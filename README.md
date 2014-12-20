@@ -48,12 +48,14 @@ Should work with other browsers and addons, but they are not officially supporte
 
 
 <h3>HotKeys</h3>These will work with standard and numpad keys.
+<pre>
 + and = : Global Zoom in pages (enlarge)
 - : Global  Zoom out pages (reduce)
 * and 8 : Global  Restore pages to original(toggles Fit width if oversized)
 5 : Global Fit window width
 Arrow Right and "." : Next Chapter (When avaliable)
 Arrow Left and "," : Previous Chapter(When avaliable)
+</pre>
 
 <h3>Features</h3>Full Themes
 Global and Individual images zoom
