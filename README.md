@@ -85,12 +85,12 @@ Library included inline: jQuery v2.1.1
 <h3>Disclaimer</h3>In case the owner/admin of one of the supported sites does not want my script to run on their site, I will make it disabled by default. Forcing users to manually activate it.
 
 <h3>Changelog</h3>
-2014-12-06 11.03 Added NineManga
-2014-12-02 11.02 Fix for e-hentai and better zip downlaod message
-2014-11-14 11.01 Improved Control Paine, new theme Clear
-2014-11-08 11.00 Added Download as ZIP
-2014-08-28 10.00 Code reformat, script is now extendible
-2014-07-15 09.00 Added Thumbnails Navigation, Improved performance
-2013-08-29 08.00 Layout Improvement, Fix Chrome compatibility, Improved Zoom
-2013-08-16 07.00 Large code clean up, Individual page functions
-2013-08-02 06.00 Full Script Overhaul
+2014-12-06 11.03 Added NineManga</br>
+2014-12-02 11.02 Fix for e-hentai and better zip downlaod message</br>
+2014-11-14 11.01 Improved Control Paine, new theme Clear</br>
+2014-11-08 11.00 Added Download as ZIP</br>
+2014-08-28 10.00 Code reformat, script is now extendible</br>
+2014-07-15 09.00 Added Thumbnails Navigation, Improved performance</br>
+2013-08-29 08.00 Layout Improvement, Fix Chrome compatibility, Improved Zoom</br>
+2013-08-16 07.00 Large code clean up, Individual page functions</br>
+2013-08-02 06.00 Full Script Overhaul</br>
