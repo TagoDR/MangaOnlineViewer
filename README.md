@@ -1,4 +1,8 @@
 <h1>Manga OnlineViewer</h1>
+<h2>Official Sources</h2>
+GitHub:  https://github.com/TagoDR/MangaOnlineViewer </br>
+GreaseFork:  https://greasyfork.org/en/scripts/1319-manga-onlineviewer
+
 <h3>Supported Sites</h3>
 <ul><li>7manga(BoxManga)</li>
 <li>AnimeA</li>
