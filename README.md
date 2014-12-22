@@ -95,7 +95,7 @@ Library included inline: jQuery v2.1.1
 
 <h3>Changelog</h3>
 <pre>
-2014-12-22 11.0 Added  Manga Town
+2014-12-22 11.04 Added  MangaTown
 2014-12-06 11.03 Added NineManga
 2014-12-02 11.02 Fix for e-hentai and better zip downlaod message
 2014-11-14 11.01 Improved Control Paine, new theme Clear
