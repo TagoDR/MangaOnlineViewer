@@ -12,6 +12,7 @@ GreaseFork:  https://greasyfork.org/en/scripts/1319-manga-onlineviewer
 <li>Batoto</li>
 <li>Dynasty-Scans</li>
 <li>EatManga</li>
+<li>NineManga</li>
 <li>ManagBird</li>
 <li>MangaBee/OneManga.me/Manga2u/MangaSky/MangaCow/MangaMofo/MangaDoom</li>
 <li>MangaChapter</li>
@@ -25,6 +26,7 @@ GreaseFork:  https://greasyfork.org/en/scripts/1319-manga-onlineviewer
 <li>MangaPark</li>
 <li>MangaReader/MangaPanda</li>
 <li>MangaStream</li>
+<li>MangaTown</li>
 <li>TenManga</li>
 <li>Starkana</li>
 <li><b>Scanlators sites that use FoOlSlide</b></li></ul>
@@ -32,7 +34,6 @@ And these Hentai sites:
 <ul><li>Doujin-moe Non-members</li>
 <li>ExHentai(e-hentai) [May get you banned or ip blocked, use with moderation]</li>
 <li>Fakku</li>
-<li>Fufufuu</li>
 <li>HBrowse</li>
 <li>Hentai2Read</li>
 <li>hentai4manga</li>
@@ -95,6 +96,8 @@ Library included inline: jQuery v2.1.1
 
 <h3>Changelog</h3>
 <pre>
+2014-12-23 11.06 Change Zip File name, set to auto download
+2014-12-23 11.05 Removed Fufufuu
 2014-12-22 11.04 Added  MangaTown
 2014-12-06 11.03 Added NineManga
 2014-12-02 11.02 Fix for e-hentai and better zip downlaod message
