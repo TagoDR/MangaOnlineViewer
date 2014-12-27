@@ -96,6 +96,7 @@ Library included inline: jQuery v2.1.1
 
 <h3>Changelog</h3>
 <pre>
+2014-12-27 11.08 Update MangaPark
 2014-12-24 11.07 Update MangaGo and nHentai
 2014-12-23 11.06 Change Zip File name, set to auto download
 2014-12-23 11.05 Removed Fufufuu
