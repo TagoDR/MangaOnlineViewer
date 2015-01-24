@@ -16,7 +16,6 @@ GreaseFork:  https://greasyfork.org/en/scripts/1319-manga-onlineviewer
 <li>ManagBird</li>
 <li>MangaBee/OneManga.me/Manga2u/MangaSky/MangaCow/MangaMofo/MangaDoom</li>
 <li>MangaChapter</li>
-<li>MangaDevil</li>
 <li>MangaFox</li>
 <li>MangaGo</li>
 <li>MangaHere</li>
@@ -96,6 +95,8 @@ Library included inline: jQuery v2.1.1
 
 <h3>Changelog</h3>
 <pre>
+2015-01-24 11.10 Fixed Zip Download
+2015-01-10 11.09 Fixed MangaTown, removed Manga Devil
 2014-12-27 11.08 Update MangaPark
 2014-12-24 11.07 Update MangaGo and nHentai
 2014-12-23 11.06 Change Zip File name, set to auto download
