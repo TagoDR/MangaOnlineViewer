@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name  Manga OnlineViewer Portugues
 // @description  Extension for Manga OnlineViewer for sites in Portuguese -- Extenção do Manga OnlineViewer para sites de Manga em Portugues
-// @version 1.00
-// @date 2014-08-13
+// @version 1.01
+// @date 2015-02-19
 // @author  Tago
 // @namespace https://greasyfork.org/users/1849-tago
 // @require https://greasyfork.org/scripts/1319-manga-onlineviewer/code/Manga%20OnlineViewer.user.js
