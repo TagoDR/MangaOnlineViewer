@@ -12,7 +12,7 @@ GreaseFork:  https://greasyfork.org/en/scripts/1319-manga-onlineviewer
 <li>Batoto</li>
 <li>Dynasty-Scans</li>
 <li>EatManga</li>
-<li>NineManga</li>
+<li>Madokami</li>
 <li>ManagBird</li>
 <li>MangaBee/OneManga.me/Manga2u/MangaSky/MangaCow/MangaMofo/MangaDoom</li>
 <li>MangaChapter</li>
@@ -26,19 +26,21 @@ GreaseFork:  https://greasyfork.org/en/scripts/1319-manga-onlineviewer
 <li>MangaReader/MangaPanda</li>
 <li>MangaStream</li>
 <li>MangaTown</li>
+<li>NineManga</li>
+<li>Starkana</li>
 <li>TenManga</li>
 <li>TheSpectrum</li>
-<li>Starkana</li>
 <li><b>Scanlators sites that use FoOlSlide</b></li></ul>
 And these Hentai sites:
 <ul><li>Doujin-moe Non-members</li>
+<li>DoujinshiHentai</li>
 <li>ExHentai(e-hentai) [May get you banned or ip blocked, use with moderation]</li>
 <li>Fakku</li>
 <li>HBrowse</li>
 <li>Hentai2Read</li>
 <li>hentai4manga</li>
-<li>DoujinshiHentai</li>
 <li>HentaiMangaOnline</li>
+<li>Hitomi</li>
 <li>Luscious/Wondersluts</li>
 <li>nHentai</li>
 <li>Pururin</li></ul>
@@ -96,6 +98,7 @@ Library included inline: jQuery v2.1.1
 
 <h3>Changelog</h3>
 <pre>
+2015-02-16 11.12 Added Hitomi and Madokami
 2015-02-06 11.11 Added TheSpectrum
 2015-01-24 11.10 Fixed Zip Download
 2015-01-10 11.09 Fixed MangaTown, removed Manga Devil
