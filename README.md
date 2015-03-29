@@ -98,6 +98,8 @@ Library included inline: jQuery v2.1.1
 
 <h3>Changelog</h3>
 <pre>
+2015-03-28 11.14 Default Zoom apply everytime images are checked for loaded
+2015-03-14 11.13 Ajusted hitomi
 2015-02-16 11.12 Added Hitomi and Madokami
 2015-02-06 11.11 Added TheSpectrum
 2015-01-24 11.10 Fixed Zip Download
