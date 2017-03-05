@@ -18,7 +18,7 @@
 // @include /https?://manga.animea.net/.+chapter.+.html/
 // @include /https?://.*(7manga|boxmanga).com/online_manga/.+/
 // @include /https?://www.mangahere.co/manga/.+/.+/
-// @include /http://bato.to/reader.+/
+// @include /https?://bato.to/reader.+/
 // @include /https?://www.mangahen.com/.+/.+//
 // @include /https?://starkana.org/manga/.+/.+/chapter/.+/
 // @include /https?://www.fakku.net/.+/.+/
