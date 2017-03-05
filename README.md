@@ -98,6 +98,7 @@ Library included inline: jQuery v2.1.1
 
 <h3>Changelog</h3>
 <pre>
+2017-03-05 11.20 Fixed Batoto
 2015-04-05 11.17 Updated more sites domains and Fixed HBrowser
 2015-03-30 11.16 Updated sites domains, and Fixed MangaPark
 2015-03-28 11.15 Fixed RawSenmanga and code clean up
