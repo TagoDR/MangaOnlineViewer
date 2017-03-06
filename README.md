@@ -3,6 +3,7 @@
 <pre>
 GitHub:  https://github.com/TagoDR/MangaOnlineViewer
 GreaseFork:  https://greasyfork.org/en/scripts/1319-manga-onlineviewer
+OpenUserJS: https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer
 </pre>
 
 <h3>Supported Sites</h3>
