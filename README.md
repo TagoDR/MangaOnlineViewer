@@ -7,21 +7,15 @@ OpenUserJS: https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer
 </pre>
 
 <h3>Supported Sites</h3>
-<ul><li>7manga(BoxManga)</li>
-<li>AnimeA</li>
-<li>AnyManga</li>
 <li>Batoto</li>
 <li>Dynasty-Scans</li>
 <li>EatManga</li>
-<li>Madokami</li>
-<li>ManagBird</li>
-<li>MangaBee/OneManga.me/Manga2u/MangaSky/MangaCow/MangaMofo/MangaDoom</li>
-<li>MangaChapter</li>
+<li>MangaSPy/MangaMap</li>
+<li>MangaDoom</li>
 <li>MangaFox</li>
 <li>MangaGo</li>
 <li>MangaHere</li>
 <li>MangaInn</li>
-<li>MangaJoy</li>
 <li>MangaLyght</li>
 <li>MangaPark</li>
 <li>MangaReader/MangaPanda</li>
@@ -99,28 +93,5 @@ Library included inline: jQuery v2.1.1
 
 <h3>Changelog</h3>
 <pre>
-2017-03-05 11.20 Fixed Batoto
-2015-04-05 11.17 Updated more sites domains and Fixed HBrowser
-2015-03-30 11.16 Updated sites domains, and Fixed MangaPark
-2015-03-28 11.15 Fixed RawSenmanga and code clean up
-2015-03-28 11.14 Default Zoom apply everytime images are checked for loaded
-2015-03-14 11.13 Ajusted hitomi
-2015-02-16 11.12 Added Hitomi and Madokami
-2015-02-06 11.11 Added TheSpectrum
-2015-01-24 11.10 Fixed Zip Download
-2015-01-10 11.09 Fixed MangaTown, removed Manga Devil
-2014-12-27 11.08 Update MangaPark
-2014-12-24 11.07 Update MangaGo and nHentai
-2014-12-23 11.06 Change Zip File name, set to auto download
-2014-12-23 11.05 Removed Fufufuu
-2014-12-22 11.04 Added  MangaTown
-2014-12-06 11.03 Added NineManga
-2014-12-02 11.02 Fix for e-hentai and better zip downlaod message
-2014-11-14 11.01 Improved Control Paine, new theme Clear
-2014-11-08 11.00 Added Download as ZIP
-2014-08-28 10.00 Code reformat, script is now extendible
-2014-07-15 09.00 Added Thumbnails Navigation, Improved performance
-2013-08-29 08.00 Layout Improvement, Fix Chrome compatibility, Improved Zoom
-2013-08-16 07.00 Large code clean up, Individual page functions
-2013-08-02 06.00 Full Script Overhaul
+2017-03-09 12.00 Full Review
 </pre>
