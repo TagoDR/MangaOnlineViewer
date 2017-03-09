@@ -7,7 +7,7 @@ OpenUserJS: https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer
 </pre>
 
 <h3>Supported Sites</h3>
-<li>Batoto</li>
+<ul>Batoto</li>
 <li>Dynasty-Scans</li>
 <li>EatManga</li>
 <li>MangaSPy/MangaMap</li>
