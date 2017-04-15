@@ -33,6 +33,7 @@ And these Hentai sites:
 <li>Fakku</li>
 <li>HBrowse</li>
 <li>Hentai2Read</li>
+<li>HentaIhere</li>
 <li>hentai4manga</li>
 <li>HentaiMangaOnline</li>
 <li>Hitomi</li>
@@ -94,4 +95,5 @@ Library included inline: jQuery v2.1.1
 <h3>Changelog</h3>
 <pre>
 2017-03-09 12.00 Full Review
+2017-04-14 12.01 Added HentaIhere
 </pre>
