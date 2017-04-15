@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name  Manga OnlineViewer
 // @description  Shows all pages at once in online view. MangaFox, MangaReader/MangaPanda, MangaStream, MangaInn, MangaHere, MangaShare, Batoto, MangaDevil, MangaCow, MangaChapter, 7manga, MangaPirate.net and MangaBee/OneManga.me manga sites. Fakku, HBrowse, Hentai2Read and Doujin-moe Hentai sites.
-// @version 12.00
-// @date 2017-03-09
+// @version 12.01
+// @date 2017-04-14
 // @author  Tago
 // @namespace https://github.com/TagoDR
 // @require https://code.jquery.com/jquery-latest.min.js
@@ -12,7 +12,7 @@
 // @grant  GM_xmlhttpRequest
 // @include /https?://(www.)?mangafox.me/manga/.+/.+//
 // @include /https?://(www.)?(mangareader|mangapanda)(.net|.com)/.+/.+/
-// @include /https?://(www.)?(mangastream|readms).com/r.*/.+/
+// @include /https?://(www.)?(mangastream|readms)(.net|.com)/r.*/.+/
 // @include /https?://(www.)?mangainn.net/manga/chapter/.+/
 // @include /https?://(www.)?mangahere.co/manga/.+/.+/
 // @include /https?://(www.)?bato.to/reader.*/
@@ -41,9 +41,10 @@
 // @include /https?://(www.)?fakku.net/.+/.+/
 // @include /https?://(www.)?hbrowse.com/.+/
 // @include /https?://(www.)?doujins.com/.+/
-// @include /https?://(www.)?hentai2read.com/.+/.+//
+// @include /https?://(www.)?(hentai2read|hentaihere).com/.+/.+//
 // @include /.+/read/.+/
 // @history 12.00 Full Review
+// @history 12.01 Added HentaIhere
 // ==/UserScript==
 console.log("Loading Manga OnlineViewer");
 $.noConflict();
@@ -1380,6 +1381,28 @@ $.noConflict();
                         return "/" + pathname[1] + "/" + pathname[2] + "/" + i + "/";
                     },
                     img: "img#arf-reader"
+                };
+            }
+        },
+        // == HentaIHere ======================================================================================================================
+        {
+            name: "HentaIHere",
+            url: /hentaihere/,
+            run: function () {
+                return {
+                    title: $(".breadcrumb a:nth(2)").text().trim(),
+                    series: $(".breadcrumb a:nth(2)").attr("href"),
+                    quant: $("#pageDropdown li").length,
+                    prev: "#",
+                    next: "#",
+                    data: $("#reader-content img").attr("src"),
+                    page: function (i, addImg, addAltImg) {
+						var str = '' + i;
+                        var size = this.data.match(/([0-9]+)\..+/)[1].length;
+                        var ext = this.data.match(/[0-9]+(\..+)/)[1];
+						while (str.length < size) str = '0' + str;
+						addImg(i, this.data.replace(/[0-9]+.jpg/, str + ext));
+                    }
                 };
             }
         },
