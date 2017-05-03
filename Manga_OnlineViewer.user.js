@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name  Manga OnlineViewer
 // @description  Shows all pages at once in online view. MangaFox, MangaReader/MangaPanda, MangaStream, MangaInn, MangaHere, MangaShare, Batoto, MangaDevil, MangaCow, MangaChapter, 7manga, MangaPirate.net and MangaBee/OneManga.me manga sites. Fakku, HBrowse, Hentai2Read and Doujin-moe Hentai sites.
-// @version 12.01
-// @date 2017-04-14
+// @version 12.03
+// @date 2017-05-03
 // @author  Tago
 // @namespace https://github.com/TagoDR
 // @require https://code.jquery.com/jquery-latest.min.js
@@ -27,6 +27,7 @@
 // @include /https?://(www.)?mangago.me/read-manga/.+/.+/
 // @include /https?://(www.)?ninemanga.com/chapter/.+/.+\.html/
 // @include /https?://(www.)?mangatown.com/manga/.+/.+/
+// @include /https?://(www.)?readmanga.today/.+/[0-9]+/
 // @include /https?://view.thespectrum.net/.+/
 // @include /https?://(www.)?(luscious.net|wondersluts.com)/c/.+/
 // @include /https?://exhentai.org/s/.+/.+/
@@ -44,6 +45,8 @@
 // @include /.+/read/.+/
 // @history 12.00 Full Review
 // @history 12.01 Added HentaIhere
+// @history 12.02 Added ReadManga.Today
+// @history 12.03 Fixed Zip Download
 // ==/UserScript==
 console.log("Loading Manga OnlineViewer");
 /*!
@@ -121,7 +124,7 @@ $.noConflict();
             var exec = false;
             $( document ).ready( function () {
                 run();
-                exec = true
+                exec = true;
             });
             setTimeout(function () {
                 if (!exec){
@@ -276,8 +279,8 @@ $.noConflict();
                 "</div>" +
                 "<div id='ChapterControlTop' class='ChapterControl'>" +
                 "<a name='bottom' href='#ChapterControlBottom' style='display: none;'>Bottom</a>" +
-                "<a class='prev' name='prev' href='" + Manga.prev + "'>Previous</a>" +
-                "<a class='next' name='next' href='" + Manga.next + "'>Next</a>" +
+                "<a class='prev' name='prev' href='" + Manga.prev + "' onclick='window.location=\"" + Manga.prev + "\";location.reload();'>Previous</a>" +
+                "<a class='next' name='next' href='" + Manga.next + "' onclick='window.location=\"" + Manga.next + "\";location.reload();'>Next</a>" +
                 "</div>" +
                 "<div id='Chapter' align='center' class='" + (settings.FitWidthIfOversized == "true" ? "fitWidthIfOversized" : "" ) + "'></div>" +
                 "<div class='ViewerTitle'><br/>" +
@@ -286,8 +289,8 @@ $.noConflict();
                 "<div id='ChapterControlBottom' class='ChapterControl'>" +
                 "<a href='#' id='blob'>Download</a>"+
                 "<a name='top' href='#MangaOnlineViewer'>Top</a>" +
-                "<a class='prev' name='prev' href='" + Manga.prev + "'>Previous</a>" +
-                "<a class='next' name='next' href='" + Manga.next + "'>Next</a>" +
+                "<a class='prev' name='prev' href='" + Manga.prev + "' onclick='window.location=\"" + Manga.prev + "\";location.reload();'>Previous</a>" +
+                "<a class='next' name='next' href='" + Manga.next + "' onclick='window.location=\"" + Manga.next + "\";location.reload();'>Next</a>" +
                 "</div>" +
                 "<div id='ImageOptions'>" +
 				"<div id='menu'><span class='menuOuterArrow'><span class='menuInnerArrow'></span></span></div>" +
@@ -444,37 +447,6 @@ $.noConflict();
             var img = "<img id='PageImg" + index + "' alt='PageImg" + index + "' src='" + src + "'/>";
             $(page).append(img).slideToggle();
             $("#ThumbNailImg" + index).attr("src", src);
-            if(settings.DownloadZip == "true"){
-				var str = '' + index;
-                while (str.length < 3) str = '0' + str;
-				var filename = "Page "+str+".png";
-				if(src.indexOf("base64") > -1){
-					var base64 = src.replace("data:image/png;base64,","");
-					var i = base64.indexOf(",");
-					if (i !== -1) {
-						base64 = base64.substring(index + 1, base64.length);
-					}
-					cache.zip.file(filename,base64,{base64:true,createFolders:true});
-					console.log(filename+" Added to Zip from Base64 Image");
-					cache.downloadFiles++;
-				} else {
-					try{
-						GM_xmlhttpRequest({
-							method: "GET",
-							url: src,
-							overrideMimeType: 'text/plain; charset=x-user-defined',
-							onload: function(e) {
-								var base64  = customBase64Encode (e.responseText);
-								cache.zip.file(filename,base64,{base64:true,createFolders:true});
-								console.log(filename+" Added to Zip as Base64 Image");
-								cache.downloadFiles++;
-							}
-						});
-					} catch (e){
-						console.log(e);
-					}
-				}
-            }
         }
 
         //Adds an optional image just in case the primary does not load
@@ -498,7 +470,7 @@ $.noConflict();
             console.log("Loading Images");
             if (Manga.pages !== undefined) {
                 console.log("Method manual bulk");
-                Manga.pages(addImg, addAltImg);
+                Manga.pages(addImg, addAltImg, getHtml);
             } else {
                 if (Manga.page !== undefined) {
                     console.log("Method manual individual");
@@ -544,17 +516,54 @@ $.noConflict();
         }
         // Generate Zip File for download
         function generateZip(){
+            $(".MangaPage img").each(function(){
+				var img = $(this);
+				var str = img.parent().prev().children("span").text();
+				while (str.length < 3) str = '0' + str;
+				var filename = "Page "+str+".png";
+				var src = img.attr("src");
+				if(src.indexOf("base64") > -1){
+					var base64 = src.replace("data:image/png;base64,","");
+					var i = base64.indexOf(",");
+					if (i !== -1) {
+						base64 = base64.substring(index + 1, base64.length);
+					}
+					cache.zip.file(filename,base64,{base64:true,createFolders:true});
+					console.log(filename+" Added to Zip from Base64 Image");
+					cache.downloadFiles++;
+				} else {
+					try{
+						GM_xmlhttpRequest({
+							method: "GET",
+							url: src,
+							overrideMimeType: 'text/plain; charset=x-user-defined',
+							onload: function(e) {
+								var base64  = customBase64Encode (e.responseText);
+								cache.zip.file(filename,base64,{base64:true,createFolders:true});
+								console.log(filename+" Added to Zip as Base64 Image");
+								cache.downloadFiles++;
+							}
+						});
+					} catch (e){
+						console.log(e);
+					}
+				}
+			});
             if(cache.downloadFiles != cache.Data.quant){
                 setTimeout(generateZip,2000);
-                console.log("Waiting for Files to Download "+cache.downloadFiles+" of "+cache.Data.quant);
+                console.log("Waiting for Files to Download "+cache.downloadFiles+" of "+ cache.Data.quant);
             } else {
                 var blobLink = document.getElementById('blob');
                 try {
                     blobLink.download = $(".ViewerTitle:first a").text().replace("(Return to Chapter List)","").trim() + ".zip";
-                    blobLink.href = window.URL.createObjectURL(cache.zip.generate({type:"blob"}));
-                    console.log("Download Ready");
-					$("#blob")[0].click();
+					cache.zip.generateAsync({type:"blob"}).then(function (content) {
+						blobLink.href = window.URL.createObjectURL(content);
+						console.log("Download Ready");
+						$("#blob")[0].click();
+					});
+
                 } catch(e) {
+					console.log(e);
                     blobLink.innerHTML += " (not supported on this browser)";
                 }
             }
@@ -584,9 +593,10 @@ $.noConflict();
             } else {
                 applyDefaultZoom();
                 console.log("Images Loading Complete");
-                if(settings.DownloadZip == "true"){
-                    generateZip();
-                }
+				if(settings.DownloadZip == "true"){
+					$("#blob").attr("href","#download");
+					console.log("Download Avaliable");
+				}
             }
         }
         //Force reload the image
@@ -791,6 +801,10 @@ $.noConflict();
             $('.Hide').click(function () {
                 var img = $(this).parents(".MangaPage").find(".PageContent");
                 img.slideToggle("slow");
+            });
+			//Download
+			$('#blob').one( "click", function () {
+                generateZip();
             });
         }
 
@@ -1093,6 +1107,28 @@ $.noConflict();
                     prev: $("#sel_book_1 option:selected").prev("option").val(),
                     next: $("#sel_book_1 option:selected").next("option").val(),
                     img: ".img "
+                };
+            }
+        },
+        // == ReadManga.Today ========================================================================================================================
+        {
+            name: "ReadManga.Today",
+            url: /readmanga.today/,
+            run: function () {
+                return {
+                    title: $("title").text().trim(),
+                    series: $(".btn:nth(4)").attr("href"),
+                    quant: $("select[name='category_type']:last option").length,
+                    prev: $("select[name='chapter_list'] option:selected").next("option").val(),
+                    next: $("select[name='chapter_list'] option:selected").prev("option").val(),
+                    pages: function (addImg, addAltImg, getHtml) {
+						getHtml(window.location + "/all-pages", function (html) {
+							var imgs = $(html).find("img.img-responsive-2");
+							for (var index = 1; index <= imgs.length; index++){
+								addImg(index, $(imgs[index-1]).attr("src") );
+							}
+                        });
+                    }
                 };
             }
         },
