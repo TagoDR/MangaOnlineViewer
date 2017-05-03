@@ -7,7 +7,7 @@ OpenUserJS: https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer
 </pre>
 
 <h3>Supported Sites</h3>
-<ul>Batoto</li>
+<ul><li>Batoto</li>
 <li>Dynasty-Scans</li>
 <li>EatManga</li>
 <li>MangaSPy/MangaMap</li>
@@ -96,4 +96,6 @@ Library included inline: jQuery v2.1.1
 <pre>
 2017-03-09 12.00 Full Review
 2017-04-14 12.01 Added HentaIhere
+2017-04-28 12.02 Added ReadManga.Today
+2017-05-03 12.03 Fixed Zip Download
 </pre>
