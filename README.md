@@ -62,7 +62,9 @@ Arrow Right and "." : Next Chapter (When avaliable)
 Arrow Left and "," : Previous Chapter(When avaliable)
 </pre>
 
-<h3>Features</h3>Full Themes
+<h3>Features</h3>
+<pre>
+Full Themes
 Global and Individual images zoom
 -In(Global one may stretch images beyond window width)
 -Out
@@ -77,7 +79,8 @@ HotKeys
 Goto Page
 Image Loading Timer[Default 1s](Some sites require longer timers. eg.:ExHentai,e-hentai)
 Thumbnails Navigation[Default on]
-Download all images as ZIP File[Default off]
+Download all images as ZIP File[Automatic Default off]
+</pre>
 
 <h3>Description</h3>This scripts loads all pages(images) from the current chapter of the manga showing them in one page in a list type structure, witch helps reading faster.
 Please note the this script may he a heavy on resources on a few sites, so please open only one tab of each site at a time and wait it finish loading.
@@ -98,4 +101,5 @@ Library included inline: jQuery v2.1.1
 2017-04-14 12.01 Added HentaIhere
 2017-04-28 12.02 Added ReadManga.Today
 2017-05-03 12.03 Fixed Zip Download
+2017-05-04 12.04 Changed default Zip Download behavior
 </pre>
