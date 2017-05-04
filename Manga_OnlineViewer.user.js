@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name  Manga OnlineViewer
 // @description  Shows all pages at once in online view. MangaFox, MangaReader/MangaPanda, MangaStream, MangaInn, MangaHere, MangaShare, Batoto, MangaDevil, MangaCow, MangaChapter, 7manga, MangaPirate.net and MangaBee/OneManga.me manga sites. Fakku, HBrowse, Hentai2Read and Doujin-moe Hentai sites.
-// @version 12.04
+// @version 12.05
 // @date 2017-05-04
 // @author  Tago
 // @namespace https://github.com/TagoDR
@@ -48,6 +48,7 @@
 // @history 12.02 Added ReadManga.Today
 // @history 12.03 Fixed Zip Download
 // @history 12.04 Changed default Zip Download behavior
+// @history 12.05 Fixed infinite loop
 // ==/UserScript==
 console.log("Loading Manga OnlineViewer");
 /*!
@@ -67,32 +68,33 @@ for(var a,b=[],c=0;c<256;c++){a=c;for(var d=0;d<8;d++)a=1&a?3988292384^a>>>1:a>>
 for(d=1;d<=W;d++)f[d]=g=g+c[d-1]<<1;for(e=0;e<=b;e++){var h=a[2*e+1];0!==h&&(a[2*e]=k(f[h]++,h))}}function o(){var a,b,c,d,f,g=new Array(W+1);for(c=0,d=0;d<Q-1;d++)for(ka[d]=c,a=0;a<1<<ba[d];a++)ja[c++]=d;for(ja[c-1]=d,f=0,d=0;d<16;d++)for(la[d]=f,a=0;a<1<<ca[d];a++)ia[f++]=d;for(f>>=7;d<T;d++)for(la[d]=f<<7,a=0;a<1<<ca[d]-7;a++)ia[256+f++]=d;for(b=0;b<=W;b++)g[b]=0;for(a=0;a<=143;)ga[2*a+1]=8,a++,g[8]++;for(;a<=255;)ga[2*a+1]=9,a++,g[9]++;for(;a<=279;)ga[2*a+1]=7,a++,g[7]++;for(;a<=287;)ga[2*a+1]=8,a++,g[8]++;for(n(ga,S+1,g),a=0;a<T;a++)ha[2*a+1]=5,ha[2*a]=k(a,5);ma=new e(ga,ba,R+1,S,W),na=new e(ha,ca,0,T,W),oa=new e(new Array(0),da,0,U,Y)}function p(a){var b;for(b=0;b<S;b++)a.dyn_ltree[2*b]=0;for(b=0;b<T;b++)a.dyn_dtree[2*b]=0;for(b=0;b<U;b++)a.bl_tree[2*b]=0;a.dyn_ltree[2*Z]=1,a.opt_len=a.static_len=0,a.last_lit=a.matches=0}function q(a){a.bi_valid>8?h(a,a.bi_buf):a.bi_valid>0&&(a.pending_buf[a.pending++]=a.bi_buf),a.bi_buf=0,a.bi_valid=0}function r(a,b,c,d){q(a),d&&(h(a,c),h(a,~c)),G.arraySet(a.pending_buf,a.window,b,c,a.pending),a.pending+=c}function s(a,b,c,d){var e=2*b,f=2*c;return a[e]<a[f]||a[e]===a[f]&&d[b]<=d[c]}function t(a,b,c){for(var d=a.heap[c],e=c<<1;e<=a.heap_len&&(e<a.heap_len&&s(b,a.heap[e+1],a.heap[e],a.depth)&&e++,!s(b,d,a.heap[e],a.depth));)a.heap[c]=a.heap[e],c=e,e<<=1;a.heap[c]=d}function u(a,b,c){var d,e,f,h,k=0;if(0!==a.last_lit)do d=a.pending_buf[a.d_buf+2*k]<<8|a.pending_buf[a.d_buf+2*k+1],e=a.pending_buf[a.l_buf+k],k++,0===d?j(a,e,b):(f=ja[e],j(a,f+R+1,b),h=ba[f],0!==h&&(e-=ka[f],i(a,e,h)),d--,f=g(d),j(a,f,c),h=ca[f],0!==h&&(d-=la[f],i(a,d,h)));while(k<a.last_lit);j(a,Z,b)}function v(a,b){var c,d,e,f=b.dyn_tree,g=b.stat_desc.static_tree,h=b.stat_desc.has_stree,i=b.stat_desc.elems,j=-1;for(a.heap_len=0,a.heap_max=V,c=0;c<i;c++)0!==f[2*c]?(a.heap[++a.heap_len]=j=c,a.depth[c]=0):f[2*c+1]=0;for(;a.heap_len<2;)e=a.heap[++a.heap_len]=j<2?++j:0,f[2*e]=1,a.depth[e]=0,a.opt_len--,h&&(a.static_len-=g[2*e+1]);for(b.max_code=j,c=a.heap_len>>1;c>=1;c--)t(a,f,c);e=i;do c=a.heap[1],a.heap[1]=a.heap[a.heap_len--],t(a,f,1),d=a.heap[1],a.heap[--a.heap_max]=c,a.heap[--a.heap_max]=d,f[2*e]=f[2*c]+f[2*d],a.depth[e]=(a.depth[c]>=a.depth[d]?a.depth[c]:a.depth[d])+1,f[2*c+1]=f[2*d+1]=e,a.heap[1]=e++,t(a,f,1);while(a.heap_len>=2);a.heap[--a.heap_max]=a.heap[1],m(a,b),n(f,j,a.bl_count)}function w(a,b,c){var d,e,f=-1,g=b[1],h=0,i=7,j=4;for(0===g&&(i=138,j=3),b[2*(c+1)+1]=65535,d=0;d<=c;d++)e=g,g=b[2*(d+1)+1],++h<i&&e===g||(h<j?a.bl_tree[2*e]+=h:0!==e?(e!==f&&a.bl_tree[2*e]++,a.bl_tree[2*$]++):h<=10?a.bl_tree[2*_]++:a.bl_tree[2*aa]++,h=0,f=e,0===g?(i=138,j=3):e===g?(i=6,j=3):(i=7,j=4))}function x(a,b,c){var d,e,f=-1,g=b[1],h=0,k=7,l=4;for(0===g&&(k=138,l=3),d=0;d<=c;d++)if(e=g,g=b[2*(d+1)+1],!(++h<k&&e===g)){if(h<l){do j(a,e,a.bl_tree);while(0!==--h)}else 0!==e?(e!==f&&(j(a,e,a.bl_tree),h--),j(a,$,a.bl_tree),i(a,h-3,2)):h<=10?(j(a,_,a.bl_tree),i(a,h-3,3)):(j(a,aa,a.bl_tree),i(a,h-11,7));h=0,f=e,0===g?(k=138,l=3):e===g?(k=6,l=3):(k=7,l=4)}}function y(a){var b;for(w(a,a.dyn_ltree,a.l_desc.max_code),w(a,a.dyn_dtree,a.d_desc.max_code),v(a,a.bl_desc),b=U-1;b>=3&&0===a.bl_tree[2*ea[b]+1];b--);return a.opt_len+=3*(b+1)+5+5+4,b}function z(a,b,c,d){var e;for(i(a,b-257,5),i(a,c-1,5),i(a,d-4,4),e=0;e<d;e++)i(a,a.bl_tree[2*ea[e]+1],3);x(a,a.dyn_ltree,b-1),x(a,a.dyn_dtree,c-1)}function A(a){var b,c=4093624447;for(b=0;b<=31;b++,c>>>=1)if(1&c&&0!==a.dyn_ltree[2*b])return I;if(0!==a.dyn_ltree[18]||0!==a.dyn_ltree[20]||0!==a.dyn_ltree[26])return J;for(b=32;b<R;b++)if(0!==a.dyn_ltree[2*b])return J;return I}function B(a){pa||(o(),pa=!0),a.l_desc=new f(a.dyn_ltree,ma),a.d_desc=new f(a.dyn_dtree,na),a.bl_desc=new f(a.bl_tree,oa),a.bi_buf=0,a.bi_valid=0,p(a)}function C(a,b,c,d){i(a,(L<<1)+(d?1:0),3),r(a,b,c,!0)}function D(a){i(a,M<<1,3),j(a,Z,ga),l(a)}function E(a,b,c,d){var e,f,g=0;a.level>0?(a.strm.data_type===K&&(a.strm.data_type=A(a)),v(a,a.l_desc),v(a,a.d_desc),g=y(a),e=a.opt_len+3+7>>>3,f=a.static_len+3+7>>>3,f<=e&&(e=f)):e=f=c+5,c+4<=e&&b!==-1?C(a,b,c,d):a.strategy===H||f===e?(i(a,(M<<1)+(d?1:0),3),u(a,ga,ha)):(i(a,(N<<1)+(d?1:0),3),z(a,a.l_desc.max_code+1,a.d_desc.max_code+1,g+1),u(a,a.dyn_ltree,a.dyn_dtree)),p(a),d&&q(a)}function F(a,b,c){return a.pending_buf[a.d_buf+2*a.last_lit]=b>>>8&255,a.pending_buf[a.d_buf+2*a.last_lit+1]=255&b,a.pending_buf[a.l_buf+a.last_lit]=255&c,a.last_lit++,0===b?a.dyn_ltree[2*c]++:(a.matches++,b--,a.dyn_ltree[2*(ja[c]+R+1)]++,a.dyn_dtree[2*g(b)]++),a.last_lit===a.lit_bufsize-1}var G=a("../utils/common"),H=4,I=0,J=1,K=2,L=0,M=1,N=2,O=3,P=258,Q=29,R=256,S=R+1+Q,T=30,U=19,V=2*S+1,W=15,X=16,Y=7,Z=256,$=16,_=17,aa=18,ba=[0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,0],ca=[0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13],da=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,7],ea=[16,17,18,0,8,7,9,6,10,5,11,4,12,3,13,2,14,1,15],fa=512,ga=new Array(2*(S+2));d(ga);var ha=new Array(2*T);d(ha);var ia=new Array(fa);d(ia);var ja=new Array(P-O+1);d(ja);var ka=new Array(Q);d(ka);var la=new Array(T);d(la);var ma,na,oa,pa=!1;c._tr_init=B,c._tr_stored_block=C,c._tr_flush_block=E,c._tr_tally=F,c._tr_align=D},{"../utils/common":62}],74:[function(a,b,c){"use strict";function d(){this.input=null,this.next_in=0,this.avail_in=0,this.total_in=0,this.output=null,this.next_out=0,this.avail_out=0,this.total_out=0,this.msg="",this.state=null,this.data_type=2,this.adler=0}b.exports=d},{}]},{},[10])(10)});
 
 $.noConflict();
-(function ($) {
-    $.MangaOnlineViewer = (function () {
-        function getValueGM(name,defaultValue){
-            try{
+(function($) {
+    $.MangaOnlineViewer = (function() {
+        function getValueGM(name, defaultValue) {
+            try {
                 return GM_getValue(name, defaultValue);
-            } catch (e){
+            } catch (e) {
                 console.log(e);
                 return defaultValue;
             }
         }
-        function setValueGM(name,value){
-            try{
+
+        function setValueGM(name, value) {
+            try {
                 GM_setValue(name, value);
-            } catch (e){
+            } catch (e) {
                 console.log(e);
             }
         }
         var cache = {};
-        try{
-            cache ={
+        try {
+            cache = {
                 zip: new JSZip(),
                 downloadFiles: 0,
                 Data: {}
             };
-        } catch (e){
-                console.log(e);
+        } catch (e) {
+            console.log(e);
         }
         var sites = [];
         var settings = {
@@ -123,36 +125,36 @@ $.noConflict();
             console.log("Starting Manga OnlineViewer");
             sites = m;
             var exec = false;
-            $( document ).ready( function () {
+            $(document).ready(function() {
                 run();
                 exec = true;
             });
-            setTimeout(function () {
-                if (!exec){
+            setTimeout(function() {
+                if (!exec) {
                     run();
                     console.log("Forced Execution");
                 }
             }, 20000);
         }
-        function run (){
-            setTimeout(function () {
-                    console.log(sites.length + " Known Manga Sites");
-                    console.log("Identifying Site");
-                    var i = 0;
-                    if ($("meta[content~='FoOlSlide']").length > 0) {
-                        formatPage(sites[i].run());
-                    } else {
-                        for (++i; i <= sites.length; i++) {
-                            if (sites[i].url.test(window.location.host)) {
-                                console.log("Loading " + sites[i].name);
-                                formatPage(sites[i].run());
-                                break;
-                            }
+
+        function run() {
+            setTimeout(function() {
+                console.log(sites.length + " Known Manga Sites");
+                console.log("Identifying Site");
+                var i = 0;
+                if ($("meta[content~='FoOlSlide']").length > 0) {
+                    formatPage(sites[i].run());
+                } else {
+                    for (++i; i <= sites.length; i++) {
+                        if (sites[i].url.test(window.location.host)) {
+                            console.log("Loading " + sites[i].name);
+                            formatPage(sites[i].run());
+                            break;
                         }
                     }
-                }, 3000);
+                }
+            }, 3000);
         }
-
         //Organize the site adding place holders for the manga pages
         function formatPage(Manga) {
             console.log("Found " + Manga.quant + " pages");
@@ -169,24 +171,24 @@ $.noConflict();
                 $("#DefaultZoom option[value=" + settings.Zoom + "]").attr("selected", "true");
                 $(".ChapterControl a[href*='undefined']").attr("href", "");
                 configCSS();
-                setTimeout(function () {
+                setTimeout(function() {
                     addPages(Manga);
                     controls();
                     setKeyDownEvents();
                     checkImagesLoaded();
                     console.log("Site rebuild done");
-                    setTimeout(function () {
+                    setTimeout(function() {
                         loadPages(Manga);
                     }, 50);
                 }, 50);
             }
         }
-
         //Inject CSS for this script
         function configCSS() {
             $("style, link[type='text/css'], link[href$='css']").remove();
             var css = '<style type="text/css">' +
-                /*! normalize.css v1.0.0 | MIT License | git.io/normalize */'article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary{display:block}audio,canvas,video{display:inline-block;*display:inline;*zoom:1}audio:not([controls]){display:none;height:0}[hidden]{display:none}html{font-size:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}html,button,input,select,textarea{font-family:sans-serif}body{margin:0}a:focus{outline:thin dotted}a:active,a:hover{outline:0}h1{font-size:2em;margin:.67em 0}h2{font-size:1.5em;margin:.83em 0}h3{font-size:1.17em;margin:1em 0}h4{font-size:1em;margin:1.33em 0}h5{font-size:.83em;margin:1.67em 0}h6{font-size:.75em;margin:2.33em 0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:bold}blockquote{margin:1em 40px}dfn{font-style:italic}mark{background:#ff0;color:#000}p,pre{margin:1em 0}code,kbd,pre,samp{font-family:monospace,serif;_font-family:"courier new",monospace;font-size:1em}pre{white-space:pre;white-space:pre-wrap;word-wrap:break-word}q{quotes:none}q:before,q:after{content:"";content:none}small{font-size:75%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-0.5em}sub{bottom:-0.25em}dl,menu,ol,ul{margin:1em 0}dd{margin:0 0 0 40px}menu,ol,ul{padding:0 0 0 40px}nav ul,nav ol{list-style:none;list-style-image:none}img{border:0;-ms-interpolation-mode:bicubic}svg:not(:root){overflow:hidden}figure{margin:0}form{margin:0}fieldset{border:1px solid #c0c0c0;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0;white-space:normal;*margin-left:-7px}button,input,select,textarea{font-size:100%;margin:0;vertical-align:baseline;*vertical-align:middle}button,input{line-height:normal}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer;*overflow:visible}button[disabled],input[disabled]{cursor:default}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0;*height:13px;*width:13px}input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}' +
+                /*! normalize.css v1.0.0 | MIT License | git.io/normalize */
+                'article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary{display:block}audio,canvas,video{display:inline-block;*display:inline;*zoom:1}audio:not([controls]){display:none;height:0}[hidden]{display:none}html{font-size:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}html,button,input,select,textarea{font-family:sans-serif}body{margin:0}a:focus{outline:thin dotted}a:active,a:hover{outline:0}h1{font-size:2em;margin:.67em 0}h2{font-size:1.5em;margin:.83em 0}h3{font-size:1.17em;margin:1em 0}h4{font-size:1em;margin:1.33em 0}h5{font-size:.83em;margin:1.67em 0}h6{font-size:.75em;margin:2.33em 0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:bold}blockquote{margin:1em 40px}dfn{font-style:italic}mark{background:#ff0;color:#000}p,pre{margin:1em 0}code,kbd,pre,samp{font-family:monospace,serif;_font-family:"courier new",monospace;font-size:1em}pre{white-space:pre;white-space:pre-wrap;word-wrap:break-word}q{quotes:none}q:before,q:after{content:"";content:none}small{font-size:75%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-0.5em}sub{bottom:-0.25em}dl,menu,ol,ul{margin:1em 0}dd{margin:0 0 0 40px}menu,ol,ul{padding:0 0 0 40px}nav ul,nav ol{list-style:none;list-style-image:none}img{border:0;-ms-interpolation-mode:bicubic}svg:not(:root){overflow:hidden}figure{margin:0}form{margin:0}fieldset{border:1px solid #c0c0c0;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0;white-space:normal;*margin-left:-7px}button,input,select,textarea{font-size:100%;margin:0;vertical-align:baseline;*vertical-align:middle}button,input{line-height:normal}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer;*overflow:visible}button[disabled],input[disabled]{cursor:default}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0;*height:13px;*width:13px}input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}' +
                 'html{font-size:100%}' +
                 'img{height:auto;max-width:100%;vertical-align:middle;border:0 none}' +
                 'button,input,select,textarea{margin:0;font-size:100%;vertical-align:middle}' +
@@ -241,9 +243,9 @@ $.noConflict();
                 '#MangaOnlineViewer #Navigation .ThumbNail {display: inline-block;height: 150px;margin: 0 5px;position: relative;}' +
                 '#MangaOnlineViewer #Navigation .ThumbNail span {display: block;opacity: 0.8;position: relative;top: -30px;width: 100%;}' +
                 '#MangaOnlineViewer #Navigation .ThumbNail img {align-content: center;cursor: pointer;display: inline-block;margin-bottom: -10px;margin-top: 10px;max-height: 150px;min-height: 150px;min-width: 100px;}' +
-                '#MangaOnlineViewer #Navigation .nav {behavior:url(-ms-transform.htc);-moz-transform:rotate(-90deg);-webkit-transform:rotate(-90deg);-o-transform:rotate(-90deg);}'+
-				'#MangaOnlineViewer #ImageOptions .menuOuterArrow  {width: 0;height: 0;border-top: 10px solid transparent;border-bottom: 10px solid transparent;border-left:10px solid blue;display: inline-block;position: absolute;bottom: 0;}'+
-				'#MangaOnlineViewer #ImageOptions .menuInnerArrow {width: 0;height: 0;border-top: 5px solid transparent;border-bottom: 5px solid transparent;border-left:5px solid white;left: -10px;position: absolute;top: -5px;display: inline-block;}';
+                '#MangaOnlineViewer #Navigation .nav {behavior:url(-ms-transform.htc);-moz-transform:rotate(-90deg);-webkit-transform:rotate(-90deg);-o-transform:rotate(-90deg);}' +
+                '#MangaOnlineViewer #ImageOptions .menuOuterArrow  {width: 0;height: 0;border-top: 10px solid transparent;border-bottom: 10px solid transparent;border-left:10px solid blue;display: inline-block;position: absolute;bottom: 0;}' +
+                '#MangaOnlineViewer #ImageOptions .menuInnerArrow {width: 0;height: 0;border-top: 5px solid transparent;border-bottom: 5px solid transparent;border-left:5px solid white;left: -10px;position: absolute;top: -5px;display: inline-block;}';
             var themes = [ //   body       text       border     painel     dark1      dark2
                 ["Dark", "#000000", "#ffffff", "#666666", "#333333", "#111111", "#282828"],
                 ["Light", "#eeeeec", "#2e3436", "#888a85", "#babdb6", "#c8cec2", "#d3d7cf"],
@@ -266,15 +268,14 @@ $.noConflict();
                 css += '.' + themes[i][0] + ' .painel {background: none repeat scroll 0 0 ' + themes[i][4] + '; color: ' + themes[i][2] + ';border: thin solid ' + themes[i][3] + ';}';
                 css += '.' + themes[i][0] + ' .PageContent, .' + themes[i][0] + ' .ThumbNail img { outline: 2px solid ' + themes[i][6] + '; background: none repeat scroll 0 0 ' + themes[i][5] + ';}';
                 css += '.' + themes[i][0] + ' .ChapterControl a { border: 1px solid ' + themes[i][3] + '; background: -moz-linear-gradient(left top , ' + themes[i][6] + ', ' + themes[i][4] + ') repeat scroll 0 0 transparent; background: -webkit-linear-gradient(left , ' + themes[i][6] + ' 41%, ' + themes[i][4] + ' 71%) repeat scroll 0 0 transparent; }';
-				$("#ThemeSelector").append("<option value='" + themes[i][0] + "' " + (settings.Theme == themes[i][0] ? "selected" : "") + ">" + themes[i][0].replace("_", " ") + "</option>");
+                $("#ThemeSelector").append("<option value='" + themes[i][0] + "' " + (settings.Theme == themes[i][0] ? "selected" : "") + ">" + themes[i][0].replace("_", " ") + "</option>");
             }
             css += '</style>';
             $('head').append(css);
         }
-
         //Build the reader main body
         function reader(Manga) {
-            var reader = "<div id='MangaOnlineViewer' class='" + settings.Theme+ "' style='min-height: 1080px;' >" +
+            var reader = "<div id='MangaOnlineViewer' class='" + settings.Theme + "' style='min-height: 1080px;' >" +
                 "<div class='ViewerTitle'><br/>" +
                 "<a id='series' href='" + Manga.series + "'> " + Manga.title + " <br/>(Return to Chapter List)</a>" +
                 "</div>" +
@@ -284,18 +285,18 @@ $.noConflict();
                 "<a class='prev' name='prev' href='" + Manga.prev + "' onclick='window.location=\"" + Manga.prev + "\";location.reload();'>Previous</a>" +
                 "<a class='next' name='next' href='" + Manga.next + "' onclick='window.location=\"" + Manga.next + "\";location.reload();'>Next</a>" +
                 "</div>" +
-                "<div id='Chapter' align='center' class='" + (settings.FitWidthIfOversized == "true" ? "fitWidthIfOversized" : "" ) + "'></div>" +
+                "<div id='Chapter' align='center' class='" + (settings.FitWidthIfOversized == "true" ? "fitWidthIfOversized" : "") + "'></div>" +
                 "<div class='ViewerTitle'><br/>" +
                 "<a id='series' href='" + Manga.series + "'> " + Manga.title + " <br/>(Return to Chapter List)</a>" +
                 "</div>" +
                 "<div id='ChapterControlBottom' class='ChapterControl'>" +
-                "<a href='#' id='blob' class='download'>Download</a>"+
+                "<a href='#' id='blob' class='download'>Download</a>" +
                 "<a name='top' href='#MangaOnlineViewer'>Top</a>" +
                 "<a class='prev' name='prev' href='" + Manga.prev + "' onclick='window.location=\"" + Manga.prev + "\";location.reload();'>Previous</a>" +
                 "<a class='next' name='next' href='" + Manga.next + "' onclick='window.location=\"" + Manga.next + "\";location.reload();'>Next</a>" +
                 "</div>" +
                 "<div id='ImageOptions'>" +
-				"<div id='menu'><span class='menuOuterArrow'><span class='menuInnerArrow'></span></span></div>" +
+                "<div id='menu'><span class='menuOuterArrow'><span class='menuInnerArrow'></span></span></div>" +
                 "<div class='painel'>" +
                 "<img id='enlarge' alt='Enlarge' src='" + icon.enlage + "' class='controlButton'/> " +
                 "<img id='restore' alt='Restore' src='" + icon.restore + "' class='controlButton'/> " +
@@ -329,120 +330,116 @@ $.noConflict();
                 "<option value='1000'>Fit Width</option>" +
                 "</select> " +
                 "<span class='controlLable'>Fit Width if Oversized:</span> " +
-                "<input type='checkbox' val='true' name='fitIfOversized' id='fitIfOversized' " + (settings.FitWidthIfOversized == "true" ? "checked" : "" ) + "> " +
+                "<input type='checkbox' val='true' name='fitIfOversized' id='fitIfOversized' " + (settings.FitWidthIfOversized == "true" ? "checked" : "") + "> " +
                 "<span class='controlLable'>Show Thumbnails:</span> " +
-                "<input type='checkbox' val='true' name='showThumbnails' id='showThumbnails' " + (settings.ShowThumbnails == "true" ? "checked" : "" ) + "> " +
+                "<input type='checkbox' val='true' name='showThumbnails' id='showThumbnails' " + (settings.ShowThumbnails == "true" ? "checked" : "") + "> " +
                 "<span class='controlLable'>Download Images as Zip Automatically:</span> " +
-                "<input type='checkbox' val='false' name='downloadZip' id='downloadZip' " + (settings.DownloadZip == "true" ? "checked" : "" ) + "> " +
+                "<input type='checkbox' val='false' name='downloadZip' id='downloadZip' " + (settings.DownloadZip == "true" ? "checked" : "") + "> " +
                 "</div>" +
                 "<div id='Counters' class='controlLable'>" +
                 "<i>0</i> of <b>" + Manga.quant + "</b> Pages Loaded " +
                 "<span class='controlLable'>Go to Page:</span> <select id='gotoPage'><option selected>#</option></select>" +
                 "</div>" +
-                "<div id='Navigation' align='center' class='painel " + (settings.ShowThumbnails == "true" ? "" : "disabled" ) + "'>" +
+                "<div id='Navigation' align='center' class='painel " + (settings.ShowThumbnails == "true" ? "" : "disabled") + "'>" +
                 "<div id='NavigationCounters' class='controlLable'>" +
                 "<img id='' alt='menu' src='" + icon.menu + "' class='nav'/>" +
                 " <i>0</i> of <b>" + Manga.quant + "</b> Pages Loaded " +
                 "</div>" +
                 "</div>" +
-                "</div>"+
-                ""
-            ;
+                "</div>" +
+                "";
             $("body").append(reader);
         }
-
         //Add Pages Place holders
         function addPages(Manga) {
-            var pages = [], options = [], thumbs = [];
+            var pages = [],
+                options = [],
+                thumbs = [];
             for (var i = 1; i <= Manga.quant; i++) {
                 pages.push("<div id='Page" + i + "' class='MangaPage'>" +
-                           "<div class='PageFunctions'>" +
-                           "<a class='ZoomIn controlButton'></a> " +
-                           "<a class='ZoomRestore controlButton'></a>" +
-                           "<a class='ZoomOut controlButton'></a>" +
-                           "<a class='ZoomWidth controlButton'></a> " +
-                           "<a class='Hide controlButton'></a> " +
-                           "<a class='Reload controlButton'></a> " +
-                           "<span>" + i + "</span>" +
-                           "</div>" +
-                           "<div class='PageContent' style='display: none;'></div>" +
-                           "</div>");
+                    "<div class='PageFunctions'>" +
+                    "<a class='ZoomIn controlButton'></a> " +
+                    "<a class='ZoomRestore controlButton'></a>" +
+                    "<a class='ZoomOut controlButton'></a>" +
+                    "<a class='ZoomWidth controlButton'></a> " +
+                    "<a class='Hide controlButton'></a> " +
+                    "<a class='Reload controlButton'></a> " +
+                    "<span>" + i + "</span>" +
+                    "</div>" +
+                    "<div class='PageContent' style='display: none;'></div>" +
+                    "</div>");
                 options.push("<option value='" + i + "'>" + i + "</option>");
                 thumbs.push("<div id='ThumbNail" + i + "' class='ThumbNail'>" +
-                            "<img id='ThumbNailImg" + i + "' alt='' src=''/>" +
-                            "<span>" + i + "</span>" +
-                            "</div>");
+                    "<img id='ThumbNailImg" + i + "' alt='' src=''/>" +
+                    "<span>" + i + "</span>" +
+                    "</div>");
             }
             $("#Chapter").append(pages.join(''));
             $("#gotoPage").append(options.join(''));
             $("#Navigation").append(thumbs.join(''));
         }
-		//Converts Images into Base64
-		function customBase64Encode (inputStr) {
-		// Source: http://stackoverflow.com/questions/8778863/downloading-an-image-using-xmlhttprequest-in-a-userscript/8781262#8781262
-			var
-				bbLen               = 3,
-				enCharLen           = 4,
-				inpLen              = inputStr.length,
-				inx                 = 0,
-				jnx,
-				keyStr              = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
-				output              = "",
-				paddingBytes        = 0;
-			var
-				bytebuffer          = new Array (bbLen),
-				encodedCharIndexes  = new Array (enCharLen);
-
-			while (inx < inpLen) {
-				for (jnx = 0;  jnx < bbLen;  ++jnx) {
-					/*--- Throw away high-order byte, as documented at:
-					  https://developer.mozilla.org/En/Using_XMLHttpRequest#Handling_binary_data
-					*/
-					if (inx < inpLen)
-						bytebuffer[jnx] = inputStr.charCodeAt (inx++) & 0xff;
-					else
-						bytebuffer[jnx] = 0;
-				}
-
-				/*--- Get each encoded character, 6 bits at a time.
-					index 0: first  6 bits
-					index 1: second 6 bits
-								(2 least significant bits from inputStr byte 1
-								 + 4 most significant bits from byte 2)
-					index 2: third  6 bits
-								(4 least significant bits from inputStr byte 2
-								 + 2 most significant bits from byte 3)
-					index 3: forth  6 bits (6 least significant bits from inputStr byte 3)
-				*/
-				encodedCharIndexes[0] = bytebuffer[0] >> 2;
-				encodedCharIndexes[1] = ( (bytebuffer[0] & 0x3) << 4)   |  (bytebuffer[1] >> 4);
-				encodedCharIndexes[2] = ( (bytebuffer[1] & 0x0f) << 2)  |  (bytebuffer[2] >> 6);
-				encodedCharIndexes[3] = bytebuffer[2] & 0x3f;
-
-				//--- Determine whether padding happened, and adjust accordingly.
-				paddingBytes          = inx - (inpLen - 1);
-				switch (paddingBytes) {
-					case 1:
-						// Set last character to padding char
-						encodedCharIndexes[3] = 64;
-						break;
-					case 2:
-						// Set last 2 characters to padding char
-						encodedCharIndexes[3] = 64;
-						encodedCharIndexes[2] = 64;
-						break;
-					default:
-						break; // No padding - proceed
-				}
-
-				/*--- Now grab each appropriate character out of our keystring,
-					based on our index array and append it to the output string.
-				*/
-				for (jnx = 0;  jnx < enCharLen;  ++jnx)
-					output += keyStr.charAt ( encodedCharIndexes[jnx] );
-			}
-			return output;
-		}
+        //Converts Images into Base64
+        function customBase64Encode(inputStr) {
+            // Source: http://stackoverflow.com/questions/8778863/downloading-an-image-using-xmlhttprequest-in-a-userscript/8781262#8781262
+            var
+                bbLen = 3,
+                enCharLen = 4,
+                inpLen = inputStr.length,
+                inx = 0,
+                jnx,
+                keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+                output = "",
+                paddingBytes = 0;
+            var
+                bytebuffer = new Array(bbLen),
+                encodedCharIndexes = new Array(enCharLen);
+            while (inx < inpLen) {
+                for (jnx = 0; jnx < bbLen; ++jnx) {
+                    /*--- Throw away high-order byte, as documented at:
+                      https://developer.mozilla.org/En/Using_XMLHttpRequest#Handling_binary_data
+                    */
+                    if (inx < inpLen)
+                        bytebuffer[jnx] = inputStr.charCodeAt(inx++) & 0xff;
+                    else
+                        bytebuffer[jnx] = 0;
+                }
+                /*--- Get each encoded character, 6 bits at a time.
+                	index 0: first  6 bits
+                	index 1: second 6 bits
+                				(2 least significant bits from inputStr byte 1
+                				 + 4 most significant bits from byte 2)
+                	index 2: third  6 bits
+                				(4 least significant bits from inputStr byte 2
+                				 + 2 most significant bits from byte 3)
+                	index 3: forth  6 bits (6 least significant bits from inputStr byte 3)
+                */
+                encodedCharIndexes[0] = bytebuffer[0] >> 2;
+                encodedCharIndexes[1] = ((bytebuffer[0] & 0x3) << 4) | (bytebuffer[1] >> 4);
+                encodedCharIndexes[2] = ((bytebuffer[1] & 0x0f) << 2) | (bytebuffer[2] >> 6);
+                encodedCharIndexes[3] = bytebuffer[2] & 0x3f;
+                //--- Determine whether padding happened, and adjust accordingly.
+                paddingBytes = inx - (inpLen - 1);
+                switch (paddingBytes) {
+                    case 1:
+                        // Set last character to padding char
+                        encodedCharIndexes[3] = 64;
+                        break;
+                    case 2:
+                        // Set last 2 characters to padding char
+                        encodedCharIndexes[3] = 64;
+                        encodedCharIndexes[2] = 64;
+                        break;
+                    default:
+                        break; // No padding - proceed
+                }
+                /*--- Now grab each appropriate character out of our keystring,
+                	based on our index array and append it to the output string.
+                */
+                for (jnx = 0; jnx < enCharLen; ++jnx)
+                    output += keyStr.charAt(encodedCharIndexes[jnx]);
+            }
+            return output;
+        }
         //Adds an image to the place-holder div
         function addImg(index, src, error) {
             var page = '#Page' + index + ' .PageContent';
@@ -450,12 +447,10 @@ $.noConflict();
             $(page).append(img).slideToggle();
             $("#ThumbNailImg" + index).attr("src", src);
         }
-
         //Adds an optional image just in case the primary does not load
         function addAltImg(index, src) {
             $('img#PageImg' + index).attr("altsrc", src);
         }
-
         //Default ajax operation
         function getHtml(url, action) {
             $.ajax({
@@ -466,7 +461,6 @@ $.noConflict();
                 success: action
             });
         }
-
         //Load Pages Entry
         function loadPages(Manga) {
             console.log("Loading Images");
@@ -483,16 +477,15 @@ $.noConflict();
                 loadImg(Manga, 0);
             }
         }
-
         //Load Images on the background
         function loadImg(Manga, index) {
             if (++index <= Manga.quant) {
                 console.log("Page " + index);
-                setTimeout(function () {
+                setTimeout(function() {
                     if (Manga.page !== undefined) {
                         Manga.page(index, addImg, addAltImg);
                     } else {
-                        getHtml(resolveUrl(Manga, index), function (html) {
+                        getHtml(resolveUrl(Manga, index), function(html) {
                             addImg(index, $(html).find(Manga.img).attr('src'));
                         });
                     }
@@ -500,7 +493,6 @@ $.noConflict();
                 }, Manga.timer || settings.Timer);
             }
         }
-
         //Get the pages url
         function resolveUrl(Manga, index) {
             var url = window.location.href;
@@ -517,89 +509,96 @@ $.noConflict();
             return url;
         }
         // Generate Zip File for download
-        function generateZip(){
-            $(".MangaPage img").each(function(){
-				var img = $(this);
-				var str = img.parent().prev().children("span").text();
-				while (str.length < 3) str = '0' + str;
-				var filename = "Page "+str+".png";
-				var src = img.attr("src");
-				if(src.indexOf("base64") > -1){
-					var base64 = src.replace("data:image/png;base64,","");
-					var i = base64.indexOf(",");
-					if (i !== -1) {
-						base64 = base64.substring(index + 1, base64.length);
-					}
-					cache.zip.file(filename,base64,{base64:true,createFolders:true});
-					console.log(filename+" Added to Zip from Base64 Image");
-					cache.downloadFiles++;
-				} else {
-					try{
-						GM_xmlhttpRequest({
-							method: "GET",
-							url: src,
-							overrideMimeType: 'text/plain; charset=x-user-defined',
-							onload: function(e) {
-								var base64  = customBase64Encode (e.responseText);
-								cache.zip.file(filename,base64,{base64:true,createFolders:true});
-								console.log(filename+" Added to Zip as Base64 Image");
-								cache.downloadFiles++;
-							}
-						});
-					} catch (e){
-						console.log(e);
-					}
-				}
-			});			
-            if(cache.downloadFiles != cache.Data.quant){
-                setTimeout(generateZip,2000);
-                console.log("Waiting for Files to Download "+cache.downloadFiles+" of "+ cache.Data.quant);
+        function generateZip() {
+            $(".MangaPage img").each(function() {
+                var img = $(this);
+                var str = img.parent().prev().children("span").text();
+                while (str.length < 3) str = '0' + str;
+                var filename = "Page " + str + ".png";
+                var src = img.attr("src");
+                if (src.indexOf("base64") > -1) {
+                    var base64 = src.replace("data:image/png;base64,", "");
+                    var i = base64.indexOf(",");
+                    if (i !== -1) {
+                        base64 = base64.substring(index + 1, base64.length);
+                    }
+                    cache.zip.file(filename, base64, {
+                        base64: true,
+                        createFolders: true
+                    });
+                    console.log(filename + " Added to Zip from Base64 Image");
+                    cache.downloadFiles++;
+                } else {
+                    try {
+                        GM_xmlhttpRequest({
+                            method: "GET",
+                            url: src,
+                            overrideMimeType: 'text/plain; charset=x-user-defined',
+                            onload: function(e) {
+                                var base64 = customBase64Encode(e.responseText);
+                                cache.zip.file(filename, base64, {
+                                    base64: true,
+                                    createFolders: true
+                                });
+                                console.log(filename + " Added to Zip as Base64 Image");
+                                cache.downloadFiles++;
+                            }
+                        });
+                    } catch (e) {
+                        console.log(e);
+                    }
+                }
+            });
+            if (cache.downloadFiles != cache.Data.quant) {
+                setTimeout(generateZip, 2000);
+                console.log("Waiting for Files to Download " + cache.downloadFiles + " of " + cache.Data.quant);
             } else {
                 var blobLink = document.getElementById('blob');
                 try {
-                    blobLink.download = $(".ViewerTitle:first a").text().replace("(Return to Chapter List)","").trim() + ".zip";
-					cache.zip.generateAsync({type:"blob"}).then(function (content) {
-						blobLink.href = window.URL.createObjectURL(content);
-						console.log("Download Ready");
-						$("#blob")[0].click();
-					});
-
-                } catch(e) {
-					console.log(e);
+                    blobLink.download = $(".ViewerTitle:first a").text().replace("(Return to Chapter List)", "").trim() + ".zip";
+                    cache.zip.generateAsync({
+                        type: "blob"
+                    }).then(function(content) {
+                        blobLink.href = window.URL.createObjectURL(content);
+                        console.log("Download Ready");
+                        $("#blob")[0].click();
+                    });
+                } catch (e) {
+                    console.log(e);
                     blobLink.innerHTML += " (not supported on this browser)";
                 }
             }
-        }		
+        }
         //Checks if all images loaded correctly
         function checkImagesLoaded() {
             var p = $(".PageContent:empty").length;
-            $(".PageContent img").filter(function () {
+            $(".PageContent img").filter(function() {
                 var image = $(this);
                 if (image.context.naturalWidth === 0 ||
                     image.readyState == 'uninitialized') {
                     return true;
                 } else {
-					applyDefaultZoom(this);
-				}
+                    applyDefaultZoom(this);
+                }
                 return false;
-            }).each(function () {
+            }).each(function() {
                 p++;
                 reloadImage($(this));
             });
             $("#Counters i").html($("#Counters b").html() - p);
             $("#NavigationCounters i").html($("#NavigationCounters b").html() - p);
             if (p > 0) {
-                setTimeout(function () {
+                setTimeout(function() {
                     checkImagesLoaded();
                 }, 3000);
             } else {
                 applyDefaultZoom();
                 console.log("Images Loading Complete");
-				$(".download").attr("href","#download");
-				console.log("Download Avaliable");
-				if(settings.DownloadZip == "true"){
-					$("#blob").click();
-				}
+                $(".download").attr("href", "#download");
+                console.log("Download Avaliable");
+                if (settings.DownloadZip == "true") {
+                    $("#blob").click();
+                }
             }
         }
         //Force reload the image
@@ -609,34 +608,32 @@ $.noConflict();
                 var altsrc = img.attr("altsrc");
                 img.removeAttr("src");
                 img.attr("altsrc", src);
-                setTimeout(function () {
+                setTimeout(function() {
                     img.attr("src", altsrc);
                     img.removeAttr('width');
                 }, 500);
             } else {
                 img.removeAttr("src");
-                setTimeout(function () {
+                setTimeout(function() {
                     img.attr("src", src);
                     img.removeAttr('width');
                 }, 500);
             }
         }
-
         //After pages load apply default Zoom
         function applyDefaultZoom(page) {
-			var pages = page || ".PageContent img";
+            var pages = page || ".PageContent img";
             var w = settings.Zoom;
             if (w == 1000) {
                 $("#fitwidth").click();
             } else {
                 $("#Zoom b").html(w);
                 $(pages).removeAttr('width');
-                $(pages).each(function () {
+                $(pages).each(function() {
                     $(this).attr('width', $(this).width() * (w / 100));
                 });
             }
         }
-
         //Clean key press configurations and set some when specified
         function setKeyDownEvents() {
             document.onkeydown = null;
@@ -647,6 +644,7 @@ $.noConflict();
             document.body.onload = null;
             $(document).unbind("keypress");
             $(document).unbind("keydown");
+
             function processKey(e) {
                 var a = e.keyCode || e.which;
                 if ($.inArray(a, [39, 46, 190, 37, 44, 188, 43, 107, 61, 45, 109, 42, 106, 56, 104, 53, 101]) != -1) {
@@ -654,114 +652,112 @@ $.noConflict();
                     e.stopPropagation();
                     e.stopImmediatePropagation();
                     switch (a) {
-                        case 39://down:right
-                        case 46://press:right / down:.
-                        case 190://press:.
+                        case 39: //down:right
+                        case 46: //press:right / down:.
+                        case 190: //press:.
                             $(".ChapterControl:first .next")[0].click();
                             break;
-                        case 37://down:left
-                        case 44://press:left / down:,
-                        case 188://press:,
+                        case 37: //down:left
+                        case 44: //press:left / down:,
+                        case 188: //press:,
                             $(".ChapterControl:first .prev")[0].click();
                             break;
-                        case 43://+
-                        case 107://numpad+
-                        case 61://=
+                        case 43: //+
+                        case 107: //numpad+
+                        case 61: //=
                             $('#enlarge').click();
                             break;
-                        case 45://-
-                        case 109://numpad-
+                        case 45: //-
+                        case 109: //numpad-
                             $('#reduce').click();
                             break;
-                        case 42://5
-                        case 106://numpad5
-                        case 56://8
-                        case 104://numpad8
+                        case 42: //5
+                        case 106: //numpad5
+                        case 56: //8
+                        case 104: //numpad8
                             $('#restore').click();
                             break;
-                        case 53://*
-                        case 101://numpad*
+                        case 53: //*
+                        case 101: //numpad*
                             $('#fitwidth').click();
                             break;
                     }
                     return false;
                 }
             }
-
             if (navigator.userAgent.match(/mozilla/i)) {
                 $(document).keypress(processKey);
             } else {
                 $(document).keydown(processKey);
             }
         }
-
         //Controls for the extra features added to the sites
         function controls() {
             // Size Controls
-            $('#enlarge').click(function () {
+            $('#enlarge').click(function() {
                 $("#Zoom b").html(parseInt($("#Zoom b").html()) + 10);
                 $(".PageContent img").removeAttr('width');
-                $(".PageContent img").each(function () {
+                $(".PageContent img").each(function() {
                     $(this).attr('width', $(this).width() * ($("#Zoom b").html() / 100));
                 });
             });
-            $('#reduce').click(function () {
+            $('#reduce').click(function() {
                 $("#Zoom b").html(parseInt($("#Zoom b").html()) - 10);
                 $(".PageContent img").removeAttr('width');
-                $(".PageContent img").each(function () {
+                $(".PageContent img").each(function() {
                     $(this).attr('width', $(this).width() * ($("#Zoom b").html() / 100));
                 });
             });
-            $('#restore').click(function () {
+            $('#restore').click(function() {
                 $("#Zoom b").html("100");
                 $(".PageContent img").removeAttr('width');
             });
-            $('#fitwidth').click(function () {
+            $('#fitwidth').click(function() {
                 $("#Zoom b").html("1000");
-                $(".PageContent img").each(function () {
+                $(".PageContent img").each(function() {
                     $(this).attr('width', $("html").width());
                 });
             });
-            $("#fitIfOversized").change(function () {
+            $("#fitIfOversized").change(function() {
                 $("#Chapter").toggleClass("fitWidthIfOversized");
                 if ($(this).is(':checked'))
                     setValueGM("MangaFitWidthIfOversized", "true");
                 else
                     setValueGM("MangaFitWidthIfOversized", "false");
             });
-            $("#showThumbnails").change(function () {
+            $("#showThumbnails").change(function() {
                 $("#Navigation").toggleClass("disabled");
                 if ($(this).is(':checked'))
                     setValueGM("MangaShowThumbnails", "true");
                 else
                     setValueGM("MangaShowThumbnails", "false");
             });
-			//Download
-            $("#downloadZip").change(function () {
-                if ($(this).is(':checked')){
+            //Download
+            $("#downloadZip").change(function() {
+                if ($(this).is(':checked')) {
                     setValueGM("MangaDownloadZip", "true");
                     alert("Next time a chapter finish loading you will be promted to save automaticlly");
-                }else
+                } else
                     setValueGM("MangaDownloadZip", "false");
-            });			
-			$('#blob').click(function () {
+            });
+            $('#blob').one('click', function() {
                 generateZip();
             });
-			$('#downloadManga').click(function () {
+            $('#downloadManga').click(function() {
                 $("#blob")[0].click();
             });
-            $('#PagesPerSecond').change(function () {
+            $('#PagesPerSecond').change(function() {
                 setValueGM("MangaTimer", $(this).val());
             });
-            $('#DefaultZoom').change(function () {
+            $('#DefaultZoom').change(function() {
                 var w = $(this).val();
                 $("#Zoom b").html(w);
                 setValueGM("MangaZoom", w);
-				settings.Zoom = w;
+                settings.Zoom = w;
                 applyDefaultZoom();
             });
             // Theme Control
-            $('#ThemeSelector').change(function () {
+            $('#ThemeSelector').change(function() {
                 $("#MangaOnlineViewer , body").removeClass();
                 $("#MangaOnlineViewer , body").addClass($(this).val());
                 setValueGM("MangaTheme", $(this).val());
@@ -770,74 +766,70 @@ $.noConflict();
             function scrollToElement(ele) {
                 $(window).scrollTop(ele.offset().top).scrollLeft(ele.offset().left);
             }
-
-            $("#gotoPage").bind("change", function () {
+            $("#gotoPage").bind("change", function() {
                 scrollToElement($("#Page" + $(this).val()));
             });
-            $(".ThumbNail").bind("click", function () {
+            $(".ThumbNail").bind("click", function() {
                 scrollToElement($("#Page" + $(this).find("span").html()));
             });
             //Settings Control
-            $("#settings").click(function () {
+            $("#settings").click(function() {
                 $("#ViewerControls").slideToggle();
                 $("#ImageOptions").toggleClass("settingsOpen");
                 $("#Navigation").toggleClass("visible");
             });
             //Individual Page functions
             //Reload Page
-            $('.Reload').click(function () {
+            $('.Reload').click(function() {
                 reloadImage($(this).parents(".MangaPage").find(".PageContent img"));
             });
             //ZoomIn
-            $('.ZoomIn').click(function () {
+            $('.ZoomIn').click(function() {
                 var img = $(this).parents(".MangaPage").find(".PageContent img");
                 img.attr('width', img.width() + (img.width() / 3));
             });
             //ZoomOut
-            $('.ZoomOut').click(function () {
+            $('.ZoomOut').click(function() {
                 var img = $(this).parents(".MangaPage").find(".PageContent img");
                 img.attr('width', img.width() - (img.width() / 3));
             });
             //ZoomRestore
-            $('.ZoomRestore').click(function () {
+            $('.ZoomRestore').click(function() {
                 $(".PageContent img").removeAttr('width');
             });
             //ZoomWidth
-            $('.ZoomWidth').click(function () {
+            $('.ZoomWidth').click(function() {
                 var img = $(this).parents(".MangaPage").find(".PageContent img");
                 img.attr('width', $("html").width());
             });
             //Hide
-            $('.Hide').click(function () {
+            $('.Hide').click(function() {
                 var img = $(this).parents(".MangaPage").find(".PageContent");
                 img.slideToggle("slow");
             });
-			
         }
-
         return {
-            start: function (m) {
+            start: function(m) {
                 main(m);
             },
-            setSites: function(extraSites){
+            setSites: function(extraSites) {
                 sites = extraSites;
             }
         };
     })();
-
     var m = [
         // == FoOlSlide ========================================================================================================================
         {
             name: "FoOlSlide",
             url: /a^/,
-            run: function () {
+            run: function() {
                 return {
                     title: $("title").text().trim(),
                     series: $("div.tbtitle div.text a:first").attr("href"),
                     quant: $(".topbar_right .dropdown li").length,
                     prev: "#",
                     next: "#",
-                    url: function (i) {
+                    url: function(i) {
                         var url = window.location.href.substr(0, window.location.href.lastIndexOf("/")) + "/";
                         return url.match(/page\/$/ ? url : url += "page/") + i;
                     },
@@ -849,14 +841,14 @@ $.noConflict();
         {
             name: "MangaFox",
             url: /mangafox/,
-            run: function () {
+            run: function() {
                 return {
                     title: $("#series .no").text().trim(),
                     series: $("#series a:last").attr("href"),
                     quant: $('select.m:first option:last').prev().val(),
                     prev: $("#chnav p:first a").attr("href"),
                     next: $("#chnav p:last a").attr("href"),
-                    url: function (i) {
+                    url: function(i) {
                         return i + ".html";
                     },
                     img: 'img#image'
@@ -867,7 +859,7 @@ $.noConflict();
         {
             name: "MangaReader",
             url: /(mangareader|mangapanda)/,
-            run: function () {
+            run: function() {
                 return {
                     title: $("#mangainfo h1").text(),
                     series: $("#mangainfo a").attr("href"),
@@ -875,14 +867,14 @@ $.noConflict();
                     prev: $("#mangainfo_bas a:last").attr("href"),
                     next: $("#mangainfo_bas a:first").attr("href"),
                     img: 'img#img',
-                    before: function () {
+                    before: function() {
                         if (window.location.pathname.match(/\/.+\/.+\/chapter-[0-9]+.*/)) {
                             var path = window.location.pathname.split("/");
                             window.location.pathname = "/" + path[2] + "/" + path[3].match(/[0-9]+/);
                         } else if (window.location.search) {
                             window.location.href = window.location.pathname;
                         }
-                            }
+                    }
                 };
             }
         },
@@ -890,14 +882,14 @@ $.noConflict();
         {
             name: "MangaStream",
             url: /(mangastream|readms)/,
-            run: function () {
+            run: function() {
                 return {
                     title: $(".btn:eq(1)").text().trim(),
                     series: $("div.controls div.btn-group ul.dropdown-menu:first li a:last").attr("href"),
                     quant: $("div.controls div.btn-group ul.dropdown-menu li:last").text().match(/[0-9]+/),
                     prev: $(".dropdown-menu:eq(1) a").eq($(".dropdown-menu:eq(1) a").index($(".dropdown-menu:eq(1) a[href*='" + location.pathname + "']")) + 1).attr("href"),
                     next: $(".dropdown-menu:eq(1) a").eq($(".dropdown-menu:eq(1) a").index($(".dropdown-menu:eq(1) a[href*='" + location.pathname + "']")) - 1).attr("href"),
-                    url: function (i) {
+                    url: function(i) {
                         return window.location.href.substring(0, window.location.href.lastIndexOf("\/") + 1) + i;
                     },
                     img: 'img#manga-page'
@@ -908,14 +900,14 @@ $.noConflict();
         {
             name: "MangaInn",
             url: /mangainn/,
-            run: function () {
+            run: function() {
                 return {
                     title: $("#gotomangainfo2").text().replace(" - ", ""),
                     series: $("#gotoMangaInfo").attr("href"),
                     quant: $('select#cmbpages option:last').html(),
                     prev: $("#chapters option:selected").prev().val(),
                     next: $("#chapters option:selected").next().val(),
-                    url: function (i) {
+                    url: function(i) {
                         return location.href + '/page_' + i;
                     },
                     img: 'img#imgPage'
@@ -926,7 +918,7 @@ $.noConflict();
         {
             name: "MangaHere",
             url: /mangahere/,
-            run: function () {
+            run: function() {
                 return {
                     title: $(".title h1").text(),
                     series: $("div.title h2 a").attr("href"),
@@ -942,15 +934,15 @@ $.noConflict();
         {
             name: "Batoto",
             url: /bato\.to/,
-            run: function () {
+            run: function() {
                 return {
                     title: $(".moderation_bar li:first").text(),
                     series: $("div.moderation_bar a:first").attr("href"),
                     quant: $("select#page_select:first option").length,
                     prev: $("img[src$='pprev.png']:first").parent().attr("href"),
                     next: $("img[src$='nnext.png']:first").parent().attr("href"),
-                    url: function (i) {
-                        return window.location.hash.replace("#","/areader?id=") + "&p=" + i;
+                    url: function(i) {
+                        return window.location.hash.replace("#", "/areader?id=") + "&p=" + i;
                     },
                     img: '#comic_page'
                 };
@@ -960,14 +952,14 @@ $.noConflict();
         {
             name: "WPManga",
             url: /(mangaspy|mangamap)/,
-            run: function () {
+            run: function() {
                 return {
                     title: $(".wpm_pag h1").text().trim(),
                     series: $("h1.ttl a").attr("href"),
                     quant: $("select.cbo_wpm_pag:first option:last").html(),
                     prev: $(".cbo_wpm_chp").attr("onchange").replace(/location.href=\'/, "").replace(/\'.+/, $(".cbo_wpm_chp option:selected").next().val()),
                     next: $(".cbo_wpm_chp").attr("onchange").replace(/location.href=\'/, "").replace(/\'.+/, $(".cbo_wpm_chp option:selected").prev().val()),
-                    url: function (i) {
+                    url: function(i) {
                         var pathname = window.location.pathname.split('/');
                         return "/" + pathname[1] + "/" + pathname[2] + "/" + i + "/";
                     },
@@ -975,15 +967,15 @@ $.noConflict();
                 };
             }
         },
-		// == MangaDoom ========================================================================================================================
+        // == MangaDoom ========================================================================================================================
         {
             name: "MangaDoom",
             url: /mangadoom/,
-            run: function () {
+            run: function() {
                 return {
                     title: $(".widget-heading").text().trim(),
                     series: $(".widget-heading a").attr("href"),
-                    quant: $(".selectPage:first option").length-1,
+                    quant: $(".selectPage:first option").length - 1,
                     prev: $(".chapterSelect:first option:selected").next().val(),
                     next: $(".chapterSelect:first option:selected").prev().val(),
                     data: $(".selectPage:first option:not(:first)"),
@@ -995,20 +987,20 @@ $.noConflict();
         {
             name: "SenManga",
             url: /senmanga/,
-            run: function () {
+            run: function() {
                 return {
                     title: $(".title").text().trim(),
                     series: $(".title a").attr("href"),
                     quant: $("select[name='page'] option:last").val(),
                     prev: $(".title a").attr("href") + $("select[name='chapter'] option:selected").next().val(),
                     next: $(".title a").attr("href") + $("select[name='chapter'] option:selected").prev().val(),
-                    url: function (i) {
+                    url: function(i) {
                         var pathname = window.location.pathname.split('/');
                         return "/" + pathname[1] + "/" + pathname[2] + "/" + i + "/";
                     },
                     img: "#picture",
-                    before: function () {
-                        $("body").contents().filter(function () {
+                    before: function() {
+                        $("body").contents().filter(function() {
                             return this.nodeType == 3; //Node.TEXT_NODE
                         }).remove();
                     }
@@ -1019,7 +1011,7 @@ $.noConflict();
         {
             name: "EatManga",
             url: /eatmanga/,
-            run: function () {
+            run: function() {
                 return {
                     title: $("#main_content h1").text().split(",")[0].trim(),
                     series: $("ul#crumbs li a:eq(2)").attr("href"),
@@ -1035,14 +1027,14 @@ $.noConflict();
         {
             name: "MangaMint",
             url: /mangamint/,
-            run: function () {
+            run: function() {
                 return {
                     title: $("div#squeeze2 h2 a").text(),
                     series: $("div#squeeze2 h2 a").attr("href"),
                     quant: $("#manga_page option").length,
                     prev: $("#select_node option:selected").prev().val(),
                     next: $("#select_node option:selected").next().val(),
-                    url: function (i) {
+                    url: function(i) {
                         return window.location.href + '?page=' + (i - 1);
                     },
                     img: "#images a img"
@@ -1053,7 +1045,7 @@ $.noConflict();
         {
             name: "MangaLyght",
             url: /manga.lyght/,
-            run: function () {
+            run: function() {
                 return {
                     title: $("div.entry h1 a").text().trim(),
                     series: $("div.entry h1 a").attr("href"),
@@ -1061,7 +1053,7 @@ $.noConflict();
                     prev: (window.location.pathname + "?ch=" + $(".selectchapter option:selected").prev().val()).replace(" ", "+"),
                     next: (window.location.pathname + "?ch=" + $(".selectchapter option:selected").next().val()).replace(" ", "+"),
                     data: $("form[name='pageSelector1']").attr("action") + "?ch=" + $(".selectchapter option:selected").val().replace(" ", "+") + "&page=",
-                    url: function (i) {
+                    url: function(i) {
                         return this.data + i;
                     },
                     img: "#mainimage"
@@ -1072,7 +1064,7 @@ $.noConflict();
         {
             name: "Dynasty-Scans",
             url: /dynasty\-scans/,
-            run: function () {
+            run: function() {
                 return {
                     data: JSON.parse($("script:last").html().match(/\[.+\]/)),
                     title: $("#chapter-title").text(),
@@ -1080,8 +1072,8 @@ $.noConflict();
                     quant: JSON.parse($("script:last").html().match(/\[.+\]/)).length,
                     prev: "#",
                     next: "#",
-                    page: function (i, addImg, addAltImg) {
-						addImg(i, this.data[i - 1].image);
+                    page: function(i, addImg, addAltImg) {
+                        addImg(i, this.data[i - 1].image);
                     }
                 };
             }
@@ -1090,9 +1082,9 @@ $.noConflict();
         {
             name: "TenManga",
             url: /tenmanga/,
-            run: function () {
+            run: function() {
                 return {
-                    title: $("span.normal").text().replace("\n","").replace("\n","").replace(/.*>>.*>> /,"").replace(/ Page.*/,""),
+                    title: $("span.normal").text().replace("\n", "").replace("\n", "").replace(/.*>>.*>> /, "").replace(/ Page.*/, ""),
                     series: $("span.normal a:eq(1)").attr("href"),
                     quant: $(".sl-page:first option").length,
                     prev: $(".sl-chap:first option:selected").next().val(),
@@ -1106,7 +1098,7 @@ $.noConflict();
         {
             name: "MangaPark",
             url: /mangapark/,
-            run: function () {
+            run: function() {
                 return {
                     title: $(".location:first span a").text().trim(),
                     series: $(".location:first span a").attr("href"),
@@ -1121,19 +1113,19 @@ $.noConflict();
         {
             name: "ReadManga.Today",
             url: /readmanga.today/,
-            run: function () {
+            run: function() {
                 return {
                     title: $("title").text().trim(),
                     series: $(".btn:nth(4)").attr("href"),
                     quant: $("select[name='category_type']:last option").length,
                     prev: $("select[name='chapter_list'] option:selected").next("option").val(),
                     next: $("select[name='chapter_list'] option:selected").prev("option").val(),
-                    pages: function (addImg, addAltImg, getHtml) {
-						getHtml(window.location + "/all-pages", function (html) {
-							var imgs = $(html).find("img.img-responsive-2");
-							for (var index = 1; index <= imgs.length; index++){
-								addImg(index, $(imgs[index-1]).attr("src") );
-							}
+                    pages: function(addImg, addAltImg, getHtml) {
+                        getHtml(window.location + "/all-pages", function(html) {
+                            var imgs = $(html).find("img.img-responsive-2");
+                            for (var index = 1; index <= imgs.length; index++) {
+                                addImg(index, $(imgs[index - 1]).attr("src"));
+                            }
                         });
                     }
                 };
@@ -1143,16 +1135,16 @@ $.noConflict();
         {
             name: "MangaGo",
             url: /mangago/,
-            run: function () {
+            run: function() {
                 return {
                     title: $("#series").text(),
                     series: $("#series").attr("href"),
-                    quant: $(".page a:first").text().replace(/page 1 of /,""),
+                    quant: $(".page a:first").text().replace(/page 1 of /, ""),
                     prev: "#",
                     next: "#",
                     data: $(".page a"),
-                    url: function (i) {
-                        return $(this.data[i-1]).attr("href");
+                    url: function(i) {
+                        return $(this.data[i - 1]).attr("href");
                     },
                     img: "#page1"
                 };
@@ -1162,50 +1154,50 @@ $.noConflict();
         {
             name: "NineManga",
             url: /ninemanga/,
-            run: function () {
+            run: function() {
                 return {
                     title: $(".tip a:first").text(),
                     series: $(".subgiude a:nth(1)").attr("href"),
-                    quant:$("#page:first option").length,
+                    quant: $("#page:first option").length,
                     prev: $(".chnav a:first").attr("href"),
-                    next:$(".chnav a:nth(1)").attr("href"),
-                    data:$("#page:first option"),
+                    next: $(".chnav a:nth(1)").attr("href"),
+                    data: $("#page:first option"),
                     img: ".manga_pic"
                 };
             }
         },
-		// == MangaTown ========================================================================================================================
+        // == MangaTown ========================================================================================================================
         {
             name: "MangaTown",
             url: /mangatown/,
-            run: function () {
+            run: function() {
                 return {
                     title: $(".title h1").text(),
                     series: $(".title h2 a").attr("href"),
-                    quant:$(".page_select select:first option").length,
+                    quant: $(".page_select select:first option").length,
                     prev: $("#top_chapter_list option:selected").prev().val(),
-                    next:$("#top_chapter_list option:selected").next().val(),
-                    data:$(".page_select select option"),
+                    next: $("#top_chapter_list option:selected").next().val(),
+                    data: $(".page_select select option"),
                     img: "#image"
                 };
             }
         },
-		// == TheSpectrum ======================================================================================================================
+        // == TheSpectrum ======================================================================================================================
         {
             name: "TheSpectrum",
             url: /thespectrum/,
-            run: function () {
+            run: function() {
                 return {
                     title: $(".viewerLabel:nth(1)").text(),
                     series: "#",
-                    quant:$(".selectpage option").length,
+                    quant: $(".selectpage option").length,
                     prev: window.location.pathname + "?ch=" + $(".selectchapter option:selected").prev().val(),
                     next: window.location.pathname + "?ch=" + $(".selectchapter option:selected").next().val(),
-					data: window.location.pathname + "?" + $("form").serialize().substring(0,$("form").serialize().lastIndexOf("=")) + "=",
-					url: function (i) {
-						return this.data + i;
+                    data: window.location.pathname + "?" + $("form").serialize().substring(0, $("form").serialize().lastIndexOf("=")) + "=",
+                    url: function(i) {
+                        return this.data + i;
                     },
-					img:"#imgContainer img"
+                    img: "#imgContainer img"
                 };
             }
         },
@@ -1213,7 +1205,7 @@ $.noConflict();
         {
             name: "Fakku",
             url: /fakku.net/,
-            run: function () {
+            run: function() {
                 return {
                     title: $(".chapter a:eq(1)").text().trim(),
                     series: $("a.a-series-title:first").attr("href"),
@@ -1221,10 +1213,10 @@ $.noConflict();
                     prev: "#",
                     next: "#",
                     data: $("#thumbs img, .current-page").attr("src").replace("thumbs", "images").replace(/[0-9]+(\.thumb)?\.jpg$/, ""),
-                    page: function (i, addImg, addAltImg) {
-						var str = '' + i;
-						while (str.length < 3) str = '0' + str;
-						addImg(i, this.data + str + ".jpg");
+                    page: function(i, addImg, addAltImg) {
+                        var str = '' + i;
+                        while (str.length < 3) str = '0' + str;
+                        addImg(i, this.data + str + ".jpg");
                     }
                 };
             }
@@ -1233,20 +1225,20 @@ $.noConflict();
         {
             name: "HBrowser",
             url: /hbrowse/,
-            run: function () {
+            run: function() {
                 return {
                     title: $('.listTable td.listLong:first').text().trim(),
                     series: window.location.href.match(/.+\/[0-9]+\//),
                     quant: $('td.pageList a, td.pageList strong').length - 1,
                     prev: $("#chapters + table a.listLink").eq($("#chapters + table a.listLink").index($("#chapters + table a.listLink[href='" + window.location.href + "']")) - 1).attr("href"),
                     next: $("#chapters + table a.listLink").eq($("#chapters + table a.listLink").index($("#chapters + table a.listLink[href='" + window.location.href + "']")) + 1).attr("href"),
-                    url: function (i) {
+                    url: function(i) {
                         var str = '' + i;
                         while (str.length < 4) str = '0' + str;
-                        return window.location.href + (window.location.href.slice(-1) == "/" ? "": "/") + str;
+                        return window.location.href + (window.location.href.slice(-1) == "/" ? "" : "/") + str;
                     },
                     img: 'td.pageImage a img',
-                    before: function () {
+                    before: function() {
                         $('html > head').append($('<style>#main a:visited, #pageMain a:visited { color: darkred !important; }</style>'));
                     }
                 };
@@ -1256,7 +1248,7 @@ $.noConflict();
         {
             name: "DoujinMoeNM",
             url: /doujins/,
-            run: function () {
+            run: function() {
                 return {
                     title: $(".title").text(),
                     series: $(".title a").eq(-2).attr("href"),
@@ -1264,8 +1256,8 @@ $.noConflict();
                     prev: "#",
                     next: "#",
                     data: $("#gallery > djm:not(.thumbs)"),
-                    page: function (i, addImg, addAltImg) {
-                        addImg(i, this.data.eq(i - 1).attr("file").replace("static2","static"));
+                    page: function(i, addImg, addAltImg) {
+                        addImg(i, this.data.eq(i - 1).attr("file").replace("static2", "static"));
                     }
                 };
             }
@@ -1274,7 +1266,7 @@ $.noConflict();
         {
             name: "Luscious",
             url: /(luscious|wondersluts)/,
-            run: function () {
+            run: function() {
                 return {
                     title: $("#main .center h1:first").text().split("|")[0].trim(),
                     series: "#",
@@ -1282,15 +1274,15 @@ $.noConflict();
                     prev: "#",
                     next: "#",
                     url: window.location.pathname,
-                    page: function (i, addImg, addAltImg) {
+                    page: function(i, addImg, addAltImg) {
                         var self = this;
                         $.ajax({
                             type: "GET",
                             url: self.url,
                             dataType: "html",
                             async: false,
-                            success: function (html) {
-                                addImg(i,$(html).find("img#single_picture").attr("src"));
+                            success: function(html) {
+                                addImg(i, $(html).find("img#single_picture").attr("src"));
                                 self.url = $(html).find("#next").attr("href");
                             }
                         });
@@ -1302,7 +1294,7 @@ $.noConflict();
         {
             name: "MangaFap",
             url: /mangafap/,
-            run: function () {
+            run: function() {
                 return {
                     title: $(".breadcrumb a:nth(2)").text().trim(),
                     series: $(".breadcrumb a:nth(2)").attr("href"),
@@ -1318,7 +1310,7 @@ $.noConflict();
         {
             name: "ExHentai",
             url: /(exhentai|e-hentai)/,
-            run: function () {
+            run: function() {
                 return {
                     title: $("#il h1").text().trim(),
                     series: $("div#i5 div.sb a").attr("href"),
@@ -1327,18 +1319,18 @@ $.noConflict();
                     next: "#",
                     url: window.location.href,
                     timer: 3000,
-                    page: function (i, addImg, addAltImg) {
+                    page: function(i, addImg, addAltImg) {
                         var self = this;
                         $.ajax({
                             type: "GET",
                             url: self.url,
                             dataType: "html",
                             async: false,
-                            success: function (html) {
+                            success: function(html) {
                                 var ref = $(html).find("div#i7 a, #img");
-								var src = ref.attr(ref.is("img")?"src":"href");
-                                addImg(i,src);
-                                addAltImg(i, src+" ?nl=1");
+                                var src = ref.attr(ref.is("img") ? "src" : "href");
+                                addImg(i, src);
+                                addAltImg(i, src + " ?nl=1");
                                 self.url = $(html).find("#img").parent().attr("href");
                             }
                         });
@@ -1350,7 +1342,7 @@ $.noConflict();
         {
             name: "Pururin",
             url: /pururin/,
-            run: function () {
+            run: function() {
                 return {
                     title: $(".header-breadcrumbs a:eq(3)").text().trim(),
                     series: $(".header-breadcrumbs a:eq(3)").attr("href"),
@@ -1358,9 +1350,9 @@ $.noConflict();
                     prev: "#",
                     next: "#",
                     data: $("img.b").attr("src"),
-                    page: function (i,addImg, addAltImg) {
-                            console.log("Page " + i);
-                            addImg(i, this.data.replace(/\/[0-9]+\./ , "/"+ i +"."));
+                    page: function(i, addImg, addAltImg) {
+                        console.log("Page " + i);
+                        addImg(i, this.data.replace(/\/[0-9]+\./, "/" + i + "."));
                     }
                 };
             }
@@ -1369,14 +1361,14 @@ $.noConflict();
         {
             name: "hentai4manga",
             url: /hentai4manga/,
-            run: function () {
+            run: function() {
                 return {
                     title: $(".category-label").text().trim(),
                     series: location.href.replace(/\/\d+\//, '/'),
                     quant: $('select#sl option').size(),
                     prev: "#",
                     next: "#",
-                    url: function (i) {
+                    url: function(i) {
                         return "../" + i + "/";
                     },
                     img: '#textboxContent img'
@@ -1387,7 +1379,7 @@ $.noConflict();
         {
             name: "DoujinshiHentai",
             url: /doujinshihentai/,
-            run: function () {
+            run: function() {
                 return {
                     title: $(".category-label").text().trim(),
                     series: "http://doujinshihentai.com/series.html",
@@ -1395,30 +1387,30 @@ $.noConflict();
                     prev: "#",
                     next: "#",
                     data: location.href,
-                    url: function (i) {
+                    url: function(i) {
                         var str = '' + i;
                         while (str.length < 3) str = '0' + str;
-                        return this.data.replace("001.",str+".");
+                        return this.data.replace("001.", str + ".");
                     },
                     img: '.weatimages_bigimage'
                 };
             }
         },
-		// == hitomi ===========================================================================================================================
+        // == hitomi ===========================================================================================================================
         {
             name: "hitomi",
             url: /hitomi.la/,
-            run: function () {
+            run: function() {
                 return {
-                    title: $("title").text().replace("| Hitomi.la","").trim(),
+                    title: $("title").text().replace("| Hitomi.la", "").trim(),
                     series: $(".brand").attr("href"),
                     quant: $("#single-page-select option").length,
                     prev: "#",
                     next: "#",
-					data:$(".img-url"),
-					page: function (i,addImg, addAltImg) {
-                            console.log("Page " + i);
-                            addImg(i, this.data.eq(i - 1).text().replace("//g","//la"));
+                    data: $(".img-url"),
+                    page: function(i, addImg, addAltImg) {
+                        console.log("Page " + i);
+                        addImg(i, this.data.eq(i - 1).text().replace("//g", "//la"));
                     }
                 };
             }
@@ -1427,14 +1419,14 @@ $.noConflict();
         {
             name: "Hentai2Read",
             url: /hentai2read/,
-            run: function () {
+            run: function() {
                 return {
                     title: $(".breadcrumb a:nth(2)").text().trim(),
                     series: $(".breadcrumb a:nth(2)").attr("href"),
                     quant: $(".pageDropdown:first li").length,
                     prev: "#",
                     next: "#",
-                    url: function (i) {
+                    url: function(i) {
                         var pathname = window.location.pathname.split('/');
                         return "/" + pathname[1] + "/" + pathname[2] + "/" + i + "/";
                     },
@@ -1446,7 +1438,7 @@ $.noConflict();
         {
             name: "HentaIHere",
             url: /hentaihere/,
-            run: function () {
+            run: function() {
                 return {
                     title: $(".breadcrumb a:nth(2)").text().trim(),
                     series: $(".breadcrumb a:nth(2)").attr("href"),
@@ -1454,12 +1446,12 @@ $.noConflict();
                     prev: "#",
                     next: "#",
                     data: $("#reader-content img").attr("src"),
-                    page: function (i, addImg, addAltImg) {
-						var str = '' + i;
+                    page: function(i, addImg, addAltImg) {
+                        var str = '' + i;
                         var size = this.data.match(/([0-9]+)\..+/)[1].length;
                         var ext = this.data.match(/[0-9]+(\..+)/)[1];
-						while (str.length < size) str = '0' + str;
-						addImg(i, this.data.replace(/[0-9]+.jpg/, str + ext));
+                        while (str.length < size) str = '0' + str;
+                        addImg(i, this.data.replace(/[0-9]+.jpg/, str + ext));
                     }
                 };
             }
@@ -1468,14 +1460,14 @@ $.noConflict();
         {
             name: "nHentai",
             url: /nhentai/,
-            run: function () {
+            run: function() {
                 return {
                     title: $('title').text().split('- Page')[0].trim(),
                     series: $("div#page-container div a").attr("href"),
                     quant: $(".num-pages:first").html(),
                     prev: "#",
                     next: "#",
-                    url: function (i) {
+                    url: function(i) {
                         return "../" + i + "/";
                     },
                     img: '#page-container img'
@@ -1483,7 +1475,5 @@ $.noConflict();
             }
         }
     ];
-
     $.MangaOnlineViewer.start(m);
-
 })(jQuery);
