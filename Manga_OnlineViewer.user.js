@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name  Manga OnlineViewer
 // @description  Shows all pages at once in online view. MangaFox, MangaReader/MangaPanda, MangaStream, MangaInn, MangaHere, MangaShare, Batoto, MangaDevil, MangaCow, MangaChapter, 7manga, MangaPirate.net and MangaBee/OneManga.me manga sites. Fakku, HBrowse, Hentai2Read and Doujin-moe Hentai sites.
-// @version 12.05
-// @date 2017-05-04
+// @version 12.06
+// @date 2017-05-09
 // @author  Tago
 // @namespace https://github.com/TagoDR
 // @require https://code.jquery.com/jquery-latest.min.js
@@ -28,6 +28,7 @@
 // @include /https?://(www.)?ninemanga.com/chapter/.+/.+\.html/
 // @include /https?://(www.)?mangatown.com/manga/.+/.+/
 // @include /https?://(www.)?readmanga.today/.+/[0-9]+/
+// @include /https?://(www.)?kissmanga.com/Manga/.+/.+?id=[0-9]+/
 // @include /https?://view.thespectrum.net/.+/
 // @include /https?://(www.)?(luscious.net|wondersluts.com)/c/.+/
 // @include /https?://exhentai.org/s/.+/.+/
@@ -49,6 +50,7 @@
 // @history 12.03 Fixed Zip Download
 // @history 12.04 Changed default Zip Download behavior
 // @history 12.05 Fixed infinite loop
+// @history 12.06 Added KissManga
 // ==/UserScript==
 console.log("Loading Manga OnlineViewer");
 /*!
@@ -1127,6 +1129,24 @@ $.noConflict();
                                 addImg(index, $(imgs[index - 1]).attr("src"));
                             }
                         });
+                    }
+                };
+            }
+        },
+		// == KissManga ========================================================================================================================
+        {
+            name: "KissManga",
+            url: /kissmanga/,
+            run: function() {
+                return {
+                    title: $("#navsubbar a").text(),
+                    series: $("#navsubbar a").attr("href"),
+                    quant: $("#selectPage option:last").html() || $("#divImage img").length,
+                    prev: $(".selectChapter:first option:selected").prev().val(),
+                    next: $(".selectChapter:first option:selected").next().val(),
+                    data: lstImages,
+                    page: function(i, addImg, addAltImg) {
+                        addImg(i, this.data[i -1]);
                     }
                 };
             }
