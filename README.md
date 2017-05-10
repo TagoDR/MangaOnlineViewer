@@ -10,6 +10,7 @@ OpenUserJS: https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer
 <ul><li>Batoto</li>
 <li>Dynasty-Scans</li>
 <li>EatManga</li>
+<li>KissManga</li>
 <li>MangaSPy/MangaMap</li>
 <li>MangaDoom</li>
 <li>MangaFox</li>
@@ -22,6 +23,7 @@ OpenUserJS: https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer
 <li>MangaStream</li>
 <li>MangaTown</li>
 <li>NineManga</li>
+<li>ReadManga.Today</li>
 <li>Starkana</li>
 <li>TenManga</li>
 <li>TheSpectrum</li>
@@ -102,4 +104,6 @@ Library included inline: jQuery v2.1.1
 2017-04-28 12.02 Added ReadManga.Today
 2017-05-03 12.03 Fixed Zip Download
 2017-05-04 12.04 Changed default Zip Download behavior
+2017-05-04 12.05 Fixed Infinite Loop
+2017-05-09 12.06 Added KissManga
 </pre>
