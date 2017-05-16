@@ -106,4 +106,6 @@ Library included inline: jQuery v2.1.1
 2017-05-04 12.04 Changed default Zip Download behavior
 2017-05-04 12.05 Fixed Infinite Loop
 2017-05-09 12.06 Added KissManga
+2017-05-13 12.07 Fixed FoOlSlide
+2017-05-14 12.08 Added Loading Bar
 </pre>
