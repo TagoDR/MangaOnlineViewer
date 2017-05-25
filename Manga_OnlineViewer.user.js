@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name  Manga OnlineViewer
 // @description  Shows all pages at once in online view. MangaFox, MangaReader/MangaPanda, MangaStream, MangaInn, MangaHere, MangaShare, Batoto, MangaDevil, MangaCow, MangaChapter, 7manga, MangaPirate.net and MangaBee/OneManga.me manga sites. Fakku, HBrowse, Hentai2Read and Doujin-moe Hentai sites.
-// @version 12.08
-// @date 2017-05-14
+// @version 12.10
+// @date 2017-05-25
 // @author  Tago
 // @namespace https://github.com/TagoDR
 // @require https://code.jquery.com/jquery-latest.min.js
@@ -30,6 +30,7 @@
 // @include /https?://(www.)?readmanga.today/.+/[0-9]+/
 // @include /https?://(www.)?kissmanga.com/Manga/.+/.+?id=[0-9]+/
 // @include /https?://view.thespectrum.net/.+/
+// @include /https?://read.egscans.com/.+/
 // @include /https?://(www.)?(luscious.net|wondersluts.com)/c/.+/
 // @include /https?://exhentai.org/s/.+/.+/
 // @include /https?://g.e-hentai.org/s/.+/.+/
@@ -53,6 +54,8 @@
 // @history 12.06 Added KissManga
 // @history 12.07 Fixed FoOlSlide
 // @history 12.08 Added Loading Bar
+// @history 12.09 Fixed MangaPark
+// @history 12.10 Added EGScans
 // ==/UserScript==
 console.log("Loading Manga OnlineViewer");
 /*!
@@ -593,7 +596,7 @@ $.noConflict();
         //Checks if all images loaded correctly
         function checkImagesLoaded() {
             var p = $(".PageContent:empty").length;
-			var total = $("#Counters b").html(); //$("#NavigationCounters b").html() 
+			var total = $("#Counters b").html(); //$("#NavigationCounters b").html()
             $(".PageContent img").filter(function() {
                 var image = $(this);
                 if (image.context.naturalWidth === 0 ||
@@ -609,7 +612,7 @@ $.noConflict();
             });
             $("#Counters i").html(total - p);
             $("#NavigationCounters i").html(total - p);
-			NProgress.set((total - p)/total); 
+			NProgress.set((total - p)/total);
 			console.log("Progress: " + (total - p)/total);
             if (p > 0) {
                 setTimeout(function() {
@@ -1108,7 +1111,7 @@ $.noConflict();
             url: /tenmanga/,
             run: function() {
                 return {
-                    title: $("span.normal").text().replace("\n", "").replace("\n", "").replace(/.*>>.*>> /, "").replace(/ Page.*/, ""),
+                    title: $(".read-page  a:nth(2)").text().replace("»", "").trim(),
                     series: $("span.normal a:eq(1)").attr("href"),
                     quant: $(".sl-page:first option").length,
                     prev: $(".sl-chap:first option:selected").next().val(),
@@ -1127,8 +1130,8 @@ $.noConflict();
                     title: $(".location:first span a").text().trim(),
                     series: $(".location:first span a").attr("href"),
                     quant: $("#sel_page_1 option").length,
-                    prev: $("#sel_book_1 option:selected").prev("option").val(),
-                    next: $("#sel_book_1 option:selected").next("option").val(),
+                    prev: "/manga/" + window.location.pathname.split("/")[2] +  $("#sel_book_1 option:selected").prev("option").val(),
+                    next:  "/manga/" + window.location.pathname.split("/")[2] +  $("#sel_book_1 option:selected").next("option").val(),
                     img: ".img "
                 };
             }
@@ -1152,6 +1155,30 @@ $.noConflict();
                             }
                         });
                     }
+                };
+            }
+        },
+		// == EGScans =================================================================================================================================
+        {
+            name: "EGScans",
+            url: /read.egscans/,
+            run: function() {
+                return {
+                    title: $("select[name='manga'] option:selected").text().trim(),
+                    series: "#",
+                    quant: img_url.length -1,
+                    prev: prev_chap,
+                    next: next_chap,
+                    data: img_url,
+                    page: function(i, addImg, addAltImg) {
+                        addImg(i,this.data[i]);
+                    },
+					before: function(){
+						$(img_url).each(function( index, value ){
+							var img = new Image();
+							img.src = value;
+;						});
+					}
                 };
             }
         },
