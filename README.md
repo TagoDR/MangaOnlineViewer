@@ -108,4 +108,6 @@ Library included inline: jQuery v2.1.1
 2017-05-09 12.06 Added KissManga
 2017-05-13 12.07 Fixed FoOlSlide
 2017-05-14 12.08 Added Loading Bar
+2017-05-25 12.09 Fixed MangaPark
+2017-05-25 12.10 Added EGScans
 </pre>
