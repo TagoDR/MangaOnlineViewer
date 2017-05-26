@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name  Manga OnlineViewer
 // @description  Shows all pages at once in online view. MangaFox, MangaReader/MangaPanda, MangaStream, MangaInn, MangaHere, MangaShare, Batoto, MangaDevil, MangaCow, MangaChapter, 7manga, MangaPirate.net and MangaBee/OneManga.me manga sites. Fakku, HBrowse, Hentai2Read and Doujin-moe Hentai sites.
-// @version 12.10
-// @date 2017-05-25
+// @version 12.12
+// @date 2017-05-26
 // @author  Tago
 // @namespace https://github.com/TagoDR
 // @require https://code.jquery.com/jquery-latest.min.js
@@ -56,6 +56,8 @@
 // @history 12.08 Added Loading Bar
 // @history 12.09 Fixed MangaPark
 // @history 12.10 Added EGScans
+// @history 12.11 Added Hitomi
+// @history 12.12 Fixed infinite loop
 // ==/UserScript==
 console.log("Loading Manga OnlineViewer");
 /*!
@@ -175,7 +177,7 @@ $.noConflict();
             console.log("Found " + Manga.quant + " pages");
             if (Manga.before !== undefined) Manga.before();
             if (Manga.quant > 0) {
-                cache.Data = Manga;
+                cache.Manga = Manga;
                 $("body > :not(#MangaOnlineViewer)").remove();
                 $("body").removeClass().addClass(settings.Theme);
                 $("script").remove();
@@ -534,48 +536,50 @@ $.noConflict();
         }
         // Generate Zip File for download
         function generateZip() {
-            $(".MangaPage img").each(function() {
-                var img = $(this);
-                var str = img.parent().prev().children("span").text();
-                while (str.length < 3) str = '0' + str;
-                var filename = "Page " + str + ".png";
-                var src = img.attr("src");
-                if (src.indexOf("base64") > -1) {
-                    var base64 = src.replace("data:image/png;base64,", "");
-                    var i = base64.indexOf(",");
-                    if (i !== -1) {
-                        base64 = base64.substring(index + 1, base64.length);
-                    }
-                    cache.zip.file(filename, base64, {
-                        base64: true,
-                        createFolders: true
-                    });
-                    console.log(filename + " Added to Zip from Base64 Image");
-                    cache.downloadFiles++;
-                } else {
-                    try {
-                        GM_xmlhttpRequest({
-                            method: "GET",
-                            url: src,
-                            overrideMimeType: 'text/plain; charset=x-user-defined',
-                            onload: function(e) {
-                                var base64 = customBase64Encode(e.responseText);
-                                cache.zip.file(filename, base64, {
-                                    base64: true,
-                                    createFolders: true
-                                });
-                                console.log(filename + " Added to Zip as Base64 Image");
-                                cache.downloadFiles++;
-                            }
-                        });
-                    } catch (e) {
-                        console.log(e);
-                    }
-                }
-            });
-            if (cache.downloadFiles != cache.Data.quant) {
+			if (cache.downloadFiles == 0){
+				$(".MangaPage img").each(function() {
+					var img = $(this);
+					var str = img.parent().prev().children("span").text();
+					while (str.length < 3) str = '0' + str;
+					var filename = "Page " + str + ".png";
+					var src = img.attr("src");
+					if (src.indexOf("base64") > -1) {
+						var base64 = src.replace("data:image/png;base64,", "");
+						var i = base64.indexOf(",");
+						if (i !== -1) {
+							base64 = base64.substring(index + 1, base64.length);
+						}
+						cache.zip.file(filename, base64, {
+							base64: true,
+							createFolders: true
+						});
+						console.log(filename + " Added to Zip from Base64 Image");
+						cache.downloadFiles++;
+					} else {
+						try {
+							GM_xmlhttpRequest({
+								method: "GET",
+								url: src,
+								overrideMimeType: 'text/plain; charset=x-user-defined',
+								onload: function(e) {
+									var base64 = customBase64Encode(e.responseText);
+									cache.zip.file(filename, base64, {
+										base64: true,
+										createFolders: true
+									});
+									console.log(filename + " Added to Zip as Base64 Image");
+									cache.downloadFiles++;
+								}
+							});
+						} catch (e) {
+							console.log(e);
+						}
+					}
+				});
+			}
+            if (cache.downloadFiles != cache.Manga.quant) {
                 setTimeout(generateZip, 2000);
-                console.log("Waiting for Files to Download " + cache.downloadFiles + " of " + cache.Data.quant);
+                console.log("Waiting for Files to Download " + cache.downloadFiles + " of " + cache.Manga.quant);
             } else {
                 var blobLink = document.getElementById('blob');
                 try {
@@ -596,7 +600,7 @@ $.noConflict();
         //Checks if all images loaded correctly
         function checkImagesLoaded() {
             var p = $(".PageContent:empty").length;
-			var total = $("#Counters b").html(); //$("#NavigationCounters b").html()
+			var total = $("#Counters b").html(); //$("#NavigationCounters b").html() 
             $(".PageContent img").filter(function() {
                 var image = $(this);
                 if (image.context.naturalWidth === 0 ||
@@ -612,7 +616,7 @@ $.noConflict();
             });
             $("#Counters i").html(total - p);
             $("#NavigationCounters i").html(total - p);
-			NProgress.set((total - p)/total);
+			NProgress.set((total - p)/total); 
 			console.log("Progress: " + (total - p)/total);
             if (p > 0) {
                 setTimeout(function() {
@@ -1477,9 +1481,10 @@ $.noConflict();
                     prev: "#",
                     next: "#",
                     data: $(".img-url"),
+					key: $("#comicImages img").attr("src").split(".")[0], 
                     page: function(i, addImg, addAltImg) {
                         console.log("Page " + i);
-                        addImg(i, this.data.eq(i - 1).text().replace("//g", "//la"));
+                        addImg(i, this.data.eq(i - 1).text().replace("//g", this.key));
                     }
                 };
             }
