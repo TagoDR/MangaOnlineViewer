@@ -110,4 +110,6 @@ Library included inline: jQuery v2.1.1
 2017-05-14 12.08 Added Loading Bar
 2017-05-25 12.09 Fixed MangaPark
 2017-05-25 12.10 Added EGScans
+2017-05-25 12.11 Added Hitomi
+2017-05-25 12.12 Fixed infinite loop
 </pre>
