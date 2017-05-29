@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name  Manga OnlineViewer
 // @description  Shows all pages at once in online view. MangaFox, MangaReader/MangaPanda, MangaStream, MangaInn, MangaHere, MangaShare, Batoto, MangaDevil, MangaCow, MangaChapter, 7manga, MangaPirate.net and MangaBee/OneManga.me manga sites. Fakku, HBrowse, Hentai2Read and Doujin-moe Hentai sites.
-// @version 12.12
-// @date 2017-05-26
+// @version 12.15
+// @date 2017-05-29
 // @author  Tago
 // @namespace https://github.com/TagoDR
 // @require https://code.jquery.com/jquery-latest.min.js
@@ -47,7 +47,6 @@
 // @include /.+/read/.+/
 // @history 12.00 Full Review
 // @history 12.01 Added HentaIhere
-// @history 12.02 Added ReadManga.Today
 // @history 12.03 Fixed Zip Download
 // @history 12.04 Changed default Zip Download behavior
 // @history 12.05 Fixed infinite loop
@@ -58,6 +57,9 @@
 // @history 12.10 Added EGScans
 // @history 12.11 Added Hitomi
 // @history 12.12 Fixed infinite loop
+// @history 12.13 Fixed Pururin
+// @history 12.14 Fixed Tenmanga
+// @history 12.15 Fixed Mangapark
 // ==/UserScript==
 console.log("Loading Manga OnlineViewer");
 /*!
@@ -1116,7 +1118,7 @@ $.noConflict();
             run: function() {
                 return {
                     title: $(".read-page  a:nth(2)").text().replace("»", "").trim(),
-                    series: $("span.normal a:eq(1)").attr("href"),
+                    series: $(".read-page a:nth(1)").attr("href"),
                     quant: $(".sl-page:first option").length,
                     prev: $(".sl-chap:first option:selected").next().val(),
                     next: $(".sl-chap:first option:selected").prev().val(),
@@ -1131,12 +1133,12 @@ $.noConflict();
             url: /mangapark/,
             run: function() {
                 return {
-                    title: $(".location:first span a").text().trim(),
-                    series: $(".location:first span a").attr("href"),
+                    title: $(".loc a:first").text().trim(),
+                    series: "/manga/" + window.location.pathname.split("/")[2],
                     quant: $("#sel_page_1 option").length,
-                    prev: "/manga/" + window.location.pathname.split("/")[2] +  $("#sel_book_1 option:selected").prev("option").val(),
-                    next:  "/manga/" + window.location.pathname.split("/")[2] +  $("#sel_book_1 option:selected").next("option").val(),
-                    img: ".img "
+                    prev: $(".info a:nth(0)").attr("href"),
+                    next: $(".info a:nth(1)").attr("href"),
+                    img: ".img"
                 };
             }
         },
@@ -1417,12 +1419,12 @@ $.noConflict();
             url: /pururin/,
             run: function() {
                 return {
-                    title: $(".header-breadcrumbs a:eq(3)").text().trim(),
-                    series: $(".header-breadcrumbs a:eq(3)").attr("href"),
-                    quant: $(".image-pageSelect option").length,
+                    title: $(".title").text().trim(),
+                    series: $(".control a:nth(3)").attr("href"),
+                    quant: $(".control select option").length,
                     prev: "#",
                     next: "#",
-                    data: $("img.b").attr("src"),
+                    data: $(".images-holder img").attr("src"),
                     page: function(i, addImg, addAltImg) {
                         console.log("Page " + i);
                         addImg(i, this.data.replace(/\/[0-9]+\./, "/" + i + "."));
