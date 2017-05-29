@@ -112,4 +112,7 @@ Library included inline: jQuery v2.1.1
 2017-05-25 12.10 Added EGScans
 2017-05-25 12.11 Added Hitomi
 2017-05-25 12.12 Fixed infinite loop
+2017-05-28 12.13 Fixed Pururin
+2017-05-29 12.14 Fixed Tenmanga
+2017-05-29 12.15 Fixed Mangapark
 </pre>
