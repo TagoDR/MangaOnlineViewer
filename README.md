@@ -115,4 +115,5 @@ Library included inline: jQuery v2.1.1
 2017-05-28 12.13 Fixed Pururin
 2017-05-29 12.14 Fixed Tenmanga
 2017-05-29 12.15 Fixed Mangapark
+2017-05-29 12.19 Changed the trigger, added an abort option
 </pre>
