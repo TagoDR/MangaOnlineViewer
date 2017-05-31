@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name  Manga OnlineViewer Adult
 // @description  Extension for Manga OnlineViewer for Adult sites mainly Hentai: Fakku, HBrowse, Hentai2Read and Doujin-moe Hentai sites.
-// @version 01.00
-// @date 2017-05-29
+// @version 01.02
+// @date 2017-05-31
 // @author  Tago
 // @namespace https://github.com/TagoDR
 // @require https://code.jquery.com/jquery-latest.min.js
@@ -14,9 +14,9 @@
 // @grant  GM_xmlhttpRequest
 // @include /https?://(www.)?(luscious.net|wondersluts.com)/c/.+/
 // @include /https?://exhentai.org/s/.+/.+/
-// @include /https?://g.e-hentai.org/s/.+/.+/
+// @include /https?://(g.)?e-hentai.org/s/.+/.+/
 // @include /https?://(www.)?mangafap.com/image/.+/
-// @include /https?://(www.)?pururin.us/view/.+/.+/.+/
+// @include /https?://(www.)?pururin.us/(view|read)/.+/.+/.+/
 // @include /https?://(www.)?hentai4manga.com/hentai_manga/.+/.+/
 // @include /https?://(www.)?doujinshihentai.com/manga/index.php/.+/
 // @include /https?://hitomi.la/reader/.+/
@@ -26,6 +26,8 @@
 // @include /https?://(www.)?doujins.com/.+/
 // @include /https?://(www.)?(hentai2read|hentaihere).com/.+/.+//
 // @history 01.00 It Begins
+// @history 01.01 Fixed e-hentai
+// @history 01.02 Fixed Pururin
 // ==/UserScript==
 (function ($) {
     var m = [
@@ -174,7 +176,7 @@
                 return {
                     title: $(".title").text().trim(),
                     series: $(".control a:nth(3)").attr("href"),
-                    quant: $(".control select option").length,
+                    quant: $(".form-control option").length,
                     prev: "#",
                     next: "#",
                     data: $(".images-holder img").attr("src"),
@@ -305,5 +307,4 @@
         }
     ];
     $.MangaOnlineViewer.setSites(m);
-
 })(jQuery);
