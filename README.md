@@ -28,7 +28,7 @@ OpenUserJS: https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer
 <li>TenManga</li>
 <li>TheSpectrum</li>
 <li><b>Scanlators sites that use FoOlSlide</b></li></ul>
-And these Hentai sites: <b><h4 style='color: red;'>Adult Script</h4> avaliable <i>only</i> on <a href='https://github.com/TagoDR/MangaOnlineViewer'>Github</a></b>
+And these Hentai sites: <b><a style='color: red;'>Adult Script</a> avaliable <i>only</i> on <a href='https://github.com/TagoDR/MangaOnlineViewer'>Github</a></b>
 <ul><li>Doujin-moe Non-members</li>
 <li>DoujinshiHentai</li>
 <li>ExHentai(e-hentai) [May get you banned or ip blocked, use with moderation]</li>
@@ -116,5 +116,5 @@ Library included inline: jQuery v2.1.1
 2017-05-29 12.14 Fixed Tenmanga
 2017-05-29 12.15 Fixed Mangapark
 2017-05-29 12.16 Changed the trigger, added an abort option
-2017-05-31 12.17 Slplit Adult sites on another script
+2017-05-31 12.17 Split Adult sites on another script
 </pre>
