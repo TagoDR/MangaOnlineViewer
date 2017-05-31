@@ -28,7 +28,7 @@ OpenUserJS: https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer
 <li>TenManga</li>
 <li>TheSpectrum</li>
 <li><b>Scanlators sites that use FoOlSlide</b></li></ul>
-And these Hentai sites: <b><a style='color: red;'>Adult Script</a> avaliable <i>only</i> on <a href='https://github.com/TagoDR/MangaOnlineViewer'>Github</a></b>
+And these Hentai sites: <b><a style="color: red;" href="https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js">Adult Script</a> avaliable <i>only</i> on <a href='https://github.com/TagoDR/MangaOnlineViewer'>Github</a></b>
 <ul><li>Doujin-moe Non-members</li>
 <li>DoujinshiHentai</li>
 <li>ExHentai(e-hentai) [May get you banned or ip blocked, use with moderation]</li>
@@ -44,12 +44,12 @@ And these Hentai sites: <b><a style='color: red;'>Adult Script</a> avaliable <i>
 <li>Pururin</li></ul>
 
 <h3>Extendible Script</h3>
-The script now support extensions, anyone that wish to make use of my script structure to support different languages of sites are free to do so. Below is are teh links for the ones I know of. The first one is for Portuguese is mine, use it as an example.
+The script now support extensions, anyone that wish to make use of my script structure to support different languages of sites are free to do so. Below is are teh links for the ones I know of. The first one is for Portuguese is mine, use it as an example.</br>
 
 Portuguese: https://greasyfork.org/scripts/4657-manga-onlineviewer-portugues
 
 <h3>Supported Browsers</h3>
-1. Mozilla Firefox with <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">Greasemonkey</a>
+1. Mozilla Firefox with <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">Greasemonkey</a></br>
 2. Google Chrome with <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en">Tampermonkey</a>
 Should work with other browsers and addons, but they are not officially supported.
 
