@@ -28,7 +28,7 @@ OpenUserJS: https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer
 <li>TenManga</li>
 <li>TheSpectrum</li>
 <li><b>Scanlators sites that use FoOlSlide</b></li></ul>
-And these Hentai sites: <b><span style='color:red'>Adult Script</span> avaliable <i>only</i> on <a href='https://github.com/TagoDR/MangaOnlineViewer'>Github</a></b>
+And these Hentai sites: <b><span style='color: red;'>Adult Script</span> avaliable <i>only</i> on <a href='https://github.com/TagoDR/MangaOnlineViewer'>Github</a></b>
 <ul><li>Doujin-moe Non-members</li>
 <li>DoujinshiHentai</li>
 <li>ExHentai(e-hentai) [May get you banned or ip blocked, use with moderation]</li>
