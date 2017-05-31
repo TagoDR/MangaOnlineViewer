@@ -97,7 +97,7 @@ Library included inline: jQuery v2.1.1
 
 <h3>Disclaimer</h3>In case the owner/admin of one of the supported sites does not want my script to run on their site, I will make it disabled by default. Forcing users to manually activate it.
 
-<h3>Changelog</h3>
+<h3>Changelog:</h3>
 <pre>
 2017-03-09 12.00 Full Review
 2017-04-14 12.01 Added HentaIhere
@@ -117,4 +117,10 @@ Library included inline: jQuery v2.1.1
 2017-05-29 12.15 Fixed Mangapark
 2017-05-29 12.16 Changed the trigger, added an abort option
 2017-05-31 12.17 Split Adult sites on another script
+</pre>
+<h3>Changelog Adult:</h3>
+<pre>
+2017-05-31 01.00 It Begins
+2017-05-31 01.01 Fixed e-hentai
+2017-05-31 01.02 Fixed Pururin
 </pre>
