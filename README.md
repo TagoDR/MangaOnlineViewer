@@ -117,6 +117,9 @@ Library included inline: jQuery v2.1.1
 2017-05-29 12.15 Fixed Mangapark
 2017-05-29 12.16 Changed the trigger, added an abort option
 2017-05-31 12.17 Split Adult sites on another script
+2017-06-01 12.18 Bug fix
+2017-06-01 12.19 Fixed FoOlSlide starting anywhere
+2017-06-01 12.20 Swapped to alertifyjs
 </pre>
 <h3>Changelog Adult:</h3>
 <pre>
