@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name  Manga OnlineViewer
 // @description  Shows all pages at once in online view: MangaFox, MangaReader/MangaPanda, MangaStream, MangaInn, MangaHere, MangaShare, Batoto, MangaDevil, MangaCow, MangaChapter, 7manga, MangaPirate.net and MangaBee/OneManga.me manga sites.
-// @version 12.17
+// @version 12.18
 // @date 2017-05-31
 // @author  Tago
 // @namespace https://github.com/TagoDR
@@ -50,7 +50,8 @@
 // @history 12.14 Fixed Tenmanga
 // @history 12.15 Fixed MangaPark
 // @history 12.16 Changed the trigger, added an abort option
-// @history 12.17 Slplit Adult sites on another script
+// @history 12.17 Split Adult sites on another script
+// @history 12.18 Bug fix
 // ==/UserScript==
 console.log("Loading Manga OnlineViewer");
 /*!JSZip v3.1.3 - A Javascript class for generating and reading zip files<http://stuartk.com/jszip>*/
@@ -159,6 +160,7 @@ $.noConflict();
                         console.log("Loading " + sites[i].name);
                         manga = sites[i].run();
                         formatPage(manga);
+						found = true;
                         break;
                     }
                 }
@@ -614,7 +616,7 @@ $.noConflict();
             $("#Counters i").html(total - p);
             $("#NavigationCounters i").html(total - p);
             NProgress.set((total - p)/total);
-            console.log("Progress: " + (total - p)/total);
+            console.log("Progress: " + (total - p)/total*100 + "%");
             if (p > 0) {
                 setTimeout(function() {
                     checkImagesLoaded();
