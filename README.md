@@ -122,6 +122,7 @@ Library included inline: jQuery v2.1.1
 2017-06-01 12.20 Swapped to alertifyjs
 2017-06-01 12.21 Added Debuging informations
 2017-06-01 12.22 New Themes
+2017-06-02 12.23 Added custom Theme
 </pre>
 <h3>Changelog Adult:</h3>
 <pre>
