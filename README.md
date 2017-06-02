@@ -120,6 +120,8 @@ Library included inline: jQuery v2.1.1
 2017-06-01 12.18 Bug fix
 2017-06-01 12.19 Fixed FoOlSlide starting anywhere
 2017-06-01 12.20 Swapped to alertifyjs
+2017-06-01 12.21 Added Debuging informations
+2017-06-01 12.22 New Themes
 </pre>
 <h3>Changelog Adult:</h3>
 <pre>
