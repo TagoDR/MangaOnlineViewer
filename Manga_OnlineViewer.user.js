@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name  Manga OnlineViewer
 // @description  Shows all pages at once in online view: MangaFox, MangaReader/MangaPanda, MangaStream, MangaInn, MangaHere, MangaShare, Batoto, MangaDevil, MangaCow, MangaChapter, 7manga, MangaPirate.net and MangaBee/OneManga.me manga sites.
-// @version 12.21
-// @date 2017-06-01
+// @version 12.22
+// @date 2017-06-02
 // @author  Tago
 // @namespace https://github.com/TagoDR
 // @require https://code.jquery.com/jquery-latest.min.js
@@ -55,6 +55,7 @@
 // @history 12.19 Fixed FoOlSlide starting anywhere
 // @history 12.20 Swapped to alertifyjs
 // @history 12.21 Added Debuging informations
+// @history 12.22 New Themes
 // ==/UserScript==
 console.log("Loading Manga OnlineViewer");
 /*!JSZip v3.1.3 - A Javascript class for generating and reading zip files<http://stuartk.com/jszip>*/
@@ -179,15 +180,29 @@ $.noConflict();
             $("head").append("<style type='text/css'>.alertify .ajs-dialog{background-color:#fff;box-shadow:0 15px 20px 0 rgba(0,0,0,.25);border-radius:2px}.alertify .ajs-header{color:#000;font-weight:700;background:#fafafa;border-bottom:#eee 1px solid;border-radius:2px 2px 0 0}.alertify .ajs-body{color:#000}.alertify .ajs-body .ajs-content .ajs-input{display:block;width:100%;padding:8px;margin:4px;border-radius:2px;border:1px solid #CCC}.alertify .ajs-body .ajs-content p{margin:0}.alertify .ajs-footer{background:#fbfbfb;border-top:#eee 1px solid;border-radius:0 0 2px 2px}.alertify .ajs-footer .ajs-buttons .ajs-button{background-color:transparent;color:#000;border:0;font-size:14px;font-weight:700;text-transform:uppercase}.alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok{color:#3593D2}.alertify-notifier .ajs-message{background:rgba(255,255,255,.95);color:#000;text-align:center;border:1px solid #ddd;border-radius:2px}.alertify-notifier .ajs-message.ajs-success{color:#fff;background:rgba(91,189,114,.95);text-shadow:-1px -1px 0 rgba(0,0,0,.5)}.alertify-notifier .ajs-message.ajs-error{color:#fff;background:rgba(217,92,92,.95);text-shadow:-1px -1px 0 rgba(0,0,0,.5)}.alertify-notifier .ajs-message.ajs-warning{background:rgba(252,248,215,.95);border-color:#999}</style>");
             // Custom CSS
             $("head").append("<style type='text/css'>.alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok{color:#FFFFFF;background-color:#DD6B55;border-radius:4px;padding:6px}.alertify .ajs-header, .alertify .ajs-body .ajs-content, .alertify .ajs-footer .ajs-buttons.ajs-primary{text-align: center;}}</style>");
-            alertify.alert("Starting MangaOnlineViewer", "Please wait, 3 seconds...").setting({
-                "label": "No, cancel!",
-                "onok": function (closeEvent) {
-                    cancel = true;
-                    console.log("MangaOnlineViwer Aborted ");
-                },
-                "closable": false,
-                "transition": "zoom",
-                "movable": false
+            alertify.dialog('waitAlert', function factory() {
+                return {
+                    setup: function () {
+                        return {
+                            buttons: [{
+                                text: "No, cancel!!",
+                                key: 27 /*Esc*/ ,
+                                className: alertify.defaults.theme.ok
+                            }],
+                            options: {
+                                closable: false,
+                                transition: "zoom",
+                                movable: false,
+                                maximizable: false,
+                                resizable: false
+                            }
+                        };
+                    }
+                };
+            }, false, 'alert');
+            alertify.waitAlert("Starting MangaOnlineViewer", "Please wait, 3 seconds...", function (closeEvent) {
+                cancel = true;
+                console.log("MangaOnlineViwer Aborted ");
             });
             setTimeout(function () {
                 if (cancel) {
@@ -228,8 +243,8 @@ $.noConflict();
     function configCSS() {
         $("style, link[type='text/css'], link[href$='css']").remove();
         var css = "<style type='text/css'>" +
-            /*! normalize.css v1.0.0 | MIT License | git.io/normalize */
-            "article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary{display:block}audio,canvas,video{display:inline-block;*display:inline;*zoom:1}audio:not([controls]){display:none;height:0}[hidden]{display:none}html{font-size:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}html,button,input,select,textarea{font-family:sans-serif}body{margin:0}a:focus{outline:thin dotted}a:active,a:hover{outline:0}h1{font-size:2em;margin:.67em 0}h2{font-size:1.5em;margin:.83em 0}h3{font-size:1.17em;margin:1em 0}h4{font-size:1em;margin:1.33em 0}h5{font-size:.83em;margin:1.67em 0}h6{font-size:.75em;margin:2.33em 0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:bold}blockquote{margin:1em 40px}dfn{font-style:italic}mark{background:#ff0;color:#000}p,pre{margin:1em 0}code,kbd,pre,samp{font-family:monospace,serif;_font-family:'courier new',monospace;font-size:1em}pre{white-space:pre;white-space:pre-wrap;word-wrap:break-word}q{quotes:none}q:before,q:after{content:'';content:none}small{font-size:75%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-0.5em}sub{bottom:-0.25em}dl,menu,ol,ul{margin:1em 0}dd{margin:0 0 0 40px}menu,ol,ul{padding:0 0 0 40px}nav ul,nav ol{list-style:none;list-style-image:none}img{border:0;-ms-interpolation-mode:bicubic}svg:not(:root){overflow:hidden}figure{margin:0}form{margin:0}fieldset{border:1px solid #c0c0c0;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0;white-space:normal;*margin-left:-7px}button,input,select,textarea{font-size:100%;margin:0;vertical-align:baseline;*vertical-align:middle}button,input{line-height:normal}button,html input[type='button'],input[type='reset'],input[type='submit']{-webkit-appearance:button;cursor:pointer;*overflow:visible}button[disabled],input[disabled]{cursor:default}input[type='checkbox'],input[type='radio']{box-sizing:border-box;padding:0;*height:13px;*width:13px}input[type='search']{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type='search']::-webkit-search-cancel-button,input[type='search']::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}" +
+            /*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */
+            "button,hr,input{overflow:visible}audio,canvas,progress,video{display:inline-block}progress,sub,sup{vertical-align:baseline}[type=checkbox],[type=radio],legend{box-sizing:border-box;padding:0}html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figure{margin:1em 40px}hr{box-sizing:content-box;height:0}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative}sub{bottom:-.25em}sup{top:-.5em}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:ButtonText dotted 1px}fieldset{padding:.35em .75em .625em}legend{color:inherit;display:table;max-width:100%;white-space:normal}textarea{overflow:auto}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}[hidden],template{display:none}" +
             "html{font-size:100%}" +
             "img{height:auto;max-width:100%;vertical-align:middle;border:0 none}" +
             "button,input,select,textarea{margin:0;font-size:100%;vertical-align:middle}" +
@@ -273,7 +288,7 @@ $.noConflict();
             "#MangaOnlineViewer #ThemeSelector{width:110px;}" +
             "#MangaOnlineViewer #PagesPerSecond{width:46px;}" +
             "#MangaOnlineViewer .ChapterControl{-moz-user-select:none;-webkit-user-select: none;margin-right:120px;margin-top: 1px;float: right;}" +
-            "#MangaOnlineViewer .ChapterControl a{display:inline-block;width: 80px;height:25px;text-align:center;margin-left: 3px;margin-left: 3px;}" +
+            "#MangaOnlineViewer .ChapterControl a{display:inline-block;width: 80px;height:25px;text-align:center;margin-left: 3px;margin-bottom: -1px;}" +
             "#MangaOnlineViewer .ChapterControl a[href='#'],#MangaOnlineViewer .ChapterControl a[href='']{visibility:hidden}" +
             "#MangaOnlineViewer .ViewerTitle{display: block;text-align: center;height:35px;}" +
             "#MangaOnlineViewer #Counters {position: absolute;right: 10px;top: 10px;}" +
@@ -299,7 +314,7 @@ $.noConflict();
             "#MangaOnlineViewer #Navigation .nav {behavior:url(-ms-transform.htc);-moz-transform:rotate(-90deg);-webkit-transform:rotate(-90deg);-o-transform:rotate(-90deg);}" +
             "#MangaOnlineViewer #ImageOptions .menuOuterArrow  {width: 0;height: 0;border-top: 10px solid transparent;border-bottom: 10px solid transparent;border-left:10px solid blue;display: inline-block;position: absolute;bottom: 0;}" +
             "#MangaOnlineViewer #ImageOptions .menuInnerArrow {width: 0;height: 0;border-top: 5px solid transparent;border-bottom: 5px solid transparent;border-left:5px solid white;left: -10px;position: absolute;top: -5px;display: inline-block;}";
-        var themes = [ //   body       text       border     painel     dark1      dark2
+        var themes = [ //   1-body       2-text       3-lines     4-painel/imgBackground     5-Gradiant1      6-Gradiant2
             ["Dark", "#000000", "#ffffff", "#666666", "#333333", "#111111", "#282828"],
             ["Light", "#eeeeec", "#2e3436", "#888a85", "#babdb6", "#c8cec2", "#d3d7cf"],
             ["Clear", "#ffffff", "#2e3436", "#888a85", "#eeeeec", "#c8cec2", "#d3d7cf"],
@@ -308,19 +323,20 @@ $.noConflict();
             ["Lime", "#000000", "#8abd59", "#608d34", "#38531f", "#233413", "#293e17"],
             ["Plum", "#000000", "#ad7fa8", "#75507b", "#49324d", "#1d1020", "#311b37"],
             ["Light_Plum", "#eeeeec", "#5c3566", "#9b71a2", "#ad7fa8", "#d2b8ce", "#c4a3c0"],
-            ["Alpha_Blue", "#000000", "#82a0bf", "rgba(56,109,164,0.9)", "#304c77", "#081425", "rgba(18,41,75,0.8)"]
+            //["Alpha_Blue", "#000000", "#82a0bf", "rgba(56,109,164,0.9)", "#304c77", "#081425", "rgba(18,41,75,0.8)"],
+            ["Earthy", "#000000", "#ffffff", "#693d3d", "#46211a", "#ba5536", "#a43820"],
+            ["Cool_Blues", "#000000", "#c4dfe6", "#66a5ad", "#07575b", "#07575b", "#003b46"]
         ];
         for (var i = 0; i < themes.length; i++) {
-            css += "." + themes[i][0] + " .controlLable, ." + themes[i][0] + " .ViewerTitle, ." + themes[i][0] + "{color: " + themes[i][2] + ";}";
+            css += "." + themes[i][0] + " .controlLable, ." + themes[i][0] + " .ViewerTitle, ." + themes[i][0] + ", .PageFunctions a.visible, ." + themes[i][0] + " a, ." + themes[i][0] + " a:link, ." + themes[i][0] + " a:visited, ." + themes[i][0] + " a:active, ." + themes[i][0] + " a:focus{ text-decoration:none; color: " + themes[i][2] + ";}";
             css += "." + themes[i][0] + " {background: none repeat scroll 0 0 " + themes[i][1] + ";}";
             css += "." + themes[i][0] + " #ImageOptions #menu .menuOuterArrow {border-left:10px solid " + themes[i][4] + ";}";
             css += "." + themes[i][0] + " #ImageOptions #menu .menuInnerArrow {border-left:5px solid " + themes[i][1] + ";}";
-            css += "." + themes[i][0] + " .PageFunctions a.visible, ." + themes[i][0] + " a, ." + themes[i][0] + " a:link, ." + themes[i][0] + " a:visited, ." + themes[i][0] + " a:active, ." + themes[i][0] + " a:focus{ text-decoration:none; color: " + themes[i][2] + ";}";
             css += "." + themes[i][0] + " .PageFunctions { border: 1px solid " + themes[i][3] + "; border-bottom: medium none;    border-left: medium none;    border-right: medium none;}";
-            css += "." + themes[i][0] + " .PageFunctions > span, ." + themes[i][0] + " .ThumbNail span {background: none repeat scroll 0 0 " + themes[i][4] + "; color: " + themes[i][2] + ";}";
-            css += "." + themes[i][0] + " .painel {background: none repeat scroll 0 0 " + themes[i][4] + "; color: " + themes[i][2] + ";border: thin solid " + themes[i][3] + ";}";
-            css += "." + themes[i][0] + " .PageContent, ." + themes[i][0] + " .ThumbNail img { outline: 2px solid " + themes[i][6] + "; background: none repeat scroll 0 0 " + themes[i][5] + ";}";
-            css += "." + themes[i][0] + " .ChapterControl a { border: 1px solid " + themes[i][3] + "; background: -moz-linear-gradient(left top , " + themes[i][6] + ", " + themes[i][4] + ") repeat scroll 0 0 transparent; background: -webkit-linear-gradient(left , " + themes[i][6] + " 41%, " + themes[i][4] + " 71%) repeat scroll 0 0 transparent; }";
+            css += "." + themes[i][0] + " .PageFunctions > span, ." + themes[i][0] + " .ThumbNail span {background: none repeat scroll 0 0 " + themes[i][4] + ";}";
+            css += "." + themes[i][0] + " .painel {background: none repeat scroll 0 0 " + themes[i][4] + "; border: thin solid " + themes[i][3] + ";}";
+            css += "." + themes[i][0] + " .PageContent, ." + themes[i][0] + " .ThumbNail img { outline: 2px solid " + themes[i][3] + "; background: none repeat scroll 0 0 " + themes[i][4] + ";}";
+            css += "." + themes[i][0] + " .ChapterControl a { border: 1px solid " + themes[i][3] + "; background: -moz-linear-gradient(left top , " + themes[i][6] + ", " + themes[i][5] + ") repeat scroll 0 0 transparent; background: -webkit-linear-gradient(left , " + themes[i][6] + " 41%, " + themes[i][5] + " 71%) repeat scroll 0 0 transparent; }";
             $("#ThemeSelector").append("<option value='" + themes[i][0] + "' " + (settings.Theme == themes[i][0] ? "selected" : "") + ">" + themes[i][0].replace("_", " ") + "</option>");
         }
         css += "</style>";
@@ -794,7 +810,8 @@ $.noConflict();
         $("#downloadZip").change(function () {
             if ($(this).is(":checked")) {
                 setValueGM("MangaDownloadZip", "true");
-                alert("Next time a chapter finish loading you will be promted to save automatically");
+                var msg = alertify.alert("Attention", "Next time a chapter finish loading you will be promted to save automatically");
+                msg.show();
             } else
                 setValueGM("MangaDownloadZip", "false");
         });
