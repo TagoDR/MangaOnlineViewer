@@ -1,12 +1,16 @@
 // ==UserScript==
 // @name  Manga OnlineViewer Adult
 // @description  Extension for Manga OnlineViewer for Adult sites mainly Hentai: Fakku, HBrowse, Hentai2Read and Doujin-moe Hentai sites.
-// @version 01.02
-// @date 2017-05-31
+// @version 01.03
+// @date 2017-06-07
 // @author  Tago
 // @namespace https://github.com/TagoDR
 // @require https://code.jquery.com/jquery-latest.min.js
-// @require https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.10.0/alertify.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js
+// @require https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewert.user.js
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @grant  GM_getValue
@@ -28,6 +32,7 @@
 // @history 01.00 It Begins
 // @history 01.01 Fixed e-hentai
 // @history 01.02 Fixed Pururin
+// @history 01.03 Fixed Requirements
 // ==/UserScript==
 (function ($) {
     var m = [
@@ -238,7 +243,7 @@
                     prev: "#",
                     next: "#",
                     data: $(".img-url"),
-                    key: $("#comicImages img").attr("src").split(".")[0], 
+                    key: $("#comicImages img").attr("src").split(".")[0],
                     page: function(i, addImg, addAltImg) {
                         console.log("Page " + i);
                         addImg(i, this.data.eq(i - 1).text().replace("//g", this.key));
