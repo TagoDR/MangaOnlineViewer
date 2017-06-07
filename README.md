@@ -6,28 +6,31 @@ GreaseFork:  https://greasyfork.org/en/scripts/1319-manga-onlineviewer
 OpenUserJS: https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer
 </pre>
 
-<h3>Supported Sites</h3>
-<ul><li>Batoto</li>
-<li>Dynasty-Scans</li>
-<li>EatManga</li>
-<li>KissManga</li>
-<li>MangaSPy/MangaMap</li>
-<li>MangaDoom</li>
-<li>MangaFox</li>
-<li>MangaGo</li>
-<li>MangaHere</li>
-<li>MangaInn</li>
-<li>MangaLyght</li>
-<li>MangaPark</li>
-<li>MangaReader/MangaPanda</li>
-<li>MangaStream</li>
-<li>MangaTown</li>
-<li>NineManga</li>
-<li>ReadManga.Today</li>
-<li>Starkana</li>
-<li>TenManga</li>
-<li>TheSpectrum</li>
-<li><b>Scanlators sites that use FoOlSlide</b></li></ul>
+<h3>Supported Manga Sites</h3>
+<ul><li><a href="http://bato.to/">Batoto</a></li>
+<li><a href="https://dynasty-scans.com/">Dynasty-Scans</a></li>
+<li><a href="http://eatmanga.me/">Eat Manga</a></li>
+<li><a href="http://read.egscans.com/">Easy Going Scans</a></li>
+<li><a href="http://kissmanga.com/">Kiss Manga</a></li>
+<li><a href="http://www.mangateen.com/">Manga Teen</a></li>
+<li><a href="https://mangadoom.co/">Manga Doom</a></li>
+<li><a href="http://mangafox.me/">Manga Fox</a></li>
+<li><a href="http://www.mangago.me/">Manga Go</a></li>
+<li><a href="http://www.mangahere.co/">Manga Here</a></li>
+<li><a href="http://www.mangainn.net/">Manga Inn</a></li>
+<li><a href="http://manga.lyght.net/">Manga Lyght</a></li>
+<li><a href="http://mangapark.me/">Manga Park</a></li>
+<li><a href="http://www.mangareader.net/">Manga Reader</a>/<a href="http://www.mangapanda.com/">MangaPanda</a></li>
+<li><a href="http://mangastream.com/">Manga Stream</a></li>
+<li><a href="http://www.mangatown.com/">MangaTown</a></li>
+<li><a href="http://ninemanga.com/">Nine Manga</a></li>
+<li><a href="http://www.readmanga.today/">Read Manga Today</a></li>
+<li><a href="http://www.tenmanga.com/">Ten Manga</a></li>
+<li><a href="http://www.thespectrum.net/">The Spectrum</a></li>
+<li><b>Scanlators sites that use FoOlSlide</b></li>
+<li><a href="http://raw.senmanga.com/">Sen Manga (Raws)</a></li></ul>
+<h3>Supported Comic Sites</h3>
+<ul><li><a href="http://www.comicastle.org/">ComiCastle</a></li></ul>
 And these Hentai sites: <b><a style="color: red;" href="https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js">Adult Script</a> avaliable <i>only</i> on <a href='https://github.com/TagoDR/MangaOnlineViewer'>Github</a></b>
 <ul><li>Doujin-moe Non-members</li>
 <li>DoujinshiHentai</li>
@@ -44,8 +47,7 @@ And these Hentai sites: <b><a style="color: red;" href="https://github.com/TagoD
 <li>Pururin</li></ul>
 
 <h3>Extendible Script</h3>
-The script now support extensions, anyone that wish to make use of my script structure to support different languages of sites are free to do so. Below is are teh links for the ones I know of. The first one is for Portuguese is mine, use it as an example.</br>
-
+The script now support extensions, anyone that wish to make use of my script structure to support different languages of sites are free to do so. Below is are the links for the ones I know of. The first one is for Portuguese is mine, use it as an example.</br>
 Portuguese: https://greasyfork.org/scripts/4657-manga-onlineviewer-portugues
 
 <h3>Supported Browsers</h3>
