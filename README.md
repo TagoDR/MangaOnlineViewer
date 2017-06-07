@@ -31,7 +31,7 @@ OpenUserJS: https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer
 <li><a href="http://raw.senmanga.com/">Sen Manga (Raws)</a></li></ul>
 <h3>Supported Comic Sites</h3>
 <ul><li><a href="http://www.comicastle.org/">ComiCastle</a></li></ul>
-And these Hentai sites: <b><a style="color: red;" href="https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js">Adult Script</a> avaliable <i>only</i> on <a href='https://github.com/TagoDR/MangaOnlineViewer'>Github</a></b>
+<h3>Supported Hentai Sites</h3> <b><a style="color: red;" href="https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js">Adult Script</a> avaliable <i>only</i> on <a href='https://github.com/TagoDR/MangaOnlineViewer'>Github</a></b>
 <ul><li>Doujin-moe Non-members</li>
 <li>DoujinshiHentai</li>
 <li>ExHentai(e-hentai) [May get you banned or ip blocked, use with moderation]</li>
