@@ -124,6 +124,9 @@ Library included inline: jQuery v2.1.1
 2017-06-01 12.22 New Themes
 2017-06-02 12.23 Added custom Theme
 2017-06-03 12.24 Removed most inline Libraries
+2017-06-05 12.25 Added ComiCastle
+2017-06-05 12.27 Added Always Load option
+2017-06-06 12.28 Fixed keybinds
 </pre>
 <h3>Changelog Adult:</h3>
 <pre>
