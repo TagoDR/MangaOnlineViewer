@@ -130,10 +130,12 @@ Library included inline: jQuery v2.1.1
 2017-06-05 12.25 Added ComiCastle
 2017-06-05 12.27 Added Always Load option
 2017-06-06 12.28 Fixed keybinds
+2017-06-07 12.28 Bug Fixes
 </pre>
 <h3>Changelog Adult:</h3>
 <pre>
 2017-05-31 01.00 It Begins
 2017-05-31 01.01 Fixed e-hentai
 2017-05-31 01.02 Fixed Pururin
+2017-06-07 01.03 Fixed Requirements
 </pre>
