@@ -1,9 +1,9 @@
 <h1>Manga OnlineViewer</h1>
 <h2>Official Sources</h2>
 <pre>
-GitHub:  https://github.com/TagoDR/MangaOnlineViewer
-GreaseFork:  https://greasyfork.org/en/scripts/1319-manga-onlineviewer
-OpenUserJS: https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer
+GitHub:     <a href="https://github.com/TagoDR/MangaOnlineViewer">https://github.com/TagoDR/MangaOnlineViewer</a>
+GreaseFork: <a href="https://github.com/TagoDR/MangaOnlineViewer">https://greasyfork.org/en/scripts/1319-manga-onlineviewer</a>
+OpenUserJS: <a href="https://github.com/TagoDR/MangaOnlineViewer">https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer</a>
 </pre>
 
 <h3>Supported Manga Sites</h3>
@@ -52,7 +52,7 @@ Portuguese: https://greasyfork.org/scripts/4657-manga-onlineviewer-portugues
 
 <h3>Supported Browsers</h3>
 1. Mozilla Firefox with <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">Greasemonkey</a></br>
-2. Google Chrome with <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en">Tampermonkey</a>
+2. Google Chrome with <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en">Tampermonkey</a></br>
 Should work with other browsers and addons, but they are not officially supported.
 
 
