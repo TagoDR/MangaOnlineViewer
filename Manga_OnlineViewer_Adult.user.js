@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name  Manga OnlineViewer Adult
 // @description  Extension for Manga OnlineViewer for Adult sites mainly Hentai: Fakku, HBrowse, Hentai2Read and Doujin-moe Hentai sites.
-// @version 01.03
+// @version 01.04
 // @date 2017-06-07
 // @author  Tago
 // @namespace https://github.com/TagoDR
@@ -33,6 +33,7 @@
 // @history 01.01 Fixed e-hentai
 // @history 01.02 Fixed Pururin
 // @history 01.03 Fixed Requirements
+// @history 01.04 Fixed Typo
 // ==/UserScript==
 (function ($) {
     var m = [
