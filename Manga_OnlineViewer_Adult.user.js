@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name  Manga OnlineViewer Adult
 // @description  Extension for Manga OnlineViewer for Adult sites mainly Hentai: Fakku, HBrowse, Hentai2Read and Doujin-moe Hentai sites.
-// @version 01.04
-// @date 2017-06-07
+// @version 01.06
+// @date 2017-06-10
 // @author  Tago
 // @namespace https://github.com/TagoDR
 // @require https://code.jquery.com/jquery-latest.min.js
@@ -10,7 +10,7 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.10.0/alertify.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js
-// @require https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
+// @require https://cdn.rawgit.com/TagoDR/MangaOnlineViewer/2ff59bd9/Manga_OnlineViewer.user.js
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @grant  GM_getValue
@@ -29,13 +29,16 @@
 // @include /https?://(www.)?hbrowse.com/.+/
 // @include /https?://(www.)?doujins.com/.+/
 // @include /https?://(www.)?(hentai2read|hentaihere).com/.+/.+//
+// @include /https?://(www.)?tsumino.com/Read/View/.+(/.+)?/
 // @history 01.00 It Begins
 // @history 01.01 Fixed e-hentai
 // @history 01.02 Fixed Pururin
 // @history 01.03 Fixed Requirements
 // @history 01.04 Fixed Typo
+// @history 01.05 Added Tsumino
+// @history 01.06 Fixed doujinshihentai
 // ==/UserScript==
-(function ($) {
+(function (W) {
     var m = [
         // == Fakku ============================================================================================================================
         {
@@ -64,14 +67,14 @@
             run: function() {
                 return {
                     title: $('.listTable td.listLong:first').text().trim(),
-                    series: window.location.href.match(/.+\/[0-9]+\//),
+                    series: location.href.match(/.+\/[0-9]+\//),
                     quant: $('td.pageList a, td.pageList strong').length - 1,
-                    prev: $("#chapters + table a.listLink").eq($("#chapters + table a.listLink").index($("#chapters + table a.listLink[href='" + window.location.href + "']")) - 1).attr("href"),
-                    next: $("#chapters + table a.listLink").eq($("#chapters + table a.listLink").index($("#chapters + table a.listLink[href='" + window.location.href + "']")) + 1).attr("href"),
+                    prev: $("#chapters + table a.listLink").eq($("#chapters + table a.listLink").index($("#chapters + table a.listLink[href='" + location.href + "']")) - 1).attr("href"),
+                    next: $("#chapters + table a.listLink").eq($("#chapters + table a.listLink").index($("#chapters + table a.listLink[href='" + location.href + "']")) + 1).attr("href"),
                     url: function(i) {
                         var str = '' + i;
                         while (str.length < 4) str = '0' + str;
-                        return window.location.href + (window.location.href.slice(-1) == "/" ? "" : "/") + str;
+                        return location.href + (location.href.slice(-1) == "/" ? "" : "/") + str;
                     },
                     img: 'td.pageImage a img',
                     before: function() {
@@ -83,7 +86,7 @@
         // == Doujin-Moe Non-members ===========================================================================================================
         {
             name: "DoujinMoeNM",
-            url: /doujins/,
+            url: /doujins.com/,
             run: function() {
                 return {
                     title: $(".title").text(),
@@ -109,7 +112,7 @@
                     quant: $("#pj_no_pictures").html().trim(),
                     prev: "#",
                     next: "#",
-                    url: window.location.pathname,
+                    url: location.pathname,
                     page: function(i, addImg, addAltImg) {
                         var self = this;
                         $.ajax({
@@ -153,7 +156,7 @@
                     quant: $(".sn div span:last").text(),
                     prev: "#",
                     next: "#",
-                    url: window.location.href,
+                    url: location.href,
                     timer: 3000,
                     page: function(i, addImg, addAltImg) {
                         var self = this;
@@ -264,7 +267,7 @@
                     prev: "#",
                     next: "#",
                     url: function(i) {
-                        var pathname = window.location.pathname.split('/');
+                        var pathname = location.pathname.split('/');
                         return "/" + pathname[1] + "/" + pathname[2] + "/" + i + "/";
                     },
                     img: "img#arf-reader"
@@ -310,7 +313,28 @@
                     img: '#page-container img'
                 };
             }
+        },
+        // == Tsumino =======================================================================================================================
+        {
+            name: "Tsumino",
+            url: /tsumino/,
+			waitVar: "reader_page_locs",
+            run: function() {
+                return {
+                    title: $("title").text().trim().match(/(.+: Read )(.+)/)[2],
+                    series: $("#backToIndex").next("a").attr("href"),
+                    quant: $("h1").text().match(/[0-9]+$/),
+                    prev: "#",
+                    next: "#",
+					data: W.reader_page_locs.map(function(x){
+						return W.reader_baseobj_url + "?name=" + encodeURIComponent(x);
+					}),
+                    page: function(i, addImg, addAltImg) {
+                        addImg(i, this.data[i-1]);
+                    }
+                };
+            }
         }
     ];
-    $.MangaOnlineViewer.setSites(m);
-})(jQuery);
+    W.MangaOnlineViewer.setSites(m);
+})((typeof unsafeWindow === 'undefined') ? window : unsafeWindow);
