@@ -44,7 +44,8 @@ OpenUserJS: <a href="https://github.com/TagoDR/MangaOnlineViewer">https://openus
 <li><a href="https://hitomi.la/">Hitomi</a></li>
 <li><a href="https://luscious.net/">Luscious</a> / <a href="https://www.wondersluts.com/">Wondersluts</a></li>
 <li><a href="https://nhentai.net/">nHentai</a></li>
-<li><a href="http://pururin.us/">Pururin</a></li></ul>
+<li><a href="http://pururin.us/">Pururin</a></li>
+<li><a href="http://tsumino.com/">Tsumino</a></li></ul>
 
 <h3>Extendible Script</h3>
 The script now support extensions, anyone that wish to make use of my script structure to support different languages of sites are free to do so. Below is are the links for the ones I know of. The first one is for Portuguese is mine, use it as an example.</br>
@@ -131,6 +132,11 @@ Library included inline: jQuery v2.1.1
 2017-06-05 12.27 Added Always Load option
 2017-06-06 12.28 Fixed keybinds
 2017-06-07 12.28 Bug Fixes
+2017-06-07 12.29 Bug Fix
+2017-06-09 12.30 Fix Mangastream
+2017-06-10 12.31 Fix Eatmanga
+2017-06-10 12.32 Added Mangateen
+2017-06-10 12.33 Code Improved
 </pre>
 <h3>Changelog Adult:</h3>
 <pre>
@@ -138,4 +144,7 @@ Library included inline: jQuery v2.1.1
 2017-05-31 01.01 Fixed e-hentai
 2017-05-31 01.02 Fixed Pururin
 2017-06-07 01.03 Fixed Requirements
+2017-06-07 01.04 Fixed Typo
+2017-06-09 01.05 Added Tsumino
+2017-06-10 01.06 Fixed doujinshihentai
 </pre>
