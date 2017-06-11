@@ -1,11 +1,16 @@
 // ==UserScript==
 // @name  Manga OnlineViewer Portugues
 // @description  Extension for Manga OnlineViewer for sites in Portuguese -- Extenção do Manga OnlineViewer para sites de Manga em Portugues
-// @version 1.01
+// @version 1.02
 // @date 2015-02-19
 // @author  Tago
-// @namespace https://greasyfork.org/users/1849-tago
-// @require https://greasyfork.org/scripts/1319-manga-onlineviewer/code/Manga%20OnlineViewer.user.js
+// @namespace https://github.com/TagoDR
+// @require https://code.jquery.com/jquery-latest.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.10.0/alertify.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js
+// @require https://cdn.rawgit.com/TagoDR/MangaOnlineViewer/2ff59bd9/Manga_OnlineViewer.user.js
 // @grant  GM_getValue
 // @grant  GM_setValue
 // @include /http://www.maxmangas.com.br/.+/[0-9]+/
@@ -14,10 +19,10 @@
 // @include /http://unionmangas.com.br/leitor/.+/
 // @history 1.00 It Begins
 // @history 1.01 Adicionado UnionMangas
+// @history 1.02 Prerequisitos atualizados
 // ==/UserScript==
-
 //OnlineViewer
-(function ($) {
+(function (W) {
     var m = [
 // == MaxMangas ===================================================================================================================================
         {
@@ -102,8 +107,6 @@
                 };
             }
         }
-    ];
-	
-    $.MangaOnlineViewer.setSites(m);
-
-})(jQuery);
+    ];	
+    W.MangaOnlineViewer.setSites(m);
+})((typeof unsafeWindow === 'undefined') ? window : unsafeWindow);
