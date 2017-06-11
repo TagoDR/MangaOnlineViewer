@@ -2,8 +2,8 @@
 <h2>Official Sources</h2>
 <pre>
 GitHub:     <a href="https://github.com/TagoDR/MangaOnlineViewer">https://github.com/TagoDR/MangaOnlineViewer</a>
-GreaseFork: <a href="https://github.com/TagoDR/MangaOnlineViewer">https://greasyfork.org/en/scripts/1319-manga-onlineviewer</a>
-OpenUserJS: <a href="https://github.com/TagoDR/MangaOnlineViewer">https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer</a>
+GreaseFork: <a href="https://greasyfork.org/en/scripts/1319-manga-onlineviewer">https://greasyfork.org/en/scripts/1319-manga-onlineviewer</a>
+OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer</a>
 </pre>
 
 <h3>Supported Manga Sites</h3>
@@ -37,6 +37,7 @@ OpenUserJS: <a href="https://github.com/TagoDR/MangaOnlineViewer">https://openus
 <li><a href="https://exhentai.org/">ExHentai</a> / <a href="https://e-hentai.org/">e-hentai</a> [May get you banned or ip blocked, use with moderation]</li>
 <li><a href="https://www.fakku.net/">Fakku</a></li>
 <li><a href="http://www.hbrowse.com/">HBrowse</a></li>
+<li><a href="http://www.hentaifox.com/">HentaiFox</a></li>
 <li><a href="http://hentai2read.com/">Hentai2Read</a></li>
 <li><a href="https://www.hentaihere.com/">HentaIhere</a></li>
 <li><a href="http://hentai4manga.com/">hentai4manga</a></li>
@@ -45,6 +46,7 @@ OpenUserJS: <a href="https://github.com/TagoDR/MangaOnlineViewer">https://openus
 <li><a href="https://luscious.net/">Luscious</a> / <a href="https://www.wondersluts.com/">Wondersluts</a></li>
 <li><a href="https://nhentai.net/">nHentai</a></li>
 <li><a href="http://pururin.us/">Pururin</a></li>
+<li><a href="http://simply-hentai.com/">Simply-Hentai</a></li>
 <li><a href="http://tsumino.com/">Tsumino</a></li></ul>
 
 <h3>Extendible Script</h3>
@@ -91,7 +93,6 @@ Download all images as ZIP File[Automatic Default off]
 Please note the this script may he a heavy on resources on a few sites, so please open only one tab of each site at a time and wait it finish loading.
 I'll try to keep this script updated, however I hardly-ever visit some of the sites supported, if you find it no longer works, post it in the feedback area, and have patience.
 I allow this script to be posted or used anywhere so long it gives me credit and provides a link back to this site. I allow parts of my script to be used freely.
-Library included inline: jQuery v2.1.1
 
 <h3>Rules For adding new Manga Sites</h3>
 <ol><li>The site must have rare/unique mangas</li>
@@ -137,6 +138,7 @@ Library included inline: jQuery v2.1.1
 2017-06-10 12.31 Fix Eatmanga
 2017-06-10 12.32 Added Mangateen
 2017-06-10 12.33 Code Improved
+2017-06-11 12.34 Added Shotcut Text
 </pre>
 <h3>Changelog Adult:</h3>
 <pre>
@@ -147,4 +149,6 @@ Library included inline: jQuery v2.1.1
 2017-06-07 01.04 Fixed Typo
 2017-06-09 01.05 Added Tsumino
 2017-06-10 01.06 Fixed doujinshihentai
+2017-06-11 01.07 Added HentaiFox
+2017-06-11 01.08 Added simply-hentai
 </pre>
