@@ -139,6 +139,7 @@ I allow this script to be posted or used anywhere so long it gives me credit and
 2017-06-10 12.32 Added Mangateen
 2017-06-10 12.33 Code Improved
 2017-06-11 12.34 Added Shotcut Text
+2017-06-16 12.35 Code Clean Up
 </pre>
 <h3>Changelog Adult:</h3>
 <pre>
@@ -151,4 +152,5 @@ I allow this script to be posted or used anywhere so long it gives me credit and
 2017-06-10 01.06 Fixed doujinshihentai
 2017-06-11 01.07 Added HentaiFox
 2017-06-11 01.08 Added simply-hentai
+2017-06-16 01.09 Code Clean Up
 </pre>
