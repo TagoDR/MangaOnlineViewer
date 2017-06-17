@@ -56,7 +56,6 @@
 // @history 12.33 Code Improved
 // @history 12.34 Added Shotcut Text
 // @history 12.35 Code Clean Up
-// @require file://C:\Users\Tago\Desktop\MOV.js
 // ==/UserScript==
 (function (W) {
     "use strict";
