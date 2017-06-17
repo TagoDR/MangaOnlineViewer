@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name  Manga OnlineViewer
 // @description  Shows all pages at once in online view: MangaFox, MangaReader/MangaPanda, MangaStream, MangaInn, MangaHere, MangaShare, Batoto, MangaDevil, MangaCow, MangaChapter, 7manga, MangaPirate.net and MangaBee/OneManga.me manga sites.
-// @version 12.34
-// @date 2017-06-11
+// @version 12.35
+// @date 2017-06-16
 // @author  Tago
 // @namespace https://github.com/TagoDR
 // @require https://code.jquery.com/jquery-latest.min.js
@@ -10,10 +10,12 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.10.0/alertify.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.0/color-scheme.min.js
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @grant  GM_getValue
 // @grant  GM_setValue
+// @grant  GM_listValues
 // @grant  GM_xmlhttpRequest
 // @include /https?://(www.)?mangafox.me/manga/.+/.+//
 // @include /https?://(www.)?(mangareader|mangapanda)(.net|.com)/.+/.+/
@@ -53,56 +55,58 @@
 // @history 12.32 Added Mangateen
 // @history 12.33 Code Improved
 // @history 12.34 Added Shotcut Text
+// @history 12.35 Code Clean Up
+// @require file://C:\Users\Tago\Desktop\MOV.js
 // ==/UserScript==
-/*! color-scheme.js, <https://github.com/c0bra/color-scheme-js*/
-!(function(){var t,e=[].slice;t=function(){function t(){var e,n;for(e=[],n=1;n<=4;n++)e.push(new t.mutablecolor(60));this.col=e,this._scheme="mono",this._distance=.5,this._web_safe=!1,this._add_complement=!1}var n,r,o,a,i,u;for(i=Array.isArray||function(t){return"[object Array]"==={}.toString.call(t)},t.SCHEMES={},a="mono monochromatic contrast triade tetrade analogic".split(/\s+/),r=0,o=a.length;r<o;r++)u=a[r],t.SCHEMES[u]=!0;return t.PRESETS={default:[-1,-1,1,-.7,.25,1,.5,1],pastel:[.5,-.9,.5,.5,.1,.9,.75,.75],soft:[.3,-.8,.3,.5,.1,.9,.5,.75],light:[.25,1,.5,.75,.1,1,.5,1],hard:[1,-1,1,-.6,.1,1,.6,1],pale:[.1,-.85,.1,.5,.1,1,.1,.75]},t.COLOR_WHEEL={0:[255,0,0,100],15:[255,51,0,100],30:[255,102,0,100],45:[255,128,0,100],60:[255,153,0,100],75:[255,178,0,100],90:[255,204,0,100],105:[255,229,0,100],120:[255,255,0,100],135:[204,255,0,100],150:[153,255,0,100],165:[51,255,0,100],180:[0,204,0,80],195:[0,178,102,70],210:[0,153,153,60],225:[0,102,178,70],240:[0,51,204,80],255:[25,25,178,70],270:[51,0,153,60],285:[64,0,153,60],300:[102,0,153,60],315:[153,0,153,60],330:[204,0,153,80],345:[229,0,102,90]},t.prototype.colors=function(){var t,e,n,r,o,a,i,u,s;if(s=1,e=this.col[0].get_hue(),t={mono:function(t){return function(){}}(this),contrast:function(t){return function(){return s=2,t.col[1].set_hue(e),t.col[1].rotate(180)}}(this),triade:function(t){return function(){var n;return s=3,n=60*t._distance,t.col[1].set_hue(e),t.col[1].rotate(180-n),t.col[2].set_hue(e),t.col[2].rotate(180+n)}}(this),tetrade:function(t){return function(){var n;return s=4,n=90*t._distance,t.col[1].set_hue(e),t.col[1].rotate(180),t.col[2].set_hue(e),t.col[2].rotate(180+n),t.col[3].set_hue(e),t.col[3].rotate(n)}}(this),analogic:function(t){return function(){var n;return s=t._add_complement?4:3,n=60*t._distance,t.col[1].set_hue(e),t.col[1].rotate(n),t.col[2].set_hue(e),t.col[2].rotate(360-n),t.col[3].set_hue(e),t.col[3].rotate(180)}}(this)},t.monochromatic=t.mono,null==t[this._scheme])throw"Unknown color scheme name: "+this._scheme;for(t[this._scheme](),i=[],n=o=0,u=s-1;0<=u?o<=u:o>=u;n=0<=u?++o:--o)for(r=a=0;a<=3;r=++a)i[4*n+r]=this.col[n].get_hex(this._web_safe,r);return i},t.prototype.colorset=function(){var t,e;for(t=n(this.colors()),e=[];t.length>0;)e.push(t.splice(0,4));return e},t.prototype.from_hue=function(t){if(null==t)throw"from_hue needs an argument";return this.col[0].set_hue(t),this},t.prototype.rgb2ryb=function(){var t,n,r,o,a,u,s,h,l;return s=1<=arguments.length?e.call(arguments,0):[],null!=s[0]&&i(s[0])&&(s=s[0]),u=s[0],n=s[1],t=s[2],h=Math.min(u,n,t),u-=h,n-=h,t-=h,o=Math.max(u,n,t),l=Math.min(u,n),u-=l,n-=l,t>0&&n>0&&(t/=2,n/=2),l+=n,t+=n,a=Math.max(u,l,t),a>0&&(r=o/a,u*=r,l*=r,t*=r),u+=h,l+=h,t+=h,[Math.floor(u),Math.floor(l),Math.floor(t)]},t.prototype.rgb2hsv=function(){var t,n,r,o,a,u,s,h,l,c;return h=1<=arguments.length?e.call(arguments,0):[],null!=h[0]&&i(h[0])&&(h=h[0]),s=h[0],r=h[1],t=h[2],s/=255,r/=255,t/=255,u=Math.min.apply(Math,[s,r,t]),a=Math.max.apply(Math,[s,r,t]),n=a-u,c=a,n>0?(l=n/a,o=s===a?(r-t)/n:r===a?2+(t-s)/n:4+(s-r)/n,o*=60,o%=360,[o,l,c]):[0,0,c]},t.prototype.rgbToHsv=function(){var t,n,r,o,a,u,s,h,l,c;if(h=1<=arguments.length?e.call(arguments,0):[],null!=h[0]&&i(h[0])&&(h=h[0]),s=h[0],r=h[1],t=h[2],s/=255,r/=255,t/=255,a=Math.max(s,r,t),u=Math.min(s,r,t),o=void 0,l=void 0,c=a,n=a-u,l=0===a?0:n/a,a===u)o=0;else{switch(a){case s:o=(r-t)/n+(r<t?6:0);break;case r:o=(t-s)/n+2;break;case t:o=(s-r)/n+4}o/=6}return[o,l,c]},t.prototype.from_hex=function(t){var e,n,r,o,a,i,u,s,h,l,c,f,p,_,m,d;if(null==t)throw"from_hex needs an argument";if(!/^([0-9A-F]{2}){3}$/im.test(t))throw"from_hex("+t+") - argument must be in the form of RRGGBB";return _=/(..)(..)(..)/.exec(t).slice(1,4),f=function(){var t,e,n;for(n=[],e=0,t=_.length;e<t;e++)l=_[e],n.push(parseInt(l,16));return n}(),c=f[0],n=f[1],e=f[2],p=this.rgb2ryb([c,n,e]),c=p[0],n=p[1],e=p[2],u=this.rgbToHsv(c,n,e),o=u[0],a=0,i=1e3,s=null,h=null,r=null,m=null,d=null,r=u[0],m=u[1],d=u[2],this.from_hue(360*r),this._set_variant_preset([m,d,m,.7*d,.25*m,1,.5*m,1]),this},t.prototype.add_complement=function(t){if(null==t)throw"add_complement needs an argument";return this._add_complement=t,this},t.prototype.web_safe=function(t){if(null==t)throw"web_safe needs an argument";return this._web_safe=t,this},t.prototype.distance=function(t){if(null==t)throw"distance needs an argument";if(t<0)throw"distance("+t+") - argument must be >= 0";if(t>1)throw"distance("+t+") - argument must be <= 1";return this._distance=t,this},t.prototype.scheme=function(e){if(null==e)return this._scheme;if(null==t.SCHEMES[e])throw"'"+e+"' isn't a valid scheme name";return this._scheme=e,this},t.prototype.variation=function(e){if(null==e)throw"variation needs an argument";if(null==t.PRESETS[e])throw"'$v' isn't a valid variation name";return this._set_variant_preset(t.PRESETS[e]),this},t.prototype._set_variant_preset=function(t){var e,n,r;for(r=[],e=n=0;n<=3;e=++n)r.push(this.col[e].set_variant_preset(t));return r},n=function(t){var e,r,o;if(null==t||"object"!=typeof t)return t;if(t instanceof Date)return new Date(t.getTime());if(t instanceof RegExp)return e="",null!=t.global&&(e+="g"),null!=t.ignoreCase&&(e+="i"),null!=t.multiline&&(e+="m"),null!=t.sticky&&(e+="y"),new RegExp(t.source,e);o=new t.constructor;for(r in t)o[r]=n(t[r]);return o},t.mutablecolor=function(){function e(e){if(null==e)throw"No hue specified";this.saturation=[],this.value=[],this.base_red=0,this.base_green=0,this.base_blue=0,this.base_saturation=0,this.base_value=0,this.set_hue(e),this.set_variant_preset(t.PRESETS.default)}return e.prototype.hue=0,e.prototype.saturation=[],e.prototype.value=[],e.prototype.base_red=0,e.prototype.base_green=0,e.prototype.base_saturation=0,e.prototype.base_value=0,e.prototype.get_hue=function(){return this.hue},e.prototype.set_hue=function(e){var n,r,o,a,i,u,s,h,l,c;n=function(t,e,n){return t+Math.round((e-t)*n)},this.hue=Math.round(e%360),i=this.hue%15+(this.hue-Math.floor(this.hue)),c=i/15,u=this.hue-Math.floor(i),s=(u+15)%360,o=t.COLOR_WHEEL[u],a=t.COLOR_WHEEL[s],h={red:0,green:1,blue:2,value:3};for(r in h)l=h[r],this["base_"+r]=n(o[l],a[l],c);return this.base_saturation=n(100,100,c)/100,this.base_value/=100},e.prototype.rotate=function(t){var e;return e=(this.hue+t)%360,this.set_hue(e)},e.prototype.get_saturation=function(t){var e,n;return n=this.saturation[t],e=n<0?-n*this.base_saturation:n,e>1&&(e=1),e<0&&(e=0),e},e.prototype.get_value=function(t){var e,n;return n=this.value[t],e=n<0?-n*this.base_value:n,e>1&&(e=1),e<0&&(e=0),e},e.prototype.set_variant=function(t,e,n){return this.saturation[t]=e,this.value[t]=n},e.prototype.set_variant_preset=function(t){var e,n,r;for(r=[],e=n=0;n<=3;e=++n)r.push(this.set_variant(e,t[2*e],t[2*e+1]));return r},e.prototype.get_hex=function(t,e){var n,r,o,a,i,u,s,h,l,c,f,p,_,m,d,v,g;for(l=Math.max.apply(Math,function(){var t,e,n,o;for(n=["red","green","blue"],o=[],e=0,t=n.length;e<t;e++)r=n[e],o.push(this["base_"+r]);return o}.call(this)),c=Math.min.apply(Math,function(){var t,e,n,o;for(n=["red","green","blue"],o=[],e=0,t=n.length;e<t;e++)r=n[e],o.push(this["base_"+r]);return o}.call(this)),g=255*(e<0?this.base_value:this.get_value(e)),d=e<0?this.base_saturation:this.get_saturation(e),i=l>0?g/l:0,_=[],p=["red","green","blue"],h=0,u=p.length;h<u;h++)r=p[h],m=Math.min.apply(Math,[255,Math.round(g-(g-this["base_"+r]*i)*d)]),_.push(m);for(t&&(_=function(){var t,e,r;for(r=[],e=0,t=_.length;e<t;e++)n=_[e],r.push(51*Math.round(n/51));return r}()),o="",f=0,s=_.length;f<s;f++)a=_[f],v=a.toString(16),v.length<2&&(v="0"+v),o+=v;return o},e}(),t}(),"undefined"!=typeof module&&null!==module&&null!=module.exports?module.exports=t:"function"==typeof define&&define.amd?define([],function(){return t}):window.ColorScheme=t}).call(this);
 (function (W) {
     "use strict";
     // Start the script
     function main(m) {
-        console.log("Starting " + getInfoGM().script.name + " " + getInfoGM().script.version + " on " + getBrowser() + " with " + getEngine);
+        console.log("Starting " + getInfoGM().script.name + " " + getInfoGM().script.version + " on " + getBrowser() + " with " + getEngine());
+        // W.InfoGM = getInfoGM();
         sites = $.merge(sites, m);
-        $(document).ready(function () {
-            console.log(sites.length + " Known Manga Sites");
-            var found = 0;
-            for (var i = 1; i < sites.length; i += 1) {
-                if (sites[i].url.test(location.host)) {
-                    found = i;
-                    break;
+        console.log(sites.length + " Known Manga Sites");
+        var found = 0;
+        for (var i = 1; i < sites.length; i += 1) {
+            if (sites[i].url.test(location.host)) {
+                found = i;
+                break;
+            }
+        }
+        console.log("Loading " + sites[found].name);
+        //Wait for something on the site to be ready before executing the script
+        function waitExec() {
+            var wait = "";
+            if (sites[found].waitEle !== undefined) {
+                if (sites[found].waitAttr !== undefined) {
+                    wait = $(sites[found].waitEle).attr(sites[found].waitAttr);
+                } else {
+                    wait = $(sites[found].waitEle);
+                }
+                console.log("Wating for " + sites[found].waitEle + " = " + wait);
+                if (isEmpty(wait)) {
+                    setTimeout(function () {
+                        waitExec();
+                    }, 1000);
+                    return;
                 }
             }
-            console.log("Loading " + sites[found].name);
-            function waitExec() {
-                var wait = "";
-                if (sites[found].waitEle !== undefined) {
-                    if (sites[found].waitAttr !== undefined) {
-                        wait = $(sites[found].waitEle).attr(sites[found].waitAttr);
-                    } else {
-                        wait = $(sites[found].waitEle);
-                    }
-                    console.log("Wating for " + sites[found].waitEle + " = " + wait);
-                    if (isEmpty(wait)) {
-                        setTimeout(function () {
-                            waitExec();
-                        }, 1000);
-                        return;
-                    }
+            if (sites[found].waitVar !== undefined) {
+                wait = W[sites[found].waitVar];
+                console.log("Wating for " + sites[found].waitVar + " = " + wait);
+                if (isEmpty(wait)) {
+                    setTimeout(function () {
+                        waitExec();
+                    }, 1000);
+                    return;
                 }
-                if (sites[found].waitVar !== undefined) {
-                    wait = W[sites[found].waitVar];
-                    console.log("Wating for " + sites[found].waitVar + " = " + wait);
-                    if (isEmpty(wait)) {
-                        setTimeout(function () {
-                            waitExec();
-                        }, 1000);
-                        return;
-                    }
-                }
-                Manga = sites[found].run();
-                formatPage(Manga);
             }
-            setTimeout(waitExec, sites[found].delay || 50);
-        });
+            Manga = sites[found].run();
+            formatPage(Manga);
+        }
+		$(document).ready(function(){
+			setTimeout(waitExec, sites[found].delay || 50);			
+		})
     }
     // Configuration
     var cache = {
@@ -115,18 +119,11 @@
     });
     var sites = [];
     var Manga = {};
-    var VERSION = 12.27; // Only for resetting settings
-    if (getValueGM("MangaVersion", 12.00) < VERSION) {
-        setValueGM("MangaTheme", "Light");
-        setValueGM("MangaCustomTheme", "3d0099");
+    if (getListGM().length !== 0 && typeof getValueGM("MangaFitWidthIfOversized", "true") == "string") {
         setValueGM("MangaFitWidthIfOversized", true);
         setValueGM("MangaShowThumbnails", true);
         setValueGM("MangaDownloadZip", false);
-        setValueGM("MangaTimer", 1000);
-        setValueGM("MangaZoom", 100);
         setValueGM("MangaAlwaysLoad", false);
-        setValueGM("MangaVersion", VERSION);
-        alert("Manga OnlineViewer Setting have been RESET, because of Update to version: " + VERSION);
     }
     var settings = {
         Theme: getValueGM("MangaTheme", "Light"),
@@ -172,7 +169,7 @@
         if ((tem = ua.match(/version\/(\d+)/i)) !== null) M.splice(1, 1, tem[1]);
         return M.join(" ");
     }
-
+    // Check if the value is empty
     function isEmpty(value) {
         return (value === null || value.length === 0);
     }
@@ -180,7 +177,15 @@
     function getEngine() {
         return (getInfoGM().scriptHandler || "Greasemonkey") + " " + getInfoGM().version;
     }
-
+    // Replacement function for GM_listValues allowing for debugging in console
+    function getListGM() {
+        try {
+            return GM_listValues();
+        } catch (e){
+            return [];
+        }
+    }
+    // Replacement function for GM_info allowing for debugging in console
     function getInfoGM() {
         try {
             return GM_info;
@@ -214,6 +219,7 @@
     //Organize the site adding place holders for the manga pages
     function formatPage() {
         console.log("Found " + Manga.quant + " pages");
+        W.stop();
         if (Manga.quant > 0) {
             var cancel = false;
             if (!settings.alwaysLoad) {
@@ -260,7 +266,6 @@
                 $("body").removeClass().addClass(settings.Theme);
                 $("script").remove();
                 $("head > :not(title, meta)").remove();
-                //$("head").append("<script src='https://code.jquery.com/jquery-latest.min.js'></script>");
                 reader();
                 $("#PagesPerSecond option[value=" + settings.Timer + "]").attr("selected", "true");
                 $("#DefaultZoom option[value=" + settings.Zoom + "]").attr("selected", "true");
@@ -288,78 +293,7 @@
         $("style, link[type='text/css'], link[href$='css']").remove();
         var css = "<style type='text/css'>" +
             /*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */
-            "button,hr,input{overflow:visible}audio,canvas,progress,video{display:inline-block}progress,sub,sup{vertical-align:baseline}[type=checkbox],[type=radio],legend{box-sizing:border-box;padding:0}html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figure{margin:1em 40px}hr{box-sizing:content-box;height:0}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative}sub{bottom:-.25em}sup{top:-.5em}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:ButtonText dotted 1px}fieldset{padding:.35em .75em .625em}legend{color:inherit;display:table;max-width:100%;white-space:normal}textarea{overflow:auto}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}[hidden],template{display:none}" +
-            "html{font-size:100%}" +
-            "img{height:auto;max-width:100%;vertical-align:middle;border:0 none}" +
-            "button,input,select,textarea{margin:0;font-size:100%;vertical-align:middle}" +
-            "button,input{line-height:normal}" +
-            "body{margin:0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:#333;background-color:#FFF}" +
-            "a{color:#08C;text-decoration:none}" +
-            "label,input,button,select,textarea{font-size:14px;font-weight:normal;line-height:20px}" +
-            "input,button,select,textarea{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif}" +
-            "select,textarea,input[type='text'],input[type='password'],input[type='datetime'],input[type='datetime-local'],input[type='date'],input[type='month'],input[type='time'],input[type='week'],input[type='number'],input[type='email'],input[type='url'],input[type='search'],input[type='tel'],input[type='color'],.uneditable-input{display:inline-block;height:20px;padding:4px 6px;margin-bottom:10px;font-size:14px;line-height:20px;color:#555;vertical-align:middle;border-radius:4px 4px 4px 4px}" +
-            "input:not([type='checkbox']),textarea,.uneditable-input{width:206px}" +
-            "textarea,input[type='text'],input[type='password'],input[type='datetime'],input[type='datetime-local'],input[type='date'],input[type='month'],input[type='time'],input[type='week'],input[type='number'],input[type='email'],input[type='url'],input[type='search'],input[type='tel'],input[type='color'],.uneditable-input{background-color:#FFF;border:1px solid #CCC;box-shadow:0 1px 1px rgba(0,0,0,0.075) inset;transition:border .2s linear 0,box-shadow .2s linear 0}" +
-            "input,textarea,.uneditable-input{margin-left:0}" +
-            "body{font-family:sans-serif;font-size:12pt;padding:0}" +
-            "#nprogress{pointer-events:none;}" +
-            "#nprogress .bar{background:#29d;position:fixed;z-index:1031;top:0;left:0;width:100%;height:4px;}" +
-            "#nprogress .peg{display:block;position:absolute;right:0px;width:100px;height:100%;box-shadow:0 0 10px #29d,0 0 5px #29d;opacity:1.0;-webkit-transform:rotate(3deg) translate(0px,-4px);-ms-transform:rotate(3deg) translate(0px,-4px);transform:rotate(3deg) translate(0px,-4px);}" +
-            "#nprogress .spinner{display:block;position:fixed;z-index:1031;top:15px;right:15px;}" +
-            "#nprogress .spinner-icon{width:18px;height:18px;box-sizing:border-box;border:solid 2px transparent;border-top-color:#29d;border-left-color:#29d;border-radius:50%;-webkit-animation:nprogress-spinner 400ms linear infinite;animation:nprogress-spinner 400ms linear infinite;}" +
-            ".nprogress-custom-parent{overflow:hidden;position:relative;}" +
-            ".nprogress-custom-parent #nprogress .spinner,.nprogress-custom-parent #nprogress .bar{position:absolute;}" +
-            "@-webkit-keyframes nprogress-spinner{0%{-webkit-transform:rotate(0deg);}100%{-webkit-transform:rotate(360deg);}}" +
-            "@keyframes nprogress-spinner{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}" +
-            ".alertify .ajs-dimmer,.alertify .ajs-modal{position:fixed;padding:0;z-index:1981;top:0;right:0;bottom:0;left:0}.alertify .ajs-dimmer{margin:0;background-color:#252525;opacity:.5}.alertify .ajs-modal{overflow-y:auto}.alertify .ajs-dialog{position:relative;margin:5% auto;min-height:110px;max-width:500px;padding:24px 24px 0;outline:0;background-color:#fff}.alertify .ajs-dialog.ajs-capture:before{content:'';position:absolute;top:0;right:0;bottom:0;left:0;display:block;z-index:1}.alertify .ajs-reset{position:absolute!important;display:inline!important;width:0!important;height:0!important;opacity:0!important}.alertify .ajs-commands{position:absolute;right:4px;margin:-14px 24px 0 0;z-index:2}.alertify .ajs-commands button{display:none;width:10px;height:10px;margin-left:10px;padding:10px;border:0;background-color:transparent;background-repeat:no-repeat;background-position:center;cursor:pointer}.alertify .ajs-commands button.ajs-close{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8xMy8xNOrZqugAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAh0lEQVQYlY2QsQ0EIQwEB9cBAR1CJUaI/gigDnwR6NBL/7/xWLNrZ2b8EwGotVpr7eOitWa1VjugiNB7R1UPrKrWe0dEAHBbXUqxMQbeewDmnHjvyTm7C3zDwAUd9c63YQdUVdu6EAJzzquz7HXvTiklt+H9DQFYaxFjvDqllFyMkbXWvfpXHjJrWFgdBq/hAAAAAElFTkSuQmCC)}.alertify .ajs-commands button.ajs-maximize{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8xMy8xNOrZqugAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAOUlEQVQYlWP8//8/AzGAhYGBgaG4uBiv6t7eXkYmooxjYGAgWiELsvHYFMCcRX2rSXcjoSBiJDbAAeD+EGu+8BZcAAAAAElFTkSuQmCC)}.alertify .ajs-header{margin:-24px -24px 0;padding:16px 24px;background-color:#fff}.alertify .ajs-body{min-height:56px}.alertify .ajs-body .ajs-content{padding:16px 24px 16px 16px}.alertify .ajs-footer{padding:4px;margin-left:-24px;margin-right:-24px;min-height:43px;background-color:#fff}.alertify.ajs-maximized .ajs-dialog,.alertify.ajs-no-padding:not(.ajs-maximized) .ajs-body .ajs-content,.alertify.ajs-resizable .ajs-dialog{padding:0}.alertify .ajs-footer .ajs-buttons.ajs-auxiliary .ajs-button,.alertify .ajs-footer .ajs-buttons.ajs-primary .ajs-button{margin:4px}.alertify .ajs-footer .ajs-buttons.ajs-primary{text-align:right}.alertify .ajs-footer .ajs-buttons.ajs-auxiliary{float:left;clear:none;text-align:left}.alertify .ajs-footer .ajs-buttons .ajs-button{min-width:88px;min-height:35px}.alertify .ajs-handle{position:absolute;display:none;width:10px;height:10px;right:0;bottom:0;z-index:1;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8xMS8xNEDQYmMAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAQ0lEQVQYlaXNMQoAIAxD0dT7H657l0KX3iJuUlBUNOsPPCGJm7VDp6ryeMxMuDsAQH7owW3pyn3RS26iKxERMLN3ugOaAkaL3sWVigAAAABJRU5ErkJggg==);-webkit-transform:scaleX(1);transform:scaleX(1);cursor:se-resize}.alertify.ajs-no-overflow .ajs-body .ajs-content{overflow:hidden!important}.alertify.ajs-no-padding.ajs-maximized .ajs-body .ajs-content{left:0;right:0;padding:0}.alertify.ajs-no-padding:not(.ajs-maximized) .ajs-body{margin-left:-24px;margin-right:-24px}.alertify.ajs-no-padding.ajs-resizable .ajs-body .ajs-content{left:0;right:0}.alertify.ajs-closable .ajs-commands button.ajs-close,.alertify.ajs-maximizable .ajs-commands button.ajs-maximize,.alertify.ajs-maximizable .ajs-commands button.ajs-restore{display:inline-block}.alertify.ajs-maximized .ajs-dialog{width:100%!important;height:100%!important;max-width:none!important;margin:0 auto!important;top:0!important;left:0!important}.alertify.ajs-maximized.ajs-modeless .ajs-modal{position:fixed!important;min-height:100%!important;max-height:none!important;margin:0!important}.alertify.ajs-maximized .ajs-commands button.ajs-maximize{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8xMy8xNOrZqugAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAASklEQVQYlZWQ0QkAMQhDtXRincOZX78KVtrDCwgqJNEoIB3MPLj7lRUROlpyVXGzby6zWuY+kz6tj5sBMTMAyVV3/595RbOh3cAXsww1raeiOcoAAAAASUVORK5CYII=)}.alertify.ajs-maximized .ajs-commands,.alertify.ajs-resizable .ajs-commands{margin:14px 24px 0 0}.alertify.ajs-maximized .ajs-header,.alertify.ajs-resizable .ajs-header{position:absolute;top:0;left:0;right:0;margin:0;padding:16px 24px}.alertify.ajs-maximized .ajs-body,.alertify.ajs-resizable .ajs-body{min-height:224px;display:inline-block}.alertify.ajs-maximized .ajs-body .ajs-content,.alertify.ajs-resizable .ajs-body .ajs-content{position:absolute;top:50px;right:24px;bottom:50px;left:24px;overflow:auto}.alertify.ajs-maximized .ajs-footer,.alertify.ajs-resizable .ajs-footer{position:absolute;left:0;right:0;bottom:0;margin:0}.alertify.ajs-resizable:not(.ajs-maximized) .ajs-dialog{min-width:548px}.alertify.ajs-resizable:not(.ajs-maximized) .ajs-handle{display:block}.alertify.ajs-movable:not(.ajs-maximized) .ajs-header{cursor:move}.alertify.ajs-modeless .ajs-dimmer,.alertify.ajs-modeless .ajs-reset{display:none}.alertify.ajs-modeless .ajs-modal{overflow:visible;max-width:none;max-height:0}.alertify.ajs-modeless.ajs-pinnable .ajs-commands button.ajs-pin{display:inline-block;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8xMy8xNOrZqugAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAQklEQVQYlcWPMQ4AIAwCqU9u38GbcbHRWN1MvKQDhQFMEpKImGJA0gCgnYw0V0rwxseg5erT4oSkQVI5d9f+e9+xA0NbLpWfitPXAAAAAElFTkSuQmCC)}.alertify.ajs-modeless.ajs-unpinned .ajs-modal{position:absolute}.alertify.ajs-modeless.ajs-unpinned .ajs-commands button.ajs-pin{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8xMy8xNOrZqugAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAO0lEQVQYlWP8//8/AzGAiShV6AqLi4txGs+CLoBLMYbC3t5eRmyaWfBZhwwYkX2NTxPRvibKjRhW4wMAhxkYGbLu3pEAAAAASUVORK5CYII=)}.alertify.ajs-modeless:not(.ajs-unpinned) .ajs-body{max-height:500px;overflow:auto}.alertify.ajs-basic .ajs-header{opacity:0}.alertify.ajs-basic .ajs-footer{visibility:hidden}.alertify.ajs-frameless .ajs-header{position:absolute;top:0;left:0;right:0;min-height:60px;margin:0;padding:0;opacity:0;z-index:1}.alertify.ajs-frameless .ajs-footer{display:none}.alertify.ajs-frameless .ajs-body .ajs-content{position:absolute;top:0;right:0;bottom:0;left:0}.alertify.ajs-frameless:not(.ajs-resizable) .ajs-dialog{padding-top:0}.alertify.ajs-frameless:not(.ajs-resizable) .ajs-dialog .ajs-commands{margin-top:0}.ajs-no-overflow{overflow:hidden!important;outline:0}.ajs-no-overflow.ajs-fixed{position:fixed;top:0;right:0;bottom:0;left:0;overflow-y:scroll!important}.ajs-no-selection,.ajs-no-selection *{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}@media screen and (max-width:568px){.alertify .ajs-dialog{min-width:150px}.alertify:not(.ajs-maximized) .ajs-modal{padding:0 5%}.alertify:not(.ajs-maximized).ajs-resizable .ajs-dialog{min-width:initial;min-width:auto}}@-moz-document url-prefix(){.alertify button:focus{outline:#3593D2 dotted 1px}}.alertify .ajs-dimmer,.alertify .ajs-modal{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);transition-property:opacity,visibility;transition-timing-function:linear;transition-duration:250ms}.alertify.ajs-hidden .ajs-dimmer,.alertify.ajs-hidden .ajs-modal{visibility:hidden;opacity:0}.alertify.ajs-in:not(.ajs-hidden) .ajs-dialog{-webkit-animation-duration:.5s;animation-duration:.5s}.alertify.ajs-out.ajs-hidden .ajs-dialog{-webkit-animation-duration:250ms;animation-duration:250ms}.alertify .ajs-dialog.ajs-shake{-webkit-animation-name:ajs-shake;animation-name:ajs-shake;-webkit-animation-duration:.1s;animation-duration:.1s;-webkit-animation-fill-mode:both;animation-fill-mode:both}@-webkit-keyframes ajs-shake{0%,100%{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}10%,30%,50%,70%,90%{-webkit-transform:translate3d(-10px,0,0);transform:translate3d(-10px,0,0)}20%,40%,60%,80%{-webkit-transform:translate3d(10px,0,0);transform:translate3d(10px,0,0)}}@keyframes ajs-shake{0%,100%{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}10%,30%,50%,70%,90%{-webkit-transform:translate3d(-10px,0,0);transform:translate3d(-10px,0,0)}20%,40%,60%,80%{-webkit-transform:translate3d(10px,0,0);transform:translate3d(10px,0,0)}}.alertify.ajs-slide.ajs-in:not(.ajs-hidden) .ajs-dialog{-webkit-animation-name:ajs-slideIn;animation-name:ajs-slideIn;-webkit-animation-timing-function:cubic-bezier(.175,.885,.32,1.275);animation-timing-function:cubic-bezier(.175,.885,.32,1.275)}.alertify.ajs-slide.ajs-out.ajs-hidden .ajs-dialog{-webkit-animation-name:ajs-slideOut;animation-name:ajs-slideOut;-webkit-animation-timing-function:cubic-bezier(.6,-.28,.735,.045);animation-timing-function:cubic-bezier(.6,-.28,.735,.045)}.alertify.ajs-zoom.ajs-in:not(.ajs-hidden) .ajs-dialog{-webkit-animation-name:ajs-zoomIn;animation-name:ajs-zoomIn}.alertify.ajs-zoom.ajs-out.ajs-hidden .ajs-dialog{-webkit-animation-name:ajs-zoomOut;animation-name:ajs-zoomOut}.alertify.ajs-fade.ajs-in:not(.ajs-hidden) .ajs-dialog{-webkit-animation-name:ajs-fadeIn;animation-name:ajs-fadeIn}.alertify.ajs-fade.ajs-out.ajs-hidden .ajs-dialog{-webkit-animation-name:ajs-fadeOut;animation-name:ajs-fadeOut}.alertify.ajs-pulse.ajs-in:not(.ajs-hidden) .ajs-dialog{-webkit-animation-name:ajs-pulseIn;animation-name:ajs-pulseIn}.alertify.ajs-pulse.ajs-out.ajs-hidden .ajs-dialog{-webkit-animation-name:ajs-pulseOut;animation-name:ajs-pulseOut}.alertify.ajs-flipx.ajs-in:not(.ajs-hidden) .ajs-dialog{-webkit-animation-name:ajs-flipInX;animation-name:ajs-flipInX}.alertify.ajs-flipx.ajs-out.ajs-hidden .ajs-dialog{-webkit-animation-name:ajs-flipOutX;animation-name:ajs-flipOutX}.alertify.ajs-flipy.ajs-in:not(.ajs-hidden) .ajs-dialog{-webkit-animation-name:ajs-flipInY;animation-name:ajs-flipInY}.alertify.ajs-flipy.ajs-out.ajs-hidden .ajs-dialog{-webkit-animation-name:ajs-flipOutY;animation-name:ajs-flipOutY}@-webkit-keyframes ajs-pulseIn{0%,100%,20%,40%,60%,80%{transition-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}20%{-webkit-transform:scale3d(1.1,1.1,1.1);transform:scale3d(1.1,1.1,1.1)}40%{-webkit-transform:scale3d(.9,.9,.9);transform:scale3d(.9,.9,.9)}60%{opacity:1;-webkit-transform:scale3d(1.03,1.03,1.03);transform:scale3d(1.03,1.03,1.03)}80%{-webkit-transform:scale3d(.97,.97,.97);transform:scale3d(.97,.97,.97)}100%{opacity:1;-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}}@keyframes ajs-pulseIn{0%,100%,20%,40%,60%,80%{transition-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}20%{-webkit-transform:scale3d(1.1,1.1,1.1);transform:scale3d(1.1,1.1,1.1)}40%{-webkit-transform:scale3d(.9,.9,.9);transform:scale3d(.9,.9,.9)}60%{opacity:1;-webkit-transform:scale3d(1.03,1.03,1.03);transform:scale3d(1.03,1.03,1.03)}80%{-webkit-transform:scale3d(.97,.97,.97);transform:scale3d(.97,.97,.97)}100%{opacity:1;-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}}@-webkit-keyframes ajs-pulseOut{20%{-webkit-transform:scale3d(.9,.9,.9);transform:scale3d(.9,.9,.9)}50%,55%{opacity:1;-webkit-transform:scale3d(1.1,1.1,1.1);transform:scale3d(1.1,1.1,1.1)}100%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}}@keyframes ajs-pulseOut{20%{-webkit-transform:scale3d(.9,.9,.9);transform:scale3d(.9,.9,.9)}50%,55%{opacity:1;-webkit-transform:scale3d(1.1,1.1,1.1);transform:scale3d(1.1,1.1,1.1)}100%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}}@-webkit-keyframes ajs-zoomIn{0%{opacity:0;-webkit-transform:scale3d(.25,.25,.25);transform:scale3d(.25,.25,.25)}100%{opacity:1;-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}}@keyframes ajs-zoomIn{0%{opacity:0;-webkit-transform:scale3d(.25,.25,.25);transform:scale3d(.25,.25,.25)}100%{opacity:1;-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}}@-webkit-keyframes ajs-zoomOut{0%{opacity:1;-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}100%{opacity:0;-webkit-transform:scale3d(.25,.25,.25);transform:scale3d(.25,.25,.25)}}@keyframes ajs-zoomOut{0%{opacity:1;-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}100%{opacity:0;-webkit-transform:scale3d(.25,.25,.25);transform:scale3d(.25,.25,.25)}}@-webkit-keyframes ajs-fadeIn{0%{opacity:0}100%{opacity:1}}@keyframes ajs-fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes ajs-fadeOut{0%{opacity:1}100%{opacity:0}}@keyframes ajs-fadeOut{0%{opacity:1}100%{opacity:0}}@-webkit-keyframes ajs-flipInX{0%{-webkit-transform:perspective(400px) rotate3d(1,0,0,90deg);transform:perspective(400px) rotate3d(1,0,0,90deg);transition-timing-function:ease-in;opacity:0}40%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-20deg);transform:perspective(400px) rotate3d(1,0,0,-20deg);transition-timing-function:ease-in}60%{-webkit-transform:perspective(400px) rotate3d(1,0,0,10deg);transform:perspective(400px) rotate3d(1,0,0,10deg);opacity:1}80%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-5deg);transform:perspective(400px) rotate3d(1,0,0,-5deg)}100%{-webkit-transform:perspective(400px);transform:perspective(400px)}}@keyframes ajs-flipInX{0%{-webkit-transform:perspective(400px) rotate3d(1,0,0,90deg);transform:perspective(400px) rotate3d(1,0,0,90deg);transition-timing-function:ease-in;opacity:0}40%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-20deg);transform:perspective(400px) rotate3d(1,0,0,-20deg);transition-timing-function:ease-in}60%{-webkit-transform:perspective(400px) rotate3d(1,0,0,10deg);transform:perspective(400px) rotate3d(1,0,0,10deg);opacity:1}80%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-5deg);transform:perspective(400px) rotate3d(1,0,0,-5deg)}100%{-webkit-transform:perspective(400px);transform:perspective(400px)}}@-webkit-keyframes ajs-flipOutX{0%{-webkit-transform:perspective(400px);transform:perspective(400px)}30%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-20deg);transform:perspective(400px) rotate3d(1,0,0,-20deg);opacity:1}100%{-webkit-transform:perspective(400px) rotate3d(1,0,0,90deg);transform:perspective(400px) rotate3d(1,0,0,90deg);opacity:0}}@keyframes ajs-flipOutX{0%{-webkit-transform:perspective(400px);transform:perspective(400px)}30%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-20deg);transform:perspective(400px) rotate3d(1,0,0,-20deg);opacity:1}100%{-webkit-transform:perspective(400px) rotate3d(1,0,0,90deg);transform:perspective(400px) rotate3d(1,0,0,90deg);opacity:0}}@-webkit-keyframes ajs-flipInY{0%{-webkit-transform:perspective(400px) rotate3d(0,1,0,90deg);transform:perspective(400px) rotate3d(0,1,0,90deg);transition-timing-function:ease-in;opacity:0}40%{-webkit-transform:perspective(400px) rotate3d(0,1,0,-20deg);transform:perspective(400px) rotate3d(0,1,0,-20deg);transition-timing-function:ease-in}60%{-webkit-transform:perspective(400px) rotate3d(0,1,0,10deg);transform:perspective(400px) rotate3d(0,1,0,10deg);opacity:1}80%{-webkit-transform:perspective(400px) rotate3d(0,1,0,-5deg);transform:perspective(400px) rotate3d(0,1,0,-5deg)}100%{-webkit-transform:perspective(400px);transform:perspective(400px)}}@keyframes ajs-flipInY{0%{-webkit-transform:perspective(400px) rotate3d(0,1,0,90deg);transform:perspective(400px) rotate3d(0,1,0,90deg);transition-timing-function:ease-in;opacity:0}40%{-webkit-transform:perspective(400px) rotate3d(0,1,0,-20deg);transform:perspective(400px) rotate3d(0,1,0,-20deg);transition-timing-function:ease-in}60%{-webkit-transform:perspective(400px) rotate3d(0,1,0,10deg);transform:perspective(400px) rotate3d(0,1,0,10deg);opacity:1}80%{-webkit-transform:perspective(400px) rotate3d(0,1,0,-5deg);transform:perspective(400px) rotate3d(0,1,0,-5deg)}100%{-webkit-transform:perspective(400px);transform:perspective(400px)}}@-webkit-keyframes ajs-flipOutY{0%{-webkit-transform:perspective(400px);transform:perspective(400px)}30%{-webkit-transform:perspective(400px) rotate3d(0,1,0,-15deg);transform:perspective(400px) rotate3d(0,1,0,-15deg);opacity:1}100%{-webkit-transform:perspective(400px) rotate3d(0,1,0,90deg);transform:perspective(400px) rotate3d(0,1,0,90deg);opacity:0}}@keyframes ajs-flipOutY{0%{-webkit-transform:perspective(400px);transform:perspective(400px)}30%{-webkit-transform:perspective(400px) rotate3d(0,1,0,-15deg);transform:perspective(400px) rotate3d(0,1,0,-15deg);opacity:1}100%{-webkit-transform:perspective(400px) rotate3d(0,1,0,90deg);transform:perspective(400px) rotate3d(0,1,0,90deg);opacity:0}}@-webkit-keyframes ajs-slideIn{0%{margin-top:-100%}100%{margin-top:5%}}@keyframes ajs-slideIn{0%{margin-top:-100%}100%{margin-top:5%}}@-webkit-keyframes ajs-slideOut{0%{margin-top:5%}100%{margin-top:-100%}}@keyframes ajs-slideOut{0%{margin-top:5%}100%{margin-top:-100%}}.alertify-notifier{position:fixed;width:0;overflow:visible;z-index:1982;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}.alertify-notifier .ajs-message{position:relative;width:260px;max-height:0;padding:0;opacity:0;margin:0;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);transition-duration:250ms;transition-timing-function:linear}.alertify-notifier .ajs-message.ajs-visible{transition-duration:.5s;transition-timing-function:cubic-bezier(.175,.885,.32,1.275);opacity:1;max-height:100%;padding:15px;margin-top:10px}.alertify-notifier .ajs-message.ajs-success{background:rgba(91,189,114,.95)}.alertify-notifier .ajs-message.ajs-error{background:rgba(217,92,92,.95)}.alertify-notifier .ajs-message.ajs-warning{background:rgba(252,248,215,.95)}.alertify-notifier .ajs-message .ajs-close{position:absolute;top:0;right:0;width:16px;height:16px;cursor:pointer;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAABGdBTUEAALGPC/xhBQAAAFBJREFUGBl1j0EKADEIA+ve/P9f9bh1hEihNBfjVCO1v7RKVqJK4h8gM5cAPR42AkQEpSXPwMTyoi13n5N9YqJehm3Fnr7nL1D0ZEbD5OubGyC7a9gx+9eNAAAAAElFTkSuQmCC);background-repeat:no-repeat;background-position:center center;background-color:rgba(0,0,0,.5);border-top-right-radius:2px}.alertify-notifier.ajs-top{top:10px}.alertify-notifier.ajs-bottom{bottom:10px}.alertify-notifier.ajs-right{right:10px}.alertify-notifier.ajs-right .ajs-message{right:-320px}.alertify-notifier.ajs-right .ajs-message.ajs-visible{right:290px}.alertify-notifier.ajs-left{left:10px}.alertify-notifier.ajs-left .ajs-message{left:-300px}.alertify-notifier.ajs-left .ajs-message.ajs-visible{left:0}" +
-            ".alertify .ajs-dialog{background-color:#fff;box-shadow:0 15px 20px 0 rgba(0,0,0,.25);border-radius:2px}.alertify .ajs-header{color:#000;font-weight:700;background:#fafafa;border-bottom:#eee 1px solid;border-radius:2px 2px 0 0}.alertify .ajs-body{color:#000}.alertify .ajs-body .ajs-content .ajs-input{display:block;width:100%;padding:8px;margin:4px;border-radius:2px;border:1px solid #CCC}.alertify .ajs-body .ajs-content p{margin:0}.alertify .ajs-footer{background:#fbfbfb;border-top:#eee 1px solid;border-radius:0 0 2px 2px}.alertify .ajs-footer .ajs-buttons .ajs-button{background-color:transparent;color:#000;border:0;font-size:14px;font-weight:700;text-transform:uppercase}.alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok{color:#3593D2}.alertify-notifier .ajs-message{background:rgba(255,255,255,.95);color:#000;text-align:center;border:1px solid #ddd;border-radius:2px}.alertify-notifier .ajs-message.ajs-success{color:#fff;background:rgba(91,189,114,.95);text-shadow:-1px -1px 0 rgba(0,0,0,.5)}.alertify-notifier .ajs-message.ajs-error{color:#fff;background:rgba(217,92,92,.95);text-shadow:-1px -1px 0 rgba(0,0,0,.5)}.alertify-notifier .ajs-message.ajs-warning{background:rgba(252,248,215,.95);border-color:#999}" +
-            ".alertify .ajs-header, .alertify .ajs-body .ajs-content, .alertify .ajs-footer .ajs-buttons.ajs-primary{text-align: center;}" +
-            ".key{display:inline;display:inline-block;min-width:1em;padding:.2em .3em;font:400 .85em/1 'Lucida Grande',Lucida,Arial,sans-serif;text-align:center;text-decoration:none;-moz-border-radius:.3em;-webkit-border-radius:.3em;border-radius:.3em;border:none;cursor:default;-moz-user-select:none;-webkit-user-select:none;user-select:none}.key[title]{cursor:help}.dark-keys,.dark-keys .key,.key,.key.dark{background:#505050;background:-moz-linear-gradient(top,#3c3c3c,#505050);background:-webkit-gradient(linear,left top,left bottom,from(#3c3c3c),to(#505050));color:#fafafa;text-shadow:-1px -1px 0 #464646;-moz-box-shadow:inset 0 0 1px #969696,inset 0 -.05em .4em #505050,0 .1em 0 #1e1e1e,0 .1em .1em rgba(0,0,0,.3);-webkit-box-shadow:inset 0 0 1px #969696,inset 0 -.05em .4em #505050,0 .1em 0 #1e1e1e,0 .1em .1em rgba(0,0,0,.3);box-shadow:inset 0 0 1px #969696,inset 0 -.05em .4em #505050,0 .1em 0 #1e1e1e,0 .1em .1em rgba(0,0,0,.3)}.key.light,.light-keys .key,.light-keys kbd{background:#fafafa;background:-moz-linear-gradient(top,#d2d2d2,#fff);background:-webkit-gradient(linear,left top,left bottom,from(#d2d2d2),to(#fff));color:#323232;text-shadow:0 0 2px #fff;-moz-box-shadow:inset 0 0 1px #fff,inset 0 0 .4em #c8c8c8,0 .1em 0 #828282,0 .11em 0 rgba(0,0,0,.4),0 .1em .11em rgba(0,0,0,.9);-webkit-box-shadow:inset 0 0 1px #fff,inset 0 0 .4em #c8c8c8,0 .1em 0 #828282,0 .11em 0 rgba(0,0,0,.4),0 .1em .11em rgba(0,0,0,.9);box-shadow:inset 0 0 1px #fff,inset 0 0 .4em #c8c8c8,0 .1em 0 #828282,0 .11em 0 rgba(0,0,0,.4),0 .1em .11em rgba(0,0,0,.9)}" +
-            "#MangaOnlineViewer{width:100%;height:100%;padding-bottom: 100px;}" +
-            "#MangaOnlineViewer #Chapter{text-align:center;margin: 25px auto 0;display:block;}" +
-            "#MangaOnlineViewer #ViewerControls{padding: 8px;position:fixed;top:0;left:190px;}" +
-            "#MangaOnlineViewer #ViewerShortcuts{padding: 8px;position:fixed;top:65px;left:0px;}" +
-            "#MangaOnlineViewer select{height:20px;padding:0;margin-bottom:5px}" +
-            "#MangaOnlineViewer .controlButton{cursor:pointer;border:0 none;}" +
-            "#MangaOnlineViewer #ImageOptions {left: 0px;position: absolute;top: 0px;width: 200px;}" +
-            "#MangaOnlineViewer #ImageOptions .painel {padding:4.5px;position: inherit;}" +
-            "#MangaOnlineViewer #ImageOptions:hover {position:fixed;}" +
-            "#MangaOnlineViewer #ImageOptions.settingsOpen {position:fixed;}" +
-            "#MangaOnlineViewer #ImageOptions #menu {position:fixed;top: 45px;height: 64px;width: 200px;top: 0;}" +
-            "#MangaOnlineViewer #ImageOptions #Zoom {position:absolute;left: 18px;bottom: -65px;}" +
-            "#MangaOnlineViewer .MangaPage{width:100%;display:inline-block;text-align:center;align:center}" +
-            "#MangaOnlineViewer .PageContent{margin:0 0 15px;text-align:center;display:inline-block}" +
-            "#MangaOnlineViewer .fitWidthIfOversized .PageContent img { max-width: " + $(window).width() + "px;}" +
-            "#MangaOnlineViewer #gotoPage{width:35px;}" +
-            "#MangaOnlineViewer #ThemeSelector{width:110px;}" +
-            "#MangaOnlineViewer #PagesPerSecond{width:46px;}" +
-            "#MangaOnlineViewer .ChapterControl{-moz-user-select:none;-webkit-user-select: none;margin-right:120px;margin-top: 1px;float: right;}" +
-            "#MangaOnlineViewer .ChapterControl a{display:inline-block;width: 80px;height:25px;text-align:center;margin-left: 3px;margin-bottom: -1px;}" +
-            "#MangaOnlineViewer .ChapterControl a[href='#'],#MangaOnlineViewer .ChapterControl a[href='']{visibility:hidden}" +
-            "#MangaOnlineViewer .ViewerTitle{display: block;text-align: center;height:35px;}" +
-            "#MangaOnlineViewer #Counters {position: absolute;right: 10px;top: 10px;}" +
-            "#MangaOnlineViewer .PageFunctions{-moz-user-select:none;-webkit-user-select: none;font-family:monospace;font-size:10pt;padding-right:120px;text-align:right}" +
-            "#MangaOnlineViewer .PageFunctions>span{min-width:20px;text-align:center;display:inline-block;padding:2px 10px}" +
-            "#MangaOnlineViewer .PageFunctions > a {height: 16px;width: 16px; padding: 10px;}" +
-            "#MangaOnlineViewer .PageFunctions .Reload {background: url('" + icon.reload + "') no-repeat scroll center center transparent;}" +
-            "#MangaOnlineViewer .PageFunctions .Hide {background: url('" + icon.hide + "') no-repeat scroll center center transparent;}" +
-            "#MangaOnlineViewer .PageFunctions .ZoomIn {background: url('" + icon.zoomin + "') no-repeat scroll center center transparent;}" +
-            "#MangaOnlineViewer .PageFunctions .ZoomOut {background: url('" + icon.zoomout + "') no-repeat scroll center center transparent;}" +
-            "#MangaOnlineViewer .PageFunctions .ZoomRestore {background: url('" + icon.zoomrestore + "') no-repeat scroll center center transparent;}" +
-            "#MangaOnlineViewer .PageFunctions .ZoomWidth {background: url('" + icon.zoomwidth + "') no-repeat scroll center center transparent;}" +
-            "#MangaOnlineViewer .PageFunctions a{opacity:0.2}" +
-            "#MangaOnlineViewer .PageFunctions:hover a{opacity:1}" +
-            "#MangaOnlineViewer #NavigationCounters {margin-top: 5px;width: 100%;}" +
-            "#MangaOnlineViewer #Navigation {bottom: -170px;height: 180px;overflow: auto;overflow-x: auto;overflow-y: hidden;padding-bottom: 20px;position: fixed;white-space: nowrap;width: 100%;}" +
-            "#MangaOnlineViewer #Navigation:hover {bottom: 0;}" +
-            "#MangaOnlineViewer #Navigation.disabled {display: none;}" +
-            "#MangaOnlineViewer #Navigation.visible {bottom: 0;}" +
-            "#MangaOnlineViewer #Navigation .ThumbNail {display: inline-block;height: 150px;margin: 0 5px;position: relative;}" +
-            "#MangaOnlineViewer #Navigation .ThumbNail span {display: block;opacity: 0.8;position: relative;top: -30px;width: 100%;}" +
-            "#MangaOnlineViewer #Navigation .ThumbNail img {align-content: center;cursor: pointer;display: inline-block;margin-bottom: -10px;margin-top: 10px;max-height: 150px;min-height: 150px;min-width: 100px;}" +
-            "#MangaOnlineViewer #Navigation .nav {behavior:url(-ms-transform.htc);-moz-transform:rotate(-90deg);-webkit-transform:rotate(-90deg);-o-transform:rotate(-90deg);}" +
-            "#MangaOnlineViewer #ImageOptions .menuOuterArrow  {width: 0;height: 0;border-top: 10px solid transparent;border-bottom: 10px solid transparent;border-left:10px solid blue;display: inline-block;position: absolute;bottom: 0;}" +
-            "#MangaOnlineViewer #ImageOptions .menuInnerArrow {width: 0;height: 0;border-top: 5px solid transparent;border-bottom: 5px solid transparent;border-left:5px solid white;left: -10px;position: absolute;top: -5px;display: inline-block;}";
+            "button,hr,input{overflow:visible}audio,canvas,progress,video{display:inline-block}progress,sub,sup{vertical-align:baseline}[type=checkbox],[type=radio],legend{box-sizing:border-box;padding:0}html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figure{margin:1em 40px}hr{box-sizing:content-box;height:0}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative}sub{bottom:-.25em}sup{top:-.5em}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:ButtonText dotted 1px}fieldset{padding:.35em .75em .625em}legend{color:inherit;display:table;max-width:100%;white-space:normal}textarea{overflow:auto}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}[hidden],template{display:none}" + "html{font-size:100%}" + "img{height:auto;max-width:100%;vertical-align:middle;border:0 none}" + "button,input,select,textarea{margin:0;font-size:100%;vertical-align:middle}" + "button,input{line-height:normal}" + "body{margin:0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:#333;background-color:#FFF}" + "a{color:#08C;text-decoration:none}" + "label,input,button,select,textarea{font-size:14px;font-weight:normal;line-height:20px}" + "input,button,select,textarea{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif}" + "select,textarea,input[type='text'],input[type='password'],input[type='datetime'],input[type='datetime-local'],input[type='date'],input[type='month'],input[type='time'],input[type='week'],input[type='number'],input[type='email'],input[type='url'],input[type='search'],input[type='tel'],input[type='color'],.uneditable-input{display:inline-block;height:20px;padding:4px 6px;margin-bottom:10px;font-size:14px;line-height:20px;color:#555;vertical-align:middle;border-radius:4px 4px 4px 4px}" + "input:not([type='checkbox']),textarea,.uneditable-input{width:206px}" + "textarea,input[type='text'],input[type='password'],input[type='datetime'],input[type='datetime-local'],input[type='date'],input[type='month'],input[type='time'],input[type='week'],input[type='number'],input[type='email'],input[type='url'],input[type='search'],input[type='tel'],input[type='color'],.uneditable-input{background-color:#FFF;border:1px solid #CCC;box-shadow:0 1px 1px rgba(0,0,0,0.075) inset;transition:border .2s linear 0,box-shadow .2s linear 0}" + "input,textarea,.uneditable-input{margin-left:0}" + "body{font-family:sans-serif;font-size:12pt;padding:0}" + "#nprogress{pointer-events:none;}" + "#nprogress .bar{background:#29d;position:fixed;z-index:1031;top:0;left:0;width:100%;height:4px;}" + "#nprogress .peg{display:block;position:absolute;right:0px;width:100px;height:100%;box-shadow:0 0 10px #29d,0 0 5px #29d;opacity:1.0;-webkit-transform:rotate(3deg) translate(0px,-4px);-ms-transform:rotate(3deg) translate(0px,-4px);transform:rotate(3deg) translate(0px,-4px);}" + "#nprogress .spinner{display:block;position:fixed;z-index:1031;top:15px;right:15px;}" + "#nprogress .spinner-icon{width:18px;height:18px;box-sizing:border-box;border:solid 2px transparent;border-top-color:#29d;border-left-color:#29d;border-radius:50%;-webkit-animation:nprogress-spinner 400ms linear infinite;animation:nprogress-spinner 400ms linear infinite;}" + ".nprogress-custom-parent{overflow:hidden;position:relative;}" + ".nprogress-custom-parent #nprogress .spinner,.nprogress-custom-parent #nprogress .bar{position:absolute;}" + "@-webkit-keyframes nprogress-spinner{0%{-webkit-transform:rotate(0deg);}100%{-webkit-transform:rotate(360deg);}}" + "@keyframes nprogress-spinner{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}" + ".alertify .ajs-dimmer,.alertify .ajs-modal{position:fixed;padding:0;z-index:1981;top:0;right:0;bottom:0;left:0}.alertify .ajs-dimmer{margin:0;background-color:#252525;opacity:.5}.alertify .ajs-modal{overflow-y:auto}.alertify .ajs-dialog{position:relative;margin:5% auto;min-height:110px;max-width:500px;padding:24px 24px 0;outline:0;background-color:#fff}.alertify .ajs-dialog.ajs-capture:before{content:'';position:absolute;top:0;right:0;bottom:0;left:0;display:block;z-index:1}.alertify .ajs-reset{position:absolute!important;display:inline!important;width:0!important;height:0!important;opacity:0!important}.alertify .ajs-commands{position:absolute;right:4px;margin:-14px 24px 0 0;z-index:2}.alertify .ajs-commands button{display:none;width:10px;height:10px;margin-left:10px;padding:10px;border:0;background-color:transparent;background-repeat:no-repeat;background-position:center;cursor:pointer}.alertify .ajs-commands button.ajs-close{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8xMy8xNOrZqugAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAh0lEQVQYlY2QsQ0EIQwEB9cBAR1CJUaI/gigDnwR6NBL/7/xWLNrZ2b8EwGotVpr7eOitWa1VjugiNB7R1UPrKrWe0dEAHBbXUqxMQbeewDmnHjvyTm7C3zDwAUd9c63YQdUVdu6EAJzzquz7HXvTiklt+H9DQFYaxFjvDqllFyMkbXWvfpXHjJrWFgdBq/hAAAAAElFTkSuQmCC)}.alertify .ajs-commands button.ajs-maximize{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8xMy8xNOrZqugAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAOUlEQVQYlWP8//8/AzGAhYGBgaG4uBiv6t7eXkYmooxjYGAgWiELsvHYFMCcRX2rSXcjoSBiJDbAAeD+EGu+8BZcAAAAAElFTkSuQmCC)}.alertify .ajs-header{margin:-24px -24px 0;padding:16px 24px;background-color:#fff}.alertify .ajs-body{min-height:56px}.alertify .ajs-body .ajs-content{padding:16px 24px 16px 16px}.alertify .ajs-footer{padding:4px;margin-left:-24px;margin-right:-24px;min-height:43px;background-color:#fff}.alertify.ajs-maximized .ajs-dialog,.alertify.ajs-no-padding:not(.ajs-maximized) .ajs-body .ajs-content,.alertify.ajs-resizable .ajs-dialog{padding:0}.alertify .ajs-footer .ajs-buttons.ajs-auxiliary .ajs-button,.alertify .ajs-footer .ajs-buttons.ajs-primary .ajs-button{margin:4px}.alertify .ajs-footer .ajs-buttons.ajs-primary{text-align:right}.alertify .ajs-footer .ajs-buttons.ajs-auxiliary{float:left;clear:none;text-align:left}.alertify .ajs-footer .ajs-buttons .ajs-button{min-width:88px;min-height:35px}.alertify .ajs-handle{position:absolute;display:none;width:10px;height:10px;right:0;bottom:0;z-index:1;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8xMS8xNEDQYmMAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAQ0lEQVQYlaXNMQoAIAxD0dT7H657l0KX3iJuUlBUNOsPPCGJm7VDp6ryeMxMuDsAQH7owW3pyn3RS26iKxERMLN3ugOaAkaL3sWVigAAAABJRU5ErkJggg==);-webkit-transform:scaleX(1);transform:scaleX(1);cursor:se-resize}.alertify.ajs-no-overflow .ajs-body .ajs-content{overflow:hidden!important}.alertify.ajs-no-padding.ajs-maximized .ajs-body .ajs-content{left:0;right:0;padding:0}.alertify.ajs-no-padding:not(.ajs-maximized) .ajs-body{margin-left:-24px;margin-right:-24px}.alertify.ajs-no-padding.ajs-resizable .ajs-body .ajs-content{left:0;right:0}.alertify.ajs-closable .ajs-commands button.ajs-close,.alertify.ajs-maximizable .ajs-commands button.ajs-maximize,.alertify.ajs-maximizable .ajs-commands button.ajs-restore{display:inline-block}.alertify.ajs-maximized .ajs-dialog{width:100%!important;height:100%!important;max-width:none!important;margin:0 auto!important;top:0!important;left:0!important}.alertify.ajs-maximized.ajs-modeless .ajs-modal{position:fixed!important;min-height:100%!important;max-height:none!important;margin:0!important}.alertify.ajs-maximized .ajs-commands button.ajs-maximize{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8xMy8xNOrZqugAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAASklEQVQYlZWQ0QkAMQhDtXRincOZX78KVtrDCwgqJNEoIB3MPLj7lRUROlpyVXGzby6zWuY+kz6tj5sBMTMAyVV3/595RbOh3cAXsww1raeiOcoAAAAASUVORK5CYII=)}.alertify.ajs-maximized .ajs-commands,.alertify.ajs-resizable .ajs-commands{margin:14px 24px 0 0}.alertify.ajs-maximized .ajs-header,.alertify.ajs-resizable .ajs-header{position:absolute;top:0;left:0;right:0;margin:0;padding:16px 24px}.alertify.ajs-maximized .ajs-body,.alertify.ajs-resizable .ajs-body{min-height:224px;display:inline-block}.alertify.ajs-maximized .ajs-body .ajs-content,.alertify.ajs-resizable .ajs-body .ajs-content{position:absolute;top:50px;right:24px;bottom:50px;left:24px;overflow:auto}.alertify.ajs-maximized .ajs-footer,.alertify.ajs-resizable .ajs-footer{position:absolute;left:0;right:0;bottom:0;margin:0}.alertify.ajs-resizable:not(.ajs-maximized) .ajs-dialog{min-width:548px}.alertify.ajs-resizable:not(.ajs-maximized) .ajs-handle{display:block}.alertify.ajs-movable:not(.ajs-maximized) .ajs-header{cursor:move}.alertify.ajs-modeless .ajs-dimmer,.alertify.ajs-modeless .ajs-reset{display:none}.alertify.ajs-modeless .ajs-modal{overflow:visible;max-width:none;max-height:0}.alertify.ajs-modeless.ajs-pinnable .ajs-commands button.ajs-pin{display:inline-block;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8xMy8xNOrZqugAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAQklEQVQYlcWPMQ4AIAwCqU9u38GbcbHRWN1MvKQDhQFMEpKImGJA0gCgnYw0V0rwxseg5erT4oSkQVI5d9f+e9+xA0NbLpWfitPXAAAAAElFTkSuQmCC)}.alertify.ajs-modeless.ajs-unpinned .ajs-modal{position:absolute}.alertify.ajs-modeless.ajs-unpinned .ajs-commands button.ajs-pin{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNy8xMy8xNOrZqugAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAAO0lEQVQYlWP8//8/AzGAiShV6AqLi4txGs+CLoBLMYbC3t5eRmyaWfBZhwwYkX2NTxPRvibKjRhW4wMAhxkYGbLu3pEAAAAASUVORK5CYII=)}.alertify.ajs-modeless:not(.ajs-unpinned) .ajs-body{max-height:500px;overflow:auto}.alertify.ajs-basic .ajs-header{opacity:0}.alertify.ajs-basic .ajs-footer{visibility:hidden}.alertify.ajs-frameless .ajs-header{position:absolute;top:0;left:0;right:0;min-height:60px;margin:0;padding:0;opacity:0;z-index:1}.alertify.ajs-frameless .ajs-footer{display:none}.alertify.ajs-frameless .ajs-body .ajs-content{position:absolute;top:0;right:0;bottom:0;left:0}.alertify.ajs-frameless:not(.ajs-resizable) .ajs-dialog{padding-top:0}.alertify.ajs-frameless:not(.ajs-resizable) .ajs-dialog .ajs-commands{margin-top:0}.ajs-no-overflow{overflow:hidden!important;outline:0}.ajs-no-overflow.ajs-fixed{position:fixed;top:0;right:0;bottom:0;left:0;overflow-y:scroll!important}.ajs-no-selection,.ajs-no-selection *{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}@media screen and (max-width:568px){.alertify .ajs-dialog{min-width:150px}.alertify:not(.ajs-maximized) .ajs-modal{padding:0 5%}.alertify:not(.ajs-maximized).ajs-resizable .ajs-dialog{min-width:initial;min-width:auto}}@-moz-document url-prefix(){.alertify button:focus{outline:#3593D2 dotted 1px}}.alertify .ajs-dimmer,.alertify .ajs-modal{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);transition-property:opacity,visibility;transition-timing-function:linear;transition-duration:250ms}.alertify.ajs-hidden .ajs-dimmer,.alertify.ajs-hidden .ajs-modal{visibility:hidden;opacity:0}.alertify.ajs-in:not(.ajs-hidden) .ajs-dialog{-webkit-animation-duration:.5s;animation-duration:.5s}.alertify.ajs-out.ajs-hidden .ajs-dialog{-webkit-animation-duration:250ms;animation-duration:250ms}.alertify .ajs-dialog.ajs-shake{-webkit-animation-name:ajs-shake;animation-name:ajs-shake;-webkit-animation-duration:.1s;animation-duration:.1s;-webkit-animation-fill-mode:both;animation-fill-mode:both}@-webkit-keyframes ajs-shake{0%,100%{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}10%,30%,50%,70%,90%{-webkit-transform:translate3d(-10px,0,0);transform:translate3d(-10px,0,0)}20%,40%,60%,80%{-webkit-transform:translate3d(10px,0,0);transform:translate3d(10px,0,0)}}@keyframes ajs-shake{0%,100%{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}10%,30%,50%,70%,90%{-webkit-transform:translate3d(-10px,0,0);transform:translate3d(-10px,0,0)}20%,40%,60%,80%{-webkit-transform:translate3d(10px,0,0);transform:translate3d(10px,0,0)}}.alertify.ajs-slide.ajs-in:not(.ajs-hidden) .ajs-dialog{-webkit-animation-name:ajs-slideIn;animation-name:ajs-slideIn;-webkit-animation-timing-function:cubic-bezier(.175,.885,.32,1.275);animation-timing-function:cubic-bezier(.175,.885,.32,1.275)}.alertify.ajs-slide.ajs-out.ajs-hidden .ajs-dialog{-webkit-animation-name:ajs-slideOut;animation-name:ajs-slideOut;-webkit-animation-timing-function:cubic-bezier(.6,-.28,.735,.045);animation-timing-function:cubic-bezier(.6,-.28,.735,.045)}.alertify.ajs-zoom.ajs-in:not(.ajs-hidden) .ajs-dialog{-webkit-animation-name:ajs-zoomIn;animation-name:ajs-zoomIn}.alertify.ajs-zoom.ajs-out.ajs-hidden .ajs-dialog{-webkit-animation-name:ajs-zoomOut;animation-name:ajs-zoomOut}.alertify.ajs-fade.ajs-in:not(.ajs-hidden) .ajs-dialog{-webkit-animation-name:ajs-fadeIn;animation-name:ajs-fadeIn}.alertify.ajs-fade.ajs-out.ajs-hidden .ajs-dialog{-webkit-animation-name:ajs-fadeOut;animation-name:ajs-fadeOut}.alertify.ajs-pulse.ajs-in:not(.ajs-hidden) .ajs-dialog{-webkit-animation-name:ajs-pulseIn;animation-name:ajs-pulseIn}.alertify.ajs-pulse.ajs-out.ajs-hidden .ajs-dialog{-webkit-animation-name:ajs-pulseOut;animation-name:ajs-pulseOut}.alertify.ajs-flipx.ajs-in:not(.ajs-hidden) .ajs-dialog{-webkit-animation-name:ajs-flipInX;animation-name:ajs-flipInX}.alertify.ajs-flipx.ajs-out.ajs-hidden .ajs-dialog{-webkit-animation-name:ajs-flipOutX;animation-name:ajs-flipOutX}.alertify.ajs-flipy.ajs-in:not(.ajs-hidden) .ajs-dialog{-webkit-animation-name:ajs-flipInY;animation-name:ajs-flipInY}.alertify.ajs-flipy.ajs-out.ajs-hidden .ajs-dialog{-webkit-animation-name:ajs-flipOutY;animation-name:ajs-flipOutY}@-webkit-keyframes ajs-pulseIn{0%,100%,20%,40%,60%,80%{transition-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}20%{-webkit-transform:scale3d(1.1,1.1,1.1);transform:scale3d(1.1,1.1,1.1)}40%{-webkit-transform:scale3d(.9,.9,.9);transform:scale3d(.9,.9,.9)}60%{opacity:1;-webkit-transform:scale3d(1.03,1.03,1.03);transform:scale3d(1.03,1.03,1.03)}80%{-webkit-transform:scale3d(.97,.97,.97);transform:scale3d(.97,.97,.97)}100%{opacity:1;-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}}@keyframes ajs-pulseIn{0%,100%,20%,40%,60%,80%{transition-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}20%{-webkit-transform:scale3d(1.1,1.1,1.1);transform:scale3d(1.1,1.1,1.1)}40%{-webkit-transform:scale3d(.9,.9,.9);transform:scale3d(.9,.9,.9)}60%{opacity:1;-webkit-transform:scale3d(1.03,1.03,1.03);transform:scale3d(1.03,1.03,1.03)}80%{-webkit-transform:scale3d(.97,.97,.97);transform:scale3d(.97,.97,.97)}100%{opacity:1;-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}}@-webkit-keyframes ajs-pulseOut{20%{-webkit-transform:scale3d(.9,.9,.9);transform:scale3d(.9,.9,.9)}50%,55%{opacity:1;-webkit-transform:scale3d(1.1,1.1,1.1);transform:scale3d(1.1,1.1,1.1)}100%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}}@keyframes ajs-pulseOut{20%{-webkit-transform:scale3d(.9,.9,.9);transform:scale3d(.9,.9,.9)}50%,55%{opacity:1;-webkit-transform:scale3d(1.1,1.1,1.1);transform:scale3d(1.1,1.1,1.1)}100%{opacity:0;-webkit-transform:scale3d(.3,.3,.3);transform:scale3d(.3,.3,.3)}}@-webkit-keyframes ajs-zoomIn{0%{opacity:0;-webkit-transform:scale3d(.25,.25,.25);transform:scale3d(.25,.25,.25)}100%{opacity:1;-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}}@keyframes ajs-zoomIn{0%{opacity:0;-webkit-transform:scale3d(.25,.25,.25);transform:scale3d(.25,.25,.25)}100%{opacity:1;-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}}@-webkit-keyframes ajs-zoomOut{0%{opacity:1;-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}100%{opacity:0;-webkit-transform:scale3d(.25,.25,.25);transform:scale3d(.25,.25,.25)}}@keyframes ajs-zoomOut{0%{opacity:1;-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1)}100%{opacity:0;-webkit-transform:scale3d(.25,.25,.25);transform:scale3d(.25,.25,.25)}}@-webkit-keyframes ajs-fadeIn{0%{opacity:0}100%{opacity:1}}@keyframes ajs-fadeIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes ajs-fadeOut{0%{opacity:1}100%{opacity:0}}@keyframes ajs-fadeOut{0%{opacity:1}100%{opacity:0}}@-webkit-keyframes ajs-flipInX{0%{-webkit-transform:perspective(400px) rotate3d(1,0,0,90deg);transform:perspective(400px) rotate3d(1,0,0,90deg);transition-timing-function:ease-in;opacity:0}40%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-20deg);transform:perspective(400px) rotate3d(1,0,0,-20deg);transition-timing-function:ease-in}60%{-webkit-transform:perspective(400px) rotate3d(1,0,0,10deg);transform:perspective(400px) rotate3d(1,0,0,10deg);opacity:1}80%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-5deg);transform:perspective(400px) rotate3d(1,0,0,-5deg)}100%{-webkit-transform:perspective(400px);transform:perspective(400px)}}@keyframes ajs-flipInX{0%{-webkit-transform:perspective(400px) rotate3d(1,0,0,90deg);transform:perspective(400px) rotate3d(1,0,0,90deg);transition-timing-function:ease-in;opacity:0}40%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-20deg);transform:perspective(400px) rotate3d(1,0,0,-20deg);transition-timing-function:ease-in}60%{-webkit-transform:perspective(400px) rotate3d(1,0,0,10deg);transform:perspective(400px) rotate3d(1,0,0,10deg);opacity:1}80%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-5deg);transform:perspective(400px) rotate3d(1,0,0,-5deg)}100%{-webkit-transform:perspective(400px);transform:perspective(400px)}}@-webkit-keyframes ajs-flipOutX{0%{-webkit-transform:perspective(400px);transform:perspective(400px)}30%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-20deg);transform:perspective(400px) rotate3d(1,0,0,-20deg);opacity:1}100%{-webkit-transform:perspective(400px) rotate3d(1,0,0,90deg);transform:perspective(400px) rotate3d(1,0,0,90deg);opacity:0}}@keyframes ajs-flipOutX{0%{-webkit-transform:perspective(400px);transform:perspective(400px)}30%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-20deg);transform:perspective(400px) rotate3d(1,0,0,-20deg);opacity:1}100%{-webkit-transform:perspective(400px) rotate3d(1,0,0,90deg);transform:perspective(400px) rotate3d(1,0,0,90deg);opacity:0}}@-webkit-keyframes ajs-flipInY{0%{-webkit-transform:perspective(400px) rotate3d(0,1,0,90deg);transform:perspective(400px) rotate3d(0,1,0,90deg);transition-timing-function:ease-in;opacity:0}40%{-webkit-transform:perspective(400px) rotate3d(0,1,0,-20deg);transform:perspective(400px) rotate3d(0,1,0,-20deg);transition-timing-function:ease-in}60%{-webkit-transform:perspective(400px) rotate3d(0,1,0,10deg);transform:perspective(400px) rotate3d(0,1,0,10deg);opacity:1}80%{-webkit-transform:perspective(400px) rotate3d(0,1,0,-5deg);transform:perspective(400px) rotate3d(0,1,0,-5deg)}100%{-webkit-transform:perspective(400px);transform:perspective(400px)}}@keyframes ajs-flipInY{0%{-webkit-transform:perspective(400px) rotate3d(0,1,0,90deg);transform:perspective(400px) rotate3d(0,1,0,90deg);transition-timing-function:ease-in;opacity:0}40%{-webkit-transform:perspective(400px) rotate3d(0,1,0,-20deg);transform:perspective(400px) rotate3d(0,1,0,-20deg);transition-timing-function:ease-in}60%{-webkit-transform:perspective(400px) rotate3d(0,1,0,10deg);transform:perspective(400px) rotate3d(0,1,0,10deg);opacity:1}80%{-webkit-transform:perspective(400px) rotate3d(0,1,0,-5deg);transform:perspective(400px) rotate3d(0,1,0,-5deg)}100%{-webkit-transform:perspective(400px);transform:perspective(400px)}}@-webkit-keyframes ajs-flipOutY{0%{-webkit-transform:perspective(400px);transform:perspective(400px)}30%{-webkit-transform:perspective(400px) rotate3d(0,1,0,-15deg);transform:perspective(400px) rotate3d(0,1,0,-15deg);opacity:1}100%{-webkit-transform:perspective(400px) rotate3d(0,1,0,90deg);transform:perspective(400px) rotate3d(0,1,0,90deg);opacity:0}}@keyframes ajs-flipOutY{0%{-webkit-transform:perspective(400px);transform:perspective(400px)}30%{-webkit-transform:perspective(400px) rotate3d(0,1,0,-15deg);transform:perspective(400px) rotate3d(0,1,0,-15deg);opacity:1}100%{-webkit-transform:perspective(400px) rotate3d(0,1,0,90deg);transform:perspective(400px) rotate3d(0,1,0,90deg);opacity:0}}@-webkit-keyframes ajs-slideIn{0%{margin-top:-100%}100%{margin-top:5%}}@keyframes ajs-slideIn{0%{margin-top:-100%}100%{margin-top:5%}}@-webkit-keyframes ajs-slideOut{0%{margin-top:5%}100%{margin-top:-100%}}@keyframes ajs-slideOut{0%{margin-top:5%}100%{margin-top:-100%}}.alertify-notifier{position:fixed;width:0;overflow:visible;z-index:1982;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}.alertify-notifier .ajs-message{position:relative;width:260px;max-height:0;padding:0;opacity:0;margin:0;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);transition-duration:250ms;transition-timing-function:linear}.alertify-notifier .ajs-message.ajs-visible{transition-duration:.5s;transition-timing-function:cubic-bezier(.175,.885,.32,1.275);opacity:1;max-height:100%;padding:15px;margin-top:10px}.alertify-notifier .ajs-message.ajs-success{background:rgba(91,189,114,.95)}.alertify-notifier .ajs-message.ajs-error{background:rgba(217,92,92,.95)}.alertify-notifier .ajs-message.ajs-warning{background:rgba(252,248,215,.95)}.alertify-notifier .ajs-message .ajs-close{position:absolute;top:0;right:0;width:16px;height:16px;cursor:pointer;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAABGdBTUEAALGPC/xhBQAAAFBJREFUGBl1j0EKADEIA+ve/P9f9bh1hEihNBfjVCO1v7RKVqJK4h8gM5cAPR42AkQEpSXPwMTyoi13n5N9YqJehm3Fnr7nL1D0ZEbD5OubGyC7a9gx+9eNAAAAAElFTkSuQmCC);background-repeat:no-repeat;background-position:center center;background-color:rgba(0,0,0,.5);border-top-right-radius:2px}.alertify-notifier.ajs-top{top:10px}.alertify-notifier.ajs-bottom{bottom:10px}.alertify-notifier.ajs-right{right:10px}.alertify-notifier.ajs-right .ajs-message{right:-320px}.alertify-notifier.ajs-right .ajs-message.ajs-visible{right:290px}.alertify-notifier.ajs-left{left:10px}.alertify-notifier.ajs-left .ajs-message{left:-300px}.alertify-notifier.ajs-left .ajs-message.ajs-visible{left:0}" + ".alertify .ajs-dialog{background-color:#fff;box-shadow:0 15px 20px 0 rgba(0,0,0,.25);border-radius:2px}.alertify .ajs-header{color:#000;font-weight:700;background:#fafafa;border-bottom:#eee 1px solid;border-radius:2px 2px 0 0}.alertify .ajs-body{color:#000}.alertify .ajs-body .ajs-content .ajs-input{display:block;width:100%;padding:8px;margin:4px;border-radius:2px;border:1px solid #CCC}.alertify .ajs-body .ajs-content p{margin:0}.alertify .ajs-footer{background:#fbfbfb;border-top:#eee 1px solid;border-radius:0 0 2px 2px}.alertify .ajs-footer .ajs-buttons .ajs-button{background-color:transparent;color:#000;border:0;font-size:14px;font-weight:700;text-transform:uppercase}.alertify .ajs-footer .ajs-buttons .ajs-button.ajs-ok{color:#3593D2}.alertify-notifier .ajs-message{background:rgba(255,255,255,.95);color:#000;text-align:center;border:1px solid #ddd;border-radius:2px}.alertify-notifier .ajs-message.ajs-success{color:#fff;background:rgba(91,189,114,.95);text-shadow:-1px -1px 0 rgba(0,0,0,.5)}.alertify-notifier .ajs-message.ajs-error{color:#fff;background:rgba(217,92,92,.95);text-shadow:-1px -1px 0 rgba(0,0,0,.5)}.alertify-notifier .ajs-message.ajs-warning{background:rgba(252,248,215,.95);border-color:#999}" + ".alertify .ajs-header, .alertify .ajs-body .ajs-content, .alertify .ajs-footer .ajs-buttons.ajs-primary{text-align: center;}" + ".key{display:inline;display:inline-block;min-width:1em;padding:.2em .3em;font:400 .85em/1 'Lucida Grande',Lucida,Arial,sans-serif;text-align:center;text-decoration:none;-moz-border-radius:.3em;-webkit-border-radius:.3em;border-radius:.3em;border:none;cursor:default;-moz-user-select:none;-webkit-user-select:none;user-select:none}.key[title]{cursor:help}.dark-keys,.dark-keys .key,.key,.key.dark{background:#505050;background:-moz-linear-gradient(top,#3c3c3c,#505050);background:-webkit-gradient(linear,left top,left bottom,from(#3c3c3c),to(#505050));color:#fafafa;text-shadow:-1px -1px 0 #464646;-moz-box-shadow:inset 0 0 1px #969696,inset 0 -.05em .4em #505050,0 .1em 0 #1e1e1e,0 .1em .1em rgba(0,0,0,.3);-webkit-box-shadow:inset 0 0 1px #969696,inset 0 -.05em .4em #505050,0 .1em 0 #1e1e1e,0 .1em .1em rgba(0,0,0,.3);box-shadow:inset 0 0 1px #969696,inset 0 -.05em .4em #505050,0 .1em 0 #1e1e1e,0 .1em .1em rgba(0,0,0,.3)}.key.light,.light-keys .key,.light-keys kbd{background:#fafafa;background:-moz-linear-gradient(top,#d2d2d2,#fff);background:-webkit-gradient(linear,left top,left bottom,from(#d2d2d2),to(#fff));color:#323232;text-shadow:0 0 2px #fff;-moz-box-shadow:inset 0 0 1px #fff,inset 0 0 .4em #c8c8c8,0 .1em 0 #828282,0 .11em 0 rgba(0,0,0,.4),0 .1em .11em rgba(0,0,0,.9);-webkit-box-shadow:inset 0 0 1px #fff,inset 0 0 .4em #c8c8c8,0 .1em 0 #828282,0 .11em 0 rgba(0,0,0,.4),0 .1em .11em rgba(0,0,0,.9);box-shadow:inset 0 0 1px #fff,inset 0 0 .4em #c8c8c8,0 .1em 0 #828282,0 .11em 0 rgba(0,0,0,.4),0 .1em .11em rgba(0,0,0,.9)}" + "#MangaOnlineViewer{width:100%;height:100%;padding-bottom: 100px;}" + "#MangaOnlineViewer #Chapter{text-align:center;margin: 25px auto 0;display:block;}" + "#MangaOnlineViewer #ViewerControls{padding: 8px;position:fixed;top:0;left:190px;}" + "#MangaOnlineViewer #ViewerShortcuts{padding: 8px;position:fixed;top:65px;left:0px;}" + "#MangaOnlineViewer select{height:20px;padding:0;margin-bottom:5px}" + "#MangaOnlineViewer .controlButton{cursor:pointer;border:0 none;}" + "#MangaOnlineViewer #ImageOptions {left: 0px;position: absolute;top: 0px;width: 200px;}" + "#MangaOnlineViewer #ImageOptions .painel {padding:4.5px;position: inherit;}" + "#MangaOnlineViewer #ImageOptions:hover {position:fixed;}" + "#MangaOnlineViewer #ImageOptions.settingsOpen {position:fixed;}" + "#MangaOnlineViewer #ImageOptions #menu {position:fixed;top: 45px;height: 64px;width: 200px;top: 0;}" + "#MangaOnlineViewer #ImageOptions #Zoom {position:absolute;left: 18px;bottom: -65px;}" + "#MangaOnlineViewer .MangaPage{width:100%;display:inline-block;text-align:center;align:center}" + "#MangaOnlineViewer .PageContent{margin:0 0 15px;text-align:center;display:inline-block}" + "#MangaOnlineViewer .fitWidthIfOversized .PageContent img { max-width: " + $(window).width() + "px;}" + "#MangaOnlineViewer #gotoPage{width:35px;}" + "#MangaOnlineViewer #ThemeSelector{width:110px;}" + "#MangaOnlineViewer #PagesPerSecond{width:46px;}" + "#MangaOnlineViewer .ChapterControl{-moz-user-select:none;-webkit-user-select: none;margin-right:120px;margin-top: 1px;float: right;}" + "#MangaOnlineViewer .ChapterControl a{display:inline-block;width: 80px;height:25px;text-align:center;margin-left: 3px;margin-bottom: -1px;}" + "#MangaOnlineViewer .ChapterControl a[href='#'],#MangaOnlineViewer .ChapterControl a[href='']{visibility:hidden}" + "#MangaOnlineViewer .ViewerTitle{display: block;text-align: center;height:35px;}" + "#MangaOnlineViewer #Counters {position: absolute;right: 10px;top: 10px;}" + "#MangaOnlineViewer .PageFunctions{-moz-user-select:none;-webkit-user-select: none;font-family:monospace;font-size:10pt;padding-right:120px;text-align:right}" + "#MangaOnlineViewer .PageFunctions>span{min-width:20px;text-align:center;display:inline-block;padding:2px 10px}" + "#MangaOnlineViewer .PageFunctions > a {height: 16px;width: 16px; padding: 10px;}" + "#MangaOnlineViewer .PageFunctions .Reload {background: url('" + icon.reload + "') no-repeat scroll center center transparent;}" + "#MangaOnlineViewer .PageFunctions .Hide {background: url('" + icon.hide + "') no-repeat scroll center center transparent;}" + "#MangaOnlineViewer .PageFunctions .ZoomIn {background: url('" + icon.zoomin + "') no-repeat scroll center center transparent;}" + "#MangaOnlineViewer .PageFunctions .ZoomOut {background: url('" + icon.zoomout + "') no-repeat scroll center center transparent;}" + "#MangaOnlineViewer .PageFunctions .ZoomRestore {background: url('" + icon.zoomrestore + "') no-repeat scroll center center transparent;}" + "#MangaOnlineViewer .PageFunctions .ZoomWidth {background: url('" + icon.zoomwidth + "') no-repeat scroll center center transparent;}" + "#MangaOnlineViewer .PageFunctions a{opacity:0.2}" + "#MangaOnlineViewer .PageFunctions:hover a{opacity:1}" + "#MangaOnlineViewer #NavigationCounters {margin-top: 5px;width: 100%;}" + "#MangaOnlineViewer #Navigation {bottom: -170px;height: 180px;overflow: auto;overflow-x: auto;overflow-y: hidden;padding-bottom: 20px;position: fixed;white-space: nowrap;width: 100%;}" + "#MangaOnlineViewer #Navigation:hover {bottom: 0;}" + "#MangaOnlineViewer #Navigation.disabled {display: none;}" + "#MangaOnlineViewer #Navigation.visible {bottom: 0;}" + "#MangaOnlineViewer #Navigation .ThumbNail {display: inline-block;height: 150px;margin: 0 5px;position: relative;}" + "#MangaOnlineViewer #Navigation .ThumbNail span {display: block;opacity: 0.8;position: relative;top: -30px;width: 100%;}" + "#MangaOnlineViewer #Navigation .ThumbNail img {align-content: center;cursor: pointer;display: inline-block;margin-bottom: -10px;margin-top: 10px;max-height: 150px;min-height: 150px;min-width: 100px;}" + "#MangaOnlineViewer #Navigation .nav {behavior:url(-ms-transform.htc);-moz-transform:rotate(-90deg);-webkit-transform:rotate(-90deg);-o-transform:rotate(-90deg);}" + "#MangaOnlineViewer #ImageOptions .menuOuterArrow  {width: 0;height: 0;border-top: 10px solid transparent;border-bottom: 10px solid transparent;border-left:10px solid blue;display: inline-block;position: absolute;bottom: 0;}" + "#MangaOnlineViewer #ImageOptions .menuInnerArrow {width: 0;height: 0;border-top: 5px solid transparent;border-bottom: 5px solid transparent;border-left:5px solid white;left: -10px;position: absolute;top: -5px;display: inline-block;}";
         css += "</style>";
         $("head").append(css);
         var bg = scheme.colors();
@@ -385,7 +319,7 @@
             $("#CustomThemeHue").hide();
         }
     }
-
+    // Add custom Themes to the page
     function addTheme(theme) {
         $("style[name='" + theme[0] + "']").remove();
         var css = "<style type='text/css' name='" + theme[0] + "'>";
@@ -403,104 +337,7 @@
     }
     //Build the reader main body
     function reader() {
-        var reader =
-            "<div id='MangaOnlineViewer' class='" + settings.Theme + "' style='min-height: 1080px;'>" +
-            "    <div class='ViewerTitle'>" +
-            "        <br/>" +
-            "        <a id='series' href='" + Manga.series + "'> " + Manga.title + " " +
-            "            <br/>(Return to Chapter List)" +
-            "        </a>" +
-            "    </div>" +
-            "    <div id='ChapterControlTop' class='ChapterControl'>" +
-            "        <a name='bottom' href='#ChapterControlBottom' style='display: none;'>Bottom</a>" +
-            "        <a href='#' id='downloadManga' class='download'>Download</a>" +
-            "        <a class='prev' name='prev' href='" + Manga.prev + "' onclick='location=\"" + Manga.prev + "\";location.reload();'>Previous</a>" +
-            "        <a class='next' name='next' href='" + Manga.next + "' onclick='location=\"" + Manga.next + "\";location.reload();'>Next</a>" +
-            "    </div>" +
-            "    <div id='Chapter' align='center' class='" + (settings.FitWidthIfOversized == "true" ? "fitWidthIfOversized" : "") + "'></div>" +
-            "    <div class='ViewerTitle'>" +
-            "        <br/>" +
-            "        <a id='series' href='" + Manga.series + "'> " + Manga.title + " " +
-            "            <br/>(Return to Chapter List)" +
-            "        </a>" +
-            "    </div>" +
-            "    <div id='ChapterControlBottom' class='ChapterControl'>" +
-            "        <a href='#' id='blob' class='download'>Download</a>" +
-            "        <a name='top' href='#MangaOnlineViewer'>Top</a>" +
-            "        <a class='prev' name='prev' href='" + Manga.prev + "' onclick='location=\"" + Manga.prev + "\";location.reload();'>Previous</a>" +
-            "        <a class='next' name='next' href='" + Manga.next + "' onclick='location=\"" + Manga.next + "\";location.reload();'>Next</a>" +
-            "    </div>" +
-            "    <div id='ImageOptions'>" +
-            "        <div id='menu'>" +
-            "            <span class='menuOuterArrow'>" +
-            "                <span class='menuInnerArrow'></span>" +
-            "            </span>" +
-            "        </div>" +
-            "        <div class='painel'>" +
-            "            <img id='enlarge' alt='Enlarge' src='" + icon.enlage + "' class='controlButton'/>" +
-            "            <img id='restore' alt='Restore' src='" + icon.restore + "' class='controlButton'/>" +
-            "            <img id='reduce' alt='Reduce' src='" + icon.reduce + "' class='controlButton'/>" +
-            "            <img id='fitwidth' alt='Fit Width' src='" + icon.fitwidth + "' class='controlButton'/>" +
-            "            <img id='settings' alt='settings' src='" + icon.settings + "' class='controlButton'/>" +
-            "        </div>" +
-            "        <div id='Zoom' class='controlLable'>Zoom: " +
-            "            <b>" + settings.Zoom + "</b> %" +
-            "        </div>" +
-            "    </div>" +
-            "    <div id='ViewerControls' class='painel' style='display: none;'>" +
-            "        <span class='controlLable'>Theme:</span>" +
-            "       <input id='CustomThemeHue' class='jscolor' value='" + settings.CustomTheme + "' style='width: 50px;'>" +
-            "        <select id='ThemeSelector'></select>" +
-            "        <span class='controlLable'>Pages/Second:</span>" +
-            "        <select id='PagesPerSecond'>" +
-            "            <option value='3000'>0.3</option>" +
-            "            <option value='2000'>0.5</option>" +
-            "            <option value='1000'>01</option>" +
-            "            <option value='500'>02</option>" +
-            "            <option value='250'>04</option>" +
-            "            <option value='125'>08</option>" +
-            "            <option value='100'>10</option>" +
-            "        </select>" +
-            "        <span class='controlLable'>Default Zoom:</span>" +
-            "        <select id='DefaultZoom'>" +
-            "            <option value='50'>50%</option>" +
-            "            <option value='75'>75%</option>" +
-            "            <option value='100'>100%</option>" +
-            "            <option value='125'>125%</option>" +
-            "            <option value='150'>150%</option>" +
-            "            <option value='175'>175%</option>" +
-            "            <option value='200'>200%</option>" +
-            "            <option value='1000'>Fit Width</option>" +
-            "        </select>" +
-            "        <span class='controlLable'>Fit Width if Oversized:</span><input type='checkbox' val='true' name='fitIfOversized' id='fitIfOversized' " + (settings.FitWidthIfOversized ? "checked" : "") + ">" +
-            "        <span class='controlLable'>Show Thumbnails:</span><input type='checkbox' val='true' name='showThumbnails' id='showThumbnails' " + (settings.ShowThumbnails ? "checked" : "") + ">" +
-            "        <span class='controlLable'>Download Images as Zip Automatically:</span><input type='checkbox' val='false' name='downloadZip' id='downloadZip' " + (settings.DownloadZip ? "checked" : "") + ">" +
-            "        <span class='controlLable'>Always Load Script:</span><input type='checkbox' val='true' name='alwaysLoad' id='alwaysLoad' " + (settings.alwaysLoad ? "checked" : "") + ">" +
-            "    </div>" +
-            "    <div id='ViewerShortcuts' class='painel' style='display: none;'>" +
-            "        <span class='key'>+</span> or <span class='key'>=</span> : Global Zoom in pages (enlarge)</br>" +
-            "        <span class='key'>-</span> : Global  Zoom out pages (reduce)</br>" +
-            "        <span class='key'>*</span> or <span class='key'>8</span> : Global  Restore pages to original</br>" +
-            "        <span class='key'>5</span> : Global Fit window width</br>" +
-            "        <span class='key'>Arrow Right</span> or <span class='key'>.</span> : Next Chapter</br>" +
-            "        <span class='key'>Arrow Left</span> or <span class='key'>,</span> : Previous Chapter</br>" +
-            "    </div>" +
-            "    <div id='Counters' class='controlLable'>" +
-            "        <i>0</i> of " +
-            "        <b>" + Manga.quant + "</b> Pages Loaded " +
-            "        <span class='controlLable'>Go to Page:</span>" +
-            "        <select id='gotoPage'>" +
-            "            <option selected>#</option>" +
-            "        </select>" +
-            "    </div>" +
-            "    <div id='Navigation' align='center' class='painel " + (settings.ShowThumbnails ? "" : "disabled") + "'>" +
-            "        <div id='NavigationCounters' class='controlLable'>" +
-            "            <img id='' alt='menu' src='" + icon.menu + "' class='nav'/>" +
-            "            <i>0</i> of " +
-            "            <b>" + Manga.quant + "</b> Pages Loaded" +
-            "        </div>" +
-            "    </div>" +
-            "</div>";
+        var reader = "<div id='MangaOnlineViewer' class='" + settings.Theme + "' style='min-height: 1080px;'>" + "    <div class='ViewerTitle'>" + "        <br/>" + "        <a id='series' href='" + Manga.series + "'> " + Manga.title + " " + "            <br/>(Return to Chapter List)" + "        </a>" + "    </div>" + "    <div id='ChapterControlTop' class='ChapterControl'>" + "        <a name='bottom' href='#ChapterControlBottom' style='display: none;'>Bottom</a>" + "        <a href='#' id='downloadManga' class='download'>Download</a>" + "        <a class='prev' name='prev' href='" + Manga.prev + "' onclick='location=\"" + Manga.prev + "\";location.reload();'>Previous</a>" + "        <a class='next' name='next' href='" + Manga.next + "' onclick='location=\"" + Manga.next + "\";location.reload();'>Next</a>" + "    </div>" + "    <div id='Chapter' align='center' class='" + (settings.FitWidthIfOversized == "true" ? "fitWidthIfOversized" : "") + "'></div>" + "    <div class='ViewerTitle'>" + "        <br/>" + "        <a id='series' href='" + Manga.series + "'> " + Manga.title + " " + "            <br/>(Return to Chapter List)" + "        </a>" + "    </div>" + "    <div id='ChapterControlBottom' class='ChapterControl'>" + "        <a href='#' id='blob' class='download'>Download</a>" + "        <a name='top' href='#MangaOnlineViewer'>Top</a>" + "        <a class='prev' name='prev' href='" + Manga.prev + "' onclick='location=\"" + Manga.prev + "\";location.reload();'>Previous</a>" + "        <a class='next' name='next' href='" + Manga.next + "' onclick='location=\"" + Manga.next + "\";location.reload();'>Next</a>" + "    </div>" + "    <div id='ImageOptions'>" + "        <div id='menu'>" + "            <span class='menuOuterArrow'>" + "                <span class='menuInnerArrow'></span>" + "            </span>" + "        </div>" + "        <div class='painel'>" + "            <img id='enlarge' alt='Enlarge' src='" + icon.enlage + "' class='controlButton'/>" + "            <img id='restore' alt='Restore' src='" + icon.restore + "' class='controlButton'/>" + "            <img id='reduce' alt='Reduce' src='" + icon.reduce + "' class='controlButton'/>" + "            <img id='fitwidth' alt='Fit Width' src='" + icon.fitwidth + "' class='controlButton'/>" + "            <img id='settings' alt='settings' src='" + icon.settings + "' class='controlButton'/>" + "        </div>" + "        <div id='Zoom' class='controlLable'>Zoom: " + "            <b>" + settings.Zoom + "</b> %" + "        </div>" + "    </div>" + "    <div id='ViewerControls' class='painel' style='display: none;'>" + "        <span class='controlLable'>Theme:</span>" + "       <input id='CustomThemeHue' class='jscolor' value='" + settings.CustomTheme + "' style='width: 50px;'>" + "        <select id='ThemeSelector'></select>" + "        <span class='controlLable'>Pages/Second:</span>" + "        <select id='PagesPerSecond'>" + "            <option value='3000'>0.3</option>" + "            <option value='2000'>0.5</option>" + "            <option value='1000'>01</option>" + "            <option value='500'>02</option>" + "            <option value='250'>04</option>" + "            <option value='125'>08</option>" + "            <option value='100'>10</option>" + "        </select>" + "        <span class='controlLable'>Default Zoom:</span>" + "        <select id='DefaultZoom'>" + "            <option value='50'>50%</option>" + "            <option value='75'>75%</option>" + "            <option value='100'>100%</option>" + "            <option value='125'>125%</option>" + "            <option value='150'>150%</option>" + "            <option value='175'>175%</option>" + "            <option value='200'>200%</option>" + "            <option value='1000'>Fit Width</option>" + "        </select>" + "        <span class='controlLable'>Fit Width if Oversized:</span><input type='checkbox' val='true' name='fitIfOversized' id='fitIfOversized' " + (settings.FitWidthIfOversized ? "checked" : "") + ">" + "        <span class='controlLable'>Show Thumbnails:</span><input type='checkbox' val='true' name='showThumbnails' id='showThumbnails' " + (settings.ShowThumbnails ? "checked" : "") + ">" + "        <span class='controlLable'>Download Images as Zip Automatically:</span><input type='checkbox' val='false' name='downloadZip' id='downloadZip' " + (settings.DownloadZip ? "checked" : "") + ">" + "        <span class='controlLable'>Always Load Script:</span><input type='checkbox' val='true' name='alwaysLoad' id='alwaysLoad' " + (settings.alwaysLoad ? "checked" : "") + ">" + "    </div>" + "    <div id='ViewerShortcuts' class='painel' style='display: none;'>" + "        <span class='key'>+</span> or <span class='key'>=</span> : Global Zoom in pages (enlarge)</br>" + "        <span class='key'>-</span> : Global  Zoom out pages (reduce)</br>" + "        <span class='key'>*</span> or <span class='key'>8</span> : Global  Restore pages to original</br>" + "        <span class='key'>5</span> : Global Fit window width</br>" + "        <span class='key'>Arrow Right</span> or <span class='key'>.</span> : Next Chapter</br>" + "        <span class='key'>Arrow Left</span> or <span class='key'>,</span> : Previous Chapter</br>" + "    </div>" + "    <div id='Counters' class='controlLable'>" + "        <i>0</i> of " + "        <b>" + Manga.quant + "</b> Pages Loaded " + "        <span class='controlLable'>Go to Page:</span>" + "        <select id='gotoPage'>" + "            <option selected>#</option>" + "        </select>" + "    </div>" + "    <div id='Navigation' align='center' class='painel " + (settings.ShowThumbnails ? "" : "disabled") + "'>" + "        <div id='NavigationCounters' class='controlLable'>" + "            <img id='' alt='menu' src='" + icon.menu + "' class='nav'/>" + "            <i>0</i> of " + "            <b>" + Manga.quant + "</b> Pages Loaded" + "        </div>" + "    </div>" + "</div>";
         $("body").html(reader);
     }
     //Add Pages Place holders
@@ -509,25 +346,9 @@
             options = [],
             thumbs = [];
         for (var i = 1; i <= Manga.quant; i++) {
-            pages.push(
-                "<div id='Page" + i + "' class='MangaPage'>" +
-                "    <div class='PageFunctions'>" +
-                "        <a class='ZoomIn controlButton'></a> " +
-                "        <a class='ZoomRestore controlButton'></a>" +
-                "        <a class='ZoomOut controlButton'></a>" +
-                "        <a class='ZoomWidth controlButton'></a> " +
-                "        <a class='Hide controlButton'></a> " +
-                "        <a class='Reload controlButton'></a> " +
-                "        <span>" + i + "</span>" +
-                "    </div>" +
-                "    <div class='PageContent' style='display: none;'></div>" +
-                "</div>");
+            pages.push("<div id='Page" + i + "' class='MangaPage'>" + "    <div class='PageFunctions'>" + "        <a class='ZoomIn controlButton'></a> " + "        <a class='ZoomRestore controlButton'></a>" + "        <a class='ZoomOut controlButton'></a>" + "        <a class='ZoomWidth controlButton'></a> " + "        <a class='Hide controlButton'></a> " + "        <a class='Reload controlButton'></a> " + "        <span>" + i + "</span>" + "    </div>" + "    <div class='PageContent' style='display: none;'></div>" + "</div>");
             options.push("<option value='" + i + "'>" + i + "</option>");
-            thumbs.push(
-                "<div id='ThumbNail" + i + "' class='ThumbNail'>" +
-                "    <img id='ThumbNailImg" + i + "' alt='' src=''/>" +
-                "    <span>" + i + "</span>" +
-                "</div>");
+            thumbs.push("<div id='ThumbNail" + i + "' class='ThumbNail'>" + "    <img id='ThumbNailImg" + i + "' alt='' src=''/>" + "    <span>" + i + "</span>" + "</div>");
         }
         $("#Chapter").append(pages.join(""));
         $("#gotoPage").append(options.join(""));
@@ -536,8 +357,7 @@
     //Converts Images into Base64
     function customBase64Encode(inputStr) {
         // Source: http://stackoverflow.com/questions/8778863/downloading-an-image-using-xmlhttprequest-in-a-userscript/8781262#8781262
-        var
-            bbLen = 3,
+        var bbLen = 3,
             enCharLen = 4,
             inpLen = inputStr.length,
             inx = 0,
@@ -545,18 +365,15 @@
             keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
             output = "",
             paddingBytes = 0;
-        var
-            bytebuffer = new Array(bbLen),
+        var bytebuffer = new Array(bbLen),
             encodedCharIndexes = new Array(enCharLen);
         while (inx < inpLen) {
             for (jnx = 0; jnx < bbLen; ++jnx) {
                 /*--- Throw away high-order byte, as documented at:
                   https://developer.mozilla.org/En/Using_XMLHttpRequest#Handling_binary_data
                 */
-                if (inx < inpLen)
-                    bytebuffer[jnx] = inputStr.charCodeAt(inx++) & 0xff;
-                else
-                    bytebuffer[jnx] = 0;
+                if (inx < inpLen) bytebuffer[jnx] = inputStr.charCodeAt(inx++) & 0xff;
+                else bytebuffer[jnx] = 0;
             }
             /*--- Get each encoded character, 6 bits at a time.
                 index 0: first  6 bits
@@ -575,23 +392,22 @@
             //--- Determine whether padding happened, and adjust accordingly.
             paddingBytes = inx - (inpLen - 1);
             switch (paddingBytes) {
-            case 1:
-                // Set last character to padding char
-                encodedCharIndexes[3] = 64;
-                break;
-            case 2:
-                // Set last 2 characters to padding char
-                encodedCharIndexes[3] = 64;
-                encodedCharIndexes[2] = 64;
-                break;
-            default:
-                break; // No padding - proceed
+                case 1:
+                    // Set last character to padding char
+                    encodedCharIndexes[3] = 64;
+                    break;
+                case 2:
+                    // Set last 2 characters to padding char
+                    encodedCharIndexes[3] = 64;
+                    encodedCharIndexes[2] = 64;
+                    break;
+                default:
+                    break; // No padding - proceed
             }
             /*--- Now grab each appropriate character out of our keystring,
                 based on our index array and append it to the output string.
             */
-            for (jnx = 0; jnx < enCharLen; ++jnx)
-                output += keyStr.charAt(encodedCharIndexes[jnx]);
+            for (jnx = 0; jnx < enCharLen; ++jnx) output += keyStr.charAt(encodedCharIndexes[jnx]);
         }
         return output;
     }
@@ -732,8 +548,7 @@
         var total = $("#Counters b").html(); //$("#NavigationCounters b").html();
         $(".PageContent img").filter(function () {
             var image = $(this);
-            if (image.context.naturalWidth === 0 ||
-                image.readyState == "uninitialized") {
+            if (image.context.naturalWidth === 0 || image.readyState == "uninitialized") {
                 return true;
             } else {
                 applyDefaultZoom(this);
@@ -750,7 +565,7 @@
         if (p > 0) {
             setTimeout(function () {
                 checkImagesLoaded();
-            }, 3000);
+            }, 5000);
         } else {
             applyDefaultZoom();
             console.log("Images Loading Complete");
@@ -764,7 +579,7 @@
     //Force reload the image
     function reloadImage(img) {
         var src = img.attr("src");
-        if ($(this).attr("altsrc") !== undefined) {
+        if (img.attr("altsrc") !== undefined) {
             var altsrc = img.attr("altsrc");
             img.removeAttr("src");
             img.attr("altsrc", src);
@@ -816,35 +631,35 @@
                 e.stopPropagation();
                 e.stopImmediatePropagation();
                 switch (a) {
-                case 39: //down:right
-                case 46: //press:right / down:.
-                case 190: //press:.
-                    $(".ChapterControl:first .next")[0].click();
-                    break;
-                case 37: //down:left
-                case 44: //press:left / down:,
-                case 188: //press:,
-                    $(".ChapterControl:first .prev")[0].click();
-                    break;
-                case 43: //+
-                case 107: //numpad+
-                case 61: //=
-                    $("#enlarge").click();
-                    break;
-                case 45: //-
-                case 109: //numpad-
-                    $("#reduce").click();
-                    break;
-                case 42: //5
-                case 106: //numpad5
-                case 56: //8
-                case 104: //numpad8
-                    $("#restore").click();
-                    break;
-                case 53: //*
-                case 101: //numpad*
-                    $("#fitwidth").click();
-                    break;
+                    case 39: //down:right
+                    case 46: //press:right / down:.
+                    case 190: //press:.
+                        $(".ChapterControl:first .next")[0].click();
+                        break;
+                    case 37: //down:left
+                    case 44: //press:left / down:,
+                    case 188: //press:,
+                        $(".ChapterControl:first .prev")[0].click();
+                        break;
+                    case 43: //+
+                    case 107: //numpad+
+                    case 61: //=
+                        $("#enlarge").click();
+                        break;
+                    case 45: //-
+                    case 109: //numpad-
+                        $("#reduce").click();
+                        break;
+                    case 42: //5
+                    case 106: //numpad5
+                    case 56: //8
+                    case 104: //numpad8
+                        $("#restore").click();
+                        break;
+                    case 53: //*
+                    case 101: //numpad*
+                        $("#fitwidth").click();
+                        break;
                 }
                 return false;
             }
@@ -1454,5 +1269,7 @@
             }
         }
     ];
-    W.MangaOnlineViewer.start(m);
+    if (getInfoGM().script.name == "Manga OnlineViewer") {
+        W.MangaOnlineViewer.start(m);
+    }
 })((typeof unsafeWindow === 'undefined') ? window : unsafeWindow);
