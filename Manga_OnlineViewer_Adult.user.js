@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name  Manga OnlineViewer Adult
 // @description  Extension for Manga OnlineViewer for Adult sites mainly Hentai: Fakku, HBrowse, Hentai2Read and Doujin-moe Hentai sites.
-// @version 01.08
-// @date 2017-06-11
+// @version 01.09
+// @date 2017-06-16
 // @author  Tago
 // @namespace https://github.com/TagoDR
 // @require https://code.jquery.com/jquery-latest.min.js
@@ -10,11 +10,13 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.10.0/alertify.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js
-// @require https://cdn.rawgit.com/TagoDR/MangaOnlineViewer/9fda1978/Manga_OnlineViewer.user.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.0/color-scheme.min.js
+// @require https://cdn.rawgit.com/TagoDR/MangaOnlineViewer/1323b7d/Manga_OnlineViewer.user.js
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @grant  GM_getValue
 // @grant  GM_setValue
+// @grant  GM_listValues
 // @grant  GM_xmlhttpRequest
 // @include /https?://(www.)?(luscious.net|wondersluts.com)/c/.+/
 // @include /https?://exhentai.org/s/.+/.+/
@@ -41,6 +43,7 @@
 // @history 01.06 Fixed doujinshihentai
 // @history 01.07 Added HentaiFox
 // @history 01.08 Added Simply-Hentai
+// @history 01.09 Code Clean Up
 // ==/UserScript==
 (function (W) {
     var m = [
@@ -382,5 +385,5 @@
             }
         }
     ];
-    W.MangaOnlineViewer.setSites(m);
+    W.MangaOnlineViewer.start(m);
 })((typeof unsafeWindow === 'undefined') ? window : unsafeWindow);
