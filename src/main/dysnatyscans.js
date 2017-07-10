@@ -1,0 +1,18 @@
+// == DynastyScans =================================================================================
+export default {
+  name: 'Dynasty-Scans',
+  url: /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/,
+  homepage: 'https://dynasty-scans.com/',
+  lang: ['eng'],
+  category: 'manga',
+  run() {
+    return {
+      title: $('#chapter-title').text(),
+      series: '#',
+      quant: W.pages.length,
+      prev: $('#prev_link').attr('href'),
+      next: $('#next_link').attr('href'),
+      listImages: W.pages.map(x => x.image),
+    };
+  },
+};

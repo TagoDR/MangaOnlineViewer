@@ -15,50 +15,15 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 
 <h3>Supported Manga Sites</h3>
 <ul>
-<li><a href='http://bato.to/'>Batoto</a></li>
-<li><a href='https://dynasty-scans.com/'>Dynasty-Scans</a></li>
-<li><a href='http://read.egscans.com/'>Easy Going Scans</a></li>
-<li><a href='http://eatmanga.me/'>EatManga</a></li>
-<li><a href=''>FoOlSlide</a></li>
-<li><a href='http://kissmanga.com/'>KissManga</a></li>
-<li><a href='http://mangadeep.com/'>MangaDeep</a></li>
-<li><a href='https://mangadoom.co/'>MangaDoom</a></li>
-<li><a href='http://mangafox.me/'>MangaFox</a></li>
-<li><a href='http://www.mangago.me/'>MangaGo</a></li>
-<li><a href='http://www.mangahere.co/'>MangaHere</a></li>
-<li><a href='http://www.mangainn.net/'>MangaInn</a></li>
-<li><a href='http://manga.lyght.net/'>MangaLyght</a></li>
-<li><a href='http://www.mangapanda.com/'>MangaPanda</a></li>
-<li><a href='http://mangapark.me/'>MangaPark</a></li>
-<li><a href='http://www.mangareader.net/'>MangaReader</a></li>
-<li><a href='http://mangastream.com/'>MangaStream</a></li>
-<li><a href='http://www.mangatown.com/'>MangaTown</a></li>
-<li><a href='http://ninemanga.com/'>NineManga</a></li>
-<li><a href='http://www.readmanga.today/'>ReadManga.Today</a></li>
-<li><a href='http://raw.senmanga.com/'>SenManga(Raw)</a></li>
-<li><a href='http://www.tenmanga.com/'>TenManga</a></li>
-<li><a href='http://www.thespectrum.net/'>TheSpectrum</a></li>
+<!-- @echo LIST_MANGA_SITES -->
 </ul>
 <h3>Supported Comic Sites</h3>
 <ul>
-<li><a href='http://www.comicastle.org/'>ComiCastle</a></li>
+<!-- @echo LIST_COMIC_SITES -->
 </ul>
 <h3>Supported Hentai Sites</h3> <b><a style="color: red;" href="https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js">Adult Script</a> avaliable <i>only</i> on <a href='https://github.com/TagoDR/MangaOnlineViewer'>Github</a></b>
 <ul>
-<li><a href='https://doujins.com/'>DoujinMoeNM</a></li>
-<li><a href='https://exhentai.org/'>ExHentai</a></li>
-<li><a href='http://www.hbrowse.com/'>HBrowser</a></li>
-<li><a href='https://www.hentaihere.com/'>HentaIHere</a></li>
-<li><a href='http://hentai2read.com/'>Hentai2Read</a></li>
-<li><a href='https://luscious.net/'>Luscious</a></li>
-<li><a href='http://pururin.us/'>Pururin</a></li>
-<li><a href='http://simply-hentai.com/'>Simply-Hentai</a></li>
-<li><a href='http://tsumino.com/'>Tsumino</a></li>
-<li><a href='https://www.wondersluts.com/'>Wondersluts</a></li>
-<li><a href='https://e-hentai.org/'>e-Hentai</a></li>
-<li><a href='http://www.hentaifox.com/'>hentaifox</a></li>
-<li><a href='https://hitomi.la/'>hitomi</a></li>
-<li><a href='https://nhentai.net/'>nHentai</a></li>
+<!-- @echo LIST_HENTAI_SITES -->
 </ul>
 
 <h3>Extendible Script</h3>
