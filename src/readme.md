@@ -7,8 +7,7 @@ I allow this script to be posted or used anywhere so long it gives me credit and
 
 <h2>Official Sources</h2>
 <pre>
-GitHub (Main):     <a href="https://github.com/TagoDR/MangaOnlineViewer">https://github
-.com/TagoDR/MangaOnlineViewer</a>
+GitHub:     <a href="https://github.com/TagoDR/MangaOnlineViewer">https://github.com/TagoDR/MangaOnlineViewer</a>
 GreaseFork: <a href="https://greasyfork.org/en/scripts/1319-manga-onlineviewer">https://greasyfork.org/en/scripts/1319-manga-onlineviewer</a>
 OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer</a>
 </pre>
@@ -73,9 +72,3 @@ Download all images as ZIP File[Automatic Default off]
 <li>The site must not be exclusive to a handful of manga titles</li></ol>
 
 <h3>Disclaimer</h3>In case the owner/admin of one of the supported sites does not want my script to run on their site, I will make it disabled by default. Forcing users to manually activate it.
-
-<h3>Changelog:</h3>
-<pre>
-2017-08-01 13.0.0 Full Project Rewrite
-2017-08-01 13.0.1 Removed comments, fix luscious infinite recursion
-</pre>
