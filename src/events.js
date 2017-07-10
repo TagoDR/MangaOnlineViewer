@@ -163,7 +163,8 @@ function controls() {
   $('#ThemeSelector').change((event) => {
     const target = $(event.target);
     $('#MangaOnlineViewer , body').removeClass().addClass(target.val());
-    setValueGM('MangaTheme:', target.val());
+    logScript('MangaTheme:', target.val());
+    setValueGM('MangaTheme', target.val());
     if (target.val() === 'Custom_Dark' || target.val() === 'Custom_Light') {
       $('#CustomThemeHue').show();
     } else {
