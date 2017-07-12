@@ -14,55 +14,51 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 
 <h3>Supported Manga Sites</h3>
 <ul>
-<li><a href='http://bato.to/'>Batoto</a></li>
-<li><a href='https://dynasty-scans.com/'>Dynasty-Scans</a></li>
-<li><a href='http://read.egscans.com/'>Easy Going Scans</a></li>
-<li><a href='http://eatmanga.me/'>EatManga</a></li>
-<li><a href=''>FoOlSlide</a></li>
-<li><a href='http://kissmanga.com/'>KissManga</a></li>
-<li><a href='http://mangadeep.com/'>MangaDeep</a></li>
-<li><a href='https://mangadoom.co/'>MangaDoom</a></li>
-<li><a href='http://mangafox.me/'>MangaFox</a></li>
-<li><a href='http://www.mangago.me/'>MangaGo</a></li>
-<li><a href='http://www.mangahere.co/'>MangaHere</a></li>
-<li><a href='http://www.mangainn.net/'>MangaInn</a></li>
-<li><a href='http://manga.lyght.net/'>MangaLyght</a></li>
-<li><a href='http://www.mangapanda.com/'>MangaPanda</a></li>
-<li><a href='http://mangapark.me/'>MangaPark</a></li>
-<li><a href='http://www.mangareader.net/'>MangaReader</a></li>
-<li><a href='http://mangastream.com/'>MangaStream</a></li>
-<li><a href='http://www.mangatown.com/'>MangaTown</a></li>
-<li><a href='http://ninemanga.com/'>NineManga</a></li>
-<li><a href='http://www.readmanga.today/'>ReadManga.Today</a></li>
-<li><a href='http://raw.senmanga.com/'>SenManga(Raw)</a></li>
-<li><a href='http://www.tenmanga.com/'>TenManga</a></li>
-<li><a href='http://www.thespectrum.net/'>TheSpectrum</a></li>
+<li><a href='http://bato.to/'>Batoto</a> <i>[English]</i></li>
+<li><a href='https://dynasty-scans.com/'>Dynasty-Scans</a> <i>[English]</i></li>
+<li><a href='http://read.egscans.com/'>Easy Going Scans</a> <i>[English]</i></li>
+<li><a href='http://eatmanga.me/'>EatManga</a> <i>[English]</i></li>
+<li><a href=''>FoOlSlide</a> <i>[English]</i> <b>Obs: Any Scanlator site that uses FoOLSlide</b></li>
+<li><a href='http://funmanga.com/'>Funmanga</a> <i>[English]</i></li>
+<li><a href='http://kissmanga.com/'>KissManga</a> <i>[English]</i></li>
+<li><a href='http://mangadeep.com/'>MangaDeep</a> <i>[English]</i></li>
+<li><a href='https://mangadoom.co/'>MangaDoom</a> <i>[English]</i></li>
+<li><a href='http://mangafox.me/'>MangaFox</a> <i>[English]</i></li>
+<li><a href='http://www.mangago.me/'>MangaGo</a> <i>[English]</i></li>
+<li><a href='http://www.mangahere.co/'>MangaHere</a> <i>[English]</i></li>
+<li><a href='http://www.mangainn.net/'>MangaInn</a> <i>[English]</i></li>
+<li><a href='http://manga.lyght.net/'>MangaLyght</a> <i>[English]</i></li>
+<li><a href='http://mangapark.me/'>MangaPark</a> <i>[English]</i></li>
+<li><a href='http://www.mangareader.net/'>MangaReader</a> / <a href='http://www.mangapanda.com/'>MangaPanda</a> <i>[English]</i></li>
+<li><a href='http://mangastream.com/'>MangaStream</a> <i>[English]</i></li>
+<li><a href='http://www.mangatown.com/'>MangaTown</a> <i>[English]</i></li>
+<li><a href='http://ninemanga.com/'>NineManga</a> <i>[English]</i></li>
+<li><a href='http://www.readmanga.today/'>ReadManga.Today</a> <i>[English]</i></li>
+<li><a href='http://raw.senmanga.com/'>SenManga(Raw)</a> <i>[English]</i></li>
+<li><a href='http://www.tenmanga.com/'>TenManga</a> <i>[English]</i></li>
+<li><a href='http://www.thespectrum.net/'>TheSpectrum</a> <i>[English]</i></li>
+<li><a href='https://mangahost.net/'>MangaHost</a> <i>[Portuguese]</i></li>
+<li><a href='http://unionmangas.net/'>UnionMangas</a> <i>[Portuguese]</i></li>
 </ul>
 <h3>Supported Comic Sites</h3>
 <ul>
-<li><a href='http://www.comicastle.org/'>ComiCastle</a></li>
+<li><a href='http://www.comicastle.org/'>ComiCastle</a> <i>[English]</i></li>
 </ul>
 <h3>Supported Hentai Sites</h3> <b><a style="color: red;" href="https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js">Adult Script</a> avaliable <i>only</i> on <a href='https://github.com/TagoDR/MangaOnlineViewer'>Github</a></b>
 <ul>
-<li><a href='https://doujins.com/'>DoujinMoeNM</a></li>
-<li><a href='https://exhentai.org/'>ExHentai</a></li>
-<li><a href='http://www.hbrowse.com/'>HBrowser</a></li>
-<li><a href='https://www.hentaihere.com/'>HentaIHere</a></li>
-<li><a href='http://hentai2read.com/'>Hentai2Read</a></li>
-<li><a href='https://luscious.net/'>Luscious</a></li>
-<li><a href='http://pururin.us/'>Pururin</a></li>
-<li><a href='http://simply-hentai.com/'>Simply-Hentai</a></li>
-<li><a href='http://tsumino.com/'>Tsumino</a></li>
-<li><a href='https://www.wondersluts.com/'>Wondersluts</a></li>
-<li><a href='https://e-hentai.org/'>e-Hentai</a></li>
-<li><a href='http://www.hentaifox.com/'>hentaifox</a></li>
-<li><a href='https://hitomi.la/'>hitomi</a></li>
-<li><a href='https://nhentai.net/'>nHentai</a></li>
+<li><a href='https://doujins.com/'>DoujinMoeNM</a> <i>[English]</i></li>
+<li><a href='https://exhentai.org/'>ExHentai</a> / <a href='https://e-hentai.org/'>e-Hentai</a> <i>[English]</i> <b>Obs: May get your IP Banned, use with moderation</b></li>
+<li><a href='http://www.hbrowse.com/'>HBrowser</a> <i>[English]</i></li>
+<li><a href='https://www.hentaihere.com/'>HentaIHere</a> <i>[English]</i></li>
+<li><a href='http://hentai2read.com/'>Hentai2Read</a> <i>[English]</i></li>
+<li><a href='https://luscious.net/'>Luscious</a> / <a href='https://www.wondersluts.com/'>Wondersluts</a> <i>[English]</i></li>
+<li><a href='http://pururin.us/'>Pururin</a> <i>[English]</i></li>
+<li><a href='http://simply-hentai.com/'>Simply-Hentai</a> <i>[English]</i></li>
+<li><a href='http://tsumino.com/'>Tsumino</a> <i>[English]</i></li>
+<li><a href='http://www.hentaifox.com/'>hentaifox</a> <i>[English]</i></li>
+<li><a href='https://hitomi.la/'>hitomi</a> <i>[English]</i></li>
+<li><a href='https://nhentai.net/'>nHentai</a> <i>[English]</i></li>
 </ul>
-
-<h3>Extendible Script</h3>
-The script now support extensions, anyone that wish to make use of my script structure to support different languages of sites are free to do so. Below is are the links for the ones I know of. The first one is for Portuguese is mine, use it as an example.</br>
-Portuguese: https://greasyfork.org/scripts/4657-manga-onlineviewer-portugues
 
 <h3>Supported Browsers</h3>
 <ol><li>Mozilla Firefox with <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">Greasemonkey</a></li>
@@ -101,9 +97,8 @@ Download all images as ZIP File[Automatic Default off]
 </pre>
 
 <h3>Rules For adding new Manga Sites</h3>
-<ol><li>The site must have rare/unique mangas</li>
-<li>If the site have mangas in multiple languages it must have an English version</li>
+<ol><li>The site must have rare/unique mangas(Meaning: the othe sites does not have, or better quality)</li>
 <li>The site must be strong enough or else my script may crash it</li>
-<li>The site must not be exclusive to a handful of manga titles</li></ol>
+<li>The site must not be exclusive to a handful of manga titles (Meaning: no small scanlators)</li></ol>
 
 <h3>Disclaimer</h3>In case the owner/admin of one of the supported sites does not want my script to run on their site, I will make it disabled by default. Forcing users to manually activate it.

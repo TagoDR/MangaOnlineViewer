@@ -4,9 +4,9 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep
-// @version 13.0.2
-// @date 2017-07-10
+// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost
+// @version 13.3.0
+// @date 2017-07-12
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -40,7 +40,10 @@
 // @include /https?:\/\/raw.senmanga.com\/.+\/.+\/?/
 // @include /https?:\/\/(www.)?tenmanga.com\/chapter\/.+/
 // @include /https?:\/\/view.thespectrum.net\/.+/
-// @include /https?:\/\/(www.)?(mangaspy|mangadeep|mangateen).com\/.+\/[0-9]+/
+// @include /https?:\/\/(www.)?(mangadeep).com\/.+\/[0-9]+/
+// @include /https?:\/\/(www.)?funmanga.com\/.+\/[0-9]+/
+// @include /http?:\/\/unionmangas.net\/leitor\/.+\/.+/
+// @include /https?:\/\/mangahost.net\/manga\/.+\/.+/
 // @exclude /https?:\/\/(www.)?tsumino.com\/.+/
 // @exclude /https?:\/\/(www.)?pururin.us\/.+/
 // ==/UserScript==
@@ -662,7 +665,7 @@
     url: /https?:\/\/(www.)?bato.to\/reader.*/,
     waitEle: 'select#page_select:first option',
     homepage: 'http://bato.to/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       const num = $('select#page_select:first option').length;
@@ -682,7 +685,7 @@
     name: 'ComiCastle',
     url: /https?:\/\/(www.)?comicastle.org\/comic\/.+\/[0-9]+.*/,
     homepage: 'http://www.comicastle.org/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'comic',
     run() {
       const url = $('.form-control:last option').get();
@@ -703,7 +706,7 @@
     name: 'Dynasty-Scans',
     url: /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/,
     homepage: 'https://dynasty-scans.com/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       return {
@@ -721,7 +724,7 @@
     name: 'EatManga',
     url: /https?:\/\/(www.)?eatmanga.me\/Manga-Scan\/.+\/.+\//,
     homepage: 'http://eatmanga.me/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       const chapter = $('#top_chapter_list option:selected');
@@ -741,7 +744,7 @@
     name: 'Easy Going Scans',
     url: /https?:\/\/read.egscans.com\/.+/,
     homepage: 'http://read.egscans.com/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       const src = W.img_url.slice(1);
@@ -766,7 +769,8 @@
     name: 'FoOlSlide',
     url: /.+\/read\/.+/,
     homepage: '',
-    language: ['English'], ['eng'],
+    language: ['English'],
+    obs: 'Any Scanlator site that uses FoOLSlide',
     category: 'manga',
     run() {
       const temp = String(location.href.substr(0, location.href.lastIndexOf('/'))) + '/';
@@ -789,7 +793,7 @@
     name: 'KissManga',
     url: /https?:\/\/(www.)?kissmanga.com\/Manga\/.+\/.+?id=[0-9]+/,
     homepage: 'http://kissmanga.com/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       const chapter = $('#selectChapter option');
@@ -809,7 +813,7 @@
     name: 'MangaDoom',
     url: /https?:\/\/(www.)?mangadoom.co\/.+\/[0-9]+/,
     homepage: 'https://mangadoom.co/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       const url = $('.selectPage:first option:not(:first)').get();
@@ -830,7 +834,7 @@
     name: 'MangaFox',
     url: /https?:\/\/(www.)?mangafox.me\/manga\/.+\/.+\//,
     homepage: 'http://mangafox.me/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       const num = parseInt($('select.m:first option:last').prev().val(), 10);
@@ -850,7 +854,7 @@
     name: 'MangaGo',
     url: /https?:\/\/(www.)?mangago.me\/read-manga\/.+\/.+/,
     homepage: 'http://www.mangago.me/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       const origin = $('#series');
@@ -870,7 +874,7 @@
     name: 'MangaHere',
     url: /https?:\/\/(www.)?mangahere.co\/manga\/.+\/.+/,
     homepage: 'http://www.mangahere.co/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       const num = parseInt($('.right select:first option:last').html(), 10);
@@ -891,7 +895,7 @@
     name: 'MangaInn',
     url: /https?:\/\/(www.)?mangainn.net\/manga\/chapter\/.+/,
     homepage: 'http://www.mangainn.net/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       const num = parseInt($('select#cmbpages option:last').html(), 10);
@@ -912,7 +916,7 @@
     name: 'MangaLyght',
     url: /https?:\/\/manga.lyght.net\/series\/.+\.html/,
     homepage: 'http://manga.lyght.net/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       const chapter = $('.selectchapter option:selected');
@@ -935,7 +939,7 @@
     name: 'MangaPark',
     url: /https?:\/\/(www.)?mangapark.me\/manga\/.+\/.+/,
     homepage: 'http://mangapark.me/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       const url = location.href + (location.href.lastIndexOf('/') !== location.href.length - 1 ? '/' : '');
@@ -956,7 +960,7 @@
     name: ['MangaReader', 'MangaPanda'],
     url: /https?:\/\/(www.)?(mangareader|mangapanda)(.net|.com)\/.+\/.+/,
     homepage: ['http://www.mangareader.net/', 'http://www.mangapanda.com/'],
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       const url = location.href + (location.href.lastIndexOf('/') !== location.href.length - 1 ? '/' : '');
@@ -986,7 +990,7 @@
     name: 'MangaStream',
     url: /https?:\/\/(www.)?(mangastream|readms)(.net|.com)\/r.*\/.+/,
     homepage: 'http://mangastream.com/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       const url = location.href.substring(0, location.href.lastIndexOf('/') + 1);
@@ -1008,7 +1012,7 @@
     name: 'MangaTown',
     url: /https?:\/\/(www.)?mangatown.com\/manga\/.+\/.+/,
     homepage: 'http://www.mangatown.com/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     waitEle: '#top_chapter_list option',
     run() {
@@ -1030,7 +1034,7 @@
     name: 'NineManga',
     url: /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/,
     homepage: 'http://ninemanga.com/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       return {
@@ -1049,7 +1053,7 @@
     name: 'ReadManga.Today',
     url: /https?:\/\/(www.)?readmanga.today\/.+\/[0-9]+/,
     homepage: 'http://www.readmanga.today/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       const chapter = $('select[name="chapter_list"] option:selected');
@@ -1075,7 +1079,7 @@
     name: 'SenManga(Raw)',
     url: /https?:\/\/raw.senmanga.com\/.+\/.+\/?/,
     homepage: 'http://raw.senmanga.com/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       const url = '/' + String(location.pathname.split('/')[1]) + '/' + String(location.pathname.split('/')[2]);
@@ -1101,7 +1105,7 @@
     name: 'TenManga',
     url: /https?:\/\/(www.)?tenmanga.com\/chapter\/.+/,
     homepage: 'http://www.tenmanga.com/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       const url = $('.sl-page:first option').get();
@@ -1122,7 +1126,7 @@
     name: 'TheSpectrum',
     url: /https?:\/\/view.thespectrum.net\/.+/,
     homepage: 'http://www.thespectrum.net/',
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       const url = String(location.pathname) + '?' + String($('form').serialize().substring(0, $('form').serialize().lastIndexOf('=')));
@@ -1142,9 +1146,9 @@
 
   var wpmanga = {
     name: ['MangaDeep'],
-    url: /https?:\/\/(www.)?(mangaspy|mangadeep|mangateen).com\/.+\/[0-9]+/,
+    url: /https?:\/\/(www.)?(mangadeep).com\/.+\/[0-9]+/,
     homepage: ['http://mangadeep.com/'],
-    language: ['English'], ['eng'],
+    language: ['English'],
     category: 'manga',
     run() {
       const url = '/' + String(location.pathname.split('/')[1]) + '/' + String(location.pathname.split('/')[2]);
@@ -1163,7 +1167,76 @@
     }
   };
 
-  var sites = [batoto, comicastle, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga];
+  var funmanga = {
+    name: 'Funmanga',
+    url: /https?:\/\/(www.)?funmanga.com\/.+\/[0-9]+/,
+    homepage: 'http://funmanga.com/',
+    language: ['English'],
+    category: 'manga',
+    run() {
+      const chapter = $('.extra-buttons select:first option:selected');
+      const url = $('.widget-heading select option').get().slice(1);
+      return {
+        title: $('title').text().trim(),
+        series: $('h5.widget-heading a:first').attr('href'),
+        quant: url.length,
+        prev: chapter.next('option').val(),
+        next: chapter.prev('option').val(),
+        listPages: url.map(item => $(item).val()),
+        img: '.img-responsive'
+      };
+    }
+  };
+
+  var unionmangas = {
+    name: 'UnionMangas',
+    url: /http?:\/\/unionmangas.net\/leitor\/.+\/.+/,
+    homepage: 'http://unionmangas.net/',
+    language: ['Portuguese'],
+    category: 'manga',
+    run() {
+      const origin = $('#topo h1 a');
+      const chapter = $('#cap_manga1 option:selected');
+      const src = $('.item img.real').get();
+      return {
+        title: origin.text(),
+        series: origin.attr('href'),
+        quant: $('.selectPage:first option').length,
+        prev: chapter.prev().val(),
+        next: chapter.next().val(),
+        listImages: [$(src[0]).attr('src')].concat(src.splice(1).map(item => $(item).attr('data-lazy')))
+      };
+    }
+  };
+
+  var mangahost = {
+    name: 'MangaHost',
+    url: /https?:\/\/mangahost.net\/manga\/.+\/.+/,
+    homepage: 'https://mangahost.net/',
+    language: ['Portuguese'],
+    category: 'manga',
+    run() {
+      const url = location.href + (location.href.lastIndexOf('/') !== location.href.length - 1 ? '/' : '');
+      const chapter = $('.viewerChapter:first option:selected');
+      const num = parseInt($('.viewerPage:first option:last').html(), 10);
+      const manga = {
+        title: $('.breadcrumb li:eq(3)').text().trim(),
+        series: $('.breadcrumb li:eq(2) a').attr('href'),
+        quant: num,
+        prev: chapter.next().val(),
+        next: chapter.prev().val(),
+        img: '.image-content img'
+      };
+      if ($('.read-slideshow img').get().length === 0) {
+        manga.listPages = [...Array(num).keys()].map(i => url + (i + 1));
+      } else {
+        manga.listImages = $('.read-slideshow img').get().map(item => $(item).attr('src'));
+      }
+      return manga;
+    }
+  };
+
+  var sites = [batoto, comicastle, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost];
 
   start(sites);
 

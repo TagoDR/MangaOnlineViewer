@@ -21,10 +21,10 @@ import senmanga from './senmanga';
 import tenmanga from './tenmanga';
 import thespectrum from './thespectrum';
 import wpmanga from './wpmanga';
+import funmanga from './funmanga';
 import unionmangas from './unionmangas';
 import mangahost from './mangahost';
 
-// TODO: http://funmanga.com
 export default [
   batoto,
   comicastle,
@@ -49,6 +49,7 @@ export default [
   tenmanga,
   thespectrum,
   wpmanga,
+  funmanga,
   unionmangas,
   mangahost,
 ];

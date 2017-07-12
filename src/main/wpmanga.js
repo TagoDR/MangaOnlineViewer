@@ -1,7 +1,7 @@
 // == WPManga ======================================================================================
 export default {
   name: ['MangaDeep'],
-  url: /https?:\/\/(www.)?(mangaspy|mangadeep|mangateen).com\/.+\/[0-9]+/,
+  url: /https?:\/\/(www.)?(mangadeep).com\/.+\/[0-9]+/,
   homepage: ['http://mangadeep.com/'],
   language: ['English'],
   category: 'manga',

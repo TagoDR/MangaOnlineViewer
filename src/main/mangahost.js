@@ -1,7 +1,7 @@
 // == MangaHost ===================================================================================
 export default { // TODO: Check
   name: 'MangaHost',
-  url: /mangahost/,
+  url: /https?:\/\/mangahost.net\/manga\/.+\/.+/,
   homepage: 'https://mangahost.net/',
   language: ['Portuguese'],
   category: 'manga',
@@ -10,14 +10,19 @@ export default { // TODO: Check
       1 ? '/' : '');
     const chapter = $('.viewerChapter:first option:selected');
     const num = parseInt($('.viewerPage:first option:last').html(), 10);
-    return {
-      title: $('.breadcrumb li:nth(3)').text().trim(),
-      series: $('.breadcrumb li:nth(2) a').attr('href'),
+    const manga = {
+      title: $('.breadcrumb li:eq(3)').text().trim(),
+      series: $('.breadcrumb li:eq(2) a').attr('href'),
       quant: num,
       prev: chapter.next().val(),
       next: chapter.prev().val(),
-      listPages: [...Array(num).keys()].map(i => url + (i + 1)),
       img: '.image-content img',
     };
+    if ($('.read-slideshow img').get().length === 0) {
+      manga.listPages = [...Array(num).keys()].map(i => url + (i + 1));
+    } else {
+      manga.listImages = $('.read-slideshow img').get().map(item => $(item).attr('src'));
+    }
+    return manga;
   },
 };

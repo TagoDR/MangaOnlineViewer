@@ -4,9 +4,9 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep
-// @version 13.0.2
-// @date 2017-07-10
+// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost
+// @version 13.3.0
+// @date 2017-07-12
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -40,7 +40,10 @@
 // @include /https?:\/\/raw.senmanga.com\/.+\/.+\/?/
 // @include /https?:\/\/(www.)?tenmanga.com\/chapter\/.+/
 // @include /https?:\/\/view.thespectrum.net\/.+/
-// @include /https?:\/\/(www.)?(mangaspy|mangadeep|mangateen).com\/.+\/[0-9]+/
+// @include /https?:\/\/(www.)?(mangadeep).com\/.+\/[0-9]+/
+// @include /https?:\/\/(www.)?funmanga.com\/.+\/[0-9]+/
+// @include /http?:\/\/unionmangas.net\/leitor\/.+\/.+/
+// @include /https?:\/\/mangahost.net\/manga\/.+\/.+/
 // @exclude /https?:\/\/(www.)?tsumino.com\/.+/
 // @exclude /https?:\/\/(www.)?pururin.us\/.+/
 // ==/UserScript==
