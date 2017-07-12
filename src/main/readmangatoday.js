@@ -3,7 +3,7 @@ export default {
   name: 'ReadManga.Today',
   url: /https?:\/\/(www.)?readmanga.today\/.+\/[0-9]+/,
   homepage: 'http://www.readmanga.today/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     const chapter = $('select[name="chapter_list"] option:selected');

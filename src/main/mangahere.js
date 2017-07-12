@@ -3,7 +3,7 @@ export default {
   name: 'MangaHere',
   url: /https?:\/\/(www.)?mangahere.co\/manga\/.+\/.+/,
   homepage: 'http://www.mangahere.co/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     const num = parseInt($('.right select:first option:last').html(), 10);

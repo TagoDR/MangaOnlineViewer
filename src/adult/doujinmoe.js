@@ -3,7 +3,7 @@ export default {
   name: 'DoujinMoeNM',
   url: /https?:\/\/(www.)?doujins.com\/.+/,
   homepage: 'https://doujins.com/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'hentai',
   run() {
     const imgs = $('#gallery > :not(.thumbs)').get();

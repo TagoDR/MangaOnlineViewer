@@ -3,7 +3,7 @@ export default {
   name: ['Luscious', 'Wondersluts'],
   url: /https?:\/\/(www.)?(luscious.net|wondersluts.com)\/c\/.+/,
   homepage: ['https://luscious.net/', 'https://www.wondersluts.com/'],
-  lang: ['eng'],
+  language: ['English'],
   category: 'hentai',
   run() {
     const origin = $('.three_column_details h3 a');

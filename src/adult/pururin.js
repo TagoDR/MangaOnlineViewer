@@ -3,7 +3,7 @@ export default {
   name: 'Pururin',
   url: /https?:\/\/(www.)?pururin.us\/(view|read)\/.+\/.+\/.+/,
   homepage: 'http://pururin.us/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'hentai',
   waitEle: '.images-holder img',
   waitAttr: 'src',

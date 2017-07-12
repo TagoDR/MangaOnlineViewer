@@ -3,7 +3,7 @@ export default {
   name: 'EatManga',
   url: /https?:\/\/(www.)?eatmanga.me\/Manga-Scan\/.+\/.+\//,
   homepage: 'http://eatmanga.me/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     const chapter = $('#top_chapter_list option:selected');

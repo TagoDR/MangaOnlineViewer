@@ -3,7 +3,7 @@ export default {
   name: 'Dynasty-Scans',
   url: /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/,
   homepage: 'https://dynasty-scans.com/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     return {

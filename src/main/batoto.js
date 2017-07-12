@@ -4,7 +4,7 @@ export default { // TODO: Webtoon support
   url: /https?:\/\/(www.)?bato.to\/reader.*/,
   waitEle: 'select#page_select:first option',
   homepage: 'http://bato.to/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     const num = $('select#page_select:first option').length;

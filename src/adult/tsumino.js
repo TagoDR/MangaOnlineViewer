@@ -4,7 +4,7 @@ export default {
   url: /https?:\/\/(www.)?tsumino.com\/Read\/View\/.+(\/.+)?/,
   waitVar: 'reader_page_locs',
   homepage: 'http://tsumino.com/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'hentai',
   run() {
     return {

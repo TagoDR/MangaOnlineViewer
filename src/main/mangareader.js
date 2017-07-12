@@ -3,7 +3,7 @@ export default {
   name: ['MangaReader', 'MangaPanda'],
   url: /https?:\/\/(www.)?(mangareader|mangapanda)(.net|.com)\/.+\/.+/,
   homepage: ['http://www.mangareader.net/', 'http://www.mangapanda.com/'],
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     const url = location.href + (location.href.lastIndexOf('/') !== location.href.length - 1 ? '/' : '');

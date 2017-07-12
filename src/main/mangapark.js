@@ -3,7 +3,7 @@ export default {
   name: 'MangaPark',
   url: /https?:\/\/(www.)?mangapark.me\/manga\/.+\/.+/,
   homepage: 'http://mangapark.me/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     const url = location.href + (location.href.lastIndexOf('/') !== location.href.length

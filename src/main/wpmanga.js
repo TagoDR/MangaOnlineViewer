@@ -3,7 +3,7 @@ export default {
   name: ['MangaDeep'],
   url: /https?:\/\/(www.)?(mangaspy|mangadeep|mangateen).com\/.+\/[0-9]+/,
   homepage: ['http://mangadeep.com/'],
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     const url = `/${location.pathname.split('/')[1]}/${location.pathname.split('/')[2]}`;

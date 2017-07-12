@@ -3,7 +3,7 @@ export default {
   name: 'Fakku',
   url: /https?:\/\/(www.)?fakku.net\/.+\/.+/,
   homepage: 'https://www.fakku.net/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'hentai',
   run() {
     const src = $('#thumbs img, .current-page')

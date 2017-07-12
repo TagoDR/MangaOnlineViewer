@@ -3,7 +3,8 @@ export default {
   name: ['ExHentai', 'e-Hentai'],
   url: /https?:\/\/(g.)?(exhentai|e-hentai).org\/g\/.+\/.+/,
   homepage: ['https://exhentai.org/', 'https://e-hentai.org/'],
-  lang: ['eng'],
+  language: ['English'],
+  obs: 'May get your IP Banned, use with moderation',
   category: 'hentai',
   run() {
     return {

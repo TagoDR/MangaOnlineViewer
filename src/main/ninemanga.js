@@ -3,7 +3,7 @@ export default {
   name: 'NineManga',
   url: /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/,
   homepage: 'http://ninemanga.com/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     return {

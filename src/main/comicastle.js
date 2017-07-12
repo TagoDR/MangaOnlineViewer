@@ -3,7 +3,7 @@ export default {
   name: 'ComiCastle',
   url: /https?:\/\/(www.)?comicastle.org\/comic\/.+\/[0-9]+.*/,
   homepage: 'http://www.comicastle.org/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'comic',
   run() {
     const url = $('.form-control:last option').get();

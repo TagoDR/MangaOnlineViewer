@@ -3,7 +3,7 @@ export default {
   name: 'Hentai2Read',
   url: /https?:\/\/(www.)?hentai2read.com\/.+\/.+\//,
   homepage: 'http://hentai2read.com/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'hentai',
   run() {
     const url = location.pathname.split('/');

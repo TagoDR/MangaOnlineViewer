@@ -25,10 +25,6 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 <!-- @echo LIST_HENTAI_SITES -->
 </ul>
 
-<h3>Extendible Script</h3>
-The script now support extensions, anyone that wish to make use of my script structure to support different languages of sites are free to do so. Below is are the links for the ones I know of. The first one is for Portuguese is mine, use it as an example.</br>
-Portuguese: https://greasyfork.org/scripts/4657-manga-onlineviewer-portugues
-
 <h3>Supported Browsers</h3>
 <ol><li>Mozilla Firefox with <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">Greasemonkey</a></li>
 <li>Google Chrome with <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en">Tampermonkey</a></li></ol>
@@ -66,9 +62,8 @@ Download all images as ZIP File[Automatic Default off]
 </pre>
 
 <h3>Rules For adding new Manga Sites</h3>
-<ol><li>The site must have rare/unique mangas</li>
-<li>If the site have mangas in multiple languages it must have an English version</li>
+<ol><li>The site must have rare/unique mangas(Meaning: the othe sites does not have, or better quality)</li>
 <li>The site must be strong enough or else my script may crash it</li>
-<li>The site must not be exclusive to a handful of manga titles</li></ol>
+<li>The site must not be exclusive to a handful of manga titles (Meaning: no small scanlators)</li></ol>
 
 <h3>Disclaimer</h3>In case the owner/admin of one of the supported sites does not want my script to run on their site, I will make it disabled by default. Forcing users to manually activate it.

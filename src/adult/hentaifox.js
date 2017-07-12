@@ -3,7 +3,7 @@ export default {
   name: 'hentaifox',
   url: /https?:\/\/(www.)?hentaifox.com\/g\/.+/,
   homepage: 'http://www.hentaifox.com/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'hentai',
   run() {
     const num = $('.pag_info option').length - 2;

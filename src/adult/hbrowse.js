@@ -3,7 +3,7 @@ export default {
   name: 'HBrowser',
   url: /https?:\/\/(www.)?hbrowse.com\/.+/,
   homepage: 'http://www.hbrowse.com/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'hentai',
   run() {
     const url = location.href + (location.href.slice(-1) === '/' ? '' : '/');

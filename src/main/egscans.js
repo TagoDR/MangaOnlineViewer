@@ -3,7 +3,7 @@ export default {
   name: 'Easy Going Scans',
   url: /https?:\/\/read.egscans.com\/.+/,
   homepage: 'http://read.egscans.com/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     const src = W.img_url.slice(1);

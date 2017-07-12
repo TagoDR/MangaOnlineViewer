@@ -3,7 +3,7 @@ export default {
   name: 'MangaStream',
   url: /https?:\/\/(www.)?(mangastream|readms)(.net|.com)\/r.*\/.+/,
   homepage: 'http://mangastream.com/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     const url = location.href.substring(0, location.href.lastIndexOf('/') + 1);

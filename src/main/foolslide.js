@@ -3,7 +3,8 @@ export default {
   name: 'FoOlSlide',
   url: /.+\/read\/.+/,
   homepage: '',
-  lang: ['eng'],
+  language: ['English'],
+  obs: 'Any Scanlator site that uses FoOLSlide',
   category: 'manga',
   run() {
     const temp = `${location.href.substr(0, location.href.lastIndexOf('/'))}/`;

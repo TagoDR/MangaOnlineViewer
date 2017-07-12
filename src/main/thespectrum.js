@@ -3,7 +3,7 @@ export default {
   name: 'TheSpectrum',
   url: /https?:\/\/view.thespectrum.net\/.+/,
   homepage: 'http://www.thespectrum.net/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     const url = `${location.pathname}?${$('form')

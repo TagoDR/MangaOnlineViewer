@@ -648,7 +648,7 @@
     name: 'DoujinMoeNM',
     url: /https?:\/\/(www.)?doujins.com\/.+/,
     homepage: 'https://doujins.com/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'hentai',
     run() {
       const imgs = $('#gallery > :not(.thumbs)').get();
@@ -667,7 +667,7 @@
     name: ['ExHentai', 'e-Hentai'],
     url: /https?:\/\/(g.)?(exhentai|e-hentai).org\/g\/.+\/.+/,
     homepage: ['https://exhentai.org/', 'https://e-hentai.org/'],
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'hentai',
     run() {
       return {
@@ -687,7 +687,7 @@
     name: 'HBrowser',
     url: /https?:\/\/(www.)?hbrowse.com\/.+/,
     homepage: 'http://www.hbrowse.com/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'hentai',
     run() {
       const url = location.href + (location.href.slice(-1) === '/' ? '' : '/');
@@ -709,7 +709,7 @@
     name: 'Hentai2Read',
     url: /https?:\/\/(www.)?hentai2read.com\/.+\/.+\//,
     homepage: 'http://hentai2read.com/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'hentai',
     run() {
       const url = location.pathname.split('/');
@@ -731,7 +731,7 @@
     name: 'hentaifox',
     url: /https?:\/\/(www.)?hentaifox.com\/g\/.+/,
     homepage: 'http://www.hentaifox.com/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'hentai',
     run() {
       const num = $('.pag_info option').length - 2;
@@ -751,7 +751,7 @@
     name: 'HentaIHere',
     url: /https?:\/\/(www.)?hentaihere.com\/.+\/.+\//,
     homepage: 'https://www.hentaihere.com/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'hentai',
     run() {
       const src = $('#reader-content img').attr('src');
@@ -774,7 +774,7 @@
     name: 'hitomi',
     url: /https?:\/\/hitomi.la\/reader\/.+/,
     homepage: 'https://hitomi.la/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'hentai',
     waitEle: '#comicImages img',
     run() {
@@ -795,7 +795,7 @@
     name: ['Luscious', 'Wondersluts'],
     url: /https?:\/\/(www.)?(luscious.net|wondersluts.com)\/c\/.+/,
     homepage: ['https://luscious.net/', 'https://www.wondersluts.com/'],
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'hentai',
     run() {
       const origin = $('.three_column_details h3 a');
@@ -822,7 +822,7 @@
     name: 'nHentai',
     url: /https?:\/\/(www.)?nhentai.net\/g\/.+\/.+/,
     homepage: 'https://nhentai.net/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'hentai',
     run() {
       const num = parseInt($('.num-pages:first').html(), 10);
@@ -842,7 +842,7 @@
     name: 'Pururin',
     url: /https?:\/\/(www.)?pururin.us\/(view|read)\/.+\/.+\/.+/,
     homepage: 'http://pururin.us/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'hentai',
     waitEle: '.images-holder img',
     waitAttr: 'src',
@@ -864,7 +864,7 @@
     name: 'Simply-Hentai',
     url: /https?:\/\/.*simply-hentai.com\/.+\/page\/.+/,
     homepage: 'http://simply-hentai.com/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'hentai',
     run() {
       const url = $('#nextLink').prev('a').attr('href');
@@ -892,7 +892,7 @@
     url: /https?:\/\/(www.)?tsumino.com\/Read\/View\/.+(\/.+)?/,
     waitVar: 'reader_page_locs',
     homepage: 'http://tsumino.com/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'hentai',
     run() {
       return {

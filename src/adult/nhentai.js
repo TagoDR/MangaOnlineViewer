@@ -3,7 +3,7 @@ export default {
   name: 'nHentai',
   url: /https?:\/\/(www.)?nhentai.net\/g\/.+\/.+/,
   homepage: 'https://nhentai.net/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'hentai',
   run() {
     const num = parseInt($('.num-pages:first').html(), 10);

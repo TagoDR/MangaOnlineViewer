@@ -3,7 +3,7 @@ export default {
   name: 'KissManga',
   url: /https?:\/\/(www.)?kissmanga.com\/Manga\/.+\/.+?id=[0-9]+/,
   homepage: 'http://kissmanga.com/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     const chapter = $('#selectChapter option');

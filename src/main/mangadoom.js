@@ -3,7 +3,7 @@ export default {
   name: 'MangaDoom',
   url: /https?:\/\/(www.)?mangadoom.co\/.+\/[0-9]+/,
   homepage: 'https://mangadoom.co/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     const url = $('.selectPage:first option:not(:first)').get();

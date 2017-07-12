@@ -3,7 +3,7 @@ export default {
   name: 'Simply-Hentai',
   url: /https?:\/\/.*simply-hentai.com\/.+\/page\/.+/,
   homepage: 'http://simply-hentai.com/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'hentai',
   run() {
     const url = $('#nextLink').prev('a').attr('href');

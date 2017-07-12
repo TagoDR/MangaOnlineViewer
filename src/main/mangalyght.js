@@ -3,7 +3,7 @@ export default {
   name: 'MangaLyght',
   url: /https?:\/\/manga.lyght.net\/series\/.+\.html/,
   homepage: 'http://manga.lyght.net/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     const chapter = $('.selectchapter option:selected');

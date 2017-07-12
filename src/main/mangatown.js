@@ -3,7 +3,7 @@ export default {
   name: 'MangaTown',
   url: /https?:\/\/(www.)?mangatown.com\/manga\/.+\/.+/,
   homepage: 'http://www.mangatown.com/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   waitEle: '#top_chapter_list option',
   run() {

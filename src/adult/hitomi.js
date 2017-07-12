@@ -3,7 +3,7 @@ export default {
   name: 'hitomi',
   url: /https?:\/\/hitomi.la\/reader\/.+/,
   homepage: 'https://hitomi.la/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'hentai',
   waitEle: '#comicImages img',
   run() {

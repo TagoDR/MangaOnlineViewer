@@ -662,7 +662,7 @@
     url: /https?:\/\/(www.)?bato.to\/reader.*/,
     waitEle: 'select#page_select:first option',
     homepage: 'http://bato.to/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const num = $('select#page_select:first option').length;
@@ -682,7 +682,7 @@
     name: 'ComiCastle',
     url: /https?:\/\/(www.)?comicastle.org\/comic\/.+\/[0-9]+.*/,
     homepage: 'http://www.comicastle.org/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'comic',
     run() {
       const url = $('.form-control:last option').get();
@@ -703,7 +703,7 @@
     name: 'Dynasty-Scans',
     url: /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/,
     homepage: 'https://dynasty-scans.com/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       return {
@@ -721,7 +721,7 @@
     name: 'EatManga',
     url: /https?:\/\/(www.)?eatmanga.me\/Manga-Scan\/.+\/.+\//,
     homepage: 'http://eatmanga.me/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const chapter = $('#top_chapter_list option:selected');
@@ -741,7 +741,7 @@
     name: 'Easy Going Scans',
     url: /https?:\/\/read.egscans.com\/.+/,
     homepage: 'http://read.egscans.com/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const src = W.img_url.slice(1);
@@ -766,7 +766,7 @@
     name: 'FoOlSlide',
     url: /.+\/read\/.+/,
     homepage: '',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const temp = String(location.href.substr(0, location.href.lastIndexOf('/'))) + '/';
@@ -789,7 +789,7 @@
     name: 'KissManga',
     url: /https?:\/\/(www.)?kissmanga.com\/Manga\/.+\/.+?id=[0-9]+/,
     homepage: 'http://kissmanga.com/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const chapter = $('#selectChapter option');
@@ -809,7 +809,7 @@
     name: 'MangaDoom',
     url: /https?:\/\/(www.)?mangadoom.co\/.+\/[0-9]+/,
     homepage: 'https://mangadoom.co/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const url = $('.selectPage:first option:not(:first)').get();
@@ -830,7 +830,7 @@
     name: 'MangaFox',
     url: /https?:\/\/(www.)?mangafox.me\/manga\/.+\/.+\//,
     homepage: 'http://mangafox.me/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const num = parseInt($('select.m:first option:last').prev().val(), 10);
@@ -850,7 +850,7 @@
     name: 'MangaGo',
     url: /https?:\/\/(www.)?mangago.me\/read-manga\/.+\/.+/,
     homepage: 'http://www.mangago.me/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const origin = $('#series');
@@ -870,7 +870,7 @@
     name: 'MangaHere',
     url: /https?:\/\/(www.)?mangahere.co\/manga\/.+\/.+/,
     homepage: 'http://www.mangahere.co/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const num = parseInt($('.right select:first option:last').html(), 10);
@@ -891,7 +891,7 @@
     name: 'MangaInn',
     url: /https?:\/\/(www.)?mangainn.net\/manga\/chapter\/.+/,
     homepage: 'http://www.mangainn.net/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const num = parseInt($('select#cmbpages option:last').html(), 10);
@@ -912,7 +912,7 @@
     name: 'MangaLyght',
     url: /https?:\/\/manga.lyght.net\/series\/.+\.html/,
     homepage: 'http://manga.lyght.net/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const chapter = $('.selectchapter option:selected');
@@ -935,7 +935,7 @@
     name: 'MangaPark',
     url: /https?:\/\/(www.)?mangapark.me\/manga\/.+\/.+/,
     homepage: 'http://mangapark.me/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const url = location.href + (location.href.lastIndexOf('/') !== location.href.length - 1 ? '/' : '');
@@ -956,7 +956,7 @@
     name: ['MangaReader', 'MangaPanda'],
     url: /https?:\/\/(www.)?(mangareader|mangapanda)(.net|.com)\/.+\/.+/,
     homepage: ['http://www.mangareader.net/', 'http://www.mangapanda.com/'],
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const url = location.href + (location.href.lastIndexOf('/') !== location.href.length - 1 ? '/' : '');
@@ -986,7 +986,7 @@
     name: 'MangaStream',
     url: /https?:\/\/(www.)?(mangastream|readms)(.net|.com)\/r.*\/.+/,
     homepage: 'http://mangastream.com/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const url = location.href.substring(0, location.href.lastIndexOf('/') + 1);
@@ -1008,7 +1008,7 @@
     name: 'MangaTown',
     url: /https?:\/\/(www.)?mangatown.com\/manga\/.+\/.+/,
     homepage: 'http://www.mangatown.com/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     waitEle: '#top_chapter_list option',
     run() {
@@ -1030,7 +1030,7 @@
     name: 'NineManga',
     url: /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/,
     homepage: 'http://ninemanga.com/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       return {
@@ -1049,7 +1049,7 @@
     name: 'ReadManga.Today',
     url: /https?:\/\/(www.)?readmanga.today\/.+\/[0-9]+/,
     homepage: 'http://www.readmanga.today/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const chapter = $('select[name="chapter_list"] option:selected');
@@ -1075,7 +1075,7 @@
     name: 'SenManga(Raw)',
     url: /https?:\/\/raw.senmanga.com\/.+\/.+\/?/,
     homepage: 'http://raw.senmanga.com/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const url = '/' + String(location.pathname.split('/')[1]) + '/' + String(location.pathname.split('/')[2]);
@@ -1101,7 +1101,7 @@
     name: 'TenManga',
     url: /https?:\/\/(www.)?tenmanga.com\/chapter\/.+/,
     homepage: 'http://www.tenmanga.com/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const url = $('.sl-page:first option').get();
@@ -1122,7 +1122,7 @@
     name: 'TheSpectrum',
     url: /https?:\/\/view.thespectrum.net\/.+/,
     homepage: 'http://www.thespectrum.net/',
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const url = String(location.pathname) + '?' + String($('form').serialize().substring(0, $('form').serialize().lastIndexOf('=')));
@@ -1144,7 +1144,7 @@
     name: ['MangaDeep'],
     url: /https?:\/\/(www.)?(mangaspy|mangadeep|mangateen).com\/.+\/[0-9]+/,
     homepage: ['http://mangadeep.com/'],
-    lang: ['eng'],
+    language: ['English'], ['eng'],
     category: 'manga',
     run() {
       const url = '/' + String(location.pathname.split('/')[1]) + '/' + String(location.pathname.split('/')[2]);

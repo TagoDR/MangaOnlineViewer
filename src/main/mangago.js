@@ -3,7 +3,7 @@ export default {
   name: 'MangaGo',
   url: /https?:\/\/(www.)?mangago.me\/read-manga\/.+\/.+/,
   homepage: 'http://www.mangago.me/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     const origin = $('#series');

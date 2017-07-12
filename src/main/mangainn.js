@@ -3,7 +3,7 @@ export default {
   name: 'MangaInn',
   url: /https?:\/\/(www.)?mangainn.net\/manga\/chapter\/.+/,
   homepage: 'http://www.mangainn.net/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     const num = parseInt($('select#cmbpages option:last').html(), 10);

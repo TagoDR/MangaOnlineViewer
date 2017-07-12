@@ -3,7 +3,7 @@ export default {
   name: 'HentaIHere',
   url: /https?:\/\/(www.)?hentaihere.com\/.+\/.+\//,
   homepage: 'https://www.hentaihere.com/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'hentai',
   run() {
     const src = $('#reader-content img').attr('src');

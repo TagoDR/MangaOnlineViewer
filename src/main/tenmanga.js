@@ -3,7 +3,7 @@ export default {
   name: 'TenManga',
   url: /https?:\/\/(www.)?tenmanga.com\/chapter\/.+/,
   homepage: 'http://www.tenmanga.com/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     const url = $('.sl-page:first option').get();

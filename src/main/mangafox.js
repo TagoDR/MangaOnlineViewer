@@ -3,7 +3,7 @@ export default {
   name: 'MangaFox',
   url: /https?:\/\/(www.)?mangafox.me\/manga\/.+\/.+\//,
   homepage: 'http://mangafox.me/',
-  lang: ['eng'],
+  language: ['English'],
   category: 'manga',
   run() {
     const num = parseInt($('select.m:first option:last').prev().val(), 10);

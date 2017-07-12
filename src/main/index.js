@@ -21,6 +21,8 @@ import senmanga from './senmanga';
 import tenmanga from './tenmanga';
 import thespectrum from './thespectrum';
 import wpmanga from './wpmanga';
+import unionmangas from './unionmangas';
+import mangahost from './mangahost';
 
 // TODO: http://funmanga.com
 export default [
@@ -47,4 +49,6 @@ export default [
   tenmanga,
   thespectrum,
   wpmanga,
+  unionmangas,
+  mangahost,
 ];
