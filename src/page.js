@@ -31,11 +31,12 @@ function getPage(url, wait = settings.Timer) {
     }, wait);
   });
 }
-const loadMangaPages = manga =>
-  mapIndexed((url, index) =>
-    getPage(url, (manga.timer || settings.Timer) * index)
-      .then(response => addImg(index + 1, $(response).find(manga.img).attr('src'))),
-  manga.listPages);
+const loadMangaPages = (manga, begin) =>
+  mapIndexed(
+    (url, index) => (index >= begin ? getPage(url,
+      (manga.timer || settings.Timer) * (index - begin))
+      .then(response => addImg(index + 1, $(response).find(manga.img).attr('src'))) : null),
+    manga.listPages);
 
 function getImages(src, wait = settings.Timer) {
   return new Promise((resolve) => {
@@ -45,25 +46,27 @@ function getImages(src, wait = settings.Timer) {
   });
 }
 
-const loadMangaImages = manga =>
-  mapIndexed((src, index) =>
-    getImages(src, (manga.timer || settings.Timer) * index)
+const loadMangaImages = (manga, begin) =>
+  mapIndexed(
+    (src, index) => (index >= begin ? getImages(src,
+      (manga.timer || settings.Timer) * (index - begin))
       .then(response =>
-        addImg(index + 1, response)),
-  manga.listImages);
+        addImg(index + 1, response)) : null),
+    manga.listImages);
 
-function loadManga(manga) {
+function loadManga(manga, begin = 0) {
   logScript('Loading Images');
   logScript(`Intervals: ${manga.timer || settings.Timer || 'Default(1000)'}`);
   if (manga.listPages !== undefined) {
     logScript('Method: Pages:', manga.listPages);
-    loadMangaPages(manga);
+    loadMangaPages(manga, begin);
   } else if (manga.listImages !== undefined) {
     logScript('Method: Images:', manga.listImages);
-    loadMangaImages(manga);
+    loadMangaImages(manga, begin);
   } else {
     logScript('Method: Brute Force');
     manga.bruteForce({
+      begin,
       addImg,
       loadMangaImages,
       loadMangaPages,

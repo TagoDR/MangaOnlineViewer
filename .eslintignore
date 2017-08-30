@@ -1,3 +1,7 @@
 node_modules
 *.min.js
 dist/**
+Manga_OnlineViewer.meta.js
+Manga_OnlineViewer.user.js
+Manga_OnlineViewer_Adult.meta.js
+Manga_OnlineViewer_Adult.user.js

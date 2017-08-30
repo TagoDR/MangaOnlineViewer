@@ -17,6 +17,7 @@ const painel = `
     <img id='restore' alt='Restore' src='${icon.restore}' class='controlButton' />
     <img id='reduce' alt='Reduce' src='${icon.reduce}' class='controlButton' />
     <img id='fitwidth' alt='Fit Width' src='${icon.fitwidth}' class='controlButton' />
+    <img id='webcomic' alt='Web Comic View' src='${icon.webcomic}' class='controlButton' />
     <img id='settings' alt='settings' src='${icon.settings}' class='controlButton' />
   </div>
   <div id='Zoom' class='controlLable'>Zoom: <b>${settings.Zoom}</b> %</div>
@@ -142,11 +143,13 @@ input,textarea,.uneditable-input{margin-left:0}*/
 .light-keys,.light-keys .key,.key.light{background:#fafafa;background:-moz-linear-gradient(top,#d2d2d2,#fff);background:-webkit-gradient(linear,left top,left bottom,from(#d2d2d2),to(#fff));color:#323232;text-shadow:0 0 2px #fff;-moz-box-shadow:inset 0 0 1px #fff,inset 0 0 .4em #c8c8c8,0 .1em 0 #828282,0 .11em 0 rgba(0,0,0,.4),0 .1em .11em rgba(0,0,0,.9);-webkit-box-shadow:inset 0 0 1px #fff,inset 0 0 .4em #c8c8c8,0 .1em 0 #828282,0 .11em 0 rgba(0,0,0,.4),0 .1em .11em rgba(0,0,0,.9);box-shadow:inset 0 0 1px #fff,inset 0 0 .4em #c8c8c8,0 .1em 0 #828282,0 .11em 0 rgba(0,0,0,.4),0 .1em .11em rgba(0,0,0,.9)}
 #MangaOnlineViewer{width:100%;height:100%;padding-bottom: 100px;}
 #MangaOnlineViewer #Chapter{text-align:center;margin: 25px auto 0;display:block;}
-#MangaOnlineViewer #ViewerControls{padding: 8px;position:fixed;top:0;left:190px;}
+#MangaOnlineViewer #Chapter.WebComic .PageFunctions {position: relative;}
+#MangaOnlineViewer #Chapter.WebComic .PageContent {margin-top: -23px; margin-bottom: 0;}
+#MangaOnlineViewer #ViewerControls{padding: 8px;position:fixed;top:0;left:225px;}
 #MangaOnlineViewer #ViewerShortcuts{padding: 8px;position:fixed;top:65px;left:0px;}
 #MangaOnlineViewer select{height:20px;padding:0;margin-bottom:5px}
 #MangaOnlineViewer .controlButton{cursor:pointer;border:0 none;}
-#MangaOnlineViewer #ImageOptions {left: 0px;position: absolute;top: 0px;width: 200px;}
+#MangaOnlineViewer #ImageOptions {left: 0px;position: absolute;top: 0px;width: 250px;}
 #MangaOnlineViewer #ImageOptions .painel {padding:4.5px;position: inherit;}
 #MangaOnlineViewer #ImageOptions:hover {position:fixed;}
 #MangaOnlineViewer #ImageOptions.settingsOpen {position:fixed;}

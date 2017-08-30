@@ -22,7 +22,7 @@ import {
 } from './utils';
 
 // Organize the site adding place holders for the manga pages
-function formatPage(manga) {
+function formatPage(manga, begin = 0) {
   logScript(`Found ${manga.quant} pages`);
   W.stop();
   if (manga.quant > 0) {
@@ -40,6 +40,7 @@ function formatPage(manga) {
         closeOnConfirm: true,
       }, (isConfirm) => {
         cancel = isConfirm;
+        W.mov = starting => formatPage(manga, starting);
       });
     }
     setTimeout(() => {
@@ -58,7 +59,7 @@ function formatPage(manga) {
           checkImagesLoaded(manga);
           logScript('Site rebuild done');
           setTimeout(() => {
-            loadManga(manga);
+            loadManga(manga, begin);
           }, 50);
         } catch (e) {
           logScript(e);

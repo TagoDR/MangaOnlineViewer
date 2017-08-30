@@ -100,11 +100,15 @@ function controls() {
     settings.Zoom = 100;
     $('#Zoom b').html(settings.Zoom);
     $('.PageContent img').removeAttr('width');
+    $('.PageContent img').removeAttr('style');
   });
   $('#fitwidth').click(() => {
     settings.Zoom = 1000;
     $('#Zoom b').html(settings.Zoom);
     applyZoom();
+  });
+  $('#webcomic').click(() => {
+    $('#Chapter').toggleClass('WebComic');
   });
   $('#fitIfOversized').change((event) => {
     $('#Chapter').toggleClass('fitWidthIfOversized');
