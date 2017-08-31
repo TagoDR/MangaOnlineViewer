@@ -155,7 +155,7 @@ input,textarea,.uneditable-input{margin-left:0}*/
 #MangaOnlineViewer #ImageOptions.settingsOpen {position:fixed;}
 #MangaOnlineViewer #ImageOptions #menu {position:fixed;top: 45px;height: 64px;width: 200px;top: 0;}
 #MangaOnlineViewer #ImageOptions #Zoom {position:absolute;left: 18px;bottom: -65px;}
-#MangaOnlineViewer .MangaPage{width:100%;display:inline-block;text-align:center;align:center}
+#MangaOnlineViewer .MangaPage{width:100%;display:inline-block;text-align:center;align:center;transform: translate3d(0, 0, 0);backface-visibility: hidden;perspective: 1000;(0, 0, 0);-webkit-backface-visibility: hidden;-webkit-perspective: 1000;-moz-transform: translate3d(0, 0, 0);-moz-backface-visibility: hidden;-moz-perspective: 1000;}
 #MangaOnlineViewer .PageContent{margin:0 0 15px;text-align:center;display:inline-block}
 #MangaOnlineViewer #gotoPage{width:35px;}
 #MangaOnlineViewer #ThemeSelector{width:110px;}
