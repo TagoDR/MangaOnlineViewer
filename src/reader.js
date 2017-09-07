@@ -67,6 +67,8 @@ const controls = `
   <input type='checkbox' val='false' name='downloadZip' id='downloadZip' ${(settings.DownloadZip ? 'checked' : '')}>
   <span class='controlLable'>Always Load Script:</span>
   <input type='checkbox' val='true' name='alwaysLoad' id='alwaysLoad' ${(settings.alwaysLoad ? 'checked' : '')}>
+  <span class='controlLable'>Always WebComic Mode:</span>
+  <input type='checkbox' val='true' name='alwaysWebComic' id='alwaysWebComic' ${(settings.alwaysWebComic ? 'checked' : '')}>
 </div>`;
 const chapterControl = R.curry((id, target, manga) => `
 <div id='${id}' class='ChapterControl'>
@@ -100,7 +102,7 @@ const body = manga => `
 <div id='MangaOnlineViewer' class='${settings.Theme}' style='min-height: 1080px;'>
   ${title(manga)}
   ${chapterControlTop(manga)}
-  <div id='Chapter' align='center' class='${(settings.FitWidthIfOversized === true ? 'fitWidthIfOversized' : '')}'>
+  <div id='Chapter' align='center' class='${(settings.FitWidthIfOversized === true ? 'fitWidthIfOversized' : '')} ${(settings.alwaysWebComic === true ? 'WebComic' : '')}'>
     ${listPages(manga.quant).join('')}    
   </div>
   ${title(manga)}

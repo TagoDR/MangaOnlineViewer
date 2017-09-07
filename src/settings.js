@@ -17,6 +17,7 @@ const settings = {
   Timer: getValueGM('MangaTimer', 1000),
   Zoom: getValueGM('MangaZoom', 100),
   alwaysLoad: getValueGM('MangaAlwaysLoad', false),
+  alwaysWebComic: getValueGM('MangaAlwaysWebComic', false),
 };
 // Icons in Base64 format
 const icon = {

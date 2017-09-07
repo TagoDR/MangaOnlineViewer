@@ -119,6 +119,15 @@ function controls() {
     }
     logScript(`fitIfOversized: ${getValueGM('MangaFitWidthIfOversized')}`);
   });
+  $('#alwaysWebComic').change((event) => {
+    $('#Chapter').toggleClass('WebComic');
+    if ($(event.target).is(':checked')) {
+      setValueGM('MangaAlwaysWebComic', true);
+    } else {
+      setValueGM('MangaAlwaysWebComic', false);
+    }
+    logScript(`alwaysWebComic: ${getValueGM('MangaAlwaysWebComic')}`);
+  });
   $('#alwaysLoad').change((event) => {
     if ($(event.target).is(':checked')) {
       setValueGM('MangaAlwaysLoad', true);
