@@ -4,9 +4,9 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost
-// @version 13.6.0
-// @date 2017-09-07
+// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh
+// @version 13.7.0
+// @date 2017-09-08
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -44,6 +44,7 @@
 // @include /https?:\/\/(www.)?funmanga.com\/.+\/[0-9]+/
 // @include /http?:\/\/unionmangas.net\/leitor\/.+\/.+/
 // @include /https?:\/\/mangahost.net\/manga\/.+\/.+/
+// @include /http?:\/\/hocvientruyentranh.com\/chapter\/.+\/.+/
 // @exclude /https?:\/\/(www.)?tsumino.com\/.+/
 // @exclude /https?:\/\/(www.)?pururin.us\/.+/
 // ==/UserScript==
@@ -1248,7 +1249,26 @@
     }
   };
 
-  var sites = [batoto, comicastle, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost];
+  var hocvien = {
+    name: 'Hoc Vien Truyen Tranh',
+    url: /http?:\/\/hocvientruyentranh.com\/chapter\/.+\/.+/,
+    homepage: 'http://hocvientruyentranh.com/',
+    language: ['Vietnamese'],
+    category: 'manga',
+    run() {
+      const src = $('.manga-container img').get();
+      return {
+        title: $('.chapters-dropdown option:selected').text().trim(),
+        series: $('.theNavi a').attr('href'),
+        quant: src.length,
+        prev: $('.top-nav a:first').attr('href'),
+        next: $('.top-nav a:last').attr('href'),
+        listImages: src.map(item => $(item).attr('src'))
+      };
+    }
+  };
+
+  var sites = [batoto, comicastle, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost, hocvien];
 
   start(sites);
 

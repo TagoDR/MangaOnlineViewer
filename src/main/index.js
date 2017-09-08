@@ -24,6 +24,7 @@ import wpmanga from './wpmanga';
 import funmanga from './funmanga';
 import unionmangas from './unionmangas';
 import mangahost from './mangahost';
+import hocvien from './hocvientruyentranh';
 
 export default [
   batoto,
@@ -52,4 +53,5 @@ export default [
   funmanga,
   unionmangas,
   mangahost,
+  hocvien,
 ];

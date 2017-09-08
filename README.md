@@ -39,6 +39,7 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 <li><a href='http://www.thespectrum.net/'>TheSpectrum</a> <i>[English]</i></li>
 <li><a href='https://mangahost.net/'>MangaHost</a> <i>[Portuguese]</i></li>
 <li><a href='http://unionmangas.net/'>UnionMangas</a> <i>[Portuguese]</i></li>
+<li><a href='http://hocvientruyentranh.com/'>Hoc Vien Truyen Tranh</a> <i>[Vietnamese]</i></li>
 </ul>
 <h3>Supported Comic Sites</h3>
 <ul>
