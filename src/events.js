@@ -83,6 +83,7 @@ function setKeyDownEvents() {
     $(document).keydown(processKey);
   }
 }
+
 // Controls for the extra features added to the sites
 function controls() {
   // Size Controls
@@ -162,7 +163,10 @@ function controls() {
     logScript(`downloadZip: ${getValueGM('MangaDownloadZip')}`);
   });
   $('#blob').one('click', generateZip);
-  $('.download').click($('#blob')[0].click);
+  $('.download').click(() => {
+    logScript('Downloading Chapter');
+    $('#blob')[0].click();
+  });
   $('#PagesPerSecond').change((event) => {
     setValueGM('MangaTimer', $(event.target).val());
   });
@@ -192,6 +196,7 @@ function controls() {
     $('head').append(addCustomTheme(target));
     setValueGM('MangaCustomTheme', target);
   });
+
   // Goto Page and ThumbNails
   function scrollToElement(ele) {
     $(W).scrollTop(ele.offset().top).scrollLeft(ele.offset().left);
