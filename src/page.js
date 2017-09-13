@@ -9,11 +9,20 @@ import {
   mapIndexed,
 } from './utils';
 
+function normalizeUrl(url) {
+  let uri = url.trim();
+  if (uri.startsWith('//')) {
+    uri = `http:${uri}`;
+  }
+  return uri;
+}
+
 // Adds an image to the place-holder div
 function addImg(index, src) {
-  logScript('Image:', index, 'Source:', src);
-  $(`#PageImg${index}`).attr('src', src).parent().slideToggle();
-  $(`#ThumbNailImg${index}`).attr('src', src);
+  const url = normalizeUrl(src);
+  logScript('Image:', index, 'Source:', url);
+  $(`#PageImg${index}`).attr('src', url).parent().slideToggle();
+  $(`#ThumbNailImg${index}`).attr('src', url);
   return index;
 }
 
@@ -31,6 +40,7 @@ function getPage(url, wait = settings.Timer) {
     }, wait);
   });
 }
+
 const loadMangaPages = (manga, begin) =>
   mapIndexed(
     (url, index) => (index >= begin ? getPage(url,

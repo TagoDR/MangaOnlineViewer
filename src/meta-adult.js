@@ -20,6 +20,7 @@ export default {
     'GM_listValues',
     'GM_xmlhttpRequest',
   ],
+  connect: '*',
   require: [
     'https://code.jquery.com/jquery-latest.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js',

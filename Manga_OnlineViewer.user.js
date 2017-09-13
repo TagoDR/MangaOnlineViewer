@@ -5,12 +5,13 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh
-// @version 13.8.0
-// @date 2017-09-10
+// @version 13.9.0
+// @date 2017-09-13
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
 // @grant GM_xmlhttpRequest
+// @connect *
 // @require https://code.jquery.com/jquery-latest.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
@@ -172,7 +173,7 @@
   const listThumbnails = R.times(index => '<div id=\'ThumbNail' + String(index + 1) + '\' class=\'ThumbNail\'><img id=\'ThumbNailImg' + String(index + 1) + '\' alt=\'ThumbNailImg' + String(index + 1) + '\' src=\'\'/><span>' + String(index + 1) + '</span></div>');
   const body = manga => '\n<div id=\'MangaOnlineViewer\' class=\'' + String(settings.Theme) + '\' style=\'min-height: 1080px;\'>\n  ' + String(title(manga)) + '\n  ' + String(chapterControlTop(manga)) + '\n  <div id=\'Chapter\' align=\'center\' class=\'' + (settings.FitWidthIfOversized === true ? 'fitWidthIfOversized' : '') + ' ' + (settings.alwaysWebComic === true ? 'WebComic' : '') + '\'>\n    ' + String(listPages(manga.quant).join('')) + '    \n  </div>\n  ' + String(title(manga)) + '\n  ' + String(chapterControlBottom(manga)) + '\n  ' + painel + '    \n  ' + controls + '\n  ' + shortcuts + '    \n  <div id=\'Counters\' class=\'controlLable\'>\n    <i>0</i> of <b>' + String(manga.quant) + '</b> Pages Loaded \n    <span class=\'controlLable\'>Go to Page:</span>\n    <select id=\'gotoPage\'><option selected>#</option>' + String(listOptions(manga.quant).join('')) + '</select>\n  </div>\n  <div id=\'Navigation\' align=\'center\' class=\'painel ' + (settings.ShowThumbnails ? '' : 'disabled') + '\'>\n    <div id=\'NavigationCounters\' class=\'controlLable\'>\n      <img alt=\'menu\' src=\'' + String(icon.menu) + '\' class=\'nav\' /><i>0</i> of <b>' + String(manga.quant) + '</b> Pages Loaded\n    </div>\n    ' + String(listThumbnails(manga.quant).join('')) + '\n  </div>\n  <a href=\'#\' id=\'blob\' style=\'display: none;\'>Download</a>\n</div>';
   const readerCSS = '\n<style type=\'text/css\'>html{font-size:100%}\nbody{margin:0;font-family:\'Helvetica Neue\',Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:#333;background-color:#FFF;padding:0}\na{color:#08C;text-decoration:none}\nimg{height:auto;max-width:100%;vertical-align:middle;border:0 none}\n/*button,input,select,textarea{margin:0;font-size:100%;vertical-align:middle}\nbutton,input{line-height:normal}\nlabel,input,button,select,textarea{font-size:14px;font-weight:normal;line-height:20px}\ninput,button,select,textarea{font-family:\'Helvetica Neue\',Helvetica,Arial,sans-serif}\nselect,textarea,input[type=\'text\'],input[type=\'password\'],input[type=\'datetime\'],input[type=\'datetime-local\'],input[type=\'date\'],input[type=\'month\'],input[type=\'time\'],input[type=\'week\'],input[type=\'number\'],input[type=\'email\'],input[type=\'url\'],input[type=\'search\'],input[type=\'tel\'],input[type=\'color\'],.uneditable-input{display:inline-block;height:20px;padding:4px 6px;margin-bottom:10px;font-size:14px;line-height:20px;color:#555;vertical-align:middle;border-radius:4px 4px 4px 4px}\ninput:not([type=\'checkbox\']),textarea,.uneditable-input{width:206px}\ntextarea,input[type=\'text\'],input[type=\'password\'],input[type=\'datetime\'],input[type=\'datetime-local\'],input[type=\'date\'],input[type=\'month\'],input[type=\'time\'],input[type=\'week\'],input[type=\'number\'],input[type=\'email\'],input[type=\'url\'],input[type=\'search\'],input[type=\'tel\'],input[type=\'color\'],.uneditable-input{background-color:#FFF;border:1px solid #CCC;box-shadow:0 1px 1px rgba(0,0,0,0.075) inset;transition:border .2s linear 0,box-shadow .2s linear 0}\ninput,textarea,.uneditable-input{margin-left:0}*/\n#nprogress .bar{background:#29d;position:fixed;z-index:1031;top:0;left:0;width:100%;height:4px;}\n.key{display:inline;display:inline-block;min-width:1em;padding:.2em .3em;font:400 .85em/1 \'Lucida Grande\',Lucida,Arial,sans-serif;text-align:center;text-decoration:none;-moz-border-radius:.3em;-webkit-border-radius:.3em;border-radius:.3em;border:none;cursor:default;-moz-user-select:none;-webkit-user-select:none;user-select:none}\n.key[title]{cursor:help}\n.key, .dark-keys,.dark-keys .key,.key.dark{background:#505050;background:-moz-linear-gradient(top,#3c3c3c,#505050);background:-webkit-gradient(linear,left top,left bottom,from(#3c3c3c),to(#505050));color:#fafafa;text-shadow:-1px -1px 0 #464646;-moz-box-shadow:inset 0 0 1px #969696,inset 0 -.05em .4em #505050,0 .1em 0 #1e1e1e,0 .1em .1em rgba(0,0,0,.3);-webkit-box-shadow:inset 0 0 1px #969696,inset 0 -.05em .4em #505050,0 .1em 0 #1e1e1e,0 .1em .1em rgba(0,0,0,.3);box-shadow:inset 0 0 1px #969696,inset 0 -.05em .4em #505050,0 .1em 0 #1e1e1e,0 .1em .1em rgba(0,0,0,.3)}\n.light-keys,.light-keys .key,.key.light{background:#fafafa;background:-moz-linear-gradient(top,#d2d2d2,#fff);background:-webkit-gradient(linear,left top,left bottom,from(#d2d2d2),to(#fff));color:#323232;text-shadow:0 0 2px #fff;-moz-box-shadow:inset 0 0 1px #fff,inset 0 0 .4em #c8c8c8,0 .1em 0 #828282,0 .11em 0 rgba(0,0,0,.4),0 .1em .11em rgba(0,0,0,.9);-webkit-box-shadow:inset 0 0 1px #fff,inset 0 0 .4em #c8c8c8,0 .1em 0 #828282,0 .11em 0 rgba(0,0,0,.4),0 .1em .11em rgba(0,0,0,.9);box-shadow:inset 0 0 1px #fff,inset 0 0 .4em #c8c8c8,0 .1em 0 #828282,0 .11em 0 rgba(0,0,0,.4),0 .1em .11em rgba(0,0,0,.9)}\n#MangaOnlineViewer{width:100%;height:100%;padding-bottom: 100px;}\n#MangaOnlineViewer #Chapter{text-align:center;margin: 25px auto 0;display:block;}\n#MangaOnlineViewer #Chapter.WebComic .PageFunctions {position: relative;}\n#MangaOnlineViewer #Chapter.WebComic .PageContent {margin-top: -23px; margin-bottom: 0;}\n#MangaOnlineViewer #ViewerControls{padding: 8px;position:fixed;top:0;left:225px;}\n#MangaOnlineViewer #ViewerShortcuts{padding: 8px;position:fixed;top:65px;left:0px;}\n#MangaOnlineViewer select{height:20px;padding:0;margin-bottom:5px}\n#MangaOnlineViewer .controlButton{cursor:pointer;border:0 none;}\n#MangaOnlineViewer #ImageOptions {left: 0px;position: absolute;top: 0px;width: 250px;}\n#MangaOnlineViewer #ImageOptions .painel {padding:4.5px;position: inherit;}\n#MangaOnlineViewer #ImageOptions:hover {position:fixed;}\n#MangaOnlineViewer #ImageOptions.settingsOpen {position:fixed;}\n#MangaOnlineViewer #ImageOptions #menu {position:fixed;top: 45px;height: 64px;width: 200px;top: 0;}\n#MangaOnlineViewer #ImageOptions #Zoom {position:absolute;left: 18px;bottom: -65px;}\n#MangaOnlineViewer .MangaPage{width:100%;display:inline-block;text-align:center;align:center;transform: translate3d(0, 0, 0);backface-visibility: hidden;perspective: 1000;(0, 0, 0);-webkit-backface-visibility: hidden;-webkit-perspective: 1000;-moz-transform: translate3d(0, 0, 0);-moz-backface-visibility: hidden;-moz-perspective: 1000;}\n#MangaOnlineViewer .PageContent{margin:0 0 15px;text-align:center;display:inline-block}\n#MangaOnlineViewer #gotoPage{width:35px;}\n#MangaOnlineViewer #ThemeSelector{width:110px;}\n#MangaOnlineViewer #PagesPerSecond{width:46px;}\n#MangaOnlineViewer .ChapterControl{-moz-user-select:none;-webkit-user-select: none;margin-right:120px;margin-top: 1px;float: right;}\n#MangaOnlineViewer .ChapterControl a{display:inline-block;width: 80px;height:25px;text-align:center;margin-left: 3px;margin-bottom: -1px;}\n#MangaOnlineViewer .ChapterControl a[href=\'#\'],#MangaOnlineViewer .ChapterControl a[href=\'\']{visibility:hidden}\n#MangaOnlineViewer .ViewerTitle{display: block;text-align: center;height:35px;}\n#MangaOnlineViewer #Counters {position: absolute;right: 10px;top: 10px;}\n#MangaOnlineViewer .PageFunctions{-moz-user-select:none;-webkit-user-select: none;font-family:monospace;font-size:10pt;padding-right:120px;text-align:right}\n#MangaOnlineViewer .PageFunctions>span{min-width:20px;text-align:center;display:inline-block;padding:2px 10px}\n#MangaOnlineViewer .PageFunctions > a {height: 16px;width: 16px; padding: 10px;}\n#MangaOnlineViewer .PageFunctions a{opacity:0.2}\n#MangaOnlineViewer .PageFunctions:hover a{opacity:1}\n#MangaOnlineViewer #NavigationCounters {margin-top: 5px;width: 100%;}\n#MangaOnlineViewer #Navigation {bottom: -170px;height: 180px;overflow: auto;overflow-x: auto;overflow-y: hidden;padding-bottom: 20px;position: fixed;white-space: nowrap;width: 100%;}\n#MangaOnlineViewer #Navigation:hover {bottom: 0;}\n#MangaOnlineViewer #Navigation.disabled {display: none;}\n#MangaOnlineViewer #Navigation.visible {bottom: 0;}\n#MangaOnlineViewer #Navigation .ThumbNail {display: inline-block;height: 150px;margin: 0 5px;position: relative;}\n#MangaOnlineViewer #Navigation .ThumbNail span {display: block;opacity: 0.8;position: relative;top: -30px;width: 100%;}\n#MangaOnlineViewer #Navigation .ThumbNail img {align-content: center;cursor: pointer;display: inline-block;margin-bottom: -10px;margin-top: 10px;max-height: 150px;min-height: 150px;min-width: 100px;}\n#MangaOnlineViewer #Navigation .nav {behavior:url(-ms-transform.htc);-moz-transform:rotate(-90deg);-webkit-transform:rotate(-90deg);-o-transform:rotate(-90deg);}\n#MangaOnlineViewer #ImageOptions .menuOuterArrow  {width: 0;height: 0;border-top: 10px solid transparent;border-bottom: 10px solid transparent;border-left:10px solid blue;display: inline-block;position: absolute;bottom: 0;}\n#MangaOnlineViewer #ImageOptions .menuInnerArrow {width: 0;height: 0;border-top: 5px solid transparent;border-bottom: 5px solid transparent;border-left:5px solid white;left: -10px;position: absolute;top: -5px;display: inline-block;}\n#MangaOnlineViewer .fitWidthIfOversized .PageContent img { max-width: ' + String($(window).width()) + 'px;}\n#MangaOnlineViewer .PageFunctions .Reload {background: url(\'' + String(icon.reload) + '\') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .Hide {background: url(\'' + String(icon.hide) + '\') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomIn {background: url(\'' + String(icon.zoomin) + '\') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomOut {background: url(\'' + String(icon.zoomout) + '\') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomRestore {background: url(\'' + String(icon.zoomrestore) + '\') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomWidth {background: url(\'' + String(icon.zoomwidth) + '\') no-repeat scroll center center transparent;}\n</style>';
-  const externalScripts = ['<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" integrity="sha256-RbP/rbx4XeYJH6eYUniR63Jk5NEV48Gjestg49cNSWY=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js" integrity="sha256-XWzSUJ+FIQ38dqC06/48sNRwU1Qh3/afjmJ080SneA8=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js" integrity="sha256-egVvxkq6UBCQyKzRBrDHu8miZ5FOaVrjSqQqauKglKc=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/color-js/1.0.1/color.min.js" integrity="sha256-qAjuzGZ65rH+O8iRUmRdRCgk33HmM0Gbq15CwUsxW3k=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.0/color-scheme.min.js" integrity="sha256-DonUU+7nLBqoy0pdfzuUbr+5bdhcMcnKdF2MhfkjvGs=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.24.1/ramda.min.js" integrity="sha256-yF1J6hzNIWN398K1d+n1XXGC3JEchH55G05dxM+rsFk=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/bacon.js/0.7.94/Bacon.min.js" integrity="sha256-/iRvW1K45C96AyicFqZ1Aw7pGD21IsgeJ6H/wYHIhvs=" crossorigin="anonymous"></script>'];
+  const externalScripts = ['<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" integrity="sha256-RbP/rbx4XeYJH6eYUniR63Jk5NEV48Gjestg49cNSWY=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js" integrity="sha256-XWzSUJ+FIQ38dqC06/48sNRwU1Qh3/afjmJ080SneA8=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js" integrity="sha256-egVvxkq6UBCQyKzRBrDHu8miZ5FOaVrjSqQqauKglKc=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/color-js/1.0.1/color.min.js" integrity="sha256-qAjuzGZ65rH+O8iRUmRdRCgk33HmM0Gbq15CwUsxW3k=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.0/color-scheme.min.js" integrity="sha256-DonUU+7nLBqoy0pdfzuUbr+5bdhcMcnKdF2MhfkjvGs=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.24.1/ramda.min.js" integrity="sha256-yF1J6hzNIWN398K1d+n1XXGC3JEchH55G05dxM+rsFk=" crossorigin="anonymous"></script>'];
   const externalCSS = ['<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" integrity="sha256-HxaKz5E/eBbvhGMNwhWRPrAR9i/lG1JeT4mD6hCQ7s4=" crossorigin="anonymous" />', '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" integrity="sha256-pMhcV6/TBDtqH9E9PWKgS+P32PVguLG8IipkPyqMtfY=" crossorigin="anonymous" />', '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" integrity="sha256-iXUYfkbVl5itd4bAkFH5mjMEN5ld9t3OHvXX3IU8UxU=" crossorigin="anonymous" />'];
 
   function reader(manga) {
@@ -182,10 +183,19 @@
   const isEmpty = R.either(R.either(R.isNil, R.isEmpty), R.either(x => R.length(x) === 0, x => x === 0));
   const mapIndexed = R.addIndex(R.map);
 
+  function normalizeUrl(url) {
+    let uri = url.trim();
+    if (uri.startsWith('//')) {
+      uri = 'http:' + String(uri);
+    }
+    return uri;
+  }
+
   function addImg(index, src) {
-    logScript('Image:', index, 'Source:', src);
-    $('#PageImg' + String(index)).attr('src', src).parent().slideToggle();
-    $('#ThumbNailImg' + String(index)).attr('src', src);
+    const url = normalizeUrl(src);
+    logScript('Image:', index, 'Source:', url);
+    $('#PageImg' + String(index)).attr('src', url).parent().slideToggle();
+    $('#ThumbNailImg' + String(index)).attr('src', url);
     return index;
   }
 
@@ -280,49 +290,6 @@
     Data: {}
   };
 
-  function customBase64Encode(inputStr) {
-    const bbLen = 3;
-    const enCharLen = 4;
-    const inpLen = inputStr.length;
-    let inx = 0;
-    let jnx;
-    const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-    let output = '';
-    let paddingBytes = 0;
-    const bytebuffer = new Array(bbLen);
-    const encodedCharIndexes = new Array(enCharLen);
-    while (inx < inpLen) {
-      for (jnx = 0; jnx < bbLen; jnx += 1) {
-        if (inx < inpLen) {
-          bytebuffer[jnx] = inputStr.charCodeAt(inx) & 0xff;
-          inx += 1;
-        } else {
-          bytebuffer[jnx] = 0;
-        }
-      }
-      encodedCharIndexes[0] = bytebuffer[0] >> 2;
-      encodedCharIndexes[1] = (bytebuffer[0] & 0x3) << 4 | bytebuffer[1] >> 4;
-      encodedCharIndexes[2] = (bytebuffer[1] & 0x0f) << 2 | bytebuffer[2] >> 6;
-      encodedCharIndexes[3] = bytebuffer[2] & 0x3f;
-      paddingBytes = inx - (inpLen - 1);
-      switch (paddingBytes) {
-        case 1:
-          encodedCharIndexes[3] = 64;
-          break;
-        case 2:
-          encodedCharIndexes[3] = 64;
-          encodedCharIndexes[2] = 64;
-          break;
-        default:
-          break;
-      }
-      for (jnx = 0; jnx < enCharLen; jnx += 1) {
-        output += keyStr.charAt(encodedCharIndexes[jnx]);
-      }
-    }
-    return output;
-  }
-
   function generateZip() {
     if (cache.downloadFiles === 0) {
       $('.MangaPage img').get().forEach((value, index) => {
@@ -339,7 +306,7 @@
             base64: true,
             createFolders: true
           });
-          logScript(filename + ' Added to Zip from Base64 Image');
+          logScript(filename + ' Added to Zip from Base64 Image, From: ' + String(src));
           cache.downloadFiles += 1;
         } else {
           try {
@@ -347,13 +314,14 @@
               method: 'GET',
               url: src,
               overrideMimeType: 'text/plain; charset=x-user-defined',
-              onload(e) {
-                const base64 = customBase64Encode(e.responseText);
-                cache.zip.file(filename, base64, {
+              responseType: 'blob',
+              onload(request) {
+                cache.zip.file(filename, request.response, {
                   base64: true,
-                  createFolders: true
+                  createFolders: true,
+                  compression: 'DEFLATE'
                 });
-                logScript(filename + ' Added to Zip as Base64 Image');
+                logScript(filename + ' Added to Zip as Base64 Image, From: ' + String(src) + ', Data:', request.response);
                 cache.downloadFiles += 1;
               }
             });
