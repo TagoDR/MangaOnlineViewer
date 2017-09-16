@@ -89,10 +89,12 @@ function loadManga(manga, begin = 0) {
 // Force reload the image
 function reloadImage(img) {
   const src = img.attr('src');
-  img.removeAttr('src');
-  setTimeout(() => {
-    img.attr('src', src);
-  }, 500);
+  if (src !== undefined) {
+    img.removeAttr('src');
+    setTimeout(() => {
+      img.attr('src', src);
+    }, 500);
+  }
 }
 
 // After pages load apply default Zoom
