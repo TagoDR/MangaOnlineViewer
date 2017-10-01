@@ -1,5 +1,5 @@
 import {
-  logScript,
+  logScript, setValueGM,
   // logScriptComposable,
 } from './browser';
 import {
@@ -36,6 +36,22 @@ function getPage(url, wait = settings.Timer) {
         dataType: 'html',
         async: true,
         success: html => resolve(html),
+        // retryCount and retryLimit will let you retry a determined number of times
+        retryCount: 0,
+        retryLimit: 10,
+        // retryTimeout limits the total time retrying (in milliseconds)
+        retryTimeout: 10000,
+        // timeout for each request
+        timeout: 1000,
+        // created tells when this request was created
+        created: Date.now(),
+        error() {
+          this.retryCount += 1;
+          if (this.retryCount <= this.retryLimit && Date.now() - this.created < this.retryTimeout) {
+            logScript(`Retrying Getting page: ${url}`);
+            $.ajax(this);
+          }
+        },
       });
     }, wait);
   });
@@ -64,15 +80,15 @@ const loadMangaImages = (manga, begin) =>
         addImg(index + 1, response)) : null),
     manga.listImages);
 
-function loadManga(manga, begin = 0) {
+function loadManga(manga, begin = 1) {
   logScript('Loading Images');
   logScript(`Intervals: ${manga.timer || settings.Timer || 'Default(1000)'}`);
   if (manga.listPages !== undefined) {
     logScript('Method: Pages:', manga.listPages);
-    loadMangaPages(manga, begin);
+    loadMangaPages(manga, begin - 1);
   } else if (manga.listImages !== undefined) {
     logScript('Method: Images:', manga.listImages);
-    loadMangaImages(manga, begin);
+    loadMangaImages(manga, begin - 1);
   } else {
     logScript('Method: Brute Force');
     manga.bruteForce({
@@ -124,6 +140,9 @@ function checkImagesLoaded() {
     setTimeout(checkImagesLoaded, 5000);
   } else {
     logScript('Images Loading Complete');
+    // Clear used Bookmarks
+    settings.bookmarks = settings.bookmarks.filter(el => el.url !== location.href);
+    setValueGM('MangaBookmarks', JSON.stringify(settings.bookmarks));
     $('.download').attr('href', '#download');
     logScript('Download Avaliable');
     if (settings.DownloadZip) {

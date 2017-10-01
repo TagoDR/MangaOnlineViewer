@@ -5,7 +5,7 @@ export default {
   homepage: 'http://www.mangatown.com/',
   language: ['English'],
   category: 'manga',
-  waitEle: '#top_chapter_list option',
+  // waitEle: '#top_chapter_list option',
   run() {
     const num = $('.page_select select:first option').get();
     const chapter = $('#top_chapter_list option:selected');

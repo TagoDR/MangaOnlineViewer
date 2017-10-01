@@ -216,6 +216,31 @@ function controls() {
     $('#Navigation').toggleClass('visible');
   });
   // Individual Page functions
+  // Bookmark Page to resume reading
+  $('.Bookmark').click((event) => {
+    const num = parseInt($(event.target).parents('.MangaPage').find('.PageFunctions span').text(),
+      10);
+    const mark = { url: location.href, page: num, date: Date.now() };
+    const found = settings.bookmarks.filter(el => el.url === mark.url).length > 0;
+    settings.bookmarks = settings.bookmarks.filter(el => el.url !== mark.url);
+    if (found) {
+      swal({
+        title: 'Bookmark Removed',
+        timer: 10000,
+        type: 'error',
+        confirmButtonText: 'OK',
+      });
+    } else {
+      settings.bookmarks.push(mark);
+      swal({
+        title: 'Saved Bookmark',
+        html: `Next time you open this chapter it will resume from:<h4>Page ${num}</h4>(Only <i>ONCE</i> per Bookmark, will be removed after a year unused)`,
+        type: 'success',
+        confirmButtonText: 'OK',
+      });
+    }
+    setValueGM('MangaBookmarks', JSON.stringify(settings.bookmarks));
+  });
   // Reload Page
   $('.Reload').click((event) => {
     reloadImage($(event.target).parents('.MangaPage').find('.PageContent img'));

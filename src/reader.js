@@ -34,7 +34,8 @@ const shortcuts = `
 const controls = `
 <div id='ViewerControls' class='painel' style='display: none;'>
   <span class='controlLable'>Theme:</span>
-  <input id='CustomThemeHue' class='jscolor' value='${settings.CustomTheme}' ${(settings.Theme !== 'Custom_Dark' && settings.Theme !== 'Custom_Light') ? 'style="display: none;"' : ''}'>
+  <input id='CustomThemeHue' class='jscolor' value='${settings.CustomTheme}' ${(settings.Theme
+  !== 'Custom_Dark' && settings.Theme !== 'Custom_Light') ? 'style="display: none;"' : ''}'>
   <select id='ThemeSelector'>
     ${themesSelector}
   </select>
@@ -84,6 +85,7 @@ const title = manga => `<div class='ViewerTitle'><br/><a id='series' href='${man
 const listPages = R.times(index => `
 <div id='Page${index + 1}' class='MangaPage'>
   <div class='PageFunctions'>
+    <a class='Bookmark controlButton'></a>
     <a class='ZoomIn controlButton'></a>
     <a class='ZoomRestore controlButton'></a>
     <a class='ZoomOut controlButton'></a>
@@ -97,13 +99,16 @@ const listPages = R.times(index => `
   </div>
 </div>`);
 const listOptions = R.times(index => `<option value='${index + 1}'>${index + 1}</option>`);
-const listThumbnails = R.times(index => `<div id='ThumbNail${index + 1}' class='ThumbNail'><img id='ThumbNailImg${index + 1}' alt='ThumbNailImg${index + 1}' src=''/><span>${index + 1}</span></div>`);
-const body = manga => `
+const listThumbnails = R.times(
+  index => `<div id='ThumbNail${index + 1}' class='ThumbNail'><img id='ThumbNailImg${index
+  + 1}' alt='ThumbNailImg${index + 1}' src=''/><span>${index + 1}</span></div>`);
+const body = (manga, begin = 0) => `
 <div id='MangaOnlineViewer' class='${settings.Theme}' style='min-height: 1080px;'>
   ${title(manga)}
   ${chapterControlTop(manga)}
-  <div id='Chapter' align='center' class='${(settings.FitWidthIfOversized === true ? 'fitWidthIfOversized' : '')} ${(settings.alwaysWebComic === true ? 'WebComic' : '')}'>
-    ${listPages(manga.quant).join('')}    
+  <div id='Chapter' align='center' class='${(settings.FitWidthIfOversized
+=== true ? 'fitWidthIfOversized' : '')} ${(settings.alwaysWebComic === true ? 'WebComic' : '')}'>
+    ${listPages(manga.quant).slice(begin).join('')}    
   </div>
   ${title(manga)}
   ${chapterControlBottom(manga)}
@@ -113,13 +118,15 @@ const body = manga => `
   <div id='Counters' class='controlLable'>
     <i>0</i> of <b>${manga.quant}</b> Pages Loaded 
     <span class='controlLable'>Go to Page:</span>
-    <select id='gotoPage'><option selected>#</option>${listOptions(manga.quant).join('')}</select>
+    <select id='gotoPage'><option selected>#</option>${listOptions(manga.quant)
+    .slice(begin)
+    .join('')}</select>
   </div>
   <div id='Navigation' align='center' class='painel ${settings.ShowThumbnails ? '' : 'disabled'}'>
     <div id='NavigationCounters' class='controlLable'>
       <img alt='menu' src='${icon.menu}' class='nav' /><i>0</i> of <b>${manga.quant}</b> Pages Loaded
     </div>
-    ${listThumbnails(manga.quant).join('')}
+    ${listThumbnails(manga.quant).slice(begin).join('')}
   </div>
   <a href='#' id='blob' style='display: none;'>Download</a>
 </div>`;
@@ -184,6 +191,7 @@ input,textarea,.uneditable-input{margin-left:0}*/
 #MangaOnlineViewer #ImageOptions .menuOuterArrow  {width: 0;height: 0;border-top: 10px solid transparent;border-bottom: 10px solid transparent;border-left:10px solid blue;display: inline-block;position: absolute;bottom: 0;}
 #MangaOnlineViewer #ImageOptions .menuInnerArrow {width: 0;height: 0;border-top: 5px solid transparent;border-bottom: 5px solid transparent;border-left:5px solid white;left: -10px;position: absolute;top: -5px;display: inline-block;}
 #MangaOnlineViewer .fitWidthIfOversized .PageContent img { max-width: ${$(window).width()}px;}
+#MangaOnlineViewer .PageFunctions .Bookmark {background: url('${icon.bookmark}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .Reload {background: url('${icon.reload}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .Hide {background: url('${icon.hide}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .ZoomIn {background: url('${icon.zoomin}') no-repeat scroll center center transparent;}
@@ -195,7 +203,7 @@ const externalScripts = [
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" integrity="sha256-RbP/rbx4XeYJH6eYUniR63Jk5NEV48Gjestg49cNSWY=" crossorigin="anonymous"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js" integrity="sha256-XWzSUJ+FIQ38dqC06/48sNRwU1Qh3/afjmJ080SneA8=" crossorigin="anonymous"></script>',
-  '<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js" integrity="sha256-egVvxkq6UBCQyKzRBrDHu8miZ5FOaVrjSqQqauKglKc=" crossorigin="anonymous"></script>',
+  '<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.1/sweetalert2.all.min.js" integrity="sha256-Cx9rA5vmyLN1w4VBrMl1cCaCD5FN7K+H1uTpf0/V+7s=" crossorigin="anonymous"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/color-js/1.0.1/color.min.js" integrity="sha256-qAjuzGZ65rH+O8iRUmRdRCgk33HmM0Gbq15CwUsxW3k=" crossorigin="anonymous"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.0/color-scheme.min.js" integrity="sha256-DonUU+7nLBqoy0pdfzuUbr+5bdhcMcnKdF2MhfkjvGs=" crossorigin="anonymous"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.24.1/ramda.min.js" integrity="sha256-yF1J6hzNIWN398K1d+n1XXGC3JEchH55G05dxM+rsFk=" crossorigin="anonymous"></script>',
@@ -204,9 +212,10 @@ const externalScripts = [
 const externalCSS = [
   '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" integrity="sha256-HxaKz5E/eBbvhGMNwhWRPrAR9i/lG1JeT4mD6hCQ7s4=" crossorigin="anonymous" />',
   '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" integrity="sha256-pMhcV6/TBDtqH9E9PWKgS+P32PVguLG8IipkPyqMtfY=" crossorigin="anonymous" />',
-  '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" integrity="sha256-iXUYfkbVl5itd4bAkFH5mjMEN5ld9t3OHvXX3IU8UxU=" crossorigin="anonymous" />',
+  '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.1/sweetalert2.min.css" integrity="sha256-dFCwuhCfoeoBeMuViN7hhbZEZW7takATo0uQ8SzZSI8=" crossorigin="anonymous" />',
 ];
-function reader(manga) {
+
+function reader(manga, begin = 0) {
   return `
 <head>
   <title>${manga.title}</title>
@@ -217,7 +226,9 @@ function reader(manga) {
   ${themesCSS}
 </head>
 <body class='${settings.Theme}'>
-  ${body(manga)}
+  ${body(manga, begin > 0 ? begin - 1 : 0)}
 </body>`;
 }
+
 export default reader;
+export { externalScripts };
