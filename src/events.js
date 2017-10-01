@@ -108,8 +108,29 @@ function controls() {
     $('#Zoom b').html(settings.Zoom);
     applyZoom();
   });
+  // WebComic View Mode
   $('#webcomic').click(() => {
-    $('#Chapter').toggleClass('WebComic');
+    $('#Chapter').addClass('WebComic')
+      .removeClass('FluidLTR')
+      .removeClass('FluidRTL');
+  });
+  // Fluid LTR View Mode
+  $('#ltrmode').click(() => {
+    $('#Chapter').removeClass('WebComic')
+      .addClass('FluidLTR')
+      .removeClass('FluidRTL');
+  });
+  // Fluid RTL View Mode
+  $('#rtlmode').click(() => {
+    $('#Chapter').removeClass('WebComic')
+      .removeClass('FluidLTR')
+      .addClass('FluidRTL');
+  });
+  // Vertical View Mode
+  $('#verticalmode').click(() => {
+    $('#Chapter').removeClass('WebComic')
+      .removeClass('FluidLTR')
+      .removeClass('FluidRTL');
   });
   $('#fitIfOversized').change((event) => {
     $('#Chapter').toggleClass('fitWidthIfOversized');
@@ -120,14 +141,14 @@ function controls() {
     }
     logScript(`fitIfOversized: ${getValueGM('MangaFitWidthIfOversized')}`);
   });
-  $('#alwaysWebComic').change((event) => {
-    $('#Chapter').toggleClass('WebComic');
-    if ($(event.target).is(':checked')) {
-      setValueGM('MangaAlwaysWebComic', true);
-    } else {
-      setValueGM('MangaAlwaysWebComic', false);
-    }
-    logScript(`alwaysWebComic: ${getValueGM('MangaAlwaysWebComic')}`);
+  $('#viewMode').change((event) => {
+    const mode = $(event.target).val();
+    $('#Chapter').removeClass('WebComic')
+      .removeClass('FluidLTR')
+      .removeClass('FluidRTL')
+      .addClass(mode);
+    setValueGM('MangaViewMode', mode);
+    logScript(`ViewMode: ${getValueGM('MangaViewMode')}`);
   });
   $('#alwaysLoad').change((event) => {
     if ($(event.target).is(':checked')) {
@@ -180,7 +201,7 @@ function controls() {
   $('#ThemeSelector').change((event) => {
     const target = $(event.target);
     $('#MangaOnlineViewer , body').removeClass().addClass(target.val());
-    logScript('MangaTheme:', target.val());
+    logScript('MangaTheme', target.val());
     setValueGM('MangaTheme', target.val());
     if (target.val() === 'Custom_Dark' || target.val() === 'Custom_Light') {
       $('#CustomThemeHue').show();

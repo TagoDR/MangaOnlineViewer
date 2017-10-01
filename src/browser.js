@@ -6,10 +6,13 @@ function logScript(...text) {
   console.log('MangaOnlineViewer:', ...text);
   return text;
 }
+
 // Composeble console output
 const logScriptC = R.curry((x, y) => logScript(x, y)[1]);
 // Replacement function for GM_listValues allowing for debugging in console
 const getListGM = GM_listValues || (() => []);
+// Replacement function for GM_listValues allowing for debugging in console
+const removeValueGM = GM_deleteValue || (name => logScript('Removing: ', name));
 // Replacement function for GM_info allowing for debugging in console
 const getInfoGM = GM_info || {
   scriptHandler: 'Console',
@@ -19,9 +22,11 @@ const getInfoGM = GM_info || {
   },
 };
 // Replacement function for GM_getValue allowing for debugging in console
-const getValueGM = GM_getValue || ((name, defaultValue = null) => logScript('Getting: ', name, '=', defaultValue)[3]);
+const getValueGM = GM_getValue || ((name, defaultValue = null) => logScript('Getting: ', name, '=',
+  defaultValue)[3]);
 // Replacement function for GM_setValue allowing for debugging in console
 const setValueGM = GM_setValue || ((name, value) => logScript('Getting: ', name, '=', value));
+
 // See https://stackoverflow.com/a/2401861/331508 for optional browser sniffing code.
 function getBrowser() {
   const ua = navigator.userAgent;
@@ -49,12 +54,14 @@ function getBrowser() {
 function getEngine() {
   return `${getInfoGM.scriptHandler || 'Greasemonkey'} ${getInfoGM.version}`;
 }
+
 export {
   logScript,
   getListGM,
   getInfoGM,
   getValueGM,
   setValueGM,
+  removeValueGM,
   getBrowser,
   getEngine,
   logScriptC,

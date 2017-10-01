@@ -18,6 +18,7 @@ export default {
     'GM_getValue',
     'GM_setValue',
     'GM_listValues',
+    'GM_deleteValue',
     'GM_xmlhttpRequest',
   ],
   connect: '*',
