@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino
-// @version 13.16.0
+// @version 13.16.1
 // @date 2017-10-01
 // @grant GM_getValue
 // @grant GM_setValue
@@ -626,7 +626,7 @@
           confirmButtonText: 'No, cancel!',
           confirmButtonColor: '#DD6B55',
           closeOnConfirm: true
-        }, isConfirm => {
+        }).then(isConfirm => {
           cancel = isConfirm;
           W.mov = starting => formatPage(manga, starting);
         });

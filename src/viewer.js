@@ -40,7 +40,7 @@ function formatPage(manga, begin = 0) {
         confirmButtonText: 'No, cancel!',
         confirmButtonColor: '#DD6B55',
         closeOnConfirm: true,
-      }, (isConfirm) => {
+      }).then((isConfirm) => {
         cancel = isConfirm;
         W.mov = starting => formatPage(manga, starting);
       });
