@@ -2,7 +2,8 @@
 
 <h3>Description</h3>This scripts loads all pages(images) from the current chapter of the manga showing them in one page in a list type structure, witch helps reading faster.
 Please note the this script may he a heavy on resources on a few sites, so please open only one tab of each site at a time and wait it finish loading.
-I'll try to keep this script updated, however I hardly-ever visit some of the sites supported, if you find it no longer works, post it in the feedback area, and have patience.
+I'll try to keep this script updated, however I hardly-ever visit some of the sites supported, if
+ you find it no longer works, post it in the Issues/feedback area, and have patience.</br></br>
 I allow this script to be posted or used anywhere so long it gives me credit and provides a link back to this site. I allow parts of my script to be used freely.
 
 <h2>Official Sources</h2>
@@ -26,10 +27,8 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 </ul>
 
 <h3>Supported Browsers</h3>
-<ol><li>Mozilla Firefox with <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">Greasemonkey</a></li>
-<li>Google Chrome with <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en">Tampermonkey</a></li></ol>
+Any Browser with <a href="https://tampermonkey.net/">Tampermonkey</a><br>
 Should work with other browsers and addons, but they are not officially supported.
-
 
 <h3>HotKeys</h3>These will work with standard and numpad keys.
 <pre>
@@ -43,17 +42,23 @@ Arrow Left and "," : Previous Chapter(When avaliable)
 
 <h3>Features</h3>
 <pre>
-Full Themes and Cusomizible
+View Modes:
+- Vertical [Default]
+- WebComic
+- Fluid Left to Right
+- Fluid Right to Left
+Bookmarks Pages (To resume reading)
+Full Themes and Customizable
 Global and Individual images zoom
--In(Global one may stretch images beyond window width)
--Out
--Restore original(Toggle fit width if oversized)
--Fit width
--Fit width if oversized[Default on]
--Hide
+- In(Global one may stretch images beyond window width)
+- Out
+- Restore original(Toggle fit width if oversized)
+- Fit width
+- Fit width if oversized[Default on]
+- Hide
 Auto reload Images
--Counter for loaded Images
--Individual image reload, just in case
+- Counter for loaded Images
+- Individual image reload, just in case
 HotKeys
 Goto Page
 Image Loading Timer[Default 1s](Some sites require longer timers. eg.:ExHentai,e-hentai)
