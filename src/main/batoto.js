@@ -14,7 +14,11 @@ export default { // TODO: Webtoon support
       quant: num,
       prev: $('img[src$=\'pprev.png\']:first').parent().attr('href'),
       next: $('img[src$=\'nnext.png\']:first').parent().attr('href'),
-      listPages: [...Array(num).keys()].map(i => `${location.hash.replace('#', '/areader?id=')}&p=${i + 1}`),
+      listPages: [...Array(num).keys()].map(
+        i => `${location.hash
+          .slice(0, location.hash.lastIndexOf('_') > 0 ? location.hash.lastIndexOf(
+            '_') : location.hash.length)
+          .replace('#', '/areader?id=')}&p=${i + 1}`),
       img: '#comic_page',
     };
   },
