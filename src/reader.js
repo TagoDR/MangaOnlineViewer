@@ -101,23 +101,23 @@ const title = manga => `<div class='ViewerTitle'><br/><a id='series' href='${man
 const listPages = R.times(index => `
 <div id='Page${index + 1}' class='MangaPage'>
   <div class='PageFunctions'>
-    <a class='Bookmark controlButton'></a>
-    <a class='ZoomIn controlButton'></a>
-    <a class='ZoomRestore controlButton'></a>
-    <a class='ZoomOut controlButton'></a>
-    <a class='ZoomWidth controlButton'></a>
-    <a class='Hide controlButton'></a>
-    <a class='Reload controlButton'></a>
+    <a class='Bookmark controlButton' title='Bookmark'></a>
+    <a class='ZoomIn controlButton' title='Zoom In'></a>
+    <a class='ZoomRestore controlButton' title='Zoom Restore'></a>
+    <a class='ZoomOut controlButton' title='Zoom Out'></a>
+    <a class='ZoomWidth controlButton' title='Zoom to Width'></a>
+    <a class='Hide controlButton' title='Hide'></a>
+    <a class='Reload controlButton' title='Reload'></a>
     <span>${index + 1}</span>
   </div>
   <div class='PageContent' style='display: none;'>
-    <img id='PageImg${index + 1}' title='PageImg${index + 1}' />
+    <img id='PageImg${index + 1}' alt='PageImg${index + 1}' />
   </div>
 </div>`);
 const listOptions = R.times(index => `<option value='${index + 1}'>${index + 1}</option>`);
 const listThumbnails = R.times(
   index => `<div id='ThumbNail${index + 1}' class='ThumbNail'><img id='ThumbNailImg${index
-  + 1}' title='ThumbNailImg${index + 1}' src=''/><span>${index + 1}</span></div>`);
+  + 1}' alt='ThumbNailImg${index + 1}' src=''/><span>${index + 1}</span></div>`);
 const body = (manga, begin = 0) => `
 <div id='MangaOnlineViewer' class='${settings.Theme}' style='min-height: 1080px;'>
   ${title(manga)}
@@ -141,7 +141,7 @@ const body = (manga, begin = 0) => `
   </div>
   <div id='Navigation' align='center' class='painel ${settings.ShowThumbnails ? '' : 'disabled'}'>
     <div id='NavigationCounters' class='controlLable'>
-      <img title='menu' src='${icon.menu}' class='nav' /><i>0</i> of <b>${manga.quant}</b> Pages Loaded
+      <img title='Thumbnails' src='${icon.menu}' class='nav' /><i>0</i> of <b>${manga.quant}</b> Pages Loaded
     </div>
     ${listThumbnails(manga.quant).slice(begin).join('')}
   </div>
