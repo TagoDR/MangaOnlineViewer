@@ -6,7 +6,7 @@ export default {
   language: ['English'],
   category: 'manga',
   run() {
-    const num = parseInt($('.right select:first option:last').html(), 10);
+    const num = $('.right select:first option').length - 1;
     const chapter = $('.reader_tip a');
     return {
       title: $('.title h1').text(),

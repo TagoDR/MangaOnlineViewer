@@ -5,8 +5,8 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh
-// @version 13.16.4
-// @date 2017-10-15
+// @version 13.16.5
+// @date 2017-11-04
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -924,7 +924,7 @@
     language: ['English'],
     category: 'manga',
     run() {
-      const num = parseInt($('.right select:first option:last').html(), 10);
+      const num = $('.right select:first option').length - 1;
       const chapter = $('.reader_tip a');
       return {
         title: $('.title h1').text(),
