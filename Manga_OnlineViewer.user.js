@@ -5,8 +5,8 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh
-// @version 13.16.5
-// @date 2017-11-04
+// @version 13.17.0
+// @date 2017-11-08
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -322,8 +322,9 @@
     if (cache.downloadFiles === 0) {
       $('.MangaPage img').get().forEach((value, index) => {
         const img = $(value);
-        const filename = 'Page ' + String(String('000' + String(index + 1)).slice(-3)) + '.png';
         const src = img.attr('src');
+        const ext = src.match(/.jpg|.png/ig)[0] || '.png';
+        const filename = 'Page ' + String(String('000' + String(index + 1)).slice(-3)) + String(ext);
         if (src.indexOf('base64') > -1) {
           let base64 = src.replace('data:image/png;base64,', '');
           const i = base64.indexOf(',');
@@ -1062,7 +1063,7 @@
     language: ['English'],
     category: 'manga',
     run() {
-      const num = $('.page_select select:first option').get();
+      const num = $('.page_select select:first option').get().slice(0, -1);
       const chapter = $('#top_chapter_list option:selected');
       return {
         title: $('.title h1').text(),
