@@ -123,7 +123,7 @@ function applyZoom(page, newZoom) {
 }
 
 // Checks if all images loaded correctly
-function checkImagesLoaded() {
+function checkImagesLoaded(manga) {
   const images = $('.PageContent img').get();
   const total = images.length;
   const missing = images.filter(item => $(item).prop('naturalWidth') === 0);
@@ -135,11 +135,13 @@ function checkImagesLoaded() {
     showSpinner: false,
   }).set(loaded.length / total);
   $('#Counters i, #NavigationCounters i').html(loaded.length);
-  logScript(`Progress: ${(loaded.length / total) * 100}%`);
+  logScript(`Progress: ${Math.floor((loaded.length / total) * 100)}%`);
+  $('title').html(`(${Math.floor((loaded.length / total) * 100)}%) ${manga.title}`);
   if (loaded.length < total) {
-    setTimeout(checkImagesLoaded, 5000);
+    setTimeout(() => checkImagesLoaded(manga), 5000);
   } else {
     logScript('Images Loading Complete');
+    $('title').html(manga.title);
     // Clear used Bookmarks
     settings.bookmarks = settings.bookmarks.filter(el => el.url !== location.href);
     setValueGM('MangaBookmarks', JSON.stringify(settings.bookmarks));
