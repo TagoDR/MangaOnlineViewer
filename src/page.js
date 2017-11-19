@@ -87,10 +87,10 @@ function loadManga(manga, begin = 1) {
   logScript(`Intervals: ${manga.timer || settings.Timer || 'Default(1000)'}`);
   if (manga.listPages !== undefined) {
     logScript('Method: Pages:', manga.listPages);
-    loadMangaPages(manga, begin - 1);
+    loadMangaPages(begin - 1, manga);
   } else if (manga.listImages !== undefined) {
     logScript('Method: Images:', manga.listImages);
-    loadMangaImages(manga, begin - 1);
+    loadMangaImages(begin - 1, manga);
   } else {
     logScript('Method: Brute Force');
     manga.bruteForce({
