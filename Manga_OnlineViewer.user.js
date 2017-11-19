@@ -5,8 +5,8 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh
-// @version 13.18.0
-// @date 2017-11-17
+// @version 13.19.0
+// @date 2017-11-19
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -222,7 +222,7 @@
           async: true,
           success: html => resolve(html),
           retryCount: 0,
-          retryLimit: 10,
+          retryLimit: 5,
           retryTimeout: 10000,
           timeout: 1000,
           created: Date.now(),
@@ -231,13 +231,15 @@
             if (this.retryCount <= this.retryLimit && Date.now() - this.created < this.retryTimeout) {
               logScript('Retrying Getting page: ' + String(url));
               $.ajax(this);
+            } else {
+              logScript('Failed Getting page: ' + String(url));
             }
           }
         });
       }, wait);
     });
   }
-  const loadMangaPages = (manga, begin) => mapIndexed((url, index) => index >= begin ? getPage(url, (manga.timer || settings.Timer) * (index - begin)).then(response => addImg(index + 1, $(response).find(manga.img).attr('src'))) : null, manga.listPages);
+  const loadMangaPages = (begin, manga) => mapIndexed((url, index) => index >= begin ? getPage(url, (manga.timer || settings.Timer) * (index - begin)).then(response => addImg(index + 1, $(response).find(manga.img).attr('src'))) : null, manga.listPages);
 
   function getImages(src, wait = settings.Timer) {
     return new Promise(resolve => {
@@ -246,7 +248,7 @@
       }, wait);
     });
   }
-  const loadMangaImages = (manga, begin) => mapIndexed((src, index) => index >= begin ? getImages(src, (manga.timer || settings.Timer) * (index - begin)).then(response => addImg(index + 1, response)) : null, manga.listImages);
+  const loadMangaImages = (begin, manga) => mapIndexed((src, index) => index >= begin ? getImages(src, (manga.timer || settings.Timer) * (index - begin)).then(response => addImg(index + 1, response)) : null, manga.listImages);
 
   function loadManga(manga, begin = 1) {
     logScript('Loading Images');
@@ -262,8 +264,8 @@
       manga.bruteForce({
         begin,
         addImg,
-        loadMangaImages,
-        loadMangaPages,
+        loadMangaImages: R.curry(loadMangaImages)(begin - 1),
+        loadMangaPages: R.curry(loadMangaPages)(begin - 1),
         getPage,
         getImages
       });
@@ -1105,16 +1107,18 @@
     language: ['English'],
     category: 'manga',
     run() {
+      const url = location.href.substring(0, location.href.lastIndexOf('/'));
+      const num = $('select[name="category_type"]:last option').get().length;
       const chapter = $('select[name="chapter_list"] option:selected');
       return {
         title: $('title').text().trim(),
         series: $('.btn:eq(4)').attr('href'),
-        quant: $('select[name="category_type"]:last option').get().length,
+        quant: num,
         prev: chapter.next('option').val(),
         next: chapter.prev('option').val(),
         bruteForce(func) {
-          func.getPage(String(location) + '/all-pages').then(html => {
-            const listImages = $(html).find('img.img-responsive-2').get().map(item => $(item).attr('src'));
+          func.getPage(String(url) + '/all-pages').then(html => {
+            const listImages = $(html).find('.page_chapter img').get().map(item => $(item).attr('src'));
             func.loadMangaImages({
               listImages
             });

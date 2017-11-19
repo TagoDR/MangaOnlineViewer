@@ -38,7 +38,7 @@ function getPage(url, wait = settings.Timer) {
         success: html => resolve(html),
         // retryCount and retryLimit will let you retry a determined number of times
         retryCount: 0,
-        retryLimit: 10,
+        retryLimit: 5,
         // retryTimeout limits the total time retrying (in milliseconds)
         retryTimeout: 10000,
         // timeout for each request
@@ -50,6 +50,8 @@ function getPage(url, wait = settings.Timer) {
           if (this.retryCount <= this.retryLimit && Date.now() - this.created < this.retryTimeout) {
             logScript(`Retrying Getting page: ${url}`);
             $.ajax(this);
+          } else {
+            logScript(`Failed Getting page: ${url}`);
           }
         },
       });
@@ -57,7 +59,7 @@ function getPage(url, wait = settings.Timer) {
   });
 }
 
-const loadMangaPages = (manga, begin) =>
+const loadMangaPages = (begin, manga) =>
   mapIndexed(
     (url, index) => (index >= begin ? getPage(url,
       (manga.timer || settings.Timer) * (index - begin))
@@ -72,7 +74,7 @@ function getImages(src, wait = settings.Timer) {
   });
 }
 
-const loadMangaImages = (manga, begin) =>
+const loadMangaImages = (begin, manga) =>
   mapIndexed(
     (src, index) => (index >= begin ? getImages(src,
       (manga.timer || settings.Timer) * (index - begin))
@@ -94,8 +96,8 @@ function loadManga(manga, begin = 1) {
     manga.bruteForce({
       begin,
       addImg,
-      loadMangaImages,
-      loadMangaPages,
+      loadMangaImages: R.curry(loadMangaImages)(begin - 1),
+      loadMangaPages: R.curry(loadMangaPages)(begin - 1),
       getPage,
       getImages,
     });

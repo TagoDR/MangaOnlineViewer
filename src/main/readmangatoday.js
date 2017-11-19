@@ -6,19 +6,26 @@ export default {
   language: ['English'],
   category: 'manga',
   run() {
+    const url = location.href.substring(0, location.href.lastIndexOf('/'));
+    const num = $('select[name="category_type"]:last option').get().length;
     const chapter = $('select[name="chapter_list"] option:selected');
     return {
       title: $('title').text().trim(),
       series: $('.btn:eq(4)').attr('href'),
-      quant: $('select[name="category_type"]:last option').get().length,
+      quant: num,
       prev: chapter.next('option').val(),
       next: chapter.prev('option').val(),
+      // listPages: [...Array(num).keys()].map(i => `${url}/${i + 1}`),
+      // img: '#chapter_img',
       bruteForce(func) {
-        func.getPage(`${location}/all-pages`).then((html) => {
-          const listImages = $(html).find('img.img-responsive-2').get().map(item => $(item).attr('src'));
+        func.getPage(`${url}/all-pages`).then((html) => {
+          const listImages = $(html)
+            .find('.page_chapter img').get()
+            .map(item => $(item).attr('src'));
           func.loadMangaImages({ listImages });
         });
       },
     };
   },
 };
+
