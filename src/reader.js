@@ -45,25 +45,25 @@ const controls = `
   </span>
   <span class='controlLable'>Pages/Second:
     <select id='PagesPerSecond'>
-      <option value='3000' ${settings.Timer === 3000 ? 'selected' : ''}>0.3</option>
+      <option value='3000' ${settings.Timer === 3000 ? 'selected' : ''}>0.3(Slow)</option>
       <option value='2000' ${settings.Timer === 2000 ? 'selected' : ''}>0.5</option>
-      <option value='1000' ${settings.Timer === 1000 ? 'selected' : ''}>01</option>
+      <option value='1000' ${settings.Timer === 1000 ? 'selected' : ''}>01(Normal)</option>
       <option value='500' ${settings.Timer === 500 ? 'selected' : ''}>02</option>
-      <option value='250' ${settings.Timer === 250 ? 'selected' : ''}>04</option>
+      <option value='250' ${settings.Timer === 250 ? 'selected' : ''}>04(Fast)</option>
       <option value='125' ${settings.Timer === 125 ? 'selected' : ''}>08</option>
-      <option value='100' ${settings.Timer === 100 ? 'selected' : ''}>10</option>
+      <option value='100' ${settings.Timer === 100 ? 'selected' : ''}>10(Extreme)</option>
     </select>
   </span>
   <span class='controlLable'>Default Zoom:
     <select id='DefaultZoom'>
       <option value='50' ${settings.Zoom === 50 ? 'selected' : ''}>50%</option>
-      <option value='75' ${settings.Zoom === 50 ? 'selected' : ''}>75%</option>
-      <option value='100' ${settings.Zoom === 50 ? 'selected' : ''}>100%</option>
-      <option value='125' ${settings.Zoom === 50 ? 'selected' : ''}>125%</option>
-      <option value='150' ${settings.Zoom === 50 ? 'selected' : ''}>150%</option>
-      <option value='175' ${settings.Zoom === 50 ? 'selected' : ''}>175%</option>
-      <option value='200' ${settings.Zoom === 50 ? 'selected' : ''}>200%</option>
-      <option value='1000' ${settings.Zoom === 50 ? 'selected' : ''}>Fit Width</option>
+      <option value='75' ${settings.Zoom === 75 ? 'selected' : ''}>75%</option>
+      <option value='100' ${settings.Zoom === 100 ? 'selected' : ''}>100%</option>
+      <option value='125' ${settings.Zoom === 125 ? 'selected' : ''}>125%</option>
+      <option value='150' ${settings.Zoom === 150 ? 'selected' : ''}>150%</option>
+      <option value='175' ${settings.Zoom === 175 ? 'selected' : ''}>175%</option>
+      <option value='200' ${settings.Zoom === 200 ? 'selected' : ''}>200%</option>
+      <option value='1000' ${settings.Zoom === 1000 ? 'selected' : ''}>Fit Width</option>
     </select>
   </span>
   <span class='controlLable'>Fit Width if Oversized:

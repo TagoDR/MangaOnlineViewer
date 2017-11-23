@@ -1,5 +1,9 @@
 <h1>Manga OnlineViewer</h1>
 
+<h3>Installation</h3>
+<a href='https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js'>Reader</a><br>
+<a href='https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js'>Adult Reader</a>
+
 <h3>Description</h3>This scripts loads all pages(images) from the current chapter of the manga showing them in one page in a list type structure, witch helps reading faster.
 Please note the this script may he a heavy on resources on a few sites, so please open only one tab of each site at a time and wait it finish loading.
 I'll try to keep this script updated, however I hardly-ever visit some of the sites supported, if
