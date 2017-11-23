@@ -7,6 +7,10 @@ if (typeof getValueGM('MangaFitWidthIfOversized') === 'string') {
   setValueGM('MangaDownloadZip', false);
   setValueGM('MangaAlwaysLoad', false);
 }
+if (typeof getValueGM('MangaZoom') === 'string') {
+  setValueGM('MangaTimer', 1000);
+  setValueGM('MangaZoom', 100);
+}
 removeValueGM('MangaAlwaysWebComic');
 removeValueGM('MangaTheme:');
 

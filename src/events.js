@@ -156,7 +156,7 @@ function controls() {
     } else {
       setValueGM('MangaAlwaysLoad', false);
     }
-    logScript(`alwaysLoad: ${getValueGM('MangaAlwaysLoad')}`);
+    logScript(`MangaAlwaysLoad: ${getValueGM('MangaAlwaysLoad')}`);
   });
   $('#showThumbnails').change((event) => {
     $('#Navigation').toggleClass('disabled');
@@ -165,7 +165,7 @@ function controls() {
     } else {
       setValueGM('MangaShowThumbnails', false);
     }
-    logScript(`showThumbnails: ${getValueGM('MangaShowThumbnails')}`);
+    logScript(`MangaShowThumbnails: ${getValueGM('MangaShowThumbnails')}`);
   });
   // Download
   $('#downloadZip').change((event) => {
@@ -181,7 +181,7 @@ function controls() {
     } else {
       setValueGM('MangaDownloadZip', false);
     }
-    logScript(`downloadZip: ${getValueGM('MangaDownloadZip')}`);
+    logScript(`MangaDownloadZip: ${getValueGM('MangaDownloadZip')}`);
   });
   $('#blob').one('click', generateZip);
   $('.download').click(() => {
@@ -189,12 +189,14 @@ function controls() {
     $('#blob')[0].click();
   });
   $('#PagesPerSecond').change((event) => {
-    setValueGM('MangaTimer', $(event.target).val());
+    setValueGM('MangaTimer', parseInt($(event.target).val(), 10));
+    logScript(`MangaTimer: ${getValueGM('MangaTimer')}`);
   });
   $('#DefaultZoom').change((event) => {
-    settings.Zoom = $(event.target).val();
+    settings.Zoom = parseInt($(event.target).val(), 10);
     $('#Zoom b').html(settings.Zoom);
     setValueGM('MangaZoom', settings.Zoom);
+    logScript(`MangaZoom: ${getValueGM('MangaZoom')}`);
     applyZoom();
   });
   // Theme Control
@@ -203,6 +205,7 @@ function controls() {
     $('#MangaOnlineViewer , body').removeClass().addClass(target.val());
     logScript('MangaTheme', target.val());
     setValueGM('MangaTheme', target.val());
+    logScript(`MangaTheme: ${getValueGM('MangaTheme')}`);
     if (target.val() === 'Custom_Dark' || target.val() === 'Custom_Light') {
       $('#CustomThemeHue').show();
     } else {
@@ -216,6 +219,7 @@ function controls() {
     $('style[title="Custom_Light"], style[title="Custom_Dark"]').remove();
     $('head').append(addCustomTheme(target));
     setValueGM('MangaCustomTheme', target);
+    logScript(`MangaCustomTheme: ${getValueGM('MangaCustomTheme')}`);
   });
 
   // Goto Page and ThumbNails
@@ -261,6 +265,7 @@ function controls() {
       });
     }
     setValueGM('MangaBookmarks', JSON.stringify(settings.bookmarks));
+    logScript(`MangaBookmarks: ${getValueGM('MangaBookmarks')}`);
   });
   // Reload Page
   $('.Reload').click((event) => {

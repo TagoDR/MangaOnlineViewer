@@ -190,7 +190,6 @@ input,textarea,.uneditable-input{margin-left:0}*/
 #MangaOnlineViewer .PageContent{margin:0 0 15px;text-align:center;display:inline-block}
 #MangaOnlineViewer #gotoPage{width:35px;}
 #MangaOnlineViewer #ThemeSelector{width:110px;}
-#MangaOnlineViewer #PagesPerSecond{width:46px;}
 #MangaOnlineViewer .ChapterControl{-moz-user-select:none;-webkit-user-select: none;margin-right:120px;margin-top: 1px;float: right;}
 #MangaOnlineViewer .ChapterControl a{display:inline-block;width: 80px;height:25px;text-align:center;margin-left: 3px;margin-bottom: -1px;}
 #MangaOnlineViewer .ChapterControl a[href='#'],#MangaOnlineViewer .ChapterControl a[href='']{visibility:hidden}
