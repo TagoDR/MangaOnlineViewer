@@ -15,8 +15,6 @@ export default {
       quant: num,
       prev: chapter.next('option').val(),
       next: chapter.prev('option').val(),
-      // listPages: [...Array(num).keys()].map(i => `${url}/${i + 1}`),
-      // img: '#chapter_img',
       bruteForce(func) {
         func.getPage(`${url}/all-pages`).then((html) => {
           const listImages = $(html)

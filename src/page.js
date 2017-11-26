@@ -12,7 +12,7 @@ import {
 function normalizeUrl(url) {
   let uri = url.trim();
   if (uri.startsWith('//')) {
-    uri = `http:${uri}`;
+    uri = `https:${uri}`;
   }
   return uri;
 }

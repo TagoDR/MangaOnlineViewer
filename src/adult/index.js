@@ -11,8 +11,10 @@ import nhentai from './nhentai';
 import pururin from './pururin';
 import simplyhentai from './simplyhentai';
 import tsumino from './tsumino';
+import EightMuses from './8muses';
 
 export default [
+  EightMuses,
   doujinmoe,
   exhentai,
   // fakku,

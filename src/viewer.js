@@ -76,7 +76,7 @@ function formatPage(manga, begin = 0) {
 function start(sites) {
   logScript(
     `Starting ${getInfoGM.script.name} ${getInfoGM.script.version} on ${getBrowser()} with ${getEngine()}`);
-  // W.InfoGM = getInfoGM;
+  W.InfoGM = getInfoGM;
   logScript(`${sites.length} Known Manga Sites`);
 
   // Wait for something on the site to be ready before executing the script
