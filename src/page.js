@@ -38,7 +38,7 @@ function getPage(url, wait = settings.Timer) {
         success: html => resolve(html),
         // retryCount and retryLimit will let you retry a determined number of times
         retryCount: 0,
-        retryLimit: 5,
+        retryLimit: 10,
         // retryTimeout limits the total time retrying (in milliseconds)
         retryTimeout: 10000,
         // timeout for each request

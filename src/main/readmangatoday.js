@@ -1,8 +1,8 @@
 // == ReadManga.Today ==============================================================================
 export default {
   name: 'ReadManga.Today',
-  url: /https?:\/\/(www.)?readmanga.today\/.+\/[0-9]+/,
-  homepage: 'http://www.readmanga.today/',
+  url: /https?:\/\/(www.)?readmng.com\/.+\/.+\/[0-9]+/,
+  homepage: 'http://www.readmng.com/',
   language: ['English'],
   category: 'manga',
   run() {
@@ -15,14 +15,16 @@ export default {
       quant: num,
       prev: chapter.next('option').val(),
       next: chapter.prev('option').val(),
-      bruteForce(func) {
-        func.getPage(`${url}/all-pages`).then((html) => {
-          const listImages = $(html)
-            .find('.page_chapter img').get()
-            .map(item => $(item).attr('src'));
-          func.loadMangaImages({ listImages });
-        });
-      },
+      listPages: [...Array(num).keys()].map(i => `${url}/${i + 1}`),
+      img: '#chapter_img',
+      // bruteForce(func) {
+      //   func.getPage(`${url}/all-pages`).then((html) => {
+      //     const listImages = $(html)
+      //       .find('.page_chapter img').get()
+      //       .map(item => $(item).attr('src'));
+      //     func.loadMangaImages({ listImages });
+      //   });
+      // },
     };
   },
 };

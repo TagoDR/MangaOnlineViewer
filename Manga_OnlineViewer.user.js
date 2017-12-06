@@ -5,8 +5,8 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh
-// @version 13.21.0
-// @date 2017-11-26
+// @version 13.22.0
+// @date 2017-12-06
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -28,7 +28,7 @@
 // @include /.+\/read\/.+/
 // @include /https?:\/\/(www.)?kissmanga.com\/Manga\/.+\/.+?id=[0-9]+/
 // @include /https?:\/\/(www.)?mangadoom.co\/.+\/[0-9]+/
-// @include /https?:\/\/(www.)?mangafox.me\/manga\/.+\/.+\//
+// @include /https?:\/\/(www.)?mangafox.la\/manga\/.+\/.+\//
 // @include /https?:\/\/(www.)?mangago.me\/read-manga\/.+\/.+/
 // @include /https?:\/\/(www.)?mangahere.co\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?mangainn.net\/manga\/chapter\/.+/
@@ -38,7 +38,7 @@
 // @include /https?:\/\/(www.)?(mangastream|readms)(.net|.com)\/r.*\/.+/
 // @include /https?:\/\/(www.)?mangatown.com\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/
-// @include /https?:\/\/(www.)?readmanga.today\/.+\/[0-9]+/
+// @include /https?:\/\/(www.)?readmng.com\/.+\/.+\/[0-9]+/
 // @include /https?:\/\/raw.senmanga.com\/.+\/.+\/?/
 // @include /https?:\/\/(www.)?tenmanga.com\/chapter\/.+/
 // @include /https?:\/\/view.thespectrum.net\/.+/
@@ -226,7 +226,7 @@
           async: true,
           success: html => resolve(html),
           retryCount: 0,
-          retryLimit: 5,
+          retryLimit: 10,
           retryTimeout: 10000,
           timeout: 1000,
           created: Date.now(),
@@ -894,8 +894,8 @@
 
   var mangafox = {
     name: 'MangaFox',
-    url: /https?:\/\/(www.)?mangafox.me\/manga\/.+\/.+\//,
-    homepage: 'http://mangafox.me/',
+    url: /https?:\/\/(www.)?mangafox.la\/manga\/.+\/.+\//,
+    homepage: 'http://mangafox.la/',
     language: ['English'],
     category: 'manga',
     run() {
@@ -1112,8 +1112,8 @@
 
   var readmangatoday = {
     name: 'ReadManga.Today',
-    url: /https?:\/\/(www.)?readmanga.today\/.+\/[0-9]+/,
-    homepage: 'http://www.readmanga.today/',
+    url: /https?:\/\/(www.)?readmng.com\/.+\/.+\/[0-9]+/,
+    homepage: 'http://www.readmng.com/',
     language: ['English'],
     category: 'manga',
     run() {
@@ -1126,14 +1126,8 @@
         quant: num,
         prev: chapter.next('option').val(),
         next: chapter.prev('option').val(),
-        bruteForce(func) {
-          func.getPage(String(url) + '/all-pages').then(html => {
-            const listImages = $(html).find('.page_chapter img').get().map(item => $(item).attr('src'));
-            func.loadMangaImages({
-              listImages
-            });
-          });
-        }
+        listPages: [...Array(num).keys()].map(i => String(url) + '/' + String(i + 1)),
+        img: '#chapter_img'
       };
     }
   };

@@ -1,8 +1,8 @@
 // == MangaFox =====================================================================================
 export default {
   name: 'MangaFox',
-  url: /https?:\/\/(www.)?mangafox.me\/manga\/.+\/.+\//,
-  homepage: 'http://mangafox.me/',
+  url: /https?:\/\/(www.)?mangafox.la\/manga\/.+\/.+\//,
+  homepage: 'http://mangafox.la/',
   language: ['English'],
   category: 'manga',
   run() {

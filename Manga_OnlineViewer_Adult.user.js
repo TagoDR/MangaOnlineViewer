@@ -5,8 +5,8 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino
-// @version 13.21.0
-// @date 2017-11-26
+// @version 13.22.0
+// @date 2017-12-06
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -210,7 +210,7 @@
           async: true,
           success: html => resolve(html),
           retryCount: 0,
-          retryLimit: 5,
+          retryLimit: 10,
           retryTimeout: 10000,
           timeout: 1000,
           created: Date.now(),
