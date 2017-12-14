@@ -7,7 +7,7 @@
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh
 // @version 13.22.0
 // @license MIT
-// @date 2017-12-06
+// @date 2017-12-14
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -28,7 +28,7 @@
 // @include /https?:\/\/read.egscans.com\/.+/
 // @include /.+\/read\/.+/
 // @include /https?:\/\/(www.)?kissmanga.com\/Manga\/.+\/.+?id=[0-9]+/
-// @include /https?:\/\/(www.)?mangadoom.co\/.+\/[0-9]+/
+// @include /https?:\/\/(www.)?mngdoom.com\/.+\/[0-9]+/
 // @include /https?:\/\/(www.)?mangafox.la\/manga\/.+\/.+\//
 // @include /https?:\/\/(www.)?mangago.me\/read-manga\/.+\/.+/
 // @include /https?:\/\/(www.)?mangahere.co\/manga\/.+\/.+/
@@ -874,8 +874,8 @@
 
   var mangadoom = {
     name: 'MangaDoom',
-    url: /https?:\/\/(www.)?mangadoom.co\/.+\/[0-9]+/,
-    homepage: 'https://mangadoom.co/',
+    url: /https?:\/\/(www.)?mngdoom.com\/.+\/[0-9]+/,
+    homepage: 'https://mngdoom.com/',
     language: ['English'],
     category: 'manga',
     run() {

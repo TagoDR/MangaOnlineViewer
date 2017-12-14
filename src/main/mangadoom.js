@@ -1,8 +1,8 @@
 // == MangaDoom ====================================================================================
 export default {
   name: 'MangaDoom',
-  url: /https?:\/\/(www.)?mangadoom.co\/.+\/[0-9]+/,
-  homepage: 'https://mangadoom.co/',
+  url: /https?:\/\/(www.)?mngdoom.com\/.+\/[0-9]+/,
+  homepage: 'https://mngdoom.com/',
   language: ['English'],
   category: 'manga',
   run() {

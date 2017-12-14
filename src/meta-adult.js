@@ -10,9 +10,9 @@ export default {
   updateURL: 'https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js',
   downloadURL: 'https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js',
   namespace: 'https://github.com/TagoDR',
-  description: `Shows all pages at once in online view for these sites: ${R.pluck('name', sites)
-    .join(', ')}`,
+  description: `Shows all pages at once in online view for these sites: ${R.pluck('name', sites).join(', ')}`,
   version: pkg.version,
+  license: pkg.license,
   date: moment().format('YYYY-MM-DD'),
   grant: [
     'GM_getValue',

@@ -6,7 +6,8 @@
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino
 // @version 13.22.0
-// @date 2017-12-06
+// @license MIT
+// @date 2017-12-14
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
