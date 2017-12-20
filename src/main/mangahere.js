@@ -1,8 +1,8 @@
 // == MangaHere ====================================================================================
 export default {
   name: 'MangaHere',
-  url: /https?:\/\/(www.)?mangahere.co\/manga\/.+\/.+/,
-  homepage: 'http://www.mangahere.co/',
+  url: /https?:\/\/(www.)?mangahere.cc\/manga\/.+\/.+/,
+  homepage: 'http://www.mangahere.cc/',
   language: ['English'],
   category: 'manga',
   run() {
