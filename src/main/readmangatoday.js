@@ -1,7 +1,7 @@
 // == ReadManga.Today ==============================================================================
 export default {
   name: 'ReadManga.Today',
-  url: /https?:\/\/(www.)?readmng.com\/.+\/.+\/[0-9]+/,
+  url: /https?:\/\/(www.)?readmng.com\/.+\/.+\/[0-9.]+/,
   homepage: 'http://www.readmng.com/',
   language: ['English'],
   category: 'manga',

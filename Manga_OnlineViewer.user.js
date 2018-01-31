@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh
-// @version 13.24.1
+// @version 13.25.0
 // @license MIT
-// @date 2018-01-01
+// @date 2018-01-31
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -29,7 +29,7 @@
 // @include /.+\/read\/.+/
 // @include /https?:\/\/(www.)?kissmanga.com\/Manga\/.+\/.+?id=[0-9]+/
 // @include /https?:\/\/(www.)?mngdoom.com\/.+\/[0-9]+/
-// @include /https?:\/\/(www.)?mangafox.la\/manga\/.+\/.+\//
+// @include /https?:\/\/(www.)?(mangafox.la|fanfox.net)\/manga\/.+\/.+\//
 // @include /https?:\/\/(www.)?mangago.me\/read-manga\/.+\/.+/
 // @include /https?:\/\/(www.)?mangahere.cc\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?mangainn.net\/manga\/chapter\/.+/
@@ -39,7 +39,7 @@
 // @include /https?:\/\/(www.)?(mangastream|readms)(.net|.com)\/r.*\/.+/
 // @include /https?:\/\/(www.)?mangatown.com\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/
-// @include /https?:\/\/(www.)?readmng.com\/.+\/.+\/[0-9]+/
+// @include /https?:\/\/(www.)?readmng.com\/.+\/.+\/[0-9.]+/
 // @include /https?:\/\/raw.senmanga.com\/.+\/.+\/?/
 // @include /https?:\/\/(www.)?tenmanga.com\/chapter\/.+/
 // @include /https?:\/\/view.thespectrum.net\/.+/
@@ -694,9 +694,16 @@
     logScript('Starting ' + String(getInfoGM.script.name) + ' ' + String(getInfoGM.script.version) + ' on ' + String(getBrowser()) + ' with ' + String(getEngine()));
     W.InfoGM = getInfoGM;
     logScript(String(sites.length) + ' Known Manga Sites');
+    let waitElapsed = 0;
 
     function waitExec(site) {
       let wait = '';
+      if (site.waitMax !== undefined) {
+        if (waitElapsed >= site.waitMax) {
+          formatPage(site.run());
+          return;
+        }
+      }
       if (site.waitEle !== undefined) {
         if (site.waitAttr !== undefined) {
           wait = $(site.waitEle).attr(site.waitAttr);
@@ -707,7 +714,8 @@
         if (isEmpty(wait)) {
           setTimeout(() => {
             waitExec(site);
-          }, 1000);
+          }, site.waitStep || 1000);
+          waitElapsed += site.waitStep || 1000;
           return;
         }
       }
@@ -717,7 +725,8 @@
         if (isEmpty(wait)) {
           setTimeout(() => {
             waitExec(site);
-          }, 1000);
+          }, site.waitStep || 1000);
+          waitElapsed += site.waitStep || 1000;
           return;
         }
       }
@@ -895,7 +904,7 @@
 
   var mangafox = {
     name: 'MangaFox',
-    url: /https?:\/\/(www.)?mangafox.la\/manga\/.+\/.+\//,
+    url: /https?:\/\/(www.)?(mangafox.la|fanfox.net)\/manga\/.+\/.+\//,
     homepage: 'http://mangafox.la/',
     language: ['English'],
     category: 'manga',
@@ -1078,6 +1087,7 @@
     language: ['English'],
     category: 'manga',
     waitEle: '#top_chapter_list option',
+    waitMax: 5000,
     run() {
       const num = $('.page_select select:first option').get().slice(0, -1);
       const chapter = $('#top_chapter_list option:selected');
@@ -1114,7 +1124,7 @@
 
   var readmangatoday = {
     name: 'ReadManga.Today',
-    url: /https?:\/\/(www.)?readmng.com\/.+\/.+\/[0-9]+/,
+    url: /https?:\/\/(www.)?readmng.com\/.+\/.+\/[0-9.]+/,
     homepage: 'http://www.readmng.com/',
     language: ['English'],
     category: 'manga',

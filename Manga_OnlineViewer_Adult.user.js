@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino
-// @version 13.24.1
+// @version 13.25.0
 // @license MIT
-// @date 2018-01-01
+// @date 2018-01-31
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -678,9 +678,16 @@
     logScript('Starting ' + String(getInfoGM.script.name) + ' ' + String(getInfoGM.script.version) + ' on ' + String(getBrowser()) + ' with ' + String(getEngine()));
     W.InfoGM = getInfoGM;
     logScript(String(sites.length) + ' Known Manga Sites');
+    let waitElapsed = 0;
 
     function waitExec(site) {
       let wait = '';
+      if (site.waitMax !== undefined) {
+        if (waitElapsed >= site.waitMax) {
+          formatPage(site.run());
+          return;
+        }
+      }
       if (site.waitEle !== undefined) {
         if (site.waitAttr !== undefined) {
           wait = $(site.waitEle).attr(site.waitAttr);
@@ -691,7 +698,8 @@
         if (isEmpty(wait)) {
           setTimeout(() => {
             waitExec(site);
-          }, 1000);
+          }, site.waitStep || 1000);
+          waitElapsed += site.waitStep || 1000;
           return;
         }
       }
@@ -701,7 +709,8 @@
         if (isEmpty(wait)) {
           setTimeout(() => {
             waitExec(site);
-          }, 1000);
+          }, site.waitStep || 1000);
+          waitElapsed += site.waitStep || 1000;
           return;
         }
       }

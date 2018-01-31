@@ -6,6 +6,7 @@ export default {
   language: ['English'],
   category: 'manga',
   waitEle: '#top_chapter_list option',
+  waitMax: 5000,
   run() {
     const num = $('.page_select select:first option').get().slice(0, -1);
     const chapter = $('#top_chapter_list option:selected');
