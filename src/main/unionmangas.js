@@ -1,7 +1,7 @@
 // == UnionMangas =================================================================================
 export default { // TODO: Check
   name: 'UnionMangas',
-  url: /http?:\/\/unionmangas.net\/leitor\/.+\/.+/,
+  url: /https?:\/\/(www.)?unionmangas.net\/leitor\/.+\/.+/,
   homepage: 'http://unionmangas.net/',
   language: ['Portuguese'],
   category: 'manga',

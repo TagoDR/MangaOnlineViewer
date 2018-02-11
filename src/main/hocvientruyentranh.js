@@ -1,7 +1,7 @@
 // == Hoc Vien Truyen Tranh =======================================================================
 export default {
   name: 'Hoc Vien Truyen Tranh',
-  url: /http?:\/\/hocvientruyentranh.com\/chapter\/.+\/.+/,
+  url: /https?:\/\/(www.)?hocvientruyentranh.com\/chapter\/.+\/.+/,
   homepage: 'http://hocvientruyentranh.com/',
   language: ['Vietnamese'],
   category: 'manga',

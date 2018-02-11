@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox
-// @version 13.26.0
+// @version 13.27.0
 // @license MIT
 // @date 2018-02-11
 // @grant GM_getValue
@@ -45,9 +45,9 @@
 // @include /https?:\/\/view.thespectrum.net\/.+/
 // @include /https?:\/\/(www.)?(mangadeep).com\/.+\/[0-9]+/
 // @include /https?:\/\/(www.)?funmanga.com\/.+\/[0-9]+/
-// @include /http?:\/\/unionmangas.net\/leitor\/.+\/.+/
-// @include /https?:\/\/mangahost.net\/manga\/.+\/.+/
-// @include /http?:\/\/hocvientruyentranh.com\/chapter\/.+\/.+/
+// @include /https?:\/\/(www.)?unionmangas.net\/leitor\/.+\/.+/
+// @include /https?:\/\/(www.)?mangahost.net\/manga\/.+\/.+/
+// @include /https?:\/\/(www.)?hocvientruyentranh.com\/chapter\/.+\/.+/
 // @include /https?:\/\/(www.)?jaiminisbox.com\/reader\/read\/.+/
 // @exclude /https?:\/\/(www.)?tsumino.com\/.+/
 // @exclude /https?:\/\/(www.)?pururin.us\/.+/
@@ -1258,7 +1258,7 @@
 
   var unionmangas = {
     name: 'UnionMangas',
-    url: /http?:\/\/unionmangas.net\/leitor\/.+\/.+/,
+    url: /https?:\/\/(www.)?unionmangas.net\/leitor\/.+\/.+/,
     homepage: 'http://unionmangas.net/',
     language: ['Portuguese'],
     category: 'manga',
@@ -1279,7 +1279,7 @@
 
   var mangahost = {
     name: 'MangaHost',
-    url: /https?:\/\/mangahost.net\/manga\/.+\/.+/,
+    url: /https?:\/\/(www.)?mangahost.net\/manga\/.+\/.+/,
     homepage: 'https://mangahost.net/',
     language: ['Portuguese'],
     category: 'manga',
@@ -1306,7 +1306,7 @@
 
   var hocvien = {
     name: 'Hoc Vien Truyen Tranh',
-    url: /http?:\/\/hocvientruyentranh.com\/chapter\/.+\/.+/,
+    url: /https?:\/\/(www.)?hocvientruyentranh.com\/chapter\/.+\/.+/,
     homepage: 'http://hocvientruyentranh.com/',
     language: ['Vietnamese'],
     category: 'manga',
