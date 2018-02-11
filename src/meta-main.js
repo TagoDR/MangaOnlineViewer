@@ -34,5 +34,6 @@ export default {
   include: R.pluck('url', sites),
   exclude: [/https?:\/\/(www.)?tsumino.com\/.+/,
     /https?:\/\/(www.)?pururin.us\/.+/,
+    /https?:\/\/hentai.cafe\/.+/,
   ],
 };

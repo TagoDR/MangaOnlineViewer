@@ -12,6 +12,7 @@ import pururin from './pururin';
 import simplyhentai from './simplyhentai';
 import tsumino from './tsumino';
 import EightMuses from './8muses';
+import hentaicafe from './hentaicafe';
 
 export default [
   EightMuses,
@@ -28,4 +29,5 @@ export default [
   pururin,
   simplyhentai,
   tsumino,
+  hentaicafe,
 ];

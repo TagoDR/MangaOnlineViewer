@@ -4,8 +4,8 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino
-// @version 13.28.0
+// @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe
+// @version 13.29.0
 // @license MIT
 // @date 2018-02-11
 // @grant GM_getValue
@@ -34,6 +34,7 @@
 // @include /https?:\/\/(www.)?pururin.us\/(view|read)\/.+\/.+\/.+/
 // @include /https?:\/\/.*simply-hentai.com\/.+\/page\/.+/
 // @include /https?:\/\/(www.)?tsumino.com\/Read\/View\/.+(\/.+)?/
+// @include /https?:\/\/hentai.cafe\/manga\/read\/.*\/en\/0\/1\/page\/.+/
 // ==/UserScript==
 
 (function() {
@@ -1012,8 +1013,31 @@
     }
   };
 
+  var hentaicafe = {
+    name: 'HentaiCafe',
+    url: /https?:\/\/hentai.cafe\/manga\/read\/.*\/en\/0\/1\/page\/.+/,
+    homepage: 'https://hentai.cafe',
+    language: ['English'],
+    category: 'manga',
+    run() {
+      const temp = String(location.href.substr(0, location.href.lastIndexOf('/'))) + '/';
+      const url = temp.match(/page\/$/) ? temp : temp + 'page/';
+      const num = $('.topbar_right .dropdown li').length;
+      const chapter = $('.topbar_left .dropdown_parent:last ul li a');
+      return {
+        title: $('title').text().trim().replace(/Page [0-9]+ /, ''),
+        series: location.pathname.match(/\/manga\/read\/(.+)\/.+\/.+\/.+\/page\/.+/)[1],
+        quant: num,
+        prev: chapter.eq(chapter.index(chapter.filter('[href*=\'' + String(location.pathname.replace(/page.+/, '')) + '\']')) + 1).attr('href'),
+        next: chapter.eq(chapter.index(chapter.filter('[href*=\'' + String(location.pathname.replace(/page.+/, '')) + '\']')) - 1).attr('href'),
+        listPages: [...Array(num).keys()].map(i => url + (i + 1)),
+        img: 'img.open'
+      };
+    }
+  };
+
   var sites = [EightMuses, doujinmoe, exhentai,
-    hbrowse, hentai2read, hentaifox, hentaihere, hitomi, luscious, nhentai, pururin, simplyhentai, tsumino
+    hbrowse, hentai2read, hentaifox, hentaihere, hitomi, luscious, nhentai, pururin, simplyhentai, tsumino, hentaicafe
   ];
 
   start(sites);
