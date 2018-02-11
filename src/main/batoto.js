@@ -1,25 +1,19 @@
 // == Batoto =======================================================================================
-export default { // TODO: Webtoon support
+export default {
   name: 'Batoto',
-  url: /https?:\/\/(www.)?bato.to\/reader.*/,
-  waitEle: 'select#page_select:first option',
+  url: /https?:\/\/(www.)?bato.to\/chapter.*/,
   homepage: 'http://bato.to/',
   language: ['English'],
   category: 'manga',
   run() {
-    const num = $('select#page_select:first option').length;
+    const num = $('#viewer .item').length;
     return {
-      title: $('.moderation_bar li:first').text(),
-      series: $('div.moderation_bar a:first').attr('href'),
+      title: $('.nav-title a').text(),
+      series: $('.nav-title a').attr('href'),
       quant: num,
-      prev: $('img[src$=\'pprev.png\']:first').parent().attr('href'),
-      next: $('img[src$=\'nnext.png\']:first').parent().attr('href'),
-      listPages: [...Array(num).keys()].map(
-        i => `${location.hash
-          .slice(0, location.hash.lastIndexOf('_') > 0 ? location.hash.lastIndexOf(
-            '_') : location.hash.length)
-          .replace('#', '/areader?id=')}&p=${i + 1}`),
-      img: '#comic_page',
+      prev: $('.nav-prev a').attr('href'),
+      next: $('.nav-next a').attr('href'),
+      listImages: $('.page-img').get().map(i => $(i).attr('src')),
     };
   },
 };

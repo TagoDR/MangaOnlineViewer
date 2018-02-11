@@ -23,7 +23,7 @@ export default {
   ],
   connect: '*',
   require: [
-    'https://code.jquery.com/jquery-latest.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.1/sweetalert2.all.min.js',

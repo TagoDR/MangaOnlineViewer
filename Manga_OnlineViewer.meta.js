@@ -4,29 +4,29 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh
-// @version 13.25.0
+// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox
+// @version 13.26.0
 // @license MIT
-// @date 2018-01-31
+// @date 2018-02-11
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
 // @grant GM_deleteValue
 // @grant GM_xmlhttpRequest
 // @connect *
-// @require https://code.jquery.com/jquery-latest.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.1/sweetalert2.all.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.0/color-scheme.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/ramda/0.24.1/ramda.min.js
-// @include /https?:\/\/(www.)?bato.to\/reader.*/
+// @include /https?:\/\/(www.)?bato.to\/chapter.*/
 // @include /https?:\/\/(www.)?comicastle.org\/comic\/.+\/[0-9]+.*/
 // @include /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/
 // @include /https?:\/\/(www.)?eatmanga.me\/Manga-Scan\/.+\/.+\//
 // @include /https?:\/\/read.egscans.com\/.+/
-// @include /.+\/read\/.+/
+// @include /https?:\/\/(www.)?^(?!jaiminisbox).+\/read\/.+/
 // @include /https?:\/\/(www.)?kissmanga.com\/Manga\/.+\/.+?id=[0-9]+/
 // @include /https?:\/\/(www.)?mngdoom.com\/.+\/[0-9]+/
 // @include /https?:\/\/(www.)?(mangafox.la|fanfox.net)\/manga\/.+\/.+\//
@@ -48,6 +48,7 @@
 // @include /http?:\/\/unionmangas.net\/leitor\/.+\/.+/
 // @include /https?:\/\/mangahost.net\/manga\/.+\/.+/
 // @include /http?:\/\/hocvientruyentranh.com\/chapter\/.+\/.+/
+// @include /https?:\/\/(www.)?jaiminisbox.com\/reader\/read\/.+/
 // @exclude /https?:\/\/(www.)?tsumino.com\/.+/
 // @exclude /https?:\/\/(www.)?pururin.us\/.+/
 // ==/UserScript==

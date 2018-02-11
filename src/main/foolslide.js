@@ -1,7 +1,7 @@
 // == FoOlSlide ====================================================================================
 export default {
   name: 'FoOlSlide',
-  url: /.+\/read\/.+/,
+  url: /https?:\/\/(www.)?^(?!jaiminisbox).+\/read\/.+/,
   homepage: '',
   language: ['English'],
   obs: 'Any Scanlator site that uses FoOLSlide',

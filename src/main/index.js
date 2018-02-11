@@ -25,6 +25,7 @@ import funmanga from './funmanga';
 import unionmangas from './unionmangas';
 import mangahost from './mangahost';
 import hocvien from './hocvientruyentranh';
+import jaiminisbox from './jaiminisbox';
 
 export default [
   batoto,
@@ -54,4 +55,5 @@ export default [
   unionmangas,
   mangahost,
   hocvien,
+  jaiminisbox,
 ];
