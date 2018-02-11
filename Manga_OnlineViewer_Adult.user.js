@@ -1026,7 +1026,7 @@
       const chapter = $('.topbar_left .dropdown_parent:last ul li a');
       return {
         title: $('title').text().trim().replace(/Page [0-9]+ /, ''),
-        series: '/' + String(location.pathname.match(/\/manga\/read\/(.+)\/.+\/.+\/.+\/page\/.+/)[1]) + '/',
+        series: W.next_chapter,
         quant: num,
         prev: chapter.eq(chapter.index(chapter.filter('[href*=\'' + String(location.pathname.replace(/page.+/, '')) + '\']')) + 1).attr('href'),
         next: chapter.eq(chapter.index(chapter.filter('[href*=\'' + String(location.pathname.replace(/page.+/, '')) + '\']')) - 1).attr('href'),
