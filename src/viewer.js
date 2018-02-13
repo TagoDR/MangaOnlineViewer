@@ -63,6 +63,7 @@ function formatPage(manga, begin = 0) {
           checkImagesLoaded(manga);
           logScript('Site rebuild done');
           setTimeout(() => {
+            $('body').scrollTo(0);
             loadManga(manga, settings.starting);
           }, 50);
         } catch (e) {

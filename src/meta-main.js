@@ -24,9 +24,10 @@ export default {
   connect: '*',
   require: [
     'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.1/sweetalert2.all.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.5/sweetalert2.all.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.0/color-scheme.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/ramda/0.24.1/ramda.min.js',
