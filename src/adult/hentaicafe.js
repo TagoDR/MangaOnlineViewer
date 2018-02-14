@@ -1,7 +1,7 @@
 // == HentaiCafe ===================================================================================
 export default {
   name: 'HentaiCafe',
-  url: /https?:\/\/hentai.cafe\/manga\/read\/.*\/en\/0\/1\/page\/.+/,
+  url: /https?:\/\/hentai.cafe\/manga\/read\/.*\/en\/0\/1\/(page\/.+)?/,
   homepage: 'https://hentai.cafe',
   language: ['English'],
   category: 'manga',

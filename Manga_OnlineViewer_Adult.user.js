@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe
-// @version 13.33.0
+// @version 13.34.0
 // @license MIT
 // @date 2018-02-14
 // @grant GM_getValue
@@ -35,7 +35,7 @@
 // @include /https?:\/\/(www.)?pururin.io\/(view|read)\/.+\/.+\/.+/
 // @include /https?:\/\/.*simply-hentai.com\/.+\/page\/.+/
 // @include /https?:\/\/(www.)?tsumino.com\/Read\/View\/.+(\/.+)?/
-// @include /https?:\/\/hentai.cafe\/manga\/read\/.*\/en\/0\/1\/page\/.+/
+// @include /https?:\/\/hentai.cafe\/manga\/read\/.*\/en\/0\/1\/(page\/.+)?/
 // ==/UserScript==
 
 (function() {
@@ -1017,7 +1017,7 @@
 
   var hentaicafe = {
     name: 'HentaiCafe',
-    url: /https?:\/\/hentai.cafe\/manga\/read\/.*\/en\/0\/1\/page\/.+/,
+    url: /https?:\/\/hentai.cafe\/manga\/read\/.*\/en\/0\/1\/(page\/.+)?/,
     homepage: 'https://hentai.cafe',
     language: ['English'],
     category: 'manga',
