@@ -62,7 +62,7 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 <li><a href='http://hentai2read.com/'>Hentai2Read</a> <i>[English]</i></li>
 <li><a href='https://hentai.cafe'>HentaiCafe</a> <i>[English]</i></li>
 <li><a href='https://luscious.net/'>Luscious</a> / <a href='https://www.wondersluts.com/'>Wondersluts</a> <i>[English]</i></li>
-<li><a href='http://pururin.us/'>Pururin</a> <i>[English]</i></li>
+<li><a href='http://pururin.io/'>Pururin</a> <i>[English]</i></li>
 <li><a href='http://simply-hentai.com/'>Simply-Hentai</a> <i>[English]</i></li>
 <li><a href='http://tsumino.com/'>Tsumino</a> <i>[English]</i></li>
 <li><a href='http://www.hentaifox.com/'>hentaifox</a> <i>[English]</i></li>
