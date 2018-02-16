@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex
-// @version 13.34.0
+// @version 13.35.0
 // @license MIT
-// @date 2018-02-14
+// @date 2018-02-16
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -27,7 +27,7 @@
 // @include /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/
 // @include /https?:\/\/(www.)?eatmanga.me\/Manga-Scan\/.+\/.+\//
 // @include /https?:\/\/read.egscans.com\/.+/
-// @include /.*^(?!jaiminisbox).+\/read\/.+/
+// @include /^(?!.*jaiminisbox).*\/read\/.+/
 // @include /https?:\/\/(www.)?kissmanga.com\/Manga\/.+\/.+?id=[0-9]+/
 // @include /https?:\/\/(www.)?mngdoom.com\/.+\/[0-9]+/
 // @include /https?:\/\/(www.)?(mangafox.la|fanfox.net)\/manga\/.+\/.+\//
