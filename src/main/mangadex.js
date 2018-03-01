@@ -1,7 +1,7 @@
 // == MangaDex =====================================================================================
 export default {
   name: 'MangaDex',
-  url: /https?:\/\/(www.)?mangadex.com\/chapter\/.+(\/.+)?/,
+  url: /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/,
   homepage: 'https://mangadex.com/',
   language: ['English'],
   category: 'manga',
