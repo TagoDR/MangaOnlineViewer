@@ -15,7 +15,7 @@ export default {
       quant: $('#single-page-select option').length,
       prev: '#',
       next: '#',
-      listImages: src.map(item => $(item).text().replace('//g', key)),
+      listImages: src.map(item => $(item).text().replace(/\/\/(g|i)/, key)),
     };
   },
 };
