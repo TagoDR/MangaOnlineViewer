@@ -19,8 +19,8 @@ export default {
       title: $('title').text().replace(' - MangaDex', ''),
       series: $('span[title="Title"] + a').attr('href'),
       quant: pages.length,
-      prev: `../${chapter.prev().val()}`,
-      next: `../${chapter.next().val()}`,
+      prev: `/chapter/${chapter.prev().val()}`,
+      next: `/chapter/${chapter.next().val()}`,
       listImages: pages.map(i => `${server + dataUrl}/${i}`),
     };
   },

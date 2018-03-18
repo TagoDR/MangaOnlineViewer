@@ -1,6 +1,6 @@
 {
   "name": "mangaonlineviewer",
-  "version": "13.37.0",
+  "version": "13.38.0",
   "description": "Userscript that helps to read Manga faster by loading all the pages at once",
   "scripts": {
     "test": "45 test/*.js",

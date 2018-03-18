@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex
-// @version 13.37.0
+// @version 13.38.0
 // @license MIT
-// @date 2018-03-14
+// @date 2018-03-17
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -1093,7 +1093,7 @@
     waitMax: 5000,
     run() {
       const num = $('.page_select select:first option').get().slice(0, -1);
-      const chapter = $('#top_chapter_list option:selected');
+      const chapter = $('#top_chapter_list option').eq(W.current_chapter_index);
       return {
         title: $('.title h1').text(),
         series: $('.title h2 a').attr('href'),
@@ -1366,8 +1366,8 @@
         title: $('title').text().replace(' - MangaDex', ''),
         series: $('span[title="Title"] + a').attr('href'),
         quant: pages.length,
-        prev: '../' + String(chapter.prev().val()),
-        next: '../' + String(chapter.next().val()),
+        prev: '/chapter/' + String(chapter.prev().val()),
+        next: '/chapter/' + String(chapter.next().val()),
         listImages: pages.map(i => String(server + dataUrl) + '/' + String(i))
       };
     }
