@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe
-// @version 13.38.0
+// @version 13.39.0
 // @license MIT
-// @date 2018-03-17
+// @date 2018-04-04
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -22,7 +22,7 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.0/color-scheme.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/ramda/0.24.1/ramda.min.js
-// @include /https?:\/\/(www.)?8muses.com\/comix\/.+/
+// @include /https?:\/\/(www.)?8muses.com\/comics\/album\/.+/
 // @include /https?:\/\/(www.)?doujins.com\/.+/
 // @include /https?:\/\/(g.)?(exhentai|e-hentai).org\/g\/.+\/.+/
 // @include /https?:\/\/(www.)?hbrowse.com\/.+/
@@ -989,7 +989,7 @@
 
   var EightMuses = {
     name: '8Muses',
-    url: /https?:\/\/(www.)?8muses.com\/comix\/.+/,
+    url: /https?:\/\/(www.)?8muses.com\/comics\/album\/.+/,
     homepage: 'https://www.8muses.com/',
     language: ['English'],
     category: 'hentai',
