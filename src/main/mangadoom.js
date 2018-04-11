@@ -6,10 +6,10 @@ export default {
   language: ['English'],
   category: 'manga',
   run() {
-    const url = $('.selectPage:first option:not(:first)').get();
+    const url = $('.selectPage:first option').get();
     const chapter = $('.chapterSelect:first option:selected');
     return {
-      title: $('.widget-heading').text().trim(),
+      title: $('.widget-heading > div > div:first').text().trim(),
       series: $('.widget-heading a').attr('href'),
       quant: url.length,
       prev: chapter.next().val(),

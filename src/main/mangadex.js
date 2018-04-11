@@ -17,10 +17,10 @@ export default {
     const chapter = $('#jump_chapter option:selected');
     return {
       title: $('title').text().replace(' - MangaDex', ''),
-      series: $('span[title="Title"] + a').attr('href'),
+      series: $('span[title] + a').attr('href'),
       quant: pages.length,
-      prev: `/chapter/${chapter.prev().val()}`,
-      next: `/chapter/${chapter.next().val()}`,
+      prev: `/chapter/${chapter.next().val()}`,
+      next: `/chapter/${chapter.prev().val()}`,
       listImages: pages.map(i => `${server + dataUrl}/${i}`),
     };
   },
