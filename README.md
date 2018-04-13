@@ -4,11 +4,10 @@
 <a href='https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js'>Reader</a><br>
 <a href='https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js'>Adult Reader</a>
 
-<h3>Description</h3>This scripts loads all pages(images) from the current chapter of the manga showing them in one page in a list type structure, witch helps reading faster.
-Please note the this script may he a heavy on resources on a few sites, so please open only one tab of each site at a time and wait it finish loading.
-I'll try to keep this script updated, however I hardly-ever visit some of the sites supported, if
- you find it no longer works, post it in the Issues/feedback area, and have patience.</br></br>
-I allow this script to be posted or used anywhere so long it gives me credit and provides a link back to this site. I allow parts of my script to be used freely.
+<h3>Description</h3>MangaOnlineViewer helps speed up reading by loading all pages(images) from the current chapter of the manga on one page in a list type structure.
+Please note on a few sites, MangaOnlineViewer may use more resources. Only open one tab for each site at a time and wait for the page to completely load.
+I will try to keep this script updated, however I hardly-ever visit some of the sites supported. If the script no longer works for a site, then post the problem in the Issues/Feedback area, and have patience.</br></br>
+I allow this script to be posted or used anywhere as long as I am given credit and provided a link to this site. I allow parts of my script to be used freely.
 
 <h2>Official Sources</h2>
 <pre>
@@ -72,7 +71,7 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 
 <h3>Supported Browsers</h3>
 Any Browser with <a href="https://tampermonkey.net/">Tampermonkey</a><br>
-Should work with other browsers and addons, but they are not officially supported.
+Should work with other browsers and addons, but not officially supported.
 
 <h3>HotKeys</h3>These will work with standard and numpad keys.
 <pre>
