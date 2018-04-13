@@ -4,11 +4,10 @@
 <a href='https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js'>Reader</a><br>
 <a href='https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js'>Adult Reader</a>
 
-<h3>Description</h3>MangaOnlineViewer helps speed up reading by loading all pages(images) from the current chapter of the manga on one page in a list type structure.
-Please note on a few sites, MangaOnlineViewer may use more resources. Only open one tab for each site at a time and wait for the page to completely load.
+<h3>Description</h3>MangaOnlineViewer helps speed up reading by loading all pages(images) from the current chapter of the manga on one page in a list type structure.</br>
+Please note on a few sites, MangaOnlineViewer may use more resources. Only open one tab for each site at a time and wait for the page to completely load.</br>
 I will try to keep this script updated, however I hardly-ever visit some of the sites supported. If the script no longer works for a site, then post the problem in the Issues/Feedback area, and have patience.</br></br>
 I allow this script to be posted or used anywhere as long as I am given credit and provided a link to this site. I allow parts of my script to be used freely.
-
 <h2>Official Sources</h2>
 <pre>
 GitHub:     <a href="https://github.com/TagoDR/MangaOnlineViewer">https://github.com/TagoDR/MangaOnlineViewer</a>
