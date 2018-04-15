@@ -14,7 +14,7 @@ export default {
       quant: num,
       prev: chapter.eq(-1).attr('href'),
       next: chapter.eq(-2).attr('href'),
-      listPages: [...Array(num).keys()].map(i => `${i + 1}.html`),
+      listPages: [''].concat([...Array(num - 1).keys()].map(i => `${i + 2}.html`)),
       img: 'img#image',
     };
   },

@@ -143,7 +143,7 @@ function checkImagesLoaded(manga) {
     setTimeout(() => checkImagesLoaded(manga), 5000);
   } else {
     logScript('Images Loading Complete');
-    $('title').html(manga.title);
+    // $('title').html(manga.title);
     // Clear used Bookmarks
     settings.bookmarks = settings.bookmarks.filter(el => el.url !== location.href);
     setValueGM('MangaBookmarks', JSON.stringify(settings.bookmarks));
