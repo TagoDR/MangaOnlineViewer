@@ -1,21 +1,18 @@
 // == MangaInn  ====================================================================================
 export default {
   name: 'MangaInn',
-  url: /https?:\/\/(www.)?mangainn.net\/manga\/chapter\/.+/,
+  url: /https?:\/\/(www.)?mangainn.net\/.+\/[0-9]+(\/[0-9]*)?/,
   homepage: 'http://www.mangainn.net/',
   language: ['English'],
   category: 'manga',
   run() {
-    const num = parseInt($('select#cmbpages option:last').html(), 10);
-    const chapter = $('#chapters option:selected');
     return {
-      title: $('#gotomangainfo2').text().replace(' - ', ''),
-      series: $('#gotoMangaInfo').attr('href'),
-      quant: num,
-      prev: chapter.prev().val(),
-      next: chapter.next().val(),
-      listPages: [...Array(num).keys()].map(i => `${location.href}/page_${i + 1}`),
-      img: 'img#imgPage',
+      title: W.chapter_page_title.trim(),
+      series: W.manga_url,
+      quant: W.images.length,
+      prev: W.prev_chapter_url,
+      next: W.next_chapter_url,
+      listImages: W.images.map(i => i.url),
     };
   },
 };

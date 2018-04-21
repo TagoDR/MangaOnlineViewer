@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga.Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex
-// @version 13.41.0
+// @version 13.42.0
 // @license MIT
-// @date 2018-04-15
+// @date 2018-04-21
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -33,7 +33,7 @@
 // @include /https?:\/\/(www.)?(mangafox.la|fanfox.net)\/manga\/.+\/.+\//
 // @include /https?:\/\/(www.)?mangago.me\/read-manga\/.+\/.+/
 // @include /https?:\/\/(www.)?mangahere.cc\/manga\/.+\/.+/
-// @include /https?:\/\/(www.)?mangainn.net\/manga\/chapter\/.+/
+// @include /https?:\/\/(www.)?mangainn.net\/.+\/[0-9]+(\/[0-9]*)?/
 // @include /https?:\/\/manga.lyght.net\/series\/.+\.html/
 // @include /https?:\/\/(www.)?mangapark.me\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?(mangareader|mangapanda)(.net|.com)\/.+\/.+/
@@ -967,21 +967,18 @@
 
   var mangainn = {
     name: 'MangaInn',
-    url: /https?:\/\/(www.)?mangainn.net\/manga\/chapter\/.+/,
+    url: /https?:\/\/(www.)?mangainn.net\/.+\/[0-9]+(\/[0-9]*)?/,
     homepage: 'http://www.mangainn.net/',
     language: ['English'],
     category: 'manga',
     run() {
-      const num = parseInt($('select#cmbpages option:last').html(), 10);
-      const chapter = $('#chapters option:selected');
       return {
-        title: $('#gotomangainfo2').text().replace(' - ', ''),
-        series: $('#gotoMangaInfo').attr('href'),
-        quant: num,
-        prev: chapter.prev().val(),
-        next: chapter.next().val(),
-        listPages: [...Array(num).keys()].map(i => String(location.href) + '/page_' + String(i + 1)),
-        img: 'img#imgPage'
+        title: W.chapter_page_title.trim(),
+        series: W.manga_url,
+        quant: W.images.length,
+        prev: W.prev_chapter_url,
+        next: W.next_chapter_url,
+        listImages: W.images.map(i => i.url)
       };
     }
   };
