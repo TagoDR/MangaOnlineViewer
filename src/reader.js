@@ -226,7 +226,7 @@ const externalScripts = [
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js" integrity="sha256-XWzSUJ+FIQ38dqC06/48sNRwU1Qh3/afjmJ080SneA8=" crossorigin="anonymous"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.11.0/sweetalert2.all.min.js" integrity="sha256-BioifFOOOY9mUlPOQj/1+czPAq+O1osC92/I8kSfW6o=" crossorigin="anonymous"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/color-js/1.0.1/color.min.js" integrity="sha256-qAjuzGZ65rH+O8iRUmRdRCgk33HmM0Gbq15CwUsxW3k=" crossorigin="anonymous"></script>',
-  '<script src="https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.0/color-scheme.min.js" integrity="sha256-DonUU+7nLBqoy0pdfzuUbr+5bdhcMcnKdF2MhfkjvGs=" crossorigin="anonymous"></script>',
+  '<script src="https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js" integrity="sha256-7IUC8vhyoPLh1tuQJnffPB5VO6HpR4VWK4Y1ciOOoBY=" crossorigin="anonymous"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.24.1/ramda.min.js" integrity="sha256-yF1J6hzNIWN398K1d+n1XXGC3JEchH55G05dxM+rsFk=" crossorigin="anonymous"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js" integrity="sha256-7QS1cHsH75h3IFgrFKsdhmKHHpWqF82sb/9vNLqcqs0=" crossorigin="anonymous"></script>',
 

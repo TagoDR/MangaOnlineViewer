@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex
-// @version 13.43.0
+// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans
+// @version 13.44.0
 // @license MIT
-// @date 2018-04-22
+// @date 2018-05-29
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -51,6 +51,7 @@
 // @include /https?:\/\/(www.)?hocvientruyentranh.com\/chapter\/.+\/.+/
 // @include /https?:\/\/(www.)?jaiminisbox.com\/reader\/read\/.+/
 // @include /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/
+// @include /https?:\/\/(www.)?hatigarmscans.net\/manga\/.+\/.+(\/[0-9]*)?/
 // @exclude /https?:\/\/(www.)?tsumino.com\/.+/
 // @exclude /https?:\/\/(www.)?pururin.us\/.+/
 // @exclude /https?:\/\/hentai.cafe\/.+/

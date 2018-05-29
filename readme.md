@@ -23,6 +23,7 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 <li><a href='http://eatmanga.me/'>EatManga</a> <i>[English]</i></li>
 <li><a href=''>FoOlSlide</a> <i>[English]</i> <b>Obs: Any Scanlator site that uses FoOLSlide</b></li>
 <li><a href='http://funmanga.com/'>Funmanga</a> <i>[English]</i></li>
+<li><a href='https://www.hatigarmscans.net//'>HatigarmScans</a> <i>[English]</i></li>
 <li><a href='https://jaiminisbox.com/'>JaiminisBox</a> <i>[English]</i></li>
 <li><a href='http://kissmanga.com/'>KissManga</a> <i>[English]</i></li>
 <li><a href='http://mangadeep.com/'>MangaDeep</a> <i>[English]</i></li>

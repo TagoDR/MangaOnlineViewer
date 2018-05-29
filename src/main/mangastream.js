@@ -8,7 +8,7 @@ export default {
   run() {
     const url = location.href.substring(0, location.href.lastIndexOf('/') + 1);
     const num = parseInt($('div.controls div.btn-group ul.dropdown-menu li:last').text().match(/[0-9]+/), 10);
-    const chapter = $('.dropdown-menu:eq(1) a');
+    const chapter = $('.controls .dropdown-menu:first a');
     return {
       title: $('.btn:eq(0)').text().trim(),
       series: $('div.controls div.btn-group ul.dropdown-menu:first li a:last').attr('href'),
