@@ -9,7 +9,7 @@ export default {
     const src = $('#reader-content img').attr('src');
     const size = src.match(/([0-9]+)\..+/)[1].length;
     const ext = src.match(/[0-9]+(\..+)/)[1];
-    const num = $('#pageDropdown li').length;
+    const num = $('#pageDropdown:first li').length;
     const origin = $('.breadcrumb a:eq(2)');
     return {
       title: origin.text().trim(),
