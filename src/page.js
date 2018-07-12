@@ -22,7 +22,7 @@ function addImg(index, src) {
   const url = normalizeUrl(src);
   logScript('Image:', index, 'Source:', url);
   $(`#PageImg${index}`).attr('src', url).parent().slideToggle();
-  $(`#ThumbNailImg${index}`).attr('src', url);
+  $(`#ThumbnailImg${index}`).attr('src', url);
   return index;
 }
 

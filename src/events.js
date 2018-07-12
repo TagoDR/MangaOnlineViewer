@@ -222,7 +222,7 @@ function controls() {
     logScript(`MangaCustomTheme: ${getValueGM('MangaCustomTheme')}`);
   });
 
-  // Goto Page and ThumbNails
+  // Goto Page and Thumbnails
   function scrollToElement(ele) {
     $(W).scrollTop(ele.offset().top).scrollLeft(ele.offset().left);
   }
@@ -230,8 +230,8 @@ function controls() {
   $('#gotoPage').bind('change', (event) => {
     scrollToElement($(`#Page${$(event.target).val()}`));
   });
-  $('.ThumbNail').bind('click', (event) => {
-    scrollToElement($(`#Page${$(event.target).find('span').html()}`));
+  $('.Thumbnail').bind('click', (event) => {
+    scrollToElement($(`#Page${$(event.currentTarget).find('span').html()}`));
   });
   // Settings Control
   $('#settings').click(() => {

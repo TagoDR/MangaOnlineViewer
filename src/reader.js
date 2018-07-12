@@ -116,8 +116,8 @@ const listPages = R.times(index => `
 </div>`);
 const listOptions = R.times(index => `<option value='${index + 1}'>${index + 1}</option>`);
 const listThumbnails = R.times(
-  index => `<div id='ThumbNail${index + 1}' class='ThumbNail'><img id='ThumbNailImg${index
-  + 1}' alt='ThumbNailImg${index + 1}' src=''/><span>${index + 1}</span></div>`);
+  index => `<div id='Thumbnail${index + 1}' class='Thumbnail'><img id='ThumbnailImg${index
+  + 1}' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`);
 const body = (manga, begin = 0) => `
 <div id='MangaOnlineViewer' class='${settings.Theme}' style='min-height: 1080px;'>
   ${title(manga)}
@@ -143,7 +143,9 @@ const body = (manga, begin = 0) => `
     <div id='NavigationCounters' class='controlLable'>
       <img title='Thumbnails' src='${icon.menu}' class='nav' /><i>0</i> of <b>${manga.quant}</b> Pages Loaded
     </div>
-    ${listThumbnails(manga.quant).slice(begin).join('')}
+    <div id='Thumbnails'>
+      ${listThumbnails(manga.quant).slice(begin).join('')}
+    </div>
   </div>
   <a href='#' id='blob' style='display: none;'>Download</a>
 </div>`;
@@ -201,13 +203,14 @@ input,textarea,.uneditable-input{margin-left:0}*/
 #MangaOnlineViewer .PageFunctions a{opacity:0.2}
 #MangaOnlineViewer .PageFunctions:hover a{opacity:1}
 #MangaOnlineViewer #NavigationCounters {margin-top: 5px;width: 100%;}
-#MangaOnlineViewer #Navigation {bottom: -170px;height: 180px;overflow: auto;overflow-x: auto;overflow-y: hidden;padding-bottom: 20px;position: fixed;white-space: nowrap;width: 100%;}
+#MangaOnlineViewer #Navigation {bottom: -180px;height: 190px;overflow-x: hidden;overflow-y: hidden;padding-bottom: 20px;position: fixed;white-space: nowrap;width: 100%;}
+#MangaOnlineViewer #Navigation #Thumbnails {overflow-x:auto}
 #MangaOnlineViewer #Navigation:hover {bottom: 0;}
 #MangaOnlineViewer #Navigation.disabled {display: none;}
 #MangaOnlineViewer #Navigation.visible {bottom: 0;}
-#MangaOnlineViewer #Navigation .ThumbNail {display: inline-block;height: 150px;margin: 0 5px;position: relative;}
-#MangaOnlineViewer #Navigation .ThumbNail span {display: block;opacity: 0.8;position: relative;top: -30px;width: 100%;}
-#MangaOnlineViewer #Navigation .ThumbNail img {align-content: center;cursor: pointer;display: inline-block;margin-bottom: -10px;margin-top: 10px;max-height: 150px;min-height: 150px;min-width: 100px;}
+#MangaOnlineViewer #Navigation .Thumbnail {display: inline-block;height: 150px;margin: 0 5px;position: relative;}
+#MangaOnlineViewer #Navigation .Thumbnail span {display: block;opacity: 0.8;position: relative;top: -30px;width: 100%;}
+#MangaOnlineViewer #Navigation .Thumbnail img {align-content: center;cursor: pointer;display: inline-block;margin-bottom: -10px;margin-top: 10px;max-height: 150px;min-height: 150px;min-width: 100px;}
 #MangaOnlineViewer #Navigation .nav {behavior:url(-ms-transform.htc);-moz-transform:rotate(-90deg);-webkit-transform:rotate(-90deg);-o-transform:rotate(-90deg);}
 #MangaOnlineViewer #ImageOptions .menuOuterArrow  {width: 0;height: 0;border-top: 10px solid transparent;border-bottom: 10px solid transparent;border-left:10px solid blue;display: inline-block;position: absolute;bottom: 0;}
 #MangaOnlineViewer #ImageOptions .menuInnerArrow {width: 0;height: 0;border-top: 5px solid transparent;border-bottom: 5px solid transparent;border-left:5px solid white;left: -10px;position: absolute;top: -5px;display: inline-block;}
