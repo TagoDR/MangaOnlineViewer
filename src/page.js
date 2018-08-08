@@ -1,13 +1,6 @@
-import {
-  logScript, setValueGM,
-  // logScriptComposable,
-} from './browser';
-import {
-  settings,
-} from './settings';
-import {
-  mapIndexed,
-} from './utils';
+import { logScript, setValueGM } from './browser';
+import { settings } from './settings';
+import { mapIndexed } from './utils';
 
 function normalizeUrl(url) {
   let uri = url.trim();
@@ -23,6 +16,16 @@ function addImg(index, src) {
   logScript('Image:', index, 'Source:', url);
   $(`#PageImg${index}`).attr('src', url).parent().slideToggle();
   $(`#ThumbnailImg${index}`).attr('src', url);
+  return index;
+}
+
+function addImgAlt(index, altsrc) {
+  const url = normalizeUrl(altsrc);
+  logScript('Image:', index, 'Alternative Source:', url);
+  if (altsrc !== '') {
+    $(`#PageImg${index}`).attr('altsrc', url);
+    $(`#ThumbnailImg${index}`).attr('onerror', `this.src='${url}';this.onerror=null;`);
+  }
   return index;
 }
 
@@ -82,6 +85,10 @@ const loadMangaImages = (begin, manga) =>
         addImg(index + 1, response)) : null),
     manga.listImages);
 
+const loadMangaImagesAlt = (begin, manga) =>
+  mapIndexed((src, index) => (index >= begin ? addImgAlt(index + 1, src) : null),
+    manga.listImagesAlt);
+
 function loadManga(manga, begin = 1) {
   logScript('Loading Images');
   logScript(`Intervals: ${manga.timer || settings.Timer || 'Default(1000)'}`);
@@ -91,6 +98,9 @@ function loadManga(manga, begin = 1) {
   } else if (manga.listImages !== undefined) {
     logScript('Method: Images:', manga.listImages);
     loadMangaImages(begin - 1, manga);
+    if (manga.listImagesAlt !== undefined) {
+      loadMangaImagesAlt(begin - 1, manga);
+    }
   } else {
     logScript('Method: Brute Force');
     manga.bruteForce({
@@ -107,11 +117,21 @@ function loadManga(manga, begin = 1) {
 // Force reload the image
 function reloadImage(img) {
   const src = img.attr('src');
+  const altsrc = img.attr('altsrc');
   if (src !== undefined) {
-    img.removeAttr('src');
-    setTimeout(() => {
-      img.attr('src', src);
-    }, 500);
+    if (altsrc !== undefined) {
+      img.removeAttr('src');
+      img.removeAttr('altsrc');
+      setTimeout(() => {
+        img.attr('src', altsrc);
+        img.attr('altsrc', src);
+      }, 500);
+    } else {
+      img.removeAttr('src');
+      setTimeout(() => {
+        img.attr('src', src);
+      }, 500);
+    }
   }
 }
 

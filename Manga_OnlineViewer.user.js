@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans
-// @version 13.46.0
+// @version 13.47.0
 // @license MIT
-// @date 2018-07-12
+// @date 2018-08-08
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -221,6 +221,16 @@
     return index;
   }
 
+  function addImgAlt(index, altsrc) {
+    const url = normalizeUrl(altsrc);
+    logScript('Image:', index, 'Alternative Source:', url);
+    if (altsrc !== '') {
+      $('#PageImg' + String(index)).attr('altsrc', url);
+      $('#ThumbnailImg' + String(index)).attr('onerror', 'this.src=\'' + String(url) + '\';this.onerror=null;');
+    }
+    return index;
+  }
+
   function getPage(url, wait = settings.Timer) {
     return new Promise(resolve => {
       setTimeout(() => {
@@ -259,6 +269,7 @@
     });
   }
   const loadMangaImages = (begin, manga) => mapIndexed((src, index) => index >= begin ? getImages(src, (manga.timer || settings.Timer) * (index - begin)).then(response => addImg(index + 1, response)) : null, manga.listImages);
+  const loadMangaImagesAlt = (begin, manga) => mapIndexed((src, index) => index >= begin ? addImgAlt(index + 1, src) : null, manga.listImagesAlt);
 
   function loadManga(manga, begin = 1) {
     logScript('Loading Images');
@@ -269,6 +280,9 @@
     } else if (manga.listImages !== undefined) {
       logScript('Method: Images:', manga.listImages);
       loadMangaImages(begin - 1, manga);
+      if (manga.listImagesAlt !== undefined) {
+        loadMangaImagesAlt(begin - 1, manga);
+      }
     } else {
       logScript('Method: Brute Force');
       manga.bruteForce({
@@ -284,11 +298,21 @@
 
   function reloadImage(img) {
     const src = img.attr('src');
+    const altsrc = img.attr('altsrc');
     if (src !== undefined) {
-      img.removeAttr('src');
-      setTimeout(() => {
-        img.attr('src', src);
-      }, 500);
+      if (altsrc !== undefined) {
+        img.removeAttr('src');
+        img.removeAttr('altsrc');
+        setTimeout(() => {
+          img.attr('src', altsrc);
+          img.attr('altsrc', src);
+        }, 500);
+      } else {
+        img.removeAttr('src');
+        setTimeout(() => {
+          img.attr('src', src);
+        }, 500);
+      }
     }
   }
 
@@ -716,7 +740,7 @@
           wait = $(site.waitEle).get();
         }
         logScript('Wating for ' + String(site.waitEle) + ' = ' + String(wait));
-        if (isEmpty(wait)) {
+        if (wait === undefined || isEmpty(wait)) {
           setTimeout(() => {
             waitExec(site);
           }, site.waitStep || 1000);
@@ -1342,26 +1366,22 @@
   var mangadex = {
     name: 'MangaDex',
     url: /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/,
-    homepage: 'https://mangadex.com/',
+    homepage: 'https://mangadex.org/',
     language: ['English'],
     category: 'manga',
+    waitEle: '.reader-image-wrapper img',
+    waitAttr: 'src',
     run() {
-      const text = $('script:last').text();
-      const server = text.match(/var server = '(.+)';/)[1];
-      const dataUrl = text.match(/var dataurl = '(.+)';/)[1];
-      const start = text.indexOf('var page_array = ') + 18;
-      const cut = text.substring(start);
-      const end = cut.indexOf(';') - 2;
-      const pageArray = cut.substring(0, end).trim().replace(/'/g, '"');
-      const pages = JSON.parse('[' + String(pageArray) + ']');
-      const chapter = $('#jump_chapter option:selected');
+      const url = $('.reader-image-wrapper img').attr('src').replace(/\d+.(jpg|png)$/i, '');
+      const num = parseInt($('.total-pages').text(), 10);
       return {
         title: $('title').text().replace(' - MangaDex', ''),
-        series: $('span[title] + a').attr('href'),
-        quant: pages.length,
-        prev: '/chapter/' + String(chapter.next().val()),
-        next: '/chapter/' + String(chapter.prev().val()),
-        listImages: pages.map(i => String(server + dataUrl) + '/' + String(i))
+        series: $('.manga-link').attr('href'),
+        quant: num,
+        prev: $('.chapter-link-left').attr('href'),
+        next: $('.chapter-link-right').attr('href'),
+        listImages: [...Array(num).keys()].map(i => String(url + (i + 1)) + '.jpg'),
+        listImagesAlt: [...Array(num).keys()].map(i => String(url + (i + 1)) + '.png')
       };
     }
   };

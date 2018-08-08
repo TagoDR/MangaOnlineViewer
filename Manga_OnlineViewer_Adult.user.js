@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe
-// @version 13.46.0
+// @version 13.47.0
 // @license MIT
-// @date 2018-07-12
+// @date 2018-08-08
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -202,6 +202,16 @@
     return index;
   }
 
+  function addImgAlt(index, altsrc) {
+    const url = normalizeUrl(altsrc);
+    logScript('Image:', index, 'Alternative Source:', url);
+    if (altsrc !== '') {
+      $('#PageImg' + String(index)).attr('altsrc', url);
+      $('#ThumbnailImg' + String(index)).attr('onerror', 'this.src=\'' + String(url) + '\';this.onerror=null;');
+    }
+    return index;
+  }
+
   function getPage(url, wait = settings.Timer) {
     return new Promise(resolve => {
       setTimeout(() => {
@@ -240,6 +250,7 @@
     });
   }
   const loadMangaImages = (begin, manga) => mapIndexed((src, index) => index >= begin ? getImages(src, (manga.timer || settings.Timer) * (index - begin)).then(response => addImg(index + 1, response)) : null, manga.listImages);
+  const loadMangaImagesAlt = (begin, manga) => mapIndexed((src, index) => index >= begin ? addImgAlt(index + 1, src) : null, manga.listImagesAlt);
 
   function loadManga(manga, begin = 1) {
     logScript('Loading Images');
@@ -250,6 +261,9 @@
     } else if (manga.listImages !== undefined) {
       logScript('Method: Images:', manga.listImages);
       loadMangaImages(begin - 1, manga);
+      if (manga.listImagesAlt !== undefined) {
+        loadMangaImagesAlt(begin - 1, manga);
+      }
     } else {
       logScript('Method: Brute Force');
       manga.bruteForce({
@@ -265,11 +279,21 @@
 
   function reloadImage(img) {
     const src = img.attr('src');
+    const altsrc = img.attr('altsrc');
     if (src !== undefined) {
-      img.removeAttr('src');
-      setTimeout(() => {
-        img.attr('src', src);
-      }, 500);
+      if (altsrc !== undefined) {
+        img.removeAttr('src');
+        img.removeAttr('altsrc');
+        setTimeout(() => {
+          img.attr('src', altsrc);
+          img.attr('altsrc', src);
+        }, 500);
+      } else {
+        img.removeAttr('src');
+        setTimeout(() => {
+          img.attr('src', src);
+        }, 500);
+      }
     }
   }
 
@@ -697,7 +721,7 @@
           wait = $(site.waitEle).get();
         }
         logScript('Wating for ' + String(site.waitEle) + ' = ' + String(wait));
-        if (isEmpty(wait)) {
+        if (wait === undefined || isEmpty(wait)) {
           setTimeout(() => {
             waitExec(site);
           }, site.waitStep || 1000);

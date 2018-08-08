@@ -98,7 +98,7 @@ function start(sites) {
         wait = $(site.waitEle).get();
       }
       logScript(`Wating for ${site.waitEle} = ${wait}`);
-      if (isEmpty(wait)) {
+      if (wait === undefined || isEmpty(wait)) {
         setTimeout(() => {
           waitExec(site);
         }, site.waitStep || 1000);
