@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe
-// @version 13.47.0
+// @version 13.48.0
 // @license MIT
-// @date 2018-08-08
+// @date 2018-08-09
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -714,14 +714,22 @@
           return;
         }
       }
-      if (site.waitEle !== undefined) {
-        if (site.waitAttr !== undefined) {
-          wait = $(site.waitEle).attr(site.waitAttr);
-        } else {
-          wait = $(site.waitEle).get();
-        }
-        logScript('Wating for ' + String(site.waitEle) + ' = ' + String(wait));
+      if (site.waitAttr !== undefined) {
+        wait = $(site.waitAttr[0]).attr(site.waitAttr[1]);
+        logScript('Wating for ' + String(site.waitAttr[1]) + ' of ' + String(site.waitAttr[0]) + ' = ' + String(wait));
         if (wait === undefined || isEmpty(wait)) {
+          setTimeout(() => {
+            waitExec(site);
+          }, site.waitStep || 1000);
+          waitElapsed += site.waitStep || 1000;
+          return;
+        }
+      }
+      if (site.waitEle !== undefined) {
+        wait = $(site.waitEle).get();
+        const t = $(wait[0]).text();
+        logScript('Wating for ' + String(site.waitEle) + ' = ' + String(wait));
+        if (wait === undefined || isEmpty(wait) || t === '' || t === '0') {
           setTimeout(() => {
             waitExec(site);
           }, site.waitStep || 1000);
@@ -876,7 +884,7 @@
     homepage: 'https://hitomi.la/',
     language: ['English'],
     category: 'hentai',
-    waitEle: '#comicImages img',
+    waitAttr: ['#comicImages img', 'src'],
     run() {
       const key = $('#comicImages img').attr('src').split('.')[0];
       const src = $('.img-url').get();
@@ -944,8 +952,7 @@
     homepage: 'http://pururin.io/',
     language: ['English'],
     category: 'hentai',
-    waitEle: '.images-holder img',
-    waitAttr: 'src',
+    waitAttr: ['.images-holder img', 'src'],
     run() {
       const src = $('.images-holder img').attr('src');
       const num = $('.form-control option').length;

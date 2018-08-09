@@ -5,8 +5,7 @@ export default {
   homepage: 'http://pururin.io/',
   language: ['English'],
   category: 'hentai',
-  waitEle: '.images-holder img',
-  waitAttr: 'src',
+  waitAttr: ['.images-holder img', 'src'],
   run() {
     const src = $('.images-holder img').attr('src');
     const num = $('.form-control option').length;

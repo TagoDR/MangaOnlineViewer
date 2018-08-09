@@ -5,8 +5,8 @@ export default {
   homepage: 'https://mangadex.org/',
   language: ['English'],
   category: 'manga',
-  waitEle: '.reader-image-wrapper img',
-  waitAttr: 'src',
+  waitEle: '.total-pages',
+  waitAttr: ['.reader-image-wrapper img', 'src'],
   run() {
     const url = $('.reader-image-wrapper img').attr('src').replace(/\d+.(jpg|png)$/i, '');
     const num = parseInt($('.total-pages').text(), 10);

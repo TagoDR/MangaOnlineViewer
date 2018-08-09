@@ -5,7 +5,7 @@ export default {
   homepage: 'https://hitomi.la/',
   language: ['English'],
   category: 'hentai',
-  waitEle: '#comicImages img',
+  waitAttr: ['#comicImages img', 'src'],
   run() {
     const key = $('#comicImages img').attr('src').split('.')[0];
     const src = $('.img-url').get();

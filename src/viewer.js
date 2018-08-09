@@ -91,14 +91,22 @@ function start(sites) {
         return;
       }
     }
-    if (site.waitEle !== undefined) {
-      if (site.waitAttr !== undefined) {
-        wait = $(site.waitEle).attr(site.waitAttr);
-      } else {
-        wait = $(site.waitEle).get();
-      }
-      logScript(`Wating for ${site.waitEle} = ${wait}`);
+    if (site.waitAttr !== undefined) {
+      wait = $(site.waitAttr[0]).attr(site.waitAttr[1]);
+      logScript(`Wating for ${site.waitAttr[1]} of ${site.waitAttr[0]} = ${wait}`);
       if (wait === undefined || isEmpty(wait)) {
+        setTimeout(() => {
+          waitExec(site);
+        }, site.waitStep || 1000);
+        waitElapsed += site.waitStep || 1000;
+        return;
+      }
+    }
+    if (site.waitEle !== undefined) {
+      wait = $(site.waitEle).get();
+      const t = $(wait[0]).text();
+      logScript(`Wating for ${site.waitEle} = ${wait}`);
+      if (wait === undefined || isEmpty(wait) || t === '' || t === '0') {
         setTimeout(() => {
           waitExec(site);
         }, site.waitStep || 1000);

@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans
-// @version 13.47.0
+// @version 13.48.0
 // @license MIT
-// @date 2018-08-08
+// @date 2018-08-09
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -733,14 +733,22 @@
           return;
         }
       }
-      if (site.waitEle !== undefined) {
-        if (site.waitAttr !== undefined) {
-          wait = $(site.waitEle).attr(site.waitAttr);
-        } else {
-          wait = $(site.waitEle).get();
-        }
-        logScript('Wating for ' + String(site.waitEle) + ' = ' + String(wait));
+      if (site.waitAttr !== undefined) {
+        wait = $(site.waitAttr[0]).attr(site.waitAttr[1]);
+        logScript('Wating for ' + String(site.waitAttr[1]) + ' of ' + String(site.waitAttr[0]) + ' = ' + String(wait));
         if (wait === undefined || isEmpty(wait)) {
+          setTimeout(() => {
+            waitExec(site);
+          }, site.waitStep || 1000);
+          waitElapsed += site.waitStep || 1000;
+          return;
+        }
+      }
+      if (site.waitEle !== undefined) {
+        wait = $(site.waitEle).get();
+        const t = $(wait[0]).text();
+        logScript('Wating for ' + String(site.waitEle) + ' = ' + String(wait));
+        if (wait === undefined || isEmpty(wait) || t === '' || t === '0') {
           setTimeout(() => {
             waitExec(site);
           }, site.waitStep || 1000);
@@ -1369,8 +1377,8 @@
     homepage: 'https://mangadex.org/',
     language: ['English'],
     category: 'manga',
-    waitEle: '.reader-image-wrapper img',
-    waitAttr: 'src',
+    waitEle: '.total-pages',
+    waitAttr: ['.reader-image-wrapper img', 'src'],
     run() {
       const url = $('.reader-image-wrapper img').attr('src').replace(/\d+.(jpg|png)$/i, '');
       const num = parseInt($('.total-pages').text(), 10);
