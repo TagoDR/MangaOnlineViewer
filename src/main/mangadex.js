@@ -8,16 +8,23 @@ export default {
   waitEle: '.total-pages',
   waitAttr: ['.reader-image-wrapper img', 'src'],
   run() {
-    const url = $('.reader-image-wrapper img').attr('src').replace(/\d+.(jpg|png)$/i, '');
-    const num = parseInt($('.total-pages').text(), 10);
+    let api = null;
+    const url = `https://mangadex.org/api/chapter/${location.pathname.match(/[0-9]+/)[0]}`;
+    $.ajax({
+      type: 'GET',
+      url,
+      async: false,
+      success(res) {
+        api = res;
+      },
+    });
     return {
       title: $('title').text().replace(' - MangaDex', ''),
       series: $('.manga-link').attr('href'),
-      quant: num,
+      quant: api.page_array.length,
       prev: $('.chapter-link-left').attr('href'),
       next: $('.chapter-link-right').attr('href'),
-      listImages: [...Array(num).keys()].map(i => `${url + (i + 1)}.jpg`),
-      listImagesAlt: [...Array(num).keys()].map(i => `${url + (i + 1)}.png`),
+      listImages: api.page_array.map(img => `${api.server + api.hash}/${img}`),
     };
   },
 };
