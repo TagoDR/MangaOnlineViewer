@@ -6,6 +6,7 @@ export default {
   language: ['English'],
   category: 'manga',
   waitEle: 'select:nth(1) option',
+  waitAttr: ['a[title]', 'href'],
   run() {
     let api = null;
     const url = `https://api.mangarockhd.com/query/web400/pages?oid=${location.pathname.match(

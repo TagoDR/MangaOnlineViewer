@@ -748,7 +748,7 @@
       }
       if (site.waitEle !== undefined) {
         wait = $(site.waitEle).get();
-        const t = $(wait[0]).text();
+        const t = wait.map(w => $(w).text()).join('');
         logScript('Wating for ' + String(site.waitEle) + ' = ' + (String(wait) + ' ' + String(t)));
         if (wait === undefined || isEmpty(wait) || t === '' || t === '0') {
           setTimeout(() => {
@@ -1430,6 +1430,7 @@
     language: ['English'],
     category: 'manga',
     waitEle: 'select:nth(1) option',
+    waitAttr: ['a[title]', 'href'],
     run() {
       let api = null;
       const url = 'https://api.mangarockhd.com/query/web400/pages?oid=' + String(location.pathname.match(/mrs-chapter-[0-9]+/)[0]);
