@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans
-// @version 13.49.0
+// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock
+// @version 13.50.0
 // @license MIT
-// @date 2018-08-10
+// @date 2018-08-13
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -52,6 +52,7 @@
 // @include /https?:\/\/(www.)?jaiminisbox.com\/reader\/read\/.+/
 // @include /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/
 // @include /https?:\/\/(www.)?hatigarmscans.net\/manga\/.+\/.+(\/[0-9]*)?/
+// @include /https?:\/\/(www.)?mangarock.com\/manga\/.+\/chapter\/.+/
 // @exclude /https?:\/\/(www.)?tsumino.com\/.+/
 // @exclude /https?:\/\/(www.)?pururin.us\/.+/
 // @exclude /https?:\/\/hentai.cafe\/.+/
@@ -291,7 +292,8 @@
         loadMangaImages: R.curry(loadMangaImages)(begin - 1),
         loadMangaPages: R.curry(loadMangaPages)(begin - 1),
         getPage,
-        getImages
+        getImages,
+        wait: settings.timer
       });
     }
   }
@@ -1421,7 +1423,88 @@
     }
   };
 
-  var sites = [batoto, comicastle, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost, hocvien, jaiminisbox, mangadex, hatigarmscans];
+  var mangarock = {
+    name: 'MangaRock',
+    url: /https?:\/\/(www.)?mangarock.com\/manga\/.+\/chapter\/.+/,
+    homepage: '',
+    language: ['English'],
+    category: 'manga',
+    waitEle: 'select:nth(1) option',
+    run() {
+      let api = null;
+      const url = 'https://api.mangarockhd.com/query/web400/pages?oid=' + String(location.pathname.match(/mrs-chapter-[0-9]+/)[0]);
+      $.ajax({
+        type: 'GET',
+        url,
+        async: false,
+        success(res) {
+          api = res;
+        }
+      });
+
+      function decode(t) {
+        const s = ['length'];
+        const e = new Uint8Array(t[s[0]] + 15);
+        const n = t[s[0]] + 7;
+        e[0] = 82;
+        e[1] = 73;
+        e[2] = 70;
+        e[3] = 70;
+        e[7] = n >> 24 & 255;
+        e[6] = n >> 16 & 255;
+        e[5] = n >> 8 & 255;
+        e[4] = 255 & n;
+        e[8] = 87;
+        e[9] = 69;
+        e[10] = 66;
+        e[11] = 80;
+        e[12] = 86;
+        e[13] = 80;
+        e[14] = 56;
+        for (let r = 0; r < t[s[0]]; r += 1) e[r + 15] = 101 ^ t[r];
+        return e;
+      }
+
+      function process(mri) {
+        const image = decode(new Uint8Array(mri));
+        const e = [];
+        for (let n = 0; n < image.length; n += 32768) {
+          e.push(String.fromCharCode.apply(null, image.subarray(n, n + 32768)));
+        }
+        return 'data:image/webp;base64,' + String(btoa(e.join('')));
+      }
+
+      function getMRI(index, src, e) {
+        setTimeout(() => {
+          GM_xmlhttpRequest({
+            method: 'GET',
+            url: src,
+            overrideMimeType: 'text/plain; charset=x-user-defined',
+            responseType: 'arraybuffer',
+            onload(request) {
+              e.addImg(index, process(request.response));
+            }
+          });
+        }, e.wait * (index - e.begin));
+      }
+      return {
+        title: $('title').text().trim(),
+        series: $('a[title]').attr('href'),
+        quant: api.data.length,
+        prev: $('select:first option:selected').prev().val(),
+        next: $('select:first option:selected').next().val(),
+        bruteForce(e) {
+          for (let i = 0; i < api.data.length; i += 1) {
+            if (i >= e.begin - 1) {
+              getMRI(i + 1, api.data[i], e);
+            }
+          }
+        }
+      };
+    }
+  };
+
+  var sites = [batoto, comicastle, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost, hocvien, jaiminisbox, mangadex, hatigarmscans, mangarock];
 
   start(sites);
 

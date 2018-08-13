@@ -28,6 +28,7 @@ import hocvien from './hocvientruyentranh';
 import jaiminisbox from './jaiminisbox';
 import mangadex from './mangadex';
 import hatigarmscans from './hatigarmscans';
+import mangarock from './mangarock';
 
 export default [
   batoto,
@@ -60,4 +61,5 @@ export default [
   jaiminisbox,
   mangadex,
   hatigarmscans,
+  mangarock,
 ];

@@ -110,6 +110,7 @@ function loadManga(manga, begin = 1) {
       loadMangaPages: R.curry(loadMangaPages)(begin - 1),
       getPage,
       getImages,
+      wait: settings.timer,
     });
   }
 }
