@@ -2,7 +2,7 @@
 export default {
   name: 'MangaRock',
   url: /https?:\/\/(www.)?mangarock.com\/manga\/.+\/chapter\/.+/,
-  homepage: '',
+  homepage: 'https://mangarock.com/',
   language: ['English'],
   category: 'manga',
   waitEle: 'select:nth(1) option',

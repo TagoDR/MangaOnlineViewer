@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe
-// @version 13.50.0
+// @version 13.51.0
 // @license MIT
-// @date 2018-08-13
+// @date 2018-08-15
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -342,8 +342,8 @@
       $('.MangaPage img').get().forEach((value, index) => {
         const img = $(value);
         const src = img.attr('src');
-        const ext = src.match(/.jpg|.png/ig) || ['.png'];
-        const filename = 'Page ' + String(String('000' + String(index + 1)).slice(-3)) + String(ext[0]);
+        const ext = src.substring(0, 20).match(/jpg|png|webp/ig) || ['png'];
+        const filename = 'Page ' + String(String('000' + String(index + 1)).slice(-3)) + '.' + String(ext[0]);
         if (src.indexOf('base64') > -1) {
           let base64 = src.replace('data:image/png;base64,', '');
           const i = base64.indexOf(',');

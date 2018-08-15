@@ -13,8 +13,8 @@ function generateZip() {
     $('.MangaPage img').get().forEach((value, index) => {
       const img = $(value);
       const src = img.attr('src');
-      const ext = src.match(/.jpg|.png/ig) || ['.png'];
-      const filename = `Page ${String(`000${index + 1}`).slice(-3)}${ext[0]}`;
+      const ext = src.substring(0, 20).match(/jpg|png|webp/ig) || ['png'];
+      const filename = `Page ${String(`000${index + 1}`).slice(-3)}.${ext[0]}`;
       if (src.indexOf('base64') > -1) {
         let base64 = src.replace('data:image/png;base64,', '');
         const i = base64.indexOf(',');

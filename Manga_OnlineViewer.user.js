@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock
-// @version 13.50.0
+// @version 13.51.0
 // @license MIT
-// @date 2018-08-13
+// @date 2018-08-15
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -52,7 +52,7 @@
 // @include /https?:\/\/(www.)?jaiminisbox.com\/reader\/read\/.+/
 // @include /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/
 // @include /https?:\/\/(www.)?hatigarmscans.net\/manga\/.+\/.+(\/[0-9]*)?/
-// @include /https?:\/\/(www.)?mangarock.com\/manga\/.+\/chapter\/.+/
+// @include /https?:\/\/(www.)?mangarock.com\/manga\/.+(\/chapter\/.+)?/
 // @exclude /https?:\/\/(www.)?tsumino.com\/.+/
 // @exclude /https?:\/\/(www.)?pururin.us\/.+/
 // @exclude /https?:\/\/hentai.cafe\/.+/
@@ -362,8 +362,8 @@
       $('.MangaPage img').get().forEach((value, index) => {
         const img = $(value);
         const src = img.attr('src');
-        const ext = src.match(/.jpg|.png/ig) || ['.png'];
-        const filename = 'Page ' + String(String('000' + String(index + 1)).slice(-3)) + String(ext[0]);
+        const ext = src.substring(0, 20).match(/jpg|png|webp/ig) || ['png'];
+        const filename = 'Page ' + String(String('000' + String(index + 1)).slice(-3)) + '.' + String(ext[0]);
         if (src.indexOf('base64') > -1) {
           let base64 = src.replace('data:image/png;base64,', '');
           const i = base64.indexOf(',');
@@ -1425,8 +1425,8 @@
 
   var mangarock = {
     name: 'MangaRock',
-    url: /https?:\/\/(www.)?mangarock.com\/manga\/.+\/chapter\/.+/,
-    homepage: '',
+    url: /https?:\/\/(www.)?mangarock.com\/manga\/.+(\/chapter\/.+)?/,
+    homepage: 'https://mangarock.com/',
     language: ['English'],
     category: 'manga',
     waitEle: 'select:nth(1) option',
