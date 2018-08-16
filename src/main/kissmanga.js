@@ -11,7 +11,7 @@ export default {
     return {
       title: origin.text(),
       series: origin.attr('href'),
-      quant: $('#selectPage option:last').last().html(),
+      quant: W.lstImages.length,
       prev: chapter.filter(':selected').prev().val(),
       next: chapter.filter(':selected').next().val(),
       listImages: W.lstImages,
