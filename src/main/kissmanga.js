@@ -6,14 +6,15 @@ export default {
   language: ['English'],
   category: 'manga',
   run() {
-    const chapter = $('#selectChapter option');
+    const chapter = $('.selectChapter option:selected');
     const origin = $('#navsubbar a');
+    const url = location.href.replace(/[^/]+$/, '');
     return {
-      title: origin.text(),
+      title: origin.text().trim(),
       series: origin.attr('href'),
       quant: W.lstImages.length,
-      prev: chapter.filter(':selected').prev().val(),
-      next: chapter.filter(':selected').next().val(),
+      prev: url + chapter.prev().val(),
+      next: url + chapter.next().val(),
       listImages: W.lstImages,
     };
   },
