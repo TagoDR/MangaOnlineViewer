@@ -51,6 +51,7 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 <h3>Supported Comic Sites</h3>
 <ul>
 <li><a href='http://www.comicastle.org/'>ComiCastle</a> <i>[English]</i></li>
+<li><a href='http://readcomicsonline.ru/'>ReadComicsOnline</a> <i>[English]</i></li>
 </ul>
 <h3>Supported Hentai Sites</h3> <b><a style="color: red;" href="https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js">Adult Script</a> avaliable <i>only</i> on <a href='https://github.com/TagoDR/MangaOnlineViewer'>Github</a></b>
 <ul>
@@ -62,6 +63,7 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 <li><a href='http://hentai2read.com/'>Hentai2Read</a> <i>[English]</i></li>
 <li><a href='https://hentai.cafe'>HentaiCafe</a> <i>[English]</i></li>
 <li><a href='https://luscious.net/'>Luscious</a> / <a href='https://www.wondersluts.com/'>Wondersluts</a> <i>[English]</i></li>
+<li><a href='https://www.porncomixonline.net'>PornComixOnline</a> <i>[English]</i></li>
 <li><a href='http://pururin.io/'>Pururin</a> <i>[English]</i></li>
 <li><a href='http://simply-hentai.com/'>Simply-Hentai</a> <i>[English]</i></li>
 <li><a href='http://tsumino.com/'>Tsumino</a> <i>[English]</i></li>

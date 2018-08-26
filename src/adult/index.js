@@ -13,6 +13,7 @@ import simplyhentai from './simplyhentai';
 import tsumino from './tsumino';
 import EightMuses from './8muses';
 import hentaicafe from './hentaicafe';
+import porncomixonline from './porncomixonline';
 
 export default [
   EightMuses,
@@ -30,4 +31,5 @@ export default [
   simplyhentai,
   tsumino,
   hentaicafe,
+  porncomixonline,
 ];

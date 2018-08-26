@@ -1,7 +1,7 @@
 // == 8Muses =======================================================================================
 export default {
   name: '8Muses',
-  url: /https?:\/\/(www.)?8muses.com\/comics\/album\/.+/,
+  url: /https?:\/\/(www.)?8muses.com\/comics\/.+/,
   homepage: 'https://www.8muses.com/',
   language: ['English'],
   category: 'hentai',
@@ -16,8 +16,9 @@ export default {
       quant: num.length,
       prev: '#',
       next: '#',
+      listPages: num,
       img: '.photo .image',
-      bruteForce(func, i = 1, url = num[0]) {
+      /* bruteForce(func, i = 1, url = num[0]) {
         if (i > num.length) return;
         const self = this;
         func.getPage(url).then((html) => {
@@ -29,7 +30,7 @@ export default {
             + $(html).find('#imageName').val());
           self.bruteForce(func, i + 1, num[i]);
         });
-      },
+      }, */
     };
   },
 };
