@@ -1,5 +1,6 @@
 import batoto from './batoto';
 import comicastle from './comicastle';
+import readcomicsonline from './readcomicsonline';
 import dysnatyscans from './dysnatyscans';
 import eatmanga from './eatmanga';
 import egscans from './egscans';
@@ -33,6 +34,7 @@ import mangarock from './mangarock';
 export default [
   batoto,
   comicastle,
+  readcomicsonline,
   dysnatyscans,
   eatmanga,
   egscans,

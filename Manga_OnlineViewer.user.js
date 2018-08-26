@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock
-// @version 13.53.0
+// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock
+// @version 13.54.0
 // @license MIT
-// @date 2018-08-23
+// @date 2018-08-26
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -24,6 +24,7 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/ramda/0.24.1/ramda.min.js
 // @include /https?:\/\/(www.)?bato.to\/chapter.*/
 // @include /https?:\/\/(www.)?comicastle.org\/comic\/.+\/[0-9]+.*/
+// @include /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/[0-9]*/
 // @include /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/
 // @include /https?:\/\/(www.)?eatmanga.me\/Manga-Scan\/.+\/.+\//
 // @include /https?:\/\/read.egscans.com\/.+/
@@ -816,6 +817,24 @@
     }
   };
 
+  var readcomicsonline = {
+    name: 'ReadComicsOnline',
+    url: /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/[0-9]*/,
+    homepage: 'http://readcomicsonline.ru/',
+    language: ['English'],
+    category: 'comic',
+    run() {
+      return {
+        title: W.title.replace(/ - Page [0-9]+/, ''),
+        series: $('div.pager-cnt a:first').attr('href'),
+        quant: W.pages.length,
+        prev: W.prev_chapter,
+        next: W.next_chapter,
+        listImages: $('#all img').get().map(i => $(i).attr('data-src'))
+      };
+    }
+  };
+
   var dysnatyscans = {
     name: 'Dynasty-Scans',
     url: /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/,
@@ -1506,7 +1525,7 @@
     }
   };
 
-  var sites = [batoto, comicastle, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost, hocvien, jaiminisbox, mangadex, hatigarmscans, mangarock];
+  var sites = [batoto, comicastle, readcomicsonline, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost, hocvien, jaiminisbox, mangadex, hatigarmscans, mangarock];
 
   start(sites);
 
