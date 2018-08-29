@@ -1,8 +1,8 @@
 // == PornComixOnline ==============================================================================
 export default {
-  name: 'PornComixOnline',
+  name: ['PornComixOnline', 'xyzcomics'],
   url: /https?:\/\/(www.)?(porncomixonline.net|xyzcomics.com)\/.+/,
-  homepage: 'https://www.porncomixonline.net',
+  homepage: ['https://www.porncomixonline.net', 'http://xyzcomics.com/'],
   language: ['English'],
   category: 'hentai',
   run() {
