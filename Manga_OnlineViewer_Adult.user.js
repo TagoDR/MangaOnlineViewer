@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline
-// @version 13.55.0
+// @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics
+// @version 13.56.0
 // @license MIT
-// @date 2018-08-28
+// @date 2018-09-22
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -976,22 +976,24 @@
     language: ['English'],
     category: 'hentai',
     run() {
-      const url = $('#nextLink').prev('a').attr('href');
-      const origin = $('.m10b h1 a:first');
+      let api = null;
+      $.ajax({
+        type: 'GET',
+        url: W.pagesUrl,
+        dataType: 'json',
+        async: false,
+        success(res) {
+          api = res;
+        }
+      });
+      const imgs = Object.keys(api).map(i => api[i].full);
       return {
-        title: origin.text().trim(),
-        series: origin.attr('href'),
-        quant: $('.m10b ').text().match(/Page [0-9]+ of ([0-9]+)/)[1],
+        title: $('h1 .pu-trigger:first').text().trim(),
+        series: $('h1 .pu-trigger:first').attr('href'),
+        quant: imgs.length,
         prev: '#',
         next: '#',
-        bruteForce(func) {
-          func.getPage(url).then(html => {
-            const listImages = $(html).find('.m10b span[data-class^=\'img-responsive\'] :first-child').get().map(item => $(item).attr('data-src').replace('very_small', 'full').replace('album/', ''));
-            func.loadMangaImages({
-              listImages
-            });
-          });
-        }
+        listImages: imgs
       };
     }
   };
@@ -1077,9 +1079,9 @@
   };
 
   var porncomixonline = {
-    name: 'PornComixOnline',
+    name: ['PornComixOnline', 'xyzcomics'],
     url: /https?:\/\/(www.)?(porncomixonline.net|xyzcomics.com)\/.+/,
-    homepage: 'https://www.porncomixonline.net',
+    homepage: ['https://www.porncomixonline.net', 'http://xyzcomics.com/'],
     language: ['English'],
     category: 'hentai',
     run() {
