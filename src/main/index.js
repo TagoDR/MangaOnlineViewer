@@ -30,6 +30,7 @@ import jaiminisbox from './jaiminisbox';
 import mangadex from './mangadex';
 import hatigarmscans from './hatigarmscans';
 import mangarock from './mangarock';
+import manganelo from './manganelo';
 
 export default [
   batoto,
@@ -64,4 +65,5 @@ export default [
   mangadex,
   hatigarmscans,
   mangarock,
+  manganelo,
 ];

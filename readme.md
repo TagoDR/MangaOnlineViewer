@@ -34,6 +34,7 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 <li><a href='http://www.mangahere.cc/'>MangaHere</a> <i>[English]</i></li>
 <li><a href='http://www.mangainn.net/'>MangaInn</a> <i>[English]</i></li>
 <li><a href='http://manga.lyght.net/'>MangaLyght</a> <i>[English]</i></li>
+<li><a href='http://www.manganelo.com/'>MangaNelo</a> <i>[English]</i></li>
 <li><a href='http://mangapark.me/'>MangaPark</a> <i>[English]</i></li>
 <li><a href='http://www.mangareader.net/'>MangaReader</a> / <a href='http://www.mangapanda.com/'>MangaPanda</a> <i>[English]</i></li>
 <li><a href='https://mangarock.com/'>MangaRock</a> <i>[English]</i></li>
