@@ -5,9 +5,9 @@ export default {
   homepage: 'http://pururin.io/',
   language: ['English'],
   category: 'hentai',
-  waitAttr: ['.images-holder img', 'src'],
+  waitAttr: ['.image-holder img', 'src'],
   run() {
-    const src = $('.images-holder img').attr('src');
+    const src = $('.image-holder img').attr('src');
     const num = $('.form-control option').length;
     return {
       title: $('.title').text().trim(),

@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics
-// @version 13.57.0
+// @version 13.58.0
 // @license MIT
-// @date 2018-10-10
+// @date 2018-10-23
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -954,9 +954,9 @@
     homepage: 'http://pururin.io/',
     language: ['English'],
     category: 'hentai',
-    waitAttr: ['.images-holder img', 'src'],
+    waitAttr: ['.image-holder img', 'src'],
     run() {
-      const src = $('.images-holder img').attr('src');
+      const src = $('.image-holder img').attr('src');
       const num = $('.form-control option').length;
       return {
         title: $('.title').text().trim(),
