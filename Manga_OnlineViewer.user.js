@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaNelo
-// @version 13.58.0
+// @version 13.59.0
 // @license MIT
-// @date 2018-10-23
+// @date 2018-11-18
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -31,7 +31,7 @@
 // @include /^(?!.*jaiminisbox).*\/read\/.+/
 // @include /https?:\/\/(www.)?kissmanga.com\/Manga\/.+\/.+?id=[0-9]+/
 // @include /https?:\/\/(www.)?mngdoom.com\/.+\/[0-9]+/
-// @include /https?:\/\/(www.)?(mangafox.la|fanfox.net)\/manga\/.+\/.+\//
+// @include /https?:\/\/(www.)?|fanfox.net\/manga\/.+\/.+\//
 // @include /https?:\/\/(www.)?mangago.me\/read-manga\/.+\/.+/
 // @include /https?:\/\/(www.)?mangahere.cc\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?mangainn.net\/.+\/[0-9]+(\/[0-9]*)?/
@@ -719,6 +719,9 @@
             logScript(e);
           }
         }, 50);
+        if (manga.after !== undefined) {
+          manga.after();
+        }
       }, settings.alwaysLoad ? 50 : 3000);
     }
   }
@@ -962,20 +965,33 @@
 
   var mangafox = {
     name: 'MangaFox',
-    url: /https?:\/\/(www.)?(mangafox.la|fanfox.net)\/manga\/.+\/.+\//,
-    homepage: 'http://mangafox.la/',
+    url: /https?:\/\/(www.)?|fanfox.net\/manga\/.+\/.+\//,
+    homepage: 'http://fanfox.net/',
     language: ['English'],
     category: 'manga',
     run() {
-      const num = parseInt($('select.m:first option:last').prev().val(), 10);
+      const src = [...Array(W.imagecount).keys()].map(i => {
+        let res = '';
+        $.ajax({
+          url: 'chapterfun.ashx',
+          async: false,
+          data: {
+            cid: W.chapterid,
+            page: i
+          }
+        }).done(data => {
+          res = eval(data);
+        });
+        if (i === 0) return res[0];
+        return res[1];
+      });
       return {
-        title: $('#series .no').text().trim(),
-        series: $('#series a:last').attr('href'),
-        quant: num,
-        prev: $('#chnav p:first a').attr('href'),
-        next: $('#chnav p:last a').attr('href'),
-        listPages: [...Array(num).keys()].map(i => String(i + 1) + '.html'),
-        img: 'img#image'
+        title: $('.reader-header-title div:first').text().trim(),
+        series: $('.reader-header-title a').attr('href'),
+        quant: W.imagecount,
+        prev: W.prechapterurl,
+        next: W.nextchapterurl,
+        listImages: src
       };
     }
   };

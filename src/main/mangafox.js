@@ -1,20 +1,25 @@
 // == MangaFox =====================================================================================
 export default {
   name: 'MangaFox',
-  url: /https?:\/\/(www.)?(mangafox.la|fanfox.net)\/manga\/.+\/.+\//,
-  homepage: 'http://mangafox.la/',
+  url: /https?:\/\/(www.)?|fanfox.net\/manga\/.+\/.+\//,
+  homepage: 'http://fanfox.net/',
   language: ['English'],
   category: 'manga',
   run() {
-    const num = parseInt($('select.m:first option:last').prev().val(), 10);
+    const src = [...Array(W.imagecount).keys()].map((i) => {
+      let res = '';
+      $.ajax({ url: 'chapterfun.ashx', async: false, data: { cid: W.chapterid, page: i } })
+        .done((data) => { res = eval(data); });// eslint-disable-line no-eval
+      if (i === 0) return res[0];
+      return res[1];
+    });
     return {
-      title: $('#series .no').text().trim(),
-      series: $('#series a:last').attr('href'),
-      quant: num,
-      prev: $('#chnav p:first a').attr('href'),
-      next: $('#chnav p:last a').attr('href'),
-      listPages: [...Array(num).keys()].map(i => `${i + 1}.html`),
-      img: 'img#image',
+      title: $('.reader-header-title div:first').text().trim(),
+      series: $('.reader-header-title a').attr('href'),
+      quant: W.imagecount,
+      prev: W.prechapterurl,
+      next: W.nextchapterurl,
+      listImages: src,
     };
   },
 };

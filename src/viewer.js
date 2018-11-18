@@ -70,6 +70,9 @@ function formatPage(manga, begin = 0) {
           logScript(e);
         }
       }, 50);
+      if (manga.after !== undefined) {
+        manga.after();
+      }
     }, settings.alwaysLoad ? 50 : 3000);
   }
 }
