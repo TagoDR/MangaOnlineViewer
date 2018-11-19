@@ -1,7 +1,7 @@
 // == MangaFox =====================================================================================
 export default {
   name: 'MangaFox',
-  url: /https?:\/\/(www.)?|fanfox.net\/manga\/.+\/.+\//,
+  url: /https?:\/\/(www.)?fanfox.net\/manga\/.+\/.+\//,
   homepage: 'http://fanfox.net/',
   language: ['English'],
   category: 'manga',
