@@ -7,11 +7,14 @@ export default {
   category: 'manga',
   run() {
     const chapter = $('.selectChapter option:selected');
-    const origin = $('#navsubbar a');
     const url = location.href.replace(/[^/]+$/, '');
     return {
-      title: origin.text().trim(),
-      series: origin.attr('href'),
+      title: $('title')
+        .text()
+        .replace('Read manga', '')
+        .replace('online in high quality', '')
+        .trim(),
+      series: $('#navsubbar a').attr('href'),
       quant: W.lstImages.length,
       prev: url + chapter.prev().val(),
       next: url + chapter.next().val(),
