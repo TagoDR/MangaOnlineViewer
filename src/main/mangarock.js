@@ -9,7 +9,7 @@ export default {
   waitAttr: ['a[title]', 'href'],
   run() {
     let api = null;
-    const url = `https://api.mangarockhd.com/query/web400/pages?oid=${location.pathname.match(
+    const url = `https://api.mangarockhd.com/query/web401/pages?oid=${location.pathname.match(
       /mrs-chapter-[0-9]+/)[0]}`;
     $.ajax({
       type: 'GET',
