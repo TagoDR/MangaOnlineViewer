@@ -5,16 +5,16 @@ export default {
   homepage: 'https://doujins.com/',
   language: ['English'],
   category: 'hentai',
+  waitEle: '.doujin',
   run() {
-    const imgs = $('#gallery > :not(.thumbs)').get();
+    const imgs = $('.doujin').get();
     return {
       title: $('.title').text(),
       series: $('.title a').eq(-2).attr('href'),
       quant: imgs.length,
       prev: '#',
       next: '#',
-      listImages: imgs.map(item =>
-        $(item).attr('file').replace('static2', 'static')),
+      listImages: imgs.map(i => $(i).attr('data-file')),
     };
   },
 };

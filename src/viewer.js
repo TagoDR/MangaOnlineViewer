@@ -107,9 +107,8 @@ function start(sites) {
     }
     if (site.waitEle !== undefined) {
       wait = $(site.waitEle).get();
-      const t = wait.map(w => $(w).text()).join('');
-      logScript(`Wating for ${site.waitEle} = ${`${wait} ${t}`}`);
-      if (wait === undefined || isEmpty(wait) || t === '' || t === '0') {
+      logScript(`Wating for ${site.waitEle} = ${`${wait}`}`);
+      if (wait === undefined || isEmpty(wait)) {
         setTimeout(() => {
           waitExec(site);
         }, site.waitStep || 1000);

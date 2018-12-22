@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics
-// @version 13.62.0
+// @version 13.63.0
 // @license MIT
-// @date 2018-12-04
+// @date 2018-12-22
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -732,9 +732,8 @@
       }
       if (site.waitEle !== undefined) {
         wait = $(site.waitEle).get();
-        const t = wait.map(w => $(w).text()).join('');
-        logScript('Wating for ' + String(site.waitEle) + ' = ' + (String(wait) + ' ' + String(t)));
-        if (wait === undefined || isEmpty(wait) || t === '' || t === '0') {
+        logScript('Wating for ' + String(site.waitEle) + ' = ' + ('' + String(wait)));
+        if (wait === undefined || isEmpty(wait)) {
           setTimeout(() => {
             waitExec(site);
           }, site.waitStep || 1000);
@@ -766,15 +765,16 @@
     homepage: 'https://doujins.com/',
     language: ['English'],
     category: 'hentai',
+    waitEle: '.doujin',
     run() {
-      const imgs = $('#gallery > :not(.thumbs)').get();
+      const imgs = $('.doujin').get();
       return {
         title: $('.title').text(),
         series: $('.title a').eq(-2).attr('href'),
         quant: imgs.length,
         prev: '#',
         next: '#',
-        listImages: imgs.map(item => $(item).attr('file').replace('static2', 'static'))
+        listImages: imgs.map(i => $(i).attr('data-file'))
       };
     }
   };
