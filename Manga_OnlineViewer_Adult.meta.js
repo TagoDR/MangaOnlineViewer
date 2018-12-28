@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics
-// @version 13.63.0
+// @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics, SuperHentais
+// @version 13.64.0
 // @license MIT
-// @date 2018-12-22
+// @date 2018-12-27
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -30,11 +30,12 @@
 // @include /https?:\/\/(www.)?hentaifox.com\/g\/.+/
 // @include /https?:\/\/(www.)?hentaihere.com\/.+\/.+\//
 // @include /https?:\/\/hitomi.la\/reader\/.+/
-// @include /https?:\/\/(www.)?(luscious.net|wondersluts.com)\/c\/.+/
+// @include /https?:\/\/(www.)?(luscious.net|wondersluts.com)\/pictures\/.+/
 // @include /https?:\/\/(www.)?nhentai.net\/g\/.+\/.+/
 // @include /https?:\/\/(www.)?pururin.io\/(view|read)\/.+\/.+\/.+/
 // @include /https?:\/\/.*simply-hentai.com\/.+\/page\/.+/
 // @include /https?:\/\/(www.)?tsumino.com\/Read\/View\/.+(\/.+)?/
 // @include /https?:\/\/hentai.cafe\/manga\/read\/.*\/en\/0\/1\/(page\/.+)?/
 // @include /https?:\/\/(www.)?(porncomixonline.net|xyzcomics.com)\/.+/
+// @include /https?:\/\/(www.)?superhentais.com\/manga\/.+\/.+/
 // ==/UserScript==

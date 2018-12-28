@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics
-// @version 13.63.0
+// @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics, SuperHentais
+// @version 13.64.0
 // @license MIT
-// @date 2018-12-22
+// @date 2018-12-27
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -30,13 +30,14 @@
 // @include /https?:\/\/(www.)?hentaifox.com\/g\/.+/
 // @include /https?:\/\/(www.)?hentaihere.com\/.+\/.+\//
 // @include /https?:\/\/hitomi.la\/reader\/.+/
-// @include /https?:\/\/(www.)?(luscious.net|wondersluts.com)\/c\/.+/
+// @include /https?:\/\/(www.)?(luscious.net|wondersluts.com)\/pictures\/.+/
 // @include /https?:\/\/(www.)?nhentai.net\/g\/.+\/.+/
 // @include /https?:\/\/(www.)?pururin.io\/(view|read)\/.+\/.+\/.+/
 // @include /https?:\/\/.*simply-hentai.com\/.+\/page\/.+/
 // @include /https?:\/\/(www.)?tsumino.com\/Read\/View\/.+(\/.+)?/
 // @include /https?:\/\/hentai.cafe\/manga\/read\/.*\/en\/0\/1\/(page\/.+)?/
 // @include /https?:\/\/(www.)?(porncomixonline.net|xyzcomics.com)\/.+/
+// @include /https?:\/\/(www.)?superhentais.com\/manga\/.+\/.+/
 // ==/UserScript==
 
 (function() {
@@ -906,7 +907,7 @@
 
   var luscious = {
     name: ['Luscious', 'Wondersluts'],
-    url: /https?:\/\/(www.)?(luscious.net|wondersluts.com)\/c\/.+/,
+    url: /https?:\/\/(www.)?(luscious.net|wondersluts.com)\/pictures\/.+/,
     homepage: ['https://luscious.net/', 'https://www.wondersluts.com/'],
     language: ['English'],
     category: 'hentai',
@@ -1100,8 +1101,28 @@
     }
   };
 
+  var superhentais = {
+    name: 'SuperHentais',
+    url: /https?:\/\/(www.)?superhentais.com\/manga\/.+\/.+/,
+    homepage: 'http://www.superhentais.com/',
+    language: ['Portuguese'],
+    category: 'hentai',
+    run() {
+      const imgs = $('.capListPage option').get();
+      const chapter = $('.capList option:selected');
+      return {
+        title: $('.boxBarraInfo:first').text().trim(),
+        series: $('.capList option:first').val(),
+        quant: imgs.length,
+        prev: chapter.prev().val(),
+        next: chapter.next().val(),
+        listImages: imgs.map(i => $(i).attr('data-image-page'))
+      };
+    }
+  };
+
   var sites = [EightMuses, doujinmoe, exhentai,
-    hbrowse, hentai2read, hentaifox, hentaihere, hitomi, luscious, nhentai, pururin, simplyhentai, tsumino, hentaicafe, porncomixonline
+    hbrowse, hentai2read, hentaifox, hentaihere, hitomi, luscious, nhentai, pururin, simplyhentai, tsumino, hentaicafe, porncomixonline, superhentais
   ];
 
   start(sites);

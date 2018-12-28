@@ -71,6 +71,7 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 <li><a href='http://www.hentaifox.com/'>hentaifox</a> <i>[English]</i></li>
 <li><a href='https://hitomi.la/'>hitomi</a> <i>[English]</i></li>
 <li><a href='https://nhentai.net/'>nHentai</a> <i>[English]</i></li>
+<li><a href='http://www.superhentais.com/'>SuperHentais</a> <i>[Portuguese]</i></li>
 </ul>
 
 <h3>Supported Browsers</h3>
