@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics, SuperHentais
-// @version 13.64.0
+// @version 13.65.0
 // @license MIT
-// @date 2018-12-27
+// @date 2019-01-07
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -37,7 +37,7 @@
 // @include /https?:\/\/(www.)?tsumino.com\/Read\/View\/.+(\/.+)?/
 // @include /https?:\/\/hentai.cafe\/manga\/read\/.*\/en\/0\/1\/(page\/.+)?/
 // @include /https?:\/\/(www.)?(porncomixonline.net|xyzcomics.com)\/.+/
-// @include /https?:\/\/(www.)?superhentais.com\/manga\/.+\/.+/
+// @include /https?:\/\/(www.)?superhentais.com\/(manga|hq)\/.+\/.+/
 // ==/UserScript==
 
 (function() {
@@ -983,14 +983,14 @@
       let api = null;
       $.ajax({
         type: 'GET',
-        url: W.pagesUrl,
+        url: location.href.replace(/\/page\/[0-9]+$/, '/all-pages'),
         dataType: 'json',
         async: false,
         success(res) {
           api = res;
         }
       });
-      const imgs = Object.keys(api).map(i => api[i].full);
+      const imgs = Object.values(api).map(i => api[i].full);
       return {
         title: $('h1 .pu-trigger:first').text().trim(),
         series: $('h1 .pu-trigger:first').attr('href'),
@@ -1103,7 +1103,7 @@
 
   var superhentais = {
     name: 'SuperHentais',
-    url: /https?:\/\/(www.)?superhentais.com\/manga\/.+\/.+/,
+    url: /https?:\/\/(www.)?superhentais.com\/(manga|hq)\/.+\/.+/,
     homepage: 'http://www.superhentais.com/',
     language: ['Portuguese'],
     category: 'hentai',

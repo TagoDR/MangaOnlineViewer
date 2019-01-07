@@ -1,7 +1,7 @@
 // == SuperHentais =================================================================================
 export default {
   name: 'SuperHentais',
-  url: /https?:\/\/(www.)?superhentais.com\/manga\/.+\/.+/,
+  url: /https?:\/\/(www.)?superhentais.com\/(manga|hq)\/.+\/.+/,
   homepage: 'http://www.superhentais.com/',
   language: ['Portuguese'],
   category: 'hentai',
