@@ -1,22 +1,30 @@
+/* eslint-disable no-underscore-dangle */
 // == MangaPark ====================================================================================
 export default {
   name: 'MangaPark',
-  url: /https?:\/\/(www.)?mangapark.me\/manga\/.+\/.+/,
+  url: /https?:\/\/(www.)?mangapark.(com|me|org)\/(manga|chapter)\/.+\/.+/,
   homepage: 'http://mangapark.me/',
   language: ['English'],
   category: 'manga',
   run() {
-    const url = location.href + (location.href.lastIndexOf('/') !== location.href.length
-      - 1 ? '/' : '');
-    const num = $('.info div:eq(1) a').length;
+    const img = $('.img-link img').get();
     return {
-      title: $('.loc a:first').text().trim(),
-      series: `/manga/${location.pathname.split('/')[2]}`,
-      quant: num,
-      prev: $('.info a:eq(0)').attr('href'),
-      next: $('.info a:eq(1)').attr('href'),
-      listPages: [...Array(num).keys()].map(i => url + (i + 1)),
-      img: '.img',
+      title: $('.loc a:first, h4 a').text().trim(),
+      series: $('.loc a:first, h4 a').attr('href'),
+      quant: W.pages || img.length,
+      prev: W._prev_link || $('span:contains(◀ Prev Chapter):first').parent('a').attr('href'),
+      next: W._next_link || $('span:contains(Next Chapter ▶):first').parent('a').attr('href'),
+      listImages: W.images || img.map((i) => {
+        if ($(i).hasClass('lazy')) {
+          return $(i).attr('data-src');
+        }
+        return $(i).attr('src');
+      }),
+      before() {
+        if (location.href.search(/\/1$/) !== -1) {
+          location.href = location.href.replace('/1', '');
+        }
+      },
     };
   },
 };
