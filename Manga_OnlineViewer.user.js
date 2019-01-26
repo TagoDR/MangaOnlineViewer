@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaNelo
-// @version 13.66.0
+// @version 13.68.0
 // @license MIT
-// @date 2019-01-08
+// @date 2019-01-26
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -968,20 +968,35 @@
     language: ['English'],
     category: 'manga',
     run() {
+      function decode(data, page) {
+        const toBeEval = data.match(/'[^']*'/g)[5].replace(/'/g, '');
+        const keyWords = data.match(/'[^']*'/g)[6].replace(/'/g, '').split('|');
+
+        function charFromPosition(i) {
+          return (i < 31 ? '' : charFromPosition(parseInt(i / 31, 10))) + (i % 31 > 35 ? String.fromCharCode(i % 31 + 29) : (i % 31).toString(36));
+        }
+        const replacingValues = {};
+        keyWords.forEach((ele, i) => {
+          replacingValues[charFromPosition(i)] = ele || charFromPosition(i);
+        });
+        const res = toBeEval.replace(new RegExp(/\b\w+\b/, 'g'), y => replacingValues[y]);
+        return res.match(/pix=\"([^;]+)\";/)[1] +
+          res.match(/pvalue=\[\"([^,]+)\",\"([^,\]]+)\"/)[page === 0 ? 1 : 2];
+      }
       const src = [...Array(W.imagecount).keys()].map(i => {
-        let res = '';
+        let img = '';
         $.ajax({
           url: 'chapterfun.ashx',
           async: false,
           data: {
             cid: W.chapterid,
-            page: i
+            page: i,
+            key: $('#dm5_key').val()
           }
         }).done(data => {
-          res = eval(data);
+          img = decode(data, i);
         });
-        if (i === 0) return res[0];
-        return res[1];
+        return img;
       });
       return {
         title: $('.reader-header-title div:first').text().trim(),
