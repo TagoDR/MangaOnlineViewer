@@ -13,7 +13,19 @@ export default {
       quant: imgs.length,
       prev: '#',
       next: '#',
-      listImages: imgs.map(i => $(i).attr('data-lazy-src') || $(i).attr('src')).map(i => i.replace(/-[0-9]+x[0-9]+\./, '.')),
+      listImages: imgs.map((i) => {
+        const urls = $(i).attr('data-jg-srcset').split(',');
+        let src = '';
+        let w = 0;
+        for (let l = 0; l < urls.length; l += 1) {
+          const s = urls[l].match(/(.+) (\d+)w/);
+          if (s[2] > w) {
+            w = s[2];
+            src = s[1];
+          }
+        }
+        return src;
+      }),
     };
   },
 };
