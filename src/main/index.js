@@ -31,6 +31,7 @@ import mangadex from './mangadex';
 import hatigarmscans from './hatigarmscans';
 import mangarock from './mangarock';
 import manganelo from './manganelo';
+import lhtranslation from './lhtranslation';
 
 export default [
   batoto,
@@ -66,4 +67,5 @@ export default [
   hatigarmscans,
   mangarock,
   manganelo,
+  lhtranslation,
 ];
