@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaNelo, LHTranslation
-// @version 13.71.0
+// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaNelo, LHTranslation, JapScan.To
+// @version 13.72.0
 // @license MIT
-// @date 2019-03-04
+// @date 2019-03-24
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -55,7 +55,8 @@
 // @include /https?:\/\/(www.)?hatigarmscans.net\/manga\/.+\/.+(\/[0-9]*)?/
 // @include /https?:\/\/(www.)?mangarock.com\/manga\/.+\/chapter\/.+/
 // @include /https?:\/\/(www.)?manganelo.com\/chapter\/.+\/.+/
-// @include /https?:\/\/lhtranslation.net\/read.+/
+// @include /https?:\/\/(www.)?lhtranslation.net\/read.+/
+// @include /https?:\/\/(www.)?japscan.to\/lecture-en-ligne\/.+\/.+/
 // @exclude /https?:\/\/(www.)?tsumino.com\/.+/
 // @exclude /https?:\/\/(www.)?pururin.io\/.+/
 // @exclude /https?:\/\/hentai.cafe\/.+/
@@ -1584,7 +1585,7 @@
 
   var lhtranslation = {
     name: 'LHTranslation',
-    url: /https?:\/\/lhtranslation.net\/read.+/,
+    url: /https?:\/\/(www.)?lhtranslation.net\/read.+/,
     homepage: 'http://lhtranslation.net/',
     language: ['English'],
     category: 'manga',
@@ -1600,7 +1601,27 @@
     }
   };
 
-  var sites = [batoto, comicastle, readcomicsonline, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost, hocvien, jaiminisbox, mangadex, hatigarmscans, mangarock, manganelo, lhtranslation];
+  var japscan = {
+    name: 'JapScan.To',
+    url: /https?:\/\/(www.)?japscan.to\/lecture-en-ligne\/.+\/.+/,
+    homepage: 'https://www.japscan.to/',
+    language: ['French'],
+    category: 'manga',
+    waitAttr: ['#image img', 'src'],
+    run() {
+      const src = $('#image img').attr('src').replace(/\/[0-9]+\.[a-z]+$/, '/');
+      return {
+        title: $('.container h1').text(),
+        series: $('.breadcrumb a:last').attr('href'),
+        quant: $('#pages option').get().length,
+        prev: $('.card-body span + a:first').attr('href'),
+        next: $('.card-body span + a:last').attr('href'),
+        listImages: $('#pages option').get().map(item => src + $(item).attr('data-img'))
+      };
+    }
+  };
+
+  var sites = [batoto, comicastle, readcomicsonline, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost, hocvien, jaiminisbox, mangadex, hatigarmscans, mangarock, manganelo, lhtranslation, japscan];
 
   start(sites);
 
