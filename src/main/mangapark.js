@@ -2,8 +2,8 @@
 // == MangaPark ====================================================================================
 export default {
   name: 'MangaPark',
-  url: /https?:\/\/(www.)?mangapark.(com|me|org)\/(manga|chapter)\/.+\/.+/,
-  homepage: 'http://mangapark.me/',
+  url: /https?:\/\/(www.)?mangapark.(com|me|org|net)\/(manga|chapter)\/.+\/.+/,
+  homepage: 'http://mangapark.net/',
   language: ['English'],
   category: 'manga',
   run() {

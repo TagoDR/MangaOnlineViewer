@@ -7,7 +7,7 @@
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaNelo, LHTranslation, JapScan.To
 // @version 13.72.0
 // @license MIT
-// @date 2019-03-24
+// @date 2019-04-14
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -36,7 +36,7 @@
 // @include /https?:\/\/(www.)?mangahere.cc\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?mangainn.net\/.+\/[0-9]+(\/[0-9]*)?/
 // @include /https?:\/\/manga.lyght.net\/series\/.+\.html/
-// @include /https?:\/\/(www.)?mangapark.(com|me|org)\/(manga|chapter)\/.+\/.+/
+// @include /https?:\/\/(www.)?mangapark.(com|me|org|net)\/(manga|chapter)\/.+\/.+/
 // @include /https?:\/\/(www.)?(mangareader|mangapanda)(.net|.com)\/.+\/.+/
 // @include /https?:\/\/(www.)?(mangastream|readms)(.net|.com)\/r.*\/.+/
 // @include /https?:\/\/(www.)?mangatown.com\/manga\/.+\/.+/
@@ -1095,8 +1095,8 @@
 
   var mangapark = {
     name: 'MangaPark',
-    url: /https?:\/\/(www.)?mangapark.(com|me|org)\/(manga|chapter)\/.+\/.+/,
-    homepage: 'http://mangapark.me/',
+    url: /https?:\/\/(www.)?mangapark.(com|me|org|net)\/(manga|chapter)\/.+\/.+/,
+    homepage: 'http://mangapark.net/',
     language: ['English'],
     category: 'manga',
     run() {
