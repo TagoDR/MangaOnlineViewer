@@ -1,6 +1,27 @@
-"node_modules"
-".ideia"
-\.idea/
-
-node_modules/
 /dist/
+
+# Covers JetBrains WebStorm
+.idea/
+
+# OS X
+.DS_Store*
+Icon?
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+.directory
+*~
+
+# npm
+node_modules
+package-lock.json
+*.log
+
+
+# Benchmarking
+benchmarks/graphs
