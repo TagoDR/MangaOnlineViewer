@@ -11,13 +11,16 @@ import nhentai from './nhentai';
 import pururin from './pururin';
 import simplyhentai from './simplyhentai';
 import tsumino from './tsumino';
-import EightMuses from './8muses';
+import eightMuses from './8muses';
 import hentaicafe from './hentaicafe';
 import porncomixonline from './porncomixonline';
 import superhentais from './superhentais';
+import ninehentai from './9hentai';
+import asmhentai from './asmhentai';
+import multporn from './multporn';
 
 export default [
-  EightMuses,
+  eightMuses,
   doujinmoe,
   exhentai,
   // fakku,
@@ -34,4 +37,7 @@ export default [
   hentaicafe,
   porncomixonline,
   superhentais,
+  ninehentai,
+  asmhentai,
+  multporn,
 ];

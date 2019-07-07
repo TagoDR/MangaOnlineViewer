@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, hentaifox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics, SuperHentais
-// @version 13.72.0
+// @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics, SuperHentais, 9Hentai, ASMHentai, MultPorn
+// @version 13.75.0
 // @license MIT
-// @date 2019-04-14
+// @date 2019-07-07
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -37,7 +37,10 @@
 // @include /https?:\/\/(www.)?tsumino.com\/Read\/View\/.+(\/.+)?/
 // @include /https?:\/\/hentai.cafe\/manga\/read\/.*\/en\/0\/1\/(page\/.+)?/
 // @include /https?:\/\/(www.)?(porncomixonline.net|xyzcomics.com)\/.+/
-// @include /https?:\/\/(www.)?superhentais.com\/(manga|hq)\/.+\/.+/
+// @include /https?:\/\/(www.)?superhentais.com\/.+\/.+\/[0-9]+/
+// @include /https?:\/\/(www.)?9hentai.com\/g\/.+/
+// @include /https?:\/\/(www.)?asmhentai.com\/gallery\/.+/
+// @include /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/
 // ==/UserScript==
 
 (function() {
@@ -841,7 +844,7 @@
   };
 
   var hentaifox = {
-    name: 'hentaifox',
+    name: 'HentaiFox',
     url: /https?:\/\/(www.)?hentaifox.com\/g\/.+/,
     homepage: 'http://www.hentaifox.com/',
     language: ['English'],
@@ -912,7 +915,7 @@
     category: 'hentai',
     run() {
       const origin = $('.three_column_details h3 a');
-      const num = parseInt($('#pj_no_pictures').html().trim(), 10);
+      const num = parseInt($('li:not(.content_info) div.album_stats > p:nth-child(1)').html().replace(' Pictures.', ''), 10);
       return {
         title: origin.text().trim(),
         series: origin.attr('href'),
@@ -1020,7 +1023,7 @@
     }
   };
 
-  var EightMuses = {
+  var eightMuses = {
     name: '8Muses',
     url: /https?:\/\/(www.)?8muses.com\/comics\/.+\/[0-9]+/,
     homepage: 'https://www.8muses.com/',
@@ -1114,26 +1117,100 @@
 
   var superhentais = {
     name: 'SuperHentais',
-    url: /https?:\/\/(www.)?superhentais.com\/(manga|hq)\/.+\/.+/,
+    url: /https?:\/\/(www.)?superhentais.com\/.+\/.+\/[0-9]+/,
     homepage: 'http://www.superhentais.com/',
     language: ['Portuguese'],
     category: 'hentai',
     run() {
-      const imgs = $('.capListPage option').get();
+      const url = $('.capLoad').attr('data-cdn');
+      const num = $('.capListPage option').get().length;
       const chapter = $('.capList option:selected');
       return {
-        title: $('.boxBarraInfo:first').text().trim(),
-        series: $('.capList option:first').val(),
-        quant: imgs.length,
+        title: $('.conteudoBox .boxBarraInfo:first').text().trim(),
+        series: $('.capList option:nth(2)').val(),
+        quant: num,
         prev: chapter.prev().val(),
         next: chapter.next().val(),
-        listImages: imgs.map(i => $(i).attr('data-image-page'))
+        listImages: [...Array(num).keys()].map(i => String(url) + '/' + String(i + 1) + '.jpg')
       };
     }
   };
 
-  var sites = [EightMuses, doujinmoe, exhentai,
-    hbrowse, hentai2read, hentaifox, hentaihere, hitomi, luscious, nhentai, pururin, simplyhentai, tsumino, hentaicafe, porncomixonline, superhentais
+  var ninehentai = {
+    name: '9Hentai',
+    url: /https?:\/\/(www.)?9hentai.com\/g\/.+/,
+    homepage: 'https://9hentai.com',
+    language: ['English'],
+    category: 'hentai',
+    waitAttr: ['#jumpPageModal input', 'max'],
+    run() {
+      let api = null;
+      $.ajax({
+        type: 'POST',
+        url: '/api/getBookByID',
+        data: {
+          id: parseInt(location.pathname.match(/[0-9]+/)[0], 10)
+        },
+        dataType: 'json',
+        async: false,
+        success(res) {
+          api = res.results;
+        }
+      });
+      return {
+        title: api.title,
+        series: '/g/' + String(api.id) + '/',
+        quant: api.total_page,
+        prev: '#',
+        next: '#',
+        listImages: [...Array(api.total_page).keys()].map(i => String(api.image_server + api.id) + '/' + String(i + 1) + '.jpg')
+      };
+    }
+  };
+
+  var asmhentai = {
+    name: 'ASMHentai',
+    url: /https?:\/\/(www.)?asmhentai.com\/gallery\/.+/,
+    homepage: 'https://asmhentai.com/',
+    language: ['English'],
+    category: 'hentai',
+    run() {
+      const num = $('.pag_info:first option').get().length - 2;
+      const src = $('.no_image').attr('src').replace(/\d+\.jpg/, '');
+      return {
+        title: $('title').text().trim().replace(/ Page.+/, ''),
+        series: $('.rt').attr('href'),
+        quant: num,
+        prev: '#',
+        next: '#',
+        listImages: [...Array(num).keys()].map(i => String(src + (i + 1)) + '.jpg')
+      };
+    }
+  };
+
+  var multporn = {
+    name: 'MultPorn',
+    url: /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/,
+    homepage: 'https://multporn.net/',
+    language: ['English'],
+    category: 'hentai',
+    waitEle: '.jb-idx-thumb:last .jb-thm-thumb-image',
+    run() {
+      const num = $('.jb-thm-thumb-image').get().length;
+      const imgs = $('.jb-thm-thumb-image').get().map(img => $(img).attr('src').replace(/\?.+/, '').replace('/styles/juicebox_square_thumbnail_comics/public', ''));
+      return {
+        title: $('#page-title').text().trim(),
+        series: '#',
+        quant: num,
+        prev: '#',
+        next: '#',
+        listImages: imgs
+      };
+    }
+  };
+
+  var sites = [eightMuses, doujinmoe, exhentai,
+    hbrowse, hentai2read, hentaifox, hentaihere, hitomi, luscious, nhentai, pururin, simplyhentai, tsumino, hentaicafe, porncomixonline, superhentais, ninehentai, asmhentai, multporn
   ];
 
   start(sites);

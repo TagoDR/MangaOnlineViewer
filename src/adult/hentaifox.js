@@ -1,6 +1,6 @@
 // == HentaiFox ====================================================================================
 export default {
-  name: 'hentaifox',
+  name: 'HentaiFox',
   url: /https?:\/\/(www.)?hentaifox.com\/g\/.+/,
   homepage: 'http://www.hentaifox.com/',
   language: ['English'],

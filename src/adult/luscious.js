@@ -7,7 +7,9 @@ export default {
   category: 'hentai',
   run() {
     const origin = $('.three_column_details h3 a');
-    const num = parseInt($('#pj_no_pictures').html().trim(), 10);
+    const num = parseInt(
+      $('li:not(.content_info) div.album_stats > p:nth-child(1)').html()
+        .replace(' Pictures.', ''), 10);
     return {
       title: origin.text().trim(),
       series: origin.attr('href'),

@@ -24,9 +24,12 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 <!-- @echo LIST_COMIC_SITES -->
 </ul>
 <h3>Supported Hentai Sites</h3> <b><a style="color: red;" href="https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js">Adult Script</a> avaliable <i>only</i> on <a href='https://github.com/TagoDR/MangaOnlineViewer'>Github</a></b>
+<details>
+<summary>Click to expand</summary>
 <ul>
 <!-- @echo LIST_HENTAI_SITES -->
 </ul>
+</details>
 
 <h3>Supported Browsers</h3>
 Any Browser with <a href="https://tampermonkey.net/">Tampermonkey</a><br>

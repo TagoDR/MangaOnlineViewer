@@ -57,24 +57,30 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 <li><a href='http://readcomicsonline.ru/'>ReadComicsOnline</a> <i>[English]</i></li>
 </ul>
 <h3>Supported Hentai Sites</h3> <b><a style="color: red;" href="https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js">Adult Script</a> avaliable <i>only</i> on <a href='https://github.com/TagoDR/MangaOnlineViewer'>Github</a></b>
+<details>
+<summary>Click to expand</summary>
 <ul>
 <li><a href='https://www.8muses.com/'>8Muses</a> <i>[English]</i></li>
+<li><a href='https://9hentai.com'>9Hentai</a> <i>[English]</i></li>
+<li><a href='https://asmhentai.com/'>ASMHentai</a> <i>[English]</i></li>
 <li><a href='https://doujins.com/'>DoujinMoeNM</a> <i>[English]</i></li>
 <li><a href='https://exhentai.org/'>ExHentai</a> / <a href='https://e-hentai.org/'>e-Hentai</a> <i>[English]</i> <b>Obs: May get your IP Banned, use with moderation</b></li>
 <li><a href='http://www.hbrowse.com/'>HBrowser</a> <i>[English]</i></li>
 <li><a href='https://www.hentaihere.com/'>HentaIHere</a> <i>[English]</i></li>
 <li><a href='http://hentai2read.com/'>Hentai2Read</a> <i>[English]</i></li>
 <li><a href='https://hentai.cafe'>HentaiCafe</a> <i>[English]</i></li>
+<li><a href='http://www.hentaifox.com/'>HentaiFox</a> <i>[English]</i></li>
 <li><a href='https://luscious.net/'>Luscious</a> / <a href='https://www.wondersluts.com/'>Wondersluts</a> <i>[English]</i></li>
+<li><a href='https://multporn.net/'>MultPorn</a> <i>[English]</i></li>
 <li><a href='https://www.porncomixonline.net'>PornComixOnline</a> / <a href='http://xyzcomics.com/'>xyzcomics</a> <i>[English]</i></li>
 <li><a href='http://pururin.io/'>Pururin</a> <i>[English]</i></li>
 <li><a href='http://simply-hentai.com/'>Simply-Hentai</a> <i>[English]</i></li>
 <li><a href='http://tsumino.com/'>Tsumino</a> <i>[English]</i></li>
-<li><a href='http://www.hentaifox.com/'>hentaifox</a> <i>[English]</i></li>
 <li><a href='https://hitomi.la/'>hitomi</a> <i>[English]</i></li>
 <li><a href='https://nhentai.net/'>nHentai</a> <i>[English]</i></li>
 <li><a href='http://www.superhentais.com/'>SuperHentais</a> <i>[Portuguese]</i></li>
 </ul>
+</details>
 
 <h3>Supported Browsers</h3>
 Any Browser with <a href="https://tampermonkey.net/">Tampermonkey</a><br>
