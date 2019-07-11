@@ -253,7 +253,6 @@ function controls() {
         title: 'Bookmark Removed',
         timer: 10000,
         type: 'error',
-        confirmButtonText: 'OK',
       });
     } else {
       settings.bookmarks.push(mark);
@@ -261,7 +260,6 @@ function controls() {
         title: 'Saved Bookmark',
         html: `Next time you open this chapter it will resume from:<h4>Page ${num}</h4>(Only <i>ONCE</i> per Bookmark, will be removed after a year unused)`,
         type: 'success',
-        confirmButtonText: 'OK',
       });
     }
     setValueGM('MangaBookmarks', JSON.stringify(settings.bookmarks));
