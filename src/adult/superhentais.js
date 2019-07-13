@@ -11,7 +11,7 @@ export default {
     const chapter = $('.capList option:selected');
     return {
       title: $('.conteudoBox .boxBarraInfo:first').text().trim(),
-      series: $('.capList option:nth(2)').val(),
+      series: $('.capList option').eq(2).val(),
       quant: num,
       prev: chapter.prev().val(),
       next: chapter.next().val(),
