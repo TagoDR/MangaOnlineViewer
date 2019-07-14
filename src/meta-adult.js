@@ -27,7 +27,7 @@ export default {
     'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.2.2/jszip.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.5/sweetalert2.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/color-js/1.0.1/color.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js',
