@@ -67,6 +67,7 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 <li><a href='https://exhentai.org/'>ExHentai</a> / <a href='https://e-hentai.org/'>e-Hentai</a> <i>[English]</i> <b>Obs: May get your IP Banned, use with moderation</b></li>
 <li><a href='http://www.hbrowse.com/'>HBrowser</a> <i>[English]</i></li>
 <li><a href='https://www.hentaihere.com/'>HentaIHere</a> <i>[English]</i></li>
+<li><a href='https://hentai-comic.com/'>Hentai Comic</a> <i>[English]</i> <b>Obs: and similar sites</b></li>
 <li><a href='http://hentai2read.com/'>Hentai2Read</a> <i>[English]</i></li>
 <li><a href='https://hentai.cafe'>HentaiCafe</a> <i>[English]</i></li>
 <li><a href='http://www.hentaifox.com/'>HentaiFox</a> <i>[English]</i></li>
