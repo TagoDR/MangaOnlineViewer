@@ -6,18 +6,23 @@ export default {
   language: ['English'],
   category: 'manga',
   run() {
-    const temp = `${location.href.substr(0, location.href.lastIndexOf('/'))}/`;
-    const url = temp.match(/page\/$/) ? temp : `${temp}page/`;
+    const src = $('img.open').attr('src');
+    const size = src.match(/([0-9]+)\..+$/)[1].length;
+    const ext = src.match(/[0-9]+(\..+)$/)[1];
     const num = $('.topbar_right .dropdown li').length;
     const chapter = $('.topbar_left .dropdown_parent:last ul li a');
     return {
       title: $('title').text().trim().replace(/Page [0-9]+ /, ''),
       series: W.next_chapter,
       quant: num,
-      prev: chapter.eq(chapter.index(chapter.filter(`[href*='${location.pathname.replace(/page.+/, '')}']`)) + 1).attr('href'),
-      next: chapter.eq(chapter.index(chapter.filter(`[href*='${location.pathname.replace(/page.+/, '')}']`)) - 1).attr('href'),
-      listPages: [...Array(num).keys()].map(i => url + (i + 1)),
-      img: 'img.open',
+      prev: chapter.eq(
+        chapter.index(chapter.filter(`[href*='${location.pathname.replace(/page.+/, '')}']`)) + 1)
+        .attr('href'),
+      next: chapter.eq(
+        chapter.index(chapter.filter(`[href*='${location.pathname.replace(/page.+/, '')}']`)) - 1)
+        .attr('href'),
+      listImages: [...Array(num).keys()].map(i =>
+        src.replace(/[0-9]+.jpg/, String(`00000${i + 1}`).slice(-1 * size) + ext)),
     };
   },
 };

@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics, SuperHentais, 9Hentai, ASMHentai, MultPorn, Hentai Comic
-// @version 13.79.0
+// @version 13.80.0
 // @license MIT
-// @date 2019-07-20
+// @date 2019-07-26
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -1067,8 +1067,9 @@
     language: ['English'],
     category: 'manga',
     run() {
-      const temp = String(location.href.substr(0, location.href.lastIndexOf('/'))) + '/';
-      const url = temp.match(/page\/$/) ? temp : temp + 'page/';
+      const src = $('img.open').attr('src');
+      const size = src.match(/([0-9]+)\..+$/)[1].length;
+      const ext = src.match(/[0-9]+(\..+)$/)[1];
       const num = $('.topbar_right .dropdown li').length;
       const chapter = $('.topbar_left .dropdown_parent:last ul li a');
       return {
@@ -1077,8 +1078,7 @@
         quant: num,
         prev: chapter.eq(chapter.index(chapter.filter('[href*=\'' + String(location.pathname.replace(/page.+/, '')) + '\']')) + 1).attr('href'),
         next: chapter.eq(chapter.index(chapter.filter('[href*=\'' + String(location.pathname.replace(/page.+/, '')) + '\']')) - 1).attr('href'),
-        listPages: [...Array(num).keys()].map(i => url + (i + 1)),
-        img: 'img.open'
+        listImages: [...Array(num).keys()].map(i => src.replace(/[0-9]+.jpg/, String('00000' + String(i + 1)).slice(-1 * size) + ext))
       };
     }
   };
