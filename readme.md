@@ -71,6 +71,7 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 <li><a href='http://hentai2read.com/'>Hentai2Read</a> <i>[English]</i></li>
 <li><a href='https://hentai.cafe'>HentaiCafe</a> <i>[English]</i></li>
 <li><a href='http://www.hentaifox.com/'>HentaiFox</a> <i>[English]</i></li>
+<li><a href='https://hentainexus.com/'>HentaiNexus</a> <i>[English]</i></li>
 <li><a href='https://luscious.net/'>Luscious</a> / <a href='https://www.wondersluts.com/'>Wondersluts</a> <i>[English]</i></li>
 <li><a href='https://multporn.net/'>MultPorn</a> <i>[English]</i></li>
 <li><a href='https://www.porncomixonline.net'>PornComixOnline</a> / <a href='http://xyzcomics.com/'>xyzcomics</a> <i>[English]</i></li>

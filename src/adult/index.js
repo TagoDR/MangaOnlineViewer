@@ -19,6 +19,7 @@ import ninehentai from './9hentai';
 import asmhentai from './asmhentai';
 import multporn from './multporn';
 import hentaicomic from './hentaicomic';
+import hentainexus from './hentainexus';
 
 export default [
   eightMuses,
@@ -42,4 +43,5 @@ export default [
   asmhentai,
   multporn,
   hentaicomic,
+  hentainexus,
 ];
