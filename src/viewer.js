@@ -81,12 +81,8 @@ function preparePage(manga, begin = 0) {
         .filter(x => x.url === location.href)
         .map(x => x.page)[0] || 0;
     }
-    if (settings.alwaysLoad) {
-      W.stop();
-      formatPage(manga);
-    } else {
-      $('head').append('<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>');
-      $('head').append(`<style type='text/css'>
+    $('head').append('<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.16.0/dist/sweetalert2.all.min.js" integrity="sha256-7BOWXe6DFHEYnigBpBMkb0N31LYs/lltF8wa5O9Othw=" crossorigin="anonymous"></script>');
+    $('head').append(`<style type='text/css'>
 #mov {
 position: fixed;
 left: 50%;
@@ -106,25 +102,36 @@ background: rgb(102, 83, 146);
 border: 1px #FFF;
 }
 </style>`);
-      $('body').append('<button id="mov" onclick=mov()>Start MangaOnlineViewer</button>');
-      // W.mov = () => lateStart(manga, beginnig);
-      W.mov = b => lateStart(manga, b);
-      Swal.fire({
-        title: 'Starting MangaOnlineViewer',
-        text: `${beginnig
-        > 1 ? `Resuming reading from Page ${beginnig}.\n` : ''}Please wait, 3 seconds...`,
-        showCancelButton: true,
-        cancelButtonColor: '#d33',
-        reverseButtons: true,
-        timer: 3000,
-      }).then((result) => {
-        if (result.value || result.dismiss === Swal.DismissReason.timer) {
-          W.stop();
-          formatPage(manga, beginnig);
-        } else {
-          logScript(result.dismiss);
-        }
-      });
+    W.mov = b => lateStart(manga, b || beginnig);
+
+    switch (settings.loadMode) {
+      case 'never':
+        $('body').append('<button id="mov" onclick=mov()>Start MangaOnlineViewer</button>');
+        break;
+      default:
+      case 'normal':
+        Swal.fire({
+          title: 'Starting MangaOnlineViewer',
+          text: `${beginnig
+          > 1 ? `Resuming reading from Page ${beginnig}.\n` : ''}Please wait, 3 seconds...`,
+          showCancelButton: true,
+          cancelButtonColor: '#d33',
+          reverseButtons: true,
+          timer: 3000,
+        }).then((result) => {
+          if (result.value || result.dismiss === Swal.DismissReason.timer) {
+            W.stop();
+            formatPage(manga, beginnig);
+          } else {
+            $('body').append('<button id="mov" onclick=mov()>Start MangaOnlineViewer</button>');
+            logScript(result.dismiss);
+          }
+        });
+        break;
+      case 'always':
+        W.stop();
+        formatPage(manga);
+        break;
     }
   }
 }

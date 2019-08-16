@@ -100,10 +100,10 @@ gulp.task('meta_adult', (done) => {
   done();
 });
 
-gulp.task('main', () => buildUserscript(`src/${scripts.main.entry}`, `dist/${scripts.main.name}`,
+gulp.task('script_main', () => buildUserscript(`src/${scripts.main.entry}`, `dist/${scripts.main.name}`,
   `./dist/${scripts.main.meta}`));
 
-gulp.task('adult', () => buildUserscript(`src/${scripts.adult.entry}`,
+gulp.task('script_adult', () => buildUserscript(`src/${scripts.adult.entry}`,
   `dist/${scripts.adult.name}`, `./dist/${scripts.adult.meta}`));
 
 gulp.task('readme', (done) => {
@@ -128,26 +128,21 @@ gulp.task('beautify', (done) => {
   done();
 });
 
-gulp.task('release', (done) => {
+gulp.task('move', (done) => {
   gulp.src('dist/**.*')
     .pipe(gulp.dest('.'));
   done();
 });
 
-gulp.task('debug', gulp.series(
-  gulp.parallel(
-    gulp.series('meta_main', 'main'),
-    gulp.series('meta_adult', 'adult'),
-  ),
-),
-);
+gulp.task('main', gulp.series('meta_main', 'script_main'));
+gulp.task('adult', gulp.series('meta_adult', 'script_adult'));
+gulp.task('build', gulp.parallel('main', 'adult'));
 
-gulp.task('build', gulp.series(
+gulp.task('release', gulp.series(
   gulp.parallel(
-    gulp.series('meta_main', 'main'),
-    gulp.series('meta_adult', 'adult'),
+    'build',
     'readme'),
   'beautify',
-  'release'),
+  'move'),
 );
 

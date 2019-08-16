@@ -150,13 +150,10 @@ function controls() {
     setValueGM('MangaViewMode', mode);
     logScript(`ViewMode: ${getValueGM('MangaViewMode')}`);
   });
-  $('#alwaysLoad').change((event) => {
-    if ($(event.target).is(':checked')) {
-      setValueGM('MangaAlwaysLoad', true);
-    } else {
-      setValueGM('MangaAlwaysLoad', false);
-    }
-    logScript(`MangaAlwaysLoad: ${getValueGM('MangaAlwaysLoad')}`);
+  $('#loadMode').change((event) => {
+    const mode = $(event.target).val();
+    setValueGM('MangaLoadMode', mode);
+    logScript(`MangaLoadMode: ${getValueGM('MangaLoadMode')}`);
   });
   $('#showThumbnails').change((event) => {
     $('#Navigation').toggleClass('disabled');
@@ -176,7 +173,6 @@ function controls() {
         text: 'Next time a chapter finish loading you will be promted to save automatically',
         timer: 10000,
         type: 'info',
-        confirmButtonText: 'OK',
       });
     } else {
       setValueGM('MangaDownloadZip', false);

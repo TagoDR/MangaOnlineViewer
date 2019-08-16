@@ -7,8 +7,7 @@ import {
   themesSelector,
 } from './themes';
 
-const painel = `
-<div id='ImageOptions'>
+const painel = `<div id='ImageOptions'>
   <div id='menu'>
     <span class='menuOuterArrow'><span class='menuInnerArrow'></span></span>
   </div>
@@ -25,8 +24,7 @@ const painel = `
   </div>
   <div id='Zoom' class='controlLable'>Zoom: <b>${settings.Zoom}</b> %</div>
 </div>`;
-const shortcuts = `
-<div id='ViewerShortcuts' class='painel' style='display: none;'>
+const shortcuts = `<div id='ViewerShortcuts' class='painel' style='display: none;'>
   <span class='key'>+</span> or <span class='key'>=</span> : Global Zoom in pages (enlarge)<br/>
   <span class='key'>-</span> : Global Zoom out pages (reduce)<br/>
   <span class='key'>*</span> or <span class='key'>8</span> : Global Restore pages to original<br/>
@@ -34,8 +32,7 @@ const shortcuts = `
   <span class='key'>Arrow Right</span> or <span class='key'>.</span> : Next Chapter<br/>
   <span class='key'>Arrow Left</span> or <span class='key'>,</span> : Previous Chapter<br/>
 </div>`;
-const controls = `
-<div id='ViewerControls' class='painel' style='display: none;'>
+const controls = `<div id='ViewerControls' class='painel' style='display: none;'>
   <span class='controlLable'>Theme:
     <input id='CustomThemeHue' class='jscolor' value='${settings.CustomTheme}' ${(settings.Theme
   !== 'Custom_Dark' && settings.Theme !== 'Custom_Light') ? 'style="display: none;"' : ''}'>
@@ -83,12 +80,15 @@ const controls = `
   <span class='controlLable'>Download Images as Zip Automatically:
     <input type='checkbox' val='false' name='downloadZip' id='downloadZip' ${(settings.DownloadZip ? 'checked' : '')}>
   </span>
-  <span class='controlLable'>Always Load Script:
-    <input type='checkbox' val='true' name='alwaysLoad' id='alwaysLoad' ${(settings.alwaysLoad ? 'checked' : '')}>
+  <span class='controlLable'>Default Load Mode:
+    <select id='loadMode'>
+      <option value='normal' ${settings.loadMode === 'normal' ? 'selected' : ''}>Normal</option>
+      <option value='always' ${settings.loadMode === 'always' ? 'selected' : ''}>Always</option>
+      <option value='never' ${settings.loadMode === 'never' ? 'selected' : ''}>Never</option>
+    </select>
   </span>
 </div>`;
-const chapterControl = R.curry((id, target, manga) => `
-<div id='${id}' class='ChapterControl'>
+const chapterControl = R.curry((id, target, manga) => `<div id='${id}' class='ChapterControl'>
     <a id='bottom' href='#${target}' style='display: none;'>Bottom</a>
     <a href='#' class='download'>Download</a>
     <a class='prev' id='prev' href='${manga.prev || ''}' onclick='location="${manga.prev || ''}";location.reload();'>Previous</a>
@@ -98,8 +98,7 @@ const chapterControlTop = chapterControl('ChapterControlTop', 'ChapterControlBot
 const chapterControlBottom = chapterControl('ChapterControlBottom', 'MangaOnlineViewer');
 const title = manga => `<div class='ViewerTitle'><br/><a id='series' href='${manga.series}'>${manga.title}<br/>(Return to Chapter List)</a></div>`;
 // Add Pages Place holders
-const listPages = R.times(index => `
-<div id='Page${index + 1}' class='MangaPage'>
+const listPages = R.times(index => `<div id='Page${index + 1}' class='MangaPage'>
   <div class='PageFunctions'>
     <a class='Bookmark controlButton' title='Bookmark'></a>
     <a class='ZoomIn controlButton' title='Zoom In'></a>
@@ -118,8 +117,7 @@ const listOptions = R.times(index => `<option value='${index + 1}'>${index + 1}<
 const listThumbnails = R.times(
   index => `<div id='Thumbnail${index + 1}' class='Thumbnail'><img id='ThumbnailImg${index
   + 1}' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`);
-const body = (manga, begin = 0) => `
-<div id='MangaOnlineViewer' class='${settings.Theme}' style='min-height: 1080px;'>
+const body = (manga, begin = 0) => `<div id='MangaOnlineViewer' class='${settings.Theme}' style='min-height: 1080px;'>
   ${title(manga)}
   ${chapterControlTop(manga)}
   <div id='Chapter' align='center' class='${(settings.FitWidthIfOversized
@@ -151,8 +149,7 @@ const body = (manga, begin = 0) => `
 </div>`;
 
 // Inject CSS for this script
-const readerCSS = `
-<style type='text/css'>html{font-size:100%}
+const readerCSS = `<style type='text/css'>html{font-size:100%}
 body{margin:0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:#333;background-color:#FFF;padding:0}
 a{color:#08C;text-decoration:none}
 img{height:auto;max-width:100%;vertical-align:middle;border:0 none}
@@ -227,7 +224,7 @@ const externalScripts = [
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.2.2/jszip.min.js" integrity="sha256-gy5W5/rXWluWXFRvMWFFMVhocfpBe7Tf4SW2WMfjs4E=" crossorigin="anonymous"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js" integrity="sha256-XWzSUJ+FIQ38dqC06/48sNRwU1Qh3/afjmJ080SneA8=" crossorigin="anonymous"></script>',
-  '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>',
+  '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.16.0/dist/sweetalert2.all.min.js" integrity="sha256-7BOWXe6DFHEYnigBpBMkb0N31LYs/lltF8wa5O9Othw=" crossorigin="anonymous"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js" integrity="sha256-CJWfUCeP3jLdUMVNUll6yQx37gh9AKmXTRxvRf7jzro=" crossorigin="anonymous"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js" integrity="sha256-7IUC8vhyoPLh1tuQJnffPB5VO6HpR4VWK4Y1ciOOoBY=" crossorigin="anonymous"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js" integrity="sha256-43x9r7YRdZpZqTjDT5E0Vfrxn1ajIZLyYWtfAXsargA=" crossorigin="anonymous"></script>',
@@ -235,6 +232,7 @@ const externalScripts = [
 
 ];
 const externalCSS = [
+  '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@8.16.0/dist/sweetalert2.min.css" integrity="sha256-zfoprrAG5QCLwEZhI7DWYoqRWYaVYxdjd0mEF3Hl9k0=" crossorigin="anonymous">',
   '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />',
   '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" integrity="sha256-pMhcV6/TBDtqH9E9PWKgS+P32PVguLG8IipkPyqMtfY=" crossorigin="anonymous" />',
 ];

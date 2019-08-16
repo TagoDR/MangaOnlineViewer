@@ -12,6 +12,7 @@ if (typeof getValueGM('MangaZoom') === 'string') {
   setValueGM('MangaZoom', 100);
 }
 removeValueGM('MangaAlwaysWebComic');
+removeValueGM('MangaAlwaysLoad');
 removeValueGM('MangaTheme:');
 
 // Configuration
@@ -23,7 +24,7 @@ const settings = {
   DownloadZip: getValueGM('MangaDownloadZip', false),
   Timer: getValueGM('MangaTimer', 1000),
   Zoom: getValueGM('MangaZoom', 100),
-  alwaysLoad: getValueGM('MangaAlwaysLoad', false),
+  loadMode: getValueGM('MangaLoadMode', 'normal'),
   viewMode: getValueGM('MangaViewMode', ''),
   bookmarks: JSON.parse(getValueGM('MangaBookmarks', '[]')),
 };
