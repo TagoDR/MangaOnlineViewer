@@ -21,59 +21,111 @@ import {
   isEmpty,
 } from './utils';
 
+function formatPage(manga, begin) {
+  if (manga.before !== undefined) {
+    manga.before();
+  }
+  document.documentElement.innerHTML = reader(manga, begin);
+  setTimeout(() => {
+    try {
+      controls(manga);
+      setKeyDownEvents(manga);
+      checkImagesLoaded(manga);
+      logScript('Site rebuild done');
+      setTimeout(() => {
+        $('body').scrollTo(0);
+        loadManga(manga, begin);
+      }, 50);
+    } catch (e) {
+      logScript(e);
+    }
+  }, 50);
+  if (manga.after !== undefined) {
+    manga.after();
+  }
+}
+
+function lateStart(manga, begin = 1) {
+  logScript('LateStart');
+  Swal.fire({
+    title: 'Starting MangaOnlineViewer',
+    input: 'range',
+    inputAttributes: {
+      min: 1,
+      max: manga.quant,
+      step: 1,
+    },
+    inputValue: begin,
+    text: 'Choose the Page to start from:',
+    showCancelButton: true,
+    cancelButtonColor: '#d33',
+    reverseButtons: true,
+  }).then((result) => {
+    if (result.value) {
+      logScript(`Choice: ${result.value}`);
+      W.stop();
+      formatPage(manga, result.value);
+    } else {
+      logScript(result.dismiss);
+    }
+  });
+}
+
 // Organize the site adding place holders for the manga pages
-function formatPage(manga, begin = 0) {
+function preparePage(manga, begin = 0) {
   logScript(`Found ${manga.quant} pages`);
   if (manga.quant > 0) {
-    settings.starting = begin || settings.bookmarks// [manga.name]
-      .filter(x => x.url === location.href)
-      .map(x => x.page)[0] || 0;
-    let cancel = false;
-    if (!settings.alwaysLoad) {
-      $('head')
-        .append(
-          '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.5/sweetalert2.min.css" integrity="sha256-0AEO0dmdWUZ8e17VwaCiLJ1k8VlFQq2jGRetjpVCr34=" crossorigin="anonymous" />');
-      swal({
+    let beginnig = begin;
+    if (beginnig === 0) {
+      beginnig = settings.bookmarks// [manga.name]
+        .filter(x => x.url === location.href)
+        .map(x => x.page)[0] || 0;
+    }
+    if (settings.alwaysLoad) {
+      W.stop();
+      formatPage(manga);
+    } else {
+      $('head').append('<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>');
+      $('head').append(`<style type='text/css'>
+#mov {
+position: fixed;
+left: 50%;
+transform: translateX(-50%);
+top: 0;
+z-index: 1000;
+border-radius: .25em;
+font-size: 1.5em;
+cursor: pointer;
+display: inline-block;
+margin: .3125em;
+padding: .625em 2em;
+box-shadow: none;
+font-weight: 500;
+color: #FFF;
+background: rgb(102, 83, 146);
+border: 1px #FFF;
+}
+</style>`);
+      $('body').append('<button id="mov" onclick=mov()>Start MangaOnlineViewer</button>');
+      // W.mov = () => lateStart(manga, beginnig);
+      W.mov = b => lateStart(manga, b);
+      Swal.fire({
         title: 'Starting MangaOnlineViewer',
-        text: `${settings.starting
-        > 1 ? `Resuming reading from Page ${settings.starting}.\n` : ''}Please wait, 3 seconds...`,
-        showCancelButton: false,
-        confirmButtonText: 'No, cancel!',
-        confirmButtonColor: '#DD6B55',
-        closeOnConfirm: true,
-      }).then((isConfirm) => {
-        cancel = isConfirm;
-        W.mov = starting => formatPage(manga, starting);
+        text: `${beginnig
+        > 1 ? `Resuming reading from Page ${beginnig}.\n` : ''}Please wait, 3 seconds...`,
+        showCancelButton: true,
+        cancelButtonColor: '#d33',
+        reverseButtons: true,
+        timer: 3000,
+      }).then((result) => {
+        if (result.value || result.dismiss === Swal.DismissReason.timer) {
+          W.stop();
+          formatPage(manga, beginnig);
+        } else {
+          logScript(result.dismiss);
+        }
       });
     }
-    setTimeout(() => {
-      W.stop();
-      if (cancel) {
-        logScript('Aborted');
-        return;
-      }
-      if (manga.before !== undefined) {
-        manga.before();
-      }
-      document.documentElement.innerHTML = reader(manga, settings.starting);
-      setTimeout(() => {
-        try {
-          controls(manga);
-          setKeyDownEvents(manga);
-          checkImagesLoaded(manga);
-          logScript('Site rebuild done');
-          setTimeout(() => {
-            $('body').scrollTo(0);
-            loadManga(manga, settings.starting);
-          }, 50);
-        } catch (e) {
-          logScript(e);
-        }
-      }, 50);
-      if (manga.after !== undefined) {
-        manga.after();
-      }
-    }, settings.alwaysLoad ? 50 : 3000);
   }
 }
 
@@ -90,7 +142,7 @@ function start(sites) {
     let wait = '';
     if (site.waitMax !== undefined) {
       if (waitElapsed >= site.waitMax) {
-        formatPage(site.run());
+        preparePage(site.run());
         return;
       }
     }
@@ -127,7 +179,7 @@ function start(sites) {
         return;
       }
     }
-    formatPage(site.run());
+    preparePage(site.run());
   }
 
   logScript('Looking for a match...');

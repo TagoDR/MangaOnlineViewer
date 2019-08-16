@@ -1,6 +1,6 @@
 {
   "name": "mangaonlineviewer",
-  "version": "13.82.0",
+  "version": "14.0.0",
   "description": "Userscript that helps to read Manga faster by loading all the pages at once",
   "scripts": {
     "test": "45 test/*.js",
@@ -27,11 +27,11 @@
     "color-scheme": "^1.0.1",
     "jquery": "^3.4.1",
     "jquery.scrollto": "^2.1.2",
-    "jscolor": "^0.2.2",
+    "jscolor": "^0.3.0",
     "jszip": "^3.2.2",
     "nprogress": "^0.2.0",
-    "ramda": "^0.24.1",
-    "sweetalert2": "^6.11.5"
+    "ramda": "^0.26.1",
+    "sweetalert2": "^8.16.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -46,11 +46,11 @@
     "eslint-plugin-better": "^0.1.5",
     "eslint-plugin-fp": "^2.3.0",
     "eslint-plugin-import": "^2.18.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-cli": "^2.2.0",
-    "gulp-file": "^0.3.0",
+    "gulp-file": "^0.4.0",
     "gulp-jsbeautify": "^0.1.1",
-    "gulp-preprocess": "^2.0.0",
+    "gulp-preprocess": "^3.0.2",
     "moment": "^2.24.0",
     "rollup": "^0.43.1",
     "rollup-plugin-babel": "^2.7.1",

@@ -87,23 +87,26 @@ function buildUserscript(entryFile, destFile, metaFile) {
     // sourceMap: 'inline',
   }));
 }
-gulp.task('build', ['build:main', 'build:adult', 'readme'], () =>
-  gulp.src('./dist/*.js')
-    .pipe(beautify({
-      indent_size: 2,
-    }))
-    .pipe(gulp.dest('./dist/')));
-gulp.task('build:main', ['build:meta-main'], () =>
-  buildUserscript(`src/${scripts.main.entry}`, `dist/${scripts.main.name}`,
-    `./dist/${scripts.main.meta}`));
-gulp.task('build:adult', ['build:meta-adult'], () =>
-  buildUserscript(`src/${scripts.adult.entry}`,
-    `dist/${scripts.adult.name}`, `./dist/${scripts.adult.meta}`));
-gulp.task('build:meta-main', () =>
-  file(scripts.main.meta, userscript.stringify(metaMain), { src: true }).pipe(gulp.dest('dist')));
-gulp.task('build:meta-adult', () =>
-  file(scripts.adult.meta, userscript.stringify(metaAdult), { src: true }).pipe(gulp.dest('dist')));
-gulp.task('readme', () => {
+
+gulp.task('meta_main', (done) => {
+  file(scripts.main.meta, userscript.stringify(metaMain), { src: true })
+    .pipe(gulp.dest('./dist'));
+  done();
+});
+
+gulp.task('meta_adult', (done) => {
+  file(scripts.adult.meta, userscript.stringify(metaAdult), { src: true })
+    .pipe(gulp.dest('./dist'));
+  done();
+});
+
+gulp.task('main', () => buildUserscript(`src/${scripts.main.entry}`, `dist/${scripts.main.name}`,
+  `./dist/${scripts.main.meta}`));
+
+gulp.task('adult', () => buildUserscript(`src/${scripts.adult.entry}`,
+  `dist/${scripts.adult.name}`, `./dist/${scripts.adult.meta}`));
+
+gulp.task('readme', (done) => {
   gulp.src('./src/readme.md')
     .pipe(preprocess({
       context: {
@@ -113,10 +116,38 @@ gulp.task('readme', () => {
       },
     })) // To set environment variables in-line
     .pipe(gulp.dest('./dist/'));
+  done();
 });
-gulp.task('watch', () => {
-  gulp.watch(['./src/**/*.js'], ['build']);
+
+gulp.task('beautify', (done) => {
+  gulp.src('./dist/*.js')
+    .pipe(beautify({
+      indent_size: 2,
+    }))
+    .pipe(gulp.dest('./dist/'));
+  done();
 });
-gulp.task('release', ['build'], () => {
-  gulp.src('dist/**.*').pipe(gulp.dest('./'));
+
+gulp.task('release', (done) => {
+  gulp.src('dist/**.*')
+    .pipe(gulp.dest('.'));
+  done();
 });
+
+gulp.task('debug', gulp.series(
+  gulp.parallel(
+    gulp.series('meta_main', 'main'),
+    gulp.series('meta_adult', 'adult'),
+  ),
+),
+);
+
+gulp.task('build', gulp.series(
+  gulp.parallel(
+    gulp.series('meta_main', 'main'),
+    gulp.series('meta_adult', 'adult'),
+    'readme'),
+  'beautify',
+  'release'),
+);
+

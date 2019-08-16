@@ -20,7 +20,7 @@ module.exports = {
     'NProgress': false,
     'jscolor': false,
     'ColorScheme': false,
-    'swal': false,
+    'Swal': false,
   },
   'extends': [
     // 'cleanjs',

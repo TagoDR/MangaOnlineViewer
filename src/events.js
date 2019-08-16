@@ -171,7 +171,7 @@ function controls() {
   $('#downloadZip').change((event) => {
     if ($(event.target).is(':checked')) {
       setValueGM('MangaDownloadZip', true);
-      swal({
+      Swal.fire({
         title: 'Attention',
         text: 'Next time a chapter finish loading you will be promted to save automatically',
         timer: 10000,
@@ -249,14 +249,14 @@ function controls() {
     const found = settings.bookmarks.filter(el => el.url === mark.url).length > 0;
     settings.bookmarks = settings.bookmarks.filter(el => el.url !== mark.url);
     if (found) {
-      swal({
+      Swal.fire({
         title: 'Bookmark Removed',
         timer: 10000,
         type: 'error',
       });
     } else {
       settings.bookmarks.push(mark);
-      swal({
+      Swal.fire({
         title: 'Saved Bookmark',
         html: `Next time you open this chapter it will resume from:<h4>Page ${num}</h4>(Only <i>ONCE</i> per Bookmark, will be removed after a year unused)`,
         type: 'success',
