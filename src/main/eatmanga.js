@@ -13,7 +13,7 @@ export default {
       quant: $('select#pages option:last').html(),
       prev: chapter.next().val(),
       next: chapter.prev().val(),
-      listPages: $('select#pages option').get().map(item => $(item).val()),
+      listPages: $('select#pages option').get().map((item) => $(item).val()),
       img: '#eatmanga_image , #eatmanga_image_big',
     };
   },

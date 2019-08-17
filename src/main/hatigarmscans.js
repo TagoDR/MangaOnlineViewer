@@ -14,7 +14,7 @@ export default {
       quant: W.pages.length,
       prev: W.next_chapter,
       next: W.prev_chapter,
-      listImages: W.pages.map(i => url + i.page_image),
+      listImages: W.pages.map((i) => url + i.page_image),
     };
   },
 };

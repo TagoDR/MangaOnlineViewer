@@ -11,7 +11,7 @@ export default {
     $.ajax({
       type: 'POST',
       url: '/api/getBookByID',
-      data: { id: parseInt(location.pathname.match(/[0-9]+/)[0], 10) },
+      data: { id: parseInt(W.location.pathname.match(/[0-9]+/)[0], 10) },
       dataType: 'json',
       async: false,
       success(res) {
@@ -25,7 +25,8 @@ export default {
       prev: '#',
       next: '#',
       listImages: [...Array(api.total_page).keys()].map(
-        i => `${api.image_server + api.id}/${i + 1}.jpg`),
+        (i) => `${api.image_server + api.id}/${i + 1}.jpg`,
+      ),
     };
   },
 };

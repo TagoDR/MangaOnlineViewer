@@ -7,7 +7,7 @@ export default {
   category: 'manga',
   run() {
     const chapter = $('.selectChapter option:selected');
-    const url = location.href.replace(/[^/]+$/, '');
+    const url = W.location.href.replace(/[^/]+$/, '');
     return {
       title: $('title')
         .text()

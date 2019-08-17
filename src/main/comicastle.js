@@ -14,7 +14,7 @@ export default {
       quant: url.length,
       prev: chapter.find(':selected').prev().val(),
       next: chapter.find(':selected').next().val(),
-      listPages: url.map(item => $(item).val()),
+      listPages: url.map((item) => $(item).val()),
       img: '.chapter-img',
     };
   },

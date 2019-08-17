@@ -14,7 +14,7 @@ export default {
       quant: src.length,
       prev: `../${W.prev_chap}`,
       next: `../${W.next_chap}`,
-      listImages: src.map(encodeURI).map(x => `../${x}`),
+      listImages: src.map(encodeURI).map((x) => `../${x}`),
     };
   },
 };

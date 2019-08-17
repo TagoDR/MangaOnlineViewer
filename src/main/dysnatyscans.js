@@ -12,7 +12,7 @@ export default {
       quant: W.pages.length,
       prev: $('#prev_link').attr('href'),
       next: $('#next_link').attr('href'),
-      listImages: W.pages.map(x => x.image),
+      listImages: W.pages.map((x) => x.image),
     };
   },
 };

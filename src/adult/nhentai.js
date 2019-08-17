@@ -13,7 +13,7 @@ export default {
       quant: num,
       prev: '#',
       next: '#',
-      listPages: [...Array(num).keys()].map(i => `../${i + 1}/`),
+      listPages: [...Array(num).keys()].map((i) => `../${i + 1}/`),
       img: '#page-container img',
     };
   },

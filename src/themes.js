@@ -1,8 +1,7 @@
-import {
-  settings,
-} from './settings';
+import { settings } from './settings';
 
 const scheme = new ColorScheme().scheme('mono').variation('default');
+
 // Add custom Themes to the page
 function addTheme(theme) {
   return `<style type='text/css' name='${theme[0]}'>
@@ -28,8 +27,8 @@ function addCustomTheme(color) {
     `#${bg[3]}`,
     `#${bg[0]}`,
     `#${bg[1]}`,
-  ]) +
-    addTheme([
+  ])
+    + addTheme([
       'Custom_Light',
       '#eeeeec',
       `#${bg[3]}`,
@@ -56,12 +55,14 @@ function loadThemes() {
     ['Custom_Light', '#eeeeec', `#${bg[3]}`, `#${bg[2]}`, `#${bg[0]}`, `#${bg[1]}`],
   ];
 }
+
 const themes = loadThemes();
 const themesSelector = R.map(
-  theme => `<option value='${theme[0]}' ${
+  (theme) => `<option value='${theme[0]}' ${
     settings.Theme === theme[0] ? 'selected' : ''
-  }>${theme[0].replace('_', ' ')}</option>`, themes);
-const themesCSS = R.map(theme => addTheme(theme), themes).join('');
+  }>${theme[0].replace('_', ' ')}</option>`, themes,
+);
+const themesCSS = R.map((theme) => addTheme(theme), themes).join('');
 
 export {
   themesCSS,

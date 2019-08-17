@@ -15,7 +15,7 @@ export default {
       quant: num,
       prev: '#',
       next: '#',
-      listImages: [...Array(num).keys()].map(i => src.replace(/\/[0-9]+\./, `/${i + 1}.`)),
+      listImages: [...Array(num).keys()].map((i) => src.replace(/\/[0-9]+\./, `/${i + 1}.`)),
     };
   },
 };

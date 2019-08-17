@@ -1,25 +1,11 @@
 import {
-  getBrowser,
-  getEngine,
-  getInfoGM,
-  logScript,
-  logScriptC,
+  getBrowser, getEngine, getInfoGM, logScript, logScriptC,
 } from './browser';
-import {
-  settings,
-} from './settings';
+import { controls, setKeyDownEvents } from './events';
+import { checkImagesLoaded, loadManga } from './page';
 import reader from './reader';
-import {
-  loadManga,
-  checkImagesLoaded,
-} from './page';
-import {
-  controls,
-  setKeyDownEvents,
-} from './events';
-import {
-  isEmpty,
-} from './utils';
+import { settings } from './settings';
+import { isEmpty } from './utils';
 
 function formatPage(manga, begin) {
   if (manga.before !== undefined) {
@@ -78,10 +64,13 @@ function preparePage(manga, begin = 0) {
     let beginnig = begin;
     if (beginnig === 0) {
       beginnig = settings.bookmarks// [manga.name]
-        .filter(x => x.url === location.href)
-        .map(x => x.page)[0] || 0;
+        .filter((x) => x.url === W.location.href)
+        .map((x) => x.page)[0] || 0;
     }
-    $('head').append('<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.16.0/dist/sweetalert2.all.min.js" integrity="sha256-7BOWXe6DFHEYnigBpBMkb0N31LYs/lltF8wa5O9Othw=" crossorigin="anonymous"></script>');
+    $('head')
+      .append(
+        '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.16.0/dist/sweetalert2.all.min.js" integrity="sha256-7BOWXe6DFHEYnigBpBMkb0N31LYs/lltF8wa5O9Othw=" crossorigin="anonymous"></script>',
+      );
     $('head').append(`<style type='text/css'>
 #mov {
 position: fixed;
@@ -102,7 +91,7 @@ background: rgb(102, 83, 146);
 border: 1px #FFF;
 }
 </style>`);
-    W.mov = b => lateStart(manga, b || beginnig);
+    W.mov = (b) => lateStart(manga, b || beginnig);
 
     switch (settings.loadMode) {
       case 'never':
@@ -139,7 +128,8 @@ border: 1px #FFF;
 // Script Entry point
 function start(sites) {
   logScript(
-    `Starting ${getInfoGM.script.name} ${getInfoGM.script.version} on ${getBrowser()} with ${getEngine()}`);
+    `Starting ${getInfoGM.script.name} ${getInfoGM.script.version} on ${getBrowser()} with ${getEngine()}`,
+  );
   W.InfoGM = getInfoGM;
   logScript(`${sites.length} Known Manga Sites`);
   let waitElapsed = 0;
@@ -192,7 +182,7 @@ function start(sites) {
   logScript('Looking for a match...');
   const test = R.compose(R.map(waitExec),
     R.map(logScriptC('Site Found:')),
-    R.filter(x => R.test(x.url, location.href)));
+    R.filter((x) => R.test(x.url, W.location.href)));
   test(sites);
 }
 

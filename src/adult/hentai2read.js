@@ -12,7 +12,7 @@ export default {
       quant: W.gData.images.length,
       prev: W.gData.previousURL,
       next: W.gData.nextURL,
-      listImages: W.gData.images.map(i => `https://static.hentaicdn.com/hentai${i}`),
+      listImages: W.gData.images.map((i) => `https://static.hentaicdn.com/hentai${i}`),
     };
   },
 };

@@ -6,16 +6,20 @@ export default {
   language: ['English'],
   category: 'manga',
   run() {
-    const url = location.href.substring(0, location.href.lastIndexOf('/') + 1);
-    const num = parseInt($('div.controls div.btn-group ul.dropdown-menu li:last').text().match(/[0-9]+/), 10);
+    const url = W.location.href.substring(0, W.location.href.lastIndexOf('/') + 1);
+    const num = parseInt(
+      $('div.controls div.btn-group ul.dropdown-menu li:last').text().match(/[0-9]+/), 10,
+    );
     const chapter = $('.controls .dropdown-menu:first a');
     return {
       title: $('.btn:eq(0)').text().trim(),
       series: $('div.controls div.btn-group ul.dropdown-menu:first li a:last').attr('href'),
       quant: num,
-      prev: chapter.eq(chapter.index(chapter.filter(`[href*='${location.pathname}']`)) + 1).attr('href'),
-      next: chapter.eq(chapter.index(chapter.filter(`[href*='${location.pathname}']`)) - 1).attr('href'),
-      listPages: [...Array(num).keys()].map(i => url + (i + 1)),
+      prev: chapter.eq(chapter.index(chapter.filter(`[href*='${W.location.pathname}']`)) + 1)
+        .attr('href'),
+      next: chapter.eq(chapter.index(chapter.filter(`[href*='${W.location.pathname}']`)) - 1)
+        .attr('href'),
+      listPages: [...Array(num).keys()].map((i) => url + (i + 1)),
       img: 'img#manga-page',
     };
   },

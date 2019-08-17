@@ -11,9 +11,15 @@ export default {
       title: $('title').text().trim(),
       series: $('div.tbtitle div.text a:first').attr('href'),
       quant: W.pages.length,
-      prev: chapter.eq(chapter.index(chapter.filter(`[href*='${location.pathname.replace(/page.+/, '')}']`)) + 1).attr('href'),
-      next: chapter.eq(chapter.index(chapter.filter(`[href*='${location.pathname.replace(/page.+/, '')}']`)) - 1).attr('href'),
-      listImages: W.pages.map(i => i.url),
+      prev: chapter.eq(
+        chapter.index(chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`)) + 1,
+      )
+        .attr('href'),
+      next: chapter.eq(
+        chapter.index(chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`)) - 1,
+      )
+        .attr('href'),
+      listImages: W.pages.map((i) => i.url),
     };
   },
 };

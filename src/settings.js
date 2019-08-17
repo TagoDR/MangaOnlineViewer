@@ -30,7 +30,7 @@ const settings = {
 };
 // Clear old Bookmarks
 const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // year
-settings.bookmarks = settings.bookmarks.filter(el => Date.now() - el.date < bookmarkTimeLimit);
+settings.bookmarks = settings.bookmarks.filter((el) => Date.now() - el.date < bookmarkTimeLimit);
 setValueGM('MangaBookmarks', JSON.stringify(settings.bookmarks));
 
 // Icons in Base64 format

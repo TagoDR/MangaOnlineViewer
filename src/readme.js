@@ -1,14 +1,14 @@
 import R from 'ramda';
-import main from './main';
 import adult from './adult';
+import main from './main';
 
 const sites = R.concat(main, adult);
 const languages = R.compose(R.uniq, R.map(R.prop('languages')))(sites);
 
-const linkSite = site => `<a href='${site[1]}'>${site[0]}</a>`;
-const normalizeSite = R.ifElse(site => typeof site.name !== 'string',
-  site => R.zip(site.name, site.homepage),
-  site => [R.pair(site.name, site.homepage)]);
+const linkSite = (site) => `<a href='${site[1]}'>${site[0]}</a>`;
+const normalizeSite = R.ifElse((site) => typeof site.name !== 'string',
+  (site) => R.zip(site.name, site.homepage),
+  (site) => [R.pair(site.name, site.homepage)]);
 
 function siteListEntry(site) {
   const links = R.compose(R.join(' / '), R.map(linkSite), normalizeSite);

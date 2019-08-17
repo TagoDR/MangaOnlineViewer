@@ -9,7 +9,7 @@ export default {
   run() {
     const num = $('.jb-thm-thumb-image').get().length;
     const imgs = $('.jb-thm-thumb-image').get()
-      .map(img => $(img).attr('src')
+      .map((img) => $(img).attr('src')
         .replace(/\?.+/, '')
         .replace('/styles/juicebox_square_thumbnail_comics/public', ''));
     return {

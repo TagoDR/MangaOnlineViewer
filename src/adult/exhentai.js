@@ -13,7 +13,7 @@ export default {
       quant: $('.gdtm a, .gdtl a').get().length,
       prev: $('.ptt td:first a').attr('href'),
       next: $('.ptt td:last a').attr('href'),
-      listPages: $('.gdtm a, .gdtl a').get().map(item => $(item).attr('href')),
+      listPages: $('.gdtm a, .gdtl a').get().map((item) => $(item).attr('href')),
       img: '#img',
       // timer: 3000,
     };

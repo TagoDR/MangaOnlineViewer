@@ -1,25 +1,19 @@
+import fs from 'fs';
 import gulp from 'gulp';
 import file from 'gulp-file';
 import beautify from 'gulp-jsbeautify';
 import preprocess from 'gulp-preprocess';
-import userscript from 'userscript-meta';
-import {
-  rollup,
-} from 'rollup';
-import commonjs from 'rollup-plugin-commonjs';
-import babel from 'rollup-plugin-babel';
-import eslint from 'rollup-plugin-eslint';
-import cleanup from 'rollup-plugin-cleanup';
 import R from 'ramda';
-import fs from 'fs';
-import metaMain from './src/meta-main';
-import metaAdult from './src/meta-adult';
-import {
-  mangaSites,
-  comicSites,
-  hentaiSites,
-} from './src/readme';
+import { rollup } from 'rollup';
+import babel from 'rollup-plugin-babel';
+import cleanup from 'rollup-plugin-cleanup';
+import commonjs from 'rollup-plugin-commonjs';
+import { eslint } from 'rollup-plugin-eslint';
+import userscript from 'userscript-meta';
 import pkg from './package.json';
+import metaAdult from './src/meta-adult';
+import metaMain from './src/meta-main';
+import { comicSites, hentaiSites, mangaSites } from './src/readme';
 
 const scripts = {
   main: {
@@ -38,11 +32,11 @@ const scripts = {
 
 function buildUserscript(entryFile, destFile, metaFile) {
   return rollup({
-    entry: entryFile,
+    input: entryFile,
     external: R.keys(pkg.dependencies),
     plugins: [
       commonjs(), // {namedExports: {'./src/sites-metaAdult.js': ['sites']}}),
-      eslint(),
+      eslint({ fix: true }),
       babel({
         babelrc: false,
         presets: [
@@ -50,7 +44,7 @@ function buildUserscript(entryFile, destFile, metaFile) {
             'airbnb', {
               modules: false,
               targets: {
-                node: 7,
+                node: 12,
               //   chrome: 59,
               //   opera: 46,
               //   firefox: 52,
@@ -61,8 +55,9 @@ function buildUserscript(entryFile, destFile, metaFile) {
           ],
         ],
         plugins: [
-          'external-helpers',
+          '@babel/external-helpers',
         ],
+        runtimeHelpers: true,
         exclude: 'node_modules/**',
       }),
       cleanup({
@@ -70,11 +65,11 @@ function buildUserscript(entryFile, destFile, metaFile) {
         normalizeEols: 'win',
       }),
     ],
-  }).then(bundle => bundle.write({
+  }).then((bundle) => bundle.write({
     banner: fs.readFileSync(metaFile, 'utf8'),
     intro: 'var W = (typeof unsafeWindow === undefined) ? window : unsafeWindow;',
     format: 'iife',
-    dest: destFile,
+    file: destFile,
     globals: {
       'color-scheme': 'ColorScheme',
       jquery: '$',
@@ -82,7 +77,7 @@ function buildUserscript(entryFile, destFile, metaFile) {
       jszip: 'JSZip',
       nprogress: 'NProgress',
       ramda: 'R',
-      sweetalert: 'swal',
+      sweetalert: 'Swal',
     },
     // sourceMap: 'inline',
   }));
@@ -100,8 +95,9 @@ gulp.task('meta_adult', (done) => {
   done();
 });
 
-gulp.task('script_main', () => buildUserscript(`src/${scripts.main.entry}`, `dist/${scripts.main.name}`,
-  `./dist/${scripts.main.meta}`));
+gulp.task('script_main',
+  () => buildUserscript(`src/${scripts.main.entry}`, `dist/${scripts.main.name}`,
+    `./dist/${scripts.main.meta}`));
 
 gulp.task('script_adult', () => buildUserscript(`src/${scripts.adult.entry}`,
   `dist/${scripts.adult.name}`, `./dist/${scripts.adult.meta}`));
@@ -141,8 +137,8 @@ gulp.task('build', gulp.parallel('main', 'adult'));
 gulp.task('release', gulp.series(
   gulp.parallel(
     'build',
-    'readme'),
+    'readme',
+  ),
   'beautify',
-  'move'),
-);
-
+  'move',
+));

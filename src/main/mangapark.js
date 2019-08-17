@@ -21,8 +21,8 @@ export default {
         return $(i).attr('src');
       }),
       before() {
-        if (location.href.search(/\/1$/) !== -1) {
-          location.href = location.href.replace('/1', '');
+        if (W.location.href.search(/\/1$/) !== -1) {
+          W.location.href = W.location.href.replace('/1', '');
         }
       },
     };

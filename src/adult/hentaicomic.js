@@ -7,8 +7,8 @@ export default {
   obs: 'and similar sites',
   category: 'hentai',
   run() {
-    const pages = [location.pathname];
-    pages.push(...$('#paginator:first a').get().slice(0, -2).map(s => $(s).attr('href')));
+    const pages = [W.location.pathname];
+    pages.push(...$('#paginator:first a').get().slice(0, -2).map((s) => $(s).attr('href')));
     const imgs = [];
 
     function getimages(url) {
@@ -18,7 +18,7 @@ export default {
         dataType: 'html',
         async: false,
         success(html) {
-          imgs.push(...$('#display_image_detail img', html).get().map(s => $(s).attr('src')));
+          imgs.push(...$('#display_image_detail img', html).get().map((s) => $(s).attr('src')));
         },
       });
     }

@@ -1,11 +1,5 @@
-import {
-  settings,
-  icon,
-} from './settings';
-import {
-  themesCSS,
-  themesSelector,
-} from './themes';
+import { icon, settings } from './settings';
+import { themesCSS, themesSelector } from './themes';
 
 const painel = `<div id='ImageOptions'>
   <div id='menu'>
@@ -91,14 +85,14 @@ const controls = `<div id='ViewerControls' class='painel' style='display: none;'
 const chapterControl = R.curry((id, target, manga) => `<div id='${id}' class='ChapterControl'>
     <a id='bottom' href='#${target}' style='display: none;'>Bottom</a>
     <a href='#' class='download'>Download</a>
-    <a class='prev' id='prev' href='${manga.prev || ''}' onclick='location="${manga.prev || ''}";location.reload();'>Previous</a>
-    <a class='next' id='next' href='${manga.next || ''}' onclick='location="${manga.next || ''}";location.reload();'>Next</a>
+    <a class='prev' id='prev' href='${manga.prev || ''}' onclick='W.location="${manga.prev || ''}";W.location.reload();'>Previous</a>
+    <a class='next' id='next' href='${manga.next || ''}' onclick='W.location="${manga.next || ''}";W.location.reload();'>Next</a>
 </div>`);
 const chapterControlTop = chapterControl('ChapterControlTop', 'ChapterControlBottom');
 const chapterControlBottom = chapterControl('ChapterControlBottom', 'MangaOnlineViewer');
-const title = manga => `<div class='ViewerTitle'><br/><a id='series' href='${manga.series}'>${manga.title}<br/>(Return to Chapter List)</a></div>`;
+const title = (manga) => `<div class='ViewerTitle'><br/><a id='series' href='${manga.series}'>${manga.title}<br/>(Return to Chapter List)</a></div>`;
 // Add Pages Place holders
-const listPages = R.times(index => `<div id='Page${index + 1}' class='MangaPage'>
+const listPages = R.times((index) => `<div id='Page${index + 1}' class='MangaPage'>
   <div class='PageFunctions'>
     <a class='Bookmark controlButton' title='Bookmark'></a>
     <a class='ZoomIn controlButton' title='Zoom In'></a>
@@ -113,10 +107,11 @@ const listPages = R.times(index => `<div id='Page${index + 1}' class='MangaPage'
     <img id='PageImg${index + 1}' alt='PageImg${index + 1}' />
   </div>
 </div>`);
-const listOptions = R.times(index => `<option value='${index + 1}'>${index + 1}</option>`);
+const listOptions = R.times((index) => `<option value='${index + 1}'>${index + 1}</option>`);
 const listThumbnails = R.times(
-  index => `<div id='Thumbnail${index + 1}' class='Thumbnail'><img id='ThumbnailImg${index
-  + 1}' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`);
+  (index) => `<div id='Thumbnail${index + 1}' class='Thumbnail'><img id='ThumbnailImg${index
+  + 1}' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`,
+);
 const body = (manga, begin = 0) => `<div id='MangaOnlineViewer' class='${settings.Theme}' style='min-height: 1080px;'>
   ${title(manga)}
   ${chapterControlTop(manga)}
@@ -185,7 +180,7 @@ input,textarea,.uneditable-input{margin-left:0}*/
 #MangaOnlineViewer #ImageOptions.settingsOpen {position:fixed;}
 #MangaOnlineViewer #ImageOptions #menu {position:fixed;top: 45px;height: 64px;width: 200px;top: 0;}
 #MangaOnlineViewer #ImageOptions #Zoom {position:absolute;left: 18px;bottom: -65px;}
-#MangaOnlineViewer .MangaPage{width:100%;display:inline-block;text-align:center;align:center;transform: translate3d(0, 0, 0);backface-visibility: hidden;perspective: 1000;(0, 0, 0);-webkit-backface-visibility: hidden;-webkit-perspective: 1000;-moz-transform: translate3d(0, 0, 0);-moz-backface-visibility: hidden;-moz-perspective: 1000;}
+#MangaOnlineViewer .MangaPage{width:100%;display:inline-block;text-align:center;align:center;transform: translate3d(0, 0, 0);backface-visibility: hidden;perspective: 1000px;-webkit-backface-visibility: hidden;-webkit-perspective: 1000px;-moz-transform: translate3d(0, 0, 0);-moz-backface-visibility: hidden;-moz-perspective: 1000px;}
 #MangaOnlineViewer .PageContent{margin:0 0 15px;text-align:center;display:inline-block}
 #MangaOnlineViewer #gotoPage{width:35px;}
 #MangaOnlineViewer #ThemeSelector{width:110px;}
@@ -208,7 +203,7 @@ input,textarea,.uneditable-input{margin-left:0}*/
 #MangaOnlineViewer #Navigation .Thumbnail {display: inline-block;height: 150px;margin: 0 5px;position: relative;}
 #MangaOnlineViewer #Navigation .Thumbnail span {display: block;opacity: 0.8;position: relative;top: -30px;width: 100%;}
 #MangaOnlineViewer #Navigation .Thumbnail img {align-content: center;cursor: pointer;display: inline-block;margin-bottom: -10px;margin-top: 10px;max-height: 150px;min-height: 150px;min-width: 100px;}
-#MangaOnlineViewer #Navigation .nav {behavior:url(-ms-transform.htc);-moz-transform:rotate(-90deg);-webkit-transform:rotate(-90deg);-o-transform:rotate(-90deg);}
+#MangaOnlineViewer #Navigation .nav {transform: rotate(-90deg);;}
 #MangaOnlineViewer #ImageOptions .menuOuterArrow  {width: 0;height: 0;border-top: 10px solid transparent;border-bottom: 10px solid transparent;border-left:10px solid blue;display: inline-block;position: absolute;bottom: 0;}
 #MangaOnlineViewer #ImageOptions .menuInnerArrow {width: 0;height: 0;border-top: 5px solid transparent;border-bottom: 5px solid transparent;border-left:5px solid white;left: -10px;position: absolute;top: -5px;display: inline-block;}
 #MangaOnlineViewer .fitWidthIfOversized .PageContent img { max-width: ${$(window).width()}px;}

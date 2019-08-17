@@ -14,7 +14,7 @@ export default {
       quant: url.length,
       prev: chapter.next().val(),
       next: chapter.prev().val(),
-      listPages: url.map(item => $(item).val()),
+      listPages: url.map((item) => $(item).val()),
       img: '.manga_pic',
     };
   },

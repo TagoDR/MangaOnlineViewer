@@ -14,7 +14,7 @@ export default {
       quant: imgs.length,
       prev: '#',
       next: '#',
-      listImages: imgs.map(i => $(i).attr('data-file')),
+      listImages: imgs.map((i) => $(i).attr('data-file')),
     };
   },
 };

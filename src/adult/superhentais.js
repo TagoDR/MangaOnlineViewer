@@ -15,7 +15,7 @@ export default {
       quant: num,
       prev: chapter.prev().val(),
       next: chapter.next().val(),
-      listImages: [...Array(num).keys()].map(i => `${url}/${i + 1}.jpg`),
+      listImages: [...Array(num).keys()].map((i) => `${url}/${i + 1}.jpg`),
     };
   },
 };

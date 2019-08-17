@@ -16,7 +16,7 @@ export default {
       quant: num.length,
       prev: chapter.prev().val(),
       next: chapter.next().val(),
-      listPages: num.map(item => $(item).val()),
+      listPages: num.map((item) => $(item).val()),
       img: '#image',
     };
   },

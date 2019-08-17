@@ -32,5 +32,6 @@ module.exports = {
   'rules': {
     'linebreak-style': ['off', 'windows'],
     'no-console': 'warn',
+    'prefer-destructuring': ["error", {"object": true, "array": false}],
   },
 };

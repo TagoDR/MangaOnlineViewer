@@ -20,6 +20,7 @@ export default {
         for (let l = 0; l < urls.length; l += 1) {
           const s = urls[l].match(/(.+) (\d+)w/);
           if (s[2] > w) {
+            [, w, src] = s;
             w = s[2];
             src = s[1];
           }

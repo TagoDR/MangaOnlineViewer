@@ -16,13 +16,16 @@ export default {
       series: W.next_chapter,
       quant: num,
       prev: chapter.eq(
-        chapter.index(chapter.filter(`[href*='${location.pathname.replace(/page.+/, '')}']`)) + 1)
+        chapter.index(chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`)) + 1,
+      )
         .attr('href'),
       next: chapter.eq(
-        chapter.index(chapter.filter(`[href*='${location.pathname.replace(/page.+/, '')}']`)) - 1)
+        chapter.index(chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`)) - 1,
+      )
         .attr('href'),
-      listImages: [...Array(num).keys()].map(i =>
-        src.replace(/[0-9]+.jpg/, String(`00000${i + 1}`).slice(-1 * size) + ext)),
+      listImages: [...Array(num).keys()].map(
+        (i) => src.replace(/[0-9]+.jpg/, String(`00000${i + 1}`).slice(-1 * size) + ext),
+      ),
     };
   },
 };

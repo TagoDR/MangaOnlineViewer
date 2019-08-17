@@ -13,7 +13,9 @@ export default {
       quant: $('h1').text().match(/[0-9]+$/),
       prev: '#',
       next: '#',
-      listImages: W.reader_page_locs.map(x => `${W.reader_baseobj_url}?name=${encodeURIComponent(x)}`),
+      listImages: W.reader_page_locs.map(
+        (x) => `${W.reader_baseobj_url}?name=${encodeURIComponent(x)}`,
+      ),
     };
   },
 };

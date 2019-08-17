@@ -6,7 +6,8 @@ export default {
   language: ['English'],
   category: 'manga',
   run() {
-    const url = location.href + (location.href.lastIndexOf('/') !== location.href.length - 1 ? '/' : '');
+    const url = W.location.href + (W.location.href.lastIndexOf('/') !== W.location.href.length
+    - 1 ? '/' : '');
     const num = parseInt($('select#pageMenu option:last').html(), 10);
     const chapter = $('#mangainfo_bas a');
     return {
@@ -15,14 +16,14 @@ export default {
       quant: num,
       prev: chapter.last().attr('href'),
       next: chapter.first().attr('href'),
-      listPages: [...Array(num).keys()].map(i => url + (i + 1), num),
+      listPages: [...Array(num).keys()].map((i) => url + (i + 1), num),
       img: 'img#img',
       before() {
-        if (location.pathname.match(/\/.+\/.+\/chapter-[0-9]+.*/)) {
-          const path = location.pathname.split('/');
-          location.pathname = `/${path[2]}/${path[3].match(/[0-9]+/)}`;
-        } else if (location.search) {
-          location.href = location.pathname;
+        if (W.location.pathname.match(/\/.+\/.+\/chapter-[0-9]+.*/)) {
+          const path = W.location.pathname.split('/');
+          W.location.pathname = `/${path[2]}/${path[3].match(/[0-9]+/)}`;
+        } else if (W.location.search) {
+          W.location.href = W.location.pathname;
         }
       },
     };

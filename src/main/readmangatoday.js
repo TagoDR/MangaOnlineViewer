@@ -12,8 +12,7 @@ export default {
       quant: W.images.length,
       prev: W.prev_chapter_url,
       next: W.next_chapter_url,
-      listImages: W.images.map(i => i.url),
+      listImages: W.images.map((i) => i.url),
     };
   },
 };
-

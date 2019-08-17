@@ -1,19 +1,8 @@
-import {
-  applyZoom,
-  reloadImage,
-} from './page';
-import {
-  addCustomTheme,
-} from './themes';
+import { getValueGM, logScript, setValueGM } from './browser';
 import generateZip from './download';
-import {
-  getValueGM,
-  logScript,
-  setValueGM,
-} from './browser';
-import {
-  settings,
-} from './settings';
+import { applyZoom, reloadImage } from './page';
+import { settings } from './settings';
+import { addCustomTheme } from './themes';
 
 // Clean key press configurations and set some when specified
 function setKeyDownEvents() {
@@ -241,9 +230,9 @@ function controls() {
   $('.Bookmark').click((event) => {
     const num = parseInt($(event.target).parents('.MangaPage').find('.PageFunctions span').text(),
       10);
-    const mark = { url: location.href, page: num, date: Date.now() };
-    const found = settings.bookmarks.filter(el => el.url === mark.url).length > 0;
-    settings.bookmarks = settings.bookmarks.filter(el => el.url !== mark.url);
+    const mark = { url: W.location.href, page: num, date: Date.now() };
+    const found = settings.bookmarks.filter((el) => el.url === mark.url).length > 0;
+    settings.bookmarks = settings.bookmarks.filter((el) => el.url !== mark.url);
     if (found) {
       Swal.fire({
         title: 'Bookmark Removed',

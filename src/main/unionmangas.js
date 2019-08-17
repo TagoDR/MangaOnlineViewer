@@ -15,7 +15,9 @@ export default { // TODO: Check
       quant: $('.selectPage:first option').length,
       prev: chapter.prev().val(),
       next: chapter.next().val(),
-      listImages: [$(src[0]).attr('src')].concat(src.splice(1).map(item => $(item).attr('data-lazy'))),
+      listImages: [$(src[0]).attr('src')].concat(
+        src.splice(1).map((item) => $(item).attr('data-lazy')),
+      ),
     };
   },
 };

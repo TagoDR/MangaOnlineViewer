@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import moment from 'moment';
 import R from 'ramda';
 import pkg from '../package.json';
@@ -10,7 +9,8 @@ export default {
   updateURL: 'https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js',
   downloadURL: 'https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js',
   namespace: 'https://github.com/TagoDR',
-  description: `Shows all pages at once in online view for these sites: ${R.pluck('name', sites).join(', ')}`,
+  description: `Shows all pages at once in online view for these sites: ${R.pluck('name', sites)
+    .join(', ')}`,
   version: pkg.version,
   license: pkg.license,
   date: moment().format('YYYY-MM-DD'),

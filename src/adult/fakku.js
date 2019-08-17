@@ -17,7 +17,7 @@ export default {
       quant: num,
       prev: '#',
       next: '#',
-      listImages: [...Array(num).keys()].map(i => `${src + String(`000${i + 1}`).slice(-3)}.jpg`),
+      listImages: [...Array(num).keys()].map((i) => `${src + String(`000${i + 1}`).slice(-3)}.jpg`),
     };
   },
 };

@@ -13,7 +13,7 @@ export default {
       quant: images.length,
       prev: $('.btn-navigation-chap a:eq(0)').attr('href'),
       next: $('.btn-navigation-chap a:eq(1)').attr('href'),
-      listImages: images.map(i => $(i).attr('src')),
+      listImages: images.map((i) => $(i).attr('src')),
     };
   },
 };

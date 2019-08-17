@@ -38,7 +38,7 @@ function getPage(url, wait = settings.Timer) {
         url,
         dataType: 'html',
         async: true,
-        success: html => resolve(html),
+        success: (html) => resolve(html),
         // retryCount and retryLimit will let you retry a determined number of times
         retryCount: 0,
         retryLimit: 10,
@@ -62,12 +62,12 @@ function getPage(url, wait = settings.Timer) {
   });
 }
 
-const loadMangaPages = (begin, manga) =>
-  mapIndexed(
-    (url, index) => (index >= begin ? getPage(url,
-      (manga.timer || settings.Timer) * (index - begin))
-      .then(response => addImg(index + 1, $(response).find(manga.img).attr('src'))) : null),
-    manga.listPages);
+const loadMangaPages = (begin, manga) => mapIndexed(
+  (url, index) => (index >= begin ? getPage(url,
+    (manga.timer || settings.Timer) * (index - begin))
+    .then((response) => addImg(index + 1, $(response).find(manga.img).attr('src'))) : null),
+  manga.listPages,
+);
 
 function getImages(src, wait = settings.Timer) {
   return new Promise((resolve) => {
@@ -77,17 +77,17 @@ function getImages(src, wait = settings.Timer) {
   });
 }
 
-const loadMangaImages = (begin, manga) =>
-  mapIndexed(
-    (src, index) => (index >= begin ? getImages(src,
-      (manga.timer || settings.Timer) * (index - begin))
-      .then(response =>
-        addImg(index + 1, response)) : null),
-    manga.listImages);
+const loadMangaImages = (begin, manga) => mapIndexed(
+  (src, index) => (index >= begin ? getImages(src,
+    (manga.timer || settings.Timer) * (index - begin))
+    .then((response) => addImg(index + 1, response)) : null),
+  manga.listImages,
+);
 
-const loadMangaImagesAlt = (begin, manga) =>
-  mapIndexed((src, index) => (index >= begin ? addImgAlt(index + 1, src) : null),
-    manga.listImagesAlt);
+const loadMangaImagesAlt = (begin, manga) => mapIndexed(
+  (src, index) => (index >= begin ? addImgAlt(index + 1, src) : null),
+  manga.listImagesAlt,
+);
 
 function loadManga(manga, begin = 1) {
   logScript('Loading Images');
@@ -140,20 +140,19 @@ function reloadImage(img) {
 function applyZoom(page, newZoom) {
   const zoom = newZoom || settings.Zoom;
   const pages = page || '.PageContent img';
-  $(pages).each((index, value) =>
-    $(value)
-      .width(zoom === 1000 ? $('html').width() : $(value).prop('naturalWidth') * (zoom / 100)));
+  $(pages).each((index, value) => $(value)
+    .width(zoom === 1000 ? $('html').width() : $(value).prop('naturalWidth') * (zoom / 100)));
 }
 
 // Checks if all images loaded correctly
 function checkImagesLoaded(manga) {
   const images = $('.PageContent img').get();
   const total = images.length;
-  const missing = images.filter(item => $(item).prop('naturalWidth') === 0);
-  const loaded = images.filter(item => $(item).prop('naturalWidth') !== 0);
-  loaded.filter(item => $(item).attr('width') === undefined)
-    .forEach(item => applyZoom($(item)));
-  missing.forEach(item => reloadImage($(item)));
+  const missing = images.filter((item) => $(item).prop('naturalWidth') === 0);
+  const loaded = images.filter((item) => $(item).prop('naturalWidth') !== 0);
+  loaded.filter((item) => $(item).attr('width') === undefined)
+    .forEach((item) => applyZoom($(item)));
+  missing.forEach((item) => reloadImage($(item)));
   NProgress.configure({
     showSpinner: false,
   }).set(loaded.length / total);
@@ -166,7 +165,7 @@ function checkImagesLoaded(manga) {
     logScript('Images Loading Complete');
     // $('title').html(manga.title);
     // Clear used Bookmarks
-    settings.bookmarks = settings.bookmarks.filter(el => el.url !== location.href);
+    settings.bookmarks = settings.bookmarks.filter((el) => el.url !== W.location.href);
     setValueGM('MangaBookmarks', JSON.stringify(settings.bookmarks));
     $('.download').attr('href', '#download');
     logScript('Download Avaliable');

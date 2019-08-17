@@ -12,7 +12,7 @@ export default {
       quant: $('#page:first option').length,
       prev: $('.chnav a:first').attr('href'),
       next: $('.chnav a:eq(1)').attr('href'),
-      listPages: $('#page:first option').get().map(item => $(item).val()),
+      listPages: $('#page:first option').get().map((item) => $(item).val()),
       img: '.manga_pic',
     };
   },

@@ -13,7 +13,7 @@ export default {
       quant: src.length,
       prev: $('.top-nav a:first').attr('href'),
       next: $('.top-nav a:last').attr('href'),
-      listImages: src.map(item => $(item).attr('src')),
+      listImages: src.map((item) => $(item).attr('src')),
     };
   },
 };

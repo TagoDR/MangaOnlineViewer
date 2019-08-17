@@ -14,7 +14,7 @@ export default {
       quant: url.length,
       prev: chapter.next('option').val(),
       next: chapter.prev('option').val(),
-      listPages: url.map(item => $(item).val()),
+      listPages: url.map((item) => $(item).val()),
       img: '.img-responsive',
     };
   },

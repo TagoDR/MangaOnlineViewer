@@ -12,7 +12,7 @@ const logScriptC = R.curry((x, y) => logScript(x, y)[1]);
 // Replacement function for GM_listValues allowing for debugging in console
 const getListGM = GM_listValues || (() => []);
 // Replacement function for GM_listValues allowing for debugging in console
-const removeValueGM = GM_deleteValue || (name => logScript('Removing: ', name));
+const removeValueGM = GM_deleteValue || ((name) => logScript('Removing: ', name));
 // Replacement function for GM_info allowing for debugging in console
 const getInfoGM = GM_info || {
   scriptHandler: 'Console',
