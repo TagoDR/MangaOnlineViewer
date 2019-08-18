@@ -89,8 +89,9 @@ function controls() {
   $('#restore').click(() => {
     settings.Zoom = 100;
     $('#Zoom b').html(settings.Zoom);
-    $('.PageContent img').removeAttr('width');
-    $('.PageContent img').removeAttr('style');
+    $('.PageContent img')
+      .removeAttr('width')
+      .removeAttr('style');
   });
   $('#fitwidth').click(() => {
     settings.Zoom = 1000;
@@ -159,7 +160,7 @@ function controls() {
       setValueGM('MangaDownloadZip', true);
       Swal.fire({
         title: 'Attention',
-        text: 'Next time a chapter finish loading you will be promted to save automatically',
+        text: 'Next time a chapter finish loading you will be prompted to save automatically',
         timer: 10000,
         type: 'info',
       });
@@ -172,6 +173,20 @@ function controls() {
   $('.download').click(() => {
     logScript('Downloading Chapter');
     $('#blob')[0].click();
+  });
+  $('#lazyLoadImages').change((event) => {
+    if ($(event.target).is(':checked')) {
+      setValueGM('MangaLazyLoadImages', true);
+      Swal.fire({
+        title: 'Warning',
+        html: 'Lazy load is incompatible with zip download, you will not be able to download with this setting ON.<br/>'
+          + 'Suggestion: <span style="color:red;font:bold">Disable Thumbnails</span> to save Bandwidth/Memory.',
+        type: 'warning',
+      });
+    } else {
+      setValueGM('MangaLazyLoadImages', false);
+    }
+    logScript(`MangaLazyLoadImages: ${getValueGM('MangaLazyLoadImages')}`);
   });
   $('#PagesPerSecond').change((event) => {
     setValueGM('MangaTimer', parseInt($(event.target).val(), 10));

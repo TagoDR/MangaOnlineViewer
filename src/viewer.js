@@ -1,5 +1,5 @@
 import {
-  getBrowser, getEngine, getInfoGM, logScript, logScriptC,
+  getBrowser, getEngine, getInfoGM, logClear, logScript, logScriptC, setValueGM,
 } from './browser';
 import { controls, setKeyDownEvents } from './events';
 import { checkImagesLoaded, loadManga } from './page';
@@ -8,20 +8,27 @@ import { settings } from './settings';
 import { isEmpty } from './utils';
 
 function formatPage(manga, begin) {
+  W.stop();
   if (manga.before !== undefined) {
     manga.before();
   }
   document.documentElement.innerHTML = reader(manga, begin);
+  logClear('Rebuilding Site');
   setTimeout(() => {
     try {
       controls(manga);
       setKeyDownEvents(manga);
       checkImagesLoaded(manga);
-      logScript('Site rebuild done');
       setTimeout(() => {
         $('body').scrollTo(0);
         loadManga(manga, begin);
       }, 50);
+      // Clear used Bookmarks
+      if (!isEmpty(settings.bookmarks.filter((el) => el.url === W.location.href))) {
+        logScript(`Bookmark Removed ${W.location.href}`);
+        settings.bookmarks = settings.bookmarks.filter((el) => el.url !== W.location.href);
+        setValueGM('MangaBookmarks', JSON.stringify(settings.bookmarks));
+      }
     } catch (e) {
       logScript(e);
     }
@@ -46,10 +53,10 @@ function lateStart(manga, begin = 1) {
     showCancelButton: true,
     cancelButtonColor: '#d33',
     reverseButtons: true,
+    type: 'question',
   }).then((result) => {
     if (result.value) {
       logScript(`Choice: ${result.value}`);
-      W.stop();
       formatPage(manga, result.value);
     } else {
       logScript(result.dismiss);
@@ -92,7 +99,6 @@ border: 1px #FFF;
 }
 </style>`);
     W.mov = (b) => lateStart(manga, b || beginnig);
-
     switch (settings.loadMode) {
       case 'never':
         $('body').append('<button id="mov" onclick=mov()>Start MangaOnlineViewer</button>');
@@ -101,15 +107,14 @@ border: 1px #FFF;
       case 'normal':
         Swal.fire({
           title: 'Starting MangaOnlineViewer',
-          text: `${beginnig
-          > 1 ? `Resuming reading from Page ${beginnig}.\n` : ''}Please wait, 3 seconds...`,
+          html: `${beginnig
+          > 1 ? `Resuming reading from Page ${beginnig}.<br/>` : ''}Please wait, 3 seconds...`,
           showCancelButton: true,
           cancelButtonColor: '#d33',
           reverseButtons: true,
           timer: 3000,
         }).then((result) => {
           if (result.value || result.dismiss === Swal.DismissReason.timer) {
-            W.stop();
             formatPage(manga, beginnig);
           } else {
             $('body').append('<button id="mov" onclick=mov()>Start MangaOnlineViewer</button>');
@@ -118,7 +123,6 @@ border: 1px #FFF;
         });
         break;
       case 'always':
-        W.stop();
         formatPage(manga);
         break;
     }

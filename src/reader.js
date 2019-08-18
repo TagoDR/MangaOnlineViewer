@@ -6,17 +6,17 @@ const painel = `<div id='ImageOptions'>
     <span class='menuOuterArrow'><span class='menuInnerArrow'></span></span>
   </div>
   <div class='painel'>
-    <img id='enlarge' title='Enlarge' src='${icon.enlage}' class='controlButton' />
-    <img id='restore' title='Restore' src='${icon.restore}' class='controlButton' />
-    <img id='reduce' title='Reduce' src='${icon.reduce}' class='controlButton' />
-    <img id='fitwidth' title='Fit Width' src='${icon.fitwidth}' class='controlButton' />
-    <img id='webcomic' title='Web Comic Mode' src='${icon.webcomic}' class='controlButton' />
-    <img id='ltrmode' title='Left to Right Mode' src='${icon.pictureleft}' class='controlButton'/>
-    <img id='verticalmode' title='Vertical Mode' src='${icon.picturedown}' class='controlButton'/>
-    <img id='rtlmode' title='Right to Left Mode' src='${icon.pictureright}' class='controlButton'/>
-    <img id='settings' title='settings' src='${icon.settings}' class='controlButton' />
+    <img id='enlarge' alt='Enlarge' title='Enlarge' src='${icon.enlage}' class='controlButton' />
+    <img id='restore' alt='Restore' title='Restore' src='${icon.restore}' class='controlButton' />
+    <img id='reduce' alt='Reduce' title='Reduce' src='${icon.reduce}' class='controlButton' />
+    <img id='fitwidth' alt='Fit Width' title='Fit Width' src='${icon.fitwidth}' class='controlButton' />
+    <img id='webcomic' alt='Web Comic Mode' title='Web Comic Mode' src='${icon.webcomic}' class='controlButton' />
+    <img id='ltrmode' alt='Left to Right Mode' title='Left to Right Mode' src='${icon.pictureleft}' class='controlButton'/>
+    <img id='verticalmode' alt='Vertical Mode' title='Vertical Mode' src='${icon.picturedown}' class='controlButton'/>
+    <img id='rtlmode' alt='Right to Left Mode' title='Right to Left Mode' src='${icon.pictureright}' class='controlButton'/>
+    <img id='settings' alt='settings' title='settings' src='${icon.settings}' class='controlButton' />
   </div>
-  <div id='Zoom' class='controlLable'>Zoom: <b>${settings.Zoom}</b> %</div>
+  <div id='Zoom' class='controlLabel'>Zoom: <b>${settings.Zoom}</b> %</div>
 </div>`;
 const shortcuts = `<div id='ViewerShortcuts' class='painel' style='display: none;'>
   <span class='key'>+</span> or <span class='key'>=</span> : Global Zoom in pages (enlarge)<br/>
@@ -27,14 +27,21 @@ const shortcuts = `<div id='ViewerShortcuts' class='painel' style='display: none
   <span class='key'>Arrow Left</span> or <span class='key'>,</span> : Previous Chapter<br/>
 </div>`;
 const controls = `<div id='ViewerControls' class='painel' style='display: none;'>
-  <span class='controlLable'>Theme:
+  <span class='controlLabel'>Theme:
     <input id='CustomThemeHue' class='jscolor' value='${settings.CustomTheme}' ${(settings.Theme
   !== 'Custom_Dark' && settings.Theme !== 'Custom_Light') ? 'style="display: none;"' : ''}'>
     <select id='ThemeSelector'>
       ${themesSelector}
     </select>
   </span>
-  <span class='controlLable'>Pages/Second:
+  <span class='controlLabel'>Default Load Mode:
+    <select id='loadMode'>
+      <option value='normal' ${settings.loadMode === 'normal' ? 'selected' : ''}>Normal(Wait 3 sec)</option>
+      <option value='always' ${settings.loadMode === 'always' ? 'selected' : ''}>Always(Immediately)</option>
+      <option value='never' ${settings.loadMode === 'never' ? 'selected' : ''}>Never(Manually)</option>
+    </select>
+  </span>
+  <span class='controlLabel'>Pages/Second:
     <select id='PagesPerSecond'>
       <option value='3000' ${settings.Timer === 3000 ? 'selected' : ''}>0.3(Slow)</option>
       <option value='2000' ${settings.Timer === 2000 ? 'selected' : ''}>0.5</option>
@@ -45,7 +52,7 @@ const controls = `<div id='ViewerControls' class='painel' style='display: none;'
       <option value='100' ${settings.Timer === 100 ? 'selected' : ''}>10(Extreme)</option>
     </select>
   </span>
-  <span class='controlLable'>Default Zoom:
+  <span class='controlLabel'>Default Zoom:
     <select id='DefaultZoom'>
       <option value='50' ${settings.Zoom === 50 ? 'selected' : ''}>50%</option>
       <option value='75' ${settings.Zoom === 75 ? 'selected' : ''}>75%</option>
@@ -57,13 +64,7 @@ const controls = `<div id='ViewerControls' class='painel' style='display: none;'
       <option value='1000' ${settings.Zoom === 1000 ? 'selected' : ''}>Fit Width</option>
     </select>
   </span>
-  <span class='controlLable'>Fit Width if Oversized:
-    <input type='checkbox' val='true' name='fitIfOversized' id='fitIfOversized' ${(settings.FitWidthIfOversized ? 'checked' : '')}>
-  </span>
-  <span class='controlLable'>Show Thumbnails:
-    <input type='checkbox' val='true' name='showThumbnails' id='showThumbnails' ${(settings.ShowThumbnails ? 'checked' : '')}>
-   </span>
-  <span class='controlLable'>Default View Mode:
+  <span class='controlLabel'>Default View Mode:
     <select id='viewMode'>
       <option value='' ${settings.viewMode === '' ? 'selected' : ''}>Vertical</option>
       <option value='WebComic' ${settings.viewMode === 'WebComic' ? 'selected' : ''}>WebComic</option>
@@ -71,15 +72,17 @@ const controls = `<div id='ViewerControls' class='painel' style='display: none;'
       <option value='FluidRTL' ${settings.viewMode === 'FluidRTL' ? 'selected' : ''}>Right to Left</option>
     </select>
   </span>
-  <span class='controlLable'>Download Images as Zip Automatically:
-    <input type='checkbox' val='false' name='downloadZip' id='downloadZip' ${(settings.DownloadZip ? 'checked' : '')}>
+  <span class='controlLabel'>Fit Width if Oversized:
+    <input type='checkbox' value='true' name='fitIfOversized' id='fitIfOversized' ${(settings.FitWidthIfOversized ? 'checked' : '')}>
   </span>
-  <span class='controlLable'>Default Load Mode:
-    <select id='loadMode'>
-      <option value='normal' ${settings.loadMode === 'normal' ? 'selected' : ''}>Normal</option>
-      <option value='always' ${settings.loadMode === 'always' ? 'selected' : ''}>Always</option>
-      <option value='never' ${settings.loadMode === 'never' ? 'selected' : ''}>Never</option>
-    </select>
+  <span class='controlLabel'>Show Thumbnails:
+    <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${(settings.ShowThumbnails ? 'checked' : '')}>
+   </span>
+   <span class='controlLabel'>Lazy Load Images:
+    <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${(settings.lazyLoadImages ? 'checked' : '')}>
+   </span>
+  <span class='controlLabel'>Download Images as Zip Automatically:
+    <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${(settings.DownloadZip ? 'checked' : '')}>
   </span>
 </div>`;
 const chapterControl = R.curry((id, target, manga) => `<div id='${id}' class='ChapterControl'>
@@ -124,17 +127,17 @@ const body = (manga, begin = 0) => `<div id='MangaOnlineViewer' class='${setting
   ${painel}    
   ${controls}
   ${shortcuts}    
-  <div id='Counters' class='controlLable'>
+  <div id='Counters' class='controlLabel'>
     <i>0</i> of <b>${manga.quant}</b> Pages Loaded 
-    <span class='controlLable'>Go to Page:</span>
+    <span class='controlLabel'>Go to Page:</span>
     <select id='gotoPage'>
       <option selected>#</option>
       ${listOptions(manga.quant).slice(begin).join('')}
     </select>
   </div>
   <div id='Navigation' align='center' class='painel ${settings.ShowThumbnails ? '' : 'disabled'}'>
-    <div id='NavigationCounters' class='controlLable'>
-      <img title='Thumbnails' src='${icon.menu}' class='nav' /><i>0</i> of <b>${manga.quant}</b> Pages Loaded
+    <div id='NavigationCounters' class='controlLabel'>
+      <img alt='Thumbnails' title='Thumbnails' src='${icon.menu}' class='nav' /><i>0</i> of <b>${manga.quant}</b> Pages Loaded
     </div>
     <div id='Thumbnails'>
       ${listThumbnails(manga.quant).slice(begin).join('')}
@@ -157,7 +160,7 @@ input:not([type='checkbox']),textarea,.uneditable-input{width:206px}
 textarea,input[type='text'],input[type='password'],input[type='datetime'],input[type='datetime-local'],input[type='date'],input[type='month'],input[type='time'],input[type='week'],input[type='number'],input[type='email'],input[type='url'],input[type='search'],input[type='tel'],input[type='color'],.uneditable-input{background-color:#FFF;border:1px solid #CCC;box-shadow:0 1px 1px rgba(0,0,0,0.075) inset;transition:border .2s linear 0,box-shadow .2s linear 0}
 input,textarea,.uneditable-input{margin-left:0}*/
 #nprogress .bar{background:#29d;position:fixed;z-index:1031;top:0;left:0;width:100%;height:4px;}
-.key{display:inline;display:inline-block;min-width:1em;padding:.2em .3em;font:400 .85em/1 'Lucida Grande',Lucida,Arial,sans-serif;text-align:center;text-decoration:none;-moz-border-radius:.3em;-webkit-border-radius:.3em;border-radius:.3em;border:none;cursor:default;-moz-user-select:none;-webkit-user-select:none;user-select:none}
+.key{display:inline-block;min-width:1em;padding:.2em .3em;font:400 .85em/1 'Lucida Grande',Lucida,Arial,sans-serif;text-align:center;text-decoration:none;-moz-border-radius:.3em;-webkit-border-radius:.3em;border-radius:.3em;border:none;cursor:default;-moz-user-select:none;-webkit-user-select:none;user-select:none}
 .key[title]{cursor:help}
 .key, .dark-keys,.dark-keys .key,.key.dark{background:#505050;background:-moz-linear-gradient(top,#3c3c3c,#505050);background:-webkit-gradient(linear,left top,left bottom,from(#3c3c3c),to(#505050));color:#fafafa;text-shadow:-1px -1px 0 #464646;-moz-box-shadow:inset 0 0 1px #969696,inset 0 -.05em .4em #505050,0 .1em 0 #1e1e1e,0 .1em .1em rgba(0,0,0,.3);-webkit-box-shadow:inset 0 0 1px #969696,inset 0 -.05em .4em #505050,0 .1em 0 #1e1e1e,0 .1em .1em rgba(0,0,0,.3);box-shadow:inset 0 0 1px #969696,inset 0 -.05em .4em #505050,0 .1em 0 #1e1e1e,0 .1em .1em rgba(0,0,0,.3)}
 .light-keys,.light-keys .key,.key.light{background:#fafafa;background:-moz-linear-gradient(top,#d2d2d2,#fff);background:-webkit-gradient(linear,left top,left bottom,from(#d2d2d2),to(#fff));color:#323232;text-shadow:0 0 2px #fff;-moz-box-shadow:inset 0 0 1px #fff,inset 0 0 .4em #c8c8c8,0 .1em 0 #828282,0 .11em 0 rgba(0,0,0,.4),0 .1em .11em rgba(0,0,0,.9);-webkit-box-shadow:inset 0 0 1px #fff,inset 0 0 .4em #c8c8c8,0 .1em 0 #828282,0 .11em 0 rgba(0,0,0,.4),0 .1em .11em rgba(0,0,0,.9);box-shadow:inset 0 0 1px #fff,inset 0 0 .4em #c8c8c8,0 .1em 0 #828282,0 .11em 0 rgba(0,0,0,.4),0 .1em .11em rgba(0,0,0,.9)}
@@ -170,15 +173,15 @@ input,textarea,.uneditable-input{margin-left:0}*/
 #MangaOnlineViewer #Chapter.FluidLTR {direction: ltr;}
 #MangaOnlineViewer #Chapter.FluidRTL {direction: rtl;}
 #MangaOnlineViewer #ViewerControls{padding: 8px;position:fixed;top:0;left:332px;width:auto;}
-#MangaOnlineViewer #ViewerShortcuts{padding: 8px;position:fixed;top:65px;left:0px;}
-#ViewerControls .controlLable {display: list-item; list-style: none;}
+#MangaOnlineViewer #ViewerShortcuts{padding: 8px;position:fixed;top:65px;left:0;}
+#ViewerControls .controlLabel {display: list-item; list-style: none;}
 #MangaOnlineViewer select{height:20px;padding:0;margin-bottom:5px}
 #MangaOnlineViewer .controlButton{cursor:pointer;border:0 none;}
-#MangaOnlineViewer #ImageOptions {left: 0px;position: absolute;top: 0px;width: 332px;}
+#MangaOnlineViewer #ImageOptions {left: 0;position: absolute;top: 0;width: 332px;}
 #MangaOnlineViewer #ImageOptions .painel {padding:4.5px;position: inherit;}
 #MangaOnlineViewer #ImageOptions:hover {position:fixed;}
 #MangaOnlineViewer #ImageOptions.settingsOpen {position:fixed;}
-#MangaOnlineViewer #ImageOptions #menu {position:fixed;top: 45px;height: 64px;width: 200px;top: 0;}
+#MangaOnlineViewer #ImageOptions #menu {position:fixed;height: 64px;width: 200px;top: 0;}
 #MangaOnlineViewer #ImageOptions #Zoom {position:absolute;left: 18px;bottom: -65px;}
 #MangaOnlineViewer .MangaPage{width:100%;display:inline-block;text-align:center;align:center;transform: translate3d(0, 0, 0);backface-visibility: hidden;perspective: 1000px;-webkit-backface-visibility: hidden;-webkit-perspective: 1000px;-moz-transform: translate3d(0, 0, 0);-moz-backface-visibility: hidden;-moz-perspective: 1000px;}
 #MangaOnlineViewer .PageContent{margin:0 0 15px;text-align:center;display:inline-block}
@@ -196,7 +199,7 @@ input,textarea,.uneditable-input{margin-left:0}*/
 #MangaOnlineViewer .PageFunctions:hover a{opacity:1}
 #MangaOnlineViewer #NavigationCounters {margin-top: 5px;width: 100%;}
 #MangaOnlineViewer #Navigation {bottom: -180px;height: 190px;overflow-x: hidden;overflow-y: hidden;padding-bottom: 20px;position: fixed;white-space: nowrap;width: 100%;}
-#MangaOnlineViewer #Navigation #Thumbnails {overflow-x:auto}
+#MangaOnlineViewer #Navigation #Thumbnails {overflow-x:auto;overflow-y: hidden;}
 #MangaOnlineViewer #Navigation:hover {bottom: 0;}
 #MangaOnlineViewer #Navigation.disabled {display: none;}
 #MangaOnlineViewer #Navigation.visible {bottom: 0;}
@@ -224,6 +227,7 @@ const externalScripts = [
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js" integrity="sha256-7IUC8vhyoPLh1tuQJnffPB5VO6HpR4VWK4Y1ciOOoBY=" crossorigin="anonymous"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js" integrity="sha256-43x9r7YRdZpZqTjDT5E0Vfrxn1ajIZLyYWtfAXsargA=" crossorigin="anonymous"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js" integrity="sha256-7QS1cHsH75h3IFgrFKsdhmKHHpWqF82sb/9vNLqcqs0=" crossorigin="anonymous"></script>',
+  '<script src="https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js" integrity="sha256-B00tEEtJRbA9gas0viRdqVPI81EuZG+kYU978/alKt8=" crossorigin="anonymous"></script>',
 
 ];
 const externalCSS = [

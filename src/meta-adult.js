@@ -31,6 +31,7 @@ export default {
     'https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js',
   ],
   include: R.pluck('url', sites),
 };

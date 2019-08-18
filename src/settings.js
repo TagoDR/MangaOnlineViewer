@@ -27,6 +27,7 @@ const settings = {
   loadMode: getValueGM('MangaLoadMode', 'normal'),
   viewMode: getValueGM('MangaViewMode', ''),
   bookmarks: JSON.parse(getValueGM('MangaBookmarks', '[]')),
+  lazyLoadImages: getValueGM('MangaLazyLoadImages', false),
 };
 // Clear old Bookmarks
 const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // year

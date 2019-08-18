@@ -1,4 +1,4 @@
-import { logScript, setValueGM } from './browser';
+import { logScript } from './browser';
 import { settings } from './settings';
 import { mapIndexed } from './utils';
 
@@ -13,9 +13,28 @@ function normalizeUrl(url) {
 // Adds an image to the place-holder div
 function addImg(index, src) {
   const url = normalizeUrl(src);
-  logScript('Image:', index, 'Source:', url);
-  $(`#PageImg${index}`).attr('src', url).parent().slideToggle();
-  $(`#ThumbnailImg${index}`).attr('src', url);
+  if (index <= 2 || !settings.lazyLoadImages) {
+    logScript('Loaded Image:', index, 'Source:', url);
+    $(`#PageImg${index}`).attr('src', url).parent().slideToggle();
+    $(`#ThumbnailImg${index}`).attr('src', url);
+  } else {
+    $(`#PageImg${index}`).attr('data-src', url).parent().slideToggle();
+    $(`#ThumbnailImg${index}`).attr('data-src', url);
+    $(`#PageImg${index}`).unveil({
+      offset: 500,
+      throttle: 500,
+      placeholder: 'http://placehold.it/1000x500',
+    }).on('loaded.unveil', () => {
+      logScript('Unveiled Image:', index, 'Source:', url);
+    });
+    $(`#ThumbnailImg${index}`).unveil({
+      offset: 0,
+      throttle: 500,
+      placeholder: 'http://placehold.it/100x150',
+    }).on('loaded.unveil', () => {
+      logScript('Unveiled Thumbnail:', index);
+    });
+  }
   return index;
 }
 
@@ -146,6 +165,10 @@ function applyZoom(page, newZoom) {
 
 // Checks if all images loaded correctly
 function checkImagesLoaded(manga) {
+  if (settings.lazyLoadImages) {
+    logScript('Download NOT Available with Lazy Load Images');
+    return;
+  }
   const images = $('.PageContent img').get();
   const total = images.length;
   const missing = images.filter((item) => $(item).prop('naturalWidth') === 0);
@@ -164,11 +187,8 @@ function checkImagesLoaded(manga) {
   } else {
     logScript('Images Loading Complete');
     // $('title').html(manga.title);
-    // Clear used Bookmarks
-    settings.bookmarks = settings.bookmarks.filter((el) => el.url !== W.location.href);
-    setValueGM('MangaBookmarks', JSON.stringify(settings.bookmarks));
     $('.download').attr('href', '#download');
-    logScript('Download Avaliable');
+    logScript('Download Available');
     if (settings.DownloadZip) {
       $('#blob').click();
     }

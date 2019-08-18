@@ -45,11 +45,11 @@ function buildUserscript(entryFile, destFile, metaFile) {
               modules: false,
               targets: {
                 node: 12,
-              //   chrome: 59,
-              //   opera: 46,
-              //   firefox: 52,
-              //   safari: 10,
-              //   edge: 14,
+                chrome: 75,
+                // opera: 46,
+                firefox: 68,
+                safari: 12,
+              // dge: 14,
               },
             },
           ],
@@ -83,27 +83,41 @@ function buildUserscript(entryFile, destFile, metaFile) {
   }));
 }
 
-gulp.task('meta_main', (done) => {
-  file(scripts.main.meta, userscript.stringify(metaMain), { src: true })
+function createMetaMain() {
+  return file(scripts.main.meta, userscript.stringify(metaMain), { src: true })
     .pipe(gulp.dest('./dist'));
-  done();
-});
+}
 
-gulp.task('meta_adult', (done) => {
-  file(scripts.adult.meta, userscript.stringify(metaAdult), { src: true })
+function createMetaAdult() {
+  return file(scripts.adult.meta, userscript.stringify(metaAdult), { src: true })
     .pipe(gulp.dest('./dist'));
-  done();
-});
+}
 
-gulp.task('script_main',
-  () => buildUserscript(`src/${scripts.main.entry}`, `dist/${scripts.main.name}`,
-    `./dist/${scripts.main.meta}`));
+function createScriptMain() {
+  return buildUserscript(`src/${scripts.main.entry}`, `dist/${scripts.main.name}`,
+    `./dist/${scripts.main.meta}`);
+}
 
-gulp.task('script_adult', () => buildUserscript(`src/${scripts.adult.entry}`,
-  `dist/${scripts.adult.name}`, `./dist/${scripts.adult.meta}`));
+function createScriptAdult() {
+  return buildUserscript(`src/${scripts.adult.entry}`,
+    `dist/${scripts.adult.name}`, `./dist/${scripts.adult.meta}`);
+}
 
-gulp.task('readme', (done) => {
-  gulp.src('./src/readme.md')
+function beauty() {
+  return gulp.src('./dist/*.js')
+    .pipe(beautify({
+      indent_size: 2,
+    }))
+    .pipe(gulp.dest('./dist/'));
+}
+
+function move() {
+  return gulp.src('dist/**.*')
+    .pipe(gulp.dest('.'));
+}
+
+function readme() {
+  return gulp.src('./src/readme.md')
     .pipe(preprocess({
       context: {
         LIST_MANGA_SITES: mangaSites,
@@ -112,33 +126,17 @@ gulp.task('readme', (done) => {
       },
     })) // To set environment variables in-line
     .pipe(gulp.dest('./dist/'));
-  done();
-});
-
-gulp.task('beautify', (done) => {
-  gulp.src('./dist/*.js')
-    .pipe(beautify({
-      indent_size: 2,
-    }))
-    .pipe(gulp.dest('./dist/'));
-  done();
-});
-
-gulp.task('move', (done) => {
-  gulp.src('dist/**.*')
-    .pipe(gulp.dest('.'));
-  done();
-});
-
-gulp.task('main', gulp.series('meta_main', 'script_main'));
-gulp.task('adult', gulp.series('meta_adult', 'script_adult'));
-gulp.task('build', gulp.parallel('main', 'adult'));
+}
 
 gulp.task('release', gulp.series(
   gulp.parallel(
-    'build',
-    'readme',
+    gulp.series(createMetaMain, createScriptMain),
+    gulp.series(createMetaAdult, createScriptAdult),
+    readme,
   ),
-  'beautify',
-  'move',
+  beauty,
+  move,
 ));
+
+gulp.task('main', gulp.series(createMetaMain, createScriptMain));
+gulp.task('adult', gulp.series(createMetaAdult, createScriptAdult));
