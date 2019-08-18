@@ -87,7 +87,7 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 <h3>Supported Browsers</h3>
 Any Browser with <a href="https://tampermonkey.net/">Tampermonkey</a><br>
 Should work with other browsers and add-ons, but not officially supported.
-<h3>HotKeys</h3>These will work with standard and numpad keys.
+<h3>HotKeys</h3>
 <kbd class="dark">Numpad 5</kbd>/<kbd class="dark">/</kbd>: Open Settings<br>
 <kbd class="dark">Numpad +</kbd>/<kbd class="dark">=</kbd>: Global Zoom in pages (enlarge)<br>
 <kbd class="dark">Numpad -</kbd>/<kbd class="dark">-</kbd>: Global Zoom out pages (reduce)<br>
