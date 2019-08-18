@@ -18,22 +18,27 @@ function addImg(index, src) {
     $(`#PageImg${index}`).attr('src', url).parent().slideToggle();
     $(`#ThumbnailImg${index}`).attr('src', url);
   } else {
-    $(`#PageImg${index}`).attr('data-src', url).parent().slideToggle();
-    $(`#ThumbnailImg${index}`).attr('data-src', url);
-    $(`#PageImg${index}`).unveil({
-      offset: 500,
-      throttle: 500,
-      placeholder: 'http://placehold.it/1000x500',
-    }).on('loaded.unveil', () => {
-      logScript('Unveiled Image:', index, 'Source:', url);
-    });
-    $(`#ThumbnailImg${index}`).unveil({
-      offset: 0,
-      throttle: 500,
-      placeholder: 'http://placehold.it/100x150',
-    }).on('loaded.unveil', () => {
-      logScript('Unveiled Thumbnail:', index);
-    });
+    $(`#PageImg${index}`)
+      .attr('data-src', url)
+      .unveil({
+        offset: 500,
+        throttle: 500,
+        placeholder: 'http://placehold.it/1000x500',
+      })
+      .on('loaded.unveil', () => {
+        logScript('Unveiled Image:', index, 'Source:', url);
+      })
+      .parent()
+      .slideToggle();
+    $(`#ThumbnailImg${index}`)
+      .attr('data-src', url)
+      .unveil({
+        offset: 0,
+        throttle: 500,
+        placeholder: 'http://placehold.it/100x150',
+      }).on('loaded.unveil', () => {
+        logScript('Unveiled Thumbnail:', index);
+      });
   }
   return index;
 }

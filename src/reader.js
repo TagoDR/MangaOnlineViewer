@@ -1,24 +1,24 @@
 import { icon, settings } from './settings';
 import { themesCSS, themesSelector } from './themes';
 
-const painel = `<div id='ImageOptions'>
+const panel = `<div id='ImageOptions'>
   <div id='menu'>
     <span class='menuOuterArrow'><span class='menuInnerArrow'></span></span>
   </div>
-  <div class='painel'>
-    <img id='enlarge' alt='Enlarge' title='Enlarge' src='${icon.enlage}' class='controlButton' />
+  <div class='panel'>
+    <img id='enlarge' alt='Enlarge' title='Enlarge' src='${icon.enlarge}' class='controlButton' />
     <img id='restore' alt='Restore' title='Restore' src='${icon.restore}' class='controlButton' />
     <img id='reduce' alt='Reduce' title='Reduce' src='${icon.reduce}' class='controlButton' />
-    <img id='fitwidth' alt='Fit Width' title='Fit Width' src='${icon.fitwidth}' class='controlButton' />
-    <img id='webcomic' alt='Web Comic Mode' title='Web Comic Mode' src='${icon.webcomic}' class='controlButton' />
-    <img id='ltrmode' alt='Left to Right Mode' title='Left to Right Mode' src='${icon.pictureleft}' class='controlButton'/>
-    <img id='verticalmode' alt='Vertical Mode' title='Vertical Mode' src='${icon.picturedown}' class='controlButton'/>
-    <img id='rtlmode' alt='Right to Left Mode' title='Right to Left Mode' src='${icon.pictureright}' class='controlButton'/>
+    <img id='fitWidth' alt='Fit Width' title='Fit Width' src='${icon.fitWidth}' class='controlButton' />
+    <img id='webComic' alt='Web Comic Mode' title='Web Comic Mode' src='${icon.webComic}' class='controlButton' />
+    <img id='ltrMode' alt='Left to Right Mode' title='Left to Right Mode' src='${icon.pictureLeft}' class='controlButton'/>
+    <img id='verticalMode' alt='Vertical Mode' title='Vertical Mode' src='${icon.pictureDown}' class='controlButton'/>
+    <img id='rtlMode' alt='Right to Left Mode' title='Right to Left Mode' src='${icon.pictureRight}' class='controlButton'/>
     <img id='settings' alt='settings' title='settings' src='${icon.settings}' class='controlButton' />
   </div>
   <div id='Zoom' class='controlLabel'>Zoom: <b>${settings.Zoom}</b> %</div>
 </div>`;
-const shortcuts = `<div id='ViewerShortcuts' class='painel' style='display: none;'>
+const shortcuts = `<div id='ViewerShortcuts' class='panel' style='display: none;'>
   <span class='key'>+</span> or <span class='key'>=</span> : Global Zoom in pages (enlarge)<br/>
   <span class='key'>-</span> : Global Zoom out pages (reduce)<br/>
   <span class='key'>*</span> or <span class='key'>8</span> : Global Restore pages to original<br/>
@@ -26,7 +26,7 @@ const shortcuts = `<div id='ViewerShortcuts' class='painel' style='display: none
   <span class='key'>Arrow Right</span> or <span class='key'>.</span> : Next Chapter<br/>
   <span class='key'>Arrow Left</span> or <span class='key'>,</span> : Previous Chapter<br/>
 </div>`;
-const controls = `<div id='ViewerControls' class='painel' style='display: none;'>
+const controls = `<div id='ViewerControls' class='panel' style='display: none;'>
   <span class='controlLabel'>Theme:
     <input id='CustomThemeHue' class='jscolor' value='${settings.CustomTheme}' ${(settings.Theme
   !== 'Custom_Dark' && settings.Theme !== 'Custom_Light') ? 'style="display: none;"' : ''}'>
@@ -118,13 +118,13 @@ const listThumbnails = R.times(
 const body = (manga, begin = 0) => `<div id='MangaOnlineViewer' class='${settings.Theme}' style='min-height: 1080px;'>
   ${title(manga)}
   ${chapterControlTop(manga)}
-  <div id='Chapter' align='center' class='${(settings.FitWidthIfOversized
+  <div id='Chapter' style='text-align:center' class='${(settings.FitWidthIfOversized
 === true ? 'fitWidthIfOversized' : '')} ${settings.viewMode}'>
     ${listPages(manga.quant).slice(begin).join('')}    
   </div>
   ${title(manga)}
   ${chapterControlBottom(manga)}
-  ${painel}    
+  ${panel}    
   ${controls}
   ${shortcuts}    
   <div id='Counters' class='controlLabel'>
@@ -135,7 +135,7 @@ const body = (manga, begin = 0) => `<div id='MangaOnlineViewer' class='${setting
       ${listOptions(manga.quant).slice(begin).join('')}
     </select>
   </div>
-  <div id='Navigation' align='center' class='painel ${settings.ShowThumbnails ? '' : 'disabled'}'>
+  <div id='Navigation' style='text-align:center' class='panel ${settings.ShowThumbnails ? '' : 'disabled'}'>
     <div id='NavigationCounters' class='controlLabel'>
       <img alt='Thumbnails' title='Thumbnails' src='${icon.menu}' class='nav' /><i>0</i> of <b>${manga.quant}</b> Pages Loaded
     </div>
@@ -178,12 +178,12 @@ input,textarea,.uneditable-input{margin-left:0}*/
 #MangaOnlineViewer select{height:20px;padding:0;margin-bottom:5px}
 #MangaOnlineViewer .controlButton{cursor:pointer;border:0 none;}
 #MangaOnlineViewer #ImageOptions {left: 0;position: absolute;top: 0;width: 332px;}
-#MangaOnlineViewer #ImageOptions .painel {padding:4.5px;position: inherit;}
+#MangaOnlineViewer #ImageOptions .panel {padding:5px;position: inherit;}
 #MangaOnlineViewer #ImageOptions:hover {position:fixed;}
 #MangaOnlineViewer #ImageOptions.settingsOpen {position:fixed;}
 #MangaOnlineViewer #ImageOptions #menu {position:fixed;height: 64px;width: 200px;top: 0;}
 #MangaOnlineViewer #ImageOptions #Zoom {position:absolute;left: 18px;bottom: -65px;}
-#MangaOnlineViewer .MangaPage{width:100%;display:inline-block;text-align:center;align:center;transform: translate3d(0, 0, 0);backface-visibility: hidden;perspective: 1000px;-webkit-backface-visibility: hidden;-webkit-perspective: 1000px;-moz-transform: translate3d(0, 0, 0);-moz-backface-visibility: hidden;-moz-perspective: 1000px;}
+#MangaOnlineViewer .MangaPage{width:100%;display:inline-block;text-align:center;transform: translate3d(0, 0, 0);backface-visibility: hidden;perspective: 1000px;-webkit-backface-visibility: hidden;-webkit-perspective: 1000px;-moz-transform: translate3d(0, 0, 0);-moz-backface-visibility: hidden;-moz-perspective: 1000px;}
 #MangaOnlineViewer .PageContent{margin:0 0 15px;text-align:center;display:inline-block}
 #MangaOnlineViewer #gotoPage{width:35px;}
 #MangaOnlineViewer #ThemeSelector{width:110px;}
@@ -213,10 +213,10 @@ input,textarea,.uneditable-input{margin-left:0}*/
 #MangaOnlineViewer .PageFunctions .Bookmark {background: url('${icon.bookmark}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .Reload {background: url('${icon.reload}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .Hide {background: url('${icon.hide}') no-repeat scroll center center transparent;}
-#MangaOnlineViewer .PageFunctions .ZoomIn {background: url('${icon.zoomin}') no-repeat scroll center center transparent;}
-#MangaOnlineViewer .PageFunctions .ZoomOut {background: url('${icon.zoomout}') no-repeat scroll center center transparent;}
-#MangaOnlineViewer .PageFunctions .ZoomRestore {background: url('${icon.zoomrestore}') no-repeat scroll center center transparent;}
-#MangaOnlineViewer .PageFunctions .ZoomWidth {background: url('${icon.zoomwidth}') no-repeat scroll center center transparent;}
+#MangaOnlineViewer .PageFunctions .ZoomIn {background: url('${icon.zoomIn}') no-repeat scroll center center transparent;}
+#MangaOnlineViewer .PageFunctions .ZoomOut {background: url('${icon.zoomOut}') no-repeat scroll center center transparent;}
+#MangaOnlineViewer .PageFunctions .ZoomRestore {background: url('${icon.zoomRestore}') no-repeat scroll center center transparent;}
+#MangaOnlineViewer .PageFunctions .ZoomWidth {background: url('${icon.zoomWidth}') no-repeat scroll center center transparent;}
 </style>`;
 const externalScripts = [
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>',
@@ -231,7 +231,7 @@ const externalScripts = [
 
 ];
 const externalCSS = [
-  '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@8.16.0/dist/sweetalert2.min.css" integrity="sha256-zfoprrAG5QCLwEZhI7DWYoqRWYaVYxdjd0mEF3Hl9k0=" crossorigin="anonymous">',
+  '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@8.16.0/dist/sweetalert2.min.css" integrity="sha256-zfoprrAG5QCLwEZhI7DWYoqRWYaVYxdjd0mEF3Hl9k0=" crossorigin="anonymous" />',
   '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />',
   '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" integrity="sha256-pMhcV6/TBDtqH9E9PWKgS+P32PVguLG8IipkPyqMtfY=" crossorigin="anonymous" />',
 ];

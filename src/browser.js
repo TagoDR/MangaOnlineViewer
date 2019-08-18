@@ -6,14 +6,20 @@ function logScript(...text) {
   console.log('MangaOnlineViewer:', ...text);
   return text;
 }
+
 // Composeble console output
 const logScriptC = R.curry((x, y) => logScript(x, y)[1]);
+
 // Clear the Console
 function logClear(...text) {
-  // eslint-disable-next-line no-console
-  console.clear();
-  logScript(...text);
+  try {
+    // eslint-disable-next-line no-console
+    console.clear();
+  } finally {
+    logScript(...text);
+  }
 }
+
 // Replacement function for GM_listValues allowing for debugging in console
 const getListGM = GM_listValues || (() => []);
 // Replacement function for GM_listValues allowing for debugging in console

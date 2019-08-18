@@ -12,7 +12,7 @@ function addTheme(theme) {
   .${theme[0]} .PageFunctions { border: 1px solid ${theme[3]}; border-bottom: medium none; border-left: medium none; border-right: medium none;}
   /*.${theme[0]} #Chapter { border: 1px solid ${theme[3]}; border-top: medium none; border-left: medium none; border-right: medium none;}*/
   .${theme[0]} .PageFunctions > span, .${theme[0]} .Thumbnail span {background: none repeat scroll 0 0 ${theme[4]};}
-  .${theme[0]} .painel {background: none repeat scroll 0 0 ${theme[4]}; border: thin solid ${theme[3]};}
+  .${theme[0]} .panel {background: none repeat scroll 0 0 ${theme[4]}; border: thin solid ${theme[3]};}
   .${theme[0]} .PageContent, .${theme[0]} .Thumbnail img { outline: 2px solid ${theme[3]}; background: none repeat scroll 0 0 ${theme[4]};}
   .${theme[0]} .ChapterControl a { border: 1px solid ${theme[3]}; background-color: ${theme[5]};
   </style>`;
@@ -40,7 +40,7 @@ function addCustomTheme(color) {
 
 function loadThemes() {
   const bg = scheme.from_hex(settings.CustomTheme).colors();
-  return [ //   1-body       2-text       3-lines     4-painel     5-Buttons
+  return [ //   1-body       2-text       3-lines     4-panel     5-Buttons
     ['Dark', '#000000', '#ffffff', '#666666', '#333333', '#282828'],
     ['Light', '#eeeeec', '#2e3436', '#888a85', '#babdb6', '#c8cec2'],
     ['Clear', '#ffffff', '#2e3436', '#888a85', '#eeeeec', '#d3d7cf'],

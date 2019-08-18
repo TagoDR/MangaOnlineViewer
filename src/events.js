@@ -56,7 +56,7 @@ function setKeyDownEvents() {
           break;
         case 53: // *
         case 101: // numpad*
-          $('#fitwidth').click();
+          $('#fitWidth').click();
           break;
         default:
           break;
@@ -93,31 +93,31 @@ function controls() {
       .removeAttr('width')
       .removeAttr('style');
   });
-  $('#fitwidth').click(() => {
+  $('#fitWidth').click(() => {
     settings.Zoom = 1000;
     $('#Zoom b').html(settings.Zoom);
     applyZoom();
   });
   // WebComic View Mode
-  $('#webcomic').click(() => {
+  $('#webComic').click(() => {
     $('#Chapter').addClass('WebComic')
       .removeClass('FluidLTR')
       .removeClass('FluidRTL');
   });
   // Fluid LTR View Mode
-  $('#ltrmode').click(() => {
+  $('#ltrMode').click(() => {
     $('#Chapter').removeClass('WebComic')
       .addClass('FluidLTR')
       .removeClass('FluidRTL');
   });
   // Fluid RTL View Mode
-  $('#rtlmode').click(() => {
+  $('#rtlMode').click(() => {
     $('#Chapter').removeClass('WebComic')
       .removeClass('FluidLTR')
       .addClass('FluidRTL');
   });
   // Vertical View Mode
-  $('#verticalmode').click(() => {
+  $('#verticalMode').click(() => {
     $('#Chapter').removeClass('WebComic')
       .removeClass('FluidLTR')
       .removeClass('FluidRTL');
