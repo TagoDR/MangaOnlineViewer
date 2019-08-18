@@ -20,43 +20,81 @@ function setKeyDownEvents() {
   }
 
   function processKey(e) {
-    const a = e.keyCode || e.which;
-    if ($.inArray(a, [
-      39, 46, 190, 37, 44, 188, 43, 107, 61,
-      45, 109, 42, 106, 56, 104, 53, 101,
-    ]) !== -1) {
+    const a = e.code;
+    if ($.inArray(a,
+      [
+        'KeyW',
+        'Numpad8',
+        'KeyS',
+        'Numpad2',
+        'ArrowRight',
+        'Period',
+        'KeyD',
+        'Numpad6',
+        'ArrowLeft',
+        'Comma',
+        'KeyA',
+        'Numpad4',
+        'Equal',
+        'NumpadAdd',
+        'Minus',
+        'NumpadSubtract',
+        'Digit9',
+        'NumpadDivide',
+        'Digit0',
+        'NumpadMultiply',
+        'Slash',
+        'Numpad5',
+      ]) !== -1) {
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
       switch (a) {
-        case 39: // down:right
-        case 46: // press:right / down:.
-        case 190: // press:.
+        case 'KeyW':
+        case 'Numpad8':
+          window.scrollBy({
+            top: -500,
+            behavior: 'smooth',
+          });
+          break;
+        case 'KeyS':
+        case 'Numpad2':
+          window.scrollBy({
+            top: 500,
+            behavior: 'smooth',
+          });
+          break;
+        case 'ArrowRight':
+        case 'Period':
+        case 'KeyD':
+        case 'Numpad6':
           $('.ChapterControl:first .next')[0].click();
           break;
-        case 37: // down:left
-        case 44: // press:left / down:,
-        case 188: // press:,
+        case 'ArrowLeft':
+        case 'Comma':
+        case 'KeyA':
+        case 'Numpad4':
           $('.ChapterControl:first .prev')[0].click();
           break;
-        case 43: // +
-        case 107: // numpad+
-        case 61: // =
+        case 'Equal':
+        case 'NumpadAdd':
           $('#enlarge').click();
           break;
-        case 45: // -
-        case 109: // numpad-
+        case 'Minus':
+        case 'NumpadSubtract':
           $('#reduce').click();
           break;
-        case 42: // 5
-        case 106: // numpad5
-        case 56: // 8
-        case 104: // numpad8
+        case 'Digit9':
+        case 'NumpadDivide':
           $('#restore').click();
           break;
-        case 53: // *
-        case 101: // numpad*
+        case 'Digit0':
+        case 'NumpadMultiply':
           $('#fitWidth').click();
+          break;
+        case 'Slash':
+        case 'Numpad5':
+          $('#settings').click();
           break;
         default:
           break;
@@ -66,11 +104,7 @@ function setKeyDownEvents() {
     return true;
   }
 
-  if (navigator.userAgent.match(/mozilla/i)) {
-    $(document).keypress(processKey);
-  } else {
-    $(document).keydown(processKey);
-  }
+  W.onkeydown = processKey;
 }
 
 // Controls for the extra features added to the sites

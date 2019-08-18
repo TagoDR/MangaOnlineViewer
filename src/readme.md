@@ -34,16 +34,16 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 <h3>Supported Browsers</h3>
 Any Browser with <a href="https://tampermonkey.net/">Tampermonkey</a><br>
 Should work with other browsers and add-ons, but not officially supported.
-
 <h3>HotKeys</h3>These will work with standard and numpad keys.
-<pre>
-+ and = : Global Zoom in pages (enlarge)
-- : Global  Zoom out pages (reduce)
-* and 8 : Global  Restore pages to original(toggles Fit width if oversized)
-5 : Global Fit window width
-Arrow Right and "." : Next Chapter (When available)
-Arrow Left and "," : Previous Chapter(When available)
-</pre>
+<kbd class="dark">Numpad 5</kbd>/<kbd class="dark">/</kbd>: Open Settings<br>
+<kbd class="dark">Numpad +</kbd>/<kbd class="dark">=</kbd>: Global Zoom in pages (enlarge)<br>
+<kbd class="dark">Numpad -</kbd>/<kbd class="dark">-</kbd>: Global Zoom out pages (reduce)<br>
+<kbd class="dark">Numpad /</kbd>/<kbd class="dark">9</kbd>: Global Restore pages to original<br>
+<kbd class="dark">Numpad *</kbd>/<kbd class="dark">0</kbd>: Global Fit window width<br>
+<kbd class="dark">→</kbd>/<kbd class="dark">D</kbd>/<kbd class="dark">Numpad 6</kbd>/<kbd class="dark">.</kbd> : Next Chapter<br>
+<kbd class="dark">←</kbd>/<kbd class="dark">A</kbd>/<kbd class="dark">Numpad 4</kbd>/<kbd class="dark">,</kbd> : Previous Chapter<br>
+<kbd class="dark">↑</kbd>/<kbd class="dark">W</kbd>/<kbd class="dark">Numpad 8</kbd>: Scroll Up<br>
+<kbd class="dark">↓</kbd>/<kbd class="dark">S</kbd>/<kbd class="dark">Numpad 2</kbd>: Scroll Down<br>
 
 <h3>Features</h3>
 <pre>
@@ -69,10 +69,11 @@ Goto Page
 Image Loading Timer[Default 1s](Some sites require longer timers. eg.:ExHentai,e-hentai)
 Thumbnails Navigation[Default on]
 Download all images as ZIP File[Automatic Default off]
+Lazy Load Images[Default off]
 </pre>
 
 <h3>Rules For adding new Manga Sites</h3>
-<ol><li>The site must have rare/unique mangas (Meaning: there isn`t in other sites, or with
+<ol><li>The site must have rare/unique mangas (Meaning: it's not available in other sites, or is a
  better quality)</li>
 <li>The site must be strong enough or else my script may crash it</li>
 <li>The site must not be exclusive to a handful of manga titles (Meaning: no small scanlators)</li></ol>
