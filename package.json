@@ -1,10 +1,9 @@
 {
   "name": "mangaonlineviewer",
-  "version": "14.8.0",
+  "version": "14.9.0",
   "description": "Userscript that helps to read Manga faster by loading all the pages at once",
   "scripts": {
-    "test": "45 test/*.js",
-    "build": "gulp build"
+    "build": "gulp release"
   },
   "author": "TagoDR",
   "license": "MIT",
@@ -29,10 +28,10 @@
     "jquery.scrollto": "^2.1.2",
     "jscolor": "^0.3.0",
     "jszip": "^3.2.2",
+    "moment": "^2.24.0",
     "nprogress": "^0.2.0",
     "ramda": "^0.26.1",
-    "sweetalert2": "^8.16.0",
-    "moment": "^2.24.0"
+    "sweetalert2": "^8.16.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

@@ -21,31 +21,35 @@ function setKeyDownEvents() {
 
   function processKey(e) {
     const a = e.code;
-    if ($.inArray(a,
-      [
-        'KeyW',
-        'Numpad8',
-        'KeyS',
-        'Numpad2',
-        'ArrowRight',
-        'Period',
-        'KeyD',
-        'Numpad6',
-        'ArrowLeft',
-        'Comma',
-        'KeyA',
-        'Numpad4',
-        'Equal',
-        'NumpadAdd',
-        'Minus',
-        'NumpadSubtract',
-        'Digit9',
-        'NumpadDivide',
-        'Digit0',
-        'NumpadMultiply',
-        'Slash',
-        'Numpad5',
-      ]) !== -1) {
+    if (!e.ctrlKey
+      && !e.altKey
+      && !e.shiftKey
+      && !e.metaKey
+      && $.inArray(a,
+        [
+          'KeyW',
+          'Numpad8',
+          'KeyS',
+          'Numpad2',
+          'ArrowRight',
+          'Period',
+          'KeyD',
+          'Numpad6',
+          'ArrowLeft',
+          'Comma',
+          'KeyA',
+          'Numpad4',
+          'Equal',
+          'NumpadAdd',
+          'Minus',
+          'NumpadSubtract',
+          'Digit9',
+          'NumpadDivide',
+          'Digit0',
+          'NumpadMultiply',
+          'Slash',
+          'Numpad5',
+        ]) !== -1) {
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
@@ -78,22 +82,27 @@ function setKeyDownEvents() {
           break;
         case 'Equal':
         case 'NumpadAdd':
+        case 'KeyE':
           $('#enlarge').click();
           break;
         case 'Minus':
         case 'NumpadSubtract':
+        case 'KeyQ':
           $('#reduce').click();
           break;
         case 'Digit9':
         case 'NumpadDivide':
+        case 'KeyR':
           $('#restore').click();
           break;
         case 'Digit0':
         case 'NumpadMultiply':
+        case 'KeyF':
           $('#fitWidth').click();
           break;
         case 'Slash':
         case 'Numpad5':
+        case 'KeyX':
           $('#settings').click();
           break;
         default:
