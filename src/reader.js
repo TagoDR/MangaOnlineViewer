@@ -19,15 +19,15 @@ const panel = `<div id='ImageOptions'>
   <div id='Zoom' class='controlLabel'>Zoom: <b>${settings.Zoom}</b> %</div>
 </div>`;
 const shortcuts = `<div id='ViewerShortcuts' class='panel' style='display: none;'>
- <kbd class='dark'>Numpad 5</kbd>/<kbd class='dark'>X</kbd>/<kbd class='dark'>/</kbd>: Open Settings<br/>
- <kbd class='dark'>Numpad +</kbd>/<kbd class='dark'>Q</kbd>/<kbd class='dark'>=</kbd>: Global Zoom in pages (enlarge)<br/>
- <kbd class='dark'>Numpad -</kbd>/<kbd class='dark'>E</kbd>/<kbd class='dark'>-</kbd>: Global Zoom out pages (reduce)<br/>
- <kbd class='dark'>Numpad /</kbd>/<kbd class='dark'>R</kbd>/<kbd class='dark'>9</kbd>: Global Restore pages to original<br/>
- <kbd class='dark'>Numpad *</kbd>/<kbd class='dark'>F</kbd>/<kbd class='dark'>0</kbd>: Global Fit window width<br/>
- <kbd class='dark'>Numpad 6</kbd>/<kbd class='dark'>D</kbd>/<kbd class='dark'>.</kbd>: Next Chapter<br/>
- <kbd class='dark'>Numpad 4</kbd>/<kbd class='dark'>A</kbd>/<kbd class='dark'>,</kbd>: Previous Chapter<br/>
- <kbd class='dark'>Numpad 8</kbd>/<kbd class='dark'>W</kbd>: Scroll Up<br/>
- <kbd class='dark'>Numpad 2</kbd>/<kbd class='dark'>S</kbd>: Scroll Down<br/>
+<kbd class='dark'>Numpad 5</kbd>/<kbd class='dark'>X</kbd>/<kbd class='dark'>/</kbd>: Open Settings<br/>
+<kbd class='dark'>Numpad +</kbd>/<kbd class='dark'>Q</kbd>/<kbd class='dark'>=</kbd>: Global Zoom in pages (enlarge)<br/>
+<kbd class='dark'>Numpad -</kbd>/<kbd class='dark'>E</kbd>/<kbd class='dark'>-</kbd>: Global Zoom out pages (reduce)<br/>
+<kbd class='dark'>Numpad /</kbd>/<kbd class='dark'>R</kbd>/<kbd class='dark'>9</kbd>: Global Restore pages to original<br/>
+<kbd class='dark'>Numpad *</kbd>/<kbd class='dark'>F</kbd>/<kbd class='dark'>0</kbd>: Global Fit window width<br/>
+<kbd class='dark'>Numpad 6</kbd>/<kbd class='dark'>D</kbd>/<kbd class='dark'>.</kbd>/<kbd class="dark">→</kbd>: Next Chapter<br/>
+<kbd class='dark'>Numpad 4</kbd>/<kbd class='dark'>A</kbd>/<kbd class='dark'>,</kbd>/<kbd class="dark">←</kbd>: Previous Chapter<br/>
+<kbd class='dark'>Numpad 8</kbd>/<kbd class='dark'>W</kbd>: Scroll Up<br/>
+<kbd class='dark'>Numpad 2</kbd>/<kbd class='dark'>S</kbd>: Scroll Down<br/>
 </div>`;
 const controls = `<div id='ViewerControls' class='panel' style='display: none;'>
   <span class='controlLabel'>Theme:
