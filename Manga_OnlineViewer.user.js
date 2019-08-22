@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaNelo, LHTranslation, JapScan.To
-// @version 14.9.0
+// @version 14.10.0
 // @license MIT
-// @date 2019-08-21
+// @date 2019-08-22
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -1294,7 +1294,7 @@
 
     function processKey(e) {
       const a = e.code;
-      if (!e.ctrlKey && !e.altKey && !e.shiftKey && !e.metaKey && $.inArray(a, ['KeyW', 'Numpad8', 'KeyS', 'Numpad2', 'ArrowRight', 'Period', 'KeyD', 'Numpad6', 'ArrowLeft', 'Comma', 'KeyA', 'Numpad4', 'Equal', 'NumpadAdd', 'Minus', 'NumpadSubtract', 'Digit9', 'NumpadDivide', 'Digit0', 'NumpadMultiply', 'Slash', 'Numpad5']) !== -1) {
+      if (!e.ctrlKey && !e.altKey && !e.shiftKey && !e.metaKey && $.inArray(a, ['KeyW', 'Numpad8', 'KeyS', 'Numpad2', 'ArrowRight', 'Period', 'KeyD', 'Numpad6', 'ArrowLeft', 'Comma', 'KeyA', 'Numpad4', 'Equal', 'NumpadAdd', 'KeyE', 'Minus', 'NumpadSubtract', 'KeyQ', 'Digit9', 'NumpadDivide', 'KeyR', 'Digit0', 'NumpadMultiply', 'KeyF', 'Slash', 'Numpad5', 'KeyX']) !== -1) {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();

@@ -41,14 +41,19 @@ function setKeyDownEvents() {
           'Numpad4',
           'Equal',
           'NumpadAdd',
+          'KeyE',
           'Minus',
           'NumpadSubtract',
+          'KeyQ',
           'Digit9',
           'NumpadDivide',
+          'KeyR',
           'Digit0',
           'NumpadMultiply',
+          'KeyF',
           'Slash',
           'Numpad5',
+          'KeyX',
         ]) !== -1) {
       e.preventDefault();
       e.stopPropagation();

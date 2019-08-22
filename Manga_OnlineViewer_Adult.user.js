@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics, SuperHentais, 9Hentai, ASMHentai, MultPorn, Hentai Comic, HentaiNexus
-// @version 14.9.0
+// @version 14.10.0
 // @license MIT
-// @date 2019-08-21
+// @date 2019-08-22
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -939,7 +939,7 @@
 
     function processKey(e) {
       const a = e.code;
-      if (!e.ctrlKey && !e.altKey && !e.shiftKey && !e.metaKey && $.inArray(a, ['KeyW', 'Numpad8', 'KeyS', 'Numpad2', 'ArrowRight', 'Period', 'KeyD', 'Numpad6', 'ArrowLeft', 'Comma', 'KeyA', 'Numpad4', 'Equal', 'NumpadAdd', 'Minus', 'NumpadSubtract', 'Digit9', 'NumpadDivide', 'Digit0', 'NumpadMultiply', 'Slash', 'Numpad5']) !== -1) {
+      if (!e.ctrlKey && !e.altKey && !e.shiftKey && !e.metaKey && $.inArray(a, ['KeyW', 'Numpad8', 'KeyS', 'Numpad2', 'ArrowRight', 'Period', 'KeyD', 'Numpad6', 'ArrowLeft', 'Comma', 'KeyA', 'Numpad4', 'Equal', 'NumpadAdd', 'KeyE', 'Minus', 'NumpadSubtract', 'KeyQ', 'Digit9', 'NumpadDivide', 'KeyR', 'Digit0', 'NumpadMultiply', 'KeyF', 'Slash', 'Numpad5', 'KeyX']) !== -1) {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
