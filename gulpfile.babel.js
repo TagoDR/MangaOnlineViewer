@@ -9,6 +9,7 @@ import babel from 'rollup-plugin-babel';
 import cleanup from 'rollup-plugin-cleanup';
 import commonjs from 'rollup-plugin-commonjs';
 import { eslint } from 'rollup-plugin-eslint';
+import html from 'rollup-plugin-string-html';
 import userscript from 'userscript-meta';
 import pkg from './package.json';
 import metaAdult from './src/meta-adult';
@@ -35,8 +36,17 @@ function buildUserscript(entryFile, destFile, metaFile) {
     input: entryFile,
     external: R.keys(pkg.dependencies),
     plugins: [
-      commonjs(), // {namedExports: {'./src/sites-metaAdult.js': ['sites']}}),
-      eslint({ fix: true }),
+      commonjs(),
+      html({
+        include: './src/components/**',
+      }),
+      eslint({
+        fix: true,
+        exclude: [
+          'node_modules/**',
+          './src/components/**',
+        ],
+      }),
       babel({
         babelrc: false,
         presets: [

@@ -57,6 +57,7 @@
     "rollup-plugin-cleanup": "^3.1.1",
     "rollup-plugin-commonjs": "^10.0.2",
     "rollup-plugin-eslint": "^7.0.0",
+    "rollup-plugin-string-html": "^1.0.0",
     "userscript-meta": "^1.0.1"
   }
 }
