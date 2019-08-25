@@ -39,6 +39,13 @@ function buildUserscript(entryFile, destFile, metaFile) {
       commonjs(),
       html({
         include: './src/components/**',
+        minifier: {
+          collapseWhitespace: true,
+          collapseBooleanAttributes: true,
+          conservativeCollapse: true,
+          minifyJS: true,
+          minifyCSS: true,
+        },
       }),
       eslint({
         fix: true,

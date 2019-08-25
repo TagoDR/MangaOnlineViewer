@@ -21,21 +21,21 @@ const panel = `<div id='ImageOptions'>
   <div id='Zoom' class='controlLabel'>Zoom: <b>${settings.Zoom}</b> %</div>
 </div>`;
 const controls = `<div id='ViewerControls' class='panel' style='display: none;'>
-  <span class='controlLabel'>Theme:
+  <span class='controlLabel ThemeSelector'>Theme:
     <input id='CustomThemeHue' class='jscolor' value='${settings.CustomTheme}' ${(settings.Theme
   !== 'Custom_Dark' && settings.Theme !== 'Custom_Light') ? 'style="display: none;"' : ''}'>
     <select id='ThemeSelector'>
       ${themesSelector}
     </select>
   </span>
-  <span class='controlLabel'>Default Load Mode:
+  <span class='controlLabel loadMode'>Default Load Mode:
     <select id='loadMode'>
       <option value='normal' ${settings.loadMode === 'normal' ? 'selected' : ''}>Normal(Wait 3 sec)</option>
       <option value='always' ${settings.loadMode === 'always' ? 'selected' : ''}>Always(Immediately)</option>
       <option value='never' ${settings.loadMode === 'never' ? 'selected' : ''}>Never(Manually)</option>
     </select>
   </span>
-  <span class='controlLabel'>Pages/Second:
+  <span class='controlLabel PagesPerSecond'>Pages/Second:
     <select id='PagesPerSecond'>
       <option value='3000' ${settings.Timer === 3000 ? 'selected' : ''}>0.3(Slow)</option>
       <option value='2000' ${settings.Timer === 2000 ? 'selected' : ''}>0.5</option>
@@ -46,7 +46,7 @@ const controls = `<div id='ViewerControls' class='panel' style='display: none;'>
       <option value='100' ${settings.Timer === 100 ? 'selected' : ''}>10(Extreme)</option>
     </select>
   </span>
-  <span class='controlLabel'>Default Zoom:
+  <span class='controlLabel DefaultZoom'>Default Zoom:
     <select id='DefaultZoom'>
       <option value='50' ${settings.Zoom === 50 ? 'selected' : ''}>50%</option>
       <option value='75' ${settings.Zoom === 75 ? 'selected' : ''}>75%</option>
@@ -58,7 +58,7 @@ const controls = `<div id='ViewerControls' class='panel' style='display: none;'>
       <option value='1000' ${settings.Zoom === 1000 ? 'selected' : ''}>Fit Width</option>
     </select>
   </span>
-  <span class='controlLabel'>Default View Mode:
+  <span class='controlLabel viewMode'>Default View Mode:
     <select id='viewMode'>
       <option value='' ${settings.viewMode === '' ? 'selected' : ''}>Vertical</option>
       <option value='WebComic' ${settings.viewMode === 'WebComic' ? 'selected' : ''}>WebComic</option>
@@ -66,16 +66,16 @@ const controls = `<div id='ViewerControls' class='panel' style='display: none;'>
       <option value='FluidRTL' ${settings.viewMode === 'FluidRTL' ? 'selected' : ''}>Right to Left</option>
     </select>
   </span>
-  <span class='controlLabel'>Fit Width if Oversized:
+  <span class='controlLabel fitIfOversized'>Fit Width if Oversized:
     <input type='checkbox' value='true' name='fitIfOversized' id='fitIfOversized' ${(settings.FitWidthIfOversized ? 'checked' : '')}>
   </span>
-  <span class='controlLabel'>Show Thumbnails:
+  <span class='controlLabel showThumbnails'>Show Thumbnails:
     <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${(settings.ShowThumbnails ? 'checked' : '')}>
    </span>
-   <span class='controlLabel'>Lazy Load Images:
+   <span class='controlLabel lazyLoadImages'>Lazy Load Images:
     <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${(settings.lazyLoadImages ? 'checked' : '')}>
    </span>
-  <span class='controlLabel'>Download Images as Zip Automatically:
+  <span class='controlLabel downloadZip'>Download Images as Zip Automatically:
     <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${(settings.DownloadZip ? 'checked' : '')}>
   </span>
 </div>`;
@@ -111,6 +111,14 @@ const listThumbnails = R.times(
 );
 const body = (manga, begin = 0) => `<div id='MangaOnlineViewer' class='${settings.Theme}' style='min-height: 1080px;'>
   ${title(manga)}
+  <div id='Counters' class='controlLabel'>
+    <i>0</i> of <b>${manga.quant}</b> Pages Loaded 
+    <span class='controlLabel'>Go to Page:</span>
+    <select id='gotoPage'>
+      <option selected>#</option>
+      ${listOptions(manga.quant).slice(begin).join('')}
+    </select>
+  </div>
   ${chapterControlTop(manga)}
   <div id='Chapter' style='text-align:center' class='${(settings.FitWidthIfOversized
 === true ? 'fitWidthIfOversized' : '')} ${settings.viewMode}'>
@@ -120,15 +128,7 @@ const body = (manga, begin = 0) => `<div id='MangaOnlineViewer' class='${setting
   ${chapterControlBottom(manga)}
   ${panel}    
   ${controls}
-  ${htmlKeybinds}    
-  <div id='Counters' class='controlLabel'>
-    <i>0</i> of <b>${manga.quant}</b> Pages Loaded 
-    <span class='controlLabel'>Go to Page:</span>
-    <select id='gotoPage'>
-      <option selected>#</option>
-      ${listOptions(manga.quant).slice(begin).join('')}
-    </select>
-  </div>
+  ${htmlKeybinds}
   <div id='Navigation' style='text-align:center' class='panel ${settings.ShowThumbnails ? '' : 'disabled'}'>
     <div id='NavigationCounters' class='controlLabel'>
       <img alt='Thumbnails' title='Thumbnails' src='${icon.menu}' class='nav' /><i>0</i> of <b>${manga.quant}</b> Pages Loaded

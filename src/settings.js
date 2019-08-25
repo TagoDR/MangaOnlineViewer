@@ -1,4 +1,6 @@
-import { getValueGM, removeValueGM, setValueGM } from './browser';
+import {
+  getValueGM, isMobile, removeValueGM, setValueGM,
+} from './browser';
 
 // Fix/Remove old or bugged settings
 if (typeof getValueGM('MangaFitWidthIfOversized') === 'string') {
@@ -29,6 +31,14 @@ const settings = {
   bookmarks: JSON.parse(getValueGM('MangaBookmarks', '[]')),
   lazyLoadImages: getValueGM('MangaLazyLoadImages', false),
 };
+// Force Settings for mobile
+if (isMobile) {
+  settings.lazyLoadImages = true;
+  settings.FitWidthIfOversized = true;
+  settings.ShowThumbnails = false;
+  settings.ShowThumbnails = false;
+  settings.viewMode = '';
+}
 // Clear old Bookmarks
 const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // year
 settings.bookmarks = settings.bookmarks.filter((el) => Date.now() - el.date < bookmarkTimeLimit);

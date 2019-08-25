@@ -66,6 +66,8 @@ function getEngine() {
   return `${getInfoGM.scriptHandler || 'Greasemonkey'} ${getInfoGM.version}`;
 }
 
+const isMobile = W.matchMedia('all and (max-width: 1024px) and (orientation: portrait)').matches;
+
 export {
   logScript,
   getListGM,
@@ -77,4 +79,5 @@ export {
   getEngine,
   logScriptC,
   logClear,
+  isMobile,
 };
