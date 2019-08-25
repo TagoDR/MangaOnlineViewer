@@ -1,3 +1,4 @@
+import { isMobile } from './browser';
 import htmlKeybinds from './components/keybinds.html';
 import cssStyles from './components/styles.css';
 import { icon, settings } from './settings';
@@ -109,7 +110,8 @@ const listThumbnails = R.times(
   (index) => `<div id='Thumbnail${index + 1}' class='Thumbnail'><img id='ThumbnailImg${index
   + 1}' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`,
 );
-const body = (manga, begin = 0) => `<div id='MangaOnlineViewer' class='${settings.Theme}' style='min-height: 1080px;'>
+const body = (manga, begin = 0) => `
+<div id='MangaOnlineViewer' class='${settings.Theme} ${isMobile ? 'mobile' : ''} style='min-height: 1080px;'>
   ${title(manga)}
   <div id='Counters' class='controlLabel'>
     <i>0</i> of <b>${manga.quant}</b> Pages Loaded 

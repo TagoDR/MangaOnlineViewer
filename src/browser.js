@@ -66,7 +66,7 @@ function getEngine() {
   return `${getInfoGM.scriptHandler || 'Greasemonkey'} ${getInfoGM.version}`;
 }
 
-const isMobile = W.matchMedia('all and (max-width: 1024px) and (orientation: portrait)').matches;
+const isMobile = W.matchMedia('screen and (max-width: 1024px)').matches;
 
 export {
   logScript,
