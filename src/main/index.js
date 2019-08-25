@@ -30,11 +30,13 @@ import readcomicsonline from './readcomicsonline';
 import readmangatoday from './readmangatoday';
 import senmanga from './senmanga';
 import tenmanga from './tenmanga';
+import test from './test';
 import thespectrum from './thespectrum';
 import unionmangas from './unionmangas';
 import wpmanga from './wpmanga';
 
 export default [
+  test,
   batoto,
   comicastle,
   readcomicsonline,

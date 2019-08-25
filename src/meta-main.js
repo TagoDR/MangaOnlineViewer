@@ -10,7 +10,7 @@ export default {
   downloadURL: 'https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js',
   namespace: 'https://github.com/TagoDR',
   description: `Shows all pages at once in online view for these sites: ${R.pluck('name', sites)
-    .join(', ')}`,
+    .join(', ').replace('Test, ', '')}`,
   version: pkg.version,
   license: pkg.license,
   date: moment().format('YYYY-MM-DD'),

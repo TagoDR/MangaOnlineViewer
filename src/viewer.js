@@ -178,5 +178,4 @@ function start(sites) {
   test(sites);
 }
 
-// eslint-disable-next-line import/prefer-default-export
-export { start };
+export default start;

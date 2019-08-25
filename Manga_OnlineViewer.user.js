@@ -23,6 +23,7 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js
+// @include /https?:\/\/(www.)?blank.org\/(\?[0-9]+)?/
 // @include /https?:\/\/(www.)?bato.to\/chapter.*/
 // @include /https?:\/\/(www.)?comicastle.org\/comic\/.+\/[0-9]+.*/
 // @include /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/[0-9]*/
@@ -842,6 +843,25 @@
     }
   };
 
+  var test = {
+    name: 'Test',
+    url: /https?:\/\/(www.)?blank.org\/(\?[0-9]+)?/,
+    homepage: 'http://blank.org/?5',
+    language: ['English'],
+    category: 'test',
+    run() {
+      const num = parseInt(W.location.search.replace('?', ''), 10) || 5;
+      return {
+        title: 'Test Page',
+        series: 'http://blank.org/?5',
+        quant: num,
+        prev: "'http://blank.org/?".concat(num - 1),
+        next: "'http://blank.org/?".concat(num + 1),
+        listImages: [...Array(num).keys()].map(i => "http://lorempixel.com/900/1300/cats/".concat(i))
+      };
+    }
+  };
+
   var thespectrum = {
     name: 'TheSpectrum',
     url: /https?:\/\/view.thespectrum.net\/.+/,
@@ -908,7 +928,7 @@
     }
   };
 
-  var sites = [batoto, comicastle, readcomicsonline, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost, hocvien, jaiminisbox, mangadex, hatigarmscans, mangarock, manganelo, lhtranslation, japscan];
+  var sites = [test, batoto, comicastle, readcomicsonline, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost, hocvien, jaiminisbox, mangadex, hatigarmscans, mangarock, manganelo, lhtranslation, japscan];
 
   function logScript(...text) {
     console.log('MangaOnlineViewer:', ...text);
