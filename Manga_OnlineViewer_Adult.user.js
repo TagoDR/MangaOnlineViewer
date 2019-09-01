@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics, SuperHentais, 9Hentai, ASMHentai, MultPorn, Hentai Comic, HentaiNexus
-// @version 14.17.0
+// @version 14.18.0
 // @license MIT
 // @date 2019-09-01
 // @grant GM_getValue
@@ -752,15 +752,14 @@
     } else {
       $("#PageImg".concat(index)).attr('data-src', url).unveil({
         offset: 500,
-        throttle: 1000,
-        placeholder: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
+        throttle: 1000
       }).on('loaded.unveil', () => {
         logScript('Unveiled Image:', index, 'Source:', url);
       }).parent().slideToggle();
       $("#ThumbnailImg".concat(index)).attr('data-src', url).unveil({
-        offset: 0,
-        throttle: 500,
-        placeholder: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
+        offset: 100,
+        throttle: 1000,
+        container: $('#Thumbnails')
       }).on('loaded.unveil', () => {
         logScript('Unveiled Thumbnail:', index);
       });

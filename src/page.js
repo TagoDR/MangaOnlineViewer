@@ -23,8 +23,6 @@ function addImg(index, src) {
       .unveil({
         offset: 500,
         throttle: 1000,
-        // http://zhongdeliu.github.io/placeholder-image/ or http://png-pixel.com/
-        placeholder: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
       })
       .on('loaded.unveil', () => {
         logScript('Unveiled Image:', index, 'Source:', url);
@@ -34,9 +32,9 @@ function addImg(index, src) {
     $(`#ThumbnailImg${index}`)
       .attr('data-src', url)
       .unveil({
-        offset: 0,
-        throttle: 500,
-        placeholder: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
+        offset: 100,
+        throttle: 1000,
+        container: $('#Thumbnails'),
       }).on('loaded.unveil', () => {
         logScript('Unveiled Thumbnail:', index);
       });
