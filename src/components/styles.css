@@ -38,6 +38,7 @@ img {
   width: 100%;
   height: 100%;
   padding-bottom: 100px;
+  min-height: 1080px;
 }
 
 #MangaOnlineViewer #Chapter {
@@ -77,6 +78,7 @@ img {
   top: 0;
   left: 332px;
   width: auto;
+  display: none;
 }
 
 #MangaOnlineViewer #ViewerShortcuts {
@@ -86,7 +88,7 @@ img {
   left: 0;
 }
 
-#ViewerControls .controlLabel {
+#MangaOnlineViewer #ViewerControls .controlLabel {
   display: list-item;
   list-style: none;
 }
@@ -147,7 +149,7 @@ img {
 #MangaOnlineViewer .PageContent {
   margin: 0 0 15px;
   text-align: center;
-  display: inline-block
+  display: inline-block;
 }
 
 #MangaOnlineViewer #gotoPage {
@@ -231,6 +233,7 @@ img {
   position: fixed;
   white-space: nowrap;
   width: 100%;
+  text-align: center;
 }
 
 #MangaOnlineViewer #Navigation #Thumbnails {

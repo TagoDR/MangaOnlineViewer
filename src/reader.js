@@ -21,7 +21,7 @@ const panel = `<div id='ImageOptions'>
   </div>
   <div id='Zoom' class='controlLabel'>Zoom: <b>${settings.Zoom}</b> %</div>
 </div>`;
-const controls = `<div id='ViewerControls' class='panel' style='display: none;'>
+const controls = `<div id='ViewerControls' class='panel'>
   <span class='controlLabel ThemeSelector'>Theme:
     <input id='CustomThemeHue' class='jscolor' value='${settings.CustomTheme}' ${(settings.Theme
   !== 'Custom_Dark' && settings.Theme !== 'Custom_Light') ? 'style="display: none;"' : ''}'>
@@ -81,7 +81,7 @@ const controls = `<div id='ViewerControls' class='panel' style='display: none;'>
   </span>
 </div>`;
 const chapterControl = R.curry((id, target, manga) => `<div id='${id}' class='ChapterControl'>
-    <a id='bottom' href='#${target}' style='display: none;'>Bottom</a>
+    <a id='bottom' href='#${target}'>Bottom</a>
     <a href='#' class='download'>Download</a>
     <a class='prev' id='prev' href='${manga.prev || ''}' onclick='W.location="${manga.prev || ''}";W.location.reload();'>Previous</a>
     <a class='next' id='next' href='${manga.next || ''}' onclick='W.location="${manga.next || ''}";W.location.reload();'>Next</a>
@@ -111,7 +111,7 @@ const listThumbnails = R.times(
   + 1}' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`,
 );
 const body = (manga, begin = 0) => `
-<div id='MangaOnlineViewer' class='${settings.Theme} ${isMobile ? 'mobile' : ''} style='min-height: 1080px;'>
+<div id='MangaOnlineViewer' class='${settings.Theme} ${isMobile ? 'mobile' : ''}'>
   ${title(manga)}
   <div id='Counters' class='controlLabel'>
     <i>0</i> of <b>${manga.quant}</b> Pages Loaded 
@@ -122,7 +122,7 @@ const body = (manga, begin = 0) => `
     </select>
   </div>
   ${chapterControlTop(manga)}
-  <div id='Chapter' style='text-align:center' class='${(settings.FitWidthIfOversized
+  <div id='Chapter' class='${(settings.FitWidthIfOversized
 === true ? 'fitWidthIfOversized' : '')} ${settings.viewMode}'>
     ${listPages(manga.quant).slice(begin).join('')}    
   </div>
@@ -131,7 +131,7 @@ const body = (manga, begin = 0) => `
   ${panel}    
   ${controls}
   ${htmlKeybinds}
-  <div id='Navigation' style='text-align:center' class='panel ${settings.ShowThumbnails ? '' : 'disabled'}'>
+  <div id='Navigation' class='panel ${settings.ShowThumbnails ? '' : 'disabled'}'>
     <div id='NavigationCounters' class='controlLabel'>
       <img alt='Thumbnails' title='Thumbnails' src='${icon.menu}' class='nav' /><i>0</i> of <b>${manga.quant}</b> Pages Loaded
     </div>
