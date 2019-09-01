@@ -152,6 +152,12 @@ img {
   display: inline-block;
 }
 
+#MangaOnlineViewer .PageContent img.unveil-placeholder {
+  width: 500px;
+  height: 750px;
+  display: inline-block;
+}
+
 #MangaOnlineViewer #gotoPage {
   width: 35px;
 }
