@@ -14,7 +14,7 @@ const logScriptC = R.curry((x, y) => logScript(x, y)[1]);
 function logClear(...text) {
   try {
     // eslint-disable-next-line no-console
-    console.clear();
+    if (typeof console.clear !== 'undefined') console.clear();
   } finally {
     logScript(...text);
   }
