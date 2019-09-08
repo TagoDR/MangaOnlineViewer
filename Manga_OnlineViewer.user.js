@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaNelo, LHTranslation, JapScan.To
-// @version 14.19.0
+// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaKakalot,MangaNelo, LHTranslation, JapScan.To, MangaSee
+// @version 14.20.0
 // @license MIT
-// @date 2019-09-02
+// @date 2019-09-08
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -55,9 +55,10 @@
 // @include /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/
 // @include /https?:\/\/(www.)?hatigarmscans.net\/manga\/.+\/.+(\/[0-9]*)?/
 // @include /https?:\/\/(www.)?mangarock.com\/manga\/.+\/chapter\/.+/
-// @include /https?:\/\/(www.)?manganelo.com\/chapter\/.+\/.+/
+// @include /https?:\/\/(www.)?(manganelo|mangakakalot).com\/chapter\/.+\/.+/
 // @include /https?:\/\/(www.)?lhtranslation.net\/read.+/
 // @include /https?:\/\/(www.)?japscan.to\/lecture-en-ligne\/.+\/.+/
+// @include /https?:\/\/(www.)?mangaseeonline.us\/read-online\/.+/
 // @exclude /https?:\/\/(www.)?tsumino.com\/.+/
 // @exclude /https?:\/\/(www.)?pururin.io\/.+/
 // @exclude /https?:\/\/(www.)?hentainexus.com\/.+/
@@ -513,6 +514,25 @@
     }
   };
 
+  var mangakakalot = {
+    name: ['MangaKakalot', 'MangaNelo'],
+    url: /https?:\/\/(www.)?(manganelo|mangakakalot).com\/chapter\/.+\/.+/,
+    homepage: ['https://mangakakalot.com/page', 'http://www.manganelo.com/'],
+    language: ['English'],
+    category: 'manga',
+    run() {
+      const images = $('#vungdoc img').get();
+      return {
+        title: $('.info-top-chapter h2').text().trim(),
+        series: $('.rdfa-breadcrumb a span[itemprop="title"]').eq(1).parent().attr('href'),
+        quant: images.length,
+        prev: $('.btn-navigation-chap a:eq(0)').attr('href'),
+        next: $('.btn-navigation-chap a:eq(1)').attr('href'),
+        listImages: images.map(i => $(i).attr('src'))
+      };
+    }
+  };
+
   var mangalyght = {
     name: 'MangaLyght',
     url: /https?:\/\/manga.lyght.net\/series\/.+\.html/,
@@ -532,25 +552,6 @@
         next: "".concat(W.location.pathname, "?ch=").concat(chapter.next().val()).replace(' ', '+'),
         listPages: [...Array(num).keys()].map(i => url + (i + 1)),
         img: '#mainimage'
-      };
-    }
-  };
-
-  var manganelo = {
-    name: 'MangaNelo',
-    url: /https?:\/\/(www.)?manganelo.com\/chapter\/.+\/.+/,
-    homepage: 'http://www.manganelo.com/',
-    language: ['English'],
-    category: 'manga',
-    run() {
-      const images = $('#vungdoc img').get();
-      return {
-        title: $('.info-top-chapter h2').text().trim(),
-        series: $('.rdfa-breadcrumb a span[itemprop="title"]').eq(1).parent().attr('href'),
-        quant: images.length,
-        prev: $('.btn-navigation-chap a:eq(0)').attr('href'),
-        next: $('.btn-navigation-chap a:eq(1)').attr('href'),
-        listImages: images.map(i => $(i).attr('src'))
       };
     }
   };
@@ -691,6 +692,30 @@
             }
           }
         }
+      };
+    }
+  };
+
+  var mangasee = {
+    name: 'MangaSee',
+    url: /https?:\/\/(www.)?mangaseeonline.us\/read-online\/.+/,
+    homepage: 'https://mangaseeonline.us/',
+    language: ['English'],
+    category: 'manga',
+    run() {
+      const imgs = Object.values(W.PageArr).slice(0, -1);
+      const chapter = $('.ChapterSelect:first option:selected');
+      const chapterLink = chap => {
+        if (chap === undefined) return '#';
+        return "/read-online/".concat($('.IndexName').val(), "-chapter-").concat(W.ChapterArr[chap].ChapterDisplay, "-page-1.html");
+      };
+      return {
+        title: $('title').text().replace(/ Page .+/, ''),
+        series: $('.list-link').attr('href'),
+        quant: imgs.length,
+        prev: chapterLink(chapter.prev().val()),
+        next: chapterLink(chapter.next().val()),
+        listImages: imgs
       };
     }
   };
@@ -908,7 +933,7 @@
     }
   };
 
-  var sites = [batoto, comicastle, readcomicsonline, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost, hocvien, jaiminisbox, mangadex, hatigarmscans, mangarock, manganelo, lhtranslation, japscan];
+  var sites = [batoto, comicastle, readcomicsonline, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost, hocvien, jaiminisbox, mangadex, hatigarmscans, mangarock, mangakakalot, lhtranslation, japscan, mangasee];
 
   function logScript(...text) {
     console.log('MangaOnlineViewer:', ...text);
@@ -1567,9 +1592,9 @@
 
   const panel = "<div id='ImageOptions'>\n  <div id='menu'>\n    <span class='menuOuterArrow'><span class='menuInnerArrow'></span></span>\n  </div>\n  <div class='panel'>\n    <img id='enlarge' alt='Enlarge' title='Enlarge' src='".concat(icon.enlarge, "' class='controlButton' />\n    <img id='restore' alt='Restore' title='Restore' src='").concat(icon.restore, "' class='controlButton' />\n    <img id='reduce' alt='Reduce' title='Reduce' src='").concat(icon.reduce, "' class='controlButton' />\n    <img id='fitWidth' alt='Fit Width' title='Fit Width' src='").concat(icon.fitWidth, "' class='controlButton' />\n    <img id='webComic' alt='Web Comic Mode' title='Web Comic Mode' src='").concat(icon.webComic, "' class='controlButton' />\n    <img id='ltrMode' alt='Left to Right Mode' title='Left to Right Mode' src='").concat(icon.pictureLeft, "' class='controlButton'/>\n    <img id='verticalMode' alt='Vertical Mode' title='Vertical Mode' src='").concat(icon.pictureDown, "' class='controlButton'/>\n    <img id='rtlMode' alt='Right to Left Mode' title='Right to Left Mode' src='").concat(icon.pictureRight, "' class='controlButton'/>\n    <img id='settings' alt='settings' title='settings' src='").concat(icon.settings, "' class='controlButton' />\n  </div>\n  <div id='Zoom' class='controlLabel'>Zoom: <b>").concat(settings.Zoom, "</b> %</div>\n</div>");
   const controls$1 = "<div id='ViewerControls' class='panel'>\n  <span class='controlLabel ThemeSelector'>Theme:\n    <input id='CustomThemeHue' class='jscolor' value='".concat(settings.CustomTheme, "' ").concat(settings.Theme !== 'Custom_Dark' && settings.Theme !== 'Custom_Light' ? 'style="display: none;"' : '', "'>\n    <select id='ThemeSelector'>\n      ").concat(themesSelector, "\n    </select>\n  </span>\n  <span class='controlLabel loadMode'>Default Load Mode:\n    <select id='loadMode'>\n      <option value='normal' ").concat(settings.loadMode === 'normal' ? 'selected' : '', ">Normal(Wait 3 sec)</option>\n      <option value='always' ").concat(settings.loadMode === 'always' ? 'selected' : '', ">Always(Immediately)</option>\n      <option value='never' ").concat(settings.loadMode === 'never' ? 'selected' : '', ">Never(Manually)</option>\n    </select>\n  </span>\n  <span class='controlLabel PagesPerSecond'>Pages/Second:\n    <select id='PagesPerSecond'>\n      <option value='3000' ").concat(settings.Timer === 3000 ? 'selected' : '', ">0.3(Slow)</option>\n      <option value='2000' ").concat(settings.Timer === 2000 ? 'selected' : '', ">0.5</option>\n      <option value='1000' ").concat(settings.Timer === 1000 ? 'selected' : '', ">01(Normal)</option>\n      <option value='500' ").concat(settings.Timer === 500 ? 'selected' : '', ">02</option>\n      <option value='250' ").concat(settings.Timer === 250 ? 'selected' : '', ">04(Fast)</option>\n      <option value='125' ").concat(settings.Timer === 125 ? 'selected' : '', ">08</option>\n      <option value='100' ").concat(settings.Timer === 100 ? 'selected' : '', ">10(Extreme)</option>\n    </select>\n  </span>\n  <span class='controlLabel DefaultZoom'>Default Zoom:\n    <select id='DefaultZoom'>\n      <option value='50' ").concat(settings.Zoom === 50 ? 'selected' : '', ">50%</option>\n      <option value='75' ").concat(settings.Zoom === 75 ? 'selected' : '', ">75%</option>\n      <option value='100' ").concat(settings.Zoom === 100 ? 'selected' : '', ">100%</option>\n      <option value='125' ").concat(settings.Zoom === 125 ? 'selected' : '', ">125%</option>\n      <option value='150' ").concat(settings.Zoom === 150 ? 'selected' : '', ">150%</option>\n      <option value='175' ").concat(settings.Zoom === 175 ? 'selected' : '', ">175%</option>\n      <option value='200' ").concat(settings.Zoom === 200 ? 'selected' : '', ">200%</option>\n      <option value='1000' ").concat(settings.Zoom === 1000 ? 'selected' : '', ">Fit Width</option>\n    </select>\n  </span>\n  <span class='controlLabel viewMode'>Default View Mode:\n    <select id='viewMode'>\n      <option value='' ").concat(settings.viewMode === '' ? 'selected' : '', ">Vertical</option>\n      <option value='WebComic' ").concat(settings.viewMode === 'WebComic' ? 'selected' : '', ">WebComic</option>\n      <option value='FluidLTR' ").concat(settings.viewMode === 'FluidLTR' ? 'selected' : '', ">Left to Right</option>\n      <option value='FluidRTL' ").concat(settings.viewMode === 'FluidRTL' ? 'selected' : '', ">Right to Left</option>\n    </select>\n  </span>\n  <span class='controlLabel fitIfOversized'>Fit Width if Oversized:\n    <input type='checkbox' value='true' name='fitIfOversized' id='fitIfOversized' ").concat(settings.FitWidthIfOversized ? 'checked' : '', ">\n  </span>\n  <span class='controlLabel showThumbnails'>Show Thumbnails:\n    <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ").concat(settings.ShowThumbnails ? 'checked' : '', ">\n   </span>\n   <span class='controlLabel lazyLoadImages'>Lazy Load Images:\n    <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ").concat(settings.lazyLoadImages ? 'checked' : '', ">\n   </span>\n  <span class='controlLabel downloadZip'>Download Images as Zip Automatically:\n    <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ").concat(settings.DownloadZip ? 'checked' : '', ">\n  </span>\n</div>");
-  const chapterControl = R.curry((id, target, manga) => "<div id='".concat(id, "' class='ChapterControl'>\n    <a id='bottom' href='#").concat(target, "'>Bottom</a>\n    <a href='#' class='download'>Download</a>\n    <a class='prev' id='prev' href='").concat(manga.prev || '', "' onclick='W.location=\"").concat(manga.prev || '', "\";W.location.reload();'>Previous</a>\n    <a class='next' id='next' href='").concat(manga.next || '', "' onclick='W.location=\"").concat(manga.next || '', "\";W.location.reload();'>Next</a>\n</div>"));
-  const chapterControlTop = chapterControl('ChapterControlTop', 'ChapterControlBottom');
-  const chapterControlBottom = chapterControl('ChapterControlBottom', 'MangaOnlineViewer');
+  const chapterControl = R.curry((id, manga) => "<div id='".concat(id, "' class='ChapterControl'>\n    <a href='#' class='download'>Download</a>\n    <a class='prev' id='prev' href='").concat(manga.prev || '', "' onclick='W.location=\"").concat(manga.prev || '', "\";W.location.reload();'>Previous</a>\n    <a class='next' id='next' href='").concat(manga.next || '', "' onclick='W.location=\"").concat(manga.next || '', "\";W.location.reload();'>Next</a>\n</div>"));
+  const chapterControlTop = chapterControl('ChapterControlTop');
+  const chapterControlBottom = chapterControl('ChapterControlBottom');
   const title = manga => "<div class='ViewerTitle'><br/><a id='series' href='".concat(manga.series, "'>").concat(manga.title, "<br/>(Return to Chapter List)</a></div>");
   const listPages = R.times(index => "<div id='Page".concat(index + 1, "' class='MangaPage'>\n  <div class='PageFunctions'>\n    <a class='Bookmark controlButton' title='Bookmark'></a>\n    <a class='ZoomIn controlButton' title='Zoom In'></a>\n    <a class='ZoomRestore controlButton' title='Zoom Restore'></a>\n    <a class='ZoomOut controlButton' title='Zoom Out'></a>\n    <a class='ZoomWidth controlButton' title='Zoom to Width'></a>\n    <a class='Hide controlButton' title='Hide'></a>\n    <a class='Reload controlButton' title='Reload'></a>\n    <span>").concat(index + 1, "</span>\n  </div>\n  <div class='PageContent' style='display: none;'>\n    <img id='PageImg").concat(index + 1, "' alt='PageImg").concat(index + 1, "' />\n  </div>\n</div>"));
   const listOptions = R.times(index => "<option value='".concat(index + 1, "'>").concat(index + 1, "</option>"));

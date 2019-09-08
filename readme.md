@@ -34,11 +34,12 @@ OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">h
 <li><a href='http://www.mangago.me/'>MangaGo</a> <i>[English]</i></li>
 <li><a href='http://www.mangahere.cc/'>MangaHere</a> <i>[English]</i></li>
 <li><a href='http://www.mangainn.net/'>MangaInn</a> <i>[English]</i></li>
+<li><a href='https://mangakakalot.com/page'>MangaKakalot</a> / <a href='http://www.manganelo.com/'>MangaNelo</a> <i>[English]</i></li>
 <li><a href='http://manga.lyght.net/'>MangaLyght</a> <i>[English]</i></li>
-<li><a href='http://www.manganelo.com/'>MangaNelo</a> <i>[English]</i></li>
 <li><a href='http://mangapark.net/'>MangaPark</a> <i>[English]</i></li>
 <li><a href='http://www.mangareader.net/'>MangaReader</a> / <a href='http://www.mangapanda.com/'>MangaPanda</a> <i>[English]</i></li>
 <li><a href='https://mangarock.com/'>MangaRock</a> <i>[English]</i></li>
+<li><a href='https://mangaseeonline.us/'>MangaSee</a> <i>[English]</i></li>
 <li><a href='http://mangastream.com/'>MangaStream</a> <i>[English]</i></li>
 <li><a href='http://www.mangatown.com/'>MangaTown</a> <i>[English]</i></li>
 <li><a href='http://ninemanga.com/'>NineManga</a> <i>[English]</i></li>

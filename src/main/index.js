@@ -18,11 +18,12 @@ import mangago from './mangago';
 import mangahere from './mangahere';
 import mangahost from './mangahost';
 import mangainn from './mangainn';
+import mangakakalot from './mangakakalot';
 import mangalyght from './mangalyght';
-import manganelo from './manganelo';
 import mangapark from './mangapark';
 import mangareader from './mangareader';
 import mangarock from './mangarock';
+import mangasee from './mangasee';
 import mangastream from './mangastream';
 import mangatown from './mangatown';
 import ninemanga from './ninemanga';
@@ -67,7 +68,8 @@ export default [
   mangadex,
   hatigarmscans,
   mangarock,
-  manganelo,
+  mangakakalot,
   lhtranslation,
   japscan,
+  mangasee,
 ];

@@ -80,14 +80,13 @@ const controls = `<div id='ViewerControls' class='panel'>
     <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${(settings.DownloadZip ? 'checked' : '')}>
   </span>
 </div>`;
-const chapterControl = R.curry((id, target, manga) => `<div id='${id}' class='ChapterControl'>
-    <a id='bottom' href='#${target}'>Bottom</a>
+const chapterControl = R.curry((id, manga) => `<div id='${id}' class='ChapterControl'>
     <a href='#' class='download'>Download</a>
     <a class='prev' id='prev' href='${manga.prev || ''}' onclick='W.location="${manga.prev || ''}";W.location.reload();'>Previous</a>
     <a class='next' id='next' href='${manga.next || ''}' onclick='W.location="${manga.next || ''}";W.location.reload();'>Next</a>
 </div>`);
-const chapterControlTop = chapterControl('ChapterControlTop', 'ChapterControlBottom');
-const chapterControlBottom = chapterControl('ChapterControlBottom', 'MangaOnlineViewer');
+const chapterControlTop = chapterControl('ChapterControlTop');
+const chapterControlBottom = chapterControl('ChapterControlBottom');
 const title = (manga) => `<div class='ViewerTitle'><br/><a id='series' href='${manga.series}'>${manga.title}<br/>(Return to Chapter List)</a></div>`;
 // Add Pages Place holders
 const listPages = R.times((index) => `<div id='Page${index + 1}' class='MangaPage'>
