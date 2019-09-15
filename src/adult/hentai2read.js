@@ -1,7 +1,7 @@
 // == Hentai2Read ==================================================================================
 export default {
   name: 'Hentai2Read',
-  url: /https?:\/\/(www.)?hentai2read.com\/[^/]+\/[0-9]+\//,
+  url: /https?:\/\/(www.)?hentai2read.com\/[^/]+\/[0-9]+(.[0-9]+)?\//,
   homepage: 'http://hentai2read.com/',
   language: ['English'],
   category: 'hentai',
