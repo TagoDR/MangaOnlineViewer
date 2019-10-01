@@ -260,7 +260,11 @@ function controls() {
       $('#CustomThemeHue').hide();
     }
   });
-  jscolor(document.getElementById('CustomThemeHue'));
+  try {
+    jscolor(document.getElementById('CustomThemeHue'));
+  } catch (e) {
+    logScript(e);
+  }
   $('#CustomThemeHue').change((event) => {
     const target = $(event.target).val();
     logScript(`CustomTheme: #${target}`);

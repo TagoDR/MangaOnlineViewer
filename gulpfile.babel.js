@@ -14,7 +14,9 @@ import userscript from 'userscript-meta';
 import pkg from './package.json';
 import metaAdult from './src/meta-adult';
 import metaMain from './src/meta-main';
-import { comicSites, hentaiSites, mangaSites } from './src/readme';
+import {
+  comicSites, hentaiSites, mangaSites,
+} from './src/readme';
 
 const scripts = {
   main: {
@@ -82,22 +84,23 @@ function buildUserscript(entryFile, destFile, metaFile) {
         normalizeEols: 'win',
       }),
     ],
-  }).then((bundle) => bundle.write({
-    banner: fs.readFileSync(metaFile, 'utf8'),
-    intro: 'var W = (typeof unsafeWindow === undefined) ? window : unsafeWindow;',
-    format: 'iife',
-    file: destFile,
-    globals: {
-      'color-scheme': 'ColorScheme',
-      jquery: '$',
-      jscolor: 'jscolor',
-      jszip: 'JSZip',
-      nprogress: 'NProgress',
-      ramda: 'R',
-      sweetalert: 'Swal',
-    },
-    // sourceMap: 'inline',
-  }));
+  })
+    .then((bundle) => bundle.write({
+      banner: fs.readFileSync(metaFile, 'utf8'),
+      intro: 'var W = (typeof unsafeWindow === \'undefined\') ? window : unsafeWindow;',
+      format: 'iife',
+      file: destFile,
+      globals: {
+        'color-scheme': 'ColorScheme',
+        jquery: '$',
+        jscolor: 'jscolor',
+        jszip: 'JSZip',
+        nprogress: 'NProgress',
+        ramda: 'R',
+        sweetalert: 'Swal',
+      },
+      // sourceMap: 'inline',
+    }));
 }
 
 function createMetaMain() {
@@ -157,3 +160,4 @@ gulp.task('release', gulp.series(
 
 gulp.task('main', gulp.series(createMetaMain, createScriptMain));
 gulp.task('adult', gulp.series(createMetaAdult, createScriptAdult));
+gulp.task('readme', readme);

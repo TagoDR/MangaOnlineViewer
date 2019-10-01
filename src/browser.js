@@ -21,11 +21,11 @@ function logClear(...text) {
 }
 
 // Replacement function for GM_listValues allowing for debugging in console
-const getListGM = GM_listValues || (() => []);
+const getListGM = (typeof GM_listValues !== 'undefined') ? GM_listValues : (() => []);
 // Replacement function for GM_listValues allowing for debugging in console
-const removeValueGM = GM_deleteValue || ((name) => logScript('Removing: ', name));
+const removeValueGM = (typeof GM_deleteValue !== 'undefined') ? GM_deleteValue : ((name) => logScript('Removing: ', name));
 // Replacement function for GM_info allowing for debugging in console
-const getInfoGM = GM_info || {
+const getInfoGM = (typeof GM_info !== 'undefined') ? GM_info : {
   scriptHandler: 'Console',
   script: {
     name: 'Debug',
@@ -33,10 +33,10 @@ const getInfoGM = GM_info || {
   },
 };
 // Replacement function for GM_getValue allowing for debugging in console
-const getValueGM = GM_getValue || ((name, defaultValue = null) => logScript('Getting: ', name, '=',
+const getValueGM = (typeof GM_getValue !== 'undefined') ? GM_getValue : ((name, defaultValue = null) => logScript('Getting: ', name, '=',
   defaultValue)[3]);
 // Replacement function for GM_setValue allowing for debugging in console
-const setValueGM = GM_setValue || ((name, value) => logScript('Getting: ', name, '=', value));
+const setValueGM = (typeof GM_setValue !== 'undefined') ? GM_setValue : ((name, value) => logScript('Getting: ', name, '=', value));
 
 // See https://stackoverflow.com/a/2401861/331508 for optional browser sniffing code.
 function getBrowser() {
@@ -50,7 +50,9 @@ function getBrowser() {
   if (M[1] === 'Chrome') {
     tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
     if (tem !== null) {
-      return tem.slice(1).join(' ').replace('OPR', 'Opera');
+      return tem.slice(1)
+        .join(' ')
+        .replace('OPR', 'Opera');
     }
   }
   M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];

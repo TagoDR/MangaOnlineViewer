@@ -2,6 +2,7 @@ import moment from 'moment';
 import R from 'ramda';
 import pkg from '../package.json';
 import sites from './adult';
+import { requiredScripts } from './externals';
 
 export default {
   name: 'Manga OnlineViewer Adult',
@@ -13,7 +14,8 @@ export default {
     .join(', ')}`,
   version: pkg.version,
   license: pkg.license,
-  date: moment().format('YYYY-MM-DD'),
+  date: moment()
+    .format('YYYY-MM-DD'),
   grant: [
     'GM_getValue',
     'GM_setValue',
@@ -22,16 +24,6 @@ export default {
     'GM_xmlhttpRequest',
   ],
   connect: '*',
-  require: [
-    'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.2.2/jszip.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js',
-    'https://cdn.jsdelivr.net/npm/sweetalert2@8.16.0/dist/sweetalert2.all.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js',
-  ],
+  require: requiredScripts,
   include: R.pluck('url', sites),
 };

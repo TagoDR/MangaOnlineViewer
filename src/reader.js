@@ -3,6 +3,7 @@ import htmlKeybinds from './components/keybinds.html';
 import cssStyles from './components/styles.css';
 import { icon, settings } from './settings';
 import { themesCSS, themesSelector } from './themes';
+import { externalCSS, externalScripts } from './externals';
 
 const panel = `<div id='ImageOptions'>
   <div id='menu'>
@@ -117,13 +118,17 @@ const body = (manga, begin = 0) => `
     <span class='controlLabel'>Go to Page:</span>
     <select id='gotoPage'>
       <option selected>#</option>
-      ${listOptions(manga.quant).slice(begin).join('')}
+      ${listOptions(manga.quant)
+    .slice(begin)
+    .join('')}
     </select>
   </div>
   ${chapterControlTop(manga)}
   <div id='Chapter' class='${(settings.FitWidthIfOversized
 === true ? 'fitWidthIfOversized' : '')} ${settings.viewMode}'>
-    ${listPages(manga.quant).slice(begin).join('')}    
+    ${listPages(manga.quant)
+    .slice(begin)
+    .join('')}    
   </div>
   ${title(manga)}
   ${chapterControlBottom(manga)}
@@ -135,7 +140,9 @@ const body = (manga, begin = 0) => `
       <img alt='Thumbnails' title='Thumbnails' src='${icon.menu}' class='nav' /><i>0</i> of <b>${manga.quant}</b> Pages Loaded
     </div>
     <div id='Thumbnails'>
-      ${listThumbnails(manga.quant).slice(begin).join('')}
+      ${listThumbnails(manga.quant)
+    .slice(begin)
+    .join('')}
     </div>
   </div>
   <a href='#' id='blob' style='display: none;'>Download</a>
@@ -144,7 +151,8 @@ const body = (manga, begin = 0) => `
 // Inject CSS for this script
 const readerCSS = `<style type='text/css'>
 ${cssStyles}
-#MangaOnlineViewer .fitWidthIfOversized .PageContent img { max-width: ${$(window).width()}px;}
+#MangaOnlineViewer .fitWidthIfOversized .PageContent img { max-width: ${$(window)
+    .width()}px;}
 #MangaOnlineViewer .PageFunctions .Bookmark {background: url('${icon.bookmark}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .Reload {background: url('${icon.reload}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .Hide {background: url('${icon.hide}') no-repeat scroll center center transparent;}
@@ -153,24 +161,6 @@ ${cssStyles}
 #MangaOnlineViewer .PageFunctions .ZoomRestore {background: url('${icon.zoomRestore}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .ZoomWidth {background: url('${icon.zoomWidth}') no-repeat scroll center center transparent;}
 </style>`;
-const externalScripts = [
-  '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>',
-  '<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.2.2/jszip.min.js" integrity="sha256-gy5W5/rXWluWXFRvMWFFMVhocfpBe7Tf4SW2WMfjs4E=" crossorigin="anonymous"></script>',
-  '<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js" integrity="sha256-XWzSUJ+FIQ38dqC06/48sNRwU1Qh3/afjmJ080SneA8=" crossorigin="anonymous"></script>',
-  '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.16.1/dist/sweetalert2.min.js" integrity="sha256-eMnJEv7c7pNrl00kXIpjSRDEkBCijv3gGL2bOOyG7ZY=" crossorigin="anonymous"></script>',
-  '<script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js" integrity="sha256-CJWfUCeP3jLdUMVNUll6yQx37gh9AKmXTRxvRf7jzro=" crossorigin="anonymous"></script>',
-  '<script src="https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js" integrity="sha256-7IUC8vhyoPLh1tuQJnffPB5VO6HpR4VWK4Y1ciOOoBY=" crossorigin="anonymous"></script>',
-  '<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js" integrity="sha256-43x9r7YRdZpZqTjDT5E0Vfrxn1ajIZLyYWtfAXsargA=" crossorigin="anonymous"></script>',
-  '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js" integrity="sha256-7QS1cHsH75h3IFgrFKsdhmKHHpWqF82sb/9vNLqcqs0=" crossorigin="anonymous"></script>',
-  '<script src="https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js" integrity="sha256-B00tEEtJRbA9gas0viRdqVPI81EuZG+kYU978/alKt8=" crossorigin="anonymous"></script>',
-
-];
-const externalCSS = [
-  '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />',
-  '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@8.16.1/dist/sweetalert2.css" integrity="sha256-k59BjMeOG0yTQ5DlmjApR918fjnoMKI9zsdP3iZaYhQ=" crossorigin="anonymous">',
-  '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" integrity="sha256-pMhcV6/TBDtqH9E9PWKgS+P32PVguLG8IipkPyqMtfY=" crossorigin="anonymous" />',
-  '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gerhobbelt/keyscss@1.1.3-6/keys.css" integrity="sha256-a/1ebfXeoX0xLUcQCJLQsm6APQNBwrm03/XFcvW7xAI=" crossorigin="anonymous">',
-];
 
 function reader(manga, begin = 0) {
   return `
