@@ -1,6 +1,7 @@
 import R from 'ramda';
 import adult from './adult';
 import main from './main';
+import { requiredScripts } from './externals';
 
 const sites = R.concat(main, adult);
 const languages = R.compose(R.uniq, R.map(R.prop('languages')))(sites);
@@ -26,10 +27,12 @@ const sitesList = R.compose(R.join('\n'), R.map(siteListEntry), sortSites);
 const mangaSites = sitesList(R.filter(R.propEq('category', 'manga'), main));
 const comicSites = sitesList(R.filter(R.propEq('category', 'comic'), main));
 const hentaiSites = sitesList(adult);
+const bookmarklet = `${requiredScripts.join('", "')}`;
 
 export {
   mangaSites,
   comicSites,
   hentaiSites,
   languages,
+  bookmarklet,
 };

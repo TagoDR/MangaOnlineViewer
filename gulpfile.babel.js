@@ -15,7 +15,7 @@ import pkg from './package.json';
 import metaAdult from './src/meta-adult';
 import metaMain from './src/meta-main';
 import {
-  comicSites, hentaiSites, mangaSites,
+  comicSites, hentaiSites, mangaSites, bookmarklet,
 } from './src/readme';
 
 const scripts = {
@@ -143,6 +143,7 @@ function readme() {
         LIST_MANGA_SITES: mangaSites,
         LIST_COMIC_SITES: comicSites,
         LIST_HENTAI_SITES: hentaiSites,
+        BOOKMARKLET: bookmarklet,
       },
     })) // To set environment variables in-line
     .pipe(gulp.dest('./dist/'));
