@@ -2,18 +2,17 @@
 ### Installation
 
 [Reader](https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js)  
-[Adult Reader](https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js)  
+[Adult Reader](https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js)
 ##### Official Source: [GitHub](https://github.com/TagoDR/MangaOnlineViewer)  
 
 ### Supported Browsers  
-Any Browser with [Tampermonkey](https://tampermonkey.net/)  
-Should work with other browsers and add-ons, but not officially supported.  
-Mobile Bookmarklet (*Settings can't be saved, may require to request for Desktop Page*):<br>
+Firefox and Chrome with [Tampermonkey](https://tampermonkey.net/).  
+Other Browsers with other add-ons may also work, but not officially supported.  
+Mobile Bookmarklet (*Settings can't be saved, may require to request for Desktop Page*):  
 Main:
 ```
 javascript:(function(){["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/Manga_OnlineViewer.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
 ```
-
 Adult:
 ```
 javascript:(function(){["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/Manga_OnlineViewer_Adult.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
@@ -32,7 +31,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 ### Supported Comic Sites  
 <!-- @echo LIST_COMIC_SITES -->
 
-###Supported Hentai Sites  
+### Supported Hentai Sites  
 > Adult Script available **_only_** on [Github](https://github.com/TagoDR/MangaOnlineViewer)
 <!-- @echo LIST_HENTAI_SITES -->
 
