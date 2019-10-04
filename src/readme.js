@@ -6,16 +6,16 @@ import { requiredScripts } from './externals';
 const sites = R.concat(main, adult);
 const languages = R.compose(R.uniq, R.map(R.prop('languages')))(sites);
 
-const linkSite = (site) => `<a href='${site[1]}'>${site[0]}</a>`;
+const linkSite = (site) => `[${site[0]}](${site[1]})`;
 const normalizeSite = R.ifElse((site) => typeof site.name !== 'string',
   (site) => R.zip(site.name, site.homepage),
   (site) => [R.pair(site.name, site.homepage)]);
 
 function siteListEntry(site) {
   const links = R.compose(R.join(' / '), R.map(linkSite), normalizeSite);
-  const lang = site.language === undefined ? '' : ` <i>[${site.language}]</i>`;
-  const obs = site.obs === undefined ? '' : ` <b>Obs: ${site.obs}</b>`;
-  return `<li>${links(site)}${lang}${obs}</li>`;
+  const lang = site.language === undefined ? '' : ` _[${site.language}]_`;
+  const obs = site.obs === undefined ? '' : ` **Obs: ${site.obs}**`;
+  return `- ${links(site)}${lang}${obs}`;
 }
 
 const sortSites = R.sortWith([

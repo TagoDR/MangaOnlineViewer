@@ -1,138 +1,137 @@
 <h1>Manga OnlineViewer</h1>
 
-<h3>Installation</h3>
-<a href='https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js'>Reader</a><br>
-<a href='https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js'>Adult Reader</a>
-<br/>Mobile Bookmarklet(Settings can't be saved):
-<pre>
+###Installation
+
+[Reader](https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js)  
+[Adult Reader](https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js)
+#####Official Source: [GitHub](https://github.com/TagoDR/MangaOnlineViewer)  
+
+###Supported Browsers
+Any Browser with [Tampermonkey](https://tampermonkey.net/)  
+Should work with other browsers and add-ons, but not officially supported.  
+Mobile Bookmarklet (*Settings can't be saved, may require to request for Desktop Page*):<br>
+Main:
+```
 javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.2.2/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdn.jsdelivr.net/npm/sweetalert2@8.18.0/dist/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js", "https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js", "https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/Manga_OnlineViewer.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
-</pre>
-<h3>Description</h3>MangaOnlineViewer helps speed up reading by loading all pages(images) from the current chapter of the manga on one page in a list type structure.</br>
-Please note on a few sites, MangaOnlineViewer may use more resources. Only open one tab for each site at a time and wait for the page to completely load.</br>
-I will try to keep this script updated, however I hardly-ever visit some of the sites supported. If the script no longer works for a site, then post the problem in the Issues/Feedback area, and have patience.</br></br>
+```
+
+Adult:
+```
+javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.2.2/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdn.jsdelivr.net/npm/sweetalert2@8.18.0/dist/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js", "https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js", "https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/Manga_OnlineViewer_Adult.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
+```
+
+###Description
+MangaOnlineViewer helps speed up reading by loading all pages(images) from the current chapter of the manga on one page in a list type structure.  
+Please note on a few sites, MangaOnlineViewer may use more resources. Only open one tab for each site at a time and wait for the page to completely load.  
+I will try to keep this script updated, however I hardly-ever visit some of the sites supported. If the script no longer works for a site, then post the problem in the Issues/Feedback area, and have patience.  
+
 I allow this script to be posted or used anywhere as long as I am given credit and provided a link to this site. I allow parts of my script to be used freely.
-<h2>Official Sources</h2>
-<pre>
-GitHub:     <a href="https://github.com/TagoDR/MangaOnlineViewer">https://github.com/TagoDR/MangaOnlineViewer</a>
-GreaseFork: <a href="https://greasyfork.org/en/scripts/1319-manga-onlineviewer">https://greasyfork.org/en/scripts/1319-manga-onlineviewer</a>
-OpenUserJS: <a href="https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer">https://openuserjs.org/scripts/TagoDR/Manga_OnlineViewer</a>
-</pre>
 
-<h3>Supported Manga Sites</h3>
-<ul>
-<li><a href='http://bato.to/'>Batoto</a> <i>[English]</i></li>
-<li><a href='https://dynasty-scans.com/'>Dynasty-Scans</a> <i>[English]</i></li>
-<li><a href='http://read.egscans.com/'>Easy Going Scans</a> <i>[English]</i></li>
-<li><a href='http://eatmanga.me/'>EatManga</a> <i>[English]</i></li>
-<li><a href=''>FoOlSlide</a> <i>[English]</i> <b>Obs: Any Scanlator site that uses FoOLSlide</b></li>
-<li><a href='http://funmanga.com/'>Funmanga</a> <i>[English]</i></li>
-<li><a href='https://www.hatigarmscans.net//'>HatigarmScans</a> <i>[English]</i></li>
-<li><a href='https://jaiminisbox.com/'>JaiminisBox</a> <i>[English]</i></li>
-<li><a href='http://kissmanga.com/'>KissManga</a> <i>[English]</i></li>
-<li><a href='http://lhtranslation.net/'>LHTranslation</a> <i>[English]</i></li>
-<li><a href='http://mangadeep.com/'>MangaDeep</a> <i>[English]</i></li>
-<li><a href='https://mangadex.org/'>MangaDex</a> <i>[English]</i></li>
-<li><a href='https://mngdoom.com/'>MangaDoom</a> <i>[English]</i></li>
-<li><a href='http://fanfox.net/'>MangaFox</a> <i>[English]</i></li>
-<li><a href='http://www.mangago.me/'>MangaGo</a> <i>[English]</i></li>
-<li><a href='http://www.mangahere.cc/'>MangaHere</a> <i>[English]</i></li>
-<li><a href='http://www.mangainn.net/'>MangaInn</a> <i>[English]</i></li>
-<li><a href='https://mangakakalot.com/page'>MangaKakalot</a> / <a href='http://www.manganelo.com/'>MangaNelo</a> <i>[English]</i></li>
-<li><a href='http://manga.lyght.net/'>MangaLyght</a> <i>[English]</i></li>
-<li><a href='http://mangapark.net/'>MangaPark</a> <i>[English]</i></li>
-<li><a href='http://www.mangareader.net/'>MangaReader</a> / <a href='http://www.mangapanda.com/'>MangaPanda</a> <i>[English]</i></li>
-<li><a href='https://mangarock.com/'>MangaRock</a> <i>[English]</i></li>
-<li><a href='https://mangaseeonline.us/'>MangaSee</a> <i>[English]</i></li>
-<li><a href='http://mangastream.com/'>MangaStream</a> <i>[English]</i></li>
-<li><a href='http://www.mangatown.com/'>MangaTown</a> <i>[English]</i></li>
-<li><a href='http://ninemanga.com/'>NineManga</a> <i>[English]</i></li>
-<li><a href='http://www.readmng.com/'>ReadManga Today</a> <i>[English]</i></li>
-<li><a href='http://raw.senmanga.com/'>SenManga(Raw)</a> <i>[English]</i></li>
-<li><a href='http://www.tenmanga.com/'>TenManga</a> <i>[English]</i></li>
-<li><a href='http://www.thespectrum.net/'>TheSpectrum</a> <i>[English]</i></li>
-<li><a href='https://www.japscan.to/'>JapScan.To</a> <i>[French]</i></li>
-<li><a href='https://mangahost.net/'>MangaHost</a> <i>[Portuguese]</i></li>
-<li><a href='http://unionmangas.net/'>UnionMangas</a> <i>[Portuguese]</i></li>
-<li><a href='http://hocvientruyentranh.com/'>Hoc Vien Truyen Tranh</a> <i>[Vietnamese]</i></li>
-</ul>
-<h3>Supported Comic Sites</h3>
-<ul>
-<li><a href='http://www.comicastle.org/'>ComiCastle</a> <i>[English]</i></li>
-<li><a href='http://readcomicsonline.ru/'>ReadComicsOnline</a> <i>[English]</i></li>
-</ul>
-<h3>Supported Hentai Sites</h3> <b><a style="color: red;" href="https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js">Adult Script</a> available <i>only</i> on <a href='https://github.com/TagoDR/MangaOnlineViewer'>Github</a></b>
-<details>
-<summary>Click to expand</summary>
-<ul>
-<li><a href='https://www.8muses.com/'>8Muses</a> <i>[English]</i></li>
-<li><a href='https://9hentai.com'>9Hentai</a> <i>[English]</i></li>
-<li><a href='https://asmhentai.com/'>ASMHentai</a> <i>[English]</i></li>
-<li><a href='https://doujins.com/'>DoujinMoeNM</a> <i>[English]</i></li>
-<li><a href='https://exhentai.org/'>ExHentai</a> / <a href='https://e-hentai.org/'>e-Hentai</a> <i>[English]</i> <b>Obs: May get your IP Banned, use with moderation</b></li>
-<li><a href='http://www.hbrowse.com/'>HBrowser</a> <i>[English]</i></li>
-<li><a href='https://www.hentaihere.com/'>HentaIHere</a> <i>[English]</i></li>
-<li><a href='https://hentai-comic.com/'>Hentai Comic</a> <i>[English]</i> <b>Obs: and similar sites</b></li>
-<li><a href='http://hentai2read.com/'>Hentai2Read</a> <i>[English]</i></li>
-<li><a href='https://hentai.cafe'>HentaiCafe</a> <i>[English]</i></li>
-<li><a href='http://www.hentaifox.com/'>HentaiFox</a> <i>[English]</i></li>
-<li><a href='https://hentainexus.com/'>HentaiNexus</a> <i>[English]</i></li>
-<li><a href='https://luscious.net/'>Luscious</a> / <a href='https://www.wondersluts.com/'>Wondersluts</a> <i>[English]</i></li>
-<li><a href='https://multporn.net/'>MultPorn</a> <i>[English]</i></li>
-<li><a href='https://www.porncomixonline.net'>PornComixOnline</a> / <a href='http://xyzcomics.com/'>xyzcomics</a> <i>[English]</i></li>
-<li><a href='http://pururin.io/'>Pururin</a> <i>[English]</i></li>
-<li><a href='http://simply-hentai.com/'>Simply-Hentai</a> <i>[English]</i></li>
-<li><a href='http://tsumino.com/'>Tsumino</a> <i>[English]</i></li>
-<li><a href='https://hitomi.la/'>hitomi</a> <i>[English]</i></li>
-<li><a href='https://nhentai.net/'>nHentai</a> <i>[English]</i></li>
-<li><a href='http://www.superhentais.com/'>SuperHentais</a> <i>[Portuguese]</i></li>
-</ul>
-</details>
+###Supported Manga Sites
+- [Batoto](http://bato.to/) _[English]_
+- [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
+- [Easy Going Scans](http://read.egscans.com/) _[English]_
+- [EatManga](http://eatmanga.me/) _[English]_
+- [FoOlSlide]() _[English]_ **Obs: Any Scanlator site that uses FoOLSlide**
+- [Funmanga](http://funmanga.com/) _[English]_
+- [HatigarmScans](https://www.hatigarmscans.net//) _[English]_
+- [JaiminisBox](https://jaiminisbox.com/) _[English]_
+- [KissManga](http://kissmanga.com/) _[English]_
+- [LHTranslation](http://lhtranslation.net/) _[English]_
+- [MangaDeep](http://mangadeep.com/) _[English]_
+- [MangaDex](https://mangadex.org/) _[English]_
+- [MangaDoom](https://mngdoom.com/) _[English]_
+- [MangaFox](http://fanfox.net/) _[English]_
+- [MangaGo](http://www.mangago.me/) _[English]_
+- [MangaHere](http://www.mangahere.cc/) _[English]_
+- [MangaInn](http://www.mangainn.net/) _[English]_
+- [MangaKakalot](https://mangakakalot.com/page) / [MangaNelo](http://www.manganelo.com/) _[English]_
+- [MangaLyght](http://manga.lyght.net/) _[English]_
+- [MangaPark](http://mangapark.net/) _[English]_
+- [MangaReader](http://www.mangareader.net/) / [MangaPanda](http://www.mangapanda.com/) _[English]_
+- [MangaRock](https://mangarock.com/) _[English]_
+- [MangaSee](https://mangaseeonline.us/) _[English]_
+- [MangaStream](http://mangastream.com/) _[English]_
+- [MangaTown](http://www.mangatown.com/) _[English]_
+- [NineManga](http://ninemanga.com/) _[English]_
+- [ReadManga Today](http://www.readmng.com/) _[English]_
+- [SenManga(Raw)](http://raw.senmanga.com/) _[English]_
+- [TenManga](http://www.tenmanga.com/) _[English]_
+- [TheSpectrum](http://www.thespectrum.net/) _[English]_
+- [JapScan.To](https://www.japscan.to/) _[French]_
+- [MangaHost](https://mangahost.net/) _[Portuguese]_
+- [UnionMangas](http://unionmangas.net/) _[Portuguese]_
+- [Hoc Vien Truyen Tranh](http://hocvientruyentranh.com/) _[Vietnamese]_
 
-<h3>Supported Browsers</h3>
-Any Browser with <a href="https://tampermonkey.net/">Tampermonkey</a><br>
-Should work with other browsers and add-ons, but not officially supported.
-<h3>HotKeys</h3>
-<kbd class='dark'>Numpad 5</kbd>/<kbd class='dark'>X</kbd>/<kbd class='dark'>/</kbd>: Open Settings<br/>
-<kbd class='dark'>Numpad +</kbd>/<kbd class='dark'>Q</kbd>/<kbd class='dark'>=</kbd>: Global Zoom in pages (enlarge)<br/>
-<kbd class='dark'>Numpad -</kbd>/<kbd class='dark'>E</kbd>/<kbd class='dark'>-</kbd>: Global Zoom out pages (reduce)<br/>
-<kbd class='dark'>Numpad /</kbd>/<kbd class='dark'>R</kbd>/<kbd class='dark'>9</kbd>: Global Restore pages to original<br/>
-<kbd class='dark'>Numpad *</kbd>/<kbd class='dark'>F</kbd>/<kbd class='dark'>0</kbd>: Global Fit window width<br/>
-<kbd class='dark'>Numpad 6</kbd>/<kbd class='dark'>D</kbd>/<kbd class='dark'>.</kbd>/<kbd class="dark">→</kbd>: Next Chapter<br/>
-<kbd class='dark'>Numpad 4</kbd>/<kbd class='dark'>A</kbd>/<kbd class='dark'>,</kbd>/<kbd class="dark">←</kbd>: Previous Chapter<br/>
-<kbd class='dark'>Numpad 8</kbd>/<kbd class='dark'>W</kbd>: Scroll Up<br/>
-<kbd class='dark'>Numpad 2</kbd>/<kbd class='dark'>S</kbd>: Scroll Down<br/>
+###Supported Comic Sites
+- [ComiCastle](http://www.comicastle.org/) _[English]_
+- [ReadComicsOnline](http://readcomicsonline.ru/) _[English]_
 
-<h3>Features</h3>
-<pre>
-View Modes:
-- Vertical [Default]
-- WebComic
-- Fluid Left to Right
-- Fluid Right to Left
-Bookmarks Pages (To resume reading)
-Full Themes and Customizable
-Global and Individual images zoom
-- In(Global one may stretch images beyond window width)
-- Out
-- Restore original(Toggle fit width if oversized)
-- Fit width
-- Fit width if oversized[Default on]
-- Hide
-Auto reload Images
-- Counter for loaded Images
-- Individual image reload, just in case
-HotKeys
-Goto Page
-Image Loading Timer[Default 1s](Some sites require longer timers. eg.:ExHentai,e-hentai)
-Thumbnails Navigation[Default on]
-Download all images as ZIP File[Automatic Default off]
-Lazy Load Images[Default off]
-</pre>
+###Supported Hentai Sites
+> Adult Script available **_only_** on [Github](https://github.com/TagoDR/MangaOnlineViewer)
+- [8Muses](https://www.8muses.com/) _[English]_
+- [9Hentai](https://9hentai.com) _[English]_
+- [ASMHentai](https://asmhentai.com/) _[English]_
+- [DoujinMoeNM](https://doujins.com/) _[English]_
+- [ExHentai](https://exhentai.org/) / [e-Hentai](https://e-hentai.org/) _[English]_ **Obs: May get your IP Banned, use with moderation**
+- [HBrowser](http://www.hbrowse.com/) _[English]_
+- [HentaIHere](https://www.hentaihere.com/) _[English]_
+- [Hentai Comic](https://hentai-comic.com/) _[English]_ **Obs: and similar sites**
+- [Hentai2Read](http://hentai2read.com/) _[English]_
+- [HentaiCafe](https://hentai.cafe) _[English]_
+- [HentaiFox](http://www.hentaifox.com/) _[English]_
+- [HentaiNexus](https://hentainexus.com/) _[English]_
+- [Luscious](https://luscious.net/) / [Wondersluts](https://www.wondersluts.com/) _[English]_
+- [MultPorn](https://multporn.net/) _[English]_
+- [PornComixOnline](https://www.porncomixonline.net) / [xyzcomics](http://xyzcomics.com/) _[English]_
+- [Pururin](http://pururin.io/) _[English]_
+- [Simply-Hentai](http://simply-hentai.com/) _[English]_
+- [Tsumino](http://tsumino.com/) _[English]_
+- [hitomi](https://hitomi.la/) _[English]_
+- [nHentai](https://nhentai.net/) _[English]_
+- [SuperHentais](http://www.superhentais.com/) _[Portuguese]_
 
-<h3>Rules For adding new Manga Sites</h3>
-<ol><li>The site must have rare/unique mangas (Meaning: it's not available in other sites, or is a
- better quality)</li>
-<li>The site must be strong enough or else my script may crash it</li>
-<li>The site must not be exclusive to a handful of manga titles (Meaning: no small scanlators)</li></ol>
+###HotKeys
+<kbd class='dark'>Numpad 5</kbd>/<kbd class='dark'>X</kbd>/<kbd class='dark'>/</kbd>: Open Settings  
+<kbd class='dark'>Numpad +</kbd>/<kbd class='dark'>Q</kbd>/<kbd class='dark'>=</kbd>: Global Zoom in pages (enlarge)  
+<kbd class='dark'>Numpad -</kbd>/<kbd class='dark'>E</kbd>/<kbd class='dark'>-</kbd>: Global Zoom out pages (reduce)  
+<kbd class='dark'>Numpad /</kbd>/<kbd class='dark'>R</kbd>/<kbd class='dark'>9</kbd>: Global Restore pages to original  
+<kbd class='dark'>Numpad *</kbd>/<kbd class='dark'>F</kbd>/<kbd class='dark'>0</kbd>: Global Fit window width  
+<kbd class='dark'>Numpad 6</kbd>/<kbd class='dark'>D</kbd>/<kbd class='dark'>.</kbd>/<kbd class="dark">→</kbd>: Next Chapter  
+<kbd class='dark'>Numpad 4</kbd>/<kbd class='dark'>A</kbd>/<kbd class='dark'>,</kbd>/<kbd class="dark">←</kbd>: Previous Chapter  
+<kbd class='dark'>Numpad 8</kbd>/<kbd class='dark'>W</kbd>: Scroll Up  
+<kbd class='dark'>Numpad 2</kbd>/<kbd class='dark'>S</kbd>: Scroll Down  
 
-<h3>Disclaimer</h3>In case the owner/admin of one of the supported sites does not want my script to run on their site, I will make it disabled by default. Forcing users to manually activate it.
+###Features
+- View Modes:
+  - Vertical [Default]
+  - WebComic
+  - Fluid Left to Right
+  - Fluid Right to Left
+- Bookmarks Pages (To resume reading)
+- Full Themes and Customizable
+- Global and Individual images zoom
+  - In(Global one may stretch images beyond window width)
+  - Out
+  - Restore original(Toggle fit width if oversized)
+  - Fit width
+  - Fit width if oversized[Default on]
+  - Hide
+- Auto reload Images
+  - Counter for loaded Images
+  - Individual image reload, just in case
+- HotKeys
+- Goto Page
+- Image Loading Timer[Default 1s](Some sites require longer timers. eg.:ExHentai,e-hentai)
+- Thumbnails Navigation[Default on]
+- Download all images as ZIP File[Automatic Default off]
+- Lazy Load Images[Default off]
+
+###Rules For adding new Manga Sites
+1. The site must have rare/unique mangas (Meaning: it's not available in other sites, or is a
+ better quality)
+2. The site must be strong enough or else my script may crash it
+3. The site must not be exclusive to a handful of manga titles (Meaning: no small scanlators)
+
+###Disclaimer
+In case the owner/admin of one of the supported sites does not want my script to run on their site, I will make it disabled by default. Forcing users to manually activate it.
