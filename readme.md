@@ -1,19 +1,19 @@
 # Manga OnlineViewer  
 ### Installation
 
-[Reader](https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js)  
-[Adult Reader](https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js)
+##### [Main Reader](https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js)  
+##### [Adult Reader](https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js)
 ##### Official Source: [GitHub](https://github.com/TagoDR/MangaOnlineViewer)  
 
 ### Supported Browsers  
 Firefox and Chrome with [Tampermonkey](https://tampermonkey.net/).  
 Other Browsers with other add-ons may also work, but not officially supported.  
 Mobile Bookmarklet (*Settings can't be saved, may require to request for Desktop Page*):  
-Main:
+##### Main Reader:
 ```
 javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.2.2/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdn.jsdelivr.net/npm/sweetalert2@8.18.0/dist/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js", "https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js", "https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/Manga_OnlineViewer.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
 ```
-Adult:
+##### Adult Reader:
 ```
 javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.2.2/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdn.jsdelivr.net/npm/sweetalert2@8.18.0/dist/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js", "https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js", "https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/Manga_OnlineViewer_Adult.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
 ```
@@ -51,6 +51,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [MangaSee](https://mangaseeonline.us/) _[English]_
 - [MangaStream](http://mangastream.com/) _[English]_
 - [MangaTown](http://www.mangatown.com/) _[English]_
+- [MangaZuki](https://www.mangazuki.online/) _[English]_
 - [NineManga](http://ninemanga.com/) _[English]_
 - [ReadManga Today](http://www.readmng.com/) _[English]_
 - [SenManga(Raw)](http://raw.senmanga.com/) _[English]_

@@ -34,6 +34,7 @@ import tenmanga from './tenmanga';
 import thespectrum from './thespectrum';
 import unionmangas from './unionmangas';
 import wpmanga from './wpmanga';
+import mangazuki from './mangazuki';
 
 export default [
   batoto,
@@ -72,4 +73,5 @@ export default [
   lhtranslation,
   japscan,
   mangasee,
+  mangazuki,
 ];

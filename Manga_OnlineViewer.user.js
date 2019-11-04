@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaKakalot,MangaNelo, LHTranslation, JapScan.To, MangaSee
-// @version 15.00.0
+// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaKakalot,MangaNelo, LHTranslation, JapScan.To, MangaSee, MangaZuki
+// @version 15.01.0
 // @license MIT
-// @date 2019-10-02
+// @date 2019-11-04
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -59,6 +59,7 @@
 // @include /https?:\/\/(www.)?lhtranslation.net\/read.+/
 // @include /https?:\/\/(www.)?japscan.to\/lecture-en-ligne\/.+\/.+/
 // @include /https?:\/\/(www.)?mangaseeonline.us\/read-online\/.+/
+// @include /https?:\/\/(www.)?mangazuki.online\/manga\/.+\/.+\//
 // @exclude /https?:\/\/(www.)?tsumino.com\/.+/
 // @exclude /https?:\/\/(www.)?pururin.io\/.+/
 // @exclude /https?:\/\/(www.)?hentainexus.com\/.+/
@@ -960,7 +961,26 @@
     }
   };
 
-  var sites = [batoto, comicastle, readcomicsonline, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost, hocvien, jaiminisbox, mangadex, hatigarmscans, mangarock, mangakakalot, lhtranslation, japscan, mangasee];
+  var mangazuki = {
+    name: 'MangaZuki',
+    url: /https?:\/\/(www.)?mangazuki.online\/manga\/.+\/.+\//,
+    homepage: 'https://www.mangazuki.online/',
+    language: ['English'],
+    category: 'manga',
+    run() {
+      const imgs = jQuery('.wp-manga-chapter-img').get().map(i => jQuery(i).attr('src').trim());
+      return {
+        title: $('.wp-manga-nav .c-breadcrumb li:last').text().trim(),
+        series: $('.wp-manga-nav .c-breadcrumb li:nth(1) a').attr('href'),
+        quant: imgs.length,
+        prev: $('.nav-previous a').attr('href'),
+        next: $('.nav-next a').attr('href'),
+        listImages: imgs
+      };
+    }
+  };
+
+  var sites = [batoto, comicastle, readcomicsonline, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost, hocvien, jaiminisbox, mangadex, hatigarmscans, mangarock, mangakakalot, lhtranslation, japscan, mangasee, mangazuki];
 
   function logScript(...text) {
     console.log('MangaOnlineViewer:', ...text);
@@ -1706,7 +1726,7 @@
         beginning = settings.bookmarks
           .filter(x => x.url === W.location.href).map(x => x.page)[0] || 0;
       }
-      $('head').append('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />', '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@8.16.1/dist/sweetalert2.css" integrity="sha256-k59BjMeOG0yTQ5DlmjApR918fjnoMKI9zsdP3iZaYhQ=" crossorigin="anonymous">', '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.16.1/dist/sweetalert2.min.js" integrity="sha256-eMnJEv7c7pNrl00kXIpjSRDEkBCijv3gGL2bOOyG7ZY=" crossorigin="anonymous"></script>', '<style type="text/css">#mov {position: fixed;left: 50%;transform: translateX(-50%);top: 0;z-index: 1000;border-radius: .25em;font-size: 1.5em;cursor: pointer;display: inline-block;margin: .3125em;padding: .625em 2em;box-shadow: none;font-weight: 500;color: #FFF;background: rgb(102, 83, 146);border: 1px #FFF;}</style>');
+      $('head').append('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />', '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@8.16.1/dist/sweetalert2.css" integrity="sha256-k59BjMeOG0yTQ5DlmjApR918fjnoMKI9zsdP3iZaYhQ=" crossorigin="anonymous">', '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.16.1/dist/sweetalert2.min.js" integrity="sha256-eMnJEv7c7pNrl00kXIpjSRDEkBCijv3gGL2bOOyG7ZY=" crossorigin="anonymous"></script>', '<style type="text/css">#mov {position: fixed;left: 50%;transform: translateX(-50%);top: 0;z-index: 1000000;border-radius: .25em;font-size: 1.5em;cursor: pointer;display: inline-block;margin: .3125em;padding: .625em 2em;box-shadow: none;font-weight: 500;color: #FFF;background: rgb(102, 83, 146);border: 1px #FFF;}</style>');
       W.mov = b => lateStart(manga, b || beginning);
       switch (settings.loadMode) {
         case 'never':
