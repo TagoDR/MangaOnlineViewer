@@ -89,6 +89,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [hitomi](https://hitomi.la/) _[English]_
 - [nHentai](https://nhentai.net/) _[English]_
 - [SuperHentais](http://www.superhentais.com/) _[Portuguese]_
+- [TMOHentai](http://tmohentai.com/) _[Spanish]_
 
 ### HotKeys  
 <kbd class='dark'>Numpad 5</kbd>/<kbd class='dark'>X</kbd>/<kbd class='dark'>/</kbd>: Open Settings  

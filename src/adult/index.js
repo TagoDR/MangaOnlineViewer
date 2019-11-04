@@ -20,6 +20,7 @@ import pururin from './pururin';
 import simplyhentai from './simplyhentai';
 import superhentais from './superhentais';
 import tsumino from './tsumino';
+import tmohhentai from './tmohentai';
 
 export default [
   eightMuses,
@@ -44,4 +45,5 @@ export default [
   multporn,
   hentaicomic,
   hentainexus,
+  tmohhentai,
 ];
