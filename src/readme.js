@@ -8,7 +8,7 @@ const languages = R.compose(R.uniq, R.map(R.prop('languages')))(sites);
 
 const linkSite = (site) => `[${site[0]}](${site[1]})`;
 const normalizeSite = R.ifElse((site) => typeof site.name !== 'string',
-  (site) => R.zip(site.name, site.homepage),
+  (site) => R.zip(site.name || '', site.homepage || ''),
   (site) => [R.pair(site.name, site.homepage)]);
 
 function siteListEntry(site) {

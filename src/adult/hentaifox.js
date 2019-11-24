@@ -6,15 +6,15 @@ export default {
   language: ['English'],
   category: 'hentai',
   run() {
-    const num = $('.pag_info option').length - 2;
+    const num = parseInt($('.total_pages:first').text(), 10);
     return {
-      title: $('title').text().trim().match(/.+\| (.+) - HentaiFox$/)[1],
+      title: $('title').text().trim().replace(/ - Page .+/, ''),
       series: $('.return a').attr('href'),
       quant: num,
       prev: '#',
       next: '#',
-      listPages: [...Array(num).keys()].map((i) => `../${i + 1}/`),
-      img: '.gallery_content img.lazy',
+      listPages: [...Array(num).keys()].map((i) => '../'.concat(i + 1, '/')),
+      img: '#gimg',
     };
   },
 };
