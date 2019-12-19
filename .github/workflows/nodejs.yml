@@ -13,7 +13,7 @@ jobs:
     - name: Compile with Grunt
       uses: elstudio/actions-js-build/build@v2
       with:
-        args: build
+        args: run-script build
 
     - name: Commit changes
       uses: elstudio/actions-js-build/commit@v3
