@@ -1,25 +1,18 @@
-name: Node CI
+name: Grunt build and commit updated
 
 on: [push]
 
 jobs:
-  build:
+  grunt-build:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [12.x]
-
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: npm install, build
-      run: |
-        npm ci
-        npm run build --if-present
-      env:
-        CI: true
+    - uses: actions/checkout@v2
+
+    - name: Compile with Grunt
+      uses: elstudio/actions-js-build/build@v2
+
+
+    - name: Commit changes
+      uses: elstudio/actions-js-build/commit@v3
