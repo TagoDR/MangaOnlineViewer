@@ -19,6 +19,7 @@ export default {
       listImages: [...Array(num).keys()].map(
         (i) => src.replace(/[0-9]+.jpg/, String(`00000${i + 1}`).slice(-1 * size) + ext),
       ),
+      timer: 3000,
     };
   },
 };
