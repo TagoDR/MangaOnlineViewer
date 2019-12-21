@@ -35,6 +35,7 @@ import thespectrum from './thespectrum';
 import unionmangas from './unionmangas';
 import wpmanga from './wpmanga';
 import mangazuki from './mangazuki';
+import tmofans from './tmofans';
 
 export default [
   batoto,
@@ -74,4 +75,5 @@ export default [
   japscan,
   mangasee,
   mangazuki,
+  tmofans,
 ];

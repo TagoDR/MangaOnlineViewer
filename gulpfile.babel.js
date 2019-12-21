@@ -159,6 +159,12 @@ gulp.task('release', gulp.series(
   move,
 ));
 
+gulp.task('build', gulp.parallel(
+  gulp.series(createMetaMain, createScriptMain),
+  gulp.series(createMetaAdult, createScriptAdult),
+  readme,
+));
+
 gulp.task('main', gulp.series(createMetaMain, createScriptMain));
 gulp.task('adult', gulp.series(createMetaAdult, createScriptAdult));
 gulp.task('readme', readme);

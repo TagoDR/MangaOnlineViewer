@@ -57,6 +57,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [SenManga(Raw)](http://raw.senmanga.com/) _[English]_
 - [TenManga](http://www.tenmanga.com/) _[English]_
 - [TheSpectrum](http://www.thespectrum.net/) _[English]_
+- [TuMangaOnline](https://tmofans.com/) _[English]_
 - [JapScan.To](https://www.japscan.to/) _[French]_
 - [MangaHost](https://mangahost.net/) _[Portuguese]_
 - [UnionMangas](http://unionmangas.net/) _[Portuguese]_

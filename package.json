@@ -1,9 +1,10 @@
 {
   "name": "mangaonlineviewer",
-  "version": "15.03.0",
+  "version": "16.00.0",
   "description": "Userscript that helps to read Manga faster by loading all the pages at once",
   "scripts": {
-    "build": "gulp release"
+    "build": "gulp build",
+    "release": "gulp release"
   },
   "author": "TagoDR",
   "license": "MIT",
