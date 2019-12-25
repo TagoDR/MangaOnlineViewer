@@ -6,13 +6,13 @@ export default {
   language: ['English'],
   category: 'manga',
   run() {
-    const images = $('#vungdoc img').get();
+    const images = $('#vungdoc img, .container-chapter-reader img').get();
     return {
-      title: $('.info-top-chapter h2').text().trim(),
-      series: $('.rdfa-breadcrumb a span[itemprop="title"]').eq(1).parent().attr('href'),
+      title: $('.info-top-chapter h2, .panel-chapter-info-top h1').text().trim(),
+      series: $('span a[title]').eq(1).attr('href'),
       quant: images.length,
-      prev: $('.btn-navigation-chap a:eq(0)').attr('href'),
-      next: $('.btn-navigation-chap a:eq(1)').attr('href'),
+      prev: $('.navi-change-chapter-btn-prev:first, .back:first').attr('href'),
+      next: $('.navi-change-chapter-btn-next:first, .next:first').attr('href'),
       listImages: images.map((i) => $(i).attr('src')),
     };
   },
