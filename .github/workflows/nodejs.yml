@@ -1,4 +1,4 @@
-name: Grunt build and commit updated
+name: Grunt build and commit
 
 on: [push]
 
@@ -8,12 +8,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Compile with Grunt
-      uses: elstudio/actions-js-build/build@v2
-      with:
-        args: run-script build
+      - name: Compile with Grunt
+        uses: elstudio/actions-js-build/build@v2
+        with:
+          args: run-script release
 
-  #  - name: Commit changes
-  #    uses: elstudio/actions-js-build/commit@v3
+      - name: Commit changes
+        uses: elstudio/actions-js-build/commit@v3
