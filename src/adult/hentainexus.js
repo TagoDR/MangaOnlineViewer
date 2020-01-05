@@ -5,6 +5,7 @@ export default {
   homepage: 'https://hentainexus.com/',
   language: ['English'],
   category: 'hentai',
+  waitVar: 'baseTitle',
   run() {
     return {
       title: W.baseTitle.replace(' :: HentaiNexus', ''),
