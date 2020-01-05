@@ -15,5 +15,5 @@ jobs:
         with:
           args: run-script release
 
-      - name: Commit changes
-        uses: elstudio/actions-js-build/commit@v3
+#      - name: Commit changes
+#        uses: elstudio/actions-js-build/commit@v3
