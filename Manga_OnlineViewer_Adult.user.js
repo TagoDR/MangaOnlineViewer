@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics, SuperHentais, 9Hentai, ASMHentai, MultPorn, Hentai Comic, HentaiNexus, TMOHentai
-// @version 16.02.0
+// @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics, SuperHentais, 9Hentai, ASMHentai, MultPorn, Hentai Comic, HentaiNexus, TMOHentai, HentaiHand
+// @version 16.03.0
 // @license MIT
-// @date 2019-12-24
+// @date 2020-01-05
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -45,6 +45,7 @@
 // @include /https?:\/\/(www.)?(hentai|porn)-.+.com\/image\/.+/
 // @include /https?:\/\/(www.)?hentainexus.com\/read\/[0-9]+\/[0-9]+/
 // @include /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/[0-9]+/
+// @include /https?:\/\/(www.)?hentaihand.com\/viewc\/[0-9]+\/[0-9]+/
 // ==/UserScript==
 
 (function() {
@@ -584,8 +585,27 @@
     }
   };
 
+  var hentaihand = {
+    name: 'HentaiHand',
+    url: /https?:\/\/(www.)?hentaihand.com\/viewc\/[0-9]+\/[0-9]+/,
+    homepage: 'https://hentaihand.com/',
+    language: ['English'],
+    category: 'hentai',
+    waitVar: 'model',
+    run() {
+      return {
+        title: W.model.title.replace(' - Page {page}', ''),
+        series: $('.back-to-gallery a').attr('href'),
+        quant: Object.keys(W.images).length,
+        prev: '#',
+        next: '#',
+        listImages: Object.values(W.images)
+      };
+    }
+  };
+
   var sites = [eightMuses, doujinmoe, exhentai,
-    hbrowse, hentai2read, hentaifox, hentaihere, hitomi, luscious, nhentai, pururin, simplyhentai, tsumino, hentaicafe, porncomixonline, superhentais, ninehentai, asmhentai, multporn, hentaicomic, hentainexus, tmohhentai
+    hbrowse, hentai2read, hentaifox, hentaihere, hitomi, luscious, nhentai, pururin, simplyhentai, tsumino, hentaicafe, porncomixonline, superhentais, ninehentai, asmhentai, multporn, hentaicomic, hentainexus, tmohhentai, hentaihand
   ];
 
   function logScript(...text) {

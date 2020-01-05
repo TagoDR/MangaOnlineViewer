@@ -37,7 +37,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [KissManga](http://kissmanga.com/) _[English]_
 - [LHTranslation](http://lhtranslation.net/) _[English]_
 - [MangaDeep](http://mangadeep.com/) _[English]_
-- [MangaDex](https://mangadex.org/) _[English]_
+- [MangaDex](https://mangadex.cc/) _[English]_
 - [MangaDoom](https://mngdoom.com/) _[English]_
 - [MangaFox](http://fanfox.net/) _[English]_
 - [MangaGo](http://www.mangago.me/) _[English]_
@@ -80,6 +80,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [Hentai2Read](http://hentai2read.com/) _[English]_
 - [HentaiCafe](https://hentai.cafe) _[English]_
 - [HentaiFox](http://www.hentaifox.com/) _[English]_
+- [HentaiHand](https://hentaihand.com/) _[English]_
 - [HentaiNexus](https://hentainexus.com/) _[English]_
 - [Luscious](https://luscious.net/) / [Wondersluts](https://www.wondersluts.com/) _[English]_
 - [MultPorn](https://multporn.net/) _[English]_

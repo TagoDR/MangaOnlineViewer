@@ -21,6 +21,7 @@ import simplyhentai from './simplyhentai';
 import superhentais from './superhentais';
 import tsumino from './tsumino';
 import tmohhentai from './tmohentai';
+import hentaihand from './hentaihand';
 
 export default [
   eightMuses,
@@ -46,4 +47,5 @@ export default [
   hentaicomic,
   hentainexus,
   tmohhentai,
+  hentaihand,
 ];
