@@ -1,15 +1,15 @@
 // == MangaDex =====================================================================================
 export default {
   name: 'MangaDex',
-  url: /https?:\/\/(www.)?mangadex.cc\/chapter\/.+(\/.+)?/,
-  homepage: 'https://mangadex.cc/',
+  url: /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/,
+  homepage: 'https://mangadex.org/',
   language: ['English'],
   category: 'manga',
   waitEle: '.total-pages',
   waitAttr: ['.reader-image-wrapper img', 'src'],
   run() {
     let api = null;
-    const url = `https://mangadex.cc/api/chapter/${W.location.pathname.match(/[0-9]+/)[0]}`;
+    const url = `https://mangadex.org/api/chapter/${W.location.pathname.match(/[0-9]+/)[0]}`;
     $.ajax({
       type: 'GET',
       url,

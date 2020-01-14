@@ -37,7 +37,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [KissManga](http://kissmanga.com/) _[English]_
 - [LHTranslation](http://lhtranslation.net/) _[English]_
 - [MangaDeep](http://mangadeep.com/) _[English]_
-- [MangaDex](https://mangadex.cc/) _[English]_
+- [MangaDex](https://mangadex.org/) _[English]_
 - [MangaDoom](https://mngdoom.com/) _[English]_
 - [MangaFox](http://fanfox.net/) _[English]_
 - [MangaGo](http://www.mangago.me/) _[English]_
