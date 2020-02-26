@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics, SuperHentais, 9Hentai, ASMHentai, MultPorn, Hentai Comic, HentaiNexus, TMOHentai, HentaiHand
-// @version 16.05.0
+// @version 16.06.0
 // @license MIT
-// @date 2020-01-14
+// @date 2020-02-26
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -354,10 +354,10 @@
       return {
         title: $('title').text().replace('| Hitomi.la', '').trim(),
         series: $('.brand').attr('href'),
-        quant: W.galleryinfo.length,
+        quant: W.galleryinfo.files.length,
         prev: '#',
         next: '#',
-        listImages: W.galleryinfo.map(item => W.url_from_url_from_hash(W.galleryid, item))
+        listImages: W.galleryinfo.files.map(item => W.url_from_url_from_hash(W.galleryid, item))
       };
     }
   };

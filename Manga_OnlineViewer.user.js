@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaKakalot,MangaNelo, LHTranslation, JapScan.To, MangaSee, MangaZuki, TuMangaOnline
-// @version 16.05.0
+// @version 16.06.0
 // @license MIT
-// @date 2020-01-14
+// @date 2020-02-26
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -555,8 +555,8 @@
         title: $('.info-top-chapter h2, .panel-chapter-info-top h1').text().trim(),
         series: $('span a[title]').eq(1).attr('href'),
         quant: images.length,
-        prev: $('.navi-change-chapter-btn-prev:first, .back:first').attr('href'),
-        next: $('.navi-change-chapter-btn-next:first, .next:first').attr('href'),
+        prev: $('.navi-change-chapter-btn-next:first, .next:first').attr('href'),
+        next: $('.navi-change-chapter-btn-prev:first, .back:first').attr('href'),
         listImages: images.map(i => $(i).attr('src'))
       };
     }
