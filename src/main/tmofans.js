@@ -1,8 +1,8 @@
 // == TMOFans ==================================================================================
 export default {
-  name: 'TuMangaOnline',
-  url: /https?:\/\/(www.)?tmofans.com\/viewer\/.+\/paginated/,
-  homepage: 'https://tmofans.com/',
+  name: ['TuMangaOnline'],
+  url: /https?:\/\/(www.)?(tmofans|lectortmo).com\/viewer\/.+\/paginated/,
+  homepage: ['https://tmofans.com/', 'https://lectortmo.com/'],
   language: ['English'],
   category: 'manga',
   run() {
@@ -14,7 +14,7 @@ export default {
       prev: '#',
       next: '#',
       listPages: [...Array(num).keys()].map((i) => `${W.location.href}/${i + 1}`),
-      img: '#viewer-container img',
+      img: '#viewer-container img, .viewer-page',
       timer: 3000,
     };
   },

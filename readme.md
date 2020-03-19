@@ -27,6 +27,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 
 ### Supported Manga Sites  
 - [Batoto](http://bato.to/) _[English]_
+- [DisasterScans](https://disasterscans.com/) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
 - [Easy Going Scans](http://read.egscans.com/) _[English]_
 - [EatManga](http://eatmanga.me/) _[English]_

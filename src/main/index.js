@@ -36,6 +36,7 @@ import unionmangas from './unionmangas';
 import wpmanga from './wpmanga';
 import mangazuki from './mangazuki';
 import tmofans from './tmofans';
+import disasterscans from './disasterscans';
 
 export default [
   batoto,
@@ -76,4 +77,5 @@ export default [
   mangasee,
   mangazuki,
   tmofans,
+  disasterscans,
 ];

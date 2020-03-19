@@ -1,6 +1,6 @@
 {
   "name": "mangaonlineviewer",
-  "version": "16.06.0",
+  "version": "16.07.0",
   "description": "Userscript that helps to read Manga faster by loading all the pages at once",
   "scripts": {
     "build": "gulp build",

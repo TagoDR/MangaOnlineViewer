@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaKakalot,MangaNelo, LHTranslation, JapScan.To, MangaSee, MangaZuki, TuMangaOnline
-// @version 16.06.0
+// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaKakalot,MangaNelo, LHTranslation, JapScan.To, MangaSee, MangaZuki, TuMangaOnline, DisasterScans
+// @version 16.07.0
 // @license MIT
-// @date 2020-02-26
+// @date 2020-03-19
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -60,7 +60,8 @@
 // @include /https?:\/\/(www.)?japscan.to\/lecture-en-ligne\/.+\/.+/
 // @include /https?:\/\/(www.)?mangaseeonline.us\/read-online\/.+/
 // @include /https?:\/\/(www.)?mangazuki.online\/manga\/.+\/.+\//
-// @include /https?:\/\/(www.)?tmofans.com\/viewer\/.+\/paginated/
+// @include /https?:\/\/(www.)?(tmofans|lectortmo).com\/viewer\/.+\/paginated/
+// @include /https?:\/\/(www.)?disasterscans.com\/manga\/.+\/chapter-.+/
 // @exclude /https?:\/\/(www.)?tsumino.com\/.+/
 // @exclude /https?:\/\/(www.)?pururin.io\/.+/
 // @exclude /https?:\/\/(www.)?hentainexus.com\/.+/
@@ -982,9 +983,9 @@
   };
 
   var tmofans = {
-    name: 'TuMangaOnline',
-    url: /https?:\/\/(www.)?tmofans.com\/viewer\/.+\/paginated/,
-    homepage: 'https://tmofans.com/',
+    name: ['TuMangaOnline'],
+    url: /https?:\/\/(www.)?(tmofans|lectortmo).com\/viewer\/.+\/paginated/,
+    homepage: ['https://tmofans.com/', 'https://lectortmo.com/'],
     language: ['English'],
     category: 'manga',
     run() {
@@ -996,13 +997,31 @@
         prev: '#',
         next: '#',
         listPages: [...Array(num).keys()].map(i => "".concat(W.location.href, "/").concat(i + 1)),
-        img: '#viewer-container img',
+        img: '#viewer-container img, .viewer-page',
         timer: 3000
       };
     }
   };
 
-  var sites = [batoto, comicastle, readcomicsonline, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost, hocvien, jaiminisbox, mangadex, hatigarmscans, mangarock, mangakakalot, lhtranslation, japscan, mangasee, mangazuki, tmofans];
+  var disasterscans = {
+    name: 'DisasterScans',
+    url: /https?:\/\/(www.)?disasterscans.com\/manga\/.+\/chapter-.+/,
+    homepage: 'https://disasterscans.com/',
+    language: ['English'],
+    category: 'manga',
+    run() {
+      return {
+        title: $('#chapter-heading').text(),
+        series: W.mangaNav.mangaUrl,
+        quant: W.chapter_preloaded_images.length,
+        prev: $('select.single-chapter-select option:selected').next().val(),
+        next: $('select.single-chapter-select option:selected').prev().val(),
+        listImages: W.chapter_preloaded_images
+      };
+    }
+  };
+
+  var sites = [batoto, comicastle, readcomicsonline, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost, hocvien, jaiminisbox, mangadex, hatigarmscans, mangarock, mangakakalot, lhtranslation, japscan, mangasee, mangazuki, tmofans, disasterscans];
 
   function logScript(...text) {
     console.log('MangaOnlineViewer:', ...text);
