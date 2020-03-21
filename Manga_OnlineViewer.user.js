@@ -7,7 +7,7 @@
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaKakalot,MangaNelo, LHTranslation, JapScan.To, MangaSee, MangaZuki, TuMangaOnline, DisasterScans
 // @version 16.07.0
 // @license MIT
-// @date 2020-03-19
+// @date 2020-03-21
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -997,8 +997,7 @@
         prev: '#',
         next: '#',
         listPages: [...Array(num).keys()].map(i => "".concat(W.location.href, "/").concat(i + 1)),
-        img: '#viewer-container img, .viewer-page',
-        timer: 3000
+        img: '#viewer-container img, .viewer-page'
       };
     }
   };
@@ -1028,14 +1027,6 @@
     return text;
   }
   const logScriptC = R.curry((x, y) => logScript(x, y)[1]);
-
-  function logClear(...text) {
-    try {
-      if (typeof console.clear !== 'undefined') console.clear();
-    } finally {
-      logScript(...text);
-    }
-  }
   const getListGM = typeof GM_listValues !== 'undefined' ? GM_listValues : () => [];
   const removeValueGM = typeof GM_deleteValue !== 'undefined' ? GM_deleteValue : name => logScript('Removing: ', name);
   const getInfoGM = typeof GM_info !== 'undefined' ? GM_info : {
@@ -1274,7 +1265,7 @@
       }, wait);
     });
   }
-  const loadMangaPages = (begin, manga) => mapIndexed((url, index) => index >= begin ? getPage(url, (manga.timer || settings.Timer) * (index - begin)).then(response => addImg(index + 1, $(response).find(manga.img).attr('src'))) : null, manga.listPages);
+  const loadMangaPages = (begin, manga) => mapIndexed((url, index) => index >= begin ? getPage(url, (manga.timer || settings.Timer) * (index - begin)).then(response => addImg(index + 1, $(response).find(manga.img).attr(manga.lazyAttr || 'src'))) : null, manga.listPages);
 
   function getImages(src, wait = settings.Timer) {
     return new Promise(resolve => {
@@ -1707,7 +1698,7 @@
       manga.before();
     }
     document.documentElement.innerHTML = reader(manga, begin);
-    logClear('Rebuilding Site');
+    logScript('Rebuilding Site');
     setTimeout(() => {
       try {
         controls(manga);

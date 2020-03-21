@@ -2,7 +2,6 @@ import {
   getBrowser,
   getEngine,
   getInfoGM,
-  logClear,
   logScript,
   logScriptC,
   setValueGM,
@@ -19,7 +18,7 @@ function formatPage(manga, begin) {
     manga.before();
   }
   document.documentElement.innerHTML = reader(manga, begin);
-  logClear('Rebuilding Site');
+  logScript('Rebuilding Site');
   setTimeout(() => {
     try {
       controls(manga);

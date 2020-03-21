@@ -88,7 +88,7 @@ function getPage(url, wait = settings.Timer) {
 const loadMangaPages = (begin, manga) => mapIndexed(
   (url, index) => (index >= begin ? getPage(url,
     (manga.timer || settings.Timer) * (index - begin))
-    .then((response) => addImg(index + 1, $(response).find(manga.img).attr('src'))) : null),
+    .then((response) => addImg(index + 1, $(response).find(manga.img).attr(manga.lazyAttr || 'src'))) : null),
   manga.listPages,
 );
 

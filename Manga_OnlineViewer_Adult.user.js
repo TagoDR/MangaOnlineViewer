@@ -7,7 +7,7 @@
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics, SuperHentais, 9Hentai, ASMHentai, MultPorn, Hentai Comic, HentaiNexus, TMOHentai, HentaiHand
 // @version 16.07.0
 // @license MIT
-// @date 2020-03-19
+// @date 2020-03-21
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -571,17 +571,15 @@
     category: 'hentai',
     run() {
       const num = $('#select-page option').get().length;
-      const src = $('.content-image').attr('data-original');
-      const size = src.match(/([0-9]+)\..+/)[1].length;
-      const ext = src.match(/[0-9]+(\..+)/)[1];
       return {
         title: $('.reader-title').text().trim(),
         series: $('.nav a:nth(-2)').attr('href'),
         quant: num,
         prev: '#',
         next: '#',
-        listImages: [...Array(num).keys()].map(i => src.replace(/[0-9]+.jpg/, String("00000".concat(i + 1)).slice(-1 * size) + ext)),
-        timer: 3000
+        listPages: [...Array(num).keys()].map(i => W.location.href.replace(/\/[0-9]+?$/, "/".concat(i + 1))),
+        img: '.content-image',
+        lazyAttr: 'data-original'
       };
     }
   };
@@ -614,14 +612,6 @@
     return text;
   }
   const logScriptC = R.curry((x, y) => logScript(x, y)[1]);
-
-  function logClear(...text) {
-    try {
-      if (typeof console.clear !== 'undefined') console.clear();
-    } finally {
-      logScript(...text);
-    }
-  }
   const getListGM = typeof GM_listValues !== 'undefined' ? GM_listValues : () => [];
   const removeValueGM = typeof GM_deleteValue !== 'undefined' ? GM_deleteValue : name => logScript('Removing: ', name);
   const getInfoGM = typeof GM_info !== 'undefined' ? GM_info : {
@@ -860,7 +850,7 @@
       }, wait);
     });
   }
-  const loadMangaPages = (begin, manga) => mapIndexed((url, index) => index >= begin ? getPage(url, (manga.timer || settings.Timer) * (index - begin)).then(response => addImg(index + 1, $(response).find(manga.img).attr('src'))) : null, manga.listPages);
+  const loadMangaPages = (begin, manga) => mapIndexed((url, index) => index >= begin ? getPage(url, (manga.timer || settings.Timer) * (index - begin)).then(response => addImg(index + 1, $(response).find(manga.img).attr(manga.lazyAttr || 'src'))) : null, manga.listPages);
 
   function getImages(src, wait = settings.Timer) {
     return new Promise(resolve => {
@@ -1293,7 +1283,7 @@
       manga.before();
     }
     document.documentElement.innerHTML = reader(manga, begin);
-    logClear('Rebuilding Site');
+    logScript('Rebuilding Site');
     setTimeout(() => {
       try {
         controls(manga);

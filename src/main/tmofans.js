@@ -15,7 +15,6 @@ export default {
       next: '#',
       listPages: [...Array(num).keys()].map((i) => `${W.location.href}/${i + 1}`),
       img: '#viewer-container img, .viewer-page',
-      timer: 3000,
     };
   },
 };
