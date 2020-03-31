@@ -49,11 +49,12 @@ img {
 
 #MangaOnlineViewer #Chapter.WebComic .PageFunctions {
   position: relative;
+  margin-bottom: -23px;
 }
 
 #MangaOnlineViewer #Chapter.WebComic .PageContent {
-  margin-top: -23px;
   margin-bottom: 0;
+  line-height: 0;
 }
 
 #MangaOnlineViewer #Chapter.FluidLTR .MangaPage {
@@ -282,7 +283,8 @@ img {
   margin-top: 10px;
   max-height: 150px;
   min-height: 150px;
-  min-width: 100px;
+  min-width: 80px;
+  max-width: 160px;
 }
 
 #MangaOnlineViewer #Navigation .nav {
