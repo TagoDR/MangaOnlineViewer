@@ -3,7 +3,6 @@ import ninehentai from './9hentai';
 import asmhentai from './asmhentai';
 import doujinmoe from './doujinmoe';
 import exhentai from './exhentai';
-// import fakku from './fakku';
 import hbrowse from './hbrowse';
 import hentai2read from './hentai2read';
 import hentaicafe from './hentaicafe';
@@ -22,12 +21,12 @@ import superhentais from './superhentais';
 import tsumino from './tsumino';
 import tmohhentai from './tmohentai';
 import hentaihand from './hentaihand';
+import gntai from './gntai';
 
 export default [
   eightMuses,
   doujinmoe,
   exhentai,
-  // fakku,
   hbrowse,
   hentai2read,
   hentaifox,
@@ -48,4 +47,5 @@ export default [
   hentainexus,
   tmohhentai,
   hentaihand,
+  gntai,
 ];

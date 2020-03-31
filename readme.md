@@ -92,6 +92,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [hitomi](https://hitomi.la/) _[English]_
 - [nHentai](https://nhentai.net/) _[English]_
 - [SuperHentais](http://www.superhentais.com/) _[Portuguese]_
+- [GNTAI.xyz](http://www.gntai.xyz/) _[Spanish]_
 - [TMOHentai](http://tmohentai.com/) _[Spanish]_
 
 ### HotKeys  
