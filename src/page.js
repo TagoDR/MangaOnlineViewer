@@ -115,15 +115,15 @@ const loadMangaImagesAlt = (begin, manga) => mapIndexed(
 function loadManga(manga, begin = 1) {
   logScript('Loading Images');
   logScript(`Intervals: ${manga.timer || settings.Timer || 'Default(1000)'}`);
-  if (manga.listPages !== undefined) {
-    logScript('Method: Pages:', manga.listPages);
-    loadMangaPages(begin - 1, manga);
-  } else if (manga.listImages !== undefined) {
+  if (manga.listImages !== undefined) {
     logScript('Method: Images:', manga.listImages);
     loadMangaImages(begin - 1, manga);
     if (manga.listImagesAlt !== undefined) {
       loadMangaImagesAlt(begin - 1, manga);
     }
+  } else if (manga.listPages !== undefined) {
+    logScript('Method: Pages:', manga.listPages);
+    loadMangaPages(begin - 1, manga);
   } else {
     logScript('Method: Brute Force');
     manga.bruteForce({
