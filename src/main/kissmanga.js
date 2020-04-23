@@ -5,6 +5,7 @@ export default {
   homepage: 'http://kissmanga.com/',
   language: ['English'],
   category: 'manga',
+  waitVar: 'lstOLA',
   run() {
     const chapter = $('.selectChapter option:selected');
     const url = W.location.href.replace(/[^/]+$/, '');
@@ -15,10 +16,10 @@ export default {
         .replace('online in high quality', '')
         .trim(),
       series: $('#navsubbar a').attr('href'),
-      quant: W.lstIA.length,
+      quant: W.lstOLA.length,
       prev: url + chapter.prev().val(),
       next: url + chapter.next().val(),
-      listImages: W.lstIA,
+      listImages: W.lstOLA,
     };
   },
 };
