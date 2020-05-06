@@ -14,6 +14,7 @@ const panel = `<div id='ImageOptions'>
     <img id='restore' alt='Restore' title='Restore' src='${icon.restore}' class='controlButton' />
     <img id='reduce' alt='Reduce' title='Reduce' src='${icon.reduce}' class='controlButton' />
     <img id='fitWidth' alt='Fit Width' title='Fit Width' src='${icon.fitWidth}' class='controlButton' />
+    <img id='fitHeight' alt='Fit Height' title='Fit Height' src='${icon.fitHeight}' class='controlButton' />
     <img id='webComic' alt='Web Comic Mode' title='Web Comic Mode' src='${icon.webComic}' class='controlButton' />
     <img id='ltrMode' alt='Left to Right Mode' title='Left to Right Mode' src='${icon.pictureLeft}' class='controlButton'/>
     <img id='verticalMode' alt='Vertical Mode' title='Vertical Mode' src='${icon.pictureDown}' class='controlButton'/>
@@ -58,6 +59,7 @@ const controls = `<div id='ViewerControls' class='panel'>
       <option value='175' ${settings.Zoom === 175 ? 'selected' : ''}>175%</option>
       <option value='200' ${settings.Zoom === 200 ? 'selected' : ''}>200%</option>
       <option value='1000' ${settings.Zoom === 1000 ? 'selected' : ''}>Fit Width</option>
+      <option value='-1000' ${settings.Zoom === -1000 ? 'selected' : ''}>Fit Height</option>
     </select>
   </span>
   <span class='controlLabel viewMode'>Default View Mode:
@@ -97,6 +99,7 @@ const listPages = R.times((index) => `<div id='Page${index + 1}' class='MangaPag
     <a class='ZoomRestore controlButton' title='Zoom Restore'></a>
     <a class='ZoomOut controlButton' title='Zoom Out'></a>
     <a class='ZoomWidth controlButton' title='Zoom to Width'></a>
+    <a class='ZoomHeight controlButton' title='Zoom to Height'></a>
     <a class='Hide controlButton' title='Hide'></a>
     <a class='Reload controlButton' title='Reload'></a>
     <span>${index + 1}</span>
@@ -114,7 +117,7 @@ const body = (manga, begin = 0) => `
 <div id='MangaOnlineViewer' class='${settings.Theme} ${isMobile ? 'mobile' : ''}'>
   ${title(manga)}
   <div id='Counters' class='controlLabel'>
-    <i>0</i> of <b>${manga.quant}</b> Pages Loaded 
+    <i>0</i> of <b>${manga.quant}</b> Pages Loaded
     <span class='controlLabel'>Go to Page:</span>
     <select id='gotoPage'>
       <option selected>#</option>
@@ -128,11 +131,11 @@ const body = (manga, begin = 0) => `
 === true ? 'fitWidthIfOversized' : '')} ${settings.viewMode}'>
     ${listPages(manga.quant)
     .slice(begin)
-    .join('')}    
+    .join('')}
   </div>
   ${title(manga)}
   ${chapterControlBottom(manga)}
-  ${panel}    
+  ${panel}
   ${controls}
   ${htmlKeybinds}
   <div id='Navigation' class='panel ${settings.ShowThumbnails ? '' : 'disabled'}'>
@@ -151,8 +154,7 @@ const body = (manga, begin = 0) => `
 // Inject CSS for this script
 const readerCSS = `<style type='text/css'>
 ${cssStyles}
-#MangaOnlineViewer .fitWidthIfOversized .PageContent img { max-width: ${$(window)
-    .width()}px;}
+#MangaOnlineViewer .fitWidthIfOversized .PageContent img { max-width: ${$(window).width()}px;}
 #MangaOnlineViewer .PageFunctions .Bookmark {background: url('${icon.bookmark}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .Reload {background: url('${icon.reload}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .Hide {background: url('${icon.hide}') no-repeat scroll center center transparent;}
@@ -160,6 +162,7 @@ ${cssStyles}
 #MangaOnlineViewer .PageFunctions .ZoomOut {background: url('${icon.zoomOut}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .ZoomRestore {background: url('${icon.zoomRestore}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .ZoomWidth {background: url('${icon.zoomWidth}') no-repeat scroll center center transparent;}
+#MangaOnlineViewer .PageFunctions .ZoomHeight {background: url('${icon.zoomWidth}') no-repeat scroll center center transparent;}
 </style>`;
 
 function reader(manga, begin = 0) {

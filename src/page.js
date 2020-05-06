@@ -88,7 +88,8 @@ function getPage(url, wait = settings.Timer) {
 const loadMangaPages = (begin, manga) => mapIndexed(
   (url, index) => (index >= begin ? getPage(url,
     (manga.timer || settings.Timer) * (index - begin))
-    .then((response) => addImg(index + 1, $(response).find(manga.img).attr(manga.lazyAttr || 'src'))) : null),
+    .then((response) => addImg(index + 1, $(response).find(manga.img)
+      .attr(manga.lazyAttr || 'src'))) : null),
   manga.listPages,
 );
 
@@ -163,8 +164,20 @@ function reloadImage(img) {
 function applyZoom(page, newZoom) {
   const zoom = newZoom || settings.Zoom;
   const pages = page || '.PageContent img';
-  $(pages).each((index, value) => $(value)
-    .width(zoom === 1000 ? $('html').width() : $(value).prop('naturalWidth') * (zoom / 100)));
+  $(pages).each((index, value) => {
+    $(value).removeAttr('width')
+      .removeAttr('height')
+      .removeAttr('style');
+    if (zoom === 1000) {
+      $(value).width($(window).width());
+    } else if (zoom === -1000) {
+      $(value).height($(window).height()
+        - (settings.ShowThumbnails ? 25 : 0)
+        - ($('#Chapter').hasClass('WebComic') ? 0 : (25 + 23)));
+    } else {
+      $(value).width($(value).prop('naturalWidth') * (zoom / 100));
+    }
+  });
 }
 
 // Checks if all images loaded correctly
