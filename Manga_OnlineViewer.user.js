@@ -1434,6 +1434,7 @@
         e.stopPropagation();
         e.stopImmediatePropagation();
         switch (a) {
+          case 'ArrowUp':
           case 'KeyW':
           case 'Numpad8':
             if (settings.Zoom === -1000) {
@@ -1450,6 +1451,7 @@
               });
             }
             break;
+          case 'ArrowDown':
           case 'KeyS':
           case 'Numpad2':
             if (settings.Zoom === -1000) {
