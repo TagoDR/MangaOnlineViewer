@@ -77,9 +77,9 @@ function setKeyDownEvents() {
             const current = $('.MangaPage').get().map((item) => $(item).offset().top - $(window)
               .scrollTop()).findIndex((element) => element > 10);
             if (current === -1) {
-              scrollToElement($('#MangaOnlineViewer'));
-            } else {
               scrollToElement($('.MangaPage:eq(-2)'));
+            } else {
+              scrollToElement($(`#Page${current - 1}`));
             }
           } else {
             window.scrollBy({
