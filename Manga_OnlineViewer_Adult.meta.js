@@ -7,7 +7,7 @@
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics, SuperHentais, 9Hentai, ASMHentai, MultPorn, Hentai Comic, HentaiNexus, TMOHentai, HentaiHand, GNTAI.xyz
 // @version 16.15.0
 // @license MIT
-// @date 2020-05-06
+// @date 2020-05-07
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues

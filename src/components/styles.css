@@ -417,3 +417,7 @@ img {
 #MangaOnlineViewer.mobile #Chapter {
   margin: 5px auto 0;
 }
+
+#MangaOnlineViewer .fitWidthIfOversized .PageContent img {
+  max-width: 100%;
+}

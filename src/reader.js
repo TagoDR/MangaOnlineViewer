@@ -154,7 +154,6 @@ const body = (manga, begin = 0) => `
 // Inject CSS for this script
 const readerCSS = `<style type='text/css'>
 ${cssStyles}
-#MangaOnlineViewer .fitWidthIfOversized .PageContent img { max-width: ${$(window).width()}px;}
 #MangaOnlineViewer .PageFunctions .Bookmark {background: url('${icon.bookmark}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .Reload {background: url('${icon.reload}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .Hide {background: url('${icon.hide}') no-repeat scroll center center transparent;}
