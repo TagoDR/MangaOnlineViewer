@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics, SuperHentais, 9Hentai, ASMHentai, MultPorn, Hentai Comic, HentaiNexus, TMOHentai, HentaiHand, GNTAI.xyz
-// @version 16.18.0
+// @version 16.19.0
 // @license MIT
 // @date 2020-05-08
 // @grant GM_getValue
@@ -1165,6 +1165,7 @@
       $('#Chapter').removeClass('WebComic').removeClass('FluidLTR').removeClass('FluidRTL').addClass(mode);
       setValueGM('MangaViewMode', mode);
       logScript("ViewMode: ".concat(getValueGM('MangaViewMode')));
+      applyZoom();
     });
     $('#loadMode').change(event => {
       const mode = $(event.target).val();
@@ -1179,6 +1180,7 @@
         setValueGM('MangaShowThumbnails', false);
       }
       logScript("MangaShowThumbnails: ".concat(getValueGM('MangaShowThumbnails')));
+      applyZoom();
     });
     $('#downloadZip').change(event => {
       if ($(event.target).is(':checked')) {
@@ -1249,9 +1251,11 @@
       logScript("MangaCustomTheme: ".concat(getValueGM('MangaCustomTheme')));
     });
     $('#gotoPage').bind('change', event => {
+      applyZoom();
       scrollToElement($("#Page".concat($(event.target).val())));
     });
     $('.Thumbnail').bind('click', event => {
+      applyZoom();
       scrollToElement($("#Page".concat($(event.currentTarget).find('span').html())));
     });
     $('#settings').click(() => {

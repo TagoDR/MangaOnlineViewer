@@ -223,6 +223,7 @@ function controls() {
       .addClass(mode);
     setValueGM('MangaViewMode', mode);
     logScript(`ViewMode: ${getValueGM('MangaViewMode')}`);
+    applyZoom();
   });
   $('#loadMode').change((event) => {
     const mode = $(event.target).val();
@@ -237,6 +238,7 @@ function controls() {
       setValueGM('MangaShowThumbnails', false);
     }
     logScript(`MangaShowThumbnails: ${getValueGM('MangaShowThumbnails')}`);
+    applyZoom();
   });
   // Download
   $('#downloadZip').change((event) => {
@@ -311,9 +313,11 @@ function controls() {
   });
 
   $('#gotoPage').bind('change', (event) => {
+    applyZoom();
     scrollToElement($(`#Page${$(event.target).val()}`));
   });
   $('.Thumbnail').bind('click', (event) => {
+    applyZoom();
     scrollToElement($(`#Page${$(event.currentTarget).find('span').html()}`));
   });
   // Settings Control
