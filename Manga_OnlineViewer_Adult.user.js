@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics, SuperHentais, 9Hentai, ASMHentai, MultPorn, Hentai Comic, HentaiNexus, TMOHentai, HentaiHand, GNTAI.xyz
-// @version 16.17.0
+// @version 16.18.0
 // @license MIT
 // @date 2020-05-08
 // @grant GM_getValue
@@ -935,7 +935,7 @@
       if (zoom === 1000) {
         $(value).width($(window).width());
       } else if (zoom === -1000) {
-        $(value).height($(window).height() - (settings.ShowThumbnails ? 25 : 0) - ($('#Chapter').hasClass('WebComic') ? 0 : 25 + 23));
+        $(value).height($(window).height() + ($('#Navigation').hasClass('disabled') ? 0 : -34) + ($('#Chapter').hasClass('WebComic') ? 0 : -35));
       } else {
         $(value).width($(value).prop('naturalWidth') * (zoom / 100));
       }

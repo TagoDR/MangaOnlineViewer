@@ -172,8 +172,8 @@ function applyZoom(page, newZoom) {
       $(value).width($(window).width());
     } else if (zoom === -1000) {
       $(value).height($(window).height()
-        - (settings.ShowThumbnails ? 25 : 0)
-        - ($('#Chapter').hasClass('WebComic') ? 0 : (25 + 23)));
+        + ($('#Navigation').hasClass('disabled') ? 0 : -34)
+        + ($('#Chapter').hasClass('WebComic') ? 0 : -35));
     } else {
       $(value).width($(value).prop('naturalWidth') * (zoom / 100));
     }
