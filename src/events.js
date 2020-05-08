@@ -79,7 +79,7 @@ function setKeyDownEvents() {
             if (current === -1) {
               scrollToElement($('#MangaOnlineViewer'));
             } else {
-              scrollToElement($(`#Page${current - 1}`));
+              scrollToElement($('.MangaPage:eq(-2)'));
             }
           } else {
             window.scrollBy({
