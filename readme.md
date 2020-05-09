@@ -59,6 +59,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [TenManga](http://www.tenmanga.com/) _[English]_
 - [TheSpectrum](http://www.thespectrum.net/) _[English]_
 - [JapScan.To](https://www.japscan.to/) _[French]_
+- [Leitor](https://leitor.net/) _[Portuguese]_
 - [MangaHost](https://mangahost.net/) _[Portuguese]_
 - [UnionMangas](https://unionleitor.top/xw) _[Portuguese]_
 - [TuMangaOnline](https://tmofans.com/) / [LectorManga](https://lectortmo.com/) _[Spanish]_

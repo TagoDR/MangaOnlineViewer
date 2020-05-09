@@ -4,8 +4,8 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaKakalot,MangaNelo, LHTranslation, JapScan.To, MangaSee, MangaZuki, TuMangaOnline,LectorManga, DisasterScans
-// @version 16.20.0
+// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaKakalot,MangaNelo, LHTranslation, JapScan.To, MangaSee, MangaZuki, TuMangaOnline,LectorManga, DisasterScans, Leitor
+// @version 16.21.0
 // @license MIT
 // @date 2020-05-09
 // @grant GM_getValue
@@ -62,6 +62,7 @@
 // @include /https?:\/\/(www.)?mangazuki.online\/manga\/.+\/.+\//
 // @include /https?:\/\/(www.)?(tmofans|lectortmo|followmanga).com\/.+\/.+\/(paginated|cascade)/
 // @include /https?:\/\/(www.)?disasterscans.com\/manga\/.+\/chapter-.+/
+// @include /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
 // @exclude /https?:\/\/(www.)?tsumino.com\/.+/
 // @exclude /https?:\/\/(www.)?pururin.io\/.+/
 // @exclude /https?:\/\/(www.)?hentainexus.com\/.+/
@@ -1020,7 +1021,37 @@
     }
   };
 
-  var sites = [batoto, comicastle, readcomicsonline, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost, hocvien, jaiminisbox, mangadex, hatigarmscans, mangarock, mangakakalot, lhtranslation, japscan, mangasee, mangazuki, tmofans, disasterscans];
+  var leitor = {
+    name: 'Leitor',
+    url: /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/,
+    homepage: 'https://leitor.net/',
+    language: ['Portuguese'],
+    category: 'manga',
+    run() {
+      const token = $('script[src*=token]').attr('src').match(new RegExp(/[&?]token=(\w+)&?/i))[1];
+      const idRelease = $('script[src*=token]').attr('src').match(new RegExp(/[&?]id_release=(\d+)&?/i))[1];
+      let api = null;
+      const url = "https://leitor.net/leitor/pages/".concat(idRelease, ".json?key=").concat(token);
+      $.ajax({
+        type: 'GET',
+        url,
+        async: false,
+        success(res) {
+          api = res;
+        }
+      });
+      return {
+        title: $('title').text().trim(),
+        series: $('.series-cover a').attr('href'),
+        quant: api.images.length,
+        prev: $('.chapter-list .selected').next().find('a').attr('href'),
+        next: $('.chapter-list .selected').prev().find('a').attr('href'),
+        listImages: api.images
+      };
+    }
+  };
+
+  var sites = [batoto, comicastle, readcomicsonline, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost, hocvien, jaiminisbox, mangadex, hatigarmscans, mangarock, mangakakalot, lhtranslation, japscan, mangasee, mangazuki, tmofans, disasterscans, leitor];
 
   function logScript(...text) {
     console.log('MangaOnlineViewer:', ...text);

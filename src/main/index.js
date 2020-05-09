@@ -37,6 +37,7 @@ import wpmanga from './wpmanga';
 import mangazuki from './mangazuki';
 import tmofans from './tmofans';
 import disasterscans from './disasterscans';
+import leitor from './leitor';
 
 export default [
   batoto,
@@ -78,4 +79,5 @@ export default [
   mangazuki,
   tmofans,
   disasterscans,
+  leitor,
 ];
