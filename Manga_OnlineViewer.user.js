@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaKakalot,MangaNelo, LHTranslation, JapScan.To, MangaSee, MangaZuki, TuMangaOnline,LectorManga, DisasterScans
-// @version 16.19.0
+// @version 16.20.0
 // @license MIT
-// @date 2020-05-08
+// @date 2020-05-09
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -48,7 +48,7 @@
 // @include /https?:\/\/view.thespectrum.net\/.+/
 // @include /https?:\/\/(www.)?(mangadeep).com\/.+\/[0-9]+/
 // @include /https?:\/\/(www.)?funmanga.com\/.+\/[0-9]+/
-// @include /https?:\/\/(www.)?unionmangas.net\/leitor\/.+\/.+/
+// @include /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/
 // @include /https?:\/\/(www.)?mangahost.net\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?hocvientruyentranh.com\/chapter\/.+\/.+/
 // @include /https?:\/\/(www.)?jaiminisbox.com\/reader\/read\/.+/
@@ -922,21 +922,18 @@
 
   var unionmangas = {
     name: 'UnionMangas',
-    url: /https?:\/\/(www.)?unionmangas.net\/leitor\/.+\/.+/,
-    homepage: 'http://unionmangas.net/',
+    url: /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/,
+    homepage: 'https://unionleitor.top/xw',
     language: ['Portuguese'],
     category: 'manga',
     run() {
-      const origin = $('#topo h1 a');
-      const chapter = $('#cap_manga1 option:selected');
-      const src = $('.item img.real').get();
       return {
-        title: origin.text(),
-        series: origin.attr('href'),
-        quant: $('.selectPage:first option').length,
-        prev: chapter.prev().val(),
-        next: chapter.next().val(),
-        listImages: [$(src[0]).attr('src')].concat(src.splice(1).map(item => $(item).attr('data-lazy')))
+        title: $('.titulo-leitura').text().trim(),
+        series: $('.breadcrumbs a:last').attr('href'),
+        quant: $('#paginas option').get().length,
+        prev: "/leitor/".concat($('#mangaUrl').text(), "/").concat($('.listCap:selected').prev().val()),
+        next: "/leitor/".concat($('#mangaUrl').text(), "/").concat($('.listCap:selected').prev().next()),
+        listImages: $('.img-manga').get().map(i => $(i).attr('src'))
       };
     }
   };

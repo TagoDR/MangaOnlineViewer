@@ -1,23 +1,18 @@
 // == UnionMangas =================================================================================
-export default { // TODO: Check
+export default {
   name: 'UnionMangas',
-  url: /https?:\/\/(www.)?unionmangas.net\/leitor\/.+\/.+/,
-  homepage: 'http://unionmangas.net/',
+  url: /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/,
+  homepage: 'https://unionleitor.top/xw',
   language: ['Portuguese'],
   category: 'manga',
   run() {
-    const origin = $('#topo h1 a');
-    const chapter = $('#cap_manga1 option:selected');
-    const src = $('.item img.real').get();
     return {
-      title: origin.text(),
-      series: origin.attr('href'),
-      quant: $('.selectPage:first option').length,
-      prev: chapter.prev().val(),
-      next: chapter.next().val(),
-      listImages: [$(src[0]).attr('src')].concat(
-        src.splice(1).map((item) => $(item).attr('data-lazy')),
-      ),
+      title: $('.titulo-leitura').text().trim(),
+      series: $('.breadcrumbs a:last').attr('href'),
+      quant: $('#paginas option').get().length,
+      prev: `/leitor/${$('#mangaUrl').text()}/${$('.listCap:selected').prev().val()}`,
+      next: `/leitor/${$('#mangaUrl').text()}/${$('.listCap:selected').prev().next()}`,
+      listImages: $('.img-manga').get().map((i) => $(i).attr('src')),
     };
   },
 };
