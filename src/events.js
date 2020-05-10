@@ -74,13 +74,9 @@ function setKeyDownEvents() {
         case 'KeyW':
         case 'Numpad8':
           if (settings.Zoom === -1000) {
-            const current = $('.MangaPage').get().map((item) => $(item).offset().top - $(window)
+            const next = $('.MangaPage').get().map((item) => $(item).offset().top - $(window)
               .scrollTop()).findIndex((element) => element > 10);
-            if (current === -1) {
-              scrollToElement($('.MangaPage:eq(-2)'));
-            } else {
-              scrollToElement($(`#Page${current - 1}`));
-            }
+            scrollToElement($('.MangaPage').eq(next - 2));
           } else {
             window.scrollBy({
               top: -$(window).height() / 2,
@@ -92,9 +88,9 @@ function setKeyDownEvents() {
         case 'KeyS':
         case 'Numpad2':
           if (settings.Zoom === -1000) {
-            const current = $('.MangaPage').get().map((item) => $(item).offset().top - $(window)
+            const next = $('.MangaPage').get().map((item) => $(item).offset().top - $(window)
               .scrollTop()).findIndex((element) => element > 10);
-            scrollToElement($(`#Page${current + 1}`));
+            scrollToElement($('.MangaPage').eq(next));
           } else {
             window.scrollBy({
               top: $(window).height() / 2,

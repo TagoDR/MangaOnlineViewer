@@ -9,7 +9,7 @@ export default {
     const imgs = jQuery('.wp-manga-chapter-img').get().map((i) => jQuery(i).attr('src').trim());
     return {
       title: $('.wp-manga-nav .c-breadcrumb li:last').text().trim(),
-      series: $('.wp-manga-nav .c-breadcrumb li:nth(1) a').attr('href'),
+      series: $('.wp-manga-nav .c-breadcrumb li:eq(1) a').attr('href'),
       quant: imgs.length,
       prev: $('.nav-previous a').attr('href'),
       next: $('.nav-next a').attr('href'),

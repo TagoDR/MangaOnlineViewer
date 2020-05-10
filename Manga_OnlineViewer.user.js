@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaKakalot,MangaNelo, LHTranslation, JapScan.To, MangaSee, MangaZuki, TuMangaOnline,LectorManga, DisasterScans, Leitor
-// @version 16.21.0
+// @version 16.22.0
 // @license MIT
-// @date 2020-05-09
+// @date 2020-05-10
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -972,7 +972,7 @@
       const imgs = jQuery('.wp-manga-chapter-img').get().map(i => jQuery(i).attr('src').trim());
       return {
         title: $('.wp-manga-nav .c-breadcrumb li:last').text().trim(),
-        series: $('.wp-manga-nav .c-breadcrumb li:nth(1) a').attr('href'),
+        series: $('.wp-manga-nav .c-breadcrumb li:eq(1) a').attr('href'),
         quant: imgs.length,
         prev: $('.nav-previous a').attr('href'),
         next: $('.nav-next a').attr('href'),
@@ -1466,12 +1466,8 @@
           case 'KeyW':
           case 'Numpad8':
             if (settings.Zoom === -1000) {
-              const current = $('.MangaPage').get().map(item => $(item).offset().top - $(window).scrollTop()).findIndex(element => element > 10);
-              if (current === -1) {
-                scrollToElement($('.MangaPage:eq(-2)'));
-              } else {
-                scrollToElement($("#Page".concat(current - 1)));
-              }
+              const next = $('.MangaPage').get().map(item => $(item).offset().top - $(window).scrollTop()).findIndex(element => element > 10);
+              scrollToElement($('.MangaPage').eq(next - 2));
             } else {
               window.scrollBy({
                 top: -$(window).height() / 2,
@@ -1483,8 +1479,8 @@
           case 'KeyS':
           case 'Numpad2':
             if (settings.Zoom === -1000) {
-              const current = $('.MangaPage').get().map(item => $(item).offset().top - $(window).scrollTop()).findIndex(element => element > 10);
-              scrollToElement($("#Page".concat(current + 1)));
+              const next = $('.MangaPage').get().map(item => $(item).offset().top - $(window).scrollTop()).findIndex(element => element > 10);
+              scrollToElement($('.MangaPage').eq(next));
             } else {
               window.scrollBy({
                 top: $(window).height() / 2,

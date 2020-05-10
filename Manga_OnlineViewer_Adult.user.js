@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics, SuperHentais, 9Hentai, ASMHentai, MultPorn, Hentai Comic, HentaiNexus, TMOHentai, HentaiHand, GNTAI.xyz
-// @version 16.21.0
+// @version 16.22.0
 // @license MIT
-// @date 2020-05-09
+// @date 2020-05-10
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -1038,12 +1038,8 @@
           case 'KeyW':
           case 'Numpad8':
             if (settings.Zoom === -1000) {
-              const current = $('.MangaPage').get().map(item => $(item).offset().top - $(window).scrollTop()).findIndex(element => element > 10);
-              if (current === -1) {
-                scrollToElement($('.MangaPage:eq(-2)'));
-              } else {
-                scrollToElement($("#Page".concat(current - 1)));
-              }
+              const next = $('.MangaPage').get().map(item => $(item).offset().top - $(window).scrollTop()).findIndex(element => element > 10);
+              scrollToElement($('.MangaPage').eq(next - 2));
             } else {
               window.scrollBy({
                 top: -$(window).height() / 2,
@@ -1055,8 +1051,8 @@
           case 'KeyS':
           case 'Numpad2':
             if (settings.Zoom === -1000) {
-              const current = $('.MangaPage').get().map(item => $(item).offset().top - $(window).scrollTop()).findIndex(element => element > 10);
-              scrollToElement($("#Page".concat(current + 1)));
+              const next = $('.MangaPage').get().map(item => $(item).offset().top - $(window).scrollTop()).findIndex(element => element > 10);
+              scrollToElement($('.MangaPage').eq(next));
             } else {
               window.scrollBy({
                 top: $(window).height() / 2,
