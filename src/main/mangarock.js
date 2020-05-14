@@ -1,4 +1,4 @@
-// == MangaRock ====================================================================================
+// == MangaRock [Dead/Arquived] ====================================================================
 export default {
   name: 'MangaRock',
   url: /https?:\/\/(www.)?mangarock.com\/manga\/.+\/chapter\/.+/,

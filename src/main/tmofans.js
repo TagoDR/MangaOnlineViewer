@@ -1,8 +1,8 @@
 // == TMOFans ==================================================================================
 export default {
-  name: ['TuMangaOnline', 'LectorManga'],
+  name: 'TuMangaOnline',
   url: /https?:\/\/(www.)?(tmofans|lectortmo|followmanga).com\/.+\/.+\/(paginated|cascade)/,
-  homepage: ['https://tmofans.com/', 'https://lectortmo.com/'],
+  homepage: 'https://lectortmo.com/',
   language: ['Spanish'],
   category: 'manga',
   run() {

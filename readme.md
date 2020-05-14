@@ -30,7 +30,6 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [DisasterScans](https://disasterscans.com/) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
 - [Easy Going Scans](http://read.egscans.com/) _[English]_
-- [EatManga](http://eatmanga.me/) _[English]_
 - [FoOlSlide]() _[English]_ **Obs: Any Scanlator site that uses FoOLSlide**
 - [Funmanga](http://funmanga.com/) _[English]_
 - [HatigarmScans](https://www.hatigarmscans.net//) _[English]_
@@ -48,9 +47,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [MangaLyght](http://manga.lyght.net/) _[English]_
 - [MangaPark](http://mangapark.net/) _[English]_
 - [MangaReader](http://www.mangareader.net/) / [MangaPanda](http://www.mangapanda.com/) _[English]_
-- [MangaRock](https://mangarock.com/) _[English]_
 - [MangaSee](https://mangaseeonline.us/) _[English]_
-- [MangaStream](http://mangastream.com/) _[English]_
 - [MangaTown](http://www.mangatown.com/) _[English]_
 - [MangaZuki](https://www.mangazuki.online/) _[English]_
 - [NineManga](http://ninemanga.com/) _[English]_
@@ -62,8 +59,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [Leitor](https://leitor.net/) _[Portuguese]_
 - [MangaHost](https://mangahost.net/) _[Portuguese]_
 - [UnionMangas](https://unionleitor.top/xw) _[Portuguese]_
-- [TuMangaOnline](https://tmofans.com/) / [LectorManga](https://lectortmo.com/) _[Spanish]_
-- [Hoc Vien Truyen Tranh](http://hocvientruyentranh.com/) _[Vietnamese]_
+- [TuMangaOnline](https://lectortmo.com/) _[Spanish]_
 
 ### Supported Comic Sites
 - [ComiCastle](http://www.comicastle.org/) _[English]_
@@ -84,7 +80,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [HentaiFox](http://www.hentaifox.com/) _[English]_
 - [HentaiHand](https://hentaihand.com/) _[English]_
 - [HentaiNexus](https://hentainexus.com/) _[English]_
-- [Luscious](https://luscious.net/) / [Wondersluts](https://www.wondersluts.com/) _[English]_
+- [Luscious](https://luscious.net/) _[English]_
 - [MultPorn](https://multporn.net/) _[English]_
 - [PornComixOnline](https://www.porncomixonline.net) / [xyzcomics](http://xyzcomics.com/) _[English]_
 - [Pururin](http://pururin.io/) _[English]_
