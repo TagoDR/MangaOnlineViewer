@@ -1,8 +1,8 @@
 // == Luscious =====================================================================================
 export default {
-  name: ['Luscious', 'Wondersluts'],
-  url: /https?:\/\/(www.)?(luscious.net|wondersluts.com)\/pictures\/.+/,
-  homepage: ['https://luscious.net/', 'https://www.wondersluts.com/'],
+  name: 'Luscious',
+  url: /https?:\/\/(www.)?luscious.net\/pictures\/.+/,
+  homepage: 'https://luscious.net/',
   language: ['English'],
   category: 'hentai',
   run() {

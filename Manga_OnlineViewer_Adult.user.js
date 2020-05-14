@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics, SuperHentais, 9Hentai, ASMHentai, MultPorn, Hentai Comic, HentaiNexus, TMOHentai, HentaiHand, GNTAI.xyz
+// @description Shows all pages at once in online view for these sites: ASMHentai, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiCafe, Hentai Comic, HentaiFox, HentaIHere, HentaiNexus, hitomi, MultPorn, nHentai, Pururin, TMOHentai, Tsumino
 // @version 16.22.0
 // @license MIT
-// @date 2020-05-10
+// @date 2020-05-14
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -23,106 +23,28 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js
-// @include /https?:\/\/(www.)?8muses.com\/comics\/.+\/[0-9]+/
+// @include /https?:\/\/(www.)?asmhentai.com\/gallery\/.+/
 // @include /https?:\/\/(www.)?doujins.com\/.+/
 // @include /https?:\/\/(g.)?(exhentai|e-hentai).org\/g\/.+\/.+/
 // @include /https?:\/\/(www.)?hbrowse.com\/.+/
 // @include /https?:\/\/(www.)?hentai2read.com\/[^/]+\/[0-9]+(.[0-9]+)?\//
+// @include /https?:\/\/hentai.cafe\/manga\/read\/.*\/en\/0\/1\/(page\/.+)?/
+// @include /https?:\/\/(www.)?(hentai|porn)-.+.com\/image\/.+/
 // @include /https?:\/\/(www.)?hentaifox.com\/g\/.+/
 // @include /https?:\/\/(www.)?hentaihere.com\/.+\/.+\//
+// @include /https?:\/\/(www.)?hentainexus.com\/read\/[0-9]+\/[0-9]+/
 // @include /https?:\/\/hitomi.la\/reader\/.+/
-// @include /https?:\/\/(www.)?(luscious.net|wondersluts.com)\/pictures\/.+/
+// @include /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include /https?:\/\/(www.)?nhentai.net\/g\/.+\/.+/
 // @include /https?:\/\/(www.)?pururin.io\/(view|read)\/.+\/.+\/.+/
-// @include /https?:\/\/.*simply-hentai.com\/.+\/page\/.+/
-// @include /https?:\/\/(www.)?tsumino.com\/Read\/Index\/[0-9]+\?page=.+/
-// @include /https?:\/\/hentai.cafe\/manga\/read\/.*\/en\/0\/1\/(page\/.+)?/
-// @include /https?:\/\/(www.)?(porncomixonline.net|xyzcomics.com)\/.+/
-// @include /https?:\/\/(www.)?superhentais.com\/.+\/.+\/[0-9]+/
-// @include /https?:\/\/(www.)?9hentai.com\/g\/.+/
-// @include /https?:\/\/(www.)?asmhentai.com\/gallery\/.+/
-// @include /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/
-// @include /https?:\/\/(www.)?(hentai|porn)-.+.com\/image\/.+/
-// @include /https?:\/\/(www.)?hentainexus.com\/read\/[0-9]+\/[0-9]+/
 // @include /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/[0-9]+/
-// @include /https?:\/\/(www.)?hentaihand.com\/viewc\/[0-9]+\/[0-9]+/
-// @include /https?:\/\/(www.)?gntai.xyz\/[0-9]+\/[0-9]+\/.+.html(#[0-9]+)?/
+// @include /https?:\/\/(www.)?tsumino.com\/Read\/Index\/[0-9]+\?page=.+/
 // ==/UserScript==
 
 (function() {
   'use strict';
 
   var W = (typeof unsafeWindow === 'undefined') ? window : unsafeWindow;
-
-  var eightMuses = {
-    name: '8Muses',
-    url: /https?:\/\/(www.)?8muses.com\/comics\/.+\/[0-9]+/,
-    homepage: 'https://www.8muses.com/',
-    language: ['English'],
-    category: 'hentai',
-    run() {
-      function decode(t) {
-        return (t => {
-          if (t.charAt(0) !== '!') return t;
-          return t.substr(1).replace(/[\x21-\x7e]/g, t => String.fromCharCode(33 + (t.charCodeAt(0) + 14) % 94));
-        })(t.replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'));
-      }
-      let api = null;
-      const url = W.location.href;
-      $.ajax({
-        type: 'GET',
-        url,
-        async: false,
-        success(res) {
-          api = res;
-        }
-      });
-      const dataPublic = JSON.parse(decode($(api).find('#ractive-public').html().trim()));
-      const dataShared = JSON.parse(decode($(api).find('#ractive-shared').html().trim()));
-      const src = dataShared.options.pictureHost || W.location.host;
-      const images = dataPublic.pictures.map(img => "//".concat(src, "/image/fl/").concat(img.publicUri, ".jpg"));
-      return {
-        title: $('.top-menu-breadcrumb li:last a').text(),
-        series: $('.top-menu-breadcrumb li:last').prev('li').find('a').attr('href'),
-        quant: dataPublic.pictures.length,
-        prev: '#',
-        next: '#',
-        listImages: images
-      };
-    }
-  };
-
-  var ninehentai = {
-    name: '9Hentai',
-    url: /https?:\/\/(www.)?9hentai.com\/g\/.+/,
-    homepage: 'https://9hentai.com',
-    language: ['English'],
-    category: 'hentai',
-    waitAttr: ['#jumpPageModal input', 'max'],
-    run() {
-      let api = null;
-      $.ajax({
-        type: 'POST',
-        url: '/api/getBookByID',
-        data: {
-          id: parseInt(W.location.pathname.match(/[0-9]+/)[0], 10)
-        },
-        dataType: 'json',
-        async: false,
-        success(res) {
-          api = res.results;
-        }
-      });
-      return {
-        title: api.title,
-        series: "/g/".concat(api.id, "/"),
-        quant: api.total_page,
-        prev: '#',
-        next: '#',
-        listImages: [...Array(api.total_page).keys()].map(i => "".concat(api.image_server + api.id, "/").concat(i + 1, ".jpg"))
-      };
-    }
-  };
 
   var asmhentai = {
     name: 'ASMHentai',
@@ -363,33 +285,6 @@
     }
   };
 
-  var luscious = {
-    name: ['Luscious', 'Wondersluts'],
-    url: /https?:\/\/(www.)?(luscious.net|wondersluts.com)\/pictures\/.+/,
-    homepage: ['https://luscious.net/', 'https://www.wondersluts.com/'],
-    language: ['English'],
-    category: 'hentai',
-    run() {
-      const origin = $('.three_column_details h3 a');
-      const num = parseInt($('li:not(.content_info) div.album_stats > p:nth-child(1)').html().replace(' Pictures.', ''), 10);
-      return {
-        title: origin.text().trim(),
-        series: origin.attr('href'),
-        quant: num,
-        prev: '#',
-        next: '#',
-        bruteForce(func, i = 1, url = W.location.pathname) {
-          if (i > num) return;
-          const self = this;
-          func.getPage(url).then(html => {
-            func.addImg(i, $(html).find('img#single_picture').attr('src'));
-            self.bruteForce(func, i + 1, $(html).find('#next').attr('href'));
-          });
-        }
-      };
-    }
-  };
-
   var multporn = {
     name: 'MultPorn',
     url: /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/,
@@ -431,38 +326,6 @@
     }
   };
 
-  var porncomixonline = {
-    name: ['PornComixOnline', 'xyzcomics'],
-    url: /https?:\/\/(www.)?(porncomixonline.net|xyzcomics.com)\/.+/,
-    homepage: ['https://www.porncomixonline.net', 'http://xyzcomics.com/'],
-    language: ['English'],
-    category: 'hentai',
-    run() {
-      const imgs = $('.dgwt-jg-gallery img').get();
-      return {
-        title: $('.entry-title').text().trim(),
-        series: '#',
-        quant: imgs.length,
-        prev: '#',
-        next: '#',
-        listImages: imgs.map(i => {
-          const urls = $(i).attr('data-jg-srcset').split(',');
-          let src = '';
-          let w = 0;
-          for (let l = 0; l < urls.length; l += 1) {
-            const s = urls[l].match(/(.+) (\d+)w/);
-            if (s[2] > w) {
-              [, w, src] = s;
-              w = s[2];
-              src = s[1];
-            }
-          }
-          return src;
-        })
-      };
-    }
-  };
-
   var pururin = {
     name: 'Pururin',
     url: /https?:\/\/(www.)?pururin.io\/(view|read)\/.+\/.+\/.+/,
@@ -484,52 +347,23 @@
     }
   };
 
-  var simplyhentai = {
-    name: 'Simply-Hentai',
-    url: /https?:\/\/.*simply-hentai.com\/.+\/page\/.+/,
-    homepage: 'http://simply-hentai.com/',
-    language: ['English'],
+  var tmohhentai = {
+    name: 'TMOHentai',
+    url: /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/[0-9]+/,
+    homepage: 'http://tmohentai.com/',
+    language: ['Spanish'],
     category: 'hentai',
     run() {
-      let api = null;
-      $.ajax({
-        type: 'GET',
-        url: W.location.href.replace(/\/page\/[0-9]+#?$/, '/all-pages'),
-        dataType: 'json',
-        async: false,
-        success(res) {
-          api = res;
-        }
-      });
-      const imgs = Object.values(api).map(i => i.full || i.giant || i.path);
+      const num = $('#select-page option').get().length;
       return {
-        title: $('h1 .pu-trigger:first').text().trim(),
-        series: $('h1 .pu-trigger:first').attr('href'),
-        quant: imgs.length,
+        title: $('.reader-title').text().trim(),
+        series: $('.nav a:nth(-2)').attr('href'),
+        quant: num,
         prev: '#',
         next: '#',
-        listImages: imgs
-      };
-    }
-  };
-
-  var superhentais = {
-    name: 'SuperHentais',
-    url: /https?:\/\/(www.)?superhentais.com\/.+\/.+\/[0-9]+/,
-    homepage: 'http://www.superhentais.com/',
-    language: ['Portuguese'],
-    category: 'hentai',
-    run() {
-      const url = $('.capLoad').attr('data-cdn');
-      const num = $('.capListPage option').get().length;
-      const chapter = $('.capList option:selected');
-      return {
-        title: $('.conteudoBox .boxBarraInfo:first').text().trim(),
-        series: $('.capList option').eq(2).val(),
-        quant: num,
-        prev: chapter.prev().val(),
-        next: chapter.next().val(),
-        listImages: [...Array(num).keys()].map(i => "".concat(url, "/").concat(i + 1, ".jpg"))
+        listPages: [...Array(num).keys()].map(i => W.location.href.replace(/\/[0-9]+?$/, "/".concat(i + 1))),
+        img: '.content-image',
+        lazyAttr: 'data-original'
       };
     }
   };
@@ -564,66 +398,13 @@
     }
   };
 
-  var tmohhentai = {
-    name: 'TMOHentai',
-    url: /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/[0-9]+/,
-    homepage: 'http://tmohentai.com/',
-    language: ['Spanish'],
-    category: 'hentai',
-    run() {
-      const num = $('#select-page option').get().length;
-      return {
-        title: $('.reader-title').text().trim(),
-        series: $('.nav a:nth(-2)').attr('href'),
-        quant: num,
-        prev: '#',
-        next: '#',
-        listPages: [...Array(num).keys()].map(i => W.location.href.replace(/\/[0-9]+?$/, "/".concat(i + 1))),
-        img: '.content-image',
-        lazyAttr: 'data-original'
-      };
-    }
-  };
-
-  var hentaihand = {
-    name: 'HentaiHand',
-    url: /https?:\/\/(www.)?hentaihand.com\/viewc\/[0-9]+\/[0-9]+/,
-    homepage: 'https://hentaihand.com/',
-    language: ['English'],
-    category: 'hentai',
-    waitVar: 'model',
-    run() {
-      return {
-        title: W.model.title.replace(' - Page {page}', ''),
-        series: $('.back-to-gallery a').attr('href'),
-        quant: Object.keys(W.images).length,
-        prev: '#',
-        next: '#',
-        listImages: Object.values(W.images)
-      };
-    }
-  };
-
-  var gntai = {
-    name: 'GNTAI.xyz',
-    url: /https?:\/\/(www.)?gntai.xyz\/[0-9]+\/[0-9]+\/.+.html(#[0-9]+)?/,
-    homepage: 'http://www.gntai.xyz/',
-    language: ['Spanish'],
-    category: 'hentai',
-    waitVar: 'pages',
-    run() {
-      return {
-        title: W.title_post,
-        series: W.HOME,
-        quant: W.pages.length,
-        prev: '#',
-        next: '#',
-        listImages: W.pages
-      };
-    }
-  };
-
-  var sites = [eightMuses, doujinmoe, exhentai, hbrowse, hentai2read, hentaifox, hentaihere, hitomi, luscious, nhentai, pururin, simplyhentai, tsumino, hentaicafe, porncomixonline, superhentais, ninehentai, asmhentai, multporn, hentaicomic, hentainexus, tmohhentai, hentaihand, gntai];
+  var sites = [asmhentai, doujinmoe, exhentai,
+    hbrowse, hentai2read, hentaicafe, hentaicomic, hentaifox,
+    hentaihere, hentainexus, hitomi,
+    multporn, nhentai,
+    pururin,
+    tmohhentai, tsumino
+  ];
 
   function logScript(...text) {
     console.log('MangaOnlineViewer:', ...text);

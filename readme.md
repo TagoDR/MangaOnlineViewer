@@ -28,42 +28,25 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 ### Supported Manga Sites
 - [Batoto](http://bato.to/) _[English]_
 - [DisasterScans](https://disasterscans.com/) _[English]_
-- [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
-- [Easy Going Scans](http://read.egscans.com/) _[English]_
-- [EatManga](http://eatmanga.me/) _[English]_
 - [FoOlSlide]() _[English]_ **Obs: Any Scanlator site that uses FoOLSlide**
 - [Funmanga](http://funmanga.com/) _[English]_
-- [HatigarmScans](https://www.hatigarmscans.net//) _[English]_
 - [JaiminisBox](https://jaiminisbox.com/) _[English]_
 - [KissManga](http://kissmanga.com/) _[English]_
 - [LHTranslation](http://lhtranslation.net/) _[English]_
-- [MangaDeep](http://mangadeep.com/) _[English]_
 - [MangaDex](https://mangadex.org/) _[English]_
 - [MangaDoom](https://mngdoom.com/) _[English]_
 - [MangaFox](http://fanfox.net/) _[English]_
-- [MangaGo](http://www.mangago.me/) _[English]_
 - [MangaHere](http://www.mangahere.cc/) _[English]_
 - [MangaInn](http://www.mangainn.net/) _[English]_
 - [MangaKakalot](https://mangakakalot.com/page) / [MangaNelo](http://www.manganelo.com/) _[English]_
 - [MangaLyght](http://manga.lyght.net/) _[English]_
 - [MangaPark](http://mangapark.net/) _[English]_
 - [MangaReader](http://www.mangareader.net/) / [MangaPanda](http://www.mangapanda.com/) _[English]_
-- [MangaRock](https://mangarock.com/) _[English]_
 - [MangaSee](https://mangaseeonline.us/) _[English]_
-- [MangaStream](http://mangastream.com/) _[English]_
 - [MangaTown](http://www.mangatown.com/) _[English]_
-- [MangaZuki](https://www.mangazuki.online/) _[English]_
-- [NineManga](http://ninemanga.com/) _[English]_
 - [ReadManga Today](http://www.readmng.com/) _[English]_
 - [SenManga(Raw)](http://raw.senmanga.com/) _[English]_
-- [TenManga](http://www.tenmanga.com/) _[English]_
-- [TheSpectrum](http://www.thespectrum.net/) _[English]_
-- [JapScan.To](https://www.japscan.to/) _[French]_
 - [Leitor](https://leitor.net/) _[Portuguese]_
-- [MangaHost](https://mangahost.net/) _[Portuguese]_
-- [UnionMangas](https://unionleitor.top/xw) _[Portuguese]_
-- [TuMangaOnline](https://tmofans.com/) / [LectorManga](https://lectortmo.com/) _[Spanish]_
-- [Hoc Vien Truyen Tranh](http://hocvientruyentranh.com/) _[Vietnamese]_
 
 ### Supported Comic Sites
 - [ComiCastle](http://www.comicastle.org/) _[English]_
@@ -71,8 +54,6 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 
 ### Supported Hentai Sites
 > Adult Script available **_only_** on [Github](https://github.com/TagoDR/MangaOnlineViewer)
-- [8Muses](https://www.8muses.com/) _[English]_
-- [9Hentai](https://9hentai.com) _[English]_
 - [ASMHentai](https://asmhentai.com/) _[English]_
 - [DoujinMoeNM](https://doujins.com/) _[English]_
 - [ExHentai](https://exhentai.org/) / [e-Hentai](https://e-hentai.org/) _[English]_ **Obs: May get your IP Banned, use with moderation**
@@ -82,18 +63,12 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [Hentai2Read](http://hentai2read.com/) _[English]_
 - [HentaiCafe](https://hentai.cafe) _[English]_
 - [HentaiFox](http://www.hentaifox.com/) _[English]_
-- [HentaiHand](https://hentaihand.com/) _[English]_
 - [HentaiNexus](https://hentainexus.com/) _[English]_
-- [Luscious](https://luscious.net/) / [Wondersluts](https://www.wondersluts.com/) _[English]_
 - [MultPorn](https://multporn.net/) _[English]_
-- [PornComixOnline](https://www.porncomixonline.net) / [xyzcomics](http://xyzcomics.com/) _[English]_
 - [Pururin](http://pururin.io/) _[English]_
-- [Simply-Hentai](http://simply-hentai.com/) _[English]_
 - [Tsumino](http://tsumino.com/) _[English]_
 - [hitomi](https://hitomi.la/) _[English]_
 - [nHentai](https://nhentai.net/) _[English]_
-- [SuperHentais](http://www.superhentais.com/) _[Portuguese]_
-- [GNTAI.xyz](http://www.gntai.xyz/) _[Spanish]_
 - [TMOHentai](http://tmohentai.com/) _[Spanish]_
 
 ### HotKeys

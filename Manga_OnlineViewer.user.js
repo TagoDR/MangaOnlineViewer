@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Batoto, ComiCastle, ReadComicsOnline, Dynasty-Scans, EatManga, Easy Going Scans, FoOlSlide, KissManga, MangaDoom, MangaFox, MangaGo, MangaHere, MangaInn, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaStream, MangaTown, NineManga, ReadManga Today, SenManga(Raw), TenManga, TheSpectrum, MangaDeep, Funmanga, UnionMangas, MangaHost, Hoc Vien Truyen Tranh, JaiminisBox, MangaDex, HatigarmScans, MangaRock, MangaKakalot,MangaNelo, LHTranslation, JapScan.To, MangaSee, MangaZuki, TuMangaOnline,LectorManga, DisasterScans, Leitor
+// @description Shows all pages at once in online view for these sites: ComiCastle, DisasterScans, FoOlSlide, Funmanga, JaiminisBox, KissManga, Leitor, LHTranslation, MangaDex, MangaDoom, MangaFox, MangaHere, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaSee, MangaTown, ReadComicsOnline, ReadManga Today, SenManga(Raw), Batoto
 // @version 16.22.0
 // @license MIT
-// @date 2020-05-10
+// @date 2020-05-14
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -23,46 +23,29 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js
-// @include /https?:\/\/(www.)?bato.to\/chapter.*/
 // @include /https?:\/\/(www.)?comicastle.org\/comic\/.+\/[0-9]+.*/
-// @include /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/[0-9]*/
-// @include /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/
-// @include /https?:\/\/(www.)?eatmanga.me\/Manga-Scan\/.+\/.+\//
-// @include /https?:\/\/read.egscans.com\/.+/
+// @include /https?:\/\/(www.)?disasterscans.com\/manga\/.+\/chapter-.+/
 // @include /^(?!.*jaiminisbox).*\/read\/.+/
+// @include /https?:\/\/(www.)?funmanga.com\/.+\/[0-9]+/
+// @include /https?:\/\/(www.)?jaiminisbox.com\/reader\/read\/.+/
 // @include /https?:\/\/(www.)?kissmanga.com\/Manga\/.+\/.+?id=[0-9]+/
+// @include /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
+// @include /https?:\/\/(www.)?lhtranslation.net\/read.+/
+// @include /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/
 // @include /https?:\/\/(www.)?mngdoom.com\/.+\/[0-9]+/
 // @include /https?:\/\/(www.)?fanfox.net\/manga\/.+\/.+\//
-// @include /https?:\/\/(www.)?mangago.me\/read-manga\/.+\/.+/
 // @include /https?:\/\/(www.)?mangahere.cc\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?mangainn.net\/.+\/[0-9]+(\/[0-9]*)?/
+// @include /https?:\/\/(www.)?(manganelo|mangakakalot).com\/chapter\/.+\/.+/
 // @include /https?:\/\/manga.lyght.net\/series\/.+\.html/
 // @include /https?:\/\/(www.)?mangapark.(com|me|org|net)\/(manga|chapter)\/.+\/.+/
 // @include /https?:\/\/(www.)?(mangareader|mangapanda)(.net|.com)\/.+\/.+/
-// @include /https?:\/\/(www.)?(mangastream|readms)(.net|.com)\/r.*\/.+/
+// @include /https?:\/\/(www.)?mangaseeonline.us\/read-online\/.+/
 // @include /https?:\/\/(www.)?mangatown.com\/manga\/.+\/.+/
-// @include /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/
+// @include /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/[0-9]*/
 // @include /https?:\/\/(www.)?readmng.com\/.+\/[0-9.]+(\/[0-9]*)?/
 // @include /https?:\/\/raw.senmanga.com\/.+\/.+\/?/
-// @include /https?:\/\/(www.)?tenmanga.com\/chapter\/.+/
-// @include /https?:\/\/view.thespectrum.net\/.+/
-// @include /https?:\/\/(www.)?(mangadeep).com\/.+\/[0-9]+/
-// @include /https?:\/\/(www.)?funmanga.com\/.+\/[0-9]+/
-// @include /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/
-// @include /https?:\/\/(www.)?mangahost.net\/manga\/.+\/.+/
-// @include /https?:\/\/(www.)?hocvientruyentranh.com\/chapter\/.+\/.+/
-// @include /https?:\/\/(www.)?jaiminisbox.com\/reader\/read\/.+/
-// @include /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/
-// @include /https?:\/\/(www.)?hatigarmscans.net\/manga\/.+\/.+(\/[0-9]*)?/
-// @include /https?:\/\/(www.)?mangarock.com\/manga\/.+\/chapter\/.+/
-// @include /https?:\/\/(www.)?(manganelo|mangakakalot).com\/chapter\/.+\/.+/
-// @include /https?:\/\/(www.)?lhtranslation.net\/read.+/
-// @include /https?:\/\/(www.)?japscan.to\/lecture-en-ligne\/.+\/.+/
-// @include /https?:\/\/(www.)?mangaseeonline.us\/read-online\/.+/
-// @include /https?:\/\/(www.)?mangazuki.online\/manga\/.+\/.+\//
-// @include /https?:\/\/(www.)?(tmofans|lectortmo|followmanga).com\/.+\/.+\/(paginated|cascade)/
-// @include /https?:\/\/(www.)?disasterscans.com\/manga\/.+\/chapter-.+/
-// @include /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
+// @include /https?:\/\/(www.)?bato.to\/chapter.*/
 // @exclude /https?:\/\/(www.)?tsumino.com\/.+/
 // @exclude /https?:\/\/(www.)?pururin.io\/.+/
 // @exclude /https?:\/\/(www.)?hentainexus.com\/.+/
@@ -114,60 +97,20 @@
     }
   };
 
-  var dysnatyscans = {
-    name: 'Dynasty-Scans',
-    url: /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/,
-    homepage: 'https://dynasty-scans.com/',
+  var disasterscans = {
+    name: 'DisasterScans',
+    url: /https?:\/\/(www.)?disasterscans.com\/manga\/.+\/chapter-.+/,
+    homepage: 'https://disasterscans.com/',
     language: ['English'],
     category: 'manga',
     run() {
       return {
-        title: $('#chapter-title').text(),
-        series: '#',
-        quant: W.pages.length,
-        prev: $('#prev_link').attr('href'),
-        next: $('#next_link').attr('href'),
-        listImages: W.pages.map(x => x.image)
-      };
-    }
-  };
-
-  var eatmanga = {
-    name: 'EatManga',
-    url: /https?:\/\/(www.)?eatmanga.me\/Manga-Scan\/.+\/.+\//,
-    homepage: 'http://eatmanga.me/',
-    language: ['English'],
-    category: 'manga',
-    run() {
-      const chapter = $('#top_chapter_list option:selected');
-      return {
-        title: $('#main_content h1').text().split(',')[0].trim(),
-        series: $('ul#crumbs li a:eq(2)').attr('href'),
-        quant: $('select#pages option:last').html(),
-        prev: chapter.next().val(),
-        next: chapter.prev().val(),
-        listPages: $('select#pages option').get().map(item => $(item).val()),
-        img: '#eatmanga_image , #eatmanga_image_big'
-      };
-    }
-  };
-
-  var egscans = {
-    name: 'Easy Going Scans',
-    url: /https?:\/\/read.egscans.com\/.+/,
-    homepage: 'http://read.egscans.com/',
-    language: ['English'],
-    category: 'manga',
-    waitVar: 'img_url',
-    run() {
-      const src = W.img_url.slice(1);
-      return {
-        title: $('select[name="manga"] option:selected').text().trim(),
-        series: '#',
-        quant: src.length,
-        prev: "../".concat(W.prev_chap),
-        next: "../".concat(W.next_chap),
-        listImages: src.map(encodeURI).map(x => "../".concat(x))
+        title: $('#chapter-heading').text(),
+        series: W.mangaNav.mangaUrl,
+        quant: W.chapter_preloaded_images.length,
+        prev: $('select.single-chapter-select option:selected').next().val(),
+        next: $('select.single-chapter-select option:selected').prev().val(),
+        listImages: W.chapter_preloaded_images
       };
     }
   };
@@ -217,45 +160,6 @@
     }
   };
 
-  var hatigarmscans = {
-    name: 'HatigarmScans',
-    url: /https?:\/\/(www.)?hatigarmscans.net\/manga\/.+\/.+(\/[0-9]*)?/,
-    homepage: 'https://www.hatigarmscans.net//',
-    language: ['English'],
-    category: 'manga',
-    run() {
-      const src = $('.scan-page').attr('src');
-      const url = src.substring(0, src.lastIndexOf('/') + 1);
-      return {
-        title: W.title.replace(/ - Page .+/, '').trim(),
-        series: W.base_url.substring(0, W.base_url.lastIndexOf('/') + 1),
-        quant: W.pages.length,
-        prev: W.next_chapter,
-        next: W.prev_chapter,
-        listImages: W.pages.map(i => url + i.page_image)
-      };
-    }
-  };
-
-  var hocvien = {
-    name: 'Hoc Vien Truyen Tranh',
-    url: /https?:\/\/(www.)?hocvientruyentranh.com\/chapter\/.+\/.+/,
-    homepage: 'http://hocvientruyentranh.com/',
-    language: ['Vietnamese'],
-    category: 'manga',
-    run() {
-      const src = $('.manga-container img').get();
-      return {
-        title: $('.chapters-dropdown option:selected').text().trim(),
-        series: $('.theNavi a').attr('href'),
-        quant: src.length,
-        prev: $('.top-nav a:first').attr('href'),
-        next: $('.top-nav a:last').attr('href'),
-        listImages: src.map(item => $(item).attr('src'))
-      };
-    }
-  };
-
   var jaiminisbox = {
     name: 'JaiminisBox',
     url: /https?:\/\/(www.)?jaiminisbox.com\/reader\/read\/.+/,
@@ -271,26 +175,6 @@
         prev: chapter.eq(chapter.index(chapter.filter("[href*='".concat(W.location.pathname.replace(/page.+/, ''), "']"))) + 1).attr('href'),
         next: chapter.eq(chapter.index(chapter.filter("[href*='".concat(W.location.pathname.replace(/page.+/, ''), "']"))) - 1).attr('href'),
         listImages: W.pages.map(i => i.url)
-      };
-    }
-  };
-
-  var japscan = {
-    name: 'JapScan.To',
-    url: /https?:\/\/(www.)?japscan.to\/lecture-en-ligne\/.+\/.+/,
-    homepage: 'https://www.japscan.to/',
-    language: ['French'],
-    category: 'manga',
-    waitAttr: ['#image img', 'src'],
-    run() {
-      const src = $('#image img').attr('src').replace(/\/[0-9]+\.[a-z]+$/, '/');
-      return {
-        title: $('.container h1').text(),
-        series: $('.breadcrumb a:last').attr('href'),
-        quant: $('#pages option').get().length,
-        prev: $('.card-body span + a:first').attr('href'),
-        next: $('.card-body span + a:last').attr('href'),
-        listImages: $('#pages option').get().map(item => src + $(item).attr('data-img'))
       };
     }
   };
@@ -312,6 +196,36 @@
         prev: url + chapter.prev().val(),
         next: url + chapter.next().val(),
         listImages: W.lstOLA
+      };
+    }
+  };
+
+  var leitor = {
+    name: 'Leitor',
+    url: /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/,
+    homepage: 'https://leitor.net/',
+    language: ['Portuguese'],
+    category: 'manga',
+    run() {
+      const token = $('script[src*=token]').attr('src').match(new RegExp(/[&?]token=(\w+)&?/i))[1];
+      const idRelease = $('script[src*=token]').attr('src').match(new RegExp(/[&?]id_release=(\d+)&?/i))[1];
+      let api = null;
+      const url = "https://leitor.net/leitor/pages/".concat(idRelease, ".json?key=").concat(token);
+      $.ajax({
+        type: 'GET',
+        url,
+        async: false,
+        success(res) {
+          api = res;
+        }
+      });
+      return {
+        title: $('title').text().trim(),
+        series: $('.series-cover a').attr('href'),
+        quant: api.images.length,
+        prev: $('.chapter-list .selected').next().find('a').attr('href'),
+        next: $('.chapter-list .selected').prev().find('a').attr('href'),
+        listImages: api.images
       };
     }
   };
@@ -433,26 +347,6 @@
     }
   };
 
-  var mangago = {
-    name: 'MangaGo',
-    url: /https?:\/\/(www.)?mangago.me\/read-manga\/.+\/.+/,
-    homepage: 'http://www.mangago.me/',
-    language: ['English'],
-    category: 'manga',
-    run() {
-      const origin = $('#series');
-      return {
-        title: origin.text(),
-        series: origin.attr('href'),
-        quant: $('.page a:first').text().replace(/page 1 of /, ''),
-        prev: $('.readtips p:eq(4) a:first').attr('href'),
-        next: $('.readtips p:eq(3) a:first').attr('href'),
-        listPages: $('.page a').get().map(item => $(item).attr('href')),
-        img: '#page1'
-      };
-    }
-  };
-
   var mangahere = {
     name: 'MangaHere',
     url: /https?:\/\/(www.)?mangahere.cc\/manga\/.+\/.+/,
@@ -498,33 +392,6 @@
         next: W.nextchapterurl,
         listImages: src
       };
-    }
-  };
-
-  var mangahost = {
-    name: 'MangaHost',
-    url: /https?:\/\/(www.)?mangahost.net\/manga\/.+\/.+/,
-    homepage: 'https://mangahost.net/',
-    language: ['Portuguese'],
-    category: 'manga',
-    run() {
-      const url = W.location.href + (W.location.href.lastIndexOf('/') !== W.location.href.length - 1 ? '/' : '');
-      const chapter = $('.viewerChapter:first option:selected');
-      const num = parseInt($('.viewerPage:first option:last').html(), 10);
-      const manga = {
-        title: $('.breadcrumb li:eq(3)').text().trim(),
-        series: $('.breadcrumb li:eq(2) a').attr('href'),
-        quant: num,
-        prev: chapter.next().val(),
-        next: chapter.prev().val(),
-        img: '.image-content img'
-      };
-      if ($('.read-slideshow img').get().length === 0) {
-        manga.listPages = [...Array(num).keys()].map(i => url + (i + 1));
-      } else {
-        manga.listImages = $('.read-slideshow img').get().map(item => $(item).attr('src'));
-      }
-      return manga;
     }
   };
 
@@ -647,87 +514,6 @@
     }
   };
 
-  var mangarock = {
-    name: 'MangaRock',
-    url: /https?:\/\/(www.)?mangarock.com\/manga\/.+\/chapter\/.+/,
-    homepage: 'https://mangarock.com/',
-    language: ['English'],
-    category: 'manga',
-    waitAttr: ['a[title]', 'href'],
-    run() {
-      let api = null;
-      const url = "https://api.mangarockhd.com/query/web401/pages?oid=".concat(W.location.pathname.match(/mrs-chapter-[0-9]+/)[0]);
-      $.ajax({
-        type: 'GET',
-        url,
-        async: false,
-        success(res) {
-          api = res;
-        }
-      });
-
-      function decode(t) {
-        const s = ['length'];
-        const e = new Uint8Array(t[s[0]] + 15);
-        const n = t[s[0]] + 7;
-        e[0] = 82;
-        e[1] = 73;
-        e[2] = 70;
-        e[3] = 70;
-        e[7] = n >> 24 & 255;
-        e[6] = n >> 16 & 255;
-        e[5] = n >> 8 & 255;
-        e[4] = 255 & n;
-        e[8] = 87;
-        e[9] = 69;
-        e[10] = 66;
-        e[11] = 80;
-        e[12] = 86;
-        e[13] = 80;
-        e[14] = 56;
-        for (let r = 0; r < t[s[0]]; r += 1) e[r + 15] = 101 ^ t[r];
-        return e;
-      }
-
-      function process(mri) {
-        const image = decode(new Uint8Array(mri));
-        const e = [];
-        for (let n = 0; n < image.length; n += 32768) {
-          e.push(String.fromCharCode.apply(null, image.subarray(n, n + 32768)));
-        }
-        return "data:image/webp;base64,".concat(btoa(e.join('')));
-      }
-
-      function getMRI(index, src, e) {
-        setTimeout(() => {
-          GM_xmlhttpRequest({
-            method: 'GET',
-            url: src,
-            overrideMimeType: 'text/plain; charset=x-user-defined',
-            responseType: 'arraybuffer',
-            onload(request) {
-              e.addImg(index, process(request.response));
-            }
-          });
-        }, e.wait * (index - e.begin));
-      }
-      return {
-        title: $('title').text().trim(),
-        series: $('a[title]').attr('href'),
-        quant: api.data.length,
-        prev: $('select:first option:selected').prev().val(),
-        next: $('select:first option:selected').next().val(),
-        bruteForce(e) {
-          for (let i = 0; i < api.data.length; i += 1) {
-            if (i >= e.begin - 1) {
-              getMRI(i + 1, api.data[i], e);
-            }
-          }
-        }
-      };
-    }
-  };
-
   var mangasee = {
     name: 'MangaSee',
     url: /https?:\/\/(www.)?mangaseeonline.us\/read-online\/.+/,
@@ -752,28 +538,6 @@
     }
   };
 
-  var mangastream = {
-    name: 'MangaStream',
-    url: /https?:\/\/(www.)?(mangastream|readms)(.net|.com)\/r.*\/.+/,
-    homepage: 'http://mangastream.com/',
-    language: ['English'],
-    category: 'manga',
-    run() {
-      const url = W.location.href.substring(0, W.location.href.lastIndexOf('/') + 1);
-      const num = parseInt($('div.controls div.btn-group ul.dropdown-menu li:last').text().match(/[0-9]+/), 10);
-      const chapter = $('.controls .dropdown-menu:first a');
-      return {
-        title: $('.btn:eq(0)').text().trim(),
-        series: $('div.controls div.btn-group ul.dropdown-menu:first li a:last').attr('href'),
-        quant: num,
-        prev: chapter.eq(chapter.index(chapter.filter("[href*='".concat(W.location.pathname, "']"))) + 1).attr('href'),
-        next: chapter.eq(chapter.index(chapter.filter("[href*='".concat(W.location.pathname, "']"))) - 1).attr('href'),
-        listPages: [...Array(num).keys()].map(i => url + (i + 1)),
-        img: 'img#manga-page'
-      };
-    }
-  };
-
   var mangatown = {
     name: 'MangaTown',
     url: /https?:\/\/(www.)?mangatown.com\/manga\/.+\/.+/,
@@ -793,25 +557,6 @@
         next: chapter.next().val(),
         listPages: num.map(item => $(item).val()),
         img: '#image'
-      };
-    }
-  };
-
-  var ninemanga = {
-    name: 'NineManga',
-    url: /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/,
-    homepage: 'http://ninemanga.com/',
-    language: ['English'],
-    category: 'manga',
-    run() {
-      return {
-        title: $('.tip a:first').text(),
-        series: $('.subgiude a:eq(1)').attr('href'),
-        quant: $('#page:first option').length,
-        prev: $('.chnav a:first').attr('href'),
-        next: $('.chnav a:eq(1)').attr('href'),
-        listPages: $('#page:first option').get().map(item => $(item).val()),
-        img: '.manga_pic'
       };
     }
   };
@@ -878,180 +623,16 @@
     }
   };
 
-  var tenmanga = {
-    name: 'TenManga',
-    url: /https?:\/\/(www.)?tenmanga.com\/chapter\/.+/,
-    homepage: 'http://www.tenmanga.com/',
-    language: ['English'],
-    category: 'manga',
-    run() {
-      const url = $('.sl-page:first option').get();
-      const chapter = $('.sl-chap:first option:selected');
-      return {
-        title: $('.read-page  a:eq(2)').text().replace('»', '').trim(),
-        series: $('.read-page a:eq(1)').attr('href'),
-        quant: url.length,
-        prev: chapter.next().val(),
-        next: chapter.prev().val(),
-        listPages: url.map(item => $(item).val()),
-        img: '.manga_pic'
-      };
-    }
-  };
-
-  var thespectrum = {
-    name: 'TheSpectrum',
-    url: /https?:\/\/view.thespectrum.net\/.+/,
-    homepage: 'http://www.thespectrum.net/',
-    language: ['English'],
-    category: 'manga',
-    run() {
-      const url = "".concat(W.location.pathname, "?").concat($('form').serialize().substring(0, $('form').serialize().lastIndexOf('=')));
-      const num = $('.selectpage option').length;
-      const chapter = $('.selectchapter option:selected');
-      return {
-        title: $('.viewerLabel:eq(1)').text(),
-        series: '#',
-        quant: num,
-        prev: "".concat(W.location.pathname, "?ch=").concat(chapter.prev().val()),
-        next: "".concat(W.location.pathname, "?ch=").concat(chapter.next().val()),
-        listPages: [...Array(num).keys()].map(i => "".concat(url, "=").concat(i + 1)),
-        img: '#imgContainer img'
-      };
-    }
-  };
-
-  var unionmangas = {
-    name: 'UnionMangas',
-    url: /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/,
-    homepage: 'https://unionleitor.top/xw',
-    language: ['Portuguese'],
-    category: 'manga',
-    run() {
-      return {
-        title: $('.titulo-leitura').text().trim(),
-        series: $('.breadcrumbs a:last').attr('href'),
-        quant: $('#paginas option').get().length,
-        prev: "/leitor/".concat($('#mangaUrl').text(), "/").concat($('.listCap:selected').prev().val()),
-        next: "/leitor/".concat($('#mangaUrl').text(), "/").concat($('.listCap:selected').prev().next()),
-        listImages: $('.img-manga').get().map(i => $(i).attr('src'))
-      };
-    }
-  };
-
-  var wpmanga = {
-    name: ['MangaDeep'],
-    url: /https?:\/\/(www.)?(mangadeep).com\/.+\/[0-9]+/,
-    homepage: ['http://mangadeep.com/'],
-    language: ['English'],
-    category: 'manga',
-    run() {
-      const url = "/".concat(W.location.pathname.split('/')[1], "/").concat(W.location.pathname.split('/')[2]);
-      const num = parseInt($('select.cbo_wpm_pag:first option:last').html(), 10);
-      const chapter = $('.cbo_wpm_chp option:selected');
-      const key = $('.cbo_wpm_chp').attr('onchange').replace(/W.location.href='/, '');
-      return {
-        title: $('.wpm_pag h1').text().trim(),
-        series: $('h1.ttl a').attr('href'),
-        quant: num,
-        prev: key.replace(/'.+/, chapter.next().val()),
-        next: key.replace(/'.+/, chapter.prev().val()),
-        listPages: [...Array(num).keys()].map(i => "".concat(url, "/").concat(i + 1, "/")),
-        img: 'img.manga-page , .prw > a img, .prw a img'
-      };
-    }
-  };
-
-  var mangazuki = {
-    name: 'MangaZuki',
-    url: /https?:\/\/(www.)?mangazuki.online\/manga\/.+\/.+\//,
-    homepage: 'https://www.mangazuki.online/',
-    language: ['English'],
-    category: 'manga',
-    run() {
-      const imgs = jQuery('.wp-manga-chapter-img').get().map(i => jQuery(i).attr('src').trim());
-      return {
-        title: $('.wp-manga-nav .c-breadcrumb li:last').text().trim(),
-        series: $('.wp-manga-nav .c-breadcrumb li:eq(1) a').attr('href'),
-        quant: imgs.length,
-        prev: $('.nav-previous a').attr('href'),
-        next: $('.nav-next a').attr('href'),
-        listImages: imgs
-      };
-    }
-  };
-
-  var tmofans = {
-    name: ['TuMangaOnline', 'LectorManga'],
-    url: /https?:\/\/(www.)?(tmofans|lectortmo|followmanga).com\/.+\/.+\/(paginated|cascade)/,
-    homepage: ['https://tmofans.com/', 'https://lectortmo.com/'],
-    language: ['Spanish'],
-    category: 'manga',
-    run() {
-      const num = $('#viewer-pages-select:first option').get().length;
-      const src = $('#viewer-container img, .viewer-page').get();
-      return {
-        title: $('title').text().trim(),
-        series: $('a[title="Volver"]').attr('href'),
-        quant: num || src.length,
-        prev: '#',
-        next: '#',
-        listPages: [...Array(num).keys()].map(i => W.location.href.replace(/\/[0-9]+$/, "/".concat(i + 1))),
-        listImages: src.map(item => $(item).attr('src')),
-        img: '#viewer-container img, .viewer-page'
-      };
-    }
-  };
-
-  var disasterscans = {
-    name: 'DisasterScans',
-    url: /https?:\/\/(www.)?disasterscans.com\/manga\/.+\/chapter-.+/,
-    homepage: 'https://disasterscans.com/',
-    language: ['English'],
-    category: 'manga',
-    run() {
-      return {
-        title: $('#chapter-heading').text(),
-        series: W.mangaNav.mangaUrl,
-        quant: W.chapter_preloaded_images.length,
-        prev: $('select.single-chapter-select option:selected').next().val(),
-        next: $('select.single-chapter-select option:selected').prev().val(),
-        listImages: W.chapter_preloaded_images
-      };
-    }
-  };
-
-  var leitor = {
-    name: 'Leitor',
-    url: /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/,
-    homepage: 'https://leitor.net/',
-    language: ['Portuguese'],
-    category: 'manga',
-    run() {
-      const token = $('script[src*=token]').attr('src').match(new RegExp(/[&?]token=(\w+)&?/i))[1];
-      const idRelease = $('script[src*=token]').attr('src').match(new RegExp(/[&?]id_release=(\d+)&?/i))[1];
-      let api = null;
-      const url = "https://leitor.net/leitor/pages/".concat(idRelease, ".json?key=").concat(token);
-      $.ajax({
-        type: 'GET',
-        url,
-        async: false,
-        success(res) {
-          api = res;
-        }
-      });
-      return {
-        title: $('title').text().trim(),
-        series: $('.series-cover a').attr('href'),
-        quant: api.images.length,
-        prev: $('.chapter-list .selected').next().find('a').attr('href'),
-        next: $('.chapter-list .selected').prev().find('a').attr('href'),
-        listImages: api.images
-      };
-    }
-  };
-
-  var sites = [batoto, comicastle, readcomicsonline, dysnatyscans, eatmanga, egscans, foolslide, kissmanga, mangadoom, mangafox, mangago, mangahere, mangainn, mangalyght, mangapark, mangareader, mangastream, mangatown, ninemanga, readmangatoday, senmanga, tenmanga, thespectrum, wpmanga, funmanga, unionmangas, mangahost, hocvien, jaiminisbox, mangadex, hatigarmscans, mangarock, mangakakalot, lhtranslation, japscan, mangasee, mangazuki, tmofans, disasterscans, leitor];
+  var sites = [comicastle, disasterscans,
+    foolslide, funmanga,
+    jaiminisbox,
+    kissmanga, leitor, lhtranslation, mangadex, mangadoom, mangafox,
+    mangahere,
+    mangainn, mangakakalot, mangalyght, mangapark, mangareader,
+    mangasee, mangatown,
+    readcomicsonline, readmangatoday, senmanga,
+    batoto
+  ];
 
   function logScript(...text) {
     console.log('MangaOnlineViewer:', ...text);

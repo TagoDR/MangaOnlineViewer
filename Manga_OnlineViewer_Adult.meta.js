@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: 8Muses, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaIHere, hitomi, Luscious,Wondersluts, nHentai, Pururin, Simply-Hentai, Tsumino, HentaiCafe, PornComixOnline,xyzcomics, SuperHentais, 9Hentai, ASMHentai, MultPorn, Hentai Comic, HentaiNexus, TMOHentai, HentaiHand, GNTAI.xyz
+// @description Shows all pages at once in online view for these sites: ASMHentai, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiCafe, Hentai Comic, HentaiFox, HentaIHere, HentaiNexus, hitomi, MultPorn, nHentai, Pururin, TMOHentai, Tsumino
 // @version 16.22.0
 // @license MIT
-// @date 2020-05-10
+// @date 2020-05-14
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -23,28 +23,20 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/ramda/0.26.1/ramda.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js
-// @include /https?:\/\/(www.)?8muses.com\/comics\/.+\/[0-9]+/
+// @include /https?:\/\/(www.)?asmhentai.com\/gallery\/.+/
 // @include /https?:\/\/(www.)?doujins.com\/.+/
 // @include /https?:\/\/(g.)?(exhentai|e-hentai).org\/g\/.+\/.+/
 // @include /https?:\/\/(www.)?hbrowse.com\/.+/
 // @include /https?:\/\/(www.)?hentai2read.com\/[^/]+\/[0-9]+(.[0-9]+)?\//
+// @include /https?:\/\/hentai.cafe\/manga\/read\/.*\/en\/0\/1\/(page\/.+)?/
+// @include /https?:\/\/(www.)?(hentai|porn)-.+.com\/image\/.+/
 // @include /https?:\/\/(www.)?hentaifox.com\/g\/.+/
 // @include /https?:\/\/(www.)?hentaihere.com\/.+\/.+\//
+// @include /https?:\/\/(www.)?hentainexus.com\/read\/[0-9]+\/[0-9]+/
 // @include /https?:\/\/hitomi.la\/reader\/.+/
-// @include /https?:\/\/(www.)?(luscious.net|wondersluts.com)\/pictures\/.+/
+// @include /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include /https?:\/\/(www.)?nhentai.net\/g\/.+\/.+/
 // @include /https?:\/\/(www.)?pururin.io\/(view|read)\/.+\/.+\/.+/
-// @include /https?:\/\/.*simply-hentai.com\/.+\/page\/.+/
-// @include /https?:\/\/(www.)?tsumino.com\/Read\/Index\/[0-9]+\?page=.+/
-// @include /https?:\/\/hentai.cafe\/manga\/read\/.*\/en\/0\/1\/(page\/.+)?/
-// @include /https?:\/\/(www.)?(porncomixonline.net|xyzcomics.com)\/.+/
-// @include /https?:\/\/(www.)?superhentais.com\/.+\/.+\/[0-9]+/
-// @include /https?:\/\/(www.)?9hentai.com\/g\/.+/
-// @include /https?:\/\/(www.)?asmhentai.com\/gallery\/.+/
-// @include /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/
-// @include /https?:\/\/(www.)?(hentai|porn)-.+.com\/image\/.+/
-// @include /https?:\/\/(www.)?hentainexus.com\/read\/[0-9]+\/[0-9]+/
 // @include /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/[0-9]+/
-// @include /https?:\/\/(www.)?hentaihand.com\/viewc\/[0-9]+\/[0-9]+/
-// @include /https?:\/\/(www.)?gntai.xyz\/[0-9]+\/[0-9]+\/.+.html(#[0-9]+)?/
+// @include /https?:\/\/(www.)?tsumino.com\/Read\/Index\/[0-9]+\?page=.+/
 // ==/UserScript==
