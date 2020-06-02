@@ -1,23 +1,20 @@
 // == WPManga ======================================================================================
 export default {
   name: ['MangaDeep'],
-  url: /https?:\/\/(www.)?(mangadeep).com\/.+\/[0-9]+/,
+  url: /https?:\/\/(www.)?(mangadeep).com\/chapter\/.+\/[0-9]+/,
   homepage: ['http://mangadeep.com/'],
   language: ['English'],
   category: 'manga',
   run() {
-    const url = `/${W.location.pathname.split('/')[1]}/${W.location.pathname.split('/')[2]}`;
-    const num = parseInt($('select.cbo_wpm_pag:first option:last').html(), 10);
-    const chapter = $('.cbo_wpm_chp option:selected');
-    const key = $('.cbo_wpm_chp').attr('onchange').replace(/W.location.href='/, '');
+    const src = $('select.sl-page:first option').get();
     return {
-      title: $('.wpm_pag h1').text().trim(),
-      series: $('h1.ttl a').attr('href'),
-      quant: num,
-      prev: key.replace(/'.+/, chapter.next().val()),
-      next: key.replace(/'.+/, chapter.prev().val()),
-      listPages: [...Array(num).keys()].map((i) => `${url}/${i + 1}/`),
-      img: 'img.manga-page , .prw > a img, .prw a img',
+      title: $('.read-page a:eq(2)').text().trim(),
+      series: $('.read-page a:eq(1)').attr('href'),
+      quant: src.length,
+      prev: $('select.sl-chap:first option:selected').next().val(),
+      next: $('select.sl-chap:first option:selected').prev().val(),
+      listPages: src.map((i) => $(i).val()),
+      img: '#manga_pic_1',
     };
   },
 };

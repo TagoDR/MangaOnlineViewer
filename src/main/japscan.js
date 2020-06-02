@@ -1,8 +1,8 @@
 // == JapScan.To ===================================================================================
 export default {
   name: 'JapScan.To',
-  url: /https?:\/\/(www.)?japscan.to\/lecture-en-ligne\/.+\/.+/,
-  homepage: 'https://www.japscan.to/',
+  url: /https?:\/\/(www.)?japscan.co\/lecture-en-ligne\/.+\/.+/,
+  homepage: 'https://www.japscan.co/',
   language: ['French'],
   category: 'manga',
   waitAttr: ['#image img', 'src'],

@@ -1,8 +1,8 @@
 // == 8Muses =======================================================================================
 export default {
   name: '8Muses',
-  url: /https?:\/\/(www.)?8muses.com\/comics\/.+\/[0-9]+/,
-  homepage: 'https://www.8muses.com/',
+  url: /https?:\/\/comics.8muses.com\/comics\/picture\/.+/,
+  homepage: 'https://comics.8muses.com/',
   language: ['English'],
   category: 'hentai',
   run() {

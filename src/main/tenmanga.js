@@ -1,7 +1,7 @@
 // == TenManga =====================================================================================
 export default {
   name: 'TenManga',
-  url: /https?:\/\/(www.)?tenmanga.com\/chapter\/.+/,
+  url: /https?:\/\/(www.)?(tenmanga|gardenmanage).com\/(chapter|statuses)\/.+/,
   homepage: 'http://www.tenmanga.com/',
   language: ['English'],
   category: 'manga',

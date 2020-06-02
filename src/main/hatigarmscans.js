@@ -1,20 +1,19 @@
-// == MangaInn  ====================================================================================
+// == HatigarmScans  ===============================================================================
 export default {
   name: 'HatigarmScans',
-  url: /https?:\/\/(www.)?hatigarmscans.net\/manga\/.+\/.+(\/[0-9]*)?/,
-  homepage: 'https://www.hatigarmscans.net//',
+  url: /https?:\/\/(www.)?hatigarmscanz.net\/comics\/.+\/.+\/.+/,
+  homepage: 'https://hatigarmscanz.net/home',
   language: ['English'],
   category: 'manga',
+  waitVar: 'chapterPages',
   run() {
-    const src = $('.scan-page').attr('src');
-    const url = src.substring(0, src.lastIndexOf('/') + 1);
     return {
-      title: W.title.replace(/ - Page .+/, '').trim(),
-      series: W.base_url.substring(0, W.base_url.lastIndexOf('/') + 1),
-      quant: W.pages.length,
-      prev: W.next_chapter,
-      next: W.prev_chapter,
-      listImages: W.pages.map((i) => url + i.page_image),
+      title: $('.page-section-title').text().trim(),
+      series: $('div.heading + a').attr('href'),
+      quant: W.chapterPages.length,
+      prev: $('.container div div a:eq(0)').attr('href'),
+      next: $('.container div div a:eq(1)').attr('href'),
+      listImages: W.chapterPages,
     };
   },
 };

@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: ASMHentai, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiCafe, Hentai Comic, HentaiFox, HentaIHere, HentaiNexus, hitomi, MultPorn, nHentai, Pururin, TMOHentai, Tsumino
-// @version 16.22.0
+// @description Shows all pages at once in online view for these sites: ASMHentai, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiCafe, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, HentaiNexus, hitomi, MultPorn, nHentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, 8Muses, xyzcomics
+// @version 17.0.0
 // @license MIT
-// @date 2020-05-14
+// @date 2020-06-02
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -31,14 +31,19 @@
 // @include /https?:\/\/hentai.cafe\/manga\/read\/.*\/en\/0\/1\/(page\/.+)?/
 // @include /https?:\/\/(www.)?(hentai|porn)-.+.com\/image\/.+/
 // @include /https?:\/\/(www.)?hentaifox.com\/g\/.+/
+// @include /https?:\/\/(www.)?hentaihand.com\/viewc\/[0-9]+\/[0-9]+/
 // @include /https?:\/\/(www.)?hentaihere.com\/.+\/.+\//
 // @include /https?:\/\/(www.)?hentainexus.com\/read\/[0-9]+\/[0-9]+/
 // @include /https?:\/\/hitomi.la\/reader\/.+/
 // @include /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include /https?:\/\/(www.)?nhentai.net\/g\/.+\/.+/
+// @include /https?:\/\/(www.)?porncomixonline.net\/.+/
 // @include /https?:\/\/(www.)?pururin.io\/(view|read)\/.+\/.+\/.+/
+// @include /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/
 // @include /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/[0-9]+/
 // @include /https?:\/\/(www.)?tsumino.com\/Read\/Index\/[0-9]+\?page=.+/
+// @include /https?:\/\/comics.8muses.com\/comics\/picture\/.+/
+// @include /https?:\/\/(www.)?xyzcomics.com\/.+/
 // ==/UserScript==
 
 (function() {
@@ -82,6 +87,44 @@
         prev: '#',
         next: '#',
         listImages: imgs.map(i => $(i).attr('data-file'))
+      };
+    }
+  };
+
+  var eightMuses = {
+    name: '8Muses',
+    url: /https?:\/\/comics.8muses.com\/comics\/picture\/.+/,
+    homepage: 'https://comics.8muses.com/',
+    language: ['English'],
+    category: 'hentai',
+    run() {
+      function decode(t) {
+        return (t => {
+          if (t.charAt(0) !== '!') return t;
+          return t.substr(1).replace(/[\x21-\x7e]/g, t => String.fromCharCode(33 + (t.charCodeAt(0) + 14) % 94));
+        })(t.replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&'));
+      }
+      let api = null;
+      const url = W.location.href;
+      $.ajax({
+        type: 'GET',
+        url,
+        async: false,
+        success(res) {
+          api = res;
+        }
+      });
+      const dataPublic = JSON.parse(decode($(api).find('#ractive-public').html().trim()));
+      const dataShared = JSON.parse(decode($(api).find('#ractive-shared').html().trim()));
+      const src = dataShared.options.pictureHost || W.location.host;
+      const images = dataPublic.pictures.map(img => "//".concat(src, "/image/fl/").concat(img.publicUri, ".jpg"));
+      return {
+        title: $('.top-menu-breadcrumb li:last a').text(),
+        series: $('.top-menu-breadcrumb li:last').prev('li').find('a').attr('href'),
+        quant: dataPublic.pictures.length,
+        prev: '#',
+        next: '#',
+        listImages: images
       };
     }
   };
@@ -224,6 +267,25 @@
     }
   };
 
+  var hentaihand = {
+    name: 'HentaiHand',
+    url: /https?:\/\/(www.)?hentaihand.com\/viewc\/[0-9]+\/[0-9]+/,
+    homepage: 'https://hentaihand.com/',
+    language: ['English'],
+    category: 'hentai',
+    waitVar: 'model',
+    run() {
+      return {
+        title: W.model.title.replace(' - Page {page}', ''),
+        series: $('.back-to-gallery a').attr('href'),
+        quant: Object.keys(W.images).length,
+        prev: '#',
+        next: '#',
+        listImages: Object.values(W.images)
+      };
+    }
+  };
+
   var hentaihere = {
     name: 'HentaIHere',
     url: /https?:\/\/(www.)?hentaihere.com\/.+\/.+\//,
@@ -326,6 +388,39 @@
     }
   };
 
+  var porncomixonline = {
+    name: 'PornComixOnline',
+    url: /https?:\/\/(www.)?porncomixonline.net\/.+/,
+    homepage: 'https://www.porncomixonline.net',
+    language: ['English'],
+    category: 'hentai',
+    run() {
+      return {
+        title: $('.entry-title').text().trim(),
+        series: '#',
+        quant: $('#single-pager:first option').get().length || $('.dgwt-jg-gallery img').get().length,
+        prev: '#',
+        next: '#',
+        listPages: $('#single-pager:first option').get().map(i => $(i).attr('data-redirect')),
+        listImages: $('.dgwt-jg-gallery img').get().map(i => {
+          const urls = $(i).attr('data-jg-srcset').split(',');
+          let src = '';
+          let w = 0;
+          for (let l = 0; l < urls.length; l += 1) {
+            const s = urls[l].match(/(.+) (\d+)w/);
+            if (s[2] > w) {
+              [, w, src] = s;
+              w = s[2];
+              src = s[1];
+            }
+          }
+          return src;
+        }),
+        img: 'img.wp-manga-chapter-img'
+      };
+    }
+  };
+
   var pururin = {
     name: 'Pururin',
     url: /https?:\/\/(www.)?pururin.io\/(view|read)\/.+\/.+\/.+/,
@@ -343,6 +438,35 @@
         prev: '#',
         next: '#',
         listImages: [...Array(num).keys()].map(i => src.replace(/\/[0-9]+\./, "/".concat(i + 1, ".")))
+      };
+    }
+  };
+
+  var simplyhentai = {
+    name: 'Simply-Hentai',
+    url: /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/,
+    homepage: 'http://simply-hentai.com/',
+    language: ['English'],
+    category: 'hentai',
+    run() {
+      let api = null;
+      $.ajax({
+        type: 'GET',
+        url: W.location.href.replace(/\/page\/[0-9]+#?$/, '/all-pages'),
+        dataType: 'json',
+        async: false,
+        success(res) {
+          api = res;
+        }
+      });
+      const imgs = Object.values(api).map(i => i.full || i.giant || i.path);
+      return {
+        title: $('h1 .pu-trigger:first').text().trim(),
+        series: $('h1 .pu-trigger:first').attr('href'),
+        quant: imgs.length,
+        prev: '#',
+        next: '#',
+        listImages: imgs
       };
     }
   };
@@ -398,12 +522,43 @@
     }
   };
 
+  var xyzcomics = {
+    name: 'xyzcomics',
+    url: /https?:\/\/(www.)?xyzcomics.com\/.+/,
+    homepage: 'http://xyzcomics.com/',
+    language: ['English'],
+    category: 'hentai',
+    run() {
+      const imgs = $('.dgwt-jg-gallery img').get();
+      return {
+        title: $('.entry-title').text().trim(),
+        series: '#',
+        quant: imgs.length,
+        prev: '#',
+        next: '#',
+        listImages: imgs.map(i => {
+          const urls = $(i).attr('data-jg-srcset').split(',');
+          let src = '';
+          let w = 0;
+          for (let l = 0; l < urls.length; l += 1) {
+            const s = urls[l].match(/(.+) (\d+)w/);
+            if (s[2] > w) {
+              [, w, src] = s;
+              w = s[2];
+              src = s[1];
+            }
+          }
+          return src;
+        })
+      };
+    }
+  };
+
   var sites = [asmhentai, doujinmoe, exhentai,
-    hbrowse, hentai2read, hentaicafe, hentaicomic, hentaifox,
-    hentaihere, hentainexus, hitomi,
+    hbrowse, hentai2read, hentaicafe, hentaicomic, hentaifox, hentaihand, hentaihere, hentainexus, hitomi,
     multporn, nhentai,
-    pururin,
-    tmohhentai, tsumino
+    porncomixonline, pururin, simplyhentai,
+    tmohhentai, tsumino, eightMuses, xyzcomics
   ];
 
   function logScript(...text) {
@@ -577,7 +732,7 @@
     pictureLeft: 'data:image/png;base64,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'
   };
 
-  const isEmpty = R.either(R.either(R.isNil, R.isEmpty), R.either(x => R.length(x) === 0, x => x === 0));
+  const isEmpty = R.either(R.isNil, R.isEmpty);
   const mapIndexed = R.addIndex(R.map);
 
   function normalizeUrl(url) {
@@ -665,13 +820,13 @@
   function loadManga(manga, begin = 1) {
     logScript('Loading Images');
     logScript("Intervals: ".concat(manga.timer || settings.Timer || 'Default(1000)'));
-    if (manga.listImages !== undefined) {
+    if (!isEmpty(manga.listImages)) {
       logScript('Method: Images:', manga.listImages);
       loadMangaImages(begin - 1, manga);
       if (manga.listImagesAlt !== undefined) {
         loadMangaImagesAlt(begin - 1, manga);
       }
-    } else if (manga.listPages !== undefined) {
+    } else if (!isEmpty(manga.listPages)) {
       logScript('Method: Pages:', manga.listPages);
       loadMangaPages(begin - 1, manga);
     } else {

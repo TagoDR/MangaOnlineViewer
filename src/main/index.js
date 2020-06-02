@@ -38,10 +38,10 @@ import wpmanga from './wpmanga';
 export default [
   comicastle,
   disasterscans,
-  // dysnatyscans, Todo: Fix
+  dysnatyscans,
   foolslide,
   funmanga,
-  // hatigarmscans, Todo: Fix
+  hatigarmscans,
   jaiminisbox,
   // japscan, Todo: Fix
   kissmanga,
@@ -50,7 +50,7 @@ export default [
   mangadex,
   mangadoom,
   mangafox,
-  // mangago, Todo: Fix
+  // mangago, [Weak? Not Safe?]
   mangahere,
   // mangahost, [Full Ads]
   mangainn,
@@ -61,15 +61,15 @@ export default [
   // mangarock, [Dead/Arquived]
   mangasee,
   mangatown,
-  // mangazuki, Todo: Fix
-  // ninemanga, Todo: Fix
+  // mangazuki, [Weak? Not Safe?]
+  ninemanga,
   readcomicsonline,
   readmangatoday,
   senmanga,
-  // tenmanga, Todo: Fix
+  // tenmanga, [Not Safe?]
   // thespectrum, [Broken, Dead?]
-  // tmofans, Todo: Fix
-  // unionmangas, Todo: Fix
-  // wpmanga, Todo: Fix
+  tmofans,
+  unionmangas,
+  wpmanga,
   batoto,
 ];

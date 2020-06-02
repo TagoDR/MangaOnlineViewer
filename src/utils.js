@@ -1,6 +1,5 @@
 // Check if the value is empty
-const isEmpty = R.either(R.either(R.isNil, R.isEmpty),
-  R.either((x) => R.length(x) === 0, (x) => x === 0));
+const isEmpty = R.either(R.isNil, R.isEmpty);
 
 const mapIndexed = R.addIndex(R.map);
 

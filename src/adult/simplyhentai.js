@@ -1,7 +1,7 @@
 // == Simply-Hentai ================================================================================
 export default {
   name: 'Simply-Hentai',
-  url: /https?:\/\/.*simply-hentai.com\/.+\/page\/.+/,
+  url: /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/,
   homepage: 'http://simply-hentai.com/',
   language: ['English'],
   category: 'hentai',

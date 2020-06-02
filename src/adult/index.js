@@ -23,18 +23,19 @@ import simplyhentai from './simplyhentai';
 import superhentais from './superhentais';
 import tmohhentai from './tmohentai';
 import tsumino from './tsumino';
+import xyzcomics from './xyzcomics';
 
 export default [
   asmhentai,
   doujinmoe,
   exhentai,
-  // gntai, Todo: Fix
+  // gntai, [CORS disabled]
   hbrowse,
   hentai2read,
   hentaicafe,
   hentaicomic,
   hentaifox,
-  // hentaihand, Todo: Fix
+  hentaihand,
   hentaihere,
   hentainexus,
   hitomi,
@@ -42,11 +43,12 @@ export default [
   multporn,
   nhentai,
   // ninehentai, [Broken]
-  // porncomixonline, Todo: Fix
+  porncomixonline,
   pururin,
-  // simplyhentai, Todo: Fix
+  simplyhentai,
   // superhentais, Todo: Fix
   tmohhentai,
   tsumino,
-  // eightMuses, Todo: Fix
+  eightMuses,
+  xyzcomics,
 ];

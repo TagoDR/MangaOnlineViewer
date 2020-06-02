@@ -1,19 +1,19 @@
 // == GNTAI ========================================================================================
 export default {
   name: 'GNTAI.xyz',
-  url: /https?:\/\/(www.)?gntai.xyz\/[0-9]+\/[0-9]+\/.+.html(#[0-9]+)?/,
-  homepage: 'http://www.gntai.xyz/',
+  url: /https?:\/\/(www.)?gntai.net\/.+\/.+/,
+  homepage: 'http://www.gntai.net/',
   language: ['Spanish'],
   category: 'hentai',
-  waitVar: 'pages',
   run() {
     return {
-      title: W.title_post,
-      series: W.HOME,
-      quant: W.pages.length,
+      title: $('h1:last').text().trim(),
+      series: '#',
+      quant: $('#select-page-list option').get().length,
       prev: '#',
       next: '#',
-      listImages: W.pages,
+      listPages: $('#main script').text().match(/https[^"]+/g),
+      img: '#img-page img',
     };
   },
 };

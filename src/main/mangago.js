@@ -1,7 +1,7 @@
 // == MangaGo ======================================================================================
 export default {
   name: 'MangaGo',
-  url: /https?:\/\/(www.)?mangago.me\/read-manga\/.+\/.+/,
+  url: /https?:\/\/(www.)?mangago.me\/article\/.+\/.+/,
   homepage: 'http://www.mangago.me/',
   language: ['English'],
   category: 'manga',

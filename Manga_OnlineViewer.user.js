@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: ComiCastle, DisasterScans, FoOlSlide, Funmanga, JaiminisBox, KissManga, Leitor, LHTranslation, MangaDex, MangaDoom, MangaFox, MangaHere, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaSee, MangaTown, ReadComicsOnline, ReadManga Today, SenManga(Raw), Batoto
-// @version 16.22.0
+// @description Shows all pages at once in online view for these sites: ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, JaiminisBox, KissManga, Leitor, LHTranslation, MangaDex, MangaDoom, MangaFox, MangaHere, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaSee, MangaTown, NineManga, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, UnionMangas, MangaDeep, Batoto
+// @version 17.0.0
 // @license MIT
-// @date 2020-05-14
+// @date 2020-06-02
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -25,8 +25,10 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js
 // @include /https?:\/\/(www.)?comicastle.org\/comic\/.+\/[0-9]+.*/
 // @include /https?:\/\/(www.)?disasterscans.com\/manga\/.+\/chapter-.+/
+// @include /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/
 // @include /^(?!.*jaiminisbox).*\/read\/.+/
 // @include /https?:\/\/(www.)?funmanga.com\/.+\/[0-9]+/
+// @include /https?:\/\/(www.)?hatigarmscanz.net\/comics\/.+\/.+\/.+/
 // @include /https?:\/\/(www.)?jaiminisbox.com\/reader\/read\/.+/
 // @include /https?:\/\/(www.)?kissmanga.com\/Manga\/.+\/.+?id=[0-9]+/
 // @include /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
@@ -42,9 +44,13 @@
 // @include /https?:\/\/(www.)?(mangareader|mangapanda)(.net|.com)\/.+\/.+/
 // @include /https?:\/\/(www.)?mangaseeonline.us\/read-online\/.+/
 // @include /https?:\/\/(www.)?mangatown.com\/manga\/.+\/.+/
+// @include /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/
 // @include /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/[0-9]*/
 // @include /https?:\/\/(www.)?readmng.com\/.+\/[0-9.]+(\/[0-9]*)?/
 // @include /https?:\/\/raw.senmanga.com\/.+\/.+\/?/
+// @include /https?:\/\/(www.)?(tmofans|lectortmo|followmanga).com\/.+\/.+\/(paginated|cascade)/
+// @include /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/
+// @include /https?:\/\/(www.)?(mangadeep).com\/chapter\/.+\/[0-9]+/
 // @include /https?:\/\/(www.)?bato.to\/chapter.*/
 // @exclude /https?:\/\/(www.)?tsumino.com\/.+/
 // @exclude /https?:\/\/(www.)?pururin.io\/.+/
@@ -115,6 +121,24 @@
     }
   };
 
+  var dysnatyscans = {
+    name: 'Dynasty-Scans',
+    url: /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/,
+    homepage: 'https://dynasty-scans.com/',
+    language: ['English'],
+    category: 'manga',
+    run() {
+      return {
+        title: $('#chapter-title').text(),
+        series: '#',
+        quant: W.pages.length,
+        prev: $('#prev_link').attr('href'),
+        next: $('#next_link').attr('href'),
+        listImages: W.pages.map(x => x.image)
+      };
+    }
+  };
+
   var foolslide = {
     name: 'FoOlSlide',
     url: /^(?!.*jaiminisbox).*\/read\/.+/,
@@ -156,6 +180,25 @@
         next: chapter.prev('option').val(),
         listPages: url.map(item => $(item).val()),
         img: '.img-responsive'
+      };
+    }
+  };
+
+  var hatigarmscans = {
+    name: 'HatigarmScans',
+    url: /https?:\/\/(www.)?hatigarmscanz.net\/comics\/.+\/.+\/.+/,
+    homepage: 'https://hatigarmscanz.net/home',
+    language: ['English'],
+    category: 'manga',
+    waitVar: 'chapterPages',
+    run() {
+      return {
+        title: $('.page-section-title').text().trim(),
+        series: $('div.heading + a').attr('href'),
+        quant: W.chapterPages.length,
+        prev: $('.container div div a:eq(0)').attr('href'),
+        next: $('.container div div a:eq(1)').attr('href'),
+        listImages: W.chapterPages
       };
     }
   };
@@ -561,6 +604,25 @@
     }
   };
 
+  var ninemanga = {
+    name: 'NineManga',
+    url: /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/,
+    homepage: 'http://ninemanga.com/',
+    language: ['English'],
+    category: 'manga',
+    run() {
+      return {
+        title: $('.tip a:first').text(),
+        series: $('.subgiude a:eq(1)').attr('href'),
+        quant: $('#page:first option').length,
+        prev: $('.chnav a:first').attr('href'),
+        next: $('.chnav a:eq(1)').attr('href'),
+        listPages: $('#page:first option').get().map(item => $(item).val()),
+        img: '.manga_pic'
+      };
+    }
+  };
+
   var readcomicsonline = {
     name: 'ReadComicsOnline',
     url: /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/[0-9]*/,
@@ -623,15 +685,72 @@
     }
   };
 
-  var sites = [comicastle, disasterscans,
-    foolslide, funmanga,
-    jaiminisbox,
+  var tmofans = {
+    name: 'TuMangaOnline',
+    url: /https?:\/\/(www.)?(tmofans|lectortmo|followmanga).com\/.+\/.+\/(paginated|cascade)/,
+    homepage: 'https://lectortmo.com/',
+    language: ['Spanish'],
+    category: 'manga',
+    run() {
+      const num = $('#viewer-pages-select:first option').get().length || $('.img-container img').get().length;
+      return {
+        title: $('title').text().trim(),
+        series: $('a[title="Volver"]').attr('href'),
+        quant: num,
+        prev: '#',
+        next: '#',
+        listPages: [...Array(num).keys()].map(i => W.location.href.replace(/\/[0-9]+$/, "/".concat(i + 1))),
+        listImages: $('.img-container img').get().map(item => $(item).attr('data-src')),
+        img: '#viewer-container img, .viewer-page'
+      };
+    }
+  };
+
+  var unionmangas = {
+    name: 'UnionMangas',
+    url: /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/,
+    homepage: 'https://unionleitor.top/xw',
+    language: ['Portuguese'],
+    category: 'manga',
+    run() {
+      return {
+        title: $('.titulo-leitura').text().trim(),
+        series: $('.breadcrumbs a:last').attr('href'),
+        quant: $('#paginas option').get().length,
+        prev: "/leitor/".concat($('#mangaUrl').text(), "/").concat($('.listCap:selected').prev().val()),
+        next: "/leitor/".concat($('#mangaUrl').text(), "/").concat($('.listCap:selected').prev().next()),
+        listImages: $('.img-manga').get().map(i => $(i).attr('src'))
+      };
+    }
+  };
+
+  var wpmanga = {
+    name: ['MangaDeep'],
+    url: /https?:\/\/(www.)?(mangadeep).com\/chapter\/.+\/[0-9]+/,
+    homepage: ['http://mangadeep.com/'],
+    language: ['English'],
+    category: 'manga',
+    run() {
+      const src = $('select.sl-page:first option').get();
+      return {
+        title: $('.read-page a:eq(2)').text().trim(),
+        series: $('.read-page a:eq(1)').attr('href'),
+        quant: src.length,
+        prev: $('select.sl-chap:first option:selected').next().val(),
+        next: $('select.sl-chap:first option:selected').prev().val(),
+        listPages: src.map(i => $(i).val()),
+        img: '#manga_pic_1'
+      };
+    }
+  };
+
+  var sites = [comicastle, disasterscans, dysnatyscans, foolslide, funmanga, hatigarmscans, jaiminisbox,
     kissmanga, leitor, lhtranslation, mangadex, mangadoom, mangafox,
     mangahere,
     mangainn, mangakakalot, mangalyght, mangapark, mangareader,
     mangasee, mangatown,
-    readcomicsonline, readmangatoday, senmanga,
-    batoto
+    ninemanga, readcomicsonline, readmangatoday, senmanga,
+    tmofans, unionmangas, wpmanga, batoto
   ];
 
   function logScript(...text) {
@@ -805,7 +924,7 @@
     pictureLeft: 'data:image/png;base64,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'
   };
 
-  const isEmpty = R.either(R.either(R.isNil, R.isEmpty), R.either(x => R.length(x) === 0, x => x === 0));
+  const isEmpty = R.either(R.isNil, R.isEmpty);
   const mapIndexed = R.addIndex(R.map);
 
   function normalizeUrl(url) {
@@ -893,13 +1012,13 @@
   function loadManga(manga, begin = 1) {
     logScript('Loading Images');
     logScript("Intervals: ".concat(manga.timer || settings.Timer || 'Default(1000)'));
-    if (manga.listImages !== undefined) {
+    if (!isEmpty(manga.listImages)) {
       logScript('Method: Images:', manga.listImages);
       loadMangaImages(begin - 1, manga);
       if (manga.listImagesAlt !== undefined) {
         loadMangaImagesAlt(begin - 1, manga);
       }
-    } else if (manga.listPages !== undefined) {
+    } else if (!isEmpty(manga.listPages)) {
       logScript('Method: Pages:', manga.listPages);
       loadMangaPages(begin - 1, manga);
     } else {

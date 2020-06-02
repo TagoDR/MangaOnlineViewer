@@ -1,6 +1,6 @@
 import { logScript } from './browser';
 import { settings } from './settings';
-import { mapIndexed } from './utils';
+import { isEmpty, mapIndexed } from './utils';
 
 function normalizeUrl(url) {
   let uri = url.trim();
@@ -116,13 +116,13 @@ const loadMangaImagesAlt = (begin, manga) => mapIndexed(
 function loadManga(manga, begin = 1) {
   logScript('Loading Images');
   logScript(`Intervals: ${manga.timer || settings.Timer || 'Default(1000)'}`);
-  if (manga.listImages !== undefined) {
+  if (!isEmpty(manga.listImages)) {
     logScript('Method: Images:', manga.listImages);
     loadMangaImages(begin - 1, manga);
     if (manga.listImagesAlt !== undefined) {
       loadMangaImagesAlt(begin - 1, manga);
     }
-  } else if (manga.listPages !== undefined) {
+  } else if (!isEmpty(manga.listPages)) {
     logScript('Method: Pages:', manga.listPages);
     loadMangaPages(begin - 1, manga);
   } else {
