@@ -1,6 +1,6 @@
-// == nHentai ======================================================================================
+// == nHentai.net ==================================================================================
 export default {
-  name: 'nHentai',
+  name: 'nHentai.net',
   url: /https?:\/\/(www.)?nhentai.net\/g\/.+\/.+/,
   homepage: 'https://nhentai.net/',
   language: ['English'],
@@ -14,7 +14,7 @@ export default {
       prev: '#',
       next: '#',
       listPages: [...Array(num).keys()].map((i) => `../${i + 1}/`),
-      img: '#page-container img',
+      img: '#image-container img',
     };
   },
 };

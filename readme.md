@@ -62,6 +62,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 > Adult Script available **_only_** on [Github](https://github.com/TagoDR/MangaOnlineViewer)
 - [8Muses](https://comics.8muses.com/) _[English]_
 - [ASMHentai](https://asmhentai.com/) _[English]_
+- [BestPornComix](https://www.bestporncomix.com) _[English]_
 - [DoujinMoeNM](https://doujins.com/) _[English]_
 - [ExHentai](https://exhentai.org/) / [e-Hentai](https://e-hentai.org/) _[English]_ **Obs: May get your IP Banned, use with moderation**
 - [HBrowser](http://www.hbrowse.com/) _[English]_
@@ -73,25 +74,27 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [HentaiHand](https://hentaihand.com/) _[English]_
 - [HentaiNexus](https://hentainexus.com/) _[English]_
 - [MultPorn](https://multporn.net/) _[English]_
+- [MyHentaiGallery](https://www.myhentaigallery.com) _[English]_
 - [PornComixOnline](https://www.porncomixonline.net) _[English]_
 - [Pururin](http://pururin.io/) _[English]_
 - [Simply-Hentai](http://simply-hentai.com/) _[English]_
 - [Tsumino](http://tsumino.com/) _[English]_
 - [hitomi](https://hitomi.la/) _[English]_
-- [nHentai](https://nhentai.net/) _[English]_
+- [nHentai.com](https://nhentai.com/) _[English]_
+- [nHentai.net](https://nhentai.net/) _[English]_
 - [xyzcomics](http://xyzcomics.com/) _[English]_
 - [TMOHentai](http://tmohentai.com/) _[Spanish]_
 
 ### HotKeys
-<kbd class='dark'>Numpad 5</kbd>/<kbd class='dark'>X</kbd>/<kbd class='dark'>/</kbd>: Open Settings
-<kbd class='dark'>Numpad +</kbd>/<kbd class='dark'>Q</kbd>/<kbd class='dark'>=</kbd>: Global Zoom in pages (enlarge)
-<kbd class='dark'>Numpad -</kbd>/<kbd class='dark'>E</kbd>/<kbd class='dark'>-</kbd>: Global Zoom out pages (reduce)
-<kbd class='dark'>Numpad /</kbd>/<kbd class='dark'>R</kbd>/<kbd class='dark'>9</kbd>: Global Restore pages to original
-<kbd class='dark'>Numpad *</kbd>/<kbd class='dark'>F</kbd>/<kbd class='dark'>0</kbd>: Global Fit window width
-<kbd class='dark'>Numpad 6</kbd>/<kbd class='dark'>D</kbd>/<kbd class='dark'>.</kbd>/<kbd class="dark">→</kbd>: Next Chapter
-<kbd class='dark'>Numpad 4</kbd>/<kbd class='dark'>A</kbd>/<kbd class='dark'>,</kbd>/<kbd class="dark">←</kbd>: Previous Chapter
-<kbd class='dark'>Numpad 8</kbd>/<kbd class='dark'>W</kbd>: Scroll Up
-<kbd class='dark'>Numpad 2</kbd>/<kbd class='dark'>S</kbd>: Scroll Down
+<kbd class='dark'>Numpad 5</kbd> | <kbd class='dark'>X</kbd> | <kbd class='dark'>/</kbd>: Open Settings
+<kbd class='dark'>Numpad +</kbd> | <kbd class='dark'>Q</kbd> | <kbd class='dark'>=</kbd>: Global Zoom in pages (enlarge)
+<kbd class='dark'>Numpad -</kbd> | <kbd class='dark'>E</kbd> | <kbd class='dark'>-</kbd>: Global Zoom out pages (reduce)
+<kbd class='dark'>Numpad /</kbd> | <kbd class='dark'>R</kbd> | <kbd class='dark'>9</kbd>: Global Restore pages to original
+<kbd class='dark'>Numpad *</kbd> | <kbd class='dark'>F</kbd> | <kbd class='dark'>0</kbd>: Global Fit window width
+<kbd class='dark'>Numpad 6</kbd> | <kbd class='dark'>D</kbd> | <kbd class='dark'>.</kbd> | <kbd class="dark">→</kbd>: Next Chapter
+<kbd class='dark'>Numpad 4</kbd> | <kbd class='dark'>A</kbd> | <kbd class='dark'>,</kbd> | x<kbd class="dark">←</kbd>: Previous Chapter
+<kbd class='dark'>Numpad 8</kbd> | <kbd class='dark'>W</kbd>: Scroll Up
+<kbd class='dark'>Numpad 2</kbd> | <kbd class='dark'>S</kbd>: Scroll Down
 
 ### Features
 - View Modes:

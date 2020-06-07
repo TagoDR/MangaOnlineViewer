@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: ASMHentai, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiCafe, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, HentaiNexus, hitomi, MultPorn, nHentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, 8Muses, xyzcomics
-// @version 17.0.0
+// @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiCafe, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, HentaiNexus, hitomi, MultPorn, MyHentaiGallery, nHentai.net, nHentai.com, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, 8Muses, xyzcomics
+// @version 17.1.0
 // @license MIT
-// @date 2020-06-02
+// @date 2020-06-09
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -24,6 +24,7 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js
 // @include /https?:\/\/(www.)?asmhentai.com\/gallery\/.+/
+// @include /https?:\/\/(www.)?bestporncomix.com\/gallery\/.+/
 // @include /https?:\/\/(www.)?doujins.com\/.+/
 // @include /https?:\/\/(g.)?(exhentai|e-hentai).org\/g\/.+\/.+/
 // @include /https?:\/\/(www.)?hbrowse.com\/.+/
@@ -36,7 +37,9 @@
 // @include /https?:\/\/(www.)?hentainexus.com\/read\/[0-9]+\/[0-9]+/
 // @include /https?:\/\/hitomi.la\/reader\/.+/
 // @include /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/
+// @include /https?:\/\/(www.)?myhentaigallery.com\/gallery\/show\/.+\/[0-9]+/
 // @include /https?:\/\/(www.)?nhentai.net\/g\/.+\/.+/
+// @include /https?:\/\/(www.)?nhentai.com\/.+\/reader\/[0-9]+/
 // @include /https?:\/\/(www.)?porncomixonline.net\/.+/
 // @include /https?:\/\/(www.)?pururin.io\/(view|read)\/.+\/.+\/.+/
 // @include /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/

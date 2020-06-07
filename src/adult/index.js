@@ -15,7 +15,8 @@ import hentainexus from './hentainexus';
 import hitomi from './hitomi';
 import luscious from './luscious';
 import multporn from './multporn';
-import nhentai from './nhentai';
+import nhentainet from './nhentainet';
+import nhentaicom from './nhentaicom';
 import ninehentai from './9hentai';
 import porncomixonline from './porncomixonline';
 import pururin from './pururin';
@@ -24,9 +25,12 @@ import superhentais from './superhentais';
 import tmohhentai from './tmohentai';
 import tsumino from './tsumino';
 import xyzcomics from './xyzcomics';
+import bestporncomix from './bestporncomix';
+import myhentaigallery from './myhentaigallery';
 
 export default [
   asmhentai,
+  bestporncomix,
   doujinmoe,
   exhentai,
   // gntai, [CORS disabled]
@@ -41,7 +45,9 @@ export default [
   hitomi,
   // luscious, Todo: Fix
   multporn,
-  nhentai,
+  myhentaigallery,
+  nhentainet,
+  nhentaicom,
   // ninehentai, [Broken]
   porncomixonline,
   pururin,
