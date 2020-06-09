@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ASMHentai, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiCafe, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, HentaiNexus, hitomi, MultPorn, nHentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, 8Muses, xyzcomics
-// @version 17.0.0
+// @version 17.0.1
 // @license MIT
-// @date 2020-06-02
+// @date 2020-06-09
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -383,7 +383,7 @@
         prev: '#',
         next: '#',
         listPages: [...Array(num).keys()].map(i => "../".concat(i + 1, "/")),
-        img: '#page-container img'
+        img: '#image-container img'
       };
     }
   };

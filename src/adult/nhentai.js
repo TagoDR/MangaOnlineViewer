@@ -14,7 +14,7 @@ export default {
       prev: '#',
       next: '#',
       listPages: [...Array(num).keys()].map((i) => `../${i + 1}/`),
-      img: '#page-container img',
+      img: '#image-container img',
     };
   },
 };
