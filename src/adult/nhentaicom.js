@@ -1,7 +1,7 @@
 // == nHentai.Com ==================================================================================
 export default {
   name: 'nHentai.com',
-  url: /https?:\/\/(www.)?nhentai.com\/.+\/reader\/[0-9]+/,
+  url: /https?:\/\/(www.)?nhentai.com\/.+\/comic\/.+/,
   homepage: 'https://nhentai.com/',
   language: ['English'],
   category: 'hentai',
