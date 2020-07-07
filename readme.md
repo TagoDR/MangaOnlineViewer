@@ -48,8 +48,9 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [MangaSee](https://mangaseeonline.us/) _[English]_
 - [MangaTown](http://www.mangatown.com/) _[English]_
 - [NineManga](http://ninemanga.com/) _[English]_
+- [RawDevart](https://rawdevart.com) _[English]_
 - [ReadManga Today](http://www.readmng.com/) _[English]_
-- [SenManga(Raw)](http://raw.senmanga.com/) _[English]_
+- [SenManga(Raw)](http://raw.senmanga.com/) _[Original]_
 - [Leitor](https://leitor.net/) _[Portuguese]_
 - [UnionMangas](https://unionleitor.top/xw) _[Portuguese]_
 - [TuMangaOnline](https://lectortmo.com/) _[Spanish]_

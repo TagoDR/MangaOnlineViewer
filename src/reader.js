@@ -104,7 +104,7 @@ const listPages = R.times((index) => `<div id='Page${index + 1}' class='MangaPag
     <a class='Reload controlButton' title='Reload'></a>
     <span>${index + 1}</span>
   </div>
-  <div class='PageContent' style='display: none;'>
+  <div class='PageContent'>
     <img id='PageImg${index + 1}' alt='PageImg${index + 1}' />
   </div>
 </div>`);

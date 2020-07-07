@@ -3,7 +3,7 @@ export default {
   name: 'SenManga(Raw)',
   url: /https?:\/\/raw.senmanga.com\/.+\/.+\/?/,
   homepage: 'http://raw.senmanga.com/',
-  language: ['English'],
+  language: ['Original'],
   category: 'manga',
   run() {
     const url = `/${W.location.pathname.split('/')[1]}/${W.location.pathname.split('/')[2]}`;

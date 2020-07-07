@@ -20,7 +20,7 @@ export default {
       bruteForce(func, i = 1, url = W.location.pathname) {
         if (i > num) return;
         const self = this;
-        func.getPage(url).then((html) => {
+        func.getHtml(url).then((html) => {
           func.addImg(i, $(html).find('img#single_picture').attr('src'));
           self.bruteForce(func, i + 1, $(html).find('#next').attr('href'));
         });

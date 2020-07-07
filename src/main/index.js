@@ -34,6 +34,7 @@ import thespectrum from './thespectrum';
 import tmofans from './tmofans';
 import unionmangas from './unionmangas';
 import wpmanga from './wpmanga';
+import rawdevart from './rawdevart';
 
 export default [
   comicastle,
@@ -63,6 +64,7 @@ export default [
   mangatown,
   // mangazuki, [Weak? Not Safe?]
   ninemanga,
+  rawdevart,
   readcomicsonline,
   readmangatoday,
   senmanga,
