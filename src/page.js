@@ -51,7 +51,7 @@ function normalizeUrl(url) {
 // Adds an image to the place-holder div
 function addImg(index, imageSrc) {
   const src = normalizeUrl(imageSrc);
-  if (!settings.lazyLoadImages) {
+  if (!settings.lazyLoadImages && index < 100) {
     logScript('Loaded Image:', index, 'Source:', src);
     $(`#PageImg${index}`).attr('src', src);
     $(`#ThumbnailImg${index}`).attr('src', src);
@@ -80,7 +80,7 @@ function addImg(index, imageSrc) {
 
 // Adds an page to the place-holder div
 function addPage(manga, index, pageUrl) {
-  if (!settings.lazyLoadImages) {
+  if (!settings.lazyLoadImages && index < 50) {
     getHtml(pageUrl)
       .then((response) => {
         const src = normalizeUrl($(response).find(manga.img).attr(manga.lazyAttr || 'src'));
@@ -92,7 +92,7 @@ function addPage(manga, index, pageUrl) {
     $(`#PageImg${index}`)
       .attr('data-src', 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==')
       .unveil({
-        offset: 2500,
+        offset: 3000,
         throttle: 1000,
       })
       .on('loaded.unveil', () => {
@@ -135,7 +135,7 @@ const loadMangaImages = (begin, manga) => mapIndexed(
 
 // Entry point for loading hte Manga pages
 function loadManga(manga, begin = 1) {
-  settings.lazyLoadImages = manga.quant > 100 || manga.lazy || settings.lazyLoadImages;
+  settings.lazyLoadImages = manga.lazy || settings.lazyLoadImages;
   logScript('Loading Images');
   logScript(`Intervals: ${manga.timer || settings.Timer || 'Default(1000)'}`);
   logScript(`Lazy: ${settings.lazyLoadImages}`);

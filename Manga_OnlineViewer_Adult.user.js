@@ -856,7 +856,7 @@
 
   function addImg(index, imageSrc) {
     const src = normalizeUrl(imageSrc);
-    if (!settings.lazyLoadImages) {
+    if (!settings.lazyLoadImages && index < 100) {
       logScript('Loaded Image:', index, 'Source:', src);
       $("#PageImg".concat(index)).attr('src', src);
       $("#ThumbnailImg".concat(index)).attr('src', src);
@@ -879,7 +879,7 @@
   }
 
   function addPage(manga, index, pageUrl) {
-    if (!settings.lazyLoadImages) {
+    if (!settings.lazyLoadImages && index < 50) {
       getHtml(pageUrl).then(response => {
         const src = normalizeUrl($(response).find(manga.img).attr(manga.lazyAttr || 'src'));
         $("#PageImg".concat(index)).attr('src', src);
@@ -888,7 +888,7 @@
       });
     } else {
       $("#PageImg".concat(index)).attr('data-src', 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==').unveil({
-        offset: 2500,
+        offset: 3000,
         throttle: 1000
       }).on('loaded.unveil', () => {
         getHtml(pageUrl).then(response => {
@@ -913,7 +913,7 @@
   const loadMangaImages = (begin, manga) => mapIndexed((src, index) => index >= begin ? delayAdd(src, (manga.timer || settings.Timer) * (index - begin)).then(response => addImg(index + 1, response)) : null, manga.listImages);
 
   function loadManga(manga, begin = 1) {
-    settings.lazyLoadImages = manga.quant > 50 || manga.lazy || settings.lazyLoadImages;
+    settings.lazyLoadImages = manga.lazy || settings.lazyLoadImages;
     logScript('Loading Images');
     logScript("Intervals: ".concat(manga.timer || settings.Timer || 'Default(1000)'));
     logScript("Lazy: ".concat(settings.lazyLoadImages));
