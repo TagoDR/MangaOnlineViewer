@@ -1,10 +1,5 @@
 import {
-  getBrowser,
-  getEngine,
-  getInfoGM,
-  logScript,
-  logScriptC,
-  setValueGM,
+  getBrowser, getEngine, getInfoGM, logScript, logScriptC, setValueGM,
 } from './browser';
 import { controls, setKeyDownEvents } from './events';
 import { checkImagesLoaded, loadManga } from './page';
@@ -58,7 +53,7 @@ function lateStart(manga, begin = 1) {
     showCancelButton: true,
     cancelButtonColor: '#d33',
     reverseButtons: true,
-    type: 'question',
+    icon: 'question',
   }).then((result) => {
     if (result.value) {
       logScript(`Choice: ${result.value}`);
@@ -81,8 +76,7 @@ function preparePage(manga, begin = 0) {
     }
     $('head').append(
       '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />',
-      '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@8.16.1/dist/sweetalert2.css" integrity="sha256-k59BjMeOG0yTQ5DlmjApR918fjnoMKI9zsdP3iZaYhQ=" crossorigin="anonymous">',
-      '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.16.1/dist/sweetalert2.min.js" integrity="sha256-eMnJEv7c7pNrl00kXIpjSRDEkBCijv3gGL2bOOyG7ZY=" crossorigin="anonymous"></script>',
+      '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.15.2/dist/sweetalert2.all.min.js" integrity="sha256-jcwzk3T3JY59zhhzLTvM7Z9Bib+tPyWi8UgC2PT5vrc=" crossorigin="anonymous"></script>',
       '<style type="text/css">#mov {position: fixed;left: 50%;transform: translateX(-50%);top: 0;z-index: 1000000;border-radius: .25em;font-size: 1.5em;cursor: pointer;display: inline-block;margin: .3125em;padding: .625em 2em;box-shadow: none;font-weight: 500;color: #FFF;background: rgb(102, 83, 146);border: 1px #FFF;}</style>',
     );
     W.mov = (b) => lateStart(manga, b || beginning);

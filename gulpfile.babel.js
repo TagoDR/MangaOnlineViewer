@@ -14,9 +14,7 @@ import userscript from 'userscript-meta';
 import pkg from './package.json';
 import metaAdult from './src/meta-adult';
 import metaMain from './src/meta-main';
-import {
-  comicSites, hentaiSites, mangaSites, bookmarklet,
-} from './src/readme';
+import { bookmarklet, comicSites, hentaiSites, mangaSites, } from './src/readme';
 
 const scripts = {
   main: {
