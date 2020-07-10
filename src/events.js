@@ -244,7 +244,7 @@ function controls() {
         title: 'Attention',
         text: 'Next time a chapter finish loading you will be prompted to save automatically',
         timer: 10000,
-        type: 'info',
+        icon: 'info',
       });
     } else {
       setValueGM('MangaDownloadZip', false);
@@ -263,7 +263,7 @@ function controls() {
         title: 'Warning',
         html: 'Lazy load is incompatible with zip download, you will not be able to download with this setting ON.<br/>'
           + 'Suggestion: <span style="color:red;font:bold">Disable Thumbnails</span> to save Bandwidth/Memory.',
-        type: 'warning',
+        icon: 'warning',
       });
     } else {
       setValueGM('MangaLazyLoadImages', false);
@@ -339,14 +339,14 @@ function controls() {
       Swal.fire({
         title: 'Bookmark Removed',
         timer: 10000,
-        type: 'error',
+        icon: 'error',
       });
     } else {
       settings.bookmarks.push(mark);
       Swal.fire({
         title: 'Saved Bookmark',
         html: `Next time you open this chapter it will resume from:<h4>Page ${num}</h4>(Only <i>ONCE</i> per Bookmark, will be removed after a year unused)`,
-        type: 'success',
+        icon: 'success',
       });
     }
     setValueGM('MangaBookmarks', JSON.stringify(settings.bookmarks));

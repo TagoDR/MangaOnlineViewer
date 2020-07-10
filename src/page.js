@@ -59,7 +59,7 @@ function addImg(index, imageSrc) {
     $(`#PageImg${index}`)
       .attr('data-src', src)
       .unveil({
-        offset: 500,
+        offset: 1000,
         throttle: 1000,
       })
       .on('loaded.unveil', () => {
@@ -92,7 +92,7 @@ function addPage(manga, index, pageUrl) {
     $(`#PageImg${index}`)
       .attr('data-src', 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==')
       .unveil({
-        offset: 1500,
+        offset: 2500,
         throttle: 1000,
       })
       .on('loaded.unveil', () => {
@@ -135,7 +135,7 @@ const loadMangaImages = (begin, manga) => mapIndexed(
 
 // Entry point for loading hte Manga pages
 function loadManga(manga, begin = 1) {
-  settings.lazyLoadImages = manga.lazy || settings.lazyLoadImages;
+  settings.lazyLoadImages = manga.quant > 50 || manga.lazy || settings.lazyLoadImages;
   logScript('Loading Images');
   logScript(`Intervals: ${manga.timer || settings.Timer || 'Default(1000)'}`);
   logScript(`Lazy: ${settings.lazyLoadImages}`);
