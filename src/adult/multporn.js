@@ -5,17 +5,23 @@ export default {
   homepage: 'https://multporn.net/',
   language: ['English'],
   category: 'hentai',
-  waitEle: '.jb-idx-thumb:last .jb-thm-thumb-image',
+  // waitEle: '.jb-idx-thumb:last .jb-thm-thumb-image',
   run() {
-    const num = $('.jb-thm-thumb-image').get().length;
-    const imgs = $('.jb-thm-thumb-image').get()
-      .map((img) => $(img).attr('src')
-        .replace(/\?.+/, '')
-        .replace('/styles/juicebox_square_thumbnail_comics/public', ''));
+    let api = null;
+    const url = $('head').text().match(/"configUrl":"(.+?)",/)[1].replace('\\', '');
+    $.ajax({
+      type: 'GET',
+      url,
+      async: false,
+      success(res) {
+        api = res;
+      },
+    });
+    const imgs = $(api).find('image').get().map((i) => $(i).attr('imageURL'));
     return {
       title: $('#page-title').text().trim(),
       series: '#',
-      quant: num,
+      quant: imgs.length,
       prev: '#',
       next: '#',
       listImages: imgs,

@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiCafe, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, HentaiNexus, hitomi, MultPorn, MyHentaiGallery, nHentai.net, nHentai.com, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, 8Muses, xyzcomics
-// @version 18.1.0
+// @version 18.3.0
 // @license MIT
-// @date 2020-07-10
+// @date 2020-07-11
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -373,14 +373,22 @@
     homepage: 'https://multporn.net/',
     language: ['English'],
     category: 'hentai',
-    waitEle: '.jb-idx-thumb:last .jb-thm-thumb-image',
     run() {
-      const num = $('.jb-thm-thumb-image').get().length;
-      const imgs = $('.jb-thm-thumb-image').get().map(img => $(img).attr('src').replace(/\?.+/, '').replace('/styles/juicebox_square_thumbnail_comics/public', ''));
+      let api = null;
+      const url = $('head').text().match(/"configUrl":"(.+?)",/)[1].replace('\\', '');
+      $.ajax({
+        type: 'GET',
+        url,
+        async: false,
+        success(res) {
+          api = res;
+        }
+      });
+      const imgs = $(api).find('image').get().map(i => $(i).attr('imageURL'));
       return {
         title: $('#page-title').text().trim(),
         series: '#',
-        quant: num,
+        quant: imgs.length,
         prev: '#',
         next: '#',
         listImages: imgs
