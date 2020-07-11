@@ -6,14 +6,16 @@ export default {
   language: ['English'],
   category: 'manga',
   waitVar: 'rconfig',
+  waitEle: '#chapter-list select',
   run() {
     return {
       title: W.rconfig.chapterTitle,
       series: W.rconfig.prefix,
       quant: $('#img-container img').get().length,
-      prev: $('.custom-select option:selected').prev().val(),
-      next: $('.custom-select option:selected').next().val(),
-      listImages: $('#img-container img').get().map((item) => $(item).attr('data-src') || $(item).attr('src')),
+      prev: $('#chapter-list option:selected').next().val(),
+      next: $('#chapter-list option:selected').prev().val(),
+      listImages: $('#img-container img').get().map((item) => $(item).attr('data-src') || $(item)
+        .attr('src')),
     };
   },
 };
