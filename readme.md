@@ -48,8 +48,8 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [MangaSee](https://mangaseeonline.us/) _[English]_
 - [MangaTown](http://www.mangatown.com/) _[English]_
 - [NineManga](http://ninemanga.com/) _[English]_
-- [RawDevart](https://rawdevart.com) _[English]_
 - [ReadManga Today](http://www.readmng.com/) _[English]_
+- [RawDevart](https://rawdevart.com) _[Original]_
 - [SenManga(Raw)](http://raw.senmanga.com/) _[Original]_
 - [Leitor](https://leitor.net/) _[Portuguese]_
 - [MangaHost2](https://mangahost2.com/) _[Portuguese]_
@@ -88,15 +88,15 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [TMOHentai](http://tmohentai.com/) _[Spanish]_
 
 ### HotKeys
-<kbd class='dark'>Numpad 5</kbd> | <kbd class='dark'>X</kbd> | <kbd class='dark'>/</kbd>: Open Settings
-<kbd class='dark'>Numpad +</kbd> | <kbd class='dark'>Q</kbd> | <kbd class='dark'>=</kbd>: Global Zoom in pages (enlarge)
-<kbd class='dark'>Numpad -</kbd> | <kbd class='dark'>E</kbd> | <kbd class='dark'>-</kbd>: Global Zoom out pages (reduce)
-<kbd class='dark'>Numpad /</kbd> | <kbd class='dark'>R</kbd> | <kbd class='dark'>9</kbd>: Global Restore pages to original
-<kbd class='dark'>Numpad *</kbd> | <kbd class='dark'>F</kbd> | <kbd class='dark'>0</kbd>: Global Fit window width
-<kbd class='dark'>Numpad 6</kbd> | <kbd class='dark'>D</kbd> | <kbd class='dark'>.</kbd> | <kbd class="dark">→</kbd>: Next Chapter
-<kbd class='dark'>Numpad 4</kbd> | <kbd class='dark'>A</kbd> | <kbd class='dark'>,</kbd> | x<kbd class="dark">←</kbd>: Previous Chapter
-<kbd class='dark'>Numpad 8</kbd> | <kbd class='dark'>W</kbd>: Scroll Up
-<kbd class='dark'>Numpad 2</kbd> | <kbd class='dark'>S</kbd>: Scroll Down
+- <kbd class='dark'>Numpad 5</kbd> | <kbd class='dark'>X</kbd> | <kbd class='dark'>/</kbd>: Open Settings
+- <kbd class='dark'>Numpad +</kbd> | <kbd class='dark'>Q</kbd> | <kbd class='dark'>=</kbd>: Global Zoom in pages (enlarge)
+- <kbd class='dark'>Numpad -</kbd> | <kbd class='dark'>E</kbd> | <kbd class='dark'>-</kbd>: Global Zoom out pages (reduce)
+- <kbd class='dark'>Numpad /</kbd> | <kbd class='dark'>R</kbd> | <kbd class='dark'>9</kbd>: Global Restore pages to original
+- <kbd class='dark'>Numpad *</kbd> | <kbd class='dark'>F</kbd> | <kbd class='dark'>0</kbd>: Global Fit window width
+- <kbd class='dark'>Numpad 6</kbd> | <kbd class='dark'>D</kbd> | <kbd class='dark'>.</kbd> | <kbd class="dark">→</kbd>: Next Chapter
+- <kbd class='dark'>Numpad 4</kbd> | <kbd class='dark'>A</kbd> | <kbd class='dark'>,</kbd> | x<kbd class="dark">←</kbd>: Previous Chapter
+- <kbd class='dark'>Numpad 8</kbd> | <kbd class='dark'>W</kbd>: Scroll Up
+- <kbd class='dark'>Numpad 2</kbd> | <kbd class='dark'>S</kbd>: Scroll Down
 
 ### Features
 - View Modes:
