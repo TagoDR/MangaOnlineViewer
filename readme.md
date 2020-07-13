@@ -52,6 +52,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [ReadManga Today](http://www.readmng.com/) _[English]_
 - [SenManga(Raw)](http://raw.senmanga.com/) _[Original]_
 - [Leitor](https://leitor.net/) _[Portuguese]_
+- [MangaHost2](https://mangahost2.com/) _[Portuguese]_
 - [UnionMangas](https://unionleitor.top/xw) _[Portuguese]_
 - [TuMangaOnline](https://lectortmo.com/) _[Spanish]_
 

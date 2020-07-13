@@ -29,6 +29,7 @@ import tmofans from './tmofans';
 import unionmangas from './unionmangas';
 import wpmanga from './wpmanga';
 import rawdevart from './rawdevart';
+import mangahost from './mangahost';
 
 export default [
   comicastle,
@@ -47,7 +48,7 @@ export default [
   mangafox,
   // mangago, [Weak? Not Safe?]
   mangahere,
-  // mangahost, [Full Ads]
+  mangahost,
   mangainn,
   mangakakalot,
   mangalyght,

@@ -1,8 +1,8 @@
-// == MangaHost ===================================================================================
-export default { // TODO: Check
-  name: 'MangaHost',
-  url: /https?:\/\/(www.)?mangahost.net\/manga\/.+\/.+/,
-  homepage: 'https://mangahost.net/',
+// == MangaHost2 ===================================================================================
+export default {
+  name: 'MangaHost2',
+  url: /https?:\/\/(www.)?mangahost2.com\/manga\/.+\/.+/,
+  homepage: 'https://mangahost2.com/',
   language: ['Portuguese'],
   category: 'manga',
   run() {
