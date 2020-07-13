@@ -9,7 +9,7 @@ export default {
     const num = $('#select-page option').get().length;
     return {
       title: $('.reader-title').text().trim(),
-      series: $('.nav a:nth(-2)').attr('href'),
+      series: $('.nav a:eq(-2)').attr('href'),
       quant: num,
       prev: '#',
       next: '#',

@@ -22,7 +22,7 @@ export default {
         const self = this;
         [...Array(maxGalley).keys()]
           .slice(Math.floor(Math.abs((func.begin - 1) / 40)))
-          .map((galleryId, galleryOrder) => func.getHtml(galleryId > 0 ? `${gallery}?p=${galleryId}` : gallery, func.wait * galleryOrder)
+          .map((galleryId, galleryOrder) => func.getHtml(galleryId > 0 ? `${gallery}?inline_set=ts_m&p=${galleryId}` : `${gallery}?inline_set=ts_m`, func.wait * galleryOrder)
             .then((html) => {
               $(html).find('.gdtm a, .gdtl a').get()
                 .map((item) => $(item).attr('href'))

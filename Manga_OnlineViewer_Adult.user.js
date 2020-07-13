@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiCafe, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, HentaiNexus, hitomi, MultPorn, MyHentaiGallery, nHentai.net, nHentai.com, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, 8Muses, xyzcomics
-// @version 18.3.0
+// @version 18.4.0
 // @license MIT
-// @date 2020-07-11
+// @date 2020-07-12
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -153,7 +153,7 @@
         lazy: true,
         bruteForce(func) {
           const self = this;
-          [...Array(maxGalley).keys()].slice(Math.floor(Math.abs((func.begin - 1) / 40))).map((galleryId, galleryOrder) => func.getHtml(galleryId > 0 ? "".concat(gallery, "?p=").concat(galleryId) : gallery, func.wait * galleryOrder).then(html => {
+          [...Array(maxGalley).keys()].slice(Math.floor(Math.abs((func.begin - 1) / 40))).map((galleryId, galleryOrder) => func.getHtml(galleryId > 0 ? "".concat(gallery, "?inline_set=ts_m&p=").concat(galleryId) : "".concat(gallery, "?inline_set=ts_m"), func.wait * galleryOrder).then(html => {
             $(html).find('.gdtm a, .gdtl a').get().map(item => $(item).attr('href')).map((url, index) => {
               setTimeout(() => {
                 if (galleryId * 40 + index + 1 >= func.begin) {
@@ -528,7 +528,7 @@
       const num = $('#select-page option').get().length;
       return {
         title: $('.reader-title').text().trim(),
-        series: $('.nav a:nth(-2)').attr('href'),
+        series: $('.nav a:eq(-2)').attr('href'),
         quant: num,
         prev: '#',
         next: '#',
