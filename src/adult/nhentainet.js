@@ -9,7 +9,7 @@ export default {
     const num = parseInt($('.num-pages:first').html(), 10);
     return {
       title: $('title').text().split('- Page')[0].trim(),
-      series: $('div#page-container div a').attr('href'),
+      series: $('.go-back').attr('href'),
       quant: num,
       prev: '#',
       next: '#',

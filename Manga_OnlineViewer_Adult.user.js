@@ -406,7 +406,7 @@
       const num = parseInt($('.num-pages:first').html(), 10);
       return {
         title: $('title').text().split('- Page')[0].trim(),
-        series: $('div#page-container div a').attr('href'),
+        series: $('.go-back').attr('href'),
         quant: num,
         prev: '#',
         next: '#',
@@ -869,6 +869,43 @@
     });
   }
 
+  function reloadImage(img) {
+    const src = img.attr('src');
+    if (src !== undefined) {
+      img.removeAttr('src');
+      setTimeout(() => {
+        img.attr('src', src);
+      }, 500);
+    }
+  }
+
+  function checkImagesLoaded(manga) {
+    const images = $('.PageContent img').get();
+    const total = images.length;
+    const missing = images.filter(item => $(item).prop('naturalWidth') === 0);
+    const loaded = images.filter(item => $(item).prop('naturalWidth') !== 0);
+    loaded.filter(item => $(item).attr('width') === undefined).forEach(item => applyZoom($(item)));
+    missing.forEach(item => reloadImage($(item)));
+    NProgress.configure({
+      showSpinner: false
+    }).set(loaded.length / total);
+    $('#Counters i, #NavigationCounters i').html(loaded.length);
+    logScript("Progress: ".concat(Math.floor(loaded.length / total * 100), "%"));
+    if (manga !== undefined) {
+      $('title').html("(".concat(Math.floor(loaded.length / total * 100), "%) ").concat(manga.title));
+      if (loaded.length < total) {
+        setTimeout(() => checkImagesLoaded(manga), 5000);
+      } else {
+        logScript('Images Loading Complete');
+        $('.download').attr('href', '#download');
+        logScript('Download Available');
+        if (settings.DownloadZip) {
+          $('#blob').click();
+        }
+      }
+    }
+  }
+
   function normalizeUrl(url) {
     let uri = url.trim();
     if (uri.startsWith('//')) {
@@ -889,7 +926,7 @@
         throttle: 1000
       }).on('loaded.unveil', () => {
         logScript('Unveiled Image:', index, 'Source:', $("#PageImg".concat(index)).removeAttr('class').attr('src'));
-        applyZoom("#PageImg".concat(index));
+        if (index % 5 === 0) checkImagesLoaded();
       });
       $("#ThumbnailImg".concat(index)).attr('data-src', src).unveil({
         offset: 100,
@@ -920,7 +957,7 @@
           $("#PageImg".concat(index)).attr('src', src);
           $("#ThumbnailImg".concat(index)).attr('src', src);
           logScript('Unveiled Image:', index, 'Source:', $("#PageImg".concat(index)).removeAttr('class').attr('src'));
-          applyZoom("#PageImg".concat(index));
+          if (index % 5 === 0) checkImagesLoaded();
         });
       });
     }
@@ -942,6 +979,9 @@
     logScript('Loading Images');
     logScript("Intervals: ".concat(manga.timer || settings.Timer || 'Default(1000)'));
     logScript("Lazy: ".concat(settings.lazyLoadImages));
+    if (settings.lazyLoadImages) {
+      logScript('Download NOT Available with Lazy Load Images');
+    }
     if (!isEmpty(manga.listImages)) {
       logScript('Method: Images:', manga.listImages);
       loadMangaImages(begin - 1, manga);
@@ -959,45 +999,6 @@
         getHtml,
         wait: settings.timer
       });
-    }
-  }
-
-  function reloadImage(img) {
-    const src = img.attr('src');
-    if (src !== undefined) {
-      img.removeAttr('src');
-      setTimeout(() => {
-        img.attr('src', src);
-      }, 500);
-    }
-  }
-
-  function checkImagesLoaded(manga) {
-    if (settings.lazyLoadImages) {
-      logScript('Download NOT Available with Lazy Load Images');
-      return;
-    }
-    const images = $('.PageContent img').get();
-    const total = images.length;
-    const missing = images.filter(item => $(item).prop('naturalWidth') === 0);
-    const loaded = images.filter(item => $(item).prop('naturalWidth') !== 0);
-    loaded.filter(item => $(item).attr('width') === undefined).forEach(item => applyZoom($(item)));
-    missing.forEach(item => reloadImage($(item)));
-    NProgress.configure({
-      showSpinner: false
-    }).set(loaded.length / total);
-    $('#Counters i, #NavigationCounters i').html(loaded.length);
-    logScript("Progress: ".concat(Math.floor(loaded.length / total * 100), "%"));
-    $('title').html("(".concat(Math.floor(loaded.length / total * 100), "%) ").concat(manga.title));
-    if (loaded.length < total) {
-      setTimeout(() => checkImagesLoaded(manga), 5000);
-    } else {
-      logScript('Images Loading Complete');
-      $('.download').attr('href', '#download');
-      logScript('Download Available');
-      if (settings.DownloadZip) {
-        $('#blob').click();
-      }
     }
   }
 

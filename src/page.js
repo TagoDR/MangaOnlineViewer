@@ -59,6 +59,47 @@ function applyZoom(page, newZoom) {
   });
 }
 
+// Force reload the image
+function reloadImage(img) {
+  const src = img.attr('src');
+  if (src !== undefined) {
+    img.removeAttr('src');
+    setTimeout(() => {
+      img.attr('src', src);
+    }, 500);
+  }
+}
+
+// Checks if all images loaded correctly
+function checkImagesLoaded(manga) {
+  const images = $('.PageContent img').get();
+  const total = images.length;
+  const missing = images.filter((item) => $(item).prop('naturalWidth') === 0);
+  const loaded = images.filter((item) => $(item).prop('naturalWidth') !== 0);
+  loaded.filter((item) => $(item).attr('width') === undefined)
+    .forEach((item) => applyZoom($(item)));
+  missing.forEach((item) => reloadImage($(item)));
+  NProgress.configure({
+    showSpinner: false,
+  }).set(loaded.length / total);
+  $('#Counters i, #NavigationCounters i').html(loaded.length);
+  logScript(`Progress: ${Math.floor((loaded.length / total) * 100)}%`);
+  if (manga !== undefined) {
+    $('title').html(`(${Math.floor((loaded.length / total) * 100)}%) ${manga.title}`);
+    if (loaded.length < total) {
+      setTimeout(() => checkImagesLoaded(manga), 5000);
+    } else {
+      logScript('Images Loading Complete');
+      // $('title').html(manga.title);
+      $('.download').attr('href', '#download');
+      logScript('Download Available');
+      if (settings.DownloadZip) {
+        $('#blob').click();
+      }
+    }
+  }
+}
+
 // Corrects urls
 function normalizeUrl(url) {
   let uri = url.trim();
@@ -85,7 +126,7 @@ function addImg(index, imageSrc) {
       .on('loaded.unveil', () => {
         logScript('Unveiled Image:', index, 'Source:', $(`#PageImg${index}`).removeAttr('class')
           .attr('src'));
-        applyZoom(`#PageImg${index}`);
+        if (index % 5 === 0) checkImagesLoaded();
       });
     $(`#ThumbnailImg${index}`)
       .attr('data-src', src)
@@ -125,7 +166,7 @@ function addPage(manga, index, pageUrl) {
             $(`#ThumbnailImg${index}`).attr('src', src);
             logScript('Unveiled Image:', index, 'Source:', $(`#PageImg${index}`).removeAttr('class')
               .attr('src'));
-            applyZoom(`#PageImg${index}`);
+            if (index % 5 === 0) checkImagesLoaded();
           });
       });
   }
@@ -163,6 +204,9 @@ function loadManga(manga, begin = 1) {
   logScript('Loading Images');
   logScript(`Intervals: ${manga.timer || settings.Timer || 'Default(1000)'}`);
   logScript(`Lazy: ${settings.lazyLoadImages}`);
+  if (settings.lazyLoadImages) {
+    logScript('Download NOT Available with Lazy Load Images');
+  }
   if (!isEmpty(manga.listImages)) {
     logScript('Method: Images:', manga.listImages);
     loadMangaImages(begin - 1, manga);
@@ -180,49 +224,6 @@ function loadManga(manga, begin = 1) {
       getHtml,
       wait: settings.timer,
     });
-  }
-}
-
-// Force reload the image
-function reloadImage(img) {
-  const src = img.attr('src');
-  if (src !== undefined) {
-    img.removeAttr('src');
-    setTimeout(() => {
-      img.attr('src', src);
-    }, 500);
-  }
-}
-
-// Checks if all images loaded correctly
-function checkImagesLoaded(manga) {
-  if (settings.lazyLoadImages) {
-    logScript('Download NOT Available with Lazy Load Images');
-    return;
-  }
-  const images = $('.PageContent img').get();
-  const total = images.length;
-  const missing = images.filter((item) => $(item).prop('naturalWidth') === 0);
-  const loaded = images.filter((item) => $(item).prop('naturalWidth') !== 0);
-  loaded.filter((item) => $(item).attr('width') === undefined)
-    .forEach((item) => applyZoom($(item)));
-  missing.forEach((item) => reloadImage($(item)));
-  NProgress.configure({
-    showSpinner: false,
-  }).set(loaded.length / total);
-  $('#Counters i, #NavigationCounters i').html(loaded.length);
-  logScript(`Progress: ${Math.floor((loaded.length / total) * 100)}%`);
-  $('title').html(`(${Math.floor((loaded.length / total) * 100)}%) ${manga.title}`);
-  if (loaded.length < total) {
-    setTimeout(() => checkImagesLoaded(manga), 5000);
-  } else {
-    logScript('Images Loading Complete');
-    // $('title').html(manga.title);
-    $('.download').attr('href', '#download');
-    logScript('Download Available');
-    if (settings.DownloadZip) {
-      $('#blob').click();
-    }
   }
 }
 
