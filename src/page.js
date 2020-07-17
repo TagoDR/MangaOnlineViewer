@@ -39,6 +39,26 @@ function getHtml(url, wait = settings.Timer) {
   });
 }
 
+// After pages load apply default Zoom
+function applyZoom(page, newZoom) {
+  const zoom = newZoom || settings.Zoom;
+  const pages = page || '.PageContent img';
+  $(pages).each((index, value) => {
+    $(value).removeAttr('width')
+      .removeAttr('height')
+      .removeAttr('style');
+    if (zoom === 1000) {
+      $(value).width($(window).width());
+    } else if (zoom === -1000) {
+      $(value).height($(window).height()
+        + ($('#Navigation').hasClass('disabled') ? 0 : -34)
+        + ($('#Chapter').hasClass('WebComic') ? 0 : -35));
+    } else {
+      $(value).width($(value).prop('naturalWidth') * (zoom / 100));
+    }
+  });
+}
+
 // Corrects urls
 function normalizeUrl(url) {
   let uri = url.trim();
@@ -63,7 +83,9 @@ function addImg(index, imageSrc) {
         throttle: 1000,
       })
       .on('loaded.unveil', () => {
-        logScript('Unveiled Image:', index, 'Source:', $(`#PageImg${index}`).removeAttr('class').attr('src'));
+        logScript('Unveiled Image:', index, 'Source:', $(`#PageImg${index}`).removeAttr('class')
+          .attr('src'));
+        applyZoom(`#PageImg${index}`);
       });
     $(`#ThumbnailImg${index}`)
       .attr('data-src', src)
@@ -84,7 +106,7 @@ function addPage(manga, index, pageUrl) {
     getHtml(pageUrl)
       .then((response) => {
         const src = normalizeUrl($(response).find(manga.img).attr(manga.lazyAttr || 'src'));
-        $(`#PageImg${index}`).attr('src', src);
+        $(`#PageImg${index}`).attr('src', src).removeAttr('style');
         $(`#ThumbnailImg${index}`).attr('src', src);
         logScript('Loaded Image:', index, 'Source:', src);
       });
@@ -101,7 +123,9 @@ function addPage(manga, index, pageUrl) {
             const src = normalizeUrl($(response).find(manga.img).attr(manga.lazyAttr || 'src'));
             $(`#PageImg${index}`).attr('src', src);
             $(`#ThumbnailImg${index}`).attr('src', src);
-            logScript('Unveiled Image:', index, 'Source:', $(`#PageImg${index}`).removeAttr('class').attr('src'));
+            logScript('Unveiled Image:', index, 'Source:', $(`#PageImg${index}`).removeAttr('class')
+              .attr('src'));
+            applyZoom(`#PageImg${index}`);
           });
       });
   }
@@ -168,26 +192,6 @@ function reloadImage(img) {
       img.attr('src', src);
     }, 500);
   }
-}
-
-// After pages load apply default Zoom
-function applyZoom(page, newZoom) {
-  const zoom = newZoom || settings.Zoom;
-  const pages = page || '.PageContent img';
-  $(pages).each((index, value) => {
-    $(value).removeAttr('width')
-      .removeAttr('height')
-      .removeAttr('style');
-    if (zoom === 1000) {
-      $(value).width($(window).width());
-    } else if (zoom === -1000) {
-      $(value).height($(window).height()
-        + ($('#Navigation').hasClass('disabled') ? 0 : -34)
-        + ($('#Chapter').hasClass('WebComic') ? 0 : -35));
-    } else {
-      $(value).width($(value).prop('naturalWidth') * (zoom / 100));
-    }
-  });
 }
 
 // Checks if all images loaded correctly

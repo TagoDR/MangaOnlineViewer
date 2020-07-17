@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiCafe, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, HentaiNexus, hitomi, MultPorn, MyHentaiGallery, nHentai.net, nHentai.com, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, 8Muses, xyzcomics
-// @version 18.4.0
+// @version 18.6.0
 // @license MIT
-// @date 2020-07-12
+// @date 2020-07-17
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -854,6 +854,21 @@
     });
   }
 
+  function applyZoom(page, newZoom) {
+    const zoom = newZoom || settings.Zoom;
+    const pages = page || '.PageContent img';
+    $(pages).each((index, value) => {
+      $(value).removeAttr('width').removeAttr('height').removeAttr('style');
+      if (zoom === 1000) {
+        $(value).width($(window).width());
+      } else if (zoom === -1000) {
+        $(value).height($(window).height() + ($('#Navigation').hasClass('disabled') ? 0 : -34) + ($('#Chapter').hasClass('WebComic') ? 0 : -35));
+      } else {
+        $(value).width($(value).prop('naturalWidth') * (zoom / 100));
+      }
+    });
+  }
+
   function normalizeUrl(url) {
     let uri = url.trim();
     if (uri.startsWith('//')) {
@@ -874,6 +889,7 @@
         throttle: 1000
       }).on('loaded.unveil', () => {
         logScript('Unveiled Image:', index, 'Source:', $("#PageImg".concat(index)).removeAttr('class').attr('src'));
+        applyZoom("#PageImg".concat(index));
       });
       $("#ThumbnailImg".concat(index)).attr('data-src', src).unveil({
         offset: 100,
@@ -890,7 +906,7 @@
     if (!settings.lazyLoadImages && index < 50) {
       getHtml(pageUrl).then(response => {
         const src = normalizeUrl($(response).find(manga.img).attr(manga.lazyAttr || 'src'));
-        $("#PageImg".concat(index)).attr('src', src);
+        $("#PageImg".concat(index)).attr('src', src).removeAttr('style');
         $("#ThumbnailImg".concat(index)).attr('src', src);
         logScript('Loaded Image:', index, 'Source:', src);
       });
@@ -904,6 +920,7 @@
           $("#PageImg".concat(index)).attr('src', src);
           $("#ThumbnailImg".concat(index)).attr('src', src);
           logScript('Unveiled Image:', index, 'Source:', $("#PageImg".concat(index)).removeAttr('class').attr('src'));
+          applyZoom("#PageImg".concat(index));
         });
       });
     }
@@ -953,21 +970,6 @@
         img.attr('src', src);
       }, 500);
     }
-  }
-
-  function applyZoom(page, newZoom) {
-    const zoom = newZoom || settings.Zoom;
-    const pages = page || '.PageContent img';
-    $(pages).each((index, value) => {
-      $(value).removeAttr('width').removeAttr('height').removeAttr('style');
-      if (zoom === 1000) {
-        $(value).width($(window).width());
-      } else if (zoom === -1000) {
-        $(value).height($(window).height() + ($('#Navigation').hasClass('disabled') ? 0 : -34) + ($('#Chapter').hasClass('WebComic') ? 0 : -35));
-      } else {
-        $(value).width($(value).prop('naturalWidth') * (zoom / 100));
-      }
-    });
   }
 
   function checkImagesLoaded(manga) {
