@@ -30,6 +30,7 @@ const settings = {
   viewMode: getValueGM('MangaViewMode', ''),
   bookmarks: JSON.parse(getValueGM('MangaBookmarks', '[]')),
   lazyLoadImages: getValueGM('MangaLazyLoadImages', false),
+  lazyStart: getValueGM('MangaLazyStart', 50),
 };
 // Force Settings for mobile
 if (isMobile) {

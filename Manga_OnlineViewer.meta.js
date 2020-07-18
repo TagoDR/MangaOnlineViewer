@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, JaiminisBox, KissManga, Leitor, LHTranslation, MangaDex, MangaDoom, MangaFox, MangaHere, MangaHost2, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaSee, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, UnionMangas, MangaDeep, Batoto
-// @version 18.6.0
+// @version 18.8.0
 // @license MIT
-// @date 2020-07-17
+// @date 2020-07-18
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -23,6 +23,7 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/ramda/0.27.0/ramda.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js
 // @include /https?:\/\/(www.)?comicastle.org\/comic\/.+\/[0-9]+.*/
 // @include /https?:\/\/(www.)?disasterscans.com\/manga\/.+\/chapter-.+/
 // @include /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/

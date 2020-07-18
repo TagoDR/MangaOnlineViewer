@@ -19,17 +19,19 @@ function getHtml(url, wait = settings.Timer) {
         // retryCount and retryLimit will let you retry a determined number of times
         retryCount: 0,
         retryLimit: 10,
-        // retryTimeout limits the total time retrying (in milliseconds)
-        retryTimeout: 10000,
+        // retryTimeout limits the next retry (in milliseconds)
+        retryWait: 10000,
         // timeout for each request
         timeout: 1000,
         // created tells when this request was created
         created: Date.now(),
         error() {
           this.retryCount += 1;
-          if (this.retryCount <= this.retryLimit && Date.now() - this.created < this.retryTimeout) {
+          if (this.retryCount <= this.retryLimit) {
             logScript(`Retrying Getting page: ${url}`);
-            $.ajax(this);
+            setTimeout(() => {
+              $.ajax(this);
+            }, this.retryWait);
           } else {
             logScript(`Failed Getting page: ${url}`);
           }
@@ -70,34 +72,45 @@ function reloadImage(img) {
   }
 }
 
-// Checks if all images loaded correctly
-function checkImagesLoaded(manga) {
-  const images = $('.PageContent img').get();
-  const total = images.length;
-  const missing = images.filter((item) => $(item).prop('naturalWidth') === 0);
-  const loaded = images.filter((item) => $(item).prop('naturalWidth') !== 0);
-  loaded.filter((item) => $(item).attr('width') === undefined)
-    .forEach((item) => applyZoom($(item)));
-  missing.forEach((item) => reloadImage($(item)));
-  NProgress.configure({
-    showSpinner: false,
-  }).set(loaded.length / total);
-  $('#Counters i, #NavigationCounters i').html(loaded.length);
-  logScript(`Progress: ${Math.floor((loaded.length / total) * 100)}%`);
-  if (manga !== undefined) {
-    $('title').html(`(${Math.floor((loaded.length / total) * 100)}%) ${manga.title}`);
-    if (loaded.length < total) {
-      setTimeout(() => checkImagesLoaded(manga), 5000);
-    } else {
-      logScript('Images Loading Complete');
-      // $('title').html(manga.title);
-      $('.download').attr('href', '#download');
-      logScript('Download Available');
-      if (settings.DownloadZip) {
-        $('#blob').click();
-      }
+function onImagesDone() {
+  logScript('Images Loading Complete');
+  if (!settings.lazyLoadImages) {
+    $('.download').attr('href', '#download');
+    logScript('Download Available');
+    if (settings.DownloadZip) {
+      $('#blob').click();
     }
   }
+}
+
+function updateProgress() {
+  const total = $('.PageContent img').get().length;
+  const loaded = $('.PageContent img.imgLoaded').get().length;
+  const percentage = Math.floor((loaded / total) * 100);
+  $('title').html(`(${percentage}%) ${$('#series i').text()}`);
+  $('#Counters i, #NavigationCounters i').html(loaded);
+  NProgress.configure({
+    showSpinner: false,
+  }).set(loaded / total);
+  logScript(`Progress: ${percentage}%`);
+  if (loaded === total) onImagesDone();
+}
+
+// change class if the image is loaded or broken
+function onImagesProgress(imgLoad, image) {
+  const $item = $(image.img);
+  if (image.isLoaded) {
+    $item.addClass('imgLoaded');
+    $item.removeClass('imgBroken');
+    const thumb = $item.attr('id').replace('PageImg', 'ThumbnailImg');
+    $(`#${thumb}`).attr('src', $item.attr('src'));
+    applyZoom($item);
+  } else {
+    $item.addClass('imgBroken');
+    reloadImage($item);
+    $item.parent().imagesLoaded().progress(onImagesProgress);
+  }
+  updateProgress();
 }
 
 // Corrects urls
@@ -112,30 +125,19 @@ function normalizeUrl(url) {
 // Adds an image to the place-holder div
 function addImg(index, imageSrc) {
   const src = normalizeUrl(imageSrc);
-  if (!settings.lazyLoadImages && index < 100) {
-    logScript('Loaded Image:', index, 'Source:', src);
+  if (!settings.lazyLoadImages && index < settings.lazyStart) {
     $(`#PageImg${index}`).attr('src', src);
-    $(`#ThumbnailImg${index}`).attr('src', src);
+    $(`#PageImg${index}`).parent().imagesLoaded().progress(onImagesProgress);
+    logScript('Loaded Image:', index, 'Source:', src);
   } else {
     $(`#PageImg${index}`)
       .attr('data-src', src)
       .unveil({
         offset: 1000,
-        throttle: 1000,
       })
       .on('loaded.unveil', () => {
-        logScript('Unveiled Image:', index, 'Source:', $(`#PageImg${index}`).removeAttr('class')
-          .attr('src'));
-        if (index % 5 === 0) checkImagesLoaded();
-      });
-    $(`#ThumbnailImg${index}`)
-      .attr('data-src', src)
-      .unveil({
-        offset: 100,
-        throttle: 1000,
-        container: $('#Thumbnails'),
-      }).on('loaded.unveil', () => {
-        logScript('Unveiled Thumbnail:', index);
+        $(`#PageImg${index}`).parent().imagesLoaded().progress(onImagesProgress);
+        logScript('Unveiled Image: ', index, ' Source: ', $(`#PageImg${index}`).attr('src'));
       });
   }
   return index;
@@ -143,30 +145,27 @@ function addImg(index, imageSrc) {
 
 // Adds an page to the place-holder div
 function addPage(manga, index, pageUrl) {
-  if (!settings.lazyLoadImages && index < 50) {
+  if (!settings.lazyLoadImages && index < settings.lazyStart) {
     getHtml(pageUrl)
       .then((response) => {
         const src = normalizeUrl($(response).find(manga.img).attr(manga.lazyAttr || 'src'));
-        $(`#PageImg${index}`).attr('src', src).removeAttr('style');
-        $(`#ThumbnailImg${index}`).attr('src', src);
-        logScript('Loaded Image:', index, 'Source:', src);
+        $(`#PageImg${index}`).attr('src', src);
+        $(`#PageImg${index}`).parent().imagesLoaded().progress(onImagesProgress);
+        logScript('Loaded Page:', index, 'Source:', src);
       });
   } else {
     $(`#PageImg${index}`)
       .attr('data-src', 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==')
       .unveil({
-        offset: 3000,
-        throttle: 1000,
+        offset: 2000,
       })
       .on('loaded.unveil', () => {
         getHtml(pageUrl)
           .then((response) => {
             const src = normalizeUrl($(response).find(manga.img).attr(manga.lazyAttr || 'src'));
-            $(`#PageImg${index}`).attr('src', src);
-            $(`#ThumbnailImg${index}`).attr('src', src);
-            logScript('Unveiled Image:', index, 'Source:', $(`#PageImg${index}`).removeAttr('class')
-              .attr('src'));
-            if (index % 5 === 0) checkImagesLoaded();
+            $(`#PageImg${index}`).attr('src', src).width('auto');
+            $(`#PageImg${index}`).parent().imagesLoaded().progress(onImagesProgress);
+            logScript('Unveiled Page: ', index, ' Source: ', $(`#PageImg${index}`).attr('src'));
           });
       });
   }
@@ -205,7 +204,7 @@ function loadManga(manga, begin = 1) {
   logScript(`Intervals: ${manga.timer || settings.Timer || 'Default(1000)'}`);
   logScript(`Lazy: ${settings.lazyLoadImages}`);
   if (settings.lazyLoadImages) {
-    logScript('Download NOT Available with Lazy Load Images');
+    logScript('Download may not work with Lazy Loading Images');
   }
   if (!isEmpty(manga.listImages)) {
     logScript('Method: Images:', manga.listImages);
@@ -229,7 +228,6 @@ function loadManga(manga, begin = 1) {
 
 export {
   loadManga,
-  checkImagesLoaded,
   applyZoom,
   reloadImage,
 };

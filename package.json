@@ -1,6 +1,6 @@
 {
   "name": "mangaonlineviewer",
-  "version": "18.6.0",
+  "version": "18.8.0",
   "description": "Userscript that helps to read Manga faster by loading all the pages at once",
   "scripts": {
     "build": "gulp build",
@@ -25,6 +25,7 @@
   "homepage": "https://github.com/TagoDR/MangaOnlineViewer#readme",
   "dependencies": {
     "color-scheme": "^1.0.1",
+    "imagesloaded": "^4.1.4",
     "jquery": "^3.5.1",
     "jquery.scrollto": "^2.1.2",
     "jscolor": "^0.3.0",

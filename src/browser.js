@@ -3,7 +3,7 @@
 // Encapsulation for the console
 function logScript(...text) {
   // eslint-disable-next-line no-console
-  console.log('MangaOnlineViewer:', ...text);
+  console.log('MangaOnlineViewer: ', ...text);
   return text;
 }
 

@@ -153,7 +153,7 @@ img {
   display: inline-block;
 }
 
-#MangaOnlineViewer .PageContent img[class], #MangaOnlineViewer .PageContent img[src=""], #MangaOnlineViewer .PageContent img:not([src]){
+#MangaOnlineViewer .PageContent img[src=""], #MangaOnlineViewer .PageContent img:not([src]){
   width: 500px;
   height: 750px;
   display: inline-block;

@@ -90,7 +90,7 @@ const chapterControl = R.curry((id, manga) => `<div id='${id}' class='ChapterCon
 </div>`);
 const chapterControlTop = chapterControl('ChapterControlTop');
 const chapterControlBottom = chapterControl('ChapterControlBottom');
-const title = (manga) => `<div class='ViewerTitle'><br/><a id='series' href='${manga.series}'>${manga.title}<br/>(Return to Chapter List)</a></div>`;
+const title = (manga) => `<div class='ViewerTitle'><br/><a id='series' href='${manga.series}'><i>${manga.title}</i><br/>(Return to Chapter List)</a></div>`;
 // Add Pages Place holders
 const listPages = R.times((index) => `<div id='Page${index + 1}' class='MangaPage'>
   <div class='PageFunctions'>

@@ -2,7 +2,7 @@ import {
   getBrowser, getEngine, getInfoGM, logScript, logScriptC, setValueGM,
 } from './browser';
 import { controls, setKeyDownEvents } from './events';
-import { checkImagesLoaded, loadManga } from './page';
+import { loadManga } from './page';
 import reader from './reader';
 import { settings } from './settings';
 import { isEmpty } from './utils';
@@ -18,7 +18,6 @@ function formatPage(manga, begin) {
     try {
       controls(manga);
       setKeyDownEvents(manga);
-      checkImagesLoaded(manga);
       setTimeout(() => {
         $('body').scrollTo(0);
         loadManga(manga, begin);
