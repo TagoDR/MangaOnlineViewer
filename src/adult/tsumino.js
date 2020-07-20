@@ -1,7 +1,7 @@
 // == Tsumino ======================================================================================
 export default {
   name: 'Tsumino',
-  url: /https?:\/\/(www.)?tsumino.com\/Read\/Index\/[0-9]+\?page=.+/,
+  url: /https?:\/\/(www.)?tsumino.com\/Read\/Index\/[0-9]+(\?page=.+)?/,
   homepage: 'http://tsumino.com/',
   language: ['English'],
   category: 'hentai',

@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiCafe, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, HentaiNexus, hitomi, MultPorn, MyHentaiGallery, nHentai.net, nHentai.com, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, 8Muses, xyzcomics
-// @version 18.8.0
+// @version 18.9.0
 // @license MIT
-// @date 2020-07-18
+// @date 2020-07-20
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -45,7 +45,7 @@
 // @include /https?:\/\/(www.)?pururin.io\/(view|read)\/.+\/.+\/.+/
 // @include /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/
 // @include /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/[0-9]+/
-// @include /https?:\/\/(www.)?tsumino.com\/Read\/Index\/[0-9]+\?page=.+/
+// @include /https?:\/\/(www.)?tsumino.com\/Read\/Index\/[0-9]+(\?page=.+)?/
 // @include /https?:\/\/comics.8muses.com\/comics\/picture\/.+/
 // @include /https?:\/\/(www.)?xyzcomics.com\/.+/
 // ==/UserScript==
@@ -542,7 +542,7 @@
 
   var tsumino = {
     name: 'Tsumino',
-    url: /https?:\/\/(www.)?tsumino.com\/Read\/Index\/[0-9]+\?page=.+/,
+    url: /https?:\/\/(www.)?tsumino.com\/Read\/Index\/[0-9]+(\?page=.+)?/,
     homepage: 'http://tsumino.com/',
     language: ['English'],
     category: 'hentai',
