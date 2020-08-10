@@ -19,6 +19,7 @@ const panel = `<div id='ImageOptions'>
     <img id='ltrMode' alt='Left to Right Mode' title='Left to Right Mode' src='${icon.pictureLeft}' class='controlButton'/>
     <img id='verticalMode' alt='Vertical Mode' title='Vertical Mode' src='${icon.pictureDown}' class='controlButton'/>
     <img id='rtlMode' alt='Right to Left Mode' title='Right to Left Mode' src='${icon.pictureRight}' class='controlButton'/>
+    <img id='pageControls' alt='Toggle Page Controls' title='Toggle Page Controls' src='${icon.controls}' class='controlButton'/>
     <img id='settings' alt='settings' title='settings' src='${icon.settings}' class='controlButton' />
   </div>
   <div id='Zoom' class='controlLabel'>Zoom: <b>${settings.Zoom}</b> %</div>

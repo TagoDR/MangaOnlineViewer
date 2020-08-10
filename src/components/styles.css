@@ -109,7 +109,7 @@ img {
   left: 0;
   position: absolute;
   top: 0;
-  width: 368px;
+  width: 403px;
 }
 
 #MangaOnlineViewer #ImageOptions .panel {
@@ -224,6 +224,11 @@ img {
 
 #MangaOnlineViewer .PageFunctions:hover a {
   opacity: 1
+}
+
+#MangaOnlineViewer.hideControls .PageFunctions {
+  display: none;
+  visibility: hidden;
 }
 
 #MangaOnlineViewer #NavigationCounters {

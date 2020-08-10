@@ -281,6 +281,10 @@ function controls() {
     logScript(`MangaZoom: ${getValueGM('MangaZoom')}`);
     applyZoom();
   });
+  // Toggle Controls
+  $('#pageControls').click(() => {
+    $('#MangaOnlineViewer').toggleClass('hideControls');
+  });
   // Theme Control
   $('#ThemeSelector').change((event) => {
     const target = $(event.target);
