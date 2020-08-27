@@ -45,7 +45,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [MangaLyght](http://manga.lyght.net/) _[English]_
 - [MangaPark](http://mangapark.net/) _[English]_
 - [MangaReader](http://www.mangareader.net/) / [MangaPanda](http://www.mangapanda.com/) _[English]_
-- [MangaSee](https://mangaseeonline.us/) _[English]_
+- [MangaSee](https://mangasee123.com/) _[English]_
 - [MangaTown](http://www.mangatown.com/) _[English]_
 - [NineManga](http://ninemanga.com/) _[English]_
 - [ReadManga Today](http://www.readmng.com/) _[English]_
