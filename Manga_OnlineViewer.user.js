@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, JaiminisBox, KissManga, Leitor, LHTranslation, MangaDex, MangaDoom, MangaFox, MangaHere, MangaHost2, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaSee, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, UnionMangas, MangaDeep, Batoto
-// @version 18.14.0
+// @version 18.15.0
 // @license MIT
 // @date 2020-11-01
 // @grant GM_getValue
@@ -1583,7 +1583,8 @@
     }
   }
 
-  function lateStart(manga, begin = 1) {
+  function lateStart(site, begin = 1) {
+    const manga = site.run();
     logScript('LateStart');
     Swal.fire({
       title: 'Starting<br>MangaOnlineViewer',
@@ -1609,7 +1610,7 @@
     });
   }
 
-  function preparePage(manga, begin = 0) {
+  function preparePage(site, manga, begin = 0) {
     logScript("Found ".concat(manga.quant, " pages"));
     if (manga.quant > 0) {
       let beginning = begin;
@@ -1618,7 +1619,7 @@
           .filter(x => x.url === W.location.href).map(x => x.page)[0] || 0;
       }
       $('head').append('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />', '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.15.2/dist/sweetalert2.all.min.js" integrity="sha256-jcwzk3T3JY59zhhzLTvM7Z9Bib+tPyWi8UgC2PT5vrc=" crossorigin="anonymous"></script>', '<style type="text/css">#mov {position: fixed;left: 50%;transform: translateX(-50%);top: 0;z-index: 1000000;border-radius: .25em;font-size: 1.5em;cursor: pointer;display: inline-block;margin: .3125em;padding: .625em 2em;box-shadow: none;font-weight: 500;color: #FFF;background: rgb(102, 83, 146);border: 1px #FFF;}</style>');
-      W.mov = b => lateStart(manga, b || beginning);
+      W.mov = b => lateStart(site, b || beginning);
       switch (settings.loadMode) {
         case 'never':
           $('body').append('<button id="mov" onclick=mov()>Start MangaOnlineViewer</button>');
@@ -1658,7 +1659,7 @@
       let wait = '';
       if (site.waitMax !== undefined) {
         if (waitElapsed >= site.waitMax) {
-          preparePage(site.run());
+          preparePage(site, site.run());
           return;
         }
       }
@@ -1695,7 +1696,7 @@
           return;
         }
       }
-      preparePage(site.run());
+      preparePage(site, site.run());
     }
     logScript('Looking for a match...');
     const test = R.compose(R.map(waitExec), R.map(logScriptC('Site Found:')), R.filter(x => R.test(x.url, W.location.href)));

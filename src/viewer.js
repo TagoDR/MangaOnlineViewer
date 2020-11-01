@@ -37,7 +37,8 @@ function formatPage(manga, begin) {
   }
 }
 
-function lateStart(manga, begin = 1) {
+function lateStart(site, begin = 1) {
+  const manga = site.run();
   logScript('LateStart');
   Swal.fire({
     title: 'Starting<br>MangaOnlineViewer',
@@ -64,7 +65,7 @@ function lateStart(manga, begin = 1) {
 }
 
 // Organize the site adding place holders for the manga pages
-function preparePage(manga, begin = 0) {
+function preparePage(site, manga, begin = 0) {
   logScript(`Found ${manga.quant} pages`);
   if (manga.quant > 0) {
     let beginning = begin;
@@ -78,7 +79,7 @@ function preparePage(manga, begin = 0) {
       '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.15.2/dist/sweetalert2.all.min.js" integrity="sha256-jcwzk3T3JY59zhhzLTvM7Z9Bib+tPyWi8UgC2PT5vrc=" crossorigin="anonymous"></script>',
       '<style type="text/css">#mov {position: fixed;left: 50%;transform: translateX(-50%);top: 0;z-index: 1000000;border-radius: .25em;font-size: 1.5em;cursor: pointer;display: inline-block;margin: .3125em;padding: .625em 2em;box-shadow: none;font-weight: 500;color: #FFF;background: rgb(102, 83, 146);border: 1px #FFF;}</style>',
     );
-    W.mov = (b) => lateStart(manga, b || beginning);
+    W.mov = (b) => lateStart(site, b || beginning);
     switch (settings.loadMode) {
       case 'never':
         $('body').append('<button id="mov" onclick=mov()>Start MangaOnlineViewer</button>');
@@ -123,7 +124,7 @@ function start(sites) {
     let wait = '';
     if (site.waitMax !== undefined) {
       if (waitElapsed >= site.waitMax) {
-        preparePage(site.run());
+        preparePage(site, site.run());
         return;
       }
     }
@@ -160,7 +161,7 @@ function start(sites) {
         return;
       }
     }
-    preparePage(site.run());
+    preparePage(site, site.run());
   }
 
   logScript('Looking for a match...');
