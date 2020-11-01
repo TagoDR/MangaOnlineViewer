@@ -150,12 +150,12 @@ function setKeyDownEvents() {
 function controls() {
   // Size Controls
   $('#enlarge').click(() => {
-    settings.Zoom += 25;
+    settings.Zoom += settings.zoomStep;
     $('#Zoom b').html(settings.Zoom);
     applyZoom();
   });
   $('#reduce').click(() => {
-    settings.Zoom -= 25;
+    settings.Zoom -= settings.zoomStep;
     $('#Zoom b').html(settings.Zoom);
     applyZoom();
   });
@@ -173,6 +173,11 @@ function controls() {
     settings.Zoom = -1000;
     $('#Zoom b').html(settings.Zoom);
     applyZoom();
+  });
+  $('#zoomStep').change((event) => {
+    const step = $(event.target).val();
+    setValueGM('MangaZoomStep', step);
+    logScript(`zoomStep: ${getValueGM('MangaZoomStep')}`);
   });
   // WebComic View Mode
   $('#webComic').click(() => {
@@ -269,6 +274,11 @@ function controls() {
       setValueGM('MangaLazyLoadImages', false);
     }
     logScript(`MangaLazyLoadImages: ${getValueGM('MangaLazyLoadImages')}`);
+  });
+  $('#lazyStart').change((event) => {
+    const start = $(event.target).val();
+    setValueGM('MangaLazyStart', start);
+    logScript(`lazyStart: ${getValueGM('MangaLazyStart')}`);
   });
   $('#PagesPerSecond').change((event) => {
     setValueGM('MangaTimer', parseInt($(event.target).val(), 10));

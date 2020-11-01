@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, JaiminisBox, KissManga, Leitor, LHTranslation, MangaDex, MangaDoom, MangaFox, MangaHere, MangaHost2, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaSee, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, UnionMangas, MangaDeep, Batoto
-// @version 18.15.0
+// @version 18.16.0
 // @license MIT
 // @date 2020-11-01
 // @grant GM_getValue
@@ -956,6 +956,7 @@
     DownloadZip: getValueGM('MangaDownloadZip', false),
     Timer: getValueGM('MangaTimer', 1000),
     Zoom: getValueGM('MangaZoom', 100),
+    zoomStep: getValueGM('MangaZoomStep', 25),
     loadMode: getValueGM('MangaLoadMode', 'normal'),
     viewMode: getValueGM('MangaViewMode', ''),
     bookmarks: JSON.parse(getValueGM('MangaBookmarks', '[]')),
@@ -964,8 +965,8 @@
   };
   if (isMobile) {
     settings.lazyLoadImages = true;
+    settings.lazyStart = getValueGM('MangaLazyStart', 5);
     settings.FitWidthIfOversized = true;
-    settings.ShowThumbnails = false;
     settings.ShowThumbnails = false;
     settings.viewMode = '';
   }
@@ -1106,7 +1107,7 @@
 
   function addImg(index, imageSrc) {
     const src = normalizeUrl(imageSrc);
-    if (!settings.lazyLoadImages && index < settings.lazyStart) {
+    if (!settings.lazyLoadImages || index < settings.lazyStart) {
       $("#PageImg".concat(index)).attr('src', src);
       $("#PageImg".concat(index)).parent().imagesLoaded().progress(onImagesProgress);
       logScript('Loaded Image:', index, 'Source:', src);
@@ -1122,7 +1123,7 @@
   }
 
   function addPage(manga, index, pageUrl) {
-    if (!settings.lazyLoadImages && index < settings.lazyStart) {
+    if (!settings.lazyLoadImages || index < settings.lazyStart) {
       getHtml(pageUrl).then(response => {
         const src = normalizeUrl($(response).find(manga.img).attr(manga.lazyAttr || 'src'));
         $("#PageImg".concat(index)).attr('src', src);
@@ -1318,12 +1319,12 @@
 
   function controls() {
     $('#enlarge').click(() => {
-      settings.Zoom += 25;
+      settings.Zoom += settings.zoomStep;
       $('#Zoom b').html(settings.Zoom);
       applyZoom();
     });
     $('#reduce').click(() => {
-      settings.Zoom -= 25;
+      settings.Zoom -= settings.zoomStep;
       $('#Zoom b').html(settings.Zoom);
       applyZoom();
     });
@@ -1341,6 +1342,11 @@
       settings.Zoom = -1000;
       $('#Zoom b').html(settings.Zoom);
       applyZoom();
+    });
+    $('#zoomStep').change(event => {
+      const step = $(event.target).val();
+      setValueGM('MangaZoomStep', step);
+      logScript("zoomStep: ".concat(getValueGM('MangaZoomStep')));
     });
     $('#webComic').click(() => {
       $('#Chapter').addClass('WebComic').removeClass('FluidLTR').removeClass('FluidRTL');
@@ -1420,6 +1426,11 @@
         setValueGM('MangaLazyLoadImages', false);
       }
       logScript("MangaLazyLoadImages: ".concat(getValueGM('MangaLazyLoadImages')));
+    });
+    $('#lazyStart').change(event => {
+      const start = $(event.target).val();
+      setValueGM('MangaLazyStart', start);
+      logScript("lazyStart: ".concat(getValueGM('MangaLazyStart')));
     });
     $('#PagesPerSecond').change(event => {
       setValueGM('MangaTimer', parseInt($(event.target).val(), 10));
@@ -1539,7 +1550,7 @@
   const externalCSS = ['<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />', '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" integrity="sha256-pMhcV6/TBDtqH9E9PWKgS+P32PVguLG8IipkPyqMtfY=" crossorigin="anonymous" />', '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gerhobbelt/keyscss@1.1.3-6/keys.css" integrity="sha256-a/1ebfXeoX0xLUcQCJLQsm6APQNBwrm03/XFcvW7xAI=" crossorigin="anonymous">'];
 
   const panel = "<div id='ImageOptions'>\n  <div id='menu'>\n    <span class='menuOuterArrow'><span class='menuInnerArrow'></span></span>\n  </div>\n  <div class='panel'>\n    <img id='enlarge' alt='Enlarge' title='Enlarge' src='".concat(icon.enlarge, "' class='controlButton' />\n    <img id='restore' alt='Restore' title='Restore' src='").concat(icon.restore, "' class='controlButton' />\n    <img id='reduce' alt='Reduce' title='Reduce' src='").concat(icon.reduce, "' class='controlButton' />\n    <img id='fitWidth' alt='Fit Width' title='Fit Width' src='").concat(icon.fitWidth, "' class='controlButton' />\n    <img id='fitHeight' alt='Fit Height' title='Fit Height' src='").concat(icon.fitHeight, "' class='controlButton' />\n    <img id='webComic' alt='Web Comic Mode' title='Web Comic Mode' src='").concat(icon.webComic, "' class='controlButton' />\n    <img id='ltrMode' alt='Left to Right Mode' title='Left to Right Mode' src='").concat(icon.pictureLeft, "' class='controlButton'/>\n    <img id='verticalMode' alt='Vertical Mode' title='Vertical Mode' src='").concat(icon.pictureDown, "' class='controlButton'/>\n    <img id='rtlMode' alt='Right to Left Mode' title='Right to Left Mode' src='").concat(icon.pictureRight, "' class='controlButton'/>\n    <img id='pageControls' alt='Toggle Page Controls' title='Toggle Page Controls' src='").concat(icon.controls, "' class='controlButton'/>\n    <img id='settings' alt='settings' title='settings' src='").concat(icon.settings, "' class='controlButton' />\n  </div>\n  <div id='Zoom' class='controlLabel'>Zoom: <b>").concat(settings.Zoom, "</b> %</div>\n</div>");
-  const controls$1 = "<div id='ViewerControls' class='panel'>\n  <span class='controlLabel ThemeSelector'>Theme:\n    <input id='CustomThemeHue' class='jscolor' value='".concat(settings.CustomTheme, "' ").concat(settings.Theme !== 'Custom_Dark' && settings.Theme !== 'Custom_Light' ? 'style="display: none;"' : '', "'>\n    <select id='ThemeSelector'>\n      ").concat(themesSelector, "\n    </select>\n  </span>\n  <span class='controlLabel loadMode'>Default Load Mode:\n    <select id='loadMode'>\n      <option value='normal' ").concat(settings.loadMode === 'normal' ? 'selected' : '', ">Normal(Wait 3 sec)</option>\n      <option value='always' ").concat(settings.loadMode === 'always' ? 'selected' : '', ">Always(Immediately)</option>\n      <option value='never' ").concat(settings.loadMode === 'never' ? 'selected' : '', ">Never(Manually)</option>\n    </select>\n  </span>\n  <span class='controlLabel PagesPerSecond'>Pages/Second:\n    <select id='PagesPerSecond'>\n      <option value='3000' ").concat(settings.Timer === 3000 ? 'selected' : '', ">0.3(Slow)</option>\n      <option value='2000' ").concat(settings.Timer === 2000 ? 'selected' : '', ">0.5</option>\n      <option value='1000' ").concat(settings.Timer === 1000 ? 'selected' : '', ">01(Normal)</option>\n      <option value='500' ").concat(settings.Timer === 500 ? 'selected' : '', ">02</option>\n      <option value='250' ").concat(settings.Timer === 250 ? 'selected' : '', ">04(Fast)</option>\n      <option value='125' ").concat(settings.Timer === 125 ? 'selected' : '', ">08</option>\n      <option value='100' ").concat(settings.Timer === 100 ? 'selected' : '', ">10(Extreme)</option>\n    </select>\n  </span>\n  <span class='controlLabel DefaultZoom'>Default Zoom:\n    <select id='DefaultZoom'>\n      <option value='50' ").concat(settings.Zoom === 50 ? 'selected' : '', ">50%</option>\n      <option value='75' ").concat(settings.Zoom === 75 ? 'selected' : '', ">75%</option>\n      <option value='100' ").concat(settings.Zoom === 100 ? 'selected' : '', ">100%</option>\n      <option value='125' ").concat(settings.Zoom === 125 ? 'selected' : '', ">125%</option>\n      <option value='150' ").concat(settings.Zoom === 150 ? 'selected' : '', ">150%</option>\n      <option value='175' ").concat(settings.Zoom === 175 ? 'selected' : '', ">175%</option>\n      <option value='200' ").concat(settings.Zoom === 200 ? 'selected' : '', ">200%</option>\n      <option value='1000' ").concat(settings.Zoom === 1000 ? 'selected' : '', ">Fit Width</option>\n      <option value='-1000' ").concat(settings.Zoom === -1000 ? 'selected' : '', ">Fit Height</option>\n    </select>\n  </span>\n  <span class='controlLabel viewMode'>Default View Mode:\n    <select id='viewMode'>\n      <option value='' ").concat(settings.viewMode === '' ? 'selected' : '', ">Vertical</option>\n      <option value='WebComic' ").concat(settings.viewMode === 'WebComic' ? 'selected' : '', ">WebComic</option>\n      <option value='FluidLTR' ").concat(settings.viewMode === 'FluidLTR' ? 'selected' : '', ">Left to Right</option>\n      <option value='FluidRTL' ").concat(settings.viewMode === 'FluidRTL' ? 'selected' : '', ">Right to Left</option>\n    </select>\n  </span>\n  <span class='controlLabel fitIfOversized'>Fit Width if Oversized:\n    <input type='checkbox' value='true' name='fitIfOversized' id='fitIfOversized' ").concat(settings.FitWidthIfOversized ? 'checked' : '', ">\n  </span>\n  <span class='controlLabel showThumbnails'>Show Thumbnails:\n    <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ").concat(settings.ShowThumbnails ? 'checked' : '', ">\n   </span>\n   <span class='controlLabel lazyLoadImages'>Lazy Load Images:\n    <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ").concat(settings.lazyLoadImages ? 'checked' : '', ">\n   </span>\n  <span class='controlLabel downloadZip'>Download Images as Zip Automatically:\n    <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ").concat(settings.DownloadZip ? 'checked' : '', ">\n  </span>\n</div>");
+  const controls$1 = "<div id='ViewerControls' class='panel'>\n  <span class='controlLabel ThemeSelector'>Theme:\n    <input id='CustomThemeHue' class='jscolor' value='".concat(settings.CustomTheme, "' ").concat(settings.Theme !== 'Custom_Dark' && settings.Theme !== 'Custom_Light' ? 'style="display: none;"' : '', "'>\n    <select id='ThemeSelector'>\n      ").concat(themesSelector, "\n    </select>\n  </span>\n  <span class='controlLabel loadMode'>Default Load Mode:\n    <select id='loadMode'>\n      <option value='normal' ").concat(settings.loadMode === 'normal' ? 'selected' : '', ">Normal(Wait 3 sec)</option>\n      <option value='always' ").concat(settings.loadMode === 'always' ? 'selected' : '', ">Always(Immediately)</option>\n      <option value='never' ").concat(settings.loadMode === 'never' ? 'selected' : '', ">Never(Manually)</option>\n    </select>\n  </span>\n  <span class='controlLabel PagesPerSecond'>Pages/Second:\n    <select id='PagesPerSecond'>\n      <option value='3000' ").concat(settings.Timer === 3000 ? 'selected' : '', ">0.3(Slow)</option>\n      <option value='2000' ").concat(settings.Timer === 2000 ? 'selected' : '', ">0.5</option>\n      <option value='1000' ").concat(settings.Timer === 1000 ? 'selected' : '', ">01(Normal)</option>\n      <option value='500' ").concat(settings.Timer === 500 ? 'selected' : '', ">02</option>\n      <option value='250' ").concat(settings.Timer === 250 ? 'selected' : '', ">04(Fast)</option>\n      <option value='125' ").concat(settings.Timer === 125 ? 'selected' : '', ">08</option>\n      <option value='100' ").concat(settings.Timer === 100 ? 'selected' : '', ">10(Extreme)</option>\n    </select>\n  </span>\n  <span class='controlLabel DefaultZoom'>Default Zoom:\n    <select id='DefaultZoom'>\n      <option value='50' ").concat(settings.Zoom === 50 ? 'selected' : '', ">50%</option>\n      <option value='75' ").concat(settings.Zoom === 75 ? 'selected' : '', ">75%</option>\n      <option value='100' ").concat(settings.Zoom === 100 ? 'selected' : '', ">100%</option>\n      <option value='125' ").concat(settings.Zoom === 125 ? 'selected' : '', ">125%</option>\n      <option value='150' ").concat(settings.Zoom === 150 ? 'selected' : '', ">150%</option>\n      <option value='175' ").concat(settings.Zoom === 175 ? 'selected' : '', ">175%</option>\n      <option value='200' ").concat(settings.Zoom === 200 ? 'selected' : '', ">200%</option>\n      <option value='1000' ").concat(settings.Zoom === 1000 ? 'selected' : '', ">Fit Width</option>\n      <option value='-1000' ").concat(settings.Zoom === -1000 ? 'selected' : '', ">Fit Height</option>\n    </select>\n  </span>\n  <span class='controlLabel zoomStep'>Zoom Change Step (between 5 and 50): <br/>\n    <input type='range' value='").concat(settings.zoomStep, "' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput=\"zoomStepVal.value = this.value\">\n    <output id=\"zoomStepVal\">").concat(settings.zoomStep, "</output>\n  </span>\n  <span class='controlLabel viewMode'>Default View Mode:\n    <select id='viewMode'>\n      <option value='' ").concat(settings.viewMode === '' ? 'selected' : '', ">Vertical</option>\n      <option value='WebComic' ").concat(settings.viewMode === 'WebComic' ? 'selected' : '', ">WebComic</option>\n      <option value='FluidLTR' ").concat(settings.viewMode === 'FluidLTR' ? 'selected' : '', ">Left to Right</option>\n      <option value='FluidRTL' ").concat(settings.viewMode === 'FluidRTL' ? 'selected' : '', ">Right to Left</option>\n    </select>\n  </span>\n  <span class='controlLabel fitIfOversized'>Fit Width if Oversized:\n    <input type='checkbox' value='true' name='fitIfOversized' id='fitIfOversized' ").concat(settings.FitWidthIfOversized ? 'checked' : '', ">\n  </span>\n  <span class='controlLabel showThumbnails'>Show Thumbnails:\n    <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ").concat(settings.ShowThumbnails ? 'checked' : '', ">\n   </span>\n   <span class='controlLabel lazyLoadImages'>Lazy Load Images:\n    <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ").concat(settings.lazyLoadImages ? 'checked' : '', ">\n   </span>\n   <span class='controlLabel lazyStart'>Lazy Start From Page (between 5 and 100):<br/>\n    <input type='range' value='").concat(settings.lazyStart, "' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput=\"lazyStartVal.value = this.value\">\n    <output id=\"lazyStartVal\">").concat(settings.lazyStart, "</output>\n  </span>\n  <span class='controlLabel downloadZip'>Download Images as Zip Automatically:\n    <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ").concat(settings.DownloadZip ? 'checked' : '', ">\n  </span>\n</div>");
   const chapterControl = R.curry((id, manga) => "<div id='".concat(id, "' class='ChapterControl'>\n    <a href='#' class='download'>Download</a>\n    <a class='prev' id='prev' href='").concat(manga.prev || '', "' onclick='W.location=\"").concat(manga.prev || '', "\";W.location.reload();'>Previous</a>\n    <a class='next' id='next' href='").concat(manga.next || '', "' onclick='W.location=\"").concat(manga.next || '', "\";W.location.reload();'>Next</a>\n</div>"));
   const chapterControlTop = chapterControl('ChapterControlTop');
   const chapterControlBottom = chapterControl('ChapterControlBottom');

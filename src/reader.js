@@ -63,6 +63,10 @@ const controls = `<div id='ViewerControls' class='panel'>
       <option value='-1000' ${settings.Zoom === -1000 ? 'selected' : ''}>Fit Height</option>
     </select>
   </span>
+  <span class='controlLabel zoomStep'>Zoom Change Step (between 5 and 50): <br/>
+    <input type='range' value='${settings.zoomStep}' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput="zoomStepVal.value = this.value">
+    <output id="zoomStepVal">${settings.zoomStep}</output>
+  </span>
   <span class='controlLabel viewMode'>Default View Mode:
     <select id='viewMode'>
       <option value='' ${settings.viewMode === '' ? 'selected' : ''}>Vertical</option>
@@ -80,6 +84,10 @@ const controls = `<div id='ViewerControls' class='panel'>
    <span class='controlLabel lazyLoadImages'>Lazy Load Images:
     <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${(settings.lazyLoadImages ? 'checked' : '')}>
    </span>
+   <span class='controlLabel lazyStart'>Lazy Start From Page (between 5 and 100):<br/>
+    <input type='range' value='${settings.lazyStart}' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput="lazyStartVal.value = this.value">
+    <output id="lazyStartVal">${settings.lazyStart}</output>
+  </span>
   <span class='controlLabel downloadZip'>Download Images as Zip Automatically:
     <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${(settings.DownloadZip ? 'checked' : '')}>
   </span>

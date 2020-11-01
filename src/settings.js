@@ -26,6 +26,7 @@ const settings = {
   DownloadZip: getValueGM('MangaDownloadZip', false),
   Timer: getValueGM('MangaTimer', 1000),
   Zoom: getValueGM('MangaZoom', 100),
+  zoomStep: getValueGM('MangaZoomStep', 25),
   loadMode: getValueGM('MangaLoadMode', 'normal'),
   viewMode: getValueGM('MangaViewMode', ''),
   bookmarks: JSON.parse(getValueGM('MangaBookmarks', '[]')),
@@ -35,8 +36,8 @@ const settings = {
 // Force Settings for mobile
 if (isMobile) {
   settings.lazyLoadImages = true;
+  settings.lazyStart = getValueGM('MangaLazyStart', 5);
   settings.FitWidthIfOversized = true;
-  settings.ShowThumbnails = false;
   settings.ShowThumbnails = false;
   settings.viewMode = '';
 }

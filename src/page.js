@@ -125,7 +125,7 @@ function normalizeUrl(url) {
 // Adds an image to the place-holder div
 function addImg(index, imageSrc) {
   const src = normalizeUrl(imageSrc);
-  if (!settings.lazyLoadImages && index < settings.lazyStart) {
+  if (!settings.lazyLoadImages || index < settings.lazyStart) {
     $(`#PageImg${index}`).attr('src', src);
     $(`#PageImg${index}`).parent().imagesLoaded().progress(onImagesProgress);
     logScript('Loaded Image:', index, 'Source:', src);
@@ -145,7 +145,7 @@ function addImg(index, imageSrc) {
 
 // Adds an page to the place-holder div
 function addPage(manga, index, pageUrl) {
-  if (!settings.lazyLoadImages && index < settings.lazyStart) {
+  if (!settings.lazyLoadImages || index < settings.lazyStart) {
     getHtml(pageUrl)
       .then((response) => {
         const src = normalizeUrl($(response).find(manga.img).attr(manga.lazyAttr || 'src'));
