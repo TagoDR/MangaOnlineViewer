@@ -12,7 +12,12 @@ export default {
     const CHAPTERS = JSON.parse($('script:last').text().match(/CHAPTERS = (\[{.+}\]);/)[1]);
     const CurChapterIndex = CHAPTERS.findIndex((chap) => chap.Chapter === CurChapter.Chapter);
 
-    function ChapterURLEncode(ChapterString) {
+    function ChapterURLEncode(reference) {
+      let ChapterString = CHAPTERS[CurChapterIndex + reference];
+      if (ChapterString === undefined) {
+        return '#';
+      }
+      ChapterString = ChapterString.Chapter;
       let Index = '';
       const IndexString = ChapterString.substring(0, 1);
       if (IndexString !== '1') {
@@ -31,8 +36,8 @@ export default {
       title: $('title').text().replace(/ Page .+/, ''),
       series: $('.MainContainer a:first').attr('href'),
       quant: CurChapter.Page,
-      prev: ChapterURLEncode(CHAPTERS[CurChapterIndex - 1].Chapter),
-      next: ChapterURLEncode(CHAPTERS[CurChapterIndex + 1].Chapter),
+      prev: ChapterURLEncode(+1),
+      next: ChapterURLEncode(-1),
       listImages: [...Array(parseInt(CurChapter.Page, 10))
         .keys()].map((i) => src.replace(/-\d\d\d.png/, `-${String(`000${i + 1}`).slice(-3)}.png`)),
     };
