@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, JaiminisBox, KissManga, Leitor, LHTranslation, MangaDex, MangaDoom, MangaFox, MangaHere, MangaHost2, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaSee, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, UnionMangas, MangaDeep, Batoto
-// @version 18.16.0
+// @version 18.17.0
 // @license MIT
-// @date 2020-11-01
+// @date 2020-11-05
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -17,7 +17,7 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
-// @require https://cdn.jsdelivr.net/npm/sweetalert2@9.15.2/dist/sweetalert2.all.min.js
+// @require https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.2.3/jscolor.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/ramda/0.27.0/ramda.min.js
