@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, JaiminisBox, KissManga, Leitor, LHTranslation, MangaDex, MangaDoom, MangaFox, MangaHere, MangaHost2, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaSee, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, UnionMangas, MangaDeep, Batoto
-// @version 18.17.0
+// @version 18.18.0
 // @license MIT
-// @date 2020-11-05
+// @date 2020-11-16
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -935,37 +935,24 @@
     }
   }
 
-  if (typeof getValueGM('MangaFitWidthIfOversized') === 'string') {
-    setValueGM('MangaFitWidthIfOversized', true);
-    setValueGM('MangaShowThumbnails', true);
-    setValueGM('MangaDownloadZip', false);
-    setValueGM('MangaAlwaysLoad', false);
-  }
-  if (typeof getValueGM('MangaZoom') === 'string') {
-    setValueGM('MangaTimer', 1000);
-    setValueGM('MangaZoom', 100);
-  }
-  removeValueGM('MangaAlwaysWebComic');
-  removeValueGM('MangaAlwaysLoad');
-  removeValueGM('MangaTheme:');
   const settings = {
     Theme: getValueGM('MangaTheme', 'Light'),
     CustomTheme: getValueGM('MangaCustomTheme', '3d0099'),
     FitWidthIfOversized: getValueGM('MangaFitWidthIfOversized', true),
     ShowThumbnails: getValueGM('MangaShowThumbnails', true),
     DownloadZip: getValueGM('MangaDownloadZip', false),
-    Timer: getValueGM('MangaTimer', 1000),
-    Zoom: getValueGM('MangaZoom', 100),
-    zoomStep: getValueGM('MangaZoomStep', 25),
+    Timer: parseInt(getValueGM('MangaTimer', 1000), 10),
+    Zoom: parseInt(getValueGM('MangaZoom', 100), 10),
+    zoomStep: parseInt(getValueGM('MangaZoomStep', 25), 10),
     loadMode: getValueGM('MangaLoadMode', 'normal'),
     viewMode: getValueGM('MangaViewMode', ''),
     bookmarks: JSON.parse(getValueGM('MangaBookmarks', '[]')),
     lazyLoadImages: getValueGM('MangaLazyLoadImages', false),
-    lazyStart: getValueGM('MangaLazyStart', 50)
+    lazyStart: parseInt(getValueGM('MangaLazyStart', 50), 10)
   };
   if (isMobile) {
     settings.lazyLoadImages = true;
-    settings.lazyStart = getValueGM('MangaLazyStart', 5);
+    settings.lazyStart = parseInt(getValueGM('MangaLazyStart', 5), 10);
     settings.FitWidthIfOversized = true;
     settings.ShowThumbnails = false;
     settings.viewMode = '';
@@ -1345,7 +1332,7 @@
     });
     $('#zoomStep').change(event => {
       const step = $(event.target).val();
-      setValueGM('MangaZoomStep', step);
+      setValueGM('MangaZoomStep', parseInt(step, 10));
       logScript("zoomStep: ".concat(getValueGM('MangaZoomStep')));
     });
     $('#webComic').click(() => {
@@ -1439,7 +1426,7 @@
     $('#DefaultZoom').change(event => {
       settings.Zoom = parseInt($(event.target).val(), 10);
       $('#Zoom b').html(settings.Zoom);
-      setValueGM('MangaZoom', settings.Zoom);
+      setValueGM('MangaZoom', parseInt(settings.Zoom, 10));
       logScript("MangaZoom: ".concat(getValueGM('MangaZoom')));
       applyZoom();
     });
@@ -1516,12 +1503,12 @@
     });
     $('.ZoomIn').click(event => {
       const img = $(event.target).parents('.MangaPage').find('.PageContent img');
-      const ratio = img.width() / img.prop('naturalWidth') * 1.25 * 100;
+      const ratio = img.width() / img.prop('naturalWidth') * (100 + settings.zoomStep);
       applyZoom(img, ratio);
     });
     $('.ZoomOut').click(event => {
       const img = $(event.target).parents('.MangaPage').find('.PageContent img');
-      const ratio = img.width() / img.prop('naturalWidth') * 0.75 * 100;
+      const ratio = img.width() / img.prop('naturalWidth') * (100 - settings.zoomStep);
       applyZoom(img, ratio);
     });
     $('.ZoomRestore').click(() => {

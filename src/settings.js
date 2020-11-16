@@ -1,21 +1,6 @@
 import {
-  getValueGM, isMobile, removeValueGM, setValueGM,
+  getValueGM, isMobile, setValueGM,
 } from './browser';
-
-// Fix/Remove old or bugged settings
-if (typeof getValueGM('MangaFitWidthIfOversized') === 'string') {
-  setValueGM('MangaFitWidthIfOversized', true);
-  setValueGM('MangaShowThumbnails', true);
-  setValueGM('MangaDownloadZip', false);
-  setValueGM('MangaAlwaysLoad', false);
-}
-if (typeof getValueGM('MangaZoom') === 'string') {
-  setValueGM('MangaTimer', 1000);
-  setValueGM('MangaZoom', 100);
-}
-removeValueGM('MangaAlwaysWebComic');
-removeValueGM('MangaAlwaysLoad');
-removeValueGM('MangaTheme:');
 
 // Configuration
 const settings = {
@@ -24,19 +9,19 @@ const settings = {
   FitWidthIfOversized: getValueGM('MangaFitWidthIfOversized', true),
   ShowThumbnails: getValueGM('MangaShowThumbnails', true),
   DownloadZip: getValueGM('MangaDownloadZip', false),
-  Timer: getValueGM('MangaTimer', 1000),
-  Zoom: getValueGM('MangaZoom', 100),
-  zoomStep: getValueGM('MangaZoomStep', 25),
+  Timer: parseInt(getValueGM('MangaTimer', 1000), 10),
+  Zoom: parseInt(getValueGM('MangaZoom', 100), 10),
+  zoomStep: parseInt(getValueGM('MangaZoomStep', 25), 10),
   loadMode: getValueGM('MangaLoadMode', 'normal'),
   viewMode: getValueGM('MangaViewMode', ''),
   bookmarks: JSON.parse(getValueGM('MangaBookmarks', '[]')),
   lazyLoadImages: getValueGM('MangaLazyLoadImages', false),
-  lazyStart: getValueGM('MangaLazyStart', 50),
+  lazyStart: parseInt(getValueGM('MangaLazyStart', 50), 10),
 };
 // Force Settings for mobile
 if (isMobile) {
   settings.lazyLoadImages = true;
-  settings.lazyStart = getValueGM('MangaLazyStart', 5);
+  settings.lazyStart = parseInt(getValueGM('MangaLazyStart', 5), 10);
   settings.FitWidthIfOversized = true;
   settings.ShowThumbnails = false;
   settings.viewMode = '';

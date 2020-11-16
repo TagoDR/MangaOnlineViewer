@@ -176,7 +176,7 @@ function controls() {
   });
   $('#zoomStep').change((event) => {
     const step = $(event.target).val();
-    setValueGM('MangaZoomStep', step);
+    setValueGM('MangaZoomStep', parseInt(step, 10));
     logScript(`zoomStep: ${getValueGM('MangaZoomStep')}`);
   });
   // WebComic View Mode
@@ -287,7 +287,7 @@ function controls() {
   $('#DefaultZoom').change((event) => {
     settings.Zoom = parseInt($(event.target).val(), 10);
     $('#Zoom b').html(settings.Zoom);
-    setValueGM('MangaZoom', settings.Zoom);
+    setValueGM('MangaZoom', parseInt(settings.Zoom, 10));
     logScript(`MangaZoom: ${getValueGM('MangaZoom')}`);
     applyZoom();
   });
@@ -373,13 +373,13 @@ function controls() {
   // ZoomIn
   $('.ZoomIn').click((event) => {
     const img = $(event.target).parents('.MangaPage').find('.PageContent img');
-    const ratio = (img.width() / img.prop('naturalWidth')) * 1.25 * 100;
+    const ratio = (img.width() / img.prop('naturalWidth')) * (100 + settings.zoomStep);
     applyZoom(img, ratio);
   });
   // ZoomOut
   $('.ZoomOut').click((event) => {
     const img = $(event.target).parents('.MangaPage').find('.PageContent img');
-    const ratio = (img.width() / img.prop('naturalWidth')) * 0.75 * 100;
+    const ratio = (img.width() / img.prop('naturalWidth')) * (100 - settings.zoomStep);
     applyZoom(img, ratio);
   });
   // ZoomRestore
