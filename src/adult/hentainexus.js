@@ -1,7 +1,7 @@
 // == HentaiNexus ==================================================================================
 export default {
   name: 'HentaiNexus',
-  url: /https?:\/\/(www.)?hentainexus.com\/read\/[0-9]+\/[0-9]+/,
+  url: /https?:\/\/(www.)?hentainexus.com\/read\/.+/,
   homepage: 'https://hentainexus.com/',
   language: ['English'],
   category: 'hentai',
