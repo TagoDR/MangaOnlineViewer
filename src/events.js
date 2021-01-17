@@ -295,6 +295,15 @@ function controls() {
   $('#pageControls').click(() => {
     $('#MangaOnlineViewer').toggleClass('hideControls');
   });
+  $('#hidePageControls').change((event) => {
+    $('#MangaOnlineViewer').toggleClass('hideControls');
+    if ($(event.target).is(':checked')) {
+      setValueGM('MangaHidePageControls', true);
+    } else {
+      setValueGM('MangaHidePageControls', false);
+    }
+    logScript(`MangaHidePageControls: ${getValueGM('MangaHidePageControls')}`);
+  });
   // Theme Control
   $('#ThemeSelector').change((event) => {
     const target = $(event.target);

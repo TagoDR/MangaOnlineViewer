@@ -91,6 +91,9 @@ const controls = `<div id='ViewerControls' class='panel'>
   <span class='controlLabel downloadZip'>Download Images as Zip Automatically:
     <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${(settings.DownloadZip ? 'checked' : '')}>
   </span>
+  <span class='controlLabel hidePageControls'>Always Hide Page Controls:
+    <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${(settings.hidePageControls ? 'checked' : '')}>
+  </span>
 </div>`;
 const chapterControl = R.curry((id, manga) => `<div id='${id}' class='ChapterControl'>
     <a href='#' class='download'>Download</a>
@@ -123,7 +126,7 @@ const listThumbnails = R.times(
   + 1}' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`,
 );
 const body = (manga, begin = 0) => `
-<div id='MangaOnlineViewer' class='${settings.Theme} ${isMobile ? 'mobile' : ''}'>
+<div id='MangaOnlineViewer' class='${settings.Theme} ${isMobile ? 'mobile' : ''} ${settings.hidePageControls ? 'hideControls' : ''}'>
   ${title(manga)}
   <div id='Counters' class='controlLabel'>
     <i>0</i> of <b>${manga.quant}</b> Pages Loaded

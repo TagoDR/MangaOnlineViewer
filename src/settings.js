@@ -17,6 +17,7 @@ const settings = {
   bookmarks: JSON.parse(getValueGM('MangaBookmarks', '[]')),
   lazyLoadImages: getValueGM('MangaLazyLoadImages', false),
   lazyStart: parseInt(getValueGM('MangaLazyStart', 50), 10),
+  hidePageControls: getValueGM('MangaHidePageControls', false),
 };
 // Force Settings for mobile
 if (isMobile) {
