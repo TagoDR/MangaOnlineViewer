@@ -153,7 +153,8 @@ img {
   display: inline-block;
 }
 
-#MangaOnlineViewer .PageContent img[src=""], #MangaOnlineViewer .PageContent img:not([src]){
+#MangaOnlineViewer .PageContent img[src=""],
+#MangaOnlineViewer .PageContent img:not([src]){
   width: 500px;
   height: 750px;
   display: inline-block;
@@ -182,7 +183,8 @@ img {
   margin-bottom: -1px;
 }
 
-#MangaOnlineViewer .ChapterControl a[href='#'], #MangaOnlineViewer .ChapterControl a[href=''] {
+#MangaOnlineViewer .ChapterControl a[href='#'],
+#MangaOnlineViewer .ChapterControl a[href=''] {
   visibility: hidden
 }
 

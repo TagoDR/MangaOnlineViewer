@@ -6,7 +6,7 @@
 ##### Official Source: [GitHub](https://github.com/TagoDR/MangaOnlineViewer)
 
 ### Supported Browsers
-Firefox and Chrome with [Tampermonkey](https://tampermonkey.net/).
+Firefox and Chrome with [Tampermonkey](https://tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/).
 Other Browsers with other add-ons may also work, but not officially supported.
 Mobile Bookmarklet (*Settings can't be saved, may require to request for Desktop Page*):
 ##### Main Reader:

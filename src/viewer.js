@@ -19,7 +19,7 @@ function formatPage(manga, begin) {
       controls(manga);
       setKeyDownEvents(manga);
       setTimeout(() => {
-        $('body').scrollTo(0);
+        $(window).scrollTop(0);
         loadManga(manga, begin);
       }, 50);
       // Clear used Bookmarks
