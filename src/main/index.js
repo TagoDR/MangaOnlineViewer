@@ -30,6 +30,7 @@ import unionmangas from './unionmangas';
 import wpmanga from './wpmanga';
 import rawdevart from './rawdevart';
 import mangahost from './mangahost';
+import toonily from './toonily';
 
 export default [
   comicastle,
@@ -66,6 +67,7 @@ export default [
   // tenmanga, [Not Safe?]
   // thespectrum, [Broken, Dead?]
   tmofans,
+  toonily,
   unionmangas,
   wpmanga,
   batoto,

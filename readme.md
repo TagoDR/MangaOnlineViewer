@@ -49,6 +49,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [MangaTown](http://www.mangatown.com/) _[English]_
 - [NineManga](http://ninemanga.com/) _[English]_
 - [ReadManga Today](http://www.readmng.com/) _[English]_
+- [Toonily](https://toonily.net/) _[English]_
 - [RawDevart](https://rawdevart.com) _[Original]_
 - [SenManga(Raw)](http://raw.senmanga.com/) _[Original]_
 - [Leitor](https://leitor.net/) _[Portuguese]_

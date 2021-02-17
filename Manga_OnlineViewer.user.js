@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, JaiminisBox, KissManga, Leitor, LHTranslation, MangaDex, MangaDoom, MangaFox, MangaHere, MangaHost2, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaSee, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, UnionMangas, MangaDeep, Batoto
-// @version 19.0.0
+// @description Shows all pages at once in online view for these sites: ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, JaiminisBox, KissManga, Leitor, LHTranslation, MangaDex, MangaDoom, MangaFox, MangaHere, MangaHost2, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaSee, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, Toonily, UnionMangas, MangaDeep, Batoto
+// @version 19.1.0
 // @license MIT
-// @date 2021-02-06
+// @date 2021-02-17
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -51,6 +51,7 @@
 // @include /https?:\/\/(www.)?readmng.com\/.+\/[0-9.]+(\/[0-9]*)?/
 // @include /https?:\/\/raw.senmanga.com\/.+\/.+\/?/
 // @include /https?:\/\/(www.)?(tmofans|lectortmo|followmanga).com\/.+\/.+\/(paginated|cascade)/
+// @include /https?:\/\/(www.)?(toonily).net\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/
 // @include /https?:\/\/(www.)?(mangadeep).com\/chapter\/.+\/[0-9]+/
 // @include /https?:\/\/(www.)?bato.to\/chapter.*/
@@ -812,12 +813,31 @@
     }
   };
 
+  var toonily = {
+    name: 'Toonily',
+    url: /https?:\/\/(www.)?(toonily).net\/manga\/.+\/.+/,
+    homepage: 'https://toonily.net/',
+    language: ['English'],
+    category: 'manga',
+    run() {
+      const images = $('.wp-manga-chapter-img').get();
+      return {
+        title: $('#chapter-heading').text().trim(),
+        series: $('.breadcrumb li:eq(1) a').attr('href'),
+        quant: images.length,
+        prev: $('.prev_page').attr('href'),
+        next: $('.next_page').attr('href'),
+        listImages: images.map(i => $(i).attr('src'))
+      };
+    }
+  };
+
   var sites = [comicastle, disasterscans, dysnatyscans, foolslide, funmanga, hatigarmscans, jaiminisbox,
     kissmanga, leitor, lhtranslation, mangadex, mangadoom, mangafox,
     mangahere, mangahost, mangainn, mangakakalot, mangalyght, mangapark, mangareader,
     mangasee, mangatown,
     ninemanga, rawdevart, readcomicsonline, readmangatoday, senmanga,
-    tmofans, unionmangas, wpmanga, batoto
+    tmofans, toonily, unionmangas, wpmanga, batoto
   ];
 
   function logScript(...text) {
