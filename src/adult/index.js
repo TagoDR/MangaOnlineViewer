@@ -2,6 +2,7 @@
 import asmhentai from './asmhentai';
 import doujinmoe from './doujinmoe';
 import eightMuses from './8muses';
+import ninehentai from './9hentai';
 import exhentai from './exhentai';
 import hbrowse from './hbrowse';
 import hentai2read from './hentai2read';
@@ -44,7 +45,7 @@ export default [
   myhentaigallery,
   nhentainet,
   nhentaicom,
-  // ninehentai, [Broken]
+  ninehentai,
   porncomixonline,
   pururin,
   simplyhentai,

@@ -64,6 +64,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 ### Supported Hentai Sites
 > Adult Script available **_only_** on [Github](https://github.com/TagoDR/MangaOnlineViewer)
 - [8Muses](https://comics.8muses.com/) _[English]_
+- [9Hentai](https://9hentai.ru) _[English]_
 - [ASMHentai](https://asmhentai.com/) _[English]_
 - [BestPornComix](https://www.bestporncomix.com) _[English]_
 - [DoujinMoeNM](https://doujins.com/) _[English]_
@@ -78,7 +79,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [HentaiNexus](https://hentainexus.com/) _[English]_
 - [MultPorn](https://multporn.net/) _[English]_
 - [MyHentaiGallery](https://www.myhentaigallery.com) _[English]_
-- [PornComixOnline](https://www.porncomixonline.net) _[English]_
+- [PornComixOnline](https://www.porncomixone.net) _[English]_
 - [Pururin](http://pururin.io/) _[English]_
 - [Simply-Hentai](http://simply-hentai.com/) _[English]_
 - [Tsumino](http://tsumino.com/) _[English]_

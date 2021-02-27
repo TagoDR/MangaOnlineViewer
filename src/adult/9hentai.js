@@ -1,8 +1,8 @@
-// == HentaiFox ====================================================================================
+// == 9Hentai ======================================================================================
 export default {
   name: '9Hentai',
-  url: /https?:\/\/(www.)?9hentai.com\/g\/.+/,
-  homepage: 'https://9hentai.com',
+  url: /https?:\/\/(www.)?9hentai.ru\/g\/.+/,
+  homepage: 'https://9hentai.ru',
   language: ['English'],
   category: 'hentai',
   waitAttr: ['#jumpPageModal input', 'max'],

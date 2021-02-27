@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiCafe, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, HentaiNexus, hitomi, MultPorn, MyHentaiGallery, nHentai.net, nHentai.com, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, 8Muses, xyzcomics
-// @version 19.0.0
+// @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiCafe, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, HentaiNexus, hitomi, MultPorn, MyHentaiGallery, nHentai.net, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, 8Muses, xyzcomics
+// @version 19.3.0
 // @license MIT
-// @date 2021-02-06
+// @date 2021-02-26
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -40,7 +40,8 @@
 // @include /https?:\/\/(www.)?myhentaigallery.com\/gallery\/show\/.+\/[0-9]+/
 // @include /https?:\/\/(www.)?nhentai.net\/g\/.+\/.+/
 // @include /https?:\/\/(www.)?nhentai.com\/.+\/comic\/.+/
-// @include /https?:\/\/(www.)?porncomixonline.net\/.+/
+// @include /https?:\/\/(www.)?9hentai.ru\/g\/.+/
+// @include /https?:\/\/(www.)?porncomixone.net\/comic\/.+/
 // @include /https?:\/\/(www.)?pururin.io\/(view|read)\/.+\/.+\/.+/
 // @include /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/
 // @include /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/[0-9]+/
@@ -128,6 +129,38 @@
         prev: '#',
         next: '#',
         listImages: images
+      };
+    }
+  };
+
+  var ninehentai = {
+    name: '9Hentai',
+    url: /https?:\/\/(www.)?9hentai.ru\/g\/.+/,
+    homepage: 'https://9hentai.ru',
+    language: ['English'],
+    category: 'hentai',
+    waitAttr: ['#jumpPageModal input', 'max'],
+    run() {
+      let api = null;
+      $.ajax({
+        type: 'POST',
+        url: '/api/getBookByID',
+        data: {
+          id: parseInt(W.location.pathname.match(/[0-9]+/)[0], 10)
+        },
+        dataType: 'json',
+        async: false,
+        success(res) {
+          api = res.results;
+        }
+      });
+      return {
+        title: api.title,
+        series: "/g/".concat(api.id, "/"),
+        quant: api.total_page,
+        prev: '#',
+        next: '#',
+        listImages: [...Array(api.total_page).keys()].map(i => "".concat(api.image_server + api.id, "/").concat(i + 1, ".jpg"))
       };
     }
   };
@@ -437,33 +470,19 @@
 
   var porncomixonline = {
     name: 'PornComixOnline',
-    url: /https?:\/\/(www.)?porncomixonline.net\/.+/,
-    homepage: 'https://www.porncomixonline.net',
+    url: /https?:\/\/(www.)?porncomixone.net\/comic\/.+/,
+    homepage: 'https://www.porncomixone.net',
     language: ['English'],
     category: 'hentai',
     run() {
+      const imgs = $('figure a').get();
       return {
-        title: $('.entry-title').text().trim(),
+        title: $('.post-title').text().trim(),
         series: '#',
-        quant: $('#single-pager:first option').get().length || $('.dgwt-jg-gallery img').get().length,
+        quant: imgs.length,
         prev: '#',
         next: '#',
-        listPages: $('#single-pager:first option').get().map(i => $(i).attr('data-redirect')),
-        listImages: $('.dgwt-jg-gallery img').get().map(i => {
-          const urls = $(i).attr('data-jg-srcset').split(',');
-          let src = '';
-          let w = 0;
-          for (let l = 0; l < urls.length; l += 1) {
-            const s = urls[l].match(/(.+) (\d+)w/);
-            if (s[2] > w) {
-              [, w, src] = s;
-              w = s[2];
-              src = s[1];
-            }
-          }
-          return src;
-        }),
-        img: 'img.wp-manga-chapter-img'
+        listImages: imgs.map(i => $(i).attr('href'))
       };
     }
   };
@@ -643,8 +662,7 @@
 
   var sites = [asmhentai, bestporncomix, doujinmoe, exhentai,
     hbrowse, hentai2read, hentaicafe, hentaicomic, hentaifox, hentaihand, hentaihere, hentainexus, hitomi,
-    multporn, myhentaigallery, nhentainet, nhentaicom,
-    porncomixonline, pururin, simplyhentai,
+    multporn, myhentaigallery, nhentainet, nhentaicom, ninehentai, porncomixonline, pururin, simplyhentai,
     tmohhentai, tsumino, eightMuses, xyzcomics
   ];
 
