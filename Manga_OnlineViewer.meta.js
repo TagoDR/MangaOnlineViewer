@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, JaiminisBox, KissManga, Leitor, LHTranslation, MangaDex, MangaDoom, MangaFox, MangaHere, MangaHost2, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaSee, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, Toonily, UnionMangas, MangaDeep, Batoto
-// @version 19.1.0
+// @version 19.3.0
 // @license MIT
-// @date 2021-02-17
+// @date 2021-03-18
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues

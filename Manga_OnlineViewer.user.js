@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, JaiminisBox, KissManga, Leitor, LHTranslation, MangaDex, MangaDoom, MangaFox, MangaHere, MangaHost2, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaSee, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, Toonily, UnionMangas, MangaDeep, Batoto
-// @version 19.1.0
+// @version 19.3.0
 // @license MIT
-// @date 2021-02-17
+// @date 2021-03-18
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -304,7 +304,7 @@
     waitAttr: ['.reader-image-wrapper img', 'src'],
     run() {
       let api = null;
-      const url = "https://mangadex.org/api/chapter/".concat(W.location.pathname.match(/[0-9]+/)[0]);
+      const url = "https://api.mangadex.org/v2/chapter/".concat(W.location.pathname.match(/[0-9]+/)[0]);
       $.ajax({
         type: 'GET',
         url,
@@ -316,10 +316,10 @@
       return {
         title: $('title').text().replace(' - MangaDex', ''),
         series: $('.manga-link').attr('href'),
-        quant: api.page_array.length,
+        quant: api.data.pages.length,
         prev: $('.chapter-link-left').attr('href'),
         next: $('.chapter-link-right').attr('href'),
-        listImages: api.page_array.map(img => "".concat(api.server + api.hash, "/").concat(img))
+        listImages: api.data.pages.map(img => "".concat(api.data.server + api.data.hash, "/").concat(img))
       };
     }
   };

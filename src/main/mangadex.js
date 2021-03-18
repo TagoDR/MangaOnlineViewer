@@ -9,7 +9,7 @@ export default {
   waitAttr: ['.reader-image-wrapper img', 'src'],
   run() {
     let api = null;
-    const url = `https://mangadex.org/api/chapter/${W.location.pathname.match(/[0-9]+/)[0]}`;
+    const url = `https://api.mangadex.org/v2/chapter/${W.location.pathname.match(/[0-9]+/)[0]}`;
     $.ajax({
       type: 'GET',
       url,
@@ -21,10 +21,10 @@ export default {
     return {
       title: $('title').text().replace(' - MangaDex', ''),
       series: $('.manga-link').attr('href'),
-      quant: api.page_array.length,
+      quant: api.data.pages.length,
       prev: $('.chapter-link-left').attr('href'),
       next: $('.chapter-link-right').attr('href'),
-      listImages: api.page_array.map((img) => `${api.server + api.hash}/${img}`),
+      listImages: api.data.pages.map((img) => `${api.data.server + api.data.hash}/${img}`),
     };
   },
 };
