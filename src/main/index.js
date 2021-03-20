@@ -34,6 +34,7 @@ import toonily from './toonily';
 import reaperscans from './reaperscans';
 import asurasflamecans from './asurasflamecans';
 import madarawp from './madarawp';
+import mangahub from './mangahub';
 
 export default [
   asurasflamecans,
@@ -55,6 +56,7 @@ export default [
   // mangago, [Weak? Not Safe?]
   mangahere,
   mangahost,
+  mangahub,
   mangainn,
   mangakakalot,
   mangalyght,

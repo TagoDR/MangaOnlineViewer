@@ -42,6 +42,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [MangaFox](http://fanfox.net/) _[English]_
 - [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) _[English]_
 - [MangaHere](http://www.mangahere.cc/) _[English]_
+- [MangaHub](https://mangahub.io/) _[English]_
 - [MangaInn](http://www.mangainn.net/) _[English]_
 - [MangaKakalot](https://mangakakalot.com/page) / [MangaNelo](http://www.manganelo.com/) _[English]_
 - [MangaLyght](http://manga.lyght.net/) _[English]_
