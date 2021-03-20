@@ -26,6 +26,7 @@ I will try to keep this script updated, however I hardly-ever visit some of the 
 I allow this script to be posted or used anywhere as long as I am given credit and provided a link to this site. I allow parts of my script to be used freely.
 
 ### Supported Manga Sites
+- [Asura Scans](https://www.asurascans.com/) / [Flame Scans](https://flamescans.org/) _[English]_
 - [Batoto](http://bato.to/) _[English]_
 - [DisasterScans](https://disasterscans.com/) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
@@ -39,6 +40,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [MangaDex](https://mangadex.org/) _[English]_
 - [MangaDoom](https://mngdoom.com/) _[English]_
 - [MangaFox](http://fanfox.net/) _[English]_
+- [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) _[English]_
 - [MangaHere](http://www.mangahere.cc/) _[English]_
 - [MangaInn](http://www.mangainn.net/) _[English]_
 - [MangaKakalot](https://mangakakalot.com/page) / [MangaNelo](http://www.manganelo.com/) _[English]_
@@ -49,6 +51,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [MangaTown](http://www.mangatown.com/) _[English]_
 - [NineManga](http://ninemanga.com/) _[English]_
 - [ReadManga Today](http://www.readmng.com/) _[English]_
+- [Reaper Scans](https://reaperscans.com/home) _[English]_
 - [Toonily](https://toonily.net/) _[English]_
 - [RawDevart](https://rawdevart.com) _[Original]_
 - [SenManga(Raw)](http://raw.senmanga.com/) _[Original]_
@@ -73,10 +76,8 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [HentaIHere](https://www.hentaihere.com/) _[English]_
 - [Hentai Comic](https://hentai-comic.com/) _[English]_ **Obs: and similar sites**
 - [Hentai2Read](http://hentai2read.com/) _[English]_
-- [HentaiCafe](https://hentai.cafe) _[English]_
 - [HentaiFox](http://www.hentaifox.com/) _[English]_
 - [HentaiHand](https://hentaihand.com/) _[English]_
-- [HentaiNexus](https://hentainexus.com/) _[English]_
 - [MultPorn](https://multporn.net/) _[English]_
 - [MyHentaiGallery](https://www.myhentaigallery.com) _[English]_
 - [PornComixOnline](https://www.porncomixone.net) _[English]_

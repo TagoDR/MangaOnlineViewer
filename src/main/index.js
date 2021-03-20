@@ -31,8 +31,12 @@ import wpmanga from './wpmanga';
 import rawdevart from './rawdevart';
 import mangahost from './mangahost';
 import toonily from './toonily';
+import reaperscans from './reaperscans';
+import asurasflamecans from './asurasflamecans';
+import madarawp from './madarawp';
 
 export default [
+  asurasflamecans,
   comicastle,
   disasterscans,
   dysnatyscans,
@@ -44,6 +48,7 @@ export default [
   kissmanga,
   leitor,
   lhtranslation,
+  madarawp,
   mangadex,
   mangadoom,
   mangafox,
@@ -63,6 +68,7 @@ export default [
   rawdevart,
   readcomicsonline,
   readmangatoday,
+  reaperscans,
   senmanga,
   // tenmanga, [Not Safe?]
   // thespectrum, [Broken, Dead?]

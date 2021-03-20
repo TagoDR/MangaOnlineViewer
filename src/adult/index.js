@@ -33,12 +33,12 @@ export default [
   // gntai, [CORS disabled]
   hbrowse,
   hentai2read,
-  hentaicafe,
+  // hentaicafe, [RIP]
   hentaicomic,
   hentaifox,
   hentaihand,
   hentaihere,
-  hentainexus,
+  // hentainexus, [RIP]
   hitomi,
   // luscious, Todo: Fix
   multporn,
