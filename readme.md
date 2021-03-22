@@ -40,6 +40,8 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [MangaDex](https://mangadex.org/) _[English]_
 - [MangaDoom](https://mngdoom.com/) _[English]_
 - [MangaFox](http://fanfox.net/) _[English]_
+- [MangaFreak](https://komiraw.com/) _[English]_
+- [MangaFreak](https://mangafreak.net/) _[English]_
 - [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) _[English]_
 - [MangaHere](http://www.mangahere.cc/) _[English]_
 - [MangaHub](https://mangahub.io/) _[English]_

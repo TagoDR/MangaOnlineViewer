@@ -35,6 +35,8 @@ import reaperscans from './reaperscans';
 import asurasflamecans from './asurasflamecans';
 import madarawp from './madarawp';
 import mangahub from './mangahub';
+import mangafreak from './mangafreak';
+import komiraw from './komiraw';
 
 export default [
   asurasflamecans,
@@ -47,11 +49,13 @@ export default [
   jaiminisbox,
   // japscan, Todo: Fix
   kissmanga,
+  komiraw,
   leitor,
   lhtranslation,
   madarawp,
   mangadex,
   mangadoom,
+  mangafreak,
   mangafox,
   // mangago, [Weak? Not Safe?]
   mangahere,
