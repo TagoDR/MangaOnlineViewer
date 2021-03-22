@@ -41,7 +41,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [MangaFox](http://fanfox.net/) _[English]_
 - [MangaFreak](https://komiraw.com/) _[English]_
 - [MangaFreak](https://mangafreak.net/) _[English]_
-- [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) _[English]_
+- [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
 - [MangaHere](http://www.mangahere.cc/) _[English]_
 - [MangaHub](https://mangahub.io/) _[English]_
 - [MangaInn](http://www.mangainn.net/) _[English]_

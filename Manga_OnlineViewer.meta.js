@@ -35,7 +35,7 @@
 // @include /https?:\/\/(www.)?(komiraw).com\/.+\/.+/
 // @include /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
 // @include /https?:\/\/(www.)?lhtranslation.net\/read.+/
-// @include /https?:\/\/(www.)?(manhuaus|isekaiscan|comickiba|zinmanga|mangatx|toonily|mangazuki).(com|net|me)\/manga\/.+\/.+/
+// @include /https?:\/\/.+\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/
 // @include /https?:\/\/(www.)?mngdoom.com\/.+\/[0-9]+/
 // @include /https?:\/\/.{3,4}?(mangafreak).net\/Read.+/
