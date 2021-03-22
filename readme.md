@@ -36,13 +36,12 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [JaiminisBox](https://jaiminisbox.com/) _[English]_
 - [KissManga](http://kissmanga.com/) _[English]_
 - [LHTranslation](http://lhtranslation.net/) _[English]_
-- [MangaDeep](http://mangadeep.com/) _[English]_
 - [MangaDex](https://mangadex.org/) _[English]_
 - [MangaDoom](https://mngdoom.com/) _[English]_
 - [MangaFox](http://fanfox.net/) _[English]_
 - [MangaFreak](https://komiraw.com/) _[English]_
 - [MangaFreak](https://mangafreak.net/) _[English]_
-- [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) _[English]_
+- [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) _[English]_
 - [MangaHere](http://www.mangahere.cc/) _[English]_
 - [MangaHub](https://mangahub.io/) _[English]_
 - [MangaInn](http://www.mangainn.net/) _[English]_
@@ -55,7 +54,6 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [NineManga](http://ninemanga.com/) _[English]_
 - [ReadManga Today](http://www.readmng.com/) _[English]_
 - [Reaper Scans](https://reaperscans.com/home) _[English]_
-- [Toonily](https://toonily.net/) _[English]_
 - [RawDevart](https://rawdevart.com) _[Original]_
 - [SenManga(Raw)](http://raw.senmanga.com/) _[Original]_
 - [Leitor](https://leitor.net/) _[Portuguese]_

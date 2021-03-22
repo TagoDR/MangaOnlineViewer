@@ -1,8 +1,8 @@
 // == WPManga ======================================================================================
 export default {
-  name: ['MangaDeep'],
-  url: /https?:\/\/(www.)?(mangadeep).com\/chapter\/.+\/[0-9]+/,
-  homepage: ['http://mangadeep.com/'],
+  name: ['Manga33'],
+  url: /https?:\/\/(www.)?(manga33).com\/chapter\/.+\/[0-9]+/,
+  homepage: ['http://manga33.com/'],
   language: ['English'],
   category: 'manga',
   run() {
@@ -14,7 +14,7 @@ export default {
       prev: $('select.sl-chap:first option:selected').next().val(),
       next: $('select.sl-chap:first option:selected').prev().val(),
       listPages: src.map((i) => $(i).val()),
-      img: '#manga_pic_1',
+      img: '.chapter-content img',
     };
   },
 };

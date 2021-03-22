@@ -27,10 +27,8 @@ import readmangatoday from './readmangatoday';
 import senmanga from './senmanga';
 import tmofans from './tmofans';
 import unionmangas from './unionmangas';
-import wpmanga from './wpmanga';
 import rawdevart from './rawdevart';
 import mangahost from './mangahost';
-import toonily from './toonily';
 import reaperscans from './reaperscans';
 import asurasflamecans from './asurasflamecans';
 import madarawp from './madarawp';
@@ -69,7 +67,6 @@ export default [
   // mangarock, [Dead/Arquived]
   mangasee,
   mangatown,
-  // mangazuki, [Weak? Not Safe?]
   ninemanga,
   rawdevart,
   readcomicsonline,
@@ -79,8 +76,7 @@ export default [
   // tenmanga, [Not Safe?]
   // thespectrum, [Broken, Dead?]
   tmofans,
-  toonily,
   unionmangas,
-  wpmanga,
+  // wpmanga, Todo: fix
   batoto,
 ];
