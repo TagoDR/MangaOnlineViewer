@@ -1,6 +1,6 @@
 // == KomiRaw ===================================================================================
 export default {
-  name: 'MangaFreak',
+  name: 'KomiRaw',
   url: /https?:\/\/(www.)?(komiraw).com\/.+\/.+/,
   homepage: 'https://komiraw.com/',
   language: ['English'],

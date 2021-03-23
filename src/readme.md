@@ -8,12 +8,14 @@
 ### Supported Browsers
 Firefox and Chrome with [Tampermonkey](https://tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/).
 Other Browsers with other add-ons may also work, but not officially supported.
-Mobile Bookmarklet (*Settings can't be saved, may require to request for Desktop Page*):
-##### Main Reader:
+
+####Mobile Bookmarklet
+*Settings can't be saved, may require to request for Desktop Page*:
+###### Main Reader:
 ```
 javascript:(function(){["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/Manga_OnlineViewer.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
 ```
-##### Adult Reader:
+###### Adult Reader:
 ```
 javascript:(function(){["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/Manga_OnlineViewer_Adult.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
 ```

@@ -8,12 +8,14 @@
 ### Supported Browsers
 Firefox and Chrome with [Tampermonkey](https://tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/).
 Other Browsers with other add-ons may also work, but not officially supported.
-Mobile Bookmarklet (*Settings can't be saved, may require to request for Desktop Page*):
-##### Main Reader:
+
+####Mobile Bookmarklet
+*Settings can't be saved, may require to request for Desktop Page*:
+###### Main Reader:
 ```
 javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.2.3/jscolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js", "https://cdnjs.cloudflare.com/ajax/libs/ramda/0.27.0/ramda.min.js", "https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/Manga_OnlineViewer.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
 ```
-##### Adult Reader:
+###### Adult Reader:
 ```
 javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.2.3/jscolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js", "https://cdnjs.cloudflare.com/ajax/libs/ramda/0.27.0/ramda.min.js", "https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/Manga_OnlineViewer_Adult.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
 ```
@@ -35,11 +37,11 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [HatigarmScans](https://hatigarmscanz.net/home) _[English]_
 - [JaiminisBox](https://jaiminisbox.com/) _[English]_
 - [KissManga](http://kissmanga.com/) _[English]_
+- [KomiRaw](https://komiraw.com/) _[English]_
 - [LHTranslation](http://lhtranslation.net/) _[English]_
 - [MangaDex](https://mangadex.org/) _[English]_
 - [MangaDoom](https://mngdoom.com/) _[English]_
 - [MangaFox](http://fanfox.net/) _[English]_
-- [MangaFreak](https://komiraw.com/) _[English]_
 - [MangaFreak](https://mangafreak.net/) _[English]_
 - [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
 - [MangaHere](http://www.mangahere.cc/) _[English]_

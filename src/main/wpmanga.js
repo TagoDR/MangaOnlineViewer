@@ -8,11 +8,11 @@ export default {
   run() {
     const src = $('select.sl-page:first option').get();
     return {
-      title: $('.read-page a:eq(2)').text().trim(),
-      series: $('.read-page a:eq(1)').attr('href'),
+      title: $('title').text().trim(),
+      series: $('a.manga-name:last').attr('href'),
       quant: src.length,
-      prev: $('select.sl-chap:first option:selected').next().val(),
-      next: $('select.sl-chap:first option:selected').prev().val(),
+      prev: $('a.prev').attr('href'),
+      next: $('a.next').attr('href'),
       listPages: src.map((i) => $(i).val()),
       img: '.chapter-content img',
     };

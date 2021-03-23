@@ -35,6 +35,7 @@ import madarawp from './madarawp';
 import mangahub from './mangahub';
 import mangafreak from './mangafreak';
 import komiraw from './komiraw';
+import wpmanga from './wpmanga';
 
 export default [
   asurasflamecans,
@@ -77,6 +78,6 @@ export default [
   // thespectrum, [Broken, Dead?]
   tmofans,
   unionmangas,
-  // wpmanga, Todo: fix
+  // wpmanga, Todo: Fix
   batoto,
 ];
