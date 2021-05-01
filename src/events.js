@@ -65,6 +65,10 @@ function setKeyDownEvents() {
           'Slash',
           'Numpad5',
           'KeyX',
+          'KeyC',
+          'KeyV',
+          'KeyB',
+          'KeyN',
         ]) !== -1) {
       e.preventDefault();
       e.stopPropagation();
@@ -134,6 +138,18 @@ function setKeyDownEvents() {
         case 'Numpad5':
         case 'KeyX':
           $('#settings').click();
+          break;
+        case 'KeyC':
+          $('#webComic').click();
+          break;
+        case 'KeyV':
+          $('#verticalMode').click();
+          break;
+        case 'KeyN':
+          $('#rtlMode').click();
+          break;
+        case 'KeyB':
+          $('#ltrMode').click();
           break;
         default:
           break;
