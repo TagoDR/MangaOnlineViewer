@@ -11,8 +11,8 @@ export default {
       title: $('.entry-title').text().trim(),
       series: $('.allc a').attr('href'),
       quant: images.length,
-      prev: $('.ch-prev-btn:first').attr('href'),
-      next: $('.ch-next-btn:first').attr('href'),
+      prev: $('.ch-prev-btn:first').attr('href').replace('/prev/', ''),
+      next: $('.ch-next-btn:first').attr('href').replace('/next/', ''),
       listImages: images.map((i) => $(i).attr('src')),
     };
   },
