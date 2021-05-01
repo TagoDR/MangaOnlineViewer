@@ -7,14 +7,14 @@ export default {
   category: 'hentai',
   run() {
     const num = parseInt($('.num-pages:first').html(), 10);
+    const src = $('#image-container img').attr('src').replace(/\d+.jpg/, '');
     return {
       title: $('title').text().split('- Page')[0].trim(),
       series: $('.go-back').attr('href'),
       quant: num,
       prev: '#',
       next: '#',
-      listPages: [...Array(num).keys()].map((i) => `../${i + 1}/`),
-      img: '#image-container img',
+      listImages: [...Array(num).keys()].map((i) => `${src}/${i + 1}.jpg`),
     };
   },
 };
