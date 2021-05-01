@@ -5,7 +5,12 @@ import {
 // Configuration
 const settings = {
   Theme: getValueGM('MangaTheme', 'Light'),
-  CustomTheme: getValueGM('MangaCustomTheme', '3d0099'),
+  CustomTheme: getValueGM('MangaCustomTheme', '#3d0099'),
+  CustomThemeBody: getValueGM('MangaCustomThemeBody', '#000000'),
+  CustomThemeText: getValueGM('MangaCustomThemeText', '#ffffff'),
+  CustomThemeLines: getValueGM('MangaCustomThemeLines', '#666666'),
+  CustomThemePanel: getValueGM('MangaCustomThemePanel', '#333333'),
+  CustomThemeButton: getValueGM('MangaCustomThemebutton', '#282828'),
   FitWidthIfOversized: getValueGM('MangaFitWidthIfOversized', true),
   ShowThumbnails: getValueGM('MangaShowThumbnails', true),
   DownloadZip: getValueGM('MangaDownloadZip', false),

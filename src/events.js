@@ -2,7 +2,7 @@ import { getValueGM, logScript, setValueGM } from './browser';
 import generateZip from './download';
 import { applyZoom, reloadImage } from './page';
 import { settings } from './settings';
-import { addCustomTheme } from './themes';
+import { addCustomTheme, addFullCustomTheme } from './themes';
 
 // Goto Page and Thumbnails
 function scrollToElement(ele) {
@@ -326,25 +326,67 @@ function controls() {
     $('#MangaOnlineViewer , body').removeClass().addClass(target.val());
     logScript('MangaTheme', target.val());
     setValueGM('MangaTheme', target.val());
-    logScript(`MangaTheme: ${getValueGM('MangaTheme')}`);
     if (target.val() === 'Custom_Dark' || target.val() === 'Custom_Light') {
-      $('#CustomThemeHue').show();
+      $('.CustomTheme').show();
     } else {
-      $('#CustomThemeHue').hide();
+      $('.CustomTheme').hide();
+    }
+    if (target.val() === 'Full_Custom') {
+      $('.FullCustom').show();
+    } else {
+      $('.FullCustom').hide();
     }
   });
-  try {
-    jscolor(document.getElementById('CustomThemeHue'));
-  } catch (e) {
-    logScript(e);
-  }
+  // try {
+  //   jscolor.presets.default = {
+  //     position: 'right',
+  //     format: 'hex',
+  //     palette: [
+  //       '#000000', '#7d7d7d', '#870014', '#ec1c23', '#ff7e26',
+  //       '#fef100', '#22b14b', '#00a1e7', '#3f47cc', '#a349a4',
+  //       '#ffffff', '#c3c3c3', '#b87957', '#feaec9', '#ffc80d',
+  //       '#eee3af', '#b5e61d', '#99d9ea', '#7092be', '#c8bfe7',
+  //     ],
+  //     // paletteCols: 12,
+  //     hideOnPaletteClick: true,
+  //     closeButton: true,
+  //     shadow: false,
+  //     alphaChannel: false,
+  //     paletteSetsAlpha: false,
+  //   };
+  //   jscolor.install();
+  // } catch (e) {
+  //   logScript(e);
+  // }
+  $('INPUT.colorpicker').minicolors();
   $('#CustomThemeHue').change((event) => {
     const target = $(event.target).val();
-    logScript(`CustomTheme: #${target}`);
+    logScript(`CustomTheme: ${target}`);
     $('style[title="Custom_Light"], style[title="Custom_Dark"]').remove();
     $('head').append(addCustomTheme(target));
     setValueGM('MangaCustomTheme', target);
     logScript(`MangaCustomTheme: ${getValueGM('MangaCustomTheme')}`);
+  });
+  $('.FullCustom').change(() => {
+    logScript('FullCustomTheme: ',
+      $('#CustomThemeHueBody').val(),
+      $('#CustomThemeHueText').val(),
+      $('#CustomThemeHueLines').val(),
+      $('#CustomThemeHuePanel').val(),
+      $('#CustomThemeHueButton').val());
+    $('style[title="Full_Custom"]').remove();
+    $('head').append(addFullCustomTheme(
+      $('#CustomThemeHueBody').val(),
+      $('#CustomThemeHueText').val(),
+      $('#CustomThemeHueLines').val(),
+      $('#CustomThemeHuePanel').val(),
+      $('#CustomThemeHueButton').val(),
+    ));
+    setValueGM('MangaCustomThemeBody', $('#CustomThemeHueBody').val());
+    setValueGM('MangaCustomThemeText', $('#CustomThemeHueText').val());
+    setValueGM('MangaCustomThemeLines', $('#CustomThemeHueLines').val());
+    setValueGM('MangaCustomThemePanel', $('#CustomThemeHuePanel').val());
+    setValueGM('MangaCustomThemebutton', $('#CustomThemeHueButton').val());
   });
 
   $('#gotoPage').bind('change', (event) => {

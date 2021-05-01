@@ -26,11 +26,15 @@ const panel = `<div id='ImageOptions'>
 </div>`;
 const controls = `<div id='ViewerControls' class='panel'>
   <span class='controlLabel ThemeSelector'>Theme:
-    <input id='CustomThemeHue' class='jscolor' value='${settings.CustomTheme}' ${(settings.Theme
-  !== 'Custom_Dark' && settings.Theme !== 'Custom_Light') ? 'style="display: none;"' : ''}'>
     <select id='ThemeSelector'>
       ${themesSelector}
     </select>
+      <span class='CustomTheme' ${(settings.Theme !== 'Custom_Dark' && settings.Theme !== 'Custom_Light') ? 'style="display: none;"' : ''}><br/>-Base:<input id='CustomThemeHue' value='${settings.CustomTheme}' class='colorpicker CustomTheme'></span>
+      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Body:<input id='CustomThemeHueBody' value='${settings.CustomThemeBody}' class='colorpicker FullCustom'></span>
+      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Text:<input id='CustomThemeHueText' value=${settings.CustomThemeText}' class='colorpicker FullCustom'></span>
+      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Lines:<input id='CustomThemeHueLines' value='${settings.CustomThemeLines}' class='colorpicker FullCustom'></span>
+      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Painels:<input id='CustomThemeHuePanel' value='${settings.CustomThemePanel}' class='colorpicker FullCustom'></span>
+      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Buttons:<input id='CustomThemeHueButton' value='${settings.CustomThemeButton}' class='colorpicker FullCustom'></span>
   </span>
   <span class='controlLabel loadMode'>Default Load Mode:
     <select id='loadMode'>

@@ -428,3 +428,7 @@ img {
 #MangaOnlineViewer .fitWidthIfOversized .PageContent img {
   max-width: 100%;
 }
+#MangaOnlineViewer .minicolors-theme-default .minicolors-swatch{
+  top: 2px;
+  left: 2px;
+}

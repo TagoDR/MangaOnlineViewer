@@ -19,7 +19,7 @@ function addTheme(theme) {
 }
 
 function addCustomTheme(color) {
-  const bg = scheme.from_hex(color).colors();
+  const bg = scheme.from_hex(color.replace('#', '')).colors();
   return addTheme([
     'Custom_Dark',
     '#000000',
@@ -27,20 +27,30 @@ function addCustomTheme(color) {
     `#${bg[3]}`,
     `#${bg[0]}`,
     `#${bg[1]}`,
-  ])
-    + addTheme([
-      'Custom_Light',
-      '#eeeeec',
-      `#${bg[3]}`,
-      `#${bg[2]}`,
-      `#${bg[0]}`,
-      `#${bg[1]}`,
-    ]);
+  ]) + addTheme([
+    'Custom_Light',
+    '#eeeeec',
+    `#${bg[3]}`,
+    `#${bg[2]}`,
+    `#${bg[0]}`,
+    `#${bg[1]}`,
+  ]);
+}
+
+function addFullCustomTheme(body, text, lines, panel, buttons) {
+  return addTheme([
+    'Full_Custom',
+    body,
+    text,
+    lines,
+    panel,
+    buttons,
+  ]);
 }
 
 function loadThemes() {
-  const bg = scheme.from_hex(settings.CustomTheme).colors();
-  return [ //   1-body       2-text       3-lines     4-panel     5-Buttons
+  const bg = scheme.from_hex(settings.CustomTheme.replace('#', '')).colors();
+  return [ //   1-body       2-text       3-lines     4-panel     5-buttons
     ['Dark', '#000000', '#ffffff', '#666666', '#333333', '#282828'],
     ['Light', '#eeeeec', '#2e3436', '#888a85', '#babdb6', '#c8cec2'],
     ['Clear', '#ffffff', '#2e3436', '#888a85', '#eeeeec', '#d3d7cf'],
@@ -53,6 +63,7 @@ function loadThemes() {
     ['Cool_Blues', '#000000', '#c4dfe6', '#66a5ad', '#07575b', '#003b46'],
     ['Custom_Dark', '#000000', `#${bg[2]}`, `#${bg[3]}`, `#${bg[0]}`, `#${bg[1]}`],
     ['Custom_Light', '#eeeeec', `#${bg[3]}`, `#${bg[2]}`, `#${bg[0]}`, `#${bg[1]}`],
+    ['Full_Custom', settings.CustomThemeBody, settings.CustomThemeText, settings.CustomThemeLines, settings.CustomThemePanel, settings.CustomThemeButton],
   ];
 }
 
@@ -68,4 +79,5 @@ export {
   themesCSS,
   themesSelector,
   addCustomTheme,
+  addFullCustomTheme,
 };

@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans,Flame Scans, ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, JaiminisBox, KissManga, KomiRaw, Leitor, LHTranslation, MangaHaus,Isekai Scan,Comic Kiba,Zinmanga,mangatx,Toonily,Mngazuki, MangaDex, MangaDoom, MangaFreak, MangaFox, MangaHere, MangaHost2, MangaHub, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaPark, MangaReader,MangaPanda, MangaSee, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, Reaper Scans, SenManga(Raw), TuMangaOnline, UnionMangas, Batoto
-// @version 19.10.0
+// @version 20.0.0
 // @license MIT
 // @date 2021-05-01
 // @grant GM_getValue
@@ -17,12 +17,12 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
-// @require https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.2.3/jscolor.min.js
+// @require https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/ramda/0.27.0/ramda.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.3.5/jquery.minicolors.min.js
 // @include /https?:\/\/(www.)?(asurascans|flamescans).(com|org)\/.+/
 // @include /https?:\/\/(www.)?comicastle.org\/comic\/.+\/[0-9]+.*/
 // @include /https?:\/\/(www.)?disasterscans.com\/manga\/.+\/chapter-.+/
@@ -61,6 +61,4 @@
 // @include /https?:\/\/(www.)?bato.to\/chapter.*/
 // @exclude /https?:\/\/(www.)?tsumino.com\/.+/
 // @exclude /https?:\/\/(www.)?pururin.io\/.+/
-// @exclude /https?:\/\/(www.)?hentainexus.com\/.+/
-// @exclude /https?:\/\/hentai.cafe\/.+/
 // ==/UserScript==

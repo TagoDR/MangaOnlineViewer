@@ -28,7 +28,5 @@ export default {
   exclude: [
     /https?:\/\/(www.)?tsumino.com\/.+/,
     /https?:\/\/(www.)?pururin.io\/.+/,
-    /https?:\/\/(www.)?hentainexus.com\/.+/,
-    /https?:\/\/hentai.cafe\/.+/,
   ],
 };
