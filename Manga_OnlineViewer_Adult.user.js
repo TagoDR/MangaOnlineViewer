@@ -4,8 +4,8 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, hitomi, MultPorn, MyHentaiGallery, nHentai.net, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, 8Muses, xyzcomics
-// @version 20.2.0
+// @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, hitomi, MultPorn, MyHentaiGallery, nHentai.net,nHentai.xxx, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, 8Muses, xyzcomics
+// @version 20.3.0
 // @license MIT
 // @date 2021-05-10
 // @grant GM_getValue
@@ -36,7 +36,7 @@
 // @include /https?:\/\/hitomi.la\/reader\/.+/
 // @include /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include /https?:\/\/(www.)?myhentaigallery.com\/gallery\/show\/.+\/[0-9]+/
-// @include /https?:\/\/(www.)?nhentai.net\/g\/.+\/.+/
+// @include /https?:\/\/(www.)?nhentai.(net|xxx)\/g\/.+\/.+/
 // @include /https?:\/\/(www.)?nhentai.com\/.+\/comic\/.+/
 // @include /https?:\/\/(www.)?9hentai.ru\/g\/.+/
 // @include /https?:\/\/(www.)?porncomixone.net\/comic\/.+/
@@ -386,24 +386,29 @@
   };
 
   var nhentainet = {
-    name: 'nHentai.net',
-    url: /https?:\/\/(www.)?nhentai.net\/g\/.+\/.+/,
-    homepage: 'https://nhentai.net/',
+    name: ['nHentai.net', 'nHentai.xxx'],
+    url: /https?:\/\/(www.)?nhentai.(net|xxx)\/g\/.+\/.+/,
+    homepage: ['https://nhentai.net/', 'https://nhentai.xxx/'],
     language: ['English'],
     category: 'hentai',
-    waitVar: '_gallery',
     run() {
+      var _W, _W$images_ext, _W2, _W2$_gallery, _W2$_gallery$images, _W2$_gallery$images$p;
+
+      function getExt(ext) {
+        if (ext === 'g') return 'gif';
+        if (ext === 'p') return 'png';
+        return 'jpg';
+      }
       const num = parseInt($('.num-pages:first').html(), 10);
       const src = $('#image-container img').attr('src').replace(/\d+.\w\w\w$/, '');
+      const ext = ((_W = W) === null || _W === void 0 ? void 0 : (_W$images_ext = _W.images_ext) === null || _W$images_ext === void 0 ? void 0 : _W$images_ext.map(getExt)) || ((_W2 = W) === null || _W2 === void 0 ? void 0 : (_W2$_gallery = _W2._gallery) === null || _W2$_gallery === void 0 ? void 0 : (_W2$_gallery$images = _W2$_gallery.images) === null || _W2$_gallery$images === void 0 ? void 0 : (_W2$_gallery$images$p = _W2$_gallery$images.pages) === null || _W2$_gallery$images$p === void 0 ? void 0 : _W2$_gallery$images$p.map(i => getExt(i.t))) || [...Array(num).keys()].map(getExt);
       return {
         title: $('title').text().split('- Page')[0].trim(),
         series: $('.go-back').attr('href'),
         quant: num,
         prev: '#',
         next: '#',
-        listImages: [...Array(num)
-          .keys()
-        ].map(i => "".concat(src).concat(i + 1).concat(W._gallery.images.pages[i].t === 'j' ? '.jpg' : '.png'))
+        listImages: [...Array(num).keys()].map(i => "".concat(src).concat(i + 1, ".").concat(ext[i]))
       };
     }
   };

@@ -4,8 +4,8 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, hitomi, MultPorn, MyHentaiGallery, nHentai.net, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, 8Muses, xyzcomics
-// @version 20.2.0
+// @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, hitomi, MultPorn, MyHentaiGallery, nHentai.net,nHentai.xxx, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, 8Muses, xyzcomics
+// @version 20.3.0
 // @license MIT
 // @date 2021-05-10
 // @grant GM_getValue
@@ -36,7 +36,7 @@
 // @include /https?:\/\/hitomi.la\/reader\/.+/
 // @include /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include /https?:\/\/(www.)?myhentaigallery.com\/gallery\/show\/.+\/[0-9]+/
-// @include /https?:\/\/(www.)?nhentai.net\/g\/.+\/.+/
+// @include /https?:\/\/(www.)?nhentai.(net|xxx)\/g\/.+\/.+/
 // @include /https?:\/\/(www.)?nhentai.com\/.+\/comic\/.+/
 // @include /https?:\/\/(www.)?9hentai.ru\/g\/.+/
 // @include /https?:\/\/(www.)?porncomixone.net\/comic\/.+/

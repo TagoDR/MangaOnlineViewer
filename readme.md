@@ -89,7 +89,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [Tsumino](http://tsumino.com/) _[English]_
 - [hitomi](https://hitomi.la/) _[English]_
 - [nHentai.com](https://nhentai.com/) _[English]_
-- [nHentai.net](https://nhentai.net/) _[English]_
+- [nHentai.net](https://nhentai.net/) / [nHentai.xxx](https://nhentai.xxx/) _[English]_
 - [xyzcomics](http://xyzcomics.com/) _[English]_
 - [TMOHentai](http://tmohentai.com/) _[Spanish]_
 
