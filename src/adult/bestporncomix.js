@@ -10,11 +10,10 @@ export default {
     return {
       title: $('.post-title:first').text().trim(),
       series: '#',
-      quant: $('.attachment-thumbnail').get().length,
+      quant: $('figure img').get().length,
       prev: '#',
       next: '#',
-      listPages: $('.gallery-item a').get().map((i) => $(i).attr('href')),
-      img: '.attachment-image img',
+      listImages: $('figure a').get().map((i) => $(i).attr('href')),
     };
   },
 };

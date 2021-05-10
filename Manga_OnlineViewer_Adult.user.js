@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, hitomi, MultPorn, MyHentaiGallery, nHentai.net, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, 8Muses, xyzcomics
-// @version 20.0.0
+// @version 20.1.0
 // @license MIT
-// @date 2021-05-01
+// @date 2021-05-10
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -393,14 +393,15 @@
     category: 'hentai',
     run() {
       const num = parseInt($('.num-pages:first').html(), 10);
-      const src = $('#image-container img').attr('src').replace(/\d+.jpg/, '');
+      const ext = $('#image-container img').attr('src').match(/\.\w\w\w$/);
+      const src = $('#image-container img').attr('src').replace(/\d+.\w\w\w$/, '');
       return {
         title: $('title').text().split('- Page')[0].trim(),
         series: $('.go-back').attr('href'),
         quant: num,
         prev: '#',
         next: '#',
-        listImages: [...Array(num).keys()].map(i => "".concat(src, "/").concat(i + 1, ".jpg"))
+        listImages: [...Array(num).keys()].map(i => "".concat(src).concat(i + 1).concat(ext))
       };
     }
   };
@@ -587,11 +588,10 @@
       return {
         title: $('.post-title:first').text().trim(),
         series: '#',
-        quant: $('.attachment-thumbnail').get().length,
+        quant: $('figure img').get().length,
         prev: '#',
         next: '#',
-        listPages: $('.gallery-item a').get().map(i => $(i).attr('href')),
-        img: '.attachment-image img'
+        listImages: $('figure a').get().map(i => $(i).attr('href'))
       };
     }
   };

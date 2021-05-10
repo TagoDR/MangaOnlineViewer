@@ -9,7 +9,7 @@
 Firefox and Chrome with [Tampermonkey](https://tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/).
 Other Browsers with other add-ons may also work, but not officially supported.
 
-####Mobile Bookmarklet
+#### Mobile Bookmarklet
 *Settings can't be saved, may require to request for Desktop Page*:
 ###### Main Reader:
 ```
@@ -94,15 +94,19 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [TMOHentai](http://tmohentai.com/) _[Spanish]_
 
 ### HotKeys
-- <kbd class='dark'>Numpad 5</kbd> | <kbd class='dark'>X</kbd> | <kbd class='dark'>/</kbd>: Open Settings
-- <kbd class='dark'>Numpad +</kbd> | <kbd class='dark'>Q</kbd> | <kbd class='dark'>=</kbd>: Global Zoom in pages (enlarge)
-- <kbd class='dark'>Numpad -</kbd> | <kbd class='dark'>E</kbd> | <kbd class='dark'>-</kbd>: Global Zoom out pages (reduce)
-- <kbd class='dark'>Numpad /</kbd> | <kbd class='dark'>R</kbd> | <kbd class='dark'>9</kbd>: Global Restore pages to original
-- <kbd class='dark'>Numpad *</kbd> | <kbd class='dark'>F</kbd> | <kbd class='dark'>0</kbd>: Global Fit window width
-- <kbd class='dark'>Numpad 6</kbd> | <kbd class='dark'>D</kbd> | <kbd class='dark'>.</kbd> | <kbd class="dark">→</kbd>: Next Chapter
-- <kbd class='dark'>Numpad 4</kbd> | <kbd class='dark'>A</kbd> | <kbd class='dark'>,</kbd> | <kbd class="dark">←</kbd>: Previous Chapter
-- <kbd class='dark'>Numpad 8</kbd> | <kbd class='dark'>W</kbd>: Scroll Up
-- <kbd class='dark'>Numpad 2</kbd> | <kbd class='dark'>S</kbd>: Scroll Down
+  <kbd class='dark'>Numpad 5</kbd>/<kbd class='dark'>/</kbd>: Open Settings<br/>
+  <kbd class='dark'>Numpad +</kbd>/<kbd class='dark'>=</kbd>: Global Zoom in pages (enlarge)<br/>
+  <kbd class='dark'>Numpad -</kbd>/<kbd class='dark'>-</kbd>: Global Zoom out pages (reduce)<br/>
+  <kbd class='dark'>Numpad /</kbd>/<kbd class='dark'>9</kbd>: Global Restore pages to original<br/>
+  <kbd class='dark'>Numpad *</kbd>/<kbd class='dark'>0</kbd>: Global Fit window width<br/>
+  <kbd class='dark'>V</kbd>: Vertical Mode<br/>
+  <kbd class='dark'>C</kbd>: WebComic Mode<br/>
+  <kbd class='dark'>N</kbd>: Right to Left Mode<br/>
+  <kbd class='dark'>B</kbd>: Left to Right Mode<br/>
+  <kbd class='dark'>→</kbd>/<kbd class='dark'>D</kbd>/<kbd class='dark'>Numpad 6</kbd>/<kbd class='dark'>.</kbd> : Next Chapter<br/>
+  <kbd class='dark'>←</kbd>/<kbd class='dark'>A</kbd>/<kbd class='dark'>Numpad 4</kbd>/<kbd class='dark'>,</kbd> : Previous Chapter<br/>
+  <kbd class='dark'>↑</kbd>/<kbd class='dark'>W</kbd>/<kbd class='dark'>Numpad 8</kbd>: Scroll  Up<br/>
+  <kbd class='dark'>↓</kbd>/<kbd class='dark'>S</kbd>/<kbd class='dark'>Numpad 2</kbd>: Scroll  Down<br/>
 
 ### Features
 - View Modes:
