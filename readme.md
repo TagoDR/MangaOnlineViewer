@@ -81,6 +81,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [Hentai2Read](http://hentai2read.com/) _[English]_
 - [HentaiFox](http://www.hentaifox.com/) _[English]_
 - [HentaiHand](https://hentaihand.com/) _[English]_
+- [HentaiMimi](https://hentaimimi.com/) _[English]_
 - [MultPorn](https://multporn.net/) _[English]_
 - [MyHentaiGallery](https://www.myhentaigallery.com) _[English]_
 - [PornComixOnline](https://www.porncomixone.net) _[English]_

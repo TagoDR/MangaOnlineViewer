@@ -24,6 +24,7 @@ import tsumino from './tsumino';
 import xyzcomics from './xyzcomics';
 import bestporncomix from './bestporncomix';
 import myhentaigallery from './myhentaigallery';
+import hentaimimi from './hentaimimi';
 
 export default [
   asmhentai,
@@ -38,6 +39,7 @@ export default [
   hentaifox,
   hentaihand,
   hentaihere,
+  hentaimimi,
   // hentainexus, [RIP]
   hitomi,
   // luscious, Todo: Fix
