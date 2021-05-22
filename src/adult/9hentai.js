@@ -1,7 +1,7 @@
 // == 9Hentai ======================================================================================
 export default {
   name: '9Hentai',
-  url: /https?:\/\/(www.)?9hentai.ru\/g\/.+/,
+  url: /https?:\/\/(www.)?9hentai.(ru|to)\/g\/.+/,
   homepage: 'https://9hentai.ru',
   language: ['English'],
   category: 'hentai',
