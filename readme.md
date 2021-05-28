@@ -49,6 +49,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [MangaInn](http://www.mangainn.net/) _[English]_
 - [MangaKakalot](https://mangakakalot.com/page) / [MangaNelo](http://www.manganelo.com/) _[English]_
 - [MangaLyght](http://manga.lyght.net/) _[English]_
+- [MangaNato](http://www.manganato.com/) _[English]_
 - [MangaPark](http://mangapark.net/) _[English]_
 - [MangaReader](http://www.mangareader.net/) / [MangaPanda](http://www.mangapanda.com/) _[English]_
 - [MangaSee](https://mangasee123.com/) _[English]_

@@ -36,6 +36,7 @@ import mangahub from './mangahub';
 import mangafreak from './mangafreak';
 import komiraw from './komiraw';
 import wpmanga from './wpmanga';
+import manganato from './manganato';
 
 export default [
   asurasflamecans,
@@ -63,6 +64,7 @@ export default [
   mangainn,
   mangakakalot,
   mangalyght,
+  manganato,
   mangapark,
   mangareader,
   // mangarock, [Dead/Arquived]
