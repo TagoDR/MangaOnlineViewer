@@ -9,7 +9,7 @@ export default {
   run() {
     let api = null;
     const slug = W.CURRENT_MANGA_SLUG || W.location.pathname.split('/')[2];
-    const number = W.location.pathname.split('/')[3].match(/[0-9]+/)[0];
+    const number = W.location.pathname.split('/')[3].replace('chapter-', '');
     const data = { query: `{chapter(x:m01,slug:"${slug}",number:${number}){pages}}` };
     $.ajax({
       type: 'POST',

@@ -8,7 +8,7 @@ export default {
   waitVar: 'previewImages',
   run() {
     return {
-      title: $('h3').text().trim(),
+      title: $('h3:first').text().trim(),
       series: W.location.pathname,
       quant: W.previewImages.length,
       prev: '#',
