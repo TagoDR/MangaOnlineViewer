@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, 8Muses, ExHentai,e-Hentai, HBrowser, Hentai2Read, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, HentaiMimi, hitomi, KingComix, MultPorn, MyHentaiGallery, nHentai.net,nHentai.xxx, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno,vercomicsporno, xyzcomics
-// @version 20.9.0
+// @version 20.10.0
 // @license MIT
 // @date 2021-06-05
 // @grant GM_getValue
@@ -652,7 +652,7 @@
     language: ['Spanish'],
     category: 'hentai',
     run() {
-      const imgs = $('img[loading="lazy"].size-full, .comicimg picture img').get();
+      const imgs = $('img[loading="lazy"].size-full, .comicimg picture img, .wp-content img').get();
       const src = imgs.map(i => $(i).attr('data-lazy-src') || $(i).attr('src'));
       return {
         title: $('h1.titl').text().trim() || $('title').text().trim(),
@@ -672,7 +672,7 @@
     language: ['English'],
     category: 'hentai',
     run() {
-      const src = $('figure img').get().map(i => $(i).attr('data-full-url'));
+      const src = $('figure img').get().map(i => $(i).attr('data-full-url') || $(i).attr('data-lazy-src'));
       return {
         title: $('h1.singleTitle-h1').text().trim(),
         series: '#',

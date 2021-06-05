@@ -6,7 +6,7 @@ export default {
   language: ['Spanish'],
   category: 'hentai',
   run() {
-    const imgs = $('img[loading="lazy"].size-full, .comicimg picture img').get();
+    const imgs = $('img[loading="lazy"].size-full, .comicimg picture img, .wp-content img').get();
     const src = imgs.map((i) => $(i).attr('data-lazy-src') || $(i).attr('src'));
     return {
       title: $('h1.titl').text().trim() || $('title').text().trim(),
