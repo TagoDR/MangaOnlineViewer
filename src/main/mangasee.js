@@ -8,8 +8,8 @@ export default {
   waitAttr: ['.img-fluid', 'src'],
   run() {
     const src = $('.img-fluid').attr('src');
-    const CurChapter = JSON.parse($('script:last').text().match(/CurChapter = ({.+});/)[1]);
-    const CHAPTERS = JSON.parse($('script:last').text().match(/CHAPTERS = (\[{.+}\]);/)[1]);
+    const CurChapter = JSON.parse($('script').text().match(/CurChapter = ({.+});/)[1]);
+    const CHAPTERS = JSON.parse($('script').text().match(/CHAPTERS = (\[{.+}\]);/)[1]);
     const CurChapterIndex = CHAPTERS.findIndex((chap) => chap.Chapter === CurChapter.Chapter);
 
     function ChapterURLEncode(reference) {

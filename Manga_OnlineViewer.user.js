@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans,Flame Scans, ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, JaiminisBox, KissManga, KomiRaw, Leitor, LHTranslation, MangaHaus,Isekai Scan,Comic Kiba,Zinmanga,mangatx,Toonily,Mngazuki, MangaDex, MangaDoom, MangaFreak, MangaFox, MangaHere, MangaHost2, MangaHub, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaNato, MangaPark, MangaReader,MangaPanda, MangaSee, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, Reaper Scans, SenManga(Raw), TuMangaOnline, UnionMangas, Batoto
-// @version 20.10.0
+// @version 20.11.0
 // @license MIT
 // @date 2021-06-05
 // @grant GM_getValue
@@ -572,8 +572,8 @@
     waitAttr: ['.img-fluid', 'src'],
     run() {
       const src = $('.img-fluid').attr('src');
-      const CurChapter = JSON.parse($('script:last').text().match(/CurChapter = ({.+});/)[1]);
-      const CHAPTERS = JSON.parse($('script:last').text().match(/CHAPTERS = (\[{.+}\]);/)[1]);
+      const CurChapter = JSON.parse($('script').text().match(/CurChapter = ({.+});/)[1]);
+      const CHAPTERS = JSON.parse($('script').text().match(/CHAPTERS = (\[{.+}\]);/)[1]);
       const CurChapterIndex = CHAPTERS.findIndex(chap => chap.Chapter === CurChapter.Chapter);
 
       function ChapterURLEncode(reference) {
