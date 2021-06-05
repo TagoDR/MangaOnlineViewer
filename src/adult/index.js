@@ -25,11 +25,14 @@ import xyzcomics from './xyzcomics';
 import bestporncomix from './bestporncomix';
 import myhentaigallery from './myhentaigallery';
 import hentaimimi from './hentaimimi';
+import vercomicsporno from './vercomicsporno';
+import kingcomix from './kingcomix';
 
 export default [
   asmhentai,
   bestporncomix,
   doujinmoe,
+  eightMuses,
   exhentai,
   // gntai, [CORS disabled]
   hbrowse,
@@ -42,6 +45,7 @@ export default [
   hentaimimi,
   // hentainexus, [RIP]
   hitomi,
+  kingcomix,
   // luscious, Todo: Fix
   multporn,
   myhentaigallery,
@@ -54,6 +58,6 @@ export default [
   // superhentais, Todo: Fix
   tmohhentai,
   tsumino,
-  eightMuses,
+  vercomicsporno,
   xyzcomics,
 ];

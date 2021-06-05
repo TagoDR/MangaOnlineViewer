@@ -83,6 +83,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [HentaiFox](http://www.hentaifox.com/) _[English]_
 - [HentaiHand](https://hentaihand.com/) _[English]_
 - [HentaiMimi](https://hentaimimi.com/) _[English]_
+- [KingComix](https://kingcomix.com/) _[English]_
 - [MultPorn](https://multporn.net/) _[English]_
 - [MyHentaiGallery](https://www.myhentaigallery.com) _[English]_
 - [PornComixOnline](https://www.porncomixone.net) _[English]_
@@ -94,6 +95,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [nHentai.net](https://nhentai.net/) / [nHentai.xxx](https://nhentai.xxx/) _[English]_
 - [xyzcomics](http://xyzcomics.com/) _[English]_
 - [TMOHentai](http://tmohentai.com/) _[Spanish]_
+- [vermangasporno](https://vermangasporno.com/) / [vercomicsporno](https://vercomicsporno.com/) _[Spanish]_
 
 ### HotKeys
   <kbd class='dark'>Numpad 5</kbd>/<kbd class='dark'>/</kbd>: Open Settings<br/>

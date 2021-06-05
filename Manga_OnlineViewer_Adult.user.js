@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, ExHentai,e-Hentai, HBrowser, Hentai2Read, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, HentaiMimi, hitomi, MultPorn, MyHentaiGallery, nHentai.net,nHentai.xxx, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, 8Muses, xyzcomics
-// @version 20.8.0
+// @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, 8Muses, ExHentai,e-Hentai, HBrowser, Hentai2Read, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, HentaiMimi, hitomi, KingComix, MultPorn, MyHentaiGallery, nHentai.net,nHentai.xxx, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno,vercomicsporno, xyzcomics
+// @version 20.9.0
 // @license MIT
-// @date 2021-06-02
+// @date 2021-06-05
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -26,6 +26,7 @@
 // @include /https?:\/\/(www.)?asmhentai.com\/gallery\/.+/
 // @include /https?:\/\/(www.)?bestporncomix.com\/gallery\/.+/
 // @include /https?:\/\/(www.)?doujins.com\/.+/
+// @include /https?:\/\/comics.8muses.com\/comics\/picture\/.+/
 // @include /https?:\/\/(g.)?(exhentai|e-hentai).org\/s\/.+\/.+/
 // @include /https?:\/\/(www.)?hbrowse.com\/.+/
 // @include /https?:\/\/(www.)?hentai2read.com\/[^/]+\/[0-9]+(.[0-9]+)?\//
@@ -35,6 +36,7 @@
 // @include /https?:\/\/(www.)?hentaihere.com\/.+\/.+\//
 // @include /https?:\/\/(www.)?hentaimimi.com\/view\/.+/
 // @include /https?:\/\/hitomi.la\/reader\/.+/
+// @include /https?:\/\/(www.)?kingcomix.com\/.+/
 // @include /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include /https?:\/\/(www.)?myhentaigallery.com\/gallery\/show\/.+\/[0-9]+/
 // @include /https?:\/\/(www.)?nhentai.(net|xxx)\/g\/.+\/.+/
@@ -45,7 +47,7 @@
 // @include /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/
 // @include /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/[0-9]+/
 // @include /https?:\/\/(www.)?tsumino.com\/Read\/Index\/[0-9]+(\?page=.+)?/
-// @include /https?:\/\/comics.8muses.com\/comics\/picture\/.+/
+// @include /https?:\/\/(www.)?(vermangasporno|vercomicsporno).com\/.+/
 // @include /https?:\/\/(www.)?xyzcomics.com\/.+/
 // ==/UserScript==
 
@@ -643,12 +645,51 @@
     }
   };
 
-  var sites = [asmhentai, bestporncomix, doujinmoe, exhentai,
+  var vercomicsporno = {
+    name: ['vermangasporno', 'vercomicsporno'],
+    url: /https?:\/\/(www.)?(vermangasporno|vercomicsporno).com\/.+/,
+    homepage: ['https://vermangasporno.com/', 'https://vercomicsporno.com/'],
+    language: ['Spanish'],
+    category: 'hentai',
+    run() {
+      const imgs = $('img[loading="lazy"].size-full, .comicimg picture img').get();
+      const src = imgs.map(i => $(i).attr('data-lazy-src') || $(i).attr('src'));
+      return {
+        title: $('h1.titl').text().trim() || $('title').text().trim(),
+        series: '#',
+        quant: imgs.length,
+        prev: '#',
+        next: '#',
+        listImages: src
+      };
+    }
+  };
+
+  var kingcomix = {
+    name: 'KingComix',
+    url: /https?:\/\/(www.)?kingcomix.com\/.+/,
+    homepage: 'https://kingcomix.com/',
+    language: ['English'],
+    category: 'hentai',
+    run() {
+      const src = $('figure img').get().map(i => $(i).attr('data-full-url'));
+      return {
+        title: $('h1.singleTitle-h1').text().trim(),
+        series: '#',
+        quant: src.length,
+        prev: '#',
+        next: '#',
+        listImages: src
+      };
+    }
+  };
+
+  var sites = [asmhentai, bestporncomix, doujinmoe, eightMuses, exhentai,
     hbrowse, hentai2read,
     hentaicomic, hentaifox, hentaihand, hentaihere, hentaimimi,
-    hitomi,
+    hitomi, kingcomix,
     multporn, myhentaigallery, nhentainet, nhentaicom, ninehentai, porncomixonline, pururin, simplyhentai,
-    tmohhentai, tsumino, eightMuses, xyzcomics
+    tmohhentai, tsumino, vercomicsporno, xyzcomics
   ];
 
   function logScript(...text) {
