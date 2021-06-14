@@ -46,9 +46,9 @@ export default [
   foolslide,
   funmanga,
   hatigarmscans,
-  jaiminisbox,
+  // jaiminisbox, [Broken, Dead?]
   // japscan, Todo: Fix
-  kissmanga,
+  // kissmanga, [Broken, Dead?]
   komiraw,
   leitor,
   lhtranslation,
@@ -59,14 +59,14 @@ export default [
   mangafox,
   // mangago, [Weak? Not Safe?]
   mangahere,
-  mangahost,
+  // mangahost, [Broken, Dead?]
   mangahub,
   mangainn,
   mangakakalot,
   mangalyght,
   manganato,
   mangapark,
-  mangareader,
+  // mangareader, [RIP]
   // mangarock, [Dead/Arquived]
   mangasee,
   mangatown,

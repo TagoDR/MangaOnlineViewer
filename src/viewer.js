@@ -81,7 +81,7 @@ function preparePage(site, manga, begin = 0) {
       '<style type="text/css">#mov {position: fixed;left: 50%;transform: translateX(-50%);top: 0;z-index: 1000000;border-radius: .25em;font-size: 1.5em;cursor: pointer;display: inline-block;margin: .3125em;padding: .625em 2em;box-shadow: none;font-weight: 500;color: #FFF;background: rgb(102, 83, 146);border: 1px #FFF;}</style>',
     );
     W.mov = (b) => lateStart(site, b || beginning);
-    switch (settings.loadMode) {
+    switch (site.start || settings.loadMode) {
       case 'never':
         $('body').append('<button id="mov" onclick=mov()>Start MangaOnlineViewer</button>');
         break;

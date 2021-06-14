@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, 8Muses, ExHentai,e-Hentai, HBrowser, Hentai2Read, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, HentaiMimi, hitomi, KingComix, MultPorn, MyHentaiGallery, nHentai.net,nHentai.xxx, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno,vercomicsporno, xyzcomics
-// @version 20.10.0
+// @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, 8Muses, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaiHand, HentaIHere, HentaiMimi, hitomi, KingComix, MultPorn, MyHentaiGallery, nHentai.net,nHentai.xxx, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno,vercomicsporno, xyzcomics
+// @version 20.12.0
 // @license MIT
-// @date 2021-06-05
+// @date 2021-06-14
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -30,7 +30,6 @@
 // @include /https?:\/\/(g.)?(exhentai|e-hentai).org\/s\/.+\/.+/
 // @include /https?:\/\/(www.)?hbrowse.com\/.+/
 // @include /https?:\/\/(www.)?hentai2read.com\/[^/]+\/[0-9]+(.[0-9]+)?\//
-// @include /https?:\/\/(www.)?(hentai|porn)-.+.com\/image\/.+/
 // @include /https?:\/\/(www.)?hentaifox.com\/g\/.+/
 // @include /https?:\/\/(www.)?hentaihand.com\/viewc\/[0-9]+\/[0-9]+/
 // @include /https?:\/\/(www.)?hentaihere.com\/.+\/.+\//
@@ -239,41 +238,6 @@
         prev: W.gData.previousURL,
         next: W.gData.nextURL,
         listImages: W.gData.images.map(i => "https://static.hentaicdn.com/hentai".concat(i))
-      };
-    }
-  };
-
-  var hentaicomic = {
-    name: 'Hentai Comic',
-    url: /https?:\/\/(www.)?(hentai|porn)-.+.com\/image\/.+/,
-    homepage: 'https://hentai-comic.com/',
-    language: ['English'],
-    obs: 'and similar sites',
-    category: 'hentai',
-    run() {
-      const pages = [W.location.pathname];
-      pages.push(...$('#paginator:first a').get().slice(0, -2).map(s => $(s).attr('href')));
-      const imgs = [];
-
-      function getimages(url) {
-        $.ajax({
-          type: 'POST',
-          url,
-          dataType: 'html',
-          async: false,
-          success(html) {
-            imgs.push(...$('#display_image_detail img', html).get().map(s => $(s).attr('src')));
-          }
-        });
-      }
-      pages.map(getimages);
-      return {
-        title: $('#title h2').text().trim(),
-        series: $('#post + div a').attr('href'),
-        quant: imgs.length,
-        prev: '#',
-        next: '#',
-        listImages: imgs
       };
     }
   };
@@ -686,7 +650,7 @@
 
   var sites = [asmhentai, bestporncomix, doujinmoe, eightMuses, exhentai,
     hbrowse, hentai2read,
-    hentaicomic, hentaifox, hentaihand, hentaihere, hentaimimi,
+    hentaifox, hentaihand, hentaihere, hentaimimi,
     hitomi, kingcomix,
     multporn, myhentaigallery, nhentainet, nhentaicom, ninehentai, porncomixonline, pururin, simplyhentai,
     tmohhentai, tsumino, vercomicsporno, xyzcomics
@@ -1531,7 +1495,7 @@
       }
       $('head').append('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />', '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.js" integrity="sha256-uvgSxlcEyGRDRvqW8sxcM/sPEBYiIeL+EW8XKL96iQ4=" crossorigin="anonymous"></script>', '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.css" integrity="sha256-Ow4lbGxscUvJwGnorLyGwVYv0KkeIG6+5CAmR8zuRJw=" crossorigin="anonymous">', '<style type="text/css">#mov {position: fixed;left: 50%;transform: translateX(-50%);top: 0;z-index: 1000000;border-radius: .25em;font-size: 1.5em;cursor: pointer;display: inline-block;margin: .3125em;padding: .625em 2em;box-shadow: none;font-weight: 500;color: #FFF;background: rgb(102, 83, 146);border: 1px #FFF;}</style>');
       W.mov = b => lateStart(site, b || beginning);
-      switch (settings.loadMode) {
+      switch (site.start || settings.loadMode) {
         case 'never':
           $('body').append('<button id="mov" onclick=mov()>Start MangaOnlineViewer</button>');
           break;

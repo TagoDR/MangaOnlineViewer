@@ -5,14 +5,17 @@ export default {
   homepage: ['https://www.asurascans.com/', 'https://flamescans.org/'],
   language: ['English'],
   category: 'manga',
+  waitEle: '#chapter option:eq(1)',
+  waitMax: 5000,
   run() {
+    const chapter = $('#chapter option:selected');
     const images = $('#readerarea p img').get();
     return {
       title: $('.entry-title').text().trim(),
       series: $('.allc a').attr('href'),
       quant: images.length,
-      prev: $('.ch-prev-btn:first').attr('href').replace('/prev/', ''),
-      next: $('.ch-next-btn:first').attr('href').replace('/next/', ''),
+      prev: chapter.next().val(),
+      next: chapter.prev().val(),
       listImages: images.map((i) => $(i).attr('src')),
     };
   },

@@ -6,6 +6,7 @@ export default {
   language: ['English'],
   category: 'hentai',
   waitVar: 'previewImages',
+  // start: 'never',
   run() {
     return {
       title: $('h3:first').text().trim(),

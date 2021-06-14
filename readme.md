@@ -35,8 +35,6 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [FoOlSlide]() _[English]_ **Obs: Any Scanlator site that uses FoOLSlide**
 - [Funmanga](http://funmanga.com/) _[English]_
 - [HatigarmScans](https://hatigarmscanz.net/home) _[English]_
-- [JaiminisBox](https://jaiminisbox.com/) _[English]_
-- [KissManga](http://kissmanga.com/) _[English]_
 - [KomiRaw](https://komiraw.com/) _[English]_
 - [LHTranslation](http://lhtranslation.net/) _[English]_
 - [MangaDex](https://mangadex.org/) _[English]_
@@ -51,7 +49,6 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [MangaLyght](http://manga.lyght.net/) _[English]_
 - [MangaNato](http://www.manganato.com/) _[English]_
 - [MangaPark](http://mangapark.net/) _[English]_
-- [MangaReader](http://www.mangareader.net/) / [MangaPanda](http://www.mangapanda.com/) _[English]_
 - [MangaSee](https://mangasee123.com/) _[English]_
 - [MangaTown](http://www.mangatown.com/) _[English]_
 - [NineManga](http://ninemanga.com/) _[English]_
@@ -60,8 +57,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [RawDevart](https://rawdevart.com) _[Original]_
 - [SenManga(Raw)](http://raw.senmanga.com/) _[Original]_
 - [Leitor](https://leitor.net/) _[Portuguese]_
-- [MangaHost2](https://mangahost2.com/) _[Portuguese]_
-- [UnionMangas](https://unionleitor.top/xw) _[Portuguese]_
+- [UnionMangas](https://unionleitor.top/) _[Portuguese]_
 - [TuMangaOnline](https://lectortmo.com/) _[Spanish]_
 
 ### Supported Comic Sites
@@ -78,7 +74,6 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [ExHentai](https://exhentai.org/) / [e-Hentai](https://e-hentai.org/) _[English]_ **Obs: May get your IP Banned, use with moderation**
 - [HBrowser](http://www.hbrowse.com/) _[English]_
 - [HentaIHere](https://www.hentaihere.com/) _[English]_
-- [Hentai Comic](https://hentai-comic.com/) _[English]_ **Obs: and similar sites**
 - [Hentai2Read](http://hentai2read.com/) _[English]_
 - [HentaiFox](http://www.hentaifox.com/) _[English]_
 - [HentaiHand](https://hentaihand.com/) _[English]_

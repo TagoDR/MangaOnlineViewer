@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Asura Scans,Flame Scans, ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, JaiminisBox, KissManga, KomiRaw, Leitor, LHTranslation, MangaHaus,Isekai Scan,Comic Kiba,Zinmanga,mangatx,Toonily,Mngazuki, MangaDex, MangaDoom, MangaFreak, MangaFox, MangaHere, MangaHost2, MangaHub, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaNato, MangaPark, MangaReader,MangaPanda, MangaSee, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, Reaper Scans, SenManga(Raw), TuMangaOnline, UnionMangas, Batoto
-// @version 20.11.0
+// @description Shows all pages at once in online view for these sites: Asura Scans,Flame Scans, ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, KomiRaw, Leitor, LHTranslation, MangaHaus,Isekai Scan,Comic Kiba,Zinmanga,mangatx,Toonily,Mngazuki, MangaDex, MangaDoom, MangaFreak, MangaFox, MangaHere, MangaHub, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaNato, MangaPark, MangaSee, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, Reaper Scans, SenManga(Raw), TuMangaOnline, UnionMangas, Batoto
+// @version 20.12.0
 // @license MIT
-// @date 2021-06-05
+// @date 2021-06-14
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -30,8 +30,6 @@
 // @include /^(?!.*jaiminisbox).*\/read\/.+/
 // @include /https?:\/\/(www.)?funmanga.com\/.+\/[0-9]+/
 // @include /https?:\/\/(www.)?hatigarmscanz.net\/comics\/.+\/.+\/.+/
-// @include /https?:\/\/(www.)?jaiminisbox.com\/reader\/read\/.+/
-// @include /https?:\/\/(www.)?kissmanga.com\/Manga\/.+\/.+?id=[0-9]+/
 // @include /https?:\/\/(www.)?(komiraw).com\/.+\/.+/
 // @include /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
 // @include /https?:\/\/(www.)?lhtranslation.net\/read.+/
@@ -41,14 +39,12 @@
 // @include /https?:\/\/.{3,4}?(mangafreak).net\/Read.+/
 // @include /https?:\/\/(www.)?fanfox.net\/manga\/.+\/.+\//
 // @include /https?:\/\/(www.)?mangahere.cc\/manga\/.+\/.+/
-// @include /https?:\/\/(www.)?mangahost2.com\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?(mangahub).io\/chapter\/.+\/.+/
 // @include /https?:\/\/(www.)?mangainn.net\/.+\/[0-9]+(\/[0-9]*)?/
 // @include /https?:\/\/(www.)?(manganelo|mangakakalot).com\/chapter\/.+\/.+/
 // @include /https?:\/\/manga.lyght.net\/series\/.+\.html/
 // @include /https?:\/\/(www.)?(manganato|readmanganato).com\/manga-\w\w\d+\/chapter-\d+/
 // @include /https?:\/\/(www.)?mangapark.(com|me|org|net)\/(manga|chapter)\/.+\/.+/
-// @include /https?:\/\/(www.)?(mangareader|mangapanda)(.net|.com)\/.+\/.+/
 // @include /https?:\/\/(www.)?mangasee123.com\/read-online\/.+/
 // @include /https?:\/\/(www.)?mangatown.com\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/
@@ -205,46 +201,6 @@
         prev: $('.container div div a:eq(0)').attr('href'),
         next: $('.container div div a:eq(1)').attr('href'),
         listImages: W.chapterPages
-      };
-    }
-  };
-
-  var jaiminisbox = {
-    name: 'JaiminisBox',
-    url: /https?:\/\/(www.)?jaiminisbox.com\/reader\/read\/.+/,
-    homepage: 'https://jaiminisbox.com/',
-    language: ['English'],
-    category: 'manga',
-    run() {
-      const chapter = $('.topbar_left .dropdown_parent:last ul li a');
-      return {
-        title: $('title').text().trim(),
-        series: $('div.tbtitle div.text a:first').attr('href'),
-        quant: W.pages.length,
-        prev: chapter.eq(chapter.index(chapter.filter("[href*='".concat(W.location.pathname.replace(/page.+/, ''), "']"))) + 1).attr('href'),
-        next: chapter.eq(chapter.index(chapter.filter("[href*='".concat(W.location.pathname.replace(/page.+/, ''), "']"))) - 1).attr('href'),
-        listImages: W.pages.map(i => i.url)
-      };
-    }
-  };
-
-  var kissmanga = {
-    name: 'KissManga',
-    url: /https?:\/\/(www.)?kissmanga.com\/Manga\/.+\/.+?id=[0-9]+/,
-    homepage: 'http://kissmanga.com/',
-    language: ['English'],
-    category: 'manga',
-    waitVar: 'lstOLA',
-    run() {
-      const chapter = $('.selectChapter option:selected');
-      const url = W.location.href.replace(/[^/]+$/, '');
-      return {
-        title: $('title').text().replace('Read manga', '').replace('online in high quality', '').trim(),
-        series: $('#navsubbar a').attr('href'),
-        quant: W.mnaplzoamfs.length,
-        prev: url + chapter.prev().val(),
-        next: url + chapter.next().val(),
-        listImages: W.mnaplzoamfs
       };
     }
   };
@@ -533,36 +489,6 @@
     }
   };
 
-  var mangareader = {
-    name: ['MangaReader', 'MangaPanda'],
-    url: /https?:\/\/(www.)?(mangareader|mangapanda)(.net|.com)\/.+\/.+/,
-    homepage: ['http://www.mangareader.net/', 'http://www.mangapanda.com/'],
-    language: ['English'],
-    category: 'manga',
-    run() {
-      const url = W.location.href + (W.location.href.lastIndexOf('/') !== W.location.href.length - 1 ? '/' : '');
-      const num = parseInt($('select#pageMenu option:last').html(), 10);
-      const chapter = $('#mangainfo_bas a');
-      return {
-        title: $('#mangainfo h1').text(),
-        series: $('#mangainfo a').attr('href'),
-        quant: num,
-        prev: chapter.last().attr('href'),
-        next: chapter.first().attr('href'),
-        listPages: [...Array(num).keys()].map(i => url + (i + 1), num),
-        img: 'img#img',
-        before() {
-          if (W.location.pathname.match(/\/.+\/.+\/chapter-[0-9]+.*/)) {
-            const path = W.location.pathname.split('/');
-            W.location.pathname = "/".concat(path[2], "/").concat(path[3].match(/[0-9]+/));
-          } else if (W.location.search) {
-            W.location.href = W.location.pathname;
-          }
-        }
-      };
-    }
-  };
-
   var mangasee = {
     name: 'MangaSee',
     url: /https?:\/\/(www.)?mangasee123.com\/read-online\/.+/,
@@ -734,7 +660,7 @@
   var unionmangas = {
     name: 'UnionMangas',
     url: /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/,
-    homepage: 'https://unionleitor.top/xw',
+    homepage: 'https://unionleitor.top/',
     language: ['Portuguese'],
     category: 'manga',
     run() {
@@ -769,33 +695,6 @@
     }
   };
 
-  var mangahost = {
-    name: 'MangaHost2',
-    url: /https?:\/\/(www.)?mangahost2.com\/manga\/.+\/.+/,
-    homepage: 'https://mangahost2.com/',
-    language: ['Portuguese'],
-    category: 'manga',
-    run() {
-      const url = W.location.href + (W.location.href.lastIndexOf('/') !== W.location.href.length - 1 ? '/' : '');
-      const chapter = $('.viewerChapter:first option:selected');
-      const num = parseInt($('.viewerPage:first option:last').html(), 10);
-      const manga = {
-        title: $('.breadcrumb li:eq(3)').text().trim(),
-        series: $('.breadcrumb li:eq(2) a').attr('href'),
-        quant: num,
-        prev: chapter.next().val(),
-        next: chapter.prev().val(),
-        img: '.image-content img'
-      };
-      if ($('.read-slideshow img').get().length === 0) {
-        manga.listPages = [...Array(num).keys()].map(i => url + (i + 1));
-      } else {
-        manga.listImages = $('.read-slideshow img').get().map(item => $(item).attr('src'));
-      }
-      return manga;
-    }
-  };
-
   var reaperscans = {
     name: 'Reaper Scans',
     url: /https?:\/\/(www.)?(reaperscans).com\/comics\/.+\/.+/,
@@ -821,14 +720,17 @@
     homepage: ['https://www.asurascans.com/', 'https://flamescans.org/'],
     language: ['English'],
     category: 'manga',
+    waitEle: '#chapter option:eq(1)',
+    waitMax: 5000,
     run() {
+      const chapter = $('#chapter option:selected');
       const images = $('#readerarea p img').get();
       return {
         title: $('.entry-title').text().trim(),
         series: $('.allc a').attr('href'),
         quant: images.length,
-        prev: $('.ch-prev-btn:first').attr('href').replace('/prev/', ''),
-        next: $('.ch-next-btn:first').attr('href').replace('/next/', ''),
+        prev: chapter.next().val(),
+        next: chapter.prev().val(),
         listImages: images.map(i => $(i).attr('src'))
       };
     }
@@ -947,9 +849,10 @@
     }
   };
 
-  var sites = [asurasflamecans, comicastle, disasterscans, dysnatyscans, foolslide, funmanga, hatigarmscans, jaiminisbox,
-    kissmanga, komiraw, leitor, lhtranslation, madarawp, mangadex, mangadoom, mangafreak, mangafox,
-    mangahere, mangahost, mangahub, mangainn, mangakakalot, mangalyght, manganato, mangapark, mangareader,
+  var sites = [asurasflamecans, comicastle, disasterscans, dysnatyscans, foolslide, funmanga, hatigarmscans,
+    komiraw, leitor, lhtranslation, madarawp, mangadex, mangadoom, mangafreak, mangafox,
+    mangahere,
+    mangahub, mangainn, mangakakalot, mangalyght, manganato, mangapark,
     mangasee, mangatown, ninemanga, rawdevart, readcomicsonline, readmangatoday, reaperscans, senmanga,
     tmofans, unionmangas,
     batoto
@@ -1794,7 +1697,7 @@
       }
       $('head').append('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />', '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.js" integrity="sha256-uvgSxlcEyGRDRvqW8sxcM/sPEBYiIeL+EW8XKL96iQ4=" crossorigin="anonymous"></script>', '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.css" integrity="sha256-Ow4lbGxscUvJwGnorLyGwVYv0KkeIG6+5CAmR8zuRJw=" crossorigin="anonymous">', '<style type="text/css">#mov {position: fixed;left: 50%;transform: translateX(-50%);top: 0;z-index: 1000000;border-radius: .25em;font-size: 1.5em;cursor: pointer;display: inline-block;margin: .3125em;padding: .625em 2em;box-shadow: none;font-weight: 500;color: #FFF;background: rgb(102, 83, 146);border: 1px #FFF;}</style>');
       W.mov = b => lateStart(site, b || beginning);
-      switch (settings.loadMode) {
+      switch (site.start || settings.loadMode) {
         case 'never':
           $('body').append('<button id="mov" onclick=mov()>Start MangaOnlineViewer</button>');
           break;

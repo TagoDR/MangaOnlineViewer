@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, 8Muses, ExHentai,e-Hentai, HBrowser, Hentai2Read, Hentai Comic, HentaiFox, HentaiHand, HentaIHere, HentaiMimi, hitomi, KingComix, MultPorn, MyHentaiGallery, nHentai.net,nHentai.xxx, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno,vercomicsporno, xyzcomics
-// @version 20.10.0
+// @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, 8Muses, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaiHand, HentaIHere, HentaiMimi, hitomi, KingComix, MultPorn, MyHentaiGallery, nHentai.net,nHentai.xxx, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno,vercomicsporno, xyzcomics
+// @version 20.12.0
 // @license MIT
-// @date 2021-06-05
+// @date 2021-06-14
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -30,7 +30,6 @@
 // @include /https?:\/\/(g.)?(exhentai|e-hentai).org\/s\/.+\/.+/
 // @include /https?:\/\/(www.)?hbrowse.com\/.+/
 // @include /https?:\/\/(www.)?hentai2read.com\/[^/]+\/[0-9]+(.[0-9]+)?\//
-// @include /https?:\/\/(www.)?(hentai|porn)-.+.com\/image\/.+/
 // @include /https?:\/\/(www.)?hentaifox.com\/g\/.+/
 // @include /https?:\/\/(www.)?hentaihand.com\/viewc\/[0-9]+\/[0-9]+/
 // @include /https?:\/\/(www.)?hentaihere.com\/.+\/.+\//

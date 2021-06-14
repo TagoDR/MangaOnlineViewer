@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Asura Scans,Flame Scans, ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, JaiminisBox, KissManga, KomiRaw, Leitor, LHTranslation, MangaHaus,Isekai Scan,Comic Kiba,Zinmanga,mangatx,Toonily,Mngazuki, MangaDex, MangaDoom, MangaFreak, MangaFox, MangaHere, MangaHost2, MangaHub, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaNato, MangaPark, MangaReader,MangaPanda, MangaSee, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, Reaper Scans, SenManga(Raw), TuMangaOnline, UnionMangas, Batoto
-// @version 20.11.0
+// @description Shows all pages at once in online view for these sites: Asura Scans,Flame Scans, ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, KomiRaw, Leitor, LHTranslation, MangaHaus,Isekai Scan,Comic Kiba,Zinmanga,mangatx,Toonily,Mngazuki, MangaDex, MangaDoom, MangaFreak, MangaFox, MangaHere, MangaHub, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaNato, MangaPark, MangaSee, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, Reaper Scans, SenManga(Raw), TuMangaOnline, UnionMangas, Batoto
+// @version 20.12.0
 // @license MIT
-// @date 2021-06-05
+// @date 2021-06-14
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -30,8 +30,6 @@
 // @include /^(?!.*jaiminisbox).*\/read\/.+/
 // @include /https?:\/\/(www.)?funmanga.com\/.+\/[0-9]+/
 // @include /https?:\/\/(www.)?hatigarmscanz.net\/comics\/.+\/.+\/.+/
-// @include /https?:\/\/(www.)?jaiminisbox.com\/reader\/read\/.+/
-// @include /https?:\/\/(www.)?kissmanga.com\/Manga\/.+\/.+?id=[0-9]+/
 // @include /https?:\/\/(www.)?(komiraw).com\/.+\/.+/
 // @include /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
 // @include /https?:\/\/(www.)?lhtranslation.net\/read.+/
@@ -41,14 +39,12 @@
 // @include /https?:\/\/.{3,4}?(mangafreak).net\/Read.+/
 // @include /https?:\/\/(www.)?fanfox.net\/manga\/.+\/.+\//
 // @include /https?:\/\/(www.)?mangahere.cc\/manga\/.+\/.+/
-// @include /https?:\/\/(www.)?mangahost2.com\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?(mangahub).io\/chapter\/.+\/.+/
 // @include /https?:\/\/(www.)?mangainn.net\/.+\/[0-9]+(\/[0-9]*)?/
 // @include /https?:\/\/(www.)?(manganelo|mangakakalot).com\/chapter\/.+\/.+/
 // @include /https?:\/\/manga.lyght.net\/series\/.+\.html/
 // @include /https?:\/\/(www.)?(manganato|readmanganato).com\/manga-\w\w\d+\/chapter-\d+/
 // @include /https?:\/\/(www.)?mangapark.(com|me|org|net)\/(manga|chapter)\/.+\/.+/
-// @include /https?:\/\/(www.)?(mangareader|mangapanda)(.net|.com)\/.+\/.+/
 // @include /https?:\/\/(www.)?mangasee123.com\/read-online\/.+/
 // @include /https?:\/\/(www.)?mangatown.com\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/

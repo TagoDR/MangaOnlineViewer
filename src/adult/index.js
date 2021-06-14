@@ -38,7 +38,7 @@ export default [
   hbrowse,
   hentai2read,
   // hentaicafe, [RIP]
-  hentaicomic,
+  // hentaicomic, [RIP]
   hentaifox,
   hentaihand,
   hentaihere,
