@@ -5,26 +5,37 @@ export default {
   homepage: 'https://mangadex.org/',
   language: ['English'],
   category: 'manga',
-  waitEle: '.total-pages',
-  waitAttr: ['.reader-image-wrapper img', 'src'],
+  waitAttr: ['.menu .link', 'href'],
   run() {
-    let api = null;
-    const url = `https://api.mangadex.org/v2/chapter/${W.location.pathname.match(/[0-9]+/)[0]}`;
+    let pages = null;
+    let server = null;
+    const chapterId = W.location.pathname.match(/\/chapter\/(.+)\/[0-9]*/)[1];
+    const url = `https://api.mangadex.org/chapter/${chapterId}`;
+    const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
     $.ajax({
       type: 'GET',
       url,
       async: false,
       success(res) {
-        api = res;
+        pages = res;
       },
     });
+    $.ajax({
+      type: 'GET',
+      url: home,
+      async: false,
+      success(res) {
+        server = res;
+      },
+    });
+    W.dados = pages;
     return {
       title: $('title').text().replace(' - MangaDex', ''),
-      series: $('.manga-link').attr('href'),
-      quant: api.data.pages.length,
-      prev: $('.chapter-link-left').attr('href'),
-      next: $('.chapter-link-right').attr('href'),
-      listImages: api.data.pages.map((img) => `${api.data.server + api.data.hash}/${img}`),
+      series: $('.hidden-md-and-down').attr('href'),
+      quant: pages.data.attributes.data.length,
+      prev: $('.menu .link').eq(0).attr('href'),
+      next: $('.menu .link').eq(1).attr('href'),
+      listImages: pages.data.attributes.data.map((img) => `${`${server.baseUrl}/data/${pages.data.attributes.hash}`}/${img}`),
     };
   },
 };

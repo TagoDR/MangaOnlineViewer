@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans,Flame Scans, ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, KomiRaw, Leitor, LHTranslation, MangaHaus,Isekai Scan,Comic Kiba,Zinmanga,mangatx,Toonily,Mngazuki, MangaDex, MangaDoom, MangaFreak, MangaFox, MangaHere, MangaHub, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaNato, MangaPark, MangaSee, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, Reaper Scans, SenManga(Raw), TuMangaOnline, UnionMangas, Batoto
-// @version 20.12.0
+// @version 20.14.0
 // @license MIT
-// @date 2021-06-14
+// @date 2021-07-09
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -259,26 +259,37 @@
     homepage: 'https://mangadex.org/',
     language: ['English'],
     category: 'manga',
-    waitEle: '.total-pages',
-    waitAttr: ['.reader-image-wrapper img', 'src'],
+    waitAttr: ['.menu .link', 'href'],
     run() {
-      let api = null;
-      const url = "https://api.mangadex.org/v2/chapter/".concat(W.location.pathname.match(/[0-9]+/)[0]);
+      let pages = null;
+      let server = null;
+      const chapterId = W.location.pathname.match(/\/chapter\/(.+)\/[0-9]*/)[1];
+      const url = "https://api.mangadex.org/chapter/".concat(chapterId);
+      const home = "https://api.mangadex.org/at-home/server/".concat(chapterId);
       $.ajax({
         type: 'GET',
         url,
         async: false,
         success(res) {
-          api = res;
+          pages = res;
         }
       });
+      $.ajax({
+        type: 'GET',
+        url: home,
+        async: false,
+        success(res) {
+          server = res;
+        }
+      });
+      W.dados = pages;
       return {
         title: $('title').text().replace(' - MangaDex', ''),
-        series: $('.manga-link').attr('href'),
-        quant: api.data.pages.length,
-        prev: $('.chapter-link-left').attr('href'),
-        next: $('.chapter-link-right').attr('href'),
-        listImages: api.data.pages.map(img => "".concat(api.data.server + api.data.hash, "/").concat(img))
+        series: $('.hidden-md-and-down').attr('href'),
+        quant: pages.data.attributes.data.length,
+        prev: $('.menu .link').eq(0).attr('href'),
+        next: $('.menu .link').eq(1).attr('href'),
+        listImages: pages.data.attributes.data.map(img => "".concat("".concat(server.baseUrl, "/data/").concat(pages.data.attributes.hash), "/", img))
       };
     }
   };
