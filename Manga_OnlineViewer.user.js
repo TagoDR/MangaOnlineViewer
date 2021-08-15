@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Asura Scans,Flame Scans, ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, KomiRaw, Leitor, LHTranslation, MangaHaus,Isekai Scan,Comic Kiba,Zinmanga,mangatx,Toonily,Mngazuki, MangaDex, MangaDoom, MangaFreak, MangaFox, MangaHere, MangaHub, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaNato, MangaPark, MangaSee, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, Reaper Scans, SenManga(Raw), TuMangaOnline, UnionMangas, Batoto
-// @version 20.14.0
+// @description Shows all pages at once in online view for these sites: Asura Scans,Flame Scans, ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, KomiRaw, Leitor, LHTranslation, MangaHaus,Isekai Scan,Comic Kiba,Zinmanga,mangatx,Toonily,Mngazuki,ReaperScans, MangaDex, MangaDoom, MangaFreak, MangaFox, MangaHere, MangaHub, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaNato, MangaPark, MangaSee, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, UnionMangas, Batoto
+// @version 20.15.0
 // @license MIT
-// @date 2021-07-09
+// @date 2021-08-15
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -33,7 +33,7 @@
 // @include /https?:\/\/(www.)?(komiraw).com\/.+\/.+/
 // @include /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
 // @include /https?:\/\/(www.)?lhtranslation.net\/read.+/
-// @include /https?:\/\/.+\/manga\/.+\/.+/
+// @include /https?:\/\/.+\/(manga|series)\/.+\/.+/
 // @include /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/
 // @include /https?:\/\/(www.)?mngdoom.com\/.+\/[0-9]+/
 // @include /https?:\/\/.{3,4}?(mangafreak).net\/Read.+/
@@ -51,7 +51,6 @@
 // @include /https?:\/\/(www.)?rawdevart.com\/comic\/.+\/.+\//
 // @include /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/[0-9]*/
 // @include /https?:\/\/(www.)?readmng.com\/.+\/[0-9.]+(\/[0-9]*)?/
-// @include /https?:\/\/(www.)?(reaperscans).com\/comics\/.+\/.+/
 // @include /https?:\/\/raw.senmanga.com\/.+\/.+\/?/
 // @include /https?:\/\/(www.)?(tmofans|lectortmo|followmanga).com\/.+\/.+\/(paginated|cascade)/
 // @include /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/
@@ -706,25 +705,6 @@
     }
   };
 
-  var reaperscans = {
-    name: 'Reaper Scans',
-    url: /https?:\/\/(www.)?(reaperscans).com\/comics\/.+\/.+/,
-    homepage: 'https://reaperscans.com/home',
-    language: ['English'],
-    category: 'manga',
-    waitVar: 'chapterPages',
-    run() {
-      return {
-        title: $('title').text().trim(),
-        series: $('a:has(.fa-home-alt):first').attr('href'),
-        quant: W.chapterPages.length,
-        prev: $('a:has(.fa-arrow-left):first').attr('href'),
-        next: $('a:has(.fa-arrow-right):first').attr('href'),
-        listImages: W.chapterPages
-      };
-    }
-  };
-
   var asurasflamecans = {
     name: ['Asura Scans', 'Flame Scans'],
     url: /https?:\/\/(www.)?(asurascans|flamescans).(com|org)\/.+/,
@@ -748,9 +728,9 @@
   };
 
   var madarawp = {
-    name: ['MangaHaus', 'Isekai Scan', 'Comic Kiba', 'Zinmanga', 'mangatx', 'Toonily', 'Mngazuki'],
-    url: /https?:\/\/.+\/manga\/.+\/.+/,
-    homepage: ['https://manhuaus.com', 'https://isekaiscan.com/', 'https://comickiba.com/', 'https://zinmanga.com/', 'https://mangatx.com/', 'https://toonily.net/', 'https://mangazuki.me/'],
+    name: ['MangaHaus', 'Isekai Scan', 'Comic Kiba', 'Zinmanga', 'mangatx', 'Toonily', 'Mngazuki', 'ReaperScans'],
+    url: /https?:\/\/.+\/(manga|series)\/.+\/.+/,
+    homepage: ['https://manhuaus.com', 'https://isekaiscan.com/', 'https://comickiba.com/', 'https://zinmanga.com/', 'https://mangatx.com/', 'https://toonily.net/', 'https://mangazuki.me/', 'https://reaperscans.com/'],
     language: ['English'],
     obs: 'Any Site that uses Madara Wordpress Plugin',
     category: 'manga',
@@ -864,7 +844,7 @@
     komiraw, leitor, lhtranslation, madarawp, mangadex, mangadoom, mangafreak, mangafox,
     mangahere,
     mangahub, mangainn, mangakakalot, mangalyght, manganato, mangapark,
-    mangasee, mangatown, ninemanga, rawdevart, readcomicsonline, readmangatoday, reaperscans, senmanga,
+    mangasee, mangatown, ninemanga, rawdevart, readcomicsonline, readmangatoday, senmanga,
     tmofans, unionmangas,
     batoto
   ];

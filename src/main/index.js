@@ -29,7 +29,6 @@ import tmofans from './tmofans';
 import unionmangas from './unionmangas';
 import rawdevart from './rawdevart';
 import mangahost from './mangahost';
-import reaperscans from './reaperscans';
 import asurasflamecans from './asurasflamecans';
 import madarawp from './madarawp';
 import mangahub from './mangahub';
@@ -74,7 +73,6 @@ export default [
   rawdevart,
   readcomicsonline,
   readmangatoday,
-  reaperscans,
   senmanga,
   // tenmanga, [Not Safe?]
   // thespectrum, [Broken, Dead?]

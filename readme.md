@@ -41,7 +41,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [MangaDoom](https://mngdoom.com/) _[English]_
 - [MangaFox](http://fanfox.net/) _[English]_
 - [MangaFreak](https://mangafreak.net/) _[English]_
-- [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
+- [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) / [ReaperScans](https://reaperscans.com/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
 - [MangaHere](http://www.mangahere.cc/) _[English]_
 - [MangaHub](https://mangahub.io/) _[English]_
 - [MangaInn](http://www.mangainn.net/) _[English]_
@@ -53,7 +53,6 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [MangaTown](http://www.mangatown.com/) _[English]_
 - [NineManga](http://ninemanga.com/) _[English]_
 - [ReadManga Today](http://www.readmng.com/) _[English]_
-- [Reaper Scans](https://reaperscans.com/home) _[English]_
 - [RawDevart](https://rawdevart.com) _[Original]_
 - [SenManga(Raw)](http://raw.senmanga.com/) _[Original]_
 - [Leitor](https://leitor.net/) _[Portuguese]_
