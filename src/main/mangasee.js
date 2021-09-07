@@ -1,8 +1,8 @@
 // == MangaSee =====================================================================================
 export default {
-  name: 'MangaSee',
-  url: /https?:\/\/(www.)?mangasee123.com\/read-online\/.+/,
-  homepage: 'https://mangasee123.com/',
+  name: ['MangaSee', 'Manga4life'],
+  url: /https?:\/\/(www.)?(mangasee123|manga4life).com\/read-online\/.+/,
+  homepage: ['https://mangasee123.com/', 'https://manga4life.com/'],
   language: ['English'],
   category: 'manga',
   waitAttr: ['.img-fluid', 'src'],
