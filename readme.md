@@ -77,6 +77,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [HentaiFox](http://www.hentaifox.com/) _[English]_
 - [HentaiHand](https://hentaihand.com/) _[English]_
 - [HentaiMimi](https://hentaimimi.com/) _[English]_
+- [Imhentai](http://imhentai.xxx/) _[English]_
 - [KingComix](https://kingcomix.com/) _[English]_
 - [MultPorn](https://multporn.net/) _[English]_
 - [MyHentaiGallery](https://www.myhentaigallery.com) _[English]_

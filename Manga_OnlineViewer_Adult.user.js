@@ -4,10 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, 8Muses, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaiHand, HentaIHere, HentaiMimi, hitomi, KingComix, MultPorn, MyHentaiGallery, nHentai.net,nHentai.xxx, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno,vercomicsporno, xyzcomics
-// @version 20.15.0
+// @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, 8Muses, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaiHand, HentaIHere, HentaiMimi, hitomi, Imhentai, KingComix, MultPorn, MyHentaiGallery, nHentai.net,nHentai.xxx, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno,vercomicsporno, xyzcomics
+// @version 20.16.0
 // @license MIT
-// @date 2021-08-15
+// @date 2021-09-07
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -35,6 +35,7 @@
 // @include /https?:\/\/(www.)?hentaihere.com\/.+\/.+\//
 // @include /https?:\/\/(www.)?hentaimimi.com\/view\/.+/
 // @include /https?:\/\/hitomi.la\/reader\/.+/
+// @include /https?:\/\/(www.)?imhentai.xxx\/view\/.+\/.+\//
 // @include /https?:\/\/(www.)?kingcomix.com\/.+/
 // @include /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include /https?:\/\/(www.)?myhentaigallery.com\/gallery\/show\/.+\/[0-9]+/
@@ -648,10 +649,52 @@
     }
   };
 
+  var imhentai = {
+    name: 'Imhentai',
+    url: /https?:\/\/(www.)?imhentai.xxx\/view\/.+\/.+\//,
+    homepage: 'http://imhentai.xxx/',
+    language: ['English'],
+    category: 'hentai',
+    waitVar: 'g_th',
+    run() {
+      const galleryId = $('#gallery_id').val();
+      const imageDir = $('#image_dir').val();
+      const cId = $('#u_id').val();
+      let randomServer;
+      if (cId > 0 && cId <= 274825) {
+        randomServer = 'm1.imhentai.xxx';
+      }
+      if (cId > 274825 && cId <= 403818) {
+        randomServer = 'm2.imhentai.xxx';
+      }
+      if (cId > 403818 && cId <= 527143) {
+        randomServer = 'm3.imhentai.xxx';
+      }
+      if (cId > 527143 && cId <= 632481) {
+        randomServer = 'm4.imhentai.xxx';
+      }
+      if (cId > 632481) {
+        randomServer = 'm5.imhentai.xxx';
+      }
+      const src = Object.values(W.g_th).map((i, index) => {
+        const ext = i.split(',')[0].replace('g', 'gif').replace('p', 'png').replace('j', 'jpg').replace('b', 'bmp');
+        return "//".concat(randomServer, "/").concat(imageDir, "/").concat(galleryId, "/").concat(index + 1, ".").concat(ext);
+      });
+      return {
+        title: $('title').text().trim(),
+        series: $('.return_btn').attr('href'),
+        quant: parseInt($('#pages').val(), 10),
+        prev: '#',
+        next: '#',
+        listImages: src
+      };
+    }
+  };
+
   var sites = [asmhentai, bestporncomix, doujinmoe, eightMuses, exhentai,
     hbrowse, hentai2read,
     hentaifox, hentaihand, hentaihere, hentaimimi,
-    hitomi, kingcomix,
+    hitomi, imhentai, kingcomix,
     multporn, myhentaigallery, nhentainet, nhentaicom, ninehentai, porncomixonline, pururin, simplyhentai,
     tmohhentai, tsumino, vercomicsporno, xyzcomics
   ];

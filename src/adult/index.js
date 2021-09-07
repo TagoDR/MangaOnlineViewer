@@ -27,6 +27,7 @@ import myhentaigallery from './myhentaigallery';
 import hentaimimi from './hentaimimi';
 import vercomicsporno from './vercomicsporno';
 import kingcomix from './kingcomix';
+import imhentai from './imhentai';
 
 export default [
   asmhentai,
@@ -45,6 +46,7 @@ export default [
   hentaimimi,
   // hentainexus, [RIP]
   hitomi,
+  imhentai,
   kingcomix,
   // luscious, Todo: Fix
   multporn,
