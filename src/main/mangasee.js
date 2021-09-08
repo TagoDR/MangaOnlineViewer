@@ -36,8 +36,8 @@ export default {
       title: $('title').text().replace(/ Page .+/, ''),
       series: $('.MainContainer a:first').attr('href'),
       quant: CurChapter.Page,
-      prev: ChapterURLEncode(+1),
-      next: ChapterURLEncode(-1),
+      prev: ChapterURLEncode(-1),
+      next: ChapterURLEncode(+1),
       listImages: [...Array(parseInt(CurChapter.Page, 10))
         .keys()].map((i) => src.replace(/-\d\d\d.png/, `-${String(`000${i + 1}`).slice(-3)}.png`)),
     };
