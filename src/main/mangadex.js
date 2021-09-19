@@ -5,6 +5,7 @@ export default {
   homepage: 'https://mangadex.org/',
   language: ['English'],
   category: 'manga',
+  waitEle: '.md--reader a.link',
   run() {
     let pages = null;
     let server = null;
