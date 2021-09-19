@@ -5,7 +5,6 @@ export default {
   homepage: 'https://mangadex.org/',
   language: ['English'],
   category: 'manga',
-  waitAttr: ['.menu .link', 'href'],
   run() {
     let pages = null;
     let server = null;
@@ -33,8 +32,8 @@ export default {
       title: $('title').text().replace(' - MangaDex', ''),
       series: $('.hidden-md-and-down').attr('href'),
       quant: pages.data.attributes.data.length,
-      prev: $('.menu .link').eq(0).attr('href'),
-      next: $('.menu .link').eq(1).attr('href'),
+      prev: $('.menu a').eq(1).attr('href'),
+      next: $('.md--reader a.link').attr('href'),
       listImages: pages.data.attributes.data.map((img) => `${`${server.baseUrl}/data/${pages.data.attributes.hash}`}/${img}`),
     };
   },
