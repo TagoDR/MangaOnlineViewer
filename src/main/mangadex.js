@@ -32,7 +32,7 @@ export default {
       series: $('.hidden-md-and-down').attr('href'),
       quant: pages.data.attributes.data.length,
       prev: $('.menu a:eq(1)').attr('href'),
-      next: $('.md--reader a.link').attr('href'),
+      next: $('.md--reader a:eq(1)').attr('href'),
       listImages: pages.data.attributes.data.map((img) => `${server.baseUrl}/data/${pages.data.attributes.hash}/${img}`),
     };
   },

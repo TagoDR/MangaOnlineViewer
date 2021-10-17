@@ -285,7 +285,7 @@
         series: $('.hidden-md-and-down').attr('href'),
         quant: pages.data.attributes.data.length,
         prev: $('.menu a:eq(1)').attr('href'),
-        next: $('.md--reader a.link').attr('href'),
+        next: $('.md--reader a:eq(1)').attr('href'),
         listImages: pages.data.attributes.data.map(img => "".concat(server.baseUrl, "/data/").concat(pages.data.attributes.hash, "/").concat(img))
       };
     }
