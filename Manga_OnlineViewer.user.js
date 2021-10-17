@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans,Flame Scans, ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, KomiRaw, Leitor, LHTranslation, MangaHaus,Isekai Scan,Comic Kiba,Zinmanga,mangatx,Toonily,Mngazuki,ReaperScans, MangaDex, MangaDoom, MangaFreak, MangaFox, MangaHere, MangaHub, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaNato, MangaPark, MangaSee,Manga4life, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, UnionMangas, Batoto
-// @version 20.18.0
+// @version 20.20.0
 // @license MIT
-// @date 2021-09-18
+// @date 2021-10-17
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -258,13 +258,11 @@
     homepage: 'https://mangadex.org/',
     language: ['English'],
     category: 'manga',
-    waitEle: '.md--reader a.link',
     run() {
       let pages = null;
       let server = null;
-      const chapterId = W.location.pathname.match(/\/chapter\/(.+)(\/[0-9]+)?/)[1];
+      const chapterId = W.location.pathname.match(/\/chapter\/([^/]+)(\/[0-9]+)?/)[1];
       const url = "https://api.mangadex.org/chapter/".concat(chapterId);
-      const home = "https://api.mangadex.org/at-home/server/".concat(chapterId);
       $.ajax({
         type: 'GET',
         url,
@@ -273,6 +271,7 @@
           pages = res;
         }
       });
+      const home = "https://api.mangadex.org/at-home/server/".concat(chapterId);
       $.ajax({
         type: 'GET',
         url: home,
@@ -281,14 +280,13 @@
           server = res;
         }
       });
-      W.dados = pages;
       return {
         title: $('title').text().replace(' - MangaDex', ''),
         series: $('.hidden-md-and-down').attr('href'),
         quant: pages.data.attributes.data.length,
         prev: $('.menu a:eq(1)').attr('href'),
         next: $('.md--reader a.link').attr('href'),
-        listImages: pages.data.attributes.data.map(img => "".concat("".concat(server.baseUrl, "/data/").concat(pages.data.attributes.hash), "/", img))
+        listImages: pages.data.attributes.data.map(img => "".concat(server.baseUrl, "/data/").concat(pages.data.attributes.hash, "/").concat(img))
       };
     }
   };
