@@ -6,27 +6,14 @@ export default {
   language: ['English'],
   category: 'hentai',
   run() {
-    const imgs = $('.dgwt-jg-gallery img').get();
+    const imgs = $('.jig-link').get();
     return {
-      title: $('.entry-title').text().trim(),
+      title: $('.entry-title').first().text().trim(),
       series: '#',
       quant: imgs.length,
       prev: '#',
       next: '#',
-      listImages: imgs.map((i) => {
-        const urls = $(i).attr('data-jg-srcset').split(',');
-        let src = '';
-        let w = 0;
-        for (let l = 0; l < urls.length; l += 1) {
-          const s = urls[l].match(/(.+) (\d+)w/);
-          if (s[2] > w) {
-            [, w, src] = s;
-            w = s[2];
-            src = s[1];
-          }
-        }
-        return src;
-      }),
+      listImages: imgs.map((i) => i.href),
     };
   },
 };
