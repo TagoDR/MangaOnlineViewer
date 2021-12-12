@@ -12,10 +12,9 @@ export default {
   namespace: 'https://github.com/TagoDR',
   description: `Shows all pages at once in online view for these sites: ${R.pluck('name', sites)
     .join(', ')}`,
-  version: pkg.version,
+  version: moment().format('YYYY.MM.DD'),
   license: pkg.license,
-  date: moment()
-    .format('YYYY-MM-DD'),
+  date: moment().format('YYYY-MM-DD'),
   grant: [
     'GM_getValue',
     'GM_setValue',

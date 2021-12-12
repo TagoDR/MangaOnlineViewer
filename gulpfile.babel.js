@@ -10,11 +10,14 @@ import cleanup from 'rollup-plugin-cleanup';
 import commonjs from 'rollup-plugin-commonjs';
 import { eslint } from 'rollup-plugin-eslint';
 import html from 'rollup-plugin-string-html';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import userscript from 'userscript-meta';
 import pkg from './package.json';
 import metaAdult from './src/meta-adult';
 import metaMain from './src/meta-main';
-import { bookmarklet, comicSites, hentaiSites, mangaSites, } from './src/readme';
+import {
+  bookmarklet, comicSites, hentaiSites, mangaSites,
+} from './src/readme';
 
 const scripts = {
   main: {
@@ -36,6 +39,7 @@ function buildUserscript(entryFile, destFile, metaFile) {
     input: entryFile,
     external: R.keys(pkg.dependencies),
     plugins: [
+      nodeResolve({ preferBuiltins: false }),
       commonjs(),
       html({
         include: './src/components/**',
