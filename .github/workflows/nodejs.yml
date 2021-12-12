@@ -15,8 +15,8 @@ jobs:
         with:
           args: run-script release
 
-#      - name: Commit changes
-#        uses: elstudio/actions-js-build/commit@v3
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
         with:
           commit_message: Apply changes to release
