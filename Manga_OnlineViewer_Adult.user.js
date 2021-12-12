@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, 8Muses, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaiHand, HentaIHere, HentaiMimi, hitomi, Imhentai, KingComix, MultPorn, MyHentaiGallery, nHentai.net,nHentai.xxx, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno,vercomicsporno, xyzcomics
-// @version 20.19.0
+// @version 20.20.0
 // @license MIT
-// @date 2021-10-01
+// @date 2021-12-12
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -29,7 +29,7 @@
 // @include /https?:\/\/comics.8muses.com\/comics\/picture\/.+/
 // @include /https?:\/\/(g.)?(exhentai|e-hentai).org\/s\/.+\/.+/
 // @include /https?:\/\/(www.)?hbrowse.com\/.+/
-// @include /https?:\/\/(www.)?hentai2read.com\/[^/]+\/[0-9]+(.[0-9]+)?\//
+// @include /https?:\/\/(www.)?hentai2read.com\/[^\/]+\/[0-9]+(.[0-9]+)?\//
 // @include /https?:\/\/(www.)?hentaifox.com\/g\/.+/
 // @include /https?:\/\/(www.)?hentaihand.com\/viewc\/[0-9]+\/[0-9]+/
 // @include /https?:\/\/(www.)?hentaihere.com\/.+\/.+\//
@@ -51,10 +51,19 @@
 // @include /https?:\/\/(www.)?xyzcomics.com\/.+/
 // ==/UserScript==
 
-(function() {
+(function(_inherits, _setPrototypeOf) {
   'use strict';
 
   var W = (typeof unsafeWindow === 'undefined') ? window : unsafeWindow;
+
+  function _interopDefaultLegacy(e) {
+    return e && typeof e === 'object' && 'default' in e ? e : {
+      'default': e
+    };
+  }
+
+  var _inherits__default = /*#__PURE__*/ _interopDefaultLegacy(_inherits);
+  var _setPrototypeOf__default = /*#__PURE__*/ _interopDefaultLegacy(_setPrototypeOf);
 
   var asmhentai = {
     name: 'ASMHentai',
@@ -527,27 +536,14 @@
     language: ['English'],
     category: 'hentai',
     run() {
-      const imgs = $('.dgwt-jg-gallery img').get();
+      const imgs = $('.jig-link').get();
       return {
-        title: $('.entry-title').text().trim(),
+        title: $('.entry-title').first().text().trim(),
         series: '#',
         quant: imgs.length,
         prev: '#',
         next: '#',
-        listImages: imgs.map(i => {
-          const urls = $(i).attr('data-jg-srcset').split(',');
-          let src = '';
-          let w = 0;
-          for (let l = 0; l < urls.length; l += 1) {
-            const s = urls[l].match(/(.+) (\d+)w/);
-            if (s[2] > w) {
-              [, w, src] = s;
-              w = s[2];
-              src = s[1];
-            }
-          }
-          return src;
-        })
+        listImages: imgs.map(i => i.href)
       };
     }
   };
@@ -699,7 +695,10 @@
     tmohhentai, tsumino, vercomicsporno, xyzcomics
   ];
 
-  function logScript(...text) {
+  function logScript() {
+    for (var _len = arguments.length, text = new Array(_len), _key = 0; _key < _len; _key++) {
+      text[_key] = arguments[_key];
+    }
     console.log('MangaOnlineViewer: ', ...text);
     return text;
   }
@@ -713,7 +712,10 @@
       version: 'Testing'
     }
   };
-  const getValueGM = typeof GM_getValue !== 'undefined' ? GM_getValue : (name, defaultValue = null) => logScript('Getting: ', name, '=', defaultValue)[3];
+  const getValueGM = typeof GM_getValue !== 'undefined' ? GM_getValue : function(name) {
+    let defaultValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    return logScript('Getting: ', name, '=', defaultValue)[3];
+  };
   const setValueGM = typeof GM_setValue !== 'undefined' ? GM_setValue : (name, value) => logScript('Getting: ', name, '=', value);
 
   function getBrowser() {
@@ -743,26 +745,101 @@
   }
   const isMobile = W.matchMedia('screen and (max-width: 1024px)').matches;
 
+  function _wrapRegExp() {
+    _wrapRegExp = function(re, groups) {
+      return new BabelRegExp(re, undefined, groups);
+    };
+    var _super = RegExp.prototype;
+    var _groups = new WeakMap();
+
+    function BabelRegExp(re, flags, groups) {
+      var _this = new RegExp(re, flags);
+      _groups.set(_this, groups || _groups.get(re));
+      return _setPrototypeOf__default["default"](_this, BabelRegExp.prototype);
+    }
+    _inherits__default["default"](BabelRegExp, RegExp);
+    BabelRegExp.prototype.exec = function(str) {
+      var result = _super.exec.call(this, str);
+      if (result) result.groups = buildGroups(result, this);
+      return result;
+    };
+    BabelRegExp.prototype[Symbol.replace] = function(str, substitution) {
+      if (typeof substitution === "string") {
+        var groups = _groups.get(this);
+        return _super[Symbol.replace].call(this, str, substitution.replace(/\$<([^>]+)>/g, function(_, name) {
+          return "$" + groups[name];
+        }));
+      } else if (typeof substitution === "function") {
+        var _this = this;
+        return _super[Symbol.replace].call(this, str, function() {
+          var args = arguments;
+          if (typeof args[args.length - 1] !== "object") {
+            args = [].slice.call(args);
+            args.push(buildGroups(args, _this));
+          }
+          return substitution.apply(this, args);
+        });
+      } else {
+        return _super[Symbol.replace].call(this, str, substitution);
+      }
+    };
+
+    function buildGroups(result, re) {
+      var g = _groups.get(re);
+      return Object.keys(g).reduce(function(groups, name) {
+        groups[name] = result[g[name]];
+        return groups;
+      }, Object.create(null));
+    }
+    return _wrapRegExp.apply(this, arguments);
+  }
   const cache = {
     zip: new JSZip(),
     downloadFiles: 0,
     Data: {}
   };
+  const getExtension = mimeType => ((_wrapRegExp(/image\/(jpe?g|png|webp)/, {
+    ext: 1
+  }).exec(mimeType) || {}).groups || {}).ext || '' || 'png';
+  const getFilename = (name, index, total, ext) => "".concat(name).concat((index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, '0'), ".").concat(ext.replace('jpeg', 'jpg'));
 
   function generateZip() {
     if (cache.downloadFiles === 0) {
-      $('.MangaPage img').get().forEach((value, index) => {
+      const filenameRegex = _wrapRegExp(/^(.*?)([0-9]+)\.([0-9A-Z_a-z]+)$/, {
+        name: 1,
+        index: 2,
+        ext: 3
+      });
+      const images = $('.MangaPage img');
+      const filenames = (() => {
+        const result = [];
+        for (let i = 0; i < images.length; i += 1) {
+          const img = $(images[i]);
+          const filename = img.attr('src').split(/[?#]/)[0].split('/').pop();
+          const match = filenameRegex.exec(filename);
+          if (!match) break;
+          const {
+            name,
+            index,
+            ext
+          } = match.groups;
+          const fixedFilename = getFilename(name, index, images.length, ext);
+          if (result.length > 0 && fixedFilename <= result[result.length - 1]) break;
+          result.push(fixedFilename);
+        }
+        if (result.length < images.length) return [];
+        return result;
+      })();
+      images.get().forEach((value, index) => {
         const img = $(value);
         const src = img.attr('src');
-        const ext = src.substring(0, 20).match(/jpg|png|webp/ig) || ['png'];
-        const filename = "Page ".concat(String("000".concat(index + 1)).slice(-3), ".").concat(ext[0]);
-        if (src.indexOf('base64') > -1) {
-          let base64 = src.replace('data:image/png;base64,', '');
-          const i = base64.indexOf(',');
-          if (i !== -1) {
-            base64 = base64.substring(i + 1, base64.length);
-          }
-          cache.zip.file(filename, base64, {
+        const base64 = _wrapRegExp(/^data:(image\/[0-9A-Z_a-z]+);base64,+(.+)/, {
+          mimeType: 1,
+          data: 2
+        }).exec(src);
+        if (base64) {
+          const filename = getFilename('Page ', index, images.length, getExtension(base64.groups.mimeType));
+          cache.zip.file(filename, base64.groups.data, {
             base64: true,
             createFolders: true
           });
@@ -776,6 +853,7 @@
               overrideMimeType: 'text/plain; charset=x-user-defined',
               responseType: 'blob',
               onload(request) {
+                const filename = filenames[index] || getFilename('Page ', index, images.length, getExtension(request.response.type));
                 cache.zip.file(filename, request.response, {
                   base64: true,
                   createFolders: true,
@@ -798,7 +876,7 @@
     } else {
       const blobLink = document.getElementById('blob');
       try {
-        blobLink.download = "".concat($('title').text().trim(), ".zip");
+        blobLink.download = "".concat($('#series i').first().text().trim(), ".zip");
         cache.zip.generateAsync({
           type: 'blob'
         }).then(content => {
@@ -869,7 +947,8 @@
   const isEmpty = R.either(R.isNil, R.isEmpty);
   const mapIndexed = R.addIndex(R.map);
 
-  function getHtml(url, wait = settings.Timer) {
+  function getHtml(url) {
+    let wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : settings.Timer;
     return new Promise(resolve => {
       setTimeout(() => {
         logScript("Getting page: ".concat(url));
@@ -943,7 +1022,7 @@
     const total = $('.PageContent img').get().length;
     const loaded = $('.PageContent img.imgLoaded').get().length;
     const percentage = Math.floor(loaded / total * 100);
-    $('title').html("(".concat(percentage, "%) ").concat($('#series i').text()));
+    $('title').html("(".concat(percentage, "%) ").concat($('#series i').first().text()));
     $('#Counters i, #NavigationCounters i').html(loaded);
     NProgress.configure({
       showSpinner: false
@@ -1016,7 +1095,8 @@
     return index;
   }
 
-  function delayAdd(src, wait = settings.Timer) {
+  function delayAdd(src) {
+    let wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : settings.Timer;
     return new Promise(resolve => {
       setTimeout(() => {
         resolve(src);
@@ -1026,7 +1106,8 @@
   const loadMangaPages = (begin, manga) => mapIndexed((url, index) => index >= begin ? delayAdd(url, (manga.timer || settings.Timer) * (index - begin)).then(response => addPage(manga, index + 1, response)) : null, manga.listPages);
   const loadMangaImages = (begin, manga) => mapIndexed((src, index) => index >= begin ? delayAdd(src, (manga.timer || settings.Timer) * (index - begin)).then(response => addImg(index + 1, response)) : null, manga.listImages);
 
-  function loadManga(manga, begin = 1) {
+  function loadManga(manga) {
+    let begin = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
     settings.lazyLoadImages = manga.lazy || settings.lazyLoadImages;
     logScript('Loading Images');
     logScript("Intervals: ".concat(manga.timer || settings.Timer || 'Default(1000)'));
@@ -1465,10 +1546,14 @@
   const listPages = R.times(index => "<div id='Page".concat(index + 1, "' class='MangaPage'>\n  <div class='PageFunctions'>\n    <a class='Bookmark controlButton' title='Bookmark'></a>\n    <a class='ZoomIn controlButton' title='Zoom In'></a>\n    <a class='ZoomRestore controlButton' title='Zoom Restore'></a>\n    <a class='ZoomOut controlButton' title='Zoom Out'></a>\n    <a class='ZoomWidth controlButton' title='Zoom to Width'></a>\n    <a class='ZoomHeight controlButton' title='Zoom to Height'></a>\n    <a class='Hide controlButton' title='Hide'></a>\n    <a class='Reload controlButton' title='Reload'></a>\n    <span>").concat(index + 1, "</span>\n  </div>\n  <div class='PageContent'>\n    <img id='PageImg").concat(index + 1, "' alt='PageImg").concat(index + 1, "' />\n  </div>\n</div>"));
   const listOptions = R.times(index => "<option value='".concat(index + 1, "'>").concat(index + 1, "</option>"));
   const listThumbnails = R.times(index => "<div id='Thumbnail".concat(index + 1, "' class='Thumbnail'><img id='ThumbnailImg").concat(index + 1, "' alt='ThumbnailImg").concat(index + 1, "' src=''/><span>").concat(index + 1, "</span></div>"));
-  const body = (manga, begin = 0) => "\n<div id='MangaOnlineViewer' class='".concat(settings.Theme, " ").concat(isMobile ? 'mobile' : '', " ").concat(settings.hidePageControls ? 'hideControls' : '', "'>\n  ").concat(title(manga), "\n  <div id='Counters' class='controlLabel'>\n    <i>0</i> of <b>").concat(manga.quant, "</b> Pages Loaded\n    <span class='controlLabel'>Go to Page:</span>\n    <select id='gotoPage'>\n      <option selected>#</option>\n      ").concat(listOptions(manga.quant).slice(begin).join(''), "\n    </select>\n  </div>\n  ").concat(chapterControlTop(manga), "\n  <div id='Chapter' class='").concat(settings.FitWidthIfOversized === true ? 'fitWidthIfOversized' : '', " ").concat(settings.viewMode, "'>\n    ").concat(listPages(manga.quant).slice(begin).join(''), "\n  </div>\n  ").concat(title(manga), "\n  ").concat(chapterControlBottom(manga), "\n  ").concat(panel, "\n  ").concat(controls, "\n  ").concat(htmlKeybinds, "\n  <div id='Navigation' class='panel ").concat(settings.ShowThumbnails ? '' : 'disabled', "'>\n    <div id='NavigationCounters' class='controlLabel'>\n      <img alt='Thumbnails' title='Thumbnails' src='").concat(icon.menu, "' class='nav' /><i>0</i> of <b>").concat(manga.quant, "</b> Pages Loaded\n    </div>\n    <div id='Thumbnails'>\n      ").concat(listThumbnails(manga.quant).slice(begin).join(''), "\n    </div>\n  </div>\n  <a href='#' id='blob' style='display: none;'>Download</a>\n</div>");
+  const body = function(manga) {
+    let begin = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    return "\n<div id='MangaOnlineViewer' class='".concat(settings.Theme, " ").concat(isMobile ? 'mobile' : '', " ").concat(settings.hidePageControls ? 'hideControls' : '', "'>\n  ").concat(title(manga), "\n  <div id='Counters' class='controlLabel'>\n    <i>0</i> of <b>").concat(manga.quant, "</b> Pages Loaded\n    <span class='controlLabel'>Go to Page:</span>\n    <select id='gotoPage'>\n      <option selected>#</option>\n      ").concat(listOptions(manga.quant).slice(begin).join(''), "\n    </select>\n  </div>\n  ").concat(chapterControlTop(manga), "\n  <div id='Chapter' class='").concat(settings.FitWidthIfOversized === true ? 'fitWidthIfOversized' : '', " ").concat(settings.viewMode, "'>\n    ").concat(listPages(manga.quant).slice(begin).join(''), "\n  </div>\n  ").concat(title(manga), "\n  ").concat(chapterControlBottom(manga), "\n  ").concat(panel, "\n  ").concat(controls, "\n  ").concat(htmlKeybinds, "\n  <div id='Navigation' class='panel ").concat(settings.ShowThumbnails ? '' : 'disabled', "'>\n    <div id='NavigationCounters' class='controlLabel'>\n      <img alt='Thumbnails' title='Thumbnails' src='").concat(icon.menu, "' class='nav' /><i>0</i> of <b>").concat(manga.quant, "</b> Pages Loaded\n    </div>\n    <div id='Thumbnails'>\n      ").concat(listThumbnails(manga.quant).slice(begin).join(''), "\n    </div>\n  </div>\n  <a href='#' id='blob' style='display: none;'>Download</a>\n</div>");
+  };
   const readerCSS = "<style type='text/css'>\n".concat(cssStyles, "\n#MangaOnlineViewer .PageFunctions .Bookmark {background: url('").concat(icon.bookmark, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .Reload {background: url('").concat(icon.reload, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .Hide {background: url('").concat(icon.hide, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomIn {background: url('").concat(icon.zoomIn, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomOut {background: url('").concat(icon.zoomOut, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomRestore {background: url('").concat(icon.zoomRestore, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomWidth {background: url('").concat(icon.zoomWidth, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomHeight {background: url('").concat(icon.zoomWidth, "') no-repeat scroll center center transparent;}\n</style>");
 
-  function reader(manga, begin = 0) {
+  function reader(manga) {
+    let begin = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
     return "\n<head>\n  <title>".concat(manga.title, "</title>\n  <meta charset=\"UTF-8\">\n  ").concat(externalScripts.join('\n'), "\n  ").concat(externalCSS.join('\n'), "\n  ").concat(readerCSS, "\n  ").concat(themesCSS, "\n</head>\n<body class='").concat(settings.Theme, "'>\n  ").concat(body(manga, begin > 0 ? begin - 1 : 0), "\n</body>");
   }
 
@@ -1501,7 +1586,8 @@
     }
   }
 
-  function lateStart(site, begin = 1) {
+  function lateStart(site) {
+    let begin = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
     const manga = site.run();
     logScript('LateStart');
     Swal.fire({
@@ -1528,7 +1614,8 @@
     });
   }
 
-  function preparePage(site, manga, begin = 0) {
+  function preparePage(site, manga) {
+    let begin = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
     logScript("Found ".concat(manga.quant, " pages"));
     if (manga.quant > 0) {
       let beginning = begin;
@@ -1623,4 +1710,4 @@
 
   start(sites);
 
-}());
+})(_inherits, _setPrototypeOf);
