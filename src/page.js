@@ -87,7 +87,7 @@ function updateProgress() {
   const total = $('.PageContent img').get().length;
   const loaded = $('.PageContent img.imgLoaded').get().length;
   const percentage = Math.floor((loaded / total) * 100);
-  $('title').html(`(${percentage}%) ${$('#series i').text()}`);
+  $('title').html(`(${percentage}%) ${$('#series i').first().text()}`);
   $('#Counters i, #NavigationCounters i').html(loaded);
   NProgress.configure({
     showSpinner: false,

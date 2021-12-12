@@ -58,7 +58,7 @@ function generateZip() {
   } else {
     const blobLink = document.getElementById('blob');
     try {
-      blobLink.download = `${$('title').text().trim()}.zip`;
+      blobLink.download = `${$('#series i').first().text().trim()}.zip`;
       cache.zip.generateAsync({
         type: 'blob',
       }).then((content) => {
