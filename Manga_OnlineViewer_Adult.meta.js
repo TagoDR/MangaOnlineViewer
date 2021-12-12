@@ -29,7 +29,7 @@
 // @include /https?:\/\/comics.8muses.com\/comics\/picture\/.+/
 // @include /https?:\/\/(g.)?(exhentai|e-hentai).org\/s\/.+\/.+/
 // @include /https?:\/\/(www.)?hbrowse.com\/.+/
-// @include /https?:\/\/(www.)?hentai2read.com\/[^/]+\/[0-9]+(.[0-9]+)?\//
+// @include /https?:\/\/(www.)?hentai2read.com\/[^\/]+\/[0-9]+(.[0-9]+)?\//
 // @include /https?:\/\/(www.)?hentaifox.com\/g\/.+/
 // @include /https?:\/\/(www.)?hentaihand.com\/viewc\/[0-9]+\/[0-9]+/
 // @include /https?:\/\/(www.)?hentaihere.com\/.+\/.+\//
