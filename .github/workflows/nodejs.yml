@@ -17,3 +17,6 @@ jobs:
 
 #      - name: Commit changes
 #        uses: elstudio/actions-js-build/commit@v3
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply changes to release
