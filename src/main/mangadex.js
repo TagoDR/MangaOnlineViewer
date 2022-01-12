@@ -5,20 +5,10 @@ export default {
   homepage: 'https://mangadex.org/',
   language: ['English'],
   category: 'manga',
-  waitEle: '.menu a:eq(1) , .md--reader a:eq(1)',
+  waitEle: 'a[href^=\'/chapter/\']',
   run() {
-    let pages = null;
     let server = null;
     const chapterId = W.location.pathname.match(/\/chapter\/([^/]+)(\/[0-9]+)?/)[1];
-    const url = `https://api.mangadex.org/chapter/${chapterId}`;
-    $.ajax({
-      type: 'GET',
-      url,
-      async: false,
-      success(res) {
-        pages = res;
-      },
-    });
     const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
     $.ajax({
       type: 'GET',
@@ -31,10 +21,10 @@ export default {
     return {
       title: $('title').text().replace(' - MangaDex', ''),
       series: $('.hidden-md-and-down').attr('href'),
-      quant: pages.data.attributes.data.length,
-      prev: $('.menu a:eq(1)').attr('href'),
-      next: $('.md--reader a:eq(1)').attr('href'),
-      listImages: pages.data.attributes.data.map((img) => `${server.baseUrl}/data/${pages.data.attributes.hash}/${img}`),
+      quant: server.chapter.data.length,
+      prev: $('a[href^=\'/chapter/\']').eq(0).attr('href'),
+      next: $('a[href^=\'/chapter/\']').eq(1).attr('href'),
+      listImages: server.chapter.data.map((img) => `${server.baseUrl}/data/${server.chapter.hash}/${img}`),
     };
   },
 };

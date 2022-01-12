@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans,Flame Scans, ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, KomiRaw, Leitor, LHTranslation, MangaHaus,Isekai Scan,Comic Kiba,Zinmanga,mangatx,Toonily,Mngazuki,ReaperScans, MangaDex, MangaDoom, MangaFreak, MangaFox, MangaHere, MangaHub, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaNato, MangaPark, MangaSee,Manga4life, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, UnionMangas, Batoto
-// @version 2021.12.12
+// @version 2022.01.12
 // @license MIT
-// @date 2021-12-12
+// @date 2022-01-12
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -258,20 +258,10 @@
     homepage: 'https://mangadex.org/',
     language: ['English'],
     category: 'manga',
-    waitEle: '.menu a:eq(1) , .md--reader a:eq(1)',
+    waitEle: 'a[href^=\'/chapter/\']',
     run() {
-      let pages = null;
       let server = null;
       const chapterId = W.location.pathname.match(/\/chapter\/([^/]+)(\/[0-9]+)?/)[1];
-      const url = "https://api.mangadex.org/chapter/".concat(chapterId);
-      $.ajax({
-        type: 'GET',
-        url,
-        async: false,
-        success(res) {
-          pages = res;
-        }
-      });
       const home = "https://api.mangadex.org/at-home/server/".concat(chapterId);
       $.ajax({
         type: 'GET',
@@ -284,10 +274,10 @@
       return {
         title: $('title').text().replace(' - MangaDex', ''),
         series: $('.hidden-md-and-down').attr('href'),
-        quant: pages.data.attributes.data.length,
-        prev: $('.menu a:eq(1)').attr('href'),
-        next: $('.md--reader a:eq(1)').attr('href'),
-        listImages: pages.data.attributes.data.map(img => "".concat(server.baseUrl, "/data/").concat(pages.data.attributes.hash, "/").concat(img))
+        quant: server.chapter.data.length,
+        prev: $('a[href^=\'/chapter/\']').eq(0).attr('href'),
+        next: $('a[href^=\'/chapter/\']').eq(1).attr('href'),
+        listImages: server.chapter.data.map(img => "".concat(server.baseUrl, "/data/").concat(server.chapter.hash, "/").concat(img))
       };
     }
   };
@@ -848,10 +838,7 @@
     batoto
   ];
 
-  function logScript() {
-    for (var _len = arguments.length, text = new Array(_len), _key = 0; _key < _len; _key++) {
-      text[_key] = arguments[_key];
-    }
+  function logScript(...text) {
     console.log('MangaOnlineViewer: ', ...text);
     return text;
   }
@@ -865,10 +852,7 @@
       version: 'Testing'
     }
   };
-  const getValueGM = typeof GM_getValue !== 'undefined' ? GM_getValue : function(name) {
-    let defaultValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-    return logScript('Getting: ', name, '=', defaultValue)[3];
-  };
+  const getValueGM = typeof GM_getValue !== 'undefined' ? GM_getValue : (name, defaultValue = null) => logScript('Getting: ', name, '=', defaultValue)[3];
   const setValueGM = typeof GM_setValue !== 'undefined' ? GM_setValue : (name, value) => logScript('Getting: ', name, '=', value);
 
   function getBrowser() {
@@ -1122,8 +1106,7 @@
   const isEmpty = R.either(R.isNil, R.isEmpty);
   const mapIndexed = R.addIndex(R.map);
 
-  function getHtml(url) {
-    let wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : settings.Timer;
+  function getHtml(url, wait = settings.Timer) {
     return new Promise(resolve => {
       setTimeout(() => {
         logScript("Getting page: ".concat(url));
@@ -1270,8 +1253,7 @@
     return index;
   }
 
-  function delayAdd(src) {
-    let wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : settings.Timer;
+  function delayAdd(src, wait = settings.Timer) {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve(src);
@@ -1281,8 +1263,7 @@
   const loadMangaPages = (begin, manga) => mapIndexed((url, index) => index >= begin ? delayAdd(url, (manga.timer || settings.Timer) * (index - begin)).then(response => addPage(manga, index + 1, response)) : null, manga.listPages);
   const loadMangaImages = (begin, manga) => mapIndexed((src, index) => index >= begin ? delayAdd(src, (manga.timer || settings.Timer) * (index - begin)).then(response => addImg(index + 1, response)) : null, manga.listImages);
 
-  function loadManga(manga) {
-    let begin = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  function loadManga(manga, begin = 1) {
     settings.lazyLoadImages = manga.lazy || settings.lazyLoadImages;
     logScript('Loading Images');
     logScript("Intervals: ".concat(manga.timer || settings.Timer || 'Default(1000)'));
@@ -1721,14 +1702,10 @@
   const listPages = R.times(index => "<div id='Page".concat(index + 1, "' class='MangaPage'>\n  <div class='PageFunctions'>\n    <a class='Bookmark controlButton' title='Bookmark'></a>\n    <a class='ZoomIn controlButton' title='Zoom In'></a>\n    <a class='ZoomRestore controlButton' title='Zoom Restore'></a>\n    <a class='ZoomOut controlButton' title='Zoom Out'></a>\n    <a class='ZoomWidth controlButton' title='Zoom to Width'></a>\n    <a class='ZoomHeight controlButton' title='Zoom to Height'></a>\n    <a class='Hide controlButton' title='Hide'></a>\n    <a class='Reload controlButton' title='Reload'></a>\n    <span>").concat(index + 1, "</span>\n  </div>\n  <div class='PageContent'>\n    <img id='PageImg").concat(index + 1, "' alt='PageImg").concat(index + 1, "' />\n  </div>\n</div>"));
   const listOptions = R.times(index => "<option value='".concat(index + 1, "'>").concat(index + 1, "</option>"));
   const listThumbnails = R.times(index => "<div id='Thumbnail".concat(index + 1, "' class='Thumbnail'><img id='ThumbnailImg").concat(index + 1, "' alt='ThumbnailImg").concat(index + 1, "' src=''/><span>").concat(index + 1, "</span></div>"));
-  const body = function(manga) {
-    let begin = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    return "\n<div id='MangaOnlineViewer' class='".concat(settings.Theme, " ").concat(isMobile ? 'mobile' : '', " ").concat(settings.hidePageControls ? 'hideControls' : '', "'>\n  ").concat(title(manga), "\n  <div id='Counters' class='controlLabel'>\n    <i>0</i> of <b>").concat(manga.quant, "</b> Pages Loaded\n    <span class='controlLabel'>Go to Page:</span>\n    <select id='gotoPage'>\n      <option selected>#</option>\n      ").concat(listOptions(manga.quant).slice(begin).join(''), "\n    </select>\n  </div>\n  ").concat(chapterControlTop(manga), "\n  <div id='Chapter' class='").concat(settings.FitWidthIfOversized === true ? 'fitWidthIfOversized' : '', " ").concat(settings.viewMode, "'>\n    ").concat(listPages(manga.quant).slice(begin).join(''), "\n  </div>\n  ").concat(title(manga), "\n  ").concat(chapterControlBottom(manga), "\n  ").concat(panel, "\n  ").concat(controls, "\n  ").concat(htmlKeybinds, "\n  <div id='Navigation' class='panel ").concat(settings.ShowThumbnails ? '' : 'disabled', "'>\n    <div id='NavigationCounters' class='controlLabel'>\n      <img alt='Thumbnails' title='Thumbnails' src='").concat(icon.menu, "' class='nav' /><i>0</i> of <b>").concat(manga.quant, "</b> Pages Loaded\n    </div>\n    <div id='Thumbnails'>\n      ").concat(listThumbnails(manga.quant).slice(begin).join(''), "\n    </div>\n  </div>\n  <a href='#' id='blob' style='display: none;'>Download</a>\n</div>");
-  };
+  const body = (manga, begin = 0) => "\n<div id='MangaOnlineViewer' class='".concat(settings.Theme, " ").concat(isMobile ? 'mobile' : '', " ").concat(settings.hidePageControls ? 'hideControls' : '', "'>\n  ").concat(title(manga), "\n  <div id='Counters' class='controlLabel'>\n    <i>0</i> of <b>").concat(manga.quant, "</b> Pages Loaded\n    <span class='controlLabel'>Go to Page:</span>\n    <select id='gotoPage'>\n      <option selected>#</option>\n      ").concat(listOptions(manga.quant).slice(begin).join(''), "\n    </select>\n  </div>\n  ").concat(chapterControlTop(manga), "\n  <div id='Chapter' class='").concat(settings.FitWidthIfOversized === true ? 'fitWidthIfOversized' : '', " ").concat(settings.viewMode, "'>\n    ").concat(listPages(manga.quant).slice(begin).join(''), "\n  </div>\n  ").concat(title(manga), "\n  ").concat(chapterControlBottom(manga), "\n  ").concat(panel, "\n  ").concat(controls, "\n  ").concat(htmlKeybinds, "\n  <div id='Navigation' class='panel ").concat(settings.ShowThumbnails ? '' : 'disabled', "'>\n    <div id='NavigationCounters' class='controlLabel'>\n      <img alt='Thumbnails' title='Thumbnails' src='").concat(icon.menu, "' class='nav' /><i>0</i> of <b>").concat(manga.quant, "</b> Pages Loaded\n    </div>\n    <div id='Thumbnails'>\n      ").concat(listThumbnails(manga.quant).slice(begin).join(''), "\n    </div>\n  </div>\n  <a href='#' id='blob' style='display: none;'>Download</a>\n</div>");
   const readerCSS = "<style type='text/css'>\n".concat(cssStyles, "\n#MangaOnlineViewer .PageFunctions .Bookmark {background: url('").concat(icon.bookmark, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .Reload {background: url('").concat(icon.reload, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .Hide {background: url('").concat(icon.hide, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomIn {background: url('").concat(icon.zoomIn, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomOut {background: url('").concat(icon.zoomOut, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomRestore {background: url('").concat(icon.zoomRestore, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomWidth {background: url('").concat(icon.zoomWidth, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomHeight {background: url('").concat(icon.zoomWidth, "') no-repeat scroll center center transparent;}\n</style>");
 
-  function reader(manga) {
-    let begin = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  function reader(manga, begin = 0) {
     return "\n<head>\n  <title>".concat(manga.title, "</title>\n  <meta charset=\"UTF-8\">\n  ").concat(externalScripts.join('\n'), "\n  ").concat(externalCSS.join('\n'), "\n  ").concat(readerCSS, "\n  ").concat(themesCSS, "\n</head>\n<body class='").concat(settings.Theme, "'>\n  ").concat(body(manga, begin > 0 ? begin - 1 : 0), "\n</body>");
   }
 
@@ -1761,8 +1738,7 @@
     }
   }
 
-  function lateStart(site) {
-    let begin = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  function lateStart(site, begin = 1) {
     const manga = site.run();
     logScript('LateStart');
     Swal.fire({
@@ -1789,8 +1765,7 @@
     });
   }
 
-  function preparePage(site, manga) {
-    let begin = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  function preparePage(site, manga, begin = 0) {
     logScript("Found ".concat(manga.quant, " pages"));
     if (manga.quant > 0) {
       let beginning = begin;
