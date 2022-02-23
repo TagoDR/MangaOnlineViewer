@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans,Flame Scans, ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, KomiRaw, Leitor, LHTranslation, MangaHaus,Isekai Scan,Comic Kiba,Zinmanga,mangatx,Toonily,Mngazuki,ReaperScans, MangaDex, MangaDoom, MangaFreak, MangaFox, MangaHere, MangaHub, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaNato, MangaPark, MangaSee,Manga4life, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, UnionMangas, Batoto
-// @version 2022.01.12
+// @version 2022.02.23
 // @license MIT
-// @date 2022-01-12
+// @date 2022-02-23
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -44,7 +44,7 @@
 // @include /https?:\/\/(www.)?(manganelo|mangakakalot).com\/chapter\/.+\/.+/
 // @include /https?:\/\/manga.lyght.net\/series\/.+\.html/
 // @include /https?:\/\/(www.)?(manganato|readmanganato).com\/manga-\w\w\d+\/chapter-\d+/
-// @include /https?:\/\/(www.)?mangapark.(com|me|org|net)\/(manga|chapter)\/.+\/.+/
+// @include /https?:\/\/(www.)?mangapark.(com|me|org|net)\/(manga|chapter|comic)\/.+\/.+/
 // @include /https?:\/\/(www.)?(mangasee123|manga4life).com\/read-online\/.+/
 // @include /https?:\/\/(www.)?mangatown.com\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/
@@ -273,7 +273,7 @@
       });
       return {
         title: $('title').text().replace(' - MangaDex', ''),
-        series: $('.hidden-md-and-down').attr('href'),
+        series: $("a[href^='/title/']:last").attr('href'),
         quant: server.chapter.data.length,
         prev: $('a[href^=\'/chapter/\']').eq(0).attr('href'),
         next: $('a[href^=\'/chapter/\']').eq(1).attr('href'),
@@ -461,29 +461,19 @@
 
   var mangapark = {
     name: 'MangaPark',
-    url: /https?:\/\/(www.)?mangapark.(com|me|org|net)\/(manga|chapter)\/.+\/.+/,
+    url: /https?:\/\/(www.)?mangapark.(com|me|org|net)\/(manga|chapter|comic)\/.+\/.+/,
     homepage: 'http://mangapark.net/',
     language: ['English'],
     category: 'manga',
     run() {
-      const img = $('.img-link img').get();
+      const pass = JSON.parse(CryptoJS.AES.decrypt(amWord, amPass).toString(CryptoJS.enc.Utf8));
       return {
-        title: $('.loc a:first, h4 a').text().trim(),
-        series: $('.loc a:first, h4 a').attr('href'),
-        quant: W.pages || img.length,
-        prev: W._prev_link || $('span:contains(◀ Prev Chapter):first').parent('a').attr('href'),
-        next: W._next_link || $('span:contains(Next Chapter ▶):first').parent('a').attr('href'),
-        listImages: W.images || img.map(i => {
-          if ($(i).hasClass('lazy')) {
-            return $(i).attr('data-src');
-          }
-          return $(i).attr('src');
-        }),
-        before() {
-          if (W.location.href.search(/\/1$/) !== -1) {
-            W.location.href = W.location.href.replace('/1', '');
-          }
-        }
+        title: "".concat(amSub_name, " - ").concat(mpEpi_name),
+        series: currSubUrl,
+        quant: imgPathLis.length,
+        prev: prevEpiUrl,
+        next: nextEpiUrl,
+        listImages: imgPathLis.map((i, index) => "".concat(imgCdnHost + i, "?").concat(pass[index]))
       };
     }
   };
