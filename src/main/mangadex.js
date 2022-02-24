@@ -22,8 +22,8 @@ export default {
       title: $('title').text().replace(' - MangaDex', ''),
       series: $("a[href^='/title/']:last").attr('href'),
       quant: server.chapter.data.length,
-      prev: $('a[href^=\'/chapter/\']').eq(0).attr('href'),
-      next: $('a[href^=\'/chapter/\']').eq(1).attr('href'),
+      prev: $('a[href^=\'/chapter/\']').eq(1).attr('href'),
+      next: $('a[href^=\'/chapter/\']').eq(0).attr('href'),
       listImages: server.chapter.data.map((img) => `${server.baseUrl}/data/${server.chapter.hash}/${img}`),
     };
   },
