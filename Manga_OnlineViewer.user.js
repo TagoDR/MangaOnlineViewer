@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans,Flame Scans, ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, KomiRaw, Leitor, LHTranslation, MangaHaus,Isekai Scan,Comic Kiba,Zinmanga,mangatx,Toonily,Mngazuki,ReaperScans, MangaDex, MangaDoom, MangaFreak, MangaFox, MangaHere, MangaHub, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaNato, MangaPark, MangaSee,Manga4life, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, UnionMangas, Batoto
-// @version 2022.02.23
+// @version 2022.02.24
 // @license MIT
-// @date 2022-02-23
+// @date 2022-02-24
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -275,8 +275,8 @@
         title: $('title').text().replace(' - MangaDex', ''),
         series: $("a[href^='/title/']:last").attr('href'),
         quant: server.chapter.data.length,
-        prev: $('a[href^=\'/chapter/\']').eq(0).attr('href'),
-        next: $('a[href^=\'/chapter/\']').eq(1).attr('href'),
+        prev: $('a[href^=\'/chapter/\']').eq(1).attr('href'),
+        next: $('a[href^=\'/chapter/\']').eq(0).attr('href'),
         listImages: server.chapter.data.map(img => "".concat(server.baseUrl, "/data/").concat(server.chapter.hash, "/").concat(img))
       };
     }
