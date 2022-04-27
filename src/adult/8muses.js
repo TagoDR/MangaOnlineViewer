@@ -31,7 +31,7 @@ export default {
     const src = dataShared.options.pictureHost || W.location.host;
     const images = dataPublic.pictures.map((img) => `//${src}/image/fl/${img.publicUri}.jpg`);
     return {
-      title: $('.top-menu-breadcrumb li:last a').text(),
+      title: $('.top-menu-breadcrumb li:eq(-2) a').text(),
       series: $('.top-menu-breadcrumb li:last').prev('li').find('a').attr('href'),
       quant: dataPublic.pictures.length,
       prev: '#',

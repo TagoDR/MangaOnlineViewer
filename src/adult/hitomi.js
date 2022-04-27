@@ -13,7 +13,7 @@ export default {
       quant: W.galleryinfo.files.length,
       prev: '#',
       next: '#',
-      listImages: W.galleryinfo.files.map((item) => W.url_from_url_from_hash(W.galleryid, item)),
+      listImages: W.galleryinfo.files.map((file) => W.url_from_url_from_hash(W.galleryinfo, file, 'webp', undefined, 'a')),
     };
   },
 };

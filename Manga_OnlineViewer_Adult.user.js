@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, 8Muses, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaiHand, HentaIHere, HentaiMimi, hitomi, Imhentai, KingComix, MultPorn, MyHentaiGallery, nHentai.net,nHentai.xxx, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno,vercomicsporno, xyzcomics
-// @version 2022.02.24
+// @version 2022.04.27
 // @license MIT
-// @date 2022-02-24
+// @date 2022-04-27
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -124,7 +124,7 @@
       const src = dataShared.options.pictureHost || W.location.host;
       const images = dataPublic.pictures.map(img => "//".concat(src, "/image/fl/").concat(img.publicUri, ".jpg"));
       return {
-        title: $('.top-menu-breadcrumb li:last a').text(),
+        title: $('.top-menu-breadcrumb li:eq(-2) a').text(),
         series: $('.top-menu-breadcrumb li:last').prev('li').find('a').attr('href'),
         quant: dataPublic.pictures.length,
         prev: '#',
@@ -249,16 +249,25 @@
     homepage: 'http://www.hentaifox.com/',
     language: ['English'],
     category: 'hentai',
+    waitVar: 'g_th',
     run() {
       const num = parseInt($('.total_pages:first').text(), 10);
+      const src = $('#gimg').attr('src').replace(/\d+.\w+$/, '');
+
+      function findExt(i) {
+        const c = W.g_th[i][0];
+        if (c === 'p') return '.png';
+        if (c === 'b') return '.bmp';
+        if (c === 'g') return '.gif';
+        return '.jpg';
+      }
       return {
         title: $('title').text().trim().replace(/ - Page .+/, ''),
         series: $('.return a').attr('href'),
         quant: num,
         prev: '#',
         next: '#',
-        listPages: [...Array(num).keys()].map(i => '../'.concat(i + 1, '/')),
-        img: '#gimg'
+        listImages: [...Array(num).keys()].map(i => src + (i + 1) + findExt(i + 1))
       };
     }
   };
@@ -319,7 +328,7 @@
         quant: W.galleryinfo.files.length,
         prev: '#',
         next: '#',
-        listImages: W.galleryinfo.files.map(item => W.url_from_url_from_hash(W.galleryid, item))
+        listImages: W.galleryinfo.files.map(file => W.url_from_url_from_hash(W.galleryinfo, file, 'webp', undefined, 'a'))
       };
     }
   };
