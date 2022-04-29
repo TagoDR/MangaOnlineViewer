@@ -6,7 +6,7 @@ export default {
   language: ['English'],
   category: 'hentai',
   run() {
-    const src = $('figure img').get().map((i) => $(i).attr('data-full-url') || $(i).attr('data-lazy-src'));
+    const src = $('figure img, .entry-content img.lazy').get().map((i) => $(i).attr('src') || $(i).attr('data-src') || $(i).attr('data-full-url') || $(i).attr('data-lazy-src'));
     return {
       title: $('h1.singleTitle-h1').text().trim(),
       series: '#',

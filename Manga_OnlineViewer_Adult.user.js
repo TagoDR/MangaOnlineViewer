@@ -5,9 +5,9 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, 8Muses, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaiHand, HentaIHere, HentaiMimi, hitomi, Imhentai, KingComix, MultPorn, MyHentaiGallery, nHentai.net,nHentai.xxx, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno,vercomicsporno, xyzcomics
-// @version 2022.04.27
+// @version 2022.04.29
 // @license MIT
-// @date 2022-04-27
+// @date 2022-04-29
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -633,7 +633,7 @@
     language: ['English'],
     category: 'hentai',
     run() {
-      const src = $('figure img').get().map(i => $(i).attr('data-full-url') || $(i).attr('data-lazy-src'));
+      const src = $('figure img, .entry-content img.lazy').get().map(i => $(i).attr('src') || $(i).attr('data-src') || $(i).attr('data-full-url') || $(i).attr('data-lazy-src'));
       return {
         title: $('h1.singleTitle-h1').text().trim(),
         series: '#',
