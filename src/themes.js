@@ -68,12 +68,8 @@ function loadThemes() {
 }
 
 const themes = loadThemes();
-const themesSelector = R.map(
-  (theme) => `<option value='${theme[0]}' ${
-    settings.Theme === theme[0] ? 'selected' : ''
-  }>${theme[0].replace('_', ' ')}</option>`, themes,
-);
-const themesCSS = R.map((theme) => addTheme(theme), themes).join('');
+const themesSelector = themes.map((theme) => `<option value='${theme[0]}' ${settings.Theme === theme[0] ? 'selected' : ''}>${theme[0].replace('_', ' ')}</option>`);
+const themesCSS = themes.map(addTheme).join('');
 
 export {
   themesCSS,

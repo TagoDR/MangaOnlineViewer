@@ -1,5 +1,14 @@
 {
   "presets": [
-    "airbnb"
-  ]
+    [
+      "airbnb",
+      {
+        "targets": {
+          "firefox": "100",
+          "chrome": "100"
+        }
+      }
+    ]
+  ],
+  "plugins": []
 }

@@ -1,5 +1,5 @@
 html {
-  font-size: 100%
+  font-size: 100%;
 }
 
 body {
@@ -9,19 +9,19 @@ body {
   line-height: 20px;
   color: #333;
   background-color: #FFF;
-  padding: 0
+  padding: 0;
 }
 
 a {
   color: #08C;
-  text-decoration: none
+  text-decoration: none;
 }
 
 img {
   height: auto;
   max-width: 100%;
   vertical-align: middle;
-  border: 0 none
+  border: 0 none;
 }
 
 #nprogress .bar {
@@ -97,7 +97,7 @@ img {
 #MangaOnlineViewer select {
   height: 20px;
   padding: 0;
-  margin-bottom: 5px
+  margin-bottom: 5px;
 }
 
 #MangaOnlineViewer .controlButton {
@@ -154,7 +154,7 @@ img {
 }
 
 #MangaOnlineViewer .PageContent img[src=""],
-#MangaOnlineViewer .PageContent img:not([src]){
+#MangaOnlineViewer .PageContent img:not([src]) {
   width: 500px;
   height: 750px;
   display: inline-block;
@@ -221,11 +221,11 @@ img {
 }
 
 #MangaOnlineViewer .PageFunctions a {
-  opacity: 0.2
+  opacity: 0.2;
 }
 
 #MangaOnlineViewer .PageFunctions:hover a {
-  opacity: 1
+  opacity: 1;
 }
 
 #MangaOnlineViewer.hideControls .PageFunctions {
@@ -295,7 +295,7 @@ img {
 }
 
 #MangaOnlineViewer #Navigation .nav {
-  transform: rotate(-90deg);;
+  transform: rotate(-90deg);
 }
 
 #MangaOnlineViewer #ImageOptions .menuOuterArrow {
@@ -428,7 +428,8 @@ img {
 #MangaOnlineViewer .fitWidthIfOversized .PageContent img {
   max-width: 100%;
 }
-#MangaOnlineViewer .minicolors-theme-default .minicolors-swatch{
+
+#MangaOnlineViewer .minicolors-theme-default .minicolors-swatch {
   top: 2px;
   left: 2px;
 }

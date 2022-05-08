@@ -1,31 +1,28 @@
-import R from 'ramda';
 import adult from './adult';
 import main from './main';
 import { requiredScripts } from './externals';
 
-const sites = R.concat(main, adult);
-const languages = R.compose(R.uniq, R.map(R.prop('languages')))(sites);
+const sites = [...main, ...adult];
+const languages = [...new Set(sites.flatMap((s) => s.language))];
 
 const linkSite = (site) => `[${site[0]}](${site[1]})`;
-const normalizeSite = R.ifElse((site) => typeof site.name !== 'string',
-  (site) => R.zip(site.name || '', site.homepage || ''),
-  (site) => [R.pair(site.name, site.homepage)]);
+const normalizeSite = (site) => {
+  if (typeof site.name === 'string') return [[site.name || '', site.homepage || '']];
+  return site.name.map((n, i) => [n, site.homepage[i]]);
+};
 
 function siteListEntry(site) {
-  const links = R.compose(R.join(' / '), R.map(linkSite), normalizeSite);
+  const links = (s) => normalizeSite(s).map(linkSite).join(' / ');
   const lang = site.language === undefined ? '' : ` _[${site.language}]_`;
   const obs = site.obs === undefined ? '' : ` **Obs: ${site.obs}**`;
   return `- ${links(site)}${lang}${obs}`;
 }
 
-const sortSites = R.sortWith([
-  R.ascend(R.prop('language')),
-  R.ascend(R.prop('name')),
-]);
-const sitesList = R.compose(R.join('\n'), R.map(siteListEntry), sortSites);
+const sortSites = (s) => [...s].sort((a, b) => (`${a.language}`).localeCompare(b.language));
+const sitesList = (s) => sortSites(s).map(siteListEntry).join('\n');
 
-const mangaSites = sitesList(R.filter(R.propEq('category', 'manga'), main));
-const comicSites = sitesList(R.filter(R.propEq('category', 'comic'), main));
+const mangaSites = sitesList(main.filter((s) => s.category === 'manga'));
+const comicSites = sitesList(main.filter((s) => s.category === 'comic'));
 const hentaiSites = sitesList(adult);
 const bookmarklet = `${requiredScripts.join('", "')}`;
 

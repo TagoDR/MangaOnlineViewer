@@ -282,8 +282,8 @@ function controls() {
       setValueGM('MangaLazyLoadImages', true);
       Swal.fire({
         title: 'Warning',
-        html: 'Lazy load is incompatible with zip download, you will not be able to download with this setting ON.<br/>'
-          + 'Suggestion: <span style="color:red;font:bold">Disable Thumbnails</span> to save Bandwidth/Memory.',
+        html: `Lazy load is incompatible with zip download, you will not be able to download with this setting ON.<br/>
+               Suggestion: <span style="color:red;font:bold">Disable Thumbnails</span> to save Bandwidth/Memory.`,
         icon: 'warning',
       });
     } else {

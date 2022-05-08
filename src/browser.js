@@ -8,7 +8,7 @@ function logScript(...text) {
 }
 
 // Composeble console output
-const logScriptC = R.curry((x, y) => logScript(x, y)[1]);
+const logScriptC = (x) => (y) => logScript(x, y)[1];
 
 // Clear the Console
 function logClear(...text) {
@@ -33,10 +33,13 @@ const getInfoGM = (typeof GM_info !== 'undefined') ? GM_info : {
   },
 };
 // Replacement function for GM_getValue allowing for debugging in console
-const getValueGM = (typeof GM_getValue !== 'undefined') ? GM_getValue : ((name, defaultValue = null) => logScript('Getting: ', name, '=',
-  defaultValue)[3]);
+const getValueGM = (typeof GM_getValue !== 'undefined') ? GM_getValue : (
+  (name, defaultValue = null) => logScript('Getting: ', name, '=', defaultValue)[3]
+);
 // Replacement function for GM_setValue allowing for debugging in console
-const setValueGM = (typeof GM_setValue !== 'undefined') ? GM_setValue : ((name, value) => logScript('Getting: ', name, '=', value));
+const setValueGM = (typeof GM_setValue !== 'undefined') ? GM_setValue : (
+  (name, value) => logScript('Getting: ', name, '=', value)
+);
 
 // See https://stackoverflow.com/a/2401861/331508 for optional browser sniffing code.
 function getBrowser() {

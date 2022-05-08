@@ -20,7 +20,7 @@ export default {
         (ele, i) => { replacingValues[charFromPosition(i)] = ele || charFromPosition(i); },
       );
 
-      const res = toBeEval.replace(new RegExp(/\b\w+\b/, 'g'), (y) => replacingValues[y]);
+      const res = toBeEval.replace(/\b\w+\b/g, (y) => replacingValues[y]);
       return res.match(/pix=\"([^;]+)\";/)[1] // eslint-disable-line no-useless-escape
         + res.match(/pvalue=\[\"([^,]+)\",\"([^,\]]+)\"/)[page === 0 ? 1 : 2]; // eslint-disable-line no-useless-escape
     }

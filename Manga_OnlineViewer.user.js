@@ -5,24 +5,22 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans,Flame Scans, ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, KomiRaw, Leitor, LHTranslation, MangaHaus,Isekai Scan,Comic Kiba,Zinmanga,mangatx,Toonily,Mngazuki,ReaperScans, MangaDex, MangaDoom, MangaFreak, MangaFox, MangaHere, MangaHub, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaNato, MangaPark, MangaSee,Manga4life, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, UnionMangas, Batoto
-// @version 2022.02.24
+// @version 2022-05-08
 // @license MIT
-// @date 2022-02-24
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
 // @grant GM_deleteValue
 // @grant GM_xmlhttpRequest
 // @connect *
-// @require https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
-// @require https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.10/sweetalert2.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/ramda/0.27.0/ramda.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.3.5/jquery.minicolors.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.3.6/jquery.minicolors.min.js
 // @include /https?:\/\/(www.)?(asurascans|flamescans).(com|org)\/.+/
 // @include /https?:\/\/(www.)?comicastle.org\/comic\/.+\/[0-9]+.*/
 // @include /https?:\/\/(www.)?disasterscans.com\/manga\/.+\/chapter-.+/
@@ -63,6 +61,7 @@
   'use strict';
 
   var W = (typeof unsafeWindow === 'undefined') ? window : unsafeWindow;
+  /* global $:readonly, JSZip:readonly ,NProgress:readonly , jscolor:readonly , ColorScheme:readonly , Swal:readonly */
 
   var batoto = {
     name: 'Batoto',
@@ -211,8 +210,8 @@
     language: ['Portuguese'],
     category: 'manga',
     run() {
-      const token = $('script[src*=token]').attr('src').match(new RegExp(/[&?]token=(\w+)&?/i))[1];
-      const idRelease = $('script[src*=token]').attr('src').match(new RegExp(/[&?]id_release=(\d+)&?/i))[1];
+      const token = $('script[src*=token]').attr('src').match(/[&?]token=(\w+)&?/i)[1];
+      const idRelease = $('script[src*=token]').attr('src').match(/[&?]id_release=(\d+)&?/i)[1];
       let api = null;
       const url = "https://leitor.net/leitor/pages/".concat(idRelease, ".json?key=").concat(token);
       $.ajax({
@@ -321,7 +320,7 @@
         keyWords.forEach((ele, i) => {
           replacingValues[charFromPosition(i)] = ele || charFromPosition(i);
         });
-        const res = toBeEval.replace(new RegExp(/\b\w+\b/, 'g'), y => replacingValues[y]);
+        const res = toBeEval.replace(/\b\w+\b/g, y => replacingValues[y]);
         return res.match(/pix=\"([^;]+)\";/)[1] +
           res.match(/pvalue=\[\"([^,]+)\",\"([^,\]]+)\"/)[page === 0 ? 1 : 2];
       }
@@ -369,7 +368,7 @@
         keyWords.forEach((ele, i) => {
           replacingValues[charFromPosition(i)] = ele || charFromPosition(i);
         });
-        const res = toBeEval.replace(new RegExp(/\b\w+\b/, 'g'), y => replacingValues[y]);
+        const res = toBeEval.replace(/\b\w+\b/g, y => replacingValues[y]);
         return res.match(/pix=\"([^;]+)\";/)[1] +
           res.match(/pvalue=\[\"([^,]+)\",\"([^,\]]+)\"/)[page === 0 ? 1 : 2];
       }
@@ -832,7 +831,7 @@
     console.log('MangaOnlineViewer: ', ...text);
     return text;
   }
-  const logScriptC = R.curry((x, y) => logScript(x, y)[1]);
+  const logScriptC = x => y => logScript(x, y)[1];
   typeof GM_listValues !== 'undefined' ? GM_listValues : () => [];
   typeof GM_deleteValue !== 'undefined' ? GM_deleteValue : name => logScript('Removing: ', name);
   const getInfoGM = typeof GM_info !== 'undefined' ? GM_info : {
@@ -872,93 +871,17 @@
   }
   const isMobile = W.matchMedia('screen and (max-width: 1024px)').matches;
 
-  function _setPrototypeOf(o, p) {
-    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-      o.__proto__ = p;
-      return o;
-    };
-    return _setPrototypeOf(o, p);
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function");
-    }
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) _setPrototypeOf(subClass, superClass);
-  }
-
-  function _wrapRegExp() {
-    _wrapRegExp = function(re, groups) {
-      return new BabelRegExp(re, undefined, groups);
-    };
-    var _super = RegExp.prototype;
-    var _groups = new WeakMap();
-
-    function BabelRegExp(re, flags, groups) {
-      var _this = new RegExp(re, flags);
-      _groups.set(_this, groups || _groups.get(re));
-      return _setPrototypeOf(_this, BabelRegExp.prototype);
-    }
-    _inherits(BabelRegExp, RegExp);
-    BabelRegExp.prototype.exec = function(str) {
-      var result = _super.exec.call(this, str);
-      if (result) result.groups = buildGroups(result, this);
-      return result;
-    };
-    BabelRegExp.prototype[Symbol.replace] = function(str, substitution) {
-      if (typeof substitution === "string") {
-        var groups = _groups.get(this);
-        return _super[Symbol.replace].call(this, str, substitution.replace(/\$<([^>]+)>/g, function(_, name) {
-          return "$" + groups[name];
-        }));
-      } else if (typeof substitution === "function") {
-        var _this = this;
-        return _super[Symbol.replace].call(this, str, function() {
-          var args = arguments;
-          if (typeof args[args.length - 1] !== "object") {
-            args = [].slice.call(args);
-            args.push(buildGroups(args, _this));
-          }
-          return substitution.apply(this, args);
-        });
-      } else {
-        return _super[Symbol.replace].call(this, str, substitution);
-      }
-    };
-
-    function buildGroups(result, re) {
-      var g = _groups.get(re);
-      return Object.keys(g).reduce(function(groups, name) {
-        groups[name] = result[g[name]];
-        return groups;
-      }, Object.create(null));
-    }
-    return _wrapRegExp.apply(this, arguments);
-  }
   const cache = {
     zip: new JSZip(),
     downloadFiles: 0,
     Data: {}
   };
-  const getExtension = mimeType => ((_wrapRegExp(/image\/(jpe?g|png|webp)/, {
-    ext: 1
-  }).exec(mimeType) || {}).groups || {}).ext || '' || 'png';
+  const getExtension = mimeType => ((/image\/(?<ext>jpe?g|png|webp)/.exec(mimeType) || {}).groups || {}).ext || '' || 'png';
   const getFilename = (name, index, total, ext) => "".concat(name).concat((index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, '0'), ".").concat(ext.replace('jpeg', 'jpg'));
 
   function generateZip() {
     if (cache.downloadFiles === 0) {
-      const filenameRegex = _wrapRegExp(/^(.*?)([0-9]+)\.([0-9A-Z_a-z]+)$/, {
-        name: 1,
-        index: 2,
-        ext: 3
-      });
+      const filenameRegex = /^(?<name>.*?)(?<index>\d+)\.(?<ext>\w+)$/;
       const images = $('.MangaPage img');
       const filenames = (() => {
         const result = [];
@@ -982,10 +905,7 @@
       images.get().forEach((value, index) => {
         const img = $(value);
         const src = img.attr('src');
-        const base64 = _wrapRegExp(/^data:(image\/[0-9A-Z_a-z]+);base64,+(.+)/, {
-          mimeType: 1,
-          data: 2
-        }).exec(src);
+        const base64 = /^data:(?<mimeType>image\/\w+);base64,+(?<data>.+)/.exec(src);
         if (base64) {
           const filename = getFilename('Page ', index, images.length, getExtension(base64.groups.mimeType));
           cache.zip.file(filename, base64.groups.data, {
@@ -1093,8 +1013,18 @@
     controls: 'data:image/png;base64,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'
   };
 
-  const isEmpty = R.either(R.isNil, R.isEmpty);
-  const mapIndexed = R.addIndex(R.map);
+  function isNothing(value) {
+    const isEmptyObject = a => {
+      if (typeof a.length === 'undefined') {
+        const hasNonempty = Object.keys(a).some(element => !isNothing(a[element]));
+        return hasNonempty ? false : isEmptyObject(Object.keys(a));
+      }
+      return !a.some(element => !isNothing(element));
+    };
+    return (
+      value == false || value === 0 || typeof value === 'undefined' || value == null || typeof value === 'object' && isEmptyObject(value)
+    );
+  }
 
   function getHtml(url, wait = settings.Timer) {
     return new Promise(resolve => {
@@ -1250,8 +1180,8 @@
       }, wait);
     });
   }
-  const loadMangaPages = (begin, manga) => mapIndexed((url, index) => index >= begin ? delayAdd(url, (manga.timer || settings.Timer) * (index - begin)).then(response => addPage(manga, index + 1, response)) : null, manga.listPages);
-  const loadMangaImages = (begin, manga) => mapIndexed((src, index) => index >= begin ? delayAdd(src, (manga.timer || settings.Timer) * (index - begin)).then(response => addImg(index + 1, response)) : null, manga.listImages);
+  const loadMangaPages = (begin, manga) => manga.listPages.map((url, index) => index >= begin ? delayAdd(url, (manga.timer || settings.Timer) * (index - begin)).then(response => addPage(manga, index + 1, response)) : null);
+  const loadMangaImages = (begin, manga) => manga.listImages.map((src, index) => index >= begin ? delayAdd(src, (manga.timer || settings.Timer) * (index - begin)).then(response => addImg(index + 1, response)) : null);
 
   function loadManga(manga, begin = 1) {
     settings.lazyLoadImages = manga.lazy || settings.lazyLoadImages;
@@ -1261,10 +1191,10 @@
     if (settings.lazyLoadImages) {
       logScript('Download may not work with Lazy Loading Images');
     }
-    if (!isEmpty(manga.listImages)) {
+    if (!isNothing(manga.listImages)) {
       logScript('Method: Images:', manga.listImages);
       loadMangaImages(begin - 1, manga);
-    } else if (!isEmpty(manga.listPages)) {
+    } else if (!isNothing(manga.listPages)) {
       logScript('Method: Pages:', manga.listPages);
       loadMangaPages(begin - 1, manga);
     } else {
@@ -1272,9 +1202,9 @@
       manga.bruteForce({
         begin,
         addImg,
-        addPage: R.curry(addPage)(manga),
-        loadMangaImages: R.curry(loadMangaImages)(begin - 1),
-        loadMangaPages: R.curry(loadMangaPages)(begin - 1),
+        addPage: (...args) => addPage(manga, ...args),
+        loadMangaImages: (...args) => loadMangaImages(begin - 1, ...args),
+        loadMangaPages: (...args) => loadMangaPages(begin - 1, ...args),
         getHtml,
         wait: settings.timer
       });
@@ -1315,8 +1245,8 @@
     ];
   }
   const themes = loadThemes();
-  const themesSelector = R.map(theme => "<option value='".concat(theme[0], "' ").concat(settings.Theme === theme[0] ? 'selected' : '', ">").concat(theme[0].replace('_', ' '), "</option>"), themes);
-  const themesCSS = R.map(theme => addTheme(theme), themes).join('');
+  const themesSelector = themes.map(theme => "<option value='".concat(theme[0], "' ").concat(settings.Theme === theme[0] ? 'selected' : '', ">").concat(theme[0].replace('_', ' '), "</option>"));
+  const themesCSS = themes.map(addTheme).join('');
 
   function scrollToElement(ele) {
     $(W).scrollTop(ele.offset().top).scrollLeft(ele.offset().left);
@@ -1534,7 +1464,7 @@
         setValueGM('MangaLazyLoadImages', true);
         Swal.fire({
           title: 'Warning',
-          html: 'Lazy load is incompatible with zip download, you will not be able to download with this setting ON.<br/>' + 'Suggestion: <span style="color:red;font:bold">Disable Thumbnails</span> to save Bandwidth/Memory.',
+          html: "Lazy load is incompatible with zip download, you will not be able to download with this setting ON.<br/>\n               Suggestion: <span style=\"color:red;font:bold\">Disable Thumbnails</span> to save Bandwidth/Memory.",
           icon: 'warning'
         });
       } else {
@@ -1677,21 +1607,21 @@
 
   var htmlKeybinds = "<div id=\"ViewerShortcuts\" class=\"panel\" style=\"display:none\"> <kbd class=\"dark\">Numpad 5</kbd>/<kbd class=\"dark\">/</kbd>: Open Settings<br> <kbd class=\"dark\">Numpad +</kbd>/<kbd class=\"dark\">=</kbd>: Global Zoom in pages (enlarge)<br> <kbd class=\"dark\">Numpad -</kbd>/<kbd class=\"dark\">-</kbd>: Global Zoom out pages (reduce)<br> <kbd class=\"dark\">Numpad /</kbd>/<kbd class=\"dark\">9</kbd>: Global Restore pages to original<br> <kbd class=\"dark\">Numpad *</kbd>/<kbd class=\"dark\">0</kbd>: Global Fit window width<br> <kbd class=\"dark\">V</kbd>: Vertical Mode<br> <kbd class=\"dark\">C</kbd>: WebComic Mode<br> <kbd class=\"dark\">N</kbd>: Right to Left Mode<br> <kbd class=\"dark\">B</kbd>: Left to Right Mode<br> <kbd class=\"dark\">→</kbd>/<kbd class=\"dark\">D</kbd>/<kbd class=\"dark\">Numpad 6</kbd>/<kbd class=\"dark\">.</kbd> : Next Chapter<br> <kbd class=\"dark\">←</kbd>/<kbd class=\"dark\">A</kbd>/<kbd class=\"dark\">Numpad 4</kbd>/<kbd class=\"dark\">,</kbd> : Previous Chapter<br> <kbd class=\"dark\">↑</kbd>/<kbd class=\"dark\">W</kbd>/<kbd class=\"dark\">Numpad 8</kbd>: Scroll Up<br> <kbd class=\"dark\">↓</kbd>/<kbd class=\"dark\">S</kbd>/<kbd class=\"dark\">Numpad 2</kbd>: Scroll Down<br> </div> ";
 
-  var cssStyles = "html { font-size: 100% } body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #333; background-color: #FFF; padding: 0 } a { color: #08C; text-decoration: none } img { height: auto; max-width: 100%; vertical-align: middle; border: 0 none } #nprogress .bar { background: #29d; position: fixed; z-index: 1031; top: 0; left: 0; width: 100%; height: 4px; } #MangaOnlineViewer { width: 100%; height: 100%; padding-bottom: 100px; min-height: 1080px; } #MangaOnlineViewer #Chapter { text-align: center; margin: 25px auto 0; display: block; } #MangaOnlineViewer #Chapter.WebComic .PageFunctions { position: relative; margin-bottom: -23px; } #MangaOnlineViewer #Chapter.WebComic .PageContent { margin-bottom: 0; line-height: 0; } #MangaOnlineViewer #Chapter.FluidLTR .MangaPage { width: auto; } #MangaOnlineViewer #Chapter.FluidRTL .MangaPage { width: auto; } #MangaOnlineViewer #Chapter.FluidLTR { direction: ltr; } #MangaOnlineViewer #Chapter.FluidRTL { direction: rtl; } #MangaOnlineViewer #ViewerControls { padding: 8px; position: fixed; top: 0; left: 405px; width: auto; display: none; } #MangaOnlineViewer #ViewerShortcuts { padding: 8px; position: fixed; top: 65px; left: 0; } #MangaOnlineViewer #ViewerControls .controlLabel { display: list-item; list-style: none; } #MangaOnlineViewer select { height: 20px; padding: 0; margin-bottom: 5px } #MangaOnlineViewer .controlButton { cursor: pointer; border: 0 none; } #MangaOnlineViewer #ImageOptions { left: 0; position: absolute; top: 0; width: 405px; } #MangaOnlineViewer #ImageOptions .panel { padding: 5px; position: inherit; } #MangaOnlineViewer #ImageOptions:hover { position: fixed; } #MangaOnlineViewer #ImageOptions.settingsOpen { position: fixed; } #MangaOnlineViewer #ImageOptions #menu { position: fixed; height: 64px; width: 200px; top: 0; } #MangaOnlineViewer #ImageOptions #Zoom { position: absolute; left: 18px; bottom: -65px; } #MangaOnlineViewer .MangaPage { width: 100%; display: inline-block; text-align: center; transform: translate3d(0, 0, 0); backface-visibility: hidden; perspective: 1000px; } #MangaOnlineViewer .PageContent { margin: 0 0 15px; text-align: center; display: inline-block; } #MangaOnlineViewer .PageContent img[src=\"\"], #MangaOnlineViewer .PageContent img:not([src]){ width: 500px; height: 750px; display: inline-block; } #MangaOnlineViewer #gotoPage { width: 35px; } #MangaOnlineViewer #ThemeSelector { width: 110px; } #MangaOnlineViewer .ChapterControl { margin-right: 120px; margin-top: 1px; float: right; } #MangaOnlineViewer .ChapterControl a { display: inline-block; width: 80px; height: 25px; text-align: center; margin-left: 3px; margin-bottom: -1px; } #MangaOnlineViewer .ChapterControl a[href='#'], #MangaOnlineViewer .ChapterControl a[href=''] { visibility: hidden } #MangaOnlineViewer .ViewerTitle { display: block; text-align: center; height: 35px; } #MangaOnlineViewer #Counters { position: absolute; right: 10px; top: 10px; } #MangaOnlineViewer .PageFunctions { font-family: monospace; font-size: 10pt; padding-right: 120px; text-align: right } #MangaOnlineViewer .PageFunctions > span { min-width: 20px; text-align: center; display: inline-block; padding: 2px 10px } #MangaOnlineViewer .PageFunctions > a { height: 16px; width: 16px; padding: 10px; } #MangaOnlineViewer .PageFunctions a { opacity: 0.2 } #MangaOnlineViewer .PageFunctions:hover a { opacity: 1 } #MangaOnlineViewer.hideControls .PageFunctions { display: none; visibility: hidden; } #MangaOnlineViewer #NavigationCounters { margin-top: 5px; width: 100%; } #MangaOnlineViewer #Navigation { bottom: -180px; height: 190px; overflow-x: hidden; overflow-y: hidden; padding-bottom: 20px; position: fixed; white-space: nowrap; width: 100%; text-align: center; } #MangaOnlineViewer #Navigation #Thumbnails { overflow-x: auto; overflow-y: hidden; } #MangaOnlineViewer #Navigation:hover { bottom: 0; } #MangaOnlineViewer #Navigation.disabled { display: none; } #MangaOnlineViewer #Navigation.visible { bottom: 0; } #MangaOnlineViewer #Navigation .Thumbnail { display: inline-block; height: 150px; margin: 0 5px; position: relative; } #MangaOnlineViewer #Navigation .Thumbnail span { display: block; opacity: 0.8; position: relative; top: -30px; width: 100%; } #MangaOnlineViewer #Navigation .Thumbnail img { align-content: center; cursor: pointer; display: inline-block; margin-bottom: -10px; margin-top: 10px; max-height: 150px; min-height: 150px; min-width: 80px; max-width: 160px; } #MangaOnlineViewer #Navigation .nav { transform: rotate(-90deg);; } #MangaOnlineViewer #ImageOptions .menuOuterArrow { width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 10px solid blue; display: inline-block; position: absolute; bottom: 0; } #MangaOnlineViewer #ImageOptions .menuInnerArrow { width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 5px solid white; left: -10px; position: absolute; top: -5px; display: inline-block; } #MangaOnlineViewer.mobile * { float: none !important; } #MangaOnlineViewer.mobile #Navigation { display: none; } #MangaOnlineViewer.mobile .PageFunctions { padding: 0; } #MangaOnlineViewer.mobile .PageFunctions a:not(.Bookmark) { display: none; } #MangaOnlineViewer.mobile .PageFunctions a.Bookmark { opacity: 1; } #MangaOnlineViewer.mobile .PageFunctions span { right: 0; position: inherit; text-align: center; } #MangaOnlineViewer.mobile .PageContent { margin: 0; width: 100%; } #MangaOnlineViewer.mobile .PageContent img { width: 100% !important; } #MangaOnlineViewer.mobile .fitWidthIfOversized .PageContent img { max-width: 100%; } #MangaOnlineViewer.mobile #ImageOptions img:not(#settings) { display: none; } #MangaOnlineViewer.mobile #ViewerShortcuts { display: none !important; } #MangaOnlineViewer.mobile #ViewerControls { padding: 8px; position: fixed; top: 0; left: 45px; width: auto; } #MangaOnlineViewer.mobile #ViewerControls span.DefaultZoom, #MangaOnlineViewer.mobile #ViewerControls span.viewMode, #MangaOnlineViewer.mobile #ViewerControls span.fitIfOversized, #MangaOnlineViewer.mobile #ViewerControls span.showThumbnails, #MangaOnlineViewer.mobile #ViewerControls span.lazyLoadImages, #MangaOnlineViewer.mobile #ViewerControls span.downloadZip { display: none; } #MangaOnlineViewer.mobile #ViewerControls { padding: 8px; position: fixed; top: 0; left: 45px; width: auto; } #MangaOnlineViewer.mobile #ImageOptions #menu { display: none; } #MangaOnlineViewer.mobile #ImageOptions #Zoom { display: none; } #MangaOnlineViewer.mobile .ViewerTitle { height: auto; } #MangaOnlineViewer.mobile .ChapterControl { margin: 10px; display: block; text-align: center; } #MangaOnlineViewer.mobile .ChapterControl .download { display: none; } #MangaOnlineViewer.mobile #Counters { position: inherit; text-align: center; margin: 10px; } #MangaOnlineViewer.mobile #Chapter { margin: 5px auto 0; } #MangaOnlineViewer .fitWidthIfOversized .PageContent img { max-width: 100%; } #MangaOnlineViewer .minicolors-theme-default .minicolors-swatch{ top: 2px; left: 2px; } ";
+  var cssStyles = "html { font-size: 100%; } body { margin: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #333; background-color: #FFF; padding: 0; } a { color: #08C; text-decoration: none; } img { height: auto; max-width: 100%; vertical-align: middle; border: 0 none; } #nprogress .bar { background: #29d; position: fixed; z-index: 1031; top: 0; left: 0; width: 100%; height: 4px; } #MangaOnlineViewer { width: 100%; height: 100%; padding-bottom: 100px; min-height: 1080px; } #MangaOnlineViewer #Chapter { text-align: center; margin: 25px auto 0; display: block; } #MangaOnlineViewer #Chapter.WebComic .PageFunctions { position: relative; margin-bottom: -23px; } #MangaOnlineViewer #Chapter.WebComic .PageContent { margin-bottom: 0; line-height: 0; } #MangaOnlineViewer #Chapter.FluidLTR .MangaPage { width: auto; } #MangaOnlineViewer #Chapter.FluidRTL .MangaPage { width: auto; } #MangaOnlineViewer #Chapter.FluidLTR { direction: ltr; } #MangaOnlineViewer #Chapter.FluidRTL { direction: rtl; } #MangaOnlineViewer #ViewerControls { padding: 8px; position: fixed; top: 0; left: 405px; width: auto; display: none; } #MangaOnlineViewer #ViewerShortcuts { padding: 8px; position: fixed; top: 65px; left: 0; } #MangaOnlineViewer #ViewerControls .controlLabel { display: list-item; list-style: none; } #MangaOnlineViewer select { height: 20px; padding: 0; margin-bottom: 5px; } #MangaOnlineViewer .controlButton { cursor: pointer; border: 0 none; } #MangaOnlineViewer #ImageOptions { left: 0; position: absolute; top: 0; width: 405px; } #MangaOnlineViewer #ImageOptions .panel { padding: 5px; position: inherit; } #MangaOnlineViewer #ImageOptions:hover { position: fixed; } #MangaOnlineViewer #ImageOptions.settingsOpen { position: fixed; } #MangaOnlineViewer #ImageOptions #menu { position: fixed; height: 64px; width: 200px; top: 0; } #MangaOnlineViewer #ImageOptions #Zoom { position: absolute; left: 18px; bottom: -65px; } #MangaOnlineViewer .MangaPage { width: 100%; display: inline-block; text-align: center; transform: translate3d(0, 0, 0); backface-visibility: hidden; perspective: 1000px; } #MangaOnlineViewer .PageContent { margin: 0 0 15px; text-align: center; display: inline-block; } #MangaOnlineViewer .PageContent img[src=\"\"], #MangaOnlineViewer .PageContent img:not([src]) { width: 500px; height: 750px; display: inline-block; } #MangaOnlineViewer #gotoPage { width: 35px; } #MangaOnlineViewer #ThemeSelector { width: 110px; } #MangaOnlineViewer .ChapterControl { margin-right: 120px; margin-top: 1px; float: right; } #MangaOnlineViewer .ChapterControl a { display: inline-block; width: 80px; height: 25px; text-align: center; margin-left: 3px; margin-bottom: -1px; } #MangaOnlineViewer .ChapterControl a[href='#'], #MangaOnlineViewer .ChapterControl a[href=''] { visibility: hidden } #MangaOnlineViewer .ViewerTitle { display: block; text-align: center; height: 35px; } #MangaOnlineViewer #Counters { position: absolute; right: 10px; top: 10px; } #MangaOnlineViewer .PageFunctions { font-family: monospace; font-size: 10pt; padding-right: 120px; text-align: right } #MangaOnlineViewer .PageFunctions > span { min-width: 20px; text-align: center; display: inline-block; padding: 2px 10px } #MangaOnlineViewer .PageFunctions > a { height: 16px; width: 16px; padding: 10px; } #MangaOnlineViewer .PageFunctions a { opacity: 0.2; } #MangaOnlineViewer .PageFunctions:hover a { opacity: 1; } #MangaOnlineViewer.hideControls .PageFunctions { display: none; visibility: hidden; } #MangaOnlineViewer #NavigationCounters { margin-top: 5px; width: 100%; } #MangaOnlineViewer #Navigation { bottom: -180px; height: 190px; overflow-x: hidden; overflow-y: hidden; padding-bottom: 20px; position: fixed; white-space: nowrap; width: 100%; text-align: center; } #MangaOnlineViewer #Navigation #Thumbnails { overflow-x: auto; overflow-y: hidden; } #MangaOnlineViewer #Navigation:hover { bottom: 0; } #MangaOnlineViewer #Navigation.disabled { display: none; } #MangaOnlineViewer #Navigation.visible { bottom: 0; } #MangaOnlineViewer #Navigation .Thumbnail { display: inline-block; height: 150px; margin: 0 5px; position: relative; } #MangaOnlineViewer #Navigation .Thumbnail span { display: block; opacity: 0.8; position: relative; top: -30px; width: 100%; } #MangaOnlineViewer #Navigation .Thumbnail img { align-content: center; cursor: pointer; display: inline-block; margin-bottom: -10px; margin-top: 10px; max-height: 150px; min-height: 150px; min-width: 80px; max-width: 160px; } #MangaOnlineViewer #Navigation .nav { transform: rotate(-90deg); } #MangaOnlineViewer #ImageOptions .menuOuterArrow { width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 10px solid blue; display: inline-block; position: absolute; bottom: 0; } #MangaOnlineViewer #ImageOptions .menuInnerArrow { width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 5px solid white; left: -10px; position: absolute; top: -5px; display: inline-block; } #MangaOnlineViewer.mobile * { float: none !important; } #MangaOnlineViewer.mobile #Navigation { display: none; } #MangaOnlineViewer.mobile .PageFunctions { padding: 0; } #MangaOnlineViewer.mobile .PageFunctions a:not(.Bookmark) { display: none; } #MangaOnlineViewer.mobile .PageFunctions a.Bookmark { opacity: 1; } #MangaOnlineViewer.mobile .PageFunctions span { right: 0; position: inherit; text-align: center; } #MangaOnlineViewer.mobile .PageContent { margin: 0; width: 100%; } #MangaOnlineViewer.mobile .PageContent img { width: 100% !important; } #MangaOnlineViewer.mobile .fitWidthIfOversized .PageContent img { max-width: 100%; } #MangaOnlineViewer.mobile #ImageOptions img:not(#settings) { display: none; } #MangaOnlineViewer.mobile #ViewerShortcuts { display: none !important; } #MangaOnlineViewer.mobile #ViewerControls { padding: 8px; position: fixed; top: 0; left: 45px; width: auto; } #MangaOnlineViewer.mobile #ViewerControls span.DefaultZoom, #MangaOnlineViewer.mobile #ViewerControls span.viewMode, #MangaOnlineViewer.mobile #ViewerControls span.fitIfOversized, #MangaOnlineViewer.mobile #ViewerControls span.showThumbnails, #MangaOnlineViewer.mobile #ViewerControls span.lazyLoadImages, #MangaOnlineViewer.mobile #ViewerControls span.downloadZip { display: none; } #MangaOnlineViewer.mobile #ViewerControls { padding: 8px; position: fixed; top: 0; left: 45px; width: auto; } #MangaOnlineViewer.mobile #ImageOptions #menu { display: none; } #MangaOnlineViewer.mobile #ImageOptions #Zoom { display: none; } #MangaOnlineViewer.mobile .ViewerTitle { height: auto; } #MangaOnlineViewer.mobile .ChapterControl { margin: 10px; display: block; text-align: center; } #MangaOnlineViewer.mobile .ChapterControl .download { display: none; } #MangaOnlineViewer.mobile #Counters { position: inherit; text-align: center; margin: 10px; } #MangaOnlineViewer.mobile #Chapter { margin: 5px auto 0; } #MangaOnlineViewer .fitWidthIfOversized .PageContent img { max-width: 100%; } #MangaOnlineViewer .minicolors-theme-default .minicolors-swatch { top: 2px; left: 2px; } ";
 
-  const externalScripts = ['<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js" integrity="sha512-y3o0Z5TJF1UsKjs/jS2CDkeHN538bWsftxO9nctODL5W40nyXIbs0Pgyu7//icrQY9m6475gLaVr39i/uh/nLA==" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js" integrity="sha256-XWzSUJ+FIQ38dqC06/48sNRwU1Qh3/afjmJ080SneA8=" crossorigin="anonymous"></script>', '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js" integrity="sha256-Pak+T/D7rPGAHfzcUuHBYvzPhWGP+hNyabAZE28kCtI=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js" integrity="sha256-7IUC8vhyoPLh1tuQJnffPB5VO6HpR4VWK4Y1ciOOoBY=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.27.0/ramda.min.js" integrity="sha512-rZHvUXcc1zWKsxm7rJ8lVQuIr1oOmm7cShlvpV0gWf0RvbcJN6x96al/Rp2L2BI4a4ZkT2/YfVe/8YvB2UHzQw==" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js" integrity="sha256-B00tEEtJRbA9gas0viRdqVPI81EuZG+kYU978/alKt8=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha512-S5PZ9GxJZO16tT9r3WJp/Safn31eu8uWrzglMahDT4dsmgqWonRY9grk3j+3tfuPr9WJNsfooOR7Gi7HL5W2jw==" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.3.5/jquery.minicolors.min.js" integrity="sha512-FVnzYpPeG7mAH2iLD3T+pXpsBTUwF0Ea9C7sL85QLzF/GVDMDStSLUYiWl1Vuz5pe69LJCy7pFTtSEEIhVj/FQ==" crossorigin="anonymous"></script>'];
+  const externalScripts = ['<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js" integrity="sha512-amNoSoOK3jIKx6qlDrv36P4M/h7vc6CHwiBU3XG9/1LW0ZSNe8E3iZL1tPG/VnfCrVrZc2Zv47FIJ7fyDX4DMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js" integrity="sha256-XWzSUJ+FIQ38dqC06/48sNRwU1Qh3/afjmJ080SneA8=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.10/sweetalert2.min.js" integrity="sha512-OgIASmUioEN3o3gYIAxYUeW4G5FWdhORLq0p7UhTM6Xrm5XGY4IrSDM3uYTCNh4ik4V8BX0NaX9/Z/VMqigCzg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js" integrity="sha256-7IUC8vhyoPLh1tuQJnffPB5VO6HpR4VWK4Y1ciOOoBY=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js" integrity="sha256-B00tEEtJRbA9gas0viRdqVPI81EuZG+kYU978/alKt8=" crossorigin="anonymous"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js" integrity="sha512-kfs3Dt9u9YcOiIt4rNcPUzdyNNO9sVGQPiZsub7ywg6lRW5KuK1m145ImrFHe3LMWXHndoKo2YRXWy8rnOcSKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.3.6/jquery.minicolors.min.js" integrity="sha512-vBqPkpOdZM0O7YezzE8xaoUdyt4Z2d+gLrY0AMvmNPLdLuNzvreTopyuaM9/FiRzHs1bwWzYDJgH6STcuNXpqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>'];
   externalScripts.map(script => script.match(/src="(.+?)"/)[1]);
-  const externalCSS = ['<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />', '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" integrity="sha256-pMhcV6/TBDtqH9E9PWKgS+P32PVguLG8IipkPyqMtfY=" crossorigin="anonymous" />', '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gerhobbelt/keyscss@1.1.3-6/keys.css" integrity="sha256-a/1ebfXeoX0xLUcQCJLQsm6APQNBwrm03/XFcvW7xAI=" crossorigin="anonymous">', '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css" integrity="sha256-+i/q+yL1PZtG7XXcozv06rg9dju2gmNIHW7sJ+su/U4=" crossorigin="anonymous">', '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.3.5/jquery.minicolors.min.css" integrity="sha512-0jYrW0Fs5LLt+7sTBtP32vdsuTDL/Bk4XVQXn7zDscm8HnPvUoTDX8vPmC/Crr89U27V9jXp8s3aPKb9aTu/iQ==" crossorigin="anonymous" />'];
+  const externalCSS = ['<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />', '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" integrity="sha256-pMhcV6/TBDtqH9E9PWKgS+P32PVguLG8IipkPyqMtfY=" crossorigin="anonymous" />', '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gerhobbelt/keyscss@1.1.3-6/keys.css" integrity="sha256-a/1ebfXeoX0xLUcQCJLQsm6APQNBwrm03/XFcvW7xAI=" crossorigin="anonymous">', '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.10/sweetalert2.min.css" integrity="sha512-R9EM3xazxo9xyo8pz3IMTw7SIO1qKnG1Vs3yJnVApYhqDwemdSJJbcd5KROicK87kRiFksOhhtW/s2c4Mdjrwg==" crossorigin="anonymous" referrerpolicy="no-referrer" />', '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.3.6/jquery.minicolors.min.css" integrity="sha512-BVeRnUOL0G7d4gXmj+0VxpoiQuEibKQtlkclADKvCdNrESs0LA6+H8s1lU455VqWFtHBfF/pKDGw/CMat2hqOg==" crossorigin="anonymous" referrerpolicy="no-referrer" />'];
 
   const panel = "<div id='ImageOptions'>\n  <div id='menu'>\n    <span class='menuOuterArrow'><span class='menuInnerArrow'></span></span>\n  </div>\n  <div class='panel'>\n    <img id='enlarge' alt='Enlarge' title='Enlarge' src='".concat(icon.enlarge, "' class='controlButton' />\n    <img id='restore' alt='Restore' title='Restore' src='").concat(icon.restore, "' class='controlButton' />\n    <img id='reduce' alt='Reduce' title='Reduce' src='").concat(icon.reduce, "' class='controlButton' />\n    <img id='fitWidth' alt='Fit Width' title='Fit Width' src='").concat(icon.fitWidth, "' class='controlButton' />\n    <img id='fitHeight' alt='Fit Height' title='Fit Height' src='").concat(icon.fitHeight, "' class='controlButton' />\n    <img id='webComic' alt='Web Comic Mode' title='Web Comic Mode' src='").concat(icon.webComic, "' class='controlButton' />\n    <img id='ltrMode' alt='Left to Right Mode' title='Left to Right Mode' src='").concat(icon.pictureLeft, "' class='controlButton'/>\n    <img id='verticalMode' alt='Vertical Mode' title='Vertical Mode' src='").concat(icon.pictureDown, "' class='controlButton'/>\n    <img id='rtlMode' alt='Right to Left Mode' title='Right to Left Mode' src='").concat(icon.pictureRight, "' class='controlButton'/>\n    <img id='pageControls' alt='Toggle Page Controls' title='Toggle Page Controls' src='").concat(icon.controls, "' class='controlButton'/>\n    <img id='settings' alt='settings' title='settings' src='").concat(icon.settings, "' class='controlButton' />\n  </div>\n  <div id='Zoom' class='controlLabel'>Zoom: <b>").concat(settings.Zoom, "</b> %</div>\n</div>");
   const controls = "<div id='ViewerControls' class='panel'>\n  <span class='controlLabel ThemeSelector'>Theme:\n    <select id='ThemeSelector'>\n      ".concat(themesSelector, "\n    </select>\n      <span class='CustomTheme' ").concat(settings.Theme !== 'Custom_Dark' && settings.Theme !== 'Custom_Light' ? 'style="display: none;"' : '', "><br/>-Base:<input id='CustomThemeHue' value='").concat(settings.CustomTheme, "' class='colorpicker CustomTheme'></span>\n      <span class='FullCustom' ").concat(settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : '', "><br/>-Body:<input id='CustomThemeHueBody' value='").concat(settings.CustomThemeBody, "' class='colorpicker FullCustom'></span>\n      <span class='FullCustom' ").concat(settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : '', "><br/>-Text:<input id='CustomThemeHueText' value=").concat(settings.CustomThemeText, "' class='colorpicker FullCustom'></span>\n      <span class='FullCustom' ").concat(settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : '', "><br/>-Lines:<input id='CustomThemeHueLines' value='").concat(settings.CustomThemeLines, "' class='colorpicker FullCustom'></span>\n      <span class='FullCustom' ").concat(settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : '', "><br/>-Painels:<input id='CustomThemeHuePanel' value='").concat(settings.CustomThemePanel, "' class='colorpicker FullCustom'></span>\n      <span class='FullCustom' ").concat(settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : '', "><br/>-Buttons:<input id='CustomThemeHueButton' value='").concat(settings.CustomThemeButton, "' class='colorpicker FullCustom'></span>\n  </span>\n  <span class='controlLabel loadMode'>Default Load Mode:\n    <select id='loadMode'>\n      <option value='normal' ").concat(settings.loadMode === 'normal' ? 'selected' : '', ">Normal(Wait 3 sec)</option>\n      <option value='always' ").concat(settings.loadMode === 'always' ? 'selected' : '', ">Always(Immediately)</option>\n      <option value='never' ").concat(settings.loadMode === 'never' ? 'selected' : '', ">Never(Manually)</option>\n    </select>\n  </span>\n  <span class='controlLabel PagesPerSecond'>Pages/Second:\n    <select id='PagesPerSecond'>\n      <option value='3000' ").concat(settings.Timer === 3000 ? 'selected' : '', ">0.3(Slow)</option>\n      <option value='2000' ").concat(settings.Timer === 2000 ? 'selected' : '', ">0.5</option>\n      <option value='1000' ").concat(settings.Timer === 1000 ? 'selected' : '', ">01(Normal)</option>\n      <option value='500' ").concat(settings.Timer === 500 ? 'selected' : '', ">02</option>\n      <option value='250' ").concat(settings.Timer === 250 ? 'selected' : '', ">04(Fast)</option>\n      <option value='125' ").concat(settings.Timer === 125 ? 'selected' : '', ">08</option>\n      <option value='100' ").concat(settings.Timer === 100 ? 'selected' : '', ">10(Extreme)</option>\n    </select>\n  </span>\n  <span class='controlLabel DefaultZoom'>Default Zoom:\n    <select id='DefaultZoom'>\n      <option value='50' ").concat(settings.Zoom === 50 ? 'selected' : '', ">50%</option>\n      <option value='75' ").concat(settings.Zoom === 75 ? 'selected' : '', ">75%</option>\n      <option value='100' ").concat(settings.Zoom === 100 ? 'selected' : '', ">100%</option>\n      <option value='125' ").concat(settings.Zoom === 125 ? 'selected' : '', ">125%</option>\n      <option value='150' ").concat(settings.Zoom === 150 ? 'selected' : '', ">150%</option>\n      <option value='175' ").concat(settings.Zoom === 175 ? 'selected' : '', ">175%</option>\n      <option value='200' ").concat(settings.Zoom === 200 ? 'selected' : '', ">200%</option>\n      <option value='1000' ").concat(settings.Zoom === 1000 ? 'selected' : '', ">Fit Width</option>\n      <option value='-1000' ").concat(settings.Zoom === -1000 ? 'selected' : '', ">Fit Height</option>\n    </select>\n  </span>\n  <span class='controlLabel zoomStep'>Zoom Change Step (between 5 and 50): <br/>\n    <input type='range' value='").concat(settings.zoomStep, "' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput=\"zoomStepVal.value = this.value\">\n    <output id=\"zoomStepVal\">").concat(settings.zoomStep, "</output>\n  </span>\n  <span class='controlLabel viewMode'>Default View Mode:\n    <select id='viewMode'>\n      <option value='' ").concat(settings.viewMode === '' ? 'selected' : '', ">Vertical</option>\n      <option value='WebComic' ").concat(settings.viewMode === 'WebComic' ? 'selected' : '', ">WebComic</option>\n      <option value='FluidLTR' ").concat(settings.viewMode === 'FluidLTR' ? 'selected' : '', ">Left to Right</option>\n      <option value='FluidRTL' ").concat(settings.viewMode === 'FluidRTL' ? 'selected' : '', ">Right to Left</option>\n    </select>\n  </span>\n  <span class='controlLabel fitIfOversized'>Fit Width if Oversized:\n    <input type='checkbox' value='true' name='fitIfOversized' id='fitIfOversized' ").concat(settings.FitWidthIfOversized ? 'checked' : '', ">\n  </span>\n  <span class='controlLabel showThumbnails'>Show Thumbnails:\n    <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ").concat(settings.ShowThumbnails ? 'checked' : '', ">\n   </span>\n   <span class='controlLabel lazyLoadImages'>Lazy Load Images:\n    <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ").concat(settings.lazyLoadImages ? 'checked' : '', ">\n   </span>\n   <span class='controlLabel lazyStart'>Lazy Start From Page (between 5 and 100):<br/>\n    <input type='range' value='").concat(settings.lazyStart, "' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput=\"lazyStartVal.value = this.value\">\n    <output id=\"lazyStartVal\">").concat(settings.lazyStart, "</output>\n  </span>\n  <span class='controlLabel downloadZip'>Download Images as Zip Automatically:\n    <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ").concat(settings.DownloadZip ? 'checked' : '', ">\n  </span>\n  <span class='controlLabel hidePageControls'>Always Hide Page Controls:\n    <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ").concat(settings.hidePageControls ? 'checked' : '', ">\n  </span>\n</div>");
-  const chapterControl = R.curry((id, manga) => "<div id='".concat(id, "' class='ChapterControl'>\n    <a href='#' class='download'>Download</a>\n    <a class='prev' id='prev' href='").concat(manga.prev || '', "' onclick='W.location=\"").concat(manga.prev || '', "\";W.location.reload();'>Previous</a>\n    <a class='next' id='next' href='").concat(manga.next || '', "' onclick='W.location=\"").concat(manga.next || '', "\";W.location.reload();'>Next</a>\n</div>"));
+  const chapterControl = id => manga => "<div id='".concat(id, "' class='ChapterControl'>\n    <a href='#' class='download'>Download</a>\n    <a class='prev' id='prev' href='").concat(manga.prev || '', "' onclick='W.location=\"").concat(manga.prev || '', "\";W.location.reload();'>Previous</a>\n    <a class='next' id='next' href='").concat(manga.next || '', "' onclick='W.location=\"").concat(manga.next || '', "\";W.location.reload();'>Next</a>\n</div>");
   const chapterControlTop = chapterControl('ChapterControlTop');
   const chapterControlBottom = chapterControl('ChapterControlBottom');
   const title = manga => "<div class='ViewerTitle'><br/><a id='series' href='".concat(manga.series, "'><i>").concat(manga.title, "</i><br/>(Return to Chapter List)</a></div>");
-  const listPages = R.times(index => "<div id='Page".concat(index + 1, "' class='MangaPage'>\n  <div class='PageFunctions'>\n    <a class='Bookmark controlButton' title='Bookmark'></a>\n    <a class='ZoomIn controlButton' title='Zoom In'></a>\n    <a class='ZoomRestore controlButton' title='Zoom Restore'></a>\n    <a class='ZoomOut controlButton' title='Zoom Out'></a>\n    <a class='ZoomWidth controlButton' title='Zoom to Width'></a>\n    <a class='ZoomHeight controlButton' title='Zoom to Height'></a>\n    <a class='Hide controlButton' title='Hide'></a>\n    <a class='Reload controlButton' title='Reload'></a>\n    <span>").concat(index + 1, "</span>\n  </div>\n  <div class='PageContent'>\n    <img id='PageImg").concat(index + 1, "' alt='PageImg").concat(index + 1, "' />\n  </div>\n</div>"));
-  const listOptions = R.times(index => "<option value='".concat(index + 1, "'>").concat(index + 1, "</option>"));
-  const listThumbnails = R.times(index => "<div id='Thumbnail".concat(index + 1, "' class='Thumbnail'><img id='ThumbnailImg").concat(index + 1, "' alt='ThumbnailImg").concat(index + 1, "' src=''/><span>").concat(index + 1, "</span></div>"));
+  const listPages = times => [...Array(times).keys()].map(index => "<div id='Page".concat(index + 1, "' class='MangaPage'>\n  <div class='PageFunctions'>\n    <a class='Bookmark controlButton' title='Bookmark'></a>\n    <a class='ZoomIn controlButton' title='Zoom In'></a>\n    <a class='ZoomRestore controlButton' title='Zoom Restore'></a>\n    <a class='ZoomOut controlButton' title='Zoom Out'></a>\n    <a class='ZoomWidth controlButton' title='Zoom to Width'></a>\n    <a class='ZoomHeight controlButton' title='Zoom to Height'></a>\n    <a class='Hide controlButton' title='Hide'></a>\n    <a class='Reload controlButton' title='Reload'></a>\n    <span>").concat(index + 1, "</span>\n  </div>\n  <div class='PageContent'>\n    <img id='PageImg").concat(index + 1, "' alt='PageImg").concat(index + 1, "' />\n  </div>\n</div>"));
+  const listOptions = times => [...Array(times).keys()].map(index => "<option value='".concat(index + 1, "'>").concat(index + 1, "</option>"));
+  const listThumbnails = times => [...Array(times).keys()].map(index => "<div id='Thumbnail".concat(index + 1, "' class='Thumbnail'><img id='ThumbnailImg").concat(index + 1, "' alt='ThumbnailImg").concat(index + 1, "' src=''/><span>").concat(index + 1, "</span></div>"));
   const body = (manga, begin = 0) => "\n<div id='MangaOnlineViewer' class='".concat(settings.Theme, " ").concat(isMobile ? 'mobile' : '', " ").concat(settings.hidePageControls ? 'hideControls' : '', "'>\n  ").concat(title(manga), "\n  <div id='Counters' class='controlLabel'>\n    <i>0</i> of <b>").concat(manga.quant, "</b> Pages Loaded\n    <span class='controlLabel'>Go to Page:</span>\n    <select id='gotoPage'>\n      <option selected>#</option>\n      ").concat(listOptions(manga.quant).slice(begin).join(''), "\n    </select>\n  </div>\n  ").concat(chapterControlTop(manga), "\n  <div id='Chapter' class='").concat(settings.FitWidthIfOversized === true ? 'fitWidthIfOversized' : '', " ").concat(settings.viewMode, "'>\n    ").concat(listPages(manga.quant).slice(begin).join(''), "\n  </div>\n  ").concat(title(manga), "\n  ").concat(chapterControlBottom(manga), "\n  ").concat(panel, "\n  ").concat(controls, "\n  ").concat(htmlKeybinds, "\n  <div id='Navigation' class='panel ").concat(settings.ShowThumbnails ? '' : 'disabled', "'>\n    <div id='NavigationCounters' class='controlLabel'>\n      <img alt='Thumbnails' title='Thumbnails' src='").concat(icon.menu, "' class='nav' /><i>0</i> of <b>").concat(manga.quant, "</b> Pages Loaded\n    </div>\n    <div id='Thumbnails'>\n      ").concat(listThumbnails(manga.quant).slice(begin).join(''), "\n    </div>\n  </div>\n  <a href='#' id='blob' style='display: none;'>Download</a>\n</div>");
   const readerCSS = "<style type='text/css'>\n".concat(cssStyles, "\n#MangaOnlineViewer .PageFunctions .Bookmark {background: url('").concat(icon.bookmark, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .Reload {background: url('").concat(icon.reload, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .Hide {background: url('").concat(icon.hide, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomIn {background: url('").concat(icon.zoomIn, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomOut {background: url('").concat(icon.zoomOut, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomRestore {background: url('").concat(icon.zoomRestore, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomWidth {background: url('").concat(icon.zoomWidth, "') no-repeat scroll center center transparent;}\n#MangaOnlineViewer .PageFunctions .ZoomHeight {background: url('").concat(icon.zoomWidth, "') no-repeat scroll center center transparent;}\n</style>");
 
@@ -1714,7 +1644,7 @@
           $(window).scrollTop(0);
           loadManga(manga, begin);
         }, 50);
-        if (!isEmpty(settings.bookmarks.filter(el => el.url === W.location.href))) {
+        if (!isNothing(settings.bookmarks.filter(el => el.url === W.location.href))) {
           logScript("Bookmark Removed ".concat(W.location.href));
           settings.bookmarks = settings.bookmarks.filter(el => el.url !== W.location.href);
           setValueGM('MangaBookmarks', JSON.stringify(settings.bookmarks));
@@ -1769,8 +1699,11 @@
         case 'never':
           $('body').append('<button id="mov" onclick=mov()>Start MangaOnlineViewer</button>');
           break;
-        default:
+        case 'always':
+          formatPage(manga);
+          break;
         case 'normal':
+        default:
           Swal.fire({
             title: 'Starting<br>MangaOnlineViewer',
             html: "".concat(beginning > 1 ? "Resuming reading from Page ".concat(beginning, ".<br/>") : '', "Please wait, 3 seconds..."),
@@ -1786,9 +1719,6 @@
               logScript(result.dismiss);
             }
           });
-          break;
-        case 'always':
-          formatPage(manga);
           break;
       }
     }
@@ -1811,7 +1741,7 @@
       if (site.waitAttr !== undefined) {
         wait = $(site.waitAttr[0]).attr(site.waitAttr[1]);
         logScript("Wating for ".concat(site.waitAttr[1], " of ").concat(site.waitAttr[0], " = ").concat(wait));
-        if (wait === undefined || isEmpty(wait)) {
+        if (isNothing(wait)) {
           setTimeout(() => {
             waitExec(site);
           }, site.waitStep || 1000);
@@ -1822,7 +1752,7 @@
       if (site.waitEle !== undefined) {
         wait = $(site.waitEle).get();
         logScript("Waiting for ".concat(site.waitEle, " = ", "".concat(wait)));
-        if (wait === undefined || isEmpty(wait)) {
+        if (isNothing(wait)) {
           setTimeout(() => {
             waitExec(site);
           }, site.waitStep || 1000);
@@ -1833,7 +1763,7 @@
       if (site.waitVar !== undefined) {
         wait = W[site.waitVar];
         logScript("Wating for ".concat(site.waitVar, " = ").concat(wait));
-        if (isEmpty(wait)) {
+        if (isNothing(wait)) {
           setTimeout(() => {
             waitExec(site);
           }, site.waitStep || 1000);
@@ -1844,7 +1774,7 @@
       preparePage(site, site.run());
     }
     logScript('Looking for a match...');
-    const test = R.compose(R.map(waitExec), R.map(logScriptC('Site Found:')), R.filter(x => R.test(x.url, W.location.href)));
+    const test = s => s.filter(x => x.url.test(W.location.href)).map(logScriptC('Site Found:')).map(waitExec);
     test(sites);
   }
 

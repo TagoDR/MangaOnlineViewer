@@ -5,7 +5,7 @@ import { controls, setKeyDownEvents } from './events';
 import { loadManga } from './page';
 import reader from './reader';
 import { settings } from './settings';
-import { isEmpty } from './utils';
+import { isNothing } from './utils';
 
 function formatPage(manga, begin) {
   W.stop();
@@ -23,7 +23,7 @@ function formatPage(manga, begin) {
         loadManga(manga, begin);
       }, 50);
       // Clear used Bookmarks
-      if (!isEmpty(settings.bookmarks.filter((el) => el.url === W.location.href))) {
+      if (!isNothing(settings.bookmarks.filter((el) => el.url === W.location.href))) {
         logScript(`Bookmark Removed ${W.location.href}`);
         settings.bookmarks = settings.bookmarks.filter((el) => el.url !== W.location.href);
         setValueGM('MangaBookmarks', JSON.stringify(settings.bookmarks));
@@ -85,8 +85,11 @@ function preparePage(site, manga, begin = 0) {
       case 'never':
         $('body').append('<button id="mov" onclick=mov()>Start MangaOnlineViewer</button>');
         break;
-      default:
+      case 'always':
+        formatPage(manga);
+        break;
       case 'normal':
+      default:
         Swal.fire({
           title: 'Starting<br>MangaOnlineViewer',
           html: `${beginning
@@ -103,9 +106,6 @@ function preparePage(site, manga, begin = 0) {
             logScript(result.dismiss);
           }
         });
-        break;
-      case 'always':
-        formatPage(manga);
         break;
     }
   }
@@ -132,7 +132,7 @@ function start(sites) {
     if (site.waitAttr !== undefined) {
       wait = $(site.waitAttr[0]).attr(site.waitAttr[1]);
       logScript(`Wating for ${site.waitAttr[1]} of ${site.waitAttr[0]} = ${wait}`);
-      if (wait === undefined || isEmpty(wait)) {
+      if (isNothing(wait)) {
         setTimeout(() => {
           waitExec(site);
         }, site.waitStep || 1000);
@@ -143,7 +143,7 @@ function start(sites) {
     if (site.waitEle !== undefined) {
       wait = $(site.waitEle).get();
       logScript(`Waiting for ${site.waitEle} = ${`${wait}`}`);
-      if (wait === undefined || isEmpty(wait)) {
+      if (isNothing(wait)) {
         setTimeout(() => {
           waitExec(site);
         }, site.waitStep || 1000);
@@ -154,7 +154,7 @@ function start(sites) {
     if (site.waitVar !== undefined) {
       wait = W[site.waitVar];
       logScript(`Wating for ${site.waitVar} = ${wait}`);
-      if (isEmpty(wait)) {
+      if (isNothing(wait)) {
         setTimeout(() => {
           waitExec(site);
         }, site.waitStep || 1000);
@@ -166,9 +166,10 @@ function start(sites) {
   }
 
   logScript('Looking for a match...');
-  const test = R.compose(R.map(waitExec),
-    R.map(logScriptC('Site Found:')),
-    R.filter((x) => R.test(x.url, W.location.href)));
+  const test = (s) => s
+    .filter((x) => x.url.test(W.location.href))
+    .map(logScriptC('Site Found:'))
+    .map(waitExec);
   test(sites);
 }
 

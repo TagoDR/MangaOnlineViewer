@@ -1,6 +1,6 @@
 import { logScript } from './browser';
 import { settings } from './settings';
-import { isEmpty, mapIndexed } from './utils';
+import { isNothing } from './utils';
 
 // Get html pages content
 function getHtml(url, wait = settings.Timer) {
@@ -182,19 +182,17 @@ function delayAdd(src, wait = settings.Timer) {
 }
 
 // use a list of pages to fill the viewer
-const loadMangaPages = (begin, manga) => mapIndexed(
-  (url, index) => (index >= begin ? delayAdd(url,
-    (manga.timer || settings.Timer) * (index - begin))
-    .then((response) => addPage(manga, index + 1, response)) : null),
-  manga.listPages,
+const loadMangaPages = (begin, manga) => manga.listPages.map(
+  (url, index) => (index >= begin
+    ? delayAdd(url, (manga.timer || settings.Timer) * (index - begin))
+      .then((response) => addPage(manga, index + 1, response)) : null),
 );
 
 // use a list of images to fill the viewer
-const loadMangaImages = (begin, manga) => mapIndexed(
-  (src, index) => (index >= begin ? delayAdd(src,
-    (manga.timer || settings.Timer) * (index - begin))
-    .then((response) => addImg(index + 1, response)) : null),
-  manga.listImages,
+const loadMangaImages = (begin, manga) => manga.listImages.map(
+  (src, index) => (index >= begin
+    ? delayAdd(src, (manga.timer || settings.Timer) * (index - begin))
+      .then((response) => addImg(index + 1, response)) : null),
 );
 
 // Entry point for loading hte Manga pages
@@ -206,10 +204,10 @@ function loadManga(manga, begin = 1) {
   if (settings.lazyLoadImages) {
     logScript('Download may not work with Lazy Loading Images');
   }
-  if (!isEmpty(manga.listImages)) {
+  if (!isNothing(manga.listImages)) {
     logScript('Method: Images:', manga.listImages);
     loadMangaImages(begin - 1, manga);
-  } else if (!isEmpty(manga.listPages)) {
+  } else if (!isNothing(manga.listPages)) {
     logScript('Method: Pages:', manga.listPages);
     loadMangaPages(begin - 1, manga);
   } else {
@@ -217,9 +215,9 @@ function loadManga(manga, begin = 1) {
     manga.bruteForce({
       begin,
       addImg,
-      addPage: R.curry(addPage)(manga),
-      loadMangaImages: R.curry(loadMangaImages)(begin - 1),
-      loadMangaPages: R.curry(loadMangaPages)(begin - 1),
+      addPage: (...args) => addPage(manga, ...args),
+      loadMangaImages: (...args) => loadMangaImages(begin - 1, ...args),
+      loadMangaPages: (...args) => loadMangaPages(begin - 1, ...args),
       getHtml,
       wait: settings.timer,
     });

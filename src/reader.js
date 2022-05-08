@@ -99,16 +99,16 @@ const controls = `<div id='ViewerControls' class='panel'>
     <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${(settings.hidePageControls ? 'checked' : '')}>
   </span>
 </div>`;
-const chapterControl = R.curry((id, manga) => `<div id='${id}' class='ChapterControl'>
+const chapterControl = (id) => (manga) => `<div id='${id}' class='ChapterControl'>
     <a href='#' class='download'>Download</a>
     <a class='prev' id='prev' href='${manga.prev || ''}' onclick='W.location="${manga.prev || ''}";W.location.reload();'>Previous</a>
     <a class='next' id='next' href='${manga.next || ''}' onclick='W.location="${manga.next || ''}";W.location.reload();'>Next</a>
-</div>`);
+</div>`;
 const chapterControlTop = chapterControl('ChapterControlTop');
 const chapterControlBottom = chapterControl('ChapterControlBottom');
 const title = (manga) => `<div class='ViewerTitle'><br/><a id='series' href='${manga.series}'><i>${manga.title}</i><br/>(Return to Chapter List)</a></div>`;
 // Add Pages Place holders
-const listPages = R.times((index) => `<div id='Page${index + 1}' class='MangaPage'>
+const listPages = (times) => [...Array(times).keys()].map((index) => `<div id='Page${index + 1}' class='MangaPage'>
   <div class='PageFunctions'>
     <a class='Bookmark controlButton' title='Bookmark'></a>
     <a class='ZoomIn controlButton' title='Zoom In'></a>
@@ -124,8 +124,8 @@ const listPages = R.times((index) => `<div id='Page${index + 1}' class='MangaPag
     <img id='PageImg${index + 1}' alt='PageImg${index + 1}' />
   </div>
 </div>`);
-const listOptions = R.times((index) => `<option value='${index + 1}'>${index + 1}</option>`);
-const listThumbnails = R.times(
+const listOptions = (times) => [...Array(times).keys()].map((index) => `<option value='${index + 1}'>${index + 1}</option>`);
+const listThumbnails = (times) => [...Array(times).keys()].map(
   (index) => `<div id='Thumbnail${index + 1}' class='Thumbnail'><img id='ThumbnailImg${index
   + 1}' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`,
 );
@@ -143,8 +143,7 @@ const body = (manga, begin = 0) => `
     </select>
   </div>
   ${chapterControlTop(manga)}
-  <div id='Chapter' class='${(settings.FitWidthIfOversized
-=== true ? 'fitWidthIfOversized' : '')} ${settings.viewMode}'>
+  <div id='Chapter' class='${(settings.FitWidthIfOversized === true ? 'fitWidthIfOversized' : '')} ${settings.viewMode}'>
     ${listPages(manga.quant)
     .slice(begin)
     .join('')}
