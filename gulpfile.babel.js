@@ -11,7 +11,6 @@ import eslint from '@rbnlffl/rollup-plugin-eslint';
 import html from 'rollup-plugin-string-html';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import userscript from 'userscript-meta';
-import pkg from './package.json';
 import metaAdult from './src/meta-adult';
 import metaMain from './src/meta-main';
 import {
@@ -34,7 +33,6 @@ const scripts = {
 function buildUserscript(entryFile, destFile, metaFile) {
   return rollup({
     input: entryFile,
-    // external: Object.keys(pkg.dependencies),
     plugins: [
       nodeResolve({ preferBuiltins: false }),
       commonjs(),

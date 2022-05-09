@@ -10,5 +10,8 @@
       }
     ]
   ],
-  "plugins": []
+  "plugins": [
+    "@babel/plugin-external-helpers",
+    "babel-plugin-remove-template-literals-whitespace"
+  ]
 }
