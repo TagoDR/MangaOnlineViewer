@@ -12,11 +12,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-
-      - name: Compile with Grunt
-        uses: elstudio/actions-js-build/build@v4
-        with:
-          args: run-script release
+      - run: npm ci
+      - run: gulp
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
