@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, 8Muses, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaiHand, HentaIHere, HentaiMimi, hitomi, Imhentai, KingComix, MultPorn, MyHentaiGallery, nHentai.net,nHentai.xxx, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno,vercomicsporno, xyzcomics
-// @version 2022.05-09
+// @version 2022.05-11
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -172,7 +172,7 @@
     obs: 'May get your IP Banned, use with moderation',
     category: 'hentai',
     run() {
-      const num = $('.sn div span:eq(1)').text().trim();
+      const num = parseInt($('.sn div span:eq(1)').text().trim(), 10);
       const maxGalley = Math.ceil(num / 40);
       const gallery = $('.sb a').attr('href').replace(/\?p=\d+/, '');
       return {
@@ -1068,9 +1068,9 @@
       manga.bruteForce({
         begin,
         addImg,
-        addPage: (...args) => addPage(manga, ...args),
-        loadMangaImages: (...args) => loadMangaImages(begin - 1, ...args),
-        loadMangaPages: (...args) => loadMangaPages(begin - 1, ...args),
+        addPage: (index, pageUrl) => addPage(manga, index, pageUrl),
+        loadMangaImages: m => loadMangaImages(begin - 1, m),
+        loadMangaPages: m => loadMangaPages(begin - 1, m),
         getHtml,
         wait: settings.timer
       });

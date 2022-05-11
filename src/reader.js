@@ -144,9 +144,7 @@ const body = (manga, begin = 0) => `
   </div>
   ${chapterControlTop(manga)}
   <div id='Chapter' class='${(settings.FitWidthIfOversized === true ? 'fitWidthIfOversized' : '')} ${settings.viewMode}'>
-    ${listPages(manga.quant)
-    .slice(begin)
-    .join('')}
+    ${listPages(manga.quant).slice(begin).join('')}
   </div>
   ${title(manga)}
   ${chapterControlBottom(manga)}

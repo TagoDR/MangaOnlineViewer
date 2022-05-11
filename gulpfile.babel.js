@@ -133,22 +133,9 @@ function readme() {
     .pipe(gulp.dest('./dist/'));
 }
 
-gulp.task('release', gulp.series(
-  gulp.parallel(
-    gulp.series(createMetaMain, createScriptMain),
-    gulp.series(createMetaAdult, createScriptAdult),
-    readme,
-  ),
-  beauty,
-  move,
-));
-
-gulp.task('build', gulp.parallel(
-  gulp.series(createMetaMain, createScriptMain),
-  gulp.series(createMetaAdult, createScriptAdult),
-  readme,
-));
-
+gulp.task('readme', readme);
 gulp.task('main', gulp.series(createMetaMain, createScriptMain));
 gulp.task('adult', gulp.series(createMetaAdult, createScriptAdult));
-gulp.task('readme', readme);
+gulp.task('build', gulp.parallel('main', 'adult', 'readme'));
+gulp.task('release', gulp.series('build', beauty, move));
+gulp.task('default', gulp.series('release'));

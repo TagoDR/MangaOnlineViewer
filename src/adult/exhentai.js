@@ -7,7 +7,7 @@ export default {
   obs: 'May get your IP Banned, use with moderation',
   category: 'hentai',
   run() {
-    const num = $('.sn div span:eq(1)').text().trim();
+    const num = parseInt($('.sn div span:eq(1)').text().trim(), 10);
     const maxGalley = Math.ceil(num / 40);
     const gallery = $('.sb a').attr('href').replace(/\?p=\d+/, '');
     return {
