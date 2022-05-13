@@ -11,6 +11,9 @@ import eslint from '@rbnlffl/rollup-plugin-eslint';
 import html from 'rollup-plugin-string-html';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import userscript from 'userscript-meta';
+import typescriptPlugin from '@rollup/plugin-typescript';
+import typescript from 'typescript';
+import liveServer from 'live-server';
 import metaAdult from './src/meta-adult';
 import metaMain from './src/meta-main';
 import {
@@ -19,12 +22,12 @@ import {
 
 const scripts = {
   main: {
-    entry: 'userscript-main.js',
+    entry: 'userscript-main.ts',
     name: 'Manga_OnlineViewer.user.js',
     meta: 'Manga_OnlineViewer.meta.js',
   },
   adult: {
-    entry: 'userscript-adult.js',
+    entry: 'userscript-adult.ts',
     name: 'Manga_OnlineViewer_Adult.user.js',
     meta: 'Manga_OnlineViewer_Adult.meta.js',
   },
@@ -34,8 +37,19 @@ function buildUserscript(entryFile, destFile, metaFile) {
   return rollup({
     input: entryFile,
     plugins: [
-      nodeResolve({ preferBuiltins: false }),
-      commonjs(),
+      nodeResolve({
+        preferBuiltins: false,
+        extensions: ['.js', '.ts', '.tsx'],
+      }),
+      typescriptPlugin({ typescript }),
+      commonjs({
+        include: [
+          'node_modules/**',
+        ],
+        exclude: [
+          'node_modules/process-es6/**',
+        ],
+      }),
       html({
         include: './src/components/**',
         minifier: {
@@ -65,7 +79,7 @@ function buildUserscript(entryFile, destFile, metaFile) {
   })
     .then((bundle) => bundle.write({
       banner: fs.readFileSync(metaFile, 'utf8'),
-      intro: `var W = (typeof unsafeWindow === 'undefined') ? window : unsafeWindow;
+      intro: `var W = (typeof unsafeWindow === 'undefined') ? window : unsafeWindow; \n
               /* global $:readonly, JSZip:readonly ,NProgress:readonly , jscolor:readonly , ColorScheme:readonly , Swal:readonly */`,
       format: 'iife',
       file: destFile,
@@ -76,6 +90,8 @@ function buildUserscript(entryFile, destFile, metaFile) {
         jszip: 'JSZip',
         nprogress: 'NProgress',
         sweetalert: 'Swal',
+        react: 'React',
+        'react-dom': 'ReactDOM',
       },
       // sourceMap: 'inline',
     }));
@@ -133,7 +149,19 @@ function readme() {
     .pipe(gulp.dest('./dist/'));
 }
 
+function server() {
+  liveServer.start({
+    root: './dist/',
+    open: true,
+  });
+}
+
+function watch() {
+  gulp.watch(['./src/*.*'], gulp.parallel(createScriptMain, createScriptAdult));
+}
+
 gulp.task('readme', readme);
+gulp.task('dev', gulp.parallel(server, watch));
 gulp.task('main', gulp.series(createMetaMain, createScriptMain));
 gulp.task('adult', gulp.series(createMetaAdult, createScriptAdult));
 gulp.task('build', gulp.parallel('main', 'adult', 'readme'));

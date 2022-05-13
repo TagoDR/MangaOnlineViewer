@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "target": "ES2020",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "jsx": "react",
+    "module": "es6",
+    "typeRoots": [
+      "./types",
+      "./node_modules/@types",
+      "./typings.d.ts"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "./src/"
+  ]
+}
