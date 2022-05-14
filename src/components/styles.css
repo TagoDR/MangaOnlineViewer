@@ -356,7 +356,7 @@ img {
   width: 100% !important;
 }
 
-#MangaOnlineViewer.mobile .fitWidthIfOversized .PageContent img {
+#MangaOnlineViewer.mobile .fitWidthIfOversize .PageContent img {
   max-width: 100%;
 }
 
@@ -378,7 +378,7 @@ img {
 
 #MangaOnlineViewer.mobile #ViewerControls span.DefaultZoom,
 #MangaOnlineViewer.mobile #ViewerControls span.viewMode,
-#MangaOnlineViewer.mobile #ViewerControls span.fitIfOversized,
+#MangaOnlineViewer.mobile #ViewerControls span.fitIfOversize,
 #MangaOnlineViewer.mobile #ViewerControls span.showThumbnails,
 #MangaOnlineViewer.mobile #ViewerControls span.lazyLoadImages,
 #MangaOnlineViewer.mobile #ViewerControls span.downloadZip {
@@ -425,7 +425,7 @@ img {
   margin: 5px auto 0;
 }
 
-#MangaOnlineViewer .fitWidthIfOversized .PageContent img {
+#MangaOnlineViewer .fitWidthIfOversize .PageContent img {
   max-width: 100%;
 }
 

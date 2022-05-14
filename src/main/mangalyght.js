@@ -14,7 +14,7 @@ export default {
     return {
       title: origin.text().trim(),
       series: origin.attr('href'),
-      quant: num,
+      pages: num,
       prev: (`${W.location.pathname}?ch=${chapter.prev().val()}`).replace(' ', '+'),
       next: (`${W.location.pathname}?ch=${chapter.next().val()}`).replace(' ', '+'),
       listPages: [...Array(num).keys()].map((i) => url + (i + 1)),

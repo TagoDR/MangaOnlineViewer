@@ -11,7 +11,7 @@ export default {
     return {
       title: $('.chapter-title').attr('title').trim(),
       series: $('#boxtopchap a').attr('href'),
-      quant: images.length,
+      pages: images.length,
       prev: $('#chapter-nav-bot #prev_chap').attr('href'),
       next: $('#chapter-nav-bot #next_chap').attr('href'),
       listImages: images.map((i) => $(i).attr('src')),

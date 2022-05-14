@@ -66,7 +66,6 @@ export default [
   manganato,
   mangapark,
   // mangareader, [RIP]
-  // mangarock, [Dead/Arquived]
   mangasee,
   mangatown,
   ninemanga,

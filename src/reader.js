@@ -79,8 +79,8 @@ const controls = `<div id='ViewerControls' class='panel'>
       <option value='FluidRTL' ${settings.viewMode === 'FluidRTL' ? 'selected' : ''}>Right to Left</option>
     </select>
   </span>
-  <span class='controlLabel fitIfOversized'>Fit Width if Oversized:
-    <input type='checkbox' value='true' name='fitIfOversized' id='fitIfOversized' ${(settings.FitWidthIfOversized ? 'checked' : '')}>
+  <span class='controlLabel fitIfOversize'>Fit Width if Oversize:
+    <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${(settings.FitWidthIfOversize ? 'checked' : '')}>
   </span>
   <span class='controlLabel showThumbnails'>Show Thumbnails:
     <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${(settings.ShowThumbnails ? 'checked' : '')}>
@@ -107,7 +107,7 @@ const chapterControl = (id) => (manga) => `<div id='${id}' class='ChapterControl
 const chapterControlTop = chapterControl('ChapterControlTop');
 const chapterControlBottom = chapterControl('ChapterControlBottom');
 const title = (manga) => `<div class='ViewerTitle'><br/><a id='series' href='${manga.series}'><i>${manga.title}</i><br/>(Return to Chapter List)</a></div>`;
-// Add Pages Place holders
+// Add Pages Place-holders
 const listPages = (times) => [...Array(times).keys()].map((index) => `<div id='Page${index + 1}' class='MangaPage'>
   <div class='PageFunctions'>
     <a class='Bookmark controlButton' title='Bookmark'></a>
@@ -133,18 +133,18 @@ const body = (manga, begin = 0) => `
 <div id='MangaOnlineViewer' class='${settings.Theme} ${isMobile ? 'mobile' : ''} ${settings.hidePageControls ? 'hideControls' : ''}'>
   ${title(manga)}
   <div id='Counters' class='controlLabel'>
-    <i>0</i> of <b>${manga.quant}</b> Pages Loaded
+    <i>0</i> of <b>${manga.pages}</b> Pages Loaded
     <span class='controlLabel'>Go to Page:</span>
     <select id='gotoPage'>
       <option selected>#</option>
-      ${listOptions(manga.quant)
+      ${listOptions(manga.pages)
     .slice(begin)
     .join('')}
     </select>
   </div>
   ${chapterControlTop(manga)}
-  <div id='Chapter' class='${(settings.FitWidthIfOversized === true ? 'fitWidthIfOversized' : '')} ${settings.viewMode}'>
-    ${listPages(manga.quant).slice(begin).join('')}
+  <div id='Chapter' class='${(settings.FitWidthIfOversize === true ? 'fitWidthIfOversize' : '')} ${settings.viewMode}'>
+    ${listPages(manga.pages).slice(begin).join('')}
   </div>
   ${title(manga)}
   ${chapterControlBottom(manga)}
@@ -153,10 +153,10 @@ const body = (manga, begin = 0) => `
   ${htmlKeybinds}
   <div id='Navigation' class='panel ${settings.ShowThumbnails ? '' : 'disabled'}'>
     <div id='NavigationCounters' class='controlLabel'>
-      <img alt='Thumbnails' title='Thumbnails' src='${icon.menu}' class='nav' /><i>0</i> of <b>${manga.quant}</b> Pages Loaded
+      <img alt='Thumbnails' title='Thumbnails' src='${icon.menu}' class='nav' /><i>0</i> of <b>${manga.pages}</b> Pages Loaded
     </div>
     <div id='Thumbnails'>
-      ${listThumbnails(manga.quant)
+      ${listThumbnails(manga.pages)
     .slice(begin)
     .join('')}
     </div>

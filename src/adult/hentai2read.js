@@ -9,7 +9,7 @@ export default {
     return {
       title: $('.reader-left-text').text().trim(),
       series: W.gData.mainURL,
-      quant: W.gData.images.length,
+      pages: W.gData.images.length,
       prev: W.gData.previousURL,
       next: W.gData.nextURL,
       listImages: W.gData.images.map((i) => `https://static.hentaicdn.com/hentai${i}`),

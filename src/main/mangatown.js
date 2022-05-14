@@ -13,7 +13,7 @@ export default {
     return {
       title: $('.title h1').text(),
       series: $('.title h2 a').attr('href'),
-      quant: num.length,
+      pages: num.length,
       prev: chapter.prev().val(),
       next: chapter.next().val(),
       listPages: num.map((item) => $(item).val()),

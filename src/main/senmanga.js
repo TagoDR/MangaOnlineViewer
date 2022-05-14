@@ -13,7 +13,7 @@ export default {
     return {
       title: $('.title').text().trim(),
       series: origin.attr('href'),
-      quant: num,
+      pages: num,
       prev: origin.attr('href') + chapter.next().val(),
       next: origin.attr('href') + chapter.prev().val(),
       listPages: [...Array(num).keys()].map((i) => `${url}/${i + 1}/`),

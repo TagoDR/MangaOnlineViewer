@@ -11,7 +11,7 @@ export default {
     return {
       title: $('h1.titl').text().trim() || $('title').text().trim(),
       series: '#',
-      quant: imgs.length,
+      pages: imgs.length,
       prev: '#',
       next: '#',
       listImages: src,

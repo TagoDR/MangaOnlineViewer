@@ -10,7 +10,7 @@ export default {
     return {
       title: $('h1.singleTitle-h1').text().trim(),
       series: '#',
-      quant: src.length,
+      pages: src.length,
       prev: '#',
       next: '#',
       listImages: src,

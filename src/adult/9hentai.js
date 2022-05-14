@@ -21,7 +21,7 @@ export default {
     return {
       title: api.title,
       series: `/g/${api.id}/`,
-      quant: api.total_page,
+      pages: api.total_page,
       prev: '#',
       next: '#',
       listImages: [...Array(api.total_page).keys()].map(

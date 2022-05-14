@@ -10,7 +10,7 @@ export default {
     return {
       title: $('title').text().trim(),
       series: $('.title a').attr('href'),
-      quant: images.length,
+      pages: images.length,
       prev: $('.chapter_list select option:selected').prev().val(),
       next: $('.chapter_list select option:selected').next().val(),
       listImages: images.map((i) => $(i).attr('src')),

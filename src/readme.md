@@ -23,7 +23,7 @@ javascript:(function(){["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/
 ### Description
 MangaOnlineViewer helps speed up reading by loading all pages(images) from the current chapter of the manga on one page in a list type structure.
 Please note on a few sites, MangaOnlineViewer may use more resources. Only open one tab for each site at a time and wait for the page to completely load.
-I will try to keep this script updated, however I hardly-ever visit some of the sites supported. If the script no longer works for a site, then post the problem in the Issues/Feedback area, and have patience.
+I will try to keep this script updated, however I hardly-ever visit some supported sites. If the script no longer works for a site, then post the problem in the Issues/Feedback area, and have patience.
 
 I allow this script to be posted or used anywhere as long as I am given credit and provided a link to this site. I allow parts of my script to be used freely.
 
@@ -34,7 +34,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 <!-- @echo LIST_COMIC_SITES -->
 
 ### Supported Hentai Sites
-> Adult Script available **_only_** on [Github](https://github.com/TagoDR/MangaOnlineViewer)
+> Adult Script available **_only_** on [GitHub](https://github.com/TagoDR/MangaOnlineViewer)
 <!-- @echo LIST_HENTAI_SITES -->
 
 ### HotKeys
@@ -58,14 +58,14 @@ I allow this script to be posted or used anywhere as long as I am given credit a
   - WebComic
   - Fluid Left to Right
   - Fluid Right to Left
-- Bookmarks Pages (To resume reading)
+- Bookmark Pages (To resume reading)
 - Full Themes and Customizable
 - Global and Individual images zoom
   - In(Global one may stretch images beyond window width)
   - Out
-  - Restore original(Toggle fit width if oversized)
+  - Restore original(Toggle fit width if oversize)
   - Fit width
-  - Fit width if oversized[Default on]
+  - Fit width if oversize[Default on]
   - Fit Height (with scroll pages)
   - Hide
 - Auto reload Images
@@ -82,7 +82,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 1. The site must have rare/unique mangas (Meaning: it's not available in other sites, or is a
  better quality)
 2. The site must be strong enough or else my script may crash it
-3. The site must not be exclusive to a handful of manga titles (Meaning: no small scanlators)
+3. The site must not be exclusive to a handful of manga titles (Meaning: no small Scanlators)
 
 ### Disclaimer
 In case the owner/admin of one of the supported sites does not want my script to run on their site, I will make it disabled by default. Forcing users to manually activate it.

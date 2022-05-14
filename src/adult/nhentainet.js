@@ -22,7 +22,7 @@ export default {
     return {
       title: $('title').text().split('- Page')[0].trim(),
       series: $('.go-back').attr('href'),
-      quant: num,
+      pages: num,
       prev: '#',
       next: '#',
       listImages: [...Array(num).keys()].map((i) => `${src}${i + 1}.${ext[i]}`),

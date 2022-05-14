@@ -7,14 +7,14 @@ export default {
   obs: 'Any Scanlator site that uses FoOLSlide',
   category: 'manga',
   run() {
-    const temp = `${W.location.href.substr(0, W.location.href.lastIndexOf('/'))}/`;
+    const temp = `${W.location.href.slice(0, W.location.href.lastIndexOf('/'))}/`;
     const url = temp.match(/page\/$/) ? temp : `${temp}page/`;
     const num = $('.topbar_right .dropdown li').length;
     const chapter = $('.topbar_left .dropdown_parent:last ul li a');
     return {
       title: $('title').text().trim(),
       series: $('div.tbtitle div.text a:first').attr('href'),
-      quant: num,
+      pages: num,
       prev: chapter.eq(
         chapter.index(chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`)) + 1,
       )

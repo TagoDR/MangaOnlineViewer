@@ -11,7 +11,7 @@ export default {
     return {
       title: $('h3:first').text().trim(),
       series: W.location.pathname,
-      quant: W.previewImages.length,
+      pages: W.previewImages.length,
       prev: '#',
       next: '#',
       listImages: W.previewImages.map((i) => `https://hentaimimi.com//${i}`),

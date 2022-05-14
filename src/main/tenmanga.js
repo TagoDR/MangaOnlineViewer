@@ -11,7 +11,7 @@ export default {
     return {
       title: $('.read-page  a:eq(2)').text().replace('»', '').trim(),
       series: $('.read-page a:eq(1)').attr('href'),
-      quant: url.length,
+      pages: url.length,
       prev: chapter.next().val(),
       next: chapter.prev().val(),
       listPages: url.map((item) => $(item).val()),

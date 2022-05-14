@@ -9,7 +9,7 @@ export default {
     return {
       title: $('.tip a:first').text(),
       series: $('.subgiude a:eq(1)').attr('href'),
-      quant: $('#page:first option').length,
+      pages: $('#page:first option').length,
       prev: $('.chnav a:first').attr('href'),
       next: $('.chnav a:eq(1)').attr('href'),
       listPages: $('#page:first option').get().map((item) => $(item).val()),

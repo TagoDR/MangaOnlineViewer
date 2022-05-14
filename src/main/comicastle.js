@@ -11,7 +11,7 @@ export default {
     return {
       title: chapter.find(':selected').text(),
       series: $('.navbar-header a').attr('href'),
-      quant: url.length,
+      pages: url.length,
       prev: chapter.find(':selected').prev().val(),
       next: chapter.find(':selected').next().val(),
       listPages: url.map((item) => $(item).val()),

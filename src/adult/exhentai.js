@@ -13,7 +13,7 @@ export default {
     return {
       title: $('#i1 h1').text().trim(),
       series: gallery,
-      quant: num,
+      pages: num,
       prev: '#',
       next: '#',
       img: '#img',

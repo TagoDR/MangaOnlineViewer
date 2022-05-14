@@ -24,7 +24,7 @@ export default {
     return {
       title: $('#mangareader h3').text().trim(),
       series: $('#mangareader a:first').attr('href'),
-      quant: images.length,
+      pages: images.length,
       prev: $('.previous a').attr('href'),
       next: $('.next a').attr('href'),
       listImages: images.map((i) => `https://img.mghubcdn.com/file/imghub/${i}`),

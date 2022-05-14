@@ -12,7 +12,7 @@ export default {
     return {
       title: $('.listTable td.listLong:first').text().trim(),
       series: W.location.href.match(/.+\/[0-9]+\//),
-      quant: num,
+      pages: num,
       prev: chapter.eq(chapter.index(chapter.filter(`[href='${W.location.href}']`)) - 1)
         .attr('href'),
       next: chapter.eq(chapter.index(chapter.filter(`[href='${W.location.href}']`)) + 1)

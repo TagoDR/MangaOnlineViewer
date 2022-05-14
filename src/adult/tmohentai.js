@@ -10,7 +10,7 @@ export default {
     return {
       title: $('.reader-title').text().trim(),
       series: $('.nav a:eq(-2)').attr('href'),
-      quant: num,
+      pages: num,
       prev: '#',
       next: '#',
       listPages: [...Array(num)

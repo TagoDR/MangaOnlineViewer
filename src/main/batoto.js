@@ -10,7 +10,7 @@ export default {
     return {
       title: $('.nav-title a').text(),
       series: $('.nav-title a').attr('href'),
-      quant: num,
+      pages: num,
       prev: $('.nav-prev a').attr('href'),
       next: $('.nav-next a').attr('href'),
       listImages: $('.page-img').get().map((i) => $(i).attr('src')),

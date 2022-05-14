@@ -21,7 +21,7 @@ export default {
     return {
       title: $('title').text().trim().replace(/ - Page .+/, ''),
       series: $('.return a').attr('href'),
-      quant: num,
+      pages: num,
       prev: '#',
       next: '#',
       listImages: [...Array(num).keys()].map((i) => src + (i + 1) + findExt(i + 1)),

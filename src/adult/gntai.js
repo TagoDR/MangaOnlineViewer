@@ -9,7 +9,7 @@ export default {
     return {
       title: $('h1:last').text().trim(),
       series: '#',
-      quant: $('#select-page-list option').get().length,
+      pages: $('#select-page-list option').get().length,
       prev: '#',
       next: '#',
       listPages: $('#main script').text().match(/https[^"]+/g),

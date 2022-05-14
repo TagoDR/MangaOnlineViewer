@@ -10,7 +10,7 @@ export default {
     return {
       title: W.baseTitle.replace(' :: HentaiNexus', ''),
       series: $('#pageChangeSnap > p > a').attr('href'),
-      quant: W.pageData.length,
+      pages: W.pageData.length,
       prev: '#',
       next: '#',
       listImages: W.pageData,

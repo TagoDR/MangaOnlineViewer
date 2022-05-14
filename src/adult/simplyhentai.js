@@ -20,7 +20,7 @@ export default {
     return {
       title: $('h1 .pu-trigger:first').text().trim(),
       series: $('h1 .pu-trigger:first').attr('href'),
-      quant: imgs.length,
+      pages: imgs.length,
       prev: '#',
       next: '#',
       listImages: imgs,

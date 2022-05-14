@@ -78,7 +78,7 @@ function onImagesDone() {
     $('.download').attr('href', '#download');
     logScript('Download Available');
     if (settings.DownloadZip) {
-      $('#blob').click();
+      $('#blob').trigger('click');
     }
   }
 }
@@ -143,7 +143,7 @@ function addImg(index, imageSrc) {
   return index;
 }
 
-// Adds an page to the place-holder div
+// Adds a page to the place-holder div
 function addPage(manga, index, pageUrl) {
   if (!settings.lazyLoadImages || index < settings.lazyStart) {
     getHtml(pageUrl)
@@ -172,7 +172,7 @@ function addPage(manga, index, pageUrl) {
   return index;
 }
 
-// daley the use of a url/src
+// daley the use of an url/src
 function delayAdd(src, wait = settings.Timer) {
   return new Promise((resolve) => {
     setTimeout(() => {

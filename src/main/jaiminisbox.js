@@ -10,7 +10,7 @@ export default {
     return {
       title: $('title').text().trim(),
       series: $('div.tbtitle div.text a:first').attr('href'),
-      quant: W.pages.length,
+      pages: W.pages.length,
       prev: chapter.eq(
         chapter.index(chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`)) + 1,
       )

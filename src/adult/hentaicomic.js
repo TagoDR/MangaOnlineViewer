@@ -27,7 +27,7 @@ export default {
     return {
       title: $('#title h2').text().trim(),
       series: $('#post + div a').attr('href'),
-      quant: imgs.length,
+      pages: imgs.length,
       prev: '#',
       next: '#',
       listImages: imgs,

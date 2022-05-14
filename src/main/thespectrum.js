@@ -14,7 +14,7 @@ export default {
     return {
       title: $('.viewerLabel:eq(1)').text(),
       series: '#',
-      quant: num,
+      pages: num,
       prev: `${W.location.pathname}?ch=${chapter.prev().val()}`,
       next: `${W.location.pathname}?ch=${chapter.next().val()}`,
       listPages: [...Array(num).keys()].map((i) => `${url}=${i + 1}`),

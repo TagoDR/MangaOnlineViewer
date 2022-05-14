@@ -13,7 +13,7 @@ export default {
     const manga = {
       title: $('.breadcrumb li:eq(3)').text().trim(),
       series: $('.breadcrumb li:eq(2) a').attr('href'),
-      quant: num,
+      pages: num,
       prev: chapter.next().val(),
       next: chapter.prev().val(),
       img: '.image-content img',

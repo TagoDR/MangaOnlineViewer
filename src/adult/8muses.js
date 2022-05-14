@@ -10,7 +10,7 @@ export default {
       /* eslint-disable no-mixed-operators,no-shadow */
       return (((t) => {
         if (t.charAt(0) !== '!') return t;
-        return t.substr(1)
+        return t.slice(1)
           .replace(/[\x21-\x7e]/g, (t) => String.fromCharCode(33 + (t.charCodeAt(0) + 14) % 94));
       })(t.replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&')));
       /* eslint-enable no-mixed-operators,no-shadow */
@@ -33,7 +33,7 @@ export default {
     return {
       title: $('.top-menu-breadcrumb li:eq(-2) a').text(),
       series: $('.top-menu-breadcrumb li:last').prev('li').find('a').attr('href'),
-      quant: dataPublic.pictures.length,
+      pages: dataPublic.pictures.length,
       prev: '#',
       next: '#',
       listImages: images,

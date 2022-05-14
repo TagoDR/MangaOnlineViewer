@@ -10,7 +10,7 @@ export default {
     return {
       title: $('title').text().replace('| Hitomi.la', '').trim(),
       series: $('.brand').attr('href'),
-      quant: W.galleryinfo.files.length,
+      pages: W.galleryinfo.files.length,
       prev: '#',
       next: '#',
       listImages: W.galleryinfo.files.map((file) => W.url_from_url_from_hash(W.galleryinfo, file, 'webp', undefined, 'a')),

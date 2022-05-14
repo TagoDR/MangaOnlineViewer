@@ -28,7 +28,7 @@ export default {
         .trim(),
       series: $('.series-cover a')
         .attr('href'),
-      quant: api.images.length,
+      pages: api.images.length,
       prev: $('.chapter-list .selected')
         .next()
         .find('a')

@@ -10,7 +10,7 @@ export default {
     return {
       title: $('title').text().trim(),
       series: $('a[title="Volver"]').attr('href'),
-      quant: num,
+      pages: num,
       prev: $('.chapter-prev a').attr('href'),
       next: $('.chapter-next a').attr('href'),
       listPages: [...Array(num).keys()].map((i) => W.location.href.replace(/\/[0-9]+$/, `/${i + 1}`)),

@@ -10,8 +10,8 @@ const settings = {
   CustomThemeText: getValueGM('MangaCustomThemeText', '#ffffff'),
   CustomThemeLines: getValueGM('MangaCustomThemeLines', '#666666'),
   CustomThemePanel: getValueGM('MangaCustomThemePanel', '#333333'),
-  CustomThemeButton: getValueGM('MangaCustomThemebutton', '#282828'),
-  FitWidthIfOversized: getValueGM('MangaFitWidthIfOversized', true),
+  CustomThemeButton: getValueGM('MangaCustomThemeButton', '#282828'),
+  FitWidthIfOversize: getValueGM('MangaFitWidthIfOversize', true),
   ShowThumbnails: getValueGM('MangaShowThumbnails', true),
   DownloadZip: getValueGM('MangaDownloadZip', false),
   Timer: parseInt(getValueGM('MangaTimer', 1000), 10),
@@ -28,7 +28,7 @@ const settings = {
 if (isMobile) {
   settings.lazyLoadImages = true;
   settings.lazyStart = parseInt(getValueGM('MangaLazyStart', 5), 10);
-  settings.FitWidthIfOversized = true;
+  settings.FitWidthIfOversize = true;
   settings.ShowThumbnails = false;
   settings.viewMode = '';
 }

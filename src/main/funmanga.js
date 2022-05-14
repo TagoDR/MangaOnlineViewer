@@ -11,7 +11,7 @@ export default {
     return {
       title: $('title').text().trim(),
       series: $('h5.widget-heading a:first').attr('href'),
-      quant: url.length,
+      pages: url.length,
       prev: chapter.next('option').val(),
       next: chapter.prev('option').val(),
       listPages: url.map((item) => $(item).val()),

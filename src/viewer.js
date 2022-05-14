@@ -45,7 +45,7 @@ function lateStart(site, begin = 1) {
     input: 'range',
     inputAttributes: {
       min: 1,
-      max: manga.quant,
+      max: manga.pages,
       step: 1,
     },
     inputValue: begin,
@@ -64,10 +64,10 @@ function lateStart(site, begin = 1) {
   });
 }
 
-// Organize the site adding place holders for the manga pages
+// Organize the site adding place-holders for the manga pages
 function preparePage(site, manga, begin = 0) {
-  logScript(`Found ${manga.quant} pages`);
-  if (manga.quant > 0) {
+  logScript(`Found ${manga.pages} pages`);
+  if (manga.pages > 0) {
     let beginning = begin;
     if (beginning === 0) {
       beginning = settings.bookmarks// [manga.name]
@@ -131,7 +131,7 @@ function start(sites) {
     }
     if (site.waitAttr !== undefined) {
       wait = $(site.waitAttr[0]).attr(site.waitAttr[1]);
-      logScript(`Wating for ${site.waitAttr[1]} of ${site.waitAttr[0]} = ${wait}`);
+      logScript(`Waiting for ${site.waitAttr[1]} of ${site.waitAttr[0]} = ${wait}`);
       if (isNothing(wait)) {
         setTimeout(() => {
           waitExec(site);
@@ -153,7 +153,7 @@ function start(sites) {
     }
     if (site.waitVar !== undefined) {
       wait = W[site.waitVar];
-      logScript(`Wating for ${site.waitVar} = ${wait}`);
+      logScript(`Waiting for ${site.waitVar} = ${wait}`);
       if (isNothing(wait)) {
         setTimeout(() => {
           waitExec(site);

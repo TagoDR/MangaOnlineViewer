@@ -21,7 +21,7 @@ export default {
     return {
       title: $('title').text().match(/(.+Read )(.+)/)[2],
       series: api.reader_start_url,
-      quant: api.reader_page_total,
+      pages: api.reader_page_total,
       prev: '#',
       next: '#',
       listImages: imgs,

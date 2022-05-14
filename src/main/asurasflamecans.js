@@ -13,7 +13,7 @@ export default {
     return {
       title: $('.entry-title').text().trim(),
       series: $('.allc a').attr('href'),
-      quant: images.length,
+      pages: images.length,
       prev: chapter.next().val(),
       next: chapter.prev().val(),
       listImages: images.map((i) => $(i).attr('src')),

@@ -10,7 +10,7 @@ export default {
     return {
       title: $('.comic-title').text().trim(),
       series: $('.comic-title a').attr('href'),
-      quant: $('.pages-selector option').get().length,
+      pages: $('.pages-selector option').get().length,
       prev: '#',
       next: '#',
       listImages: $('.reader img').get().map((i) => $(i).attr('data-src')),

@@ -14,7 +14,7 @@ export default {
     return {
       title: origin.text().trim(),
       series: origin.attr('href'),
-      quant: num,
+      pages: num,
       prev: '#',
       next: '#',
       listImages: [...Array(num).keys()].map(

@@ -26,7 +26,7 @@ export default {
     return {
       title: $('title').text().trim(),
       series: $('.return_btn').attr('href'),
-      quant: parseInt($('#pages').val(), 10),
+      pages: parseInt($('#pages').val(), 10),
       prev: '#',
       next: '#',
       listImages: src,

@@ -38,7 +38,7 @@ export default {
     return {
       title: $('.reader-header-title div:first').text().trim(),
       series: $('.reader-header-title a').attr('href'),
-      quant: W.imagecount,
+      pages: W.imagecount,
       prev: W.prechapterurl,
       next: W.nextchapterurl,
       listImages: src,

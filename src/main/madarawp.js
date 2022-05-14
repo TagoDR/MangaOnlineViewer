@@ -12,7 +12,7 @@ export default {
     return {
       title: $('#chapter-heading').text().trim(),
       series: $('.breadcrumb li a:last').attr('href'),
-      quant: src.length,
+      pages: src.length,
       prev: $('.prev_page:first').attr('href'),
       next: $('.next_page:first').attr('href'),
       listImages: src.map((i) => $(i).attr('src') || $(i).attr('data-src') || $(i)

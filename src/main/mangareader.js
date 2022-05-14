@@ -13,7 +13,7 @@ export default {
     return {
       title: $('#mangainfo h1').text(),
       series: $('#mangainfo a').attr('href'),
-      quant: num,
+      pages: num,
       prev: chapter.last().attr('href'),
       next: chapter.first().attr('href'),
       listPages: [...Array(num).keys()].map((i) => url + (i + 1), num),

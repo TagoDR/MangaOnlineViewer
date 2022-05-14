@@ -11,7 +11,7 @@ export default {
     return {
       title: $('title').text().trim(),
       series: $('.back-to-gallery a').attr('href'),
-      quant: num,
+      pages: num,
       prev: '#',
       next: '#',
       listImages: [...Array(num).keys()].map((i) => src.replace(/[0-9]+\./, `${String(`000${i + 1}`)

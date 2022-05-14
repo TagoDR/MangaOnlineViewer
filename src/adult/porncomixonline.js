@@ -10,7 +10,7 @@ export default {
     return {
       title: $('.post-title').text().trim(),
       series: '#',
-      quant: imgs.length,
+      pages: imgs.length,
       prev: '#',
       next: '#',
       listImages: imgs.map((i) => $(i).attr('href')),

@@ -10,7 +10,7 @@ export default {
     return {
       title: $('title').text().trim(),
       series: $('a.manga-name:last').attr('href'),
-      quant: src.length,
+      pages: src.length,
       prev: $('a.prev').attr('href'),
       next: $('a.next').attr('href'),
       listPages: src.map((i) => $(i).val()),

@@ -12,7 +12,7 @@ export default {
       // eslint-disable-next-line camelcase
       title: `${amSub_name} - ${mpEpi_name}`,
       series: currSubUrl,
-      quant: imgPathLis.length,
+      pages: imgPathLis.length,
       prev: prevEpiUrl,
       next: nextEpiUrl,
       listImages: imgPathLis.map((i, index) => `${imgCdnHost + i}?${pass[index]}`),

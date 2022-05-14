@@ -14,7 +14,7 @@ export default {
     return {
       title: $('title').text().trim().replace(/Page [0-9]+ /, ''),
       series: W.next_chapter,
-      quant: num,
+      pages: num,
       prev: chapter.eq(
         chapter.index(chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`)) + 1,
       )

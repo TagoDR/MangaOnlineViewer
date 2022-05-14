@@ -12,7 +12,7 @@ export default {
     return {
       title: $('.title').text().trim(),
       series: $('.control a:eq(3)').attr('href'),
-      quant: num,
+      pages: num,
       prev: '#',
       next: '#',
       listImages: [...Array(num).keys()].map((i) => src.replace(/\/[0-9]+\./, `/${i + 1}.`)),

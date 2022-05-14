@@ -21,7 +21,7 @@ export default {
     return {
       title: $('#page-title').text().trim(),
       series: '#',
-      quant: imgs.length,
+      pages: imgs.length,
       prev: '#',
       next: '#',
       listImages: imgs,

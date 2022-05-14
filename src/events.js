@@ -106,50 +106,50 @@ function setKeyDownEvents() {
         case 'Period':
         case 'KeyD':
         case 'Numpad6':
-          $('.ChapterControl:first .next')[0].click();
+          $('.ChapterControl:first .next')[0].trigger('click');
           break;
         case 'ArrowLeft':
         case 'Comma':
         case 'KeyA':
         case 'Numpad4':
-          $('.ChapterControl:first .prev')[0].click();
+          $('.ChapterControl:first .prev')[0].trigger('click');
           break;
         case 'Equal':
         case 'NumpadAdd':
         case 'KeyE':
-          $('#enlarge').click();
+          $('#enlarge').trigger('click');
           break;
         case 'Minus':
         case 'NumpadSubtract':
         case 'KeyQ':
-          $('#reduce').click();
+          $('#reduce').trigger('click');
           break;
         case 'Digit9':
         case 'NumpadDivide':
         case 'KeyR':
-          $('#restore').click();
+          $('#restore').trigger('click');
           break;
         case 'Digit0':
         case 'NumpadMultiply':
         case 'KeyF':
-          $('#fitWidth').click();
+          $('#fitWidth').trigger('click');
           break;
         case 'Slash':
         case 'Numpad5':
         case 'KeyX':
-          $('#settings').click();
+          $('#settings').trigger('click');
           break;
         case 'KeyC':
-          $('#webComic').click();
+          $('#webComic').trigger('click');
           break;
         case 'KeyV':
-          $('#verticalMode').click();
+          $('#verticalMode').trigger('click');
           break;
         case 'KeyN':
-          $('#rtlMode').click();
+          $('#rtlMode').trigger('click');
           break;
         case 'KeyB':
-          $('#ltrMode').click();
+          $('#ltrMode').trigger('click');
           break;
         default:
           break;
@@ -159,80 +159,80 @@ function setKeyDownEvents() {
     return true;
   }
 
-  $(document).keydown(processKey);
+  $(document).on('keydown', processKey);
 }
 
 // Controls for the extra features added to the sites
 function controls() {
   // Size Controls
-  $('#enlarge').click(() => {
+  $('#enlarge').on('click', () => {
     settings.Zoom += settings.zoomStep;
     $('#Zoom b').html(settings.Zoom);
     applyZoom();
   });
-  $('#reduce').click(() => {
+  $('#reduce').on('click', () => {
     settings.Zoom -= settings.zoomStep;
     $('#Zoom b').html(settings.Zoom);
     applyZoom();
   });
-  $('#restore').click(() => {
+  $('#restore').on('click', () => {
     settings.Zoom = 100;
     $('#Zoom b').html(settings.Zoom);
     applyZoom();
   });
-  $('#fitWidth').click(() => {
+  $('#fitWidth').on('click', () => {
     settings.Zoom = 1000;
     $('#Zoom b').html(settings.Zoom);
     applyZoom();
   });
-  $('#fitHeight').click(() => {
+  $('#fitHeight').on('click', () => {
     settings.Zoom = -1000;
     $('#Zoom b').html(settings.Zoom);
     applyZoom();
   });
-  $('#zoomStep').change((event) => {
+  $('#zoomStep').on('change', (event) => {
     const step = $(event.target).val();
     setValueGM('MangaZoomStep', parseInt(step, 10));
     logScript(`zoomStep: ${getValueGM('MangaZoomStep')}`);
   });
   // WebComic View Mode
-  $('#webComic').click(() => {
+  $('#webComic').on('click', () => {
     $('#Chapter').addClass('WebComic')
       .removeClass('FluidLTR')
       .removeClass('FluidRTL');
     applyZoom();
   });
   // Fluid LTR View Mode
-  $('#ltrMode').click(() => {
+  $('#ltrMode').on('click', () => {
     $('#Chapter').removeClass('WebComic')
       .addClass('FluidLTR')
       .removeClass('FluidRTL');
     applyZoom();
   });
   // Fluid RTL View Mode
-  $('#rtlMode').click(() => {
+  $('#rtlMode').on('click', () => {
     $('#Chapter').removeClass('WebComic')
       .removeClass('FluidLTR')
       .addClass('FluidRTL');
     applyZoom();
   });
   // Vertical View Mode
-  $('#verticalMode').click(() => {
+  $('#verticalMode').on('click', () => {
     $('#Chapter').removeClass('WebComic')
       .removeClass('FluidLTR')
       .removeClass('FluidRTL');
     applyZoom();
   });
-  $('#fitIfOversized').change((event) => {
-    $('#Chapter').toggleClass('fitWidthIfOversized');
+  $('#fitIfOversize').on('change', (event) => {
+    $('#Chapter').toggleClass('fitWidthIfOversize');
     if ($(event.target).is(':checked')) {
-      setValueGM('MangaFitWidthIfOversized', true);
+      setValueGM('MangaFitWidthIfOversize', true);
     } else {
-      setValueGM('MangaFitWidthIfOversized', false);
+      setValueGM('MangaFitWidthIfOversize', false);
     }
-    logScript(`fitIfOversized: ${getValueGM('MangaFitWidthIfOversized')}`);
+    logScript(`fitIfOversize: ${getValueGM('MangaFitWidthIfOversize')}`);
   });
-  $('#viewMode').change((event) => {
+  $('#viewMode').on('change', (event) => {
     const mode = $(event.target).val();
     $('#Chapter').removeClass('WebComic')
       .removeClass('FluidLTR')
@@ -242,12 +242,12 @@ function controls() {
     logScript(`ViewMode: ${getValueGM('MangaViewMode')}`);
     applyZoom();
   });
-  $('#loadMode').change((event) => {
+  $('#loadMode').on('change', (event) => {
     const mode = $(event.target).val();
     setValueGM('MangaLoadMode', mode);
     logScript(`MangaLoadMode: ${getValueGM('MangaLoadMode')}`);
   });
-  $('#showThumbnails').change((event) => {
+  $('#showThumbnails').on('change', (event) => {
     $('#Navigation').toggleClass('disabled');
     if ($(event.target).is(':checked')) {
       setValueGM('MangaShowThumbnails', true);
@@ -258,7 +258,7 @@ function controls() {
     applyZoom();
   });
   // Download
-  $('#downloadZip').change((event) => {
+  $('#downloadZip').on('change', (event) => {
     if ($(event.target).is(':checked')) {
       setValueGM('MangaDownloadZip', true);
       Swal.fire({
@@ -273,17 +273,17 @@ function controls() {
     logScript(`MangaDownloadZip: ${getValueGM('MangaDownloadZip')}`);
   });
   $('#blob').one('click', generateZip);
-  $('.download').click(() => {
+  $('.download').on('click', () => {
     logScript('Downloading Chapter');
-    $('#blob')[0].click();
+    $('#blob')[0].trigger('click');
   });
-  $('#lazyLoadImages').change((event) => {
+  $('#lazyLoadImages').on('change', (event) => {
     if ($(event.target).is(':checked')) {
       setValueGM('MangaLazyLoadImages', true);
       Swal.fire({
         title: 'Warning',
         html: `Lazy load is incompatible with zip download, you will not be able to download with this setting ON.<br/>
-               Suggestion: <span style="color:red;font:bold">Disable Thumbnails</span> to save Bandwidth/Memory.`,
+               Suggestion: <span style="color:red;font-weight:bold">Disable Thumbnails</span> to save Bandwidth/Memory.`,
         icon: 'warning',
       });
     } else {
@@ -291,16 +291,16 @@ function controls() {
     }
     logScript(`MangaLazyLoadImages: ${getValueGM('MangaLazyLoadImages')}`);
   });
-  $('#lazyStart').change((event) => {
+  $('#lazyStart').on('change', (event) => {
     const start = $(event.target).val();
     setValueGM('MangaLazyStart', start);
     logScript(`lazyStart: ${getValueGM('MangaLazyStart')}`);
   });
-  $('#PagesPerSecond').change((event) => {
+  $('#PagesPerSecond').on('change', (event) => {
     setValueGM('MangaTimer', parseInt($(event.target).val(), 10));
     logScript(`MangaTimer: ${getValueGM('MangaTimer')}`);
   });
-  $('#DefaultZoom').change((event) => {
+  $('#DefaultZoom').on('change', (event) => {
     settings.Zoom = parseInt($(event.target).val(), 10);
     $('#Zoom b').html(settings.Zoom);
     setValueGM('MangaZoom', parseInt(settings.Zoom, 10));
@@ -308,10 +308,10 @@ function controls() {
     applyZoom();
   });
   // Toggle Controls
-  $('#pageControls').click(() => {
+  $('#pageControls').on('click', () => {
     $('#MangaOnlineViewer').toggleClass('hideControls');
   });
-  $('#hidePageControls').change((event) => {
+  $('#hidePageControls').on('change', (event) => {
     $('#MangaOnlineViewer').toggleClass('hideControls');
     if ($(event.target).is(':checked')) {
       setValueGM('MangaHidePageControls', true);
@@ -321,7 +321,7 @@ function controls() {
     logScript(`MangaHidePageControls: ${getValueGM('MangaHidePageControls')}`);
   });
   // Theme Control
-  $('#ThemeSelector').change((event) => {
+  $('#ThemeSelector').on('change', (event) => {
     const target = $(event.target);
     $('#MangaOnlineViewer , body').removeClass().addClass(target.val());
     logScript('MangaTheme', target.val());
@@ -359,7 +359,7 @@ function controls() {
   //   logScript(e);
   // }
   $('INPUT.colorpicker').minicolors();
-  $('#CustomThemeHue').change((event) => {
+  $('#CustomThemeHue').on('change', (event) => {
     const target = $(event.target).val();
     logScript(`CustomTheme: ${target}`);
     $('style[title="Custom_Light"], style[title="Custom_Dark"]').remove();
@@ -367,7 +367,7 @@ function controls() {
     setValueGM('MangaCustomTheme', target);
     logScript(`MangaCustomTheme: ${getValueGM('MangaCustomTheme')}`);
   });
-  $('.FullCustom').change(() => {
+  $('.FullCustom').on('change', () => {
     logScript('FullCustomTheme: ',
       $('#CustomThemeHueBody').val(),
       $('#CustomThemeHueText').val(),
@@ -386,19 +386,19 @@ function controls() {
     setValueGM('MangaCustomThemeText', $('#CustomThemeHueText').val());
     setValueGM('MangaCustomThemeLines', $('#CustomThemeHueLines').val());
     setValueGM('MangaCustomThemePanel', $('#CustomThemeHuePanel').val());
-    setValueGM('MangaCustomThemebutton', $('#CustomThemeHueButton').val());
+    setValueGM('MangaCustomThemeButton', $('#CustomThemeHueButton').val());
   });
 
-  $('#gotoPage').bind('change', (event) => {
+  $('#gotoPage').on('change', (event) => {
     applyZoom();
     scrollToElement($(`#Page${$(event.target).val()}`));
   });
-  $('.Thumbnail').bind('click', (event) => {
+  $('.Thumbnail').on('click', (event) => {
     applyZoom();
     scrollToElement($(`#Page${$(event.currentTarget).find('span').html()}`));
   });
   // Settings Control
-  $('#settings').click(() => {
+  $('#settings').on('click', () => {
     $('#ViewerControls').slideToggle();
     $('#ViewerShortcuts').slideToggle();
     $('#ImageOptions').toggleClass('settingsOpen');
@@ -406,7 +406,7 @@ function controls() {
   });
   // Individual Page functions
   // Bookmark Page to resume reading
-  $('.Bookmark').click((event) => {
+  $('.Bookmark').on('click', (event) => {
     const num = parseInt($(event.target).parents('.MangaPage').find('.PageFunctions span').text(),
       10);
     const mark = {
@@ -434,37 +434,37 @@ function controls() {
     logScript(`MangaBookmarks: ${getValueGM('MangaBookmarks')}`);
   });
   // Reload Page
-  $('.Reload').click((event) => {
+  $('.Reload').on('click', (event) => {
     reloadImage($(event.target).parents('.MangaPage').find('.PageContent img'));
   });
   // ZoomIn
-  $('.ZoomIn').click((event) => {
+  $('.ZoomIn').on('click', (event) => {
     const img = $(event.target).parents('.MangaPage').find('.PageContent img');
     const ratio = (img.width() / img.prop('naturalWidth')) * (100 + settings.zoomStep);
     applyZoom(img, ratio);
   });
   // ZoomOut
-  $('.ZoomOut').click((event) => {
+  $('.ZoomOut').on('click', (event) => {
     const img = $(event.target).parents('.MangaPage').find('.PageContent img');
     const ratio = (img.width() / img.prop('naturalWidth')) * (100 - settings.zoomStep);
     applyZoom(img, ratio);
   });
   // ZoomRestore
-  $('.ZoomRestore').click(() => {
+  $('.ZoomRestore').on('click', () => {
     $('.PageContent img').removeAttr('width');
   });
   // ZoomWidth
-  $('.ZoomWidth').click((event) => {
+  $('.ZoomWidth').on('click', (event) => {
     const img = $(event.target).parents('.MangaPage').find('.PageContent img');
     applyZoom(img, 1000);
   });
   // ZoomHeight
-  $('.ZoomHeight').click((event) => {
+  $('.ZoomHeight').on('click', (event) => {
     const img = $(event.target).parents('.MangaPage').find('.PageContent img');
     applyZoom(img, -1000);
   });
   // Hide
-  $('.Hide').click((event) => {
+  $('.Hide').on('click', (event) => {
     const img = $(event.target).parents('.MangaPage').find('.PageContent');
     img.slideToggle('slow');
   });

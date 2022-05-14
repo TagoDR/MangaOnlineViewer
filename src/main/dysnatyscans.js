@@ -9,7 +9,7 @@ export default {
     return {
       title: $('#chapter-title').text(),
       series: '#',
-      quant: W.pages.length,
+      pages: W.pages.length,
       prev: $('#prev_link').attr('href'),
       next: $('#next_link').attr('href'),
       listImages: W.pages.map((x) => x.image),

@@ -11,7 +11,7 @@ export default {
     return {
       title: $('.title').text(),
       series: $('.title a').eq(-2).attr('href'),
-      quant: imgs.length,
+      pages: imgs.length,
       prev: '#',
       next: '#',
       listImages: imgs.map((i) => $(i).attr('data-file')),

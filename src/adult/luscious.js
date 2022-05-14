@@ -14,7 +14,7 @@ export default {
     return {
       title: origin.text().trim(),
       series: origin.attr('href'),
-      quant: num,
+      pages: num,
       prev: '#',
       next: '#',
       bruteForce(func, i = 1, url = W.location.pathname) {

@@ -14,7 +14,7 @@ export default {
     return {
       title: $('.chapter a:eq(1)').text().trim(),
       series: $('a.a-series-title:first').attr('href'),
-      quant: num,
+      pages: num,
       prev: '#',
       next: '#',
       listImages: [...Array(num).keys()].map((i) => `${src + String(`000${i + 1}`).slice(-3)}.jpg`),

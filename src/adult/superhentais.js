@@ -12,7 +12,7 @@ export default {
     return {
       title: $('.conteudoBox .boxBarraInfo:first').text().trim(),
       series: $('.capList option').eq(2).val(),
-      quant: num,
+      pages: num,
       prev: chapter.prev().val(),
       next: chapter.next().val(),
       listImages: [...Array(num).keys()].map((i) => `${url}/${i + 1}.jpg`),

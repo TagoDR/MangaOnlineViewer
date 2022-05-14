@@ -35,7 +35,7 @@ export default {
     return {
       title: $('title').text().replace(/ Page .+/, ''),
       series: $('.MainContainer a:first').attr('href'),
-      quant: CurChapter.Page,
+      pages: CurChapter.Page,
       prev: ChapterURLEncode(-1),
       next: ChapterURLEncode(+1),
       listImages: [...Array(parseInt(CurChapter.Page, 10))

@@ -7,7 +7,7 @@ function logScript(...text) {
   return text;
 }
 
-// Composeble console output
+// Compose console output
 const logScriptC = (x) => (y) => logScript(x, y)[1];
 
 // Clear the Console

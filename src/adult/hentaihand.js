@@ -10,7 +10,7 @@ export default {
     return {
       title: W.model.title.replace(' - Page {page}', ''),
       series: $('.back-to-gallery a').attr('href'),
-      quant: Object.keys(W.images).length,
+      pages: Object.keys(W.images).length,
       prev: '#',
       next: '#',
       listImages: Object.values(W.images),
