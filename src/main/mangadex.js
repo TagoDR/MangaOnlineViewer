@@ -20,7 +20,7 @@ export default {
     });
     return {
       title: $('title').text().replace(' - MangaDex', ''),
-      series: $("a[href^='/title/']:last").attr('href'),
+      series: $('a[href^=\'/title/\']:last').attr('href'),
       pages: server.chapter.data.length,
       prev: $('a[href^=\'/chapter/\']').eq(1).attr('href'),
       next: $('a[href^=\'/chapter/\']').eq(0).attr('href'),

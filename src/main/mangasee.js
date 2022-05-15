@@ -38,8 +38,8 @@ export default {
       pages: CurChapter.Page,
       prev: ChapterURLEncode(-1),
       next: ChapterURLEncode(+1),
-      listImages: [...Array(parseInt(CurChapter.Page, 10))
-        .keys()].map((i) => src.replace(/-\d\d\d.png/, `-${String(`000${i + 1}`).slice(-3)}.png`)),
+      listImages: [...Array(parseInt(CurChapter.Page, 10)).keys()]
+        .map((i) => src.replace(/-\d\d\d.png/, `-${String(`000${i + 1}`).slice(-3)}.png`)),
     };
   },
 };

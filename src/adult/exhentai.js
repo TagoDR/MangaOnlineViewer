@@ -19,7 +19,6 @@ export default {
       img: '#img',
       lazy: true,
       bruteForce(func) {
-        const self = this;
         [...Array(maxGalley).keys()]
           .slice(Math.floor(Math.abs((func.begin - 1) / 40)))
           .map((galleryId, galleryOrder) => func.getHtml(galleryId > 0 ? `${gallery}?inline_set=ts_m&p=${galleryId}` : `${gallery}?inline_set=ts_m`, func.wait * galleryOrder)
@@ -32,7 +31,7 @@ export default {
                       func.addPage((galleryId * 40) + index + 1, url);
                     }
                     return null;
-                  }, (self.timer || func.wait) * ((galleryOrder * 40) + index + 1));
+                  }, (func.wait) * ((galleryOrder * 40) + index + 1));
                   return (galleryId * 40) + index + 1;
                 });
             }));

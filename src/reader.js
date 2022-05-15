@@ -1,9 +1,9 @@
-import { isMobile } from './browser';
+import { isMobile } from './browser.js';
 import htmlKeybinds from './components/keybinds.html';
 import cssStyles from './components/styles.css';
-import { icon, settings } from './settings';
-import { themesCSS, themesSelector } from './themes';
-import { externalCSS, externalScripts } from './externals';
+import { externalCSS, externalScripts } from './externals.js';
+import { icon, settings } from './settings.js';
+import { themesCSS, themesSelector } from './themes.js';
 
 const panel = `<div id='ImageOptions'>
   <div id='menu'>
@@ -137,9 +137,7 @@ const body = (manga, begin = 0) => `
     <span class='controlLabel'>Go to Page:</span>
     <select id='gotoPage'>
       <option selected>#</option>
-      ${listOptions(manga.pages)
-    .slice(begin)
-    .join('')}
+      ${listOptions(manga.pages).slice(begin).join('')}
     </select>
   </div>
   ${chapterControlTop(manga)}
@@ -156,9 +154,7 @@ const body = (manga, begin = 0) => `
       <img alt='Thumbnails' title='Thumbnails' src='${icon.menu}' class='nav' /><i>0</i> of <b>${manga.pages}</b> Pages Loaded
     </div>
     <div id='Thumbnails'>
-      ${listThumbnails(manga.pages)
-    .slice(begin)
-    .join('')}
+      ${listThumbnails(manga.pages).slice(begin).join('')}
     </div>
   </div>
   <a href='#' id='blob' style='display: none;'>Download</a>

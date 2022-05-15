@@ -1,6 +1,6 @@
-import adult from './adult';
-import main from './main';
-import { requiredScripts } from './externals';
+import adult from './adult/index.js';
+import { requiredScripts } from './externals.js';
+import main from './main/index.js';
 
 const sites = [...main, ...adult];
 const languages = [...new Set(sites.flatMap((s) => s.language))];

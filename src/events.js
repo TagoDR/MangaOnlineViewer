@@ -1,8 +1,8 @@
-import { getValueGM, logScript, setValueGM } from './browser';
-import generateZip from './download';
-import { applyZoom, reloadImage } from './page';
-import { settings } from './settings';
-import { addCustomTheme, addFullCustomTheme } from './themes';
+import { getValueGM, logScript, setValueGM } from './browser.js';
+import generateZip from './download.js';
+import { applyZoom, reloadImage } from './page.js';
+import { settings } from './settings.js';
+import { addCustomTheme, addFullCustomTheme } from './themes.js';
 
 // Goto Page and Thumbnails
 function scrollToElement(ele) {

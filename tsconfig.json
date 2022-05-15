@@ -11,8 +11,9 @@
     "esModuleInterop": true,
     "jsx": "react",
     "module": "es6",
-//    "noEmit": true,,
-    "outDir": "dist"
+//    "noEmit": true,
+    "outDir": "dist",
+    "allowSyntheticDefaultImports": true
   },
   "exclude": [
     "node_modules"

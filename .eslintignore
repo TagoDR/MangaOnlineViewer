@@ -1,6 +1,7 @@
 node_modules
 *.min.js
 dist/**
+gulpfile.js
 Manga_OnlineViewer.meta.js
 Manga_OnlineViewer.user.js
 Manga_OnlineViewer_Adult.meta.js

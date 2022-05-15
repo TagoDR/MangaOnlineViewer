@@ -1,6 +1,6 @@
-import { logScript } from './browser';
-import { settings } from './settings';
-import { isNothing } from './utils';
+import { logScript } from './browser.js';
+import { settings } from './settings.js';
+import { isNothing } from './utils.js';
 
 // Get html pages content
 function getHtml(url, wait = settings.Timer) {

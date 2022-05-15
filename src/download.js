@@ -1,4 +1,4 @@
-import { logScript } from './browser';
+import { logScript } from './browser.js';
 
 const cache = {
   zip: new JSZip(),
@@ -56,8 +56,7 @@ function generateZip() {
                 createFolders: true,
                 compression: 'DEFLATE',
               });
-              logScript(`${filename} Added to Zip as Base64 Image, From: ${src}, Data:`,
-                request.response);
+              logScript(`${filename} Added to Zip as Base64 Image, From: ${src}, Data:`, request.response);
               cache.downloadFiles += 1;
             },
           });

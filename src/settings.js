@@ -1,6 +1,4 @@
-import {
-  getValueGM, isMobile, setValueGM,
-} from './browser';
+import { getValueGM, isMobile, setValueGM } from './browser.js';
 
 // Configuration
 const settings = {

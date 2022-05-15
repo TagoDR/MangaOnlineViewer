@@ -1,6 +1,5 @@
-import pkg from '../package.json';
-import sites from './main';
-import { requiredScripts } from './externals';
+import { requiredScripts } from './externals.js';
+import sites from './main/index.js';
 
 export default {
   name: 'Manga OnlineViewer',
@@ -10,7 +9,7 @@ export default {
   namespace: 'https://github.com/TagoDR',
   description: `Shows all pages at once in online view for these sites: ${sites.map((s) => s.name).join(', ')}`,
   version: new Date().toISOString().slice(0, 10),
-  license: pkg.license,
+  license: 'MIT',
   grant: [
     'GM_getValue',
     'GM_setValue',

@@ -1,8 +1,8 @@
 module.exports = {
-  parser: '@babel/eslint-parser',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    sourceType: 'module',
-    experimentalObjectRestSpread: true,
+    ecmaVersion: 2020,
+    project: ['./tsconfig.json'],
   },
   env: {
     browser: true,
@@ -22,15 +22,19 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'airbnb-base',
+    'plugin:@typescript-eslint/recommended',
+    "airbnb-base",
+    "airbnb-typescript/base",
   ],
-  plugins: [
-    'import',
-  ],
+  plugins: ['import', '@typescript-eslint'],
   rules: {
     'linebreak-style': ['off', 'windows'],
     'no-console': 'warn',
-    'prefer-destructuring': ['error', { object: true, array: false }],
+    'prefer-destructuring': ['error', {
+      object: true,
+      array: false,
+    }],
     'function-paren-newline': 'off',
+    'import/extensions': ['warn', 'always', { ignorePackages: true }],
   },
 };

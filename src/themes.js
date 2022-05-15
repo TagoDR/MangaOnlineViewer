@@ -1,4 +1,4 @@
-import { settings } from './settings';
+import { settings } from './settings.js';
 
 const scheme = new ColorScheme().scheme('mono').variation('default');
 
