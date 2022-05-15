@@ -33,9 +33,9 @@ const scripts = {
   },
 };
 
-function buildUserscript(entryFile, destFile, metaFile) {
+function buildUserscriptRollup(script) {
   return rollup({
-    input: entryFile,
+    input: `src/${script.entry}`,
     plugins: [
       nodeResolve({
         preferBuiltins: false,
@@ -43,12 +43,8 @@ function buildUserscript(entryFile, destFile, metaFile) {
       }),
       typescriptPlugin({ typescript }),
       commonjs({
-        include: [
-          'node_modules/**',
-        ],
-        exclude: [
-          'node_modules/process-es6/**',
-        ],
+        include: ['node_modules/**'],
+        exclude: ['node_modules/process-es6/**'],
       }),
       html({
         include: './src/components/**',
@@ -62,10 +58,7 @@ function buildUserscript(entryFile, destFile, metaFile) {
       }),
       eslint({
         fix: true,
-        filterExclude: [
-          'node_modules/**',
-          'src/components/**',
-        ],
+        filterExclude: ['node_modules/**', 'src/components/**'],
       }),
       babel({
         babelHelpers: 'runtime',
@@ -74,15 +67,14 @@ function buildUserscript(entryFile, destFile, metaFile) {
       cleanup({
         comments: 'none',
         normalizeEols: 'win',
-      }),
-    ],
+      })],
   })
     .then((bundle) => bundle.write({
-      banner: fs.readFileSync(metaFile, 'utf8'),
+      banner: fs.readFileSync(`./dist/${script.meta}`, 'utf8'),
       intro: `var W = (typeof unsafeWindow === 'undefined') ? window : unsafeWindow; \n
               /* global $:readonly, JSZip:readonly ,NProgress:readonly , jscolor:readonly , ColorScheme:readonly , Swal:readonly */`,
       format: 'iife',
-      file: destFile,
+      file: `dist/${script.name}`,
       globals: {
         'color-scheme': 'ColorScheme',
         jquery: '$',
@@ -93,7 +85,6 @@ function buildUserscript(entryFile, destFile, metaFile) {
         react: 'React',
         'react-dom': 'ReactDOM',
       },
-      // sourceMap: 'inline',
     }));
 }
 
@@ -108,19 +99,11 @@ function createMetaAdult() {
 }
 
 function createScriptMain() {
-  return buildUserscript(
-    `src/${scripts.main.entry}`,
-    `dist/${scripts.main.name}`,
-    `./dist/${scripts.main.meta}`,
-  );
+  return buildUserscriptRollup(scripts.main);
 }
 
 function createScriptAdult() {
-  return buildUserscript(
-    `src/${scripts.adult.entry}`,
-    `dist/${scripts.adult.name}`,
-    `./dist/${scripts.adult.meta}`,
-  );
+  return buildUserscriptRollup(scripts.adult);
 }
 
 function beauty() {
@@ -145,7 +128,7 @@ function readme() {
         LIST_HENTAI_SITES: hentaiSites,
         BOOKMARKLET: bookmarklet,
       },
-    })) // To set environment variables in-line
+    }))
     .pipe(gulp.dest('./dist/'));
 }
 
@@ -164,6 +147,6 @@ gulp.task('readme', readme);
 gulp.task('dev', gulp.parallel(server, watch));
 gulp.task('main', gulp.series(createMetaMain, createScriptMain));
 gulp.task('adult', gulp.series(createMetaAdult, createScriptAdult));
-gulp.task('build', gulp.parallel('main', 'adult', 'readme'));
-gulp.task('release', gulp.series('build', beauty, move));
-gulp.task('default', gulp.series('release'));
+gulp.task('build', gulp.parallel(gulp.series(createMetaMain, createScriptMain), gulp.series(createMetaAdult, createScriptAdult), readme));
+gulp.task('release', gulp.series(gulp.parallel(gulp.series(createMetaMain, createScriptMain), gulp.series(createMetaAdult, createScriptAdult), readme), beauty, move));
+gulp.task('default', gulp.series(gulp.parallel(gulp.series(createMetaMain, createScriptMain), gulp.series(createMetaAdult, createScriptAdult), readme), beauty, move));

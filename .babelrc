@@ -3,10 +3,7 @@
     [
       "airbnb",
       {
-        "targets": {
-          "firefox": "100",
-          "chrome": "100"
-        }
+        "targets": "Firefox ESR"
       }
     ]
   ],

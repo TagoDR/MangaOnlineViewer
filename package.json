@@ -54,7 +54,5 @@
     "rollup-plugin-string-html": "^1.0.0",
     "typescript": "^4.6.4",
     "userscript-meta": "^1.0.1"
-  },
-  "dependencies": {
   }
 }
