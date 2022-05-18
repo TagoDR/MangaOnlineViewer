@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans,Flame Scans, ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, KomiRaw, Leitor, LHTranslation, MangaHaus,Isekai Scan,Comic Kiba,Zinmanga,mangatx,Toonily,Mngazuki,ReaperScans, MangaDex, MangaDoom, MangaFreak, MangaFox, MangaHere, MangaHub, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaNato, MangaPark, MangaSee,Manga4life, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, UnionMangas, Batoto
-// @version 2022-05-11
+// @version 2022-05-18
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -1114,8 +1114,7 @@
       $item.addClass('imgLoaded');
       $item.removeClass('imgBroken');
       const thumb = $item.attr('id').replace('PageImg', 'ThumbnailImg');
-      $("#".concat(thumb)).attr('src', $item.attr('src'));
-      applyZoom($item);
+      $("#".concat(thumb)).attr('src', $item.attr('src')).on('load', () => applyZoom($item));
     } else {
       $item.addClass('imgBroken');
       reloadImage($item);
