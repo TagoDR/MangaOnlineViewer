@@ -1,24 +1,25 @@
 {
-  "compilerOptions": {
-    "strict": true,
-    "allowJs": true,
-//    "checkJs": true,
-    "noImplicitAny": false,
-    "noEmitOnError": true,
-    "removeComments": false,
-    "target": "ESNext",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "jsx": "react",
-    "module": "es6",
-//    "noEmit": true,
-    "outDir": "dist",
-    "allowSyntheticDefaultImports": true
-  },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "./src/"
-  ]
+    "compilerOptions": {
+        "strict": true,
+        "allowJs": true,
+        //    "checkJs": true,
+        "noImplicitAny": false,
+        "noEmitOnError": true,
+        "removeComments": false,
+        "target": "ESNext",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "jsx": "react",
+        "module": "es6",
+        //    "noEmit": true,
+        "outDir": "dist",
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true
+    },
+    "exclude": [
+        "node_modules"
+    ],
+    "include": [
+        "./src/"
+    ]
 }

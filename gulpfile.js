@@ -1,3 +1,4 @@
+import * as esbuild from 'esbuild';
 import fs from 'fs';
 import gulp from 'gulp';
 import file from 'gulp-file';
@@ -9,27 +10,51 @@ import eslint from '@rbnlffl/rollup-plugin-eslint';
 import html from 'rollup-plugin-string-html';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import userscript from 'userscript-meta';
-import typescriptPlugin from '@rollup/plugin-typescript';
-import typescript from 'typescript';
+import typescriptPlugin from 'rollup-plugin-typescript';
 import liveServer from 'live-server';
-import metaAdult from './src/meta-adult.js';
-import metaMain from './src/meta-main.js';
-import {
-  bookmarklet, comicSites, hentaiSites, mangaSites,
-} from './src/readme.js';
+import { tsImport } from 'ts-import';
+import prettier from 'gulp-prettier';
 
 const scripts = {
   main: {
     entry: 'userscript-main.ts',
     name: 'Manga_OnlineViewer.user.js',
     meta: 'Manga_OnlineViewer.meta.js',
+    banner: './src/meta-main.ts',
   },
   adult: {
     entry: 'userscript-adult.ts',
     name: 'Manga_OnlineViewer_Adult.user.js',
     meta: 'Manga_OnlineViewer_Adult.meta.js',
+    banner: './src/meta-adult.ts',
   },
 };
+
+function buildUserscriptEsbuild(script) {
+  // run esbuild configuration
+  return esbuild
+    .build({
+      banner: {
+        js: fs.readFileSync(`./dist/${script.meta}`, 'utf8') + `\n var W = (typeof unsafeWindow === 'undefined') ? window : unsafeWindow; \n
+              /* global $:readonly, JSZip:readonly ,NProgress:readonly , jscolor:readonly , ColorScheme:readonly , Swal:readonly */`,
+      },
+      entryPoints: [`src/${script.entry}`],
+      logLevel: 'debug',
+      bundle: true,
+      outfile: `dist/${script.name}`,
+      // watch: isDev,
+      // minify: isProd,
+      // sourcemap: isDev && 'inline',
+    })
+    .catch((e) => {
+      console.log(e);
+      // process.exit(1);
+    })
+    .finally(() => {
+      console.log(`${script.name} Created`);
+      // process.exit(0);
+    });
+}
 
 function buildUserscriptRollup(script) {
   return rollup({
@@ -39,7 +64,7 @@ function buildUserscriptRollup(script) {
         preferBuiltins: false,
         extensions: ['.js', '.ts', '.tsx'],
       }),
-      typescriptPlugin({ typescript }),
+      typescriptPlugin(),
       commonjs({
         include: ['node_modules/**'],
         exclude: ['node_modules/process-es6/**'],
@@ -48,12 +73,12 @@ function buildUserscriptRollup(script) {
         include: './src/components/**',
       }),
       eslint({
-        fix: true,
+        // fix: true,
         filterExclude: ['node_modules/**', 'src/components/**'],
       }),
       cleanup({
         comments: 'none',
-        normalizeEols: 'win',
+        // normalizeEols: 'win',
       }),
     ],
   })
@@ -76,37 +101,36 @@ function buildUserscriptRollup(script) {
     }));
 }
 
-function createMetaMain() {
-  return file(scripts.main.meta, userscript.stringify(metaMain), { src: true })
-    .pipe(gulp.dest('./dist'));
+async function createMetaMain() {
+  const s = await tsImport.compile(scripts.main.banner);
+  return file(scripts.main.meta, userscript.stringify(s.default, { src: true })).pipe(gulp.dest('./dist'));
 }
 
-function createMetaAdult() {
-  return file(scripts.adult.meta, userscript.stringify(metaAdult), { src: true })
-    .pipe(gulp.dest('./dist'));
+async function createMetaAdult() {
+  const s = await tsImport.compile(scripts.adult.banner);
+  return file(scripts.adult.meta, userscript.stringify(s.default, { src: true })).pipe(gulp.dest('./dist'));
 }
 
-function createScriptMain() {
-  return buildUserscriptRollup(scripts.main);
-}
-
-function createScriptAdult() {
-  return buildUserscriptRollup(scripts.adult);
+function beauty() {
+  return gulp.src('./dist/*.js')
+    .pipe(prettier({ singleQuote: true }))
+    .pipe(gulp.dest('./dist/'));
 }
 
 function move() {
-  return gulp.src('dist/**.*')
+  return gulp.src(['dist/*.meta.js', 'dist/*.user.js', 'dist/readme.md'])
     .pipe(gulp.dest('.'));
 }
 
-function readme() {
+async function readme() {
+  const s = await tsImport.compile('./src/readme.ts');
   return gulp.src('./src/readme.md')
     .pipe(preprocess({
       context: {
-        LIST_MANGA_SITES: mangaSites,
-        LIST_COMIC_SITES: comicSites,
-        LIST_HENTAI_SITES: hentaiSites,
-        BOOKMARKLET: bookmarklet,
+        LIST_MANGA_SITES: s.mangaSites,
+        LIST_COMIC_SITES: s.comicSites,
+        LIST_HENTAI_SITES: s.hentaiSites,
+        BOOKMARKLET: s.bookmarklet,
       },
     }))
     .pipe(gulp.dest('./dist/'));
@@ -119,14 +143,24 @@ function server() {
   });
 }
 
+// const bundler = buildUserscriptEsbuild;
+const bundler = buildUserscriptRollup;
+
+function createScriptMain() {
+  return bundler(scripts.main);
+}
+
+function createScriptAdult() {
+  return bundler(scripts.adult);
+}
+
 function watch() {
   gulp.watch(['./src/*.*'], gulp.parallel(createScriptMain, createScriptAdult));
 }
 
-gulp.task('readme', readme);
 gulp.task('dev', gulp.parallel(server, watch));
 gulp.task('main', gulp.series(createMetaMain, createScriptMain));
 gulp.task('adult', gulp.series(createMetaAdult, createScriptAdult));
 gulp.task('build', gulp.parallel(gulp.series(createMetaMain, createScriptMain), gulp.series(createMetaAdult, createScriptAdult), readme));
-gulp.task('release', gulp.series(gulp.parallel(gulp.series(createMetaMain, createScriptMain), gulp.series(createMetaAdult, createScriptAdult), readme),  move));
-gulp.task('default', gulp.series(gulp.parallel(gulp.series(createMetaMain, createScriptMain), gulp.series(createMetaAdult, createScriptAdult), readme),  move));
+gulp.task('release', gulp.series(gulp.parallel(gulp.series(createMetaMain, createScriptMain), gulp.series(createMetaAdult, createScriptAdult), readme), beauty, move));
+gulp.task('default', gulp.series(gulp.parallel(gulp.series(createMetaMain, createScriptMain), gulp.series(createMetaAdult, createScriptAdult), readme), beauty, move));

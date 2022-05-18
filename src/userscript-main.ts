@@ -1,4 +1,4 @@
-import sites from './main';
-import start from './viewer';
+import sites from './main/index.js';
+import start from './viewer.js';
 
 start(sites);

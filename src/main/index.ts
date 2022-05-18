@@ -36,8 +36,9 @@ import readmangatoday from './readmangatoday.js';
 import senmanga from './senmanga.js';
 import tmofans from './tmofans.js';
 import unionmangas from './unionmangas.js';
+import { ISite } from '../interfaces.js';
 
-export default [
+const sites = [
   asurasflamecans,
   comicastle,
   disasterscans,
@@ -79,4 +80,5 @@ export default [
   unionmangas,
   // wpmanga, Todo: Fix
   batoto,
-];
+] as ISite[];
+export default sites;

@@ -28,8 +28,9 @@ import tmohhentai from './tmohentai.js';
 import tsumino from './tsumino.js';
 import vercomicsporno from './vercomicsporno.js';
 import xyzcomics from './xyzcomics.js';
+import { ISite } from '../interfaces.js';
 
-export default [
+const sites = [
   asmhentai,
   bestporncomix,
   doujinmoe,
@@ -62,4 +63,5 @@ export default [
   tsumino,
   vercomicsporno,
   xyzcomics,
-];
+] as ISite[];
+export default sites;

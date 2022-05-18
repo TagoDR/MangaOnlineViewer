@@ -9,7 +9,7 @@ export default {
   run() {
     const src = $('.img-fluid').attr('src');
     const CurChapter = JSON.parse($('script').text().match(/CurChapter = ({.+});/)[1]);
-    const CHAPTERS = JSON.parse($('script').text().match(/CHAPTERS = (\[{.+}\]);/)[1]);
+    const CHAPTERS = JSON.parse($('script').text().match(/CHAPTERS = (\[{.+}]);/)[1]);
     const CurChapterIndex = CHAPTERS.findIndex((chap) => chap.Chapter === CurChapter.Chapter);
 
     function ChapterURLEncode(reference) {

@@ -1,8 +1,8 @@
-// == MangaFox =====================================================================================
+// == MangaHere ====================================================================================
 export default {
-  name: 'MangaFox',
-  url: /https?:\/\/(www.)?fanfox.net\/manga\/.+\/.+\//,
-  homepage: 'http://fanfox.net/',
+  name: 'MangaHere',
+  url: /https?:\/\/(www.)?mangahere.cc\/manga\/.+\/.+/,
+  homepage: 'http://www.mangahere.cc/',
   language: ['English'],
   category: 'manga',
   run() {
@@ -21,8 +21,8 @@ export default {
       );
 
       const res = toBeEval.replace(/\b\w+\b/g, (y) => replacingValues[y]);
-      return res.match(/pix=\"([^;]+)\";/)[1] // eslint-disable-line no-useless-escape
-        + res.match(/pvalue=\[\"([^,]+)\",\"([^,\]]+)\"/)[page === 0 ? 1 : 2]; // eslint-disable-line no-useless-escape
+      return res.match(/pix="([^;]+)";/)[1] // eslint-disable-line no-useless-escape
+        + res.match(/pvalue=\["([^,]+)","([^,\]]+)"/)[page === 0 ? 1 : 2]; // eslint-disable-line no-useless-escape
     }
 
     const src = [...Array(W.imagecount).keys()].map((i) => {

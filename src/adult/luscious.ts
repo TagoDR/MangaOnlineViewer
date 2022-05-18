@@ -19,10 +19,10 @@ export default {
       next: '#',
       bruteForce(func, i = 1, url = W.location.pathname) {
         if (i > num) return;
-        const self = this;
+        // const self = this;
         func.getHtml(url).then((html) => {
           func.addImg(i, $(html).find('img#single_picture').attr('src'));
-          self.bruteForce(func, i + 1, $(html).find('#next').attr('href'));
+          this.bruteForce(func, i + 1, $(html).find('#next').attr('href'));
         });
       },
     };

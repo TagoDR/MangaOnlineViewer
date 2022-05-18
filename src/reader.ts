@@ -1,9 +1,10 @@
 import { isMobile } from './browser.js';
-import htmlKeybinds from './components/keybinds.html';
-import cssStyles from './components/styles.css';
+import htmlKeybinds from './components/keybinds.js';
+import cssStyles from './components/styles.js';
 import { externalCSS, externalScripts } from './externals.js';
 import { icon, settings } from './settings.js';
 import { themesCSS, themesSelector } from './themes.js';
+import { IManga } from './interfaces.js';
 
 const panel = `<div id='ImageOptions'>
   <div id='menu'>
@@ -173,7 +174,7 @@ ${cssStyles}
 #MangaOnlineViewer .PageFunctions .ZoomHeight {background: url('${icon.zoomWidth}') no-repeat scroll center center transparent;}
 </style>`;
 
-function reader(manga, begin = 0) {
+function reader(manga: IManga, begin = 0) {
   return `
 <head>
   <title>${manga.title}</title>

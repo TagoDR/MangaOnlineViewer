@@ -25,17 +25,19 @@ const getListGM = (typeof GM_listValues !== 'undefined') ? GM_listValues : (() =
 // Replacement function for GM_listValues allowing for debugging in console
 const removeValueGM = (typeof GM_deleteValue !== 'undefined') ? GM_deleteValue : ((name) => logScript('Removing: ', name));
 // Replacement function for GM_info allowing for debugging in console
-const getInfoGM = (typeof GM_info !== 'undefined') ? GM_info : {
+const getInfoGM = GM_info || {
   scriptHandler: 'Console',
   script: {
     name: 'Debug',
     version: 'Testing',
   },
 };
+
 // Replacement function for GM_getValue allowing for debugging in console
-const getValueGM = (typeof GM_getValue !== 'undefined') ? GM_getValue : (
-  (name, defaultValue = null) => logScript('Getting: ', name, '=', defaultValue)[3]
-);
+const getValueGM = (name: string, defaultValue: string | boolean | number | null = null) => {
+  if (typeof GM_getValue !== 'undefined') return GM_getValue(name, defaultValue);
+  return logScript('Getting: ', name, '=', defaultValue)[3];
+};
 // Replacement function for GM_setValue allowing for debugging in console
 const setValueGM = (typeof GM_setValue !== 'undefined') ? GM_setValue : (
   (name, value) => logScript('Getting: ', name, '=', value)
@@ -68,7 +70,7 @@ function getBrowser() {
 
 // See https://stackoverflow.com/questions/27487828/how-to-detect-if-a-userscript-is-installed-from-the-chrome-store
 function getEngine() {
-  return `${getInfoGM.scriptHandler || 'Greasemonkey'} ${getInfoGM.version}`;
+  return `${getInfoGM.scriptHandler || 'Greasemonkey'} ${getInfoGM.script.version}`;
 }
 
 const isMobile = W.matchMedia('screen and (max-width: 1024px)').matches;

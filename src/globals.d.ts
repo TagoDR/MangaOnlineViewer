@@ -1,0 +1,1 @@
+declare const W: Window;

@@ -1,4 +1,4 @@
-import sites from './adult';
-import start from './viewer';
+import sites from './adult/index.js';
+import start from './viewer.js';
 
 start(sites);

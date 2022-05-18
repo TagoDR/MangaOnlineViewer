@@ -1,6 +1,7 @@
 import { logScript } from './browser.js';
 import { settings } from './settings.js';
 import { isNothing } from './utils.js';
+import AjaxSettings = JQuery.AjaxSettings;
 
 // Get html pages content
 function getHtml(url, wait = settings.Timer) {
@@ -36,15 +37,13 @@ function getHtml(url, wait = settings.Timer) {
             logScript(`Failed Getting page: ${url}`);
           }
         },
-      });
+      } as AjaxSettings);
     }, wait);
   });
 }
 
 // After pages load apply default Zoom
-function applyZoom(page, newZoom) {
-  const zoom = newZoom || settings.Zoom;
-  const pages = page || '.PageContent img';
+function applyZoom(pages = '.PageContent img', zoom = settings.Zoom) {
   $(pages).each((index, value) => {
     $(value).removeAttr('width')
       .removeAttr('height')
@@ -88,7 +87,7 @@ function updateProgress() {
   const loaded = $('.PageContent img.imgLoaded').get().length;
   const percentage = Math.floor((loaded / total) * 100);
   $('title').html(`(${percentage}%) ${$('#series i').first().text()}`);
-  $('#Counters i, #NavigationCounters i').html(loaded);
+  $('#Counters i, #NavigationCounters i').html(loaded.toString());
   NProgress.configure({
     showSpinner: false,
   }).set(loaded / total);
@@ -219,7 +218,7 @@ function loadManga(manga, begin = 1) {
       loadMangaImages: (m) => loadMangaImages(begin - 1, m),
       loadMangaPages: (m) => loadMangaPages(begin - 1, m),
       getHtml,
-      wait: settings.timer,
+      wait: settings.Timer,
     });
   }
 }
