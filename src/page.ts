@@ -102,8 +102,8 @@ function onImagesProgress(imgLoad, image) {
     $item.addClass('imgLoaded');
     $item.removeClass('imgBroken');
     const thumb = $item.attr('id').replace('PageImg', 'ThumbnailImg');
-    $(`#${thumb}`).attr('src', $item.attr('src'));
-    applyZoom($item);
+    $(`#${thumb}`).attr('src', $item.attr('src'))
+      .on('load', () => applyZoom($item));
   } else {
     $item.addClass('imgBroken');
     reloadImage($item);
