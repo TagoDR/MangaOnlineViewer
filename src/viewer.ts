@@ -1,3 +1,4 @@
+import Swal, { SweetAlertOptions } from 'sweetalert2';
 import {
   getBrowser, getEngine, getInfoGM, logScript, logScriptC, setValueGM,
 } from './browser.js';
@@ -6,8 +7,9 @@ import { loadManga } from './page.js';
 import reader from './reader.js';
 import { settings } from './settings.js';
 import { isNothing } from './utils.js';
+import { IManga, ISite } from './interfaces.js';
 
-function formatPage(manga, begin) {
+function formatPage(manga: IManga, begin = 0) {
   W.stop();
   if (manga.before !== undefined) {
     manga.before();
@@ -16,8 +18,8 @@ function formatPage(manga, begin) {
   logScript('Rebuilding Site');
   setTimeout(() => {
     try {
-      controls(manga);
-      setKeyDownEvents(manga);
+      controls();
+      setKeyDownEvents();
       setTimeout(() => {
         $(window).scrollTop(0);
         loadManga(manga, begin);
@@ -37,16 +39,16 @@ function formatPage(manga, begin) {
   }
 }
 
-function lateStart(site, begin = 1) {
+function lateStart(site: ISite, begin = 1) {
   const manga = site.run();
   logScript('LateStart');
-  Swal.fire({
+  const options: SweetAlertOptions = {
     title: 'Starting<br>MangaOnlineViewer',
     input: 'range',
     inputAttributes: {
-      min: 1,
-      max: manga.pages,
-      step: 1,
+      min: '1',
+      max: manga.pages.toString(),
+      step: '1',
     },
     inputValue: begin,
     text: 'Choose the Page to start from:',
@@ -54,7 +56,8 @@ function lateStart(site, begin = 1) {
     cancelButtonColor: '#d33',
     reverseButtons: true,
     icon: 'question',
-  }).then((result) => {
+  };
+  Swal.fire(options).then((result) => {
     if (result.value) {
       logScript(`Choice: ${result.value}`);
       formatPage(manga, result.value);
@@ -65,12 +68,12 @@ function lateStart(site, begin = 1) {
 }
 
 // Organize the site adding place-holders for the manga pages
-function preparePage(site, manga, begin = 0) {
+function preparePage(site: ISite, manga: IManga, begin = 0) {
   logScript(`Found ${manga.pages} pages`);
   if (manga.pages > 0) {
     let beginning = begin;
     if (beginning === 0) {
-      beginning = settings.bookmarks// [manga.name]
+      beginning = settings.bookmarks
         .filter((x) => x.url === W.location.href).map((x) => x.page)[0] || 0;
     }
     $('head')
@@ -79,7 +82,9 @@ function preparePage(site, manga, begin = 0) {
         '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.js" integrity="sha256-uvgSxlcEyGRDRvqW8sxcM/sPEBYiIeL+EW8XKL96iQ4=" crossorigin="anonymous"></script>',
         '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.css" integrity="sha256-Ow4lbGxscUvJwGnorLyGwVYv0KkeIG6+5CAmR8zuRJw=" crossorigin="anonymous">',
         '<style type="text/css">#mov {position: fixed;left: 50%;transform: translateX(-50%);top: 0;z-index: 1000000;border-radius: .25em;font-size: 1.5em;cursor: pointer;display: inline-block;margin: .3125em;padding: .625em 2em;box-shadow: none;font-weight: 500;color: #FFF;background: rgb(102, 83, 146);border: 1px #FFF;}</style>');
-    W.mov = (b) => lateStart(site, b || beginning);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    W.mov = (b: number) => lateStart(site, b || beginning);
     switch (site.start || settings.loadMode) {
       case 'never':
         $('body').append('<button id="mov" onclick=mov()>Start MangaOnlineViewer</button>');
@@ -110,15 +115,14 @@ function preparePage(site, manga, begin = 0) {
 }
 
 // Script Entry point
-function start(sites) {
-  logScript(`Starting ${getInfoGM.script.name} ${getInfoGM.script.version} on ${getBrowser()} with ${getEngine()}`);
-  W.InfoGM = getInfoGM;
+function start(sites: ISite[]) {
+  logScript(`Starting ${getInfoGM.script.name} ${getInfoGM.script.version} on ${getBrowser()} with ${getEngine()}`, getInfoGM);
+  // W.InfoGM = getInfoGM;
   logScript(`${sites.length} Known Manga Sites`);
   let waitElapsed = 0;
 
   // Wait for something on the site to be ready before executing the script
-  function waitExec(site) {
-    let wait = '';
+  function waitExec(site: ISite) {
     if (site.waitMax !== undefined) {
       if (waitElapsed >= site.waitMax) {
         preparePage(site, site.run());
@@ -126,7 +130,7 @@ function start(sites) {
       }
     }
     if (site.waitAttr !== undefined) {
-      wait = $(site.waitAttr[0]).attr(site.waitAttr[1]);
+      const wait = $(site.waitAttr[0]).attr(site.waitAttr[1]);
       logScript(`Waiting for ${site.waitAttr[1]} of ${site.waitAttr[0]} = ${wait}`);
       if (isNothing(wait)) {
         setTimeout(() => {
@@ -137,7 +141,7 @@ function start(sites) {
       }
     }
     if (site.waitEle !== undefined) {
-      wait = $(site.waitEle).get();
+      const wait = $(site.waitEle).get();
       logScript(`Waiting for ${site.waitEle} = ${`${wait}`}`);
       if (isNothing(wait)) {
         setTimeout(() => {
@@ -148,7 +152,7 @@ function start(sites) {
       }
     }
     if (site.waitVar !== undefined) {
-      wait = W[site.waitVar];
+      const wait = W[site.waitVar];
       logScript(`Waiting for ${site.waitVar} = ${wait}`);
       if (isNothing(wait)) {
         setTimeout(() => {
@@ -162,7 +166,9 @@ function start(sites) {
   }
 
   logScript('Looking for a match...');
-  const test = (s) => s.filter((x) => x.url.test(W.location.href)).map(logScriptC('Site Found:')).map(waitExec);
+
+  function test(list: ISite[]) { return list.filter((site: ISite) => site.url.test(W.location.href)).map(logScriptC('Site Found:')).map(waitExec); }
+
   test(sites);
 }
 

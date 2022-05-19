@@ -1,18 +1,21 @@
 import adult from './adult/index.js';
 import { requiredScripts } from './externals.js';
 import main from './main/index.js';
+import { ISite } from './interfaces.js';
 
 const sites = [...main, ...adult];
-const languages = [...new Set(sites.flatMap((s) => s.language))];
+const languages: string[] = [...new Set(sites.flatMap((s) => s.language))];
 
-const linkSite = (site) => `[${site[0]}](${site[1]})`;
-const normalizeSite = (site) => {
-  if (typeof site.name === 'string') return [[site.name || '', site.homepage || '']];
+function linkSite(site: string[]) { return `[${site[0]}](${site[1]})`; }
+
+function normalizeSite(site: ISite): string[][] {
+  if (typeof site.name === 'string') return [[site.name, site.homepage]];
   return site.name.map((n, i) => [n, site.homepage[i]]);
-};
+}
 
-function siteListEntry(site) {
-  const links = (s) => normalizeSite(s).map(linkSite).join(' / ');
+function siteListEntry(site: ISite) {
+  function links(s: ISite) { return normalizeSite(s).map(linkSite).join(' / '); }
+
   const lang = site.language === undefined ? '' : ` _[${site.language}]_`;
   const obs = site.obs === undefined ? '' : ` **Obs: ${site.obs}**`;
   return `- ${links(site)}${lang}${obs}`;

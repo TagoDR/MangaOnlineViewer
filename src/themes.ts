@@ -1,9 +1,10 @@
+import ColorScheme from 'color-scheme';
 import { settings } from './settings.js';
 
 const scheme = new ColorScheme().scheme('mono').variation('default');
 
 // Add custom Themes to the page
-function addTheme(theme) {
+function addTheme(theme:string[]):string {
   return `<style type='text/css' name='${theme[0]}'>
   .${theme[0]} .controlLabel, .${theme[0]} .ViewerTitle, .${theme[0]}, .PageFunctions a.visible, .${theme[0]} a, .${theme[0]} a:link, .${theme[0]} a:visited, .${theme[0]} a:active, .${theme[0]} a:focus{ text-decoration:none; color: ${theme[2]};}
   .${theme[0]} {background-repeat: repeat;background-position: 0 0;background-image: none;background-color: ${theme[1]};background-attachment: scroll;}
@@ -18,7 +19,7 @@ function addTheme(theme) {
   </style>`;
 }
 
-function addCustomTheme(color) {
+function addCustomTheme(color:string):string {
   const bg = scheme.from_hex(color.replace('#', '')).colors();
   return addTheme([
     'Custom_Dark',
@@ -37,7 +38,7 @@ function addCustomTheme(color) {
   ]);
 }
 
-function addFullCustomTheme(body, text, lines, panel, buttons) {
+function addFullCustomTheme(body:string, text:string, lines:string, panel:string, buttons:string) {
   return addTheme([
     'Full_Custom',
     body,
@@ -48,7 +49,7 @@ function addFullCustomTheme(body, text, lines, panel, buttons) {
   ]);
 }
 
-function loadThemes() {
+function loadThemes():string[][] {
   const bg = scheme.from_hex(settings.CustomTheme.replace('#', '')).colors();
   return [ //   1-body       2-text       3-lines     4-panel     5-buttons
     ['Dark', '#000000', '#ffffff', '#666666', '#333333', '#282828'],

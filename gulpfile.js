@@ -51,7 +51,7 @@ function buildUserscriptEsbuild(script) {
       // process.exit(1);
     })
     .finally(() => {
-      console.log(`${script.name} Created`);
+      // console.log(`${script.name} Created`);
       // process.exit(0);
     });
 }

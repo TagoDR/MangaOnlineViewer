@@ -1,8 +1,10 @@
+import Swal, { SweetAlertOptions } from 'sweetalert2';
 import { getValueGM, logScript, setValueGM } from './browser.js';
 import generateZip from './download.js';
 import { applyZoom, reloadImage } from './page.js';
 import { settings } from './settings.js';
 import { addCustomTheme, addFullCustomTheme } from './themes.js';
+import { IBookmark } from './interfaces.js';
 
 // Goto Page and Thumbnails
 function scrollToElement(ele) {
@@ -78,8 +80,9 @@ function setKeyDownEvents() {
         case 'KeyW':
         case 'Numpad8':
           if (settings.Zoom === -1000) {
-            const next = $('.MangaPage').get().map((item) => $(item).offset().top - $(window)
-              .scrollTop()).findIndex((element) => element > 10);
+            const next = $('.MangaPage').get().map(
+              (item) => $(item).offset().top - $(window).scrollTop())
+              .findIndex((element) => element > 10);
             scrollToElement($('.MangaPage').eq(next - 2));
           } else {
             window.scrollBy({
@@ -409,7 +412,7 @@ function controls() {
   $('.Bookmark').on('click', (event) => {
     const num = parseInt($(event.target).parents('.MangaPage').find('.PageFunctions span').text(),
       10);
-    const mark = {
+    const mark: IBookmark = {
       url: W.location.href,
       page: num,
       date: Date.now(),

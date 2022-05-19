@@ -14,7 +14,7 @@
  * @param {any} value - item to test
  * @returns {boolean} true if empty, otherwise false
  */
-function isEmpty(value) {
+function isEmpty(value: any): boolean {
   return value === null // check for null
     || (typeof value === 'undefined' || value === undefined) // check for undefined
     || value === '' // check for empty string
@@ -38,8 +38,8 @@ function isEmpty(value) {
  * @param {any} value - item to test
  * @returns {boolean} true if nothing, otherwise false
  */
-function isNothing(value) {
-  const isEmptyObject = (a) => {
+function isNothing(value: any): boolean {
+  function isEmptyObject(a: any):boolean {
     if (typeof a.length === 'undefined') { // it's an Object, not an Array
       const hasNonempty = Object.keys(a).some((element) => !isNothing(a[element]));
       return hasNonempty ? false : isEmptyObject(Object.keys(a));
@@ -47,7 +47,8 @@ function isNothing(value) {
     // check if array is really not empty as JS thinks at least one element should be non-empty
     return !a.some((element) => !isNothing(element), //
     );
-  };
+  }
+
   return (
     // eslint-disable-next-line eqeqeq
     value == false

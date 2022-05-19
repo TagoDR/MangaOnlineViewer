@@ -1,4 +1,5 @@
 import { getValueGM, isMobile, setValueGM } from './browser.js';
+import { IBookmark } from './interfaces.js';
 
 // Configuration
 const settings = {
@@ -12,14 +13,14 @@ const settings = {
   FitWidthIfOversize: getValueGM('MangaFitWidthIfOversize', true),
   ShowThumbnails: getValueGM('MangaShowThumbnails', true),
   DownloadZip: getValueGM('MangaDownloadZip', false),
-  Timer: parseInt(getValueGM('MangaTimer', 1000), 10),
-  Zoom: parseInt(getValueGM('MangaZoom', 100), 10),
-  zoomStep: parseInt(getValueGM('MangaZoomStep', 25), 10),
+  Timer: getValueGM('MangaTimer', 1000),
+  Zoom: getValueGM('MangaZoom', 100),
+  zoomStep: getValueGM('MangaZoomStep', 25),
   loadMode: getValueGM('MangaLoadMode', 'normal'),
   viewMode: getValueGM('MangaViewMode', ''),
-  bookmarks: JSON.parse(getValueGM('MangaBookmarks', '[]')),
+  bookmarks: JSON.parse(getValueGM('MangaBookmarks', '[]')) as IBookmark[],
   lazyLoadImages: getValueGM('MangaLazyLoadImages', false),
-  lazyStart: parseInt(getValueGM('MangaLazyStart', 50), 10),
+  lazyStart: getValueGM('MangaLazyStart', 50),
   hidePageControls: getValueGM('MangaHidePageControls', false),
 };
 // Force Settings for mobile

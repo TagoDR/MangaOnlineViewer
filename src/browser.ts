@@ -1,14 +1,14 @@
 /* eslint-disable camelcase */
 
 // Encapsulation for the console
-function logScript(...text) {
+function logScript(...text: any[]): any[] {
   // eslint-disable-next-line no-console
   console.log('MangaOnlineViewer: ', ...text);
   return text;
 }
 
 // Compose console output
-const logScriptC = (x) => (y) => logScript(x, y)[1];
+const logScriptC = (x: any) => (y: any) => logScript(x, y)[1];
 
 // Clear the Console
 function logClear(...text) {
@@ -21,9 +21,11 @@ function logClear(...text) {
 }
 
 // Replacement function for GM_listValues allowing for debugging in console
-const getListGM = (typeof GM_listValues !== 'undefined') ? GM_listValues : (() => []);
+function getListGM(): string[] { return (typeof GM_listValues !== 'undefined') ? GM_listValues() : []; }
+
 // Replacement function for GM_listValues allowing for debugging in console
-const removeValueGM = (typeof GM_deleteValue !== 'undefined') ? GM_deleteValue : ((name) => logScript('Removing: ', name));
+function removeValueGM(name) { return (typeof GM_deleteValue !== 'undefined') ? GM_deleteValue(name) : logScript('Removing: ', name); }
+
 // Replacement function for GM_info allowing for debugging in console
 const getInfoGM = GM_info || {
   scriptHandler: 'Console',
@@ -34,17 +36,21 @@ const getInfoGM = GM_info || {
 };
 
 // Replacement function for GM_getValue allowing for debugging in console
-const getValueGM = (name: string, defaultValue: string | boolean | number | null = null) => {
+function getValueGM(name: string, defaultValue: any): any {
   if (typeof GM_getValue !== 'undefined') return GM_getValue(name, defaultValue);
-  return logScript('Getting: ', name, '=', defaultValue)[3];
-};
+  logScript('Getting: ', name, '=', defaultValue);
+  return defaultValue;
+}
+
 // Replacement function for GM_setValue allowing for debugging in console
-const setValueGM = (typeof GM_setValue !== 'undefined') ? GM_setValue : (
-  (name, value) => logScript('Getting: ', name, '=', value)
-);
+function setValueGM(name: string, value: string | number | boolean): string {
+  if (typeof GM_setValue !== 'undefined') return String(GM_setValue(name, value));
+  logScript('Getting: ', name, '=', value);
+  return String(value);
+}
 
 // See https://stackoverflow.com/a/2401861/331508 for optional browser sniffing code.
-function getBrowser() {
+function getBrowser(): string {
   const ua = navigator.userAgent;
   let tem;
   let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
@@ -69,7 +75,7 @@ function getBrowser() {
 }
 
 // See https://stackoverflow.com/questions/27487828/how-to-detect-if-a-userscript-is-installed-from-the-chrome-store
-function getEngine() {
+function getEngine(): string {
   return `${getInfoGM.scriptHandler || 'Greasemonkey'} ${getInfoGM.script.version}`;
 }
 

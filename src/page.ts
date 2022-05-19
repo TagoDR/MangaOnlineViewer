@@ -2,9 +2,11 @@ import { logScript } from './browser.js';
 import { settings } from './settings.js';
 import { isNothing } from './utils.js';
 import AjaxSettings = JQuery.AjaxSettings;
+import { IManga } from './interfaces.js';
+import NProgress from 'nprogress';
 
 // Get html pages content
-function getHtml(url, wait = settings.Timer) {
+function getHtml(url: string, wait: number = settings.Timer) {
   return new Promise((resolve) => {
     setTimeout(() => {
       logScript(`Getting page: ${url}`);
@@ -61,7 +63,7 @@ function applyZoom(pages = '.PageContent img', zoom = settings.Zoom) {
 }
 
 // Force reload the image
-function reloadImage(img) {
+function reloadImage(img: JQuery) {
   const src = img.attr('src');
   if (src !== undefined) {
     img.removeAttr('src');
@@ -195,7 +197,7 @@ const loadMangaImages = (begin, manga) => manga.listImages.map(
 );
 
 // Entry point for loading hte Manga pages
-function loadManga(manga, begin = 1) {
+function loadManga(manga: IManga, begin: number = 1) {
   settings.lazyLoadImages = manga.lazy || settings.lazyLoadImages;
   logScript('Loading Images');
   logScript(`Intervals: ${manga.timer || settings.Timer || 'Default(1000)'}`);
