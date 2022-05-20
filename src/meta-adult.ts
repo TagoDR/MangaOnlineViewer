@@ -10,14 +10,8 @@ export default {
   description: `Shows all pages at once in online view for these sites: ${sites.map((s) => s.name).join(', ')}`,
   version: new Date().toISOString().slice(0, 10).replace('-', '.'),
   license: 'MIT',
-  grant: [
-    'GM_getValue',
-    'GM_setValue',
-    'GM_listValues',
-    'GM_deleteValue',
-    'GM_xmlhttpRequest',
-  ],
+  grant: ['GM_getValue', 'GM_setValue', 'GM_listValues', 'GM_deleteValue', 'GM_xmlhttpRequest'],
   connect: '*',
   require: requiredScripts,
   include: sites.map((s) => s.url),
-};
+} as Partial<Tampermonkey.ScriptMetadata>;

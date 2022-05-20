@@ -1,7 +1,5 @@
 import Swal, { SweetAlertOptions } from 'sweetalert2';
-import {
-  getBrowser, getEngine, getInfoGM, logScript, logScriptC, setValueGM,
-} from './browser.js';
+import { getBrowser, getEngine, getInfoGM, logScript, logScriptC, setValueGM } from './browser.js';
 import { controls, setKeyDownEvents } from './events.js';
 import { loadManga } from './page.js';
 import reader from './reader.js';
@@ -73,15 +71,14 @@ function preparePage(site: ISite, manga: IManga, begin = 0) {
   if (manga.pages > 0) {
     let beginning = begin;
     if (beginning === 0) {
-      beginning = settings.bookmarks
-        .filter((x) => x.url === W.location.href).map((x) => x.page)[0] || 0;
+      beginning = settings?.bookmarks?.find((b) => b.url === W.location.href)?.page || 0;
     }
-    $('head')
-      .append(
-        '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />',
-        '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.js" integrity="sha256-uvgSxlcEyGRDRvqW8sxcM/sPEBYiIeL+EW8XKL96iQ4=" crossorigin="anonymous"></script>',
-        '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.css" integrity="sha256-Ow4lbGxscUvJwGnorLyGwVYv0KkeIG6+5CAmR8zuRJw=" crossorigin="anonymous">',
-        '<style type="text/css">#mov {position: fixed;left: 50%;transform: translateX(-50%);top: 0;z-index: 1000000;border-radius: .25em;font-size: 1.5em;cursor: pointer;display: inline-block;margin: .3125em;padding: .625em 2em;box-shadow: none;font-weight: 500;color: #FFF;background: rgb(102, 83, 146);border: 1px #FFF;}</style>');
+    $('head').append(
+      '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />',
+      '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.js" integrity="sha256-uvgSxlcEyGRDRvqW8sxcM/sPEBYiIeL+EW8XKL96iQ4=" crossorigin="anonymous"></script>',
+      '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.css" integrity="sha256-Ow4lbGxscUvJwGnorLyGwVYv0KkeIG6+5CAmR8zuRJw=" crossorigin="anonymous">',
+      '<style type="text/css">#mov {position: fixed;left: 50%;transform: translateX(-50%);top: 0;z-index: 1000000;border-radius: .25em;font-size: 1.5em;cursor: pointer;display: inline-block;margin: .3125em;padding: .625em 2em;box-shadow: none;font-weight: 500;color: #FFF;background: rgb(102, 83, 146);border: 1px #FFF;}</style>',
+    );
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     W.mov = (b: number) => lateStart(site, b || beginning);
@@ -167,7 +164,12 @@ function start(sites: ISite[]) {
 
   logScript('Looking for a match...');
 
-  function test(list: ISite[]) { return list.filter((site: ISite) => site.url.test(W.location.href)).map(logScriptC('Site Found:')).map(waitExec); }
+  function test(list: ISite[]) {
+    return list
+      .filter((site: ISite) => site.url.test(W.location.href))
+      .map(logScriptC('Site Found:'))
+      .map(waitExec);
+  }
 
   test(sites);
 }

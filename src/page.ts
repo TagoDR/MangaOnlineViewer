@@ -1,9 +1,9 @@
+import NProgress from 'nprogress';
 import { logScript } from './browser.js';
 import { settings } from './settings.js';
 import { isNothing } from './utils.js';
 import AjaxSettings = JQuery.AjaxSettings;
 import { IManga } from './interfaces.js';
-import NProgress from 'nprogress';
 
 // Get html pages content
 function getHtml(url: string, wait: number = settings.Timer) {
@@ -45,17 +45,14 @@ function getHtml(url: string, wait: number = settings.Timer) {
 }
 
 // After pages load apply default Zoom
-function applyZoom(pages = '.PageContent img', zoom = settings.Zoom) {
-  $(pages).each((index, value) => {
-    $(value).removeAttr('width')
-      .removeAttr('height')
-      .removeAttr('style');
+function applyZoom(pages: string | JQuery = '.PageContent img', zoom = settings.Zoom) {
+  const $pages = typeof pages === 'string' ? $(pages) : pages;
+  $pages.each((index, value) => {
+    $(value).removeAttr('width').removeAttr('height').removeAttr('style');
     if (zoom === 1000) {
-      $(value).width($(window).width());
+      $(value).width(window.innerWidth);
     } else if (zoom === -1000) {
-      $(value).height($(window).height()
-        + ($('#Navigation').hasClass('disabled') ? 0 : -34)
-        + ($('#Chapter').hasClass('WebComic') ? 0 : -35));
+      $(value).height(window.innerHeight + ($('#Navigation').hasClass('disabled') ? 0 : -34) + ($('#Chapter').hasClass('WebComic') ? 0 : -35));
     } else {
       $(value).width($(value).prop('naturalWidth') * (zoom / 100));
     }
@@ -98,13 +95,14 @@ function updateProgress() {
 }
 
 // change class if the image is loaded or broken
-function onImagesProgress(imgLoad, image) {
+function onImagesProgress(imgLoad: JQuery, image) {
   const $item = $(image.img);
   if (image.isLoaded) {
     $item.addClass('imgLoaded');
     $item.removeClass('imgBroken');
-    const thumb = $item.attr('id').replace('PageImg', 'ThumbnailImg');
-    $(`#${thumb}`).attr('src', $item.attr('src'))
+    const thumb = $item!.attr('id')!.replace('PageImg', 'ThumbnailImg');
+    $(`#${thumb}`)
+      .attr('src', $item.attr('src')!)
       .on('load', () => applyZoom($item));
   } else {
     $item.addClass('imgBroken');
@@ -115,7 +113,7 @@ function onImagesProgress(imgLoad, image) {
 }
 
 // Corrects urls
-function normalizeUrl(url) {
+function normalizeUrl(url: string): string {
   let uri = url.trim();
   if (uri.startsWith('//')) {
     uri = `https:${uri}`;
@@ -124,7 +122,7 @@ function normalizeUrl(url) {
 }
 
 // Adds an image to the place-holder div
-function addImg(index, imageSrc) {
+function addImg(index: number, imageSrc: string): number {
   const src = normalizeUrl(imageSrc);
   if (!settings.lazyLoadImages || index < settings.lazyStart) {
     $(`#PageImg${index}`).attr('src', src);
@@ -145,15 +143,18 @@ function addImg(index, imageSrc) {
 }
 
 // Adds a page to the place-holder div
-function addPage(manga, index, pageUrl) {
+function addPage(manga: IManga, index: number, pageUrl: string): number {
   if (!settings.lazyLoadImages || index < settings.lazyStart) {
-    getHtml(pageUrl)
-      .then((response) => {
-        const src = normalizeUrl($(response).find(manga.img).attr(manga.lazyAttr || 'src'));
-        $(`#PageImg${index}`).attr('src', src);
-        $(`#PageImg${index}`).parent().imagesLoaded().progress(onImagesProgress);
-        logScript('Loaded Page:', index, 'Source:', src);
-      });
+    getHtml(pageUrl).then((response) => {
+      const src = normalizeUrl(
+        $(response as string)
+          .find(manga.img!)
+          .attr(manga.lazyAttr ?? 'src') as string,
+      );
+      $(`#PageImg${index}`).attr('src', src);
+      $(`#PageImg${index}`).parent().imagesLoaded().progress(onImagesProgress);
+      logScript('Loaded Page:', index, 'Source:', src);
+    });
   } else {
     $(`#PageImg${index}`)
       .attr('data-src', 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==')
@@ -161,20 +162,23 @@ function addPage(manga, index, pageUrl) {
         offset: 2000,
       })
       .on('loaded.unveil', () => {
-        getHtml(pageUrl)
-          .then((response) => {
-            const src = normalizeUrl($(response).find(manga.img).attr(manga.lazyAttr || 'src'));
-            $(`#PageImg${index}`).attr('src', src).width('auto');
-            $(`#PageImg${index}`).parent().imagesLoaded().progress(onImagesProgress);
-            logScript('Unveiled Page: ', index, ' Source: ', $(`#PageImg${index}`).attr('src'));
-          });
+        getHtml(pageUrl).then((response) => {
+          const src = normalizeUrl(
+            $(response as string)
+              .find(manga.img!)
+              .attr(manga.lazyAttr ?? 'src') as string,
+          );
+          $(`#PageImg${index}`).attr('src', src).width('auto');
+          $(`#PageImg${index}`).parent().imagesLoaded().progress(onImagesProgress);
+          logScript('Unveiled Page: ', index, ' Source: ', $(`#PageImg${index}`).attr('src'));
+        });
       });
   }
   return index;
 }
 
 // daley the use of an url/src
-function delayAdd(src, wait = settings.Timer) {
+function delayAdd(src: string, wait: number = settings.Timer) {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(src);
@@ -183,21 +187,21 @@ function delayAdd(src, wait = settings.Timer) {
 }
 
 // use a list of pages to fill the viewer
-const loadMangaPages = (begin, manga) => manga.listPages.map(
-  (url, index) => (index >= begin
-    ? delayAdd(url, (manga.timer || settings.Timer) * (index - begin))
-      .then((response) => addPage(manga, index + 1, response)) : null),
-);
+function loadMangaPages(begin: number, manga: IManga) {
+  return manga.listPages?.map((url, index) =>
+    index >= begin ? delayAdd(url, (manga.timer || settings.Timer) * (index - begin)).then((response) => addPage(manga, index + 1, response as string)) : null,
+  );
+}
 
 // use a list of images to fill the viewer
-const loadMangaImages = (begin, manga) => manga.listImages.map(
-  (src, index) => (index >= begin
-    ? delayAdd(src, (manga.timer || settings.Timer) * (index - begin))
-      .then((response) => addImg(index + 1, response)) : null),
-);
+function loadMangaImages(begin: number, manga: IManga) {
+  return manga.listImages?.map((src, index) =>
+    index >= begin ? delayAdd(src, (manga.timer || settings.Timer) * (index - begin)).then((response) => addImg(index + 1, response as string)) : null,
+  );
+}
 
 // Entry point for loading hte Manga pages
-function loadManga(manga: IManga, begin: number = 1) {
+function loadManga(manga: IManga, begin = 1) {
   settings.lazyLoadImages = manga.lazy || settings.lazyLoadImages;
   logScript('Loading Images');
   logScript(`Intervals: ${manga.timer || settings.Timer || 'Default(1000)'}`);
@@ -211,7 +215,7 @@ function loadManga(manga: IManga, begin: number = 1) {
   } else if (!isNothing(manga.listPages)) {
     logScript('Method: Pages:', manga.listPages);
     loadMangaPages(begin - 1, manga);
-  } else {
+  } else if (manga.bruteForce !== undefined) {
     logScript('Method: Brute Force');
     manga.bruteForce({
       begin,
@@ -225,8 +229,4 @@ function loadManga(manga: IManga, begin: number = 1) {
   }
 }
 
-export {
-  loadManga,
-  applyZoom,
-  reloadImage,
-};
+export { loadManga, applyZoom, reloadImage };

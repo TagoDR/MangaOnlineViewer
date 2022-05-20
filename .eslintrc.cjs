@@ -23,17 +23,21 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    "airbnb-base",
-    "airbnb-typescript/base",
+    'airbnb',
+    'airbnb-typescript',
+    'prettier',
   ],
-  plugins: ['import', '@typescript-eslint'],
+  plugins: ['import', '@typescript-eslint', 'prettier'],
   rules: {
+    "prettier/prettier": ["error"],
     'linebreak-style': ['off', 'windows'],
     'no-console': 'warn',
-    'prefer-destructuring': ['error', {
-      object: true,
-      array: false,
-    }],
+    'prefer-destructuring': [
+      'error', {
+        object: true,
+        array: false,
+      },
+    ],
     'function-paren-newline': 'off',
     'import/extensions': ['warn', 'always', { ignorePackages: true }],
   },

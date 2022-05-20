@@ -4,7 +4,7 @@ import { settings } from './settings.js';
 const scheme = new ColorScheme().scheme('mono').variation('default');
 
 // Add custom Themes to the page
-function addTheme(theme:string[]):string {
+function addTheme(theme: string[]): string {
   return `<style type='text/css' name='${theme[0]}'>
   .${theme[0]} .controlLabel, .${theme[0]} .ViewerTitle, .${theme[0]}, .PageFunctions a.visible, .${theme[0]} a, .${theme[0]} a:link, .${theme[0]} a:visited, .${theme[0]} a:active, .${theme[0]} a:focus{ text-decoration:none; color: ${theme[2]};}
   .${theme[0]} {background-repeat: repeat;background-position: 0 0;background-image: none;background-color: ${theme[1]};background-attachment: scroll;}
@@ -19,39 +19,22 @@ function addTheme(theme:string[]):string {
   </style>`;
 }
 
-function addCustomTheme(color:string):string {
+function addCustomTheme(color: string): string {
   const bg = scheme.from_hex(color.replace('#', '')).colors();
-  return addTheme([
-    'Custom_Dark',
-    '#000000',
-    `#${bg[2]}`,
-    `#${bg[3]}`,
-    `#${bg[0]}`,
-    `#${bg[1]}`,
-  ]) + addTheme([
-    'Custom_Light',
-    '#eeeeec',
-    `#${bg[3]}`,
-    `#${bg[2]}`,
-    `#${bg[0]}`,
-    `#${bg[1]}`,
-  ]);
+  return (
+    addTheme(['Custom_Dark', '#000000', `#${bg[2]}`, `#${bg[3]}`, `#${bg[0]}`, `#${bg[1]}`]) +
+    addTheme(['Custom_Light', '#eeeeec', `#${bg[3]}`, `#${bg[2]}`, `#${bg[0]}`, `#${bg[1]}`])
+  );
 }
 
-function addFullCustomTheme(body:string, text:string, lines:string, panel:string, buttons:string) {
-  return addTheme([
-    'Full_Custom',
-    body,
-    text,
-    lines,
-    panel,
-    buttons,
-  ]);
+function addFullCustomTheme(body: string, text: string, lines: string, panel: string, buttons: string) {
+  return addTheme(['Full_Custom', body, text, lines, panel, buttons]);
 }
 
-function loadThemes():string[][] {
+function loadThemes(): string[][] {
   const bg = scheme.from_hex(settings.CustomTheme.replace('#', '')).colors();
-  return [ //   1-body       2-text       3-lines     4-panel     5-buttons
+  return [
+    //   1-body       2-text       3-lines     4-panel     5-buttons
     ['Dark', '#000000', '#ffffff', '#666666', '#333333', '#282828'],
     ['Light', '#eeeeec', '#2e3436', '#888a85', '#babdb6', '#c8cec2'],
     ['Clear', '#ffffff', '#2e3436', '#888a85', '#eeeeec', '#d3d7cf'],
@@ -72,9 +55,4 @@ const themes = loadThemes();
 const themesSelector = themes.map((theme) => `<option value='${theme[0]}' ${settings.Theme === theme[0] ? 'selected' : ''}>${theme[0].replace('_', ' ')}</option>`);
 const themesCSS = themes.map(addTheme).join('');
 
-export {
-  themesCSS,
-  themesSelector,
-  addCustomTheme,
-  addFullCustomTheme,
-};
+export { themesCSS, themesSelector, addCustomTheme, addFullCustomTheme };

@@ -14,12 +14,15 @@
  * @param {any} value - item to test
  * @returns {boolean} true if empty, otherwise false
  */
-function isEmpty(value: any): boolean {
-  return value === null // check for null
-    || (typeof value === 'undefined' || value === undefined) // check for undefined
-    || value === '' // check for empty string
-    || (Array.isArray(value) && value.length === 0) // check for empty array
-    || (typeof value === 'object' && Object.keys(value).length === 0);
+function isEmpty(value: unknown): boolean {
+  return (
+    value === null || // check for null
+    typeof value === 'undefined' ||
+    value === undefined || // check for undefined
+    value === '' || // check for empty string
+    (Array.isArray(value) && value.length === 0) || // check for empty array
+    (typeof value === 'object' && Object.keys(value).length === 0)
+  );
 }
 
 /**
@@ -38,24 +41,22 @@ function isEmpty(value: any): boolean {
  * @param {any} value - item to test
  * @returns {boolean} true if nothing, otherwise false
  */
-function isNothing(value: any): boolean {
-  function isEmptyObject(a: any):boolean {
-    if (typeof a.length === 'undefined') { // it's an Object, not an Array
-      const hasNonempty = Object.keys(a).some((element) => !isNothing(a[element]));
-      return hasNonempty ? false : isEmptyObject(Object.keys(a));
+function isNothing(value: unknown): boolean {
+  function isEmptyObject(a: unknown): boolean {
+    if (!Array.isArray(a)) {
+      // it's an Object, not an Array
+      const hasNonempty = Object.keys(a as object).some((element) => !isNothing((a as object)[element]));
+      return hasNonempty ? false : isEmptyObject(Object.keys(a as object));
     }
     // check if array is really not empty as JS thinks at least one element should be non-empty
-    return !a.some((element) => !isNothing(element), //
+    return !a.some(
+      (element: unknown) => !isNothing(element), //
     );
   }
 
   return (
     // eslint-disable-next-line eqeqeq
-    value == false
-    || value === 0
-    || typeof value === 'undefined'
-    || value == null
-    || (typeof value === 'object' && isEmptyObject(value))
+    value == false || value === 0 || typeof value === 'undefined' || value == null || (typeof value === 'object' && isEmptyObject(value))
   );
 }
 
@@ -71,7 +72,4 @@ function isNothing(value: any): boolean {
 // testUtil(testValues, isEmpty);
 // testUtil(testValues, isNothing);
 
-export {
-  isEmpty,
-  isNothing,
-};
+export { isEmpty, isNothing };

@@ -35,7 +35,9 @@ function buildUserscriptEsbuild(script) {
   return esbuild
     .build({
       banner: {
-        js: fs.readFileSync(`./dist/${script.meta}`, 'utf8') + `\n var W = (typeof unsafeWindow === 'undefined') ? window : unsafeWindow; \n
+        js:
+          fs.readFileSync(`./dist/${script.meta}`, 'utf8') +
+          `\n var W = (typeof unsafeWindow === 'undefined') ? window : unsafeWindow; \n
               /* global $:readonly, JSZip:readonly ,NProgress:readonly , jscolor:readonly , ColorScheme:readonly , Swal:readonly */`,
       },
       entryPoints: [`src/${script.entry}`],
@@ -81,8 +83,8 @@ function buildUserscriptRollup(script) {
         // normalizeEols: 'win',
       }),
     ],
-  })
-    .then((bundle) => bundle.write({
+  }).then((bundle) =>
+    bundle.write({
       banner: fs.readFileSync(`./dist/${script.meta}`, 'utf8'),
       intro: `var W = (typeof unsafeWindow === 'undefined') ? window : unsafeWindow; \n
               /* global $:readonly, JSZip:readonly ,NProgress:readonly , jscolor:readonly , ColorScheme:readonly , Swal:readonly */`,
@@ -98,7 +100,8 @@ function buildUserscriptRollup(script) {
         react: 'React',
         'react-dom': 'ReactDOM',
       },
-    }));
+    }),
+  );
 }
 
 async function createMetaMain() {
@@ -112,27 +115,30 @@ async function createMetaAdult() {
 }
 
 function beauty() {
-  return gulp.src('./dist/*.js')
+  return gulp
+    .src('./dist/*.js')
     .pipe(prettier({ singleQuote: true }))
     .pipe(gulp.dest('./dist/'));
 }
 
 function move() {
-  return gulp.src(['dist/*.meta.js', 'dist/*.user.js', 'dist/readme.md'])
-    .pipe(gulp.dest('.'));
+  return gulp.src(['dist/*.meta.js', 'dist/*.user.js', 'dist/readme.md']).pipe(gulp.dest('.'));
 }
 
 async function readme() {
   const s = await tsImport.compile('./src/readme.ts');
-  return gulp.src('./src/readme.md')
-    .pipe(preprocess({
-      context: {
-        LIST_MANGA_SITES: s.mangaSites,
-        LIST_COMIC_SITES: s.comicSites,
-        LIST_HENTAI_SITES: s.hentaiSites,
-        BOOKMARKLET: s.bookmarklet,
-      },
-    }))
+  return gulp
+    .src('./src/readme.md')
+    .pipe(
+      preprocess({
+        context: {
+          LIST_MANGA_SITES: s.mangaSites,
+          LIST_COMIC_SITES: s.comicSites,
+          LIST_HENTAI_SITES: s.hentaiSites,
+          BOOKMARKLET: s.bookmarklet,
+        },
+      }),
+    )
     .pipe(gulp.dest('./dist/'));
 }
 
@@ -159,8 +165,9 @@ function watch() {
 }
 
 gulp.task('dev', gulp.parallel(server, watch));
+gulp.task('release', gulp.series(gulp.parallel(gulp.series(createMetaMain, createScriptMain), gulp.series(createMetaAdult, createScriptAdult), readme), beauty, move));
 gulp.task('main', gulp.series(createMetaMain, createScriptMain));
 gulp.task('adult', gulp.series(createMetaAdult, createScriptAdult));
 gulp.task('build', gulp.parallel(gulp.series(createMetaMain, createScriptMain), gulp.series(createMetaAdult, createScriptAdult), readme));
-gulp.task('release', gulp.series(gulp.parallel(gulp.series(createMetaMain, createScriptMain), gulp.series(createMetaAdult, createScriptAdult), readme), beauty, move));
+gulp.task('imports', gulp.parallel(readme, createMetaMain, createMetaAdult));
 gulp.task('default', gulp.series(gulp.parallel(gulp.series(createMetaMain, createScriptMain), gulp.series(createMetaAdult, createScriptAdult), readme), beauty, move));

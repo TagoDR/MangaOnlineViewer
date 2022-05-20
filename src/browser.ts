@@ -21,10 +21,14 @@ function logClear(...text) {
 }
 
 // Replacement function for GM_listValues allowing for debugging in console
-function getListGM(): string[] { return (typeof GM_listValues !== 'undefined') ? GM_listValues() : []; }
+function getListGM(): string[] {
+  return typeof GM_listValues !== 'undefined' ? GM_listValues() : [];
+}
 
 // Replacement function for GM_listValues allowing for debugging in console
-function removeValueGM(name) { return (typeof GM_deleteValue !== 'undefined') ? GM_deleteValue(name) : logScript('Removing: ', name); }
+function removeValueGM(name) {
+  return typeof GM_deleteValue !== 'undefined' ? GM_deleteValue(name) : logScript('Removing: ', name);
+}
 
 // Replacement function for GM_info allowing for debugging in console
 const getInfoGM = GM_info || {
@@ -61,9 +65,7 @@ function getBrowser(): string {
   if (M[1] === 'Chrome') {
     tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
     if (tem !== null) {
-      return tem.slice(1)
-        .join(' ')
-        .replace('OPR', 'Opera');
+      return tem.slice(1).join(' ').replace('OPR', 'Opera');
     }
   }
   M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
@@ -81,16 +83,4 @@ function getEngine(): string {
 
 const isMobile = W.matchMedia('screen and (max-width: 1024px)').matches;
 
-export {
-  logScript,
-  getListGM,
-  getInfoGM,
-  getValueGM,
-  setValueGM,
-  removeValueGM,
-  getBrowser,
-  getEngine,
-  logScriptC,
-  logClear,
-  isMobile,
-};
+export { logScript, getListGM, getInfoGM, getValueGM, setValueGM, removeValueGM, getBrowser, getEngine, logScriptC, logClear, isMobile };

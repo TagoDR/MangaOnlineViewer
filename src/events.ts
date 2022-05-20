@@ -1,4 +1,4 @@
-import Swal, { SweetAlertOptions } from 'sweetalert2';
+import Swal from 'sweetalert2';
 import { getValueGM, logScript, setValueGM } from './browser.js';
 import generateZip from './download.js';
 import { applyZoom, reloadImage } from './page.js';
@@ -34,44 +34,45 @@ function setKeyDownEvents() {
 
   function processKey(e) {
     const a = e.originalEvent.code;
-    if (!e.originalEvent.ctrlKey
-      && !e.originalEvent.altKey
-      && !e.originalEvent.shiftKey
-      && !e.originalEvent.metaKey
-      && $.inArray(a,
-        [
-          'KeyW',
-          'Numpad8',
-          'KeyS',
-          'Numpad2',
-          'ArrowRight',
-          'Period',
-          'KeyD',
-          'Numpad6',
-          'ArrowLeft',
-          'Comma',
-          'KeyA',
-          'Numpad4',
-          'Equal',
-          'NumpadAdd',
-          'KeyE',
-          'Minus',
-          'NumpadSubtract',
-          'KeyQ',
-          'Digit9',
-          'NumpadDivide',
-          'KeyR',
-          'Digit0',
-          'NumpadMultiply',
-          'KeyF',
-          'Slash',
-          'Numpad5',
-          'KeyX',
-          'KeyC',
-          'KeyV',
-          'KeyB',
-          'KeyN',
-        ]) !== -1) {
+    if (
+      !e.originalEvent.ctrlKey &&
+      !e.originalEvent.altKey &&
+      !e.originalEvent.shiftKey &&
+      !e.originalEvent.metaKey &&
+      $.inArray(a, [
+        'KeyW',
+        'Numpad8',
+        'KeyS',
+        'Numpad2',
+        'ArrowRight',
+        'Period',
+        'KeyD',
+        'Numpad6',
+        'ArrowLeft',
+        'Comma',
+        'KeyA',
+        'Numpad4',
+        'Equal',
+        'NumpadAdd',
+        'KeyE',
+        'Minus',
+        'NumpadSubtract',
+        'KeyQ',
+        'Digit9',
+        'NumpadDivide',
+        'KeyR',
+        'Digit0',
+        'NumpadMultiply',
+        'KeyF',
+        'Slash',
+        'Numpad5',
+        'KeyX',
+        'KeyC',
+        'KeyV',
+        'KeyB',
+        'KeyN',
+      ]) !== -1
+    ) {
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
@@ -80,13 +81,14 @@ function setKeyDownEvents() {
         case 'KeyW':
         case 'Numpad8':
           if (settings.Zoom === -1000) {
-            const next = $('.MangaPage').get().map(
-              (item) => $(item).offset().top - $(window).scrollTop())
+            const next = $('.MangaPage')
+              .get()
+              .map((item) => $(item).offset()!.top - $(window).scrollTop()!)
               .findIndex((element) => element > 10);
             scrollToElement($('.MangaPage').eq(next - 2));
           } else {
             window.scrollBy({
-              top: -$(window).height() / 2,
+              top: -$(window).height()! / 2,
               behavior: 'smooth',
             });
           }
@@ -95,12 +97,14 @@ function setKeyDownEvents() {
         case 'KeyS':
         case 'Numpad2':
           if (settings.Zoom === -1000) {
-            const next = $('.MangaPage').get().map((item) => $(item).offset().top - $(window)
-              .scrollTop()).findIndex((element) => element > 10);
+            const next = $('.MangaPage')
+              .get()
+              .map((item) => $(item).offset()!.top - $(window).scrollTop()!)
+              .findIndex((element) => element > 10);
             scrollToElement($('.MangaPage').eq(next));
           } else {
             window.scrollBy({
-              top: $(window).height() / 2,
+              top: $(window).height()! / 2,
               behavior: 'smooth',
             });
           }
@@ -200,30 +204,22 @@ function controls() {
   });
   // WebComic View Mode
   $('#webComic').on('click', () => {
-    $('#Chapter').addClass('WebComic')
-      .removeClass('FluidLTR')
-      .removeClass('FluidRTL');
+    $('#Chapter').addClass('WebComic').removeClass('FluidLTR').removeClass('FluidRTL');
     applyZoom();
   });
   // Fluid LTR View Mode
   $('#ltrMode').on('click', () => {
-    $('#Chapter').removeClass('WebComic')
-      .addClass('FluidLTR')
-      .removeClass('FluidRTL');
+    $('#Chapter').removeClass('WebComic').addClass('FluidLTR').removeClass('FluidRTL');
     applyZoom();
   });
   // Fluid RTL View Mode
   $('#rtlMode').on('click', () => {
-    $('#Chapter').removeClass('WebComic')
-      .removeClass('FluidLTR')
-      .addClass('FluidRTL');
+    $('#Chapter').removeClass('WebComic').removeClass('FluidLTR').addClass('FluidRTL');
     applyZoom();
   });
   // Vertical View Mode
   $('#verticalMode').on('click', () => {
-    $('#Chapter').removeClass('WebComic')
-      .removeClass('FluidLTR')
-      .removeClass('FluidRTL');
+    $('#Chapter').removeClass('WebComic').removeClass('FluidLTR').removeClass('FluidRTL');
     applyZoom();
   });
   $('#fitIfOversize').on('change', (event) => {
@@ -237,10 +233,7 @@ function controls() {
   });
   $('#viewMode').on('change', (event) => {
     const mode = $(event.target).val();
-    $('#Chapter').removeClass('WebComic')
-      .removeClass('FluidLTR')
-      .removeClass('FluidRTL')
-      .addClass(mode);
+    $('#Chapter').removeClass('WebComic').removeClass('FluidLTR').removeClass('FluidRTL').addClass(mode);
     setValueGM('MangaViewMode', mode);
     logScript(`ViewMode: ${getValueGM('MangaViewMode')}`);
     applyZoom();
@@ -371,20 +364,24 @@ function controls() {
     logScript(`MangaCustomTheme: ${getValueGM('MangaCustomTheme')}`);
   });
   $('.FullCustom').on('change', () => {
-    logScript('FullCustomTheme: ',
-      $('#CustomThemeHueBody').val(),
-      $('#CustomThemeHueText').val(),
-      $('#CustomThemeHueLines').val(),
-      $('#CustomThemeHuePanel').val(),
-      $('#CustomThemeHueButton').val());
-    $('style[title="Full_Custom"]').remove();
-    $('head').append(addFullCustomTheme(
+    logScript(
+      'FullCustomTheme: ',
       $('#CustomThemeHueBody').val(),
       $('#CustomThemeHueText').val(),
       $('#CustomThemeHueLines').val(),
       $('#CustomThemeHuePanel').val(),
       $('#CustomThemeHueButton').val(),
-    ));
+    );
+    $('style[title="Full_Custom"]').remove();
+    $('head').append(
+      addFullCustomTheme(
+        $('#CustomThemeHueBody').val(),
+        $('#CustomThemeHueText').val(),
+        $('#CustomThemeHueLines').val(),
+        $('#CustomThemeHuePanel').val(),
+        $('#CustomThemeHueButton').val(),
+      ),
+    );
     setValueGM('MangaCustomThemeBody', $('#CustomThemeHueBody').val());
     setValueGM('MangaCustomThemeText', $('#CustomThemeHueText').val());
     setValueGM('MangaCustomThemeLines', $('#CustomThemeHueLines').val());
@@ -410,8 +407,7 @@ function controls() {
   // Individual Page functions
   // Bookmark Page to resume reading
   $('.Bookmark').on('click', (event) => {
-    const num = parseInt($(event.target).parents('.MangaPage').find('.PageFunctions span').text(),
-      10);
+    const num = parseInt($(event.target).parents('.MangaPage').find('.PageFunctions span').text(), 10);
     const mark: IBookmark = {
       url: W.location.href,
       page: num,
@@ -473,7 +469,4 @@ function controls() {
   });
 }
 
-export {
-  controls,
-  setKeyDownEvents,
-};
+export { controls, setKeyDownEvents };

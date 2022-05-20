@@ -30,12 +30,24 @@ const controls = `<div id='ViewerControls' class='panel'>
     <select id='ThemeSelector'>
       ${themesSelector}
     </select>
-      <span class='CustomTheme' ${(settings.Theme !== 'Custom_Dark' && settings.Theme !== 'Custom_Light') ? 'style="display: none;"' : ''}><br/>-Base:<input id='CustomThemeHue' value='${settings.CustomTheme}' class='colorpicker CustomTheme'></span>
-      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Body:<input id='CustomThemeHueBody' value='${settings.CustomThemeBody}' class='colorpicker FullCustom'></span>
-      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Text:<input id='CustomThemeHueText' value=${settings.CustomThemeText}' class='colorpicker FullCustom'></span>
-      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Lines:<input id='CustomThemeHueLines' value='${settings.CustomThemeLines}' class='colorpicker FullCustom'></span>
-      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Painels:<input id='CustomThemeHuePanel' value='${settings.CustomThemePanel}' class='colorpicker FullCustom'></span>
-      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Buttons:<input id='CustomThemeHueButton' value='${settings.CustomThemeButton}' class='colorpicker FullCustom'></span>
+      <span class='CustomTheme' ${
+        settings.Theme !== 'Custom_Dark' && settings.Theme !== 'Custom_Light' ? 'style="display: none;"' : ''
+      }><br/>-Base:<input id='CustomThemeHue' value='${settings.CustomTheme}' class='colorpicker CustomTheme'></span>
+      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Body:<input id='CustomThemeHueBody' value='${
+  settings.CustomThemeBody
+}' class='colorpicker FullCustom'></span>
+      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Text:<input id='CustomThemeHueText' value=${
+  settings.CustomThemeText
+}' class='colorpicker FullCustom'></span>
+      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Lines:<input id='CustomThemeHueLines' value='${
+  settings.CustomThemeLines
+}' class='colorpicker FullCustom'></span>
+      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Painels:<input id='CustomThemeHuePanel' value='${
+  settings.CustomThemePanel
+}' class='colorpicker FullCustom'></span>
+      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Buttons:<input id='CustomThemeHueButton' value='${
+  settings.CustomThemeButton
+}' class='colorpicker FullCustom'></span>
   </span>
   <span class='controlLabel loadMode'>Default Load Mode:
     <select id='loadMode'>
@@ -81,26 +93,27 @@ const controls = `<div id='ViewerControls' class='panel'>
     </select>
   </span>
   <span class='controlLabel fitIfOversize'>Fit Width if Oversize:
-    <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${(settings.FitWidthIfOversize ? 'checked' : '')}>
+    <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${settings.FitWidthIfOversize ? 'checked' : ''}>
   </span>
   <span class='controlLabel showThumbnails'>Show Thumbnails:
-    <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${(settings.ShowThumbnails ? 'checked' : '')}>
+    <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${settings.ShowThumbnails ? 'checked' : ''}>
    </span>
    <span class='controlLabel lazyLoadImages'>Lazy Load Images:
-    <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${(settings.lazyLoadImages ? 'checked' : '')}>
+    <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${settings.lazyLoadImages ? 'checked' : ''}>
    </span>
    <span class='controlLabel lazyStart'>Lazy Start From Page (between 5 and 100):<br/>
     <input type='range' value='${settings.lazyStart}' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput="lazyStartVal.value = this.value">
     <output id="lazyStartVal">${settings.lazyStart}</output>
   </span>
   <span class='controlLabel downloadZip'>Download Images as Zip Automatically:
-    <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${(settings.DownloadZip ? 'checked' : '')}>
+    <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${settings.DownloadZip ? 'checked' : ''}>
   </span>
   <span class='controlLabel hidePageControls'>Always Hide Page Controls:
-    <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${(settings.hidePageControls ? 'checked' : '')}>
+    <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${settings.hidePageControls ? 'checked' : ''}>
   </span>
 </div>`;
-const chapterControl = (id) => (manga) => `<div id='${id}' class='ChapterControl'>
+const chapterControl = (id) => (manga) =>
+  `<div id='${id}' class='ChapterControl'>
     <a href='#' class='download'>Download</a>
     <a class='prev' id='prev' href='${manga.prev || ''}' onclick='W.location="${manga.prev || ''}";W.location.reload();'>Previous</a>
     <a class='next' id='next' href='${manga.next || ''}' onclick='W.location="${manga.next || ''}";W.location.reload();'>Next</a>
@@ -109,7 +122,9 @@ const chapterControlTop = chapterControl('ChapterControlTop');
 const chapterControlBottom = chapterControl('ChapterControlBottom');
 const title = (manga) => `<div class='ViewerTitle'><br/><a id='series' href='${manga.series}'><i>${manga.title}</i><br/>(Return to Chapter List)</a></div>`;
 // Add Pages Place-holders
-const listPages = (times) => [...Array(times).keys()].map((index) => `<div id='Page${index + 1}' class='MangaPage'>
+const listPages = (times) =>
+  [...Array(times).keys()].map(
+    (index) => `<div id='Page${index + 1}' class='MangaPage'>
   <div class='PageFunctions'>
     <a class='Bookmark controlButton' title='Bookmark'></a>
     <a class='ZoomIn controlButton' title='Zoom In'></a>
@@ -124,12 +139,13 @@ const listPages = (times) => [...Array(times).keys()].map((index) => `<div id='P
   <div class='PageContent'>
     <img id='PageImg${index + 1}' alt='PageImg${index + 1}' />
   </div>
-</div>`);
+</div>`,
+  );
 const listOptions = (times) => [...Array(times).keys()].map((index) => `<option value='${index + 1}'>${index + 1}</option>`);
-const listThumbnails = (times) => [...Array(times).keys()].map(
-  (index) => `<div id='Thumbnail${index + 1}' class='Thumbnail'><img id='ThumbnailImg${index
-  + 1}' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`,
-);
+const listThumbnails = (times) =>
+  [...Array(times).keys()].map(
+    (index) => `<div id='Thumbnail${index + 1}' class='Thumbnail'><img id='ThumbnailImg${index + 1}' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`,
+  );
 const body = (manga, begin = 0) => `
 <div id='MangaOnlineViewer' class='${settings.Theme} ${isMobile ? 'mobile' : ''} ${settings.hidePageControls ? 'hideControls' : ''}'>
   ${title(manga)}
@@ -142,7 +158,7 @@ const body = (manga, begin = 0) => `
     </select>
   </div>
   ${chapterControlTop(manga)}
-  <div id='Chapter' class='${(settings.FitWidthIfOversize === true ? 'fitWidthIfOversize' : '')} ${settings.viewMode}'>
+  <div id='Chapter' class='${settings.FitWidthIfOversize === true ? 'fitWidthIfOversize' : ''} ${settings.viewMode}'>
     ${listPages(manga.pages).slice(begin).join('')}
   </div>
   ${title(manga)}

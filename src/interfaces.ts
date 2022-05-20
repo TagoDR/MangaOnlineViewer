@@ -3,16 +3,15 @@ export interface ISite {
   url: RegExp;
   homepage: string | string[];
   language: string[];
-  obs?:string;
-  category: string;// 'manga','comic','hentai'
-  waitAttr?: string[];// ['img#XYZ', "data-src"]
-  waitEle?: string;// 'img#XYZ'
-  waitVar?: string;// gallery
-  waitMax?:number;// 5000 = 5s
-  waitStep?:number;// 1000 = 1s
-  start?:string// 'never', 'always'
+  obs?: string;
+  category: string; // 'manga','comic','hentai'
+  waitAttr?: string[]; // ['img#XYZ', "data-src"]
+  waitEle?: JQuery; // 'img#XYZ'
+  waitVar?: string; // gallery
+  waitMax?: number; // 5000 = 5s
+  waitStep?: number; // 1000 = 1s
+  start?: string; // 'never', 'always'
   run(): IManga;
-
 }
 
 export interface IManga {
@@ -23,16 +22,20 @@ export interface IManga {
   next: string;
   listImages?: string[];
   listPages?: string[];
-  img?: string;
-  lazy?:boolean;
-  bruteForce?(func: never):void;
-  before?():void
-  after?():void
+  img?: JQuery.Selector;
+  lazy?: boolean;
+  timer?: number;
+  lazyAttr?: string;
+
+  bruteForce?(func: object): void;
+
+  before?(): void;
+
+  after?(): void;
 }
 
-export interface IBookmark{
-  url: string,
-  page: number,
-  date: number,
-
+export interface IBookmark {
+  url: string;
+  page: number;
+  date: number;
 }

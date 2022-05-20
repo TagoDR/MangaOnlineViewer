@@ -6,7 +6,7 @@ const cache = {
   Data: {},
 };
 
-const getExtension = (mimeType) => ((((/image\/(?<ext>jpe?g|png|webp)/.exec(mimeType) || {}).groups || {}).ext || '') || 'png');
+const getExtension = (mimeType) => ((/image\/(?<ext>jpe?g|png|webp)/.exec(mimeType) || {}).groups || {}).ext || '' || 'png';
 const getFilename = (name, index, total, ext) => `${name}${(index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, '0')}.${ext.replace('jpeg', 'jpg')}`;
 
 // Generate Zip File for download
@@ -74,13 +74,15 @@ function generateZip() {
     const blobLink = document.getElementById('blob');
     try {
       blobLink.download = `${$('#series i').first().text().trim()}.zip`;
-      cache.zip.generateAsync({
-        type: 'blob',
-      }).then((content) => {
-        blobLink.href = W.URL.createObjectURL(content);
-        logScript('Download Ready');
-        $('#blob')[0].click();
-      });
+      cache.zip
+        .generateAsync({
+          type: 'blob',
+        })
+        .then((content) => {
+          blobLink.href = W.URL.createObjectURL(content);
+          logScript('Download Ready');
+          $('#blob')[0].click();
+        });
     } catch (e) {
       logScript(e);
       blobLink.innerHTML += ' (not supported on this browser)';
