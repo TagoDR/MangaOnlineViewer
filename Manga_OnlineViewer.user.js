@@ -57,12 +57,21 @@
 // @exclude /https?:\/\/(www.)?pururin.io\/.+/
 // ==/UserScript==
 
-(function () {
+(function (Swal, JSZip, NProgress, ColorScheme) {
   'use strict';
 
   var W = typeof unsafeWindow === 'undefined' ? window : unsafeWindow;
 
   /* global $:readonly, JSZip:readonly ,NProgress:readonly , jscolor:readonly , ColorScheme:readonly , Swal:readonly */
+
+  function _interopDefaultLegacy(e) {
+    return e && typeof e === 'object' && 'default' in e ? e : { default: e };
+  }
+
+  var Swal__default = /*#__PURE__*/ _interopDefaultLegacy(Swal);
+  var JSZip__default = /*#__PURE__*/ _interopDefaultLegacy(JSZip);
+  var NProgress__default = /*#__PURE__*/ _interopDefaultLegacy(NProgress);
+  var ColorScheme__default = /*#__PURE__*/ _interopDefaultLegacy(ColorScheme);
 
   // == AsuraScans and FlameScans ====================================================================
   var asurasflamecans = {
@@ -186,8 +195,20 @@
         title: $('title').text().trim(),
         series: $('div.tbtitle div.text a:first').attr('href'),
         pages: num,
-        prev: chapter.eq(chapter.index(chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`)) + 1).attr('href'),
-        next: chapter.eq(chapter.index(chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`)) - 1).attr('href'),
+        prev: chapter
+          .eq(
+            chapter.index(
+              chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`),
+            ) + 1,
+          )
+          .attr('href'),
+        next: chapter
+          .eq(
+            chapter.index(
+              chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`),
+            ) - 1,
+          )
+          .attr('href'),
         listPages: [...Array(num).keys()].map((i) => url + (i + 1)),
         img: 'img.open',
       };
@@ -316,7 +337,16 @@
   // == Madara WordPress Plugin ======================================================================
   // https://themeforest.net/item/madara-wordpress-theme-for-manga/20849828
   var madarawp = {
-    name: ['MangaHaus', 'Isekai Scan', 'Comic Kiba', 'Zinmanga', 'mangatx', 'Toonily', 'Mngazuki', 'ReaperScans'],
+    name: [
+      'MangaHaus',
+      'Isekai Scan',
+      'Comic Kiba',
+      'Zinmanga',
+      'mangatx',
+      'Toonily',
+      'Mngazuki',
+      'ReaperScans',
+    ],
     url: /https?:\/\/.+\/(manga|series)\/.+\/.+/,
     homepage: [
       'https://manhuaus.com',
@@ -339,7 +369,9 @@
         pages: src.length,
         prev: $('.prev_page:first').attr('href'),
         next: $('.next_page:first').attr('href'),
-        listImages: src.map((i) => $(i).attr('src') || $(i).attr('data-src') || $(i).attr('data-full-url')),
+        listImages: src.map(
+          (i) => $(i).attr('src') || $(i).attr('data-src') || $(i).attr('data-full-url'),
+        ),
       };
     },
   };
@@ -370,7 +402,9 @@
         pages: server.chapter.data.length,
         prev: $("a[href^='/chapter/']").eq(1).attr('href'),
         next: $("a[href^='/chapter/']").eq(0).attr('href'),
-        listImages: server.chapter.data.map((img) => `${server.baseUrl}/data/${server.chapter.hash}/${img}`),
+        listImages: server.chapter.data.map(
+          (img) => `${server.baseUrl}/data/${server.chapter.hash}/${img}`,
+        ),
       };
     },
   };
@@ -412,7 +446,10 @@
           .replace(/'/g, '')
           .split('|');
         function charFromPosition(i) {
-          return (i < 31 ? '' : charFromPosition(parseInt(i / 31, 10))) + (i % 31 > 35 ? String.fromCharCode((i % 31) + 29) : (i % 31).toString(36));
+          return (
+            (i < 31 ? '' : charFromPosition(parseInt(i / 31, 10))) +
+            (i % 31 > 35 ? String.fromCharCode((i % 31) + 29) : (i % 31).toString(36))
+          );
         }
         const replacingValues = {};
         keyWords.forEach((ele, i) => {
@@ -481,7 +518,10 @@
           .replace(/'/g, '')
           .split('|');
         function charFromPosition(i) {
-          return (i < 31 ? '' : charFromPosition(parseInt(i / 31, 10))) + (i % 31 > 35 ? String.fromCharCode((i % 31) + 29) : (i % 31).toString(36));
+          return (
+            (i < 31 ? '' : charFromPosition(parseInt(i / 31, 10))) +
+            (i % 31 > 35 ? String.fromCharCode((i % 31) + 29) : (i % 31).toString(36))
+          );
         }
         const replacingValues = {};
         keyWords.forEach((ele, i) => {
@@ -597,7 +637,9 @@
     category: 'manga',
     run() {
       const chapter = $('.selectchapter option:selected');
-      const url = `${$("form[name='pageSelector1']").attr('action')}?ch=${chapter.val().replace(' ', '+')}&page=`;
+      const url = `${$("form[name='pageSelector1']").attr('action')}?ch=${chapter
+        .val()
+        .replace(' ', '+')}&page=`;
       const num = $('.selectpage option').length;
       const origin = $('div.entry h1 a');
       return {
@@ -702,7 +744,9 @@
         pages: CurChapter.Page,
         prev: ChapterURLEncode(-1),
         next: ChapterURLEncode(+1),
-        listImages: [...Array(parseInt(CurChapter.Page, 10)).keys()].map((i) => src.replace(/-\d\d\d.png/, `-${String(`000${i + 1}`).slice(-3)}.png`)),
+        listImages: [...Array(parseInt(CurChapter.Page, 10)).keys()].map((i) =>
+          src.replace(/-\d\d\d.png/, `-${String(`000${i + 1}`).slice(-3)}.png`),
+        ),
       };
     },
   };
@@ -854,14 +898,17 @@
     language: ['Spanish'],
     category: 'manga',
     run() {
-      const num = $('#viewer-pages-select:first option').get().length || $('.img-container img').get().length;
+      const num =
+        $('#viewer-pages-select:first option').get().length || $('.img-container img').get().length;
       return {
         title: $('title').text().trim(),
         series: $('a[title="Volver"]').attr('href'),
         pages: num,
         prev: $('.chapter-prev a').attr('href'),
         next: $('.chapter-next a').attr('href'),
-        listPages: [...Array(num).keys()].map((i) => W.location.href.replace(/\/[0-9]+$/, `/${i + 1}`)),
+        listPages: [...Array(num).keys()].map((i) =>
+          W.location.href.replace(/\/[0-9]+$/, `/${i + 1}`),
+        ),
         listImages: $('.img-container img')
           .get()
           .map((item) => $(item).attr('data-src')),
@@ -935,2715 +982,6 @@
     batoto,
   ];
 
-  const consolePrefix = 'SweetAlert2:';
-  const uniqueArray = (arr) => {
-    const result = [];
-    for (let i = 0; i < arr.length; i++) {
-      if (result.indexOf(arr[i]) === -1) {
-        result.push(arr[i]);
-      }
-    }
-    return result;
-  };
-  const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);
-  const toArray = (nodeList) => Array.prototype.slice.call(nodeList);
-  const warn = (message) => {
-    console.warn(`${consolePrefix} ${typeof message === 'object' ? message.join(' ') : message}`);
-  };
-  const error = (message) => {
-    console.error(`${consolePrefix} ${message}`);
-  };
-  const previousWarnOnceMessages = [];
-  const warnOnce = (message) => {
-    if (!previousWarnOnceMessages.includes(message)) {
-      previousWarnOnceMessages.push(message);
-      warn(message);
-    }
-  };
-  const warnAboutDeprecation = (deprecatedParam, useInstead) => {
-    warnOnce(`"${deprecatedParam}" is deprecated and will be removed in the next major release. Please use "${useInstead}" instead.`);
-  };
-  const callIfFunction = (arg) => (typeof arg === 'function' ? arg() : arg);
-  const hasToPromiseFn = (arg) => arg && typeof arg.toPromise === 'function';
-  const asPromise = (arg) => (hasToPromiseFn(arg) ? arg.toPromise() : Promise.resolve(arg));
-  const isPromise = (arg) => arg && Promise.resolve(arg) === arg;
-  const getRandomElement = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
-  const defaultParams = {
-    title: '',
-    titleText: '',
-    text: '',
-    html: '',
-    footer: '',
-    icon: undefined,
-    iconColor: undefined,
-    iconHtml: undefined,
-    template: undefined,
-    toast: false,
-    showClass: {
-      popup: 'swal2-show',
-      backdrop: 'swal2-backdrop-show',
-      icon: 'swal2-icon-show',
-    },
-    hideClass: {
-      popup: 'swal2-hide',
-      backdrop: 'swal2-backdrop-hide',
-      icon: 'swal2-icon-hide',
-    },
-    customClass: {},
-    target: 'body',
-    color: undefined,
-    backdrop: true,
-    heightAuto: true,
-    allowOutsideClick: true,
-    allowEscapeKey: true,
-    allowEnterKey: true,
-    stopKeydownPropagation: true,
-    keydownListenerCapture: false,
-    showConfirmButton: true,
-    showDenyButton: false,
-    showCancelButton: false,
-    preConfirm: undefined,
-    preDeny: undefined,
-    confirmButtonText: 'OK',
-    confirmButtonAriaLabel: '',
-    confirmButtonColor: undefined,
-    denyButtonText: 'No',
-    denyButtonAriaLabel: '',
-    denyButtonColor: undefined,
-    cancelButtonText: 'Cancel',
-    cancelButtonAriaLabel: '',
-    cancelButtonColor: undefined,
-    buttonsStyling: true,
-    reverseButtons: false,
-    focusConfirm: true,
-    focusDeny: false,
-    focusCancel: false,
-    returnFocus: true,
-    showCloseButton: false,
-    closeButtonHtml: '&times;',
-    closeButtonAriaLabel: 'Close this dialog',
-    loaderHtml: '',
-    showLoaderOnConfirm: false,
-    showLoaderOnDeny: false,
-    imageUrl: undefined,
-    imageWidth: undefined,
-    imageHeight: undefined,
-    imageAlt: '',
-    timer: undefined,
-    timerProgressBar: false,
-    width: undefined,
-    padding: undefined,
-    background: undefined,
-    input: undefined,
-    inputPlaceholder: '',
-    inputLabel: '',
-    inputValue: '',
-    inputOptions: {},
-    inputAutoTrim: true,
-    inputAttributes: {},
-    inputValidator: undefined,
-    returnInputValueOnDeny: false,
-    validationMessage: undefined,
-    grow: false,
-    position: 'center',
-    progressSteps: [],
-    currentProgressStep: undefined,
-    progressStepsDistance: undefined,
-    willOpen: undefined,
-    didOpen: undefined,
-    didRender: undefined,
-    willClose: undefined,
-    didClose: undefined,
-    didDestroy: undefined,
-    scrollbarPadding: true,
-  };
-  const updatableParams = [
-    'allowEscapeKey',
-    'allowOutsideClick',
-    'background',
-    'buttonsStyling',
-    'cancelButtonAriaLabel',
-    'cancelButtonColor',
-    'cancelButtonText',
-    'closeButtonAriaLabel',
-    'closeButtonHtml',
-    'color',
-    'confirmButtonAriaLabel',
-    'confirmButtonColor',
-    'confirmButtonText',
-    'currentProgressStep',
-    'customClass',
-    'denyButtonAriaLabel',
-    'denyButtonColor',
-    'denyButtonText',
-    'didClose',
-    'didDestroy',
-    'footer',
-    'hideClass',
-    'html',
-    'icon',
-    'iconColor',
-    'iconHtml',
-    'imageAlt',
-    'imageHeight',
-    'imageUrl',
-    'imageWidth',
-    'preConfirm',
-    'preDeny',
-    'progressSteps',
-    'returnFocus',
-    'reverseButtons',
-    'showCancelButton',
-    'showCloseButton',
-    'showConfirmButton',
-    'showDenyButton',
-    'text',
-    'title',
-    'titleText',
-    'willClose',
-  ];
-  const deprecatedParams = {};
-  const toastIncompatibleParams = [
-    'allowOutsideClick',
-    'allowEnterKey',
-    'backdrop',
-    'focusConfirm',
-    'focusDeny',
-    'focusCancel',
-    'returnFocus',
-    'heightAuto',
-    'keydownListenerCapture',
-  ];
-  const isValidParameter = (paramName) => {
-    return Object.prototype.hasOwnProperty.call(defaultParams, paramName);
-  };
-  const isUpdatableParameter = (paramName) => {
-    return updatableParams.indexOf(paramName) !== -1;
-  };
-  const isDeprecatedParameter = (paramName) => {
-    return deprecatedParams[paramName];
-  };
-  const checkIfParamIsValid = (param) => {
-    if (!isValidParameter(param)) {
-      warn(`Unknown parameter "${param}"`);
-    }
-  };
-  const checkIfToastParamIsValid = (param) => {
-    if (toastIncompatibleParams.includes(param)) {
-      warn(`The parameter "${param}" is incompatible with toasts`);
-    }
-  };
-  const checkIfParamIsDeprecated = (param) => {
-    if (isDeprecatedParameter(param)) {
-      warnAboutDeprecation(param, isDeprecatedParameter(param));
-    }
-  };
-  const showWarningsForParams = (params) => {
-    if (!params.backdrop && params.allowOutsideClick) {
-      warn('"allowOutsideClick" parameter requires `backdrop` parameter to be set to `true`');
-    }
-    for (const param in params) {
-      checkIfParamIsValid(param);
-      if (params.toast) {
-        checkIfToastParamIsValid(param);
-      }
-      checkIfParamIsDeprecated(param);
-    }
-  };
-
-  const swalPrefix = 'swal2-';
-  const prefix = (items) => {
-    const result = {};
-    for (const i in items) {
-      result[items[i]] = swalPrefix + items[i];
-    }
-    return result;
-  };
-  const swalClasses = prefix([
-    'container',
-    'shown',
-    'height-auto',
-    'iosfix',
-    'popup',
-    'modal',
-    'no-backdrop',
-    'no-transition',
-    'toast',
-    'toast-shown',
-    'show',
-    'hide',
-    'close',
-    'title',
-    'html-container',
-    'actions',
-    'confirm',
-    'deny',
-    'cancel',
-    'default-outline',
-    'footer',
-    'icon',
-    'icon-content',
-    'image',
-    'input',
-    'file',
-    'range',
-    'select',
-    'radio',
-    'checkbox',
-    'label',
-    'textarea',
-    'inputerror',
-    'input-label',
-    'validation-message',
-    'progress-steps',
-    'active-progress-step',
-    'progress-step',
-    'progress-step-line',
-    'loader',
-    'loading',
-    'styled',
-    'top',
-    'top-start',
-    'top-end',
-    'top-left',
-    'top-right',
-    'center',
-    'center-start',
-    'center-end',
-    'center-left',
-    'center-right',
-    'bottom',
-    'bottom-start',
-    'bottom-end',
-    'bottom-left',
-    'bottom-right',
-    'grow-row',
-    'grow-column',
-    'grow-fullscreen',
-    'rtl',
-    'timer-progress-bar',
-    'timer-progress-bar-container',
-    'scrollbar-measure',
-    'icon-success',
-    'icon-warning',
-    'icon-info',
-    'icon-question',
-    'icon-error',
-    'no-war',
-  ]);
-  const iconTypes = prefix(['success', 'warning', 'info', 'question', 'error']);
-
-  const getContainer = () => document.body.querySelector(`.${swalClasses.container}`);
-  const elementBySelector = (selectorString) => {
-    const container = getContainer();
-    return container ? container.querySelector(selectorString) : null;
-  };
-  const elementByClass = (className) => {
-    return elementBySelector(`.${className}`);
-  };
-  const getPopup = () => elementByClass(swalClasses.popup);
-  const getIcon = () => elementByClass(swalClasses.icon);
-  const getTitle = () => elementByClass(swalClasses.title);
-  const getHtmlContainer = () => elementByClass(swalClasses['html-container']);
-  const getImage = () => elementByClass(swalClasses.image);
-  const getProgressSteps$1 = () => elementByClass(swalClasses['progress-steps']);
-  const getValidationMessage = () => elementByClass(swalClasses['validation-message']);
-  const getConfirmButton = () => elementBySelector(`.${swalClasses.actions} .${swalClasses.confirm}`);
-  const getDenyButton = () => elementBySelector(`.${swalClasses.actions} .${swalClasses.deny}`);
-  const getInputLabel = () => elementByClass(swalClasses['input-label']);
-  const getLoader = () => elementBySelector(`.${swalClasses.loader}`);
-  const getCancelButton = () => elementBySelector(`.${swalClasses.actions} .${swalClasses.cancel}`);
-  const getActions = () => elementByClass(swalClasses.actions);
-  const getFooter = () => elementByClass(swalClasses.footer);
-  const getTimerProgressBar = () => elementByClass(swalClasses['timer-progress-bar']);
-  const getCloseButton = () => elementByClass(swalClasses.close);
-  const focusable = `
-  a[href],
-  area[href],
-  input:not([disabled]),
-  select:not([disabled]),
-  textarea:not([disabled]),
-  button:not([disabled]),
-  iframe,
-  object,
-  embed,
-  [tabindex="0"],
-  [contenteditable],
-  audio[controls],
-  video[controls],
-  summary
-`;
-  const getFocusableElements = () => {
-    const focusableElementsWithTabindex = toArray(getPopup().querySelectorAll('[tabindex]:not([tabindex="-1"]):not([tabindex="0"])')).sort((a, b) => {
-      const tabindexA = parseInt(a.getAttribute('tabindex'));
-      const tabindexB = parseInt(b.getAttribute('tabindex'));
-      if (tabindexA > tabindexB) {
-        return 1;
-      } else if (tabindexA < tabindexB) {
-        return -1;
-      }
-      return 0;
-    });
-    const otherFocusableElements = toArray(getPopup().querySelectorAll(focusable)).filter((el) => el.getAttribute('tabindex') !== '-1');
-    return uniqueArray(focusableElementsWithTabindex.concat(otherFocusableElements)).filter((el) => isVisible$1(el));
-  };
-  const isModal = () => {
-    return hasClass(document.body, swalClasses.shown) && !hasClass(document.body, swalClasses['toast-shown']) && !hasClass(document.body, swalClasses['no-backdrop']);
-  };
-  const isToast = () => {
-    return getPopup() && hasClass(getPopup(), swalClasses.toast);
-  };
-  const isLoading = () => {
-    return getPopup().hasAttribute('data-loading');
-  };
-
-  const states = {
-    previousBodyPadding: null,
-  };
-  const setInnerHtml = (elem, html) => {
-    elem.textContent = '';
-    if (html) {
-      const parser = new DOMParser();
-      const parsed = parser.parseFromString(html, `text/html`);
-      toArray(parsed.querySelector('head').childNodes).forEach((child) => {
-        elem.appendChild(child);
-      });
-      toArray(parsed.querySelector('body').childNodes).forEach((child) => {
-        elem.appendChild(child);
-      });
-    }
-  };
-  const hasClass = (elem, className) => {
-    if (!className) {
-      return false;
-    }
-    const classList = className.split(/\s+/);
-    for (let i = 0; i < classList.length; i++) {
-      if (!elem.classList.contains(classList[i])) {
-        return false;
-      }
-    }
-    return true;
-  };
-  const removeCustomClasses = (elem, params) => {
-    toArray(elem.classList).forEach((className) => {
-      if (!Object.values(swalClasses).includes(className) && !Object.values(iconTypes).includes(className) && !Object.values(params.showClass).includes(className)) {
-        elem.classList.remove(className);
-      }
-    });
-  };
-  const applyCustomClass = (elem, params, className) => {
-    removeCustomClasses(elem, params);
-    if (params.customClass && params.customClass[className]) {
-      if (typeof params.customClass[className] !== 'string' && !params.customClass[className].forEach) {
-        return warn(`Invalid type of customClass.${className}! Expected string or iterable object, got "${typeof params.customClass[className]}"`);
-      }
-      addClass(elem, params.customClass[className]);
-    }
-  };
-  const getInput$1 = (popup, inputClass) => {
-    if (!inputClass) {
-      return null;
-    }
-    switch (inputClass) {
-      case 'select':
-      case 'textarea':
-      case 'file':
-        return popup.querySelector(`.${swalClasses.popup} > .${swalClasses[inputClass]}`);
-      case 'checkbox':
-        return popup.querySelector(`.${swalClasses.popup} > .${swalClasses.checkbox} input`);
-      case 'radio':
-        return (
-          popup.querySelector(`.${swalClasses.popup} > .${swalClasses.radio} input:checked`) ||
-          popup.querySelector(`.${swalClasses.popup} > .${swalClasses.radio} input:first-child`)
-        );
-      case 'range':
-        return popup.querySelector(`.${swalClasses.popup} > .${swalClasses.range} input`);
-      default:
-        return popup.querySelector(`.${swalClasses.popup} > .${swalClasses.input}`);
-    }
-  };
-  const focusInput = (input) => {
-    input.focus();
-    if (input.type !== 'file') {
-      const val = input.value;
-      input.value = '';
-      input.value = val;
-    }
-  };
-  const toggleClass = (target, classList, condition) => {
-    if (!target || !classList) {
-      return;
-    }
-    if (typeof classList === 'string') {
-      classList = classList.split(/\s+/).filter(Boolean);
-    }
-    classList.forEach((className) => {
-      if (Array.isArray(target)) {
-        target.forEach((elem) => {
-          condition ? elem.classList.add(className) : elem.classList.remove(className);
-        });
-      } else {
-        condition ? target.classList.add(className) : target.classList.remove(className);
-      }
-    });
-  };
-  const addClass = (target, classList) => {
-    toggleClass(target, classList, true);
-  };
-  const removeClass = (target, classList) => {
-    toggleClass(target, classList, false);
-  };
-  const getDirectChildByClass = (elem, className) => {
-    const childNodes = toArray(elem.childNodes);
-    for (let i = 0; i < childNodes.length; i++) {
-      if (hasClass(childNodes[i], className)) {
-        return childNodes[i];
-      }
-    }
-  };
-  const applyNumericalStyle = (elem, property, value) => {
-    if (value === `${parseInt(value)}`) {
-      value = parseInt(value);
-    }
-    if (value || parseInt(value) === 0) {
-      elem.style[property] = typeof value === 'number' ? `${value}px` : value;
-    } else {
-      elem.style.removeProperty(property);
-    }
-  };
-  const show = (elem, display = 'flex') => {
-    elem.style.display = display;
-  };
-  const hide = (elem) => {
-    elem.style.display = 'none';
-  };
-  const setStyle = (parent, selector, property, value) => {
-    const el = parent.querySelector(selector);
-    if (el) {
-      el.style[property] = value;
-    }
-  };
-  const toggle = (elem, condition, display) => {
-    condition ? show(elem, display) : hide(elem);
-  };
-  const isVisible$1 = (elem) => !!(elem && (elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length));
-  const allButtonsAreHidden = () => !isVisible$1(getConfirmButton()) && !isVisible$1(getDenyButton()) && !isVisible$1(getCancelButton());
-  const isScrollable = (elem) => !!(elem.scrollHeight > elem.clientHeight);
-  const hasCssAnimation = (elem) => {
-    const style = window.getComputedStyle(elem);
-    const animDuration = parseFloat(style.getPropertyValue('animation-duration') || '0');
-    const transDuration = parseFloat(style.getPropertyValue('transition-duration') || '0');
-    return animDuration > 0 || transDuration > 0;
-  };
-  const animateTimerProgressBar = (timer, reset = false) => {
-    const timerProgressBar = getTimerProgressBar();
-    if (isVisible$1(timerProgressBar)) {
-      if (reset) {
-        timerProgressBar.style.transition = 'none';
-        timerProgressBar.style.width = '100%';
-      }
-      setTimeout(() => {
-        timerProgressBar.style.transition = `width ${timer / 1000}s linear`;
-        timerProgressBar.style.width = '0%';
-      }, 10);
-    }
-  };
-  const stopTimerProgressBar = () => {
-    const timerProgressBar = getTimerProgressBar();
-    const timerProgressBarWidth = parseInt(window.getComputedStyle(timerProgressBar).width);
-    timerProgressBar.style.removeProperty('transition');
-    timerProgressBar.style.width = '100%';
-    const timerProgressBarFullWidth = parseInt(window.getComputedStyle(timerProgressBar).width);
-    const timerProgressBarPercent = (timerProgressBarWidth / timerProgressBarFullWidth) * 100;
-    timerProgressBar.style.removeProperty('transition');
-    timerProgressBar.style.width = `${timerProgressBarPercent}%`;
-  };
-
-  const isNodeEnv = () => typeof window === 'undefined' || typeof document === 'undefined';
-
-  const RESTORE_FOCUS_TIMEOUT = 100;
-
-  const globalState = {};
-  const focusPreviousActiveElement = () => {
-    if (globalState.previousActiveElement && globalState.previousActiveElement.focus) {
-      globalState.previousActiveElement.focus();
-      globalState.previousActiveElement = null;
-    } else if (document.body) {
-      document.body.focus();
-    }
-  };
-  const restoreActiveElement = (returnFocus) => {
-    return new Promise((resolve) => {
-      if (!returnFocus) {
-        return resolve();
-      }
-      const x = window.scrollX;
-      const y = window.scrollY;
-      globalState.restoreFocusTimeout = setTimeout(() => {
-        focusPreviousActiveElement();
-        resolve();
-      }, RESTORE_FOCUS_TIMEOUT);
-      window.scrollTo(x, y);
-    });
-  };
-
-  const sweetHTML = `
- <div aria-labelledby="${swalClasses.title}" aria-describedby="${swalClasses['html-container']}" class="${swalClasses.popup}" tabindex="-1">
-   <button type="button" class="${swalClasses.close}"></button>
-   <ul class="${swalClasses['progress-steps']}"></ul>
-   <div class="${swalClasses.icon}"></div>
-   <img class="${swalClasses.image}" />
-   <h2 class="${swalClasses.title}" id="${swalClasses.title}"></h2>
-   <div class="${swalClasses['html-container']}" id="${swalClasses['html-container']}"></div>
-   <input class="${swalClasses.input}" />
-   <input type="file" class="${swalClasses.file}" />
-   <div class="${swalClasses.range}">
-     <input type="range" />
-     <output></output>
-   </div>
-   <select class="${swalClasses.select}"></select>
-   <div class="${swalClasses.radio}"></div>
-   <label for="${swalClasses.checkbox}" class="${swalClasses.checkbox}">
-     <input type="checkbox" />
-     <span class="${swalClasses.label}"></span>
-   </label>
-   <textarea class="${swalClasses.textarea}"></textarea>
-   <div class="${swalClasses['validation-message']}" id="${swalClasses['validation-message']}"></div>
-   <div class="${swalClasses.actions}">
-     <div class="${swalClasses.loader}"></div>
-     <button type="button" class="${swalClasses.confirm}"></button>
-     <button type="button" class="${swalClasses.deny}"></button>
-     <button type="button" class="${swalClasses.cancel}"></button>
-   </div>
-   <div class="${swalClasses.footer}"></div>
-   <div class="${swalClasses['timer-progress-bar-container']}">
-     <div class="${swalClasses['timer-progress-bar']}"></div>
-   </div>
- </div>
-`.replace(/(^|\n)\s*/g, '');
-  const resetOldContainer = () => {
-    const oldContainer = getContainer();
-    if (!oldContainer) {
-      return false;
-    }
-    oldContainer.remove();
-    removeClass([document.documentElement, document.body], [swalClasses['no-backdrop'], swalClasses['toast-shown'], swalClasses['has-column']]);
-    return true;
-  };
-  const resetValidationMessage$1 = () => {
-    globalState.currentInstance.resetValidationMessage();
-  };
-  const addInputChangeListeners = () => {
-    const popup = getPopup();
-    const input = getDirectChildByClass(popup, swalClasses.input);
-    const file = getDirectChildByClass(popup, swalClasses.file);
-    const range = popup.querySelector(`.${swalClasses.range} input`);
-    const rangeOutput = popup.querySelector(`.${swalClasses.range} output`);
-    const select = getDirectChildByClass(popup, swalClasses.select);
-    const checkbox = popup.querySelector(`.${swalClasses.checkbox} input`);
-    const textarea = getDirectChildByClass(popup, swalClasses.textarea);
-    input.oninput = resetValidationMessage$1;
-    file.onchange = resetValidationMessage$1;
-    select.onchange = resetValidationMessage$1;
-    checkbox.onchange = resetValidationMessage$1;
-    textarea.oninput = resetValidationMessage$1;
-    range.oninput = () => {
-      resetValidationMessage$1();
-      rangeOutput.value = range.value;
-    };
-    range.onchange = () => {
-      resetValidationMessage$1();
-      range.nextSibling.value = range.value;
-    };
-  };
-  const getTarget = (target) => (typeof target === 'string' ? document.querySelector(target) : target);
-  const setupAccessibility = (params) => {
-    const popup = getPopup();
-    popup.setAttribute('role', params.toast ? 'alert' : 'dialog');
-    popup.setAttribute('aria-live', params.toast ? 'polite' : 'assertive');
-    if (!params.toast) {
-      popup.setAttribute('aria-modal', 'true');
-    }
-  };
-  const setupRTL = (targetElement) => {
-    if (window.getComputedStyle(targetElement).direction === 'rtl') {
-      addClass(getContainer(), swalClasses.rtl);
-    }
-  };
-  const init = (params) => {
-    const oldContainerExisted = resetOldContainer();
-    if (isNodeEnv()) {
-      error('SweetAlert2 requires document to initialize');
-      return;
-    }
-    const container = document.createElement('div');
-    container.className = swalClasses.container;
-    if (oldContainerExisted) {
-      addClass(container, swalClasses['no-transition']);
-    }
-    setInnerHtml(container, sweetHTML);
-    const targetElement = getTarget(params.target);
-    targetElement.appendChild(container);
-    setupAccessibility(params);
-    setupRTL(targetElement);
-    addInputChangeListeners();
-    noWarMessageForRussians(container, params);
-  };
-  const noWarMessageForRussians = (container, params) => {
-    if (params.toast) {
-      return;
-    }
-    const message = getRandomElement([
-      {
-        text: 'ШВАРЦЕНЕГГЕР обратился <br> к РУССКОМУ НАРОДУ о войне',
-        youtubeId: 'fWClXZd9c78',
-      },
-      {
-        text: 'РУССКИЙ ПАТРИОТ <br> открыл главную тайну спецоперации',
-        youtubeId: '_RjBNkn88yA',
-      },
-      {
-        text: 'ГЕРОЙ НОВОРОССИИ СТРЕЛКОВ <br> дал оценку ходу спецоперации',
-        youtubeId: 'yUmzQT4C8JY',
-      },
-      {
-        text: 'ФИНСКИЙ ДРУГ РОССИИ <br> говорит ПО-РУССКИ о спецоперации',
-        youtubeId: 'hkCYb6edUrQ',
-      },
-    ]);
-    if (navigator.language === 'ru' && location.host.match(/\.(ru|su|xn--p1ai)$/)) {
-      const noWar = document.createElement('div');
-      noWar.className = swalClasses['no-war'];
-      setInnerHtml(noWar, `<a href="https://www.youtube.com/watch?v=${message.youtubeId}" target="_blank">${message.text}</a>`);
-      container.appendChild(noWar);
-      container.style.paddingTop = '4em';
-    }
-  };
-
-  const parseHtmlToContainer = (param, target) => {
-    if (param instanceof HTMLElement) {
-      target.appendChild(param);
-    } else if (typeof param === 'object') {
-      handleObject(param, target);
-    } else if (param) {
-      setInnerHtml(target, param);
-    }
-  };
-  const handleObject = (param, target) => {
-    if (param.jquery) {
-      handleJqueryElem(target, param);
-    } else {
-      setInnerHtml(target, param.toString());
-    }
-  };
-  const handleJqueryElem = (target, elem) => {
-    target.textContent = '';
-    if (0 in elem) {
-      for (let i = 0; i in elem; i++) {
-        target.appendChild(elem[i].cloneNode(true));
-      }
-    } else {
-      target.appendChild(elem.cloneNode(true));
-    }
-  };
-
-  const animationEndEvent = (() => {
-    if (isNodeEnv()) {
-      return false;
-    }
-    const testEl = document.createElement('div');
-    const transEndEventNames = {
-      WebkitAnimation: 'webkitAnimationEnd',
-      animation: 'animationend',
-    };
-    for (const i in transEndEventNames) {
-      if (Object.prototype.hasOwnProperty.call(transEndEventNames, i) && typeof testEl.style[i] !== 'undefined') {
-        return transEndEventNames[i];
-      }
-    }
-    return false;
-  })();
-
-  const measureScrollbar = () => {
-    const scrollDiv = document.createElement('div');
-    scrollDiv.className = swalClasses['scrollbar-measure'];
-    document.body.appendChild(scrollDiv);
-    const scrollbarWidth = scrollDiv.getBoundingClientRect().width - scrollDiv.clientWidth;
-    document.body.removeChild(scrollDiv);
-    return scrollbarWidth;
-  };
-
-  const renderActions = (instance, params) => {
-    const actions = getActions();
-    const loader = getLoader();
-    if (!params.showConfirmButton && !params.showDenyButton && !params.showCancelButton) {
-      hide(actions);
-    } else {
-      show(actions);
-    }
-    applyCustomClass(actions, params, 'actions');
-    renderButtons(actions, loader, params);
-    setInnerHtml(loader, params.loaderHtml);
-    applyCustomClass(loader, params, 'loader');
-  };
-  function renderButtons(actions, loader, params) {
-    const confirmButton = getConfirmButton();
-    const denyButton = getDenyButton();
-    const cancelButton = getCancelButton();
-    renderButton(confirmButton, 'confirm', params);
-    renderButton(denyButton, 'deny', params);
-    renderButton(cancelButton, 'cancel', params);
-    handleButtonsStyling(confirmButton, denyButton, cancelButton, params);
-    if (params.reverseButtons) {
-      if (params.toast) {
-        actions.insertBefore(cancelButton, confirmButton);
-        actions.insertBefore(denyButton, confirmButton);
-      } else {
-        actions.insertBefore(cancelButton, loader);
-        actions.insertBefore(denyButton, loader);
-        actions.insertBefore(confirmButton, loader);
-      }
-    }
-  }
-  function handleButtonsStyling(confirmButton, denyButton, cancelButton, params) {
-    if (!params.buttonsStyling) {
-      return removeClass([confirmButton, denyButton, cancelButton], swalClasses.styled);
-    }
-    addClass([confirmButton, denyButton, cancelButton], swalClasses.styled);
-    if (params.confirmButtonColor) {
-      confirmButton.style.backgroundColor = params.confirmButtonColor;
-      addClass(confirmButton, swalClasses['default-outline']);
-    }
-    if (params.denyButtonColor) {
-      denyButton.style.backgroundColor = params.denyButtonColor;
-      addClass(denyButton, swalClasses['default-outline']);
-    }
-    if (params.cancelButtonColor) {
-      cancelButton.style.backgroundColor = params.cancelButtonColor;
-      addClass(cancelButton, swalClasses['default-outline']);
-    }
-  }
-  function renderButton(button, buttonType, params) {
-    toggle(button, params[`show${capitalizeFirstLetter(buttonType)}Button`], 'inline-block');
-    setInnerHtml(button, params[`${buttonType}ButtonText`]);
-    button.setAttribute('aria-label', params[`${buttonType}ButtonAriaLabel`]);
-    button.className = swalClasses[buttonType];
-    applyCustomClass(button, params, `${buttonType}Button`);
-    addClass(button, params[`${buttonType}ButtonClass`]);
-  }
-
-  function handleBackdropParam(container, backdrop) {
-    if (typeof backdrop === 'string') {
-      container.style.background = backdrop;
-    } else if (!backdrop) {
-      addClass([document.documentElement, document.body], swalClasses['no-backdrop']);
-    }
-  }
-  function handlePositionParam(container, position) {
-    if (position in swalClasses) {
-      addClass(container, swalClasses[position]);
-    } else {
-      warn('The "position" parameter is not valid, defaulting to "center"');
-      addClass(container, swalClasses.center);
-    }
-  }
-  function handleGrowParam(container, grow) {
-    if (grow && typeof grow === 'string') {
-      const growClass = `grow-${grow}`;
-      if (growClass in swalClasses) {
-        addClass(container, swalClasses[growClass]);
-      }
-    }
-  }
-  const renderContainer = (instance, params) => {
-    const container = getContainer();
-    if (!container) {
-      return;
-    }
-    handleBackdropParam(container, params.backdrop);
-    handlePositionParam(container, params.position);
-    handleGrowParam(container, params.grow);
-    applyCustomClass(container, params, 'container');
-  };
-
-  var privateProps = {
-    awaitingPromise: new WeakMap(),
-    promise: new WeakMap(),
-    innerParams: new WeakMap(),
-    domCache: new WeakMap(),
-  };
-
-  const inputClasses = ['input', 'file', 'range', 'select', 'radio', 'checkbox', 'textarea'];
-  const renderInput = (instance, params) => {
-    const popup = getPopup();
-    const innerParams = privateProps.innerParams.get(instance);
-    const rerender = !innerParams || params.input !== innerParams.input;
-    inputClasses.forEach((inputClass) => {
-      const inputContainer = getDirectChildByClass(popup, swalClasses[inputClass]);
-      setAttributes(inputClass, params.inputAttributes);
-      inputContainer.className = swalClasses[inputClass];
-      if (rerender) {
-        hide(inputContainer);
-      }
-    });
-    if (params.input) {
-      if (rerender) {
-        showInput(params);
-      }
-      setCustomClass(params);
-    }
-  };
-  const showInput = (params) => {
-    if (!renderInputType[params.input]) {
-      return error(
-        `Unexpected type of input! Expected "text", "email", "password", "number", "tel", "select", "radio", "checkbox", "textarea", "file" or "url", got "${params.input}"`,
-      );
-    }
-    const inputContainer = getInputContainer(params.input);
-    const input = renderInputType[params.input](inputContainer, params);
-    show(inputContainer);
-    setTimeout(() => {
-      focusInput(input);
-    });
-  };
-  const removeAttributes = (input) => {
-    for (let i = 0; i < input.attributes.length; i++) {
-      const attrName = input.attributes[i].name;
-      if (!['type', 'value', 'style'].includes(attrName)) {
-        input.removeAttribute(attrName);
-      }
-    }
-  };
-  const setAttributes = (inputClass, inputAttributes) => {
-    const input = getInput$1(getPopup(), inputClass);
-    if (!input) {
-      return;
-    }
-    removeAttributes(input);
-    for (const attr in inputAttributes) {
-      input.setAttribute(attr, inputAttributes[attr]);
-    }
-  };
-  const setCustomClass = (params) => {
-    const inputContainer = getInputContainer(params.input);
-    if (typeof params.customClass === 'object') {
-      addClass(inputContainer, params.customClass.input);
-    }
-  };
-  const setInputPlaceholder = (input, params) => {
-    if (!input.placeholder || params.inputPlaceholder) {
-      input.placeholder = params.inputPlaceholder;
-    }
-  };
-  const setInputLabel = (input, prependTo, params) => {
-    if (params.inputLabel) {
-      input.id = swalClasses.input;
-      const label = document.createElement('label');
-      const labelClass = swalClasses['input-label'];
-      label.setAttribute('for', input.id);
-      label.className = labelClass;
-      if (typeof params.customClass === 'object') {
-        addClass(label, params.customClass.inputLabel);
-      }
-      label.innerText = params.inputLabel;
-      prependTo.insertAdjacentElement('beforebegin', label);
-    }
-  };
-  const getInputContainer = (inputType) => {
-    return getDirectChildByClass(getPopup(), swalClasses[inputType] || swalClasses.input);
-  };
-  const checkAndSetInputValue = (input, inputValue) => {
-    if (['string', 'number'].includes(typeof inputValue)) {
-      input.value = `${inputValue}`;
-    } else if (!isPromise(inputValue)) {
-      warn(`Unexpected type of inputValue! Expected "string", "number" or "Promise", got "${typeof inputValue}"`);
-    }
-  };
-  const renderInputType = {};
-  renderInputType.text =
-    renderInputType.email =
-    renderInputType.password =
-    renderInputType.number =
-    renderInputType.tel =
-    renderInputType.url =
-      (input, params) => {
-        checkAndSetInputValue(input, params.inputValue);
-        setInputLabel(input, input, params);
-        setInputPlaceholder(input, params);
-        input.type = params.input;
-        return input;
-      };
-  renderInputType.file = (input, params) => {
-    setInputLabel(input, input, params);
-    setInputPlaceholder(input, params);
-    return input;
-  };
-  renderInputType.range = (range, params) => {
-    const rangeInput = range.querySelector('input');
-    const rangeOutput = range.querySelector('output');
-    checkAndSetInputValue(rangeInput, params.inputValue);
-    rangeInput.type = params.input;
-    checkAndSetInputValue(rangeOutput, params.inputValue);
-    setInputLabel(rangeInput, range, params);
-    return range;
-  };
-  renderInputType.select = (select, params) => {
-    select.textContent = '';
-    if (params.inputPlaceholder) {
-      const placeholder = document.createElement('option');
-      setInnerHtml(placeholder, params.inputPlaceholder);
-      placeholder.value = '';
-      placeholder.disabled = true;
-      placeholder.selected = true;
-      select.appendChild(placeholder);
-    }
-    setInputLabel(select, select, params);
-    return select;
-  };
-  renderInputType.radio = (radio) => {
-    radio.textContent = '';
-    return radio;
-  };
-  renderInputType.checkbox = (checkboxContainer, params) => {
-    const checkbox = getInput$1(getPopup(), 'checkbox');
-    checkbox.value = '1';
-    checkbox.id = swalClasses.checkbox;
-    checkbox.checked = Boolean(params.inputValue);
-    const label = checkboxContainer.querySelector('span');
-    setInnerHtml(label, params.inputPlaceholder);
-    return checkbox;
-  };
-  renderInputType.textarea = (textarea, params) => {
-    checkAndSetInputValue(textarea, params.inputValue);
-    setInputPlaceholder(textarea, params);
-    setInputLabel(textarea, textarea, params);
-    const getMargin = (el) => parseInt(window.getComputedStyle(el).marginLeft) + parseInt(window.getComputedStyle(el).marginRight);
-    setTimeout(() => {
-      if ('MutationObserver' in window) {
-        const initialPopupWidth = parseInt(window.getComputedStyle(getPopup()).width);
-        const textareaResizeHandler = () => {
-          const textareaWidth = textarea.offsetWidth + getMargin(textarea);
-          if (textareaWidth > initialPopupWidth) {
-            getPopup().style.width = `${textareaWidth}px`;
-          } else {
-            getPopup().style.width = null;
-          }
-        };
-        new MutationObserver(textareaResizeHandler).observe(textarea, {
-          attributes: true,
-          attributeFilter: ['style'],
-        });
-      }
-    });
-    return textarea;
-  };
-
-  const renderContent = (instance, params) => {
-    const htmlContainer = getHtmlContainer();
-    applyCustomClass(htmlContainer, params, 'htmlContainer');
-    if (params.html) {
-      parseHtmlToContainer(params.html, htmlContainer);
-      show(htmlContainer, 'block');
-    } else if (params.text) {
-      htmlContainer.textContent = params.text;
-      show(htmlContainer, 'block');
-    } else {
-      hide(htmlContainer);
-    }
-    renderInput(instance, params);
-  };
-
-  const renderFooter = (instance, params) => {
-    const footer = getFooter();
-    toggle(footer, params.footer);
-    if (params.footer) {
-      parseHtmlToContainer(params.footer, footer);
-    }
-    applyCustomClass(footer, params, 'footer');
-  };
-
-  const renderCloseButton = (instance, params) => {
-    const closeButton = getCloseButton();
-    setInnerHtml(closeButton, params.closeButtonHtml);
-    applyCustomClass(closeButton, params, 'closeButton');
-    toggle(closeButton, params.showCloseButton);
-    closeButton.setAttribute('aria-label', params.closeButtonAriaLabel);
-  };
-
-  const renderIcon = (instance, params) => {
-    const innerParams = privateProps.innerParams.get(instance);
-    const icon = getIcon();
-    if (innerParams && params.icon === innerParams.icon) {
-      setContent(icon, params);
-      applyStyles(icon, params);
-      return;
-    }
-    if (!params.icon && !params.iconHtml) {
-      return hide(icon);
-    }
-    if (params.icon && Object.keys(iconTypes).indexOf(params.icon) === -1) {
-      error(`Unknown icon! Expected "success", "error", "warning", "info" or "question", got "${params.icon}"`);
-      return hide(icon);
-    }
-    show(icon);
-    setContent(icon, params);
-    applyStyles(icon, params);
-    addClass(icon, params.showClass.icon);
-  };
-  const applyStyles = (icon, params) => {
-    for (const iconType in iconTypes) {
-      if (params.icon !== iconType) {
-        removeClass(icon, iconTypes[iconType]);
-      }
-    }
-    addClass(icon, iconTypes[params.icon]);
-    setColor(icon, params);
-    adjustSuccessIconBackgroundColor();
-    applyCustomClass(icon, params, 'icon');
-  };
-  const adjustSuccessIconBackgroundColor = () => {
-    const popup = getPopup();
-    const popupBackgroundColor = window.getComputedStyle(popup).getPropertyValue('background-color');
-    const successIconParts = popup.querySelectorAll('[class^=swal2-success-circular-line], .swal2-success-fix');
-    for (let i = 0; i < successIconParts.length; i++) {
-      successIconParts[i].style.backgroundColor = popupBackgroundColor;
-    }
-  };
-  const successIconHtml = `
-  <div class="swal2-success-circular-line-left"></div>
-  <span class="swal2-success-line-tip"></span> <span class="swal2-success-line-long"></span>
-  <div class="swal2-success-ring"></div> <div class="swal2-success-fix"></div>
-  <div class="swal2-success-circular-line-right"></div>
-`;
-  const errorIconHtml = `
-  <span class="swal2-x-mark">
-    <span class="swal2-x-mark-line-left"></span>
-    <span class="swal2-x-mark-line-right"></span>
-  </span>
-`;
-  const setContent = (icon, params) => {
-    icon.textContent = '';
-    if (params.iconHtml) {
-      setInnerHtml(icon, iconContent(params.iconHtml));
-    } else if (params.icon === 'success') {
-      setInnerHtml(icon, successIconHtml);
-    } else if (params.icon === 'error') {
-      setInnerHtml(icon, errorIconHtml);
-    } else {
-      const defaultIconHtml = {
-        question: '?',
-        warning: '!',
-        info: 'i',
-      };
-      setInnerHtml(icon, iconContent(defaultIconHtml[params.icon]));
-    }
-  };
-  const setColor = (icon, params) => {
-    if (!params.iconColor) {
-      return;
-    }
-    icon.style.color = params.iconColor;
-    icon.style.borderColor = params.iconColor;
-    for (const sel of ['.swal2-success-line-tip', '.swal2-success-line-long', '.swal2-x-mark-line-left', '.swal2-x-mark-line-right']) {
-      setStyle(icon, sel, 'backgroundColor', params.iconColor);
-    }
-    setStyle(icon, '.swal2-success-ring', 'borderColor', params.iconColor);
-  };
-  const iconContent = (content) => `<div class="${swalClasses['icon-content']}">${content}</div>`;
-
-  const renderImage = (instance, params) => {
-    const image = getImage();
-    if (!params.imageUrl) {
-      return hide(image);
-    }
-    show(image, '');
-    image.setAttribute('src', params.imageUrl);
-    image.setAttribute('alt', params.imageAlt);
-    applyNumericalStyle(image, 'width', params.imageWidth);
-    applyNumericalStyle(image, 'height', params.imageHeight);
-    image.className = swalClasses.image;
-    applyCustomClass(image, params, 'image');
-  };
-
-  const renderProgressSteps = (instance, params) => {
-    const progressStepsContainer = getProgressSteps$1();
-    if (!params.progressSteps || params.progressSteps.length === 0) {
-      return hide(progressStepsContainer);
-    }
-    show(progressStepsContainer);
-    progressStepsContainer.textContent = '';
-    if (params.currentProgressStep >= params.progressSteps.length) {
-      warn('Invalid currentProgressStep parameter, it should be less than progressSteps.length ' + '(currentProgressStep like JS arrays starts from 0)');
-    }
-    params.progressSteps.forEach((step, index) => {
-      const stepEl = createStepElement(step);
-      progressStepsContainer.appendChild(stepEl);
-      if (index === params.currentProgressStep) {
-        addClass(stepEl, swalClasses['active-progress-step']);
-      }
-      if (index !== params.progressSteps.length - 1) {
-        const lineEl = createLineElement(params);
-        progressStepsContainer.appendChild(lineEl);
-      }
-    });
-  };
-  const createStepElement = (step) => {
-    const stepEl = document.createElement('li');
-    addClass(stepEl, swalClasses['progress-step']);
-    setInnerHtml(stepEl, step);
-    return stepEl;
-  };
-  const createLineElement = (params) => {
-    const lineEl = document.createElement('li');
-    addClass(lineEl, swalClasses['progress-step-line']);
-    if (params.progressStepsDistance) {
-      applyNumericalStyle(lineEl, 'width', params.progressStepsDistance);
-    }
-    return lineEl;
-  };
-
-  const renderTitle = (instance, params) => {
-    const title = getTitle();
-    toggle(title, params.title || params.titleText, 'block');
-    if (params.title) {
-      parseHtmlToContainer(params.title, title);
-    }
-    if (params.titleText) {
-      title.innerText = params.titleText;
-    }
-    applyCustomClass(title, params, 'title');
-  };
-
-  const renderPopup = (instance, params) => {
-    const container = getContainer();
-    const popup = getPopup();
-    if (params.toast) {
-      applyNumericalStyle(container, 'width', params.width);
-      popup.style.width = '100%';
-      popup.insertBefore(getLoader(), getIcon());
-    } else {
-      applyNumericalStyle(popup, 'width', params.width);
-    }
-    applyNumericalStyle(popup, 'padding', params.padding);
-    if (params.color) {
-      popup.style.color = params.color;
-    }
-    if (params.background) {
-      popup.style.background = params.background;
-    }
-    hide(getValidationMessage());
-    addClasses$1(popup, params);
-  };
-  const addClasses$1 = (popup, params) => {
-    popup.className = `${swalClasses.popup} ${isVisible$1(popup) ? params.showClass.popup : ''}`;
-    if (params.toast) {
-      addClass([document.documentElement, document.body], swalClasses['toast-shown']);
-      addClass(popup, swalClasses.toast);
-    } else {
-      addClass(popup, swalClasses.modal);
-    }
-    applyCustomClass(popup, params, 'popup');
-    if (typeof params.customClass === 'string') {
-      addClass(popup, params.customClass);
-    }
-    if (params.icon) {
-      addClass(popup, swalClasses[`icon-${params.icon}`]);
-    }
-  };
-
-  const render = (instance, params) => {
-    renderPopup(instance, params);
-    renderContainer(instance, params);
-    renderProgressSteps(instance, params);
-    renderIcon(instance, params);
-    renderImage(instance, params);
-    renderTitle(instance, params);
-    renderCloseButton(instance, params);
-    renderContent(instance, params);
-    renderActions(instance, params);
-    renderFooter(instance, params);
-    if (typeof params.didRender === 'function') {
-      params.didRender(getPopup());
-    }
-  };
-
-  const DismissReason = Object.freeze({
-    cancel: 'cancel',
-    backdrop: 'backdrop',
-    close: 'close',
-    esc: 'esc',
-    timer: 'timer',
-  });
-
-  const setAriaHidden = () => {
-    const bodyChildren = toArray(document.body.children);
-    bodyChildren.forEach((el) => {
-      if (el === getContainer() || el.contains(getContainer())) {
-        return;
-      }
-      if (el.hasAttribute('aria-hidden')) {
-        el.setAttribute('data-previous-aria-hidden', el.getAttribute('aria-hidden'));
-      }
-      el.setAttribute('aria-hidden', 'true');
-    });
-  };
-  const unsetAriaHidden = () => {
-    const bodyChildren = toArray(document.body.children);
-    bodyChildren.forEach((el) => {
-      if (el.hasAttribute('data-previous-aria-hidden')) {
-        el.setAttribute('aria-hidden', el.getAttribute('data-previous-aria-hidden'));
-        el.removeAttribute('data-previous-aria-hidden');
-      } else {
-        el.removeAttribute('aria-hidden');
-      }
-    });
-  };
-
-  const swalStringParams = ['swal-title', 'swal-html', 'swal-footer'];
-  const getTemplateParams = (params) => {
-    const template = typeof params.template === 'string' ? document.querySelector(params.template) : params.template;
-    if (!template) {
-      return {};
-    }
-    const templateContent = template.content;
-    showWarningsForElements(templateContent);
-    const result = Object.assign(
-      getSwalParams(templateContent),
-      getSwalButtons(templateContent),
-      getSwalImage(templateContent),
-      getSwalIcon(templateContent),
-      getSwalInput(templateContent),
-      getSwalStringParams(templateContent, swalStringParams),
-    );
-    return result;
-  };
-  const getSwalParams = (templateContent) => {
-    const result = {};
-    toArray(templateContent.querySelectorAll('swal-param')).forEach((param) => {
-      showWarningsForAttributes(param, ['name', 'value']);
-      const paramName = param.getAttribute('name');
-      const value = param.getAttribute('value');
-      if (typeof defaultParams[paramName] === 'boolean' && value === 'false') {
-        result[paramName] = false;
-      }
-      if (typeof defaultParams[paramName] === 'object') {
-        result[paramName] = JSON.parse(value);
-      }
-    });
-    return result;
-  };
-  const getSwalButtons = (templateContent) => {
-    const result = {};
-    toArray(templateContent.querySelectorAll('swal-button')).forEach((button) => {
-      showWarningsForAttributes(button, ['type', 'color', 'aria-label']);
-      const type = button.getAttribute('type');
-      result[`${type}ButtonText`] = button.innerHTML;
-      result[`show${capitalizeFirstLetter(type)}Button`] = true;
-      if (button.hasAttribute('color')) {
-        result[`${type}ButtonColor`] = button.getAttribute('color');
-      }
-      if (button.hasAttribute('aria-label')) {
-        result[`${type}ButtonAriaLabel`] = button.getAttribute('aria-label');
-      }
-    });
-    return result;
-  };
-  const getSwalImage = (templateContent) => {
-    const result = {};
-    const image = templateContent.querySelector('swal-image');
-    if (image) {
-      showWarningsForAttributes(image, ['src', 'width', 'height', 'alt']);
-      if (image.hasAttribute('src')) {
-        result.imageUrl = image.getAttribute('src');
-      }
-      if (image.hasAttribute('width')) {
-        result.imageWidth = image.getAttribute('width');
-      }
-      if (image.hasAttribute('height')) {
-        result.imageHeight = image.getAttribute('height');
-      }
-      if (image.hasAttribute('alt')) {
-        result.imageAlt = image.getAttribute('alt');
-      }
-    }
-    return result;
-  };
-  const getSwalIcon = (templateContent) => {
-    const result = {};
-    const icon = templateContent.querySelector('swal-icon');
-    if (icon) {
-      showWarningsForAttributes(icon, ['type', 'color']);
-      if (icon.hasAttribute('type')) {
-        result.icon = icon.getAttribute('type');
-      }
-      if (icon.hasAttribute('color')) {
-        result.iconColor = icon.getAttribute('color');
-      }
-      result.iconHtml = icon.innerHTML;
-    }
-    return result;
-  };
-  const getSwalInput = (templateContent) => {
-    const result = {};
-    const input = templateContent.querySelector('swal-input');
-    if (input) {
-      showWarningsForAttributes(input, ['type', 'label', 'placeholder', 'value']);
-      result.input = input.getAttribute('type') || 'text';
-      if (input.hasAttribute('label')) {
-        result.inputLabel = input.getAttribute('label');
-      }
-      if (input.hasAttribute('placeholder')) {
-        result.inputPlaceholder = input.getAttribute('placeholder');
-      }
-      if (input.hasAttribute('value')) {
-        result.inputValue = input.getAttribute('value');
-      }
-    }
-    const inputOptions = templateContent.querySelectorAll('swal-input-option');
-    if (inputOptions.length) {
-      result.inputOptions = {};
-      toArray(inputOptions).forEach((option) => {
-        showWarningsForAttributes(option, ['value']);
-        const optionValue = option.getAttribute('value');
-        const optionName = option.innerHTML;
-        result.inputOptions[optionValue] = optionName;
-      });
-    }
-    return result;
-  };
-  const getSwalStringParams = (templateContent, paramNames) => {
-    const result = {};
-    for (const i in paramNames) {
-      const paramName = paramNames[i];
-      const tag = templateContent.querySelector(paramName);
-      if (tag) {
-        showWarningsForAttributes(tag, []);
-        result[paramName.replace(/^swal-/, '')] = tag.innerHTML.trim();
-      }
-    }
-    return result;
-  };
-  const showWarningsForElements = (templateContent) => {
-    const allowedElements = swalStringParams.concat(['swal-param', 'swal-button', 'swal-image', 'swal-icon', 'swal-input', 'swal-input-option']);
-    toArray(templateContent.children).forEach((el) => {
-      const tagName = el.tagName.toLowerCase();
-      if (allowedElements.indexOf(tagName) === -1) {
-        warn(`Unrecognized element <${tagName}>`);
-      }
-    });
-  };
-  const showWarningsForAttributes = (el, allowedAttributes) => {
-    toArray(el.attributes).forEach((attribute) => {
-      if (allowedAttributes.indexOf(attribute.name) === -1) {
-        warn([
-          `Unrecognized attribute "${attribute.name}" on <${el.tagName.toLowerCase()}>.`,
-          `${allowedAttributes.length ? `Allowed attributes are: ${allowedAttributes.join(', ')}` : 'To set the value, use HTML within the element.'}`,
-        ]);
-      }
-    });
-  };
-
-  var defaultInputValidators = {
-    email: (string, validationMessage) => {
-      return /^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9-]{2,24}$/.test(string) ? Promise.resolve() : Promise.resolve(validationMessage || 'Invalid email address');
-    },
-    url: (string, validationMessage) => {
-      return /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-z]{2,63}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)$/.test(string)
-        ? Promise.resolve()
-        : Promise.resolve(validationMessage || 'Invalid URL');
-    },
-  };
-
-  function setDefaultInputValidators(params) {
-    if (!params.inputValidator) {
-      Object.keys(defaultInputValidators).forEach((key) => {
-        if (params.input === key) {
-          params.inputValidator = defaultInputValidators[key];
-        }
-      });
-    }
-  }
-  function validateCustomTargetElement(params) {
-    if (!params.target || (typeof params.target === 'string' && !document.querySelector(params.target)) || (typeof params.target !== 'string' && !params.target.appendChild)) {
-      warn('Target parameter is not valid, defaulting to "body"');
-      params.target = 'body';
-    }
-  }
-  function setParameters(params) {
-    setDefaultInputValidators(params);
-    if (params.showLoaderOnConfirm && !params.preConfirm) {
-      warn(
-        'showLoaderOnConfirm is set to true, but preConfirm is not defined.\n' +
-          'showLoaderOnConfirm should be used together with preConfirm, see usage example:\n' +
-          'https://sweetalert2.github.io/#ajax-request',
-      );
-    }
-    validateCustomTargetElement(params);
-    if (typeof params.title === 'string') {
-      params.title = params.title.split('\n').join('<br />');
-    }
-    init(params);
-  }
-
-  class Timer {
-    constructor(callback, delay) {
-      this.callback = callback;
-      this.remaining = delay;
-      this.running = false;
-      this.start();
-    }
-    start() {
-      if (!this.running) {
-        this.running = true;
-        this.started = new Date();
-        this.id = setTimeout(this.callback, this.remaining);
-      }
-      return this.remaining;
-    }
-    stop() {
-      if (this.running) {
-        this.running = false;
-        clearTimeout(this.id);
-        this.remaining -= new Date().getTime() - this.started.getTime();
-      }
-      return this.remaining;
-    }
-    increase(n) {
-      const running = this.running;
-      if (running) {
-        this.stop();
-      }
-      this.remaining += n;
-      if (running) {
-        this.start();
-      }
-      return this.remaining;
-    }
-    getTimerLeft() {
-      if (this.running) {
-        this.stop();
-        this.start();
-      }
-      return this.remaining;
-    }
-    isRunning() {
-      return this.running;
-    }
-  }
-
-  const fixScrollbar = () => {
-    if (states.previousBodyPadding !== null) {
-      return;
-    }
-    if (document.body.scrollHeight > window.innerHeight) {
-      states.previousBodyPadding = parseInt(window.getComputedStyle(document.body).getPropertyValue('padding-right'));
-      document.body.style.paddingRight = `${states.previousBodyPadding + measureScrollbar()}px`;
-    }
-  };
-  const undoScrollbar = () => {
-    if (states.previousBodyPadding !== null) {
-      document.body.style.paddingRight = `${states.previousBodyPadding}px`;
-      states.previousBodyPadding = null;
-    }
-  };
-
-  const iOSfix = () => {
-    const iOS = (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    if (iOS && !hasClass(document.body, swalClasses.iosfix)) {
-      const offset = document.body.scrollTop;
-      document.body.style.top = `${offset * -1}px`;
-      addClass(document.body, swalClasses.iosfix);
-      lockBodyScroll();
-      addBottomPaddingForTallPopups();
-    }
-  };
-  const addBottomPaddingForTallPopups = () => {
-    const ua = navigator.userAgent;
-    const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
-    const webkit = !!ua.match(/WebKit/i);
-    const iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
-    if (iOSSafari) {
-      const bottomPanelHeight = 44;
-      if (getPopup().scrollHeight > window.innerHeight - bottomPanelHeight) {
-        getContainer().style.paddingBottom = `${bottomPanelHeight}px`;
-      }
-    }
-  };
-  const lockBodyScroll = () => {
-    const container = getContainer();
-    let preventTouchMove;
-    container.ontouchstart = (e) => {
-      preventTouchMove = shouldPreventTouchMove(e);
-    };
-    container.ontouchmove = (e) => {
-      if (preventTouchMove) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-    };
-  };
-  const shouldPreventTouchMove = (event) => {
-    const target = event.target;
-    const container = getContainer();
-    if (isStylus(event) || isZoom(event)) {
-      return false;
-    }
-    if (target === container) {
-      return true;
-    }
-    if (!isScrollable(container) && target.tagName !== 'INPUT' && target.tagName !== 'TEXTAREA' && !(isScrollable(getHtmlContainer()) && getHtmlContainer().contains(target))) {
-      return true;
-    }
-    return false;
-  };
-  const isStylus = (event) => {
-    return event.touches && event.touches.length && event.touches[0].touchType === 'stylus';
-  };
-  const isZoom = (event) => {
-    return event.touches && event.touches.length > 1;
-  };
-  const undoIOSfix = () => {
-    if (hasClass(document.body, swalClasses.iosfix)) {
-      const offset = parseInt(document.body.style.top, 10);
-      removeClass(document.body, swalClasses.iosfix);
-      document.body.style.top = '';
-      document.body.scrollTop = offset * -1;
-    }
-  };
-
-  const SHOW_CLASS_TIMEOUT = 10;
-  const openPopup = (params) => {
-    const container = getContainer();
-    const popup = getPopup();
-    if (typeof params.willOpen === 'function') {
-      params.willOpen(popup);
-    }
-    const bodyStyles = window.getComputedStyle(document.body);
-    const initialBodyOverflow = bodyStyles.overflowY;
-    addClasses(container, popup, params);
-    setTimeout(() => {
-      setScrollingVisibility(container, popup);
-    }, SHOW_CLASS_TIMEOUT);
-    if (isModal()) {
-      fixScrollContainer(container, params.scrollbarPadding, initialBodyOverflow);
-      setAriaHidden();
-    }
-    if (!isToast() && !globalState.previousActiveElement) {
-      globalState.previousActiveElement = document.activeElement;
-    }
-    if (typeof params.didOpen === 'function') {
-      setTimeout(() => params.didOpen(popup));
-    }
-    removeClass(container, swalClasses['no-transition']);
-  };
-  const swalOpenAnimationFinished = (event) => {
-    const popup = getPopup();
-    if (event.target !== popup) {
-      return;
-    }
-    const container = getContainer();
-    popup.removeEventListener(animationEndEvent, swalOpenAnimationFinished);
-    container.style.overflowY = 'auto';
-  };
-  const setScrollingVisibility = (container, popup) => {
-    if (animationEndEvent && hasCssAnimation(popup)) {
-      container.style.overflowY = 'hidden';
-      popup.addEventListener(animationEndEvent, swalOpenAnimationFinished);
-    } else {
-      container.style.overflowY = 'auto';
-    }
-  };
-  const fixScrollContainer = (container, scrollbarPadding, initialBodyOverflow) => {
-    iOSfix();
-    if (scrollbarPadding && initialBodyOverflow !== 'hidden') {
-      fixScrollbar();
-    }
-    setTimeout(() => {
-      container.scrollTop = 0;
-    });
-  };
-  const addClasses = (container, popup, params) => {
-    addClass(container, params.showClass.backdrop);
-    popup.style.setProperty('opacity', '0', 'important');
-    show(popup, 'grid');
-    setTimeout(() => {
-      addClass(popup, params.showClass.popup);
-      popup.style.removeProperty('opacity');
-    }, SHOW_CLASS_TIMEOUT);
-    addClass([document.documentElement, document.body], swalClasses.shown);
-    if (params.heightAuto && params.backdrop && !params.toast) {
-      addClass([document.documentElement, document.body], swalClasses['height-auto']);
-    }
-  };
-
-  const showLoading = (buttonToReplace) => {
-    let popup = getPopup();
-    if (!popup) {
-      new Swal();
-    }
-    popup = getPopup();
-    const loader = getLoader();
-    if (isToast()) {
-      hide(getIcon());
-    } else {
-      replaceButton(popup, buttonToReplace);
-    }
-    show(loader);
-    popup.setAttribute('data-loading', true);
-    popup.setAttribute('aria-busy', true);
-    popup.focus();
-  };
-  const replaceButton = (popup, buttonToReplace) => {
-    const actions = getActions();
-    const loader = getLoader();
-    if (!buttonToReplace && isVisible$1(getConfirmButton())) {
-      buttonToReplace = getConfirmButton();
-    }
-    show(actions);
-    if (buttonToReplace) {
-      hide(buttonToReplace);
-      loader.setAttribute('data-button-to-replace', buttonToReplace.className);
-    }
-    loader.parentNode.insertBefore(loader, buttonToReplace);
-    addClass([popup, actions], swalClasses.loading);
-  };
-
-  const handleInputOptionsAndValue = (instance, params) => {
-    if (params.input === 'select' || params.input === 'radio') {
-      handleInputOptions(instance, params);
-    } else if (['text', 'email', 'number', 'tel', 'textarea'].includes(params.input) && (hasToPromiseFn(params.inputValue) || isPromise(params.inputValue))) {
-      showLoading(getConfirmButton());
-      handleInputValue(instance, params);
-    }
-  };
-  const getInputValue = (instance, innerParams) => {
-    const input = instance.getInput();
-    if (!input) {
-      return null;
-    }
-    switch (innerParams.input) {
-      case 'checkbox':
-        return getCheckboxValue(input);
-      case 'radio':
-        return getRadioValue(input);
-      case 'file':
-        return getFileValue(input);
-      default:
-        return innerParams.inputAutoTrim ? input.value.trim() : input.value;
-    }
-  };
-  const getCheckboxValue = (input) => (input.checked ? 1 : 0);
-  const getRadioValue = (input) => (input.checked ? input.value : null);
-  const getFileValue = (input) => (input.files.length ? (input.getAttribute('multiple') !== null ? input.files : input.files[0]) : null);
-  const handleInputOptions = (instance, params) => {
-    const popup = getPopup();
-    const processInputOptions = (inputOptions) => populateInputOptions[params.input](popup, formatInputOptions(inputOptions), params);
-    if (hasToPromiseFn(params.inputOptions) || isPromise(params.inputOptions)) {
-      showLoading(getConfirmButton());
-      asPromise(params.inputOptions).then((inputOptions) => {
-        instance.hideLoading();
-        processInputOptions(inputOptions);
-      });
-    } else if (typeof params.inputOptions === 'object') {
-      processInputOptions(params.inputOptions);
-    } else {
-      error(`Unexpected type of inputOptions! Expected object, Map or Promise, got ${typeof params.inputOptions}`);
-    }
-  };
-  const handleInputValue = (instance, params) => {
-    const input = instance.getInput();
-    hide(input);
-    asPromise(params.inputValue)
-      .then((inputValue) => {
-        input.value = params.input === 'number' ? parseFloat(inputValue) || 0 : `${inputValue}`;
-        show(input);
-        input.focus();
-        instance.hideLoading();
-      })
-      .catch((err) => {
-        error(`Error in inputValue promise: ${err}`);
-        input.value = '';
-        show(input);
-        input.focus();
-        instance.hideLoading();
-      });
-  };
-  const populateInputOptions = {
-    select: (popup, inputOptions, params) => {
-      const select = getDirectChildByClass(popup, swalClasses.select);
-      const renderOption = (parent, optionLabel, optionValue) => {
-        const option = document.createElement('option');
-        option.value = optionValue;
-        setInnerHtml(option, optionLabel);
-        option.selected = isSelected(optionValue, params.inputValue);
-        parent.appendChild(option);
-      };
-      inputOptions.forEach((inputOption) => {
-        const optionValue = inputOption[0];
-        const optionLabel = inputOption[1];
-        if (Array.isArray(optionLabel)) {
-          const optgroup = document.createElement('optgroup');
-          optgroup.label = optionValue;
-          optgroup.disabled = false;
-          select.appendChild(optgroup);
-          optionLabel.forEach((o) => renderOption(optgroup, o[1], o[0]));
-        } else {
-          renderOption(select, optionLabel, optionValue);
-        }
-      });
-      select.focus();
-    },
-    radio: (popup, inputOptions, params) => {
-      const radio = getDirectChildByClass(popup, swalClasses.radio);
-      inputOptions.forEach((inputOption) => {
-        const radioValue = inputOption[0];
-        const radioLabel = inputOption[1];
-        const radioInput = document.createElement('input');
-        const radioLabelElement = document.createElement('label');
-        radioInput.type = 'radio';
-        radioInput.name = swalClasses.radio;
-        radioInput.value = radioValue;
-        if (isSelected(radioValue, params.inputValue)) {
-          radioInput.checked = true;
-        }
-        const label = document.createElement('span');
-        setInnerHtml(label, radioLabel);
-        label.className = swalClasses.label;
-        radioLabelElement.appendChild(radioInput);
-        radioLabelElement.appendChild(label);
-        radio.appendChild(radioLabelElement);
-      });
-      const radios = radio.querySelectorAll('input');
-      if (radios.length) {
-        radios[0].focus();
-      }
-    },
-  };
-  const formatInputOptions = (inputOptions) => {
-    const result = [];
-    if (typeof Map !== 'undefined' && inputOptions instanceof Map) {
-      inputOptions.forEach((value, key) => {
-        let valueFormatted = value;
-        if (typeof valueFormatted === 'object') {
-          valueFormatted = formatInputOptions(valueFormatted);
-        }
-        result.push([key, valueFormatted]);
-      });
-    } else {
-      Object.keys(inputOptions).forEach((key) => {
-        let valueFormatted = inputOptions[key];
-        if (typeof valueFormatted === 'object') {
-          valueFormatted = formatInputOptions(valueFormatted);
-        }
-        result.push([key, valueFormatted]);
-      });
-    }
-    return result;
-  };
-  const isSelected = (optionValue, inputValue) => {
-    return inputValue && inputValue.toString() === optionValue.toString();
-  };
-
-  function hideLoading() {
-    const innerParams = privateProps.innerParams.get(this);
-    if (!innerParams) {
-      return;
-    }
-    const domCache = privateProps.domCache.get(this);
-    hide(domCache.loader);
-    if (isToast()) {
-      if (innerParams.icon) {
-        show(getIcon());
-      }
-    } else {
-      showRelatedButton(domCache);
-    }
-    removeClass([domCache.popup, domCache.actions], swalClasses.loading);
-    domCache.popup.removeAttribute('aria-busy');
-    domCache.popup.removeAttribute('data-loading');
-    domCache.confirmButton.disabled = false;
-    domCache.denyButton.disabled = false;
-    domCache.cancelButton.disabled = false;
-  }
-  const showRelatedButton = (domCache) => {
-    const buttonToReplace = domCache.popup.getElementsByClassName(domCache.loader.getAttribute('data-button-to-replace'));
-    if (buttonToReplace.length) {
-      show(buttonToReplace[0], 'inline-block');
-    } else if (allButtonsAreHidden()) {
-      hide(domCache.actions);
-    }
-  };
-
-  function getInput(instance) {
-    const innerParams = privateProps.innerParams.get(instance || this);
-    const domCache = privateProps.domCache.get(instance || this);
-    if (!domCache) {
-      return null;
-    }
-    return getInput$1(domCache.popup, innerParams.input);
-  }
-
-  var privateMethods = {
-    swalPromiseResolve: new WeakMap(),
-    swalPromiseReject: new WeakMap(),
-  };
-
-  const isVisible = () => {
-    return isVisible$1(getPopup());
-  };
-  const clickConfirm = () => getConfirmButton() && getConfirmButton().click();
-  const clickDeny = () => getDenyButton() && getDenyButton().click();
-  const clickCancel = () => getCancelButton() && getCancelButton().click();
-
-  const removeKeydownHandler = (globalState) => {
-    if (globalState.keydownTarget && globalState.keydownHandlerAdded) {
-      globalState.keydownTarget.removeEventListener('keydown', globalState.keydownHandler, {
-        capture: globalState.keydownListenerCapture,
-      });
-      globalState.keydownHandlerAdded = false;
-    }
-  };
-  const addKeydownHandler = (instance, globalState, innerParams, dismissWith) => {
-    removeKeydownHandler(globalState);
-    if (!innerParams.toast) {
-      globalState.keydownHandler = (e) => keydownHandler(instance, e, dismissWith);
-      globalState.keydownTarget = innerParams.keydownListenerCapture ? window : getPopup();
-      globalState.keydownListenerCapture = innerParams.keydownListenerCapture;
-      globalState.keydownTarget.addEventListener('keydown', globalState.keydownHandler, {
-        capture: globalState.keydownListenerCapture,
-      });
-      globalState.keydownHandlerAdded = true;
-    }
-  };
-  const setFocus = (innerParams, index, increment) => {
-    const focusableElements = getFocusableElements();
-    if (focusableElements.length) {
-      index = index + increment;
-      if (index === focusableElements.length) {
-        index = 0;
-      } else if (index === -1) {
-        index = focusableElements.length - 1;
-      }
-      return focusableElements[index].focus();
-    }
-    getPopup().focus();
-  };
-  const arrowKeysNextButton = ['ArrowRight', 'ArrowDown'];
-  const arrowKeysPreviousButton = ['ArrowLeft', 'ArrowUp'];
-  const keydownHandler = (instance, e, dismissWith) => {
-    const innerParams = privateProps.innerParams.get(instance);
-    if (!innerParams) {
-      return;
-    }
-    if (e.isComposing || e.keyCode === 229) {
-      return;
-    }
-    if (innerParams.stopKeydownPropagation) {
-      e.stopPropagation();
-    }
-    if (e.key === 'Enter') {
-      handleEnter(instance, e, innerParams);
-    } else if (e.key === 'Tab') {
-      handleTab(e, innerParams);
-    } else if ([...arrowKeysNextButton, ...arrowKeysPreviousButton].includes(e.key)) {
-      handleArrows(e.key);
-    } else if (e.key === 'Escape') {
-      handleEsc(e, innerParams, dismissWith);
-    }
-  };
-  const handleEnter = (instance, e, innerParams) => {
-    if (!callIfFunction(innerParams.allowEnterKey)) {
-      return;
-    }
-    if (e.target && instance.getInput() && e.target.outerHTML === instance.getInput().outerHTML) {
-      if (['textarea', 'file'].includes(innerParams.input)) {
-        return;
-      }
-      clickConfirm();
-      e.preventDefault();
-    }
-  };
-  const handleTab = (e, innerParams) => {
-    const targetElement = e.target;
-    const focusableElements = getFocusableElements();
-    let btnIndex = -1;
-    for (let i = 0; i < focusableElements.length; i++) {
-      if (targetElement === focusableElements[i]) {
-        btnIndex = i;
-        break;
-      }
-    }
-    if (!e.shiftKey) {
-      setFocus(innerParams, btnIndex, 1);
-    } else {
-      setFocus(innerParams, btnIndex, -1);
-    }
-    e.stopPropagation();
-    e.preventDefault();
-  };
-  const handleArrows = (key) => {
-    const confirmButton = getConfirmButton();
-    const denyButton = getDenyButton();
-    const cancelButton = getCancelButton();
-    if (![confirmButton, denyButton, cancelButton].includes(document.activeElement)) {
-      return;
-    }
-    const sibling = arrowKeysNextButton.includes(key) ? 'nextElementSibling' : 'previousElementSibling';
-    let buttonToFocus = document.activeElement;
-    for (let i = 0; i < getActions().children.length; i++) {
-      buttonToFocus = buttonToFocus[sibling];
-      if (!buttonToFocus) {
-        return;
-      }
-      if (isVisible$1(buttonToFocus) && buttonToFocus instanceof HTMLButtonElement) {
-        break;
-      }
-    }
-    if (buttonToFocus instanceof HTMLButtonElement) {
-      buttonToFocus.focus();
-    }
-  };
-  const handleEsc = (e, innerParams, dismissWith) => {
-    if (callIfFunction(innerParams.allowEscapeKey)) {
-      e.preventDefault();
-      dismissWith(DismissReason.esc);
-    }
-  };
-
-  function removePopupAndResetState(instance, container, returnFocus, didClose) {
-    if (isToast()) {
-      triggerDidCloseAndDispose(instance, didClose);
-    } else {
-      restoreActiveElement(returnFocus).then(() => triggerDidCloseAndDispose(instance, didClose));
-      removeKeydownHandler(globalState);
-    }
-    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    if (isSafari) {
-      container.setAttribute('style', 'display:none !important');
-      container.removeAttribute('class');
-      container.innerHTML = '';
-    } else {
-      container.remove();
-    }
-    if (isModal()) {
-      undoScrollbar();
-      undoIOSfix();
-      unsetAriaHidden();
-    }
-    removeBodyClasses();
-  }
-  function removeBodyClasses() {
-    removeClass([document.documentElement, document.body], [swalClasses.shown, swalClasses['height-auto'], swalClasses['no-backdrop'], swalClasses['toast-shown']]);
-  }
-  function close(resolveValue) {
-    resolveValue = prepareResolveValue(resolveValue);
-    const swalPromiseResolve = privateMethods.swalPromiseResolve.get(this);
-    const didClose = triggerClosePopup(this);
-    if (this.isAwaitingPromise()) {
-      if (!resolveValue.isDismissed) {
-        handleAwaitingPromise(this);
-        swalPromiseResolve(resolveValue);
-      }
-    } else if (didClose) {
-      swalPromiseResolve(resolveValue);
-    }
-  }
-  function isAwaitingPromise() {
-    return !!privateProps.awaitingPromise.get(this);
-  }
-  const triggerClosePopup = (instance) => {
-    const popup = getPopup();
-    if (!popup) {
-      return false;
-    }
-    const innerParams = privateProps.innerParams.get(instance);
-    if (!innerParams || hasClass(popup, innerParams.hideClass.popup)) {
-      return false;
-    }
-    removeClass(popup, innerParams.showClass.popup);
-    addClass(popup, innerParams.hideClass.popup);
-    const backdrop = getContainer();
-    removeClass(backdrop, innerParams.showClass.backdrop);
-    addClass(backdrop, innerParams.hideClass.backdrop);
-    handlePopupAnimation(instance, popup, innerParams);
-    return true;
-  };
-  function rejectPromise(error) {
-    const rejectPromise = privateMethods.swalPromiseReject.get(this);
-    handleAwaitingPromise(this);
-    if (rejectPromise) {
-      rejectPromise(error);
-    }
-  }
-  const handleAwaitingPromise = (instance) => {
-    if (instance.isAwaitingPromise()) {
-      privateProps.awaitingPromise.delete(instance);
-      if (!privateProps.innerParams.get(instance)) {
-        instance._destroy();
-      }
-    }
-  };
-  const prepareResolveValue = (resolveValue) => {
-    if (typeof resolveValue === 'undefined') {
-      return {
-        isConfirmed: false,
-        isDenied: false,
-        isDismissed: true,
-      };
-    }
-    return Object.assign(
-      {
-        isConfirmed: false,
-        isDenied: false,
-        isDismissed: false,
-      },
-      resolveValue,
-    );
-  };
-  const handlePopupAnimation = (instance, popup, innerParams) => {
-    const container = getContainer();
-    const animationIsSupported = animationEndEvent && hasCssAnimation(popup);
-    if (typeof innerParams.willClose === 'function') {
-      innerParams.willClose(popup);
-    }
-    if (animationIsSupported) {
-      animatePopup(instance, popup, container, innerParams.returnFocus, innerParams.didClose);
-    } else {
-      removePopupAndResetState(instance, container, innerParams.returnFocus, innerParams.didClose);
-    }
-  };
-  const animatePopup = (instance, popup, container, returnFocus, didClose) => {
-    globalState.swalCloseEventFinishedCallback = removePopupAndResetState.bind(null, instance, container, returnFocus, didClose);
-    popup.addEventListener(animationEndEvent, function (e) {
-      if (e.target === popup) {
-        globalState.swalCloseEventFinishedCallback();
-        delete globalState.swalCloseEventFinishedCallback;
-      }
-    });
-  };
-  const triggerDidCloseAndDispose = (instance, didClose) => {
-    setTimeout(() => {
-      if (typeof didClose === 'function') {
-        didClose.bind(instance.params)();
-      }
-      instance._destroy();
-    });
-  };
-
-  function setButtonsDisabled(instance, buttons, disabled) {
-    const domCache = privateProps.domCache.get(instance);
-    buttons.forEach((button) => {
-      domCache[button].disabled = disabled;
-    });
-  }
-  function setInputDisabled(input, disabled) {
-    if (!input) {
-      return false;
-    }
-    if (input.type === 'radio') {
-      const radiosContainer = input.parentNode.parentNode;
-      const radios = radiosContainer.querySelectorAll('input');
-      for (let i = 0; i < radios.length; i++) {
-        radios[i].disabled = disabled;
-      }
-    } else {
-      input.disabled = disabled;
-    }
-  }
-  function enableButtons() {
-    setButtonsDisabled(this, ['confirmButton', 'denyButton', 'cancelButton'], false);
-  }
-  function disableButtons() {
-    setButtonsDisabled(this, ['confirmButton', 'denyButton', 'cancelButton'], true);
-  }
-  function enableInput() {
-    return setInputDisabled(this.getInput(), false);
-  }
-  function disableInput() {
-    return setInputDisabled(this.getInput(), true);
-  }
-
-  function showValidationMessage(error) {
-    const domCache = privateProps.domCache.get(this);
-    const params = privateProps.innerParams.get(this);
-    setInnerHtml(domCache.validationMessage, error);
-    domCache.validationMessage.className = swalClasses['validation-message'];
-    if (params.customClass && params.customClass.validationMessage) {
-      addClass(domCache.validationMessage, params.customClass.validationMessage);
-    }
-    show(domCache.validationMessage);
-    const input = this.getInput();
-    if (input) {
-      input.setAttribute('aria-invalid', true);
-      input.setAttribute('aria-describedby', swalClasses['validation-message']);
-      focusInput(input);
-      addClass(input, swalClasses.inputerror);
-    }
-  }
-  function resetValidationMessage() {
-    const domCache = privateProps.domCache.get(this);
-    if (domCache.validationMessage) {
-      hide(domCache.validationMessage);
-    }
-    const input = this.getInput();
-    if (input) {
-      input.removeAttribute('aria-invalid');
-      input.removeAttribute('aria-describedby');
-      removeClass(input, swalClasses.inputerror);
-    }
-  }
-
-  function getProgressSteps() {
-    const domCache = privateProps.domCache.get(this);
-    return domCache.progressSteps;
-  }
-
-  function update(params) {
-    const popup = getPopup();
-    const innerParams = privateProps.innerParams.get(this);
-    if (!popup || hasClass(popup, innerParams.hideClass.popup)) {
-      return warn(`You're trying to update the closed or closing popup, that won't work. Use the update() method in preConfirm parameter or show a new popup.`);
-    }
-    const validUpdatableParams = filterValidParams(params);
-    const updatedParams = Object.assign({}, innerParams, validUpdatableParams);
-    render(this, updatedParams);
-    privateProps.innerParams.set(this, updatedParams);
-    Object.defineProperties(this, {
-      params: {
-        value: Object.assign({}, this.params, params),
-        writable: false,
-        enumerable: true,
-      },
-    });
-  }
-  const filterValidParams = (params) => {
-    const validUpdatableParams = {};
-    Object.keys(params).forEach((param) => {
-      if (isUpdatableParameter(param)) {
-        validUpdatableParams[param] = params[param];
-      } else {
-        warn(`Invalid parameter to update: ${param}`);
-      }
-    });
-    return validUpdatableParams;
-  };
-
-  function _destroy() {
-    const domCache = privateProps.domCache.get(this);
-    const innerParams = privateProps.innerParams.get(this);
-    if (!innerParams) {
-      disposeWeakMaps(this);
-      return;
-    }
-    if (domCache.popup && globalState.swalCloseEventFinishedCallback) {
-      globalState.swalCloseEventFinishedCallback();
-      delete globalState.swalCloseEventFinishedCallback;
-    }
-    if (globalState.deferDisposalTimer) {
-      clearTimeout(globalState.deferDisposalTimer);
-      delete globalState.deferDisposalTimer;
-    }
-    if (typeof innerParams.didDestroy === 'function') {
-      innerParams.didDestroy();
-    }
-    disposeSwal(this);
-  }
-  const disposeSwal = (instance) => {
-    disposeWeakMaps(instance);
-    delete instance.params;
-    delete globalState.keydownHandler;
-    delete globalState.keydownTarget;
-    delete globalState.currentInstance;
-  };
-  const disposeWeakMaps = (instance) => {
-    if (instance.isAwaitingPromise()) {
-      unsetWeakMaps(privateProps, instance);
-      privateProps.awaitingPromise.set(instance, true);
-    } else {
-      unsetWeakMaps(privateMethods, instance);
-      unsetWeakMaps(privateProps, instance);
-    }
-  };
-  const unsetWeakMaps = (obj, instance) => {
-    for (const i in obj) {
-      obj[i].delete(instance);
-    }
-  };
-
-  var instanceMethods = /*#__PURE__*/ Object.freeze({
-    __proto__: null,
-    hideLoading: hideLoading,
-    disableLoading: hideLoading,
-    getInput: getInput,
-    close: close,
-    isAwaitingPromise: isAwaitingPromise,
-    rejectPromise: rejectPromise,
-    handleAwaitingPromise: handleAwaitingPromise,
-    closePopup: close,
-    closeModal: close,
-    closeToast: close,
-    enableButtons: enableButtons,
-    disableButtons: disableButtons,
-    enableInput: enableInput,
-    disableInput: disableInput,
-    showValidationMessage: showValidationMessage,
-    resetValidationMessage: resetValidationMessage,
-    getProgressSteps: getProgressSteps,
-    update: update,
-    _destroy: _destroy,
-  });
-
-  const handleConfirmButtonClick = (instance) => {
-    const innerParams = privateProps.innerParams.get(instance);
-    instance.disableButtons();
-    if (innerParams.input) {
-      handleConfirmOrDenyWithInput(instance, 'confirm');
-    } else {
-      confirm(instance, true);
-    }
-  };
-  const handleDenyButtonClick = (instance) => {
-    const innerParams = privateProps.innerParams.get(instance);
-    instance.disableButtons();
-    if (innerParams.returnInputValueOnDeny) {
-      handleConfirmOrDenyWithInput(instance, 'deny');
-    } else {
-      deny(instance, false);
-    }
-  };
-  const handleCancelButtonClick = (instance, dismissWith) => {
-    instance.disableButtons();
-    dismissWith(DismissReason.cancel);
-  };
-  const handleConfirmOrDenyWithInput = (instance, type) => {
-    const innerParams = privateProps.innerParams.get(instance);
-    if (!innerParams.input) {
-      return error(`The "input" parameter is needed to be set when using returnInputValueOn${capitalizeFirstLetter(type)}`);
-    }
-    const inputValue = getInputValue(instance, innerParams);
-    if (innerParams.inputValidator) {
-      handleInputValidator(instance, inputValue, type);
-    } else if (!instance.getInput().checkValidity()) {
-      instance.enableButtons();
-      instance.showValidationMessage(innerParams.validationMessage);
-    } else if (type === 'deny') {
-      deny(instance, inputValue);
-    } else {
-      confirm(instance, inputValue);
-    }
-  };
-  const handleInputValidator = (instance, inputValue, type) => {
-    const innerParams = privateProps.innerParams.get(instance);
-    instance.disableInput();
-    const validationPromise = Promise.resolve().then(() => asPromise(innerParams.inputValidator(inputValue, innerParams.validationMessage)));
-    validationPromise.then((validationMessage) => {
-      instance.enableButtons();
-      instance.enableInput();
-      if (validationMessage) {
-        instance.showValidationMessage(validationMessage);
-      } else if (type === 'deny') {
-        deny(instance, inputValue);
-      } else {
-        confirm(instance, inputValue);
-      }
-    });
-  };
-  const deny = (instance, value) => {
-    const innerParams = privateProps.innerParams.get(instance || undefined);
-    if (innerParams.showLoaderOnDeny) {
-      showLoading(getDenyButton());
-    }
-    if (innerParams.preDeny) {
-      privateProps.awaitingPromise.set(instance || undefined, true);
-      const preDenyPromise = Promise.resolve().then(() => asPromise(innerParams.preDeny(value, innerParams.validationMessage)));
-      preDenyPromise
-        .then((preDenyValue) => {
-          if (preDenyValue === false) {
-            instance.hideLoading();
-            handleAwaitingPromise(instance);
-          } else {
-            instance.closePopup({ isDenied: true, value: typeof preDenyValue === 'undefined' ? value : preDenyValue });
-          }
-        })
-        .catch((error) => rejectWith(instance || undefined, error));
-    } else {
-      instance.closePopup({ isDenied: true, value });
-    }
-  };
-  const succeedWith = (instance, value) => {
-    instance.closePopup({ isConfirmed: true, value });
-  };
-  const rejectWith = (instance, error) => {
-    instance.rejectPromise(error);
-  };
-  const confirm = (instance, value) => {
-    const innerParams = privateProps.innerParams.get(instance || undefined);
-    if (innerParams.showLoaderOnConfirm) {
-      showLoading();
-    }
-    if (innerParams.preConfirm) {
-      instance.resetValidationMessage();
-      privateProps.awaitingPromise.set(instance || undefined, true);
-      const preConfirmPromise = Promise.resolve().then(() => asPromise(innerParams.preConfirm(value, innerParams.validationMessage)));
-      preConfirmPromise
-        .then((preConfirmValue) => {
-          if (isVisible$1(getValidationMessage()) || preConfirmValue === false) {
-            instance.hideLoading();
-            handleAwaitingPromise(instance);
-          } else {
-            succeedWith(instance, typeof preConfirmValue === 'undefined' ? value : preConfirmValue);
-          }
-        })
-        .catch((error) => rejectWith(instance || undefined, error));
-    } else {
-      succeedWith(instance, value);
-    }
-  };
-
-  const handlePopupClick = (instance, domCache, dismissWith) => {
-    const innerParams = privateProps.innerParams.get(instance);
-    if (innerParams.toast) {
-      handleToastClick(instance, domCache, dismissWith);
-    } else {
-      handleModalMousedown(domCache);
-      handleContainerMousedown(domCache);
-      handleModalClick(instance, domCache, dismissWith);
-    }
-  };
-  const handleToastClick = (instance, domCache, dismissWith) => {
-    domCache.popup.onclick = () => {
-      const innerParams = privateProps.innerParams.get(instance);
-      if (innerParams && (isAnyButtonShown(innerParams) || innerParams.timer || innerParams.input)) {
-        return;
-      }
-      dismissWith(DismissReason.close);
-    };
-  };
-  const isAnyButtonShown = (innerParams) => {
-    return innerParams.showConfirmButton || innerParams.showDenyButton || innerParams.showCancelButton || innerParams.showCloseButton;
-  };
-  let ignoreOutsideClick = false;
-  const handleModalMousedown = (domCache) => {
-    domCache.popup.onmousedown = () => {
-      domCache.container.onmouseup = function (e) {
-        domCache.container.onmouseup = undefined;
-        if (e.target === domCache.container) {
-          ignoreOutsideClick = true;
-        }
-      };
-    };
-  };
-  const handleContainerMousedown = (domCache) => {
-    domCache.container.onmousedown = () => {
-      domCache.popup.onmouseup = function (e) {
-        domCache.popup.onmouseup = undefined;
-        if (e.target === domCache.popup || domCache.popup.contains(e.target)) {
-          ignoreOutsideClick = true;
-        }
-      };
-    };
-  };
-  const handleModalClick = (instance, domCache, dismissWith) => {
-    domCache.container.onclick = (e) => {
-      const innerParams = privateProps.innerParams.get(instance);
-      if (ignoreOutsideClick) {
-        ignoreOutsideClick = false;
-        return;
-      }
-      if (e.target === domCache.container && callIfFunction(innerParams.allowOutsideClick)) {
-        dismissWith(DismissReason.backdrop);
-      }
-    };
-  };
-
-  const isJqueryElement = (elem) => typeof elem === 'object' && elem.jquery;
-  const isElement = (elem) => elem instanceof Element || isJqueryElement(elem);
-  const argsToParams = (args) => {
-    const params = {};
-    if (typeof args[0] === 'object' && !isElement(args[0])) {
-      Object.assign(params, args[0]);
-    } else {
-      ['title', 'html', 'icon'].forEach((name, index) => {
-        const arg = args[index];
-        if (typeof arg === 'string' || isElement(arg)) {
-          params[name] = arg;
-        } else if (arg !== undefined) {
-          error(`Unexpected type of ${name}! Expected "string" or "Element", got ${typeof arg}`);
-        }
-      });
-    }
-    return params;
-  };
-
-  function fire(...args) {
-    const Swal = this;
-    return new Swal(...args);
-  }
-
-  function mixin(mixinParams) {
-    class MixinSwal extends this {
-      _main(params, priorityMixinParams) {
-        return super._main(params, Object.assign({}, mixinParams, priorityMixinParams));
-      }
-    }
-    return MixinSwal;
-  }
-
-  const getTimerLeft = () => {
-    return globalState.timeout && globalState.timeout.getTimerLeft();
-  };
-  const stopTimer = () => {
-    if (globalState.timeout) {
-      stopTimerProgressBar();
-      return globalState.timeout.stop();
-    }
-  };
-  const resumeTimer = () => {
-    if (globalState.timeout) {
-      const remaining = globalState.timeout.start();
-      animateTimerProgressBar(remaining);
-      return remaining;
-    }
-  };
-  const toggleTimer = () => {
-    const timer = globalState.timeout;
-    return timer && (timer.running ? stopTimer() : resumeTimer());
-  };
-  const increaseTimer = (n) => {
-    if (globalState.timeout) {
-      const remaining = globalState.timeout.increase(n);
-      animateTimerProgressBar(remaining, true);
-      return remaining;
-    }
-  };
-  const isTimerRunning = () => {
-    return globalState.timeout && globalState.timeout.isRunning();
-  };
-
-  let bodyClickListenerAdded = false;
-  const clickHandlers = {};
-  function bindClickHandler(attr = 'data-swal-template') {
-    clickHandlers[attr] = this;
-    if (!bodyClickListenerAdded) {
-      document.body.addEventListener('click', bodyClickListener);
-      bodyClickListenerAdded = true;
-    }
-  }
-  const bodyClickListener = (event) => {
-    for (let el = event.target; el && el !== document; el = el.parentNode) {
-      for (const attr in clickHandlers) {
-        const template = el.getAttribute(attr);
-        if (template) {
-          clickHandlers[attr].fire({ template });
-          return;
-        }
-      }
-    }
-  };
-
-  var staticMethods = /*#__PURE__*/ Object.freeze({
-    __proto__: null,
-    isValidParameter: isValidParameter,
-    isUpdatableParameter: isUpdatableParameter,
-    isDeprecatedParameter: isDeprecatedParameter,
-    argsToParams: argsToParams,
-    getContainer: getContainer,
-    getPopup: getPopup,
-    getTitle: getTitle,
-    getHtmlContainer: getHtmlContainer,
-    getImage: getImage,
-    getIcon: getIcon,
-    getInputLabel: getInputLabel,
-    getCloseButton: getCloseButton,
-    getActions: getActions,
-    getConfirmButton: getConfirmButton,
-    getDenyButton: getDenyButton,
-    getCancelButton: getCancelButton,
-    getLoader: getLoader,
-    getFooter: getFooter,
-    getTimerProgressBar: getTimerProgressBar,
-    getFocusableElements: getFocusableElements,
-    getValidationMessage: getValidationMessage,
-    isLoading: isLoading,
-    isVisible: isVisible,
-    clickConfirm: clickConfirm,
-    clickDeny: clickDeny,
-    clickCancel: clickCancel,
-    fire: fire,
-    mixin: mixin,
-    showLoading: showLoading,
-    enableLoading: showLoading,
-    getTimerLeft: getTimerLeft,
-    stopTimer: stopTimer,
-    resumeTimer: resumeTimer,
-    toggleTimer: toggleTimer,
-    increaseTimer: increaseTimer,
-    isTimerRunning: isTimerRunning,
-    bindClickHandler: bindClickHandler,
-  });
-
-  let currentInstance;
-  class SweetAlert {
-    constructor(...args) {
-      if (typeof window === 'undefined') {
-        return;
-      }
-      currentInstance = this;
-      const outerParams = Object.freeze(this.constructor.argsToParams(args));
-      Object.defineProperties(this, {
-        params: {
-          value: outerParams,
-          writable: false,
-          enumerable: true,
-          configurable: true,
-        },
-      });
-      const promise = this._main(this.params);
-      privateProps.promise.set(this, promise);
-    }
-    _main(userParams, mixinParams = {}) {
-      showWarningsForParams(Object.assign({}, mixinParams, userParams));
-      if (globalState.currentInstance) {
-        globalState.currentInstance._destroy();
-        if (isModal()) {
-          unsetAriaHidden();
-        }
-      }
-      globalState.currentInstance = this;
-      const innerParams = prepareParams(userParams, mixinParams);
-      setParameters(innerParams);
-      Object.freeze(innerParams);
-      if (globalState.timeout) {
-        globalState.timeout.stop();
-        delete globalState.timeout;
-      }
-      clearTimeout(globalState.restoreFocusTimeout);
-      const domCache = populateDomCache(this);
-      render(this, innerParams);
-      privateProps.innerParams.set(this, innerParams);
-      return swalPromise(this, domCache, innerParams);
-    }
-    then(onFulfilled) {
-      const promise = privateProps.promise.get(this);
-      return promise.then(onFulfilled);
-    }
-    finally(onFinally) {
-      const promise = privateProps.promise.get(this);
-      return promise.finally(onFinally);
-    }
-  }
-  const swalPromise = (instance, domCache, innerParams) => {
-    return new Promise((resolve, reject) => {
-      const dismissWith = (dismiss) => {
-        instance.closePopup({ isDismissed: true, dismiss });
-      };
-      privateMethods.swalPromiseResolve.set(instance, resolve);
-      privateMethods.swalPromiseReject.set(instance, reject);
-      domCache.confirmButton.onclick = () => handleConfirmButtonClick(instance);
-      domCache.denyButton.onclick = () => handleDenyButtonClick(instance);
-      domCache.cancelButton.onclick = () => handleCancelButtonClick(instance, dismissWith);
-      domCache.closeButton.onclick = () => dismissWith(DismissReason.close);
-      handlePopupClick(instance, domCache, dismissWith);
-      addKeydownHandler(instance, globalState, innerParams, dismissWith);
-      handleInputOptionsAndValue(instance, innerParams);
-      openPopup(innerParams);
-      setupTimer(globalState, innerParams, dismissWith);
-      initFocus(domCache, innerParams);
-      setTimeout(() => {
-        domCache.container.scrollTop = 0;
-      });
-    });
-  };
-  const prepareParams = (userParams, mixinParams) => {
-    const templateParams = getTemplateParams(userParams);
-    const params = Object.assign({}, defaultParams, mixinParams, templateParams, userParams);
-    params.showClass = Object.assign({}, defaultParams.showClass, params.showClass);
-    params.hideClass = Object.assign({}, defaultParams.hideClass, params.hideClass);
-    return params;
-  };
-  const populateDomCache = (instance) => {
-    const domCache = {
-      popup: getPopup(),
-      container: getContainer(),
-      actions: getActions(),
-      confirmButton: getConfirmButton(),
-      denyButton: getDenyButton(),
-      cancelButton: getCancelButton(),
-      loader: getLoader(),
-      closeButton: getCloseButton(),
-      validationMessage: getValidationMessage(),
-      progressSteps: getProgressSteps$1(),
-    };
-    privateProps.domCache.set(instance, domCache);
-    return domCache;
-  };
-  const setupTimer = (globalState, innerParams, dismissWith) => {
-    const timerProgressBar = getTimerProgressBar();
-    hide(timerProgressBar);
-    if (innerParams.timer) {
-      globalState.timeout = new Timer(() => {
-        dismissWith('timer');
-        delete globalState.timeout;
-      }, innerParams.timer);
-      if (innerParams.timerProgressBar) {
-        show(timerProgressBar);
-        applyCustomClass(timerProgressBar, innerParams, 'timerProgressBar');
-        setTimeout(() => {
-          if (globalState.timeout && globalState.timeout.running) {
-            animateTimerProgressBar(innerParams.timer);
-          }
-        });
-      }
-    }
-  };
-  const initFocus = (domCache, innerParams) => {
-    if (innerParams.toast) {
-      return;
-    }
-    if (!callIfFunction(innerParams.allowEnterKey)) {
-      return blurActiveElement();
-    }
-    if (!focusButton(domCache, innerParams)) {
-      setFocus(innerParams, -1, 1);
-    }
-  };
-  const focusButton = (domCache, innerParams) => {
-    if (innerParams.focusDeny && isVisible$1(domCache.denyButton)) {
-      domCache.denyButton.focus();
-      return true;
-    }
-    if (innerParams.focusCancel && isVisible$1(domCache.cancelButton)) {
-      domCache.cancelButton.focus();
-      return true;
-    }
-    if (innerParams.focusConfirm && isVisible$1(domCache.confirmButton)) {
-      domCache.confirmButton.focus();
-      return true;
-    }
-    return false;
-  };
-  const blurActiveElement = () => {
-    if (document.activeElement instanceof HTMLElement && typeof document.activeElement.blur === 'function') {
-      document.activeElement.blur();
-    }
-  };
-  Object.assign(SweetAlert.prototype, instanceMethods);
-  Object.assign(SweetAlert, staticMethods);
-  Object.keys(instanceMethods).forEach((key) => {
-    SweetAlert[key] = function (...args) {
-      if (currentInstance) {
-        return currentInstance[key](...args);
-      }
-    };
-  });
-  SweetAlert.DismissReason = DismissReason;
-  SweetAlert.version = '11.4.14';
-
-  const Swal = SweetAlert;
-  Swal.default = Swal;
-
   /* eslint-disable camelcase */
   // Encapsulation for the console
   function logScript(...text) {
@@ -3662,7 +1000,7 @@
     },
   };
   // Replacement function for GM_getValue allowing for debugging in console
-  function getValueGM(name, defaultValue) {
+  function getValueGM(name, defaultValue = null) {
     if (typeof GM_getValue !== 'undefined') return GM_getValue(name, defaultValue);
     logScript('Getting: ', name, '=', defaultValue);
     return defaultValue;
@@ -3702,12 +1040,16 @@
   const isMobile = W.matchMedia('screen and (max-width: 1024px)').matches;
 
   const cache = {
-    zip: new JSZip(),
+    zip: new JSZip__default['default'](),
     downloadFiles: 0,
     Data: {},
   };
-  const getExtension = (mimeType) => ((/image\/(?<ext>jpe?g|png|webp)/.exec(mimeType) || {}).groups || {}).ext || '' || 'png';
-  const getFilename = (name, index, total, ext) => `${name}${(index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, '0')}.${ext.replace('jpeg', 'jpg')}`;
+  const getExtension = (mimeType) =>
+    ((/image\/(?<ext>jpe?g|png|webp)/.exec(mimeType) || {}).groups || {}).ext || '' || 'png';
+  const getFilename = (name, index, total, ext) =>
+    `${name}${(index + 1)
+      .toString()
+      .padStart(Math.floor(Math.log10(total)) + 1, '0')}.${ext.replace('jpeg', 'jpg')}`;
   // Generate Zip File for download
   function generateZip() {
     // Source: http://stackoverflow.com/questions/8778863/downloading-an-image-using-xmlhttprequest-in-a-userscript/8781262#8781262
@@ -3717,8 +1059,8 @@
       const filenames = (() => {
         const result = [];
         for (let i = 0; i < images.length; i += 1) {
-          const img = $(images[i]);
-          const filename = img.attr('src').split(/[?#]/)[0].split('/').pop();
+          const $img = $(images[i]);
+          const filename = $img.attr('src')?.split(/[?#]/)[0].split('/').pop() ?? '';
           const match = filenameRegex.exec(filename);
           if (!match) break;
           const { name, index, ext } = match.groups;
@@ -3731,10 +1073,15 @@
       })();
       images.get().forEach((value, index) => {
         const img = $(value);
-        const src = img.attr('src');
+        const src = img.attr('src') ?? '';
         const base64 = /^data:(?<mimeType>image\/\w+);base64,+(?<data>.+)/.exec(src);
         if (base64) {
-          const filename = getFilename('Page ', index, images.length, getExtension(base64.groups.mimeType));
+          const filename = getFilename(
+            'Page ',
+            index,
+            images.length,
+            getExtension(base64.groups?.mimeType),
+          );
           cache.zip.file(filename, base64.groups.data, {
             base64: true,
             createFolders: true,
@@ -3749,13 +1096,18 @@
               overrideMimeType: 'text/plain; charset=x-user-defined',
               responseType: 'blob',
               onload(request) {
-                const filename = filenames[index] || getFilename('Page ', index, images.length, getExtension(request.response.type));
+                const filename =
+                  filenames[index] ||
+                  getFilename('Page ', index, images.length, getExtension(request.response.type));
                 cache.zip.file(filename, request.response, {
                   base64: true,
                   createFolders: true,
                   compression: 'DEFLATE',
                 });
-                logScript(`${filename} Added to Zip as Base64 Image, From: ${src}, Data:`, request.response);
+                logScript(
+                  `${filename} Added to Zip as Base64 Image, From: ${src}, Data:`,
+                  request.response,
+                );
                 cache.downloadFiles += 1;
               },
             });
@@ -3778,292 +1130,16 @@
             type: 'blob',
           })
           .then((content) => {
-            blobLink.href = W.URL.createObjectURL(content);
+            blobLink.href = window.URL.createObjectURL(content);
             logScript('Download Ready');
             $('#blob')[0].click();
           });
       } catch (e) {
         logScript(e);
-        blobLink.innerHTML += ' (not supported on this browser)';
+        // blobLink.innerHTML += ' (not supported on this browser)';
       }
     }
   }
-
-  var commonjsGlobal =
-    typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-  var nprogress = { exports: {} };
-
-  (function (module, exports) {
-    (function (root, factory) {
-      {
-        module.exports = factory();
-      }
-    })(commonjsGlobal, function () {
-      var NProgress = {};
-      NProgress.version = '0.2.0';
-      var Settings = (NProgress.settings = {
-        minimum: 0.08,
-        easing: 'ease',
-        positionUsing: '',
-        speed: 200,
-        trickle: true,
-        trickleRate: 0.02,
-        trickleSpeed: 800,
-        showSpinner: true,
-        barSelector: '[role="bar"]',
-        spinnerSelector: '[role="spinner"]',
-        parent: 'body',
-        template: '<div class="bar" role="bar"><div class="peg"></div></div><div class="spinner" role="spinner"><div class="spinner-icon"></div></div>',
-      });
-      NProgress.configure = function (options) {
-        var key, value;
-        for (key in options) {
-          value = options[key];
-          if (value !== undefined && options.hasOwnProperty(key)) Settings[key] = value;
-        }
-        return this;
-      };
-      NProgress.status = null;
-      NProgress.set = function (n) {
-        var started = NProgress.isStarted();
-        n = clamp(n, Settings.minimum, 1);
-        NProgress.status = n === 1 ? null : n;
-        var progress = NProgress.render(!started),
-          bar = progress.querySelector(Settings.barSelector),
-          speed = Settings.speed,
-          ease = Settings.easing;
-        progress.offsetWidth;
-        queue(function (next) {
-          if (Settings.positionUsing === '') Settings.positionUsing = NProgress.getPositioningCSS();
-          css(bar, barPositionCSS(n, speed, ease));
-          if (n === 1) {
-            css(progress, {
-              transition: 'none',
-              opacity: 1,
-            });
-            progress.offsetWidth;
-            setTimeout(function () {
-              css(progress, {
-                transition: 'all ' + speed + 'ms linear',
-                opacity: 0,
-              });
-              setTimeout(function () {
-                NProgress.remove();
-                next();
-              }, speed);
-            }, speed);
-          } else {
-            setTimeout(next, speed);
-          }
-        });
-        return this;
-      };
-      NProgress.isStarted = function () {
-        return typeof NProgress.status === 'number';
-      };
-      NProgress.start = function () {
-        if (!NProgress.status) NProgress.set(0);
-        var work = function () {
-          setTimeout(function () {
-            if (!NProgress.status) return;
-            NProgress.trickle();
-            work();
-          }, Settings.trickleSpeed);
-        };
-        if (Settings.trickle) work();
-        return this;
-      };
-      NProgress.done = function (force) {
-        if (!force && !NProgress.status) return this;
-        return NProgress.inc(0.3 + 0.5 * Math.random()).set(1);
-      };
-      NProgress.inc = function (amount) {
-        var n = NProgress.status;
-        if (!n) {
-          return NProgress.start();
-        } else {
-          if (typeof amount !== 'number') {
-            amount = (1 - n) * clamp(Math.random() * n, 0.1, 0.95);
-          }
-          n = clamp(n + amount, 0, 0.994);
-          return NProgress.set(n);
-        }
-      };
-      NProgress.trickle = function () {
-        return NProgress.inc(Math.random() * Settings.trickleRate);
-      };
-      (function () {
-        var initial = 0,
-          current = 0;
-        NProgress.promise = function ($promise) {
-          if (!$promise || $promise.state() === 'resolved') {
-            return this;
-          }
-          if (current === 0) {
-            NProgress.start();
-          }
-          initial++;
-          current++;
-          $promise.always(function () {
-            current--;
-            if (current === 0) {
-              initial = 0;
-              NProgress.done();
-            } else {
-              NProgress.set((initial - current) / initial);
-            }
-          });
-          return this;
-        };
-      })();
-      NProgress.render = function (fromStart) {
-        if (NProgress.isRendered()) return document.getElementById('nprogress');
-        addClass(document.documentElement, 'nprogress-busy');
-        var progress = document.createElement('div');
-        progress.id = 'nprogress';
-        progress.innerHTML = Settings.template;
-        var bar = progress.querySelector(Settings.barSelector),
-          perc = fromStart ? '-100' : toBarPerc(NProgress.status || 0),
-          parent = document.querySelector(Settings.parent),
-          spinner;
-        css(bar, {
-          transition: 'all 0 linear',
-          transform: 'translate3d(' + perc + '%,0,0)',
-        });
-        if (!Settings.showSpinner) {
-          spinner = progress.querySelector(Settings.spinnerSelector);
-          spinner && removeElement(spinner);
-        }
-        if (parent != document.body) {
-          addClass(parent, 'nprogress-custom-parent');
-        }
-        parent.appendChild(progress);
-        return progress;
-      };
-      NProgress.remove = function () {
-        removeClass(document.documentElement, 'nprogress-busy');
-        removeClass(document.querySelector(Settings.parent), 'nprogress-custom-parent');
-        var progress = document.getElementById('nprogress');
-        progress && removeElement(progress);
-      };
-      NProgress.isRendered = function () {
-        return !!document.getElementById('nprogress');
-      };
-      NProgress.getPositioningCSS = function () {
-        var bodyStyle = document.body.style;
-        var vendorPrefix =
-          'WebkitTransform' in bodyStyle ? 'Webkit' : 'MozTransform' in bodyStyle ? 'Moz' : 'msTransform' in bodyStyle ? 'ms' : 'OTransform' in bodyStyle ? 'O' : '';
-        if (vendorPrefix + 'Perspective' in bodyStyle) {
-          return 'translate3d';
-        } else if (vendorPrefix + 'Transform' in bodyStyle) {
-          return 'translate';
-        } else {
-          return 'margin';
-        }
-      };
-      function clamp(n, min, max) {
-        if (n < min) return min;
-        if (n > max) return max;
-        return n;
-      }
-      function toBarPerc(n) {
-        return (-1 + n) * 100;
-      }
-      function barPositionCSS(n, speed, ease) {
-        var barCSS;
-        if (Settings.positionUsing === 'translate3d') {
-          barCSS = { transform: 'translate3d(' + toBarPerc(n) + '%,0,0)' };
-        } else if (Settings.positionUsing === 'translate') {
-          barCSS = { transform: 'translate(' + toBarPerc(n) + '%,0)' };
-        } else {
-          barCSS = { 'margin-left': toBarPerc(n) + '%' };
-        }
-        barCSS.transition = 'all ' + speed + 'ms ' + ease;
-        return barCSS;
-      }
-      var queue = (function () {
-        var pending = [];
-        function next() {
-          var fn = pending.shift();
-          if (fn) {
-            fn(next);
-          }
-        }
-        return function (fn) {
-          pending.push(fn);
-          if (pending.length == 1) next();
-        };
-      })();
-      var css = (function () {
-        var cssPrefixes = ['Webkit', 'O', 'Moz', 'ms'],
-          cssProps = {};
-        function camelCase(string) {
-          return string.replace(/^-ms-/, 'ms-').replace(/-([\da-z])/gi, function (match, letter) {
-            return letter.toUpperCase();
-          });
-        }
-        function getVendorProp(name) {
-          var style = document.body.style;
-          if (name in style) return name;
-          var i = cssPrefixes.length,
-            capName = name.charAt(0).toUpperCase() + name.slice(1),
-            vendorName;
-          while (i--) {
-            vendorName = cssPrefixes[i] + capName;
-            if (vendorName in style) return vendorName;
-          }
-          return name;
-        }
-        function getStyleProp(name) {
-          name = camelCase(name);
-          return cssProps[name] || (cssProps[name] = getVendorProp(name));
-        }
-        function applyCss(element, prop, value) {
-          prop = getStyleProp(prop);
-          element.style[prop] = value;
-        }
-        return function (element, properties) {
-          var args = arguments,
-            prop,
-            value;
-          if (args.length == 2) {
-            for (prop in properties) {
-              value = properties[prop];
-              if (value !== undefined && properties.hasOwnProperty(prop)) applyCss(element, prop, value);
-            }
-          } else {
-            applyCss(element, args[1], args[2]);
-          }
-        };
-      })();
-      function hasClass(element, name) {
-        var list = typeof element == 'string' ? element : classList(element);
-        return list.indexOf(' ' + name + ' ') >= 0;
-      }
-      function addClass(element, name) {
-        var oldList = classList(element),
-          newList = oldList + name;
-        if (hasClass(oldList, name)) return;
-        element.className = newList.substring(1);
-      }
-      function removeClass(element, name) {
-        var oldList = classList(element),
-          newList;
-        if (!hasClass(element, name)) return;
-        newList = oldList.replace(' ' + name + ' ', ' ');
-        element.className = newList.substring(1, newList.length - 1);
-      }
-      function classList(element) {
-        return (' ' + (element.className || '') + ' ').replace(/\s+/gi, ' ');
-      }
-      function removeElement(element) {
-        element && element.parentNode && element.parentNode.removeChild(element);
-      }
-      return NProgress;
-    });
-  })(nprogress);
-  var NProgress = nprogress.exports;
 
   // Configuration
   const settings = {
@@ -4186,7 +1262,11 @@
     }
     return (
       // eslint-disable-next-line eqeqeq
-      value == false || value === 0 || typeof value === 'undefined' || value == null || (typeof value === 'object' && isEmptyObject(value))
+      value == false ||
+      value === 0 ||
+      typeof value === 'undefined' ||
+      value == null ||
+      (typeof value === 'object' && isEmptyObject(value))
     );
   }
 
@@ -4236,7 +1316,11 @@
       if (zoom === 1000) {
         $(value).width(window.innerWidth);
       } else if (zoom === -1000) {
-        $(value).height(window.innerHeight + ($('#Navigation').hasClass('disabled') ? 0 : -34) + ($('#Chapter').hasClass('WebComic') ? 0 : -35));
+        $(value).height(
+          window.innerHeight +
+            ($('#Navigation').hasClass('disabled') ? 0 : -34) +
+            ($('#Chapter').hasClass('WebComic') ? 0 : -35),
+        );
       } else {
         $(value).width($(value).prop('naturalWidth') * (zoom / 100));
       }
@@ -4268,9 +1352,11 @@
     const percentage = Math.floor((loaded / total) * 100);
     $('title').html(`(${percentage}%) ${$('#series i').first().text()}`);
     $('#Counters i, #NavigationCounters i').html(loaded.toString());
-    NProgress.configure({
-      showSpinner: false,
-    }).set(loaded / total);
+    NProgress__default['default']
+      .configure({
+        showSpinner: false,
+      })
+      .set(loaded / total);
     logScript(`Progress: ${percentage}%`);
     if (loaded === total) onImagesDone();
   }
@@ -4334,7 +1420,10 @@
       });
     } else {
       $(`#PageImg${index}`)
-        .attr('data-src', 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==')
+        .attr(
+          'data-src',
+          'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
+        )
         .unveil({
           offset: 2000,
         })
@@ -4364,13 +1453,21 @@
   // use a list of pages to fill the viewer
   function loadMangaPages(begin, manga) {
     return manga.listPages?.map((url, index) =>
-      index >= begin ? delayAdd(url, (manga.timer || settings.Timer) * (index - begin)).then((response) => addPage(manga, index + 1, response)) : null,
+      index >= begin
+        ? delayAdd(url, (manga.timer || settings.Timer) * (index - begin)).then((response) =>
+            addPage(manga, index + 1, response),
+          )
+        : null,
     );
   }
   // use a list of images to fill the viewer
   function loadMangaImages(begin, manga) {
     return manga.listImages?.map((src, index) =>
-      index >= begin ? delayAdd(src, (manga.timer || settings.Timer) * (index - begin)).then((response) => addImg(index + 1, response)) : null,
+      index >= begin
+        ? delayAdd(src, (manga.timer || settings.Timer) * (index - begin)).then((response) =>
+            addImg(index + 1, response),
+          )
+        : null,
     );
   }
   // Entry point for loading hte Manga pages
@@ -4402,537 +1499,7 @@
     }
   }
 
-  var colorScheme = { exports: {} };
-
-  (function (module) {
-    (function () {
-      var ColorScheme,
-        slice = [].slice;
-      ColorScheme = (function () {
-        var clone, l, len, ref, typeIsArray, word;
-        typeIsArray =
-          Array.isArray ||
-          function (value) {
-            return {}.toString.call(value) === '[object Array]';
-          };
-        ColorScheme.SCHEMES = {};
-        ref = 'mono monochromatic contrast triade tetrade analogic'.split(/\s+/);
-        for (l = 0, len = ref.length; l < len; l++) {
-          word = ref[l];
-          ColorScheme.SCHEMES[word] = true;
-        }
-        ColorScheme.PRESETS = {
-          default: [-1, -1, 1, -0.7, 0.25, 1, 0.5, 1],
-          pastel: [0.5, -0.9, 0.5, 0.5, 0.1, 0.9, 0.75, 0.75],
-          soft: [0.3, -0.8, 0.3, 0.5, 0.1, 0.9, 0.5, 0.75],
-          light: [0.25, 1, 0.5, 0.75, 0.1, 1, 0.5, 1],
-          hard: [1, -1, 1, -0.6, 0.1, 1, 0.6, 1],
-          pale: [0.1, -0.85, 0.1, 0.5, 0.1, 1, 0.1, 0.75],
-        };
-        ColorScheme.COLOR_WHEEL = {
-          0: [255, 0, 0, 100],
-          15: [255, 51, 0, 100],
-          30: [255, 102, 0, 100],
-          45: [255, 128, 0, 100],
-          60: [255, 153, 0, 100],
-          75: [255, 178, 0, 100],
-          90: [255, 204, 0, 100],
-          105: [255, 229, 0, 100],
-          120: [255, 255, 0, 100],
-          135: [204, 255, 0, 100],
-          150: [153, 255, 0, 100],
-          165: [51, 255, 0, 100],
-          180: [0, 204, 0, 80],
-          195: [0, 178, 102, 70],
-          210: [0, 153, 153, 60],
-          225: [0, 102, 178, 70],
-          240: [0, 51, 204, 80],
-          255: [25, 25, 178, 70],
-          270: [51, 0, 153, 60],
-          285: [64, 0, 153, 60],
-          300: [102, 0, 153, 60],
-          315: [153, 0, 153, 60],
-          330: [204, 0, 153, 80],
-          345: [229, 0, 102, 90],
-        };
-        function ColorScheme() {
-          var colors, m;
-          colors = [];
-          for (m = 1; m <= 4; m++) {
-            colors.push(new ColorScheme.mutablecolor(60));
-          }
-          this.col = colors;
-          this._scheme = 'mono';
-          this._distance = 0.5;
-          this._web_safe = false;
-          this._add_complement = false;
-        }
-        ColorScheme.prototype.colors = function () {
-          var dispatch, h, i, j, m, n, output, ref1, used_colors;
-          used_colors = 1;
-          h = this.col[0].get_hue();
-          dispatch = {
-            mono: (function (_this) {
-              return function () {};
-            })(),
-            contrast: (function (_this) {
-              return function () {
-                used_colors = 2;
-                _this.col[1].set_hue(h);
-                return _this.col[1].rotate(180);
-              };
-            })(this),
-            triade: (function (_this) {
-              return function () {
-                var dif;
-                used_colors = 3;
-                dif = 60 * _this._distance;
-                _this.col[1].set_hue(h);
-                _this.col[1].rotate(180 - dif);
-                _this.col[2].set_hue(h);
-                return _this.col[2].rotate(180 + dif);
-              };
-            })(this),
-            tetrade: (function (_this) {
-              return function () {
-                var dif;
-                used_colors = 4;
-                dif = 90 * _this._distance;
-                _this.col[1].set_hue(h);
-                _this.col[1].rotate(180);
-                _this.col[2].set_hue(h);
-                _this.col[2].rotate(180 + dif);
-                _this.col[3].set_hue(h);
-                return _this.col[3].rotate(dif);
-              };
-            })(this),
-            analogic: (function (_this) {
-              return function () {
-                var dif;
-                used_colors = _this._add_complement ? 4 : 3;
-                dif = 60 * _this._distance;
-                _this.col[1].set_hue(h);
-                _this.col[1].rotate(dif);
-                _this.col[2].set_hue(h);
-                _this.col[2].rotate(360 - dif);
-                _this.col[3].set_hue(h);
-                return _this.col[3].rotate(180);
-              };
-            })(this),
-          };
-          dispatch['monochromatic'] = dispatch['mono'];
-          if (dispatch[this._scheme] != null) {
-            dispatch[this._scheme]();
-          } else {
-            throw 'Unknown color scheme name: ' + this._scheme;
-          }
-          output = [];
-          for (i = m = 0, ref1 = used_colors - 1; 0 <= ref1 ? m <= ref1 : m >= ref1; i = 0 <= ref1 ? ++m : --m) {
-            for (j = n = 0; n <= 3; j = ++n) {
-              output[i * 4 + j] = this.col[i].get_hex(this._web_safe, j);
-            }
-          }
-          return output;
-        };
-        ColorScheme.prototype.colorset = function () {
-          var flat_colors, grouped_colors;
-          flat_colors = clone(this.colors());
-          grouped_colors = [];
-          while (flat_colors.length > 0) {
-            grouped_colors.push(flat_colors.splice(0, 4));
-          }
-          return grouped_colors;
-        };
-        ColorScheme.prototype.from_hue = function (h) {
-          if (h == null) {
-            throw 'from_hue needs an argument';
-          }
-          this.col[0].set_hue(h);
-          return this;
-        };
-        ColorScheme.prototype.rgb2ryb = function () {
-          var blue, green, iN, maxgreen, maxyellow, red, rgb, white, yellow;
-          rgb = 1 <= arguments.length ? slice.call(arguments, 0) : [];
-          if (rgb[0] != null && typeIsArray(rgb[0])) {
-            rgb = rgb[0];
-          }
-          (red = rgb[0]), (green = rgb[1]), (blue = rgb[2]);
-          white = Math.min(red, green, blue);
-          red -= white;
-          green -= white;
-          blue -= white;
-          maxgreen = Math.max(red, green, blue);
-          yellow = Math.min(red, green);
-          red -= yellow;
-          green -= yellow;
-          if (blue > 0 && green > 0) {
-            blue /= 2;
-            green /= 2;
-          }
-          yellow += green;
-          blue += green;
-          maxyellow = Math.max(red, yellow, blue);
-          if (maxyellow > 0) {
-            iN = maxgreen / maxyellow;
-            red *= iN;
-            yellow *= iN;
-            blue *= iN;
-          }
-          red += white;
-          yellow += white;
-          blue += white;
-          return [Math.floor(red), Math.floor(yellow), Math.floor(blue)];
-        };
-        ColorScheme.prototype.rgb2hsv = function () {
-          var b, d, g, h, max, min, r, rgb, s, v;
-          rgb = 1 <= arguments.length ? slice.call(arguments, 0) : [];
-          if (rgb[0] != null && typeIsArray(rgb[0])) {
-            rgb = rgb[0];
-          }
-          (r = rgb[0]), (g = rgb[1]), (b = rgb[2]);
-          r /= 255;
-          g /= 255;
-          b /= 255;
-          min = Math.min.apply(Math, [r, g, b]);
-          max = Math.max.apply(Math, [r, g, b]);
-          d = max - min;
-          v = max;
-          if (d > 0) {
-            s = d / max;
-          } else {
-            return [0, 0, v];
-          }
-          h = r === max ? (g - b) / d : g === max ? 2 + (b - r) / d : 4 + (r - g) / d;
-          h *= 60;
-          h %= 360;
-          return [h, s, v];
-        };
-        ColorScheme.prototype.rgbToHsv = function () {
-          var b, d, g, h, max, min, r, rgb, s, v;
-          rgb = 1 <= arguments.length ? slice.call(arguments, 0) : [];
-          if (rgb[0] != null && typeIsArray(rgb[0])) {
-            rgb = rgb[0];
-          }
-          (r = rgb[0]), (g = rgb[1]), (b = rgb[2]);
-          r /= 255;
-          g /= 255;
-          b /= 255;
-          max = Math.max(r, g, b);
-          min = Math.min(r, g, b);
-          h = void 0;
-          s = void 0;
-          v = max;
-          d = max - min;
-          s = max === 0 ? 0 : d / max;
-          if (max === min) {
-            h = 0;
-          } else {
-            switch (max) {
-              case r:
-                h = (g - b) / d + (g < b ? 6 : 0);
-                break;
-              case g:
-                h = (b - r) / d + 2;
-                break;
-              case b:
-                h = (r - g) / d + 4;
-            }
-            h /= 6;
-          }
-          return [h, s, v];
-        };
-        ColorScheme.prototype.from_hex = function (hex) {
-          var b, g, h, hsv, num, r, ref1, ref2, rgbcap, s, v;
-          if (hex == null) {
-            throw 'from_hex needs an argument';
-          }
-          if (!/^([0-9A-F]{2}){3}$/im.test(hex)) {
-            throw 'from_hex(' + hex + ') - argument must be in the form of RRGGBB';
-          }
-          rgbcap = /(..)(..)(..)/.exec(hex).slice(1, 4);
-          (ref1 = (function () {
-            var len1, m, results;
-            results = [];
-            for (m = 0, len1 = rgbcap.length; m < len1; m++) {
-              num = rgbcap[m];
-              results.push(parseInt(num, 16));
-            }
-            return results;
-          })()),
-            (r = ref1[0]),
-            (g = ref1[1]),
-            (b = ref1[2]);
-          (ref2 = this.rgb2ryb([r, g, b])), (r = ref2[0]), (g = ref2[1]), (b = ref2[2]);
-          hsv = this.rgbToHsv(r, g, b);
-          h = null;
-          s = null;
-          v = null;
-          h = hsv[0];
-          s = hsv[1];
-          v = hsv[2];
-          this.from_hue(h * 360);
-          this._set_variant_preset([s, v, s, v * 0.7, s * 0.25, 1, s * 0.5, 1]);
-          return this;
-        };
-        ColorScheme.prototype.add_complement = function (b) {
-          if (b == null) {
-            throw 'add_complement needs an argument';
-          }
-          this._add_complement = b;
-          return this;
-        };
-        ColorScheme.prototype.web_safe = function (b) {
-          if (b == null) {
-            throw 'web_safe needs an argument';
-          }
-          this._web_safe = b;
-          return this;
-        };
-        ColorScheme.prototype.distance = function (d) {
-          if (d == null) {
-            throw 'distance needs an argument';
-          }
-          if (d < 0) {
-            throw 'distance(' + d + ') - argument must be >= 0';
-          }
-          if (d > 1) {
-            throw 'distance(' + d + ') - argument must be <= 1';
-          }
-          this._distance = d;
-          return this;
-        };
-        ColorScheme.prototype.scheme = function (name) {
-          if (name == null) {
-            return this._scheme;
-          } else {
-            if (ColorScheme.SCHEMES[name] == null) {
-              throw "'" + name + "' isn't a valid scheme name";
-            }
-            this._scheme = name;
-            return this;
-          }
-        };
-        ColorScheme.prototype.variation = function (v) {
-          if (v == null) {
-            throw 'variation needs an argument';
-          }
-          if (ColorScheme.PRESETS[v] == null) {
-            throw "'$v' isn't a valid variation name";
-          }
-          this._set_variant_preset(ColorScheme.PRESETS[v]);
-          return this;
-        };
-        ColorScheme.prototype._set_variant_preset = function (p) {
-          var i, m, results;
-          results = [];
-          for (i = m = 0; m <= 3; i = ++m) {
-            results.push(this.col[i].set_variant_preset(p));
-          }
-          return results;
-        };
-        clone = function (obj) {
-          var flags, key, newInstance;
-          if (obj == null || typeof obj !== 'object') {
-            return obj;
-          }
-          if (obj instanceof Date) {
-            return new Date(obj.getTime());
-          }
-          if (obj instanceof RegExp) {
-            flags = '';
-            if (obj.global != null) {
-              flags += 'g';
-            }
-            if (obj.ignoreCase != null) {
-              flags += 'i';
-            }
-            if (obj.multiline != null) {
-              flags += 'm';
-            }
-            if (obj.sticky != null) {
-              flags += 'y';
-            }
-            return new RegExp(obj.source, flags);
-          }
-          newInstance = new obj.constructor();
-          for (key in obj) {
-            newInstance[key] = clone(obj[key]);
-          }
-          return newInstance;
-        };
-        ColorScheme.mutablecolor = (function () {
-          mutablecolor.prototype.hue = 0;
-          mutablecolor.prototype.saturation = [];
-          mutablecolor.prototype.value = [];
-          mutablecolor.prototype.base_red = 0;
-          mutablecolor.prototype.base_green = 0;
-          mutablecolor.prototype.base_saturation = 0;
-          mutablecolor.prototype.base_value = 0;
-          function mutablecolor(hue) {
-            if (hue == null) {
-              throw 'No hue specified';
-            }
-            this.saturation = [];
-            this.value = [];
-            this.base_red = 0;
-            this.base_green = 0;
-            this.base_blue = 0;
-            this.base_saturation = 0;
-            this.base_value = 0;
-            this.set_hue(hue);
-            this.set_variant_preset(ColorScheme.PRESETS['default']);
-          }
-          mutablecolor.prototype.get_hue = function () {
-            return this.hue;
-          };
-          mutablecolor.prototype.set_hue = function (h) {
-            var avrg, color, colorset1, colorset2, d, derivative1, derivative2, en, i, k;
-            avrg = function (a, b, k) {
-              return a + Math.round((b - a) * k);
-            };
-            this.hue = Math.round(h % 360);
-            d = (this.hue % 15) + (this.hue - Math.floor(this.hue));
-            k = d / 15;
-            derivative1 = this.hue - Math.floor(d);
-            derivative2 = (derivative1 + 15) % 360;
-            if (derivative1 === 360) {
-              derivative1 = 0;
-            }
-            if (derivative2 === 360) {
-              derivative2 = 0;
-            }
-            colorset1 = ColorScheme.COLOR_WHEEL[derivative1];
-            colorset2 = ColorScheme.COLOR_WHEEL[derivative2];
-            en = {
-              red: 0,
-              green: 1,
-              blue: 2,
-              value: 3,
-            };
-            for (color in en) {
-              i = en[color];
-              this['base_' + color] = avrg(colorset1[i], colorset2[i], k);
-            }
-            this.base_saturation = avrg(100, 100, k) / 100;
-            return (this.base_value /= 100);
-          };
-          mutablecolor.prototype.rotate = function (angle) {
-            var newhue;
-            newhue = (this.hue + angle) % 360;
-            return this.set_hue(newhue);
-          };
-          mutablecolor.prototype.get_saturation = function (variation) {
-            var s, x;
-            x = this.saturation[variation];
-            s = x < 0 ? -x * this.base_saturation : x;
-            if (s > 1) {
-              s = 1;
-            }
-            if (s < 0) {
-              s = 0;
-            }
-            return s;
-          };
-          mutablecolor.prototype.get_value = function (variation) {
-            var v, x;
-            x = this.value[variation];
-            v = x < 0 ? -x * this.base_value : x;
-            if (v > 1) {
-              v = 1;
-            }
-            if (v < 0) {
-              v = 0;
-            }
-            return v;
-          };
-          mutablecolor.prototype.set_variant = function (variation, s, v) {
-            this.saturation[variation] = s;
-            return (this.value[variation] = v);
-          };
-          mutablecolor.prototype.set_variant_preset = function (p) {
-            var i, m, results;
-            results = [];
-            for (i = m = 0; m <= 3; i = ++m) {
-              results.push(this.set_variant(i, p[2 * i], p[2 * i + 1]));
-            }
-            return results;
-          };
-          mutablecolor.prototype.get_hex = function (web_safe, variation) {
-            var c, color, formatted, i, k, len1, len2, m, max, n, ref1, rgb, rgbVal, s, str, v;
-            max = Math.max.apply(
-              Math,
-              function () {
-                var len1, m, ref1, results;
-                ref1 = ['red', 'green', 'blue'];
-                results = [];
-                for (m = 0, len1 = ref1.length; m < len1; m++) {
-                  color = ref1[m];
-                  results.push(this['base_' + color]);
-                }
-                return results;
-              }.call(this),
-            );
-            Math.min.apply(
-              Math,
-              function () {
-                var len1, m, ref1, results;
-                ref1 = ['red', 'green', 'blue'];
-                results = [];
-                for (m = 0, len1 = ref1.length; m < len1; m++) {
-                  color = ref1[m];
-                  results.push(this['base_' + color]);
-                }
-                return results;
-              }.call(this),
-            );
-            v = (variation < 0 ? this.base_value : this.get_value(variation)) * 255;
-            s = variation < 0 ? this.base_saturation : this.get_saturation(variation);
-            k = max > 0 ? v / max : 0;
-            rgb = [];
-            ref1 = ['red', 'green', 'blue'];
-            for (m = 0, len1 = ref1.length; m < len1; m++) {
-              color = ref1[m];
-              rgbVal = Math.min.apply(Math, [255, Math.round(v - (v - this['base_' + color] * k) * s)]);
-              rgb.push(rgbVal);
-            }
-            if (web_safe) {
-              rgb = (function () {
-                var len2, n, results;
-                results = [];
-                for (n = 0, len2 = rgb.length; n < len2; n++) {
-                  c = rgb[n];
-                  results.push(Math.round(c / 51) * 51);
-                }
-                return results;
-              })();
-            }
-            formatted = '';
-            for (n = 0, len2 = rgb.length; n < len2; n++) {
-              i = rgb[n];
-              str = i.toString(16);
-              if (str.length < 2) {
-                str = '0' + str;
-              }
-              formatted += str;
-            }
-            return formatted;
-          };
-          return mutablecolor;
-        })();
-        return ColorScheme;
-      })();
-      if (module !== null && module.exports != null) {
-        module.exports = ColorScheme;
-      } else {
-        {
-          window.ColorScheme = ColorScheme;
-        }
-      }
-    }.call(commonjsGlobal));
-  })(colorScheme);
-  var ColorScheme = colorScheme.exports;
-
-  const scheme = new ColorScheme().scheme('mono').variation('default');
+  const scheme = new ColorScheme__default['default']().scheme('mono').variation('default');
   // Add custom Themes to the page
   function addTheme(theme) {
     return `<style type='text/css' name='${theme[0]}'>
@@ -4974,11 +1541,23 @@
       ['Cool_Blues', '#000000', '#c4dfe6', '#66a5ad', '#07575b', '#003b46'],
       ['Custom_Dark', '#000000', `#${bg[2]}`, `#${bg[3]}`, `#${bg[0]}`, `#${bg[1]}`],
       ['Custom_Light', '#eeeeec', `#${bg[3]}`, `#${bg[2]}`, `#${bg[0]}`, `#${bg[1]}`],
-      ['Full_Custom', settings.CustomThemeBody, settings.CustomThemeText, settings.CustomThemeLines, settings.CustomThemePanel, settings.CustomThemeButton],
+      [
+        'Full_Custom',
+        settings.CustomThemeBody,
+        settings.CustomThemeText,
+        settings.CustomThemeLines,
+        settings.CustomThemePanel,
+        settings.CustomThemeButton,
+      ],
     ];
   }
   const themes = loadThemes();
-  const themesSelector = themes.map((theme) => `<option value='${theme[0]}' ${settings.Theme === theme[0] ? 'selected' : ''}>${theme[0].replace('_', ' ')}</option>`);
+  const themesSelector = themes.map(
+    (theme) =>
+      `<option value='${theme[0]}' ${
+        settings.Theme === theme[0] ? 'selected' : ''
+      }>${theme[0].replace('_', ' ')}</option>`,
+  );
   const themesCSS = themes.map(addTheme).join('');
 
   // Goto Page and Thumbnails
@@ -5086,13 +1665,13 @@
           case 'Period':
           case 'KeyD':
           case 'Numpad6':
-            $('.ChapterControl:first .next')[0].trigger('click');
+            $('.ChapterControl:first .next').trigger('click');
             break;
           case 'ArrowLeft':
           case 'Comma':
           case 'KeyA':
           case 'Numpad4':
-            $('.ChapterControl:first .prev')[0].trigger('click');
+            $('.ChapterControl:first .prev').trigger('click');
             break;
           case 'Equal':
           case 'NumpadAdd':
@@ -5202,7 +1781,11 @@
     });
     $('#viewMode').on('change', (event) => {
       const mode = $(event.target).val();
-      $('#Chapter').removeClass('WebComic').removeClass('FluidLTR').removeClass('FluidRTL').addClass(mode);
+      $('#Chapter')
+        .removeClass('WebComic')
+        .removeClass('FluidLTR')
+        .removeClass('FluidRTL')
+        .addClass(mode);
       setValueGM('MangaViewMode', mode);
       logScript(`ViewMode: ${getValueGM('MangaViewMode')}`);
       applyZoom();
@@ -5226,7 +1809,7 @@
     $('#downloadZip').on('change', (event) => {
       if ($(event.target).is(':checked')) {
         setValueGM('MangaDownloadZip', true);
-        Swal.fire({
+        Swal__default['default'].fire({
           title: 'Attention',
           text: 'Next time a chapter finish loading you will be prompted to save automatically',
           timer: 10000,
@@ -5240,12 +1823,12 @@
     $('#blob').one('click', generateZip);
     $('.download').on('click', () => {
       logScript('Downloading Chapter');
-      $('#blob')[0].trigger('click');
+      $('#blob').trigger('click');
     });
     $('#lazyLoadImages').on('change', (event) => {
       if ($(event.target).is(':checked')) {
         setValueGM('MangaLazyLoadImages', true);
-        Swal.fire({
+        Swal__default['default'].fire({
           title: 'Warning',
           html: `Lazy load is incompatible with zip download, you will not be able to download with this setting ON.<br/>
                Suggestion: <span style="color:red;font-weight:bold">Disable Thumbnails</span> to save Bandwidth/Memory.`,
@@ -5375,7 +1958,10 @@
     // Individual Page functions
     // Bookmark Page to resume reading
     $('.Bookmark').on('click', (event) => {
-      const num = parseInt($(event.target).parents('.MangaPage').find('.PageFunctions span').text(), 10);
+      const num = parseInt(
+        $(event.target).parents('.MangaPage').find('.PageFunctions span').text(),
+        10,
+      );
       const mark = {
         url: W.location.href,
         page: num,
@@ -5384,14 +1970,14 @@
       const found = settings.bookmarks.filter((el) => el.url === mark.url).length > 0;
       settings.bookmarks = settings.bookmarks.filter((el) => el.url !== mark.url);
       if (found) {
-        Swal.fire({
+        Swal__default['default'].fire({
           title: 'Bookmark Removed',
           timer: 10000,
           icon: 'error',
         });
       } else {
         settings.bookmarks.push(mark);
-        Swal.fire({
+        Swal__default['default'].fire({
           title: 'Saved Bookmark',
           html: `Next time you open this chapter it will resume from:<h4>Page ${num}</h4>(Only <i>ONCE</i> per Bookmark, will be removed after a year unused)`,
           icon: 'success',
@@ -5490,29 +2076,49 @@
       ${themesSelector}
     </select>
       <span class='CustomTheme' ${
-        settings.Theme !== 'Custom_Dark' && settings.Theme !== 'Custom_Light' ? 'style="display: none;"' : ''
-      }><br/>-Base:<input id='CustomThemeHue' value='${settings.CustomTheme}' class='colorpicker CustomTheme'></span>
-      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Body:<input id='CustomThemeHueBody' value='${
+        settings.Theme !== 'Custom_Dark' && settings.Theme !== 'Custom_Light'
+          ? 'style="display: none;"'
+          : ''
+      }><br/>-Base:<input id='CustomThemeHue' value='${
+    settings.CustomTheme
+  }' class='colorpicker CustomTheme'></span>
+      <span class='FullCustom' ${
+        settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''
+      }><br/>-Body:<input id='CustomThemeHueBody' value='${
     settings.CustomThemeBody
   }' class='colorpicker FullCustom'></span>
-      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Text:<input id='CustomThemeHueText' value=${
+      <span class='FullCustom' ${
+        settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''
+      }><br/>-Text:<input id='CustomThemeHueText' value=${
     settings.CustomThemeText
   }' class='colorpicker FullCustom'></span>
-      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Lines:<input id='CustomThemeHueLines' value='${
+      <span class='FullCustom' ${
+        settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''
+      }><br/>-Lines:<input id='CustomThemeHueLines' value='${
     settings.CustomThemeLines
   }' class='colorpicker FullCustom'></span>
-      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Painels:<input id='CustomThemeHuePanel' value='${
+      <span class='FullCustom' ${
+        settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''
+      }><br/>-Painels:<input id='CustomThemeHuePanel' value='${
     settings.CustomThemePanel
   }' class='colorpicker FullCustom'></span>
-      <span class='FullCustom' ${settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Buttons:<input id='CustomThemeHueButton' value='${
+      <span class='FullCustom' ${
+        settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''
+      }><br/>-Buttons:<input id='CustomThemeHueButton' value='${
     settings.CustomThemeButton
   }' class='colorpicker FullCustom'></span>
   </span>
   <span class='controlLabel loadMode'>Default Load Mode:
     <select id='loadMode'>
-      <option value='normal' ${settings.loadMode === 'normal' ? 'selected' : ''}>Normal(Wait 3 sec)</option>
-      <option value='always' ${settings.loadMode === 'always' ? 'selected' : ''}>Always(Immediately)</option>
-      <option value='never' ${settings.loadMode === 'never' ? 'selected' : ''}>Never(Manually)</option>
+      <option value='normal' ${
+        settings.loadMode === 'normal' ? 'selected' : ''
+      }>Normal(Wait 3 sec)</option>
+      <option value='always' ${
+        settings.loadMode === 'always' ? 'selected' : ''
+      }>Always(Immediately)</option>
+      <option value='never' ${
+        settings.loadMode === 'never' ? 'selected' : ''
+      }>Never(Manually)</option>
     </select>
   </span>
   <span class='controlLabel PagesPerSecond'>Pages/Second:
@@ -5540,46 +2146,71 @@
     </select>
   </span>
   <span class='controlLabel zoomStep'>Zoom Change Step (between 5 and 50): <br/>
-    <input type='range' value='${settings.zoomStep}' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput="zoomStepVal.value = this.value">
+    <input type='range' value='${
+      settings.zoomStep
+    }' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput="zoomStepVal.value = this.value">
     <output id="zoomStepVal">${settings.zoomStep}</output>
   </span>
   <span class='controlLabel viewMode'>Default View Mode:
     <select id='viewMode'>
       <option value='' ${settings.viewMode === '' ? 'selected' : ''}>Vertical</option>
-      <option value='WebComic' ${settings.viewMode === 'WebComic' ? 'selected' : ''}>WebComic</option>
-      <option value='FluidLTR' ${settings.viewMode === 'FluidLTR' ? 'selected' : ''}>Left to Right</option>
-      <option value='FluidRTL' ${settings.viewMode === 'FluidRTL' ? 'selected' : ''}>Right to Left</option>
+      <option value='WebComic' ${
+        settings.viewMode === 'WebComic' ? 'selected' : ''
+      }>WebComic</option>
+      <option value='FluidLTR' ${
+        settings.viewMode === 'FluidLTR' ? 'selected' : ''
+      }>Left to Right</option>
+      <option value='FluidRTL' ${
+        settings.viewMode === 'FluidRTL' ? 'selected' : ''
+      }>Right to Left</option>
     </select>
   </span>
   <span class='controlLabel fitIfOversize'>Fit Width if Oversize:
-    <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${settings.FitWidthIfOversize ? 'checked' : ''}>
+    <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${
+      settings.FitWidthIfOversize ? 'checked' : ''
+    }>
   </span>
   <span class='controlLabel showThumbnails'>Show Thumbnails:
-    <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${settings.ShowThumbnails ? 'checked' : ''}>
+    <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${
+      settings.ShowThumbnails ? 'checked' : ''
+    }>
    </span>
    <span class='controlLabel lazyLoadImages'>Lazy Load Images:
-    <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${settings.lazyLoadImages ? 'checked' : ''}>
+    <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${
+      settings.lazyLoadImages ? 'checked' : ''
+    }>
    </span>
    <span class='controlLabel lazyStart'>Lazy Start From Page (between 5 and 100):<br/>
-    <input type='range' value='${settings.lazyStart}' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput="lazyStartVal.value = this.value">
+    <input type='range' value='${
+      settings.lazyStart
+    }' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput="lazyStartVal.value = this.value">
     <output id="lazyStartVal">${settings.lazyStart}</output>
   </span>
   <span class='controlLabel downloadZip'>Download Images as Zip Automatically:
-    <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${settings.DownloadZip ? 'checked' : ''}>
+    <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${
+      settings.DownloadZip ? 'checked' : ''
+    }>
   </span>
   <span class='controlLabel hidePageControls'>Always Hide Page Controls:
-    <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${settings.hidePageControls ? 'checked' : ''}>
+    <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${
+      settings.hidePageControls ? 'checked' : ''
+    }>
   </span>
 </div>`;
   const chapterControl = (id) => (manga) =>
     `<div id='${id}' class='ChapterControl'>
     <a href='#' class='download'>Download</a>
-    <a class='prev' id='prev' href='${manga.prev || ''}' onclick='W.location="${manga.prev || ''}";W.location.reload();'>Previous</a>
-    <a class='next' id='next' href='${manga.next || ''}' onclick='W.location="${manga.next || ''}";W.location.reload();'>Next</a>
+    <a class='prev' id='prev' href='${manga.prev || ''}' onclick='W.location="${
+      manga.prev || ''
+    }";W.location.reload();'>Previous</a>
+    <a class='next' id='next' href='${manga.next || ''}' onclick='W.location="${
+      manga.next || ''
+    }";W.location.reload();'>Next</a>
 </div>`;
   const chapterControlTop = chapterControl('ChapterControlTop');
   const chapterControlBottom = chapterControl('ChapterControlBottom');
-  const title = (manga) => `<div class='ViewerTitle'><br/><a id='series' href='${manga.series}'><i>${manga.title}</i><br/>(Return to Chapter List)</a></div>`;
+  const title = (manga) =>
+    `<div class='ViewerTitle'><br/><a id='series' href='${manga.series}'><i>${manga.title}</i><br/>(Return to Chapter List)</a></div>`;
   // Add Pages Place-holders
   const listPages = (times) =>
     [...Array(times).keys()].map(
@@ -5600,13 +2231,19 @@
   </div>
 </div>`,
     );
-  const listOptions = (times) => [...Array(times).keys()].map((index) => `<option value='${index + 1}'>${index + 1}</option>`);
+  const listOptions = (times) =>
+    [...Array(times).keys()].map((index) => `<option value='${index + 1}'>${index + 1}</option>`);
   const listThumbnails = (times) =>
     [...Array(times).keys()].map(
-      (index) => `<div id='Thumbnail${index + 1}' class='Thumbnail'><img id='ThumbnailImg${index + 1}' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`,
+      (index) =>
+        `<div id='Thumbnail${index + 1}' class='Thumbnail'><img id='ThumbnailImg${
+          index + 1
+        }' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`,
     );
   const body = (manga, begin = 0) => `
-<div id='MangaOnlineViewer' class='${settings.Theme} ${isMobile ? 'mobile' : ''} ${settings.hidePageControls ? 'hideControls' : ''}'>
+<div id='MangaOnlineViewer' class='${settings.Theme} ${isMobile ? 'mobile' : ''} ${
+    settings.hidePageControls ? 'hideControls' : ''
+  }'>
   ${title(manga)}
   <div id='Counters' class='controlLabel'>
     <i>0</i> of <b>${manga.pages}</b> Pages Loaded
@@ -5617,7 +2254,9 @@
     </select>
   </div>
   ${chapterControlTop(manga)}
-  <div id='Chapter' class='${settings.FitWidthIfOversize === true ? 'fitWidthIfOversize' : ''} ${settings.viewMode}'>
+  <div id='Chapter' class='${settings.FitWidthIfOversize === true ? 'fitWidthIfOversize' : ''} ${
+    settings.viewMode
+  }'>
     ${listPages(manga.pages).slice(begin).join('')}
   </div>
   ${title(manga)}
@@ -5627,7 +2266,9 @@
   ${htmlKeybinds}
   <div id='Navigation' class='panel ${settings.ShowThumbnails ? '' : 'disabled'}'>
     <div id='NavigationCounters' class='controlLabel'>
-      <img alt='Thumbnails' title='Thumbnails' src='${icon.menu}' class='nav' /><i>0</i> of <b>${manga.pages}</b> Pages Loaded
+      <img alt='Thumbnails' title='Thumbnails' src='${icon.menu}' class='nav' /><i>0</i> of <b>${
+    manga.pages
+  }</b> Pages Loaded
     </div>
     <div id='Thumbnails'>
       ${listThumbnails(manga.pages).slice(begin).join('')}
@@ -5709,7 +2350,7 @@ ${cssStyles}
       reverseButtons: true,
       icon: 'question',
     };
-    Swal.fire(options).then((result) => {
+    Swal__default['default'].fire(options).then((result) => {
       if (result.value) {
         logScript(`Choice: ${result.value}`);
         formatPage(manga, result.value);
@@ -5732,8 +2373,6 @@ ${cssStyles}
         '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.css" integrity="sha256-Ow4lbGxscUvJwGnorLyGwVYv0KkeIG6+5CAmR8zuRJw=" crossorigin="anonymous">',
         '<style type="text/css">#mov {position: fixed;left: 50%;transform: translateX(-50%);top: 0;z-index: 1000000;border-radius: .25em;font-size: 1.5em;cursor: pointer;display: inline-block;margin: .3125em;padding: .625em 2em;box-shadow: none;font-weight: 500;color: #FFF;background: rgb(102, 83, 146);border: 1px #FFF;}</style>',
       );
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       W.mov = (b) => lateStart(site, b || beginning);
       switch (site.start || settings.loadMode) {
         case 'never':
@@ -5744,28 +2383,37 @@ ${cssStyles}
           break;
         case 'normal':
         default:
-          Swal.fire({
-            title: 'Starting<br>MangaOnlineViewer',
-            html: `${beginning > 1 ? `Resuming reading from Page ${beginning}.<br/>` : ''}Please wait, 3 seconds...`,
-            showCancelButton: true,
-            cancelButtonColor: '#d33',
-            reverseButtons: true,
-            timer: 3000,
-          }).then((result) => {
-            if (result.value || result.dismiss === Swal.DismissReason.timer) {
-              formatPage(manga, beginning);
-            } else {
-              $('body').append('<button id="mov" onclick=mov()>Start MangaOnlineViewer</button>');
-              logScript(result.dismiss);
-            }
-          });
+          Swal__default['default']
+            .fire({
+              title: 'Starting<br>MangaOnlineViewer',
+              html: `${
+                beginning > 1 ? `Resuming reading from Page ${beginning}.<br/>` : ''
+              }Please wait, 3 seconds...`,
+              showCancelButton: true,
+              cancelButtonColor: '#d33',
+              reverseButtons: true,
+              timer: 3000,
+            })
+            .then((result) => {
+              if (result.value || result.dismiss === Swal__default['default'].DismissReason.timer) {
+                formatPage(manga, beginning);
+              } else {
+                $('body').append('<button id="mov" onclick=mov()>Start MangaOnlineViewer</button>');
+                logScript(result.dismiss);
+              }
+            });
           break;
       }
     }
   }
   // Script Entry point
   function start(sites) {
-    logScript(`Starting ${getInfoGM.script.name} ${getInfoGM.script.version} on ${getBrowser()} with ${getEngine()}`, getInfoGM);
+    logScript(
+      `Starting ${getInfoGM.script.name} ${
+        getInfoGM.script.version
+      } on ${getBrowser()} with ${getEngine()}`,
+      getInfoGM,
+    );
     // W.InfoGM = getInfoGM;
     logScript(`${sites.length} Known Manga Sites`);
     let waitElapsed = 0;
@@ -5823,4 +2471,4 @@ ${cssStyles}
   }
 
   start(sites);
-})();
+})(Swal, JSZip, NProgress, ColorScheme);

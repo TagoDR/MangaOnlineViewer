@@ -79,8 +79,6 @@ function preparePage(site: ISite, manga: IManga, begin = 0) {
       '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.css" integrity="sha256-Ow4lbGxscUvJwGnorLyGwVYv0KkeIG6+5CAmR8zuRJw=" crossorigin="anonymous">',
       '<style type="text/css">#mov {position: fixed;left: 50%;transform: translateX(-50%);top: 0;z-index: 1000000;border-radius: .25em;font-size: 1.5em;cursor: pointer;display: inline-block;margin: .3125em;padding: .625em 2em;box-shadow: none;font-weight: 500;color: #FFF;background: rgb(102, 83, 146);border: 1px #FFF;}</style>',
     );
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     W.mov = (b: number) => lateStart(site, b || beginning);
     switch (site.start || settings.loadMode) {
       case 'never':
@@ -93,7 +91,9 @@ function preparePage(site: ISite, manga: IManga, begin = 0) {
       default:
         Swal.fire({
           title: 'Starting<br>MangaOnlineViewer',
-          html: `${beginning > 1 ? `Resuming reading from Page ${beginning}.<br/>` : ''}Please wait, 3 seconds...`,
+          html: `${
+            beginning > 1 ? `Resuming reading from Page ${beginning}.<br/>` : ''
+          }Please wait, 3 seconds...`,
           showCancelButton: true,
           cancelButtonColor: '#d33',
           reverseButtons: true,
@@ -113,7 +113,12 @@ function preparePage(site: ISite, manga: IManga, begin = 0) {
 
 // Script Entry point
 function start(sites: ISite[]) {
-  logScript(`Starting ${getInfoGM.script.name} ${getInfoGM.script.version} on ${getBrowser()} with ${getEngine()}`, getInfoGM);
+  logScript(
+    `Starting ${getInfoGM.script.name} ${
+      getInfoGM.script.version
+    } on ${getBrowser()} with ${getEngine()}`,
+    getInfoGM,
+  );
   // W.InfoGM = getInfoGM;
   logScript(`${sites.length} Known Manga Sites`);
   let waitElapsed = 0;

@@ -23,20 +23,11 @@ export default {
       },
     });
     return {
-      title: $('title')
-        .text()
-        .trim(),
-      series: $('.series-cover a')
-        .attr('href'),
+      title: $('title').text().trim(),
+      series: $('.series-cover a').attr('href'),
       pages: api.images.length,
-      prev: $('.chapter-list .selected')
-        .next()
-        .find('a')
-        .attr('href'),
-      next: $('.chapter-list .selected')
-        .prev()
-        .find('a')
-        .attr('href'),
+      prev: $('.chapter-list .selected').next().find('a').attr('href'),
+      next: $('.chapter-list .selected').prev().find('a').attr('href'),
       listImages: api.images,
     };
   },

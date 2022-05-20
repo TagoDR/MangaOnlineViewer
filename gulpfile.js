@@ -14,6 +14,7 @@ import typescriptPlugin from 'rollup-plugin-typescript';
 import liveServer from 'live-server';
 import { tsImport } from 'ts-import';
 import prettier from 'gulp-prettier';
+import excludeDependenciesFromBundle from 'rollup-plugin-exclude-dependencies-from-bundle';
 
 const scripts = {
   main: {
@@ -62,6 +63,7 @@ function buildUserscriptRollup(script) {
   return rollup({
     input: `src/${script.entry}`,
     plugins: [
+      excludeDependenciesFromBundle(),
       nodeResolve({
         preferBuiltins: false,
         extensions: ['.js', '.ts', '.tsx'],

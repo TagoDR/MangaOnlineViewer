@@ -13,9 +13,11 @@ export default {
       title: $('.listTable td.listLong:first').text().trim(),
       series: W.location.href.match(/.+\/[0-9]+\//),
       pages: num,
-      prev: chapter.eq(chapter.index(chapter.filter(`[href='${W.location.href}']`)) - 1)
+      prev: chapter
+        .eq(chapter.index(chapter.filter(`[href='${W.location.href}']`)) - 1)
         .attr('href'),
-      next: chapter.eq(chapter.index(chapter.filter(`[href='${W.location.href}']`)) + 1)
+      next: chapter
+        .eq(chapter.index(chapter.filter(`[href='${W.location.href}']`)) + 1)
         .attr('href'),
       listPages: [...Array(num).keys()].map((i) => url + String(`000${i + 1}`).slice(-4)),
       img: 'td.pageImage a img',

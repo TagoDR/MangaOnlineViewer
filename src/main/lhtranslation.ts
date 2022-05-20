@@ -12,7 +12,9 @@ export default {
       pages: $('img.chapter-img').length,
       prev: $('.form-control option:selected').next().val(),
       next: $('.form-control option:selected').prev().val(),
-      listImages: $('img.chapter-img').get().map((item) => $(item).attr('src')),
+      listImages: $('img.chapter-img')
+        .get()
+        .map((item) => $(item).attr('src')),
     };
   },
 };

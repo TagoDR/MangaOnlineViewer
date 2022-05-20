@@ -27,7 +27,9 @@ function getListGM(): string[] {
 
 // Replacement function for GM_listValues allowing for debugging in console
 function removeValueGM(name) {
-  return typeof GM_deleteValue !== 'undefined' ? GM_deleteValue(name) : logScript('Removing: ', name);
+  return typeof GM_deleteValue !== 'undefined'
+    ? GM_deleteValue(name)
+    : logScript('Removing: ', name);
 }
 
 // Replacement function for GM_info allowing for debugging in console
@@ -40,7 +42,7 @@ const getInfoGM = GM_info || {
 };
 
 // Replacement function for GM_getValue allowing for debugging in console
-function getValueGM(name: string, defaultValue: any): any {
+function getValueGM(name: string, defaultValue: any = null): any {
   if (typeof GM_getValue !== 'undefined') return GM_getValue(name, defaultValue);
   logScript('Getting: ', name, '=', defaultValue);
   return defaultValue;
@@ -83,4 +85,16 @@ function getEngine(): string {
 
 const isMobile = W.matchMedia('screen and (max-width: 1024px)').matches;
 
-export { logScript, getListGM, getInfoGM, getValueGM, setValueGM, removeValueGM, getBrowser, getEngine, logScriptC, logClear, isMobile };
+export {
+  logScript,
+  getListGM,
+  getInfoGM,
+  getValueGM,
+  setValueGM,
+  removeValueGM,
+  getBrowser,
+  getEngine,
+  logScriptC,
+  logClear,
+  isMobile,
+};

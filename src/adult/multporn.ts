@@ -8,7 +8,10 @@ export default {
   // waitEle: '.jb-idx-thumb:last .jb-thm-thumb-image',
   run() {
     let api = null;
-    const url = $('head').text().match(/"configUrl":"(.+?)",/)[1].replace('\\', '');
+    const url = $('head')
+      .text()
+      .match(/"configUrl":"(.+?)",/)[1]
+      .replace('\\', '');
     $.ajax({
       type: 'GET',
       url,
@@ -17,7 +20,10 @@ export default {
         api = res;
       },
     });
-    const imgs = $(api).find('image').get().map((i) => $(i).attr('imageURL'));
+    const imgs = $(api)
+      .find('image')
+      .get()
+      .map((i) => $(i).attr('imageURL'));
     return {
       title: $('#page-title').text().trim(),
       series: '#',

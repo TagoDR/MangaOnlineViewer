@@ -12,7 +12,9 @@ export default {
       pages: W.pages.length,
       prev: W.prev_chapter,
       next: W.next_chapter,
-      listImages: $('#all img').get().map((i) => $(i).attr('data-src')),
+      listImages: $('#all img')
+        .get()
+        .map((i) => $(i).attr('data-src')),
     };
   },
 };

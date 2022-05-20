@@ -14,7 +14,7 @@ Firefox and Chrome with [Tampermonkey](https://tampermonkey.net/) or [Violentmon
 
 #### Mobile Bookmarklet
 
-*Settings can't be saved, may require to request for Desktop Page*:
+_Settings can't be saved, may require to request for Desktop Page_:
 
 ###### Main Reader:
 
@@ -52,7 +52,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 <kbd class='dark'>Numpad +</kbd>/<kbd class='dark'>=</kbd>: Global Zoom in pages (enlarge)<br/>
 <kbd class='dark'>Numpad -</kbd>/<kbd class='dark'>-</kbd>: Global Zoom out pages (reduce)<br/>
 <kbd class='dark'>Numpad /</kbd>/<kbd class='dark'>9</kbd>: Global Restore pages to original<br/>
-<kbd class='dark'>Numpad *</kbd>/<kbd class='dark'>0</kbd>: Global Fit window width<br/>
+<kbd class='dark'>Numpad \*</kbd>/<kbd class='dark'>0</kbd>: Global Fit window width<br/>
 <kbd class='dark'>V</kbd>: Vertical Mode<br/>
 <kbd class='dark'>C</kbd>: WebComic Mode<br/>
 <kbd class='dark'>N</kbd>: Right to Left Mode<br/>
@@ -64,30 +64,30 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 
 ### Features
 
-- View Modes:
-  - Vertical [Default]
-  - WebComic
-  - Fluid Left to Right
-  - Fluid Right to Left
-- Bookmark Pages (To resume reading)
-- Full Themes and Customizable
-- Global and Individual images zoom
-  - In(Global one may stretch images beyond window width)
-  - Out
-  - Restore original(Toggle fit width if oversize)
-  - Fit width
-  - Fit width if oversize[Default on]
-  - Fit Height (with scroll pages)
-  - Hide
-- Auto reload Images
-  - Counter for loaded Images
-  - Individual image reload, just in case
-- HotKeys
-- Goto Page
-- Image Loading Timer[Default 1s](Some sites require longer timers. eg.:ExHentai,e-hentai)
-- Thumbnails Navigation[Default on]
-- Download all images as ZIP File[Automatic Default off]
-- Lazy Load Images[Default off]
+-   View Modes:
+    -   Vertical [Default]
+    -   WebComic
+    -   Fluid Left to Right
+    -   Fluid Right to Left
+-   Bookmark Pages (To resume reading)
+-   Full Themes and Customizable
+-   Global and Individual images zoom
+    -   In(Global one may stretch images beyond window width)
+    -   Out
+    -   Restore original(Toggle fit width if oversize)
+    -   Fit width
+    -   Fit width if oversize[Default on]
+    -   Fit Height (with scroll pages)
+    -   Hide
+-   Auto reload Images
+    -   Counter for loaded Images
+    -   Individual image reload, just in case
+-   HotKeys
+-   Goto Page
+-   Image Loading Timer[Default 1s](Some sites require longer timers. eg.:ExHentai,e-hentai)
+-   Thumbnails Navigation[Default on]
+-   Download all images as ZIP File[Automatic Default off]
+-   Lazy Load Images[Default off]
 
 ### Rules For adding new Manga Sites
 

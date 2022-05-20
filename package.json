@@ -53,6 +53,7 @@
         "prettier": "^2.6.2",
         "rollup": "^2.74.1",
         "rollup-plugin-cleanup": "^3.2.1",
+        "rollup-plugin-exclude-dependencies-from-bundle": "^1.1.22",
         "rollup-plugin-string-html": "^1.0.0",
         "rollup-plugin-typescript": "^1.0.1",
         "ts-import": "^2.0.40",
@@ -60,6 +61,7 @@
         "userscript-meta": "^1.0.1"
     },
     "dependencies": {
+        "@claviska/jquery-minicolors": "^2.3.6",
         "color-scheme": "^1.0.1",
         "imagesloaded": "^5.0.0",
         "jquery": "^3.6.0",
@@ -68,5 +70,84 @@
         "nprogress": "^0.2.0",
         "sweetalert2": "^11.4.14",
         "unveil2": "^2.0.8"
-    }
+    },
+    "prettier": {
+        "semi": true,
+        "singleQuote": true,
+        "trailingComma": "all",
+        "printWidth": 100
+    },
+    "eslintConfig": {
+        "parser": "@typescript-eslint/parser",
+        "parserOptions": {
+            "ecmaVersion": 2020,
+            "project": [
+                "./tsconfig.json"
+            ]
+        },
+        "env": {
+            "browser": true,
+            "commonjs": true,
+            "es6": true,
+            "jquery": true,
+            "greasemonkey": true
+        },
+        "globals": {
+            "W": "readonly",
+            "$": "readonly",
+            "JSZip": "readonly",
+            "NProgress": "readonly",
+            "jscolor": "readonly",
+            "ColorScheme": "readonly",
+            "Swal": "readonly"
+        },
+        "extends": [
+            "eslint:recommended",
+            "plugin:@typescript-eslint/recommended",
+            "airbnb",
+            "airbnb-typescript",
+            "prettier"
+        ],
+        "plugins": [
+            "import",
+            "@typescript-eslint",
+            "prettier"
+        ],
+        "rules": {
+            "prettier/prettier": [
+                "warn"
+            ],
+            "max-len": "off",
+            "linebreak-style": [
+                "off",
+                "windows"
+            ],
+            "no-console": "warn",
+            "prefer-destructuring": [
+                "error",
+                {
+                    "object": true,
+                    "array": false
+                }
+            ],
+            "function-paren-newline": "off",
+            "import/extensions": [
+                "warn",
+                "always",
+                {
+                    "ignorePackages": true
+                }
+            ]
+        }
+    },
+    "eslintIgnore": [
+        "node_modules",
+        "*.min.js",
+        "dist/**",
+        "gulpfile.js",
+        "Manga_OnlineViewer.meta.js",
+        "Manga_OnlineViewer.user.js",
+        "Manga_OnlineViewer_Adult.meta.js",
+        "Manga_OnlineViewer_Adult.user.js"
+    ]
 }

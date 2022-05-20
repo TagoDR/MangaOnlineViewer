@@ -1,5 +1,4 @@
-export default
-`html {
+export default `html {
   font-size: 100%;
 }
 

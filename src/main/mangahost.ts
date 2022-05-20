@@ -6,8 +6,9 @@ export default {
   language: ['Portuguese'],
   category: 'manga',
   run() {
-    const url = W.location.href + (W.location.href.lastIndexOf('/') !== W.location.href.length
-    - 1 ? '/' : '');
+    const url =
+      W.location.href +
+      (W.location.href.lastIndexOf('/') !== W.location.href.length - 1 ? '/' : '');
     const chapter = $('.viewerChapter:first option:selected');
     const num = parseInt($('.viewerPage:first option:last').html(), 10);
     const manga = {
@@ -21,7 +22,9 @@ export default {
     if ($('.read-slideshow img').get().length === 0) {
       manga.listPages = [...Array(num).keys()].map((i) => url + (i + 1));
     } else {
-      manga.listImages = $('.read-slideshow img').get().map((item) => $(item).attr('src'));
+      manga.listImages = $('.read-slideshow img')
+        .get()
+        .map((item) => $(item).attr('src'));
     }
     return manga;
   },

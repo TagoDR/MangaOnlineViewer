@@ -27,7 +27,13 @@ function addCustomTheme(color: string): string {
   );
 }
 
-function addFullCustomTheme(body: string, text: string, lines: string, panel: string, buttons: string) {
+function addFullCustomTheme(
+  body: string,
+  text: string,
+  lines: string,
+  panel: string,
+  buttons: string,
+) {
   return addTheme(['Full_Custom', body, text, lines, panel, buttons]);
 }
 
@@ -47,12 +53,24 @@ function loadThemes(): string[][] {
     ['Cool_Blues', '#000000', '#c4dfe6', '#66a5ad', '#07575b', '#003b46'],
     ['Custom_Dark', '#000000', `#${bg[2]}`, `#${bg[3]}`, `#${bg[0]}`, `#${bg[1]}`],
     ['Custom_Light', '#eeeeec', `#${bg[3]}`, `#${bg[2]}`, `#${bg[0]}`, `#${bg[1]}`],
-    ['Full_Custom', settings.CustomThemeBody, settings.CustomThemeText, settings.CustomThemeLines, settings.CustomThemePanel, settings.CustomThemeButton],
+    [
+      'Full_Custom',
+      settings.CustomThemeBody,
+      settings.CustomThemeText,
+      settings.CustomThemeLines,
+      settings.CustomThemePanel,
+      settings.CustomThemeButton,
+    ],
   ];
 }
 
 const themes = loadThemes();
-const themesSelector = themes.map((theme) => `<option value='${theme[0]}' ${settings.Theme === theme[0] ? 'selected' : ''}>${theme[0].replace('_', ' ')}</option>`);
+const themesSelector = themes.map(
+  (theme) =>
+    `<option value='${theme[0]}' ${
+      settings.Theme === theme[0] ? 'selected' : ''
+    }>${theme[0].replace('_', ' ')}</option>`,
+);
 const themesCSS = themes.map(addTheme).join('');
 
 export { themesCSS, themesSelector, addCustomTheme, addFullCustomTheme };

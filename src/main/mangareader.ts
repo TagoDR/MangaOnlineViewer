@@ -6,8 +6,9 @@ export default {
   language: ['English'],
   category: 'manga',
   run() {
-    const url = W.location.href + (W.location.href.lastIndexOf('/') !== W.location.href.length
-    - 1 ? '/' : '');
+    const url =
+      W.location.href +
+      (W.location.href.lastIndexOf('/') !== W.location.href.length - 1 ? '/' : '');
     const num = parseInt($('select#pageMenu option:last').html(), 10);
     const chapter = $('#mangainfo_bas a');
     return {

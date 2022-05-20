@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2';
+import minicolor from 'jquery-minicolors';
 import { getValueGM, logScript, setValueGM } from './browser.js';
 import generateZip from './download.js';
 import { applyZoom, reloadImage } from './page.js';
@@ -113,13 +114,13 @@ function setKeyDownEvents() {
         case 'Period':
         case 'KeyD':
         case 'Numpad6':
-          $('.ChapterControl:first .next')[0].trigger('click');
+          $('.ChapterControl:first .next').trigger('click');
           break;
         case 'ArrowLeft':
         case 'Comma':
         case 'KeyA':
         case 'Numpad4':
-          $('.ChapterControl:first .prev')[0].trigger('click');
+          $('.ChapterControl:first .prev').trigger('click');
           break;
         case 'Equal':
         case 'NumpadAdd':
@@ -199,7 +200,7 @@ function controls() {
   });
   $('#zoomStep').on('change', (event) => {
     const step = $(event.target).val();
-    setValueGM('MangaZoomStep', parseInt(step, 10));
+    setValueGM('MangaZoomStep', parseInt(step as string, 10));
     logScript(`zoomStep: ${getValueGM('MangaZoomStep')}`);
   });
   // WebComic View Mode
@@ -232,14 +233,18 @@ function controls() {
     logScript(`fitIfOversize: ${getValueGM('MangaFitWidthIfOversize')}`);
   });
   $('#viewMode').on('change', (event) => {
-    const mode = $(event.target).val();
-    $('#Chapter').removeClass('WebComic').removeClass('FluidLTR').removeClass('FluidRTL').addClass(mode);
+    const mode = $(event.target).val() as string;
+    $('#Chapter')
+      .removeClass('WebComic')
+      .removeClass('FluidLTR')
+      .removeClass('FluidRTL')
+      .addClass(mode);
     setValueGM('MangaViewMode', mode);
     logScript(`ViewMode: ${getValueGM('MangaViewMode')}`);
     applyZoom();
   });
   $('#loadMode').on('change', (event) => {
-    const mode = $(event.target).val();
+    const mode = $(event.target).val() as string;
     setValueGM('MangaLoadMode', mode);
     logScript(`MangaLoadMode: ${getValueGM('MangaLoadMode')}`);
   });
@@ -271,7 +276,7 @@ function controls() {
   $('#blob').one('click', generateZip);
   $('.download').on('click', () => {
     logScript('Downloading Chapter');
-    $('#blob')[0].trigger('click');
+    $('#blob').trigger('click');
   });
   $('#lazyLoadImages').on('change', (event) => {
     if ($(event.target).is(':checked')) {
@@ -288,16 +293,16 @@ function controls() {
     logScript(`MangaLazyLoadImages: ${getValueGM('MangaLazyLoadImages')}`);
   });
   $('#lazyStart').on('change', (event) => {
-    const start = $(event.target).val();
+    const start = $(event.target).val() as string;
     setValueGM('MangaLazyStart', start);
     logScript(`lazyStart: ${getValueGM('MangaLazyStart')}`);
   });
   $('#PagesPerSecond').on('change', (event) => {
-    setValueGM('MangaTimer', parseInt($(event.target).val(), 10));
+    setValueGM('MangaTimer', parseInt($(event.target).val() as string, 10));
     logScript(`MangaTimer: ${getValueGM('MangaTimer')}`);
   });
   $('#DefaultZoom').on('change', (event) => {
-    settings.Zoom = parseInt($(event.target).val(), 10);
+    settings.Zoom = parseInt($(event.target).val() as string, 10);
     $('#Zoom b').html(settings.Zoom);
     setValueGM('MangaZoom', parseInt(settings.Zoom, 10));
     logScript(`MangaZoom: ${getValueGM('MangaZoom')}`);
@@ -319,9 +324,11 @@ function controls() {
   // Theme Control
   $('#ThemeSelector').on('change', (event) => {
     const target = $(event.target);
-    $('#MangaOnlineViewer , body').removeClass().addClass(target.val());
+    $('#MangaOnlineViewer , body')
+      .removeClass()
+      .addClass(target.val() as string);
     logScript('MangaTheme', target.val());
-    setValueGM('MangaTheme', target.val());
+    setValueGM('MangaTheme', target.val() as string);
     if (target.val() === 'Custom_Dark' || target.val() === 'Custom_Light') {
       $('.CustomTheme').show();
     } else {
@@ -356,7 +363,7 @@ function controls() {
   // }
   $('INPUT.colorpicker').minicolors();
   $('#CustomThemeHue').on('change', (event) => {
-    const target = $(event.target).val();
+    const target = $(event.target).val() as string;
     logScript(`CustomTheme: ${target}`);
     $('style[title="Custom_Light"], style[title="Custom_Dark"]').remove();
     $('head').append(addCustomTheme(target));
@@ -375,18 +382,18 @@ function controls() {
     $('style[title="Full_Custom"]').remove();
     $('head').append(
       addFullCustomTheme(
-        $('#CustomThemeHueBody').val(),
-        $('#CustomThemeHueText').val(),
-        $('#CustomThemeHueLines').val(),
-        $('#CustomThemeHuePanel').val(),
-        $('#CustomThemeHueButton').val(),
+        $('#CustomThemeHueBody').val() as string,
+        $('#CustomThemeHueText').val() as string,
+        $('#CustomThemeHueLines').val() as string,
+        $('#CustomThemeHuePanel').val() as string,
+        $('#CustomThemeHueButton').val() as string,
       ),
     );
-    setValueGM('MangaCustomThemeBody', $('#CustomThemeHueBody').val());
-    setValueGM('MangaCustomThemeText', $('#CustomThemeHueText').val());
-    setValueGM('MangaCustomThemeLines', $('#CustomThemeHueLines').val());
-    setValueGM('MangaCustomThemePanel', $('#CustomThemeHuePanel').val());
-    setValueGM('MangaCustomThemeButton', $('#CustomThemeHueButton').val());
+    setValueGM('MangaCustomThemeBody', $('#CustomThemeHueBody').val() as string);
+    setValueGM('MangaCustomThemeText', $('#CustomThemeHueText').val() as string);
+    setValueGM('MangaCustomThemeLines', $('#CustomThemeHueLines').val() as string);
+    setValueGM('MangaCustomThemePanel', $('#CustomThemeHuePanel').val() as string);
+    setValueGM('MangaCustomThemeButton', $('#CustomThemeHueButton').val() as string);
   });
 
   $('#gotoPage').on('change', (event) => {
@@ -407,7 +414,10 @@ function controls() {
   // Individual Page functions
   // Bookmark Page to resume reading
   $('.Bookmark').on('click', (event) => {
-    const num = parseInt($(event.target).parents('.MangaPage').find('.PageFunctions span').text(), 10);
+    const num = parseInt(
+      $(event.target).parents('.MangaPage').find('.PageFunctions span').text(),
+      10,
+    );
     const mark: IBookmark = {
       url: W.location.href,
       page: num,
@@ -439,13 +449,13 @@ function controls() {
   // ZoomIn
   $('.ZoomIn').on('click', (event) => {
     const img = $(event.target).parents('.MangaPage').find('.PageContent img');
-    const ratio = (img.width() / img.prop('naturalWidth')) * (100 + settings.zoomStep);
+    const ratio = (img.width()! / img.prop('naturalWidth')) * (100 + settings.zoomStep);
     applyZoom(img, ratio);
   });
   // ZoomOut
   $('.ZoomOut').on('click', (event) => {
     const img = $(event.target).parents('.MangaPage').find('.PageContent img');
-    const ratio = (img.width() / img.prop('naturalWidth')) * (100 - settings.zoomStep);
+    const ratio = (img.width()! / img.prop('naturalWidth')) * (100 - settings.zoomStep);
     applyZoom(img, ratio);
   });
   // ZoomRestore

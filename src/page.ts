@@ -52,7 +52,11 @@ function applyZoom(pages: string | JQuery = '.PageContent img', zoom = settings.
     if (zoom === 1000) {
       $(value).width(window.innerWidth);
     } else if (zoom === -1000) {
-      $(value).height(window.innerHeight + ($('#Navigation').hasClass('disabled') ? 0 : -34) + ($('#Chapter').hasClass('WebComic') ? 0 : -35));
+      $(value).height(
+        window.innerHeight +
+          ($('#Navigation').hasClass('disabled') ? 0 : -34) +
+          ($('#Chapter').hasClass('WebComic') ? 0 : -35),
+      );
     } else {
       $(value).width($(value).prop('naturalWidth') * (zoom / 100));
     }
@@ -157,7 +161,10 @@ function addPage(manga: IManga, index: number, pageUrl: string): number {
     });
   } else {
     $(`#PageImg${index}`)
-      .attr('data-src', 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==')
+      .attr(
+        'data-src',
+        'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
+      )
       .unveil({
         offset: 2000,
       })
@@ -189,14 +196,22 @@ function delayAdd(src: string, wait: number = settings.Timer) {
 // use a list of pages to fill the viewer
 function loadMangaPages(begin: number, manga: IManga) {
   return manga.listPages?.map((url, index) =>
-    index >= begin ? delayAdd(url, (manga.timer || settings.Timer) * (index - begin)).then((response) => addPage(manga, index + 1, response as string)) : null,
+    index >= begin
+      ? delayAdd(url, (manga.timer || settings.Timer) * (index - begin)).then((response) =>
+          addPage(manga, index + 1, response as string),
+        )
+      : null,
   );
 }
 
 // use a list of images to fill the viewer
 function loadMangaImages(begin: number, manga: IManga) {
   return manga.listImages?.map((src, index) =>
-    index >= begin ? delayAdd(src, (manga.timer || settings.Timer) * (index - begin)).then((response) => addImg(index + 1, response as string)) : null,
+    index >= begin
+      ? delayAdd(src, (manga.timer || settings.Timer) * (index - begin)).then((response) =>
+          addImg(index + 1, response as string),
+        )
+      : null,
   );
 }
 

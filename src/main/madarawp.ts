@@ -1,7 +1,16 @@
 // == Madara WordPress Plugin ======================================================================
 // https://themeforest.net/item/madara-wordpress-theme-for-manga/20849828
 export default {
-  name: ['MangaHaus', 'Isekai Scan', 'Comic Kiba', 'Zinmanga', 'mangatx', 'Toonily', 'Mngazuki', 'ReaperScans'],
+  name: [
+    'MangaHaus',
+    'Isekai Scan',
+    'Comic Kiba',
+    'Zinmanga',
+    'mangatx',
+    'Toonily',
+    'Mngazuki',
+    'ReaperScans',
+  ],
   url: /https?:\/\/.+\/(manga|series)\/.+\/.+/,
   homepage: [
     'https://manhuaus.com',
@@ -24,8 +33,9 @@ export default {
       pages: src.length,
       prev: $('.prev_page:first').attr('href'),
       next: $('.next_page:first').attr('href'),
-      listImages: src.map((i) => $(i).attr('src') || $(i).attr('data-src') || $(i)
-        .attr('data-full-url')),
+      listImages: src.map(
+        (i) => $(i).attr('src') || $(i).attr('data-src') || $(i).attr('data-full-url'),
+      ),
     };
   },
 };

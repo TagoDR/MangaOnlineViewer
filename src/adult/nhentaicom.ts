@@ -13,7 +13,9 @@ export default {
       pages: $('.pages-selector option').get().length,
       prev: '#',
       next: '#',
-      listImages: $('.reader img').get().map((i) => $(i).attr('data-src')),
+      listImages: $('.reader img')
+        .get()
+        .map((i) => $(i).attr('data-src')),
     };
   },
 };

@@ -6,15 +6,20 @@ export default {
   language: ['Spanish'],
   category: 'manga',
   run() {
-    const num = $('#viewer-pages-select:first option').get().length || $('.img-container img').get().length;
+    const num =
+      $('#viewer-pages-select:first option').get().length || $('.img-container img').get().length;
     return {
       title: $('title').text().trim(),
       series: $('a[title="Volver"]').attr('href'),
       pages: num,
       prev: $('.chapter-prev a').attr('href'),
       next: $('.chapter-next a').attr('href'),
-      listPages: [...Array(num).keys()].map((i) => W.location.href.replace(/\/[0-9]+$/, `/${i + 1}`)),
-      listImages: $('.img-container img').get().map((item) => $(item).attr('data-src')),
+      listPages: [...Array(num).keys()].map((i) =>
+        W.location.href.replace(/\/[0-9]+$/, `/${i + 1}`),
+      ),
+      listImages: $('.img-container img')
+        .get()
+        .map((item) => $(item).attr('data-src')),
       img: '#viewer-container img, .viewer-page',
     };
   },

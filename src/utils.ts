@@ -45,7 +45,9 @@ function isNothing(value: unknown): boolean {
   function isEmptyObject(a: unknown): boolean {
     if (!Array.isArray(a)) {
       // it's an Object, not an Array
-      const hasNonempty = Object.keys(a as object).some((element) => !isNothing((a as object)[element]));
+      const hasNonempty = Object.keys(a as object).some(
+        (element) => !isNothing((a as object)[element]),
+      );
       return hasNonempty ? false : isEmptyObject(Object.keys(a as object));
     }
     // check if array is really not empty as JS thinks at least one element should be non-empty
@@ -56,7 +58,11 @@ function isNothing(value: unknown): boolean {
 
   return (
     // eslint-disable-next-line eqeqeq
-    value == false || value === 0 || typeof value === 'undefined' || value == null || (typeof value === 'object' && isEmptyObject(value))
+    value == false ||
+    value === 0 ||
+    typeof value === 'undefined' ||
+    value == null ||
+    (typeof value === 'object' && isEmptyObject(value))
   );
 }
 

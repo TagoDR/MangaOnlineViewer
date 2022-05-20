@@ -19,7 +19,9 @@ export default {
     const src = $('#image-container').attr('data-cdn');
     const imgs = [...Array(api.reader_page_total).keys()].map((i) => src.replace('[PAGE]', i + 1));
     return {
-      title: $('title').text().match(/(.+Read )(.+)/)[2],
+      title: $('title')
+        .text()
+        .match(/(.+Read )(.+)/)[2],
       series: api.reader_start_url,
       pages: api.reader_page_total,
       prev: '#',
