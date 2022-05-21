@@ -3,6 +3,7 @@ import fs from 'fs';
 import gulp from 'gulp';
 import file from 'gulp-file';
 import preprocess from 'gulp-preprocess';
+import gulpTypescript from 'gulp-typescript';
 import { rollup } from 'rollup';
 import cleanup from 'rollup-plugin-cleanup';
 import commonjs from '@rollup/plugin-commonjs';
@@ -15,6 +16,7 @@ import liveServer from 'live-server';
 import { tsImport } from 'ts-import';
 import prettier from 'gulp-prettier';
 import excludeDependenciesFromBundle from 'rollup-plugin-exclude-dependencies-from-bundle';
+import { nodeExternalsPlugin } from 'esbuild-node-externals';
 
 const scripts = {
   main: {
@@ -45,6 +47,7 @@ function buildUserscriptEsbuild(script) {
       logLevel: 'debug',
       bundle: true,
       outfile: `dist/${script.name}`,
+      plugins: [nodeExternalsPlugin()],
       // watch: isDev,
       // minify: isProd,
       // sourcemap: isDev && 'inline',
@@ -106,14 +109,32 @@ function buildUserscriptRollup(script) {
   );
 }
 
+function createMetadata() {
+  const tsProject = gulpTypescript.createProject('tsconfig.json', {
+    strict: false,
+    target: 'es6',
+    rootDir: 'src',
+    lib: ['dom', 'es6'],
+    strictNullChecks: false,
+  });
+  return gulp
+    .src('./src/**.ts', { base: 'src' })
+    .pipe(gulpTypescript(tsProject()))
+    .pipe(gulp.dest('dist/header'));
+}
+
 async function createMetaMain() {
   const s = await tsImport.compile(scripts.main.banner);
-  return file(scripts.main.meta, userscript.stringify(s.default, { src: true })).pipe(gulp.dest('./dist'));
+  return file(scripts.main.meta, userscript.stringify(s.default, { src: true })).pipe(
+    gulp.dest('./dist'),
+  );
 }
 
 async function createMetaAdult() {
   const s = await tsImport.compile(scripts.adult.banner);
-  return file(scripts.adult.meta, userscript.stringify(s.default, { src: true })).pipe(gulp.dest('./dist'));
+  return file(scripts.adult.meta, userscript.stringify(s.default, { src: true })).pipe(
+    gulp.dest('./dist'),
+  );
 }
 
 function beauty() {
@@ -163,13 +184,19 @@ function createScriptAdult() {
 }
 
 function watch() {
-  gulp.watch(['./src/*.*'], gulp.parallel(createScriptMain, createScriptAdult));
+  gulp.watch(
+    ['./src/*.*'],
+    gulp.parallel(
+      () => buildUserscriptEsbuild(scripts.main),
+      () => buildUserscriptEsbuild(scripts.adult),
+    ),
+  );
 }
 
+gulp.task('test', createMetadata);
 gulp.task('dev', gulp.parallel(server, watch));
-gulp.task('release', gulp.series(gulp.parallel(gulp.series(createMetaMain, createScriptMain), gulp.series(createMetaAdult, createScriptAdult), readme), beauty, move));
 gulp.task('main', gulp.series(createMetaMain, createScriptMain));
 gulp.task('adult', gulp.series(createMetaAdult, createScriptAdult));
-gulp.task('build', gulp.parallel(gulp.series(createMetaMain, createScriptMain), gulp.series(createMetaAdult, createScriptAdult), readme));
-gulp.task('imports', gulp.parallel(readme, createMetaMain, createMetaAdult));
-gulp.task('default', gulp.series(gulp.parallel(gulp.series(createMetaMain, createScriptMain), gulp.series(createMetaAdult, createScriptAdult), readme), beauty, move));
+gulp.task('build', gulp.parallel('main', 'adult', readme));
+gulp.task('release', gulp.series('build', beauty, move));
+gulp.task('default', gulp.series('release'));

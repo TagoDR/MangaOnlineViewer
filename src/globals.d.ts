@@ -1,6 +1,14 @@
 declare const W: Window;
 
 declare interface Window {
+  nextchapterurl?: any;
+  prechapterurl?: any;
+  chapterid?: any;
+  imagecount?: any;
+  chapterPages?: any;
+  pages?: any;
+  chapter_preloaded_images?: any;
+  mangaNav?: any;
   mov: (number) => void;
 }
 

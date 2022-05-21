@@ -15,7 +15,7 @@ export default {
 
       function charFromPosition(i) {
         return (
-          (i < 31 ? '' : charFromPosition(parseInt(i / 31, 10))) +
+          (i < 31 ? '' : charFromPosition(parseInt(`${i / 31}`, 10))) +
           (i % 31 > 35 ? String.fromCharCode((i % 31) + 29) : (i % 31).toString(36))
         );
       }

@@ -1,4 +1,6 @@
 // == MangaDex =====================================================================================
+import { data } from 'jquery';
+
 export default {
   name: 'MangaDex',
   url: /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/,
@@ -7,8 +9,11 @@ export default {
   category: 'manga',
   waitEle: "a[href^='/chapter/']",
   run() {
-    let server = null;
-    const chapterId = W.location.pathname.match(/\/chapter\/([^/]+)(\/[0-9]+)?/)[1];
+    let server: {
+      chapter: { data: string[]; hash };
+      baseUrl: string;
+    };
+    const chapterId = W.location.pathname.match(/\/chapter\/([^/]+)(\/[0-9]+)?/)![1];
     const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
     $.ajax({
       type: 'GET',
@@ -21,10 +26,10 @@ export default {
     return {
       title: $('title').text().replace(' - MangaDex', ''),
       series: $("a[href^='/title/']:last").attr('href'),
-      pages: server.chapter.data.length,
+      pages: server!.chapter.data.length,
       prev: $("a[href^='/chapter/']").eq(1).attr('href'),
       next: $("a[href^='/chapter/']").eq(0).attr('href'),
-      listImages: server.chapter.data.map(
+      listImages: server!.chapter.data.map(
         (img) => `${server.baseUrl}/data/${server.chapter.hash}/${img}`,
       ),
     };

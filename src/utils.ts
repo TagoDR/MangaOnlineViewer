@@ -14,7 +14,7 @@
  * @param {any} value - item to test
  * @returns {boolean} true if empty, otherwise false
  */
-function isEmpty(value: unknown): boolean {
+function isEmpty(value) {
   return (
     value === null || // check for null
     typeof value === 'undefined' ||
@@ -41,21 +41,18 @@ function isEmpty(value: unknown): boolean {
  * @param {any} value - item to test
  * @returns {boolean} true if nothing, otherwise false
  */
-function isNothing(value: unknown): boolean {
-  function isEmptyObject(a: unknown): boolean {
+function isNothing(value) {
+  const isEmptyObject = (a) => {
     if (!Array.isArray(a)) {
       // it's an Object, not an Array
-      const hasNonempty = Object.keys(a as object).some(
-        (element) => !isNothing((a as object)[element]),
-      );
-      return hasNonempty ? false : isEmptyObject(Object.keys(a as object));
+      const hasNonempty = Object.keys(a).some((element) => !isNothing(a[element]));
+      return hasNonempty ? false : isEmptyObject(Object.keys(a));
     }
     // check if array is really not empty as JS thinks at least one element should be non-empty
     return !a.some(
-      (element: unknown) => !isNothing(element), //
+      (element) => !isNothing(element), //
     );
-  }
-
+  };
   return (
     // eslint-disable-next-line eqeqeq
     value == false ||

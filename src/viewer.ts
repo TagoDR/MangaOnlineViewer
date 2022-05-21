@@ -143,8 +143,8 @@ function start(sites: ISite[]) {
       }
     }
     if (site.waitEle !== undefined) {
-      const wait = $(site.waitEle).get();
-      logScript(`Waiting for ${site.waitEle} = ${`${wait}`}`);
+      const wait = $(site.waitEle);
+      logScript(`Waiting for ${site.waitEle} = ${wait}`);
       if (isNothing(wait)) {
         setTimeout(() => {
           waitExec(site);

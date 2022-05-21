@@ -14,12 +14,15 @@
         //    "noEmit": true,
         "outDir": "dist",
         "allowSyntheticDefaultImports": true,
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "noEmitHelpers": true
     },
     "exclude": [
         "node_modules"
     ],
     "include": [
+        "src/globals.d.ts",
         "./src/"
     ]
 }

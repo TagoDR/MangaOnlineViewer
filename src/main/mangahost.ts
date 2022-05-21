@@ -1,4 +1,6 @@
 // == MangaHost2 ===================================================================================
+import { IManga } from '../interfaces.js';
+
 export default {
   name: 'MangaHost2',
   url: /https?:\/\/(www.)?mangahost2.com\/manga\/.+\/.+/,
@@ -18,13 +20,13 @@ export default {
       prev: chapter.next().val(),
       next: chapter.prev().val(),
       img: '.image-content img',
-    };
+    } as IManga;
     if ($('.read-slideshow img').get().length === 0) {
       manga.listPages = [...Array(num).keys()].map((i) => url + (i + 1));
     } else {
       manga.listImages = $('.read-slideshow img')
         .get()
-        .map((item) => $(item).attr('src'));
+        .map((item) => $(item).attr('src')) as string[];
     }
     return manga;
   },

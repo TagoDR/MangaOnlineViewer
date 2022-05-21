@@ -8,11 +8,11 @@ export default {
   run() {
     const token = $('script[src*=token]')
       .attr('src')
-      .match(/[&?]token=(\w+)&?/i)[1];
+      ?.match(/[&?]token=(\w+)&?/i)![1];
     const idRelease = $('script[src*=token]')
       .attr('src')
-      .match(/[&?]id_release=(\d+)&?/i)[1];
-    let api = null;
+      ?.match(/[&?]id_release=(\d+)&?/i)![1];
+    let api = { images: [] };
     const url = `https://leitor.net/leitor/pages/${idRelease}.json?key=${token}`;
     $.ajax({
       type: 'GET',

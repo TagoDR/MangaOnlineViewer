@@ -9,7 +9,7 @@ export default {
   run() {
     const images = $('img.chapter-img').get();
     return {
-      title: $('.chapter-title').attr('title').trim(),
+      title: $('.chapter-title').attr('title')?.trim(),
       series: $('#boxtopchap a').attr('href'),
       pages: images.length,
       prev: $('#chapter-nav-bot #prev_chap').attr('href'),

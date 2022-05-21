@@ -9,6 +9,7 @@ export default {
     const chapter = $('.selectchapter option:selected');
     const url = `${$("form[name='pageSelector1']").attr('action')}?ch=${chapter
       .val()
+      ?.toString()
       .replace(' ', '+')}&page=`;
     const num = $('.selectpage option').length;
     const origin = $('div.entry h1 a');
