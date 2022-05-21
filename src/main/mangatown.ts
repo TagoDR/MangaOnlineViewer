@@ -9,7 +9,7 @@ export default {
   waitMax: 5000,
   run() {
     const num = $('.page_select select:first option').get().slice(0, -1);
-    const chapter = $('#top_chapter_list option').eq(W.current_chapter_index);
+    const chapter = $('#top_chapter_list option').eq(W.current_chapter_index!);
     return {
       title: $('.title h1').text(),
       series: $('.title h2 a').attr('href'),

@@ -16,7 +16,9 @@ export default {
       pages: num,
       prev: origin.attr('href')! + chapter.next().val(),
       next: origin.attr('href')! + chapter.prev().val(),
-      listPages: [...Array(num).keys()].map((i) => `${url}/${i + 1}/`),
+      listPages: Array(num)
+        .fill(null)
+        .map((_, i) => `${url}/${i + 1}/`),
       img: '#picture',
       before() {
         // Todo: remake

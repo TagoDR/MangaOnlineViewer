@@ -17,7 +17,9 @@ export default {
       pages: num,
       prev: chapter.last().attr('href'),
       next: chapter.first().attr('href'),
-      listPages: [...Array(num).keys()].map((i) => url + (i + 1), num),
+      listPages: Array(num)
+        .fill(null)
+        .map((_, i) => url + (i + 1), num),
       img: 'img#img',
       before() {
         if (W.location.pathname.match(/\/.+\/.+\/chapter-[0-9]+.*/)) {

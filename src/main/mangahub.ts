@@ -7,7 +7,7 @@ export default {
   category: 'manga',
   waitEle: '#select-chapter',
   run() {
-    let api = null;
+    let api: { data: { chapter: { pages: any[] } } };
     const slug = W.CURRENT_MANGA_SLUG || W.location.pathname.split('/')[2];
     const number = W.location.pathname.split('/')[3].replace('chapter-', '');
     const data = { query: `{chapter(x:m01,slug:"${slug}",number:${number}){pages}}` };
@@ -20,7 +20,7 @@ export default {
         api = res;
       },
     });
-    const images = Object.values(JSON.parse(api.data.chapter.pages));
+    const images = Object.values(JSON.parse(api!.data.chapter.pages.toString()));
     return {
       title: $('#mangareader h3').text().trim(),
       series: $('#mangareader a:first').attr('href'),

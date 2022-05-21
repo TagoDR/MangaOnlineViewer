@@ -32,17 +32,19 @@ export default {
       ); // eslint-disable-line no-useless-escape
     }
 
-    const src = [...Array(W.imagecount).keys()].map((i) => {
-      let img = '';
-      $.ajax({
-        url: 'chapterfun.ashx',
-        async: false,
-        data: { cid: W.chapterid, page: i, key: $('#dm5_key').val() },
-      }).done((data) => {
-        img = decode(data, i);
-      }); // eslint-disable-line no-eval
-      return img;
-    });
+    const src = Array(W.imagecount)
+      .fill(null)
+      .map((_, i) => {
+        let img = '';
+        $.ajax({
+          url: 'chapterfun.ashx',
+          async: false,
+          data: { cid: W.chapterid, page: i, key: $('#dm5_key').val() },
+        }).done((data) => {
+          img = decode(data, i);
+        }); // eslint-disable-line no-eval
+        return img;
+      });
     return {
       title: $('.reader-header-title div:first').text().trim(),
       series: $('.reader-header-title a').attr('href'),

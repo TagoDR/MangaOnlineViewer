@@ -22,7 +22,9 @@ export default {
       img: '.image-content img',
     } as IManga;
     if ($('.read-slideshow img').get().length === 0) {
-      manga.listPages = [...Array(num).keys()].map((i) => url + (i + 1));
+      manga.listPages = Array(num)
+        .fill(null)
+        .map((_, i) => url + (i + 1));
     } else {
       manga.listImages = $('.read-slideshow img')
         .get()

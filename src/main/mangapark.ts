@@ -1,5 +1,15 @@
 /* eslint-disable no-undef */
 // == MangaPark ====================================================================================
+declare let CryptoJS;
+let amWord;
+let amPass;
+let amSub_name;
+let mpEpi_name;
+let currSubUrl;
+let imgPathLis;
+let prevEpiUrl;
+let nextEpiUrl;
+let imgCdnHost;
 export default {
   name: 'MangaPark',
   url: /https?:\/\/(www.)?mangapark.(com|me|org|net)\/(manga|chapter|comic)\/.+\/.+/,

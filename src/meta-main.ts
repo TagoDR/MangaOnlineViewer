@@ -1,3 +1,4 @@
+import './globals.js';
 import sites from './main/index.js';
 import { requiredScripts } from './externals.js';
 

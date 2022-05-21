@@ -27,7 +27,9 @@ export default {
             1,
         )
         .attr('href'),
-      listPages: [...Array(num).keys()].map((i) => url + (i + 1)),
+      listPages: Array(num)
+        .fill(null)
+        .map((_, i) => url + (i + 1)),
       img: 'img.open',
     };
   },

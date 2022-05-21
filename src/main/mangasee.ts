@@ -7,16 +7,16 @@ export default {
   category: 'manga',
   waitAttr: ['.img-fluid', 'src'],
   run() {
-    const src = $('.img-fluid').attr('src');
+    const src = $('.img-fluid').attr('src') as string;
     const CurChapter = JSON.parse(
       $('script')
         .text()
-        .match(/CurChapter = ({.+});/)[1],
+        .match(/CurChapter = ({.+});/)![1],
     );
     const CHAPTERS = JSON.parse(
       $('script')
         .text()
-        .match(/CHAPTERS = (\[{.+}]);/)[1],
+        .match(/CHAPTERS = (\[{.+}]);/)![1],
     );
     const CurChapterIndex = CHAPTERS.findIndex((chap) => chap.Chapter === CurChapter.Chapter);
 
@@ -48,9 +48,9 @@ export default {
       pages: CurChapter.Page,
       prev: ChapterURLEncode(-1),
       next: ChapterURLEncode(+1),
-      listImages: [...Array(parseInt(CurChapter.Page, 10)).keys()].map((i) =>
-        src.replace(/-\d\d\d.png/, `-${String(`000${i + 1}`).slice(-3)}.png`),
-      ),
+      listImages: Array(parseInt(CurChapter.Page, 10))
+        .fill(null)
+        .map((_, i) => src.replace(/-\d\d\d.png/, `-${String(`000${i + 1}`).slice(-3)}.png`)),
     };
   },
 };
