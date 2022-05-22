@@ -33,13 +33,16 @@ function removeValueGM(name) {
 }
 
 // Replacement function for GM_info allowing for debugging in console
-const getInfoGM = GM_info ?? {
-  scriptHandler: 'Console',
-  script: {
-    name: 'Debug',
-    version: 'Testing',
-  },
-};
+const getInfoGM =
+  typeof GM_info !== 'undefined'
+    ? GM_info
+    : {
+        scriptHandler: 'Console',
+        script: {
+          name: 'Debug',
+          version: 'Testing',
+        },
+      };
 
 // Replacement function for GM_getValue allowing for debugging in console
 function getValueGM(name: string, defaultValue: any = null): any {

@@ -1,8 +1,12 @@
 {
     "compilerOptions": {
+        "lib": [
+            "es2020",
+            "dom"
+        ],
         "strict": true,
-//        "allowJs": true,
-//            "checkJs": true,
+        //"allowJs": true,
+        //"checkJs": true,
         "noImplicitAny": false,
         "noEmitOnError": true,
         "removeComments": false,
@@ -11,12 +15,12 @@
         "esModuleInterop": true,
         "jsx": "react",
         "module": "es6",
-        //    "noEmit": true,
+        //"noEmit": true,
         "outDir": "dist",
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "noEmitHelpers": false,
+        "noEmitHelpers": false
     },
     "exclude": [
         "node_modules"
