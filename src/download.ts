@@ -1,8 +1,8 @@
-import JSZip from 'jszip';
+import * as JSZip from 'jszip';
 import { logScript } from './browser.js';
 
 const cache = {
-  zip: new JSZip(),
+  zip: JSZip,
   downloadFiles: 0,
   Data: {},
 };
@@ -17,19 +17,24 @@ const getFilename = (name, index, total, ext) =>
 
 // Generate Zip File for download
 function generateZip() {
-  // Source: http://stackoverflow.com/questions/8778863/downloading-an-image-using-xmlhttprequest-in-a-userscript/8781262#8781262
+  // Source:
+  // http://stackoverflow.com/questions/8778863/downloading-an-image-using-xmlhttprequest-in-a-userscript/8781262#8781262
   if (cache.downloadFiles === 0) {
     const filenameRegex = /^(?<name>.*?)(?<index>\d+)\.(?<ext>\w+)$/;
     const images = $('.MangaPage img');
     const filenames = (() => {
-      const result = [];
+      const result: string[] = [];
       for (let i = 0; i < images.length; i += 1) {
         const $img = $(images[i]);
         const filename = $img.attr('src')?.split(/[?#]/)[0].split('/').pop() ?? '';
         const match = filenameRegex.exec(filename);
         if (!match) break;
-        const { name, index, ext } = match.groups;
-        const fixedFilename = getFilename(name, index, images.length, ext);
+        const fixedFilename = getFilename(
+          match.groups?.name,
+          match.groups?.index,
+          images.length,
+          match.groups?.ext,
+        );
         if (result.length > 0 && fixedFilename <= result[result.length - 1]) break;
         result.push(fixedFilename);
       }
@@ -87,15 +92,15 @@ function generateZip() {
     logScript(`Waiting for Files to Download ${cache.downloadFiles} of ${total}`);
     setTimeout(generateZip, 2000);
   } else {
-    const blobLink = document.getElementById('blob');
+    const blobLink = document.getElementById('blob') as HTMLAnchorElement;
     try {
-      blobLink!.download = `${$('#series i').first().text().trim()}.zip`;
+      blobLink.download = `${$('#series i').first().text().trim()}.zip`;
       cache.zip
         .generateAsync({
           type: 'blob',
         })
         .then((content) => {
-          blobLink!.href = window.URL.createObjectURL(content);
+          blobLink.href = window.URL.createObjectURL(content);
           logScript('Download Ready');
           $('#blob')[0].click();
         });

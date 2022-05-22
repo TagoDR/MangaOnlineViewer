@@ -34,11 +34,42 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 
 ### Supported Manga Sites
 
-- [Localhost](https://localhost/) _[Portuguese]_
+- [Asura Scans](https://www.asurascans.com/) / [Flame Scans](https://flamescans.org/) _[English]_
+- [DisasterScans](https://disasterscans.com/) _[English]_
+- [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
+- [FoOlSlide]() _[English]_ **Obs: Any Scanlator site that uses FoOLSlide**
+- [Funmanga](http://funmanga.com/) _[English]_
+- [HatigarmScans](https://hatigarmscanz.net/home) _[English]_
+- [KomiRaw](https://komiraw.com/) _[English]_
+- [LHTranslation](http://lhtranslation.net/) _[English]_
+- [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) / [ReaperScans](https://reaperscans.com/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
+- [MangaDex](https://mangadex.org/) _[English]_
+- [MangaDoom](https://mngdoom.com/) _[English]_
+- [MangaFreak](https://mangafreak.net/) _[English]_
+- [MangaFox](http://fanfox.net/) _[English]_
+- [MangaHere](http://www.mangahere.cc/) _[English]_
+- [MangaHub](https://mangahub.io/) _[English]_
+- [MangaInn](http://www.mangainn.net/) _[English]_
+- [MangaKakalot](https://mangakakalot.com/page) / [MangaNelo](http://www.manganelo.com/) _[English]_
+- [MangaLyght](http://manga.lyght.net/) _[English]_
+- [MangaNato](http://www.manganato.com/) _[English]_
+- [MangaPark](http://mangapark.net/) _[English]_
+- [MangaSee](https://mangasee123.com/) / [Manga4life](https://manga4life.com/) _[English]_
+- [MangaTown](http://www.mangatown.com/) _[English]_
+- [NineManga](http://ninemanga.com/) _[English]_
+- [ReadManga Today](http://www.readmng.com/) _[English]_
+- [Batoto](http://bato.to/) _[English]_
+- [RawDevart](https://rawdevart.com) _[Original]_
+- [SenManga(Raw)](http://raw.senmanga.com/) _[Original]_
+- [Localhost](http://127.0.0.1:8080/index.html) _[Portuguese]_
+- [Leitor](https://leitor.net/) _[Portuguese]_
+- [UnionMangas](https://unionleitor.top/) _[Portuguese]_
+- [TuMangaOnline](https://lectortmo.com/) _[Spanish]_
 
 ### Supported Comic Sites
 
-
+- [ComiCastle](http://www.comicastle.org/) _[English]_
+- [ReadComicsOnline](http://readcomicsonline.ru/) _[English]_
 
 ### Supported Hentai Sites
 

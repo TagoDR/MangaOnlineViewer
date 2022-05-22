@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: ASMHentai, BestPornComix, DoujinMoeNM, 8Muses, ExHentai,e-Hentai, HBrowser, Hentai2Read, HentaiFox, HentaiHand, HentaIHere, HentaiMimi, hitomi, Imhentai, KingComix, MultPorn, MyHentaiGallery, nHentai.net,nHentai.xxx, nHentai.com, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno,vercomicsporno, xyzcomics
-// @version 2022.05-20
+// @version 2022.05-22
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -60,9 +60,35 @@
     return e && typeof e === 'object' && 'default' in e ? e : { default: e };
   }
 
+  function _interopNamespace(e) {
+    if (e && e.__esModule) return e;
+    var n = Object.create(null);
+    if (e) {
+      Object.keys(e).forEach(function (k) {
+        if (k !== 'default') {
+          var d = Object.getOwnPropertyDescriptor(e, k);
+          Object.defineProperty(
+            n,
+            k,
+            d.get
+              ? d
+              : {
+                  enumerable: true,
+                  get: function () {
+                    return e[k];
+                  },
+                },
+          );
+        }
+      });
+    }
+    n['default'] = e;
+    return Object.freeze(n);
+  }
+
   var Swal__default = /*#__PURE__*/ _interopDefaultLegacy(Swal);
-  var JSZip__default = /*#__PURE__*/ _interopDefaultLegacy(JSZip);
-  var NProgress__default = /*#__PURE__*/ _interopDefaultLegacy(NProgress);
+  var JSZip__namespace = /*#__PURE__*/ _interopNamespace(JSZip);
+  var NProgress__namespace = /*#__PURE__*/ _interopNamespace(NProgress);
   var ColorScheme__default = /*#__PURE__*/ _interopDefaultLegacy(ColorScheme);
 
   // == 8Muses =======================================================================================
@@ -119,7 +145,7 @@
     category: 'hentai',
     waitAttr: ['#jumpPageModal input', 'max'],
     run() {
-      let api = null;
+      let api;
       $.ajax({
         type: 'POST',
         url: '/api/getBookByID',
@@ -136,9 +162,9 @@
         pages: api.total_page,
         prev: '#',
         next: '#',
-        listImages: [...Array(api.total_page).keys()].map(
-          (i) => `${api.image_server + api.id}/${i + 1}.jpg`,
-        ),
+        listImages: Array(api.total_page)
+          .fill(null)
+          .map((_, i) => `${api.image_server + api.id}/${i + 1}.jpg`),
       };
     },
   };
@@ -164,7 +190,9 @@
         pages: num,
         prev: '#',
         next: '#',
-        listImages: [...Array(num).keys()].map((i) => `${src + (i + 1)}.jpg`),
+        listImages: Array(num)
+          .fill(null)
+          .map((_, i) => `${src + (i + 1)}.jpg`),
       };
     },
   };
@@ -235,7 +263,9 @@
         img: '#img',
         lazy: true,
         bruteForce(func) {
-          [...Array(maxGalley).keys()]
+          Array(maxGalley)
+            .fill(null)
+            .map((_, i) => i)
             .slice(Math.floor(Math.abs((func.begin - 1) / 40)))
             .map((galleryId, galleryOrder) =>
               func
@@ -287,7 +317,9 @@
         next: chapter
           .eq(chapter.index(chapter.filter(`[href='${W.location.href}']`)) + 1)
           .attr('href'),
-        listPages: [...Array(num).keys()].map((i) => url + String(`000${i + 1}`).slice(-4)),
+        listPages: Array(num)
+          .fill(null)
+          .map((_, i) => url + String(`000${i + 1}`).slice(-4)),
         img: 'td.pageImage a img',
       };
     },
@@ -324,7 +356,7 @@
       const num = parseInt($('.total_pages:first').text(), 10);
       const src = $('#gimg')
         .attr('src')
-        .replace(/\d+.\w+$/, '');
+        ?.replace(/\d+.\w+$/, '');
       function findExt(i) {
         const c = W.g_th[i][0];
         if (c === 'p') return '.png';
@@ -341,7 +373,9 @@
         pages: num,
         prev: '#',
         next: '#',
-        listImages: [...Array(num).keys()].map((i) => src + (i + 1) + findExt(i + 1)),
+        listImages: Array(num)
+          .fill(null)
+          .map((_, i) => src + (i + 1) + findExt(i + 1)),
       };
     },
   };
@@ -385,9 +419,9 @@
         pages: num,
         prev: '#',
         next: '#',
-        listImages: [...Array(num).keys()].map((i) =>
-          src.replace(/[0-9]+.jpg/, String(`00000${i + 1}`).slice(-1 * size) + ext),
-        ),
+        listImages: Array(num)
+          .fill(null)
+          .map((_, i) => src.replace(/[0-9]+.jpg/, String(`00000${i + 1}`).slice(-1 * size) + ext)),
       };
     },
   };
@@ -463,8 +497,8 @@
       if (cId > 632481) {
         randomServer = 'm5.imhentai.xxx';
       }
-      const src = Object.values(W.g_th).map((i, index) => {
-        const ext = i
+      const src = Object.values(W.g_th).map((key, index) => {
+        const ext = key
           .split(',')[0]
           .replace('g', 'gif')
           .replace('p', 'png')
@@ -564,9 +598,9 @@
         pages: num,
         prev: '#',
         next: '#',
-        listImages: [...Array(num).keys()].map((i) =>
-          src.replace(/[0-9]+\./, `${String(`000${i + 1}`).slice(-3)}.`),
-        ),
+        listImages: Array(num)
+          .fill(null)
+          .map((_, i) => src.replace(/[0-9]+\./, `${String(`000${i + 1}`).slice(-3)}.`)),
       };
     },
   };
@@ -609,20 +643,22 @@
       const num = parseInt($('.num-pages:first').html(), 10);
       const src = $('#image-container img')
         .attr('src')
-        .replace(/\d+.\w\w\w$/, '');
+        ?.replace(/\d+.\w\w\w$/, '');
       // eslint-disable-next-line camelcase
       const ext =
         W?.images_ext?.map(getExt) ||
         // eslint-disable-next-line no-underscore-dangle
         W?._gallery?.images?.pages?.map((i) => getExt(i.t)) ||
-        [...Array(num).keys()].map(getExt);
+        Array(num).fill('jpg');
       return {
         title: $('title').text().split('- Page')[0].trim(),
         series: $('.go-back').attr('href'),
         pages: num,
         prev: '#',
         next: '#',
-        listImages: [...Array(num).keys()].map((i) => `${src}${i + 1}.${ext[i]}`),
+        listImages: Array(num)
+          .fill(null)
+          .map((_, i) => `${src}${i + 1}.${ext[i]}`),
       };
     },
   };
@@ -664,7 +700,9 @@
         pages: num,
         prev: '#',
         next: '#',
-        listImages: [...Array(num).keys()].map((i) => src.replace(/\/[0-9]+\./, `/${i + 1}.`)),
+        listImages: Array(num)
+          .fill(null)
+          .map((_, i) => src.replace(/\/[0-9]+\./, `/${i + 1}.`)),
       };
     },
   };
@@ -677,7 +715,7 @@
     language: ['English'],
     category: 'hentai',
     run() {
-      let api = null;
+      let api;
       $.ajax({
         type: 'GET',
         url: W.location.href.replace(/\/page\/[0-9]+#?$/, '/all-pages'),
@@ -714,9 +752,9 @@
         pages: num,
         prev: '#',
         next: '#',
-        listPages: [...Array(num).keys()].map((i) =>
-          W.location.href.replace(/\/[0-9]+?$/, `/${i + 1}`),
-        ),
+        listPages: Array(num)
+          .fill(null)
+          .map((_, i) => W.location.href.replace(/\/[0-9]+?$/, `/${i + 1}`)),
         img: '.content-image',
         lazyAttr: 'data-original',
       };
@@ -731,7 +769,7 @@
     language: ['English'],
     category: 'hentai',
     run() {
-      let api = null;
+      let api;
       $.ajax({
         type: 'GET',
         url: `https://www.tsumino.com/Read/Load?q=${$('#image-container').attr('data-opt')}`,
@@ -742,9 +780,9 @@
         },
       });
       const src = $('#image-container').attr('data-cdn');
-      const imgs = [...Array(api.reader_page_total).keys()].map((i) =>
-        src.replace('[PAGE]', i + 1),
-      );
+      const imgs = Array(api.reader_page_total)
+        .fill(null)
+        .map((_, i) => src.replace('[PAGE]', `${i + 1}`));
       return {
         title: $('title')
           .text()
@@ -845,7 +883,7 @@
   // Compose console output
   const logScriptC = (x) => (y) => logScript(x, y)[1];
   // Replacement function for GM_info allowing for debugging in console
-  const getInfoGM = GM_info || {
+  const getInfoGM = GM_info ?? {
     scriptHandler: 'Console',
     script: {
       name: 'Debug',
@@ -886,14 +924,15 @@
     }
     return M.join(' ');
   }
-  // See https://stackoverflow.com/questions/27487828/how-to-detect-if-a-userscript-is-installed-from-the-chrome-store
+  // See
+  // https://stackoverflow.com/questions/27487828/how-to-detect-if-a-userscript-is-installed-from-the-chrome-store
   function getEngine() {
     return `${getInfoGM.scriptHandler || 'Greasemonkey'} ${getInfoGM.script.version}`;
   }
   const isMobile = W.matchMedia('screen and (max-width: 1024px)').matches;
 
   const cache = {
-    zip: new JSZip__default['default'](),
+    zip: JSZip__namespace,
     downloadFiles: 0,
     Data: {},
   };
@@ -905,7 +944,8 @@
       .padStart(Math.floor(Math.log10(total)) + 1, '0')}.${ext.replace('jpeg', 'jpg')}`;
   // Generate Zip File for download
   function generateZip() {
-    // Source: http://stackoverflow.com/questions/8778863/downloading-an-image-using-xmlhttprequest-in-a-userscript/8781262#8781262
+    // Source:
+    // http://stackoverflow.com/questions/8778863/downloading-an-image-using-xmlhttprequest-in-a-userscript/8781262#8781262
     if (cache.downloadFiles === 0) {
       const filenameRegex = /^(?<name>.*?)(?<index>\d+)\.(?<ext>\w+)$/;
       const images = $('.MangaPage img');
@@ -916,8 +956,12 @@
           const filename = $img.attr('src')?.split(/[?#]/)[0].split('/').pop() ?? '';
           const match = filenameRegex.exec(filename);
           if (!match) break;
-          const { name, index, ext } = match.groups;
-          const fixedFilename = getFilename(name, index, images.length, ext);
+          const fixedFilename = getFilename(
+            match.groups?.name,
+            match.groups?.index,
+            images.length,
+            match.groups?.ext,
+          );
           if (result.length > 0 && fixedFilename <= result[result.length - 1]) break;
           result.push(fixedFilename);
         }
@@ -1104,7 +1148,7 @@
    * @returns {boolean} true if nothing, otherwise false
    */
   function isNothing(value) {
-    function isEmptyObject(a) {
+    const isEmptyObject = (a) => {
       if (!Array.isArray(a)) {
         // it's an Object, not an Array
         const hasNonempty = Object.keys(a).some((element) => !isNothing(a[element]));
@@ -1112,7 +1156,7 @@
       }
       // check if array is really not empty as JS thinks at least one element should be non-empty
       return !a.some((element) => !isNothing(element));
-    }
+    };
     return (
       // eslint-disable-next-line eqeqeq
       value == false ||
@@ -1205,11 +1249,9 @@
     const percentage = Math.floor((loaded / total) * 100);
     $('title').html(`(${percentage}%) ${$('#series i').first().text()}`);
     $('#Counters i, #NavigationCounters i').html(loaded.toString());
-    NProgress__default['default']
-      .configure({
-        showSpinner: false,
-      })
-      .set(loaded / total);
+    NProgress__namespace.configure({
+      showSpinner: false,
+    }).set(loaded / total);
     logScript(`Progress: ${percentage}%`);
     if (loaded === total) onImagesDone();
   }
@@ -2001,8 +2043,8 @@
   <span class='controlLabel zoomStep'>Zoom Change Step (between 5 and 50): <br/>
     <input type='range' value='${
       settings.zoomStep
-    }' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput="zoomStepVal.value = this.value">
-    <output id="zoomStepVal">${settings.zoomStep}</output>
+    }' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput='zoomStepVal.value = this.value'>
+    <output id='zoomStepVal'>${settings.zoomStep}</output>
   </span>
   <span class='controlLabel viewMode'>Default View Mode:
     <select id='viewMode'>
@@ -2036,8 +2078,8 @@
    <span class='controlLabel lazyStart'>Lazy Start From Page (between 5 and 100):<br/>
     <input type='range' value='${
       settings.lazyStart
-    }' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput="lazyStartVal.value = this.value">
-    <output id="lazyStartVal">${settings.lazyStart}</output>
+    }' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput='lazyStartVal.value = this.value'>
+    <output id='lazyStartVal'>${settings.lazyStart}</output>
   </span>
   <span class='controlLabel downloadZip'>Download Images as Zip Automatically:
     <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${
@@ -2066,8 +2108,11 @@
     `<div class='ViewerTitle'><br/><a id='series' href='${manga.series}'><i>${manga.title}</i><br/>(Return to Chapter List)</a></div>`;
   // Add Pages Place-holders
   const listPages = (times) =>
-    [...Array(times).keys()].map(
-      (index) => `<div id='Page${index + 1}' class='MangaPage'>
+    Array(times)
+      .fill(null)
+      .map(
+        (_, index) => `
+<div id='Page${index + 1}' class='MangaPage'>
   <div class='PageFunctions'>
     <a class='Bookmark controlButton' title='Bookmark'></a>
     <a class='ZoomIn controlButton' title='Zoom In'></a>
@@ -2083,16 +2128,20 @@
     <img id='PageImg${index + 1}' alt='PageImg${index + 1}' />
   </div>
 </div>`,
-    );
+      );
   const listOptions = (times) =>
-    [...Array(times).keys()].map((index) => `<option value='${index + 1}'>${index + 1}</option>`);
+    Array(times)
+      .fill(null)
+      .map((_, index) => `<option value='${index + 1}'>${index + 1}</option>`);
   const listThumbnails = (times) =>
-    [...Array(times).keys()].map(
-      (index) =>
-        `<div id='Thumbnail${index + 1}' class='Thumbnail'><img id='ThumbnailImg${
-          index + 1
-        }' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`,
-    );
+    Array(times)
+      .fill(null)
+      .map(
+        (_, index) =>
+          `<div id='Thumbnail${index + 1}' class='Thumbnail'><img id='ThumbnailImg${
+            index + 1
+          }' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`,
+      );
   const body = (manga, begin = 0) => `
 <div id='MangaOnlineViewer' class='${settings.Theme} ${isMobile ? 'mobile' : ''} ${
     settings.hidePageControls ? 'hideControls' : ''
@@ -2145,7 +2194,7 @@ ${cssStyles}
     return `
 <head>
   <title>${manga.title}</title>
-  <meta charset="UTF-8">
+  <meta charset='UTF-8'>
   ${externalScripts.join('\n')}
   ${externalCSS.join('\n')}
   ${readerCSS}
@@ -2220,12 +2269,9 @@ ${cssStyles}
       if (beginning === 0) {
         beginning = settings?.bookmarks?.find((b) => b.url === W.location.href)?.page || 0;
       }
-      $('head').append(
-        '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />',
-        '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.js" integrity="sha256-uvgSxlcEyGRDRvqW8sxcM/sPEBYiIeL+EW8XKL96iQ4=" crossorigin="anonymous"></script>',
-        '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.css" integrity="sha256-Ow4lbGxscUvJwGnorLyGwVYv0KkeIG6+5CAmR8zuRJw=" crossorigin="anonymous">',
-        '<style type="text/css">#mov {position: fixed;left: 50%;transform: translateX(-50%);top: 0;z-index: 1000000;border-radius: .25em;font-size: 1.5em;cursor: pointer;display: inline-block;margin: .3125em;padding: .625em 2em;box-shadow: none;font-weight: 500;color: #FFF;background: rgb(102, 83, 146);border: 1px #FFF;}</style>',
-      );
+      $('head').append(` ${externalScripts.join('\n')}
+        ${externalCSS.join('\n')}
+       <style type='text/css'>#mov {position: fixed;left: 50%;transform: translateX(-50%);top: 0;z-index: 1000000;border-radius: .25em;font-size: 1.5em;cursor: pointer;display: inline-block;margin: .3125em;padding: .625em 2em;box-shadow: none;font-weight: 500;color: #FFF;background: rgb(102, 83, 146);border: 1px #FFF;}</style>`);
       W.mov = (b) => lateStart(site, b || beginning);
       switch (site.start || settings.loadMode) {
         case 'never':
@@ -2290,8 +2336,8 @@ ${cssStyles}
         }
       }
       if (site.waitEle !== undefined) {
-        const wait = $(site.waitEle).get();
-        logScript(`Waiting for ${site.waitEle} = ${`${wait}`}`);
+        const wait = $(site.waitEle);
+        logScript(`Waiting for ${site.waitEle} = ${wait}`);
         if (isNothing(wait)) {
           setTimeout(() => {
             waitExec(site);

@@ -1,15 +1,15 @@
 /* eslint-disable no-undef */
 // == MangaPark ====================================================================================
 declare let CryptoJS;
-let amWord;
-let amPass;
-let amSub_name;
-let mpEpi_name;
-let currSubUrl;
-let imgPathLis;
-let prevEpiUrl;
-let nextEpiUrl;
-let imgCdnHost;
+declare let amWord;
+declare let amPass;
+declare let amSub_name;
+declare let mpEpi_name;
+declare let currSubUrl;
+declare let imgPathLis;
+declare let prevEpiUrl;
+declare let nextEpiUrl;
+declare let imgCdnHost;
 export default {
   name: 'MangaPark',
   url: /https?:\/\/(www.)?mangapark.(com|me|org|net)\/(manga|chapter|comic)\/.+\/.+/,

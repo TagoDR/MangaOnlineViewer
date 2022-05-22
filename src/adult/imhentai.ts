@@ -9,7 +9,7 @@ export default {
   run() {
     const galleryId = $('#gallery_id').val();
     const imageDir = $('#image_dir').val();
-    const cId = $('#u_id').val();
+    const cId = $('#u_id').val() as number;
     let randomServer;
     if (cId > 0 && cId <= 274825) {
       randomServer = 'm1.imhentai.xxx';
@@ -26,8 +26,8 @@ export default {
     if (cId > 632481) {
       randomServer = 'm5.imhentai.xxx';
     }
-    const src = Object.values(W.g_th).map((i, index) => {
-      const ext = i
+    const src = Object.values(W.g_th).map((key, index) => {
+      const ext = (key as string)
         .split(',')[0]
         .replace('g', 'gif')
         .replace('p', 'png')
@@ -38,7 +38,7 @@ export default {
     return {
       title: $('title').text().trim(),
       series: $('.return_btn').attr('href'),
-      pages: parseInt($('#pages').val(), 10),
+      pages: parseInt($('#pages').val() as string, 10),
       prev: '#',
       next: '#',
       listImages: src,

@@ -103,8 +103,8 @@ const controls = `<div id='ViewerControls' class='panel'>
   <span class='controlLabel zoomStep'>Zoom Change Step (between 5 and 50): <br/>
     <input type='range' value='${
       settings.zoomStep
-    }' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput="zoomStepVal.value = this.value">
-    <output id="zoomStepVal">${settings.zoomStep}</output>
+    }' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput='zoomStepVal.value = this.value'>
+    <output id='zoomStepVal'>${settings.zoomStep}</output>
   </span>
   <span class='controlLabel viewMode'>Default View Mode:
     <select id='viewMode'>
@@ -138,8 +138,8 @@ const controls = `<div id='ViewerControls' class='panel'>
    <span class='controlLabel lazyStart'>Lazy Start From Page (between 5 and 100):<br/>
     <input type='range' value='${
       settings.lazyStart
-    }' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput="lazyStartVal.value = this.value">
-    <output id="lazyStartVal">${settings.lazyStart}</output>
+    }' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput='lazyStartVal.value = this.value'>
+    <output id='lazyStartVal'>${settings.lazyStart}</output>
   </span>
   <span class='controlLabel downloadZip'>Download Images as Zip Automatically:
     <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${
@@ -168,8 +168,11 @@ const title = (manga) =>
   `<div class='ViewerTitle'><br/><a id='series' href='${manga.series}'><i>${manga.title}</i><br/>(Return to Chapter List)</a></div>`;
 // Add Pages Place-holders
 const listPages = (times) =>
-  [...Array(times).keys()].map(
-    (index) => `<div id='Page${index + 1}' class='MangaPage'>
+  Array(times)
+    .fill(null)
+    .map(
+      (_, index) => `
+<div id='Page${index + 1}' class='MangaPage'>
   <div class='PageFunctions'>
     <a class='Bookmark controlButton' title='Bookmark'></a>
     <a class='ZoomIn controlButton' title='Zoom In'></a>
@@ -185,16 +188,20 @@ const listPages = (times) =>
     <img id='PageImg${index + 1}' alt='PageImg${index + 1}' />
   </div>
 </div>`,
-  );
+    );
 const listOptions = (times) =>
-  [...Array(times).keys()].map((index) => `<option value='${index + 1}'>${index + 1}</option>`);
+  Array(times)
+    .fill(null)
+    .map((_, index) => `<option value='${index + 1}'>${index + 1}</option>`);
 const listThumbnails = (times) =>
-  [...Array(times).keys()].map(
-    (index) =>
-      `<div id='Thumbnail${index + 1}' class='Thumbnail'><img id='ThumbnailImg${
-        index + 1
-      }' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`,
-  );
+  Array(times)
+    .fill(null)
+    .map(
+      (_, index) =>
+        `<div id='Thumbnail${index + 1}' class='Thumbnail'><img id='ThumbnailImg${
+          index + 1
+        }' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`,
+    );
 const body = (manga, begin = 0) => `
 <div id='MangaOnlineViewer' class='${settings.Theme} ${isMobile ? 'mobile' : ''} ${
   settings.hidePageControls ? 'hideControls' : ''
@@ -249,7 +256,7 @@ function reader(manga: IManga, begin = 0) {
   return `
 <head>
   <title>${manga.title}</title>
-  <meta charset="UTF-8">
+  <meta charset='UTF-8'>
   ${externalScripts.join('\n')}
   ${externalCSS.join('\n')}
   ${readerCSS}

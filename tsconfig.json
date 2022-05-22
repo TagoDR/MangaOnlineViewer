@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
         "strict": true,
-        "allowJs": true,
-        //    "checkJs": true,
+//        "allowJs": true,
+//            "checkJs": true,
         "noImplicitAny": false,
         "noEmitOnError": true,
         "removeComments": false,
@@ -16,7 +16,7 @@
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "noEmitHelpers": true
+        "noEmitHelpers": false,
     },
     "exclude": [
         "node_modules"

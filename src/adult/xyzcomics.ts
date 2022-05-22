@@ -6,7 +6,7 @@ export default {
   language: ['English'],
   category: 'hentai',
   run() {
-    const imgs = $('.jig-link').get();
+    const imgs = $('.jig-link').get() as HTMLAnchorElement[];
     return {
       title: $('.entry-title').first().text().trim(),
       series: '#',

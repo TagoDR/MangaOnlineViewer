@@ -15,7 +15,9 @@ export default {
       pages: num,
       prev: chapter.prev().val(),
       next: chapter.next().val(),
-      listImages: [...Array(num).keys()].map((i) => `${url}/${i + 1}.jpg`),
+      listImages: Array(num)
+        .fill(null)
+        .map((_, i) => `${url}/${i + 1}.jpg`),
     };
   },
 };

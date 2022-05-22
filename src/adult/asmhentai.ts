@@ -8,7 +8,7 @@ export default {
   run() {
     const num = $('.pag_info:first option').get().length - 2;
     const src = $('.no_image')
-      .attr('src')
+      .attr('src')!
       .replace(/\d+\.jpg/, '');
     return {
       title: $('title')
@@ -19,7 +19,9 @@ export default {
       pages: num,
       prev: '#',
       next: '#',
-      listImages: [...Array(num).keys()].map((i) => `${src + (i + 1)}.jpg`),
+      listImages: Array(num)
+        .fill(null)
+        .map((_, i) => `${src + (i + 1)}.jpg`),
     };
   },
 };

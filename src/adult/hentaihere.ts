@@ -6,9 +6,9 @@ export default {
   language: ['English'],
   category: 'hentai',
   run() {
-    const src = $('#reader-content img').attr('src');
-    const size = src.match(/([0-9]+)\..+/)[1].length;
-    const ext = src.match(/[0-9]+(\..+)/)[1];
+    const src = $('#reader-content img').attr('src') as string;
+    const size = src.match(/([0-9]+)\..+/)![1].length;
+    const ext = src.match(/[0-9]+(\..+)/)![1];
     const num = $('#pageDropdown:first li').length;
     const origin = $('.breadcrumb a:eq(2)');
     return {
@@ -17,9 +17,9 @@ export default {
       pages: num,
       prev: '#',
       next: '#',
-      listImages: [...Array(num).keys()].map((i) =>
-        src.replace(/[0-9]+.jpg/, String(`00000${i + 1}`).slice(-1 * size) + ext),
-      ),
+      listImages: Array(num)
+        .fill(null)
+        .map((_, i) => src.replace(/[0-9]+.jpg/, String(`00000${i + 1}`).slice(-1 * size) + ext)),
     };
   },
 };

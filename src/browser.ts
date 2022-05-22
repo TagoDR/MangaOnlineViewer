@@ -33,7 +33,7 @@ function removeValueGM(name) {
 }
 
 // Replacement function for GM_info allowing for debugging in console
-const getInfoGM = GM_info || {
+const getInfoGM = GM_info ?? {
   scriptHandler: 'Console',
   script: {
     name: 'Debug',
@@ -78,7 +78,8 @@ function getBrowser(): string {
   return M.join(' ');
 }
 
-// See https://stackoverflow.com/questions/27487828/how-to-detect-if-a-userscript-is-installed-from-the-chrome-store
+// See
+// https://stackoverflow.com/questions/27487828/how-to-detect-if-a-userscript-is-installed-from-the-chrome-store
 function getEngine(): string {
   return `${getInfoGM.scriptHandler || 'Greasemonkey'} ${getInfoGM.script.version}`;
 }

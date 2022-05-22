@@ -1,6 +1,4 @@
 // == MangaDex =====================================================================================
-import { data } from 'jquery';
-
 export default {
   name: 'MangaDex',
   url: /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/,

@@ -19,7 +19,9 @@ export default {
       next: chapter
         .eq(chapter.index(chapter.filter(`[href='${W.location.href}']`)) + 1)
         .attr('href'),
-      listPages: [...Array(num).keys()].map((i) => url + String(`000${i + 1}`).slice(-4)),
+      listPages: Array(num)
+        .fill(null)
+        .map((_, i) => url + String(`000${i + 1}`).slice(-4)),
       img: 'td.pageImage a img',
     };
   },

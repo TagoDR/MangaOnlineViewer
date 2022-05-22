@@ -6,7 +6,7 @@ export default {
   language: ['English'],
   category: 'hentai',
   run() {
-    let api = null;
+    let api: { reader_page_total; reader_start_url };
     $.ajax({
       type: 'GET',
       url: `https://www.tsumino.com/Read/Load?q=${$('#image-container').attr('data-opt')}`,
@@ -16,14 +16,16 @@ export default {
         api = res;
       },
     });
-    const src = $('#image-container').attr('data-cdn');
-    const imgs = [...Array(api.reader_page_total).keys()].map((i) => src.replace('[PAGE]', i + 1));
+    const src = $('#image-container').attr('data-cdn') as string;
+    const imgs = Array(api!.reader_page_total)
+      .fill(null)
+      .map((_, i) => src.replace('[PAGE]', `${i + 1}`));
     return {
       title: $('title')
         .text()
-        .match(/(.+Read )(.+)/)[2],
-      series: api.reader_start_url,
-      pages: api.reader_page_total,
+        .match(/(.+Read )(.+)/)![2],
+      series: api!.reader_start_url,
+      pages: api!.reader_page_total,
       prev: '#',
       next: '#',
       listImages: imgs,

@@ -4,8 +4,8 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Asura Scans,Flame Scans, ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, KomiRaw, Leitor, LHTranslation, MangaHaus,Isekai Scan,Comic Kiba,Zinmanga,mangatx,Toonily,Mngazuki,ReaperScans, MangaDex, MangaDoom, MangaFreak, MangaFox, MangaHere, MangaHub, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaNato, MangaPark, MangaSee,Manga4life, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, UnionMangas, Batoto
-// @version 2022.05-20
+// @description Shows all pages at once in online view for these sites: Localhost, Asura Scans,Flame Scans, ComiCastle, DisasterScans, Dynasty-Scans, FoOlSlide, Funmanga, HatigarmScans, KomiRaw, Leitor, LHTranslation, MangaHaus,Isekai Scan,Comic Kiba,Zinmanga,mangatx,Toonily,Mngazuki,ReaperScans, MangaDex, MangaDoom, MangaFreak, MangaFox, MangaHere, MangaHub, MangaInn, MangaKakalot,MangaNelo, MangaLyght, MangaNato, MangaPark, MangaSee,Manga4life, MangaTown, NineManga, RawDevart, ReadComicsOnline, ReadManga Today, SenManga(Raw), TuMangaOnline, UnionMangas, Batoto
+// @version 2022.05-22
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -21,6 +21,7 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/unveil2/2.0.8/jquery.unveil2.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.3.6/jquery.minicolors.min.js
+// @include /http:\/\/127.0.0.1:8080\/index.htm/
 // @include /https?:\/\/(www.)?(asurascans|flamescans).(com|org)\/.+/
 // @include /https?:\/\/(www.)?comicastle.org\/comic\/.+\/[0-9]+.*/
 // @include /https?:\/\/(www.)?disasterscans.com\/manga\/.+\/chapter-.+/
@@ -68,9 +69,35 @@
     return e && typeof e === 'object' && 'default' in e ? e : { default: e };
   }
 
+  function _interopNamespace(e) {
+    if (e && e.__esModule) return e;
+    var n = Object.create(null);
+    if (e) {
+      Object.keys(e).forEach(function (k) {
+        if (k !== 'default') {
+          var d = Object.getOwnPropertyDescriptor(e, k);
+          Object.defineProperty(
+            n,
+            k,
+            d.get
+              ? d
+              : {
+                  enumerable: true,
+                  get: function () {
+                    return e[k];
+                  },
+                },
+          );
+        }
+      });
+    }
+    n['default'] = e;
+    return Object.freeze(n);
+  }
+
   var Swal__default = /*#__PURE__*/ _interopDefaultLegacy(Swal);
-  var JSZip__default = /*#__PURE__*/ _interopDefaultLegacy(JSZip);
-  var NProgress__default = /*#__PURE__*/ _interopDefaultLegacy(NProgress);
+  var JSZip__namespace = /*#__PURE__*/ _interopNamespace(JSZip);
+  var NProgress__namespace = /*#__PURE__*/ _interopNamespace(NProgress);
   var ColorScheme__default = /*#__PURE__*/ _interopDefaultLegacy(ColorScheme);
 
   // == AsuraScans and FlameScans ====================================================================
@@ -209,7 +236,9 @@
             ) - 1,
           )
           .attr('href'),
-        listPages: [...Array(num).keys()].map((i) => url + (i + 1)),
+        listPages: Array(num)
+          .fill(null)
+          .map((_, i) => url + (i + 1)),
         img: 'img.open',
       };
     },
@@ -268,7 +297,7 @@
     run() {
       const images = $('img.chapter-img').get();
       return {
-        title: $('.chapter-title').attr('title').trim(),
+        title: $('.chapter-title').attr('title')?.trim(),
         series: $('#boxtopchap a').attr('href'),
         pages: images.length,
         prev: $('#chapter-nav-bot #prev_chap').attr('href'),
@@ -288,11 +317,11 @@
     run() {
       const token = $('script[src*=token]')
         .attr('src')
-        .match(/[&?]token=(\w+)&?/i)[1];
+        ?.match(/[&?]token=(\w+)&?/i)[1];
       const idRelease = $('script[src*=token]')
         .attr('src')
-        .match(/[&?]id_release=(\d+)&?/i)[1];
-      let api = null;
+        ?.match(/[&?]id_release=(\d+)&?/i)[1];
+      let api = { images: [] };
       const url = `https://leitor.net/leitor/pages/${idRelease}.json?key=${token}`;
       $.ajax({
         type: 'GET',
@@ -385,7 +414,7 @@
     category: 'manga',
     waitEle: "a[href^='/chapter/']",
     run() {
-      let server = null;
+      let server;
       const chapterId = W.location.pathname.match(/\/chapter\/([^/]+)(\/[0-9]+)?/)[1];
       const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
       $.ajax({
@@ -447,7 +476,7 @@
           .split('|');
         function charFromPosition(i) {
           return (
-            (i < 31 ? '' : charFromPosition(parseInt(i / 31, 10))) +
+            (i < 31 ? '' : charFromPosition(parseInt(`${i / 31}`, 10))) +
             (i % 31 > 35 ? String.fromCharCode((i % 31) + 29) : (i % 31).toString(36))
           );
         }
@@ -461,17 +490,19 @@
           res.match(/pvalue=\["([^,]+)","([^,\]]+)"/)[page === 0 ? 1 : 2]
         ); // eslint-disable-line no-useless-escape
       }
-      const src = [...Array(W.imagecount).keys()].map((i) => {
-        let img = '';
-        $.ajax({
-          url: 'chapterfun.ashx',
-          async: false,
-          data: { cid: W.chapterid, page: i, key: $('#dm5_key').val() },
-        }).done((data) => {
-          img = decode(data, i);
-        }); // eslint-disable-line no-eval
-        return img;
-      });
+      const src = Array(W.imagecount)
+        .fill(null)
+        .map((_, i) => {
+          let img = '';
+          $.ajax({
+            url: 'chapterfun.ashx',
+            async: false,
+            data: { cid: W.chapterid, page: i, key: $('#dm5_key').val() },
+          }).done((data) => {
+            img = decode(data, i);
+          }); // eslint-disable-line no-eval
+          return img;
+        });
       return {
         title: $('.reader-header-title div:first').text().trim(),
         series: $('.reader-header-title a').attr('href'),
@@ -519,7 +550,7 @@
           .split('|');
         function charFromPosition(i) {
           return (
-            (i < 31 ? '' : charFromPosition(parseInt(i / 31, 10))) +
+            (i < 31 ? '' : charFromPosition(parseInt(`${i / 31}`, 10))) +
             (i % 31 > 35 ? String.fromCharCode((i % 31) + 29) : (i % 31).toString(36))
           );
         }
@@ -533,17 +564,19 @@
           res.match(/pvalue=\["([^,]+)","([^,\]]+)"/)[page === 0 ? 1 : 2]
         ); // eslint-disable-line no-useless-escape
       }
-      const src = [...Array(W.imagecount).keys()].map((i) => {
-        let img = '';
-        $.ajax({
-          url: 'chapterfun.ashx',
-          async: false,
-          data: { cid: W.chapterid, page: i, key: $('#dm5_key').val() },
-        }).done((data) => {
-          img = decode(data, i);
-        }); // eslint-disable-line no-eval
-        return img;
-      });
+      const src = Array(W.imagecount)
+        .fill(null)
+        .map((_, i) => {
+          let img = '';
+          $.ajax({
+            url: 'chapterfun.ashx',
+            async: false,
+            data: { cid: W.chapterid, page: i, key: $('#dm5_key').val() },
+          }).done((data) => {
+            img = decode(data, i);
+          }); // eslint-disable-line no-eval
+          return img;
+        });
       return {
         title: $('.reader-header-title div:first').text().trim(),
         series: $('.reader-header-title a').attr('href'),
@@ -564,7 +597,7 @@
     category: 'manga',
     waitEle: '#select-chapter',
     run() {
-      let api = null;
+      let api;
       const slug = W.CURRENT_MANGA_SLUG || W.location.pathname.split('/')[2];
       const number = W.location.pathname.split('/')[3].replace('chapter-', '');
       const data = { query: `{chapter(x:m01,slug:"${slug}",number:${number}){pages}}` };
@@ -577,7 +610,7 @@
           api = res;
         },
       });
-      const images = Object.values(JSON.parse(api.data.chapter.pages));
+      const images = Object.values(JSON.parse(api.data.chapter.pages.toString()));
       return {
         title: $('#mangareader h3').text().trim(),
         series: $('#mangareader a:first').attr('href'),
@@ -639,6 +672,7 @@
       const chapter = $('.selectchapter option:selected');
       const url = `${$("form[name='pageSelector1']").attr('action')}?ch=${chapter
         .val()
+        ?.toString()
         .replace(' ', '+')}&page=`;
       const num = $('.selectpage option').length;
       const origin = $('div.entry h1 a');
@@ -648,7 +682,9 @@
         pages: num,
         prev: `${W.location.pathname}?ch=${chapter.prev().val()}`.replace(' ', '+'),
         next: `${W.location.pathname}?ch=${chapter.next().val()}`.replace(' ', '+'),
-        listPages: [...Array(num).keys()].map((i) => url + (i + 1)),
+        listPages: Array(num)
+          .fill(null)
+          .map((_, i) => url + (i + 1)),
         img: '#mainimage',
       };
     },
@@ -674,8 +710,6 @@
     },
   };
 
-  /* eslint-disable no-undef */
-  // == MangaPark ====================================================================================
   var mangapark = {
     name: 'MangaPark',
     url: /https?:\/\/(www.)?mangapark.(com|me|org|net)\/(manga|chapter|comic)\/.+\/.+/,
@@ -744,9 +778,9 @@
         pages: CurChapter.Page,
         prev: ChapterURLEncode(-1),
         next: ChapterURLEncode(+1),
-        listImages: [...Array(parseInt(CurChapter.Page, 10)).keys()].map((i) =>
-          src.replace(/-\d\d\d.png/, `-${String(`000${i + 1}`).slice(-3)}.png`),
-        ),
+        listImages: Array(parseInt(CurChapter.Page, 10))
+          .fill(null)
+          .map((_, i) => src.replace(/-\d\d\d.png/, `-${String(`000${i + 1}`).slice(-3)}.png`)),
       };
     },
   };
@@ -878,13 +912,16 @@
         pages: num,
         prev: origin.attr('href') + chapter.next().val(),
         next: origin.attr('href') + chapter.prev().val(),
-        listPages: [...Array(num).keys()].map((i) => `${url}/${i + 1}/`),
+        listPages: Array(num)
+          .fill(null)
+          .map((_, i) => `${url}/${i + 1}/`),
         img: '#picture',
         before() {
-          $('body')
-            .contents()
-            .filter(() => this.nodeType === 3)
-            .remove();
+          // Todo: remake
+          // $('body')
+          //   .contents()
+          //   .filter(() => this.nodeType === 3)
+          //   .remove();
         },
       };
     },
@@ -906,9 +943,9 @@
         pages: num,
         prev: $('.chapter-prev a').attr('href'),
         next: $('.chapter-next a').attr('href'),
-        listPages: [...Array(num).keys()].map((i) =>
-          W.location.href.replace(/\/[0-9]+$/, `/${i + 1}`),
-        ),
+        listPages: Array(num)
+          .fill(null)
+          .map((_, i) => W.location.href.replace(/\/[0-9]+$/, `/${i + 1}`)),
         listImages: $('.img-container img')
           .get()
           .map((item) => $(item).attr('data-src')),
@@ -938,7 +975,29 @@
     },
   };
 
+  // == Localhost =====================================================================================
+  var localhost = {
+    name: 'Localhost',
+    url: /http:\/\/127.0.0.1:8080\/index.htm/,
+    homepage: 'http://127.0.0.1:8080/index.html',
+    language: ['Portuguese'],
+    category: 'manga',
+    run() {
+      return {
+        title: $('.titulo-leitura').text().trim(),
+        series: $('.breadcrumbs a:last').attr('href'),
+        pages: $('#paginas option').get().length,
+        prev: `/leitor/${$('#mangaUrl').text()}/${$('.listCap:selected').prev().val()}`,
+        next: `/leitor/${$('#mangaUrl').text()}/${$('.listCap:selected').prev().next()}`,
+        listImages: $('.img-manga')
+          .get()
+          .map((i) => $(i).attr('src')),
+      };
+    },
+  };
+
   const sites = [
+    localhost,
     asurasflamecans,
     comicastle,
     disasterscans,
@@ -992,7 +1051,7 @@
   // Compose console output
   const logScriptC = (x) => (y) => logScript(x, y)[1];
   // Replacement function for GM_info allowing for debugging in console
-  const getInfoGM = GM_info || {
+  const getInfoGM = GM_info ?? {
     scriptHandler: 'Console',
     script: {
       name: 'Debug',
@@ -1033,14 +1092,15 @@
     }
     return M.join(' ');
   }
-  // See https://stackoverflow.com/questions/27487828/how-to-detect-if-a-userscript-is-installed-from-the-chrome-store
+  // See
+  // https://stackoverflow.com/questions/27487828/how-to-detect-if-a-userscript-is-installed-from-the-chrome-store
   function getEngine() {
     return `${getInfoGM.scriptHandler || 'Greasemonkey'} ${getInfoGM.script.version}`;
   }
   const isMobile = W.matchMedia('screen and (max-width: 1024px)').matches;
 
   const cache = {
-    zip: new JSZip__default['default'](),
+    zip: JSZip__namespace,
     downloadFiles: 0,
     Data: {},
   };
@@ -1052,7 +1112,8 @@
       .padStart(Math.floor(Math.log10(total)) + 1, '0')}.${ext.replace('jpeg', 'jpg')}`;
   // Generate Zip File for download
   function generateZip() {
-    // Source: http://stackoverflow.com/questions/8778863/downloading-an-image-using-xmlhttprequest-in-a-userscript/8781262#8781262
+    // Source:
+    // http://stackoverflow.com/questions/8778863/downloading-an-image-using-xmlhttprequest-in-a-userscript/8781262#8781262
     if (cache.downloadFiles === 0) {
       const filenameRegex = /^(?<name>.*?)(?<index>\d+)\.(?<ext>\w+)$/;
       const images = $('.MangaPage img');
@@ -1063,8 +1124,12 @@
           const filename = $img.attr('src')?.split(/[?#]/)[0].split('/').pop() ?? '';
           const match = filenameRegex.exec(filename);
           if (!match) break;
-          const { name, index, ext } = match.groups;
-          const fixedFilename = getFilename(name, index, images.length, ext);
+          const fixedFilename = getFilename(
+            match.groups?.name,
+            match.groups?.index,
+            images.length,
+            match.groups?.ext,
+          );
           if (result.length > 0 && fixedFilename <= result[result.length - 1]) break;
           result.push(fixedFilename);
         }
@@ -1251,7 +1316,7 @@
    * @returns {boolean} true if nothing, otherwise false
    */
   function isNothing(value) {
-    function isEmptyObject(a) {
+    const isEmptyObject = (a) => {
       if (!Array.isArray(a)) {
         // it's an Object, not an Array
         const hasNonempty = Object.keys(a).some((element) => !isNothing(a[element]));
@@ -1259,7 +1324,7 @@
       }
       // check if array is really not empty as JS thinks at least one element should be non-empty
       return !a.some((element) => !isNothing(element));
-    }
+    };
     return (
       // eslint-disable-next-line eqeqeq
       value == false ||
@@ -1352,11 +1417,9 @@
     const percentage = Math.floor((loaded / total) * 100);
     $('title').html(`(${percentage}%) ${$('#series i').first().text()}`);
     $('#Counters i, #NavigationCounters i').html(loaded.toString());
-    NProgress__default['default']
-      .configure({
-        showSpinner: false,
-      })
-      .set(loaded / total);
+    NProgress__namespace.configure({
+      showSpinner: false,
+    }).set(loaded / total);
     logScript(`Progress: ${percentage}%`);
     if (loaded === total) onImagesDone();
   }
@@ -2148,8 +2211,8 @@
   <span class='controlLabel zoomStep'>Zoom Change Step (between 5 and 50): <br/>
     <input type='range' value='${
       settings.zoomStep
-    }' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput="zoomStepVal.value = this.value">
-    <output id="zoomStepVal">${settings.zoomStep}</output>
+    }' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput='zoomStepVal.value = this.value'>
+    <output id='zoomStepVal'>${settings.zoomStep}</output>
   </span>
   <span class='controlLabel viewMode'>Default View Mode:
     <select id='viewMode'>
@@ -2183,8 +2246,8 @@
    <span class='controlLabel lazyStart'>Lazy Start From Page (between 5 and 100):<br/>
     <input type='range' value='${
       settings.lazyStart
-    }' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput="lazyStartVal.value = this.value">
-    <output id="lazyStartVal">${settings.lazyStart}</output>
+    }' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput='lazyStartVal.value = this.value'>
+    <output id='lazyStartVal'>${settings.lazyStart}</output>
   </span>
   <span class='controlLabel downloadZip'>Download Images as Zip Automatically:
     <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${
@@ -2213,8 +2276,11 @@
     `<div class='ViewerTitle'><br/><a id='series' href='${manga.series}'><i>${manga.title}</i><br/>(Return to Chapter List)</a></div>`;
   // Add Pages Place-holders
   const listPages = (times) =>
-    [...Array(times).keys()].map(
-      (index) => `<div id='Page${index + 1}' class='MangaPage'>
+    Array(times)
+      .fill(null)
+      .map(
+        (_, index) => `
+<div id='Page${index + 1}' class='MangaPage'>
   <div class='PageFunctions'>
     <a class='Bookmark controlButton' title='Bookmark'></a>
     <a class='ZoomIn controlButton' title='Zoom In'></a>
@@ -2230,16 +2296,20 @@
     <img id='PageImg${index + 1}' alt='PageImg${index + 1}' />
   </div>
 </div>`,
-    );
+      );
   const listOptions = (times) =>
-    [...Array(times).keys()].map((index) => `<option value='${index + 1}'>${index + 1}</option>`);
+    Array(times)
+      .fill(null)
+      .map((_, index) => `<option value='${index + 1}'>${index + 1}</option>`);
   const listThumbnails = (times) =>
-    [...Array(times).keys()].map(
-      (index) =>
-        `<div id='Thumbnail${index + 1}' class='Thumbnail'><img id='ThumbnailImg${
-          index + 1
-        }' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`,
-    );
+    Array(times)
+      .fill(null)
+      .map(
+        (_, index) =>
+          `<div id='Thumbnail${index + 1}' class='Thumbnail'><img id='ThumbnailImg${
+            index + 1
+          }' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`,
+      );
   const body = (manga, begin = 0) => `
 <div id='MangaOnlineViewer' class='${settings.Theme} ${isMobile ? 'mobile' : ''} ${
     settings.hidePageControls ? 'hideControls' : ''
@@ -2292,7 +2362,7 @@ ${cssStyles}
     return `
 <head>
   <title>${manga.title}</title>
-  <meta charset="UTF-8">
+  <meta charset='UTF-8'>
   ${externalScripts.join('\n')}
   ${externalCSS.join('\n')}
   ${readerCSS}
@@ -2367,12 +2437,9 @@ ${cssStyles}
       if (beginning === 0) {
         beginning = settings?.bookmarks?.find((b) => b.url === W.location.href)?.page || 0;
       }
-      $('head').append(
-        '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />',
-        '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.js" integrity="sha256-uvgSxlcEyGRDRvqW8sxcM/sPEBYiIeL+EW8XKL96iQ4=" crossorigin="anonymous"></script>',
-        '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.9.0/dist/sweetalert2.min.css" integrity="sha256-Ow4lbGxscUvJwGnorLyGwVYv0KkeIG6+5CAmR8zuRJw=" crossorigin="anonymous">',
-        '<style type="text/css">#mov {position: fixed;left: 50%;transform: translateX(-50%);top: 0;z-index: 1000000;border-radius: .25em;font-size: 1.5em;cursor: pointer;display: inline-block;margin: .3125em;padding: .625em 2em;box-shadow: none;font-weight: 500;color: #FFF;background: rgb(102, 83, 146);border: 1px #FFF;}</style>',
-      );
+      $('head').append(` ${externalScripts.join('\n')}
+        ${externalCSS.join('\n')}
+       <style type='text/css'>#mov {position: fixed;left: 50%;transform: translateX(-50%);top: 0;z-index: 1000000;border-radius: .25em;font-size: 1.5em;cursor: pointer;display: inline-block;margin: .3125em;padding: .625em 2em;box-shadow: none;font-weight: 500;color: #FFF;background: rgb(102, 83, 146);border: 1px #FFF;}</style>`);
       W.mov = (b) => lateStart(site, b || beginning);
       switch (site.start || settings.loadMode) {
         case 'never':
@@ -2437,8 +2504,8 @@ ${cssStyles}
         }
       }
       if (site.waitEle !== undefined) {
-        const wait = $(site.waitEle).get();
-        logScript(`Waiting for ${site.waitEle} = ${`${wait}`}`);
+        const wait = $(site.waitEle);
+        logScript(`Waiting for ${site.waitEle} = ${wait}`);
         if (isNothing(wait)) {
           setTimeout(() => {
             waitExec(site);

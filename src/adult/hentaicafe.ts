@@ -6,9 +6,9 @@ export default {
   language: ['English'],
   category: 'manga',
   run() {
-    const src = $('img.open').attr('src');
-    const size = src.match(/([0-9]+)\..+$/)[1].length;
-    const ext = src.match(/[0-9]+(\..+)$/)[1];
+    const src = $('img.open').attr('src') as string;
+    const size = src.match(/([0-9]+)\..+$/)![1].length;
+    const ext = src.match(/[0-9]+(\..+)$/)![1];
     const num = $('.topbar_right .dropdown li').length;
     const chapter = $('.topbar_left .dropdown_parent:last ul li a');
     return {
@@ -30,9 +30,9 @@ export default {
             1,
         )
         .attr('href'),
-      listImages: [...Array(num).keys()].map((i) =>
-        src.replace(/[0-9]+.jpg/, String(`00000${i + 1}`).slice(-1 * size) + ext),
-      ),
+      listImages: Array(num)
+        .fill(null)
+        .map((_, i) => src.replace(/[0-9]+.jpg/, String(`00000${i + 1}`).slice(-1 * size) + ext)),
     };
   },
 };

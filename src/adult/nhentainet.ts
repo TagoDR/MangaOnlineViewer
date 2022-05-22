@@ -15,20 +15,22 @@ export default {
     const num = parseInt($('.num-pages:first').html(), 10);
     const src = $('#image-container img')
       .attr('src')
-      .replace(/\d+.\w\w\w$/, '');
+      ?.replace(/\d+.\w\w\w$/, '');
     // eslint-disable-next-line camelcase
     const ext =
       W?.images_ext?.map(getExt) ||
       // eslint-disable-next-line no-underscore-dangle
       W?._gallery?.images?.pages?.map((i) => getExt(i.t)) ||
-      [...Array(num).keys()].map(getExt);
+      Array(num).fill('jpg');
     return {
       title: $('title').text().split('- Page')[0].trim(),
       series: $('.go-back').attr('href'),
       pages: num,
       prev: '#',
       next: '#',
-      listImages: [...Array(num).keys()].map((i) => `${src}${i + 1}.${ext[i]}`),
+      listImages: Array(num)
+        .fill(null)
+        .map((_, i) => `${src}${i + 1}.${ext[i]}`),
     };
   },
 };

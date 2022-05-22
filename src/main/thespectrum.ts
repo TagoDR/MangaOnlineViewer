@@ -17,7 +17,9 @@ export default {
       pages: num,
       prev: `${W.location.pathname}?ch=${chapter.prev().val()}`,
       next: `${W.location.pathname}?ch=${chapter.next().val()}`,
-      listPages: [...Array(num).keys()].map((i) => `${url}=${i + 1}`),
+      listPages: Array(num)
+        .fill(null)
+        .map((_, i) => `${url}=${i + 1}`),
       img: '#imgContainer img',
     };
   },

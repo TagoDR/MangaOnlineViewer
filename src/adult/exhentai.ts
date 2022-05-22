@@ -10,7 +10,7 @@ export default {
     const num = parseInt($('.sn div span:eq(1)').text().trim(), 10);
     const maxGalley = Math.ceil(num / 40);
     const gallery = $('.sb a')
-      .attr('href')
+      .attr('href')!
       .replace(/\?p=\d+/, '');
     return {
       title: $('#i1 h1').text().trim(),
@@ -21,7 +21,9 @@ export default {
       img: '#img',
       lazy: true,
       bruteForce(func) {
-        [...Array(maxGalley).keys()]
+        Array(maxGalley)
+          .fill(null)
+          .map((_, i) => i)
           .slice(Math.floor(Math.abs((func.begin - 1) / 40)))
           .map((galleryId, galleryOrder) =>
             func

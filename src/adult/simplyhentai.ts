@@ -6,7 +6,7 @@ export default {
   language: ['English'],
   category: 'hentai',
   run() {
-    let api = null;
+    let api: { full; giant; path };
     $.ajax({
       type: 'GET',
       url: W.location.href.replace(/\/page\/[0-9]+#?$/, '/all-pages'),
@@ -16,7 +16,7 @@ export default {
         api = res;
       },
     });
-    const imgs = Object.values(api).map((i) => i.full || i.giant || i.path);
+    const imgs = Object.values(api!).map((i) => i.full || i.giant || i.path);
     return {
       title: $('h1 .pu-trigger:first').text().trim(),
       series: $('h1 .pu-trigger:first').attr('href'),

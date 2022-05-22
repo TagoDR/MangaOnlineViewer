@@ -6,7 +6,7 @@ export default {
   language: ['English'],
   category: 'hentai',
   run() {
-    const src = $('.gallery-slide img').attr('src');
+    const src = $('.gallery-slide img').attr('src') as string;
     const num = parseInt($('.pagination ul li:not(.next,.last):last').text(), 10);
     return {
       title: $('title').text().trim(),
@@ -14,9 +14,9 @@ export default {
       pages: num,
       prev: '#',
       next: '#',
-      listImages: [...Array(num).keys()].map((i) =>
-        src.replace(/[0-9]+\./, `${String(`000${i + 1}`).slice(-3)}.`),
-      ),
+      listImages: Array(num)
+        .fill(null)
+        .map((_, i) => src.replace(/[0-9]+\./, `${String(`000${i + 1}`).slice(-3)}.`)),
     };
   },
 };

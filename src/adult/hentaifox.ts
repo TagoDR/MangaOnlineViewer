@@ -10,7 +10,7 @@ export default {
     const num = parseInt($('.total_pages:first').text(), 10);
     const src = $('#gimg')
       .attr('src')
-      .replace(/\d+.\w+$/, '');
+      ?.replace(/\d+.\w+$/, '') as string;
 
     function findExt(i) {
       const c = W.g_th[i][0];
@@ -29,7 +29,9 @@ export default {
       pages: num,
       prev: '#',
       next: '#',
-      listImages: [...Array(num).keys()].map((i) => src + (i + 1) + findExt(i + 1)),
+      listImages: Array(num)
+        .fill(null)
+        .map((_, i) => src + (i + 1) + findExt(i + 1)),
     };
   },
 };

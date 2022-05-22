@@ -1,4 +1,4 @@
-import NProgress from 'nprogress';
+import * as NProgress from 'nprogress';
 import { logScript } from './browser.js';
 import { settings } from './settings.js';
 import { isNothing } from './utils.js';

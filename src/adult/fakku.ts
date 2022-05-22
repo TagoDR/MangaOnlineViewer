@@ -8,7 +8,7 @@ export default {
   run() {
     const src = $('#thumbs img, .current-page')
       .attr('src')
-      .replace('thumbs', 'images')
+      ?.replace('thumbs', 'images')
       .replace(/[0-9]+(\.thumb)?\.jpg$/, '');
     const num = $('.drop option:last').val();
     return {
@@ -17,7 +17,9 @@ export default {
       pages: num,
       prev: '#',
       next: '#',
-      listImages: [...Array(num).keys()].map((i) => `${src + String(`000${i + 1}`).slice(-3)}.jpg`),
+      listImages: Array(num)
+        .fill(0)
+        .map((_, i) => `${src + String(`000${i + 1}`).slice(-3)}.jpg`),
     };
   },
 };

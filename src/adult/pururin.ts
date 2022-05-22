@@ -7,7 +7,7 @@ export default {
   category: 'hentai',
   waitAttr: ['.image-holder img', 'src'],
   run() {
-    const src = $('.image-holder img').attr('src');
+    const src = $('.image-holder img').attr('src') as string;
     const num = $('.form-control option').length;
     return {
       title: $('.title').text().trim(),
@@ -15,7 +15,9 @@ export default {
       pages: num,
       prev: '#',
       next: '#',
-      listImages: [...Array(num).keys()].map((i) => src.replace(/\/[0-9]+\./, `/${i + 1}.`)),
+      listImages: Array(num)
+        .fill(null)
+        .map((_, i) => src.replace(/\/[0-9]+\./, `/${i + 1}.`)),
     };
   },
 };
