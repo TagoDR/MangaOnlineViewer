@@ -13,7 +13,9 @@ export default {
       quant: $('figure img').get().length,
       prev: '#',
       next: '#',
-      listImages: $('figure a').get().map((i) => $(i).attr('href')),
+      listImages: $('figure a')
+        .get()
+        .map((i) => $(i).attr('href')),
     };
   },
 };

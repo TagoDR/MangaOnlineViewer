@@ -14,8 +14,9 @@ export default {
       quant: $('#img-container img').get().length,
       prev: $('#chapter-list option:selected').next().val(),
       next: $('#chapter-list option:selected').prev().val(),
-      listImages: $('#img-container img').get().map((item) => $(item).attr('data-src') || $(item)
-        .attr('src')),
+      listImages: $('#img-container img')
+        .get()
+        .map((item) => $(item).attr('data-src') || $(item).attr('src')),
     };
   },
 };

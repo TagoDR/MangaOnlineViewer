@@ -15,13 +15,17 @@ export default {
       title: $('title').text().trim(),
       series: $('div.tbtitle div.text a:first').attr('href'),
       quant: num,
-      prev: chapter.eq(
-        chapter.index(chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`)) + 1,
-      )
+      prev: chapter
+        .eq(
+          chapter.index(chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`)) +
+            1,
+        )
         .attr('href'),
-      next: chapter.eq(
-        chapter.index(chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`)) - 1,
-      )
+      next: chapter
+        .eq(
+          chapter.index(chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`)) -
+            1,
+        )
         .attr('href'),
       listPages: [...Array(num).keys()].map((i) => url + (i + 1)),
       img: 'img.open',

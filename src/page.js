@@ -46,15 +46,15 @@ function applyZoom(page, newZoom) {
   const zoom = newZoom || settings.Zoom;
   const pages = page || '.PageContent img';
   $(pages).each((index, value) => {
-    $(value).removeAttr('width')
-      .removeAttr('height')
-      .removeAttr('style');
+    $(value).removeAttr('width').removeAttr('height').removeAttr('style');
     if (zoom === 1000) {
       $(value).width($(window).width());
     } else if (zoom === -1000) {
-      $(value).height($(window).height()
-        + ($('#Navigation').hasClass('disabled') ? 0 : -34)
-        + ($('#Chapter').hasClass('WebComic') ? 0 : -35));
+      $(value).height(
+        $(window).height() +
+          ($('#Navigation').hasClass('disabled') ? 0 : -34) +
+          ($('#Chapter').hasClass('WebComic') ? 0 : -35),
+      );
     } else {
       $(value).width($(value).prop('naturalWidth') * (zoom / 100));
     }
@@ -103,7 +103,8 @@ function onImagesProgress(imgLoad, image) {
     $item.addClass('imgLoaded');
     $item.removeClass('imgBroken');
     const thumb = $item.attr('id').replace('PageImg', 'ThumbnailImg');
-    $(`#${thumb}`).attr('src', $item.attr('src'))
+    $(`#${thumb}`)
+      .attr('src', $item.attr('src'))
       .on('load', () => applyZoom($item));
   } else {
     $item.addClass('imgBroken');
@@ -146,27 +147,36 @@ function addImg(index, imageSrc) {
 // Adds an page to the place-holder div
 function addPage(manga, index, pageUrl) {
   if (!settings.lazyLoadImages || index < settings.lazyStart) {
-    getHtml(pageUrl)
-      .then((response) => {
-        const src = normalizeUrl($(response).find(manga.img).attr(manga.lazyAttr || 'src'));
-        $(`#PageImg${index}`).attr('src', src);
-        $(`#PageImg${index}`).parent().imagesLoaded().progress(onImagesProgress);
-        logScript('Loaded Page:', index, 'Source:', src);
-      });
+    getHtml(pageUrl).then((response) => {
+      const src = normalizeUrl(
+        $(response)
+          .find(manga.img)
+          .attr(manga.lazyAttr || 'src'),
+      );
+      $(`#PageImg${index}`).attr('src', src);
+      $(`#PageImg${index}`).parent().imagesLoaded().progress(onImagesProgress);
+      logScript('Loaded Page:', index, 'Source:', src);
+    });
   } else {
     $(`#PageImg${index}`)
-      .attr('data-src', 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==')
+      .attr(
+        'data-src',
+        'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
+      )
       .unveil({
         offset: 2000,
       })
       .on('loaded.unveil', () => {
-        getHtml(pageUrl)
-          .then((response) => {
-            const src = normalizeUrl($(response).find(manga.img).attr(manga.lazyAttr || 'src'));
-            $(`#PageImg${index}`).attr('src', src).width('auto');
-            $(`#PageImg${index}`).parent().imagesLoaded().progress(onImagesProgress);
-            logScript('Unveiled Page: ', index, ' Source: ', $(`#PageImg${index}`).attr('src'));
-          });
+        getHtml(pageUrl).then((response) => {
+          const src = normalizeUrl(
+            $(response)
+              .find(manga.img)
+              .attr(manga.lazyAttr || 'src'),
+          );
+          $(`#PageImg${index}`).attr('src', src).width('auto');
+          $(`#PageImg${index}`).parent().imagesLoaded().progress(onImagesProgress);
+          logScript('Unveiled Page: ', index, ' Source: ', $(`#PageImg${index}`).attr('src'));
+        });
       });
   }
   return index;
@@ -182,18 +192,24 @@ function delayAdd(src, wait = settings.Timer) {
 }
 
 // use a list of pages to fill the viewer
-const loadMangaPages = (begin, manga) => manga.listPages.map(
-  (url, index) => (index >= begin
-    ? delayAdd(url, (manga.timer || settings.Timer) * (index - begin))
-      .then((response) => addPage(manga, index + 1, response)) : null),
-);
+const loadMangaPages = (begin, manga) =>
+  manga.listPages.map((url, index) =>
+    index >= begin
+      ? delayAdd(url, (manga.timer || settings.Timer) * (index - begin)).then((response) =>
+          addPage(manga, index + 1, response),
+        )
+      : null,
+  );
 
 // use a list of images to fill the viewer
-const loadMangaImages = (begin, manga) => manga.listImages.map(
-  (src, index) => (index >= begin
-    ? delayAdd(src, (manga.timer || settings.Timer) * (index - begin))
-      .then((response) => addImg(index + 1, response)) : null),
-);
+const loadMangaImages = (begin, manga) =>
+  manga.listImages.map((src, index) =>
+    index >= begin
+      ? delayAdd(src, (manga.timer || settings.Timer) * (index - begin)).then((response) =>
+          addImg(index + 1, response),
+        )
+      : null,
+  );
 
 // Entry point for loading hte Manga pages
 function loadManga(manga, begin = 1) {
@@ -224,8 +240,4 @@ function loadManga(manga, begin = 1) {
   }
 }
 
-export {
-  loadManga,
-  applyZoom,
-  reloadImage,
-};
+export { loadManga, applyZoom, reloadImage };

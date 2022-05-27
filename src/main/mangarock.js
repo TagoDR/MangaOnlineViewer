@@ -9,9 +9,9 @@ export default {
   waitAttr: ['a[title]', 'href'],
   run() {
     let api = null;
-    const url = `https://api.mangarockhd.com/query/web401/pages?oid=${W.location.pathname.match(
-      /mrs-chapter-[0-9]+/,
-    )[0]}`;
+    const url = `https://api.mangarockhd.com/query/web401/pages?oid=${
+      W.location.pathname.match(/mrs-chapter-[0-9]+/)[0]
+    }`;
     $.ajax({
       type: 'GET',
       url,
@@ -30,9 +30,9 @@ export default {
       e[1] = 73;
       e[2] = 70;
       e[3] = 70;
-      e[7] = n >> 24 & 255;
-      e[6] = n >> 16 & 255;
-      e[5] = n >> 8 & 255;
+      e[7] = (n >> 24) & 255;
+      e[6] = (n >> 16) & 255;
+      e[5] = (n >> 8) & 255;
       e[4] = 255 & n;
       e[8] = 87;
       e[9] = 69;

@@ -32,44 +32,45 @@ function setKeyDownEvents() {
 
   function processKey(e) {
     const a = e.originalEvent.code;
-    if (!e.originalEvent.ctrlKey
-      && !e.originalEvent.altKey
-      && !e.originalEvent.shiftKey
-      && !e.originalEvent.metaKey
-      && $.inArray(a,
-        [
-          'KeyW',
-          'Numpad8',
-          'KeyS',
-          'Numpad2',
-          'ArrowRight',
-          'Period',
-          'KeyD',
-          'Numpad6',
-          'ArrowLeft',
-          'Comma',
-          'KeyA',
-          'Numpad4',
-          'Equal',
-          'NumpadAdd',
-          'KeyE',
-          'Minus',
-          'NumpadSubtract',
-          'KeyQ',
-          'Digit9',
-          'NumpadDivide',
-          'KeyR',
-          'Digit0',
-          'NumpadMultiply',
-          'KeyF',
-          'Slash',
-          'Numpad5',
-          'KeyX',
-          'KeyC',
-          'KeyV',
-          'KeyB',
-          'KeyN',
-        ]) !== -1) {
+    if (
+      !e.originalEvent.ctrlKey &&
+      !e.originalEvent.altKey &&
+      !e.originalEvent.shiftKey &&
+      !e.originalEvent.metaKey &&
+      $.inArray(a, [
+        'KeyW',
+        'Numpad8',
+        'KeyS',
+        'Numpad2',
+        'ArrowRight',
+        'Period',
+        'KeyD',
+        'Numpad6',
+        'ArrowLeft',
+        'Comma',
+        'KeyA',
+        'Numpad4',
+        'Equal',
+        'NumpadAdd',
+        'KeyE',
+        'Minus',
+        'NumpadSubtract',
+        'KeyQ',
+        'Digit9',
+        'NumpadDivide',
+        'KeyR',
+        'Digit0',
+        'NumpadMultiply',
+        'KeyF',
+        'Slash',
+        'Numpad5',
+        'KeyX',
+        'KeyC',
+        'KeyV',
+        'KeyB',
+        'KeyN',
+      ]) !== -1
+    ) {
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
@@ -78,8 +79,10 @@ function setKeyDownEvents() {
         case 'KeyW':
         case 'Numpad8':
           if (settings.Zoom === -1000) {
-            const next = $('.MangaPage').get().map((item) => $(item).offset().top - $(window)
-              .scrollTop()).findIndex((element) => element > 10);
+            const next = $('.MangaPage')
+              .get()
+              .map((item) => $(item).offset().top - $(window).scrollTop())
+              .findIndex((element) => element > 10);
             scrollToElement($('.MangaPage').eq(next - 2));
           } else {
             window.scrollBy({
@@ -92,8 +95,10 @@ function setKeyDownEvents() {
         case 'KeyS':
         case 'Numpad2':
           if (settings.Zoom === -1000) {
-            const next = $('.MangaPage').get().map((item) => $(item).offset().top - $(window)
-              .scrollTop()).findIndex((element) => element > 10);
+            const next = $('.MangaPage')
+              .get()
+              .map((item) => $(item).offset().top - $(window).scrollTop())
+              .findIndex((element) => element > 10);
             scrollToElement($('.MangaPage').eq(next));
           } else {
             window.scrollBy({
@@ -197,30 +202,22 @@ function controls() {
   });
   // WebComic View Mode
   $('#webComic').click(() => {
-    $('#Chapter').addClass('WebComic')
-      .removeClass('FluidLTR')
-      .removeClass('FluidRTL');
+    $('#Chapter').addClass('WebComic').removeClass('FluidLTR').removeClass('FluidRTL');
     applyZoom();
   });
   // Fluid LTR View Mode
   $('#ltrMode').click(() => {
-    $('#Chapter').removeClass('WebComic')
-      .addClass('FluidLTR')
-      .removeClass('FluidRTL');
+    $('#Chapter').removeClass('WebComic').addClass('FluidLTR').removeClass('FluidRTL');
     applyZoom();
   });
   // Fluid RTL View Mode
   $('#rtlMode').click(() => {
-    $('#Chapter').removeClass('WebComic')
-      .removeClass('FluidLTR')
-      .addClass('FluidRTL');
+    $('#Chapter').removeClass('WebComic').removeClass('FluidLTR').addClass('FluidRTL');
     applyZoom();
   });
   // Vertical View Mode
   $('#verticalMode').click(() => {
-    $('#Chapter').removeClass('WebComic')
-      .removeClass('FluidLTR')
-      .removeClass('FluidRTL');
+    $('#Chapter').removeClass('WebComic').removeClass('FluidLTR').removeClass('FluidRTL');
     applyZoom();
   });
   $('#fitIfOversized').change((event) => {
@@ -234,7 +231,8 @@ function controls() {
   });
   $('#viewMode').change((event) => {
     const mode = $(event.target).val();
-    $('#Chapter').removeClass('WebComic')
+    $('#Chapter')
+      .removeClass('WebComic')
       .removeClass('FluidLTR')
       .removeClass('FluidRTL')
       .addClass(mode);
@@ -368,20 +366,24 @@ function controls() {
     logScript(`MangaCustomTheme: ${getValueGM('MangaCustomTheme')}`);
   });
   $('.FullCustom').change(() => {
-    logScript('FullCustomTheme: ',
-      $('#CustomThemeHueBody').val(),
-      $('#CustomThemeHueText').val(),
-      $('#CustomThemeHueLines').val(),
-      $('#CustomThemeHuePanel').val(),
-      $('#CustomThemeHueButton').val());
-    $('style[title="Full_Custom"]').remove();
-    $('head').append(addFullCustomTheme(
+    logScript(
+      'FullCustomTheme: ',
       $('#CustomThemeHueBody').val(),
       $('#CustomThemeHueText').val(),
       $('#CustomThemeHueLines').val(),
       $('#CustomThemeHuePanel').val(),
       $('#CustomThemeHueButton').val(),
-    ));
+    );
+    $('style[title="Full_Custom"]').remove();
+    $('head').append(
+      addFullCustomTheme(
+        $('#CustomThemeHueBody').val(),
+        $('#CustomThemeHueText').val(),
+        $('#CustomThemeHueLines').val(),
+        $('#CustomThemeHuePanel').val(),
+        $('#CustomThemeHueButton').val(),
+      ),
+    );
     setValueGM('MangaCustomThemeBody', $('#CustomThemeHueBody').val());
     setValueGM('MangaCustomThemeText', $('#CustomThemeHueText').val());
     setValueGM('MangaCustomThemeLines', $('#CustomThemeHueLines').val());
@@ -407,8 +409,10 @@ function controls() {
   // Individual Page functions
   // Bookmark Page to resume reading
   $('.Bookmark').click((event) => {
-    const num = parseInt($(event.target).parents('.MangaPage').find('.PageFunctions span').text(),
-      10);
+    const num = parseInt(
+      $(event.target).parents('.MangaPage').find('.PageFunctions span').text(),
+      10,
+    );
     const mark = {
       url: W.location.href,
       page: num,
@@ -470,7 +474,4 @@ function controls() {
   });
 }
 
-export {
-  controls,
-  setKeyDownEvents,
-};
+export { controls, setKeyDownEvents };

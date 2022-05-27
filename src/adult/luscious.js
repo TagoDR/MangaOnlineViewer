@@ -8,8 +8,8 @@ export default {
   run() {
     const origin = $('.three_column_details h3 a');
     const num = parseInt(
-      $('li:not(.content_info) div.album_stats > p:nth-child(1)').html()
-        .replace(' Pictures.', ''), 10,
+      $('li:not(.content_info) div.album_stats > p:nth-child(1)').html().replace(' Pictures.', ''),
+      10,
     );
     return {
       title: origin.text().trim(),

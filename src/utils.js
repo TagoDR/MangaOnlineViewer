@@ -15,11 +15,14 @@
  * @returns {boolean} true if empty, otherwise false
  */
 function isEmpty(value) {
-  return value === null // check for null
-    || (typeof value === 'undefined' || value === undefined) // check for undefined
-    || value === '' // check for empty string
-    || (Array.isArray(value) && value.length === 0) // check for empty array
-    || (typeof value === 'object' && Object.keys(value).length === 0);
+  return (
+    value === null || // check for null
+    typeof value === 'undefined' ||
+    value === undefined || // check for undefined
+    value === '' || // check for empty string
+    (Array.isArray(value) && value.length === 0) || // check for empty array
+    (typeof value === 'object' && Object.keys(value).length === 0)
+  );
 }
 
 /**
@@ -40,21 +43,23 @@ function isEmpty(value) {
  */
 function isNothing(value) {
   const isEmptyObject = (a) => {
-    if (typeof a.length === 'undefined') { // it's an Object, not an Array
+    if (!Array.isArray(a) && a.length !== 0) {
+      // it's an Object, not an Array
       const hasNonempty = Object.keys(a).some((element) => !isNothing(a[element]));
       return hasNonempty ? false : isEmptyObject(Object.keys(a));
     }
     // check if array is really not empty as JS thinks at least one element should be non-empty
-    return !a.some((element) => !isNothing(element), //
+    return !a.some(
+      (element) => !isNothing(element), //
     );
   };
   return (
     // eslint-disable-next-line eqeqeq
-    value == false
-    || value === 0
-    || typeof value === 'undefined'
-    || value == null
-    || (typeof value === 'object' && isEmptyObject(value))
+    value == false ||
+    value === 0 ||
+    typeof value === 'undefined' ||
+    value == null ||
+    (typeof value === 'object' && isEmptyObject(value))
   );
 }
 
@@ -70,7 +75,4 @@ function isNothing(value) {
 // testUtil(testValues, isEmpty);
 // testUtil(testValues, isNothing);
 
-export {
-  isEmpty,
-  isNothing,
-};
+export { isEmpty, isNothing };

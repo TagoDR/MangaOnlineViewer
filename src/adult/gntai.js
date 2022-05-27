@@ -12,7 +12,9 @@ export default {
       quant: $('#select-page-list option').get().length,
       prev: '#',
       next: '#',
-      listPages: $('#main script').text().match(/https[^"]+/g),
+      listPages: $('#main script')
+        .text()
+        .match(/https[^"]+/g),
       img: '#img-page img',
     };
   },

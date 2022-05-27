@@ -8,7 +8,12 @@ export default {
   category: 'hentai',
   run() {
     const pages = [W.location.pathname];
-    pages.push(...$('#paginator:first a').get().slice(0, -2).map((s) => $(s).attr('href')));
+    pages.push(
+      ...$('#paginator:first a')
+        .get()
+        .slice(0, -2)
+        .map((s) => $(s).attr('href')),
+    );
     const imgs = [];
 
     function getimages(url) {
@@ -18,7 +23,11 @@ export default {
         dataType: 'html',
         async: false,
         success(html) {
-          imgs.push(...$('#display_image_detail img', html).get().map((s) => $(s).attr('src')));
+          imgs.push(
+            ...$('#display_image_detail img', html)
+              .get()
+              .map((s) => $(s).attr('src')),
+          );
         },
       });
     }

@@ -17,8 +17,8 @@ export default {
       quant: num,
       prev: '#',
       next: '#',
-      listImages: [...Array(num).keys()].map(
-        (i) => src.replace(/[0-9]+.jpg/, String(`00000${i + 1}`).slice(-1 * size) + ext),
+      listImages: [...Array(num).keys()].map((i) =>
+        src.replace(/[0-9]+.jpg/, String(`00000${i + 1}`).slice(-1 * size) + ext),
       ),
     };
   },

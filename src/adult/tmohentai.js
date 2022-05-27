@@ -13,8 +13,9 @@ export default {
       quant: num,
       prev: '#',
       next: '#',
-      listPages: [...Array(num)
-        .keys()].map((i) => W.location.href.replace(/\/[0-9]+?$/, `/${i + 1}`)),
+      listPages: [...Array(num).keys()].map((i) =>
+        W.location.href.replace(/\/[0-9]+?$/, `/${i + 1}`),
+      ),
       img: '.content-image',
       lazyAttr: 'data-original',
     };

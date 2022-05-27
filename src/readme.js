@@ -18,7 +18,7 @@ function siteListEntry(site) {
   return `- ${links(site)}${lang}${obs}`;
 }
 
-const sortSites = (s) => [...s].sort((a, b) => (`${a.language}`).localeCompare(b.language));
+const sortSites = (s) => [...s].sort((a, b) => `${a.language}`.localeCompare(b.language));
 const sitesList = (s) => sortSites(s).map(siteListEntry).join('\n');
 
 const mangaSites = sitesList(main.filter((s) => s.category === 'manga'));
@@ -26,10 +26,4 @@ const comicSites = sitesList(main.filter((s) => s.category === 'comic'));
 const hentaiSites = sitesList(adult);
 const bookmarklet = `${requiredScripts.join('", "')}`;
 
-export {
-  mangaSites,
-  comicSites,
-  hentaiSites,
-  languages,
-  bookmarklet,
-};
+export { mangaSites, comicSites, hentaiSites, languages, bookmarklet };

@@ -1,6 +1,4 @@
-import {
-  getBrowser, getEngine, getInfoGM, logScript, logScriptC, setValueGM,
-} from './browser';
+import { getBrowser, getEngine, getInfoGM, logScript, logScriptC, setValueGM } from './browser';
 import { controls, setKeyDownEvents } from './events';
 import { loadManga } from './page';
 import reader from './reader';
@@ -70,9 +68,10 @@ function preparePage(site, manga, begin = 0) {
   if (manga.quant > 0) {
     let beginning = begin;
     if (beginning === 0) {
-      beginning = settings.bookmarks// [manga.name]
-        .filter((x) => x.url === W.location.href)
-        .map((x) => x.page)[0] || 0;
+      beginning =
+        settings.bookmarks // [manga.name]
+          .filter((x) => x.url === W.location.href)
+          .map((x) => x.page)[0] || 0;
     }
     $('head').append(
       '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />',
@@ -92,8 +91,9 @@ function preparePage(site, manga, begin = 0) {
       default:
         Swal.fire({
           title: 'Starting<br>MangaOnlineViewer',
-          html: `${beginning
-          > 1 ? `Resuming reading from Page ${beginning}.<br/>` : ''}Please wait, 3 seconds...`,
+          html: `${
+            beginning > 1 ? `Resuming reading from Page ${beginning}.<br/>` : ''
+          }Please wait, 3 seconds...`,
           showCancelButton: true,
           cancelButtonColor: '#d33',
           reverseButtons: true,
@@ -114,7 +114,9 @@ function preparePage(site, manga, begin = 0) {
 // Script Entry point
 function start(sites) {
   logScript(
-    `Starting ${getInfoGM.script.name} ${getInfoGM.script.version} on ${getBrowser()} with ${getEngine()}`,
+    `Starting ${getInfoGM.script.name} ${
+      getInfoGM.script.version
+    } on ${getBrowser()} with ${getEngine()}`,
   );
   W.InfoGM = getInfoGM;
   logScript(`${sites.length} Known Manga Sites`);
@@ -130,9 +132,9 @@ function start(sites) {
       }
     }
     if (site.waitAttr !== undefined) {
-      wait = $(site.waitAttr[0]).attr(site.waitAttr[1]);
+      wait = $(site.waitAttr[0]).is(`[${site.waitAttr[1]}]`);
       logScript(`Wating for ${site.waitAttr[1]} of ${site.waitAttr[0]} = ${wait}`);
-      if (isNothing(wait)) {
+      if (!wait) {
         setTimeout(() => {
           waitExec(site);
         }, site.waitStep || 1000);
@@ -141,9 +143,9 @@ function start(sites) {
       }
     }
     if (site.waitEle !== undefined) {
-      wait = $(site.waitEle).get();
-      logScript(`Waiting for ${site.waitEle} = ${`${wait}`}`);
-      if (isNothing(wait)) {
+      wait = $(site.waitEle).length;
+      logScript(`Waiting for ${site.waitEle} = ${wait}`);
+      if (!wait) {
         setTimeout(() => {
           waitExec(site);
         }, site.waitStep || 1000);
@@ -166,10 +168,11 @@ function start(sites) {
   }
 
   logScript('Looking for a match...');
-  const test = (s) => s
-    .filter((x) => x.url.test(W.location.href))
-    .map(logScriptC('Site Found:'))
-    .map(waitExec);
+  const test = (s) =>
+    s
+      .filter((x) => x.url.test(W.location.href))
+      .map(logScriptC('Site Found:'))
+      .map(waitExec);
   test(sites);
 }
 

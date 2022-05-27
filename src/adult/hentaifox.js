@@ -8,7 +8,9 @@ export default {
   waitVar: 'g_th',
   run() {
     const num = parseInt($('.total_pages:first').text(), 10);
-    const src = $('#gimg').attr('src').replace(/\d+.\w+$/, '');
+    const src = $('#gimg')
+      .attr('src')
+      .replace(/\d+.\w+$/, '');
 
     function findExt(i) {
       const c = W.g_th[i][0];
@@ -19,7 +21,10 @@ export default {
     }
 
     return {
-      title: $('title').text().trim().replace(/ - Page .+/, ''),
+      title: $('title')
+        .text()
+        .trim()
+        .replace(/ - Page .+/, ''),
       series: $('.return a').attr('href'),
       quant: num,
       prev: '#',

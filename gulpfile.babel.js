@@ -1,7 +1,7 @@
 import fs from 'fs';
 import gulp from 'gulp';
 import file from 'gulp-file';
-import beautify from 'gulp-jsbeautify';
+import beautify from 'gulp-prettier';
 import preprocess from 'gulp-preprocess';
 import { rollup } from 'rollup';
 import babel from '@rollup/plugin-babel';
@@ -13,9 +13,8 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import userscript from 'userscript-meta';
 import metaAdult from './src/meta-adult';
 import metaMain from './src/meta-main';
-import {
-  bookmarklet, comicSites, hentaiSites, mangaSites,
-} from './src/readme';
+import rollupExternalGlobals from 'rollup-plugin-external-globals';
+import { bookmarklet, comicSites, hentaiSites, mangaSites } from './src/readme';
 
 const scripts = {
   main: {
@@ -29,12 +28,20 @@ const scripts = {
     meta: 'Manga_OnlineViewer_Adult.meta.js',
   },
 };
+const globals = {
+  'color-scheme': 'ColorScheme',
+  jquery: '$',
+  jscolor: 'jscolor',
+  jszip: 'JSZip',
+  sweetalert2: 'Swal',
+  nprogress: 'NProgress',
+};
 
-function buildUserscript(entryFile, destFile, metaFile) {
+function buildUserscriptRollup(script) {
   return rollup({
-    input: entryFile,
+    input: `src/${script.entry}`,
     plugins: [
-      nodeResolve({ preferBuiltins: false }),
+      nodeResolve({ preferBuiltins: false, extensions: ['.js', '.ts', '.tsx'] }),
       commonjs(),
       html({
         include: './src/components/**',
@@ -48,88 +55,79 @@ function buildUserscript(entryFile, destFile, metaFile) {
       }),
       eslint({
         fix: true,
-        filterExclude: [
-          'node_modules/**',
-          'src/components/**',
-        ],
+        filterExclude: ['node_modules/**', 'src/components/**'],
       }),
       babel({
         babelHelpers: 'runtime',
         exclude: 'node_modules/**',
       }),
+      rollupExternalGlobals(globals),
       cleanup({
         comments: 'none',
         normalizeEols: 'win',
       }),
     ],
-  })
-    .then((bundle) => bundle.write({
-      banner: fs.readFileSync(metaFile, 'utf8'),
+  }).then((bundle) =>
+    bundle.write({
+      banner: fs.readFileSync(`./dist/${script.meta}`, 'utf8'),
       intro: `var W = (typeof unsafeWindow === 'undefined') ? window : unsafeWindow;
               /* global $:readonly, JSZip:readonly ,NProgress:readonly , jscolor:readonly , ColorScheme:readonly , Swal:readonly */`,
       format: 'iife',
-      file: destFile,
-      globals: {
-        'color-scheme': 'ColorScheme',
-        jquery: '$',
-        jscolor: 'jscolor',
-        jszip: 'JSZip',
-        nprogress: 'NProgress',
-        sweetalert: 'Swal',
-      },
+      file: `dist/${script.name}`,
+      globals: globals,
       // sourceMap: 'inline',
-    }));
+    }),
+  );
 }
 
 function createMetaMain() {
-  return file(scripts.main.meta, userscript.stringify(metaMain), { src: true })
-    .pipe(gulp.dest('./dist'));
+  return file(scripts.main.meta, userscript.stringify(metaMain), { src: true }).pipe(
+    gulp.dest('./dist'),
+  );
 }
 
 function createMetaAdult() {
-  return file(scripts.adult.meta, userscript.stringify(metaAdult), { src: true })
-    .pipe(gulp.dest('./dist'));
+  return file(scripts.adult.meta, userscript.stringify(metaAdult), { src: true }).pipe(
+    gulp.dest('./dist'),
+  );
 }
 
 function createScriptMain() {
-  return buildUserscript(
-    `src/${scripts.main.entry}`,
-    `dist/${scripts.main.name}`,
-    `./dist/${scripts.main.meta}`,
-  );
+  return buildUserscriptRollup(scripts.main);
 }
 
 function createScriptAdult() {
-  return buildUserscript(
-    `src/${scripts.adult.entry}`,
-    `dist/${scripts.adult.name}`,
-    `./dist/${scripts.adult.meta}`,
-  );
+  return buildUserscriptRollup(scripts.main);
 }
 
 function beauty() {
-  return gulp.src('./dist/*.js')
-    .pipe(beautify({
-      indent_size: 2,
-    }))
+  return gulp
+    .src('./dist/*.js')
+    .pipe(
+      beautify({
+        indent_size: 2,
+      }),
+    )
     .pipe(gulp.dest('./dist/'));
 }
 
 function move() {
-  return gulp.src('dist/**.*')
-    .pipe(gulp.dest('.'));
+  return gulp.src('dist/**.*').pipe(gulp.dest('.'));
 }
 
 function readme() {
-  return gulp.src('./src/readme.md')
-    .pipe(preprocess({
-      context: {
-        LIST_MANGA_SITES: mangaSites,
-        LIST_COMIC_SITES: comicSites,
-        LIST_HENTAI_SITES: hentaiSites,
-        BOOKMARKLET: bookmarklet,
-      },
-    })) // To set environment variables in-line
+  return gulp
+    .src('./src/readme.md')
+    .pipe(
+      preprocess({
+        context: {
+          LIST_MANGA_SITES: mangaSites,
+          LIST_COMIC_SITES: comicSites,
+          LIST_HENTAI_SITES: hentaiSites,
+          BOOKMARKLET: bookmarklet,
+        },
+      }),
+    ) // To set environment variables in-line
     .pipe(gulp.dest('./dist/'));
 }
 
