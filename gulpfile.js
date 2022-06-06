@@ -199,9 +199,9 @@ function createScriptMain() {
 }
 
 function createScriptAdult() {
-  if (bundle === 1) return buildUserscriptRollup(scripts.main);
-  if (bundle === 2) return buildUserscriptEsbuild(scripts.main);
-  return buildUserscriptRollup(scripts.main);
+  if (bundle === 1) return buildUserscriptRollup(scripts.adult);
+  if (bundle === 2) return buildUserscriptEsbuild(scripts.adult);
+  return buildUserscriptRollup(scripts.adult);
 }
 
 function clean() {
