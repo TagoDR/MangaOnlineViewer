@@ -85,7 +85,7 @@ function preparePage(site, manga, begin = 0) {
         $('body').append('<button id="mov" onclick=mov()>Start MangaOnlineViewer</button>');
         break;
       case 'always':
-        formatPage(manga);
+        formatPage(manga, 0);
         break;
       case 'normal':
       default:

@@ -97,7 +97,7 @@ function createScriptMain() {
 }
 
 function createScriptAdult() {
-  return buildUserscriptRollup(scripts.main);
+  return buildUserscriptRollup(scripts.adult);
 }
 
 function beauty() {
