@@ -3,6 +3,7 @@ import gulp from 'gulp';
 import file from 'gulp-file';
 import beautify from 'gulp-prettier';
 import preprocess from 'gulp-preprocess';
+import uglify from 'gulp-uglify';
 import { rollup } from 'rollup';
 import babel from '@rollup/plugin-babel';
 import cleanup from 'rollup-plugin-cleanup';
@@ -10,12 +11,13 @@ import commonjs from '@rollup/plugin-commonjs';
 import eslint from '@rbnlffl/rollup-plugin-eslint';
 import html from 'rollup-plugin-string-html';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
+import rollupExternalGlobals from 'rollup-plugin-external-globals';
 import userscript from 'userscript-meta';
 import metaAdult from './src/meta-adult';
 import metaMain from './src/meta-main';
-import rollupExternalGlobals from 'rollup-plugin-external-globals';
 import { bookmarklet, comicSites, hentaiSites, mangaSites } from './src/readme';
 
+const minify = false;
 const scripts = {
   main: {
     entry: 'userscript-main.js',
@@ -102,11 +104,15 @@ function createScriptAdult() {
 
 function beauty() {
   return gulp
-    .src('./dist/*.js')
+    .src('./dist/*.user.js')
     .pipe(
-      beautify({
-        indent_size: 2,
-      }),
+      !minify
+        ? beautify({
+            indent_size: 2,
+          })
+        : uglify({
+            output: { comments: true },
+          }),
     )
     .pipe(gulp.dest('./dist/'));
 }
