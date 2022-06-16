@@ -1,25 +1,24 @@
+// import excludeDependenciesFromBundle from 'rollup-plugin-exclude-dependencies-from-bundle';
+// import { nodeExternalsPlugin } from 'esbuild-node-externals';
+import { globalExternals } from '@fal-works/esbuild-plugin-global-externals';
+import eslint from '@rbnlffl/rollup-plugin-eslint';
+import commonjs from '@rollup/plugin-commonjs';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import Del from 'del';
 import * as esbuild from 'esbuild';
 import fs from 'fs';
 import gulp from 'gulp';
 import file from 'gulp-file';
 import preprocess from 'gulp-preprocess';
-import gulpTypescript from 'gulp-typescript';
+import prettier from 'gulp-prettier';
+import liveServer from 'live-server';
 import { rollup } from 'rollup';
 import cleanup from 'rollup-plugin-cleanup';
-import commonjs from '@rollup/plugin-commonjs';
-import eslint from '@rbnlffl/rollup-plugin-eslint';
-import html from 'rollup-plugin-string-html';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import userscript from 'userscript-meta';
-import typescriptPlugin from 'rollup-plugin-typescript';
-import liveServer from 'live-server';
-import { tsImport, Compiler } from 'ts-import';
-import prettier from 'gulp-prettier';
-import excludeDependenciesFromBundle from 'rollup-plugin-exclude-dependencies-from-bundle';
-import { nodeExternalsPlugin } from 'esbuild-node-externals';
-import { globalExternals } from '@fal-works/esbuild-plugin-global-externals';
 import externalGlobals from 'rollup-plugin-external-globals';
-import Del from 'del';
+import html from 'rollup-plugin-string-html';
+import typescriptPlugin from 'rollup-plugin-typescript';
+import { tsImport } from 'ts-import';
+import userscript from 'userscript-meta';
 
 const bundle = 1; // 1 = Rollup , 2 = Esbuild
 const scripts = {
@@ -42,8 +41,6 @@ const globals = {
   jscolor: 'jscolor',
   jszip: 'JSZip',
   sweetalert2: 'Swal',
-  react: 'React',
-  'react-dom': 'ReactDOM',
   nprogress: 'NProgress',
 };
 
@@ -69,11 +66,11 @@ function buildUserscriptEsbuild(script) {
     })
     .catch((e) => {
       console.log(e);
-      // process.exit(1);
+      process.exit(1);
     })
     .finally(() => {
       // console.log(`${script.name} Created`);
-      // process.exit(0);
+      process.exit(0);
     });
 }
 

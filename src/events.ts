@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import minicolor from 'jquery-minicolors';
+import 'jquery-minicolors';
 import { getValueGM, logScript, setValueGM } from './browser.js';
 import generateZip from './download.js';
 import { applyZoom, reloadImage } from './page.js';

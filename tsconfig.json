@@ -13,7 +13,6 @@
         "target": "ESNext",
         "moduleResolution": "node",
         "esModuleInterop": true,
-        "jsx": "react",
         "module": "es6",
         //"noEmit": true,
         "outDir": "dist",

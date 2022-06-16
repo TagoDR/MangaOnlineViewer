@@ -37,28 +37,22 @@
         "@typescript-eslint/parser": "^5.25.0",
         "del": "^6.1.0",
         "esbuild": "^0.14.39",
-        "esbuild-node-externals": "^1.4.1",
-        "eslint": "^8.15.0",
-        "eslint-config-airbnb": "^19.0.4",
+        "eslint": "^8.2.0",
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-config-airbnb-typescript": "^17.0.0",
         "eslint-config-prettier": "^8.5.0",
-        "eslint-plugin-import": "^2.26.0",
-        "eslint-plugin-jsx-a11y": "^6.5.1",
+        "eslint-import-resolver-typescript": "^2.7.1",
+        "eslint-plugin-import": "^2.25.2",
         "eslint-plugin-prettier": "^4.0.0",
-        "eslint-plugin-react": "^7.30.0",
-        "eslint-plugin-react-hooks": "^4.5.0",
         "gulp": "^4.0.2",
         "gulp-file": "^0.4.0",
         "gulp-preprocess": "^4.0.2",
         "gulp-prettier": "^4.0.0",
-        "gulp-typescript": "^6.0.0-alpha.1",
-        "live-server": "^1.2.2",
         "gulp-uglify": "^3.0.2",
+        "live-server": "^1.2.2",
         "prettier": "^2.6.2",
         "rollup": "^2.75.6",
         "rollup-plugin-cleanup": "^3.2.1",
-        "rollup-plugin-exclude-dependencies-from-bundle": "^1.1.22",
         "rollup-plugin-external-globals": "^0.6.1",
         "rollup-plugin-string-html": "^1.0.0",
         "rollup-plugin-typescript": "^1.0.1",
@@ -77,6 +71,18 @@
         "sweetalert2": "^11.4.14",
         "unveil2": "^2.0.8"
     },
+    "browserslist": {
+        "production": [
+            ">20.0%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
     "prettier": {
         "semi": true,
         "singleQuote": true,
@@ -93,9 +99,7 @@
         },
         "env": {
             "browser": true,
-            "commonjs": true,
             "es6": true,
-            "jquery": true,
             "greasemonkey": true
         },
         "globals": {
@@ -108,40 +112,50 @@
             "Swal": "readonly"
         },
         "extends": [
-            "eslint:recommended",
-            "plugin:@typescript-eslint/recommended",
-            "airbnb",
-            "airbnb-typescript",
+            "airbnb-base",
+            "airbnb-typescript/base",
             "prettier"
         ],
         "plugins": [
             "import",
-            "@typescript-eslint",
-            "prettier"
+            "prettier",
+            "@typescript-eslint"
         ],
+        "settings": {
+            "import/resolver": {
+                "node": {
+                    "extensions": [
+                        ".js",
+                        ".ts",
+                        ".jsx",
+                        ".tsx",
+                        ".json"
+                    ]
+                }
+            },
+            "import/extensions": [
+                ".js",
+                ".ts",
+                ".mjs",
+                ".jsx",
+                ".tsx"
+            ]
+        },
         "rules": {
             "prettier/prettier": [
                 "warn"
             ],
-            "max-len": "off",
-            "linebreak-style": [
-                "off",
-                "windows"
-            ],
             "no-console": "warn",
-            "prefer-destructuring": [
-                "error",
-                {
-                    "object": true,
-                    "array": false
-                }
-            ],
-            "function-paren-newline": "off",
             "import/extensions": [
-                "warn",
+                "error",
                 "always",
                 {
-                    "ignorePackages": true
+                    "pattern": {
+                        "jsx": "never",
+                        "tsx": "never",
+                        "ts": "never",
+                        "js": "never"
+                    }
                 }
             ]
         }

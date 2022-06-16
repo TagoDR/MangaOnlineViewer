@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/* eslint-disable no-undef, @typescript-eslint/naming-convention */
 // == MangaPark ====================================================================================
 declare let CryptoJS;
 declare let amWord;
