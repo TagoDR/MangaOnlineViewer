@@ -10,11 +10,11 @@ export default {
   run() {
     return {
       title: $('h3:first').text().trim(),
-      series: W.location.pathname,
-      pages: W.previewImages.length,
+      series: window.location.pathname,
+      pages: window.previewImages.length,
       prev: '#',
       next: '#',
-      listImages: W.previewImages.map((i) => `https://hentaimimi.com//${i}`),
+      listImages: window.previewImages.map((i) => `https://hentaimimi.com//${i}`),
     };
   },
 };

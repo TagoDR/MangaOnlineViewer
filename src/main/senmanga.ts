@@ -6,7 +6,9 @@ export default {
   language: ['Original'],
   category: 'manga',
   run() {
-    const url = `/${W.location.pathname.split('/')[1]}/${W.location.pathname.split('/')[2]}`;
+    const url = `/${window.location.pathname.split('/')[1]}/${
+      window.location.pathname.split('/')[2]
+    }`;
     const num = parseInt($("select[name='page'] option:last").val() as string, 10);
     const chapter = $('select[name="chapter"] option:selected');
     const origin = $('.title a');

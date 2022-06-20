@@ -1,5 +1,5 @@
-import { getValueGM, isMobile, setValueGM } from './browser.js';
-import { IBookmark } from './interfaces.js';
+import { getValueGM, isMobile, setValueGM } from '../utils/tampermonkey.js';
+import { IBookmark } from '../types/IBookmark.js';
 
 // Configuration
 const settings = {

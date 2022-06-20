@@ -7,7 +7,7 @@ export default {
   obs: 'and similar sites',
   category: 'hentai',
   run() {
-    const pages = [W.location.pathname];
+    const pages = [window.location.pathname];
     pages.push(
       ...$('#paginator:first a')
         .get()

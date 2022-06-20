@@ -10,11 +10,11 @@ export default {
     return {
       title: $('title').text().replace('| Hitomi.la', '').trim(),
       series: $('.brand').attr('href'),
-      pages: W.galleryinfo.files.length,
+      pages: window.galleryinfo.files.length,
       prev: '#',
       next: '#',
-      listImages: W.galleryinfo.files.map((file) =>
-        W.url_from_url_from_hash(W.galleryinfo, file, 'webp', undefined, 'a'),
+      listImages: window.galleryinfo.files.map((file) =>
+        window.url_from_url_from_hash(window.galleryinfo, file, 'webp', undefined, 'a'),
       ),
     };
   },

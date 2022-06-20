@@ -26,13 +26,13 @@ const scripts = {
     entry: 'userscript-main.ts',
     name: 'Manga_OnlineViewer.user.js',
     meta: 'Manga_OnlineViewer.meta.js',
-    banner: './src/meta-main.ts',
+    banner: './src/meta/meta-main.ts',
   },
   adult: {
     entry: 'userscript-adult.ts',
     name: 'Manga_OnlineViewer_Adult.user.js',
     meta: 'Manga_OnlineViewer_Adult.meta.js',
-    banner: './src/meta-adult.ts',
+    banner: './src/meta/meta-adult.ts',
   },
 };
 const globals = {
@@ -49,10 +49,7 @@ function buildUserscriptEsbuild(script) {
   return esbuild
     .build({
       banner: {
-        js:
-          fs.readFileSync(`./dist/${script.meta}`, 'utf8') +
-          `\n var W = (typeof unsafeWindow === 'undefined') ? window : unsafeWindow; \n
-              /* global $:readonly, JSZip:readonly ,NProgress:readonly , jscolor:readonly , ColorScheme:readonly , Swal:readonly */`,
+        js: fs.readFileSync(`./dist/${script.meta}`, 'utf8'),
       },
       entryPoints: [`src/${script.entry}`],
       logLevel: 'debug',
@@ -104,8 +101,6 @@ function buildUserscriptRollup(script) {
   }).then((bundle) =>
     bundle.write({
       banner: fs.readFileSync(`./dist/${script.meta}`, 'utf8'),
-      intro: `var W = (typeof unsafeWindow === 'undefined') ? window : unsafeWindow; \n
-              /* global $:readonly, JSZip:readonly ,NProgress:readonly , jscolor:readonly , ColorScheme:readonly , Swal:readonly */`,
       format: 'iife',
       file: `dist/${script.name}`,
       globals: globals,
@@ -155,10 +150,10 @@ function move() {
 
 async function readme() {
   const { bookmarklet, comicSites, hentaiSites, mangaSites } = await tsImport.compile(
-    './src/readme.ts',
+    './src/meta/readme.ts',
   );
   return gulp
-    .src('./src/readme.md')
+    .src('./src/meta/readme.md')
     .pipe(
       preprocess({
         context: {

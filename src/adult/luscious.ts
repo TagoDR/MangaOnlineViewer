@@ -17,7 +17,7 @@ export default {
       pages: num,
       prev: '#',
       next: '#',
-      bruteForce(func, i = 1, url = W.location.pathname) {
+      bruteForce(func, i = 1, url = window.location.pathname) {
         if (i > num) return;
         // const self = this;
         func.getHtml(url).then((html) => {

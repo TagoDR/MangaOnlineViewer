@@ -10,10 +10,10 @@ export default {
     return {
       title: $('.page-section-title').text().trim(),
       series: $('div.heading + a').attr('href'),
-      pages: W.chapterPages.length,
+      pages: window.chapterPages.length,
       prev: $('.container div div a:eq(0)').attr('href'),
       next: $('.container div div a:eq(1)').attr('href'),
-      listImages: W.chapterPages,
+      listImages: window.chapterPages,
     };
   },
 };

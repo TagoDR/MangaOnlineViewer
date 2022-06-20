@@ -36,8 +36,8 @@ import readmangatoday from './readmangatoday.js';
 import senmanga from './senmanga.js';
 import tmofans from './tmofans.js';
 import unionmangas from './unionmangas.js';
-import { ISite } from '../interfaces.js';
 import localhost from './localhost.js';
+import { ISite } from '../types/ISite';
 
 const sites = [
   localhost,

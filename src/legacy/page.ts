@@ -1,9 +1,9 @@
 import * as NProgress from 'nprogress';
-import { logScript } from './browser.js';
+import { logScript } from '../utils/tampermonkey.js';
 import { settings } from './settings.js';
-import { isNothing } from './utils.js';
+import { isNothing } from '../utils/checks.js';
 import AjaxSettings = JQuery.AjaxSettings;
-import { IManga } from './interfaces.js';
+import { IManga } from '../types/IManga.js';
 
 // Get html pages content
 function getHtml(url: string, wait: number = settings.Timer) {

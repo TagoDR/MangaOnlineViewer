@@ -8,7 +8,7 @@ export default {
   waitVar: 'lstOLA',
   run() {
     const chapter = $('.selectChapter option:selected');
-    const url = W.location.href.replace(/[^/]+$/, '');
+    const url = window.location.href.replace(/[^/]+$/, '');
     return {
       title: $('title')
         .text()
@@ -16,10 +16,10 @@ export default {
         .replace('online in high quality', '')
         .trim(),
       series: $('#navsubbar a').attr('href'),
-      pages: W.mnaplzoamfs.length,
+      pages: window.mnaplzoamfs.length,
       prev: url + chapter.prev().val(),
       next: url + chapter.next().val(),
-      listImages: W.mnaplzoamfs,
+      listImages: window.mnaplzoamfs,
     };
   },
 };

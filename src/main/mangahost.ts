@@ -1,5 +1,5 @@
 // == MangaHost2 ===================================================================================
-import { IManga } from '../interfaces.js';
+import { IManga } from '../types/IManga';
 
 export default {
   name: 'MangaHost2',
@@ -9,8 +9,8 @@ export default {
   category: 'manga',
   run() {
     const url =
-      W.location.href +
-      (W.location.href.lastIndexOf('/') !== W.location.href.length - 1 ? '/' : '');
+      window.location.href +
+      (window.location.href.lastIndexOf('/') !== window.location.href.length - 1 ? '/' : '');
     const chapter = $('.viewerChapter:first option:selected');
     const num = parseInt($('.viewerPage:first option:last').html(), 10);
     const manga = {

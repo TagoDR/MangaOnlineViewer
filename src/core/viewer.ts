@@ -1,42 +1,11 @@
 import Swal, { SweetAlertOptions } from 'sweetalert2';
-import { getBrowser, getEngine, getInfoGM, logScript, logScriptC, setValueGM } from './browser.js';
-import { controls, setKeyDownEvents } from './events.js';
-import { loadManga } from './page.js';
-import reader from './reader.js';
-import { settings } from './settings.js';
-import { isNothing } from './utils.js';
-import { IManga, ISite } from './interfaces.js';
-import { externalCSS, externalScripts } from './externals.js';
-
-function formatPage(manga: IManga, begin = 0) {
-  W.stop();
-  if (manga.before !== undefined) {
-    manga.before();
-  }
-  document.documentElement.innerHTML = reader(manga, begin);
-  logScript('Rebuilding Site');
-  setTimeout(() => {
-    try {
-      controls();
-      setKeyDownEvents();
-      setTimeout(() => {
-        $(window).scrollTop(0);
-        loadManga(manga, begin);
-      }, 50);
-      // Clear used Bookmarks
-      if (!isNothing(settings.bookmarks.filter((el) => el.url === W.location.href))) {
-        logScript(`Bookmark Removed ${W.location.href}`);
-        settings.bookmarks = settings.bookmarks.filter((el) => el.url !== W.location.href);
-        setValueGM('MangaBookmarks', JSON.stringify(settings.bookmarks));
-      }
-    } catch (e) {
-      logScript(e);
-    }
-  }, 50);
-  if (manga.after !== undefined) {
-    manga.after();
-  }
-}
+import { getBrowser, getEngine, getInfoGM, logScript, logScriptC } from '../utils/tampermonkey.js';
+import { settings } from '../legacy/settings.js';
+import { isNothing } from '../utils/checks.js';
+import { externalCSS, externalScripts } from '../legacy/externals.js';
+import { ISite } from '../types/ISite.js';
+import { IManga } from '../types/IManga.js';
+import formatPage from './format.js';
 
 function lateStart(site: ISite, begin = 1) {
   const manga = site.run();
@@ -72,14 +41,14 @@ function preparePage(site: ISite, manga: IManga, begin = 0) {
   if (manga.pages > 0) {
     let beginning = begin;
     if (beginning === 0) {
-      beginning = settings?.bookmarks?.find((b) => b.url === W.location.href)?.page || 0;
+      beginning = settings?.bookmarks?.find((b) => b.url === window.location.href)?.page || 0;
     }
     $('head').append(
       ` ${externalScripts.join('\n')}
         ${externalCSS.join('\n')}
        <style type='text/css'>#mov {position: fixed;left: 50%;transform: translateX(-50%);top: 0;z-index: 1000000;border-radius: .25em;font-size: 1.5em;cursor: pointer;display: inline-block;margin: .3125em;padding: .625em 2em;box-shadow: none;font-weight: 500;color: #FFF;background: rgb(102, 83, 146);border: 1px #FFF;}</style>`,
     );
-    W.mov = (b: number) => lateStart(site, b || beginning);
+    window.mov = (b: number) => lateStart(site, b || beginning);
     switch (site.start || settings.loadMode) {
       case 'never':
         $('body').append('<button id="mov" onclick=mov()>Start MangaOnlineViewer</button>');
@@ -119,7 +88,7 @@ function start(sites: ISite[]) {
     } on ${getBrowser()} with ${getEngine()}`,
     getInfoGM,
   );
-  // W.InfoGM = getInfoGM;
+  // window.InfoGM = getInfoGM;
   logScript(`${sites.length} Known Manga Sites`);
   let waitElapsed = 0;
 
@@ -171,7 +140,7 @@ function start(sites: ISite[]) {
 
   function test(list: ISite[]) {
     return list
-      .filter((site: ISite) => site.url.test(W.location.href))
+      .filter((site: ISite) => site.url.test(window.location.href))
       .map(logScriptC('Site Found:'))
       .map(waitExec);
   }

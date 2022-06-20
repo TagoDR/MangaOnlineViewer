@@ -1,10 +1,10 @@
-import { isMobile } from './browser.js';
-import htmlKeybinds from './components/keybinds.js';
-import cssStyles from './components/styles.js';
+import { isMobile } from '../utils/tampermonkey.js';
+import htmlKeybinds from './keybinds.js';
+import cssStyles from './styles.js';
 import { externalCSS, externalScripts } from './externals.js';
 import { icon, settings } from './settings.js';
 import { themesCSS, themesSelector } from './themes.js';
-import { IManga } from './interfaces.js';
+import { IManga } from '../types/IManga.js';
 
 const panel = `<div id='ImageOptions'>
   <div id='menu'>
@@ -155,12 +155,12 @@ const controls = `<div id='ViewerControls' class='panel'>
 const chapterControl = (id) => (manga) =>
   `<div id='${id}' class='ChapterControl'>
     <a href='#' class='download'>Download</a>
-    <a class='prev' id='prev' href='${manga.prev || ''}' onclick='W.location="${
+    <a class='prev' id='prev' href='${manga.prev || ''}' onclick='window.location="${
     manga.prev || ''
-  }";W.location.reload();'>Previous</a>
-    <a class='next' id='next' href='${manga.next || ''}' onclick='W.location="${
+  }";window.location.reload();'>Previous</a>
+    <a class='next' id='next' href='${manga.next || ''}' onclick='window.location="${
     manga.next || ''
-  }";W.location.reload();'>Next</a>
+  }";window.location.reload();'>Next</a>
 </div>`;
 const chapterControlTop = chapterControl('ChapterControlTop');
 const chapterControlBottom = chapterControl('ChapterControlBottom');

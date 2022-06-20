@@ -7,11 +7,11 @@ export default {
   category: 'comic',
   run() {
     return {
-      title: W.title.replace(/ - Page [0-9]+/, ''),
+      title: window.title.replace(/ - Page [0-9]+/, ''),
       series: $('div.pager-cnt a:first').attr('href'),
-      pages: W.pages.length,
-      prev: W.prev_chapter,
-      next: W.next_chapter,
+      pages: window.pages.length,
+      prev: window.prev_chapter,
+      next: window.next_chapter,
       listImages: $('#all img')
         .get()
         .map((i) => $(i).attr('data-src')),

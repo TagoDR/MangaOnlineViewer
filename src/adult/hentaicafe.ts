@@ -16,18 +16,20 @@ export default {
         .text()
         .trim()
         .replace(/Page [0-9]+ /, ''),
-      series: W.next_chapter,
+      series: window.next_chapter,
       pages: num,
       prev: chapter
         .eq(
-          chapter.index(chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`)) +
-            1,
+          chapter.index(
+            chapter.filter(`[href*='${window.location.pathname.replace(/page.+/, '')}']`),
+          ) + 1,
         )
         .attr('href'),
       next: chapter
         .eq(
-          chapter.index(chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`)) -
-            1,
+          chapter.index(
+            chapter.filter(`[href*='${window.location.pathname.replace(/page.+/, '')}']`),
+          ) - 1,
         )
         .attr('href'),
       listImages: Array(num)

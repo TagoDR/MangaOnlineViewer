@@ -18,7 +18,7 @@ export default {
     }
 
     let api = null;
-    const url = W.location.href;
+    const url = window.location.href;
     $.ajax({
       type: 'GET',
       url,
@@ -29,7 +29,7 @@ export default {
     });
     const dataPublic = JSON.parse(decode($(api!).find('#ractive-public').html().trim()));
     const dataShared = JSON.parse(decode($(api!).find('#ractive-shared').html().trim()));
-    const src = dataShared.options.pictureHost || W.location.host;
+    const src = dataShared.options.pictureHost || window.location.host;
     const images = dataPublic.pictures.map((img) => `//${src}/image/fl/${img.publicUri}.jpg`);
     return {
       title: $('.top-menu-breadcrumb li:eq(-2) a').text(),

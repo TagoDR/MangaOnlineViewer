@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path="globals.d.ts" />
-import sites from './adult/index.js';
-import { requiredScripts } from './externals.js';
+/// <reference path="../legacy/globals.d.ts" />
+import sites from '../adult';
+import { requiredScripts } from '../legacy/externals.js';
 
 export default {
   name: 'Manga OnlineViewer Adult',

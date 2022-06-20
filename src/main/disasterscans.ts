@@ -8,11 +8,11 @@ export default {
   run() {
     return {
       title: $('#chapter-heading').text(),
-      series: W.mangaNav.mangaUrl,
-      pages: W.chapter_preloaded_images.length,
+      series: window.mangaNav.mangaUrl,
+      pages: window.chapter_preloaded_images.length,
       prev: $('select.single-chapter-select option:selected').next().val(),
       next: $('select.single-chapter-select option:selected').prev().val(),
-      listImages: W.chapter_preloaded_images,
+      listImages: window.chapter_preloaded_images,
     };
   },
 };

@@ -8,12 +8,12 @@ export default {
   waitVar: 'baseTitle',
   run() {
     return {
-      title: W.baseTitle.replace(' :: HentaiNexus', ''),
+      title: window.baseTitle.replace(' :: HentaiNexus', ''),
       series: $('#pageChangeSnap > p > a').attr('href'),
-      pages: W.pageData.length,
+      pages: window.pageData.length,
       prev: '#',
       next: '#',
-      listImages: W.pageData,
+      listImages: window.pageData,
     };
   },
 };

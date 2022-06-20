@@ -1,31 +1,23 @@
 {
     "compilerOptions": {
-        "lib": [
-            "es2020",
-            "dom"
-        ],
-        "strict": true,
-        //"allowJs": true,
-        //"checkJs": true,
-        "noImplicitAny": false,
-        "noEmitOnError": true,
-        "removeComments": false,
         "target": "ESNext",
-        "moduleResolution": "node",
+        "lib": ["es2020", "dom"],
+        "allowJs": false,
+        "skipLibCheck": false,
         "esModuleInterop": true,
-        "module": "es6",
-        //"noEmit": true,
-        "outDir": "dist",
         "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "module": "ESNext",
+        "moduleResolution": "node",
+        //"noEmit": true,
+        "noEmitOnError": true,
+        "noEmitHelpers": false
+        "noImplicitAny": false,
+        "removeComments": false,
+        "outDir": "dist",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "noEmitHelpers": false
     },
-    "exclude": [
-        "node_modules"
-    ],
-    "include": [
-        "src/globals.d.ts",
-        "./src/"
-    ]
+    "exclude": ["node_modules"],
+    "include": ["src/legacy/globals.d.ts", "./src/"]
 }

@@ -8,12 +8,12 @@ export default {
   waitVar: 'model',
   run() {
     return {
-      title: W.model.title.replace(' - Page {page}', ''),
+      title: window.model.title.replace(' - Page {page}', ''),
       series: $('.back-to-gallery a').attr('href'),
-      pages: Object.keys(W.images as object).length,
+      pages: Object.keys(window.images as object).length,
       prev: '#',
       next: '#',
-      listImages: Object.values(W.images as object),
+      listImages: Object.values(window.images as object),
     };
   },
 };

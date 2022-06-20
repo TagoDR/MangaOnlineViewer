@@ -9,7 +9,7 @@ export default {
     let api: { full; giant; path };
     $.ajax({
       type: 'GET',
-      url: W.location.href.replace(/\/page\/[0-9]+#?$/, '/all-pages'),
+      url: window.location.href.replace(/\/page\/[0-9]+#?$/, '/all-pages'),
       dataType: 'json',
       async: false,
       success(res) {

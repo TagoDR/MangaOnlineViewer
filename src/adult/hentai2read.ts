@@ -8,11 +8,11 @@ export default {
   run() {
     return {
       title: $('.reader-left-text').text().trim(),
-      series: W.gData.mainURL,
-      pages: W.gData.images.length,
-      prev: W.gData.previousURL,
-      next: W.gData.nextURL,
-      listImages: W.gData.images.map((i) => `https://static.hentaicdn.com/hentai${i}`),
+      series: window.gData.mainURL,
+      pages: window.gData.images.length,
+      prev: window.gData.previousURL,
+      next: window.gData.nextURL,
+      listImages: window.gData.images.map((i) => `https://static.hentaicdn.com/hentai${i}`),
     };
   },
 };

@@ -1,11 +1,11 @@
 import Swal from 'sweetalert2';
 import 'jquery-minicolors';
-import { getValueGM, logScript, setValueGM } from './browser.js';
+import { getValueGM, logScript, setValueGM } from '../utils/tampermonkey.js';
 import generateZip from './download.js';
 import { applyZoom, reloadImage } from './page.js';
 import { settings } from './settings.js';
 import { addCustomTheme, addFullCustomTheme } from './themes.js';
-import { IBookmark } from './interfaces.js';
+import { IBookmark } from '../types/IBookmark.js';
 
 // Goto Page and Thumbnails
 function scrollToElement(ele) {
@@ -25,9 +25,9 @@ function setKeyDownEvents() {
     $(W).off('onload');
     document.onkeydown = null;
     document.onkeypress = null;
-    W.onkeydown = null;
-    W.onkeypress = null;
-    W.onload = null;
+    window.onkeydown = null;
+    window.onkeypress = null;
+    window.onload = null;
     document.body.onload = null;
   } catch (e) {
     logScript(`Keybinds error: ${e}`);
@@ -419,7 +419,7 @@ function controls() {
       10,
     );
     const mark: IBookmark = {
-      url: W.location.href,
+      url: window.location.href,
       page: num,
       date: Date.now(),
     };

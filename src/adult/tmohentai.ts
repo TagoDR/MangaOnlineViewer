@@ -15,7 +15,7 @@ export default {
       next: '#',
       listPages: Array(num)
         .fill(null)
-        .map((_, i) => W.location.href.replace(/\/[0-9]+?$/, `/${i + 1}`)),
+        .map((_, i) => window.location.href.replace(/\/[0-9]+?$/, `/${i + 1}`)),
       img: '.content-image',
       lazyAttr: 'data-original',
     };

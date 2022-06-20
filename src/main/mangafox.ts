@@ -32,14 +32,14 @@ export default {
       ); // eslint-disable-line no-useless-escape
     }
 
-    const src = Array(W.imagecount)
+    const src = Array(window.imagecount)
       .fill(null)
       .map((_, i) => {
         let img = '';
         $.ajax({
           url: 'chapterfun.ashx',
           async: false,
-          data: { cid: W.chapterid, page: i, key: $('#dm5_key').val() },
+          data: { cid: window.chapterid, page: i, key: $('#dm5_key').val() },
         }).done((data) => {
           img = decode(data, i);
         }); // eslint-disable-line no-eval
@@ -48,9 +48,9 @@ export default {
     return {
       title: $('.reader-header-title div:first').text().trim(),
       series: $('.reader-header-title a').attr('href'),
-      pages: W.imagecount,
-      prev: W.prechapterurl,
-      next: W.nextchapterurl,
+      pages: window.imagecount,
+      prev: window.prechapterurl,
+      next: window.nextchapterurl,
       listImages: src,
     };
   },

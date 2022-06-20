@@ -1,3 +1,5 @@
+import { IManga } from './IManga.js';
+
 export interface ISite {
   name: string | string[];
   url: RegExp;
@@ -12,30 +14,4 @@ export interface ISite {
   waitStep?: number; // 1000 = 1s
   start?: string; // 'never', 'always'
   run(): IManga;
-}
-
-export interface IManga {
-  title: string;
-  series: string;
-  pages: number;
-  prev: string;
-  next: string;
-  listImages?: string[];
-  listPages?: string[];
-  img?: JQuery.Selector;
-  lazy?: boolean;
-  timer?: number;
-  lazyAttr?: string;
-
-  bruteForce?(func: object): void;
-
-  before?(): void;
-
-  after?(): void;
-}
-
-export interface IBookmark {
-  url: string;
-  page: number;
-  date: number;
 }

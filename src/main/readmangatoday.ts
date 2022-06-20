@@ -7,12 +7,12 @@ export default {
   category: 'manga',
   run() {
     return {
-      title: W.chapter_page_title.trim(),
-      series: W.manga_url,
-      pages: W.images.length,
-      prev: W.prev_chapter_url,
-      next: W.next_chapter_url,
-      listImages: W.images.map((i) => i.url),
+      title: window.chapter_page_title.trim(),
+      series: window.manga_url,
+      pages: window.images.length,
+      prev: window.prev_chapter_url,
+      next: window.next_chapter_url,
+      listImages: window.images.map((i) => i.url),
     };
   },
 };

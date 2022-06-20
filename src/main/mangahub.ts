@@ -8,8 +8,8 @@ export default {
   waitEle: '#select-chapter',
   run() {
     let api: { data: { chapter: { pages: any[] } } };
-    const slug = W.CURRENT_MANGA_SLUG || W.location.pathname.split('/')[2];
-    const number = W.location.pathname.split('/')[3].replace('chapter-', '');
+    const slug = window.CURRENT_MANGA_SLUG || window.location.pathname.split('/')[2];
+    const number = window.location.pathname.split('/')[3].replace('chapter-', '');
     const data = { query: `{chapter(x:m01,slug:"${slug}",number:${number}){pages}}` };
     $.ajax({
       type: 'POST',

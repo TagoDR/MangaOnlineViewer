@@ -16,7 +16,7 @@ export default {
       next: $('.chapter-next a').attr('href'),
       listPages: Array(num)
         .fill(null)
-        .map((_, i) => W.location.href.replace(/\/[0-9]+$/, `/${i + 1}`)),
+        .map((_, i) => window.location.href.replace(/\/[0-9]+$/, `/${i + 1}`)),
       listImages: $('.img-container img')
         .get()
         .map((item) => $(item).attr('data-src')),

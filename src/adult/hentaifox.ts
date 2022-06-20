@@ -13,7 +13,7 @@ export default {
       ?.replace(/\d+.\w+$/, '') as string;
 
     function findExt(i) {
-      const c = W.g_th[i][0];
+      const c = window.g_th[i][0];
       if (c === 'p') return '.png';
       if (c === 'b') return '.bmp';
       if (c === 'g') return '.gif';

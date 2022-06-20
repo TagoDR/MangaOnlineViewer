@@ -17,8 +17,8 @@ export default {
       title: origin.text().trim(),
       series: origin.attr('href'),
       pages: num,
-      prev: `${W.location.pathname}?ch=${chapter.prev().val()}`.replace(' ', '+'),
-      next: `${W.location.pathname}?ch=${chapter.next().val()}`.replace(' ', '+'),
+      prev: `${window.location.pathname}?ch=${chapter.prev().val()}`.replace(' ', '+'),
+      next: `${window.location.pathname}?ch=${chapter.next().val()}`.replace(' ', '+'),
       listPages: Array(num)
         .fill(null)
         .map((_, i) => url + (i + 1)),

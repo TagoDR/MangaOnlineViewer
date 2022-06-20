@@ -11,7 +11,7 @@ export default {
     $.ajax({
       type: 'POST',
       url: '/api/getBookByID',
-      data: { id: parseInt(W.location.pathname.match(/[0-9]+/)![0], 10) },
+      data: { id: parseInt(window.location.pathname.match(/[0-9]+/)![0], 10) },
       dataType: 'json',
       async: false,
       success(res) {

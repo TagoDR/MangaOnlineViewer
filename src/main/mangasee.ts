@@ -37,7 +37,7 @@ export default {
       if (OddString !== '0') {
         Odd = `.${OddString}`;
       }
-      return W.location.href.replace(/-chapter-.+/, `-chapter-${Chapter}${Odd}${Index}.html`);
+      return window.location.href.replace(/-chapter-.+/, `-chapter-${Chapter}${Odd}${Index}.html`);
     }
 
     return {

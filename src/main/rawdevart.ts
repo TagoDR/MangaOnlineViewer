@@ -9,8 +9,8 @@ export default {
   waitEle: '#chapter-list select',
   run() {
     return {
-      title: W.rconfig.chapterTitle,
-      series: W.rconfig.prefix,
+      title: window.rconfig.chapterTitle,
+      series: window.rconfig.prefix,
       pages: $('#img-container img').get().length,
       prev: $('#chapter-list option:selected').next().val(),
       next: $('#chapter-list option:selected').prev().val(),

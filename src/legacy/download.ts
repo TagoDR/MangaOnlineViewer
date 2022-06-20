@@ -1,5 +1,5 @@
 import * as JSZip from 'jszip';
-import { logScript } from './browser.js';
+import { logScript } from '../utils/tampermonkey.js';
 
 const cache = {
   zip: JSZip,

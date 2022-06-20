@@ -10,20 +10,22 @@ export default {
     return {
       title: $('title').text().trim(),
       series: $('div.tbtitle div.text a:first').attr('href'),
-      pages: W.pages.length,
+      pages: window.pages.length,
       prev: chapter
         .eq(
-          chapter.index(chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`)) +
-            1,
+          chapter.index(
+            chapter.filter(`[href*='${window.location.pathname.replace(/page.+/, '')}']`),
+          ) + 1,
         )
         .attr('href'),
       next: chapter
         .eq(
-          chapter.index(chapter.filter(`[href*='${W.location.pathname.replace(/page.+/, '')}']`)) -
-            1,
+          chapter.index(
+            chapter.filter(`[href*='${window.location.pathname.replace(/page.+/, '')}']`),
+          ) - 1,
         )
         .attr('href'),
-      listImages: W.pages.map((i) => i.url),
+      listImages: window.pages.map((i) => i.url),
     };
   },
 };

@@ -6,18 +6,18 @@ export default {
   language: ['English'],
   category: 'hentai',
   run() {
-    const url = W.location.href + (W.location.href.slice(-1) === '/' ? '' : '/');
+    const url = window.location.href + (window.location.href.slice(-1) === '/' ? '' : '/');
     const num = $('td.pageList a, td.pageList strong').length - 1;
     const chapter = $('#chapters + table a.listLink');
     return {
       title: $('.listTable td.listLong:first').text().trim(),
-      series: W.location.href.match(/.+\/[0-9]+\//),
+      series: window.location.href.match(/.+\/[0-9]+\//),
       pages: num,
       prev: chapter
-        .eq(chapter.index(chapter.filter(`[href='${W.location.href}']`)) - 1)
+        .eq(chapter.index(chapter.filter(`[href='${window.location.href}']`)) - 1)
         .attr('href'),
       next: chapter
-        .eq(chapter.index(chapter.filter(`[href='${W.location.href}']`)) + 1)
+        .eq(chapter.index(chapter.filter(`[href='${window.location.href}']`)) + 1)
         .attr('href'),
       listPages: Array(num)
         .fill(null)

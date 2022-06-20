@@ -26,7 +26,7 @@ export default {
     if (cId > 632481) {
       randomServer = 'm5.imhentai.xxx';
     }
-    const src = Object.values(W.g_th).map((key, index) => {
+    const src = Object.values(window.g_th).map((key, index) => {
       const ext = (key as string)
         .split(',')[0]
         .replace('g', 'gif')

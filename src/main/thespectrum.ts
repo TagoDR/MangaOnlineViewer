@@ -6,7 +6,7 @@ export default {
   language: ['English'],
   category: 'manga',
   run() {
-    const url = `${W.location.pathname}?${$('form')
+    const url = `${window.location.pathname}?${$('form')
       .serialize()
       .substring(0, $('form').serialize().lastIndexOf('='))}`;
     const num = $('.selectpage option').length;
@@ -15,8 +15,8 @@ export default {
       title: $('.viewerLabel:eq(1)').text(),
       series: '#',
       pages: num,
-      prev: `${W.location.pathname}?ch=${chapter.prev().val()}`,
-      next: `${W.location.pathname}?ch=${chapter.next().val()}`,
+      prev: `${window.location.pathname}?ch=${chapter.prev().val()}`,
+      next: `${window.location.pathname}?ch=${chapter.next().val()}`,
       listPages: Array(num)
         .fill(null)
         .map((_, i) => `${url}=${i + 1}`),

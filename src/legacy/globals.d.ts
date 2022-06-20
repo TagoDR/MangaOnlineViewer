@@ -1,5 +1,3 @@
-declare const W: Window;
-
 declare interface Window {
   _gallery: any;
   images_ext: any;

@@ -11,7 +11,7 @@ export default {
       chapter: { data: string[]; hash };
       baseUrl: string;
     };
-    const chapterId = W.location.pathname.match(/\/chapter\/([^/]+)(\/[0-9]+)?/)![1];
+    const chapterId = window.location.pathname.match(/\/chapter\/([^/]+)(\/[0-9]+)?/)![1];
     const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
     $.ajax({
       type: 'GET',

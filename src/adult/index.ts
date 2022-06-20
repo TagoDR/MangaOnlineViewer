@@ -28,7 +28,7 @@ import tmohhentai from './tmohentai.js';
 import tsumino from './tsumino.js';
 import vercomicsporno from './vercomicsporno.js';
 import xyzcomics from './xyzcomics.js';
-import { ISite } from '../interfaces.js';
+import { ISite } from '../types/ISite';
 
 const sites = [
   asmhentai,
