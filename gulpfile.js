@@ -7,8 +7,11 @@ import preprocess from 'gulp-preprocess';
 import userscript from 'userscript-meta';
 import * as tsImport from 'ts-import';
 import Del from 'del';
+import { build } from 'vite';
+import externalGlobals from 'rollup-plugin-external-globals';
 
 let minify = false;
+let vite = false;
 const scripts = {
   main: {
     entry: 'userscript-main.ts',
@@ -40,31 +43,59 @@ const globals = {
 
 function buildUserscript(script) {
   function createScriptFile() {
-    return esbuild
-      .build({
-        banner: {
-          js: fs.readFileSync(`./dist/${script.meta}`, 'utf8'),
+    const metadata = fs.readFileSync(`./dist/${script.meta}`, 'utf8');
+    if (vite) {
+      return build({
+        configFile: false,
+        esbuild: {
+          banner: metadata,
+          keepNames: true,
         },
-        entryPoints: [`src/${script.entry}`],
-        logLevel: 'info',
-        bundle: true,
-        outfile: `dist/${script.name}`,
-        // watch: isDev,
-        minify: minify,
-        keepNames: true,
-        legalComments: 'none',
-        plugins: [minifyTemplates(), writeFiles(), globalExternals(globals)],
-        write: !minify,
-        // sourcemap: minify ? false : 'inline',
-      })
-      .catch((e) => {
-        console.log(e);
-        process.exit(1);
-      })
-      .finally(() => {
-        // console.log(`${script.name} Created`);
-        // process.exit(0);
+        build: {
+          minify: minify ? 'esbuild' : false,
+          emptyOutDir: false,
+          rollupOptions: {
+            license: false,
+            input: `src/${script.entry}`,
+            // plugins: [externalGlobals(globals)],
+            output: {
+              format: 'iife',
+              entryFileNames: script.name,
+            },
+          },
+        },
       });
+    } else {
+      return esbuild
+        .build({
+          banner: {
+            js: metadata,
+          },
+          entryPoints: [`src/${script.entry}`],
+          logLevel: 'info',
+          bundle: true,
+          outfile: `dist/${script.name}`,
+          // watch: isDev,
+          minify: minify,
+          keepNames: true,
+          legalComments: 'none',
+          plugins: [
+            minifyTemplates(),
+            writeFiles(),
+            // globalExternals(globals)
+          ],
+          write: !minify,
+          // sourcemap: minify ? false : 'inline',
+        })
+        .catch((e) => {
+          console.log(e);
+          process.exit(1);
+        })
+        .finally(() => {
+          // console.log(`${script.name} Created`);
+          // process.exit(0);
+        });
+    }
   }
   return createScriptFile;
 }
@@ -88,9 +119,7 @@ function move() {
 async function readme() {
   const { bookmarklet, comicSites, hentaiSites, mangaSites } = await tsImport.load(
     './src/meta/readme.ts',
-    {
-      mode: tsImport.LoadMode.Compile,
-    },
+    { mode: tsImport.LoadMode.Compile },
   );
   return gulp
     .src('./src/meta/readme.md')
@@ -115,7 +144,9 @@ function prep() {
   if (!fs.existsSync('./dist')) {
     fs.mkdirSync('./dist', { recursive: true });
   }
-  return Promise.resolve((minify = true));
+  minify = true;
+  vite = true;
+  return Promise.resolve();
 }
 
 gulp.task('clean', clean);
@@ -126,7 +157,7 @@ gulp.task('dev', gulp.series(writeMetadata(scripts.dev), buildUserscript(scripts
 gulp.task(
   'build',
   gulp.series(
-    // clean,
+    clean,
     gulp.parallel(writeMetadata(scripts.main), writeMetadata(scripts.adult)),
     gulp.parallel(buildUserscript(scripts.main), buildUserscript(scripts.adult)),
   ),

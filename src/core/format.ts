@@ -1,6 +1,6 @@
 import { IManga } from '../types/IManga';
+import display from './display.js';
 
 export default async function formatPage(manga: IManga, begin = 0) {
-  const display = await import('./display');
-  display.default(manga, begin);
+  display(manga, begin);
 }
