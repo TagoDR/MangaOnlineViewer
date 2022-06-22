@@ -1,17 +1,21 @@
 import { IManga } from '../types/IManga';
-import reader from './reader';
+import reader, { head } from './reader';
 import { logScript, setValueGM } from '../utils/tampermonkey';
 import { controls, setKeyDownEvents } from './events';
 import { loadManga } from './page';
 import { isNothing } from '../utils/checks';
 import { settings } from './settings';
+import { body } from './components/App.js';
 
 export default function display(manga: IManga, begin: number) {
   window.stop();
   if (manga.before !== undefined) {
     manga.before();
   }
-  document.documentElement.innerHTML = reader(manga, begin);
+  document.head.innerHTML = head(manga);
+  document.body.innerHTML = body(manga, begin);
+  document.body.className = '';
+  // document.documentElement.innerHTML = reader(manga, begin);
   logScript('Rebuilding Site');
   setTimeout(() => {
     try {

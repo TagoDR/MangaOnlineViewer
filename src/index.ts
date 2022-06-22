@@ -1,4 +1,4 @@
-import loadReader from './react';
 import localhost from './main/localhost';
+import display from './core/display';
 
-loadReader(localhost.run());
+display(localhost.run(), 0);

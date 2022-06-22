@@ -13,7 +13,7 @@ export default {
     const images = [...document.querySelectorAll('#vungdoc img, .container-chapter-reader img')];
     return {
       title: document
-        .querySelector('.info-top-chapter h2, .panel-chapter-info-top h1')
+        .querySelector('.info-top-chapter h2, .imageOptions-chapter-info-top h1')
         ?.textContent?.trim(),
       series: document.querySelectorAll('span a[title]').item(1).getAttribute('href'),
       pages: images.length,

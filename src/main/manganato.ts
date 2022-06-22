@@ -8,7 +8,7 @@ export default {
   run() {
     const images = $('#vungdoc img, .container-chapter-reader img').get();
     return {
-      title: $('.info-top-chapter h2, .panel-chapter-info-top h1').text().trim(),
+      title: $('.info-top-chapter h2, .imageOptions-chapter-info-top h1').text().trim(),
       series: $('span a[title]').eq(1).attr('href'),
       pages: images.length,
       prev: $('.navi-change-chapter-btn-prev:first, .next:first').attr('href'),
