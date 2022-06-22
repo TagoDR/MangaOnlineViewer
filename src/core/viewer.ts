@@ -1,9 +1,11 @@
 import Swal, { SweetAlertOptions } from 'sweetalert2';
-import { getBrowser, getEngine, getInfoGM, getSettings, logScript } from '../utils/tampermonkey';
+import { getBrowser, getEngine, getInfoGM, logScript } from '../utils/tampermonkey';
 import { IManga, ISite } from '../types';
 import { isNothing } from '../utils/checks';
 import formatPage from './format';
-import { externalCSS, externalScripts } from './externals';
+import { requiredCSS, requiredScripts } from './externals';
+import { settings } from './settings';
+import { sweetalertStyle } from './styles.js';
 
 async function lateStart(site: ISite, begin = 1) {
   const manga = await site.run();
@@ -16,7 +18,7 @@ async function lateStart(site: ISite, begin = 1) {
       max: manga.pages.toString(),
       step: '1',
     },
-    inputValue: begin,
+    inputValue: begin || 1,
     text: 'Choose the Page to start from:',
     showCancelButton: true,
     cancelButtonColor: '#d33',
@@ -26,7 +28,7 @@ async function lateStart(site: ISite, begin = 1) {
   Swal.fire(options).then((result) => {
     if (result.value) {
       logScript(`Choice: ${result.value}`);
-      formatPage(manga, result.value);
+      formatPage(manga, result.value - 1);
     } else {
       logScript(result.dismiss);
     }
@@ -39,6 +41,7 @@ function createLateStartButton(site: ISite, beginning: number) {
   button.onclick = () => {
     lateStart(site, beginning);
   };
+  document.body.appendChild(button);
   const css = `
 #StartMOV {
     font-size: 1rem;
@@ -68,22 +71,24 @@ function createLateStartButton(site: ISite, beginning: number) {
 #StartMOV:focus {
     outline: none;
 }
+
 `;
   const style = document.createElement('style');
   style.appendChild(document.createTextNode(css));
   document.head.appendChild(style);
-  document.head.append(`${externalScripts.join('\n')}
-        ${externalCSS.join('\n')}`);
+  logScript('Start Button added to page', button);
 }
 // Organize the site adding place-holders for the manga pages
 function preparePage(site: ISite, manga: IManga, begin = 0) {
   logScript(`Found ${manga.pages} pages`);
-  const settings = getSettings();
   if (manga.pages > 0) {
     let beginning = begin;
     if (beginning === 0) {
       beginning = settings?.bookmarks?.find((b) => b.url === window.location.href)?.page || 0;
     }
+    const style = document.createElement('style');
+    style.appendChild(document.createTextNode(sweetalertStyle));
+    document.head.appendChild(style);
     // window.mov = (b: number) => lateStart(site, b || beginning);
     switch (site.start || settings?.loadMode) {
       case 'never':

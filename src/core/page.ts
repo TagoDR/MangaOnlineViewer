@@ -1,4 +1,4 @@
-import * as NProgress from 'nprogress';
+import NProgress from 'nprogress';
 import { logScript } from '../utils/tampermonkey.js';
 import { settings } from './settings.js';
 import AjaxSettings = JQuery.AjaxSettings;

@@ -57,7 +57,7 @@ function buildUserscript(script) {
           rollupOptions: {
             license: false,
             input: `src/${script.entry}`,
-            // plugins: [externalGlobals(globals)],
+            plugins: [externalGlobals(globals)],
             output: {
               format: 'iife',
               entryFileNames: script.name,
@@ -75,15 +75,11 @@ function buildUserscript(script) {
           logLevel: 'info',
           bundle: true,
           outfile: `dist/${script.name}`,
-          // watch: isDev,
+          // watch: true,
           minify: minify,
           keepNames: true,
           legalComments: 'none',
-          plugins: [
-            minifyTemplates(),
-            writeFiles(),
-            // globalExternals(globals)
-          ],
+          plugins: [minifyTemplates(), writeFiles(), globalExternals(globals)],
           write: !minify,
           // sourcemap: minify ? false : 'inline',
         })
