@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import 'jquery-minicolors';
+// import 'jquery-minicolors';
 import { getValueGM, logScript, setValueGM } from '../utils/tampermonkey.js';
 import generateZip from './download.js';
 import { applyZoom, reloadImage } from './page.js';
@@ -8,8 +8,10 @@ import { addCustomTheme, addFullCustomTheme } from './themes.js';
 import { IBookmark } from '../types/IBookmark.js';
 
 // Goto Page and Thumbnails
-function scrollToElement(ele) {
-  $(W).scrollTop(ele.offset().top).scrollLeft(ele.offset().left);
+function scrollToElement(ele: JQuery) {
+  $(window)
+    .scrollTop(ele.offset()?.top || 0)
+    .scrollLeft(ele.offset()?.left || 0);
 }
 
 // Clean key press configurations and set some when specified
@@ -19,10 +21,10 @@ function setKeyDownEvents() {
     $(document).off('keydown');
     $(document).off('keypress');
     $(document).off('onload');
-    $(W).off('keyup');
-    $(W).off('keydown');
-    $(W).off('keypress');
-    $(W).off('onload');
+    $(window).off('keyup');
+    $(window).off('keydown');
+    $(window).off('keypress');
+    $(window).off('onload');
     document.onkeydown = null;
     document.onkeypress = null;
     window.onkeydown = null;
@@ -33,13 +35,13 @@ function setKeyDownEvents() {
     logScript(`Keybinds error: ${e}`);
   }
 
-  function processKey(e) {
-    const a = e.originalEvent.code;
+  function processKey(e: JQuery.KeyDownEvent<Document, undefined, Document, Document>) {
+    const a = e.originalEvent?.code;
     if (
-      !e.originalEvent.ctrlKey &&
-      !e.originalEvent.altKey &&
-      !e.originalEvent.shiftKey &&
-      !e.originalEvent.metaKey &&
+      !e.originalEvent?.ctrlKey &&
+      !e.originalEvent?.altKey &&
+      !e.originalEvent?.shiftKey &&
+      !e.originalEvent?.metaKey &&
       $.inArray(a, [
         'KeyW',
         'Numpad8',
@@ -175,27 +177,27 @@ function controls() {
   // Size Controls
   $('#enlarge').on('click', () => {
     settings.Zoom += settings.zoomStep;
-    $('#Zoom b').html(settings.Zoom);
+    $('#Zoom b').html(settings.Zoom.toString());
     applyZoom();
   });
   $('#reduce').on('click', () => {
     settings.Zoom -= settings.zoomStep;
-    $('#Zoom b').html(settings.Zoom);
+    $('#Zoom b').html(settings.Zoom.toString());
     applyZoom();
   });
   $('#restore').on('click', () => {
     settings.Zoom = 100;
-    $('#Zoom b').html(settings.Zoom);
+    $('#Zoom b').html(settings.Zoom.toString());
     applyZoom();
   });
   $('#fitWidth').on('click', () => {
     settings.Zoom = 1000;
-    $('#Zoom b').html(settings.Zoom);
+    $('#Zoom b').html(settings.Zoom.toString());
     applyZoom();
   });
   $('#fitHeight').on('click', () => {
     settings.Zoom = -1000;
-    $('#Zoom b').html(settings.Zoom);
+    $('#Zoom b').html(settings.Zoom.toString());
     applyZoom();
   });
   $('#zoomStep').on('change', (event) => {
@@ -303,8 +305,8 @@ function controls() {
   });
   $('#DefaultZoom').on('change', (event) => {
     settings.Zoom = parseInt($(event.target).val() as string, 10);
-    $('#Zoom b').html(settings.Zoom);
-    setValueGM('MangaZoom', parseInt(settings.Zoom, 10));
+    $('#Zoom b').html(settings.Zoom.toString);
+    setValueGM('MangaZoom', parseInt(settings.Zoom.toString(), 10));
     logScript(`MangaZoom: ${getValueGM('MangaZoom')}`);
     applyZoom();
   });
@@ -361,7 +363,7 @@ function controls() {
   // } catch (e) {
   //   logScript(e);
   // }
-  $('INPUT.colorpicker').minicolors();
+  // $('INPUT.colorpicker').minicolors();
   $('#CustomThemeHue').on('change', (event) => {
     const target = $(event.target).val() as string;
     logScript(`CustomTheme: ${target}`);

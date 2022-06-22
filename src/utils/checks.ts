@@ -14,7 +14,7 @@
  * @param {any} value - item to test
  * @returns {boolean} true if empty, otherwise false
  */
-function isEmpty(value) {
+function isEmpty(value: any | any[] | null | undefined): boolean {
   return (
     value === null || // check for null
     typeof value === 'undefined' ||
@@ -41,8 +41,8 @@ function isEmpty(value) {
  * @param {any} value - item to test
  * @returns {boolean} true if nothing, otherwise false
  */
-function isNothing(value) {
-  const isEmptyObject = (a) => {
+function isNothing(value: any | any[] | null | undefined): boolean {
+  const isEmptyObject = (a: any | any[] | null | undefined): boolean => {
     if (!Array.isArray(a)) {
       // it's an Object, not an Array
       const hasNonempty = Object.keys(a).some((element) => !isNothing(a[element]));

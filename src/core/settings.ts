@@ -1,8 +1,11 @@
 import { getValueGM, isMobile, setValueGM } from '../utils/tampermonkey.js';
-import { IBookmark } from '../types/IBookmark.js';
+import { ISettings, IBookmark } from '../types';
 
 // Configuration
-const settings = {
+const settings: ISettings = {
+  configVersion: 0,
+  throttlePageLoad: 0,
+  widthScale: 0,
   Theme: getValueGM('MangaTheme', 'Light'),
   CustomTheme: getValueGM('MangaCustomTheme', '#3d0099'),
   CustomThemeBody: getValueGM('MangaCustomThemeBody', '#000000'),
@@ -12,11 +15,11 @@ const settings = {
   CustomThemeButton: getValueGM('MangaCustomThemeButton', '#282828'),
   FitWidthIfOversize: getValueGM('MangaFitWidthIfOversize', true),
   ShowThumbnails: getValueGM('MangaShowThumbnails', true),
-  DownloadZip: getValueGM('MangaDownloadZip', false),
+  downloadZip: getValueGM('MangaDownloadZip', false),
   Timer: getValueGM('MangaTimer', 1000),
   Zoom: getValueGM('MangaZoom', 100),
   zoomStep: getValueGM('MangaZoomStep', 25),
-  loadMode: getValueGM('MangaLoadMode', 'normal'),
+  loadMode: getValueGM('MangaLoadMode', 'wait'),
   viewMode: getValueGM('MangaViewMode', ''),
   bookmarks: JSON.parse(getValueGM('MangaBookmarks', '[]')) as IBookmark[],
   lazyLoadImages: getValueGM('MangaLazyLoadImages', false),

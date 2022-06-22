@@ -1,9 +1,16 @@
 import * as NProgress from 'nprogress';
 import { logScript } from '../utils/tampermonkey.js';
 import { settings } from './settings.js';
-import { isNothing } from '../utils/checks.js';
 import AjaxSettings = JQuery.AjaxSettings;
-import { IManga } from '../types/IManga.js';
+import {
+  IManga,
+  IMangaForce,
+  IMangaImages,
+  IMangaPages,
+  isBruteforceManga,
+  isImagesManga,
+  isPagesManga,
+} from '../types/IManga.js';
 
 // Get html pages content
 function getHtml(url: string, wait: number = settings.Timer) {
@@ -79,7 +86,7 @@ function onImagesDone() {
   if (!settings.lazyLoadImages) {
     $('.download').attr('href', '#download');
     logScript('Download Available');
-    if (settings.DownloadZip) {
+    if (settings.downloadZip) {
       $('#blob').trigger('click');
     }
   }
@@ -99,7 +106,7 @@ function updateProgress() {
 }
 
 // change class if the image is loaded or broken
-function onImagesProgress(imgLoad: JQuery, image) {
+function onImagesProgress(imgLoad: JQuery, image: any) {
   const $item = $(image.img);
   if (image.isLoaded) {
     $item.addClass('imgLoaded');
@@ -147,7 +154,7 @@ function addImg(index: number, imageSrc: string): number {
 }
 
 // Adds a page to the place-holder div
-function addPage(manga: IManga, index: number, pageUrl: string): number {
+function addPage(manga: IMangaPages | IMangaForce, index: number, pageUrl: string): number {
   if (!settings.lazyLoadImages || index < settings.lazyStart) {
     getHtml(pageUrl).then((response) => {
       const src = normalizeUrl(
@@ -194,7 +201,7 @@ function delayAdd(src: string, wait: number = settings.Timer) {
 }
 
 // use a list of pages to fill the viewer
-function loadMangaPages(begin: number, manga: IManga) {
+function loadMangaPages(begin: number, manga: IMangaPages) {
   return manga.listPages?.map((url, index) =>
     index >= begin
       ? delayAdd(url, (manga.timer || settings.Timer) * (index - begin)).then((response) =>
@@ -205,7 +212,7 @@ function loadMangaPages(begin: number, manga: IManga) {
 }
 
 // use a list of images to fill the viewer
-function loadMangaImages(begin: number, manga: IManga) {
+function loadMangaImages(begin: number, manga: IMangaImages) {
   return manga.listImages?.map((src, index) =>
     index >= begin
       ? delayAdd(src, (manga.timer || settings.Timer) * (index - begin)).then((response) =>
@@ -224,20 +231,20 @@ function loadManga(manga: IManga, begin = 1) {
   if (settings.lazyLoadImages) {
     logScript('Download may not work with Lazy Loading Images');
   }
-  if (!isNothing(manga.listImages)) {
+  if (isImagesManga(manga)) {
     logScript('Method: Images:', manga.listImages);
     loadMangaImages(begin - 1, manga);
-  } else if (!isNothing(manga.listPages)) {
+  } else if (isPagesManga(manga)) {
     logScript('Method: Pages:', manga.listPages);
     loadMangaPages(begin - 1, manga);
-  } else if (manga.bruteForce !== undefined) {
+  } else if (isBruteforceManga(manga)) {
     logScript('Method: Brute Force');
     manga.bruteForce({
       begin,
       addImg,
-      addPage: (index, pageUrl) => addPage(manga, index, pageUrl),
-      loadMangaImages: (m) => loadMangaImages(begin - 1, m),
-      loadMangaPages: (m) => loadMangaPages(begin - 1, m),
+      addPage: (index: number, pageUrl: string) => addPage(manga, index, pageUrl),
+      loadMangaImages: (m: IMangaImages) => loadMangaImages(begin - 1, m),
+      loadMangaPages: (m: IMangaPages) => loadMangaPages(begin - 1, m),
       getHtml,
       wait: settings.Timer,
     });

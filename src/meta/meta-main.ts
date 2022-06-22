@@ -1,7 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path="../legacy/globals.d.ts" />
 import sites from '../main';
-import { requiredScripts } from '../legacy/externals.js';
+import { requiredScripts } from '../core/externals';
 
 export default {
   name: 'Manga OnlineViewer',
@@ -10,9 +8,10 @@ export default {
   downloadURL: 'https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js',
   namespace: 'https://github.com/TagoDR',
   description: `Shows all pages at once in online view for these sites: ${sites
-    .map((s) => s.name)
+    .flatMap((s) => s.name)
+    .map((s) => s.trim())
     .join(', ')}`,
-  version: new Date().toISOString().slice(0, 10).replace(/-/g, '.'),
+  version: new Date().toISOString().slice(0, 10).replaceAll('-', '.'),
   license: 'MIT',
   grant: ['GM_getValue', 'GM_setValue', 'GM_listValues', 'GM_deleteValue', 'GM_xmlhttpRequest'],
   connect: '*',

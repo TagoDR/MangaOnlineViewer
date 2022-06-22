@@ -65,8 +65,8 @@ const controls = `<div id='ViewerControls' class='panel'>
   </span>
   <span class='controlLabel loadMode'>Default Load Mode:
     <select id='loadMode'>
-      <option value='normal' ${
-        settings.loadMode === 'normal' ? 'selected' : ''
+      <option value='wait' ${
+        settings.loadMode === 'wait' ? 'selected' : ''
       }>Normal(Wait 3 sec)</option>
       <option value='always' ${
         settings.loadMode === 'always' ? 'selected' : ''
@@ -143,7 +143,7 @@ const controls = `<div id='ViewerControls' class='panel'>
   </span>
   <span class='controlLabel downloadZip'>Download Images as Zip Automatically:
     <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${
-      settings.DownloadZip ? 'checked' : ''
+      settings.downloadZip ? 'checked' : ''
     }>
   </span>
   <span class='controlLabel hidePageControls'>Always Hide Page Controls:
@@ -152,7 +152,7 @@ const controls = `<div id='ViewerControls' class='panel'>
     }>
   </span>
 </div>`;
-const chapterControl = (id) => (manga) =>
+const chapterControl = (id: string) => (manga: IManga) =>
   `<div id='${id}' class='ChapterControl'>
     <a href='#' class='download'>Download</a>
     <a class='prev' id='prev' href='${manga.prev || ''}' onclick='window.location="${
@@ -164,10 +164,10 @@ const chapterControl = (id) => (manga) =>
 </div>`;
 const chapterControlTop = chapterControl('ChapterControlTop');
 const chapterControlBottom = chapterControl('ChapterControlBottom');
-const title = (manga) =>
+const title = (manga: IManga) =>
   `<div class='ViewerTitle'><br/><a id='series' href='${manga.series}'><i>${manga.title}</i><br/>(Return to Chapter List)</a></div>`;
 // Add Pages Place-holders
-const listPages = (times) =>
+const listPages = (times: number) =>
   Array(times)
     .fill(null)
     .map(
@@ -189,11 +189,11 @@ const listPages = (times) =>
   </div>
 </div>`,
     );
-const listOptions = (times) =>
+const listOptions = (times: number) =>
   Array(times)
     .fill(null)
     .map((_, index) => `<option value='${index + 1}'>${index + 1}</option>`);
-const listThumbnails = (times) =>
+const listThumbnails = (times: number) =>
   Array(times)
     .fill(null)
     .map(
@@ -202,7 +202,7 @@ const listThumbnails = (times) =>
           index + 1
         }' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`,
     );
-const body = (manga, begin = 0) => `
+const body = (manga: IManga, begin = 0) => `
 <div id='MangaOnlineViewer' class='${settings.Theme} ${isMobile ? 'mobile' : ''} ${
   settings.hidePageControls ? 'hideControls' : ''
 }'>

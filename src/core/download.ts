@@ -1,5 +1,5 @@
 import * as JSZip from 'jszip';
-import { logScript } from '../utils/tampermonkey.js';
+import { logScript } from '../utils/tampermonkey';
 
 const cache = {
   zip: JSZip,
@@ -7,9 +7,9 @@ const cache = {
   Data: {},
 };
 
-const getExtension = (mimeType) =>
+const getExtension = (mimeType: string) =>
   ((/image\/(?<ext>jpe?g|png|webp)/.exec(mimeType) || {}).groups || {}).ext || '' || 'png';
-const getFilename = (name, index, total, ext) =>
+const getFilename = (name: string, index: number, total: number, ext: string) =>
   `${name}${(index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, '0')}.${ext.replace(
     'jpeg',
     'jpg',
@@ -21,17 +21,17 @@ function generateZip() {
   // http://stackoverflow.com/questions/8778863/downloading-an-image-using-xmlhttprequest-in-a-userscript/8781262#8781262
   if (cache.downloadFiles === 0) {
     const filenameRegex = /^(?<name>.*?)(?<index>\d+)\.(?<ext>\w+)$/;
-    const images = $('.MangaPage img');
+    const images = document.querySelectorAll('.MangaPage img');
     const filenames = (() => {
       const result: string[] = [];
       for (let i = 0; i < images.length; i += 1) {
-        const $img = $(images[i]);
-        const filename = $img.attr('src')?.split(/[?#]/)[0].split('/').pop() ?? '';
+        const $img = images[i];
+        const filename = $img.getAttribute('src')?.split(/[?#]/)[0].split('/').pop() ?? '';
         const match = filenameRegex.exec(filename);
-        if (!match) break;
+        if (!match || !match.groups) break;
         const fixedFilename = getFilename(
-          match.groups?.name,
-          match.groups?.index,
+          match.groups.name,
+          parseInt(match.groups.index, 10),
           images.length,
           match.groups?.ext,
         );
@@ -41,11 +41,10 @@ function generateZip() {
       if (result.length < images.length) return [];
       return result;
     })();
-    images.get().forEach((value, index) => {
-      const img = $(value);
-      const src = img.attr('src') ?? '';
+    images.forEach((img, index: number) => {
+      const src = img.getAttribute('src') ?? '';
       const base64 = /^data:(?<mimeType>image\/\w+);base64,+(?<data>.+)/.exec(src);
-      if (base64) {
+      if (base64 && base64.groups) {
         const filename = getFilename(
           'Page ',
           index,
@@ -87,14 +86,17 @@ function generateZip() {
       }
     });
   }
-  const total = parseInt($('#Counters').find('b').text(), 10);
+  const total = parseInt(
+    document.getElementById('Counters')?.querySelector('b')?.textContent || '',
+    10,
+  );
   if (cache.downloadFiles < total) {
     logScript(`Waiting for Files to Download ${cache.downloadFiles} of ${total}`);
     setTimeout(generateZip, 2000);
   } else {
     const blobLink = document.getElementById('blob') as HTMLAnchorElement;
     try {
-      blobLink.download = `${$('#series i').first().text().trim()}.zip`;
+      blobLink.download = `${document.querySelector('#series b')?.textContent?.trim()}.zip`;
       cache.zip
         .generateAsync({
           type: 'blob',
@@ -102,7 +104,7 @@ function generateZip() {
         .then((content) => {
           blobLink.href = window.URL.createObjectURL(content);
           logScript('Download Ready');
-          $('#blob')[0].click();
+          document.getElementById('blob')?.dispatchEvent(new Event('click'));
         });
     } catch (e) {
       logScript(e);
@@ -112,3 +114,4 @@ function generateZip() {
 }
 
 export default generateZip;
+// Todo: Test Download

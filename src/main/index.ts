@@ -24,7 +24,6 @@ import mangainn from './mangainn.js';
 import mangakakalot from './mangakakalot.js';
 import mangalyght from './mangalyght.js';
 import wpmanga from './wpmanga.js';
-import manganato from './manganato.js';
 import mangapark from './mangapark.js';
 import mangareader from './mangareader.js';
 import mangasee from './mangasee.js';
@@ -40,7 +39,7 @@ import localhost from './localhost.js';
 import { ISite } from '../types/ISite';
 
 const sites = [
-  localhost,
+  // localhost,
   asurasflamecans,
   comicastle,
   disasterscans,
@@ -49,7 +48,7 @@ const sites = [
   funmanga,
   hatigarmscans,
   // jaiminisbox, [Broken, Dead?]
-  // japscan, Todo: Fix
+  // japscan, Todo: Fix japscan
   // kissmanga, [Broken, Dead?]
   komiraw,
   leitor,
@@ -66,7 +65,6 @@ const sites = [
   mangainn,
   mangakakalot,
   mangalyght,
-  manganato,
   mangapark,
   // mangareader, [RIP]
   mangasee,
@@ -80,7 +78,7 @@ const sites = [
   // thespectrum, [Broken, Dead?]
   tmofans,
   unionmangas,
-  // wpmanga, Todo: Fix
+  // wpmanga, Todo: Fix wpmanga
   batoto,
 ] as ISite[];
 export default sites;

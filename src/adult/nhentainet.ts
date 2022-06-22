@@ -6,30 +6,31 @@ export default {
   language: ['English'],
   category: 'hentai',
   run() {
-    function getExt(ext) {
+    function getExt(ext: string) {
       if (ext === 'g') return 'gif';
       if (ext === 'p') return 'png';
       return 'jpg';
     }
 
-    const num = parseInt($('.num-pages:first').html(), 10);
-    const src = $('#image-container img')
-      .attr('src')
+    const num = parseInt(document.querySelector('.num-pages')?.textContent || '', 10);
+    const src = document
+      .querySelector('#image-container img')
+      ?.getAttribute('src')
       ?.replace(/\d+.\w\w\w$/, '');
     // eslint-disable-next-line camelcase
     const ext =
-      W?.images_ext?.map(getExt) ||
+      (window as any).images_ext?.map(getExt) ||
       // eslint-disable-next-line no-underscore-dangle
-      W?._gallery?.images?.pages?.map((i) => getExt(i.t)) ||
+      (window as any)._gallery?.images?.pages?.map((i: { t: string }) => getExt(i.t)) ||
       Array(num).fill('jpg');
     return {
-      title: $('title').text().split('- Page')[0].trim(),
-      series: $('.go-back').attr('href'),
+      title: document.querySelector('title')?.textContent?.split('- Page')[0].trim(),
+      series: document.querySelector('.go-back')?.getAttribute('href'),
       pages: num,
       prev: '#',
       next: '#',
       listImages: Array(num)
-        .fill(null)
+        .fill(0)
         .map((_, i) => `${src}${i + 1}.${ext[i]}`),
     };
   },

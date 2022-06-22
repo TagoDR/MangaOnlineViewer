@@ -1,17 +1,40 @@
-import { IManga } from './IManga.js';
+import { IManga } from './IManga';
 
-export interface ISite {
-  name: string | string[];
+export enum Language {
+  ENGLISH = 'English',
+  SPANISSH = 'Spanish',
+  PORTUGUESE = 'Portuguese',
+  JAPANESE = 'Japanese',
+}
+
+export enum Category {
+  MANGA = 'manga',
+  COMIC = 'comic',
+  HENTAI = 'hentai',
+}
+
+export interface ISiteBase {
   url: RegExp;
-  homepage: string | string[];
-  language: string[];
+  language: Language | Language[]; // English, Spanish, Portuguese
   obs?: string;
-  category: string; // 'manga','comic','hentai'
+  category: Category | Category[]; // 'manga','comic','hentai'
   waitAttr?: string[]; // ['img#XYZ', "data-src"]
-  waitEle?: JQuery; // 'img#XYZ'
+  waitEle?: string; // 'img#XYZ'
   waitVar?: string; // gallery
   waitMax?: number; // 5000 = 5s
   waitStep?: number; // 1000 = 1s
-  start?: string; // 'never', 'always'
+  start?: 'never' | 'always'; // 'never', 'always'
   run(): IManga;
 }
+
+export interface ISiteSingle extends ISiteBase {
+  name: string;
+  homepage: string;
+}
+
+export interface ISiteGroup extends ISiteBase {
+  name: string[];
+  homepage: string[];
+}
+
+export type ISite = ISiteSingle | ISiteGroup;

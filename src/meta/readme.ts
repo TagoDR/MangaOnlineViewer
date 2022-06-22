@@ -1,9 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path="../legacy/globals.d.ts" />
 import adult from '../adult';
-import { requiredScripts } from '../legacy/externals.js';
+import { requiredScripts } from '../core/externals.js';
 import main from '../main';
-import { ISite } from '../types/ISite.js';
+import { ISite } from '../types';
 
 const sites = [...main, ...adult];
 const languages: string[] = Array.from(new Set(sites.flatMap((s) => s.language)));

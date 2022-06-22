@@ -42,10 +42,10 @@ declare interface Window {
 
 declare interface JQuery {
   minicolors(): JQuery;
-
-  imagesLoaded(): JQuery;
-
+  //
+  //   imagesLoaded(): JQuery;
+  //
   unveil(settings: object): JQuery;
-
-  progress(fn: (instance: JQuery, image) => void): JQuery;
+  //
+  //   progress(fn: (instance: JQuery, image) => void): JQuery;
 }
