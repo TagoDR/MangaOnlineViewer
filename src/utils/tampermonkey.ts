@@ -49,7 +49,7 @@ const getInfoGM =
 // Replacement function for GM_getValue allowing for debugging in console
 function getValueGM(name: string, defaultValue: any = null): any {
   if (typeof GM_getValue !== 'undefined') {
-    logScript('Getting: ', name, ' = ', defaultValue);
+    // logScript('Getting: ', name, ' = ', defaultValue);
     return GM_getValue(name, defaultValue);
   }
   logScript('Fake Getting: ', name, ' = ', defaultValue);
@@ -70,7 +70,7 @@ function getSettings(defaultSettings?: ISettings): Partial<ISettings> {
 function setValueGM(name: string, value: string | number | boolean): string {
   try {
     GM_setValue(name, value);
-    logScript('Setting: ', name, ' = ', value as any);
+    // logScript('Setting: ', name, ' = ', value as any);
     return value.toString();
   } catch (e) {
     logScript('Fake Setting: ', name, ' = ', value as any);

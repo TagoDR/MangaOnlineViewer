@@ -15,6 +15,7 @@ export default function display(manga: IManga, begin: number) {
   document.head.innerHTML = head(manga);
   document.body.innerHTML = body(manga, begin);
   document.body.className = '';
+  document.body.removeAttribute('style');
   // document.documentElement.innerHTML = reader(manga, begin);
   logScript('Rebuilding Site');
   setTimeout(() => {

@@ -1,9 +1,8 @@
 import Swal, { SweetAlertOptions } from 'sweetalert2';
 import { getBrowser, getEngine, getInfoGM, logScript } from '../utils/tampermonkey';
 import { IManga, ISite } from '../types';
-import { isNothing } from '../utils/checks';
+import { isEmpty, isNothing } from '../utils/checks';
 import formatPage from './format';
-import { requiredCSS, requiredScripts } from './externals';
 import { settings } from './settings';
 import { sweetalertStyle } from './styles.js';
 
@@ -88,7 +87,7 @@ function preparePage(site: ISite, manga: IManga, begin = 0) {
     }
     const style = document.createElement('style');
     style.appendChild(document.createTextNode(sweetalertStyle));
-    document.head.appendChild(style);
+    document.body.appendChild(style);
     // window.mov = (b: number) => lateStart(site, b || beginning);
     switch (site.start || settings?.loadMode) {
       case 'never':
@@ -120,7 +119,48 @@ function preparePage(site: ISite, manga: IManga, begin = 0) {
     }
   }
 }
-
+// Wait for something on the site to be ready before executing the script
+async function waitExec(site: ISite, waitElapsed: number = 0) {
+  if (waitElapsed >= (site.waitMax || 5000)) {
+    preparePage(site, await site.run());
+    return;
+  }
+  if (site.waitAttr !== undefined) {
+    const wait = document.querySelector(site.waitAttr[0])?.hasAttribute(site.waitAttr[1]);
+    if (isNothing(wait)) {
+      logScript(`Waiting for Attribute ${site.waitAttr[1]} of ${site.waitAttr[0]} = ${wait}`);
+      setTimeout(() => {
+        waitExec(site, waitElapsed + (site.waitStep || 1000));
+      }, site.waitStep || 1000);
+      return;
+    }
+    logScript(`Found Attribute ${site.waitAttr[1]} of ${site.waitAttr[0]} = ${wait}`);
+  }
+  if (site.waitEle !== undefined) {
+    const wait = document.querySelector(site.waitEle);
+    if (isNothing(wait?.tagName)) {
+      logScript(`Waiting for Element ${site.waitEle} = `, wait);
+      setTimeout(() => {
+        waitExec(site, waitElapsed + (site.waitStep || 1000));
+      }, site.waitStep || 1000);
+      return;
+    }
+    logScript(`Found Element ${site.waitEle} = `, wait);
+  }
+  if (site.waitVar !== undefined) {
+    const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+    const wait = W[site.waitVar as any];
+    if (isNothing(wait)) {
+      logScript(`Waiting for Variable ${site.waitVar} = ${wait}`);
+      setTimeout(() => {
+        waitExec(site, waitElapsed + (site.waitStep || 1000));
+      }, site.waitStep || 1000);
+      return;
+    }
+    logScript(`Found Variable ${site.waitVar} = ${wait}`);
+  }
+  preparePage(site, await site.run());
+}
 // Script Entry point
 function start(sites: ISite[]) {
   logScript(
@@ -130,60 +170,16 @@ function start(sites: ISite[]) {
     // getInfoGM,
   );
   // window.InfoGM = getInfoGM;
-  logScript(`${sites.length} Known Manga Sites`);
-  let waitElapsed = 0;
-
-  // Wait for something on the site to be ready before executing the script
-  async function waitExec(site: ISite) {
-    if (site.waitMax !== undefined) {
-      if (waitElapsed >= site.waitMax) {
-        preparePage(site, await site.run());
-        return;
-      }
-    }
-    if (site.waitAttr !== undefined) {
-      const wait = document.querySelector(site.waitAttr[0])?.hasAttribute(site.waitAttr[1]);
-      if (isNothing(wait)) {
-        logScript(`Waiting for Attribute ${site.waitAttr[1]} of ${site.waitAttr[0]} = ${wait}`);
-        setTimeout(() => {
-          waitExec(site);
-        }, site.waitStep || 1000);
-        waitElapsed += site.waitStep || 1000;
-        return;
-      }
-      logScript(`Found Attribute ${site.waitAttr[1]} of ${site.waitAttr[0]} = ${wait}`);
-    }
-    if (site.waitEle !== undefined) {
-      const wait = document.querySelector(site.waitEle);
-      if (isNothing(wait?.tagName)) {
-        logScript(`Waiting for Element ${site.waitEle} = `, wait);
-        setTimeout(() => {
-          waitExec(site);
-        }, site.waitStep || 1000);
-        waitElapsed += site.waitStep || 1000;
-        return;
-      }
-      logScript(`Found Element ${site.waitEle} = `, wait);
-    }
-    if (site.waitVar !== undefined) {
-      const wait = window[site.waitVar as any];
-      if (isNothing(wait)) {
-        logScript(`Waiting for Variable ${site.waitVar} = ${wait}`);
-        setTimeout(() => {
-          waitExec(site);
-        }, site.waitStep || 1000);
-        waitElapsed += site.waitStep || 1000;
-        return;
-      }
-      logScript(`Found Variable ${site.waitVar} = ${wait}`);
-    }
-    preparePage(site, await site.run());
-  }
-
-  logScript('Looking for a match...');
+  logScript(`${sites.length} Known Manga Sites, Looking for a match...`);
 
   function test(list: ISite[]) {
-    return list.filter((site: ISite) => site.url.test(window.location.href)).map(waitExec);
+    return list
+      .filter((site: ISite) => site.url.test(window.location.href))
+      .map((site) => {
+        logScript(`Found site: ${site.name}`);
+        return site;
+      })
+      .map(waitExec);
   }
 
   test(sites);

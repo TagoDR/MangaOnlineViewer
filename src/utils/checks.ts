@@ -14,12 +14,12 @@
  * @param {any} value - item to test
  * @returns {boolean} true if empty, otherwise false
  */
-function isEmpty(value: any | any[] | null | undefined): boolean {
+function isEmpty<T>(value: T | T[] | null | undefined): value is T | T[] {
   return (
     value === null || // check for null
     typeof value === 'undefined' ||
     value === undefined || // check for undefined
-    value === '' || // check for empty string
+    (typeof value === 'string' && value === '') || // check for empty string
     (Array.isArray(value) && value.length === 0) || // check for empty array
     (typeof value === 'object' && Object.keys(value).length === 0)
   );
@@ -41,7 +41,7 @@ function isEmpty(value: any | any[] | null | undefined): boolean {
  * @param {any} value - item to test
  * @returns {boolean} true if nothing, otherwise false
  */
-function isNothing(value: any | any[] | null | undefined): boolean {
+function isNothing(value: any | any[] | null | undefined): value is any | any[] {
   const isEmptyObject = (a: any | any[] | null | undefined): boolean => {
     if (!Array.isArray(a)) {
       // it's an Object, not an Array
@@ -57,8 +57,7 @@ function isNothing(value: any | any[] | null | undefined): boolean {
     // eslint-disable-next-line eqeqeq
     value == false ||
     value === 0 ||
-    typeof value === 'undefined' ||
-    value == null ||
+    isEmpty(value) ||
     (typeof value === 'object' && isEmptyObject(value))
   );
 }
