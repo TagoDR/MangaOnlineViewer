@@ -172,17 +172,13 @@ function start(sites: ISite[]) {
   // window.InfoGM = getInfoGM;
   logScript(`${sites.length} Known Manga Sites, Looking for a match...`);
 
-  function test(list: ISite[]) {
-    return list
-      .filter((site: ISite) => site.url.test(window.location.href))
-      .map((site) => {
-        logScript(`Found site: ${site.name}`);
-        return site;
-      })
-      .map(waitExec);
+  const site = sites.find((s: ISite) => s.url.test(window.location.href));
+  if (site) {
+    logScript(`Found site: ${site.name}`);
+    waitExec(site);
+  } else {
+    logScript(`Sorry, didnt find any valid site`);
   }
-
-  test(sites);
 }
 
 export default start;

@@ -44,7 +44,6 @@ const sites = [
   comicastle,
   disasterscans,
   dysnatyscans,
-  foolslide,
   funmanga,
   hatigarmscans,
   // jaiminisbox, [Broken, Dead?]
@@ -53,7 +52,6 @@ const sites = [
   komiraw,
   leitor,
   lhtranslation,
-  madarawp,
   mangadex,
   mangadoom,
   mangafreak,
@@ -80,5 +78,7 @@ const sites = [
   unionmangas,
   // wpmanga, Todo: Fix wpmanga
   batoto,
+  foolslide, // Must be at the end because is a generic check
+  madarawp, // Must be at the end because is a generic check
 ] as ISite[];
 export default sites;
