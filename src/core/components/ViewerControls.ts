@@ -10,32 +10,32 @@ export const controls = `<div id='ViewerControls' class='panel'>
         settings.Theme !== 'Custom_Dark' && settings.Theme !== 'Custom_Light'
           ? 'style="display: none;"'
           : ''
-      }><br/>-Base:<input id='CustomThemeHue' value='${
+      }><br/>-Base:<input id='CustomThemeHue' type='color' value='${
   settings.CustomTheme
 }' class='colorpicker CustomTheme'></span>
       <span class='FullCustom' ${
         settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''
-      }><br/>-Body:<input id='CustomThemeHueBody' value='${
+      }><br/>-Body:<input id='CustomThemeHueBody' type='color' value='${
   settings.CustomThemeBody
 }' class='colorpicker FullCustom'></span>
       <span class='FullCustom' ${
         settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''
-      }><br/>-Text:<input id='CustomThemeHueText' value=${
+      }><br/>-Text:<input id='CustomThemeHueText' type='color' value=${
   settings.CustomThemeText
 }' class='colorpicker FullCustom'></span>
       <span class='FullCustom' ${
         settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''
-      }><br/>-Lines:<input id='CustomThemeHueLines' value='${
+      }><br/>-Lines:<input id='CustomThemeHueLines' type='color' value='${
   settings.CustomThemeLines
 }' class='colorpicker FullCustom'></span>
       <span class='FullCustom' ${
         settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''
-      }><br/>-Painels:<input id='CustomThemeHuePanel' value='${
+      }><br/>-Painels:<input id='CustomThemeHuePanel' type='color' value='${
   settings.CustomThemePanel
 }' class='colorpicker FullCustom'></span>
       <span class='FullCustom' ${
         settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''
-      }><br/>-Buttons:<input id='CustomThemeHueButton' value='${
+      }><br/>-Buttons:<input id='CustomThemeHueButton' type='color' value='${
   settings.CustomThemeButton
 }' class='colorpicker FullCustom'></span>
   </span>

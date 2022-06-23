@@ -41,7 +41,6 @@ declare interface Window {
 }
 
 declare interface JQuery {
-  minicolors(): JQuery;
   //
   //   imagesLoaded(): JQuery;
   //
