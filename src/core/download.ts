@@ -1,8 +1,9 @@
-import * as JSZip from 'jszip';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 import { logScript } from '../utils/tampermonkey';
 
 const cache = {
-  zip: JSZip,
+  zip: new JSZip(),
   downloadFiles: 0,
   Data: {},
 };
@@ -102,9 +103,11 @@ function generateZip() {
           type: 'blob',
         })
         .then((content) => {
-          blobLink.href = window.URL.createObjectURL(content);
+          // blobLink.href = unsafeWindow.URL.createObjectURL(content);
           logScript('Download Ready');
-          document.getElementById('blob')?.dispatchEvent(new Event('click'));
+          // document.getElementById('blob')?.dispatchEvent(new Event('click'));
+          const zipName = `${document.querySelector('#series i')?.textContent?.trim()}.zip`;
+          saveAs(content, zipName);
         });
     } catch (e) {
       logScript(e);

@@ -52,7 +52,7 @@ function buildUserscript(script) {
           keepNames: true,
         },
         build: {
-          minify: minify ? 'esbuild' : false,
+          minify: 'esbuild',
           emptyOutDir: false,
           rollupOptions: {
             license: false,
