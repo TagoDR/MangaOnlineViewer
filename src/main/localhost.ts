@@ -29,12 +29,12 @@ export default {
     }
 
     return {
-      title: 'Manga Loaded',
-      series: '',
+      title: 'Placeholder Manga Loaded',
+      series: '#Counters',
       pages: 5,
       begin: 0,
-      prev: '',
-      next: '?next',
+      prev: '#PageImg2',
+      next: '#PageImg5',
       listImages: [
         placeholder(985, 1400, '#152C55'),
         placeholder(1970, 1400, '#2D1657'),
