@@ -1,5 +1,4 @@
 import { IBookmark } from './IBookmark';
-import { settings } from '../core/settings.js';
 
 export interface ITheme {
   primaryShade: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;

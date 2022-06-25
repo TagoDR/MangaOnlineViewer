@@ -43,7 +43,7 @@ function createLateStartButton(site: ISite, beginning: number) {
   document.body.appendChild(button);
   const css = `
 #StartMOV {
-    font-size: 1rem;
+    font-size: 1.5em;
     font-weight: bold;
     color: #fff;
     cursor: pointer;
@@ -59,7 +59,7 @@ function createLateStartButton(site: ISite, beginning: number) {
     position: fixed;
     top: 10px;
     right: 10px;
-    z-index: 1000;
+    z-index: 10000;
 }
 
 #StartMOV:hover {
@@ -126,7 +126,7 @@ async function waitExec(site: ISite, waitElapsed: number = 0) {
     return;
   }
   if (site.waitAttr !== undefined) {
-    const wait = document.querySelector(site.waitAttr[0])?.hasAttribute(site.waitAttr[1]);
+    const wait = document.querySelector(site.waitAttr[0])?.getAttribute(site.waitAttr[1]);
     if (isNothing(wait)) {
       logScript(`Waiting for Attribute ${site.waitAttr[1]} of ${site.waitAttr[0]} = ${wait}`);
       setTimeout(() => {

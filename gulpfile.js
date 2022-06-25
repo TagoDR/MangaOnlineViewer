@@ -149,7 +149,7 @@ gulp.task('clean', clean);
 // gulp.task('readme', readme);
 // gulp.task('main',gulp.series(clean, writeMetadata(scripts.main), buildUserscript(scripts.main)));
 // gulp.task('adult',gulp.series(clean, writeMetadata(scripts.adult), buildUserscript(scripts.adult)));
-gulp.task('dev', gulp.series(writeMetadata(scripts.dev), buildUserscript(scripts.dev)));
+gulp.task('dev', gulp.series(clean, writeMetadata(scripts.dev), buildUserscript(scripts.dev)));
 gulp.task(
   'build',
   gulp.series(
