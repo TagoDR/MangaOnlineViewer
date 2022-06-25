@@ -6,15 +6,15 @@ export default {
   language: ['Portuguese'],
   category: 'manga',
   run() {
+    const chapter = document.querySelector<HTMLOptionElement>('#capitulo_trocar option:checked');
+    const images = [...document.querySelectorAll('.img-manga')];
     return {
-      title: $('.titulo-leitura').text().trim(),
-      series: $('.breadcrumbs a:last').attr('href'),
-      pages: $('#paginas option').get().length,
-      prev: `/leitor/${$('#mangaUrl').text()}/${$('.listCap:selected').prev().val()}`,
-      next: `/leitor/${$('#mangaUrl').text()}/${$('.listCap:selected').prev().next()}`,
-      listImages: $('.img-manga')
-        .get()
-        .map((i) => $(i).attr('src')),
+      title: document.querySelector('.titulo-leitura')?.textContent?.trim(),
+      series: document.querySelector('.breadcrumbs a:nth-child(3)')?.getAttribute('href'),
+      pages: images.length,
+      prev: chapter?.previousElementSibling?.getAttribute('value'),
+      next: chapter?.nextElementSibling?.getAttribute('value'),
+      listImages: images.map((img) => img.getAttribute('src')),
     };
   },
 };

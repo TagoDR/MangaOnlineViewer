@@ -1,57 +1,37 @@
 // == MangaFox =====================================================================================
 export default {
-  name: 'MangaFox',
-  url: /https?:\/\/(www.)?fanfox.net\/manga\/.+\/.+\//,
-  homepage: 'http://fanfox.net/',
+  name: ['MangaFox', 'MangaHere'],
+  url: /https?:\/\/(www.)?(fanfox.net|mangahere.cc)\/manga\/.+\/.+\//,
+  homepage: ['https://fanfox.net/', 'https://www.mangahere.cc/'],
   language: ['English'],
   category: 'manga',
-  run() {
-    function decode(data, page) {
-      const toBeEval = data.match(/'[^']*'/g)[5].replace(/'/g, '');
-      const keyWords = data
-        .match(/'[^']*'/g)[6]
-        .replace(/'/g, '')
-        .split('|');
-
-      function charFromPosition(i) {
-        return (
-          (i < 31 ? '' : charFromPosition(parseInt(`${i / 31}`, 10))) +
-          (i % 31 > 35 ? String.fromCharCode((i % 31) + 29) : (i % 31).toString(36))
-        );
-      }
-
-      const replacingValues = {};
-      keyWords.forEach((ele, i) => {
-        replacingValues[charFromPosition(i)] = ele || charFromPosition(i);
-      });
-
-      const res = toBeEval.replace(/\b\w+\b/g, (y) => replacingValues[y]);
-      return (
-        res.match(/pix="([^;]+)";/)[1] + // eslint-disable-line no-useless-escape
-        res.match(/pvalue=\["([^,]+)","([^,\]]+)"/)[page === 0 ? 1 : 2]
-      ); // eslint-disable-line no-useless-escape
-    }
-
-    const src = Array(window.imagecount)
+  async run() {
+    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+    const key = document.querySelector('#dm5_key')?.getAttribute('value');
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+    };
+    const src = Array(W.imagecount)
       .fill(null)
-      .map((_, i) => {
-        let img = '';
-        $.ajax({
-          url: 'chapterfun.ashx',
-          async: false,
-          data: { cid: window.chapterid, page: i, key: $('#dm5_key').val() },
-        }).done((data) => {
-          img = decode(data, i);
-        }); // eslint-disable-line no-eval
-        return img;
+      .map(async (_, i) => {
+        const url = `chapterfun.ashx?cid=${W.chapterid}&page=${i}&key=${key}`;
+        const api: string = await fetch(url, options).then((res) => res.text());
+        // eslint-disable-next-line no-eval
+        eval(api);
+        // @ts-ignore
+        return d;
       });
+    const images = await Promise.all(src);
     return {
-      title: $('.reader-header-title div:first').text().trim(),
-      series: $('.reader-header-title a').attr('href'),
-      pages: window.imagecount,
-      prev: window.prechapterurl,
-      next: window.nextchapterurl,
-      listImages: src,
+      title: document.querySelector('.reader-header-title div')?.textContent?.trim(),
+      series: document.querySelector('.reader-header-title a')?.getAttribute('href'),
+      pages: W.imagecount,
+      prev: W.prechapterurl,
+      next: W.nextchapterurl,
+      listImages: images.map((img, i) => img[i === 0 ? 0 : 1]),
     };
   },
 };

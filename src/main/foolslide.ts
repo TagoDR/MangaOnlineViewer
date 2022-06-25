@@ -1,37 +1,44 @@
 // == FoOlSlide ====================================================================================
 export default {
-  name: 'FoOlSlide',
+  name: ['FoOlSlide', 'Kireicake', 'Yuri-ism'],
   url: /^(?!.*jaiminisbox).*\/read\/.+/,
-  homepage: '',
+  homepage: ['#', 'https://reader.kireicake.com', 'https://www.yuri-ism.net'],
   language: ['English'],
-  obs: 'Any Scanlator site that uses FoOLSlide',
+  obs: 'Any Site that uses FoOLSlide',
   category: 'manga',
   run() {
-    const temp = `${window.location.href.slice(0, window.location.href.lastIndexOf('/'))}/`;
-    const url = temp.match(/page\/$/) ? temp : `${temp}page/`;
-    const num = $('.topbar_right .dropdown li').length;
-    const chapter = $('.topbar_left .dropdown_parent:last ul li a');
+    // Todo: remake chapter links
+    // const chapter = $('.topbar_left .dropdown_parent:last ul li a');
+    const pages = [...document.querySelectorAll('.topbar_right .dropdown li')];
+    const images = [...document.querySelectorAll('.inner img:not(.open)')];
+    const num = images.length > 1 ? images.length : pages.length;
     return {
-      title: $('title').text().trim(),
+      title: document.querySelector('title')?.textContent?.trim(),
       series: $('div.tbtitle div.text a:first').attr('href'),
       pages: num,
-      prev: chapter
-        .eq(
-          chapter.index(
-            chapter.filter(`[href*='${window.location.pathname.replace(/page.+/, '')}']`),
-          ) + 1,
-        )
-        .attr('href'),
-      next: chapter
-        .eq(
-          chapter.index(
-            chapter.filter(`[href*='${window.location.pathname.replace(/page.+/, '')}']`),
-          ) - 1,
-        )
-        .attr('href'),
-      listPages: Array(num)
-        .fill(null)
-        .map((_, i) => url + (i + 1)),
+      prev: '#',
+      next: '#',
+      // prev: chapter
+      //   .eq(
+      //     chapter.index(
+      //       chapter.filter(`[href*='${window.location.pathname.replace(/page.+/, '')}']`),
+      //     ) + 1,
+      //   )
+      //   .attr('href'),
+      // next: chapter
+      //   .eq(
+      //     chapter.index(
+      //       chapter.filter(`[href*='${window.location.pathname.replace(/page.+/, '')}']`),
+      //     ) - 1,
+      //   )
+      //   .attr('href'),
+      listPages:
+        images.length > 1
+          ? null
+          : Array(num)
+              .fill(0)
+              .map((_, i) => `${window.location.href.replace(/\/\d+$/, '')}/${i + 1}`),
+      listImages: images.length > 1 ? images.map((img) => img.getAttribute('src')) : null,
       img: 'img.open',
     };
   },

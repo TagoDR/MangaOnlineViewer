@@ -2,19 +2,19 @@
 export default {
   name: 'NineManga',
   url: /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/,
-  homepage: 'http://ninemanga.com/',
+  homepage: 'https://ninemanga.com/',
   language: ['English'],
   category: 'manga',
   run() {
+    const chapter = document.querySelector<HTMLOptionElement>('#chapter option:checked');
+    const pages = [...document.querySelector('#page')!.querySelectorAll('option')];
     return {
-      title: $('.tip a:first').text(),
-      series: $('.subgiude a:eq(1)').attr('href'),
-      pages: $('#page:first option').length,
-      prev: $('.chnav a:first').attr('href'),
-      next: $('.chnav a:eq(1)').attr('href'),
-      listPages: $('#page:first option')
-        .get()
-        .map((item) => $(item).val()),
+      title: document.querySelector('.tip a')?.textContent?.trim(),
+      series: document.querySelector('.subgiude > li:nth-child(2) > a')?.getAttribute('href'),
+      pages: pages.length,
+      prev: chapter?.nextElementSibling?.getAttribute('value'),
+      next: chapter?.previousElementSibling?.getAttribute('value'),
+      listPages: pages.map((item) => $(item).val()),
       img: '.manga_pic',
     };
   },

@@ -2,19 +2,19 @@
 export default {
   name: 'LHTranslation',
   url: /https?:\/\/(www.)?lhtranslation.net\/read.+/,
-  homepage: 'http://lhtranslation.net/',
+  homepage: 'https://lhtranslation.net/',
   language: ['English'],
   category: 'manga',
   run() {
+    const chapter = document.querySelector<HTMLOptionElement>('.form-control option:checked');
+    const images = [...document.querySelectorAll('img.chapter-img')];
     return {
-      title: $('.chapter-img.tieude font').text(),
-      series: $('.navbar-brand.manga-name').attr('href'),
-      pages: $('img.chapter-img').length,
-      prev: $('.form-control option:selected').next().val(),
-      next: $('.form-control option:selected').prev().val(),
-      listImages: $('img.chapter-img')
-        .get()
-        .map((item) => $(item).attr('src')),
+      title: document.querySelector('.chapter-img.tieude font')?.textContent?.trim(),
+      series: document.querySelector('.navbar-brand.manga-name')?.getAttribute('href'),
+      pages: images.length,
+      prev: chapter?.nextElementSibling?.getAttribute('value'),
+      next: chapter?.previousElementSibling?.getAttribute('value'),
+      listImages: images.map((img) => img.getAttribute('src')),
     };
   },
 };

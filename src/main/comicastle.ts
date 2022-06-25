@@ -1,21 +1,21 @@
 // == ComiCastle ===================================================================================
 export default {
   name: 'ComiCastle',
-  url: /https?:\/\/(www.)?comicastle.org\/comic\/.+\/[0-9]+.*/,
+  url: /https?:\/\/(www.)?comicastle.org\/read\/.+\/[0-9]+.*/,
   homepage: 'http://www.comicastle.org/',
   language: ['English'],
   category: 'comic',
+  waitEle: '.form-control option:nth-child(1)',
   run() {
-    const url = $('.form-control:last option').get();
-    const chapter = $('.form-control:first option');
+    const images = [...document.querySelectorAll('.form-control')[1].querySelectorAll('option')];
+    const chapter = document.querySelectorAll('.form-control')[0].querySelector('option:checked');
     return {
-      title: chapter.find(':selected').text(),
-      series: $('.navbar-header a').attr('href'),
-      pages: url.length,
-      prev: chapter.find(':selected').prev().val(),
-      next: chapter.find(':selected').next().val(),
-      listPages: url.map((item) => $(item).val()),
-      img: '.chapter-img',
+      title: chapter?.textContent?.trim(),
+      series: document.querySelector('.navbar-header a')?.getAttribute('href'),
+      pages: images.length,
+      prev: chapter?.previousElementSibling?.getAttribute('value'),
+      next: chapter?.nextElementSibling?.getAttribute('value'),
+      listImages: images.map((img) => img.getAttribute('alt')),
     };
   },
 };

@@ -6,16 +6,14 @@ export default {
   language: ['English'],
   category: 'manga',
   run() {
-    const num = $('#viewer .item').length;
+    const images = [...document.querySelectorAll('.page-img')];
     return {
-      title: $('.nav-title a').text(),
-      series: $('.nav-title a').attr('href'),
-      pages: num,
-      prev: $('.nav-prev a').attr('href'),
-      next: $('.nav-next a').attr('href'),
-      listImages: $('.page-img')
-        .get()
-        .map((i) => $(i).attr('src')),
+      title: document.querySelector('.nav-title a')?.textContent?.trim(),
+      series: document.querySelector('.nav-title a')?.getAttribute('href'),
+      pages: images.length,
+      prev: document.querySelector('.nav-prev a')?.getAttribute('href'),
+      next: document.querySelector('.nav-next a')?.getAttribute('href'),
+      listImages: images.map((img) => img.getAttribute('src')),
     };
   },
 };

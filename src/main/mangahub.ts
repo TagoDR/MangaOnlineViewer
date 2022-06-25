@@ -7,7 +7,8 @@ export default {
   category: 'manga',
   waitEle: '#select-chapter',
   async run() {
-    const slug = window['CURRENT_MANGA_SLUG' as any] || window.location.pathname.split('/')[2];
+    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+    const slug = W.CURRENT_MANGA_SLUG || window.location.pathname.split('/')[2];
     const number = window.location.pathname.split('/')[3].replace('chapter-', '');
     const data = { query: `{chapter(x:m01,slug:"${slug}",number:${number}){pages}}` };
     const options = {

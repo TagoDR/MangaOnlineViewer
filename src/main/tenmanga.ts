@@ -2,20 +2,24 @@
 export default {
   name: 'TenManga',
   url: /https?:\/\/(www.)?(tenmanga|gardenmanage).com\/(chapter|statuses)\/.+/,
-  homepage: 'http://www.tenmanga.com/',
+  homepage: 'https://www.tenmanga.com/',
   language: ['English'],
   category: 'manga',
+  waitVar: '_pageCtrl',
   run() {
-    const url = $('.sl-page:first option').get();
-    const chapter = $('.sl-chap:first option:selected');
+    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+    const chapter = document.querySelector<HTMLOptionElement>(
+      '.mangaread-pagenav select option:checked',
+    );
+    // eslint-disable-next-line no-underscore-dangle
+    const images = W._pageCtrl.options.all_imgs_url;
     return {
-      title: $('.read-page  a:eq(2)').text().replace('»', '').trim(),
-      series: $('.read-page a:eq(1)').attr('href'),
-      pages: url.length,
-      prev: chapter.next().val(),
-      next: chapter.prev().val(),
-      listPages: url.map((item) => $(item).val()),
-      img: '.manga_pic',
+      title: document.querySelector('.title  h1')?.textContent?.trim(),
+      series: document.querySelector('.title  a:nth-child(2)')?.getAttribute('href'),
+      pages: images.length,
+      prev: chapter?.nextElementSibling?.getAttribute('value'),
+      next: chapter?.previousElementSibling?.getAttribute('value'),
+      listImages: images,
     };
   },
 };

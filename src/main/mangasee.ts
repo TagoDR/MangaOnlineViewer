@@ -7,20 +7,17 @@ export default {
   category: 'manga',
   waitAttr: ['.img-fluid', 'src'],
   run() {
-    const src = $('.img-fluid').attr('src') as string;
-    const CurChapter = JSON.parse(
-      $('script')
-        .text()
-        .match(/CurChapter = ({.+});/)![1],
+    const src = document.querySelector('.img-fluid')?.getAttribute('src') || '';
+    const script = [...document.querySelectorAll('body script:not([src])')].at(-1)?.textContent;
+    const textCurChapter = script?.match(/CurChapter = ({.+});/) || [];
+    const CurChapter = JSON.parse(textCurChapter[1]);
+    const textCHAPTERS = script?.match(/CHAPTERS = (\[\{.+}]);/) || [];
+    const CHAPTERS = JSON.parse(textCHAPTERS[1]);
+    const CurChapterIndex = CHAPTERS.findIndex(
+      (chap: { Chapter: string }) => chap.Chapter === CurChapter.Chapter,
     );
-    const CHAPTERS = JSON.parse(
-      $('script')
-        .text()
-        .match(/CHAPTERS = (\[{.+}]);/)![1],
-    );
-    const CurChapterIndex = CHAPTERS.findIndex((chap) => chap.Chapter === CurChapter.Chapter);
 
-    function ChapterURLEncode(reference) {
+    function ChapterURLEncode(reference: number) {
       let ChapterString = CHAPTERS[CurChapterIndex + reference];
       if (ChapterString === undefined) {
         return '#';
@@ -41,15 +38,16 @@ export default {
     }
 
     return {
-      title: $('title')
-        .text()
-        .replace(/ Page .+/, ''),
-      series: $('.MainContainer a:first').attr('href'),
-      pages: CurChapter.Page,
+      title: document
+        .querySelector('title')
+        ?.textContent?.replace(/ Page .+/, '')
+        .trim(),
+      series: document.querySelector('.MainContainer a')?.getAttribute('href'),
+      pages: parseInt(CurChapter.Page, 10),
       prev: ChapterURLEncode(-1),
       next: ChapterURLEncode(+1),
       listImages: Array(parseInt(CurChapter.Page, 10))
-        .fill(null)
+        .fill(0)
         .map((_, i) => src.replace(/-\d\d\d.png/, `-${String(`000${i + 1}`).slice(-3)}.png`)),
     };
   },

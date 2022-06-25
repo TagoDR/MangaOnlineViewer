@@ -6,20 +6,26 @@ export default {
   language: ['Spanish'],
   category: 'manga',
   run() {
-    const num =
-      $('#viewer-pages-select:first option').get().length || $('.img-container img').get().length;
+    const images = [...document.querySelectorAll('.img-container img')];
+    const pages = [
+      ...document.querySelectorAll<HTMLOptionElement>(
+        'div.container:nth-child(4) select#viewer-pages-select option',
+      ),
+    ];
+    const num = images.length > 1 ? images.length : pages.length;
     return {
-      title: $('title').text().trim(),
-      series: $('a[title="Volver"]').attr('href'),
+      title: document.querySelector('title')?.textContent?.trim(),
+      series: document.querySelector('a[title="Volver"]')?.getAttribute('href'),
       pages: num,
-      prev: $('.chapter-prev a').attr('href'),
-      next: $('.chapter-next a').attr('href'),
-      listPages: Array(num)
-        .fill(null)
-        .map((_, i) => window.location.href.replace(/\/[0-9]+$/, `/${i + 1}`)),
-      listImages: $('.img-container img')
-        .get()
-        .map((item) => $(item).attr('data-src')),
+      prev: document.querySelector('.chapter-prev a')?.getAttribute('href'),
+      next: document.querySelector('.chapter-next a')?.getAttribute('href'),
+      listPages:
+        images.length > 1
+          ? null
+          : Array(num)
+              .fill(0)
+              .map((_, i) => `${window.location.href.replace(/\/\d+$/, '')}/${i + 1}`),
+      listImages: images.length > 1 ? images.map((item) => $(item).attr('data-src')) : null,
       img: '#viewer-container img, .viewer-page',
     };
   },

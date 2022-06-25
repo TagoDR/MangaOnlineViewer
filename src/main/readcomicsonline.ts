@@ -1,20 +1,20 @@
 // == ReadComicsOnline =============================================================================
 export default {
   name: 'ReadComicsOnline',
-  url: /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/[0-9]*/,
-  homepage: 'http://readcomicsonline.ru/',
+  url: /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/\d*/,
+  homepage: 'https://readcomicsonline.ru/',
   language: ['English'],
   category: 'comic',
   run() {
+    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+    const images = [...document.querySelectorAll('#all img')];
     return {
-      title: window.title.replace(/ - Page [0-9]+/, ''),
-      series: $('div.pager-cnt a:first').attr('href'),
-      pages: window.pages.length,
-      prev: window.prev_chapter,
-      next: window.next_chapter,
-      listImages: $('#all img')
-        .get()
-        .map((i) => $(i).attr('data-src')),
+      title: W.title.replace(/ - Page \d+/, ''),
+      series: document.querySelector('div.pager-cnt a')?.getAttribute('href'),
+      pages: W.pages.length,
+      prev: W.prev_chapter,
+      next: W.next_chapter,
+      listImages: images.map((img) => img.getAttribute('data-src')),
     };
   },
 };

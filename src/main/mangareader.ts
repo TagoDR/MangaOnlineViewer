@@ -1,34 +1,26 @@
-// == MangaReader ==================================================================================
+// == Mangareader ==================================================================================
 export default {
-  name: ['MangaReader', 'MangaPanda'],
-  url: /https?:\/\/(www.)?(mangareader|mangapanda)(.net|.com)\/.+\/.+/,
-  homepage: ['http://www.mangareader.net/', 'http://www.mangapanda.com/'],
+  name: 'Mangareader',
+  url: /https?:\/\/(www.)?mangareader.to\/read\/.+\/.+\/.+/,
+  homepage: 'https://mangareader.to',
   language: ['English'],
   category: 'manga',
+  obs: 'Some galleries will not be usable',
+  waitEle: '.ds-image, .iv-card',
   run() {
-    const url =
-      window.location.href +
-      (window.location.href.lastIndexOf('/') !== window.location.href.length - 1 ? '/' : '');
-    const num = parseInt($('select#pageMenu option:last').html(), 10);
-    const chapter = $('#mangainfo_bas a');
+    const chapter = document.querySelector('.chapter-item.active');
+    const images = [
+      ...document.querySelectorAll(
+        '.ds-image:not(.shuffled)[data-url], .iv-card:not(.shuffled)[data-url]',
+      ),
+    ];
     return {
-      title: $('#mangainfo h1').text(),
-      series: $('#mangainfo a').attr('href'),
-      pages: num,
-      prev: chapter.last().attr('href'),
-      next: chapter.first().attr('href'),
-      listPages: Array(num)
-        .fill(null)
-        .map((_, i) => url + (i + 1), num),
-      img: 'img#img',
-      before() {
-        if (window.location.pathname.match(/\/.+\/.+\/chapter-[0-9]+.*/)) {
-          const path = window.location.pathname.split('/');
-          window.location.pathname = `/${path[2]}/${path[3].match(/[0-9]+/)}`;
-        } else if (window.location.search) {
-          window.location.href = window.location.pathname;
-        }
-      },
+      title: document.querySelector('.hr-manga h2')?.textContent?.trim(),
+      series: document.querySelector('.hr-manga')?.getAttribute('href'),
+      pages: images.length,
+      prev: chapter?.nextElementSibling?.querySelector('a')?.getAttribute('href'),
+      next: chapter?.previousElementSibling?.querySelector('a')?.getAttribute('href'),
+      listImages: images.map((img) => img.getAttribute('data-url')),
     };
   },
 };

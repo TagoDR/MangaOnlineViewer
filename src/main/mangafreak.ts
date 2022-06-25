@@ -6,14 +6,17 @@ export default {
   language: ['English'],
   category: 'manga',
   run() {
-    const images = $('.mySlides img').get();
+    const chapter = document.querySelector<HTMLOptionElement>(
+      '.chapter_list select option:checked',
+    );
+    const images = [...document.querySelectorAll('.mySlides img')];
     return {
-      title: $('title').text().trim(),
-      series: $('.title a').attr('href'),
+      title: document.querySelector('title')?.textContent?.trim(),
+      series: document.querySelector('.title a')?.getAttribute('href'),
       pages: images.length,
-      prev: $('.chapter_list select option:selected').prev().val(),
-      next: $('.chapter_list select option:selected').next().val(),
-      listImages: images.map((i) => $(i).attr('src')),
+      prev: chapter?.previousElementSibling?.getAttribute('value'),
+      next: chapter?.nextElementSibling?.getAttribute('value'),
+      listImages: images.map((img) => img.getAttribute('src')),
     };
   },
 };
