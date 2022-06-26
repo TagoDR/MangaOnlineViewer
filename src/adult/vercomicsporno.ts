@@ -5,16 +5,20 @@ export default {
   homepage: ['https://vermangasporno.com/', 'https://vercomicsporno.com/'],
   language: ['Spanish'],
   category: 'hentai',
+  waitEle: 'img[loading="lazy"].size-full, .comicimg picture img, .wp-content img',
   run() {
-    const imgs = $('img[loading="lazy"].size-full, .comicimg picture img, .wp-content img').get();
-    const src = imgs.map((i) => $(i).attr('data-lazy-src') || $(i).attr('src'));
+    const images = [
+      ...document.querySelectorAll(
+        'img[loading="lazy"].size-full, .comicimg picture img, .wp-content img',
+      ),
+    ];
     return {
-      title: $('h1.titl').text().trim() || $('title').text().trim(),
+      title: document.querySelector('h1.titl, title')?.textContent?.trim(),
       series: '#',
-      pages: imgs.length,
+      pages: images.length,
       prev: '#',
       next: '#',
-      listImages: src,
+      listImages: images.map((img) => img.getAttribute('data-lazy-src') || img.getAttribute('src')),
     };
   },
 };

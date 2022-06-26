@@ -6,50 +6,72 @@ export default {
   language: ['English'],
   obs: 'May get your IP Banned, use with moderation',
   category: 'hentai',
-  run() {
-    const num = parseInt($('.sn div span:eq(1)').text().trim(), 10);
+  async run() {
+    const num = parseInt(
+      document.querySelector('.sn div span:nth-child(2)')?.textContent || '',
+      10,
+    );
     const maxGalley = Math.ceil(num / 40);
-    const gallery = $('.sb a')
-      .attr('href')!
-      .replace(/\?p=\d+/, '');
+    const gallery = document
+      .querySelector('.sb a')
+      ?.getAttribute('href')
+      ?.replace(/\?p=\d+/, '');
+
+    const fetchBlocks = Array(maxGalley)
+      .fill(0)
+      .map((_, galleryId) =>
+        fetch(
+          galleryId > 0
+            ? `${gallery}?inline_set=ts_m&p=${galleryId}`
+            : `${gallery}?inline_set=ts_m`,
+        )
+          .then((res) => res.text())
+          .then((html) => new DOMParser().parseFromString(html, 'text/html')),
+      );
+
+    const data = await Promise.all(fetchBlocks);
+    const pages = data.flatMap((html) =>
+      [...html.querySelectorAll('.gdtm a, .gdtl a')].map((item) => item.getAttribute('href')),
+    );
+
+    // function bruteForce(func: any) {
+    //   Array(maxGalley)
+    //     .fill(0)
+    //     .map((_, i) => i)
+    //     .slice(Math.floor(Math.abs((func.begin - 1) / 40)))
+    //     .map((galleryId, galleryOrder) =>
+    //       fetch(
+    //         galleryId > 0
+    //           ? `${gallery}?inline_set=ts_m&p=${galleryId}`
+    //           : `${gallery}?inline_set=ts_m`,
+    //       )
+    //         .then((res) => res.text())
+    //         .then((html) => new DOMParser().parseFromString(html, 'text/html'))
+    //         .then((html: any) => {
+    //           [...html.querySelectorAll('.gdtm a, .gdtl a')]
+    //             .map((item) => item.getAttribute('href'))
+    //             .filter((url, index) => galleryId * 40 + index + 1 >= func.begin)
+    //             .map((url, index) => {
+    //               setTimeout(() => {
+    //                 if (galleryId * 40 + index + 1 >= func.begin) {
+    //                   func.addPage(galleryId * 40 + index + 1, url);
+    //                 }
+    //               }, func.wait * (galleryOrder * 40 + index + 1));
+    //               return galleryId * 40 + index + 1;
+    //             });
+    //         }),
+    //     );
+    // }
+
     return {
-      title: $('#i1 h1').text().trim(),
+      title: document.querySelector('#i1 h1')?.textContent?.trim(),
       series: gallery,
       pages: num,
       prev: '#',
       next: '#',
+      listPages: pages,
       img: '#img',
       lazy: true,
-      bruteForce(func) {
-        Array(maxGalley)
-          .fill(null)
-          .map((_, i) => i)
-          .slice(Math.floor(Math.abs((func.begin - 1) / 40)))
-          .map((galleryId, galleryOrder) =>
-            func
-              .getHtml(
-                galleryId > 0
-                  ? `${gallery}?inline_set=ts_m&p=${galleryId}`
-                  : `${gallery}?inline_set=ts_m`,
-                func.wait * galleryOrder,
-              )
-              .then((html) => {
-                $(html)
-                  .find('.gdtm a, .gdtl a')
-                  .get()
-                  .map((item) => $(item).attr('href'))
-                  .map((url, index) => {
-                    setTimeout(() => {
-                      if (galleryId * 40 + index + 1 >= func.begin) {
-                        func.addPage(galleryId * 40 + index + 1, url);
-                      }
-                      return null;
-                    }, func.wait * (galleryOrder * 40 + index + 1));
-                    return galleryId * 40 + index + 1;
-                  });
-              }),
-          );
-      },
     };
   },
 };

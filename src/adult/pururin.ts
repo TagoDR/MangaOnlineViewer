@@ -1,23 +1,21 @@
 // == Pururin ======================================================================================
 export default {
   name: 'Pururin',
-  url: /https?:\/\/(www.)?pururin.(io|to)\/(view|read)\/.+\/.+\/.+/,
-  homepage: 'http://pururin.io/',
+  url: /https?:\/\/(www.)?pururin.to\/(view|read)\/.+\/.+\/.+/,
+  homepage: 'https://pururin.to/',
   language: ['English'],
   category: 'hentai',
   waitAttr: ['.image-holder img', 'src'],
   run() {
-    const src = $('.image-holder img').attr('src') as string;
-    const num = $('.form-control option').length;
+    const src = document.querySelector('.image-holder img')?.getAttribute('src') || '';
+    const num = [...document.querySelectorAll('.form-control option')];
     return {
-      title: $('.title').text().trim(),
-      series: $('.control a:eq(3)').attr('href'),
-      pages: num,
+      title: document.querySelector('.title')?.textContent?.trim(),
+      series: document.querySelector('.breadcrumb-item:nth-child(4) a')?.getAttribute('href'),
+      pages: num.length,
       prev: '#',
       next: '#',
-      listImages: Array(num)
-        .fill(null)
-        .map((_, i) => src.replace(/\/[0-9]+\./, `/${i + 1}.`)),
+      listImages: num.map((_, i) => src.replace(/\/\d+\./, `/${i + 1}.`)),
     };
   },
 };

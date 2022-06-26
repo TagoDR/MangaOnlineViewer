@@ -2,18 +2,18 @@
 export default {
   name: 'xyzcomics',
   url: /https?:\/\/(www.)?xyzcomics.com\/.+/,
-  homepage: 'http://xyzcomics.com/',
+  homepage: 'https://xyzcomics.com/',
   language: ['English'],
   category: 'hentai',
   run() {
-    const imgs = $('.jig-link').get() as HTMLAnchorElement[];
+    const images = [...document.querySelectorAll('.jig-link')];
     return {
-      title: $('.entry-title').first().text().trim(),
+      title: document.querySelector('.entry-title')?.textContent?.trim(),
       series: '#',
-      pages: imgs.length,
+      pages: images.length,
       prev: '#',
       next: '#',
-      listImages: imgs.map((i) => i.href),
+      listImages: images.map((img) => img.getAttribute('href')),
     };
   },
 };

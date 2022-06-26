@@ -7,15 +7,14 @@ export default {
   category: 'hentai',
   timer: 5000,
   run() {
+    const images = [...document.querySelectorAll('figure a')];
     return {
-      title: $('.post-title:first').text().trim(),
+      title: document.querySelector('h1.entry-title')?.textContent?.trim(),
       series: '#',
-      pages: $('figure img').get().length,
+      pages: images.length,
       prev: '#',
       next: '#',
-      listImages: $('figure a')
-        .get()
-        .map((i) => $(i).attr('href')),
+      listImages: images.map((img) => img.getAttribute('href')),
     };
   },
 };

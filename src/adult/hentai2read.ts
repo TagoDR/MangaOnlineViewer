@@ -1,18 +1,19 @@
 // == Hentai2Read ==================================================================================
 export default {
   name: 'Hentai2Read',
-  url: /https?:\/\/(www.)?hentai2read.com\/[^/]+\/[0-9]+(.[0-9]+)?\//,
-  homepage: 'http://hentai2read.com/',
+  url: /https?:\/\/(www.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//,
+  homepage: 'https://hentai2read.com/',
   language: ['English'],
   category: 'hentai',
   run() {
+    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     return {
-      title: $('.reader-left-text').text().trim(),
-      series: window.gData.mainURL,
-      pages: window.gData.images.length,
-      prev: window.gData.previousURL,
-      next: window.gData.nextURL,
-      listImages: window.gData.images.map((i) => `https://static.hentaicdn.com/hentai${i}`),
+      title: document.querySelector('.reader-left-text')?.textContent?.trim(),
+      series: W.gData.mainURL,
+      pages: W.gData.images.length,
+      prev: W.gData.previousURL,
+      next: W.gData.nextURL,
+      listImages: W.gData.images.map((i: string) => `https://static.hentaicdn.com/hentai${i}`),
     };
   },
 };

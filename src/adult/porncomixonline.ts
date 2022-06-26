@@ -6,14 +6,14 @@ export default {
   language: ['English'],
   category: 'hentai',
   run() {
-    const imgs = $('figure a').get();
+    const images = [...document.querySelectorAll('figure a')];
     return {
-      title: $('.post-title').text().trim(),
+      title: document.querySelector('.post-title')?.textContent?.trim(),
       series: '#',
-      pages: imgs.length,
+      pages: images.length,
       prev: '#',
       next: '#',
-      listImages: imgs.map((i) => $(i).attr('href')),
+      listImages: images.map((img) => img.getAttribute('href')),
     };
   },
 };

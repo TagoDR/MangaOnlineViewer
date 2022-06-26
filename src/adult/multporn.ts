@@ -6,31 +6,23 @@ export default {
   language: ['English'],
   category: 'hentai',
   // waitEle: '.jb-idx-thumb:last .jb-thm-thumb-image',
-  run() {
-    let api = null;
-    const url = $('head')
-      .text()
-      .match(/"configUrl":"(.+?)",/)[1]
-      .replace('\\', '');
-    $.ajax({
-      type: 'GET',
-      url,
-      async: false,
-      success(res) {
-        api = res;
-      },
-    });
-    const imgs = $(api)
-      .find('image')
-      .get()
-      .map((i) => $(i).attr('imageURL'));
+  async run() {
+    const url =
+      document.head.textContent
+        ?.match(/"configUrl":"(.+?)",/)
+        ?.at(1)
+        ?.replaceAll('\\', '') || '';
+    const api = await fetch(url)
+      .then((res) => res.text())
+      .then((html) => new DOMParser().parseFromString(html, 'text/xml'));
+    const images = [...api.querySelectorAll('image')];
     return {
-      title: $('#page-title').text().trim(),
+      title: document.querySelector('#page-title')?.textContent?.trim(),
       series: '#',
-      pages: imgs.length,
+      pages: images.length,
       prev: '#',
       next: '#',
-      listImages: imgs,
+      listImages: images.map((img) => img.getAttribute('imageURL')),
     };
   },
 };

@@ -5,8 +5,8 @@ export default {
   homepage: 'https://comics.8muses.com/',
   language: ['English'],
   category: 'hentai',
-  run() {
-    function decode(data) {
+  async run() {
+    function decode(data: string) {
       /* eslint-disable no-mixed-operators,no-shadow */
       return ((t) => {
         if (t.charAt(0) !== '!') return t;
@@ -17,27 +17,29 @@ export default {
       /* eslint-enable no-mixed-operators,no-shadow */
     }
 
-    let api = null;
-    const url = window.location.href;
-    $.ajax({
-      type: 'GET',
-      url,
-      async: false,
-      success(res) {
-        api = res;
-      },
-    });
-    const dataPublic = JSON.parse(decode($(api!).find('#ractive-public').html().trim()));
-    const dataShared = JSON.parse(decode($(api!).find('#ractive-shared').html().trim()));
+    const api = await fetch(window.location.href)
+      .then((res) => res.text())
+      .then((html) => new DOMParser().parseFromString(html, 'text/html'));
+    const dataPublic = JSON.parse(
+      decode(api.querySelector('#ractive-public')?.innerHTML.trim() || ''),
+    );
+    const dataShared = JSON.parse(
+      decode(api.querySelector('#ractive-shared')?.innerHTML.trim() || ''),
+    );
     const src = dataShared.options.pictureHost || window.location.host;
-    const images = dataPublic.pictures.map((img) => `//${src}/image/fl/${img.publicUri}.jpg`);
     return {
-      title: $('.top-menu-breadcrumb li:eq(-2) a').text(),
-      series: $('.top-menu-breadcrumb li:last').prev('li').find('a').attr('href'),
+      title: document
+        .querySelector('.top-menu-breadcrumb li:nth-last-child(2) a')
+        ?.textContent?.trim(),
+      series: document
+        .querySelector('.top-menu-breadcrumb li:nth-last-child(2) a')
+        ?.getAttribute('href'),
       pages: dataPublic.pictures.length,
       prev: '#',
       next: '#',
-      listImages: images,
+      listImages: dataPublic.pictures.map(
+        (img: { publicUri: string }) => `//${src}/image/fl/${img.publicUri}.jpg`,
+      ),
     };
   },
 };

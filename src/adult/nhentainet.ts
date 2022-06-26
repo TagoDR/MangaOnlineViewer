@@ -8,6 +8,7 @@ export default {
   run() {
     function getExt(ext: string) {
       if (ext === 'g') return 'gif';
+      if (ext === 'b') return 'bmp';
       if (ext === 'p') return 'png';
       return 'jpg';
     }

@@ -6,22 +6,20 @@ export default {
   language: ['English'],
   category: 'hentai',
   run() {
-    const src = $('figure img, .entry-content img.lazy')
-      .get()
-      .map(
-        (i) =>
-          $(i).attr('src') ||
-          $(i).attr('data-src') ||
-          $(i).attr('data-full-url') ||
-          $(i).attr('data-lazy-src'),
-      );
+    const src = [...document.querySelectorAll('figure img, .entry-content img.lazy')];
     return {
-      title: $('h1.singleTitle-h1').text().trim(),
+      title: document.querySelector('h1.singleTitle-h1')?.textContent?.trim(),
       series: '#',
       pages: src.length,
       prev: '#',
       next: '#',
-      listImages: src,
+      listImages: src.map(
+        (img) =>
+          img.getAttribute('src') ||
+          img.getAttribute('data-src') ||
+          img.getAttribute('data-full-url') ||
+          img.getAttribute('data-lazy-src'),
+      ),
     };
   },
 };

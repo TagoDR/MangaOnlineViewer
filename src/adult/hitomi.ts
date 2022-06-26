@@ -6,15 +6,17 @@ export default {
   language: ['English'],
   category: 'hentai',
   waitAttr: ['#comicImages img', 'src'],
+  waitVar: 'galleryinfo',
   run() {
+    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     return {
-      title: $('title').text().replace('| Hitomi.la', '').trim(),
-      series: $('.brand').attr('href'),
-      pages: window.galleryinfo.files.length,
+      title: document.querySelector('title')?.textContent?.replace('| Hitomi.la', '').trim(),
+      series: document.querySelector('.brand')?.getAttribute('href'),
+      pages: W.galleryinfo.files.length,
       prev: '#',
       next: '#',
-      listImages: window.galleryinfo.files.map((file) =>
-        window.url_from_url_from_hash(window.galleryinfo, file, 'webp', undefined, 'a'),
+      listImages: W.galleryinfo.files.map((file: string) =>
+        W.url_from_url_from_hash(W.galleryinfo, file, 'webp', undefined, 'a'),
       ),
     };
   },

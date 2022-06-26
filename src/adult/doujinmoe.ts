@@ -7,14 +7,14 @@ export default {
   category: 'hentai',
   waitEle: '.doujin',
   run() {
-    const imgs = $('.doujin').get();
+    const images = [...document.querySelectorAll('.doujin')];
     return {
-      title: $('.title').text(),
-      series: $('.title a').eq(-2).attr('href'),
-      pages: imgs.length,
+      title: document.querySelector('.folder-title a:last-child')?.textContent?.trim(),
+      series: document.querySelector('.folder-title a:nth-last-child(2)')?.getAttribute('href'),
+      pages: images.length,
       prev: '#',
       next: '#',
-      listImages: imgs.map((i) => $(i).attr('data-file')),
+      listImages: images.map((img) => img.getAttribute('data-file')),
     };
   },
 };
