@@ -1,6 +1,6 @@
 import { logScript } from './tampermonkey';
 
-export default function getHtml(url: string, selector: string, attibute: string) {
+export function fetchText(url: string, format: DOMParserSupportedType): Promise<Document> {
   return new Promise((resolve) => {
     logScript('Fetching page: ', url);
     fetch(url)
@@ -13,17 +13,32 @@ export default function getHtml(url: string, selector: string, attibute: string)
         const parser = new DOMParser();
 
         // Parse the text
-        const doc = parser.parseFromString(html, 'text/html');
+        const doc = parser.parseFromString(html, format);
 
         // You can now even select part of that html as you would in the regular DOM
         // Example:
         // var docArticle = doc.querySelector('article').innerHTML;
         // console.log(doc);
-        logScript('Selection Page image: ', selector, 'attribute: ', attibute);
-        resolve(doc.querySelector(selector)?.getAttribute(attibute));
+        resolve(doc);
       })
       .catch((err) => {
         logScript('Failed to fetch page: ', err);
       });
+  });
+}
+
+export function fetchHtml(url: string): Promise<Document> {
+  return fetchText(url, 'text/html');
+}
+
+export function fetchXml(url: string): Promise<Document> {
+  return fetchText(url, 'text/xml');
+}
+
+export function getElementAttribute(url: string, selector: string, attibute: string) {
+  return new Promise((resolve) => {
+    fetchHtml(url).then((doc) => resolve(doc.querySelector(selector)?.getAttribute(attibute)));
+  }).catch((err) => {
+    logScript('Failed to fetch page: ', err);
   });
 }

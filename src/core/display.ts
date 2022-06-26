@@ -1,5 +1,6 @@
+import $ from 'JQuery';
 import { IManga } from '../types/IManga';
-import reader, { head } from './reader';
+import { head } from './reader';
 import { logScript, setValueGM } from '../utils/tampermonkey';
 import { controls, setKeyDownEvents } from './events';
 import { loadManga } from './page';

@@ -1,3 +1,4 @@
+import $ from 'JQuery';
 import NProgress from 'nprogress';
 import { logScript } from '../utils/tampermonkey.js';
 import { settings } from './settings.js';

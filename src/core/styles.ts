@@ -1,4 +1,5 @@
-export default `html {
+export default `
+html {
   font-size: 100%;
 }
 
@@ -43,7 +44,6 @@ img {
 
 #MangaOnlineViewer #Chapter {
   text-align: center;
-  margin: 25px auto 0;
   display: block;
 }
 
@@ -168,10 +168,17 @@ img {
   width: 110px;
 }
 
+#MangaOnlineViewer header, #MangaOnlineViewer footer {
+ display: flex;
+ justify-content: center;
+ align-content: center;
+ position: relative;
+}
+
 #MangaOnlineViewer .ChapterControl {
-  margin-right: 120px;
-  margin-top: 1px;
-  float: right;
+  right: 270px;
+  position: absolute;
+  top: 20px;
 }
 
 #MangaOnlineViewer .ChapterControl a {
@@ -189,15 +196,19 @@ img {
 }
 
 #MangaOnlineViewer .ViewerTitle {
-  display: block;
   text-align: center;
-  height: 35px;
+  min-height: 60px;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding-top: 10px;
 }
 
 #MangaOnlineViewer #Counters {
   position: absolute;
   right: 10px;
-  top: 10px;
+  top: 22px;
 }
 
 #MangaOnlineViewer .PageFunctions {

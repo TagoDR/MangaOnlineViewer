@@ -1,11 +1,11 @@
+import $ from 'JQuery';
 import Swal from 'sweetalert2';
-// import 'jquery-minicolors';
-import { getValueGM, logScript, setValueGM } from '../utils/tampermonkey.js';
-import generateZip from './download.js';
-import { applyZoom, reloadImage } from './page.js';
-import { settings } from './settings.js';
-import { addCustomTheme, addFullCustomTheme } from './themes.js';
-import { IBookmark } from '../types/IBookmark.js';
+import { getValueGM, logScript, setValueGM } from '../utils/tampermonkey';
+import generateZip from './download';
+import { applyZoom, reloadImage } from './page';
+import { settings } from './settings';
+import { addCustomTheme, addFullCustomTheme } from './themes';
+import { IBookmark } from '../types';
 
 // Goto Page and Thumbnails
 function scrollToElement(ele: JQuery) {

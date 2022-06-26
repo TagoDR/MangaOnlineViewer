@@ -1,5 +1,5 @@
 import ColorScheme from 'color-scheme';
-import { settings } from './settings.js';
+import { settings } from './settings';
 
 const scheme = new ColorScheme().scheme('mono').variation('default');
 
