@@ -1,4 +1,3 @@
-import $ from 'JQuery';
 import { IManga } from '../types/IManga';
 import { head } from './reader';
 import { logScript, setValueGM } from '../utils/tampermonkey';
@@ -6,7 +5,7 @@ import { controls, setKeyDownEvents } from './events';
 import { loadManga } from './page';
 import { isNothing } from '../utils/checks';
 import { settings } from './settings';
-import { body } from './components/App.js';
+import { body } from './components/App';
 
 export default function display(manga: IManga, begin: number) {
   window.stop();
@@ -24,7 +23,7 @@ export default function display(manga: IManga, begin: number) {
       controls();
       setKeyDownEvents();
       setTimeout(() => {
-        $(window).scrollTop(0);
+        window.scrollTo(0, 0);
         loadManga(manga, begin);
       }, 50);
       // Clear used Bookmarks

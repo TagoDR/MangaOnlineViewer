@@ -1,9 +1,9 @@
-import cssStyles from './styles.js';
-import { externalCSS, externalScripts } from './externals.js';
-import { icon, settings } from './settings.js';
-import { themesCSS } from './themes.js';
-import { IManga } from '../types/IManga.js';
-import { body } from './components/App.js';
+import cssStyles from './styles';
+import { externalCSS, externalScripts } from './externals';
+import { icon, settings } from './settings';
+import { themesCSS } from './themes';
+import { IManga } from '../types';
+import { body } from './components/App';
 
 // Inject CSS for this script
 const readerCSS = `<style type='text/css'>

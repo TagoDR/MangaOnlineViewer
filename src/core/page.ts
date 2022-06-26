@@ -1,7 +1,7 @@
-import $ from 'JQuery';
+import $ from 'jquery';
 import NProgress from 'nprogress';
-import { logScript } from '../utils/tampermonkey.js';
-import { settings } from './settings.js';
+import { logScript } from '../utils/tampermonkey';
+import { settings } from './settings';
 import AjaxSettings = JQuery.AjaxSettings;
 import {
   IManga,
@@ -11,7 +11,7 @@ import {
   isBruteforceManga,
   isImagesManga,
   isPagesManga,
-} from '../types/IManga.js';
+} from '../types';
 
 // Get html pages content
 function getHtml(url: string, wait: number = settings.Timer) {

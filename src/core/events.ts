@@ -1,4 +1,4 @@
-import $ from 'JQuery';
+import $ from 'jquery';
 import Swal from 'sweetalert2';
 import { getValueGM, logScript, setValueGM } from '../utils/tampermonkey';
 import generateZip from './download';

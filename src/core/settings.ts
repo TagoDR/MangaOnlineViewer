@@ -1,4 +1,4 @@
-import { getValueGM, isMobile, setValueGM } from '../utils/tampermonkey.js';
+import { getValueGM, isMobile, setValueGM } from '../utils/tampermonkey';
 import { ISettings, IBookmark } from '../types';
 
 // Configuration
