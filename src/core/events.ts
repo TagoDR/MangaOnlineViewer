@@ -446,19 +446,21 @@ function controls() {
   });
   // Reload Page
   $('.Reload').on('click', (event) => {
-    reloadImage($(event.target).parents('.MangaPage').find('.PageContent img'));
+    reloadImage(
+      $(event.target).parents('.MangaPage').find('.PageContent img')[0] as HTMLImageElement,
+    );
   });
   // ZoomIn
   $('.ZoomIn').on('click', (event) => {
     const img = $(event.target).parents('.MangaPage').find('.PageContent img');
     const ratio = (img.width()! / img.prop('naturalWidth')) * (100 + settings.zoomStep);
-    applyZoom(img, ratio);
+    applyZoom(`#${$(event.target).attr('id')}`, ratio);
   });
   // ZoomOut
   $('.ZoomOut').on('click', (event) => {
     const img = $(event.target).parents('.MangaPage').find('.PageContent img');
     const ratio = (img.width()! / img.prop('naturalWidth')) * (100 - settings.zoomStep);
-    applyZoom(img, ratio);
+    applyZoom(`#${$(event.target).attr('id')}`, ratio);
   });
   // ZoomRestore
   $('.ZoomRestore').on('click', () => {
@@ -466,13 +468,13 @@ function controls() {
   });
   // ZoomWidth
   $('.ZoomWidth').on('click', (event) => {
-    const img = $(event.target).parents('.MangaPage').find('.PageContent img');
-    applyZoom(img, 1000);
+    $(event.target).parents('.MangaPage').find('.PageContent img');
+    applyZoom(`#${$(event.target).attr('id')}`, 1000);
   });
   // ZoomHeight
   $('.ZoomHeight').on('click', (event) => {
-    const img = $(event.target).parents('.MangaPage').find('.PageContent img');
-    applyZoom(img, -1000);
+    $(event.target).parents('.MangaPage').find('.PageContent img');
+    applyZoom(`#${$(event.target).attr('id')}`, -1000);
   });
   // Hide
   $('.Hide').on('click', (event) => {

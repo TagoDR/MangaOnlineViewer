@@ -35,10 +35,10 @@ export function fetchXml(url: string): Promise<Document> {
   return fetchText(url, 'text/xml');
 }
 
-export function getElementAttribute(url: string, selector: string, attibute: string) {
-  return new Promise((resolve) => {
-    fetchHtml(url).then((doc) => resolve(doc.querySelector(selector)?.getAttribute(attibute)));
-  }).catch((err) => {
-    logScript('Failed to fetch page: ', err);
-  });
+export function getElementAttribute(
+  url: string,
+  selector: string,
+  attribute: string,
+): Promise<string | null | undefined> {
+  return fetchHtml(url).then((doc) => doc.querySelector(selector)?.getAttribute(attribute));
 }

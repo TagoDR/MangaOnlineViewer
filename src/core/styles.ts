@@ -176,7 +176,7 @@ img {
 }
 
 #MangaOnlineViewer .ChapterControl {
-  right: 270px;
+  right: 300px;
   position: absolute;
   top: 20px;
 }

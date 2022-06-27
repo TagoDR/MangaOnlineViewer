@@ -1,83 +1,46 @@
 import $ from 'jquery';
 import NProgress from 'nprogress';
+import imagesLoaded from 'imagesloaded';
 import { logScript } from '../utils/tampermonkey';
 import { settings } from './settings';
-import AjaxSettings = JQuery.AjaxSettings;
 import {
   IManga,
-  IMangaForce,
   IMangaImages,
   IMangaPages,
   isBruteforceManga,
   isImagesManga,
   isPagesManga,
 } from '../types';
-
-// Get html pages content
-function getHtml(url: string, wait: number = settings.Timer) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      logScript(`Getting page: ${url}`);
-      $.ajax({
-        type: 'GET',
-        url,
-        dataType: 'html',
-        async: true,
-        success: (html) => {
-          logScript(`Got page: ${url}`);
-          resolve(html);
-        },
-        // retryCount and retryLimit will let you retry a determined number of times
-        retryCount: 0,
-        retryLimit: 10,
-        // retryTimeout limits the next retry (in milliseconds)
-        retryWait: 10000,
-        // timeout for each request
-        timeout: 1000,
-        // created tells when this request was created
-        created: Date.now(),
-        error() {
-          this.retryCount += 1;
-          if (this.retryCount <= this.retryLimit) {
-            logScript(`Retrying Getting page: ${url}`);
-            setTimeout(() => {
-              $.ajax(this);
-            }, this.retryWait);
-          } else {
-            logScript(`Failed Getting page: ${url}`);
-          }
-        },
-      } as AjaxSettings);
-    }, wait);
-  });
-}
+import { getElementAttribute } from '../utils/request';
 
 // After pages load apply default Zoom
-function applyZoom(pages: string | JQuery = '.PageContent img', zoom = settings.Zoom) {
-  const $pages = typeof pages === 'string' ? $(pages) : pages;
-  $pages.each((index, value) => {
-    $(value).removeAttr('width').removeAttr('height').removeAttr('style');
+function applyZoom(pages: string = '.PageContent img', zoom = settings.Zoom) {
+  const pg = [...document.querySelectorAll<HTMLImageElement>(pages)];
+  pg.forEach((value) => {
+    const img = value;
+    img.removeAttribute('width');
+    img.removeAttribute('height');
+    img.removeAttribute('style');
     if (zoom === 1000) {
-      $(value).width(window.innerWidth);
+      img.style.width = `${window.innerWidth}px`;
     } else if (zoom === -1000) {
-      $(value).height(
-        window.innerHeight +
-          ($('#Navigation').hasClass('disabled') ? 0 : -34) +
-          ($('#Chapter').hasClass('WebComic') ? 0 : -35),
-      );
+      const nav = document.querySelector('#Navigation')?.classList.contains('disabled');
+      const chap = document.querySelector('#Chapter')?.classList.contains('WebComic');
+      const nextHeight = window.innerHeight + (nav ? 0 : -34) + (chap ? 0 : -35);
+      img.style.height = `${nextHeight}px`;
     } else {
-      $(value).width($(value).prop('naturalWidth') * (zoom / 100));
+      img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
     }
   });
 }
 
 // Force reload the image
-function reloadImage(img: JQuery) {
-  const src = img.attr('src');
-  if (src !== undefined) {
-    img.removeAttr('src');
+function reloadImage(img: HTMLImageElement) {
+  const src = img.getAttribute('src');
+  if (src) {
+    img.removeAttribute('src');
     setTimeout(() => {
-      img.attr('src', src);
+      img.setAttribute('src', src);
     }, 500);
   }
 }
@@ -85,20 +48,25 @@ function reloadImage(img: JQuery) {
 function onImagesDone() {
   logScript('Images Loading Complete');
   if (!settings.lazyLoadImages) {
-    $('.download').attr('href', '#download');
+    document.querySelector('.download')?.setAttribute('href', '#download');
     logScript('Download Available');
     if (settings.downloadZip) {
-      $('#blob').trigger('click');
+      document.querySelector('#blob')?.dispatchEvent(new Event('click'));
     }
   }
 }
 
 function updateProgress() {
-  const total = $('.PageContent img').get().length;
-  const loaded = $('.PageContent img.imgLoaded').get().length;
+  const total = document.querySelectorAll('.PageContent img').length;
+  const loaded = document.querySelectorAll('.PageContent img.imgLoaded').length;
   const percentage = Math.floor((loaded / total) * 100);
-  $('title').html(`(${percentage}%) ${$('#series i').first().text()}`);
-  $('#Counters i, #NavigationCounters i').html(loaded.toString());
+  const title = document.querySelector('title');
+  if (title) {
+    title.innerHTML = `(${percentage}%) ${document.querySelector('#series i')?.textContent}`;
+  }
+  document.querySelectorAll('#Counters i, #NavigationCounters i').forEach((ele) => {
+    ele.textContent = loaded.toString();
+  });
   NProgress.configure({
     showSpinner: false,
   }).set(loaded / total);
@@ -107,25 +75,36 @@ function updateProgress() {
 }
 
 // change class if the image is loaded or broken
-function onImagesProgress(imgLoad: JQuery, image: any) {
-  const $item = $(image.img);
-  if (image.isLoaded) {
-    $item.addClass('imgLoaded');
-    $item.removeClass('imgBroken');
-    const thumb = $item!.attr('id')!.replace('PageImg', 'ThumbnailImg');
-    $(`#${thumb}`)
-      .attr('src', $item.attr('src')!)
-      .on('load', () => applyZoom($item));
-  } else {
-    $item.addClass('imgBroken');
-    reloadImage($item);
-    $item.parent().imagesLoaded().progress(onImagesProgress);
+function onImagesProgress(
+  instance: ImagesLoaded.ImagesLoaded,
+  image?: {
+    img: HTMLImageElement;
+    isLoaded: boolean;
+  },
+): void {
+  if (image) {
+    if (image.isLoaded) {
+      image.img.classList.add('imgLoaded');
+      image.img.classList.remove('imgBroken');
+      image.img.getAttribute('id');
+      const thumbId = image.img.getAttribute('id')!.replace('PageImg', 'ThumbnailImg');
+      const thumb = document.getElementById(thumbId);
+      if (thumb) {
+        thumb.onload = () => applyZoom(`#${image.img.getAttribute('id')}`);
+        thumb.setAttribute('src', image.img.getAttribute('src')!);
+      }
+    } else {
+      image.img.classList.add('imgBroken');
+      reloadImage(image.img);
+      const imgLoad = imagesLoaded(image.img.parentElement!);
+      imgLoad.on('progress', onImagesProgress);
+    }
   }
   updateProgress();
 }
 
 // Corrects urls
-function normalizeUrl(url: string): string {
+function normalizeUrl(url: string = ''): string {
   let uri = url.trim();
   if (uri.startsWith('//')) {
     uri = `https:${uri}`;
@@ -134,62 +113,63 @@ function normalizeUrl(url: string): string {
 }
 
 // Adds an image to the place-holder div
-function addImg(index: number, imageSrc: string): number {
+function addImg(index: number, imageSrc: string) {
   const src = normalizeUrl(imageSrc);
-  if (!settings.lazyLoadImages || index < settings.lazyStart) {
-    $(`#PageImg${index}`).attr('src', src);
-    $(`#PageImg${index}`).parent().imagesLoaded().progress(onImagesProgress);
-    logScript('Loaded Image:', index, 'Source:', src);
-  } else {
-    $(`#PageImg${index}`)
-      .attr('data-src', src)
-      .unveil({
-        offset: 1000,
-      })
-      .on('loaded.unveil', () => {
-        $(`#PageImg${index}`).parent().imagesLoaded().progress(onImagesProgress);
-        logScript('Unveiled Image: ', index, ' Source: ', $(`#PageImg${index}`).attr('src'));
-      });
+  const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
+  if (img) {
+    if (!settings.lazyLoadImages || index < settings.lazyStart) {
+      img.setAttribute('src', src);
+      img.setAttribute('src', src);
+      const imgLoad = imagesLoaded(img.parentElement!);
+      imgLoad.on('progress', onImagesProgress);
+      logScript('Loaded Image:', index, 'Source:', src);
+    } else {
+      img.setAttribute('data-src', src);
+      $(img)
+        .unveil({
+          offset: 1000,
+        })
+        .on('loaded.unveil', () => {
+          const imgLoad = imagesLoaded(img.parentElement!);
+          imgLoad.on('progress', onImagesProgress);
+          logScript('Unveiled Image: ', index, ' Source: ', img.getAttribute('src'));
+        });
+    }
   }
-  return index;
+}
+
+function findPage(manga: IMangaPages, index: number, pageUrl: string, lazy: boolean) {
+  return async () => {
+    const src = await getElementAttribute(pageUrl, manga.img, manga.lazyAttr ?? 'src');
+    const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
+    if (src && img) {
+      img.setAttribute('src', src);
+      img.style.width = 'auto';
+      const imgLoad = imagesLoaded(img.parentElement!);
+      imgLoad.on('progress', onImagesProgress);
+      logScript(`${lazy && 'Unveiled '}Page: `, index, ' Source: ', img.getAttribute('src'));
+    }
+  };
 }
 
 // Adds a page to the place-holder div
-function addPage(manga: IMangaPages | IMangaForce, index: number, pageUrl: string): number {
-  if (!settings.lazyLoadImages || index < settings.lazyStart) {
-    getHtml(pageUrl).then((response) => {
-      const src = normalizeUrl(
-        $(response as string)
-          .find(manga.img!)
-          .attr(manga.lazyAttr ?? 'src') as string,
-      );
-      $(`#PageImg${index}`).attr('src', src);
-      $(`#PageImg${index}`).parent().imagesLoaded().progress(onImagesProgress);
-      logScript('Loaded Page:', index, 'Source:', src);
-    });
-  } else {
-    $(`#PageImg${index}`)
-      .attr(
+async function addPage(manga: IMangaPages, index: number, pageUrl: string) {
+  const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
+  if (img) {
+    if (!settings.lazyLoadImages || index < settings.lazyStart) {
+      await findPage(manga, index, pageUrl, false)();
+    } else {
+      img.setAttribute(
         'data-src',
         'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
-      )
-      .unveil({
-        offset: 2000,
-      })
-      .on('loaded.unveil', () => {
-        getHtml(pageUrl).then((response) => {
-          const src = normalizeUrl(
-            $(response as string)
-              .find(manga.img!)
-              .attr(manga.lazyAttr ?? 'src') as string,
-          );
-          $(`#PageImg${index}`).attr('src', src).width('auto');
-          $(`#PageImg${index}`).parent().imagesLoaded().progress(onImagesProgress);
-          logScript('Unveiled Page: ', index, ' Source: ', $(`#PageImg${index}`).attr('src'));
-        });
-      });
+      );
+      $(img)
+        .unveil({
+          offset: 2000,
+        })
+        .on('loaded.unveil', findPage(manga, index, pageUrl, false));
+    }
   }
-  return index;
 }
 
 // daley the use of an url/src
@@ -243,10 +223,14 @@ function loadManga(manga: IManga, begin = 1) {
     manga.bruteForce({
       begin,
       addImg,
-      addPage: (index: number, pageUrl: string) => addPage(manga, index, pageUrl),
-      loadMangaImages: (m: IMangaImages) => loadMangaImages(begin - 1, m),
-      loadMangaPages: (m: IMangaPages) => loadMangaPages(begin - 1, m),
-      getHtml,
+      loadImages: (list: string[]) => loadMangaImages(begin - 1, { ...manga, listImages: list }),
+      loadPages: (list: string[], img: string, lazyAttr: string | undefined) =>
+        loadMangaPages(begin - 1, {
+          ...manga,
+          listPages: list,
+          img,
+          lazyAttr,
+        }),
       wait: settings.Timer,
     });
   }

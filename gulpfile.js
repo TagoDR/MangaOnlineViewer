@@ -35,7 +35,6 @@ const scripts = {
 const globals = {
   'color-scheme': 'ColorScheme',
   jquery: '$',
-  jscolor: 'jscolor',
   jszip: 'JSZip',
   sweetalert2: 'Swal',
   nprogress: 'NProgress',

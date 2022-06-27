@@ -27,11 +27,17 @@ export default {
 
       return `data:image/svg+xml;charset=UTF-8,${encoded}`;
     }
+    function randomPlaceholder() {
+      const widths = [985, 1970];
+      const randomSize = Math.floor(Math.random() * 2);
+      const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+      return placeholder(widths[randomSize], 1400, randomColor);
+    }
 
     return {
       title: 'Placeholder Manga Loaded',
       series: '#Counters',
-      pages: 5,
+      pages: 50,
       begin: 0,
       prev: '#PageImg2',
       next: '#PageImg5',
@@ -41,6 +47,7 @@ export default {
         placeholder(985, 1400, '#7A1420'),
         placeholder(985, 1400, '#0F5B30'),
         placeholder(1970, 1400, '#806D15'),
+        ...Array(45).fill(0).map(randomPlaceholder),
       ],
     };
   },
