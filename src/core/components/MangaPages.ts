@@ -1,5 +1,5 @@
 // Add Pages Place-holders
-export const listPages = (times: number) =>
+const listPages = (times: number) =>
   Array(times)
     .fill(null)
     .map(
@@ -21,3 +21,4 @@ export const listPages = (times: number) =>
   </div>
 </div>`,
     );
+export default listPages;

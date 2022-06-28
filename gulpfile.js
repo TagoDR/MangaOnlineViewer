@@ -2,10 +2,8 @@ import fs from 'fs';
 import Del from 'del';
 import * as tsImport from 'ts-import';
 import typescript from 'typescript';
-
 import gulp from 'gulp';
 import preprocess from 'gulp-preprocess';
-
 import userscript from 'userscript-meta';
 import { build as vite } from 'vite';
 
@@ -17,10 +15,10 @@ import { rollup } from 'rollup';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescriptPlugin from '@rollup/plugin-typescript';
-import html from 'rollup-plugin-string-html';
 import eslint from '@rbnlffl/rollup-plugin-eslint';
 import cleanup from 'rollup-plugin-cleanup';
 import externalGlobals from 'rollup-plugin-external-globals';
+import bundleSize from 'rollup-plugin-bundle-size';
 
 let minify = false;
 let build = 'rollup'; // 'esbuild' | 'rollup' | 'vite'
@@ -89,9 +87,6 @@ function buildUserscript(script) {
             include: ['node_modules/**'],
             exclude: ['node_modules/process-es6/**'],
           }),
-          html({
-            include: './src/components/**',
-          }),
           eslint({
             filterExclude: ['node_modules/**', 'src/components/**'],
           }),
@@ -99,6 +94,7 @@ function buildUserscript(script) {
             comments: 'none',
             lineEndings: 'win',
           }),
+          bundleSize(),
         ],
       }).then((bundle) =>
         bundle.write({
@@ -185,8 +181,8 @@ function prep() {
   if (!fs.existsSync('./dist')) {
     fs.mkdirSync('./dist', { recursive: true });
   }
-  // minify = true;
-  // build = 'vite';
+  minify = false;
+  build = 'rollup';
   return Promise.resolve();
 }
 

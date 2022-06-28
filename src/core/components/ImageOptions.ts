@@ -1,6 +1,6 @@
 import { icon, settings } from '../settings';
 
-export const imageOptions = `<div id='ImageOptions'>
+const imageOptions = `<div id='ImageOptions'>
   <div id='menu'>
     <span class='menuOuterArrow'><span class='menuInnerArrow'></span></span>
   </div>
@@ -19,3 +19,4 @@ export const imageOptions = `<div id='ImageOptions'>
   </div>
   <div id='Zoom' class='controlLabel'>Zoom: <b>${settings.zoom}</b> %</div>
 </div>`;
+export default imageOptions;

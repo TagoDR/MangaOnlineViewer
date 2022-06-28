@@ -1,4 +1,4 @@
-export const listThumbnails = (times: number) =>
+const listThumbnails = (times: number) =>
   Array(times)
     .fill(null)
     .map(
@@ -7,3 +7,4 @@ export const listThumbnails = (times: number) =>
           index + 1
         }' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`,
     );
+export default listThumbnails;

@@ -1,7 +1,7 @@
 import { themesSelector } from '../themes';
 import { settings } from '../settings';
 
-export const controls = `<div id='ViewerControls' class='panel'>
+const controls = `<div id='ViewerControls' class='panel'>
   <span class='controlLabel ThemeSelector'>Theme:
     <select id='ThemeSelector'>
       ${themesSelector}
@@ -128,3 +128,4 @@ export const controls = `<div id='ViewerControls' class='panel'>
     }>
   </span>
 </div>`;
+export default controls;

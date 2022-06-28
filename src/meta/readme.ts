@@ -25,8 +25,9 @@ function siteListEntry(site: ISite) {
   return `- ${links(site)}${lang}${obs}`;
 }
 
-const sortSites = (s) => [...s].sort((a, b) => `${a.language}`.localeCompare(b.language));
-const sitesList = (s) => sortSites(s).map(siteListEntry).join('\n');
+const sortSites = (s: ISite[]) =>
+  [...s].sort((a, b) => `${a.language}`.localeCompare(b.language.toString()));
+const sitesList = (s: ISite[]) => sortSites(s).map(siteListEntry).join('\n');
 
 const mangaSites = sitesList(main.filter((s) => s.category === 'manga'));
 const comicSites = sitesList(main.filter((s) => s.category === 'comic'));

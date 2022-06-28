@@ -1,9 +1,8 @@
 import cssStyles from './styles';
 import { externalCSS, externalScripts } from './externals';
-import { icon, settings } from './settings';
+import { icon } from './settings';
 import { themesCSS } from './themes';
 import { IManga } from '../types';
-import { body } from './components/App';
 
 // Inject CSS for this script
 const readerCSS = `<style type='text/css'>
@@ -18,7 +17,7 @@ ${cssStyles}
 #MangaOnlineViewer .PageFunctions .ZoomHeight {background: url('${icon.zoomWidth}') no-repeat scroll center center transparent;}
 </style>`;
 
-export function head(manga: IManga) {
+function head(manga: IManga) {
   return `
 <head>
   <title>${manga.title}</title>
@@ -30,13 +29,4 @@ export function head(manga: IManga) {
 </head>
 `;
 }
-
-function reader(manga: IManga, begin = 0) {
-  return `
-${head(manga)}
-<body class='${settings.theme}'>
-  ${body(manga, begin > 0 ? begin - 1 : 0)}
-</body>`;
-}
-
-export default reader;
+export default head;

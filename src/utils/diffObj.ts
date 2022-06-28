@@ -13,7 +13,7 @@ const diffObj = <T extends object>(changed: T, original: T): Partial<object> => 
   const changes = (object: object, base: object): object =>
     _.transform(
       object,
-      (result: any, value, key: keyof object) => {
+      (result: any, value: any, key: keyof object) => {
         if (!_.isEqual(value, base[key])) {
           if (_.isObject(value)) {
             result[key] = changes(value, base[key]);
