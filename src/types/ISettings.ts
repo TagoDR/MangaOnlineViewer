@@ -17,7 +17,7 @@ export interface ITheme {
 }
 
 export interface ISettings {
-  Theme:
+  theme:
     | 'Dark'
     | 'Light'
     | 'Clear'
@@ -31,12 +31,12 @@ export interface ISettings {
     | 'Custom_Dark'
     | 'Custom_Light'
     | 'Full_Custom';
-  CustomTheme: string;
-  CustomThemeBody: string;
-  CustomThemeText: string;
-  CustomThemeLines: string;
-  CustomThemePanel: string;
-  CustomThemeButton: string;
+  customTheme: string;
+  customThemeBody: string;
+  customThemeText: string;
+  customThemeLines: string;
+  customThemePanel: string;
+  customThemeButton: string;
   configVersion: number;
   zoomStep: number;
   viewMode: 'WebComic' | 'FluidLTR' | 'FluidRTL' | ''; // inherit = WebComic
@@ -44,11 +44,11 @@ export interface ISettings {
   loadMode: 'wait' | 'always' | 'never';
   throttlePageLoad: number;
   widthScale: number;
-  FitWidthIfOversize?: boolean;
-  ShowThumbnails?: boolean;
+  fitWidthIfOversize?: boolean;
+  showThumbnails?: boolean;
   downloadZip?: boolean;
-  Timer: number;
-  Zoom: number;
+  timer: number;
+  zoom: number;
   lazyLoadImages: boolean;
   lazyStart: number;
   hidePageControls: boolean;

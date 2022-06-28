@@ -14,7 +14,7 @@ import { getElementAttribute } from '../utils/request';
 import lazyLoad from '../utils/lazyLoad.js';
 
 // After pages load apply default Zoom
-function applyZoom(pages: string = '.PageContent img', zoom = settings.Zoom) {
+function applyZoom(pages: string = '.PageContent img', zoom = settings.zoom) {
   const pg = [...document.querySelectorAll<HTMLImageElement>(pages)];
   pg.forEach((value) => {
     const img = value;
@@ -166,7 +166,7 @@ async function addPage(manga: IMangaPages, index: number, pageUrl: string) {
 }
 
 // daley the use of an url/src
-function delayAdd(src: string, wait: number = settings.Timer) {
+function delayAdd(src: string, wait: number = settings.timer) {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(src);
@@ -178,7 +178,7 @@ function delayAdd(src: string, wait: number = settings.Timer) {
 function loadMangaPages(begin: number, manga: IMangaPages) {
   return manga.listPages?.map((url, index) =>
     index >= begin
-      ? delayAdd(url, (manga.timer || settings.Timer) * (index - begin)).then((response) =>
+      ? delayAdd(url, (manga.timer || settings.timer) * (index - begin)).then((response) =>
           addPage(manga, index + 1, response as string),
         )
       : null,
@@ -189,7 +189,7 @@ function loadMangaPages(begin: number, manga: IMangaPages) {
 function loadMangaImages(begin: number, manga: IMangaImages) {
   return manga.listImages?.map((src, index) =>
     index >= begin
-      ? delayAdd(src, (manga.timer || settings.Timer) * (index - begin)).then((response) =>
+      ? delayAdd(src, (manga.timer || settings.timer) * (index - begin)).then((response) =>
           addImg(index + 1, response as string),
         )
       : null,
@@ -200,7 +200,7 @@ function loadMangaImages(begin: number, manga: IMangaImages) {
 function loadManga(manga: IManga, begin = 1) {
   settings.lazyLoadImages = manga.lazy || settings.lazyLoadImages;
   logScript('Loading Images');
-  logScript(`Intervals: ${manga.timer || settings.Timer || 'Default(1000)'}`);
+  logScript(`Intervals: ${manga.timer || settings.timer || 'Default(1000)'}`);
   logScript(`Lazy: ${settings.lazyLoadImages}`);
   if (settings.lazyLoadImages) {
     logScript('Download may not work with Lazy Loading Images');
@@ -224,7 +224,7 @@ function loadManga(manga: IManga, begin = 1) {
           img,
           lazyAttr,
         }),
-      wait: settings.Timer,
+      wait: settings.timer,
     });
   }
 }

@@ -38,7 +38,7 @@ function addFullCustomTheme(
 }
 
 function loadThemes(): string[][] {
-  const bg = scheme.from_hex(settings.CustomTheme.replace('#', '')).colors();
+  const bg = scheme.from_hex(settings.customTheme.replace('#', '')).colors();
   return [
     //   1-body       2-text       3-lines     4-imageOptions     5-buttons
     ['Dark', '#000000', '#ffffff', '#666666', '#333333', '#282828'],
@@ -55,11 +55,11 @@ function loadThemes(): string[][] {
     ['Custom_Light', '#eeeeec', `#${bg[3]}`, `#${bg[2]}`, `#${bg[0]}`, `#${bg[1]}`],
     [
       'Full_Custom',
-      settings.CustomThemeBody,
-      settings.CustomThemeText,
-      settings.CustomThemeLines,
-      settings.CustomThemePanel,
-      settings.CustomThemeButton,
+      settings.customThemeBody,
+      settings.customThemeText,
+      settings.customThemeLines,
+      settings.customThemePanel,
+      settings.customThemeButton,
     ],
   ];
 }
@@ -68,7 +68,7 @@ const themes = loadThemes();
 const themesSelector = themes.map(
   (theme) =>
     `<option value='${theme[0]}' ${
-      settings.Theme === theme[0] ? 'selected' : ''
+      settings.theme === theme[0] ? 'selected' : ''
     }>${theme[0].replace('_', ' ')}</option>`,
 );
 const themesCSS = themes.map(addTheme).join('');

@@ -7,36 +7,36 @@ export const controls = `<div id='ViewerControls' class='panel'>
       ${themesSelector}
     </select>
       <span class='CustomTheme' ${
-        settings.Theme !== 'Custom_Dark' && settings.Theme !== 'Custom_Light'
+        settings.theme !== 'Custom_Dark' && settings.theme !== 'Custom_Light'
           ? 'style="display: none;"'
           : ''
       }><br/>-Base:<input id='CustomThemeHue' type='color' value='${
-  settings.CustomTheme
+  settings.customTheme
 }' class='colorpicker CustomTheme'></span>
       <span class='FullCustom' ${
-        settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''
+        settings.theme !== 'Full_Custom' ? 'style="display: none;"' : ''
       }><br/>-Body:<input id='CustomThemeHueBody' type='color' value='${
-  settings.CustomThemeBody
+  settings.customThemeBody
 }' class='colorpicker FullCustom'></span>
       <span class='FullCustom' ${
-        settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''
+        settings.theme !== 'Full_Custom' ? 'style="display: none;"' : ''
       }><br/>-Text:<input id='CustomThemeHueText' type='color' value=${
-  settings.CustomThemeText
+  settings.customThemeText
 }' class='colorpicker FullCustom'></span>
       <span class='FullCustom' ${
-        settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''
+        settings.theme !== 'Full_Custom' ? 'style="display: none;"' : ''
       }><br/>-Lines:<input id='CustomThemeHueLines' type='color' value='${
-  settings.CustomThemeLines
+  settings.customThemeLines
 }' class='colorpicker FullCustom'></span>
       <span class='FullCustom' ${
-        settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''
+        settings.theme !== 'Full_Custom' ? 'style="display: none;"' : ''
       }><br/>-Painels:<input id='CustomThemeHuePanel' type='color' value='${
-  settings.CustomThemePanel
+  settings.customThemePanel
 }' class='colorpicker FullCustom'></span>
       <span class='FullCustom' ${
-        settings.Theme !== 'Full_Custom' ? 'style="display: none;"' : ''
+        settings.theme !== 'Full_Custom' ? 'style="display: none;"' : ''
       }><br/>-Buttons:<input id='CustomThemeHueButton' type='color' value='${
-  settings.CustomThemeButton
+  settings.customThemeButton
 }' class='colorpicker FullCustom'></span>
   </span>
   <span class='controlLabel loadMode'>Default Load Mode:
@@ -54,26 +54,26 @@ export const controls = `<div id='ViewerControls' class='panel'>
   </span>
   <span class='controlLabel PagesPerSecond'>Pages/Second:
     <select id='PagesPerSecond'>
-      <option value='3000' ${settings.Timer === 3000 ? 'selected' : ''}>0.3(Slow)</option>
-      <option value='2000' ${settings.Timer === 2000 ? 'selected' : ''}>0.5</option>
-      <option value='1000' ${settings.Timer === 1000 ? 'selected' : ''}>01(Normal)</option>
-      <option value='500' ${settings.Timer === 500 ? 'selected' : ''}>02</option>
-      <option value='250' ${settings.Timer === 250 ? 'selected' : ''}>04(Fast)</option>
-      <option value='125' ${settings.Timer === 125 ? 'selected' : ''}>08</option>
-      <option value='100' ${settings.Timer === 100 ? 'selected' : ''}>10(Extreme)</option>
+      <option value='3000' ${settings.timer === 3000 ? 'selected' : ''}>0.3(Slow)</option>
+      <option value='2000' ${settings.timer === 2000 ? 'selected' : ''}>0.5</option>
+      <option value='1000' ${settings.timer === 1000 ? 'selected' : ''}>01(Normal)</option>
+      <option value='500' ${settings.timer === 500 ? 'selected' : ''}>02</option>
+      <option value='250' ${settings.timer === 250 ? 'selected' : ''}>04(Fast)</option>
+      <option value='125' ${settings.timer === 125 ? 'selected' : ''}>08</option>
+      <option value='100' ${settings.timer === 100 ? 'selected' : ''}>10(Extreme)</option>
     </select>
   </span>
   <span class='controlLabel DefaultZoom'>Default Zoom:
     <select id='DefaultZoom'>
-      <option value='50' ${settings.Zoom === 50 ? 'selected' : ''}>50%</option>
-      <option value='75' ${settings.Zoom === 75 ? 'selected' : ''}>75%</option>
-      <option value='100' ${settings.Zoom === 100 ? 'selected' : ''}>100%</option>
-      <option value='125' ${settings.Zoom === 125 ? 'selected' : ''}>125%</option>
-      <option value='150' ${settings.Zoom === 150 ? 'selected' : ''}>150%</option>
-      <option value='175' ${settings.Zoom === 175 ? 'selected' : ''}>175%</option>
-      <option value='200' ${settings.Zoom === 200 ? 'selected' : ''}>200%</option>
-      <option value='1000' ${settings.Zoom === 1000 ? 'selected' : ''}>Fit Width</option>
-      <option value='-1000' ${settings.Zoom === -1000 ? 'selected' : ''}>Fit Height</option>
+      <option value='50' ${settings.zoom === 50 ? 'selected' : ''}>50%</option>
+      <option value='75' ${settings.zoom === 75 ? 'selected' : ''}>75%</option>
+      <option value='100' ${settings.zoom === 100 ? 'selected' : ''}>100%</option>
+      <option value='125' ${settings.zoom === 125 ? 'selected' : ''}>125%</option>
+      <option value='150' ${settings.zoom === 150 ? 'selected' : ''}>150%</option>
+      <option value='175' ${settings.zoom === 175 ? 'selected' : ''}>175%</option>
+      <option value='200' ${settings.zoom === 200 ? 'selected' : ''}>200%</option>
+      <option value='1000' ${settings.zoom === 1000 ? 'selected' : ''}>Fit Width</option>
+      <option value='-1000' ${settings.zoom === -1000 ? 'selected' : ''}>Fit Height</option>
     </select>
   </span>
   <span class='controlLabel zoomStep'>Zoom Change Step (between 5 and 50): <br/>
@@ -98,12 +98,12 @@ export const controls = `<div id='ViewerControls' class='panel'>
   </span>
   <span class='controlLabel fitIfOversize'>Fit Width if Oversize:
     <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${
-      settings.FitWidthIfOversize ? 'checked' : ''
+      settings.fitWidthIfOversize ? 'checked' : ''
     }>
   </span>
   <span class='controlLabel showThumbnails'>Show Thumbnails:
     <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${
-      settings.ShowThumbnails ? 'checked' : ''
+      settings.showThumbnails ? 'checked' : ''
     }>
    </span>
    <span class='controlLabel lazyLoadImages'>Lazy Load Images:

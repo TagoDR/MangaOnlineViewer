@@ -30,7 +30,7 @@ export default function display(manga: IManga, begin: number) {
       if (!isNothing(settings.bookmarks.filter((el) => el.url === window.location.href))) {
         logScript(`Bookmark Removed ${window.location.href}`);
         settings.bookmarks = settings.bookmarks.filter((el) => el.url !== window.location.href);
-        setValueGM('MangaBookmarks', JSON.stringify(settings.bookmarks));
+        setValueGM('Bookmarks', JSON.stringify(settings.bookmarks));
       }
     } catch (e) {
       logScript(e);

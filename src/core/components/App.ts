@@ -17,7 +17,7 @@ const listOptions = (times: number) =>
 
 export const body = (manga: IManga, begin = 0) => `
 <div id='MangaOnlineViewer'
-  class='${settings.Theme} ${isMobile ? 'mobile' : ''} ${
+  class='${settings.theme} ${isMobile ? 'mobile' : ''} ${
   settings.hidePageControls ? 'hideControls' : ''
 }'>
   <header>
@@ -32,7 +32,7 @@ export const body = (manga: IManga, begin = 0) => `
     </div>
     ${chapterControlTop(manga)}
   </header>  
-  <main id='Chapter' class='${settings.FitWidthIfOversize === true ? 'fitWidthIfOversize' : ''} ${
+  <main id='Chapter' class='${settings.fitWidthIfOversize === true ? 'fitWidthIfOversize' : ''} ${
   settings.viewMode
 }'>
     ${listPages(manga.pages).slice(begin).join('')}
@@ -46,7 +46,7 @@ export const body = (manga: IManga, begin = 0) => `
     ${controls}
     ${htmlKeybinds}
   </aside>
-  <nav id='Navigation' class='panel ${settings.ShowThumbnails ? '' : 'disabled'}'>
+  <nav id='Navigation' class='panel ${settings.showThumbnails ? '' : 'disabled'}'>
     <div id='NavigationCounters' class='controlLabel'>
       <img alt='Thumbnails' title='Thumbnails' src='${icon.menu}' class='nav' />
       <i>0</i> of <b>${manga.pages}</b> Pages Loaded

@@ -34,7 +34,7 @@ export function head(manga: IManga) {
 function reader(manga: IManga, begin = 0) {
   return `
 ${head(manga)}
-<body class='${settings.Theme}'>
+<body class='${settings.theme}'>
   ${body(manga, begin > 0 ? begin - 1 : 0)}
 </body>`;
 }

@@ -6,38 +6,38 @@ const settings: ISettings = {
   configVersion: 0,
   throttlePageLoad: 0,
   widthScale: 0,
-  Theme: getValueGM('MangaTheme', 'Light'),
-  CustomTheme: getValueGM('MangaCustomTheme', '#3d0099'),
-  CustomThemeBody: getValueGM('MangaCustomThemeBody', '#000000'),
-  CustomThemeText: getValueGM('MangaCustomThemeText', '#ffffff'),
-  CustomThemeLines: getValueGM('MangaCustomThemeLines', '#666666'),
-  CustomThemePanel: getValueGM('MangaCustomThemePanel', '#333333'),
-  CustomThemeButton: getValueGM('MangaCustomThemeButton', '#282828'),
-  FitWidthIfOversize: getValueGM('MangaFitWidthIfOversize', true),
-  ShowThumbnails: getValueGM('MangaShowThumbnails', true),
-  downloadZip: getValueGM('MangaDownloadZip', false),
-  Timer: getValueGM('MangaTimer', 1000),
-  Zoom: getValueGM('MangaZoom', 100),
-  zoomStep: getValueGM('MangaZoomStep', 25),
-  loadMode: getValueGM('MangaLoadMode', 'wait'),
-  viewMode: getValueGM('MangaViewMode', ''),
-  bookmarks: JSON.parse(getValueGM('MangaBookmarks', '[]')) as IBookmark[],
-  lazyLoadImages: getValueGM('MangaLazyLoadImages', false),
-  lazyStart: getValueGM('MangaLazyStart', 50),
-  hidePageControls: getValueGM('MangaHidePageControls', false),
+  theme: getValueGM('Theme', 'Light'),
+  customTheme: getValueGM('CustomTheme', '#3d0099'),
+  customThemeBody: getValueGM('CustomThemeBody', '#000000'),
+  customThemeText: getValueGM('CustomThemeText', '#ffffff'),
+  customThemeLines: getValueGM('CustomThemeLines', '#666666'),
+  customThemePanel: getValueGM('CustomThemePanel', '#333333'),
+  customThemeButton: getValueGM('CustomThemeButton', '#282828'),
+  fitWidthIfOversize: getValueGM('FitWidthIfOversize', true),
+  showThumbnails: getValueGM('ShowThumbnails', true),
+  downloadZip: getValueGM('DownloadZip', false),
+  timer: getValueGM('Timer', 1000),
+  zoom: getValueGM('Zoom', 100),
+  zoomStep: getValueGM('ZoomStep', 25),
+  loadMode: getValueGM('LoadMode', 'wait'),
+  viewMode: getValueGM('ViewMode', ''),
+  bookmarks: JSON.parse(getValueGM('Bookmarks', '[]')) as IBookmark[],
+  lazyLoadImages: getValueGM('LazyLoadImages', false),
+  lazyStart: getValueGM('LazyStart', 50),
+  hidePageControls: getValueGM('HidePageControls', false),
 };
 // Force Settings for mobile
 if (isMobile) {
   settings.lazyLoadImages = true;
-  settings.lazyStart = parseInt(getValueGM('MangaLazyStart', 5), 10);
-  settings.FitWidthIfOversize = true;
-  settings.ShowThumbnails = false;
+  settings.lazyStart = parseInt(getValueGM('LazyStart', 5), 10);
+  settings.fitWidthIfOversize = true;
+  settings.showThumbnails = false;
   settings.viewMode = '';
 }
 // Clear old Bookmarks
 const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // year
 settings.bookmarks = settings.bookmarks.filter((el) => Date.now() - el.date < bookmarkTimeLimit);
-setValueGM('MangaBookmarks', JSON.stringify(settings.bookmarks));
+setValueGM('Bookmarks', JSON.stringify(settings.bookmarks));
 
 // Icons in Base64 format
 // Source: http://www.iconarchive.com/show/farm-fresh-icons-by-fatcow.html
