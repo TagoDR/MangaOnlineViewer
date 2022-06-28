@@ -1,17 +1,29 @@
+import fs from 'fs';
+import Del from 'del';
+import * as tsImport from 'ts-import';
+import typescript from 'typescript';
+
+import gulp from 'gulp';
+import preprocess from 'gulp-preprocess';
+
+import userscript from 'userscript-meta';
+import { build as vite } from 'vite';
+
 import * as esbuild from 'esbuild';
 import { minifyTemplates, writeFiles } from 'esbuild-minify-templates';
 import { globalExternals } from '@fal-works/esbuild-plugin-global-externals';
-import fs from 'fs';
-import gulp from 'gulp';
-import preprocess from 'gulp-preprocess';
-import userscript from 'userscript-meta';
-import * as tsImport from 'ts-import';
-import Del from 'del';
-import { build } from 'vite';
+
+import { rollup } from 'rollup';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import typescriptPlugin from '@rollup/plugin-typescript';
+import html from 'rollup-plugin-string-html';
+import eslint from '@rbnlffl/rollup-plugin-eslint';
+import cleanup from 'rollup-plugin-cleanup';
 import externalGlobals from 'rollup-plugin-external-globals';
 
 let minify = false;
-let vite = false;
+let build = 'rollup'; // 'esbuild' | 'rollup' | 'vite'
 const scripts = {
   main: {
     entry: 'userscript-main.ts',
@@ -43,18 +55,17 @@ const globals = {
 function buildUserscript(script) {
   function createScriptFile() {
     const metadata = fs.readFileSync(`./dist/${script.meta}`, 'utf8');
-    if (vite) {
-      return build({
+    if (build === 'vite') {
+      return vite({
         configFile: false,
         esbuild: {
           banner: metadata,
           keepNames: true,
         },
         build: {
-          minify: 'esbuild',
+          minify: minify ? 'esbuild' : false,
           emptyOutDir: false,
           rollupOptions: {
-            license: false,
             input: `src/${script.entry}`,
             plugins: [externalGlobals(globals)],
             output: {
@@ -64,6 +75,41 @@ function buildUserscript(script) {
           },
         },
       });
+    } else if (build === 'rollup') {
+      return rollup({
+        input: `src/${script.entry}`,
+        plugins: [
+          externalGlobals(globals),
+          nodeResolve({
+            preferBuiltins: false,
+            extensions: ['.js', '.ts', '.tsx'],
+          }),
+          typescriptPlugin({ typescript }),
+          commonjs({
+            include: ['node_modules/**'],
+            exclude: ['node_modules/process-es6/**'],
+          }),
+          html({
+            include: './src/components/**',
+          }),
+          eslint({
+            filterExclude: ['node_modules/**', 'src/components/**'],
+          }),
+          cleanup({
+            comments: 'none',
+            lineEndings: 'win',
+          }),
+        ],
+      }).then((bundle) =>
+        bundle.write({
+          banner: fs.readFileSync(`./dist/${script.meta}`, 'utf8'),
+          // intro: `var W = (typeof unsafeWindow === 'undefined') ? window : unsafeWindow; \n
+          //     /* global $:readonly, JSZip:readonly ,NProgress:readonly , jscolor:readonly , ColorScheme:readonly , Swal:readonly */`,
+          format: 'iife',
+          file: `dist/${script.name}`,
+          // globals,
+        }),
+      );
     } else {
       return esbuild
         .build({
@@ -139,8 +185,8 @@ function prep() {
   if (!fs.existsSync('./dist')) {
     fs.mkdirSync('./dist', { recursive: true });
   }
-  minify = true;
-  vite = true;
+  // minify = true;
+  // build = 'vite';
   return Promise.resolve();
 }
 
