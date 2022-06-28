@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import NProgress from 'nprogress';
 import imagesLoaded from 'imagesloaded';
 import { logScript } from '../utils/tampermonkey';
@@ -12,6 +11,7 @@ import {
   isPagesManga,
 } from '../types';
 import { getElementAttribute } from '../utils/request';
+import lazyLoad from '../utils/lazyLoad.js';
 
 // After pages load apply default Zoom
 function applyZoom(pages: string = '.PageContent img', zoom = settings.Zoom) {
@@ -125,15 +125,12 @@ function addImg(index: number, imageSrc: string) {
       logScript('Loaded Image:', index, 'Source:', src);
     } else {
       img.setAttribute('data-src', src);
-      $(img)
-        .unveil({
-          offset: 1000,
-        })
-        .on('loaded.unveil', () => {
-          const imgLoad = imagesLoaded(img.parentElement!);
-          imgLoad.on('progress', onImagesProgress);
-          logScript('Unveiled Image: ', index, ' Source: ', img.getAttribute('src'));
-        });
+
+      lazyLoad(img, () => {
+        const imgLoad = imagesLoaded(img.parentElement!);
+        imgLoad.on('progress', onImagesProgress);
+        logScript('Lazy Image: ', index, ' Source: ', img.getAttribute('src'));
+      });
     }
   }
 }
@@ -147,7 +144,7 @@ function findPage(manga: IMangaPages, index: number, pageUrl: string, lazy: bool
       img.style.width = 'auto';
       const imgLoad = imagesLoaded(img.parentElement!);
       imgLoad.on('progress', onImagesProgress);
-      logScript(`${lazy && 'Unveiled '}Page: `, index, ' Source: ', img.getAttribute('src'));
+      logScript(`${lazy && 'Lazy '}Page: `, index, ' Source: ', img.getAttribute('src'));
     }
   };
 }
@@ -163,11 +160,7 @@ async function addPage(manga: IMangaPages, index: number, pageUrl: string) {
         'data-src',
         'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
       );
-      $(img)
-        .unveil({
-          offset: 2000,
-        })
-        .on('loaded.unveil', findPage(manga, index, pageUrl, false));
+      lazyLoad(img, findPage(manga, index, pageUrl, false));
     }
   }
 }

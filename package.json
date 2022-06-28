@@ -63,8 +63,7 @@
         "jquery": "^3.6.0",
         "jszip": "^3.10.0",
         "nprogress": "^0.2.0",
-        "sweetalert2": "^11.4.19",
-        "unveil2": "^2.0.8"
+        "sweetalert2": "^11.4.19"
     },
     "browserslist": {
         "production": [

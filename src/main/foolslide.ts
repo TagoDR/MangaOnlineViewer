@@ -11,6 +11,7 @@ export default {
   language: ['English'],
   obs: 'Any Site that uses FoOLSlide',
   category: 'manga',
+  waitEle: 'img.open',
   run() {
     const chapter = [...document.querySelectorAll('.topbar_left .dropdown_parent:last-of-type li')];
     const origin = chapter.findIndex((item) => {
