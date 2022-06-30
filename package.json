@@ -49,7 +49,6 @@
         "eslint-plugin-import": "^2.26.0",
         "eslint-plugin-prettier": "^4.1.0",
         "gulp": "^4.0.2",
-        "gulp-file": "^0.4.0",
         "gulp-preprocess": "^4.0.2",
         "prettier": "^2.7.1",
         "rollup": "^2.75.7",
