@@ -6,6 +6,7 @@ export default {
   language: ['English'],
   category: 'hentai',
   run() {
+    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     function getExt(ext: string) {
       if (ext === 'g') return 'gif';
       if (ext === 'b') return 'bmp';
@@ -20,9 +21,9 @@ export default {
       ?.replace(/\d+.\w\w\w$/, '');
     // eslint-disable-next-line camelcase
     const ext =
-      (window as any).images_ext?.map(getExt) ||
+      W.images_ext?.map(getExt) ||
       // eslint-disable-next-line no-underscore-dangle
-      (window as any)._gallery?.images?.pages?.map((i: { t: string }) => getExt(i.t)) ||
+      W._gallery?.images?.pages?.map((i: { t: string }) => getExt(i.t)) ||
       Array(num).fill('jpg');
     return {
       title: document.querySelector('title')?.textContent?.split('- Page')[0].trim(),

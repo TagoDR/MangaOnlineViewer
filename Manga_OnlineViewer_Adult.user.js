@@ -547,6 +547,7 @@
         language: ['English'],
         category: 'hentai',
         run() {
+            const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
             function getExt(ext) {
                 if (ext === 'g')
                     return 'gif';
@@ -562,9 +563,9 @@
                 ?.getAttribute('src')
                 ?.replace(/\d+.\w\w\w$/, '');
             // eslint-disable-next-line camelcase
-            const ext = window.images_ext?.map(getExt) ||
+            const ext = W.images_ext?.map(getExt) ||
                 // eslint-disable-next-line no-underscore-dangle
-                window._gallery?.images?.pages?.map((i) => getExt(i.t)) ||
+                W._gallery?.images?.pages?.map((i) => getExt(i.t)) ||
                 Array(num).fill('jpg');
             return {
                 title: document.querySelector('title')?.textContent?.split('- Page')[0].trim(),
