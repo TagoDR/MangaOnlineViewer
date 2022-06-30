@@ -1,12 +1,35 @@
-/dist/
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Covers JetBrains WebStorm
-.idea/
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
 
-# OS X
+# testing
+/coverage
+
+# production
+/build
+
+# misc
 .DS_Store*
 Icon?
 ._*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+desktop.ini
+/dist
+
+
+# Covers JetBrains WebStorm
+.idea/
 
 # Windows
 Thumbs.db
@@ -18,7 +41,6 @@ Desktop.ini
 *~
 
 # npm
-node_modules
 *.log
 
 

@@ -1,14 +1,16 @@
 {
     "name": "mangaonlineviewer",
-    "version": "22.1.0",
     "description": "Userscript that helps to read Manga faster by loading all the pages at once",
+    "version": "30.0.0",
     "scripts": {
+        "start": "vite",
         "build": "gulp build",
         "release": "gulp release"
     },
     "author": "TagoDR",
     "license": "MIT",
-    "type": "commonjs",
+    "type": "module",
+    "private": true,
     "repository": {
         "type": "git",
         "url": "git+https://github.com/TagoDR/MangaOnlineViewer.git"
@@ -20,40 +22,65 @@
         "online",
         "loader"
     ],
-    "bugs": {
-        "url": "https://github.com/TagoDR/MangaOnlineViewer/issues"
-    },
+    "bugs": "https://github.com/TagoDR/MangaOnlineViewer/issues",
     "homepage": "https://github.com/TagoDR/MangaOnlineViewer#readme",
     "devDependencies": {
-        "@babel/cli": "^7.17.10",
-        "@babel/core": "^7.18.2",
-        "@babel/eslint-parser": "^7.18.2",
-        "@babel/plugin-external-helpers": "^7.17.12",
-        "@babel/register": "^7.17.7",
+        "@fal-works/esbuild-plugin-global-externals": "^2.1.2",
         "@rbnlffl/rollup-plugin-eslint": "^3.0.0",
-        "@rollup/plugin-babel": "^5.3.1",
-        "@rollup/plugin-commonjs": "^22.0.0",
+        "@rollup/plugin-commonjs": "^22.0.1",
         "@rollup/plugin-node-resolve": "^13.3.0",
-        "babel-plugin-remove-template-literals-whitespace": "^1.0.4",
-        "babel-preset-airbnb": "^5.0.0",
-        "eslint": "^8.17.0",
-        "eslint-config-airbnb": "^19.0.4",
+        "@rollup/plugin-typescript": "^8.3.3",
+        "@types/file-saver": "^2.0.5",
+        "@types/imagesloaded": "^4.1.2",
+        "@types/jquery": "^3.5.14",
+        "@types/node": "^18.0.0",
+        "@types/nprogress": "^0.2.0",
+        "@types/tampermonkey": "^4.0.5",
+        "@typescript-eslint/eslint-plugin": "^5.30.0",
+        "@typescript-eslint/parser": "^5.30.0",
+        "del": "^6.1.1",
+        "esbuild": "^0.14.47",
+        "esbuild-minify-templates": "^0.8.0",
+        "eslint": "^8.18.0",
         "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-airbnb-typescript": "^17.0.0",
         "eslint-config-prettier": "^8.5.0",
+        "eslint-import-resolver-typescript": "^3.1.1",
         "eslint-plugin-import": "^2.26.0",
-        "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-prettier": "^4.1.0",
         "gulp": "^4.0.2",
-        "gulp-cli": "^2.3.0",
-        "gulp-file": "^0.4.0",
         "gulp-preprocess": "^4.0.2",
-        "gulp-prettier": "^4.0.0",
-        "gulp-uglify": "^3.0.2",
-        "prettier": "^2.6.2",
-        "rollup": "^2.75.6",
+        "prettier": "^2.7.1",
+        "rollup": "^2.75.7",
+        "rollup-plugin-bundle-size": "^1.0.3",
         "rollup-plugin-cleanup": "^3.2.1",
         "rollup-plugin-external-globals": "^0.6.1",
-        "rollup-plugin-string-html": "^1.0.0",
-        "userscript-meta": "^1.0.1"
+        "ts-import": "^4.0.0-beta.2",
+        "tslib": "^2.4.0",
+        "typescript": "^4.7.4",
+        "userscript-meta": "^1.0.1",
+        "vite": "^2.9.13"
+    },
+    "dependencies": {
+        "color-scheme": "^1.0.1",
+        "file-saver": "^2.0.5",
+        "imagesloaded": "^5.0.0",
+        "jquery": "^3.6.0",
+        "jszip": "^3.10.0",
+        "nprogress": "^0.2.0",
+        "sweetalert2": "^11.4.19"
+    },
+    "browserslist": {
+        "production": [
+            ">20.0%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
     },
     "prettier": {
         "semi": true,
@@ -62,16 +89,17 @@
         "printWidth": 100
     },
     "eslintConfig": {
-        "parser": "@babel/eslint-parser",
+        "parser": "@typescript-eslint/parser",
         "parserOptions": {
-            "sourceType": "module",
-            "experimentalObjectRestSpread": true
+            "ecmaVersion": 2020,
+            "project": [
+                "./tsconfig.json",
+                "./tsconfig.node.json"
+            ]
         },
         "env": {
             "browser": true,
-            "commonjs": true,
             "es6": true,
-            "jquery": true,
             "greasemonkey": true
         },
         "globals": {
@@ -84,31 +112,58 @@
             "Swal": "readonly"
         },
         "extends": [
-            "eslint:recommended",
             "airbnb-base",
+            "airbnb-typescript/base",
             "prettier"
         ],
         "plugins": [
             "import",
-            "prettier"
+            "prettier",
+            "@typescript-eslint"
         ],
+        "settings": {
+            "import/resolver": {
+                "node": {
+                    "extensions": [
+                        ".js",
+                        ".ts",
+                        ".jsx",
+                        ".tsx",
+                        ".json"
+                    ]
+                }
+            },
+            "import/extensions": [
+                ".js",
+                ".ts",
+                ".mjs",
+                ".jsx",
+                ".tsx"
+            ]
+        },
         "rules": {
             "prettier/prettier": [
                 "warn"
             ],
-            "linebreak-style": [
-                "off",
-                "windows"
-            ],
             "no-console": "warn",
-            "prefer-destructuring": [
+            "import/extensions": [
                 "error",
+                "always",
                 {
-                    "object": true,
-                    "array": false
+                    "pattern": {
+                        "jsx": "never",
+                        "tsx": "never",
+                        "ts": "never",
+                        "js": "never"
+                    }
                 }
             ],
-            "function-paren-newline": "off"
+            "no-param-reassign": [
+                "error",
+                {
+                    "props": false
+                }
+            ]
         }
     },
     "eslintIgnore": [
@@ -120,22 +175,5 @@
         "Manga_OnlineViewer.user.js",
         "Manga_OnlineViewer_Adult.meta.js",
         "Manga_OnlineViewer_Adult.user.js"
-    ],
-    "babel": {
-        "presets": [
-            [
-                "airbnb",
-                {
-                    "targets": {
-                        "firefox": "100",
-                        "chrome": "100"
-                    }
-                }
-            ]
-        ],
-        "plugins": [
-            "@babel/plugin-external-helpers",
-            "babel-plugin-remove-template-literals-whitespace"
-        ]
-    }
+    ]
 }
