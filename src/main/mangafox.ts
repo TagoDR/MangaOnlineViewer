@@ -5,6 +5,7 @@ export default {
   homepage: ['https://fanfox.net/', 'https://www.mangahere.cc/'],
   language: ['English'],
   category: 'manga',
+  waitVar: 'chapterid',
   async run() {
     const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     const key = document.querySelector('#dm5_key')?.getAttribute('value');
@@ -15,12 +16,12 @@ export default {
       },
     };
     const src = Array(W.imagecount)
-      .fill(null)
+      .fill(0)
       .map(async (_, i) => {
-        const url = `chapterfun.ashx?cid=${W.chapterid}&page=${i}&key=${key}`;
+        const url = `chapterfun.ashx?cid=${W.chapterid || W.chapter_id}&page=${i}&key=${key}`;
         const api: string = await fetch(url, options).then((res) => res.text());
         // eslint-disable-next-line no-eval
-        eval(api);
+        (0, eval)(api);
         // @ts-ignore
         return d;
       });
