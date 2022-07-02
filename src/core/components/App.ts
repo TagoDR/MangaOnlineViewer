@@ -18,24 +18,34 @@ const body = (manga: IManga, begin = 0) => `
   settings.hidePageControls ? 'hideControls' : ''
 }'>
   <header id="Header">
-    <aside id='GlobalControls'></aside>
+    <aside id='GlobalControls'>
+      ${imageOptions}
+      ${controls}
+      ${Keybindings}
+    </aside>
     <div class='ViewerTitle'>
       <h1 id='MangaTitle'>${manga.title}</h1>
       <a id='series' href='${manga.series}'>(Return to Chapter List)</a>
     </div>
     <nav id='ChapterNavigation'>
-      <div id='Counters' class='controlLabel'>
+      <div id='Counters' class='ControlLabel'>
         <i>0</i> of <b>${manga.pages}</b> Pages Loaded
-        <span class='controlLabel'>Go to Page:</span>
+        <span class='ControlLabel'>Go to Page:</span>
         <select id='gotoPage'>
           <option selected>#</option>
           ${listOptions(manga.pages).slice(begin).join('')}
         </select>
       </div>
       <div id='ChapterControl' class='ChapterControl'>
-        <a href='#' class='download'>Download</a>
-        <a class='prev' id='prev' href='${manga.prev || ''}'>Previous</a>
-        <a class='next' id='next' href='${manga.next || ''}'>Next</a>
+        <a href='#' class='download NavigationControlButton ControlButton'>
+          Download
+        </a>
+        <a class='prev NavigationControlButton ControlButton' id='prev' href='${manga.prev || ''}'>
+          Previous
+        </a>
+        <a class='next NavigationControlButton ControlButton' id='next' href='${manga.next || ''}'>
+          Next
+        </a>
       </div>
     </nav>
   </header>  
@@ -44,13 +54,8 @@ const body = (manga: IManga, begin = 0) => `
 }'>
     ${listPages(manga.pages).slice(begin).join('')}
   </main>
-  <aside>
-    ${imageOptions}
-    ${controls}
-    ${Keybindings}
-  </aside>
   <nav id='Navigation' class='panel ${settings.showThumbnails ? '' : 'disabled'}'>
-    <div id='NavigationCounters' class='controlLabel'>
+    <div id='NavigationCounters' class='ControlLabel'>
       <img alt='Thumbnails' title='Thumbnails' src='${icon.menu}' class='nav' />
       <i>0</i> of <b>${manga.pages}</b> Pages Loaded
     </div>

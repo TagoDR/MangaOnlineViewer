@@ -22,7 +22,7 @@ function generateZip() {
   // http://stackoverflow.com/questions/8778863/downloading-an-image-using-xmlhttprequest-in-a-userscript/8781262#8781262
   if (cache.downloadFiles === 0) {
     const filenameRegex = /^(?<name>.*?)(?<index>\d+)\.(?<ext>\w+)$/;
-    const images = [...document.querySelectorAll('.MangaPage img')];
+    const images = [...document.querySelectorAll<HTMLImageElement>('.PageImg')];
     const filenames = (() => {
       const result: string[] = [];
       for (let i = 0; i < images.length; i += 1) {
@@ -87,7 +87,7 @@ function generateZip() {
       }
     });
   }
-  const total = document.querySelectorAll('.MangaPage').length;
+  const total = document.querySelectorAll('.PageImg').length;
   if (cache.downloadFiles < total) {
     logScript(`Waiting for Files to Download ${cache.downloadFiles} of ${total}`);
     setTimeout(generateZip, 2000);
@@ -103,7 +103,7 @@ function generateZip() {
         )
         .then((content) => {
           logScript('Download Ready');
-          const zipName = `${document.querySelector('#series b')?.textContent?.trim()}.zip`;
+          const zipName = `${document.querySelector('#MangaTitle')?.textContent?.trim()}.zip`;
           saveAs(content, zipName);
         });
     } catch (e) {

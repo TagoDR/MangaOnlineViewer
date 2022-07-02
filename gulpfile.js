@@ -21,7 +21,7 @@ import externalGlobals from 'rollup-plugin-external-globals';
 import bundleSize from 'rollup-plugin-bundle-size';
 
 let minify = false;
-let build = 'vite'; // 'esbuild' | 'rollup' | 'vite'
+let build = 'esbuild'; // 'esbuild' | 'rollup' | 'vite'
 const scripts = {
   main: {
     entry: 'userscript-main.ts',

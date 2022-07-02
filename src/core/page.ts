@@ -62,7 +62,7 @@ function updateProgress() {
   const percentage = Math.floor((loaded / total) * 100);
   const title = document.querySelector('title');
   if (title) {
-    title.innerHTML = `(${percentage}%) ${document.querySelector('#series i')?.textContent}`;
+    title.innerHTML = `(${percentage}%) ${document.querySelector('#MangaTitle')?.textContent}`;
   }
   document.querySelectorAll('#Counters i, #NavigationCounters i').forEach((ele) => {
     ele.textContent = loaded.toString();

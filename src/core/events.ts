@@ -412,6 +412,7 @@ function controls() {
     $('#ViewerShortcuts').slideToggle();
     $('#ImageOptions').toggleClass('settingsOpen');
     $('#Navigation').toggleClass('visible');
+    $('#Header').toggleClass('visible');
   });
   // Individual Page functions
   // Bookmark Page to resume reading
