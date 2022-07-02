@@ -1,4 +1,4 @@
-import cssStyles from './styles';
+import cssStyles from './components/styles';
 import { externalCSS, externalScripts } from './externals';
 import { icon } from './settings';
 import { themesCSS } from './themes';

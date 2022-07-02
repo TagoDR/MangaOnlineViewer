@@ -481,6 +481,39 @@ function controls() {
     const img = $(event.target).parents('.MangaPage').find('.PageContent');
     img.slideToggle('slow');
   });
+  const useScrollDirection = (showEnd = 0) => {
+    let prevOffset = 0;
+    const header = document.querySelector<HTMLDivElement>('#Header')!;
+    const setScrollDirection = (show: boolean | null) => {
+      if (show == null) {
+        header.classList.remove('scroll-hide');
+        header.classList.remove('scroll-show');
+      } else if (show) {
+        header.classList.add('scroll-show');
+        header.classList.remove('scroll-hide');
+      } else {
+        header.classList.remove('scroll-show');
+        header.classList.add('scroll-hide');
+      }
+    };
+
+    const toggleScrollDirection = () => {
+      const { scrollY } = window;
+      if (showEnd && scrollY + window.innerHeight + showEnd > document.body.offsetHeight) {
+        setScrollDirection(true);
+      } else if (scrollY > prevOffset && scrollY > 50) {
+        setScrollDirection(false);
+      } else if (scrollY < prevOffset && scrollY > 50) {
+        setScrollDirection(true);
+      } else {
+        setScrollDirection(null);
+      }
+      prevOffset = scrollY;
+    };
+
+    window.addEventListener('scroll', toggleScrollDirection);
+  };
+  useScrollDirection(100);
 }
 
 export { controls, setKeyDownEvents };

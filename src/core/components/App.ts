@@ -1,15 +1,12 @@
 import { IManga } from '../../types';
 import { icon, settings } from '../settings';
 import { isMobile } from '../../utils/tampermonkey';
-import { chapterControlBottom, chapterControlTop } from './ChapterControl';
 import listPages from './MangaPages';
 import imageOptions from './ImageOptions';
 import controls from './ViewerControls';
-import htmlKeybinds from '../keybinds';
+import Keybindings from './Keybindings.js';
 import listThumbnails from './Thumbnails';
 
-const title = (manga: IManga) =>
-  `<div class='ViewerTitle'><a id='series' href='${manga.series}'><i>${manga.title}</i><br/>(Return to Chapter List)</a></div>`;
 const listOptions = (times: number) =>
   Array(times)
     .fill(null)
@@ -20,31 +17,37 @@ const body = (manga: IManga, begin = 0) => `
   class='${settings.theme} ${isMobile ? 'mobile' : ''} ${
   settings.hidePageControls ? 'hideControls' : ''
 }'>
-  <header>
-    ${title(manga)}
-    <div id='Counters' class='controlLabel'>
-      <i>0</i> of <b>${manga.pages}</b> Pages Loaded
-      <span class='controlLabel'>Go to Page:</span>
-      <select id='gotoPage'>
-        <option selected>#</option>
-        ${listOptions(manga.pages).slice(begin).join('')}
-      </select>
+  <header id="Header">
+    <aside id='GlobalControls'></aside>
+    <div class='ViewerTitle'>
+      <h1 id='MangaTitle'>${manga.title}</h1>
+      <a id='series' href='${manga.series}'>(Return to Chapter List)</a>
     </div>
-    ${chapterControlTop(manga)}
+    <nav id='ChapterNavigation'>
+      <div id='Counters' class='controlLabel'>
+        <i>0</i> of <b>${manga.pages}</b> Pages Loaded
+        <span class='controlLabel'>Go to Page:</span>
+        <select id='gotoPage'>
+          <option selected>#</option>
+          ${listOptions(manga.pages).slice(begin).join('')}
+        </select>
+      </div>
+      <div id='ChapterControl' class='ChapterControl'>
+        <a href='#' class='download'>Download</a>
+        <a class='prev' id='prev' href='${manga.prev || ''}'>Previous</a>
+        <a class='next' id='next' href='${manga.next || ''}'>Next</a>
+      </div>
+    </nav>
   </header>  
   <main id='Chapter' class='${settings.fitWidthIfOversize === true ? 'fitWidthIfOversize' : ''} ${
   settings.viewMode
 }'>
     ${listPages(manga.pages).slice(begin).join('')}
   </main>
-  <footer>
-    ${title(manga)}
-    ${chapterControlBottom(manga)}
-  </footer>
   <aside>
     ${imageOptions}
     ${controls}
-    ${htmlKeybinds}
+    ${Keybindings}
   </aside>
   <nav id='Navigation' class='panel ${settings.showThumbnails ? '' : 'disabled'}'>
     <div id='NavigationCounters' class='controlLabel'>

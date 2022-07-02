@@ -1,4 +1,4 @@
-export default `<div id='ViewerShortcuts' class='panel' style='display: none;'>
+const keybindings = `<div id='ViewerShortcuts' class='panel' style='display: none;'>
     <kbd class='dark'>Numpad 5</kbd>/<kbd class='dark'>/</kbd>: Open Settings<br/>
     <kbd class='dark'>Numpad +</kbd>/<kbd class='dark'>=</kbd>: Global Zoom in pages (enlarge)<br/>
     <kbd class='dark'>Numpad -</kbd>/<kbd class='dark'>-</kbd>: Global Zoom out pages (reduce)<br/>
@@ -13,3 +13,5 @@ export default `<div id='ViewerShortcuts' class='panel' style='display: none;'>
     <kbd class='dark'>↑</kbd>/<kbd class='dark'>W</kbd>/<kbd class='dark'>Numpad 8</kbd>: Scroll Up<br/>
     <kbd class='dark'>↓</kbd>/<kbd class='dark'>S</kbd>/<kbd class='dark'>Numpad 2</kbd>: Scroll Down<br/>
 </div>`;
+
+export default keybindings;

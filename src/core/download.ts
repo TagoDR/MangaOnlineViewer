@@ -22,7 +22,7 @@ function generateZip() {
   // http://stackoverflow.com/questions/8778863/downloading-an-image-using-xmlhttprequest-in-a-userscript/8781262#8781262
   if (cache.downloadFiles === 0) {
     const filenameRegex = /^(?<name>.*?)(?<index>\d+)\.(?<ext>\w+)$/;
-    const images = document.querySelectorAll('.MangaPage img');
+    const images = [...document.querySelectorAll('.MangaPage img')];
     const filenames = (() => {
       const result: string[] = [];
       for (let i = 0; i < images.length; i += 1) {
@@ -87,31 +87,27 @@ function generateZip() {
       }
     });
   }
-  const total = parseInt(
-    document.getElementById('Counters')?.querySelector('b')?.textContent || '',
-    10,
-  );
+  const total = document.querySelectorAll('.MangaPage').length;
   if (cache.downloadFiles < total) {
     logScript(`Waiting for Files to Download ${cache.downloadFiles} of ${total}`);
     setTimeout(generateZip, 2000);
   } else {
-    const blobLink = document.getElementById('blob') as HTMLAnchorElement;
     try {
-      blobLink.download = `${document.querySelector('#series b')?.textContent?.trim()}.zip`;
+      logScript('Generating Zip');
       cache.zip
-        .generateAsync({
-          type: 'blob',
-        })
+        .generateAsync(
+          {
+            type: 'blob',
+          },
+          // logScript, progress
+        )
         .then((content) => {
-          // blobLink.href = unsafeWindow.URL.createObjectURL(content);
           logScript('Download Ready');
-          // document.getElementById('blob')?.dispatchEvent(new Event('click'));
-          const zipName = `${document.querySelector('#series i')?.textContent?.trim()}.zip`;
+          const zipName = `${document.querySelector('#series b')?.textContent?.trim()}.zip`;
           saveAs(content, zipName);
         });
     } catch (e) {
       logScript(e);
-      // blobLink.innerHTML += ' (not supported on this browser)';
     }
   }
 }
