@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Batoto, ComiCastle, DisasterScans, Dynasty-Scans, Leitor, LHTranslation, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTown, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, SenManga(Raw), TenManga, TuMangaOnline, UnionMangas, Manga33, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, ReaperScans, JaiminisBox
-// @version 2022.06.30
+// @version 2022.07.02
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -1049,7 +1049,7 @@ img {
 #MangaOnlineViewer {
   width: 100%;
   height: 100%;
-  padding-bottom: 100px;
+  padding-bottom: 40px;
   min-height: 1080px;
 }
 
@@ -1059,13 +1059,11 @@ img {
 }
 
 #MangaOnlineViewer #Chapter.WebComic .PageFunctions {
-  position: relative;
-  margin-bottom: -23px;
 }
 
 #MangaOnlineViewer #Chapter.WebComic .PageContent {
   margin-bottom: 0;
-  line-height: 0;
+  margin-top: -23px;
 }
 
 #MangaOnlineViewer #Chapter.FluidLTR .MangaPage {
@@ -1091,6 +1089,7 @@ img {
   left: 405px;
   width: auto;
   display: none;
+  z-index: 1000;
 }
 
 #MangaOnlineViewer #ViewerShortcuts {
@@ -1100,7 +1099,7 @@ img {
   left: 0;
 }
 
-#MangaOnlineViewer #ViewerControls .controlLabel {
+#MangaOnlineViewer #ViewerControls .ControlLabel {
   display: list-item;
   list-style: none;
 }
@@ -1111,9 +1110,13 @@ img {
   margin-bottom: 5px;
 }
 
-#MangaOnlineViewer .controlButton {
+#MangaOnlineViewer .ControlButton {
   cursor: pointer;
-  border: 0 none;
+  border-radius: 5px;
+  border-width: 1px;
+}
+#MangaOnlineViewer .ControlButton:hover {
+  opacity: 0.8;
 }
 
 #MangaOnlineViewer #ImageOptions {
@@ -1121,15 +1124,13 @@ img {
   position: absolute;
   top: 0;
   width: 405px;
+  z-index:1000;
 }
 
 #MangaOnlineViewer #ImageOptions .panel {
   padding: 5px;
   position: inherit;
-}
-
-#MangaOnlineViewer #ImageOptions:hover {
-  position: fixed;
+  z
 }
 
 #MangaOnlineViewer #ImageOptions.settingsOpen {
@@ -1164,11 +1165,15 @@ img {
   display: inline-block;
 }
 
-#MangaOnlineViewer .PageContent img[src=""],
-#MangaOnlineViewer .PageContent img:not([src]) {
+#MangaOnlineViewer .PageContent .PageImg[src=""],
+#MangaOnlineViewer .PageContent .PageImg:not([src]) {
   width: 500px;
   height: 750px;
   display: inline-block;
+}
+
+#MangaOnlineViewer .fitWidthIfOversize .PageContent .PageImg {
+  max-width: 100%;
 }
 
 #MangaOnlineViewer #gotoPage {
@@ -1179,30 +1184,63 @@ img {
   width: 110px;
 }
 
-#MangaOnlineViewer header, #MangaOnlineViewer footer {
- display: flex;
- justify-content: center;
- align-content: center;
- position: relative;
+#MangaOnlineViewer #Header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  flex-flow: row nowrap;  
+  transition: transform 0.3s ease-in, background-color 0.3s linear;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: inherit;
+  z-index: 900;
+}
+
+#MangaOnlineViewer #Header.scroll-hide {
+    transform: translateY(-100%);
+}
+
+#MangaOnlineViewer #Header.scroll-show,
+#MangaOnlineViewer #Header.visible{
+    transform: translateY(-1%);
+}
+
+#MangaOnlineViewer #MangaTitle {
+  padding: 2px;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: normal;
+}
+
+#MangaOnlineViewer #GlobalControls {
+  flex-basis: 30%;
+}
+
+#MangaOnlineViewer #ChapterNavigation {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  flex-basis: 30%;
 }
 
 #MangaOnlineViewer .ChapterControl {
-  right: 300px;
-  position: absolute;
-  top: 20px;
 }
 
-#MangaOnlineViewer .ChapterControl a {
-  display: inline-block;
+#MangaOnlineViewer .ChapterControl .NavigationControlButton {
+  display: inline-flex;
   width: 80px;
   height: 25px;
-  text-align: center;
-  margin-left: 3px;
-  margin-bottom: -1px;
+  margin: 3px;
+  justify-content: center;
+  align-items: center;
 }
 
-#MangaOnlineViewer .ChapterControl a[href='#'],
-#MangaOnlineViewer .ChapterControl a[href=''] {
+#MangaOnlineViewer .ChapterControl .NavigationControlButton[href='#'],
+#MangaOnlineViewer .ChapterControl .NavigationControlButton[href=''] {
   visibility: hidden
 }
 
@@ -1212,46 +1250,53 @@ img {
   max-width: 500px;
   display: flex;
   justify-content: center;
-  align-content: center;
-  padding-top: 10px;
+  align-items: center;
+  flex-direction: column;
+  padding: 5px;
 }
 
 #MangaOnlineViewer #Counters {
-  position: absolute;
-  right: 10px;
-  top: 22px;
 }
 
 #MangaOnlineViewer .PageFunctions {
   font-family: monospace;
-  font-size: 10pt;
-  padding-right: 120px;
-  text-align: right
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 3px;
+  position: relative;
 }
 
-#MangaOnlineViewer .PageFunctions > span {
+#MangaOnlineViewer .PageFunctions > .PageIndex {
   min-width: 20px;
   text-align: center;
   display: inline-block;
   padding: 2px 10px
 }
 
-#MangaOnlineViewer .PageFunctions > a {
+#MangaOnlineViewer .PageFunctions > .ControlButton {
   height: 16px;
   width: 16px;
-  padding: 10px;
+  padding: 0 5px;
+  margin: 0;
+  border-width: 0;
 }
 
-#MangaOnlineViewer .PageFunctions a {
+#MangaOnlineViewer .PageFunctions .ControlButton {
   opacity: 0.2;
 }
 
-#MangaOnlineViewer .PageFunctions:hover a {
+#MangaOnlineViewer .PageFunctions:hover .ControlButton {
   opacity: 1;
 }
 
+#MangaOnlineViewer .PageFunctions .ControlButton:hover {
+  opacity: 0.9;
+}
+
 #MangaOnlineViewer.hideControls .PageFunctions {
-  display: none;
   visibility: hidden;
 }
 
@@ -1270,6 +1315,7 @@ img {
   white-space: nowrap;
   width: 100%;
   text-align: center;
+  transition: transform 0.3s ease-in, background-color 0.3s linear;
 }
 
 #MangaOnlineViewer #Navigation #Thumbnails {
@@ -1278,7 +1324,7 @@ img {
 }
 
 #MangaOnlineViewer #Navigation:hover {
-  bottom: 0;
+  transform: translateY(-180px);
 }
 
 #MangaOnlineViewer #Navigation.disabled {
@@ -1286,7 +1332,7 @@ img {
 }
 
 #MangaOnlineViewer #Navigation.visible {
-  bottom: 0;
+  transform: translateY(-180px);
 }
 
 #MangaOnlineViewer #Navigation .Thumbnail {
@@ -1296,7 +1342,7 @@ img {
   position: relative;
 }
 
-#MangaOnlineViewer #Navigation .Thumbnail span {
+#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailIndex {
   display: block;
   opacity: 0.8;
   position: relative;
@@ -1304,7 +1350,7 @@ img {
   width: 100%;
 }
 
-#MangaOnlineViewer #Navigation .Thumbnail img {
+#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailImg {
   align-content: center;
   cursor: pointer;
   display: inline-block;
@@ -1342,118 +1388,125 @@ img {
   top: -5px;
   display: inline-block;
 }
-
-#MangaOnlineViewer.mobile * {
-  float: none !important;
-}
-
-#MangaOnlineViewer.mobile #Navigation {
+#MangaOnlineViewer #blob{
   display: none;
 }
 
-#MangaOnlineViewer.mobile .PageFunctions {
-  padding: 0;
-}
-
-#MangaOnlineViewer.mobile .PageFunctions a:not(.Bookmark) {
-  display: none;
-}
-
-#MangaOnlineViewer.mobile .PageFunctions a.Bookmark {
-  opacity: 1;
-}
-
-#MangaOnlineViewer.mobile .PageFunctions span {
-  right: 0;
-  position: inherit;
-  text-align: center;
-}
-
-#MangaOnlineViewer.mobile .PageContent {
-  margin: 0;
-  width: 100%;
-}
-
-#MangaOnlineViewer.mobile .PageContent img {
-  width: 100% !important;
-}
-
-#MangaOnlineViewer.mobile .fitWidthIfOversize .PageContent img {
-  max-width: 100%;
-}
-
-#MangaOnlineViewer.mobile #ImageOptions img:not(#settings) {
-  display: none;
-}
-
-#MangaOnlineViewer.mobile #ViewerShortcuts {
-  display: none !important;
-}
-
-#MangaOnlineViewer.mobile #ViewerControls {
-  padding: 8px;
-  position: fixed;
-  top: 0;
-  left: 45px;
-  width: auto;
-}
-
-#MangaOnlineViewer.mobile #ViewerControls span.DefaultZoom,
-#MangaOnlineViewer.mobile #ViewerControls span.viewMode,
-#MangaOnlineViewer.mobile #ViewerControls span.fitIfOversize,
-#MangaOnlineViewer.mobile #ViewerControls span.showThumbnails,
-#MangaOnlineViewer.mobile #ViewerControls span.lazyLoadImages,
-#MangaOnlineViewer.mobile #ViewerControls span.downloadZip {
-  display: none;
-}
-
-#MangaOnlineViewer.mobile #ViewerControls {
-  padding: 8px;
-  position: fixed;
-  top: 0;
-  left: 45px;
-  width: auto;
-}
-
-#MangaOnlineViewer.mobile #ImageOptions #menu {
-  display: none;
-}
-
-#MangaOnlineViewer.mobile #ImageOptions #Zoom {
-  display: none;
-}
-
-#MangaOnlineViewer.mobile .ViewerTitle {
-  height: auto;
-}
-
-#MangaOnlineViewer.mobile .ChapterControl {
-  margin: 10px;
-  display: block;
-  text-align: center;
-}
-
-#MangaOnlineViewer.mobile .ChapterControl .download {
-  display: none;
-}
-
-#MangaOnlineViewer.mobile #Counters {
-  position: inherit;
-  text-align: center;
-  margin: 10px;
-}
-
-#MangaOnlineViewer.mobile #Chapter {
-  margin: 5px auto 0;
-}
-
-#MangaOnlineViewer .fitWidthIfOversize .PageContent img {
-  max-width: 100%;
-}
-
-#MangaOnlineViewer .minicolors-theme-default .minicolors-swatch {
-  top: 2px;
-  left: 2px;
+/* Mobile styles*/
+@media (max-width: 768px) {
+  #MangaOnlineViewer #Header {
+      flex-direction: column;
+  }
+  #MangaOnlineViewer .ViewerTitle {
+      order: 1;
+      flex-basis: 100%;
+  }
+  #MangaOnlineViewer #GlobalControls {
+      order: 2;
+  }
+  #MangaOnlineViewer #ChapterNavigation {
+      order: 3;
+  }
+  
+  #MangaOnlineViewer #Navigation {
+    display: none;
+  }
+  
+  #MangaOnlineViewer .PageFunctions {
+    padding: 0;
+  }
+  
+  #MangaOnlineViewer .PageFunctions a:not(.Bookmark) {
+    display: none;
+  }
+  
+  #MangaOnlineViewer .PageFunctions a.Bookmark {
+    opacity: 1;
+  }
+  
+  #MangaOnlineViewer .PageFunctions span {
+    right: 0;
+    position: inherit;
+    text-align: center;
+  }
+  
+  #MangaOnlineViewer .PageContent {
+    margin: 0;
+    width: 100%;
+  }
+  
+  #MangaOnlineViewer .PageContent img {
+    width: 100% !important;
+  }
+  
+  #MangaOnlineViewer .fitWidthIfOversize .PageContent img {
+    max-width: 100%;
+  }
+  
+  #MangaOnlineViewer #ImageOptions img:not(#settings) {
+    display: none;
+  }
+  
+  #MangaOnlineViewer #ViewerShortcuts {
+    display: none !important;
+  }
+  
+  #MangaOnlineViewer #ViewerControls {
+    padding: 8px;
+    position: fixed;
+    top: 0;
+    left: 45px;
+    width: auto;
+  }
+  
+  #MangaOnlineViewer #ViewerControls span.DefaultZoom,
+  #MangaOnlineViewer #ViewerControls span.viewMode,
+  #MangaOnlineViewer #ViewerControls span.fitIfOversize,
+  #MangaOnlineViewer #ViewerControls span.showThumbnails,
+  #MangaOnlineViewer #ViewerControls span.lazyLoadImages,
+  #MangaOnlineViewer #ViewerControls span.downloadZip {
+    display: none;
+  }
+  
+  #MangaOnlineViewer #ViewerControls {
+    padding: 8px;
+    position: fixed;
+    top: 0;
+    left: 45px;
+    width: auto;
+  }
+  
+  #MangaOnlineViewer #ImageOptions #menu {
+    display: none;
+  }
+  
+  #MangaOnlineViewer #ImageOptions #Zoom {
+    display: none;
+  }
+  
+  #MangaOnlineViewer .ViewerTitle {
+    height: auto;
+  }
+  
+  #MangaOnlineViewer .ChapterControl {
+    margin: 10px;
+    display: block;
+    text-align: center;
+  }
+  
+  #MangaOnlineViewer .ChapterControl .download {
+    display: none;
+  }
+  
+  #MangaOnlineViewer #Counters {
+    position: inherit;
+    text-align: center;
+    margin: 10px;
+  }
+  
+  #MangaOnlineViewer #Chapter {
+    margin: 5px auto 0;
+  }
 }
 `;
     const sweetalertStyle = `
@@ -2970,7 +3023,7 @@ body.swal2-toast-shown .swal2-container.swal2-bottom-right {
     // Add custom Themes to the page
     function addTheme(theme) {
         return `<style type='text/css' name='${theme[0]}'>
-  .${theme[0]} .controlLabel, .${theme[0]} .ViewerTitle, .${theme[0]}, .PageFunctions a.visible, .${theme[0]} a, .${theme[0]} a:link, .${theme[0]} a:visited, .${theme[0]} a:active, .${theme[0]} a:focus{ text-decoration:none; color: ${theme[2]};}
+  .${theme[0]} .ControlLabel, .${theme[0]} .ViewerTitle, .${theme[0]}, .PageFunctions a.visible, .${theme[0]} a, .${theme[0]} a:link, .${theme[0]} a:visited, .${theme[0]} a:active, .${theme[0]} a:focus{ text-decoration:none; color: ${theme[2]};}
   .${theme[0]} {background-repeat: repeat;background-position: 0 0;background-image: none;background-color: ${theme[1]};background-attachment: scroll;}
   .${theme[0]} #ImageOptions #menu .menuOuterArrow {border-left-width: 10px;border-left-style: solid;border-left-color: ${theme[4]};}
   .${theme[0]} #ImageOptions #menu .menuInnerArrow {border-left-width: 5px;border-left-style: solid;border-left-color: ${theme[1]};}
@@ -3045,32 +3098,24 @@ ${cssStyles}
 `;
     }
 
-    const chapterControl = (id) => (manga) => `<div id='${id}' class='ChapterControl'>
-    <a href='#' class='download'>Download</a>
-    <a class='prev' id='prev' href='${manga.prev || ''}'>Previous</a>
-    <a class='next' id='next' href='${manga.next || ''}'>Next</a>
-</div>`;
-    const chapterControlTop = chapterControl('ChapterControlTop');
-    const chapterControlBottom = chapterControl('ChapterControlBottom');
-
     // Add Pages Place-holders
     const listPages = (times) => Array(times)
         .fill(null)
         .map((_, index) => `
 <div id='Page${index + 1}' class='MangaPage'>
   <div class='PageFunctions'>
-    <a class='Bookmark controlButton' title='Bookmark'></a>
-    <a class='ZoomIn controlButton' title='Zoom In'></a>
-    <a class='ZoomRestore controlButton' title='Zoom Restore'></a>
-    <a class='ZoomOut controlButton' title='Zoom Out'></a>
-    <a class='ZoomWidth controlButton' title='Zoom to Width'></a>
-    <a class='ZoomHeight controlButton' title='Zoom to Height'></a>
-    <a class='Hide controlButton' title='Hide'></a>
-    <a class='Reload controlButton' title='Reload'></a>
-    <span>${index + 1}</span>
+    <button class='Bookmark ControlButton' title='Bookmark'></button>
+    <button class='ZoomIn ControlButton' title='Zoom In'></button>
+    <button class='ZoomRestore ControlButton' title='Zoom Restore'></button>
+    <button class='ZoomOut ControlButton' title='Zoom Out'></button>
+    <button class='ZoomWidth ControlButton' title='Zoom to Width'></button>
+    <button class='ZoomHeight ControlButton' title='Zoom to Height'></button>
+    <button class='Hide ControlButton' title='Hide'></button>
+    <button class='Reload ControlButton' title='Reload'></button>
+    <span class='PageIndex'>${index + 1}</span>
   </div>
   <div class='PageContent'>
-    <img id='PageImg${index + 1}' alt='PageImg${index + 1}' />
+    <img id='PageImg${index + 1}' alt='PageImg${index + 1}' class='PageImg' />
   </div>
 </div>`);
 
@@ -3079,23 +3124,23 @@ ${cssStyles}
     <span class='menuOuterArrow'><span class='menuInnerArrow'></span></span>
   </div>
   <div class='panel'>
-    <img id='enlarge' alt='Enlarge' title='Enlarge' src='${icon.enlarge}' class='controlButton' />
-    <img id='restore' alt='Restore' title='Restore' src='${icon.restore}' class='controlButton' />
-    <img id='reduce' alt='Reduce' title='Reduce' src='${icon.reduce}' class='controlButton' />
-    <img id='fitWidth' alt='Fit Width' title='Fit Width' src='${icon.fitWidth}' class='controlButton' />
-    <img id='fitHeight' alt='Fit Height' title='Fit Height' src='${icon.fitHeight}' class='controlButton' />
-    <img id='webComic' alt='Web Comic Mode' title='Web Comic Mode' src='${icon.webComic}' class='controlButton' />
-    <img id='ltrMode' alt='Left to Right Mode' title='Left to Right Mode' src='${icon.pictureLeft}' class='controlButton'/>
-    <img id='verticalMode' alt='Vertical Mode' title='Vertical Mode' src='${icon.pictureDown}' class='controlButton'/>
-    <img id='rtlMode' alt='Right to Left Mode' title='Right to Left Mode' src='${icon.pictureRight}' class='controlButton'/>
-    <img id='pageControls' alt='Toggle Page Controls' title='Toggle Page Controls' src='${icon.controls}' class='controlButton'/>
-    <img id='settings' alt='settings' title='settings' src='${icon.settings}' class='controlButton' />
+    <img id='enlarge' alt='Enlarge' title='Enlarge' src='${icon.enlarge}' class='ControlButton' />
+    <img id='restore' alt='Restore' title='Restore' src='${icon.restore}' class='ControlButton' />
+    <img id='reduce' alt='Reduce' title='Reduce' src='${icon.reduce}' class='ControlButton' />
+    <img id='fitWidth' alt='Fit Width' title='Fit Width' src='${icon.fitWidth}' class='ControlButton' />
+    <img id='fitHeight' alt='Fit Height' title='Fit Height' src='${icon.fitHeight}' class='ControlButton' />
+    <img id='webComic' alt='Web Comic Mode' title='Web Comic Mode' src='${icon.webComic}' class='ControlButton' />
+    <img id='ltrMode' alt='Left to Right Mode' title='Left to Right Mode' src='${icon.pictureLeft}' class='ControlButton'/>
+    <img id='verticalMode' alt='Vertical Mode' title='Vertical Mode' src='${icon.pictureDown}' class='ControlButton'/>
+    <img id='rtlMode' alt='Right to Left Mode' title='Right to Left Mode' src='${icon.pictureRight}' class='ControlButton'/>
+    <img id='pageControls' alt='Toggle Page Controls' title='Toggle Page Controls' src='${icon.controls}' class='ControlButton'/>
+    <img id='settings' alt='settings' title='settings' src='${icon.settings}' class='ControlButton' />
   </div>
-  <div id='Zoom' class='controlLabel'>Zoom: <b>${settings$1.zoom}</b> %</div>
+  <div id='Zoom' class='ControlLabel'>Zoom: <b>${settings$1.zoom}</b> %</div>
 </div>`;
 
     const controls$1 = `<div id='ViewerControls' class='panel'>
-  <span class='controlLabel ThemeSelector'>Theme:
+  <span class='ControlLabel ThemeSelector'>Theme:
     <select id='ThemeSelector'>
       ${themesSelector}
     </select>
@@ -3108,14 +3153,14 @@ ${cssStyles}
       <span class='FullCustom' ${settings$1.theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Painels:<input id='CustomThemeHuePanel' type='color' value='${settings$1.customThemePanel}' class='colorpicker FullCustom'></span>
       <span class='FullCustom' ${settings$1.theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Buttons:<input id='CustomThemeHueButton' type='color' value='${settings$1.customThemeButton}' class='colorpicker FullCustom'></span>
   </span>
-  <span class='controlLabel loadMode'>Default Load Mode:
+  <span class='ControlLabel loadMode'>Default Load Mode:
     <select id='loadMode'>
       <option value='wait' ${settings$1.loadMode === 'wait' ? 'selected' : ''}>Normal(Wait 3 sec)</option>
       <option value='always' ${settings$1.loadMode === 'always' ? 'selected' : ''}>Always(Immediately)</option>
       <option value='never' ${settings$1.loadMode === 'never' ? 'selected' : ''}>Never(Manually)</option>
     </select>
   </span>
-  <span class='controlLabel PagesPerSecond'>Pages/Second:
+  <span class='ControlLabel PagesPerSecond'>Pages/Second:
     <select id='PagesPerSecond'>
       <option value='3000' ${settings$1.timer === 3000 ? 'selected' : ''}>0.3(Slow)</option>
       <option value='2000' ${settings$1.timer === 2000 ? 'selected' : ''}>0.5</option>
@@ -3126,7 +3171,7 @@ ${cssStyles}
       <option value='100' ${settings$1.timer === 100 ? 'selected' : ''}>10(Extreme)</option>
     </select>
   </span>
-  <span class='controlLabel DefaultZoom'>Default Zoom:
+  <span class='ControlLabel DefaultZoom'>Default Zoom:
     <select id='DefaultZoom'>
       <option value='50' ${settings$1.zoom === 50 ? 'selected' : ''}>50%</option>
       <option value='75' ${settings$1.zoom === 75 ? 'selected' : ''}>75%</option>
@@ -3139,11 +3184,11 @@ ${cssStyles}
       <option value='-1000' ${settings$1.zoom === -1000 ? 'selected' : ''}>Fit Height</option>
     </select>
   </span>
-  <span class='controlLabel zoomStep'>Zoom Change Step (between 5 and 50): <br/>
+  <span class='ControlLabel zoomStep'>Zoom Change Step (between 5 and 50): <br/>
     <input type='range' value='${settings$1.zoomStep}' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput='zoomStepVal.value = this.value'>
     <output id='zoomStepVal'>${settings$1.zoomStep}</output>
   </span>
-  <span class='controlLabel viewMode'>Default View Mode:
+  <span class='ControlLabel viewMode'>Default View Mode:
     <select id='viewMode'>
       <option value='' ${settings$1.viewMode === '' ? 'selected' : ''}>Vertical</option>
       <option value='WebComic' ${settings$1.viewMode === 'WebComic' ? 'selected' : ''}>WebComic</option>
@@ -3151,28 +3196,28 @@ ${cssStyles}
       <option value='FluidRTL' ${settings$1.viewMode === 'FluidRTL' ? 'selected' : ''}>Right to Left</option>
     </select>
   </span>
-  <span class='controlLabel fitIfOversize'>Fit Width if Oversize:
+  <span class='ControlLabel fitIfOversize'>Fit Width if Oversize:
     <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${settings$1.fitWidthIfOversize ? 'checked' : ''}>
   </span>
-  <span class='controlLabel showThumbnails'>Show Thumbnails:
+  <span class='ControlLabel showThumbnails'>Show Thumbnails:
     <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${settings$1.showThumbnails ? 'checked' : ''}>
    </span>
-   <span class='controlLabel lazyLoadImages'>Lazy Load Images:
+   <span class='ControlLabel lazyLoadImages'>Lazy Load Images:
     <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${settings$1.lazyLoadImages ? 'checked' : ''}>
    </span>
-   <span class='controlLabel lazyStart'>Lazy Start From Page (between 5 and 100):<br/>
+   <span class='ControlLabel lazyStart'>Lazy Start From Page (between 5 and 100):<br/>
     <input type='range' value='${settings$1.lazyStart}' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput='lazyStartVal.value = this.value'>
     <output id='lazyStartVal'>${settings$1.lazyStart}</output>
   </span>
-  <span class='controlLabel downloadZip'>Download Images as Zip Automatically:
+  <span class='ControlLabel downloadZip'>Download Images as Zip Automatically:
     <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${settings$1.downloadZip ? 'checked' : ''}>
   </span>
-  <span class='controlLabel hidePageControls'>Always Hide Page Controls:
+  <span class='ControlLabel hidePageControls'>Always Hide Page Controls:
     <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${settings$1.hidePageControls ? 'checked' : ''}>
   </span>
 </div>`;
 
-    var htmlKeybinds = `<div id='ViewerShortcuts' class='panel' style='display: none;'>
+    const keybindings = `<div id='ViewerShortcuts' class='panel' style='display: none;'>
     <kbd class='dark'>Numpad 5</kbd>/<kbd class='dark'>/</kbd>: Open Settings<br/>
     <kbd class='dark'>Numpad +</kbd>/<kbd class='dark'>=</kbd>: Global Zoom in pages (enlarge)<br/>
     <kbd class='dark'>Numpad -</kbd>/<kbd class='dark'>-</kbd>: Global Zoom out pages (reduce)<br/>
@@ -3190,41 +3235,55 @@ ${cssStyles}
 
     const listThumbnails = (times) => Array(times)
         .fill(null)
-        .map((_, index) => `<div id='Thumbnail${index + 1}' class='Thumbnail'><img id='ThumbnailImg${index + 1}' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`);
+        .map((_, index) => `
+<div id='Thumbnail${index + 1}' class='Thumbnail'>
+  <img id='ThumbnailImg${index + 1}' alt='ThumbnailImg${index + 1}' class='ThumbnailImg' src=''/>
+  <span class='ThumbnailIndex'>${index + 1}</span>
+</div>`);
 
-    const title = (manga) => `<div class='ViewerTitle'><a id='series' href='${manga.series}'><i>${manga.title}</i><br/>(Return to Chapter List)</a></div>`;
     const listOptions = (times) => Array(times)
         .fill(null)
         .map((_, index) => `<option value='${index + 1}'>${index + 1}</option>`);
     const body = (manga, begin = 0) => `
 <div id='MangaOnlineViewer'
   class='${settings$1.theme} ${isMobile ? 'mobile' : ''} ${settings$1.hidePageControls ? 'hideControls' : ''}'>
-  <header>
-    ${title(manga)}
-    <div id='Counters' class='controlLabel'>
-      <i>0</i> of <b>${manga.pages}</b> Pages Loaded
-      <span class='controlLabel'>Go to Page:</span>
-      <select id='gotoPage'>
-        <option selected>#</option>
-        ${listOptions(manga.pages).slice(begin).join('')}
-      </select>
+  <header id="Header">
+    <aside id='GlobalControls'>
+      ${imageOptions}
+      ${controls$1}
+      ${keybindings}
+    </aside>
+    <div class='ViewerTitle'>
+      <h1 id='MangaTitle'>${manga.title}</h1>
+      <a id='series' href='${manga.series}'>(Return to Chapter List)</a>
     </div>
-    ${chapterControlTop(manga)}
+    <nav id='ChapterNavigation'>
+      <div id='Counters' class='ControlLabel'>
+        <i>0</i> of <b>${manga.pages}</b> Pages Loaded
+        <span class='ControlLabel'>Go to Page:</span>
+        <select id='gotoPage'>
+          <option selected>#</option>
+          ${listOptions(manga.pages).slice(begin).join('')}
+        </select>
+      </div>
+      <div id='ChapterControl' class='ChapterControl'>
+        <a href='#' class='download NavigationControlButton ControlButton'>
+          Download
+        </a>
+        <a class='prev NavigationControlButton ControlButton' id='prev' href='${manga.prev || ''}'>
+          Previous
+        </a>
+        <a class='next NavigationControlButton ControlButton' id='next' href='${manga.next || ''}'>
+          Next
+        </a>
+      </div>
+    </nav>
   </header>  
   <main id='Chapter' class='${settings$1.fitWidthIfOversize === true ? 'fitWidthIfOversize' : ''} ${settings$1.viewMode}'>
     ${listPages(manga.pages).slice(begin).join('')}
   </main>
-  <footer>
-    ${title(manga)}
-    ${chapterControlBottom(manga)}
-  </footer>
-  <aside>
-    ${imageOptions}
-    ${controls$1}
-    ${htmlKeybinds}
-  </aside>
   <nav id='Navigation' class='panel ${settings$1.showThumbnails ? '' : 'disabled'}'>
-    <div id='NavigationCounters' class='controlLabel'>
+    <div id='NavigationCounters' class='ControlLabel'>
       <img alt='Thumbnails' title='Thumbnails' src='${icon.menu}' class='nav' />
       <i>0</i> of <b>${manga.pages}</b> Pages Loaded
     </div>
@@ -3256,7 +3315,7 @@ ${cssStyles}
         // http://stackoverflow.com/questions/8778863/downloading-an-image-using-xmlhttprequest-in-a-userscript/8781262#8781262
         if (cache.downloadFiles === 0) {
             const filenameRegex = /^(?<name>.*?)(?<index>\d+)\.(?<ext>\w+)$/;
-            const images = document.querySelectorAll('.MangaPage img');
+            const images = [...document.querySelectorAll('.PageImg')];
             const filenames = (() => {
                 const result = [];
                 for (let i = 0; i < images.length; i += 1) {
@@ -3312,30 +3371,26 @@ ${cssStyles}
                 }
             });
         }
-        const total = parseInt(document.getElementById('Counters')?.querySelector('b')?.textContent || '', 10);
+        const total = document.querySelectorAll('.PageImg').length;
         if (cache.downloadFiles < total) {
             logScript(`Waiting for Files to Download ${cache.downloadFiles} of ${total}`);
             setTimeout(generateZip, 2000);
         }
         else {
-            const blobLink = document.getElementById('blob');
             try {
-                blobLink.download = `${document.querySelector('#series b')?.textContent?.trim()}.zip`;
+                logScript('Generating Zip');
                 cache.zip
                     .generateAsync({
                     type: 'blob',
                 })
                     .then((content) => {
-                    // blobLink.href = unsafeWindow.URL.createObjectURL(content);
                     logScript('Download Ready');
-                    // document.getElementById('blob')?.dispatchEvent(new Event('click'));
-                    const zipName = `${document.querySelector('#series i')?.textContent?.trim()}.zip`;
+                    const zipName = `${document.querySelector('#MangaTitle')?.textContent?.trim()}.zip`;
                     FileSaver_min.exports.saveAs(content, zipName);
                 });
             }
             catch (e) {
                 logScript(e);
-                // blobLink.innerHTML += ' (not supported on this browser)';
             }
         }
     }
@@ -3821,7 +3876,7 @@ ${cssStyles}
         const percentage = Math.floor((loaded / total) * 100);
         const title = document.querySelector('title');
         if (title) {
-            title.innerHTML = `(${percentage}%) ${document.querySelector('#series i')?.textContent}`;
+            title.innerHTML = `(${percentage}%) ${document.querySelector('#MangaTitle')?.textContent}`;
         }
         document.querySelectorAll('#Counters i, #NavigationCounters i').forEach((ele) => {
             ele.textContent = loaded.toString();
@@ -4357,6 +4412,7 @@ ${cssStyles}
             $('#ViewerShortcuts').slideToggle();
             $('#ImageOptions').toggleClass('settingsOpen');
             $('#Navigation').toggleClass('visible');
+            $('#Header').toggleClass('visible');
         });
         // Individual Page functions
         // Bookmark Page to resume reading
@@ -4422,6 +4478,42 @@ ${cssStyles}
             const img = $(event.target).parents('.MangaPage').find('.PageContent');
             img.slideToggle('slow');
         });
+        const useScrollDirection = (showEnd = 0) => {
+            let prevOffset = 0;
+            const header = document.querySelector('#Header');
+            const setScrollDirection = (show) => {
+                if (show == null) {
+                    header.classList.remove('scroll-hide');
+                    header.classList.remove('scroll-show');
+                }
+                else if (show) {
+                    header.classList.add('scroll-show');
+                    header.classList.remove('scroll-hide');
+                }
+                else {
+                    header.classList.remove('scroll-show');
+                    header.classList.add('scroll-hide');
+                }
+            };
+            const toggleScrollDirection = () => {
+                const { scrollY } = window;
+                if (showEnd && scrollY + window.innerHeight + showEnd > document.body.offsetHeight) {
+                    setScrollDirection(true);
+                }
+                else if (scrollY > prevOffset && scrollY > 50) {
+                    setScrollDirection(false);
+                }
+                else if (scrollY < prevOffset && scrollY > 50) {
+                    setScrollDirection(true);
+                }
+                else {
+                    setScrollDirection(null);
+                }
+                prevOffset = scrollY;
+            };
+            window.addEventListener('scroll', toggleScrollDirection);
+        };
+        useScrollDirection(100);
     }
 
     function display(manga, begin) {
