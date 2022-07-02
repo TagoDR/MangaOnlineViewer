@@ -21,7 +21,7 @@ import externalGlobals from 'rollup-plugin-external-globals';
 import bundleSize from 'rollup-plugin-bundle-size';
 
 let minify = false;
-let build = 'rollup'; // 'esbuild' | 'rollup' | 'vite'
+let build = 'vite'; // 'esbuild' | 'rollup' | 'vite'
 const scripts = {
   main: {
     entry: 'userscript-main.ts',
@@ -57,16 +57,17 @@ function buildUserscript(script) {
       return vite({
         configFile: false,
         esbuild: {
-          banner: metadata,
           keepNames: true,
         },
         build: {
+          target: 'esnext',
           minify: minify ? 'esbuild' : false,
           emptyOutDir: false,
           rollupOptions: {
             input: `src/${script.entry}`,
             plugins: [externalGlobals(globals)],
             output: {
+              banner: metadata,
               format: 'iife',
               entryFileNames: script.name,
             },
