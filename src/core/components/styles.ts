@@ -78,8 +78,18 @@ img {
   top: 0;
   left: 405px;
   width: auto;
-  display: none;
   z-index: 1000;
+  transition: transform 0.3s ease-in, background-color 0.3s linear;
+  display: none;
+}
+
+#MangaOnlineViewer #ViewerControls.visible {
+  display: block;
+}
+
+#MangaOnlineViewer #ViewerControls .ControlLabel {
+  display: list-item;
+  list-style: none;
 }
 
 #MangaOnlineViewer #ViewerShortcuts {
@@ -87,11 +97,11 @@ img {
   position: fixed;
   top: 65px;
   left: 0;
+  display: none;
 }
 
-#MangaOnlineViewer #ViewerControls .ControlLabel {
-  display: list-item;
-  list-style: none;
+#MangaOnlineViewer #ViewerShortcuts.visible {
+  display: block;
 }
 
 #MangaOnlineViewer select {
@@ -152,6 +162,10 @@ img {
   margin: 0 0 15px;
   text-align: center;
   display: inline-block;
+}
+
+#MangaOnlineViewer .PageContent.hide{
+  display: none;
 }
 
 #MangaOnlineViewer .PageContent .PageImg[src=""],
@@ -446,23 +460,20 @@ img {
     top: 0;
     left: 45px;
     width: auto;
-  }
-
-  #MangaOnlineViewer #ViewerControls span.DefaultZoom,
-  #MangaOnlineViewer #ViewerControls span.viewMode,
-  #MangaOnlineViewer #ViewerControls span.fitIfOversize,
-  #MangaOnlineViewer #ViewerControls span.showThumbnails,
-  #MangaOnlineViewer #ViewerControls span.lazyLoadImages,
-  #MangaOnlineViewer #ViewerControls span.downloadZip {
+    transition: transform 0.3s ease-in, background-color 0.3s linear;
     display: none;
   }
+  #MangaOnlineViewer #ViewerControls.visible {
+    display: block;    
+  }
 
-  #MangaOnlineViewer #ViewerControls {
-    padding: 8px;
-    position: fixed;
-    top: 0;
-    left: 45px;
-    width: auto;
+  #MangaOnlineViewer #ViewerControls .DefaultZoom,
+  #MangaOnlineViewer #ViewerControls .viewMode,
+  #MangaOnlineViewer #ViewerControls .fitIfOversize,
+  #MangaOnlineViewer #ViewerControls .showThumbnails,
+  #MangaOnlineViewer #ViewerControls .lazyLoadImages,
+  #MangaOnlineViewer #ViewerControls .downloadZip {
+    display: none;
   }
 
   #MangaOnlineViewer #ImageOptions #menu {

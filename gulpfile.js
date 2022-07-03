@@ -45,7 +45,6 @@ const scripts = {
 };
 const globals = {
   'color-scheme': 'ColorScheme',
-  jquery: '$',
   jszip: 'JSZip',
   sweetalert2: 'Swal',
   nprogress: 'NProgress',

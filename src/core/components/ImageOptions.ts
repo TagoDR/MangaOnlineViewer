@@ -17,6 +17,6 @@ const imageOptions = `<div id='ImageOptions'>
     <img id='pageControls' alt='Toggle Page Controls' title='Toggle Page Controls' src='${icon.controls}' class='ControlButton'/>
     <img id='settings' alt='settings' title='settings' src='${icon.settings}' class='ControlButton' />
   </div>
-  <div id='Zoom' class='ControlLabel'>Zoom: <b>${settings.zoom}</b> %</div>
+  <div id='Zoom' class='ControlLabel'>Zoom: <b id='ZoomPercent'>${settings.zoom}</b> %</div>
 </div>`;
 export default imageOptions;

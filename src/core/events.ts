@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import Swal from 'sweetalert2';
 import { getValueGM, logScript, setValueGM } from '../utils/tampermonkey';
 import generateZip from './download';
@@ -8,23 +7,21 @@ import { addCustomTheme, addFullCustomTheme } from './themes';
 import { IBookmark } from '../types';
 
 // Goto Page and Thumbnails
-function scrollToElement(ele: JQuery) {
-  $(window)
-    .scrollTop(ele.offset()?.top || 0)
-    .scrollLeft(ele.offset()?.left || 0);
+function scrollToElement(ele: HTMLElement | undefined) {
+  window.scroll(0, ele?.offsetTop || 0);
 }
 
 // Clean key press configurations and set some when specified
 function setKeyDownEvents() {
   try {
-    $(document).off('keyup');
-    $(document).off('keydown');
-    $(document).off('keypress');
-    $(document).off('onload');
-    $(window).off('keyup');
-    $(window).off('keydown');
-    $(window).off('keypress');
-    $(window).off('onload');
+    // $(document).off('keyup');
+    // $(document).off('keydown');
+    // $(document).off('keypress');
+    // $(document).off('onload');
+    // $(window).off('keyup');
+    // $(window).off('keydown');
+    // $(window).off('keypress');
+    // $(window).off('onload');
     document.onkeydown = null;
     document.onkeypress = null;
     window.onkeydown = null;
@@ -35,47 +32,43 @@ function setKeyDownEvents() {
     logScript(`Keybinds error: ${e}`);
   }
 
-  function processKey(e: JQuery.KeyDownEvent<Document, undefined, Document, Document>) {
-    const a = e.originalEvent?.code;
-    if (
-      !e.originalEvent?.ctrlKey &&
-      !e.originalEvent?.altKey &&
-      !e.originalEvent?.shiftKey &&
-      !e.originalEvent?.metaKey &&
-      $.inArray(a, [
-        'KeyW',
-        'Numpad8',
-        'KeyS',
-        'Numpad2',
-        'ArrowRight',
-        'Period',
-        'KeyD',
-        'Numpad6',
-        'ArrowLeft',
-        'Comma',
-        'KeyA',
-        'Numpad4',
-        'Equal',
-        'NumpadAdd',
-        'KeyE',
-        'Minus',
-        'NumpadSubtract',
-        'KeyQ',
-        'Digit9',
-        'NumpadDivide',
-        'KeyR',
-        'Digit0',
-        'NumpadMultiply',
-        'KeyF',
-        'Slash',
-        'Numpad5',
-        'KeyX',
-        'KeyC',
-        'KeyV',
-        'KeyB',
-        'KeyN',
-      ]) !== -1
-    ) {
+  function processKey(e: KeyboardEvent) {
+    const a = e.code;
+    console.log('Keyboard:', a, ' Event:', e);
+    const usedKeys = [
+      'KeyW',
+      'Numpad8',
+      'KeyS',
+      'Numpad2',
+      'ArrowRight',
+      'Period',
+      'KeyD',
+      'Numpad6',
+      'ArrowLeft',
+      'Comma',
+      'KeyA',
+      'Numpad4',
+      'Equal',
+      'NumpadAdd',
+      'KeyE',
+      'Minus',
+      'NumpadSubtract',
+      'KeyQ',
+      'Digit9',
+      'NumpadDivide',
+      'KeyR',
+      'Digit0',
+      'NumpadMultiply',
+      'KeyF',
+      'Slash',
+      'Numpad5',
+      'KeyX',
+      'KeyC',
+      'KeyV',
+      'KeyB',
+      'KeyN',
+    ];
+    if (!e.ctrlKey && !e.altKey && !e.shiftKey && !e.metaKey && usedKeys.some((i) => i === a)) {
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
@@ -84,14 +77,13 @@ function setKeyDownEvents() {
         case 'KeyW':
         case 'Numpad8':
           if (settings.zoom === -1000) {
-            const next = $('.MangaPage')
-              .get()
-              .map((item) => $(item).offset()!.top - $(window).scrollTop()!)
-              .findIndex((element) => element > 10);
-            scrollToElement($('.MangaPage').eq(next - 2));
+            const next = [...document.querySelectorAll<HTMLElement>('.MangaPage')].find(
+              (element) => element.offsetTop - window.scrollY > 10,
+            );
+            scrollToElement(next?.previousElementSibling as HTMLElement);
           } else {
             window.scrollBy({
-              top: -$(window).height()! / 2,
+              top: -window.innerHeight / 2,
               behavior: 'smooth',
             });
           }
@@ -100,14 +92,13 @@ function setKeyDownEvents() {
         case 'KeyS':
         case 'Numpad2':
           if (settings.zoom === -1000) {
-            const next = $('.MangaPage')
-              .get()
-              .map((item) => $(item).offset()!.top - $(window).scrollTop()!)
-              .findIndex((element) => element > 10);
-            scrollToElement($('.MangaPage').eq(next));
+            const next = [...document.querySelectorAll<HTMLElement>('.MangaPage')].find(
+              (element) => element.offsetTop - window.scrollY > 10,
+            );
+            scrollToElement(next as HTMLElement);
           } else {
             window.scrollBy({
-              top: $(window).height()! / 2,
+              top: window.innerHeight / 2,
               behavior: 'smooth',
             });
           }
@@ -116,50 +107,50 @@ function setKeyDownEvents() {
         case 'Period':
         case 'KeyD':
         case 'Numpad6':
-          $('.ChapterControl:first .next').trigger('click');
+          document.querySelector('#next')?.dispatchEvent(new Event('click'));
           break;
         case 'ArrowLeft':
         case 'Comma':
         case 'KeyA':
         case 'Numpad4':
-          $('.ChapterControl:first .prev').trigger('click');
+          document.querySelector('#prev')?.dispatchEvent(new Event('click'));
           break;
         case 'Equal':
         case 'NumpadAdd':
         case 'KeyE':
-          $('#enlarge').trigger('click');
+          document.querySelector('#enlarge')?.dispatchEvent(new Event('click'));
           break;
         case 'Minus':
         case 'NumpadSubtract':
         case 'KeyQ':
-          $('#reduce').trigger('click');
+          document.querySelector('#reduce')?.dispatchEvent(new Event('click'));
           break;
         case 'Digit9':
         case 'NumpadDivide':
         case 'KeyR':
-          $('#restore').trigger('click');
+          document.querySelector('#restore')?.dispatchEvent(new Event('click'));
           break;
         case 'Digit0':
         case 'NumpadMultiply':
         case 'KeyF':
-          $('#fitWidth').trigger('click');
+          document.querySelector('#fitWidth')?.dispatchEvent(new Event('click'));
           break;
         case 'Slash':
         case 'Numpad5':
         case 'KeyX':
-          $('#settings').trigger('click');
+          document.querySelector('#settings')?.dispatchEvent(new Event('click'));
           break;
         case 'KeyC':
-          $('#webComic').trigger('click');
+          document.querySelector('#webComic')?.dispatchEvent(new Event('click'));
           break;
         case 'KeyV':
-          $('#verticalMode').trigger('click');
+          document.querySelector('#verticalMode')?.dispatchEvent(new Event('click'));
           break;
         case 'KeyN':
-          $('#rtlMode').trigger('click');
+          document.querySelector('#rtlMode')?.dispatchEvent(new Event('click'));
           break;
         case 'KeyB':
-          $('#ltrMode').trigger('click');
+          document.querySelector('#ltrMode')?.dispatchEvent(new Event('click'));
           break;
         default:
           break;
@@ -168,91 +159,114 @@ function setKeyDownEvents() {
     }
     return true;
   }
+  document.addEventListener('keydown', processKey);
+}
 
-  $(document).on('keydown', processKey);
+function updateZoomPercent(percent: number | string = settings.zoom) {
+  const zoom = document.querySelector('#ZoomPercent');
+  if (zoom) {
+    zoom.textContent = percent.toString();
+  }
 }
 
 // Controls for the extra features added to the sites
 function controls() {
   // Size Controls
-  $('#enlarge').on('click', () => {
+  // Global Zoom In Button
+  document.querySelector('#enlarge')?.addEventListener('click', () => {
     settings.zoom += settings.zoomStep;
-    $('#Zoom b').html(settings.zoom.toString());
+    updateZoomPercent();
     applyZoom();
   });
-  $('#reduce').on('click', () => {
+  // Global Zoom Out Button
+  document.querySelector('#reduce')?.addEventListener('click', () => {
     settings.zoom -= settings.zoomStep;
-    $('#Zoom b').html(settings.zoom.toString());
+    updateZoomPercent();
     applyZoom();
   });
-  $('#restore').on('click', () => {
+  // Global Zoomm Restore Button
+  document.querySelector('#restore')?.addEventListener('click', () => {
     settings.zoom = 100;
-    $('#Zoom b').html(settings.zoom.toString());
+    updateZoomPercent();
     applyZoom();
   });
-  $('#fitWidth').on('click', () => {
+  // Global Fit Width Button
+  document.querySelector('#fitWidth')?.addEventListener('click', () => {
     settings.zoom = 1000;
-    $('#Zoom b').html(settings.zoom.toString());
+    updateZoomPercent();
     applyZoom();
   });
-  $('#fitHeight').on('click', () => {
+  // Global Fit height Button
+  document.querySelector('#fitHeight')?.addEventListener('click', () => {
     settings.zoom = -1000;
-    $('#Zoom b').html(settings.zoom.toString());
+    updateZoomPercent();
     applyZoom();
   });
-  $('#zoomStep').on('change', (event) => {
-    const step = $(event.target).val();
+  // Zoom Step Slider
+  document.querySelector('#zoomStep')?.addEventListener('change', (event) => {
+    const step = (event.currentTarget as HTMLInputElement).value;
     setValueGM('ZoomStep', parseInt(step as string, 10));
-    logScript(`zoomStep: ${getValueGM('ZoomStep')}`);
+    logScript(`ZoomStep: ${getValueGM('ZoomStep')}`);
   });
-  // WebComic View Mode
-  $('#webComic').on('click', () => {
-    $('#Chapter').addClass('WebComic').removeClass('FluidLTR').removeClass('FluidRTL');
+  // WebComic View Mode Button
+  document.querySelector('#webComic')?.addEventListener('click', () => {
+    document.querySelector('#Chapter')?.classList.add('WebComic');
+    document.querySelector('#Chapter')?.classList.remove('FluidLTR');
+    document.querySelector('#Chapter')?.classList.remove('FluidRTL');
     applyZoom();
   });
-  // Fluid LTR View Mode
-  $('#ltrMode').on('click', () => {
-    $('#Chapter').removeClass('WebComic').addClass('FluidLTR').removeClass('FluidRTL');
+  // Fluid LTR View Mode Button
+  document.querySelector('#ltrMode')?.addEventListener('click', () => {
+    document.querySelector('#Chapter')?.classList.remove('WebComic');
+    document.querySelector('#Chapter')?.classList.add('FluidLTR');
+    document.querySelector('#Chapter')?.classList.remove('FluidRTL');
     applyZoom();
   });
-  // Fluid RTL View Mode
-  $('#rtlMode').on('click', () => {
-    $('#Chapter').removeClass('WebComic').removeClass('FluidLTR').addClass('FluidRTL');
+  // Fluid RTL View Mode Button
+  document.querySelector('#rtlMode')?.addEventListener('click', () => {
+    document.querySelector('#Chapter')?.classList.remove('WebComic');
+    document.querySelector('#Chapter')?.classList.remove('FluidLTR');
+    document.querySelector('#Chapter')?.classList.add('FluidRTL');
     applyZoom();
   });
-  // Vertical View Mode
-  $('#verticalMode').on('click', () => {
-    $('#Chapter').removeClass('WebComic').removeClass('FluidLTR').removeClass('FluidRTL');
+  // Vertical View Mode Button
+  document.querySelector('#verticalMode')?.addEventListener('click', () => {
+    document.querySelector('#Chapter')?.classList.remove('WebComic');
+    document.querySelector('#Chapter')?.classList.remove('FluidLTR');
+    document.querySelector('#Chapter')?.classList.remove('FluidRTL');
     applyZoom();
   });
-  $('#fitIfOversize').on('change', (event) => {
-    $('#Chapter').toggleClass('fitWidthIfOversize');
-    if ($(event.target).is(':checked')) {
+  // Image Fit width if Oversized Toggle
+  document.querySelector('#fitIfOversize')?.addEventListener('change', (event) => {
+    document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize');
+    if ((event.currentTarget as HTMLInputElement).checked) {
       setValueGM('FitWidthIfOversize', true);
     } else {
       setValueGM('FitWidthIfOversize', false);
     }
     logScript(`fitIfOversize: ${getValueGM('FitWidthIfOversize')}`);
   });
-  $('#viewMode').on('change', (event) => {
-    const mode = $(event.target).val() as string;
-    $('#Chapter')
-      .removeClass('WebComic')
-      .removeClass('FluidLTR')
-      .removeClass('FluidRTL')
-      .addClass(mode);
+  // Default View mode Selector
+  document.querySelector('#viewMode')?.addEventListener('change', (event) => {
+    const mode = (event.currentTarget as HTMLInputElement).value;
+    document.querySelector('#Chapter')?.classList.remove('WebComic');
+    document.querySelector('#Chapter')?.classList.remove('FluidLTR');
+    document.querySelector('#Chapter')?.classList.remove('FluidRTL');
+    document.querySelector('#Chapter')?.classList.add(mode);
     setValueGM('ViewMode', mode);
     logScript(`ViewMode: ${getValueGM('ViewMode')}`);
     applyZoom();
   });
-  $('#loadMode').on('change', (event) => {
-    const mode = $(event.target).val() as string;
+  // Start/Load mode Selector
+  document.querySelector('#loadMode')?.addEventListener('change', (event) => {
+    const mode = (event.currentTarget as HTMLInputElement).value;
     setValueGM('LoadMode', mode);
     logScript(`MangaLoadMode: ${getValueGM('LoadMode')}`);
   });
-  $('#showThumbnails').on('change', (event) => {
-    $('#Navigation').toggleClass('disabled');
-    if ($(event.target).is(':checked')) {
+  // Show Thumbnail Toggle
+  document.querySelector('#showThumbnails')?.addEventListener('change', (event) => {
+    document.querySelector('#Navigation')?.classList.toggle('disabled');
+    if ((event.currentTarget as HTMLInputElement).checked) {
       setValueGM('ShowThumbnails', true);
     } else {
       setValueGM('ShowThumbnails', false);
@@ -260,9 +274,9 @@ function controls() {
     logScript(`MangaShowThumbnails: ${getValueGM('ShowThumbnails')}`);
     applyZoom();
   });
-  // Download
-  $('#downloadZip').on('change', (event) => {
-    if ($(event.target).is(':checked')) {
+  // Download auto start toggle
+  document.querySelector('#downloadZip')?.addEventListener('change', (event) => {
+    if ((event.currentTarget as HTMLInputElement).checked) {
       setValueGM('DownloadZip', true);
       Swal.fire({
         title: 'Attention',
@@ -275,13 +289,15 @@ function controls() {
     }
     logScript(`MangaDownloadZip: ${getValueGM('DownloadZip')}`);
   });
-  $('#blob').one('click', generateZip);
-  $('.download').on('click', () => {
+  // Download starter
+  document.querySelector('#blob')?.addEventListener('click', generateZip, { once: true });
+  document.querySelector('.download')?.addEventListener('click', () => {
     logScript('Downloading Chapter');
-    $('#blob').trigger('click');
+    document.querySelector('#blob')?.dispatchEvent(new Event('click'));
   });
-  $('#lazyLoadImages').on('change', (event) => {
-    if ($(event.target).is(':checked')) {
+  // Lazy load Toggle
+  document.querySelector('#lazyLoadImages')?.addEventListener('change', (event) => {
+    if ((event.currentTarget as HTMLInputElement).checked) {
       setValueGM('LazyLoadImages', true);
       Swal.fire({
         title: 'Warning',
@@ -294,195 +310,255 @@ function controls() {
     }
     logScript(`MangaLazyLoadImages: ${getValueGM('LazyLoadImages')}`);
   });
-  $('#lazyStart').on('change', (event) => {
-    const start = $(event.target).val() as string;
+  // Lazy load starting point Slider
+  document.querySelector('#lazyStart')?.addEventListener('change', (event) => {
+    const start = (event.currentTarget as HTMLInputElement).value;
     setValueGM('LazyStart', start);
     logScript(`lazyStart: ${getValueGM('LazyStart')}`);
   });
-  $('#PagesPerSecond').on('change', (event) => {
-    setValueGM('Timer', parseInt($(event.target).val() as string, 10));
+  // Images load speed Selector
+  document.querySelector('#PagesPerSecond')?.addEventListener('change', (event) => {
+    setValueGM('Timer', parseInt((event.currentTarget as HTMLInputElement).value, 10));
     logScript(`MangaTimer: ${getValueGM('Timer')}`);
   });
-  $('#DefaultZoom').on('change', (event) => {
-    settings.zoom = parseInt($(event.target).val() as string, 10);
-    $('#Zoom b').html(settings.zoom.toString);
+  // Global Default Zoom Selector
+  document.querySelector('#DefaultZoom')?.addEventListener('change', (event) => {
+    settings.zoom = parseInt((event.currentTarget as HTMLInputElement).value, 10);
+    updateZoomPercent();
     setValueGM('Zoom', parseInt(settings.zoom.toString(), 10));
     logScript(`MangaZoom: ${getValueGM('Zoom')}`);
     applyZoom();
   });
-  // Toggle Controls
-  $('#pageControls').on('click', () => {
-    $('#MangaOnlineViewer').toggleClass('hideControls');
+  // Show/hide Image Controls Button
+  document.querySelector('#pageControls')?.addEventListener('click', () => {
+    document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
   });
-  $('#hidePageControls').on('change', (event) => {
-    $('#MangaOnlineViewer').toggleClass('hideControls');
-    if ($(event.target).is(':checked')) {
+  // Show/hide Image Controls Toggle
+  document.querySelector('#hidePageControls')?.addEventListener('change', (event) => {
+    document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
+    if ((event.currentTarget as HTMLInputElement).checked) {
       setValueGM('HidePageControls', true);
     } else {
       setValueGM('HidePageControls', false);
     }
     logScript(`MangaHidePageControls: ${getValueGM('HidePageControls')}`);
   });
-  // Theme Control
-  $('#ThemeSelector').on('change', (event) => {
-    const target = $(event.target);
-    $('#MangaOnlineViewer , body')
-      .removeClass()
-      .addClass(target.val() as string);
-    logScript('Theme', target.val());
-    setValueGM('Theme', target.val() as string);
-    if (target.val() === 'Custom_Dark' || target.val() === 'Custom_Light') {
-      $('.CustomTheme').show();
+  // Theme Control Selector
+  document.querySelector('#ThemeSelector')?.addEventListener('change', (event) => {
+    const target = (event.currentTarget as HTMLInputElement).value;
+    [...document.querySelectorAll('#MangaOnlineViewer , body')].forEach((elem) => {
+      elem.className = '';
+      elem.classList.add((event.currentTarget as HTMLInputElement).value);
+    });
+    logScript('Theme', target);
+    setValueGM('Theme', target);
+    const ct = [...document.querySelectorAll<HTMLDivElement>('.CustomTheme')];
+    if (target === 'Custom_Dark' || target === 'Custom_Light') {
+      ct.forEach((elem) => {
+        elem.style.display = 'inherit';
+      });
     } else {
-      $('.CustomTheme').hide();
+      ct.forEach((elem) => {
+        elem.style.display = 'none';
+      });
     }
-    if (target.val() === 'Full_Custom') {
-      $('.FullCustom').show();
+    const fc = [...document.querySelectorAll<HTMLDivElement>('.FullCustom')];
+    if (target === 'Full_Custom') {
+      fc.forEach((elem) => {
+        elem.style.display = 'inherit';
+      });
     } else {
-      $('.FullCustom').hide();
+      fc.forEach((elem) => {
+        elem.style.display = 'none';
+      });
     }
   });
-  // try {
-  //   jscolor.presets.default = {
-  //     position: 'right',
-  //     format: 'hex',
-  //     palette: [
-  //       '#000000', '#7d7d7d', '#870014', '#ec1c23', '#ff7e26',
-  //       '#fef100', '#22b14b', '#00a1e7', '#3f47cc', '#a349a4',
-  //       '#ffffff', '#c3c3c3', '#b87957', '#feaec9', '#ffc80d',
-  //       '#eee3af', '#b5e61d', '#99d9ea', '#7092be', '#c8bfe7',
-  //     ],
-  //     // paletteCols: 12,
-  //     hideOnPaletteClick: true,
-  //     closeButton: true,
-  //     shadow: false,
-  //     alphaChannel: false,
-  //     paletteSetsAlpha: false,
-  //   };
-  //   jscolor.install();
-  // } catch (e) {
-  //   logScript(e);
-  // }
-  // $('INPUT.colorpicker').minicolors();
-  $('#CustomThemeHue').on('change', (event) => {
-    const target = $(event.target).val() as string;
+  // Light/Dark Custom theme Color Input
+  document.querySelector('#CustomThemeHue')?.addEventListener('change', (event) => {
+    const target = (event.currentTarget as HTMLInputElement).value;
     logScript(`CustomTheme: ${target}`);
-    $('style[title="Custom_Light"], style[title="Custom_Dark"]').remove();
-    $('head').append(addCustomTheme(target));
+    document
+      .querySelectorAll('style[title="Custom_Light"], style[title="Custom_Dark"]')
+      .forEach((elem) => elem.remove());
+    document.head.append(addCustomTheme(target));
     setValueGM('CustomTheme', target);
     logScript(`MangaCustomTheme: ${getValueGM('CustomTheme')}`);
   });
-  $('.FullCustom').on('change', () => {
-    logScript(
-      'FullCustomTheme: ',
-      $('#CustomThemeHueBody').val(),
-      $('#CustomThemeHueText').val(),
-      $('#CustomThemeHueLines').val(),
-      $('#CustomThemeHuePanel').val(),
-      $('#CustomThemeHueButton').val(),
-    );
-    $('style[title="Full_Custom"]').remove();
-    $('head').append(
-      addFullCustomTheme(
-        $('#CustomThemeHueBody').val() as string,
-        $('#CustomThemeHueText').val() as string,
-        $('#CustomThemeHueLines').val() as string,
-        $('#CustomThemeHuePanel').val() as string,
-        $('#CustomThemeHueButton').val() as string,
-      ),
-    );
-    setValueGM('CustomThemeBody', $('#CustomThemeHueBody').val() as string);
-    setValueGM('CustomThemeText', $('#CustomThemeHueText').val() as string);
-    setValueGM('CustomThemeLines', $('#CustomThemeHueLines').val() as string);
-    setValueGM('CustomThemePanel', $('#CustomThemeHuePanel').val() as string);
-    setValueGM('CustomThemeButton', $('#CustomThemeHueButton').val() as string);
-  });
-
-  $('#gotoPage').on('change', (event) => {
+  // Full Custom theme Color Input
+  document.querySelectorAll('.FullCustom')?.forEach((input) =>
+    input.addEventListener('change', () => {
+      logScript(
+        'FullCustomTheme: ',
+        document.querySelector<HTMLInputElement>('#CustomThemeHueBody')?.value,
+        document.querySelector<HTMLInputElement>('#CustomThemeHueText')?.value,
+        document.querySelector<HTMLInputElement>('#CustomThemeHueLines')?.value,
+        document.querySelector<HTMLInputElement>('#CustomThemeHuePanel')?.value,
+        document.querySelector<HTMLInputElement>('#CustomThemeHueButton')?.value,
+      );
+      document.querySelectorAll('style[title="Full_Custom"]').forEach((elem) => elem.remove());
+      document.head.append(
+        addFullCustomTheme(
+          document.querySelector<HTMLInputElement>('#CustomThemeHueBody')!.value,
+          document.querySelector<HTMLInputElement>('#CustomThemeHueText')!.value,
+          document.querySelector<HTMLInputElement>('#CustomThemeHueLines')!.value,
+          document.querySelector<HTMLInputElement>('#CustomThemeHuePanel')!.value,
+          document.querySelector<HTMLInputElement>('#CustomThemeHueButton')!.value,
+        ),
+      );
+      setValueGM(
+        'CustomThemeBody',
+        document.querySelector<HTMLInputElement>('#CustomThemeHueBody')!.value,
+      );
+      setValueGM(
+        'CustomThemeText',
+        document.querySelector<HTMLInputElement>('#CustomThemeHueText')!.value,
+      );
+      setValueGM(
+        'CustomThemeLines',
+        document.querySelector<HTMLInputElement>('#CustomThemeHueLines')!.value,
+      );
+      setValueGM(
+        'CustomThemePanel',
+        document.querySelector<HTMLInputElement>('#CustomThemeHuePanel')!.value,
+      );
+      setValueGM(
+        'CustomThemeButton',
+        document.querySelector<HTMLInputElement>('#CustomThemeHueButton')!.value,
+      );
+    }),
+  );
+  // Goto Navigation
+  document.querySelector('#gotoPage')?.addEventListener('change', (event) => {
     applyZoom();
-    scrollToElement($(`#Page${$(event.target).val()}`));
+    scrollToElement(
+      document.querySelector(
+        `#Page${(event.currentTarget as HTMLElement).textContent}`,
+      ) as HTMLElement,
+    );
   });
-  $('.Thumbnail').on('click', (event) => {
-    applyZoom();
-    scrollToElement($(`#Page${$(event.currentTarget).find('span').html()}`));
-  });
+  // Thumbnail Navigation
+  document.querySelectorAll('.Thumbnail')?.forEach((elem) =>
+    elem.addEventListener('click', (event) => {
+      applyZoom();
+      scrollToElement(
+        document.querySelector(
+          `#Page${
+            (event.currentTarget as HTMLElement).querySelector('.ThumbnailIndex')?.textContent
+          }`,
+        ) as HTMLElement,
+      );
+    }),
+  );
   // Settings Control
-  $('#settings').on('click', () => {
-    $('#ViewerControls').slideToggle();
-    $('#ViewerShortcuts').slideToggle();
-    $('#ImageOptions').toggleClass('settingsOpen');
-    $('#Navigation').toggleClass('visible');
-    $('#Header').toggleClass('visible');
+  document.querySelector('#settings')?.addEventListener('click', () => {
+    document.querySelector('#ViewerControls')?.classList.toggle('visible');
+    document.querySelector('#ViewerShortcuts')?.classList.toggle('visible');
+    document.querySelector('#ImageOptions')?.classList.toggle('settingsOpen');
+    document.querySelector('#Navigation')?.classList.toggle('visible');
+    document.querySelector('#Header')?.classList.toggle('visible');
   });
   // Individual Page functions
   // Bookmark Page to resume reading
-  $('.Bookmark').on('click', (event) => {
-    const num = parseInt(
-      $(event.target).parents('.MangaPage').find('.PageFunctions span').text(),
-      10,
-    );
-    const mark: IBookmark = {
-      url: window.location.href,
-      page: num,
-      date: Date.now(),
-    };
-    const found = settings.bookmarks.filter((el) => el.url === mark.url).length > 0;
-    settings.bookmarks = settings.bookmarks.filter((el) => el.url !== mark.url);
-    if (found) {
-      Swal.fire({
-        title: 'Bookmark Removed',
-        timer: 10000,
-        icon: 'error',
-      });
-    } else {
-      settings.bookmarks.push(mark);
-      Swal.fire({
-        title: 'Saved Bookmark',
-        html: `Next time you open this chapter it will resume from:<h4>Page ${num}</h4>(Only <i>ONCE</i> per Bookmark, will be removed after a year unused)`,
-        icon: 'success',
-      });
-    }
-    setValueGM('Bookmarks', JSON.stringify(settings.bookmarks));
-    logScript(`MangaBookmarks: ${getValueGM('Bookmarks')}`);
-  });
+  document.querySelectorAll('.Bookmark')?.forEach((elem) =>
+    elem.addEventListener('click', (event) => {
+      const num = parseInt(
+        (event.currentTarget as HTMLElement).parentElement?.querySelector('.PageIndex')
+          ?.textContent || '0',
+        10,
+      );
+      const mark: IBookmark = {
+        url: window.location.href,
+        page: num,
+        date: Date.now(),
+      };
+      const found = settings.bookmarks.filter((el) => el.url === mark.url).length > 0;
+      settings.bookmarks = settings.bookmarks.filter((el) => el.url !== mark.url);
+      if (found) {
+        Swal.fire({
+          title: 'Bookmark Removed',
+          timer: 10000,
+          icon: 'error',
+        });
+      } else {
+        settings.bookmarks.push(mark);
+        Swal.fire({
+          title: 'Saved Bookmark',
+          html: `Next time you open this chapter it will resume from:<h4>Page ${num}</h4>(Only <i>ONCE</i> per Bookmark, will be removed after a year unused)`,
+          icon: 'success',
+        });
+      }
+      setValueGM('Bookmarks', JSON.stringify(settings.bookmarks));
+      logScript(`MangaBookmarks: ${getValueGM('Bookmarks')}`);
+    }),
+  );
   // Reload Page
-  $('.Reload').on('click', (event) => {
-    reloadImage(
-      $(event.target).parents('.MangaPage').find('.PageContent img')[0] as HTMLImageElement,
-    );
-  });
+  document.querySelectorAll('.Reload')?.forEach((elem) =>
+    elem.addEventListener('click', (event) => {
+      const img: HTMLImageElement = (
+        event.currentTarget as HTMLElement
+      ).parentElement?.parentElement?.querySelector('.PageImg')!;
+      reloadImage(img);
+    }),
+  );
   // ZoomIn
-  $('.ZoomIn').on('click', (event) => {
-    const img = $(event.target).parents('.MangaPage').find('.PageContent img');
-    const ratio = (img.width()! / img.prop('naturalWidth')) * (100 + settings.zoomStep);
-    applyZoom(`#${$(event.target).attr('id')}`, ratio);
-  });
+  document.querySelectorAll('.ZoomIn')?.forEach((elem) =>
+    elem.addEventListener('click', (event) => {
+      const img: HTMLImageElement = (
+        event.currentTarget as HTMLElement
+      ).parentElement?.parentElement?.querySelector('.PageImg')!;
+      const ratio = (img.width / img.naturalWidth) * (100 + settings.zoomStep);
+      applyZoom(`#${img.getAttribute('id')}`, ratio);
+    }),
+  );
   // ZoomOut
-  $('.ZoomOut').on('click', (event) => {
-    const img = $(event.target).parents('.MangaPage').find('.PageContent img');
-    const ratio = (img.width()! / img.prop('naturalWidth')) * (100 - settings.zoomStep);
-    applyZoom(`#${$(event.target).attr('id')}`, ratio);
-  });
+  document.querySelectorAll('.ZoomOut')?.forEach((elem) =>
+    elem.addEventListener('click', (event) => {
+      const img: HTMLImageElement = (
+        event.currentTarget as HTMLElement
+      ).parentElement?.parentElement?.querySelector('.PageImg')!;
+      const ratio = (img.width / img.naturalWidth) * (100 - settings.zoomStep);
+      applyZoom(`#${img.getAttribute('id')}`, ratio);
+    }),
+  );
   // ZoomRestore
-  $('.ZoomRestore').on('click', () => {
-    $('.PageContent img').removeAttr('width');
-  });
+  document.querySelectorAll('.ZoomRestore')?.forEach((elem) =>
+    elem.addEventListener('click', () => {
+      document.querySelector('.PageContent .PageImg')?.removeAttribute('width');
+    }),
+  );
   // ZoomWidth
-  $('.ZoomWidth').on('click', (event) => {
-    $(event.target).parents('.MangaPage').find('.PageContent img');
-    applyZoom(`#${$(event.target).attr('id')}`, 1000);
-  });
+  document.querySelectorAll('.ZoomWidth')?.forEach((elem) =>
+    elem.addEventListener('click', (event) => {
+      const img: HTMLImageElement = (
+        event.currentTarget as HTMLElement
+      ).parentElement?.parentElement?.querySelector('.PageImg')!;
+      applyZoom(`#${img.getAttribute('id')}`, 1000);
+    }),
+  );
   // ZoomHeight
-  $('.ZoomHeight').on('click', (event) => {
-    $(event.target).parents('.MangaPage').find('.PageContent img');
-    applyZoom(`#${$(event.target).attr('id')}`, -1000);
-  });
+  document.querySelectorAll('.ZoomHeight')?.forEach((elem) =>
+    elem.addEventListener('click', (event) => {
+      const img: HTMLImageElement = (
+        event.currentTarget as HTMLElement
+      ).parentElement?.parentElement?.querySelector('.PageImg')!;
+      applyZoom(`#${img.getAttribute('id')}`, -1000);
+    }),
+  );
   // Hide
-  $('.Hide').on('click', (event) => {
-    const img = $(event.target).parents('.MangaPage').find('.PageContent');
-    img.slideToggle('slow');
-  });
-  const useScrollDirection = (showEnd = 0) => {
+  document.querySelectorAll('.Hide')?.forEach((elem) =>
+    elem.addEventListener('click', (event) => {
+      const img: HTMLImageElement = (
+        event.currentTarget as HTMLElement
+      ).parentElement?.parentElement?.querySelector('.PageContent')!;
+      img.classList.toggle('hide');
+    }),
+  );
+
+  /**
+   * Changes header class when scrolling up or down to show/hide it
+   * @param showEnd [default 0]px from end of the screen to show header
+   */
+  function useScrollDirection(showEnd = 0) {
     let prevOffset = 0;
     const header = document.querySelector<HTMLDivElement>('#Header')!;
     const setScrollDirection = (show: boolean | null) => {
@@ -498,7 +574,7 @@ function controls() {
       }
     };
 
-    const toggleScrollDirection = () => {
+    function toggleScrollDirection() {
       const { scrollY } = window;
       if (showEnd && scrollY + window.innerHeight + showEnd > document.body.offsetHeight) {
         setScrollDirection(true);
@@ -510,10 +586,11 @@ function controls() {
         setScrollDirection(null);
       }
       prevOffset = scrollY;
-    };
+    }
 
     window.addEventListener('scroll', toggleScrollDirection);
-  };
+  }
+
   useScrollDirection(100);
 }
 
