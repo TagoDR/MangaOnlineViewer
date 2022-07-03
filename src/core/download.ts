@@ -1,5 +1,5 @@
 import JSZip from 'jszip';
-import { saveAs } from 'file-saver';
+import FileSaver from 'file-saver';
 import { logScript } from '../utils/tampermonkey';
 
 const cache = {
@@ -104,7 +104,7 @@ function generateZip() {
         .then((content) => {
           logScript('Download Ready');
           const zipName = `${document.querySelector('#MangaTitle')?.textContent?.trim()}.zip`;
-          saveAs(content, zipName);
+          FileSaver.saveAs(content, zipName);
         });
     } catch (e) {
       logScript(e);
@@ -113,4 +113,3 @@ function generateZip() {
 }
 
 export default generateZip;
-// Todo: Test Download

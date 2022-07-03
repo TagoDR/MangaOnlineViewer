@@ -15,12 +15,7 @@
         "isolatedModules": true,
         "noEmit": true,
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
+        "emitDecoratorMetadata": true
     },
-    "include": ["src"],
-    "references": [
-        {
-            "path": "./tsconfig.node.json"
-        }
-    ]
+    "include": ["src"]
 }

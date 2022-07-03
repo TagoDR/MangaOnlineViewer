@@ -22,6 +22,7 @@ import bundleSize from 'rollup-plugin-bundle-size';
 
 let minify = false;
 let build = 'esbuild'; // 'esbuild' | 'rollup' | 'vite'
+let sourcemap = minify;
 const scripts = {
   main: {
     entry: 'userscript-main.ts',
@@ -48,6 +49,8 @@ const globals = {
   jszip: 'JSZip',
   sweetalert2: 'Swal',
   nprogress: 'NProgress',
+  imagesloaded: 'imagesLoaded',
+  'file-saver': 'FileSaver',
 };
 
 function buildUserscript(script) {
@@ -55,6 +58,7 @@ function buildUserscript(script) {
     const metadata = fs.readFileSync(`./dist/${script.meta}`, 'utf8');
     if (build === 'vite') {
       return vite({
+        mode: 'development',
         configFile: false,
         esbuild: {
           keepNames: true,
@@ -70,6 +74,7 @@ function buildUserscript(script) {
               banner: metadata,
               format: 'iife',
               entryFileNames: script.name,
+              sourcemap: sourcemap ? 'inline' : false,
             },
           },
         },
@@ -89,7 +94,7 @@ function buildUserscript(script) {
             exclude: ['node_modules/process-es6/**'],
           }),
           eslint({
-            filterExclude: ['node_modules/**', 'src/components/**'],
+            filterExclude: ['node_modules/**'],
           }),
           cleanup({
             comments: 'none',
@@ -104,12 +109,14 @@ function buildUserscript(script) {
           //     /* global $:readonly, JSZip:readonly ,NProgress:readonly , jscolor:readonly , ColorScheme:readonly , Swal:readonly */`,
           format: 'iife',
           file: `dist/${script.name}`,
+          sourcemap: sourcemap ? 'inline' : false,
           // globals,
         }),
       );
     } else {
       return esbuild
         .build({
+          target: 'esnext',
           banner: {
             js: metadata,
           },
@@ -123,7 +130,7 @@ function buildUserscript(script) {
           legalComments: 'none',
           plugins: [minifyTemplates(), writeFiles(), globalExternals(globals)],
           write: !minify,
-          // sourcemap: minify ? false : 'inline',
+          sourcemap: sourcemap ? 'inline' : false,
         })
         .catch((e) => {
           console.log(e);
@@ -178,13 +185,16 @@ function clean() {
   return Del(['node_modules/ts-import/cache', 'dist/*']);
 }
 
-function prep() {
-  if (!fs.existsSync('./dist')) {
-    fs.mkdirSync('./dist', { recursive: true });
+function prep(bundler, uglify = false) {
+  function prepare() {
+    if (!fs.existsSync('./dist')) {
+      fs.mkdirSync('./dist', { recursive: true });
+    }
+    minify = uglify;
+    build = bundler;
+    return Promise.resolve();
   }
-  minify = false;
-  build = 'rollup';
-  return Promise.resolve();
+  return prepare;
 }
 
 gulp.task('clean', clean);
@@ -192,9 +202,13 @@ gulp.task('clean', clean);
 // gulp.task('main',gulp.series(clean, writeMetadata(scripts.main), buildUserscript(scripts.main)));
 // gulp.task('adult',gulp.series(clean, writeMetadata(scripts.adult), buildUserscript(scripts.adult)));
 gulp.task('dev', gulp.series(clean, writeMetadata(scripts.dev), buildUserscript(scripts.dev)));
+gulp.task('rollup', gulp.series(prep('rollup'), 'dev'));
+gulp.task('esbuild', gulp.series(prep('esbuild'), 'dev'));
+// gulp.task('vite', gulp.series(prep('vite'), 'dev'));
 gulp.task(
   'build',
   gulp.series(
+    prep('esbuild'),
     clean,
     gulp.parallel(writeMetadata(scripts.main), writeMetadata(scripts.adult)),
     gulp.parallel(buildUserscript(scripts.main), buildUserscript(scripts.adult)),
@@ -203,7 +217,7 @@ gulp.task(
 gulp.task(
   'release',
   gulp.series(
-    prep,
+    prep('rollup'),
     clean,
     gulp.parallel(writeMetadata(scripts.main), writeMetadata(scripts.adult), readme),
     gulp.parallel(buildUserscript(scripts.main), buildUserscript(scripts.adult)),

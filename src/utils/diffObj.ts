@@ -1,4 +1,5 @@
-import _ from 'lodash';
+// import _ from 'lodash';
+export {};
 /* eslint-disable no-param-reassign */
 // https://gist.github.com/Yimiprod/7ee176597fef230d1451
 // https://stackoverflow.com/questions/8572826/generic-deep-diff-between-two-objects
@@ -9,24 +10,24 @@ import _ from 'lodash';
  * @param  {Object} original   Object to compare with
  * @return {Object} Return a new object who represent the diff
  */
-const diffObj = <T extends object>(changed: T, original: T): Partial<object> => {
-  const changes = (object: object, base: object): object =>
-    _.transform(
-      object,
-      (result: any, value: any, key: keyof object) => {
-        if (!_.isEqual(value, base[key])) {
-          if (_.isObject(value)) {
-            result[key] = changes(value, base[key]);
-          } else {
-            result[key] = value;
-          }
-        }
-      },
-      /* omit accumulator */
-    );
-  return changes(changed, original);
-};
-export default diffObj;
+// const diffObj = <T extends object>(changed: T, original: T): Partial<object> => {
+//   const changes = (object: object, base: object): object =>
+//     _.transform(
+//       object,
+//       (result: any, value: any, key: keyof object) => {
+//         if (!_.isEqual(value, base[key])) {
+//           if (_.isObject(value)) {
+//             result[key] = changes(value, base[key]);
+//           } else {
+//             result[key] = value;
+//           }
+//         }
+//       },
+//       /* omit accumulator */
+//     );
+//   return changes(changed, original);
+// };
+// export default diffObj;
 
 /*
  http://stackoverflow.com/questions/31295545/how-to-get-only-the-changed-values-from-two-json-objects

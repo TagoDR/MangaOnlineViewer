@@ -36,18 +36,18 @@
         "@types/node": "^18.0.0",
         "@types/nprogress": "^0.2.0",
         "@types/tampermonkey": "^4.0.5",
-        "@typescript-eslint/eslint-plugin": "^5.30.0",
-        "@typescript-eslint/parser": "^5.30.0",
+        "@typescript-eslint/eslint-plugin": "^5.30.4",
+        "@typescript-eslint/parser": "^5.30.4",
         "del": "^6.1.1",
-        "esbuild": "^0.14.47",
+        "esbuild": "^0.14.48",
         "esbuild-minify-templates": "^0.8.0",
-        "eslint": "^8.18.0",
+        "eslint": "^8.19.0",
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-config-airbnb-typescript": "^17.0.0",
         "eslint-config-prettier": "^8.5.0",
-        "eslint-import-resolver-typescript": "^3.1.1",
+        "eslint-import-resolver-typescript": "^3.2.0",
         "eslint-plugin-import": "^2.26.0",
-        "eslint-plugin-prettier": "^4.1.0",
+        "eslint-plugin-prettier": "^4.2.1",
         "gulp": "^4.0.2",
         "gulp-preprocess": "^4.0.2",
         "prettier": "^2.7.1",
@@ -93,8 +93,7 @@
         "parserOptions": {
             "ecmaVersion": 2020,
             "project": [
-                "./tsconfig.json",
-                "./tsconfig.node.json"
+                "./tsconfig.json"
             ]
         },
         "env": {
@@ -103,13 +102,13 @@
             "greasemonkey": true
         },
         "globals": {
-            "W": "readonly",
             "$": "readonly",
             "JSZip": "readonly",
             "NProgress": "readonly",
-            "jscolor": "readonly",
             "ColorScheme": "readonly",
-            "Swal": "readonly"
+            "Swal": "readonly",
+            "imagesLoaded": "readonly",
+            "FileSaver": "readonly"
         },
         "extends": [
             "airbnb-base",

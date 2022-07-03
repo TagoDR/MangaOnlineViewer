@@ -57,8 +57,8 @@ function onImagesDone() {
 }
 
 function updateProgress() {
-  const total = document.querySelectorAll('.PageContent img').length;
-  const loaded = document.querySelectorAll('.PageContent img.imgLoaded').length;
+  const total = document.querySelectorAll('.PageContent .PageImg').length;
+  const loaded = document.querySelectorAll('.PageContent .PageImg.imgLoaded').length;
   const percentage = Math.floor((loaded / total) * 100);
   const title = document.querySelector('title');
   if (title) {

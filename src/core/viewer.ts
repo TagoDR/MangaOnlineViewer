@@ -4,7 +4,7 @@ import { IManga, ISite } from '../types';
 import { isNothing } from '../utils/checks';
 import formatPage from './format';
 import { settings } from './settings';
-import { sweetalertStyle } from './components/styles';
+import sweetalertStyle from './components/sweetalertStyle.js';
 
 async function lateStart(site: ISite, begin = 1) {
   const manga = await site.run();
