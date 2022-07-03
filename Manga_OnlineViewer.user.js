@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Batoto, ComiCastle, DisasterScans, Dynasty-Scans, Leitor, LHTranslation, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTown, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, SenManga(Raw), TenManga, TuMangaOnline, UnionMangas, Manga33, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, ReaperScans, JaiminisBox
-// @version 2022.06.30
+// @version 2022.07.03
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -13,12 +13,12 @@
 // @grant GM_deleteValue
 // @grant GM_xmlhttpRequest
 // @connect *
-// @require https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.10/sweetalert2.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.19/sweetalert2.min.js
 // @include /https?:\/\/(www.)?(asurascans|flamescans).(com|org)\/.+/
 // @include /https?:\/\/(www.)?bato.to\/chapter.*/
 // @include /https?:\/\/(www.)?comicastle.org\/read\/.+\/[0-9]+.*/
@@ -1009,6 +1009,7 @@
             (typeof value === 'object' && isEmptyObject(value)));
     }
 
+    // language=CSS
     var cssStyles = `
 html {
   font-size: 100%;
@@ -1049,7 +1050,7 @@ img {
 #MangaOnlineViewer {
   width: 100%;
   height: 100%;
-  padding-bottom: 100px;
+  padding-bottom: 40px;
   min-height: 1080px;
 }
 
@@ -1059,13 +1060,11 @@ img {
 }
 
 #MangaOnlineViewer #Chapter.WebComic .PageFunctions {
-  position: relative;
-  margin-bottom: -23px;
 }
 
 #MangaOnlineViewer #Chapter.WebComic .PageContent {
   margin-bottom: 0;
-  line-height: 0;
+  margin-top: -23px;
 }
 
 #MangaOnlineViewer #Chapter.FluidLTR .MangaPage {
@@ -1090,7 +1089,18 @@ img {
   top: 0;
   left: 405px;
   width: auto;
+  z-index: 1000;
+  transition: transform 0.3s ease-in, background-color 0.3s linear;
   display: none;
+}
+
+#MangaOnlineViewer #ViewerControls.visible {
+  display: block;
+}
+
+#MangaOnlineViewer #ViewerControls .ControlLabel {
+  display: list-item;
+  list-style: none;
 }
 
 #MangaOnlineViewer #ViewerShortcuts {
@@ -1098,11 +1108,11 @@ img {
   position: fixed;
   top: 65px;
   left: 0;
+  display: none;
 }
 
-#MangaOnlineViewer #ViewerControls .controlLabel {
-  display: list-item;
-  list-style: none;
+#MangaOnlineViewer #ViewerShortcuts.visible {
+  display: block;
 }
 
 #MangaOnlineViewer select {
@@ -1111,9 +1121,13 @@ img {
   margin-bottom: 5px;
 }
 
-#MangaOnlineViewer .controlButton {
+#MangaOnlineViewer .ControlButton {
   cursor: pointer;
-  border: 0 none;
+  border-radius: 5px;
+  border-width: 1px;
+}
+#MangaOnlineViewer .ControlButton:hover {
+  opacity: 0.8;
 }
 
 #MangaOnlineViewer #ImageOptions {
@@ -1121,6 +1135,7 @@ img {
   position: absolute;
   top: 0;
   width: 405px;
+  z-index:1000;
 }
 
 #MangaOnlineViewer #ImageOptions .panel {
@@ -1141,6 +1156,7 @@ img {
   height: 64px;
   width: 200px;
   top: 0;
+  z-index: 1000;
 }
 
 #MangaOnlineViewer #ImageOptions #Zoom {
@@ -1164,11 +1180,19 @@ img {
   display: inline-block;
 }
 
-#MangaOnlineViewer .PageContent img[src=""],
-#MangaOnlineViewer .PageContent img:not([src]) {
+#MangaOnlineViewer .PageContent.hide{
+  display: none;
+}
+
+#MangaOnlineViewer .PageContent .PageImg[src=""],
+#MangaOnlineViewer .PageContent .PageImg:not([src]) {
   width: 500px;
   height: 750px;
   display: inline-block;
+}
+
+#MangaOnlineViewer .fitWidthIfOversize .PageContent .PageImg {
+  max-width: 100%;
 }
 
 #MangaOnlineViewer #gotoPage {
@@ -1179,30 +1203,72 @@ img {
   width: 110px;
 }
 
-#MangaOnlineViewer header, #MangaOnlineViewer footer {
- display: flex;
- justify-content: center;
- align-content: center;
- position: relative;
+#MangaOnlineViewer #Header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-flow: row nowrap;
+  transition: transform 0.3s ease-in, background-color 0.3s linear;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: inherit;
+  z-index: 900;
+}
+
+#MangaOnlineViewer #Header.scroll-hide {
+  transform: translateY(-100%);
+}
+
+#MangaOnlineViewer #Header.scroll-show{
+  transform: translateY(-1%);
+}
+
+#MangaOnlineViewer #Header.mouseOverMenu{
+  position: absolute;
+  transform: none;
+}
+
+#MangaOnlineViewer #Header.scroll-end,
+#MangaOnlineViewer #Header.visible{
+  transform: translateY(-1%);
+  position: sticky;
+}
+
+#MangaOnlineViewer #MangaTitle {
+  padding: 2px;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: normal;
+}
+
+#MangaOnlineViewer #GlobalControls {
+  flex-basis: 30%;
+}
+
+#MangaOnlineViewer #ChapterNavigation {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  flex-basis: 30%;
 }
 
 #MangaOnlineViewer .ChapterControl {
-  right: 300px;
-  position: absolute;
-  top: 20px;
 }
 
-#MangaOnlineViewer .ChapterControl a {
-  display: inline-block;
+#MangaOnlineViewer .ChapterControl .NavigationControlButton {
+  display: inline-flex;
   width: 80px;
   height: 25px;
-  text-align: center;
-  margin-left: 3px;
-  margin-bottom: -1px;
+  margin: 3px;
+  justify-content: center;
+  align-items: center;
 }
 
-#MangaOnlineViewer .ChapterControl a[href='#'],
-#MangaOnlineViewer .ChapterControl a[href=''] {
+#MangaOnlineViewer .ChapterControl .NavigationControlButton[href='#'],
+#MangaOnlineViewer .ChapterControl .NavigationControlButton[href=''] {
   visibility: hidden
 }
 
@@ -1212,46 +1278,53 @@ img {
   max-width: 500px;
   display: flex;
   justify-content: center;
-  align-content: center;
-  padding-top: 10px;
+  align-items: center;
+  flex-direction: column;
+  padding: 5px;
 }
 
 #MangaOnlineViewer #Counters {
-  position: absolute;
-  right: 10px;
-  top: 22px;
 }
 
 #MangaOnlineViewer .PageFunctions {
   font-family: monospace;
-  font-size: 10pt;
-  padding-right: 120px;
-  text-align: right
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 3px;
+  position: relative;
 }
 
-#MangaOnlineViewer .PageFunctions > span {
+#MangaOnlineViewer .PageFunctions > .PageIndex {
   min-width: 20px;
   text-align: center;
   display: inline-block;
   padding: 2px 10px
 }
 
-#MangaOnlineViewer .PageFunctions > a {
+#MangaOnlineViewer .PageFunctions > .ControlButton {
   height: 16px;
   width: 16px;
-  padding: 10px;
+  padding: 0 5px;
+  margin: 0;
+  border-width: 0;
 }
 
-#MangaOnlineViewer .PageFunctions a {
-  opacity: 0.2;
+#MangaOnlineViewer .PageFunctions .ControlButton {
+  opacity: 0.5;
 }
 
-#MangaOnlineViewer .PageFunctions:hover a {
+#MangaOnlineViewer .PageFunctions:hover .ControlButton {
   opacity: 1;
 }
 
+#MangaOnlineViewer .PageFunctions .ControlButton:hover {
+  opacity: 0.9;
+}
+
 #MangaOnlineViewer.hideControls .PageFunctions {
-  display: none;
   visibility: hidden;
 }
 
@@ -1270,6 +1343,7 @@ img {
   white-space: nowrap;
   width: 100%;
   text-align: center;
+  transition: transform 0.3s ease-in, background-color 0.3s linear;
 }
 
 #MangaOnlineViewer #Navigation #Thumbnails {
@@ -1278,7 +1352,7 @@ img {
 }
 
 #MangaOnlineViewer #Navigation:hover {
-  bottom: 0;
+  transform: translateY(-180px);
 }
 
 #MangaOnlineViewer #Navigation.disabled {
@@ -1286,7 +1360,7 @@ img {
 }
 
 #MangaOnlineViewer #Navigation.visible {
-  bottom: 0;
+  transform: translateY(-180px);
 }
 
 #MangaOnlineViewer #Navigation .Thumbnail {
@@ -1296,7 +1370,7 @@ img {
   position: relative;
 }
 
-#MangaOnlineViewer #Navigation .Thumbnail span {
+#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailIndex {
   display: block;
   opacity: 0.8;
   position: relative;
@@ -1304,7 +1378,7 @@ img {
   width: 100%;
 }
 
-#MangaOnlineViewer #Navigation .Thumbnail img {
+#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailImg {
   align-content: center;
   cursor: pointer;
   display: inline-block;
@@ -1342,1551 +1416,132 @@ img {
   top: -5px;
   display: inline-block;
 }
-
-#MangaOnlineViewer.mobile * {
-  float: none !important;
-}
-
-#MangaOnlineViewer.mobile #Navigation {
+#MangaOnlineViewer #blob{
   display: none;
 }
 
-#MangaOnlineViewer.mobile .PageFunctions {
-  padding: 0;
-}
+/* Mobile styles*/
+@media (max-width: 768px) {
+  #MangaOnlineViewer #Header {
+    flex-direction: column;
+  }
+  #MangaOnlineViewer .ViewerTitle {
+    order: 1;
+    flex-basis: 100%;
+  }
+  #MangaOnlineViewer #GlobalControls {
+    order: 2;
+  }
+  #MangaOnlineViewer #ChapterNavigation {
+    order: 3;
+  }
 
-#MangaOnlineViewer.mobile .PageFunctions a:not(.Bookmark) {
-  display: none;
-}
+  #MangaOnlineViewer #Navigation {
+    display: none;
+  }
 
-#MangaOnlineViewer.mobile .PageFunctions a.Bookmark {
-  opacity: 1;
-}
-
-#MangaOnlineViewer.mobile .PageFunctions span {
-  right: 0;
-  position: inherit;
-  text-align: center;
-}
-
-#MangaOnlineViewer.mobile .PageContent {
-  margin: 0;
-  width: 100%;
-}
-
-#MangaOnlineViewer.mobile .PageContent img {
-  width: 100% !important;
-}
-
-#MangaOnlineViewer.mobile .fitWidthIfOversize .PageContent img {
-  max-width: 100%;
-}
-
-#MangaOnlineViewer.mobile #ImageOptions img:not(#settings) {
-  display: none;
-}
-
-#MangaOnlineViewer.mobile #ViewerShortcuts {
-  display: none !important;
-}
-
-#MangaOnlineViewer.mobile #ViewerControls {
-  padding: 8px;
-  position: fixed;
-  top: 0;
-  left: 45px;
-  width: auto;
-}
-
-#MangaOnlineViewer.mobile #ViewerControls span.DefaultZoom,
-#MangaOnlineViewer.mobile #ViewerControls span.viewMode,
-#MangaOnlineViewer.mobile #ViewerControls span.fitIfOversize,
-#MangaOnlineViewer.mobile #ViewerControls span.showThumbnails,
-#MangaOnlineViewer.mobile #ViewerControls span.lazyLoadImages,
-#MangaOnlineViewer.mobile #ViewerControls span.downloadZip {
-  display: none;
-}
-
-#MangaOnlineViewer.mobile #ViewerControls {
-  padding: 8px;
-  position: fixed;
-  top: 0;
-  left: 45px;
-  width: auto;
-}
-
-#MangaOnlineViewer.mobile #ImageOptions #menu {
-  display: none;
-}
-
-#MangaOnlineViewer.mobile #ImageOptions #Zoom {
-  display: none;
-}
-
-#MangaOnlineViewer.mobile .ViewerTitle {
-  height: auto;
-}
-
-#MangaOnlineViewer.mobile .ChapterControl {
-  margin: 10px;
-  display: block;
-  text-align: center;
-}
-
-#MangaOnlineViewer.mobile .ChapterControl .download {
-  display: none;
-}
-
-#MangaOnlineViewer.mobile #Counters {
-  position: inherit;
-  text-align: center;
-  margin: 10px;
-}
-
-#MangaOnlineViewer.mobile #Chapter {
-  margin: 5px auto 0;
-}
-
-#MangaOnlineViewer .fitWidthIfOversize .PageContent img {
-  max-width: 100%;
-}
-
-#MangaOnlineViewer .minicolors-theme-default .minicolors-swatch {
-  top: 2px;
-  left: 2px;
-}
-`;
-    const sweetalertStyle = `
-.swal2-popup.swal2-toast {
-    box-sizing: border-box;
-    grid-column: 1/4 !important;
-    grid-row: 1/4 !important;
-    grid-template-columns: 1fr 99fr 1fr;
-    padding: 1em;
-    overflow-y: hidden;
-    background: #fff;
-    box-shadow: 0 0 1px hsla(0deg, 0%, 0%, 0.075), 0 1px 2px hsla(0deg, 0%, 0%, 0.075),
-        1px 2px 4px hsla(0deg, 0%, 0%, 0.075), 1px 3px 8px hsla(0deg, 0%, 0%, 0.075),
-        2px 4px 16px hsla(0deg, 0%, 0%, 0.075);
-    pointer-events: all;
-}
-.swal2-popup.swal2-toast > * {
-    grid-column: 2;
-}
-.swal2-popup.swal2-toast #swal2-title {
-    margin: 0.5em 1em;
+  #MangaOnlineViewer .PageFunctions {
     padding: 0;
-    font-size: 1em;
-    text-align: initial;
-}
-.swal2-popup.swal2-toast .swal2-loading {
-    justify-content: center;
-}
-.swal2-popup.swal2-toast .swal2-input {
-    height: 2em;
-    margin: 0.5em;
-    font-size: 1em;
-}
-.swal2-popup.swal2-toast .swal2-validation-message {
-    font-size: 1em;
-}
-.swal2-popup.swal2-toast .swal2-footer {
-    margin: 0.5em 0 0;
-    padding: 0.5em 0 0;
-    font-size: 0.8em;
-}
-.swal2-popup.swal2-toast .swal2-close {
-    grid-column: 3/3;
-    grid-row: 1/99;
-    align-self: center;
-    width: 0.8em;
-    height: 0.8em;
+  }
+
+  #MangaOnlineViewer .PageFunctions a:not(.Bookmark) {
+    display: none;
+  }
+
+  #MangaOnlineViewer .PageFunctions a.Bookmark {
+    opacity: 1;
+  }
+
+  #MangaOnlineViewer .PageFunctions span {
+    right: 0;
+    position: inherit;
+    text-align: center;
+  }
+
+  #MangaOnlineViewer .PageContent {
     margin: 0;
-    font-size: 2em;
-}
-.swal2-popup.swal2-toast .swal2-html-container {
-    margin: 0.5em 1em;
-    padding: 0;
-    font-size: 1em;
-    text-align: initial;
-}
-.swal2-popup.swal2-toast .swal2-html-container:empty {
-    padding: 0;
-}
-.swal2-popup.swal2-toast .swal2-loader {
-    grid-column: 1;
-    grid-row: 1/99;
-    align-self: center;
-    width: 2em;
-    height: 2em;
-    margin: 0.25em;
-}
-.swal2-popup.swal2-toast .swal2-icon {
-    grid-column: 1;
-    grid-row: 1/99;
-    align-self: center;
-    width: 2em;
-    min-width: 2em;
-    height: 2em;
-    margin: 0 0.5em 0 0;
-}
-.swal2-popup.swal2-toast .swal2-icon .swal2-icon-content {
-    display: flex;
-    align-items: center;
-    font-size: 1.8em;
-    font-weight: 700;
-}
-.swal2-popup.swal2-toast .swal2-icon.swal2-success .swal2-success-ring {
-    width: 2em;
-    height: 2em;
-}
-.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
-    top: 0.875em;
-    width: 1.375em;
-}
-.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='left'] {
-    left: 0.3125em;
-}
-.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='right'] {
-    right: 0.3125em;
-}
-.swal2-popup.swal2-toast .swal2-actions {
-    justify-content: flex-start;
+    width: 100%;
+  }
+
+  #MangaOnlineViewer .PageContent img {
+    width: 100% !important;
+  }
+
+  #MangaOnlineViewer .fitWidthIfOversize .PageContent img {
+    max-width: 100%;
+  }
+
+  #MangaOnlineViewer #ImageOptions img:not(#settings) {
+    display: none;
+  }
+
+  #MangaOnlineViewer #ViewerShortcuts {
+    display: none !important;
+  }
+
+  #MangaOnlineViewer #ViewerControls {
+    padding: 8px;
+    position: fixed;
+    top: 0;
+    left: 45px;
+    width: auto;
+    transition: transform 0.3s ease-in, background-color 0.3s linear;
+    display: none;
+  }
+  #MangaOnlineViewer #ViewerControls.visible {
+    display: block;    
+  }
+
+  #MangaOnlineViewer #ViewerControls .DefaultZoom,
+  #MangaOnlineViewer #ViewerControls .viewMode,
+  #MangaOnlineViewer #ViewerControls .fitIfOversize,
+  #MangaOnlineViewer #ViewerControls .showThumbnails,
+  #MangaOnlineViewer #ViewerControls .lazyLoadImages,
+  #MangaOnlineViewer #ViewerControls .downloadZip {
+    display: none;
+  }
+
+  #MangaOnlineViewer #ImageOptions #menu {
+    display: none;
+  }
+
+  #MangaOnlineViewer #ImageOptions #Zoom {
+    display: none;
+  }
+
+  #MangaOnlineViewer .ViewerTitle {
     height: auto;
-    margin: 0;
-    margin-top: 0.5em;
-    padding: 0 0.5em;
-}
-.swal2-popup.swal2-toast .swal2-styled {
-    margin: 0.25em 0.5em;
-    padding: 0.4em 0.6em;
-    font-size: 1em;
-}
-.swal2-popup.swal2-toast .swal2-success {
-    border-color: #a5dc86;
-}
-.swal2-popup.swal2-toast .swal2-success [class^='swal2-success-circular-line'] {
-    position: absolute;
-    width: 1.6em;
-    height: 3em;
-    transform: rotate(45deg);
-    border-radius: 50%;
-}
-.swal2-popup.swal2-toast .swal2-success [class^='swal2-success-circular-line'][class$='left'] {
-    top: -0.8em;
-    left: -0.5em;
-    transform: rotate(-45deg);
-    transform-origin: 2em 2em;
-    border-radius: 4em 0 0 4em;
-}
-.swal2-popup.swal2-toast .swal2-success [class^='swal2-success-circular-line'][class$='right'] {
-    top: -0.25em;
-    left: 0.9375em;
-    transform-origin: 0 1.5em;
-    border-radius: 0 4em 4em 0;
-}
-.swal2-popup.swal2-toast .swal2-success .swal2-success-ring {
-    width: 2em;
-    height: 2em;
-}
-.swal2-popup.swal2-toast .swal2-success .swal2-success-fix {
-    top: 0;
-    left: 0.4375em;
-    width: 0.4375em;
-    height: 2.6875em;
-}
-.swal2-popup.swal2-toast .swal2-success [class^='swal2-success-line'] {
-    height: 0.3125em;
-}
-.swal2-popup.swal2-toast .swal2-success [class^='swal2-success-line'][class$='tip'] {
-    top: 1.125em;
-    left: 0.1875em;
-    width: 0.75em;
-}
-.swal2-popup.swal2-toast .swal2-success [class^='swal2-success-line'][class$='long'] {
-    top: 0.9375em;
-    right: 0.1875em;
-    width: 1.375em;
-}
-.swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip {
-    -webkit-animation: swal2-toast-animate-success-line-tip 0.75s;
-    animation: swal2-toast-animate-success-line-tip 0.75s;
-}
-.swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long {
-    -webkit-animation: swal2-toast-animate-success-line-long 0.75s;
-    animation: swal2-toast-animate-success-line-long 0.75s;
-}
-.swal2-popup.swal2-toast.swal2-show {
-    -webkit-animation: swal2-toast-show 0.5s;
-    animation: swal2-toast-show 0.5s;
-}
-.swal2-popup.swal2-toast.swal2-hide {
-    -webkit-animation: swal2-toast-hide 0.1s forwards;
-    animation: swal2-toast-hide 0.1s forwards;
-}
-.swal2-container {
-    display: grid;
-    position: fixed;
-    z-index: 1060;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    box-sizing: border-box;
-    grid-template-areas: 'top-start top top-end' 'center-start center center-end' 'bottom-start bottom-center bottom-end';
-    grid-template-rows: minmax(-webkit-min-content, auto) minmax(-webkit-min-content, auto) minmax(
-            -webkit-min-content,
-            auto
-        );
-    grid-template-rows: minmax(min-content, auto) minmax(min-content, auto) minmax(
-            min-content,
-            auto
-        );
-    height: 100%;
-    padding: 0.625em;
-    overflow-x: hidden;
-    transition: background-color 0.1s;
-    -webkit-overflow-scrolling: touch;
-}
-.swal2-container.swal2-backdrop-show,
-.swal2-container.swal2-noanimation {
-    background: rgba(0, 0, 0, 0.4);
-}
-.swal2-container.swal2-backdrop-hide {
-    background: 0 0 !important;
-}
-.swal2-container.swal2-bottom-start,
-.swal2-container.swal2-center-start,
-.swal2-container.swal2-top-start {
-    grid-template-columns: minmax(0, 1fr) auto auto;
-}
-.swal2-container.swal2-bottom,
-.swal2-container.swal2-center,
-.swal2-container.swal2-top {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-}
-.swal2-container.swal2-bottom-end,
-.swal2-container.swal2-center-end,
-.swal2-container.swal2-top-end {
-    grid-template-columns: auto auto minmax(0, 1fr);
-}
-.swal2-container.swal2-top-start > .swal2-popup {
-    align-self: start;
-}
-.swal2-container.swal2-top > .swal2-popup {
-    grid-column: 2;
-    align-self: start;
-    justify-self: center;
-}
-.swal2-container.swal2-top-end > .swal2-popup,
-.swal2-container.swal2-top-right > .swal2-popup {
-    grid-column: 3;
-    align-self: start;
-    justify-self: end;
-}
-.swal2-container.swal2-center-left > .swal2-popup,
-.swal2-container.swal2-center-start > .swal2-popup {
-    grid-row: 2;
-    align-self: center;
-}
-.swal2-container.swal2-center > .swal2-popup {
-    grid-column: 2;
-    grid-row: 2;
-    align-self: center;
-    justify-self: center;
-}
-.swal2-container.swal2-center-end > .swal2-popup,
-.swal2-container.swal2-center-right > .swal2-popup {
-    grid-column: 3;
-    grid-row: 2;
-    align-self: center;
-    justify-self: end;
-}
-.swal2-container.swal2-bottom-left > .swal2-popup,
-.swal2-container.swal2-bottom-start > .swal2-popup {
-    grid-column: 1;
-    grid-row: 3;
-    align-self: end;
-}
-.swal2-container.swal2-bottom > .swal2-popup {
-    grid-column: 2;
-    grid-row: 3;
-    justify-self: center;
-    align-self: end;
-}
-.swal2-container.swal2-bottom-end > .swal2-popup,
-.swal2-container.swal2-bottom-right > .swal2-popup {
-    grid-column: 3;
-    grid-row: 3;
-    align-self: end;
-    justify-self: end;
-}
-.swal2-container.swal2-grow-fullscreen > .swal2-popup,
-.swal2-container.swal2-grow-row > .swal2-popup {
-    grid-column: 1/4;
-    width: 100%;
-}
-.swal2-container.swal2-grow-column > .swal2-popup,
-.swal2-container.swal2-grow-fullscreen > .swal2-popup {
-    grid-row: 1/4;
-    align-self: stretch;
-}
-.swal2-container.swal2-no-transition {
-    transition: none !important;
-}
-.swal2-popup {
-    display: none;
-    position: relative;
-    box-sizing: border-box;
-    grid-template-columns: minmax(0, 100%);
-    width: 32em;
-    max-width: 100%;
-    padding: 0 0 1.25em;
-    border: none;
-    border-radius: 5px;
-    background: #fff;
-    color: #545454;
-    font-family: inherit;
-    font-size: 1rem;
-}
-.swal2-popup:focus {
-    outline: 0;
-}
-.swal2-popup.swal2-loading {
-    overflow-y: hidden;
-}
-#swal2-title {
-    position: relative;
-    max-width: 100%;
-    margin: 0;
-    padding: 0.8em 1em 0;
-    color: inherit;
-    font-size: 1.875em;
-    font-weight: 600;
-    text-align: center;
-    text-transform: none;
-    word-wrap: break-word;
-}
-.swal2-actions {
-    display: flex;
-    z-index: 1;
-    box-sizing: border-box;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    margin: 1.25em auto 0;
-    padding: 0;
-}
-.swal2-actions:not(.swal2-loading) .swal2-styled[disabled] {
-    opacity: 0.4;
-}
-.swal2-actions:not(.swal2-loading) .swal2-styled:hover {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
-}
-.swal2-actions:not(.swal2-loading) .swal2-styled:active {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-}
-.swal2-loader {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    width: 2.2em;
-    height: 2.2em;
-    margin: 0 1.875em;
-    -webkit-animation: swal2-rotate-loading 1.5s linear 0s infinite normal;
-    animation: swal2-rotate-loading 1.5s linear 0s infinite normal;
-    border-width: 0.25em;
-    border-style: solid;
-    border-radius: 100%;
-    border-color: #2778c4 transparent #2778c4 transparent;
-}
-.swal2-styled {
-    margin: 0.3125em;
-    padding: 0.625em 1.1em;
-    transition: box-shadow 0.1s;
-    box-shadow: 0 0 0 3px transparent;
-    font-weight: 500;
-}
-.swal2-styled:not([disabled]) {
-    cursor: pointer;
-}
-.swal2-styled.swal2-confirm {
-    border: 0;
-    border-radius: 0.25em;
-    background: initial;
-    background-color: #7066e0;
-    color: #fff;
-    font-size: 1em;
-}
-.swal2-styled.swal2-confirm:focus {
-    box-shadow: 0 0 0 3px rgba(112, 102, 224, 0.5);
-}
-.swal2-styled.swal2-deny {
-    border: 0;
-    border-radius: 0.25em;
-    background: initial;
-    background-color: #dc3741;
-    color: #fff;
-    font-size: 1em;
-}
-.swal2-styled.swal2-deny:focus {
-    box-shadow: 0 0 0 3px rgba(220, 55, 65, 0.5);
-}
-.swal2-styled.swal2-cancel {
-    border: 0;
-    border-radius: 0.25em;
-    background: initial;
-    background-color: #6e7881;
-    color: #fff;
-    font-size: 1em;
-}
-.swal2-styled.swal2-cancel:focus {
-    box-shadow: 0 0 0 3px rgba(110, 120, 129, 0.5);
-}
-.swal2-styled.swal2-default-outline:focus {
-    box-shadow: 0 0 0 3px rgba(100, 150, 200, 0.5);
-}
-.swal2-styled:focus {
-    outline: 0;
-}
-.swal2-styled::-moz-focus-inner {
-    border: 0;
-}
-.swal2-footer {
-    justify-content: center;
-    margin: 1em 0 0;
-    padding: 1em 1em 0;
-    border-top: 1px solid #eee;
-    color: inherit;
-    font-size: 1em;
-}
-.swal2-timer-progress-bar-container {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    grid-column: auto !important;
-    overflow: hidden;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-}
-.swal2-timer-progress-bar {
-    width: 100%;
-    height: 0.25em;
-    background: rgba(0, 0, 0, 0.2);
-}
-.swal2-image {
-    max-width: 100%;
-    margin: 2em auto 1em;
-}
-.swal2-close {
-    z-index: 2;
-    align-items: center;
-    justify-content: center;
-    width: 1.2em;
-    height: 1.2em;
-    margin-top: 0;
-    margin-right: 0;
-    margin-bottom: -1.2em;
-    padding: 0;
-    overflow: hidden;
-    transition: color 0.1s, box-shadow 0.1s;
-    border: none;
-    border-radius: 5px;
-    background: 0 0;
-    color: #ccc;
-    font-family: serif;
-    font-family: monospace;
-    font-size: 2.5em;
-    cursor: pointer;
-    justify-self: end;
-}
-.swal2-close:hover {
-    transform: none;
-    background: 0 0;
-    color: #f27474;
-}
-.swal2-close:focus {
-    outline: 0;
-    box-shadow: inset 0 0 0 3px rgba(100, 150, 200, 0.5);
-}
-.swal2-close::-moz-focus-inner {
-    border: 0;
-}
-.swal2-html-container {
-    z-index: 1;
-    justify-content: center;
-    margin: 1em 1.6em 0.3em;
-    padding: 0;
-    overflow: auto;
-    color: inherit;
-    font-size: 1.125em;
-    font-weight: 400;
-    line-height: normal;
-    text-align: center;
-    word-wrap: break-word;
-    word-break: break-word;
-}
-.swal2-checkbox,
-.swal2-file,
-.swal2-input,
-.swal2-radio,
-.swal2-select,
-.swal2-textarea {
-    margin: 1em 2em 3px;
-}
-.swal2-file,
-.swal2-input,
-.swal2-textarea {
-    box-sizing: border-box;
-    width: auto;
-    transition: border-color 0.1s, box-shadow 0.1s;
-    border: 1px solid #d9d9d9;
-    border-radius: 0.1875em;
-    background: 0 0;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06), 0 0 0 3px transparent;
-    color: inherit;
-    font-size: 1.125em;
-}
-.swal2-file.swal2-inputerror,
-.swal2-input.swal2-inputerror,
-.swal2-textarea.swal2-inputerror {
-    border-color: #f27474 !important;
-    box-shadow: 0 0 2px #f27474 !important;
-}
-.swal2-file:focus,
-.swal2-input:focus,
-.swal2-textarea:focus {
-    border: 1px solid #b4dbed;
-    outline: 0;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06), 0 0 0 3px rgba(100, 150, 200, 0.5);
-}
-.swal2-file::-moz-placeholder,
-.swal2-input::-moz-placeholder,
-.swal2-textarea::-moz-placeholder {
-    color: #ccc;
-}
-.swal2-file:-ms-input-placeholder,
-.swal2-input:-ms-input-placeholder,
-.swal2-textarea:-ms-input-placeholder {
-    color: #ccc;
-}
-.swal2-file::placeholder,
-.swal2-input::placeholder,
-.swal2-textarea::placeholder {
-    color: #ccc;
-}
-.swal2-range {
-    margin: 1em 2em 3px;
-    background: #fff;
-}
-.swal2-range input {
-    width: 80%;
-}
-.swal2-range output {
-    width: 20%;
-    color: inherit;
-    font-weight: 600;
-    text-align: center;
-}
-.swal2-range input,
-.swal2-range output {
-    height: 2.625em;
-    padding: 0;
-    font-size: 1.125em;
-    line-height: 2.625em;
-}
-.swal2-input {
-    height: 2.625em;
-    padding: 0 0.75em;
-}
-.swal2-file {
-    width: 75%;
-    margin-right: auto;
-    margin-left: auto;
-    background: 0 0;
-    font-size: 1.125em;
-}
-.swal2-textarea {
-    height: 6.75em;
-    padding: 0.75em;
-}
-.swal2-select {
-    min-width: 50%;
-    max-width: 100%;
-    padding: 0.375em 0.625em;
-    background: 0 0;
-    color: inherit;
-    font-size: 1.125em;
-}
-.swal2-checkbox,
-.swal2-radio {
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    color: inherit;
-}
-.swal2-checkbox label,
-.swal2-radio label {
-    margin: 0 0.6em;
-    font-size: 1.125em;
-}
-.swal2-checkbox input,
-.swal2-radio input {
-    flex-shrink: 0;
-    margin: 0 0.4em;
-}
-.swal2-input-label {
-    display: flex;
-    justify-content: center;
-    margin: 1em auto 0;
-}
-.swal2-validation-message {
-    align-items: center;
-    justify-content: center;
-    margin: 1em 0 0;
-    padding: 0.625em;
-    overflow: hidden;
-    background: #f0f0f0;
-    color: #666;
-    font-size: 1em;
-    font-weight: 300;
-}
-.swal2-validation-message::before {
-    content: '!';
-    display: inline-block;
-    width: 1.5em;
-    min-width: 1.5em;
-    height: 1.5em;
-    margin: 0 0.625em;
-    border-radius: 50%;
-    background-color: #f27474;
-    color: #fff;
-    font-weight: 600;
-    line-height: 1.5em;
-    text-align: center;
-}
-.swal2-icon {
-    position: relative;
-    box-sizing: content-box;
-    justify-content: center;
-    width: 5em;
-    height: 5em;
-    margin: 2.5em auto 0.6em;
-    border: 0.25em solid transparent;
-    border-radius: 50%;
-    border-color: #000;
-    font-family: inherit;
-    line-height: 5em;
-    cursor: default;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-.swal2-icon .swal2-icon-content {
-    display: flex;
-    align-items: center;
-    font-size: 3.75em;
-}
-.swal2-icon.swal2-error {
-    border-color: #f27474;
-    color: #f27474;
-}
-.swal2-icon.swal2-error .swal2-x-mark {
-    position: relative;
-    flex-grow: 1;
-}
-.swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
-    display: block;
-    position: absolute;
-    top: 2.3125em;
-    width: 2.9375em;
-    height: 0.3125em;
-    border-radius: 0.125em;
-    background-color: #f27474;
-}
-.swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='left'] {
-    left: 1.0625em;
-    transform: rotate(45deg);
-}
-.swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='right'] {
-    right: 1em;
-    transform: rotate(-45deg);
-}
-.swal2-icon.swal2-error.swal2-icon-show {
-    -webkit-animation: swal2-animate-error-icon 0.5s;
-    animation: swal2-animate-error-icon 0.5s;
-}
-.swal2-icon.swal2-error.swal2-icon-show .swal2-x-mark {
-    -webkit-animation: swal2-animate-error-x-mark 0.5s;
-    animation: swal2-animate-error-x-mark 0.5s;
-}
-.swal2-icon.swal2-warning {
-    border-color: #facea8;
-    color: #f8bb86;
-}
-.swal2-icon.swal2-warning.swal2-icon-show {
-    -webkit-animation: swal2-animate-error-icon 0.5s;
-    animation: swal2-animate-error-icon 0.5s;
-}
-.swal2-icon.swal2-warning.swal2-icon-show .swal2-icon-content {
-    -webkit-animation: swal2-animate-i-mark 0.5s;
-    animation: swal2-animate-i-mark 0.5s;
-}
-.swal2-icon.swal2-info {
-    border-color: #9de0f6;
-    color: #3fc3ee;
-}
-.swal2-icon.swal2-info.swal2-icon-show {
-    -webkit-animation: swal2-animate-error-icon 0.5s;
-    animation: swal2-animate-error-icon 0.5s;
-}
-.swal2-icon.swal2-info.swal2-icon-show .swal2-icon-content {
-    -webkit-animation: swal2-animate-i-mark 0.8s;
-    animation: swal2-animate-i-mark 0.8s;
-}
-.swal2-icon.swal2-question {
-    border-color: #c9dae1;
-    color: #87adbd;
-}
-.swal2-icon.swal2-question.swal2-icon-show {
-    -webkit-animation: swal2-animate-error-icon 0.5s;
-    animation: swal2-animate-error-icon 0.5s;
-}
-.swal2-icon.swal2-question.swal2-icon-show .swal2-icon-content {
-    -webkit-animation: swal2-animate-question-mark 0.8s;
-    animation: swal2-animate-question-mark 0.8s;
-}
-.swal2-icon.swal2-success {
-    border-color: #a5dc86;
-    color: #a5dc86;
-}
-.swal2-icon.swal2-success [class^='swal2-success-circular-line'] {
-    position: absolute;
-    width: 3.75em;
-    height: 7.5em;
-    transform: rotate(45deg);
-    border-radius: 50%;
-}
-.swal2-icon.swal2-success [class^='swal2-success-circular-line'][class$='left'] {
-    top: -0.4375em;
-    left: -2.0635em;
-    transform: rotate(-45deg);
-    transform-origin: 3.75em 3.75em;
-    border-radius: 7.5em 0 0 7.5em;
-}
-.swal2-icon.swal2-success [class^='swal2-success-circular-line'][class$='right'] {
-    top: -0.6875em;
-    left: 1.875em;
-    transform: rotate(-45deg);
-    transform-origin: 0 3.75em;
-    border-radius: 0 7.5em 7.5em 0;
-}
-.swal2-icon.swal2-success .swal2-success-ring {
-    position: absolute;
-    z-index: 2;
-    top: -0.25em;
-    left: -0.25em;
-    box-sizing: content-box;
-    width: 100%;
-    height: 100%;
-    border: 0.25em solid rgba(165, 220, 134, 0.3);
-    border-radius: 50%;
-}
-.swal2-icon.swal2-success .swal2-success-fix {
-    position: absolute;
-    z-index: 1;
-    top: 0.5em;
-    left: 1.625em;
-    width: 0.4375em;
-    height: 5.625em;
-    transform: rotate(-45deg);
-}
-.swal2-icon.swal2-success [class^='swal2-success-line'] {
-    display: block;
-    position: absolute;
-    z-index: 2;
-    height: 0.3125em;
-    border-radius: 0.125em;
-    background-color: #a5dc86;
-}
-.swal2-icon.swal2-success [class^='swal2-success-line'][class$='tip'] {
-    top: 2.875em;
-    left: 0.8125em;
-    width: 1.5625em;
-    transform: rotate(45deg);
-}
-.swal2-icon.swal2-success [class^='swal2-success-line'][class$='long'] {
-    top: 2.375em;
-    right: 0.5em;
-    width: 2.9375em;
-    transform: rotate(-45deg);
-}
-.swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-tip {
-    -webkit-animation: swal2-animate-success-line-tip 0.75s;
-    animation: swal2-animate-success-line-tip 0.75s;
-}
-.swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-long {
-    -webkit-animation: swal2-animate-success-line-long 0.75s;
-    animation: swal2-animate-success-line-long 0.75s;
-}
-.swal2-icon.swal2-success.swal2-icon-show .swal2-success-circular-line-right {
-    -webkit-animation: swal2-rotate-success-circular-line 4.25s ease-in;
-    animation: swal2-rotate-success-circular-line 4.25s ease-in;
-}
-.swal2-progress-steps {
-    flex-wrap: wrap;
-    align-items: center;
-    max-width: 100%;
-    margin: 1.25em auto;
-    padding: 0;
-    background: 0 0;
-    font-weight: 600;
-}
-.swal2-progress-steps li {
-    display: inline-block;
-    position: relative;
-}
-.swal2-progress-steps .swal2-progress-step {
-    z-index: 20;
-    flex-shrink: 0;
-    width: 2em;
-    height: 2em;
-    border-radius: 2em;
-    background: #2778c4;
-    color: #fff;
-    line-height: 2em;
-    text-align: center;
-}
-.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step {
-    background: #2778c4;
-}
-.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step ~ .swal2-progress-step {
-    background: #add8e6;
-    color: #fff;
-}
-.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step ~ .swal2-progress-step-line {
-    background: #add8e6;
-}
-.swal2-progress-steps .swal2-progress-step-line {
-    z-index: 10;
-    flex-shrink: 0;
-    width: 2.5em;
-    height: 0.4em;
-    margin: 0 -1px;
-    background: #2778c4;
-}
-[class^='swal2'] {
-    -webkit-tap-highlight-color: transparent;
-}
-.swal2-show {
-    -webkit-animation: swal2-show 0.3s;
-    animation: swal2-show 0.3s;
-}
-.swal2-hide {
-    -webkit-animation: swal2-hide 0.15s forwards;
-    animation: swal2-hide 0.15s forwards;
-}
-.swal2-noanimation {
-    transition: none;
-}
-.swal2-scrollbar-measure {
-    position: absolute;
-    top: -9999px;
-    width: 50px;
-    height: 50px;
-    overflow: scroll;
-}
-.swal2-rtl .swal2-close {
-    margin-right: initial;
-    margin-left: 0;
-}
-.swal2-rtl .swal2-timer-progress-bar {
-    right: 0;
-    left: auto;
-}
-.swal2-no-war {
-    display: flex;
-    position: fixed;
-    z-index: 1061;
-    top: 0;
-    left: 0;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 3.375em;
-    background: #20232a;
-    color: #fff;
-    text-align: center;
-}
-.swal2-no-war a {
-    color: #61dafb;
-    text-decoration: none;
-}
-.swal2-no-war a:hover {
-    text-decoration: underline;
-}
-@-webkit-keyframes swal2-toast-show {
-    0% {
-        transform: translateY(-0.625em) rotateZ(2deg);
-    }
-    33% {
-        transform: translateY(0) rotateZ(-2deg);
-    }
-    66% {
-        transform: translateY(0.3125em) rotateZ(2deg);
-    }
-    100% {
-        transform: translateY(0) rotateZ(0);
-    }
-}
-@keyframes swal2-toast-show {
-    0% {
-        transform: translateY(-0.625em) rotateZ(2deg);
-    }
-    33% {
-        transform: translateY(0) rotateZ(-2deg);
-    }
-    66% {
-        transform: translateY(0.3125em) rotateZ(2deg);
-    }
-    100% {
-        transform: translateY(0) rotateZ(0);
-    }
-}
-@-webkit-keyframes swal2-toast-hide {
-    100% {
-        transform: rotateZ(1deg);
-        opacity: 0;
-    }
-}
-@keyframes swal2-toast-hide {
-    100% {
-        transform: rotateZ(1deg);
-        opacity: 0;
-    }
-}
-@-webkit-keyframes swal2-toast-animate-success-line-tip {
-    0% {
-        top: 0.5625em;
-        left: 0.0625em;
-        width: 0;
-    }
-    54% {
-        top: 0.125em;
-        left: 0.125em;
-        width: 0;
-    }
-    70% {
-        top: 0.625em;
-        left: -0.25em;
-        width: 1.625em;
-    }
-    84% {
-        top: 1.0625em;
-        left: 0.75em;
-        width: 0.5em;
-    }
-    100% {
-        top: 1.125em;
-        left: 0.1875em;
-        width: 0.75em;
-    }
-}
-@keyframes swal2-toast-animate-success-line-tip {
-    0% {
-        top: 0.5625em;
-        left: 0.0625em;
-        width: 0;
-    }
-    54% {
-        top: 0.125em;
-        left: 0.125em;
-        width: 0;
-    }
-    70% {
-        top: 0.625em;
-        left: -0.25em;
-        width: 1.625em;
-    }
-    84% {
-        top: 1.0625em;
-        left: 0.75em;
-        width: 0.5em;
-    }
-    100% {
-        top: 1.125em;
-        left: 0.1875em;
-        width: 0.75em;
-    }
-}
-@-webkit-keyframes swal2-toast-animate-success-line-long {
-    0% {
-        top: 1.625em;
-        right: 1.375em;
-        width: 0;
-    }
-    65% {
-        top: 1.25em;
-        right: 0.9375em;
-        width: 0;
-    }
-    84% {
-        top: 0.9375em;
-        right: 0;
-        width: 1.125em;
-    }
-    100% {
-        top: 0.9375em;
-        right: 0.1875em;
-        width: 1.375em;
-    }
-}
-@keyframes swal2-toast-animate-success-line-long {
-    0% {
-        top: 1.625em;
-        right: 1.375em;
-        width: 0;
-    }
-    65% {
-        top: 1.25em;
-        right: 0.9375em;
-        width: 0;
-    }
-    84% {
-        top: 0.9375em;
-        right: 0;
-        width: 1.125em;
-    }
-    100% {
-        top: 0.9375em;
-        right: 0.1875em;
-        width: 1.375em;
-    }
-}
-@-webkit-keyframes swal2-show {
-    0% {
-        transform: scale(0.7);
-    }
-    45% {
-        transform: scale(1.05);
-    }
-    80% {
-        transform: scale(0.95);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-@keyframes swal2-show {
-    0% {
-        transform: scale(0.7);
-    }
-    45% {
-        transform: scale(1.05);
-    }
-    80% {
-        transform: scale(0.95);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-@-webkit-keyframes swal2-hide {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(0.5);
-        opacity: 0;
-    }
-}
-@keyframes swal2-hide {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(0.5);
-        opacity: 0;
-    }
-}
-@-webkit-keyframes swal2-animate-success-line-tip {
-    0% {
-        top: 1.1875em;
-        left: 0.0625em;
-        width: 0;
-    }
-    54% {
-        top: 1.0625em;
-        left: 0.125em;
-        width: 0;
-    }
-    70% {
-        top: 2.1875em;
-        left: -0.375em;
-        width: 3.125em;
-    }
-    84% {
-        top: 3em;
-        left: 1.3125em;
-        width: 1.0625em;
-    }
-    100% {
-        top: 2.8125em;
-        left: 0.8125em;
-        width: 1.5625em;
-    }
-}
-@keyframes swal2-animate-success-line-tip {
-    0% {
-        top: 1.1875em;
-        left: 0.0625em;
-        width: 0;
-    }
-    54% {
-        top: 1.0625em;
-        left: 0.125em;
-        width: 0;
-    }
-    70% {
-        top: 2.1875em;
-        left: -0.375em;
-        width: 3.125em;
-    }
-    84% {
-        top: 3em;
-        left: 1.3125em;
-        width: 1.0625em;
-    }
-    100% {
-        top: 2.8125em;
-        left: 0.8125em;
-        width: 1.5625em;
-    }
-}
-@-webkit-keyframes swal2-animate-success-line-long {
-    0% {
-        top: 3.375em;
-        right: 2.875em;
-        width: 0;
-    }
-    65% {
-        top: 3.375em;
-        right: 2.875em;
-        width: 0;
-    }
-    84% {
-        top: 2.1875em;
-        right: 0;
-        width: 3.4375em;
-    }
-    100% {
-        top: 2.375em;
-        right: 0.5em;
-        width: 2.9375em;
-    }
-}
-@keyframes swal2-animate-success-line-long {
-    0% {
-        top: 3.375em;
-        right: 2.875em;
-        width: 0;
-    }
-    65% {
-        top: 3.375em;
-        right: 2.875em;
-        width: 0;
-    }
-    84% {
-        top: 2.1875em;
-        right: 0;
-        width: 3.4375em;
-    }
-    100% {
-        top: 2.375em;
-        right: 0.5em;
-        width: 2.9375em;
-    }
-}
-@-webkit-keyframes swal2-rotate-success-circular-line {
-    0% {
-        transform: rotate(-45deg);
-    }
-    5% {
-        transform: rotate(-45deg);
-    }
-    12% {
-        transform: rotate(-405deg);
-    }
-    100% {
-        transform: rotate(-405deg);
-    }
-}
-@keyframes swal2-rotate-success-circular-line {
-    0% {
-        transform: rotate(-45deg);
-    }
-    5% {
-        transform: rotate(-45deg);
-    }
-    12% {
-        transform: rotate(-405deg);
-    }
-    100% {
-        transform: rotate(-405deg);
-    }
-}
-@-webkit-keyframes swal2-animate-error-x-mark {
-    0% {
-        margin-top: 1.625em;
-        transform: scale(0.4);
-        opacity: 0;
-    }
-    50% {
-        margin-top: 1.625em;
-        transform: scale(0.4);
-        opacity: 0;
-    }
-    80% {
-        margin-top: -0.375em;
-        transform: scale(1.15);
-    }
-    100% {
-        margin-top: 0;
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-@keyframes swal2-animate-error-x-mark {
-    0% {
-        margin-top: 1.625em;
-        transform: scale(0.4);
-        opacity: 0;
-    }
-    50% {
-        margin-top: 1.625em;
-        transform: scale(0.4);
-        opacity: 0;
-    }
-    80% {
-        margin-top: -0.375em;
-        transform: scale(1.15);
-    }
-    100% {
-        margin-top: 0;
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-@-webkit-keyframes swal2-animate-error-icon {
-    0% {
-        transform: rotateX(100deg);
-        opacity: 0;
-    }
-    100% {
-        transform: rotateX(0);
-        opacity: 1;
-    }
-}
-@keyframes swal2-animate-error-icon {
-    0% {
-        transform: rotateX(100deg);
-        opacity: 0;
-    }
-    100% {
-        transform: rotateX(0);
-        opacity: 1;
-    }
-}
-@-webkit-keyframes swal2-rotate-loading {
-    0% {
-        transform: rotate(0);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-@keyframes swal2-rotate-loading {
-    0% {
-        transform: rotate(0);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-@-webkit-keyframes swal2-animate-question-mark {
-    0% {
-        transform: rotateY(-360deg);
-    }
-    100% {
-        transform: rotateY(0);
-    }
-}
-@keyframes swal2-animate-question-mark {
-    0% {
-        transform: rotateY(-360deg);
-    }
-    100% {
-        transform: rotateY(0);
-    }
-}
-@-webkit-keyframes swal2-animate-i-mark {
-    0% {
-        transform: rotateZ(45deg);
-        opacity: 0;
-    }
-    25% {
-        transform: rotateZ(-25deg);
-        opacity: 0.4;
-    }
-    50% {
-        transform: rotateZ(15deg);
-        opacity: 0.8;
-    }
-    75% {
-        transform: rotateZ(-5deg);
-        opacity: 1;
-    }
-    100% {
-        transform: rotateX(0);
-        opacity: 1;
-    }
-}
-@keyframes swal2-animate-i-mark {
-    0% {
-        transform: rotateZ(45deg);
-        opacity: 0;
-    }
-    25% {
-        transform: rotateZ(-25deg);
-        opacity: 0.4;
-    }
-    50% {
-        transform: rotateZ(15deg);
-        opacity: 0.8;
-    }
-    75% {
-        transform: rotateZ(-5deg);
-        opacity: 1;
-    }
-    100% {
-        transform: rotateX(0);
-        opacity: 1;
-    }
-}
-body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
-    overflow: hidden;
-}
-body.swal2-height-auto {
-    height: auto !important;
-}
-body.swal2-no-backdrop .swal2-container {
-    background-color: transparent !important;
-    pointer-events: none;
-}
-body.swal2-no-backdrop .swal2-container .swal2-popup {
-    pointer-events: all;
-}
-body.swal2-no-backdrop .swal2-container .swal2-modal {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-}
-@media print {
-    body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
-        overflow-y: scroll !important;
-    }
-    body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) > [aria-hidden='true'] {
-        display: none;
-    }
-    body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) .swal2-container {
-        position: static !important;
-    }
-}
-body.swal2-toast-shown .swal2-container {
-    box-sizing: border-box;
-    width: 360px;
-    max-width: 100%;
-    background-color: transparent;
-    pointer-events: none;
-}
-body.swal2-toast-shown .swal2-container.swal2-top {
-    top: 0;
-    right: auto;
-    bottom: auto;
-    left: 50%;
-    transform: translateX(-50%);
-}
-body.swal2-toast-shown .swal2-container.swal2-top-end,
-body.swal2-toast-shown .swal2-container.swal2-top-right {
-    top: 0;
-    right: 0;
-    bottom: auto;
-    left: auto;
-}
-body.swal2-toast-shown .swal2-container.swal2-top-left,
-body.swal2-toast-shown .swal2-container.swal2-top-start {
-    top: 0;
-    right: auto;
-    bottom: auto;
-    left: 0;
-}
-body.swal2-toast-shown .swal2-container.swal2-center-left,
-body.swal2-toast-shown .swal2-container.swal2-center-start {
-    top: 50%;
-    right: auto;
-    bottom: auto;
-    left: 0;
-    transform: translateY(-50%);
-}
-body.swal2-toast-shown .swal2-container.swal2-center {
-    top: 50%;
-    right: auto;
-    bottom: auto;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-body.swal2-toast-shown .swal2-container.swal2-center-end,
-body.swal2-toast-shown .swal2-container.swal2-center-right {
-    top: 50%;
-    right: 0;
-    bottom: auto;
-    left: auto;
-    transform: translateY(-50%);
-}
-body.swal2-toast-shown .swal2-container.swal2-bottom-left,
-body.swal2-toast-shown .swal2-container.swal2-bottom-start {
-    top: auto;
-    right: auto;
-    bottom: 0;
-    left: 0;
-}
-body.swal2-toast-shown .swal2-container.swal2-bottom {
-    top: auto;
-    right: auto;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-}
-body.swal2-toast-shown .swal2-container.swal2-bottom-end,
-body.swal2-toast-shown .swal2-container.swal2-bottom-right {
-    top: auto;
-    right: 0;
-    bottom: 0;
-    left: auto;
-}
+  }
 
+  #MangaOnlineViewer .ChapterControl {
+    margin: 10px;
+    display: block;
+    text-align: center;
+  }
+
+  #MangaOnlineViewer .ChapterControl .download {
+    display: none;
+  }
+
+  #MangaOnlineViewer #Counters {
+    position: inherit;
+    text-align: center;
+    margin: 10px;
+  }
+
+  #MangaOnlineViewer #Chapter {
+    margin: 5px auto 0;
+  }
+}
 `;
 
     const externalScripts = [
-        '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>',
-        '<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js" integrity="sha512-amNoSoOK3jIKx6qlDrv36P4M/h7vc6CHwiBU3XG9/1LW0ZSNe8E3iZL1tPG/VnfCrVrZc2Zv47FIJ7fyDX4DMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>',
-        '<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js" integrity="sha256-XWzSUJ+FIQ38dqC06/48sNRwU1Qh3/afjmJ080SneA8=" crossorigin="anonymous"></script>',
-        '<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.10/sweetalert2.min.js" integrity="sha512-OgIASmUioEN3o3gYIAxYUeW4G5FWdhORLq0p7UhTM6Xrm5XGY4IrSDM3uYTCNh4ik4V8BX0NaX9/Z/VMqigCzg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>',
         '<script src="https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js" integrity="sha256-7IUC8vhyoPLh1tuQJnffPB5VO6HpR4VWK4Y1ciOOoBY=" crossorigin="anonymous"></script>',
+        '<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js" integrity="sha512-Qlv6VSKh1gDKGoJbnyA5RMXYcvnpIqhO++MhIM2fStMcGT9i2T//tSwYFlcyoRRDcDZ+TYHpH8azBBCyhpSeqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>',
         '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js" integrity="sha512-kfs3Dt9u9YcOiIt4rNcPUzdyNNO9sVGQPiZsub7ywg6lRW5KuK1m145ImrFHe3LMWXHndoKo2YRXWy8rnOcSKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>',
+        '<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js" integrity="sha512-xcHCGC5tQ0SHlRX8Anbz6oy/OullASJkEhb4gjkneVpGE3/QGYejf14CUO5n5q5paiHfRFTa9HKgByxzidw2Bw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>',
+        '<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js" integrity="sha256-XWzSUJ+FIQ38dqC06/48sNRwU1Qh3/afjmJ080SneA8=" crossorigin="anonymous"></script>',
+        '<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.19/sweetalert2.min.js" integrity="sha512-8EbzTdONoihxrKJqQUk1W6Z++PXPHexYlmSfizYg7eUqz8NgScujWLqqSdni6SRxx8wS4Z9CQu0eakmPLtq0HA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>',
     ];
     externalScripts.map((script) => {
         const find = script.match(/src="(.+?)"/);
@@ -2896,7 +1551,7 @@ body.swal2-toast-shown .swal2-container.swal2-bottom-right {
         '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />',
         '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" integrity="sha256-pMhcV6/TBDtqH9E9PWKgS+P32PVguLG8IipkPyqMtfY=" crossorigin="anonymous" />',
         '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gerhobbelt/keyscss@1.1.3-6/keys.css" integrity="sha256-a/1ebfXeoX0xLUcQCJLQsm6APQNBwrm03/XFcvW7xAI=" crossorigin="anonymous">',
-        '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.10/sweetalert2.min.css" integrity="sha512-R9EM3xazxo9xyo8pz3IMTw7SIO1qKnG1Vs3yJnVApYhqDwemdSJJbcd5KROicK87kRiFksOhhtW/s2c4Mdjrwg==" crossorigin="anonymous" referrerpolicy="no-referrer" />',
+        '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.19/sweetalert2.css" integrity="sha512-p06JAs/zQhPp/dk821RoSDTtxZ71yaznVju7IHe85CPn9gKpQVzvOXwTkfqCyWRdwo+e6DOkEKOWPmn8VE9Ekg==" crossorigin="anonymous" referrerpolicy="no-referrer" />',
     ];
     externalCSS.map((script) => {
         const find = script.match(/href="(.+?)"/);
@@ -2905,9 +1560,6 @@ body.swal2-toast-shown .swal2-container.swal2-bottom-right {
 
     // Configuration
     const settings$1 = {
-        configVersion: 0,
-        throttlePageLoad: 0,
-        widthScale: 0,
         theme: getValueGM('Theme', 'Light'),
         customTheme: getValueGM('CustomTheme', '#3d0099'),
         customThemeBody: getValueGM('CustomThemeBody', '#000000'),
@@ -2918,7 +1570,7 @@ body.swal2-toast-shown .swal2-container.swal2-bottom-right {
         fitWidthIfOversize: getValueGM('FitWidthIfOversize', true),
         showThumbnails: getValueGM('ShowThumbnails', true),
         downloadZip: getValueGM('DownloadZip', false),
-        timer: getValueGM('Timer', 1000),
+        throttlePageLoad: getValueGM('Timer', 1000),
         zoom: getValueGM('Zoom', 100),
         zoomStep: getValueGM('ZoomStep', 25),
         loadMode: getValueGM('LoadMode', 'wait'),
@@ -2927,6 +1579,7 @@ body.swal2-toast-shown .swal2-container.swal2-bottom-right {
         lazyLoadImages: getValueGM('LazyLoadImages', false),
         lazyStart: getValueGM('LazyStart', 50),
         hidePageControls: getValueGM('HidePageControls', false),
+        mouseOverMenu: getValueGM('MouseOverMenu', false),
     };
     // Force Settings for mobile
     if (isMobile) {
@@ -2970,7 +1623,7 @@ body.swal2-toast-shown .swal2-container.swal2-bottom-right {
     // Add custom Themes to the page
     function addTheme(theme) {
         return `<style type='text/css' name='${theme[0]}'>
-  .${theme[0]} .controlLabel, .${theme[0]} .ViewerTitle, .${theme[0]}, .PageFunctions a.visible, .${theme[0]} a, .${theme[0]} a:link, .${theme[0]} a:visited, .${theme[0]} a:active, .${theme[0]} a:focus{ text-decoration:none; color: ${theme[2]};}
+  .${theme[0]} .ControlLabel, .${theme[0]} .ViewerTitle, .${theme[0]}, .PageFunctions a.visible, .${theme[0]} a, .${theme[0]} a:link, .${theme[0]} a:visited, .${theme[0]} a:active, .${theme[0]} a:focus{ text-decoration:none; color: ${theme[2]};}
   .${theme[0]} {background-repeat: repeat;background-position: 0 0;background-image: none;background-color: ${theme[1]};background-attachment: scroll;}
   .${theme[0]} #ImageOptions #menu .menuOuterArrow {border-left-width: 10px;border-left-style: solid;border-left-color: ${theme[4]};}
   .${theme[0]} #ImageOptions #menu .menuInnerArrow {border-left-width: 5px;border-left-style: solid;border-left-color: ${theme[1]};}
@@ -3045,32 +1698,24 @@ ${cssStyles}
 `;
     }
 
-    const chapterControl = (id) => (manga) => `<div id='${id}' class='ChapterControl'>
-    <a href='#' class='download'>Download</a>
-    <a class='prev' id='prev' href='${manga.prev || ''}'>Previous</a>
-    <a class='next' id='next' href='${manga.next || ''}'>Next</a>
-</div>`;
-    const chapterControlTop = chapterControl('ChapterControlTop');
-    const chapterControlBottom = chapterControl('ChapterControlBottom');
-
     // Add Pages Place-holders
     const listPages = (times) => Array(times)
         .fill(null)
         .map((_, index) => `
 <div id='Page${index + 1}' class='MangaPage'>
   <div class='PageFunctions'>
-    <a class='Bookmark controlButton' title='Bookmark'></a>
-    <a class='ZoomIn controlButton' title='Zoom In'></a>
-    <a class='ZoomRestore controlButton' title='Zoom Restore'></a>
-    <a class='ZoomOut controlButton' title='Zoom Out'></a>
-    <a class='ZoomWidth controlButton' title='Zoom to Width'></a>
-    <a class='ZoomHeight controlButton' title='Zoom to Height'></a>
-    <a class='Hide controlButton' title='Hide'></a>
-    <a class='Reload controlButton' title='Reload'></a>
-    <span>${index + 1}</span>
+    <button class='Bookmark ControlButton' title='Bookmark'></button>
+    <button class='ZoomIn ControlButton' title='Zoom In'></button>
+    <button class='ZoomRestore ControlButton' title='Zoom Restore'></button>
+    <button class='ZoomOut ControlButton' title='Zoom Out'></button>
+    <button class='ZoomWidth ControlButton' title='Zoom to Width'></button>
+    <button class='ZoomHeight ControlButton' title='Zoom to Height'></button>
+    <button class='Hide ControlButton' title='Hide'></button>
+    <button class='Reload ControlButton' title='Reload'></button>
+    <span class='PageIndex'>${index + 1}</span>
   </div>
   <div class='PageContent'>
-    <img id='PageImg${index + 1}' alt='PageImg${index + 1}' />
+    <img id='PageImg${index + 1}' alt='PageImg${index + 1}' class='PageImg' />
   </div>
 </div>`);
 
@@ -3079,54 +1724,68 @@ ${cssStyles}
     <span class='menuOuterArrow'><span class='menuInnerArrow'></span></span>
   </div>
   <div class='panel'>
-    <img id='enlarge' alt='Enlarge' title='Enlarge' src='${icon.enlarge}' class='controlButton' />
-    <img id='restore' alt='Restore' title='Restore' src='${icon.restore}' class='controlButton' />
-    <img id='reduce' alt='Reduce' title='Reduce' src='${icon.reduce}' class='controlButton' />
-    <img id='fitWidth' alt='Fit Width' title='Fit Width' src='${icon.fitWidth}' class='controlButton' />
-    <img id='fitHeight' alt='Fit Height' title='Fit Height' src='${icon.fitHeight}' class='controlButton' />
-    <img id='webComic' alt='Web Comic Mode' title='Web Comic Mode' src='${icon.webComic}' class='controlButton' />
-    <img id='ltrMode' alt='Left to Right Mode' title='Left to Right Mode' src='${icon.pictureLeft}' class='controlButton'/>
-    <img id='verticalMode' alt='Vertical Mode' title='Vertical Mode' src='${icon.pictureDown}' class='controlButton'/>
-    <img id='rtlMode' alt='Right to Left Mode' title='Right to Left Mode' src='${icon.pictureRight}' class='controlButton'/>
-    <img id='pageControls' alt='Toggle Page Controls' title='Toggle Page Controls' src='${icon.controls}' class='controlButton'/>
-    <img id='settings' alt='settings' title='settings' src='${icon.settings}' class='controlButton' />
+    <img id='enlarge' alt='Enlarge' title='Enlarge' src='${icon.enlarge}' class='ControlButton' />
+    <img id='restore' alt='Restore' title='Restore' src='${icon.restore}' class='ControlButton' />
+    <img id='reduce' alt='Reduce' title='Reduce' src='${icon.reduce}' class='ControlButton' />
+    <img id='fitWidth' alt='Fit Width' title='Fit Width' src='${icon.fitWidth}' class='ControlButton' />
+    <img id='fitHeight' alt='Fit Height' title='Fit Height' src='${icon.fitHeight}' class='ControlButton' />
+    <img id='webComic' alt='Web Comic Mode' title='Web Comic Mode' src='${icon.webComic}' class='ControlButton' />
+    <img id='ltrMode' alt='Left to Right Mode' title='Left to Right Mode' src='${icon.pictureLeft}' class='ControlButton'/>
+    <img id='verticalMode' alt='Vertical Mode' title='Vertical Mode' src='${icon.pictureDown}' class='ControlButton'/>
+    <img id='rtlMode' alt='Right to Left Mode' title='Right to Left Mode' src='${icon.pictureRight}' class='ControlButton'/>
+    <img id='pageControls' alt='Toggle Page Controls' title='Toggle Page Controls' src='${icon.controls}' class='ControlButton'/>
+    <img id='settings' alt='settings' title='settings' src='${icon.settings}' class='ControlButton' />
   </div>
-  <div id='Zoom' class='controlLabel'>Zoom: <b>${settings$1.zoom}</b> %</div>
+  <div id='Zoom' class='ControlLabel'>Zoom: <b id='ZoomPercent'>${settings$1.zoom}</b> %</div>
 </div>`;
 
     const controls$1 = `<div id='ViewerControls' class='panel'>
-  <span class='controlLabel ThemeSelector'>Theme:
+  <div class='ControlLabel ThemeSelector'>Theme:
     <select id='ThemeSelector'>
       ${themesSelector}
     </select>
-      <span class='CustomTheme' ${settings$1.theme !== 'Custom_Dark' && settings$1.theme !== 'Custom_Light'
+      <div class='CustomTheme' ${settings$1.theme !== 'Custom_Dark' && settings$1.theme !== 'Custom_Light'
     ? 'style="display: none;"'
-    : ''}><br/>-Base:<input id='CustomThemeHue' type='color' value='${settings$1.customTheme}' class='colorpicker CustomTheme'></span>
-      <span class='FullCustom' ${settings$1.theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Body:<input id='CustomThemeHueBody' type='color' value='${settings$1.customThemeBody}' class='colorpicker FullCustom'></span>
-      <span class='FullCustom' ${settings$1.theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Text:<input id='CustomThemeHueText' type='color' value=${settings$1.customThemeText}' class='colorpicker FullCustom'></span>
-      <span class='FullCustom' ${settings$1.theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Lines:<input id='CustomThemeHueLines' type='color' value='${settings$1.customThemeLines}' class='colorpicker FullCustom'></span>
-      <span class='FullCustom' ${settings$1.theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Painels:<input id='CustomThemeHuePanel' type='color' value='${settings$1.customThemePanel}' class='colorpicker FullCustom'></span>
-      <span class='FullCustom' ${settings$1.theme !== 'Full_Custom' ? 'style="display: none;"' : ''}><br/>-Buttons:<input id='CustomThemeHueButton' type='color' value='${settings$1.customThemeButton}' class='colorpicker FullCustom'></span>
-  </span>
-  <span class='controlLabel loadMode'>Default Load Mode:
+    : ''}>
+        -Base:<input id='CustomThemeHue' type='color' value='${settings$1.customTheme}' class='colorpicker CustomTheme'>
+      </div>
+      <div class='FullCustom' ${settings$1.theme !== 'Full_Custom' ? 'style="display: none;"' : ''}>
+        -Body:<input id='CustomThemeHueBody' type='color' value='${settings$1.customThemeBody}' class='colorpicker FullCustom'>
+      </div>
+      <div class='FullCustom' ${settings$1.theme !== 'Full_Custom' ? 'style="display: none;"' : ''}>
+        -Text:<input id='CustomThemeHueText' type='color' value=${settings$1.customThemeText}' class='colorpicker FullCustom'>
+      </div>
+      <div class='FullCustom' ${settings$1.theme !== 'Full_Custom' ? 'style="display: none;"' : ''}>
+        -Lines:<input id='CustomThemeHueLines' type='color' value='${settings$1.customThemeLines}' class='colorpicker FullCustom'>
+      </div>
+      <div class='FullCustom' ${settings$1.theme !== 'Full_Custom' ? 'style="display: none;"' : ''}>
+        -Painels:
+        <input id='CustomThemeHuePanel' type='color' value='${settings$1.customThemePanel}' class='colorpicker FullCustom'>
+      </div>
+      <div class='FullCustom' ${settings$1.theme !== 'Full_Custom' ? 'style="display: none;"' : ''}>
+        -Buttons:
+        <input id='CustomThemeHueButton' type='color' value='${settings$1.customThemeButton}' class='colorpicker FullCustom'>
+      </div>
+  </div>
+  <div class='ControlLabel loadMode'>Default Load Mode:
     <select id='loadMode'>
       <option value='wait' ${settings$1.loadMode === 'wait' ? 'selected' : ''}>Normal(Wait 3 sec)</option>
       <option value='always' ${settings$1.loadMode === 'always' ? 'selected' : ''}>Always(Immediately)</option>
       <option value='never' ${settings$1.loadMode === 'never' ? 'selected' : ''}>Never(Manually)</option>
     </select>
-  </span>
-  <span class='controlLabel PagesPerSecond'>Pages/Second:
+  </div>
+  <div class='ControlLabel PagesPerSecond'>Pages/Second:
     <select id='PagesPerSecond'>
-      <option value='3000' ${settings$1.timer === 3000 ? 'selected' : ''}>0.3(Slow)</option>
-      <option value='2000' ${settings$1.timer === 2000 ? 'selected' : ''}>0.5</option>
-      <option value='1000' ${settings$1.timer === 1000 ? 'selected' : ''}>01(Normal)</option>
-      <option value='500' ${settings$1.timer === 500 ? 'selected' : ''}>02</option>
-      <option value='250' ${settings$1.timer === 250 ? 'selected' : ''}>04(Fast)</option>
-      <option value='125' ${settings$1.timer === 125 ? 'selected' : ''}>08</option>
-      <option value='100' ${settings$1.timer === 100 ? 'selected' : ''}>10(Extreme)</option>
+      <option value='3000' ${settings$1.throttlePageLoad === 3000 ? 'selected' : ''}>0.3(Slow)</option>
+      <option value='2000' ${settings$1.throttlePageLoad === 2000 ? 'selected' : ''}>0.5</option>
+      <option value='1000' ${settings$1.throttlePageLoad === 1000 ? 'selected' : ''}>01(Normal)</option>
+      <option value='500' ${settings$1.throttlePageLoad === 500 ? 'selected' : ''}>02</option>
+      <option value='250' ${settings$1.throttlePageLoad === 250 ? 'selected' : ''}>04(Fast)</option>
+      <option value='125' ${settings$1.throttlePageLoad === 125 ? 'selected' : ''}>08</option>
+      <option value='100' ${settings$1.throttlePageLoad === 100 ? 'selected' : ''}>10(Extreme)</option>
     </select>
-  </span>
-  <span class='controlLabel DefaultZoom'>Default Zoom:
+  </div>
+  <div class='ControlLabel DefaultZoom'>Default Zoom:
     <select id='DefaultZoom'>
       <option value='50' ${settings$1.zoom === 50 ? 'selected' : ''}>50%</option>
       <option value='75' ${settings$1.zoom === 75 ? 'selected' : ''}>75%</option>
@@ -3138,41 +1797,44 @@ ${cssStyles}
       <option value='1000' ${settings$1.zoom === 1000 ? 'selected' : ''}>Fit Width</option>
       <option value='-1000' ${settings$1.zoom === -1000 ? 'selected' : ''}>Fit Height</option>
     </select>
-  </span>
-  <span class='controlLabel zoomStep'>Zoom Change Step (between 5 and 50): <br/>
+  </div>
+  <div class='ControlLabel zoomStep'>Zoom Change Step (between 5 and 50): <br/>
     <input type='range' value='${settings$1.zoomStep}' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput='zoomStepVal.value = this.value'>
     <output id='zoomStepVal'>${settings$1.zoomStep}</output>
-  </span>
-  <span class='controlLabel viewMode'>Default View Mode:
+  </div>
+  <div class='ControlLabel viewMode'>Default View Mode:
     <select id='viewMode'>
       <option value='' ${settings$1.viewMode === '' ? 'selected' : ''}>Vertical</option>
       <option value='WebComic' ${settings$1.viewMode === 'WebComic' ? 'selected' : ''}>WebComic</option>
       <option value='FluidLTR' ${settings$1.viewMode === 'FluidLTR' ? 'selected' : ''}>Left to Right</option>
       <option value='FluidRTL' ${settings$1.viewMode === 'FluidRTL' ? 'selected' : ''}>Right to Left</option>
     </select>
-  </span>
-  <span class='controlLabel fitIfOversize'>Fit Width if Oversize:
+  </div>
+  <div class='ControlLabel fitIfOversize'>Fit Width if Oversize:
     <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${settings$1.fitWidthIfOversize ? 'checked' : ''}>
-  </span>
-  <span class='controlLabel showThumbnails'>Show Thumbnails:
+  </div>
+  <div class='ControlLabel showThumbnails'>Show Thumbnails:
     <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${settings$1.showThumbnails ? 'checked' : ''}>
-   </span>
-   <span class='controlLabel lazyLoadImages'>Lazy Load Images:
+   </div>
+   <div class='ControlLabel lazyLoadImages'>Lazy Load Images:
     <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${settings$1.lazyLoadImages ? 'checked' : ''}>
-   </span>
-   <span class='controlLabel lazyStart'>Lazy Start From Page (between 5 and 100):<br/>
+   </div>
+   <div class='ControlLabel lazyStart'>Lazy Start From Page (between 5 and 100):<br/>
     <input type='range' value='${settings$1.lazyStart}' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput='lazyStartVal.value = this.value'>
     <output id='lazyStartVal'>${settings$1.lazyStart}</output>
-  </span>
-  <span class='controlLabel downloadZip'>Download Images as Zip Automatically:
+  </div>
+  <div class='ControlLabel downloadZip'>Download Images as Zip Automatically:
     <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${settings$1.downloadZip ? 'checked' : ''}>
-  </span>
-  <span class='controlLabel hidePageControls'>Always Hide Page Controls:
+  </div>
+  <div class='ControlLabel hidePageControls'>Always Hide Page Controls:
     <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${settings$1.hidePageControls ? 'checked' : ''}>
-  </span>
+  </div>
+  <div class='ControlLabel mouseOverMenu'>Toggle Sticky Header / MouseOverMenu:
+    <input type='checkbox' value='false' name='mouseOverMenu' id='mouseOverMenu' ${settings$1.mouseOverMenu ? 'checked' : ''}>
+  </div>
 </div>`;
 
-    var htmlKeybinds = `<div id='ViewerShortcuts' class='panel' style='display: none;'>
+    const keybindings = `<div id='ViewerShortcuts' class='panel'>
     <kbd class='dark'>Numpad 5</kbd>/<kbd class='dark'>/</kbd>: Open Settings<br/>
     <kbd class='dark'>Numpad +</kbd>/<kbd class='dark'>=</kbd>: Global Zoom in pages (enlarge)<br/>
     <kbd class='dark'>Numpad -</kbd>/<kbd class='dark'>-</kbd>: Global Zoom out pages (reduce)<br/>
@@ -3190,41 +1852,55 @@ ${cssStyles}
 
     const listThumbnails = (times) => Array(times)
         .fill(null)
-        .map((_, index) => `<div id='Thumbnail${index + 1}' class='Thumbnail'><img id='ThumbnailImg${index + 1}' alt='ThumbnailImg${index + 1}' src=''/><span>${index + 1}</span></div>`);
+        .map((_, index) => `
+<div id='Thumbnail${index + 1}' class='Thumbnail'>
+  <img id='ThumbnailImg${index + 1}' alt='ThumbnailImg${index + 1}' class='ThumbnailImg' src=''/>
+  <span class='ThumbnailIndex'>${index + 1}</span>
+</div>`);
 
-    const title = (manga) => `<div class='ViewerTitle'><a id='series' href='${manga.series}'><i>${manga.title}</i><br/>(Return to Chapter List)</a></div>`;
     const listOptions = (times) => Array(times)
         .fill(null)
         .map((_, index) => `<option value='${index + 1}'>${index + 1}</option>`);
     const body = (manga, begin = 0) => `
 <div id='MangaOnlineViewer'
-  class='${settings$1.theme} ${isMobile ? 'mobile' : ''} ${settings$1.hidePageControls ? 'hideControls' : ''}'>
-  <header>
-    ${title(manga)}
-    <div id='Counters' class='controlLabel'>
-      <i>0</i> of <b>${manga.pages}</b> Pages Loaded
-      <span class='controlLabel'>Go to Page:</span>
-      <select id='gotoPage'>
-        <option selected>#</option>
-        ${listOptions(manga.pages).slice(begin).join('')}
-      </select>
+  class="${settings$1.theme} ${isMobile ? 'mobile' : ''} ${settings$1.hidePageControls ? 'hideControls' : ''}">
+  <header id="Header" class="${settings$1.mouseOverMenu ? 'mouseOverMenu' : ''}">
+    <aside id='GlobalControls'>
+      ${imageOptions}
+      ${controls$1}
+      ${keybindings}
+    </aside>
+    <div class='ViewerTitle'>
+      <h1 id='MangaTitle'>${manga.title}</h1>
+      <a id='series' href='${manga.series}'>(Return to Chapter List)</a>
     </div>
-    ${chapterControlTop(manga)}
+    <nav id='ChapterNavigation'>
+      <div id='Counters' class='ControlLabel'>
+        <i>0</i> of <b>${manga.pages}</b> Pages Loaded
+        <span class='ControlLabel'>Go to Page:</span>
+        <select id='gotoPage'>
+          <option selected>#</option>
+          ${listOptions(manga.pages).slice(begin).join('')}
+        </select>
+      </div>
+      <div id='ChapterControl' class='ChapterControl'>
+        <a href='#' class='download NavigationControlButton ControlButton'>
+          Download
+        </a>
+        <a class='prev NavigationControlButton ControlButton' id='prev' href='${manga.prev || ''}'>
+          Previous
+        </a>
+        <a class='next NavigationControlButton ControlButton' id='next' href='${manga.next || ''}'>
+          Next
+        </a>
+      </div>
+    </nav>
   </header>  
   <main id='Chapter' class='${settings$1.fitWidthIfOversize === true ? 'fitWidthIfOversize' : ''} ${settings$1.viewMode}'>
     ${listPages(manga.pages).slice(begin).join('')}
   </main>
-  <footer>
-    ${title(manga)}
-    ${chapterControlBottom(manga)}
-  </footer>
-  <aside>
-    ${imageOptions}
-    ${controls$1}
-    ${htmlKeybinds}
-  </aside>
   <nav id='Navigation' class='panel ${settings$1.showThumbnails ? '' : 'disabled'}'>
-    <div id='NavigationCounters' class='controlLabel'>
+    <div id='NavigationCounters' class='ControlLabel'>
       <img alt='Thumbnails' title='Thumbnails' src='${icon.menu}' class='nav' />
       <i>0</i> of <b>${manga.pages}</b> Pages Loaded
     </div>
@@ -3234,14 +1910,6 @@ ${cssStyles}
   </nav>
   <a href='#' id='blob' style='display: none;'>Download</a>
 </div>`;
-
-    var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-    var FileSaver_min = {exports: {}};
-
-    (function (module, exports) {
-    	(function(a,b){b();})(commonjsGlobal,function(){function b(a,b){return "undefined"==typeof b?b={autoBom:!1}:"object"!=typeof b&&(console.warn("Deprecated: Expected third argument to be a object"),b={autoBom:!b}),b.autoBom&&/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(a.type)?new Blob(["\uFEFF",a],{type:a.type}):a}function c(a,b,c){var d=new XMLHttpRequest;d.open("GET",a),d.responseType="blob",d.onload=function(){g(d.response,b,c);},d.onerror=function(){console.error("could not download file");},d.send();}function d(a){var b=new XMLHttpRequest;b.open("HEAD",a,!1);try{b.send();}catch(a){}return 200<=b.status&&299>=b.status}function e(a){try{a.dispatchEvent(new MouseEvent("click"));}catch(c){var b=document.createEvent("MouseEvents");b.initMouseEvent("click",!0,!0,window,0,0,0,80,20,!1,!1,!1,!1,0,null),a.dispatchEvent(b);}}var f="object"==typeof window&&window.window===window?window:"object"==typeof self&&self.self===self?self:"object"==typeof commonjsGlobal&&commonjsGlobal.global===commonjsGlobal?commonjsGlobal:void 0,a=f.navigator&&/Macintosh/.test(navigator.userAgent)&&/AppleWebKit/.test(navigator.userAgent)&&!/Safari/.test(navigator.userAgent),g=f.saveAs||("object"!=typeof window||window!==f?function(){}:"download"in HTMLAnchorElement.prototype&&!a?function(b,g,h){var i=f.URL||f.webkitURL,j=document.createElement("a");g=g||b.name||"download",j.download=g,j.rel="noopener","string"==typeof b?(j.href=b,j.origin===location.origin?e(j):d(j.href)?c(b,g,h):e(j,j.target="_blank")):(j.href=i.createObjectURL(b),setTimeout(function(){i.revokeObjectURL(j.href);},4E4),setTimeout(function(){e(j);},0));}:"msSaveOrOpenBlob"in navigator?function(f,g,h){if(g=g||f.name||"download","string"!=typeof f)navigator.msSaveOrOpenBlob(b(f,h),g);else if(d(f))c(f,g,h);else {var i=document.createElement("a");i.href=f,i.target="_blank",setTimeout(function(){e(i);});}}:function(b,d,e,g){if(g=g||open("","_blank"),g&&(g.document.title=g.document.body.innerText="downloading..."),"string"==typeof b)return c(b,d,e);var h="application/octet-stream"===b.type,i=/constructor/i.test(f.HTMLElement)||f.safari,j=/CriOS\/[\d]+/.test(navigator.userAgent);if((j||h&&i||a)&&"undefined"!=typeof FileReader){var k=new FileReader;k.onloadend=function(){var a=k.result;a=j?a:a.replace(/^data:[^;]*;/,"data:attachment/file;"),g?g.location.href=a:location=a,g=null;},k.readAsDataURL(b);}else {var l=f.URL||f.webkitURL,m=l.createObjectURL(b);g?g.location=m:location.href=m,g=null,setTimeout(function(){l.revokeObjectURL(m);},4E4);}});f.saveAs=g.saveAs=g,(module.exports=g);});
-    } (FileSaver_min));
 
     const cache = {
         zip: new JSZip(),
@@ -3256,7 +1924,7 @@ ${cssStyles}
         // http://stackoverflow.com/questions/8778863/downloading-an-image-using-xmlhttprequest-in-a-userscript/8781262#8781262
         if (cache.downloadFiles === 0) {
             const filenameRegex = /^(?<name>.*?)(?<index>\d+)\.(?<ext>\w+)$/;
-            const images = document.querySelectorAll('.MangaPage img');
+            const images = [...document.querySelectorAll('.PageImg')];
             const filenames = (() => {
                 const result = [];
                 for (let i = 0; i < images.length; i += 1) {
@@ -3312,322 +1980,29 @@ ${cssStyles}
                 }
             });
         }
-        const total = parseInt(document.getElementById('Counters')?.querySelector('b')?.textContent || '', 10);
+        const total = document.querySelectorAll('.PageImg').length;
         if (cache.downloadFiles < total) {
             logScript(`Waiting for Files to Download ${cache.downloadFiles} of ${total}`);
             setTimeout(generateZip, 2000);
         }
         else {
-            const blobLink = document.getElementById('blob');
             try {
-                blobLink.download = `${document.querySelector('#series b')?.textContent?.trim()}.zip`;
+                logScript('Generating Zip');
                 cache.zip
                     .generateAsync({
                     type: 'blob',
                 })
                     .then((content) => {
-                    // blobLink.href = unsafeWindow.URL.createObjectURL(content);
                     logScript('Download Ready');
-                    // document.getElementById('blob')?.dispatchEvent(new Event('click'));
-                    const zipName = `${document.querySelector('#series i')?.textContent?.trim()}.zip`;
-                    FileSaver_min.exports.saveAs(content, zipName);
+                    const zipName = `${document.querySelector('#MangaTitle')?.textContent?.trim()}.zip`;
+                    FileSaver.saveAs(content, zipName);
                 });
             }
             catch (e) {
                 logScript(e);
-                // blobLink.innerHTML += ' (not supported on this browser)';
             }
         }
     }
-    // Todo: Test Download
-
-    var imagesloaded = {exports: {}};
-
-    var evEmitter = {exports: {}};
-
-    var hasRequiredEvEmitter;
-    function requireEvEmitter () {
-    	if (hasRequiredEvEmitter) return evEmitter.exports;
-    	hasRequiredEvEmitter = 1;
-    	(function (module) {
-    		( function( global, factory ) {
-    		  if ( module.exports ) {
-    		    module.exports = factory();
-    		  } else {
-    		    global.EvEmitter = factory();
-    		  }
-    		}( typeof window != 'undefined' ? window : commonjsGlobal, function() {
-    		function EvEmitter() {}
-    		let proto = EvEmitter.prototype;
-    		proto.on = function( eventName, listener ) {
-    		  if ( !eventName || !listener ) return this;
-    		  let events = this._events = this._events || {};
-    		  let listeners = events[ eventName ] = events[ eventName ] || [];
-    		  if ( !listeners.includes( listener ) ) {
-    		    listeners.push( listener );
-    		  }
-    		  return this;
-    		};
-    		proto.once = function( eventName, listener ) {
-    		  if ( !eventName || !listener ) return this;
-    		  this.on( eventName, listener );
-    		  let onceEvents = this._onceEvents = this._onceEvents || {};
-    		  let onceListeners = onceEvents[ eventName ] = onceEvents[ eventName ] || {};
-    		  onceListeners[ listener ] = true;
-    		  return this;
-    		};
-    		proto.off = function( eventName, listener ) {
-    		  let listeners = this._events && this._events[ eventName ];
-    		  if ( !listeners || !listeners.length ) return this;
-    		  let index = listeners.indexOf( listener );
-    		  if ( index != -1 ) {
-    		    listeners.splice( index, 1 );
-    		  }
-    		  return this;
-    		};
-    		proto.emitEvent = function( eventName, args ) {
-    		  let listeners = this._events && this._events[ eventName ];
-    		  if ( !listeners || !listeners.length ) return this;
-    		  listeners = listeners.slice( 0 );
-    		  args = args || [];
-    		  let onceListeners = this._onceEvents && this._onceEvents[ eventName ];
-    		  for ( let listener of listeners ) {
-    		    let isOnce = onceListeners && onceListeners[ listener ];
-    		    if ( isOnce ) {
-    		      this.off( eventName, listener );
-    		      delete onceListeners[ listener ];
-    		    }
-    		    listener.apply( this, args );
-    		  }
-    		  return this;
-    		};
-    		proto.allOff = function() {
-    		  delete this._events;
-    		  delete this._onceEvents;
-    		  return this;
-    		};
-    		return EvEmitter;
-    		} ) );
-    } (evEmitter));
-    	return evEmitter.exports;
-    }
-
-    (function (module) {
-    	( function( window, factory ) {
-    	  if ( module.exports ) {
-    	    module.exports = factory( window, requireEvEmitter() );
-    	  } else {
-    	    window.imagesLoaded = factory( window, window.EvEmitter );
-    	  }
-    	} )( typeof window !== 'undefined' ? window : commonjsGlobal,
-    	    function factory( window, EvEmitter ) {
-    	let $ = window.jQuery;
-    	let console = window.console;
-    	function makeArray( obj ) {
-    	  if ( Array.isArray( obj ) ) return obj;
-    	  let isArrayLike = typeof obj == 'object' && typeof obj.length == 'number';
-    	  if ( isArrayLike ) return [ ...obj ];
-    	  return [ obj ];
-    	}
-    	function ImagesLoaded( elem, options, onAlways ) {
-    	  if ( !( this instanceof ImagesLoaded ) ) {
-    	    return new ImagesLoaded( elem, options, onAlways );
-    	  }
-    	  let queryElem = elem;
-    	  if ( typeof elem == 'string' ) {
-    	    queryElem = document.querySelectorAll( elem );
-    	  }
-    	  if ( !queryElem ) {
-    	    console.error(`Bad element for imagesLoaded ${queryElem || elem}`);
-    	    return;
-    	  }
-    	  this.elements = makeArray( queryElem );
-    	  this.options = {};
-    	  if ( typeof options == 'function' ) {
-    	    onAlways = options;
-    	  } else {
-    	    Object.assign( this.options, options );
-    	  }
-    	  if ( onAlways ) this.on( 'always', onAlways );
-    	  this.getImages();
-    	  if ( $ ) this.jqDeferred = new $.Deferred();
-    	  setTimeout( this.check.bind( this ) );
-    	}
-    	ImagesLoaded.prototype = Object.create( EvEmitter.prototype );
-    	ImagesLoaded.prototype.getImages = function() {
-    	  this.images = [];
-    	  this.elements.forEach( this.addElementImages, this );
-    	};
-    	const elementNodeTypes = [ 1, 9, 11 ];
-    	ImagesLoaded.prototype.addElementImages = function( elem ) {
-    	  if ( elem.nodeName === 'IMG' ) {
-    	    this.addImage( elem );
-    	  }
-    	  if ( this.options.background === true ) {
-    	    this.addElementBackgroundImages( elem );
-    	  }
-    	  let { nodeType } = elem;
-    	  if ( !nodeType || !elementNodeTypes.includes( nodeType ) ) return;
-    	  let childImgs = elem.querySelectorAll('img');
-    	  for ( let img of childImgs ) {
-    	    this.addImage( img );
-    	  }
-    	  if ( typeof this.options.background == 'string' ) {
-    	    let children = elem.querySelectorAll( this.options.background );
-    	    for ( let child of children ) {
-    	      this.addElementBackgroundImages( child );
-    	    }
-    	  }
-    	};
-    	const reURL = /url\((['"])?(.*?)\1\)/gi;
-    	ImagesLoaded.prototype.addElementBackgroundImages = function( elem ) {
-    	  let style = getComputedStyle( elem );
-    	  if ( !style ) return;
-    	  let matches = reURL.exec( style.backgroundImage );
-    	  while ( matches !== null ) {
-    	    let url = matches && matches[2];
-    	    if ( url ) {
-    	      this.addBackground( url, elem );
-    	    }
-    	    matches = reURL.exec( style.backgroundImage );
-    	  }
-    	};
-    	ImagesLoaded.prototype.addImage = function( img ) {
-    	  let loadingImage = new LoadingImage( img );
-    	  this.images.push( loadingImage );
-    	};
-    	ImagesLoaded.prototype.addBackground = function( url, elem ) {
-    	  let background = new Background( url, elem );
-    	  this.images.push( background );
-    	};
-    	ImagesLoaded.prototype.check = function() {
-    	  this.progressedCount = 0;
-    	  this.hasAnyBroken = false;
-    	  if ( !this.images.length ) {
-    	    this.complete();
-    	    return;
-    	  }
-    	  let onProgress = ( image, elem, message ) => {
-    	    setTimeout( () => {
-    	      this.progress( image, elem, message );
-    	    } );
-    	  };
-    	  this.images.forEach( function( loadingImage ) {
-    	    loadingImage.once( 'progress', onProgress );
-    	    loadingImage.check();
-    	  } );
-    	};
-    	ImagesLoaded.prototype.progress = function( image, elem, message ) {
-    	  this.progressedCount++;
-    	  this.hasAnyBroken = this.hasAnyBroken || !image.isLoaded;
-    	  this.emitEvent( 'progress', [ this, image, elem ] );
-    	  if ( this.jqDeferred && this.jqDeferred.notify ) {
-    	    this.jqDeferred.notify( this, image );
-    	  }
-    	  if ( this.progressedCount === this.images.length ) {
-    	    this.complete();
-    	  }
-    	  if ( this.options.debug && console ) {
-    	    console.log( `progress: ${message}`, image, elem );
-    	  }
-    	};
-    	ImagesLoaded.prototype.complete = function() {
-    	  let eventName = this.hasAnyBroken ? 'fail' : 'done';
-    	  this.isComplete = true;
-    	  this.emitEvent( eventName, [ this ] );
-    	  this.emitEvent( 'always', [ this ] );
-    	  if ( this.jqDeferred ) {
-    	    let jqMethod = this.hasAnyBroken ? 'reject' : 'resolve';
-    	    this.jqDeferred[ jqMethod ]( this );
-    	  }
-    	};
-    	function LoadingImage( img ) {
-    	  this.img = img;
-    	}
-    	LoadingImage.prototype = Object.create( EvEmitter.prototype );
-    	LoadingImage.prototype.check = function() {
-    	  let isComplete = this.getIsImageComplete();
-    	  if ( isComplete ) {
-    	    this.confirm( this.img.naturalWidth !== 0, 'naturalWidth' );
-    	    return;
-    	  }
-    	  this.proxyImage = new Image();
-    	  if ( this.img.crossOrigin ) {
-    	    this.proxyImage.crossOrigin = this.img.crossOrigin;
-    	  }
-    	  this.proxyImage.addEventListener( 'load', this );
-    	  this.proxyImage.addEventListener( 'error', this );
-    	  this.img.addEventListener( 'load', this );
-    	  this.img.addEventListener( 'error', this );
-    	  this.proxyImage.src = this.img.currentSrc || this.img.src;
-    	};
-    	LoadingImage.prototype.getIsImageComplete = function() {
-    	  return this.img.complete && this.img.naturalWidth;
-    	};
-    	LoadingImage.prototype.confirm = function( isLoaded, message ) {
-    	  this.isLoaded = isLoaded;
-    	  let { parentNode } = this.img;
-    	  let elem = parentNode.nodeName === 'PICTURE' ? parentNode : this.img;
-    	  this.emitEvent( 'progress', [ this, elem, message ] );
-    	};
-    	LoadingImage.prototype.handleEvent = function( event ) {
-    	  let method = 'on' + event.type;
-    	  if ( this[ method ] ) {
-    	    this[ method ]( event );
-    	  }
-    	};
-    	LoadingImage.prototype.onload = function() {
-    	  this.confirm( true, 'onload' );
-    	  this.unbindEvents();
-    	};
-    	LoadingImage.prototype.onerror = function() {
-    	  this.confirm( false, 'onerror' );
-    	  this.unbindEvents();
-    	};
-    	LoadingImage.prototype.unbindEvents = function() {
-    	  this.proxyImage.removeEventListener( 'load', this );
-    	  this.proxyImage.removeEventListener( 'error', this );
-    	  this.img.removeEventListener( 'load', this );
-    	  this.img.removeEventListener( 'error', this );
-    	};
-    	function Background( url, element ) {
-    	  this.url = url;
-    	  this.element = element;
-    	  this.img = new Image();
-    	}
-    	Background.prototype = Object.create( LoadingImage.prototype );
-    	Background.prototype.check = function() {
-    	  this.img.addEventListener( 'load', this );
-    	  this.img.addEventListener( 'error', this );
-    	  this.img.src = this.url;
-    	  let isComplete = this.getIsImageComplete();
-    	  if ( isComplete ) {
-    	    this.confirm( this.img.naturalWidth !== 0, 'naturalWidth' );
-    	    this.unbindEvents();
-    	  }
-    	};
-    	Background.prototype.unbindEvents = function() {
-    	  this.img.removeEventListener( 'load', this );
-    	  this.img.removeEventListener( 'error', this );
-    	};
-    	Background.prototype.confirm = function( isLoaded, message ) {
-    	  this.isLoaded = isLoaded;
-    	  this.emitEvent( 'progress', [ this, this.element, message ] );
-    	};
-    	ImagesLoaded.makeJQueryPlugin = function( jQuery ) {
-    	  jQuery = jQuery || window.jQuery;
-    	  if ( !jQuery ) return;
-    	  $ = jQuery;
-    	  $.fn.imagesLoaded = function( options, onAlways ) {
-    	    let instance = new ImagesLoaded( this, options, onAlways );
-    	    return instance.jqDeferred.promise( $( this ) );
-    	  };
-    	};
-    	ImagesLoaded.makeJQueryPlugin();
-    	return ImagesLoaded;
-    	} );
-    } (imagesloaded));
-    var imagesLoaded = imagesloaded.exports;
 
     function isImagesManga(manga) {
         return 'listImages' in manga && !isNothing(manga.listImages);
@@ -3816,12 +2191,12 @@ ${cssStyles}
         }
     }
     function updateProgress() {
-        const total = document.querySelectorAll('.PageContent img').length;
-        const loaded = document.querySelectorAll('.PageContent img.imgLoaded').length;
+        const total = document.querySelectorAll('.PageContent .PageImg').length;
+        const loaded = document.querySelectorAll('.PageContent .PageImg.imgLoaded').length;
         const percentage = Math.floor((loaded / total) * 100);
         const title = document.querySelector('title');
         if (title) {
-            title.innerHTML = `(${percentage}%) ${document.querySelector('#series i')?.textContent}`;
+            title.innerHTML = `(${percentage}%) ${document.querySelector('#MangaTitle')?.textContent}`;
         }
         document.querySelectorAll('#Counters i, #NavigationCounters i').forEach((ele) => {
             ele.textContent = loaded.toString();
@@ -3913,7 +2288,7 @@ ${cssStyles}
         }
     }
     // daley the use of an url/src
-    function delayAdd(src, wait = settings$1.timer) {
+    function delayAdd(src, wait = settings$1.throttlePageLoad) {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve(src);
@@ -3923,20 +2298,20 @@ ${cssStyles}
     // use a list of pages to fill the viewer
     function loadMangaPages(begin, manga) {
         return manga.listPages?.map((url, index) => index >= begin
-            ? delayAdd(url, (manga.timer || settings$1.timer) * (index - begin)).then((response) => addPage(manga, index + 1, response))
+            ? delayAdd(url, (manga.timer || settings$1.throttlePageLoad) * (index - begin)).then((response) => addPage(manga, index + 1, response))
             : null);
     }
     // use a list of images to fill the viewer
     function loadMangaImages(begin, manga) {
         return manga.listImages?.map((src, index) => index >= begin
-            ? delayAdd(src, (manga.timer || settings$1.timer) * (index - begin)).then((response) => addImg(index + 1, response))
+            ? delayAdd(src, (manga.timer || settings$1.throttlePageLoad) * (index - begin)).then((response) => addImg(index + 1, response))
             : null);
     }
     // Entry point for loading hte Manga pages
     function loadManga(manga, begin = 1) {
         settings$1.lazyLoadImages = manga.lazy || settings$1.lazyLoadImages;
         logScript('Loading Images');
-        logScript(`Intervals: ${manga.timer || settings$1.timer || 'Default(1000)'}`);
+        logScript(`Intervals: ${manga.timer || settings$1.throttlePageLoad || 'Default(1000)'}`);
         logScript(`Lazy: ${settings$1.lazyLoadImages}`);
         if (settings$1.lazyLoadImages) {
             logScript('Download may not work with Lazy Loading Images');
@@ -3961,28 +2336,26 @@ ${cssStyles}
                     img,
                     lazyAttr,
                 }),
-                wait: settings$1.timer,
+                wait: settings$1.throttlePageLoad,
             });
         }
     }
 
     // Goto Page and Thumbnails
     function scrollToElement(ele) {
-        $(window)
-            .scrollTop(ele.offset()?.top || 0)
-            .scrollLeft(ele.offset()?.left || 0);
+        window.scroll(0, ele?.offsetTop || 0);
     }
     // Clean key press configurations and set some when specified
     function setKeyDownEvents() {
         try {
-            $(document).off('keyup');
-            $(document).off('keydown');
-            $(document).off('keypress');
-            $(document).off('onload');
-            $(window).off('keyup');
-            $(window).off('keydown');
-            $(window).off('keypress');
-            $(window).off('onload');
+            // $(document).off('keyup');
+            // $(document).off('keydown');
+            // $(document).off('keypress');
+            // $(document).off('onload');
+            // $(window).off('keyup');
+            // $(window).off('keydown');
+            // $(window).off('keypress');
+            // $(window).off('onload');
             document.onkeydown = null;
             document.onkeypress = null;
             window.onkeydown = null;
@@ -3994,44 +2367,42 @@ ${cssStyles}
             logScript(`Keybinds error: ${e}`);
         }
         function processKey(e) {
-            const a = e.originalEvent?.code;
-            if (!e.originalEvent?.ctrlKey &&
-                !e.originalEvent?.altKey &&
-                !e.originalEvent?.shiftKey &&
-                !e.originalEvent?.metaKey &&
-                $.inArray(a, [
-                    'KeyW',
-                    'Numpad8',
-                    'KeyS',
-                    'Numpad2',
-                    'ArrowRight',
-                    'Period',
-                    'KeyD',
-                    'Numpad6',
-                    'ArrowLeft',
-                    'Comma',
-                    'KeyA',
-                    'Numpad4',
-                    'Equal',
-                    'NumpadAdd',
-                    'KeyE',
-                    'Minus',
-                    'NumpadSubtract',
-                    'KeyQ',
-                    'Digit9',
-                    'NumpadDivide',
-                    'KeyR',
-                    'Digit0',
-                    'NumpadMultiply',
-                    'KeyF',
-                    'Slash',
-                    'Numpad5',
-                    'KeyX',
-                    'KeyC',
-                    'KeyV',
-                    'KeyB',
-                    'KeyN',
-                ]) !== -1) {
+            const a = e.code;
+            console.log('Keyboard:', a, ' Event:', e);
+            const usedKeys = [
+                'KeyW',
+                'Numpad8',
+                'KeyS',
+                'Numpad2',
+                'ArrowRight',
+                'Period',
+                'KeyD',
+                'Numpad6',
+                'ArrowLeft',
+                'Comma',
+                'KeyA',
+                'Numpad4',
+                'Equal',
+                'NumpadAdd',
+                'KeyE',
+                'Minus',
+                'NumpadSubtract',
+                'KeyQ',
+                'Digit9',
+                'NumpadDivide',
+                'KeyR',
+                'Digit0',
+                'NumpadMultiply',
+                'KeyF',
+                'Slash',
+                'Numpad5',
+                'KeyX',
+                'KeyC',
+                'KeyV',
+                'KeyB',
+                'KeyN',
+            ];
+            if (!e.ctrlKey && !e.altKey && !e.shiftKey && !e.metaKey && usedKeys.some((i) => i === a)) {
                 e.preventDefault();
                 e.stopPropagation();
                 e.stopImmediatePropagation();
@@ -4040,15 +2411,12 @@ ${cssStyles}
                     case 'KeyW':
                     case 'Numpad8':
                         if (settings$1.zoom === -1000) {
-                            const next = $('.MangaPage')
-                                .get()
-                                .map((item) => $(item).offset().top - $(window).scrollTop())
-                                .findIndex((element) => element > 10);
-                            scrollToElement($('.MangaPage').eq(next - 2));
+                            const next = [...document.querySelectorAll('.MangaPage')].find((element) => element.offsetTop - window.scrollY > 10);
+                            scrollToElement(next?.previousElementSibling);
                         }
                         else {
                             window.scrollBy({
-                                top: -$(window).height() / 2,
+                                top: -window.innerHeight / 2,
                                 behavior: 'smooth',
                             });
                         }
@@ -4057,15 +2425,12 @@ ${cssStyles}
                     case 'KeyS':
                     case 'Numpad2':
                         if (settings$1.zoom === -1000) {
-                            const next = $('.MangaPage')
-                                .get()
-                                .map((item) => $(item).offset().top - $(window).scrollTop())
-                                .findIndex((element) => element > 10);
-                            scrollToElement($('.MangaPage').eq(next));
+                            const next = [...document.querySelectorAll('.MangaPage')].find((element) => element.offsetTop - window.scrollY > 10);
+                            scrollToElement(next);
                         }
                         else {
                             window.scrollBy({
-                                top: $(window).height() / 2,
+                                top: window.innerHeight / 2,
                                 behavior: 'smooth',
                             });
                         }
@@ -4074,114 +2439,135 @@ ${cssStyles}
                     case 'Period':
                     case 'KeyD':
                     case 'Numpad6':
-                        $('.ChapterControl:first .next').trigger('click');
+                        document.querySelector('#next')?.dispatchEvent(new Event('click'));
                         break;
                     case 'ArrowLeft':
                     case 'Comma':
                     case 'KeyA':
                     case 'Numpad4':
-                        $('.ChapterControl:first .prev').trigger('click');
+                        document.querySelector('#prev')?.dispatchEvent(new Event('click'));
                         break;
                     case 'Equal':
                     case 'NumpadAdd':
                     case 'KeyE':
-                        $('#enlarge').trigger('click');
+                        document.querySelector('#enlarge')?.dispatchEvent(new Event('click'));
                         break;
                     case 'Minus':
                     case 'NumpadSubtract':
                     case 'KeyQ':
-                        $('#reduce').trigger('click');
+                        document.querySelector('#reduce')?.dispatchEvent(new Event('click'));
                         break;
                     case 'Digit9':
                     case 'NumpadDivide':
                     case 'KeyR':
-                        $('#restore').trigger('click');
+                        document.querySelector('#restore')?.dispatchEvent(new Event('click'));
                         break;
                     case 'Digit0':
                     case 'NumpadMultiply':
                     case 'KeyF':
-                        $('#fitWidth').trigger('click');
+                        document.querySelector('#fitWidth')?.dispatchEvent(new Event('click'));
                         break;
                     case 'Slash':
                     case 'Numpad5':
                     case 'KeyX':
-                        $('#settings').trigger('click');
+                        document.querySelector('#settings')?.dispatchEvent(new Event('click'));
                         break;
                     case 'KeyC':
-                        $('#webComic').trigger('click');
+                        document.querySelector('#webComic')?.dispatchEvent(new Event('click'));
                         break;
                     case 'KeyV':
-                        $('#verticalMode').trigger('click');
+                        document.querySelector('#verticalMode')?.dispatchEvent(new Event('click'));
                         break;
                     case 'KeyN':
-                        $('#rtlMode').trigger('click');
+                        document.querySelector('#rtlMode')?.dispatchEvent(new Event('click'));
                         break;
                     case 'KeyB':
-                        $('#ltrMode').trigger('click');
+                        document.querySelector('#ltrMode')?.dispatchEvent(new Event('click'));
                         break;
                 }
                 return false;
             }
             return true;
         }
-        $(document).on('keydown', processKey);
+        document.addEventListener('keydown', processKey);
+    }
+    function updateZoomPercent(percent = settings$1.zoom) {
+        const zoom = document.querySelector('#ZoomPercent');
+        if (zoom) {
+            zoom.textContent = percent.toString();
+        }
     }
     // Controls for the extra features added to the sites
     function controls() {
         // Size Controls
-        $('#enlarge').on('click', () => {
+        // Global Zoom In Button
+        document.querySelector('#enlarge')?.addEventListener('click', () => {
             settings$1.zoom += settings$1.zoomStep;
-            $('#Zoom b').html(settings$1.zoom.toString());
+            updateZoomPercent();
             applyZoom();
         });
-        $('#reduce').on('click', () => {
+        // Global Zoom Out Button
+        document.querySelector('#reduce')?.addEventListener('click', () => {
             settings$1.zoom -= settings$1.zoomStep;
-            $('#Zoom b').html(settings$1.zoom.toString());
+            updateZoomPercent();
             applyZoom();
         });
-        $('#restore').on('click', () => {
+        // Global Zoomm Restore Button
+        document.querySelector('#restore')?.addEventListener('click', () => {
             settings$1.zoom = 100;
-            $('#Zoom b').html(settings$1.zoom.toString());
+            updateZoomPercent();
             applyZoom();
         });
-        $('#fitWidth').on('click', () => {
+        // Global Fit Width Button
+        document.querySelector('#fitWidth')?.addEventListener('click', () => {
             settings$1.zoom = 1000;
-            $('#Zoom b').html(settings$1.zoom.toString());
+            updateZoomPercent();
             applyZoom();
         });
-        $('#fitHeight').on('click', () => {
+        // Global Fit height Button
+        document.querySelector('#fitHeight')?.addEventListener('click', () => {
             settings$1.zoom = -1000;
-            $('#Zoom b').html(settings$1.zoom.toString());
+            updateZoomPercent();
             applyZoom();
         });
-        $('#zoomStep').on('change', (event) => {
-            const step = $(event.target).val();
+        // Zoom Step Slider
+        document.querySelector('#zoomStep')?.addEventListener('change', (event) => {
+            const step = event.currentTarget.value;
             setValueGM('ZoomStep', parseInt(step, 10));
-            logScript(`zoomStep: ${getValueGM('ZoomStep')}`);
+            logScript(`ZoomStep: ${getValueGM('ZoomStep')}`);
         });
-        // WebComic View Mode
-        $('#webComic').on('click', () => {
-            $('#Chapter').addClass('WebComic').removeClass('FluidLTR').removeClass('FluidRTL');
+        // WebComic View Mode Button
+        document.querySelector('#webComic')?.addEventListener('click', () => {
+            document.querySelector('#Chapter')?.classList.add('WebComic');
+            document.querySelector('#Chapter')?.classList.remove('FluidLTR');
+            document.querySelector('#Chapter')?.classList.remove('FluidRTL');
             applyZoom();
         });
-        // Fluid LTR View Mode
-        $('#ltrMode').on('click', () => {
-            $('#Chapter').removeClass('WebComic').addClass('FluidLTR').removeClass('FluidRTL');
+        // Fluid LTR View Mode Button
+        document.querySelector('#ltrMode')?.addEventListener('click', () => {
+            document.querySelector('#Chapter')?.classList.remove('WebComic');
+            document.querySelector('#Chapter')?.classList.add('FluidLTR');
+            document.querySelector('#Chapter')?.classList.remove('FluidRTL');
             applyZoom();
         });
-        // Fluid RTL View Mode
-        $('#rtlMode').on('click', () => {
-            $('#Chapter').removeClass('WebComic').removeClass('FluidLTR').addClass('FluidRTL');
+        // Fluid RTL View Mode Button
+        document.querySelector('#rtlMode')?.addEventListener('click', () => {
+            document.querySelector('#Chapter')?.classList.remove('WebComic');
+            document.querySelector('#Chapter')?.classList.remove('FluidLTR');
+            document.querySelector('#Chapter')?.classList.add('FluidRTL');
             applyZoom();
         });
-        // Vertical View Mode
-        $('#verticalMode').on('click', () => {
-            $('#Chapter').removeClass('WebComic').removeClass('FluidLTR').removeClass('FluidRTL');
+        // Vertical View Mode Button
+        document.querySelector('#verticalMode')?.addEventListener('click', () => {
+            document.querySelector('#Chapter')?.classList.remove('WebComic');
+            document.querySelector('#Chapter')?.classList.remove('FluidLTR');
+            document.querySelector('#Chapter')?.classList.remove('FluidRTL');
             applyZoom();
         });
-        $('#fitIfOversize').on('change', (event) => {
-            $('#Chapter').toggleClass('fitWidthIfOversize');
-            if ($(event.target).is(':checked')) {
+        // Image Fit width if Oversized Toggle
+        document.querySelector('#fitIfOversize')?.addEventListener('change', (event) => {
+            document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize');
+            if (event.currentTarget.checked) {
                 setValueGM('FitWidthIfOversize', true);
             }
             else {
@@ -4189,25 +2575,27 @@ ${cssStyles}
             }
             logScript(`fitIfOversize: ${getValueGM('FitWidthIfOversize')}`);
         });
-        $('#viewMode').on('change', (event) => {
-            const mode = $(event.target).val();
-            $('#Chapter')
-                .removeClass('WebComic')
-                .removeClass('FluidLTR')
-                .removeClass('FluidRTL')
-                .addClass(mode);
+        // Default View mode Selector
+        document.querySelector('#viewMode')?.addEventListener('change', (event) => {
+            const mode = event.currentTarget.value;
+            document.querySelector('#Chapter')?.classList.remove('WebComic');
+            document.querySelector('#Chapter')?.classList.remove('FluidLTR');
+            document.querySelector('#Chapter')?.classList.remove('FluidRTL');
+            document.querySelector('#Chapter')?.classList.add(mode);
             setValueGM('ViewMode', mode);
             logScript(`ViewMode: ${getValueGM('ViewMode')}`);
             applyZoom();
         });
-        $('#loadMode').on('change', (event) => {
-            const mode = $(event.target).val();
+        // Start/Load mode Selector
+        document.querySelector('#loadMode')?.addEventListener('change', (event) => {
+            const mode = event.currentTarget.value;
             setValueGM('LoadMode', mode);
             logScript(`MangaLoadMode: ${getValueGM('LoadMode')}`);
         });
-        $('#showThumbnails').on('change', (event) => {
-            $('#Navigation').toggleClass('disabled');
-            if ($(event.target).is(':checked')) {
+        // Show Thumbnail Toggle
+        document.querySelector('#showThumbnails')?.addEventListener('change', (event) => {
+            document.querySelector('#Navigation')?.classList.toggle('disabled');
+            if (event.currentTarget.checked) {
                 setValueGM('ShowThumbnails', true);
             }
             else {
@@ -4216,9 +2604,9 @@ ${cssStyles}
             logScript(`MangaShowThumbnails: ${getValueGM('ShowThumbnails')}`);
             applyZoom();
         });
-        // Download
-        $('#downloadZip').on('change', (event) => {
-            if ($(event.target).is(':checked')) {
+        // Download auto start toggle
+        document.querySelector('#downloadZip')?.addEventListener('change', (event) => {
+            if (event.currentTarget.checked) {
                 setValueGM('DownloadZip', true);
                 Swal.fire({
                     title: 'Attention',
@@ -4232,13 +2620,15 @@ ${cssStyles}
             }
             logScript(`MangaDownloadZip: ${getValueGM('DownloadZip')}`);
         });
-        $('#blob').one('click', generateZip);
-        $('.download').on('click', () => {
+        // Download starter
+        document.querySelector('#blob')?.addEventListener('click', generateZip, { once: true });
+        document.querySelector('.download')?.addEventListener('click', () => {
             logScript('Downloading Chapter');
-            $('#blob').trigger('click');
+            document.querySelector('#blob')?.dispatchEvent(new Event('click'));
         });
-        $('#lazyLoadImages').on('change', (event) => {
-            if ($(event.target).is(':checked')) {
+        // Lazy load Toggle
+        document.querySelector('#lazyLoadImages')?.addEventListener('change', (event) => {
+            if (event.currentTarget.checked) {
                 setValueGM('LazyLoadImages', true);
                 Swal.fire({
                     title: 'Warning',
@@ -4252,29 +2642,33 @@ ${cssStyles}
             }
             logScript(`MangaLazyLoadImages: ${getValueGM('LazyLoadImages')}`);
         });
-        $('#lazyStart').on('change', (event) => {
-            const start = $(event.target).val();
+        // Lazy load starting point Slider
+        document.querySelector('#lazyStart')?.addEventListener('change', (event) => {
+            const start = event.currentTarget.value;
             setValueGM('LazyStart', start);
             logScript(`lazyStart: ${getValueGM('LazyStart')}`);
         });
-        $('#PagesPerSecond').on('change', (event) => {
-            setValueGM('Timer', parseInt($(event.target).val(), 10));
+        // Images load speed Selector
+        document.querySelector('#PagesPerSecond')?.addEventListener('change', (event) => {
+            setValueGM('Timer', parseInt(event.currentTarget.value, 10));
             logScript(`MangaTimer: ${getValueGM('Timer')}`);
         });
-        $('#DefaultZoom').on('change', (event) => {
-            settings$1.zoom = parseInt($(event.target).val(), 10);
-            $('#Zoom b').html(settings$1.zoom.toString);
+        // Global Default Zoom Selector
+        document.querySelector('#DefaultZoom')?.addEventListener('change', (event) => {
+            settings$1.zoom = parseInt(event.currentTarget.value, 10);
+            updateZoomPercent();
             setValueGM('Zoom', parseInt(settings$1.zoom.toString(), 10));
             logScript(`MangaZoom: ${getValueGM('Zoom')}`);
             applyZoom();
         });
-        // Toggle Controls
-        $('#pageControls').on('click', () => {
-            $('#MangaOnlineViewer').toggleClass('hideControls');
+        // Show/hide Image Controls Button
+        document.querySelector('#pageControls')?.addEventListener('click', () => {
+            document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
         });
-        $('#hidePageControls').on('change', (event) => {
-            $('#MangaOnlineViewer').toggleClass('hideControls');
-            if ($(event.target).is(':checked')) {
+        // Show/hide Image Controls Toggle
+        document.querySelector('#hidePageControls')?.addEventListener('change', (event) => {
+            document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
+            if (event.currentTarget.checked) {
                 setValueGM('HidePageControls', true);
             }
             else {
@@ -4282,86 +2676,94 @@ ${cssStyles}
             }
             logScript(`MangaHidePageControls: ${getValueGM('HidePageControls')}`);
         });
-        // Theme Control
-        $('#ThemeSelector').on('change', (event) => {
-            const target = $(event.target);
-            $('#MangaOnlineViewer , body')
-                .removeClass()
-                .addClass(target.val());
-            logScript('Theme', target.val());
-            setValueGM('Theme', target.val());
-            if (target.val() === 'Custom_Dark' || target.val() === 'Custom_Light') {
-                $('.CustomTheme').show();
+        // Sticky Header or MouseOverMenu Toggle
+        document.querySelector('#mouseOverMenu')?.addEventListener('change', (event) => {
+            document.querySelector('#Header')?.classList.toggle('mouseOverMenu');
+            if (event.currentTarget.checked) {
+                setValueGM('MouseOverMenu', true);
             }
             else {
-                $('.CustomTheme').hide();
+                setValueGM('MouseOverMenu', false);
             }
-            if (target.val() === 'Full_Custom') {
-                $('.FullCustom').show();
+            logScript(`MangaHidePageControls: ${getValueGM('MouseOverMenu')}`);
+        });
+        // Theme Control Selector
+        document.querySelector('#ThemeSelector')?.addEventListener('change', (event) => {
+            const target = event.currentTarget.value;
+            [...document.querySelectorAll('#MangaOnlineViewer , body')].forEach((elem) => {
+                elem.className = '';
+                elem.classList.add(event.currentTarget.value);
+            });
+            logScript('Theme', target);
+            setValueGM('Theme', target);
+            const ct = [...document.querySelectorAll('.CustomTheme')];
+            if (target === 'Custom_Dark' || target === 'Custom_Light') {
+                ct.forEach((elem) => {
+                    elem.style.display = 'inherit';
+                });
             }
             else {
-                $('.FullCustom').hide();
+                ct.forEach((elem) => {
+                    elem.style.display = 'none';
+                });
+            }
+            const fc = [...document.querySelectorAll('.FullCustom')];
+            if (target === 'Full_Custom') {
+                fc.forEach((elem) => {
+                    elem.style.display = 'inherit';
+                });
+            }
+            else {
+                fc.forEach((elem) => {
+                    elem.style.display = 'none';
+                });
             }
         });
-        // try {
-        //   jscolor.presets.default = {
-        //     position: 'right',
-        //     format: 'hex',
-        //     palette: [
-        //       '#000000', '#7d7d7d', '#870014', '#ec1c23', '#ff7e26',
-        //       '#fef100', '#22b14b', '#00a1e7', '#3f47cc', '#a349a4',
-        //       '#ffffff', '#c3c3c3', '#b87957', '#feaec9', '#ffc80d',
-        //       '#eee3af', '#b5e61d', '#99d9ea', '#7092be', '#c8bfe7',
-        //     ],
-        //     // paletteCols: 12,
-        //     hideOnPaletteClick: true,
-        //     closeButton: true,
-        //     shadow: false,
-        //     alphaChannel: false,
-        //     paletteSetsAlpha: false,
-        //   };
-        //   jscolor.install();
-        // } catch (e) {
-        //   logScript(e);
-        // }
-        // $('INPUT.colorpicker').minicolors();
-        $('#CustomThemeHue').on('change', (event) => {
-            const target = $(event.target).val();
+        // Light/Dark Custom theme Color Input
+        document.querySelector('#CustomThemeHue')?.addEventListener('change', (event) => {
+            const target = event.currentTarget.value;
             logScript(`CustomTheme: ${target}`);
-            $('style[title="Custom_Light"], style[title="Custom_Dark"]').remove();
-            $('head').append(addCustomTheme(target));
+            document
+                .querySelectorAll('style[title="Custom_Light"], style[title="Custom_Dark"]')
+                .forEach((elem) => elem.remove());
+            document.head.append(addCustomTheme(target));
             setValueGM('CustomTheme', target);
             logScript(`MangaCustomTheme: ${getValueGM('CustomTheme')}`);
         });
-        $('.FullCustom').on('change', () => {
-            logScript('FullCustomTheme: ', $('#CustomThemeHueBody').val(), $('#CustomThemeHueText').val(), $('#CustomThemeHueLines').val(), $('#CustomThemeHuePanel').val(), $('#CustomThemeHueButton').val());
-            $('style[title="Full_Custom"]').remove();
-            $('head').append(addFullCustomTheme($('#CustomThemeHueBody').val(), $('#CustomThemeHueText').val(), $('#CustomThemeHueLines').val(), $('#CustomThemeHuePanel').val(), $('#CustomThemeHueButton').val()));
-            setValueGM('CustomThemeBody', $('#CustomThemeHueBody').val());
-            setValueGM('CustomThemeText', $('#CustomThemeHueText').val());
-            setValueGM('CustomThemeLines', $('#CustomThemeHueLines').val());
-            setValueGM('CustomThemePanel', $('#CustomThemeHuePanel').val());
-            setValueGM('CustomThemeButton', $('#CustomThemeHueButton').val());
-        });
-        $('#gotoPage').on('change', (event) => {
+        // Full Custom theme Color Input
+        document.querySelectorAll('.FullCustom')?.forEach((input) => input.addEventListener('change', () => {
+            logScript('FullCustomTheme: ', document.querySelector('#CustomThemeHueBody')?.value, document.querySelector('#CustomThemeHueText')?.value, document.querySelector('#CustomThemeHueLines')?.value, document.querySelector('#CustomThemeHuePanel')?.value, document.querySelector('#CustomThemeHueButton')?.value);
+            document.querySelectorAll('style[title="Full_Custom"]').forEach((elem) => elem.remove());
+            document.head.append(addFullCustomTheme(document.querySelector('#CustomThemeHueBody').value, document.querySelector('#CustomThemeHueText').value, document.querySelector('#CustomThemeHueLines').value, document.querySelector('#CustomThemeHuePanel').value, document.querySelector('#CustomThemeHueButton').value));
+            setValueGM('CustomThemeBody', document.querySelector('#CustomThemeHueBody').value);
+            setValueGM('CustomThemeText', document.querySelector('#CustomThemeHueText').value);
+            setValueGM('CustomThemeLines', document.querySelector('#CustomThemeHueLines').value);
+            setValueGM('CustomThemePanel', document.querySelector('#CustomThemeHuePanel').value);
+            setValueGM('CustomThemeButton', document.querySelector('#CustomThemeHueButton').value);
+        }));
+        // Goto Navigation
+        document.querySelector('#gotoPage')?.addEventListener('change', (event) => {
             applyZoom();
-            scrollToElement($(`#Page${$(event.target).val()}`));
+            scrollToElement(document.querySelector(`#Page${event.currentTarget.textContent}`));
         });
-        $('.Thumbnail').on('click', (event) => {
+        // Thumbnail Navigation
+        document.querySelectorAll('.Thumbnail')?.forEach((elem) => elem.addEventListener('click', (event) => {
             applyZoom();
-            scrollToElement($(`#Page${$(event.currentTarget).find('span').html()}`));
-        });
+            scrollToElement(document.querySelector(`#Page${event.currentTarget.querySelector('.ThumbnailIndex')?.textContent}`));
+        }));
         // Settings Control
-        $('#settings').on('click', () => {
-            $('#ViewerControls').slideToggle();
-            $('#ViewerShortcuts').slideToggle();
-            $('#ImageOptions').toggleClass('settingsOpen');
-            $('#Navigation').toggleClass('visible');
+        document.querySelector('#settings')?.addEventListener('click', () => {
+            document.querySelector('#ViewerControls')?.classList.toggle('visible');
+            document.querySelector('#ViewerShortcuts')?.classList.toggle('visible');
+            document.querySelector('#ImageOptions')?.classList.toggle('settingsOpen');
+            document.querySelector('#Navigation')?.classList.toggle('visible');
+            document.querySelector('#Header')?.classList.toggle('visible');
         });
         // Individual Page functions
         // Bookmark Page to resume reading
-        $('.Bookmark').on('click', (event) => {
-            const num = parseInt($(event.target).parents('.MangaPage').find('.PageFunctions span').text(), 10);
+        document.querySelectorAll('.Bookmark')?.forEach((elem) => elem.addEventListener('click', (event) => {
+            const num = parseInt(event.currentTarget.parentElement?.querySelector('.PageIndex')
+                ?.textContent || '0', 10);
             const mark = {
                 url: window.location.href,
                 page: num,
@@ -4386,42 +2788,76 @@ ${cssStyles}
             }
             setValueGM('Bookmarks', JSON.stringify(settings$1.bookmarks));
             logScript(`MangaBookmarks: ${getValueGM('Bookmarks')}`);
-        });
+        }));
         // Reload Page
-        $('.Reload').on('click', (event) => {
-            reloadImage($(event.target).parents('.MangaPage').find('.PageContent img')[0]);
-        });
+        document.querySelectorAll('.Reload')?.forEach((elem) => elem.addEventListener('click', (event) => {
+            const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
+            reloadImage(img);
+        }));
         // ZoomIn
-        $('.ZoomIn').on('click', (event) => {
-            const img = $(event.target).parents('.MangaPage').find('.PageContent img');
-            const ratio = (img.width() / img.prop('naturalWidth')) * (100 + settings$1.zoomStep);
-            applyZoom(`#${$(event.target).attr('id')}`, ratio);
-        });
+        document.querySelectorAll('.ZoomIn')?.forEach((elem) => elem.addEventListener('click', (event) => {
+            const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
+            const ratio = (img.width / img.naturalWidth) * (100 + settings$1.zoomStep);
+            applyZoom(`#${img.getAttribute('id')}`, ratio);
+        }));
         // ZoomOut
-        $('.ZoomOut').on('click', (event) => {
-            const img = $(event.target).parents('.MangaPage').find('.PageContent img');
-            const ratio = (img.width() / img.prop('naturalWidth')) * (100 - settings$1.zoomStep);
-            applyZoom(`#${$(event.target).attr('id')}`, ratio);
-        });
+        document.querySelectorAll('.ZoomOut')?.forEach((elem) => elem.addEventListener('click', (event) => {
+            const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
+            const ratio = (img.width / img.naturalWidth) * (100 - settings$1.zoomStep);
+            applyZoom(`#${img.getAttribute('id')}`, ratio);
+        }));
         // ZoomRestore
-        $('.ZoomRestore').on('click', () => {
-            $('.PageContent img').removeAttr('width');
-        });
+        document.querySelectorAll('.ZoomRestore')?.forEach((elem) => elem.addEventListener('click', () => {
+            document.querySelector('.PageContent .PageImg')?.removeAttribute('width');
+        }));
         // ZoomWidth
-        $('.ZoomWidth').on('click', (event) => {
-            $(event.target).parents('.MangaPage').find('.PageContent img');
-            applyZoom(`#${$(event.target).attr('id')}`, 1000);
-        });
+        document.querySelectorAll('.ZoomWidth')?.forEach((elem) => elem.addEventListener('click', (event) => {
+            const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
+            applyZoom(`#${img.getAttribute('id')}`, 1000);
+        }));
         // ZoomHeight
-        $('.ZoomHeight').on('click', (event) => {
-            $(event.target).parents('.MangaPage').find('.PageContent img');
-            applyZoom(`#${$(event.target).attr('id')}`, -1000);
-        });
+        document.querySelectorAll('.ZoomHeight')?.forEach((elem) => elem.addEventListener('click', (event) => {
+            const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
+            applyZoom(`#${img.getAttribute('id')}`, -1000);
+        }));
         // Hide
-        $('.Hide').on('click', (event) => {
-            const img = $(event.target).parents('.MangaPage').find('.PageContent');
-            img.slideToggle('slow');
-        });
+        document.querySelectorAll('.Hide')?.forEach((elem) => elem.addEventListener('click', (event) => {
+            const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageContent');
+            img.classList.toggle('hide');
+        }));
+        /**
+         * Changes header class when scrolling up or down to show/hide it
+         * @param showEnd [default 0]px from end of the screen to show header
+         */
+        function useScrollDirection(showEnd = 0) {
+            let prevOffset = 0;
+            const header = document.querySelector('#Header');
+            const setScrollDirection = (classSuffix) => {
+                header.classList.remove('scroll-end');
+                header.classList.remove('scroll-hide');
+                header.classList.remove('scroll-show');
+                if (classSuffix)
+                    header.classList.add(`scroll-${classSuffix}`);
+            };
+            function toggleScrollDirection() {
+                const { scrollY } = window;
+                if (showEnd && scrollY + window.innerHeight + showEnd > document.body.offsetHeight) {
+                    setScrollDirection('end');
+                }
+                else if (scrollY > prevOffset && scrollY > 50) {
+                    setScrollDirection('hide');
+                }
+                else if (scrollY < prevOffset && scrollY > 50) {
+                    setScrollDirection('show');
+                }
+                else {
+                    setScrollDirection('');
+                }
+                prevOffset = scrollY;
+            }
+            window.addEventListener('scroll', toggleScrollDirection);
+        }
+        useScrollDirection(100);
     }
 
     function display(manga, begin) {
@@ -4462,6 +2898,9 @@ ${cssStyles}
     async function formatPage(manga, begin = 0) {
         display(manga, begin);
     }
+
+    // language=CSS
+    var sweetalertStyle = `.swal2-popup.swal2-toast{box-sizing:border-box;grid-column:1/4 !important;grid-row:1/4 !important;grid-template-columns:1fr 99fr 1fr;padding:1em;overflow-y:hidden;background:#fff;box-shadow:0 0 1px hsla(0deg, 0%, 0%, 0.075), 0 1px 2px hsla(0deg, 0%, 0%, 0.075), 1px 2px 4px hsla(0deg, 0%, 0%, 0.075), 1px 3px 8px hsla(0deg, 0%, 0%, 0.075), 2px 4px 16px hsla(0deg, 0%, 0%, 0.075);pointer-events:all}.swal2-popup.swal2-toast > *{grid-column:2}.swal2-popup.swal2-toast #swal2-title{margin:0.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-popup.swal2-toast .swal2-loading{justify-content:center}.swal2-popup.swal2-toast .swal2-input{height:2em;margin:0.5em;font-size:1em}.swal2-popup.swal2-toast .swal2-validation-message{font-size:1em}.swal2-popup.swal2-toast .swal2-footer{margin:0.5em 0 0;padding:0.5em 0 0;font-size:0.8em}.swal2-popup.swal2-toast .swal2-close{grid-column:3/3;grid-row:1/99;align-self:center;width:0.8em;height:0.8em;margin:0;font-size:2em}.swal2-popup.swal2-toast .swal2-html-container{margin:0.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-popup.swal2-toast .swal2-html-container:empty{padding:0}.swal2-popup.swal2-toast .swal2-loader{grid-column:1;grid-row:1/99;align-self:center;width:2em;height:2em;margin:0.25em}.swal2-popup.swal2-toast .swal2-icon{grid-column:1;grid-row:1/99;align-self:center;width:2em;min-width:2em;height:2em;margin:0 0.5em 0 0}.swal2-popup.swal2-toast .swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:1.8em;font-weight:700}.swal2-popup.swal2-toast .swal2-icon.swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^='swal2-x-mark-line']{top:0.875em;width:1.375em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='left']{left:0.3125em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='right']{right:0.3125em}.swal2-popup.swal2-toast .swal2-actions{justify-content:flex-start;height:auto;margin:0.5em 0 0;padding:0 0.5em}.swal2-popup.swal2-toast .swal2-styled{margin:0.25em 0.5em;padding:0.4em 0.6em;font-size:1em}.swal2-popup.swal2-toast .swal2-success{border-color:#a5dc86}.swal2-popup.swal2-toast .swal2-success [class^='swal2-success-circular-line']{position:absolute;width:1.6em;height:3em;transform:rotate(45deg);border-radius:50%}.swal2-popup.swal2-toast .swal2-success [class^='swal2-success-circular-line'][class$='left']{top:-0.8em;left:-0.5em;transform:rotate(-45deg);transform-origin:2em 2em;border-radius:4em 0 0 4em}.swal2-popup.swal2-toast .swal2-success [class^='swal2-success-circular-line'][class$='right']{top:-0.25em;left:0.9375em;transform-origin:0 1.5em;border-radius:0 4em 4em 0}.swal2-popup.swal2-toast .swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-popup.swal2-toast .swal2-success .swal2-success-fix{top:0;left:0.4375em;width:0.4375em;height:2.6875em}.swal2-popup.swal2-toast .swal2-success [class^='swal2-success-line']{height:0.3125em}.swal2-popup.swal2-toast .swal2-success [class^='swal2-success-line'][class$='tip']{top:1.125em;left:0.1875em;width:0.75em}.swal2-popup.swal2-toast .swal2-success [class^='swal2-success-line'][class$='long']{top:0.9375em;right:0.1875em;width:1.375em}.swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip{-webkit-animation:swal2-toast-animate-success-line-tip 0.75s;animation:swal2-toast-animate-success-line-tip 0.75s}.swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long{-webkit-animation:swal2-toast-animate-success-line-long 0.75s;animation:swal2-toast-animate-success-line-long 0.75s}.swal2-popup.swal2-toast.swal2-show{-webkit-animation:swal2-toast-show 0.5s;animation:swal2-toast-show 0.5s}.swal2-popup.swal2-toast.swal2-hide{-webkit-animation:swal2-toast-hide 0.1s forwards;animation:swal2-toast-hide 0.1s forwards}.swal2-container{display:grid;position:fixed;z-index:1060;top:0;right:0;bottom:0;left:0;box-sizing:border-box;grid-template-areas:'top-start top top-end' 'center-start center center-end' 'bottom-start bottom-center bottom-end';grid-template-rows:minmax(-webkit-min-content, auto) minmax(-webkit-min-content, auto) minmax( -webkit-min-content, auto );grid-template-rows:minmax(min-content, auto) minmax(min-content, auto) minmax( min-content, auto );height:100%;padding:0.625em;overflow-x:hidden;transition:background-color 0.1s;-webkit-overflow-scrolling:touch}.swal2-container.swal2-backdrop-show,.swal2-container.swal2-noanimation{background:rgba(0, 0, 0, 0.4)}.swal2-container.swal2-backdrop-hide{background:0 0 !important}.swal2-container.swal2-bottom-start,.swal2-container.swal2-center-start,.swal2-container.swal2-top-start{grid-template-columns:minmax(0, 1fr) auto auto}.swal2-container.swal2-bottom,.swal2-container.swal2-center,.swal2-container.swal2-top{grid-template-columns:auto minmax(0, 1fr) auto}.swal2-container.swal2-bottom-end,.swal2-container.swal2-center-end,.swal2-container.swal2-top-end{grid-template-columns:auto auto minmax(0, 1fr)}.swal2-container.swal2-top-start > .swal2-popup{align-self:start}.swal2-container.swal2-top > .swal2-popup{grid-column:2;align-self:start;justify-self:center}.swal2-container.swal2-top-end > .swal2-popup,.swal2-container.swal2-top-right > .swal2-popup{grid-column:3;align-self:start;justify-self:end}.swal2-container.swal2-center-left > .swal2-popup,.swal2-container.swal2-center-start > .swal2-popup{grid-row:2;align-self:center}.swal2-container.swal2-center > .swal2-popup{grid-column:2;grid-row:2;align-self:center;justify-self:center}.swal2-container.swal2-center-end > .swal2-popup,.swal2-container.swal2-center-right > .swal2-popup{grid-column:3;grid-row:2;align-self:center;justify-self:end}.swal2-container.swal2-bottom-left > .swal2-popup,.swal2-container.swal2-bottom-start > .swal2-popup{grid-column:1;grid-row:3;align-self:end}.swal2-container.swal2-bottom > .swal2-popup{grid-column:2;grid-row:3;justify-self:center;align-self:end}.swal2-container.swal2-bottom-end > .swal2-popup,.swal2-container.swal2-bottom-right > .swal2-popup{grid-column:3;grid-row:3;align-self:end;justify-self:end}.swal2-container.swal2-grow-fullscreen > .swal2-popup,.swal2-container.swal2-grow-row > .swal2-popup{grid-column:1/4;width:100%}.swal2-container.swal2-grow-column > .swal2-popup,.swal2-container.swal2-grow-fullscreen > .swal2-popup{grid-row:1/4;align-self:stretch}.swal2-container.swal2-no-transition{transition:none !important}.swal2-popup{display:none;position:relative;box-sizing:border-box;grid-template-columns:minmax(0, 100%);width:32em;max-width:100%;padding:0 0 1.25em;border:none;border-radius:5px;background:#fff;color:#545454;font-family:inherit;font-size:1rem}.swal2-popup:focus{outline:0}.swal2-popup.swal2-loading{overflow-y:hidden}#swal2-title{position:relative;max-width:100%;margin:0;padding:0.8em 1em 0;color:inherit;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;word-wrap:break-word}.swal2-actions{display:flex;z-index:1;box-sizing:border-box;flex-wrap:wrap;align-items:center;justify-content:center;width:auto;margin:1.25em auto 0;padding:0}.swal2-actions:not(.swal2-loading) .swal2-styled[disabled]{opacity:0.4}.swal2-actions:not(.swal2-loading) .swal2-styled:hover{background-image:linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1))}.swal2-actions:not(.swal2-loading) .swal2-styled:active{background-image:linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))}.swal2-loader{display:none;align-items:center;justify-content:center;width:2.2em;height:2.2em;margin:0 1.875em;-webkit-animation:swal2-rotate-loading 1.5s linear 0s infinite normal;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;border-width:0.25em;border-style:solid;border-radius:100%;border-color:#2778c4 transparent #2778c4 transparent}.swal2-styled{margin:0.3125em;padding:0.625em 1.1em;transition:box-shadow 0.1s;box-shadow:0 0 0 3px transparent;font-weight:500}.swal2-styled:not([disabled]){cursor:pointer}.swal2-styled.swal2-confirm{border:0;border-radius:0.25em;background:initial;background-color:#7066e0;color:#fff;font-size:1em}.swal2-styled.swal2-confirm:focus{box-shadow:0 0 0 3px rgba(112, 102, 224, 0.5)}.swal2-styled.swal2-deny{border:0;border-radius:0.25em;background:initial;background-color:#dc3741;color:#fff;font-size:1em}.swal2-styled.swal2-deny:focus{box-shadow:0 0 0 3px rgba(220, 55, 65, 0.5)}.swal2-styled.swal2-cancel{border:0;border-radius:0.25em;background:initial;background-color:#6e7881;color:#fff;font-size:1em}.swal2-styled.swal2-cancel:focus{box-shadow:0 0 0 3px rgba(110, 120, 129, 0.5)}.swal2-styled.swal2-default-outline:focus{box-shadow:0 0 0 3px rgba(100, 150, 200, 0.5)}.swal2-styled:focus{outline:0}.swal2-styled::-moz-focus-inner{border:0}.swal2-footer{justify-content:center;margin:1em 0 0;padding:1em 1em 0;border-top:1px solid #eee;color:inherit;font-size:1em}.swal2-timer-progress-bar-container{position:absolute;right:0;bottom:0;left:0;grid-column:auto !important;overflow:hidden;border-bottom-right-radius:5px;border-bottom-left-radius:5px}.swal2-timer-progress-bar{width:100%;height:0.25em;background:rgba(0, 0, 0, 0.2)}.swal2-image{max-width:100%;margin:2em auto 1em}.swal2-close{z-index:2;align-items:center;justify-content:center;width:1.2em;height:1.2em;margin-top:0;margin-right:0;margin-bottom:-1.2em;padding:0;overflow:hidden;transition:color 0.1s, box-shadow 0.1s;border:none;border-radius:5px;background:0 0;color:#ccc;font-family:serif;font-family:monospace;font-size:2.5em;cursor:pointer;justify-self:end}.swal2-close:hover{transform:none;background:0 0;color:#f27474}.swal2-close:focus{outline:0;box-shadow:inset 0 0 0 3px rgba(100, 150, 200, 0.5)}.swal2-close::-moz-focus-inner{border:0}.swal2-html-container{z-index:1;justify-content:center;margin:1em 1.6em 0.3em;padding:0;overflow:auto;color:inherit;font-size:1.125em;font-weight:400;line-height:normal;text-align:center;word-wrap:break-word;word-break:break-word}.swal2-checkbox,.swal2-file,.swal2-input,.swal2-radio,.swal2-select,.swal2-textarea{margin:1em 2em 3px}.swal2-file,.swal2-input,.swal2-textarea{box-sizing:border-box;width:auto;transition:border-color 0.1s, box-shadow 0.1s;border:1px solid #d9d9d9;border-radius:0.1875em;background:0 0;box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.06), 0 0 0 3px transparent;color:inherit;font-size:1.125em}.swal2-file.swal2-inputerror,.swal2-input.swal2-inputerror,.swal2-textarea.swal2-inputerror{border-color:#f27474 !important;box-shadow:0 0 2px #f27474 !important}.swal2-file:focus,.swal2-input:focus,.swal2-textarea:focus{border:1px solid #b4dbed;outline:0;box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.06), 0 0 0 3px rgba(100, 150, 200, 0.5)}.swal2-file::-moz-placeholder,.swal2-input::-moz-placeholder,.swal2-textarea::-moz-placeholder{color:#ccc}.swal2-file:-ms-input-placeholder,.swal2-input:-ms-input-placeholder,.swal2-textarea:-ms-input-placeholder{color:#ccc}.swal2-file::placeholder,.swal2-input::placeholder,.swal2-textarea::placeholder{color:#ccc}.swal2-range{margin:1em 2em 3px;background:#fff}.swal2-range input{width:80%}.swal2-range output{width:20%;color:inherit;font-weight:600;text-align:center}.swal2-range input,.swal2-range output{height:2.625em;padding:0;font-size:1.125em;line-height:2.625em}.swal2-input{height:2.625em;padding:0 0.75em}.swal2-file{width:75%;margin-right:auto;margin-left:auto;background:0 0;font-size:1.125em}.swal2-textarea{height:6.75em;padding:0.75em}.swal2-select{min-width:50%;max-width:100%;padding:0.375em 0.625em;background:0 0;color:inherit;font-size:1.125em}.swal2-checkbox,.swal2-radio{align-items:center;justify-content:center;background:#fff;color:inherit}.swal2-checkbox label,.swal2-radio label{margin:0 0.6em;font-size:1.125em}.swal2-checkbox input,.swal2-radio input{flex-shrink:0;margin:0 0.4em}.swal2-input-label{display:flex;justify-content:center;margin:1em auto 0}.swal2-validation-message{align-items:center;justify-content:center;margin:1em 0 0;padding:0.625em;overflow:hidden;background:#f0f0f0;color:#666;font-size:1em;font-weight:300}.swal2-validation-message::before{content:'!';display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 0.625em;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center}.swal2-icon{position:relative;box-sizing:content-box;justify-content:center;width:5em;height:5em;margin:2.5em auto 0.6em;border:0.25em solid transparent;border-radius:50%;border-color:#000;font-family:inherit;line-height:5em;cursor:default;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:3.75em}.swal2-icon.swal2-error{border-color:#f27474;color:#f27474}.swal2-icon.swal2-error .swal2-x-mark{position:relative;flex-grow:1}.swal2-icon.swal2-error [class^='swal2-x-mark-line']{display:block;position:absolute;top:2.3125em;width:2.9375em;height:0.3125em;border-radius:0.125em;background-color:#f27474}.swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='left']{left:1.0625em;transform:rotate(45deg)}.swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='right']{right:1em;transform:rotate(-45deg)}.swal2-icon.swal2-error.swal2-icon-show{-webkit-animation:swal2-animate-error-icon 0.5s;animation:swal2-animate-error-icon 0.5s}.swal2-icon.swal2-error.swal2-icon-show .swal2-x-mark{-webkit-animation:swal2-animate-error-x-mark 0.5s;animation:swal2-animate-error-x-mark 0.5s}.swal2-icon.swal2-warning{border-color:#facea8;color:#f8bb86}.swal2-icon.swal2-warning.swal2-icon-show{-webkit-animation:swal2-animate-error-icon 0.5s;animation:swal2-animate-error-icon 0.5s}.swal2-icon.swal2-warning.swal2-icon-show .swal2-icon-content{-webkit-animation:swal2-animate-i-mark 0.5s;animation:swal2-animate-i-mark 0.5s}.swal2-icon.swal2-info{border-color:#9de0f6;color:#3fc3ee}.swal2-icon.swal2-info.swal2-icon-show{-webkit-animation:swal2-animate-error-icon 0.5s;animation:swal2-animate-error-icon 0.5s}.swal2-icon.swal2-info.swal2-icon-show .swal2-icon-content{-webkit-animation:swal2-animate-i-mark 0.8s;animation:swal2-animate-i-mark 0.8s}.swal2-icon.swal2-question{border-color:#c9dae1;color:#87adbd}.swal2-icon.swal2-question.swal2-icon-show{-webkit-animation:swal2-animate-error-icon 0.5s;animation:swal2-animate-error-icon 0.5s}.swal2-icon.swal2-question.swal2-icon-show .swal2-icon-content{-webkit-animation:swal2-animate-question-mark 0.8s;animation:swal2-animate-question-mark 0.8s}.swal2-icon.swal2-success{border-color:#a5dc86;color:#a5dc86}.swal2-icon.swal2-success [class^='swal2-success-circular-line']{position:absolute;width:3.75em;height:7.5em;transform:rotate(45deg);border-radius:50%}.swal2-icon.swal2-success [class^='swal2-success-circular-line'][class$='left']{top:-0.4375em;left:-2.0635em;transform:rotate(-45deg);transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}.swal2-icon.swal2-success [class^='swal2-success-circular-line'][class$='right']{top:-0.6875em;left:1.875em;transform:rotate(-45deg);transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}.swal2-icon.swal2-success .swal2-success-ring{position:absolute;z-index:2;top:-0.25em;left:-0.25em;box-sizing:content-box;width:100%;height:100%;border:0.25em solid rgba(165, 220, 134, 0.3);border-radius:50%}.swal2-icon.swal2-success .swal2-success-fix{position:absolute;z-index:1;top:0.5em;left:1.625em;width:0.4375em;height:5.625em;transform:rotate(-45deg)}.swal2-icon.swal2-success [class^='swal2-success-line']{display:block;position:absolute;z-index:2;height:0.3125em;border-radius:0.125em;background-color:#a5dc86}.swal2-icon.swal2-success [class^='swal2-success-line'][class$='tip']{top:2.875em;left:0.8125em;width:1.5625em;transform:rotate(45deg)}.swal2-icon.swal2-success [class^='swal2-success-line'][class$='long']{top:2.375em;right:0.5em;width:2.9375em;transform:rotate(-45deg)}.swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-tip{-webkit-animation:swal2-animate-success-line-tip 0.75s;animation:swal2-animate-success-line-tip 0.75s}.swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-long{-webkit-animation:swal2-animate-success-line-long 0.75s;animation:swal2-animate-success-line-long 0.75s}.swal2-icon.swal2-success.swal2-icon-show .swal2-success-circular-line-right{-webkit-animation:swal2-rotate-success-circular-line 4.25s ease-in;animation:swal2-rotate-success-circular-line 4.25s ease-in}.swal2-progress-steps{flex-wrap:wrap;align-items:center;max-width:100%;margin:1.25em auto;padding:0;background:0 0;font-weight:600}.swal2-progress-steps li{display:inline-block;position:relative}.swal2-progress-steps .swal2-progress-step{z-index:20;flex-shrink:0;width:2em;height:2em;border-radius:2em;background:#2778c4;color:#fff;line-height:2em;text-align:center}.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step{background:#2778c4}.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step ~ .swal2-progress-step{background:#add8e6;color:#fff}.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step ~ .swal2-progress-step-line{background:#add8e6}.swal2-progress-steps .swal2-progress-step-line{z-index:10;flex-shrink:0;width:2.5em;height:0.4em;margin:0 -1px;background:#2778c4}[class^='swal2']{-webkit-tap-highlight-color:transparent}.swal2-show{-webkit-animation:swal2-show 0.3s;animation:swal2-show 0.3s}.swal2-hide{-webkit-animation:swal2-hide 0.15s forwards;animation:swal2-hide 0.15s forwards}.swal2-noanimation{transition:none}.swal2-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}.swal2-rtl .swal2-close{margin-right:initial;margin-left:0}.swal2-rtl .swal2-timer-progress-bar{right:0;left:auto}.swal2-no-war{display:flex;position:fixed;z-index:1061;top:0;left:0;align-items:center;justify-content:center;width:100%;height:3.375em;background:#20232a;color:#fff;text-align:center}.swal2-no-war a{color:#61dafb;text-decoration:none}.swal2-no-war a:hover{text-decoration:underline}@-webkit-keyframes swal2-toast-show{0%{transform:translateY(-0.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(0.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0)}}@keyframes swal2-toast-show{0%{transform:translateY(-0.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(0.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0)}}@-webkit-keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@-webkit-keyframes swal2-toast-animate-success-line-tip{0%{top:0.5625em;left:0.0625em;width:0}54%{top:0.125em;left:0.125em;width:0}70%{top:0.625em;left:-0.25em;width:1.625em}84%{top:1.0625em;left:0.75em;width:0.5em}100%{top:1.125em;left:0.1875em;width:0.75em}}@keyframes swal2-toast-animate-success-line-tip{0%{top:0.5625em;left:0.0625em;width:0}54%{top:0.125em;left:0.125em;width:0}70%{top:0.625em;left:-0.25em;width:1.625em}84%{top:1.0625em;left:0.75em;width:0.5em}100%{top:1.125em;left:0.1875em;width:0.75em}}@-webkit-keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:0.9375em;width:0}84%{top:0.9375em;right:0;width:1.125em}100%{top:0.9375em;right:0.1875em;width:1.375em}}@keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:0.9375em;width:0}84%{top:0.9375em;right:0;width:1.125em}100%{top:0.9375em;right:0.1875em;width:1.375em}}@-webkit-keyframes swal2-show{0%{transform:scale(0.7)}45%{transform:scale(1.05)}80%{transform:scale(0.95)}100%{transform:scale(1)}}@keyframes swal2-show{0%{transform:scale(0.7)}45%{transform:scale(1.05)}80%{transform:scale(0.95)}100%{transform:scale(1)}}@-webkit-keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(0.5);opacity:0}}@keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(0.5);opacity:0}}@-webkit-keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:0.0625em;width:0}54%{top:1.0625em;left:0.125em;width:0}70%{top:2.1875em;left:-0.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:0.8125em;width:1.5625em}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:0.0625em;width:0}54%{top:1.0625em;left:0.125em;width:0}70%{top:2.1875em;left:-0.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:0.8125em;width:1.5625em}}@-webkit-keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:0.5em;width:2.9375em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:0.5em;width:2.9375em}}@-webkit-keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@-webkit-keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(0.4);opacity:0}50%{margin-top:1.625em;transform:scale(0.4);opacity:0}80%{margin-top:-0.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(0.4);opacity:0}50%{margin-top:1.625em;transform:scale(0.4);opacity:0}80%{margin-top:-0.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@-webkit-keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0);opacity:1}}@-webkit-keyframes swal2-rotate-loading{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes swal2-rotate-loading{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@-webkit-keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@-webkit-keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:0.4}50%{transform:rotateZ(15deg);opacity:0.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:0.4}50%{transform:rotateZ(15deg);opacity:0.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){overflow:hidden}body.swal2-height-auto{height:auto !important}body.swal2-no-backdrop .swal2-container{background-color:transparent !important;pointer-events:none}body.swal2-no-backdrop .swal2-container .swal2-popup{pointer-events:all}body.swal2-no-backdrop .swal2-container .swal2-modal{box-shadow:0 0 10px rgba(0, 0, 0, 0.4)}@media print{body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){overflow-y:scroll !important}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) > [aria-hidden='true']{display:none}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) .swal2-container{position:static !important}}body.swal2-toast-shown .swal2-container{box-sizing:border-box;width:360px;max-width:100%;background-color:transparent;pointer-events:none}body.swal2-toast-shown .swal2-container.swal2-top{top:0;right:auto;bottom:auto;left:50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-top-end,body.swal2-toast-shown .swal2-container.swal2-top-right{top:0;right:0;bottom:auto;left:auto}body.swal2-toast-shown .swal2-container.swal2-top-left,body.swal2-toast-shown .swal2-container.swal2-top-start{top:0;right:auto;bottom:auto;left:0}body.swal2-toast-shown .swal2-container.swal2-center-left,body.swal2-toast-shown .swal2-container.swal2-center-start{top:50%;right:auto;bottom:auto;left:0;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-center{top:50%;right:auto;bottom:auto;left:50%;transform:translate(-50%, -50%)}body.swal2-toast-shown .swal2-container.swal2-center-end,body.swal2-toast-shown .swal2-container.swal2-center-right{top:50%;right:0;bottom:auto;left:auto;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-left,body.swal2-toast-shown .swal2-container.swal2-bottom-start{top:auto;right:auto;bottom:0;left:0}body.swal2-toast-shown .swal2-container.swal2-bottom{top:auto;right:auto;bottom:0;left:50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-end,body.swal2-toast-shown .swal2-container.swal2-bottom-right{top:auto;right:0;bottom:0;left:auto}`;
 
     async function lateStart(site, begin = 1) {
         const manga = await site.run();
