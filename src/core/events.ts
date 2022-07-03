@@ -343,6 +343,16 @@ function controls() {
     }
     logScript(`MangaHidePageControls: ${getValueGM('HidePageControls')}`);
   });
+  // Sticky Header or MouseOverMenu Toggle
+  document.querySelector('#mouseOverMenu')?.addEventListener('change', (event) => {
+    document.querySelector('#Header')?.classList.toggle('mouseOverMenu');
+    if ((event.currentTarget as HTMLInputElement).checked) {
+      setValueGM('MouseOverMenu', true);
+    } else {
+      setValueGM('MouseOverMenu', false);
+    }
+    logScript(`MangaHidePageControls: ${getValueGM('MouseOverMenu')}`);
+  });
   // Theme Control Selector
   document.querySelector('#ThemeSelector')?.addEventListener('change', (event) => {
     const target = (event.currentTarget as HTMLInputElement).value;
@@ -561,29 +571,23 @@ function controls() {
   function useScrollDirection(showEnd = 0) {
     let prevOffset = 0;
     const header = document.querySelector<HTMLDivElement>('#Header')!;
-    const setScrollDirection = (show: boolean | null) => {
-      if (show == null) {
-        header.classList.remove('scroll-hide');
-        header.classList.remove('scroll-show');
-      } else if (show) {
-        header.classList.add('scroll-show');
-        header.classList.remove('scroll-hide');
-      } else {
-        header.classList.remove('scroll-show');
-        header.classList.add('scroll-hide');
-      }
+    const setScrollDirection = (classSuffix: string) => {
+      header.classList.remove('scroll-end');
+      header.classList.remove('scroll-hide');
+      header.classList.remove('scroll-show');
+      if (classSuffix) header.classList.add(`scroll-${classSuffix}`);
     };
 
     function toggleScrollDirection() {
       const { scrollY } = window;
       if (showEnd && scrollY + window.innerHeight + showEnd > document.body.offsetHeight) {
-        setScrollDirection(true);
+        setScrollDirection('end');
       } else if (scrollY > prevOffset && scrollY > 50) {
-        setScrollDirection(false);
+        setScrollDirection('hide');
       } else if (scrollY < prevOffset && scrollY > 50) {
-        setScrollDirection(true);
+        setScrollDirection('show');
       } else {
-        setScrollDirection(null);
+        setScrollDirection('');
       }
       prevOffset = scrollY;
     }

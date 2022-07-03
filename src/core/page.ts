@@ -166,7 +166,7 @@ async function addPage(manga: IMangaPages, index: number, pageUrl: string) {
 }
 
 // daley the use of an url/src
-function delayAdd(src: string, wait: number = settings.timer) {
+function delayAdd(src: string, wait: number = settings.throttlePageLoad) {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(src);
@@ -178,8 +178,8 @@ function delayAdd(src: string, wait: number = settings.timer) {
 function loadMangaPages(begin: number, manga: IMangaPages) {
   return manga.listPages?.map((url, index) =>
     index >= begin
-      ? delayAdd(url, (manga.timer || settings.timer) * (index - begin)).then((response) =>
-          addPage(manga, index + 1, response as string),
+      ? delayAdd(url, (manga.timer || settings.throttlePageLoad) * (index - begin)).then(
+          (response) => addPage(manga, index + 1, response as string),
         )
       : null,
   );
@@ -189,8 +189,8 @@ function loadMangaPages(begin: number, manga: IMangaPages) {
 function loadMangaImages(begin: number, manga: IMangaImages) {
   return manga.listImages?.map((src, index) =>
     index >= begin
-      ? delayAdd(src, (manga.timer || settings.timer) * (index - begin)).then((response) =>
-          addImg(index + 1, response as string),
+      ? delayAdd(src, (manga.timer || settings.throttlePageLoad) * (index - begin)).then(
+          (response) => addImg(index + 1, response as string),
         )
       : null,
   );
@@ -200,7 +200,7 @@ function loadMangaImages(begin: number, manga: IMangaImages) {
 function loadManga(manga: IManga, begin = 1) {
   settings.lazyLoadImages = manga.lazy || settings.lazyLoadImages;
   logScript('Loading Images');
-  logScript(`Intervals: ${manga.timer || settings.timer || 'Default(1000)'}`);
+  logScript(`Intervals: ${manga.timer || settings.throttlePageLoad || 'Default(1000)'}`);
   logScript(`Lazy: ${settings.lazyLoadImages}`);
   if (settings.lazyLoadImages) {
     logScript('Download may not work with Lazy Loading Images');
@@ -224,7 +224,7 @@ function loadManga(manga: IManga, begin = 1) {
           img,
           lazyAttr,
         }),
-      wait: settings.timer,
+      wait: settings.throttlePageLoad,
     });
   }
 }

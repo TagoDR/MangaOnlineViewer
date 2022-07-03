@@ -14,10 +14,10 @@ const listOptions = (times: number) =>
 
 const body = (manga: IManga, begin = 0) => `
 <div id='MangaOnlineViewer'
-  class='${settings.theme} ${isMobile ? 'mobile' : ''} ${
+  class="${settings.theme} ${isMobile ? 'mobile' : ''} ${
   settings.hidePageControls ? 'hideControls' : ''
-}'>
-  <header id="Header">
+}">
+  <header id="Header" class="${settings.mouseOverMenu ? 'mouseOverMenu' : ''}">
     <aside id='GlobalControls'>
       ${imageOptions}
       ${controls}

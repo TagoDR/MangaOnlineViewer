@@ -37,19 +37,17 @@ export interface ISettings {
   customThemeLines: string;
   customThemePanel: string;
   customThemeButton: string;
-  configVersion: number;
   zoomStep: number;
   viewMode: 'WebComic' | 'FluidLTR' | 'FluidRTL' | ''; // inherit = WebComic
   bookmarks: IBookmark[];
   loadMode: 'wait' | 'always' | 'never';
-  throttlePageLoad: number;
-  widthScale: number;
   fitWidthIfOversize?: boolean;
   showThumbnails?: boolean;
   downloadZip?: boolean;
-  timer: number;
+  throttlePageLoad: number;
   zoom: number;
   lazyLoadImages: boolean;
   lazyStart: number;
   hidePageControls: boolean;
+  mouseOverMenu: boolean;
 }

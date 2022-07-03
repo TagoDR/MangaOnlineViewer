@@ -58,13 +58,19 @@ const controls = `<div id='ViewerControls' class='panel'>
   </div>
   <div class='ControlLabel PagesPerSecond'>Pages/Second:
     <select id='PagesPerSecond'>
-      <option value='3000' ${settings.timer === 3000 ? 'selected' : ''}>0.3(Slow)</option>
-      <option value='2000' ${settings.timer === 2000 ? 'selected' : ''}>0.5</option>
-      <option value='1000' ${settings.timer === 1000 ? 'selected' : ''}>01(Normal)</option>
-      <option value='500' ${settings.timer === 500 ? 'selected' : ''}>02</option>
-      <option value='250' ${settings.timer === 250 ? 'selected' : ''}>04(Fast)</option>
-      <option value='125' ${settings.timer === 125 ? 'selected' : ''}>08</option>
-      <option value='100' ${settings.timer === 100 ? 'selected' : ''}>10(Extreme)</option>
+      <option value='3000' ${
+        settings.throttlePageLoad === 3000 ? 'selected' : ''
+      }>0.3(Slow)</option>
+      <option value='2000' ${settings.throttlePageLoad === 2000 ? 'selected' : ''}>0.5</option>
+      <option value='1000' ${
+        settings.throttlePageLoad === 1000 ? 'selected' : ''
+      }>01(Normal)</option>
+      <option value='500' ${settings.throttlePageLoad === 500 ? 'selected' : ''}>02</option>
+      <option value='250' ${settings.throttlePageLoad === 250 ? 'selected' : ''}>04(Fast)</option>
+      <option value='125' ${settings.throttlePageLoad === 125 ? 'selected' : ''}>08</option>
+      <option value='100' ${
+        settings.throttlePageLoad === 100 ? 'selected' : ''
+      }>10(Extreme)</option>
     </select>
   </div>
   <div class='ControlLabel DefaultZoom'>Default Zoom:
@@ -129,6 +135,11 @@ const controls = `<div id='ViewerControls' class='panel'>
   <div class='ControlLabel hidePageControls'>Always Hide Page Controls:
     <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${
       settings.hidePageControls ? 'checked' : ''
+    }>
+  </div>
+  <div class='ControlLabel mouseOverMenu'>Toggle Sticky Header / MouseOverMenu:
+    <input type='checkbox' value='false' name='mouseOverMenu' id='mouseOverMenu' ${
+      settings.mouseOverMenu ? 'checked' : ''
     }>
   </div>
 </div>`;

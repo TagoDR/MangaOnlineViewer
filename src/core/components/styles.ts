@@ -132,6 +132,10 @@ img {
   position: inherit;
 }
 
+#MangaOnlineViewer #ImageOptions:hover {
+  position: fixed;
+}
+
 #MangaOnlineViewer #ImageOptions.settingsOpen {
   position: fixed;
 }
@@ -141,6 +145,7 @@ img {
   height: 64px;
   width: 200px;
   top: 0;
+  z-index: 1000;
 }
 
 #MangaOnlineViewer #ImageOptions #Zoom {
@@ -191,7 +196,6 @@ img {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  position: relative;
   flex-flow: row nowrap;
   transition: transform 0.3s ease-in, background-color 0.3s linear;
   position: sticky;
@@ -206,9 +210,19 @@ img {
   transform: translateY(-100%);
 }
 
-#MangaOnlineViewer #Header.scroll-show,
+#MangaOnlineViewer #Header.scroll-show{
+  transform: translateY(-1%);
+}
+
+#MangaOnlineViewer #Header.mouseOverMenu{
+  position: absolute;
+  transform: none;
+}
+
+#MangaOnlineViewer #Header.scroll-end,
 #MangaOnlineViewer #Header.visible{
   transform: translateY(-1%);
+  position: sticky;
 }
 
 #MangaOnlineViewer #MangaTitle {
