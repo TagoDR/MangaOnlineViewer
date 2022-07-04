@@ -215,7 +215,7 @@ img {
 }
 
 #MangaOnlineViewer #Header.mouseOverMenu{
-  position: absolute;
+  position: static;
   transform: none;
 }
 
