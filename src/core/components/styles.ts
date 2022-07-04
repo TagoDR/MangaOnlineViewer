@@ -145,7 +145,6 @@ img {
   height: 64px;
   width: 200px;
   top: 0;
-  z-index: 1000;
 }
 
 #MangaOnlineViewer #ImageOptions #Zoom {
