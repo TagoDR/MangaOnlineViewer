@@ -41,6 +41,7 @@ function createLateStartButton(site: ISite, beginning: number) {
     lateStart(site, beginning);
   };
   document.body.appendChild(button);
+  // language=CSS
   const css = `
 #StartMOV {
     font-size: 20px;

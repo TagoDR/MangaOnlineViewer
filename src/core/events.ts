@@ -365,21 +365,21 @@ function controls() {
     const ct = [...document.querySelectorAll<HTMLDivElement>('.CustomTheme')];
     if (target === 'Custom_Dark' || target === 'Custom_Light') {
       ct.forEach((elem) => {
-        elem.style.display = 'inherit';
+        elem.classList.add('show');
       });
     } else {
       ct.forEach((elem) => {
-        elem.style.display = 'none';
+        elem.classList.remove('show');
       });
     }
     const fc = [...document.querySelectorAll<HTMLDivElement>('.FullCustom')];
     if (target === 'Full_Custom') {
       fc.forEach((elem) => {
-        elem.style.display = 'inherit';
+        elem.classList.add('show');
       });
     } else {
       fc.forEach((elem) => {
-        elem.style.display = 'none';
+        elem.classList.remove('show');
       });
     }
   });
@@ -387,15 +387,12 @@ function controls() {
   document.querySelector('#CustomThemeHue')?.addEventListener('change', (event) => {
     const target = (event.currentTarget as HTMLInputElement).value;
     logScript(`CustomTheme: ${target}`);
-    document
-      .querySelectorAll('style[title="Custom_Light"], style[title="Custom_Dark"]')
-      .forEach((elem) => elem.remove());
-    document.head.append(addCustomTheme(target));
+    addCustomTheme(target);
     setValueGM('CustomTheme', target);
     logScript(`MangaCustomTheme: ${getValueGM('CustomTheme')}`);
   });
   // Full Custom theme Color Input
-  document.querySelectorAll('.FullCustom')?.forEach((input) =>
+  document.querySelectorAll('.colorpicker.FullCustom')?.forEach((input) =>
     input.addEventListener('change', () => {
       logScript(
         'FullCustomTheme: ',
@@ -405,15 +402,12 @@ function controls() {
         document.querySelector<HTMLInputElement>('#CustomThemeHuePanel')?.value,
         document.querySelector<HTMLInputElement>('#CustomThemeHueButton')?.value,
       );
-      document.querySelectorAll('style[title="Full_Custom"]').forEach((elem) => elem.remove());
-      document.head.append(
-        addFullCustomTheme(
-          document.querySelector<HTMLInputElement>('#CustomThemeHueBody')!.value,
-          document.querySelector<HTMLInputElement>('#CustomThemeHueText')!.value,
-          document.querySelector<HTMLInputElement>('#CustomThemeHueLines')!.value,
-          document.querySelector<HTMLInputElement>('#CustomThemeHuePanel')!.value,
-          document.querySelector<HTMLInputElement>('#CustomThemeHueButton')!.value,
-        ),
+      addFullCustomTheme(
+        document.querySelector<HTMLInputElement>('#CustomThemeHueBody')!.value,
+        document.querySelector<HTMLInputElement>('#CustomThemeHueText')!.value,
+        document.querySelector<HTMLInputElement>('#CustomThemeHueLines')!.value,
+        document.querySelector<HTMLInputElement>('#CustomThemeHuePanel')!.value,
+        document.querySelector<HTMLInputElement>('#CustomThemeHueButton')!.value,
       );
       setValueGM(
         'CustomThemeBody',

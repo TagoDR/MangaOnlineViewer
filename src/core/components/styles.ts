@@ -21,7 +21,6 @@ a {
 
 img {
   height: auto;
-  max-width: 100%;
   vertical-align: middle;
   border: 0 none;
 }
@@ -37,10 +36,9 @@ img {
 }
 
 #MangaOnlineViewer {
-  width: 100%;
-  height: 100%;
   padding-bottom: 40px;
-  min-height: 1080px;
+  min-height: 760px;
+  min-width: 360px;
 }
 
 #MangaOnlineViewer #Chapter {
@@ -80,16 +78,33 @@ img {
   width: auto;
   z-index: 1000;
   transition: transform 0.3s ease-in, background-color 0.3s linear;
-  display: none;
+  transform: translateY(-100%);
+  display: flex;
+  flex-flow: column;
+  gap: 5px;
+  max-width: 300px;
 }
 
 #MangaOnlineViewer #ViewerControls.visible {
-  display: block;
+  transform: translateY(0);
 }
 
 #MangaOnlineViewer #ViewerControls .ControlLabel {
-  display: list-item;
-  list-style: none;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#MangaOnlineViewer #ViewerControls .ControlLabelItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-basis: 40%;
+}
+
+#MangaOnlineViewer #ViewerControls .ControlLabelItem:not(.show) {
+  display: none;
 }
 
 #MangaOnlineViewer #ViewerShortcuts {
@@ -97,11 +112,12 @@ img {
   position: fixed;
   top: 65px;
   left: 0;
-  display: none;
+  transition: transform 0.3s ease-in, background-color 0.3s linear;
+  transform: translateX(-100%);
 }
 
 #MangaOnlineViewer #ViewerShortcuts.visible {
-  display: block;
+  transform: translateX(0);
 }
 
 #MangaOnlineViewer select {
@@ -143,7 +159,7 @@ img {
 #MangaOnlineViewer #ImageOptions #menu {
   position: fixed;
   height: 64px;
-  width: 200px;
+  width: 400px;
   top: 0;
 }
 
@@ -166,6 +182,8 @@ img {
   margin: 0 0 15px;
   text-align: center;
   display: inline-block;
+  overflow-x: auto;
+  max-width: 100%;
 }
 
 #MangaOnlineViewer .PageContent.hide{
@@ -244,6 +262,8 @@ img {
 }
 
 #MangaOnlineViewer .ChapterControl {
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 #MangaOnlineViewer .ChapterControl .NavigationControlButton {
@@ -450,21 +470,13 @@ img {
     margin: 0;
     width: 100%;
   }
-
-  #MangaOnlineViewer .PageContent img {
-    width: 100% !important;
-  }
-
-  #MangaOnlineViewer .fitWidthIfOversize .PageContent img {
+  
+  #MangaOnlineViewer .fitWidthIfOversize .PageContent .PageImg {
     max-width: 100%;
   }
 
-  #MangaOnlineViewer #ImageOptions img:not(#settings) {
+  #MangaOnlineViewer #ImageOptions .ControlButton:not(#settings) {
     display: none;
-  }
-
-  #MangaOnlineViewer #ViewerShortcuts {
-    display: none !important;
   }
 
   #MangaOnlineViewer #ViewerControls {
@@ -499,10 +511,10 @@ img {
 
   #MangaOnlineViewer .ViewerTitle {
     height: auto;
+    padding: 0;
   }
 
   #MangaOnlineViewer .ChapterControl {
-    margin: 10px;
     display: block;
     text-align: center;
   }
@@ -512,13 +524,10 @@ img {
   }
 
   #MangaOnlineViewer #Counters {
-    position: inherit;
-    text-align: center;
-    margin: 10px;
+    display: none;
   }
 
   #MangaOnlineViewer #Chapter {
-    margin: 5px auto 0;
   }
 }
 `;

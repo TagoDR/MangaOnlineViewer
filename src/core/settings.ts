@@ -3,8 +3,8 @@ import { ISettings, IBookmark } from '../types';
 
 // Configuration
 const settings: ISettings = {
-  theme: getValueGM('Theme', 'Light'),
-  customTheme: getValueGM('CustomTheme', '#3d0099'),
+  theme: getValueGM('Theme', 'Dark'),
+  customTheme: getValueGM('CustomTheme', '#263e3a'),
   customThemeBody: getValueGM('CustomThemeBody', '#000000'),
   customThemeText: getValueGM('CustomThemeText', '#ffffff'),
   customThemeLines: getValueGM('CustomThemeLines', '#666666'),

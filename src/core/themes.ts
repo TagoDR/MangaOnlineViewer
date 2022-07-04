@@ -3,9 +3,9 @@ import { settings } from './settings';
 
 const scheme = new ColorScheme().scheme('mono').variation('default');
 
-// Add custom Themes to the page
-function addTheme(theme: string[]): string {
-  return `<style type='text/css' name='${theme[0]}'>
+function generateThemeCSS(theme: [string, string, string, string, string, string]) {
+  // language=CSS
+  return `
   .${theme[0]} .ControlLabel, .${theme[0]} .ViewerTitle, .${theme[0]}, .PageFunctions a.visible, .${theme[0]} a, .${theme[0]} a:link, .${theme[0]} a:visited, .${theme[0]} a:active, .${theme[0]} a:focus{ text-decoration:none; color: ${theme[2]};}
   .${theme[0]} {background-repeat: repeat;background-position: 0 0;background-image: none;background-color: ${theme[1]};background-attachment: scroll;}
   .${theme[0]} #ImageOptions #menu .menuOuterArrow {border-left-width: 10px;border-left-style: solid;border-left-color: ${theme[4]};}
@@ -15,16 +15,26 @@ function addTheme(theme: string[]): string {
   .${theme[0]} .PageFunctions > span, .${theme[0]} .Thumbnail span {background: none repeat scroll 0 0 ${theme[4]};}
   .${theme[0]} .panel {background: none repeat scroll 0 0 ${theme[4]}; border: thin solid ${theme[3]};}
   .${theme[0]} .PageContent, .${theme[0]} .Thumbnail img { outline: 2px solid ${theme[3]}; background: none repeat scroll 0 0 ${theme[4]};}
-  .${theme[0]} .ChapterControl a { border: 1px solid ${theme[3]}; background-color: ${theme[5]};
-  </style>`;
+  .${theme[0]} .ChapterControl a { border: 1px solid ${theme[3]}; background-color: ${theme[5]};}
+  `;
 }
 
-function addCustomTheme(color: string): string {
+// Add custom Themes to the page
+function addTheme(theme: [string, string, string, string, string, string]): string {
+  return `<style type='text/css' name='${theme[0]}'>${generateThemeCSS(theme)}</style>`;
+}
+
+function swapTheme(theme: [string, string, string, string, string, string]) {
+  document.querySelectorAll('style[title="Full_Custom"]').forEach((elem) => elem.remove());
+  const style = document.createElement('style');
+  style.appendChild(document.createTextNode(generateThemeCSS(theme)));
+  document.head.appendChild(style);
+}
+
+function addCustomTheme(color: string) {
   const bg = scheme.from_hex(color.replace('#', '')).colors();
-  return (
-    addTheme(['Custom_Dark', '#000000', `#${bg[2]}`, `#${bg[3]}`, `#${bg[0]}`, `#${bg[1]}`]) +
-    addTheme(['Custom_Light', '#eeeeec', `#${bg[3]}`, `#${bg[2]}`, `#${bg[0]}`, `#${bg[1]}`])
-  );
+  swapTheme(['Custom_Dark', '#000000', `#${bg[2]}`, `#${bg[3]}`, `#${bg[0]}`, `#${bg[1]}`]);
+  swapTheme(['Custom_Light', '#eeeeec', `#${bg[3]}`, `#${bg[2]}`, `#${bg[0]}`, `#${bg[1]}`]);
 }
 
 function addFullCustomTheme(
@@ -34,10 +44,10 @@ function addFullCustomTheme(
   panel: string,
   buttons: string,
 ) {
-  return addTheme(['Full_Custom', body, text, lines, panel, buttons]);
+  swapTheme(['Full_Custom', body, text, lines, panel, buttons]);
 }
 
-function loadThemes(): string[][] {
+function loadThemes(): [string, string, string, string, string, string][] {
   const bg = scheme.from_hex(settings.customTheme.replace('#', '')).colors();
   return [
     //   1-body       2-text       3-lines     4-imageOptions     5-buttons
