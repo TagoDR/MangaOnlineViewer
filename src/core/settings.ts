@@ -27,7 +27,7 @@ const settings: ISettings = {
 // Force Settings for mobile
 if (isMobile) {
   settings.lazyLoadImages = true;
-  settings.lazyStart = parseInt(getValueGM('LazyStart', 5), 10);
+  settings.lazyStart = 5;
   settings.fitWidthIfOversize = true;
   settings.showThumbnails = false;
   settings.viewMode = '';

@@ -115,7 +115,7 @@ function getEngine(): string {
   return getInfoGM.scriptHandler || 'Greasemonkey';
 }
 
-const isMobile = window.matchMedia('screen and (max-width: 1024px)').matches;
+const isMobile = window.matchMedia('screen and (max-width: 768px)').matches;
 
 export {
   logScript,

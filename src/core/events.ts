@@ -34,7 +34,6 @@ function setKeyDownEvents() {
 
   function processKey(e: KeyboardEvent) {
     const a = e.code;
-    console.log('Keyboard:', a, ' Event:', e);
     const usedKeys = [
       'KeyW',
       'Numpad8',
@@ -72,6 +71,7 @@ function setKeyDownEvents() {
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
+      logScript('Keyboard:', a, ' Event:', e);
       switch (a) {
         case 'ArrowUp':
         case 'KeyW':
@@ -107,13 +107,14 @@ function setKeyDownEvents() {
         case 'Period':
         case 'KeyD':
         case 'Numpad6':
-          document.querySelector('#next')?.dispatchEvent(new Event('click'));
+          logScript('Click next');
+          document.querySelector<HTMLAnchorElement>('#next')?.click();
           break;
         case 'ArrowLeft':
         case 'Comma':
         case 'KeyA':
         case 'Numpad4':
-          document.querySelector('#prev')?.dispatchEvent(new Event('click'));
+          document.querySelector<HTMLAnchorElement>('#prev')?.click();
           break;
         case 'Equal':
         case 'NumpadAdd':

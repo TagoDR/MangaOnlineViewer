@@ -1,6 +1,5 @@
 import { IManga } from '../../types';
 import { icon, settings } from '../settings';
-import { isMobile } from '../../utils/tampermonkey';
 import listPages from './MangaPages';
 import imageOptions from './ImageOptions';
 import controls from './ViewerControls';
@@ -14,9 +13,7 @@ const listOptions = (times: number) =>
 
 const body = (manga: IManga, begin = 0) => `
 <div id='MangaOnlineViewer'
-  class="${settings.theme} ${isMobile ? 'mobile' : ''} ${
-  settings.hidePageControls ? 'hideControls' : ''
-}">
+  class="${settings.theme} ${settings.hidePageControls ? 'hideControls' : ''}">
   <header id="Header" class="${settings.mouseOverMenu ? 'mouseOverMenu' : ''}">
     <aside id='GlobalControls'>
       ${imageOptions}

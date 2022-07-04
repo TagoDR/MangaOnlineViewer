@@ -949,7 +949,7 @@
     function getEngine() {
         return getInfoGM.scriptHandler || 'Greasemonkey';
     }
-    const isMobile = window.matchMedia('screen and (max-width: 1024px)').matches;
+    const isMobile = window.matchMedia('screen and (max-width: 768px)').matches;
 
     /**
      * Checks if a JavaScript value is empty
@@ -1032,7 +1032,6 @@ a {
 
 img {
   height: auto;
-  max-width: 100%;
   vertical-align: middle;
   border: 0 none;
 }
@@ -1048,10 +1047,9 @@ img {
 }
 
 #MangaOnlineViewer {
-  width: 100%;
-  height: 100%;
   padding-bottom: 40px;
-  min-height: 1080px;
+  min-height: 760px;
+  min-width: 360px;
 }
 
 #MangaOnlineViewer #Chapter {
@@ -1091,16 +1089,33 @@ img {
   width: auto;
   z-index: 1000;
   transition: transform 0.3s ease-in, background-color 0.3s linear;
-  display: none;
+  transform: translateY(-100%);
+  display: flex;
+  flex-flow: column;
+  gap: 5px;
+  max-width: 300px;
 }
 
 #MangaOnlineViewer #ViewerControls.visible {
-  display: block;
+  transform: translateY(0);
 }
 
 #MangaOnlineViewer #ViewerControls .ControlLabel {
-  display: list-item;
-  list-style: none;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#MangaOnlineViewer #ViewerControls .ControlLabelItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-basis: 40%;
+}
+
+#MangaOnlineViewer #ViewerControls .ControlLabelItem:not(.show) {
+  display: none;
 }
 
 #MangaOnlineViewer #ViewerShortcuts {
@@ -1108,11 +1123,12 @@ img {
   position: fixed;
   top: 65px;
   left: 0;
-  display: none;
+  transition: transform 0.3s ease-in, background-color 0.3s linear;
+  transform: translateX(-100%);
 }
 
 #MangaOnlineViewer #ViewerShortcuts.visible {
-  display: block;
+  transform: translateX(0);
 }
 
 #MangaOnlineViewer select {
@@ -1154,7 +1170,7 @@ img {
 #MangaOnlineViewer #ImageOptions #menu {
   position: fixed;
   height: 64px;
-  width: 200px;
+  width: 400px;
   top: 0;
 }
 
@@ -1177,6 +1193,8 @@ img {
   margin: 0 0 15px;
   text-align: center;
   display: inline-block;
+  overflow-x: auto;
+  max-width: 100%;
 }
 
 #MangaOnlineViewer .PageContent.hide{
@@ -1255,6 +1273,8 @@ img {
 }
 
 #MangaOnlineViewer .ChapterControl {
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 #MangaOnlineViewer .ChapterControl .NavigationControlButton {
@@ -1461,21 +1481,13 @@ img {
     margin: 0;
     width: 100%;
   }
-
-  #MangaOnlineViewer .PageContent img {
-    width: 100% !important;
-  }
-
-  #MangaOnlineViewer .fitWidthIfOversize .PageContent img {
+  
+  #MangaOnlineViewer .fitWidthIfOversize .PageContent .PageImg {
     max-width: 100%;
   }
 
-  #MangaOnlineViewer #ImageOptions img:not(#settings) {
+  #MangaOnlineViewer #ImageOptions .ControlButton:not(#settings) {
     display: none;
-  }
-
-  #MangaOnlineViewer #ViewerShortcuts {
-    display: none !important;
   }
 
   #MangaOnlineViewer #ViewerControls {
@@ -1510,10 +1522,10 @@ img {
 
   #MangaOnlineViewer .ViewerTitle {
     height: auto;
+    padding: 0;
   }
 
   #MangaOnlineViewer .ChapterControl {
-    margin: 10px;
     display: block;
     text-align: center;
   }
@@ -1523,13 +1535,10 @@ img {
   }
 
   #MangaOnlineViewer #Counters {
-    position: inherit;
-    text-align: center;
-    margin: 10px;
+    display: none;
   }
 
   #MangaOnlineViewer #Chapter {
-    margin: 5px auto 0;
   }
 }
 `;
@@ -1559,8 +1568,8 @@ img {
 
     // Configuration
     const settings$1 = {
-        theme: getValueGM('Theme', 'Light'),
-        customTheme: getValueGM('CustomTheme', '#3d0099'),
+        theme: getValueGM('Theme', 'Dark'),
+        customTheme: getValueGM('CustomTheme', '#263e3a'),
         customThemeBody: getValueGM('CustomThemeBody', '#000000'),
         customThemeText: getValueGM('CustomThemeText', '#ffffff'),
         customThemeLines: getValueGM('CustomThemeLines', '#666666'),
@@ -1583,7 +1592,7 @@ img {
     // Force Settings for mobile
     if (isMobile) {
         settings$1.lazyLoadImages = true;
-        settings$1.lazyStart = parseInt(getValueGM('LazyStart', 5), 10);
+        settings$1.lazyStart = 5;
         settings$1.fitWidthIfOversize = true;
         settings$1.showThumbnails = false;
         settings$1.viewMode = '';
@@ -1619,9 +1628,9 @@ img {
     };
 
     const scheme = new ColorScheme().scheme('mono').variation('default');
-    // Add custom Themes to the page
-    function addTheme(theme) {
-        return `<style type='text/css' name='${theme[0]}'>
+    function generateThemeCSS(theme) {
+        // language=CSS
+        return `
   .${theme[0]} .ControlLabel, .${theme[0]} .ViewerTitle, .${theme[0]}, .PageFunctions a.visible, .${theme[0]} a, .${theme[0]} a:link, .${theme[0]} a:visited, .${theme[0]} a:active, .${theme[0]} a:focus{ text-decoration:none; color: ${theme[2]};}
   .${theme[0]} {background-repeat: repeat;background-position: 0 0;background-image: none;background-color: ${theme[1]};background-attachment: scroll;}
   .${theme[0]} #ImageOptions #menu .menuOuterArrow {border-left-width: 10px;border-left-style: solid;border-left-color: ${theme[4]};}
@@ -1631,16 +1640,26 @@ img {
   .${theme[0]} .PageFunctions > span, .${theme[0]} .Thumbnail span {background: none repeat scroll 0 0 ${theme[4]};}
   .${theme[0]} .panel {background: none repeat scroll 0 0 ${theme[4]}; border: thin solid ${theme[3]};}
   .${theme[0]} .PageContent, .${theme[0]} .Thumbnail img { outline: 2px solid ${theme[3]}; background: none repeat scroll 0 0 ${theme[4]};}
-  .${theme[0]} .ChapterControl a { border: 1px solid ${theme[3]}; background-color: ${theme[5]};
-  </style>`;
+  .${theme[0]} .ChapterControl a { border: 1px solid ${theme[3]}; background-color: ${theme[5]};}
+  `;
+    }
+    // Add custom Themes to the page
+    function addTheme(theme) {
+        return `<style type='text/css' name='${theme[0]}'>${generateThemeCSS(theme)}</style>`;
+    }
+    function swapTheme(theme) {
+        document.querySelectorAll('style[title="Full_Custom"]').forEach((elem) => elem.remove());
+        const style = document.createElement('style');
+        style.appendChild(document.createTextNode(generateThemeCSS(theme)));
+        document.head.appendChild(style);
     }
     function addCustomTheme(color) {
         const bg = scheme.from_hex(color.replace('#', '')).colors();
-        return (addTheme(['Custom_Dark', '#000000', `#${bg[2]}`, `#${bg[3]}`, `#${bg[0]}`, `#${bg[1]}`]) +
-            addTheme(['Custom_Light', '#eeeeec', `#${bg[3]}`, `#${bg[2]}`, `#${bg[0]}`, `#${bg[1]}`]));
+        swapTheme(['Custom_Dark', '#000000', `#${bg[2]}`, `#${bg[3]}`, `#${bg[0]}`, `#${bg[1]}`]);
+        swapTheme(['Custom_Light', '#eeeeec', `#${bg[3]}`, `#${bg[2]}`, `#${bg[0]}`, `#${bg[1]}`]);
     }
     function addFullCustomTheme(body, text, lines, panel, buttons) {
-        return addTheme(['Full_Custom', body, text, lines, panel, buttons]);
+        swapTheme(['Full_Custom', body, text, lines, panel, buttons]);
     }
     function loadThemes() {
         const bg = scheme.from_hex(settings$1.customTheme.replace('#', '')).colors();
@@ -1743,25 +1762,23 @@ ${cssStyles}
     <select id='ThemeSelector'>
       ${themesSelector}
     </select>
-      <div class='CustomTheme' ${settings$1.theme !== 'Custom_Dark' && settings$1.theme !== 'Custom_Light'
-    ? 'style="display: none;"'
-    : ''}>
+      <div class='CustomTheme ControlLabelItem ${settings$1.theme === 'Custom_Dark' || settings$1.theme === 'Custom_Light' ? 'show' : ''}'>
         -Base:<input id='CustomThemeHue' type='color' value='${settings$1.customTheme}' class='colorpicker CustomTheme'>
       </div>
-      <div class='FullCustom' ${settings$1.theme !== 'Full_Custom' ? 'style="display: none;"' : ''}>
+      <div class='FullCustom ControlLabelItem ${settings$1.theme === 'Full_Custom' ? 'show' : ''}' >
         -Body:<input id='CustomThemeHueBody' type='color' value='${settings$1.customThemeBody}' class='colorpicker FullCustom'>
       </div>
-      <div class='FullCustom' ${settings$1.theme !== 'Full_Custom' ? 'style="display: none;"' : ''}>
+      <div class='FullCustom ControlLabelItem ${settings$1.theme === 'Full_Custom' ? 'show' : ''}' >
         -Text:<input id='CustomThemeHueText' type='color' value=${settings$1.customThemeText}' class='colorpicker FullCustom'>
       </div>
-      <div class='FullCustom' ${settings$1.theme !== 'Full_Custom' ? 'style="display: none;"' : ''}>
+      <div class='FullCustom ControlLabelItem ${settings$1.theme === 'Full_Custom' ? 'show' : ''}' >
         -Lines:<input id='CustomThemeHueLines' type='color' value='${settings$1.customThemeLines}' class='colorpicker FullCustom'>
       </div>
-      <div class='FullCustom' ${settings$1.theme !== 'Full_Custom' ? 'style="display: none;"' : ''}>
+      <div class='FullCustom ControlLabelItem ${settings$1.theme === 'Full_Custom' ? 'show' : ''}'>
         -Painels:
         <input id='CustomThemeHuePanel' type='color' value='${settings$1.customThemePanel}' class='colorpicker FullCustom'>
       </div>
-      <div class='FullCustom' ${settings$1.theme !== 'Full_Custom' ? 'style="display: none;"' : ''}>
+      <div class='FullCustom ControlLabelItem ${settings$1.theme === 'Full_Custom' ? 'show' : ''}'>
         -Buttons:
         <input id='CustomThemeHueButton' type='color' value='${settings$1.customThemeButton}' class='colorpicker FullCustom'>
       </div>
@@ -1797,9 +1814,9 @@ ${cssStyles}
       <option value='-1000' ${settings$1.zoom === -1000 ? 'selected' : ''}>Fit Height</option>
     </select>
   </div>
-  <div class='ControlLabel zoomStep'>Zoom Change Step (between 5 and 50): <br/>
+  <div class='ControlLabel zoomStep'>Zoom Change Step (between 5 and 50):<output id='zoomStepVal'>${settings$1.zoomStep}</output>
     <input type='range' value='${settings$1.zoomStep}' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput='zoomStepVal.value = this.value'>
-    <output id='zoomStepVal'>${settings$1.zoomStep}</output>
+    
   </div>
   <div class='ControlLabel viewMode'>Default View Mode:
     <select id='viewMode'>
@@ -1818,9 +1835,10 @@ ${cssStyles}
    <div class='ControlLabel lazyLoadImages'>Lazy Load Images:
     <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${settings$1.lazyLoadImages ? 'checked' : ''}>
    </div>
-   <div class='ControlLabel lazyStart'>Lazy Start From Page (between 5 and 100):<br/>
+   <div class='ControlLabel lazyStart'>Lazy Start From Page (between 5 and 100):
+   <output id='lazyStartVal'>${settings$1.lazyStart}</output>
     <input type='range' value='${settings$1.lazyStart}' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput='lazyStartVal.value = this.value'>
-    <output id='lazyStartVal'>${settings$1.lazyStart}</output>
+    
   </div>
   <div class='ControlLabel downloadZip'>Download Images as Zip Automatically:
     <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${settings$1.downloadZip ? 'checked' : ''}>
@@ -1862,7 +1880,7 @@ ${cssStyles}
         .map((_, index) => `<option value='${index + 1}'>${index + 1}</option>`);
     const body = (manga, begin = 0) => `
 <div id='MangaOnlineViewer'
-  class="${settings$1.theme} ${isMobile ? 'mobile' : ''} ${settings$1.hidePageControls ? 'hideControls' : ''}">
+  class="${settings$1.theme} ${settings$1.hidePageControls ? 'hideControls' : ''}">
   <header id="Header" class="${settings$1.mouseOverMenu ? 'mouseOverMenu' : ''}">
     <aside id='GlobalControls'>
       ${imageOptions}
@@ -2367,7 +2385,6 @@ ${cssStyles}
         }
         function processKey(e) {
             const a = e.code;
-            console.log('Keyboard:', a, ' Event:', e);
             const usedKeys = [
                 'KeyW',
                 'Numpad8',
@@ -2405,6 +2422,7 @@ ${cssStyles}
                 e.preventDefault();
                 e.stopPropagation();
                 e.stopImmediatePropagation();
+                logScript('Keyboard:', a, ' Event:', e);
                 switch (a) {
                     case 'ArrowUp':
                     case 'KeyW':
@@ -2438,13 +2456,14 @@ ${cssStyles}
                     case 'Period':
                     case 'KeyD':
                     case 'Numpad6':
-                        document.querySelector('#next')?.dispatchEvent(new Event('click'));
+                        logScript('Click next');
+                        document.querySelector('#next')?.click();
                         break;
                     case 'ArrowLeft':
                     case 'Comma':
                     case 'KeyA':
                     case 'Numpad4':
-                        document.querySelector('#prev')?.dispatchEvent(new Event('click'));
+                        document.querySelector('#prev')?.click();
                         break;
                     case 'Equal':
                     case 'NumpadAdd':
@@ -2698,23 +2717,23 @@ ${cssStyles}
             const ct = [...document.querySelectorAll('.CustomTheme')];
             if (target === 'Custom_Dark' || target === 'Custom_Light') {
                 ct.forEach((elem) => {
-                    elem.style.display = 'inherit';
+                    elem.classList.add('show');
                 });
             }
             else {
                 ct.forEach((elem) => {
-                    elem.style.display = 'none';
+                    elem.classList.remove('show');
                 });
             }
             const fc = [...document.querySelectorAll('.FullCustom')];
             if (target === 'Full_Custom') {
                 fc.forEach((elem) => {
-                    elem.style.display = 'inherit';
+                    elem.classList.add('show');
                 });
             }
             else {
                 fc.forEach((elem) => {
-                    elem.style.display = 'none';
+                    elem.classList.remove('show');
                 });
             }
         });
@@ -2722,18 +2741,14 @@ ${cssStyles}
         document.querySelector('#CustomThemeHue')?.addEventListener('change', (event) => {
             const target = event.currentTarget.value;
             logScript(`CustomTheme: ${target}`);
-            document
-                .querySelectorAll('style[title="Custom_Light"], style[title="Custom_Dark"]')
-                .forEach((elem) => elem.remove());
-            document.head.append(addCustomTheme(target));
+            addCustomTheme(target);
             setValueGM('CustomTheme', target);
             logScript(`MangaCustomTheme: ${getValueGM('CustomTheme')}`);
         });
         // Full Custom theme Color Input
-        document.querySelectorAll('.FullCustom')?.forEach((input) => input.addEventListener('change', () => {
+        document.querySelectorAll('.colorpicker.FullCustom')?.forEach((input) => input.addEventListener('change', () => {
             logScript('FullCustomTheme: ', document.querySelector('#CustomThemeHueBody')?.value, document.querySelector('#CustomThemeHueText')?.value, document.querySelector('#CustomThemeHueLines')?.value, document.querySelector('#CustomThemeHuePanel')?.value, document.querySelector('#CustomThemeHueButton')?.value);
-            document.querySelectorAll('style[title="Full_Custom"]').forEach((elem) => elem.remove());
-            document.head.append(addFullCustomTheme(document.querySelector('#CustomThemeHueBody').value, document.querySelector('#CustomThemeHueText').value, document.querySelector('#CustomThemeHueLines').value, document.querySelector('#CustomThemeHuePanel').value, document.querySelector('#CustomThemeHueButton').value));
+            addFullCustomTheme(document.querySelector('#CustomThemeHueBody').value, document.querySelector('#CustomThemeHueText').value, document.querySelector('#CustomThemeHueLines').value, document.querySelector('#CustomThemeHuePanel').value, document.querySelector('#CustomThemeHueButton').value);
             setValueGM('CustomThemeBody', document.querySelector('#CustomThemeHueBody').value);
             setValueGM('CustomThemeText', document.querySelector('#CustomThemeHueText').value);
             setValueGM('CustomThemeLines', document.querySelector('#CustomThemeHueLines').value);
@@ -2937,6 +2952,7 @@ ${cssStyles}
             lateStart(site, beginning);
         };
         document.body.appendChild(button);
+        // language=CSS
         const css = `
 #StartMOV {
     font-size: 20px;
