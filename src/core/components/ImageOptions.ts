@@ -2,7 +2,12 @@ import { icon, settings } from '../settings';
 
 const imageOptions = `<div id='ImageOptions'>
   <div id='menu'>
-    <span class='menuOuterArrow'><span class='menuInnerArrow'></span></span>
+    <div class="hamburger-lines">
+      <span class="line line1"></span>
+      <span class="line line2"></span>
+      <span class="line line3"></span>
+    </div>
+<!--    <span class='menuOuterArrow'><span class='menuInnerArrow'></span></span>-->
   </div>
   <div class='panel'>
     <img id='enlarge' alt='Enlarge' title='Enlarge' src='${icon.enlarge}' class='ControlButton' />

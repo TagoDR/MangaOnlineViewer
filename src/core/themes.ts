@@ -16,6 +16,7 @@ function generateThemeCSS(theme: [string, string, string, string, string, string
   .${theme[0]} .panel {background: none repeat scroll 0 0 ${theme[4]}; border: thin solid ${theme[3]};}
   .${theme[0]} .PageContent, .${theme[0]} .Thumbnail img { outline: 2px solid ${theme[3]}; background: none repeat scroll 0 0 ${theme[4]};}
   .${theme[0]} .ChapterControl a { border: 1px solid ${theme[3]}; background-color: ${theme[5]};}
+  .${theme[0]} #ImageOptions .hamburger-lines .line { background-color: ${theme[3]};}
   `;
 }
 
