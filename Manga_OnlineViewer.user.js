@@ -291,7 +291,8 @@
             ];
             return {
                 title: document.querySelector('#chapter-heading')?.textContent?.trim(),
-                series: document.querySelector('.breadcrumb li:nth-child(2) a')?.getAttribute('href'),
+                series: (document.querySelector('.breadcrumb li:nth-child(3) a') ||
+                    document.querySelector('.breadcrumb li:nth-child(2) a'))?.getAttribute('href'),
                 pages: images.length,
                 prev: document.querySelector('.prev_page')?.getAttribute('href'),
                 next: document.querySelector('.next_page')?.getAttribute('href'),
