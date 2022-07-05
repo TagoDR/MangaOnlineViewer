@@ -1,7 +1,7 @@
 // == Localhost =====================================================================================
 export default {
   name: 'Localhost',
-  url: /(file:\/\/\/.+index.html|https?:\/\/(127.0.0.1|localhost):8080\/.*)/,
+  url: /(file:\/\/\/.+index.html)/,
   homepage: 'http://127.0.0.1:8080/index.html',
   language: ['Portuguese'],
   category: 'manga',
