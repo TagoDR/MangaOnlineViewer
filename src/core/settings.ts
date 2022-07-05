@@ -16,6 +16,7 @@ const settings: ISettings = {
   throttlePageLoad: getValueGM('Timer', 1000),
   zoom: getValueGM('Zoom', 100),
   zoomStep: getValueGM('ZoomStep', 25),
+  minZoom: getValueGM('MinZoom', 50),
   loadMode: getValueGM('LoadMode', 'wait'),
   viewMode: getValueGM('ViewMode', ''),
   bookmarks: JSON.parse(getValueGM('Bookmarks', '[]')) as IBookmark[],

@@ -37,7 +37,6 @@ export interface ISettings {
   customThemeLines: string;
   customThemePanel: string;
   customThemeButton: string;
-  zoomStep: number;
   viewMode: 'WebComic' | 'FluidLTR' | 'FluidRTL' | ''; // inherit = WebComic
   bookmarks: IBookmark[];
   loadMode: 'wait' | 'always' | 'never';
@@ -46,6 +45,8 @@ export interface ISettings {
   downloadZip?: boolean;
   throttlePageLoad: number;
   zoom: number;
+  zoomStep: number;
+  minZoom: number;
   lazyLoadImages: boolean;
   lazyStart: number;
   hidePageControls: boolean;

@@ -1,5 +1,6 @@
 import ColorScheme from 'color-scheme';
 import { settings } from './settings';
+import { replaceStyleSheet } from '../utils/css.js';
 
 const scheme = new ColorScheme().scheme('mono').variation('default');
 
@@ -22,14 +23,11 @@ function generateThemeCSS(theme: [string, string, string, string, string, string
 
 // Add custom Themes to the page
 function addTheme(theme: [string, string, string, string, string, string]): string {
-  return `<style type='text/css' name='${theme[0]}'>${generateThemeCSS(theme)}</style>`;
+  return `<style type='text/css' id='${theme[0]}'>${generateThemeCSS(theme)}</style>`;
 }
 
 function swapTheme(theme: [string, string, string, string, string, string]) {
-  document.querySelectorAll('style[title="Full_Custom"]').forEach((elem) => elem.remove());
-  const style = document.createElement('style');
-  style.appendChild(document.createTextNode(generateThemeCSS(theme)));
-  document.head.appendChild(style);
+  replaceStyleSheet(theme[0], generateThemeCSS(theme));
 }
 
 function addCustomTheme(color: string) {

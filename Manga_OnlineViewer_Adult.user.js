@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno, vercomicsporno, xyzcomics
-// @version 2022.07.04
+// @version 2022.07.05
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -924,23 +924,22 @@
     }
 
     // language=CSS
-    var cssStyles = `
-html {
+    var cssStyles = `html {
   font-size: 100%;
 }
 
 body {
   margin: 0;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 20px;
   color: #333;
-  background-color: #FFF;
+  background-color: #fff;
   padding: 0;
 }
 
 a {
-  color: #08C;
+  color: #08c;
   text-decoration: none;
 }
 
@@ -975,7 +974,7 @@ img {
 }
 
 #MangaOnlineViewer #Chapter.WebComic .PageContent {
-  margin-bottom: 0;
+  margin-bottom: -5px;
   margin-top: -23px;
 }
 
@@ -1056,6 +1055,7 @@ img {
   border-radius: 5px;
   border-width: 1px;
 }
+
 #MangaOnlineViewer .ControlButton:hover {
   opacity: 0.8;
 }
@@ -1065,7 +1065,7 @@ img {
   position: absolute;
   top: 0;
   width: 405px;
-  z-index:1000;
+  z-index: 1000;
 }
 
 #MangaOnlineViewer #ImageOptions .panel {
@@ -1111,7 +1111,7 @@ img {
   max-width: 100%;
 }
 
-#MangaOnlineViewer .PageContent.hide{
+#MangaOnlineViewer .PageContent.hide {
   display: none;
 }
 
@@ -1152,17 +1152,17 @@ img {
   transform: translateY(-100%);
 }
 
-#MangaOnlineViewer #Header.scroll-show{
+#MangaOnlineViewer #Header.scroll-show {
   transform: translateY(-1%);
 }
 
-#MangaOnlineViewer #Header.mouseOverMenu{
+#MangaOnlineViewer #Header.mouseOverMenu {
   position: static;
   transform: none;
 }
 
 #MangaOnlineViewer #Header.scroll-end,
-#MangaOnlineViewer #Header.visible{
+#MangaOnlineViewer #Header.visible {
   transform: translateY(-1%);
   position: sticky;
 }
@@ -1200,9 +1200,9 @@ img {
   align-items: center;
 }
 
-#MangaOnlineViewer .ChapterControl .NavigationControlButton[href='#'],
-#MangaOnlineViewer .ChapterControl .NavigationControlButton[href=''] {
-  visibility: hidden
+#MangaOnlineViewer .ChapterControl .NavigationControlButton[href="#"],
+#MangaOnlineViewer .ChapterControl .NavigationControlButton[href=""] {
+  visibility: hidden;
 }
 
 #MangaOnlineViewer .ViewerTitle {
@@ -1234,7 +1234,7 @@ img {
   min-width: 20px;
   text-align: center;
   display: inline-block;
-  padding: 2px 10px
+  padding: 2px 10px;
 }
 
 #MangaOnlineViewer .PageFunctions > .ControlButton {
@@ -1349,7 +1349,29 @@ img {
   top: -5px;
   display: inline-block;
 }
-#MangaOnlineViewer #blob{
+
+#MangaOnlineViewer #ImageOptions .hamburger-lines {
+  display: block;
+  height: 26px;
+  width: 32px;
+  position: absolute;
+  top: 17px;
+  left: 20px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#MangaOnlineViewer #ImageOptions .hamburger-lines .line {
+  display: block;
+  height: 4px;
+  width: 100%;
+  border-radius: 10px;
+  /*background: rgba(131, 133, 136, 0.40);*/
+}
+
+#MangaOnlineViewer #blob {
   display: none;
 }
 
@@ -1358,13 +1380,16 @@ img {
   #MangaOnlineViewer #Header {
     flex-direction: column;
   }
+
   #MangaOnlineViewer .ViewerTitle {
     order: 1;
     flex-basis: 100%;
   }
+
   #MangaOnlineViewer #GlobalControls {
     order: 2;
   }
+
   #MangaOnlineViewer #ChapterNavigation {
     order: 3;
   }
@@ -1395,7 +1420,7 @@ img {
     margin: 0;
     width: 100%;
   }
-  
+
   #MangaOnlineViewer .fitWidthIfOversize .PageContent .PageImg {
     max-width: 100%;
   }
@@ -1413,8 +1438,9 @@ img {
     transition: transform 0.3s ease-in, background-color 0.3s linear;
     display: none;
   }
+
   #MangaOnlineViewer #ViewerControls.visible {
-    display: block;    
+    display: block;
   }
 
   #MangaOnlineViewer #ViewerControls .DefaultZoom,
@@ -1423,6 +1449,10 @@ img {
   #MangaOnlineViewer #ViewerControls .showThumbnails,
   #MangaOnlineViewer #ViewerControls .lazyLoadImages,
   #MangaOnlineViewer #ViewerControls .downloadZip {
+    display: none;
+  }
+
+  #MangaOnlineViewer #ViewerShortcuts {
     display: none;
   }
 
@@ -1455,6 +1485,7 @@ img {
   #MangaOnlineViewer #Chapter {
   }
 }
+
 `;
 
     const externalScripts = [
@@ -1495,6 +1526,7 @@ img {
         throttlePageLoad: getValueGM('Timer', 1000),
         zoom: getValueGM('Zoom', 100),
         zoomStep: getValueGM('ZoomStep', 25),
+        minZoom: getValueGM('MinZoom', 50),
         loadMode: getValueGM('LoadMode', 'wait'),
         viewMode: getValueGM('ViewMode', ''),
         bookmarks: JSON.parse(getValueGM('Bookmarks', '[]')),
@@ -1541,31 +1573,51 @@ img {
         controls: 'data:image/png;base64,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',
     };
 
+    // Creates the style element
+    function createStyleElement(id, content) {
+        const style = document.createElement('style');
+        style.id = id;
+        style.appendChild(document.createTextNode(content));
+        return style;
+    }
+    // Appends CSS content to the head of the site
+    function appendStyleSheet(id, content) {
+        if (!document.querySelector(`#${id}`)) {
+            const head = document.head || document.querySelector('head');
+            head.appendChild(createStyleElement(id, content));
+        }
+    }
+    function removeStyleSheet(id) {
+        document.querySelectorAll(`style[id="${id}"]`).forEach((elem) => elem.remove());
+    }
+    function replaceStyleSheet(id, content) {
+        removeStyleSheet(id);
+        appendStyleSheet(id, content);
+    }
+
     const scheme = new ColorScheme().scheme('mono').variation('default');
     function generateThemeCSS(theme) {
         // language=CSS
         return `
   .${theme[0]} .ControlLabel, .${theme[0]} .ViewerTitle, .${theme[0]}, .PageFunctions a.visible, .${theme[0]} a, .${theme[0]} a:link, .${theme[0]} a:visited, .${theme[0]} a:active, .${theme[0]} a:focus{ text-decoration:none; color: ${theme[2]};}
   .${theme[0]} {background-repeat: repeat;background-position: 0 0;background-image: none;background-color: ${theme[1]};background-attachment: scroll;}
-  .${theme[0]} #ImageOptions #menu .menuOuterArrow {border-left-width: 10px;border-left-style: solid;border-left-color: ${theme[4]};}
-  .${theme[0]} #ImageOptions #menu .menuInnerArrow {border-left-width: 5px;border-left-style: solid;border-left-color: ${theme[1]};}
+  /*.${theme[0]} #ImageOptions #menu .menuOuterArrow {border-left-width: 10px;border-left-style: solid;border-left-color: ${theme[4]};}*/
+  /*.${theme[0]} #ImageOptions #menu .menuInnerArrow {border-left-width: 5px;border-left-style: solid;border-left-color: ${theme[1]};}*/
   .${theme[0]} .PageFunctions { border: 1px solid ${theme[3]}; border-bottom: medium none; border-left: medium none; border-right: medium none;}
-  /*.${theme[0]} #Chapter { border: 1px solid ${theme[3]}; border-top: medium none; border-left: medium none; border-right: medium none;}*/
+  /*.${theme[0]} #Chapter { border-bottom: 1px solid ${theme[3]};}*/
   .${theme[0]} .PageFunctions > span, .${theme[0]} .Thumbnail span {background: none repeat scroll 0 0 ${theme[4]};}
   .${theme[0]} .panel {background: none repeat scroll 0 0 ${theme[4]}; border: thin solid ${theme[3]};}
   .${theme[0]} .PageContent, .${theme[0]} .Thumbnail img { outline: 2px solid ${theme[3]}; background: none repeat scroll 0 0 ${theme[4]};}
   .${theme[0]} .ChapterControl a { border: 1px solid ${theme[3]}; background-color: ${theme[5]};}
+  .${theme[0]} #ImageOptions .hamburger-lines .line { background-color: ${theme[3]};}
   `;
     }
     // Add custom Themes to the page
     function addTheme(theme) {
-        return `<style type='text/css' name='${theme[0]}'>${generateThemeCSS(theme)}</style>`;
+        return `<style type='text/css' id='${theme[0]}'>${generateThemeCSS(theme)}</style>`;
     }
     function swapTheme(theme) {
-        document.querySelectorAll('style[title="Full_Custom"]').forEach((elem) => elem.remove());
-        const style = document.createElement('style');
-        style.appendChild(document.createTextNode(generateThemeCSS(theme)));
-        document.head.appendChild(style);
+        replaceStyleSheet(theme[0], generateThemeCSS(theme));
     }
     function addCustomTheme(color) {
         const bg = scheme.from_hex(color.replace('#', '')).colors();
@@ -1606,7 +1658,7 @@ img {
     const themesCSS = themes.map(addTheme).join('');
 
     // Inject CSS for this script
-    const readerCSS = `<style type='text/css'>
+    const readerCSS = `<style id='Reader' type='text/css'>
 ${cssStyles}
 #MangaOnlineViewer .PageFunctions .Bookmark {background: url('${icon.bookmark}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .Reload {background: url('${icon.reload}') no-repeat scroll center center transparent;}
@@ -1626,6 +1678,9 @@ ${cssStyles}
   ${externalCSS.join('\n')}
   ${readerCSS}
   ${themesCSS}
+  <style id='MinZoom' type='text/css'>
+    #MangaOnlineViewer .PageContent .PageImg {min-width: ${settings$1.minZoom}vw;}
+  </style>
 </head>
 `;
     }
@@ -1653,7 +1708,12 @@ ${cssStyles}
 
     const imageOptions = `<div id='ImageOptions'>
   <div id='menu'>
-    <span class='menuOuterArrow'><span class='menuInnerArrow'></span></span>
+    <div class="hamburger-lines">
+      <span class="line line1"></span>
+      <span class="line line2"></span>
+      <span class="line line3"></span>
+    </div>
+<!--    <span class='menuOuterArrow'><span class='menuInnerArrow'></span></span>-->
   </div>
   <div class='panel'>
     <img id='enlarge' alt='Enlarge' title='Enlarge' src='${icon.enlarge}' class='ControlButton' />
@@ -1671,30 +1731,31 @@ ${cssStyles}
   <div id='Zoom' class='ControlLabel'>Zoom: <b id='ZoomPercent'>${settings$1.zoom}</b> %</div>
 </div>`;
 
-    const controls$1 = `<div id='ViewerControls' class='panel'>
+    const controls$1 = `
+<div id='ViewerControls' class='panel'>
   <div class='ControlLabel ThemeSelector'>Theme:
     <select id='ThemeSelector'>
       ${themesSelector}
     </select>
       <div class='CustomTheme ControlLabelItem ${settings$1.theme === 'Custom_Dark' || settings$1.theme === 'Custom_Light' ? 'show' : ''}'>
-        -Base:<input id='CustomThemeHue' type='color' value='${settings$1.customTheme}' class='colorpicker CustomTheme'>
+        -Base:<input id='CustomThemeHue' type='color' value='${settings$1.customTheme}' class='colorpicker CustomTheme'/>
       </div>
       <div class='FullCustom ControlLabelItem ${settings$1.theme === 'Full_Custom' ? 'show' : ''}' >
-        -Body:<input id='CustomThemeHueBody' type='color' value='${settings$1.customThemeBody}' class='colorpicker FullCustom'>
+        -Body:<input id='CustomThemeHueBody' type='color' value='${settings$1.customThemeBody}' class='colorpicker FullCustom'/>
       </div>
       <div class='FullCustom ControlLabelItem ${settings$1.theme === 'Full_Custom' ? 'show' : ''}' >
-        -Text:<input id='CustomThemeHueText' type='color' value=${settings$1.customThemeText}' class='colorpicker FullCustom'>
+        -Text:<input id='CustomThemeHueText' type='color' value=${settings$1.customThemeText}' class='colorpicker FullCustom'/>
       </div>
       <div class='FullCustom ControlLabelItem ${settings$1.theme === 'Full_Custom' ? 'show' : ''}' >
-        -Lines:<input id='CustomThemeHueLines' type='color' value='${settings$1.customThemeLines}' class='colorpicker FullCustom'>
+        -Lines:<input id='CustomThemeHueLines' type='color' value='${settings$1.customThemeLines}' class='colorpicker FullCustom'/>
       </div>
       <div class='FullCustom ControlLabelItem ${settings$1.theme === 'Full_Custom' ? 'show' : ''}'>
         -Painels:
-        <input id='CustomThemeHuePanel' type='color' value='${settings$1.customThemePanel}' class='colorpicker FullCustom'>
+        <input id='CustomThemeHuePanel' type='color' value='${settings$1.customThemePanel}' class='colorpicker FullCustom'/>
       </div>
       <div class='FullCustom ControlLabelItem ${settings$1.theme === 'Full_Custom' ? 'show' : ''}'>
         -Buttons:
-        <input id='CustomThemeHueButton' type='color' value='${settings$1.customThemeButton}' class='colorpicker FullCustom'>
+        <input id='CustomThemeHueButton' type='color' value='${settings$1.customThemeButton}' class='colorpicker FullCustom'/>
       </div>
   </div>
   <div class='ControlLabel loadMode'>Default Load Mode:
@@ -1728,8 +1789,19 @@ ${cssStyles}
       <option value='-1000' ${settings$1.zoom === -1000 ? 'selected' : ''}>Fit Height</option>
     </select>
   </div>
-  <div class='ControlLabel zoomStep'>Zoom Change Step (between 5 and 50):<output id='zoomStepVal'>${settings$1.zoomStep}</output>
-    <input type='range' value='${settings$1.zoomStep}' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput='zoomStepVal.value = this.value'>
+  <div class='ControlLabel minZoom'>
+    <span>
+      Minimun Zoom relative to the width of screen (between 30 and 100):
+      <output id='minZoomVal'>${settings$1.minZoom}</output>
+    </span>
+    <input type='range' value='${settings$1.minZoom}' name='minZoom' id='minZoom' min='30' max='100' step='10' oninput='minZoomVal.value = this.value'/>
+  </div>
+  <div class='ControlLabel zoomStep'>
+    <span>
+      Zoom Change Step (between 5 and 50):
+      <output id='zoomStepVal'>${settings$1.zoomStep}</output>
+    </span>
+    <input type='range' value='${settings$1.zoomStep}' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput='zoomStepVal.value = this.value'/>
     
   </div>
   <div class='ControlLabel viewMode'>Default View Mode:
@@ -1741,29 +1813,33 @@ ${cssStyles}
     </select>
   </div>
   <div class='ControlLabel fitIfOversize'>Fit Width if Oversize:
-    <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${settings$1.fitWidthIfOversize ? 'checked' : ''}>
+    <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${settings$1.fitWidthIfOversize ? 'checked' : ''}/>
   </div>
   <div class='ControlLabel showThumbnails'>Show Thumbnails:
-    <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${settings$1.showThumbnails ? 'checked' : ''}>
-   </div>
-   <div class='ControlLabel lazyLoadImages'>Lazy Load Images:
-    <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${settings$1.lazyLoadImages ? 'checked' : ''}>
-   </div>
-   <div class='ControlLabel lazyStart'>Lazy Start From Page (between 5 and 100):
-   <output id='lazyStartVal'>${settings$1.lazyStart}</output>
-    <input type='range' value='${settings$1.lazyStart}' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput='lazyStartVal.value = this.value'>
+    <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${settings$1.showThumbnails ? 'checked' : ''}/>
+  </div>
+  <div class='ControlLabel lazyLoadImages'>Lazy Load Images:
+    <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${settings$1.lazyLoadImages ? 'checked' : ''}/>
+    </div>
+    <div class='ControlLabel lazyStart'>
+    <span>
+      Lazy Start From Page (between 5 and 100):
+      <output id='lazyStartVal'>${settings$1.lazyStart}</output>
+    </span>
+    <input type='range' value='${settings$1.lazyStart}' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput='lazyStartVal.value = this.value'/>
     
   </div>
   <div class='ControlLabel downloadZip'>Download Images as Zip Automatically:
-    <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${settings$1.downloadZip ? 'checked' : ''}>
+    <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${settings$1.downloadZip ? 'checked' : ''}/>
   </div>
   <div class='ControlLabel hidePageControls'>Always Hide Page Controls:
-    <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${settings$1.hidePageControls ? 'checked' : ''}>
+    <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${settings$1.hidePageControls ? 'checked' : ''}/>
   </div>
   <div class='ControlLabel mouseOverMenu'>Toggle Sticky Header / MouseOverMenu:
-    <input type='checkbox' value='false' name='mouseOverMenu' id='mouseOverMenu' ${settings$1.mouseOverMenu ? 'checked' : ''}>
+    <input type='checkbox' value='false' name='mouseOverMenu' id='mouseOverMenu' ${settings$1.mouseOverMenu ? 'checked' : ''}/>
   </div>
-</div>`;
+</div>
+`;
 
     const keybindings = `<div id='ViewerShortcuts' class='panel'>
     <kbd class='dark'>Numpad 5</kbd>/<kbd class='dark'>/</kbd>: Open Settings<br/>
@@ -2468,6 +2544,13 @@ ${cssStyles}
             setValueGM('ZoomStep', parseInt(step, 10));
             logScript(`ZoomStep: ${getValueGM('ZoomStep')}`);
         });
+        // Min Zoom Slider
+        document.querySelector('#minZoom')?.addEventListener('change', (event) => {
+            const min = event.currentTarget.value;
+            replaceStyleSheet('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
+            setValueGM('MinZoom', parseInt(min, 10));
+            logScript(`MinZoom: ${getValueGM('MinZoom')}`);
+        });
         // WebComic View Mode Button
         document.querySelector('#webComic')?.addEventListener('click', () => {
             document.querySelector('#Chapter')?.classList.add('WebComic');
@@ -2669,10 +2752,11 @@ ${cssStyles}
             setValueGM('CustomThemePanel', document.querySelector('#CustomThemeHuePanel').value);
             setValueGM('CustomThemeButton', document.querySelector('#CustomThemeHueButton').value);
         }));
-        // Goto Navigation
+        // Goto Navigation Selector
         document.querySelector('#gotoPage')?.addEventListener('change', (event) => {
+            console.info(event);
             applyZoom();
-            scrollToElement(document.querySelector(`#Page${event.currentTarget.textContent}`));
+            scrollToElement(document.querySelector(`#Page${event.target.selectedIndex}`));
         });
         // Thumbnail Navigation
         document.querySelectorAll('.Thumbnail')?.forEach((elem) => elem.addEventListener('click', (event) => {

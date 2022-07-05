@@ -1,7 +1,8 @@
 import { themesSelector } from '../themes';
 import { settings } from '../settings';
 
-const controls = `<div id='ViewerControls' class='panel'>
+const controls = `
+<div id='ViewerControls' class='panel'>
   <div class='ControlLabel ThemeSelector'>Theme:
     <select id='ThemeSelector'>
       ${themesSelector}
@@ -11,34 +12,34 @@ const controls = `<div id='ViewerControls' class='panel'>
       }'>
         -Base:<input id='CustomThemeHue' type='color' value='${
           settings.customTheme
-        }' class='colorpicker CustomTheme'>
+        }' class='colorpicker CustomTheme'/>
       </div>
       <div class='FullCustom ControlLabelItem ${settings.theme === 'Full_Custom' ? 'show' : ''}' >
         -Body:<input id='CustomThemeHueBody' type='color' value='${
           settings.customThemeBody
-        }' class='colorpicker FullCustom'>
+        }' class='colorpicker FullCustom'/>
       </div>
       <div class='FullCustom ControlLabelItem ${settings.theme === 'Full_Custom' ? 'show' : ''}' >
         -Text:<input id='CustomThemeHueText' type='color' value=${
           settings.customThemeText
-        }' class='colorpicker FullCustom'>
+        }' class='colorpicker FullCustom'/>
       </div>
       <div class='FullCustom ControlLabelItem ${settings.theme === 'Full_Custom' ? 'show' : ''}' >
         -Lines:<input id='CustomThemeHueLines' type='color' value='${
           settings.customThemeLines
-        }' class='colorpicker FullCustom'>
+        }' class='colorpicker FullCustom'/>
       </div>
       <div class='FullCustom ControlLabelItem ${settings.theme === 'Full_Custom' ? 'show' : ''}'>
         -Painels:
         <input id='CustomThemeHuePanel' type='color' value='${
           settings.customThemePanel
-        }' class='colorpicker FullCustom'>
+        }' class='colorpicker FullCustom'/>
       </div>
       <div class='FullCustom ControlLabelItem ${settings.theme === 'Full_Custom' ? 'show' : ''}'>
         -Buttons:
         <input id='CustomThemeHueButton' type='color' value='${
           settings.customThemeButton
-        }' class='colorpicker FullCustom'>
+        }' class='colorpicker FullCustom'/>
       </div>
   </div>
   <div class='ControlLabel loadMode'>Default Load Mode:
@@ -84,12 +85,23 @@ const controls = `<div id='ViewerControls' class='panel'>
       <option value='-1000' ${settings.zoom === -1000 ? 'selected' : ''}>Fit Height</option>
     </select>
   </div>
-  <div class='ControlLabel zoomStep'>Zoom Change Step (between 5 and 50):<output id='zoomStepVal'>${
-    settings.zoomStep
-  }</output>
+  <div class='ControlLabel minZoom'>
+    <span>
+      Minimun Zoom relative to the width of screen (between 30 and 100):
+      <output id='minZoomVal'>${settings.minZoom}</output>
+    </span>
+    <input type='range' value='${
+      settings.minZoom
+    }' name='minZoom' id='minZoom' min='30' max='100' step='10' oninput='minZoomVal.value = this.value'/>
+  </div>
+  <div class='ControlLabel zoomStep'>
+    <span>
+      Zoom Change Step (between 5 and 50):
+      <output id='zoomStepVal'>${settings.zoomStep}</output>
+    </span>
     <input type='range' value='${
       settings.zoomStep
-    }' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput='zoomStepVal.value = this.value'>
+    }' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput='zoomStepVal.value = this.value'/>
     
   </div>
   <div class='ControlLabel viewMode'>Default View Mode:
@@ -109,39 +121,43 @@ const controls = `<div id='ViewerControls' class='panel'>
   <div class='ControlLabel fitIfOversize'>Fit Width if Oversize:
     <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${
       settings.fitWidthIfOversize ? 'checked' : ''
-    }>
+    }/>
   </div>
   <div class='ControlLabel showThumbnails'>Show Thumbnails:
     <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${
       settings.showThumbnails ? 'checked' : ''
-    }>
-   </div>
-   <div class='ControlLabel lazyLoadImages'>Lazy Load Images:
+    }/>
+  </div>
+  <div class='ControlLabel lazyLoadImages'>Lazy Load Images:
     <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${
       settings.lazyLoadImages ? 'checked' : ''
-    }>
-   </div>
-   <div class='ControlLabel lazyStart'>Lazy Start From Page (between 5 and 100):
-   <output id='lazyStartVal'>${settings.lazyStart}</output>
+    }/>
+    </div>
+    <div class='ControlLabel lazyStart'>
+    <span>
+      Lazy Start From Page (between 5 and 100):
+      <output id='lazyStartVal'>${settings.lazyStart}</output>
+    </span>
     <input type='range' value='${
       settings.lazyStart
-    }' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput='lazyStartVal.value = this.value'>
+    }' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput='lazyStartVal.value = this.value'/>
     
   </div>
   <div class='ControlLabel downloadZip'>Download Images as Zip Automatically:
     <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${
       settings.downloadZip ? 'checked' : ''
-    }>
+    }/>
   </div>
   <div class='ControlLabel hidePageControls'>Always Hide Page Controls:
     <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${
       settings.hidePageControls ? 'checked' : ''
-    }>
+    }/>
   </div>
   <div class='ControlLabel mouseOverMenu'>Toggle Sticky Header / MouseOverMenu:
     <input type='checkbox' value='false' name='mouseOverMenu' id='mouseOverMenu' ${
       settings.mouseOverMenu ? 'checked' : ''
-    }>
+    }/>
   </div>
-</div>`;
+</div>
+`;
 export default controls;

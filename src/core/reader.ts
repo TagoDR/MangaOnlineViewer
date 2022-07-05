@@ -1,11 +1,11 @@
 import cssStyles from './components/styles';
 import { externalCSS, externalScripts } from './externals';
-import { icon } from './settings';
+import { icon, settings } from './settings';
 import { themesCSS } from './themes';
 import { IManga } from '../types';
 
 // Inject CSS for this script
-const readerCSS = `<style type='text/css'>
+const readerCSS = `<style id='Reader' type='text/css'>
 ${cssStyles}
 #MangaOnlineViewer .PageFunctions .Bookmark {background: url('${icon.bookmark}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .Reload {background: url('${icon.reload}') no-repeat scroll center center transparent;}
@@ -26,6 +26,9 @@ function head(manga: IManga) {
   ${externalCSS.join('\n')}
   ${readerCSS}
   ${themesCSS}
+  <style id='MinZoom' type='text/css'>
+    #MangaOnlineViewer .PageContent .PageImg {min-width: ${settings.minZoom}vw;}
+  </style>
 </head>
 `;
 }

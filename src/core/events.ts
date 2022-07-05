@@ -5,6 +5,7 @@ import { applyZoom, reloadImage } from './page';
 import { settings } from './settings';
 import { addCustomTheme, addFullCustomTheme } from './themes';
 import { IBookmark } from '../types';
+import { replaceStyleSheet } from '../utils/css.js';
 
 // Goto Page and Thumbnails
 function scrollToElement(ele: HTMLElement | undefined) {
@@ -206,8 +207,15 @@ function controls() {
   // Zoom Step Slider
   document.querySelector('#zoomStep')?.addEventListener('change', (event) => {
     const step = (event.currentTarget as HTMLInputElement).value;
-    setValueGM('ZoomStep', parseInt(step as string, 10));
+    setValueGM('ZoomStep', parseInt(step, 10));
     logScript(`ZoomStep: ${getValueGM('ZoomStep')}`);
+  });
+  // Min Zoom Slider
+  document.querySelector('#minZoom')?.addEventListener('change', (event) => {
+    const min = (event.currentTarget as HTMLInputElement).value;
+    replaceStyleSheet('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
+    setValueGM('MinZoom', parseInt(min, 10));
+    logScript(`MinZoom: ${getValueGM('MinZoom')}`);
   });
   // WebComic View Mode Button
   document.querySelector('#webComic')?.addEventListener('click', () => {
