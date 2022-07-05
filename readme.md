@@ -43,7 +43,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [MangaFox](https://fanfox.net/) / [MangaHere](https://www.mangahere.cc/) _[English]_
 - [MangaFreak](https://mangafreak.net/) _[English]_
 - [MangaHub](https://mangahub.io/) _[English]_
-- [MangaKakalot](https://mangakakalot.com/page) / [MangaNelo](http://www.manganelo.com/) / [MangaNato](http://www.manganato.com/) _[English]_
+- [MangaKakalot](https://mangakakalot.com/page) / [MangaNelo](https://www.manganelo.com/) / [MangaNato](https://www.manganato.com/) _[English]_
 - [MangaPark](https://mangapark.net/) _[English]_
 - [Mangareader](https://mangareader.to) _[English]_ **Obs: Some galleries will not be usable**
 - [MangaSee](https://mangasee123.com/) / [Manga4life](https://manga4life.com/) _[English]_
