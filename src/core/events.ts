@@ -432,12 +432,13 @@ function controls() {
       );
     }),
   );
-  // Goto Navigation
+  // Goto Navigation Selector
   document.querySelector('#gotoPage')?.addEventListener('change', (event) => {
+    console.info(event);
     applyZoom();
     scrollToElement(
       document.querySelector(
-        `#Page${(event.currentTarget as HTMLElement).textContent}`,
+        `#Page${(event.target as HTMLSelectElement).selectedIndex}`,
       ) as HTMLElement,
     );
   });
