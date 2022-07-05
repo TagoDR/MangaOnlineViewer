@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import { getValueGM, logScript, setValueGM } from '../utils/tampermonkey';
+import { getListGM, getValueGM, logScript, removeValueGM, setValueGM } from '../utils/tampermonkey';
 import generateZip from './download';
 import { applyZoom, reloadImage } from './page';
 import { settings } from './settings';
@@ -15,14 +15,6 @@ function scrollToElement(ele: HTMLElement | undefined) {
 // Clean key press configurations and set some when specified
 function setKeyDownEvents() {
   try {
-    // $(document).off('keyup');
-    // $(document).off('keydown');
-    // $(document).off('keypress');
-    // $(document).off('onload');
-    // $(window).off('keyup');
-    // $(window).off('keydown');
-    // $(window).off('keypress');
-    // $(window).off('onload');
     document.onkeydown = null;
     document.onkeypress = null;
     window.onkeydown = null;
@@ -173,80 +165,85 @@ function updateZoomPercent(percent: number | string = settings.zoom) {
 
 // Controls for the extra features added to the sites
 function controls() {
+  // Settings Control
+  function buttonSettings() {
+    document.querySelector('#ViewerControls')?.classList.toggle('visible');
+    document.querySelector('#ViewerShortcuts')?.classList.toggle('visible');
+    document.querySelector('#ImageOptions')?.classList.toggle('settingsOpen');
+    document.querySelector('#Navigation')?.classList.toggle('visible');
+    document.querySelector('#Header')?.classList.toggle('visible');
+  }
+  document.querySelector('#settings')?.addEventListener('click', buttonSettings);
   // Size Controls
   // Global Zoom In Button
-  document.querySelector('#enlarge')?.addEventListener('click', () => {
+  function buttonGlobalZoomIn() {
     settings.zoom += settings.zoomStep;
     updateZoomPercent();
     applyZoom();
-  });
+  }
+  document.querySelector('#enlarge')?.addEventListener('click', buttonGlobalZoomIn);
   // Global Zoom Out Button
-  document.querySelector('#reduce')?.addEventListener('click', () => {
+  function buttonGlobalZoomOut() {
     settings.zoom -= settings.zoomStep;
     updateZoomPercent();
     applyZoom();
-  });
-  // Global Zoomm Restore Button
-  document.querySelector('#restore')?.addEventListener('click', () => {
+  }
+  document.querySelector('#reduce')?.addEventListener('click', buttonGlobalZoomOut);
+  // Global Zoom Restore Button
+  function buttonGlobalRestoreZoom() {
     settings.zoom = 100;
     updateZoomPercent();
     applyZoom();
-  });
+  }
+  document.querySelector('#restore')?.addEventListener('click', buttonGlobalRestoreZoom);
   // Global Fit Width Button
-  document.querySelector('#fitWidth')?.addEventListener('click', () => {
+  function buttonGlobalFitWidth() {
     settings.zoom = 1000;
     updateZoomPercent();
     applyZoom();
-  });
+  }
+  document.querySelector('#fitWidth')?.addEventListener('click', buttonGlobalFitWidth);
   // Global Fit height Button
-  document.querySelector('#fitHeight')?.addEventListener('click', () => {
+  function buttonGlobalFitHeight() {
     settings.zoom = -1000;
     updateZoomPercent();
     applyZoom();
-  });
-  // Zoom Step Slider
-  document.querySelector('#zoomStep')?.addEventListener('change', (event) => {
-    const step = (event.currentTarget as HTMLInputElement).value;
-    setValueGM('ZoomStep', parseInt(step, 10));
-    logScript(`ZoomStep: ${getValueGM('ZoomStep')}`);
-  });
-  // Min Zoom Slider
-  document.querySelector('#minZoom')?.addEventListener('change', (event) => {
-    const min = (event.currentTarget as HTMLInputElement).value;
-    replaceStyleSheet('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
-    setValueGM('MinZoom', parseInt(min, 10));
-    logScript(`MinZoom: ${getValueGM('MinZoom')}`);
-  });
+  }
+  document.querySelector('#fitHeight')?.addEventListener('click', buttonGlobalFitHeight);
   // WebComic View Mode Button
-  document.querySelector('#webComic')?.addEventListener('click', () => {
+  function buttonWebComicMode() {
     document.querySelector('#Chapter')?.classList.add('WebComic');
     document.querySelector('#Chapter')?.classList.remove('FluidLTR');
     document.querySelector('#Chapter')?.classList.remove('FluidRTL');
     applyZoom();
-  });
+  }
+  document.querySelector('#webComic')?.addEventListener('click', buttonWebComicMode);
   // Fluid LTR View Mode Button
-  document.querySelector('#ltrMode')?.addEventListener('click', () => {
+  function buttonLtrMode() {
     document.querySelector('#Chapter')?.classList.remove('WebComic');
     document.querySelector('#Chapter')?.classList.add('FluidLTR');
     document.querySelector('#Chapter')?.classList.remove('FluidRTL');
     applyZoom();
-  });
+  }
+  document.querySelector('#ltrMode')?.addEventListener('click', buttonLtrMode);
   // Fluid RTL View Mode Button
-  document.querySelector('#rtlMode')?.addEventListener('click', () => {
+  function buttonRtlMode() {
     document.querySelector('#Chapter')?.classList.remove('WebComic');
     document.querySelector('#Chapter')?.classList.remove('FluidLTR');
     document.querySelector('#Chapter')?.classList.add('FluidRTL');
     applyZoom();
-  });
+  }
+  document.querySelector('#rtlMode')?.addEventListener('click', buttonRtlMode);
   // Vertical View Mode Button
-  document.querySelector('#verticalMode')?.addEventListener('click', () => {
+  function buttonVerticalMode() {
     document.querySelector('#Chapter')?.classList.remove('WebComic');
     document.querySelector('#Chapter')?.classList.remove('FluidLTR');
     document.querySelector('#Chapter')?.classList.remove('FluidRTL');
     applyZoom();
-  });
-  // Image Fit width if Oversized Toggle
-  document.querySelector('#fitIfOversize')?.addEventListener('change', (event) => {
+  }
+  document.querySelector('#verticalMode')?.addEventListener('click', buttonVerticalMode);
+  // Image Fit width if Oversize Toggle
+  function checkFitWidthOversize(event: Event) {
     document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize');
     if ((event.currentTarget as HTMLInputElement).checked) {
       setValueGM('FitWidthIfOversize', true);
@@ -254,9 +251,10 @@ function controls() {
       setValueGM('FitWidthIfOversize', false);
     }
     logScript(`fitIfOversize: ${getValueGM('FitWidthIfOversize')}`);
-  });
+  }
+  document.querySelector('#fitIfOversize')?.addEventListener('change', checkFitWidthOversize);
   // Default View mode Selector
-  document.querySelector('#viewMode')?.addEventListener('change', (event) => {
+  function changeViewMode(event: Event) {
     const mode = (event.currentTarget as HTMLInputElement).value;
     document.querySelector('#Chapter')?.classList.remove('WebComic');
     document.querySelector('#Chapter')?.classList.remove('FluidLTR');
@@ -265,15 +263,17 @@ function controls() {
     setValueGM('ViewMode', mode);
     logScript(`ViewMode: ${getValueGM('ViewMode')}`);
     applyZoom();
-  });
+  }
+  document.querySelector('#viewMode')?.addEventListener('change', changeViewMode);
   // Start/Load mode Selector
-  document.querySelector('#loadMode')?.addEventListener('change', (event) => {
+  function changeLoadMode(event: Event) {
     const mode = (event.currentTarget as HTMLInputElement).value;
     setValueGM('LoadMode', mode);
     logScript(`MangaLoadMode: ${getValueGM('LoadMode')}`);
-  });
+  }
+  document.querySelector('#loadMode')?.addEventListener('change', changeLoadMode);
   // Show Thumbnail Toggle
-  document.querySelector('#showThumbnails')?.addEventListener('change', (event) => {
+  function checkShowThumbnails(event: Event) {
     document.querySelector('#Navigation')?.classList.toggle('disabled');
     if ((event.currentTarget as HTMLInputElement).checked) {
       setValueGM('ShowThumbnails', true);
@@ -282,9 +282,10 @@ function controls() {
     }
     logScript(`MangaShowThumbnails: ${getValueGM('ShowThumbnails')}`);
     applyZoom();
-  });
+  }
+  document.querySelector('#showThumbnails')?.addEventListener('change', checkShowThumbnails);
   // Download auto start toggle
-  document.querySelector('#downloadZip')?.addEventListener('change', (event) => {
+  function changeAutoDownload(event: Event) {
     if ((event.currentTarget as HTMLInputElement).checked) {
       setValueGM('DownloadZip', true);
       Swal.fire({
@@ -297,7 +298,8 @@ function controls() {
       setValueGM('DownloadZip', false);
     }
     logScript(`MangaDownloadZip: ${getValueGM('DownloadZip')}`);
-  });
+  }
+  document.querySelector('#downloadZip')?.addEventListener('change', changeAutoDownload);
   // Download starter
   document.querySelector('#blob')?.addEventListener('click', generateZip, { once: true });
   document.querySelector('.download')?.addEventListener('click', () => {
@@ -305,7 +307,7 @@ function controls() {
     document.querySelector('#blob')?.dispatchEvent(new Event('click'));
   });
   // Lazy load Toggle
-  document.querySelector('#lazyLoadImages')?.addEventListener('change', (event) => {
+  function checkLazyLoad(event: Event) {
     if ((event.currentTarget as HTMLInputElement).checked) {
       setValueGM('LazyLoadImages', true);
       Swal.fire({
@@ -318,32 +320,52 @@ function controls() {
       setValueGM('LazyLoadImages', false);
     }
     logScript(`MangaLazyLoadImages: ${getValueGM('LazyLoadImages')}`);
-  });
+  }
+  document.querySelector('#lazyLoadImages')?.addEventListener('change', checkLazyLoad);
   // Lazy load starting point Slider
-  document.querySelector('#lazyStart')?.addEventListener('change', (event) => {
+  function changeLazyStart(event: Event) {
     const start = (event.currentTarget as HTMLInputElement).value;
     setValueGM('LazyStart', start);
     logScript(`lazyStart: ${getValueGM('LazyStart')}`);
-  });
+  }
+  document.querySelector('#lazyStart')?.addEventListener('change', changeLazyStart);
   // Images load speed Selector
-  document.querySelector('#PagesPerSecond')?.addEventListener('change', (event) => {
+  function changePagesPerSecond(event: Event) {
     setValueGM('Timer', parseInt((event.currentTarget as HTMLInputElement).value, 10));
     logScript(`MangaTimer: ${getValueGM('Timer')}`);
-  });
+  }
+  document.querySelector('#PagesPerSecond')?.addEventListener('change', changePagesPerSecond);
   // Global Default Zoom Selector
-  document.querySelector('#DefaultZoom')?.addEventListener('change', (event) => {
+  function changeDefaultZoom(event: Event) {
     settings.zoom = parseInt((event.currentTarget as HTMLInputElement).value, 10);
     updateZoomPercent();
     setValueGM('Zoom', parseInt(settings.zoom.toString(), 10));
     logScript(`MangaZoom: ${getValueGM('Zoom')}`);
     applyZoom();
-  });
+  }
+  document.querySelector('#DefaultZoom')?.addEventListener('change', changeDefaultZoom);
+  // Zoom Step Slider
+  function changeZoomStep(event: Event) {
+    const step = (event.currentTarget as HTMLInputElement).value;
+    setValueGM('ZoomStep', parseInt(step, 10));
+    logScript(`ZoomStep: ${getValueGM('ZoomStep')}`);
+  }
+  document.querySelector('#zoomStep')?.addEventListener('change', changeZoomStep);
+  // Min Zoom Slider
+  function changeMinZoom(event: Event) {
+    const min = (event.currentTarget as HTMLInputElement).value;
+    replaceStyleSheet('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
+    setValueGM('MinZoom', parseInt(min, 10));
+    logScript(`MinZoom: ${getValueGM('MinZoom')}`);
+  }
+  document.querySelector('#minZoom')?.addEventListener('change', changeMinZoom);
   // Show/hide Image Controls Button
-  document.querySelector('#pageControls')?.addEventListener('click', () => {
+  function globalHideImageControls() {
     document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
-  });
+  }
+  document.querySelector('#pageControls')?.addEventListener('click', globalHideImageControls);
   // Show/hide Image Controls Toggle
-  document.querySelector('#hidePageControls')?.addEventListener('change', (event) => {
+  function checkHideImageControls(event: Event) {
     document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
     if ((event.currentTarget as HTMLInputElement).checked) {
       setValueGM('HidePageControls', true);
@@ -351,9 +373,10 @@ function controls() {
       setValueGM('HidePageControls', false);
     }
     logScript(`MangaHidePageControls: ${getValueGM('HidePageControls')}`);
-  });
+  }
+  document.querySelector('#hidePageControls')?.addEventListener('change', checkHideImageControls);
   // Sticky Header or MouseOverMenu Toggle
-  document.querySelector('#mouseOverMenu')?.addEventListener('change', (event) => {
+  function checkMouseOverMenu(event: Event) {
     document.querySelector('#Header')?.classList.toggle('mouseOverMenu');
     if ((event.currentTarget as HTMLInputElement).checked) {
       setValueGM('MouseOverMenu', true);
@@ -361,9 +384,10 @@ function controls() {
       setValueGM('MouseOverMenu', false);
     }
     logScript(`MangaHidePageControls: ${getValueGM('MouseOverMenu')}`);
-  });
+  }
+  document.querySelector('#mouseOverMenu')?.addEventListener('change', checkMouseOverMenu);
   // Theme Control Selector
-  document.querySelector('#ThemeSelector')?.addEventListener('change', (event) => {
+  function changeTheme(event: Event) {
     const target = (event.currentTarget as HTMLInputElement).value;
     [...document.querySelectorAll('#MangaOnlineViewer , body')].forEach((elem) => {
       elem.className = '';
@@ -391,18 +415,20 @@ function controls() {
         elem.classList.remove('show');
       });
     }
-  });
+  }
+  document.querySelector('#ThemeSelector')?.addEventListener('change', changeTheme);
   // Light/Dark Custom theme Color Input
-  document.querySelector('#CustomThemeHue')?.addEventListener('change', (event) => {
+  function changeCustomTheme(event: Event) {
     const target = (event.currentTarget as HTMLInputElement).value;
     logScript(`CustomTheme: ${target}`);
     addCustomTheme(target);
     setValueGM('CustomTheme', target);
     logScript(`MangaCustomTheme: ${getValueGM('CustomTheme')}`);
-  });
+  }
+  document.querySelector('#CustomThemeHue')?.addEventListener('change', changeCustomTheme);
   // Full Custom theme Color Input
-  document.querySelectorAll('.colorpicker.FullCustom')?.forEach((input) =>
-    input.addEventListener('change', () => {
+  function changeFullCustomTheme(input: Element) {
+    return input.addEventListener('change', () => {
       logScript(
         'FullCustomTheme: ',
         document.querySelector<HTMLInputElement>('#CustomThemeHueBody')?.value,
@@ -438,21 +464,22 @@ function controls() {
         'CustomThemeButton',
         document.querySelector<HTMLInputElement>('#CustomThemeHueButton')!.value,
       );
-    }),
-  );
+    });
+  }
+  document.querySelectorAll('.colorpicker.FullCustom')?.forEach(changeFullCustomTheme);
   // Goto Navigation Selector
-  document.querySelector('#gotoPage')?.addEventListener('change', (event) => {
-    console.info(event);
+  function selectGoToPage(event: Event) {
     applyZoom();
     scrollToElement(
       document.querySelector(
         `#Page${(event.target as HTMLSelectElement).selectedIndex}`,
       ) as HTMLElement,
     );
-  });
+  }
+  document.querySelector('#gotoPage')?.addEventListener('change', selectGoToPage);
   // Thumbnail Navigation
-  document.querySelectorAll('.Thumbnail')?.forEach((elem) =>
-    elem.addEventListener('click', (event) => {
+  function clickThumbnail(elem: Element) {
+    return elem.addEventListener('click', (event) => {
       applyZoom();
       scrollToElement(
         document.querySelector(
@@ -461,20 +488,14 @@ function controls() {
           }`,
         ) as HTMLElement,
       );
-    }),
-  );
-  // Settings Control
-  document.querySelector('#settings')?.addEventListener('click', () => {
-    document.querySelector('#ViewerControls')?.classList.toggle('visible');
-    document.querySelector('#ViewerShortcuts')?.classList.toggle('visible');
-    document.querySelector('#ImageOptions')?.classList.toggle('settingsOpen');
-    document.querySelector('#Navigation')?.classList.toggle('visible');
-    document.querySelector('#Header')?.classList.toggle('visible');
-  });
+    });
+  }
+  document.querySelectorAll('.Thumbnail')?.forEach(clickThumbnail);
+
   // Individual Page functions
   // Bookmark Page to resume reading
-  document.querySelectorAll('.Bookmark')?.forEach((elem) =>
-    elem.addEventListener('click', (event) => {
+  function buttonBookmark(elem: Element) {
+    return elem.addEventListener('click', (event) => {
       const num = parseInt(
         (event.currentTarget as HTMLElement).parentElement?.querySelector('.PageIndex')
           ?.textContent || '0',
@@ -503,70 +524,89 @@ function controls() {
       }
       setValueGM('Bookmarks', JSON.stringify(settings.bookmarks));
       logScript(`MangaBookmarks: ${getValueGM('Bookmarks')}`);
-    }),
-  );
+    });
+  }
+  document.querySelectorAll('.Bookmark')?.forEach(buttonBookmark);
   // Reload Page
-  document.querySelectorAll('.Reload')?.forEach((elem) =>
-    elem.addEventListener('click', (event) => {
+  function buttonReloadPage(elem: Element) {
+    return elem.addEventListener('click', (event) => {
       const img: HTMLImageElement = (
         event.currentTarget as HTMLElement
       ).parentElement?.parentElement?.querySelector('.PageImg')!;
       reloadImage(img);
-    }),
-  );
+    });
+  }
+  document.querySelectorAll('.Reload')?.forEach(buttonReloadPage);
   // ZoomIn
-  document.querySelectorAll('.ZoomIn')?.forEach((elem) =>
-    elem.addEventListener('click', (event) => {
+  function buttonZoomIn(elem: Element) {
+    return elem.addEventListener('click', (event) => {
       const img: HTMLImageElement = (
         event.currentTarget as HTMLElement
       ).parentElement?.parentElement?.querySelector('.PageImg')!;
       const ratio = (img.width / img.naturalWidth) * (100 + settings.zoomStep);
       applyZoom(`#${img.getAttribute('id')}`, ratio);
-    }),
-  );
+    });
+  }
+  document.querySelectorAll('.ZoomIn')?.forEach(buttonZoomIn);
   // ZoomOut
-  document.querySelectorAll('.ZoomOut')?.forEach((elem) =>
-    elem.addEventListener('click', (event) => {
+  function buttonZoomOut(elem: Element) {
+    return elem.addEventListener('click', (event) => {
       const img: HTMLImageElement = (
         event.currentTarget as HTMLElement
       ).parentElement?.parentElement?.querySelector('.PageImg')!;
       const ratio = (img.width / img.naturalWidth) * (100 - settings.zoomStep);
       applyZoom(`#${img.getAttribute('id')}`, ratio);
-    }),
-  );
+    });
+  }
+  document.querySelectorAll('.ZoomOut')?.forEach(buttonZoomOut);
   // ZoomRestore
-  document.querySelectorAll('.ZoomRestore')?.forEach((elem) =>
-    elem.addEventListener('click', () => {
+  function buttonRestoreZoom(elem: Element) {
+    return elem.addEventListener('click', () => {
       document.querySelector('.PageContent .PageImg')?.removeAttribute('width');
-    }),
-  );
+    });
+  }
+  document.querySelectorAll('.ZoomRestore')?.forEach(buttonRestoreZoom);
   // ZoomWidth
-  document.querySelectorAll('.ZoomWidth')?.forEach((elem) =>
-    elem.addEventListener('click', (event) => {
+  function buttonZoomWidth(elem: Element) {
+    return elem.addEventListener('click', (event) => {
       const img: HTMLImageElement = (
         event.currentTarget as HTMLElement
       ).parentElement?.parentElement?.querySelector('.PageImg')!;
       applyZoom(`#${img.getAttribute('id')}`, 1000);
-    }),
-  );
+    });
+  }
+  document.querySelectorAll('.ZoomWidth')?.forEach(buttonZoomWidth);
   // ZoomHeight
-  document.querySelectorAll('.ZoomHeight')?.forEach((elem) =>
+  function buttonZoomHeight(elem: Element): void {
     elem.addEventListener('click', (event) => {
       const img: HTMLImageElement = (
         event.currentTarget as HTMLElement
       ).parentElement?.parentElement?.querySelector('.PageImg')!;
       applyZoom(`#${img.getAttribute('id')}`, -1000);
-    }),
-  );
+    });
+  }
+  document.querySelectorAll('.ZoomHeight')?.forEach(buttonZoomHeight);
   // Hide
-  document.querySelectorAll('.Hide')?.forEach((elem) =>
+  function buttonHidePage(elem: Element): void {
     elem.addEventListener('click', (event) => {
       const img: HTMLImageElement = (
         event.currentTarget as HTMLElement
       ).parentElement?.parentElement?.querySelector('.PageContent')!;
       img.classList.toggle('hide');
-    }),
-  );
+    });
+  }
+  document.querySelectorAll('.Hide')?.forEach(buttonHidePage);
+  // Reset Reader Settings
+  function buttonResetSettings() {
+    getListGM().forEach((setting) => removeValueGM(setting));
+    Swal.fire({
+      title: 'Attention',
+      text: 'Settings have been reset, reload the page to take effect',
+      timer: 10000,
+      icon: 'info',
+    });
+  }
+  document.querySelector('#ResetSettings')?.addEventListener('click', buttonResetSettings);
 
   /**
    * Changes header class when scrolling up or down to show/hide it

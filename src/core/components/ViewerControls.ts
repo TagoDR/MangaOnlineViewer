@@ -20,7 +20,7 @@ const controls = `
         }' class='colorpicker FullCustom'/>
       </div>
       <div class='FullCustom ControlLabelItem ${settings.theme === 'Full_Custom' ? 'show' : ''}' >
-        -Text:<input id='CustomThemeHueText' type='color' value=${
+        -Text:<input id='CustomThemeHueText' type='color' value='${
           settings.customThemeText
         }' class='colorpicker FullCustom'/>
       </div>
@@ -88,7 +88,7 @@ const controls = `
   <div class='ControlLabel minZoom'>
     <span>
       Minimun Zoom relative to the width of screen (between 30 and 100):
-      <output id='minZoomVal'>${settings.minZoom}</output>
+      <output id='minZoomVal' for='minZoom'>${settings.minZoom}</output>
     </span>
     <input type='range' value='${
       settings.minZoom
@@ -97,7 +97,7 @@ const controls = `
   <div class='ControlLabel zoomStep'>
     <span>
       Zoom Change Step (between 5 and 50):
-      <output id='zoomStepVal'>${settings.zoomStep}</output>
+      <output id='zoomStepVal' for='zoomStep'>${settings.zoomStep}</output>
     </span>
     <input type='range' value='${
       settings.zoomStep
@@ -136,7 +136,7 @@ const controls = `
     <div class='ControlLabel lazyStart'>
     <span>
       Lazy Start From Page (between 5 and 100):
-      <output id='lazyStartVal'>${settings.lazyStart}</output>
+      <output id='lazyStartVal' for='lazyStart'>${settings.lazyStart}</output>
     </span>
     <input type='range' value='${
       settings.lazyStart
@@ -158,6 +158,7 @@ const controls = `
       settings.mouseOverMenu ? 'checked' : ''
     }/>
   </div>
+  <button id='ResetSettings'>Reset Settings</button>
 </div>
 `;
 export default controls;
