@@ -215,6 +215,7 @@ function controls() {
     document.querySelector('#Chapter')?.classList.add('WebComic');
     document.querySelector('#Chapter')?.classList.remove('FluidLTR');
     document.querySelector('#Chapter')?.classList.remove('FluidRTL');
+    document.querySelector('#Chapter')?.classList.remove('DoublePage');
     applyZoom();
   }
   document.querySelector('#webComic')?.addEventListener('click', buttonWebComicMode);
@@ -223,6 +224,7 @@ function controls() {
     document.querySelector('#Chapter')?.classList.remove('WebComic');
     document.querySelector('#Chapter')?.classList.add('FluidLTR');
     document.querySelector('#Chapter')?.classList.remove('FluidRTL');
+    document.querySelector('#Chapter')?.classList.add('DoublePage');
     applyZoom();
   }
   document.querySelector('#ltrMode')?.addEventListener('click', buttonLtrMode);
@@ -231,6 +233,7 @@ function controls() {
     document.querySelector('#Chapter')?.classList.remove('WebComic');
     document.querySelector('#Chapter')?.classList.remove('FluidLTR');
     document.querySelector('#Chapter')?.classList.add('FluidRTL');
+    document.querySelector('#Chapter')?.classList.add('DoublePage');
     applyZoom();
   }
   document.querySelector('#rtlMode')?.addEventListener('click', buttonRtlMode);
@@ -239,6 +242,7 @@ function controls() {
     document.querySelector('#Chapter')?.classList.remove('WebComic');
     document.querySelector('#Chapter')?.classList.remove('FluidLTR');
     document.querySelector('#Chapter')?.classList.remove('FluidRTL');
+    document.querySelector('#Chapter')?.classList.remove('DoublePage');
     applyZoom();
   }
   document.querySelector('#verticalMode')?.addEventListener('click', buttonVerticalMode);
@@ -569,10 +573,10 @@ function controls() {
   // ZoomWidth
   function buttonZoomWidth(elem: Element) {
     return elem.addEventListener('click', (event) => {
-      const img: HTMLImageElement = (
-        event.currentTarget as HTMLElement
-      ).parentElement?.parentElement?.querySelector('.PageImg')!;
+      const page = (event.currentTarget as HTMLElement).parentElement?.parentElement;
+      const img: HTMLImageElement = page?.querySelector('.PageImg')!;
       applyZoom(`#${img.getAttribute('id')}`, 1000);
+      page?.classList.toggle('DoublePage');
     });
   }
   document.querySelectorAll('.ZoomWidth')?.forEach(buttonZoomWidth);

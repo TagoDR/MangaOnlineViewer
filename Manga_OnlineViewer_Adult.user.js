@@ -1638,14 +1638,14 @@ img {
     function generateThemeCSS(theme) {
         // language=CSS
         return `
-  .${theme[0]} .ControlLabel, .${theme[0]} .ViewerTitle, .${theme[0]}, .PageFunctions a.visible, .${theme[0]} a, .${theme[0]} a:link, .${theme[0]} a:visited, .${theme[0]} a:active, .${theme[0]} a:focus{ text-decoration:none; color: ${theme[2]};}
+  .${theme[0]} .ControlLabel, .${theme[0]} .ViewerTitle, .${theme[0]}, .PageFunctions a.visible, .${theme[0]} a, .${theme[0]} a:link, .${theme[0]} a:visited, .${theme[0]} a:active, .${theme[0]} a:focus, .${theme[0]} button{ text-decoration:none; color: ${theme[2]};}
   .${theme[0]} {background-repeat: repeat;background-position: 0 0;background-image: none;background-color: ${theme[1]};background-attachment: scroll;}
   /*.${theme[0]} #ImageOptions #menu .menuOuterArrow {border-left-width: 10px;border-left-style: solid;border-left-color: ${theme[4]};}*/
   /*.${theme[0]} #ImageOptions #menu .menuInnerArrow {border-left-width: 5px;border-left-style: solid;border-left-color: ${theme[1]};}*/
   .${theme[0]} .PageFunctions { border: 1px solid ${theme[3]}; border-bottom: medium none; border-left: medium none; border-right: medium none;}
   /*.${theme[0]} #Chapter { border-bottom: 1px solid ${theme[3]};}*/
   .${theme[0]} .PageFunctions > span, .${theme[0]} .Thumbnail span {background: none repeat scroll 0 0 ${theme[4]};}
-  .${theme[0]} .panel {background: none repeat scroll 0 0 ${theme[4]}; border: thin solid ${theme[3]};}
+  .${theme[0]} .panel {background: none repeat scroll 0 0 ${theme[4]}; /*border: thin solid ${theme[3]};*/}
   .${theme[0]} /*.PageContent, .${theme[0]}*/ .Thumbnail img { outline: 2px solid ${theme[3]}; background: none repeat scroll 0 0 ${theme[4]};}
   .${theme[0]} .ChapterControl .NavigationControlButton { /*border: 1px solid ${theme[3]};*/ background-color: ${theme[5]};}
   .${theme[0]} #ImageOptions .hamburger-lines .line { background-color: ${theme[3]};}
@@ -2622,6 +2622,7 @@ ${cssStyles}
             document.querySelector('#Chapter')?.classList.add('WebComic');
             document.querySelector('#Chapter')?.classList.remove('FluidLTR');
             document.querySelector('#Chapter')?.classList.remove('FluidRTL');
+            document.querySelector('#Chapter')?.classList.remove('DoublePage');
             applyZoom();
         }
         document.querySelector('#webComic')?.addEventListener('click', buttonWebComicMode);
@@ -2630,6 +2631,7 @@ ${cssStyles}
             document.querySelector('#Chapter')?.classList.remove('WebComic');
             document.querySelector('#Chapter')?.classList.add('FluidLTR');
             document.querySelector('#Chapter')?.classList.remove('FluidRTL');
+            document.querySelector('#Chapter')?.classList.add('DoublePage');
             applyZoom();
         }
         document.querySelector('#ltrMode')?.addEventListener('click', buttonLtrMode);
@@ -2638,6 +2640,7 @@ ${cssStyles}
             document.querySelector('#Chapter')?.classList.remove('WebComic');
             document.querySelector('#Chapter')?.classList.remove('FluidLTR');
             document.querySelector('#Chapter')?.classList.add('FluidRTL');
+            document.querySelector('#Chapter')?.classList.add('DoublePage');
             applyZoom();
         }
         document.querySelector('#rtlMode')?.addEventListener('click', buttonRtlMode);
@@ -2646,6 +2649,7 @@ ${cssStyles}
             document.querySelector('#Chapter')?.classList.remove('WebComic');
             document.querySelector('#Chapter')?.classList.remove('FluidLTR');
             document.querySelector('#Chapter')?.classList.remove('FluidRTL');
+            document.querySelector('#Chapter')?.classList.remove('DoublePage');
             applyZoom();
         }
         document.querySelector('#verticalMode')?.addEventListener('click', buttonVerticalMode);
@@ -2937,8 +2941,10 @@ ${cssStyles}
         // ZoomWidth
         function buttonZoomWidth(elem) {
             return elem.addEventListener('click', (event) => {
-                const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
+                const page = event.currentTarget.parentElement?.parentElement;
+                const img = page?.querySelector('.PageImg');
                 applyZoom(`#${img.getAttribute('id')}`, 1000);
+                page?.classList.toggle('DoublePage');
             });
         }
         document.querySelectorAll('.ZoomWidth')?.forEach(buttonZoomWidth);
