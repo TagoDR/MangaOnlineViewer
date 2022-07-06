@@ -24,6 +24,13 @@ img {
   border: 0 none;
 }
 
+.icon-tabler {
+  height: 1rem;
+  width: 1rem;
+  align-self: center;
+  vertical-align: sub;
+}
+
 #nprogress .bar {
   background: #29d;
   position: fixed;
@@ -41,16 +48,30 @@ img {
 }
 
 #MangaOnlineViewer #Chapter {
-  text-align: center;
-  display: block;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  min-width: 225px;
+}
+
+#MangaOnlineViewer #Chapter.DoublePage {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+#MangaOnlineViewer #Chapter.DoublePage .PageImg {
+  min-width: unset;
+}
+
+#MangaOnlineViewer #Chapter.DoublePage .MangaPage.DoublePage {
+  grid-column: span 2;
 }
 
 #MangaOnlineViewer #Chapter.WebComic .PageFunctions {
 }
 
 #MangaOnlineViewer #Chapter.WebComic .PageContent {
-  margin-bottom: -5px;
-  margin-top: -23px;
+  margin-bottom: -6px;
+  margin-top: -24px;
 }
 
 #MangaOnlineViewer #Chapter.FluidLTR .MangaPage {
@@ -268,11 +289,19 @@ img {
 
 #MangaOnlineViewer .ChapterControl .NavigationControlButton {
   display: inline-flex;
-  width: 80px;
-  height: 25px;
   margin: 3px;
   justify-content: center;
   align-items: center;
+  border: 2px solid transparent;
+  padding: 5px 10px;
+  gap: 0.5em;
+}
+
+#MangaOnlineViewer .ChapterControl .NavigationControlButton svg {
+  flex-shrink: 0;
+  align-self: center;
+  width: 1rem;
+  height: 1rem;
 }
 
 #MangaOnlineViewer .ChapterControl .NavigationControlButton[href="#"],

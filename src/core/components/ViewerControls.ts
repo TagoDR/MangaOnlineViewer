@@ -3,6 +3,7 @@ import { settings } from '../settings';
 
 const controls = `
 <div id='ViewerControls' class='panel'>
+  <button id='ResetSettings'>Reset Settings</button>
   <div class='ControlLabel ThemeSelector'>Theme:
     <select id='ThemeSelector'>
       ${themesSelector}
@@ -158,7 +159,6 @@ const controls = `
       settings.mouseOverMenu ? 'checked' : ''
     }/>
   </div>
-  <button id='ResetSettings'>Reset Settings</button>
 </div>
 `;
 export default controls;
