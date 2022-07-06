@@ -12,6 +12,7 @@ export default {
     'Mngazuki',
     'ReaperScans',
     'JaiminisBox',
+    'DisasterScans',
   ],
   url: /https?:\/\/.+\/(manga|series)\/.+\/.+/,
   homepage: [
@@ -25,6 +26,7 @@ export default {
     'https://mangazuki.me/',
     'https://reaperscans.com/',
     'https://jaiminisbox.net',
+    'https://disasterscans.com/',
   ],
   language: ['English'],
   obs: 'Any Site that uses Madara Wordpress Plugin',

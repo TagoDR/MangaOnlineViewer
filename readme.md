@@ -36,7 +36,6 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 
 - [Asura Scans](https://www.asurascans.com/) / [Flame Scans](https://flamescans.org/) _[English]_
 - [Batoto](http://bato.to/) _[English]_
-- [DisasterScans](https://disasterscans.com/) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
 - [LHTranslation](https://lhtranslation.net/) _[English]_
 - [MangaDex](https://mangadex.org/) _[English]_
@@ -54,7 +53,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [TenManga](https://www.tenmanga.com/) _[English]_
 - [Manga33](https://manga33.com/) _[English]_
 - [FoOlSlide](#) / [Kireicake](https://reader.kireicake.com) / [Yuri-ism](https://www.yuri-ism.net) / [Sense-Scans](https://sensescans.com/) _[English]_ **Obs: Any Site that uses FoOLSlide**
-- [Madara WordPress Plugin](#) / [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) / [ReaperScans](https://reaperscans.com/) / [JaiminisBox](https://jaiminisbox.net) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
+- [Madara WordPress Plugin](#) / [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) / [ReaperScans](https://reaperscans.com/) / [JaiminisBox](https://jaiminisbox.net) / [DisasterScans](https://disasterscans.com/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
 - [RawDevart](https://rawdevart.com) _[Japanese]_
 - [SenManga(Raw)](https://raw.senmanga.com/) _[Original]_
 - [Leitor](https://leitor.net/) _[Portuguese]_

@@ -2,7 +2,6 @@
 import asurasflamecans from './asurasflamecans';
 import batoto from './batoto';
 import comicastle from './comicastle';
-import disasterscans from './disasterscans';
 import dysnatyscans from './dysnatyscans';
 import foolslide from './foolslide';
 import leitor from './leitor';
@@ -34,7 +33,6 @@ const sites = [
   asurasflamecans,
   batoto,
   comicastle,
-  disasterscans,
   dysnatyscans,
   leitor,
   lhtranslation,

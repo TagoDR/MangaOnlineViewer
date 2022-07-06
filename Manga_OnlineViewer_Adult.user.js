@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno, vercomicsporno, xyzcomics
-// @version 2022.07.05
+// @version 2022.07.06
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -959,6 +959,13 @@ img {
   border: 0 none;
 }
 
+.icon-tabler {
+  height: 1rem;
+  width: 1rem;
+  align-self: center;
+  vertical-align: sub;
+}
+
 #nprogress .bar {
   background: #29d;
   position: fixed;
@@ -976,16 +983,30 @@ img {
 }
 
 #MangaOnlineViewer #Chapter {
-  text-align: center;
-  display: block;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  min-width: 225px;
+}
+
+#MangaOnlineViewer #Chapter.DoublePage {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+#MangaOnlineViewer #Chapter.DoublePage .PageImg {
+  min-width: unset;
+}
+
+#MangaOnlineViewer #Chapter.DoublePage .MangaPage.DoublePage {
+  grid-column: span 2;
 }
 
 #MangaOnlineViewer #Chapter.WebComic .PageFunctions {
 }
 
 #MangaOnlineViewer #Chapter.WebComic .PageContent {
-  margin-bottom: -5px;
-  margin-top: -23px;
+  margin-bottom: -6px;
+  margin-top: -24px;
 }
 
 #MangaOnlineViewer #Chapter.FluidLTR .MangaPage {
@@ -1203,11 +1224,19 @@ img {
 
 #MangaOnlineViewer .ChapterControl .NavigationControlButton {
   display: inline-flex;
-  width: 80px;
-  height: 25px;
   margin: 3px;
   justify-content: center;
   align-items: center;
+  border: 2px solid transparent;
+  padding: 5px 10px;
+  gap: 0.5em;
+}
+
+#MangaOnlineViewer .ChapterControl .NavigationControlButton svg {
+  flex-shrink: 0;
+  align-self: center;
+  width: 1rem;
+  height: 1rem;
 }
 
 #MangaOnlineViewer .ChapterControl .NavigationControlButton[href="#"],
@@ -1617,8 +1646,8 @@ img {
   /*.${theme[0]} #Chapter { border-bottom: 1px solid ${theme[3]};}*/
   .${theme[0]} .PageFunctions > span, .${theme[0]} .Thumbnail span {background: none repeat scroll 0 0 ${theme[4]};}
   .${theme[0]} .panel {background: none repeat scroll 0 0 ${theme[4]}; border: thin solid ${theme[3]};}
-  .${theme[0]} .PageContent, .${theme[0]} .Thumbnail img { outline: 2px solid ${theme[3]}; background: none repeat scroll 0 0 ${theme[4]};}
-  .${theme[0]} .ChapterControl a { border: 1px solid ${theme[3]}; background-color: ${theme[5]};}
+  .${theme[0]} /*.PageContent, .${theme[0]}*/ .Thumbnail img { outline: 2px solid ${theme[3]}; background: none repeat scroll 0 0 ${theme[4]};}
+  .${theme[0]} .ChapterControl .NavigationControlButton { /*border: 1px solid ${theme[3]};*/ background-color: ${theme[5]};}
   .${theme[0]} #ImageOptions .hamburger-lines .line { background-color: ${theme[3]};}
   `;
     }
@@ -1642,6 +1671,7 @@ img {
         return [
             //   1-body       2-text       3-lines     4-imageOptions     5-buttons
             ['Dark', '#000000', '#ffffff', '#666666', '#333333', '#282828'],
+            ['Grey', '#1A202C', '#d6d8e3', '#666666', '#535353', '#535353'],
             ['Light', '#eeeeec', '#2e3436', '#888a85', '#babdb6', '#c8cec2'],
             ['Clear', '#ffffff', '#2e3436', '#888a85', '#eeeeec', '#d3d7cf'],
             ['Dark_Blue', '#000000', '#91a0b0', '#586980', '#3e4b5b', '#222c3b'],
@@ -1743,6 +1773,7 @@ ${cssStyles}
 
     const controls$1 = `
 <div id='ViewerControls' class='panel'>
+  <button id='ResetSettings'>Reset Settings</button>
   <div class='ControlLabel ThemeSelector'>Theme:
     <select id='ThemeSelector'>
       ${themesSelector}
@@ -1848,7 +1879,6 @@ ${cssStyles}
   <div class='ControlLabel mouseOverMenu'>Toggle Sticky Header / MouseOverMenu:
     <input type='checkbox' value='false' name='mouseOverMenu' id='mouseOverMenu' ${settings$1.mouseOverMenu ? 'checked' : ''}/>
   </div>
-  <button id='ResetSettings'>Reset Settings</button>
 </div>
 `;
 
@@ -1875,6 +1905,35 @@ ${cssStyles}
   <img id='ThumbnailImg${index + 1}' alt='ThumbnailImg${index + 1}' class='ThumbnailImg' src=''/>
   <span class='ThumbnailIndex'>${index + 1}</span>
 </div>`);
+
+    // Icons from https://tabler-icons.io/
+    // Icons for Navigation
+    const IconArrowBigRight = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z" />
+</svg>`;
+    const IconArrowBigLeft = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z"></path>
+</svg>`;
+    const IconFileDownload = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
+   <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>
+   <path d="M12 17v-6"></path>
+   <path d="M9.5 14.5l2.5 2.5l2.5 -2.5"></path>
+</svg>`;
+    const IconCategory = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M4 4h6v6h-6z"></path>
+   <path d="M14 4h6v6h-6z"></path>
+   <path d="M4 14h6v6h-6z"></path>
+   <circle cx="17" cy="17" r="3"></circle>
+</svg>`;
 
     const listOptions = (times) => Array(times)
         .fill(null)
@@ -1903,13 +1962,16 @@ ${cssStyles}
       </div>
       <div id='ChapterControl' class='ChapterControl'>
         <a href='#' class='download NavigationControlButton ControlButton'>
+          ${IconFileDownload}
           Download
         </a>
         <a class='prev NavigationControlButton ControlButton' id='prev' href='${manga.prev || ''}'>
+          ${IconArrowBigLeft}
           Previous
         </a>
         <a class='next NavigationControlButton ControlButton' id='next' href='${manga.next || ''}'>
           Next
+          ${IconArrowBigRight}
         </a>
       </div>
     </nav>
@@ -1919,7 +1981,7 @@ ${cssStyles}
   </main>
   <nav id='Navigation' class='panel ${settings$1.showThumbnails ? '' : 'disabled'}'>
     <div id='NavigationCounters' class='ControlLabel'>
-      <img alt='Thumbnails' title='Thumbnails' src='${icon.menu}' class='nav' />
+      ${IconCategory}
       <i>0</i> of <b>${manga.pages}</b> Pages Loaded
     </div>
     <div id='Thumbnails'>
