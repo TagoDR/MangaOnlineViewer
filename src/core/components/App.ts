@@ -2,7 +2,7 @@ import { IManga } from '../../types';
 import { settings } from '../settings';
 import listPages from './MangaPages';
 import imageOptions from './ImageOptions';
-import controls from './ViewerControls';
+import settingsPanel from './ViewerControls';
 import Keybindings from './Keybindings.js';
 import listThumbnails from './Thumbnails';
 import { IconArrowBigLeft, IconArrowBigRight, IconCategory, IconFileDownload } from './svg.js';
@@ -18,8 +18,6 @@ const body = (manga: IManga, begin = 0) => `
   <header id="Header" class="${settings.mouseOverMenu ? 'mouseOverMenu' : ''}">
     <aside id='GlobalControls'>
       ${imageOptions}
-      ${controls}
-      ${Keybindings}
     </aside>
     <div class='ViewerTitle'>
       <h1 id='MangaTitle'>${manga.title}</h1>
@@ -64,6 +62,8 @@ const body = (manga: IManga, begin = 0) => `
       ${listThumbnails(manga.pages).slice(begin).join('')}
     </div>
   </nav>
+  ${settingsPanel}
+  ${Keybindings}
   <a href='#' id='blob' style='display: none;'>Download</a>
 </div>`;
 export default body;

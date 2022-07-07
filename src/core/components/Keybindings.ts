@@ -1,4 +1,6 @@
-const keybindings = `<div id='ViewerShortcuts' class='panel'>
+const keybindings = `
+<div id='ViewerShortcuts' class='panel'>
+    <h2>Keybindings</h2>
     <kbd class='dark'>Numpad 5</kbd>/<kbd class='dark'>/</kbd>: Open Settings<br/>
     <kbd class='dark'>Numpad +</kbd>/<kbd class='dark'>=</kbd>: Global Zoom in pages (enlarge)<br/>
     <kbd class='dark'>Numpad -</kbd>/<kbd class='dark'>-</kbd>: Global Zoom out pages (reduce)<br/>

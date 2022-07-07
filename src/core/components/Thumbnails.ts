@@ -4,7 +4,7 @@ const listThumbnails = (times: number) =>
     .map(
       (_, index) => `
 <div id='Thumbnail${index + 1}' class='Thumbnail'>
-  <img id='ThumbnailImg${index + 1}' alt='ThumbnailImg${index + 1}' class='ThumbnailImg' src=''/>
+  <img id='ThumbnailImg${index + 1}' alt='' class='ThumbnailImg' src=''/>
   <span class='ThumbnailIndex'>${index + 1}</span>
 </div>`,
     );

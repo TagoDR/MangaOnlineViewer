@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Batoto, ComiCastle, Dynasty-Scans, Leitor, LHTranslation, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTown, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, SenManga(Raw), TenManga, TuMangaOnline, UnionMangas, Manga33, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, ReaperScans, JaiminisBox, DisasterScans
-// @version 2022.07.06
+// @version 2022.07.08
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -998,10 +998,11 @@
     }
 
     // language=CSS
-    var cssStyles = `html {
+    var cssStyles = `
+/*  Simple Normalizer */
+html {
   font-size: 100%;
 }
-
 body {
   margin: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -1011,12 +1012,10 @@ body {
   background-color: #fff;
   padding: 0;
 }
-
 a {
   color: #08c;
   text-decoration: none;
 }
-
 img {
   height: auto;
   vertical-align: middle;
@@ -1069,8 +1068,7 @@ img {
 }
 
 #MangaOnlineViewer #Chapter.WebComic .PageContent {
-  margin-bottom: -6px;
-  margin-top: -24px;
+  margin: 0;
 }
 
 #MangaOnlineViewer #Chapter.FluidLTR .MangaPage {
@@ -1090,22 +1088,23 @@ img {
 }
 
 #MangaOnlineViewer #ViewerControls {
-  padding: 8px;
+  padding: 10px;
   position: fixed;
   top: 0;
-  left: 405px;
-  width: auto;
+  left: 0;
   z-index: 1000;
   transition: transform 0.3s ease-in, background-color 0.3s linear;
-  transform: translateY(-100%);
+  transform: translateX(-100%);
   display: flex;
   flex-flow: column;
   gap: 5px;
-  max-width: 300px;
+  height: 100%;
+  max-width: 100vw;
+  width: 305px;
 }
 
 #MangaOnlineViewer #ViewerControls.visible {
-  transform: translateY(0);
+  transform: translateX(0);
 }
 
 #MangaOnlineViewer #ViewerControls .ControlLabel {
@@ -1126,17 +1125,28 @@ img {
   display: none;
 }
 
+#MangaOnlineViewer #CloseSettings {
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
 #MangaOnlineViewer #ViewerShortcuts {
   padding: 8px;
   position: fixed;
   top: 65px;
-  left: 0;
-  transition: transform 0.3s ease-in, background-color 0.3s linear;
-  transform: translateX(-100%);
+  right: 0;
+  /*transition: transform 0.3s ease-in, background-color 0.3s linear;*/
+  /*transform: translateX(100%);*/
+  display: none;
+  line-height: 1.5em;
 }
 
 #MangaOnlineViewer #ViewerShortcuts.visible {
-  transform: translateX(0);
+  /*transform: translateX(0);*/
+  display: block;
 }
 
 #MangaOnlineViewer select {
@@ -1159,13 +1169,14 @@ img {
   left: 0;
   position: absolute;
   top: 0;
-  width: 405px;
+  width: 408px;
   z-index: 1000;
 }
 
-#MangaOnlineViewer #ImageOptions .panel {
+#MangaOnlineViewer .panel {
   padding: 5px;
   position: inherit;
+  border-radius: 5px;
 }
 
 #MangaOnlineViewer #ImageOptions:hover {
@@ -1196,6 +1207,7 @@ img {
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
+  line-height: 0;
 }
 
 #MangaOnlineViewer .PageContent {
@@ -1206,8 +1218,12 @@ img {
   max-width: 100%;
 }
 
-#MangaOnlineViewer .PageContent.hide {
+#MangaOnlineViewer .MangaPage.hide .PageContent {
   display: none;
+}
+
+#MangaOnlineViewer .MangaPage.hide .PageFunctions {
+  position:relative;
 }
 
 #MangaOnlineViewer .PageContent .PageImg[src=""],
@@ -1330,7 +1346,8 @@ img {
   margin: 0;
   padding: 0;
   gap: 3px;
-  position: relative;
+  position: absolute;
+  right: 0;
 }
 
 #MangaOnlineViewer .PageFunctions > .PageIndex {
@@ -1338,6 +1355,7 @@ img {
   text-align: center;
   display: inline-block;
   padding: 2px 10px;
+  line-height: 1rem;
 }
 
 #MangaOnlineViewer .PageFunctions > .ControlButton {
@@ -1365,13 +1383,14 @@ img {
 }
 
 #MangaOnlineViewer #NavigationCounters {
-  margin-top: 5px;
+  margin: 5px;
   width: 100%;
+  line-height: 1rem;
 }
 
 #MangaOnlineViewer #Navigation {
   bottom: -180px;
-  height: 190px;
+  height: 185px;
   overflow-x: hidden;
   overflow-y: hidden;
   padding-bottom: 20px;
@@ -1380,11 +1399,15 @@ img {
   width: 100%;
   text-align: center;
   transition: transform 0.3s ease-in, background-color 0.3s linear;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  line-height: 0rem;
 }
 
 #MangaOnlineViewer #Navigation #Thumbnails {
   overflow-x: auto;
   overflow-y: hidden;
+  margin-right: 10px;
 }
 
 #MangaOnlineViewer #Navigation:hover {
@@ -1403,54 +1426,24 @@ img {
   display: inline-block;
   height: 150px;
   margin: 0 5px;
-  position: relative;
 }
 
 #MangaOnlineViewer #Navigation .Thumbnail .ThumbnailIndex {
   display: block;
   opacity: 0.8;
   position: relative;
-  top: -30px;
+  bottom: 25%;
   width: 100%;
+  line-height: 1rem;
 }
 
 #MangaOnlineViewer #Navigation .Thumbnail .ThumbnailImg {
-  align-content: center;
   cursor: pointer;
   display: inline-block;
-  margin-bottom: -10px;
-  margin-top: 10px;
   max-height: 150px;
   min-height: 150px;
   min-width: 80px;
   max-width: 160px;
-}
-
-#MangaOnlineViewer #Navigation .nav {
-  transform: rotate(-90deg);
-}
-
-#MangaOnlineViewer #ImageOptions .menuOuterArrow {
-  width: 0;
-  height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  border-left: 10px solid blue;
-  display: inline-block;
-  position: absolute;
-  bottom: 0;
-}
-
-#MangaOnlineViewer #ImageOptions .menuInnerArrow {
-  width: 0;
-  height: 0;
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  border-left: 5px solid white;
-  left: -10px;
-  position: absolute;
-  top: -5px;
-  display: inline-block;
 }
 
 #MangaOnlineViewer #ImageOptions .hamburger-lines {
@@ -1458,8 +1451,8 @@ img {
   height: 26px;
   width: 32px;
   position: absolute;
-  top: 17px;
-  left: 20px;
+  top: 15px;
+  left: 15px;
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -1505,18 +1498,12 @@ img {
     padding: 0;
   }
 
-  #MangaOnlineViewer .PageFunctions a:not(.Bookmark) {
+  #MangaOnlineViewer .PageFunctions .ControlButton:not(.Bookmark) {
     display: none;
   }
 
-  #MangaOnlineViewer .PageFunctions a.Bookmark {
+  #MangaOnlineViewer .PageFunctions .ControlButton.Bookmark {
     opacity: 1;
-  }
-
-  #MangaOnlineViewer .PageFunctions span {
-    right: 0;
-    position: inherit;
-    text-align: center;
   }
 
   #MangaOnlineViewer .PageContent {
@@ -1532,32 +1519,21 @@ img {
     display: none;
   }
 
-  #MangaOnlineViewer #ViewerControls {
-    padding: 8px;
-    position: fixed;
-    top: 0;
-    left: 45px;
-    width: auto;
-    transition: transform 0.3s ease-in, background-color 0.3s linear;
-    display: none;
-  }
-
-  #MangaOnlineViewer #ViewerControls.visible {
-    display: block;
-  }
-
   #MangaOnlineViewer #ViewerControls .DefaultZoom,
   #MangaOnlineViewer #ViewerControls .viewMode,
   #MangaOnlineViewer #ViewerControls .fitIfOversize,
   #MangaOnlineViewer #ViewerControls .showThumbnails,
   #MangaOnlineViewer #ViewerControls .lazyLoadImages,
-  #MangaOnlineViewer #ViewerControls .downloadZip {
+  #MangaOnlineViewer #ViewerControls .downloadZip,
+  #MangaOnlineViewer #ViewerControls .minZoom,
+  #MangaOnlineViewer #ViewerControls .zoomStep,
+  #MangaOnlineViewer #ViewerControls .mouseOverMenu {
     display: none;
   }
 
   #MangaOnlineViewer #ViewerShortcuts {
     display: none;
-  }
+  }  
 
   #MangaOnlineViewer #ImageOptions #menu {
     display: none;
@@ -1584,9 +1560,6 @@ img {
   #MangaOnlineViewer #Counters {
     display: none;
   }
-
-  #MangaOnlineViewer #Chapter {
-  }
 }
 
 `;
@@ -1604,7 +1577,7 @@ img {
         return find ? find[1] : '';
     });
     const externalCSS = [
-        '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />',
+        // '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />',
         '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" integrity="sha256-pMhcV6/TBDtqH9E9PWKgS+P32PVguLG8IipkPyqMtfY=" crossorigin="anonymous" />',
         '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gerhobbelt/keyscss@1.1.3-6/keys.css" integrity="sha256-a/1ebfXeoX0xLUcQCJLQsm6APQNBwrm03/XFcvW7xAI=" crossorigin="anonymous">',
         '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.19/sweetalert2.css" integrity="sha512-p06JAs/zQhPp/dk821RoSDTtxZ71yaznVju7IHe85CPn9gKpQVzvOXwTkfqCyWRdwo+e6DOkEKOWPmn8VE9Ekg==" crossorigin="anonymous" referrerpolicy="no-referrer" />',
@@ -1702,17 +1675,31 @@ img {
     function generateThemeCSS(theme) {
         // language=CSS
         return `
-  .${theme[0]} .ControlLabel, .${theme[0]} .ViewerTitle, .${theme[0]}, .PageFunctions a.visible, .${theme[0]} a, .${theme[0]} a:link, .${theme[0]} a:visited, .${theme[0]} a:active, .${theme[0]} a:focus, .${theme[0]} button{ text-decoration:none; color: ${theme[2]};}
-  .${theme[0]} {background-repeat: repeat;background-position: 0 0;background-image: none;background-color: ${theme[1]};background-attachment: scroll;}
-  /*.${theme[0]} #ImageOptions #menu .menuOuterArrow {border-left-width: 10px;border-left-style: solid;border-left-color: ${theme[4]};}*/
-  /*.${theme[0]} #ImageOptions #menu .menuInnerArrow {border-left-width: 5px;border-left-style: solid;border-left-color: ${theme[1]};}*/
-  .${theme[0]} .PageFunctions { border: 1px solid ${theme[3]}; border-bottom: medium none; border-left: medium none; border-right: medium none;}
-  /*.${theme[0]} #Chapter { border-bottom: 1px solid ${theme[3]};}*/
-  .${theme[0]} .PageFunctions > span, .${theme[0]} .Thumbnail span {background: none repeat scroll 0 0 ${theme[4]};}
-  .${theme[0]} .panel {background: none repeat scroll 0 0 ${theme[4]}; /*border: thin solid ${theme[3]};*/}
-  .${theme[0]} /*.PageContent, .${theme[0]}*/ .Thumbnail img { outline: 2px solid ${theme[3]}; background: none repeat scroll 0 0 ${theme[4]};}
-  .${theme[0]} .ChapterControl .NavigationControlButton { /*border: 1px solid ${theme[3]};*/ background-color: ${theme[5]};}
-  .${theme[0]} #ImageOptions .hamburger-lines .line { background-color: ${theme[3]};}
+  .${theme[0]} a,
+  .${theme[0]} a:link,
+  .${theme[0]} a:visited,
+  .${theme[0]} a:active,
+  .${theme[0]} a:focus,
+  .${theme[0]} { 
+    text-decoration:none;
+    color: ${theme[2]};
+    background-color: ${theme[1]};
+  }
+  .${theme[0]} .PageFunctions > span,
+  .${theme[0]} .Thumbnail span,
+  .${theme[0]} .panel {
+    background-color: ${theme[4]};
+  }
+  .${theme[0]} .Thumbnail {
+    border: 1px solid ${theme[3]};
+    background-color: ${theme[4]};
+  }
+  .${theme[0]} .ChapterControl .NavigationControlButton {
+    background-color: ${theme[5]};
+  }
+  .${theme[0]} #ImageOptions .hamburger-lines .line {
+    background-color: ${theme[3]};
+  }
   `;
     }
     // Add custom Themes to the page
@@ -1806,7 +1793,7 @@ ${cssStyles}
     <span class='PageIndex'>${index + 1}</span>
   </div>
   <div class='PageContent'>
-    <img id='PageImg${index + 1}' alt='PageImg${index + 1}' class='PageImg' />
+    <img id='PageImg${index + 1}' alt='' class='PageImg' />
   </div>
 </div>`);
 
@@ -1835,8 +1822,46 @@ ${cssStyles}
   <div id='Zoom' class='ControlLabel'>Zoom: <b id='ZoomPercent'>${settings$1.zoom}</b> %</div>
 </div>`;
 
-    const controls$1 = `
+    // Icons from https://tabler-icons.io/
+    // Icons for Navigation
+    const IconArrowBigRight = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z" />
+</svg>`;
+    const IconArrowBigLeft = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z"></path>
+</svg>`;
+    const IconFileDownload = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
+   <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>
+   <path d="M12 17v-6"></path>
+   <path d="M9.5 14.5l2.5 2.5l2.5 -2.5"></path>
+</svg>`;
+    const IconCategory = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M4 4h6v6h-6z"></path>
+   <path d="M14 4h6v6h-6z"></path>
+   <path d="M4 14h6v6h-6z"></path>
+   <circle cx="17" cy="17" r="3"></circle>
+</svg>`;
+    // Icons for Global Controls
+    const IconX = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <line x1="18" y1="6" x2="6" y2="18"></line>
+   <line x1="6" y1="6" x2="18" y2="18"></line>
+</svg>`;
+
+    const settingsPanel = `
 <div id='ViewerControls' class='panel'>
+  <h2>Settings</h2>
+  <button id='CloseSettings'>${IconX}</button>
   <button id='ResetSettings'>Reset Settings</button>
   <div class='ControlLabel ThemeSelector'>Theme:
     <select id='ThemeSelector'>
@@ -1946,7 +1971,9 @@ ${cssStyles}
 </div>
 `;
 
-    const keybindings = `<div id='ViewerShortcuts' class='panel'>
+    const keybindings = `
+<div id='ViewerShortcuts' class='panel'>
+    <h2>Keybindings</h2>
     <kbd class='dark'>Numpad 5</kbd>/<kbd class='dark'>/</kbd>: Open Settings<br/>
     <kbd class='dark'>Numpad +</kbd>/<kbd class='dark'>=</kbd>: Global Zoom in pages (enlarge)<br/>
     <kbd class='dark'>Numpad -</kbd>/<kbd class='dark'>-</kbd>: Global Zoom out pages (reduce)<br/>
@@ -1966,38 +1993,9 @@ ${cssStyles}
         .fill(null)
         .map((_, index) => `
 <div id='Thumbnail${index + 1}' class='Thumbnail'>
-  <img id='ThumbnailImg${index + 1}' alt='ThumbnailImg${index + 1}' class='ThumbnailImg' src=''/>
+  <img id='ThumbnailImg${index + 1}' alt='' class='ThumbnailImg' src=''/>
   <span class='ThumbnailIndex'>${index + 1}</span>
 </div>`);
-
-    // Icons from https://tabler-icons.io/
-    // Icons for Navigation
-    const IconArrowBigRight = `
-<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z" />
-</svg>`;
-    const IconArrowBigLeft = `
-<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z"></path>
-</svg>`;
-    const IconFileDownload = `
-<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
-   <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>
-   <path d="M12 17v-6"></path>
-   <path d="M9.5 14.5l2.5 2.5l2.5 -2.5"></path>
-</svg>`;
-    const IconCategory = `
-<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M4 4h6v6h-6z"></path>
-   <path d="M14 4h6v6h-6z"></path>
-   <path d="M4 14h6v6h-6z"></path>
-   <circle cx="17" cy="17" r="3"></circle>
-</svg>`;
 
     const listOptions = (times) => Array(times)
         .fill(null)
@@ -2008,8 +2006,6 @@ ${cssStyles}
   <header id="Header" class="${settings$1.mouseOverMenu ? 'mouseOverMenu' : ''}">
     <aside id='GlobalControls'>
       ${imageOptions}
-      ${controls$1}
-      ${keybindings}
     </aside>
     <div class='ViewerTitle'>
       <h1 id='MangaTitle'>${manga.title}</h1>
@@ -2052,6 +2048,8 @@ ${cssStyles}
       ${listThumbnails(manga.pages).slice(begin).join('')}
     </div>
   </nav>
+  ${settingsPanel}
+  ${keybindings}
   <a href='#' id='blob' style='display: none;'>Download</a>
 </div>`;
 
@@ -2645,6 +2643,7 @@ ${cssStyles}
             document.querySelector('#Header')?.classList.toggle('visible');
         }
         document.querySelector('#settings')?.addEventListener('click', buttonSettings);
+        document.querySelector('#CloseSettings')?.addEventListener('click', buttonSettings);
         // Size Controls
         // Global Zoom In Button
         function buttonGlobalZoomIn() {
@@ -3023,7 +3022,7 @@ ${cssStyles}
         // Hide
         function buttonHidePage(elem) {
             elem.addEventListener('click', (event) => {
-                const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageContent');
+                const img = event.currentTarget.parentElement?.parentElement;
                 img.classList.toggle('hide');
             });
         }

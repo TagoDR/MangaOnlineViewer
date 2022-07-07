@@ -1,8 +1,11 @@
 import { themesSelector } from '../themes';
 import { settings } from '../settings';
+import { IconX } from './svg.js';
 
-const controls = `
+const settingsPanel = `
 <div id='ViewerControls' class='panel'>
+  <h2>Settings</h2>
+  <button id='CloseSettings'>${IconX}</button>
   <button id='ResetSettings'>Reset Settings</button>
   <div class='ControlLabel ThemeSelector'>Theme:
     <select id='ThemeSelector'>
@@ -161,4 +164,4 @@ const controls = `
   </div>
 </div>
 `;
-export default controls;
+export default settingsPanel;

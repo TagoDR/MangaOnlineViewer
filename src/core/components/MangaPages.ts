@@ -17,7 +17,7 @@ const listPages = (times: number) =>
     <span class='PageIndex'>${index + 1}</span>
   </div>
   <div class='PageContent'>
-    <img id='PageImg${index + 1}' alt='PageImg${index + 1}' class='PageImg' />
+    <img id='PageImg${index + 1}' alt='' class='PageImg' />
   </div>
 </div>`,
     );

@@ -174,6 +174,7 @@ function controls() {
     document.querySelector('#Header')?.classList.toggle('visible');
   }
   document.querySelector('#settings')?.addEventListener('click', buttonSettings);
+  document.querySelector('#CloseSettings')?.addEventListener('click', buttonSettings);
   // Size Controls
   // Global Zoom In Button
   function buttonGlobalZoomIn() {
@@ -593,9 +594,7 @@ function controls() {
   // Hide
   function buttonHidePage(elem: Element): void {
     elem.addEventListener('click', (event) => {
-      const img: HTMLImageElement = (
-        event.currentTarget as HTMLElement
-      ).parentElement?.parentElement?.querySelector('.PageContent')!;
+      const img: HTMLElement = (event.currentTarget as HTMLElement).parentElement?.parentElement!;
       img.classList.toggle('hide');
     });
   }
