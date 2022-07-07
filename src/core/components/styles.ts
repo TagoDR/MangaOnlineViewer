@@ -479,6 +479,10 @@ img {
   display: none;
 }
 
+#MangaOnlineViewer #ResetSettings {
+  color: unset;
+}
+
 /* Mobile styles*/
 @media (max-width: 768px) {
   #MangaOnlineViewer #Header {

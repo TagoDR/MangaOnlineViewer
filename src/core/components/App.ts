@@ -1,5 +1,5 @@
 import { IManga } from '../../types';
-import { icon, settings } from '../settings';
+import { settings } from '../settings';
 import listPages from './MangaPages';
 import imageOptions from './ImageOptions';
 import controls from './ViewerControls';
