@@ -8,7 +8,7 @@ export default {
   waitEle: '#chapter option:nth-child(2)',
   run() {
     const chapter = document.querySelector<HTMLOptionElement>('#chapter option:checked');
-    const images = [...document.querySelectorAll('#readerarea p img')];
+    const images = [...document.querySelectorAll('#readerarea img')];
     return {
       title: document.querySelector('.entry-title')?.textContent?.trim(),
       series: document.querySelector('.allc a')?.getAttribute('href'),

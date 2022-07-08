@@ -65,9 +65,18 @@ img {
   grid-column: span 2;
 }
 
-#MangaOnlineViewer #Chapter.WebComic .PageFunctions {
+#MangaOnlineViewer #Chapter.DoublePage .MangaPage:not(.DoublePage):nth-child(2n) {
+  justify-self: flex-start;
 }
 
+#MangaOnlineViewer #Chapter.DoublePage .MangaPage:not(.DoublePage):nth-child(2n-1) {
+  justify-self: flex-end;
+}
+
+#MangaOnlineViewer #Chapter.WebComic .PageFunctions {
+}
+#MangaOnlineViewer #Chapter.FluidLTR .PageContent,
+#MangaOnlineViewer #Chapter.FluidRTL .PageContent,
 #MangaOnlineViewer #Chapter.WebComic .PageContent {
   margin: 0;
 }
