@@ -3,7 +3,7 @@ import { ISettings, IBookmark } from '../types';
 
 // Configuration
 const settings: ISettings = {
-  theme: getValueGM('Theme', 'Dark'),
+  theme: getValueGM('Theme', 'Tango_Blue'),
   customTheme: getValueGM('CustomTheme', '#263e3a'),
   customThemeBody: getValueGM('CustomThemeBody', '#000000'),
   customThemeText: getValueGM('CustomThemeText', '#ffffff'),
@@ -23,7 +23,7 @@ const settings: ISettings = {
   lazyLoadImages: getValueGM('LazyLoadImages', false),
   lazyStart: getValueGM('LazyStart', 50),
   hidePageControls: getValueGM('HidePageControls', false),
-  mouseOverMenu: getValueGM('MouseOverMenu', false),
+  mouseOverMenu: getValueGM('MouseOverMenu', true),
 };
 // Force Settings for mobile
 if (isMobile) {

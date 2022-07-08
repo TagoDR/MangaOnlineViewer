@@ -169,6 +169,7 @@ img {
   cursor: pointer;
   border-radius: 5px;
   border-width: 1px;
+  padding: 2px;
 }
 
 #MangaOnlineViewer .ControlButton:hover {
@@ -193,21 +194,24 @@ img {
   position: fixed;
 }
 
+#MangaOnlineViewer #ImageOptions:hover #menu {
+  display: none;
+}
+
 #MangaOnlineViewer #ImageOptions.settingsOpen {
   position: fixed;
 }
 
 #MangaOnlineViewer #ImageOptions #menu {
   position: fixed;
-  height: 64px;
-  width: 400px;
+  height: 5%;
+  width: 50%;
   top: 0;
+  z-index: -1;
 }
 
 #MangaOnlineViewer #ImageOptions #Zoom {
-  position: absolute;
-  left: 18px;
-  bottom: -65px;
+  margin-left: 10px;
 }
 
 #MangaOnlineViewer .MangaPage {
@@ -257,7 +261,7 @@ img {
 
 #MangaOnlineViewer #Header {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   flex-flow: row nowrap;
   transition: transform 0.3s ease-in, background-color 0.3s linear;
@@ -299,12 +303,19 @@ img {
   flex-basis: 30%;
 }
 
+#MangaOnlineViewer #GlobalFunctions{
+  display: flex;
+  gap: 3px;
+  padding: 10px 10px 0 10px;
+}
+
 #MangaOnlineViewer #ChapterNavigation {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  align-items: center;
+  align-items: end;
   flex-basis: 30%;
+  padding-right: 10px;
 }
 
 #MangaOnlineViewer .ChapterControl {
@@ -364,14 +375,18 @@ img {
   min-width: 20px;
   text-align: center;
   display: inline-block;
-  padding: 2px 10px;
+  padding: 3px 5px;
   line-height: 1rem;
+  border-radius: 5px;
+  border-top-right-radius: 5px;
+  border-top-right-radius: 0;
 }
 
 #MangaOnlineViewer .PageFunctions > .ControlButton {
-  height: 16px;
-  width: 16px;
-  padding: 0 5px;
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 0;
   border-width: 0;
 }
@@ -386,6 +401,13 @@ img {
 
 #MangaOnlineViewer .PageFunctions .ControlButton:hover {
   opacity: 0.9;
+}
+
+#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide  > .inverse,
+#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide  > :not(.inverse),
+#MangaOnlineViewer.bookmarked .ControlButton.Bookmark  > :not(.inverse),
+#MangaOnlineViewer:not(.bookmarked) .ControlButton.Bookmark  > .inverse {
+  display: none;
 }
 
 #MangaOnlineViewer.hideControls .PageFunctions {
@@ -456,33 +478,31 @@ img {
   max-width: 160px;
 }
 
-#MangaOnlineViewer #ImageOptions .hamburger-lines {
-  display: block;
-  height: 26px;
-  width: 32px;
+#MangaOnlineViewer #menu svg {
+  height: 40px;
+  width: 40px;
   position: absolute;
   top: 15px;
   left: 15px;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-#MangaOnlineViewer #ImageOptions .hamburger-lines .line {
-  display: block;
-  height: 4px;
-  width: 100%;
-  border-radius: 10px;
-  /*background: rgba(131, 133, 136, 0.40);*/
 }
 
 #MangaOnlineViewer #blob {
   display: none;
 }
 
-/* Mobile styles*/
-@media (max-width: 768px) {
+
+@media (max-width: 1430px) {
+  #MangaOnlineViewer .ViewerTitle {
+    margin-top: 50px;
+  }
+}
+@media (max-width: 800px) {
+    #MangaOnlineViewer #Header {
+        flex-direction: column;
+    }
+}
+/* Small devices (landscape phones) */
+@media (max-width: 576px) {
   #MangaOnlineViewer #Header {
     flex-direction: column;
   }
@@ -490,6 +510,7 @@ img {
   #MangaOnlineViewer .ViewerTitle {
     order: 1;
     flex-basis: 100%;
+    margin-top: 0px;
   }
 
   #MangaOnlineViewer #GlobalControls {
@@ -559,8 +580,6 @@ img {
   }
 
   #MangaOnlineViewer .ChapterControl {
-    display: block;
-    text-align: center;
   }
 
   #MangaOnlineViewer .ChapterControl .download {

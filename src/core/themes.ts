@@ -17,20 +17,22 @@ function generateThemeCSS(theme: [string, string, string, string, string, string
     color: ${theme[2]};
     background-color: ${theme[1]};
   }
-  .${theme[0]} .PageFunctions > span,
-  .${theme[0]} .Thumbnail span,
-  .${theme[0]} .panel {
+  .${theme[0]} .PageFunctions .PageIndex,
+  .${theme[0]} .Thumbnail .ThumbnailIndex,
+  .${theme[0]} .ControlButton,
+  .${theme[0]} #ChapterControl .ControlButton {
+    color: ${theme[2]};
     background-color: ${theme[4]};
+    border-color: transparent;
   }
   .${theme[0]} .Thumbnail {
     border: 1px solid ${theme[3]};
-    background-color: ${theme[4]};
   }
-  .${theme[0]} .ChapterControl .NavigationControlButton {
+  .${theme[0]} .panel {
     background-color: ${theme[5]};
   }
-  .${theme[0]} #ImageOptions .hamburger-lines .line {
-    background-color: ${theme[3]};
+  .${theme[0]} #menu  {
+    color: ${theme[3]};
   }
   `;
 }

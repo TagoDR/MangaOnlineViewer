@@ -500,7 +500,8 @@ function controls() {
   // Individual Page functions
   // Bookmark Page to resume reading
   function buttonBookmark(elem: Element) {
-    return elem.addEventListener('click', (event) => {
+    elem.addEventListener('click', (event) => {
+      document.querySelector('#MangaOnlineViewer')?.classList.toggle('bookmarked');
       const num = parseInt(
         (event.currentTarget as HTMLElement).parentElement?.querySelector('.PageIndex')
           ?.textContent || '0',

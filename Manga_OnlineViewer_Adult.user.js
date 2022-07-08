@@ -1104,6 +1104,7 @@ img {
   cursor: pointer;
   border-radius: 5px;
   border-width: 1px;
+  padding: 2px;
 }
 
 #MangaOnlineViewer .ControlButton:hover {
@@ -1128,21 +1129,24 @@ img {
   position: fixed;
 }
 
+#MangaOnlineViewer #ImageOptions:hover #menu {
+  display: none;
+}
+
 #MangaOnlineViewer #ImageOptions.settingsOpen {
   position: fixed;
 }
 
 #MangaOnlineViewer #ImageOptions #menu {
   position: fixed;
-  height: 64px;
-  width: 400px;
+  height: 5%;
+  width: 50%;
   top: 0;
+  z-index: -1;
 }
 
 #MangaOnlineViewer #ImageOptions #Zoom {
-  position: absolute;
-  left: 18px;
-  bottom: -65px;
+  margin-left: 10px;
 }
 
 #MangaOnlineViewer .MangaPage {
@@ -1192,7 +1196,7 @@ img {
 
 #MangaOnlineViewer #Header {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   flex-flow: row nowrap;
   transition: transform 0.3s ease-in, background-color 0.3s linear;
@@ -1234,12 +1238,19 @@ img {
   flex-basis: 30%;
 }
 
+#MangaOnlineViewer #GlobalFunctions{
+  display: flex;
+  gap: 3px;
+  padding: 10px 10px 0 10px;
+}
+
 #MangaOnlineViewer #ChapterNavigation {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  align-items: center;
+  align-items: end;
   flex-basis: 30%;
+  padding-right: 10px;
 }
 
 #MangaOnlineViewer .ChapterControl {
@@ -1299,14 +1310,18 @@ img {
   min-width: 20px;
   text-align: center;
   display: inline-block;
-  padding: 2px 10px;
+  padding: 3px 5px;
   line-height: 1rem;
+  border-radius: 5px;
+  border-top-right-radius: 5px;
+  border-top-right-radius: 0;
 }
 
 #MangaOnlineViewer .PageFunctions > .ControlButton {
-  height: 16px;
-  width: 16px;
-  padding: 0 5px;
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 0;
   border-width: 0;
 }
@@ -1321,6 +1336,13 @@ img {
 
 #MangaOnlineViewer .PageFunctions .ControlButton:hover {
   opacity: 0.9;
+}
+
+#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide  > .inverse,
+#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide  > :not(.inverse),
+#MangaOnlineViewer.bookmarked .ControlButton.Bookmark  > :not(.inverse),
+#MangaOnlineViewer:not(.bookmarked) .ControlButton.Bookmark  > .inverse {
+  display: none;
 }
 
 #MangaOnlineViewer.hideControls .PageFunctions {
@@ -1391,33 +1413,31 @@ img {
   max-width: 160px;
 }
 
-#MangaOnlineViewer #ImageOptions .hamburger-lines {
-  display: block;
-  height: 26px;
-  width: 32px;
+#MangaOnlineViewer #menu svg {
+  height: 40px;
+  width: 40px;
   position: absolute;
   top: 15px;
   left: 15px;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-#MangaOnlineViewer #ImageOptions .hamburger-lines .line {
-  display: block;
-  height: 4px;
-  width: 100%;
-  border-radius: 10px;
-  /*background: rgba(131, 133, 136, 0.40);*/
 }
 
 #MangaOnlineViewer #blob {
   display: none;
 }
 
-/* Mobile styles*/
-@media (max-width: 768px) {
+
+@media (max-width: 1430px) {
+  #MangaOnlineViewer .ViewerTitle {
+    margin-top: 50px;
+  }
+}
+@media (max-width: 800px) {
+    #MangaOnlineViewer #Header {
+        flex-direction: column;
+    }
+}
+/* Small devices (landscape phones) */
+@media (max-width: 576px) {
   #MangaOnlineViewer #Header {
     flex-direction: column;
   }
@@ -1425,6 +1445,7 @@ img {
   #MangaOnlineViewer .ViewerTitle {
     order: 1;
     flex-basis: 100%;
+    margin-top: 0px;
   }
 
   #MangaOnlineViewer #GlobalControls {
@@ -1494,8 +1515,6 @@ img {
   }
 
   #MangaOnlineViewer .ChapterControl {
-    display: block;
-    text-align: center;
   }
 
   #MangaOnlineViewer .ChapterControl .download {
@@ -1534,7 +1553,7 @@ img {
 
     // Configuration
     const settings$1 = {
-        theme: getValueGM('Theme', 'Dark'),
+        theme: getValueGM('Theme', 'Tango_Blue'),
         customTheme: getValueGM('CustomTheme', '#263e3a'),
         customThemeBody: getValueGM('CustomThemeBody', '#000000'),
         customThemeText: getValueGM('CustomThemeText', '#ffffff'),
@@ -1554,7 +1573,7 @@ img {
         lazyLoadImages: getValueGM('LazyLoadImages', false),
         lazyStart: getValueGM('LazyStart', 50),
         hidePageControls: getValueGM('HidePageControls', false),
-        mouseOverMenu: getValueGM('MouseOverMenu', false),
+        mouseOverMenu: getValueGM('MouseOverMenu', true),
     };
     // Force Settings for mobile
     if (isMobile) {
@@ -1630,20 +1649,22 @@ img {
     color: ${theme[2]};
     background-color: ${theme[1]};
   }
-  .${theme[0]} .PageFunctions > span,
-  .${theme[0]} .Thumbnail span,
-  .${theme[0]} .panel {
+  .${theme[0]} .PageFunctions .PageIndex,
+  .${theme[0]} .Thumbnail .ThumbnailIndex,
+  .${theme[0]} .ControlButton,
+  .${theme[0]} #ChapterControl .ControlButton {
+    color: ${theme[2]};
     background-color: ${theme[4]};
+    border-color: transparent;
   }
   .${theme[0]} .Thumbnail {
     border: 1px solid ${theme[3]};
-    background-color: ${theme[4]};
   }
-  .${theme[0]} .ChapterControl .NavigationControlButton {
+  .${theme[0]} .panel {
     background-color: ${theme[5]};
   }
-  .${theme[0]} #ImageOptions .hamburger-lines .line {
-    background-color: ${theme[3]};
+  .${theme[0]} #menu  {
+    color: ${theme[3]};
   }
   `;
     }
@@ -1696,6 +1717,7 @@ img {
     // Inject CSS for this script
     const readerCSS = `<style id='Reader' type='text/css'>
 ${cssStyles}
+/*
 #MangaOnlineViewer .PageFunctions .Bookmark {background: url('${icon.bookmark}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .Reload {background: url('${icon.reload}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .Hide {background: url('${icon.hide}') no-repeat scroll center center transparent;}
@@ -1704,6 +1726,7 @@ ${cssStyles}
 #MangaOnlineViewer .PageFunctions .ZoomRestore {background: url('${icon.zoomRestore}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .ZoomWidth {background: url('${icon.zoomWidth}') no-repeat scroll center center transparent;}
 #MangaOnlineViewer .PageFunctions .ZoomHeight {background: url('${icon.zoomWidth}') no-repeat scroll center center transparent;}
+ */
 </style>`;
     function head(manga) {
         return `
@@ -1720,52 +1743,6 @@ ${cssStyles}
 </head>
 `;
     }
-
-    // Add Pages Place-holders
-    const listPages = (times) => Array(times)
-        .fill(null)
-        .map((_, index) => `
-<div id='Page${index + 1}' class='MangaPage'>
-  <div class='PageFunctions'>
-    <button class='Bookmark ControlButton' title='Bookmark'></button>
-    <button class='ZoomIn ControlButton' title='Zoom In'></button>
-    <button class='ZoomRestore ControlButton' title='Zoom Restore'></button>
-    <button class='ZoomOut ControlButton' title='Zoom Out'></button>
-    <button class='ZoomWidth ControlButton' title='Zoom to Width'></button>
-    <button class='ZoomHeight ControlButton' title='Zoom to Height'></button>
-    <button class='Hide ControlButton' title='Hide'></button>
-    <button class='Reload ControlButton' title='Reload'></button>
-    <span class='PageIndex'>${index + 1}</span>
-  </div>
-  <div class='PageContent'>
-    <img id='PageImg${index + 1}' alt='' class='PageImg' />
-  </div>
-</div>`);
-
-    const imageOptions = `<div id='ImageOptions'>
-  <div id='menu'>
-    <div class="hamburger-lines">
-      <span class="line line1"></span>
-      <span class="line line2"></span>
-      <span class="line line3"></span>
-    </div>
-<!--    <span class='menuOuterArrow'><span class='menuInnerArrow'></span></span>-->
-  </div>
-  <div class='panel'>
-    <img id='enlarge' alt='Enlarge' title='Enlarge' src='${icon.enlarge}' class='ControlButton' />
-    <img id='restore' alt='Restore' title='Restore' src='${icon.restore}' class='ControlButton' />
-    <img id='reduce' alt='Reduce' title='Reduce' src='${icon.reduce}' class='ControlButton' />
-    <img id='fitWidth' alt='Fit Width' title='Fit Width' src='${icon.fitWidth}' class='ControlButton' />
-    <img id='fitHeight' alt='Fit Height' title='Fit Height' src='${icon.fitHeight}' class='ControlButton' />
-    <img id='webComic' alt='Web Comic Mode' title='Web Comic Mode' src='${icon.webComic}' class='ControlButton' />
-    <img id='ltrMode' alt='Left to Right Mode' title='Left to Right Mode' src='${icon.pictureLeft}' class='ControlButton'/>
-    <img id='verticalMode' alt='Vertical Mode' title='Vertical Mode' src='${icon.pictureDown}' class='ControlButton'/>
-    <img id='rtlMode' alt='Right to Left Mode' title='Right to Left Mode' src='${icon.pictureRight}' class='ControlButton'/>
-    <img id='pageControls' alt='Toggle Page Controls' title='Toggle Page Controls' src='${icon.controls}' class='ControlButton'/>
-    <img id='settings' alt='settings' title='settings' src='${icon.settings}' class='ControlButton' />
-  </div>
-  <div id='Zoom' class='ControlLabel'>Zoom: <b id='ZoomPercent'>${settings$1.zoom}</b> %</div>
-</div>`;
 
     // Icons from https://tabler-icons.io/
     // Icons for Navigation
@@ -1802,6 +1779,144 @@ ${cssStyles}
    <line x1="18" y1="6" x2="6" y2="18"></line>
    <line x1="6" y1="6" x2="18" y2="18"></line>
 </svg>`;
+    const IconMenu2 = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <line x1="4" y1="6" x2="20" y2="6"></line>
+   <line x1="4" y1="12" x2="20" y2="12"></line>
+   <line x1="4" y1="18" x2="20" y2="18"></line>
+</svg>`;
+    const IconArrowAutofitWidth = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-width" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6"></path>
+   <path color="yellow" d="M10 18h-7"></path>
+   <path color="yellow" d="M21 18h-7"></path>
+   <path color="yellow" d="M6 15l-3 3l3 3"></path>
+   <path color="yellow" d="M18 15l3 3l-3 3"></path>
+</svg>`;
+    const IconArrowAutofitHeight = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-height" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6"></path>
+   <path color="yellow" d="M18 14v7"></path>
+   <path color="yellow" d="M18 3v7"></path>
+   <path color="yellow" d="M15 18l3 3l3 -3"></path>
+   <path color="yellow" d="M15 6l3 -3l3 3"></path>
+</svg>`;
+    // Icons for Page Controls
+    const IconBookmark = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path color="orange" stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path color="orange" d="M9 4h6a2 2 0 0 1 2 2v14l-5 -3l-5 3v-14a2 2 0 0 1 2 -2"></path>
+</svg>`;
+    const IconBookmarkOff = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark-off inverse" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path color="orange" stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <line color="red" x1="3" y1="3" x2="21" y2="21"></line>
+   <path color="orange" d="M17 17v3l-5 -3l-5 3v-13m1.178 -2.818c.252 -.113 .53 -.176 .822 -.176h6a2 2 0 0 1 2 2v7"></path>
+</svg>`;
+    const IconEye = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <circle cx="12" cy="12" r="2"></circle>
+   <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7"></path>
+</svg>`;
+    const IconEyeOff = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-off inverse" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <line color="red" x1="3" y1="3" x2="21" y2="21"></line>
+   <path d="M10.584 10.587a2 2 0 0 0 2.828 2.83"></path>
+   <path d="M9.363 5.365a9.466 9.466 0 0 1 2.637 -.365c4 0 7.333 2.333 10 7c-.778 1.361 -1.612 2.524 -2.503 3.488m-2.14 1.861c-1.631 1.1 -3.415 1.651 -5.357 1.651c-4 0 -7.333 -2.333 -10 -7c1.369 -2.395 2.913 -4.175 4.632 -5.341"></path>
+</svg>`;
+    const IconZoomCancel = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-cancel" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <circle cx="10" cy="10" r="7"></circle>
+   <line color="#9966FF" x1="8" y1="8" x2="12" y2="12"></line>
+   <line color="#9966FF" x1="12" y1="8" x2="8" y2="12"></line>
+   <line x1="21" y1="21" x2="15" y2="15"></line>
+</svg>`;
+    const IconZoomIn = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <circle cx="10" cy="10" r="7"></circle>
+   <line color="lime" x1="7" y1="10" x2="13" y2="10"></line>
+   <line color="lime" x1="10" y1="7" x2="10" y2="13"></line>
+   <line x1="21" y1="21" x2="15" y2="15"></line>
+</svg>`;
+    const IconZoomOut = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <circle cx="10" cy="10" r="7"></circle>
+   <line color="red" x1="7" y1="10" x2="13" y2="10"></line>
+   <line x1="21" y1="21" x2="15" y2="15"></line>
+</svg>`;
+    const IconRefresh = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"></path>
+   <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"></path>
+</svg>`;
+
+    // Add Pages Place-holders
+    const listPages = (times) => Array(times)
+        .fill(null)
+        .map((_, index) => `
+<div id='Page${index + 1}' class='MangaPage'>
+  <div class='PageFunctions'>
+    <button class='Bookmark ControlButton' title='Bookmark'>
+      ${IconBookmark}
+      ${IconBookmarkOff}
+    </button>
+    <button class='ZoomIn ControlButton' title='Zoom In'>
+      ${IconZoomIn}
+    </button>
+    <button class='ZoomRestore ControlButton' title='Zoom Restore'>
+      ${IconZoomCancel}
+    </button>
+    <button class='ZoomOut ControlButton' title='Zoom Out'>
+      ${IconZoomOut}
+    </button>
+    <button class='ZoomWidth ControlButton' title='Zoom to Width'>
+      ${IconArrowAutofitWidth}
+    </button>
+    <button class='ZoomHeight ControlButton' title='Zoom to Height'>
+      ${IconArrowAutofitHeight}
+    </button>
+    <button class='Hide ControlButton' title='Hide'>
+      ${IconEye}
+      ${IconEyeOff}
+    </button>
+    <button class='Reload ControlButton' title='Reload'>
+      ${IconRefresh}
+    </button>
+    <span class='PageIndex'>${index + 1}</span>
+  </div>
+  <div class='PageContent'>
+    <img id='PageImg${index + 1}' alt='' class='PageImg' />
+  </div>
+</div>`);
+
+    const imageOptions = `<div id='ImageOptions'>
+  <div id='menu'>
+    ${IconMenu2}
+  </div>
+  <div id='GlobalFunctions' class=''>
+    <button id='enlarge' title='Enlarge' class='ControlButton' ><img alt='Enlarge' src='${icon.enlarge}' /></button>
+    <button id='restore' title='Restore' class='ControlButton'><img alt='Restore' src='${icon.restore}' /></button>
+    <button id='reduce' title='Reduce' class='ControlButton'><img alt='Reduce' src='${icon.reduce}' /></button>
+    <button id='fitWidth' title='Fit Width' class='ControlButton'><img alt='Fit Width' src='${icon.fitWidth}' /></button>
+    <button id='fitHeight' title='Fit Height' class='ControlButton'><img alt='Fit Height' src='${icon.fitHeight}' /></button>
+    <button id='webComic' title='Web Comic Mode' class='ControlButton'><img alt='Web Comic Mode' src='${icon.webComic}' /></button>
+    <button id='ltrMode' title='Left to Right Mode' class='ControlButton'><img alt='Left to Right Mode' src='${icon.pictureLeft}' /></button>
+    <button id='verticalMode' title='Vertical Mode' class='ControlButton'><img alt='Vertical Mode' src='${icon.pictureDown}' /></button>
+    <button id='rtlMode' title='Right to Left Mode' class='ControlButton'><img alt='Right to Left Mode' src='${icon.pictureRight}' /></button>
+    <button id='pageControls' title='Toggle Page Controls' class='ControlButton'><img alt='Toggle Page Controls' src='${icon.controls}' /></button>
+    <button id='settings' title='Settings' class='ControlButton'><img alt='Settings' src='${icon.settings}' /></button>
+  </div>
+  <div id='Zoom' class='ControlLabel'>Zoom: <b id='ZoomPercent'>${settings$1.zoom}</b> %</div>
+</div>`;
 
     const settingsPanel = `
 <div id='ViewerControls' class='panel'>
@@ -2883,7 +2998,8 @@ ${cssStyles}
         // Individual Page functions
         // Bookmark Page to resume reading
         function buttonBookmark(elem) {
-            return elem.addEventListener('click', (event) => {
+            elem.addEventListener('click', (event) => {
+                document.querySelector('#MangaOnlineViewer')?.classList.toggle('bookmarked');
                 const num = parseInt(event.currentTarget.parentElement?.querySelector('.PageIndex')
                     ?.textContent || '0', 10);
                 const mark = {
