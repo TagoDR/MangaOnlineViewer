@@ -1,3 +1,6 @@
+import { svgToUrl } from '../../utils/svgs';
+import { IconPhotoOff } from './icons';
+
 // language=CSS
 export default `
 /*  Simple Normalizer */
@@ -44,6 +47,8 @@ img {
   padding-bottom: 40px;
   min-height: 760px;
   min-width: 360px;
+  width:100%;
+  height:100%;
 }
 
 #MangaOnlineViewer #Chapter {
@@ -241,10 +246,16 @@ img {
 }
 
 #MangaOnlineViewer .PageContent .PageImg[src=""],
-#MangaOnlineViewer .PageContent .PageImg:not([src]) {
+#MangaOnlineViewer .PageContent .PageImg:not([src]),
+#MangaOnlineViewer .PageContent .PageImg.imgBroken {
   width: 500px;
   height: 750px;
   display: inline-block;
+  background-image: url("${svgToUrl(IconPhotoOff)}");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100px;
+  
 }
 
 #MangaOnlineViewer .fitWidthIfOversize .PageContent .PageImg {

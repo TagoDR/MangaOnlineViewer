@@ -5,7 +5,7 @@ import imageOptions from './ImageOptions';
 import settingsPanel from './ViewerControls';
 import Keybindings from './Keybindings.js';
 import listThumbnails from './Thumbnails';
-import { IconArrowBigLeft, IconArrowBigRight, IconCategory, IconFileDownload } from './svg.js';
+import { IconArrowBigLeft, IconArrowBigRight, IconCategory, IconFileDownload } from './icons.js';
 
 const listOptions = (times: number) =>
   Array(times)

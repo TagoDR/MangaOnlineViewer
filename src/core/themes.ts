@@ -28,10 +28,13 @@ function generateThemeCSS(theme: [string, string, string, string, string, string
   .${theme[0]} .Thumbnail {
     border: 1px solid ${theme[3]};
   }
+  .${theme[0]} .PageImg {
+    background-color: ${theme[3]};
+  }  
   .${theme[0]} .panel {
     background-color: ${theme[5]};
   }
-  .${theme[0]} #menu  {
+  .${theme[0]} #menu {
     color: ${theme[3]};
   }
   `;

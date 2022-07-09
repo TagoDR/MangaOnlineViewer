@@ -217,6 +217,16 @@ export const IconZoomOut = `
 export const IconRefresh = `
 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"></path>
-   <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"></path>
+   <path color='cyan' d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"></path>
+   <path color='cyan' d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"></path>
+</svg>`;
+
+export const IconPhotoOff = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path color="silver" stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <line color="silver" x1="15" y1="8" x2="15.01" y2="8"></line>
+   <path color="silver" d="M19.121 19.122a3 3 0 0 1 -2.121 .878h-10a3 3 0 0 1 -3 -3v-10c0 -.833 .34 -1.587 .888 -2.131m3.112 -.869h9a3 3 0 0 1 3 3v9"></path>
+   <path color="silver" d="M4 15l4 -4c.928 -.893 2.072 -.893 3 0l5 5"></path>
+   <line color="orange" x1="3" y1="3" x2="21" y2="21"></line>
+   <path color="silver" d="M16.32 12.34c.577 -.059 1.162 .162 1.68 .66l2 2"></path>
 </svg>`;

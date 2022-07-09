@@ -10,7 +10,7 @@ import {
   IconZoomCancel,
   IconZoomIn,
   IconZoomOut,
-} from './svg';
+} from './icons.js';
 
 const listPages = (times: number) =>
   Array(times)

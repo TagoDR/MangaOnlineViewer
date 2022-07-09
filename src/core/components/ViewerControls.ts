@@ -1,6 +1,6 @@
 import { themesSelector } from '../themes';
 import { settings } from '../settings';
-import { IconX } from './svg.js';
+import { IconX } from './icons.js';
 
 const settingsPanel = `
 <div id='ViewerControls' class='panel'>

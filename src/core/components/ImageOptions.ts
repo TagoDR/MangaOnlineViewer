@@ -1,5 +1,5 @@
 import { icon, settings } from '../settings';
-import { IconMenu2 } from './svg';
+import { IconMenu2 } from './icons.js';
 
 const imageOptions = `<div id='ImageOptions'>
   <div id='menu'>
