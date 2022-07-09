@@ -1,5 +1,5 @@
 import { themesSelector } from '../themes';
-import { settings } from '../settings';
+import settings from '../settings';
 import { IconX } from './icons.js';
 
 const settingsPanel = `

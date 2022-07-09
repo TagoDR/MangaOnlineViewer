@@ -2,7 +2,7 @@ import Swal from 'sweetalert2';
 import { getListGM, getValueGM, logScript, removeValueGM, setValueGM } from '../utils/tampermonkey';
 import generateZip from './download';
 import { applyZoom, reloadImage } from './page';
-import { settings } from './settings';
+import settings from './settings';
 import { addCustomTheme, addFullCustomTheme } from './themes';
 import { IBookmark } from '../types';
 import { replaceStyleSheet } from '../utils/css.js';

@@ -1,7 +1,7 @@
 import NProgress from 'nprogress';
 import imagesLoaded from 'imagesloaded';
 import { logScript } from '../utils/tampermonkey';
-import { settings } from './settings';
+import settings from './settings';
 import {
   IManga,
   IMangaImages,

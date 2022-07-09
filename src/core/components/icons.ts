@@ -16,8 +16,8 @@ export const IconFileDownload = `
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>
-   <path d="M12 17v-6"></path>
-   <path d="M9.5 14.5l2.5 2.5l2.5 -2.5"></path>
+   <path color="gold" d="M12 17v-6"></path>
+   <path color="gold" d="M9.5 14.5l2.5 2.5l2.5 -2.5"></path>
 </svg>`;
 export const IconCategory = `
 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -63,8 +63,8 @@ export const IconArrowAutofitHeight = `
 export const IconZoomInArea = `
 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M15 13v4"></path>
-   <path d="M13 15h4"></path>
+   <path color="lime" d="M15 13v4"></path>
+   <path color="lime" d="M13 15h4"></path>
    <circle cx="15" cy="15" r="5"></circle>
    <path d="M22 22l-3 -3"></path>
    <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1"></path>
@@ -76,7 +76,7 @@ export const IconZoomInArea = `
 export const IconZoomOutArea = `
 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M13 15h4"></path>
+   <path color="red" d="M13 15h4"></path>
    <circle cx="15" cy="15" r="5"></circle>
    <path d="M22 22l-3 -3"></path>
    <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1"></path>
@@ -90,31 +90,38 @@ export const IconZoomPan = `
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <circle cx="12" cy="12" r="3"></circle>
    <path d="M17 17l-2.5 -2.5"></path>
-   <path d="M10 5l2 -2l2 2"></path>
-   <path d="M19 10l2 2l-2 2"></path>
-   <path d="M5 10l-2 2l2 2"></path>
-   <path d="M10 19l2 2l2 -2"></path>
+   <path color="#9966FF" d="M10 5l2 -2l2 2"></path>
+   <path color="#9966FF" d="M19 10l2 2l-2 2"></path>
+   <path color="#9966FF" d="M5 10l-2 2l2 2"></path>
+   <path color="#9966FF" d="M10 19l2 2l2 -2"></path>
 </svg>`;
 export const IconArrowAutofitDown = `
 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8"></path>
-   <path d="M18 4v17"></path>
-   <path d="M15 18l3 3l3 -3"></path>
+   <path color="#28FFBF" d="M18 4v17"></path>
+   <path color="#28FFBF" d="M15 18l3 3l3 -3"></path>
 </svg>`;
 export const IconArrowAutofitLeft = `
 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8"></path>
-   <path d="M20 18h-17"></path>
-   <path d="M6 15l-3 3l3 3"></path>
+   <path color="#28FFBF" d="M20 18h-17"></path>
+   <path color="#28FFBF" d="M6 15l-3 3l3 3"></path>
 </svg>`;
 export const IconArrowAutofitRight = `
 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <path d="M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8"></path>
-   <path d="M4 18h17"></path>
-   <path d="M18 15l3 3l-3 3"></path>
+   <path color="#28FFBF" d="M4 18h17"></path>
+   <path color="#28FFBF" d="M18 15l3 3l-3 3"></path>
+</svg>`;
+export const IconSpacingVertical = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-spacing-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2"></path>
+   <path d="M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path>
+   <path color="fuchsia" d="M16 12h-8"></path>
 </svg>`;
 export const IconSettings = `
 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -133,6 +140,15 @@ export const IconKeyboard = `
    <line x1="6" y1="14" x2="6" y2="14.01"></line>
    <line x1="18" y1="14" x2="18" y2="14.01"></line>
    <line x1="10" y1="14" x2="14" y2="14"></line>
+</svg>`;
+export const IconListNumbers = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-numbers" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M11 6h9"></path>
+   <path d="M11 12h9"></path>
+   <path d="M12 18h8"></path>
+   <path color="#E48900" d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4"></path>
+   <path color="#E48900" d="M6 10v-6l-2 2"></path>
 </svg>`;
 export const IconBorderNone = `
 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-border-none" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -220,7 +236,14 @@ export const IconRefresh = `
    <path color='cyan' d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"></path>
    <path color='cyan' d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"></path>
 </svg>`;
-
+export const IconPhoto = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path color="silver" stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <line color="silver" x1="15" y1="8" x2="15.01" y2="8"></line>
+   <rect color="silver" x="4" y="4" width="16" height="16" rx="3"></rect>
+   <path color="silver" d="M4 15l4 -4a3 5 0 0 1 3 0l5 5"></path>
+   <path color="silver" d="M14 14l1 -1a3 5 0 0 1 3 0l2 2"></path>
+</svg>`;
 export const IconPhotoOff = `
 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path color="silver" stroke="none" d="M0 0h24v24H0z" fill="none"></path>

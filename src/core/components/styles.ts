@@ -1,5 +1,5 @@
 import { svgToUrl } from '../../utils/svgs';
-import { IconPhotoOff } from './icons';
+import { IconPhoto, IconPhotoOff } from './icons';
 
 // language=CSS
 export default `
@@ -78,18 +78,13 @@ img {
   justify-self: flex-end;
 }
 
-#MangaOnlineViewer #Chapter.WebComic .PageFunctions {
-}
 #MangaOnlineViewer #Chapter.FluidLTR .PageContent,
 #MangaOnlineViewer #Chapter.FluidRTL .PageContent,
 #MangaOnlineViewer #Chapter.WebComic .PageContent {
   margin: 0;
 }
 
-#MangaOnlineViewer #Chapter.FluidLTR .MangaPage {
-  width: auto;
-}
-
+#MangaOnlineViewer #Chapter.FluidLTR .MangaPage,
 #MangaOnlineViewer #Chapter.FluidRTL .MangaPage {
   width: auto;
 }
@@ -100,6 +95,11 @@ img {
 
 #MangaOnlineViewer #Chapter.FluidRTL {
   direction: rtl;
+}
+
+#MangaOnlineViewer #Chapter.FluidLTR .ZoomWidth .icon-tabler,
+#MangaOnlineViewer #Chapter.FluidRTL .ZoomWidth .icon-tabler {
+  color: red;
 }
 
 #MangaOnlineViewer #ViewerControls {
@@ -246,7 +246,16 @@ img {
 }
 
 #MangaOnlineViewer .PageContent .PageImg[src=""],
-#MangaOnlineViewer .PageContent .PageImg:not([src]),
+#MangaOnlineViewer .PageContent .PageImg:not([src]) {
+  width: 500px;
+  height: 750px;
+  display: inline-block;
+  background-image: url("${svgToUrl(IconPhoto)}");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 20%;
+}
+
 #MangaOnlineViewer .PageContent .PageImg.imgBroken {
   width: 500px;
   height: 750px;
@@ -254,8 +263,18 @@ img {
   background-image: url("${svgToUrl(IconPhotoOff)}");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 100px;
-  
+  background-size: 20%;
+}
+
+#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=""],
+#MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {
+  width: 100px;
+  height: 150px;
+  display: inline-block;
+  background-image: url("${svgToUrl(IconPhoto)}");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 20%;
 }
 
 #MangaOnlineViewer .fitWidthIfOversize .PageContent .PageImg {
@@ -320,6 +339,11 @@ img {
   padding: 10px 10px 0 10px;
 }
 
+#MangaOnlineViewer #GlobalFunctions .icon-tabler{
+  width: 25px;
+  height: 25px;
+}
+
 #MangaOnlineViewer #ChapterNavigation {
   display: flex;
   flex-flow: column nowrap;
@@ -344,7 +368,7 @@ img {
   gap: 0.5em;
 }
 
-#MangaOnlineViewer .ChapterControl .NavigationControlButton svg {
+#MangaOnlineViewer .ChapterControl .NavigationControlButton .icon-tabler {
   flex-shrink: 0;
   align-self: center;
   width: 1rem;
@@ -489,20 +513,19 @@ img {
   max-width: 160px;
 }
 
-#MangaOnlineViewer #menu svg {
-  height: 40px;
-  width: 40px;
+#MangaOnlineViewer #menu .icon-tabler {
   position: absolute;
-  top: 15px;
-  left: 15px;
+  top: 10px;
+  left: 10px;
+  height: 32px;
+  width: 32px;
 }
 
 #MangaOnlineViewer #blob {
   display: none;
 }
 
-
-@media (max-width: 1430px) {
+@media (max-width: 1270px) {
   #MangaOnlineViewer .ViewerTitle {
     margin-top: 50px;
   }

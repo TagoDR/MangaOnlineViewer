@@ -3,7 +3,7 @@ import { getBrowser, getEngine, getInfoGM, logScript } from '../utils/tampermonk
 import { IManga, ISite } from '../types';
 import { isNothing } from '../utils/checks';
 import formatPage from './format';
-import { settings } from './settings';
+import settings from './settings';
 import sweetalertStyle from './components/sweetalertStyle.js';
 
 async function lateStart(site: ISite, begin = 1) {

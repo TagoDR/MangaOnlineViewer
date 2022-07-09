@@ -1,5 +1,5 @@
 import ColorScheme from 'color-scheme';
-import { settings } from './settings';
+import settings from './settings';
 import { replaceStyleSheet } from '../utils/css.js';
 
 const scheme = new ColorScheme().scheme('mono').variation('default');
@@ -28,7 +28,10 @@ function generateThemeCSS(theme: [string, string, string, string, string, string
   .${theme[0]} .Thumbnail {
     border: 1px solid ${theme[3]};
   }
-  .${theme[0]} .PageImg {
+
+  .${theme[0]} .PageContent .PageImg[src=""],
+  .${theme[0]} .PageContent .PageImg:not([src]),
+  .${theme[0]} .PageContent .PageImg.imgBroken {
     background-color: ${theme[3]};
   }  
   .${theme[0]} .panel {

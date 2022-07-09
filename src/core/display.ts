@@ -5,7 +5,7 @@ import { logScript, setValueGM } from '../utils/tampermonkey';
 import { controls, setKeyDownEvents } from './events';
 import { loadManga } from './page';
 import { isNothing } from '../utils/checks';
-import { settings } from './settings';
+import settings from './settings';
 
 export default function display(manga: IManga, begin: number) {
   window.stop();
