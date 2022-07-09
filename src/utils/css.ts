@@ -23,4 +23,8 @@ function replaceStyleSheet(id: string, content: string) {
   appendStyleSheet(id, content);
 }
 
-export { appendStyleSheet, removeStyleSheet, replaceStyleSheet };
+function wrapStyle(id: string, css: string) {
+  return `<style type='text/css' id='${id}'>${css}</style>`;
+}
+
+export { appendStyleSheet, removeStyleSheet, replaceStyleSheet, wrapStyle };

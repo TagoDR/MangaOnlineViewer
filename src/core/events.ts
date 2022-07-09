@@ -306,10 +306,12 @@ function controls() {
   }
   document.querySelector('#downloadZip')?.addEventListener('change', changeAutoDownload);
   // Download starter
-  document.querySelector('#blob')?.addEventListener('click', generateZip, { once: true });
-  document.querySelector('.download')?.addEventListener('click', () => {
+  document.querySelector('.download')?.addEventListener('click', (event: Event) => {
+    const button = event.currentTarget as HTMLInputElement;
     logScript('Downloading Chapter');
-    document.querySelector('#blob')?.dispatchEvent(new Event('click'));
+    button.disabled = true;
+    button.classList.add('loading');
+    generateZip();
   });
   // Lazy load Toggle
   function checkLazyLoad(event: Event) {

@@ -104,6 +104,9 @@ function generateZip() {
         .then((content) => {
           logScript('Download Ready');
           const zipName = `${document.querySelector('#MangaTitle')?.textContent?.trim()}.zip`;
+          const button = document.querySelector<HTMLButtonElement>('.download')!;
+          button.disabled = false;
+          button.classList.remove('loading');
           FileSaver.saveAs(content, zipName);
         });
     } catch (e) {

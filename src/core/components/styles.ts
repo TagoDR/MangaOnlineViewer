@@ -15,6 +15,7 @@ body {
   color: #333;
   background-color: #fff;
   padding: 0;
+  height: 100vh;
 }
 a {
   color: #08c;
@@ -380,6 +381,10 @@ img {
   visibility: hidden;
 }
 
+#MangaOnlineViewer .ChapterControl .download.loading{
+  cursor: not-allowed;
+}
+
 #MangaOnlineViewer .ViewerTitle {
   text-align: center;
   min-height: 60px;
@@ -438,6 +443,8 @@ img {
   opacity: 0.9;
 }
 
+#MangaOnlineViewer .ChapterControl .download.loading > :not(.inverse),
+#MangaOnlineViewer .ChapterControl .download:not(.loading) > .inverse,
 #MangaOnlineViewer .MangaPage.hide .ControlButton.Hide  > .inverse,
 #MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide  > :not(.inverse),
 #MangaOnlineViewer.bookmarked .ControlButton.Bookmark  > :not(.inverse),
@@ -625,4 +632,38 @@ img {
   }
 }
 
+@-webkit-keyframes spin {
+  to {
+    transform:rotate(360deg)
+  }
+}
+@keyframes spin {
+  to {
+    transform:rotate(360deg)
+  }
+}
+.animate-spin {
+  -webkit-animation:spin 1s linear infinite;
+  animation:spin 1s linear infinite
+}
+@-webkit-keyframes spin-reverse {
+  0% {
+    transform:rotate(360deg)
+  }
+  to {
+    transform:rotate(0)
+  }
+}
+@keyframes spin-reverse {
+  0% {
+    transform:rotate(360deg)
+  }
+  to {
+    transform:rotate(0)
+  }
+}
+.animate-spin-reverse {
+  -webkit-animation:spin-reverse 1s linear infinite;
+  animation:spin-reverse 1s linear infinite
+}
 `;

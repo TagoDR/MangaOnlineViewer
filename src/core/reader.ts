@@ -1,26 +1,22 @@
 import cssStyles from './components/styles';
-import { externalCSS, externalScripts } from './externals';
 import settings from './settings';
 import { themesCSS } from './themes';
 import { IManga } from '../types';
-
-// Inject CSS for this script
-const readerCSS = `<style id='Reader' type='text/css'>
-${cssStyles}
-</style>`;
+import externalCSS from './components/externalStyle';
+import { wrapStyle } from '../utils/css';
 
 function head(manga: IManga) {
   return `
 <head>
   <title>${manga.title}</title>
   <meta charset='UTF-8'>
-  ${externalScripts.join('\n')}
-  ${externalCSS.join('\n')}
-  ${readerCSS}
+  ${wrapStyle('externals', externalCSS)}
+  ${wrapStyle('reader', cssStyles)}
   ${themesCSS}
-  <style id='MinZoom' type='text/css'>
-    #MangaOnlineViewer .PageContent .PageImg {min-width: ${settings.minZoom}vw;}
-  </style>
+  ${wrapStyle(
+    'MinZoom',
+    `#MangaOnlineViewer .PageContent .PageImg {min-width: ${settings.minZoom}vw;}`,
+  )}
 </head>
 `;
 }

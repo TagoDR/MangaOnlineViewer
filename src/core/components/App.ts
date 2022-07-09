@@ -5,7 +5,13 @@ import imageOptions from './ImageOptions';
 import settingsPanel from './ViewerControls';
 import Keybindings from './Keybindings.js';
 import listThumbnails from './Thumbnails';
-import { IconArrowBigLeft, IconArrowBigRight, IconCategory, IconFileDownload } from './icons.js';
+import {
+  IconArrowBigLeft,
+  IconArrowBigRight,
+  IconCategory,
+  IconFileDownload,
+  IconLoader2,
+} from './icons.js';
 
 const listOptions = (times: number) =>
   Array(times)
@@ -33,18 +39,21 @@ const body = (manga: IManga, begin = 0) => `
         </select>
       </div>
       <div id='ChapterControl' class='ChapterControl'>
-        <a href='#' class='download NavigationControlButton ControlButton'>
+        <button class='download NavigationControlButton ControlButton' type='button'>
           ${IconFileDownload}
+          ${IconLoader2}
           Download
-        </a>
-        <a class='prev NavigationControlButton ControlButton' id='prev' href='${manga.prev || ''}'>
+        </button>
+        <button id='prev' class='prev NavigationControlButton ControlButton' type='button'
+        onclick="window.location.href='${manga.prev || ''}';">
           ${IconArrowBigLeft}
           Previous
-        </a>
-        <a class='next NavigationControlButton ControlButton' id='next' href='${manga.next || ''}'>
+        </button>
+        <button id='next' class='next NavigationControlButton ControlButton' type='button'
+        onclick="window.location.href='${manga.next || ''}';">
           Next
           ${IconArrowBigRight}
-        </a>
+        </button>
       </div>
     </nav>
   </header>  
@@ -64,6 +73,5 @@ const body = (manga: IManga, begin = 0) => `
   </nav>
   ${settingsPanel}
   ${Keybindings}
-  <a href='#' id='blob' style='display: none;'>Download</a>
 </div>`;
 export default body;
