@@ -1,6 +1,8 @@
 import JSZip from 'jszip';
-import FileSaver from 'file-saver';
+import * as FileSaver from 'file-saver';
 import { logScript } from '../utils/tampermonkey';
+
+declare const saveAs: typeof FileSaver.saveAs;
 
 const cache = {
   zip: new JSZip(),
@@ -63,7 +65,7 @@ function generateZip() {
           GM_xmlhttpRequest({
             method: 'GET',
             url: src,
-            overrideMimeType: 'text/plain; charset=x-user-defined',
+            headers: { referer: src, origin: src },
             responseType: 'blob',
             onload(request) {
               const filename =
@@ -104,11 +106,12 @@ function generateZip() {
         .then((content) => {
           logScript('Download Ready');
           const zipName = `${document.querySelector('#MangaTitle')?.textContent?.trim()}.zip`;
+          saveAs(content, zipName);
           const button = document.querySelector<HTMLButtonElement>('.download')!;
           button.disabled = false;
           button.classList.remove('loading');
-          FileSaver.saveAs(content, zipName);
-        });
+        })
+        .catch(logScript);
     } catch (e) {
       logScript(e);
     }

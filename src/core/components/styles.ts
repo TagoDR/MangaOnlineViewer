@@ -15,7 +15,6 @@ body {
   color: #333;
   background-color: #fff;
   padding: 0;
-  height: 100vh;
 }
 a {
   color: #08c;
@@ -248,8 +247,8 @@ img {
 
 #MangaOnlineViewer .PageContent .PageImg[src=""],
 #MangaOnlineViewer .PageContent .PageImg:not([src]) {
-  width: 500px;
-  height: 750px;
+  width: 40vw;
+  height: 100vh;
   display: inline-block;
   background-image: url("${svgToUrl(IconPhoto)}");
   background-position: center;
