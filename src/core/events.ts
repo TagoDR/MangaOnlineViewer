@@ -168,13 +168,18 @@ function controls() {
   // Settings Control
   function buttonSettings() {
     document.querySelector('#ViewerControls')?.classList.toggle('visible');
-    document.querySelector('#ViewerShortcuts')?.classList.toggle('visible');
     document.querySelector('#ImageOptions')?.classList.toggle('settingsOpen');
     document.querySelector('#Navigation')?.classList.toggle('visible');
     document.querySelector('#Header')?.classList.toggle('visible');
   }
   document.querySelector('#settings')?.addEventListener('click', buttonSettings);
   document.querySelector('#CloseSettings')?.addEventListener('click', buttonSettings);
+  // Keybindings list
+  function buttonKeybindings() {
+    document.querySelector('#ViewerShortcuts')?.classList.toggle('visible');
+  }
+  document.querySelector('#keybindings')?.addEventListener('click', buttonKeybindings);
+  document.querySelector('#CloseKeybindings')?.addEventListener('click', buttonKeybindings);
   // Size Controls
   // Global Zoom In Button
   function buttonGlobalZoomIn() {

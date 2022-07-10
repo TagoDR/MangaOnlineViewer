@@ -5,6 +5,7 @@ import {
   IconArrowAutofitLeft,
   IconArrowAutofitRight,
   IconArrowAutofitWidth,
+  IconKeyboard,
   IconListNumbers,
   IconMenu2,
   IconSettings,
@@ -24,6 +25,7 @@ const imageOptions = `<div id='ImageOptions'>
     <button id='reduce' title='Reduce' class='ControlButton'>${IconZoomOutArea}</button>
     <button id='fitWidth' title='Fit Width' class='ControlButton'>${IconArrowAutofitWidth}</button>
     <button id='fitHeight' title='Fit Height' class='ControlButton'>${IconArrowAutofitHeight}</button>
+    <button id='keybindings' title='Keybindings' class='ControlButton'>${IconKeyboard}</button>
     <button id='webComic' title='Web Comic Mode' class='ControlButton'>${IconSpacingVertical}</button>
     <button id='ltrMode' title='Left to Right Mode' class='ControlButton'>${IconArrowAutofitRight}</button>
     <button id='verticalMode' title='Vertical Mode' class='ControlButton'>${IconArrowAutofitDown}</button>
@@ -31,6 +33,6 @@ const imageOptions = `<div id='ImageOptions'>
     <button id='pageControls' title='Toggle Page Controls' class='ControlButton'>${IconListNumbers}</button>
     <button id='settings' title='Settings' class='ControlButton'>${IconSettings}</button>
   </div>
-  <div id='Zoom' class='ControlLabel'>Zoom: <b id='ZoomPercent'>${settings.zoom}</b> %</div>
+<!--  <div id='Zoom' class='ControlLabel'>Zoom: <b id='ZoomPercent'>${settings.zoom}</b> %</div>-->
 </div>`;
 export default imageOptions;

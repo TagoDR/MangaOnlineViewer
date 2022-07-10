@@ -5,7 +5,7 @@ import { IconX } from './icons.js';
 const settingsPanel = `
 <div id='ViewerControls' class='panel'>
   <h2>Settings</h2>
-  <button id='CloseSettings'>${IconX}</button>
+  <button id='CloseSettings' class='closeButton'>${IconX}</button>
   <button id='ResetSettings'>Reset Settings</button>
   <div class='ControlLabel ThemeSelector'>Theme:
     <select id='ThemeSelector'>
