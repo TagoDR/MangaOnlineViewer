@@ -158,6 +158,48 @@ img {
   display: block;
 }
 
+#MangaOnlineViewer #BookmarksPanel {
+  position: fixed;
+  top: 10%;
+  width: 50%;
+  left: 25%;
+  right: 25%;
+  text-align: center;
+  max-height: 70%;
+  display: none;
+}
+
+#MangaOnlineViewer #BookmarksPanel.visible {
+  /*transform: translateX(0);*/
+  display: block;
+}
+
+#MangaOnlineViewer #BookmarksList {
+  padding: 0 15px;
+  overflow: auto;
+  max-height: 60vh;
+}
+
+#MangaOnlineViewer #BookmarksList .BookmarkItem {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px;
+}
+
+#MangaOnlineViewer #BookmarksList .bookmarkData {
+  flex-basis: 15%;
+}
+
+#MangaOnlineViewer #BookmarksList .bookmarkURl {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  flex-basis: 55%;
+}
+
+
 #MangaOnlineViewer select {
   height: 20px;
   padding: 0;

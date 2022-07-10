@@ -5,7 +5,8 @@ import { applyZoom, reloadImage } from './page';
 import settings from './settings';
 import { addCustomTheme, addFullCustomTheme } from './themes';
 import { IBookmark } from '../types';
-import { replaceStyleSheet } from '../utils/css.js';
+import { replaceStyleSheet } from '../utils/css';
+import { reloadBookmarks } from './components/Bookmarks';
 
 // Goto Page and Thumbnails
 function scrollToElement(ele: HTMLElement | undefined) {
@@ -177,6 +178,32 @@ function controls() {
   }
   document.querySelector('#keybindings')?.addEventListener('click', buttonKeybindings);
   document.querySelector('#CloseKeybindings')?.addEventListener('click', buttonKeybindings);
+  // List of Bookmarks
+  function buttonBookmarks() {
+    document.querySelector('#BookmarksPanel')?.classList.toggle('visible');
+  }
+  document.querySelector('#bookmarks')?.addEventListener('click', buttonBookmarks);
+  document.querySelector('#CloseBookmarks')?.addEventListener('click', buttonBookmarks);
+  function eraseBookmarks(elem: Element) {
+    elem.addEventListener('click', (event) => {
+      const target = (event.currentTarget as HTMLButtonElement).value;
+      settings.bookmarks = settings.bookmarks.filter((el) => el.url !== target);
+      if (target === window.location.href) {
+        document.querySelector('#MangaOnlineViewer')?.classList.toggle('bookmarked');
+      }
+      logScript(`Bookmark Removed ${target}`);
+      Swal.fire({
+        title: 'Bookmark Removed',
+        timer: 10000,
+        icon: 'error',
+      });
+      setValueGM('Bookmarks', JSON.stringify(settings.bookmarks));
+      logScript(`MangaBookmarks: ${getValueGM('Bookmarks')}`);
+      reloadBookmarks();
+      document.querySelectorAll('.BookmarkItem .erase')?.forEach(eraseBookmarks);
+    });
+  }
+  document.querySelectorAll('.BookmarkItem .erase')?.forEach(eraseBookmarks);
   // Size Controls
   // Global Zoom In Button
   function buttonGlobalZoomIn() {
@@ -504,8 +531,8 @@ function controls() {
         date: Date.now(),
       };
       const found = settings.bookmarks.filter((el) => el.url === mark.url).length > 0;
-      settings.bookmarks = settings.bookmarks.filter((el) => el.url !== mark.url);
       if (found) {
+        settings.bookmarks = settings.bookmarks.filter((el) => el.url !== mark.url);
         Swal.fire({
           title: 'Bookmark Removed',
           timer: 10000,
@@ -521,6 +548,8 @@ function controls() {
       }
       setValueGM('Bookmarks', JSON.stringify(settings.bookmarks));
       logScript(`MangaBookmarks: ${getValueGM('Bookmarks')}`);
+      reloadBookmarks();
+      document.querySelectorAll('.BookmarkItem .erase')?.forEach(eraseBookmarks);
     });
   }
   document.querySelectorAll('.Bookmark')?.forEach(buttonBookmark);

@@ -5,6 +5,7 @@ import {
   IconArrowAutofitLeft,
   IconArrowAutofitRight,
   IconArrowAutofitWidth,
+  IconBookmarks,
   IconKeyboard,
   IconListNumbers,
   IconMenu2,
@@ -29,6 +30,7 @@ const imageOptions = `<div id='ImageOptions'>
     <button id='verticalMode' title='Vertical Mode' class='ControlButton'>${IconArrowAutofitDown}</button>
     <button id='rtlMode' title='Right to Left Mode' class='ControlButton'>${IconArrowAutofitLeft}</button>
     <button id='pageControls' title='Toggle Page Controls' class='ControlButton'>${IconListNumbers}</button>
+    <button id='bookmarks' title='List Bookmarks' class='ControlButton'>${IconBookmarks}</button>
     <button id='settings' title='Settings' class='ControlButton'>${IconSettings}</button>
   </div>
 <!--  <div id='Zoom' class='ControlLabel'>Zoom: <b id='ZoomPercent'>${settings.zoom}</b> %</div>-->
