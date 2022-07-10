@@ -78,12 +78,6 @@ img {
   justify-self: flex-end;
 }
 
-#MangaOnlineViewer #Chapter.FluidLTR .PageContent,
-#MangaOnlineViewer #Chapter.FluidRTL .PageContent,
-#MangaOnlineViewer #Chapter.WebComic .PageContent {
-  margin: 0;
-}
-
 #MangaOnlineViewer #Chapter.FluidLTR .MangaPage,
 #MangaOnlineViewer #Chapter.FluidRTL .MangaPage {
   width: auto;
@@ -230,7 +224,6 @@ img {
 }
 
 #MangaOnlineViewer .PageContent {
-  margin: 0 0 15px;
   text-align: center;
   display: inline-block;
   overflow-x: auto;
@@ -410,6 +403,7 @@ img {
   gap: 3px;
   position: absolute;
   right: 0;
+  direction: ltr;
 }
 
 #MangaOnlineViewer .PageFunctions > .PageIndex {

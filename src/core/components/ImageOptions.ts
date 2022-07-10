@@ -9,7 +9,6 @@ import {
   IconListNumbers,
   IconMenu2,
   IconSettings,
-  IconSpacingVertical,
   IconZoomInArea,
   IconZoomOutArea,
   IconZoomPan,
@@ -26,7 +25,6 @@ const imageOptions = `<div id='ImageOptions'>
     <button id='fitWidth' title='Fit Width' class='ControlButton'>${IconArrowAutofitWidth}</button>
     <button id='fitHeight' title='Fit Height' class='ControlButton'>${IconArrowAutofitHeight}</button>
     <button id='keybindings' title='Keybindings' class='ControlButton'>${IconKeyboard}</button>
-    <button id='webComic' title='Web Comic Mode' class='ControlButton'>${IconSpacingVertical}</button>
     <button id='ltrMode' title='Left to Right Mode' class='ControlButton'>${IconArrowAutofitRight}</button>
     <button id='verticalMode' title='Vertical Mode' class='ControlButton'>${IconArrowAutofitDown}</button>
     <button id='rtlMode' title='Right to Left Mode' class='ControlButton'>${IconArrowAutofitLeft}</button>

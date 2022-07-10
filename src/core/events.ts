@@ -134,9 +134,6 @@ function setKeyDownEvents() {
         case 'KeyX':
           document.querySelector('#settings')?.dispatchEvent(new Event('click'));
           break;
-        case 'KeyC':
-          document.querySelector('#webComic')?.dispatchEvent(new Event('click'));
-          break;
         case 'KeyV':
           document.querySelector('#verticalMode')?.dispatchEvent(new Event('click'));
           break;
@@ -216,18 +213,8 @@ function controls() {
     applyZoom();
   }
   document.querySelector('#fitHeight')?.addEventListener('click', buttonGlobalFitHeight);
-  // WebComic View Mode Button
-  function buttonWebComicMode() {
-    document.querySelector('#Chapter')?.classList.add('WebComic');
-    document.querySelector('#Chapter')?.classList.remove('FluidLTR');
-    document.querySelector('#Chapter')?.classList.remove('FluidRTL');
-    document.querySelector('#Chapter')?.classList.remove('DoublePage');
-    applyZoom();
-  }
-  document.querySelector('#webComic')?.addEventListener('click', buttonWebComicMode);
   // Fluid LTR View Mode Button
   function buttonLtrMode() {
-    document.querySelector('#Chapter')?.classList.remove('WebComic');
     document.querySelector('#Chapter')?.classList.add('FluidLTR');
     document.querySelector('#Chapter')?.classList.remove('FluidRTL');
     document.querySelector('#Chapter')?.classList.add('DoublePage');
@@ -236,7 +223,6 @@ function controls() {
   document.querySelector('#ltrMode')?.addEventListener('click', buttonLtrMode);
   // Fluid RTL View Mode Button
   function buttonRtlMode() {
-    document.querySelector('#Chapter')?.classList.remove('WebComic');
     document.querySelector('#Chapter')?.classList.remove('FluidLTR');
     document.querySelector('#Chapter')?.classList.add('FluidRTL');
     document.querySelector('#Chapter')?.classList.add('DoublePage');
@@ -245,7 +231,6 @@ function controls() {
   document.querySelector('#rtlMode')?.addEventListener('click', buttonRtlMode);
   // Vertical View Mode Button
   function buttonVerticalMode() {
-    document.querySelector('#Chapter')?.classList.remove('WebComic');
     document.querySelector('#Chapter')?.classList.remove('FluidLTR');
     document.querySelector('#Chapter')?.classList.remove('FluidRTL');
     document.querySelector('#Chapter')?.classList.remove('DoublePage');
@@ -266,7 +251,6 @@ function controls() {
   // Default View mode Selector
   function changeViewMode(event: Event) {
     const mode = (event.currentTarget as HTMLInputElement).value;
-    document.querySelector('#Chapter')?.classList.remove('WebComic');
     document.querySelector('#Chapter')?.classList.remove('FluidLTR');
     document.querySelector('#Chapter')?.classList.remove('FluidRTL');
     document.querySelector('#Chapter')?.classList.add(mode);
