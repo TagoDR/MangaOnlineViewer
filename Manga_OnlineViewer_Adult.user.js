@@ -2050,7 +2050,6 @@ img {
 `;
     }
 
-    // Add Pages Place-holders
     const listPages = (times) => Array(times)
         .fill(null)
         .map((_, index) => `
