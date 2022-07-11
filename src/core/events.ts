@@ -6,7 +6,7 @@ import settings from './settings';
 import { addCustomTheme, addFullCustomTheme } from './themes';
 import { IBookmark } from '../types';
 import { replaceStyleSheet } from '../utils/css';
-import { reloadBookmarks } from './components/Bookmarks';
+import { reloadBookmarks } from './components/BookmarksPanel';
 
 // Goto Page and Thumbnails
 function scrollToElement(ele: HTMLElement | undefined) {
@@ -165,8 +165,7 @@ function updateZoomPercent(percent: number | string = settings.zoom) {
 function controls() {
   // Settings Control
   function buttonSettings() {
-    document.querySelector('#ViewerControls')?.classList.toggle('visible');
-    document.querySelector('#ImageOptions')?.classList.toggle('settingsOpen');
+    document.querySelector('#SettingsPanel')?.classList.toggle('visible');
     document.querySelector('#Navigation')?.classList.toggle('visible');
     document.querySelector('#Header')?.classList.toggle('visible');
   }
@@ -174,7 +173,7 @@ function controls() {
   document.querySelector('#CloseSettings')?.addEventListener('click', buttonSettings);
   // Keybindings list
   function buttonKeybindings() {
-    document.querySelector('#ViewerShortcuts')?.classList.toggle('visible');
+    document.querySelector('#KeybindingsPanel')?.classList.toggle('visible');
   }
   document.querySelector('#keybindings')?.addEventListener('click', buttonKeybindings);
   document.querySelector('#CloseKeybindings')?.addEventListener('click', buttonKeybindings);

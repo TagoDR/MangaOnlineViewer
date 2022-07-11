@@ -71,7 +71,7 @@ function addFullCustomTheme(
 function loadThemes(): [string, string, string, string, string, string][] {
   const bg = scheme.from_hex(settings.customTheme.replace('#', '')).colors();
   return [
-    //   1-body       2-text       3-lines     4-imageOptions     5-buttons
+    //   1-body       2-text       3-lines     4-button     5-panel
     ['Dark', '#000000', '#ffffff', '#666666', '#333333', '#282828'],
     ['Grey', '#1A202C', '#d6d8e3', '#666666', '#535353', '#535353'],
     ['Light', '#eeeeec', '#2e3436', '#888a85', '#babdb6', '#c8cec2'],

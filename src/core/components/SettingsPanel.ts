@@ -1,9 +1,9 @@
 import { themesSelector } from '../themes';
 import settings from '../settings';
-import { IconX } from './icons.js';
+import { IconX } from './icons';
 
-const settingsPanel = `
-<div id='ViewerControls' class='panel'>
+const SettingsPanel = `
+<div id='SettingsPanel' class='panel'>
   <h2>Settings</h2>
   <button id='CloseSettings' class='closeButton'>${IconX}</button>
   <button id='ResetSettings'>Reset Settings</button>
@@ -165,4 +165,4 @@ const settingsPanel = `
   </div>
 </div>
 `;
-export default settingsPanel;
+export default SettingsPanel;

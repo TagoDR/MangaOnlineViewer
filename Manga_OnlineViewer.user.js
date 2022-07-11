@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Batoto, ComiCastle, Dynasty-Scans, Leitor, LHTranslation, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTown, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, SenManga(Raw), TenManga, TuMangaOnline, UnionMangas, Manga33, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, ReaperScans, JaiminisBox, DisasterScans
-// @version 2022.07.10
+// @version 2022.07.11
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -1345,7 +1345,7 @@ img {
   color: red;
 }
 
-#MangaOnlineViewer #ViewerControls {
+#MangaOnlineViewer #SettingsPanel {
   padding: 10px;
   position: fixed;
   top: 0;
@@ -1361,25 +1361,25 @@ img {
   width: 305px;
 }
 
-#MangaOnlineViewer #ViewerControls.visible {
+#MangaOnlineViewer #SettingsPanel.visible {
   transform: translateX(0);
 }
 
-#MangaOnlineViewer #ViewerControls .ControlLabel {
+#MangaOnlineViewer #SettingsPanel .ControlLabel {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
 }
 
-#MangaOnlineViewer #ViewerControls .ControlLabelItem {
+#MangaOnlineViewer #SettingsPanel .ControlLabelItem {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-basis: 40%;
 }
 
-#MangaOnlineViewer #ViewerControls .ControlLabelItem:not(.show) {
+#MangaOnlineViewer #SettingsPanel .ControlLabelItem:not(.show) {
   display: none;
 }
 
@@ -1391,7 +1391,7 @@ img {
   top: 10px;
 }
 
-#MangaOnlineViewer #ViewerShortcuts {
+#MangaOnlineViewer #KeybindingsPanel {
   padding: 8px;
   position: fixed;
   top: 65px;
@@ -1402,7 +1402,7 @@ img {
   line-height: 1.5em;
 }
 
-#MangaOnlineViewer #ViewerShortcuts.visible {
+#MangaOnlineViewer #KeybindingsPanel.visible {
   /*transform: translateX(0);*/
   display: block;
 }
@@ -1460,48 +1460,17 @@ img {
   border-radius: 5px;
   border-width: 1px;
   padding: 2px;
+  min-height: 32px;
 }
 
 #MangaOnlineViewer .ControlButton:hover {
   opacity: 0.8;
 }
 
-#MangaOnlineViewer #ImageOptions {
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 408px;
-  z-index: 1000;
-}
-
 #MangaOnlineViewer .panel {
   padding: 5px;
   position: inherit;
   border-radius: 5px;
-}
-
-#MangaOnlineViewer #ImageOptions:hover {
-  position: fixed;
-}
-
-#MangaOnlineViewer #ImageOptions:hover #menu {
-  display: none;
-}
-
-#MangaOnlineViewer #ImageOptions.settingsOpen {
-  position: fixed;
-}
-
-#MangaOnlineViewer #ImageOptions #menu {
-  position: fixed;
-  height: 5%;
-  width: 50%;
-  top: 0;
-  z-index: -1;
-}
-
-#MangaOnlineViewer #ImageOptions #Zoom {
-  margin-left: 10px;
 }
 
 #MangaOnlineViewer .MangaPage {
@@ -1578,7 +1547,7 @@ img {
   justify-content: space-between;
   align-items: center;
   flex-flow: row nowrap;
-  transition: transform 0.3s ease-in, background-color 0.3s linear;
+  transition: transform 0.3s ease-in;
   position: sticky;
   top: 0;
   left: 0;
@@ -1606,6 +1575,23 @@ img {
   position: sticky;
 }
 
+#MangaOnlineViewer #Header.mouseOverMenu:hover {
+  position: sticky;
+}
+
+#MangaOnlineViewer #Header:not(.mouseOverMenu) #menu,
+#MangaOnlineViewer #Header.mouseOverMenu:hover #menu {
+  display: none;
+}
+
+#MangaOnlineViewer #menu {
+  position: fixed;
+  min-height: 70px;
+  width: 100%;
+  top: 0;
+  z-index: 1;
+}
+
 #MangaOnlineViewer #MangaTitle {
   padding: 2px;
   margin: 0;
@@ -1613,16 +1599,13 @@ img {
   font-weight: normal;
 }
 
-#MangaOnlineViewer #GlobalControls {
-  flex-basis: 30%;
-}
-
 #MangaOnlineViewer #GlobalFunctions{
   display: flex;
   gap: 3px;
   padding-left:10px;
   flex-wrap: wrap;
-  width: 220px;
+  max-width: 220px;
+  z-index: 100;
 }
 
 #MangaOnlineViewer #GlobalFunctions .icon-tabler{
@@ -1635,7 +1618,6 @@ img {
   flex-flow: column nowrap;
   justify-content: center;
   align-items: end;
-  flex-basis: 30%;
   padding-right: 10px;
 }
 
@@ -1646,10 +1628,9 @@ img {
 
 #MangaOnlineViewer .ChapterControl .NavigationControlButton {
   display: inline-flex;
-  margin: 3px;
+  margin-left: 3px;
   justify-content: center;
   align-items: center;
-  border: 2px solid transparent;
   padding: 5px 10px;
   gap: 0.5em;
 }
@@ -1673,12 +1654,13 @@ img {
 #MangaOnlineViewer .ViewerTitle {
   text-align: center;
   min-height: 60px;
-  max-width: 500px;
+  /*max-width: 500px;*/
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   padding: 5px;
+  flex-basis: 60%;
 }
 
 #MangaOnlineViewer #Counters {
@@ -1708,16 +1690,14 @@ img {
   border-top-right-radius: 0;
 }
 
-#MangaOnlineViewer .PageFunctions > .ControlButton {
+#MangaOnlineViewer .PageFunctions .ControlButton {
   padding: 3px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0;
   border-width: 0;
-}
-
-#MangaOnlineViewer .PageFunctions .ControlButton {
+  min-height: auto;
   opacity: 0.5;
 }
 
@@ -1814,23 +1794,28 @@ img {
   width: 32px;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 992px) {
   #MangaOnlineViewer #Header {
       flex-direction: column;
   }
-  
-  #MangaOnlineViewer .ViewerTitle {
-    margin-top: 20px;
-  }
-  
+    
   #MangaOnlineViewer #GlobalFunctions {
     flex-wrap: nowrap;
+    max-width: initial;
+    padding: 0;
+  }
+  
+  #MangaOnlineViewer #menu {
+    display: none;
   }
 }
 /* Small devices (landscape phones) */
-@media (max-width: 576px) {
+@media (max-width: 600px) {
   #MangaOnlineViewer #Header {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
   }
 
   #MangaOnlineViewer .ViewerTitle {
@@ -1839,8 +1824,9 @@ img {
     margin-top: 0px;
   }
 
-  #MangaOnlineViewer #GlobalControls {
+  #MangaOnlineViewer #GlobalFunctions {
     order: 2;
+    padding: 0;
   }
 
   #MangaOnlineViewer #ChapterNavigation {
@@ -1872,34 +1858,34 @@ img {
     max-width: 100%;
   }
 
-  #MangaOnlineViewer #ImageOptions .ControlButton:not(#settings) {
+  #MangaOnlineViewer #GlobalFunctions .ControlButton:not(#settings) {
     display: none;
   }
 
-  #MangaOnlineViewer #ViewerControls .DefaultZoom,
-  #MangaOnlineViewer #ViewerControls .viewMode,
-  #MangaOnlineViewer #ViewerControls .fitIfOversize,
-  #MangaOnlineViewer #ViewerControls .showThumbnails,
-  #MangaOnlineViewer #ViewerControls .lazyLoadImages,
-  #MangaOnlineViewer #ViewerControls .downloadZip,
-  #MangaOnlineViewer #ViewerControls .minZoom,
-  #MangaOnlineViewer #ViewerControls .zoomStep,
-  #MangaOnlineViewer #ViewerControls .mouseOverMenu {
+  #MangaOnlineViewer #GlobalFunctions {
+    min-width: auto;
+  }
+
+  #MangaOnlineViewer #SettingsPanel .DefaultZoom,
+  #MangaOnlineViewer #SettingsPanel .viewMode,
+  #MangaOnlineViewer #SettingsPanel .fitIfOversize,
+  #MangaOnlineViewer #SettingsPanel .showThumbnails,
+  #MangaOnlineViewer #SettingsPanel .lazyLoadImages,
+  #MangaOnlineViewer #SettingsPanel .downloadZip,
+  #MangaOnlineViewer #SettingsPanel .minZoom,
+  #MangaOnlineViewer #SettingsPanel .zoomStep,
+  #MangaOnlineViewer #SettingsPanel .mouseOverMenu {
     display: none;
   }
 
-  #MangaOnlineViewer #ViewerShortcuts {
+  #MangaOnlineViewer #KeybindingsPanel {
     display: none;
   }  
 
-  #MangaOnlineViewer #ImageOptions #menu {
+  #MangaOnlineViewer #menu {
     display: none;
   }
-
-  #MangaOnlineViewer #ImageOptions #Zoom {
-    display: none;
-  }
-
+  
   #MangaOnlineViewer .ViewerTitle {
     height: auto;
     padding: 0;
@@ -2072,7 +2058,7 @@ img {
     function loadThemes() {
         const bg = scheme.from_hex(settings$1.customTheme.replace('#', '')).colors();
         return [
-            //   1-body       2-text       3-lines     4-imageOptions     5-buttons
+            //   1-body       2-text       3-lines     4-button     5-panel
             ['Dark', '#000000', '#ffffff', '#666666', '#333333', '#282828'],
             ['Grey', '#1A202C', '#d6d8e3', '#666666', '#535353', '#535353'],
             ['Light', '#eeeeec', '#2e3436', '#888a85', '#babdb6', '#c8cec2'],
@@ -2167,29 +2153,8 @@ img {
   </div>
 </div>`);
 
-    const imageOptions = `<div id='ImageOptions'>
-  <div id='menu'>
-    ${IconMenu2}
-  </div>
-  <div id='GlobalFunctions' class=''>
-    <button id='enlarge' title='Enlarge' class='ControlButton'>${IconZoomInArea}</button>
-    <button id='restore' title='Restore' class='ControlButton'>${IconZoomPan}</button>
-    <button id='reduce' title='Reduce' class='ControlButton'>${IconZoomOutArea}</button>
-    <button id='fitWidth' title='Fit Width' class='ControlButton'>${IconArrowAutofitWidth}</button>
-    <button id='fitHeight' title='Fit Height' class='ControlButton'>${IconArrowAutofitHeight}</button>
-    <button id='keybindings' title='Keybindings' class='ControlButton'>${IconKeyboard}</button>
-    <button id='ltrMode' title='Left to Right Mode' class='ControlButton'>${IconArrowAutofitRight}</button>
-    <button id='verticalMode' title='Vertical Mode' class='ControlButton'>${IconArrowAutofitDown}</button>
-    <button id='rtlMode' title='Right to Left Mode' class='ControlButton'>${IconArrowAutofitLeft}</button>
-    <button id='pageControls' title='Toggle Page Controls' class='ControlButton'>${IconListNumbers}</button>
-    <button id='bookmarks' title='List Bookmarks' class='ControlButton'>${IconBookmarks}</button>
-    <button id='settings' title='Settings' class='ControlButton'>${IconSettings}</button>
-  </div>
-<!--  <div id='Zoom' class='ControlLabel'>Zoom: <b id='ZoomPercent'>${settings$1.zoom}</b> %</div>-->
-</div>`;
-
-    const settingsPanel = `
-<div id='ViewerControls' class='panel'>
+    const SettingsPanel = `
+<div id='SettingsPanel' class='panel'>
   <h2>Settings</h2>
   <button id='CloseSettings' class='closeButton'>${IconX}</button>
   <button id='ResetSettings'>Reset Settings</button>
@@ -2306,8 +2271,8 @@ img {
 </div>
 `;
 
-    const keybindings = `
-<div id='ViewerShortcuts' class='panel'>
+    const KeybindingsPanel = `
+<div id='KeybindingsPanel' class='panel'>
     <h2>Keybindings</h2>
     <button id='CloseKeybindings' class='closeButton'>${IconX}</button>
     <kbd class='dark'>Numpad 5</kbd>/<kbd class='dark'>/</kbd>: Open Settings<br/>
@@ -2325,7 +2290,7 @@ img {
     <kbd class='dark'>↓</kbd>/<kbd class='dark'>S</kbd>/<kbd class='dark'>Numpad 2</kbd>: Scroll Down<br/>
 </div>`;
 
-    const listThumbnails = (times) => Array(times)
+    const ThumbnailsPanel = (times) => Array(times)
         .fill(null)
         .map((_, index) => `
 <div id='Thumbnail${index + 1}' class='Thumbnail'>
@@ -2377,8 +2342,22 @@ img {
 <div id='MangaOnlineViewer'
   class="${settings$1.theme} ${settings$1.hidePageControls ? 'hideControls' : ''}">
   <header id="Header" class="${settings$1.mouseOverMenu ? 'mouseOverMenu' : ''}">
-    <aside id='GlobalControls'>
-      ${imageOptions}
+    <div id='menu'>
+      ${IconMenu2}
+    </div>
+    <aside id='GlobalFunctions'>
+      <button id='enlarge' title='Enlarge' class='ControlButton'>${IconZoomInArea}</button>
+      <button id='restore' title='Restore' class='ControlButton'>${IconZoomPan}</button>
+      <button id='reduce' title='Reduce' class='ControlButton'>${IconZoomOutArea}</button>
+      <button id='fitWidth' title='Fit Width' class='ControlButton'>${IconArrowAutofitWidth}</button>
+      <button id='fitHeight' title='Fit Height' class='ControlButton'>${IconArrowAutofitHeight}</button>
+      <button id='keybindings' title='Keybindings' class='ControlButton'>${IconKeyboard}</button>
+      <button id='ltrMode' title='Left to Right Mode' class='ControlButton'>${IconArrowAutofitRight}</button>
+      <button id='verticalMode' title='Vertical Mode' class='ControlButton'>${IconArrowAutofitDown}</button>
+      <button id='rtlMode' title='Right to Left Mode' class='ControlButton'>${IconArrowAutofitLeft}</button>
+      <button id='pageControls' title='Toggle Page Controls' class='ControlButton'>${IconListNumbers}</button>
+      <button id='bookmarks' title='List Bookmarks' class='ControlButton'>${IconBookmarks}</button>
+      <button id='settings' title='Settings' class='ControlButton'>${IconSettings}</button>
     </aside>
     <div class='ViewerTitle'>
       <h1 id='MangaTitle'>${manga.title}</h1>
@@ -2421,11 +2400,11 @@ img {
       <i>0</i> of <b>${manga.pages}</b> Pages Loaded
     </div>
     <div id='Thumbnails'>
-      ${listThumbnails(manga.pages).slice(begin).join('')}
+      ${ThumbnailsPanel(manga.pages).slice(begin).join('')}
     </div>
   </nav>
-  ${settingsPanel}
-  ${keybindings}
+  ${SettingsPanel}
+  ${KeybindingsPanel}
   ${BookmarkPanel}
 </div>`;
 
@@ -3013,8 +2992,7 @@ img {
     function controls() {
         // Settings Control
         function buttonSettings() {
-            document.querySelector('#ViewerControls')?.classList.toggle('visible');
-            document.querySelector('#ImageOptions')?.classList.toggle('settingsOpen');
+            document.querySelector('#SettingsPanel')?.classList.toggle('visible');
             document.querySelector('#Navigation')?.classList.toggle('visible');
             document.querySelector('#Header')?.classList.toggle('visible');
         }
@@ -3022,7 +3000,7 @@ img {
         document.querySelector('#CloseSettings')?.addEventListener('click', buttonSettings);
         // Keybindings list
         function buttonKeybindings() {
-            document.querySelector('#ViewerShortcuts')?.classList.toggle('visible');
+            document.querySelector('#KeybindingsPanel')?.classList.toggle('visible');
         }
         document.querySelector('#keybindings')?.addEventListener('click', buttonKeybindings);
         document.querySelector('#CloseKeybindings')?.addEventListener('click', buttonKeybindings);

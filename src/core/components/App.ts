@@ -1,18 +1,30 @@
 import { IManga } from '../../types';
 import settings from '../settings';
 import listPages from './MangaPages';
-import imageOptions from './ImageOptions';
-import settingsPanel from './ViewerControls';
-import Keybindings from './Keybindings';
-import listThumbnails from './Thumbnails';
+import SettingsPanel from './SettingsPanel';
+import KeybindingsPanel from './KeybindingsPanel';
+import ThumbnailsPanel from './ThumbnailsPanel';
 import {
   IconArrowBigLeft,
   IconArrowBigRight,
   IconCategory,
   IconFileDownload,
   IconLoader2,
+  IconMenu2,
+  IconArrowAutofitDown,
+  IconArrowAutofitHeight,
+  IconArrowAutofitLeft,
+  IconArrowAutofitRight,
+  IconArrowAutofitWidth,
+  IconBookmarks,
+  IconKeyboard,
+  IconListNumbers,
+  IconSettings,
+  IconZoomInArea,
+  IconZoomOutArea,
+  IconZoomPan,
 } from './icons';
-import Bookmarks from './Bookmarks.js';
+import BookmarksPanel from './BookmarksPanel';
 
 const listOptions = (times: number) =>
   Array(times)
@@ -23,8 +35,22 @@ const body = (manga: IManga, begin = 0) => `
 <div id='MangaOnlineViewer'
   class="${settings.theme} ${settings.hidePageControls ? 'hideControls' : ''}">
   <header id="Header" class="${settings.mouseOverMenu ? 'mouseOverMenu' : ''}">
-    <aside id='GlobalControls'>
-      ${imageOptions}
+    <div id='menu'>
+      ${IconMenu2}
+    </div>
+    <aside id='GlobalFunctions'>
+      <button id='enlarge' title='Enlarge' class='ControlButton'>${IconZoomInArea}</button>
+      <button id='restore' title='Restore' class='ControlButton'>${IconZoomPan}</button>
+      <button id='reduce' title='Reduce' class='ControlButton'>${IconZoomOutArea}</button>
+      <button id='fitWidth' title='Fit Width' class='ControlButton'>${IconArrowAutofitWidth}</button>
+      <button id='fitHeight' title='Fit Height' class='ControlButton'>${IconArrowAutofitHeight}</button>
+      <button id='keybindings' title='Keybindings' class='ControlButton'>${IconKeyboard}</button>
+      <button id='ltrMode' title='Left to Right Mode' class='ControlButton'>${IconArrowAutofitRight}</button>
+      <button id='verticalMode' title='Vertical Mode' class='ControlButton'>${IconArrowAutofitDown}</button>
+      <button id='rtlMode' title='Right to Left Mode' class='ControlButton'>${IconArrowAutofitLeft}</button>
+      <button id='pageControls' title='Toggle Page Controls' class='ControlButton'>${IconListNumbers}</button>
+      <button id='bookmarks' title='List Bookmarks' class='ControlButton'>${IconBookmarks}</button>
+      <button id='settings' title='Settings' class='ControlButton'>${IconSettings}</button>
     </aside>
     <div class='ViewerTitle'>
       <h1 id='MangaTitle'>${manga.title}</h1>
@@ -69,11 +95,11 @@ const body = (manga: IManga, begin = 0) => `
       <i>0</i> of <b>${manga.pages}</b> Pages Loaded
     </div>
     <div id='Thumbnails'>
-      ${listThumbnails(manga.pages).slice(begin).join('')}
+      ${ThumbnailsPanel(manga.pages).slice(begin).join('')}
     </div>
   </nav>
-  ${settingsPanel}
-  ${Keybindings}
-  ${Bookmarks}
+  ${SettingsPanel}
+  ${KeybindingsPanel}
+  ${BookmarksPanel}
 </div>`;
 export default body;

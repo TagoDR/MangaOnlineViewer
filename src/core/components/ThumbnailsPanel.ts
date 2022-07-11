@@ -1,4 +1,4 @@
-const listThumbnails = (times: number) =>
+const ThumbnailsPanel = (times: number) =>
   Array(times)
     .fill(null)
     .map(
@@ -8,4 +8,4 @@ const listThumbnails = (times: number) =>
   <span class='ThumbnailIndex'>${index + 1}</span>
 </div>`,
     );
-export default listThumbnails;
+export default ThumbnailsPanel;

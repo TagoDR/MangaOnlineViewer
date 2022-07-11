@@ -1,7 +1,7 @@
-import { IconX } from './icons.js';
+import { IconX } from './icons';
 
-const keybindings = `
-<div id='ViewerShortcuts' class='panel'>
+const KeybindingsPanel = `
+<div id='KeybindingsPanel' class='panel'>
     <h2>Keybindings</h2>
     <button id='CloseKeybindings' class='closeButton'>${IconX}</button>
     <kbd class='dark'>Numpad 5</kbd>/<kbd class='dark'>/</kbd>: Open Settings<br/>
@@ -19,4 +19,4 @@ const keybindings = `
     <kbd class='dark'>↓</kbd>/<kbd class='dark'>S</kbd>/<kbd class='dark'>Numpad 2</kbd>: Scroll Down<br/>
 </div>`;
 
-export default keybindings;
+export default KeybindingsPanel;

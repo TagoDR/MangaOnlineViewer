@@ -1,4 +1,3 @@
-// Add Pages Place-holders
 import {
   IconArrowAutofitHeight,
   IconArrowAutofitWidth,
@@ -10,7 +9,7 @@ import {
   IconZoomCancel,
   IconZoomIn,
   IconZoomOut,
-} from './icons.js';
+} from './icons';
 
 const listPages = (times: number) =>
   Array(times)
