@@ -147,14 +147,14 @@ img {
   position: fixed;
   top: 65px;
   right: 0;
-  /*transition: transform 0.3s ease-in, background-color 0.3s linear;*/
-  /*transform: translateX(100%);*/
-  display: none;
+  transition: transform 0.3s ease-in-out;;
+  transform: translateX(100%);
+  /*display: none;*/
   line-height: 1.5em;
 }
 
 #MangaOnlineViewer #KeybindingsPanel.visible {
-  /*transform: translateX(0);*/
+  transform: translateX(0);
   display: block;
 }
 
@@ -166,11 +166,12 @@ img {
   right: 25%;
   text-align: center;
   max-height: 70%;
-  display: none;
+  transition: transform 0.3s ease-in-out;;
+  transform: scaleY(0%);
 }
 
 #MangaOnlineViewer #BookmarksPanel.visible {
-  /*transform: translateX(0);*/
+  transform: scaleY(100%);
   display: block;
 }
 
@@ -228,10 +229,11 @@ img {
   width: 100%;
   display: inline-block;
   text-align: center;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-  perspective: 1000px;
+  /*transform: translate3d(0, 0, 0);*/
+  /*backface-visibility: hidden;*/
+  /*perspective: 1000px;*/
   line-height: 0;
+  min-height: 22px;
 }
 
 #MangaOnlineViewer .PageContent {
@@ -239,14 +241,18 @@ img {
   display: inline-block;
   overflow-x: auto;
   max-width: 100%;
+  transition: all 0.3s ease-in-out;
+  height: 100%;
+  overflow-y: hidden;
 }
 
 #MangaOnlineViewer .MangaPage.hide .PageContent {
-  display: none;
+  /*display: none;*/
+  height: 0;
 }
 
 #MangaOnlineViewer .MangaPage.hide .PageFunctions {
-  position:relative;
+  /*position:relative;*/
 }
 
 #MangaOnlineViewer .PageContent .PageImg[src=""],
