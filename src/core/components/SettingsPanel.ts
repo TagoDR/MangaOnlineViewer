@@ -1,6 +1,6 @@
 import { themesSelector } from '../themes';
 import settings from '../settings';
-import { IconX } from './icons';
+import { IconMoon, IconSun, IconX } from './icons';
 
 const SettingsPanel = `
 <div id='SettingsPanel' class='panel'>
@@ -8,6 +8,10 @@ const SettingsPanel = `
   <button id='CloseSettings' class='closeButton'>${IconX}</button>
   <button id='ResetSettings'>Reset Settings</button>
   <div class='ControlLabel ThemeSelector'>Theme:
+    <button id='ColorScheme' class='ControlButton'>      
+      ${IconSun}
+      ${IconMoon}
+    </button>
     <select id='ThemeSelector'>
       ${themesSelector}
     </select>
@@ -17,33 +21,6 @@ const SettingsPanel = `
         -Base:<input id='CustomThemeHue' type='color' value='${
           settings.customTheme
         }' class='colorpicker CustomTheme'/>
-      </div>
-      <div class='FullCustom ControlLabelItem ${settings.theme === 'Full_Custom' ? 'show' : ''}' >
-        -Body:<input id='CustomThemeHueBody' type='color' value='${
-          settings.customThemeBody
-        }' class='colorpicker FullCustom'/>
-      </div>
-      <div class='FullCustom ControlLabelItem ${settings.theme === 'Full_Custom' ? 'show' : ''}' >
-        -Text:<input id='CustomThemeHueText' type='color' value='${
-          settings.customThemeText
-        }' class='colorpicker FullCustom'/>
-      </div>
-      <div class='FullCustom ControlLabelItem ${settings.theme === 'Full_Custom' ? 'show' : ''}' >
-        -Lines:<input id='CustomThemeHueLines' type='color' value='${
-          settings.customThemeLines
-        }' class='colorpicker FullCustom'/>
-      </div>
-      <div class='FullCustom ControlLabelItem ${settings.theme === 'Full_Custom' ? 'show' : ''}'>
-        -Painels:
-        <input id='CustomThemeHuePanel' type='color' value='${
-          settings.customThemePanel
-        }' class='colorpicker FullCustom'/>
-      </div>
-      <div class='FullCustom ControlLabelItem ${settings.theme === 'Full_Custom' ? 'show' : ''}'>
-        -Buttons:
-        <input id='CustomThemeHueButton' type='color' value='${
-          settings.customThemeButton
-        }' class='colorpicker FullCustom'/>
       </div>
   </div>
   <div class='ControlLabel loadMode'>Default Load Mode:

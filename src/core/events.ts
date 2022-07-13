@@ -408,17 +408,23 @@ function controls() {
     logScript(`MangaHidePageControls: ${getValueGM('MouseOverMenu')}`);
   }
   document.querySelector('#mouseOverMenu')?.addEventListener('change', checkMouseOverMenu);
+  // ColorScheme Selector
+  function changeColorScheme() {
+    [...document.querySelectorAll('#MangaOnlineViewer , body')].forEach((elem) => {
+      elem.classList.toggle('light');
+    });
+  }
+  document.querySelector('#ColorScheme')?.addEventListener('click', changeColorScheme);
   // Theme Control Selector
   function changeTheme(event: Event) {
     const target = (event.currentTarget as HTMLInputElement).value;
     [...document.querySelectorAll('#MangaOnlineViewer , body')].forEach((elem) => {
-      elem.className = '';
-      elem.classList.add((event.currentTarget as HTMLInputElement).value);
+      elem.setAttribute('data-theme', target);
     });
     logScript('Theme', target);
     setValueGM('Theme', target);
     const ct = [...document.querySelectorAll<HTMLDivElement>('.CustomTheme')];
-    if (target === 'custom_dark' || target === 'custom_light') {
+    if (target.startsWith('custom')) {
       ct.forEach((elem) => {
         elem.classList.add('show');
       });
@@ -427,19 +433,9 @@ function controls() {
         elem.classList.remove('show');
       });
     }
-    // const fc = [...document.querySelectorAll<HTMLDivElement>('.FullCustom')];
-    // if (target === 'Full_Custom') {
-    //   fc.forEach((elem) => {
-    //     elem.classList.add('show');
-    //   });
-    // } else {
-    //   fc.forEach((elem) => {
-    //     elem.classList.remove('show');
-    //   });
-    // }
   }
   document.querySelector('#ThemeSelector')?.addEventListener('change', changeTheme);
-  // Light/Dark Custom theme Color Input
+  // Custom theme Color Input
   function changeCustomTheme(event: Event) {
     const target = (event.currentTarget as HTMLInputElement).value;
     logScript(`CustomTheme: ${target}`);
@@ -448,47 +444,6 @@ function controls() {
     logScript(`MangaCustomTheme: ${getValueGM('CustomTheme')}`);
   }
   document.querySelector('#CustomThemeHue')?.addEventListener('change', changeCustomTheme);
-  // Full Custom theme Color Input
-  // function changeFullCustomTheme(input: Element) {
-  //   return input.addEventListener('change', () => {
-  //     logScript(
-  //       'FullCustomTheme: ',
-  //       document.querySelector<HTMLInputElement>('#CustomThemeHueBody')?.value,
-  //       document.querySelector<HTMLInputElement>('#CustomThemeHueText')?.value,
-  //       document.querySelector<HTMLInputElement>('#CustomThemeHueLines')?.value,
-  //       document.querySelector<HTMLInputElement>('#CustomThemeHuePanel')?.value,
-  //       document.querySelector<HTMLInputElement>('#CustomThemeHueButton')?.value,
-  //     );
-  //     addFullCustomTheme(
-  //       document.querySelector<HTMLInputElement>('#CustomThemeHueBody')!.value,
-  //       document.querySelector<HTMLInputElement>('#CustomThemeHueText')!.value,
-  //       document.querySelector<HTMLInputElement>('#CustomThemeHueLines')!.value,
-  //       document.querySelector<HTMLInputElement>('#CustomThemeHuePanel')!.value,
-  //       document.querySelector<HTMLInputElement>('#CustomThemeHueButton')!.value,
-  //     );
-  //     setValueGM(
-  //       'CustomThemeBody',
-  //       document.querySelector<HTMLInputElement>('#CustomThemeHueBody')!.value,
-  //     );
-  //     setValueGM(
-  //       'CustomThemeText',
-  //       document.querySelector<HTMLInputElement>('#CustomThemeHueText')!.value,
-  //     );
-  //     setValueGM(
-  //       'CustomThemeLines',
-  //       document.querySelector<HTMLInputElement>('#CustomThemeHueLines')!.value,
-  //     );
-  //     setValueGM(
-  //       'CustomThemePanel',
-  //       document.querySelector<HTMLInputElement>('#CustomThemeHuePanel')!.value,
-  //     );
-  //     setValueGM(
-  //       'CustomThemeButton',
-  //       document.querySelector<HTMLInputElement>('#CustomThemeHueButton')!.value,
-  //     );
-  //   });
-  // }
-  // document.querySelectorAll('.colorpicker.FullCustom')?.forEach(changeFullCustomTheme);
   // Goto Navigation Selector
   function selectGoToPage(event: Event) {
     applyZoom();

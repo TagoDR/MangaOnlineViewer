@@ -1,7 +1,7 @@
 import ColorScheme from 'color-scheme';
 import settings from './settings';
 import { replaceStyleSheet, wrapStyle } from '../utils/css';
-import colors, { base, IColor } from '../utils/colors';
+import colors, { IColor } from '../utils/colors';
 
 const scheme = new ColorScheme().scheme('mono').variation('default');
 
@@ -9,24 +9,10 @@ function generateThemeCSS(theme: IColor) {
   // language=CSS
   return `
 .${theme.name},
-.${theme.name}_dark,
-[data-theme='${theme.name}'],
-[data-theme='${theme.name}_dark'] {
-  --theme-body-background: ${colors.gray['900']};
-  --theme-body-text-color: ${base.whiteAlpha['900']};
-  --theme-text-color: ${base.whiteAlpha['900']};
+[data-theme='${theme.name}'] {
   --theme-primary-color: ${theme['600']};
   --theme-background-color: ${theme['800']};
   --theme-hightlight-color: ${theme['700']};
-}
-.${theme.name}_light,
-[data-theme='${theme.name}_light'] {
-  --theme-body-background: ${base.white};
-  --theme-body-text-color: ${colors.gray['800']};
-  --theme-text-color: ${base.whiteAlpha['900']};
-  --theme-primary-color: ${theme['600']};
-  --theme-background-color: ${theme['900']};
-  --theme-hightlight-color: ${theme['800']};
 }
 `;
 }
@@ -62,18 +48,11 @@ function addCustomTheme(hex: string) {
 }
 
 const themesSelector = [...Object.keys(colors).map((color) => colors[color].name), 'custom'].map(
-  (theme) => {
-    const dark = `${theme}_dark`;
-    const light = `${theme}_light`;
-    return `
-<option value='${dark}' ${settings.theme === dark ? 'selected' : ''}>
-  ${dark.replace(/[_.]/, ' ')}
+  (theme) => `
+<option value='${theme}' ${settings.theme === theme ? 'selected' : ''}>
+  ${theme.replace(/[_.]/, ' ')}
 </option>
-<option value='${light}' ${settings.theme === light ? 'selected' : ''}>
-  ${light.replace(/[_.]/, ' ')}
-</option>
-`;
-  },
+`,
 );
 const themesCSS = Object.values({ ...colors, custom: createCustomTheme(settings.customTheme) })
   .map(addTheme)

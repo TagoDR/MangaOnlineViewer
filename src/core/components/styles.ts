@@ -1,15 +1,28 @@
 import { svgToUrl } from '../../utils/svgs';
 import { IconPhoto, IconPhotoOff } from './icons';
+import colors, { base } from '../../utils/colors';
 
 // language=CSS
 export default `
 :root {
-  --theme-body-background: #27323a;
-  --theme-body-text-color: #f1f1f1;
-  --theme-text-color: #f1f1f1;
+  --theme-body-background: ${colors.gray['900']};
+  --theme-body-text-color: ${base.whiteAlpha['900']};
+  --theme-text-color: ${base.whiteAlpha['900']};
   --theme-primary-color: #282828;
   --theme-background-color: #333333;
   --theme-hightlight-color: #666666;
+}
+.dark,
+[data-theme='dark'] {
+  --theme-body-background: ${colors.gray['900']};
+  --theme-body-text-color: ${base.whiteAlpha['900']};
+  --theme-text-color: ${base.whiteAlpha['900']};
+}
+.light,
+[data-theme='light'] {
+  --theme-body-background: ${base.white};
+  --theme-body-text-color: ${colors.gray['800']};
+  --theme-text-color: ${base.whiteAlpha['900']};
 }
 /*  Simple Normalizer */
 html {
@@ -491,6 +504,8 @@ img {
   opacity: 0.9;
 }
 
+#MangaOnlineViewer.light #ColorScheme > :not(.inverse),
+#MangaOnlineViewer:not(.light) #ColorScheme > .inverse,
 #MangaOnlineViewer .ChapterControl .download.loading > :not(.inverse),
 #MangaOnlineViewer .ChapterControl .download:not(.loading) > .inverse,
 #MangaOnlineViewer .MangaPage.hide .ControlButton.Hide  > .inverse,
