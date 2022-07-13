@@ -3,6 +3,13 @@ import { IconPhoto, IconPhotoOff } from './icons';
 
 // language=CSS
 export default `
+:root {
+  --theme-body-background: "#27323a";
+  --theme-text-color: "#f1f1f1";
+  --theme-primary-color: "#282828";
+  --theme-background-color: "#333333";
+  --theme-hightlight-color: "#666666";
+}
 /*  Simple Normalizer */
 html {
   font-size: 100%;
@@ -16,8 +23,12 @@ body {
   background-color: #fff;
   padding: 0;
 }
-a {
-  color: #08c;
+a,
+a:link,
+a:visited,
+a:active,
+a:focus {
+  color: var(--theme-text-color);
   text-decoration: none;
 }
 img {
@@ -49,6 +60,9 @@ img {
   min-width: 360px;
   width:100%;
   height:100%;
+  text-decoration:none;
+  color: var(--theme-text-color);
+  background-color: var(--theme-body-background);
 }
 
 #MangaOnlineViewer #Chapter {
@@ -213,6 +227,9 @@ img {
   border-width: 1px;
   padding: 2px;
   min-height: 32px;
+  color: var(--theme-text-color);
+  background-color: var(--theme-primary-color);
+  border-color: var(--theme-primary-color);  
 }
 
 #MangaOnlineViewer .ControlButton:hover {
@@ -223,6 +240,7 @@ img {
   padding: 5px;
   position: inherit;
   border-radius: 5px;
+  background-color: var(--theme-background-color);
 }
 
 #MangaOnlineViewer .MangaPage {
@@ -264,6 +282,7 @@ img {
   background-position: center;
   background-repeat: no-repeat;
   background-size: 20%;
+  background-color: var(--theme-hightlight-color);
 }
 
 #MangaOnlineViewer .PageContent .PageImg.imgBroken {
@@ -274,6 +293,7 @@ img {
   background-position: center;
   background-repeat: no-repeat;
   background-size: 20%;
+  background-color: var(--theme-hightlight-color);
 }
 
 #MangaOnlineViewer .Thumbnail .ThumbnailImg[src=""],
@@ -347,6 +367,7 @@ img {
   width: 100%;
   top: 0;
   z-index: 1;
+  color: var(--theme-hightlight-color);
 }
 
 #MangaOnlineViewer #MangaTitle {
@@ -361,7 +382,7 @@ img {
   gap: 3px;
   padding-left:10px;
   flex-wrap: wrap;
-  max-width: 220px;
+  width: 300px;
   z-index: 100;
 }
 
@@ -376,6 +397,7 @@ img {
   justify-content: center;
   align-items: end;
   padding-right: 10px;
+  width: 300px;
 }
 
 #MangaOnlineViewer .ChapterControl {
@@ -523,6 +545,7 @@ img {
   display: inline-block;
   height: 150px;
   margin: 0 5px;
+  border: 1px solid var(--theme-hightlight-color);
 }
 
 #MangaOnlineViewer #Navigation .Thumbnail .ThumbnailIndex {
@@ -558,8 +581,8 @@ img {
     
   #MangaOnlineViewer #GlobalFunctions {
     flex-wrap: nowrap;
-    max-width: initial;
     padding: 0;
+    width: auto;
   }
   
   #MangaOnlineViewer #menu {
@@ -588,6 +611,7 @@ img {
 
   #MangaOnlineViewer #ChapterNavigation {
     order: 3;
+    width: auto;
   }
 
   #MangaOnlineViewer #Navigation {

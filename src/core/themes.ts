@@ -7,40 +7,15 @@ const scheme = new ColorScheme().scheme('mono').variation('default');
 function generateThemeCSS(theme: [string, string, string, string, string, string]) {
   // language=CSS
   return `
-  .${theme[0]} a,
-  .${theme[0]} a:link,
-  .${theme[0]} a:visited,
-  .${theme[0]} a:active,
-  .${theme[0]} a:focus,
-  .${theme[0]} { 
-    text-decoration:none;
-    color: ${theme[2]};
-    background-color: ${theme[1]};
-  }
-  .${theme[0]} .PageFunctions .PageIndex,
-  .${theme[0]} .Thumbnail .ThumbnailIndex,
-  .${theme[0]} .ControlButton,
-  .${theme[0]} #ChapterControl .ControlButton {
-    color: ${theme[2]};
-    background-color: ${theme[4]};
-    border-color: transparent;
-  }
-  .${theme[0]} .Thumbnail {
-    border: 1px solid ${theme[3]};
-  }
-
-  .${theme[0]} .PageContent .PageImg[src=""],
-  .${theme[0]} .PageContent .PageImg:not([src]),
-  .${theme[0]} .PageContent .PageImg.imgBroken {
-    background-color: ${theme[3]};
-  }  
-  .${theme[0]} .panel {
-    background-color: ${theme[5]};
-  }
-  .${theme[0]} #menu {
-    color: ${theme[3]};
-  }
-  `;
+.${theme[0]},
+[data-theme='${theme[0]}'] {
+  --theme-body-background: ${theme[1]};
+  --theme-text-color: ${theme[2]};
+  --theme-primary-color: ${theme[4]};
+  --theme-background-color: ${theme[5]};
+  --theme-hightlight-color: ${theme[3]};
+}
+`;
 }
 
 // Add custom Themes to the page

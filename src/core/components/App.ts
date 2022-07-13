@@ -39,18 +39,22 @@ const body = (manga: IManga, begin = 0) => `
       ${IconMenu2}
     </div>
     <aside id='GlobalFunctions'>
-      <button id='enlarge' title='Enlarge' class='ControlButton'>${IconZoomInArea}</button>
-      <button id='restore' title='Restore' class='ControlButton'>${IconZoomPan}</button>
-      <button id='reduce' title='Reduce' class='ControlButton'>${IconZoomOutArea}</button>
-      <button id='fitWidth' title='Fit Width' class='ControlButton'>${IconArrowAutofitWidth}</button>
-      <button id='fitHeight' title='Fit Height' class='ControlButton'>${IconArrowAutofitHeight}</button>
-      <button id='keybindings' title='Keybindings' class='ControlButton'>${IconKeyboard}</button>
-      <button id='ltrMode' title='Left to Right Mode' class='ControlButton'>${IconArrowAutofitRight}</button>
-      <button id='verticalMode' title='Vertical Mode' class='ControlButton'>${IconArrowAutofitDown}</button>
-      <button id='rtlMode' title='Right to Left Mode' class='ControlButton'>${IconArrowAutofitLeft}</button>
-      <button id='pageControls' title='Toggle Page Controls' class='ControlButton'>${IconListNumbers}</button>
-      <button id='bookmarks' title='List Bookmarks' class='ControlButton'>${IconBookmarks}</button>
-      <button id='settings' title='Settings' class='ControlButton'>${IconSettings}</button>
+      <span>
+        <button id='enlarge' title='Enlarge' class='ControlButton'>${IconZoomInArea}</button>
+        <button id='restore' title='Restore' class='ControlButton'>${IconZoomPan}</button>
+        <button id='reduce' title='Reduce' class='ControlButton'>${IconZoomOutArea}</button>
+        <button id='fitWidth' title='Fit Width' class='ControlButton'>${IconArrowAutofitWidth}</button>
+        <button id='fitHeight' title='Fit Height' class='ControlButton'>${IconArrowAutofitHeight}</button>
+        <button id='keybindings' title='Keybindings' class='ControlButton'>${IconKeyboard}</button>
+      </span>
+      <span>
+        <button id='ltrMode' title='Left to Right Mode' class='ControlButton'>${IconArrowAutofitRight}</button>
+        <button id='verticalMode' title='Vertical Mode' class='ControlButton'>${IconArrowAutofitDown}</button>
+        <button id='rtlMode' title='Right to Left Mode' class='ControlButton'>${IconArrowAutofitLeft}</button>
+        <button id='pageControls' title='Toggle Page Controls' class='ControlButton'>${IconListNumbers}</button>
+        <button id='bookmarks' title='List Bookmarks' class='ControlButton'>${IconBookmarks}</button>
+        <button id='settings' title='Settings' class='ControlButton'>${IconSettings}</button>
+      </span>
     </aside>
     <div class='ViewerTitle'>
       <h1 id='MangaTitle'>${manga.title}</h1>
