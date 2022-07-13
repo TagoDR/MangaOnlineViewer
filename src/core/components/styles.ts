@@ -4,11 +4,12 @@ import { IconPhoto, IconPhotoOff } from './icons';
 // language=CSS
 export default `
 :root {
-  --theme-body-background: "#27323a";
-  --theme-text-color: "#f1f1f1";
-  --theme-primary-color: "#282828";
-  --theme-background-color: "#333333";
-  --theme-hightlight-color: "#666666";
+  --theme-body-background: #27323a;
+  --theme-body-text-color: #f1f1f1;
+  --theme-text-color: #f1f1f1;
+  --theme-primary-color: #282828;
+  --theme-background-color: #333333;
+  --theme-hightlight-color: #666666;
 }
 /*  Simple Normalizer */
 html {
@@ -28,7 +29,7 @@ a:link,
 a:visited,
 a:active,
 a:focus {
-  color: var(--theme-text-color);
+  color: var(--theme-body-text-color);
   text-decoration: none;
 }
 img {
@@ -61,7 +62,7 @@ img {
   width:100%;
   height:100%;
   text-decoration:none;
-  color: var(--theme-text-color);
+  color: var(--theme-body-text-color);
   background-color: var(--theme-body-background);
 }
 
@@ -111,6 +112,7 @@ img {
 }
 
 #MangaOnlineViewer #SettingsPanel {
+  color: var(--theme-text-color);
   padding: 10px;
   position: fixed;
   top: 0;
@@ -467,6 +469,7 @@ img {
   border-radius: 5px;
   border-top-right-radius: 5px;
   border-top-right-radius: 0;
+  background-color: var(--theme-primary-color);
 }
 
 #MangaOnlineViewer .PageFunctions .ControlButton {
@@ -508,6 +511,7 @@ img {
 }
 
 #MangaOnlineViewer #Navigation {
+  color: var(--theme-text-color);
   bottom: -180px;
   height: 185px;
   overflow-x: hidden;

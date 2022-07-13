@@ -3,7 +3,7 @@ import { getListGM, getValueGM, logScript, removeValueGM, setValueGM } from '../
 import generateZip from './download';
 import { applyZoom, reloadImage } from './page';
 import settings from './settings';
-import { addCustomTheme, addFullCustomTheme } from './themes';
+import { addCustomTheme } from './themes';
 import { IBookmark } from '../types';
 import { replaceStyleSheet } from '../utils/css';
 import { reloadBookmarks } from './components/BookmarksPanel';
@@ -418,7 +418,7 @@ function controls() {
     logScript('Theme', target);
     setValueGM('Theme', target);
     const ct = [...document.querySelectorAll<HTMLDivElement>('.CustomTheme')];
-    if (target === 'Custom_Dark' || target === 'Custom_Light') {
+    if (target === 'custom_dark' || target === 'custom_light') {
       ct.forEach((elem) => {
         elem.classList.add('show');
       });
@@ -427,16 +427,16 @@ function controls() {
         elem.classList.remove('show');
       });
     }
-    const fc = [...document.querySelectorAll<HTMLDivElement>('.FullCustom')];
-    if (target === 'Full_Custom') {
-      fc.forEach((elem) => {
-        elem.classList.add('show');
-      });
-    } else {
-      fc.forEach((elem) => {
-        elem.classList.remove('show');
-      });
-    }
+    // const fc = [...document.querySelectorAll<HTMLDivElement>('.FullCustom')];
+    // if (target === 'Full_Custom') {
+    //   fc.forEach((elem) => {
+    //     elem.classList.add('show');
+    //   });
+    // } else {
+    //   fc.forEach((elem) => {
+    //     elem.classList.remove('show');
+    //   });
+    // }
   }
   document.querySelector('#ThemeSelector')?.addEventListener('change', changeTheme);
   // Light/Dark Custom theme Color Input
@@ -449,46 +449,46 @@ function controls() {
   }
   document.querySelector('#CustomThemeHue')?.addEventListener('change', changeCustomTheme);
   // Full Custom theme Color Input
-  function changeFullCustomTheme(input: Element) {
-    return input.addEventListener('change', () => {
-      logScript(
-        'FullCustomTheme: ',
-        document.querySelector<HTMLInputElement>('#CustomThemeHueBody')?.value,
-        document.querySelector<HTMLInputElement>('#CustomThemeHueText')?.value,
-        document.querySelector<HTMLInputElement>('#CustomThemeHueLines')?.value,
-        document.querySelector<HTMLInputElement>('#CustomThemeHuePanel')?.value,
-        document.querySelector<HTMLInputElement>('#CustomThemeHueButton')?.value,
-      );
-      addFullCustomTheme(
-        document.querySelector<HTMLInputElement>('#CustomThemeHueBody')!.value,
-        document.querySelector<HTMLInputElement>('#CustomThemeHueText')!.value,
-        document.querySelector<HTMLInputElement>('#CustomThemeHueLines')!.value,
-        document.querySelector<HTMLInputElement>('#CustomThemeHuePanel')!.value,
-        document.querySelector<HTMLInputElement>('#CustomThemeHueButton')!.value,
-      );
-      setValueGM(
-        'CustomThemeBody',
-        document.querySelector<HTMLInputElement>('#CustomThemeHueBody')!.value,
-      );
-      setValueGM(
-        'CustomThemeText',
-        document.querySelector<HTMLInputElement>('#CustomThemeHueText')!.value,
-      );
-      setValueGM(
-        'CustomThemeLines',
-        document.querySelector<HTMLInputElement>('#CustomThemeHueLines')!.value,
-      );
-      setValueGM(
-        'CustomThemePanel',
-        document.querySelector<HTMLInputElement>('#CustomThemeHuePanel')!.value,
-      );
-      setValueGM(
-        'CustomThemeButton',
-        document.querySelector<HTMLInputElement>('#CustomThemeHueButton')!.value,
-      );
-    });
-  }
-  document.querySelectorAll('.colorpicker.FullCustom')?.forEach(changeFullCustomTheme);
+  // function changeFullCustomTheme(input: Element) {
+  //   return input.addEventListener('change', () => {
+  //     logScript(
+  //       'FullCustomTheme: ',
+  //       document.querySelector<HTMLInputElement>('#CustomThemeHueBody')?.value,
+  //       document.querySelector<HTMLInputElement>('#CustomThemeHueText')?.value,
+  //       document.querySelector<HTMLInputElement>('#CustomThemeHueLines')?.value,
+  //       document.querySelector<HTMLInputElement>('#CustomThemeHuePanel')?.value,
+  //       document.querySelector<HTMLInputElement>('#CustomThemeHueButton')?.value,
+  //     );
+  //     addFullCustomTheme(
+  //       document.querySelector<HTMLInputElement>('#CustomThemeHueBody')!.value,
+  //       document.querySelector<HTMLInputElement>('#CustomThemeHueText')!.value,
+  //       document.querySelector<HTMLInputElement>('#CustomThemeHueLines')!.value,
+  //       document.querySelector<HTMLInputElement>('#CustomThemeHuePanel')!.value,
+  //       document.querySelector<HTMLInputElement>('#CustomThemeHueButton')!.value,
+  //     );
+  //     setValueGM(
+  //       'CustomThemeBody',
+  //       document.querySelector<HTMLInputElement>('#CustomThemeHueBody')!.value,
+  //     );
+  //     setValueGM(
+  //       'CustomThemeText',
+  //       document.querySelector<HTMLInputElement>('#CustomThemeHueText')!.value,
+  //     );
+  //     setValueGM(
+  //       'CustomThemeLines',
+  //       document.querySelector<HTMLInputElement>('#CustomThemeHueLines')!.value,
+  //     );
+  //     setValueGM(
+  //       'CustomThemePanel',
+  //       document.querySelector<HTMLInputElement>('#CustomThemeHuePanel')!.value,
+  //     );
+  //     setValueGM(
+  //       'CustomThemeButton',
+  //       document.querySelector<HTMLInputElement>('#CustomThemeHueButton')!.value,
+  //     );
+  //   });
+  // }
+  // document.querySelectorAll('.colorpicker.FullCustom')?.forEach(changeFullCustomTheme);
   // Goto Navigation Selector
   function selectGoToPage(event: Event) {
     applyZoom();
