@@ -5,11 +5,8 @@ import { ISettings, IBookmark } from '../types';
 const settings: ISettings = {
   theme: getValueGM('Theme', 'Tango_Blue'),
   customTheme: getValueGM('CustomTheme', '#263e3a'),
-  customThemeBody: getValueGM('CustomThemeBody', '#000000'),
-  customThemeText: getValueGM('CustomThemeText', '#ffffff'),
-  customThemeLines: getValueGM('CustomThemeLines', '#666666'),
-  customThemePanel: getValueGM('CustomThemePanel', '#333333'),
-  customThemeButton: getValueGM('CustomThemeButton', '#282828'),
+  themeShade: getValueGM('ThemeShade', 600),
+  colorScheme: getValueGM('ColorScheme', 'dark'),
   fitWidthIfOversize: getValueGM('FitWidthIfOversize', true),
   showThumbnails: getValueGM('ShowThumbnails', true),
   downloadZip: getValueGM('DownloadZip', false),

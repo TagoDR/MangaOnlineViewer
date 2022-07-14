@@ -1,29 +1,41 @@
 import { themesSelector } from '../themes';
 import settings from '../settings';
 import { IconMoon, IconSun, IconX } from './icons';
-
+// language=html
 const SettingsPanel = `
 <div id='SettingsPanel' class='panel'>
   <h2>Settings</h2>
   <button id='CloseSettings' class='closeButton'>${IconX}</button>
   <button id='ResetSettings' class='simpleButton'>Reset Settings</button>
-  
   <div class='ControlLabel ColorSchemeSelector'>Color Scheme:
     <button id='ColorScheme' class='simpleButton'>      
       ${IconSun}
       ${IconMoon}
     </button>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel ThemeSelector'>Theme:
       ${themesSelector.join('')}      
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel CustomTheme ControlLabelItem ${
     settings.theme.startsWith('custom') ? 'show' : ''
   }'>
-        Theme Primary Color:<input id='CustomThemeHue' type='color' value='${
+        Theme Primary Color Palette:<input id='CustomThemeHue' type='color' value='${
           settings.customTheme
         }' class='colorpicker CustomTheme'/>
-      </div>
+  </div>
+<!-- =========================================================================================== -->
+  <div class='ControlLabel'>
+    <span>
+      Theme Primary Color Shade:
+      <output id='themeShadeVal' for='themeShade'>${settings.themeShade}</output>
+    </span>
+    <input type='range' value='${
+      settings.themeShade
+    }' name='ThemeShade' id='ThemeShade' min='100' max='900' step='100' oninput='themeShadeVal.value = this.value'/>
+  </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel loadMode'>Default Load Mode:
     <select id='loadMode'>
       <option value='wait' ${
@@ -37,6 +49,7 @@ const SettingsPanel = `
       }>Never(Manually)</option>
     </select>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel PagesPerSecond'>Pages/Second:
     <select id='PagesPerSecond'>
       <option value='3000' ${
@@ -54,6 +67,7 @@ const SettingsPanel = `
       }>10(Extreme)</option>
     </select>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel DefaultZoom'>Default Zoom:
     <select id='DefaultZoom'>
       <option value='50' ${settings.zoom === 50 ? 'selected' : ''}>50%</option>
@@ -67,6 +81,7 @@ const SettingsPanel = `
       <option value='-1000' ${settings.zoom === -1000 ? 'selected' : ''}>Fit Height</option>
     </select>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel minZoom'>
     <span>
       Minimun Zoom relative to the width of screen (between 30 and 100):
@@ -76,6 +91,7 @@ const SettingsPanel = `
       settings.minZoom
     }' name='minZoom' id='minZoom' min='30' max='100' step='10' oninput='minZoomVal.value = this.value'/>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel zoomStep'>
     <span>
       Zoom Change Step (between 5 and 50):
@@ -84,8 +100,8 @@ const SettingsPanel = `
     <input type='range' value='${
       settings.zoomStep
     }' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput='zoomStepVal.value = this.value'/>
-    
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel viewMode'>Default View Mode:
     <select id='viewMode'>
       <option value='' ${
@@ -101,22 +117,26 @@ const SettingsPanel = `
       </option>
     </select>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel fitIfOversize'>Fit Width if Oversize:
     <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${
       settings.fitWidthIfOversize ? 'checked' : ''
     }/>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel showThumbnails'>Show Thumbnails:
     <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${
       settings.showThumbnails ? 'checked' : ''
     }/>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel lazyLoadImages'>Lazy Load Images:
     <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${
       settings.lazyLoadImages ? 'checked' : ''
     }/>
-    </div>
-    <div class='ControlLabel lazyStart'>
+  </div>
+<!-- =========================================================================================== -->
+  <div class='ControlLabel lazyStart'>
     <span>
       Lazy Start From Page (between 5 and 100):
       <output id='lazyStartVal' for='lazyStart'>${settings.lazyStart}</output>
@@ -126,16 +146,19 @@ const SettingsPanel = `
     }' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput='lazyStartVal.value = this.value'/>
     
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel downloadZip'>Download Images as Zip Automatically:
     <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${
       settings.downloadZip ? 'checked' : ''
     }/>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel hidePageControls'>Always Hide Page Controls:
     <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${
       settings.hidePageControls ? 'checked' : ''
     }/>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel mouseOverMenu'>Toggle Sticky Header / MouseOverMenu:
     <input type='checkbox' value='false' name='mouseOverMenu' id='mouseOverMenu' ${
       settings.mouseOverMenu ? 'checked' : ''

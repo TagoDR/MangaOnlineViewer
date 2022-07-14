@@ -8,15 +8,13 @@ export interface ITheme {
     variant: 'filled' | 'outline' | 'light';
   };
 }
+type Shade = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 
 export interface ISettings {
+  colorScheme: 'dark' | 'light';
   theme: string;
   customTheme: string;
-  customThemeBody: string;
-  customThemeText: string;
-  customThemeLines: string;
-  customThemePanel: string;
-  customThemeButton: string;
+  themeShade: Shade;
   viewMode: 'FluidLTR' | 'FluidRTL' | '';
   bookmarks: IBookmark[];
   loadMode: 'wait' | 'always' | 'never';

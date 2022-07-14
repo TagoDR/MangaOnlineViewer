@@ -44,7 +44,7 @@ const scripts = {
   },
 };
 const globals = {
-  'color-scheme': 'ColorScheme',
+  color: 'Color',
   jszip: 'JSZip',
   sweetalert2: 'Swal',
   nprogress: 'NProgress',
@@ -203,7 +203,7 @@ gulp.task('clean', clean);
 gulp.task('dev', gulp.series(clean, writeMetadata(scripts.dev), buildUserscript(scripts.dev)));
 gulp.task('rollup', gulp.series(prep('rollup'), 'dev'));
 gulp.task('esbuild', gulp.series(prep('esbuild'), 'dev'));
-// gulp.task('vite', gulp.series(prep('vite'), 'dev'));
+gulp.task('vite', gulp.series(prep('vite'), 'dev'));
 gulp.task(
   'build',
   gulp.series(

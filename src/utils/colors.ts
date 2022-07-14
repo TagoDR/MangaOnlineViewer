@@ -1,9 +1,12 @@
+import Color from 'color';
+
 export const base = {
   transparent: 'transparent',
   current: 'currentColor',
   black: '#000000',
   white: '#F1F1F1',
   whiteAlpha: {
+    name: 'white',
     50: 'rgba(255, 255, 255, 0.04)',
     100: 'rgba(255, 255, 255, 0.06)',
     200: 'rgba(255, 255, 255, 0.08)',
@@ -16,6 +19,7 @@ export const base = {
     900: 'rgba(255, 255, 255, 0.92)',
   },
   blackAlpha: {
+    name: 'black',
     50: 'rgba(0, 0, 0, 0.04)',
     100: 'rgba(0, 0, 0, 0.06)',
     200: 'rgba(0, 0, 0, 0.08)',
@@ -26,18 +30,6 @@ export const base = {
     700: 'rgba(0, 0, 0, 0.64)',
     800: 'rgba(0, 0, 0, 0.80)',
     900: 'rgba(0, 0, 0, 0.92)',
-  },
-  dark: {
-    50: '#C1C2C5',
-    100: '#A6A7AB',
-    200: '#909296',
-    300: '#5c5f66',
-    400: '#373A40',
-    500: '#2C2E33',
-    600: '#25262b',
-    700: '#1A1B1E',
-    800: '#141517',
-    900: '#101113',
   },
 };
 export interface IColor {
@@ -57,6 +49,20 @@ export interface IPalette {
   [key: string]: IColor;
 }
 const colors: IPalette = {
+  dark: {
+    name: 'dark',
+    50: '#C1C2C5',
+    100: '#A6A7AB',
+    200: '#909296',
+    300: '#5c5f66',
+    400: '#373A40',
+    500: '#2C2E33',
+    600: '#25262b',
+    700: '#1A1B1E',
+    800: '#141517',
+    900: '#101113',
+  },
+
   gray: {
     name: 'gray',
     50: '#f8f9fa',
@@ -252,5 +258,82 @@ const colors: IPalette = {
     900: '#1E355B',
   },
 };
+
+const config = {
+  darkest: {
+    lightness: 10,
+    rotate: 0,
+    saturate: 0,
+  },
+  lightest: {
+    lightness: 95,
+    rotate: 0,
+    saturate: 0,
+  },
+};
+
+export function customColor(color: string): IColor {
+  const darkSteps = 4;
+  const lightSteps = 5;
+
+  const lightnessStep = (config.lightest.lightness - 50) / lightSteps;
+  const darknessStep = (50 - config.darkest.lightness) / darkSteps;
+
+  const lightRotateStep = config.lightest.rotate / lightSteps;
+  const darkRotateStep = config.darkest.rotate / darkSteps;
+
+  const lightSaturateStep = config.lightest.saturate / lightSteps;
+  const darkSaturateStep = config.darkest.saturate / darkSteps;
+
+  return {
+    name: 'custom',
+    50: Color(color)
+      .lightness(50 + lightnessStep * 5)
+      .rotate(lightRotateStep * 5)
+      .saturate(lightSaturateStep * 5)
+      .hex(),
+    100: Color(color)
+      .lightness(50 + lightnessStep * 4)
+      .rotate(lightRotateStep * 4)
+      .saturate(lightSaturateStep * 4)
+      .hex(),
+    200: Color(color)
+      .lightness(50 + lightnessStep * 3)
+      .rotate(lightRotateStep * 3)
+      .saturate(lightSaturateStep * 3)
+      .hex(),
+    300: Color(color)
+      .lightness(50 + lightnessStep * 2)
+      .rotate(lightRotateStep * 2)
+      .saturate(lightSaturateStep * 2)
+      .hex(),
+    400: Color(color)
+      .lightness(50 + lightnessStep * 1)
+      .rotate(lightRotateStep * 1)
+      .saturate(lightSaturateStep * 1)
+      .hex(),
+    500: Color(color).lightness(50).hex(),
+    600: Color(color)
+      .lightness(50 - darknessStep * 1)
+      .rotate(darkRotateStep * 1)
+      .saturate(darkSaturateStep * 1)
+      .hex(),
+    700: Color(color)
+      .lightness(50 - darknessStep * 2)
+      .rotate(darkRotateStep * 2)
+      .saturate(darkSaturateStep * 2)
+      .hex(),
+    800: Color(color)
+      .lightness(50 - darknessStep * 3)
+      .rotate(darkRotateStep * 3)
+      .saturate(darkSaturateStep * 3)
+      .hex(),
+    900: Color(color)
+      .lightness(50 - darknessStep * 4)
+      .rotate(darkRotateStep * 4)
+      .saturate(darkSaturateStep * 4)
+      .hex(),
+  };
+}
 
 export default colors;

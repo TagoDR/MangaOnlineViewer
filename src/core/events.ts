@@ -3,7 +3,7 @@ import { getListGM, getValueGM, logScript, removeValueGM, setValueGM } from '../
 import generateZip from './download';
 import { applyZoom, reloadImage } from './page';
 import settings from './settings';
-import { addCustomTheme } from './themes';
+import { addCustomTheme, refreshThemes } from './themes';
 import { IBookmark } from '../types';
 import { replaceStyleSheet } from '../utils/css';
 import { reloadBookmarks } from './components/BookmarksPanel';
@@ -441,11 +441,22 @@ function controls() {
   function changeCustomTheme(event: Event) {
     const target = (event.currentTarget as HTMLInputElement).value;
     logScript(`CustomTheme: ${target}`);
+    settings.customTheme = target;
     addCustomTheme(target);
     setValueGM('CustomTheme', target);
-    logScript(`MangaCustomTheme: ${getValueGM('CustomTheme')}`);
+    logScript(`CustomTheme: ${getValueGM('CustomTheme')}`);
   }
   document.querySelector('#CustomThemeHue')?.addEventListener('change', changeCustomTheme);
+  // Theme Shade Input
+  function changeThemeShade(event: Event) {
+    const target = parseInt((event.currentTarget as HTMLInputElement).value, 10);
+    logScript(`ThemeShade: ${target}`);
+    settings.themeShade = target as typeof settings.themeShade;
+    refreshThemes();
+    setValueGM('ThemeShade', target);
+    logScript(`ThemeShade: ${getValueGM('ThemeShade')}`);
+  }
+  document.querySelector('#ThemeShade')?.addEventListener('change', changeThemeShade);
   // Goto Navigation Selector
   function selectGoToPage(event: Event) {
     applyZoom();

@@ -1,1 +1,1 @@
-declare module 'color-scheme';
+/// <reference types="vite/client" />

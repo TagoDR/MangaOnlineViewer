@@ -1,6 +1,6 @@
 import { svgToUrl } from '../../utils/svgs';
 import { IconPalette, IconPhoto, IconPhotoOff } from './icons';
-import colors, { base } from '../../utils/colors';
+import colors from '../../utils/colors';
 
 // language=CSS
 export default `
@@ -8,14 +8,14 @@ export default `
 .dark,
 .dark .default,
 [data-theme='dark'] {
-  --theme-body-background: ${base.dark['600']};
-  --theme-body-text-color: ${base.dark['50']};
-  --theme-text-color: ${base.dark['50']};
-  --theme-primary-color: ${base.dark['700']};
-  --theme-primary-text-color: ${base.dark['50']};
-  --theme-background-color: ${base.dark['600']};
-  --theme-hightlight-color: ${base.dark['500']};
-  --theme-border-color: ${base.dark['400']};
+  --theme-body-background: ${colors.dark['600']};
+  --theme-body-text-color: ${colors.dark['50']};
+  --theme-text-color: ${colors.dark['50']};
+  --theme-primary-color: ${colors.dark['700']};
+  --theme-primary-text-color: ${colors.dark['50']};
+  --theme-background-color: ${colors.dark['600']};
+  --theme-hightlight-color: ${colors.dark['500']};
+  --theme-border-color: ${colors.dark['400']};
 }
 .light,
 .light .default,
@@ -507,6 +507,8 @@ img {
 }
 
 #MangaOnlineViewer .PageFunctions > .PageIndex {
+  background-color: var(--theme-primary-color);
+  color: var(--theme-primary-text-color);
   min-width: 20px;
   text-align: center;
   display: inline-block;
@@ -515,7 +517,6 @@ img {
   border-radius: 5px;
   border-top-right-radius: 5px;
   border-top-right-radius: 0;
-  background-color: var(--theme-primary-color);
 }
 
 #MangaOnlineViewer .PageFunctions .ControlButton {
