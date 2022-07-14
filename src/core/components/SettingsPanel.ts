@@ -6,21 +6,24 @@ const SettingsPanel = `
 <div id='SettingsPanel' class='panel'>
   <h2>Settings</h2>
   <button id='CloseSettings' class='closeButton'>${IconX}</button>
-  <button id='ResetSettings'>Reset Settings</button>
-  <div class='ControlLabel ThemeSelector'>Theme:
-    <button id='ColorScheme' class='ControlButton'>      
+  <button id='ResetSettings' class='simpleButton'>Reset Settings</button>
+  
+  <div class='ControlLabel ColorSchemeSelector'>Color Scheme:
+    <button id='ColorScheme' class='simpleButton'>      
       ${IconSun}
       ${IconMoon}
     </button>
-      ${themesSelector.join('')}
-      <div class='CustomTheme ControlLabelItem ${
-        settings.theme.startsWith('custom') ? 'show' : ''
-      }'>
-        -Base:<input id='CustomThemeHue' type='color' value='${
+  </div>
+  <div class='ControlLabel ThemeSelector'>Theme:
+      ${themesSelector.join('')}      
+  </div>
+  <div class='ControlLabel CustomTheme ControlLabelItem ${
+    settings.theme.startsWith('custom') ? 'show' : ''
+  }'>
+        Theme Primary Color:<input id='CustomThemeHue' type='color' value='${
           settings.customTheme
         }' class='colorpicker CustomTheme'/>
       </div>
-  </div>
   <div class='ControlLabel loadMode'>Default Load Mode:
     <select id='loadMode'>
       <option value='wait' ${

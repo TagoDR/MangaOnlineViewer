@@ -2,7 +2,7 @@ import ColorScheme from 'color-scheme';
 import settings from './settings';
 import { replaceStyleSheet, wrapStyle } from '../utils/css';
 import colors, { IColor } from '../utils/colors';
-import { IconCheck } from './components/icons.js';
+import { IconCheck } from './components/icons';
 
 const scheme = new ColorScheme().scheme('mono').variation('default');
 
@@ -12,8 +12,7 @@ function generateThemeCSS(theme: IColor) {
 .${theme.name},
 [data-theme='${theme.name}'] {
   --theme-primary-color: ${theme['600']};
-  --theme-background-color: ${theme['800']};
-  --theme-hightlight-color: ${theme['700']};
+  --theme-primary-text-color: ${theme['50']};
 }
 `;
 }

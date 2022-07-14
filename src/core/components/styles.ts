@@ -4,25 +4,30 @@ import colors, { base } from '../../utils/colors';
 
 // language=CSS
 export default `
-:root {
-  --theme-body-background: ${colors.gray['900']};
-  --theme-body-text-color: ${base.whiteAlpha['900']};
-  --theme-text-color: ${base.whiteAlpha['900']};
-  --theme-primary-color: #282828;
-  --theme-background-color: #333333;
-  --theme-hightlight-color: #666666;
-}
+:root,
 .dark,
+.dark .default,
 [data-theme='dark'] {
-  --theme-body-background: ${colors.gray['900']};
-  --theme-body-text-color: ${base.whiteAlpha['900']};
-  --theme-text-color: ${base.whiteAlpha['900']};
+  --theme-body-background: ${base.dark['600']};
+  --theme-body-text-color: ${base.dark['50']};
+  --theme-text-color: ${base.dark['50']};
+  --theme-primary-color: ${base.dark['700']};
+  --theme-primary-text-color: ${base.dark['50']};
+  --theme-background-color: ${base.dark['600']};
+  --theme-hightlight-color: ${base.dark['500']};
+  --theme-border-color: ${base.dark['400']};
 }
 .light,
+.light .default,
 [data-theme='light'] {
-  --theme-body-background: ${base.white};
-  --theme-body-text-color: ${colors.gray['800']};
-  --theme-text-color: ${base.whiteAlpha['900']};
+  --theme-body-background: ${colors.gray['50']};
+  --theme-body-text-color: ${colors.gray['900']};
+  --theme-text-color: ${colors.gray['900']};
+  --theme-primary-color: ${colors.gray['300']};
+  --theme-primary-text-color: ${colors.gray['900']};
+  --theme-background-color: ${colors.gray['50']};
+  --theme-hightlight-color: ${colors.gray['500']};
+  --theme-border-color: ${colors.gray['100']};
 }
 /*  Simple Normalizer */
 html {
@@ -156,7 +161,6 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-basis: 40%;
 }
 
 #MangaOnlineViewer #SettingsPanel .ControlLabelItem:not(.show) {
@@ -172,16 +176,17 @@ img {
 }
 
 #MangaOnlineViewer .ThemeRadio {
+  border: 1px solid var(--theme-text-color);
+  color: var(--theme-primary-text-color);
+  background-color: var(--theme-primary-color);
   height: 20px;
   width: 20px;
-  border: 1px solid var(--theme-text-color);
   border-radius: 50%;
-  background-color: var(--theme-primary-color);
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 1px;
-  margin: 0 2px;
+  margin: 2px 5px;
 }
 
 #MangaOnlineViewer .ThemeRadio.custom{
@@ -270,18 +275,13 @@ img {
   border-width: 1px;
   padding: 2px;
   min-height: 32px;
-  color: var(--theme-text-color);
+  color: var(--theme-primary-text-color);
   background-color: var(--theme-primary-color);
-  border-color: var(--theme-primary-color);  
+  border-color: var(--theme-border-color);  
 }
 
 #MangaOnlineViewer .ControlButton:hover {
   opacity: 0.8;
-}
-
-#MangaOnlineViewer #ColorScheme {
-  min-width: 32px;
-  border-color: var(--theme-text-color);
 }
 
 #MangaOnlineViewer .panel {
@@ -560,6 +560,7 @@ img {
 
 #MangaOnlineViewer #Navigation {
   color: var(--theme-text-color);
+  background-color: var(--theme-hightlight-color);
   bottom: -180px;
   height: 185px;
   overflow-x: hidden;
@@ -597,10 +598,12 @@ img {
   display: inline-block;
   height: 150px;
   margin: 0 5px;
-  border: 1px solid var(--theme-hightlight-color);
+  border: 1px solid var(--theme-primary-color);
 }
 
 #MangaOnlineViewer #Navigation .Thumbnail .ThumbnailIndex {
+  color: var(--theme-text-color);
+  background-color: var(--theme-hightlight-color);
   display: block;
   opacity: 0.8;
   position: relative;
