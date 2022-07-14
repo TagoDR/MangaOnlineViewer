@@ -1,5 +1,5 @@
 import { svgToUrl } from '../../utils/svgs';
-import { IconPhoto, IconPhotoOff } from './icons';
+import { IconPalette, IconPhoto, IconPhotoOff } from './icons';
 import colors, { base } from '../../utils/colors';
 
 // language=CSS
@@ -171,6 +171,34 @@ img {
   top: 10px;
 }
 
+#MangaOnlineViewer .ThemeRadio {
+  height: 20px;
+  width: 20px;
+  border: 1px solid var(--theme-text-color);
+  border-radius: 50%;
+  background-color: var(--theme-primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1px;
+  margin: 0 2px;
+}
+
+#MangaOnlineViewer .ThemeRadio.custom{
+  background-image: url("${svgToUrl(IconPalette)}");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 80%;
+}
+
+#MangaOnlineViewer .ThemeRadio.selected svg {
+  display: inline;
+}
+
+#MangaOnlineViewer .ThemeRadio:not(.selected) svg {
+  display: none;
+}
+
 #MangaOnlineViewer #KeybindingsPanel {
   padding: 8px;
   position: fixed;
@@ -249,6 +277,11 @@ img {
 
 #MangaOnlineViewer .ControlButton:hover {
   opacity: 0.8;
+}
+
+#MangaOnlineViewer #ColorScheme {
+  min-width: 32px;
+  border-color: var(--theme-text-color);
 }
 
 #MangaOnlineViewer .panel {

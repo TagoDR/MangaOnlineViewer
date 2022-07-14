@@ -417,24 +417,26 @@ function controls() {
   document.querySelector('#ColorScheme')?.addEventListener('click', changeColorScheme);
   // Theme Control Selector
   function changeTheme(event: Event) {
-    const target = (event.currentTarget as HTMLInputElement).value;
+    const target = event.currentTarget as HTMLElement;
+    [...document.querySelectorAll('.ThemeRadio')].forEach((elem) =>
+      elem.classList.remove('selected'),
+    );
+    target.classList.add('selected');
     [...document.querySelectorAll('#MangaOnlineViewer , body')].forEach((elem) => {
-      elem.setAttribute('data-theme', target);
+      elem.setAttribute('data-theme', target.title);
     });
-    logScript('Theme', target);
-    setValueGM('Theme', target);
-    const ct = [...document.querySelectorAll<HTMLDivElement>('.CustomTheme')];
-    if (target.startsWith('custom')) {
-      ct.forEach((elem) => {
-        elem.classList.add('show');
-      });
+    logScript('Theme', target.title);
+    setValueGM('Theme', target.title);
+    const elem = document.querySelector<HTMLDivElement>('.CustomTheme');
+    if (target.title.startsWith('custom')) {
+      elem?.classList.add('show');
     } else {
-      ct.forEach((elem) => {
-        elem.classList.remove('show');
-      });
+      elem?.classList.remove('show');
     }
   }
-  document.querySelector('#ThemeSelector')?.addEventListener('change', changeTheme);
+  [...document.querySelectorAll('.ThemeRadio')].forEach((elem) =>
+    elem.addEventListener('click', changeTheme),
+  );
   // Custom theme Color Input
   function changeCustomTheme(event: Event) {
     const target = (event.currentTarget as HTMLInputElement).value;

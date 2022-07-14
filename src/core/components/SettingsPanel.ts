@@ -12,11 +12,9 @@ const SettingsPanel = `
       ${IconSun}
       ${IconMoon}
     </button>
-    <select id='ThemeSelector'>
-      ${themesSelector}
-    </select>
+      ${themesSelector.join('')}
       <div class='CustomTheme ControlLabelItem ${
-        settings.theme === 'Custom_Dark' || settings.theme === 'Custom_Light' ? 'show' : ''
+        settings.theme.startsWith('custom') ? 'show' : ''
       }'>
         -Base:<input id='CustomThemeHue' type='color' value='${
           settings.customTheme

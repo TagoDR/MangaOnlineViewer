@@ -2,6 +2,7 @@ import ColorScheme from 'color-scheme';
 import settings from './settings';
 import { replaceStyleSheet, wrapStyle } from '../utils/css';
 import colors, { IColor } from '../utils/colors';
+import { IconCheck } from './components/icons.js';
 
 const scheme = new ColorScheme().scheme('mono').variation('default');
 
@@ -49,9 +50,11 @@ function addCustomTheme(hex: string) {
 
 const themesSelector = [...Object.keys(colors).map((color) => colors[color].name), 'custom'].map(
   (theme) => `
-<option value='${theme}' ${settings.theme === theme ? 'selected' : ''}>
-  ${theme.replace(/[_.]/, ' ')}
-</option>
+<span class='${theme} ThemeRadio ${settings.theme === theme ? 'selected' : ''}'
+      title='${theme}'      
+>
+${IconCheck}
+</span>
 `,
 );
 const themesCSS = Object.values({ ...colors, custom: createCustomTheme(settings.customTheme) })
