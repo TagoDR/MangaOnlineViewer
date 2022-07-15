@@ -33,7 +33,8 @@ const listOptions = (times: number) =>
 
 const body = (manga: IManga, begin = 0) => `
 <div id='MangaOnlineViewer'
-  class="${settings.theme} ${settings.hidePageControls ? 'hideControls' : ''}">
+  class="${settings.theme} ${settings.colorScheme}
+  ${settings.hidePageControls ? 'hideControls' : ''}">
   <header id="Header" class="${settings.mouseOverMenu ? 'mouseOverMenu' : ''}">
     <div id='menu'>
       ${IconMenu2}

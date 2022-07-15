@@ -410,9 +410,14 @@ function controls() {
   document.querySelector('#mouseOverMenu')?.addEventListener('change', checkMouseOverMenu);
   // ColorScheme Selector
   function changeColorScheme() {
+    const isDark = settings.colorScheme === 'dark';
+    settings.colorScheme = isDark ? 'light' : 'dark';
+    setValueGM('ColorScheme', settings.colorScheme);
     [...document.querySelectorAll('#MangaOnlineViewer , body')].forEach((elem) => {
-      elem.classList.toggle('light');
+      elem.classList.remove(isDark ? 'dark' : 'light');
+      elem.classList.add(settings.colorScheme);
     });
+    logScript('Theme', getValueGM('ColorScheme'));
   }
   document.querySelector('#ColorScheme')?.addEventListener('click', changeColorScheme);
   // Theme Control Selector
@@ -425,8 +430,8 @@ function controls() {
     [...document.querySelectorAll('#MangaOnlineViewer , body')].forEach((elem) => {
       elem.setAttribute('data-theme', target.title);
     });
-    logScript('Theme', target.title);
     setValueGM('Theme', target.title);
+    logScript('Theme', getValueGM('Theme'));
     const elem = document.querySelector<HTMLDivElement>('.CustomTheme');
     if (target.title.startsWith('custom')) {
       elem?.classList.add('show');
