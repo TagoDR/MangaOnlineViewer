@@ -3,7 +3,7 @@ import { ISettings, IBookmark } from '../types';
 
 // Configuration
 const settings: ISettings = {
-  theme: getValueGM('Theme', 'Tango_Blue'),
+  theme: getValueGM('Theme', 'darkblue'),
   customTheme: getValueGM('CustomTheme', '#263e3a'),
   themeShade: getValueGM('ThemeShade', 600),
   colorScheme: getValueGM('ColorScheme', 'dark'),

@@ -417,7 +417,7 @@ function controls() {
       elem.classList.remove(isDark ? 'dark' : 'light');
       elem.classList.add(settings.colorScheme);
     });
-    logScript('Theme', getValueGM('ColorScheme'));
+    logScript('ColorScheme', getValueGM('ColorScheme'));
   }
   document.querySelector('#ColorScheme')?.addEventListener('click', changeColorScheme);
   // Theme Control Selector
