@@ -182,25 +182,29 @@ img {
   height: 20px;
   width: 20px;
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 1px;
   margin: 2px 5px;
+  position: relative;
+}
+
+#MangaOnlineViewer .ThemeRadio svg{
+  position: absolute;
+  top: 15%;
+  right: 15%;
 }
 
 #MangaOnlineViewer .ThemeRadio.custom{
-  background-image: url("${svgToUrl(IconPalette)}");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 80%;
+  /*background-image: url("${svgToUrl(IconPalette)}");*/
+  /*background-position: center;*/
+  /*background-repeat: no-repeat;*/
+  /*background-size: 80%;*/
 }
 
-#MangaOnlineViewer .ThemeRadio.selected svg {
+#MangaOnlineViewer .ThemeRadio.selected .icon-tabler-check {
   display: inline;
 }
 
-#MangaOnlineViewer .ThemeRadio:not(.selected) svg {
+#MangaOnlineViewer .ThemeRadio:not(.selected) .icon-tabler-check {
   display: none;
 }
 

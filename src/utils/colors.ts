@@ -1,4 +1,4 @@
-import Color from 'color';
+import tinycolor from 'tinycolor2';
 
 export const base = {
   transparent: 'transparent',
@@ -287,52 +287,52 @@ export function customColor(color: string): IColor {
 
   return {
     name: 'custom',
-    50: Color(color)
-      .lightness(50 + lightnessStep * 5)
-      .rotate(lightRotateStep * 5)
+    50: tinycolor(color)
+      .brighten(50 + lightnessStep * 5)
+      .spin(lightRotateStep * 5)
       .saturate(lightSaturateStep * 5)
-      .hex(),
-    100: Color(color)
-      .lightness(50 + lightnessStep * 4)
-      .rotate(lightRotateStep * 4)
+      .toHexString(),
+    100: tinycolor(color)
+      .brighten(50 + lightnessStep * 4)
+      .spin(lightRotateStep * 4)
       .saturate(lightSaturateStep * 4)
-      .hex(),
-    200: Color(color)
-      .lightness(50 + lightnessStep * 3)
-      .rotate(lightRotateStep * 3)
+      .toHexString(),
+    200: tinycolor(color)
+      .brighten(50 + lightnessStep * 3)
+      .spin(lightRotateStep * 3)
       .saturate(lightSaturateStep * 3)
-      .hex(),
-    300: Color(color)
-      .lightness(50 + lightnessStep * 2)
-      .rotate(lightRotateStep * 2)
+      .toHexString(),
+    300: tinycolor(color)
+      .brighten(50 + lightnessStep * 2)
+      .spin(lightRotateStep * 2)
       .saturate(lightSaturateStep * 2)
-      .hex(),
-    400: Color(color)
-      .lightness(50 + lightnessStep * 1)
-      .rotate(lightRotateStep * 1)
+      .toHexString(),
+    400: tinycolor(color)
+      .brighten(50 + lightnessStep * 1)
+      .spin(lightRotateStep * 1)
       .saturate(lightSaturateStep * 1)
-      .hex(),
-    500: Color(color).lightness(50).hex(),
-    600: Color(color)
-      .lightness(50 - darknessStep * 1)
-      .rotate(darkRotateStep * 1)
+      .toHexString(),
+    500: tinycolor(color).brighten(50).toHexString(),
+    600: tinycolor(color)
+      .brighten(50 - darknessStep * 1)
+      .spin(darkRotateStep * 1)
       .saturate(darkSaturateStep * 1)
-      .hex(),
-    700: Color(color)
-      .lightness(50 - darknessStep * 2)
-      .rotate(darkRotateStep * 2)
+      .toHexString(),
+    700: tinycolor(color)
+      .brighten(50 - darknessStep * 2)
+      .spin(darkRotateStep * 2)
       .saturate(darkSaturateStep * 2)
-      .hex(),
-    800: Color(color)
-      .lightness(50 - darknessStep * 3)
-      .rotate(darkRotateStep * 3)
+      .toHexString(),
+    800: tinycolor(color)
+      .brighten(50 - darknessStep * 3)
+      .spin(darkRotateStep * 3)
       .saturate(darkSaturateStep * 3)
-      .hex(),
-    900: Color(color)
-      .lightness(50 - darknessStep * 4)
-      .rotate(darkRotateStep * 4)
+      .toHexString(),
+    900: tinycolor(color)
+      .brighten(50 - darknessStep * 4)
+      .spin(darkRotateStep * 4)
       .saturate(darkSaturateStep * 4)
-      .hex(),
+      .toHexString(),
   };
 }
 

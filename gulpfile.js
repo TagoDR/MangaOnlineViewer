@@ -44,7 +44,7 @@ const scripts = {
   },
 };
 const globals = {
-  color: 'Color',
+  tinycolor2: 'tinycolor',
   jszip: 'JSZip',
   sweetalert2: 'Swal',
   nprogress: 'NProgress',

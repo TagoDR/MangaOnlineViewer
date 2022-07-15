@@ -30,12 +30,12 @@
         "@rollup/plugin-commonjs": "^22.0.1",
         "@rollup/plugin-node-resolve": "^13.3.0",
         "@rollup/plugin-typescript": "^8.3.3",
-        "@types/color": "^3.0.3",
         "@types/file-saver": "^2.0.5",
         "@types/imagesloaded": "^4.1.2",
         "@types/node": "^18.0.4",
         "@types/nprogress": "^0.2.0",
         "@types/tampermonkey": "^4.0.5",
+        "@types/tinycolor2": "^1.4.3",
         "@typescript-eslint/eslint-plugin": "^5.30.6",
         "@typescript-eslint/parser": "^5.30.6",
         "del": "^6.1.1",
@@ -62,12 +62,12 @@
         "vite": "^3.0.0"
     },
     "dependencies": {
-        "color": "^4.2.3",
         "file-saver": "^2.0.5",
         "imagesloaded": "^5.0.0",
         "jszip": "^3.9.1",
         "nprogress": "^0.2.0",
-        "sweetalert2": "^11.4.23"
+        "sweetalert2": "^11.4.23",
+        "tinycolor2": "^1.4.2"
     },
     "browserslist": {
         "production": [

@@ -1,6 +1,6 @@
 import { themesSelector } from '../themes';
 import settings from '../settings';
-import { IconMoon, IconSun, IconX } from './icons';
+import { IconCheck, IconMoon, IconPalette, IconSun, IconX } from './icons';
 // language=html
 const SettingsPanel = `
 <div id='SettingsPanel' class='panel'>
@@ -15,7 +15,11 @@ const SettingsPanel = `
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel ThemeSelector'>Theme:
-      ${themesSelector.join('')}      
+    <span class='custom ThemeRadio ${settings.theme === 'custom' ? 'selected' : ''}' title='custom'>
+      ${IconPalette}
+      ${IconCheck}
+    </span>
+    ${themesSelector.join('')}      
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel CustomTheme ControlLabelItem ${

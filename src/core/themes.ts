@@ -29,7 +29,7 @@ function addCustomTheme(hex: string) {
 
 const themes = () => Object.values({ ...colors, custom: customColor(settings.customTheme) });
 
-const themesSelector = [...Object.keys(colors).map((color) => colors[color].name), 'custom'].map(
+const themesSelector = [...Object.keys(colors).map((color) => colors[color].name)].map(
   (theme) => `
 <span class='${theme} ThemeRadio ${settings.theme === theme ? 'selected' : ''}'
       title='${theme}'      
