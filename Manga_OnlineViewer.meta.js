@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Batoto, ComiCastle, Dynasty-Scans, Leitor, LHTranslation, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTown, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, SenManga(Raw), TenManga, TuMangaOnline, UnionMangas, Manga33, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, ReaperScans, JaiminisBox, DisasterScans
-// @version 2022.07.11
+// @version 2022.07.15
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -13,12 +13,12 @@
 // @grant GM_deleteValue
 // @grant GM_xmlhttpRequest
 // @connect *
-// @require https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/tinycolor.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.19/sweetalert2.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.23/sweetalert2.min.js
 // @include /https?:\/\/(www.)?(asurascans|flamescans).(com|org)\/.+/
 // @include /https?:\/\/(www.)?bato.to\/chapter.*/
 // @include /https?:\/\/(www.)?comicastle.org\/read\/.+\/[0-9]+.*/

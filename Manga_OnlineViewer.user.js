@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Batoto, ComiCastle, Dynasty-Scans, Leitor, LHTranslation, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTown, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, SenManga(Raw), TenManga, TuMangaOnline, UnionMangas, Manga33, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, ReaperScans, JaiminisBox, DisasterScans
-// @version 2022.07.11
+// @version 2022.07.15
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -13,12 +13,12 @@
 // @grant GM_deleteValue
 // @grant GM_xmlhttpRequest
 // @connect *
-// @require https://cdnjs.cloudflare.com/ajax/libs/color-scheme/1.0.1/color-scheme.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/tinycolor.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.19/sweetalert2.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.23/sweetalert2.min.js
 // @include /https?:\/\/(www.)?(asurascans|flamescans).(com|org)\/.+/
 // @include /https?:\/\/(www.)?bato.to\/chapter.*/
 // @include /https?:\/\/(www.)?comicastle.org\/read\/.+\/[0-9]+.*/
@@ -1178,6 +1178,30 @@
    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
 </svg>`;
+    const IconSun = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <circle cx="12" cy="12" r="4"></circle>
+   <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path>
+</svg>`;
+    const IconMoon = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon inverse" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+</svg>`;
+    const IconCheck = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M5 12l5 5l10 -10"></path>
+</svg>`;
+    const IconPalette = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-palette" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M12 21a9 9 0 1 1 0 -18a9 8 0 0 1 9 8a4.5 4 0 0 1 -4.5 4h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"></path>
+   <circle cx="7.5" cy="10.5" r=".5" fill="currentColor"></circle>
+   <circle cx="12" cy="7.5" r=".5" fill="currentColor"></circle>
+   <circle cx="16.5" cy="10.5" r=".5" fill="currentColor"></circle>
+</svg>`;
     // Icons for Page Controls
     const IconBookmark = `
 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -1250,8 +1274,242 @@
    <path color="silver" d="M16.32 12.34c.577 -.059 1.162 .162 1.68 .66l2 2"></path>
 </svg>`;
 
+    const colors = {
+        dark: {
+            name: 'dark',
+            50: '#C1C2C5',
+            100: '#A6A7AB',
+            200: '#909296',
+            300: '#5c5f66',
+            400: '#373A40',
+            500: '#2C2E33',
+            600: '#25262b',
+            700: '#1A1B1E',
+            800: '#141517',
+            900: '#101113',
+        },
+        gray: {
+            name: 'gray',
+            50: '#f8f9fa',
+            100: '#f1f3f5',
+            200: '#e9ecef',
+            300: '#dee2e6',
+            400: '#ced4da',
+            500: '#adb5bd',
+            600: '#868e96',
+            700: '#495057',
+            800: '#343a40',
+            900: '#212529',
+        },
+        red: {
+            name: 'red',
+            50: '#fff5f5',
+            100: '#ffe3e3',
+            200: '#ffc9c9',
+            300: '#ffa8a8',
+            400: '#ff8787',
+            500: '#ff6b6b',
+            600: '#fa5252',
+            700: '#f03e3e',
+            800: '#e03131',
+            900: '#c92a2a',
+        },
+        pink: {
+            name: 'pink',
+            50: '#fff0f6',
+            100: '#ffdeeb',
+            200: '#fcc2d7',
+            300: '#faa2c1',
+            400: '#f783ac',
+            500: '#f06595',
+            600: '#e64980',
+            700: '#d6336c',
+            800: '#c2255c',
+            900: '#a61e4d',
+        },
+        grape: {
+            name: 'grape',
+            50: '#f8f0fc',
+            100: '#f3d9fa',
+            200: '#eebefa',
+            300: '#e599f7',
+            400: '#da77f2',
+            500: '#cc5de8',
+            600: '#be4bdb',
+            700: '#ae3ec9',
+            800: '#9c36b5',
+            900: '#862e9c',
+        },
+        violet: {
+            name: 'violet',
+            50: '#f3f0ff',
+            100: '#e5dbff',
+            200: '#d0bfff',
+            300: '#b197fc',
+            400: '#9775fa',
+            500: '#845ef7',
+            600: '#7950f2',
+            700: '#7048e8',
+            800: '#6741d9',
+            900: '#5f3dc4',
+        },
+        indigo: {
+            name: 'purple',
+            50: '#edf2ff',
+            100: '#dbe4ff',
+            200: '#bac8ff',
+            300: '#91a7ff',
+            400: '#748ffc',
+            500: '#5c7cfa',
+            600: '#4c6ef5',
+            700: '#4263eb',
+            800: '#3b5bdb',
+            900: '#364fc7',
+        },
+        blue: {
+            name: 'blue',
+            50: '#e7f5ff',
+            100: '#d0ebff',
+            200: '#a5d8ff',
+            300: '#74c0fc',
+            400: '#4dabf7',
+            500: '#339af0',
+            600: '#228be6',
+            700: '#1c7ed6',
+            800: '#1971c2',
+            900: '#1864ab',
+        },
+        cyan: {
+            name: 'cyan',
+            50: '#e3fafc',
+            100: '#c5f6fa',
+            200: '#99e9f2',
+            300: '#66d9e8',
+            400: '#3bc9db',
+            500: '#22b8cf',
+            600: '#15aabf',
+            700: '#1098ad',
+            800: '#0c8599',
+            900: '#0b7285',
+        },
+        teal: {
+            name: 'teal',
+            50: '#e6fcf5',
+            100: '#c3fae8',
+            200: '#96f2d7',
+            300: '#63e6be',
+            400: '#38d9a9',
+            500: '#20c997',
+            600: '#12b886',
+            700: '#0ca678',
+            800: '#099268',
+            900: '#087f5b',
+        },
+        green: {
+            name: 'green',
+            50: '#ebfbee',
+            100: '#d3f9d8',
+            200: '#b2f2bb',
+            300: '#8ce99a',
+            400: '#69db7c',
+            500: '#51cf66',
+            600: '#40c057',
+            700: '#37b24d',
+            800: '#2f9e44',
+            900: '#2b8a3e',
+        },
+        lime: {
+            name: 'lime',
+            50: '#f4fce3',
+            100: '#e9fac8',
+            200: '#d8f5a2',
+            300: '#c0eb75',
+            400: '#a9e34b',
+            500: '#94d82d',
+            600: '#82c91e',
+            700: '#74b816',
+            800: '#66a80f',
+            900: '#5c940d',
+        },
+        yellow: {
+            name: 'yellow',
+            50: '#fff9db',
+            100: '#fff3bf',
+            200: '#ffec99',
+            300: '#ffe066',
+            400: '#ffd43b',
+            500: '#fcc419',
+            600: '#fab005',
+            700: '#f59f00',
+            800: '#f08c00',
+            900: '#e67700',
+        },
+        orange: {
+            name: 'orange',
+            50: '#fff4e6',
+            100: '#ffe8cc',
+            200: '#ffd8a8',
+            300: '#ffc078',
+            400: '#ffa94d',
+            500: '#ff922b',
+            600: '#fd7e14',
+            700: '#f76707',
+            800: '#e8590c',
+            900: '#d9480f',
+        },
+        darkblue: {
+            name: 'darkblue',
+            50: '#E8F4F9',
+            100: '#D9DEE9',
+            200: '#B7C2DA',
+            300: '#6482C0',
+            400: '#4267B2',
+            500: '#385898',
+            600: '#314E89',
+            700: '#29487D',
+            800: '#223B67',
+            900: '#1E355B',
+        },
+    };
+    const darkest = 10;
+    const lightest = 95;
+    function setLightness(hsl, lightness) {
+        hsl.l = lightness;
+        return tinycolor(hsl).toHexString();
+    }
+    function getTextColor(hex) {
+        const color = tinycolor(hex);
+        const hsl = color.toHsl();
+        return setLightness(hsl, color.isDark() ? lightest : darkest);
+    }
+
     // language=CSS
     var cssStyles = `
+:root,
+.dark,
+.dark .default,
+[data-theme='dark'] {
+  --theme-body-background: ${colors.dark['600']};
+  --theme-body-text-color: ${colors.dark['50']};
+  --theme-text-color: ${colors.dark['50']};
+  --theme-primary-color: ${colors.dark['700']};
+  --theme-primary-text-color: ${colors.dark['50']};
+  --theme-background-color: ${colors.dark['600']};
+  --theme-hightlight-color: ${colors.dark['500']};
+  --theme-border-color: ${colors.dark['400']};
+}
+.light,
+.light .default,
+[data-theme='light'] {
+  --theme-body-background: ${colors.gray['50']};
+  --theme-body-text-color: ${colors.gray['900']};
+  --theme-text-color: ${colors.gray['900']};
+  --theme-primary-color: ${colors.gray['300']};
+  --theme-primary-text-color: ${colors.gray['900']};
+  --theme-background-color: ${colors.gray['50']};
+  --theme-hightlight-color: ${colors.gray['500']};
+  --theme-border-color: ${colors.gray['100']};
+}
 /*  Simple Normalizer */
 html {
   font-size: 100%;
@@ -1265,8 +1523,12 @@ body {
   background-color: #fff;
   padding: 0;
 }
-a {
-  color: #08c;
+a,
+a:link,
+a:visited,
+a:active,
+a:focus {
+  color: var(--theme-body-text-color);
   text-decoration: none;
 }
 img {
@@ -1298,6 +1560,9 @@ img {
   min-width: 360px;
   width:100%;
   height:100%;
+  text-decoration:none;
+  color: var(--theme-body-text-color);
+  background-color: var(--theme-body-background);
 }
 
 #MangaOnlineViewer #Chapter {
@@ -1346,6 +1611,7 @@ img {
 }
 
 #MangaOnlineViewer #SettingsPanel {
+  color: var(--theme-text-color);
   padding: 10px;
   position: fixed;
   top: 0;
@@ -1376,7 +1642,6 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-basis: 40%;
 }
 
 #MangaOnlineViewer #SettingsPanel .ControlLabelItem:not(.show) {
@@ -1391,19 +1656,52 @@ img {
   top: 10px;
 }
 
+#MangaOnlineViewer .ThemeRadio {
+  border: 1px solid var(--theme-text-color);
+  color: var(--theme-primary-text-color);
+  background-color: var(--theme-primary-color);
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  padding: 1px;
+  margin: 2px 5px;
+  position: relative;
+}
+
+#MangaOnlineViewer .ThemeRadio svg{
+  position: absolute;
+  top: 15%;
+  right: 15%;
+}
+
+#MangaOnlineViewer .ThemeRadio.custom{
+  /*background-image: url("${svgToUrl(IconPalette)}");*/
+  /*background-position: center;*/
+  /*background-repeat: no-repeat;*/
+  /*background-size: 80%;*/
+}
+
+#MangaOnlineViewer .ThemeRadio.selected .icon-tabler-check {
+  display: inline;
+}
+
+#MangaOnlineViewer .ThemeRadio:not(.selected) .icon-tabler-check {
+  display: none;
+}
+
 #MangaOnlineViewer #KeybindingsPanel {
   padding: 8px;
   position: fixed;
   top: 65px;
   right: 0;
-  /*transition: transform 0.3s ease-in, background-color 0.3s linear;*/
-  /*transform: translateX(100%);*/
-  display: none;
+  transition: transform 0.3s ease-in-out;;
+  transform: translateX(100%);
+  /*display: none;*/
   line-height: 1.5em;
 }
 
 #MangaOnlineViewer #KeybindingsPanel.visible {
-  /*transform: translateX(0);*/
+  transform: translateX(0);
   display: block;
 }
 
@@ -1415,11 +1713,12 @@ img {
   right: 25%;
   text-align: center;
   max-height: 70%;
-  display: none;
+  transition: transform 0.3s ease-in-out;;
+  transform: scaleY(0%);
 }
 
 #MangaOnlineViewer #BookmarksPanel.visible {
-  /*transform: translateX(0);*/
+  transform: scaleY(100%);
   display: block;
 }
 
@@ -1461,6 +1760,9 @@ img {
   border-width: 1px;
   padding: 2px;
   min-height: 32px;
+  color: var(--theme-primary-text-color);
+  background-color: var(--theme-primary-color);
+  border-color: var(--theme-border-color);  
 }
 
 #MangaOnlineViewer .ControlButton:hover {
@@ -1471,16 +1773,18 @@ img {
   padding: 5px;
   position: inherit;
   border-radius: 5px;
+  background-color: var(--theme-background-color);
 }
 
 #MangaOnlineViewer .MangaPage {
   width: 100%;
   display: inline-block;
   text-align: center;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-  perspective: 1000px;
+  /*transform: translate3d(0, 0, 0);*/
+  /*backface-visibility: hidden;*/
+  /*perspective: 1000px;*/
   line-height: 0;
+  min-height: 22px;
 }
 
 #MangaOnlineViewer .PageContent {
@@ -1488,14 +1792,18 @@ img {
   display: inline-block;
   overflow-x: auto;
   max-width: 100%;
+  transition: all 0.3s ease-in-out;
+  height: 100%;
+  overflow-y: hidden;
 }
 
 #MangaOnlineViewer .MangaPage.hide .PageContent {
-  display: none;
+  /*display: none;*/
+  height: 0;
 }
 
 #MangaOnlineViewer .MangaPage.hide .PageFunctions {
-  position:relative;
+  /*position:relative;*/
 }
 
 #MangaOnlineViewer .PageContent .PageImg[src=""],
@@ -1507,6 +1815,7 @@ img {
   background-position: center;
   background-repeat: no-repeat;
   background-size: 20%;
+  background-color: var(--theme-hightlight-color);
 }
 
 #MangaOnlineViewer .PageContent .PageImg.imgBroken {
@@ -1517,6 +1826,7 @@ img {
   background-position: center;
   background-repeat: no-repeat;
   background-size: 20%;
+  background-color: var(--theme-hightlight-color);
 }
 
 #MangaOnlineViewer .Thumbnail .ThumbnailImg[src=""],
@@ -1590,6 +1900,7 @@ img {
   width: 100%;
   top: 0;
   z-index: 1;
+  color: var(--theme-body-text-color);
 }
 
 #MangaOnlineViewer #MangaTitle {
@@ -1604,7 +1915,7 @@ img {
   gap: 3px;
   padding-left:10px;
   flex-wrap: wrap;
-  max-width: 220px;
+  width: 300px;
   z-index: 100;
 }
 
@@ -1619,6 +1930,7 @@ img {
   justify-content: center;
   align-items: end;
   padding-right: 10px;
+  width: 300px;
 }
 
 #MangaOnlineViewer .ChapterControl {
@@ -1680,6 +1992,8 @@ img {
 }
 
 #MangaOnlineViewer .PageFunctions > .PageIndex {
+  background-color: var(--theme-primary-color);
+  color: var(--theme-primary-text-color);
   min-width: 20px;
   text-align: center;
   display: inline-block;
@@ -1709,6 +2023,8 @@ img {
   opacity: 0.9;
 }
 
+#MangaOnlineViewer.light #ColorScheme > :not(.inverse),
+#MangaOnlineViewer:not(.light) #ColorScheme > .inverse,
 #MangaOnlineViewer .ChapterControl .download.loading > :not(.inverse),
 #MangaOnlineViewer .ChapterControl .download:not(.loading) > .inverse,
 #MangaOnlineViewer .MangaPage.hide .ControlButton.Hide  > .inverse,
@@ -1729,6 +2045,8 @@ img {
 }
 
 #MangaOnlineViewer #Navigation {
+  color: var(--theme-text-color);
+  background-color: var(--theme-hightlight-color);
   bottom: -180px;
   height: 185px;
   overflow-x: hidden;
@@ -1766,9 +2084,12 @@ img {
   display: inline-block;
   height: 150px;
   margin: 0 5px;
+  border: 1px solid var(--theme-primary-color);
 }
 
 #MangaOnlineViewer #Navigation .Thumbnail .ThumbnailIndex {
+  color: var(--theme-text-color);
+  background-color: var(--theme-hightlight-color);
   display: block;
   opacity: 0.8;
   position: relative;
@@ -1801,8 +2122,8 @@ img {
     
   #MangaOnlineViewer #GlobalFunctions {
     flex-wrap: nowrap;
-    max-width: initial;
     padding: 0;
+    width: auto;
   }
   
   #MangaOnlineViewer #menu {
@@ -1831,6 +2152,7 @@ img {
 
   #MangaOnlineViewer #ChapterNavigation {
     order: 3;
+    width: auto;
   }
 
   #MangaOnlineViewer #Navigation {
@@ -1941,13 +2263,10 @@ img {
 
     // Configuration
     const settings$1 = {
-        theme: getValueGM('Theme', 'Tango_Blue'),
+        theme: getValueGM('Theme', 'darkblue'),
         customTheme: getValueGM('CustomTheme', '#263e3a'),
-        customThemeBody: getValueGM('CustomThemeBody', '#000000'),
-        customThemeText: getValueGM('CustomThemeText', '#ffffff'),
-        customThemeLines: getValueGM('CustomThemeLines', '#666666'),
-        customThemePanel: getValueGM('CustomThemePanel', '#333333'),
-        customThemeButton: getValueGM('CustomThemeButton', '#282828'),
+        themeShade: getValueGM('ThemeShade', 600),
+        colorScheme: getValueGM('ColorScheme', 'dark'),
         fitWidthIfOversize: getValueGM('FitWidthIfOversize', true),
         showThumbnails: getValueGM('ShowThumbnails', true),
         downloadZip: getValueGM('DownloadZip', false),
@@ -2001,90 +2320,43 @@ img {
         return `<style type='text/css' id='${id}'>${css}</style>`;
     }
 
-    const scheme = new ColorScheme().scheme('mono').variation('default');
-    function generateThemeCSS(theme) {
+    function generateThemeCSS(name, primary, text) {
         // language=CSS
         return `
-  .${theme[0]} a,
-  .${theme[0]} a:link,
-  .${theme[0]} a:visited,
-  .${theme[0]} a:active,
-  .${theme[0]} a:focus,
-  .${theme[0]} { 
-    text-decoration:none;
-    color: ${theme[2]};
-    background-color: ${theme[1]};
-  }
-  .${theme[0]} .PageFunctions .PageIndex,
-  .${theme[0]} .Thumbnail .ThumbnailIndex,
-  .${theme[0]} .ControlButton,
-  .${theme[0]} #ChapterControl .ControlButton {
-    color: ${theme[2]};
-    background-color: ${theme[4]};
-    border-color: transparent;
-  }
-  .${theme[0]} .Thumbnail {
-    border: 1px solid ${theme[3]};
-  }
-
-  .${theme[0]} .PageContent .PageImg[src=""],
-  .${theme[0]} .PageContent .PageImg:not([src]),
-  .${theme[0]} .PageContent .PageImg.imgBroken {
-    background-color: ${theme[3]};
-  }  
-  .${theme[0]} .panel {
-    background-color: ${theme[5]};
-  }
-  .${theme[0]} #menu {
-    color: ${theme[3]};
-  }
-  `;
+.${name},
+[data-theme='${name}'] {
+  --theme-primary-color: ${primary};
+  --theme-primary-text-color: ${text};
+}
+`;
+    }
+    function getNormalThemeCSS(theme) {
+        return generateThemeCSS(theme.name, theme[settings$1.themeShade], settings$1.themeShade < 500 ? theme['900'] : theme['50']);
+    }
+    function getCustomThemeCSS(hex) {
+        return generateThemeCSS('custom', hex, getTextColor(hex));
     }
     // Add custom Themes to the page
     function addTheme(theme) {
-        return wrapStyle(theme[0], generateThemeCSS(theme));
+        return wrapStyle(theme.name, getNormalThemeCSS(theme));
     }
-    function swapTheme(theme) {
-        replaceStyleSheet(theme[0], generateThemeCSS(theme));
+    function addCustomTheme(hex) {
+        replaceStyleSheet('custom', getCustomThemeCSS(hex));
     }
-    function addCustomTheme(color) {
-        const bg = scheme.from_hex(color.replace('#', '')).colors();
-        swapTheme(['Custom_Dark', '#000000', `#${bg[2]}`, `#${bg[3]}`, `#${bg[0]}`, `#${bg[1]}`]);
-        swapTheme(['Custom_Light', '#eeeeec', `#${bg[3]}`, `#${bg[2]}`, `#${bg[0]}`, `#${bg[1]}`]);
+    const themes = () => Object.values(colors);
+    // Object.values({ ...colors, custom: customColor(settings.customTheme) });
+    const themesSelector = [...Object.keys(colors).map((color) => colors[color].name)].map((theme) => `
+<span class='${theme} ThemeRadio ${settings$1.theme === theme ? 'selected' : ''}'
+      title='${theme}'      
+>
+${IconCheck}
+</span>
+`);
+    function refreshThemes() {
+        themes().forEach((theme) => replaceStyleSheet(theme.name, getNormalThemeCSS(theme)));
+        replaceStyleSheet('custom', getCustomThemeCSS(settings$1.customTheme));
     }
-    function addFullCustomTheme(body, text, lines, panel, buttons) {
-        swapTheme(['Full_Custom', body, text, lines, panel, buttons]);
-    }
-    function loadThemes() {
-        const bg = scheme.from_hex(settings$1.customTheme.replace('#', '')).colors();
-        return [
-            //   1-body       2-text       3-lines     4-button     5-panel
-            ['Dark', '#000000', '#ffffff', '#666666', '#333333', '#282828'],
-            ['Grey', '#1A202C', '#d6d8e3', '#666666', '#535353', '#535353'],
-            ['Light', '#eeeeec', '#2e3436', '#888a85', '#babdb6', '#c8cec2'],
-            ['Clear', '#ffffff', '#2e3436', '#888a85', '#eeeeec', '#d3d7cf'],
-            ['Dark_Blue', '#000000', '#91a0b0', '#586980', '#3e4b5b', '#222c3b'],
-            ['Tango_Blue', '#000000', '#82a0bf', '#3d669b', '#304c77', '#102747'],
-            ['Lime', '#000000', '#8abd59', '#608d34', '#38531f', '#233413'],
-            ['Plum', '#000000', '#ad7fa8', '#75507b', '#49324d', '#311b37'],
-            ['Light_Plum', '#eeeeec', '#5c3566', '#9b71a2', '#ad7fa8', '#d2b8ce'],
-            ['Earthy', '#000000', '#ffffff', '#693d3d', '#46211a', '#683327'],
-            ['Cool_Blues', '#000000', '#c4dfe6', '#66a5ad', '#07575b', '#003b46'],
-            ['Custom_Dark', '#000000', `#${bg[2]}`, `#${bg[3]}`, `#${bg[0]}`, `#${bg[1]}`],
-            ['Custom_Light', '#eeeeec', `#${bg[3]}`, `#${bg[2]}`, `#${bg[0]}`, `#${bg[1]}`],
-            [
-                'Full_Custom',
-                settings$1.customThemeBody,
-                settings$1.customThemeText,
-                settings$1.customThemeLines,
-                settings$1.customThemePanel,
-                settings$1.customThemeButton,
-            ],
-        ];
-    }
-    const themes = loadThemes();
-    const themesSelector = themes.map((theme) => `<option value='${theme[0]}' ${settings$1.theme === theme[0] ? 'selected' : ''}>${theme[0].replace('_', ' ')}</option>`);
-    const themesCSS = themes.map(addTheme).join('');
+    const themesCSS = themes().map(addTheme).join('') + wrapStyle('custom', getCustomThemeCSS(settings$1.customTheme));
 
     // https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.20/sweetalert2.css
     // .swal2-title -> #swal2-title
@@ -2152,36 +2424,41 @@ img {
   </div>
 </div>`);
 
+    // language=html
     const SettingsPanel = `
 <div id='SettingsPanel' class='panel'>
   <h2>Settings</h2>
   <button id='CloseSettings' class='closeButton'>${IconX}</button>
-  <button id='ResetSettings'>Reset Settings</button>
-  <div class='ControlLabel ThemeSelector'>Theme:
-    <select id='ThemeSelector'>
-      ${themesSelector}
-    </select>
-      <div class='CustomTheme ControlLabelItem ${settings$1.theme === 'Custom_Dark' || settings$1.theme === 'Custom_Light' ? 'show' : ''}'>
-        -Base:<input id='CustomThemeHue' type='color' value='${settings$1.customTheme}' class='colorpicker CustomTheme'/>
-      </div>
-      <div class='FullCustom ControlLabelItem ${settings$1.theme === 'Full_Custom' ? 'show' : ''}' >
-        -Body:<input id='CustomThemeHueBody' type='color' value='${settings$1.customThemeBody}' class='colorpicker FullCustom'/>
-      </div>
-      <div class='FullCustom ControlLabelItem ${settings$1.theme === 'Full_Custom' ? 'show' : ''}' >
-        -Text:<input id='CustomThemeHueText' type='color' value='${settings$1.customThemeText}' class='colorpicker FullCustom'/>
-      </div>
-      <div class='FullCustom ControlLabelItem ${settings$1.theme === 'Full_Custom' ? 'show' : ''}' >
-        -Lines:<input id='CustomThemeHueLines' type='color' value='${settings$1.customThemeLines}' class='colorpicker FullCustom'/>
-      </div>
-      <div class='FullCustom ControlLabelItem ${settings$1.theme === 'Full_Custom' ? 'show' : ''}'>
-        -Painels:
-        <input id='CustomThemeHuePanel' type='color' value='${settings$1.customThemePanel}' class='colorpicker FullCustom'/>
-      </div>
-      <div class='FullCustom ControlLabelItem ${settings$1.theme === 'Full_Custom' ? 'show' : ''}'>
-        -Buttons:
-        <input id='CustomThemeHueButton' type='color' value='${settings$1.customThemeButton}' class='colorpicker FullCustom'/>
-      </div>
+  <button id='ResetSettings' class='simpleButton'>Reset Settings</button>
+  <div class='ControlLabel ColorSchemeSelector'>Color Scheme:
+    <button id='ColorScheme' class='simpleButton'>      
+      ${IconSun}
+      ${IconMoon}
+    </button>
   </div>
+<!-- =========================================================================================== -->
+  <div class='ControlLabel ThemeSelector'>Theme:
+    <span class='custom ThemeRadio ${settings$1.theme === 'custom' ? 'selected' : ''}' title='custom'>
+      ${IconPalette}
+      ${IconCheck}
+    </span>
+    ${themesSelector.join('')}      
+  </div>
+<!-- =========================================================================================== -->
+  <div id='Hue' class='ControlLabel CustomTheme ControlLabelItem 
+        ${settings$1.theme.startsWith('custom') ? 'show' : ''}'>
+        Theme Primary Color Hue:<input id='CustomThemeHue' type='color' value='${settings$1.customTheme}' class='colorpicker CustomTheme'/>
+  </div>
+<!-- =========================================================================================== -->
+  <div id='Shade' class='ControlLabel CustomTheme ControlLabelItem
+        ${settings$1.theme.startsWith('custom') ? '' : 'show'}'>
+    <span>
+      Theme Primary Color Shade:
+      <output id='themeShadeVal' for='themeShade'>${settings$1.themeShade}</output>
+    </span>
+    <input type='range' value='${settings$1.themeShade}' name='ThemeShade' id='ThemeShade' min='100' max='900' step='100' oninput='themeShadeVal.value = this.value'/>
+  </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel loadMode'>Default Load Mode:
     <select id='loadMode'>
       <option value='wait' ${settings$1.loadMode === 'wait' ? 'selected' : ''}>Normal(Wait 3 sec)</option>
@@ -2189,6 +2466,7 @@ img {
       <option value='never' ${settings$1.loadMode === 'never' ? 'selected' : ''}>Never(Manually)</option>
     </select>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel PagesPerSecond'>Pages/Second:
     <select id='PagesPerSecond'>
       <option value='3000' ${settings$1.throttlePageLoad === 3000 ? 'selected' : ''}>0.3(Slow)</option>
@@ -2200,6 +2478,7 @@ img {
       <option value='100' ${settings$1.throttlePageLoad === 100 ? 'selected' : ''}>10(Extreme)</option>
     </select>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel DefaultZoom'>Default Zoom:
     <select id='DefaultZoom'>
       <option value='50' ${settings$1.zoom === 50 ? 'selected' : ''}>50%</option>
@@ -2213,6 +2492,7 @@ img {
       <option value='-1000' ${settings$1.zoom === -1000 ? 'selected' : ''}>Fit Height</option>
     </select>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel minZoom'>
     <span>
       Minimun Zoom relative to the width of screen (between 30 and 100):
@@ -2220,14 +2500,15 @@ img {
     </span>
     <input type='range' value='${settings$1.minZoom}' name='minZoom' id='minZoom' min='30' max='100' step='10' oninput='minZoomVal.value = this.value'/>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel zoomStep'>
     <span>
       Zoom Change Step (between 5 and 50):
       <output id='zoomStepVal' for='zoomStep'>${settings$1.zoomStep}</output>
     </span>
     <input type='range' value='${settings$1.zoomStep}' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput='zoomStepVal.value = this.value'/>
-    
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel viewMode'>Default View Mode:
     <select id='viewMode'>
       <option value='' ${settings$1.viewMode !== 'FluidLTR' && settings$1.viewMode !== 'FluidRTL' ? 'selected' : ''}>
@@ -2241,16 +2522,20 @@ img {
       </option>
     </select>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel fitIfOversize'>Fit Width if Oversize:
     <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${settings$1.fitWidthIfOversize ? 'checked' : ''}/>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel showThumbnails'>Show Thumbnails:
     <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${settings$1.showThumbnails ? 'checked' : ''}/>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel lazyLoadImages'>Lazy Load Images:
     <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${settings$1.lazyLoadImages ? 'checked' : ''}/>
-    </div>
-    <div class='ControlLabel lazyStart'>
+  </div>
+<!-- =========================================================================================== -->
+  <div class='ControlLabel lazyStart'>
     <span>
       Lazy Start From Page (between 5 and 100):
       <output id='lazyStartVal' for='lazyStart'>${settings$1.lazyStart}</output>
@@ -2258,12 +2543,15 @@ img {
     <input type='range' value='${settings$1.lazyStart}' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput='lazyStartVal.value = this.value'/>
     
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel downloadZip'>Download Images as Zip Automatically:
     <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${settings$1.downloadZip ? 'checked' : ''}/>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel hidePageControls'>Always Hide Page Controls:
     <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${settings$1.hidePageControls ? 'checked' : ''}/>
   </div>
+<!-- =========================================================================================== -->
   <div class='ControlLabel mouseOverMenu'>Toggle Sticky Header / MouseOverMenu:
     <input type='checkbox' value='false' name='mouseOverMenu' id='mouseOverMenu' ${settings$1.mouseOverMenu ? 'checked' : ''}/>
   </div>
@@ -2339,24 +2627,29 @@ img {
         .map((_, index) => `<option value='${index + 1}'>${index + 1}</option>`);
     const body = (manga, begin = 0) => `
 <div id='MangaOnlineViewer'
-  class="${settings$1.theme} ${settings$1.hidePageControls ? 'hideControls' : ''}">
+  class="${settings$1.colorScheme} ${settings$1.hidePageControls ? 'hideControls' : ''}"
+  data-theme='${settings$1.theme}'>
   <header id="Header" class="${settings$1.mouseOverMenu ? 'mouseOverMenu' : ''}">
     <div id='menu'>
       ${IconMenu2}
     </div>
     <aside id='GlobalFunctions'>
-      <button id='enlarge' title='Enlarge' class='ControlButton'>${IconZoomInArea}</button>
-      <button id='restore' title='Restore' class='ControlButton'>${IconZoomPan}</button>
-      <button id='reduce' title='Reduce' class='ControlButton'>${IconZoomOutArea}</button>
-      <button id='fitWidth' title='Fit Width' class='ControlButton'>${IconArrowAutofitWidth}</button>
-      <button id='fitHeight' title='Fit Height' class='ControlButton'>${IconArrowAutofitHeight}</button>
-      <button id='keybindings' title='Keybindings' class='ControlButton'>${IconKeyboard}</button>
-      <button id='ltrMode' title='Left to Right Mode' class='ControlButton'>${IconArrowAutofitRight}</button>
-      <button id='verticalMode' title='Vertical Mode' class='ControlButton'>${IconArrowAutofitDown}</button>
-      <button id='rtlMode' title='Right to Left Mode' class='ControlButton'>${IconArrowAutofitLeft}</button>
-      <button id='pageControls' title='Toggle Page Controls' class='ControlButton'>${IconListNumbers}</button>
-      <button id='bookmarks' title='List Bookmarks' class='ControlButton'>${IconBookmarks}</button>
-      <button id='settings' title='Settings' class='ControlButton'>${IconSettings}</button>
+      <span>
+        <button id='enlarge' title='Enlarge' class='ControlButton'>${IconZoomInArea}</button>
+        <button id='restore' title='Restore' class='ControlButton'>${IconZoomPan}</button>
+        <button id='reduce' title='Reduce' class='ControlButton'>${IconZoomOutArea}</button>
+        <button id='fitWidth' title='Fit Width' class='ControlButton'>${IconArrowAutofitWidth}</button>
+        <button id='fitHeight' title='Fit Height' class='ControlButton'>${IconArrowAutofitHeight}</button>
+        <button id='keybindings' title='Keybindings' class='ControlButton'>${IconKeyboard}</button>
+      </span>
+      <span>
+        <button id='ltrMode' title='Left to Right Mode' class='ControlButton'>${IconArrowAutofitRight}</button>
+        <button id='verticalMode' title='Vertical Mode' class='ControlButton'>${IconArrowAutofitDown}</button>
+        <button id='rtlMode' title='Right to Left Mode' class='ControlButton'>${IconArrowAutofitLeft}</button>
+        <button id='pageControls' title='Toggle Page Controls' class='ControlButton'>${IconListNumbers}</button>
+        <button id='bookmarks' title='List Bookmarks' class='ControlButton'>${IconBookmarks}</button>
+        <button id='settings' title='Settings' class='ControlButton'>${IconSettings}</button>
+      </span>
     </aside>
     <div class='ViewerTitle'>
       <h1 id='MangaTitle'>${manga.title}</h1>
@@ -3240,61 +3533,60 @@ img {
             logScript(`MangaHidePageControls: ${getValueGM('MouseOverMenu')}`);
         }
         document.querySelector('#mouseOverMenu')?.addEventListener('change', checkMouseOverMenu);
+        // ColorScheme Selector
+        function changeColorScheme() {
+            const isDark = settings$1.colorScheme === 'dark';
+            settings$1.colorScheme = isDark ? 'light' : 'dark';
+            setValueGM('ColorScheme', settings$1.colorScheme);
+            [...document.querySelectorAll('#MangaOnlineViewer , body')].forEach((elem) => {
+                elem.classList.remove(isDark ? 'dark' : 'light');
+                elem.classList.add(settings$1.colorScheme);
+            });
+            logScript('ColorScheme', getValueGM('ColorScheme'));
+        }
+        document.querySelector('#ColorScheme')?.addEventListener('click', changeColorScheme);
         // Theme Control Selector
         function changeTheme(event) {
-            const target = event.currentTarget.value;
+            const target = event.currentTarget;
+            [...document.querySelectorAll('.ThemeRadio')].forEach((elem) => elem.classList.remove('selected'));
+            target.classList.add('selected');
             [...document.querySelectorAll('#MangaOnlineViewer , body')].forEach((elem) => {
-                elem.className = '';
-                elem.classList.add(event.currentTarget.value);
+                elem.setAttribute('data-theme', target.title);
             });
-            logScript('Theme', target);
-            setValueGM('Theme', target);
-            const ct = [...document.querySelectorAll('.CustomTheme')];
-            if (target === 'Custom_Dark' || target === 'Custom_Light') {
-                ct.forEach((elem) => {
-                    elem.classList.add('show');
-                });
+            setValueGM('Theme', target.title);
+            logScript('Theme', getValueGM('Theme'));
+            const hue = document.querySelector('#Hue');
+            const shade = document.querySelector('#Shade');
+            if (target.title.startsWith('custom')) {
+                hue?.classList.add('show');
+                shade?.classList.remove('show');
             }
             else {
-                ct.forEach((elem) => {
-                    elem.classList.remove('show');
-                });
-            }
-            const fc = [...document.querySelectorAll('.FullCustom')];
-            if (target === 'Full_Custom') {
-                fc.forEach((elem) => {
-                    elem.classList.add('show');
-                });
-            }
-            else {
-                fc.forEach((elem) => {
-                    elem.classList.remove('show');
-                });
+                hue?.classList.remove('show');
+                shade?.classList.add('show');
             }
         }
-        document.querySelector('#ThemeSelector')?.addEventListener('change', changeTheme);
-        // Light/Dark Custom theme Color Input
+        [...document.querySelectorAll('.ThemeRadio')].forEach((elem) => elem.addEventListener('click', changeTheme));
+        // Custom theme Color Input
         function changeCustomTheme(event) {
             const target = event.currentTarget.value;
             logScript(`CustomTheme: ${target}`);
+            settings$1.customTheme = target;
             addCustomTheme(target);
             setValueGM('CustomTheme', target);
-            logScript(`MangaCustomTheme: ${getValueGM('CustomTheme')}`);
+            logScript(`CustomTheme: ${getValueGM('CustomTheme')}`);
         }
         document.querySelector('#CustomThemeHue')?.addEventListener('change', changeCustomTheme);
-        // Full Custom theme Color Input
-        function changeFullCustomTheme(input) {
-            return input.addEventListener('change', () => {
-                logScript('FullCustomTheme: ', document.querySelector('#CustomThemeHueBody')?.value, document.querySelector('#CustomThemeHueText')?.value, document.querySelector('#CustomThemeHueLines')?.value, document.querySelector('#CustomThemeHuePanel')?.value, document.querySelector('#CustomThemeHueButton')?.value);
-                addFullCustomTheme(document.querySelector('#CustomThemeHueBody').value, document.querySelector('#CustomThemeHueText').value, document.querySelector('#CustomThemeHueLines').value, document.querySelector('#CustomThemeHuePanel').value, document.querySelector('#CustomThemeHueButton').value);
-                setValueGM('CustomThemeBody', document.querySelector('#CustomThemeHueBody').value);
-                setValueGM('CustomThemeText', document.querySelector('#CustomThemeHueText').value);
-                setValueGM('CustomThemeLines', document.querySelector('#CustomThemeHueLines').value);
-                setValueGM('CustomThemePanel', document.querySelector('#CustomThemeHuePanel').value);
-                setValueGM('CustomThemeButton', document.querySelector('#CustomThemeHueButton').value);
-            });
+        // Theme Shade Input
+        function changeThemeShade(event) {
+            const target = parseInt(event.currentTarget.value, 10);
+            logScript(`ThemeShade: ${target}`);
+            settings$1.themeShade = target;
+            refreshThemes();
+            setValueGM('ThemeShade', target);
+            logScript(`ThemeShade: ${getValueGM('ThemeShade')}`);
         }
-        document.querySelectorAll('.colorpicker.FullCustom')?.forEach(changeFullCustomTheme);
+        document.querySelector('#ThemeShade')?.addEventListener('change', changeThemeShade);
         // Goto Navigation Selector
         function selectGoToPage(event) {
             applyZoom();
