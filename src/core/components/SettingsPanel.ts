@@ -22,15 +22,15 @@ const SettingsPanel = `
     ${themesSelector.join('')}      
   </div>
 <!-- =========================================================================================== -->
-  <div class='ControlLabel CustomTheme ControlLabelItem ${
-    settings.theme.startsWith('custom') ? 'show' : ''
-  }'>
+  <div id='Hue' class='ControlLabel CustomTheme ControlLabelItem 
+        ${settings.theme.startsWith('custom') ? 'show' : ''}'>
         Theme Primary Color Hue:<input id='CustomThemeHue' type='color' value='${
           settings.customTheme
         }' class='colorpicker CustomTheme'/>
   </div>
 <!-- =========================================================================================== -->
-  <div class='ControlLabel'>
+  <div id='Shade' class='ControlLabel CustomTheme ControlLabelItem
+        ${settings.theme.startsWith('custom') ? '' : 'show'}'>
     <span>
       Theme Primary Color Shade:
       <output id='themeShadeVal' for='themeShade'>${settings.themeShade}</output>

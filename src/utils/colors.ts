@@ -259,8 +259,8 @@ const colors: IPalette = {
   },
 };
 
-const darkest = 30; // Original 10
-const lightest = 85; // Original 95
+const darkest = 10;
+const lightest = 95;
 const darkSteps = 4;
 const lightSteps = 5;
 
@@ -286,6 +286,12 @@ export function customColor(color: string) {
     800: setLightness(hsl, 50 - darknessStep * 3),
     900: setLightness(hsl, 50 - darknessStep * 4),
   };
+}
+
+export function getTextColor(hex: string) {
+  const color = tinycolor(hex);
+  const hsl = color.toHsl();
+  return setLightness(hsl, color.isDark() ? lightest : darkest);
 }
 
 export default colors;

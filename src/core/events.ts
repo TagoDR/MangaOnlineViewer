@@ -432,11 +432,14 @@ function controls() {
     });
     setValueGM('Theme', target.title);
     logScript('Theme', getValueGM('Theme'));
-    const elem = document.querySelector<HTMLDivElement>('.CustomTheme');
+    const hue = document.querySelector<HTMLDivElement>('#Hue');
+    const shade = document.querySelector<HTMLDivElement>('#Shade');
     if (target.title.startsWith('custom')) {
-      elem?.classList.add('show');
+      hue?.classList.add('show');
+      shade?.classList.remove('show');
     } else {
-      elem?.classList.remove('show');
+      hue?.classList.remove('show');
+      shade?.classList.add('show');
     }
   }
   [...document.querySelectorAll('.ThemeRadio')].forEach((elem) =>

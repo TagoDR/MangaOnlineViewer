@@ -1,34 +1,42 @@
 import settings from './settings';
 import { replaceStyleSheet, wrapStyle } from '../utils/css';
-import colors, { customColor, IColor } from '../utils/colors';
+import colors, { getTextColor, IColor } from '../utils/colors';
 import { IconCheck } from './components/icons';
 
-function generateThemeCSS(theme: IColor) {
+function generateThemeCSS(name: string, primary: string, text: string) {
   // language=CSS
   return `
-.${theme.name},
-[data-theme='${theme.name}'] {
-  --theme-primary-color: ${theme[settings.themeShade]};
-  --theme-primary-text-color: ${settings.themeShade <= 500 ? theme['900'] : theme['50']};
+.${name},
+[data-theme='${name}'] {
+  --theme-primary-color: ${primary};
+  --theme-primary-text-color: ${text};
 }
 `;
 }
 
-// Add custom Themes to the page
-function addTheme(theme: IColor): string {
-  return wrapStyle(theme.name, generateThemeCSS(theme));
+function getNormalThemeCSS(theme: IColor) {
+  return generateThemeCSS(
+    theme.name,
+    theme[settings.themeShade],
+    settings.themeShade < 500 ? theme['900'] : theme['50'],
+  );
 }
 
-function swapTheme(theme: IColor) {
-  replaceStyleSheet(theme.name, generateThemeCSS(theme));
+function getCustomThemeCSS(hex: string) {
+  return generateThemeCSS('custom', hex, getTextColor(hex));
+}
+
+// Add custom Themes to the page
+function addTheme(theme: IColor): string {
+  return wrapStyle(theme.name, getNormalThemeCSS(theme));
 }
 
 function addCustomTheme(hex: string) {
-  swapTheme(customColor(hex));
+  replaceStyleSheet('custom', getCustomThemeCSS(hex));
 }
 
-const themes = (): IColor[] =>
-  Object.values({ ...colors, custom: customColor(settings.customTheme) });
+const themes = (): IColor[] => Object.values(colors);
+// Object.values({ ...colors, custom: customColor(settings.customTheme) });
 
 const themesSelector = [...Object.keys(colors).map((color) => colors[color].name)].map(
   (theme) => `
@@ -41,9 +49,11 @@ ${IconCheck}
 );
 
 function refreshThemes() {
-  themes().forEach((theme: IColor) => replaceStyleSheet(theme.name, generateThemeCSS(theme)));
+  themes().forEach((theme: IColor) => replaceStyleSheet(theme.name, getNormalThemeCSS(theme)));
+  replaceStyleSheet('custom', getCustomThemeCSS(settings.customTheme));
 }
 
-const themesCSS = themes().map(addTheme).join('');
+const themesCSS =
+  themes().map(addTheme).join('') + wrapStyle('custom', getCustomThemeCSS(settings.customTheme));
 
 export { themesCSS, themesSelector, addCustomTheme, refreshThemes };
