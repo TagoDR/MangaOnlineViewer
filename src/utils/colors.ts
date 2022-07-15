@@ -259,80 +259,32 @@ const colors: IPalette = {
   },
 };
 
-const config = {
-  darkest: {
-    lightness: 10,
-    rotate: 0,
-    saturate: 0,
-  },
-  lightest: {
-    lightness: 95,
-    rotate: 0,
-    saturate: 0,
-  },
-};
+const darkest = 30; // Original 10
+const lightest = 85; // Original 95
+const darkSteps = 4;
+const lightSteps = 5;
 
-export function customColor(color: string): IColor {
-  const darkSteps = 4;
-  const lightSteps = 5;
+const lightnessStep = (lightest - 50) / lightSteps;
+const darknessStep = (50 - darkest) / darkSteps;
 
-  const lightnessStep = (config.lightest.lightness - 50) / lightSteps;
-  const darknessStep = (50 - config.darkest.lightness) / darkSteps;
-
-  const lightRotateStep = config.lightest.rotate / lightSteps;
-  const darkRotateStep = config.darkest.rotate / darkSteps;
-
-  const lightSaturateStep = config.lightest.saturate / lightSteps;
-  const darkSaturateStep = config.darkest.saturate / darkSteps;
-
+function setLightness(hsl: tinycolor.ColorFormats.HSLA, lightness: number) {
+  hsl.l = lightness;
+  return tinycolor(hsl).toHexString();
+}
+export function customColor(color: string) {
+  const hsl = tinycolor(color).toHsl();
   return {
     name: 'custom',
-    50: tinycolor(color)
-      .brighten(50 + lightnessStep * 5)
-      .spin(lightRotateStep * 5)
-      .saturate(lightSaturateStep * 5)
-      .toHexString(),
-    100: tinycolor(color)
-      .brighten(50 + lightnessStep * 4)
-      .spin(lightRotateStep * 4)
-      .saturate(lightSaturateStep * 4)
-      .toHexString(),
-    200: tinycolor(color)
-      .brighten(50 + lightnessStep * 3)
-      .spin(lightRotateStep * 3)
-      .saturate(lightSaturateStep * 3)
-      .toHexString(),
-    300: tinycolor(color)
-      .brighten(50 + lightnessStep * 2)
-      .spin(lightRotateStep * 2)
-      .saturate(lightSaturateStep * 2)
-      .toHexString(),
-    400: tinycolor(color)
-      .brighten(50 + lightnessStep * 1)
-      .spin(lightRotateStep * 1)
-      .saturate(lightSaturateStep * 1)
-      .toHexString(),
-    500: tinycolor(color).brighten(50).toHexString(),
-    600: tinycolor(color)
-      .brighten(50 - darknessStep * 1)
-      .spin(darkRotateStep * 1)
-      .saturate(darkSaturateStep * 1)
-      .toHexString(),
-    700: tinycolor(color)
-      .brighten(50 - darknessStep * 2)
-      .spin(darkRotateStep * 2)
-      .saturate(darkSaturateStep * 2)
-      .toHexString(),
-    800: tinycolor(color)
-      .brighten(50 - darknessStep * 3)
-      .spin(darkRotateStep * 3)
-      .saturate(darkSaturateStep * 3)
-      .toHexString(),
-    900: tinycolor(color)
-      .brighten(50 - darknessStep * 4)
-      .spin(darkRotateStep * 4)
-      .saturate(darkSaturateStep * 4)
-      .toHexString(),
+    50: setLightness(hsl, 50 + lightnessStep * 5),
+    100: setLightness(hsl, 50 + lightnessStep * 4),
+    200: setLightness(hsl, 50 + lightnessStep * 3),
+    300: setLightness(hsl, 50 + lightnessStep * 2),
+    400: setLightness(hsl, 50 + lightnessStep),
+    500: setLightness(hsl, 50),
+    600: setLightness(hsl, 50 - darknessStep),
+    700: setLightness(hsl, 50 - darknessStep * 2),
+    800: setLightness(hsl, 50 - darknessStep * 3),
+    900: setLightness(hsl, 50 - darknessStep * 4),
   };
 }
 

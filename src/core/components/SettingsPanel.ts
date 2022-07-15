@@ -25,7 +25,7 @@ const SettingsPanel = `
   <div class='ControlLabel CustomTheme ControlLabelItem ${
     settings.theme.startsWith('custom') ? 'show' : ''
   }'>
-        Theme Primary Color Palette:<input id='CustomThemeHue' type='color' value='${
+        Theme Primary Color Hue:<input id='CustomThemeHue' type='color' value='${
           settings.customTheme
         }' class='colorpicker CustomTheme'/>
   </div>

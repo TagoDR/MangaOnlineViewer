@@ -27,7 +27,8 @@ function addCustomTheme(hex: string) {
   swapTheme(customColor(hex));
 }
 
-const themes = () => Object.values({ ...colors, custom: customColor(settings.customTheme) });
+const themes = (): IColor[] =>
+  Object.values({ ...colors, custom: customColor(settings.customTheme) });
 
 const themesSelector = [...Object.keys(colors).map((color) => colors[color].name)].map(
   (theme) => `
