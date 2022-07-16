@@ -168,9 +168,11 @@ function controls() {
     document.querySelector('#SettingsPanel')?.classList.toggle('visible');
     document.querySelector('#Navigation')?.classList.toggle('visible');
     document.querySelector('#Header')?.classList.toggle('visible');
+    document.querySelector('#SettingsOverlay')?.classList.toggle('visible');
   }
   document.querySelector('#settings')?.addEventListener('click', buttonSettings);
   document.querySelector('#CloseSettings')?.addEventListener('click', buttonSettings);
+  document.querySelector('#SettingsOverlay')?.addEventListener('click', buttonSettings);
   // Keybindings list
   function buttonKeybindings() {
     document.querySelector('#KeybindingsPanel')?.classList.toggle('visible');
@@ -180,9 +182,11 @@ function controls() {
   // List of Bookmarks
   function buttonBookmarks() {
     document.querySelector('#BookmarksPanel')?.classList.toggle('visible');
+    document.querySelector('#BookmarksOverlay')?.classList.toggle('visible');
   }
   document.querySelector('#bookmarks')?.addEventListener('click', buttonBookmarks);
   document.querySelector('#CloseBookmarks')?.addEventListener('click', buttonBookmarks);
+  document.querySelector('#BookmarksOverlay')?.addEventListener('click', buttonBookmarks);
   function eraseBookmarks(elem: Element) {
     elem.addEventListener('click', (event) => {
       const target = (event.currentTarget as HTMLButtonElement).value;

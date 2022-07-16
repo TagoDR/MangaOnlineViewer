@@ -3,42 +3,53 @@ import settings from '../settings';
 import { IconCheck, IconMoon, IconPalette, IconSun, IconX } from './icons';
 // language=html
 const SettingsPanel = `
+<div id='SettingsOverlay' class='overlay'></div>
 <div id='SettingsPanel' class='panel'>
   <h2>Settings</h2>
   <button id='CloseSettings' class='closeButton'>${IconX}</button>
   <button id='ResetSettings' class='simpleButton'>Reset Settings</button>
-  <div class='ControlLabel ColorSchemeSelector'>Color Scheme:
-    <button id='ColorScheme' class='simpleButton'>      
-      ${IconSun}
-      ${IconMoon}
-    </button>
-  </div>
+  <div id='ThemeSection'>
+    <div class='ControlLabel ColorSchemeSelector'>Color Scheme:
+      <button id='ColorScheme' class='simpleButton'>      
+        ${IconSun}
+        ${IconMoon}
+      </button>
+    </div>
 <!-- =========================================================================================== -->
-  <div class='ControlLabel ThemeSelector'>Theme:
-    <span class='custom ThemeRadio ${settings.theme === 'custom' ? 'selected' : ''}' title='custom'>
-      ${IconPalette}
-      ${IconCheck}
-    </span>
-    ${themesSelector.join('')}      
-  </div>
+    <div class='ControlLabel ThemeSelector'>Theme:
+      <span class='custom ThemeRadio 
+            ${settings.theme === 'custom' ? 'selected' : ''}'
+            title='custom'>
+        ${IconPalette}
+        ${IconCheck}
+      </span>
+      ${themesSelector.join('')}      
+    </div>
 <!-- =========================================================================================== -->
-  <div id='Hue' class='ControlLabel CustomTheme ControlLabelItem 
-        ${settings.theme.startsWith('custom') ? 'show' : ''}'>
-        Theme Primary Color Hue:<input id='CustomThemeHue' type='color' value='${
-          settings.customTheme
-        }' class='colorpicker CustomTheme'/>
-  </div>
+    <div id='Hue' class='ControlLabel CustomTheme ControlLabelItem 
+          ${settings.theme.startsWith('custom') ? 'show' : ''}'>
+          Theme Primary Color Hue:<input id='CustomThemeHue' type='color' value='${
+            settings.customTheme
+          }' class='colorpicker CustomTheme'/>
+    </div>
 <!-- =========================================================================================== -->
-  <div id='Shade' class='ControlLabel CustomTheme ControlLabelItem
-        ${settings.theme.startsWith('custom') ? '' : 'show'}'>
-    <span>
-      Theme Primary Color Shade:
-      <output id='themeShadeVal' for='themeShade'>${settings.themeShade}</output>
-    </span>
-    <input type='range' value='${
-      settings.themeShade
-    }' name='ThemeShade' id='ThemeShade' min='100' max='900' step='100' oninput='themeShadeVal.value = this.value'/>
-  </div>
+    <div id='Shade' class='ControlLabel CustomTheme ControlLabelItem
+          ${settings.theme.startsWith('custom') ? '' : 'show'}'>
+      <span>
+        Theme Primary Color Shade:
+        <output id='themeShadeVal' for='themeShade'>${settings.themeShade}</output>
+      </span>
+      <input type='range'
+            value='${settings.themeShade}' 
+            name='ThemeShade' 
+            id='ThemeShade' 
+            min='100' 
+            max='900' 
+            step='100' 
+            oninput='themeShadeVal.value = this.value'
+      />
+    </div>
+  </div>  
 <!-- =========================================================================================== -->
   <div class='ControlLabel loadMode'>Default Load Mode:
     <select id='loadMode'>
@@ -91,9 +102,15 @@ const SettingsPanel = `
       Minimun Zoom relative to the width of screen (between 30 and 100):
       <output id='minZoomVal' for='minZoom'>${settings.minZoom}</output>
     </span>
-    <input type='range' value='${
-      settings.minZoom
-    }' name='minZoom' id='minZoom' min='30' max='100' step='10' oninput='minZoomVal.value = this.value'/>
+    <input type='range' 
+          value='${settings.minZoom}' 
+          name='minZoom' 
+          id='minZoom' 
+          min='30' 
+          max='100' 
+          step='10' 
+          oninput='minZoomVal.value = this.value'
+    />
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel zoomStep'>
@@ -101,9 +118,15 @@ const SettingsPanel = `
       Zoom Change Step (between 5 and 50):
       <output id='zoomStepVal' for='zoomStep'>${settings.zoomStep}</output>
     </span>
-    <input type='range' value='${
-      settings.zoomStep
-    }' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput='zoomStepVal.value = this.value'/>
+    <input type='range' 
+          value='${settings.zoomStep}' 
+          name='zoomStep' 
+          id='zoomStep' 
+          min='5' 
+          max='50' 
+          step='5' 
+          oninput='zoomStepVal.value = this.value'
+    />
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel viewMode'>Default View Mode:

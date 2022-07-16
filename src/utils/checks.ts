@@ -14,7 +14,7 @@
  * @param {any} value - item to test
  * @returns {boolean} true if empty, otherwise false
  */
-function isEmpty<T>(value: T | T[] | null | undefined): value is T | T[] {
+function isEmpty<T>(value: T | T[] | null | undefined): value is null | undefined {
   return (
     value === null || // check for null
     typeof value === 'undefined' ||
@@ -41,7 +41,7 @@ function isEmpty<T>(value: T | T[] | null | undefined): value is T | T[] {
  * @param {any} value - item to test
  * @returns {boolean} true if nothing, otherwise false
  */
-function isNothing(value: any | any[] | null | undefined): value is any | any[] {
+function isNothing(value: any | any[] | null | undefined): value is null | undefined {
   const isEmptyObject = (a: any | any[] | null | undefined): boolean => {
     if (!Array.isArray(a)) {
       // it's an Object, not an Array

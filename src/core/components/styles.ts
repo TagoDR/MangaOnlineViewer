@@ -167,12 +167,35 @@ img {
   display: none;
 }
 
+#MangaOnlineViewer #ThemeSection{
+  border: 1px solid var(--theme-body-text-color);
+  border-radius: 10px;
+  padding: 10px;
+}
+
 #MangaOnlineViewer .closeButton {
   width: fit-content;
   height: fit-content;
   position: absolute;
   right: 10px;
   top: 10px;
+}
+
+#MangaOnlineViewer .overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 950;
+  cursor: pointer;
+}
+#MangaOnlineViewer .overlay.visible {
+  display: block;
 }
 
 #MangaOnlineViewer .ThemeRadio {
@@ -234,6 +257,7 @@ img {
   max-height: 70%;
   transition: transform 0.3s ease-in-out;;
   transform: scaleY(0%);
+  z-index: 1000;
 }
 
 #MangaOnlineViewer #BookmarksPanel.visible {
@@ -304,6 +328,7 @@ img {
   /*perspective: 1000px;*/
   line-height: 0;
   min-height: 22px;
+  min-width: 100%;
 }
 
 #MangaOnlineViewer .PageContent {
@@ -638,11 +663,41 @@ img {
   #MangaOnlineViewer #Header {
       flex-direction: column;
   }
-    
+
+  #MangaOnlineViewer #Header.mouseOverMenu {
+    position: sticky;
+    transition: transform 0.3s ease-in;
+  }
+
+  #MangaOnlineViewer #Header.scroll-show {
+    transform: translateY(-1%);
+  }
+
+  #MangaOnlineViewer #Header.scroll-hide {
+    transform: translateY(-100%);
+  }
+  
+  #MangaOnlineViewer .PageContent .PageImg {
+    max-width: 100%;
+  }
+
+  #MangaOnlineViewer .ViewerTitle {
+    order: 1;
+    min-height: auto;
+    padding: 0px;
+    margin: 0px;
+  }
+  
   #MangaOnlineViewer #GlobalFunctions {
     flex-wrap: nowrap;
     padding: 0;
     width: auto;
+    order: 3;
+    padding: 5px;
+  }
+
+  #MangaOnlineViewer #ChapterNavigation {
+    order: 2;
   }
   
   #MangaOnlineViewer #menu {
@@ -656,6 +711,19 @@ img {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+  }
+
+  #MangaOnlineViewer #Header.mouseOverMenu {
+    position: sticky;
+    transition: transform 0.3s ease-in;
+  }
+  
+  #MangaOnlineViewer #Header.scroll-show {
+    transform: translateY(-1%);
+  }
+  
+  #MangaOnlineViewer #Header.scroll-hide {
+    transform: translateY(-100%);
   }
 
   #MangaOnlineViewer .ViewerTitle {
@@ -695,7 +763,7 @@ img {
     width: 100%;
   }
 
-  #MangaOnlineViewer .fitWidthIfOversize .PageContent .PageImg {
+  #MangaOnlineViewer .PageContent .PageImg {
     max-width: 100%;
   }
 
