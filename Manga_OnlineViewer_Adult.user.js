@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno, vercomicsporno, xyzcomics
-// @version 2022.07.15
+// @version 2022.07.16
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -1584,12 +1584,35 @@ img {
   display: none;
 }
 
+#MangaOnlineViewer #ThemeSection{
+  border: 1px solid var(--theme-body-text-color);
+  border-radius: 10px;
+  padding: 10px;
+}
+
 #MangaOnlineViewer .closeButton {
   width: fit-content;
   height: fit-content;
   position: absolute;
   right: 10px;
   top: 10px;
+}
+
+#MangaOnlineViewer .overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 950;
+  cursor: pointer;
+}
+#MangaOnlineViewer .overlay.visible {
+  display: block;
 }
 
 #MangaOnlineViewer .ThemeRadio {
@@ -1651,6 +1674,7 @@ img {
   max-height: 70%;
   transition: transform 0.3s ease-in-out;;
   transform: scaleY(0%);
+  z-index: 1000;
 }
 
 #MangaOnlineViewer #BookmarksPanel.visible {
@@ -1721,6 +1745,7 @@ img {
   /*perspective: 1000px;*/
   line-height: 0;
   min-height: 22px;
+  min-width: 100%;
 }
 
 #MangaOnlineViewer .PageContent {
@@ -2055,11 +2080,41 @@ img {
   #MangaOnlineViewer #Header {
       flex-direction: column;
   }
-    
+
+  #MangaOnlineViewer #Header.mouseOverMenu {
+    position: sticky;
+    transition: transform 0.3s ease-in;
+  }
+
+  #MangaOnlineViewer #Header.scroll-show {
+    transform: translateY(-1%);
+  }
+
+  #MangaOnlineViewer #Header.scroll-hide {
+    transform: translateY(-100%);
+  }
+  
+  #MangaOnlineViewer .PageContent .PageImg {
+    max-width: 100%;
+  }
+
+  #MangaOnlineViewer .ViewerTitle {
+    order: 1;
+    min-height: auto;
+    padding: 0px;
+    margin: 0px;
+  }
+  
   #MangaOnlineViewer #GlobalFunctions {
     flex-wrap: nowrap;
     padding: 0;
     width: auto;
+    order: 3;
+    padding: 5px;
+  }
+
+  #MangaOnlineViewer #ChapterNavigation {
+    order: 2;
   }
   
   #MangaOnlineViewer #menu {
@@ -2073,6 +2128,19 @@ img {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+  }
+
+  #MangaOnlineViewer #Header.mouseOverMenu {
+    position: sticky;
+    transition: transform 0.3s ease-in;
+  }
+  
+  #MangaOnlineViewer #Header.scroll-show {
+    transform: translateY(-1%);
+  }
+  
+  #MangaOnlineViewer #Header.scroll-hide {
+    transform: translateY(-100%);
   }
 
   #MangaOnlineViewer .ViewerTitle {
@@ -2112,7 +2180,7 @@ img {
     width: 100%;
   }
 
-  #MangaOnlineViewer .fitWidthIfOversize .PageContent .PageImg {
+  #MangaOnlineViewer .PageContent .PageImg {
     max-width: 100%;
   }
 
@@ -2362,38 +2430,51 @@ ${IconCheck}
 
     // language=html
     const SettingsPanel = `
+<div id='SettingsOverlay' class='overlay'></div>
 <div id='SettingsPanel' class='panel'>
   <h2>Settings</h2>
   <button id='CloseSettings' class='closeButton'>${IconX}</button>
   <button id='ResetSettings' class='simpleButton'>Reset Settings</button>
-  <div class='ControlLabel ColorSchemeSelector'>Color Scheme:
-    <button id='ColorScheme' class='simpleButton'>      
-      ${IconSun}
-      ${IconMoon}
-    </button>
-  </div>
+  <div id='ThemeSection'>
+    <div class='ControlLabel ColorSchemeSelector'>Color Scheme:
+      <button id='ColorScheme' class='simpleButton'>      
+        ${IconSun}
+        ${IconMoon}
+      </button>
+    </div>
 <!-- =========================================================================================== -->
-  <div class='ControlLabel ThemeSelector'>Theme:
-    <span class='custom ThemeRadio ${settings$1.theme === 'custom' ? 'selected' : ''}' title='custom'>
-      ${IconPalette}
-      ${IconCheck}
-    </span>
-    ${themesSelector.join('')}      
-  </div>
+    <div class='ControlLabel ThemeSelector'>Theme:
+      <span class='custom ThemeRadio 
+            ${settings$1.theme === 'custom' ? 'selected' : ''}'
+            title='custom'>
+        ${IconPalette}
+        ${IconCheck}
+      </span>
+      ${themesSelector.join('')}      
+    </div>
 <!-- =========================================================================================== -->
-  <div id='Hue' class='ControlLabel CustomTheme ControlLabelItem 
-        ${settings$1.theme.startsWith('custom') ? 'show' : ''}'>
-        Theme Primary Color Hue:<input id='CustomThemeHue' type='color' value='${settings$1.customTheme}' class='colorpicker CustomTheme'/>
-  </div>
+    <div id='Hue' class='ControlLabel CustomTheme ControlLabelItem 
+          ${settings$1.theme.startsWith('custom') ? 'show' : ''}'>
+          Theme Primary Color Hue:<input id='CustomThemeHue' type='color' value='${settings$1.customTheme}' class='colorpicker CustomTheme'/>
+    </div>
 <!-- =========================================================================================== -->
-  <div id='Shade' class='ControlLabel CustomTheme ControlLabelItem
-        ${settings$1.theme.startsWith('custom') ? '' : 'show'}'>
-    <span>
-      Theme Primary Color Shade:
-      <output id='themeShadeVal' for='themeShade'>${settings$1.themeShade}</output>
-    </span>
-    <input type='range' value='${settings$1.themeShade}' name='ThemeShade' id='ThemeShade' min='100' max='900' step='100' oninput='themeShadeVal.value = this.value'/>
-  </div>
+    <div id='Shade' class='ControlLabel CustomTheme ControlLabelItem
+          ${settings$1.theme.startsWith('custom') ? '' : 'show'}'>
+      <span>
+        Theme Primary Color Shade:
+        <output id='themeShadeVal' for='themeShade'>${settings$1.themeShade}</output>
+      </span>
+      <input type='range'
+            value='${settings$1.themeShade}' 
+            name='ThemeShade' 
+            id='ThemeShade' 
+            min='100' 
+            max='900' 
+            step='100' 
+            oninput='themeShadeVal.value = this.value'
+      />
+    </div>
+  </div>  
 <!-- =========================================================================================== -->
   <div class='ControlLabel loadMode'>Default Load Mode:
     <select id='loadMode'>
@@ -2434,7 +2515,15 @@ ${IconCheck}
       Minimun Zoom relative to the width of screen (between 30 and 100):
       <output id='minZoomVal' for='minZoom'>${settings$1.minZoom}</output>
     </span>
-    <input type='range' value='${settings$1.minZoom}' name='minZoom' id='minZoom' min='30' max='100' step='10' oninput='minZoomVal.value = this.value'/>
+    <input type='range' 
+          value='${settings$1.minZoom}' 
+          name='minZoom' 
+          id='minZoom' 
+          min='30' 
+          max='100' 
+          step='10' 
+          oninput='minZoomVal.value = this.value'
+    />
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel zoomStep'>
@@ -2442,7 +2531,15 @@ ${IconCheck}
       Zoom Change Step (between 5 and 50):
       <output id='zoomStepVal' for='zoomStep'>${settings$1.zoomStep}</output>
     </span>
-    <input type='range' value='${settings$1.zoomStep}' name='zoomStep' id='zoomStep' min='5' max='50' step='5' oninput='zoomStepVal.value = this.value'/>
+    <input type='range' 
+          value='${settings$1.zoomStep}' 
+          name='zoomStep' 
+          id='zoomStep' 
+          min='5' 
+          max='50' 
+          step='5' 
+          oninput='zoomStepVal.value = this.value'
+    />
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel viewMode'>Default View Mode:
@@ -2521,28 +2618,33 @@ ${IconCheck}
   <span class='ThumbnailIndex'>${index + 1}</span>
 </div>`);
 
-    const listBookmarks = () => settings$1.bookmarks.map((mark, index) => `
-  <div id='Bookmark${index + 1}' class='BookmarkItem'>
-    <span class='bookmarkData bookmarkDate'>
-      ${new Date(mark.date).toLocaleDateString()}
-    </span>
-    <span class='bookmarkData bookmarkURl'
-      title='${mark.url}'>
-      ${mark.url}
-    </span>
-    <span class='bookmarkData bookmarkPage'>Page: ${mark.page}</span>
-    <span class='bookmarkData bookmarkFunctions'>
-      <button class='ControlButton open' title='Open Bookmark' type='button'
-      onclick="window.open('${mark.url}','_blank')">
-        ${IconExternalLink}
-      </button>
-      <button class='ControlButton erase' title='Delete Bookmark' type='button'
-      value='${mark.url}'>
-        ${IconTrash}
-      </button>
-    </pan>
-  </div>`);
+    const listBookmarks = () => {
+        if (isEmpty(settings$1.bookmarks))
+            return ['List Empty'];
+        return settings$1.bookmarks.map((mark, index) => `
+<div id='Bookmark${index + 1}' class='BookmarkItem'>
+  <span class='bookmarkData bookmarkDate'>
+    ${new Date(mark.date).toLocaleDateString()}
+  </span>
+  <span class='bookmarkData bookmarkURl'
+    title='${mark.url}'>
+    ${mark.url}
+  </span>
+  <span class='bookmarkData bookmarkPage'>Page: ${mark.page}</span>
+  <span class='bookmarkData bookmarkFunctions'>
+    <button class='ControlButton open' title='Open Bookmark' type='button'
+    onclick="window.open('${mark.url}','_blank')">
+      ${IconExternalLink}
+    </button>
+    <button class='ControlButton erase' title='Delete Bookmark' type='button'
+    value='${mark.url}'>
+      ${IconTrash}
+    </button>
+  </pan>
+</div>`);
+    };
     const BookmarkPanel = `
+<div id='BookmarksOverlay' class='overlay'></div>
 <div id='BookmarksPanel' class='panel'>
   <button id='CloseBookmarks' class='closeButton'>${IconX}</button>
   <h2>Bookmarks</h2>
@@ -3223,9 +3325,11 @@ ${IconCheck}
             document.querySelector('#SettingsPanel')?.classList.toggle('visible');
             document.querySelector('#Navigation')?.classList.toggle('visible');
             document.querySelector('#Header')?.classList.toggle('visible');
+            document.querySelector('#SettingsOverlay')?.classList.toggle('visible');
         }
         document.querySelector('#settings')?.addEventListener('click', buttonSettings);
         document.querySelector('#CloseSettings')?.addEventListener('click', buttonSettings);
+        document.querySelector('#SettingsOverlay')?.addEventListener('click', buttonSettings);
         // Keybindings list
         function buttonKeybindings() {
             document.querySelector('#KeybindingsPanel')?.classList.toggle('visible');
@@ -3235,9 +3339,11 @@ ${IconCheck}
         // List of Bookmarks
         function buttonBookmarks() {
             document.querySelector('#BookmarksPanel')?.classList.toggle('visible');
+            document.querySelector('#BookmarksOverlay')?.classList.toggle('visible');
         }
         document.querySelector('#bookmarks')?.addEventListener('click', buttonBookmarks);
         document.querySelector('#CloseBookmarks')?.addEventListener('click', buttonBookmarks);
+        document.querySelector('#BookmarksOverlay')?.addEventListener('click', buttonBookmarks);
         function eraseBookmarks(elem) {
             elem.addEventListener('click', (event) => {
                 const target = event.currentTarget.value;
