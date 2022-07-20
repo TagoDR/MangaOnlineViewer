@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Batoto, ComiCastle, Dynasty-Scans, Leitor, LHTranslation, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTown, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, SenManga(Raw), TenManga, TuMangaOnline, UnionMangas, Manga33, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, ReaperScans, JaiminisBox, DisasterScans
-// @version 2022.07.17
+// @version 2022.07.20
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -997,6 +997,215 @@
             (typeof value === 'object' && isEmptyObject(value)));
     }
 
+    const colors = {
+        dark: {
+            name: 'dark',
+            50: '#C1C2C5',
+            100: '#A6A7AB',
+            200: '#909296',
+            300: '#5c5f66',
+            400: '#373A40',
+            500: '#2C2E33',
+            600: '#25262b',
+            700: '#1A1B1E',
+            800: '#141517',
+            900: '#101113',
+        },
+        gray: {
+            name: 'gray',
+            50: '#f8f9fa',
+            100: '#f1f3f5',
+            200: '#e9ecef',
+            300: '#dee2e6',
+            400: '#ced4da',
+            500: '#adb5bd',
+            600: '#868e96',
+            700: '#495057',
+            800: '#343a40',
+            900: '#212529',
+        },
+        red: {
+            name: 'red',
+            50: '#fff5f5',
+            100: '#ffe3e3',
+            200: '#ffc9c9',
+            300: '#ffa8a8',
+            400: '#ff8787',
+            500: '#ff6b6b',
+            600: '#fa5252',
+            700: '#f03e3e',
+            800: '#e03131',
+            900: '#c92a2a',
+        },
+        pink: {
+            name: 'pink',
+            50: '#fff0f6',
+            100: '#ffdeeb',
+            200: '#fcc2d7',
+            300: '#faa2c1',
+            400: '#f783ac',
+            500: '#f06595',
+            600: '#e64980',
+            700: '#d6336c',
+            800: '#c2255c',
+            900: '#a61e4d',
+        },
+        grape: {
+            name: 'grape',
+            50: '#f8f0fc',
+            100: '#f3d9fa',
+            200: '#eebefa',
+            300: '#e599f7',
+            400: '#da77f2',
+            500: '#cc5de8',
+            600: '#be4bdb',
+            700: '#ae3ec9',
+            800: '#9c36b5',
+            900: '#862e9c',
+        },
+        violet: {
+            name: 'violet',
+            50: '#f3f0ff',
+            100: '#e5dbff',
+            200: '#d0bfff',
+            300: '#b197fc',
+            400: '#9775fa',
+            500: '#845ef7',
+            600: '#7950f2',
+            700: '#7048e8',
+            800: '#6741d9',
+            900: '#5f3dc4',
+        },
+        indigo: {
+            name: 'purple',
+            50: '#edf2ff',
+            100: '#dbe4ff',
+            200: '#bac8ff',
+            300: '#91a7ff',
+            400: '#748ffc',
+            500: '#5c7cfa',
+            600: '#4c6ef5',
+            700: '#4263eb',
+            800: '#3b5bdb',
+            900: '#364fc7',
+        },
+        blue: {
+            name: 'blue',
+            50: '#e7f5ff',
+            100: '#d0ebff',
+            200: '#a5d8ff',
+            300: '#74c0fc',
+            400: '#4dabf7',
+            500: '#339af0',
+            600: '#228be6',
+            700: '#1c7ed6',
+            800: '#1971c2',
+            900: '#1864ab',
+        },
+        cyan: {
+            name: 'cyan',
+            50: '#e3fafc',
+            100: '#c5f6fa',
+            200: '#99e9f2',
+            300: '#66d9e8',
+            400: '#3bc9db',
+            500: '#22b8cf',
+            600: '#15aabf',
+            700: '#1098ad',
+            800: '#0c8599',
+            900: '#0b7285',
+        },
+        teal: {
+            name: 'teal',
+            50: '#e6fcf5',
+            100: '#c3fae8',
+            200: '#96f2d7',
+            300: '#63e6be',
+            400: '#38d9a9',
+            500: '#20c997',
+            600: '#12b886',
+            700: '#0ca678',
+            800: '#099268',
+            900: '#087f5b',
+        },
+        green: {
+            name: 'green',
+            50: '#ebfbee',
+            100: '#d3f9d8',
+            200: '#b2f2bb',
+            300: '#8ce99a',
+            400: '#69db7c',
+            500: '#51cf66',
+            600: '#40c057',
+            700: '#37b24d',
+            800: '#2f9e44',
+            900: '#2b8a3e',
+        },
+        lime: {
+            name: 'lime',
+            50: '#f4fce3',
+            100: '#e9fac8',
+            200: '#d8f5a2',
+            300: '#c0eb75',
+            400: '#a9e34b',
+            500: '#94d82d',
+            600: '#82c91e',
+            700: '#74b816',
+            800: '#66a80f',
+            900: '#5c940d',
+        },
+        yellow: {
+            name: 'yellow',
+            50: '#fff9db',
+            100: '#fff3bf',
+            200: '#ffec99',
+            300: '#ffe066',
+            400: '#ffd43b',
+            500: '#fcc419',
+            600: '#fab005',
+            700: '#f59f00',
+            800: '#f08c00',
+            900: '#e67700',
+        },
+        orange: {
+            name: 'orange',
+            50: '#fff4e6',
+            100: '#ffe8cc',
+            200: '#ffd8a8',
+            300: '#ffc078',
+            400: '#ffa94d',
+            500: '#ff922b',
+            600: '#fd7e14',
+            700: '#f76707',
+            800: '#e8590c',
+            900: '#d9480f',
+        },
+        darkblue: {
+            name: 'darkblue',
+            50: '#E8F4F9',
+            100: '#D9DEE9',
+            200: '#B7C2DA',
+            300: '#6482C0',
+            400: '#4267B2',
+            500: '#385898',
+            600: '#314E89',
+            700: '#29487D',
+            800: '#223B67',
+            900: '#1E355B',
+        },
+    };
+    const darkest = 10;
+    const lightest = 95;
+    function setLightness(hsl, lightness) {
+        hsl.l = lightness;
+        return tinycolor(hsl).toHexString();
+    }
+    function getTextColor(hex) {
+        const color = tinycolor(hex);
+        const hsl = color.toHsl();
+        return setLightness(hsl, color.isDark() ? lightest : darkest);
+    }
+
     function svgToUrl(str) {
         const cleaned = str
             .replace(/[\t\n\r]/gim, '') // Strip newlines and tabs
@@ -1007,6 +1216,7 @@
             .replace(/\)/g, '%29');
         return `data:image/svg+xml;charset=UTF-8,${encoded}`;
     }
+    Object.values(colors).map((i) => i['900']);
 
     // Icons from https://tabler-icons.io/
     // Icons for Navigation
@@ -1273,215 +1483,6 @@
    <line color="orange" x1="3" y1="3" x2="21" y2="21"></line>
    <path color="silver" d="M16.32 12.34c.577 -.059 1.162 .162 1.68 .66l2 2"></path>
 </svg>`;
-
-    const colors = {
-        dark: {
-            name: 'dark',
-            50: '#C1C2C5',
-            100: '#A6A7AB',
-            200: '#909296',
-            300: '#5c5f66',
-            400: '#373A40',
-            500: '#2C2E33',
-            600: '#25262b',
-            700: '#1A1B1E',
-            800: '#141517',
-            900: '#101113',
-        },
-        gray: {
-            name: 'gray',
-            50: '#f8f9fa',
-            100: '#f1f3f5',
-            200: '#e9ecef',
-            300: '#dee2e6',
-            400: '#ced4da',
-            500: '#adb5bd',
-            600: '#868e96',
-            700: '#495057',
-            800: '#343a40',
-            900: '#212529',
-        },
-        red: {
-            name: 'red',
-            50: '#fff5f5',
-            100: '#ffe3e3',
-            200: '#ffc9c9',
-            300: '#ffa8a8',
-            400: '#ff8787',
-            500: '#ff6b6b',
-            600: '#fa5252',
-            700: '#f03e3e',
-            800: '#e03131',
-            900: '#c92a2a',
-        },
-        pink: {
-            name: 'pink',
-            50: '#fff0f6',
-            100: '#ffdeeb',
-            200: '#fcc2d7',
-            300: '#faa2c1',
-            400: '#f783ac',
-            500: '#f06595',
-            600: '#e64980',
-            700: '#d6336c',
-            800: '#c2255c',
-            900: '#a61e4d',
-        },
-        grape: {
-            name: 'grape',
-            50: '#f8f0fc',
-            100: '#f3d9fa',
-            200: '#eebefa',
-            300: '#e599f7',
-            400: '#da77f2',
-            500: '#cc5de8',
-            600: '#be4bdb',
-            700: '#ae3ec9',
-            800: '#9c36b5',
-            900: '#862e9c',
-        },
-        violet: {
-            name: 'violet',
-            50: '#f3f0ff',
-            100: '#e5dbff',
-            200: '#d0bfff',
-            300: '#b197fc',
-            400: '#9775fa',
-            500: '#845ef7',
-            600: '#7950f2',
-            700: '#7048e8',
-            800: '#6741d9',
-            900: '#5f3dc4',
-        },
-        indigo: {
-            name: 'purple',
-            50: '#edf2ff',
-            100: '#dbe4ff',
-            200: '#bac8ff',
-            300: '#91a7ff',
-            400: '#748ffc',
-            500: '#5c7cfa',
-            600: '#4c6ef5',
-            700: '#4263eb',
-            800: '#3b5bdb',
-            900: '#364fc7',
-        },
-        blue: {
-            name: 'blue',
-            50: '#e7f5ff',
-            100: '#d0ebff',
-            200: '#a5d8ff',
-            300: '#74c0fc',
-            400: '#4dabf7',
-            500: '#339af0',
-            600: '#228be6',
-            700: '#1c7ed6',
-            800: '#1971c2',
-            900: '#1864ab',
-        },
-        cyan: {
-            name: 'cyan',
-            50: '#e3fafc',
-            100: '#c5f6fa',
-            200: '#99e9f2',
-            300: '#66d9e8',
-            400: '#3bc9db',
-            500: '#22b8cf',
-            600: '#15aabf',
-            700: '#1098ad',
-            800: '#0c8599',
-            900: '#0b7285',
-        },
-        teal: {
-            name: 'teal',
-            50: '#e6fcf5',
-            100: '#c3fae8',
-            200: '#96f2d7',
-            300: '#63e6be',
-            400: '#38d9a9',
-            500: '#20c997',
-            600: '#12b886',
-            700: '#0ca678',
-            800: '#099268',
-            900: '#087f5b',
-        },
-        green: {
-            name: 'green',
-            50: '#ebfbee',
-            100: '#d3f9d8',
-            200: '#b2f2bb',
-            300: '#8ce99a',
-            400: '#69db7c',
-            500: '#51cf66',
-            600: '#40c057',
-            700: '#37b24d',
-            800: '#2f9e44',
-            900: '#2b8a3e',
-        },
-        lime: {
-            name: 'lime',
-            50: '#f4fce3',
-            100: '#e9fac8',
-            200: '#d8f5a2',
-            300: '#c0eb75',
-            400: '#a9e34b',
-            500: '#94d82d',
-            600: '#82c91e',
-            700: '#74b816',
-            800: '#66a80f',
-            900: '#5c940d',
-        },
-        yellow: {
-            name: 'yellow',
-            50: '#fff9db',
-            100: '#fff3bf',
-            200: '#ffec99',
-            300: '#ffe066',
-            400: '#ffd43b',
-            500: '#fcc419',
-            600: '#fab005',
-            700: '#f59f00',
-            800: '#f08c00',
-            900: '#e67700',
-        },
-        orange: {
-            name: 'orange',
-            50: '#fff4e6',
-            100: '#ffe8cc',
-            200: '#ffd8a8',
-            300: '#ffc078',
-            400: '#ffa94d',
-            500: '#ff922b',
-            600: '#fd7e14',
-            700: '#f76707',
-            800: '#e8590c',
-            900: '#d9480f',
-        },
-        darkblue: {
-            name: 'darkblue',
-            50: '#E8F4F9',
-            100: '#D9DEE9',
-            200: '#B7C2DA',
-            300: '#6482C0',
-            400: '#4267B2',
-            500: '#385898',
-            600: '#314E89',
-            700: '#29487D',
-            800: '#223B67',
-            900: '#1E355B',
-        },
-    };
-    const darkest = 10;
-    const lightest = 95;
-    function setLightness(hsl, lightness) {
-        hsl.l = lightness;
-        return tinycolor(hsl).toHexString();
-    }
-    function getTextColor(hex) {
-        const color = tinycolor(hex);
-        const hsl = color.toHsl();
-        return setLightness(hsl, color.isDark() ? lightest : darkest);
-    }
 
     // language=CSS
     var cssStyles = `
@@ -1870,7 +1871,7 @@ img {
 }
 
 #MangaOnlineViewer #gotoPage {
-  width: 35px;
+  min-width: 35px;
 }
 
 #MangaOnlineViewer #ThemeSelector {
@@ -2454,10 +2455,15 @@ ${IconCheck}
 `;
     }
 
-    const listPages = (times) => Array(times)
-        .fill(null)
-        .map((_, index) => `
-<div id='Page${index + 1}' class='MangaPage'>
+    function indexList(repeat, begin = 1) {
+        return Array(repeat)
+            .fill(0)
+            .map((_, i) => i + 1)
+            .filter((i) => i >= begin);
+    }
+
+    const listPages = (times, begin) => indexList(times, begin).map((index) => `
+<div id='Page${index}' class='MangaPage'>
   <div class='PageFunctions'>
     <button class='Bookmark ControlButton' title='Bookmark'>
       ${IconBookmark}
@@ -2485,10 +2491,10 @@ ${IconCheck}
     <button class='Reload ControlButton' title='Reload'>
       ${IconRefresh}
     </button>
-    <span class='PageIndex'>${index + 1}</span>
+    <span class='PageIndex'>${index}</span>
   </div>
   <div class='PageContent'>
-    <img id='PageImg${index + 1}' alt='' class='PageImg' />
+    <img id='PageImg${index}' alt='' class='PageImg' />
   </div>
 </div>`);
 
@@ -2674,12 +2680,10 @@ ${IconCheck}
     <kbd class='dark'>↓</kbd>/<kbd class='dark'>S</kbd>/<kbd class='dark'>Numpad 2</kbd>: Scroll Down<br/>
 </div>`;
 
-    const ThumbnailsPanel = (times) => Array(times)
-        .fill(null)
-        .map((_, index) => `
-<div id='Thumbnail${index + 1}' class='Thumbnail'>
-  <img id='ThumbnailImg${index + 1}' alt='' class='ThumbnailImg' src=''/>
-  <span class='ThumbnailIndex'>${index + 1}</span>
+    const ThumbnailsPanel = (times, begin) => indexList(times, begin).map((index) => `
+<div id='Thumbnail${index}' class='Thumbnail'>
+  <img id='ThumbnailImg${index}' alt='' class='ThumbnailImg' src=''/>
+  <span class='ThumbnailIndex'>${index}</span>
 </div>`);
 
     const listBookmarks = () => {
@@ -2724,10 +2728,8 @@ ${IconCheck}
         }
     }
 
-    const listOptions = (times) => Array(times)
-        .fill(null)
-        .map((_, index) => `<option value='${index + 1}'>${index + 1}</option>`);
-    const body = (manga, begin = 0) => `
+    const listOptions = (times, begin) => indexList(times, begin).map((index) => `<option value='${index}'>${index}</option>`);
+    const body = (manga, begin = 1) => `
 <div id='MangaOnlineViewer'
   class="${settings$1.colorScheme} ${settings$1.hidePageControls ? 'hideControls' : ''}"
   data-theme='${settings$1.theme}'>
@@ -2759,11 +2761,11 @@ ${IconCheck}
     </div>
     <nav id='ChapterNavigation'>
       <div id='Counters' class='ControlLabel'>
-        <i>0</i> of <b>${manga.pages}</b> Pages Loaded
+        <i>0</i> of <b>${manga.pages - (begin - 1)}</b> Pages Loaded,
         <span class='ControlLabel'>Go to Page:</span>
         <select id='gotoPage'>
           <option selected>#</option>
-          ${listOptions(manga.pages).slice(begin).join('')}
+          ${listOptions(manga.pages, begin).join('')}
         </select>
       </div>
       <div id='ChapterControl' class='ChapterControl'>
@@ -2786,15 +2788,15 @@ ${IconCheck}
     </nav>
   </header>  
   <main id='Chapter' class='${settings$1.fitWidthIfOversize === true ? 'fitWidthIfOversize' : ''} ${settings$1.viewMode}'>
-    ${listPages(manga.pages).slice(begin).join('')}
+    ${listPages(manga.pages, begin).join('')}
   </main>
   <nav id='Navigation' class='panel ${settings$1.showThumbnails ? '' : 'disabled'}'>
     <div id='NavigationCounters' class='ControlLabel'>
       ${IconCategory}
-      <i>0</i> of <b>${manga.pages}</b> Pages Loaded
+      <i>0</i> of <b>${manga.pages - (begin - 1)}</b> Pages Loaded
     </div>
     <div id='Thumbnails'>
-      ${ThumbnailsPanel(manga.pages).slice(begin).join('')}
+      ${ThumbnailsPanel(manga.pages, begin).join('')}
     </div>
   </nav>
   ${SettingsPanel}
@@ -2972,12 +2974,12 @@ ${IconCheck}
      */
     function filterInView(value) {
         const { element } = value;
-        if (!element.offsetParent)
-            return false;
-        const ele = element.offsetParent;
-        const top = ele.offsetTop + element.height >= window.scrollY - settings.threshold;
-        const bottom = ele.offsetTop <= window.scrollY + window.innerHeight + settings.threshold;
-        return top && bottom;
+        const rect = element.getBoundingClientRect();
+        const viewport = {
+            top: 0 - settings.threshold,
+            bottom: window.scrollY + window.innerHeight + settings.threshold,
+        };
+        return rect.bottom >= viewport.top && rect.top <= viewport.bottom;
     }
     /**
      * Execute the loading of the image
@@ -3000,7 +3002,7 @@ ${IconCheck}
     /**
      * Throttle controller
      */
-    let wait;
+    let wait = false;
     /**
      * Function responsible for observing the screen move/change
      */
@@ -3016,8 +3018,9 @@ ${IconCheck}
             return;
         }
         executeCheck();
-        wait = setTimeout(() => {
-            wait = undefined;
+        wait = true;
+        setTimeout(() => {
+            wait = false;
         }, settings.throttle);
     }
     /**
@@ -3041,6 +3044,7 @@ ${IconCheck}
             });
         }
         listElements.push({ element, callback });
+        observerEvent();
     }
 
     // After pages load apply default Zoom
@@ -3135,16 +3139,17 @@ ${IconCheck}
         return uri;
     }
     // Adds an image to the place-holder div
-    function addImg(index, imageSrc) {
+    function addImg(manga, index, imageSrc, position) {
         const src = normalizeUrl(imageSrc);
         const img = document.querySelector(`#PageImg${index}`);
         if (img) {
-            if (!settings$1.lazyLoadImages || index < settings$1.lazyStart) {
-                img.setAttribute('src', src);
-                img.setAttribute('src', src);
-                const imgLoad = imagesLoaded(img.parentElement);
-                imgLoad.on('progress', onImagesProgress);
-                logScript('Loaded Image:', index, 'Source:', src);
+            if (!settings$1.lazyLoadImages || position <= settings$1.lazyStart) {
+                setTimeout(() => {
+                    img.setAttribute('src', src);
+                    const imgLoad = imagesLoaded(img.parentElement);
+                    imgLoad.on('progress', onImagesProgress);
+                    logScript('Loaded Image:', index, 'Source:', src);
+                }, (manga.timer || settings$1.throttlePageLoad) * position);
             }
             else {
                 img.setAttribute('data-src', src);
@@ -3170,62 +3175,52 @@ ${IconCheck}
         };
     }
     // Adds a page to the place-holder div
-    async function addPage(manga, index, pageUrl) {
+    async function addPage(manga, index, pageUrl, position) {
         const img = document.querySelector(`#PageImg${index}`);
         if (img) {
-            if (!settings$1.lazyLoadImages || index < settings$1.lazyStart) {
-                await findPage(manga, index, pageUrl, false)();
+            if (!settings$1.lazyLoadImages || position <= settings$1.lazyStart) {
+                setTimeout(() => {
+                    findPage(manga, index, pageUrl, false)();
+                }, (manga.timer || settings$1.throttlePageLoad) * position);
             }
             else {
                 img.setAttribute('data-src', 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');
-                lazyLoad(img, findPage(manga, index, pageUrl, false));
+                lazyLoad(img, findPage(manga, index, pageUrl, true));
             }
         }
     }
-    // daley the use of an url/src
-    function delayAdd(src, wait = settings$1.throttlePageLoad) {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(src);
-            }, wait);
-        });
-    }
     // use a list of pages to fill the viewer
     function loadMangaPages(begin, manga) {
-        return manga.listPages?.map((url, index) => index >= begin
-            ? delayAdd(url, (manga.timer || settings$1.throttlePageLoad) * (index - begin)).then((response) => addPage(manga, index + 1, response))
-            : null);
+        indexList(manga.pages, begin).forEach((index, position) => addPage(manga, index, manga.listPages[index - 1], position));
     }
     // use a list of images to fill the viewer
     function loadMangaImages(begin, manga) {
-        return manga.listImages?.map((src, index) => index >= begin
-            ? delayAdd(src, (manga.timer || settings$1.throttlePageLoad) * (index - begin)).then((response) => addImg(index + 1, response))
-            : null);
+        indexList(manga.pages, begin).forEach((index, position) => addImg(manga, index, manga.listImages[index - 1], position));
     }
     // Entry point for loading hte Manga pages
     function loadManga(manga, begin = 1) {
         settings$1.lazyLoadImages = manga.lazy || settings$1.lazyLoadImages;
         logScript('Loading Images');
         logScript(`Intervals: ${manga.timer || settings$1.throttlePageLoad || 'Default(1000)'}`);
-        logScript(`Lazy: ${settings$1.lazyLoadImages}`);
+        logScript(`Lazy: ${settings$1.lazyLoadImages}, Starting from: ${settings$1.lazyStart}`);
         if (settings$1.lazyLoadImages) {
             logScript('Download may not work with Lazy Loading Images');
         }
         if (isImagesManga(manga)) {
             logScript('Method: Images:', manga.listImages);
-            loadMangaImages(begin - 1, manga);
+            loadMangaImages(begin, manga);
         }
         else if (isPagesManga(manga)) {
             logScript('Method: Pages:', manga.listPages);
-            loadMangaPages(begin - 1, manga);
+            loadMangaPages(begin, manga);
         }
         else if (isBruteforceManga(manga)) {
             logScript('Method: Brute Force');
             manga.bruteForce({
                 begin,
                 addImg,
-                loadImages: (list) => loadMangaImages(begin - 1, { ...manga, listImages: list }),
-                loadPages: (list, img, lazyAttr) => loadMangaPages(begin - 1, {
+                loadImages: (list) => loadMangaImages(begin, { ...manga, listImages: list }),
+                loadPages: (list, img, lazyAttr) => loadMangaPages(begin, {
                     ...manga,
                     listPages: list,
                     img,
@@ -3695,8 +3690,9 @@ ${IconCheck}
         document.querySelector('#ThemeShade')?.addEventListener('change', changeThemeShade);
         // Goto Navigation Selector
         function selectGoToPage(event) {
+            const target = event.currentTarget.value;
             applyZoom();
-            scrollToElement(document.querySelector(`#Page${event.target.selectedIndex}`));
+            scrollToElement(document.querySelector(`#Page${target}`));
         }
         document.querySelector('#gotoPage')?.addEventListener('change', selectGoToPage);
         // Thumbnail Navigation
@@ -3908,7 +3904,7 @@ ${IconCheck}
         Swal.fire(options).then((result) => {
             if (result.value) {
                 logScript(`Choice: ${result.value}`);
-                formatPage(manga, result.value - 1);
+                formatPage(manga, result.value);
             }
             else {
                 logScript(result.dismiss);
@@ -3965,8 +3961,8 @@ ${IconCheck}
         logScript(`Found Pages: ${manga.pages}`);
         if (manga.pages > 0) {
             let beginning = begin;
-            if (beginning === 0) {
-                beginning = settings$1?.bookmarks?.find((b) => b.url === window.location.href)?.page || 0;
+            if (beginning <= 1) {
+                beginning = settings$1?.bookmarks?.find((b) => b.url === window.location.href)?.page || 1;
             }
             const style = document.createElement('style');
             style.appendChild(document.createTextNode(sweetalertStyle));
