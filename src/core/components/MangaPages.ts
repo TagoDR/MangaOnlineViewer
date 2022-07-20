@@ -1,3 +1,4 @@
+import sequence from '../../utils/sequence';
 import {
   IconArrowAutofitHeight,
   IconArrowAutofitWidth,
@@ -11,12 +12,10 @@ import {
   IconZoomOut,
 } from './icons';
 
-const listPages = (times: number) =>
-  Array(times)
-    .fill(null)
-    .map(
-      (_, index) => `
-<div id='Page${index + 1}' class='MangaPage'>
+const listPages = (times: number, begin: number) =>
+  sequence(times, begin).map(
+    (index) => `
+<div id='Page${index}' class='MangaPage'>
   <div class='PageFunctions'>
     <button class='Bookmark ControlButton' title='Bookmark'>
       ${IconBookmark}
@@ -44,11 +43,11 @@ const listPages = (times: number) =>
     <button class='Reload ControlButton' title='Reload'>
       ${IconRefresh}
     </button>
-    <span class='PageIndex'>${index + 1}</span>
+    <span class='PageIndex'>${index}</span>
   </div>
   <div class='PageContent'>
-    <img id='PageImg${index + 1}' alt='' class='PageImg' />
+    <img id='PageImg${index}' alt='' class='PageImg' />
   </div>
 </div>`,
-    );
+  );
 export default listPages;

@@ -389,7 +389,7 @@ img {
 }
 
 #MangaOnlineViewer #gotoPage {
-  width: 35px;
+  min-width: 35px;
 }
 
 #MangaOnlineViewer #ThemeSelector {

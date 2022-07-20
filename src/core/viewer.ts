@@ -27,7 +27,7 @@ async function lateStart(site: ISite, begin = 1) {
   Swal.fire(options).then((result) => {
     if (result.value) {
       logScript(`Choice: ${result.value}`);
-      formatPage(manga, result.value - 1);
+      formatPage(manga, result.value);
     } else {
       logScript(result.dismiss);
     }
@@ -83,8 +83,8 @@ function preparePage(site: ISite, manga: IManga, begin = 0) {
   logScript(`Found Pages: ${manga.pages}`);
   if (manga.pages > 0) {
     let beginning = begin;
-    if (beginning === 0) {
-      beginning = settings?.bookmarks?.find((b) => b.url === window.location.href)?.page || 0;
+    if (beginning <= 1) {
+      beginning = settings?.bookmarks?.find((b) => b.url === window.location.href)?.page || 1;
     }
     const style = document.createElement('style');
     style.appendChild(document.createTextNode(sweetalertStyle));

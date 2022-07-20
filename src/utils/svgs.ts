@@ -1,3 +1,5 @@
+import colors from './colors';
+
 function svgToUrl(str: string) {
   const cleaned = str
     .replace(/[\t\n\r]/gim, '') // Strip newlines and tabs
@@ -19,11 +21,12 @@ function placeholder(width: number, height: number, bgColor = '#0F1C3F', textCol
 </svg>`;
   return svgToUrl(str);
 }
+const backgrounds = Object.values(colors).map((i) => i['900']);
+const widths = [985, 985, 985, 985, 1970];
 function randomPlaceholder() {
-  const widths = [985, 1970];
-  const randomSize = Math.floor(Math.random() * 2);
-  const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-  return placeholder(widths[randomSize], 1400, randomColor);
+  const randomSize = Math.floor(Math.random() * widths.length);
+  const randomColor = Math.floor(Math.random() * backgrounds.length);
+  return placeholder(widths[randomSize], 1400, backgrounds[randomColor]);
 }
 
 export { randomPlaceholder, placeholder, svgToUrl };

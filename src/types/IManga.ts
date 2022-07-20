@@ -25,9 +25,9 @@ export interface IMangaImages extends IMangaBase {
 
 interface IBruteForceObj {
   begin: number;
-  addImg: (index: number, imageSrc: string) => void;
-  loadImages: (list: string[]) => any;
-  loadPages: (list: string[], img: string, lazyAttr: string | undefined) => any;
+  addImg: (manga: IMangaImages, index: number, imageSrc: string, position: number) => void;
+  loadImages: (list: string[]) => void;
+  loadPages: (list: string[], img: string, lazyAttr: string | undefined) => void;
   wait: number;
 }
 

@@ -471,12 +471,9 @@ function controls() {
   document.querySelector('#ThemeShade')?.addEventListener('change', changeThemeShade);
   // Goto Navigation Selector
   function selectGoToPage(event: Event) {
+    const target = (event.currentTarget as HTMLOptionElement).value;
     applyZoom();
-    scrollToElement(
-      document.querySelector(
-        `#Page${(event.target as HTMLSelectElement).selectedIndex}`,
-      ) as HTMLElement,
-    );
+    scrollToElement(document.querySelector(`#Page${target}`) as HTMLElement);
   }
   document.querySelector('#gotoPage')?.addEventListener('change', selectGoToPage);
   // Thumbnail Navigation

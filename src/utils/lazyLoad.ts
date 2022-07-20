@@ -37,11 +37,12 @@ let listElements: LazyItem[] = [];
  */
 function filterInView(value: LazyItem) {
   const { element } = value;
-  if (!element.offsetParent) return false;
-  const ele = element.offsetParent as HTMLElement;
-  const top = ele.offsetTop + element.height >= window.scrollY - settings.threshold;
-  const bottom = ele.offsetTop <= window.scrollY + window.innerHeight + settings.threshold;
-  return top && bottom;
+  const rect = element.getBoundingClientRect();
+  const viewport = {
+    top: 0 - settings.threshold,
+    bottom: window.scrollY + window.innerHeight + settings.threshold,
+  };
+  return rect.bottom >= viewport.top && rect.top <= viewport.bottom;
 }
 
 /**
@@ -66,7 +67,7 @@ function executeCheck() {
 /**
  * Throttle controller
  */
-let wait: NodeJS.Timeout | undefined;
+let wait: boolean = false;
 /**
  * Function responsible for observing the screen move/change
  */
@@ -83,8 +84,9 @@ function observerEvent() {
   }
   executeCheck();
 
-  wait = setTimeout(() => {
-    wait = undefined;
+  wait = true;
+  setTimeout(() => {
+    wait = false;
   }, settings.throttle);
 }
 
@@ -109,5 +111,6 @@ function lazyLoad(element: HTMLImageElement, callback: (element: HTMLImageElemen
     });
   }
   listElements.push({ element, callback });
+  observerEvent();
 }
 export default lazyLoad;

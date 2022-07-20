@@ -11,7 +11,8 @@ import {
   isPagesManga,
 } from '../types';
 import { getElementAttribute } from '../utils/request';
-import lazyLoad from '../utils/lazyLoad.js';
+import lazyLoad from '../utils/lazyLoad';
+import sequence from '../utils/sequence';
 
 // After pages load apply default Zoom
 function applyZoom(pages: string = '.PageContent img', zoom = settings.zoom) {
@@ -113,16 +114,17 @@ function normalizeUrl(url: string = ''): string {
 }
 
 // Adds an image to the place-holder div
-function addImg(index: number, imageSrc: string) {
+function addImg(manga: IMangaImages, index: number, imageSrc: string, position: number) {
   const src = normalizeUrl(imageSrc);
   const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
   if (img) {
-    if (!settings.lazyLoadImages || index < settings.lazyStart) {
-      img.setAttribute('src', src);
-      img.setAttribute('src', src);
-      const imgLoad = imagesLoaded(img.parentElement!);
-      imgLoad.on('progress', onImagesProgress);
-      logScript('Loaded Image:', index, 'Source:', src);
+    if (!settings.lazyLoadImages || position <= settings.lazyStart) {
+      setTimeout(() => {
+        img.setAttribute('src', src);
+        const imgLoad = imagesLoaded(img.parentElement!);
+        imgLoad.on('progress', onImagesProgress);
+        logScript('Loaded Image:', index, 'Source:', src);
+      }, (manga.timer || settings.throttlePageLoad) * position);
     } else {
       img.setAttribute('data-src', src);
 
@@ -150,49 +152,34 @@ function findPage(manga: IMangaPages, index: number, pageUrl: string, lazy: bool
 }
 
 // Adds a page to the place-holder div
-async function addPage(manga: IMangaPages, index: number, pageUrl: string) {
+async function addPage(manga: IMangaPages, index: number, pageUrl: string, position: number) {
   const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
   if (img) {
-    if (!settings.lazyLoadImages || index < settings.lazyStart) {
-      await findPage(manga, index, pageUrl, false)();
+    if (!settings.lazyLoadImages || position <= settings.lazyStart) {
+      setTimeout(() => {
+        findPage(manga, index, pageUrl, false)();
+      }, (manga.timer || settings.throttlePageLoad) * position);
     } else {
       img.setAttribute(
         'data-src',
         'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
       );
-      lazyLoad(img, findPage(manga, index, pageUrl, false));
+      lazyLoad(img, findPage(manga, index, pageUrl, true));
     }
   }
 }
 
-// daley the use of an url/src
-function delayAdd(src: string, wait: number = settings.throttlePageLoad) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(src);
-    }, wait);
-  });
-}
-
 // use a list of pages to fill the viewer
 function loadMangaPages(begin: number, manga: IMangaPages) {
-  return manga.listPages?.map((url, index) =>
-    index >= begin
-      ? delayAdd(url, (manga.timer || settings.throttlePageLoad) * (index - begin)).then(
-          (response) => addPage(manga, index + 1, response as string),
-        )
-      : null,
+  sequence(manga.pages, begin).forEach((index, position) =>
+    addPage(manga, index, manga.listPages[index - 1], position),
   );
 }
 
 // use a list of images to fill the viewer
 function loadMangaImages(begin: number, manga: IMangaImages) {
-  return manga.listImages?.map((src, index) =>
-    index >= begin
-      ? delayAdd(src, (manga.timer || settings.throttlePageLoad) * (index - begin)).then(
-          (response) => addImg(index + 1, response as string),
-        )
-      : null,
+  sequence(manga.pages, begin).forEach((index, position) =>
+    addImg(manga, index, manga.listImages[index - 1], position),
   );
 }
 
@@ -201,24 +188,24 @@ function loadManga(manga: IManga, begin = 1) {
   settings.lazyLoadImages = manga.lazy || settings.lazyLoadImages;
   logScript('Loading Images');
   logScript(`Intervals: ${manga.timer || settings.throttlePageLoad || 'Default(1000)'}`);
-  logScript(`Lazy: ${settings.lazyLoadImages}`);
+  logScript(`Lazy: ${settings.lazyLoadImages}, Starting from: ${settings.lazyStart}`);
   if (settings.lazyLoadImages) {
     logScript('Download may not work with Lazy Loading Images');
   }
   if (isImagesManga(manga)) {
     logScript('Method: Images:', manga.listImages);
-    loadMangaImages(begin - 1, manga);
+    loadMangaImages(begin, manga);
   } else if (isPagesManga(manga)) {
     logScript('Method: Pages:', manga.listPages);
-    loadMangaPages(begin - 1, manga);
+    loadMangaPages(begin, manga);
   } else if (isBruteforceManga(manga)) {
     logScript('Method: Brute Force');
     manga.bruteForce({
       begin,
       addImg,
-      loadImages: (list: string[]) => loadMangaImages(begin - 1, { ...manga, listImages: list }),
+      loadImages: (list: string[]) => loadMangaImages(begin, { ...manga, listImages: list }),
       loadPages: (list: string[], img: string, lazyAttr: string | undefined) =>
-        loadMangaPages(begin - 1, {
+        loadMangaPages(begin, {
           ...manga,
           listPages: list,
           img,

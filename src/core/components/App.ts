@@ -25,13 +25,12 @@ import {
   IconZoomPan,
 } from './icons';
 import BookmarksPanel from './BookmarksPanel';
+import sequence from '../../utils/sequence';
 
-const listOptions = (times: number) =>
-  Array(times)
-    .fill(null)
-    .map((_, index) => `<option value='${index + 1}'>${index + 1}</option>`);
+const listOptions = (times: number, begin: number) =>
+  sequence(times, begin).map((index) => `<option value='${index}'>${index}</option>`);
 
-const body = (manga: IManga, begin = 0) => `
+const body = (manga: IManga, begin = 1) => `
 <div id='MangaOnlineViewer'
   class="${settings.colorScheme} ${settings.hidePageControls ? 'hideControls' : ''}"
   data-theme='${settings.theme}'>
@@ -63,11 +62,11 @@ const body = (manga: IManga, begin = 0) => `
     </div>
     <nav id='ChapterNavigation'>
       <div id='Counters' class='ControlLabel'>
-        <i>0</i> of <b>${manga.pages}</b> Pages Loaded
+        <i>0</i> of <b>${manga.pages - (begin - 1)}</b> Pages Loaded,
         <span class='ControlLabel'>Go to Page:</span>
         <select id='gotoPage'>
           <option selected>#</option>
-          ${listOptions(manga.pages).slice(begin).join('')}
+          ${listOptions(manga.pages, begin).join('')}
         </select>
       </div>
       <div id='ChapterControl' class='ChapterControl'>
@@ -92,15 +91,15 @@ const body = (manga: IManga, begin = 0) => `
   <main id='Chapter' class='${settings.fitWidthIfOversize === true ? 'fitWidthIfOversize' : ''} ${
   settings.viewMode
 }'>
-    ${listPages(manga.pages).slice(begin).join('')}
+    ${listPages(manga.pages, begin).join('')}
   </main>
   <nav id='Navigation' class='panel ${settings.showThumbnails ? '' : 'disabled'}'>
     <div id='NavigationCounters' class='ControlLabel'>
       ${IconCategory}
-      <i>0</i> of <b>${manga.pages}</b> Pages Loaded
+      <i>0</i> of <b>${manga.pages - (begin - 1)}</b> Pages Loaded
     </div>
     <div id='Thumbnails'>
-      ${ThumbnailsPanel(manga.pages).slice(begin).join('')}
+      ${ThumbnailsPanel(manga.pages, begin).join('')}
     </div>
   </nav>
   ${SettingsPanel}
