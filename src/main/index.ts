@@ -3,8 +3,9 @@ import asurasflamecans from './asurasflamecans';
 import batoto from './batoto';
 import comicastle from './comicastle';
 import dysnatyscans from './dysnatyscans';
+import mangago from './mangago.js';
 import foolslide from './foolslide';
-import klmanga from './klmanga.js';
+import klmanga from './klmanga';
 import leitor from './leitor';
 import lhtranslation from './lhtranslation';
 import madarawp from './madarawp';
@@ -15,7 +16,7 @@ import mangahosted from './mangahosted';
 import mangahub from './mangahub';
 import mangakakalot from './mangakakalot';
 import mangapark from './mangapark';
-import mangaraw from './mangaraw.js';
+import mangaraw from './mangaraw';
 import mangareader from './mangareader';
 import mangasee from './mangasee';
 import mangatown from './mangatown';
@@ -42,6 +43,7 @@ const sites = [
   mangadex,
   mangafox,
   mangafreak,
+  mangago,
   mangahosted,
   mangahub,
   mangakakalot,
