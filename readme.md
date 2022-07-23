@@ -38,9 +38,11 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [Batoto](http://bato.to/) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
 - [LHTranslation](https://lhtranslation.net/) _[English]_
+- [MangaBuddy](https://mangabuddy.com/) _[English]_
 - [MangaDex](https://mangadex.org/) _[English]_
 - [MangaFox](https://fanfox.net/) / [MangaHere](https://www.mangahere.cc/) _[English]_
 - [MangaFreak](https://mangafreak.net/) _[English]_
+- [Mangago](https://www.mangago.me/) _[English]_
 - [MangaHub](https://mangahub.io/) _[English]_
 - [MangaKakalot](https://mangakakalot.com/page) / [MangaNelo](https://www.manganelo.com/) / [MangaNato](https://www.manganato.com/) _[English]_
 - [MangaPark](https://mangapark.net/) _[English]_
@@ -48,19 +50,24 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [Mangareader](https://mangareader.to) _[English]_ **Obs: Some galleries will not be usable**
 - [MangaSee](https://mangasee123.com/) / [Manga4life](https://manga4life.com/) _[English]_
 - [MangaTown](https://www.mangatown.com/) _[English]_
+- [ManhuaScan](https://manhuascan.io/) _[English]_
 - [NineManga](https://ninemanga.com/) _[English]_
 - [PandaManga](https://www.pandamanga.com/) _[English]_
 - [ReadManga Today](https://www.readmng.com/) / [Funmanga](https://funmanga.com/) / [MangaDoom](https://mngdoom.com/) / [MangaInn](https://www.mangainn.net/) _[English]_
+- [ShimadaScans](https://shimadascans.com/) _[English]_
 - [TenManga](https://www.tenmanga.com/) _[English]_
+- [WebToons](https://www.webtoons.com/) _[English]_
 - [Manga33](https://manga33.com/) _[English]_
 - [FoOlSlide](#) / [Kireicake](https://reader.kireicake.com) / [Yuri-ism](https://www.yuri-ism.net) / [Sense-Scans](https://sensescans.com/) _[English]_ **Obs: Any Site that uses FoOLSlide**
-- [Madara WordPress Plugin](#) / [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) / [ReaperScans](https://reaperscans.com/) / [JaiminisBox](https://jaiminisbox.net) / [DisasterScans](https://disasterscans.com/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
+- [Madara WordPress Plugin](#) / [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) / [ReaperScans](https://reaperscans.com/) / [JaiminisBox](https://jaiminisbox.net) / [DisasterScans](https://disasterscans.com/) / [ManhuaPlus](https://manhuaplus.com/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
 - [SenManga(Raw)](https://raw.senmanga.com/) _[Original]_
 - [Leitor](https://leitor.net/) _[Portuguese]_
 - [mangahosted](https://mangahosted.com/) _[Portuguese]_
 - [UnionMangas](https://unionleitor.top/) _[Portuguese]_
 - [KLManga](https://klmanga.com/) _[Raw]_
 - [RawDevart](https://rawdevart.com) _[Raw]_
+- [InManga](https://inmanga.com//) _[Spanish]_
+- [MangaTigre](https://www.mangatigre.net/) _[Spanish]_
 - [TuMangaOnline](https://lectortmo.com/) _[Spanish]_
 
 ### Supported Comic Sites
