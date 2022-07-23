@@ -3,7 +3,7 @@ import asurasflamecans from './asurasflamecans';
 import batoto from './batoto';
 import comicastle from './comicastle';
 import dysnatyscans from './dysnatyscans';
-import mangago from './mangago.js';
+import inmanga from './inmanga';
 import foolslide from './foolslide';
 import klmanga from './klmanga';
 import leitor from './leitor';
@@ -12,6 +12,7 @@ import madarawp from './madarawp';
 import mangadex from './mangadex';
 import mangafox from './mangafox';
 import mangafreak from './mangafreak';
+import mangago from './mangago';
 import mangahosted from './mangahosted';
 import mangahub from './mangahub';
 import mangakakalot from './mangakakalot';
@@ -38,6 +39,7 @@ const sites = [
   batoto,
   comicastle,
   dysnatyscans,
+  inmanga,
   klmanga,
   leitor,
   lhtranslation,
