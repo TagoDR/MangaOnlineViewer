@@ -4,8 +4,8 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Batoto, ComiCastle, Dynasty-Scans, Leitor, LHTranslation, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTown, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, SenManga(Raw), TenManga, TuMangaOnline, UnionMangas, Manga33, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, ReaperScans, JaiminisBox, DisasterScans
-// @version 2022.07.20
+// @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Batoto, ComiCastle, Dynasty-Scans, KLManga, Leitor, LHTranslation, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MangaRaw, Mangareader, MangaSee, Manga4life, MangaTown, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, SenManga(Raw), TenManga, TuMangaOnline, UnionMangas, Manga33, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, ReaperScans, JaiminisBox, DisasterScans
+// @version 2022.07.23
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -23,6 +23,7 @@
 // @include /https?:\/\/(www.)?bato.to\/chapter.*/
 // @include /https?:\/\/(www.)?comicastle.org\/read\/.+\/[0-9]+.*/
 // @include /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/
+// @include /https?:\/\/(www.)?klmanga.com\/.+chapter.+/
 // @include /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
 // @include /https?:\/\/(www.)?lhtranslation.net\/read.+/
 // @include /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/
@@ -32,6 +33,7 @@
 // @include /https?:\/\/(www.)?(mangahub).io\/chapter\/.+\/.+/
 // @include /https?:\/\/(www.)?((manganelo|mangakakalot).com\/chapter\/.+\/.+|(manganato|readmanganato).com\/manga-\w\w\d+\/chapter-\d+)/
 // @include /https?:\/\/(www.)?mangapark.(com|me|org|net)\/(manga|chapter|comic)\/.+\/.+/
+// @include /https?:\/\/(www.)?mcreader.net\/reader\/.*/
 // @include /https?:\/\/(www.)?mangareader.to\/read\/.+\/.+\/.+/
 // @include /https?:\/\/(www.)?(mangasee123|manga4life).com\/read-online\/.+/
 // @include /https?:\/\/(www.|m.)?mangatown.com\/manga\/.+\/.+/
@@ -182,6 +184,27 @@
                         .map((_, i) => `${window.location.href.replace(/\/\d+$/, '')}/${i + 1}`),
                 listImages: images.length > 1 ? images.map((img) => img.getAttribute('src')) : null,
                 img: 'img.open',
+            };
+        },
+    };
+
+    // == KLManga ======================================================================================
+    var klmanga = {
+        name: 'KLManga',
+        url: /https?:\/\/(www.)?klmanga.com\/.+chapter.+/,
+        homepage: 'https://klmanga.com/',
+        language: ['Raw'],
+        category: 'manga',
+        run() {
+            const images = [...document.querySelectorAll('.chapter-content img')];
+            const chapter = document.querySelectorAll('.form-control')[0].querySelector('option:checked');
+            return {
+                title: document.querySelector('title')?.textContent?.trim(),
+                series: document.querySelector('.navbar-brand')?.getAttribute('href'),
+                pages: images.length,
+                prev: chapter?.nextElementSibling?.getAttribute('value'),
+                next: chapter?.previousElementSibling?.getAttribute('value'),
+                listImages: images.map((img) => img.getAttribute('src')),
             };
         },
     };
@@ -466,6 +489,26 @@
         },
     };
 
+    // == MangaRaw =====================================================================================
+    var mangaraw = {
+        name: 'MangaRaw',
+        url: /https?:\/\/(www.)?mcreader.net\/reader\/.*/,
+        homepage: 'https://www.manga-raw.club/',
+        language: ['English'],
+        category: 'manga',
+        run() {
+            const images = [...document.querySelectorAll('#chapter-reader img')];
+            return {
+                title: document.querySelector('.titles')?.textContent?.trim(),
+                series: document.querySelector('.titles a')?.getAttribute('href'),
+                pages: images.length,
+                prev: document.querySelector('.chnav.prev')?.getAttribute('href'),
+                next: document.querySelector('.chnav.next')?.getAttribute('href'),
+                listImages: images.map((img) => img.getAttribute('src')),
+            };
+        },
+    };
+
     // == Mangareader ==================================================================================
     var mangareader = {
         name: 'Mangareader',
@@ -633,7 +676,7 @@
         name: 'RawDevart',
         url: /https?:\/\/(www.)?rawdevart.com\/comic\/.+\/.+\//,
         homepage: 'https://rawdevart.com',
-        language: ['Japanese'],
+        language: ['Raw'],
         category: 'manga',
         waitVar: 'rconfig',
         waitEle: '#chapter-list select',
@@ -837,6 +880,7 @@
         batoto,
         comicastle,
         dysnatyscans,
+        klmanga,
         leitor,
         lhtranslation,
         mangadex,
@@ -846,6 +890,7 @@
         mangahub,
         mangakakalot,
         mangapark,
+        mangaraw,
         mangareader,
         mangasee,
         mangatown,
@@ -2914,9 +2959,9 @@ ${IconCheck}
     var Language;
     (function (Language) {
         Language["ENGLISH"] = "English";
-        Language["SPANISSH"] = "Spanish";
+        Language["SPANISH"] = "Spanish";
         Language["PORTUGUESE"] = "Portuguese";
-        Language["JAPANESE"] = "Japanese";
+        Language["RAW"] = "Raw";
     })(Language || (Language = {}));
     var Category;
     (function (Category) {

@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno, vercomicsporno, xyzcomics
-// @version 2022.07.20
+// @version 2022.07.23
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -2850,9 +2850,9 @@ ${IconCheck}
     var Language;
     (function (Language) {
         Language["ENGLISH"] = "English";
-        Language["SPANISSH"] = "Spanish";
+        Language["SPANISH"] = "Spanish";
         Language["PORTUGUESE"] = "Portuguese";
-        Language["JAPANESE"] = "Japanese";
+        Language["RAW"] = "Raw";
     })(Language || (Language = {}));
     var Category;
     (function (Category) {
