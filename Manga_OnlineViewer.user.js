@@ -4,7 +4,7 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Batoto, ComiCastle, Dynasty-Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MangaRaw, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, SenManga(Raw), ShimadaScans, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, ReaperScans, JaiminisBox, DisasterScans, ManhuaPlus
+// @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Batoto, ComiCastle, Dynasty-Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MangaRaw, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, SenManga(Raw), ShimadaScans, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, ReaperScans, JaiminisBox, DisasterScans, ManhuaPlus
 // @version 2022.07.23
 // @license MIT
 // @grant GM_getValue
@@ -54,6 +54,7 @@
 // @include /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/
 // @include /https?:\/\/(www.)?webtoons.com\/.+viewer.+/
 // @include /https?:\/\/(www.)?(manga33).com\/manga\/.+/
+// @include /https?:\/\/(www.)?zeroscans.com\/comics\/.+/
 // @include /^(?!.*jaiminisbox).*\/read\/.+/
 // @include /https?:\/\/.+\/(manga|series)\/.+\/.+/
 // @exclude /https?:\/\/(www.)?tsumino.com\/.+/
@@ -1043,6 +1044,30 @@
         },
     };
 
+    // == ZeroScans ====================================================================================
+    var zeroscans = {
+        name: 'ZeroScans',
+        url: /https?:\/\/(www.)?zeroscans.com\/comics\/.+/,
+        homepage: 'https://zeroscans.com/',
+        language: ['English'],
+        category: 'manga',
+        waitVar: '__ZEROSCANS__',
+        run() {
+            const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+            // eslint-disable-next-line no-underscore-dangle
+            const images = W.__ZEROSCANS__.data.at(0).current_chapter.high_quality;
+            const chapters = document.querySelectorAll('.v-btn--router');
+            return {
+                title: document.querySelector('title')?.textContent?.trim(),
+                series: document.querySelector('.v-breadcrumbs li:nth-child(2) + a')?.getAttribute('href'),
+                pages: images.length,
+                prev: chapters[0]?.getAttribute('href'),
+                next: chapters[1]?.getAttribute('href'),
+                listImages: images,
+            };
+        },
+    };
+
     /* eslint-disable no-unused-vars,@typescript-eslint/no-unused-vars */
     const sites = [
         asurasflamecans,
@@ -1080,6 +1105,7 @@
         unionmangas,
         webtoons,
         wpmanga,
+        zeroscans,
         foolslide,
         madarawp, // Must be at the end because is a generic check
     ];

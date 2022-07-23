@@ -36,6 +36,7 @@ import tmofans from './tmofans';
 import unionmangas from './unionmangas';
 import webtoons from './webtoons';
 import wpmanga from './wpmanga';
+import zeroscans from './zeroscans';
 import { ISite } from '../types/ISite';
 
 const sites = [
@@ -74,6 +75,7 @@ const sites = [
   unionmangas,
   webtoons,
   wpmanga,
+  zeroscans,
   foolslide, // Must be at the end because is a generic check
   madarawp, // Must be at the end because is a generic check
 ] as ISite[];
