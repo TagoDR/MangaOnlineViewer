@@ -13,6 +13,7 @@ export default {
     'ReaperScans',
     'JaiminisBox',
     'DisasterScans',
+    'ManhuaPlus',
   ],
   url: /https?:\/\/.+\/(manga|series)\/.+\/.+/,
   homepage: [
@@ -27,13 +28,16 @@ export default {
     'https://reaperscans.com/',
     'https://jaiminisbox.net',
     'https://disasterscans.com/',
+    'https://manhuaplus.com/',
   ],
   language: ['English'],
   obs: 'Any Site that uses Madara Wordpress Plugin',
   category: 'manga',
   run() {
     const images = [
-      ...document.querySelectorAll('.wp-manga-chapter-img, .blocks-gallery-item img'),
+      ...document.querySelectorAll(
+        '.wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img',
+      ),
     ];
     return {
       title: document.querySelector('#chapter-heading')?.textContent?.trim(),
