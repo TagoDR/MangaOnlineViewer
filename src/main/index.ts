@@ -20,6 +20,7 @@ import mangaraw from './mangaraw';
 import mangareader from './mangareader';
 import mangasee from './mangasee';
 import mangatown from './mangatown';
+import manhuascan from './manhuascan.js';
 import ninemanga from './ninemanga';
 import pandamanga from './pandamanga';
 import rawdevart from './rawdevart';
@@ -52,6 +53,7 @@ const sites = [
   mangareader,
   mangasee,
   mangatown,
+  manhuascan,
   ninemanga,
   pandamanga,
   rawdevart,
