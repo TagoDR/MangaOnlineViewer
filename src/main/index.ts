@@ -9,6 +9,7 @@ import klmanga from './klmanga';
 import leitor from './leitor';
 import lhtranslation from './lhtranslation';
 import madarawp from './madarawp';
+import mangabuddy from './mangabuddy';
 import mangadex from './mangadex';
 import mangafox from './mangafox';
 import mangafreak from './mangafreak';
@@ -46,6 +47,7 @@ const sites = [
   klmanga,
   leitor,
   lhtranslation,
+  mangabuddy,
   mangadex,
   mangafox,
   mangafreak,
