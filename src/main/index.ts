@@ -32,6 +32,7 @@ import senmanga from './senmanga';
 import tenmanga from './tenmanga';
 import tmofans from './tmofans';
 import unionmangas from './unionmangas';
+import webtoons from './webtoons';
 import wpmanga from './wpmanga';
 import { ISite } from '../types/ISite';
 
@@ -67,6 +68,7 @@ const sites = [
   tenmanga,
   tmofans,
   unionmangas,
+  webtoons,
   wpmanga,
   foolslide, // Must be at the end because is a generic check
   madarawp, // Must be at the end because is a generic check
