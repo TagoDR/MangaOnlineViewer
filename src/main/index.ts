@@ -4,6 +4,7 @@ import batoto from './batoto';
 import comicastle from './comicastle';
 import dysnatyscans from './dysnatyscans';
 import foolslide from './foolslide';
+import klmanga from './klmanga.js';
 import leitor from './leitor';
 import lhtranslation from './lhtranslation';
 import madarawp from './madarawp';
@@ -34,6 +35,7 @@ const sites = [
   batoto,
   comicastle,
   dysnatyscans,
+  klmanga,
   leitor,
   lhtranslation,
   mangadex,

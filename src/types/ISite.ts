@@ -2,9 +2,9 @@ import { IManga } from './IManga';
 
 export enum Language {
   ENGLISH = 'English',
-  SPANISSH = 'Spanish',
+  SPANISH = 'Spanish',
   PORTUGUESE = 'Portuguese',
-  JAPANESE = 'Japanese',
+  RAW = 'Raw',
 }
 
 export enum Category {

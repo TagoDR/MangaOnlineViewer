@@ -3,7 +3,7 @@ export default {
   name: 'RawDevart',
   url: /https?:\/\/(www.)?rawdevart.com\/comic\/.+\/.+\//,
   homepage: 'https://rawdevart.com',
-  language: ['Japanese'],
+  language: ['Raw'],
   category: 'manga',
   waitVar: 'rconfig',
   waitEle: '#chapter-list select',
