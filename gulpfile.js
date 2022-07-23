@@ -1,5 +1,5 @@
 import fs from 'fs';
-import Del from 'del';
+import { deleteAsync } from 'del';
 import * as tsImport from 'ts-import';
 import typescript from 'typescript';
 import gulp from 'gulp';
@@ -181,7 +181,7 @@ async function readme() {
 }
 
 function clean() {
-  return Del(['node_modules/ts-import/cache', 'dist/*']);
+  return deleteAsync(['node_modules/ts-import/cache', 'dist/*']);
 }
 
 function prep(bundler, uglify = false) {
