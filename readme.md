@@ -61,12 +61,12 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 - [ZeroScans](https://zeroscans.com/) _[English]_
 - [FoOlSlide](#) / [Kireicake](https://reader.kireicake.com) / [Yuri-ism](https://www.yuri-ism.net) / [Sense-Scans](https://sensescans.com/) _[English]_ **Obs: Any Site that uses FoOLSlide**
 - [Madara WordPress Plugin](#) / [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) / [ReaperScans](https://reaperscans.com/) / [JaiminisBox](https://jaiminisbox.net) / [DisasterScans](https://disasterscans.com/) / [ManhuaPlus](https://manhuaplus.com/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
-- [SenManga(Raw)](https://raw.senmanga.com/) _[Original]_
 - [Leitor](https://leitor.net/) _[Portuguese]_
 - [mangahosted](https://mangahosted.com/) _[Portuguese]_
 - [UnionMangas](https://unionleitor.top/) _[Portuguese]_
 - [KLManga](https://klmanga.com/) _[Raw]_
 - [RawDevart](https://rawdevart.com) _[Raw]_
+- [SenManga(Raw)](https://raw.senmanga.com/) _[Raw]_
 - [InManga](https://inmanga.com//) _[Spanish]_
 - [MangaTigre](https://www.mangatigre.net/) _[Spanish]_
 - [TuMangaOnline](https://lectortmo.com/) _[Spanish]_
