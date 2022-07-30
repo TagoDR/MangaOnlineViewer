@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno, vercomicsporno, xyzcomics
-// @version 2022.07.29
+// @version 2022.07.30
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -2698,7 +2698,7 @@ ${IconCheck}
     </div>
     <nav id='ChapterNavigation'>
       <div id='Counters' class='ControlLabel'>
-        <i>0</i> of <b>${manga.pages - (begin - 1)}</b> Pages Loaded,
+        <i>0</i> of <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b> Pages Loaded,
         <span class='ControlLabel'>Go to Page:</span>
         <select id='gotoPage'>
           <option selected>#</option>
@@ -2730,7 +2730,7 @@ ${IconCheck}
   <nav id='Navigation' class='panel ${settings$1.showThumbnails ? '' : 'disabled'}'>
     <div id='NavigationCounters' class='ControlLabel'>
       ${IconCategory}
-      <i>0</i> of <b>${manga.pages - (begin - 1)}</b> Pages Loaded
+      <i>0</i> of <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b> Pages Loaded
     </div>
     <div id='Thumbnails'>
       ${ThumbnailsPanel(manga.pages, begin).join('')}

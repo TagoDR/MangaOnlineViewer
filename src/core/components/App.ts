@@ -62,7 +62,7 @@ const body = (manga: IManga, begin = 1) => `
     </div>
     <nav id='ChapterNavigation'>
       <div id='Counters' class='ControlLabel'>
-        <i>0</i> of <b>${manga.pages - (begin - 1)}</b> Pages Loaded,
+        <i>0</i> of <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b> Pages Loaded,
         <span class='ControlLabel'>Go to Page:</span>
         <select id='gotoPage'>
           <option selected>#</option>
@@ -96,7 +96,7 @@ const body = (manga: IManga, begin = 1) => `
   <nav id='Navigation' class='panel ${settings.showThumbnails ? '' : 'disabled'}'>
     <div id='NavigationCounters' class='ControlLabel'>
       ${IconCategory}
-      <i>0</i> of <b>${manga.pages - (begin - 1)}</b> Pages Loaded
+      <i>0</i> of <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b> Pages Loaded
     </div>
     <div id='Thumbnails'>
       ${ThumbnailsPanel(manga.pages, begin).join('')}
