@@ -34,7 +34,7 @@ I allow this script to be posted or used anywhere as long as I am given credit a
 
 ### Supported Manga Sites
 
-- [Asura Scans](https://www.asurascans.com/) / [Flame Scans](https://flamescans.org/) / [Realm Scans](https://realmscans.com/) _[English]_
+- [Asura Scans](https://www.asurascans.com/) / [Flame Scans](https://flamescans.org/) / [Realm Scans](https://realmscans.com/) / [Alpha-scans](https://alpha-scans.org/) _[English]_
 - [Batoto](http://bato.to/) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
 - [LHTranslation](https://lhtranslation.net/) _[English]_

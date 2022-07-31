@@ -1,8 +1,13 @@
 // == AsuraScans and FlameScans ====================================================================
 export default {
-  name: ['Asura Scans', 'Flame Scans', 'Realm Scans'],
-  url: /https?:\/\/(www.)?(asurascans|flamescans|realmscans).(com|org)\/.+/,
-  homepage: ['https://www.asurascans.com/', 'https://flamescans.org/', 'https://realmscans.com/'],
+  name: ['Asura Scans', 'Flame Scans', 'Realm Scans', 'Alpha-scans'],
+  url: /https?:\/\/(www.)?(asurascans|flamescans|realmscans|alpha-scans).(com|org)\/.+/,
+  homepage: [
+    'https://www.asurascans.com/',
+    'https://flamescans.org/',
+    'https://realmscans.com/',
+    'https://alpha-scans.org/',
+  ],
   language: ['English'],
   category: 'manga',
   waitEle: '#chapter option:nth-child(2)',
