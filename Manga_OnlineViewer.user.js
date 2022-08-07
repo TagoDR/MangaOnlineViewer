@@ -4,8 +4,8 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Alpha-scans, Batoto, ComiCastle, Dynasty-Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MangaRaw, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, SenManga(Raw), ShimadaScans, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, ReaperScans, JaiminisBox, DisasterScans, ManhuaPlus
-// @version 2022.07.31
+// @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Alpha-scans, Batoto, ComiCastle, Dynasty-Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MangaRaw, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, ReaperScans, JaiminisBox, DisasterScans, ManhuaPlus
+// @version 2022.08.07
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -49,6 +49,7 @@
 // @include /https?:\/\/(www.)?(funmanga|mngdoom|readmng|mangainn).(com|net)\/.+\/\d+/
 // @include /https?:\/\/raw.senmanga.com\/.+\/.+\/?/
 // @include /https?:\/\/(www.)?shimadascans.com\/.+series.+/
+// @include /https?:\/\/(www.)?tapas.io\/episode\/.+/
 // @include /https?:\/\/(www.)?(tenmanga|gardenmanage).com\/(chapter|statuses)\/.+/
 // @include /https?:\/\/(www.)?(tmofans|lectortmo|followmanga).com\/.+\/.+\/(paginated|cascade)/
 // @include /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/
@@ -928,6 +929,27 @@
         },
     };
 
+    // == Tapas ======================================================================================
+    var tapas = {
+        name: 'KLManga',
+        url: /https?:\/\/(www.)?tapas.io\/episode\/.+/,
+        homepage: 'https://tapas.io/',
+        language: ['English'],
+        category: 'manga',
+        run() {
+            const images = [...document.querySelectorAll('.viewer__body img.content__img')];
+            const chapter = document.querySelector('.js-episodes .body__item--selected');
+            return {
+                title: document.querySelector('.viewer__header .title')?.textContent?.trim(),
+                series: document.querySelector('.vw-nav__left a')?.getAttribute('href'),
+                pages: images.length,
+                prev: chapter?.previousElementSibling?.getAttribute('data-href'),
+                next: chapter?.nextElementSibling?.getAttribute('data-href'),
+                listImages: images.map((img) => img.getAttribute('data-src') || img.getAttribute('src')),
+            };
+        },
+    };
+
     // == TenManga =====================================================================================
     var tenmanga = {
         name: 'TenManga',
@@ -1105,6 +1127,7 @@
         readmangatoday,
         senmanga,
         shimadascans,
+        tapas,
         tenmanga,
         tmofans,
         unionmangas,
