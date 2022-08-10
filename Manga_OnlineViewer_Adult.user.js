@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno, vercomicsporno, xyzcomics
-// @version 2022.08.07
+// @version 2022.08.10
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -141,48 +141,19 @@
         category: 'hentai',
         async run() {
             const num = parseInt(document.querySelector('.sn div span:nth-child(2)')?.textContent || '', 10);
-            const maxGalley = Math.ceil(num / 40);
+            const maxGalley = parseInt(document.querySelector('.ptt td:nth-last-of-type(2) a')?.textContent || '', 10) ||
+                Math.ceil(num / 40);
             const gallery = document
                 .querySelector('.sb a')
                 ?.getAttribute('href')
                 ?.replace(/\?p=\d+/, '');
             const fetchBlocks = Array(maxGalley)
                 .fill(0)
-                .map((_, galleryId) => fetch(galleryId > 0
-                ? `${gallery}?inline_set=ts_m&p=${galleryId}`
-                : `${gallery}?inline_set=ts_m`)
+                .map((_, galleryId) => fetch(`${gallery}?p=${galleryId}`)
                 .then((res) => res.text())
                 .then((html) => new DOMParser().parseFromString(html, 'text/html')));
             const data = await Promise.all(fetchBlocks);
             const pages = data.flatMap((html) => [...html.querySelectorAll('.gdtm a, .gdtl a')].map((item) => item.getAttribute('href')));
-            // function bruteForce(func: any) {
-            //   Array(maxGalley)
-            //     .fill(0)
-            //     .map((_, i) => i)
-            //     .slice(Math.floor(Math.abs((func.begin - 1) / 40)))
-            //     .map((galleryId, galleryOrder) =>
-            //       fetch(
-            //         galleryId > 0
-            //           ? `${gallery}?inline_set=ts_m&p=${galleryId}`
-            //           : `${gallery}?inline_set=ts_m`,
-            //       )
-            //         .then((res) => res.text())
-            //         .then((html) => new DOMParser().parseFromString(html, 'text/html'))
-            //         .then((html: any) => {
-            //           [...html.querySelectorAll('.gdtm a, .gdtl a')]
-            //             .map((item) => item.getAttribute('href'))
-            //             .filter((url, index) => galleryId * 40 + index + 1 >= func.begin)
-            //             .map((url, index) => {
-            //               setTimeout(() => {
-            //                 if (galleryId * 40 + index + 1 >= func.begin) {
-            //                   func.addPage(galleryId * 40 + index + 1, url);
-            //                 }
-            //               }, func.wait * (galleryOrder * 40 + index + 1));
-            //               return galleryId * 40 + index + 1;
-            //             });
-            //         }),
-            //     );
-            // }
             return {
                 title: document.querySelector('#i1 h1')?.textContent?.trim(),
                 series: gallery,
