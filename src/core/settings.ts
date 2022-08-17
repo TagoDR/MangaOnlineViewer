@@ -25,10 +25,9 @@ const settings: ISettings = {
 // Force Settings for mobile
 if (isMobile) {
   settings.lazyLoadImages = true;
-  settings.lazyStart = 5;
   settings.fitWidthIfOversize = true;
   settings.showThumbnails = false;
-  settings.viewMode = '';
+  settings.viewMode = 'WebComic';
 }
 // Clear old Bookmarks
 const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // year
