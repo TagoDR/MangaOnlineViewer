@@ -31,7 +31,7 @@ import sequence from '../../utils/sequence';
 const listOptions = (times: number, begin: number) =>
   sequence(times, begin).map((index) => `<option value='${index}'>${index}</option>`);
 
-const body = (manga: IManga, begin = 1) => `
+const app = (manga: IManga, begin = 1) => `
 <div id='MangaOnlineViewer'
   class="${settings.colorScheme} ${settings.hidePageControls ? 'hideControls' : ''}"
   data-theme='${settings.theme}'>
@@ -108,4 +108,4 @@ const body = (manga: IManga, begin = 1) => `
   ${KeybindingsPanel}
   ${BookmarksPanel}
 </div>`;
-export default body;
+export default app;

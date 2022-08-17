@@ -15,16 +15,10 @@ function scrollToElement(ele: HTMLElement | undefined) {
 
 // Clean key press configurations and set some when specified
 function setKeyDownEvents() {
-  try {
-    document.onkeydown = null;
-    document.onkeypress = null;
-    window.onkeydown = null;
-    window.onkeypress = null;
-    window.onload = null;
-    document.body.onload = null;
-  } catch (e) {
-    logScript(`Keybinds error: ${e}`);
-  }
+  document.onkeydown = null;
+  window.onkeydown = null;
+  window.onload = null;
+  document.body.onload = null;
 
   function processKey(e: KeyboardEvent) {
     const a = e.code;
