@@ -50,6 +50,7 @@ const globals = {
   nprogress: 'NProgress',
   imagesloaded: 'imagesLoaded',
   'file-saver': 'FileSaver',
+  lodash: '_',
 };
 
 function buildUserscript(script) {
