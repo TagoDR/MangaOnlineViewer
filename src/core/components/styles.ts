@@ -111,6 +111,10 @@ img {
   justify-self: flex-end;
 }
 
+#MangaOnlineViewer #Chapter:not(.WebComic,.FluidLTR,.FluidRTL) .PageContent {
+  margin-bottom: 15px;
+}
+
 #MangaOnlineViewer #Chapter.FluidLTR .MangaPage,
 #MangaOnlineViewer #Chapter.FluidRTL .MangaPage {
   width: auto;
@@ -533,7 +537,6 @@ img {
   gap: 3px;
   position: absolute;
   right: 0;
-  direction: ltr;
 }
 
 #MangaOnlineViewer .PageFunctions > .PageIndex {

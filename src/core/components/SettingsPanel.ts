@@ -131,10 +131,11 @@ const SettingsPanel = `
 <!-- =========================================================================================== -->
   <div class='ControlLabel viewMode'>Default View Mode:
     <select id='viewMode'>
-      <option value='' ${
-        settings.viewMode !== 'FluidLTR' && settings.viewMode !== 'FluidRTL' ? 'selected' : ''
-      }>
+      <option value='' ${settings.viewMode === '' ? 'selected' : ''}>
       Vertical
+      </option>
+      <option value='WebComic' ${settings.viewMode === 'WebComic' ? 'selected' : ''}>
+        WebComic
       </option>
       <option value='FluidLTR' ${settings.viewMode === 'FluidLTR' ? 'selected' : ''}>
       Left to Right

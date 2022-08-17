@@ -15,7 +15,7 @@ const settings: ISettings = {
   zoomStep: getValueGM('ZoomStep', 25),
   minZoom: getValueGM('MinZoom', 50),
   loadMode: getValueGM('LoadMode', 'wait'),
-  viewMode: getValueGM('ViewMode', ''),
+  viewMode: getValueGM('ViewMode', 'WebComic'),
   bookmarks: JSON.parse(getValueGM('Bookmarks', '[]')) as IBookmark[],
   lazyLoadImages: getValueGM('LazyLoadImages', false),
   lazyStart: getValueGM('LazyStart', 50),

@@ -15,7 +15,7 @@ export interface ISettings {
   theme: string;
   customTheme: string;
   themeShade: Shade;
-  viewMode: 'FluidLTR' | 'FluidRTL' | '';
+  viewMode: 'WebComic' | 'FluidLTR' | 'FluidRTL' | '';
   bookmarks: IBookmark[];
   loadMode: 'wait' | 'always' | 'never';
   fitWidthIfOversize?: boolean;

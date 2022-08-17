@@ -23,6 +23,7 @@ import {
   IconZoomInArea,
   IconZoomOutArea,
   IconZoomPan,
+  IconSpacingVertical,
 } from './icons';
 import BookmarksPanel from './BookmarksPanel';
 import sequence from '../../utils/sequence';
@@ -50,6 +51,7 @@ const body = (manga: IManga, begin = 1) => `
       <span>
         <button id='ltrMode' title='Left to Right Mode' class='ControlButton'>${IconArrowAutofitRight}</button>
         <button id='verticalMode' title='Vertical Mode' class='ControlButton'>${IconArrowAutofitDown}</button>
+        <button id='webComic' title='Web Comic Mode' class='ControlButton'>${IconSpacingVertical}</button>
         <button id='rtlMode' title='Right to Left Mode' class='ControlButton'>${IconArrowAutofitLeft}</button>
         <button id='pageControls' title='Toggle Page Controls' class='ControlButton'>${IconListNumbers}</button>
         <button id='bookmarks' title='List Bookmarks' class='ControlButton'>${IconBookmarks}</button>
