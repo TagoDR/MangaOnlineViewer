@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno, vercomicsporno, xyzcomics
-// @version 2022.08.10
+// @version 2022.08.18
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -18,7 +18,8 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.23/sweetalert2.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.28/sweetalert2.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
 // @include /https?:\/\/(www.)?bestporncomix.com\/gallery\/.+/
 // @include /https?:\/\/(www.)?doujins.com\/.+/
 // @include /https?:\/\/comics.8muses.com\/comics\/picture\/.+/
@@ -519,12 +520,12 @@
         category: 'hentai',
         run() {
             const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-            function getExt(ext) {
-                if (ext === 'g')
+            function getExt(extension) {
+                if (extension === 'g')
                     return 'gif';
-                if (ext === 'b')
+                if (extension === 'b')
                     return 'bmp';
-                if (ext === 'p')
+                if (extension === 'p')
                     return 'png';
                 return 'jpg';
             }
@@ -663,7 +664,7 @@
                 next: '#',
                 listPages: Array(num)
                     .fill(0)
-                    .map((_, i) => window.location.href.replace(/\/\d+?$/, `/${i + 1}`)),
+                    .map((_, i) => window.location.href.replace(/\/\d*$/, `/${i + 1}`)),
                 img: '.content-image',
                 lazyAttr: 'data-original',
             };
@@ -776,16 +777,6 @@
         console.log('MangaOnlineViewer: ', ...text);
         return text;
     }
-    // Replacement function for GM_listValues allowing for debugging in console
-    function getListGM() {
-        return typeof GM_listValues !== 'undefined' ? GM_listValues() : [];
-    }
-    // Replacement function for GM_listValues allowing for debugging in console
-    function removeValueGM(name) {
-        return typeof GM_deleteValue !== 'undefined'
-            ? GM_deleteValue(name)
-            : logScript('Removing: ', name);
-    }
     // Replacement function for GM_info allowing for debugging in console
     const getInfoGM = typeof GM_info !== 'undefined'
         ? GM_info
@@ -799,11 +790,19 @@
     // Replacement function for GM_getValue allowing for debugging in console
     function getValueGM(name, defaultValue = null) {
         if (typeof GM_getValue !== 'undefined') {
-            // logScript('Getting: ', name, ' = ', defaultValue);
             return GM_getValue(name, defaultValue);
         }
         logScript('Fake Getting: ', name, ' = ', defaultValue);
         return defaultValue;
+    }
+    function getJsonGM(name, defaultValue = null) {
+        const result = getValueGM(name, defaultValue);
+        if (typeof result === 'string')
+            return JSON.parse(result);
+        return result;
+    }
+    function getSettings(defaultSettings) {
+        return getJsonGM('settings', defaultSettings);
     }
     // Replacement function for GM_setValue allowing for debugging in console
     function setValueGM(name, value) {
@@ -816,6 +815,12 @@
             logScript('Fake Setting: ', name, ' = ', value);
             return String(value);
         }
+    }
+    function setJsonGM(name, value) {
+        return setValueGM(name, JSON.stringify(value));
+    }
+    function setSettings(value) {
+        return setJsonGM('settings', value);
     }
     // See https://stackoverflow.com/a/2401861/331508 for optional browser sniffing code.
     function getBrowser() {
@@ -903,6 +908,23 @@
             isEmpty(value) ||
             (typeof value === 'object' && isEmptyObject(value)));
     }
+    function testUtil(test, fn) {
+        test.map((value) => console.log(`${fn.name}(${JSON.stringify(value)}) // ${fn(value)}`));
+    }
+    const testValues = [
+        null,
+        undefined,
+        [],
+        {},
+        '',
+        false,
+        0,
+        [{}, { 0: false }, { '': 0 }, { 0: 0 }],
+        42,
+        [{ '': 1 }, { 0: 1 }], // Should be Something
+    ];
+    testUtil(testValues, isEmpty);
+    testUtil(testValues, isNothing);
 
     const colors = {
         dark: {
@@ -1246,6 +1268,13 @@
    <path color="#28FFBF" d="M4 18h17"></path>
    <path color="#28FFBF" d="M18 15l3 3l-3 3"></path>
 </svg>`;
+    const IconSpacingVertical = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-spacing-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2"></path>
+   <path d="M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path>
+   <path color="fuchsia" d="M16 12h-8"></path>
+</svg>`;
     const IconSettings = `
 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -1498,6 +1527,10 @@ img {
 
 #MangaOnlineViewer #Chapter.DoublePage .MangaPage:not(.DoublePage):nth-child(2n-1) {
   justify-self: flex-end;
+}
+
+#MangaOnlineViewer #Chapter.Vertical .PageContent {
+  margin-bottom: 15px;
 }
 
 #MangaOnlineViewer #Chapter.FluidLTR .MangaPage,
@@ -1887,9 +1920,9 @@ img {
   height: 1rem;
 }
 
-#MangaOnlineViewer .ChapterControl .NavigationControlButton[onclick="window.location.href='#';"],
-#MangaOnlineViewer .ChapterControl .NavigationControlButton[onclick="window.location.href='';"],
-#MangaOnlineViewer .ChapterControl .NavigationControlButton[onclick="window.location.href='undefined';"] {
+#MangaOnlineViewer .ChapterControl .NavigationControlLink[href='#'],
+#MangaOnlineViewer .ChapterControl .NavigationControlLink[href=''],
+#MangaOnlineViewer .ChapterControl .NavigationControlLink[href='undefined'] {
   visibility: hidden;
 }
 
@@ -1922,7 +1955,6 @@ img {
   gap: 3px;
   position: absolute;
   right: 0;
-  direction: ltr;
 }
 
 #MangaOnlineViewer .PageFunctions > .PageIndex {
@@ -2238,39 +2270,87 @@ img {
 }
 `;
 
-    // Configuration
-    const settings$1 = {
-        theme: getValueGM('Theme', 'darkblue'),
-        customTheme: getValueGM('CustomTheme', '#263e3a'),
-        themeShade: getValueGM('ThemeShade', 600),
-        colorScheme: getValueGM('ColorScheme', 'dark'),
-        fitWidthIfOversize: getValueGM('FitWidthIfOversize', true),
-        showThumbnails: getValueGM('ShowThumbnails', true),
-        downloadZip: getValueGM('DownloadZip', false),
-        throttlePageLoad: getValueGM('Timer', 1000),
-        zoom: getValueGM('Zoom', 100),
-        zoomStep: getValueGM('ZoomStep', 25),
-        minZoom: getValueGM('MinZoom', 50),
-        loadMode: getValueGM('LoadMode', 'wait'),
-        viewMode: getValueGM('ViewMode', ''),
-        bookmarks: JSON.parse(getValueGM('Bookmarks', '[]')),
-        lazyLoadImages: getValueGM('LazyLoadImages', false),
-        lazyStart: getValueGM('LazyStart', 50),
-        hidePageControls: getValueGM('HidePageControls', false),
-        mouseOverMenu: getValueGM('MouseOverMenu', true),
+    /**
+     *  Deep diff between two object, using lodash
+     *
+     *  We are comparing two objects: a and b.
+     *  Object b is newer and similar to a.
+     *  We are looking for changes from a to b.
+     *  We assume that data types haven't changed (String to Number).
+     *  We assume that parent is either an Array or an Object.
+     *
+     *  This is the "easier on the programmer, harder on the computer" method.
+     *  It's very inefficient. Worst case is something like O(n^n).
+     *  But this works, is easier to understand that the "correct"
+     *  implementation, and entertained me for a bit. *
+     *
+     *  http://stackoverflow.com/questions/31295545/how-to-get-only-the-changed-values-from-two-json-objects
+     *  https://gist.github.com/Yimiprod/7ee176597fef230d1451
+     *  https://stackoverflow.com/questions/8572826/generic-deep-diff-between-two-objects
+     *  https://qastack.com.br/programming/31683075/how-to-do-a-deep-comparison-between-2-objects-with-lodash
+     * @param  {Object} changed Object compared
+     * @param  {Object} original   Object to compare with
+     * @return {Object} Return a new object who represent the diff
+     */
+    const diffObj = (changed, original) => {
+        const changes = (object, base) => _.transform(object, (result, value, key) => {
+            if (!_.isEqual(value, base[key])) {
+                if (_.isObject(value)) {
+                    result[key] = changes(value, base[key]);
+                }
+                else {
+                    result[key] = value;
+                }
+            }
+        });
+        return changes(changed, original);
     };
+
+    const defaultSettings = {
+        theme: 'darkblue',
+        customTheme: '#263e3a',
+        themeShade: 600,
+        colorScheme: 'dark',
+        fitWidthIfOversize: true,
+        showThumbnails: true,
+        downloadZip: false,
+        throttlePageLoad: 1000,
+        zoom: 100,
+        zoomStep: 25,
+        minZoom: 50,
+        loadMode: 'wait',
+        viewMode: 'WebComic',
+        bookmarks: [],
+        lazyLoadImages: false,
+        lazyStart: 50,
+        hidePageControls: false,
+        mouseOverMenu: true,
+    };
+    // Configuration
+    let settings$1 = _.defaultsDeep(getSettings(defaultSettings), defaultSettings);
     // Force Settings for mobile
     if (isMobile) {
         settings$1.lazyLoadImages = true;
-        settings$1.lazyStart = 5;
         settings$1.fitWidthIfOversize = true;
         settings$1.showThumbnails = false;
-        settings$1.viewMode = '';
+        settings$1.viewMode = 'WebComic';
+    }
+    function useSettings() {
+        return settings$1;
+    }
+    function updateSettings(newValue) {
+        logScript(JSON.stringify(newValue));
+        settings$1 = { ...settings$1, ...newValue };
+        setSettings(diffObj(settings$1, defaultSettings));
+    }
+    function resetSettings() {
+        updateSettings(defaultSettings);
     }
     // Clear old Bookmarks
     const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // year
-    settings$1.bookmarks = settings$1.bookmarks.filter((el) => Date.now() - el.date < bookmarkTimeLimit);
-    setValueGM('Bookmarks', JSON.stringify(settings$1.bookmarks));
+    updateSettings({
+        bookmarks: settings$1.bookmarks.filter((el) => Date.now() - el.date < bookmarkTimeLimit),
+    });
 
     // Creates the style element
     function createStyleElement(id, content) {
@@ -2308,7 +2388,7 @@ img {
 `;
     }
     function getNormalThemeCSS(theme) {
-        return generateThemeCSS(theme.name, theme[settings$1.themeShade], settings$1.themeShade < 500 ? theme['900'] : theme['50']);
+        return generateThemeCSS(theme.name, theme[useSettings().themeShade], useSettings().themeShade < 500 ? theme['900'] : theme['50']);
     }
     function getCustomThemeCSS(hex) {
         return generateThemeCSS('custom', hex, getTextColor(hex));
@@ -2321,9 +2401,8 @@ img {
         replaceStyleSheet('custom', getCustomThemeCSS(hex));
     }
     const themes = () => Object.values(colors);
-    // Object.values({ ...colors, custom: customColor(settings.customTheme) });
     const themesSelector = [...Object.keys(colors).map((color) => colors[color].name)].map((theme) => `
-<span class='${theme} ThemeRadio ${settings$1.theme === theme ? 'selected' : ''}'
+<span class='${theme} ThemeRadio ${useSettings().theme === theme ? 'selected' : ''}'
       title='${theme}'      
 >
 ${IconCheck}
@@ -2331,9 +2410,10 @@ ${IconCheck}
 `);
     function refreshThemes() {
         themes().forEach((theme) => replaceStyleSheet(theme.name, getNormalThemeCSS(theme)));
-        replaceStyleSheet('custom', getCustomThemeCSS(settings$1.customTheme));
+        replaceStyleSheet('custom', getCustomThemeCSS(useSettings().customTheme));
     }
-    const themesCSS = themes().map(addTheme).join('') + wrapStyle('custom', getCustomThemeCSS(settings$1.customTheme));
+    const themesCSS = themes().map(addTheme).join('') +
+        wrapStyle('custom', getCustomThemeCSS(useSettings().customTheme));
 
     // https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.20/sweetalert2.css
     // .swal2-title -> #swal2-title
@@ -2358,7 +2438,7 @@ ${IconCheck}
   ${wrapStyle('externals', sweetalertStyle)}
   ${wrapStyle('reader', cssStyles)}
   ${themesCSS}
-  ${wrapStyle('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${settings$1.minZoom}vw;}`)}
+  ${wrapStyle('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${useSettings().minZoom}vw;}`)}
 </head>
 `;
     }
@@ -2423,7 +2503,7 @@ ${IconCheck}
 <!-- =========================================================================================== -->
     <div class='ControlLabel ThemeSelector'>Theme:
       <span class='custom ThemeRadio 
-            ${settings$1.theme === 'custom' ? 'selected' : ''}'
+            ${useSettings().theme === 'custom' ? 'selected' : ''}'
             title='custom'>
         ${IconPalette}
         ${IconCheck}
@@ -2432,18 +2512,18 @@ ${IconCheck}
     </div>
 <!-- =========================================================================================== -->
     <div id='Hue' class='ControlLabel CustomTheme ControlLabelItem 
-          ${settings$1.theme.startsWith('custom') ? 'show' : ''}'>
-          Theme Primary Color Hue:<input id='CustomThemeHue' type='color' value='${settings$1.customTheme}' class='colorpicker CustomTheme'/>
+          ${useSettings().theme.startsWith('custom') ? 'show' : ''}'>
+          Theme Primary Color Hue:<input id='CustomThemeHue' type='color' value='${useSettings().customTheme}' class='colorpicker CustomTheme'/>
     </div>
 <!-- =========================================================================================== -->
     <div id='Shade' class='ControlLabel CustomTheme ControlLabelItem
-          ${settings$1.theme.startsWith('custom') ? '' : 'show'}'>
+          ${useSettings().theme.startsWith('custom') ? '' : 'show'}'>
       <span>
         Theme Primary Color Shade:
-        <output id='themeShadeVal' for='themeShade'>${settings$1.themeShade}</output>
+        <output id='themeShadeVal' for='themeShade'>${useSettings().themeShade}</output>
       </span>
       <input type='range'
-            value='${settings$1.themeShade}' 
+            value='${useSettings().themeShade}' 
             name='ThemeShade' 
             id='ThemeShade' 
             min='100' 
@@ -2456,45 +2536,45 @@ ${IconCheck}
 <!-- =========================================================================================== -->
   <div class='ControlLabel loadMode'>Default Load Mode:
     <select id='loadMode'>
-      <option value='wait' ${settings$1.loadMode === 'wait' ? 'selected' : ''}>Normal(Wait 3 sec)</option>
-      <option value='always' ${settings$1.loadMode === 'always' ? 'selected' : ''}>Always(Immediately)</option>
-      <option value='never' ${settings$1.loadMode === 'never' ? 'selected' : ''}>Never(Manually)</option>
+      <option value='wait' ${useSettings().loadMode === 'wait' ? 'selected' : ''}>Normal(Wait 3 sec)</option>
+      <option value='always' ${useSettings().loadMode === 'always' ? 'selected' : ''}>Always(Immediately)</option>
+      <option value='never' ${useSettings().loadMode === 'never' ? 'selected' : ''}>Never(Manually)</option>
     </select>
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel PagesPerSecond'>Pages/Second:
     <select id='PagesPerSecond'>
-      <option value='3000' ${settings$1.throttlePageLoad === 3000 ? 'selected' : ''}>0.3(Slow)</option>
-      <option value='2000' ${settings$1.throttlePageLoad === 2000 ? 'selected' : ''}>0.5</option>
-      <option value='1000' ${settings$1.throttlePageLoad === 1000 ? 'selected' : ''}>01(Normal)</option>
-      <option value='500' ${settings$1.throttlePageLoad === 500 ? 'selected' : ''}>02</option>
-      <option value='250' ${settings$1.throttlePageLoad === 250 ? 'selected' : ''}>04(Fast)</option>
-      <option value='125' ${settings$1.throttlePageLoad === 125 ? 'selected' : ''}>08</option>
-      <option value='100' ${settings$1.throttlePageLoad === 100 ? 'selected' : ''}>10(Extreme)</option>
+      <option value='3000' ${useSettings().throttlePageLoad === 3000 ? 'selected' : ''}>0.3(Slow)</option>
+      <option value='2000' ${useSettings().throttlePageLoad === 2000 ? 'selected' : ''}>0.5</option>
+      <option value='1000' ${useSettings().throttlePageLoad === 1000 ? 'selected' : ''}>01(Normal)</option>
+      <option value='500' ${useSettings().throttlePageLoad === 500 ? 'selected' : ''}>02</option>
+      <option value='250' ${useSettings().throttlePageLoad === 250 ? 'selected' : ''}>04(Fast)</option>
+      <option value='125' ${useSettings().throttlePageLoad === 125 ? 'selected' : ''}>08</option>
+      <option value='100' ${useSettings().throttlePageLoad === 100 ? 'selected' : ''}>10(Extreme)</option>
     </select>
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel DefaultZoom'>Default Zoom:
     <select id='DefaultZoom'>
-      <option value='50' ${settings$1.zoom === 50 ? 'selected' : ''}>50%</option>
-      <option value='75' ${settings$1.zoom === 75 ? 'selected' : ''}>75%</option>
-      <option value='100' ${settings$1.zoom === 100 ? 'selected' : ''}>100%</option>
-      <option value='125' ${settings$1.zoom === 125 ? 'selected' : ''}>125%</option>
-      <option value='150' ${settings$1.zoom === 150 ? 'selected' : ''}>150%</option>
-      <option value='175' ${settings$1.zoom === 175 ? 'selected' : ''}>175%</option>
-      <option value='200' ${settings$1.zoom === 200 ? 'selected' : ''}>200%</option>
-      <option value='1000' ${settings$1.zoom === 1000 ? 'selected' : ''}>Fit Width</option>
-      <option value='-1000' ${settings$1.zoom === -1000 ? 'selected' : ''}>Fit Height</option>
+      <option value='50' ${useSettings().zoom === 50 ? 'selected' : ''}>50%</option>
+      <option value='75' ${useSettings().zoom === 75 ? 'selected' : ''}>75%</option>
+      <option value='100' ${useSettings().zoom === 100 ? 'selected' : ''}>100%</option>
+      <option value='125' ${useSettings().zoom === 125 ? 'selected' : ''}>125%</option>
+      <option value='150' ${useSettings().zoom === 150 ? 'selected' : ''}>150%</option>
+      <option value='175' ${useSettings().zoom === 175 ? 'selected' : ''}>175%</option>
+      <option value='200' ${useSettings().zoom === 200 ? 'selected' : ''}>200%</option>
+      <option value='1000' ${useSettings().zoom === 1000 ? 'selected' : ''}>Fit Width</option>
+      <option value='-1000' ${useSettings().zoom === -1000 ? 'selected' : ''}>Fit Height</option>
     </select>
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel minZoom'>
     <span>
       Minimun Zoom relative to the width of screen (between 30 and 100):
-      <output id='minZoomVal' for='minZoom'>${settings$1.minZoom}</output>
+      <output id='minZoomVal' for='minZoom'>${useSettings().minZoom}</output>
     </span>
     <input type='range' 
-          value='${settings$1.minZoom}' 
+          value='${useSettings().minZoom}' 
           name='minZoom' 
           id='minZoom' 
           min='30' 
@@ -2507,10 +2587,10 @@ ${IconCheck}
   <div class='ControlLabel zoomStep'>
     <span>
       Zoom Change Step (between 5 and 50):
-      <output id='zoomStepVal' for='zoomStep'>${settings$1.zoomStep}</output>
+      <output id='zoomStepVal' for='zoomStep'>${useSettings().zoomStep}</output>
     </span>
     <input type='range' 
-          value='${settings$1.zoomStep}' 
+          value='${useSettings().zoomStep}' 
           name='zoomStep' 
           id='zoomStep' 
           min='5' 
@@ -2522,49 +2602,52 @@ ${IconCheck}
 <!-- =========================================================================================== -->
   <div class='ControlLabel viewMode'>Default View Mode:
     <select id='viewMode'>
-      <option value='' ${settings$1.viewMode !== 'FluidLTR' && settings$1.viewMode !== 'FluidRTL' ? 'selected' : ''}>
+      <option value='Vertical' ${useSettings().viewMode === 'Vertical' ? 'selected' : ''}>
       Vertical
       </option>
-      <option value='FluidLTR' ${settings$1.viewMode === 'FluidLTR' ? 'selected' : ''}>
+      <option value='WebComic' ${useSettings().viewMode === 'WebComic' ? 'selected' : ''}>
+        WebComic
+      </option>
+      <option value='FluidLTR' ${useSettings().viewMode === 'FluidLTR' ? 'selected' : ''}>
       Left to Right
       </option>
-      <option value='FluidRTL' ${settings$1.viewMode === 'FluidRTL' ? 'selected' : ''}>
+      <option value='FluidRTL' ${useSettings().viewMode === 'FluidRTL' ? 'selected' : ''}>
       Right to Left
       </option>
     </select>
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel fitIfOversize'>Fit Width if Oversize:
-    <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${settings$1.fitWidthIfOversize ? 'checked' : ''}/>
+    <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${useSettings().fitWidthIfOversize ? 'checked' : ''}/>
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel showThumbnails'>Show Thumbnails:
-    <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${settings$1.showThumbnails ? 'checked' : ''}/>
+    <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${useSettings().showThumbnails ? 'checked' : ''}/>
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel lazyLoadImages'>Lazy Load Images:
-    <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${settings$1.lazyLoadImages ? 'checked' : ''}/>
+    <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${useSettings().lazyLoadImages ? 'checked' : ''}/>
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel lazyStart'>
     <span>
       Lazy Start From Page (between 5 and 100):
-      <output id='lazyStartVal' for='lazyStart'>${settings$1.lazyStart}</output>
+      <output id='lazyStartVal' for='lazyStart'>${useSettings().lazyStart}</output>
     </span>
-    <input type='range' value='${settings$1.lazyStart}' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput='lazyStartVal.value = this.value'/>
+    <input type='range' value='${useSettings().lazyStart}' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput='lazyStartVal.value = this.value'/>
     
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel downloadZip'>Download Images as Zip Automatically:
-    <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${settings$1.downloadZip ? 'checked' : ''}/>
+    <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${useSettings().downloadZip ? 'checked' : ''}/>
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel hidePageControls'>Always Hide Page Controls:
-    <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${settings$1.hidePageControls ? 'checked' : ''}/>
+    <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${useSettings().hidePageControls ? 'checked' : ''}/>
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel mouseOverMenu'>Toggle Sticky Header / MouseOverMenu:
-    <input type='checkbox' value='false' name='mouseOverMenu' id='mouseOverMenu' ${settings$1.mouseOverMenu ? 'checked' : ''}/>
+    <input type='checkbox' value='false' name='mouseOverMenu' id='mouseOverMenu' ${useSettings().mouseOverMenu ? 'checked' : ''}/>
   </div>
 </div>
 `;
@@ -2595,9 +2678,9 @@ ${IconCheck}
 </div>`);
 
     const listBookmarks = () => {
-        if (isEmpty(settings$1.bookmarks))
+        if (isEmpty(useSettings().bookmarks))
             return ['List Empty'];
-        return settings$1.bookmarks.map((mark, index) => `
+        return useSettings().bookmarks.map((mark, index) => `
 <div id='Bookmark${index + 1}' class='BookmarkItem'>
   <span class='bookmarkData bookmarkDate'>
     ${new Date(mark.date).toLocaleDateString()}
@@ -2637,11 +2720,11 @@ ${IconCheck}
     }
 
     const listOptions = (times, begin) => indexList(times, begin).map((index) => `<option value='${index}'>${index}</option>`);
-    const body = (manga, begin = 1) => `
+    const app = (manga, begin = 1) => `
 <div id='MangaOnlineViewer'
-  class="${settings$1.colorScheme} ${settings$1.hidePageControls ? 'hideControls' : ''}"
-  data-theme='${settings$1.theme}'>
-  <header id="Header" class="${settings$1.mouseOverMenu ? 'mouseOverMenu' : ''}">
+  class="${useSettings().colorScheme} ${useSettings().hidePageControls ? 'hideControls' : ''}"
+  data-theme='${useSettings().theme}'>
+  <header id="Header" class="${useSettings().mouseOverMenu ? 'mouseOverMenu' : ''}">
     <div id='menu'>
       ${IconMenu2}
     </div>
@@ -2657,6 +2740,7 @@ ${IconCheck}
       <span>
         <button id='ltrMode' title='Left to Right Mode' class='ControlButton'>${IconArrowAutofitRight}</button>
         <button id='verticalMode' title='Vertical Mode' class='ControlButton'>${IconArrowAutofitDown}</button>
+        <button id='webComic' title='Web Comic Mode' class='ControlButton'>${IconSpacingVertical}</button>
         <button id='rtlMode' title='Right to Left Mode' class='ControlButton'>${IconArrowAutofitLeft}</button>
         <button id='pageControls' title='Toggle Page Controls' class='ControlButton'>${IconListNumbers}</button>
         <button id='bookmarks' title='List Bookmarks' class='ControlButton'>${IconBookmarks}</button>
@@ -2682,23 +2766,26 @@ ${IconCheck}
           ${IconLoader2}
           Download
         </button>
-        <button id='prev' class='prev NavigationControlButton ControlButton' title='Previos Chapter' type='button'
-        onclick="window.location.href='${manga.prev || ''}';">
+        <a class='prev NavigationControlLink' href='${manga.prev || ''}'>
+          <button id='prev' class='prev NavigationControlButton ControlButton' title='Previos Chapter' type='button'>          
           ${IconArrowBigLeft}
           Previous
         </button>
-        <button id='next' class='next NavigationControlButton ControlButton' title='Next Chapter' type='button'
-        onclick="window.location.href='${manga.next || ''}';">
+        </a>        
+        <a class='next NavigationControlLink' href='${manga.next || ''}'>
+        <button id='next' class='next NavigationControlButton ControlButton' title='Next Chapter' type='button'>
           Next
           ${IconArrowBigRight}
         </button>
+        </a>
       </div>
     </nav>
   </header>  
-  <main id='Chapter' class='${settings$1.fitWidthIfOversize === true ? 'fitWidthIfOversize' : ''} ${settings$1.viewMode}'>
+  <main id='Chapter' class='${useSettings().fitWidthIfOversize ? 'fitWidthIfOversize' : ''}
+      ${useSettings().viewMode}'>
     ${listPages(manga.pages, begin).join('')}
   </main>
-  <nav id='Navigation' class='panel ${settings$1.showThumbnails ? '' : 'disabled'}'>
+  <nav id='Navigation' class='panel ${useSettings().showThumbnails ? '' : 'disabled'}'>
     <div id='NavigationCounters' class='ControlLabel'>
       ${IconCategory}
       <i>0</i> of <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b> Pages Loaded
@@ -2864,6 +2951,10 @@ ${IconCheck}
     }
 
     /**
+     * Interface for the settings
+     */
+
+    /**
      * Settings the lazy load will obey
      */
     const settings = {
@@ -2876,6 +2967,7 @@ ${IconCheck}
      * List of elements that will be lazy loaded
      */
     let listElements = [];
+    let setup = false;
     /**
      * Check if the image ins nearing the viewport, so it needs to load.
      * @param value
@@ -2908,29 +3000,9 @@ ${IconCheck}
         inView.forEach(showElement);
     }
     /**
-     * Throttle controller
-     */
-    let wait = false;
-    /**
      * Function responsible for observing the screen move/change
      */
-    function observerEvent() {
-        if (listElements.length === 0) {
-            window.removeEventListener('scroll', observerEvent);
-            window.removeEventListener('touchmove', observerEvent);
-            window.removeEventListener('resize', observerEvent);
-            // console.info('All items lazy loaded');
-            return;
-        }
-        if (wait) {
-            return;
-        }
-        executeCheck();
-        wait = true;
-        setTimeout(() => {
-            wait = false;
-        }, settings.throttle);
-    }
+    const observerEvent = _.throttle(executeCheck, settings.throttle);
     /**
      * Simple lazy loading for images.
      * Add an image element to a list, wait for it to be close to appearing on screen then load its 'src' from 'data-src'
@@ -2939,8 +3011,7 @@ ${IconCheck}
      * @param callback
      */
     function lazyLoad(element, callback) {
-        if (listElements.length === 0) {
-            // console.info('Initializing lazy load');
+        if (!setup) {
             window.addEventListener('scroll', observerEvent, {
                 passive: true,
             });
@@ -2950,13 +3021,14 @@ ${IconCheck}
             window.addEventListener('resize', observerEvent, {
                 passive: true,
             });
+            setup = true;
         }
         listElements.push({ element, callback });
         observerEvent();
     }
 
     // After pages load apply default Zoom
-    function applyZoom(pages = '.PageContent img', zoom = settings$1.zoom) {
+    function applyZoom(pages = '.PageContent img', zoom = useSettings().zoom) {
         const pg = [...document.querySelectorAll(pages)];
         pg.forEach((value) => {
             const img = value;
@@ -2989,10 +3061,10 @@ ${IconCheck}
     }
     function onImagesDone() {
         logScript('Images Loading Complete');
-        if (!settings$1.lazyLoadImages) {
+        if (!useSettings().lazyLoadImages) {
             document.querySelector('.download')?.setAttribute('href', '#download');
             logScript('Download Available');
-            if (settings$1.downloadZip) {
+            if (useSettings().downloadZip) {
                 document.querySelector('#blob')?.dispatchEvent(new Event('click'));
             }
         }
@@ -3016,7 +3088,7 @@ ${IconCheck}
             onImagesDone();
     }
     // change class if the image is loaded or broken
-    function onImagesProgress(instance, image) {
+    function onImagesProgress(_instance, image) {
         if (image) {
             if (image.isLoaded) {
                 image.img.classList.add('imgLoaded');
@@ -3051,13 +3123,13 @@ ${IconCheck}
         const src = normalizeUrl(imageSrc);
         const img = document.querySelector(`#PageImg${index}`);
         if (img) {
-            if (!settings$1.lazyLoadImages || position <= settings$1.lazyStart) {
+            if (!useSettings().lazyLoadImages || position <= useSettings().lazyStart) {
                 setTimeout(() => {
                     img.setAttribute('src', src);
                     const imgLoad = imagesLoaded(img.parentElement);
                     imgLoad.on('progress', onImagesProgress);
                     logScript('Loaded Image:', index, 'Source:', src);
-                }, (manga.timer || settings$1.throttlePageLoad) * position);
+                }, (manga.timer || useSettings().throttlePageLoad) * position);
             }
             else {
                 img.setAttribute('data-src', src);
@@ -3086,10 +3158,10 @@ ${IconCheck}
     async function addPage(manga, index, pageUrl, position) {
         const img = document.querySelector(`#PageImg${index}`);
         if (img) {
-            if (!settings$1.lazyLoadImages || position <= settings$1.lazyStart) {
+            if (!useSettings().lazyLoadImages || position <= useSettings().lazyStart) {
                 setTimeout(() => {
                     findPage(manga, index, pageUrl, false)();
-                }, (manga.timer || settings$1.throttlePageLoad) * position);
+                }, (manga.timer || useSettings().throttlePageLoad) * position);
             }
             else {
                 img.setAttribute('data-src', 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');
@@ -3107,11 +3179,11 @@ ${IconCheck}
     }
     // Entry point for loading hte Manga pages
     function loadManga(manga, begin = 1) {
-        settings$1.lazyLoadImages = manga.lazy || settings$1.lazyLoadImages;
+        useSettings().lazyLoadImages = manga.lazy || useSettings().lazyLoadImages;
         logScript('Loading Images');
-        logScript(`Intervals: ${manga.timer || settings$1.throttlePageLoad || 'Default(1000)'}`);
-        logScript(`Lazy: ${settings$1.lazyLoadImages}, Starting from: ${settings$1.lazyStart}`);
-        if (settings$1.lazyLoadImages) {
+        logScript(`Intervals: ${manga.timer || useSettings().throttlePageLoad || 'Default(1000)'}`);
+        logScript(`Lazy: ${useSettings().lazyLoadImages}, Starting from: ${useSettings().lazyStart}`);
+        if (useSettings().lazyLoadImages) {
             logScript('Download may not work with Lazy Loading Images');
         }
         if (isImagesManga(manga)) {
@@ -3134,7 +3206,7 @@ ${IconCheck}
                     img,
                     lazyAttr,
                 }),
-                wait: settings$1.throttlePageLoad,
+                wait: useSettings().throttlePageLoad,
             });
         }
     }
@@ -3145,17 +3217,10 @@ ${IconCheck}
     }
     // Clean key press configurations and set some when specified
     function setKeyDownEvents() {
-        try {
-            document.onkeydown = null;
-            document.onkeypress = null;
-            window.onkeydown = null;
-            window.onkeypress = null;
-            window.onload = null;
-            document.body.onload = null;
-        }
-        catch (e) {
-            logScript(`Keybinds error: ${e}`);
-        }
+        document.onkeydown = null;
+        window.onkeydown = null;
+        window.onload = null;
+        document.body.onload = null;
         function processKey(e) {
             const a = e.code;
             const usedKeys = [
@@ -3200,7 +3265,7 @@ ${IconCheck}
                     case 'ArrowUp':
                     case 'KeyW':
                     case 'Numpad8':
-                        if (settings$1.zoom === -1000) {
+                        if (useSettings().zoom === -1000) {
                             const next = [...document.querySelectorAll('.MangaPage')].find((element) => element.offsetTop - window.scrollY > 10);
                             scrollToElement(next?.previousElementSibling);
                         }
@@ -3214,7 +3279,7 @@ ${IconCheck}
                     case 'ArrowDown':
                     case 'KeyS':
                     case 'Numpad2':
-                        if (settings$1.zoom === -1000) {
+                        if (useSettings().zoom === -1000) {
                             const next = [...document.querySelectorAll('.MangaPage')].find((element) => element.offsetTop - window.scrollY > 10);
                             scrollToElement(next);
                         }
@@ -3263,6 +3328,9 @@ ${IconCheck}
                     case 'KeyX':
                         document.querySelector('#settings')?.dispatchEvent(new Event('click'));
                         break;
+                    case 'KeyC':
+                        document.querySelector('#webComic')?.dispatchEvent(new Event('click'));
+                        break;
                     case 'KeyV':
                         document.querySelector('#verticalMode')?.dispatchEvent(new Event('click'));
                         break;
@@ -3279,7 +3347,7 @@ ${IconCheck}
         }
         document.addEventListener('keydown', processKey);
     }
-    function updateZoomPercent(percent = settings$1.zoom) {
+    function updateZoomPercent(percent = useSettings().zoom) {
         const zoom = document.querySelector('#ZoomPercent');
         if (zoom) {
             zoom.textContent = percent.toString();
@@ -3314,7 +3382,7 @@ ${IconCheck}
         function eraseBookmarks(elem) {
             elem.addEventListener('click', (event) => {
                 const target = event.currentTarget.value;
-                settings$1.bookmarks = settings$1.bookmarks.filter((el) => el.url !== target);
+                const bookmarks = useSettings().bookmarks.filter((el) => el.url !== target);
                 if (target === window.location.href) {
                     document.querySelector('#MangaOnlineViewer')?.classList.toggle('bookmarked');
                 }
@@ -3324,8 +3392,7 @@ ${IconCheck}
                     timer: 10000,
                     icon: 'error',
                 });
-                setValueGM('Bookmarks', JSON.stringify(settings$1.bookmarks));
-                logScript(`MangaBookmarks: ${getValueGM('Bookmarks')}`);
+                updateSettings({ bookmarks });
                 reloadBookmarks();
                 document.querySelectorAll('.BookmarkItem .erase')?.forEach(eraseBookmarks);
             });
@@ -3334,41 +3401,53 @@ ${IconCheck}
         // Size Controls
         // Global Zoom In Button
         function buttonGlobalZoomIn() {
-            settings$1.zoom += settings$1.zoomStep;
+            useSettings().zoom += useSettings().zoomStep;
             updateZoomPercent();
             applyZoom();
         }
         document.querySelector('#enlarge')?.addEventListener('click', buttonGlobalZoomIn);
         // Global Zoom Out Button
         function buttonGlobalZoomOut() {
-            settings$1.zoom -= settings$1.zoomStep;
+            useSettings().zoom -= useSettings().zoomStep;
             updateZoomPercent();
             applyZoom();
         }
         document.querySelector('#reduce')?.addEventListener('click', buttonGlobalZoomOut);
         // Global Zoom Restore Button
         function buttonGlobalRestoreZoom() {
-            settings$1.zoom = 100;
+            useSettings().zoom = 100;
             updateZoomPercent();
             applyZoom();
         }
         document.querySelector('#restore')?.addEventListener('click', buttonGlobalRestoreZoom);
         // Global Fit Width Button
         function buttonGlobalFitWidth() {
-            settings$1.zoom = 1000;
+            useSettings().zoom = 1000;
             updateZoomPercent();
             applyZoom();
         }
         document.querySelector('#fitWidth')?.addEventListener('click', buttonGlobalFitWidth);
         // Global Fit height Button
         function buttonGlobalFitHeight() {
-            settings$1.zoom = -1000;
+            useSettings().zoom = -1000;
             updateZoomPercent();
             applyZoom();
         }
         document.querySelector('#fitHeight')?.addEventListener('click', buttonGlobalFitHeight);
+        // WebComic View Mode Button
+        function buttonWebComicMode() {
+            document.querySelector('#Chapter')?.classList.remove('Vertical');
+            document.querySelector('#Chapter')?.classList.add('WebComic');
+            document.querySelector('#Chapter')?.classList.remove('FluidLTR');
+            document.querySelector('#Chapter')?.classList.remove('FluidRTL');
+            document.querySelector('#Chapter')?.classList.remove('DoublePage');
+            applyZoom();
+        }
+        document.querySelector('#webComic')?.addEventListener('click', buttonWebComicMode);
         // Fluid LTR View Mode Button
         function buttonLtrMode() {
+            document.querySelector('#Chapter')?.classList.remove('Vertical');
+            document.querySelector('#Chapter')?.classList.remove('WebComic');
             document.querySelector('#Chapter')?.classList.add('FluidLTR');
             document.querySelector('#Chapter')?.classList.remove('FluidRTL');
             document.querySelector('#Chapter')?.classList.add('DoublePage');
@@ -3377,6 +3456,8 @@ ${IconCheck}
         document.querySelector('#ltrMode')?.addEventListener('click', buttonLtrMode);
         // Fluid RTL View Mode Button
         function buttonRtlMode() {
+            document.querySelector('#Chapter')?.classList.remove('Vertical');
+            document.querySelector('#Chapter')?.classList.remove('WebComic');
             document.querySelector('#Chapter')?.classList.remove('FluidLTR');
             document.querySelector('#Chapter')?.classList.add('FluidRTL');
             document.querySelector('#Chapter')?.classList.add('DoublePage');
@@ -3385,6 +3466,8 @@ ${IconCheck}
         document.querySelector('#rtlMode')?.addEventListener('click', buttonRtlMode);
         // Vertical View Mode Button
         function buttonVerticalMode() {
+            document.querySelector('#Chapter')?.classList.add('Vertical');
+            document.querySelector('#Chapter')?.classList.remove('WebComic');
             document.querySelector('#Chapter')?.classList.remove('FluidLTR');
             document.querySelector('#Chapter')?.classList.remove('FluidRTL');
             document.querySelector('#Chapter')?.classList.remove('DoublePage');
@@ -3394,50 +3477,39 @@ ${IconCheck}
         // Image Fit width if Oversize Toggle
         function checkFitWidthOversize(event) {
             document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize');
-            if (event.currentTarget.checked) {
-                setValueGM('FitWidthIfOversize', true);
-            }
-            else {
-                setValueGM('FitWidthIfOversize', false);
-            }
-            logScript(`fitIfOversize: ${getValueGM('FitWidthIfOversize')}`);
+            updateSettings({ fitWidthIfOversize: event.currentTarget.checked });
         }
         document.querySelector('#fitIfOversize')?.addEventListener('change', checkFitWidthOversize);
         // Default View mode Selector
         function changeViewMode(event) {
             const mode = event.currentTarget.value;
+            document.querySelector('#Chapter')?.classList.remove('Vertical');
+            document.querySelector('#Chapter')?.classList.remove('WebComic');
             document.querySelector('#Chapter')?.classList.remove('FluidLTR');
             document.querySelector('#Chapter')?.classList.remove('FluidRTL');
+            document.querySelector('#Chapter')?.classList.remove('DoublePage');
             document.querySelector('#Chapter')?.classList.add(mode);
-            setValueGM('ViewMode', mode);
-            logScript(`ViewMode: ${getValueGM('ViewMode')}`);
+            updateSettings({ viewMode: mode });
             applyZoom();
         }
         document.querySelector('#viewMode')?.addEventListener('change', changeViewMode);
         // Start/Load mode Selector
         function changeLoadMode(event) {
             const mode = event.currentTarget.value;
-            setValueGM('LoadMode', mode);
-            logScript(`MangaLoadMode: ${getValueGM('LoadMode')}`);
+            updateSettings({ loadMode: mode });
         }
         document.querySelector('#loadMode')?.addEventListener('change', changeLoadMode);
         // Show Thumbnail Toggle
         function checkShowThumbnails(event) {
             document.querySelector('#Navigation')?.classList.toggle('disabled');
-            if (event.currentTarget.checked) {
-                setValueGM('ShowThumbnails', true);
-            }
-            else {
-                setValueGM('ShowThumbnails', false);
-            }
-            logScript(`MangaShowThumbnails: ${getValueGM('ShowThumbnails')}`);
+            updateSettings({ showThumbnails: event.currentTarget.checked });
             applyZoom();
         }
         document.querySelector('#showThumbnails')?.addEventListener('change', checkShowThumbnails);
         // Download auto start toggle
         function changeAutoDownload(event) {
+            updateSettings({ downloadZip: event.currentTarget.checked });
             if (event.currentTarget.checked) {
-                setValueGM('DownloadZip', true);
                 Swal.fire({
                     title: 'Attention',
                     text: 'Next time a chapter finish loading you will be prompted to save automatically',
@@ -3445,10 +3517,6 @@ ${IconCheck}
                     icon: 'info',
                 });
             }
-            else {
-                setValueGM('DownloadZip', false);
-            }
-            logScript(`MangaDownloadZip: ${getValueGM('DownloadZip')}`);
         }
         document.querySelector('#downloadZip')?.addEventListener('change', changeAutoDownload);
         // Download starter
@@ -3461,56 +3529,48 @@ ${IconCheck}
         });
         // Lazy load Toggle
         function checkLazyLoad(event) {
+            updateSettings({ lazyLoadImages: event.currentTarget.checked });
             if (event.currentTarget.checked) {
-                setValueGM('LazyLoadImages', true);
                 Swal.fire({
                     title: 'Warning',
                     html: `Lazy load is incompatible with zip download, you will not be able to download with this setting ON.<br/>
-               Suggestion: <span style="color:red;font-weight:bold">Disable Thumbnails</span> to save Bandwidth/Memory.`,
+               Suggestion: <span style='color:red;font-weight:bold'>Disable Thumbnails</span> to save Bandwidth/Memory.`,
                     icon: 'warning',
                 });
             }
-            else {
-                setValueGM('LazyLoadImages', false);
-            }
-            logScript(`MangaLazyLoadImages: ${getValueGM('LazyLoadImages')}`);
         }
         document.querySelector('#lazyLoadImages')?.addEventListener('change', checkLazyLoad);
         // Lazy load starting point Slider
         function changeLazyStart(event) {
             const start = event.currentTarget.value;
-            setValueGM('LazyStart', start);
-            logScript(`lazyStart: ${getValueGM('LazyStart')}`);
+            updateSettings({ lazyStart: parseInt(start, 10) });
         }
         document.querySelector('#lazyStart')?.addEventListener('change', changeLazyStart);
         // Images load speed Selector
         function changePagesPerSecond(event) {
-            setValueGM('Timer', parseInt(event.currentTarget.value, 10));
-            logScript(`MangaTimer: ${getValueGM('Timer')}`);
+            const timer = parseInt(event.currentTarget.value, 10);
+            updateSettings({ throttlePageLoad: timer });
         }
         document.querySelector('#PagesPerSecond')?.addEventListener('change', changePagesPerSecond);
         // Global Default Zoom Selector
         function changeDefaultZoom(event) {
-            settings$1.zoom = parseInt(event.currentTarget.value, 10);
+            const zoom = event.currentTarget.value;
             updateZoomPercent();
-            setValueGM('Zoom', parseInt(settings$1.zoom.toString(), 10));
-            logScript(`MangaZoom: ${getValueGM('Zoom')}`);
+            updateSettings({ zoom: parseInt(zoom, 10) });
             applyZoom();
         }
         document.querySelector('#DefaultZoom')?.addEventListener('change', changeDefaultZoom);
         // Zoom Step Slider
         function changeZoomStep(event) {
             const step = event.currentTarget.value;
-            setValueGM('ZoomStep', parseInt(step, 10));
-            logScript(`ZoomStep: ${getValueGM('ZoomStep')}`);
+            updateSettings({ zoomStep: parseInt(step, 10) });
         }
         document.querySelector('#zoomStep')?.addEventListener('change', changeZoomStep);
         // Min Zoom Slider
         function changeMinZoom(event) {
             const min = event.currentTarget.value;
             replaceStyleSheet('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
-            setValueGM('MinZoom', parseInt(min, 10));
-            logScript(`MinZoom: ${getValueGM('MinZoom')}`);
+            updateSettings({ minZoom: parseInt(min, 10) });
         }
         document.querySelector('#minZoom')?.addEventListener('change', changeMinZoom);
         // Show/hide Image Controls Button
@@ -3521,37 +3581,23 @@ ${IconCheck}
         // Show/hide Image Controls Toggle
         function checkHideImageControls(event) {
             document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
-            if (event.currentTarget.checked) {
-                setValueGM('HidePageControls', true);
-            }
-            else {
-                setValueGM('HidePageControls', false);
-            }
-            logScript(`MangaHidePageControls: ${getValueGM('HidePageControls')}`);
+            updateSettings({ hidePageControls: event.currentTarget.checked });
         }
         document.querySelector('#hidePageControls')?.addEventListener('change', checkHideImageControls);
         // Sticky Header or MouseOverMenu Toggle
         function checkMouseOverMenu(event) {
             document.querySelector('#Header')?.classList.toggle('mouseOverMenu');
-            if (event.currentTarget.checked) {
-                setValueGM('MouseOverMenu', true);
-            }
-            else {
-                setValueGM('MouseOverMenu', false);
-            }
-            logScript(`MangaHidePageControls: ${getValueGM('MouseOverMenu')}`);
+            updateSettings({ mouseOverMenu: event.currentTarget.checked });
         }
         document.querySelector('#mouseOverMenu')?.addEventListener('change', checkMouseOverMenu);
         // ColorScheme Selector
         function changeColorScheme() {
-            const isDark = settings$1.colorScheme === 'dark';
-            settings$1.colorScheme = isDark ? 'light' : 'dark';
-            setValueGM('ColorScheme', settings$1.colorScheme);
+            const isDark = useSettings().colorScheme === 'dark';
+            updateSettings({ colorScheme: isDark ? 'light' : 'dark' });
             [...document.querySelectorAll('#MangaOnlineViewer , body')].forEach((elem) => {
                 elem.classList.remove(isDark ? 'dark' : 'light');
-                elem.classList.add(settings$1.colorScheme);
+                elem.classList.add(useSettings().colorScheme);
             });
-            logScript('ColorScheme', getValueGM('ColorScheme'));
         }
         document.querySelector('#ColorScheme')?.addEventListener('click', changeColorScheme);
         // Theme Control Selector
@@ -3562,8 +3608,7 @@ ${IconCheck}
             [...document.querySelectorAll('#MangaOnlineViewer , body')].forEach((elem) => {
                 elem.setAttribute('data-theme', target.title);
             });
-            setValueGM('Theme', target.title);
-            logScript('Theme', getValueGM('Theme'));
+            updateSettings({ theme: target.title });
             const hue = document.querySelector('#Hue');
             const shade = document.querySelector('#Shade');
             if (target.title.startsWith('custom')) {
@@ -3579,21 +3624,15 @@ ${IconCheck}
         // Custom theme Color Input
         function changeCustomTheme(event) {
             const target = event.currentTarget.value;
-            logScript(`CustomTheme: ${target}`);
-            settings$1.customTheme = target;
+            updateSettings({ customTheme: target });
             addCustomTheme(target);
-            setValueGM('CustomTheme', target);
-            logScript(`CustomTheme: ${getValueGM('CustomTheme')}`);
         }
         document.querySelector('#CustomThemeHue')?.addEventListener('change', changeCustomTheme);
         // Theme Shade Input
         function changeThemeShade(event) {
             const target = parseInt(event.currentTarget.value, 10);
-            logScript(`ThemeShade: ${target}`);
-            settings$1.themeShade = target;
+            updateSettings({ themeShade: target });
             refreshThemes();
-            setValueGM('ThemeShade', target);
-            logScript(`ThemeShade: ${getValueGM('ThemeShade')}`);
         }
         document.querySelector('#ThemeShade')?.addEventListener('change', changeThemeShade);
         // Goto Navigation Selector
@@ -3623,9 +3662,9 @@ ${IconCheck}
                     page: num,
                     date: Date.now(),
                 };
-                const found = settings$1.bookmarks.filter((el) => el.url === mark.url).length > 0;
+                const found = useSettings().bookmarks.some((el) => el.url === mark.url);
                 if (found) {
-                    settings$1.bookmarks = settings$1.bookmarks.filter((el) => el.url !== mark.url);
+                    updateSettings({ bookmarks: useSettings().bookmarks.filter((el) => el.url !== mark.url) });
                     Swal.fire({
                         title: 'Bookmark Removed',
                         timer: 10000,
@@ -3633,15 +3672,13 @@ ${IconCheck}
                     });
                 }
                 else {
-                    settings$1.bookmarks.push(mark);
+                    updateSettings({ bookmarks: [...useSettings().bookmarks, mark] });
                     Swal.fire({
                         title: 'Saved Bookmark',
                         html: `Next time you open this chapter it will resume from:<h4>Page ${num}</h4>(Only <i>ONCE</i> per Bookmark, will be removed after a year unused)`,
                         icon: 'success',
                     });
                 }
-                setValueGM('Bookmarks', JSON.stringify(settings$1.bookmarks));
-                logScript(`MangaBookmarks: ${getValueGM('Bookmarks')}`);
                 reloadBookmarks();
                 document.querySelectorAll('.BookmarkItem .erase')?.forEach(eraseBookmarks);
             });
@@ -3659,7 +3696,7 @@ ${IconCheck}
         function buttonZoomIn(elem) {
             return elem.addEventListener('click', (event) => {
                 const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
-                const ratio = (img.width / img.naturalWidth) * (100 + settings$1.zoomStep);
+                const ratio = (img.width / img.naturalWidth) * (100 + useSettings().zoomStep);
                 applyZoom(`#${img.getAttribute('id')}`, ratio);
             });
         }
@@ -3668,7 +3705,7 @@ ${IconCheck}
         function buttonZoomOut(elem) {
             return elem.addEventListener('click', (event) => {
                 const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
-                const ratio = (img.width / img.naturalWidth) * (100 - settings$1.zoomStep);
+                const ratio = (img.width / img.naturalWidth) * (100 - useSettings().zoomStep);
                 applyZoom(`#${img.getAttribute('id')}`, ratio);
             });
         }
@@ -3708,7 +3745,7 @@ ${IconCheck}
         document.querySelectorAll('.Hide')?.forEach(buttonHidePage);
         // Reset Reader Settings
         function buttonResetSettings() {
-            getListGM().forEach((setting) => removeValueGM(setting));
+            resetSettings();
             Swal.fire({
                 title: 'Attention',
                 text: 'Settings have been reset, reload the page to take effect',
@@ -3747,7 +3784,7 @@ ${IconCheck}
                 }
                 prevOffset = scrollY;
             }
-            window.addEventListener('scroll', toggleScrollDirection);
+            window.addEventListener('scroll', _.debounce(toggleScrollDirection, 50));
         }
         useScrollDirection(100);
     }
@@ -3758,10 +3795,9 @@ ${IconCheck}
             manga.before();
         }
         document.head.innerHTML = head(manga);
-        document.body.innerHTML = body(manga, begin);
+        document.body.innerHTML = app(manga, begin);
         document.body.className = '';
         document.body.removeAttribute('style');
-        // document.documentElement.innerHTML = reader(manga, begin);
         logScript('Rebuilding Site');
         setTimeout(() => {
             try {
@@ -3772,10 +3808,10 @@ ${IconCheck}
                     loadManga(manga, begin);
                 }, 50);
                 // Clear used Bookmarks
-                if (!isNothing(settings$1.bookmarks.filter((el) => el.url === window.location.href))) {
+                if (!isNothing(useSettings().bookmarks.filter((el) => el.url === window.location.href))) {
                     logScript(`Bookmark Removed ${window.location.href}`);
-                    settings$1.bookmarks = settings$1.bookmarks.filter((el) => el.url !== window.location.href);
-                    setValueGM('Bookmarks', JSON.stringify(settings$1.bookmarks));
+                    useSettings().bookmarks = useSettings().bookmarks.filter((el) => el.url !== window.location.href);
+                    setValueGM('Bookmarks', JSON.stringify(useSettings().bookmarks));
                 }
             }
             catch (e) {
@@ -3790,7 +3826,6 @@ ${IconCheck}
     async function formatPage(manga, begin = 0) {
         display(manga, begin);
     }
-
     async function lateStart(site, begin = 1) {
         const manga = await site.run();
         logScript('LateStart');
@@ -3870,13 +3905,12 @@ ${IconCheck}
         if (manga.pages > 0) {
             let beginning = begin;
             if (beginning <= 1) {
-                beginning = settings$1?.bookmarks?.find((b) => b.url === window.location.href)?.page || 1;
+                beginning = useSettings()?.bookmarks?.find((b) => b.url === window.location.href)?.page || 1;
             }
             const style = document.createElement('style');
             style.appendChild(document.createTextNode(sweetalertStyle));
             document.body.appendChild(style);
-            // window.mov = (b: number) => lateStart(site, b || beginning);
-            switch (site.start || settings$1?.loadMode) {
+            switch (site.start || useSettings()?.loadMode) {
                 case 'never':
                     createLateStartButton(site, beginning);
                     break;
@@ -3950,7 +3984,6 @@ ${IconCheck}
     // Script Entry point
     function start(sites) {
         logScript(`Starting ${getInfoGM.script.name} ${getInfoGM.script.version} on ${getBrowser()} with ${getEngine()}`);
-        // window.InfoGM = getInfoGM;
         logScript(`${sites.length} Known Manga Sites, Looking for a match...`);
         const site = sites.find((s) => s.url.test(window.location.href));
         if (site) {
