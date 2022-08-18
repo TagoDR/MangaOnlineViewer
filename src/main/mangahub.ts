@@ -7,6 +7,11 @@ export default {
   category: 'manga',
   waitEle: '#select-chapter',
   async run() {
+    function getCookie(name: string) {
+      const re = new RegExp(`${name}=([^;]+)`);
+      const value = re.exec(document.cookie);
+      return value != null ? decodeURIComponent(value[1]) : null;
+    }
     const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     const slug = W.CURRENT_MANGA_SLUG || window.location.pathname.split('/')[2];
     const number = window.location.pathname.split('/')[3].replace('chapter-', '');
@@ -16,9 +21,12 @@ export default {
       body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
+        'x-mhub-access': getCookie('mhub_access'),
       },
     };
-    const api = await fetch('https://api.mghubcdn.com/graphql', options).then((res) => res.json());
+    const api = await fetch('https://api.mghubcdn.com/graphql', options as any).then((res) =>
+      res.json(),
+    );
     const images = Object.values(JSON.parse(api?.data.chapter.pages.toString()));
     return {
       title: document.querySelector('#mangareader h3')?.textContent?.trim(),
