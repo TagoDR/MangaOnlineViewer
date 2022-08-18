@@ -1,5 +1,5 @@
 import { IManga } from '../../types';
-import settings from '../settings';
+import { useSettings } from '../settings';
 import listPages from './MangaPages';
 import SettingsPanel from './SettingsPanel';
 import KeybindingsPanel from './KeybindingsPanel';
@@ -33,9 +33,9 @@ const listOptions = (times: number, begin: number) =>
 
 const app = (manga: IManga, begin = 1) => `
 <div id='MangaOnlineViewer'
-  class="${settings.colorScheme} ${settings.hidePageControls ? 'hideControls' : ''}"
-  data-theme='${settings.theme}'>
-  <header id="Header" class="${settings.mouseOverMenu ? 'mouseOverMenu' : ''}">
+  class="${useSettings().colorScheme} ${useSettings().hidePageControls ? 'hideControls' : ''}"
+  data-theme='${useSettings().theme}'>
+  <header id="Header" class="${useSettings().mouseOverMenu ? 'mouseOverMenu' : ''}">
     <div id='menu'>
       ${IconMenu2}
     </div>
@@ -77,25 +77,26 @@ const app = (manga: IManga, begin = 1) => `
           ${IconLoader2}
           Download
         </button>
-        <button id='prev' class='prev NavigationControlButton ControlButton' title='Previos Chapter' type='button'
-        onclick="window.location.href='${manga.prev || ''}';">
+        <a class='prev NavigationControlLink' href='${manga.prev || ''}'>
+          <button id='prev' class='prev NavigationControlButton ControlButton' title='Previos Chapter' type='button'>          
           ${IconArrowBigLeft}
           Previous
         </button>
-        <button id='next' class='next NavigationControlButton ControlButton' title='Next Chapter' type='button'
-        onclick="window.location.href='${manga.next || ''}';">
+        </a>        
+        <a class='next NavigationControlLink' href='${manga.next || ''}'>
+        <button id='next' class='next NavigationControlButton ControlButton' title='Next Chapter' type='button'>
           Next
           ${IconArrowBigRight}
         </button>
+        </a>
       </div>
     </nav>
   </header>  
-  <main id='Chapter' class='${settings.fitWidthIfOversize === true ? 'fitWidthIfOversize' : ''} ${
-  settings.viewMode
-}'>
+  <main id='Chapter' class='${useSettings().fitWidthIfOversize ? 'fitWidthIfOversize' : ''}
+      ${useSettings().viewMode}'>
     ${listPages(manga.pages, begin).join('')}
   </main>
-  <nav id='Navigation' class='panel ${settings.showThumbnails ? '' : 'disabled'}'>
+  <nav id='Navigation' class='panel ${useSettings().showThumbnails ? '' : 'disabled'}'>
     <div id='NavigationCounters' class='ControlLabel'>
       ${IconCategory}
       <i>0</i> of <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b> Pages Loaded

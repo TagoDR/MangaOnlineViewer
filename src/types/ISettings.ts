@@ -8,16 +8,19 @@ export interface ITheme {
     variant: 'filled' | 'outline' | 'light';
   };
 }
-type Shade = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+export type Shade = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+export type ViewMode = 'WebComic' | 'FluidLTR' | 'FluidRTL' | 'Vertical';
+export type LoadMode = 'wait' | 'always' | 'never';
+export type ColorScheme = 'dark' | 'light';
 
 export interface ISettings {
-  colorScheme: 'dark' | 'light';
+  colorScheme: ColorScheme;
   theme: string;
   customTheme: string;
   themeShade: Shade;
-  viewMode: 'WebComic' | 'FluidLTR' | 'FluidRTL' | '';
+  viewMode: ViewMode;
   bookmarks: IBookmark[];
-  loadMode: 'wait' | 'always' | 'never';
+  loadMode: LoadMode;
   fitWidthIfOversize?: boolean;
   showThumbnails?: boolean;
   downloadZip?: boolean;

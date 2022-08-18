@@ -22,9 +22,7 @@ export default {
         placeholder(985, 1400, '#7A1420'),
         placeholder(985, 1400, '#0F5B30'),
         placeholder(1970, 1400, '#806D15'),
-        ...Array(num - 5)
-          .fill(0)
-          .map(randomPlaceholder),
+        ...Array(num).fill(0).map(randomPlaceholder),
       ],
     };
   },

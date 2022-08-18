@@ -5,7 +5,7 @@ import { logScript, setValueGM } from '../utils/tampermonkey';
 import { controls, setKeyDownEvents } from './events';
 import { loadManga } from './page';
 import { isNothing } from '../utils/checks';
-import settings from './settings';
+import { useSettings } from './settings';
 
 export default function display(manga: IManga, begin: number) {
   window.stop();
@@ -16,7 +16,6 @@ export default function display(manga: IManga, begin: number) {
   document.body.innerHTML = body(manga, begin);
   document.body.className = '';
   document.body.removeAttribute('style');
-  // document.documentElement.innerHTML = reader(manga, begin);
   logScript('Rebuilding Site');
   setTimeout(() => {
     try {
@@ -27,10 +26,12 @@ export default function display(manga: IManga, begin: number) {
         loadManga(manga, begin);
       }, 50);
       // Clear used Bookmarks
-      if (!isNothing(settings.bookmarks.filter((el) => el.url === window.location.href))) {
+      if (!isNothing(useSettings().bookmarks.filter((el) => el.url === window.location.href))) {
         logScript(`Bookmark Removed ${window.location.href}`);
-        settings.bookmarks = settings.bookmarks.filter((el) => el.url !== window.location.href);
-        setValueGM('Bookmarks', JSON.stringify(settings.bookmarks));
+        useSettings().bookmarks = useSettings().bookmarks.filter(
+          (el) => el.url !== window.location.href,
+        );
+        setValueGM('Bookmarks', JSON.stringify(useSettings().bookmarks));
       }
     } catch (e) {
       logScript(e);

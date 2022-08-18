@@ -111,7 +111,7 @@ img {
   justify-self: flex-end;
 }
 
-#MangaOnlineViewer #Chapter:not(.WebComic,.FluidLTR,.FluidRTL) .PageContent {
+#MangaOnlineViewer #Chapter.Vertical .PageContent {
   margin-bottom: 15px;
 }
 
@@ -502,9 +502,9 @@ img {
   height: 1rem;
 }
 
-#MangaOnlineViewer .ChapterControl .NavigationControlButton[onclick="window.location.href='#';"],
-#MangaOnlineViewer .ChapterControl .NavigationControlButton[onclick="window.location.href='';"],
-#MangaOnlineViewer .ChapterControl .NavigationControlButton[onclick="window.location.href='undefined';"] {
+#MangaOnlineViewer .ChapterControl .NavigationControlLink[href='#'],
+#MangaOnlineViewer .ChapterControl .NavigationControlLink[href=''],
+#MangaOnlineViewer .ChapterControl .NavigationControlLink[href='undefined'] {
   visibility: hidden;
 }
 

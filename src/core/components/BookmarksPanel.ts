@@ -1,10 +1,10 @@
 import { IconExternalLink, IconTrash, IconX } from './icons';
-import settings from '../settings';
+import { useSettings } from '../settings';
 import { isEmpty } from '../../utils/checks';
 
 const listBookmarks = () => {
-  if (isEmpty(settings.bookmarks)) return ['List Empty'];
-  return settings.bookmarks.map(
+  if (isEmpty(useSettings().bookmarks)) return ['List Empty'];
+  return useSettings().bookmarks.map(
     (mark, index) => `
 <div id='Bookmark${index + 1}' class='BookmarkItem'>
   <span class='bookmarkData bookmarkDate'>

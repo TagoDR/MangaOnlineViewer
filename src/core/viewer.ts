@@ -2,9 +2,13 @@ import Swal, { SweetAlertOptions } from 'sweetalert2';
 import { getBrowser, getEngine, getInfoGM, logScript } from '../utils/tampermonkey';
 import { IManga, ISite } from '../types';
 import { isNothing } from '../utils/checks';
-import formatPage from './format';
-import settings from './settings';
+import display from './display';
+import { useSettings } from './settings';
 import sweetalertStyle from './components/externalStyle';
+
+async function formatPage(manga: IManga, begin = 0) {
+  display(manga, begin);
+}
 
 async function lateStart(site: ISite, begin = 1) {
   const manga = await site.run();
@@ -84,13 +88,12 @@ function preparePage(site: ISite, manga: IManga, begin = 0) {
   if (manga.pages > 0) {
     let beginning = begin;
     if (beginning <= 1) {
-      beginning = settings?.bookmarks?.find((b) => b.url === window.location.href)?.page || 1;
+      beginning = useSettings()?.bookmarks?.find((b) => b.url === window.location.href)?.page || 1;
     }
     const style = document.createElement('style');
     style.appendChild(document.createTextNode(sweetalertStyle));
     document.body.appendChild(style);
-    // window.mov = (b: number) => lateStart(site, b || beginning);
-    switch (site.start || settings?.loadMode) {
+    switch (site.start || useSettings()?.loadMode) {
       case 'never':
         createLateStartButton(site, beginning);
         break;
@@ -168,9 +171,7 @@ function start(sites: ISite[]) {
     `Starting ${getInfoGM.script.name} ${
       getInfoGM.script.version
     } on ${getBrowser()} with ${getEngine()}`,
-    // getInfoGM,
   );
-  // window.InfoGM = getInfoGM;
   logScript(`${sites.length} Known Manga Sites, Looking for a match...`);
 
   const site = sites.find((s: ISite) => s.url.test(window.location.href));

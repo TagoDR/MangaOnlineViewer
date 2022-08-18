@@ -1,7 +1,7 @@
 import NProgress from 'nprogress';
 import imagesLoaded from 'imagesloaded';
 import { logScript } from '../utils/tampermonkey';
-import settings from './settings';
+import { useSettings } from './settings';
 import {
   IManga,
   IMangaImages,
@@ -15,7 +15,7 @@ import lazyLoad from '../utils/lazyLoad';
 import sequence from '../utils/sequence';
 
 // After pages load apply default Zoom
-function applyZoom(pages: string = '.PageContent img', zoom = settings.zoom) {
+function applyZoom(pages: string = '.PageContent img', zoom = useSettings().zoom) {
   const pg = [...document.querySelectorAll<HTMLImageElement>(pages)];
   pg.forEach((value) => {
     const img = value;
@@ -48,10 +48,10 @@ function reloadImage(img: HTMLImageElement) {
 
 function onImagesDone() {
   logScript('Images Loading Complete');
-  if (!settings.lazyLoadImages) {
+  if (!useSettings().lazyLoadImages) {
     document.querySelector('.download')?.setAttribute('href', '#download');
     logScript('Download Available');
-    if (settings.downloadZip) {
+    if (useSettings().downloadZip) {
       document.querySelector('#blob')?.dispatchEvent(new Event('click'));
     }
   }
@@ -77,7 +77,7 @@ function updateProgress() {
 
 // change class if the image is loaded or broken
 function onImagesProgress(
-  instance: ImagesLoaded.ImagesLoaded,
+  _instance: ImagesLoaded.ImagesLoaded,
   image?: {
     img: HTMLImageElement;
     isLoaded: boolean;
@@ -118,13 +118,13 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
   const src = normalizeUrl(imageSrc);
   const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
   if (img) {
-    if (!settings.lazyLoadImages || position <= settings.lazyStart) {
+    if (!useSettings().lazyLoadImages || position <= useSettings().lazyStart) {
       setTimeout(() => {
         img.setAttribute('src', src);
         const imgLoad = imagesLoaded(img.parentElement!);
         imgLoad.on('progress', onImagesProgress);
         logScript('Loaded Image:', index, 'Source:', src);
-      }, (manga.timer || settings.throttlePageLoad) * position);
+      }, (manga.timer || useSettings().throttlePageLoad) * position);
     } else {
       img.setAttribute('data-src', src);
 
@@ -155,10 +155,10 @@ function findPage(manga: IMangaPages, index: number, pageUrl: string, lazy: bool
 async function addPage(manga: IMangaPages, index: number, pageUrl: string, position: number) {
   const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
   if (img) {
-    if (!settings.lazyLoadImages || position <= settings.lazyStart) {
+    if (!useSettings().lazyLoadImages || position <= useSettings().lazyStart) {
       setTimeout(() => {
         findPage(manga, index, pageUrl, false)();
-      }, (manga.timer || settings.throttlePageLoad) * position);
+      }, (manga.timer || useSettings().throttlePageLoad) * position);
     } else {
       img.setAttribute(
         'data-src',
@@ -185,11 +185,11 @@ function loadMangaImages(begin: number, manga: IMangaImages) {
 
 // Entry point for loading hte Manga pages
 function loadManga(manga: IManga, begin = 1) {
-  settings.lazyLoadImages = manga.lazy || settings.lazyLoadImages;
+  useSettings().lazyLoadImages = manga.lazy || useSettings().lazyLoadImages;
   logScript('Loading Images');
-  logScript(`Intervals: ${manga.timer || settings.throttlePageLoad || 'Default(1000)'}`);
-  logScript(`Lazy: ${settings.lazyLoadImages}, Starting from: ${settings.lazyStart}`);
-  if (settings.lazyLoadImages) {
+  logScript(`Intervals: ${manga.timer || useSettings().throttlePageLoad || 'Default(1000)'}`);
+  logScript(`Lazy: ${useSettings().lazyLoadImages}, Starting from: ${useSettings().lazyStart}`);
+  if (useSettings().lazyLoadImages) {
     logScript('Download may not work with Lazy Loading Images');
   }
   if (isImagesManga(manga)) {
@@ -211,7 +211,7 @@ function loadManga(manga: IManga, begin = 1) {
           img,
           lazyAttr,
         }),
-      wait: settings.throttlePageLoad,
+      wait: useSettings().throttlePageLoad,
     });
   }
 }

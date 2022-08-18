@@ -1,5 +1,5 @@
 import { themesSelector } from '../themes';
-import settings from '../settings';
+import { useSettings } from '../settings';
 import { IconCheck, IconMoon, IconPalette, IconSun, IconX } from './icons';
 // language=html
 const SettingsPanel = `
@@ -18,7 +18,7 @@ const SettingsPanel = `
 <!-- =========================================================================================== -->
     <div class='ControlLabel ThemeSelector'>Theme:
       <span class='custom ThemeRadio 
-            ${settings.theme === 'custom' ? 'selected' : ''}'
+            ${useSettings().theme === 'custom' ? 'selected' : ''}'
             title='custom'>
         ${IconPalette}
         ${IconCheck}
@@ -27,20 +27,20 @@ const SettingsPanel = `
     </div>
 <!-- =========================================================================================== -->
     <div id='Hue' class='ControlLabel CustomTheme ControlLabelItem 
-          ${settings.theme.startsWith('custom') ? 'show' : ''}'>
+          ${useSettings().theme.startsWith('custom') ? 'show' : ''}'>
           Theme Primary Color Hue:<input id='CustomThemeHue' type='color' value='${
-            settings.customTheme
+            useSettings().customTheme
           }' class='colorpicker CustomTheme'/>
     </div>
 <!-- =========================================================================================== -->
     <div id='Shade' class='ControlLabel CustomTheme ControlLabelItem
-          ${settings.theme.startsWith('custom') ? '' : 'show'}'>
+          ${useSettings().theme.startsWith('custom') ? '' : 'show'}'>
       <span>
         Theme Primary Color Shade:
-        <output id='themeShadeVal' for='themeShade'>${settings.themeShade}</output>
+        <output id='themeShadeVal' for='themeShade'>${useSettings().themeShade}</output>
       </span>
       <input type='range'
-            value='${settings.themeShade}' 
+            value='${useSettings().themeShade}' 
             name='ThemeShade' 
             id='ThemeShade' 
             min='100' 
@@ -54,13 +54,13 @@ const SettingsPanel = `
   <div class='ControlLabel loadMode'>Default Load Mode:
     <select id='loadMode'>
       <option value='wait' ${
-        settings.loadMode === 'wait' ? 'selected' : ''
+        useSettings().loadMode === 'wait' ? 'selected' : ''
       }>Normal(Wait 3 sec)</option>
       <option value='always' ${
-        settings.loadMode === 'always' ? 'selected' : ''
+        useSettings().loadMode === 'always' ? 'selected' : ''
       }>Always(Immediately)</option>
       <option value='never' ${
-        settings.loadMode === 'never' ? 'selected' : ''
+        useSettings().loadMode === 'never' ? 'selected' : ''
       }>Never(Manually)</option>
     </select>
   </div>
@@ -68,42 +68,44 @@ const SettingsPanel = `
   <div class='ControlLabel PagesPerSecond'>Pages/Second:
     <select id='PagesPerSecond'>
       <option value='3000' ${
-        settings.throttlePageLoad === 3000 ? 'selected' : ''
+        useSettings().throttlePageLoad === 3000 ? 'selected' : ''
       }>0.3(Slow)</option>
-      <option value='2000' ${settings.throttlePageLoad === 2000 ? 'selected' : ''}>0.5</option>
+      <option value='2000' ${useSettings().throttlePageLoad === 2000 ? 'selected' : ''}>0.5</option>
       <option value='1000' ${
-        settings.throttlePageLoad === 1000 ? 'selected' : ''
+        useSettings().throttlePageLoad === 1000 ? 'selected' : ''
       }>01(Normal)</option>
-      <option value='500' ${settings.throttlePageLoad === 500 ? 'selected' : ''}>02</option>
-      <option value='250' ${settings.throttlePageLoad === 250 ? 'selected' : ''}>04(Fast)</option>
-      <option value='125' ${settings.throttlePageLoad === 125 ? 'selected' : ''}>08</option>
+      <option value='500' ${useSettings().throttlePageLoad === 500 ? 'selected' : ''}>02</option>
+      <option value='250' ${
+        useSettings().throttlePageLoad === 250 ? 'selected' : ''
+      }>04(Fast)</option>
+      <option value='125' ${useSettings().throttlePageLoad === 125 ? 'selected' : ''}>08</option>
       <option value='100' ${
-        settings.throttlePageLoad === 100 ? 'selected' : ''
+        useSettings().throttlePageLoad === 100 ? 'selected' : ''
       }>10(Extreme)</option>
     </select>
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel DefaultZoom'>Default Zoom:
     <select id='DefaultZoom'>
-      <option value='50' ${settings.zoom === 50 ? 'selected' : ''}>50%</option>
-      <option value='75' ${settings.zoom === 75 ? 'selected' : ''}>75%</option>
-      <option value='100' ${settings.zoom === 100 ? 'selected' : ''}>100%</option>
-      <option value='125' ${settings.zoom === 125 ? 'selected' : ''}>125%</option>
-      <option value='150' ${settings.zoom === 150 ? 'selected' : ''}>150%</option>
-      <option value='175' ${settings.zoom === 175 ? 'selected' : ''}>175%</option>
-      <option value='200' ${settings.zoom === 200 ? 'selected' : ''}>200%</option>
-      <option value='1000' ${settings.zoom === 1000 ? 'selected' : ''}>Fit Width</option>
-      <option value='-1000' ${settings.zoom === -1000 ? 'selected' : ''}>Fit Height</option>
+      <option value='50' ${useSettings().zoom === 50 ? 'selected' : ''}>50%</option>
+      <option value='75' ${useSettings().zoom === 75 ? 'selected' : ''}>75%</option>
+      <option value='100' ${useSettings().zoom === 100 ? 'selected' : ''}>100%</option>
+      <option value='125' ${useSettings().zoom === 125 ? 'selected' : ''}>125%</option>
+      <option value='150' ${useSettings().zoom === 150 ? 'selected' : ''}>150%</option>
+      <option value='175' ${useSettings().zoom === 175 ? 'selected' : ''}>175%</option>
+      <option value='200' ${useSettings().zoom === 200 ? 'selected' : ''}>200%</option>
+      <option value='1000' ${useSettings().zoom === 1000 ? 'selected' : ''}>Fit Width</option>
+      <option value='-1000' ${useSettings().zoom === -1000 ? 'selected' : ''}>Fit Height</option>
     </select>
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel minZoom'>
     <span>
       Minimun Zoom relative to the width of screen (between 30 and 100):
-      <output id='minZoomVal' for='minZoom'>${settings.minZoom}</output>
+      <output id='minZoomVal' for='minZoom'>${useSettings().minZoom}</output>
     </span>
     <input type='range' 
-          value='${settings.minZoom}' 
+          value='${useSettings().minZoom}' 
           name='minZoom' 
           id='minZoom' 
           min='30' 
@@ -116,10 +118,10 @@ const SettingsPanel = `
   <div class='ControlLabel zoomStep'>
     <span>
       Zoom Change Step (between 5 and 50):
-      <output id='zoomStepVal' for='zoomStep'>${settings.zoomStep}</output>
+      <output id='zoomStepVal' for='zoomStep'>${useSettings().zoomStep}</output>
     </span>
     <input type='range' 
-          value='${settings.zoomStep}' 
+          value='${useSettings().zoomStep}' 
           name='zoomStep' 
           id='zoomStep' 
           min='5' 
@@ -131,16 +133,16 @@ const SettingsPanel = `
 <!-- =========================================================================================== -->
   <div class='ControlLabel viewMode'>Default View Mode:
     <select id='viewMode'>
-      <option value='' ${settings.viewMode === '' ? 'selected' : ''}>
+      <option value='Vertical' ${useSettings().viewMode === 'Vertical' ? 'selected' : ''}>
       Vertical
       </option>
-      <option value='WebComic' ${settings.viewMode === 'WebComic' ? 'selected' : ''}>
+      <option value='WebComic' ${useSettings().viewMode === 'WebComic' ? 'selected' : ''}>
         WebComic
       </option>
-      <option value='FluidLTR' ${settings.viewMode === 'FluidLTR' ? 'selected' : ''}>
+      <option value='FluidLTR' ${useSettings().viewMode === 'FluidLTR' ? 'selected' : ''}>
       Left to Right
       </option>
-      <option value='FluidRTL' ${settings.viewMode === 'FluidRTL' ? 'selected' : ''}>
+      <option value='FluidRTL' ${useSettings().viewMode === 'FluidRTL' ? 'selected' : ''}>
       Right to Left
       </option>
     </select>
@@ -148,48 +150,48 @@ const SettingsPanel = `
 <!-- =========================================================================================== -->
   <div class='ControlLabel fitIfOversize'>Fit Width if Oversize:
     <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${
-      settings.fitWidthIfOversize ? 'checked' : ''
+      useSettings().fitWidthIfOversize ? 'checked' : ''
     }/>
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel showThumbnails'>Show Thumbnails:
     <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${
-      settings.showThumbnails ? 'checked' : ''
+      useSettings().showThumbnails ? 'checked' : ''
     }/>
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel lazyLoadImages'>Lazy Load Images:
     <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${
-      settings.lazyLoadImages ? 'checked' : ''
+      useSettings().lazyLoadImages ? 'checked' : ''
     }/>
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel lazyStart'>
     <span>
       Lazy Start From Page (between 5 and 100):
-      <output id='lazyStartVal' for='lazyStart'>${settings.lazyStart}</output>
+      <output id='lazyStartVal' for='lazyStart'>${useSettings().lazyStart}</output>
     </span>
     <input type='range' value='${
-      settings.lazyStart
+      useSettings().lazyStart
     }' name='lazyStart' id='lazyStart' min='5' max='100' step='5' oninput='lazyStartVal.value = this.value'/>
     
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel downloadZip'>Download Images as Zip Automatically:
     <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${
-      settings.downloadZip ? 'checked' : ''
+      useSettings().downloadZip ? 'checked' : ''
     }/>
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel hidePageControls'>Always Hide Page Controls:
     <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${
-      settings.hidePageControls ? 'checked' : ''
+      useSettings().hidePageControls ? 'checked' : ''
     }/>
   </div>
 <!-- =========================================================================================== -->
   <div class='ControlLabel mouseOverMenu'>Toggle Sticky Header / MouseOverMenu:
     <input type='checkbox' value='false' name='mouseOverMenu' id='mouseOverMenu' ${
-      settings.mouseOverMenu ? 'checked' : ''
+      useSettings().mouseOverMenu ? 'checked' : ''
     }/>
   </div>
 </div>

@@ -1,6 +1,8 @@
 /**
  * Interface for the settings
  */
+import _ from 'lodash';
+
 interface ILazyOptions {
   threshold: number;
   throttle: number;
@@ -30,6 +32,7 @@ interface LazyItem {
  * List of elements that will be lazy loaded
  */
 let listElements: LazyItem[] = [];
+let setup = false;
 
 /**
  * Check if the image ins nearing the viewport, so it needs to load.
@@ -65,30 +68,9 @@ function executeCheck() {
 }
 
 /**
- * Throttle controller
- */
-let wait: boolean = false;
-/**
  * Function responsible for observing the screen move/change
  */
-function observerEvent() {
-  if (listElements.length === 0) {
-    window.removeEventListener('scroll', observerEvent);
-    window.removeEventListener('touchmove', observerEvent);
-    window.removeEventListener('resize', observerEvent);
-    // console.info('All items lazy loaded');
-    return;
-  }
-  if (wait) {
-    return;
-  }
-  executeCheck();
-
-  wait = true;
-  setTimeout(() => {
-    wait = false;
-  }, settings.throttle);
-}
+const observerEvent = _.throttle(executeCheck, settings.throttle);
 
 /**
  * Simple lazy loading for images.
@@ -98,8 +80,7 @@ function observerEvent() {
  * @param callback
  */
 function lazyLoad(element: HTMLImageElement, callback: (element: HTMLImageElement) => void): void {
-  if (listElements.length === 0) {
-    // console.info('Initializing lazy load');
+  if (!setup) {
     window.addEventListener('scroll', observerEvent, {
       passive: true,
     });
@@ -109,6 +90,7 @@ function lazyLoad(element: HTMLImageElement, callback: (element: HTMLImageElemen
     window.addEventListener('resize', observerEvent, {
       passive: true,
     });
+    setup = true;
   }
   listElements.push({ element, callback });
   observerEvent();

@@ -49,7 +49,6 @@ const getInfoGM =
 // Replacement function for GM_getValue allowing for debugging in console
 function getValueGM(name: string, defaultValue: any = null): any {
   if (typeof GM_getValue !== 'undefined') {
-    // logScript('Getting: ', name, ' = ', defaultValue);
     return GM_getValue(name, defaultValue);
   }
   logScript('Fake Getting: ', name, ' = ', defaultValue);

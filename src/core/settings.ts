@@ -1,27 +1,32 @@
-import { getValueGM, isMobile, setValueGM } from '../utils/tampermonkey';
-import { ISettings, IBookmark } from '../types';
+import _ from 'lodash';
+import { getSettings, isMobile, logScript, setSettings } from '../utils/tampermonkey';
+import { ISettings } from '../types';
+import diffObj from '../utils/diffObj';
+
+export const defaultSettings: ISettings = {
+  theme: 'darkblue',
+  customTheme: '#263e3a',
+  themeShade: 600,
+  colorScheme: 'dark',
+  fitWidthIfOversize: true,
+  showThumbnails: true,
+  downloadZip: false,
+  throttlePageLoad: 1000,
+  zoom: 100,
+  zoomStep: 25,
+  minZoom: 50,
+  loadMode: 'wait',
+  viewMode: 'WebComic',
+  bookmarks: [],
+  lazyLoadImages: false,
+  lazyStart: 50,
+  hidePageControls: false,
+  mouseOverMenu: true,
+};
 
 // Configuration
-const settings: ISettings = {
-  theme: getValueGM('Theme', 'darkblue'),
-  customTheme: getValueGM('CustomTheme', '#263e3a'),
-  themeShade: getValueGM('ThemeShade', 600),
-  colorScheme: getValueGM('ColorScheme', 'dark'),
-  fitWidthIfOversize: getValueGM('FitWidthIfOversize', true),
-  showThumbnails: getValueGM('ShowThumbnails', true),
-  downloadZip: getValueGM('DownloadZip', false),
-  throttlePageLoad: getValueGM('Timer', 1000),
-  zoom: getValueGM('Zoom', 100),
-  zoomStep: getValueGM('ZoomStep', 25),
-  minZoom: getValueGM('MinZoom', 50),
-  loadMode: getValueGM('LoadMode', 'wait'),
-  viewMode: getValueGM('ViewMode', 'WebComic'),
-  bookmarks: JSON.parse(getValueGM('Bookmarks', '[]')) as IBookmark[],
-  lazyLoadImages: getValueGM('LazyLoadImages', false),
-  lazyStart: getValueGM('LazyStart', 50),
-  hidePageControls: getValueGM('HidePageControls', false),
-  mouseOverMenu: getValueGM('MouseOverMenu', true),
-};
+let settings: ISettings = _.defaultsDeep(getSettings(defaultSettings), defaultSettings);
+
 // Force Settings for mobile
 if (isMobile) {
   settings.lazyLoadImages = true;
@@ -29,9 +34,27 @@ if (isMobile) {
   settings.showThumbnails = false;
   settings.viewMode = 'WebComic';
 }
+
+type SettingsKey = keyof typeof settings;
+export function useSettingsValue(key: SettingsKey) {
+  return settings[key];
+}
+
+export function useSettings() {
+  return settings;
+}
+export function updateSettings(newValue: Partial<ISettings>) {
+  logScript(JSON.stringify(newValue));
+  settings = { ...settings, ...newValue };
+  setSettings(diffObj(settings, defaultSettings));
+}
+
+export function resetSettings() {
+  updateSettings(defaultSettings);
+}
+
 // Clear old Bookmarks
 const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // year
-settings.bookmarks = settings.bookmarks.filter((el) => Date.now() - el.date < bookmarkTimeLimit);
-setValueGM('Bookmarks', JSON.stringify(settings.bookmarks));
-
-export default settings;
+updateSettings({
+  bookmarks: settings.bookmarks.filter((el) => Date.now() - el.date < bookmarkTimeLimit),
+});
