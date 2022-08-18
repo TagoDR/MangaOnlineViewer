@@ -1145,6 +1145,16 @@
         console.log('MangaOnlineViewer: ', ...text);
         return text;
     }
+    // Replacement function for GM_listValues allowing for debugging in console
+    function getListGM() {
+        return typeof GM_listValues !== 'undefined' ? GM_listValues() : [];
+    }
+    // Replacement function for GM_listValues allowing for debugging in console
+    function removeValueGM(name) {
+        return typeof GM_deleteValue !== 'undefined'
+            ? GM_deleteValue(name)
+            : logScript('Removing: ', name);
+    }
     // Replacement function for GM_info allowing for debugging in console
     const getInfoGM = typeof GM_info !== 'undefined'
         ? GM_info
@@ -2712,6 +2722,7 @@ img {
         setSettings(diffObj(settings$1, defaultSettings));
     }
     function resetSettings() {
+        getListGM().forEach((setting) => removeValueGM(setting));
         updateSettings(defaultSettings);
     }
     // Clear old Bookmarks

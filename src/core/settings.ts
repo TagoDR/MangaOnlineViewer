@@ -1,5 +1,12 @@
 import _ from 'lodash';
-import { getSettings, isMobile, logScript, setSettings } from '../utils/tampermonkey';
+import {
+  getListGM,
+  getSettings,
+  isMobile,
+  logScript,
+  removeValueGM,
+  setSettings,
+} from '../utils/tampermonkey';
 import { ISettings } from '../types';
 import diffObj from '../utils/diffObj';
 
@@ -50,6 +57,7 @@ export function updateSettings(newValue: Partial<ISettings>) {
 }
 
 export function resetSettings() {
+  getListGM().forEach((setting) => removeValueGM(setting));
   updateSettings(defaultSettings);
 }
 
