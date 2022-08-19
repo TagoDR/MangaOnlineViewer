@@ -90,24 +90,37 @@ img {
   min-width: 225px;
 }
 
-#MangaOnlineViewer #Chapter.DoublePage {
+#MangaOnlineViewer #Chapter.FluidLTR {
+  direction: ltr;
+}
+
+#MangaOnlineViewer #Chapter.FluidRTL {
+  direction: rtl;
+}
+
+#MangaOnlineViewer #Chapter.FluidLTR,
+#MangaOnlineViewer #Chapter.FluidRTL {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
 
-#MangaOnlineViewer #Chapter.DoublePage .PageImg {
+#MangaOnlineViewer #Chapter.FluidLTR .PageImg,
+#MangaOnlineViewer #Chapter.FluidRTL .PageImg {
   min-width: unset;
 }
 
-#MangaOnlineViewer #Chapter.DoublePage .MangaPage.DoublePage {
+#MangaOnlineViewer #Chapter.FluidLTR .MangaPage.DoublePage,
+#MangaOnlineViewer #Chapter.FluidRTL .MangaPage.DoublePage {
   grid-column: span 2;
 }
 
-#MangaOnlineViewer #Chapter.DoublePage .MangaPage:not(.DoublePage):nth-child(2n) {
+#MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n),
+#MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n) {
   justify-self: flex-start;
 }
 
-#MangaOnlineViewer #Chapter.DoublePage .MangaPage:not(.DoublePage):nth-child(2n-1) {
+#MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n-1),
+#MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n-1) {
   justify-self: flex-end;
 }
 
@@ -118,14 +131,6 @@ img {
 #MangaOnlineViewer #Chapter.FluidLTR .MangaPage,
 #MangaOnlineViewer #Chapter.FluidRTL .MangaPage {
   width: auto;
-}
-
-#MangaOnlineViewer #Chapter.FluidLTR {
-  direction: ltr;
-}
-
-#MangaOnlineViewer #Chapter.FluidRTL {
-  direction: rtl;
 }
 
 #MangaOnlineViewer #Chapter.FluidLTR .ZoomWidth .icon-tabler,
