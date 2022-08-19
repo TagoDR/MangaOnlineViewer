@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno, vercomicsporno, xyzcomics
-// @version 2022.08.18
+// @version 2022.08.19
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -1518,24 +1518,37 @@ img {
   min-width: 225px;
 }
 
-#MangaOnlineViewer #Chapter.DoublePage {
+#MangaOnlineViewer #Chapter.FluidLTR {
+  direction: ltr;
+}
+
+#MangaOnlineViewer #Chapter.FluidRTL {
+  direction: rtl;
+}
+
+#MangaOnlineViewer #Chapter.FluidLTR,
+#MangaOnlineViewer #Chapter.FluidRTL {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
 
-#MangaOnlineViewer #Chapter.DoublePage .PageImg {
+#MangaOnlineViewer #Chapter.FluidLTR .PageImg,
+#MangaOnlineViewer #Chapter.FluidRTL .PageImg {
   min-width: unset;
 }
 
-#MangaOnlineViewer #Chapter.DoublePage .MangaPage.DoublePage {
+#MangaOnlineViewer #Chapter.FluidLTR .MangaPage.DoublePage,
+#MangaOnlineViewer #Chapter.FluidRTL .MangaPage.DoublePage {
   grid-column: span 2;
 }
 
-#MangaOnlineViewer #Chapter.DoublePage .MangaPage:not(.DoublePage):nth-child(2n) {
+#MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n),
+#MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n) {
   justify-self: flex-start;
 }
 
-#MangaOnlineViewer #Chapter.DoublePage .MangaPage:not(.DoublePage):nth-child(2n-1) {
+#MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n-1),
+#MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n-1) {
   justify-self: flex-end;
 }
 
@@ -1546,14 +1559,6 @@ img {
 #MangaOnlineViewer #Chapter.FluidLTR .MangaPage,
 #MangaOnlineViewer #Chapter.FluidRTL .MangaPage {
   width: auto;
-}
-
-#MangaOnlineViewer #Chapter.FluidLTR {
-  direction: ltr;
-}
-
-#MangaOnlineViewer #Chapter.FluidRTL {
-  direction: rtl;
 }
 
 #MangaOnlineViewer #Chapter.FluidLTR .ZoomWidth .icon-tabler,
@@ -3226,6 +3231,14 @@ ${IconCheck}
     function scrollToElement(ele) {
         window.scroll(0, ele?.offsetTop || 0);
     }
+    // Update current View mode
+    function updateViewMode(mode) {
+        document.querySelector('#Chapter')?.classList.remove('Vertical');
+        document.querySelector('#Chapter')?.classList.remove('WebComic');
+        document.querySelector('#Chapter')?.classList.remove('FluidLTR');
+        document.querySelector('#Chapter')?.classList.remove('FluidRTL');
+        document.querySelector('#Chapter')?.classList.add(mode);
+    }
     // Clean key press configurations and set some when specified
     function setKeyDownEvents() {
         document.onkeydown = null;
@@ -3447,41 +3460,25 @@ ${IconCheck}
         document.querySelector('#fitHeight')?.addEventListener('click', buttonGlobalFitHeight);
         // WebComic View Mode Button
         function buttonWebComicMode() {
-            document.querySelector('#Chapter')?.classList.remove('Vertical');
-            document.querySelector('#Chapter')?.classList.add('WebComic');
-            document.querySelector('#Chapter')?.classList.remove('FluidLTR');
-            document.querySelector('#Chapter')?.classList.remove('FluidRTL');
-            document.querySelector('#Chapter')?.classList.remove('DoublePage');
+            updateViewMode('WebComic');
             applyZoom();
         }
         document.querySelector('#webComic')?.addEventListener('click', buttonWebComicMode);
         // Fluid LTR View Mode Button
         function buttonLtrMode() {
-            document.querySelector('#Chapter')?.classList.remove('Vertical');
-            document.querySelector('#Chapter')?.classList.remove('WebComic');
-            document.querySelector('#Chapter')?.classList.add('FluidLTR');
-            document.querySelector('#Chapter')?.classList.remove('FluidRTL');
-            document.querySelector('#Chapter')?.classList.add('DoublePage');
+            updateViewMode('FluidLTR');
             applyZoom();
         }
         document.querySelector('#ltrMode')?.addEventListener('click', buttonLtrMode);
         // Fluid RTL View Mode Button
         function buttonRtlMode() {
-            document.querySelector('#Chapter')?.classList.remove('Vertical');
-            document.querySelector('#Chapter')?.classList.remove('WebComic');
-            document.querySelector('#Chapter')?.classList.remove('FluidLTR');
-            document.querySelector('#Chapter')?.classList.add('FluidRTL');
-            document.querySelector('#Chapter')?.classList.add('DoublePage');
+            updateViewMode('FluidRTL');
             applyZoom();
         }
         document.querySelector('#rtlMode')?.addEventListener('click', buttonRtlMode);
         // Vertical View Mode Button
         function buttonVerticalMode() {
-            document.querySelector('#Chapter')?.classList.add('Vertical');
-            document.querySelector('#Chapter')?.classList.remove('WebComic');
-            document.querySelector('#Chapter')?.classList.remove('FluidLTR');
-            document.querySelector('#Chapter')?.classList.remove('FluidRTL');
-            document.querySelector('#Chapter')?.classList.remove('DoublePage');
+            updateViewMode('Vertical');
             applyZoom();
         }
         document.querySelector('#verticalMode')?.addEventListener('click', buttonVerticalMode);
@@ -3494,12 +3491,7 @@ ${IconCheck}
         // Default View mode Selector
         function changeViewMode(event) {
             const mode = event.currentTarget.value;
-            document.querySelector('#Chapter')?.classList.remove('Vertical');
-            document.querySelector('#Chapter')?.classList.remove('WebComic');
-            document.querySelector('#Chapter')?.classList.remove('FluidLTR');
-            document.querySelector('#Chapter')?.classList.remove('FluidRTL');
-            document.querySelector('#Chapter')?.classList.remove('DoublePage');
-            document.querySelector('#Chapter')?.classList.add(mode);
+            updateViewMode(mode);
             updateSettings({ viewMode: mode });
             applyZoom();
         }
