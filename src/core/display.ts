@@ -2,7 +2,7 @@ import { IManga } from '../types/IManga';
 import head from './reader';
 import body from './components/App';
 import { logScript, setValueGM } from '../utils/tampermonkey';
-import { controls, setKeyDownEvents } from './events';
+import events from './events';
 import { loadManga } from './page';
 import { isNothing } from '../utils/checks';
 import { useSettings } from './settings';
@@ -19,8 +19,7 @@ export default function display(manga: IManga, begin: number) {
   logScript('Rebuilding Site');
   setTimeout(() => {
     try {
-      controls();
-      setKeyDownEvents();
+      events();
       setTimeout(() => {
         window.scrollTo(0, 0);
         loadManga(manga, begin);
