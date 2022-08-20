@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Alpha-scans, Batoto, ComiCastle, Dynasty-Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MangaRaw, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, ReaperScans, JaiminisBox, DisasterScans, ManhuaPlus
-// @version 2022.08.19
+// @version 2022.08.20
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -2673,10 +2673,10 @@ img {
      *  But this works, is easier to understand that the "correct"
      *  implementation, and entertained me for a bit. *
      *
-     *  http://stackoverflow.com/questions/31295545/how-to-get-only-the-changed-values-from-two-json-objects
-     *  https://gist.github.com/Yimiprod/7ee176597fef230d1451
-     *  https://stackoverflow.com/questions/8572826/generic-deep-diff-between-two-objects
-     *  https://qastack.com.br/programming/31683075/how-to-do-a-deep-comparison-between-2-objects-with-lodash
+     * http://stackoverflow.com/questions/31295545/how-to-get-only-the-changed-values-from-two-json-objects
+     * https://gist.github.com/Yimiprod/7ee176597fef230d1451
+     * https://stackoverflow.com/questions/8572826/generic-deep-diff-between-two-objects
+     * https://qastack.com.br/programming/31683075/how-to-do-a-deep-comparison-between-2-objects-with-lodash
      * @param  {Object} changed Object compared
      * @param  {Object} original   Object to compare with
      * @return {Object} Return a new object who represent the diff
@@ -2684,7 +2684,10 @@ img {
     const diffObj = (changed, original) => {
         const changes = (object, base) => _.transform(object, (result, value, key) => {
             if (!_.isEqual(value, base[key])) {
-                if (_.isObject(value)) {
+                if (_.isArray(value)) {
+                    result[key] = _.difference(value, base[key]);
+                }
+                else if (_.isObject(value) && _.isObject(base[key])) {
                     result[key] = changes(value, base[key]);
                 }
                 else {
