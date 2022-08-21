@@ -144,13 +144,14 @@ img {
   position: fixed;
   top: 0;
   left: 0;
+  bottom: 0;
   z-index: 1000;
   transition: transform 0.3s ease-in, background-color 0.3s linear;
   transform: translateX(-100%);
   display: flex;
   flex-flow: column;
   gap: 5px;
-  height: 100%;
+  overflow-y: auto;
   max-width: 100vw;
   width: 305px;
 }
@@ -247,8 +248,8 @@ img {
   right: 0;
   transition: transform 0.3s ease-in-out;;
   transform: translateX(100%);
-  /*display: none;*/
   line-height: 1.5em;
+  z-index: 1000;
 }
 
 #MangaOnlineViewer #KeybindingsPanel.visible {
@@ -710,6 +711,10 @@ img {
   }
   
   #MangaOnlineViewer #menu {
+    display: none;
+  }
+
+  #MangaOnlineViewer #GlobalFunctions #keybindings {
     display: none;
   }
 }
