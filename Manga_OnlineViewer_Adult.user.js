@@ -4,8 +4,8 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno, vercomicsporno, xyzcomics
-// @version 2022.08.21
+// @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno, vercomicsporno, wnacg, xyzcomics
+// @version 2022.09.04
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -44,6 +44,7 @@
 // @include /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/\d+/
 // @include /https?:\/\/(www.)?tsumino.com\/Read\/Index\/[0-9]+(\?page=.+)?/
 // @include /https?:\/\/(www.)?(vermangasporno|vercomicsporno).com\/.+/
+// @include /https?:\/\/(www.)?wnacg.com\/photos-view-id-.+/
 // @include /https?:\/\/(www.)?xyzcomics.com\/.+/
 // ==/UserScript==
 
@@ -722,6 +723,28 @@
         },
     };
 
+    // == wnacg ========================================================================================
+    var wnacg = {
+        name: 'wnacg',
+        url: /https?:\/\/(www.)?wnacg.com\/photos-view-id-.+/,
+        homepage: 'https://wnacg.com/',
+        language: ['English', 'Raw', 'Chinese'],
+        category: 'hentai',
+        run() {
+            const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+            const pages = [...document.querySelectorAll('.pageselect option')];
+            return {
+                title: document.querySelector('.bread a:last-of-type')?.textContent?.trim(),
+                series: '#',
+                pages: pages.length,
+                prev: '#',
+                next: '#',
+                listPages: pages.map((page) => W.location.pathname.replace(/\d+/, page.value)),
+                img: '#picarea',
+            };
+        },
+    };
+
     // == xyzcomics ====================================================================================
     var xyzcomics = {
         name: 'xyzcomics',
@@ -768,6 +791,7 @@
         tmohhentai,
         tsumino,
         vercomicsporno,
+        wnacg,
         xyzcomics,
     ];
 
@@ -3186,6 +3210,7 @@ ${IconCheck}
         Language["ENGLISH"] = "English";
         Language["SPANISH"] = "Spanish";
         Language["PORTUGUESE"] = "Portuguese";
+        Language["CHINESE"] = "Chinese";
         Language["RAW"] = "Raw";
     })(Language || (Language = {}));
     var Category;

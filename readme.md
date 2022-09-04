@@ -108,6 +108,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/
 - [Simply-Hentai](https://simply-hentai.com/) _[English]_
 - [Tsumino](http://tsumino.com/) _[English]_
 - [xyzcomics](https://xyzcomics.com/) _[English]_
+- [wnacg](https://wnacg.com/) _[English,Raw,Chinese]_
 - [GNTAI.net](https://www.gntai.net/) _[Spanish]_
 - [TMOHentai](https://tmohentai.com/) _[Spanish]_
 - [vermangasporno](https://vermangasporno.com/) / [vercomicsporno](https://vercomicsporno.com/) _[Spanish]_
