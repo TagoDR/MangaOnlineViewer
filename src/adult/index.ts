@@ -23,6 +23,7 @@ import simplyhentai from './simplyhentai';
 import tmohhentai from './tmohentai';
 import tsumino from './tsumino';
 import vercomicsporno from './vercomicsporno';
+import wnacg from './wnacg';
 import xyzcomics from './xyzcomics';
 import { ISite } from '../types/ISite';
 
@@ -51,6 +52,7 @@ const sites = [
   tmohhentai,
   tsumino,
   vercomicsporno,
+  wnacg,
   xyzcomics,
 ] as ISite[];
 export default sites;

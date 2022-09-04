@@ -4,6 +4,7 @@ export enum Language {
   ENGLISH = 'English',
   SPANISH = 'Spanish',
   PORTUGUESE = 'Portuguese',
+  CHINESE = 'Chinese',
   RAW = 'Raw',
 }
 
