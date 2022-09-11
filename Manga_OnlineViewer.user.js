@@ -2185,10 +2185,6 @@ img {
   background-color: var(--theme-hightlight-color);
 }
 
-#MangaOnlineViewer .PageContent .PageImg.FreeWidth {
-  min-width: unset;
-}
-
 #MangaOnlineViewer .Thumbnail .ThumbnailImg[src=""],
 #MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {
   width: 100px;
@@ -2314,9 +2310,9 @@ img {
   height: 1rem;
 }
 
-#MangaOnlineViewer .ChapterControl .NavigationControlLink[href='#'],
-#MangaOnlineViewer .ChapterControl .NavigationControlLink[href=''],
-#MangaOnlineViewer .ChapterControl .NavigationControlLink[href='undefined'] {
+#MangaOnlineViewer .ChapterControl .NavigationControlButton[value='#'],
+#MangaOnlineViewer .ChapterControl .NavigationControlButton[value=''],
+#MangaOnlineViewer .ChapterControl .NavigationControlButton[value='undefined'] {
   visibility: hidden;
 }
 
@@ -3054,23 +3050,179 @@ ${IconCheck}
 </div>
 `;
 
+    function scrollToElement(ele) {
+        window.scroll(0, ele?.offsetTop || 0);
+    }
+
+    const doClick = (selector) => document.querySelector(selector)?.dispatchEvent(new Event('click'));
+    function doScrolling(sign) {
+        if (useSettings().zoom === -1000) {
+            const currentPage = [...document.querySelectorAll('.MangaPage')].findIndex((element) => element.offsetTop - window.scrollY > 10);
+            scrollToElement(document.querySelector(`#Page${currentPage + sign}`));
+        }
+        else {
+            window.scrollBy({
+                top: (sign * window.innerHeight) / 2,
+                behavior: 'smooth',
+            });
+        }
+    }
+    const keybinds = [
+        {
+            name: 'Scroll Up',
+            keys: ['ArrowUp', 'KeyW', 'Numpad8'],
+            action() {
+                doScrolling(-1);
+            },
+        },
+        {
+            name: 'Scroll Down',
+            keys: ['ArrowDown', 'KeyS', 'Numpad2'],
+            action() {
+                doScrolling(1);
+            },
+        },
+        {
+            name: 'Next Chapter',
+            keys: ['ArrowRight', 'Period', 'KeyD', 'Numpad6'],
+            action() {
+                doClick('#next');
+            },
+        },
+        {
+            name: 'Prev Chapter',
+            keys: ['ArrowLeft', 'Comma', 'KeyA', 'Numpad4'],
+            action() {
+                doClick('#prev');
+            },
+        },
+        {
+            name: 'Zoom Enlarge',
+            keys: ['Equal', 'NumpadAdd', 'KeyE'],
+            action() {
+                doClick('#enlarge');
+            },
+        },
+        {
+            name: 'Zoom Reduce',
+            keys: ['Minus', 'NumpadSubtract', 'KeyQ'],
+            action() {
+                doClick('#reduce');
+            },
+        },
+        {
+            name: 'Zoom Restore',
+            keys: ['Digit9', 'NumpadDivide', 'KeyR'],
+            action() {
+                doClick('#restore');
+            },
+        },
+        {
+            name: 'Zoom Fit Width',
+            keys: ['Digit0', 'NumpadMultiply', 'KeyF'],
+            action() {
+                doClick('#fitWidth');
+            },
+        },
+        {
+            name: 'Zoom Fit Height',
+            keys: ['KeyH'],
+            action() {
+                doClick('#fitHeight');
+            },
+        },
+        {
+            name: 'Open Settings',
+            keys: ['Slash', 'Numpad5', 'KeyX'],
+            action() {
+                doClick('#settings');
+            },
+        },
+        {
+            name: 'View Mode WebComic',
+            keys: ['KeyC'],
+            action() {
+                doClick('#webComic');
+            },
+        },
+        {
+            name: 'View Mode Vertical',
+            keys: ['KeyV'],
+            action() {
+                doClick('#verticalMode');
+            },
+        },
+        {
+            name: 'View Mode Left to Right',
+            keys: ['KeyN'],
+            action() {
+                doClick('#rtlMode');
+            },
+        },
+        {
+            name: 'View Mode Right to Left',
+            keys: ['KeyB'],
+            action() {
+                doClick('#ltrMode');
+            },
+        },
+    ];
+    const usedKeys = keybinds.flatMap((kb) => kb.keys);
+    function processKey(e) {
+        if (e.ctrlKey || e.altKey || e.shiftKey || e.metaKey || !usedKeys.some((i) => i === e.code))
+            return true;
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        const keyBindings = keybinds.find((kb) => kb.keys.some((key) => key === e.code));
+        logScript('Keyboard:', e.code, /* ' Event:', e, */ 'Entry', keyBindings);
+        keyBindings?.action();
+        return false;
+    }
+    // Clean key press configurations and set some when specified
+    function hotkeys() {
+        document.onkeydown = null;
+        document.onkeyup = null;
+        document.onkeypress = null;
+        window.onkeydown = null;
+        window.onkeyup = null;
+        window.onkeypress = null;
+        window.onload = null;
+        document.body.onload = null;
+        document.addEventListener('keydown', processKey);
+    }
+
+    function formatKeyName(key) {
+        let formatted = key;
+        formatted = formatted.replace('Key', '');
+        formatted = formatted.replace('Digit', '');
+        formatted = formatted.replace('Numpad', 'Numpad ');
+        formatted = formatted.replace('Subtract', '-');
+        formatted = formatted.replace('Add', '+');
+        formatted = formatted.replace('Minus', '-');
+        formatted = formatted.replace('Equal', '=');
+        formatted = formatted.replace('Divide', '/');
+        formatted = formatted.replace('Multiply', '*');
+        formatted = formatted.replace('Comma', ',');
+        formatted = formatted.replace('Period', '.');
+        formatted = formatted.replace('Slash', '/');
+        formatted = formatted.replace('ArrowUp', '↑');
+        formatted = formatted.replace('ArrowDown', '↓');
+        formatted = formatted.replace('ArrowRight', '→');
+        formatted = formatted.replace('ArrowLeft', '←');
+        return formatted;
+    }
+    const keybindings = keybinds
+        .map((kb) => {
+        const keys = kb.keys.map((key) => `<kbd class='dark'>${formatKeyName(key)}</kbd>`).join(' / ');
+        return `${keys}: ${kb.name}<br/>`;
+    })
+        .join('\n');
     const KeybindingsPanel = `
 <div id='KeybindingsPanel' class='panel'>
     <h2>Keybindings</h2>
     <button id='CloseKeybindings' class='closeButton'>${IconX}</button>
-    <kbd class='dark'>Numpad 5</kbd>/<kbd class='dark'>/</kbd>: Open Settings<br/>
-    <kbd class='dark'>Numpad +</kbd>/<kbd class='dark'>=</kbd>: Global Zoom in pages (enlarge)<br/>
-    <kbd class='dark'>Numpad -</kbd>/<kbd class='dark'>-</kbd>: Global Zoom out pages (reduce)<br/>
-    <kbd class='dark'>Numpad /</kbd>/<kbd class='dark'>9</kbd>: Global Restore pages to original<br/>
-    <kbd class='dark'>Numpad *</kbd>/<kbd class='dark'>0</kbd>: Global Fit window width<br/>
-    <kbd class='dark'>V</kbd>: Vertical Mode<br/>
-    <kbd class='dark'>C</kbd>: WebComic Mode<br/>
-    <kbd class='dark'>N</kbd>: Right to Left Mode<br/>
-    <kbd class='dark'>B</kbd>: Left to Right Mode<br/>
-    <kbd class='dark'>→</kbd>/<kbd class='dark'>D</kbd>/<kbd class='dark'>Numpad 6</kbd>/<kbd class='dark'>.</kbd> : Next Chapter<br/>
-    <kbd class='dark'>←</kbd>/<kbd class='dark'>A</kbd>/<kbd class='dark'>Numpad 4</kbd>/<kbd class='dark'>,</kbd> : Previous Chapter<br/>
-    <kbd class='dark'>↑</kbd>/<kbd class='dark'>W</kbd>/<kbd class='dark'>Numpad 8</kbd>: Scroll Up<br/>
-    <kbd class='dark'>↓</kbd>/<kbd class='dark'>S</kbd>/<kbd class='dark'>Numpad 2</kbd>: Scroll Down<br/>
+    ${keybindings}
 </div>`;
 
     const ThumbnailsPanel = (times, begin) => indexList(times, begin).map((index) => `
@@ -3168,18 +3320,16 @@ ${IconCheck}
           ${IconLoader2}
           Download
         </button>
-        <a class='prev NavigationControlLink' href='${manga.prev || ''}'>
-          <button id='prev' class='prev NavigationControlButton ControlButton' title='Previos Chapter' type='button'>          
+        <button id='prev' class='NavigationControlButton ControlButton' title='Previos Chapter' type='button' 
+          value='${manga.prev || ''}'>
           ${IconArrowBigLeft}
           Previous
         </button>
-        </a>        
-        <a class='next NavigationControlLink' href='${manga.next || ''}'>
-        <button id='next' class='next NavigationControlButton ControlButton' title='Next Chapter' type='button'>
+        <button id='next' class='NavigationControlButton ControlButton' title='Next Chapter' type='button' 
+          value='${manga.next || ''}'>
           Next
           ${IconArrowBigRight}
         </button>
-        </a>
       </div>
     </nav>
   </header>  
@@ -3362,21 +3512,26 @@ ${IconCheck}
         }
     }
 
+    function startDownload(event) {
+        const button = event.currentTarget;
+        logScript('Downloading Chapter');
+        button.disabled = true;
+        button.classList.add('loading');
+        generateZip();
+    }
+    function globalHideImageControls() {
+        document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
+    }
+    function redirect(event) {
+        const url = event.target.getAttribute('value');
+        if (url)
+            window.location.href = url;
+    }
     function globals() {
-        // Download starter
-        function startDownload(event) {
-            const button = event.currentTarget;
-            logScript('Downloading Chapter');
-            button.disabled = true;
-            button.classList.add('loading');
-            generateZip();
-        }
         document.querySelector('.download')?.addEventListener('click', startDownload);
-        // Show/hide Image Controls Button
-        function globalHideImageControls() {
-            document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
-        }
         document.querySelector('#pageControls')?.addEventListener('click', globalHideImageControls);
+        document.querySelector('#next')?.addEventListener('click', redirect);
+        document.querySelector('#prev')?.addEventListener('click', redirect);
     }
 
     /**
@@ -3410,143 +3565,6 @@ ${IconCheck}
             prevOffset = scrollY;
         }
         window.addEventListener('scroll', _.debounce(toggleScrollDirection, 50));
-    }
-
-    function scrollToElement(ele) {
-        window.scroll(0, ele?.offsetTop || 0);
-    }
-
-    const doClick = (selector) => document.querySelector(selector)?.dispatchEvent(new Event('click'));
-    function processKey(e) {
-        const a = e.code;
-        const usedKeys = [
-            'KeyW',
-            'Numpad8',
-            'KeyS',
-            'Numpad2',
-            'ArrowRight',
-            'Period',
-            'KeyD',
-            'Numpad6',
-            'ArrowLeft',
-            'Comma',
-            'KeyA',
-            'Numpad4',
-            'Equal',
-            'NumpadAdd',
-            'KeyE',
-            'Minus',
-            'NumpadSubtract',
-            'KeyQ',
-            'Digit9',
-            'NumpadDivide',
-            'KeyR',
-            'Digit0',
-            'NumpadMultiply',
-            'KeyF',
-            'Slash',
-            'Numpad5',
-            'KeyX',
-            'KeyC',
-            'KeyV',
-            'KeyB',
-            'KeyN',
-        ];
-        if (!e.ctrlKey && !e.altKey && !e.shiftKey && !e.metaKey && usedKeys.some((i) => i === a)) {
-            e.preventDefault();
-            e.stopPropagation();
-            e.stopImmediatePropagation();
-            logScript('Keyboard:', a, ' Event:', e);
-            switch (a) {
-                case 'ArrowUp':
-                case 'KeyW':
-                case 'Numpad8':
-                    if (useSettings().zoom === -1000) {
-                        const currentPage = [...document.querySelectorAll('.MangaPage')].findIndex((element) => element.offsetTop - window.scrollY > 10);
-                        scrollToElement(document.querySelector(`#Page${currentPage - 1}`));
-                    }
-                    else {
-                        window.scrollBy({
-                            top: -window.innerHeight / 2,
-                            behavior: 'smooth',
-                        });
-                    }
-                    break;
-                case 'ArrowDown':
-                case 'KeyS':
-                case 'Numpad2':
-                    if (useSettings().zoom === -1000) {
-                        const currentPage = [...document.querySelectorAll('.MangaPage')].findIndex((element) => element.offsetTop - window.scrollY > 10);
-                        scrollToElement(document.querySelector(`#Page${currentPage + 1}`));
-                    }
-                    else {
-                        window.scrollBy({
-                            top: window.innerHeight / 2,
-                            behavior: 'smooth',
-                        });
-                    }
-                    break;
-                case 'ArrowRight':
-                case 'Period':
-                case 'KeyD':
-                case 'Numpad6':
-                    doClick('#next');
-                    break;
-                case 'ArrowLeft':
-                case 'Comma':
-                case 'KeyA':
-                case 'Numpad4':
-                    doClick('#prev');
-                    break;
-                case 'Equal':
-                case 'NumpadAdd':
-                case 'KeyE':
-                    doClick('#enlarge');
-                    break;
-                case 'Minus':
-                case 'NumpadSubtract':
-                case 'KeyQ':
-                    doClick('#reduce');
-                    break;
-                case 'Digit9':
-                case 'NumpadDivide':
-                case 'KeyR':
-                    doClick('#restore');
-                    break;
-                case 'Digit0':
-                case 'NumpadMultiply':
-                case 'KeyF':
-                    doClick('#fitWidth');
-                    break;
-                case 'Slash':
-                case 'Numpad5':
-                case 'KeyX':
-                    doClick('#settings');
-                    break;
-                case 'KeyC':
-                    doClick('#webComic');
-                    break;
-                case 'KeyV':
-                    doClick('#verticalMode');
-                    break;
-                case 'KeyN':
-                    doClick('#rtlMode');
-                    break;
-                case 'KeyB':
-                    doClick('#ltrMode');
-                    break;
-            }
-            return false;
-        }
-        return true;
-    }
-    // Clean key press configurations and set some when specified
-    function hotkeys() {
-        document.onkeydown = null;
-        window.onkeydown = null;
-        window.onload = null;
-        document.body.onload = null;
-        document.addEventListener('keydown', processKey);
     }
 
     function isImagesManga(manga) {
@@ -3697,7 +3715,7 @@ ${IconCheck}
                 const chap = document.querySelector('#Chapter')?.classList.contains('WebComic');
                 const nextHeight = window.innerHeight + (nav ? 0 : -30) + (chap ? 0 : -35);
                 img.style.height = `${nextHeight}px`;
-                img.classList.add('FreeWidth');
+                img.style.minWidth = 'unset';
             }
             else {
                 img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
