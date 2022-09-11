@@ -1,22 +1,39 @@
 import { IconX } from './icons';
+import { keybinds } from '../events/hotkeys';
+
+function formatKeyName(key: string) {
+  let formatted = key;
+  formatted = formatted.replace('Key', '');
+  formatted = formatted.replace('Digit', '');
+  formatted = formatted.replace('Numpad', 'Numpad ');
+  formatted = formatted.replace('Subtract', '-');
+  formatted = formatted.replace('Add', '+');
+  formatted = formatted.replace('Minus', '-');
+  formatted = formatted.replace('Equal', '=');
+  formatted = formatted.replace('Divide', '/');
+  formatted = formatted.replace('Multiply', '*');
+  formatted = formatted.replace('Comma', ',');
+  formatted = formatted.replace('Period', '.');
+  formatted = formatted.replace('Slash', '/');
+  formatted = formatted.replace('ArrowUp', '↑');
+  formatted = formatted.replace('ArrowDown', '↓');
+  formatted = formatted.replace('ArrowRight', '→');
+  formatted = formatted.replace('ArrowLeft', '←');
+  return formatted;
+}
+
+export const keybindings = keybinds
+  .map((kb) => {
+    const keys = kb.keys.map((key) => `<kbd class='dark'>${formatKeyName(key)}</kbd>`).join(' / ');
+    return `${keys}: ${kb.name}<br/>`;
+  })
+  .join('\n');
 
 const KeybindingsPanel = `
 <div id='KeybindingsPanel' class='panel'>
     <h2>Keybindings</h2>
     <button id='CloseKeybindings' class='closeButton'>${IconX}</button>
-    <kbd class='dark'>Numpad 5</kbd>/<kbd class='dark'>/</kbd>: Open Settings<br/>
-    <kbd class='dark'>Numpad +</kbd>/<kbd class='dark'>=</kbd>: Global Zoom in pages (enlarge)<br/>
-    <kbd class='dark'>Numpad -</kbd>/<kbd class='dark'>-</kbd>: Global Zoom out pages (reduce)<br/>
-    <kbd class='dark'>Numpad /</kbd>/<kbd class='dark'>9</kbd>: Global Restore pages to original<br/>
-    <kbd class='dark'>Numpad *</kbd>/<kbd class='dark'>0</kbd>: Global Fit window width<br/>
-    <kbd class='dark'>V</kbd>: Vertical Mode<br/>
-    <kbd class='dark'>C</kbd>: WebComic Mode<br/>
-    <kbd class='dark'>N</kbd>: Right to Left Mode<br/>
-    <kbd class='dark'>B</kbd>: Left to Right Mode<br/>
-    <kbd class='dark'>→</kbd>/<kbd class='dark'>D</kbd>/<kbd class='dark'>Numpad 6</kbd>/<kbd class='dark'>.</kbd> : Next Chapter<br/>
-    <kbd class='dark'>←</kbd>/<kbd class='dark'>A</kbd>/<kbd class='dark'>Numpad 4</kbd>/<kbd class='dark'>,</kbd> : Previous Chapter<br/>
-    <kbd class='dark'>↑</kbd>/<kbd class='dark'>W</kbd>/<kbd class='dark'>Numpad 8</kbd>: Scroll Up<br/>
-    <kbd class='dark'>↓</kbd>/<kbd class='dark'>S</kbd>/<kbd class='dark'>Numpad 2</kbd>: Scroll Down<br/>
+    ${keybindings}
 </div>`;
 
 export default KeybindingsPanel;
