@@ -383,6 +383,10 @@ img {
   background-color: var(--theme-hightlight-color);
 }
 
+#MangaOnlineViewer .PageContent .PageImg.FreeWidth {
+  min-width: unset;
+}
+
 #MangaOnlineViewer .Thumbnail .ThumbnailImg[src=""],
 #MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {
   width: 100px;

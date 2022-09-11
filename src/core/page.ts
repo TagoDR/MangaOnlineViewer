@@ -17,11 +17,11 @@ import sequence from '../utils/sequence';
 // After pages load apply default Zoom
 function applyZoom(pages: string = '.PageContent img', zoom = useSettings().zoom) {
   const pg = [...document.querySelectorAll<HTMLImageElement>(pages)];
-  pg.forEach((value) => {
-    const img = value;
+  pg.forEach((img) => {
     img.removeAttribute('width');
     img.removeAttribute('height');
     img.removeAttribute('style');
+    img.classList.remove('FreeWidth');
     if (zoom === 1000) {
       img.style.width = `${window.innerWidth}px`;
     } else if (zoom === -1000) {
@@ -29,6 +29,7 @@ function applyZoom(pages: string = '.PageContent img', zoom = useSettings().zoom
       const chap = document.querySelector('#Chapter')?.classList.contains('WebComic');
       const nextHeight = window.innerHeight + (nav ? 0 : -30) + (chap ? 0 : -35);
       img.style.height = `${nextHeight}px`;
+      img.classList.add('FreeWidth');
     } else {
       img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
     }
