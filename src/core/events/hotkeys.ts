@@ -50,10 +50,10 @@ function processKey(e: KeyboardEvent) {
       case 'KeyW':
       case 'Numpad8':
         if (useSettings().zoom === -1000) {
-          const next = [...document.querySelectorAll<HTMLElement>('.MangaPage')].find(
+          const currentPage = [...document.querySelectorAll<HTMLElement>('.MangaPage')].findIndex(
             (element) => element.offsetTop - window.scrollY > 10,
           );
-          scrollToElement(next?.previousElementSibling as HTMLElement);
+          scrollToElement(document.querySelector<HTMLElement>(`#Page${currentPage - 1}`));
         } else {
           window.scrollBy({
             top: -window.innerHeight / 2,
@@ -65,10 +65,10 @@ function processKey(e: KeyboardEvent) {
       case 'KeyS':
       case 'Numpad2':
         if (useSettings().zoom === -1000) {
-          const next = [...document.querySelectorAll<HTMLElement>('.MangaPage')].find(
+          const currentPage = [...document.querySelectorAll<HTMLElement>('.MangaPage')].findIndex(
             (element) => element.offsetTop - window.scrollY > 10,
           );
-          scrollToElement(next as HTMLElement);
+          scrollToElement(document.querySelector<HTMLElement>(`#Page${currentPage + 1}`));
         } else {
           window.scrollBy({
             top: window.innerHeight / 2,
