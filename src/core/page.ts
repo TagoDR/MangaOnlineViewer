@@ -27,7 +27,7 @@ function applyZoom(pages: string = '.PageContent img', zoom = useSettings().zoom
     } else if (zoom === -1000) {
       const nav = document.querySelector('#Navigation')?.classList.contains('disabled');
       const chap = document.querySelector('#Chapter')?.classList.contains('WebComic');
-      const nextHeight = window.innerHeight + (nav ? 0 : -34) + (chap ? 0 : -35);
+      const nextHeight = window.innerHeight + (nav ? 0 : -30) + (chap ? 0 : -35);
       img.style.height = `${nextHeight}px`;
     } else {
       img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
