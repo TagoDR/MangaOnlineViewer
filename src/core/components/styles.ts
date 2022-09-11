@@ -508,9 +508,9 @@ img {
   height: 1rem;
 }
 
-#MangaOnlineViewer .ChapterControl .NavigationControlLink[href='#'],
-#MangaOnlineViewer .ChapterControl .NavigationControlLink[href=''],
-#MangaOnlineViewer .ChapterControl .NavigationControlLink[href='undefined'] {
+#MangaOnlineViewer .ChapterControl .NavigationControlButton[value='#'],
+#MangaOnlineViewer .ChapterControl .NavigationControlButton[value=''],
+#MangaOnlineViewer .ChapterControl .NavigationControlButton[value='undefined'] {
   visibility: hidden;
 }
 

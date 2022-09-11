@@ -77,18 +77,16 @@ const app = (manga: IManga, begin = 1) => `
           ${IconLoader2}
           Download
         </button>
-        <a class='prev NavigationControlLink' href='${manga.prev || ''}'>
-          <button id='prev' class='prev NavigationControlButton ControlButton' title='Previos Chapter' type='button'>          
+        <button id='prev' class='NavigationControlButton ControlButton' title='Previos Chapter' type='button' 
+          value='${manga.prev || ''}'>
           ${IconArrowBigLeft}
           Previous
         </button>
-        </a>        
-        <a class='next NavigationControlLink' href='${manga.next || ''}'>
-        <button id='next' class='next NavigationControlButton ControlButton' title='Next Chapter' type='button'>
+        <button id='next' class='NavigationControlButton ControlButton' title='Next Chapter' type='button' 
+          value='${manga.next || ''}'>
           Next
           ${IconArrowBigRight}
         </button>
-        </a>
       </div>
     </nav>
   </header>  
