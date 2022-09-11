@@ -2185,6 +2185,10 @@ img {
   background-color: var(--theme-hightlight-color);
 }
 
+#MangaOnlineViewer .PageContent .PageImg.FreeWidth {
+  min-width: unset;
+}
+
 #MangaOnlineViewer .Thumbnail .ThumbnailImg[src=""],
 #MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {
   width: 100px;
@@ -3680,11 +3684,11 @@ ${IconCheck}
     // After pages load apply default Zoom
     function applyZoom(pages = '.PageContent img', zoom = useSettings().zoom) {
         const pg = [...document.querySelectorAll(pages)];
-        pg.forEach((value) => {
-            const img = value;
+        pg.forEach((img) => {
             img.removeAttribute('width');
             img.removeAttribute('height');
             img.removeAttribute('style');
+            img.classList.remove('FreeWidth');
             if (zoom === 1000) {
                 img.style.width = `${window.innerWidth}px`;
             }
@@ -3693,6 +3697,7 @@ ${IconCheck}
                 const chap = document.querySelector('#Chapter')?.classList.contains('WebComic');
                 const nextHeight = window.innerHeight + (nav ? 0 : -30) + (chap ? 0 : -35);
                 img.style.height = `${nextHeight}px`;
+                img.classList.add('FreeWidth');
             }
             else {
                 img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
