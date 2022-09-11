@@ -3108,8 +3108,8 @@ ${IconCheck}
                 case 'KeyW':
                 case 'Numpad8':
                     if (useSettings().zoom === -1000) {
-                        const next = [...document.querySelectorAll('.MangaPage')].find((element) => element.offsetTop - window.scrollY > 10);
-                        scrollToElement(next?.previousElementSibling);
+                        const currentPage = [...document.querySelectorAll('.MangaPage')].findIndex((element) => element.offsetTop - window.scrollY > 10);
+                        scrollToElement(document.querySelector(`#Page${currentPage - 1}`));
                     }
                     else {
                         window.scrollBy({
@@ -3122,8 +3122,8 @@ ${IconCheck}
                 case 'KeyS':
                 case 'Numpad2':
                     if (useSettings().zoom === -1000) {
-                        const next = [...document.querySelectorAll('.MangaPage')].find((element) => element.offsetTop - window.scrollY > 10);
-                        scrollToElement(next);
+                        const currentPage = [...document.querySelectorAll('.MangaPage')].findIndex((element) => element.offsetTop - window.scrollY > 10);
+                        scrollToElement(document.querySelector(`#Page${currentPage + 1}`));
                     }
                     else {
                         window.scrollBy({
