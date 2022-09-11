@@ -197,23 +197,23 @@ function prep(bundler, uglify = false) {
   return prepare;
 }
 
-gulp.task('clean', clean);
+// gulp.task('clean', clean);
 // gulp.task('readme', readme);
 // gulp.task('main',gulp.series(clean, writeMetadata(scripts.main), buildUserscript(scripts.main)));
 // gulp.task('adult',gulp.series(clean, writeMetadata(scripts.adult), buildUserscript(scripts.adult)));
 gulp.task('dev', gulp.series(clean, writeMetadata(scripts.dev), buildUserscript(scripts.dev)));
-gulp.task('rollup', gulp.series(prep('rollup'), 'dev'));
-gulp.task('esbuild', gulp.series(prep('esbuild'), 'dev'));
-gulp.task('vite', gulp.series(prep('vite'), 'dev'));
-gulp.task(
-  'build',
-  gulp.series(
-    prep('esbuild'),
-    clean,
-    gulp.parallel(writeMetadata(scripts.main), writeMetadata(scripts.adult)),
-    gulp.parallel(buildUserscript(scripts.main), buildUserscript(scripts.adult)),
-  ),
-);
+// gulp.task('rollup', gulp.series(prep('rollup'), 'dev'));
+// gulp.task('esbuild', gulp.series(prep('esbuild'), 'dev'));
+// gulp.task('vite', gulp.series(prep('vite'), 'dev'));
+// gulp.task(
+//   'build',
+//   gulp.series(
+//     prep('esbuild'),
+//     clean,
+//     gulp.parallel(writeMetadata(scripts.main), writeMetadata(scripts.adult)),
+//     gulp.parallel(buildUserscript(scripts.main), buildUserscript(scripts.adult)),
+//   ),
+// );
 gulp.task(
   'release',
   gulp.series(

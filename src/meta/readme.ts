@@ -1,5 +1,5 @@
 import adult from '../adult';
-import { requiredScripts } from '../core/externals.js';
+import { requiredScripts } from '../core/externals';
 import main from '../main';
 import { ISite } from '../types';
 
