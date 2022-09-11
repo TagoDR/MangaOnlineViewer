@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Alpha-scans, Batoto, ComiCastle, Dynasty-Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MangaRaw, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, ReaperScans, JaiminisBox, DisasterScans, ManhuaPlus
-// @version 2022.09.04
+// @version 2022.09.11
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -3691,7 +3691,7 @@ ${IconCheck}
             else if (zoom === -1000) {
                 const nav = document.querySelector('#Navigation')?.classList.contains('disabled');
                 const chap = document.querySelector('#Chapter')?.classList.contains('WebComic');
-                const nextHeight = window.innerHeight + (nav ? 0 : -34) + (chap ? 0 : -35);
+                const nextHeight = window.innerHeight + (nav ? 0 : -30) + (chap ? 0 : -35);
                 img.style.height = `${nextHeight}px`;
             }
             else {
