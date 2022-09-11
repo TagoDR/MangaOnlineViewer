@@ -29,7 +29,7 @@ function applyZoom(pages: string = '.PageContent img', zoom = useSettings().zoom
       const chap = document.querySelector('#Chapter')?.classList.contains('WebComic');
       const nextHeight = window.innerHeight + (nav ? 0 : -30) + (chap ? 0 : -35);
       img.style.height = `${nextHeight}px`;
-      img.classList.add('FreeWidth');
+      img.style.minWidth = 'unset';
     } else {
       img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
     }
