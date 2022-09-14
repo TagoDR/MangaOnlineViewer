@@ -36,15 +36,28 @@ function applyZoom(pages: string = '.PageContent img', zoom = useSettings().zoom
   });
 }
 
+function invalidateImageCache(src: string, repeat: number) {
+  const url = src.replace(/[?&]cache=(\d+)$/, '');
+  const symbol = url.indexOf('?') === -1 ? '?' : '&';
+  return `${url + symbol}cache=${repeat}`;
+}
+
+function getRepeatValue(src: string | null) {
+  let repeat = 1;
+  const cache = src?.match(/cache=(\d+)$/);
+  if (cache && cache[1]) repeat = parseInt(cache[1], 10) + 1;
+  return repeat;
+}
+
 // Force reload the image
 function reloadImage(img: HTMLImageElement) {
   const src = img.getAttribute('src');
-  if (src) {
-    img.removeAttribute('src');
-    setTimeout(() => {
-      img.setAttribute('src', src);
-    }, 500);
-  }
+  if (!src) return;
+  const repeat = getRepeatValue(src);
+  img.removeAttribute('src');
+  setTimeout(() => {
+    img.setAttribute('src', invalidateImageCache(src, repeat));
+  }, 500);
 }
 
 function onImagesDone() {
@@ -95,7 +108,7 @@ function onImagesProgress(
         thumb.onload = () => applyZoom(`#${image.img.getAttribute('id')}`);
         thumb.setAttribute('src', image.img.getAttribute('src')!);
       }
-    } else {
+    } else if (getRepeatValue(image.img.getAttribute('src')) <= 5) {
       image.img.classList.add('imgBroken');
       reloadImage(image.img);
       const imgLoad = imagesLoaded(image.img.parentElement!);
