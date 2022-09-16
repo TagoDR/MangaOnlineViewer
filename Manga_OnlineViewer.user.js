@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Alpha-scans, Batoto, ComiCastle, Dynasty-Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MangaRaw, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, ReaperScans, JaiminisBox, DisasterScans, ManhuaPlus
-// @version 2022.09.11
+// @version 2022.09.16
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -3722,15 +3722,28 @@ ${IconCheck}
             }
         });
     }
+    function invalidateImageCache(src, repeat) {
+        const url = src.replace(/[?&]cache=(\d+)$/, '');
+        const symbol = url.indexOf('?') === -1 ? '?' : '&';
+        return `${url + symbol}cache=${repeat}`;
+    }
+    function getRepeatValue(src) {
+        let repeat = 1;
+        const cache = src?.match(/cache=(\d+)$/);
+        if (cache && cache[1])
+            repeat = parseInt(cache[1], 10) + 1;
+        return repeat;
+    }
     // Force reload the image
     function reloadImage(img) {
         const src = img.getAttribute('src');
-        if (src) {
-            img.removeAttribute('src');
-            setTimeout(() => {
-                img.setAttribute('src', src);
-            }, 500);
-        }
+        if (!src)
+            return;
+        const repeat = getRepeatValue(src);
+        img.removeAttribute('src');
+        setTimeout(() => {
+            img.setAttribute('src', invalidateImageCache(src, repeat));
+        }, 500);
     }
     function onImagesDone() {
         logScript('Images Loading Complete');
@@ -3774,7 +3787,7 @@ ${IconCheck}
                     thumb.setAttribute('src', image.img.getAttribute('src'));
                 }
             }
-            else {
+            else if (getRepeatValue(image.img.getAttribute('src')) <= 5) {
                 image.img.classList.add('imgBroken');
                 reloadImage(image.img);
                 const imgLoad = imagesLoaded(image.img.parentElement);
