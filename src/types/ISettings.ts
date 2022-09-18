@@ -32,4 +32,5 @@ export interface ISettings {
   lazyStart: number;
   hidePageControls: boolean;
   mouseOverMenu: boolean;
+  maxReload: number;
 }

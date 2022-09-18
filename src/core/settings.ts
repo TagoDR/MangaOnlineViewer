@@ -29,6 +29,7 @@ export const defaultSettings: ISettings = {
   lazyStart: 50,
   hidePageControls: false,
   mouseOverMenu: true,
+  maxReload: 5,
 };
 
 // Configuration
@@ -63,6 +64,8 @@ export function resetSettings() {
 
 // Clear old Bookmarks
 const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // year
-updateSettings({
-  bookmarks: settings.bookmarks.filter((el) => Date.now() - el.date < bookmarkTimeLimit),
-});
+const refreshedBookmark = settings.bookmarks.filter(
+  (el) => Date.now() - el.date < bookmarkTimeLimit,
+);
+if (settings.bookmarks.length !== refreshedBookmark.length)
+  updateSettings({ bookmarks: refreshedBookmark });

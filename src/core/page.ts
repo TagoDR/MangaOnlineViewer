@@ -37,7 +37,7 @@ function applyZoom(pages: string = '.PageContent img', zoom = useSettings().zoom
 }
 
 function invalidateImageCache(src: string, repeat: number) {
-  const url = src.replace(/[?&]cache=(\d+)$/, '');
+  const url = src.replace(/[?&]cache=\d+$/, '');
   const symbol = url.indexOf('?') === -1 ? '?' : '&';
   return `${url + symbol}cache=${repeat}`;
 }
@@ -53,10 +53,9 @@ function getRepeatValue(src: string | null) {
 function reloadImage(img: HTMLImageElement) {
   const src = img.getAttribute('src');
   if (!src) return;
-  const repeat = getRepeatValue(src);
   img.removeAttribute('src');
   setTimeout(() => {
-    img.setAttribute('src', invalidateImageCache(src, repeat));
+    img.setAttribute('src', invalidateImageCache(src, getRepeatValue(src)));
   }, 500);
 }
 
@@ -92,27 +91,24 @@ function updateProgress() {
 // change class if the image is loaded or broken
 function onImagesProgress(
   _instance: ImagesLoaded.ImagesLoaded,
-  image?: {
-    img: HTMLImageElement;
-    isLoaded: boolean;
-  },
+  image?: ImagesLoaded.LoadingImage,
 ): void {
   if (image) {
     if (image.isLoaded) {
       image.img.classList.add('imgLoaded');
       image.img.classList.remove('imgBroken');
-      image.img.getAttribute('id');
-      const thumbId = image.img.getAttribute('id')!.replace('PageImg', 'ThumbnailImg');
+      const id = image.img.getAttribute('id');
+      const thumbId = id!.replace('PageImg', 'ThumbnailImg');
       const thumb = document.getElementById(thumbId);
-      if (thumb) {
-        thumb.onload = () => applyZoom(`#${image.img.getAttribute('id')}`);
-        thumb.setAttribute('src', image.img.getAttribute('src')!);
-      }
-    } else if (getRepeatValue(image.img.getAttribute('src')) <= 5) {
+      if (thumb) thumb.setAttribute('src', image.img.getAttribute('src')!);
+      applyZoom(`#${id}`);
+    } else {
       image.img.classList.add('imgBroken');
-      reloadImage(image.img);
-      const imgLoad = imagesLoaded(image.img.parentElement!);
-      imgLoad.on('progress', onImagesProgress);
+      if (getRepeatValue(image.img.getAttribute('src')) <= useSettings().maxReload) {
+        reloadImage(image.img);
+        const imgLoad = imagesLoaded(image.img.parentElement!);
+        imgLoad.once('progress', onImagesProgress);
+      }
     }
   }
   updateProgress();
@@ -136,7 +132,7 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
       setTimeout(() => {
         img.setAttribute('src', src);
         const imgLoad = imagesLoaded(img.parentElement!);
-        imgLoad.on('progress', onImagesProgress);
+        imgLoad.once('progress', onImagesProgress);
         logScript('Loaded Image:', index, 'Source:', src);
       }, (manga.timer || useSettings().throttlePageLoad) * position);
     } else {
@@ -144,7 +140,7 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
 
       lazyLoad(img, () => {
         const imgLoad = imagesLoaded(img.parentElement!);
-        imgLoad.on('progress', onImagesProgress);
+        imgLoad.once('progress', onImagesProgress);
         logScript('Lazy Image: ', index, ' Source: ', img.getAttribute('src'));
       });
     }
@@ -159,7 +155,7 @@ function findPage(manga: IMangaPages, index: number, pageUrl: string, lazy: bool
       img.setAttribute('src', src);
       img.style.width = 'auto';
       const imgLoad = imagesLoaded(img.parentElement!);
-      imgLoad.on('progress', onImagesProgress);
+      imgLoad.once('progress', onImagesProgress);
       logScript(`${lazy && 'Lazy '}Page: `, index, ' Source: ', img.getAttribute('src'));
     }
   };
