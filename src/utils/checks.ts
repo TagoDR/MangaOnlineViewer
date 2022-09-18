@@ -62,23 +62,23 @@ function isNothing(value: any | any[] | null | undefined): value is null | undef
   );
 }
 
-function testUtil(test: any, fn: any) {
-  test.map((value: any) => console.log(`${fn.name}(${JSON.stringify(value)}) // ${fn(value)}`));
-}
-
-const testValues = [
-  null,
-  undefined,
-  [],
-  {},
-  '', // Should be Empty and Nothing
-  false,
-  0,
-  [{}, { 0: false }, { '': 0 }, { 0: 0 }], // Should be Nothing
-  42,
-  [{ '': 1 }, { 0: 1 }], // Should be Something
-];
-testUtil(testValues, isEmpty);
-testUtil(testValues, isNothing);
+// function testUtil(test: any, fn: any) {
+//   test.map((value: any) => console.log(`${fn.name}(${JSON.stringify(value)}) // ${fn(value)}`));
+// }
+//
+// const testValues = [
+//   null,
+//   undefined,
+//   [],
+//   {},
+//   '', // Should be Empty and Nothing
+//   false,
+//   0,
+//   [{}, { 0: false }, { '': 0 }, { 0: 0 }], // Should be Nothing
+//   42,
+//   [{ '': 1 }, { 0: 1 }], // Should be Something
+// ];
+// testUtil(testValues, isEmpty);
+// testUtil(testValues, isNothing);
 
 export { isEmpty, isNothing };
