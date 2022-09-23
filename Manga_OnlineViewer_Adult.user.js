@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno, vercomicsporno, wnacg, xyzcomics
-// @version 2022.09.16
+// @version 2022.09.23
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -942,23 +942,6 @@
             isEmpty(value) ||
             (typeof value === 'object' && isEmptyObject(value)));
     }
-    function testUtil(test, fn) {
-        test.map((value) => console.log(`${fn.name}(${JSON.stringify(value)}) // ${fn(value)}`));
-    }
-    const testValues = [
-        null,
-        undefined,
-        [],
-        {},
-        '',
-        false,
-        0,
-        [{}, { 0: false }, { '': 0 }, { 0: 0 }],
-        42,
-        [{ '': 1 }, { 0: 1 }], // Should be Something
-    ];
-    testUtil(testValues, isEmpty);
-    testUtil(testValues, isNothing);
 
     const colors = {
         dark: {
@@ -2372,6 +2355,7 @@ img {
         lazyStart: 50,
         hidePageControls: false,
         mouseOverMenu: true,
+        maxReload: 5,
     };
     // Configuration
     let settings$1 = _.defaultsDeep(getSettings(defaultSettings), defaultSettings);
@@ -2396,9 +2380,9 @@ img {
     }
     // Clear old Bookmarks
     const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // year
-    updateSettings({
-        bookmarks: settings$1.bookmarks.filter((el) => Date.now() - el.date < bookmarkTimeLimit),
-    });
+    const refreshedBookmark = settings$1.bookmarks.filter((el) => Date.now() - el.date < bookmarkTimeLimit);
+    if (settings$1.bookmarks.length !== refreshedBookmark.length)
+        updateSettings({ bookmarks: refreshedBookmark });
 
     // Creates the style element
     function createStyleElement(id, content) {
@@ -3373,7 +3357,7 @@ ${IconCheck}
         });
     }
     function invalidateImageCache(src, repeat) {
-        const url = src.replace(/[?&]cache=(\d+)$/, '');
+        const url = src.replace(/[?&]cache=\d+$/, '');
         const symbol = url.indexOf('?') === -1 ? '?' : '&';
         return `${url + symbol}cache=${repeat}`;
     }
@@ -3389,11 +3373,8 @@ ${IconCheck}
         const src = img.getAttribute('src');
         if (!src)
             return;
-        const repeat = getRepeatValue(src);
         img.removeAttribute('src');
-        setTimeout(() => {
-            img.setAttribute('src', invalidateImageCache(src, repeat));
-        }, 500);
+        img.setAttribute('src', invalidateImageCache(src, getRepeatValue(src)));
     }
     function onImagesDone() {
         logScript('Images Loading Complete');
@@ -3423,28 +3404,31 @@ ${IconCheck}
         if (loaded === total)
             onImagesDone();
     }
-    // change class if the image is loaded or broken
-    function onImagesProgress(_instance, image) {
-        if (image) {
-            if (image.isLoaded) {
-                image.img.classList.add('imgLoaded');
-                image.img.classList.remove('imgBroken');
-                image.img.getAttribute('id');
-                const thumbId = image.img.getAttribute('id').replace('PageImg', 'ThumbnailImg');
-                const thumb = document.getElementById(thumbId);
-                if (thumb) {
-                    thumb.onload = () => applyZoom(`#${image.img.getAttribute('id')}`);
-                    thumb.setAttribute('src', image.img.getAttribute('src'));
-                }
+    function onImagesSuccess(instance) {
+        instance.images.forEach((image) => {
+            image.img.classList.add('imgLoaded');
+            image.img.classList.remove('imgBroken');
+            const thumbId = image.img.id.replace('PageImg', 'ThumbnailImg');
+            const thumb = document.getElementById(thumbId);
+            if (thumb)
+                thumb.setAttribute('src', image.img.getAttribute('src'));
+            applyZoom(`#${image.img.id}`);
+            updateProgress();
+        });
+    }
+    function onImagesFail(instance) {
+        instance.images.forEach((image) => {
+            image.img.classList.add('imgBroken');
+            const src = image.img.getAttribute('src');
+            if (src && getRepeatValue(src) <= useSettings().maxReload) {
+                setTimeout(() => {
+                    reloadImage(image.img);
+                    const imgLoad = imagesLoaded(image.img.parentElement);
+                    imgLoad.on('done', onImagesSuccess);
+                    imgLoad.on('fail', onImagesFail);
+                }, 2000);
             }
-            else if (getRepeatValue(image.img.getAttribute('src')) <= 5) {
-                image.img.classList.add('imgBroken');
-                reloadImage(image.img);
-                const imgLoad = imagesLoaded(image.img.parentElement);
-                imgLoad.on('progress', onImagesProgress);
-            }
-        }
-        updateProgress();
+        });
     }
     // Corrects urls
     function normalizeUrl(url = '') {
@@ -3461,9 +3445,10 @@ ${IconCheck}
         if (img) {
             if (!useSettings().lazyLoadImages || position <= useSettings().lazyStart) {
                 setTimeout(() => {
-                    img.setAttribute('src', src);
                     const imgLoad = imagesLoaded(img.parentElement);
-                    imgLoad.on('progress', onImagesProgress);
+                    imgLoad.on('done', onImagesSuccess);
+                    imgLoad.on('fail', onImagesFail);
+                    img.setAttribute('src', src);
                     logScript('Loaded Image:', index, 'Source:', src);
                 }, (manga.timer || useSettings().throttlePageLoad) * position);
             }
@@ -3471,7 +3456,8 @@ ${IconCheck}
                 img.setAttribute('data-src', src);
                 lazyLoad(img, () => {
                     const imgLoad = imagesLoaded(img.parentElement);
-                    imgLoad.on('progress', onImagesProgress);
+                    imgLoad.on('done', onImagesSuccess);
+                    imgLoad.on('fail', onImagesFail);
                     logScript('Lazy Image: ', index, ' Source: ', img.getAttribute('src'));
                 });
             }
@@ -3482,10 +3468,11 @@ ${IconCheck}
             const src = await getElementAttribute(pageUrl, manga.img, manga.lazyAttr ?? 'src');
             const img = document.querySelector(`#PageImg${index}`);
             if (src && img) {
-                img.setAttribute('src', src);
                 img.style.width = 'auto';
                 const imgLoad = imagesLoaded(img.parentElement);
-                imgLoad.on('progress', onImagesProgress);
+                imgLoad.on('done', onImagesSuccess);
+                imgLoad.on('fail', onImagesFail);
+                img.setAttribute('src', src);
                 logScript(`${lazy && 'Lazy '}Page: `, index, ' Source: ', img.getAttribute('src'));
             }
         };
