@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Alpha-scans, Batoto, ComiCastle, Dynasty-Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MangaRaw, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, ReaperScans, JaiminisBox, DisasterScans, ManhuaPlus
-// @version 2022.09.23
+// @version 2022.09.30
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -69,9 +69,10 @@
     // == AsuraScans and FlameScans ====================================================================
     var asurasflamecans = {
         name: ['Asura Scans', 'Flame Scans', 'Realm Scans', 'Alpha-scans'],
-        url: /https?:\/\/(www.)?(asurascans|flamescans|realmscans|alpha-scans).(com|org)\/.+/,
+        url: /https?:\/\/(www.)?(asurascans|asura|flamescans|realmscans|alpha-scans).(com|org\gg)\/.+/,
         homepage: [
             'https://www.asurascans.com/',
+            'https://asura.gg/',
             'https://flamescans.org/',
             'https://realmscans.com/',
             'https://alpha-scans.org/',
