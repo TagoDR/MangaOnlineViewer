@@ -1,5 +1,5 @@
 import { IManga } from '../../types';
-import { useSettings } from '../settings';
+import { isBookmarked, useSettings } from '../settings';
 import listPages from './MangaPages';
 import SettingsPanel from './SettingsPanel';
 import KeybindingsPanel from './KeybindingsPanel';
@@ -33,7 +33,9 @@ const listOptions = (times: number, begin: number) =>
 
 const app = (manga: IManga, begin = 1) => `
 <div id='MangaOnlineViewer'
-  class="${useSettings().colorScheme} ${useSettings().hidePageControls ? 'hideControls' : ''}"
+  class="${useSettings().colorScheme} 
+    ${useSettings().hidePageControls ? 'hideControls' : ''}
+    ${isBookmarked() ? 'bookmarked' : ''}"
   data-theme='${useSettings().theme}'>
   <header id="Header" class="${useSettings().mouseOverMenu ? 'mouseOverMenu' : ''}">
     <div id='menu'>

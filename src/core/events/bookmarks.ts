@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 import { IBookmark } from '../../types';
-import { updateSettings, useSettings } from '../settings';
+import { isBookmarked, updateSettings, useSettings } from '../settings';
 import { reloadBookmarks } from '../components/BookmarksPanel';
 import { logScript } from '../../utils/tampermonkey';
 
@@ -41,8 +41,7 @@ function buttonBookmark(elem: Element) {
       page: num,
       date: Date.now(),
     };
-    const found = useSettings().bookmarks.some((el) => el.url === mark.url);
-    if (found) {
+    if (isBookmarked(mark.url)) {
       updateSettings({ bookmarks: useSettings().bookmarks.filter((el) => el.url !== mark.url) });
       Swal.fire({
         title: 'Bookmark Removed',

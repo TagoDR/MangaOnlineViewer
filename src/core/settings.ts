@@ -69,3 +69,7 @@ const refreshedBookmark = settings.bookmarks.filter(
 );
 if (settings.bookmarks.length !== refreshedBookmark.length)
   updateSettings({ bookmarks: refreshedBookmark });
+
+export function isBookmarked(url: string = window.location.href): boolean {
+  return useSettings().bookmarks.some((el) => el.url === url);
+}
