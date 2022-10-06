@@ -51,7 +51,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/
 - [MangaHub](https://mangahub.io/) _[English]_
 - [MangaKakalot](https://mangakakalot.com/page) / [MangaNelo](https://www.manganelo.com/) / [MangaNato](https://www.manganato.com/) _[English]_
 - [MangaPark](https://mangapark.net/) _[English]_
-- [MangaRaw](https://www.manga-raw.club/) _[English]_
+- [MReader](https://www.mreader.co/) _[English]_
 - [Mangareader](https://mangareader.to) _[English]_ **Obs: Some galleries will not be usable**
 - [MangaSee](https://mangasee123.com/) / [Manga4life](https://manga4life.com/) _[English]_
 - [MangaTown](https://www.mangatown.com/) _[English]_

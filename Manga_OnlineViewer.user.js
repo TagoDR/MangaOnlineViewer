@@ -4,7 +4,7 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Alpha-scans, Batoto, ComiCastle, Dynasty-Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MangaRaw, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus
+// @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Alpha-scans, Batoto, ComiCastle, Dynasty-Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MReader, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus
 // @version 2022.10.06
 // @license MIT
 // @grant GM_getValue
@@ -37,7 +37,7 @@
 // @include /https?:\/\/(www.)?(mangahub).io\/chapter\/.+\/.+/
 // @include /https?:\/\/(www.)?((manganelo|mangakakalot).com\/chapter\/.+\/.+|(manganato|readmanganato).com\/manga-\w\w\d+\/chapter-\d+)/
 // @include /https?:\/\/(www.)?mangapark.(com|me|org|net)\/(manga|chapter|comic)\/.+\/.+/
-// @include /https?:\/\/(www.)?mcreader.net\/reader\/.*/
+// @include /https?:\/\/(www.)?mreader.co\/reader\/.*/
 // @include /https?:\/\/(www.)?mangareader.to\/read\/.+\/.+\/.+/
 // @include /https?:\/\/(www.)?(mangasee123|manga4life).com\/read-online\/.+/
 // @include /https?:\/\/(www.)?mangatigre.net\/.+\/.+\/.+/
@@ -584,26 +584,6 @@
         },
     };
 
-    // == MangaRaw =====================================================================================
-    var mangaraw = {
-        name: 'MangaRaw',
-        url: /https?:\/\/(www.)?mcreader.net\/reader\/.*/,
-        homepage: 'https://www.manga-raw.club/',
-        language: ['English'],
-        category: 'manga',
-        run() {
-            const images = [...document.querySelectorAll('#chapter-reader img')];
-            return {
-                title: document.querySelector('.titles')?.textContent?.trim(),
-                series: document.querySelector('.titles a')?.getAttribute('href'),
-                pages: images.length,
-                prev: document.querySelector('.chnav.prev')?.getAttribute('href'),
-                next: document.querySelector('.chnav.next')?.getAttribute('href'),
-                listImages: images.map((img) => img.getAttribute('src')),
-            };
-        },
-    };
-
     // == Mangareader ==================================================================================
     var mangareader = {
         name: 'Mangareader',
@@ -763,6 +743,26 @@
                 prev: document.querySelector('.chapter-select a:first-of-type')?.getAttribute('href'),
                 next: document.querySelector('.chapter-select a:last-of-type')?.getAttribute('href'),
                 listImages: images,
+            };
+        },
+    };
+
+    // == MReader ======================================================================================
+    var mreader = {
+        name: 'MReader',
+        url: /https?:\/\/(www.)?mreader.co\/reader\/.*/,
+        homepage: 'https://www.mreader.co/',
+        language: ['English'],
+        category: 'manga',
+        run() {
+            const images = [...document.querySelectorAll('#chapter-reader img')];
+            return {
+                title: document.querySelector('.titles')?.textContent?.trim(),
+                series: document.querySelector('.titles a')?.getAttribute('href'),
+                pages: images.length,
+                prev: document.querySelector('.chnav.prev')?.getAttribute('href'),
+                next: document.querySelector('.chnav.next')?.getAttribute('href'),
+                listImages: images.map((img) => img.getAttribute('src')),
             };
         },
     };
@@ -1140,7 +1140,7 @@
         mangahub,
         mangakakalot,
         mangapark,
-        mangaraw,
+        mreader,
         mangareader,
         mangasee,
         mangatigre,
