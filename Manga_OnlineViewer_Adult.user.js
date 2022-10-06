@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno, vercomicsporno, wnacg, xyzcomics
-// @version 2022.09.30
+// @version 2022.10.06
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -2383,6 +2383,9 @@ img {
     const refreshedBookmark = settings$1.bookmarks.filter((el) => Date.now() - el.date < bookmarkTimeLimit);
     if (settings$1.bookmarks.length !== refreshedBookmark.length)
         updateSettings({ bookmarks: refreshedBookmark });
+    function isBookmarked(url = window.location.href) {
+        return useSettings().bookmarks.some((el) => el.url === url);
+    }
 
     // Creates the style element
     function createStyleElement(id, content) {
@@ -2910,7 +2913,9 @@ ${IconCheck}
     const listOptions = (times, begin) => indexList(times, begin).map((index) => `<option value='${index}'>${index}</option>`);
     const app = (manga, begin = 1) => `
 <div id='MangaOnlineViewer'
-  class="${useSettings().colorScheme} ${useSettings().hidePageControls ? 'hideControls' : ''}"
+  class="${useSettings().colorScheme} 
+    ${useSettings().hidePageControls ? 'hideControls' : ''}
+    ${isBookmarked() ? 'bookmarked' : ''}"
   data-theme='${useSettings().theme}'>
   <header id="Header" class="${useSettings().mouseOverMenu ? 'mouseOverMenu' : ''}">
     <div id='menu'>
@@ -3017,8 +3022,7 @@ ${IconCheck}
                 page: num,
                 date: Date.now(),
             };
-            const found = useSettings().bookmarks.some((el) => el.url === mark.url);
-            if (found) {
+            if (isBookmarked(mark.url)) {
                 updateSettings({ bookmarks: useSettings().bookmarks.filter((el) => el.url !== mark.url) });
                 Swal.fire({
                     title: 'Bookmark Removed',

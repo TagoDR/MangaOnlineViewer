@@ -4,8 +4,8 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Alpha-scans, Batoto, ComiCastle, Dynasty-Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MangaRaw, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, ReaperScans, JaiminisBox, DisasterScans, ManhuaPlus
-// @version 2022.09.30
+// @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Alpha-scans, Batoto, ComiCastle, Dynasty-Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MangaRaw, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus
+// @version 2022.10.06
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -48,6 +48,7 @@
 // @include /https?:\/\/(www.)?rawdevart.com\/comic\/.+\/.+\//
 // @include /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/\d*/
 // @include /https?:\/\/(www.)?(funmanga|mngdoom|readmng|mangainn).(com|net)\/.+\/\d+/
+// @include /https?:\/\/(www.)?reaperscans.com\/comics\/.+\/chapters\/.+/
 // @include /https?:\/\/raw.senmanga.com\/.+\/.+\/?/
 // @include /https?:\/\/(www.)?shimadascans.com\/.+series.+/
 // @include /https?:\/\/(www.)?tapas.io\/episode\/.+/
@@ -305,7 +306,6 @@
             'mangatx',
             'Toonily',
             'Mngazuki',
-            'ReaperScans',
             'JaiminisBox',
             'DisasterScans',
             'ManhuaPlus',
@@ -320,7 +320,6 @@
             'https://mangatx.com/',
             'https://toonily.net/',
             'https://mangazuki.me/',
-            'https://reaperscans.com/',
             'https://jaiminisbox.net',
             'https://disasterscans.com/',
             'https://manhuaplus.com/',
@@ -884,6 +883,26 @@
         },
     };
 
+    // == ReaperScans ==================================================================================
+    var reaperscans = {
+        name: 'ReaperScans',
+        url: /https?:\/\/(www.)?reaperscans.com\/comics\/.+\/chapters\/.+/,
+        homepage: 'https://reaperscans.com/',
+        language: ['English'],
+        category: 'manga',
+        run() {
+            const images = [...document.querySelectorAll('main img')];
+            return {
+                title: document.querySelector('title')?.textContent?.trim(),
+                series: document.querySelector('.fa-list')?.parentElement?.getAttribute('href'),
+                pages: images.length,
+                prev: document.querySelector('.fa-arrow-left')?.parentElement?.getAttribute('href'),
+                next: document.querySelector('.fa-arrow-right')?.parentElement?.getAttribute('href'),
+                listImages: images.map((img) => img.getAttribute('data-src') || img.getAttribute('src')),
+            };
+        },
+    };
+
     // == SenManga =====================================================================================
     var senmanga = {
         name: 'SenManga(Raw)',
@@ -1132,6 +1151,7 @@
         rawdevart,
         readcomicsonline,
         readmangatoday,
+        reaperscans,
         senmanga,
         shimadascans,
         tapas,
@@ -2733,6 +2753,9 @@ img {
     const refreshedBookmark = settings$1.bookmarks.filter((el) => Date.now() - el.date < bookmarkTimeLimit);
     if (settings$1.bookmarks.length !== refreshedBookmark.length)
         updateSettings({ bookmarks: refreshedBookmark });
+    function isBookmarked(url = window.location.href) {
+        return useSettings().bookmarks.some((el) => el.url === url);
+    }
 
     // Creates the style element
     function createStyleElement(id, content) {
@@ -3260,7 +3283,9 @@ ${IconCheck}
     const listOptions = (times, begin) => indexList(times, begin).map((index) => `<option value='${index}'>${index}</option>`);
     const app = (manga, begin = 1) => `
 <div id='MangaOnlineViewer'
-  class="${useSettings().colorScheme} ${useSettings().hidePageControls ? 'hideControls' : ''}"
+  class="${useSettings().colorScheme} 
+    ${useSettings().hidePageControls ? 'hideControls' : ''}
+    ${isBookmarked() ? 'bookmarked' : ''}"
   data-theme='${useSettings().theme}'>
   <header id="Header" class="${useSettings().mouseOverMenu ? 'mouseOverMenu' : ''}">
     <div id='menu'>
@@ -3367,8 +3392,7 @@ ${IconCheck}
                 page: num,
                 date: Date.now(),
             };
-            const found = useSettings().bookmarks.some((el) => el.url === mark.url);
-            if (found) {
+            if (isBookmarked(mark.url)) {
                 updateSettings({ bookmarks: useSettings().bookmarks.filter((el) => el.url !== mark.url) });
                 Swal.fire({
                     title: 'Bookmark Removed',
