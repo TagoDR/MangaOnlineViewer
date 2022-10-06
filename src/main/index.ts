@@ -29,6 +29,7 @@ import pandamanga from './pandamanga';
 import rawdevart from './rawdevart';
 import readcomicsonline from './readcomicsonline';
 import readmangatoday from './readmangatoday';
+import reaperscans from './reaperscans';
 import senmanga from './senmanga';
 import shimadascans from './shimadascans';
 import tapas from './tapas';
@@ -69,6 +70,7 @@ const sites = [
   rawdevart,
   readcomicsonline,
   readmangatoday,
+  reaperscans,
   senmanga,
   shimadascans,
   tapas,
