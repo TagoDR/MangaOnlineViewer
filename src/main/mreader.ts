@@ -1,8 +1,8 @@
-// == MangaRaw =====================================================================================
+// == MReader ======================================================================================
 export default {
-  name: 'MangaRaw',
-  url: /https?:\/\/(www.)?mcreader.net\/reader\/.*/,
-  homepage: 'https://www.manga-raw.club/',
+  name: 'MReader',
+  url: /https?:\/\/(www.)?mreader.co\/reader\/.*/,
+  homepage: 'https://www.mreader.co/',
   language: ['English'],
   category: 'manga',
   run() {
