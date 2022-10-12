@@ -7,10 +7,20 @@ const doClick = (selector: string) =>
 
 function doScrolling(sign: 1 | -1) {
   if (useSettings().zoom === -1000) {
-    const currentPage = [...document.querySelectorAll<HTMLElement>('.MangaPage')].findIndex(
-      (element) => element.offsetTop - window.scrollY > 10,
-    );
-    scrollToElement(document.querySelector<HTMLElement>(`#Page${currentPage + sign}`));
+    // Fit height
+    const pages = [...document.querySelectorAll<HTMLElement>('.MangaPage')];
+    const distance = pages.map((element) => Math.abs(element.offsetTop - window.scrollY));
+    const currentPage = distance.findIndex((d) => d <= 5);
+    const target = currentPage + sign;
+    const header = document.querySelector<HTMLDivElement>('#Header')!;
+    if (target < 0) {
+      scrollToElement(header);
+    } else if (target >= pages.length) {
+      header.classList.add('scroll-end');
+    } else {
+      logScript(`Current array page ${currentPage},`, `Scrolling to page ${target}`);
+      scrollToElement(pages.at(target));
+    }
   } else {
     window.scrollBy({
       top: (sign * window.innerHeight) / 2,

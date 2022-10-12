@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { useSettings } from '../settings.js';
 
 /**
  * Changes header class when scrolling up or down to show/hide it
@@ -17,7 +18,11 @@ function headroom(showEnd = 0) {
 
   function toggleScrollDirection() {
     const { scrollY } = window;
-    if (showEnd && scrollY + window.innerHeight + showEnd > document.body.offsetHeight) {
+    if (
+      showEnd &&
+      useSettings().zoom !== -1000 &&
+      scrollY + window.innerHeight + showEnd > document.body.offsetHeight
+    ) {
       setScrollDirection('end');
     } else if (scrollY > prevOffset && scrollY > 50) {
       setScrollDirection('hide');
