@@ -514,8 +514,14 @@ img {
   visibility: hidden;
 }
 
-#MangaOnlineViewer .ChapterControl .download.loading{
+#MangaOnlineViewer .ChapterControl #download.loading{
   cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+#MangaOnlineViewer .ChapterControl #download.disabled{
+  visibility: hidden;
 }
 
 #MangaOnlineViewer .ViewerTitle {
@@ -579,8 +585,8 @@ img {
 
 #MangaOnlineViewer.light #ColorScheme > :not(.inverse),
 #MangaOnlineViewer:not(.light) #ColorScheme > .inverse,
-#MangaOnlineViewer .ChapterControl .download.loading > :not(.inverse),
-#MangaOnlineViewer .ChapterControl .download:not(.loading) > .inverse,
+#MangaOnlineViewer .ChapterControl #download.loading > :not(.inverse),
+#MangaOnlineViewer .ChapterControl #download:not(.loading) > .inverse,
 #MangaOnlineViewer .MangaPage.hide .ControlButton.Hide  > .inverse,
 #MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide  > :not(.inverse),
 #MangaOnlineViewer.bookmarked .ControlButton.Bookmark  > :not(.inverse),

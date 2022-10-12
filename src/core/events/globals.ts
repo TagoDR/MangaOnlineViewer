@@ -3,8 +3,8 @@ import generateZip from '../download';
 
 function startDownload(event: Event) {
   const button = event.currentTarget as HTMLInputElement;
+  if (button.classList.contains('loading')) return;
   logScript('Downloading Chapter');
-  button.disabled = true;
   button.classList.add('loading');
   generateZip();
 }
@@ -19,7 +19,7 @@ function redirect(event: Event) {
 }
 
 function globals() {
-  document.querySelector('.download')?.addEventListener('click', startDownload);
+  document.querySelector('#download')?.addEventListener('click', startDownload);
   document.querySelector('#pageControls')?.addEventListener('click', globalHideImageControls);
   document.querySelector('#next')?.addEventListener('click', redirect);
   document.querySelector('#prev')?.addEventListener('click', redirect);

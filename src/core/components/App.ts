@@ -74,7 +74,7 @@ const app = (manga: IManga, begin = 1) => `
         </select>
       </div>
       <div id='ChapterControl' class='ChapterControl'>
-        <button class='download NavigationControlButton ControlButton' title='Donwload Images Zip' type='button'>
+        <button id='download' class='NavigationControlButton ControlButton disabled' title='Download Images Zip' type='button'>
           ${IconFileDownload}
           ${IconLoader2}
           Download

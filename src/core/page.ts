@@ -23,13 +23,16 @@ function applyZoom(pages: string = '.PageContent img', zoom = useSettings().zoom
     img.removeAttribute('style');
     img.classList.remove('FreeWidth');
     if (zoom === 1000) {
+      // Fit width
       img.style.width = `${window.innerWidth}px`;
     } else if (zoom === -1000) {
+      // Fit height
       const nav = document.querySelector('#Navigation')?.classList.contains('disabled');
       const chap = document.querySelector('#Chapter')?.classList.contains('WebComic');
       const nextHeight = window.innerHeight + (nav ? 0 : -30) + (chap ? 0 : -35);
       img.style.height = `${nextHeight}px`;
       img.style.minWidth = 'unset';
+      document.getElementById('header')?.classList.add('mouseOverMenu');
     } else {
       img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
     }
@@ -59,12 +62,8 @@ function reloadImage(img: HTMLImageElement) {
 
 function onImagesDone() {
   logScript('Images Loading Complete');
-  if (!useSettings().lazyLoadImages) {
-    document.querySelector('.download')?.setAttribute('href', '#download');
-    logScript('Download Available');
-    if (useSettings().downloadZip) {
-      document.querySelector('#blob')?.dispatchEvent(new Event('click'));
-    }
+  if (useSettings().downloadZip) {
+    document.getElementById('download')?.dispatchEvent(new Event('click'));
   }
 }
 
@@ -199,9 +198,6 @@ function loadManga(manga: IManga, begin = 1) {
   logScript('Loading Images');
   logScript(`Intervals: ${manga.timer || useSettings().throttlePageLoad || 'Default(1000)'}`);
   logScript(`Lazy: ${useSettings().lazyLoadImages}, Starting from: ${useSettings().lazyStart}`);
-  if (useSettings().lazyLoadImages) {
-    logScript('Download may not work with Lazy Loading Images');
-  }
   if (isImagesManga(manga)) {
     logScript('Method: Images:', manga.listImages);
     loadMangaImages(begin, manga);
@@ -224,6 +220,7 @@ function loadManga(manga: IManga, begin = 1) {
       wait: useSettings().throttlePageLoad,
     });
   }
+  document.getElementById('download')?.classList.remove('disabled');
 }
 
 export { loadManga, applyZoom, reloadImage };
