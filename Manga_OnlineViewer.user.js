@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Alpha-scans, Voids-Scans, Batoto, ComiCastle, Dynasty-Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MReader, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus
-// @version 2022.10.09
+// @version 2022.10.12
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -2320,8 +2320,14 @@ img {
   visibility: hidden;
 }
 
-#MangaOnlineViewer .ChapterControl .download.loading{
+#MangaOnlineViewer .ChapterControl #download.loading{
   cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+#MangaOnlineViewer .ChapterControl #download.disabled{
+  visibility: hidden;
 }
 
 #MangaOnlineViewer .ViewerTitle {
@@ -2385,8 +2391,8 @@ img {
 
 #MangaOnlineViewer.light #ColorScheme > :not(.inverse),
 #MangaOnlineViewer:not(.light) #ColorScheme > .inverse,
-#MangaOnlineViewer .ChapterControl .download.loading > :not(.inverse),
-#MangaOnlineViewer .ChapterControl .download:not(.loading) > .inverse,
+#MangaOnlineViewer .ChapterControl #download.loading > :not(.inverse),
+#MangaOnlineViewer .ChapterControl #download:not(.loading) > .inverse,
 #MangaOnlineViewer .MangaPage.hide .ControlButton.Hide  > .inverse,
 #MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide  > :not(.inverse),
 #MangaOnlineViewer.bookmarked .ControlButton.Bookmark  > :not(.inverse),
@@ -3065,8 +3071,22 @@ ${IconCheck}
     const doClick = (selector) => document.querySelector(selector)?.dispatchEvent(new Event('click'));
     function doScrolling(sign) {
         if (useSettings().zoom === -1000) {
-            const currentPage = [...document.querySelectorAll('.MangaPage')].findIndex((element) => element.offsetTop - window.scrollY > 10);
-            scrollToElement(document.querySelector(`#Page${currentPage + sign}`));
+            // Fit height
+            const pages = [...document.querySelectorAll('.MangaPage')];
+            const distance = pages.map((element) => Math.abs(element.offsetTop - window.scrollY));
+            const currentPage = distance.findIndex((d) => d <= 5);
+            const target = currentPage + sign;
+            const header = document.querySelector('#Header');
+            if (target < 0) {
+                scrollToElement(header);
+            }
+            else if (target >= pages.length) {
+                header.classList.add('scroll-end');
+            }
+            else {
+                logScript(`Current array page ${currentPage},`, `Scrolling to page ${target}`);
+                scrollToElement(pages.at(target));
+            }
         }
         else {
             window.scrollBy({
@@ -3325,7 +3345,7 @@ ${IconCheck}
         </select>
       </div>
       <div id='ChapterControl' class='ChapterControl'>
-        <button class='download NavigationControlButton ControlButton' title='Donwload Images Zip' type='button'>
+        <button id='download' class='NavigationControlButton ControlButton disabled' title='Download Images Zip' type='button'>
           ${IconFileDownload}
           ${IconLoader2}
           Download
@@ -3424,107 +3444,80 @@ ${IconCheck}
         document.querySelectorAll('.Bookmark')?.forEach(buttonBookmark);
     }
 
-    const cache = {
-        zip: new JSZip(),
-        downloadFiles: 0,
-        Data: {},
-    };
+    let zip;
+    // const filenameRegex = /^(?<name>.*?)(?<index>\d+)\.(?<ext>\w+)$/;
+    const base64Regex = /^data:(?<mimeType>image\/\w+);base64,+(?<data>.+)/;
     const getExtension = (mimeType) => ((/image\/(?<ext>jpe?g|png|webp)/.exec(mimeType) || {}).groups || {}).ext || '' || 'png';
     const getFilename = (name, index, total, ext) => `${name}${(index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, '0')}.${ext.replace('jpeg', 'jpg')}`;
-    // Generate Zip File for download
-    function generateZip() {
-        // Source:
-        // http://stackoverflow.com/questions/8778863/downloading-an-image-using-xmlhttprequest-in-a-userscript/8781262#8781262
-        if (cache.downloadFiles === 0) {
-            const filenameRegex = /^(?<name>.*?)(?<index>\d+)\.(?<ext>\w+)$/;
-            const images = [...document.querySelectorAll('.PageImg')];
-            const filenames = (() => {
-                const result = [];
-                for (let i = 0; i < images.length; i += 1) {
-                    const $img = images[i];
-                    const filename = $img.getAttribute('src')?.split(/[?#]/)[0].split('/').pop() ?? '';
-                    const match = filenameRegex.exec(filename);
-                    if (!match || !match.groups)
-                        break;
-                    const fixedFilename = getFilename(match.groups.name, parseInt(match.groups.index, 10), images.length, match.groups?.ext);
-                    if (result.length > 0 && fixedFilename <= result[result.length - 1])
-                        break;
-                    result.push(fixedFilename);
-                }
-                if (result.length < images.length)
-                    return [];
-                return result;
-            })();
-            images.forEach((img, index) => {
-                const src = img.getAttribute('src') ?? '';
-                const base64 = /^data:(?<mimeType>image\/\w+);base64,+(?<data>.+)/.exec(src);
-                if (base64 && base64.groups) {
-                    const filename = getFilename('Page ', index, images.length, getExtension(base64.groups?.mimeType));
-                    cache.zip.file(filename, base64.groups.data, {
-                        base64: true,
-                        createFolders: true,
-                    });
-                    logScript(`${filename} Added to Zip from Base64 Image, From: ${src}`);
-                    cache.downloadFiles += 1;
-                }
-                else {
-                    try {
-                        GM_xmlhttpRequest({
-                            method: 'GET',
-                            url: src,
-                            headers: { referer: src, origin: src },
-                            responseType: 'blob',
-                            onload(request) {
-                                const filename = filenames[index] ||
-                                    getFilename('Page ', index, images.length, getExtension(request.response.type));
-                                cache.zip.file(filename, request.response, {
-                                    base64: true,
-                                    createFolders: true,
-                                    compression: 'DEFLATE',
-                                });
-                                logScript(`${filename} Added to Zip as Base64 Image, From: ${src}, Data:`, request.response);
-                                cache.downloadFiles += 1;
-                            },
-                        });
-                    }
-                    catch (e) {
-                        logScript(e);
-                    }
-                }
+    function getImage(src) {
+        return new Promise((resolve) => {
+            logScript(`Getting Image data: ${src}`);
+            GM_xmlhttpRequest({
+                method: 'GET',
+                url: src,
+                headers: { referer: src, origin: src },
+                responseType: 'blob',
+                onload(response) {
+                    // logScript(`Received image: ${src}`);
+                    resolve(response);
+                },
+            });
+        });
+    }
+    function getImageData(img, index, array) {
+        const src = img.getAttribute('src') ?? img.getAttribute('data-src');
+        if (src == null)
+            return Promise.reject(new Error('Image source not specified'));
+        const base64 = base64Regex.exec(src);
+        if (base64 && base64.groups) {
+            return Promise.resolve({
+                name: getFilename('Page-', index, array.length, getExtension(base64.groups?.mimeType)),
+                data: base64.groups.data,
             });
         }
-        const total = document.querySelectorAll('.PageImg').length;
-        if (cache.downloadFiles < total) {
-            logScript(`Waiting for Files to Download ${cache.downloadFiles} of ${total}`);
-            setTimeout(generateZip, 2000);
-        }
-        else {
-            try {
-                logScript('Generating Zip');
-                cache.zip
-                    .generateAsync({
-                    type: 'blob',
-                })
-                    .then((content) => {
-                    logScript('Download Ready');
-                    const zipName = `${document.querySelector('#MangaTitle')?.textContent?.trim()}.zip`;
-                    saveAs(content, zipName);
-                    const button = document.querySelector('.download');
-                    button.disabled = false;
-                    button.classList.remove('loading');
-                })
-                    .catch(logScript);
-            }
-            catch (e) {
-                logScript(e);
-            }
-        }
+        return new Promise((resolve) => {
+            // setTimeout(
+            //   () =>
+            getImage(src).then((res) => resolve({
+                name: getFilename('Page-', index, array.length, getExtension(res.response.type)),
+                data: res.response,
+            }));
+            //   useSettings().throttlePageLoad * index,
+            // );
+        });
+    }
+    function addZip(img) {
+        logScript(`${img.name} Added to Zip from Base64 Image`);
+        zip.file(img.name, img.data, {
+            base64: true,
+            createFolders: true,
+            compression: 'DEFLATE',
+        });
+    }
+    async function generateZip() {
+        zip = new JSZip();
+        const images = [...document.querySelectorAll('.PageImg')];
+        const data = await Promise.all(images.map(getImageData));
+        data.forEach(addZip);
+        logScript('Generating Zip');
+        zip
+            .generateAsync({
+            type: 'blob',
+        })
+            .then((content) => {
+            logScript('Download Ready');
+            const zipName = `${document.querySelector('#MangaTitle')?.textContent?.trim()}.zip`;
+            saveAs(content, zipName);
+            document.getElementById('download')?.classList.remove('loading');
+        })
+            .catch(logScript);
     }
 
     function startDownload(event) {
         const button = event.currentTarget;
+        if (button.classList.contains('loading'))
+            return;
         logScript('Downloading Chapter');
-        button.disabled = true;
         button.classList.add('loading');
         generateZip();
     }
@@ -3537,7 +3530,7 @@ ${IconCheck}
             window.location.href = url;
     }
     function globals() {
-        document.querySelector('.download')?.addEventListener('click', startDownload);
+        document.querySelector('#download')?.addEventListener('click', startDownload);
         document.querySelector('#pageControls')?.addEventListener('click', globalHideImageControls);
         document.querySelector('#next')?.addEventListener('click', redirect);
         document.querySelector('#prev')?.addEventListener('click', redirect);
@@ -3559,7 +3552,9 @@ ${IconCheck}
         };
         function toggleScrollDirection() {
             const { scrollY } = window;
-            if (showEnd && scrollY + window.innerHeight + showEnd > document.body.offsetHeight) {
+            if (showEnd &&
+                useSettings().zoom !== -1000 &&
+                scrollY + window.innerHeight + showEnd > document.body.offsetHeight) {
                 setScrollDirection('end');
             }
             else if (scrollY > prevOffset && scrollY > 50) {
@@ -3717,14 +3712,17 @@ ${IconCheck}
             img.removeAttribute('style');
             img.classList.remove('FreeWidth');
             if (zoom === 1000) {
+                // Fit width
                 img.style.width = `${window.innerWidth}px`;
             }
             else if (zoom === -1000) {
+                // Fit height
                 const nav = document.querySelector('#Navigation')?.classList.contains('disabled');
                 const chap = document.querySelector('#Chapter')?.classList.contains('WebComic');
                 const nextHeight = window.innerHeight + (nav ? 0 : -30) + (chap ? 0 : -35);
                 img.style.height = `${nextHeight}px`;
                 img.style.minWidth = 'unset';
+                document.getElementById('header')?.classList.add('mouseOverMenu');
             }
             else {
                 img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
@@ -3753,12 +3751,8 @@ ${IconCheck}
     }
     function onImagesDone() {
         logScript('Images Loading Complete');
-        if (!useSettings().lazyLoadImages) {
-            document.querySelector('.download')?.setAttribute('href', '#download');
-            logScript('Download Available');
-            if (useSettings().downloadZip) {
-                document.querySelector('#blob')?.dispatchEvent(new Event('click'));
-            }
+        if (useSettings().downloadZip) {
+            document.getElementById('download')?.dispatchEvent(new Event('click'));
         }
     }
     function updateProgress() {
@@ -3881,9 +3875,6 @@ ${IconCheck}
         logScript('Loading Images');
         logScript(`Intervals: ${manga.timer || useSettings().throttlePageLoad || 'Default(1000)'}`);
         logScript(`Lazy: ${useSettings().lazyLoadImages}, Starting from: ${useSettings().lazyStart}`);
-        if (useSettings().lazyLoadImages) {
-            logScript('Download may not work with Lazy Loading Images');
-        }
         if (isImagesManga(manga)) {
             logScript('Method: Images:', manga.listImages);
             loadMangaImages(begin, manga);
@@ -3907,6 +3898,7 @@ ${IconCheck}
                 wait: useSettings().throttlePageLoad,
             });
         }
+        document.getElementById('download')?.classList.remove('disabled');
     }
 
     function individual() {
