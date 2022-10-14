@@ -65,6 +65,7 @@ function onImagesDone() {
   if (useSettings().downloadZip) {
     document.getElementById('download')?.dispatchEvent(new Event('click'));
   }
+  document.getElementById('download')?.classList.remove('disabled');
 }
 
 function updateProgress() {
@@ -219,8 +220,9 @@ function loadManga(manga: IManga, begin = 1) {
         }),
       wait: useSettings().throttlePageLoad,
     });
+  } else {
+    logScript('No Loading Method Found');
   }
-  document.getElementById('download')?.classList.remove('disabled');
 }
 
 export { loadManga, applyZoom, reloadImage };

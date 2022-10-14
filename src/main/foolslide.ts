@@ -1,13 +1,8 @@
 // == FoOlSlide ====================================================================================
 export default {
-  name: ['FoOlSlide', 'Kireicake', 'Yuri-ism', 'Sense-Scans'],
+  name: ['FoOlSlide', 'Kireicake'],
   url: /^(?!.*jaiminisbox).*\/read\/.+/,
-  homepage: [
-    '#',
-    'https://reader.kireicake.com',
-    'https://www.yuri-ism.net',
-    'https://sensescans.com/',
-  ],
+  homepage: ['#', 'https://reader.kireicake.com'],
   language: ['English'],
   obs: 'Any Site that uses FoOLSlide',
   category: 'manga',
@@ -23,7 +18,9 @@ export default {
     const images = [...document.querySelectorAll('.inner img:not(.open)')];
     const num = images.length > 1 ? images.length : pages.length;
     return {
-      title: chapter.at(origin)?.querySelector('a')?.textContent?.trim(),
+      title:
+        chapter.at(origin)?.querySelector('a')?.textContent?.trim() ??
+        document.querySelector('title')?.textContent?.trim(),
       series: document.querySelector('div.tbtitle div.text a')?.getAttribute('href'),
       pages: num,
       prev: chapter
