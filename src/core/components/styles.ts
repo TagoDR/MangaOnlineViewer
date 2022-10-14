@@ -448,7 +448,7 @@ img {
 }
 
 #MangaOnlineViewer #Header.scroll #menu,
-#MangaOnlineViewer #Header.fixed #menu
+#MangaOnlineViewer #Header.fixed #menu,
 #MangaOnlineViewer #Header.hover:hover #menu,
 #MangaOnlineViewer #Header:not(.click).visible #menu {
   display: none;
