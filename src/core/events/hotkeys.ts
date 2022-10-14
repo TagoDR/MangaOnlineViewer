@@ -16,7 +16,7 @@ function doScrolling(sign: 1 | -1) {
     if (target < 0) {
       scrollToElement(header);
     } else if (target >= pages.length) {
-      header.classList.add('scroll-end');
+      header.classList.add('headroom-end');
     } else {
       logScript(`Current array page ${currentPage},`, `Scrolling to page ${target}`);
       scrollToElement(pages.at(target));

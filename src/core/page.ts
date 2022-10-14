@@ -32,7 +32,6 @@ function applyZoom(pages: string = '.PageContent img', zoom = useSettings().zoom
       const nextHeight = window.innerHeight + (nav ? 0 : -30) + (chap ? 0 : -35);
       img.style.height = `${nextHeight}px`;
       img.style.minWidth = 'unset';
-      document.getElementById('header')?.classList.add('mouseOverMenu');
     } else {
       img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
     }

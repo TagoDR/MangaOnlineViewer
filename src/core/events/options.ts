@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 import { resetSettings, updateSettings } from '../settings';
-import { LoadMode } from '../../types';
+import { Header, LoadMode } from '../../types';
 import { applyZoom } from '../page';
 import { replaceStyleSheet } from '../../utils/css';
 
@@ -103,12 +103,14 @@ function options() {
   }
   document.querySelector('#hidePageControls')?.addEventListener('change', checkHideImageControls);
 
-  // Sticky Header or MouseOverMenu Toggle
-  function checkMouseOverMenu(event: Event) {
-    document.querySelector('#Header')?.classList.toggle('mouseOverMenu');
-    updateSettings({ mouseOverMenu: (event.currentTarget as HTMLInputElement).checked });
+  // Change Header Type
+  function changeHeaderType(event: Event) {
+    document.querySelector('#Header')!.className = '';
+    const headerType = (event.currentTarget as HTMLInputElement).value;
+    document.querySelector('#Header')?.classList.add(headerType);
+    updateSettings({ header: headerType as Header });
   }
-  document.querySelector('#mouseOverMenu')?.addEventListener('change', checkMouseOverMenu);
+  document.querySelector('#headerType')?.addEventListener('change', changeHeaderType);
 }
 
 export default options;

@@ -10,10 +10,10 @@ function headroom(showEnd = 0) {
 
   const setScrollDirection = (classSuffix: string) => {
     const header = document.querySelector<HTMLDivElement>('#Header')!;
-    header.classList.remove('scroll-end');
-    header.classList.remove('scroll-hide');
-    header.classList.remove('scroll-show');
-    if (classSuffix) header.classList.add(`scroll-${classSuffix}`);
+    header.classList.remove('headroom-end');
+    header.classList.remove('headroom-hide');
+    header.classList.remove('headroom-show');
+    if (classSuffix) header.classList.add(`headroom-${classSuffix}`);
   };
 
   function toggleScrollDirection() {

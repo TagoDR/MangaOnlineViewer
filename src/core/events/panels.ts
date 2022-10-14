@@ -1,14 +1,26 @@
 function panels() {
-  // Settings Control
-  function buttonSettings() {
-    document.querySelector('#SettingsPanel')?.classList.toggle('visible');
-    document.querySelector('#Navigation')?.classList.toggle('visible');
-    document.querySelector('#Header')?.classList.toggle('visible');
-    document.querySelector('#SettingsOverlay')?.classList.toggle('visible');
+  // Show Header list
+  function buttonHeader() {
+    const header = document.querySelector('#Header');
+    if (header?.classList.contains('click')) header?.classList.toggle('visible');
   }
-  document.querySelector('#settings')?.addEventListener('click', buttonSettings);
-  document.querySelector('#CloseSettings')?.addEventListener('click', buttonSettings);
-  document.querySelector('#SettingsOverlay')?.addEventListener('click', buttonSettings);
+  document.querySelector('#menu')?.addEventListener('click', buttonHeader);
+  // Settings Control
+  function buttonSettingsOpen() {
+    document.querySelector('#SettingsPanel')?.classList.add('visible');
+    document.querySelector('#Navigation')?.classList.add('visible');
+    document.querySelector('#Header')?.classList.add('visible');
+    document.querySelector('#SettingsOverlay')?.classList.add('visible');
+  }
+  function buttonSettingsClose() {
+    document.querySelector('#SettingsPanel')?.classList.remove('visible');
+    document.querySelector('#Navigation')?.classList.remove('visible');
+    document.querySelector('#Header')?.classList.remove('visible');
+    document.querySelector('#SettingsOverlay')?.classList.remove('visible');
+  }
+  document.querySelector('#settings')?.addEventListener('click', buttonSettingsOpen);
+  document.querySelector('#CloseSettings')?.addEventListener('click', buttonSettingsClose);
+  document.querySelector('#SettingsOverlay')?.addEventListener('click', buttonSettingsClose);
   // Keybindings list
   function buttonKeybindings() {
     document.querySelector('#KeybindingsPanel')?.classList.toggle('visible');

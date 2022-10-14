@@ -189,10 +189,21 @@ const SettingsPanel = `
     }/>
   </div>
 <!-- =========================================================================================== -->
-  <div class='ControlLabel mouseOverMenu'>Toggle Sticky Header / MouseOverMenu:
-    <input type='checkbox' value='false' name='mouseOverMenu' id='mouseOverMenu' ${
-      useSettings().mouseOverMenu ? 'checked' : ''
-    }/>
+  <div class='ControlLabel headerType'>Change Header Type:
+    <select id='headerType'>
+      <option value='hover' ${useSettings().header === 'hover' ? 'selected' : ''}>
+        Hover
+      </option>
+      <option value='scroll' ${useSettings().header === 'scroll' ? 'selected' : ''}>
+        Scroll
+      </option>
+      <option value='click' ${useSettings().header === 'click' ? 'selected' : ''}>
+        Click
+      </option>
+      <option value='fixed' ${useSettings().header === 'fixed' ? 'selected' : ''}>
+        Fixed
+      </option>
+    </select>
   </div>
 </div>
 `;

@@ -37,7 +37,7 @@ const app = (manga: IManga, begin = 1) => `
     ${useSettings().hidePageControls ? 'hideControls' : ''}
     ${isBookmarked() ? 'bookmarked' : ''}"
   data-theme='${useSettings().theme}'>
-  <header id="Header" class="${useSettings().mouseOverMenu ? 'mouseOverMenu' : ''}">
+  <header id="Header" class="${useSettings().header}">
     <div id='menu'>
       ${IconMenu2}
     </div>

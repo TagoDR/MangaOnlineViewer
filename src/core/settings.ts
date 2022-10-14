@@ -28,7 +28,7 @@ export const defaultSettings: ISettings = {
   lazyLoadImages: false,
   lazyStart: 50,
   hidePageControls: false,
-  mouseOverMenu: true,
+  header: 'hover',
   maxReload: 5,
 };
 
@@ -41,6 +41,7 @@ if (isMobile) {
   settings.fitWidthIfOversize = true;
   settings.showThumbnails = false;
   settings.viewMode = 'WebComic';
+  settings.header = 'click';
 }
 
 type SettingsKey = keyof typeof settings;
