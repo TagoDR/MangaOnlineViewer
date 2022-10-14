@@ -4,7 +4,7 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Alpha-scans, Voids-Scans, Batoto, ComiCastle, Dynasty-Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MReader, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Yuri-ism, Sense-Scans, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus
+// @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Alpha-scans, Voids-Scans, Batoto, ComiCastle, Dynasty-Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MReader, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus
 // @version 2022.10.14
 // @license MIT
 // @grant GM_getValue
@@ -184,14 +184,9 @@
 
     // == FoOlSlide ====================================================================================
     var foolslide = {
-        name: ['FoOlSlide', 'Kireicake', 'Yuri-ism', 'Sense-Scans'],
+        name: ['FoOlSlide', 'Kireicake'],
         url: /^(?!.*jaiminisbox).*\/read\/.+/,
-        homepage: [
-            '#',
-            'https://reader.kireicake.com',
-            'https://www.yuri-ism.net',
-            'https://sensescans.com/',
-        ],
+        homepage: ['#', 'https://reader.kireicake.com'],
         language: ['English'],
         obs: 'Any Site that uses FoOLSlide',
         category: 'manga',
@@ -208,7 +203,8 @@
             const images = [...document.querySelectorAll('.inner img:not(.open)')];
             const num = images.length > 1 ? images.length : pages.length;
             return {
-                title: chapter.at(origin)?.querySelector('a')?.textContent?.trim(),
+                title: chapter.at(origin)?.querySelector('a')?.textContent?.trim() ??
+                    document.querySelector('title')?.textContent?.trim(),
                 series: document.querySelector('div.tbtitle div.text a')?.getAttribute('href'),
                 pages: num,
                 prev: chapter
@@ -2226,31 +2222,37 @@ img {
   z-index: 900;
 }
 
-#MangaOnlineViewer #Header.scroll-hide {
+#MangaOnlineViewer #Header.scroll.headroom-hide {
   transform: translateY(-100%);
 }
 
-#MangaOnlineViewer #Header.scroll-show {
+#MangaOnlineViewer #Header.scroll.headroom-show {
   transform: translateY(-1%);
 }
 
-#MangaOnlineViewer #Header.mouseOverMenu {
+#MangaOnlineViewer #Header.hover,
+#MangaOnlineViewer #Header.fixed,
+#MangaOnlineViewer #Header.click {
   position: static;
   transform: none;
 }
 
-#MangaOnlineViewer #Header.scroll-end,
-#MangaOnlineViewer #Header.visible {
+#MangaOnlineViewer #Header.headroom-end,
+#MangaOnlineViewer #Header.visible,
+#MangaOnlineViewer #Header.fixed {
   transform: translateY(-1%);
   position: sticky;
 }
 
-#MangaOnlineViewer #Header.mouseOverMenu:hover {
+#MangaOnlineViewer #Header.hover:hover,
+#MangaOnlineViewer #Header.fixed {
   position: sticky;
 }
 
-#MangaOnlineViewer #Header:not(.mouseOverMenu) #menu,
-#MangaOnlineViewer #Header.mouseOverMenu:hover #menu {
+#MangaOnlineViewer #Header.scroll #menu,
+#MangaOnlineViewer #Header.fixed #menu
+#MangaOnlineViewer #Header.hover:hover #menu,
+#MangaOnlineViewer #Header:not(.click).visible #menu {
   display: none;
 }
 
@@ -2261,6 +2263,16 @@ img {
   top: 0;
   z-index: 1;
   color: var(--theme-body-text-color);
+}
+
+#MangaOnlineViewer #Header.click #menu {
+  cursor: pointer;
+}
+
+#MangaOnlineViewer #Header.click.visible #menu {
+  position: static;
+  width: 50px;
+  min-height: unset;
 }
 
 #MangaOnlineViewer #MangaTitle {
@@ -2485,19 +2497,6 @@ img {
   #MangaOnlineViewer #Header {
       flex-direction: column;
   }
-
-  #MangaOnlineViewer #Header.mouseOverMenu {
-    position: sticky;
-    transition: transform 0.3s ease-in;
-  }
-
-  #MangaOnlineViewer #Header.scroll-show {
-    transform: translateY(-1%);
-  }
-
-  #MangaOnlineViewer #Header.scroll-hide {
-    transform: translateY(-100%);
-  }
   
   #MangaOnlineViewer .PageContent .PageImg {
     max-width: 100%;
@@ -2522,10 +2521,6 @@ img {
     order: 2;
   }
   
-  #MangaOnlineViewer #menu {
-    display: none;
-  }
-
   #MangaOnlineViewer #GlobalFunctions #keybindings {
     display: none;
   }
@@ -2538,20 +2533,7 @@ img {
     justify-content: center;
     align-items: center;
   }
-
-  #MangaOnlineViewer #Header.mouseOverMenu {
-    position: sticky;
-    transition: transform 0.3s ease-in;
-  }
   
-  #MangaOnlineViewer #Header.scroll-show {
-    transform: translateY(-1%);
-  }
-  
-  #MangaOnlineViewer #Header.scroll-hide {
-    transform: translateY(-100%);
-  }
-
   #MangaOnlineViewer .ViewerTitle {
     order: 1;
     flex-basis: 100%;
@@ -2609,18 +2591,14 @@ img {
   #MangaOnlineViewer #SettingsPanel .downloadZip,
   #MangaOnlineViewer #SettingsPanel .minZoom,
   #MangaOnlineViewer #SettingsPanel .zoomStep,
-  #MangaOnlineViewer #SettingsPanel .mouseOverMenu {
+  #MangaOnlineViewer #SettingsPanel .headerType {
     display: none;
   }
 
   #MangaOnlineViewer #KeybindingsPanel {
     display: none;
   }  
-
-  #MangaOnlineViewer #menu {
-    display: none;
-  }
-  
+    
   #MangaOnlineViewer .ViewerTitle {
     height: auto;
     padding: 0;
@@ -2731,7 +2709,7 @@ img {
         lazyLoadImages: false,
         lazyStart: 50,
         hidePageControls: false,
-        mouseOverMenu: true,
+        header: 'hover',
         maxReload: 5,
     };
     // Configuration
@@ -2742,6 +2720,7 @@ img {
         settings$1.fitWidthIfOversize = true;
         settings$1.showThumbnails = false;
         settings$1.viewMode = 'WebComic';
+        settings$1.header = 'click';
     }
     function useSettings() {
         return settings$1;
@@ -3058,8 +3037,21 @@ ${IconCheck}
     <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${useSettings().hidePageControls ? 'checked' : ''}/>
   </div>
 <!-- =========================================================================================== -->
-  <div class='ControlLabel mouseOverMenu'>Toggle Sticky Header / MouseOverMenu:
-    <input type='checkbox' value='false' name='mouseOverMenu' id='mouseOverMenu' ${useSettings().mouseOverMenu ? 'checked' : ''}/>
+  <div class='ControlLabel headerType'>Change Header Type:
+    <select id='headerType'>
+      <option value='hover' ${useSettings().header === 'hover' ? 'selected' : ''}>
+        Hover
+      </option>
+      <option value='scroll' ${useSettings().header === 'scroll' ? 'selected' : ''}>
+        Scroll
+      </option>
+      <option value='click' ${useSettings().header === 'click' ? 'selected' : ''}>
+        Click
+      </option>
+      <option value='fixed' ${useSettings().header === 'fixed' ? 'selected' : ''}>
+        Fixed
+      </option>
+    </select>
   </div>
 </div>
 `;
@@ -3081,7 +3073,7 @@ ${IconCheck}
                 scrollToElement(header);
             }
             else if (target >= pages.length) {
-                header.classList.add('scroll-end');
+                header.classList.add('headroom-end');
             }
             else {
                 logScript(`Current array page ${currentPage},`, `Scrolling to page ${target}`);
@@ -3308,7 +3300,7 @@ ${IconCheck}
     ${useSettings().hidePageControls ? 'hideControls' : ''}
     ${isBookmarked() ? 'bookmarked' : ''}"
   data-theme='${useSettings().theme}'>
-  <header id="Header" class="${useSettings().mouseOverMenu ? 'mouseOverMenu' : ''}">
+  <header id="Header" class="${useSettings().header}">
     <div id='menu'>
       ${IconMenu2}
     </div>
@@ -3544,11 +3536,11 @@ ${IconCheck}
         let prevOffset = 0;
         const setScrollDirection = (classSuffix) => {
             const header = document.querySelector('#Header');
-            header.classList.remove('scroll-end');
-            header.classList.remove('scroll-hide');
-            header.classList.remove('scroll-show');
+            header.classList.remove('headroom-end');
+            header.classList.remove('headroom-hide');
+            header.classList.remove('headroom-show');
             if (classSuffix)
-                header.classList.add(`scroll-${classSuffix}`);
+                header.classList.add(`headroom-${classSuffix}`);
         };
         function toggleScrollDirection() {
             const { scrollY } = window;
@@ -3722,7 +3714,6 @@ ${IconCheck}
                 const nextHeight = window.innerHeight + (nav ? 0 : -30) + (chap ? 0 : -35);
                 img.style.height = `${nextHeight}px`;
                 img.style.minWidth = 'unset';
-                document.getElementById('header')?.classList.add('mouseOverMenu');
             }
             else {
                 img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
@@ -3754,6 +3745,7 @@ ${IconCheck}
         if (useSettings().downloadZip) {
             document.getElementById('download')?.dispatchEvent(new Event('click'));
         }
+        document.getElementById('download')?.classList.remove('disabled');
     }
     function updateProgress() {
         const total = document.querySelectorAll('.PageContent .PageImg').length;
@@ -3898,7 +3890,9 @@ ${IconCheck}
                 wait: useSettings().throttlePageLoad,
             });
         }
-        document.getElementById('download')?.classList.remove('disabled');
+        else {
+            logScript('No Loading Method Found');
+        }
     }
 
     function individual() {
@@ -4026,25 +4020,40 @@ ${IconCheck}
             updateSettings({ hidePageControls: event.currentTarget.checked });
         }
         document.querySelector('#hidePageControls')?.addEventListener('change', checkHideImageControls);
-        // Sticky Header or MouseOverMenu Toggle
-        function checkMouseOverMenu(event) {
-            document.querySelector('#Header')?.classList.toggle('mouseOverMenu');
-            updateSettings({ mouseOverMenu: event.currentTarget.checked });
+        // Change Header Type
+        function changeHeaderType(event) {
+            document.querySelector('#Header').className = '';
+            const headerType = event.currentTarget.value;
+            document.querySelector('#Header')?.classList.add(headerType);
+            updateSettings({ header: headerType });
         }
-        document.querySelector('#mouseOverMenu')?.addEventListener('change', checkMouseOverMenu);
+        document.querySelector('#headerType')?.addEventListener('change', changeHeaderType);
     }
 
     function panels() {
-        // Settings Control
-        function buttonSettings() {
-            document.querySelector('#SettingsPanel')?.classList.toggle('visible');
-            document.querySelector('#Navigation')?.classList.toggle('visible');
-            document.querySelector('#Header')?.classList.toggle('visible');
-            document.querySelector('#SettingsOverlay')?.classList.toggle('visible');
+        // Show Header list
+        function buttonHeader() {
+            const header = document.querySelector('#Header');
+            if (header?.classList.contains('click'))
+                header?.classList.toggle('visible');
         }
-        document.querySelector('#settings')?.addEventListener('click', buttonSettings);
-        document.querySelector('#CloseSettings')?.addEventListener('click', buttonSettings);
-        document.querySelector('#SettingsOverlay')?.addEventListener('click', buttonSettings);
+        document.querySelector('#menu')?.addEventListener('click', buttonHeader);
+        // Settings Control
+        function buttonSettingsOpen() {
+            document.querySelector('#SettingsPanel')?.classList.add('visible');
+            document.querySelector('#Navigation')?.classList.add('visible');
+            document.querySelector('#Header')?.classList.add('visible');
+            document.querySelector('#SettingsOverlay')?.classList.add('visible');
+        }
+        function buttonSettingsClose() {
+            document.querySelector('#SettingsPanel')?.classList.remove('visible');
+            document.querySelector('#Navigation')?.classList.remove('visible');
+            document.querySelector('#Header')?.classList.remove('visible');
+            document.querySelector('#SettingsOverlay')?.classList.remove('visible');
+        }
+        document.querySelector('#settings')?.addEventListener('click', buttonSettingsOpen);
+        document.querySelector('#CloseSettings')?.addEventListener('click', buttonSettingsClose);
+        document.querySelector('#SettingsOverlay')?.addEventListener('click', buttonSettingsClose);
         // Keybindings list
         function buttonKeybindings() {
             document.querySelector('#KeybindingsPanel')?.classList.toggle('visible');

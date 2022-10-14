@@ -66,7 +66,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/
 - [WebToons](https://www.webtoons.com/) _[English]_
 - [Manga33](https://manga33.com/) _[English]_
 - [ZeroScans](https://zeroscans.com/) _[English]_
-- [FoOlSlide](#) / [Kireicake](https://reader.kireicake.com) / [Yuri-ism](https://www.yuri-ism.net) / [Sense-Scans](https://sensescans.com/) _[English]_ **Obs: Any Site that uses FoOLSlide**
+- [FoOlSlide](#) / [Kireicake](https://reader.kireicake.com) _[English]_ **Obs: Any Site that uses FoOLSlide**
 - [Madara WordPress Plugin](#) / [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) / [JaiminisBox](https://jaiminisbox.net) / [DisasterScans](https://disasterscans.com/) / [ManhuaPlus](https://manhuaplus.com/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
 - [Leitor](https://leitor.net/) _[Portuguese]_
 - [mangahosted](https://mangahosted.com/) _[Portuguese]_
