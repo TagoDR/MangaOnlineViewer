@@ -68,8 +68,8 @@ const app = (manga: IManga, begin = 1) => `
     </div>
     <nav id="ChapterNavigation">
       <div id="Counters" class="ControlLabel">
-        <i>0</i> of <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b>
-        ${getLocaleString('PAGES_LOADED')}
+        ${getLocaleString('PAGES_LOADED')}:
+        <i>0</i> / <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b>
         <span class="ControlLabel">
           ${getLocaleString('GO_TO_PAGE')}:
         </span>
@@ -104,7 +104,7 @@ const app = (manga: IManga, begin = 1) => `
   <nav id="Navigation" class="panel ${useSettings().showThumbnails ? '' : 'disabled'}">
     <div id="NavigationCounters" class="ControlLabel">
       ${IconCategory}
-      <i>0</i> of <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b>
+      <i>0</i> / <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b>
       ${getLocaleString('PAGES_LOADED')}
     </div>
     <div id="Thumbnails">

@@ -71,17 +71,14 @@ const SettingsPanel = `
     <!-- =========================================================================================== -->
     <div class="ControlLabel loadMode">${getLocaleString('DEFAULT_LOAD_MODE')}:
       <select id="loadMode">
-        <option value="wait" ${
-          useSettings().loadMode === 'wait' ? 'selected' : ''
-        }>Normal(Wait 3 sec)
+        <option value="wait" ${useSettings().loadMode === 'wait' ? 'selected' : ''}>
+          ${getLocaleString('LOAD_MODE_NORMAL')}
         </option>
-        <option value="always" ${
-          useSettings().loadMode === 'always' ? 'selected' : ''
-        }>Always(Immediately)
+        <option value="always" ${useSettings().loadMode === 'always' ? 'selected' : ''}>
+          ${getLocaleString('LOAD_MODE_ALWAYS')}
         </option>
-        <option value="never" ${
-          useSettings().loadMode === 'never' ? 'selected' : ''
-        }>Never(Manually)
+        <option value="never" ${useSettings().loadMode === 'never' ? 'selected' : ''}>
+          ${getLocaleString('LOAD_MODE_NEVER')}
         </option>
       </select>
     </div>
