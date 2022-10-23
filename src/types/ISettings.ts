@@ -15,6 +15,7 @@ export type ColorScheme = 'dark' | 'light';
 export type Header = 'hover' | 'scroll' | 'click' | 'fixed';
 
 export interface ISettings {
+  locale: string;
   colorScheme: ColorScheme;
   theme: string;
   customTheme: string;

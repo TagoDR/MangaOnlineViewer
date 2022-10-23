@@ -15,13 +15,29 @@ function options() {
       icon: 'info',
     });
   }
+
   document.querySelector('#ResetSettings')?.addEventListener('click', buttonResetSettings);
+
+  // Change Locale
+  function changeLocale(event: Event) {
+    const locale = (event.currentTarget as HTMLInputElement).value;
+    updateSettings({ locale });
+    Swal.fire({
+      title: 'Attention',
+      text: 'Language has been changed, reload the page to take effect',
+      timer: 10000,
+      icon: 'info',
+    });
+  }
+
+  document.querySelector('#locale')?.addEventListener('change', changeLocale);
 
   // Image Fit width if Oversize Toggle
   function checkFitWidthOversize(event: Event) {
     document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize');
     updateSettings({ fitWidthIfOversize: (event.currentTarget as HTMLInputElement).checked });
   }
+
   document.querySelector('#fitIfOversize')?.addEventListener('change', checkFitWidthOversize);
 
   // Start/Load mode Selector
@@ -29,6 +45,7 @@ function options() {
     const mode = (event.currentTarget as HTMLInputElement).value;
     updateSettings({ loadMode: mode as LoadMode });
   }
+
   document.querySelector('#loadMode')?.addEventListener('change', changeLoadMode);
 
   // Show Thumbnail Toggle
@@ -37,6 +54,7 @@ function options() {
     updateSettings({ showThumbnails: (event.currentTarget as HTMLInputElement).checked });
     applyZoom();
   }
+
   document.querySelector('#showThumbnails')?.addEventListener('change', checkShowThumbnails);
 
   // Download auto start toggle
@@ -51,6 +69,7 @@ function options() {
       });
     }
   }
+
   document.querySelector('#downloadZip')?.addEventListener('change', changeAutoDownload);
 
   // Lazy load Toggle
@@ -60,11 +79,12 @@ function options() {
       Swal.fire({
         title: 'Warning',
         html: `Lazy load is incompatible with zip download, you will not be able to download with this setting ON.<br/>
-               Suggestion: <span style='color:red;font-weight:bold'>Disable Thumbnails</span> to save Bandwidth/Memory.`,
+               Suggestion: <span style="color:red;font-weight:bold">Disable Thumbnails</span> to save Bandwidth/Memory.`,
         icon: 'warning',
       });
     }
   }
+
   document.querySelector('#lazyLoadImages')?.addEventListener('change', checkLazyLoad);
 
   // Lazy load starting point Slider
@@ -72,6 +92,7 @@ function options() {
     const start = (event.currentTarget as HTMLInputElement).value;
     updateSettings({ lazyStart: parseInt(start, 10) });
   }
+
   document.querySelector('#lazyStart')?.addEventListener('change', changeLazyStart);
 
   // Images load speed Selector
@@ -79,6 +100,7 @@ function options() {
     const timer = parseInt((event.currentTarget as HTMLInputElement).value, 10);
     updateSettings({ throttlePageLoad: timer });
   }
+
   document.querySelector('#PagesPerSecond')?.addEventListener('change', changePagesPerSecond);
 
   // Zoom Step Slider
@@ -86,6 +108,7 @@ function options() {
     const step = (event.currentTarget as HTMLInputElement).value;
     updateSettings({ zoomStep: parseInt(step, 10) });
   }
+
   document.querySelector('#zoomStep')?.addEventListener('change', changeZoomStep);
 
   // Min Zoom Slider
@@ -94,6 +117,7 @@ function options() {
     replaceStyleSheet('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
     updateSettings({ minZoom: parseInt(min, 10) });
   }
+
   document.querySelector('#minZoom')?.addEventListener('change', changeMinZoom);
 
   // Show/hide Image Controls Toggle
@@ -101,6 +125,7 @@ function options() {
     document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
     updateSettings({ hidePageControls: (event.currentTarget as HTMLInputElement).checked });
   }
+
   document.querySelector('#hidePageControls')?.addEventListener('change', checkHideImageControls);
 
   // Change Header Type
@@ -110,6 +135,7 @@ function options() {
     document.querySelector('#Header')?.classList.add(headerType);
     updateSettings({ header: headerType as Header });
   }
+
   document.querySelector('#headerType')?.addEventListener('change', changeHeaderType);
 }
 

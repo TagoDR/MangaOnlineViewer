@@ -9,8 +9,10 @@ import {
 } from '../utils/tampermonkey';
 import { ISettings } from '../types';
 import diffObj from '../utils/diffObj';
+import locales from '../locales';
 
 export const defaultSettings: ISettings = {
+  locale: 'en_US',
   theme: 'darkblue',
   customTheme: '#263e3a',
   themeShade: 600,
@@ -45,6 +47,7 @@ if (isMobile) {
 }
 
 type SettingsKey = keyof typeof settings;
+
 export function useSettingsValue(key: SettingsKey) {
   return settings[key];
 }
@@ -52,6 +55,15 @@ export function useSettingsValue(key: SettingsKey) {
 export function useSettings() {
   return settings;
 }
+
+export function getLocaleString(name: string): string {
+  const locale = locales.find((l) => l.ID === settings.locale);
+  if (locale) {
+    return locale[name];
+  }
+  return '##MISSING_STRING##';
+}
+
 export function updateSettings(newValue: Partial<ISettings>) {
   logScript(JSON.stringify(newValue));
   settings = { ...settings, ...newValue };
@@ -68,8 +80,9 @@ const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // year
 const refreshedBookmark = settings.bookmarks.filter(
   (el) => Date.now() - el.date < bookmarkTimeLimit,
 );
-if (settings.bookmarks.length !== refreshedBookmark.length)
+if (settings.bookmarks.length !== refreshedBookmark.length) {
   updateSettings({ bookmarks: refreshedBookmark });
+}
 
 export function isBookmarked(url: string = window.location.href): boolean {
   return useSettings().bookmarks.some((el) => el.url === url);
