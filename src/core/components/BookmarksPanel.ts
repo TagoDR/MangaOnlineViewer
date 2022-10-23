@@ -1,5 +1,5 @@
 import { IconExternalLink, IconTrash, IconX } from './icons';
-import { useSettings } from '../settings';
+import { getLocaleString, useSettings } from '../settings';
 import { isEmpty } from '../../utils/checks';
 
 const listBookmarks = () => {
@@ -29,11 +29,11 @@ const listBookmarks = () => {
   );
 };
 const BookmarkPanel = `
-<div id='BookmarksOverlay' class='overlay'></div>
-<div id='BookmarksPanel' class='panel'>
-  <button id='CloseBookmarks' class='closeButton'>${IconX}</button>
-  <h2>Bookmarks</h2>
-  <div id='BookmarksList'>
+<div id="BookmarksOverlay" class="overlay"></div>
+<div id="BookmarksPanel" class="panel">
+  <button id="CloseBookmarks" class="closeButton">${IconX}</button>
+  <h2>${getLocaleString('BOOKMARKS')}</h2>
+  <div id="BookmarksList">
     ${listBookmarks().join('')}
   </div>
 </div>

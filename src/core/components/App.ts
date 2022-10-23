@@ -1,107 +1,113 @@
 import { IManga } from '../../types';
-import { isBookmarked, useSettings } from '../settings';
+import { getLocaleString, isBookmarked, useSettings } from '../settings';
 import listPages from './MangaPages';
 import SettingsPanel from './SettingsPanel';
 import KeybindingsPanel from './KeybindingsPanel';
 import ThumbnailsPanel from './ThumbnailsPanel';
 import {
-  IconArrowBigLeft,
-  IconArrowBigRight,
-  IconCategory,
-  IconFileDownload,
-  IconLoader2,
-  IconMenu2,
   IconArrowAutofitDown,
   IconArrowAutofitHeight,
   IconArrowAutofitLeft,
   IconArrowAutofitRight,
   IconArrowAutofitWidth,
+  IconArrowBigLeft,
+  IconArrowBigRight,
   IconBookmarks,
+  IconCategory,
+  IconFileDownload,
   IconKeyboard,
   IconListNumbers,
+  IconLoader2,
+  IconMenu2,
   IconSettings,
+  IconSpacingVertical,
   IconZoomInArea,
   IconZoomOutArea,
   IconZoomPan,
-  IconSpacingVertical,
 } from './icons';
 import BookmarksPanel from './BookmarksPanel';
 import sequence from '../../utils/sequence';
 
 const listOptions = (times: number, begin: number) =>
-  sequence(times, begin).map((index) => `<option value='${index}'>${index}</option>`);
+  sequence(times, begin).map((index) => `<option value="${index}">${index}</option>`);
 
 const app = (manga: IManga, begin = 1) => `
-<div id='MangaOnlineViewer'
+<div id="MangaOnlineViewer"
   class="${useSettings().colorScheme} 
     ${useSettings().hidePageControls ? 'hideControls' : ''}
     ${isBookmarked() ? 'bookmarked' : ''}"
-  data-theme='${useSettings().theme}'>
+  data-theme="${useSettings().theme}">
   <header id="Header" class="${useSettings().header}">
-    <div id='menu'>
+    <div id="menu">
       ${IconMenu2}
     </div>
-    <aside id='GlobalFunctions'>
+    <aside id="GlobalFunctions">
       <span>
-        <button id='enlarge' title='Enlarge' class='ControlButton'>${IconZoomInArea}</button>
-        <button id='restore' title='Restore' class='ControlButton'>${IconZoomPan}</button>
-        <button id='reduce' title='Reduce' class='ControlButton'>${IconZoomOutArea}</button>
-        <button id='fitWidth' title='Fit Width' class='ControlButton'>${IconArrowAutofitWidth}</button>
-        <button id='fitHeight' title='Fit Height' class='ControlButton'>${IconArrowAutofitHeight}</button>
-        <button id='keybindings' title='Keybindings' class='ControlButton'>${IconKeyboard}</button>
+        <button id="enlarge" title="Enlarge" class="ControlButton">${IconZoomInArea}</button>
+        <button id="restore" title="Restore" class="ControlButton">${IconZoomPan}</button>
+        <button id="reduce" title="Reduce" class="ControlButton">${IconZoomOutArea}</button>
+        <button id="fitWidth" title="Fit Width" class="ControlButton">${IconArrowAutofitWidth}</button>
+        <button id="fitHeight" title="Fit Height" class="ControlButton">${IconArrowAutofitHeight}</button>
+        <button id="keybindings" title="Keybindings" class="ControlButton">${IconKeyboard}</button>
       </span>
       <span>
-        <button id='ltrMode' title='Left to Right Mode' class='ControlButton'>${IconArrowAutofitRight}</button>
-        <button id='verticalMode' title='Vertical Mode' class='ControlButton'>${IconArrowAutofitDown}</button>
-        <button id='webComic' title='Web Comic Mode' class='ControlButton'>${IconSpacingVertical}</button>
-        <button id='rtlMode' title='Right to Left Mode' class='ControlButton'>${IconArrowAutofitLeft}</button>
-        <button id='pageControls' title='Toggle Page Controls' class='ControlButton'>${IconListNumbers}</button>
-        <button id='bookmarks' title='List Bookmarks' class='ControlButton'>${IconBookmarks}</button>
-        <button id='settings' title='Settings' class='ControlButton'>${IconSettings}</button>
+        <button id="ltrMode" title="Left to Right Mode" class="ControlButton">${IconArrowAutofitRight}</button>
+        <button id="verticalMode" title="Vertical Mode" class="ControlButton">${IconArrowAutofitDown}</button>
+        <button id="webComic" title="Web Comic Mode" class="ControlButton">${IconSpacingVertical}</button>
+        <button id="rtlMode" title="Right to Left Mode" class="ControlButton">${IconArrowAutofitLeft}</button>
+        <button id="pageControls" title="Toggle Page Controls" class="ControlButton">${IconListNumbers}</button>
+        <button id="bookmarks" title="List Bookmarks" class="ControlButton">${IconBookmarks}</button>
+        <button id="settings" title="Settings" class="ControlButton">${IconSettings}</button>
       </span>
     </aside>
-    <div class='ViewerTitle'>
-      <h1 id='MangaTitle'>${manga.title}</h1>
-      <a id='series' href='${manga.series}'>(Return to Chapter List)</a>
+    <div class="ViewerTitle">
+      <h1 id="MangaTitle">${manga.title}</h1>
+      <a id="series" href="${manga.series}">
+        (${getLocaleString('RETURN_CHAPTER_LIST')})
+      </a>
     </div>
-    <nav id='ChapterNavigation'>
-      <div id='Counters' class='ControlLabel'>
-        <i>0</i> of <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b> Pages Loaded,
-        <span class='ControlLabel'>Go to Page:</span>
-        <select id='gotoPage'>
+    <nav id="ChapterNavigation">
+      <div id="Counters" class="ControlLabel">
+        <i>0</i> of <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b>
+        ${getLocaleString('PAGES_LOADED')}
+        <span class="ControlLabel">
+          ${getLocaleString('GO_TO_PAGE')}:
+        </span>
+        <select id="gotoPage">
           <option selected>#</option>
           ${listOptions(manga.pages, begin).join('')}
         </select>
       </div>
-      <div id='ChapterControl' class='ChapterControl'>
-        <button id='download' class='NavigationControlButton ControlButton disabled' title='Download Images Zip' type='button'>
+      <div id="ChapterControl" class="ChapterControl">
+        <button id="download" class="NavigationControlButton ControlButton disabled" title="Download Images Zip" type="button">
           ${IconFileDownload}
           ${IconLoader2}
-          Download
+          ${getLocaleString('BUTTON_DOWNLOAD')}
         </button>
-        <button id='prev' class='NavigationControlButton ControlButton' title='Previos Chapter' type='button' 
-          value='${manga.prev || ''}'>
+        <button id="prev" class="NavigationControlButton ControlButton" title="Previos Chapter" type="button" 
+          value="${manga.prev || ''}">
           ${IconArrowBigLeft}
-          Previous
+          ${getLocaleString('BUTTON_PREVIOUS')}
         </button>
-        <button id='next' class='NavigationControlButton ControlButton' title='Next Chapter' type='button' 
-          value='${manga.next || ''}'>
-          Next
+        <button id="next" class="NavigationControlButton ControlButton" title="Next Chapter" type="button" 
+          value="${manga.next || ''}">
+          ${getLocaleString('BUTTON_NEXT')}
           ${IconArrowBigRight}
         </button>
       </div>
     </nav>
   </header>  
-  <main id='Chapter' class='${useSettings().fitWidthIfOversize ? 'fitWidthIfOversize' : ''}
-      ${useSettings().viewMode}'>
+  <main id="Chapter" class="${useSettings().fitWidthIfOversize ? 'fitWidthIfOversize' : ''}
+      ${useSettings().viewMode}">
     ${listPages(manga.pages, begin).join('')}
   </main>
-  <nav id='Navigation' class='panel ${useSettings().showThumbnails ? '' : 'disabled'}'>
-    <div id='NavigationCounters' class='ControlLabel'>
+  <nav id="Navigation" class="panel ${useSettings().showThumbnails ? '' : 'disabled'}">
+    <div id="NavigationCounters" class="ControlLabel">
       ${IconCategory}
-      <i>0</i> of <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b> Pages Loaded
+      <i>0</i> of <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b>
+      ${getLocaleString('PAGES_LOADED')}
     </div>
-    <div id='Thumbnails'>
+    <div id="Thumbnails">
       ${ThumbnailsPanel(manga.pages, begin).join('')}
     </div>
   </nav>

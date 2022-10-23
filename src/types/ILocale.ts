@@ -1,6 +1,6 @@
 export interface ILocale {
   ID: string;
-  LANGUAGE: string;
+  NAME: string;
 
   [key: string]: string;
 }

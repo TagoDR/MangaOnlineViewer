@@ -1,5 +1,6 @@
 import { IconX } from './icons';
 import { keybinds } from '../events/hotkeys';
+import { getLocaleString } from '../settings.js';
 
 function formatKeyName(key: string) {
   let formatted = key;
@@ -30,9 +31,9 @@ export const keybindings = keybinds
   .join('\n');
 
 const KeybindingsPanel = `
-<div id='KeybindingsPanel' class='panel'>
-    <h2>Keybindings</h2>
-    <button id='CloseKeybindings' class='closeButton'>${IconX}</button>
+<div id="KeybindingsPanel" class="panel">
+    <h2>${getLocaleString('KEYBINDINGS')}</h2>
+    <button id="CloseKeybindings" class="closeButton">${IconX}</button>
     ${keybindings}
 </div>`;
 

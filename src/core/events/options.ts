@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import { resetSettings, updateSettings } from '../settings';
+import { getLocaleString, resetSettings, updateSettings } from '../settings';
 import { Header, LoadMode } from '../../types';
 import { applyZoom } from '../page';
 import { replaceStyleSheet } from '../../utils/css';
@@ -9,8 +9,8 @@ function options() {
   function buttonResetSettings() {
     resetSettings();
     Swal.fire({
-      title: 'Attention',
-      text: 'Settings have been reset, reload the page to take effect',
+      title: getLocaleString('ATTENTION'),
+      text: getLocaleString('SETTINGS_RESET'),
       timer: 10000,
       icon: 'info',
     });
@@ -23,8 +23,8 @@ function options() {
     const locale = (event.currentTarget as HTMLInputElement).value;
     updateSettings({ locale });
     Swal.fire({
-      title: 'Attention',
-      text: 'Language has been changed, reload the page to take effect',
+      title: getLocaleString('ATTENTION'),
+      text: getLocaleString('LANGUAGE_CHANGED'),
       timer: 10000,
       icon: 'info',
     });
@@ -62,8 +62,8 @@ function options() {
     updateSettings({ downloadZip: (event.currentTarget as HTMLInputElement).checked });
     if ((event.currentTarget as HTMLInputElement).checked) {
       Swal.fire({
-        title: 'Attention',
-        text: 'Next time a chapter finish loading you will be prompted to save automatically',
+        title: getLocaleString('ATTENTION'),
+        text: getLocaleString('AUTO_DOWNLOAD'),
         timer: 10000,
         icon: 'info',
       });
@@ -77,9 +77,8 @@ function options() {
     updateSettings({ lazyLoadImages: (event.currentTarget as HTMLInputElement).checked });
     if ((event.currentTarget as HTMLInputElement).checked) {
       Swal.fire({
-        title: 'Warning',
-        html: `Lazy load is incompatible with zip download, you will not be able to download with this setting ON.<br/>
-               Suggestion: <span style="color:red;font-weight:bold">Disable Thumbnails</span> to save Bandwidth/Memory.`,
+        title: getLocaleString('WARNING'),
+        html: getLocaleString('LAZY_LOAD'),
         icon: 'warning',
       });
     }

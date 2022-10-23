@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 import { IBookmark } from '../../types';
-import { isBookmarked, updateSettings, useSettings } from '../settings';
+import { getLocaleString, isBookmarked, updateSettings, useSettings } from '../settings';
 import { reloadBookmarks } from '../components/BookmarksPanel';
 import { logScript } from '../../utils/tampermonkey';
 
@@ -18,7 +18,7 @@ function eraseBookmarks(elem: Element) {
     }
     logScript(`Bookmark Removed ${target}`);
     Swal.fire({
-      title: 'Bookmark Removed',
+      title: getLocaleString('BOOKMARK_REMOVED'),
       timer: 10000,
       icon: 'error',
     });
@@ -44,15 +44,15 @@ function buttonBookmark(elem: Element) {
     if (isBookmarked(mark.url)) {
       updateSettings({ bookmarks: useSettings().bookmarks.filter((el) => el.url !== mark.url) });
       Swal.fire({
-        title: 'Bookmark Removed',
+        title: getLocaleString('BOOKMARK_REMOVED'),
         timer: 10000,
         icon: 'error',
       });
     } else {
       updateSettings({ bookmarks: [...useSettings().bookmarks, mark] });
       Swal.fire({
-        title: 'Saved Bookmark',
-        html: `Next time you open this chapter it will resume from:<h4>Page ${num}</h4>(Only <i>ONCE</i> per Bookmark, will be removed after a year unused)`,
+        title: getLocaleString('BOOKMARK_SAVED'),
+        html: getLocaleString('BOOKMARK_SAVED').replace('##NUM##', num.toString()),
         icon: 'success',
       });
     }
@@ -71,4 +71,5 @@ function bookmarks() {
   // Bookmark Page to resume reading
   document.querySelectorAll('.Bookmark')?.forEach(buttonBookmark);
 }
+
 export default bookmarks;

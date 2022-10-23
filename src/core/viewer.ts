@@ -3,8 +3,9 @@ import { getBrowser, getEngine, getInfoGM, logScript } from '../utils/tampermonk
 import { IManga, ISite } from '../types';
 import { isNothing } from '../utils/checks';
 import display from './display';
-import { useSettings } from './settings';
+import { getLocaleString, useSettings } from './settings';
 import sweetalertStyle from './components/externalStyle';
+import { startButton } from './components/styles.js';
 
 async function formatPage(manga: IManga, begin = 0) {
   display(manga, begin);
@@ -14,7 +15,7 @@ async function lateStart(site: ISite, begin = 1) {
   const manga = await site.run();
   logScript('LateStart');
   const options: SweetAlertOptions = {
-    title: 'Starting<br>MangaOnlineViewer',
+    title: getLocaleString('STARTING'),
     input: 'range',
     inputAttributes: {
       min: '1',
@@ -22,7 +23,7 @@ async function lateStart(site: ISite, begin = 1) {
       step: '1',
     },
     inputValue: begin || 1,
-    text: 'Choose the Page to start from:',
+    text: getLocaleString('CHOOSE_BEGINNING'),
     showCancelButton: true,
     cancelButtonColor: '#d33',
     reverseButtons: true,
@@ -37,51 +38,22 @@ async function lateStart(site: ISite, begin = 1) {
     }
   });
 }
+
 function createLateStartButton(site: ISite, beginning: number) {
   const button = document.createElement('button');
-  button.innerText = 'Start MangaOnlineViewer';
+  button.innerText = getLocaleString('BUTTON_START');
   button.id = 'StartMOV';
   button.onclick = () => {
     lateStart(site, beginning);
   };
   document.body.appendChild(button);
-  // language=CSS
-  const css = `
-#StartMOV {
-    font-size: 20px;
-    font-weight: bold;
-    color: #fff;
-    cursor: pointer;
-    margin: 20px;
-    padding: 10px 20px;
-    text-align: center;
-    border: none;
-    background-size: 300% 100%;
-    border-radius: 50px;
-    transition: all 0.4s ease-in-out;
-    background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);
-    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 10000;
-}
 
-#StartMOV:hover {
-    background-position: 100% 0;
-    transition: all 0.4s ease-in-out;
-}
-
-#StartMOV:focus {
-    outline: none;
-}
-
-`;
   const style = document.createElement('style');
-  style.appendChild(document.createTextNode(css));
+  style.appendChild(document.createTextNode(startButton));
   document.head.appendChild(style);
   logScript('Start Button added to page', button);
 }
+
 // Organize the site adding place-holders for the manga pages
 function preparePage(site: ISite, manga: IManga, begin = 0) {
   logScript(`Found Pages: ${manga.pages}`);
@@ -103,10 +75,10 @@ function preparePage(site: ISite, manga: IManga, begin = 0) {
       case 'wait':
       default:
         Swal.fire({
-          title: 'Starting<br>MangaOnlineViewer',
+          title: getLocaleString('STARTING'),
           html: `${
-            beginning > 1 ? `Resuming reading from Page ${beginning}.<br/>` : ''
-          }Please wait, 3 seconds...`,
+            beginning > 1 ? `${getLocaleString('RESUME')}${beginning}.<br/>` : ''
+          }${getLocaleString('WAITING')}`,
           showCancelButton: true,
           cancelButtonColor: '#d33',
           reverseButtons: true,
@@ -123,6 +95,7 @@ function preparePage(site: ISite, manga: IManga, begin = 0) {
     }
   }
 }
+
 // Wait for something on the site to be ready before executing the script
 async function waitExec(site: ISite, waitElapsed: number = 0) {
   if (waitElapsed >= (site.waitMax || 5000)) {
@@ -165,6 +138,7 @@ async function waitExec(site: ISite, waitElapsed: number = 0) {
   }
   preparePage(site, await site.run());
 }
+
 // Script Entry point
 function start(sites: ISite[]) {
   logScript(
