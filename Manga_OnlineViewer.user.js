@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Alpha-scans, Voids-Scans, Batoto, ComiCastle, Dynasty-Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MReader, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus
-// @version 2022.10.23
+// @version 2022.10.24
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -2762,7 +2762,7 @@
         VIEW_MODE_LEFT: 'Left to Right',
         VIEW_MODE_RIGHT: 'Right to Left',
         VIEW_MODE_WEBCOMIC: 'WebComic',
-        FIT_WIDTH: 'Fit Width if Oversize',
+        FIT_WIDTH_OVERSIZED: 'Fit Width if Oversized',
         SHOW_THUMBNAILS: 'Show Thumbnails',
         HIDE_CONTROLS: 'Always Hide Page Controls',
         HEADER_TYPE: 'Change Header Type',
@@ -2775,6 +2775,7 @@
         BUTTON_NEXT: 'Next',
         BUTTON_PREVIOUS: 'Previous',
         BOOKMARKS: 'Bookmarks',
+        BOOKMARK: 'Bookmark',
         BOOKMARK_REMOVED: 'Bookmark Removed',
         BOOKMARK_SAVED: 'Bookmark Saved',
         BOOKMARK_MESSAGE: 'Next time you open this chapter it will resume from:<h4>Page ##num##</h4>(Only <i>ONCE</i> per Bookmark)',
@@ -2790,6 +2791,23 @@
         RETURN_CHAPTER_LIST: 'Return to Chapter List',
         PAGES_LOADED: 'Pages Loaded',
         GO_TO_PAGE: 'Go to Page',
+        ENLARGE: 'Enlarge',
+        RESTORE: 'Restore',
+        REDUCE: 'Restore',
+        FIT_WIDTH: 'Fit Width',
+        FIT_HEIGHT: 'Fit Height',
+        TOGGLE_CONTROLS: 'Toggle page controls',
+        ZOOM_IN: 'Zoom In',
+        ZOOM_OUT: 'Zoom Out',
+        ZOOM_RESET: 'Zoom Reset',
+        ZOOM_WIDTH: 'Zoom to Width',
+        ZOOM_HEIGHT: 'Zoom to Height',
+        HIDE: 'Hide',
+        RELOAD: 'Reload',
+        SLOWLY: 'Slowly',
+        NORMAL: 'Normal',
+        FAST: 'Fast',
+        EXTREME: 'Extreme',
     };
 
     var pt_BR = {
@@ -2819,7 +2837,7 @@
         VIEW_MODE_LEFT: 'Esquerda para Direita',
         VIEW_MODE_RIGHT: 'Direita para Esquerda',
         VIEW_MODE_WEBCOMIC: 'WebComic',
-        FIT_WIDTH: 'Encher a tela se grande demais',
+        FIT_WIDTH_OVERSIZED: 'Encher a tela se grande demais',
         SHOW_THUMBNAILS: 'Mostra Miniaturas',
         HIDE_CONTROLS: 'Sempre esconder controles das paginas',
         HEADER_TYPE: 'Mudar Tipo de Cabeçalho',
@@ -2831,7 +2849,8 @@
         DOWNLOAD_IMAGES: 'Download das Imagens como Zip Automaticamente',
         BUTTON_NEXT: 'Proximo',
         BUTTON_PREVIOUS: 'Anterior',
-        BOOKMARKS: 'Marca pagina',
+        BOOKMARKS: 'Marca paginas',
+        BOOKMARK: 'Marcar pagina',
         BOOKMARK_REMOVED: 'Marca pagina Removido',
         BOOKMARK_SAVED: 'Marca pagina Salvo',
         BOOKMARK_MESSAGE: 'Proxima vez que abrir este capitulo continuará a partir da <h4>Pagina ##num##</h4>(Apenas <i>UMA VEZ</i> por marca pagina)',
@@ -2847,9 +2866,102 @@
         RETURN_CHAPTER_LIST: 'Voltar a lista de Capitulos',
         PAGES_LOADED: 'Paginas Carregadas',
         GO_TO_PAGE: 'Pular para',
+        ENLARGE: 'Aumentar',
+        RESTORE: 'Restaurar',
+        REDUCE: 'Diminuir',
+        FIT_WIDTH: 'Preencher Largura',
+        FIT_HEIGHT: 'Preencher Altura ',
+        TOGGLE_CONTROLS: 'Mostar controles de pagina',
+        ZOOM_IN: 'Mais Zoom',
+        ZOOM_OUT: 'Menos Zoom',
+        ZOOM_RESET: 'Resetar Zoom',
+        ZOOM_WIDTH: 'Zoom para Largura',
+        ZOOM_HEIGHT: 'Zoom para Altura',
+        HIDE: 'Esconder',
+        RELOAD: 'Recarregar',
+        SLOWLY: 'Devagar',
+        NORMAL: 'Normal',
+        FAST: 'Rapido',
+        EXTREME: 'Extremo',
     };
 
-    const locales = [en_US, pt_BR];
+    // Translation by lhj5426
+    var zh_CN = {
+        ID: 'zh_cn',
+        NAME: '中文 (简体)',
+        STARTING: '正在启动<br>MangaOnlineViewer',
+        RESUME: '从页面继续阅读 ',
+        WAITING: '请等待3秒钟...',
+        CHOOSE_BEGINNING: '选择要开始的页数:',
+        BUTTON_START: '启动MangaOnlineViewer',
+        SETTINGS: '设置',
+        LANGUAGE: '语言',
+        COLOR_SCHEME: '配色方案',
+        THEME: '主题',
+        THEME_HUE: '主题色调',
+        THEME_SHADE: '主题阴影',
+        DEFAULT_LOAD_MODE: '默认加载模式',
+        LOAD_MODE_NORMAL: '等待模式(等待3秒自动加载 )',
+        LOAD_MODE_ALWAYS: '自动模式(无需等待)',
+        LOAD_MODE_NEVER: '手动模式(点击启动)',
+        LOAD_SPEED: '加载速度页数/秒',
+        DEFAULT_ZOOM: '默认缩放',
+        MINIMUM_ZOOM: '相对于屏幕宽度的最小缩放 (最小 30 最大 100)',
+        ZOOM_STEP: '缩放级别 (最小 5 最大 50)',
+        DEFAULT_VIEW_MODE: '默认视图模式',
+        VIEW_MODE_VERTICAL: '垂直拼接',
+        VIEW_MODE_LEFT: '从左到右',
+        VIEW_MODE_RIGHT: '从右到左',
+        VIEW_MODE_WEBCOMIC: '网络漫画',
+        FIT_WIDTH_OVERSIZED: '如果尺寸过大、则适合宽度',
+        SHOW_THUMBNAILS: '显示缩略图',
+        HIDE_CONTROLS: '始终隐藏页面控件',
+        HEADER_TYPE: '更改标题显示方式',
+        HEADER_HOVER: '悬停',
+        HEADER_SCROLL: '滚动',
+        HEADER_CLICK: '点击',
+        HEADER_FIXED: '固定',
+        BUTTON_DOWNLOAD: '下载',
+        DOWNLOAD_IMAGES: '自动将图片下载成ZIP',
+        BUTTON_NEXT: '下一页',
+        BUTTON_PREVIOUS: '上一页',
+        BOOKMARKS: '书签',
+        BOOKMARK: 'Bookmark',
+        BOOKMARK_REMOVED: '删除书签',
+        BOOKMARK_SAVED: '保存书签',
+        BOOKMARK_MESSAGE: '下次打开本章时，将从:<h4>Page ##num##</h4>(Only <i>开始</i> 继续)',
+        KEYBINDINGS: '快捷键',
+        ATTENTION: '注意',
+        WARNING: '警告',
+        BUTTON_RESET_SETTINGS: '重置设置',
+        SETTINGS_RESET: '设置已重置、重新加载页面才能生效',
+        LANGUAGE_CHANGED: '语言已更改、重新加载页面才能生效',
+        AUTO_DOWNLOAD: '下次章节加载完成时、系统将提示您自动保存',
+        LAZY_LOAD: '延迟加载与zip下载不兼容、您将无法使用此设置下载.<br/> 建议: <span style=\'color:red;font-weight:bold\'>禁用缩略图</span> 以节省流量和内存.',
+        LAZY_LOAD_IMAGES: '惰性加载从页面 (最小 5 最大 100)',
+        RETURN_CHAPTER_LIST: '返回章节列表',
+        PAGES_LOADED: '已加载的页数',
+        GO_TO_PAGE: '转到页数',
+        ENLARGE: '放大',
+        RESTORE: '还原',
+        REDUCE: '缩小',
+        FIT_WIDTH: '适合宽度',
+        FIT_HEIGHT: '适合高度',
+        TOGGLE_CONTROLS: '显示隐藏页面控件',
+        ZOOM_IN: 'Zoom In',
+        ZOOM_OUT: 'Zoom Out',
+        ZOOM_RESET: 'Zoom Reset',
+        ZOOM_WIDTH: 'Zoom to Width',
+        ZOOM_HEIGHT: 'Zoom to Height',
+        HIDE: 'Hide',
+        RELOAD: 'Reload',
+        SLOWLY: 'Slowly',
+        NORMAL: 'Normal',
+        FAST: 'Fast',
+        EXTREME: 'Extreme',
+    };
+
+    const locales = [en_US, pt_BR, zh_CN];
 
     const defaultSettings = {
         locale: 'en_US',
@@ -3011,38 +3123,38 @@ ${IconCheck}
     }
 
     const listPages = (times, begin) => indexList(times, begin).map((index) => `
-<div id='Page${index}' class='MangaPage'>
-  <div class='PageFunctions'>
-    <button class='Bookmark ControlButton' title='Bookmark'>
+<div id="Page${index}" class="MangaPage">
+  <div class="PageFunctions">
+    <button class="Bookmark ControlButton" title="${getLocaleString('BOOKMARK')}">
       ${IconBookmark}
       ${IconBookmarkOff}
     </button>
-    <button class='ZoomIn ControlButton' title='Zoom In'>
+    <button class="ZoomIn ControlButton" title="${getLocaleString('ZOOM_IN')}">
       ${IconZoomIn}
     </button>
-    <button class='ZoomRestore ControlButton' title='Zoom Restore'>
+    <button class="ZoomRestore ControlButton" title="${getLocaleString('ZOOM_RESET')}">
       ${IconZoomCancel}
     </button>
-    <button class='ZoomOut ControlButton' title='Zoom Out'>
+    <button class="ZoomOut ControlButton" title="${getLocaleString('ZOOM_OUT')}">
       ${IconZoomOut}
     </button>
-    <button class='ZoomWidth ControlButton' title='Zoom to Width'>
+    <button class="ZoomWidth ControlButton" title="${getLocaleString('ZOOM_WIDTH')}">
       ${IconArrowAutofitWidth}
     </button>
-    <button class='ZoomHeight ControlButton' title='Zoom to Height'>
+    <button class="ZoomHeight ControlButton" title="${getLocaleString('ZOOM_HEIGHT')}">
       ${IconArrowAutofitHeight}
     </button>
-    <button class='Hide ControlButton' title='Hide'>
+    <button class="Hide ControlButton" title="${getLocaleString('HIDE')}">
       ${IconEye}
       ${IconEyeOff}
     </button>
-    <button class='Reload ControlButton' title='Reload'>
+    <button class="Reload ControlButton" title="${getLocaleString('RELOAD')}">
       ${IconRefresh}
     </button>
-    <span class='PageIndex'>${index}</span>
+    <span class="PageIndex">${index}</span>
   </div>
-  <div class='PageContent'>
-    <img id='PageImg${index}' alt='' class='PageImg' />
+  <div class="PageContent">
+    <img id="PageImg${index}" alt="" class="PageImg" />
   </div>
 </div>`);
 
@@ -3122,17 +3234,26 @@ ${IconCheck}
     <!-- =========================================================================================== -->
     <div class="ControlLabel PagesPerSecond">${getLocaleString('LOAD_SPEED')}:
       <select id="PagesPerSecond">
-        <option value="3000" ${useSettings().throttlePageLoad === 3000 ? 'selected' : ''}>0.3(Slow)
+        <option value="3000" ${useSettings().throttlePageLoad === 3000 ? 'selected' : ''}>
+            0.3(${getLocaleString('SLOWLY')})
         </option>
-        <option value="2000" ${useSettings().throttlePageLoad === 2000 ? 'selected' : ''}>0.5
+        <option value="2000" ${useSettings().throttlePageLoad === 2000 ? 'selected' : ''}>
+          0.5
         </option>
-        <option value="1000" ${useSettings().throttlePageLoad === 1000 ? 'selected' : ''}>01(Normal)
+        <option value="1000" ${useSettings().throttlePageLoad === 1000 ? 'selected' : ''}>
+            01(${getLocaleString('NORMAL')})
         </option>
-        <option value="500" ${useSettings().throttlePageLoad === 500 ? 'selected' : ''}>02</option>
-        <option value="250" ${useSettings().throttlePageLoad === 250 ? 'selected' : ''}>04(Fast)
+        <option value="500" ${useSettings().throttlePageLoad === 500 ? 'selected' : ''}>
+          02
         </option>
-        <option value="125" ${useSettings().throttlePageLoad === 125 ? 'selected' : ''}>08</option>
-        <option value="100" ${useSettings().throttlePageLoad === 100 ? 'selected' : ''}>10(Extreme)
+        <option value="250" ${useSettings().throttlePageLoad === 250 ? 'selected' : ''}>
+            04(${getLocaleString('FAST')})
+        </option>
+        <option value="125" ${useSettings().throttlePageLoad === 125 ? 'selected' : ''}>
+          08
+        </option>
+        <option value="100" ${useSettings().throttlePageLoad === 100 ? 'selected' : ''}>
+            10(${getLocaleString('EXTREME')})
         </option>
       </select>
     </div>
@@ -3200,7 +3321,7 @@ ${IconCheck}
       </select>
     </div>
     <!-- =========================================================================================== -->
-    <div class="ControlLabel fitIfOversize">${getLocaleString('FIT_WIDTH')}:
+    <div class="ControlLabel fitIfOversize">${getLocaleString('FIT_WIDTH_OVERSIZED')}:
       <input type="checkbox" value="true" name="fitIfOversize" id="fitIfOversize" ${useSettings().fitWidthIfOversize ? 'checked' : ''} />
     </div>
     <!-- =========================================================================================== -->
@@ -3499,21 +3620,21 @@ ${IconCheck}
     </div>
     <aside id="GlobalFunctions">
       <span>
-        <button id="enlarge" title="Enlarge" class="ControlButton">${IconZoomInArea}</button>
-        <button id="restore" title="Restore" class="ControlButton">${IconZoomPan}</button>
-        <button id="reduce" title="Reduce" class="ControlButton">${IconZoomOutArea}</button>
-        <button id="fitWidth" title="Fit Width" class="ControlButton">${IconArrowAutofitWidth}</button>
-        <button id="fitHeight" title="Fit Height" class="ControlButton">${IconArrowAutofitHeight}</button>
-        <button id="keybindings" title="Keybindings" class="ControlButton">${IconKeyboard}</button>
+        <button id="enlarge" title="${getLocaleString('ENLARGE')}" class="ControlButton">${IconZoomInArea}</button>
+        <button id="restore" title="${getLocaleString('RESTORE')}" class="ControlButton">${IconZoomPan}</button>
+        <button id="reduce" title="${getLocaleString('REDUCE')}" class="ControlButton">${IconZoomOutArea}</button>
+        <button id="fitWidth" title="${getLocaleString('FIT_WIDTH')}" class="ControlButton">${IconArrowAutofitWidth}</button>
+        <button id="fitHeight" title="${getLocaleString('FIT_HEIGHT')}" class="ControlButton">${IconArrowAutofitHeight}</button>
+        <button id="keybindings" title="${getLocaleString('KEYBINDINGS')}" class="ControlButton">${IconKeyboard}</button>
       </span>
       <span>
-        <button id="ltrMode" title="Left to Right Mode" class="ControlButton">${IconArrowAutofitRight}</button>
-        <button id="verticalMode" title="Vertical Mode" class="ControlButton">${IconArrowAutofitDown}</button>
-        <button id="webComic" title="Web Comic Mode" class="ControlButton">${IconSpacingVertical}</button>
-        <button id="rtlMode" title="Right to Left Mode" class="ControlButton">${IconArrowAutofitLeft}</button>
-        <button id="pageControls" title="Toggle Page Controls" class="ControlButton">${IconListNumbers}</button>
-        <button id="bookmarks" title="List Bookmarks" class="ControlButton">${IconBookmarks}</button>
-        <button id="settings" title="Settings" class="ControlButton">${IconSettings}</button>
+        <button id="ltrMode" title="${getLocaleString('VIEW_MODE_LEFT')}" class="ControlButton">${IconArrowAutofitRight}</button>
+        <button id="verticalMode" title="${getLocaleString('VIEW_MODE_VERTICAL')}" class="ControlButton">${IconArrowAutofitDown}</button>
+        <button id="webComic" title="${getLocaleString('VIEW_MODE_WEBCOMIC')}" class="ControlButton">${IconSpacingVertical}</button>
+        <button id="rtlMode" title="${getLocaleString('VIEW_MODE_RIGHT')}" class="ControlButton">${IconArrowAutofitLeft}</button>
+        <button id="pageControls" title="${getLocaleString('TOGGLE_CONTROLS')}" class="ControlButton">${IconListNumbers}</button>
+        <button id="bookmarks" title="${getLocaleString('BOOKMARKS')}" class="ControlButton">${IconBookmarks}</button>
+        <button id="settings" title="${getLocaleString('SETTINGS')}" class="ControlButton">${IconSettings}</button>
       </span>
     </aside>
     <div class="ViewerTitle">
@@ -3535,17 +3656,17 @@ ${IconCheck}
         </select>
       </div>
       <div id="ChapterControl" class="ChapterControl">
-        <button id="download" class="NavigationControlButton ControlButton disabled" title="Download Images Zip" type="button">
+        <button id="download" class="NavigationControlButton ControlButton disabled" type="button">
           ${IconFileDownload}
           ${IconLoader2}
           ${getLocaleString('BUTTON_DOWNLOAD')}
         </button>
-        <button id="prev" class="NavigationControlButton ControlButton" title="Previos Chapter" type="button" 
+        <button id="prev" class="NavigationControlButton ControlButton" type="button" 
           value="${manga.prev || ''}">
           ${IconArrowBigLeft}
           ${getLocaleString('BUTTON_PREVIOUS')}
         </button>
-        <button id="next" class="NavigationControlButton ControlButton" title="Next Chapter" type="button" 
+        <button id="next" class="NavigationControlButton ControlButton" type="button" 
           value="${manga.next || ''}">
           ${getLocaleString('BUTTON_NEXT')}
           ${IconArrowBigRight}
