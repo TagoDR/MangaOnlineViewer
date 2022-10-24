@@ -1,24 +1,24 @@
-import fs from 'fs';
+import { globalExternals } from '@fal-works/esbuild-plugin-global-externals';
+import eslint from '@rbnlffl/rollup-plugin-eslint';
+import commonjs from '@rollup/plugin-commonjs';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import typescriptPlugin from '@rollup/plugin-typescript';
 import { deleteAsync } from 'del';
-import * as tsImport from 'ts-import';
-import typescript from 'typescript';
-import gulp from 'gulp';
-import preprocess from 'gulp-preprocess';
-import userscript from 'userscript-meta';
-import { build as vite } from 'vite';
 
 import * as esbuild from 'esbuild';
 import { minifyTemplates, writeFiles } from 'esbuild-minify-templates';
-import { globalExternals } from '@fal-works/esbuild-plugin-global-externals';
+import fs from 'fs';
+import gulp from 'gulp';
+import preprocess from 'gulp-preprocess';
 
 import { rollup } from 'rollup';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import typescriptPlugin from '@rollup/plugin-typescript';
-import eslint from '@rbnlffl/rollup-plugin-eslint';
+import bundleSize from 'rollup-plugin-bundle-size';
 import cleanup from 'rollup-plugin-cleanup';
 import externalGlobals from 'rollup-plugin-external-globals';
-import bundleSize from 'rollup-plugin-bundle-size';
+import * as tsImport from 'ts-import';
+import typescript from 'typescript';
+import userscript from 'userscript-meta';
+import { build as vite } from 'vite';
 
 let minify = false;
 let build = 'esbuild'; // 'esbuild' | 'rollup' | 'vite'
@@ -106,7 +106,8 @@ function buildUserscript(script) {
         bundle.write({
           banner: fs.readFileSync(`./dist/${script.meta}`, 'utf8'),
           // intro: `var W = (typeof unsafeWindow === 'undefined') ? window : unsafeWindow; \n
-          //     /* global $:readonly, JSZip:readonly ,NProgress:readonly , jscolor:readonly , ColorScheme:readonly , Swal:readonly */`,
+          //     /* global $:readonly, JSZip:readonly ,NProgress:readonly , jscolor:readonly ,
+          // ColorScheme:readonly , Swal:readonly */`,
           format: 'iife',
           file: `dist/${script.name}`,
           sourcemap: sourcemap ? 'inline' : false,
@@ -194,13 +195,16 @@ function prep(bundler, uglify = false) {
     build = bundler;
     return Promise.resolve();
   }
+
   return prepare;
 }
 
 // gulp.task('clean', clean);
 // gulp.task('readme', readme);
-// gulp.task('main',gulp.series(clean, writeMetadata(scripts.main), buildUserscript(scripts.main)));
-// gulp.task('adult',gulp.series(clean, writeMetadata(scripts.adult), buildUserscript(scripts.adult)));
+// gulp.task('main',gulp.series(clean, writeMetadata(scripts.main),
+// buildUserscript(scripts.main)));
+// gulp.task('adult',gulp.series(clean, writeMetadata(scripts.adult),
+// buildUserscript(scripts.adult)));
 gulp.task('dev', gulp.series(clean, writeMetadata(scripts.dev), buildUserscript(scripts.dev)));
 // gulp.task('rollup', gulp.series(prep('rollup'), 'dev'));
 // gulp.task('esbuild', gulp.series(prep('esbuild'), 'dev'));

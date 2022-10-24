@@ -85,17 +85,26 @@ const SettingsPanel = `
     <!-- =========================================================================================== -->
     <div class="ControlLabel PagesPerSecond">${getLocaleString('LOAD_SPEED')}:
       <select id="PagesPerSecond">
-        <option value="3000" ${useSettings().throttlePageLoad === 3000 ? 'selected' : ''}>0.3(Slow)
+        <option value="3000" ${useSettings().throttlePageLoad === 3000 ? 'selected' : ''}>
+            0.3(${getLocaleString('SLOWLY')})
         </option>
-        <option value="2000" ${useSettings().throttlePageLoad === 2000 ? 'selected' : ''}>0.5
+        <option value="2000" ${useSettings().throttlePageLoad === 2000 ? 'selected' : ''}>
+          0.5
         </option>
-        <option value="1000" ${useSettings().throttlePageLoad === 1000 ? 'selected' : ''}>01(Normal)
+        <option value="1000" ${useSettings().throttlePageLoad === 1000 ? 'selected' : ''}>
+            01(${getLocaleString('NORMAL')})
         </option>
-        <option value="500" ${useSettings().throttlePageLoad === 500 ? 'selected' : ''}>02</option>
-        <option value="250" ${useSettings().throttlePageLoad === 250 ? 'selected' : ''}>04(Fast)
+        <option value="500" ${useSettings().throttlePageLoad === 500 ? 'selected' : ''}>
+          02
         </option>
-        <option value="125" ${useSettings().throttlePageLoad === 125 ? 'selected' : ''}>08</option>
-        <option value="100" ${useSettings().throttlePageLoad === 100 ? 'selected' : ''}>10(Extreme)
+        <option value="250" ${useSettings().throttlePageLoad === 250 ? 'selected' : ''}>
+            04(${getLocaleString('FAST')})
+        </option>
+        <option value="125" ${useSettings().throttlePageLoad === 125 ? 'selected' : ''}>
+          08
+        </option>
+        <option value="100" ${useSettings().throttlePageLoad === 100 ? 'selected' : ''}>
+            10(${getLocaleString('EXTREME')})
         </option>
       </select>
     </div>
@@ -163,7 +172,7 @@ const SettingsPanel = `
       </select>
     </div>
     <!-- =========================================================================================== -->
-    <div class="ControlLabel fitIfOversize">${getLocaleString('FIT_WIDTH')}:
+    <div class="ControlLabel fitIfOversize">${getLocaleString('FIT_WIDTH_OVERSIZED')}:
       <input type="checkbox" value="true" name="fitIfOversize" id="fitIfOversize" ${
         useSettings().fitWidthIfOversize ? 'checked' : ''
       } />
