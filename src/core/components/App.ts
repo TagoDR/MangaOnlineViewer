@@ -43,34 +43,50 @@ const app = (manga: IManga, begin = 1) => `
     </div>
     <aside id="GlobalFunctions">
       <span>
-        <button id="enlarge" title="${getLocaleString(
-  'ENLARGE')}" class="ControlButton">${IconZoomInArea}</button>
-        <button id="restore" title="${getLocaleString(
-  'RESTORE')}" class="ControlButton">${IconZoomPan}</button>
-        <button id="reduce" title="${getLocaleString(
-  'REDUCE')}" class="ControlButton">${IconZoomOutArea}</button>
-        <button id="fitWidth" title="${getLocaleString(
-  'FIT_WIDTH')}" class="ControlButton">${IconArrowAutofitWidth}</button>
-        <button id="fitHeight" title="${getLocaleString(
-  'FIT_HEIGHT')}" class="ControlButton">${IconArrowAutofitHeight}</button>
-        <button id="keybindings" title="${getLocaleString(
-  'KEYBINDINGS')}" class="ControlButton">${IconKeyboard}</button>
+        <button id="enlarge" title="${getLocaleString('ENLARGE')}" class="ControlButton">
+          ${IconZoomInArea}
+        </button>
+        <button id="restore" title="${getLocaleString('RESTORE')}" class="ControlButton">
+          ${IconZoomPan}
+        </button>
+        <button id="reduce" title="${getLocaleString('REDUCE')}" class="ControlButton">
+          ${IconZoomOutArea}
+        </button>
+        <button id="fitWidth" title="${getLocaleString('FIT_WIDTH')}" class="ControlButton">
+          ${IconArrowAutofitWidth}
+        </button>
+        <button id="fitHeight" title="${getLocaleString('FIT_HEIGHT')}" class="ControlButton">
+          ${IconArrowAutofitHeight}
+        </button>
+        <button id="keybindings" title="${getLocaleString('KEYBINDINGS')}" class="ControlButton">
+          ${IconKeyboard}
+        </button>
       </span>
       <span>
-        <button id="ltrMode" title="${getLocaleString(
-  'VIEW_MODE_LEFT')}" class="ControlButton">${IconArrowAutofitRight}</button>
-        <button id="verticalMode" title="${getLocaleString(
-  'VIEW_MODE_VERTICAL')}" class="ControlButton">${IconArrowAutofitDown}</button>
-        <button id="webComic" title="${getLocaleString(
-  'VIEW_MODE_WEBCOMIC')}" class="ControlButton">${IconSpacingVertical}</button>
-        <button id="rtlMode" title="${getLocaleString(
-  'VIEW_MODE_RIGHT')}" class="ControlButton">${IconArrowAutofitLeft}</button>
-        <button id="pageControls" title="${getLocaleString(
-  'TOGGLE_CONTROLS')}" class="ControlButton">${IconListNumbers}</button>
-        <button id="bookmarks" title="${getLocaleString(
-  'BOOKMARKS')}" class="ControlButton">${IconBookmarks}</button>
-        <button id="settings" title="${getLocaleString(
-  'SETTINGS')}" class="ControlButton">${IconSettings}</button>
+        <button id="ltrMode" title="${getLocaleString('VIEW_MODE_LEFT')}" class="ControlButton">
+          ${IconArrowAutofitRight}
+        </button>
+        <button id="verticalMode" 
+          title="${getLocaleString('VIEW_MODE_VERTICAL')}" class="ControlButton">
+          ${IconArrowAutofitDown}
+        </button>
+        <button id="webComic" 
+          title="${getLocaleString('VIEW_MODE_WEBCOMIC')}" class="ControlButton">
+          ${IconSpacingVertical}
+        </button>
+        <button id="rtlMode" title="${getLocaleString('VIEW_MODE_RIGHT')}" class="ControlButton">
+          ${IconArrowAutofitLeft}
+        </button>
+        <button id="pageControls" 
+          title="${getLocaleString('TOGGLE_CONTROLS')}" class="ControlButton">
+          ${IconListNumbers}
+        </button>
+        <button id="bookmarks" title="${getLocaleString('BOOKMARKS')}" class="ControlButton">
+          ${IconBookmarks}
+        </button>
+        <button id="settings" title="${getLocaleString('SETTINGS')}" class="ControlButton">
+          ${IconSettings}
+        </button>
       </span>
     </aside>
     <div class="ViewerTitle">
@@ -92,18 +108,19 @@ const app = (manga: IManga, begin = 1) => `
         </select>
       </div>
       <div id="ChapterControl" class="ChapterControl">
-        <button id="download" class="NavigationControlButton ControlButton disabled" type="button">
+        <button id="download" class="NavigationControlButton ControlButton disabled" type="button"
+          title="${getLocaleString('DOWNLOAD_ZIP')}">
           ${IconFileDownload}
           ${IconLoader2}
           ${getLocaleString('BUTTON_DOWNLOAD')}
         </button>
         <button id="prev" class="NavigationControlButton ControlButton" type="button" 
-          value="${manga.prev || ''}">
+          value="${manga.prev || ''}" title="${getLocaleString('PREVIOUS_CHAPTER')}">
           ${IconArrowBigLeft}
           ${getLocaleString('BUTTON_PREVIOUS')}
         </button>
         <button id="next" class="NavigationControlButton ControlButton" type="button" 
-          value="${manga.next || ''}">
+          value="${manga.next || ''}" title="${getLocaleString('NEXT_CHAPTER')}">
           ${getLocaleString('BUTTON_NEXT')}
           ${IconArrowBigRight}
         </button>

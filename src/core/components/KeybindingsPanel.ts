@@ -25,15 +25,17 @@ function formatKeyName(key: string) {
 
 export const keybindings = keybinds
   .map((kb) => {
-    const keys = kb.keys.map((key) => `<kbd class='dark'>${formatKeyName(key)}</kbd>`).join(' / ');
-    return `${keys}: ${kb.name}<br/>`;
+    const keys = kb.keys.map((key) => `<kbd class="dark">${formatKeyName(key)}</kbd>`).join(' / ');
+    return `${keys}: ${getLocaleString(kb.name)}<br/>`;
   })
   .join('\n');
 
 const KeybindingsPanel = `
 <div id="KeybindingsPanel" class="panel">
     <h2>${getLocaleString('KEYBINDINGS')}</h2>
-    <button id="CloseKeybindings" class="closeButton">${IconX}</button>
+    <button id="CloseKeybindings" class="closeButton" title="${getLocaleString('CLOSE')}">
+      ${IconX}
+    </button>
     ${keybindings}
 </div>`;
 

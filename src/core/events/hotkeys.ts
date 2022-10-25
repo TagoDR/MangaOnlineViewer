@@ -37,98 +37,98 @@ interface IKeyBindings {
 
 export const keybinds: IKeyBindings[] = [
   {
-    name: 'Scroll Up',
+    name: 'SCROLL_UP',
     keys: ['ArrowUp', 'KeyW', 'Numpad8'],
     action() {
       doScrolling(-1);
     },
   },
   {
-    name: 'Scroll Down',
+    name: 'SCROLL_DOWN',
     keys: ['ArrowDown', 'KeyS', 'Numpad2'],
     action() {
       doScrolling(1);
     },
   },
   {
-    name: 'Next Chapter',
+    name: 'NEXT_CHAPTER',
     keys: ['ArrowRight', 'Period', 'KeyD', 'Numpad6'],
     action() {
       doClick('#next');
     },
   },
   {
-    name: 'Prev Chapter',
+    name: 'PREVIOUS_CHAPTER',
     keys: ['ArrowLeft', 'Comma', 'KeyA', 'Numpad4'],
     action() {
       doClick('#prev');
     },
   },
   {
-    name: 'Zoom Enlarge',
+    name: 'ENLARGE',
     keys: ['Equal', 'NumpadAdd', 'KeyE'],
     action() {
       doClick('#enlarge');
     },
   },
   {
-    name: 'Zoom Reduce',
+    name: 'REDUCE',
     keys: ['Minus', 'NumpadSubtract', 'KeyQ'],
     action() {
       doClick('#reduce');
     },
   },
   {
-    name: 'Zoom Restore',
+    name: 'RESTORE',
     keys: ['Digit9', 'NumpadDivide', 'KeyR'],
     action() {
       doClick('#restore');
     },
   },
   {
-    name: 'Zoom Fit Width',
+    name: 'FIT_WIDTH',
     keys: ['Digit0', 'NumpadMultiply', 'KeyF'],
     action() {
       doClick('#fitWidth');
     },
   },
   {
-    name: 'Zoom Fit Height',
+    name: 'FIT_HEIGHT',
     keys: ['KeyH'],
     action() {
       doClick('#fitHeight');
     },
   },
   {
-    name: 'Open Settings',
+    name: 'SETTINGS',
     keys: ['Slash', 'Numpad5', 'KeyX'],
     action() {
       doClick('#settings');
     },
   },
   {
-    name: 'View Mode WebComic',
+    name: 'VIEW_MODE_WEBCOMIC',
     keys: ['KeyC'],
     action() {
       doClick('#webComic');
     },
   },
   {
-    name: 'View Mode Vertical',
+    name: 'VIEW_MODE_VERTICAL',
     keys: ['KeyV'],
     action() {
       doClick('#verticalMode');
     },
   },
   {
-    name: 'View Mode Left to Right',
+    name: 'VIEW_MODE_LEFT',
     keys: ['KeyN'],
     action() {
       doClick('#rtlMode');
     },
   },
   {
-    name: 'View Mode Right to Left',
+    name: 'VIEW_MODE_RIGHT',
     keys: ['KeyB'],
     action() {
       doClick('#ltrMode');

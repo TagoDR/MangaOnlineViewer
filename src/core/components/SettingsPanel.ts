@@ -15,7 +15,9 @@ const SettingsPanel = `
   <div id="SettingsOverlay" class="overlay"></div>
   <div id="SettingsPanel" class="panel">
     <h2>${getLocaleString('SETTINGS')}</h2>
-    <button id="CloseSettings" class="closeButton">${IconX}</button>
+    <button id="CloseSettings" class="closeButton" title="${getLocaleString('CLOSE')}">
+      ${IconX}
+    </button>
     <button id="ResetSettings" class="simpleButton">
       ${getLocaleString('BUTTON_RESET_SETTINGS')}
     </button>
