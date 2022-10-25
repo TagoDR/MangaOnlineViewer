@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno, vercomicsporno, wnacg, xyzcomics
-// @version 2022.10.24
+// @version 2022.10.25
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -417,10 +417,10 @@
                 pages: src.length,
                 prev: '#',
                 next: '#',
-                listImages: src.map((img) => img.getAttribute('src') ||
-                    img.getAttribute('data-src') ||
+                listImages: src.map((img) => img.getAttribute('data-src') ||
                     img.getAttribute('data-full-url') ||
-                    img.getAttribute('data-lazy-src')),
+                    img.getAttribute('data-lazy-src') ||
+                    img.getAttribute('src')),
             };
         },
     };
@@ -2404,9 +2404,12 @@
         HEADER_CLICK: 'Click',
         HEADER_FIXED: 'Fixed',
         BUTTON_DOWNLOAD: 'Download',
+        DOWNLOAD_ZIP: 'Download Zip file',
         DOWNLOAD_IMAGES: 'Download Images as Zip Automatically',
         BUTTON_NEXT: 'Next',
+        NEXT_CHAPTER: 'Next Chapter',
         BUTTON_PREVIOUS: 'Previous',
+        PREVIOUS_CHAPTER: 'Previous Chapter',
         BOOKMARKS: 'Bookmarks',
         BOOKMARK: 'Bookmark',
         BOOKMARK_REMOVED: 'Bookmark Removed',
@@ -2441,6 +2444,10 @@
         NORMAL: 'Normal',
         FAST: 'Fast',
         EXTREME: 'Extreme',
+        SCROLL_UP: 'Scroll Up',
+        SCROLL_DOWN: 'Scroll Down',
+        CLOSE: 'Close',
+        LIST_EMPTY: 'List Empty',
     };
 
     var pt_BR = {
@@ -2479,9 +2486,12 @@
         HEADER_CLICK: 'Click',
         HEADER_FIXED: 'Fixo',
         BUTTON_DOWNLOAD: 'Download',
+        DOWNLOAD_ZIP: 'Baixar arquivo Zip',
         DOWNLOAD_IMAGES: 'Download das Imagens como Zip Automaticamente',
         BUTTON_NEXT: 'Proximo',
+        NEXT_CHAPTER: 'Proximo Capitulo',
         BUTTON_PREVIOUS: 'Anterior',
+        PREVIOUS_CHAPTER: 'Capitulo Anterior',
         BOOKMARKS: 'Marca paginas',
         BOOKMARK: 'Marcar pagina',
         BOOKMARK_REMOVED: 'Marca pagina Removido',
@@ -2516,6 +2526,10 @@
         NORMAL: 'Normal',
         FAST: 'Rapido',
         EXTREME: 'Extremo',
+        SCROLL_UP: 'Subir Pagina',
+        SCROLL_DOWN: 'Descer Pagina',
+        CLOSE: 'Fechar',
+        LIST_EMPTY: 'Lista Vazia',
     };
 
     // Translation by lhj5426
@@ -2555,14 +2569,17 @@
         HEADER_CLICK: '点击',
         HEADER_FIXED: '固定',
         BUTTON_DOWNLOAD: '下载',
+        DOWNLOAD_ZIP: '下载压缩文件',
         DOWNLOAD_IMAGES: '自动将图片下载成ZIP',
         BUTTON_NEXT: '下一页',
+        NEXT_CHAPTER: '下一章',
         BUTTON_PREVIOUS: '上一页',
+        PREVIOUS_CHAPTER: '上一章',
         BOOKMARKS: '书签',
         BOOKMARK: 'Bookmark',
         BOOKMARK_REMOVED: '删除书签',
         BOOKMARK_SAVED: '保存书签',
-        BOOKMARK_MESSAGE: '下次打开本章时，将从:<h4>Page ##num##</h4>(Only <i>开始</i> 继续)',
+        BOOKMARK_MESSAGE: '下次打开本章时，将从:<h4>页码 ##num##</h4>(<i>仅一次</i> 每个书签)',
         KEYBINDINGS: '快捷键',
         ATTENTION: '注意',
         WARNING: '警告',
@@ -2581,17 +2598,21 @@
         FIT_WIDTH: '适合宽度',
         FIT_HEIGHT: '适合高度',
         TOGGLE_CONTROLS: '显示隐藏页面控件',
-        ZOOM_IN: 'Zoom In',
-        ZOOM_OUT: 'Zoom Out',
-        ZOOM_RESET: 'Zoom Reset',
-        ZOOM_WIDTH: 'Zoom to Width',
-        ZOOM_HEIGHT: 'Zoom to Height',
-        HIDE: 'Hide',
-        RELOAD: 'Reload',
-        SLOWLY: 'Slowly',
-        NORMAL: 'Normal',
-        FAST: 'Fast',
-        EXTREME: 'Extreme',
+        ZOOM_IN: '放大',
+        ZOOM_OUT: '缩小',
+        ZOOM_RESET: '还原',
+        ZOOM_WIDTH: '适合宽度',
+        ZOOM_HEIGHT: '适合高度',
+        HIDE: '显示隐藏页面控件',
+        RELOAD: '重新加载',
+        SLOWLY: '慢速',
+        NORMAL: '正常',
+        FAST: '快速',
+        EXTREME: '极端',
+        SCROLL_UP: '向上滚动',
+        SCROLL_DOWN: '向下滚动',
+        CLOSE: '关闭',
+        LIST_EMPTY: '没有收藏书签',
     };
 
     const locales = [en_US, pt_BR, zh_CN];
@@ -2797,7 +2818,9 @@ ${IconCheck}
   <div id="SettingsOverlay" class="overlay"></div>
   <div id="SettingsPanel" class="panel">
     <h2>${getLocaleString('SETTINGS')}</h2>
-    <button id="CloseSettings" class="closeButton">${IconX}</button>
+    <button id="CloseSettings" class="closeButton" title="${getLocaleString('CLOSE')}">
+      ${IconX}
+    </button>
     <button id="ResetSettings" class="simpleButton">
       ${getLocaleString('BUTTON_RESET_SETTINGS')}
     </button>
@@ -3036,98 +3059,98 @@ ${IconCheck}
     }
     const keybinds = [
         {
-            name: 'Scroll Up',
+            name: 'SCROLL_UP',
             keys: ['ArrowUp', 'KeyW', 'Numpad8'],
             action() {
                 doScrolling(-1);
             },
         },
         {
-            name: 'Scroll Down',
+            name: 'SCROLL_DOWN',
             keys: ['ArrowDown', 'KeyS', 'Numpad2'],
             action() {
                 doScrolling(1);
             },
         },
         {
-            name: 'Next Chapter',
+            name: 'NEXT_CHAPTER',
             keys: ['ArrowRight', 'Period', 'KeyD', 'Numpad6'],
             action() {
                 doClick('#next');
             },
         },
         {
-            name: 'Prev Chapter',
+            name: 'PREVIOUS_CHAPTER',
             keys: ['ArrowLeft', 'Comma', 'KeyA', 'Numpad4'],
             action() {
                 doClick('#prev');
             },
         },
         {
-            name: 'Zoom Enlarge',
+            name: 'ENLARGE',
             keys: ['Equal', 'NumpadAdd', 'KeyE'],
             action() {
                 doClick('#enlarge');
             },
         },
         {
-            name: 'Zoom Reduce',
+            name: 'REDUCE',
             keys: ['Minus', 'NumpadSubtract', 'KeyQ'],
             action() {
                 doClick('#reduce');
             },
         },
         {
-            name: 'Zoom Restore',
+            name: 'RESTORE',
             keys: ['Digit9', 'NumpadDivide', 'KeyR'],
             action() {
                 doClick('#restore');
             },
         },
         {
-            name: 'Zoom Fit Width',
+            name: 'FIT_WIDTH',
             keys: ['Digit0', 'NumpadMultiply', 'KeyF'],
             action() {
                 doClick('#fitWidth');
             },
         },
         {
-            name: 'Zoom Fit Height',
+            name: 'FIT_HEIGHT',
             keys: ['KeyH'],
             action() {
                 doClick('#fitHeight');
             },
         },
         {
-            name: 'Open Settings',
+            name: 'SETTINGS',
             keys: ['Slash', 'Numpad5', 'KeyX'],
             action() {
                 doClick('#settings');
             },
         },
         {
-            name: 'View Mode WebComic',
+            name: 'VIEW_MODE_WEBCOMIC',
             keys: ['KeyC'],
             action() {
                 doClick('#webComic');
             },
         },
         {
-            name: 'View Mode Vertical',
+            name: 'VIEW_MODE_VERTICAL',
             keys: ['KeyV'],
             action() {
                 doClick('#verticalMode');
             },
         },
         {
-            name: 'View Mode Left to Right',
+            name: 'VIEW_MODE_LEFT',
             keys: ['KeyN'],
             action() {
                 doClick('#rtlMode');
             },
         },
         {
-            name: 'View Mode Right to Left',
+            name: 'VIEW_MODE_RIGHT',
             keys: ['KeyB'],
             action() {
                 doClick('#ltrMode');
@@ -3181,14 +3204,16 @@ ${IconCheck}
     }
     const keybindings = keybinds
         .map((kb) => {
-        const keys = kb.keys.map((key) => `<kbd class='dark'>${formatKeyName(key)}</kbd>`).join(' / ');
-        return `${keys}: ${kb.name}<br/>`;
+        const keys = kb.keys.map((key) => `<kbd class="dark">${formatKeyName(key)}</kbd>`).join(' / ');
+        return `${keys}: ${getLocaleString(kb.name)}<br/>`;
     })
         .join('\n');
     const KeybindingsPanel = `
 <div id="KeybindingsPanel" class="panel">
     <h2>${getLocaleString('KEYBINDINGS')}</h2>
-    <button id="CloseKeybindings" class="closeButton">${IconX}</button>
+    <button id="CloseKeybindings" class="closeButton" title="${getLocaleString('CLOSE')}">
+      ${IconX}
+    </button>
     ${keybindings}
 </div>`;
 
@@ -3200,24 +3225,23 @@ ${IconCheck}
 
     const listBookmarks = () => {
         if (isEmpty(useSettings().bookmarks))
-            return ['List Empty'];
+            return [getLocaleString('LIST_EMPTY')];
         return useSettings().bookmarks.map((mark, index) => `
-<div id='Bookmark${index + 1}' class='BookmarkItem'>
-  <span class='bookmarkData bookmarkDate'>
+<div id="Bookmark${index + 1}" class="BookmarkItem">
+  <span class="bookmarkData bookmarkDate">
     ${new Date(mark.date).toLocaleDateString()}
   </span>
-  <span class='bookmarkData bookmarkURl'
-    title='${mark.url}'>
+  <span class="bookmarkData bookmarkURl"
+    title="${mark.url}">
     ${mark.url}
   </span>
-  <span class='bookmarkData bookmarkPage'>Page: ${mark.page}</span>
-  <span class='bookmarkData bookmarkFunctions'>
-    <button class='ControlButton open' title='Open Bookmark' type='button'
-    onclick="window.open('${mark.url}','_blank')">
+  <span class="bookmarkData bookmarkPage">Page: ${mark.page}</span>
+  <span class="bookmarkData bookmarkFunctions">
+    <button class="ControlButton open" title="Open Bookmark" type="button"
+     onclick="window.open('${mark.url}','_blank')">
       ${IconExternalLink}
     </button>
-    <button class='ControlButton erase' title='Delete Bookmark' type='button'
-    value='${mark.url}'>
+    <button class="ControlButton erase" title="Delete Bookmark" type="button" value="${mark.url}">
       ${IconTrash}
     </button>
   </pan>
@@ -3226,7 +3250,9 @@ ${IconCheck}
     const BookmarkPanel = `
 <div id="BookmarksOverlay" class="overlay"></div>
 <div id="BookmarksPanel" class="panel">
-  <button id="CloseBookmarks" class="closeButton">${IconX}</button>
+  <button id="CloseBookmarks" class="closeButton" title="${getLocaleString('CLOSE')}">
+    ${IconX}
+  </button>
   <h2>${getLocaleString('BOOKMARKS')}</h2>
   <div id="BookmarksList">
     ${listBookmarks().join('')}
@@ -3253,21 +3279,50 @@ ${IconCheck}
     </div>
     <aside id="GlobalFunctions">
       <span>
-        <button id="enlarge" title="${getLocaleString('ENLARGE')}" class="ControlButton">${IconZoomInArea}</button>
-        <button id="restore" title="${getLocaleString('RESTORE')}" class="ControlButton">${IconZoomPan}</button>
-        <button id="reduce" title="${getLocaleString('REDUCE')}" class="ControlButton">${IconZoomOutArea}</button>
-        <button id="fitWidth" title="${getLocaleString('FIT_WIDTH')}" class="ControlButton">${IconArrowAutofitWidth}</button>
-        <button id="fitHeight" title="${getLocaleString('FIT_HEIGHT')}" class="ControlButton">${IconArrowAutofitHeight}</button>
-        <button id="keybindings" title="${getLocaleString('KEYBINDINGS')}" class="ControlButton">${IconKeyboard}</button>
+        <button id="enlarge" title="${getLocaleString('ENLARGE')}" class="ControlButton">
+          ${IconZoomInArea}
+        </button>
+        <button id="restore" title="${getLocaleString('RESTORE')}" class="ControlButton">
+          ${IconZoomPan}
+        </button>
+        <button id="reduce" title="${getLocaleString('REDUCE')}" class="ControlButton">
+          ${IconZoomOutArea}
+        </button>
+        <button id="fitWidth" title="${getLocaleString('FIT_WIDTH')}" class="ControlButton">
+          ${IconArrowAutofitWidth}
+        </button>
+        <button id="fitHeight" title="${getLocaleString('FIT_HEIGHT')}" class="ControlButton">
+          ${IconArrowAutofitHeight}
+        </button>
+        <button id="keybindings" title="${getLocaleString('KEYBINDINGS')}" class="ControlButton">
+          ${IconKeyboard}
+        </button>
       </span>
       <span>
-        <button id="ltrMode" title="${getLocaleString('VIEW_MODE_LEFT')}" class="ControlButton">${IconArrowAutofitRight}</button>
-        <button id="verticalMode" title="${getLocaleString('VIEW_MODE_VERTICAL')}" class="ControlButton">${IconArrowAutofitDown}</button>
-        <button id="webComic" title="${getLocaleString('VIEW_MODE_WEBCOMIC')}" class="ControlButton">${IconSpacingVertical}</button>
-        <button id="rtlMode" title="${getLocaleString('VIEW_MODE_RIGHT')}" class="ControlButton">${IconArrowAutofitLeft}</button>
-        <button id="pageControls" title="${getLocaleString('TOGGLE_CONTROLS')}" class="ControlButton">${IconListNumbers}</button>
-        <button id="bookmarks" title="${getLocaleString('BOOKMARKS')}" class="ControlButton">${IconBookmarks}</button>
-        <button id="settings" title="${getLocaleString('SETTINGS')}" class="ControlButton">${IconSettings}</button>
+        <button id="ltrMode" title="${getLocaleString('VIEW_MODE_LEFT')}" class="ControlButton">
+          ${IconArrowAutofitRight}
+        </button>
+        <button id="verticalMode" 
+          title="${getLocaleString('VIEW_MODE_VERTICAL')}" class="ControlButton">
+          ${IconArrowAutofitDown}
+        </button>
+        <button id="webComic" 
+          title="${getLocaleString('VIEW_MODE_WEBCOMIC')}" class="ControlButton">
+          ${IconSpacingVertical}
+        </button>
+        <button id="rtlMode" title="${getLocaleString('VIEW_MODE_RIGHT')}" class="ControlButton">
+          ${IconArrowAutofitLeft}
+        </button>
+        <button id="pageControls" 
+          title="${getLocaleString('TOGGLE_CONTROLS')}" class="ControlButton">
+          ${IconListNumbers}
+        </button>
+        <button id="bookmarks" title="${getLocaleString('BOOKMARKS')}" class="ControlButton">
+          ${IconBookmarks}
+        </button>
+        <button id="settings" title="${getLocaleString('SETTINGS')}" class="ControlButton">
+          ${IconSettings}
+        </button>
       </span>
     </aside>
     <div class="ViewerTitle">
@@ -3289,18 +3344,19 @@ ${IconCheck}
         </select>
       </div>
       <div id="ChapterControl" class="ChapterControl">
-        <button id="download" class="NavigationControlButton ControlButton disabled" type="button">
+        <button id="download" class="NavigationControlButton ControlButton disabled" type="button"
+          title="${getLocaleString('DOWNLOAD_ZIP')}">
           ${IconFileDownload}
           ${IconLoader2}
           ${getLocaleString('BUTTON_DOWNLOAD')}
         </button>
         <button id="prev" class="NavigationControlButton ControlButton" type="button" 
-          value="${manga.prev || ''}">
+          value="${manga.prev || ''}" title="${getLocaleString('PREVIOUS_CHAPTER')}">
           ${IconArrowBigLeft}
           ${getLocaleString('BUTTON_PREVIOUS')}
         </button>
         <button id="next" class="NavigationControlButton ControlButton" type="button" 
-          value="${manga.next || ''}">
+          value="${manga.next || ''}" title="${getLocaleString('NEXT_CHAPTER')}">
           ${getLocaleString('BUTTON_NEXT')}
           ${IconArrowBigRight}
         </button>
