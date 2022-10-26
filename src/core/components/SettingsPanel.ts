@@ -120,8 +120,12 @@ const SettingsPanel = `
         <option value="150" ${useSettings().zoom === 150 ? 'selected' : ''}>150%</option>
         <option value="175" ${useSettings().zoom === 175 ? 'selected' : ''}>175%</option>
         <option value="200" ${useSettings().zoom === 200 ? 'selected' : ''}>200%</option>
-        <option value="1000" ${useSettings().zoom === 1000 ? 'selected' : ''}>Fit Width</option>
-        <option value="-1000" ${useSettings().zoom === -1000 ? 'selected' : ''}>Fit Height</option>
+        <option value="1000" ${useSettings().zoom === 1000 ? 'selected' : ''}>
+          ${getLocaleString('FIT_WIDTH')}
+        </option>
+        <option value="-1000" ${useSettings().zoom === -1000 ? 'selected' : ''}>
+          ${getLocaleString('FIT_HEIGHT')}
+        </option>
       </select>
     </div>
     <!-- =========================================================================================== -->
