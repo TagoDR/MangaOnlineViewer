@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno, vercomicsporno, wnacg, xyzcomics
-// @version 2022.10.25
+// @version 2022.10.26
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -2556,10 +2556,10 @@
         MINIMUM_ZOOM: '相对于屏幕宽度的最小缩放 (最小 30 最大 100)',
         ZOOM_STEP: '缩放级别 (最小 5 最大 50)',
         DEFAULT_VIEW_MODE: '默认视图模式',
-        VIEW_MODE_VERTICAL: '垂直拼接',
+        VIEW_MODE_VERTICAL: '垂直有缝',
         VIEW_MODE_LEFT: '从左到右',
         VIEW_MODE_RIGHT: '从右到左',
-        VIEW_MODE_WEBCOMIC: '网络漫画',
+        VIEW_MODE_WEBCOMIC: '垂直无缝',
         FIT_WIDTH_OVERSIZED: '如果尺寸过大、则适合宽度',
         SHOW_THUMBNAILS: '显示缩略图',
         HIDE_CONTROLS: '始终隐藏页面控件',
@@ -2923,8 +2923,12 @@ ${IconCheck}
         <option value="150" ${useSettings().zoom === 150 ? 'selected' : ''}>150%</option>
         <option value="175" ${useSettings().zoom === 175 ? 'selected' : ''}>175%</option>
         <option value="200" ${useSettings().zoom === 200 ? 'selected' : ''}>200%</option>
-        <option value="1000" ${useSettings().zoom === 1000 ? 'selected' : ''}>Fit Width</option>
-        <option value="-1000" ${useSettings().zoom === -1000 ? 'selected' : ''}>Fit Height</option>
+        <option value="1000" ${useSettings().zoom === 1000 ? 'selected' : ''}>
+          ${getLocaleString('FIT_WIDTH')}
+        </option>
+        <option value="-1000" ${useSettings().zoom === -1000 ? 'selected' : ''}>
+          ${getLocaleString('FIT_HEIGHT')}
+        </option>
       </select>
     </div>
     <!-- =========================================================================================== -->
