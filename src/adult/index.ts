@@ -17,6 +17,7 @@ import multporn from './multporn';
 import myhentaigallery from './myhentaigallery';
 import nhentainet from './nhentainet';
 import ninehentai from './9hentai';
+import omegascans from './omegascans';
 import porncomixonline from './porncomixonline';
 import pururin from './pururin';
 import simplyhentai from './simplyhentai';
@@ -46,6 +47,7 @@ const sites = [
   myhentaigallery,
   nhentainet,
   ninehentai,
+  omegascans,
   porncomixonline,
   pururin,
   simplyhentai,
