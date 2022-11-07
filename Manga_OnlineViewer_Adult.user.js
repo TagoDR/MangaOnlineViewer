@@ -4,8 +4,8 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, 9Hentai, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno, vercomicsporno, wnacg, xyzcomics
-// @version 2022.10.26
+// @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno, vercomicsporno, wnacg, xyzcomics
+// @version 2022.11.07
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -38,6 +38,7 @@
 // @include /https?:\/\/(www.)?myhentaigallery.com\/gallery\/show\/.+\/\d+/
 // @include /https?:\/\/(www.)?nhentai.(net|xxx)\/g\/.+\/.+/
 // @include /https?:\/\/(www.)?9hentai.(ru|to)\/g\/.+\/.+/
+// @include /https?:\/\/(www.)?(omegascans).(org)\/.+/
 // @include /https?:\/\/(www.)?porncomixone.net\/comic\/.+/
 // @include /https?:\/\/(www.)?pururin.to\/(view|read)\/.+\/.+\/.+/
 // @include /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/
@@ -584,6 +585,28 @@
         },
     };
 
+    // == OmegaScans ===================================================================================
+    var omegascans = {
+        name: ['OmegaScans'],
+        url: /https?:\/\/(www.)?(omegascans).(org)\/.+/,
+        homepage: ['https://omegascans.org/'],
+        language: ['English'],
+        category: 'manga',
+        waitEle: '#chapter option:nth-child(2)',
+        run() {
+            const chapter = document.querySelector('#chapter option:checked');
+            const images = [...document.querySelectorAll('#readerarea img')];
+            return {
+                title: document.querySelector('.entry-title')?.textContent?.trim(),
+                series: document.querySelector('.allc a')?.getAttribute('href'),
+                pages: images.length,
+                prev: chapter?.nextElementSibling?.getAttribute('value'),
+                next: chapter?.previousElementSibling?.getAttribute('value'),
+                listImages: images.map((img) => img.getAttribute('data-src') || img.getAttribute('src')),
+            };
+        },
+    };
+
     // == PornComixOnline ==============================================================================
     var porncomixonline = {
         name: 'PornComixOnline',
@@ -785,6 +808,7 @@
         myhentaigallery,
         nhentainet,
         ninehentai,
+        omegascans,
         porncomixonline,
         pururin,
         simplyhentai,
