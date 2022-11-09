@@ -102,6 +102,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/
 - [Luscious](https://luscious.net/) _[English]_
 - [MultPorn](https://multporn.net/) _[English]_
 - [MyHentaiGallery](https://www.myhentaigallery.com) _[English]_
+- [Nana.my](https://nana.my.id/) _[English]_
 - [nHentai.net](https://nhentai.net/) / [nHentai.xxx](https://nhentai.xxx/) _[English]_
 - [9Hentai](https://9hentai.to) _[English]_
 - [OmegaScans](https://omegascans.org/) _[English]_
