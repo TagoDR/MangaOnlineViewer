@@ -4,11 +4,8 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM,
-// 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand,
-// nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana,
-// nHentai.net, nHentai.xxx, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai,
-// TMOHentai, Tsumino, vermangasporno, vercomicsporno, wnacg, xyzcomics @version 2022.11.09
+// @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno, vercomicsporno, wnacg, xyzcomics
+// @version 2022.11.09
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -517,20 +514,19 @@
         },
     };
 
-  // == Nana
-  // =========================================================================================
+    // == Nana =========================================================================================
     var nana = {
-      name: 'Nana',
-      url: /https?:\/\/nana.my.id\/reader\/.+/,
-      homepage: 'https://nana.my.id/',
-      language: ['English'],
-      category: 'hentai',
-      run() {
-        const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-        return {
-          title: document
-            .querySelector('title')
-            ?.textContent?.replace(/ - Nana .+/, '')
+        name: 'Nana',
+        url: /https?:\/\/nana.my.id\/reader\/.+/,
+        homepage: 'https://nana.my.id/',
+        language: ['English'],
+        category: 'hentai',
+        run() {
+            const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+            return {
+                title: document
+                    .querySelector('title')
+                    ?.textContent?.replace(/ - Nana .+/, '')
                     .trim(),
                 series: '#',
                 pages: W.Reader.pages.length,
@@ -2050,7 +2046,7 @@
   #MangaOnlineViewer .ViewerTitle #series[href=''],
   #MangaOnlineViewer .ViewerTitle #series[href='undefined'] {
     visibility: hidden;
-  }  
+  }
 
   #MangaOnlineViewer #Counters {
   }
@@ -3745,8 +3741,8 @@ ${IconCheck}
     const observerEvent = _.throttle(executeCheck, settings.throttle);
     /**
      * Simple lazy loading for images.
-     * Add an image element to a list, wait for it to be close to appearing on screen then load its
-     * 'src' from 'data-src' then call a callback function.
+     * Add an image element to a list, wait for it to be close to appearing on screen then load its 'src' from 'data-src'
+     * then call a callback function.
      * @param element
      * @param callback
      */
