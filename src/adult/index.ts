@@ -15,6 +15,7 @@ import kingcomix from './kingcomix';
 import luscious from './luscious';
 import multporn from './multporn';
 import myhentaigallery from './myhentaigallery';
+import nana from './nana.js';
 import nhentainet from './nhentainet';
 import ninehentai from './9hentai';
 import omegascans from './omegascans';
@@ -45,6 +46,7 @@ const sites = [
   luscious,
   multporn,
   myhentaigallery,
+  nana,
   nhentainet,
   ninehentai,
   omegascans,
