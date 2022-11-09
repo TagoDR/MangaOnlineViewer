@@ -1,13 +1,13 @@
 // == AsuraScans and FlameScans ====================================================================
 export default {
-  name: ['Asura Scans', 'Flame Scans', 'Realm Scans', 'Alpha-scans', 'Voids-Scans'],
-  url: /https?:\/\/(www.)?(asura|flamescans|realmscans|alpha-scans|void-scans).(com|org|gg)\/.+/,
+  name: ['Asura Scans', 'Flame Scans', 'Realm Scans', 'Voids-Scans', 'Luminous Scans'],
+  url: /https?:\/\/(www.)?(asura|flamescans|realmscans|void-scans|luminousscans).(com|org|gg)\/.+/,
   homepage: [
     'https://www.asura.gg/',
     'https://flamescans.org/',
     'https://realmscans.com/',
-    'https://alpha-scans.org/',
     'https://void-scans.com/',
+    'https://luminousscans.com/',
   ],
   language: ['English'],
   category: 'manga',
