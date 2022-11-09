@@ -7,6 +7,7 @@ export default {
   category: 'hentai',
   run() {
     const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+
     function getExt(extension: string) {
       if (extension === 'g') return 'gif';
       if (extension === 'b') return 'bmp';

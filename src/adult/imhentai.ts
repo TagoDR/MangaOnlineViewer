@@ -26,6 +26,7 @@ export default {
     } else if (cId > 816010) {
       randomServer = 'm6.imhentai.xxx';
     }
+
     function findExt(i: number) {
       const c = W.g_th[i][0];
       if (c === 'p') return '.png';
@@ -33,6 +34,7 @@ export default {
       if (c === 'g') return '.gif';
       return '.jpg';
     }
+
     return {
       title: document.querySelector('title')?.textContent?.trim(),
       series: document.querySelector('.return_btn')?.getAttribute('href'),

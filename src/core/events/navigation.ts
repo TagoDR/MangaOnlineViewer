@@ -8,7 +8,9 @@ function navigation() {
     applyZoom();
     scrollToElement(document.querySelector(`#Page${target}`) as HTMLElement);
   }
+
   document.querySelector('#gotoPage')?.addEventListener('change', selectGoToPage);
+
   // Thumbnail Navigation
   function clickThumbnail(elem: Element) {
     return elem.addEventListener('click', (event) => {
@@ -22,6 +24,8 @@ function navigation() {
       );
     });
   }
+
   document.querySelectorAll('.Thumbnail')?.forEach(clickThumbnail);
 }
+
 export default navigation;

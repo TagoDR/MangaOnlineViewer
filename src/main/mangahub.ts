@@ -12,6 +12,7 @@ export default {
       const value = re.exec(document.cookie);
       return value != null ? decodeURIComponent(value[1]) : null;
     }
+
     const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     const slug = W.CURRENT_MANGA_SLUG || window.location.pathname.split('/')[2];
     const number = window.location.pathname.split('/')[3].replace('chapter-', '');

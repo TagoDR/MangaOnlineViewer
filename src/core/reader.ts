@@ -20,4 +20,5 @@ function head(manga: IManga) {
 </head>
 `;
 }
+
 export default head;

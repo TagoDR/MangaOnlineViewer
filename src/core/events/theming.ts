@@ -12,6 +12,7 @@ function theming() {
       elem.classList.add(useSettings().colorScheme);
     });
   }
+
   document.querySelector('#ColorScheme')?.addEventListener('click', changeColorScheme);
 
   // Theme Control Selector
@@ -35,6 +36,7 @@ function theming() {
       shade?.classList.add('show');
     }
   }
+
   [...document.querySelectorAll('.ThemeRadio')].forEach((elem) =>
     elem.addEventListener('click', changeTheme),
   );
@@ -45,6 +47,7 @@ function theming() {
     updateSettings({ customTheme: target });
     addCustomTheme(target);
   }
+
   document.querySelector('#CustomThemeHue')?.addEventListener('change', changeCustomTheme);
 
   // Theme Shade Input
@@ -53,6 +56,7 @@ function theming() {
     updateSettings({ themeShade: target as Shade });
     refreshThemes();
   }
+
   document.querySelector('#ThemeShade')?.addEventListener('change', changeThemeShade);
 }
 

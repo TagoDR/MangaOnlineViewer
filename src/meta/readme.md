@@ -99,7 +99,7 @@ javascript:(function(){["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/
 2. The site must be strong enough or else my script may crash it
 3. The site must not be exclusive to a handful of manga titles (Meaning: no small Scanlators)
 
-## Permissions 
+## Permissions
 
 I allow this script to be posted or used anywhere as long as I am given credit and provided a link to this site. I allow parts of my script to be used freely.
 

@@ -10,7 +10,9 @@ function individual() {
       reloadImage(img);
     });
   }
+
   document.querySelectorAll('.Reload')?.forEach(buttonReloadPage);
+
   // Hide
   function buttonHidePage(elem: Element): void {
     elem.addEventListener('click', (event) => {
@@ -18,6 +20,7 @@ function individual() {
       img.classList.toggle('hide');
     });
   }
+
   document.querySelectorAll('.Hide')?.forEach(buttonHidePage);
 }
 

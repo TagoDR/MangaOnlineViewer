@@ -84,6 +84,7 @@ function updateProgress() {
   logScript(`Progress: ${percentage}%`);
   if (loaded === total) onImagesDone();
 }
+
 function onImagesSuccess(instance: ImagesLoaded.ImagesLoaded) {
   instance.images.forEach((image) => {
     image.img.classList.add('imgLoaded');
@@ -95,6 +96,7 @@ function onImagesSuccess(instance: ImagesLoaded.ImagesLoaded) {
     updateProgress();
   });
 }
+
 function onImagesFail(instance: ImagesLoaded.ImagesLoaded) {
   instance.images.forEach((image) => {
     image.img.classList.add('imgBroken');

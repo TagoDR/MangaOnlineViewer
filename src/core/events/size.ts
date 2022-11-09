@@ -12,7 +12,9 @@ function size() {
       applyZoom(`#${img.getAttribute('id')}`, ratio);
     });
   }
+
   document.querySelectorAll('.ZoomIn')?.forEach(buttonZoomIn);
+
   // ZoomOut
   function buttonZoomOut(elem: Element) {
     return elem.addEventListener('click', (event) => {
@@ -23,14 +25,18 @@ function size() {
       applyZoom(`#${img.getAttribute('id')}`, ratio);
     });
   }
+
   document.querySelectorAll('.ZoomOut')?.forEach(buttonZoomOut);
+
   // ZoomRestore
   function buttonRestoreZoom(elem: Element) {
     return elem.addEventListener('click', () => {
       document.querySelector('.PageContent .PageImg')?.removeAttribute('width');
     });
   }
+
   document.querySelectorAll('.ZoomRestore')?.forEach(buttonRestoreZoom);
+
   // ZoomWidth
   function buttonZoomWidth(elem: Element) {
     return elem.addEventListener('click', (event) => {
@@ -40,7 +46,9 @@ function size() {
       page?.classList.toggle('DoublePage');
     });
   }
+
   document.querySelectorAll('.ZoomWidth')?.forEach(buttonZoomWidth);
+
   // ZoomHeight
   function buttonZoomHeight(elem: Element): void {
     elem.addEventListener('click', (event) => {
@@ -50,6 +58,7 @@ function size() {
       applyZoom(`#${img.getAttribute('id')}`, -1000);
     });
   }
+
   document.querySelectorAll('.ZoomHeight')?.forEach(buttonZoomHeight);
 }
 

@@ -31,4 +31,5 @@ function viewMode() {
   // Vertical View Mode Button
   document.querySelector('#verticalMode')?.addEventListener('click', updateViewMode('Vertical'));
 }
+
 export default viewMode;

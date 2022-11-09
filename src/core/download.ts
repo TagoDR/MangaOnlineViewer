@@ -8,6 +8,7 @@ interface ImageFile {
   name: string;
   data: any;
 }
+
 let zip: JSZip;
 
 // const filenameRegex = /^(?<name>.*?)(?<index>\d+)\.(?<ext>\w+)$/;
@@ -96,4 +97,5 @@ async function generateZip() {
     })
     .catch(logScript);
 }
+
 export default generateZip;

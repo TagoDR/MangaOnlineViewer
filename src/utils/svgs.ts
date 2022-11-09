@@ -21,8 +21,10 @@ function placeholder(width: number, height: number, bgColor = '#0F1C3F', textCol
 </svg>`;
   return svgToUrl(str);
 }
+
 const backgrounds = Object.values(colors).map((i) => i['900']);
 const widths = [985, 985, 985, 985, 1970];
+
 function randomPlaceholder() {
   const randomSize = Math.floor(Math.random() * widths.length);
   const randomColor = Math.floor(Math.random() * backgrounds.length);

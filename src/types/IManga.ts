@@ -9,7 +9,9 @@ export interface IMangaBase {
   next: string | null | undefined;
   lazy?: boolean;
   timer?: number;
+
   before?(): void;
+
   after?(): void;
 }
 
@@ -40,9 +42,11 @@ export type IManga = IMangaPages | IMangaImages | IMangaForce;
 export function isImagesManga(manga: IManga): manga is IMangaImages {
   return 'listImages' in manga && !isNothing(manga.listImages);
 }
+
 export function isPagesManga(manga: IManga): manga is IMangaPages {
   return 'listPages' in manga && !isNothing(manga.listPages);
 }
+
 export function isBruteforceManga(manga: IManga): manga is IMangaForce {
   return 'bruteForce' in manga && !isNothing(manga.bruteForce);
 }

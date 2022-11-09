@@ -16,8 +16,9 @@ export default {
       listImages: images.map((img) => img.getAttribute('src')),
       before() {
         if (window.location.pathname.match(/all.html$/)) return;
-        if (window.location.pathname.match(/\d+-\d+.html$/))
+        if (window.location.pathname.match(/\d+-\d+.html$/)) {
           window.location.pathname = window.location.pathname.replace(/-\d+.html$/, '-all.html');
+        }
       },
     };
   },

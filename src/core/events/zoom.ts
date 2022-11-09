@@ -31,6 +31,7 @@ function zoom() {
     updateSettings({ zoom: target });
     changeGlobalZoom(target)();
   }
+
   document.querySelector('#DefaultZoom')?.addEventListener('change', changeDefaultZoom);
   // Global Zoom In Button
   document.querySelector('#enlarge')?.addEventListener('click', changeZoomByStep());

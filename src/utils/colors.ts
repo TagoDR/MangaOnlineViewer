@@ -32,6 +32,7 @@ export const base = {
     900: 'rgba(0, 0, 0, 0.92)',
   },
 };
+
 export interface IColor {
   name: string;
   50: string;
@@ -45,9 +46,11 @@ export interface IColor {
   800: string;
   900: string;
 }
+
 export interface IPalette {
   [key: string]: IColor;
 }
+
 const colors: IPalette = {
   dark: {
     name: 'dark',
@@ -271,6 +274,7 @@ function setLightness(hsl: tinycolor.ColorFormats.HSLA, lightness: number) {
   hsl.l = lightness;
   return tinycolor(hsl).toHexString();
 }
+
 export function customColor(color: string) {
   const hsl = tinycolor(color).toHsl();
   return {

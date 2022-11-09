@@ -139,8 +139,9 @@ export const keybinds: IKeyBindings[] = [
 const usedKeys = keybinds.flatMap((kb) => kb.keys);
 
 function processKey(e: KeyboardEvent) {
-  if (e.ctrlKey || e.altKey || e.shiftKey || e.metaKey || !usedKeys.some((i) => i === e.code))
+  if (e.ctrlKey || e.altKey || e.shiftKey || e.metaKey || !usedKeys.some((i) => i === e.code)) {
     return true;
+  }
   e.preventDefault();
   e.stopPropagation();
   e.stopImmediatePropagation();
