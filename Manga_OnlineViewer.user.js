@@ -2360,6 +2360,12 @@
     flex-basis: 60%;
   }
 
+  #MangaOnlineViewer .ViewerTitle #series[href='#'],
+  #MangaOnlineViewer .ViewerTitle #series[href=''],
+  #MangaOnlineViewer .ViewerTitle #series[href='undefined'] {
+    visibility: hidden;
+  }
+
   #MangaOnlineViewer #Counters {
   }
 
@@ -4053,8 +4059,8 @@ ${IconCheck}
     const observerEvent = _.throttle(executeCheck, settings.throttle);
     /**
      * Simple lazy loading for images.
-     * Add an image element to a list, wait for it to be close to appearing on screen then load its 'src' from 'data-src'
-     * then call a callback function.
+     * Add an image element to a list, wait for it to be close to appearing on screen then load its
+     * 'src' from 'data-src' then call a callback function.
      * @param element
      * @param callback
      */

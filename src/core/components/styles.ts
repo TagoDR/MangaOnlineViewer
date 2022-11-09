@@ -558,6 +558,12 @@ export default `
     flex-basis: 60%;
   }
 
+  #MangaOnlineViewer .ViewerTitle #series[href='#'],
+  #MangaOnlineViewer .ViewerTitle #series[href=''],
+  #MangaOnlineViewer .ViewerTitle #series[href='undefined'] {
+    visibility: hidden;
+  }
+
   #MangaOnlineViewer #Counters {
   }
 
