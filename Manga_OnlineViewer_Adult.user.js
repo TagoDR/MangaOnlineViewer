@@ -4,8 +4,8 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, Tsumino, vermangasporno, vercomicsporno, wnacg, xyzcomics
-// @version 2022.11.09
+// @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, xyzcomics
+// @version 2022.11.12
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -44,6 +44,7 @@
 // @include /https?:\/\/(www.)?pururin.to\/(view|read)\/.+\/.+\/.+/
 // @include /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/
 // @include /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/\d+/
+// @include /https?:\/\/(www.)?3hentai.net\/d\/.+\/.+/
 // @include /https?:\/\/(www.)?tsumino.com\/Read\/Index\/[0-9]+(\?page=.+)?/
 // @include /https?:\/\/(www.)?(vermangasporno|vercomicsporno).com\/.+/
 // @include /https?:\/\/(www.)?wnacg.com\/photos-view-id-.+/
@@ -719,6 +720,27 @@
         },
     };
 
+    // == 3Hentai ======================================================================================
+    var threehentai = {
+        name: '3Hentai',
+        url: /https?:\/\/(www.)?3hentai.net\/d\/.+\/.+/,
+        homepage: 'https://3hentai.net/',
+        language: ['English'],
+        category: 'hentai',
+        waitVar: 'readerPages',
+        run() {
+            const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+            return {
+                title: W.readerPages.title.replace(/- Page.+/, '').trim(),
+                series: W.readerPages.baseUri.replace('%s', ''),
+                pages: W.readerPages.lastPage,
+                prev: '#',
+                next: '#',
+                listImages: Object.keys(W.readerPages.pages).map((img) => W.readerPages.baseUriImg.replace('%s', W.readerPages.pages[img].f)),
+            };
+        },
+    };
+
     // == Tsumino ======================================================================================
     var tsumino = {
         name: 'Tsumino',
@@ -838,6 +860,7 @@
         pururin,
         simplyhentai,
         tmohhentai,
+        threehentai,
         tsumino,
         vercomicsporno,
         wnacg,

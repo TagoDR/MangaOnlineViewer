@@ -109,6 +109,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/
 - [PornComixOnline](https://www.porncomixone.net) _[English]_
 - [Pururin](https://pururin.to/) _[English]_
 - [Simply-Hentai](https://simply-hentai.com/) _[English]_
+- [3Hentai](https://3hentai.net/) _[English]_
 - [Tsumino](http://tsumino.com/) _[English]_
 - [xyzcomics](https://xyzcomics.com/) _[English]_
 - [wnacg](https://wnacg.com/) _[English,Raw,Chinese]_
