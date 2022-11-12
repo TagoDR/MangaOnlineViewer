@@ -23,6 +23,7 @@ import porncomixonline from './porncomixonline';
 import pururin from './pururin';
 import simplyhentai from './simplyhentai';
 import tmohhentai from './tmohentai';
+import threehentai from './3hentai';
 import tsumino from './tsumino';
 import vercomicsporno from './vercomicsporno';
 import wnacg from './wnacg';
@@ -54,6 +55,7 @@ const sites = [
   pururin,
   simplyhentai,
   tmohhentai,
+  threehentai,
   tsumino,
   vercomicsporno,
   wnacg,
