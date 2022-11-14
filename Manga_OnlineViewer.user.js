@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, Batoto, ComiCastle, Dynasty-Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MReader, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus
-// @version 2022.11.12
+// @version 2022.11.14
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -373,17 +373,18 @@
         category: 'manga',
         waitEle: "a[href^='/chapter/']",
         async run() {
-            const chapterId = window.location.pathname.match(/\/chapter\/([^/]+)(\/\d+)?/)[1];
+            const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+            const chapterId = W.location.pathname.match(/\/chapter\/([^/]+)(\/\d+)?/)[1];
             const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
             const server = await fetch(home).then((res) => res.json());
             const images = server.chapter.data;
-            const chapters = document.querySelectorAll("a[href^='/chapter/']");
+            const chapters = [...document.querySelectorAll("a[href^='/chapter/']")].map((a) => a.getAttribute('href'));
             return {
                 title: document.querySelector('title')?.text.replace(' - MangaDex', ''),
                 series: document.querySelector("a.text-primary[href^='/title/']")?.getAttribute('href'),
                 pages: images.length,
-                prev: chapters[1].getAttribute('href'),
-                next: chapters[0].getAttribute('href'),
+                prev: chapters[0] !== W.location.pathname ? chapters[0] : '#',
+                next: chapters[1] !== W.location.pathname ? chapters[1] : '#',
                 listImages: images.map((img) => `${server.baseUrl}/data/${server.chapter.hash}/${img}`),
             };
         },
