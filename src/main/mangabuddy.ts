@@ -5,8 +5,13 @@ export default {
   homepage: 'https://mangabuddy.com/',
   language: ['English'],
   category: 'manga',
+  waitVar: 'final_images',
   run() {
-    const images = [...document.querySelectorAll('#chapter-images img')];
+    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+    const img = [...document.querySelectorAll('.chapter-image.load-first img')].map((img) =>
+      img.getAttribute('data-src') || img.getAttribute('src'),
+    );
+    const images = [...img, ...W.final_images];
     return {
       title: document.querySelector('.chapter-info')?.textContent?.trim(),
       series: document
@@ -15,7 +20,7 @@ export default {
       pages: images.length,
       prev: document.querySelector('a.prev')?.getAttribute('href'),
       next: document.querySelector('a.next')?.getAttribute('href'),
-      listImages: images.map((img) => img.getAttribute('src')),
+      listImages: images,
     };
   },
 };
