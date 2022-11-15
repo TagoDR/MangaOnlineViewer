@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars,@typescript-eslint/no-unused-vars */
-import asurasflamecans from './asurasflamecans';
+import asurascans from './asurascans.js';
 import batoto from './batoto';
 import comicastle from './comicastle';
 import dysnatyscans from './dysnatyscans';
-import inmanga from './inmanga';
+import flamecans from './flamecans.js';
 import foolslide from './foolslide';
+import inmanga from './inmanga';
 import klmanga from './klmanga';
 import leitor from './leitor';
 import lhtranslation from './lhtranslation';
@@ -42,10 +43,11 @@ import zeroscans from './zeroscans';
 import { ISite } from '../types/ISite';
 
 const sites = [
-  asurasflamecans,
+  asurascans,
   batoto,
   comicastle,
   dysnatyscans,
+  flamecans,
   inmanga,
   klmanga,
   leitor,
