@@ -4,8 +4,8 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, Batoto, ComiCastle, Dynasty-Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MReader, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus
-// @version 2022.11.14
+// @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MReader, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus
+// @version 2022.11.15
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -20,10 +20,11 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.35/sweetalert2.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
-// @include /https?:\/\/(www.)?(asura|flamescans|realmscans|void-scans|luminousscans).(com|org|gg)\/.+/
+// @include /https?:\/\/beta.asurascans.com\/read\/.+\/.+/
 // @include /https?:\/\/(www.)?bato.to\/chapter.*/
 // @include /https?:\/\/(www.)?comicastle.org\/read\/.+\/[0-9]+.*/
 // @include /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/
+// @include /https?:\/\/(www.)?(asura|flamescans|realmscans|void-scans|luminousscans).(com|org|gg)\/.+/
 // @include /https?:\/\/(www.)?inmanga.com\/ver\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?klmanga.com\/.+chapter.+/
 // @include /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
@@ -67,30 +68,22 @@
 (function () {
     'use strict';
 
-    // == AsuraScans and FlameScans ====================================================================
-    var asurasflamecans = {
-        name: ['Asura Scans', 'Flame Scans', 'Realm Scans', 'Voids-Scans', 'Luminous Scans'],
-        url: /https?:\/\/(www.)?(asura|flamescans|realmscans|void-scans|luminousscans).(com|org|gg)\/.+/,
-        homepage: [
-            'https://www.asura.gg/',
-            'https://flamescans.org/',
-            'https://realmscans.com/',
-            'https://void-scans.com/',
-            'https://luminousscans.com/',
-        ],
+    // == AsuraScans ===================================================================================
+    var asurascans = {
+        name: 'Asura Scans',
+        url: /https?:\/\/beta.asurascans.com\/read\/.+\/.+/,
+        homepage: 'https://beta.asurascans.com/',
         language: ['English'],
         category: 'manga',
-        waitEle: '#chapter option:nth-child(2)',
         run() {
-            const chapter = document.querySelector('#chapter option:checked');
-            const images = [...document.querySelectorAll('#readerarea img')];
+            const { chapterID, data } = JSON.parse(document.querySelector('#__NEXT_DATA__')?.textContent ?? '').props.pageProps;
             return {
-                title: document.querySelector('.entry-title')?.textContent?.trim(),
-                series: document.querySelector('.allc a')?.getAttribute('href'),
-                pages: images.length,
-                prev: chapter?.nextElementSibling?.getAttribute('value'),
-                next: chapter?.previousElementSibling?.getAttribute('value'),
-                listImages: images.map((img) => img.getAttribute('data-src') || img.getAttribute('src')),
+                title: document.querySelector('span.h2')?.textContent?.trim(),
+                series: document.querySelector('.container a.h6')?.getAttribute('href'),
+                pages: data.length,
+                prev: document.querySelector('.prev:not(.disabled)')?.getAttribute('href'),
+                next: document.querySelector('.next:not(.disabled)')?.getAttribute('href'),
+                listImages: data.map((img) => `https://img.asurascans.com/pages/${chapterID}/${img.uuid}.jpg`),
             };
         },
     };
@@ -157,27 +150,30 @@
         },
     };
 
-    // == InManga ===================================================================================
-    /* eslint-disable no-underscore-dangle */
-    var inmanga = {
-        name: 'InManga',
-        url: /https?:\/\/(www.)?inmanga.com\/ver\/manga\/.+\/.+/,
-        homepage: 'https://inmanga.com//',
-        language: ['Spanish'],
+    // == FlameScans ===================================================================================
+    var flamecans = {
+        name: ['Asura Scans', 'Flame Scans', 'Realm Scans', 'Voids-Scans', 'Luminous Scans'],
+        url: /https?:\/\/(www.)?(asura|flamescans|realmscans|void-scans|luminousscans).(com|org|gg)\/.+/,
+        homepage: [
+            'https://www.asura.gg/',
+            'https://flamescans.org/',
+            'https://realmscans.com/',
+            'https://void-scans.com/',
+            'https://luminousscans.com/',
+        ],
+        language: ['English'],
         category: 'manga',
-        waitVar: 'pageController',
+        waitEle: '#chapter option:nth-child(2)',
         run() {
-            const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-            const images = [...document.querySelectorAll('#PageList option')];
-            const chapter = document.querySelector('#ChapList option:checked');
-            const src = W.pageController._containers.pageUrl;
+            const chapter = document.querySelector('#chapter option:checked');
+            const images = [...document.querySelectorAll('#readerarea img')];
             return {
-                title: document.querySelector('title')?.textContent?.trim(),
-                series: `../${W.pageController._containers.mangaIdentification}`,
+                title: document.querySelector('.entry-title')?.textContent?.trim(),
+                series: document.querySelector('.allc a')?.getAttribute('href'),
                 pages: images.length,
-                prev: chapter?.previousElementSibling?.getAttribute('value'),
-                next: chapter?.nextElementSibling?.getAttribute('value'),
-                listImages: images.map((img, index) => src.replace('identification', img.getAttribute('value')).replace('pageNumber', index)),
+                prev: chapter?.nextElementSibling?.getAttribute('value'),
+                next: chapter?.previousElementSibling?.getAttribute('value'),
+                listImages: images.map((img) => img.getAttribute('data-src') || img.getAttribute('src')),
             };
         },
     };
@@ -222,6 +218,31 @@
                         .map((_, i) => `${window.location.href.replace(/\/\d+$/, '')}/${i + 1}`),
                 listImages: images.length > 1 ? images.map((img) => img.getAttribute('src')) : null,
                 img: 'img.open',
+            };
+        },
+    };
+
+    // == InManga ===================================================================================
+    /* eslint-disable no-underscore-dangle */
+    var inmanga = {
+        name: 'InManga',
+        url: /https?:\/\/(www.)?inmanga.com\/ver\/manga\/.+\/.+/,
+        homepage: 'https://inmanga.com//',
+        language: ['Spanish'],
+        category: 'manga',
+        waitVar: 'pageController',
+        run() {
+            const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+            const images = [...document.querySelectorAll('#PageList option')];
+            const chapter = document.querySelector('#ChapList option:checked');
+            const src = W.pageController._containers.pageUrl;
+            return {
+                title: document.querySelector('title')?.textContent?.trim(),
+                series: `../${W.pageController._containers.mangaIdentification}`,
+                pages: images.length,
+                prev: chapter?.previousElementSibling?.getAttribute('value'),
+                next: chapter?.nextElementSibling?.getAttribute('value'),
+                listImages: images.map((img, index) => src.replace('identification', img.getAttribute('value')).replace('pageNumber', index)),
             };
         },
     };
@@ -1126,10 +1147,11 @@
 
     /* eslint-disable no-unused-vars,@typescript-eslint/no-unused-vars */
     const sites = [
-        asurasflamecans,
+        asurascans,
         batoto,
         comicastle,
         dysnatyscans,
+        flamecans,
         inmanga,
         klmanga,
         leitor,

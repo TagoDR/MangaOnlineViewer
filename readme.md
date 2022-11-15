@@ -39,9 +39,10 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/
 
 ## Supported Manga Sites
 
-- [Asura Scans](https://www.asura.gg/) / [Flame Scans](https://flamescans.org/) / [Realm Scans](https://realmscans.com/) / [Voids-Scans](https://void-scans.com/) / [Luminous Scans](https://luminousscans.com/) _[English]_
+- [Asura Scans](https://beta.asurascans.com/) _[English]_
 - [Batoto](http://bato.to/) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
+- [Asura Scans](https://www.asura.gg/) / [Flame Scans](https://flamescans.org/) / [Realm Scans](https://realmscans.com/) / [Voids-Scans](https://void-scans.com/) / [Luminous Scans](https://luminousscans.com/) _[English]_
 - [LHTranslation](https://lhtranslation.net/) _[English]_
 - [MangaBuddy](https://mangabuddy.com/) _[English]_
 - [MangaDex](https://mangadex.org/) _[English]_
