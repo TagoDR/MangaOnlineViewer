@@ -1,8 +1,8 @@
 // == nHentai.net ==================================================================================
 export default {
-  name: ['nHentai.net', 'nHentai.xxx'],
-  url: /https?:\/\/(www.)?nhentai.(net|xxx)\/g\/.+\/.+/,
-  homepage: ['https://nhentai.net/', 'https://nhentai.xxx/'],
+  name: ['nHentai.net', 'nHentai.xxx', 'lhentai'],
+  url: /https?:\/\/(www.)?(nhentai|lhentai).(net|xxx|com)\/g\/.+\/.+/,
+  homepage: ['https://nhentai.net/', 'https://nhentai.xxx/', 'https://lhentai.com/'],
   language: ['English'],
   category: 'hentai',
   run() {
