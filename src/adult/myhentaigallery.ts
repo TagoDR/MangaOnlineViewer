@@ -7,10 +7,10 @@ export default {
   category: 'hentai',
   run() {
     const src = document.querySelector('.gallery-slide img')?.getAttribute('src') || '';
-    const num = parseInt(
-      document.querySelector('.pagination ul li:nth-last-child(3)')?.textContent || '',
-      10,
-    );
+    const lastPage = document
+      .getElementById('js__pagination__next')
+      ?.parentElement?.previousElementSibling?.querySelector('a');
+    const num = parseInt(lastPage?.textContent || '', 10);
     return {
       title: document.querySelector('title')?.textContent?.trim(),
       series: document.querySelector('.back-to-gallery a')?.getAttribute('href'),
