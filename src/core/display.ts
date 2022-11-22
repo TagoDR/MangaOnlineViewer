@@ -7,15 +7,20 @@ import { loadManga } from './page';
 import { isNothing } from '../utils/checks';
 import { useSettings } from './settings';
 
+function clearTag(element: HTMLElement) {
+  element.getAttributeNames().forEach((a) => element.removeAttribute(a));
+}
+
 export default function display(manga: IManga, begin: number) {
   window.stop();
   if (manga.before !== undefined) {
     manga.before();
   }
+  clearTag(document.documentElement);
+  clearTag(document.head);
+  clearTag(document.body);
   document.head.innerHTML = head(manga);
   document.body.innerHTML = body(manga, begin);
-  document.body.className = '';
-  document.body.removeAttribute('style');
   logScript('Rebuilding Site');
   setTimeout(() => {
     try {

@@ -7,17 +7,15 @@ import { wrapStyle } from '../utils/css';
 
 function head(manga: IManga) {
   return `
-<head>
-  <title>${manga.title}</title>
-  <meta charset='UTF-8'>
-  ${wrapStyle('externals', externalCSS)}
-  ${wrapStyle('reader', cssStyles)}
-  ${themesCSS}
-  ${wrapStyle(
-    'MinZoom',
-    `#MangaOnlineViewer .PageContent .PageImg {min-width: ${useSettings().minZoom}vw;}`,
-  )}
-</head>
+<title>${manga.title}</title>
+<meta charset='UTF-8'>
+${wrapStyle('externals', externalCSS)}
+${wrapStyle('reader', cssStyles)}
+${themesCSS}
+${wrapStyle(
+  'MinZoom',
+  `#MangaOnlineViewer .PageContent .PageImg {min-width: ${useSettings().minZoom}vw;}`,
+)}
 `;
 }
 
