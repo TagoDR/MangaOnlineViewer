@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MReader, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus
-// @version 2022.11.20
+// @version 2022.11.22
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -5107,14 +5107,12 @@ template {
 
     function head(manga) {
         return `
-<head>
-  <title>${manga.title}</title>
-  <meta charset='UTF-8'>
-  ${wrapStyle('externals', sweetalertStyle)}
-  ${wrapStyle('reader', cssStyles)}
-  ${themesCSS}
-  ${wrapStyle('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${useSettings().minZoom}vw;}`)}
-</head>
+<title>${manga.title}</title>
+<meta charset='UTF-8'>
+${wrapStyle('externals', sweetalertStyle)}
+${wrapStyle('reader', cssStyles)}
+${themesCSS}
+${wrapStyle('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${useSettings().minZoom}vw;}`)}
 `;
     }
 
@@ -6487,10 +6485,9 @@ template {
         function changeColorScheme() {
             const isDark = useSettings().colorScheme === 'dark';
             updateSettings({ colorScheme: isDark ? 'light' : 'dark' });
-            [...document.querySelectorAll('#MangaOnlineViewer , body')].forEach((elem) => {
-                elem.classList.remove(isDark ? 'dark' : 'light');
-                elem.classList.add(useSettings().colorScheme);
-            });
+            const elem = document.getElementById('MangaOnlineViewer');
+            elem?.classList.remove(isDark ? 'dark' : 'light');
+            elem?.classList.add(useSettings().colorScheme);
         }
         document.querySelector('#ColorScheme')?.addEventListener('click', changeColorScheme);
         // Theme Control Selector
@@ -6498,9 +6495,7 @@ template {
             const target = event.currentTarget;
             [...document.querySelectorAll('.ThemeRadio')].forEach((elem) => elem.classList.remove('selected'));
             target.classList.add('selected');
-            [...document.querySelectorAll('#MangaOnlineViewer , body')].forEach((elem) => {
-                elem.setAttribute('data-theme', target.title);
-            });
+            document.getElementById('MangaOnlineViewer')?.setAttribute('data-theme', target.title);
             updateSettings({ theme: target.title });
             const hue = document.querySelector('#Hue');
             const shade = document.querySelector('#Shade');
@@ -6614,15 +6609,19 @@ template {
         zoom();
     }
 
+    function clearTag(element) {
+        element.getAttributeNames().forEach((a) => element.removeAttribute(a));
+    }
     function display(manga, begin) {
         window.stop();
         if (manga.before !== undefined) {
             manga.before();
         }
+        clearTag(document.documentElement);
+        clearTag(document.head);
+        clearTag(document.body);
         document.head.innerHTML = head(manga);
         document.body.innerHTML = app(manga, begin);
-        document.body.className = '';
-        document.body.removeAttribute('style');
         logScript('Rebuilding Site');
         setTimeout(() => {
             try {
