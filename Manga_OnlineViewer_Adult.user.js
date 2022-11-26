@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, xyzcomics
-// @version 2022.11.22
+// @version 2022.11.26
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -1983,6 +1983,8 @@
     cursor: pointer;
   }
 
+  #MangaOnlineViewer #Header.click:not(.headroom-hide) #menu,
+  #MangaOnlineViewer #Header.click.headroom-end #menu,
   #MangaOnlineViewer #Header.click.visible #menu {
     position: static;
     width: 50px;
@@ -6289,17 +6291,14 @@ ${wrapStyle('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${u
         zoom();
     }
 
-    function clearTag(element) {
-        element.getAttributeNames().forEach((a) => element.removeAttribute(a));
-    }
     function display(manga, begin) {
         window.stop();
         if (manga.before !== undefined) {
             manga.before();
         }
-        clearTag(document.documentElement);
-        clearTag(document.head);
-        clearTag(document.body);
+        [document.documentElement, document.head, document.body].forEach((element) => {
+            element.getAttributeNames().forEach((attr) => element.removeAttribute(attr));
+        });
         document.head.innerHTML = head(manga);
         document.body.innerHTML = app(manga, begin);
         logScript('Rebuilding Site');
