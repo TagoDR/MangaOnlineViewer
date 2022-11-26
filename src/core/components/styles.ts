@@ -473,6 +473,8 @@ export default `
     cursor: pointer;
   }
 
+  #MangaOnlineViewer #Header.click:not(.headroom-hide) #menu,
+  #MangaOnlineViewer #Header.click.headroom-end #menu,
   #MangaOnlineViewer #Header.click.visible #menu {
     position: static;
     width: 50px;
