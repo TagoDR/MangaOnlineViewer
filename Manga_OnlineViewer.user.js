@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MReader, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus
-// @version 2022.11.26
+// @version 2022.11.27
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -5704,16 +5704,16 @@ ${wrapStyle('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${u
           ${IconLoader2}
           ${getLocaleString('BUTTON_DOWNLOAD')}
         </button>
-        <button id="prev" class="NavigationControlButton ControlButton" type="button" 
-          value="${manga.prev || ''}" title="${getLocaleString('PREVIOUS_CHAPTER')}">
+        <a id="prev" class="NavigationControlButton ControlButton" type="button" 
+          href="${manga.prev || ''}" title="${getLocaleString('PREVIOUS_CHAPTER')}">
           ${IconArrowBigLeft}
           ${getLocaleString('BUTTON_PREVIOUS')}
-        </button>
-        <button id="next" class="NavigationControlButton ControlButton" type="button" 
-          value="${manga.next || ''}" title="${getLocaleString('NEXT_CHAPTER')}">
+        </a>
+        <a id="next" class="NavigationControlButton ControlButton" type="button" 
+          href="${manga.next || ''}" title="${getLocaleString('NEXT_CHAPTER')}">
           ${getLocaleString('BUTTON_NEXT')}
           ${IconArrowBigRight}
-        </button>
+        </a>
       </div>
     </nav>
   </header>  
@@ -5880,7 +5880,8 @@ ${wrapStyle('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${u
         document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
     }
     function redirect(event) {
-        const url = event.target.getAttribute('value');
+        const element = event.target;
+        const url = element.getAttribute('value') || element.getAttribute('href');
         if (url)
             window.location.href = url;
     }

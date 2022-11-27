@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, xyzcomics
-// @version 2022.11.26
+// @version 2022.11.27
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -5384,16 +5384,16 @@ ${wrapStyle('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${u
           ${IconLoader2}
           ${getLocaleString('BUTTON_DOWNLOAD')}
         </button>
-        <button id="prev" class="NavigationControlButton ControlButton" type="button" 
-          value="${manga.prev || ''}" title="${getLocaleString('PREVIOUS_CHAPTER')}">
+        <a id="prev" class="NavigationControlButton ControlButton" type="button" 
+          href="${manga.prev || ''}" title="${getLocaleString('PREVIOUS_CHAPTER')}">
           ${IconArrowBigLeft}
           ${getLocaleString('BUTTON_PREVIOUS')}
-        </button>
-        <button id="next" class="NavigationControlButton ControlButton" type="button" 
-          value="${manga.next || ''}" title="${getLocaleString('NEXT_CHAPTER')}">
+        </a>
+        <a id="next" class="NavigationControlButton ControlButton" type="button" 
+          href="${manga.next || ''}" title="${getLocaleString('NEXT_CHAPTER')}">
           ${getLocaleString('BUTTON_NEXT')}
           ${IconArrowBigRight}
-        </button>
+        </a>
       </div>
     </nav>
   </header>  
@@ -5560,7 +5560,8 @@ ${wrapStyle('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${u
         document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
     }
     function redirect(event) {
-        const url = event.target.getAttribute('value');
+        const element = event.target;
+        const url = element.getAttribute('value') || element.getAttribute('href');
         if (url)
             window.location.href = url;
     }
