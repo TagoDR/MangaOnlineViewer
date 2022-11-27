@@ -114,16 +114,16 @@ const app = (manga: IManga, begin = 1) => `
           ${IconLoader2}
           ${getLocaleString('BUTTON_DOWNLOAD')}
         </button>
-        <button id="prev" class="NavigationControlButton ControlButton" type="button" 
-          value="${manga.prev || ''}" title="${getLocaleString('PREVIOUS_CHAPTER')}">
+        <a id="prev" class="NavigationControlButton ControlButton" type="button" 
+          href="${manga.prev || ''}" title="${getLocaleString('PREVIOUS_CHAPTER')}">
           ${IconArrowBigLeft}
           ${getLocaleString('BUTTON_PREVIOUS')}
-        </button>
-        <button id="next" class="NavigationControlButton ControlButton" type="button" 
-          value="${manga.next || ''}" title="${getLocaleString('NEXT_CHAPTER')}">
+        </a>
+        <a id="next" class="NavigationControlButton ControlButton" type="button" 
+          href="${manga.next || ''}" title="${getLocaleString('NEXT_CHAPTER')}">
           ${getLocaleString('BUTTON_NEXT')}
           ${IconArrowBigRight}
-        </button>
+        </a>
       </div>
     </nav>
   </header>  

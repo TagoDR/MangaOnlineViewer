@@ -14,7 +14,8 @@ function globalHideImageControls() {
 }
 
 function redirect(event: Event) {
-  const url = (event.target as HTMLElement).getAttribute('value');
+  const element = (event.target as HTMLElement)
+  const url = element.getAttribute('value') || element.getAttribute('href');
   if (url) window.location.href = url;
 }
 
