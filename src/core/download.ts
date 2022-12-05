@@ -11,7 +11,6 @@ interface ImageFile {
 
 let zip: JSZip;
 
-// const filenameRegex = /^(?<name>.*?)(?<index>\d+)\.(?<ext>\w+)$/;
 const base64Regex = /^data:(?<mimeType>image\/\w+);base64,+(?<data>.+)/;
 
 const getExtension = (mimeType: string) =>
@@ -32,7 +31,6 @@ function getImage(src: string) {
       headers: { referer: src, origin: src },
       responseType: 'blob',
       onload(response) {
-        // logScript(`Received image: ${src}`);
         resolve(response);
       },
     });
@@ -92,7 +90,7 @@ async function generateZip() {
     .then((content) => {
       logScript('Download Ready');
       const zipName = `${document.querySelector('#MangaTitle')?.textContent?.trim()}.zip`;
-      saveAs(content, zipName);
+      saveAs(content, zipName,true);
       document.getElementById('download')?.classList.remove('loading');
     })
     .catch(logScript);

@@ -7,7 +7,7 @@ import { loadManga } from './page';
 import { isNothing } from '../utils/checks';
 import { useSettings } from './settings';
 
-export default function display(manga: IManga, begin: number) {
+export default function display(manga: IManga, begin: number = 0) {
   window.stop();
   if (manga.before !== undefined) {
     manga.before();
