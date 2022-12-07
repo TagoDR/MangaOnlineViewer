@@ -13,8 +13,9 @@ export default {
     'JaiminisBox',
     'DisasterScans',
     'ManhuaPlus',
+    'TopManhua',
   ],
-  url: /https?:\/\/.+\/(manga|series)\/.+\/.+/,
+  url: /https?:\/\/.+\/(manga|series|manhua)\/.+\/.+/,
   homepage: [
     '#',
     'https://manhuaus.com',
@@ -27,6 +28,7 @@ export default {
     'https://jaiminisbox.net',
     'https://disasterscans.com/',
     'https://manhuaplus.com/',
+    'https://www.topmanhua.com/',
   ],
   language: ['English'],
   obs: 'Any Site that uses Madara Wordpress Plugin',
