@@ -14,6 +14,7 @@ export default {
   version: new Date().toISOString().slice(0, 10).replaceAll('-', '.'),
   license: 'MIT',
   grant: ['GM_getValue', 'GM_setValue', 'GM_listValues', 'GM_deleteValue', 'GM_xmlhttpRequest'],
+  noframes: 'on',
   connect: '*',
   require: requiredScripts,
   include: sites.map((s) => s.url),

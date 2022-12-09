@@ -58,7 +58,7 @@ function buildUserscript(script) {
             banner: metadata,
             format: 'iife',
             entryFileNames: script.name,
-            sourcemap: mode === 'development' ? 'inline' : false,
+            sourcemap: false, //mode === 'development' ? 'inline' : false,
           },
         },
       },
