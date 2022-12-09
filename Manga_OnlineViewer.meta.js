@@ -12,6 +12,7 @@
 // @grant GM_listValues
 // @grant GM_deleteValue
 // @grant GM_xmlhttpRequest
+// @noframes on
 // @connect *
 // @require https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/tinycolor.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.js
