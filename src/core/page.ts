@@ -9,29 +9,34 @@ import {
   isBruteforceManga,
   isImagesManga,
   isPagesManga,
+  ZoomMode,
 } from '../types';
 import { getElementAttribute } from '../utils/request';
 import lazyLoad from '../utils/lazyLoad';
 import sequence from '../utils/sequence';
 
 // After pages load apply default Zoom
-function applyZoom(pages: string = '.PageContent img', zoom = useSettings().zoom) {
+function applyZoom(
+  zoom: number | ZoomMode = useSettings().zoomMode,
+  pages: string = '.PageContent img',
+) {
   const pg = [...document.querySelectorAll<HTMLImageElement>(pages)];
   pg.forEach((img) => {
     img.removeAttribute('width');
     img.removeAttribute('height');
     img.removeAttribute('style');
-    img.classList.remove('FreeWidth');
-    if (zoom === 1000) {
+    if (zoom === 'width') {
       // Fit width
       img.style.width = `${window.innerWidth}px`;
-    } else if (zoom === -1000) {
+    } else if (zoom === 'height') {
       // Fit height
       const nav = document.querySelector('#Navigation')?.classList.contains('disabled');
       const chap = document.querySelector('#Chapter')?.classList.contains('WebComic');
       const nextHeight = window.innerHeight + (nav ? 0 : -30) + (chap ? 0 : -35);
       img.style.height = `${nextHeight}px`;
       img.style.minWidth = 'unset';
+    } else if (zoom === 'percent') {
+      img.style.width = `${img.naturalWidth * (useSettings().zoom / 100)}px`;
     } else {
       img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
     }
@@ -92,7 +97,7 @@ function onImagesSuccess(instance: ImagesLoaded.ImagesLoaded) {
     const thumbId = image.img.id.replace('PageImg', 'ThumbnailImg');
     const thumb = document.getElementById(thumbId);
     if (thumb) thumb.setAttribute('src', image.img.getAttribute('src')!);
-    applyZoom(`#${image.img.id}`);
+    applyZoom(useSettings().zoomMode, `#${image.img.id}`);
     updateProgress();
   });
 }

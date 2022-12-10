@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import { getLocaleString, resetSettings, updateSettings } from '../settings';
+import { getLocaleString, resetSettings, updateSettings, useSettings } from '../settings';
 import { Header, LoadMode } from '../../types';
 import { applyZoom } from '../page';
 import { replaceStyleSheet } from '../../utils/css';
@@ -75,6 +75,12 @@ function options() {
   // Lazy load Toggle
   function checkLazyLoad(event: Event) {
     updateSettings({ lazyLoadImages: (event.currentTarget as HTMLInputElement).checked });
+    const start = document.querySelector<HTMLDivElement>('.lazyStart');
+    if (useSettings().lazyLoadImages) {
+      start?.classList.add('show');
+    } else {
+      start?.classList.remove('show');
+    }
     if ((event.currentTarget as HTMLInputElement).checked) {
       Swal.fire({
         title: getLocaleString('WARNING'),

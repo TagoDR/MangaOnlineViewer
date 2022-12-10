@@ -14,6 +14,7 @@ export type ViewMode = 'WebComic' | 'FluidLTR' | 'FluidRTL' | 'Vertical';
 export type LoadMode = 'wait' | 'always' | 'never';
 export type ColorScheme = 'dark' | 'light';
 export type Header = 'hover' | 'scroll' | 'click' | 'fixed';
+export type ZoomMode = 'percent' | 'height' | 'width';
 
 export interface ISettings {
   locale: string;
@@ -29,6 +30,7 @@ export interface ISettings {
   downloadZip?: boolean;
   throttlePageLoad: number;
   zoom: number;
+  zoomMode: ZoomMode;
   zoomStep: number;
   minZoom: number;
   lazyLoadImages: boolean;

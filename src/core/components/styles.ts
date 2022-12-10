@@ -796,6 +796,7 @@ export default `
       min-width: auto;
     }
 
+    #MangaOnlineViewer #SettingsPanel .DefaultZoomMode,
     #MangaOnlineViewer #SettingsPanel .DefaultZoom,
     #MangaOnlineViewer #SettingsPanel .viewMode,
     #MangaOnlineViewer #SettingsPanel .fitIfOversize,

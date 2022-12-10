@@ -9,7 +9,7 @@ function size() {
         event.currentTarget as HTMLElement
       ).parentElement?.parentElement?.querySelector('.PageImg')!;
       const ratio = (img.width / img.naturalWidth) * (100 + useSettings().zoomStep);
-      applyZoom(`#${img.getAttribute('id')}`, ratio);
+      applyZoom(ratio, `#${img.getAttribute('id')}`);
     });
   }
 
@@ -22,7 +22,7 @@ function size() {
         event.currentTarget as HTMLElement
       ).parentElement?.parentElement?.querySelector('.PageImg')!;
       const ratio = (img.width / img.naturalWidth) * (100 - useSettings().zoomStep);
-      applyZoom(`#${img.getAttribute('id')}`, ratio);
+      applyZoom(ratio, `#${img.getAttribute('id')}`);
     });
   }
 
@@ -42,7 +42,7 @@ function size() {
     return elem.addEventListener('click', (event) => {
       const page = (event.currentTarget as HTMLElement).parentElement?.parentElement;
       const img: HTMLImageElement = page?.querySelector('.PageImg')!;
-      applyZoom(`#${img.getAttribute('id')}`, 1000);
+      applyZoom('width', `#${img.getAttribute('id')}`);
       page?.classList.toggle('DoublePage');
     });
   }
@@ -55,7 +55,7 @@ function size() {
       const img: HTMLImageElement = (
         event.currentTarget as HTMLElement
       ).parentElement?.parentElement?.querySelector('.PageImg')!;
-      applyZoom(`#${img.getAttribute('id')}`, -1000);
+      applyZoom('height', `#${img.getAttribute('id')}`);
     });
   }
 

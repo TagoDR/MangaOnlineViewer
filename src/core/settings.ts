@@ -21,6 +21,7 @@ export const defaultSettings: ISettings = {
   showThumbnails: true,
   downloadZip: false,
   throttlePageLoad: 1000,
+  zoomMode: 'percent',
   zoom: 100,
   zoomStep: 25,
   minZoom: 50,
@@ -58,8 +59,11 @@ export function useSettings() {
 
 export function getLocaleString(name: string): string {
   const locale = locales.find((l) => l.ID === settings.locale);
-  if (locale) {
+  if (locale && locale[name]) {
     return locale[name];
+  }
+  if (locales[1] && locales[1][name]) {
+    return locales[1][name];
   }
   return '##MISSING_STRING##';
 }
