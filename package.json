@@ -80,7 +80,8 @@
         "parserOptions": {
             "ecmaVersion": 2020,
             "project": [
-                "./tsconfig.json"
+                "./tsconfig.json",
+                "./vite.config.ts"
             ]
         },
         "env": {

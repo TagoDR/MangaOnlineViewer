@@ -60,9 +60,8 @@ export default defineConfig(({ mode }) => {
   const target = mode === 'main' || mode === 'adult' ? mode : 'dev';
   if (target === 'dev' && !fs.existsSync('./dist')) {
     fs.mkdirSync('./dist', { recursive: true });
-  } else {
-    generateReadme();
   }
+  if (target !== 'dev') generateReadme();
   const metadata = generateMetadata(scripts[target]);
   return {
     mode: target === 'dev' ? 'development' : 'production',
