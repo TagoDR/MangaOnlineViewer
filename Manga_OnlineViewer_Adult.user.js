@@ -1549,6 +1549,34 @@
     display: none;
   }
 
+  #MangaOnlineViewer #SettingsPanel input[type="range"] {
+    width: 100%;
+  }
+
+  #MangaOnlineViewer #SettingsPanel .RangeValue {
+    display: inline-block;
+    color: var(--theme-primary-text-color);
+    line-height: 20px;
+    text-align: center;
+    border-radius: 3px;
+    background: var(--theme-primary-color);
+    padding: 2px 5px;
+    margin-left: 8px;
+  }
+
+  #MangaOnlineViewer #SettingsPanel datalist {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    writing-mode: vertical-lr;
+    width: 100%;
+  }
+
+  #MangaOnlineViewer #SettingsPanel datalist option {
+    padding: 0;
+  }
+
   #MangaOnlineViewer #ThemeSection {
     border: 1px solid var(--theme-body-text-color);
     border-radius: 10px;
@@ -1869,6 +1897,26 @@
     height: 25px;
   }
 
+  #MangaOnlineViewer #GlobalFunctions #ZoomSlider {
+    display: flex;
+    align-items: center;
+  }
+
+  #MangaOnlineViewer #GlobalFunctions #Zoom {
+    margin-left: 5px;
+  }
+
+  #MangaOnlineViewer #GlobalFunctions #ZoomVal {
+    width: 40px;
+    display: inline-block;
+    color: var(--theme-primary-text-color);
+    line-height: 20px;
+    text-align: center;
+    border-radius: 3px;
+    background: var(--theme-primary-color);
+    padding: 2px 5px;
+  }
+
   #MangaOnlineViewer #ChapterNavigation {
     display: flex;
     flex-flow: column nowrap;
@@ -2072,6 +2120,7 @@
     width: 32px;
   }
 
+  /* Medium devices (landscape phones, tablets) */
   @media (max-width: 992px) {
     #MangaOnlineViewer #Header {
       flex-direction: column;
@@ -2100,12 +2149,13 @@
       order: 2;
     }
 
-    #MangaOnlineViewer #GlobalFunctions #keybindings {
+    #MangaOnlineViewer #GlobalFunctions #ZoomSlider,
+    #MangaOnlineViewer #GlobalFunctions .ControlButton:not(.tablets, .phones) {
       display: none;
     }
   }
 
-  /* Small devices (landscape phones) */
+  /* Small devices (portrait phones) */
   @media (max-width: 600px) {
     #MangaOnlineViewer #Header {
       flex-direction: row;
@@ -2155,7 +2205,8 @@
       max-width: 100%;
     }
 
-    #MangaOnlineViewer #GlobalFunctions .ControlButton:not(#settings) {
+    #MangaOnlineViewer #GlobalFunctions #ZoomSlider,
+    #MangaOnlineViewer #GlobalFunctions .ControlButton:not(.phones) {
       display: none;
     }
 
@@ -2555,9 +2606,9 @@
     downloadZip: false,
     throttlePageLoad: 1e3,
     zoomMode: "percent",
-    zoom: 100,
+    defaultZoom: 100,
     zoomStep: 25,
-    minZoom: 50,
+    minZoom: 30,
     loadMode: "wait",
     viewMode: "WebComic",
     bookmarks: [],
@@ -4425,7 +4476,7 @@ ${wrapStyle(
           ${useSettings().theme.startsWith("custom") ? "" : "show"}'>
       <span>
         ${getLocaleString("THEME_SHADE")}:
-        <output id='themeShadeVal' for='themeShade'>${useSettings().themeShade}</output>
+        <output id='themeShadeVal' class='RangeValue' for='themeShade'>${useSettings().themeShade}</output>
       </span>
         <input type='range'
                value='${useSettings().themeShade}'
@@ -4498,23 +4549,39 @@ ${wrapStyle(
         ${useSettings().zoomMode === "percent" ? "show" : ""}'>
       <span>
         ${getLocaleString("DEFAULT_ZOOM")}:
-        <output id='defaultZoomVal' for='DefaultZoom'>${useSettings().zoom}</output>%
+        <output id='defaultZoomVal'
+                class='RangeValue'
+                for='DefaultZoom'>
+          ${useSettings().defaultZoom}%
+        </output>
       </span>
       <input type='range'
-             value='${useSettings().zoom}'
+             value='${useSettings().defaultZoom}'
              name='DefaultZoom'
              id='DefaultZoom'
              min='5'
              max='200'
              step='5'
-             oninput='defaultZoomVal.value = this.value'
+             list='tickmarks'
+             oninput='defaultZoomVal.value = this.value + "%"'
       />
+      <datalist id='tickmarks'>
+        <option value='5'>5</option>
+        <option value='25'>25</option>
+        <option value='50'>50</option>
+        <option value='75'>75</option>
+        <option value='100'>100</option>
+        <option value='125'>125</option>
+        <option value='150'>150</option>
+        <option value='175'>175</option>
+        <option value='200'>200</option>
+      </datalist>
     </div>
     <!-- =========================================================================================== -->
     <div class='ControlLabel minZoom'>
     <span>
       ${getLocaleString("MINIMUM_ZOOM")}:
-      <output id='minZoomVal' for='minZoom'>${useSettings().minZoom}</output>%
+      <output id='minZoomVal' class='RangeValue' for='minZoom'>${useSettings().minZoom}%</output>
     </span>
       <input type='range'
              value='${useSettings().minZoom}'
@@ -4523,14 +4590,14 @@ ${wrapStyle(
              min='30'
              max='100'
              step='10'
-             oninput='minZoomVal.value = this.value'
+             oninput='minZoomVal.value = this.value + "%"'
       />
     </div>
     <!-- =========================================================================================== -->
     <div class='ControlLabel zoomStep'>
     <span>
       ${getLocaleString("ZOOM_STEP")}:
-      <output id='zoomStepVal' for='zoomStep'>${useSettings().zoomStep}</output>%
+      <output id='zoomStepVal' class='RangeValue' for='zoomStep'>${useSettings().zoomStep}%</output>
     </span>
       <input type='range'
              value='${useSettings().zoomStep}'
@@ -4539,7 +4606,7 @@ ${wrapStyle(
              min='5'
              max='50'
              step='5'
-             oninput='zoomStepVal.value = this.value'
+             oninput='zoomStepVal.value = this.value + "%"'
       />
     </div>
     <!-- =========================================================================================== -->
@@ -4617,7 +4684,7 @@ ${wrapStyle(
 
   const doClick = (selector) => document.querySelector(selector)?.dispatchEvent(new Event("click"));
   function doScrolling(sign) {
-    if (useSettings().zoom === -1e3) {
+    if (useSettings().zoomMode === "height") {
       const pages = [...document.querySelectorAll(".MangaPage")];
       const distance = pages.map((element) => Math.abs(element.offsetTop - window.scrollY));
       const currentPage = distance.findIndex((d) => d <= 5);
@@ -4851,112 +4918,126 @@ ${wrapStyle(
 
   const listOptions = (times, begin) => indexList(times, begin).map((index) => `<option value="${index}">${index}</option>`);
   const app = (manga, begin = 1) => `
-<div id="MangaOnlineViewer"
-  class="${useSettings().colorScheme} 
+<div id='MangaOnlineViewer'
+  class='${useSettings().colorScheme} 
     ${useSettings().hidePageControls ? "hideControls" : ""}
-    ${isBookmarked() ? "bookmarked" : ""}"
-  data-theme="${useSettings().theme}">
-  <header id="Header" class="${useSettings().header}">
-    <div id="menu">
+    ${isBookmarked() ? "bookmarked" : ""}'
+  data-theme='${useSettings().theme}'>
+  <header id='Header' class='${useSettings().header}'>
+    <div id='menu'>
       ${IconMenu2}
     </div>
-    <aside id="GlobalFunctions">
+    <aside id='GlobalFunctions'>    
       <span>
-        <button id="enlarge" title="${getLocaleString("ENLARGE")}" class="ControlButton">
+        <button id='enlarge' title='${getLocaleString("ENLARGE")}' class='ControlButton'>
           ${IconZoomInArea}
         </button>
-        <button id="restore" title="${getLocaleString("RESTORE")}" class="ControlButton">
+        <button id='restore' title='${getLocaleString("RESTORE")}' class='ControlButton'>
           ${IconZoomPan}
         </button>
-        <button id="reduce" title="${getLocaleString("REDUCE")}" class="ControlButton">
+        <button id='reduce' title='${getLocaleString("REDUCE")}' class='ControlButton'>
           ${IconZoomOutArea}
         </button>
-        <button id="fitWidth" title="${getLocaleString("FIT_WIDTH")}" class="ControlButton">
+        <button id='fitWidth' title='${getLocaleString("FIT_WIDTH")}' class='ControlButton'>
           ${IconArrowAutofitWidth}
         </button>
-        <button id="fitHeight" title="${getLocaleString("FIT_HEIGHT")}" class="ControlButton">
+        <button id='fitHeight' title='${getLocaleString("FIT_HEIGHT")}' class='ControlButton'>
           ${IconArrowAutofitHeight}
         </button>
-        <button id="keybindings" title="${getLocaleString("KEYBINDINGS")}" class="ControlButton">
+        <button id='keybindings' title='${getLocaleString("KEYBINDINGS")}' class='ControlButton'>
           ${IconKeyboard}
         </button>
       </span>
       <span>
-        <button id="ltrMode" title="${getLocaleString("VIEW_MODE_LEFT")}" class="ControlButton">
+        <button id='ltrMode' title='${getLocaleString("VIEW_MODE_LEFT")}' class='ControlButton'>
           ${IconArrowAutofitRight}
         </button>
-        <button id="verticalMode" 
-          title="${getLocaleString("VIEW_MODE_VERTICAL")}" class="ControlButton">
+        <button id='verticalMode' 
+          title='${getLocaleString("VIEW_MODE_VERTICAL")}' class='ControlButton tablets'>
           ${IconArrowAutofitDown}
         </button>
-        <button id="webComic" 
-          title="${getLocaleString("VIEW_MODE_WEBCOMIC")}" class="ControlButton">
+        <button id='webComic' 
+          title='${getLocaleString("VIEW_MODE_WEBCOMIC")}' class='ControlButton tablets'>
           ${IconSpacingVertical}
         </button>
-        <button id="rtlMode" title="${getLocaleString("VIEW_MODE_RIGHT")}" class="ControlButton">
+        <button id='rtlMode' title='${getLocaleString("VIEW_MODE_RIGHT")}' class='ControlButton'>
           ${IconArrowAutofitLeft}
         </button>
-        <button id="pageControls" 
-          title="${getLocaleString("TOGGLE_CONTROLS")}" class="ControlButton">
+        <button id='pageControls' 
+          title='${getLocaleString("TOGGLE_CONTROLS")}' class='ControlButton tablets'>
           ${IconListNumbers}
         </button>
-        <button id="bookmarks" title="${getLocaleString("BOOKMARKS")}" class="ControlButton">
+        <button id='bookmarks' title='${getLocaleString("BOOKMARKS")}' class='ControlButton tablets'>
           ${IconBookmarks}
         </button>
-        <button id="settings" title="${getLocaleString("SETTINGS")}" class="ControlButton">
+        <button id='settings' title='${getLocaleString("SETTINGS")}' class='ControlButton tablets phones'>
           ${IconSettings}
         </button>
       </span>
+      <span id='ZoomSlider'>
+        <output id='ZoomVal'
+                class='RangeValue'
+                for='Zoom'>
+            ${useSettings().defaultZoom}%
+        </output>
+        <input type='range'
+             value='${useSettings().defaultZoom}'
+             name='Zoom'
+             id='Zoom'
+             min='1'
+             max='200'
+        />
+      </span>
     </aside>
-    <div class="ViewerTitle">
-      <h1 id="MangaTitle">${manga.title}</h1>
-      <a id="series" href="${manga.series}">
+    <div class='ViewerTitle'>
+      <h1 id='MangaTitle'>${manga.title}</h1>
+      <a id='series' href='${manga.series}'>
         (${getLocaleString("RETURN_CHAPTER_LIST")})
       </a>
     </div>
-    <nav id="ChapterNavigation">
-      <div id="Counters" class="ControlLabel">
+    <nav id='ChapterNavigation'>
+      <div id='Counters' class='ControlLabel'>
         ${getLocaleString("PAGES_LOADED")}:
         <i>0</i> / <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b>
-        <span class="ControlLabel">
+        <span class='ControlLabel'>
           ${getLocaleString("GO_TO_PAGE")}:
         </span>
-        <select id="gotoPage">
+        <select id='gotoPage'>
           <option selected>#</option>
           ${listOptions(manga.pages, begin).join("")}
         </select>
       </div>
-      <div id="ChapterControl" class="ChapterControl">
-        <button id="download" class="NavigationControlButton ControlButton disabled" type="button"
-          title="${getLocaleString("DOWNLOAD_ZIP")}">
+      <div id='ChapterControl' class='ChapterControl'>
+        <button id='download' class='NavigationControlButton ControlButton disabled' type='button'
+          title='${getLocaleString("DOWNLOAD_ZIP")}'>
           ${IconFileDownload}
           ${IconLoader2}
           ${getLocaleString("BUTTON_DOWNLOAD")}
         </button>
-        <a id="prev" class="NavigationControlButton ControlButton" type="button" 
-          href="${manga.prev || ""}" title="${getLocaleString("PREVIOUS_CHAPTER")}">
+        <a id='prev' class='NavigationControlButton ControlButton' type='button' 
+          href='${manga.prev || ""}' title='${getLocaleString("PREVIOUS_CHAPTER")}'>
           ${IconArrowBigLeft}
           ${getLocaleString("BUTTON_PREVIOUS")}
         </a>
-        <a id="next" class="NavigationControlButton ControlButton" type="button" 
-          href="${manga.next || ""}" title="${getLocaleString("NEXT_CHAPTER")}">
+        <a id='next' class='NavigationControlButton ControlButton' type='button' 
+          href='${manga.next || ""}' title='${getLocaleString("NEXT_CHAPTER")}'>
           ${getLocaleString("BUTTON_NEXT")}
           ${IconArrowBigRight}
         </a>
       </div>
     </nav>
   </header>  
-  <main id="Chapter" class="${useSettings().fitWidthIfOversize ? "fitWidthIfOversize" : ""}
-      ${useSettings().viewMode}">
+  <main id='Chapter' class='${useSettings().fitWidthIfOversize ? "fitWidthIfOversize" : ""}
+      ${useSettings().viewMode}'>
     ${listPages(manga.pages, begin).join("")}
   </main>
-  <nav id="Navigation" class="panel ${useSettings().showThumbnails ? "" : "disabled"}">
-    <div id="NavigationCounters" class="ControlLabel">
+  <nav id='Navigation' class='panel ${useSettings().showThumbnails ? "" : "disabled"}'>
+    <div id='NavigationCounters' class='ControlLabel'>
       ${IconCategory}
       <i>0</i> / <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b>
       ${getLocaleString("PAGES_LOADED")}
     </div>
-    <div id="Thumbnails">
+    <div id='Thumbnails'>
       ${ThumbnailsPanel(manga.pages, begin).join("")}
     </div>
   </nav>
@@ -5129,7 +5210,7 @@ ${wrapStyle(
     };
     function toggleScrollDirection() {
       const { scrollY } = window;
-      if (showEnd && useSettings().zoom !== -1e3 && scrollY + window.innerHeight + showEnd > document.body.offsetHeight) {
+      if (showEnd && useSettings().zoomMode !== "height" && scrollY + window.innerHeight + showEnd > document.body.offsetHeight) {
         setScrollDirection("end");
       } else if (scrollY > prevOffset && scrollY > 50) {
         setScrollDirection("hide");
@@ -5235,7 +5316,7 @@ ${wrapStyle(
         img.style.height = `${nextHeight}px`;
         img.style.minWidth = "unset";
       } else if (zoom === "percent") {
-        img.style.width = `${img.naturalWidth * (useSettings().zoom / 100)}px`;
+        img.style.width = `${img.naturalWidth * (useSettings().defaultZoom / 100)}px`;
       } else {
         img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
       }
@@ -5535,7 +5616,7 @@ ${wrapStyle(
       replaceStyleSheet("MinZoom", `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
       updateSettings({ minZoom: parseInt(min, 10) });
     }
-    document.querySelector("#minZoom")?.addEventListener("change", changeMinZoom);
+    document.querySelector("#minZoom")?.addEventListener("input", changeMinZoom);
     function checkHideImageControls(event) {
       document.querySelector("#MangaOnlineViewer")?.classList.toggle("hideControls");
       updateSettings({ hidePageControls: event.currentTarget.checked });
@@ -5688,10 +5769,24 @@ ${wrapStyle(
   }
 
   function changeGlobalZoom(value) {
-    return () => applyZoom(value);
+    return () => {
+      if (typeof value !== "number") {
+        useSettings().zoomMode = value;
+      } else {
+        useSettings().zoomMode = "percent";
+      }
+      const globalZoomVal = document.querySelector("#ZoomVal");
+      globalZoomVal.textContent = Number.isInteger(value) ? `${value}%` : value;
+      applyZoom(value);
+    };
   }
   function changeZoomByStep(sign = 1) {
-    return () => applyZoom(useSettings().zoom + useSettings().zoomStep * sign);
+    return () => {
+      const globalZoom = document.querySelector("#Zoom");
+      const ratio = parseInt(globalZoom.value, 10) + sign * useSettings().zoomStep;
+      globalZoom.value = ratio.toString();
+      globalZoom?.dispatchEvent(new Event("input", { bubbles: true }));
+    };
   }
   function zoom() {
     function changeDefaultZoomMode(event) {
@@ -5708,10 +5803,16 @@ ${wrapStyle(
     document.querySelector("#DefaultZoomMode")?.addEventListener("change", changeDefaultZoomMode);
     function changeDefaultZoom(event) {
       const target = parseInt(event.currentTarget.value, 10);
-      updateSettings({ zoom: target });
+      updateSettings({ defaultZoom: target });
       changeGlobalZoom(target)();
     }
-    document.querySelector("#DefaultZoom")?.addEventListener("change", changeDefaultZoom);
+    document.querySelector("#DefaultZoom")?.addEventListener("input", changeDefaultZoom);
+    function changeZoom(event) {
+      const target = parseInt(event.currentTarget.value, 10);
+      changeGlobalZoom(target)();
+      document.querySelector("#ZoomVal").textContent = `${target}%`;
+    }
+    document.querySelector("#Zoom")?.addEventListener("input", changeZoom);
     document.querySelector("#enlarge")?.addEventListener("click", changeZoomByStep());
     document.querySelector("#reduce")?.addEventListener("click", changeZoomByStep(-1));
     document.querySelector("#restore")?.addEventListener("click", changeGlobalZoom(100));
