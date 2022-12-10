@@ -1,21 +1,21 @@
-name: Gulp build and commit
+name: Build and commit
 
-on: [push]
+on: [ push ]
 
 jobs:
-  gulp-build:
+    release:
 
-    runs-on: ubuntu-latest
+        runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - run: npm ci
-      - run: gulp release
+        steps:
+            -   uses: actions/checkout@v3
+            -   uses: actions/setup-node@v3
+                with:
+                    node-version: 18
+            -   run: npm ci
+            -   run: npm run release
 
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Apply changes to release
+            -   name: Commit changes
+                uses: stefanzweifel/git-auto-commit-action@v4
+                with:
+                    commit_message: Apply changes to release

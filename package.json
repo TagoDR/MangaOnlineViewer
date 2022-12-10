@@ -1,12 +1,11 @@
 {
     "name": "mangaonlineviewer",
     "description": "Userscript that helps to read Manga faster by loading all the pages at once",
-    "version": "30.0.0",
+    "version": "31.0.0",
     "scripts": {
         "start": "vite",
-        "dev": "vite build --mode development",
-        "build": "gulp dev",
-        "release": "gulp release"
+        "build": "vite build --mode dev",
+        "release": "vite build --mode main && vite build --mode adult"
     },
     "author": "TagoDR",
     "license": "MIT",
@@ -43,12 +42,8 @@
         "eslint-import-resolver-typescript": "^3.5.2",
         "eslint-plugin-import": "^2.26.0",
         "eslint-plugin-prettier": "^4.2.1",
-        "gulp": "^4.0.2",
-        "gulp-preprocess": "^4.0.2",
         "prettier": "^2.8.1",
         "rollup-plugin-external-globals": "^0.7.1",
-        "ts-import": "^4.0.0-beta.2",
-        "tslib": "^2.4.0",
         "typescript": "^4.9.4",
         "userscript-meta": "^1.0.1",
         "vite": "^4.0.0"
