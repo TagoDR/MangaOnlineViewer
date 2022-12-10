@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, xyzcomics
-// @version 2022.12.09
+// @version 2022.12.10
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -2163,6 +2163,7 @@
       min-width: auto;
     }
 
+    #MangaOnlineViewer #SettingsPanel .DefaultZoomMode,
     #MangaOnlineViewer #SettingsPanel .DefaultZoom,
     #MangaOnlineViewer #SettingsPanel .viewMode,
     #MangaOnlineViewer #SettingsPanel .fitIfOversize,
@@ -2305,7 +2306,8 @@
     LOAD_MODE_ALWAYS: "Always(Immediately)",
     LOAD_MODE_NEVER: "Never(Manually)",
     LOAD_SPEED: "Load Speed Pages/Second",
-    DEFAULT_ZOOM: "Default Zoom",
+    DEFAULT_ZOOM: "Default Zoom (between 5 and 200)",
+    DEFAULT_ZOOM_MODE: "Default Zoom Mode",
     MINIMUM_ZOOM: "Minimum Zoom relative to the width of screen (between 30 and 100)",
     ZOOM_STEP: "Zoom Change Step (between 5 and 50)",
     DEFAULT_VIEW_MODE: "Default View Mode",
@@ -2341,6 +2343,7 @@
     LANGUAGE_CHANGED: "Language has been changed, reload the page to take effect",
     AUTO_DOWNLOAD: "Next time a chapter finish loading you will be prompted to save automatically",
     LAZY_LOAD: "Lazy load is incompatible with zip download, you will not be able to download with this setting ON.<br/> Suggestion: <span style='color:red;font-weight:bold'>Disable Thumbnails</span> to save Bandwidth/Memory.",
+    LAZY_LOAD_IMAGES_ENABLE: "Enable Lazy Load Images",
     LAZY_LOAD_IMAGES: "Lazy Start From Page (between 5 and 100)",
     RETURN_CHAPTER_LIST: "Return to Chapter List",
     PAGES_LOADED: "Pages Loaded",
@@ -2350,6 +2353,7 @@
     REDUCE: "Restore",
     FIT_WIDTH: "Fit Width",
     FIT_HEIGHT: "Fit Height",
+    PERCENT: "Percent",
     TOGGLE_CONTROLS: "Toggle page controls",
     ZOOM_IN: "Zoom In",
     ZOOM_OUT: "Zoom Out",
@@ -2387,7 +2391,8 @@
     LOAD_MODE_ALWAYS: "Sempre(Imediatamente)",
     LOAD_MODE_NEVER: "Nunca(Manualmente)",
     LOAD_SPEED: "Velocidade de Carregamento Paginas/Segundo",
-    DEFAULT_ZOOM: "Zoom padrão",
+    DEFAULT_ZOOM: "Zoom padrão (entre 5 e 200)",
+    DEFAULT_ZOOM_MODE: "Modo de Zoom padrão",
     MINIMUM_ZOOM: "Zoom minimo, relativo ao tamanho da tela (entre 30 e 100)",
     ZOOM_STEP: "Precisão da Mudança do Zoom (entre 5 e 50)",
     DEFAULT_VIEW_MODE: "Modo de Visualização Padrão",
@@ -2422,7 +2427,8 @@
     SETTINGS_RESET: "Configurações foram limpas, recarregue o site para efetivar a alteração",
     LANGUAGE_CHANGED: "Idioma foi alterado, recarregue o site para efetivar a alteração",
     AUTO_DOWNLOAD: "Proxima vez que abrir um capitulo download iniciara automaticamente",
-    LAZY_LOAD: "Lazy load is incompatible with zip download, you will not be able to download with this setting ON.<br/> Suggestion: <span style='color:red;font-weight:bold'>Disable Thumbnails</span> to save Bandwidth/Memory.",
+    LAZY_LOAD: "Carregamento preguiçoso não é compativel com download de zip, não conseguira com essa configuração ativa.<br/> Sugestão: <span style='color:red;font-weight:bold'>Desative Miniaturas</span> para economizar memoria e cota de internet.",
+    LAZY_LOAD_IMAGES_ENABLE: "Ativar Carregamento de imagens preguiçoso",
     LAZY_LOAD_IMAGES: "Carregamento de paginas preguiçoso começa a partir de (entre 5 e 100)",
     RETURN_CHAPTER_LIST: "Voltar a lista de Capitulos",
     PAGES_LOADED: "Paginas Carregadas",
@@ -2432,6 +2438,7 @@
     REDUCE: "Diminuir",
     FIT_WIDTH: "Preencher Largura",
     FIT_HEIGHT: "Preencher Altura ",
+    PERCENT: "Percentual",
     TOGGLE_CONTROLS: "Mostar controles de pagina",
     ZOOM_IN: "Mais Zoom",
     ZOOM_OUT: "Menos Zoom",
@@ -2469,7 +2476,8 @@
     LOAD_MODE_ALWAYS: "自动模式(无需等待)",
     LOAD_MODE_NEVER: "手动模式(点击启动)",
     LOAD_SPEED: "加载速度页数/秒",
-    DEFAULT_ZOOM: "默认缩放",
+    DEFAULT_ZOOM: "默认缩放 (最小 5 最大 200)",
+    DEFAULT_ZOOM_MODE: "默认缩放模式",
     MINIMUM_ZOOM: "相对于屏幕宽度的最小缩放 (最小 30 最大 100)",
     ZOOM_STEP: "缩放级别 (最小 5 最大 50)",
     DEFAULT_VIEW_MODE: "默认视图模式",
@@ -2505,6 +2513,7 @@
     LANGUAGE_CHANGED: "语言已更改、重新加载页面才能生效",
     AUTO_DOWNLOAD: "下次章节加载完成时、系统将提示您自动保存",
     LAZY_LOAD: "延迟加载与zip下载不兼容、您将无法使用此设置下载.<br/> 建议: <span style='color:red;font-weight:bold'>禁用缩略图</span> 以节省流量和内存.",
+    LAZY_LOAD_IMAGES_ENABLE: "启用延迟加载图像",
     LAZY_LOAD_IMAGES: "惰性加载从页面 (最小 5 最大 100)",
     RETURN_CHAPTER_LIST: "返回章节列表",
     PAGES_LOADED: "已加载的页数",
@@ -2514,6 +2523,7 @@
     REDUCE: "缩小",
     FIT_WIDTH: "适合宽度",
     FIT_HEIGHT: "适合高度",
+    PERCENT: "百分之",
     TOGGLE_CONTROLS: "显示隐藏页面控件",
     ZOOM_IN: "放大",
     ZOOM_OUT: "缩小",
@@ -2544,6 +2554,7 @@
     showThumbnails: true,
     downloadZip: false,
     throttlePageLoad: 1e3,
+    zoomMode: "percent",
     zoom: 100,
     zoomStep: 25,
     minZoom: 50,
@@ -2569,8 +2580,11 @@
   }
   function getLocaleString(name) {
     const locale = locales.find((l) => l.ID === settings$1.locale);
-    if (locale) {
+    if (locale && locale[name]) {
       return locale[name];
+    }
+    if (locales[1] && locales[1][name]) {
+      return locales[1][name];
     }
     return "##MISSING_STRING##";
   }
@@ -2660,1151 +2674,1293 @@ ${IconCheck}
 
   const sweetalert = `
   .swal2-popup.swal2-toast {
-  box-sizing: border-box;
-  grid-column: 1/4 !important;
-  grid-row: 1/4 !important;
-  grid-template-columns: min-content auto min-content;
-  padding: 1em;
-  overflow-y: hidden;
-  background: #fff;
-  box-shadow: 0 0 1px hsla(0deg, 0%, 0%, 0.075), 0 1px 2px hsla(0deg, 0%, 0%, 0.075), 1px 2px 4px hsla(0deg, 0%, 0%, 0.075), 1px 3px 8px hsla(0deg, 0%, 0%, 0.075), 2px 4px 16px hsla(0deg, 0%, 0%, 0.075);
-  pointer-events: all;
-}
-.swal2-popup.swal2-toast > * {
-  grid-column: 2;
-}
-.swal2-popup.swal2-toast .swal2-title {
-  margin: 0.5em 1em;
-  padding: 0;
-  font-size: 1em;
-  text-align: initial;
-}
-.swal2-popup.swal2-toast .swal2-loading {
-  justify-content: center;
-}
-.swal2-popup.swal2-toast .swal2-input {
-  height: 2em;
-  margin: 0.5em;
-  font-size: 1em;
-}
-.swal2-popup.swal2-toast .swal2-validation-message {
-  font-size: 1em;
-}
-.swal2-popup.swal2-toast .swal2-footer {
-  margin: 0.5em 0 0;
-  padding: 0.5em 0 0;
-  font-size: 0.8em;
-}
-.swal2-popup.swal2-toast .swal2-close {
-  grid-column: 3/3;
-  grid-row: 1/99;
-  align-self: center;
-  width: 0.8em;
-  height: 0.8em;
-  margin: 0;
-  font-size: 2em;
-}
-.swal2-popup.swal2-toast .swal2-html-container {
-  margin: 0.5em 1em;
-  padding: 0;
-  overflow: initial;
-  font-size: 1em;
-  text-align: initial;
-}
-.swal2-popup.swal2-toast .swal2-html-container:empty {
-  padding: 0;
-}
-.swal2-popup.swal2-toast .swal2-loader {
-  grid-column: 1;
-  grid-row: 1/99;
-  align-self: center;
-  width: 2em;
-  height: 2em;
-  margin: 0.25em;
-}
-.swal2-popup.swal2-toast .swal2-icon {
-  grid-column: 1;
-  grid-row: 1/99;
-  align-self: center;
-  width: 2em;
-  min-width: 2em;
-  height: 2em;
-  margin: 0 0.5em 0 0;
-}
-.swal2-popup.swal2-toast .swal2-icon .swal2-icon-content {
-  display: flex;
-  align-items: center;
-  font-size: 1.8em;
-  font-weight: bold;
-}
-.swal2-popup.swal2-toast .swal2-icon.swal2-success .swal2-success-ring {
-  width: 2em;
-  height: 2em;
-}
-.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line] {
-  top: 0.875em;
-  width: 1.375em;
-}
-.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left] {
-  left: 0.3125em;
-}
-.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right] {
-  right: 0.3125em;
-}
-.swal2-popup.swal2-toast .swal2-actions {
-  justify-content: flex-start;
-  height: auto;
-  margin: 0;
-  margin-top: 0.5em;
-  padding: 0 0.5em;
-}
-.swal2-popup.swal2-toast .swal2-styled {
-  margin: 0.25em 0.5em;
-  padding: 0.4em 0.6em;
-  font-size: 1em;
-}
-.swal2-popup.swal2-toast .swal2-success {
-  border-color: #a5dc86;
-}
-.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line] {
-  position: absolute;
-  width: 1.6em;
-  height: 3em;
-  transform: rotate(45deg);
-  border-radius: 50%;
-}
-.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left] {
-  top: -0.8em;
-  left: -0.5em;
-  transform: rotate(-45deg);
-  transform-origin: 2em 2em;
-  border-radius: 4em 0 0 4em;
-}
-.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right] {
-  top: -0.25em;
-  left: 0.9375em;
-  transform-origin: 0 1.5em;
-  border-radius: 0 4em 4em 0;
-}
-.swal2-popup.swal2-toast .swal2-success .swal2-success-ring {
-  width: 2em;
-  height: 2em;
-}
-.swal2-popup.swal2-toast .swal2-success .swal2-success-fix {
-  top: 0;
-  left: 0.4375em;
-  width: 0.4375em;
-  height: 2.6875em;
-}
-.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line] {
-  height: 0.3125em;
-}
-.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip] {
-  top: 1.125em;
-  left: 0.1875em;
-  width: 0.75em;
-}
-.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=long] {
-  top: 0.9375em;
-  right: 0.1875em;
-  width: 1.375em;
-}
-.swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip {
-  animation: swal2-toast-animate-success-line-tip 0.75s;
-}
-.swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long {
-  animation: swal2-toast-animate-success-line-long 0.75s;
-}
-.swal2-popup.swal2-toast.swal2-show {
-  animation: swal2-toast-show 0.5s;
-}
-.swal2-popup.swal2-toast.swal2-hide {
-  animation: swal2-toast-hide 0.1s forwards;
-}
-
-.swal2-container {
-  display: grid;
-  position: fixed;
-  z-index: 1060;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  box-sizing: border-box;
-  grid-template-areas: "top-start     top            top-end" "center-start  center         center-end" "bottom-start  bottom-center  bottom-end";
-  grid-template-rows: minmax(min-content, auto) minmax(min-content, auto) minmax(min-content, auto);
-  height: 100%;
-  padding: 0.625em;
-  overflow-x: hidden;
-  transition: background-color 0.1s;
-  -webkit-overflow-scrolling: touch;
-}
-.swal2-container.swal2-backdrop-show, .swal2-container.swal2-noanimation {
-  background: rgba(0, 0, 0, 0.4);
-}
-.swal2-container.swal2-backdrop-hide {
-  background: transparent !important;
-}
-.swal2-container.swal2-top-start, .swal2-container.swal2-center-start, .swal2-container.swal2-bottom-start {
-  grid-template-columns: minmax(0, 1fr) auto auto;
-}
-.swal2-container.swal2-top, .swal2-container.swal2-center, .swal2-container.swal2-bottom {
-  grid-template-columns: auto minmax(0, 1fr) auto;
-}
-.swal2-container.swal2-top-end, .swal2-container.swal2-center-end, .swal2-container.swal2-bottom-end {
-  grid-template-columns: auto auto minmax(0, 1fr);
-}
-.swal2-container.swal2-top-start > .swal2-popup {
-  align-self: start;
-}
-.swal2-container.swal2-top > .swal2-popup {
-  grid-column: 2;
-  align-self: start;
-  justify-self: center;
-}
-.swal2-container.swal2-top-end > .swal2-popup, .swal2-container.swal2-top-right > .swal2-popup {
-  grid-column: 3;
-  align-self: start;
-  justify-self: end;
-}
-.swal2-container.swal2-center-start > .swal2-popup, .swal2-container.swal2-center-left > .swal2-popup {
-  grid-row: 2;
-  align-self: center;
-}
-.swal2-container.swal2-center > .swal2-popup {
-  grid-column: 2;
-  grid-row: 2;
-  align-self: center;
-  justify-self: center;
-}
-.swal2-container.swal2-center-end > .swal2-popup, .swal2-container.swal2-center-right > .swal2-popup {
-  grid-column: 3;
-  grid-row: 2;
-  align-self: center;
-  justify-self: end;
-}
-.swal2-container.swal2-bottom-start > .swal2-popup, .swal2-container.swal2-bottom-left > .swal2-popup {
-  grid-column: 1;
-  grid-row: 3;
-  align-self: end;
-}
-.swal2-container.swal2-bottom > .swal2-popup {
-  grid-column: 2;
-  grid-row: 3;
-  justify-self: center;
-  align-self: end;
-}
-.swal2-container.swal2-bottom-end > .swal2-popup, .swal2-container.swal2-bottom-right > .swal2-popup {
-  grid-column: 3;
-  grid-row: 3;
-  align-self: end;
-  justify-self: end;
-}
-.swal2-container.swal2-grow-row > .swal2-popup, .swal2-container.swal2-grow-fullscreen > .swal2-popup {
-  grid-column: 1/4;
-  width: 100%;
-}
-.swal2-container.swal2-grow-column > .swal2-popup, .swal2-container.swal2-grow-fullscreen > .swal2-popup {
-  grid-row: 1/4;
-  align-self: stretch;
-}
-.swal2-container.swal2-no-transition {
-  transition: none !important;
-}
-
-.swal2-popup {
-  display: none;
-  position: relative;
-  box-sizing: border-box;
-  grid-template-columns: minmax(0, 100%);
-  width: 32em;
-  max-width: 100%;
-  padding: 0 0 1.25em;
-  border: none;
-  border-radius: 5px;
-  background: #fff;
-  color: #545454;
-  font-family: inherit;
-  font-size: 1rem;
-}
-.swal2-popup:focus {
-  outline: none;
-}
-.swal2-popup.swal2-loading {
-  overflow-y: hidden;
-}
-
-.swal2-title {
-  position: relative;
-  max-width: 100%;
-  margin: 0;
-  padding: 0.8em 1em 0;
-  color: inherit;
-  font-size: 1.875em;
-  font-weight: 600;
-  text-align: center;
-  text-transform: none;
-  word-wrap: break-word;
-}
-
-.swal2-actions {
-  display: flex;
-  z-index: 1;
-  box-sizing: border-box;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  width: auto;
-  margin: 1.25em auto 0;
-  padding: 0;
-}
-.swal2-actions:not(.swal2-loading) .swal2-styled[disabled] {
-  opacity: 0.4;
-}
-.swal2-actions:not(.swal2-loading) .swal2-styled:hover {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
-}
-.swal2-actions:not(.swal2-loading) .swal2-styled:active {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-}
-
-.swal2-loader {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 2.2em;
-  height: 2.2em;
-  margin: 0 1.875em;
-  animation: swal2-rotate-loading 1.5s linear 0s infinite normal;
-  border-width: 0.25em;
-  border-style: solid;
-  border-radius: 100%;
-  border-color: #2778c4 transparent #2778c4 transparent;
-}
-
-.swal2-styled {
-  margin: 0.3125em;
-  padding: 0.625em 1.1em;
-  transition: box-shadow 0.1s;
-  box-shadow: 0 0 0 3px transparent;
-  font-weight: 500;
-}
-.swal2-styled:not([disabled]) {
-  cursor: pointer;
-}
-.swal2-styled.swal2-confirm {
-  border: 0;
-  border-radius: 0.25em;
-  background: initial;
-  background-color: #7066e0;
-  color: #fff;
-  font-size: 1em;
-}
-.swal2-styled.swal2-confirm:focus {
-  box-shadow: 0 0 0 3px rgba(112, 102, 224, 0.5);
-}
-.swal2-styled.swal2-deny {
-  border: 0;
-  border-radius: 0.25em;
-  background: initial;
-  background-color: #dc3741;
-  color: #fff;
-  font-size: 1em;
-}
-.swal2-styled.swal2-deny:focus {
-  box-shadow: 0 0 0 3px rgba(220, 55, 65, 0.5);
-}
-.swal2-styled.swal2-cancel {
-  border: 0;
-  border-radius: 0.25em;
-  background: initial;
-  background-color: #6e7881;
-  color: #fff;
-  font-size: 1em;
-}
-.swal2-styled.swal2-cancel:focus {
-  box-shadow: 0 0 0 3px rgba(110, 120, 129, 0.5);
-}
-.swal2-styled.swal2-default-outline:focus {
-  box-shadow: 0 0 0 3px rgba(100, 150, 200, 0.5);
-}
-.swal2-styled:focus {
-  outline: none;
-}
-.swal2-styled::-moz-focus-inner {
-  border: 0;
-}
-
-.swal2-footer {
-  justify-content: center;
-  margin: 1em 0 0;
-  padding: 1em 1em 0;
-  border-top: 1px solid #eee;
-  color: inherit;
-  font-size: 1em;
-}
-
-.swal2-timer-progress-bar-container {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  grid-column: auto !important;
-  overflow: hidden;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
-
-.swal2-timer-progress-bar {
-  width: 100%;
-  height: 0.25em;
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.swal2-image {
-  max-width: 100%;
-  margin: 2em auto 1em;
-}
-
-.swal2-close {
-  z-index: 2;
-  align-items: center;
-  justify-content: center;
-  width: 1.2em;
-  height: 1.2em;
-  margin-top: 0;
-  margin-right: 0;
-  margin-bottom: -1.2em;
-  padding: 0;
-  overflow: hidden;
-  transition: color 0.1s, box-shadow 0.1s;
-  border: none;
-  border-radius: 5px;
-  background: transparent;
-  color: #ccc;
-  font-family: serif;
-  font-family: monospace;
-  font-size: 2.5em;
-  cursor: pointer;
-  justify-self: end;
-}
-.swal2-close:hover {
-  transform: none;
-  background: transparent;
-  color: #f27474;
-}
-.swal2-close:focus {
-  outline: none;
-  box-shadow: inset 0 0 0 3px rgba(100, 150, 200, 0.5);
-}
-.swal2-close::-moz-focus-inner {
-  border: 0;
-}
-
-.swal2-html-container {
-  z-index: 1;
-  justify-content: center;
-  margin: 1em 1.6em 0.3em;
-  padding: 0;
-  overflow: auto;
-  color: inherit;
-  font-size: 1.125em;
-  font-weight: normal;
-  line-height: normal;
-  text-align: center;
-  word-wrap: break-word;
-  word-break: break-word;
-}
-
-.swal2-input,
-.swal2-file,
-.swal2-textarea,
-.swal2-select,
-.swal2-radio,
-.swal2-checkbox {
-  margin: 1em 2em 3px;
-}
-
-.swal2-input,
-.swal2-file,
-.swal2-textarea {
-  box-sizing: border-box;
-  width: auto;
-  transition: border-color 0.1s, box-shadow 0.1s;
-  border: 1px solid #d9d9d9;
-  border-radius: 0.1875em;
-  background: transparent;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06), 0 0 0 3px transparent;
-  color: inherit;
-  font-size: 1.125em;
-}
-.swal2-input.swal2-inputerror,
-.swal2-file.swal2-inputerror,
-.swal2-textarea.swal2-inputerror {
-  border-color: #f27474 !important;
-  box-shadow: 0 0 2px #f27474 !important;
-}
-.swal2-input:focus,
-.swal2-file:focus,
-.swal2-textarea:focus {
-  border: 1px solid #b4dbed;
-  outline: none;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06), 0 0 0 3px rgba(100, 150, 200, 0.5);
-}
-.swal2-input::placeholder,
-.swal2-file::placeholder,
-.swal2-textarea::placeholder {
-  color: #ccc;
-}
-
-.swal2-range {
-  margin: 1em 2em 3px;
-  background: #fff;
-}
-.swal2-range input {
-  width: 80%;
-}
-.swal2-range output {
-  width: 20%;
-  color: inherit;
-  font-weight: 600;
-  text-align: center;
-}
-.swal2-range input,
-.swal2-range output {
-  height: 2.625em;
-  padding: 0;
-  font-size: 1.125em;
-  line-height: 2.625em;
-}
-
-.swal2-input {
-  height: 2.625em;
-  padding: 0 0.75em;
-}
-
-.swal2-file {
-  width: 75%;
-  margin-right: auto;
-  margin-left: auto;
-  background: transparent;
-  font-size: 1.125em;
-}
-
-.swal2-textarea {
-  height: 6.75em;
-  padding: 0.75em;
-}
-
-.swal2-select {
-  min-width: 50%;
-  max-width: 100%;
-  padding: 0.375em 0.625em;
-  background: transparent;
-  color: inherit;
-  font-size: 1.125em;
-}
-
-.swal2-radio,
-.swal2-checkbox {
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-  color: inherit;
-}
-.swal2-radio label,
-.swal2-checkbox label {
-  margin: 0 0.6em;
-  font-size: 1.125em;
-}
-.swal2-radio input,
-.swal2-checkbox input {
-  flex-shrink: 0;
-  margin: 0 0.4em;
-}
-
-.swal2-input-label {
-  display: flex;
-  justify-content: center;
-  margin: 1em auto 0;
-}
-
-.swal2-validation-message {
-  align-items: center;
-  justify-content: center;
-  margin: 1em 0 0;
-  padding: 0.625em;
-  overflow: hidden;
-  background: #f0f0f0;
-  color: #666666;
-  font-size: 1em;
-  font-weight: 300;
-}
-.swal2-validation-message::before {
-  content: "!";
-  display: inline-block;
-  width: 1.5em;
-  min-width: 1.5em;
-  height: 1.5em;
-  margin: 0 0.625em;
-  border-radius: 50%;
-  background-color: #f27474;
-  color: #fff;
-  font-weight: 600;
-  line-height: 1.5em;
-  text-align: center;
-}
-
-.swal2-icon {
-  position: relative;
-  box-sizing: content-box;
-  justify-content: center;
-  width: 5em;
-  height: 5em;
-  margin: 2.5em auto 0.6em;
-  border: 0.25em solid transparent;
-  border-radius: 50%;
-  border-color: #000;
-  font-family: inherit;
-  line-height: 5em;
-  cursor: default;
-  user-select: none;
-}
-.swal2-icon .swal2-icon-content {
-  display: flex;
-  align-items: center;
-  font-size: 3.75em;
-}
-.swal2-icon.swal2-error {
-  border-color: #f27474;
-  color: #f27474;
-}
-.swal2-icon.swal2-error .swal2-x-mark {
-  position: relative;
-  flex-grow: 1;
-}
-.swal2-icon.swal2-error [class^=swal2-x-mark-line] {
-  display: block;
-  position: absolute;
-  top: 2.3125em;
-  width: 2.9375em;
-  height: 0.3125em;
-  border-radius: 0.125em;
-  background-color: #f27474;
-}
-.swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left] {
-  left: 1.0625em;
-  transform: rotate(45deg);
-}
-.swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right] {
-  right: 1em;
-  transform: rotate(-45deg);
-}
-.swal2-icon.swal2-error.swal2-icon-show {
-  animation: swal2-animate-error-icon 0.5s;
-}
-.swal2-icon.swal2-error.swal2-icon-show .swal2-x-mark {
-  animation: swal2-animate-error-x-mark 0.5s;
-}
-.swal2-icon.swal2-warning {
-  border-color: #facea8;
-  color: #f8bb86;
-}
-.swal2-icon.swal2-warning.swal2-icon-show {
-  animation: swal2-animate-error-icon 0.5s;
-}
-.swal2-icon.swal2-warning.swal2-icon-show .swal2-icon-content {
-  animation: swal2-animate-i-mark 0.5s;
-}
-.swal2-icon.swal2-info {
-  border-color: #9de0f6;
-  color: #3fc3ee;
-}
-.swal2-icon.swal2-info.swal2-icon-show {
-  animation: swal2-animate-error-icon 0.5s;
-}
-.swal2-icon.swal2-info.swal2-icon-show .swal2-icon-content {
-  animation: swal2-animate-i-mark 0.8s;
-}
-.swal2-icon.swal2-question {
-  border-color: #c9dae1;
-  color: #87adbd;
-}
-.swal2-icon.swal2-question.swal2-icon-show {
-  animation: swal2-animate-error-icon 0.5s;
-}
-.swal2-icon.swal2-question.swal2-icon-show .swal2-icon-content {
-  animation: swal2-animate-question-mark 0.8s;
-}
-.swal2-icon.swal2-success {
-  border-color: #a5dc86;
-  color: #a5dc86;
-}
-.swal2-icon.swal2-success [class^=swal2-success-circular-line] {
-  position: absolute;
-  width: 3.75em;
-  height: 7.5em;
-  transform: rotate(45deg);
-  border-radius: 50%;
-}
-.swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=left] {
-  top: -0.4375em;
-  left: -2.0635em;
-  transform: rotate(-45deg);
-  transform-origin: 3.75em 3.75em;
-  border-radius: 7.5em 0 0 7.5em;
-}
-.swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=right] {
-  top: -0.6875em;
-  left: 1.875em;
-  transform: rotate(-45deg);
-  transform-origin: 0 3.75em;
-  border-radius: 0 7.5em 7.5em 0;
-}
-.swal2-icon.swal2-success .swal2-success-ring {
-  position: absolute;
-  z-index: 2;
-  top: -0.25em;
-  left: -0.25em;
-  box-sizing: content-box;
-  width: 100%;
-  height: 100%;
-  border: 0.25em solid rgba(165, 220, 134, 0.3);
-  border-radius: 50%;
-}
-.swal2-icon.swal2-success .swal2-success-fix {
-  position: absolute;
-  z-index: 1;
-  top: 0.5em;
-  left: 1.625em;
-  width: 0.4375em;
-  height: 5.625em;
-  transform: rotate(-45deg);
-}
-.swal2-icon.swal2-success [class^=swal2-success-line] {
-  display: block;
-  position: absolute;
-  z-index: 2;
-  height: 0.3125em;
-  border-radius: 0.125em;
-  background-color: #a5dc86;
-}
-.swal2-icon.swal2-success [class^=swal2-success-line][class$=tip] {
-  top: 2.875em;
-  left: 0.8125em;
-  width: 1.5625em;
-  transform: rotate(45deg);
-}
-.swal2-icon.swal2-success [class^=swal2-success-line][class$=long] {
-  top: 2.375em;
-  right: 0.5em;
-  width: 2.9375em;
-  transform: rotate(-45deg);
-}
-.swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-tip {
-  animation: swal2-animate-success-line-tip 0.75s;
-}
-.swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-long {
-  animation: swal2-animate-success-line-long 0.75s;
-}
-.swal2-icon.swal2-success.swal2-icon-show .swal2-success-circular-line-right {
-  animation: swal2-rotate-success-circular-line 4.25s ease-in;
-}
-
-.swal2-progress-steps {
-  flex-wrap: wrap;
-  align-items: center;
-  max-width: 100%;
-  margin: 1.25em auto;
-  padding: 0;
-  background: transparent;
-  font-weight: 600;
-}
-.swal2-progress-steps li {
-  display: inline-block;
-  position: relative;
-}
-.swal2-progress-steps .swal2-progress-step {
-  z-index: 20;
-  flex-shrink: 0;
-  width: 2em;
-  height: 2em;
-  border-radius: 2em;
-  background: #2778c4;
-  color: #fff;
-  line-height: 2em;
-  text-align: center;
-}
-.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step {
-  background: #2778c4;
-}
-.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step ~ .swal2-progress-step {
-  background: #add8e6;
-  color: #fff;
-}
-.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step ~ .swal2-progress-step-line {
-  background: #add8e6;
-}
-.swal2-progress-steps .swal2-progress-step-line {
-  z-index: 10;
-  flex-shrink: 0;
-  width: 2.5em;
-  height: 0.4em;
-  margin: 0 -1px;
-  background: #2778c4;
-}
-
-[class^=swal2] {
-  -webkit-tap-highlight-color: transparent;
-}
-
-.swal2-show {
-  animation: swal2-show 0.3s;
-}
-
-.swal2-hide {
-  animation: swal2-hide 0.15s forwards;
-}
-
-.swal2-noanimation {
-  transition: none;
-}
-
-.swal2-scrollbar-measure {
-  position: absolute;
-  top: -9999px;
-  width: 50px;
-  height: 50px;
-  overflow: scroll;
-}
-
-.swal2-rtl .swal2-close {
-  margin-right: initial;
-  margin-left: 0;
-}
-.swal2-rtl .swal2-timer-progress-bar {
-  right: 0;
-  left: auto;
-}
-
-@keyframes swal2-toast-show {
-  0% {
-    transform: translateY(-0.625em) rotateZ(2deg);
+    box-sizing: border-box;
+    grid-column: 1/4 !important;
+    grid-row: 1/4 !important;
+    grid-template-columns: min-content auto min-content;
+    padding: 1em;
+    overflow-y: hidden;
+    background: #fff;
+    box-shadow: 0 0 1px hsla(0deg, 0%, 0%, 0.075), 0 1px 2px hsla(0deg, 0%, 0%, 0.075), 1px 2px 4px hsla(0deg, 0%, 0%, 0.075), 1px 3px 8px hsla(0deg, 0%, 0%, 0.075), 2px 4px 16px hsla(0deg, 0%, 0%, 0.075);
+    pointer-events: all;
   }
-  33% {
-    transform: translateY(0) rotateZ(-2deg);
+
+  .swal2-popup.swal2-toast > * {
+    grid-column: 2;
   }
-  66% {
-    transform: translateY(0.3125em) rotateZ(2deg);
+
+  .swal2-popup.swal2-toast .swal2-title {
+    margin: 0.5em 1em;
+    padding: 0;
+    font-size: 1em;
+    text-align: initial;
   }
-  100% {
-    transform: translateY(0) rotateZ(0deg);
+
+  .swal2-popup.swal2-toast .swal2-loading {
+    justify-content: center;
   }
-}
-@keyframes swal2-toast-hide {
-  100% {
-    transform: rotateZ(1deg);
-    opacity: 0;
+
+  .swal2-popup.swal2-toast .swal2-input {
+    height: 2em;
+    margin: 0.5em;
+    font-size: 1em;
   }
-}
-@keyframes swal2-toast-animate-success-line-tip {
-  0% {
-    top: 0.5625em;
-    left: 0.0625em;
-    width: 0;
+
+  .swal2-popup.swal2-toast .swal2-validation-message {
+    font-size: 1em;
   }
-  54% {
-    top: 0.125em;
-    left: 0.125em;
-    width: 0;
+
+  .swal2-popup.swal2-toast .swal2-footer {
+    margin: 0.5em 0 0;
+    padding: 0.5em 0 0;
+    font-size: 0.8em;
   }
-  70% {
-    top: 0.625em;
-    left: -0.25em;
-    width: 1.625em;
+
+  .swal2-popup.swal2-toast .swal2-close {
+    grid-column: 3/3;
+    grid-row: 1/99;
+    align-self: center;
+    width: 0.8em;
+    height: 0.8em;
+    margin: 0;
+    font-size: 2em;
   }
-  84% {
-    top: 1.0625em;
-    left: 0.75em;
-    width: 0.5em;
+
+  .swal2-popup.swal2-toast .swal2-html-container {
+    margin: 0.5em 1em;
+    padding: 0;
+    overflow: initial;
+    font-size: 1em;
+    text-align: initial;
   }
-  100% {
+
+  .swal2-popup.swal2-toast .swal2-html-container:empty {
+    padding: 0;
+  }
+
+  .swal2-popup.swal2-toast .swal2-loader {
+    grid-column: 1;
+    grid-row: 1/99;
+    align-self: center;
+    width: 2em;
+    height: 2em;
+    margin: 0.25em;
+  }
+
+  .swal2-popup.swal2-toast .swal2-icon {
+    grid-column: 1;
+    grid-row: 1/99;
+    align-self: center;
+    width: 2em;
+    min-width: 2em;
+    height: 2em;
+    margin: 0 0.5em 0 0;
+  }
+
+  .swal2-popup.swal2-toast .swal2-icon .swal2-icon-content {
+    display: flex;
+    align-items: center;
+    font-size: 1.8em;
+    font-weight: bold;
+  }
+
+  .swal2-popup.swal2-toast .swal2-icon.swal2-success .swal2-success-ring {
+    width: 2em;
+    height: 2em;
+  }
+
+  .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line] {
+    top: 0.875em;
+    width: 1.375em;
+  }
+
+  .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left] {
+    left: 0.3125em;
+  }
+
+  .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right] {
+    right: 0.3125em;
+  }
+
+  .swal2-popup.swal2-toast .swal2-actions {
+    justify-content: flex-start;
+    height: auto;
+    margin: 0;
+    margin-top: 0.5em;
+    padding: 0 0.5em;
+  }
+
+  .swal2-popup.swal2-toast .swal2-styled {
+    margin: 0.25em 0.5em;
+    padding: 0.4em 0.6em;
+    font-size: 1em;
+  }
+
+  .swal2-popup.swal2-toast .swal2-success {
+    border-color: #a5dc86;
+  }
+
+  .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line] {
+    position: absolute;
+    width: 1.6em;
+    height: 3em;
+    transform: rotate(45deg);
+    border-radius: 50%;
+  }
+
+  .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left] {
+    top: -0.8em;
+    left: -0.5em;
+    transform: rotate(-45deg);
+    transform-origin: 2em 2em;
+    border-radius: 4em 0 0 4em;
+  }
+
+  .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right] {
+    top: -0.25em;
+    left: 0.9375em;
+    transform-origin: 0 1.5em;
+    border-radius: 0 4em 4em 0;
+  }
+
+  .swal2-popup.swal2-toast .swal2-success .swal2-success-ring {
+    width: 2em;
+    height: 2em;
+  }
+
+  .swal2-popup.swal2-toast .swal2-success .swal2-success-fix {
+    top: 0;
+    left: 0.4375em;
+    width: 0.4375em;
+    height: 2.6875em;
+  }
+
+  .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line] {
+    height: 0.3125em;
+  }
+
+  .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip] {
     top: 1.125em;
     left: 0.1875em;
     width: 0.75em;
   }
-}
-@keyframes swal2-toast-animate-success-line-long {
-  0% {
-    top: 1.625em;
-    right: 1.375em;
-    width: 0;
-  }
-  65% {
-    top: 1.25em;
-    right: 0.9375em;
-    width: 0;
-  }
-  84% {
-    top: 0.9375em;
-    right: 0;
-    width: 1.125em;
-  }
-  100% {
+
+  .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=long] {
     top: 0.9375em;
     right: 0.1875em;
     width: 1.375em;
   }
-}
-@keyframes swal2-show {
-  0% {
-    transform: scale(0.7);
+
+  .swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip {
+    animation: swal2-toast-animate-success-line-tip 0.75s;
   }
-  45% {
-    transform: scale(1.05);
+
+  .swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long {
+    animation: swal2-toast-animate-success-line-long 0.75s;
   }
-  80% {
-    transform: scale(0.95);
+
+  .swal2-popup.swal2-toast.swal2-show {
+    animation: swal2-toast-show 0.5s;
   }
-  100% {
-    transform: scale(1);
+
+  .swal2-popup.swal2-toast.swal2-hide {
+    animation: swal2-toast-hide 0.1s forwards;
   }
-}
-@keyframes swal2-hide {
-  0% {
-    transform: scale(1);
-    opacity: 1;
+
+  .swal2-container {
+    display: grid;
+    position: fixed;
+    z-index: 1060;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    box-sizing: border-box;
+    grid-template-areas: "top-start     top            top-end" "center-start  center         center-end" "bottom-start  bottom-center  bottom-end";
+    grid-template-rows: minmax(min-content, auto) minmax(min-content, auto) minmax(min-content, auto);
+    height: 100%;
+    padding: 0.625em;
+    overflow-x: hidden;
+    transition: background-color 0.1s;
+    -webkit-overflow-scrolling: touch;
   }
-  100% {
-    transform: scale(0.5);
-    opacity: 0;
+
+  .swal2-container.swal2-backdrop-show, .swal2-container.swal2-noanimation {
+    background: rgba(0, 0, 0, 0.4);
   }
-}
-@keyframes swal2-animate-success-line-tip {
-  0% {
-    top: 1.1875em;
-    left: 0.0625em;
-    width: 0;
+
+  .swal2-container.swal2-backdrop-hide {
+    background: transparent !important;
   }
-  54% {
-    top: 1.0625em;
-    left: 0.125em;
-    width: 0;
+
+  .swal2-container.swal2-top-start, .swal2-container.swal2-center-start, .swal2-container.swal2-bottom-start {
+    grid-template-columns: minmax(0, 1fr) auto auto;
   }
-  70% {
-    top: 2.1875em;
-    left: -0.375em;
-    width: 3.125em;
+
+  .swal2-container.swal2-top, .swal2-container.swal2-center, .swal2-container.swal2-bottom {
+    grid-template-columns: auto minmax(0, 1fr) auto;
   }
-  84% {
-    top: 3em;
-    left: 1.3125em;
-    width: 1.0625em;
+
+  .swal2-container.swal2-top-end, .swal2-container.swal2-center-end, .swal2-container.swal2-bottom-end {
+    grid-template-columns: auto auto minmax(0, 1fr);
   }
-  100% {
-    top: 2.8125em;
+
+  .swal2-container.swal2-top-start > .swal2-popup {
+    align-self: start;
+  }
+
+  .swal2-container.swal2-top > .swal2-popup {
+    grid-column: 2;
+    align-self: start;
+    justify-self: center;
+  }
+
+  .swal2-container.swal2-top-end > .swal2-popup, .swal2-container.swal2-top-right > .swal2-popup {
+    grid-column: 3;
+    align-self: start;
+    justify-self: end;
+  }
+
+  .swal2-container.swal2-center-start > .swal2-popup, .swal2-container.swal2-center-left > .swal2-popup {
+    grid-row: 2;
+    align-self: center;
+  }
+
+  .swal2-container.swal2-center > .swal2-popup {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+    justify-self: center;
+  }
+
+  .swal2-container.swal2-center-end > .swal2-popup, .swal2-container.swal2-center-right > .swal2-popup {
+    grid-column: 3;
+    grid-row: 2;
+    align-self: center;
+    justify-self: end;
+  }
+
+  .swal2-container.swal2-bottom-start > .swal2-popup, .swal2-container.swal2-bottom-left > .swal2-popup {
+    grid-column: 1;
+    grid-row: 3;
+    align-self: end;
+  }
+
+  .swal2-container.swal2-bottom > .swal2-popup {
+    grid-column: 2;
+    grid-row: 3;
+    justify-self: center;
+    align-self: end;
+  }
+
+  .swal2-container.swal2-bottom-end > .swal2-popup, .swal2-container.swal2-bottom-right > .swal2-popup {
+    grid-column: 3;
+    grid-row: 3;
+    align-self: end;
+    justify-self: end;
+  }
+
+  .swal2-container.swal2-grow-row > .swal2-popup, .swal2-container.swal2-grow-fullscreen > .swal2-popup {
+    grid-column: 1/4;
+    width: 100%;
+  }
+
+  .swal2-container.swal2-grow-column > .swal2-popup, .swal2-container.swal2-grow-fullscreen > .swal2-popup {
+    grid-row: 1/4;
+    align-self: stretch;
+  }
+
+  .swal2-container.swal2-no-transition {
+    transition: none !important;
+  }
+
+  .swal2-popup {
+    display: none;
+    position: relative;
+    box-sizing: border-box;
+    grid-template-columns: minmax(0, 100%);
+    width: 32em;
+    max-width: 100%;
+    padding: 0 0 1.25em;
+    border: none;
+    border-radius: 5px;
+    background: #fff;
+    color: #545454;
+    font-family: inherit;
+    font-size: 1rem;
+  }
+
+  .swal2-popup:focus {
+    outline: none;
+  }
+
+  .swal2-popup.swal2-loading {
+    overflow-y: hidden;
+  }
+
+  .swal2-title {
+    position: relative;
+    max-width: 100%;
+    margin: 0;
+    padding: 0.8em 1em 0;
+    color: inherit;
+    font-size: 1.875em;
+    font-weight: 600;
+    text-align: center;
+    text-transform: none;
+    word-wrap: break-word;
+  }
+
+  .swal2-actions {
+    display: flex;
+    z-index: 1;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    margin: 1.25em auto 0;
+    padding: 0;
+  }
+
+  .swal2-actions:not(.swal2-loading) .swal2-styled[disabled] {
+    opacity: 0.4;
+  }
+
+  .swal2-actions:not(.swal2-loading) .swal2-styled:hover {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+  }
+
+  .swal2-actions:not(.swal2-loading) .swal2-styled:active {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  }
+
+  .swal2-loader {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 2.2em;
+    height: 2.2em;
+    margin: 0 1.875em;
+    animation: swal2-rotate-loading 1.5s linear 0s infinite normal;
+    border-width: 0.25em;
+    border-style: solid;
+    border-radius: 100%;
+    border-color: #2778c4 transparent #2778c4 transparent;
+  }
+
+  .swal2-styled {
+    margin: 0.3125em;
+    padding: 0.625em 1.1em;
+    transition: box-shadow 0.1s;
+    box-shadow: 0 0 0 3px transparent;
+    font-weight: 500;
+  }
+
+  .swal2-styled:not([disabled]) {
+    cursor: pointer;
+  }
+
+  .swal2-styled.swal2-confirm {
+    border: 0;
+    border-radius: 0.25em;
+    background: initial;
+    background-color: #7066e0;
+    color: #fff;
+    font-size: 1em;
+  }
+
+  .swal2-styled.swal2-confirm:focus {
+    box-shadow: 0 0 0 3px rgba(112, 102, 224, 0.5);
+  }
+
+  .swal2-styled.swal2-deny {
+    border: 0;
+    border-radius: 0.25em;
+    background: initial;
+    background-color: #dc3741;
+    color: #fff;
+    font-size: 1em;
+  }
+
+  .swal2-styled.swal2-deny:focus {
+    box-shadow: 0 0 0 3px rgba(220, 55, 65, 0.5);
+  }
+
+  .swal2-styled.swal2-cancel {
+    border: 0;
+    border-radius: 0.25em;
+    background: initial;
+    background-color: #6e7881;
+    color: #fff;
+    font-size: 1em;
+  }
+
+  .swal2-styled.swal2-cancel:focus {
+    box-shadow: 0 0 0 3px rgba(110, 120, 129, 0.5);
+  }
+
+  .swal2-styled.swal2-default-outline:focus {
+    box-shadow: 0 0 0 3px rgba(100, 150, 200, 0.5);
+  }
+
+  .swal2-styled:focus {
+    outline: none;
+  }
+
+  .swal2-styled::-moz-focus-inner {
+    border: 0;
+  }
+
+  .swal2-footer {
+    justify-content: center;
+    margin: 1em 0 0;
+    padding: 1em 1em 0;
+    border-top: 1px solid #eee;
+    color: inherit;
+    font-size: 1em;
+  }
+
+  .swal2-timer-progress-bar-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    grid-column: auto !important;
+    overflow: hidden;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+
+  .swal2-timer-progress-bar {
+    width: 100%;
+    height: 0.25em;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .swal2-image {
+    max-width: 100%;
+    margin: 2em auto 1em;
+  }
+
+  .swal2-close {
+    z-index: 2;
+    align-items: center;
+    justify-content: center;
+    width: 1.2em;
+    height: 1.2em;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: -1.2em;
+    padding: 0;
+    overflow: hidden;
+    transition: color 0.1s, box-shadow 0.1s;
+    border: none;
+    border-radius: 5px;
+    background: transparent;
+    color: #ccc;
+    font-family: serif;
+    font-family: monospace;
+    font-size: 2.5em;
+    cursor: pointer;
+    justify-self: end;
+  }
+
+  .swal2-close:hover {
+    transform: none;
+    background: transparent;
+    color: #f27474;
+  }
+
+  .swal2-close:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 3px rgba(100, 150, 200, 0.5);
+  }
+
+  .swal2-close::-moz-focus-inner {
+    border: 0;
+  }
+
+  .swal2-html-container {
+    z-index: 1;
+    justify-content: center;
+    margin: 1em 1.6em 0.3em;
+    padding: 0;
+    overflow: auto;
+    color: inherit;
+    font-size: 1.125em;
+    font-weight: normal;
+    line-height: normal;
+    text-align: center;
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .swal2-input,
+  .swal2-file,
+  .swal2-textarea,
+  .swal2-select,
+  .swal2-radio,
+  .swal2-checkbox {
+    margin: 1em 2em 3px;
+  }
+
+  .swal2-input,
+  .swal2-file,
+  .swal2-textarea {
+    box-sizing: border-box;
+    width: auto;
+    transition: border-color 0.1s, box-shadow 0.1s;
+    border: 1px solid #d9d9d9;
+    border-radius: 0.1875em;
+    background: transparent;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06), 0 0 0 3px transparent;
+    color: inherit;
+    font-size: 1.125em;
+  }
+
+  .swal2-input.swal2-inputerror,
+  .swal2-file.swal2-inputerror,
+  .swal2-textarea.swal2-inputerror {
+    border-color: #f27474 !important;
+    box-shadow: 0 0 2px #f27474 !important;
+  }
+
+  .swal2-input:focus,
+  .swal2-file:focus,
+  .swal2-textarea:focus {
+    border: 1px solid #b4dbed;
+    outline: none;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06), 0 0 0 3px rgba(100, 150, 200, 0.5);
+  }
+
+  .swal2-input::placeholder,
+  .swal2-file::placeholder,
+  .swal2-textarea::placeholder {
+    color: #ccc;
+  }
+
+  .swal2-range {
+    margin: 1em 2em 3px;
+    background: #fff;
+  }
+
+  .swal2-range input {
+    width: 80%;
+  }
+
+  .swal2-range output {
+    width: 20%;
+    color: inherit;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .swal2-range input,
+  .swal2-range output {
+    height: 2.625em;
+    padding: 0;
+    font-size: 1.125em;
+    line-height: 2.625em;
+  }
+
+  .swal2-input {
+    height: 2.625em;
+    padding: 0 0.75em;
+  }
+
+  .swal2-file {
+    width: 75%;
+    margin-right: auto;
+    margin-left: auto;
+    background: transparent;
+    font-size: 1.125em;
+  }
+
+  .swal2-textarea {
+    height: 6.75em;
+    padding: 0.75em;
+  }
+
+  .swal2-select {
+    min-width: 50%;
+    max-width: 100%;
+    padding: 0.375em 0.625em;
+    background: transparent;
+    color: inherit;
+    font-size: 1.125em;
+  }
+
+  .swal2-radio,
+  .swal2-checkbox {
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    color: inherit;
+  }
+
+  .swal2-radio label,
+  .swal2-checkbox label {
+    margin: 0 0.6em;
+    font-size: 1.125em;
+  }
+
+  .swal2-radio input,
+  .swal2-checkbox input {
+    flex-shrink: 0;
+    margin: 0 0.4em;
+  }
+
+  .swal2-input-label {
+    display: flex;
+    justify-content: center;
+    margin: 1em auto 0;
+  }
+
+  .swal2-validation-message {
+    align-items: center;
+    justify-content: center;
+    margin: 1em 0 0;
+    padding: 0.625em;
+    overflow: hidden;
+    background: #f0f0f0;
+    color: #666666;
+    font-size: 1em;
+    font-weight: 300;
+  }
+
+  .swal2-validation-message::before {
+    content: "!";
+    display: inline-block;
+    width: 1.5em;
+    min-width: 1.5em;
+    height: 1.5em;
+    margin: 0 0.625em;
+    border-radius: 50%;
+    background-color: #f27474;
+    color: #fff;
+    font-weight: 600;
+    line-height: 1.5em;
+    text-align: center;
+  }
+
+  .swal2-icon {
+    position: relative;
+    box-sizing: content-box;
+    justify-content: center;
+    width: 5em;
+    height: 5em;
+    margin: 2.5em auto 0.6em;
+    border: 0.25em solid transparent;
+    border-radius: 50%;
+    border-color: #000;
+    font-family: inherit;
+    line-height: 5em;
+    cursor: default;
+    user-select: none;
+  }
+
+  .swal2-icon .swal2-icon-content {
+    display: flex;
+    align-items: center;
+    font-size: 3.75em;
+  }
+
+  .swal2-icon.swal2-error {
+    border-color: #f27474;
+    color: #f27474;
+  }
+
+  .swal2-icon.swal2-error .swal2-x-mark {
+    position: relative;
+    flex-grow: 1;
+  }
+
+  .swal2-icon.swal2-error [class^=swal2-x-mark-line] {
+    display: block;
+    position: absolute;
+    top: 2.3125em;
+    width: 2.9375em;
+    height: 0.3125em;
+    border-radius: 0.125em;
+    background-color: #f27474;
+  }
+
+  .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left] {
+    left: 1.0625em;
+    transform: rotate(45deg);
+  }
+
+  .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right] {
+    right: 1em;
+    transform: rotate(-45deg);
+  }
+
+  .swal2-icon.swal2-error.swal2-icon-show {
+    animation: swal2-animate-error-icon 0.5s;
+  }
+
+  .swal2-icon.swal2-error.swal2-icon-show .swal2-x-mark {
+    animation: swal2-animate-error-x-mark 0.5s;
+  }
+
+  .swal2-icon.swal2-warning {
+    border-color: #facea8;
+    color: #f8bb86;
+  }
+
+  .swal2-icon.swal2-warning.swal2-icon-show {
+    animation: swal2-animate-error-icon 0.5s;
+  }
+
+  .swal2-icon.swal2-warning.swal2-icon-show .swal2-icon-content {
+    animation: swal2-animate-i-mark 0.5s;
+  }
+
+  .swal2-icon.swal2-info {
+    border-color: #9de0f6;
+    color: #3fc3ee;
+  }
+
+  .swal2-icon.swal2-info.swal2-icon-show {
+    animation: swal2-animate-error-icon 0.5s;
+  }
+
+  .swal2-icon.swal2-info.swal2-icon-show .swal2-icon-content {
+    animation: swal2-animate-i-mark 0.8s;
+  }
+
+  .swal2-icon.swal2-question {
+    border-color: #c9dae1;
+    color: #87adbd;
+  }
+
+  .swal2-icon.swal2-question.swal2-icon-show {
+    animation: swal2-animate-error-icon 0.5s;
+  }
+
+  .swal2-icon.swal2-question.swal2-icon-show .swal2-icon-content {
+    animation: swal2-animate-question-mark 0.8s;
+  }
+
+  .swal2-icon.swal2-success {
+    border-color: #a5dc86;
+    color: #a5dc86;
+  }
+
+  .swal2-icon.swal2-success [class^=swal2-success-circular-line] {
+    position: absolute;
+    width: 3.75em;
+    height: 7.5em;
+    transform: rotate(45deg);
+    border-radius: 50%;
+  }
+
+  .swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=left] {
+    top: -0.4375em;
+    left: -2.0635em;
+    transform: rotate(-45deg);
+    transform-origin: 3.75em 3.75em;
+    border-radius: 7.5em 0 0 7.5em;
+  }
+
+  .swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=right] {
+    top: -0.6875em;
+    left: 1.875em;
+    transform: rotate(-45deg);
+    transform-origin: 0 3.75em;
+    border-radius: 0 7.5em 7.5em 0;
+  }
+
+  .swal2-icon.swal2-success .swal2-success-ring {
+    position: absolute;
+    z-index: 2;
+    top: -0.25em;
+    left: -0.25em;
+    box-sizing: content-box;
+    width: 100%;
+    height: 100%;
+    border: 0.25em solid rgba(165, 220, 134, 0.3);
+    border-radius: 50%;
+  }
+
+  .swal2-icon.swal2-success .swal2-success-fix {
+    position: absolute;
+    z-index: 1;
+    top: 0.5em;
+    left: 1.625em;
+    width: 0.4375em;
+    height: 5.625em;
+    transform: rotate(-45deg);
+  }
+
+  .swal2-icon.swal2-success [class^=swal2-success-line] {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    height: 0.3125em;
+    border-radius: 0.125em;
+    background-color: #a5dc86;
+  }
+
+  .swal2-icon.swal2-success [class^=swal2-success-line][class$=tip] {
+    top: 2.875em;
     left: 0.8125em;
     width: 1.5625em;
+    transform: rotate(45deg);
   }
-}
-@keyframes swal2-animate-success-line-long {
-  0% {
-    top: 3.375em;
-    right: 2.875em;
-    width: 0;
-  }
-  65% {
-    top: 3.375em;
-    right: 2.875em;
-    width: 0;
-  }
-  84% {
-    top: 2.1875em;
-    right: 0;
-    width: 3.4375em;
-  }
-  100% {
+
+  .swal2-icon.swal2-success [class^=swal2-success-line][class$=long] {
     top: 2.375em;
     right: 0.5em;
     width: 2.9375em;
-  }
-}
-@keyframes swal2-rotate-success-circular-line {
-  0% {
     transform: rotate(-45deg);
   }
-  5% {
-    transform: rotate(-45deg);
+
+  .swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-tip {
+    animation: swal2-animate-success-line-tip 0.75s;
   }
-  12% {
-    transform: rotate(-405deg);
+
+  .swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-long {
+    animation: swal2-animate-success-line-long 0.75s;
   }
-  100% {
-    transform: rotate(-405deg);
+
+  .swal2-icon.swal2-success.swal2-icon-show .swal2-success-circular-line-right {
+    animation: swal2-rotate-success-circular-line 4.25s ease-in;
   }
-}
-@keyframes swal2-animate-error-x-mark {
-  0% {
-    margin-top: 1.625em;
-    transform: scale(0.4);
-    opacity: 0;
+
+  .swal2-progress-steps {
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 100%;
+    margin: 1.25em auto;
+    padding: 0;
+    background: transparent;
+    font-weight: 600;
   }
-  50% {
-    margin-top: 1.625em;
-    transform: scale(0.4);
-    opacity: 0;
+
+  .swal2-progress-steps li {
+    display: inline-block;
+    position: relative;
   }
-  80% {
-    margin-top: -0.375em;
-    transform: scale(1.15);
+
+  .swal2-progress-steps .swal2-progress-step {
+    z-index: 20;
+    flex-shrink: 0;
+    width: 2em;
+    height: 2em;
+    border-radius: 2em;
+    background: #2778c4;
+    color: #fff;
+    line-height: 2em;
+    text-align: center;
   }
-  100% {
-    margin-top: 0;
-    transform: scale(1);
-    opacity: 1;
+
+  .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step {
+    background: #2778c4;
   }
-}
-@keyframes swal2-animate-error-icon {
-  0% {
-    transform: rotateX(100deg);
-    opacity: 0;
+
+  .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step ~ .swal2-progress-step {
+    background: #add8e6;
+    color: #fff;
   }
-  100% {
-    transform: rotateX(0deg);
-    opacity: 1;
+
+  .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step ~ .swal2-progress-step-line {
+    background: #add8e6;
   }
-}
-@keyframes swal2-rotate-loading {
-  0% {
-    transform: rotate(0deg);
+
+  .swal2-progress-steps .swal2-progress-step-line {
+    z-index: 10;
+    flex-shrink: 0;
+    width: 2.5em;
+    height: 0.4em;
+    margin: 0 -1px;
+    background: #2778c4;
   }
-  100% {
-    transform: rotate(360deg);
+
+  [class^=swal2] {
+    -webkit-tap-highlight-color: transparent;
   }
-}
-@keyframes swal2-animate-question-mark {
-  0% {
-    transform: rotateY(-360deg);
+
+  .swal2-show {
+    animation: swal2-show 0.3s;
   }
-  100% {
-    transform: rotateY(0);
+
+  .swal2-hide {
+    animation: swal2-hide 0.15s forwards;
   }
-}
-@keyframes swal2-animate-i-mark {
-  0% {
-    transform: rotateZ(45deg);
-    opacity: 0;
+
+  .swal2-noanimation {
+    transition: none;
   }
-  25% {
-    transform: rotateZ(-25deg);
-    opacity: 0.4;
+
+  .swal2-scrollbar-measure {
+    position: absolute;
+    top: -9999px;
+    width: 50px;
+    height: 50px;
+    overflow: scroll;
   }
-  50% {
-    transform: rotateZ(15deg);
-    opacity: 0.8;
+
+  .swal2-rtl .swal2-close {
+    margin-right: initial;
+    margin-left: 0;
   }
-  75% {
-    transform: rotateZ(-5deg);
-    opacity: 1;
+
+  .swal2-rtl .swal2-timer-progress-bar {
+    right: 0;
+    left: auto;
   }
-  100% {
-    transform: rotateX(0);
-    opacity: 1;
+
+  @keyframes swal2-toast-show {
+    0% {
+      transform: translateY(-0.625em) rotateZ(2deg);
+    }
+    33% {
+      transform: translateY(0) rotateZ(-2deg);
+    }
+    66% {
+      transform: translateY(0.3125em) rotateZ(2deg);
+    }
+    100% {
+      transform: translateY(0) rotateZ(0deg);
+    }
   }
-}
-body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
-  overflow: hidden;
-}
-body.swal2-height-auto {
-  height: auto !important;
-}
-body.swal2-no-backdrop .swal2-container {
-  background-color: transparent !important;
-  pointer-events: none;
-}
-body.swal2-no-backdrop .swal2-container .swal2-popup {
-  pointer-events: all;
-}
-body.swal2-no-backdrop .swal2-container .swal2-modal {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-}
-@media print {
+
+  @keyframes swal2-toast-hide {
+    100% {
+      transform: rotateZ(1deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes swal2-toast-animate-success-line-tip {
+    0% {
+      top: 0.5625em;
+      left: 0.0625em;
+      width: 0;
+    }
+    54% {
+      top: 0.125em;
+      left: 0.125em;
+      width: 0;
+    }
+    70% {
+      top: 0.625em;
+      left: -0.25em;
+      width: 1.625em;
+    }
+    84% {
+      top: 1.0625em;
+      left: 0.75em;
+      width: 0.5em;
+    }
+    100% {
+      top: 1.125em;
+      left: 0.1875em;
+      width: 0.75em;
+    }
+  }
+
+  @keyframes swal2-toast-animate-success-line-long {
+    0% {
+      top: 1.625em;
+      right: 1.375em;
+      width: 0;
+    }
+    65% {
+      top: 1.25em;
+      right: 0.9375em;
+      width: 0;
+    }
+    84% {
+      top: 0.9375em;
+      right: 0;
+      width: 1.125em;
+    }
+    100% {
+      top: 0.9375em;
+      right: 0.1875em;
+      width: 1.375em;
+    }
+  }
+
+  @keyframes swal2-show {
+    0% {
+      transform: scale(0.7);
+    }
+    45% {
+      transform: scale(1.05);
+    }
+    80% {
+      transform: scale(0.95);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes swal2-hide {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0.5);
+      opacity: 0;
+    }
+  }
+
+  @keyframes swal2-animate-success-line-tip {
+    0% {
+      top: 1.1875em;
+      left: 0.0625em;
+      width: 0;
+    }
+    54% {
+      top: 1.0625em;
+      left: 0.125em;
+      width: 0;
+    }
+    70% {
+      top: 2.1875em;
+      left: -0.375em;
+      width: 3.125em;
+    }
+    84% {
+      top: 3em;
+      left: 1.3125em;
+      width: 1.0625em;
+    }
+    100% {
+      top: 2.8125em;
+      left: 0.8125em;
+      width: 1.5625em;
+    }
+  }
+
+  @keyframes swal2-animate-success-line-long {
+    0% {
+      top: 3.375em;
+      right: 2.875em;
+      width: 0;
+    }
+    65% {
+      top: 3.375em;
+      right: 2.875em;
+      width: 0;
+    }
+    84% {
+      top: 2.1875em;
+      right: 0;
+      width: 3.4375em;
+    }
+    100% {
+      top: 2.375em;
+      right: 0.5em;
+      width: 2.9375em;
+    }
+  }
+
+  @keyframes swal2-rotate-success-circular-line {
+    0% {
+      transform: rotate(-45deg);
+    }
+    5% {
+      transform: rotate(-45deg);
+    }
+    12% {
+      transform: rotate(-405deg);
+    }
+    100% {
+      transform: rotate(-405deg);
+    }
+  }
+
+  @keyframes swal2-animate-error-x-mark {
+    0% {
+      margin-top: 1.625em;
+      transform: scale(0.4);
+      opacity: 0;
+    }
+    50% {
+      margin-top: 1.625em;
+      transform: scale(0.4);
+      opacity: 0;
+    }
+    80% {
+      margin-top: -0.375em;
+      transform: scale(1.15);
+    }
+    100% {
+      margin-top: 0;
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes swal2-animate-error-icon {
+    0% {
+      transform: rotateX(100deg);
+      opacity: 0;
+    }
+    100% {
+      transform: rotateX(0deg);
+      opacity: 1;
+    }
+  }
+
+  @keyframes swal2-rotate-loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes swal2-animate-question-mark {
+    0% {
+      transform: rotateY(-360deg);
+    }
+    100% {
+      transform: rotateY(0);
+    }
+  }
+
+  @keyframes swal2-animate-i-mark {
+    0% {
+      transform: rotateZ(45deg);
+      opacity: 0;
+    }
+    25% {
+      transform: rotateZ(-25deg);
+      opacity: 0.4;
+    }
+    50% {
+      transform: rotateZ(15deg);
+      opacity: 0.8;
+    }
+    75% {
+      transform: rotateZ(-5deg);
+      opacity: 1;
+    }
+    100% {
+      transform: rotateX(0);
+      opacity: 1;
+    }
+  }
+
   body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
-    overflow-y: scroll !important;
+    overflow: hidden;
   }
-  body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) > [aria-hidden=true] {
-    display: none;
+
+  body.swal2-height-auto {
+    height: auto !important;
   }
-  body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) .swal2-container {
-    position: static !important;
+
+  body.swal2-no-backdrop .swal2-container {
+    background-color: transparent !important;
+    pointer-events: none;
   }
-}
-body.swal2-toast-shown .swal2-container {
-  box-sizing: border-box;
-  width: 360px;
-  max-width: 100%;
-  background-color: transparent;
-  pointer-events: none;
-}
-body.swal2-toast-shown .swal2-container.swal2-top {
-  top: 0;
-  right: auto;
-  bottom: auto;
-  left: 50%;
-  transform: translateX(-50%);
-}
-body.swal2-toast-shown .swal2-container.swal2-top-end, body.swal2-toast-shown .swal2-container.swal2-top-right {
-  top: 0;
-  right: 0;
-  bottom: auto;
-  left: auto;
-}
-body.swal2-toast-shown .swal2-container.swal2-top-start, body.swal2-toast-shown .swal2-container.swal2-top-left {
-  top: 0;
-  right: auto;
-  bottom: auto;
-  left: 0;
-}
-body.swal2-toast-shown .swal2-container.swal2-center-start, body.swal2-toast-shown .swal2-container.swal2-center-left {
-  top: 50%;
-  right: auto;
-  bottom: auto;
-  left: 0;
-  transform: translateY(-50%);
-}
-body.swal2-toast-shown .swal2-container.swal2-center {
-  top: 50%;
-  right: auto;
-  bottom: auto;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-body.swal2-toast-shown .swal2-container.swal2-center-end, body.swal2-toast-shown .swal2-container.swal2-center-right {
-  top: 50%;
-  right: 0;
-  bottom: auto;
-  left: auto;
-  transform: translateY(-50%);
-}
-body.swal2-toast-shown .swal2-container.swal2-bottom-start, body.swal2-toast-shown .swal2-container.swal2-bottom-left {
-  top: auto;
-  right: auto;
-  bottom: 0;
-  left: 0;
-}
-body.swal2-toast-shown .swal2-container.swal2-bottom {
-  top: auto;
-  right: auto;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-body.swal2-toast-shown .swal2-container.swal2-bottom-end, body.swal2-toast-shown .swal2-container.swal2-bottom-right {
-  top: auto;
-  right: 0;
-  bottom: 0;
-  left: auto;
-}
+
+  body.swal2-no-backdrop .swal2-container .swal2-popup {
+    pointer-events: all;
+  }
+
+  body.swal2-no-backdrop .swal2-container .swal2-modal {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  }
+
+  @media print {
+    body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+      overflow-y: scroll !important;
+    }
+
+    body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) > [aria-hidden=true] {
+      display: none;
+    }
+
+    body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) .swal2-container {
+      position: static !important;
+    }
+  }
+
+  body.swal2-toast-shown .swal2-container {
+    box-sizing: border-box;
+    width: 360px;
+    max-width: 100%;
+    background-color: transparent;
+    pointer-events: none;
+  }
+
+  body.swal2-toast-shown .swal2-container.swal2-top {
+    top: 0;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  body.swal2-toast-shown .swal2-container.swal2-top-end, body.swal2-toast-shown .swal2-container.swal2-top-right {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: auto;
+  }
+
+  body.swal2-toast-shown .swal2-container.swal2-top-start, body.swal2-toast-shown .swal2-container.swal2-top-left {
+    top: 0;
+    right: auto;
+    bottom: auto;
+    left: 0;
+  }
+
+  body.swal2-toast-shown .swal2-container.swal2-center-start, body.swal2-toast-shown .swal2-container.swal2-center-left {
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    left: 0;
+    transform: translateY(-50%);
+  }
+
+  body.swal2-toast-shown .swal2-container.swal2-center {
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  body.swal2-toast-shown .swal2-container.swal2-center-end, body.swal2-toast-shown .swal2-container.swal2-center-right {
+    top: 50%;
+    right: 0;
+    bottom: auto;
+    left: auto;
+    transform: translateY(-50%);
+  }
+
+  body.swal2-toast-shown .swal2-container.swal2-bottom-start, body.swal2-toast-shown .swal2-container.swal2-bottom-left {
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+  }
+
+  body.swal2-toast-shown .swal2-container.swal2-bottom {
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  body.swal2-toast-shown .swal2-container.swal2-bottom-end, body.swal2-toast-shown .swal2-container.swal2-bottom-right {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: auto;
+  }
 `;
   const normalize = `/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 html {
@@ -4224,218 +4380,234 @@ ${wrapStyle(
     (locale) => `<option value="${locale.ID}" ${useSettings().locale === locale.ID ? "selected" : ""}>${locale.NAME}</option>`
   );
   const SettingsPanel = `
-  <div id="SettingsOverlay" class="overlay"></div>
-  <div id="SettingsPanel" class="panel">
+  <div id='SettingsOverlay' class='overlay'></div>
+  <div id='SettingsPanel' class='panel'>
     <h2>${getLocaleString("SETTINGS")}</h2>
-    <button id="CloseSettings" class="closeButton" title="${getLocaleString("CLOSE")}">
+    <button id='CloseSettings' class='closeButton' title='${getLocaleString("CLOSE")}'>
       ${IconX}
     </button>
-    <button id="ResetSettings" class="simpleButton">
+    <button id='ResetSettings' class='simpleButton'>
       ${getLocaleString("BUTTON_RESET_SETTINGS")}
     </button>
     <!-- =========================================================================================== -->
-    <div class="ControlLabel locale">${getLocaleString("LANGUAGE")}:
-      <select id="locale">
+    <div class='ControlLabel locale'>${getLocaleString("LANGUAGE")}:
+      <select id='locale'>
         ${localeSelector.join("")}
       </select>
     </div>
     <!-- =========================================================================================== -->
-    <div id="ThemeSection">
-      <div class="ControlLabel ColorSchemeSelector">${getLocaleString("COLOR_SCHEME")}:
-        <button id="ColorScheme" class="simpleButton">
+    <div id='ThemeSection'>
+      <div class='ControlLabel ColorSchemeSelector'>${getLocaleString("COLOR_SCHEME")}:
+        <button id='ColorScheme' class='simpleButton'>
           ${IconSun}
           ${IconMoon}
         </button>
       </div>
       <!-- =========================================================================================== -->
-      <div class="ControlLabel ThemeSelector">${getLocaleString("THEME")}:
-        <span class="custom ThemeRadio 
-            ${useSettings().theme === "custom" ? "selected" : ""}"
-              title="custom">
+      <div class='ControlLabel ThemeSelector'>${getLocaleString("THEME")}:
+        <span class='custom ThemeRadio 
+            ${useSettings().theme === "custom" ? "selected" : ""}'
+              title='custom'>
         ${IconPalette}
         ${IconCheck}
       </span>
         ${themesSelector.join("")}
       </div>
       <!-- =========================================================================================== -->
-      <div id="Hue" class="ControlLabel CustomTheme ControlLabelItem 
-          ${useSettings().theme.startsWith("custom") ? "show" : ""}">
+      <div id='Hue' class='ControlLabel CustomTheme ControlLabelItem 
+          ${useSettings().theme.startsWith("custom") ? "show" : ""}'>
         ${getLocaleString("THEME_HUE")}:
-        <input id="CustomThemeHue" type="color" value="${useSettings().customTheme}"
-               class="colorpicker CustomTheme" />
+        <input id='CustomThemeHue' type='color' value='${useSettings().customTheme}'
+               class='colorpicker CustomTheme' />
       </div>
       <!-- =========================================================================================== -->
-      <div id="Shade" class="ControlLabel CustomTheme ControlLabelItem
-          ${useSettings().theme.startsWith("custom") ? "" : "show"}">
+      <div id='Shade' class='ControlLabel CustomTheme ControlLabelItem
+          ${useSettings().theme.startsWith("custom") ? "" : "show"}'>
       <span>
         ${getLocaleString("THEME_SHADE")}:
-        <output id="themeShadeVal" for="themeShade">${useSettings().themeShade}</output>
+        <output id='themeShadeVal' for='themeShade'>${useSettings().themeShade}</output>
       </span>
-        <input type="range"
-               value="${useSettings().themeShade}"
-               name="ThemeShade"
-               id="ThemeShade"
-               min="100"
-               max="900"
-               step="100"
-               oninput="themeShadeVal.value = this.value"
+        <input type='range'
+               value='${useSettings().themeShade}'
+               name='ThemeShade'
+               id='ThemeShade'
+               min='100'
+               max='900'
+               step='100'
+               oninput='themeShadeVal.value = this.value'
         />
       </div>
     </div>
     <!-- =========================================================================================== -->
-    <div class="ControlLabel loadMode">${getLocaleString("DEFAULT_LOAD_MODE")}:
-      <select id="loadMode">
-        <option value="wait" ${useSettings().loadMode === "wait" ? "selected" : ""}>
+    <div class='ControlLabel loadMode'>${getLocaleString("DEFAULT_LOAD_MODE")}:
+      <select id='loadMode'>
+        <option value='wait' ${useSettings().loadMode === "wait" ? "selected" : ""}>
           ${getLocaleString("LOAD_MODE_NORMAL")}
         </option>
-        <option value="always" ${useSettings().loadMode === "always" ? "selected" : ""}>
+        <option value='always' ${useSettings().loadMode === "always" ? "selected" : ""}>
           ${getLocaleString("LOAD_MODE_ALWAYS")}
         </option>
-        <option value="never" ${useSettings().loadMode === "never" ? "selected" : ""}>
+        <option value='never' ${useSettings().loadMode === "never" ? "selected" : ""}>
           ${getLocaleString("LOAD_MODE_NEVER")}
         </option>
       </select>
     </div>
     <!-- =========================================================================================== -->
-    <div class="ControlLabel PagesPerSecond">${getLocaleString("LOAD_SPEED")}:
-      <select id="PagesPerSecond">
-        <option value="3000" ${useSettings().throttlePageLoad === 3e3 ? "selected" : ""}>
+    <div class='ControlLabel PagesPerSecond'>${getLocaleString("LOAD_SPEED")}:
+      <select id='PagesPerSecond'>
+        <option value='3000' ${useSettings().throttlePageLoad === 3e3 ? "selected" : ""}>
             0.3(${getLocaleString("SLOWLY")})
         </option>
-        <option value="2000" ${useSettings().throttlePageLoad === 2e3 ? "selected" : ""}>
+        <option value='2000' ${useSettings().throttlePageLoad === 2e3 ? "selected" : ""}>
           0.5
         </option>
-        <option value="1000" ${useSettings().throttlePageLoad === 1e3 ? "selected" : ""}>
+        <option value='1000' ${useSettings().throttlePageLoad === 1e3 ? "selected" : ""}>
             01(${getLocaleString("NORMAL")})
         </option>
-        <option value="500" ${useSettings().throttlePageLoad === 500 ? "selected" : ""}>
+        <option value='500' ${useSettings().throttlePageLoad === 500 ? "selected" : ""}>
           02
         </option>
-        <option value="250" ${useSettings().throttlePageLoad === 250 ? "selected" : ""}>
+        <option value='250' ${useSettings().throttlePageLoad === 250 ? "selected" : ""}>
             04(${getLocaleString("FAST")})
         </option>
-        <option value="125" ${useSettings().throttlePageLoad === 125 ? "selected" : ""}>
+        <option value='125' ${useSettings().throttlePageLoad === 125 ? "selected" : ""}>
           08
         </option>
-        <option value="100" ${useSettings().throttlePageLoad === 100 ? "selected" : ""}>
+        <option value='100' ${useSettings().throttlePageLoad === 100 ? "selected" : ""}>
             10(${getLocaleString("EXTREME")})
         </option>
       </select>
     </div>
     <!-- =========================================================================================== -->
-    <div class="ControlLabel DefaultZoom">${getLocaleString("DEFAULT_ZOOM")}:
-      <select id="DefaultZoom">
-        <option value="50" ${useSettings().zoom === 50 ? "selected" : ""}>50%</option>
-        <option value="75" ${useSettings().zoom === 75 ? "selected" : ""}>75%</option>
-        <option value="100" ${useSettings().zoom === 100 ? "selected" : ""}>100%</option>
-        <option value="125" ${useSettings().zoom === 125 ? "selected" : ""}>125%</option>
-        <option value="150" ${useSettings().zoom === 150 ? "selected" : ""}>150%</option>
-        <option value="175" ${useSettings().zoom === 175 ? "selected" : ""}>175%</option>
-        <option value="200" ${useSettings().zoom === 200 ? "selected" : ""}>200%</option>
-        <option value="1000" ${useSettings().zoom === 1e3 ? "selected" : ""}>
+    <div class='ControlLabel DefaultZoomMode'>
+      ${getLocaleString("DEFAULT_ZOOM_MODE")}:
+      <select id='DefaultZoomMode'>
+        <option value='percent' ${useSettings().zoomMode === "percent" ? "selected" : ""}>
+          ${getLocaleString("PERCENT")}
+        </option>
+        <option value='width' ${useSettings().zoomMode === "width" ? "selected" : ""}>
           ${getLocaleString("FIT_WIDTH")}
         </option>
-        <option value="-1000" ${useSettings().zoom === -1e3 ? "selected" : ""}>
+        <option value='height' ${useSettings().zoomMode === "height" ? "selected" : ""}>
           ${getLocaleString("FIT_HEIGHT")}
         </option>
       </select>
     </div>
     <!-- =========================================================================================== -->
-    <div class="ControlLabel minZoom">
+    <div class='ControlLabel DefaultZoom ControlLabelItem
+        ${useSettings().zoomMode === "percent" ? "show" : ""}'>
+      <span>
+        ${getLocaleString("DEFAULT_ZOOM")}:
+        <output id='defaultZoomVal' for='DefaultZoom'>${useSettings().zoom}</output>%
+      </span>
+      <input type='range'
+             value='${useSettings().zoom}'
+             name='DefaultZoom'
+             id='DefaultZoom'
+             min='5'
+             max='200'
+             step='5'
+             oninput='defaultZoomVal.value = this.value'
+      />
+    </div>
+    <!-- =========================================================================================== -->
+    <div class='ControlLabel minZoom'>
     <span>
       ${getLocaleString("MINIMUM_ZOOM")}:
-      <output id="minZoomVal" for="minZoom">${useSettings().minZoom}</output>
+      <output id='minZoomVal' for='minZoom'>${useSettings().minZoom}</output>%
     </span>
-      <input type="range"
-             value="${useSettings().minZoom}"
-             name="minZoom"
-             id="minZoom"
-             min="30"
-             max="100"
-             step="10"
-             oninput="minZoomVal.value = this.value"
+      <input type='range'
+             value='${useSettings().minZoom}'
+             name='minZoom'
+             id='minZoom'
+             min='30'
+             max='100'
+             step='10'
+             oninput='minZoomVal.value = this.value'
       />
     </div>
     <!-- =========================================================================================== -->
-    <div class="ControlLabel zoomStep">
+    <div class='ControlLabel zoomStep'>
     <span>
       ${getLocaleString("ZOOM_STEP")}:
-      <output id="zoomStepVal" for="zoomStep">${useSettings().zoomStep}</output>
+      <output id='zoomStepVal' for='zoomStep'>${useSettings().zoomStep}</output>%
     </span>
-      <input type="range"
-             value="${useSettings().zoomStep}"
-             name="zoomStep"
-             id="zoomStep"
-             min="5"
-             max="50"
-             step="5"
-             oninput="zoomStepVal.value = this.value"
+      <input type='range'
+             value='${useSettings().zoomStep}'
+             name='zoomStep'
+             id='zoomStep'
+             min='5'
+             max='50'
+             step='5'
+             oninput='zoomStepVal.value = this.value'
       />
     </div>
     <!-- =========================================================================================== -->
-    <div class="ControlLabel viewMode">${getLocaleString("DEFAULT_VIEW_MODE")}:
-      <select id="viewMode">
-        <option value="Vertical" ${useSettings().viewMode === "Vertical" ? "selected" : ""}>
+    <div class='ControlLabel viewMode'>${getLocaleString("DEFAULT_VIEW_MODE")}:
+      <select id='viewMode'>
+        <option value='Vertical' ${useSettings().viewMode === "Vertical" ? "selected" : ""}>
           ${getLocaleString("VIEW_MODE_VERTICAL")}
         </option>
-        <option value="WebComic" ${useSettings().viewMode === "WebComic" ? "selected" : ""}>
+        <option value='WebComic' ${useSettings().viewMode === "WebComic" ? "selected" : ""}>
           ${getLocaleString("VIEW_MODE_WEBCOMIC")}
         </option>
-        <option value="FluidLTR" ${useSettings().viewMode === "FluidLTR" ? "selected" : ""}>
+        <option value='FluidLTR' ${useSettings().viewMode === "FluidLTR" ? "selected" : ""}>
           ${getLocaleString("VIEW_MODE_LEFT")}
         </option>
-        <option value="FluidRTL" ${useSettings().viewMode === "FluidRTL" ? "selected" : ""}>
+        <option value='FluidRTL' ${useSettings().viewMode === "FluidRTL" ? "selected" : ""}>
           ${getLocaleString("VIEW_MODE_RIGHT")}
         </option>
       </select>
     </div>
     <!-- =========================================================================================== -->
-    <div class="ControlLabel fitIfOversize">${getLocaleString("FIT_WIDTH_OVERSIZED")}:
-      <input type="checkbox" value="true" name="fitIfOversize" id="fitIfOversize" ${useSettings().fitWidthIfOversize ? "checked" : ""} />
+    <div class='ControlLabel fitIfOversize'>${getLocaleString("FIT_WIDTH_OVERSIZED")}:
+      <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${useSettings().fitWidthIfOversize ? "checked" : ""} />
     </div>
     <!-- =========================================================================================== -->
-    <div class="ControlLabel showThumbnails">${getLocaleString("SHOW_THUMBNAILS")}:
-      <input type="checkbox" value="true" name="showThumbnails" id="showThumbnails" ${useSettings().showThumbnails ? "checked" : ""} />
+    <div class='ControlLabel showThumbnails'>${getLocaleString("SHOW_THUMBNAILS")}:
+      <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${useSettings().showThumbnails ? "checked" : ""} />
     </div>
     <!-- =========================================================================================== -->
-    <div class="ControlLabel lazyLoadImages">${getLocaleString("LAZY_LOAD_IMAGES")}:
-      <input type="checkbox" value="true" name="lazyLoadImages" id="lazyLoadImages" ${useSettings().lazyLoadImages ? "checked" : ""} />
+    <div class='ControlLabel lazyLoadImages'>${getLocaleString("LAZY_LOAD_IMAGES_ENABLE")}:
+      <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${useSettings().lazyLoadImages ? "checked" : ""} />
     </div>
     <!-- =========================================================================================== -->
-    <div class="ControlLabel lazyStart">
+    <div class='ControlLabel lazyStart ControlLabelItem
+        ${useSettings().lazyLoadImages ? "show" : ""}'
+    '>
     <span>
       ${getLocaleString("LAZY_LOAD_IMAGES")}:
-      <output id="lazyStartVal" for="lazyStart">${useSettings().lazyStart}</output>
+      <output id='lazyStartVal' for='lazyStart'>${useSettings().lazyStart}</output>
     </span>
-      <input type="range" value="${useSettings().lazyStart}" name="lazyStart" id="lazyStart" min="5" max="100" step="5"
-             oninput="lazyStartVal.value = this.value" />
+    <input type='range' value='${useSettings().lazyStart}' name='lazyStart' id='lazyStart' min='5' max='100' step='5'
+           oninput='lazyStartVal.value = this.value' />
 
-    </div>
-    <!-- =========================================================================================== -->
-    <div class="ControlLabel downloadZip">${getLocaleString("DOWNLOAD_IMAGES")}:
-      <input type="checkbox" value="false" name="downloadZip" id="downloadZip" ${useSettings().downloadZip ? "checked" : ""} />
-    </div>
-    <!-- =========================================================================================== -->
-    <div class="ControlLabel hidePageControls">${getLocaleString("HIDE_CONTROLS")}:
-      <input type="checkbox" value="false" name="hidePageControls" id="hidePageControls" ${useSettings().hidePageControls ? "checked" : ""} />
-    </div>
-    <!-- =========================================================================================== -->
-    <div class="ControlLabel headerType">${getLocaleString("HEADER_TYPE")}:
-      <select id="headerType">
-        <option value="hover" ${useSettings().header === "hover" ? "selected" : ""}>
-          ${getLocaleString("HEADER_HOVER")}
-        </option>
-        <option value="scroll" ${useSettings().header === "scroll" ? "selected" : ""}>
-          ${getLocaleString("HEADER_SCROLL")}
-        </option>
-        <option value="click" ${useSettings().header === "click" ? "selected" : ""}>
-          ${getLocaleString("HEADER_CLICK")}
-        </option>
-        <option value="fixed" ${useSettings().header === "fixed" ? "selected" : ""}>
-          ${getLocaleString("HEADER_FIXED")}
-        </option>
-      </select>
-    </div>
+  </div>
+  <!-- =========================================================================================== -->
+  <div class='ControlLabel downloadZip'>${getLocaleString("DOWNLOAD_IMAGES")}:
+    <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${useSettings().downloadZip ? "checked" : ""} />
+  </div>
+  <!-- =========================================================================================== -->
+  <div class='ControlLabel hidePageControls'>${getLocaleString("HIDE_CONTROLS")}:
+    <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${useSettings().hidePageControls ? "checked" : ""} />
+  </div>
+  <!-- =========================================================================================== -->
+  <div class='ControlLabel headerType'>${getLocaleString("HEADER_TYPE")}:
+    <select id='headerType'>
+      <option value='hover' ${useSettings().header === "hover" ? "selected" : ""}>
+        ${getLocaleString("HEADER_HOVER")}
+      </option>
+      <option value='scroll' ${useSettings().header === "scroll" ? "selected" : ""}>
+        ${getLocaleString("HEADER_SCROLL")}
+      </option>
+      <option value='click' ${useSettings().header === "click" ? "selected" : ""}>
+        ${getLocaleString("HEADER_CLICK")}
+      </option>
+      <option value='fixed' ${useSettings().header === "fixed" ? "selected" : ""}>
+        ${getLocaleString("HEADER_FIXED")}
+      </option>
+    </select>
+  </div>
   </div>
 `;
 
@@ -5048,21 +5220,22 @@ ${wrapStyle(
     observerEvent();
   }
 
-  function applyZoom(pages = ".PageContent img", zoom = useSettings().zoom) {
+  function applyZoom(zoom = useSettings().zoomMode, pages = ".PageContent img") {
     const pg = [...document.querySelectorAll(pages)];
     pg.forEach((img) => {
       img.removeAttribute("width");
       img.removeAttribute("height");
       img.removeAttribute("style");
-      img.classList.remove("FreeWidth");
-      if (zoom === 1e3) {
+      if (zoom === "width") {
         img.style.width = `${window.innerWidth}px`;
-      } else if (zoom === -1e3) {
+      } else if (zoom === "height") {
         const nav = document.querySelector("#Navigation")?.classList.contains("disabled");
         const chap = document.querySelector("#Chapter")?.classList.contains("WebComic");
         const nextHeight = window.innerHeight + (nav ? 0 : -30) + (chap ? 0 : -35);
         img.style.height = `${nextHeight}px`;
         img.style.minWidth = "unset";
+      } else if (zoom === "percent") {
+        img.style.width = `${img.naturalWidth * (useSettings().zoom / 100)}px`;
       } else {
         img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
       }
@@ -5120,7 +5293,7 @@ ${wrapStyle(
       const thumb = document.getElementById(thumbId);
       if (thumb)
         thumb.setAttribute("src", image.img.getAttribute("src"));
-      applyZoom(`#${image.img.id}`);
+      applyZoom(useSettings().zoomMode, `#${image.img.id}`);
       updateProgress();
     });
   }
@@ -5327,6 +5500,12 @@ ${wrapStyle(
     document.querySelector("#downloadZip")?.addEventListener("change", changeAutoDownload);
     function checkLazyLoad(event) {
       updateSettings({ lazyLoadImages: event.currentTarget.checked });
+      const start = document.querySelector(".lazyStart");
+      if (useSettings().lazyLoadImages) {
+        start?.classList.add("show");
+      } else {
+        start?.classList.remove("show");
+      }
       if (event.currentTarget.checked) {
         Swal.fire({
           title: getLocaleString("WARNING"),
@@ -5405,7 +5584,7 @@ ${wrapStyle(
       return elem.addEventListener("click", (event) => {
         const img = event.currentTarget.parentElement?.parentElement?.querySelector(".PageImg");
         const ratio = img.width / img.naturalWidth * (100 + useSettings().zoomStep);
-        applyZoom(`#${img.getAttribute("id")}`, ratio);
+        applyZoom(ratio, `#${img.getAttribute("id")}`);
       });
     }
     document.querySelectorAll(".ZoomIn")?.forEach(buttonZoomIn);
@@ -5413,7 +5592,7 @@ ${wrapStyle(
       return elem.addEventListener("click", (event) => {
         const img = event.currentTarget.parentElement?.parentElement?.querySelector(".PageImg");
         const ratio = img.width / img.naturalWidth * (100 - useSettings().zoomStep);
-        applyZoom(`#${img.getAttribute("id")}`, ratio);
+        applyZoom(ratio, `#${img.getAttribute("id")}`);
       });
     }
     document.querySelectorAll(".ZoomOut")?.forEach(buttonZoomOut);
@@ -5427,7 +5606,7 @@ ${wrapStyle(
       return elem.addEventListener("click", (event) => {
         const page = event.currentTarget.parentElement?.parentElement;
         const img = page?.querySelector(".PageImg");
-        applyZoom(`#${img.getAttribute("id")}`, 1e3);
+        applyZoom("width", `#${img.getAttribute("id")}`);
         page?.classList.toggle("DoublePage");
       });
     }
@@ -5435,7 +5614,7 @@ ${wrapStyle(
     function buttonZoomHeight(elem) {
       elem.addEventListener("click", (event) => {
         const img = event.currentTarget.parentElement?.parentElement?.querySelector(".PageImg");
-        applyZoom(`#${img.getAttribute("id")}`, -1e3);
+        applyZoom("height", `#${img.getAttribute("id")}`);
       });
     }
     document.querySelectorAll(".ZoomHeight")?.forEach(buttonZoomHeight);
@@ -5508,27 +5687,25 @@ ${wrapStyle(
     document.querySelector("#verticalMode")?.addEventListener("click", updateViewMode("Vertical"));
   }
 
-  function updateZoomPercent(percent = useSettings().zoom) {
-    const target = document.querySelector("#ZoomPercent");
-    if (target) {
-      target.textContent = percent.toString();
-    }
-  }
   function changeGlobalZoom(value) {
-    return () => {
-      useSettings().zoom = value;
-      updateZoomPercent();
-      applyZoom();
-    };
+    return () => applyZoom(value);
   }
   function changeZoomByStep(sign = 1) {
-    return () => {
-      useSettings().zoom = useSettings().zoom + useSettings().zoomStep * sign;
-      updateZoomPercent();
-      applyZoom();
-    };
+    return () => applyZoom(useSettings().zoom + useSettings().zoomStep * sign);
   }
   function zoom() {
+    function changeDefaultZoomMode(event) {
+      const target = event.currentTarget.value;
+      updateSettings({ zoomMode: target });
+      changeGlobalZoom(target)();
+      const percent = document.querySelector(".DefaultZoom");
+      if (useSettings().zoomMode === "percent") {
+        percent?.classList.add("show");
+      } else {
+        percent?.classList.remove("show");
+      }
+    }
+    document.querySelector("#DefaultZoomMode")?.addEventListener("change", changeDefaultZoomMode);
     function changeDefaultZoom(event) {
       const target = parseInt(event.currentTarget.value, 10);
       updateSettings({ zoom: target });
@@ -5538,8 +5715,8 @@ ${wrapStyle(
     document.querySelector("#enlarge")?.addEventListener("click", changeZoomByStep());
     document.querySelector("#reduce")?.addEventListener("click", changeZoomByStep(-1));
     document.querySelector("#restore")?.addEventListener("click", changeGlobalZoom(100));
-    document.querySelector("#fitWidth")?.addEventListener("click", changeGlobalZoom(1e3));
-    document.querySelector("#fitHeight")?.addEventListener("click", changeGlobalZoom(-1e3));
+    document.querySelector("#fitWidth")?.addEventListener("click", changeGlobalZoom("width"));
+    document.querySelector("#fitHeight")?.addEventListener("click", changeGlobalZoom("height"));
   }
 
   function events() {
