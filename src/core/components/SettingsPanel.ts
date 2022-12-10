@@ -57,7 +57,9 @@ const SettingsPanel = `
           ${useSettings().theme.startsWith('custom') ? '' : 'show'}'>
       <span>
         ${getLocaleString('THEME_SHADE')}:
-        <output id='themeShadeVal' for='themeShade'>${useSettings().themeShade}</output>
+        <output id='themeShadeVal' class='RangeValue' for='themeShade'>${
+          useSettings().themeShade
+        }</output>
       </span>
         <input type='range'
                value='${useSettings().themeShade}'
@@ -130,7 +132,11 @@ const SettingsPanel = `
         ${useSettings().zoomMode === 'percent' ? 'show' : ''}'>
       <span>
         ${getLocaleString('DEFAULT_ZOOM')}:
-        <output id='defaultZoomVal' for='DefaultZoom'>${useSettings().zoom}</output>%
+        <output id='defaultZoomVal'
+                class='RangeValue'
+                for='DefaultZoom'>
+          ${useSettings().zoom}%
+        </output>
       </span>
       <input type='range'
              value='${useSettings().zoom}'
@@ -139,14 +145,26 @@ const SettingsPanel = `
              min='5'
              max='200'
              step='5'
-             oninput='defaultZoomVal.value = this.value'
+             list='tickmarks'
+             oninput='defaultZoomVal.value = this.value + "%"'
       />
+      <datalist id='tickmarks'>
+        <option value='5'>5</option>
+        <option value='25'>25</option>
+        <option value='50'>50</option>
+        <option value='75'>75</option>
+        <option value='100'>100</option>
+        <option value='125'>125</option>
+        <option value='150'>150</option>
+        <option value='175'>175</option>
+        <option value='200'>200</option>
+      </datalist>
     </div>
     <!-- =========================================================================================== -->
     <div class='ControlLabel minZoom'>
     <span>
       ${getLocaleString('MINIMUM_ZOOM')}:
-      <output id='minZoomVal' for='minZoom'>${useSettings().minZoom}</output>%
+      <output id='minZoomVal' class='RangeValue' for='minZoom'>${useSettings().minZoom}%</output>
     </span>
       <input type='range'
              value='${useSettings().minZoom}'
@@ -155,14 +173,14 @@ const SettingsPanel = `
              min='30'
              max='100'
              step='10'
-             oninput='minZoomVal.value = this.value'
+             oninput='minZoomVal.value = this.value + "%"'
       />
     </div>
     <!-- =========================================================================================== -->
     <div class='ControlLabel zoomStep'>
     <span>
       ${getLocaleString('ZOOM_STEP')}:
-      <output id='zoomStepVal' for='zoomStep'>${useSettings().zoomStep}</output>%
+      <output id='zoomStepVal' class='RangeValue' for='zoomStep'>${useSettings().zoomStep}%</output>
     </span>
       <input type='range'
              value='${useSettings().zoomStep}'
@@ -171,7 +189,7 @@ const SettingsPanel = `
              min='5'
              max='50'
              step='5'
-             oninput='zoomStepVal.value = this.value'
+             oninput='zoomStepVal.value = this.value + "%"'
       />
     </div>
     <!-- =========================================================================================== -->

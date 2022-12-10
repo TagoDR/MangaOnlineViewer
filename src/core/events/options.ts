@@ -123,7 +123,7 @@ function options() {
     updateSettings({ minZoom: parseInt(min, 10) });
   }
 
-  document.querySelector('#minZoom')?.addEventListener('change', changeMinZoom);
+  document.querySelector('#minZoom')?.addEventListener('input', changeMinZoom);
 
   // Show/hide Image Controls Toggle
   function checkHideImageControls(event: Event) {

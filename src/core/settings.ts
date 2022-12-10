@@ -24,7 +24,7 @@ export const defaultSettings: ISettings = {
   zoomMode: 'percent',
   zoom: 100,
   zoomStep: 25,
-  minZoom: 50,
+  minZoom: 30,
   loadMode: 'wait',
   viewMode: 'WebComic',
   bookmarks: [],

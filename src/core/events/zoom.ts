@@ -15,7 +15,7 @@ function zoom() {
   function changeDefaultZoomMode(event: Event) {
     const target = (event.currentTarget as HTMLInputElement).value as ZoomMode;
     updateSettings({ zoomMode: target });
-    changeGlobalZoom(target)();
+    applyZoom(target);
     const percent = document.querySelector<HTMLDivElement>('.DefaultZoom');
     if (useSettings().zoomMode === 'percent') {
       percent?.classList.add('show');
@@ -30,23 +30,19 @@ function zoom() {
   function changeDefaultZoom(event: Event) {
     const target = parseInt((event.currentTarget as HTMLInputElement).value, 10);
     updateSettings({ zoom: target });
-    changeGlobalZoom(target)();
+    applyZoom(target);
   }
 
-  document.querySelector('#DefaultZoom')?.addEventListener('change', changeDefaultZoom);
+  document.querySelector('#DefaultZoom')?.addEventListener('input', changeDefaultZoom);
 
   // Global Zoom In Button
   document.querySelector('#enlarge')?.addEventListener('click', changeZoomByStep());
-
   // Global Zoom Out Button
   document.querySelector('#reduce')?.addEventListener('click', changeZoomByStep(-1));
-
   // Global Zoom Restore Button
   document.querySelector('#restore')?.addEventListener('click', changeGlobalZoom(100));
-
   // Global Fit Width Button
   document.querySelector('#fitWidth')?.addEventListener('click', changeGlobalZoom('width'));
-
   // Global Fit height Button
   document.querySelector('#fitHeight')?.addEventListener('click', changeGlobalZoom('height'));
 }

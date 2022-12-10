@@ -61,6 +61,34 @@ export default `
     border: 0 none;
   }
 
+  input[type="range"] {
+    width: 100%;
+  }
+
+  .RangeValue {
+    display: inline-block;
+    color: var(--theme-primary-text-color);
+    line-height: 20px;
+    text-align: center;
+    border-radius: 3px;
+    background: var(--theme-primary-color);
+    padding: 2px 5px;
+    margin-left: 8px;
+  }
+
+  datalist {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    writing-mode: vertical-lr;
+    width: 100%;
+  }
+
+  option {
+    padding: 0;
+  }
+
   .icon-tabler {
     height: 1rem;
     width: 1rem;
