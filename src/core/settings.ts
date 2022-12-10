@@ -22,7 +22,7 @@ export const defaultSettings: ISettings = {
   downloadZip: false,
   throttlePageLoad: 1000,
   zoomMode: 'percent',
-  zoom: 100,
+  defaultZoom: 100,
   zoomStep: 25,
   minZoom: 30,
   loadMode: 'wait',

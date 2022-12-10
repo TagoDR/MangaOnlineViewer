@@ -20,7 +20,7 @@ function headroom(showEnd = 0) {
     const { scrollY } = window;
     if (
       showEnd &&
-      useSettings().zoom !== -1000 &&
+      useSettings().zoomMode !== 'height' &&
       scrollY + window.innerHeight + showEnd > document.body.offsetHeight
     ) {
       setScrollDirection('end');

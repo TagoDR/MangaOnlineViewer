@@ -61,34 +61,6 @@ export default `
     border: 0 none;
   }
 
-  input[type="range"] {
-    width: 100%;
-  }
-
-  .RangeValue {
-    display: inline-block;
-    color: var(--theme-primary-text-color);
-    line-height: 20px;
-    text-align: center;
-    border-radius: 3px;
-    background: var(--theme-primary-color);
-    padding: 2px 5px;
-    margin-left: 8px;
-  }
-
-  datalist {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    writing-mode: vertical-lr;
-    width: 100%;
-  }
-
-  option {
-    padding: 0;
-  }
-
   .icon-tabler {
     height: 1rem;
     width: 1rem;
@@ -208,6 +180,34 @@ export default `
 
   #MangaOnlineViewer #SettingsPanel .ControlLabelItem:not(.show) {
     display: none;
+  }
+
+  #MangaOnlineViewer #SettingsPanel input[type="range"] {
+    width: 100%;
+  }
+
+  #MangaOnlineViewer #SettingsPanel .RangeValue {
+    display: inline-block;
+    color: var(--theme-primary-text-color);
+    line-height: 20px;
+    text-align: center;
+    border-radius: 3px;
+    background: var(--theme-primary-color);
+    padding: 2px 5px;
+    margin-left: 8px;
+  }
+
+  #MangaOnlineViewer #SettingsPanel datalist {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    writing-mode: vertical-lr;
+    width: 100%;
+  }
+
+  #MangaOnlineViewer #SettingsPanel datalist option {
+    padding: 0;
   }
 
   #MangaOnlineViewer #ThemeSection {
@@ -530,6 +530,26 @@ export default `
     height: 25px;
   }
 
+  #MangaOnlineViewer #GlobalFunctions #ZoomSlider {
+    display: flex;
+    align-items: center;
+  }
+
+  #MangaOnlineViewer #GlobalFunctions #Zoom {
+    margin-left: 5px;
+  }
+
+  #MangaOnlineViewer #GlobalFunctions #ZoomVal {
+    width: 40px;
+    display: inline-block;
+    color: var(--theme-primary-text-color);
+    line-height: 20px;
+    text-align: center;
+    border-radius: 3px;
+    background: var(--theme-primary-color);
+    padding: 2px 5px;
+  }
+
   #MangaOnlineViewer #ChapterNavigation {
     display: flex;
     flex-flow: column nowrap;
@@ -733,6 +753,7 @@ export default `
     width: 32px;
   }
 
+  /* Medium devices (landscape phones, tablets) */
   @media (max-width: 992px) {
     #MangaOnlineViewer #Header {
       flex-direction: column;
@@ -761,12 +782,13 @@ export default `
       order: 2;
     }
 
-    #MangaOnlineViewer #GlobalFunctions #keybindings {
+    #MangaOnlineViewer #GlobalFunctions #ZoomSlider,
+    #MangaOnlineViewer #GlobalFunctions .ControlButton:not(.tablets, .phones) {
       display: none;
     }
   }
 
-  /* Small devices (landscape phones) */
+  /* Small devices (portrait phones) */
   @media (max-width: 600px) {
     #MangaOnlineViewer #Header {
       flex-direction: row;
@@ -816,7 +838,8 @@ export default `
       max-width: 100%;
     }
 
-    #MangaOnlineViewer #GlobalFunctions .ControlButton:not(#settings) {
+    #MangaOnlineViewer #GlobalFunctions #ZoomSlider,
+    #MangaOnlineViewer #GlobalFunctions .ControlButton:not(.phones) {
       display: none;
     }
 

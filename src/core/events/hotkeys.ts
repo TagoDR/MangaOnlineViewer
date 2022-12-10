@@ -6,7 +6,7 @@ const doClick = (selector: string) =>
   document.querySelector(selector)?.dispatchEvent(new Event('click'));
 
 function doScrolling(sign: 1 | -1) {
-  if (useSettings().zoom === -1000) {
+  if (useSettings().zoomMode === 'height') {
     // Fit height
     const pages = [...document.querySelectorAll<HTMLElement>('.MangaPage')];
     const distance = pages.map((element) => Math.abs(element.offsetTop - window.scrollY));

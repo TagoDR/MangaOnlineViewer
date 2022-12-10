@@ -36,7 +36,7 @@ function applyZoom(
       img.style.height = `${nextHeight}px`;
       img.style.minWidth = 'unset';
     } else if (zoom === 'percent') {
-      img.style.width = `${img.naturalWidth * (useSettings().zoom / 100)}px`;
+      img.style.width = `${img.naturalWidth * (useSettings().defaultZoom / 100)}px`;
     } else {
       img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
     }

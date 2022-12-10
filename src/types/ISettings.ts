@@ -29,7 +29,7 @@ export interface ISettings {
   showThumbnails?: boolean;
   downloadZip?: boolean;
   throttlePageLoad: number;
-  zoom: number;
+  defaultZoom: number;
   zoomMode: ZoomMode;
   zoomStep: number;
   minZoom: number;

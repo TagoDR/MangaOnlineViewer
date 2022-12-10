@@ -135,11 +135,11 @@ const SettingsPanel = `
         <output id='defaultZoomVal'
                 class='RangeValue'
                 for='DefaultZoom'>
-          ${useSettings().zoom}%
+          ${useSettings().defaultZoom}%
         </output>
       </span>
       <input type='range'
-             value='${useSettings().zoom}'
+             value='${useSettings().defaultZoom}'
              name='DefaultZoom'
              id='DefaultZoom'
              min='5'
