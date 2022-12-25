@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MReader, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua
-// @version 2022.12.10
+// @version 2022.12.25
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -383,14 +383,14 @@
     homepage: "https://mangadex.org/",
     language: ["English"],
     category: "manga",
-    waitEle: "a[href^='/chapter/']",
+    waitEle: ".md--reader-menu a[href^='/chapter/']",
     async run() {
       const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
       const chapterId = W.location.pathname.match(/\/chapter\/([^/]+)(\/\d+)?/)[1];
       const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
       const server = await fetch(home).then((res) => res.json());
       const images = server.chapter.data;
-      const chapters = [...document.querySelectorAll("a[href^='/chapter/']")].map(
+      const chapters = [...document.querySelectorAll(".md--reader-menu a[href^='/chapter/']")].map(
         (a) => a.getAttribute("href")
       );
       return {
