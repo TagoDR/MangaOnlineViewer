@@ -1,7 +1,7 @@
 // == FlameScans ===================================================================================
 export default {
   name: ['Asura Scans', 'Flame Scans', 'Realm Scans', 'Voids-Scans', 'Luminous Scans'],
-  url: /https?:\/\/(www.)?(asura|flamescans|realmscans|void-scans|luminousscans).(com|org|gg)\/.+/,
+  url: /https?:\/\/(www.)?(asurascans|flamescans|realmscans|void-scans|luminousscans).(com|org|gg)\/.+/,
   homepage: [
     'https://www.asura.gg/',
     'https://flamescans.org/',
