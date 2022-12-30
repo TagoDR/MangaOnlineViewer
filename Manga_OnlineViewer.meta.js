@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MReader, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua
-// @version 2022.12.25
+// @version 2022.12.30
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -14,18 +14,18 @@
 // @grant GM_xmlhttpRequest
 // @noframes on
 // @connect *
-// @require https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/tinycolor.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.5.1/tinycolor.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.15/sweetalert2.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.16/sweetalert2.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
 // @include /https?:\/\/beta.asurascans.com\/read\/.+\/.+/
 // @include /https?:\/\/(www.)?bato.to\/chapter.*/
 // @include /https?:\/\/(www.)?comicastle.org\/read\/.+\/[0-9]+.*/
 // @include /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/
-// @include /https?:\/\/(www.)?(asura|flamescans|realmscans|void-scans|luminousscans).(com|org|gg)\/.+/
+// @include /https?:\/\/(www.)?(asurascans|flamescans|realmscans|void-scans|luminousscans).(com|org|gg)\/.+/
 // @include /https?:\/\/(www.)?inmanga.com\/ver\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?klmanga.com\/.+chapter.+/
 // @include /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
