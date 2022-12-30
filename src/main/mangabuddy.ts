@@ -8,8 +8,8 @@ export default {
   waitVar: 'final_images',
   run() {
     const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-    const img = [...document.querySelectorAll('.chapter-image.load-first img')].map((img) =>
-      img.getAttribute('data-src') || img.getAttribute('src'),
+    const img = [...document.querySelectorAll('.chapter-image.load-first img')].map(
+      (img) => img.getAttribute('data-src') || img.getAttribute('src'),
     );
     const images = [...img, ...W.final_images];
     return {

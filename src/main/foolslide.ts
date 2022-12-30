@@ -35,8 +35,8 @@ export default {
         images.length > 1
           ? null
           : Array(num)
-              .fill(0)
-              .map((_, i) => `${window.location.href.replace(/\/\d+$/, '')}/${i + 1}`),
+            .fill(0)
+            .map((_, i) => `${window.location.href.replace(/\/\d+$/, '')}/${i + 1}`),
       listImages: images.length > 1 ? images.map((img) => img.getAttribute('src')) : null,
       img: 'img.open',
     };

@@ -28,13 +28,13 @@ Bookmarklet seems to work only in Chrome, open the chapter then use the searchba
 ##### Main Reader:
 
 ```JS
-javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/tinycolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.15/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/Manga_OnlineViewer.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
+javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.5.1/tinycolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.16/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/Manga_OnlineViewer.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
 ```
 
 ##### Adult Reader:
 
 ```JS
-javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/tinycolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.15/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/Manga_OnlineViewer_Adult.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
+javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.5.1/tinycolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.16/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/Manga_OnlineViewer_Adult.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
 ```
 
 ## Supported Manga Sites
@@ -136,29 +136,29 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/
 
 ## Features
 
--   View Modes:
-    -   Vertical/WebComic [Default]
-    -   Fluid Left to Right
-    -   Fluid Right to Left
--   Bookmark Pages (To resume reading)
--   Full Themes and Customizable
--   Global and Individual images zoom
-    -   In(Global one may stretch images beyond window width)
-    -   Out
-    -   Restore original(Toggle fit width if oversize)
-    -   Fit width
-    -   Fit width if oversize[Default on]
-    -   Fit Height (with scroll pages)
-    -   Hide
--   Auto reload Images
-    -   Counter for loaded Images
-    -   Individual image reload, just in case
--   HotKeys
--   Goto Page
--   Image Loading Timer[Default 1s](Some sites require longer timers. eg.:ExHentai,e-hentai)
--   Thumbnails Navigation[Default on]
--   Download all images as ZIP File[Automatic Default off]
--   Lazy Load Images[Default off]
+- View Modes:
+  - Vertical/WebComic [Default]
+  - Fluid Left to Right
+  - Fluid Right to Left
+- Bookmark Pages (To resume reading)
+- Full Themes and Customizable
+- Global and Individual images zoom
+  - In(Global one may stretch images beyond window width)
+  - Out
+  - Restore original(Toggle fit width if oversize)
+  - Fit width
+  - Fit width if oversize[Default on]
+  - Fit Height (with scroll pages)
+  - Hide
+- Auto reload Images
+  - Counter for loaded Images
+  - Individual image reload, just in case
+- HotKeys
+- Goto Page
+- Image Loading Timer[Default 1s](Some sites require longer timers. eg.:ExHentai,e-hentai)
+- Thumbnails Navigation[Default on]
+- Download all images as ZIP File[Automatic Default off]
+- Lazy Load Images[Default off]
 
 ## Rules For adding new Manga Sites
 

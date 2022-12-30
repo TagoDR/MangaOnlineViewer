@@ -69,29 +69,29 @@ javascript:(function(){["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/
 
 ## Features
 
--   View Modes:
-    -   Vertical/WebComic [Default]
-    -   Fluid Left to Right
-    -   Fluid Right to Left
--   Bookmark Pages (To resume reading)
--   Full Themes and Customizable
--   Global and Individual images zoom
-    -   In(Global one may stretch images beyond window width)
-    -   Out
-    -   Restore original(Toggle fit width if oversize)
-    -   Fit width
-    -   Fit width if oversize[Default on]
-    -   Fit Height (with scroll pages)
-    -   Hide
--   Auto reload Images
-    -   Counter for loaded Images
-    -   Individual image reload, just in case
--   HotKeys
--   Goto Page
--   Image Loading Timer[Default 1s](Some sites require longer timers. eg.:ExHentai,e-hentai)
--   Thumbnails Navigation[Default on]
--   Download all images as ZIP File[Automatic Default off]
--   Lazy Load Images[Default off]
+- View Modes:
+    - Vertical/WebComic [Default]
+    - Fluid Left to Right
+    - Fluid Right to Left
+- Bookmark Pages (To resume reading)
+- Full Themes and Customizable
+- Global and Individual images zoom
+    - In(Global one may stretch images beyond window width)
+    - Out
+    - Restore original(Toggle fit width if oversize)
+    - Fit width
+    - Fit width if oversize[Default on]
+    - Fit Height (with scroll pages)
+    - Hide
+- Auto reload Images
+    - Counter for loaded Images
+    - Individual image reload, just in case
+- HotKeys
+- Goto Page
+- Image Loading Timer[Default 1s](Some sites require longer timers. eg.:ExHentai,e-hentai)
+- Thumbnails Navigation[Default on]
+- Download all images as ZIP File[Automatic Default off]
+- Lazy Load Images[Default off]
 
 ## Rules For adding new Manga Sites
 

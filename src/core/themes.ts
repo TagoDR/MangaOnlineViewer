@@ -6,12 +6,12 @@ import { IconCheck } from './components/icons';
 function generateThemeCSS(name: string, primary: string, text: string) {
   // language=CSS
   return `
-.${name},
-[data-theme='${name}'] {
-  --theme-primary-color: ${primary};
-  --theme-primary-text-color: ${text};
-}
-`;
+    .${name},
+    [data-theme='${name}'] {
+      --theme-primary-color: ${primary};
+      --theme-primary-text-color: ${text};
+    }
+  `;
 }
 
 function getNormalThemeCSS(theme: IColor) {

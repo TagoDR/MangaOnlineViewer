@@ -77,7 +77,7 @@ export default defineConfig(({ mode }) => {
           banner: metadata,
           format: 'iife',
           entryFileNames: scripts[target].name,
-          sourcemap: false, // target === 'dev' ? 'inline' : false,
+          sourcemap: false,
         },
       },
     },

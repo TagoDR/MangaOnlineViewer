@@ -13,9 +13,9 @@ ${wrapStyle('externals', externalCSS)}
 ${wrapStyle('reader', cssStyles)}
 ${themesCSS}
 ${wrapStyle(
-  'MinZoom',
-  `#MangaOnlineViewer .PageContent .PageImg {min-width: ${useSettings().minZoom}vw;}`,
-)}
+    'MinZoom',
+    `#MangaOnlineViewer .PageContent .PageImg {min-width: ${useSettings().minZoom}vw;}`,
+  )}
 `;
 }
 

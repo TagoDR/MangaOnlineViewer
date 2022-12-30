@@ -29,7 +29,7 @@ import BookmarksPanel from './BookmarksPanel';
 import sequence from '../../utils/sequence';
 
 const listOptions = (times: number, begin: number) =>
-  sequence(times, begin).map((index) => `<option value="${index}">${index}</option>`);
+  sequence(times, begin).map((index) => `<option value='${index}'>${index}</option>`);
 
 const app = (manga: IManga, begin = 1) => `
 <div id='MangaOnlineViewer'
@@ -81,10 +81,14 @@ const app = (manga: IManga, begin = 1) => `
           title='${getLocaleString('TOGGLE_CONTROLS')}' class='ControlButton tablets'>
           ${IconListNumbers}
         </button>
-        <button id='bookmarks' title='${getLocaleString('BOOKMARKS')}' class='ControlButton tablets'>
+        <button id='bookmarks' title='${getLocaleString(
+  'BOOKMARKS',
+)}' class='ControlButton tablets'>
           ${IconBookmarks}
         </button>
-        <button id='settings' title='${getLocaleString('SETTINGS')}' class='ControlButton tablets phones'>
+        <button id='settings' title='${getLocaleString(
+  'SETTINGS',
+)}' class='ControlButton tablets phones'>
           ${IconSettings}
         </button>
       </span>

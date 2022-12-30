@@ -5,7 +5,7 @@ import locales from '../../locales';
 
 const localeSelector = locales.map(
   (locale) =>
-    `<option value="${locale.ID}" ${useSettings().locale === locale.ID ? 'selected' : ''}>${
+    `<option value='${locale.ID}' ${useSettings().locale === locale.ID ? 'selected' : ''}>${
       locale.NAME
     }</option>`,
 );

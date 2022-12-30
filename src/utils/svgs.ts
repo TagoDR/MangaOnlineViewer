@@ -3,8 +3,8 @@ import colors from './colors';
 function svgToUrl(str: string) {
   const cleaned = str
     .replace(/[\t\n\r]/gim, '') // Strip newlines and tabs
-    .replace(/\s\s+/g, ' ') // Condense multiple spaces
-    .replace(/'/gim, '\\i'); // Normalize quotes
+    .replace(/\s\s+/g, ' '); // Condense multiple spaces
+  // .replace(/'/gim, '\\i'); // Normalize quotes
 
   const encoded = encodeURIComponent(cleaned)
     .replace(/\(/g, '%28') // Encode brackets
@@ -15,9 +15,9 @@ function svgToUrl(str: string) {
 
 function placeholder(width: number, height: number, bgColor = '#0F1C3F', textColor = '#ECEAD9') {
   const str = `
-<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
-  <rect fill="${bgColor}" width="${width}" height="${height}"/>
-  <text fill="${textColor}" font-family="sans-serif" font-size="30" dy="10.5" font-weight="bold" x="50%" y="50%" text-anchor="middle">${width}x${height}</text>
+<svg xmlns='http://www.w3.org/2000/svg' width='${width}' height='${height}' viewBox='0 0 ${width} ${height}'>
+  <rect fill='${bgColor}' width='${width}' height='${height}'/>
+  <text fill='${textColor}' font-family='sans-serif' font-size='30' dy='10.5' font-weight='bold' x='50%' y='50%' text-anchor='middle'>${width}x${height}</text>
 </svg>`;
   return svgToUrl(str);
 }

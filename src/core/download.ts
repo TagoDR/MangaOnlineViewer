@@ -90,7 +90,7 @@ async function generateZip() {
     .then((content) => {
       logScript('Download Ready');
       const zipName = `${document.querySelector('#MangaTitle')?.textContent?.trim()}.zip`;
-      saveAs(content, zipName,true);
+      saveAs(content, zipName, true);
       document.getElementById('download')?.classList.remove('loading');
     })
     .catch(logScript);
