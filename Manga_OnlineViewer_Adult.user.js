@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, xyzcomics
-// @version 2022.12.30
+// @version 2023.01.09
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -14,7 +14,7 @@
 // @grant GM_xmlhttpRequest
 // @noframes on
 // @connect *
-// @require https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.5.1/tinycolor.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.5.2/tinycolor.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js
@@ -435,6 +435,7 @@
     homepage: "https://multporn.net/",
     language: ["English"],
     category: "hentai",
+    // waitEle: '.jb-idx-thumb:last .jb-thm-thumb-image',
     async run() {
       const url = document.head.textContent?.match(/"configUrl":"(.+?)",/)?.at(1)?.replaceAll("\\", "") || "";
       const api = await fetch(url).then((res) => res.text()).then((html) => new DOMParser().parseFromString(html, "text/xml"));
@@ -509,7 +510,8 @@
       }
       const num = parseInt(document.querySelector(".num-pages")?.textContent || "", 10);
       const src = document.querySelector("#image-container img")?.getAttribute("src")?.replace(/\d+.\w\w\w$/, "");
-      const ext = W.images_ext?.map(getExt) || W._gallery?.images?.pages?.map((i) => getExt(i.t)) || Array(num).fill("jpg");
+      const ext = W.images_ext?.map(getExt) || // eslint-disable-next-line no-underscore-dangle
+      W._gallery?.images?.pages?.map((i) => getExt(i.t)) || Array(num).fill("jpg");
       return {
         title: document.querySelector("title")?.textContent?.split("- Page")[0].trim(),
         series: document.querySelector(".go-back")?.getAttribute("href"),
@@ -870,7 +872,8 @@
   const isMobile = window.matchMedia("screen and (max-width: 768px)").matches;
 
   function isEmpty(value) {
-    return value === null || typeof value === "undefined" || value === void 0 || typeof value === "string" && value === "" || Array.isArray(value) && value.length === 0 || typeof value === "object" && Object.keys(value).length === 0;
+    return value === null || // check for null
+    typeof value === "undefined" || value === void 0 || typeof value === "string" && value === "" || Array.isArray(value) && value.length === 0 || typeof value === "object" && Object.keys(value).length === 0;
   }
   function isNothing(value) {
     const isEmptyObject = (a) => {
@@ -880,9 +883,13 @@
       }
       return !a.some(
         (element) => !isNothing(element)
+        //
       );
     };
-    return value == false || value === 0 || isEmpty(value) || typeof value === "object" && isEmptyObject(value);
+    return (
+      // eslint-disable-next-line eqeqeq
+      value == false || value === 0 || isEmpty(value) || typeof value === "object" && isEmptyObject(value)
+    );
   }
 
   const colors = {
@@ -2334,6 +2341,7 @@
           }
         }
       }
+      /* omit accumulator */
     );
     return changes(changed, original);
   };
@@ -4814,7 +4822,13 @@ ${wrapStyle(
     e.stopPropagation();
     e.stopImmediatePropagation();
     const keyBindings = keybinds.find((kb) => kb.keys.some((key) => key === e.code));
-    logScript("Keyboard:", e.code, "Entry", keyBindings);
+    logScript(
+      "Keyboard:",
+      e.code,
+      /* ' Event:', e, */
+      "Entry",
+      keyBindings
+    );
     keyBindings?.action();
     return false;
   }
@@ -5170,6 +5184,7 @@ ${wrapStyle(
       {
         type: "blob"
       }
+      // logScript, progress
     ).then((content) => {
       logScript("Download Ready");
       const zipName = `${document.querySelector("#MangaTitle")?.textContent?.trim()}.zip`;
@@ -5242,7 +5257,8 @@ ${wrapStyle(
     return new Promise((resolve) => {
       logScript("Fetching page: ", url);
       fetch(url).then(
-        (response) => response.text()
+        (response) => // When the page is loaded convert it to text
+        response.text()
       ).then((html) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, format);

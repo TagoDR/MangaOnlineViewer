@@ -4,8 +4,8 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, InManga, KLManga, Leitor, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MReader, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua
-// @version 2022.12.30
+// @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, InManga, KLManga, Leitor, LeviatanScans, LHTranslation, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, MReader, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua
+// @version 2023.01.09
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -14,7 +14,7 @@
 // @grant GM_xmlhttpRequest
 // @noframes on
 // @connect *
-// @require https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.5.1/tinycolor.min.js
+// @require https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.5.2/tinycolor.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js
@@ -29,6 +29,7 @@
 // @include /https?:\/\/(www.)?inmanga.com\/ver\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?klmanga.com\/.+chapter.+/
 // @include /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
+// @include /https?:\/\/(www|en)?.?leviatanscans.com\/(home\/)?manga\/.+\/chapter.+/
 // @include /https?:\/\/(www.)?lhtranslation.net\/read.+/
 // @include /https?:\/\/(www.)?mangabuddy.com\/.+\/chapter.+/
 // @include /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/
@@ -277,6 +278,50 @@
         listImages: api.images.map(
           (img) => img.avif || img.legacy
         )
+      };
+    }
+  };
+
+  const leviatanscans = {
+    name: "LeviatanScans",
+    url: /https?:\/\/(www|en)?.?leviatanscans.com\/(home\/)?manga\/.+\/chapter.+/,
+    homepage: "https://leviatanscans.com/",
+    language: ["English"],
+    category: "manga",
+    waitVar: "chapter_data",
+    run() {
+      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
+      const images = Array.isArray(W.chapter_data) ? JSON.parse(W.chapter_data) : JSON.parse(
+        JSON.parse(
+          CryptoJS.AES.decrypt(W.chapter_data, W.wpmangaprotectornonce, {
+            format: {
+              stringify(data) {
+                const cypher = {
+                  ct: data.ciphertext.toString(CryptoJS.enc.Base64),
+                  iv: data.iv?.toString(),
+                  s: data.salt?.toString()
+                };
+                return JSON.stringify(cypher);
+              },
+              parse(text) {
+                const result = JSON.parse(text);
+                return CryptoJS.lib.CipherParams.create({
+                  ciphertext: CryptoJS.enc.Base64.parse(result.ct),
+                  iv: CryptoJS.enc.Hex.parse(result.iv),
+                  salt: CryptoJS.enc.Hex.parse(result.s)
+                });
+              }
+            }
+          }).toString(CryptoJS.enc.Utf8)
+        )
+      );
+      return {
+        title: document.querySelector("#chapter-heading")?.textContent?.trim(),
+        series: document.querySelector(".back")?.getAttribute("href"),
+        pages: images.length,
+        prev: document.querySelector(".prev_page")?.getAttribute("href"),
+        next: document.querySelector(".next_page")?.getAttribute("href"),
+        listImages: images
       };
     }
   };
@@ -1102,6 +1147,7 @@
     inmanga,
     klmanga,
     leitor,
+    leviatanscans,
     lhtranslation,
     mangabuddy,
     mangadex,
@@ -1134,7 +1180,9 @@
     wpmanga,
     zeroscans,
     foolslide,
+    // Must be at the end because is a generic check
     madarawp
+    // Must be at the end because is a generic check
   ];
 
   function logScript(...text) {
@@ -1212,7 +1260,8 @@
   const isMobile = window.matchMedia("screen and (max-width: 768px)").matches;
 
   function isEmpty(value) {
-    return value === null || typeof value === "undefined" || value === void 0 || typeof value === "string" && value === "" || Array.isArray(value) && value.length === 0 || typeof value === "object" && Object.keys(value).length === 0;
+    return value === null || // check for null
+    typeof value === "undefined" || value === void 0 || typeof value === "string" && value === "" || Array.isArray(value) && value.length === 0 || typeof value === "object" && Object.keys(value).length === 0;
   }
   function isNothing(value) {
     const isEmptyObject = (a) => {
@@ -1222,9 +1271,13 @@
       }
       return !a.some(
         (element) => !isNothing(element)
+        //
       );
     };
-    return value == false || value === 0 || isEmpty(value) || typeof value === "object" && isEmptyObject(value);
+    return (
+      // eslint-disable-next-line eqeqeq
+      value == false || value === 0 || isEmpty(value) || typeof value === "object" && isEmptyObject(value)
+    );
   }
 
   const colors = {
@@ -2676,6 +2729,7 @@
           }
         }
       }
+      /* omit accumulator */
     );
     return changes(changed, original);
   };
@@ -5156,7 +5210,13 @@ ${wrapStyle(
     e.stopPropagation();
     e.stopImmediatePropagation();
     const keyBindings = keybinds.find((kb) => kb.keys.some((key) => key === e.code));
-    logScript("Keyboard:", e.code, "Entry", keyBindings);
+    logScript(
+      "Keyboard:",
+      e.code,
+      /* ' Event:', e, */
+      "Entry",
+      keyBindings
+    );
     keyBindings?.action();
     return false;
   }
@@ -5512,6 +5572,7 @@ ${wrapStyle(
       {
         type: "blob"
       }
+      // logScript, progress
     ).then((content) => {
       logScript("Download Ready");
       const zipName = `${document.querySelector("#MangaTitle")?.textContent?.trim()}.zip`;
@@ -5584,7 +5645,8 @@ ${wrapStyle(
     return new Promise((resolve) => {
       logScript("Fetching page: ", url);
       fetch(url).then(
-        (response) => response.text()
+        (response) => // When the page is loaded convert it to text
+        response.text()
       ).then((html) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, format);
