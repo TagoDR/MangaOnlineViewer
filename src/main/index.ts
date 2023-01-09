@@ -8,6 +8,7 @@ import foolslide from './foolslide';
 import inmanga from './inmanga';
 import klmanga from './klmanga';
 import leitor from './leitor';
+import leviatanscans from './leviatanscans';
 import lhtranslation from './lhtranslation';
 import madarawp from './madarawp';
 import mangabuddy from './mangabuddy';
@@ -51,6 +52,7 @@ const sites = [
   inmanga,
   klmanga,
   leitor,
+  leviatanscans,
   lhtranslation,
   mangabuddy,
   mangadex,
