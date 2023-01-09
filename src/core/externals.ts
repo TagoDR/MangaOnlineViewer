@@ -1,5 +1,5 @@
 const externalScripts: string[] = [
-  '<script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.5.1/tinycolor.min.js" integrity="sha512-oTLMifH7EzjBH1ltWEFxxdYkPNp8/yqNpUr0bt8G2QmEKDDzFdPklOK9Nx4qcXuGTS+vqsBiulCHF5qTNbFEew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>',
+  '<script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.5.2/tinycolor.min.js" integrity="sha512-gV2/CUt/1tn0eFseTyMjNqZU3kvhXacxA5eFoTwTd9c4b/Ems0BF00LOG/KcWnGZRdo62tqYNS8IiKtU4PGVoA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.js" integrity="sha512-B+gr+zLWg81qxVwvtYwKrmjvQtZKD/GGFF7jD80OfzbqFw+NsbS5faEqpCO7Q7oRw1bYi0+WLJf54j8Vm7NADw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js" integrity="sha512-kfs3Dt9u9YcOiIt4rNcPUzdyNNO9sVGQPiZsub7ywg6lRW5KuK1m145ImrFHe3LMWXHndoKo2YRXWy8rnOcSKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js" integrity="sha512-amNoSoOK3jIKx6qlDrv36P4M/h7vc6CHwiBU3XG9/1LW0ZSNe8E3iZL1tPG/VnfCrVrZc2Zv47FIJ7fyDX4DMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>',
