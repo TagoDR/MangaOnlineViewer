@@ -1,4 +1,6 @@
 import Swal, { SweetAlertOptions } from 'sweetalert2';
+// @ts-ignore
+import RangeInputSlider from 'range-input-slider';
 import { getBrowser, getEngine, getInfoGM, logScript } from '../utils/tampermonkey';
 import { IManga, ISite } from '../types';
 import { isNothing } from '../utils/checks';
@@ -10,25 +12,53 @@ import { startButton } from './components/styles';
 async function lateStart(site: ISite, begin = 1) {
   const manga = await site.run();
   logScript('LateStart');
+  let beginPage = begin || 1;
+  let endPage = manga.pages;
   const options: SweetAlertOptions = {
     title: getLocaleString('STARTING'),
-    input: 'range',
-    inputAttributes: {
-      min: '1',
-      max: manga.pages.toString(),
-      step: '1',
-    },
-    inputValue: begin || 1,
-    text: getLocaleString('CHOOSE_BEGINNING'),
+    html: `
+    ${getLocaleString('CHOOSE_BEGINNING')}
+    <span id='pagesValues'></span>
+    <div id='pagesSlider' style='display: flex; justify-content: center;align-content: center;'></div>
+    `,
     showCancelButton: true,
     cancelButtonColor: '#d33',
     reverseButtons: true,
     icon: 'question',
+    didOpen() {
+      const Slider = new RangeInputSlider(document.getElementById('pagesSlider'), {
+        minPoint: 1,
+        maxPoint: manga.pages,
+        min: beginPage,
+        max: endPage,
+        onValueChangeStop(newValues: any) {
+          const el = document.getElementById('pagesValues');
+          beginPage = newValues.min;
+          endPage = newValues.max;
+          if (el) {
+            el.innerText = `${newValues.min} - ${newValues.max}`;
+          }
+        },
+        onValueChange(newValues: any) {
+          const el = document.getElementById('pagesValues');
+          beginPage = newValues.min;
+          endPage = newValues.max;
+          if (el) {
+            el.innerText = `${newValues.min} - ${newValues.max}`;
+          }
+        },
+        serifs: [
+          { position: 0, html: '1' },
+          { position: 100, html: `${manga.pages}` },
+        ],
+      });
+      Slider.init();
+    },
   };
   Swal.fire(options).then((result) => {
     if (result.value) {
-      logScript(`Choice: ${result.value}`);
-      formatPage(manga, result.value);
+      logScript(`Choice: ${beginPage} - ${endPage}`);
+      formatPage(manga, beginPage, endPage);
     } else {
       logScript(result.dismiss);
     }
