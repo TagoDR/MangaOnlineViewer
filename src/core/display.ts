@@ -7,11 +7,16 @@ import { loadManga } from './page';
 import { isNothing } from '../utils/checks';
 import { useSettings } from './settings';
 
-export default function display(manga: IManga, begin: number = 0) {
+export default function display(
+  manga: IManga,
+  begin: number = 0,
+  end: number | undefined = undefined,
+) {
   window.stop();
   if (manga.before !== undefined) {
     manga.before();
   }
+  if (end !== undefined) manga.pages = end;
   [document.documentElement, document.head, document.body].forEach((element: HTMLElement) => {
     element.getAttributeNames().forEach((attr) => element.removeAttribute(attr));
   });

@@ -81,6 +81,8 @@ function preparePage(site: ISite, manga: IManga, begin = 0) {
   const style = document.createElement('style');
   style.appendChild(document.createTextNode(sweetalertStyle));
   document.body.appendChild(style);
+  const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+  W.MOV = (startPage: number, endPage: number) => formatPage(manga, startPage, endPage);
   switch (site.start ?? useSettings()?.loadMode) {
     case 'never':
       createLateStartButton(site, beginning);
