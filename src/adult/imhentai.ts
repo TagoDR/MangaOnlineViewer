@@ -23,8 +23,10 @@ export default {
       randomServer = 'm4.imhentai.xxx';
     } else if (cId > 632481 && cId <= 816010) {
       randomServer = 'm5.imhentai.xxx';
-    } else if (cId > 816010) {
+    } else if (cId > 816010 && cId <= 970098) {
       randomServer = 'm6.imhentai.xxx';
+    } else if (cId > 970098) {
+      randomServer = 'm7.imhentai.xxx';
     }
 
     function findExt(i: number) {
