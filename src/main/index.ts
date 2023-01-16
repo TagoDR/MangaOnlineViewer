@@ -8,18 +8,18 @@ import foolslide from './foolslide';
 import inmanga from './inmanga';
 import klmanga from './klmanga';
 import leitor from './leitor';
-import leviatanscans from './leviatanscans';
+// import leviatanscans from './leviatanscans';
 import lhtranslation from './lhtranslation';
 import madarawp from './madarawp';
 import mangabuddy from './mangabuddy';
 import mangadex from './mangadex';
 import mangafox from './mangafox';
 import mangafreak from './mangafreak';
-import mangago from './mangago';
+// import mangago from './mangago';
 import mangahosted from './mangahosted';
 import mangahub from './mangahub';
 import mangakakalot from './mangakakalot';
-import mangapark from './mangapark';
+// import mangapark from './mangapark';
 import mangareader from './mangareader';
 import mangasee from './mangasee';
 import mangatigre from './mangatigre';
@@ -52,17 +52,17 @@ const sites = [
   inmanga,
   klmanga,
   leitor,
-  leviatanscans,
+  // leviatanscans, depricated
   lhtranslation,
   mangabuddy,
   mangadex,
   mangafox,
   mangafreak,
-  mangago,
+  // mangago, fixme
   mangahosted,
   mangahub,
   mangakakalot,
-  mangapark,
+  // mangapark, fixme
   mreader,
   mangareader,
   mangasee,

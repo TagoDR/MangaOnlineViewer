@@ -14,6 +14,7 @@ export default {
     'DisasterScans',
     'ManhuaPlus',
     'TopManhua',
+    'LeviatanScans',
   ],
   url: /https?:\/\/.+\/(manga|series|manhua)\/.+\/.+/,
   homepage: [
@@ -29,6 +30,7 @@ export default {
     'https://disasterscans.com/',
     'https://manhuaplus.com/',
     'https://www.topmanhua.com/',
+    'https://en.leviatanscans.com/home/',
   ],
   language: ['English'],
   obs: 'Any Site that uses Madara Wordpress Plugin',

@@ -25,6 +25,7 @@
     "bugs": "https://github.com/TagoDR/MangaOnlineViewer/issues",
     "homepage": "https://github.com/TagoDR/MangaOnlineViewer#readme",
     "devDependencies": {
+        "@types/crypto-js": "^4.1.1",
         "@types/file-saver": "^2.0.5",
         "@types/imagesloaded": "^4.1.2",
         "@types/lodash": "^4.14.191",

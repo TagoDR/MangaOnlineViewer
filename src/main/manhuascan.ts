@@ -1,5 +1,4 @@
 // == ManhuaScan ===================================================================================
-declare let CryptoJS: any;
 export default {
   name: 'ManhuaScan',
   url: /https?:\/\/(www.)?manhuascan.io\/.+chapter.+/,
