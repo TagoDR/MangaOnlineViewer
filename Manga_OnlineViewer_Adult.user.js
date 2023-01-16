@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, xyzcomics
-// @version 2023.01.14
+// @version 2023.01.16
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -347,8 +347,10 @@
         randomServer = "m4.imhentai.xxx";
       } else if (cId > 632481 && cId <= 816010) {
         randomServer = "m5.imhentai.xxx";
-      } else if (cId > 816010) {
+      } else if (cId > 816010 && cId <= 970098) {
         randomServer = "m6.imhentai.xxx";
+      } else if (cId > 970098) {
+        randomServer = "m7.imhentai.xxx";
       }
       function findExt(i) {
         const c = W.g_th[i][0];
