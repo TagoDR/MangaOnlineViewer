@@ -27,6 +27,7 @@ import mangatigre from './mangatigre';
 import mangatown from './mangatown';
 import manhuascan from './manhuascan';
 import mreader from './mreader';
+import naniscans from './naniscans';
 import ninemanga from './ninemanga';
 import pandamanga from './pandamanga';
 import rawdevart from './rawdevart';
@@ -71,6 +72,7 @@ const sites = [
   mangatigre,
   mangatown,
   manhuascan,
+  naniscans,
   ninemanga,
   pandamanga,
   rawdevart,
