@@ -27,6 +27,7 @@ import threehentai from './3hentai';
 import tsumino from './tsumino';
 import vercomicsporno from './vercomicsporno';
 import wnacg from './wnacg';
+import xlecxone from './xlecxone.js';
 import xyzcomics from './xyzcomics';
 import { ISite } from '../types/ISite';
 
@@ -59,6 +60,7 @@ const sites = [
   tsumino,
   vercomicsporno,
   wnacg,
+  xlecxone,
   xyzcomics,
 ] as ISite[];
 export default sites;
