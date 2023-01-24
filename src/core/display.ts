@@ -7,28 +7,23 @@ import { loadManga } from './page';
 import { isNothing } from '../utils/checks';
 import { useSettings } from './settings';
 
-export default function display(
-  manga: IManga,
-  begin: number = 0,
-  end: number | undefined = undefined,
-) {
+export default function display(manga: IManga) {
   window.stop();
   if (manga.before !== undefined) {
     manga.before();
   }
-  if (end !== undefined) manga.pages = end;
   [document.documentElement, document.head, document.body].forEach((element: HTMLElement) => {
     element.getAttributeNames().forEach((attr) => element.removeAttribute(attr));
   });
   document.head.innerHTML = head(manga);
-  document.body.innerHTML = body(manga, begin);
+  document.body.innerHTML = body(manga, manga.begin);
   logScript('Rebuilding Site');
   setTimeout(() => {
     try {
       events();
       setTimeout(() => {
         window.scrollTo(0, 0);
-        loadManga(manga, begin);
+        loadManga(manga, manga.begin);
       }, 50);
       // Clear used Bookmarks
       if (!isNothing(useSettings().bookmarks.filter((el) => el.url === window.location.href))) {
