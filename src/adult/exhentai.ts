@@ -2,7 +2,7 @@
 export default {
   name: ['ExHentai', 'e-Hentai'],
   url: /https?:\/\/(g.)?(exhentai|e-hentai).org\/s\/.+\/.+/,
-  homepage: ['https://exhentai.org/', 'https://e-hentai.org/'],
+  homepage: ['https://exhentai.org/', ''],
   language: ['English'],
   obs: 'May get your IP Banned, use with moderation',
   category: 'hentai',
@@ -36,6 +36,7 @@ export default {
       title: document.querySelector('#i1 h1')?.textContent?.trim(),
       series: gallery,
       pages: num,
+      begin: parseInt(document.querySelector('div#i2 span')?.textContent ?? '1', 10),
       prev: '#',
       next: '#',
       listPages: pages,
