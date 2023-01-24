@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MReader, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NaniScans, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, LeviatanScans
-// @version 2023.01.21
+// @version 2023.01.24
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -1232,30 +1232,6 @@
     return getInfoGM.scriptHandler || "Greasemonkey";
   }
   const isMobile = window.matchMedia("screen and (max-width: 768px)").matches;
-
-  function isEmpty(value) {
-    return value === null || // check for null
-    typeof value === "undefined" || value === void 0 || // check for undefined
-    typeof value === "string" && value === "" || // check for empty string
-    Array.isArray(value) && value.length === 0 || // check for empty array
-    typeof value === "object" && Object.keys(value).length === 0;
-  }
-  function isNothing(value) {
-    const isEmptyObject = (a) => {
-      if (!Array.isArray(a)) {
-        const hasNonempty = Object.keys(a).some((element) => !isNothing(a[element]));
-        return hasNonempty ? false : isEmptyObject(Object.keys(a));
-      }
-      return !a.some(
-        (element) => !isNothing(element)
-        //
-      );
-    };
-    return (
-      // eslint-disable-next-line eqeqeq
-      value == false || value === 0 || isEmpty(value) || typeof value === "object" && isEmptyObject(value)
-    );
-  }
 
   const colors = {
     dark: {
@@ -5540,6 +5516,30 @@ ${wrapStyle(
 </div>`
   );
 
+  function isEmpty(value) {
+    return value === null || // check for null
+    typeof value === "undefined" || value === void 0 || // check for undefined
+    typeof value === "string" && value === "" || // check for empty string
+    Array.isArray(value) && value.length === 0 || // check for empty array
+    typeof value === "object" && Object.keys(value).length === 0;
+  }
+  function isNothing(value) {
+    const isEmptyObject = (a) => {
+      if (!Array.isArray(a)) {
+        const hasNonempty = Object.keys(a).some((element) => !isNothing(a[element]));
+        return hasNonempty ? false : isEmptyObject(Object.keys(a));
+      }
+      return !a.some(
+        (element) => !isNothing(element)
+        //
+      );
+    };
+    return (
+      // eslint-disable-next-line eqeqeq
+      value == false || value === 0 || isEmpty(value) || typeof value === "object" && isEmptyObject(value)
+    );
+  }
+
   const listBookmarks = () => {
     if (isEmpty(useSettings().bookmarks))
       return [getLocaleString("LIST_EMPTY")];
@@ -6512,25 +6512,23 @@ ${wrapStyle(
     zoom();
   }
 
-  function display(manga, begin = 0, end = void 0) {
+  function display(manga) {
     window.stop();
     if (manga.before !== void 0) {
       manga.before();
     }
-    if (end !== void 0)
-      manga.pages = end;
     [document.documentElement, document.head, document.body].forEach((element) => {
       element.getAttributeNames().forEach((attr) => element.removeAttribute(attr));
     });
     document.head.innerHTML = head(manga);
-    document.body.innerHTML = app(manga, begin);
+    document.body.innerHTML = app(manga, manga.begin);
     logScript("Rebuilding Site");
     setTimeout(() => {
       try {
         events();
         setTimeout(() => {
           window.scrollTo(0, 0);
-          loadManga(manga, begin);
+          loadManga(manga, manga.begin);
         }, 50);
         if (!isNothing(useSettings().bookmarks.filter((el) => el.url === window.location.href))) {
           logScript(`Bookmark Removed ${window.location.href}`);
@@ -6548,117 +6546,6 @@ ${wrapStyle(
     }
   }
 
-  async function lateStart(site, begin = 1) {
-    const manga = await site.run();
-    logScript("LateStart");
-    let beginPage = begin || 1;
-    let endPage = manga.pages;
-    const options = {
-      title: getLocaleString("STARTING"),
-      html: `
-    ${getLocaleString("CHOOSE_BEGINNING")}
-    <span id='pagesValues'></span>
-    <div id='pagesSlider' style='display: flex; justify-content: center;align-content: center;'></div>
-    `,
-      showCancelButton: true,
-      cancelButtonColor: "#d33",
-      reverseButtons: true,
-      icon: "question",
-      didOpen() {
-        const Slider = new RangeInputSlider(document.getElementById("pagesSlider"), {
-          minPoint: 1,
-          maxPoint: manga.pages,
-          min: beginPage,
-          max: endPage,
-          onValueChangeStop(newValues) {
-            const el = document.getElementById("pagesValues");
-            beginPage = newValues.min;
-            endPage = newValues.max;
-            if (el) {
-              el.innerText = `${newValues.min} - ${newValues.max}`;
-            }
-          },
-          onValueChange(newValues) {
-            const el = document.getElementById("pagesValues");
-            beginPage = newValues.min;
-            endPage = newValues.max;
-            if (el) {
-              el.innerText = `${newValues.min} - ${newValues.max}`;
-            }
-          },
-          serifs: [
-            { position: 0, html: "1" },
-            { position: 100, html: `${manga.pages}` }
-          ]
-        });
-        Slider.init();
-      }
-    };
-    Swal.fire(options).then((result) => {
-      if (result.value) {
-        logScript(`Choice: ${beginPage} - ${endPage}`);
-        display(manga, beginPage, endPage);
-      } else {
-        logScript(result.dismiss);
-      }
-    });
-  }
-  function createLateStartButton(site, beginning) {
-    const button = document.createElement("button");
-    button.innerText = getLocaleString("BUTTON_START");
-    button.id = "StartMOV";
-    button.onclick = () => {
-      lateStart(site, beginning);
-    };
-    document.body.appendChild(button);
-    const style = document.createElement("style");
-    style.appendChild(document.createTextNode(startButton));
-    document.head.appendChild(style);
-    logScript("Start Button added to page", button);
-  }
-  function showWaitPopup(beginning, manga, site) {
-    Swal.fire({
-      title: getLocaleString("STARTING"),
-      html: `${beginning > 1 ? `${getLocaleString("RESUME")}${beginning}.<br/>` : ""}${getLocaleString("WAITING")}`,
-      showCancelButton: true,
-      cancelButtonColor: "#d33",
-      reverseButtons: true,
-      timer: 3e3
-    }).then((result) => {
-      if (result.value || result.dismiss === Swal.DismissReason.timer) {
-        display(manga, beginning);
-      } else {
-        createLateStartButton(site, beginning);
-        logScript(result.dismiss);
-      }
-    });
-  }
-  function preparePage(site, manga, begin = 0) {
-    logScript(`Found Pages: ${manga.pages}`);
-    if (manga.pages <= 0)
-      return;
-    let beginning = begin;
-    if (beginning <= 1) {
-      beginning = useSettings()?.bookmarks?.find((b) => b.url === window.location.href)?.page || 1;
-    }
-    const style = document.createElement("style");
-    style.appendChild(document.createTextNode(sweetalertStyle));
-    document.body.appendChild(style);
-    const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-    W.MOV = (startPage, endPage) => display(manga, startPage, endPage);
-    switch (site.start ?? useSettings()?.loadMode) {
-      case "never":
-        createLateStartButton(site, beginning);
-        break;
-      case "always":
-        display(manga, 0);
-        break;
-      case "wait":
-      default:
-        showWaitPopup(beginning, manga, site);
-        break;
-    }
-  }
   function testAttribute(site) {
     if (site.waitAttr !== void 0) {
       const wait = document.querySelector(site.waitAttr[0])?.getAttribute(site.waitAttr[1]);
@@ -6693,14 +6580,132 @@ ${wrapStyle(
     }
     return false;
   }
-  async function waitExec(site, waitElapsed = 0) {
+
+  async function lateStart(site, begin = 1) {
+    const manga = await site.run();
+    logScript("LateStart");
+    let beginPage = begin || 1;
+    let endPage = manga.pages;
+    const options = {
+      title: getLocaleString("STARTING"),
+      html: `
+    ${getLocaleString("CHOOSE_BEGINNING")}
+    <span id='pagesValues'>${begin} - ${endPage}</span>
+    <div id='pagesSlider' style='display: flex; justify-content: center;align-content: center;'></div>
+    `,
+      showCancelButton: true,
+      cancelButtonColor: "#d33",
+      reverseButtons: true,
+      icon: "question",
+      didOpen() {
+        const Slider = new RangeInputSlider(document.getElementById("pagesSlider"), {
+          minPoint: beginPage,
+          maxPoint: endPage,
+          min: 1,
+          max: manga.pages,
+          onValueChangeStop(newValues) {
+            const el = document.getElementById("pagesValues");
+            beginPage = newValues.min;
+            endPage = newValues.max;
+            if (el) {
+              el.innerText = `${beginPage} - ${endPage}`;
+            }
+          },
+          onValueChange(newValues) {
+            const el = document.getElementById("pagesValues");
+            beginPage = newValues.min;
+            endPage = newValues.max;
+            if (el) {
+              el.innerText = `${newValues.min} - ${newValues.max}`;
+            }
+          },
+          serifs: [
+            { position: 0, html: "1" },
+            { position: 100, html: `${manga.pages}` }
+          ]
+        });
+        Slider.init();
+      }
+    };
+    Swal.fire(options).then((result) => {
+      if (result.value) {
+        logScript(`Choice: ${beginPage} - ${endPage}`);
+        manga.begin = beginPage;
+        manga.pages = endPage;
+        display(manga);
+      } else {
+        logScript(result.dismiss);
+      }
+    });
+  }
+  function createLateStartButton(site, beginning) {
+    const button = document.createElement("button");
+    button.innerText = getLocaleString("BUTTON_START");
+    button.id = "StartMOV";
+    button.onclick = () => {
+      lateStart(site, beginning);
+    };
+    document.body.appendChild(button);
+    const style = document.createElement("style");
+    style.appendChild(document.createTextNode(startButton));
+    document.head.appendChild(style);
+    logScript("Start Button added to page", button);
+  }
+  function showWaitPopup(site, manga) {
+    Swal.fire({
+      title: getLocaleString("STARTING"),
+      html: `${manga.begin > 1 ? `${getLocaleString("RESUME")}${manga.begin}.<br/>` : ""}${getLocaleString("WAITING")}`,
+      showCancelButton: true,
+      cancelButtonColor: "#d33",
+      reverseButtons: true,
+      timer: 3e3
+    }).then((result) => {
+      if (result.value || result.dismiss === Swal.DismissReason.timer) {
+        display(manga);
+      } else {
+        createLateStartButton(site, manga.begin);
+        logScript(result.dismiss);
+      }
+    });
+  }
+  async function preparePage(site) {
+    const manga = await site.run();
+    logScript(`Found Pages: ${manga.pages}`);
+    if (manga.pages <= 0)
+      return;
+    manga.begin = useSettings()?.bookmarks?.find((b) => b.url === window.location.href)?.page || manga.begin || 1;
+    const style = document.createElement("style");
+    style.appendChild(document.createTextNode(sweetalertStyle));
+    document.body.appendChild(style);
+    const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
+    W.MOV = (startPage, endPage) => {
+      if (startPage !== void 0)
+        manga.begin = startPage;
+      if (endPage !== void 0)
+        manga.pages = endPage;
+      display(manga);
+    };
+    switch (site.start ?? useSettings()?.loadMode) {
+      case "never":
+        createLateStartButton(site, manga.begin);
+        break;
+      case "always":
+        display(manga);
+        break;
+      case "wait":
+      default:
+        showWaitPopup(site, manga);
+        break;
+    }
+  }
+  function waitExec(site, waitElapsed = 0) {
     if (waitElapsed < (site.waitMax || 5e3) && (testAttribute(site) || testElement(site) || testVariable(site))) {
       setTimeout(() => {
         waitExec(site, waitElapsed + (site.waitStep || 1e3));
       }, site.waitStep || 1e3);
       return;
     }
-    preparePage(site, await site.run());
+    preparePage(site);
   }
   function start(sites) {
     logScript(
