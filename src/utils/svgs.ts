@@ -23,12 +23,14 @@ function placeholder(width: number, height: number, bgColor = '#0F1C3F', textCol
 }
 
 const backgrounds = Object.values(colors).map((i) => i['900']);
-const widths = [985, 985, 985, 985, 1970];
+const widths = [400, 600, 900, 1200, 1400, 1600, 1970];
+const heights = [600, 800, 1000, 1200, 1400, 2000, 2600];
 
 function randomPlaceholder() {
-  const randomSize = Math.floor(Math.random() * widths.length);
+  const randomWidth = Math.floor(Math.random() * widths.length);
+  const randomHeight = Math.floor(Math.random() * heights.length);
   const randomColor = Math.floor(Math.random() * backgrounds.length);
-  return placeholder(widths[randomSize], 1400, backgrounds[randomColor]);
+  return placeholder(widths[randomWidth], heights[randomHeight], backgrounds[randomColor]);
 }
 
 export { randomPlaceholder, placeholder, svgToUrl };
