@@ -1,6 +1,10 @@
 name: Build and commit
 
-on: [ push ]
+on:
+    pull_request:
+    push:
+         branches:
+             - main
 
 jobs:
     release:

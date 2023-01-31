@@ -1,7 +1,7 @@
 {
     "name": "mangaonlineviewer",
     "description": "Userscript that helps to read Manga faster by loading all the pages at once",
-    "version": "31.1.0",
+    "version": "35.0.0",
     "scripts": {
         "start": "vite",
         "build": "vite build --mode dev",
@@ -31,12 +31,12 @@
         "@types/lodash": "^4.14.191",
         "@types/node": "^18.11.18",
         "@types/nprogress": "^0.2.0",
-        "@types/tampermonkey": "^4.0.9",
+        "@types/tampermonkey": "^4.0.10",
         "@types/tinycolor2": "^1.4.3",
-        "@typescript-eslint/eslint-plugin": "^5.48.2",
-        "@typescript-eslint/parser": "^5.48.2",
+        "@typescript-eslint/eslint-plugin": "^5.50.0",
+        "@typescript-eslint/parser": "^5.50.0",
         "del": "^7.0.0",
-        "eslint": "^8.32.0",
+        "eslint": "^8.33.0",
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-config-airbnb-typescript": "^17.0.0",
         "eslint-config-prettier": "^8.6.0",
@@ -45,7 +45,7 @@
         "eslint-plugin-prettier": "^4.2.1",
         "prettier": "^2.8.3",
         "rollup-plugin-external-globals": "^0.7.1",
-        "typescript": "^4.9.4",
+        "typescript": "^4.9.5",
         "userscript-meta": "^1.0.1",
         "vite": "^4.0.4"
     },
@@ -56,7 +56,7 @@
         "lodash": "^4.17.21",
         "nprogress": "^0.2.0",
         "range-input-slider": "^2.0.0",
-        "sweetalert2": "^11.4.8",
+        "sweetalert2": "=11.4.8",
         "tinycolor2": "^1.5.2"
     },
     "browserslist": {
