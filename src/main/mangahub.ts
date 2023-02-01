@@ -28,14 +28,16 @@ export default {
     const api = await fetch('https://api.mghubcdn.com/graphql', options as any).then((res) =>
       res.json(),
     );
-    const images = Object.values(JSON.parse(api?.data.chapter.pages.toString()));
+    const images = JSON.parse(api?.data.chapter.pages.toString());
     return {
       title: document.querySelector('#mangareader h3')?.textContent?.trim(),
       series: document.querySelector('#mangareader a')?.getAttribute('href'),
-      pages: images.length,
+      pages: images.i.length,
       prev: document.querySelector('.previous a')?.getAttribute('href'),
       next: document.querySelector('.next a')?.getAttribute('href'),
-      listImages: images.map((i) => `https://img.mghubcdn.com/file/imghub/${i}`),
+      listImages: images.i.map(
+        (i: string) => `https://img.mghubcdn.com/file/imghub/${images.p + i}`,
+      ),
     };
   },
 };
