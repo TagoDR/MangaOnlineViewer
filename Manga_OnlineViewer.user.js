@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MReader, MangaGeko, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NaniScans, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, LeviatanScans
-// @version 2023.01.31
+// @version 2023.02.01
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -530,14 +530,16 @@
       const api = await fetch("https://api.mghubcdn.com/graphql", options).then(
         (res) => res.json()
       );
-      const images = Object.values(JSON.parse(api?.data.chapter.pages.toString()));
+      const images = JSON.parse(api?.data.chapter.pages.toString());
       return {
         title: document.querySelector("#mangareader h3")?.textContent?.trim(),
         series: document.querySelector("#mangareader a")?.getAttribute("href"),
-        pages: images.length,
+        pages: images.i.length,
         prev: document.querySelector(".previous a")?.getAttribute("href"),
         next: document.querySelector(".next a")?.getAttribute("href"),
-        listImages: images.map((i) => `https://img.mghubcdn.com/file/imghub/${i}`)
+        listImages: images.i.map(
+          (i) => `https://img.mghubcdn.com/file/imghub/${images.p + i}`
+        )
       };
     }
   };
