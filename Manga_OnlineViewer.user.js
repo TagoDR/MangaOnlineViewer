@@ -4,8 +4,8 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MReader, MangaGeko, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NaniScans, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, LeviatanScans
-// @version 2023.02.01
+// @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MReader, MangaGeko, Mangareader, MangaSee, Manga4life, MangaTigre, MangaTown, ManhuaScan, NaniScans, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, LeviatanScans
+// @version 2023.02.02
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -26,6 +26,7 @@
 // @include /https?:\/\/(www.)?comicastle.org\/read\/.+\/[0-9]+.*/
 // @include /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/
 // @include /https?:\/\/(www.)?(asurascans|flamescans|realmscans|void-scans|luminousscans).(com|org|gg)\/.+/
+// @include /https?:\/\/comics.inkr.com\/title\/.+\/chapter\/.+/
 // @include /https?:\/\/(www.)?inmanga.com\/ver\/manga\/.+\/.+/
 // @include /https?:\/\/(www.)?klmanga.com\/.+chapter.+/
 // @include /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
@@ -208,6 +209,26 @@
         listPages: images.length > 1 ? null : Array(num).fill(0).map((_, i) => `${window.location.href.replace(/\/\d+$/, "")}/${i + 1}`),
         listImages: images.length > 1 ? images.map((img) => img.getAttribute("src")) : null,
         img: "img.open"
+      };
+    }
+  };
+
+  const inkr = {
+    name: "INKR",
+    url: /https?:\/\/comics.inkr.com\/title\/.+\/chapter\/.+/,
+    homepage: "https://comics.inkr.com/",
+    language: ["English"],
+    category: "manga",
+    waitFunc: () => document.querySelector("#editor-v2-scroll-view-id img")?.style.width !== "",
+    run() {
+      const images = [...document.querySelectorAll("#editor-v2-scroll-view-id img")];
+      return {
+        title: document.querySelector("title")?.textContent?.trim(),
+        series: document.querySelector("#chapter-detail-viewer-page div div div a")?.getAttribute("href"),
+        pages: images.length,
+        prev: document.querySelector('a[aria-label="Previous Chapter"]')?.getAttribute("href"),
+        next: document.querySelector('a[aria-label="Next Chapter"]')?.getAttribute("href"),
+        listImages: images.map((img) => img.getAttribute("src")?.replace("/t.", "/p."))
       };
     }
   };
@@ -1100,6 +1121,7 @@
     comicastle,
     dysnatyscans,
     flamecans,
+    inkr,
     inmanga,
     klmanga,
     leitor,
@@ -6582,6 +6604,17 @@ ${wrapStyle(
     }
     return false;
   }
+  function testFunc(site) {
+    if (site.waitFunc !== void 0) {
+      const wait = site.waitFunc();
+      if (!wait) {
+        logScript(`Waiting to pass Function check ${site.waitFunc} = ${wait}`);
+        return true;
+      }
+      logScript(`Found Function check ${site.waitFunc} = ${wait}`);
+    }
+    return false;
+  }
 
   async function lateStart(site, begin = 1) {
     const manga = await site.run();
@@ -6701,7 +6734,7 @@ ${wrapStyle(
     }
   }
   function waitExec(site, waitElapsed = 0) {
-    if (waitElapsed < (site.waitMax || 5e3) && (testAttribute(site) || testElement(site) || testVariable(site))) {
+    if (waitElapsed < (site.waitMax || 5e3) && (testAttribute(site) || testElement(site) || testVariable(site) || testFunc(site))) {
       setTimeout(() => {
         waitExec(site, waitElapsed + (site.waitStep || 1e3));
       }, site.waitStep || 1e3);

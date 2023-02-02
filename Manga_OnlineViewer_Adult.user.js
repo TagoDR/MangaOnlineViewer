@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics
-// @version 2023.02.01
+// @version 2023.02.02
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -6266,6 +6266,17 @@ ${wrapStyle(
     }
     return false;
   }
+  function testFunc(site) {
+    if (site.waitFunc !== void 0) {
+      const wait = site.waitFunc();
+      if (!wait) {
+        logScript(`Waiting to pass Function check ${site.waitFunc} = ${wait}`);
+        return true;
+      }
+      logScript(`Found Function check ${site.waitFunc} = ${wait}`);
+    }
+    return false;
+  }
 
   async function lateStart(site, begin = 1) {
     const manga = await site.run();
@@ -6385,7 +6396,7 @@ ${wrapStyle(
     }
   }
   function waitExec(site, waitElapsed = 0) {
-    if (waitElapsed < (site.waitMax || 5e3) && (testAttribute(site) || testElement(site) || testVariable(site))) {
+    if (waitElapsed < (site.waitMax || 5e3) && (testAttribute(site) || testElement(site) || testVariable(site) || testFunc(site))) {
       setTimeout(() => {
         waitExec(site, waitElapsed + (site.waitStep || 1e3));
       }, site.waitStep || 1e3);

@@ -43,6 +43,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.5.2/
 - [Batoto](http://bato.to/) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
 - [Asura Scans](https://www.asura.gg/) / [Flame Scans](https://flamescans.org/) / [Realm Scans](https://realmscans.com/) / [Voids-Scans](https://void-scans.com/) / [Luminous Scans](https://luminousscans.com/) _[English]_
+- [INKR](https://comics.inkr.com/) _[English]_
 - [LHTranslation](https://lhtranslation.net/) _[English]_
 - [LynxScans](https://lynxscans.com/home) _[English]_
 - [MangaBuddy](https://mangabuddy.com/) _[English]_
