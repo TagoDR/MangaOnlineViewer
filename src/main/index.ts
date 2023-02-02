@@ -5,6 +5,7 @@ import comicastle from './comicastle';
 import dysnatyscans from './dysnatyscans';
 import flamecans from './flamecans.js';
 import foolslide from './foolslide';
+import inkr from './inkr';
 import inmanga from './inmanga';
 import klmanga from './klmanga';
 import leitor from './leitor';
@@ -51,6 +52,7 @@ const sites = [
   comicastle,
   dysnatyscans,
   flamecans,
+  inkr,
   inmanga,
   klmanga,
   leitor,

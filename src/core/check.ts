@@ -38,3 +38,14 @@ export function testVariable(site: ISite) {
   }
   return false;
 }
+export function testFunc(site: ISite) {
+  if (site.waitFunc !== undefined) {
+    const wait = site.waitFunc();
+    if (!wait) {
+      logScript(`Waiting to pass Function check ${site.waitFunc} = ${wait}`);
+      return true;
+    }
+    logScript(`Found Function check ${site.waitFunc} = ${wait}`);
+  }
+  return false;
+}

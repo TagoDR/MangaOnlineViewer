@@ -24,6 +24,7 @@ export interface ISiteBase {
   waitVar?: string; // gallery
   waitMax?: number; // 5000 = 5s
   waitStep?: number; // 1000 = 1s
+  waitFunc?: () => boolean;
   start?: 'never' | 'always'; // 'never', 'always'
   run(): IManga;
 }

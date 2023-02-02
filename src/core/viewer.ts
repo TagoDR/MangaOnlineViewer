@@ -7,7 +7,7 @@ import formatPage from './display';
 import { getLocaleString, useSettings } from './settings';
 import sweetalertStyle from './components/externalStyle';
 import { startButton } from './components/styles';
-import { testAttribute, testElement, testVariable } from './check';
+import { testAttribute, testElement, testFunc, testVariable } from './check';
 
 async function lateStart(site: ISite, begin = 1) {
   const manga = await site.run();
@@ -136,7 +136,7 @@ async function preparePage(site: ISite) {
 function waitExec(site: ISite, waitElapsed: number = 0) {
   if (
     waitElapsed < (site.waitMax || 5000) &&
-    (testAttribute(site) || testElement(site) || testVariable(site))
+    (testAttribute(site) || testElement(site) || testVariable(site) || testFunc(site))
   ) {
     setTimeout(() => {
       waitExec(site, waitElapsed + (site.waitStep || 1000));
