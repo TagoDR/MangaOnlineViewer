@@ -1,8 +1,8 @@
 // == INKR =========================================================================================
 export default {
   name: 'INKR',
-  url: /https?:\/\/comics.inkr.com\/title\/.+\/chapter\/.+/,
-  homepage: 'https://comics.inkr.com/',
+  url: /https?:\/\/(comics.)?inkr.com\/title\/.+\/chapter\/.+/,
+  homepage: 'https://inkr.com/',
   language: ['English'],
   category: 'manga',
   waitFunc: () =>
