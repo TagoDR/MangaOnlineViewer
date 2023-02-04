@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars,@typescript-eslint/no-unused-vars */
 import asurascans from './asurascans.js';
 import batoto from './batoto';
+import bilibilicomics from './bilibilicomics';
 import comicastle from './comicastle';
 import dysnatyscans from './dysnatyscans';
 import flamecans from './flamecans.js';
@@ -49,6 +50,7 @@ import { ISite } from '../types/ISite';
 const sites = [
   asurascans,
   batoto,
+  bilibilicomics,
   comicastle,
   dysnatyscans,
   flamecans,
