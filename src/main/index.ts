@@ -42,6 +42,7 @@ import tapas from './tapas';
 import tenmanga from './tenmanga';
 import tmofans from './tmofans';
 import unionmangas from './unionmangas';
+import webnovel from './webnovel';
 import webtoons from './webtoons';
 import wpmanga from './wpmanga';
 import zeroscans from './zeroscans';
@@ -89,6 +90,7 @@ const sites = [
   tenmanga,
   tmofans,
   unionmangas,
+  webnovel,
   webtoons,
   wpmanga,
   zeroscans,
