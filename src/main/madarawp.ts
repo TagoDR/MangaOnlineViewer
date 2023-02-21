@@ -15,8 +15,9 @@ export default {
     'ManhuaPlus',
     'TopManhua',
     'LeviatanScans',
+    'NovelMic',
   ],
-  url: /https?:\/\/.+\/(manga|series|manhua)\/.+\/.+/,
+  url: /https?:\/\/.+\/(manga|series|manhua|comic)\/.+\/.+/,
   homepage: [
     '#',
     'https://manhuaus.com',
@@ -31,6 +32,7 @@ export default {
     'https://manhuaplus.com/',
     'https://www.topmanhua.com/',
     'https://en.leviatanscans.com/home/',
+    'https://novelmic.com/',
   ],
   language: ['English'],
   obs: 'Any Site that uses Madara Wordpress Plugin',
