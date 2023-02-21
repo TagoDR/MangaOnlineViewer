@@ -1,12 +1,13 @@
 // == ShimadaScans =================================================================================
 export default {
   name: 'ShimadaScans',
-  url: /https?:\/\/(www.)?shimadascans.com\/.+series.+/,
+  url: /https?:\/\/(www.)?shimadascans.com\/.+(series|chapter).+/,
   homepage: 'https://shimadascans.com/',
   language: ['English'],
   category: 'manga',
+  waitEle: '#readerarea img',
   run() {
-    const images = [...document.querySelectorAll('.reading-content img')];
+    const images = [...document.querySelectorAll('#readerarea img')];
     return {
       title: document.querySelector('title')?.textContent?.trim(),
       series: document.querySelector('.breadcrumb li:nth-child(2) a')?.getAttribute('href'),
