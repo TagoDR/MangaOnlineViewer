@@ -4,8 +4,8 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics
-// @version 2023.02.10
+// @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
+// @version 2023.02.21
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -51,6 +51,7 @@
 // @include /https?:\/\/(www.)?wnacg.com\/photos-view-id-.+/
 // @include /https?:\/\/(www.)?xlecx.one\/.+/
 // @include /https?:\/\/(www.)?xyzcomics.com\/.+/
+// @include /https?:\/\/.+\/(porncomic)\/.+\/.+/
 // ==/UserScript==
 
 (function () {
@@ -433,6 +434,70 @@
     }
   };
 
+  const madarawp$1 = {
+    name: [
+      "Madara WordPress Plugin",
+      "MangaHaus",
+      "Isekai Scan",
+      "Comic Kiba",
+      "Zinmanga",
+      "mangatx",
+      "Toonily",
+      "Mngazuki",
+      "JaiminisBox",
+      "DisasterScans",
+      "ManhuaPlus",
+      "TopManhua",
+      "LeviatanScans",
+      "NovelMic"
+    ],
+    url: /https?:\/\/.+\/(manga|series|manhua|comic)\/.+\/.+/,
+    homepage: [
+      "#",
+      "https://manhuaus.com",
+      "https://isekaiscan.com/",
+      "https://comickiba.com/",
+      "https://zinmanga.com/",
+      "https://mangatx.com/",
+      "https://toonily.net/",
+      "https://mangazuki.me/",
+      "https://jaiminisbox.net",
+      "https://disasterscans.com/",
+      "https://manhuaplus.com/",
+      "https://www.topmanhua.com/",
+      "https://en.leviatanscans.com/home/",
+      "https://novelmic.com/"
+    ],
+    language: ["English"],
+    obs: "Any Site that uses Madara Wordpress Plugin",
+    category: "manga",
+    run() {
+      const images = [
+        ...document.querySelectorAll(
+          ".wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img"
+        )
+      ];
+      return {
+        title: document.querySelector("#chapter-heading")?.textContent?.trim(),
+        series: (document.querySelector(".breadcrumb li:nth-child(3) a") || document.querySelector(".breadcrumb li:nth-child(2) a"))?.getAttribute("href"),
+        pages: images.length,
+        prev: document.querySelector(".prev_page")?.getAttribute("href"),
+        next: document.querySelector(".next_page")?.getAttribute("href"),
+        listImages: images.map(
+          (img) => img.getAttribute("src") || img.getAttribute("data-src") || img.getAttribute("data-full-url")
+        )
+      };
+    }
+  };
+
+  const madarawp = {
+    ...madarawp$1,
+    name: ["Madara WordPress Plugin", "AllPornComic"],
+    url: /https?:\/\/.+\/(porncomic)\/.+\/.+/,
+    homepage: ["#", "https://allporncomic.com/"],
+    category: "hentai"
+  };
+
   const multporn = {
     name: "MultPorn",
     url: /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/,
@@ -637,6 +702,28 @@
     }
   };
 
+  const threehentai = {
+    name: "3Hentai",
+    url: /https?:\/\/(www.)?3hentai.net\/d\/.+\/.+/,
+    homepage: "https://3hentai.net/",
+    language: ["English"],
+    category: "hentai",
+    waitVar: "readerPages",
+    run() {
+      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
+      return {
+        title: W.readerPages.title.replace(/- Page.+/, "").trim(),
+        series: W.readerPages.baseUri.replace("%s", ""),
+        pages: W.readerPages.lastPage,
+        prev: "#",
+        next: "#",
+        listImages: Object.keys(W.readerPages.pages).map(
+          (img) => W.readerPages.baseUriImg.replace("%s", W.readerPages.pages[img].f)
+        )
+      };
+    }
+  };
+
   const tmohhentai = {
     name: "TMOHentai",
     url: /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/\d+/,
@@ -657,28 +744,6 @@
         listPages: Array(num).fill(0).map((_, i) => window.location.href.replace(/\/\d*$/, `/${i + 1}`)),
         img: ".content-image",
         lazyAttr: "data-original"
-      };
-    }
-  };
-
-  const threehentai = {
-    name: "3Hentai",
-    url: /https?:\/\/(www.)?3hentai.net\/d\/.+\/.+/,
-    homepage: "https://3hentai.net/",
-    language: ["English"],
-    category: "hentai",
-    waitVar: "readerPages",
-    run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      return {
-        title: W.readerPages.title.replace(/- Page.+/, "").trim(),
-        series: W.readerPages.baseUri.replace("%s", ""),
-        pages: W.readerPages.lastPage,
-        prev: "#",
-        next: "#",
-        listImages: Object.keys(W.readerPages.pages).map(
-          (img) => W.readerPages.baseUriImg.replace("%s", W.readerPages.pages[img].f)
-        )
       };
     }
   };
@@ -824,7 +889,9 @@
     vercomicsporno,
     wnacg,
     xlecxone,
-    xyzcomics
+    xyzcomics,
+    madarawp
+    // Must be at the end because is a generic check
   ];
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
