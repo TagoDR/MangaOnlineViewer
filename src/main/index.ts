@@ -26,6 +26,7 @@ import mangakakalot from './mangakakalot';
 import mangareader from './mangareader';
 import mangasee from './mangasee';
 import mangatigre from './mangatigre';
+import mangatoon from './mangatoon';
 import mangatown from './mangatown';
 import manhuascan from './manhuascan';
 import mreader from './mreader';
@@ -71,12 +72,13 @@ const sites = [
   mangahub,
   mangakakalot,
   // mangapark, fixme
-  mreader,
   mangareader,
   mangasee,
   mangatigre,
+  mangatoon,
   mangatown,
   manhuascan,
+  mreader,
   naniscans,
   ninemanga,
   pandamanga,
