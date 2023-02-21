@@ -13,6 +13,7 @@ import hitomi from './hitomi';
 import imhentai from './imhentai';
 import kingcomix from './kingcomix';
 import luscious from './luscious';
+import madarawp from './madarawp';
 import multporn from './multporn';
 import myhentaigallery from './myhentaigallery';
 import nana from './nana.js';
@@ -22,8 +23,8 @@ import omegascans from './omegascans';
 import porncomixonline from './porncomixonline';
 import pururin from './pururin';
 import simplyhentai from './simplyhentai';
-import tmohhentai from './tmohentai';
 import threehentai from './3hentai';
+import tmohhentai from './tmohentai';
 import tsumino from './tsumino';
 import vercomicsporno from './vercomicsporno';
 import wnacg from './wnacg';
@@ -62,5 +63,6 @@ const sites = [
   wnacg,
   xlecxone,
   xyzcomics,
+  madarawp, // Must be at the end because is a generic check
 ] as ISite[];
 export default sites;
