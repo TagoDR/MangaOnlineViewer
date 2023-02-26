@@ -1,20 +1,27 @@
 // == LynxScans ====================================================================================
 export default {
   name: 'LynxScans',
-  url: /https?:\/\/(www.)?lynxscans.com\/comics\/.+/,
-  homepage: 'https://lynxscans.com/home',
+  url: /https?:\/\/(www.)?lynxscans.com\/comics?\/.+/,
+  homepage: 'https://lynxscans.com/',
   language: ['English'],
   category: 'manga',
-  waitVar: 'chapterPages',
+  waitAttr: ['#app', 'data-page'],
   run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+    const data: {
+      props: {
+        pages: { url: string }[];
+        nextChapter: string;
+        previousChapter: string;
+        home: string;
+      };
+    } = JSON.parse(document.querySelector('#app')!.getAttribute('data-page')!);
     return {
       title: document.querySelector('title')?.textContent?.trim(),
-      series: document.querySelector('.fa-home-alt')?.parentElement?.getAttribute('href'),
-      pages: W.chapterPages.length,
-      prev: W.previousChapter.number,
-      next: W.nextChapter.number,
-      listImages: W.chapterPages,
+      series: data.props.home,
+      pages: data.props.pages.length,
+      prev: data.props.previousChapter,
+      next: data.props.nextChapter,
+      listImages: data.props.pages.map((img: { url: string }) => img.url),
     };
   },
 };
