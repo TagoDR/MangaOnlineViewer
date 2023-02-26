@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebNovel, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, LeviatanScans, NovelMic
-// @version 2023.02.21
+// @version 2023.02.26
 // @license MIT
 // @grant GM_getValue
 // @grant GM_setValue
@@ -32,7 +32,7 @@
 // @include /https?:\/\/(www.)?klmanga.com\/.+chapter.+/
 // @include /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
 // @include /https?:\/\/(www.)?lhtranslation.net\/read.+/
-// @include /https?:\/\/(www.)?lynxscans.com\/comics\/.+/
+// @include /https?:\/\/(www.)?lynxscans.com\/comics?\/.+/
 // @include /https?:\/\/(www.)?mangabuddy.com\/.+\/chapter.+/
 // @include /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/
 // @include /https?:\/\/(www.)?(fanfox.net|mangahere.cc)\/manga\/.+\/.+\//
@@ -375,20 +375,20 @@
 
   const lynxscans = {
     name: "LynxScans",
-    url: /https?:\/\/(www.)?lynxscans.com\/comics\/.+/,
-    homepage: "https://lynxscans.com/home",
+    url: /https?:\/\/(www.)?lynxscans.com\/comics?\/.+/,
+    homepage: "https://lynxscans.com/",
     language: ["English"],
     category: "manga",
-    waitVar: "chapterPages",
+    waitAttr: ["#app", "data-page"],
     run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
+      const data = JSON.parse(document.querySelector("#app").getAttribute("data-page"));
       return {
         title: document.querySelector("title")?.textContent?.trim(),
-        series: document.querySelector(".fa-home-alt")?.parentElement?.getAttribute("href"),
-        pages: W.chapterPages.length,
-        prev: W.previousChapter.number,
-        next: W.nextChapter.number,
-        listImages: W.chapterPages
+        series: data.props.home,
+        pages: data.props.pages.length,
+        prev: data.props.previousChapter,
+        next: data.props.nextChapter,
+        listImages: data.props.pages.map((img) => img.url)
       };
     }
   };
@@ -443,7 +443,16 @@
         prev: document.querySelector(".prev_page")?.getAttribute("href"),
         next: document.querySelector(".next_page")?.getAttribute("href"),
         listImages: images.map(
-          (img) => img.getAttribute("src") || img.getAttribute("data-src") || img.getAttribute("data-full-url")
+          (img) => _.without(
+            [
+              img?.getAttribute("src"),
+              img?.getAttribute("data-src"),
+              img?.getAttribute("data-full-url")
+            ],
+            null,
+            void 0,
+            ""
+          ).pop()
         )
       };
     }

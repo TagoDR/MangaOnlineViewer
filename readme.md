@@ -46,7 +46,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
 - [Asura Scans](https://www.asura.gg/) / [Flame Scans](https://flamescans.org/) / [Realm Scans](https://realmscans.com/) / [Voids-Scans](https://void-scans.com/) / [Luminous Scans](https://luminousscans.com/) _[English]_
 - [INKR](https://inkr.com/) _[English]_
 - [LHTranslation](https://lhtranslation.net/) _[English]_
-- [LynxScans](https://lynxscans.com/home) _[English]_
+- [LynxScans](https://lynxscans.com/) _[English]_
 - [MangaBuddy](https://mangabuddy.com/) _[English]_
 - [MangaDex](https://mangadex.org/) _[English]_
 - [MangaFox](https://fanfox.net/) / [MangaHere](https://www.mangahere.cc/) _[English]_
