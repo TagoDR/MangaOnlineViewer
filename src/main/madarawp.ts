@@ -1,5 +1,7 @@
 // == Madara WordPress Plugin ======================================================================
 // https://themeforest.net/item/madara-wordpress-theme-for-manga/20849828
+import _ from 'lodash';
+
 export default {
   name: [
     'Madara WordPress Plugin',
@@ -52,11 +54,17 @@ export default {
       pages: images.length,
       prev: document.querySelector('.prev_page')?.getAttribute('href'),
       next: document.querySelector('.next_page')?.getAttribute('href'),
-      listImages: images.map(
-        (img) =>
-          img.getAttribute('src') ||
-          img.getAttribute('data-src') ||
-          img.getAttribute('data-full-url'),
+      listImages: images.map((img) =>
+        _.without(
+          [
+            img?.getAttribute('src'),
+            img?.getAttribute('data-src'),
+            img?.getAttribute('data-full-url'),
+          ],
+          null,
+          undefined,
+          '',
+        ).pop(),
       ),
     };
   },
