@@ -121,12 +121,14 @@ export default `
 
   #MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n),
   #MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n) {
-    justify-self: flex-start;
+    display: flex;
+    justify-content: start;
   }
 
   #MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n-1),
   #MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n-1) {
-    justify-self: flex-end;
+    display: flex;
+    justify-content: end;
   }
 
   #MangaOnlineViewer #Chapter.Vertical .PageContent {
