@@ -1,9 +1,9 @@
-// == LeviatanScans ================================================================================
+// == Reset-Scans ================================================================================
 declare let CryptoJS: any;
 export default {
-  name: 'LeviatanScans',
-  url: /https?:\/\/(www|en)?.?leviatanscans.com\/(home\/)?manga\/.+\/chapter.+/,
-  homepage: 'https://leviatanscans.com/',
+  name: 'Reset-Scans',
+  url: /https?:\/\/(www.)?reset-scans.com\/manga\/.+\/chapter.+/,
+  homepage: 'https://reset-scans.com/',
   language: ['English'],
   category: 'manga',
   waitVar: 'chapter_data',
