@@ -1,3 +1,4 @@
+import hotkeys from 'hotkeys-js';
 import { logScript } from '../../utils/tampermonkey';
 import { useSettings } from '../settings';
 import { scrollToElement } from './common';
@@ -74,30 +75,21 @@ const actions: { [key: string]: () => void } = {
   },
 };
 
-function processKey(e: KeyboardEvent) {
-  const keyBindings = Object.keys(useSettings().keybinds).find((key) =>
-    useSettings().keybinds[key]?.some((kb) => kb === e.code),
-  );
-  if (!keyBindings) return true;
-  e.preventDefault();
-  e.stopPropagation();
-  e.stopImmediatePropagation();
-  logScript('Keyboard:', e.code, /* ' Event:', e, */ 'Entry', keyBindings);
-  actions[keyBindings]();
-  return false;
-}
-
 // Clean key press configurations and set some when specified
-function hotkeys() {
+function keybindings() {
+  const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
   document.onkeydown = null;
   document.onkeyup = null;
   document.onkeypress = null;
-  window.onkeydown = null;
-  window.onkeyup = null;
-  window.onkeypress = null;
-  window.onload = null;
+  W.onkeydown = null;
+  W.onkeyup = null;
+  W.onkeypress = null;
+  W.onload = null;
   document.body.onload = null;
-  document.addEventListener('keydown', processKey);
+  hotkeys.unbind();
+  Object.keys(useSettings().keybinds).forEach((key) => {
+    hotkeys(useSettings().keybinds[key]?.join(',') || '', actions[key]);
+  });
 }
 
-export default hotkeys;
+export default keybindings;

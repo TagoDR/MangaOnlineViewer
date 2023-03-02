@@ -1,7 +1,7 @@
-import { trim } from 'lodash';
-import { keybindEditor, keybindings } from '../components/KeybindingsPanel';
+import { keybindEditor, keybindList } from '../components/KeybindingsPanel';
 import { updateSettings, useSettings } from '../settings';
-import { isNothing } from '../../utils/checks.js';
+import { isNothing } from '../../utils/checks';
+import keybindings from './keybindings';
 
 function panels() {
   // Show Header list
@@ -33,22 +33,27 @@ function panels() {
 
   // Keybindings list
   function buttonKeybindings() {
-    document.querySelector('#KeybindingsList')!.innerHTML = keybindings().join('\n');
+    document.querySelector('#KeybindingsList')!.innerHTML = keybindList().join('\n');
     document.querySelector('#SaveKeybindings')?.classList.add('hidden');
     document.querySelector('#EditKeybindings')?.classList.remove('hidden');
     document.querySelector('#KeybindingsPanel')?.classList.toggle('visible');
+    document.querySelector('#KeybindingsOverlay')?.classList.toggle('visible');
   }
 
   function saveKeybindings() {
     const newkeybinds: { [key: string]: string[] | undefined } = useSettings().keybinds;
     Object.keys(useSettings().keybinds).forEach((kb) => {
-      const keys = document.querySelector<HTMLInputElement>(`#${kb}`)?.value.split(',')?.map(trim);
+      const keys = document
+        .querySelector<HTMLInputElement>(`#${kb}`)
+        ?.value.split(',')
+        ?.map((value) => value.trim());
       newkeybinds[kb] = isNothing(keys) ? undefined : keys;
     });
     updateSettings({ keybinds: newkeybinds });
-    document.querySelector('#KeybindingsList')!.innerHTML = keybindings().join('\n');
+    document.querySelector('#KeybindingsList')!.innerHTML = keybindList().join('\n');
     document.querySelector('#SaveKeybindings')?.classList.add('hidden');
     document.querySelector('#EditKeybindings')?.classList.remove('hidden');
+    keybindings();
   }
 
   function editKeybindings() {
@@ -59,6 +64,7 @@ function panels() {
 
   document.querySelector('#keybindings')?.addEventListener('click', buttonKeybindings);
   document.querySelector('#CloseKeybindings')?.addEventListener('click', buttonKeybindings);
+  document.querySelector('#KeybindingsOverlay')?.addEventListener('click', buttonKeybindings);
   document.querySelector('#EditKeybindings')?.addEventListener('click', editKeybindings);
   document.querySelector('#SaveKeybindings')?.addEventListener('click', saveKeybindings);
 }

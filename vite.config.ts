@@ -38,6 +38,7 @@ const globals = {
   imagesloaded: 'imagesLoaded',
   'file-saver': 'FileSaver',
   lodash: '_',
+  'hotkeys-js': 'hotkeys',
 };
 
 function generateReadme() {

@@ -1,7 +1,7 @@
 import bookmarks from './events/bookmarks';
 import globals from './events/globals';
 import headroom from './events/headroom';
-import hotkeys from './events/hotkeys';
+import keybindings from './events/keybindings';
 import individual from './events/individual';
 import navigation from './events/navigation';
 import options from './events/options';
@@ -16,7 +16,7 @@ function events() {
   bookmarks();
   globals();
   headroom(100);
-  hotkeys();
+  keybindings();
   individual();
   navigation();
   options();
