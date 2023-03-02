@@ -64,6 +64,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
 - [PandaManga](https://www.pandamanga.com/) _[English]_
 - [ReadManga Today](https://www.readmng.com/) / [Funmanga](https://funmanga.com/) / [MangaDoom](https://mngdoom.com/) / [MangaInn](https://www.mangainn.net/) _[English]_
 - [ReaperScans](https://reaperscans.com/) _[English]_
+- [Reset-Scans](https://reset-scans.com/) _[English]_
 - [ShimadaScans](https://shimadascans.com/) _[English]_
 - [KLManga](https://tapas.io/) _[English]_
 - [TenManga](https://www.tenmanga.com/) _[English]_

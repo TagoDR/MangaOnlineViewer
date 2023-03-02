@@ -4,9 +4,10 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebNovel, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, LeviatanScans, NovelMic
-// @version 2023.02.26
+// @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, Reset-Scans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebNovel, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, LeviatanScans, NovelMic
+// @version 2023.03.02
 // @license MIT
+// @grant unsafeWindow
 // @grant GM_getValue
 // @grant GM_setValue
 // @grant GM_listValues
@@ -54,6 +55,7 @@
 // @include /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/\d*/
 // @include /https?:\/\/(www.)?(funmanga|mngdoom|readmng|mangainn).(com|net)\/.+\/\d+/
 // @include /https?:\/\/(www.)?reaperscans.com\/comics\/.+\/chapters\/.+/
+// @include /https?:\/\/(www.)?reset-scans.com\/manga\/.+\/chapter.+/
 // @include /https?:\/\/raw.senmanga.com\/.+\/.+\/?/
 // @include /https?:\/\/(www.)?shimadascans.com\/.+(series|chapter).+/
 // @include /https?:\/\/(www.)?tapas.io\/episode\/.+/
@@ -991,6 +993,50 @@
     }
   };
 
+  const resetscans = {
+    name: "Reset-Scans",
+    url: /https?:\/\/(www.)?reset-scans.com\/manga\/.+\/chapter.+/,
+    homepage: "https://reset-scans.com/",
+    language: ["English"],
+    category: "manga",
+    waitVar: "chapter_data",
+    run() {
+      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
+      const images = Array.isArray(W.chapter_data) ? JSON.parse(W.chapter_data) : JSON.parse(
+        JSON.parse(
+          CryptoJS.AES.decrypt(W.chapter_data, W.wpmangaprotectornonce, {
+            format: {
+              stringify(data) {
+                const cypher = {
+                  ct: data.ciphertext.toString(CryptoJS.enc.Base64),
+                  iv: data.iv?.toString(),
+                  s: data.salt?.toString()
+                };
+                return JSON.stringify(cypher);
+              },
+              parse(text) {
+                const result = JSON.parse(text);
+                return CryptoJS.lib.CipherParams.create({
+                  ciphertext: CryptoJS.enc.Base64.parse(result.ct),
+                  iv: CryptoJS.enc.Hex.parse(result.iv),
+                  salt: CryptoJS.enc.Hex.parse(result.s)
+                });
+              }
+            }
+          }).toString(CryptoJS.enc.Utf8)
+        )
+      );
+      return {
+        title: document.querySelector("#chapter-heading")?.textContent?.trim(),
+        series: document.querySelector(".back")?.getAttribute("href"),
+        pages: images.length,
+        prev: document.querySelector(".prev_page")?.getAttribute("href"),
+        next: document.querySelector(".next_page")?.getAttribute("href"),
+        listImages: images
+      };
+    }
+  };
+
   const senmanga = {
     name: "SenManga(Raw)",
     url: /https?:\/\/raw.senmanga.com\/.+\/.+\/?/,
@@ -1229,7 +1275,6 @@
     inmanga,
     klmanga,
     leitor,
-    // leviatanscans, depricated
     lhtranslation,
     lynxscans,
     mangabuddy,
@@ -1255,6 +1300,7 @@
     readcomicsonline,
     readmangatoday,
     reaperscans,
+    resetscans,
     senmanga,
     shimadascans,
     tapas,
@@ -1847,6 +1893,19 @@
    <line color='orange' x1='3' y1='3' x2='21' y2='21'></line>
    <path color='silver' d='M16.32 12.34c.577 -.059 1.162 .162 1.68 .66l2 2'></path>
 </svg>`;
+  const IconPencil = `
+<svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-pencil' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
+   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+   <path d='M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4'></path>
+   <path d='M13.5 6.5l4 4'></path>
+</svg>`;
+  const IconDeviceFloppy = `
+<svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-device-floppy' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
+   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+   <path d='M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2'></path>
+   <path d='M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0'></path>
+   <path d='M14 4l0 4l-6 0l0 -4'></path>
+</svg>`;
 
   const cssStyles = `
   :root,
@@ -1966,12 +2025,14 @@
 
   #MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n),
   #MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n) {
-    justify-self: flex-start;
+    display: flex;
+    justify-content: start;
   }
 
   #MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n-1),
   #MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n-1) {
-    justify-self: flex-end;
+    display: flex;
+    justify-content: end;
   }
 
   #MangaOnlineViewer #Chapter.Vertical .PageContent {
@@ -2866,6 +2927,10 @@
     BOOKMARK_SAVED: "Bookmark Saved",
     BOOKMARK_MESSAGE: "Next time you open this chapter it will resume from:<h4>Page ##num##</h4>(Only <i>ONCE</i> per Bookmark)",
     KEYBINDINGS: "Keybindings",
+    EDIT_KEYBINDS: "Edit KeyBindings",
+    SAVE_KEYBINDS: "Save KeyBindings",
+    BUTTON_EDIT: "Edit",
+    BUTTON_SAVE: "Save",
     ATTENTION: "Attention",
     WARNING: "Warning",
     BUTTON_RESET_SETTINGS: "Reset Settings",
@@ -2951,6 +3016,10 @@
     BOOKMARK_SAVED: "Marca pagina Salvo",
     BOOKMARK_MESSAGE: "Proxima vez que abrir este capitulo continuará a partir da <h4>Pagina ##num##</h4>(Apenas <i>UMA VEZ</i> por marca pagina)",
     KEYBINDINGS: "Atalhos",
+    EDIT_KEYBINDS: "Editar Atalhos",
+    SAVE_KEYBINDS: "Salvar Atalhos",
+    BUTTON_EDIT: "Editar",
+    BUTTON_SAVE: "Salvar",
     ATTENTION: "Atenção",
     WARNING: "Alerta",
     BUTTON_RESET_SETTINGS: "Limpar Configurações",
@@ -5574,15 +5643,15 @@ ${wrapStyle(
       }
     }
   ];
-  const usedKeys = keybinds.flatMap((kb) => kb.keys);
   function processKey(e) {
-    if (e.ctrlKey || e.altKey || e.shiftKey || e.metaKey || !usedKeys.some((i) => i === e.code)) {
+    if (e.ctrlKey || e.altKey || e.shiftKey || e.metaKey || !keybinds.flatMap((kb) => kb.keys).some((i) => i === e.code) || !useSettings().keybinds?.flatMap((kb) => kb.keys).some((i) => i === e.code)) {
       return true;
     }
     e.preventDefault();
     e.stopPropagation();
     e.stopImmediatePropagation();
-    const keyBindings = keybinds.find((kb) => kb.keys.some((key) => key === e.code));
+    const custom = useSettings().keybinds?.find((kb) => kb.keys.some((key) => key === e.code))?.name;
+    const keyBindings = keybinds.find((kb) => kb.name === custom) ?? keybinds.find((kb) => kb.keys.some((key) => key === e.code));
     logScript(
       "Keyboard:",
       e.code,
@@ -5606,36 +5675,37 @@ ${wrapStyle(
   }
 
   function formatKeyName(key) {
-    let formatted = key;
-    formatted = formatted.replace("Key", "");
-    formatted = formatted.replace("Digit", "");
-    formatted = formatted.replace("Numpad", "Numpad ");
-    formatted = formatted.replace("Subtract", "-");
-    formatted = formatted.replace("Add", "+");
-    formatted = formatted.replace("Minus", "-");
-    formatted = formatted.replace("Equal", "=");
-    formatted = formatted.replace("Divide", "/");
-    formatted = formatted.replace("Multiply", "*");
-    formatted = formatted.replace("Comma", ",");
-    formatted = formatted.replace("Period", ".");
-    formatted = formatted.replace("Slash", "/");
-    formatted = formatted.replace("ArrowUp", "↑");
-    formatted = formatted.replace("ArrowDown", "↓");
-    formatted = formatted.replace("ArrowRight", "→");
-    formatted = formatted.replace("ArrowLeft", "←");
-    return formatted;
+    return key.replace("Key", "").replace("Digit", "").replace("Numpad", "Numpad ").replace("Subtract", "-").replace("Add", "+").replace("Minus", "-").replace("Equal", "=").replace("Divide", "/").replace("Multiply", "*").replace("Comma", ",").replace("Period", ".").replace("Slash", "/").replace("ArrowUp", "↑").replace("ArrowDown", "↓").replace("ArrowRight", "→").replace("ArrowLeft", "←");
   }
   const keybindings = keybinds.map((kb) => {
     const keys = kb.keys.map((key) => `<kbd class='dark'>${formatKeyName(key)}</kbd>`).join(" / ");
-    return `${keys}: ${getLocaleString(kb.name)}<br/>`;
-  }).join("\n");
+    return `${getLocaleString(kb.name)}: ${keys}<br/>`;
+  });
+  const keybindEditor = keybinds.map(
+    (kb) => `${getLocaleString(kb.name)}: 
+        <input type='text' id='${kb.name}' name='${kb.name}' value='${kb.keys.join(" , ")}'><br/>`
+  );
   const KeybindingsPanel = `
 <div id='KeybindingsPanel' class='panel'>
     <h2>${getLocaleString("KEYBINDINGS")}</h2>
     <button id='CloseKeybindings' class='closeButton' title='${getLocaleString("CLOSE")}'>
       ${IconX}
     </button>
-    ${keybindings}
+    <div class='controls'>
+      <button id='EditKeybindings' class='ControlButton' type='button'
+            title='${getLocaleString("EDIT_KEYBINDS")}'>
+            ${IconPencil}
+            ${getLocaleString("BUTTON_EDIT")}
+      </button>
+      <button id='SaveKeybindings' class='ControlButton' type='button'
+            title='${getLocaleString("SAVE_KEYBINDS")}'>
+            ${IconDeviceFloppy}
+            ${getLocaleString("BUTTON_SAVE")}
+      </button>
+    </div>
+    <div id='KeybindingsList'>
+      ${keybindings.join("\n")}
+    </div>    
 </div>`;
 
   const ThumbnailsPanel = (times, begin) => indexList(times, begin).map(
@@ -6463,8 +6533,16 @@ ${wrapStyle(
     function buttonKeybindings() {
       document.querySelector("#KeybindingsPanel")?.classList.toggle("visible");
     }
+    function saveKeybindings() {
+      document.querySelector("#KeybindingsList").innerHTML = keybindings.join("\n");
+    }
+    function editKeybindings() {
+      document.querySelector("#KeybindingsList").innerHTML = keybindEditor.join("\n");
+    }
     document.querySelector("#keybindings")?.addEventListener("click", buttonKeybindings);
     document.querySelector("#CloseKeybindings")?.addEventListener("click", buttonKeybindings);
+    document.querySelector("#EditKeybindings")?.addEventListener("click", editKeybindings);
+    document.querySelector("#SaveKeybindings")?.addEventListener("click", saveKeybindings);
   }
 
   function size() {
