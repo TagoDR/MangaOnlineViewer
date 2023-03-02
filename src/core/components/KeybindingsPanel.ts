@@ -1,34 +1,38 @@
-import { IconX } from './icons';
+import { IconDeviceFloppy, IconPencil, IconX } from './icons';
 import { keybinds } from '../events/hotkeys';
-import { getLocaleString } from '../settings.js';
+import { getLocaleString } from '../settings';
 
 function formatKeyName(key: string) {
-  let formatted = key;
-  formatted = formatted.replace('Key', '');
-  formatted = formatted.replace('Digit', '');
-  formatted = formatted.replace('Numpad', 'Numpad ');
-  formatted = formatted.replace('Subtract', '-');
-  formatted = formatted.replace('Add', '+');
-  formatted = formatted.replace('Minus', '-');
-  formatted = formatted.replace('Equal', '=');
-  formatted = formatted.replace('Divide', '/');
-  formatted = formatted.replace('Multiply', '*');
-  formatted = formatted.replace('Comma', ',');
-  formatted = formatted.replace('Period', '.');
-  formatted = formatted.replace('Slash', '/');
-  formatted = formatted.replace('ArrowUp', '↑');
-  formatted = formatted.replace('ArrowDown', '↓');
-  formatted = formatted.replace('ArrowRight', '→');
-  formatted = formatted.replace('ArrowLeft', '←');
-  return formatted;
+  return key
+    .replace('Key', '')
+    .replace('Digit', '')
+    .replace('Numpad', 'Numpad ')
+    .replace('Subtract', '-')
+    .replace('Add', '+')
+    .replace('Minus', '-')
+    .replace('Equal', '=')
+    .replace('Divide', '/')
+    .replace('Multiply', '*')
+    .replace('Comma', ',')
+    .replace('Period', '.')
+    .replace('Slash', '/')
+    .replace('ArrowUp', '↑')
+    .replace('ArrowDown', '↓')
+    .replace('ArrowRight', '→')
+    .replace('ArrowLeft', '←');
 }
 
 export const keybindings = keybinds
   .map((kb) => {
     const keys = kb.keys.map((key) => `<kbd class='dark'>${formatKeyName(key)}</kbd>`).join(' / ');
-    return `${keys}: ${getLocaleString(kb.name)}<br/>`;
-  })
-  .join('\n');
+    return `${getLocaleString(kb.name)}: ${keys}<br/>`;
+  });
+export const keybindEditor = keybinds
+  .map(
+    (kb) =>
+      `${getLocaleString(kb.name)}: 
+        <input type='text' id='${kb.name}' name='${kb.name}' value='${kb.keys.join(' , ')}'><br/>`,
+  );
 
 const KeybindingsPanel = `
 <div id='KeybindingsPanel' class='panel'>
@@ -36,7 +40,21 @@ const KeybindingsPanel = `
     <button id='CloseKeybindings' class='closeButton' title='${getLocaleString('CLOSE')}'>
       ${IconX}
     </button>
-    ${keybindings}
+    <div class='controls'>
+      <button id='EditKeybindings' class='ControlButton' type='button'
+            title='${getLocaleString('EDIT_KEYBINDS')}'>
+            ${IconPencil}
+            ${getLocaleString('BUTTON_EDIT')}
+      </button>
+      <button id='SaveKeybindings' class='ControlButton' type='button'
+            title='${getLocaleString('SAVE_KEYBINDS')}'>
+            ${IconDeviceFloppy}
+            ${getLocaleString('BUTTON_SAVE')}
+      </button>
+    </div>
+    <div id='KeybindingsList'>
+      ${keybindings.join('\n')}
+    </div>    
 </div>`;
 
 export default KeybindingsPanel;

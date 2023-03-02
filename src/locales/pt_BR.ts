@@ -48,6 +48,10 @@ export default {
   BOOKMARK_MESSAGE:
     'Proxima vez que abrir este capitulo continuará a partir da <h4>Pagina ##num##</h4>(Apenas <i>UMA VEZ</i> por marca pagina)',
   KEYBINDINGS: 'Atalhos',
+  EDIT_KEYBINDS: 'Editar Atalhos',
+  SAVE_KEYBINDS: 'Salvar Atalhos',
+  BUTTON_EDIT: 'Editar',
+  BUTTON_SAVE: 'Salvar',
   ATTENTION: 'Atenção',
   WARNING: 'Alerta',
   BUTTON_RESET_SETTINGS: 'Limpar Configurações',

@@ -1,6 +1,7 @@
 import { logScript } from '../../utils/tampermonkey';
 import { useSettings } from '../settings';
 import { scrollToElement } from './common';
+import { KeyBinding } from '../../types';
 
 const doClick = (selector: string) =>
   document.querySelector(selector)?.dispatchEvent(new Event('click'));
@@ -29,9 +30,7 @@ function doScrolling(sign: 1 | -1) {
   }
 }
 
-interface IKeyBindings {
-  name: string;
-  keys: string[];
+interface IKeyBindings extends KeyBinding {
   action: () => void;
 }
 
@@ -136,16 +135,26 @@ export const keybinds: IKeyBindings[] = [
   },
 ];
 
-const usedKeys = keybinds.flatMap((kb) => kb.keys);
-
 function processKey(e: KeyboardEvent) {
-  if (e.ctrlKey || e.altKey || e.shiftKey || e.metaKey || !usedKeys.some((i) => i === e.code)) {
+  if (
+    e.ctrlKey ||
+    e.altKey ||
+    e.shiftKey ||
+    e.metaKey ||
+    !keybinds.flatMap((kb) => kb.keys).some((i) => i === e.code) ||
+    !useSettings()
+      .keybinds?.flatMap((kb) => kb.keys)
+      .some((i) => i === e.code)
+  ) {
     return true;
   }
   e.preventDefault();
   e.stopPropagation();
   e.stopImmediatePropagation();
-  const keyBindings = keybinds.find((kb) => kb.keys.some((key) => key === e.code));
+  const custom = useSettings().keybinds?.find((kb) => kb.keys.some((key) => key === e.code))?.name;
+  const keyBindings =
+    keybinds.find((kb) => kb.name === custom) ??
+    keybinds.find((kb) => kb.keys.some((key) => key === e.code));
   logScript('Keyboard:', e.code, /* ' Event:', e, */ 'Entry', keyBindings);
   keyBindings?.action();
   return false;

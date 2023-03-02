@@ -15,6 +15,7 @@ export type LoadMode = 'wait' | 'always' | 'never';
 export type ColorScheme = 'dark' | 'light';
 export type Header = 'hover' | 'scroll' | 'click' | 'fixed';
 export type ZoomMode = 'percent' | 'height' | 'width';
+export type KeyBinding = { name: string; keys: string[] };
 
 export interface ISettings {
   locale: string;
@@ -38,4 +39,5 @@ export interface ISettings {
   hidePageControls: boolean;
   header: Header;
   maxReload: number;
+  keybinds?: KeyBinding[];
 }

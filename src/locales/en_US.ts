@@ -48,6 +48,10 @@ export default {
   BOOKMARK_MESSAGE:
     'Next time you open this chapter it will resume from:<h4>Page ##num##</h4>(Only <i>ONCE</i> per Bookmark)',
   KEYBINDINGS: 'Keybindings',
+  EDIT_KEYBINDS: 'Edit KeyBindings',
+  SAVE_KEYBINDS: 'Save KeyBindings',
+  BUTTON_EDIT: 'Edit',
+  BUTTON_SAVE: 'Save',
   ATTENTION: 'Attention',
   WARNING: 'Warning',
   BUTTON_RESET_SETTINGS: 'Reset Settings',
@@ -55,7 +59,7 @@ export default {
   LANGUAGE_CHANGED: 'Language has been changed, reload the page to take effect',
   AUTO_DOWNLOAD: 'Next time a chapter finish loading you will be prompted to save automatically',
   LAZY_LOAD:
-    'Lazy load is incompatible with zip download, you will not be able to download with this setting ON.<br/> Suggestion: <span style=\'color:red;font-weight:bold\'>Disable Thumbnails</span> to save Bandwidth/Memory.',
+    "Lazy load is incompatible with zip download, you will not be able to download with this setting ON.<br/> Suggestion: <span style='color:red;font-weight:bold'>Disable Thumbnails</span> to save Bandwidth/Memory.",
   LAZY_LOAD_IMAGES_ENABLE: 'Enable Lazy Load Images',
   LAZY_LOAD_IMAGES: 'Lazy Start From Page (between 5 and 100)',
   RETURN_CHAPTER_LIST: 'Return to Chapter List',

@@ -1,3 +1,5 @@
+import { keybindEditor, keybindings } from '../components/KeybindingsPanel';
+
 function panels() {
   // Show Header list
   function buttonHeader() {
@@ -30,9 +32,17 @@ function panels() {
   function buttonKeybindings() {
     document.querySelector('#KeybindingsPanel')?.classList.toggle('visible');
   }
+  function saveKeybindings() {
+    document.querySelector('#KeybindingsList')!.innerHTML = keybindings.join('\n');
+  }
+  function editKeybindings() {
+    document.querySelector('#KeybindingsList')!.innerHTML = keybindEditor.join('\n');
+  }
 
   document.querySelector('#keybindings')?.addEventListener('click', buttonKeybindings);
   document.querySelector('#CloseKeybindings')?.addEventListener('click', buttonKeybindings);
+  document.querySelector('#EditKeybindings')?.addEventListener('click', editKeybindings);
+  document.querySelector('#SaveKeybindings')?.addEventListener('click', saveKeybindings);
 }
 
 export default panels;
