@@ -39,12 +39,12 @@ const getInfoGM =
   typeof GM_info !== 'undefined'
     ? GM_info
     : {
-      scriptHandler: 'Console',
-      script: {
-        name: 'Debug',
-        version: 'Testing',
-      },
-    };
+        scriptHandler: 'Console',
+        script: {
+          name: 'Debug',
+          version: 'Testing',
+        },
+      };
 
 // Replacement function for GM_getValue allowing for debugging in console
 function getValueGM(name: string, defaultValue: any = null): any {
@@ -66,23 +66,19 @@ function getSettings(defaultSettings?: ISettings): Partial<ISettings> {
 }
 
 // Replacement function for GM_setValue allowing for debugging in console
-function setValueGM(name: string, value: string | number | boolean): string {
+function setValueGM(name: string, value: any): string {
   try {
     GM_setValue(name, value);
     // logScript('Setting: ', name, ' = ', value as any);
     return value.toString();
   } catch (e) {
-    logScript('Fake Setting: ', name, ' = ', value as any);
+    logScript('Fake Setting: ', name, ' = ', value);
     return String(value);
   }
 }
 
-function setJsonGM(name: string, value: any) {
-  return setValueGM(name, JSON.stringify(value));
-}
-
 function setSettings(value: Partial<ISettings>) {
-  return setJsonGM('settings', value);
+  return setValueGM('settings', value);
 }
 
 // See https://stackoverflow.com/a/2401861/331508 for optional browser sniffing code.
@@ -124,7 +120,6 @@ export {
   getJsonGM,
   getSettings,
   setValueGM,
-  setJsonGM,
   setSettings,
   removeValueGM,
   getBrowser,

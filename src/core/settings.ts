@@ -33,6 +33,22 @@ export const defaultSettings: ISettings = {
   hidePageControls: false,
   header: 'hover',
   maxReload: 5,
+  keybinds: {
+    SCROLL_UP: ['ArrowUp', 'KeyW', 'Numpad8'],
+    SCROLL_DOWN: ['ArrowDown', 'KeyS', 'Numpad2'],
+    NEXT_CHAPTER: ['ArrowRight', 'Period', 'KeyD', 'Numpad6'],
+    PREVIOUS_CHAPTER: ['ArrowLeft', 'Comma', 'KeyA', 'Numpad4'],
+    ENLARGE: ['Equal', 'NumpadAdd', 'KeyE'],
+    REDUCE: ['Minus', 'NumpadSubtract', 'KeyQ'],
+    RESTORE: ['Digit9', 'NumpadDivide', 'KeyR'],
+    FIT_WIDTH: ['Digit0', 'NumpadMultiply', 'KeyF'],
+    FIT_HEIGHT: ['KeyH'],
+    SETTINGS: ['Slash', 'Numpad5', 'KeyX'],
+    VIEW_MODE_WEBCOMIC: ['KeyC'],
+    VIEW_MODE_VERTICAL: ['KeyV'],
+    VIEW_MODE_LEFT: ['KeyN'],
+    VIEW_MODE_RIGHT: ['KeyB'],
+  },
 };
 
 // Configuration

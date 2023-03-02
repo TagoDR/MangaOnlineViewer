@@ -1,7 +1,6 @@
 import { logScript } from '../../utils/tampermonkey';
 import { useSettings } from '../settings';
 import { scrollToElement } from './common';
-import { KeyBinding } from '../../types';
 
 const doClick = (selector: string) =>
   document.querySelector(selector)?.dispatchEvent(new Event('click'));
@@ -30,133 +29,61 @@ function doScrolling(sign: 1 | -1) {
   }
 }
 
-interface IKeyBindings extends KeyBinding {
-  action: () => void;
-}
-
-export const keybinds: IKeyBindings[] = [
-  {
-    name: 'SCROLL_UP',
-    keys: ['ArrowUp', 'KeyW', 'Numpad8'],
-    action() {
-      doScrolling(-1);
-    },
+const actions: { [key: string]: () => void } = {
+  SCROLL_UP: () => {
+    doScrolling(-1);
   },
-  {
-    name: 'SCROLL_DOWN',
-    keys: ['ArrowDown', 'KeyS', 'Numpad2'],
-    action() {
-      doScrolling(1);
-    },
+  SCROLL_DOWN: () => {
+    doScrolling(1);
   },
-  {
-    name: 'NEXT_CHAPTER',
-    keys: ['ArrowRight', 'Period', 'KeyD', 'Numpad6'],
-    action() {
-      doClick('#next');
-    },
+  NEXT_CHAPTER: () => {
+    doClick('#next');
   },
-  {
-    name: 'PREVIOUS_CHAPTER',
-    keys: ['ArrowLeft', 'Comma', 'KeyA', 'Numpad4'],
-    action() {
-      doClick('#prev');
-    },
+  PREVIOUS_CHAPTER: () => {
+    doClick('#prev');
   },
-  {
-    name: 'ENLARGE',
-    keys: ['Equal', 'NumpadAdd', 'KeyE'],
-    action() {
-      doClick('#enlarge');
-    },
+  ENLARGE: () => {
+    doClick('#enlarge');
   },
-  {
-    name: 'REDUCE',
-    keys: ['Minus', 'NumpadSubtract', 'KeyQ'],
-    action() {
-      doClick('#reduce');
-    },
+  REDUCE: () => {
+    doClick('#reduce');
   },
-  {
-    name: 'RESTORE',
-    keys: ['Digit9', 'NumpadDivide', 'KeyR'],
-    action() {
-      doClick('#restore');
-    },
+  RESTORE: () => {
+    doClick('#restore');
   },
-  {
-    name: 'FIT_WIDTH',
-    keys: ['Digit0', 'NumpadMultiply', 'KeyF'],
-    action() {
-      doClick('#fitWidth');
-    },
+  FIT_WIDTH: () => {
+    doClick('#fitWidth');
   },
-  {
-    name: 'FIT_HEIGHT',
-    keys: ['KeyH'],
-    action() {
-      doClick('#fitHeight');
-    },
+  FIT_HEIGHT: () => {
+    doClick('#fitHeight');
   },
-  {
-    name: 'SETTINGS',
-    keys: ['Slash', 'Numpad5', 'KeyX'],
-    action() {
-      doClick('#settings');
-    },
+  SETTINGS: () => {
+    doClick('#settings');
   },
-  {
-    name: 'VIEW_MODE_WEBCOMIC',
-    keys: ['KeyC'],
-    action() {
-      doClick('#webComic');
-    },
+  VIEW_MODE_WEBCOMIC: () => {
+    doClick('#webComic');
   },
-  {
-    name: 'VIEW_MODE_VERTICAL',
-    keys: ['KeyV'],
-    action() {
-      doClick('#verticalMode');
-    },
+  VIEW_MODE_VERTICAL: () => {
+    doClick('#verticalMode');
   },
-  {
-    name: 'VIEW_MODE_LEFT',
-    keys: ['KeyN'],
-    action() {
-      doClick('#rtlMode');
-    },
+  VIEW_MODE_LEFT: () => {
+    doClick('#rtlMode');
   },
-  {
-    name: 'VIEW_MODE_RIGHT',
-    keys: ['KeyB'],
-    action() {
-      doClick('#ltrMode');
-    },
+  VIEW_MODE_RIGHT: () => {
+    doClick('#ltrMode');
   },
-];
+};
 
 function processKey(e: KeyboardEvent) {
-  if (
-    e.ctrlKey ||
-    e.altKey ||
-    e.shiftKey ||
-    e.metaKey ||
-    !keybinds.flatMap((kb) => kb.keys).some((i) => i === e.code) ||
-    !useSettings()
-      .keybinds?.flatMap((kb) => kb.keys)
-      .some((i) => i === e.code)
-  ) {
-    return true;
-  }
+  const keyBindings = Object.keys(useSettings().keybinds).find((key) =>
+    useSettings().keybinds[key]?.some((kb) => kb === e.code),
+  );
+  if (!keyBindings) return true;
   e.preventDefault();
   e.stopPropagation();
   e.stopImmediatePropagation();
-  const custom = useSettings().keybinds?.find((kb) => kb.keys.some((key) => key === e.code))?.name;
-  const keyBindings =
-    keybinds.find((kb) => kb.name === custom) ??
-    keybinds.find((kb) => kb.keys.some((key) => key === e.code));
   logScript('Keyboard:', e.code, /* ' Event:', e, */ 'Entry', keyBindings);
-  keyBindings?.action();
+  actions[keyBindings]();
   return false;
 }
 

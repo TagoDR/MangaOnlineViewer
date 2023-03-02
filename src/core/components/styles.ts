@@ -278,19 +278,30 @@ export default `
   }
 
   #MangaOnlineViewer #KeybindingsPanel {
-    padding: 8px;
+    padding: 10px;
     position: fixed;
-    top: 65px;
+    top: 0;
     right: 0;
+    bottom: 0;
     transition: transform 0.3s ease-in-out;;
     transform: translateX(100%);
     line-height: 1.5em;
     z-index: 1000;
+    overflow-y: auto;
   }
 
   #MangaOnlineViewer #KeybindingsPanel.visible {
     transform: translateX(0);
     display: block;
+  }
+  #MangaOnlineViewer #KeybindingsPanel #KeybindingsList {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 5px;    
+  }
+  #MangaOnlineViewer #KeybindingsPanel input {
+    display: inline-block;
+    width: 100%;
   }
 
   #MangaOnlineViewer #BookmarksPanel {
@@ -663,6 +674,7 @@ export default `
     opacity: 0.9;
   }
 
+  #MangaOnlineViewer .ControlButton.hidden,
   #MangaOnlineViewer.light #ColorScheme > :not(.inverse),
   #MangaOnlineViewer:not(.light) #ColorScheme > .inverse,
   #MangaOnlineViewer .ChapterControl #download.loading > :not(.inverse),

@@ -1,4 +1,7 @@
+import { trim } from 'lodash';
 import { keybindEditor, keybindings } from '../components/KeybindingsPanel';
+import { updateSettings, useSettings } from '../settings';
+import { isNothing } from '../../utils/checks.js';
 
 function panels() {
   // Show Header list
@@ -30,13 +33,28 @@ function panels() {
 
   // Keybindings list
   function buttonKeybindings() {
+    document.querySelector('#KeybindingsList')!.innerHTML = keybindings().join('\n');
+    document.querySelector('#SaveKeybindings')?.classList.add('hidden');
+    document.querySelector('#EditKeybindings')?.classList.remove('hidden');
     document.querySelector('#KeybindingsPanel')?.classList.toggle('visible');
   }
+
   function saveKeybindings() {
-    document.querySelector('#KeybindingsList')!.innerHTML = keybindings.join('\n');
+    const newkeybinds: { [key: string]: string[] | undefined } = useSettings().keybinds;
+    Object.keys(useSettings().keybinds).forEach((kb) => {
+      const keys = document.querySelector<HTMLInputElement>(`#${kb}`)?.value.split(',')?.map(trim);
+      newkeybinds[kb] = isNothing(keys) ? undefined : keys;
+    });
+    updateSettings({ keybinds: newkeybinds });
+    document.querySelector('#KeybindingsList')!.innerHTML = keybindings().join('\n');
+    document.querySelector('#SaveKeybindings')?.classList.add('hidden');
+    document.querySelector('#EditKeybindings')?.classList.remove('hidden');
   }
+
   function editKeybindings() {
-    document.querySelector('#KeybindingsList')!.innerHTML = keybindEditor.join('\n');
+    document.querySelector('#KeybindingsList')!.innerHTML = keybindEditor().join('\n');
+    document.querySelector('#SaveKeybindings')?.classList.remove('hidden');
+    document.querySelector('#EditKeybindings')?.classList.add('hidden');
   }
 
   document.querySelector('#keybindings')?.addEventListener('click', buttonKeybindings);

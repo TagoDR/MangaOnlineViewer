@@ -1,6 +1,5 @@
 import { IconDeviceFloppy, IconPencil, IconX } from './icons';
-import { keybinds } from '../events/hotkeys';
-import { getLocaleString } from '../settings';
+import { getLocaleString, useSettings } from '../settings';
 
 function formatKeyName(key: string) {
   return key
@@ -22,16 +21,21 @@ function formatKeyName(key: string) {
     .replace('ArrowLeft', '←');
 }
 
-export const keybindings = keybinds
-  .map((kb) => {
-    const keys = kb.keys.map((key) => `<kbd class='dark'>${formatKeyName(key)}</kbd>`).join(' / ');
-    return `${getLocaleString(kb.name)}: ${keys}<br/>`;
+export const keybindings = () =>
+  Object.keys(useSettings().keybinds).map((kb) => {
+    const keys = useSettings().keybinds[kb]?.length
+      ? useSettings()
+          .keybinds[kb]?.map((key) => `<kbd class='dark'>${formatKeyName(key)}</kbd>`)
+          .join(' / ')
+      : '';
+    return `<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
   });
-export const keybindEditor = keybinds
-  .map(
+export const keybindEditor = () =>
+  Object.keys(useSettings().keybinds).map(
     (kb) =>
-      `${getLocaleString(kb.name)}: 
-        <input type='text' id='${kb.name}' name='${kb.name}' value='${kb.keys.join(' , ')}'><br/>`,
+      `<label for='${kb}'>${getLocaleString(kb)}:</label>
+        <input type='text' class='KeybindInput' id='${kb}' name='${kb}'
+         value='${useSettings().keybinds[kb]?.join(' , ') || ''}'>`,
   );
 
 const KeybindingsPanel = `
@@ -46,14 +50,14 @@ const KeybindingsPanel = `
             ${IconPencil}
             ${getLocaleString('BUTTON_EDIT')}
       </button>
-      <button id='SaveKeybindings' class='ControlButton' type='button'
+      <button id='SaveKeybindings' class='ControlButton hidden' type='button'
             title='${getLocaleString('SAVE_KEYBINDS')}'>
             ${IconDeviceFloppy}
             ${getLocaleString('BUTTON_SAVE')}
       </button>
     </div>
     <div id='KeybindingsList'>
-      ${keybindings.join('\n')}
+      ${keybindings().join('\n')}
     </div>    
 </div>`;
 
