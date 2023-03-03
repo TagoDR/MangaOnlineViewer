@@ -8,7 +8,7 @@ import externalGlobals from 'rollup-plugin-external-globals';
 import metaMain from './src/meta/meta-main';
 import metaAdult from './src/meta/meta-adult';
 import metaDev from './src/meta/meta-dev';
-import { bookmarklet, comicSites, hentaiSites, mangaSites } from './src/meta/readme.js';
+import { bookmarklet, comicSites, hentaiSites, mangaSites } from './src/meta/readme';
 
 const scripts = {
   main: {

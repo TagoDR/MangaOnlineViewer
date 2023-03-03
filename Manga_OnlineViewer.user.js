@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, Reset-Scans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebNovel, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, LeviatanScans, NovelMic
-// @version 2023.03.02
+// @version 2023.03.03
 // @license MIT
 // @grant unsafeWindow
 // @grant GM_getValue
@@ -2949,6 +2949,12 @@
     SAVE_KEYBINDS: "Save KeyBindings",
     BUTTON_EDIT: "Edit",
     BUTTON_SAVE: "Save",
+    KEYBIND_RULES: `
+    <h3>Supported Keys</h3>
+    Allowed modifiers: shift, option, alt, ctrl, control, command. </br>
+    Special keys: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. </br>
+    Examples: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd> 
+  `,
     ATTENTION: "Attention",
     WARNING: "Warning",
     BUTTON_RESET_SETTINGS: "Reset Settings",
@@ -3038,6 +3044,12 @@
     SAVE_KEYBINDS: "Salvar Atalhos",
     BUTTON_EDIT: "Editar",
     BUTTON_SAVE: "Salvar",
+    KEYBIND_RULES: `
+    <h3>Teclas Suportadas</h3>
+    Modificadores permitidos: shift, option, alt, ctrl, control, command. </br>
+    Teclas Especiais: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide.</br>
+    Exemplos: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd> 
+  `,
     ATTENTION: "Atenção",
     WARNING: "Alerta",
     BUTTON_RESET_SETTINGS: "Limpar Configurações",
@@ -3123,6 +3135,16 @@
     BOOKMARK_SAVED: "保存书签",
     BOOKMARK_MESSAGE: "下次打开本章时，将从:<h4>页码 ##num##</h4>(<i>仅一次</i> 每个书签)",
     KEYBINDINGS: "快捷键",
+    EDIT_KEYBINDS: "编辑键绑定",
+    SAVE_KEYBINDS: "保存键绑定",
+    BUTTON_EDIT: "编辑",
+    BUTTON_SAVE: "救",
+    KEYBIND_RULES: `
+    <h3>支持的密钥</h3>
+    允许的修饰符: shift, option, alt, ctrl, control, command. </br>
+    特殊键: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide.</br>
+    例子: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd> 
+  `,
     ATTENTION: "注意",
     WARNING: "警告",
     BUTTON_RESET_SETTINGS: "重置设置",
@@ -5558,15 +5580,7 @@ ${wrapStyle(
     (kb) => `<label for='${kb}'>${getLocaleString(kb)}:</label>
         <input type='text' class='KeybindInput' id='${kb}' name='${kb}'
          value='${useSettings().keybinds[kb]?.join(" , ") || ""}'>`
-  ).concat(`
-<div id='HotKeysRules'>
-    <h3>Supported Keys</h3>
-    <p>HotKeys understands the following modifiers: <code>⇧</code>, <code>shift</code>, <code>option</code>, <code>⌥</code>, <code>alt</code>, <code>ctrl</code>, <code>control</code>, <code>command</code>, and <code>⌘</code>.</p>
-    <p>The following special keys can be used for shortcuts: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 through f19, num_0 through num_9, num_multiply,
-        num_add, num_enter, num_subtract, num_decimal, num_divide.</p>
-    <p><code>⌘</code> Command<code>⌃</code> Control<code>⌥</code> Option(alt)<code>⇧</code> Shift<code>⇪</code> Caps Lock(Capital)<code>↩︎</code> return/Enter space</p>
-</div>
-  `);
+  ).concat(`<div id='HotKeysRules'> ${getLocaleString("KEYBIND_RULES")}</div>`);
   const KeybindingsPanel = `
 <div id='KeybindingsOverlay' class='overlay'></div>
 <div id='KeybindingsPanel' class='panel'>
