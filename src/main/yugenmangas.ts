@@ -1,6 +1,6 @@
 // == YugenMangas ==================================================================================
 export default {
-  name: 'NaniScans',
+  name: 'YugenMangas',
   url: /https?:\/\/(www.)?(yugenmangas).com\/series\/.+/,
   homepage: 'https://yugenmangas.com/',
   language: ['Spanish'],
