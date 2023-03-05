@@ -84,7 +84,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
 - [MangaTigre](https://www.mangatigre.net/) _[Spanish]_
 - [OlympusScans](https://olympusscans.com/) _[Spanish]_
 - [TuMangaOnline](https://lectortmo.com/) _[Spanish]_
-- [NaniScans](https://yugenmangas.com/) _[Spanish]_
+- [YugenMangas](https://yugenmangas.com/) _[Spanish]_
 
 ## Supported Comic Sites
 
