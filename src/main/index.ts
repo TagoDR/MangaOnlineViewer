@@ -31,6 +31,7 @@ import manhuascan from './manhuascan';
 import mreader from './mreader';
 import naniscans from './naniscans';
 import ninemanga from './ninemanga';
+import olympusscans from './olympusscans';
 import pandamanga from './pandamanga';
 import rawdevart from './rawdevart';
 import readcomicsonline from './readcomicsonline';
@@ -81,6 +82,7 @@ const sites = [
   mreader,
   naniscans,
   ninemanga,
+  olympusscans,
   pandamanga,
   rawdevart,
   readcomicsonline,
