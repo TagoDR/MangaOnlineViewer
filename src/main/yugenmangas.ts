@@ -11,7 +11,9 @@ export default {
       data.props.pageProps.data ??
       (
         await fetch(
-          `${window.location.href.replace('series', `_next/data/${data.buildId}/series`)}.json`,
+          window.location.href
+            .replace('series', `_next/data/${data.buildId}/series`)
+            .concat('.json'),
         ).then((res) => res.json())
       ).pageProps.data;
     const api = await fetch(`https://api.yugenmangas.com/series/chapter/${id}`).then((res) =>
