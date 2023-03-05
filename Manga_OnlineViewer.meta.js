@@ -4,7 +4,7 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, Reset-Scans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebNovel, WebToons, Manga33, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, LeviatanScans, NovelMic
+// @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, Reset-Scans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebNovel, WebToons, Manga33, NaniScans, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, LeviatanScans, NovelMic
 // @version 2023.03.05
 // @license MIT
 // @grant unsafeWindow
@@ -51,6 +51,7 @@
 // @include /https?:\/\/(www.)?(mreader|mangageko).com?\/reader\/.*/
 // @include /https?:\/\/(www.)?(naniscans).com\/chapters\/.+\/read/
 // @include /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/
+// @include /https?:\/\/(www.)?olympusscans.com\/capitulo\/.+\/.+/
 // @include /https?:\/\/(www.)?pandamanga.xyz\/.+\/.+\/.+/
 // @include /https?:\/\/(www.)?rawdevart.com\/comic\/.+\/.+\//
 // @include /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/\d*/
@@ -66,6 +67,7 @@
 // @include /https?:\/\/(www.)?webnovel.com\/comic\/.+/
 // @include /https?:\/\/(www.)?webtoons.com\/.+viewer.+/
 // @include /https?:\/\/(www.)?(manga33).com\/manga\/.+/
+// @include /https?:\/\/(www.)?(yugenmangas).com\/series\/.+/
 // @include /https?:\/\/(www.)?zeroscans.com\/comics\/.+/
 // @include /^(?!.*jaiminisbox).*\/read\/.+/
 // @include /https?:\/\/.+\/(manga|series|manhua|comic)\/.+\/.+/

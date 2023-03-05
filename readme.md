@@ -82,7 +82,9 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
 - [SenManga(Raw)](https://raw.senmanga.com/) _[Raw]_
 - [InManga](https://inmanga.com//) _[Spanish]_
 - [MangaTigre](https://www.mangatigre.net/) _[Spanish]_
+- [OlympusScans](https://olympusscans.com/) _[Spanish]_
 - [TuMangaOnline](https://lectortmo.com/) _[Spanish]_
+- [NaniScans](https://yugenmangas.com/) _[Spanish]_
 
 ## Supported Comic Sites
 
