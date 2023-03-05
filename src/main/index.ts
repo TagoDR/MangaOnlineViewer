@@ -46,6 +46,7 @@ import unionmangas from './unionmangas';
 import webnovel from './webnovel';
 import webtoons from './webtoons';
 import wpmanga from './wpmanga';
+import yugenmangas from './yugenmangas';
 import zeroscans from './zeroscans';
 import { ISite } from '../types/ISite';
 
@@ -95,6 +96,7 @@ const sites = [
   webnovel,
   webtoons,
   wpmanga,
+  yugenmangas,
   zeroscans,
   foolslide, // Must be at the end because is a generic check
   madarawp, // Must be at the end because is a generic check
