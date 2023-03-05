@@ -10,6 +10,7 @@ import {
 import { ISettings } from '../types';
 import diffObj from '../utils/diffObj';
 import locales from '../locales';
+import { isNothing } from '../utils/checks.js';
 
 export const defaultSettings: ISettings = {
   locale: 'en_US',
@@ -95,15 +96,23 @@ export function resetSettings() {
   updateSettings(defaultSettings);
 }
 
+export function isBookmarked(url: string = window.location.href): number | undefined {
+  return settings.bookmarks.find((el) => el.url === url)?.page;
+}
+
 // Clear old Bookmarks
 const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // year
 const refreshedBookmark = settings.bookmarks.filter(
-  (el) => Date.now() - el.date < bookmarkTimeLimit,
+  (el) => Date.now() - new Date(el.date).valueOf() < bookmarkTimeLimit,
 );
 if (settings.bookmarks.length !== refreshedBookmark.length) {
   updateSettings({ bookmarks: refreshedBookmark });
 }
 
-export function isBookmarked(url: string = window.location.href): boolean {
-  return useSettings().bookmarks.some((el) => el.url === url);
+// Clear used Bookmarks
+if (!isNothing(isBookmarked())) {
+  logScript(`Bookmark Removed ${window.location.href}`);
+  updateSettings({
+    bookmarks: settings.bookmarks.filter((el) => el.url !== window.location.href),
+  });
 }

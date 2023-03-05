@@ -8,7 +8,7 @@ const listBookmarks = () => {
     (mark, index) => `
 <div id='Bookmark${index + 1}' class='BookmarkItem'>
   <span class='bookmarkData bookmarkDate'>
-    ${new Date(mark.date).toLocaleDateString()}
+    ${new Date(mark.date).toISOString().slice(0, 10)}
   </span>
   <span class='bookmarkData bookmarkURl'
     title='${mark.url}'>

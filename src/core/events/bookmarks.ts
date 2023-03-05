@@ -39,7 +39,7 @@ function buttonBookmark(elem: Element) {
     const mark: IBookmark = {
       url: window.location.href,
       page: num,
-      date: Date.now(),
+      date: new Date().toISOString().slice(0, 10),
     };
     if (isBookmarked(mark.url)) {
       updateSettings({ bookmarks: useSettings().bookmarks.filter((el) => el.url !== mark.url) });

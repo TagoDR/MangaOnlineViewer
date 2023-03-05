@@ -1,11 +1,9 @@
 import { IManga } from '../types/IManga';
 import head from './reader';
 import body from './components/App';
-import { logScript, setValueGM } from '../utils/tampermonkey';
+import { logScript } from '../utils/tampermonkey';
 import events from './events';
 import { loadManga } from './page';
-import { isNothing } from '../utils/checks';
-import { useSettings } from './settings';
 
 export default function display(manga: IManga) {
   window.stop();
@@ -25,14 +23,6 @@ export default function display(manga: IManga) {
         window.scrollTo(0, 0);
         loadManga(manga, manga.begin);
       }, 50);
-      // Clear used Bookmarks
-      if (!isNothing(useSettings().bookmarks.filter((el) => el.url === window.location.href))) {
-        logScript(`Bookmark Removed ${window.location.href}`);
-        useSettings().bookmarks = useSettings().bookmarks.filter(
-          (el) => el.url !== window.location.href,
-        );
-        setValueGM('Bookmarks', JSON.stringify(useSettings().bookmarks));
-      }
     } catch (e) {
       logScript(e);
     }

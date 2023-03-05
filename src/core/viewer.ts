@@ -4,7 +4,7 @@ import RangeInputSlider from 'range-input-slider';
 import { getBrowser, getEngine, getInfoGM, logScript } from '../utils/tampermonkey';
 import { IManga, ISite } from '../types';
 import formatPage from './display';
-import { getLocaleString, useSettings } from './settings';
+import { getLocaleString, isBookmarked, useSettings } from './settings';
 import sweetalertStyle from './components/externalStyle';
 import { startButton } from './components/styles';
 import { testAttribute, testElement, testFunc, testVariable } from './check';
@@ -107,8 +107,7 @@ async function preparePage(site: ISite) {
   const manga = await site.run();
   logScript(`Found Pages: ${manga.pages}`);
   if (manga.pages <= 0) return;
-  manga.begin =
-    useSettings()?.bookmarks?.find((b) => b.url === window.location.href)?.page || manga.begin || 1;
+  manga.begin = isBookmarked() || manga.begin || 1;
   const style = document.createElement('style');
   style.appendChild(document.createTextNode(sweetalertStyle));
   document.body.appendChild(style);
