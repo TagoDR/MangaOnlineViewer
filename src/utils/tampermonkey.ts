@@ -104,8 +104,7 @@ function getBrowser(): string {
   return M.join(' ');
 }
 
-// See
-// https://stackoverflow.com/questions/27487828/how-to-detect-if-a-userscript-is-installed-from-the-chrome-store
+// See https://stackoverflow.com/questions/27487828/how-to-detect-if-a-userscript-is-installed-from-the-chrome-store
 function getEngine(): string {
   return getInfoGM.scriptHandler || 'Greasemonkey';
 }

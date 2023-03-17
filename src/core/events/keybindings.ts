@@ -88,7 +88,12 @@ function keybindings() {
   document.body.onload = null;
   hotkeys.unbind();
   Object.keys(useSettings().keybinds).forEach((key) => {
-    hotkeys(useSettings().keybinds[key]?.join(',') || '', actions[key]);
+    hotkeys(useSettings().keybinds[key]?.join(',') || '', (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      event.stopPropagation();
+      actions[key]();
+    });
   });
 }
 
