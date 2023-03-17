@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, Reset-Scans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, LeviatanScans, NovelMic
-// @version 2023.03.05
+// @version 2023.03.17
 // @license MIT
 // @grant unsafeWindow
 // @grant GM_getValue
@@ -1275,7 +1275,7 @@
     async run() {
       const data = JSON.parse(document.querySelector("#__NEXT_DATA__")?.textContent ?? "");
       const { id } = data.props.pageProps.data ?? (await fetch(
-        `${window.location.href.replace("series", `_next/data/${data.buildId}/series`)}.json`
+        window.location.href.replace("series", `_next/data/${data.buildId}/series`).concat(".json")
       ).then((res) => res.json())).pageProps.data;
       const api = await fetch(`https://api.yugenmangas.com/series/chapter/${id}`).then(
         (res) => res.json()
@@ -5891,7 +5891,7 @@ ${wrapStyle(
       const mark = {
         url: window.location.href,
         page: num,
-        date: new Date().toISOString().slice(0, 10)
+        date: (/* @__PURE__ */ new Date()).toISOString().slice(0, 10)
       };
       if (isBookmarked(mark.url)) {
         updateSettings({ bookmarks: useSettings().bookmarks.filter((el) => el.url !== mark.url) });
@@ -6121,7 +6121,12 @@ ${wrapStyle(
     document.body.onload = null;
     hotkeys.unbind();
     Object.keys(useSettings().keybinds).forEach((key) => {
-      hotkeys(useSettings().keybinds[key]?.join(",") || "", actions[key]);
+      hotkeys(useSettings().keybinds[key]?.join(",") || "", (event) => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        event.stopPropagation();
+        actions[key]();
+      });
     });
   }
 

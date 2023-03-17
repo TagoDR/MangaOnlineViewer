@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version 2023.03.05
+// @version 2023.03.17
 // @license MIT
 // @grant unsafeWindow
 // @grant GM_getValue
@@ -5428,7 +5428,7 @@ ${wrapStyle(
       const mark = {
         url: window.location.href,
         page: num,
-        date: new Date().toISOString().slice(0, 10)
+        date: (/* @__PURE__ */ new Date()).toISOString().slice(0, 10)
       };
       if (isBookmarked(mark.url)) {
         updateSettings({ bookmarks: useSettings().bookmarks.filter((el) => el.url !== mark.url) });
@@ -5658,7 +5658,12 @@ ${wrapStyle(
     document.body.onload = null;
     hotkeys.unbind();
     Object.keys(useSettings().keybinds).forEach((key) => {
-      hotkeys(useSettings().keybinds[key]?.join(",") || "", actions[key]);
+      hotkeys(useSettings().keybinds[key]?.join(",") || "", (event) => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        event.stopPropagation();
+        actions[key]();
+      });
     });
   }
 
