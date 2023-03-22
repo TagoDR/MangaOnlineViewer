@@ -48,7 +48,14 @@ export default {
       next: ChapterURLEncode(+1),
       listImages: Array(parseInt(CurChapter.Page, 10))
         .fill(0)
-        .map((_, i) => src.replace(/-\d\d\d.png/, `-${String(`000${i + 1}`).slice(-3)}.png`)),
+        .map((_, i) =>
+          src.replace(
+            /-\d\d\d.png/,
+            `-${String(i + 1)
+              .padStart(3, '0')
+              .slice(-3)}.png`,
+          ),
+        ),
     };
   },
 };

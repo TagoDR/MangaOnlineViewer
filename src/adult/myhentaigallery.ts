@@ -19,7 +19,14 @@ export default {
       next: '#',
       listImages: Array(num)
         .fill(0)
-        .map((_, i) => src.replace(/\d+\./, `${String(`000${i + 1}`).slice(-3)}.`)),
+        .map((_, i) =>
+          src.replace(
+            /\d+\./,
+            `${String(i + 1)
+              .padStart(3, '0')
+              .slice(-3)}.`,
+          ),
+        ),
     };
   },
 };

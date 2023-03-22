@@ -1,7 +1,7 @@
 // == ComiCastle ===================================================================================
 export default {
   name: 'ComiCastle',
-  url: /https?:\/\/(www.)?comicastle.org\/read\/.+\/[0-9]+.*/,
+  url: /https?:\/\/(www.)?comicastle.org\/read\/.+\/\d+.*/,
   homepage: 'http://www.comicastle.org/',
   language: ['English'],
   category: 'comic',

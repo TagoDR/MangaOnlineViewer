@@ -19,12 +19,12 @@ export default {
       results: { title: string; total_page: number; id: number; image_server: string };
     } = await fetch('/api/getBookByID', options).then((res) => res.json());
     return {
-      title: api!.results.title,
-      series: `/g/${api!.results.id}/`,
-      pages: api!.results.total_page,
+      title: api.results.title,
+      series: `/g/${api.results.id}/`,
+      pages: api.results.total_page,
       prev: '#',
       next: '#',
-      listImages: Array(api!.results.total_page)
+      listImages: Array(api.results.total_page)
         .fill(0)
         .map((_, i) => `${api.results.image_server + api.results.id}/${i + 1}.jpg`),
     };
