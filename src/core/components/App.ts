@@ -82,13 +82,13 @@ const app = (manga: IManga, begin = 1) => `
           ${IconListNumbers}
         </button>
         <button id='bookmarks' title='${getLocaleString(
-  'BOOKMARKS',
-)}' class='ControlButton tablets'>
+          'BOOKMARKS',
+        )}' class='ControlButton tablets'>
           ${IconBookmarks}
         </button>
         <button id='settings' title='${getLocaleString(
-  'SETTINGS',
-)}' class='ControlButton tablets phones'>
+          'SETTINGS',
+        )}' class='ControlButton tablets phones'>
           ${IconSettings}
         </button>
       </span>

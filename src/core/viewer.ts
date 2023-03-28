@@ -5,8 +5,8 @@ import { getBrowser, getEngine, getInfoGM, logScript } from '../utils/tampermonk
 import { IManga, ISite } from '../types';
 import formatPage from './display';
 import { getLocaleString, isBookmarked, useSettings } from './settings';
-import sweetalertStyle from './components/externalStyle';
-import { startButton } from './components/styles';
+import sweetalertStyle from './styles/externalStyle';
+import startButton from './styles/startButton.css?inline';
 import { testAttribute, testElement, testFunc, testVariable } from './check';
 
 async function lateStart(site: ISite, begin = 1) {

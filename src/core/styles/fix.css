@@ -1,0 +1,12 @@
+#pagesSlider {
+    min-height: 40px;
+}
+
+#swal2-title {
+    color: navy;
+}
+
+button.swal2-styled {
+    position: inherit;
+    transform: inherit;
+}

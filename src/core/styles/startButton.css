@@ -1,0 +1,28 @@
+#StartMOV {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    padding: 10px 20px;
+    text-align: center;
+    border: none;
+    background-size: 300% 100%;
+    border-radius: 50px;
+    transition: all 0.4s ease-in-out;
+    background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);
+    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 10000;
+  }
+
+  #StartMOV:hover {
+    background-position: 100% 0;
+    transition: all 0.4s ease-in-out;
+  }
+
+  #StartMOV:focus {
+    outline: none;
+  }

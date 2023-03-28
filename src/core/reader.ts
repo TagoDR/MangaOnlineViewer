@@ -1,8 +1,8 @@
-import cssStyles from './components/styles';
+import cssStyles from './styles/styles';
 import { useSettings } from './settings';
 import { themesCSS } from './themes';
 import { IManga } from '../types';
-import externalCSS from './components/externalStyle';
+import externalCSS from './styles/externalStyle';
 import { wrapStyle } from '../utils/css';
 
 function head(manga: IManga) {
@@ -13,9 +13,9 @@ ${wrapStyle('externals', externalCSS)}
 ${wrapStyle('reader', cssStyles)}
 ${themesCSS}
 ${wrapStyle(
-    'MinZoom',
-    `#MangaOnlineViewer .PageContent .PageImg {min-width: ${useSettings().minZoom}vw;}`,
-  )}
+  'MinZoom',
+  `#MangaOnlineViewer .PageContent .PageImg {min-width: ${useSettings().minZoom}vw;}`,
+)}
 `;
 }
 
