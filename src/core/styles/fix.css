@@ -6,6 +6,9 @@
     width: 5em;
     border: 1px darkblue dashed;
     border-radius: 5px;
+    text-align: center;
+    background: aliceblue;
+    color: black;
 }
 
 #swal2-title {
