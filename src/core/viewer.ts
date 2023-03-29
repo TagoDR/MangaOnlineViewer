@@ -1,6 +1,7 @@
 import Swal, { SweetAlertOptions } from 'sweetalert2';
-// @ts-ignore
-import RangeInputSlider from 'range-input-slider';
+import rangeSlider, { RangeSlider } from 'range-slider-input';
+import rangeSliderStyles from 'range-slider-input/dist/style.css';
+import _ from 'lodash';
 import { getBrowser, getEngine, getInfoGM, logScript } from '../utils/tampermonkey';
 import { IManga, ISite } from '../types';
 import formatPage from './display';
@@ -8,6 +9,30 @@ import { getLocaleString, isBookmarked, useSettings } from './settings';
 import sweetalertStyle from './styles/externalStyle';
 import startButton from './styles/startButton.css?inline';
 import { testAttribute, testElement, testFunc, testVariable } from './check';
+
+function validateMin(valBegin: number, endPage: number, rs: RangeSlider) {
+  let val = valBegin;
+  if (Number.isNaN(val) || val < rs.min()) {
+    val = rs.min();
+  } else if (val > rs.max()) {
+    val = rs.max();
+  } else if (val > endPage) {
+    val = endPage;
+  }
+  return val;
+}
+
+function validadeMax(valEnd: number, beginPage: number, rs: RangeSlider) {
+  let val = valEnd;
+  if (Number.isNaN(val) || val > rs.max()) {
+    val = rs.max();
+  } else if (val < rs.min()) {
+    val = rs.min();
+  } else if (val < beginPage) {
+    val = beginPage;
+  }
+  return val;
+}
 
 async function lateStart(site: ISite, begin = 1) {
   const manga = await site.run();
@@ -18,41 +43,57 @@ async function lateStart(site: ISite, begin = 1) {
     title: getLocaleString('STARTING'),
     html: `
     ${getLocaleString('CHOOSE_BEGINNING')}
-    <span id='pagesValues'>${begin} - ${endPage}</span>
-    <div id='pagesSlider' style='display: flex; justify-content: center;align-content: center;'></div>
+    <div if='pageInputs'>
+      <input type='number' id='pageBegin' class='pageInput' min='1' 
+              max='${manga.pages}' value='${beginPage}'/> 
+      - <input type='number' id='pageEnd' class='pageInput' min='1' 
+              max='${manga.pages}' value='${endPage}'/>
+    </div>
+    <div id='pagesSlider'></div>
     `,
     showCancelButton: true,
     cancelButtonColor: '#d33',
     reverseButtons: true,
     icon: 'question',
     didOpen() {
-      const Slider = new RangeInputSlider(document.getElementById('pagesSlider'), {
-        minPoint: beginPage,
-        maxPoint: endPage,
+      const pageBeginInput = document.querySelector<HTMLInputElement>('#pageBegin');
+      const pageEndInput = document.querySelector<HTMLInputElement>('#pageEnd');
+      const rangeSliderElement = rangeSlider(document.getElementById('pagesSlider')!, {
         min: 1,
         max: manga.pages,
-        onValueChangeStop(newValues: any) {
-          const el = document.getElementById('pagesValues');
-          beginPage = newValues.min;
-          endPage = newValues.max;
-          if (el) {
-            el.innerText = `${beginPage} - ${endPage}`;
+        value: [beginPage, endPage],
+        onInput(value, userInteraction) {
+          if (userInteraction) {
+            [beginPage, endPage] = value;
+            if (pageBeginInput) pageBeginInput.value = beginPage.toString();
+            if (pageEndInput) pageEndInput.value = endPage.toString();
           }
         },
-        onValueChange(newValues: any) {
-          const el = document.getElementById('pagesValues');
-          beginPage = newValues.min;
-          endPage = newValues.max;
-          if (el) {
-            el.innerText = `${newValues.min} - ${newValues.max}`;
-          }
-        },
-        serifs: [
-          { position: 0, html: '1' },
-          { position: 100, html: `${manga.pages}` },
-        ],
       });
-      Slider.init();
+
+      function changedInput() {
+        const valBegin = validateMin(
+          parseInt(pageBeginInput!.value, 10),
+          endPage,
+          rangeSliderElement,
+        );
+        const valEnd = validadeMax(
+          parseInt(pageEndInput!.value, 10),
+          beginPage,
+          rangeSliderElement,
+        );
+        pageBeginInput!.value = valBegin.toString();
+        pageEndInput!.value = valEnd.toString();
+        beginPage = valBegin;
+        endPage = valEnd;
+        rangeSliderElement.value([valBegin, valEnd]);
+      }
+
+      const observerEvent = _.debounce(changedInput, 100);
+      ['change', 'mouseup', 'keyup', 'touchend'].forEach((event) => {
+        pageBeginInput?.addEventListener(event, observerEvent);
+        pageEndInput?.addEventListener(event, observerEvent);
+      });
     },
   };
   Swal.fire(options).then((result) => {
@@ -77,7 +118,7 @@ function createLateStartButton(site: ISite, beginning: number) {
   document.body.appendChild(button);
 
   const style = document.createElement('style');
-  style.appendChild(document.createTextNode(startButton));
+  style.appendChild(document.createTextNode(startButton + rangeSliderStyles));
   document.head.appendChild(style);
   logScript('Start Button added to page', button);
 }

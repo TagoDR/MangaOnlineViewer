@@ -1,7 +1,7 @@
 {
     "name": "mangaonlineviewer",
     "description": "Userscript that helps to read Manga faster by loading all the pages at once",
-    "version": "35.0.0",
+    "version": "36.0.0",
     "scripts": {
         "start": "vite",
         "build": "vite build --mode dev",
@@ -58,7 +58,7 @@
         "lodash": "^4.17.21",
         "normalize.css": "^8.0.1",
         "nprogress": "^0.2.0",
-        "range-input-slider": "^2.0.0",
+        "range-slider-input": "^2.4.4",
         "sweetalert2": "=11.4.8",
         "tinycolor2": "^1.6.0"
     },

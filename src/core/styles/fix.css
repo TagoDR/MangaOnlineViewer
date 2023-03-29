@@ -1,5 +1,9 @@
 #pagesSlider {
-    min-height: 40px;
+    margin: 10px 0;
+}
+
+.pageInput{
+    width: 2em;
 }
 
 #swal2-title {
