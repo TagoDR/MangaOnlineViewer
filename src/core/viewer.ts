@@ -44,9 +44,9 @@ async function lateStart(site: ISite, begin = 1) {
     html: `
     ${getLocaleString('CHOOSE_BEGINNING')}
     <div if='pageInputs'>
-      <input type='number' id='pageBegin' class='pageInput' min='1' 
+      <input type='number' id='pageBegin' class='pageInput' min='1' inputmode='numeric' pattern='[0-9]*'
               max='${manga.pages}' value='${beginPage}'/> 
-      - <input type='number' id='pageEnd' class='pageInput' min='1' 
+      - <input type='number' id='pageEnd' class='pageInput' min='1' inputmode='numeric' pattern='[0-9]*'
               max='${manga.pages}' value='${endPage}'/>
     </div>
     <div id='pagesSlider'></div>
@@ -72,6 +72,7 @@ async function lateStart(site: ISite, begin = 1) {
       });
 
       function changedInput() {
+        if (pageBeginInput!.value === "" || pageEndInput!.value === "") return;
         const valBegin = validateMin(
           parseInt(pageBeginInput!.value, 10),
           endPage,
@@ -89,7 +90,7 @@ async function lateStart(site: ISite, begin = 1) {
         rangeSliderElement.value([valBegin, valEnd]);
       }
 
-      const observerEvent = _.debounce(changedInput, 100);
+      const observerEvent = _.debounce(changedInput, 300);
       ['change', 'mouseup', 'keyup', 'touchend'].forEach((event) => {
         pageBeginInput?.addEventListener(event, observerEvent);
         pageEndInput?.addEventListener(event, observerEvent);
@@ -126,9 +127,8 @@ function createLateStartButton(site: ISite, beginning: number) {
 function showWaitPopup(site: ISite, manga: IManga) {
   Swal.fire({
     title: getLocaleString('STARTING'),
-    html: `${
-      manga.begin > 1 ? `${getLocaleString('RESUME')}${manga.begin}.<br/>` : ''
-    }${getLocaleString('WAITING')}`,
+    html: `${manga.begin > 1 ? `${getLocaleString('RESUME')}${manga.begin}.<br/>` : ''
+      }${getLocaleString('WAITING')}`,
     showCancelButton: true,
     cancelButtonColor: '#d33',
     reverseButtons: true,
@@ -189,8 +189,7 @@ function waitExec(site: ISite, waitElapsed: number = 0) {
 // Script Entry point
 function start(sites: ISite[]) {
   logScript(
-    `Starting ${getInfoGM.script.name} ${
-      getInfoGM.script.version
+    `Starting ${getInfoGM.script.name} ${getInfoGM.script.version
     } on ${getBrowser()} with ${getEngine()}`,
   );
   logScript(`${sites.length} Known Manga Sites, Looking for a match...`);

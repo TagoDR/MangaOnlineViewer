@@ -3,7 +3,9 @@
 }
 
 .pageInput{
-    width: 2em;
+    width: 5em;
+    border: 1px darkblue dashed;
+    border-radius: 5px;
 }
 
 #swal2-title {
