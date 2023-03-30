@@ -16,13 +16,13 @@
     top: 10px;
     right: 10px;
     z-index: 10000;
-  }
+}
 
-  #StartMOV:hover {
+#StartMOV:hover {
     background-position: 100% 0;
     transition: all 0.4s ease-in-out;
-  }
+}
 
-  #StartMOV:focus {
+#StartMOV:focus {
     outline: none;
-  }
+}

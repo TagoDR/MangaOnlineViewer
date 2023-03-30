@@ -6,25 +6,25 @@ const listBookmarks = () => {
   if (isEmpty(useSettings().bookmarks)) return [getLocaleString('LIST_EMPTY')];
   return useSettings().bookmarks.map(
     (mark, index) => `
-<div id='Bookmark${index + 1}' class='BookmarkItem'>
+      <div id='Bookmark${index + 1}' class='BookmarkItem'>
   <span class='bookmarkData bookmarkDate'>
     ${new Date(mark.date).toISOString().slice(0, 10)}
   </span>
-  <span class='bookmarkData bookmarkURl'
-    title='${mark.url}'>
+        <span class='bookmarkData bookmarkURl'
+              title='${mark.url}'>
     ${mark.url}
   </span>
-  <span class='bookmarkData bookmarkPage'>Page: ${mark.page}</span>
-  <span class='bookmarkData bookmarkFunctions'>
+        <span class='bookmarkData bookmarkPage'>Page: ${mark.page}</span>
+        <span class='bookmarkData bookmarkFunctions'>
     <button class='ControlButton open' title='Open Bookmark' type='button'
-     onclick="window.open('${mark.url}','_blank')">
+            onclick="window.open('${mark.url}','_blank')">
       ${IconExternalLink}
     </button>
     <button class='ControlButton erase' title='Delete Bookmark' type='button' value='${mark.url}'>
       ${IconTrash}
     </button>
-  </pan>
-</div>`,
+          </pan>
+      </div>`,
   );
 };
 const BookmarkPanel = `

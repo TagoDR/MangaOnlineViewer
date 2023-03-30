@@ -38,6 +38,7 @@ export function testVariable(site: ISite) {
   }
   return false;
 }
+
 export function testFunc(site: ISite) {
   if (site.waitFunc !== undefined) {
     const wait = site.waitFunc();

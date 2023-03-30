@@ -38,5 +38,5 @@ export interface ISettings {
   hidePageControls: boolean;
   header: Header;
   maxReload: number;
-  keybinds: { [key: string]: string[] | undefined};
+  keybinds: { [key: string]: string[] | undefined };
 }

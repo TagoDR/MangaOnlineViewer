@@ -68,7 +68,7 @@ export async function awaitElement(selector: string) {
 
     function delayedProbe() {
       if (tries >= MAX_TRIES) {
-        log('Can\'t find element with selector', selector);
+        log("Can't find element with selector", selector);
         reject();
         return;
       }

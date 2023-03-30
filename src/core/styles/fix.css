@@ -1,18 +1,21 @@
 #pagesSlider {
     margin: 10px 0;
 }
+
 #pageInputs {
     display: flex;
     gap: 5px;
     align-items: center;
     justify-content: center;
 }
-#swal2-html-container .pageInput{
+
+#swal2-html-container .pageInput {
     border: 1px darkblue dashed;
     border-radius: 5px;
     text-align: center;
     background-color: aliceblue;
     color: black;
+    max-width: 40%;
 }
 
 #swal2-title {

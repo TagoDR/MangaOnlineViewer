@@ -65,7 +65,7 @@ export default {
   LANGUAGE_CHANGED: 'Idioma foi alterado, recarregue o site para efetivar a alteração',
   AUTO_DOWNLOAD: 'Proxima vez que abrir um capitulo download iniciara automaticamente',
   LAZY_LOAD:
-    'Carregamento preguiçoso não é compativel com download de zip, não conseguira com essa configuração ativa.<br/> Sugestão: <span style=\'color:red;font-weight:bold\'>Desative Miniaturas</span> para economizar memoria e cota de internet.',
+    "Carregamento preguiçoso não é compativel com download de zip, não conseguira com essa configuração ativa.<br/> Sugestão: <span style='color:red;font-weight:bold'>Desative Miniaturas</span> para economizar memoria e cota de internet.",
   LAZY_LOAD_IMAGES_ENABLE: 'Ativar Carregamento de imagens preguiçoso',
   LAZY_LOAD_IMAGES: 'Carregamento de paginas preguiçoso começa a partir de (entre 5 e 100)',
   RETURN_CHAPTER_LIST: 'Voltar a lista de Capitulos',

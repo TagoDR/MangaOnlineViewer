@@ -65,7 +65,7 @@ export default {
   LANGUAGE_CHANGED: '语言已更改、重新加载页面才能生效',
   AUTO_DOWNLOAD: '下次章节加载完成时、系统将提示您自动保存',
   LAZY_LOAD:
-    '延迟加载与zip下载不兼容、您将无法使用此设置下载.<br/> 建议: <span style=\'color:red;font-weight:bold\'>禁用缩略图</span> 以节省流量和内存.',
+    "延迟加载与zip下载不兼容、您将无法使用此设置下载.<br/> 建议: <span style='color:red;font-weight:bold'>禁用缩略图</span> 以节省流量和内存.",
   LAZY_LOAD_IMAGES_ENABLE: '启用延迟加载图像',
   LAZY_LOAD_IMAGES: '惰性加载从页面 (最小 5 最大 100)',
   RETURN_CHAPTER_LIST: '返回章节列表',

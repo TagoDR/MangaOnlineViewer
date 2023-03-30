@@ -1,12 +1,12 @@
 :root {
     --theme-body-background: #25262b;
-    --theme-body-text-color: #C1C2C5;
-    --theme-text-color: #C1C2C5;
-    --theme-primary-color: #1A1B1E;
-    --theme-primary-text-color: #C1C2C5;
+    --theme-body-text-color: #c1c2c5;
+    --theme-text-color: #c1c2c5;
+    --theme-primary-color: #1a1b1e;
+    --theme-primary-text-color: #c1c2c5;
     --theme-background-color: #25262b;
-    --theme-hightlight-color: #2C2E33;
-    --theme-border-color: #373A40;
+    --theme-hightlight-color: #2c2e33;
+    --theme-border-color: #373a40;
 }
 
 /*  Simple Normalizer */
@@ -16,7 +16,7 @@ html {
 
 body {
     margin: 0;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 20px;
     color: #333;
@@ -162,7 +162,7 @@ img {
     display: none;
 }
 
-#MangaOnlineViewer #SettingsPanel input[type="range"] {
+#MangaOnlineViewer #SettingsPanel input[type='range'] {
     width: 100%;
 }
 
@@ -333,7 +333,6 @@ img {
     flex-basis: 55%;
 }
 
-
 #MangaOnlineViewer select {
     height: 20px;
     padding: 0;
@@ -393,7 +392,7 @@ img {
     /*position:relative;*/
 }
 
-#MangaOnlineViewer .PageContent .PageImg[src=""],
+#MangaOnlineViewer .PageContent .PageImg[src=''],
 #MangaOnlineViewer .PageContent .PageImg:not([src]) {
     width: 40vw;
     height: 80vh;
@@ -414,7 +413,7 @@ img {
     background-color: var(--theme-hightlight-color);
 }
 
-#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=""],
+#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=''],
 #MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {
     width: 100px;
     height: 150px;
@@ -865,40 +864,40 @@ img {
 
 @-webkit-keyframes spin {
     to {
-        transform: rotate(360deg)
+        transform: rotate(360deg);
     }
 }
 
 @keyframes spin {
     to {
-        transform: rotate(360deg)
+        transform: rotate(360deg);
     }
 }
 
 .animate-spin {
     -webkit-animation: spin 1s linear infinite;
-    animation: spin 1s linear infinite
+    animation: spin 1s linear infinite;
 }
 
 @-webkit-keyframes spin-reverse {
     0% {
-        transform: rotate(360deg)
+        transform: rotate(360deg);
     }
     to {
-        transform: rotate(0)
+        transform: rotate(0);
     }
 }
 
 @keyframes spin-reverse {
     0% {
-        transform: rotate(360deg)
+        transform: rotate(360deg);
     }
     to {
-        transform: rotate(0)
+        transform: rotate(0);
     }
 }
 
 .animate-spin-reverse {
     -webkit-animation: spin-reverse 1s linear infinite;
-    animation: spin-reverse 1s linear infinite
+    animation: spin-reverse 1s linear infinite;
 }

@@ -7,6 +7,7 @@ function findExt(i: number) {
   if (c === 'g') return '.gif';
   return '.jpg';
 }
+
 function findServer(cId: number) {
   if (cId > 0 && cId <= 274825) return 'm1.imhentai.xxx';
   if (cId > 274825 && cId <= 403818) return 'm2.imhentai.xxx';
@@ -16,6 +17,7 @@ function findServer(cId: number) {
   if (cId > 816010 && cId <= 970098) return 'm6.imhentai.xxx';
   return 'm7.imhentai.xxx'; // id > 970098
 }
+
 export default {
   name: 'Imhentai',
   url: /https?:\/\/(www.)?imhentai.xxx\/view\/.+\/.+\//,
