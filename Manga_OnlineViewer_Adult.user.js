@@ -451,7 +451,8 @@
       "ManhuaPlus",
       "TopManhua",
       "LeviatanScans",
-      "NovelMic"
+      "NovelMic",
+      "Reset-Scans"
     ],
     url: /https?:\/\/.+\/(manga|series|manhua|comic)\/.+\/.+/,
     homepage: [
@@ -468,7 +469,8 @@
       "https://manhuaplus.com/",
       "https://www.topmanhua.com/",
       "https://en.leviatanscans.com/home/",
-      "https://novelmic.com/"
+      "https://novelmic.com/",
+      "https://reset-scans.com/"
     ],
     language: ["English"],
     obs: "Any Site that uses Madara Wordpress Plugin",

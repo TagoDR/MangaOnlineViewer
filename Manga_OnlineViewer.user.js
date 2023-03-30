@@ -4,7 +4,7 @@
 // @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, Reset-Scans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, LeviatanScans, NovelMic
+// @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, LeviatanScans, NovelMic, Reset-Scans
 // @version 2023.03.30
 // @license MIT
 // @grant unsafeWindow
@@ -57,7 +57,6 @@
 // @include /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/\d*/
 // @include /https?:\/\/(www.)?(funmanga|mngdoom|readmng|mangainn).(com|net)\/.+\/\d+/
 // @include /https?:\/\/(www.)?reaperscans.com\/comics\/.+\/chapters\/.+/
-// @include /https?:\/\/(www.)?reset-scans.com\/manga\/.+\/chapter.+/
 // @include /https?:\/\/raw.senmanga.com\/.+\/.+\/?/
 // @include /https?:\/\/(www.)?shimadascans.com\/.+(series|chapter).+/
 // @include /https?:\/\/(www.)?tapas.io\/episode\/.+/
@@ -413,7 +412,8 @@
       "ManhuaPlus",
       "TopManhua",
       "LeviatanScans",
-      "NovelMic"
+      "NovelMic",
+      "Reset-Scans"
     ],
     url: /https?:\/\/.+\/(manga|series|manhua|comic)\/.+\/.+/,
     homepage: [
@@ -430,7 +430,8 @@
       "https://manhuaplus.com/",
       "https://www.topmanhua.com/",
       "https://en.leviatanscans.com/home/",
-      "https://novelmic.com/"
+      "https://novelmic.com/",
+      "https://reset-scans.com/"
     ],
     language: ["English"],
     obs: "Any Site that uses Madara Wordpress Plugin",
@@ -1022,50 +1023,6 @@
     }
   };
 
-  const resetscans = {
-    name: "Reset-Scans",
-    url: /https?:\/\/(www.)?reset-scans.com\/manga\/.+\/chapter.+/,
-    homepage: "https://reset-scans.com/",
-    language: ["English"],
-    category: "manga",
-    waitVar: "chapter_data",
-    run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const images = Array.isArray(W.chapter_data) ? JSON.parse(W.chapter_data) : JSON.parse(
-        JSON.parse(
-          CryptoJS.AES.decrypt(W.chapter_data, W.wpmangaprotectornonce, {
-            format: {
-              stringify(data) {
-                const cypher = {
-                  ct: data.ciphertext.toString(CryptoJS.enc.Base64),
-                  iv: data.iv?.toString(),
-                  s: data.salt?.toString()
-                };
-                return JSON.stringify(cypher);
-              },
-              parse(text) {
-                const result = JSON.parse(text);
-                return CryptoJS.lib.CipherParams.create({
-                  ciphertext: CryptoJS.enc.Base64.parse(result.ct),
-                  iv: CryptoJS.enc.Hex.parse(result.iv),
-                  salt: CryptoJS.enc.Hex.parse(result.s)
-                });
-              }
-            }
-          }).toString(CryptoJS.enc.Utf8)
-        )
-      );
-      return {
-        title: document.querySelector("#chapter-heading")?.textContent?.trim(),
-        series: document.querySelector(".back")?.getAttribute("href"),
-        pages: images.length,
-        prev: document.querySelector(".prev_page")?.getAttribute("href"),
-        next: document.querySelector(".next_page")?.getAttribute("href"),
-        listImages: images
-      };
-    }
-  };
-
   const senmanga = {
     name: "SenManga(Raw)",
     url: /https?:\/\/raw.senmanga.com\/.+\/.+\/?/,
@@ -1355,7 +1312,7 @@
     readcomicsonline,
     readmangatoday,
     reaperscans,
-    resetscans,
+    // resetscans, deprecated
     senmanga,
     shimadascans,
     tapas,
