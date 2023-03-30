@@ -18,6 +18,7 @@ export default {
     'TopManhua',
     'LeviatanScans',
     'NovelMic',
+    'Reset-Scans',
   ],
   url: /https?:\/\/.+\/(manga|series|manhua|comic)\/.+\/.+/,
   homepage: [
@@ -35,6 +36,7 @@ export default {
     'https://www.topmanhua.com/',
     'https://en.leviatanscans.com/home/',
     'https://novelmic.com/',
+    'https://reset-scans.com/',
   ],
   language: ['English'],
   obs: 'Any Site that uses Madara Wordpress Plugin',

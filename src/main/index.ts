@@ -37,7 +37,7 @@ import rawdevart from './rawdevart';
 import readcomicsonline from './readcomicsonline';
 import readmangatoday from './readmangatoday';
 import reaperscans from './reaperscans';
-import resetscans from './resetscans';
+// import resetscans from './resetscans';
 import senmanga from './senmanga';
 import shimadascans from './shimadascans';
 import tapas from './tapas';
@@ -88,7 +88,7 @@ const sites = [
   readcomicsonline,
   readmangatoday,
   reaperscans,
-  resetscans,
+  // resetscans, deprecated
   senmanga,
   shimadascans,
   tapas,
