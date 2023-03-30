@@ -4,7 +4,6 @@
 
 Loads all pages from a chapter in a nice view, allowing for faster and more comfortable reading, without the need to wait for pages to load.
 
-
 :exclamation: **Attention**: Some sites require you to reload the page(F5) or open the chapter in a new tab for the script to start.
 
 ## Installation
@@ -128,46 +127,46 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
 
 ## HotKeys
 
-- <span>Scroll Up:</span> <span><kbd class="dark">up</kbd> / <kbd class="dark">W</kbd> / <kbd class="dark">num_8</kbd></span>
-- <span>Scroll Down:</span> <span><kbd class="dark">down</kbd> / <kbd class="dark">S</kbd> / <kbd class="dark">num_2</kbd></span>
-- <span>Next Chapter:</span> <span><kbd class="dark">right</kbd> / <kbd class="dark">/</kbd> / <kbd class="dark">D</kbd> / <kbd class="dark">num_6</kbd></span>
-- <span>Previous Chapter:</span> <span><kbd class="dark">left</kbd> / <kbd class="dark">;</kbd> / <kbd class="dark">A</kbd> / <kbd class="dark">num_4</kbd></span>
-- <span>Enlarge:</span> <span><kbd class="dark">-</kbd> / <kbd class="dark">num_add</kbd> / <kbd class="dark">E</kbd></span>
-- <span>Restore:</span> <span><kbd class="dark">=</kbd> / <kbd class="dark">num_subtract</kbd> / <kbd class="dark">Q</kbd></span>
-- <span>Restore:</span> <span><kbd class="dark">9</kbd> / <kbd class="dark">num_divide</kbd> / <kbd class="dark">R</kbd></span>
-- <span>Fit Width:</span> <span><kbd class="dark">0</kbd> / <kbd class="dark">num_multiply</kbd> / <kbd class="dark">F</kbd></span>
-- <span>Fit Height:</span> <span><kbd class="dark">H</kbd></span>
-- <span>Settings:</span> <span><kbd class="dark">num_divide</kbd> / <kbd class="dark">num_5</kbd> / <kbd class="dark">X</kbd></span>
-- <span>WebComic:</span> <span><kbd class="dark">C</kbd></span>
-- <span>Vertical:</span> <span><kbd class="dark">V</kbd></span>
-- <span>Left to Right:</span> <span><kbd class="dark">N</kbd></span>
-- <span>Right to Left:</span> <span><kbd class="dark">B</kbd></span>
+-   <span>Scroll Up:</span> <span><kbd class="dark">up</kbd> / <kbd class="dark">W</kbd> / <kbd class="dark">num_8</kbd></span>
+-   <span>Scroll Down:</span> <span><kbd class="dark">down</kbd> / <kbd class="dark">S</kbd> / <kbd class="dark">num_2</kbd></span>
+-   <span>Next Chapter:</span> <span><kbd class="dark">right</kbd> / <kbd class="dark">/</kbd> / <kbd class="dark">D</kbd> / <kbd class="dark">num_6</kbd></span>
+-   <span>Previous Chapter:</span> <span><kbd class="dark">left</kbd> / <kbd class="dark">;</kbd> / <kbd class="dark">A</kbd> / <kbd class="dark">num_4</kbd></span>
+-   <span>Enlarge:</span> <span><kbd class="dark">-</kbd> / <kbd class="dark">num_add</kbd> / <kbd class="dark">E</kbd></span>
+-   <span>Restore:</span> <span><kbd class="dark">=</kbd> / <kbd class="dark">num_subtract</kbd> / <kbd class="dark">Q</kbd></span>
+-   <span>Restore:</span> <span><kbd class="dark">9</kbd> / <kbd class="dark">num_divide</kbd> / <kbd class="dark">R</kbd></span>
+-   <span>Fit Width:</span> <span><kbd class="dark">0</kbd> / <kbd class="dark">num_multiply</kbd> / <kbd class="dark">F</kbd></span>
+-   <span>Fit Height:</span> <span><kbd class="dark">H</kbd></span>
+-   <span>Settings:</span> <span><kbd class="dark">num_divide</kbd> / <kbd class="dark">num_5</kbd> / <kbd class="dark">X</kbd></span>
+-   <span>WebComic:</span> <span><kbd class="dark">C</kbd></span>
+-   <span>Vertical:</span> <span><kbd class="dark">V</kbd></span>
+-   <span>Left to Right:</span> <span><kbd class="dark">N</kbd></span>
+-   <span>Right to Left:</span> <span><kbd class="dark">B</kbd></span>
 
 ## Features
 
-- View Modes:
-    - Vertical/WebComic [Default]
-    - Fluid Left to Right
-    - Fluid Right to Left
-- Bookmark Pages (To resume reading)
-- Full Themes and Customizable
-- Global and Individual images zoom
-    - In(Global one may stretch images beyond window width)
-    - Out
-    - Restore original(Toggle fit width if oversize)
-    - Fit width
-    - Fit width if oversize[Default on]
-    - Fit Height (with scroll pages)
-    - Hide
-- Auto reload Images
-    - Counter for loaded Images
-    - Individual image reload, just in case
-- HotKeys
-- Goto Page
-- Image Loading Timer[Default 1s](Some sites require longer timers. eg.:ExHentai,e-hentai)
-- Thumbnails Navigation[Default on]
-- Download all images as ZIP File[Automatic Default off]
-- Lazy Load Images[Default off]
+-   View Modes:
+    -   Vertical/WebComic [Default]
+    -   Fluid Left to Right
+    -   Fluid Right to Left
+-   Bookmark Pages (To resume reading)
+-   Full Themes and Customizable
+-   Global and Individual images zoom
+    -   In(Global one may stretch images beyond window width)
+    -   Out
+    -   Restore original(Toggle fit width if oversize)
+    -   Fit width
+    -   Fit width if oversize[Default on]
+    -   Fit Height (with scroll pages)
+    -   Hide
+-   Auto reload Images
+    -   Counter for loaded Images
+    -   Individual image reload, just in case
+-   HotKeys
+-   Goto Page
+-   Image Loading Timer[Default 1s](Some sites require longer timers. eg.:ExHentai,e-hentai)
+-   Thumbnails Navigation[Default on]
+-   Download all images as ZIP File[Automatic Default off]
+-   Lazy Load Images[Default off]
 
 ## Rules For adding new Manga Sites
 
