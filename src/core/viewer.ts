@@ -43,7 +43,7 @@ async function lateStart(site: ISite, begin = 1) {
     title: getLocaleString('STARTING'),
     html: `
     ${getLocaleString('CHOOSE_BEGINNING')}
-    <div if='pageInputs'>
+    <div id='pageInputs'>
       <input type='number' id='pageBegin' class='pageInput' min='1' inputmode='numeric' pattern='[0-9]*'
               max='${manga.pages}' value='${beginPage}'/> 
       - <input type='number' id='pageEnd' class='pageInput' min='1' inputmode='numeric' pattern='[0-9]*'

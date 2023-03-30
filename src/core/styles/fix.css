@@ -1,13 +1,17 @@
 #pagesSlider {
     margin: 10px 0;
 }
-
-.pageInput{
-    width: 5em;
+#pageInputs {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+}
+#swal2-html-container .pageInput{
     border: 1px darkblue dashed;
     border-radius: 5px;
     text-align: center;
-    background: aliceblue;
+    background-color: aliceblue;
     color: black;
 }
 
