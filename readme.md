@@ -115,6 +115,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
 - [PornComixOnline](https://www.porncomixone.net) _[English]_
 - [Pururin](https://pururin.to/) _[English]_
 - [Simply-Hentai](https://simply-hentai.com/) _[English]_
+- [ksk.moe](https://ksk.moe/) / [Sukebe.moe](https://sukebe.moe/) _[English]_ **Obs: Slow start, bruteforce required**
 - [3Hentai](https://3hentai.net/) _[English]_
 - [Tsumino](http://tsumino.com/) _[English]_
 - [XlecxOne](https://xlecx.one/) _[English]_
