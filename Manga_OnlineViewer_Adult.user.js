@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version 2023.03.31
+// @version 2023.04.01
 // @license MIT
 // @grant unsafeWindow
 // @grant GM_getValue
@@ -721,6 +721,24 @@
     }
   };
 
+  function waitForAtb(selector, atribute) {
+    return new Promise((resolve) => {
+      if (document.querySelector(selector)?.getAttribute(atribute)) {
+        resolve(document.querySelector(selector)?.getAttribute(atribute));
+      }
+      const observer = new MutationObserver(() => {
+        if (document.querySelector(selector)?.getAttribute(atribute)) {
+          resolve(document.querySelector(selector)?.getAttribute(atribute));
+          observer.disconnect();
+        }
+      });
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    });
+  }
+
   const sukebe = {
     name: ["ksk.moe", "Sukebe.moe"],
     obs: "Slow start, bruteforce required",
@@ -732,21 +750,16 @@
     async run() {
       document.querySelector(".first")?.dispatchEvent(new Event("click"));
       const next = document.querySelector(".next");
-      const qt = document.querySelectorAll(".currentPageNum option")?.length || 0;
+      const num = document.querySelectorAll(".currentPageNum option");
       const src = [];
-      for (let i = 1; i <= qt; i += 1) {
-        while (!document.querySelector(".page img")?.getAttribute("src")) {
-          await new Promise((resolve) => {
-            setTimeout(resolve, 100);
-          });
-        }
-        src.push(document.querySelector(".page img")?.getAttribute("src"));
+      for (let i = 1; i <= num?.length; i += 1) {
+        src.push(await waitForAtb(".page img", "src"));
         next?.dispatchEvent(new Event("click"));
       }
       return {
         title: document.querySelector("header h1 a")?.textContent?.trim(),
         series: document.querySelector("header h1 a")?.getAttribute("href"),
-        pages: src.length,
+        pages: num?.length,
         prev: "#",
         next: "#",
         listImages: src
