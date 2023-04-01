@@ -1,4 +1,6 @@
 // == Sukebe.moe ===================================================================================
+import { waitForAtb } from '../utils/waitFor.js';
+
 export default {
   name: ['ksk.moe', 'Sukebe.moe'],
   obs: 'Slow start, bruteforce required',
@@ -10,22 +12,17 @@ export default {
   async run() {
     document.querySelector('.first')?.dispatchEvent(new Event('click'));
     const next = document.querySelector('.next');
-    const qt = document.querySelectorAll<HTMLSelectElement>('.currentPageNum option')?.length || 0;
+    const num = document.querySelectorAll<HTMLSelectElement>('.currentPageNum option');
     const src = [];
-    for (let i = 1; i <= qt; i += 1) {
-      while (!document.querySelector('.page img')?.getAttribute('src')) {
-        // eslint-disable-next-line no-await-in-loop
-        await new Promise((resolve) => {
-          setTimeout(resolve, 100);
-        });
-      }
-      src.push(document.querySelector('.page img')?.getAttribute('src'));
+    for (let i = 1; i <= num?.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      src.push(await waitForAtb('.page img', 'src'));
       next?.dispatchEvent(new Event('click'));
     }
     return {
       title: document.querySelector('header h1 a')?.textContent?.trim(),
       series: document.querySelector('header h1 a')?.getAttribute('href'),
-      pages: src.length,
+      pages: num?.length,
       prev: '#',
       next: '#',
       listImages: src,
