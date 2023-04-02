@@ -5,7 +5,7 @@
 // @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version 2023.04.01
+// @version 2023.04.02
 // @license MIT
 // @grant unsafeWindow
 // @grant GM_getValue
@@ -721,7 +721,7 @@
     }
   };
 
-  function waitForAtb(selector, atribute) {
+  function waitForAtb(selector, atribute, target = document.body) {
     return new Promise((resolve) => {
       if (document.querySelector(selector)?.getAttribute(atribute)) {
         resolve(document.querySelector(selector)?.getAttribute(atribute));
@@ -732,9 +732,11 @@
           observer.disconnect();
         }
       });
-      observer.observe(document.body, {
+      observer.observe(target, {
         childList: true,
-        subtree: true
+        subtree: true,
+        attributes: true,
+        attributeFilter: [atribute]
       });
     });
   }
@@ -748,12 +750,19 @@
     category: "hentai",
     waitEle: ".main .page img",
     async run() {
+      const direction = document.querySelector('[name="direction"]');
+      if (direction) {
+        direction.value = "1";
+        direction.dispatchEvent(new Event("change"));
+      }
       document.querySelector(".first")?.dispatchEvent(new Event("click"));
       const next = document.querySelector(".next");
       const num = document.querySelectorAll(".currentPageNum option");
+      const target = document.querySelector(".main .pages");
       const src = [];
       for (let i = 1; i <= num?.length; i += 1) {
-        src.push(await waitForAtb(".page img", "src"));
+        src.push(await waitForAtb(".page img", "src", target ?? document.body));
+        target?.querySelector("img")?.removeAttribute("src");
         next?.dispatchEvent(new Event("click"));
       }
       return {
