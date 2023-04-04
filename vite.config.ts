@@ -26,7 +26,7 @@ const scripts = {
   dev: {
     entry: 'userscript-dev.ts',
     name: 'Manga_OnlineViewer_Dev.user.js',
-    meta: './dist/Manga_OnlineViewer_Dev.meta.js',
+    meta: 'Manga_OnlineViewer_Dev.meta.js',
     banner: metaDev,
   },
 };
@@ -53,7 +53,7 @@ function generateReadme() {
 
 function generateMetadata(script: any) {
   const banner = userscript.stringify(script.banner);
-  fs.writeFileSync(script.meta, banner, 'utf8');
+  fs.writeFileSync(`./dist/${script.meta}`, banner, 'utf8');
   return banner;
 }
 
@@ -70,7 +70,7 @@ export default defineConfig(({ mode }) => {
       target: 'esnext',
       minify: false,
       emptyOutDir: false,
-      outDir: target === 'dev' ? 'dist' : '',
+      outDir: 'dist',
       rollupOptions: {
         input: `src/${scripts[target].entry}`,
         plugins: [externalGlobals(globals)],

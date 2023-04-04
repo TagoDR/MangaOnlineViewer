@@ -5,9 +5,10 @@ export default {
   name: 'Manga OnlineViewer Adult',
   author: 'Tago',
   updateURL:
-    'https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.meta.js',
+    'https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.meta.js',
   downloadURL:
-    'https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer_Adult.user.js',
+    'https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js',
+  supportURL:'https://github.com/TagoDR/MangaOnlineViewer/issues',
   namespace: 'https://github.com/TagoDR',
   description: `Shows all pages at once in online view for these sites: ${sites
     .flatMap((s) => s.name)

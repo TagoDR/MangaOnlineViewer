@@ -25,7 +25,8 @@ yarn-debug.log*
 yarn-error.log*
 
 desktop.ini
-/dist
+/temp
+/workspace
 .cache
 
 
@@ -47,3 +48,7 @@ Desktop.ini
 
 # Benchmarking
 benchmarks/graphs
+
+# Testing build
+/dist/Manga_OnlineViewer_Dev.meta.js
+/dist/Manga_OnlineViewer_Dev.user.js

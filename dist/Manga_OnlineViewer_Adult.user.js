@@ -1,11 +1,12 @@
 // ==UserScript==
-// @name Manga OnlineViewer
+// @name Manga OnlineViewer Adult
 // @author Tago
-// @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.meta.js
-// @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
+// @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.meta.js
+// @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
+// @supportURL https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, LeviatanScans, NovelMic, Reset-Scans
-// @version 2023.04.02
+// @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
+// @version 2023.04.04
 // @license MIT
 // @grant unsafeWindow
 // @grant GM_getValue
@@ -23,381 +24,421 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
 // @require https://cdn.jsdelivr.net/npm/hotkeys-js@3.10.1/dist/hotkeys.min.js
-// @include /https?:\/\/beta.asurascans.com\/read\/.+\/.+/
-// @include /https?:\/\/(www.)?bato.to\/chapter.*/
-// @include /https?:\/\/(www.)?(bilibilicomics).com\/.+\/.+/
-// @include /https?:\/\/(www.)?comicastle.org\/read\/.+\/\d+.*/
-// @include /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/
-// @include /https?:\/\/(www.)?(asurascans|flamescans|realmscans|void-scans|luminousscans).(com|org|gg)\/.+/
-// @include /https?:\/\/(comics.)?inkr.com\/title\/.+\/chapter\/.+/
-// @include /https?:\/\/(www.)?inmanga.com\/ver\/manga\/.+\/.+/
-// @include /https?:\/\/(www.)?klmanga.com\/.+chapter.+/
-// @include /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
-// @include /https?:\/\/(www.)?lhtranslation.net\/read.+/
-// @include /https?:\/\/(www.)?lynxscans.com\/comics?\/.+/
-// @include /https?:\/\/(www.)?mangabuddy.com\/.+\/chapter.+/
-// @include /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/
-// @include /https?:\/\/(www.)?(fanfox.net|mangahere.cc)\/manga\/.+\/.+\//
-// @include /https?:\/\/.{3,4}?(mangafreak).net\/Read.+/
-// @include /https?:\/\/(www.)?mangahosted.com\/manga\/.+\/.+/
-// @include /https?:\/\/(www.)?(mangahub).io\/chapter\/.+\/.+/
-// @include /https?:\/\/(www.)?((manganelo|mangakakalot).com\/chapter\/.+\/.+|(manganato|readmanganato|chapmanganato).com\/manga-\w\w\d+\/chapter-\d+)/
-// @include /https?:\/\/(www.)?mangareader.to\/read\/.+\/.+\/.+/
-// @include /https?:\/\/(www.)?(mangasee123|manga4life).com\/read-online\/.+/
-// @include /https?:\/\/(www.)?mangatigre.net\/.+\/.+\/.+/
-// @include /https?:\/\/(www.)?mangatoon.mobi\/.+\/watch\/.+/
-// @include /https?:\/\/(www.|m.)?mangatown.com\/manga\/.+\/.+/
-// @include /https?:\/\/(www.)?manhuascan.io\/.+chapter.+/
-// @include /https?:\/\/(www.)?(mreader|mangageko).com?\/reader\/.*/
-// @include /https?:\/\/(www.)?(naniscans).com\/chapters\/.+\/read/
-// @include /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/
-// @include /https?:\/\/(www.)?olympusscans.com\/capitulo\/.+\/.+/
-// @include /https?:\/\/(www.)?pandamanga.xyz\/.+\/.+\/.+/
-// @include /https?:\/\/(www.)?rawdevart.com\/comic\/.+\/.+\//
-// @include /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/\d*/
-// @include /https?:\/\/(www.)?(funmanga|mngdoom|readmng|mangainn).(com|net)\/.+\/\d+/
-// @include /https?:\/\/(www.)?reaperscans.com\/comics\/.+\/chapters\/.+/
-// @include /https?:\/\/raw.senmanga.com\/.+\/.+\/?/
-// @include /https?:\/\/(www.)?shimadascans.com\/.+(series|chapter).+/
-// @include /https?:\/\/(www.)?tapas.io\/episode\/.+/
-// @include /https?:\/\/(www.)?(tenmanga|gardenmanage).com\/(chapter|statuses)\/.+/
-// @include /https?:\/\/(www.)?(tmofans|lectortmo|followmanga).com\/.+\/.+\/(paginated|cascade)/
-// @include /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/
-// @include /https?:\/\/(www.)?webnovel.com\/comic\/.+/
-// @include /https?:\/\/(www.)?webtoons.com\/.+viewer.+/
-// @include /https?:\/\/(www.)?(manga33).com\/manga\/.+/
-// @include /https?:\/\/(www.)?(yugenmangas).com\/series\/.+/
-// @include /https?:\/\/(www.)?zeroscans.com\/comics\/.+/
-// @include /^(?!.*jaiminisbox).*\/read\/.+/
-// @include /https?:\/\/.+\/(manga|series|manhua|comic)\/.+\/.+/
-// @exclude /https?:\/\/(www.)?tsumino.com\/.+/
-// @exclude /https?:\/\/(www.)?pururin.io\/.+/
+// @include /https?:\/\/(www.)?bestporncomix.com\/gallery\/.+/
+// @include /https?:\/\/(www.)?doujins.com\/.+/
+// @include /https?:\/\/comics.8muses.com\/comics\/picture\/.+/
+// @include /https?:\/\/(g.)?(exhentai|e-hentai).org\/s\/.+\/.+/
+// @include /https?:\/\/(www.)?gntai.net\/.+\/.+/
+// @include /https?:\/\/(www.)?hbrowse.com\/.+/
+// @include /https?:\/\/(www.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//
+// @include /https?:\/\/(www.)?hentaifox.com\/g\/.+/
+// @include /https?:\/\/(www.)?(hentaihand|nhentai).com\/.+\/reader\/\d+/
+// @include /https?:\/\/(www.)?hentaihere.com\/.+\/.+\/.+/
+// @include /https?:\/\/hitomi.la\/reader\/.+/
+// @include /https?:\/\/(www.)?imhentai.xxx\/view\/.+\/.+\//
+// @include /https?:\/\/(www.)?kingcomix.com\/.+/
+// @include /https?:\/\/(www.)?luscious.net\/.+\/read\/.+/
+// @include /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/
+// @include /https?:\/\/(www.)?myhentaigallery.com\/gallery\/show\/.+\/\d+/
+// @include /https?:\/\/nana.my.id\/reader\/.+/
+// @include /https?:\/\/(www.)?(nhentai|lhentai).(net|xxx|com)\/g\/.+\/.+/
+// @include /https?:\/\/(www.)?9hentai.(ru|to)\/g\/.+\/.+/
+// @include /https?:\/\/(www.)?(omegascans).(org)\/.+/
+// @include /https?:\/\/(www.)?porncomixone.net\/comic\/.+/
+// @include /https?:\/\/(www.)?pururin.to\/(view|read)\/.+\/.+\/.+/
+// @include /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/
+// @include /https?:\/\/(www.)?(ksk|sukebe).moe\/(archive|g)\/\d+\/.+\/\d+/
+// @include /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/\d+/
+// @include /https?:\/\/(www.)?3hentai.net\/d\/.+\/.+/
+// @include /https?:\/\/(www.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/
+// @include /https?:\/\/(www.)?(vermangasporno|vercomicsporno).com\/.+/
+// @include /https?:\/\/(www.)?wnacg.com\/photos-view-id-.+/
+// @include /https?:\/\/(www.)?xlecx.one\/.+/
+// @include /https?:\/\/(www.)?xyzcomics.com\/.+/
+// @include /https?:\/\/.+\/(porncomic)\/.+\/.+/
 // ==/UserScript==
 
 (function () {
   'use strict';var __vite_style__ = document.createElement('style');__vite_style__.textContent = ".range-slider{touch-action:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;cursor:pointer;display:block;position:relative;width:100%;height:8px;background:#ddd;border-radius:4px}.range-slider[data-vertical]{height:100%;width:8px}.range-slider[data-disabled]{opacity:.5;cursor:not-allowed}.range-slider .range-slider__thumb{position:absolute;z-index:3;top:50%;width:24px;height:24px;transform:translate(-50%,-50%);border-radius:50%;background:#2196f3}.range-slider .range-slider__thumb:focus-visible{outline:0;box-shadow:0 0 0 6px rgba(33,150,243,.5)}.range-slider[data-vertical] .range-slider__thumb{left:50%}.range-slider .range-slider__thumb[data-disabled]{z-index:2}.range-slider .range-slider__range{position:absolute;z-index:1;transform:translate(0,-50%);top:50%;width:100%;height:100%;background:#51adf6}.range-slider[data-vertical] .range-slider__range{left:50%;transform:translate(-50%,0)}.range-slider input[type=range]{-webkit-appearance:none;pointer-events:none;position:absolute;z-index:2;top:0;left:0;width:0;height:0;background-color:transparent}.range-slider input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none}.range-slider input[type=range]::-moz-range-thumb{width:0;height:0;border:0}.range-slider input[type=range]:focus{outline:0}";document.head.appendChild(__vite_style__);
 
-  const asurascans = {
-    name: "Asura Scans",
-    url: /https?:\/\/beta.asurascans.com\/read\/.+\/.+/,
-    homepage: "https://beta.asurascans.com/",
+  const bestporncomix = {
+    name: "BestPornComix",
+    url: /https?:\/\/(www.)?bestporncomix.com\/gallery\/.+/,
+    homepage: "https://www.bestporncomix.com",
     language: ["English"],
-    category: "manga",
+    category: "hentai",
+    timer: 5e3,
     run() {
-      const { chapterID, data } = JSON.parse(
-        document.querySelector("#__NEXT_DATA__")?.textContent ?? ""
-      ).props.pageProps;
+      const images = [...document.querySelectorAll("figure a")];
       return {
-        title: document.querySelector("span.h2")?.textContent?.trim(),
-        series: document.querySelector(".container a.h6")?.getAttribute("href"),
-        pages: data.length,
-        prev: document.querySelector(".prev:not(.disabled)")?.getAttribute("href"),
-        next: document.querySelector(".next:not(.disabled)")?.getAttribute("href"),
-        listImages: data.map(
-          (img) => `https://img.asurascans.com/pages/${chapterID}/${img.uuid}.jpg`
-        )
-      };
-    }
-  };
-
-  const batoto = {
-    name: "Batoto",
-    url: /https?:\/\/(www.)?bato.to\/chapter.*/,
-    homepage: "http://bato.to/",
-    language: ["English"],
-    category: "manga",
-    run() {
-      const images = [...document.querySelectorAll(".page-img")];
-      return {
-        title: document.querySelector(".nav-title a")?.textContent?.trim(),
-        series: document.querySelector(".nav-title a")?.getAttribute("href"),
+        title: document.querySelector("h1.entry-title")?.textContent?.trim(),
+        series: "#",
         pages: images.length,
-        prev: document.querySelector(".nav-prev a")?.getAttribute("href"),
-        next: document.querySelector(".nav-next a")?.getAttribute("href"),
-        listImages: images.map((img) => img.getAttribute("src"))
+        prev: "#",
+        next: "#",
+        listImages: images.map((img) => img.getAttribute("href"))
       };
     }
   };
 
-  const bilibilicomics = {
-    name: "BilibiliComics",
-    url: /https?:\/\/(www.)?(bilibilicomics).com\/.+\/.+/,
-    homepage: "https://www.bilibilicomics.com/",
+  const doujinmoe = {
+    name: "DoujinMoeNM",
+    url: /https?:\/\/(www.)?doujins.com\/.+/,
+    homepage: "https://doujins.com/",
     language: ["English"],
-    category: "manga",
-    waitEle: ".read-nav",
+    category: "hentai",
+    waitEle: ".doujin",
+    run() {
+      const images = [...document.querySelectorAll(".doujin")];
+      return {
+        title: document.querySelector(".folder-title a:last-child")?.textContent?.trim(),
+        series: document.querySelector(".folder-title a:nth-last-child(2)")?.getAttribute("href"),
+        pages: images.length,
+        prev: "#",
+        next: "#",
+        listImages: images.map((img) => img.getAttribute("data-file"))
+      };
+    }
+  };
+
+  const eightMuses = {
+    name: "8Muses",
+    url: /https?:\/\/comics.8muses.com\/comics\/picture\/.+/,
+    homepage: "https://comics.8muses.com/",
+    language: ["English"],
+    category: "hentai",
     async run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const api = await fetch(
-        "https://www.bilibilicomics.com/twirp/comic.v1.Comic/GetImageIndex?device=pc&platform=web&lang=en&sys_lang=en",
-        {
-          method: "post",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            ep_id: W.location.href.split("/").pop(),
-            credential: ""
-          })
-        }
-      ).then((res) => res.json()).then(({ data }) => data.images.map((image) => `${image.path}@2000w.webp`)).then(JSON.stringify).then(
-        (urls) => fetch(
-          "https://www.bilibilicomics.com/twirp/comic.v1.Comic/ImageToken?device=pc&platform=web&lang=en&sys_lang=en",
-          {
-            method: "post",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ urls })
-          }
+      function decode(data) {
+        return ((t) => {
+          if (t.charAt(0) !== "!")
+            return t;
+          return t.slice(1).replace(/[\x21-\x7e]/g, (s) => String.fromCharCode(33 + (s.charCodeAt(0) + 14) % 94));
+        })(data.replace(/&gt;/g, ">").replace(/&lt;/g, "<").replace(/&amp;/g, "&"));
+      }
+      const api = await fetch(window.location.href).then((res) => res.text()).then((html) => new DOMParser().parseFromString(html, "text/html"));
+      const dataPublic = JSON.parse(
+        decode(api.querySelector("#ractive-public")?.innerHTML.trim() || "")
+      );
+      const dataShared = JSON.parse(
+        decode(api.querySelector("#ractive-shared")?.innerHTML.trim() || "")
+      );
+      const src = dataShared.options.pictureHost || window.location.host;
+      return {
+        title: document.querySelector(".top-menu-breadcrumb li:nth-last-child(2) a")?.textContent?.trim(),
+        series: document.querySelector(".top-menu-breadcrumb li:nth-last-child(2) a")?.getAttribute("href"),
+        pages: dataPublic.pictures.length,
+        prev: "#",
+        next: "#",
+        listImages: dataPublic.pictures.map(
+          (img) => `//${src}/image/fl/${img.publicUri}.jpg`
         )
-      ).then((res) => res.json()).then(
-        (tokens) => tokens.data.map((i) => `${i.url}?token=${i.token}`)
+      };
+    }
+  };
+
+  const exhentai = {
+    name: ["ExHentai", "e-Hentai"],
+    url: /https?:\/\/(g.)?(exhentai|e-hentai).org\/s\/.+\/.+/,
+    homepage: ["https://exhentai.org/", ""],
+    language: ["English"],
+    obs: "May get your IP Banned, use with moderation",
+    category: "hentai",
+    async run() {
+      const num = parseInt(
+        document.querySelector(".sn div span:nth-child(2)")?.textContent || "",
+        10
+      );
+      const maxGalley = parseInt(document.querySelector(".ptt td:nth-last-of-type(2) a")?.textContent || "", 10) || Math.ceil(num / 40);
+      const gallery = document.querySelector(".sb a")?.getAttribute("href")?.replace(/\?p=\d+/, "");
+      const fetchBlocks = Array(maxGalley).fill(0).map(
+        (_, galleryId) => fetch(`${gallery}?p=${galleryId}`).then((res) => res.text()).then((html) => new DOMParser().parseFromString(html, "text/html"))
+      );
+      const data = await Promise.all(fetchBlocks);
+      const pages = data.flatMap(
+        (html) => [...html.querySelectorAll(".gdtm a, .gdtl a")].map((item) => item.getAttribute("href"))
       );
       return {
-        title: document.querySelector(".read-nav")?.textContent?.trim(),
-        series: document.querySelector(".manga-title")?.getAttribute("href"),
-        pages: api.length,
-        prev: document.querySelector(".navigate a button[title=Previous]")?.parentElement?.getAttribute("href"),
-        next: document.querySelector(".navigate a button[title=Next]")?.parentElement?.getAttribute("href"),
-        listImages: api
-      };
-    }
-  };
-
-  const comicastle = {
-    name: "ComiCastle",
-    url: /https?:\/\/(www.)?comicastle.org\/read\/.+\/\d+.*/,
-    homepage: "http://www.comicastle.org/",
-    language: ["English"],
-    category: "comic",
-    waitEle: ".form-control option:nth-child(1)",
-    run() {
-      const images = [...document.querySelectorAll(".form-control")[1].querySelectorAll("option")];
-      const chapter = document.querySelectorAll(".form-control")[0].querySelector("option:checked");
-      return {
-        title: chapter?.textContent?.trim(),
-        series: document.querySelector(".navbar-header a")?.getAttribute("href"),
-        pages: images.length,
-        prev: chapter?.previousElementSibling?.getAttribute("value"),
-        next: chapter?.nextElementSibling?.getAttribute("value"),
-        listImages: images.map((img) => img.getAttribute("alt"))
-      };
-    }
-  };
-
-  const dysnatyscans = {
-    name: "Dynasty-Scans",
-    url: /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/,
-    homepage: "https://dynasty-scans.com/",
-    language: ["English"],
-    category: "manga",
-    run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      return {
-        title: document.querySelector("#chapter-title")?.textContent?.trim(),
-        series: document.querySelector("#chapter-title a")?.getAttribute("href"),
-        pages: W.pages.length,
-        prev: document.querySelector("#prev_link")?.getAttribute("href"),
-        next: document.querySelector("#next_link")?.getAttribute("href"),
-        listImages: W.pages.map((x) => x.image)
-      };
-    }
-  };
-
-  const flamecans = {
-    name: ["Asura Scans", "Flame Scans", "Realm Scans", "Voids-Scans", "Luminous Scans"],
-    url: /https?:\/\/(www.)?(asurascans|flamescans|realmscans|void-scans|luminousscans).(com|org|gg)\/.+/,
-    homepage: [
-      "https://www.asura.gg/",
-      "https://flamescans.org/",
-      "https://realmscans.com/",
-      "https://void-scans.com/",
-      "https://luminousscans.com/"
-    ],
-    language: ["English"],
-    category: "manga",
-    waitEle: "#chapter option:nth-child(2)",
-    run() {
-      const chapter = document.querySelector("#chapter option:checked");
-      const images = [...document.querySelectorAll("#readerarea img")];
-      return {
-        title: document.querySelector(".entry-title")?.textContent?.trim(),
-        series: document.querySelector(".allc a")?.getAttribute("href"),
-        pages: images.length,
-        prev: chapter?.nextElementSibling?.getAttribute("value"),
-        next: chapter?.previousElementSibling?.getAttribute("value"),
-        listImages: images.map(
-          (img) => img.getAttribute("data-src") || img.getAttribute("data-lazy-src") || img.getAttribute("src")
-        )
-      };
-    }
-  };
-
-  const foolslide = {
-    name: ["FoOlSlide", "Kireicake"],
-    url: /^(?!.*jaiminisbox).*\/read\/.+/,
-    homepage: ["#", "https://reader.kireicake.com"],
-    language: ["English"],
-    obs: "Any Site that uses FoOLSlide",
-    category: "manga",
-    waitEle: "img.open",
-    run() {
-      const chapter = [...document.querySelectorAll(".topbar_left .dropdown_parent:last-of-type li")];
-      const origin = chapter.findIndex((item) => {
-        const url = item.querySelector("a")?.getAttribute("href");
-        if (url)
-          return window.location.href.startsWith(url);
-        return false;
-      });
-      const pages = [...document.querySelectorAll(".topbar_right .dropdown li")];
-      const images = [...document.querySelectorAll(".inner img:not(.open)")];
-      const num = images.length > 1 ? images.length : pages.length;
-      return {
-        title: chapter.at(origin)?.querySelector("a")?.textContent?.trim() ?? document.querySelector("title")?.textContent?.trim(),
-        series: document.querySelector("div.tbtitle div.text a")?.getAttribute("href"),
+        title: document.querySelector("#i1 h1")?.textContent?.trim(),
+        series: gallery,
         pages: num,
-        prev: chapter.at(origin + 1)?.querySelector("a")?.getAttribute("href"),
-        next: chapter.at(origin - 1)?.querySelector("a")?.getAttribute("href"),
-        listPages: images.length > 1 ? null : Array(num).fill(0).map((_, i) => `${window.location.href.replace(/\/\d+$/, "")}/${i + 1}`),
-        listImages: images.length > 1 ? images.map((img) => img.getAttribute("src")) : null,
-        img: "img.open"
+        begin: parseInt(document.querySelector("div#i2 span")?.textContent ?? "1", 10),
+        prev: "#",
+        next: "#",
+        listPages: pages,
+        img: "#img",
+        lazy: true
       };
     }
   };
 
-  const inkr = {
-    name: "INKR",
-    url: /https?:\/\/(comics.)?inkr.com\/title\/.+\/chapter\/.+/,
-    homepage: "https://inkr.com/",
-    language: ["English"],
-    category: "manga",
-    waitFunc: () => document.querySelector("#editor-v2-scroll-view-id img")?.style.width !== "",
-    run() {
-      const images = [...document.querySelectorAll("#editor-v2-scroll-view-id img")];
-      return {
-        title: document.querySelector("title")?.textContent?.trim(),
-        series: document.querySelector("#chapter-detail-viewer-page div div div a")?.getAttribute("href"),
-        pages: images.length,
-        prev: document.querySelector('a[aria-label="Previous Chapter"]')?.getAttribute("href"),
-        next: document.querySelector('a[aria-label="Next Chapter"]')?.getAttribute("href"),
-        listImages: images.map((img) => img.getAttribute("src")?.replace("/t.", "/p."))
-      };
-    }
-  };
-
-  const inmanga = {
-    name: "InManga",
-    url: /https?:\/\/(www.)?inmanga.com\/ver\/manga\/.+\/.+/,
-    homepage: "https://inmanga.com//",
+  const gntai = {
+    name: "GNTAI.net",
+    url: /https?:\/\/(www.)?gntai.net\/.+\/.+/,
+    homepage: "https://www.gntai.net/",
     language: ["Spanish"],
-    category: "manga",
-    waitVar: "pageController",
+    category: "hentai",
+    run() {
+      const images = document.querySelector("#main > script")?.innerHTML.match(/var pages = [^;]+/)?.at(0)?.toString().match(/https?[^"]+/g);
+      return {
+        title: document.querySelector(".entry-header h1")?.textContent?.trim(),
+        series: "#",
+        pages: images?.length,
+        prev: "#",
+        next: "#",
+        listImages: images
+      };
+    }
+  };
+
+  const hbrowse = {
+    name: "HBrowser",
+    url: /https?:\/\/(www.)?hbrowse.com\/.+/,
+    homepage: "https://www.hbrowse.com/",
+    language: ["English"],
+    category: "hentai",
+    run() {
+      const url = window.location.href + (window.location.href.slice(-1) === "/" ? "" : "/");
+      const num = parseInt(document.querySelector("#jsPageList a:last-child")?.textContent || "", 10);
+      const chapter = [...document.querySelectorAll("#chapters + table a.listLink")];
+      const origin = chapter.findIndex(
+        (chp) => window.location.href.endsWith(chp.getAttribute("href") || "undefined")
+      );
+      return {
+        title: document.querySelector(".listTable td.listLong")?.textContent?.trim(),
+        series: window.location.href.match(/.+\/\d+\//)?.at(0),
+        pages: num,
+        prev: chapter.at(origin - 1)?.getAttribute("href"),
+        next: chapter.at(origin + 1)?.getAttribute("href"),
+        listPages: Array(num).fill(0).map((_, i) => url + String(`0000${i + 1}`).slice(-5)),
+        img: "td.pageImage a img"
+      };
+    }
+  };
+
+  const hentai2read = {
+    name: "Hentai2Read",
+    url: /https?:\/\/(www.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//,
+    homepage: "https://hentai2read.com/",
+    language: ["English"],
+    category: "hentai",
     run() {
       const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const images = [...document.querySelectorAll("#PageList option")];
-      const chapter = document.querySelector("#ChapList option:checked");
-      const src = W.pageController._containers.pageUrl;
       return {
-        title: document.querySelector("title")?.textContent?.trim(),
-        series: `../${W.pageController._containers.mangaIdentification}`,
+        title: document.querySelector(".reader-left-text")?.textContent?.trim(),
+        series: W.gData.mainURL,
+        pages: W.gData.images.length,
+        prev: W.gData.previousURL,
+        next: W.gData.nextURL,
+        listImages: W.gData.images.map((i) => `https://static.hentaicdn.com/hentai${i}`)
+      };
+    }
+  };
+
+  const hentaifox = {
+    name: "HentaiFox",
+    url: /https?:\/\/(www.)?hentaifox.com\/g\/.+/,
+    homepage: "https://www.hentaifox.com/",
+    language: ["English"],
+    category: "hentai",
+    waitVar: "g_th",
+    run() {
+      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
+      const num = parseInt(document.querySelector(".total_pages")?.textContent || "", 10);
+      const src = document.querySelector("#gimg")?.getAttribute("src")?.replace(/\d+.\w+$/, "") || "";
+      function findExt(i) {
+        const c = W.g_th[i][0];
+        if (c === "p")
+          return ".png";
+        if (c === "b")
+          return ".bmp";
+        if (c === "g")
+          return ".gif";
+        return ".jpg";
+      }
+      return {
+        title: document.querySelector("title")?.textContent?.replace(/ - Page .+/, "").trim(),
+        series: document.querySelector(".browse_buttons a")?.getAttribute("href"),
+        pages: num,
+        prev: "#",
+        next: "#",
+        listImages: Array(num).fill(0).map((_, i) => src + (i + 1) + findExt(i + 1))
+      };
+    }
+  };
+
+  const hentaihand = {
+    name: ["HentaiHand", "nHentai.com"],
+    url: /https?:\/\/(www.)?(hentaihand|nhentai).com\/.+\/reader\/\d+/,
+    homepage: ["https://hentaihand.com/", "https://nhentai.com"],
+    language: ["English"],
+    category: "hentai",
+    waitEle: ".vertical-image",
+    run() {
+      const images = [...document.querySelectorAll(".vertical-image img")];
+      return {
+        title: document.querySelector(".reader-header h5")?.textContent?.trim(),
+        series: document.querySelector(".reader-header h5 a")?.getAttribute("href"),
         pages: images.length,
-        prev: chapter?.previousElementSibling?.getAttribute("value"),
-        next: chapter?.nextElementSibling?.getAttribute("value"),
-        listImages: images.map(
-          (img, index) => src.replace("identification", img.getAttribute("value")).replace("pageNumber", index)
+        prev: "#",
+        next: "#",
+        listImages: images.map((img) => img.getAttribute("data-src"))
+      };
+    }
+  };
+
+  const hentaihere = {
+    name: "HentaIHere",
+    url: /https?:\/\/(www.)?hentaihere.com\/.+\/.+\/.+/,
+    homepage: "https://www.hentaihere.com/",
+    language: ["English"],
+    category: "hentai",
+    waitVar: "rff_imageList",
+    run() {
+      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
+      const src = document.querySelector("#arf-reader-img")?.getAttribute("src")?.replace(/\d.+/, "");
+      return {
+        title: W.rff_pageTitle.replace(/.+\|/, "").trim(),
+        series: W.rff_thisManga,
+        pages: W.rff_imageList.length,
+        prev: W.rff_previousChapter,
+        next: W.rff_nextChapter,
+        listImages: W.rff_imageList.map((img) => src + img)
+      };
+    }
+  };
+
+  const hitomi = {
+    name: "hitomi",
+    url: /https?:\/\/hitomi.la\/reader\/.+/,
+    homepage: "https://hitomi.la/",
+    language: ["English"],
+    category: "hentai",
+    waitAttr: ["#comicImages img", "src"],
+    waitVar: "galleryinfo",
+    run() {
+      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
+      return {
+        title: document.querySelector("title")?.textContent?.replace("| Hitomi.la", "").trim(),
+        series: document.querySelector(".brand")?.getAttribute("href"),
+        pages: W.galleryinfo.files.length,
+        prev: "#",
+        next: "#",
+        listImages: W.galleryinfo.files.map(
+          (file) => W.url_from_url_from_hash(W.galleryinfo, file, "webp", void 0, "a")
         )
       };
     }
   };
 
-  const klmanga = {
-    name: "KLManga",
-    url: /https?:\/\/(www.)?klmanga.com\/.+chapter.+/,
-    homepage: "https://klmanga.com/",
-    language: ["Raw"],
-    category: "manga",
+  function findExt(i) {
+    const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
+    const c = W.g_th[i][0];
+    if (c === "p")
+      return ".png";
+    if (c === "b")
+      return ".bmp";
+    if (c === "g")
+      return ".gif";
+    return ".jpg";
+  }
+  function findServer(cId) {
+    if (cId > 0 && cId <= 274825)
+      return "m1.imhentai.xxx";
+    if (cId > 274825 && cId <= 403818)
+      return "m2.imhentai.xxx";
+    if (cId > 403818 && cId <= 527143)
+      return "m3.imhentai.xxx";
+    if (cId > 527143 && cId <= 632481)
+      return "m4.imhentai.xxx";
+    if (cId > 632481 && cId <= 816010)
+      return "m5.imhentai.xxx";
+    if (cId > 816010 && cId <= 970098)
+      return "m6.imhentai.xxx";
+    return "m7.imhentai.xxx";
+  }
+  const imhentai = {
+    name: "Imhentai",
+    url: /https?:\/\/(www.)?imhentai.xxx\/view\/.+\/.+\//,
+    homepage: "https://imhentai.xxx/",
+    language: ["English"],
+    category: "hentai",
+    waitVar: "g_th",
     run() {
-      const images = [...document.querySelectorAll(".chapter-content img")];
-      const chapter = document.querySelectorAll(".form-control")[0].querySelector("option:checked");
+      const galleryId = document.querySelector("#gallery_id")?.getAttribute("value");
+      const imageDir = document.querySelector("#image_dir")?.getAttribute("value");
+      const num = parseInt(document.querySelector("#pages")?.getAttribute("value") || "", 10);
+      const cId = parseInt(document.querySelector("#u_id")?.getAttribute("value") || "", 10);
+      const randomServer = findServer(cId);
       return {
         title: document.querySelector("title")?.textContent?.trim(),
-        series: document.querySelector(".navbar-brand")?.getAttribute("href"),
-        pages: images.length,
-        prev: chapter?.nextElementSibling?.getAttribute("value"),
-        next: chapter?.previousElementSibling?.getAttribute("value"),
-        listImages: images.map((img) => img.getAttribute("src"))
+        series: document.querySelector(".return_btn")?.getAttribute("href"),
+        pages: num,
+        prev: "#",
+        next: "#",
+        listImages: Array(num).fill(0).map((_, i) => `//${randomServer}/${imageDir}/${galleryId}/${i + 1}${findExt(i + 1)}`)
       };
     }
   };
 
-  const leitor = {
-    name: "Leitor",
-    url: /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/,
-    homepage: "https://leitor.net/",
-    language: ["Portuguese"],
-    category: "manga",
+  const kingcomix = {
+    name: "KingComix",
+    url: /https?:\/\/(www.)?kingcomix.com\/.+/,
+    homepage: "https://kingcomix.com/",
+    language: ["English"],
+    category: "hentai",
+    run() {
+      const src = [...document.querySelectorAll("figure img, .entry-content img.lazy")];
+      return {
+        title: document.querySelector("h1.singleTitle-h1")?.textContent?.trim(),
+        series: "#",
+        pages: src.length,
+        prev: "#",
+        next: "#",
+        listImages: src.map(
+          (img) => img.getAttribute("data-src") || img.getAttribute("data-full-url") || img.getAttribute("data-lazy-src") || img.getAttribute("src")
+        )
+      };
+    }
+  };
+
+  const luscious = {
+    name: "Luscious",
+    url: /https?:\/\/(www.)?luscious.net\/.+\/read\/.+/,
+    homepage: "https://luscious.net/",
+    language: ["English"],
+    category: "hentai",
+    waitEle: ".album-info div",
     async run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const url = `https://leitor.net/leitor/pages/${W.READER_ID_RELEASE}.json?key=${W.READER_TOKEN}`;
-      const api = await fetch(url).then((res) => res.json());
-      const chapter = document.querySelector(".chapter-list .selected");
+      const num = parseInt(
+        document.querySelector(".album-info div")?.textContent?.match(/\d+/)?.toString(),
+        10
+      );
+      const totalBlocks = Math.ceil(num / 50);
+      const id = parseInt(
+        document.querySelector(".album-heading a")?.getAttribute("href")?.match(/\d+\//)?.toString() || "",
+        10
+      );
+      const query = "&query=%2520query%2520AlbumListOwnPictures%28%2524input%253A%2520PictureListInput%21%29%2520%257B%2520picture%2520%257B%2520list%28input%253A%2520%2524input%29%2520%257B%2520info%2520%257B%2520...FacetCollectionInfo%2520%257D%2520items%2520%257B%2520__typename%2520id%2520title%2520description%2520created%2520like_status%2520number_of_comments%2520number_of_favorites%2520moderation_status%2520width%2520height%2520resolution%2520aspect_ratio%2520url_to_original%2520url_to_video%2520is_animated%2520position%2520tags%2520%257B%2520category%2520text%2520url%2520%257D%2520permissions%2520url%2520thumbnails%2520%257B%2520width%2520height%2520size%2520url%2520%257D%2520%257D%2520%257D%2520%257D%2520%257D%2520fragment%2520FacetCollectionInfo%2520on%2520FacetCollectionInfo%2520%257B%2520page%2520has_next_page%2520has_previous_page%2520total_items%2520total_pages%2520items_per_page%2520url_complete%2520%257D%2520";
+      const fetchBlocks = Array(totalBlocks).fill(0).map(async (_, block) => {
+        const url = `https://api.luscious.net/graphql/nobatch/?operationName=AlbumListOwnPictures&variables=%7B%22input%22%3A%7B%22filters%22%3A%5B%7B%22name%22%3A%22album_id%22%2C%22value%22%3A%22${id}%22%7D%5D%2C%22display%22%3A%22position%22%2C%22page%22%3A${block + 1}%7D%7D${query}`;
+        return fetch(url).then((res) => res.json());
+      });
+      const data = await Promise.all(fetchBlocks);
+      const images = data.flatMap(
+        (res) => res.data.picture.list.items.map((img) => img.url_to_original)
+      );
       return {
-        title: document.querySelector("title")?.textContent?.trim(),
-        series: document.querySelector(".series-cover a")?.getAttribute("href"),
-        pages: api.images.length,
-        prev: chapter?.nextElementSibling?.querySelector("a")?.getAttribute("href"),
-        next: chapter?.previousElementSibling?.querySelector("a")?.getAttribute("href"),
-        listImages: api.images.map(
-          (img) => img.avif || img.legacy
-        )
-      };
-    }
-  };
-
-  const lhtranslation = {
-    name: "LHTranslation",
-    url: /https?:\/\/(www.)?lhtranslation.net\/read.+/,
-    homepage: "https://lhtranslation.net/",
-    language: ["English"],
-    category: "manga",
-    run() {
-      const chapter = document.querySelector(".form-control option:checked");
-      const images = [...document.querySelectorAll("img.chapter-img")];
-      return {
-        title: document.querySelector(".chapter-img.tieude font")?.textContent?.trim(),
-        series: document.querySelector(".navbar-brand.manga-name")?.getAttribute("href"),
+        title: document.querySelector(".album-heading a")?.textContent?.trim(),
+        series: document.querySelector(".album-heading a")?.getAttribute("href"),
         pages: images.length,
-        prev: chapter?.nextElementSibling?.getAttribute("value"),
-        next: chapter?.previousElementSibling?.getAttribute("value"),
-        listImages: images.map((img) => img.getAttribute("src"))
+        prev: "#",
+        next: "#",
+        listImages: images
       };
     }
   };
 
-  const lynxscans = {
-    name: "LynxScans",
-    url: /https?:\/\/(www.)?lynxscans.com\/comics?\/.+/,
-    homepage: "https://lynxscans.com/",
-    language: ["English"],
-    category: "manga",
-    waitAttr: ["#app", "data-page"],
-    run() {
-      const data = JSON.parse(document.querySelector("#app").getAttribute("data-page"));
-      return {
-        title: document.querySelector("title")?.textContent?.trim(),
-        series: data.props.home,
-        pages: data.props.pages.length,
-        prev: data.props.previousChapter,
-        next: data.props.nextChapter,
-        listImages: data.props.pages.map((img) => img.url)
-      };
-    }
-  };
-
-  const madarawp = {
+  const madarawp$1 = {
     name: [
       "Madara WordPress Plugin",
       "MangaHaus",
@@ -464,871 +505,467 @@
     }
   };
 
-  const mangabuddy = {
-    name: "MangaBuddy",
-    url: /https?:\/\/(www.)?mangabuddy.com\/.+\/chapter.+/,
-    homepage: "https://mangabuddy.com/",
-    language: ["English"],
-    category: "manga",
-    waitVar: "final_images",
-    run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const img = [...document.querySelectorAll(".chapter-image.load-first img")].map(
-        (img2) => img2.getAttribute("data-src") || img2.getAttribute("src")
-      );
-      const images = [...img, ...W.final_images];
-      return {
-        title: document.querySelector(".chapter-info")?.textContent?.trim(),
-        series: document.querySelector("#breadcrumbs-container div:nth-child(2) a")?.getAttribute("href"),
-        pages: images.length,
-        prev: document.querySelector("a.prev")?.getAttribute("href"),
-        next: document.querySelector("a.next")?.getAttribute("href"),
-        listImages: images
-      };
-    }
+  const madarawp = {
+    ...madarawp$1,
+    name: ["Madara WordPress Plugin", "AllPornComic"],
+    url: /https?:\/\/.+\/(porncomic)\/.+\/.+/,
+    homepage: ["#", "https://allporncomic.com/"],
+    category: "hentai"
   };
 
-  const mangadex = {
-    name: "MangaDex",
-    url: /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/,
-    homepage: "https://mangadex.org/",
+  const multporn = {
+    name: "MultPorn",
+    url: /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/,
+    homepage: "https://multporn.net/",
     language: ["English"],
-    category: "manga",
-    waitEle: ".md--reader-menu a[href^='/chapter/']",
+    category: "hentai",
+    // waitEle: '.jb-idx-thumb:last .jb-thm-thumb-image',
     async run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const chapterId = W.location.pathname.match(/\/chapter\/([^/]+)(\/\d+)?/)[1];
-      const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
-      const server = await fetch(home).then((res) => res.json());
-      const images = server.chapter.data;
-      const chapters = [...document.querySelectorAll(".md--reader-menu a[href^='/chapter/']")].map(
-        (a) => a.getAttribute("href")
-      );
+      const url = document.head.textContent?.match(/"configUrl":"(.+?)",/)?.at(1)?.replaceAll("\\", "") || "";
+      const api = await fetch(url).then((res) => res.text()).then((html) => new DOMParser().parseFromString(html, "text/xml"));
+      const images = [...api.querySelectorAll("image")];
       return {
-        title: document.querySelector("title")?.text.replace(" - MangaDex", ""),
-        series: document.querySelector("a.text-primary[href^='/title/']")?.getAttribute("href"),
+        title: document.querySelector("#page-title")?.textContent?.trim(),
+        series: "#",
         pages: images.length,
-        prev: chapters[0] !== W.location.pathname ? chapters[0] : "#",
-        next: chapters[1] !== W.location.pathname ? chapters[1] : "#",
-        listImages: images.map((img) => `${server.baseUrl}/data/${server.chapter.hash}/${img}`)
+        prev: "#",
+        next: "#",
+        listImages: images.map((img) => img.getAttribute("imageURL"))
       };
     }
   };
 
-  const mangafox = {
-    name: ["MangaFox", "MangaHere"],
-    url: /https?:\/\/(www.)?(fanfox.net|mangahere.cc)\/manga\/.+\/.+\//,
-    homepage: ["https://fanfox.net/", "https://www.mangahere.cc/"],
+  const myhentaigallery = {
+    name: "MyHentaiGallery",
+    url: /https?:\/\/(www.)?myhentaigallery.com\/gallery\/show\/.+\/\d+/,
+    homepage: "https://www.myhentaigallery.com",
     language: ["English"],
-    category: "manga",
-    waitVar: "chapterid",
-    async run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const key = document.querySelector("#dm5_key")?.getAttribute("value");
-      const options = {
-        method: "GET",
-        headers: {
-          "Content-Type": "text/plain"
-        }
-      };
-      const src = Array(W.imagecount).fill(0).map(async (_, i) => {
-        const url = `chapterfun.ashx?cid=${W.chapterid || W.chapter_id}&page=${i}&key=${key}`;
-        const api = await fetch(url, options).then((res) => res.text());
-        (0, eval)(api);
-        return d;
-      });
-      const images = await Promise.all(src);
-      return {
-        title: document.querySelector(".reader-header-title div")?.textContent?.trim(),
-        series: document.querySelector(".reader-header-title a")?.getAttribute("href"),
-        pages: W.imagecount,
-        prev: W.prechapterurl,
-        next: W.nextchapterurl,
-        listImages: images.map((img, i) => img[i === 0 ? 0 : 1])
-      };
-    }
-  };
-
-  const mangafreak = {
-    name: "MangaFreak",
-    url: /https?:\/\/.{3,4}?(mangafreak).net\/Read.+/,
-    homepage: "https://mangafreak.net/",
-    language: ["English"],
-    category: "manga",
+    category: "hentai",
     run() {
-      const chapter = document.querySelector(
-        ".chapter_list select option:checked"
-      );
-      const images = [...document.querySelectorAll(".mySlides img")];
+      const src = document.querySelector(".gallery-slide img")?.getAttribute("src") || "";
+      const lastPage = document.getElementById("js__pagination__next")?.parentElement?.previousElementSibling?.querySelector("a");
+      const num = parseInt(lastPage?.textContent || "", 10);
       return {
         title: document.querySelector("title")?.textContent?.trim(),
-        series: document.querySelector(".title a")?.getAttribute("href"),
-        pages: images.length,
-        prev: chapter?.previousElementSibling?.getAttribute("value"),
-        next: chapter?.nextElementSibling?.getAttribute("value"),
-        listImages: images.map((img) => img.getAttribute("src"))
-      };
-    }
-  };
-
-  const mangahosted = {
-    name: "mangahosted",
-    url: /https?:\/\/(www.)?mangahosted.com\/manga\/.+\/.+/,
-    homepage: "https://mangahosted.com/",
-    language: ["Portuguese"],
-    category: "manga",
-    run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const images = [...document.querySelectorAll("picture img")];
-      return {
-        title: $(".breadcrumb li:eq(3)").text().trim(),
-        series: $(".breadcrumb li:eq(2) a").attr("href"),
-        pages: images.length,
-        prev: W.$read_prev,
-        next: W.$read_next,
-        listImages: images.map((img) => img.getAttribute("src"))
-      };
-    }
-  };
-
-  const mangahub = {
-    name: "MangaHub",
-    url: /https?:\/\/(www.)?(mangahub).io\/chapter\/.+\/.+/,
-    homepage: "https://mangahub.io/",
-    language: ["English"],
-    category: "manga",
-    waitEle: "#select-chapter",
-    async run() {
-      function getCookie(name) {
-        const re = new RegExp(`${name}=([^;]+)`);
-        const value = re.exec(document.cookie);
-        return value != null ? decodeURIComponent(value[1]) : null;
-      }
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const slug = W.CURRENT_MANGA_SLUG || window.location.pathname.split("/")[2];
-      const number = window.location.pathname.split("/")[3].replace("chapter-", "");
-      const data = { query: `{chapter(x:m01,slug:"${slug}",number:${number}){pages}}` };
-      const options = {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-          "x-mhub-access": getCookie("mhub_access")
-        }
-      };
-      const api = await fetch("https://api.mghubcdn.com/graphql", options).then(
-        (res) => res.json()
-      );
-      const images = JSON.parse(api?.data.chapter.pages.toString());
-      return {
-        title: document.querySelector("#mangareader h3")?.textContent?.trim(),
-        series: document.querySelector("#mangareader a")?.getAttribute("href"),
-        pages: images.i.length,
-        prev: document.querySelector(".previous a")?.getAttribute("href"),
-        next: document.querySelector(".next a")?.getAttribute("href"),
-        listImages: images.i.map(
-          (i) => `https://img.mghubcdn.com/file/imghub/${images.p + i}`
-        )
-      };
-    }
-  };
-
-  const mangakakalot = {
-    name: ["MangaKakalot", "MangaNelo", "MangaNato"],
-    url: /https?:\/\/(www.)?((manganelo|mangakakalot).com\/chapter\/.+\/.+|(manganato|readmanganato|chapmanganato).com\/manga-\w\w\d+\/chapter-\d+)/,
-    homepage: [
-      "https://mangakakalot.com/page",
-      "https://www.manganelo.com/",
-      "https://www.manganato.com/"
-    ],
-    language: ["English"],
-    category: "manga",
-    run() {
-      const images = [...document.querySelectorAll("#vungdoc img, .container-chapter-reader img")];
-      return {
-        title: document.querySelector(
-          ".info-top-chapter h2, .imageOptions-chapter-info-top h1, .panel-chapter-info-top h1"
-        )?.textContent?.trim(),
-        series: document.querySelectorAll("span a[title]").item(1).getAttribute("href"),
-        pages: images.length,
-        prev: document.querySelector(".navi-change-chapter-btn-prev, .next")?.getAttribute("href"),
-        next: document.querySelector(".navi-change-chapter-btn-next, .back")?.getAttribute("href"),
-        listImages: images.map((img) => img.getAttribute("src"))
-      };
-    }
-  };
-
-  const mangareader = {
-    name: "Mangareader",
-    url: /https?:\/\/(www.)?mangareader.to\/read\/.+\/.+\/.+/,
-    homepage: "https://mangareader.to",
-    language: ["English"],
-    category: "manga",
-    obs: "Some galleries will not be usable",
-    waitEle: ".ds-image, .iv-card",
-    async run() {
-      const chapter = document.querySelector(".chapter-item.active");
-      const images = [...document.querySelectorAll(".ds-image[data-url], .iv-card[data-url]")];
-      const src = images.map(async (img) => {
-        const url = img.getAttribute("data-url");
-        if (url && img.classList.contains("shuffled")) {
-          return (await imgReverser(url)).toDataURL();
-        }
-        return url;
-      });
-      return {
-        title: document.querySelector(".hr-manga h2")?.textContent?.trim(),
-        series: document.querySelector(".hr-manga")?.getAttribute("href"),
-        pages: src.length,
-        prev: chapter?.nextElementSibling?.querySelector("a")?.getAttribute("href"),
-        next: chapter?.previousElementSibling?.querySelector("a")?.getAttribute("href"),
-        listImages: await Promise.all(src)
-      };
-    }
-  };
-
-  const mangasee = {
-    name: ["MangaSee", "Manga4life"],
-    url: /https?:\/\/(www.)?(mangasee123|manga4life).com\/read-online\/.+/,
-    homepage: ["https://mangasee123.com/", "https://manga4life.com/"],
-    language: ["English"],
-    category: "manga",
-    waitAttr: [".img-fluid", "src"],
-    run() {
-      const src = document.querySelector(".img-fluid")?.getAttribute("src") || "";
-      const script = [...document.querySelectorAll("body script:not([src])")].at(-1)?.textContent;
-      const textCurChapter = script?.match(/CurChapter = ({.+});/) || [];
-      const CurChapter = JSON.parse(textCurChapter[1]);
-      const textCHAPTERS = script?.match(/CHAPTERS = (\[\{.+}]);/) || [];
-      const CHAPTERS = JSON.parse(textCHAPTERS[1]);
-      const CurChapterIndex = CHAPTERS.findIndex(
-        (chap) => chap.Chapter === CurChapter.Chapter
-      );
-      function ChapterURLEncode(reference) {
-        let ChapterString = CHAPTERS[CurChapterIndex + reference];
-        if (ChapterString === void 0) {
-          return "#";
-        }
-        ChapterString = ChapterString.Chapter;
-        let Index = "";
-        const IndexString = ChapterString.substring(0, 1);
-        if (IndexString !== "1") {
-          Index = `-index-${IndexString}`;
-        }
-        const Chapter = parseInt(ChapterString.slice(1, -1), 10);
-        let Odd = "";
-        const OddString = ChapterString[ChapterString.length - 1];
-        if (OddString !== "0") {
-          Odd = `.${OddString}`;
-        }
-        return window.location.href.replace(/-chapter-.+/, `-chapter-${Chapter}${Odd}${Index}.html`);
-      }
-      return {
-        title: document.querySelector("title")?.textContent?.replace(/ Page .+/, "").trim(),
-        series: document.querySelector(".MainContainer a")?.getAttribute("href"),
-        pages: parseInt(CurChapter.Page, 10),
-        prev: ChapterURLEncode(-1),
-        next: ChapterURLEncode(1),
-        listImages: Array(parseInt(CurChapter.Page, 10)).fill(0).map(
+        series: document.querySelector(".back-to-gallery a")?.getAttribute("href"),
+        pages: num,
+        prev: "#",
+        next: "#",
+        listImages: Array(num).fill(0).map(
           (_, i) => src.replace(
-            /-\d\d\d.png/,
-            `-${String(i + 1).padStart(3, "0").slice(-3)}.png`
+            /\d+\./,
+            `${String(i + 1).padStart(3, "0").slice(-3)}.`
           )
         )
       };
     }
   };
 
-  const mangatigre = {
-    name: "MangaTigre",
-    url: /https?:\/\/(www.)?mangatigre.net\/.+\/.+\/.+/,
-    homepage: "https://www.mangatigre.net/",
-    language: ["Spanish"],
-    category: "manga",
-    run() {
-      const images = [...document.querySelectorAll(".chapter-content img")];
-      const chapter = document.querySelector(".form-control option:checked");
-      return {
-        title: document.querySelector(".page-title")?.textContent?.trim(),
-        series: document.querySelector(".breadcrumb li:nth-child(3) a")?.getAttribute("href"),
-        pages: images.length,
-        prev: chapter?.nextElementSibling?.getAttribute("value"),
-        next: chapter?.previousElementSibling?.getAttribute("value"),
-        listImages: images.map((img) => img.getAttribute("data-src") || img.getAttribute("src"))
-      };
-    }
-  };
-
-  const mangatoon = {
-    name: "MangaToons",
-    url: /https?:\/\/(www.)?mangatoon.mobi\/.+\/watch\/.+/,
-    homepage: "https://mangatoon.mobi/",
+  const nana = {
+    name: "Nana",
+    url: /https?:\/\/nana.my.id\/reader\/.+/,
+    homepage: "https://nana.my.id/",
     language: ["English"],
-    category: "manga",
+    category: "hentai",
     run() {
-      const images = [...document.querySelectorAll(".pictures img")];
-      return {
-        title: document.querySelector("title")?.textContent?.trim(),
-        series: document.querySelector(".top-left a")?.getAttribute("href"),
-        pages: images.length,
-        prev: document.querySelector(".page-icons-prev")?.getAttribute("href"),
-        next: document.querySelector(".page-icons-next")?.getAttribute("href"),
-        listImages: images.map((img) => img.getAttribute("data-src"))
-      };
-    }
-  };
-
-  const mangatown = {
-    name: "MangaTown",
-    url: /https?:\/\/(www.|m.)?mangatown.com\/manga\/.+\/.+/,
-    homepage: "https://www.mangatown.com/",
-    language: ["English"],
-    category: "manga",
-    waitVar: "chapter_id",
-    async run() {
       const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const key = document.querySelector("#dm5_key")?.getAttribute("value");
+      return {
+        title: document.querySelector("title")?.textContent?.replace(/ - Nana .+/, "").trim(),
+        series: "#",
+        pages: W.Reader.pages.length,
+        prev: "#",
+        next: "#",
+        listImages: W.Reader.pages
+      };
+    }
+  };
+
+  const nhentainet = {
+    name: ["nHentai.net", "nHentai.xxx", "lhentai"],
+    url: /https?:\/\/(www.)?(nhentai|lhentai).(net|xxx|com)\/g\/.+\/.+/,
+    homepage: ["https://nhentai.net/", "https://nhentai.xxx/", "https://lhentai.com/"],
+    language: ["English"],
+    category: "hentai",
+    run() {
+      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
+      function getExt(extension) {
+        if (extension === "g")
+          return "gif";
+        if (extension === "b")
+          return "bmp";
+        if (extension === "p")
+          return "png";
+        return "jpg";
+      }
+      const num = parseInt(document.querySelector(".num-pages")?.textContent || "", 10);
+      const src = document.querySelector("#image-container img")?.getAttribute("src")?.replace(/\d+.\w\w\w$/, "");
+      const ext = W.images_ext?.map(getExt) || // eslint-disable-next-line no-underscore-dangle
+      W._gallery?.images?.pages?.map((i) => getExt(i.t)) || Array(num).fill("jpg");
+      return {
+        title: document.querySelector("title")?.textContent?.split("- Page")[0].trim(),
+        series: document.querySelector(".go-back")?.getAttribute("href"),
+        pages: num,
+        prev: "#",
+        next: "#",
+        listImages: Array(num).fill(0).map((_, i) => `${src}${i + 1}.${ext[i]}`)
+      };
+    }
+  };
+
+  const ninehentai = {
+    name: "9Hentai",
+    url: /https?:\/\/(www.)?9hentai.(ru|to)\/g\/.+\/.+/,
+    homepage: "https://9hentai.to",
+    language: ["English"],
+    category: "hentai",
+    waitAttr: ["#jumpPageModal input", "max"],
+    async run() {
+      const data = { id: parseInt(window.location.pathname.match(/\d+/)[0], 10) };
       const options = {
-        method: "GET",
+        method: "POST",
+        body: JSON.stringify(data),
         headers: {
-          "Content-Type": "text/plain"
+          "Content-Type": "application/json"
         }
       };
-      const src = Array(W.total_pages).fill(0).map(async (_, i) => {
-        const url = `chapterfun.ashx?cid=${W.chapter_id}&page=${i}&key=${key}`;
-        const api = await fetch(url, options).then((res) => res.text());
-        (0, eval)(api);
-        return d;
-      });
-      const images = await Promise.all(src);
-      const chapter = document.querySelector("#top_chapter_list option:checked");
+      const api = await fetch("/api/getBookByID", options).then((res) => res.json());
       return {
-        title: document.querySelector(".title h1")?.textContent,
-        series: W.series_url,
-        pages: images.length,
-        prev: chapter?.previousElementSibling?.getAttribute("value"),
-        next: chapter?.nextElementSibling?.getAttribute("value"),
-        listImages: images.map((img, i) => img[i === 0 ? 0 : 1])
+        title: api.results.title,
+        series: `/g/${api.results.id}/`,
+        pages: api.results.total_page,
+        prev: "#",
+        next: "#",
+        listImages: Array(api.results.total_page).fill(0).map((_, i) => `${api.results.image_server + api.results.id}/${i + 1}.jpg`)
       };
     }
   };
 
-  const manhuascan = {
-    name: "ManhuaScan",
-    url: /https?:\/\/(www.)?manhuascan.io\/.+chapter.+/,
-    homepage: "https://manhuascan.io/",
+  const omegascans = {
+    name: ["OmegaScans"],
+    url: /https?:\/\/(www.)?(omegascans).(org)\/.+/,
+    homepage: ["https://omegascans.org/"],
     language: ["English"],
     category: "manga",
-    waitVar: "imgsrcs",
-    run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const key = CryptoJS.enc.Hex.parse("e11adc3949ba59abbe56e057f20f131e");
-      const iv = CryptoJS.enc.Hex.parse("1234567890abcdef1234567890abcdef");
-      const opinion = { iv, padding: CryptoJS.pad.ZeroPadding };
-      const images = CryptoJS.AES.decrypt(W.imgsrcs, key, opinion).toString(CryptoJS.enc.Utf8).split(",");
-      return {
-        title: document.querySelector("title")?.textContent?.trim(),
-        series: document.querySelector(".breadcrumb li:nth-child(3) a")?.getAttribute("href"),
-        pages: images.length,
-        prev: document.querySelector(".chapter-select a:first-of-type")?.getAttribute("href"),
-        next: document.querySelector(".chapter-select a:last-of-type")?.getAttribute("href"),
-        listImages: images
-      };
-    }
-  };
-
-  const mreader = {
-    name: ["MReader", "MangaGeko"],
-    url: /https?:\/\/(www.)?(mreader|mangageko).com?\/reader\/.*/,
-    homepage: ["https://www.mreader.co/", "https://www.mangageko.com/"],
-    language: ["English"],
-    category: "manga",
-    run() {
-      const images = [...document.querySelectorAll("#chapter-reader img")];
-      return {
-        title: document.querySelector(".titles")?.textContent?.trim(),
-        series: document.querySelector(".titles a")?.getAttribute("href"),
-        pages: images.length,
-        prev: document.querySelector(".chnav.prev")?.getAttribute("href"),
-        next: document.querySelector(".chnav.next")?.getAttribute("href"),
-        listImages: images.map((img) => img.getAttribute("src"))
-      };
-    }
-  };
-
-  const naniscans = {
-    name: "NaniScans",
-    url: /https?:\/\/(www.)?(naniscans).com\/chapters\/.+\/read/,
-    homepage: "https://naniscans.com/",
-    language: ["English"],
-    category: "manga",
-    waitVar: "chapterListRoute",
-    async run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const api = await fetch(W.location.href.replace("read", "json")).then((res) => res.json());
-      return {
-        title: document.querySelector("title")?.textContent?.trim(),
-        series: document.querySelector('a[href^="/titles/"]')?.getAttribute("href"),
-        pages: api.pages.length,
-        prev: W.previousChapterRoute,
-        next: W.nextChapterRoute,
-        listImages: api.pages.map((i) => i.address)
-      };
-    }
-  };
-
-  const ninemanga = {
-    name: "NineManga",
-    url: /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/,
-    homepage: "https://ninemanga.com/",
-    language: ["English"],
-    category: "manga",
+    waitEle: "#chapter option:nth-child(2)",
     run() {
       const chapter = document.querySelector("#chapter option:checked");
-      const pages = [...document.querySelector("#page").querySelectorAll("option")];
+      const images = [...document.querySelectorAll("#readerarea img")];
       return {
-        title: document.querySelector(".tip a")?.textContent?.trim(),
-        series: document.querySelector(".subgiude > li:nth-child(2) > a")?.getAttribute("href"),
-        pages: pages.length,
-        prev: chapter?.nextElementSibling?.getAttribute("value"),
-        next: chapter?.previousElementSibling?.getAttribute("value"),
-        listPages: pages.map((item) => $(item).val()),
-        img: ".manga_pic"
-      };
-    }
-  };
-
-  const olympusscans = {
-    name: "OlympusScans",
-    url: /https?:\/\/(www.)?olympusscans.com\/capitulo\/.+\/.+/,
-    homepage: "https://olympusscans.com/",
-    language: ["Spanish"],
-    category: "manga",
-    waitVar: "__NUXT__",
-    run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const images = W.__NUXT__.data[W.location.pathname].chapter.pages;
-      return {
-        title: document.querySelector("title")?.textContent?.trim(),
-        series: document.querySelector("h1")?.parentElement?.getAttribute("href"),
-        pages: images.length,
-        prev: document.querySelector(".i-heroicons-chevron-left-20-solid")?.parentElement?.getAttribute("href"),
-        next: document.querySelector(".i-heroicons-chevron-right-20-solid")?.parentElement?.getAttribute("href"),
-        listImages: images
-      };
-    }
-  };
-
-  const pandamanga = {
-    name: "PandaManga",
-    url: /https?:\/\/(www.)?pandamanga.xyz\/.+\/.+\/.+/,
-    homepage: "https://www.pandamanga.com/",
-    language: ["English"],
-    category: "manga",
-    run() {
-      const chapter = document.querySelector(".select-chapter option:checked");
-      const data = JSON.parse(document.getElementById("__NEXT_DATA__").textContent);
-      const images = data.props.pageProps.mangaview.source.split(",").filter((url) => url.length > 0);
-      return {
-        title: data.props.pageProps.mangaview.nameSeoChapter,
+        title: document.querySelector(".entry-title")?.textContent?.trim(),
         series: document.querySelector(".allc a")?.getAttribute("href"),
         pages: images.length,
         prev: chapter?.nextElementSibling?.getAttribute("value"),
         next: chapter?.previousElementSibling?.getAttribute("value"),
-        listImages: images
-      };
-    }
-  };
-
-  const rawdevart = {
-    name: "RawDevart",
-    url: /https?:\/\/(www.)?rawdevart.com\/comic\/.+\/.+\//,
-    homepage: "https://rawdevart.com",
-    language: ["Raw"],
-    category: "manga",
-    waitVar: "rconfig",
-    waitEle: "#chapter-list select",
-    run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const chapter = document.querySelector("#chapter-list option:checked");
-      const images = [...document.querySelectorAll("#img-container img")];
-      return {
-        title: W.rconfig.chapterTitle,
-        series: W.rconfig.prefix,
-        pages: images.length,
-        prev: chapter?.nextElementSibling?.getAttribute("value"),
-        next: chapter?.previousElementSibling?.getAttribute("value"),
-        listImages: images.map((item) => $(item).attr("data-src") || $(item).attr("src"))
-      };
-    }
-  };
-
-  const readcomicsonline = {
-    name: "ReadComicsOnline",
-    url: /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/\d*/,
-    homepage: "https://readcomicsonline.ru/",
-    language: ["English"],
-    category: "comic",
-    run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const images = [...document.querySelectorAll("#all img")];
-      return {
-        title: W.title.replace(/ - Page \d+/, ""),
-        series: document.querySelector("div.pager-cnt a")?.getAttribute("href"),
-        pages: W.pages.length,
-        prev: W.prev_chapter,
-        next: W.next_chapter,
-        listImages: images.map((img) => img.getAttribute("data-src"))
-      };
-    }
-  };
-
-  const readmangatoday = {
-    name: ["ReadManga Today", "Funmanga", "MangaDoom", "MangaInn"],
-    url: /https?:\/\/(www.)?(funmanga|mngdoom|readmng|mangainn).(com|net)\/.+\/\d+/,
-    homepage: [
-      "https://www.readmng.com/",
-      "https://funmanga.com/",
-      "https://mngdoom.com/",
-      "https://www.mangainn.net/"
-    ],
-    language: ["English"],
-    category: "manga",
-    run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      return {
-        title: W.chapter_page_title,
-        series: W.manga_url,
-        pages: W.images.length,
-        prev: W.prev_chapter_url,
-        next: W.next_chapter_url,
-        listImages: W.images.map((item) => item.url)
-      };
-    }
-  };
-
-  const reaperscans = {
-    name: "ReaperScans",
-    url: /https?:\/\/(www.)?reaperscans.com\/comics\/.+\/chapters\/.+/,
-    homepage: "https://reaperscans.com/",
-    language: ["English"],
-    category: "manga",
-    run() {
-      const images = [...document.querySelectorAll("main img")];
-      return {
-        title: document.querySelector("title")?.textContent?.trim(),
-        series: document.querySelector(".fa-list")?.parentElement?.getAttribute("href"),
-        pages: images.length,
-        prev: document.querySelector(".fa-arrow-left-long")?.parentElement?.getAttribute("href"),
-        next: document.querySelector(".fa-arrow-right-long")?.parentElement?.getAttribute("href"),
         listImages: images.map((img) => img.getAttribute("data-src") || img.getAttribute("src"))
       };
     }
   };
 
-  const senmanga = {
-    name: "SenManga(Raw)",
-    url: /https?:\/\/raw.senmanga.com\/.+\/.+\/?/,
-    homepage: "https://raw.senmanga.com/",
-    language: ["Raw"],
-    category: "manga",
+  const porncomixonline = {
+    name: "PornComixOnline",
+    url: /https?:\/\/(www.)?porncomixone.net\/comic\/.+/,
+    homepage: "https://www.porncomixone.net",
+    language: ["English"],
+    category: "hentai",
     run() {
-      const url = `/${window.location.pathname.split("/")[1]}/${window.location.pathname.split("/")[2]}`;
+      const images = [...document.querySelectorAll("figure a")];
+      return {
+        title: document.querySelector(".post-title")?.textContent?.trim(),
+        series: "#",
+        pages: images.length,
+        prev: "#",
+        next: "#",
+        listImages: images.map((img) => img.getAttribute("href"))
+      };
+    }
+  };
+
+  const pururin = {
+    name: "Pururin",
+    url: /https?:\/\/(www.)?pururin.to\/(view|read)\/.+\/.+\/.+/,
+    homepage: "https://pururin.to/",
+    language: ["English"],
+    category: "hentai",
+    waitAttr: [".image-holder img", "src"],
+    run() {
+      const src = document.querySelector(".image-holder img")?.getAttribute("src") || "";
+      const num = [...document.querySelectorAll(".form-control option")];
+      return {
+        title: document.querySelector(".title")?.textContent?.trim(),
+        series: document.querySelector(".breadcrumb-item:nth-child(4) a")?.getAttribute("href"),
+        pages: num.length,
+        prev: "#",
+        next: "#",
+        listImages: num.map((_, i) => src.replace(/\/\d+\./, `/${i + 1}.`))
+      };
+    }
+  };
+
+  const simplyhentai = {
+    name: "Simply-Hentai",
+    url: /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/,
+    homepage: "https://simply-hentai.com/",
+    language: ["English"],
+    category: "hentai",
+    waitEle: "#__NEXT_DATA__",
+    async run() {
+      const json = JSON.parse(document.querySelector("#__NEXT_DATA__")?.innerHTML || "");
+      const images = json.props.pageProps.data.pages.map((img) => img.sizes.full);
+      return {
+        title: document.querySelector(".content-headline a")?.textContent?.trim(),
+        series: document.querySelector(".content-headline a")?.getAttribute("href"),
+        pages: images.length,
+        prev: "#",
+        next: "#",
+        listImages: images
+      };
+    }
+  };
+
+  function waitForAtb(selector, atribute, target = document.body) {
+    return new Promise((resolve) => {
+      if (document.querySelector(selector)?.getAttribute(atribute)) {
+        resolve(document.querySelector(selector)?.getAttribute(atribute));
+      }
+      const observer = new MutationObserver(() => {
+        if (document.querySelector(selector)?.getAttribute(atribute)) {
+          resolve(document.querySelector(selector)?.getAttribute(atribute));
+          observer.disconnect();
+        }
+      });
+      observer.observe(target, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: [atribute]
+      });
+    });
+  }
+
+  const sukebe = {
+    name: ["ksk.moe", "Sukebe.moe"],
+    obs: "Slow start, bruteforce required",
+    url: /https?:\/\/(www.)?(ksk|sukebe).moe\/(archive|g)\/\d+\/.+\/\d+/,
+    homepage: ["https://ksk.moe/", "https://sukebe.moe/"],
+    language: ["English"],
+    category: "hentai",
+    waitEle: ".main .page img",
+    async run() {
+      const direction = document.querySelector('[name="direction"]');
+      if (direction) {
+        direction.value = "1";
+        direction.dispatchEvent(new Event("change"));
+      }
+      document.querySelector(".first")?.dispatchEvent(new Event("click"));
+      const next = document.querySelector(".next");
+      const num = document.querySelectorAll(".currentPageNum option");
+      const target = document.querySelector(".main .pages");
+      const src = [];
+      for (let i = 1; i <= num?.length; i += 1) {
+        src.push(await waitForAtb(".page img", "src", target ?? document.body));
+        target?.querySelector("img")?.removeAttribute("src");
+        next?.dispatchEvent(new Event("click"));
+      }
+      return {
+        title: document.querySelector("header h1 a")?.textContent?.trim(),
+        series: document.querySelector("header h1 a")?.getAttribute("href"),
+        pages: num?.length,
+        prev: "#",
+        next: "#",
+        listImages: src
+      };
+    }
+  };
+
+  const threehentai = {
+    name: "3Hentai",
+    url: /https?:\/\/(www.)?3hentai.net\/d\/.+\/.+/,
+    homepage: "https://3hentai.net/",
+    language: ["English"],
+    category: "hentai",
+    waitVar: "readerPages",
+    run() {
+      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
+      return {
+        title: W.readerPages.title.replace(/- Page.+/, "").trim(),
+        series: W.readerPages.baseUri.replace("%s", ""),
+        pages: W.readerPages.lastPage,
+        prev: "#",
+        next: "#",
+        listImages: Object.keys(W.readerPages.pages).map(
+          (img) => W.readerPages.baseUriImg.replace("%s", W.readerPages.pages[img].f)
+        )
+      };
+    }
+  };
+
+  const tmohhentai = {
+    name: "TMOHentai",
+    url: /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/\d+/,
+    homepage: "https://tmohentai.com/",
+    language: ["Spanish"],
+    category: "hentai",
+    run() {
       const num = parseInt(
-        document.querySelector(".page-list select option:last-child")?.getAttribute("value") || "0",
+        document.querySelector("#select-page option:last-child")?.getAttribute("value") || "",
         10
       );
-      const chapter = [...document.querySelectorAll(".dropdown-chapter li")];
-      const origin = chapter.findIndex(
-        (item) => item.querySelector("a")?.getAttribute("href") === window.location.href
-      );
       return {
-        title: $(".title").text().trim(),
-        series: document.querySelector(".breadcrumb li:nth-child(2) a")?.getAttribute("href"),
+        title: document.querySelector(".reader-title")?.textContent?.trim(),
+        series: document.querySelector(".nav-justified li a")?.getAttribute("href"),
         pages: num,
-        prev: chapter.at(origin + 1)?.querySelector("a")?.getAttribute("href"),
-        next: chapter.at(origin - 1)?.querySelector("a")?.getAttribute("href"),
-        listPages: Array(num).fill(0).map((_, i) => `${url}/${i + 1}/`),
-        img: ".picture"
+        prev: "#",
+        next: "#",
+        listPages: Array(num).fill(0).map((_, i) => window.location.href.replace(/\/\d*$/, `/${i + 1}`)),
+        img: ".content-image",
+        lazyAttr: "data-original"
       };
     }
   };
 
-  const shimadascans = {
-    name: "ShimadaScans",
-    url: /https?:\/\/(www.)?shimadascans.com\/.+(series|chapter).+/,
-    homepage: "https://shimadascans.com/",
+  const tsumino = {
+    name: "Tsumino",
+    url: /https?:\/\/(www.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/,
+    homepage: "http://tsumino.com/",
     language: ["English"],
-    category: "manga",
-    waitEle: "#readerarea img",
-    run() {
-      const images = [...document.querySelectorAll("#readerarea img")];
+    category: "hentai",
+    async run() {
+      const dataopt = document.querySelector("#image-container")?.getAttribute("data-opt");
+      const datacdn = document.querySelector("#image-container")?.getAttribute("data-cdn") || "";
+      const url = `https://www.tsumino.com/Read/Load?q=${dataopt}`;
+      const api = await fetch(url).then((res) => res.json());
       return {
-        title: document.querySelector("title")?.textContent?.trim(),
-        series: document.querySelector(".breadcrumb li:nth-child(2) a")?.getAttribute("href"),
-        pages: images.length,
-        prev: document.querySelector("a.prev_page")?.getAttribute("href"),
-        next: document.querySelector("a.next_page")?.getAttribute("href"),
-        listImages: images.map((img) => img.getAttribute("src"))
+        title: document.querySelector("title")?.textContent?.replace(/.+Read/, "").trim(),
+        series: api.reader_start_url,
+        pages: api.reader_page_total,
+        prev: "#",
+        next: "#",
+        listImages: Array(api.reader_page_total).fill(0).map((_, i) => datacdn.replace("[PAGE]", `${i + 1}`))
       };
     }
   };
 
-  const tapas = {
-    name: "KLManga",
-    url: /https?:\/\/(www.)?tapas.io\/episode\/.+/,
-    homepage: "https://tapas.io/",
-    language: ["English"],
-    category: "manga",
-    run() {
-      const images = [...document.querySelectorAll(".viewer__body img.content__img")];
-      const chapter = document.querySelector(".js-episodes .body__item--selected");
-      return {
-        title: document.querySelector(".viewer__header .title")?.textContent?.trim(),
-        series: document.querySelector(".vw-nav__left a")?.getAttribute("href"),
-        pages: images.length,
-        prev: chapter?.previousElementSibling?.getAttribute("data-href"),
-        next: chapter?.nextElementSibling?.getAttribute("data-href"),
-        listImages: images.map((img) => img.getAttribute("data-src") || img.getAttribute("src"))
-      };
-    }
-  };
-
-  const tenmanga = {
-    name: "TenManga",
-    url: /https?:\/\/(www.)?(tenmanga|gardenmanage).com\/(chapter|statuses)\/.+/,
-    homepage: "https://www.tenmanga.com/",
-    language: ["English"],
-    category: "manga",
-    waitVar: "_pageCtrl",
-    run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const chapter = document.querySelector(
-        ".mangaread-pagenav select option:checked"
-      );
-      const images = W._pageCtrl.options.all_imgs_url;
-      return {
-        title: document.querySelector(".title  h1")?.textContent?.trim(),
-        series: document.querySelector(".title  a:nth-child(2)")?.getAttribute("href"),
-        pages: images.length,
-        prev: chapter?.nextElementSibling?.getAttribute("value"),
-        next: chapter?.previousElementSibling?.getAttribute("value"),
-        listImages: images
-      };
-    }
-  };
-
-  const tmofans = {
-    name: "TuMangaOnline",
-    url: /https?:\/\/(www.)?(tmofans|lectortmo|followmanga).com\/.+\/.+\/(paginated|cascade)/,
-    homepage: "https://lectortmo.com/",
+  const vercomicsporno = {
+    name: ["vermangasporno", "vercomicsporno"],
+    url: /https?:\/\/(www.)?(vermangasporno|vercomicsporno).com\/.+/,
+    homepage: ["https://vermangasporno.com/", "https://vercomicsporno.com/"],
     language: ["Spanish"],
-    category: "manga",
+    category: "hentai",
+    waitEle: 'img[loading="lazy"].size-full, .comicimg picture img, .wp-content img',
     run() {
-      const images = [...document.querySelectorAll(".img-container img")];
-      const pages = [
+      const images = [
         ...document.querySelectorAll(
-          "div.container:nth-child(4) select#viewer-pages-select option"
+          'img[loading="lazy"].size-full, .comicimg picture img, .wp-content img'
         )
       ];
-      const num = images.length > 1 ? images.length : pages.length;
       return {
-        title: document.querySelector("title")?.textContent?.trim(),
-        series: document.querySelector('a[title="Volver"]')?.getAttribute("href"),
-        pages: num,
-        prev: document.querySelector(".chapter-prev a")?.getAttribute("href"),
-        next: document.querySelector(".chapter-next a")?.getAttribute("href"),
-        listPages: images.length > 1 ? null : Array(num).fill(0).map((_, i) => `${window.location.href.replace(/\/\d+$/, "")}/${i + 1}`),
-        listImages: images.length > 1 ? images.map((item) => $(item).attr("data-src")) : null,
-        img: "#viewer-container img, .viewer-page"
-      };
-    }
-  };
-
-  const unionmangas = {
-    name: "UnionMangas",
-    url: /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/,
-    homepage: "https://unionleitor.top/",
-    language: ["Portuguese"],
-    category: "manga",
-    run() {
-      const chapter = document.querySelector("#capitulo_trocar option:checked");
-      const images = [...document.querySelectorAll(".img-manga")];
-      return {
-        title: document.querySelector(".titulo-leitura")?.textContent?.trim(),
-        series: document.querySelector(".breadcrumbs a:nth-child(3)")?.getAttribute("href"),
+        title: document.querySelector("h1.titl, title")?.textContent?.trim(),
+        series: "#",
         pages: images.length,
-        prev: chapter?.previousElementSibling?.getAttribute("value"),
-        next: chapter?.nextElementSibling?.getAttribute("value"),
-        listImages: images.map((img) => img.getAttribute("src"))
+        prev: "#",
+        next: "#",
+        listImages: images.map((img) => img.getAttribute("data-lazy-src") || img.getAttribute("src"))
       };
     }
   };
 
-  const webnovel = {
-    name: "WebNovel",
-    url: /https?:\/\/(www.)?webnovel.com\/comic\/.+/,
-    homepage: "https://www.webnovel.com/",
-    language: ["English"],
-    category: "manga",
-    waitVar: "g_data",
+  const wnacg = {
+    name: "wnacg",
+    url: /https?:\/\/(www.)?wnacg.com\/photos-view-id-.+/,
+    homepage: "https://wnacg.com/",
+    language: ["English", "Raw", "Chinese"],
+    category: "hentai",
     run() {
       const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const images = W.g_data.chapter.chapterInfo.chapterPage.map((img) => img.url);
+      const pages = [...document.querySelectorAll(".pageselect option")];
       return {
-        title: document.querySelector("title")?.textContent?.trim(),
-        series: "./",
-        pages: images.length,
-        prev: `${W.g_data.chapter.chapterInfo.preChapterName}_${W.g_data.chapter.chapterInfo.preChapterId}`,
-        next: `${W.g_data.chapter.chapterInfo.nextChapterName}_${W.g_data.chapter.chapterInfo.nextChapterId}`,
-        listImages: images
+        title: document.querySelector(".bread a:last-of-type")?.textContent?.trim(),
+        series: "#",
+        pages: pages.length,
+        prev: "#",
+        next: "#",
+        listPages: pages.map((page) => W.location.pathname.replace(/\d+/, page.value)),
+        img: "#picarea"
       };
     }
   };
 
-  const webtoons = {
-    name: "WebToons",
-    url: /https?:\/\/(www.)?webtoons.com\/.+viewer.+/,
-    homepage: "https://www.webtoons.com/",
+  const xlecxone = {
+    name: "XlecxOne",
+    url: /https?:\/\/(www.)?xlecx.one\/.+/,
+    homepage: "https://xlecx.one/",
     language: ["English"],
-    category: "manga",
+    category: "hentai",
     run() {
-      const images = [...document.querySelectorAll("#_imageList img")];
+      const src = [
+        ...new Set(
+          [...document.querySelectorAll("article .page__text img , article #content-2 img")].map(
+            (img) => img.getAttribute("data-src") || img.getAttribute("src")
+          )
+        )
+      ];
       return {
-        title: document.querySelector(".subj_info")?.textContent?.trim(),
-        series: document.querySelector(".subj_info a")?.getAttribute("href"),
-        pages: images.length,
-        prev: document.querySelector("._prevEpisode")?.getAttribute("href"),
-        next: document.querySelector("._nextEpisode")?.getAttribute("href"),
-        listImages: images.map((img) => img.getAttribute("data-src") || img.getAttribute("src"))
+        title: document.querySelector("title")?.textContent?.trim(),
+        series: "#",
+        pages: src.length,
+        prev: "#",
+        next: "#",
+        listImages: src
       };
     }
   };
 
-  const wpmanga = {
-    name: ["Manga33"],
-    url: /https?:\/\/(www.)?(manga33).com\/manga\/.+/,
-    homepage: ["https://manga33.com/"],
+  const xyzcomics = {
+    name: "xyzcomics",
+    url: /https?:\/\/(www.)?xyzcomics.com\/.+/,
+    homepage: "https://xyzcomics.com/",
     language: ["English"],
-    category: "manga",
+    category: "hentai",
     run() {
-      const images = [...document.querySelectorAll(".chapter-content img")];
+      const images = [...document.querySelectorAll(".jig-link")];
       return {
-        title: document.querySelector("title")?.textContent?.trim(),
-        series: document.querySelector(".navbar-brand")?.getAttribute("href"),
+        title: document.querySelector(".entry-title")?.textContent?.trim(),
+        series: "#",
         pages: images.length,
-        prev: document.querySelector("a.prev")?.getAttribute("href"),
-        next: document.querySelector("a.next")?.getAttribute("href"),
-        listImages: images.map((img) => img.getAttribute("src")),
-        before() {
-          if (window.location.pathname.match(/all.html$/))
-            return;
-          if (window.location.pathname.match(/\d+-\d+.html$/)) {
-            window.location.pathname = window.location.pathname.replace(/-\d+.html$/, "-all.html");
-          }
-        }
-      };
-    }
-  };
-
-  const yugenmangas = {
-    name: "YugenMangas",
-    url: /https?:\/\/(www.)?(yugenmangas).com\/series\/.+/,
-    homepage: "https://yugenmangas.com/",
-    language: ["Spanish"],
-    category: "manga",
-    async run() {
-      const data = JSON.parse(document.querySelector("#__NEXT_DATA__")?.textContent ?? "");
-      const { id } = data.props.pageProps.data ?? (await fetch(
-        window.location.href.replace("series", `_next/data/${data.buildId}/series`).concat(".json")
-      ).then((res) => res.json())).pageProps.data;
-      const api = await fetch(`https://api.yugenmangas.com/series/chapter/${id}`).then(
-        (res) => res.json()
-      );
-      return {
-        title: document.querySelector("title")?.textContent?.trim(),
-        series: document.querySelector(".chapter-heading h5 a")?.getAttribute("href"),
-        pages: api.content.images.length,
-        prev: document.querySelector(".prev-chap a")?.getAttribute("href"),
-        next: document.querySelector(".next-chap a")?.getAttribute("href"),
-        listImages: api.content.images.map((url) => `https://api.yugenmangas.com/${url}`)
-      };
-    }
-  };
-
-  const zeroscans = {
-    name: "ZeroScans",
-    url: /https?:\/\/(www.)?zeroscans.com\/comics\/.+/,
-    homepage: "https://zeroscans.com/",
-    language: ["English"],
-    category: "manga",
-    waitVar: "__ZEROSCANS__",
-    run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const images = W.__ZEROSCANS__.data.at(0).current_chapter.high_quality;
-      const chapters = document.querySelectorAll(".v-btn--router");
-      return {
-        title: document.querySelector("title")?.textContent?.trim(),
-        series: document.querySelector(".v-breadcrumbs li:nth-child(2) + a")?.getAttribute("href"),
-        pages: images.length,
-        prev: chapters[0]?.getAttribute("href"),
-        next: chapters[1]?.getAttribute("href"),
-        listImages: images
+        prev: "#",
+        next: "#",
+        listImages: images.map((img) => img.getAttribute("href"))
       };
     }
   };
 
   const sites = [
-    asurascans,
-    batoto,
-    bilibilicomics,
-    comicastle,
-    dysnatyscans,
-    flamecans,
-    inkr,
-    inmanga,
-    klmanga,
-    leitor,
-    lhtranslation,
-    lynxscans,
-    mangabuddy,
-    mangadex,
-    mangafox,
-    mangafreak,
-    // mangago, fixme
-    mangahosted,
-    mangahub,
-    mangakakalot,
-    // mangapark, fixme
-    mangareader,
-    mangasee,
-    mangatigre,
-    mangatoon,
-    mangatown,
-    manhuascan,
-    mreader,
-    naniscans,
-    ninemanga,
-    olympusscans,
-    pandamanga,
-    rawdevart,
-    readcomicsonline,
-    readmangatoday,
-    reaperscans,
-    // resetscans, deprecated
-    senmanga,
-    shimadascans,
-    tapas,
-    tenmanga,
-    tmofans,
-    unionmangas,
-    webnovel,
-    webtoons,
-    wpmanga,
-    yugenmangas,
-    zeroscans,
-    foolslide,
-    // Must be at the end because is a generic check
+    bestporncomix,
+    doujinmoe,
+    eightMuses,
+    exhentai,
+    gntai,
+    hbrowse,
+    hentai2read,
+    hentaifox,
+    hentaihand,
+    hentaihere,
+    hitomi,
+    imhentai,
+    kingcomix,
+    luscious,
+    multporn,
+    myhentaigallery,
+    nana,
+    nhentainet,
+    ninehentai,
+    omegascans,
+    porncomixonline,
+    pururin,
+    simplyhentai,
+    sukebe,
+    tmohhentai,
+    threehentai,
+    tsumino,
+    vercomicsporno,
+    wnacg,
+    xlecxone,
+    xyzcomics,
     madarawp
     // Must be at the end because is a generic check
   ];

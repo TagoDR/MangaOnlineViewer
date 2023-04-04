@@ -4,8 +4,11 @@ import { requiredScripts } from '../core/externals';
 export default {
   name: 'Manga OnlineViewer',
   author: 'Tago',
-  updateURL: 'https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.meta.js',
-  downloadURL: 'https://github.com/TagoDR/MangaOnlineViewer/raw/master/Manga_OnlineViewer.user.js',
+  updateURL:
+    'https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.meta.js',
+  downloadURL:
+    'https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js',
+  supportURL: 'https://github.com/TagoDR/MangaOnlineViewer/issues',
   namespace: 'https://github.com/TagoDR',
   description: `Shows all pages at once in online view for these sites: ${sites
     .flatMap((s) => s.name)
