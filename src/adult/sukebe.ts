@@ -10,29 +10,33 @@ export default {
   category: 'hentai',
   waitEle: '.main .page img',
   async run() {
-    const direction = document.querySelector<HTMLSelectElement>('[name="direction"]');
-    if (direction) {
-      direction.value = '1';
-      direction.dispatchEvent(new Event('change'));
-    }
-    document.querySelector('.first')?.dispatchEvent(new Event('click'));
-    const next = document.querySelector('.next');
-    const num = document.querySelectorAll<HTMLSelectElement>('.currentPageNum option');
-    const target = document.querySelector<HTMLDivElement>('.main .pages');
-    const src = [];
-    for (let i = 1; i <= num?.length; i += 1) {
-      // eslint-disable-next-line no-await-in-loop
-      src.push(await waitForAtb('.page img', 'src', target ?? document.body));
-      target?.querySelector('img')?.removeAttribute('src');
-      next?.dispatchEvent(new Event('click'));
-    }
+    const num = document.querySelectorAll<HTMLOptionElement>('.currentPageNum option');
     return {
       title: document.querySelector('header h1 a')?.textContent?.trim(),
       series: document.querySelector('header h1 a')?.getAttribute('href'),
       pages: num?.length,
       prev: '#',
       next: '#',
-      listImages: src,
+      listImages: [''],
+      async before(begin: number = 1) {
+        const direction = document.querySelector<HTMLSelectElement>('[name="direction"]');
+        if (direction && direction.value !== '1') {
+          direction.value = '1';
+          direction.dispatchEvent(new Event('change'));
+        }
+        num.item(begin - 1).selected = true;
+        document.querySelector('.currentPageNum select')?.dispatchEvent(new Event('change'));
+        const next = document.querySelector('.next');
+        const target = document.querySelector<HTMLDivElement>('.main .pages');
+        const src = [];
+        for (let i = begin; i <= this.pages; i += 1) {
+          // eslint-disable-next-line no-await-in-loop
+          src[i - 1] = await waitForAtb('.page img', 'src', target ?? document.body);
+          target?.querySelector('img')?.removeAttribute('src');
+          next?.dispatchEvent(new Event('click'));
+        }
+        this.listImages = src;
+      },
     };
   },
 };

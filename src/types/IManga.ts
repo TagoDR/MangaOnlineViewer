@@ -10,9 +10,7 @@ export interface IMangaBase {
   lazy?: boolean;
   timer?: number;
 
-  before?(): void;
-
-  after?(): void;
+  before?(begin: number): void | Promise<void>;
 }
 
 export interface IMangaPages extends IMangaBase {

@@ -5,10 +5,9 @@ import { logScript } from '../utils/tampermonkey';
 import events from './events';
 import { loadManga } from './page';
 
-export default function display(manga: IManga) {
-  window.stop();
+export default async function display(manga: IManga) {
   if (manga.before !== undefined) {
-    manga.before();
+    await manga.before(manga.begin);
   }
   [document.documentElement, document.head, document.body].forEach((element: HTMLElement) => {
     element.getAttributeNames().forEach((attr) => element.removeAttribute(attr));
@@ -27,7 +26,4 @@ export default function display(manga: IManga) {
       logScript(e);
     }
   }, 50);
-  if (manga.after !== undefined) {
-    manga.after();
-  }
 }

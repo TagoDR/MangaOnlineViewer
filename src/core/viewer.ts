@@ -1,6 +1,6 @@
 import Swal, { SweetAlertOptions } from 'sweetalert2';
 import rangeSlider, { RangeSlider } from 'range-slider-input';
-import rangeSliderStyles from 'range-slider-input/dist/style.css';
+import rangeSliderStyles from 'range-slider-input/dist/style.css?inline';
 import _ from 'lodash';
 import { getBrowser, getEngine, getInfoGM, logScript } from '../utils/tampermonkey';
 import { IManga, ISite } from '../types';
