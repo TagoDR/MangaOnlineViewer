@@ -6,7 +6,7 @@
 // @supportURL https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), ShimadaScans, KLManga, TenManga, TuMangaOnline, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, LeviatanScans, NovelMic, Reset-Scans
-// @version 2023.04.07
+// @version 2023.04.08
 // @license MIT
 // @grant unsafeWindow
 // @grant GM_getValue
@@ -62,7 +62,7 @@
 // @include /https?:\/\/(www.)?shimadascans.com\/.+(series|chapter).+/
 // @include /https?:\/\/(www.)?tapas.io\/episode\/.+/
 // @include /https?:\/\/(www.)?(tenmanga|gardenmanage).com\/(chapter|statuses)\/.+/
-// @include /https?:\/\/(www.)?(tmofans|lectortmo|followmanga).com\/.+\/.+\/(paginated|cascade)/
+// @include /https?:\/\/(www.)?(almtechnews|animalslegacy|anisurion|cookernice|dariusmotor|followmanga|gamesxo|lectortmo|motorbakery|otakunice|paleomotor|recetchef|recipescoaching|recipesist|sucrecipes|tmofans).com\/.+\/.+\/(paginated|cascade)/
 // @include /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/
 // @include /https?:\/\/(www.)?webnovel.com\/comic\/.+/
 // @include /https?:\/\/(www.)?webtoons.com\/.+viewer.+/
@@ -76,7 +76,7 @@
 // ==/UserScript==
 
 (function () {
-  'use strict';var __vite_style__ = document.createElement('style');__vite_style__.textContent = ".range-slider{touch-action:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;cursor:pointer;display:block;position:relative;width:100%;height:8px;background:#ddd;border-radius:4px}.range-slider[data-vertical]{height:100%;width:8px}.range-slider[data-disabled]{opacity:.5;cursor:not-allowed}.range-slider .range-slider__thumb{position:absolute;z-index:3;top:50%;width:24px;height:24px;transform:translate(-50%,-50%);border-radius:50%;background:#2196f3}.range-slider .range-slider__thumb:focus-visible{outline:0;box-shadow:0 0 0 6px rgba(33,150,243,.5)}.range-slider[data-vertical] .range-slider__thumb{left:50%}.range-slider .range-slider__thumb[data-disabled]{z-index:2}.range-slider .range-slider__range{position:absolute;z-index:1;transform:translate(0,-50%);top:50%;width:100%;height:100%;background:#51adf6}.range-slider[data-vertical] .range-slider__range{left:50%;transform:translate(-50%,0)}.range-slider input[type=range]{-webkit-appearance:none;pointer-events:none;position:absolute;z-index:2;top:0;left:0;width:0;height:0;background-color:transparent}.range-slider input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none}.range-slider input[type=range]::-moz-range-thumb{width:0;height:0;border:0}.range-slider input[type=range]:focus{outline:0}";document.head.appendChild(__vite_style__);
+  'use strict';
 
   const asurascans = {
     name: "Asura Scans",
@@ -1121,12 +1121,12 @@
 
   const tmofans = {
     name: "TuMangaOnline",
-    url: /https?:\/\/(www.)?(tmofans|lectortmo|followmanga).com\/.+\/.+\/(paginated|cascade)/,
+    url: /https?:\/\/(www.)?(almtechnews|animalslegacy|anisurion|cookernice|dariusmotor|followmanga|gamesxo|lectortmo|motorbakery|otakunice|paleomotor|recetchef|recipescoaching|recipesist|sucrecipes|tmofans).com\/.+\/.+\/(paginated|cascade)/,
     homepage: "https://lectortmo.com/",
     language: ["Spanish"],
     category: "manga",
     run() {
-      const images = [...document.querySelectorAll(".img-container img")];
+      const images = [...document.querySelectorAll(".img-container img, .viewer-container img")];
       const pages = [
         ...document.querySelectorAll(
           "div.container:nth-child(4) select#viewer-pages-select option"
@@ -1139,9 +1139,12 @@
         pages: num,
         prev: document.querySelector(".chapter-prev a")?.getAttribute("href"),
         next: document.querySelector(".chapter-next a")?.getAttribute("href"),
-        listPages: images.length > 1 ? null : Array(num).fill(0).map((_, i) => `${window.location.href.replace(/\/\d+$/, "")}/${i + 1}`),
-        listImages: images.length > 1 ? images.map((item) => $(item).attr("data-src")) : null,
-        img: "#viewer-container img, .viewer-page"
+        ...images.length > 1 ? {
+          listImages: images.map((item) => $(item).attr("data-src"))
+        } : {
+          listPages: Array(pages.length).fill(0).map((_, i) => `${window.location.href.replace(/\/\d+$/, "")}/${i + 1}`),
+          img: "#viewer-container img, .viewer-page"
+        }
       };
     }
   };
@@ -3902,10 +3905,9 @@ ${wrapStyle(
     zoom();
   }
 
-  function display(manga) {
-    window.stop();
+  async function display(manga) {
     if (manga.before !== void 0) {
-      manga.before();
+      await manga.before(manga.begin);
     }
     [document.documentElement, document.head, document.body].forEach((element) => {
       element.getAttributeNames().forEach((attr) => element.removeAttribute(attr));
@@ -3924,9 +3926,6 @@ ${wrapStyle(
         logScript(e);
       }
     }, 50);
-    if (manga.after !== void 0) {
-      manga.after();
-    }
   }
 
   const startButton = "#StartMOV {\n    font-size: 20px;\n    font-weight: bold;\n    color: #fff;\n    cursor: pointer;\n    margin: 20px;\n    padding: 10px 20px;\n    text-align: center;\n    border: none;\n    background-size: 300% 100%;\n    border-radius: 50px;\n    transition: all 0.4s ease-in-out;\n    background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\n    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\n    position: fixed;\n    top: 10px;\n    right: 10px;\n    z-index: 10000;\n}\n\n#StartMOV:hover {\n    background-position: 100% 0;\n    transition: all 0.4s ease-in-out;\n}\n\n#StartMOV:focus {\n    outline: none;\n}\n";

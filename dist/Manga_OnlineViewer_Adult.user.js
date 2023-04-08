@@ -6,7 +6,7 @@
 // @supportURL https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version 2023.04.07
+// @version 2023.04.08
 // @license MIT
 // @grant unsafeWindow
 // @grant GM_getValue
@@ -59,7 +59,7 @@
 // ==/UserScript==
 
 (function () {
-  'use strict';var __vite_style__ = document.createElement('style');__vite_style__.textContent = ".range-slider{touch-action:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;cursor:pointer;display:block;position:relative;width:100%;height:8px;background:#ddd;border-radius:4px}.range-slider[data-vertical]{height:100%;width:8px}.range-slider[data-disabled]{opacity:.5;cursor:not-allowed}.range-slider .range-slider__thumb{position:absolute;z-index:3;top:50%;width:24px;height:24px;transform:translate(-50%,-50%);border-radius:50%;background:#2196f3}.range-slider .range-slider__thumb:focus-visible{outline:0;box-shadow:0 0 0 6px rgba(33,150,243,.5)}.range-slider[data-vertical] .range-slider__thumb{left:50%}.range-slider .range-slider__thumb[data-disabled]{z-index:2}.range-slider .range-slider__range{position:absolute;z-index:1;transform:translate(0,-50%);top:50%;width:100%;height:100%;background:#51adf6}.range-slider[data-vertical] .range-slider__range{left:50%;transform:translate(-50%,0)}.range-slider input[type=range]{-webkit-appearance:none;pointer-events:none;position:absolute;z-index:2;top:0;left:0;width:0;height:0;background-color:transparent}.range-slider input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none}.range-slider input[type=range]::-moz-range-thumb{width:0;height:0;border:0}.range-slider input[type=range]:focus{outline:0}";document.head.appendChild(__vite_style__);
+  'use strict';
 
   const bestporncomix = {
     name: "BestPornComix",
@@ -751,28 +751,32 @@
     category: "hentai",
     waitEle: ".main .page img",
     async run() {
-      const direction = document.querySelector('[name="direction"]');
-      if (direction) {
-        direction.value = "1";
-        direction.dispatchEvent(new Event("change"));
-      }
-      document.querySelector(".first")?.dispatchEvent(new Event("click"));
-      const next = document.querySelector(".next");
       const num = document.querySelectorAll(".currentPageNum option");
-      const target = document.querySelector(".main .pages");
-      const src = [];
-      for (let i = 1; i <= num?.length; i += 1) {
-        src.push(await waitForAtb(".page img", "src", target ?? document.body));
-        target?.querySelector("img")?.removeAttribute("src");
-        next?.dispatchEvent(new Event("click"));
-      }
       return {
         title: document.querySelector("header h1 a")?.textContent?.trim(),
         series: document.querySelector("header h1 a")?.getAttribute("href"),
         pages: num?.length,
         prev: "#",
         next: "#",
-        listImages: src
+        listImages: [""],
+        async before(begin = 1) {
+          const direction = document.querySelector('[name="direction"]');
+          if (direction && direction.value !== "1") {
+            direction.value = "1";
+            direction.dispatchEvent(new Event("change"));
+          }
+          num.item(begin - 1).selected = true;
+          document.querySelector(".currentPageNum select")?.dispatchEvent(new Event("change"));
+          const next = document.querySelector(".next");
+          const target = document.querySelector(".main .pages");
+          const src = [];
+          for (let i = begin; i <= this.pages; i += 1) {
+            src[i - 1] = await waitForAtb(".page img", "src", target ?? document.body);
+            target?.querySelector("img")?.removeAttribute("src");
+            next?.dispatchEvent(new Event("click"));
+          }
+          this.listImages = src;
+        }
       };
     }
   };
@@ -3538,10 +3542,9 @@ ${wrapStyle(
     zoom();
   }
 
-  function display(manga) {
-    window.stop();
+  async function display(manga) {
     if (manga.before !== void 0) {
-      manga.before();
+      await manga.before(manga.begin);
     }
     [document.documentElement, document.head, document.body].forEach((element) => {
       element.getAttributeNames().forEach((attr) => element.removeAttribute(attr));
@@ -3560,9 +3563,6 @@ ${wrapStyle(
         logScript(e);
       }
     }, 50);
-    if (manga.after !== void 0) {
-      manga.after();
-    }
   }
 
   const startButton = "#StartMOV {\n    font-size: 20px;\n    font-weight: bold;\n    color: #fff;\n    cursor: pointer;\n    margin: 20px;\n    padding: 10px 20px;\n    text-align: center;\n    border: none;\n    background-size: 300% 100%;\n    border-radius: 50px;\n    transition: all 0.4s ease-in-out;\n    background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\n    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\n    position: fixed;\n    top: 10px;\n    right: 10px;\n    z-index: 10000;\n}\n\n#StartMOV:hover {\n    background-position: 100% 0;\n    transition: all 0.4s ease-in-out;\n}\n\n#StartMOV:focus {\n    outline: none;\n}\n";
