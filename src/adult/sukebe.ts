@@ -19,6 +19,12 @@ export default {
       next: '#',
       listImages: [''],
       async before(begin: number = 1) {
+        const div = document.createElement('div');
+        div.setAttribute(
+          'style',
+          'height: 100vh;width: 100vw;position: fixed;top: 0;left: 0;z-index: 100000;background: white;opacity: 0.5;',
+        );
+        document.body.append(div);
         const direction = document.querySelector<HTMLSelectElement>('[name="direction"]');
         if (direction && direction.value !== '1') {
           direction.value = '1';
