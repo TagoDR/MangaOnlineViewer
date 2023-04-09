@@ -1,25 +1,26 @@
 // == MangaPark ====================================================================================
-declare let CryptoJS: any;
-declare let amWord: string;
-declare let amPass: string;
-declare let imgPathLis: string[];
-declare let imgCdnHost: string;
 export default {
   name: 'MangaPark',
-  url: /https?:\/\/(www.)?mangapark.(com|me|org|net)\/(manga|chapter|comic)\/.+\/.+/,
+  url: /https?:\/\/(www.)?mangapark.(com|me|org|net)\/title\/.+\/.+/,
   homepage: 'https://mangapark.net/',
   language: ['English'],
   category: 'manga',
-  waitVar: 'CryptoJS',
+  waitEle: 'main div div a.btn-primary',
   run() {
-    const pass = JSON.parse(CryptoJS.AES.decrypt(amWord, amPass).toString(CryptoJS.enc.Utf8));
+    const json = JSON.parse(document.querySelector('#__NEXT_DATA__')?.innerHTML || '');
+    const data = json.props.pageProps.dehydratedState.queries[0].state.data.data.imageSet;
+    const images = data.httpLis.map(
+      (img: string, index: number) => `${img}?${data.wordLis[index]}`,
+    );
     return {
-      title: document.querySelector('title')?.textContent?.trim(),
-      series: document.querySelector('.nav-title a')?.getAttribute('href'),
-      pages: imgPathLis.length,
-      prev: document.querySelector('.nav-prev a')?.getAttribute('href'),
-      next: document.querySelector('.nav-next a')?.getAttribute('href'),
-      listImages: imgPathLis.map((i: string, index: number) => `${imgCdnHost + i}?${pass[index]}`),
+      title: [...document.querySelectorAll('.comic-detail h3 a, .comic-detail h6 span')]
+        .map((e) => e.textContent?.trim())
+        .join(' '),
+      series: document.querySelector('.comic-detail a')?.getAttribute('href'),
+      pages: images.length,
+      prev: document.querySelectorAll('main div div a.btn-primary')?.item(0)?.getAttribute('href'),
+      next: document.querySelectorAll('main div div a.btn-primary')?.item(1)?.getAttribute('href'),
+      listImages: images,
     };
   },
 };

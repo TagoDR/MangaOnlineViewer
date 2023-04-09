@@ -21,7 +21,7 @@ import mangafreak from './mangafreak';
 import mangahosted from './mangahosted';
 import mangahub from './mangahub';
 import mangakakalot from './mangakakalot';
-// import mangapark from './mangapark';
+import mangapark from './mangapark';
 import mangareader from './mangareader';
 import mangasee from './mangasee';
 import mangatigre from './mangatigre';
@@ -72,7 +72,7 @@ const sites = [
   mangahosted,
   mangahub,
   mangakakalot,
-  // mangapark, fixme
+  mangapark,
   mangareader,
   mangasee,
   mangatigre,
