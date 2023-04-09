@@ -6,7 +6,7 @@
 // @supportURL https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version 2023.04.08
+// @version 2023.04.09
 // @license MIT
 // @grant unsafeWindow
 // @grant GM_getValue
@@ -23,7 +23,7 @@
 // @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js
 // @require https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
-// @require https://cdn.jsdelivr.net/npm/hotkeys-js@3.10.1/dist/hotkeys.min.js
+// @require https://cdn.jsdelivr.net/npm/hotkeys-js@3.10.2/dist/hotkeys.min.js
 // @include /https?:\/\/(www.)?bestporncomix.com\/gallery\/.+/
 // @include /https?:\/\/(www.)?doujins.com\/.+/
 // @include /https?:\/\/comics.8muses.com\/comics\/picture\/.+/
