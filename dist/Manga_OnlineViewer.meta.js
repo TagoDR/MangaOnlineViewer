@@ -64,7 +64,7 @@
 // @include /https?:\/\/(www.)?shimadascans.com\/.+(series|chapter).+/
 // @include /https?:\/\/(www.)?tapas.io\/episode\/.+/
 // @include /https?:\/\/(www.)?(tenmanga|gardenmanage).com\/(chapter|statuses)\/.+/
-// @include /https?:\/\/(www.)?(almtechnews|animalslegacy|anisurion|cookernice|dariusmotor|followmanga|gamesxo|lectortmo|motorbakery|otakunice|paleomotor|recetchef|recipescoaching|recipesist|sucrecipes|tmofans).com\/.+\/.+\/(paginated|cascade)/
+// @include /https?:\/\/(www.)?(almtechnews|animalcanine|animalslegacy|animation2you|animationforyou|anisurion|anitirion|anitoc|cook2love|cooker2love|cookermania|cookernice|cookerready|dariusmotor|enginepassion|fanaticmanga|followmanga|gamesnk|gamesxo|infogames2you|infopetworld|lectortmo|mangalong|mistermanga|motorbakery|motornk|motorpi|mygamesinfo|mynewsrecipes|myotakuinfo|otakunice|otakuworldgames|otakworld|paleomotor|panicmanga|recetchef|recipesaniki|recipescoaching|recipesdo|recipesist|recipesnk|sucrecipes|tmofans|vgmotor|vsrecipes|worldmangas|wtechnews).com\/(viewer|news)\/.+\/(paginated|cascade)/
 // @include /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/
 // @include /https?:\/\/(www.)?webnovel.com\/comic\/.+/
 // @include /https?:\/\/(www.)?webtoons.com\/.+viewer.+/
