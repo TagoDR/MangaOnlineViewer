@@ -2,11 +2,11 @@
 export default {
   ID: 'zh_cn',
   NAME: '中文 (简体)',
-  STARTING: '正在启动<br>MangaOnlineViewer',
+  STARTING: '正在启动<br>Manga OnlineViewer',
   RESUME: '从页面继续阅读 ',
   WAITING: '请等待3秒钟...',
   CHOOSE_BEGINNING: '选择要开始的页数:',
-  BUTTON_START: '启动MangaOnlineViewer',
+  BUTTON_START: '启动Manga OnlineViewer',
   SETTINGS: '设置',
   LANGUAGE: '语言',
   COLOR_SCHEME: '配色方案',

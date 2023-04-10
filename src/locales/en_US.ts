@@ -1,11 +1,11 @@
 export default {
   ID: 'en_US',
   NAME: 'English (US)',
-  STARTING: 'Starting<br>MangaOnlineViewer',
+  STARTING: 'Starting<br>Manga OnlineViewer',
   RESUME: 'Resuming reading from Page ',
   WAITING: 'Please wait, 3 seconds...',
   CHOOSE_BEGINNING: 'Choose the Page to start from:',
-  BUTTON_START: 'Start MangaOnlineViewer',
+  BUTTON_START: 'Start Manga OnlineViewer',
   SETTINGS: 'Settings',
   LANGUAGE: 'Language',
   COLOR_SCHEME: 'Color Scheme',
