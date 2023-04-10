@@ -6,7 +6,7 @@
 // @supportURL https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace https://github.com/TagoDR
 // @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version 2023.04.09
+// @version 2023.04.10
 // @license MIT
 // @grant unsafeWindow
 // @grant GM_getValue
@@ -760,6 +760,12 @@
         next: "#",
         listImages: [""],
         async before(begin = 1) {
+          const div = document.createElement("div");
+          div.setAttribute(
+            "style",
+            "height: 100vh;width: 100vw;position: fixed;top: 0;left: 0;z-index: 100000;background: white;opacity: 0.5;"
+          );
+          document.body.append(div);
           const direction = document.querySelector('[name="direction"]');
           if (direction && direction.value !== "1") {
             direction.value = "1";
@@ -1632,11 +1638,11 @@
   const en_US = {
     ID: "en_US",
     NAME: "English (US)",
-    STARTING: "Starting<br>MangaOnlineViewer",
+    STARTING: "Starting<br>Manga OnlineViewer",
     RESUME: "Resuming reading from Page ",
     WAITING: "Please wait, 3 seconds...",
     CHOOSE_BEGINNING: "Choose the Page to start from:",
-    BUTTON_START: "Start MangaOnlineViewer",
+    BUTTON_START: "Start Manga OnlineViewer",
     SETTINGS: "Settings",
     LANGUAGE: "Language",
     COLOR_SCHEME: "Color Scheme",
@@ -1727,11 +1733,11 @@
   const pt_BR = {
     ID: "pt_BR",
     NAME: "Portugues (Brasil)",
-    STARTING: "Iniciando<br>MangaOnlineViewer",
+    STARTING: "Iniciando<br>Manga OnlineViewer",
     RESUME: "Continuando leitura na Pagina ",
     WAITING: "Por Favor espere, 3 segundos...",
     CHOOSE_BEGINNING: "Escolha a pagina de onde começar:",
-    BUTTON_START: "Iniciar MangaOnlineViewer",
+    BUTTON_START: "Iniciar Manga OnlineViewer",
     SETTINGS: "Configurações",
     LANGUAGE: "Idioma",
     COLOR_SCHEME: "Esquema de Color",
@@ -1822,11 +1828,11 @@
   const zh_CN = {
     ID: "zh_cn",
     NAME: "中文 (简体)",
-    STARTING: "正在启动<br>MangaOnlineViewer",
+    STARTING: "正在启动<br>Manga OnlineViewer",
     RESUME: "从页面继续阅读 ",
     WAITING: "请等待3秒钟...",
     CHOOSE_BEGINNING: "选择要开始的页数:",
-    BUTTON_START: "启动MangaOnlineViewer",
+    BUTTON_START: "启动Manga OnlineViewer",
     SETTINGS: "设置",
     LANGUAGE: "语言",
     COLOR_SCHEME: "配色方案",
@@ -3565,7 +3571,7 @@ ${wrapStyle(
     }, 50);
   }
 
-  const startButton = "#StartMOV {\n    font-size: 20px;\n    font-weight: bold;\n    color: #fff;\n    cursor: pointer;\n    margin: 20px;\n    padding: 10px 20px;\n    text-align: center;\n    border: none;\n    background-size: 300% 100%;\n    border-radius: 50px;\n    transition: all 0.4s ease-in-out;\n    background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\n    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\n    position: fixed;\n    top: 10px;\n    right: 10px;\n    z-index: 10000;\n}\n\n#StartMOV:hover {\n    background-position: 100% 0;\n    transition: all 0.4s ease-in-out;\n}\n\n#StartMOV:focus {\n    outline: none;\n}\n";
+  const startButton = "#StartMOV {\n    font-size: 2em;\n    color: #fff;\n    cursor: pointer;\n    margin: auto;\n    padding: 10px 20px;\n    text-align: center;\n    border: none;\n    background-size: 300% 100%;\n    border-radius: 50px;\n    transition: all 0.4s ease-in-out;\n    background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\n    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\n    position: fixed;\n    top: 0;\n    right: 0;\n    left: 0;\n    bottom: 0;\n    z-index: 1050;\n    height: 3em;\n    width: 80%;\n}\n\n#StartMOV:hover {\n    background-position: 100% 0;\n    transition: all 0.4s ease-in-out;\n}\n\n#StartMOV:focus {\n    outline: none;\n}\n";
 
   function testAttribute(site) {
     if (site.waitAttr !== void 0) {
