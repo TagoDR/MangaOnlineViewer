@@ -2,7 +2,7 @@
     font-size: 2em;
     color: #fff;
     cursor: pointer;
-    margin: auto;
+    margin: 10px auto;
     padding: 10px 20px;
     text-align: center;
     border: none;
@@ -12,12 +12,12 @@
     background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);
     box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
     position: fixed;
-    top: 0;
     right: 0;
     left: 0;
     bottom: 0;
-    z-index: 1050;
+    z-index: 105000;
     height: 3em;
+    min-height: 50px;
     width: 80%;
 }
 
