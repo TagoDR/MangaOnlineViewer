@@ -1,12 +1,13 @@
 // == MangaToons ===================================================================================
 export default {
   name: 'MangaToons',
-  url: /https?:\/\/(www.)?mangatoon.mobi\/.+\/watch\/.+/,
+  url: /https?:\/\/.*mangatoon.mobi\/.+\/watch\/.+/,
   homepage: 'https://mangatoon.mobi/',
   language: ['English'],
   category: 'manga',
+  waitEle: '.pictures img:not(.cover)',
   run() {
-    const images = [...document.querySelectorAll('.pictures img')];
+    const images = [...document.querySelectorAll('.pictures img:not(.cover)')];
     return {
       title: document.querySelector('title')?.textContent?.trim(),
       series: document.querySelector('.top-left a')?.getAttribute('href'),
