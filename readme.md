@@ -98,7 +98,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
 - [BestPornComix](https://www.bestporncomix.com) _[English]_
 - [DoujinMoeNM](https://doujins.com/) _[English]_
 - [8Muses](https://comics.8muses.com/) _[English]_
-- [ExHentai](https://exhentai.org/) / [e-Hentai]() _[English]_ **Obs: May get your IP Banned, use with moderation**
+- [ExHentai](https://exhentai.org/) / [e-Hentai](https://e-hentai.org/) _[English]_ **Obs: May get your IP Banned, use with moderation**
 - [HBrowser](https://www.hbrowse.com/) _[English]_
 - [Hentai2Read](https://hentai2read.com/) _[English]_
 - [HentaiFox](https://www.hentaifox.com/) _[English]_
