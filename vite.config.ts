@@ -1,10 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { defineConfig } from 'vite';
-// @ts-ignore
-import userscript from 'userscript-meta';
-import fs from 'fs';
-// @ts-ignore
+import userscript from 'userscript-metadata-generator';
 import externalGlobals from 'rollup-plugin-external-globals';
+import fs from 'fs';
 import metaMain from './src/meta/meta-main';
 import metaAdult from './src/meta/meta-adult';
 import metaDev from './src/meta/meta-dev';
@@ -39,6 +37,7 @@ const globals = {
   'file-saver': 'FileSaver',
   lodash: '_',
   'hotkeys-js': 'hotkeys',
+  'range-slider-input': 'rangeSlider',
 };
 
 function generateReadme() {
@@ -52,7 +51,7 @@ function generateReadme() {
 }
 
 function generateMetadata(script: any) {
-  const banner = userscript.stringify(script.banner);
+  const banner = userscript(script.banner);
   fs.writeFileSync(`./dist/${script.meta}`, banner, 'utf8');
   return banner;
 }
