@@ -1,63 +1,63 @@
 // ==UserScript==
-// @name Manga OnlineViewer Adult
-// @author Tago
-// @updateURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.meta.js
-// @downloadURL https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
-// @supportURL https://github.com/TagoDR/MangaOnlineViewer/issues
-// @namespace https://github.com/TagoDR
-// @description Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version 2023.04.12
-// @license MIT
-// @grant unsafeWindow
-// @grant GM_getValue
-// @grant GM_setValue
-// @grant GM_listValues
-// @grant GM_deleteValue
-// @grant GM_xmlhttpRequest
-// @noframes on
-// @connect *
-// @require https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js
-// @require https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
-// @require https://cdn.jsdelivr.net/npm/hotkeys-js@3.10.2/dist/hotkeys.min.js
-// @include /https?:\/\/(www.)?bestporncomix.com\/gallery\/.+/
-// @include /https?:\/\/(www.)?doujins.com\/.+/
-// @include /https?:\/\/comics.8muses.com\/comics\/picture\/.+/
-// @include /https?:\/\/(g.)?(exhentai|e-hentai).org\/s\/.+\/.+/
-// @include /https?:\/\/(www.)?gntai.net\/.+\/.+/
-// @include /https?:\/\/(www.)?hbrowse.com\/.+/
-// @include /https?:\/\/(www.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//
-// @include /https?:\/\/(www.)?hentaifox.com\/g\/.+/
-// @include /https?:\/\/(www.)?(hentaihand|nhentai).com\/.+\/reader\/\d+/
-// @include /https?:\/\/(www.)?hentaihere.com\/.+\/.+\/.+/
-// @include /https?:\/\/hitomi.la\/reader\/.+/
-// @include /https?:\/\/(www.)?imhentai.xxx\/view\/.+\/.+\//
-// @include /https?:\/\/(www.)?kingcomix.com\/.+/
-// @include /https?:\/\/(www.)?luscious.net\/.+\/read\/.+/
-// @include /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/
-// @include /https?:\/\/(www.)?myhentaigallery.com\/gallery\/show\/.+\/\d+/
-// @include /https?:\/\/nana.my.id\/reader\/.+/
-// @include /https?:\/\/(www.)?(nhentai|lhentai).(net|xxx|com)\/g\/.+\/.+/
-// @include /https?:\/\/(www.)?9hentai.(ru|to)\/g\/.+\/.+/
-// @include /https?:\/\/(www.)?(omegascans).(org)\/.+/
-// @include /https?:\/\/(www.)?porncomixone.net\/comic\/.+/
-// @include /https?:\/\/(www.)?pururin.to\/(view|read)\/.+\/.+\/.+/
-// @include /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/
-// @include /https?:\/\/(www.)?(ksk|sukebe).moe\/(archive|g)\/\d+\/.+\/\d+/
-// @include /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/\d+/
-// @include /https?:\/\/(www.)?3hentai.net\/d\/.+\/.+/
-// @include /https?:\/\/(www.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/
-// @include /https?:\/\/(www.)?(vermangasporno|vercomicsporno).com\/.+/
-// @include /https?:\/\/(www.)?wnacg.com\/photos-view-id-.+/
-// @include /https?:\/\/(www.)?xlecx.one\/.+/
-// @include /https?:\/\/(www.)?xyzcomics.com\/.+/
-// @include /https?:\/\/.+\/(porncomic)\/.+\/.+/
+// @name          Manga OnlineViewer Adult
+// @author        Tago
+// @updateURL     https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.meta.js
+// @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
+// @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
+// @namespace     https://github.com/TagoDR
+// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
+// @version       2023.04.26
+// @license       MIT
+// @grant         unsafeWindow
+// @grant         GM_getValue
+// @grant         GM_setValue
+// @grant         GM_listValues
+// @grant         GM_deleteValue
+// @grant         GM_xmlhttpRequest
+// @noframes      on
+// @connect       *
+// @require       https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
+// @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.10.2/dist/hotkeys.min.js
+// @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
+// @include       /https?:\/\/(www.)?bestporncomix.com\/gallery\/.+/
+// @include       /https?:\/\/(www.)?doujins.com\/.+/
+// @include       /https?:\/\/comics.8muses.com\/comics\/picture\/.+/
+// @include       /https?:\/\/(g.)?(exhentai|e-hentai).org\/s\/.+\/.+/
+// @include       /https?:\/\/(www.)?gntai.net\/.+\/.+/
+// @include       /https?:\/\/(www.)?hbrowse.com\/.+/
+// @include       /https?:\/\/(www.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//
+// @include       /https?:\/\/(www.)?hentaifox.com\/g\/.+/
+// @include       /https?:\/\/(www.)?(hentaihand|nhentai).com\/.+\/reader\/\d+/
+// @include       /https?:\/\/(www.)?hentaihere.com\/.+\/.+\/.+/
+// @include       /https?:\/\/hitomi.la\/reader\/.+/
+// @include       /https?:\/\/(www.)?imhentai.xxx\/view\/.+\/.+\//
+// @include       /https?:\/\/(www.)?kingcomix.com\/.+/
+// @include       /https?:\/\/(www.)?luscious.net\/.+\/read\/.+/
+// @include       /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/
+// @include       /https?:\/\/(www.)?myhentaigallery.com\/gallery\/show\/.+\/\d+/
+// @include       /https?:\/\/nana.my.id\/reader\/.+/
+// @include       /https?:\/\/(www.)?(nhentai|lhentai).(net|xxx|com)\/g\/.+\/.+/
+// @include       /https?:\/\/(www.)?9hentai.(ru|to)\/g\/.+\/.+/
+// @include       /https?:\/\/(www.)?(omegascans).(org)\/.+/
+// @include       /https?:\/\/(www.)?porncomixone.net\/comic\/.+/
+// @include       /https?:\/\/(www.)?pururin.to\/(view|read)\/.+\/.+\/.+/
+// @include       /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/
+// @include       /https?:\/\/(www.)?(ksk|sukebe).moe\/(archive|g)\/\d+\/.+\/\d+/
+// @include       /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/\d+/
+// @include       /https?:\/\/(www.)?3hentai.net\/d\/.+\/.+/
+// @include       /https?:\/\/(www.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/
+// @include       /https?:\/\/(www.)?(vermangasporno|vercomicsporno).com\/.+/
+// @include       /https?:\/\/(www.)?wnacg.com\/photos-view-id-.+/
+// @include       /https?:\/\/(www.)?xlecx.one\/.+/
+// @include       /https?:\/\/(www.)?xyzcomics.com\/.+/
+// @include       /https?:\/\/.+\/(porncomic)\/.+\/.+/
 // ==/UserScript==
-
 (function () {
   'use strict';
 
@@ -979,20 +979,6 @@
     madarawp
     // Must be at the end because is a generic check
   ];
-
-  var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-  var rangeslider_nostyle_umd_minExports = {};
-  var rangeslider_nostyle_umd_min = {
-    get exports(){ return rangeslider_nostyle_umd_minExports; },
-    set exports(v){ rangeslider_nostyle_umd_minExports = v; },
-  };
-
-  (function (module, exports) {
-  	!function(e,t){module.exports=t();}(commonjsGlobal,(()=>{return e={138:e=>{e.exports=(e,t={})=>{const a=e=>!isNaN(e)&&+e+""==e+"",i=(e=0,t=0)=>({min:e,max:t}),n=e=>{[k,F].forEach(e);},m=(e,t,a)=>{if(e)return t;a();},s=(e,t,a="")=>{e.setAttribute(t,a);},l=(e,t)=>{e.removeAttribute(t);},r=(e,t,a,i=!0)=>{e.addEventListener(t,a,i?{passive:!1,capture:!0}:{});},d=(e,t,a,i=!0)=>{e.removeEventListener(t,a,i?{passive:!1,capture:!0}:{});},o=(e,a)=>{t[e]={}.hasOwnProperty.call(t,e)?t[e]:a;},u=(e,a)=>t.orientation===H?e:a,b=e=>1===e?Q.max:Q.min,x=()=>{let e=!1;a(t.min)&&a(t.max)||(e=!0),t.min=e?1:+t.min,t.max=e?1:+t.max;},h=()=>{t.thumbsDisabled instanceof Array?(1===t.thumbsDisabled.length&&t.thumbsDisabled.push(!1),1!==t.thumbsDisabled.length&&2!==t.thumbsDisabled.length&&(t.thumbsDisabled=[!1,!1])):t.thumbsDisabled=[t.thumbsDisabled,t.thumbsDisabled],t.thumbsDisabled[0]=!!t.thumbsDisabled[0],t.thumbsDisabled[1]=!!t.thumbsDisabled[1];},p=(e,a=!1,n=!0,m=!0)=>{const r=i(le[Q.min].value,le[Q.max].value);e=e||r,le[Q.min].value=e.min,le[Q.max].value=ne||a?e.max:e.min+ae,g(),K.min>K.max&&(Q.min=+!Q.min,Q.max=+!Q.max,l(re[Q.min],V),l(re[Q.max],P),s(re[Q.min],P),s(re[Q.max],V),ne&&(ne=ne===k?F:k),g()),ee=a?K:e;let d=!1;(r.min!==le[Q.min].value||a)&&(d=!0),(r.max!==le[Q.max].value||a)&&(d=!0),d&&(n&&t.onInput&&t.onInput([K.min,K.max],m),E(),c(),D(),y());},g=()=>{n((e=>{K[e]=+le[Q[e]].value;}));},c=()=>{n((e=>{re[Q[e]].style[u("top","left")]=`calc(${(K[e]-t.min)/te*100}% + ${(.5-(K[e]-t.min)/te)*u(W,U)[e]}px)`;}));},D=()=>{const a=e.getBoundingClientRect(),i=(.5-(K.min-t.min)/te)*u(W,U).min/u(a.bottom-a.top,a.right-a.left),n=(.5-(K.max-t.min)/te)*u(W,U).max/u(a.bottom-a.top,a.right-a.left);se.style[u("top","left")]=100*((K.min-t.min)/te+i)+"%",se.style[u("height","width")]=100*((K.max-t.min)/te-(K.min-t.min)/te-i+n)+"%";},v=()=>{n(((e,a)=>{Z[e]=t.thumbsDisabled[a]?K[e]:t[e];}));},f=()=>{n(((e,a)=>{t.disabled||t.thumbsDisabled[a]?l(re[b(a)],O):s(re[b(a)],O,0);}));},y=()=>{n((e=>{s(re[Q[e]],"aria-valuemin",t.min),s(re[Q[e]],"aria-valuemax",t.max),s(re[Q[e]],"aria-valuenow",K[e]),s(re[Q[e]],"aria-valuetext",K[e]);}));},w=()=>{t.disabled?s(e,J):l(e,J);},S=()=>{t.thumbsDisabled.forEach(((e,t)=>{const a=b(t);e?(s(re[a],J),s(re[a],"aria-disabled",!0)):(l(re[a],J),s(re[a],"aria-disabled",!1));}));},_=(e,a=!1)=>{t[e]=a,x(),n((e=>{le[0][e]=t[e],le[1][e]=t[e];})),te=t.max-t.min,p("",!0,!0,!1),v();},$=()=>{t.orientation===H?s(e,Y):l(e,Y),se.style[u("left","top")]="",se.style[u("width","height")]="",re[0].style[u("left","top")]="",re[1].style[u("left","top")]="";},E=()=>{n((e=>{U[e]=z(M(re[Q[e]]).width),W[e]=z(M(re[Q[e]]).height);}));},R=(a,i)=>{const n=e.getBoundingClientRect(),m=i.getBoundingClientRect(),s=(u(m.top-n.top,m.left-n.left)+(a[`client${u("Y","X")}`]-i.getBoundingClientRect()[u("top","left")])-(ne?(.5-(K[ne]-t.min)/te)*u(W,U)[ne]:0))/u(n.bottom-n.top,n.right-n.left)*te+t.min;return s<t.min?t.min:s>t.max?t.max:s},T=(e,t)=>!e.target.classList.contains(t),A=(e,a=!0)=>{let n=!1;if(!t.disabled&&(T(e,"range-slider__thumb")&&T(e,"range-slider__range")||t.rangeSlideDisabled&&T(e,"range-slider__thumb"))&&(n=!0),n&&t.thumbsDisabled[0]&&t.thumbsDisabled[1]&&(n=!1),n){const n=R(e,se),m=q(K.min-n),s=q(K.max-n);if(t.thumbsDisabled[0])n>=K.min&&(p(i(K.min,n),!0,!a),C(e,Q.max,re[Q.max],!a));else if(t.thumbsDisabled[1])n<=K.max&&(p(i(n,K.max),!0,!a),C(e,Q.min,re[Q.min],!a));else {let t=Q.max;m===s?p(i(K.min,n),!0,!a):(p(i(m<s?n:K.min,s<m?n:K.max),!0,!a),t=m<s?Q.min:Q.max),C(e,t,re[t],!a);}a&&A(e,!1);}},L=(e,t)=>{E(),s(t,X),me=R(e,t),ie=!0;},C=(e,a,i,n=!0)=>{t.disabled||t.thumbsDisabled[b(a)]||(L(e,i),ne=Q.min===a?k:F,n&&t.onThumbDragStart&&t.onThumbDragStart());},B=e=>{if(ie){const a=R(e,se),n=a-me;let m=K.min,s=K.max;const l=ne?Z.min:t.min,r=ne?Z.max:t.max;ne&&ne!==k||(m=ne?a:ee.min+n),ne&&ne!==F||(s=ne?a:ee.max+n),m>=l&&m<=r&&s>=l&&s<=r?(p({min:m,max:s}),me=a):(m>r&&ne&&(p(i(r,r)),me=a),s<l&&ne&&(p(i(l,l)),me=a),m<l&&(p(i(l,ne?K.max:K.max-K.min+l)),me=a),s>r&&(p(i(ne?K.min:K.min-K.max+r,r)),me=a)),ne||v();}},I=()=>{ie&&(l(re[0],X),l(re[1],X),l(se,X),ie=!1,ne?t.onThumbDragEnd&&t.onThumbDragEnd():t.onRangeDragEnd&&t.onRangeDragEnd());},N=()=>{E(),c(),D();},j=()=>{const e=z(le[0].step);return le[0].step===G?G:0===e||isNaN(e)?1:e},q=Math.abs,z=parseFloat,M=window.getComputedStyle,k="min",F="max",G="any",H="vertical",O="tabindex",P="data-lower",V="data-upper",X="data-active",Y="data-vertical",J="data-disabled",K=i(),Q=i(0,1),U=i(),W=i(),Z=i();let ee=i(),te=0,ae=0,ie=!1,ne=!1,me=0;o("rangeSlideDisabled",!1),o("thumbsDisabled",[!1,!1]),o("orientation","horizontal"),o("disabled",!1),o("onThumbDragStart",!1),o("onRangeDragStart",!1),o("onThumbDragEnd",!1),o("onRangeDragEnd",!1),o("onInput",!1),o("value",[25,75]),o("step",1),o("min",0),o("max",100),x(),h(),e.innerHTML=`<input type="range" min="${t.min}" max="${t.max}" step="${t.step}" value="${t.value[0]}" disabled><input type="range" min="${t.min}" max="${t.max}" step="${t.step}" value="${t.value[1]}" disabled><div role="slider" class="range-slider__thumb" ${P}></div><div role="slider" class="range-slider__thumb" ${V}></div><div class="range-slider__range"></div>`,e.classList.add("range-slider");const se=e.querySelector(".range-slider__range"),le=e.querySelectorAll("input"),re=e.querySelectorAll(".range-slider__thumb");return te=t.max-t.min,p("",!0,!1),v(),w(),S(),f(),$(),r(e,"pointerdown",(e=>{A(e);})),Array.from(re).forEach(((e,a)=>{r(e,"pointerdown",(t=>{C(t,a,e);})),r(e,"keydown",(e=>{e.which>=37&&e.which<=40&&(e.preventDefault(),((e,a)=>{const i=(37===a||40===a?-1:1)*u(-1,1);if(!t.disabled&&!t.thumbsDisabled[b(e)]){let t=j();t=t===G?1:t;let a=K.min+t*(Q.min===e?i:0),n=K.max+t*(Q.max===e?i:0);a>Z.max&&(a=Z.max),n<Z.min&&(n=Z.min),p({min:a,max:n},!0);}})(a,e.which));}));})),r(se,"pointerdown",(e=>{(e=>{t.disabled||t.rangeSlideDisabled||(L(e,se),ae=K.max-K.min,ne=!1,t.onRangeDragStart&&t.onRangeDragStart());})(e);})),r(document,"pointermove",B),r(document,"pointerup",I),r(window,"resize",N),{min:(e=!1)=>m(!e&&0!==e,t.min,(()=>{_(k,e);})),max:(e=!1)=>m(!e&&0!==e,t.max,(()=>{_(F,e);})),step:(e=!1)=>m(!e,j(),(()=>{le[0].step=e,le[1].step=e,p("",!0,!0,!1);})),value:(e=!1)=>m(!e,[K.min,K.max],(()=>{p(i(e[0],e[1]),!0,!0,!1),v();})),orientation:(e=!1)=>m(!e,t.orientation,(()=>{t.orientation=e,$(),p("",!0,!0,!1);})),disabled:(e=!0)=>{t.disabled=!!e,w();},thumbsDisabled:(e=[!0,!0])=>{t.thumbsDisabled=e,h(),v(),f(),S();},rangeSlideDisabled:(e=!0)=>{t.rangeSlideDisabled=!!e;},currentValueIndex:()=>ne?ne===k?0:1:-1,removeGlobalEventListeners:()=>{d(document,"pointermove",B),d(document,"pointerup",I),d(window,"resize",N);}}};}},t={},function a(i){var n=t[i];if(void 0!==n)return n.exports;var m=t[i]={exports:{}};return e[i](m,m.exports,a),m.exports}(138);var e,t;}));
-  } (rangeslider_nostyle_umd_min));
-
-  const rangeSlider = rangeslider_nostyle_umd_minExports;
 
   const rangeSliderStyles = ".range-slider{touch-action:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;cursor:pointer;display:block;position:relative;width:100%;height:8px;background:#ddd;border-radius:4px}.range-slider[data-vertical]{height:100%;width:8px}.range-slider[data-disabled]{opacity:.5;cursor:not-allowed}.range-slider .range-slider__thumb{position:absolute;z-index:3;top:50%;width:24px;height:24px;transform:translate(-50%,-50%);border-radius:50%;background:#2196f3}.range-slider .range-slider__thumb:focus-visible{outline:0;box-shadow:0 0 0 6px rgba(33,150,243,.5)}.range-slider[data-vertical] .range-slider__thumb{left:50%}.range-slider .range-slider__thumb[data-disabled]{z-index:2}.range-slider .range-slider__range{position:absolute;z-index:1;transform:translate(0,-50%);top:50%;width:100%;height:100%;background:#51adf6}.range-slider[data-vertical] .range-slider__range{left:50%;transform:translate(-50%,0)}.range-slider input[type=range]{-webkit-appearance:none;pointer-events:none;position:absolute;z-index:2;top:0;left:0;width:0;height:0;background-color:transparent}.range-slider input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none}.range-slider input[type=range]::-moz-range-thumb{width:0;height:0;border:0}.range-slider input[type=range]:focus{outline:0}";
 
