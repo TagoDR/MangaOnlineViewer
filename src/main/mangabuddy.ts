@@ -5,10 +5,10 @@ export default {
   homepage: 'https://mangabuddy.com/',
   language: ['English'],
   category: 'manga',
+  waitVar: 'chapImages',
   run() {
-    const images = [...document.querySelectorAll('.chapter-image img')].map(
-      (img) => img.getAttribute('data-src') || img.getAttribute('src'),
-    );
+    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+    const images = W.chapImages.split(',');
     return {
       title: document.querySelector('.chapter-info')?.textContent?.trim(),
       series: document
