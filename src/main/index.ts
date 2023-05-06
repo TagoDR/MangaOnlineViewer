@@ -39,7 +39,6 @@ import readmangatoday from './readmangatoday';
 import reaperscans from './reaperscans';
 // import resetscans from './resetscans';
 import senmanga from './senmanga';
-import shimadascans from './shimadascans';
 import tapas from './tapas';
 import tenmanga from './tenmanga';
 import tmofans from './tmofans';
@@ -90,7 +89,6 @@ const sites = [
   reaperscans,
   // resetscans, deprecated
   senmanga,
-  shimadascans,
   tapas,
   tenmanga,
   tmofans,
