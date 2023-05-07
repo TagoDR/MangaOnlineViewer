@@ -18,7 +18,12 @@ export default {
       pages: images.length,
       prev: '#',
       next: '#',
-      listImages: images.map((img) => img.getAttribute('data-lazy-src') || img.getAttribute('src')),
+      listImages: images.map(
+        (img) =>
+          img.getAttribute('data-lazy-src') ||
+          img.getAttribute('data-src') ||
+          img.getAttribute('src'),
+      ),
     };
   },
 };
