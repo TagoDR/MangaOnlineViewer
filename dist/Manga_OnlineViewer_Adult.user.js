@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.05.06
+// @version       2023.05.07
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -874,7 +874,9 @@
         pages: images.length,
         prev: "#",
         next: "#",
-        listImages: images.map((img) => img.getAttribute("data-lazy-src") || img.getAttribute("src"))
+        listImages: images.map(
+          (img) => img.getAttribute("data-lazy-src") || img.getAttribute("data-src") || img.getAttribute("src")
+        )
       };
     }
   };
