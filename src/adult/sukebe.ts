@@ -4,13 +4,13 @@ import { waitForAtb } from '../utils/waitFor';
 export default {
   name: ['ksk.moe', 'Sukebe.moe'],
   obs: 'Slow start, bruteforce required',
-  url: /https?:\/\/(www.)?(ksk|sukebe).moe\/(archive|g)\/\d+\/.+\/\d+/,
+  url: /https?:\/\/(www.)?(ksk|sukebe).moe\/(archive|g|read)\/\d+\/.+\/\d+/,
   homepage: ['https://ksk.moe/', 'https://sukebe.moe/'],
   language: ['English'],
   category: 'hentai',
-  waitEle: '.main .page img',
+  waitEle: 'main .page img',
   async run() {
-    const num = document.querySelectorAll<HTMLOptionElement>('.currentPageNum option');
+    const num = document.querySelectorAll<HTMLOptionElement>('header .currentPageNum option');
     return {
       title: document.querySelector('header h1 a')?.textContent?.trim(),
       series: document.querySelector('header h1 a')?.getAttribute('href'),
