@@ -13,7 +13,10 @@ export default {
       pages: images.length,
       prev: document.querySelector('._prevEpisode')?.getAttribute('href'),
       next: document.querySelector('._nextEpisode')?.getAttribute('href'),
-      listImages: images.map((img) => img.getAttribute('data-src') || img.getAttribute('src')),
+      listImages: images.map(
+        (img) =>
+          img.getAttribute('data-url') || img.getAttribute('data-src') || img.getAttribute('src'),
+      ),
     };
   },
 };
