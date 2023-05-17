@@ -5,17 +5,22 @@ export default {
   homepage: ['https://omegascans.org/'],
   language: ['English'],
   category: 'manga',
-  waitEle: '#chapter option:nth-child(2)',
-  run() {
-    const chapter = document.querySelector<HTMLOptionElement>('#chapter option:checked');
-    const images = [...document.querySelectorAll('#readerarea img')];
+  waitVar: '__NEXT_DATA__',
+  async run() {
+    const W: Window = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+    const api = await fetch(
+      // @ts-ignore
+      // eslint-disable-next-line no-underscore-dangle
+      `https://api.omegascans.org/series/chapter/${W.__NEXT_DATA__.props.pageProps.data.id}`,
+    ).then((res) => res.json());
+    const { images } = api.content;
     return {
-      title: document.querySelector('.entry-title')?.textContent?.trim(),
-      series: document.querySelector('.allc a')?.getAttribute('href'),
+      title: document.querySelector('h5')?.textContent?.trim(),
+      series: document.querySelector('h5 a')?.getAttribute('href'),
       pages: images.length,
-      prev: chapter?.nextElementSibling?.getAttribute('value'),
-      next: chapter?.previousElementSibling?.getAttribute('value'),
-      listImages: images.map((img) => img.getAttribute('data-src') || img.getAttribute('src')),
+      prev: document.querySelector('.fa-arrow-left')?.closest('a')?.getAttribute('href'),
+      next: document.querySelector('.fa-arrow-right')?.closest('a')?.getAttribute('href'),
+      listImages: images,
     };
   },
 };
