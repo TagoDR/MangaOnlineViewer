@@ -10,6 +10,7 @@ import inkr from './inkr';
 import inmanga from './inmanga';
 import klmanga from './klmanga';
 import leitor from './leitor';
+import leviatanscans from './leviatanscans';
 import lhtranslation from './lhtranslation';
 import lynxscans from './lynxscans';
 import madarawp from './madarawp';
@@ -61,6 +62,7 @@ const sites = [
   inmanga,
   klmanga,
   leitor,
+  leviatanscans,
   lhtranslation,
   lynxscans,
   mangabuddy,
