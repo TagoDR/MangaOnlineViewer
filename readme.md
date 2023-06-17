@@ -44,6 +44,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
 - [Asura Scans](https://www.asura.gg/) / [Flame Scans](https://flamescans.org/) / [Realm Scans](https://realmscans.com/) / [Voids-Scans](https://void-scans.com/) / [Luminous Scans](https://luminousscans.com/) / [Shimada Scans](https://shimadascans.com/) / [Night Scans](https://nightscans.org/) _[English]_
 - [INKR](https://inkr.com/) _[English]_
+- [LeviatanScans](https://leviatanscans.com/) _[English]_
 - [LHTranslation](https://lhtranslation.net/) _[English]_
 - [LynxScans](https://lynxscans.com/) _[English]_
 - [MangaBuddy](https://mangabuddy.com/) _[English]_
@@ -72,7 +73,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
 - [Manga33](https://manga33.com/) _[English]_
 - [ZeroScans](https://zeroscans.com/) _[English]_
 - [FoOlSlide](#) / [Kireicake](https://reader.kireicake.com) _[English]_ **Obs: Any Site that uses FoOLSlide**
-- [Madara WordPress Plugin](#) / [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) / [JaiminisBox](https://jaiminisbox.net) / [DisasterScans](https://disasterscans.com/) / [ManhuaPlus](https://manhuaplus.com/) / [TopManhua](https://www.topmanhua.com/) / [LeviatanScans](https://en.leviatanscans.com/home/) / [NovelMic](https://novelmic.com/) / [Reset-Scans](https://reset-scans.com/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
+- [Madara WordPress Plugin](#) / [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) / [JaiminisBox](https://jaiminisbox.net) / [DisasterScans](https://disasterscans.com/) / [ManhuaPlus](https://manhuaplus.com/) / [TopManhua](https://www.topmanhua.com/) / [NovelMic](https://novelmic.com/) / [Reset-Scans](https://reset-scans.com/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
 - [Leitor](https://leitor.net/) _[Portuguese]_
 - [mangahosted](https://mangahosted.com/) _[Portuguese]_
 - [UnionMangas](https://unionleitor.top/) _[Portuguese]_

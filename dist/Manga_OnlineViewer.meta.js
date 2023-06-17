@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, LeviatanScans, NovelMic, Reset-Scans
-// @version       2023.06.06
+// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, INKR, InManga, KLManga, Leitor, LeviatanScans, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans
+// @version       2023.06.17
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -35,6 +35,7 @@
 // @include       /https?:\/\/(www.)?inmanga.com\/ver\/manga\/.+\/.+/
 // @include       /https?:\/\/(www.)?klmanga.com\/.+chapter.+/
 // @include       /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
+// @include       /https?:\/\/(www|en)?.?leviatanscans.com\/(home\/)?manga\/.+\/chapter.+/
 // @include       /https?:\/\/(www.)?lhtranslation.net\/read.+/
 // @include       /https?:\/\/(www.)?lynxscans.com\/comics?\/.+/
 // @include       /https?:\/\/(www.)?mangabuddy.com\/.+\/chapter.+/
