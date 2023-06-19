@@ -12,11 +12,11 @@ export default async function display(manga: IManga) {
   [document.documentElement, document.head, document.body].forEach((element: HTMLElement) => {
     element.getAttributeNames().forEach((attr) => element.removeAttribute(attr));
   });
-  const disqus = document.getElementById('disqus_thread');
+  const comments = document.querySelector('#disqus_thread, #fb-comments');
   document.head.innerHTML = head(manga);
   document.body.innerHTML = body(manga, manga.begin);
-  if (disqus) {
-    document.getElementById('CommentsArea')?.append(disqus);
+  if (comments) {
+    document.getElementById('CommentsArea')?.append(comments);
     document.getElementById('CommentsPainel')?.classList.remove('hide');
   }
   logScript('Rebuilding Site');
