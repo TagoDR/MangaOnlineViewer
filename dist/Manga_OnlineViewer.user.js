@@ -2209,6 +2209,8 @@
     FAST: "Fast",
     EXTREME: "Extreme",
     ALL_PAGES: "All Pages",
+    SPEED_WARNING: "Loading Speed too High",
+    SPEED_WARNING_MESSAGE: "This speed is not recommended.<br> It may hurt some servers or get your IP marked as DDoS attacker.<br> Please use with caution!",
     SCROLL_UP: "Scroll Up",
     SCROLL_DOWN: "Scroll Down",
     CLOSE: "Close",
@@ -2306,6 +2308,8 @@
     FAST: "Rapido",
     EXTREME: "Extremo",
     ALL_PAGES: "Todas as Paginas",
+    SPEED_WARNING: "Velocidade de Carregamento muito alta",
+    SPEED_WARNING_MESSAGE: "Essa velocidade não é recomendada.<br> Ela pode derrubar um servidor or marcar voce como um ataque hacker de DDoS.<br> Use com cuidado!",
     SCROLL_UP: "Subir Pagina",
     SCROLL_DOWN: "Descer Pagina",
     CLOSE: "Fechar",
@@ -2403,6 +2407,8 @@
     FAST: "快速",
     EXTREME: "极端",
     ALL_PAGES: "所有页面",
+    SPEED_WARNING: "加载速度过高",
+    SPEED_WARNING_MESSAGE: "不建议使用此速度.<br>它可能会伤害某些服务器或将您的 IP 标记为 DDoS 攻击者.<br>请谨慎使用!",
     SCROLL_UP: "向上滚动",
     SCROLL_DOWN: "向下滚动",
     CLOSE: "关闭",
@@ -3798,6 +3804,13 @@ ${wrapStyle(
     function changePagesPerSecond(event) {
       const timer = parseInt(event.currentTarget.value, 10);
       updateSettings({ throttlePageLoad: timer });
+      if (timer < 100) {
+        Swal.fire({
+          title: getLocaleString("SPEED_WARNING"),
+          html: getLocaleString("SPEED_WARNING_MESSAGE"),
+          icon: "warning"
+        }).catch(logScript);
+      }
     }
     document.querySelector("#PagesPerSecond")?.addEventListener("change", changePagesPerSecond);
     function changeZoomStep(event) {
