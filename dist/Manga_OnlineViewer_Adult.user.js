@@ -110,19 +110,19 @@
     async run() {
       function decode(data) {
         return ((t) => {
-          if (t.charAt(0) !== "!")
+          if (!t.startsWith("!"))
             return t;
           return t.slice(1).replace(/[\x21-\x7e]/g, (s) => String.fromCharCode(33 + (s.charCodeAt(0) + 14) % 94));
         })(data.replace(/&gt;/g, ">").replace(/&lt;/g, "<").replace(/&amp;/g, "&"));
       }
       const api = await fetch(window.location.href).then((res) => res.text()).then((html) => new DOMParser().parseFromString(html, "text/html"));
       const dataPublic = JSON.parse(
-        decode(api.querySelector("#ractive-public")?.innerHTML.trim() || "")
+        decode(api.querySelector("#ractive-public")?.innerHTML.trim() ?? "")
       );
       const dataShared = JSON.parse(
-        decode(api.querySelector("#ractive-shared")?.innerHTML.trim() || "")
+        decode(api.querySelector("#ractive-shared")?.innerHTML.trim() ?? "")
       );
-      const src = dataShared.options.pictureHost || window.location.host;
+      const src = dataShared.options.pictureHost ?? window.location.host;
       return {
         title: document.querySelector(".top-menu-breadcrumb li:nth-last-child(2) a")?.textContent?.trim(),
         series: document.querySelector(".top-menu-breadcrumb li:nth-last-child(2) a")?.getAttribute("href"),
@@ -145,10 +145,10 @@
     category: "hentai",
     async run() {
       const num = parseInt(
-        document.querySelector(".sn div span:nth-child(2)")?.textContent || "",
+        document.querySelector(".sn div span:nth-child(2)")?.textContent ?? "",
         10
       );
-      const maxGalley = parseInt(document.querySelector(".ptt td:nth-last-of-type(2) a")?.textContent || "", 10) || Math.ceil(num / 40);
+      const maxGalley = parseInt(document.querySelector(".ptt td:nth-last-of-type(2) a")?.textContent ?? "", 10) ?? Math.ceil(num / 40);
       const gallery = document.querySelector(".sb a")?.getAttribute("href")?.replace(/\?p=\d+/, "");
       const fetchBlocks = Array(maxGalley).fill(0).map(
         (_, galleryId) => fetch(`${gallery}?p=${galleryId}`).then((res) => res.text()).then((html) => new DOMParser().parseFromString(html, "text/html"))
@@ -197,15 +197,16 @@
     language: ["English"],
     category: "hentai",
     run() {
-      const url = window.location.href + (window.location.href.slice(-1) === "/" ? "" : "/");
-      const num = parseInt(document.querySelector("#jsPageList a:last-child")?.textContent || "", 10);
+      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
+      const url = W.location.href + (W.location.href.endsWith("/") ? "" : "/");
+      const num = parseInt(document.querySelector("#jsPageList a:last-child")?.textContent ?? "", 10);
       const chapter = [...document.querySelectorAll("#chapters + table a.listLink")];
       const origin = chapter.findIndex(
-        (chp) => window.location.href.endsWith(chp.getAttribute("href") || "undefined")
+        (chp) => W.location.href.endsWith(chp.getAttribute("href") ?? "undefined")
       );
       return {
         title: document.querySelector(".listTable td.listLong")?.textContent?.trim(),
-        series: window.location.href.match(/.+\/\d+\//)?.at(0),
+        series: /.+\/\d+\//.exec(W.location.href)?.at(0),
         pages: num,
         prev: chapter.at(origin - 1)?.getAttribute("href"),
         next: chapter.at(origin + 1)?.getAttribute("href"),
@@ -243,8 +244,8 @@
     waitVar: "g_th",
     run() {
       const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const num = parseInt(document.querySelector(".total_pages")?.textContent || "", 10);
-      const src = document.querySelector("#gimg")?.getAttribute("src")?.replace(/\d+.\w+$/, "") || "";
+      const num = parseInt(document.querySelector(".total_pages")?.textContent ?? "", 10);
+      const src = document.querySelector("#gimg")?.getAttribute("src")?.replace(/\d+.\w+$/, "") ?? "";
       function findExt(i) {
         const c = W.g_th[i][0];
         if (c === "p")
@@ -366,8 +367,8 @@
     run() {
       const galleryId = document.querySelector("#gallery_id")?.getAttribute("value");
       const imageDir = document.querySelector("#image_dir")?.getAttribute("value");
-      const num = parseInt(document.querySelector("#pages")?.getAttribute("value") || "", 10);
-      const cId = parseInt(document.querySelector("#u_id")?.getAttribute("value") || "", 10);
+      const num = parseInt(document.querySelector("#pages")?.getAttribute("value") ?? "", 10);
+      const cId = parseInt(document.querySelector("#u_id")?.getAttribute("value") ?? "", 10);
       const randomServer = findServer(cId);
       return {
         title: document.querySelector("title")?.textContent?.trim(),
@@ -395,7 +396,7 @@
         prev: "#",
         next: "#",
         listImages: src.map(
-          (img) => img.getAttribute("data-src") || img.getAttribute("data-full-url") || img.getAttribute("data-lazy-src") || img.getAttribute("src")
+          (img) => img.getAttribute("data-src") ?? img.getAttribute("data-full-url") ?? img.getAttribute("data-lazy-src") ?? img.getAttribute("src")
         )
       };
     }
@@ -415,7 +416,7 @@
       );
       const totalBlocks = Math.ceil(num / 50);
       const id = parseInt(
-        document.querySelector(".album-heading a")?.getAttribute("href")?.match(/\d+\//)?.toString() || "",
+        document.querySelector(".album-heading a")?.getAttribute("href")?.match(/\d+\//)?.toString() ?? "",
         10
       );
       const query = "&query=%2520query%2520AlbumListOwnPictures%28%2524input%253A%2520PictureListInput%21%29%2520%257B%2520picture%2520%257B%2520list%28input%253A%2520%2524input%29%2520%257B%2520info%2520%257B%2520...FacetCollectionInfo%2520%257D%2520items%2520%257B%2520__typename%2520id%2520title%2520description%2520created%2520like_status%2520number_of_comments%2520number_of_favorites%2520moderation_status%2520width%2520height%2520resolution%2520aspect_ratio%2520url_to_original%2520url_to_video%2520is_animated%2520position%2520tags%2520%257B%2520category%2520text%2520url%2520%257D%2520permissions%2520url%2520thumbnails%2520%257B%2520width%2520height%2520size%2520url%2520%257D%2520%257D%2520%257D%2520%257D%2520%257D%2520fragment%2520FacetCollectionInfo%2520on%2520FacetCollectionInfo%2520%257B%2520page%2520has_next_page%2520has_previous_page%2520total_items%2520total_pages%2520items_per_page%2520url_complete%2520%257D%2520";
@@ -483,7 +484,7 @@
       ];
       return {
         title: document.querySelector("#chapter-heading")?.textContent?.trim(),
-        series: (document.querySelector(".breadcrumb li:nth-child(3) a") || document.querySelector(".breadcrumb li:nth-child(2) a"))?.getAttribute("href"),
+        series: (document.querySelector(".breadcrumb li:nth-child(3) a") ?? document.querySelector(".breadcrumb li:nth-child(2) a"))?.getAttribute("href"),
         pages: images.length,
         prev: document.querySelector(".prev_page")?.getAttribute("href"),
         next: document.querySelector(".next_page")?.getAttribute("href"),
@@ -519,7 +520,7 @@
     category: "hentai",
     // waitEle: '.jb-idx-thumb:last .jb-thm-thumb-image',
     async run() {
-      const url = document.head.textContent?.match(/"configUrl":"(.+?)",/)?.at(1)?.replaceAll("\\", "") || "";
+      const url = document.head.textContent?.match(/"configUrl":"(.+?)",/)?.at(1)?.replaceAll("\\", "") ?? "";
       const api = await fetch(url).then((res) => res.text()).then((html) => new DOMParser().parseFromString(html, "text/xml"));
       const images = [...api.querySelectorAll("image")];
       return {
@@ -540,9 +541,9 @@
     language: ["English"],
     category: "hentai",
     run() {
-      const src = document.querySelector(".gallery-slide img")?.getAttribute("src") || "";
+      const src = document.querySelector(".gallery-slide img")?.getAttribute("src") ?? "";
       const lastPage = document.getElementById("js__pagination__next")?.parentElement?.previousElementSibling?.querySelector("a");
-      const num = parseInt(lastPage?.textContent || "", 10);
+      const num = parseInt(lastPage?.textContent ?? "", 10);
       return {
         title: document.querySelector("title")?.textContent?.trim(),
         series: document.querySelector(".back-to-gallery a")?.getAttribute("href"),
@@ -595,10 +596,10 @@
           return "png";
         return "jpg";
       }
-      const num = parseInt(document.querySelector(".num-pages")?.textContent || "", 10);
+      const num = parseInt(document.querySelector(".num-pages")?.textContent ?? "", 10);
       const src = document.querySelector("#image-container img")?.getAttribute("src")?.replace(/\d+.\w\w\w$/, "");
-      const ext = W.images_ext?.map(getExt) || // eslint-disable-next-line no-underscore-dangle
-      W._gallery?.images?.pages?.map((i) => getExt(i.t)) || Array(num).fill("jpg");
+      const ext = W.images_ext?.map(getExt) ?? // eslint-disable-next-line no-underscore-dangle
+      W._gallery?.images?.pages?.map((i) => getExt(i.t)) ?? Array(num).fill("jpg");
       return {
         title: document.querySelector("title")?.textContent?.split("- Page")[0].trim(),
         series: document.querySelector(".go-back")?.getAttribute("href"),
@@ -618,7 +619,7 @@
     category: "hentai",
     waitAttr: ["#jumpPageModal input", "max"],
     async run() {
-      const data = { id: parseInt(window.location.pathname.match(/\d+/)[0], 10) };
+      const data = { id: parseInt(/\d+/.exec(window.location.pathname)?.at(0) ?? "0", 10) };
       const options = {
         method: "POST",
         body: JSON.stringify(data),
@@ -691,7 +692,7 @@
     category: "hentai",
     waitAttr: [".image-holder img", "src"],
     run() {
-      const src = document.querySelector(".image-holder img")?.getAttribute("src") || "";
+      const src = document.querySelector(".image-holder img")?.getAttribute("src") ?? "";
       const num = [...document.querySelectorAll(".form-control option")];
       return {
         title: document.querySelector(".title")?.textContent?.trim(),
@@ -712,7 +713,7 @@
     category: "hentai",
     waitEle: "#__NEXT_DATA__",
     async run() {
-      const json = JSON.parse(document.querySelector("#__NEXT_DATA__")?.innerHTML || "");
+      const json = JSON.parse(document.querySelector("#__NEXT_DATA__")?.innerHTML ?? "");
       const images = json.props.pageProps.data.pages.map((img) => img.sizes.full);
       return {
         title: document.querySelector(".content-headline a")?.textContent?.trim(),
@@ -820,7 +821,7 @@
     category: "hentai",
     run() {
       const num = parseInt(
-        document.querySelector("#select-page option:last-child")?.getAttribute("value") || "",
+        document.querySelector("#select-page option:last-child")?.getAttribute("value") ?? "",
         10
       );
       return {
@@ -844,7 +845,7 @@
     category: "hentai",
     async run() {
       const dataopt = document.querySelector("#image-container")?.getAttribute("data-opt");
-      const datacdn = document.querySelector("#image-container")?.getAttribute("data-cdn") || "";
+      const datacdn = document.querySelector("#image-container")?.getAttribute("data-cdn") ?? "";
       const url = `https://www.tsumino.com/Read/Load?q=${dataopt}`;
       const api = await fetch(url).then((res) => res.json());
       return {
@@ -878,7 +879,7 @@
         prev: "#",
         next: "#",
         listImages: images.map(
-          (img) => img.getAttribute("data-lazy-src") || img.getAttribute("data-src") || img.getAttribute("src")
+          (img) => img.getAttribute("data-lazy-src") ?? img.getAttribute("data-src") ?? img.getAttribute("src")
         )
       };
     }
@@ -915,7 +916,7 @@
       const src = [
         ...new Set(
           [...document.querySelectorAll("article .page__text img , article #content-2 img")].map(
-            (img) => img.getAttribute("data-src") || img.getAttribute("src")
+            (img) => img.getAttribute("data-src") ?? img.getAttribute("src")
           )
         )
       ];
@@ -1035,26 +1036,26 @@
   function getBrowser() {
     const ua = navigator.userAgent;
     let tem;
-    let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+    const M = /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i.exec(ua) ?? [];
     if (/trident/i.test(M[1])) {
-      tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-      return `IE ${tem[1] || ""}`;
+      tem = /\brv[ :]+(\d+)/g.exec(ua) ?? [];
+      return `IE ${tem[1] ?? ""}`;
     }
     if (M[1] === "Chrome") {
-      tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
+      tem = /\b(OPR|Edge)\/(\d+)/.exec(ua);
       if (tem !== null) {
         return tem.slice(1).join(" ").replace("OPR", "Opera");
       }
     }
-    M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, "-?"];
-    tem = ua.match(/version\/(\d+)/i);
+    const tempM = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, "-?"];
+    tem = /version\/(\d+)/i.exec(ua);
     if (tem !== null) {
-      M.splice(1, 1, tem[1]);
+      tempM.splice(1, 1, tem[1]);
     }
-    return M.join(" ");
+    return tempM.join(" ");
   }
   function getEngine() {
-    return getInfoGM.scriptHandler || "Greasemonkey";
+    return getInfoGM.scriptHandler ?? "Greasemonkey";
   }
   const isMobile = window.matchMedia("screen and (max-width: 768px)").matches;
 
@@ -1722,6 +1723,7 @@
     NORMAL: "Normal",
     FAST: "Fast",
     EXTREME: "Extreme",
+    ALL_PAGES: "All Pages",
     SCROLL_UP: "Scroll Up",
     SCROLL_DOWN: "Scroll Down",
     CLOSE: "Close",
@@ -1818,6 +1820,7 @@
     NORMAL: "Normal",
     FAST: "Rapido",
     EXTREME: "Extremo",
+    ALL_PAGES: "Todas as Paginas",
     SCROLL_UP: "Subir Pagina",
     SCROLL_DOWN: "Descer Pagina",
     CLOSE: "Fechar",
@@ -1914,6 +1917,7 @@
     NORMAL: "正常",
     FAST: "快速",
     EXTREME: "极端",
+    ALL_PAGES: "所有页面",
     SCROLL_UP: "向上滚动",
     SCROLL_DOWN: "向下滚动",
     CLOSE: "关闭",
@@ -1999,10 +2003,10 @@
   }
   function getLocaleString(name) {
     const locale = locales.find((l) => l.ID === settings$1.locale);
-    if (locale && locale[name]) {
+    if (locale?.[name]) {
       return locale[name];
     }
-    if (locales[1] && locales[1][name]) {
+    if (locales?.at(1)?.[name]) {
       return locales[1][name];
     }
     return "##MISSING_STRING##";
@@ -2041,7 +2045,7 @@
   }
   function appendStyleSheet(id, content) {
     if (!document.querySelector(`#${id}`)) {
-      const head = document.head || document.querySelector("head");
+      const head = document.head ?? document.querySelector("head");
       head.appendChild(createStyleElement(id, content));
     }
   }
@@ -2266,6 +2270,9 @@ ${wrapStyle(
         <option value='100' ${useSettings().throttlePageLoad === 100 ? "selected" : ""}>
             10(${getLocaleString("EXTREME")})
         </option>
+        <option value='1' ${useSettings().throttlePageLoad === 1 ? "selected" : ""}>
+            ${getLocaleString("ALL_PAGES")}
+        </option>
       </select>
     </div>
     <!-- =========================================================================================== -->
@@ -2425,7 +2432,7 @@ ${wrapStyle(
     // language=html
     (kb) => `<label for='${kb}'>${getLocaleString(kb)}:</label>
         <input type='text' class='KeybindInput' id='${kb}' name='${kb}'
-               value='${useSettings().keybinds[kb]?.join(" , ") || ""}'>`
+               value='${useSettings().keybinds[kb]?.join(" , ") ?? ""}'>`
   ).concat(`<div id='HotKeysRules'> ${getLocaleString("KEYBIND_RULES")}</div>`);
   const KeybindingsPanel = `
   <div id='KeybindingsOverlay' class='overlay'></div>
@@ -2664,7 +2671,7 @@ ${wrapStyle(
         title: getLocaleString("BOOKMARK_REMOVED"),
         timer: 1e4,
         icon: "error"
-      });
+      }).catch(logScript);
       updateSettings({ bookmarks: marks });
       reloadBookmarks();
       document.querySelectorAll(".BookmarkItem .erase")?.forEach(eraseBookmarks);
@@ -2674,7 +2681,7 @@ ${wrapStyle(
     elem.addEventListener("click", (event) => {
       document.querySelector("#MangaOnlineViewer")?.classList.toggle("bookmarked");
       const num = parseInt(
-        event.currentTarget.parentElement?.querySelector(".PageIndex")?.textContent || "0",
+        event.currentTarget.parentElement?.querySelector(".PageIndex")?.textContent ?? "0",
         10
       );
       const mark = {
@@ -2688,14 +2695,14 @@ ${wrapStyle(
           title: getLocaleString("BOOKMARK_REMOVED"),
           timer: 1e4,
           icon: "error"
-        });
+        }).catch(logScript);
       } else {
         updateSettings({ bookmarks: [...useSettings().bookmarks, mark] });
         Swal.fire({
           title: getLocaleString("BOOKMARK_SAVED"),
           html: getLocaleString("BOOKMARK_SAVED").replace("##NUM##", num.toString()),
           icon: "success"
-        });
+        }).catch(logScript);
       }
       reloadBookmarks();
       document.querySelectorAll(".BookmarkItem .erase")?.forEach(eraseBookmarks);
@@ -2711,7 +2718,7 @@ ${wrapStyle(
 
   let zip;
   const base64Regex = /^data:(?<mimeType>image\/\w+);base64,+(?<data>.+)/;
-  const getExtension = (mimeType) => ((/image\/(?<ext>jpe?g|png|webp)/.exec(mimeType) || {}).groups || {}).ext || "" || "png";
+  const getExtension = (mimeType) => /image\/(?<ext>jpe?g|png|webp)/.exec(mimeType)?.groups?.ext ?? "png";
   const getFilename = (name, index, total, ext) => `${name}${(index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, "0")}.${ext.replace(
   "jpeg",
   "jpg"
@@ -2735,7 +2742,7 @@ ${wrapStyle(
     if (src == null)
       return Promise.reject(new Error("Image source not specified"));
     const base64 = base64Regex.exec(src);
-    if (base64 && base64.groups) {
+    if (base64?.groups) {
       return Promise.resolve({
         name: getFilename("Page-", index, array.length, getExtension(base64.groups?.mimeType)),
         data: base64.groups.data
@@ -2747,7 +2754,7 @@ ${wrapStyle(
           name: getFilename("Page-", index, array.length, getExtension(res.response.type)),
           data: res.response
         })
-      );
+      ).catch(logScript);
     });
   }
   function addZip(img) {
@@ -2832,7 +2839,7 @@ ${wrapStyle(
   }
 
   function scrollToElement(ele) {
-    window.scroll(0, ele?.offsetTop || 0);
+    window.scroll(0, ele?.offsetTop ?? 0);
   }
 
   const doClick = (selector) => document.querySelector(selector)?.dispatchEvent(new Event("click"));
@@ -2914,7 +2921,7 @@ ${wrapStyle(
     document.body.onload = null;
     hotkeys.unbind();
     Object.keys(useSettings().keybinds).forEach((key) => {
-      hotkeys(useSettings().keybinds[key]?.join(",") || "", (event) => {
+      hotkeys(useSettings().keybinds[key]?.join(",") ?? "", (event) => {
         event.preventDefault();
         event.stopImmediatePropagation();
         event.stopPropagation();
@@ -2978,7 +2985,7 @@ ${wrapStyle(
     const value = item.element.getAttribute(settings.lazyAttribute);
     if (value)
       item.element.setAttribute(settings.targetAttribute, value);
-    item.callback(item.element);
+    item.callback(item.element)?.catch(logScript);
   }
   function executeCheck() {
     const inView = listElements.filter(filterInView);
@@ -3032,7 +3039,7 @@ ${wrapStyle(
   function getRepeatValue(src) {
     let repeat = 1;
     const cache = src?.match(/cache=(\d+)$/);
-    if (cache && cache[1])
+    if (cache?.at(1))
       repeat = parseInt(cache[1], 10) + 1;
     return repeat;
   }
@@ -3112,7 +3119,7 @@ ${wrapStyle(
           imgLoad.on("fail", onImagesFail);
           img.setAttribute("src", src);
           logScript("Loaded Image:", index, "Source:", src);
-        }, (manga.timer || useSettings().throttlePageLoad) * position);
+        }, (manga.timer ?? useSettings().throttlePageLoad) * position);
       } else {
         img.setAttribute("data-src", src);
         lazyLoad(img, () => {
@@ -3143,8 +3150,8 @@ ${wrapStyle(
     if (img) {
       if (!useSettings().lazyLoadImages || position <= useSettings().lazyStart) {
         setTimeout(() => {
-          findPage(manga, index, pageUrl, false)();
-        }, (manga.timer || useSettings().throttlePageLoad) * position);
+          findPage(manga, index, pageUrl, false)().catch(logScript);
+        }, (manga.timer ?? useSettings().throttlePageLoad) * position);
       } else {
         img.setAttribute(
           "data-src",
@@ -3155,9 +3162,9 @@ ${wrapStyle(
     }
   }
   function loadMangaPages(begin, manga) {
-    indexList(manga.pages, begin).forEach(
-      (index, position) => addPage(manga, index, manga.listPages[index - 1], position)
-    );
+    indexList(manga.pages, begin).forEach((index, position) => {
+      addPage(manga, index, manga.listPages[index - 1], position).catch(logScript);
+    });
   }
   function loadMangaImages(begin, manga) {
     indexList(manga.pages, begin).forEach(
@@ -3165,9 +3172,9 @@ ${wrapStyle(
     );
   }
   function loadManga(manga, begin = 1) {
-    useSettings().lazyLoadImages = manga.lazy || useSettings().lazyLoadImages;
+    useSettings().lazyLoadImages = manga.lazy ?? useSettings().lazyLoadImages;
     logScript("Loading Images");
-    logScript(`Intervals: ${manga.timer || useSettings().throttlePageLoad || "Default(1000)"}`);
+    logScript(`Intervals: ${manga.timer ?? useSettings().throttlePageLoad ?? "Default(1000)"}`);
     logScript(`Lazy: ${useSettings().lazyLoadImages}, Starting from: ${useSettings().lazyStart}`);
     if (isImagesManga(manga)) {
       logScript("Method: Images:", manga.listImages);
@@ -3239,7 +3246,7 @@ ${wrapStyle(
         text: getLocaleString("SETTINGS_RESET"),
         timer: 1e4,
         icon: "info"
-      });
+      }).catch(logScript);
     }
     document.querySelector("#ResetSettings")?.addEventListener("click", buttonResetSettings);
     function changeLocale(event) {
@@ -3250,7 +3257,7 @@ ${wrapStyle(
         text: getLocaleString("LANGUAGE_CHANGED"),
         timer: 1e4,
         icon: "info"
-      });
+      }).catch(logScript);
     }
     document.querySelector("#locale")?.addEventListener("change", changeLocale);
     function checkFitWidthOversize(event) {
@@ -3277,7 +3284,7 @@ ${wrapStyle(
           text: getLocaleString("AUTO_DOWNLOAD"),
           timer: 1e4,
           icon: "info"
-        });
+        }).catch(logScript);
       }
     }
     document.querySelector("#downloadZip")?.addEventListener("change", changeAutoDownload);
@@ -3294,7 +3301,7 @@ ${wrapStyle(
           title: getLocaleString("WARNING"),
           html: getLocaleString("LAZY_LOAD"),
           icon: "warning"
-        });
+        }).catch(logScript);
       }
     }
     document.querySelector("#lazyLoadImages")?.addEventListener("change", checkLazyLoad);
@@ -3662,7 +3669,7 @@ ${wrapStyle(
   async function lateStart(site, begin = 1) {
     const manga = await site.run();
     logScript("LateStart");
-    let beginPage = begin || 1;
+    let beginPage = begin;
     let endPage = manga.pages;
     const options = {
       title: getLocaleString("STARTING"),
@@ -3731,18 +3738,18 @@ ${wrapStyle(
         logScript(`Choice: ${beginPage} - ${endPage}`);
         manga.begin = beginPage;
         manga.pages = endPage;
-        display(manga);
+        display(manga).catch(logScript);
       } else {
         logScript(result.dismiss);
       }
-    });
+    }).catch(logScript);
   }
   function createLateStartButton(site, beginning) {
     const button = document.createElement("button");
     button.innerText = getLocaleString("BUTTON_START");
     button.id = "StartMOV";
     button.onclick = () => {
-      lateStart(site, beginning);
+      lateStart(site, beginning).catch(logScript);
     };
     document.body.appendChild(button);
     const style = document.createElement("style");
@@ -3760,19 +3767,19 @@ ${wrapStyle(
       timer: 3e3
     }).then((result) => {
       if (result.value || result.dismiss === Swal.DismissReason.timer) {
-        display(manga);
+        display(manga).catch(logScript);
       } else {
         createLateStartButton(site, manga.begin);
         logScript(result.dismiss);
       }
-    });
+    }).catch(logScript);
   }
   async function preparePage(site) {
     const manga = await site.run();
     logScript(`Found Pages: ${manga.pages}`);
     if (manga.pages <= 0)
       return;
-    manga.begin = isBookmarked() || manga.begin || 1;
+    manga.begin = isBookmarked() ?? manga.begin ?? 1;
     const style = document.createElement("style");
     style.appendChild(document.createTextNode(sweetalertStyle));
     document.body.appendChild(style);
@@ -3782,14 +3789,14 @@ ${wrapStyle(
         manga.begin = startPage;
       if (endPage !== void 0)
         manga.pages = endPage;
-      display(manga);
+      display(manga).catch(logScript);
     };
     switch (site.start ?? useSettings()?.loadMode) {
       case "never":
         createLateStartButton(site, manga.begin);
         break;
       case "always":
-        display(manga);
+        display(manga).catch(logScript);
         break;
       case "wait":
       default:
@@ -3798,13 +3805,13 @@ ${wrapStyle(
     }
   }
   function waitExec(site, waitElapsed = 0) {
-    if (waitElapsed < (site.waitMax || 5e3) && (testAttribute(site) || testElement(site) || testVariable(site) || testFunc(site))) {
+    if (waitElapsed < (site.waitMax ?? 5e3) && (testAttribute(site) || testElement(site) || testVariable(site) || testFunc(site))) {
       setTimeout(() => {
-        waitExec(site, waitElapsed + (site.waitStep || 1e3));
-      }, site.waitStep || 1e3);
+        waitExec(site, waitElapsed + (site.waitStep ?? 1e3));
+      }, site.waitStep ?? 1e3);
       return;
     }
-    preparePage(site);
+    preparePage(site).catch(logScript);
   }
   function start(sites) {
     logScript(

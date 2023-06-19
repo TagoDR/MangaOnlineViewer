@@ -211,7 +211,15 @@
   };
 
   const flamecans = {
-    name: ["Asura Scans", "Flame Scans", "Realm Scans", "Voids-Scans", "Luminous Scans", "Shimada Scans", "Night Scans"],
+    name: [
+      "Asura Scans",
+      "Flame Scans",
+      "Realm Scans",
+      "Voids-Scans",
+      "Luminous Scans",
+      "Shimada Scans",
+      "Night Scans"
+    ],
     url: /https?:\/\/(www.)?(asurascans|flamescans|realmscans|void-scans|luminousscans|shimascans|nightscans).(com|org|gg)\/.+/,
     homepage: [
       "https://www.asura.gg/",
@@ -235,7 +243,7 @@
         prev: chapter?.nextElementSibling?.getAttribute("value"),
         next: chapter?.previousElementSibling?.getAttribute("value"),
         listImages: images.map(
-          (img) => img.getAttribute("data-src") || img.getAttribute("data-lazy-src") || img.getAttribute("src")
+          (img) => img.getAttribute("data-src") ?? img.getAttribute("data-lazy-src") ?? img.getAttribute("src")
         )
       };
     }
@@ -356,7 +364,7 @@
         prev: chapter?.nextElementSibling?.querySelector("a")?.getAttribute("href"),
         next: chapter?.previousElementSibling?.querySelector("a")?.getAttribute("href"),
         listImages: api.images.map(
-          (img) => img.avif || img.legacy
+          (img) => img.avif ?? img.legacy
         )
       };
     }
@@ -491,7 +499,7 @@
       ];
       return {
         title: document.querySelector("#chapter-heading")?.textContent?.trim(),
-        series: (document.querySelector(".breadcrumb li:nth-child(3) a") || document.querySelector(".breadcrumb li:nth-child(2) a"))?.getAttribute("href"),
+        series: (document.querySelector(".breadcrumb li:nth-child(3) a") ?? document.querySelector(".breadcrumb li:nth-child(2) a"))?.getAttribute("href"),
         pages: images.length,
         prev: document.querySelector(".prev_page")?.getAttribute("href"),
         next: document.querySelector(".next_page")?.getAttribute("href"),
@@ -576,7 +584,7 @@
         }
       };
       const src = Array(W.imagecount).fill(0).map(async (_, i) => {
-        const url = `chapterfun.ashx?cid=${W.chapterid || W.chapter_id}&page=${i}&key=${key}`;
+        const url = `chapterfun.ashx?cid=${W.chapterid ?? W.chapter_id}&page=${i}&key=${key}`;
         const api = await fetch(url, options).then((res) => res.text());
         (0, eval)(api);
         return d;
@@ -673,7 +681,7 @@
         return value != null ? decodeURIComponent(value[1]) : null;
       }
       const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const slug = W.CURRENT_MANGA_SLUG || window.location.pathname.split("/")[2];
+      const slug = W.CURRENT_MANGA_SLUG ?? window.location.pathname.split("/")[2];
       const number = window.location.pathname.split("/")[3].replace("chapter-", "");
       const data = { query: `{chapter(x:m01,slug:"${slug}",number:${number}){pages}}` };
       const options = {
@@ -734,7 +742,7 @@
     category: "manga",
     waitEle: "main div div a.btn-primary",
     run() {
-      const json = JSON.parse(document.querySelector("#__NEXT_DATA__")?.innerHTML || "");
+      const json = JSON.parse(document.querySelector("#__NEXT_DATA__")?.innerHTML ?? "");
       const data = json.props.pageProps.dehydratedState.queries[0].state.data.data.imageSet;
       const images = data.httpLis.map(
         (img, index) => `${img}?${data.wordLis[index]}`
@@ -787,11 +795,11 @@
     category: "manga",
     waitAttr: [".img-fluid", "src"],
     run() {
-      const src = document.querySelector(".img-fluid")?.getAttribute("src") || "";
+      const src = document.querySelector(".img-fluid")?.getAttribute("src") ?? "";
       const script = [...document.querySelectorAll("body script:not([src])")].at(-1)?.textContent;
-      const textCurChapter = script?.match(/CurChapter = ({.+});/) || [];
+      const textCurChapter = script?.match(/CurChapter = ({.+});/) ?? [];
       const CurChapter = JSON.parse(textCurChapter[1]);
-      const textCHAPTERS = script?.match(/CHAPTERS = (\[\{.+}]);/) || [];
+      const textCHAPTERS = script?.match(/CHAPTERS = (\[\{.+}]);/) ?? [];
       const CHAPTERS = JSON.parse(textCHAPTERS[1]);
       const CurChapterIndex = CHAPTERS.findIndex(
         (chap) => chap.Chapter === CurChapter.Chapter
@@ -846,7 +854,7 @@
         pages: images.length,
         prev: chapter?.nextElementSibling?.getAttribute("value"),
         next: chapter?.previousElementSibling?.getAttribute("value"),
-        listImages: images.map((img) => img.getAttribute("data-src") || img.getAttribute("src"))
+        listImages: images.map((img) => img.getAttribute("data-src") ?? img.getAttribute("src"))
       };
     }
   };
@@ -1051,7 +1059,7 @@
         pages: images.length,
         prev: chapter?.nextElementSibling?.getAttribute("value"),
         next: chapter?.previousElementSibling?.getAttribute("value"),
-        listImages: images.map((item) => $(item).attr("data-src") || $(item).attr("src"))
+        listImages: images.map((item) => $(item).attr("data-src") ?? $(item).attr("src"))
       };
     }
   };
@@ -1114,7 +1122,7 @@
         pages: images.length,
         prev: document.querySelector(".fa-arrow-left-long")?.parentElement?.getAttribute("href"),
         next: document.querySelector(".fa-arrow-right-long")?.parentElement?.getAttribute("href"),
-        listImages: images.map((img) => img.getAttribute("data-src") || img.getAttribute("src"))
+        listImages: images.map((img) => img.getAttribute("data-src") ?? img.getAttribute("src"))
       };
     }
   };
@@ -1128,7 +1136,7 @@
     run() {
       const url = `/${window.location.pathname.split("/")[1]}/${window.location.pathname.split("/")[2]}`;
       const num = parseInt(
-        document.querySelector(".page-list select option:last-child")?.getAttribute("value") || "0",
+        document.querySelector(".page-list select option:last-child")?.getAttribute("value") ?? "0",
         10
       );
       const chapter = [...document.querySelectorAll(".dropdown-chapter li")];
@@ -1162,7 +1170,7 @@
         pages: images.length,
         prev: chapter?.previousElementSibling?.getAttribute("data-href"),
         next: chapter?.nextElementSibling?.getAttribute("data-href"),
-        listImages: images.map((img) => img.getAttribute("data-src") || img.getAttribute("src"))
+        listImages: images.map((img) => img.getAttribute("data-src") ?? img.getAttribute("src"))
       };
     }
   };
@@ -1328,7 +1336,7 @@
         prev: document.querySelector("._prevEpisode")?.getAttribute("href"),
         next: document.querySelector("._nextEpisode")?.getAttribute("href"),
         listImages: images.map(
-          (img) => img.getAttribute("data-url") || img.getAttribute("data-src") || img.getAttribute("src")
+          (img) => img.getAttribute("data-url") ?? img.getAttribute("data-src") ?? img.getAttribute("src")
         )
       };
     }
@@ -1341,6 +1349,7 @@
     language: ["English"],
     category: "manga",
     run() {
+      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
       const images = [...document.querySelectorAll(".chapter-content img")];
       return {
         title: document.querySelector("title")?.textContent?.trim(),
@@ -1350,10 +1359,10 @@
         next: document.querySelector("a.next")?.getAttribute("href"),
         listImages: images.map((img) => img.getAttribute("src")),
         before() {
-          if (window.location.pathname.match(/all.html$/))
+          if (/all.html$/.exec(W.location.pathname))
             return;
-          if (window.location.pathname.match(/\d+-\d+.html$/)) {
-            window.location.pathname = window.location.pathname.replace(/-\d+.html$/, "-all.html");
+          if (/\d+-\d+.html$/.exec(W.location.pathname)) {
+            W.location.pathname = W.location.pathname.replace(/-\d+.html$/, "-all.html");
           }
         }
       };
@@ -1512,26 +1521,26 @@
   function getBrowser() {
     const ua = navigator.userAgent;
     let tem;
-    let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+    const M = /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i.exec(ua) ?? [];
     if (/trident/i.test(M[1])) {
-      tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-      return `IE ${tem[1] || ""}`;
+      tem = /\brv[ :]+(\d+)/g.exec(ua) ?? [];
+      return `IE ${tem[1] ?? ""}`;
     }
     if (M[1] === "Chrome") {
-      tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
+      tem = /\b(OPR|Edge)\/(\d+)/.exec(ua);
       if (tem !== null) {
         return tem.slice(1).join(" ").replace("OPR", "Opera");
       }
     }
-    M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, "-?"];
-    tem = ua.match(/version\/(\d+)/i);
+    const tempM = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, "-?"];
+    tem = /version\/(\d+)/i.exec(ua);
     if (tem !== null) {
-      M.splice(1, 1, tem[1]);
+      tempM.splice(1, 1, tem[1]);
     }
-    return M.join(" ");
+    return tempM.join(" ");
   }
   function getEngine() {
-    return getInfoGM.scriptHandler || "Greasemonkey";
+    return getInfoGM.scriptHandler ?? "Greasemonkey";
   }
   const isMobile = window.matchMedia("screen and (max-width: 768px)").matches;
 
@@ -2199,6 +2208,7 @@
     NORMAL: "Normal",
     FAST: "Fast",
     EXTREME: "Extreme",
+    ALL_PAGES: "All Pages",
     SCROLL_UP: "Scroll Up",
     SCROLL_DOWN: "Scroll Down",
     CLOSE: "Close",
@@ -2295,6 +2305,7 @@
     NORMAL: "Normal",
     FAST: "Rapido",
     EXTREME: "Extremo",
+    ALL_PAGES: "Todas as Paginas",
     SCROLL_UP: "Subir Pagina",
     SCROLL_DOWN: "Descer Pagina",
     CLOSE: "Fechar",
@@ -2391,6 +2402,7 @@
     NORMAL: "正常",
     FAST: "快速",
     EXTREME: "极端",
+    ALL_PAGES: "所有页面",
     SCROLL_UP: "向上滚动",
     SCROLL_DOWN: "向下滚动",
     CLOSE: "关闭",
@@ -2476,10 +2488,10 @@
   }
   function getLocaleString(name) {
     const locale = locales.find((l) => l.ID === settings$1.locale);
-    if (locale && locale[name]) {
+    if (locale?.[name]) {
       return locale[name];
     }
-    if (locales[1] && locales[1][name]) {
+    if (locales?.at(1)?.[name]) {
       return locales[1][name];
     }
     return "##MISSING_STRING##";
@@ -2518,7 +2530,7 @@
   }
   function appendStyleSheet(id, content) {
     if (!document.querySelector(`#${id}`)) {
-      const head = document.head || document.querySelector("head");
+      const head = document.head ?? document.querySelector("head");
       head.appendChild(createStyleElement(id, content));
     }
   }
@@ -2743,6 +2755,9 @@ ${wrapStyle(
         <option value='100' ${useSettings().throttlePageLoad === 100 ? "selected" : ""}>
             10(${getLocaleString("EXTREME")})
         </option>
+        <option value='1' ${useSettings().throttlePageLoad === 1 ? "selected" : ""}>
+            ${getLocaleString("ALL_PAGES")}
+        </option>
       </select>
     </div>
     <!-- =========================================================================================== -->
@@ -2902,7 +2917,7 @@ ${wrapStyle(
     // language=html
     (kb) => `<label for='${kb}'>${getLocaleString(kb)}:</label>
         <input type='text' class='KeybindInput' id='${kb}' name='${kb}'
-               value='${useSettings().keybinds[kb]?.join(" , ") || ""}'>`
+               value='${useSettings().keybinds[kb]?.join(" , ") ?? ""}'>`
   ).concat(`<div id='HotKeysRules'> ${getLocaleString("KEYBIND_RULES")}</div>`);
   const KeybindingsPanel = `
   <div id='KeybindingsOverlay' class='overlay'></div>
@@ -3141,7 +3156,7 @@ ${wrapStyle(
         title: getLocaleString("BOOKMARK_REMOVED"),
         timer: 1e4,
         icon: "error"
-      });
+      }).catch(logScript);
       updateSettings({ bookmarks: marks });
       reloadBookmarks();
       document.querySelectorAll(".BookmarkItem .erase")?.forEach(eraseBookmarks);
@@ -3151,7 +3166,7 @@ ${wrapStyle(
     elem.addEventListener("click", (event) => {
       document.querySelector("#MangaOnlineViewer")?.classList.toggle("bookmarked");
       const num = parseInt(
-        event.currentTarget.parentElement?.querySelector(".PageIndex")?.textContent || "0",
+        event.currentTarget.parentElement?.querySelector(".PageIndex")?.textContent ?? "0",
         10
       );
       const mark = {
@@ -3165,14 +3180,14 @@ ${wrapStyle(
           title: getLocaleString("BOOKMARK_REMOVED"),
           timer: 1e4,
           icon: "error"
-        });
+        }).catch(logScript);
       } else {
         updateSettings({ bookmarks: [...useSettings().bookmarks, mark] });
         Swal.fire({
           title: getLocaleString("BOOKMARK_SAVED"),
           html: getLocaleString("BOOKMARK_SAVED").replace("##NUM##", num.toString()),
           icon: "success"
-        });
+        }).catch(logScript);
       }
       reloadBookmarks();
       document.querySelectorAll(".BookmarkItem .erase")?.forEach(eraseBookmarks);
@@ -3188,7 +3203,7 @@ ${wrapStyle(
 
   let zip;
   const base64Regex = /^data:(?<mimeType>image\/\w+);base64,+(?<data>.+)/;
-  const getExtension = (mimeType) => ((/image\/(?<ext>jpe?g|png|webp)/.exec(mimeType) || {}).groups || {}).ext || "" || "png";
+  const getExtension = (mimeType) => /image\/(?<ext>jpe?g|png|webp)/.exec(mimeType)?.groups?.ext ?? "png";
   const getFilename = (name, index, total, ext) => `${name}${(index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, "0")}.${ext.replace(
   "jpeg",
   "jpg"
@@ -3212,7 +3227,7 @@ ${wrapStyle(
     if (src == null)
       return Promise.reject(new Error("Image source not specified"));
     const base64 = base64Regex.exec(src);
-    if (base64 && base64.groups) {
+    if (base64?.groups) {
       return Promise.resolve({
         name: getFilename("Page-", index, array.length, getExtension(base64.groups?.mimeType)),
         data: base64.groups.data
@@ -3224,7 +3239,7 @@ ${wrapStyle(
           name: getFilename("Page-", index, array.length, getExtension(res.response.type)),
           data: res.response
         })
-      );
+      ).catch(logScript);
     });
   }
   function addZip(img) {
@@ -3309,7 +3324,7 @@ ${wrapStyle(
   }
 
   function scrollToElement(ele) {
-    window.scroll(0, ele?.offsetTop || 0);
+    window.scroll(0, ele?.offsetTop ?? 0);
   }
 
   const doClick = (selector) => document.querySelector(selector)?.dispatchEvent(new Event("click"));
@@ -3391,7 +3406,7 @@ ${wrapStyle(
     document.body.onload = null;
     hotkeys.unbind();
     Object.keys(useSettings().keybinds).forEach((key) => {
-      hotkeys(useSettings().keybinds[key]?.join(",") || "", (event) => {
+      hotkeys(useSettings().keybinds[key]?.join(",") ?? "", (event) => {
         event.preventDefault();
         event.stopImmediatePropagation();
         event.stopPropagation();
@@ -3455,7 +3470,7 @@ ${wrapStyle(
     const value = item.element.getAttribute(settings.lazyAttribute);
     if (value)
       item.element.setAttribute(settings.targetAttribute, value);
-    item.callback(item.element);
+    item.callback(item.element)?.catch(logScript);
   }
   function executeCheck() {
     const inView = listElements.filter(filterInView);
@@ -3509,7 +3524,7 @@ ${wrapStyle(
   function getRepeatValue(src) {
     let repeat = 1;
     const cache = src?.match(/cache=(\d+)$/);
-    if (cache && cache[1])
+    if (cache?.at(1))
       repeat = parseInt(cache[1], 10) + 1;
     return repeat;
   }
@@ -3589,7 +3604,7 @@ ${wrapStyle(
           imgLoad.on("fail", onImagesFail);
           img.setAttribute("src", src);
           logScript("Loaded Image:", index, "Source:", src);
-        }, (manga.timer || useSettings().throttlePageLoad) * position);
+        }, (manga.timer ?? useSettings().throttlePageLoad) * position);
       } else {
         img.setAttribute("data-src", src);
         lazyLoad(img, () => {
@@ -3620,8 +3635,8 @@ ${wrapStyle(
     if (img) {
       if (!useSettings().lazyLoadImages || position <= useSettings().lazyStart) {
         setTimeout(() => {
-          findPage(manga, index, pageUrl, false)();
-        }, (manga.timer || useSettings().throttlePageLoad) * position);
+          findPage(manga, index, pageUrl, false)().catch(logScript);
+        }, (manga.timer ?? useSettings().throttlePageLoad) * position);
       } else {
         img.setAttribute(
           "data-src",
@@ -3632,9 +3647,9 @@ ${wrapStyle(
     }
   }
   function loadMangaPages(begin, manga) {
-    indexList(manga.pages, begin).forEach(
-      (index, position) => addPage(manga, index, manga.listPages[index - 1], position)
-    );
+    indexList(manga.pages, begin).forEach((index, position) => {
+      addPage(manga, index, manga.listPages[index - 1], position).catch(logScript);
+    });
   }
   function loadMangaImages(begin, manga) {
     indexList(manga.pages, begin).forEach(
@@ -3642,9 +3657,9 @@ ${wrapStyle(
     );
   }
   function loadManga(manga, begin = 1) {
-    useSettings().lazyLoadImages = manga.lazy || useSettings().lazyLoadImages;
+    useSettings().lazyLoadImages = manga.lazy ?? useSettings().lazyLoadImages;
     logScript("Loading Images");
-    logScript(`Intervals: ${manga.timer || useSettings().throttlePageLoad || "Default(1000)"}`);
+    logScript(`Intervals: ${manga.timer ?? useSettings().throttlePageLoad ?? "Default(1000)"}`);
     logScript(`Lazy: ${useSettings().lazyLoadImages}, Starting from: ${useSettings().lazyStart}`);
     if (isImagesManga(manga)) {
       logScript("Method: Images:", manga.listImages);
@@ -3716,7 +3731,7 @@ ${wrapStyle(
         text: getLocaleString("SETTINGS_RESET"),
         timer: 1e4,
         icon: "info"
-      });
+      }).catch(logScript);
     }
     document.querySelector("#ResetSettings")?.addEventListener("click", buttonResetSettings);
     function changeLocale(event) {
@@ -3727,7 +3742,7 @@ ${wrapStyle(
         text: getLocaleString("LANGUAGE_CHANGED"),
         timer: 1e4,
         icon: "info"
-      });
+      }).catch(logScript);
     }
     document.querySelector("#locale")?.addEventListener("change", changeLocale);
     function checkFitWidthOversize(event) {
@@ -3754,7 +3769,7 @@ ${wrapStyle(
           text: getLocaleString("AUTO_DOWNLOAD"),
           timer: 1e4,
           icon: "info"
-        });
+        }).catch(logScript);
       }
     }
     document.querySelector("#downloadZip")?.addEventListener("change", changeAutoDownload);
@@ -3771,7 +3786,7 @@ ${wrapStyle(
           title: getLocaleString("WARNING"),
           html: getLocaleString("LAZY_LOAD"),
           icon: "warning"
-        });
+        }).catch(logScript);
       }
     }
     document.querySelector("#lazyLoadImages")?.addEventListener("change", checkLazyLoad);
@@ -4139,7 +4154,7 @@ ${wrapStyle(
   async function lateStart(site, begin = 1) {
     const manga = await site.run();
     logScript("LateStart");
-    let beginPage = begin || 1;
+    let beginPage = begin;
     let endPage = manga.pages;
     const options = {
       title: getLocaleString("STARTING"),
@@ -4208,18 +4223,18 @@ ${wrapStyle(
         logScript(`Choice: ${beginPage} - ${endPage}`);
         manga.begin = beginPage;
         manga.pages = endPage;
-        display(manga);
+        display(manga).catch(logScript);
       } else {
         logScript(result.dismiss);
       }
-    });
+    }).catch(logScript);
   }
   function createLateStartButton(site, beginning) {
     const button = document.createElement("button");
     button.innerText = getLocaleString("BUTTON_START");
     button.id = "StartMOV";
     button.onclick = () => {
-      lateStart(site, beginning);
+      lateStart(site, beginning).catch(logScript);
     };
     document.body.appendChild(button);
     const style = document.createElement("style");
@@ -4237,19 +4252,19 @@ ${wrapStyle(
       timer: 3e3
     }).then((result) => {
       if (result.value || result.dismiss === Swal.DismissReason.timer) {
-        display(manga);
+        display(manga).catch(logScript);
       } else {
         createLateStartButton(site, manga.begin);
         logScript(result.dismiss);
       }
-    });
+    }).catch(logScript);
   }
   async function preparePage(site) {
     const manga = await site.run();
     logScript(`Found Pages: ${manga.pages}`);
     if (manga.pages <= 0)
       return;
-    manga.begin = isBookmarked() || manga.begin || 1;
+    manga.begin = isBookmarked() ?? manga.begin ?? 1;
     const style = document.createElement("style");
     style.appendChild(document.createTextNode(sweetalertStyle));
     document.body.appendChild(style);
@@ -4259,14 +4274,14 @@ ${wrapStyle(
         manga.begin = startPage;
       if (endPage !== void 0)
         manga.pages = endPage;
-      display(manga);
+      display(manga).catch(logScript);
     };
     switch (site.start ?? useSettings()?.loadMode) {
       case "never":
         createLateStartButton(site, manga.begin);
         break;
       case "always":
-        display(manga);
+        display(manga).catch(logScript);
         break;
       case "wait":
       default:
@@ -4275,13 +4290,13 @@ ${wrapStyle(
     }
   }
   function waitExec(site, waitElapsed = 0) {
-    if (waitElapsed < (site.waitMax || 5e3) && (testAttribute(site) || testElement(site) || testVariable(site) || testFunc(site))) {
+    if (waitElapsed < (site.waitMax ?? 5e3) && (testAttribute(site) || testElement(site) || testVariable(site) || testFunc(site))) {
       setTimeout(() => {
-        waitExec(site, waitElapsed + (site.waitStep || 1e3));
-      }, site.waitStep || 1e3);
+        waitExec(site, waitElapsed + (site.waitStep ?? 1e3));
+      }, site.waitStep ?? 1e3);
       return;
     }
-    preparePage(site);
+    preparePage(site).catch(logScript);
   }
   function start(sites) {
     logScript(
