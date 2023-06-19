@@ -93,4 +93,5 @@ export default {
   SCROLL_DOWN: '向下滚动',
   CLOSE: '关闭',
   LIST_EMPTY: '没有收藏书签',
+  DISPLAY_COMMENTS: '显示注释',
 };

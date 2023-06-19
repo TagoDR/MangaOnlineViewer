@@ -19,6 +19,7 @@ import {
   IconListNumbers,
   IconLoader2,
   IconMenu2,
+  IconMessage,
   IconSettings,
   IconSpacingVertical,
   IconZoomInArea,
@@ -133,12 +134,12 @@ const app = (manga: IManga, begin = 1) => `
             ${getLocaleString('BUTTON_DOWNLOAD')}
           </button>
           <a id='prev' class='NavigationControlButton ControlButton' type='button'
-             href='${manga.prev || ''}' title='${getLocaleString('PREVIOUS_CHAPTER')}'>
+             href='${manga.prev ?? ''}' title='${getLocaleString('PREVIOUS_CHAPTER')}'>
             ${IconArrowBigLeft}
             ${getLocaleString('BUTTON_PREVIOUS')}
           </a>
           <a id='next' class='NavigationControlButton ControlButton' type='button'
-             href='${manga.next || ''}' title='${getLocaleString('NEXT_CHAPTER')}'>
+             href='${manga.next ?? ''}' title='${getLocaleString('NEXT_CHAPTER')}'>
             ${getLocaleString('BUTTON_NEXT')}
             ${IconArrowBigRight}
           </a>
@@ -149,6 +150,14 @@ const app = (manga: IManga, begin = 1) => `
       ${useSettings().viewMode}'>
       ${listPages(manga.pages, begin).join('')}
     </main>
+    <section id='CommentsPainel' class='hide'>
+      <div id='CommentsButton' class='ControlButton' type='button'
+        title='${getLocaleString('DISPLAY_COMMENTS')}'>
+        ${IconMessage}
+        ${getLocaleString('DISPLAY_COMMENTS')}
+      </div>
+      <div id='CommentsArea' class='hide'></div>
+    </section>
     <nav id='Navigation' class='panel ${useSettings().showThumbnails ? '' : 'disabled'}'>
       <div id='NavigationCounters' class='ControlLabel'>
         ${IconCategory}

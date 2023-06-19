@@ -93,4 +93,5 @@ export default {
   SCROLL_DOWN: 'Descer Pagina',
   CLOSE: 'Fechar',
   LIST_EMPTY: 'Lista Vazia',
+  DISPLAY_COMMENTS: 'Mostar Comentarios',
 };

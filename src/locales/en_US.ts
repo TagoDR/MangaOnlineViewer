@@ -93,4 +93,5 @@ export default {
   SCROLL_DOWN: 'Scroll Down',
   CLOSE: 'Close',
   LIST_EMPTY: 'List Empty',
+  DISPLAY_COMMENTS: 'Display Comments',
 };

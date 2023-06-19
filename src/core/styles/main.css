@@ -659,7 +659,9 @@ img {
 #MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .inverse,
 #MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > :not(.inverse),
 #MangaOnlineViewer.bookmarked .ControlButton.Bookmark > :not(.inverse),
-#MangaOnlineViewer:not(.bookmarked) .ControlButton.Bookmark > .inverse {
+#MangaOnlineViewer:not(.bookmarked) .ControlButton.Bookmark > .inverse,
+#MangaOnlineViewer #CommentsPainel.hide,
+#MangaOnlineViewer #CommentsArea.hide {
     display: none;
 }
 
@@ -742,6 +744,16 @@ img {
     left: 10px;
     height: 32px;
     width: 32px;
+}
+
+#MangaOnlineViewer #CommentsPainel {
+    padding: 10px;
+}
+
+#MangaOnlineViewer #CommentsButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Medium devices (landscape phones, tablets) */
