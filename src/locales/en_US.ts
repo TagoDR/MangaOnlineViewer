@@ -90,6 +90,9 @@ export default {
   FAST: 'Fast',
   EXTREME: 'Extreme',
   ALL_PAGES: 'All Pages',
+  SPEED_WARNING: 'Loading Speed too High',
+  SPEED_WARNING_MESSAGE:
+    'This speed is not recommended.<br> It may hurt some servers or get your IP marked as DDoS attacker.<br> Please use with caution!',
   SCROLL_UP: 'Scroll Up',
   SCROLL_DOWN: 'Scroll Down',
   CLOSE: 'Close',

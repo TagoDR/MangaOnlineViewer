@@ -105,6 +105,13 @@ function options() {
   function changePagesPerSecond(event: Event) {
     const timer = parseInt((event.currentTarget as HTMLInputElement).value, 10);
     updateSettings({ throttlePageLoad: timer });
+    if (timer < 100) {
+      Swal.fire({
+        title: getLocaleString('SPEED_WARNING'),
+        html: getLocaleString('SPEED_WARNING_MESSAGE'),
+        icon: 'warning',
+      }).catch(logScript);
+    }
   }
 
   document.querySelector('#PagesPerSecond')?.addEventListener('change', changePagesPerSecond);

@@ -90,6 +90,9 @@ export default {
   FAST: '快速',
   EXTREME: '极端',
   ALL_PAGES: '所有页面',
+  SPEED_WARNING: '加载速度过高',
+  SPEED_WARNING_MESSAGE:
+    '不建议使用此速度.<br>它可能会伤害某些服务器或将您的 IP 标记为 DDoS 攻击者.<br>请谨慎使用!',
   SCROLL_UP: '向上滚动',
   SCROLL_DOWN: '向下滚动',
   CLOSE: '关闭',

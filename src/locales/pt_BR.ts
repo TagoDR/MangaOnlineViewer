@@ -90,6 +90,9 @@ export default {
   FAST: 'Rapido',
   EXTREME: 'Extremo',
   ALL_PAGES: 'Todas as Paginas',
+  SPEED_WARNING: 'Velocidade de Carregamento muito alta',
+  SPEED_WARNING_MESSAGE:
+    'Essa velocidade não é recomendada.<br> Ela pode derrubar um servidor or marcar voce como um ataque hacker de DDoS.<br> Use com cuidado!',
   SCROLL_UP: 'Subir Pagina',
   SCROLL_DOWN: 'Descer Pagina',
   CLOSE: 'Fechar',
