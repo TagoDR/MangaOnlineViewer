@@ -89,6 +89,7 @@ export default {
   NORMAL: 'Normal',
   FAST: 'Fast',
   EXTREME: 'Extreme',
+  ALL_PAGES: 'All Pages',
   SCROLL_UP: 'Scroll Up',
   SCROLL_DOWN: 'Scroll Down',
   CLOSE: 'Close',

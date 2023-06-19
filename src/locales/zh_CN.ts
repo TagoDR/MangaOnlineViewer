@@ -89,6 +89,7 @@ export default {
   NORMAL: '正常',
   FAST: '快速',
   EXTREME: '极端',
+  ALL_PAGES: '所有页面',
   SCROLL_UP: '向上滚动',
   SCROLL_DOWN: '向下滚动',
   CLOSE: '关闭',

@@ -110,6 +110,9 @@ const SettingsPanel = `
         <option value='100' ${useSettings().throttlePageLoad === 100 ? 'selected' : ''}>
             10(${getLocaleString('EXTREME')})
         </option>
+        <option value='1' ${useSettings().throttlePageLoad === 1 ? 'selected' : ''}>
+            ${getLocaleString('ALL_PAGES')}
+        </option>
       </select>
     </div>
     <!-- =========================================================================================== -->
