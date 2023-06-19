@@ -21,7 +21,7 @@ function eraseBookmarks(elem: Element) {
       title: getLocaleString('BOOKMARK_REMOVED'),
       timer: 10000,
       icon: 'error',
-    });
+    }).catch(logScript);
     updateSettings({ bookmarks: marks });
     reloadBookmarks();
     document.querySelectorAll('.BookmarkItem .erase')?.forEach(eraseBookmarks);
@@ -33,7 +33,7 @@ function buttonBookmark(elem: Element) {
     document.querySelector('#MangaOnlineViewer')?.classList.toggle('bookmarked');
     const num = parseInt(
       (event.currentTarget as HTMLElement).parentElement?.querySelector('.PageIndex')
-        ?.textContent || '0',
+        ?.textContent ?? '0',
       10,
     );
     const mark: IBookmark = {
@@ -47,14 +47,14 @@ function buttonBookmark(elem: Element) {
         title: getLocaleString('BOOKMARK_REMOVED'),
         timer: 10000,
         icon: 'error',
-      });
+      }).catch(logScript);
     } else {
       updateSettings({ bookmarks: [...useSettings().bookmarks, mark] });
       Swal.fire({
         title: getLocaleString('BOOKMARK_SAVED'),
         html: getLocaleString('BOOKMARK_SAVED').replace('##NUM##', num.toString()),
         icon: 'success',
-      });
+      }).catch(logScript);
     }
     reloadBookmarks();
     document.querySelectorAll('.BookmarkItem .erase')?.forEach(eraseBookmarks);

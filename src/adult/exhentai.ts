@@ -8,11 +8,11 @@ export default {
   category: 'hentai',
   async run() {
     const num = parseInt(
-      document.querySelector('.sn div span:nth-child(2)')?.textContent || '',
+      document.querySelector('.sn div span:nth-child(2)')?.textContent ?? '',
       10,
     );
     const maxGalley =
-      parseInt(document.querySelector('.ptt td:nth-last-of-type(2) a')?.textContent || '', 10) ||
+      parseInt(document.querySelector('.ptt td:nth-last-of-type(2) a')?.textContent ?? '', 10) ??
       Math.ceil(num / 40);
     const gallery = document
       .querySelector('.sb a')

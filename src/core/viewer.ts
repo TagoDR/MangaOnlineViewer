@@ -37,7 +37,7 @@ function validadeMax(valEnd: number, beginPage: number, rs: RangeSlider) {
 async function lateStart(site: ISite, begin = 1) {
   const manga = await site.run();
   logScript('LateStart');
-  let beginPage = begin || 1;
+  let beginPage = begin;
   let endPage = manga.pages;
   const options: SweetAlertOptions = {
     title: getLocaleString('STARTING'),
@@ -100,16 +100,18 @@ async function lateStart(site: ISite, begin = 1) {
       });
     },
   };
-  Swal.fire(options).then((result) => {
-    if (result.value) {
-      logScript(`Choice: ${beginPage} - ${endPage}`);
-      manga.begin = beginPage;
-      manga.pages = endPage;
-      formatPage(manga);
-    } else {
-      logScript(result.dismiss);
-    }
-  });
+  Swal.fire(options)
+    .then((result) => {
+      if (result.value) {
+        logScript(`Choice: ${beginPage} - ${endPage}`);
+        manga.begin = beginPage;
+        manga.pages = endPage;
+        formatPage(manga).catch(logScript);
+      } else {
+        logScript(result.dismiss);
+      }
+    })
+    .catch(logScript);
 }
 
 function createLateStartButton(site: ISite, beginning: number) {
@@ -117,7 +119,7 @@ function createLateStartButton(site: ISite, beginning: number) {
   button.innerText = getLocaleString('BUTTON_START');
   button.id = 'StartMOV';
   button.onclick = () => {
-    lateStart(site, beginning);
+    lateStart(site, beginning).catch(logScript);
   };
   document.body.appendChild(button);
 
@@ -137,14 +139,16 @@ function showWaitPopup(site: ISite, manga: IManga) {
     cancelButtonColor: '#d33',
     reverseButtons: true,
     timer: 3000,
-  }).then((result) => {
-    if (result.value || result.dismiss === Swal.DismissReason.timer) {
-      formatPage(manga);
-    } else {
-      createLateStartButton(site, manga.begin);
-      logScript(result.dismiss);
-    }
-  });
+  })
+    .then((result) => {
+      if (result.value || result.dismiss === Swal.DismissReason.timer) {
+        formatPage(manga).catch(logScript);
+      } else {
+        createLateStartButton(site, manga.begin);
+        logScript(result.dismiss);
+      }
+    })
+    .catch(logScript);
 }
 
 // Organize the site adding place-holders for the manga pages
@@ -152,7 +156,7 @@ async function preparePage(site: ISite) {
   const manga = await site.run();
   logScript(`Found Pages: ${manga.pages}`);
   if (manga.pages <= 0) return;
-  manga.begin = isBookmarked() || manga.begin || 1;
+  manga.begin = isBookmarked() ?? manga.begin ?? 1;
   const style = document.createElement('style');
   style.appendChild(document.createTextNode(sweetalertStyle));
   document.body.appendChild(style);
@@ -160,14 +164,14 @@ async function preparePage(site: ISite) {
   W.MOV = (startPage?: number, endPage?: number) => {
     if (startPage !== undefined) manga.begin = startPage;
     if (endPage !== undefined) manga.pages = endPage;
-    formatPage(manga);
+    formatPage(manga).catch(logScript);
   };
   switch (site.start ?? useSettings()?.loadMode) {
     case 'never':
       createLateStartButton(site, manga.begin);
       break;
     case 'always':
-      formatPage(manga);
+      formatPage(manga).catch(logScript);
       break;
     case 'wait':
     default:
@@ -179,15 +183,15 @@ async function preparePage(site: ISite) {
 // Wait for something on the site to be ready before executing the script
 function waitExec(site: ISite, waitElapsed: number = 0) {
   if (
-    waitElapsed < (site.waitMax || 5000) &&
+    waitElapsed < (site.waitMax ?? 5000) &&
     (testAttribute(site) || testElement(site) || testVariable(site) || testFunc(site))
   ) {
     setTimeout(() => {
-      waitExec(site, waitElapsed + (site.waitStep || 1000));
-    }, site.waitStep || 1000);
+      waitExec(site, waitElapsed + (site.waitStep ?? 1000));
+    }, site.waitStep ?? 1000);
     return;
   }
-  preparePage(site);
+  preparePage(site).catch(logScript);
 }
 
 // Script Entry point

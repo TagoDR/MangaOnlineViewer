@@ -7,7 +7,7 @@ export default {
   category: 'hentai',
   run() {
     const num = parseInt(
-      document.querySelector('#select-page option:last-child')?.getAttribute('value') || '',
+      document.querySelector('#select-page option:last-child')?.getAttribute('value') ?? '',
       10,
     );
     return {

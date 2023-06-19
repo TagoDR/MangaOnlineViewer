@@ -76,10 +76,10 @@ export function useSettings() {
 
 export function getLocaleString(name: string): string {
   const locale = locales.find((l) => l.ID === settings.locale);
-  if (locale && locale[name]) {
+  if (locale?.[name]) {
     return locale[name];
   }
-  if (locales[1] && locales[1][name]) {
+  if (locales?.at(1)?.[name]) {
     return locales[1][name];
   }
   return '##MISSING_STRING##';

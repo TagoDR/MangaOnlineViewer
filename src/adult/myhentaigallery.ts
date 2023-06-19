@@ -6,11 +6,11 @@ export default {
   language: ['English'],
   category: 'hentai',
   run() {
-    const src = document.querySelector('.gallery-slide img')?.getAttribute('src') || '';
+    const src = document.querySelector('.gallery-slide img')?.getAttribute('src') ?? '';
     const lastPage = document
       .getElementById('js__pagination__next')
       ?.parentElement?.previousElementSibling?.querySelector('a');
-    const num = parseInt(lastPage?.textContent || '', 10);
+    const num = parseInt(lastPage?.textContent ?? '', 10);
     return {
       title: document.querySelector('title')?.textContent?.trim(),
       series: document.querySelector('.back-to-gallery a')?.getAttribute('href'),

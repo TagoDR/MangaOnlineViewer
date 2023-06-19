@@ -13,7 +13,7 @@ export default {
       pages: images.length,
       prev: document.querySelector('.fa-arrow-left-long')?.parentElement?.getAttribute('href'),
       next: document.querySelector('.fa-arrow-right-long')?.parentElement?.getAttribute('href'),
-      listImages: images.map((img) => img.getAttribute('data-src') || img.getAttribute('src')),
+      listImages: images.map((img) => img.getAttribute('data-src') ?? img.getAttribute('src')),
     };
   },
 };

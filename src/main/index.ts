@@ -38,7 +38,6 @@ import rawdevart from './rawdevart';
 import readcomicsonline from './readcomicsonline';
 import readmangatoday from './readmangatoday';
 import reaperscans from './reaperscans';
-// import resetscans from './resetscans';
 import senmanga from './senmanga';
 import tapas from './tapas';
 import tenmanga from './tenmanga';

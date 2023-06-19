@@ -15,16 +15,16 @@ export default {
       return 'jpg';
     }
 
-    const num = parseInt(document.querySelector('.num-pages')?.textContent || '', 10);
+    const num = parseInt(document.querySelector('.num-pages')?.textContent ?? '', 10);
     const src = document
       .querySelector('#image-container img')
       ?.getAttribute('src')
       ?.replace(/\d+.\w\w\w$/, '');
     // eslint-disable-next-line camelcase
     const ext =
-      W.images_ext?.map(getExt) ||
+      W.images_ext?.map(getExt) ??
       // eslint-disable-next-line no-underscore-dangle
-      W._gallery?.images?.pages?.map((i: { t: string }) => getExt(i.t)) ||
+      W._gallery?.images?.pages?.map((i: { t: string }) => getExt(i.t)) ??
       Array(num).fill('jpg');
     return {
       title: document.querySelector('title')?.textContent?.split('- Page')[0].trim(),

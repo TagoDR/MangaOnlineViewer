@@ -8,7 +8,7 @@ export default {
     'https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.meta.js',
   downloadURL:
     'https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js',
-  supportURL:'https://github.com/TagoDR/MangaOnlineViewer/issues',
+  supportURL: 'https://github.com/TagoDR/MangaOnlineViewer/issues',
   namespace: 'https://github.com/TagoDR',
   description: `Shows all pages at once in online view for these sites: ${sites
     .flatMap((s) => s.name)

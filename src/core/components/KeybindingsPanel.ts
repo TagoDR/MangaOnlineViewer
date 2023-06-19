@@ -17,7 +17,7 @@ export const keybindEditor = () =>
       (kb) =>
         `<label for='${kb}'>${getLocaleString(kb)}:</label>
         <input type='text' class='KeybindInput' id='${kb}' name='${kb}'
-               value='${useSettings().keybinds[kb]?.join(' , ') || ''}'>`,
+               value='${useSettings().keybinds[kb]?.join(' , ') ?? ''}'>`,
     )
     .concat(`<div id='HotKeysRules'> ${getLocaleString('KEYBIND_RULES')}</div>`);
 

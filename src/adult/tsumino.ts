@@ -7,7 +7,7 @@ export default {
   category: 'hentai',
   async run() {
     const dataopt = document.querySelector('#image-container')?.getAttribute('data-opt');
-    const datacdn = document.querySelector('#image-container')?.getAttribute('data-cdn') || '';
+    const datacdn = document.querySelector('#image-container')?.getAttribute('data-cdn') ?? '';
     const url = `https://www.tsumino.com/Read/Load?q=${dataopt}`;
     const api = await fetch(url).then((res) => res.json());
     return {

@@ -7,7 +7,7 @@ export default {
   category: 'manga',
   waitEle: 'main div div a.btn-primary',
   run() {
-    const json = JSON.parse(document.querySelector('#__NEXT_DATA__')?.innerHTML || '');
+    const json = JSON.parse(document.querySelector('#__NEXT_DATA__')?.innerHTML ?? '');
     const data = json.props.pageProps.dehydratedState.queries[0].state.data.data.imageSet;
     const images = data.httpLis.map(
       (img: string, index: number) => `${img}?${data.wordLis[index]}`,

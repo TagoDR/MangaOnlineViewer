@@ -1,6 +1,14 @@
 // == FlameScans ===================================================================================
 export default {
-  name: ['Asura Scans', 'Flame Scans', 'Realm Scans', 'Voids-Scans', 'Luminous Scans','Shimada Scans', 'Night Scans'],
+  name: [
+    'Asura Scans',
+    'Flame Scans',
+    'Realm Scans',
+    'Voids-Scans',
+    'Luminous Scans',
+    'Shimada Scans',
+    'Night Scans',
+  ],
   url: /https?:\/\/(www.)?(asurascans|flamescans|realmscans|void-scans|luminousscans|shimascans|nightscans).(com|org|gg)\/.+/,
   homepage: [
     'https://www.asura.gg/',
@@ -25,8 +33,8 @@ export default {
       next: chapter?.previousElementSibling?.getAttribute('value'),
       listImages: images.map(
         (img) =>
-          img.getAttribute('data-src') ||
-          img.getAttribute('data-lazy-src') ||
+          img.getAttribute('data-src') ??
+          img.getAttribute('data-lazy-src') ??
           img.getAttribute('src'),
       ),
     };

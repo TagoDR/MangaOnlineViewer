@@ -17,7 +17,7 @@ export default {
       prev: chapter?.nextElementSibling?.querySelector('a')?.getAttribute('href'),
       next: chapter?.previousElementSibling?.querySelector('a')?.getAttribute('href'),
       listImages: api.images.map(
-        (img: { legacy?: string; avif?: string }) => img.avif || img.legacy,
+        (img: { legacy?: string; avif?: string }) => img.avif ?? img.legacy,
       ),
     };
   },

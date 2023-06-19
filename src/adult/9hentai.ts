@@ -7,7 +7,7 @@ export default {
   category: 'hentai',
   waitAttr: ['#jumpPageModal input', 'max'],
   async run() {
-    const data = { id: parseInt(window.location.pathname.match(/\d+/)![0], 10) };
+    const data = { id: parseInt(/\d+/.exec(window.location.pathname)?.at(0) ?? '0', 10) };
     const options = {
       method: 'POST',
       body: JSON.stringify(data),

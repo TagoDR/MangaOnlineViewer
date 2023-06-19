@@ -10,12 +10,12 @@ const externalScripts: string[] = [
   '<script src="https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js" integrity="sha256-KJTc4RYlnMMWuc4r2VjaBulFUWIF5ywlqbekhyENaf8=" crossorigin="anonymous"></script>',
 ];
 const requiredScripts = externalScripts.map((script: string) => {
-  const find = script.match(/src="(.+?)"/);
+  const find = /src="(.+?)"/.exec(script);
   return find ? find[1] : '';
 });
 const externalCSS: string[] = [];
 const requiredCSS = externalCSS.map((script: string) => {
-  const find = script.match(/href="(.+?)"/);
+  const find = /href="(.+?)"/.exec(script);
   return find ? find[1] : '';
 });
 export { externalScripts, requiredScripts, externalCSS, requiredCSS };

@@ -42,30 +42,31 @@ const diffObj = <T extends object>(changed: T, original: T): Partial<object> => 
   return changes(changed, original);
 };
 
-// const getDiff = (changed: any, original: any) => {
-//   const accumulator = _.isArray(original) ? [] : {};
-//   function recursiveDiff(base: any, object: any, result: any) {
-//     for (const key in base) {
-//       const value: object = object[key];
-//
-//       if (!_.isEqual(base[key], value)) {
-//         if (_.isArray(value)) {
-//           // if array
-//           result[key] = [];
-//           recursiveDiff(base[key], value, result[key]);
-//         } else if (_.isObject(value)) {
-//           // if object
-//           result[key] = {};
-//           recursiveDiff(base[key], value, result[key]);
-//         } else {
-//           // if value
-//           result[key] = value;
-//         }
-//       }
-//     }
-//   }
-//   recursiveDiff(original, changed, accumulator);
-//   return accumulator;
-// };
+export const getDiff = (changed: any, original: any) => {
+  const accumulator = _.isArray(original) ? [] : {};
+  function recursiveDiff(base: any, object: any, result: any) {
+    // eslint-disable-next-line guard-for-in,no-restricted-syntax
+    for (const key in base) {
+      const value: object = object[key];
+
+      if (!_.isEqual(base[key], value)) {
+        if (_.isArray(value)) {
+          // if array
+          result[key] = [];
+          recursiveDiff(base[key], value, result[key]);
+        } else if (_.isObject(value)) {
+          // if object
+          result[key] = {};
+          recursiveDiff(base[key], value, result[key]);
+        } else {
+          // if value
+          result[key] = value;
+        }
+      }
+    }
+  }
+  recursiveDiff(original, changed, accumulator);
+  return accumulator;
+};
 
 export default diffObj;

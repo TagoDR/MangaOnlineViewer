@@ -48,7 +48,7 @@ export default {
     return {
       title: document.querySelector('#chapter-heading')?.textContent?.trim(),
       series: (
-        document.querySelector('.breadcrumb li:nth-child(3) a') ||
+        document.querySelector('.breadcrumb li:nth-child(3) a') ??
         document.querySelector('.breadcrumb li:nth-child(2) a')
       )?.getAttribute('href'),
       pages: images.length,

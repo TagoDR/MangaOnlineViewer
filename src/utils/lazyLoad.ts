@@ -2,6 +2,7 @@
  * Interface for the settings
  */
 import _ from 'lodash';
+import { logScript } from './tampermonkey';
 
 interface ILazyOptions {
   threshold: number;
@@ -25,7 +26,7 @@ const settings: ILazyOptions = {
  */
 interface LazyItem {
   element: HTMLImageElement;
-  callback: (element: HTMLImageElement) => void;
+  callback: (element: HTMLImageElement) => void | Promise<void>;
 }
 
 /**
@@ -55,7 +56,7 @@ function filterInView(value: LazyItem) {
 function showElement(item: LazyItem) {
   const value = item.element.getAttribute(settings.lazyAttribute);
   if (value) item.element.setAttribute(settings.targetAttribute, value);
-  item.callback(item.element);
+  item.callback(item.element)?.catch(logScript);
 }
 
 /**
@@ -79,7 +80,10 @@ const observerEvent = _.throttle(executeCheck, settings.throttle);
  * @param element
  * @param callback
  */
-function lazyLoad(element: HTMLImageElement, callback: (element: HTMLImageElement) => void): void {
+function lazyLoad(
+  element: HTMLImageElement,
+  callback: (element: HTMLImageElement) => void | Promise<void>,
+): void {
   if (!setup) {
     window.addEventListener('scroll', observerEvent, {
       passive: true,

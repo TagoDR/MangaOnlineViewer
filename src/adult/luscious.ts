@@ -17,7 +17,7 @@ export default {
         .querySelector('.album-heading a')
         ?.getAttribute('href')
         ?.match(/\d+\//)
-        ?.toString() || '',
+        ?.toString() ?? '',
       10,
     );
     const query =

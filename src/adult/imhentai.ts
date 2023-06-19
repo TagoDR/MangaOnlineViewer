@@ -28,8 +28,8 @@ export default {
   run() {
     const galleryId = document.querySelector('#gallery_id')?.getAttribute('value');
     const imageDir = document.querySelector('#image_dir')?.getAttribute('value');
-    const num = parseInt(document.querySelector('#pages')?.getAttribute('value') || '', 10);
-    const cId = parseInt(document.querySelector('#u_id')?.getAttribute('value') || '', 10);
+    const num = parseInt(document.querySelector('#pages')?.getAttribute('value') ?? '', 10);
+    const cId = parseInt(document.querySelector('#u_id')?.getAttribute('value') ?? '', 10);
     const randomServer = findServer(cId);
     return {
       title: document.querySelector('title')?.textContent?.trim(),

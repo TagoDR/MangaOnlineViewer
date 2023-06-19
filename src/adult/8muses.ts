@@ -9,7 +9,7 @@ export default {
     function decode(data: string) {
       /* eslint-disable no-mixed-operators,no-shadow */
       return ((t) => {
-        if (t.charAt(0) !== '!') return t;
+        if (!t.startsWith('!')) return t;
         return t
           .slice(1)
           .replace(/[\x21-\x7e]/g, (s) => String.fromCharCode(33 + ((s.charCodeAt(0) + 14) % 94)));
@@ -21,12 +21,12 @@ export default {
       .then((res) => res.text())
       .then((html) => new DOMParser().parseFromString(html, 'text/html'));
     const dataPublic = JSON.parse(
-      decode(api.querySelector('#ractive-public')?.innerHTML.trim() || ''),
+      decode(api.querySelector('#ractive-public')?.innerHTML.trim() ?? ''),
     );
     const dataShared = JSON.parse(
-      decode(api.querySelector('#ractive-shared')?.innerHTML.trim() || ''),
+      decode(api.querySelector('#ractive-shared')?.innerHTML.trim() ?? ''),
     );
-    const src = dataShared.options.pictureHost || window.location.host;
+    const src = dataShared.options.pictureHost ?? window.location.host;
     return {
       title: document
         .querySelector('.top-menu-breadcrumb li:nth-last-child(2) a')

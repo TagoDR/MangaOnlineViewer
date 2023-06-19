@@ -20,8 +20,8 @@ export default {
       next: '#',
       listImages: images.map(
         (img) =>
-          img.getAttribute('data-lazy-src') ||
-          img.getAttribute('data-src') ||
+          img.getAttribute('data-lazy-src') ??
+          img.getAttribute('data-src') ??
           img.getAttribute('src'),
       ),
     };

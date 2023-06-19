@@ -85,28 +85,28 @@ function setSettings(value: Partial<ISettings>) {
 function getBrowser(): string {
   const ua = navigator.userAgent;
   let tem;
-  let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+  const M = /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i.exec(ua) ?? [];
   if (/trident/i.test(M[1])) {
-    tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-    return `IE ${tem[1] || ''}`;
+    tem = /\brv[ :]+(\d+)/g.exec(ua) ?? [];
+    return `IE ${tem[1] ?? ''}`;
   }
   if (M[1] === 'Chrome') {
-    tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
+    tem = /\b(OPR|Edge)\/(\d+)/.exec(ua);
     if (tem !== null) {
       return tem.slice(1).join(' ').replace('OPR', 'Opera');
     }
   }
-  M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
-  tem = ua.match(/version\/(\d+)/i);
+  const tempM = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+  tem = /version\/(\d+)/i.exec(ua);
   if (tem !== null) {
-    M.splice(1, 1, tem[1]);
+    tempM.splice(1, 1, tem[1]);
   }
-  return M.join(' ');
+  return tempM.join(' ');
 }
 
 // https://stackoverflow.com/questions/27487828/how-to-detect-if-a-userscript-is-installed-from-the-chrome-store
 function getEngine(): string {
-  return getInfoGM.scriptHandler || 'Greasemonkey';
+  return getInfoGM.scriptHandler ?? 'Greasemonkey';
 }
 
 const isMobile = window.matchMedia('screen and (max-width: 768px)').matches;

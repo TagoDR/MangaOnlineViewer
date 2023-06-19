@@ -9,7 +9,8 @@ export default {
   language: ['Portuguese'],
   category: 'manga',
   run: () => {
-    const num: number = parseInt(window.location.search.match(/\d+/)?.toString() || '0', 10) || 5;
+    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+    const num: number = parseInt(/\d+/.exec(W.location.search)?.toString() ?? '5', 10);
     return {
       title: 'Placeholder Manga Loaded',
       series: '#Counters',

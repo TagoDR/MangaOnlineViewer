@@ -3,6 +3,7 @@ import { getLocaleString, resetSettings, updateSettings, useSettings } from '../
 import { Header, LoadMode } from '../../types';
 import { applyZoom } from '../page';
 import { replaceStyleSheet } from '../../utils/css';
+import { logScript } from '../../utils/tampermonkey';
 
 function options() {
   // Reset Reader Settings
@@ -13,7 +14,7 @@ function options() {
       text: getLocaleString('SETTINGS_RESET'),
       timer: 10000,
       icon: 'info',
-    });
+    }).catch(logScript);
   }
 
   document.querySelector('#ResetSettings')?.addEventListener('click', buttonResetSettings);
@@ -27,7 +28,7 @@ function options() {
       text: getLocaleString('LANGUAGE_CHANGED'),
       timer: 10000,
       icon: 'info',
-    });
+    }).catch(logScript);
   }
 
   document.querySelector('#locale')?.addEventListener('change', changeLocale);
@@ -66,7 +67,7 @@ function options() {
         text: getLocaleString('AUTO_DOWNLOAD'),
         timer: 10000,
         icon: 'info',
-      });
+      }).catch(logScript);
     }
   }
 
@@ -86,7 +87,7 @@ function options() {
         title: getLocaleString('WARNING'),
         html: getLocaleString('LAZY_LOAD'),
         icon: 'warning',
-      });
+      }).catch(logScript);
     }
   }
 

@@ -7,7 +7,7 @@ export default {
   category: 'hentai',
   waitAttr: ['.image-holder img', 'src'],
   run() {
-    const src = document.querySelector('.image-holder img')?.getAttribute('src') || '';
+    const src = document.querySelector('.image-holder img')?.getAttribute('src') ?? '';
     const num = [...document.querySelectorAll('.form-control option')];
     return {
       title: document.querySelector('.title')?.textContent?.trim(),

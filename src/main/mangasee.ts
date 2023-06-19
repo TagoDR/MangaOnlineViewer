@@ -7,11 +7,11 @@ export default {
   category: 'manga',
   waitAttr: ['.img-fluid', 'src'],
   run() {
-    const src = document.querySelector('.img-fluid')?.getAttribute('src') || '';
+    const src = document.querySelector('.img-fluid')?.getAttribute('src') ?? '';
     const script = [...document.querySelectorAll('body script:not([src])')].at(-1)?.textContent;
-    const textCurChapter = script?.match(/CurChapter = ({.+});/) || [];
+    const textCurChapter = script?.match(/CurChapter = ({.+});/) ?? [];
     const CurChapter = JSON.parse(textCurChapter[1]);
-    const textCHAPTERS = script?.match(/CHAPTERS = (\[\{.+}]);/) || [];
+    const textCHAPTERS = script?.match(/CHAPTERS = (\[\{.+}]);/) ?? [];
     const CHAPTERS = JSON.parse(textCHAPTERS[1]);
     const CurChapterIndex = CHAPTERS.findIndex(
       (chap: { Chapter: string }) => chap.Chapter === CurChapter.Chapter,

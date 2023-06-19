@@ -10,7 +10,7 @@ export default {
       window.location.pathname.split('/')[2]
     }`;
     const num = parseInt(
-      document.querySelector('.page-list select option:last-child')?.getAttribute('value') || '0',
+      document.querySelector('.page-list select option:last-child')?.getAttribute('value') ?? '0',
       10,
     );
     const chapter = [...document.querySelectorAll('.dropdown-chapter li')];

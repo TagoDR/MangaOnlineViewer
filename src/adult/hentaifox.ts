@@ -8,12 +8,12 @@ export default {
   waitVar: 'g_th',
   run() {
     const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-    const num = parseInt(document.querySelector('.total_pages')?.textContent || '', 10);
+    const num = parseInt(document.querySelector('.total_pages')?.textContent ?? '', 10);
     const src =
       document
         .querySelector('#gimg')
         ?.getAttribute('src')
-        ?.replace(/\d+.\w+$/, '') || '';
+        ?.replace(/\d+.\w+$/, '') ?? '';
 
     function findExt(i: number) {
       const c = W.g_th[i][0];

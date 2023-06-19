@@ -6,15 +6,16 @@ export default {
   language: ['English'],
   category: 'hentai',
   run() {
-    const url = window.location.href + (window.location.href.slice(-1) === '/' ? '' : '/');
-    const num = parseInt(document.querySelector('#jsPageList a:last-child')?.textContent || '', 10);
+    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+    const url = W.location.href + (W.location.href.endsWith('/') ? '' : '/');
+    const num = parseInt(document.querySelector('#jsPageList a:last-child')?.textContent ?? '', 10);
     const chapter = [...document.querySelectorAll('#chapters + table a.listLink')];
     const origin = chapter.findIndex((chp) =>
-      window.location.href.endsWith(chp.getAttribute('href') || 'undefined'),
+      W.location.href.endsWith(chp.getAttribute('href') ?? 'undefined'),
     );
     return {
       title: document.querySelector('.listTable td.listLong')?.textContent?.trim(),
-      series: window.location.href.match(/.+\/\d+\//)?.at(0),
+      series: /.+\/\d+\//.exec(W.location.href)?.at(0),
       pages: num,
       prev: chapter.at(origin - 1)?.getAttribute('href'),
       next: chapter.at(origin + 1)?.getAttribute('href'),

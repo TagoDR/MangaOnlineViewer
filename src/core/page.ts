@@ -52,7 +52,7 @@ function invalidateImageCache(src: string, repeat: number) {
 function getRepeatValue(src: string | null): number {
   let repeat = 1;
   const cache = src?.match(/cache=(\d+)$/);
-  if (cache && cache[1]) repeat = parseInt(cache[1], 10) + 1;
+  if (cache?.at(1)) repeat = parseInt(cache[1], 10) + 1;
   return repeat;
 }
 
@@ -138,7 +138,7 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
         imgLoad.on('fail', onImagesFail);
         img.setAttribute('src', src);
         logScript('Loaded Image:', index, 'Source:', src);
-      }, (manga.timer || useSettings().throttlePageLoad) * position);
+      }, (manga.timer ?? useSettings().throttlePageLoad) * position);
     } else {
       img.setAttribute('data-src', src);
 
@@ -152,7 +152,12 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
   }
 }
 
-function findPage(manga: IMangaPages, index: number, pageUrl: string, lazy: boolean) {
+function findPage(
+  manga: IMangaPages,
+  index: number,
+  pageUrl: string,
+  lazy: boolean,
+): () => Promise<void> {
   return async () => {
     const src = await getElementAttribute(pageUrl, manga.img, manga.lazyAttr ?? 'src');
     const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
@@ -173,8 +178,8 @@ async function addPage(manga: IMangaPages, index: number, pageUrl: string, posit
   if (img) {
     if (!useSettings().lazyLoadImages || position <= useSettings().lazyStart) {
       setTimeout(() => {
-        findPage(manga, index, pageUrl, false)();
-      }, (manga.timer || useSettings().throttlePageLoad) * position);
+        findPage(manga, index, pageUrl, false)().catch(logScript);
+      }, (manga.timer ?? useSettings().throttlePageLoad) * position);
     } else {
       img.setAttribute(
         'data-src',
@@ -187,9 +192,9 @@ async function addPage(manga: IMangaPages, index: number, pageUrl: string, posit
 
 // use a list of pages to fill the viewer
 function loadMangaPages(begin: number, manga: IMangaPages) {
-  sequence(manga.pages, begin).forEach((index, position) =>
-    addPage(manga, index, manga.listPages[index - 1], position),
-  );
+  sequence(manga.pages, begin).forEach((index, position) => {
+    addPage(manga, index, manga.listPages[index - 1], position).catch(logScript);
+  });
 }
 
 // use a list of images to fill the viewer
@@ -201,9 +206,9 @@ function loadMangaImages(begin: number, manga: IMangaImages) {
 
 // Entry point for loading hte Manga pages
 function loadManga(manga: IManga, begin = 1) {
-  useSettings().lazyLoadImages = manga.lazy || useSettings().lazyLoadImages;
+  useSettings().lazyLoadImages = manga.lazy ?? useSettings().lazyLoadImages;
   logScript('Loading Images');
-  logScript(`Intervals: ${manga.timer || useSettings().throttlePageLoad || 'Default(1000)'}`);
+  logScript(`Intervals: ${manga.timer ?? useSettings().throttlePageLoad ?? 'Default(1000)'}`);
   logScript(`Lazy: ${useSettings().lazyLoadImages}, Starting from: ${useSettings().lazyStart}`);
   if (isImagesManga(manga)) {
     logScript('Method: Images:', manga.listImages);

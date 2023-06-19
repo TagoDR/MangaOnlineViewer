@@ -15,7 +15,7 @@ export default {
       next: document.querySelector('._nextEpisode')?.getAttribute('href'),
       listImages: images.map(
         (img) =>
-          img.getAttribute('data-url') || img.getAttribute('data-src') || img.getAttribute('src'),
+          img.getAttribute('data-url') ?? img.getAttribute('data-src') ?? img.getAttribute('src'),
       ),
     };
   },

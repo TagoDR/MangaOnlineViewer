@@ -9,7 +9,7 @@ function createStyleElement(id: string, content: string): HTMLStyleElement {
 // Appends CSS content to the head of the site
 function appendStyleSheet(id: string, content: string) {
   if (!document.querySelector(`#${id}`)) {
-    const head = document.head || document.querySelector('head');
+    const head = document.head ?? document.querySelector('head');
     head.appendChild(createStyleElement(id, content));
   }
 }

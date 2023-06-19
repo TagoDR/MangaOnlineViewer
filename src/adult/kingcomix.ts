@@ -15,9 +15,9 @@ export default {
       next: '#',
       listImages: src.map(
         (img) =>
-          img.getAttribute('data-src') ||
-          img.getAttribute('data-full-url') ||
-          img.getAttribute('data-lazy-src') ||
+          img.getAttribute('data-src') ??
+          img.getAttribute('data-full-url') ??
+          img.getAttribute('data-lazy-src') ??
           img.getAttribute('src'),
       ),
     };

@@ -41,8 +41,8 @@ function isEmpty<T>(value: T | T[] | null | undefined): value is null | undefine
  * @param {any} value - item to test
  * @returns {boolean} true if nothing, otherwise false
  */
-function isNothing(value: any | any[] | null | undefined): value is null | undefined {
-  const isEmptyObject = (a: any | any[] | null | undefined): boolean => {
+function isNothing(value: any): value is null | undefined {
+  const isEmptyObject = (a: any): boolean => {
     if (!Array.isArray(a)) {
       // it's an Object, not an Array
       const hasNonempty = Object.keys(a).some((element) => !isNothing(a[element]));
@@ -61,24 +61,5 @@ function isNothing(value: any | any[] | null | undefined): value is null | undef
     (typeof value === 'object' && isEmptyObject(value))
   );
 }
-
-// function testUtil(test: any, fn: any) {
-//   test.map((value: any) => console.log(`${fn.name}(${JSON.stringify(value)}) // ${fn(value)}`));
-// }
-//
-// const testValues = [
-//   null,
-//   undefined,
-//   [],
-//   {},
-//   '', // Should be Empty and Nothing
-//   false,
-//   0,
-//   [{}, { 0: false }, { '': 0 }, { 0: 0 }], // Should be Nothing
-//   42,
-//   [{ '': 1 }, { 0: 1 }], // Should be Something
-// ];
-// testUtil(testValues, isEmpty);
-// testUtil(testValues, isNothing);
 
 export { isEmpty, isNothing };

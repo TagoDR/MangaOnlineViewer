@@ -14,7 +14,7 @@ let zip: JSZip;
 const base64Regex = /^data:(?<mimeType>image\/\w+);base64,+(?<data>.+)/;
 
 const getExtension = (mimeType: string) =>
-  ((/image\/(?<ext>jpe?g|png|webp)/.exec(mimeType) || {}).groups || {}).ext || '' || 'png';
+  /image\/(?<ext>jpe?g|png|webp)/.exec(mimeType)?.groups?.ext ?? 'png';
 
 const getFilename = (name: string, index: number, total: number, ext: string) =>
   `${name}${(index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, '0')}.${ext.replace(
@@ -45,7 +45,7 @@ function getImageData(
   const src = img.getAttribute('src') ?? img.getAttribute('data-src');
   if (src == null) return Promise.reject(new Error('Image source not specified'));
   const base64 = base64Regex.exec(src);
-  if (base64 && base64.groups) {
+  if (base64?.groups) {
     return Promise.resolve({
       name: getFilename('Page-', index, array.length, getExtension(base64.groups?.mimeType)),
       data: base64.groups.data,
@@ -54,12 +54,14 @@ function getImageData(
   return new Promise((resolve) => {
     // setTimeout(
     //   () =>
-    getImage(src).then((res) =>
-      resolve({
-        name: getFilename('Page-', index, array.length, getExtension(res.response.type)),
-        data: res.response,
-      }),
-    );
+    getImage(src)
+      .then((res) =>
+        resolve({
+          name: getFilename('Page-', index, array.length, getExtension(res.response.type)),
+          data: res.response,
+        }),
+      )
+      .catch(logScript);
     //   useSettings().throttlePageLoad * index,
     // );
   });

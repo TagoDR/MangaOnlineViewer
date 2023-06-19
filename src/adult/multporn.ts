@@ -11,7 +11,7 @@ export default {
       document.head.textContent
         ?.match(/"configUrl":"(.+?)",/)
         ?.at(1)
-        ?.replaceAll('\\', '') || '';
+        ?.replaceAll('\\', '') ?? '';
     const api = await fetch(url)
       .then((res) => res.text())
       .then((html) => new DOMParser().parseFromString(html, 'text/xml'));

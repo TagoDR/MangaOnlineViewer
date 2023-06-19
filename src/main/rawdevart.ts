@@ -17,7 +17,7 @@ export default {
       pages: images.length,
       prev: chapter?.nextElementSibling?.getAttribute('value'),
       next: chapter?.previousElementSibling?.getAttribute('value'),
-      listImages: images.map((item) => $(item).attr('data-src') || $(item).attr('src')),
+      listImages: images.map((item) => $(item).attr('data-src') ?? $(item).attr('src')),
     };
   },
 };

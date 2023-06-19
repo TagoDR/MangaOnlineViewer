@@ -18,7 +18,7 @@ export default {
     const src = Array(W.imagecount)
       .fill(0)
       .map(async (_, i) => {
-        const url = `chapterfun.ashx?cid=${W.chapterid || W.chapter_id}&page=${i}&key=${key}`;
+        const url = `chapterfun.ashx?cid=${W.chapterid ?? W.chapter_id}&page=${i}&key=${key}`;
         const api: string = await fetch(url, options).then((res) => res.text());
         // eslint-disable-next-line no-eval
         (0, eval)(api);
