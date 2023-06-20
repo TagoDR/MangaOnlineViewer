@@ -5,8 +5,9 @@ export default {
   homepage: 'https://reaperscans.com/',
   language: ['English'],
   category: 'manga',
+  waitEle: 'main div:nth-child(3) img',
   run() {
-    const images = [...document.querySelectorAll('main img')];
+    const images = [...document.querySelectorAll('main div:nth-child(3) img')];
     return {
       title: document.querySelector('title')?.textContent?.trim(),
       series: document.querySelector('.fa-list')?.parentElement?.getAttribute('href'),
