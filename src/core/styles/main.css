@@ -750,6 +750,10 @@ img {
     padding: 10px;
 }
 
+#MangaOnlineViewer #CommentsArea {
+    background: var(--theme-body-background);
+}
+
 #MangaOnlineViewer #CommentsButton {
     display: flex;
     justify-content: center;

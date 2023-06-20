@@ -298,4 +298,19 @@ export function getTextColor(hex: string) {
   return setLightness(hsl, color.isDark() ? lightest : darkest);
 }
 
+export function isLight(color: string) {
+  return tinycolor(color).getBrightness() > 120;
+}
+export function isDark(color: string) {
+  return tinycolor(color).getBrightness() <= 120;
+}
+
+export function isTextColorLight(element: Element) {
+  return isLight(window.getComputedStyle(element).color);
+}
+
+export function isTextColorDark(element: Element) {
+  return isDark(window.getComputedStyle(element).color);
+}
+
 export default colors;
