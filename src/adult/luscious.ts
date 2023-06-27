@@ -8,7 +8,10 @@ export default {
   waitEle: '.album-info div',
   async run() {
     const num = parseInt(
-      document.querySelector('.album-info div')?.textContent?.match(/\d+/)?.toString()!,
+      document
+        .querySelector('input[name="page_number"] + span')
+        ?.textContent?.match(/\d+/)
+        ?.pop() ?? '0',
       10,
     );
     const totalBlocks = Math.ceil(num / 50);
@@ -17,18 +20,21 @@ export default {
         .querySelector('.album-heading a')
         ?.getAttribute('href')
         ?.match(/\d+\//)
-        ?.toString() ?? '',
+        ?.toString() ?? '0',
       10,
     );
     const query =
-      '&query=%2520query%2520AlbumListOwnPictures%28%2524input%253A%2520PictureListInput%21%29%2520%257B%2520picture%2520%257B%2520list%28input%253A%2520%2524input%29%2520%257B%2520info%2520%257B%2520...FacetCollectionInfo%2520%257D%2520items%2520%257B%2520__typename%2520id%2520title%2520description%2520created%2520like_status%2520number_of_comments%2520number_of_favorites%2520moderation_status%2520width%2520height%2520resolution%2520aspect_ratio%2520url_to_original%2520url_to_video%2520is_animated%2520position%2520tags%2520%257B%2520category%2520text%2520url%2520%257D%2520permissions%2520url%2520thumbnails%2520%257B%2520width%2520height%2520size%2520url%2520%257D%2520%257D%2520%257D%2520%257D%2520%257D%2520fragment%2520FacetCollectionInfo%2520on%2520FacetCollectionInfo%2520%257B%2520page%2520has_next_page%2520has_previous_page%2520total_items%2520total_pages%2520items_per_page%2520url_complete%2520%257D%2520';
+      '&query=%20query%20PictureListInsideAlbum(%24input%3A%20PictureListInput!)%20%7B%20picture%20%7B%20list(input%3A%20%24input)%20%7B%20info%20%7B%20...FacetCollectionInfo%20%7D%20items%20%7B%20__typename%20id%20title%20description%20created%20like_status%20number_of_comments%20number_of_favorites%20moderation_status%20width%20height%20resolution%20aspect_ratio%20url_to_original%20url_to_video%20is_animated%20position%20permissions%20url%20tags%20%7B%20category%20text%20url%20%7D%20thumbnails%20%7B%20width%20height%20size%20url%20%7D%20%7D%20%7D%20%7D%20%7D%20fragment%20FacetCollectionInfo%20on%20FacetCollectionInfo%20%7B%20page%20has_next_page%20has_previous_page%20total_items%20total_pages%20items_per_page%20url_complete%20%7D%20';
     const fetchBlocks = Array(totalBlocks)
       .fill(0)
       .map(async (_, block) => {
-        const url = `https://api.luscious.net/graphql/nobatch/?operationName=AlbumListOwnPictures&variables=%7B%22input%22%3A%7B%22filters%22%3A%5B%7B%22name%22%3A%22album_id%22%2C%22value%22%3A%22${id}%22%7D%5D%2C%22display%22%3A%22position%22%2C%22page%22%3A${
+        const url = `https://apicdn.luscious.net/graphql/nobatch/?operationName=PictureListInsideAlbum&variables={"input":{"filters":[{"name":"album_id","value":"${id}"}],"display":"position","items_per_page":50,"page":${
           block + 1
-        }%7D%7D${query}`;
-        return fetch(url).then((res) => res.json());
+        }}}${query}`;
+        return GM.xmlHttpRequest({
+          method: 'GET',
+          url,
+        }).then((res) => JSON.parse(res.responseText));
       });
     const data = await Promise.all(fetchBlocks);
     const images = data.flatMap((res) =>
@@ -37,7 +43,7 @@ export default {
     return {
       title: document.querySelector('.album-heading a')?.textContent?.trim(),
       series: document.querySelector('.album-heading a')?.getAttribute('href'),
-      pages: images.length,
+      pages: num,
       prev: '#',
       next: '#',
       listImages: images,
