@@ -10,7 +10,7 @@ export default {
     'Night Scans',
     'ManhwaFreak',
   ],
-  url: /https?:\/\/(www.)?(asurascans|flamescans|realmscans|void-scans|luminousscans|shimascans|nightscans|manhwafreak).(com|org|gg)\/.+/,
+  url: /https?:\/\/(www.)?(asurascans|flamescans|realmscans|void-scans|luminousscans|shimascans|nightscans|manhwafreak).(com|org|gg|xyz)\/.+/,
   homepage: [
     'https://www.asura.gg/',
     'https://flamescans.org/',
