@@ -5,7 +5,7 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, Nana, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
+// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
 // @version       2023.06.27
 // @license       MIT
 // @grant         unsafeWindow
@@ -27,13 +27,13 @@
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
 // @include       /https?:\/\/(www.)?bestporncomix.com\/gallery\/.+/
 // @include       /https?:\/\/(www.)?doujins.com\/.+/
-// @include       /https?:\/\/comics.8muses.com\/comics\/picture\/.+/
+// @include       /https?:\/\/8muses.io\/picture\/.+/
 // @include       /https?:\/\/(g.)?(exhentai|e-hentai).org\/s\/.+\/.+/
 // @include       /https?:\/\/(www.)?gntai.net\/.+\/.+/
 // @include       /https?:\/\/(www.)?hbrowse.com\/.+/
 // @include       /https?:\/\/(www.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//
 // @include       /https?:\/\/(www.)?hentaifox.com\/g\/.+/
-// @include       /https?:\/\/(www.)?(hentaihand|nhentai).com\/.+\/reader\/\d+/
+// @include       /https?:\/\/(www.)?(hentaihand|nhentai).com\/.+\/reader/
 // @include       /https?:\/\/(www.)?hentaihere.com\/.+\/.+\/.+/
 // @include       /https?:\/\/hitomi.la\/reader\/.+/
 // @include       /https?:\/\/(www.)?imhentai.xxx\/view\/.+\/.+\//
@@ -41,7 +41,6 @@
 // @include       /https?:\/\/(www.)?luscious.net\/.+\/read\/.+/
 // @include       /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include       /https?:\/\/(www.)?myhentaigallery.com\/gallery\/show\/.+\/\d+/
-// @include       /https?:\/\/nana.my.id\/reader\/.+/
 // @include       /https?:\/\/(www.)?(nhentai|lhentai).(net|xxx|com)\/g\/.+\/.+/
 // @include       /https?:\/\/(www.)?9hentai.(ru|to)\/g\/.+\/.+/
 // @include       /https?:\/\/(www.)?(omegascans).(org)\/.+/
@@ -103,35 +102,20 @@
 
   const eightMuses = {
     name: "8Muses",
-    url: /https?:\/\/comics.8muses.com\/comics\/picture\/.+/,
+    url: /https?:\/\/8muses.io\/picture\/.+/,
     homepage: "https://comics.8muses.com/",
     language: ["English"],
     category: "hentai",
     async run() {
-      function decode(data) {
-        return ((t) => {
-          if (!t.startsWith("!"))
-            return t;
-          return t.slice(1).replace(/[\x21-\x7e]/g, (s) => String.fromCharCode(33 + (s.charCodeAt(0) + 14) % 94));
-        })(data.replace(/&gt;/g, ">").replace(/&lt;/g, "<").replace(/&amp;/g, "&"));
-      }
-      const api = await fetch(window.location.href).then((res) => res.text()).then((html) => new DOMParser().parseFromString(html, "text/html"));
-      const dataPublic = JSON.parse(
-        decode(api.querySelector("#ractive-public")?.innerHTML.trim() ?? "")
-      );
-      const dataShared = JSON.parse(
-        decode(api.querySelector("#ractive-shared")?.innerHTML.trim() ?? "")
-      );
-      const src = dataShared.options.pictureHost ?? window.location.host;
+      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
+      W.link_images.shift();
       return {
         title: document.querySelector(".top-menu-breadcrumb li:nth-last-child(2) a")?.textContent?.trim(),
-        series: document.querySelector(".top-menu-breadcrumb li:nth-last-child(2) a")?.getAttribute("href"),
-        pages: dataPublic.pictures.length,
+        series: W.post_id,
+        pages: W.link_images.length,
         prev: "#",
         next: "#",
-        listImages: dataPublic.pictures.map(
-          (img) => `//${src}/image/fl/${img.publicUri}.jpg`
-        )
+        listImages: W.link_images
       };
     }
   };
@@ -269,20 +253,20 @@
 
   const hentaihand = {
     name: ["HentaiHand", "nHentai.com"],
-    url: /https?:\/\/(www.)?(hentaihand|nhentai).com\/.+\/reader\/\d+/,
+    url: /https?:\/\/(www.)?(hentaihand|nhentai).com\/.+\/reader/,
     homepage: ["https://hentaihand.com/", "https://nhentai.com"],
     language: ["English"],
     category: "hentai",
-    waitEle: ".vertical-image",
+    waitEle: ".reader img",
     run() {
-      const images = [...document.querySelectorAll(".vertical-image img")];
+      const images = [...document.querySelectorAll(".reader img")];
       return {
         title: document.querySelector(".reader-header h5")?.textContent?.trim(),
         series: document.querySelector(".reader-header h5 a")?.getAttribute("href"),
         pages: images.length,
         prev: "#",
         next: "#",
-        listImages: images.map((img) => img.getAttribute("data-src"))
+        listImages: images.map((img) => img.getAttribute("data-src") ?? img.getAttribute("src"))
       };
     }
   };
@@ -411,18 +395,21 @@
     waitEle: ".album-info div",
     async run() {
       const num = parseInt(
-        document.querySelector(".album-info div")?.textContent?.match(/\d+/)?.toString(),
+        document.querySelector('input[name="page_number"] + span')?.textContent?.match(/\d+/)?.pop() ?? "0",
         10
       );
       const totalBlocks = Math.ceil(num / 50);
       const id = parseInt(
-        document.querySelector(".album-heading a")?.getAttribute("href")?.match(/\d+\//)?.toString() ?? "",
+        document.querySelector(".album-heading a")?.getAttribute("href")?.match(/\d+\//)?.toString() ?? "0",
         10
       );
-      const query = "&query=%2520query%2520AlbumListOwnPictures%28%2524input%253A%2520PictureListInput%21%29%2520%257B%2520picture%2520%257B%2520list%28input%253A%2520%2524input%29%2520%257B%2520info%2520%257B%2520...FacetCollectionInfo%2520%257D%2520items%2520%257B%2520__typename%2520id%2520title%2520description%2520created%2520like_status%2520number_of_comments%2520number_of_favorites%2520moderation_status%2520width%2520height%2520resolution%2520aspect_ratio%2520url_to_original%2520url_to_video%2520is_animated%2520position%2520tags%2520%257B%2520category%2520text%2520url%2520%257D%2520permissions%2520url%2520thumbnails%2520%257B%2520width%2520height%2520size%2520url%2520%257D%2520%257D%2520%257D%2520%257D%2520%257D%2520fragment%2520FacetCollectionInfo%2520on%2520FacetCollectionInfo%2520%257B%2520page%2520has_next_page%2520has_previous_page%2520total_items%2520total_pages%2520items_per_page%2520url_complete%2520%257D%2520";
+      const query = "&query=%20query%20PictureListInsideAlbum(%24input%3A%20PictureListInput!)%20%7B%20picture%20%7B%20list(input%3A%20%24input)%20%7B%20info%20%7B%20...FacetCollectionInfo%20%7D%20items%20%7B%20__typename%20id%20title%20description%20created%20like_status%20number_of_comments%20number_of_favorites%20moderation_status%20width%20height%20resolution%20aspect_ratio%20url_to_original%20url_to_video%20is_animated%20position%20permissions%20url%20tags%20%7B%20category%20text%20url%20%7D%20thumbnails%20%7B%20width%20height%20size%20url%20%7D%20%7D%20%7D%20%7D%20%7D%20fragment%20FacetCollectionInfo%20on%20FacetCollectionInfo%20%7B%20page%20has_next_page%20has_previous_page%20total_items%20total_pages%20items_per_page%20url_complete%20%7D%20";
       const fetchBlocks = Array(totalBlocks).fill(0).map(async (_, block) => {
-        const url = `https://api.luscious.net/graphql/nobatch/?operationName=AlbumListOwnPictures&variables=%7B%22input%22%3A%7B%22filters%22%3A%5B%7B%22name%22%3A%22album_id%22%2C%22value%22%3A%22${id}%22%7D%5D%2C%22display%22%3A%22position%22%2C%22page%22%3A${block + 1}%7D%7D${query}`;
-        return fetch(url).then((res) => res.json());
+        const url = `https://apicdn.luscious.net/graphql/nobatch/?operationName=PictureListInsideAlbum&variables={"input":{"filters":[{"name":"album_id","value":"${id}"}],"display":"position","items_per_page":50,"page":${block + 1}}}${query}`;
+        return GM.xmlHttpRequest({
+          method: "GET",
+          url
+        }).then((res) => JSON.parse(res.responseText));
       });
       const data = await Promise.all(fetchBlocks);
       const images = data.flatMap(
@@ -431,7 +418,7 @@
       return {
         title: document.querySelector(".album-heading a")?.textContent?.trim(),
         series: document.querySelector(".album-heading a")?.getAttribute("href"),
-        pages: images.length,
+        pages: num,
         prev: "#",
         next: "#",
         listImages: images
@@ -556,25 +543,6 @@
             `${String(i + 1).padStart(3, "0").slice(-3)}.`
           )
         )
-      };
-    }
-  };
-
-  const nana = {
-    name: "Nana",
-    url: /https?:\/\/nana.my.id\/reader\/.+/,
-    homepage: "https://nana.my.id/",
-    language: ["English"],
-    category: "hentai",
-    run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      return {
-        title: document.querySelector("title")?.textContent?.replace(/ - Nana .+/, "").trim(),
-        series: "#",
-        pages: W.Reader.pages.length,
-        prev: "#",
-        next: "#",
-        listImages: W.Reader.pages
       };
     }
   };
@@ -967,7 +935,6 @@
     luscious,
     multporn,
     myhentaigallery,
-    nana,
     nhentainet,
     ninehentai,
     omegascans,
