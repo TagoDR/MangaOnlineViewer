@@ -16,7 +16,6 @@ import luscious from './luscious';
 import madarawp from './madarawp';
 import multporn from './multporn';
 import myhentaigallery from './myhentaigallery';
-import nana from './nana.js';
 import nhentainet from './nhentainet';
 import ninehentai from './9hentai';
 import omegascans from './omegascans';
@@ -29,7 +28,7 @@ import tmohhentai from './tmohentai';
 import tsumino from './tsumino';
 import vercomicsporno from './vercomicsporno';
 import wnacg from './wnacg';
-import xlecxone from './xlecxone.js';
+import xlecxone from './xlecxone';
 import xyzcomics from './xyzcomics';
 import { ISite } from '../types/ISite';
 
@@ -50,7 +49,6 @@ const sites = [
   luscious,
   multporn,
   myhentaigallery,
-  nana,
   nhentainet,
   ninehentai,
   omegascans,
