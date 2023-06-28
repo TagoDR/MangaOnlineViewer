@@ -19,12 +19,11 @@ export interface ISiteBase {
   language: Language | Language[]; // English, Spanish, Portuguese
   obs?: string;
   category: Category | Category[]; // 'manga','comic','hentai'
-  waitAttr?: string[]; // ['img#XYZ', "data-src"]
+  waitAttr?: [string, string]; // ['img#XYZ', "data-src"]
   waitEle?: string; // 'img#XYZ'
   waitVar?: string; // gallery
-  waitMax?: number; // 5000 = 5s
-  waitStep?: number; // 1000 = 1s
-  waitFunc?: () => boolean;
+  waitFunc?: () => boolean; // custom validation function
+  waitTime?: number;
   start?: 'never' | 'always'; // 'never', 'always'
   run(): IManga;
 }

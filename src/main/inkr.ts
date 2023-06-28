@@ -6,7 +6,8 @@ export default {
   language: ['English'],
   category: 'manga',
   waitFunc: () =>
-    document.querySelector<HTMLImageElement>('#editor-v2-scroll-view-id img')?.style.width !== '',
+    document.querySelector<HTMLImageElement>('#editor-v2-scroll-view-id img')?.naturalWidth !==
+      undefined && document.querySelectorAll('#editor-v2-scroll-view-id > div > div').length > 2,
   run() {
     const images = [...document.querySelectorAll('#editor-v2-scroll-view-id img')];
     return {

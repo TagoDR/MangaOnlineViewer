@@ -8,7 +8,7 @@ import formatPage from './display';
 import { getLocaleString, isBookmarked, useSettings } from './settings';
 import sweetalertStyle from './styles/externalStyle';
 import startButton from './styles/startButton.css?inline';
-import { testAttribute, testElement, testFunc, testVariable } from './check';
+import { testAttribute, testElement, testFunc, testTime, testVariable } from './check';
 
 function validateMin(valBegin: number, endPage: number, rs: RangeSlider) {
   let val = valBegin;
@@ -22,7 +22,7 @@ function validateMin(valBegin: number, endPage: number, rs: RangeSlider) {
   return val;
 }
 
-function validadeMax(valEnd: number, beginPage: number, rs: RangeSlider) {
+function validateMax(valEnd: number, beginPage: number, rs: RangeSlider) {
   let val = valEnd;
   if (Number.isNaN(val) || val > rs.max()) {
     val = rs.max();
@@ -81,7 +81,7 @@ async function lateStart(site: ISite, begin = 1) {
           endPage,
           rangeSliderElement,
         );
-        const valEnd = validadeMax(
+        const valEnd = validateMax(
           parseInt(pageEndInput!.value, 10),
           beginPage,
           rangeSliderElement,
@@ -180,22 +180,8 @@ async function preparePage(site: ISite) {
   }
 }
 
-// Wait for something on the site to be ready before executing the script
-function waitExec(site: ISite, waitElapsed: number = 0) {
-  if (
-    waitElapsed < (site.waitMax ?? 5000) &&
-    (testAttribute(site) || testElement(site) || testVariable(site) || testFunc(site))
-  ) {
-    setTimeout(() => {
-      waitExec(site, waitElapsed + (site.waitStep ?? 1000));
-    }, site.waitStep ?? 1000);
-    return;
-  }
-  preparePage(site).catch(logScript);
-}
-
 // Script Entry point
-function start(sites: ISite[]) {
+async function start(sites: ISite[]) {
   logScript(
     `Starting ${getInfoGM.script.name} ${
       getInfoGM.script.version
@@ -206,7 +192,13 @@ function start(sites: ISite[]) {
   const site = sites.find((s: ISite) => s.url.test(window.location.href));
   if (site) {
     logScript(`Found site: ${site.name}`);
-    waitExec(site);
+    await Promise.all([
+      testTime(site),
+      testElement(site),
+      testAttribute(site),
+      testVariable(site),
+      testFunc(site),
+    ]).then(() => preparePage(site).catch(logScript));
   } else {
     logScript(`Sorry, didnt find any valid site`);
   }

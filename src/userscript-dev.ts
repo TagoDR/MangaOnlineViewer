@@ -3,6 +3,7 @@ import adult from './adult';
 import localhost from './main/localhost';
 import start from './core/viewer';
 import { ISite } from './types';
+import { logScript } from './utils/tampermonkey';
 
 const sites = [...adult, ...main, localhost as ISite];
-start(sites);
+start(sites).catch(logScript);

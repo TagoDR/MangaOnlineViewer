@@ -1,52 +1,52 @@
 import { ISite } from '../types';
-import { isNothing } from '../utils/checks';
 import { logScript } from '../utils/tampermonkey';
+import { waitForAtb, waitForElm, waitForVar } from '../utils/waitFor';
 
-export function testAttribute(site: ISite) {
+export async function testAttribute(site: ISite) {
   if (site.waitAttr !== undefined) {
-    const wait = document.querySelector(site.waitAttr[0])?.getAttribute(site.waitAttr[1]);
-    if (isNothing(wait)) {
-      logScript(`Waiting for Attribute ${site.waitAttr[1]} of ${site.waitAttr[0]} = ${wait}`);
-      return true;
-    }
+    logScript(`Waiting for Attribute ${site.waitAttr[1]} of ${site.waitAttr[0]}`);
+    const wait = await waitForAtb(site.waitAttr[0], site.waitAttr[1]);
     logScript(`Found Attribute ${site.waitAttr[1]} of ${site.waitAttr[0]} = ${wait}`);
   }
-  return false;
 }
 
-export function testElement(site: ISite) {
+export async function testElement(site: ISite) {
   if (site.waitEle !== undefined) {
-    const wait = document.querySelector(site.waitEle);
-    if (isNothing(wait?.tagName)) {
-      logScript(`Waiting for Element ${site.waitEle} = `, wait);
-      return true;
-    }
+    logScript(`Waiting for Element ${site.waitEle}`);
+    const wait = await waitForElm(site.waitEle);
     logScript(`Found Element ${site.waitEle} = `, wait);
   }
-  return false;
 }
 
-export function testVariable(site: ISite) {
+export async function testVariable(site: ISite) {
   if (site.waitVar !== undefined) {
-    const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-    const wait = W[site.waitVar as any];
-    if (isNothing(wait)) {
-      logScript(`Waiting for Variable ${site.waitVar} = ${wait}`);
-      return true;
-    }
+    logScript(`Waiting for Variable ${site.waitVar}`);
+    const wait = await waitForVar(site.waitVar);
     logScript(`Found Variable ${site.waitVar} = ${wait}`);
   }
-  return false;
+}
+function until(predFn: () => boolean) {
+  const poll = (done: (value: unknown) => void) => {
+    const result = predFn();
+    if (result) done(result);
+    else setTimeout(() => poll(done), 500);
+  };
+  return new Promise(poll);
 }
 
-export function testFunc(site: ISite) {
+export async function testFunc(site: ISite) {
   if (site.waitFunc !== undefined) {
-    const wait = site.waitFunc();
-    if (!wait) {
-      logScript(`Waiting to pass Function check ${site.waitFunc} = ${wait}`);
-      return true;
-    }
+    logScript(`Waiting to pass Function check ${site.waitFunc}`);
+    const wait = await until(site.waitFunc);
     logScript(`Found Function check ${site.waitFunc} = ${wait}`);
   }
-  return false;
+}
+export async function testTime(site: ISite) {
+  if (site.waitTime !== undefined) {
+    logScript(`Waiting to for ${site.waitTime} milliseconds`);
+    await new Promise((resolve) => {
+      setTimeout(resolve, site.waitTime);
+    });
+    logScript(`Continuing`);
+  }
 }
