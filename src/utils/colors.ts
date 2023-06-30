@@ -305,12 +305,12 @@ export function isDark(color: string) {
   return tinycolor(color).getBrightness() <= 120;
 }
 
-export function isTextColorLight(element: Element) {
-  return isLight(window.getComputedStyle(element).color);
+export function isBackgroundColorLight(element: Element) {
+  return isLight(window.getComputedStyle(element).backgroundColor);
 }
 
-export function isTextColorDark(element: Element) {
-  return isDark(window.getComputedStyle(element).color);
+export function isBackgroundColorDark(element: Element) {
+  return isDark(window.getComputedStyle(element).backgroundColor);
 }
 
 export default colors;

@@ -4,14 +4,14 @@ import body from './components/App';
 import { logScript } from '../utils/tampermonkey';
 import events from './events';
 import { loadManga } from './page';
-import { isTextColorLight } from '../utils/colors';
+import { isBackgroundColorDark } from '../utils/colors';
 
 export default async function display(manga: IManga) {
   if (manga.before !== undefined) {
     await manga.before(manga.begin);
   }
   const comments = document.querySelector('#disqus_thread, #fb-comments');
-  const commentsTextColorLight = isTextColorLight(comments ?? document.body);
+  const commentsBackgroundColorDark = isBackgroundColorDark(comments ?? document.body);
   [document.documentElement, document.head, document.body].forEach((element: HTMLElement) => {
     element.getAttributeNames().forEach((attr) => element.removeAttribute(attr));
   });
@@ -19,7 +19,7 @@ export default async function display(manga: IManga) {
   document.body.innerHTML = body(manga, manga.begin);
   if (comments) {
     const area = document.getElementById('CommentsArea');
-    area?.classList.add(commentsTextColorLight ? 'dark' : 'light');
+    area?.classList.add(commentsBackgroundColorDark ? 'dark' : 'light');
     area?.append(comments);
     document.getElementById('CommentsPainel')?.classList.remove('hide');
   }
