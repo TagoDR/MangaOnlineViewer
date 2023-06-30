@@ -6,6 +6,7 @@ export default {
   language: ['English'],
   category: 'hentai',
   waitVar: 'g_th',
+  waitFunc: () => document.querySelector('#gimg')?.classList.contains('loaded'),
   run() {
     const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     const num = parseInt(document.querySelector('.total_pages')?.textContent ?? '', 10);
