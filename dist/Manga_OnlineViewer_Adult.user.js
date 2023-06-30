@@ -41,7 +41,7 @@
 // @include       /https?:\/\/(www.)?luscious.net\/.+\/read\/.+/
 // @include       /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include       /https?:\/\/(www.)?myhentaigallery.com\/gallery\/show\/.+\/\d+/
-// @include       /https?:\/\/(www.)?(nhentai|lhentai).(net|xxx|com)\/g\/.+\/.+/
+// @include       /https?:\/\/(www.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/
 // @include       /https?:\/\/(www.)?9hentai.(ru|to)\/g\/.+\/.+/
 // @include       /https?:\/\/(www.)?(omegascans).(org)\/.+/
 // @include       /https?:\/\/(www.)?porncomixone.net\/comic\/.+/
@@ -226,6 +226,7 @@
     language: ["English"],
     category: "hentai",
     waitVar: "g_th",
+    waitFunc: () => document.querySelector("#gimg")?.classList.contains("loaded"),
     run() {
       const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
       const num = parseInt(document.querySelector(".total_pages")?.textContent ?? "", 10);
@@ -549,7 +550,7 @@
 
   const nhentainet = {
     name: ["nHentai.net", "nHentai.xxx", "lhentai"],
-    url: /https?:\/\/(www.)?(nhentai|lhentai).(net|xxx|com)\/g\/.+\/.+/,
+    url: /https?:\/\/(www.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/,
     homepage: ["https://nhentai.net/", "https://nhentai.xxx/", "https://lhentai.com/"],
     language: ["English"],
     category: "hentai",

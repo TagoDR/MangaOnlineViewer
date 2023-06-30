@@ -41,7 +41,7 @@
 // @include       /https?:\/\/(www.)?luscious.net\/.+\/read\/.+/
 // @include       /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include       /https?:\/\/(www.)?myhentaigallery.com\/gallery\/show\/.+\/\d+/
-// @include       /https?:\/\/(www.)?(nhentai|lhentai).(net|xxx|com)\/g\/.+\/.+/
+// @include       /https?:\/\/(www.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/
 // @include       /https?:\/\/(www.)?9hentai.(ru|to)\/g\/.+\/.+/
 // @include       /https?:\/\/(www.)?(omegascans).(org)\/.+/
 // @include       /https?:\/\/(www.)?porncomixone.net\/comic\/.+/
