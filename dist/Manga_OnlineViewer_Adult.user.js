@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.06.30
+// @version       2023.07.01
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -444,7 +444,7 @@
       "NovelMic",
       "Reset-Scans"
     ],
-    url: /https?:\/\/.+\/(manga|series|manhua|comic)\/.+\/.+/,
+    url: /https?:\/\/.+\/(manga|series|manhua|comic|ch)\/.+\/.+/,
     homepage: [
       "#",
       "https://manhuaus.com",
@@ -471,7 +471,7 @@
         )
       ];
       return {
-        title: document.querySelector("#chapter-heading")?.textContent?.trim(),
+        title: (document.querySelector("#chapter-heading") ?? document.querySelector("title"))?.textContent?.trim(),
         series: (document.querySelector(".breadcrumb li:nth-child(3) a") ?? document.querySelector(".breadcrumb li:nth-child(2) a"))?.getAttribute("href"),
         pages: images.length,
         prev: document.querySelector(".prev_page")?.getAttribute("href"),
