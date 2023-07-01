@@ -156,6 +156,7 @@ async function preparePage(site: ISite) {
   const manga = await site.run();
   logScript(`Found Pages: ${manga.pages}`);
   if (manga.pages <= 0) return;
+  if (!manga.title) manga.title = document.querySelector('title')?.textContent?.trim();
   manga.begin = isBookmarked() ?? manga.begin ?? 1;
   const style = document.createElement('style');
   style.appendChild(document.createTextNode(sweetalertStyle));
