@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.07.01
+// @version       2023.07.12
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -442,7 +442,8 @@
       "ManhuaPlus",
       "TopManhua",
       "NovelMic",
-      "Reset-Scans"
+      "Reset-Scans",
+      "LeviatanScans"
     ],
     url: /https?:\/\/.+\/(manga|series|manhua|comic|ch)\/.+\/.+/,
     homepage: [
@@ -459,7 +460,8 @@
       "https://manhuaplus.com/",
       "https://www.topmanhua.com/",
       "https://novelmic.com/",
-      "https://reset-scans.com/"
+      "https://reset-scans.com/",
+      "https://leviatanscans.com/"
     ],
     language: ["English"],
     obs: "Any Site that uses Madara Wordpress Plugin",
@@ -471,7 +473,7 @@
         )
       ];
       return {
-        title: (document.querySelector("#chapter-heading") ?? document.querySelector("title"))?.textContent?.trim(),
+        title: document.querySelector("#chapter-heading")?.textContent?.trim(),
         series: (document.querySelector(".breadcrumb li:nth-child(3) a") ?? document.querySelector(".breadcrumb li:nth-child(2) a"))?.getAttribute("href"),
         pages: images.length,
         prev: document.querySelector(".prev_page")?.getAttribute("href"),
@@ -3811,6 +3813,8 @@ ${wrapStyle(
     logScript(`Found Pages: ${manga.pages}`);
     if (manga.pages <= 0)
       return;
+    if (!manga.title)
+      manga.title = document.querySelector("title")?.textContent?.trim();
     manga.begin = isBookmarked() ?? manga.begin ?? 1;
     const style = document.createElement("style");
     style.appendChild(document.createTextNode(sweetalertStyle));

@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, ManhwaFreak, INKR, InManga, KLManga, Leitor, LeviatanScans, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans
-// @version       2023.07.01
+// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, ManhwaFreak, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans
+// @version       2023.07.12
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -35,7 +35,6 @@
 // @include       /https?:\/\/(www.)?inmanga.com\/ver\/manga\/.+\/.+/
 // @include       /https?:\/\/(www.)?klmanga.com\/.+chapter.+/
 // @include       /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
-// @include       /https?:\/\/(www|en)?.?leviatanscans.com\/(home\/)?manga\/.+\/chapter.+/
 // @include       /https?:\/\/(www.)?lhtranslation.net\/read.+/
 // @include       /https?:\/\/(www.)?lynxscans.com\/comics?\/.+/
 // @include       /https?:\/\/(www.)?mangabuddy.com\/.+\/chapter.+/
@@ -372,50 +371,6 @@
     }
   };
 
-  const leviatanscans = {
-    name: "LeviatanScans",
-    url: /https?:\/\/(www|en)?.?leviatanscans.com\/(home\/)?manga\/.+\/chapter.+/,
-    homepage: "https://leviatanscans.com/",
-    language: ["English"],
-    category: "manga",
-    waitVar: "chapter_data",
-    run() {
-      const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      const images = Array.isArray(W.chapter_data) ? JSON.parse(W.chapter_data) : JSON.parse(
-        JSON.parse(
-          CryptoJS.AES.decrypt(W.chapter_data, W.wpmangaprotectornonce, {
-            format: {
-              stringify(data) {
-                const cypher = {
-                  ct: data.ciphertext.toString(CryptoJS.enc.Base64),
-                  iv: data.iv?.toString(),
-                  s: data.salt?.toString()
-                };
-                return JSON.stringify(cypher);
-              },
-              parse(text) {
-                const result = JSON.parse(text);
-                return CryptoJS.lib.CipherParams.create({
-                  ciphertext: CryptoJS.enc.Base64.parse(result.ct),
-                  iv: CryptoJS.enc.Hex.parse(result.iv),
-                  salt: CryptoJS.enc.Hex.parse(result.s)
-                });
-              }
-            }
-          }).toString(CryptoJS.enc.Utf8)
-        )
-      );
-      return {
-        title: document.querySelector("#chapter-heading")?.textContent?.trim(),
-        series: document.querySelector(".back")?.getAttribute("href"),
-        pages: images.length,
-        prev: document.querySelector(".prev_page")?.getAttribute("href"),
-        next: document.querySelector(".next_page")?.getAttribute("href"),
-        listImages: images
-      };
-    }
-  };
-
   const lhtranslation = {
     name: "LHTranslation",
     url: /https?:\/\/(www.)?lhtranslation.net\/read.+/,
@@ -471,7 +426,8 @@
       "ManhuaPlus",
       "TopManhua",
       "NovelMic",
-      "Reset-Scans"
+      "Reset-Scans",
+      "LeviatanScans"
     ],
     url: /https?:\/\/.+\/(manga|series|manhua|comic|ch)\/.+\/.+/,
     homepage: [
@@ -488,7 +444,8 @@
       "https://manhuaplus.com/",
       "https://www.topmanhua.com/",
       "https://novelmic.com/",
-      "https://reset-scans.com/"
+      "https://reset-scans.com/",
+      "https://leviatanscans.com/"
     ],
     language: ["English"],
     obs: "Any Site that uses Madara Wordpress Plugin",
@@ -500,7 +457,7 @@
         )
       ];
       return {
-        title: (document.querySelector("#chapter-heading") ?? document.querySelector("title"))?.textContent?.trim(),
+        title: document.querySelector("#chapter-heading")?.textContent?.trim(),
         series: (document.querySelector(".breadcrumb li:nth-child(3) a") ?? document.querySelector(".breadcrumb li:nth-child(2) a"))?.getAttribute("href"),
         pages: images.length,
         prev: document.querySelector(".prev_page")?.getAttribute("href"),
@@ -1430,7 +1387,7 @@
     inmanga,
     klmanga,
     leitor,
-    leviatanscans,
+    // leviatanscans,
     lhtranslation,
     lynxscans,
     mangabuddy,
@@ -4351,6 +4308,8 @@ ${wrapStyle(
     logScript(`Found Pages: ${manga.pages}`);
     if (manga.pages <= 0)
       return;
+    if (!manga.title)
+      manga.title = document.querySelector("title")?.textContent?.trim();
     manga.begin = isBookmarked() ?? manga.begin ?? 1;
     const style = document.createElement("style");
     style.appendChild(document.createTextNode(sweetalertStyle));
