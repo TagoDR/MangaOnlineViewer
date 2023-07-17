@@ -3361,13 +3361,14 @@ ${wrapStyle(
 
   function options() {
     function buttonResetSettings() {
-      Swal.fire({
+      const msg = {
         title: getLocaleString("ATTENTION"),
         text: getLocaleString("SETTINGS_RESET"),
         timer: 1e4,
         icon: "info"
-      }).catch(logScript);
+      };
       resetSettings();
+      Swal.fire(msg).catch(logScript);
     }
     document.querySelector("#ResetSettings")?.addEventListener("click", buttonResetSettings);
     function changeLocale(event) {
