@@ -1,4 +1,4 @@
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertOptions } from 'sweetalert2';
 import { getLocaleString, resetSettings, updateSettings, useSettings } from '../settings';
 import { Header, LoadMode } from '../../types';
 import { applyZoom } from '../page';
@@ -8,13 +8,14 @@ import { logScript } from '../../utils/tampermonkey';
 function options() {
   // Reset Reader Settings
   function buttonResetSettings() {
-    Swal.fire({
+    const msg: SweetAlertOptions = {
       title: getLocaleString('ATTENTION'),
       text: getLocaleString('SETTINGS_RESET'),
       timer: 10000,
       icon: 'info',
-    }).catch(logScript);
+    };
     resetSettings();
+    Swal.fire(msg).catch(logScript);
   }
 
   document.querySelector('#ResetSettings')?.addEventListener('click', buttonResetSettings);
