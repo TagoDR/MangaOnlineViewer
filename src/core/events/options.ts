@@ -8,13 +8,13 @@ import { logScript } from '../../utils/tampermonkey';
 function options() {
   // Reset Reader Settings
   function buttonResetSettings() {
-    resetSettings();
     Swal.fire({
       title: getLocaleString('ATTENTION'),
       text: getLocaleString('SETTINGS_RESET'),
       timer: 10000,
       icon: 'info',
     }).catch(logScript);
+    resetSettings();
   }
 
   document.querySelector('#ResetSettings')?.addEventListener('click', buttonResetSettings);
