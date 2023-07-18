@@ -38,7 +38,6 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
 
 ## Supported Manga Sites
 
-- [Asura Scans](https://beta.asurascans.com/) _[English]_
 - [Batoto](http://bato.to/) _[English]_
 - [BilibiliComics](https://www.bilibilicomics.com/) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
