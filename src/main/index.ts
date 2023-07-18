@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars,@typescript-eslint/no-unused-vars */
-import asurascans from './asurascans.js';
 import batoto from './batoto';
 import bilibilicomics from './bilibilicomics';
 import comicastle from './comicastle';
@@ -10,7 +9,6 @@ import inkr from './inkr';
 import inmanga from './inmanga';
 import klmanga from './klmanga';
 import leitor from './leitor';
-// import leviatanscans from './leviatanscans';
 import lhtranslation from './lhtranslation';
 import lynxscans from './lynxscans';
 import madarawp from './madarawp';
@@ -51,7 +49,7 @@ import zeroscans from './zeroscans';
 import { ISite } from '../types/ISite';
 
 const sites = [
-  asurascans,
+  // asurascans,
   batoto,
   bilibilicomics,
   comicastle,
