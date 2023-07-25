@@ -93,7 +93,7 @@ async function lateStart(site: ISite, begin = 1) {
         rangeSliderElement.value([valBegin, valEnd]);
       }
 
-      const observerEvent = _.debounce(changedInput, 300);
+      const observerEvent = _.debounce(changedInput, 600);
       ['change', 'mouseup', 'keyup', 'touchend'].forEach((event) => {
         pageBeginInput?.addEventListener(event, observerEvent);
         pageEndInput?.addEventListener(event, observerEvent);
