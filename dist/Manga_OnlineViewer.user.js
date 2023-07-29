@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, ManhwaFreak, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans
-// @version       2023.07.25
+// @description   Shows all pages at once in online view for these sites: Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, ManhwaFreak, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans
+// @version       2023.07.29
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -43,6 +43,7 @@
 // @include       /https?:\/\/(www.)?mangago.me\/.*\/.*\/.*/
 // @include       /https?:\/\/(www.)?mangahosted.com\/manga\/.+\/.+/
 // @include       /https?:\/\/(www.)?(mangahub).io\/chapter\/.+\/.+/
+// @include       /https?:\/\/(www.)?mangas.in\/manga\/.+\/.+\/\d+/
 // @include       /https?:\/\/(www.)?((manganelo|mangakakalot).com\/chapter\/.+\/.+|(manganato|readmanganato|chapmanganato).com\/manga-\w\w\d+\/chapter-\d+)/
 // @include       /https?:\/\/(www.)?mangapark.(com|me|org|net)\/title\/.+\/.+/
 // @include       /https?:\/\/(www.)?mangareader.to\/read\/.+\/.+\/.+/
@@ -64,6 +65,7 @@
 // @include       /https?:\/\/(www.)?tapas.io\/episode\/.+/
 // @include       /https?:\/\/(www.)?(tenmanga|gardenmanage).com\/(chapter|statuses)\/.+/
 // @include       /https?:\/\/(www.)?(almtechnews|animalcanine|animalslegacy|animation2you|animationforyou|anisurion|anitirion|anitoc|cook2love|cooker2love|cookermania|cookernice|cookerready|dariusmotor|enginepassion|fanaticmanga|followmanga|gamesnk|gamesxo|infogames2you|infopetworld|lectortmo|mangalong|mistermanga|motorbakery|motornk|motorpi|mygamesinfo|mynewsrecipes|myotakuinfo|otakunice|otakuworldgames|otakworld|paleomotor|panicmanga|recetchef|recipesaniki|recipescoaching|recipesdo|recipesist|recipesnk|sucrecipes|tmofans|vgmotor|vsrecipes|worldmangas|wtechnews).com\/(viewer|news)\/.+\/(paginated|cascade)/
+// @include       /https?:\/\/(www.)?tumanhwas.com\/view\/.+/
 // @include       /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/
 // @include       /https?:\/\/(www.)?webnovel.com\/comic\/.+/
 // @include       /https?:\/\/(www.)?webtoons.com\/.+viewer.+/
@@ -644,6 +646,26 @@
     }
   };
 
+  const mangasin = {
+    name: "MangasIn",
+    url: /https?:\/\/(www.)?mangas.in\/manga\/.+\/.+\/\d+/,
+    homepage: "https://mangas.in/",
+    language: ["Spanish"],
+    category: "manga",
+    run() {
+      const images = [...document.querySelectorAll("#all img")];
+      const chapter = document.querySelector("#chapter-list li.active");
+      return {
+        title: document.querySelector("title")?.textContent?.trim(),
+        series: document.querySelector("#navbar-collapse-1 ul:nth-child(2) a")?.getAttribute("href"),
+        pages: images.length,
+        prev: chapter?.nextElementSibling?.firstElementChild?.getAttribute("href"),
+        next: chapter?.previousElementSibling?.firstElementChild?.getAttribute("href"),
+        listImages: images.map((img) => img.getAttribute("data-src"))
+      };
+    }
+  };
+
   const mangakakalot = {
     name: ["MangaKakalot", "MangaNelo", "MangaNato"],
     url: /https?:\/\/(www.)?((manganelo|mangakakalot).com\/chapter\/.+\/.+|(manganato|readmanganato|chapmanganato).com\/manga-\w\w\d+\/chapter-\d+)/,
@@ -1216,6 +1238,26 @@
     }
   };
 
+  const tumanhwas = {
+    name: "TuManhwas",
+    url: /https?:\/\/(www.)?tumanhwas.com\/view\/.+/,
+    homepage: "https://tumanhwas.com/",
+    language: ["Spanish"],
+    category: "manga",
+    run() {
+      const chapter = Array.from(document.querySelectorAll(".listupd a"));
+      const images = [...document.querySelectorAll("#chapter_imgs img")];
+      return {
+        title: document.querySelector(".releases h1")?.textContent?.trim(),
+        series: chapter.find((el) => el.textContent?.includes("Lista"))?.getAttribute("href"),
+        pages: images.length,
+        prev: chapter.find((el) => el.textContent?.includes("Anterior"))?.getAttribute("href"),
+        next: chapter.find((el) => el.textContent?.includes("Siguiente"))?.getAttribute("href"),
+        listImages: images.map((item) => $(item).attr("src"))
+      };
+    }
+  };
+
   const unionmangas = {
     name: "UnionMangas",
     url: /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/,
@@ -1373,6 +1415,7 @@
     mangago,
     mangahosted,
     mangahub,
+    mangasin,
     mangakakalot,
     mangapark,
     mangareader,
@@ -1395,6 +1438,7 @@
     tapas,
     tenmanga,
     tmofans,
+    tumanhwas,
     unionmangas,
     webnovel,
     webtoons,
