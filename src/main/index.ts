@@ -19,6 +19,7 @@ import mangafreak from './mangafreak';
 import mangago from './mangago';
 import mangahosted from './mangahosted';
 import mangahub from './mangahub';
+import mangasin from './mangasin';
 import mangakakalot from './mangakakalot';
 import mangapark from './mangapark';
 import mangareader from './mangareader';
@@ -40,6 +41,7 @@ import senmanga from './senmanga';
 import tapas from './tapas';
 import tenmanga from './tenmanga';
 import tmofans from './tmofans';
+import tumanhwas from './tumanhwas';
 import unionmangas from './unionmangas';
 import webnovel from './webnovel';
 import webtoons from './webtoons';
@@ -69,6 +71,7 @@ const sites = [
   mangago,
   mangahosted,
   mangahub,
+  mangasin,
   mangakakalot,
   mangapark,
   mangareader,
@@ -91,6 +94,7 @@ const sites = [
   tapas,
   tenmanga,
   tmofans,
+  tumanhwas,
   unionmangas,
   webnovel,
   webtoons,
