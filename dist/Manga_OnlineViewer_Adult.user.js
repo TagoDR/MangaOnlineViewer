@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.07.29
+// @version       2023.08.01
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -427,6 +427,15 @@
     }
   };
 
+  function findImages() {
+    return [
+      ...document.querySelectorAll(
+        ".wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img"
+      )
+    ].map(
+      (img) => img?.getAttribute("src") ?? img?.getAttribute("data-src") ?? img?.getAttribute("data-full-url")
+    );
+  }
   const madarawp$1 = {
     name: [
       "Madara WordPress Plugin",
@@ -443,9 +452,10 @@
       "TopManhua",
       "NovelMic",
       "Reset-Scans",
-      "LeviatanScans"
+      "LeviatanScans",
+      "Dragon Tea"
     ],
-    url: /https?:\/\/.+\/(manga|series|manhua|comic|ch)\/.+\/.+/,
+    url: /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel)\/.+\/.+/,
     homepage: [
       "#",
       "https://manhuaus.com",
@@ -461,35 +471,24 @@
       "https://www.topmanhua.com/",
       "https://novelmic.com/",
       "https://reset-scans.com/",
-      "https://leviatanscans.com/"
+      "https://leviatanscans.com/",
+      "https://dragontea.ink/"
     ],
     language: ["English"],
     obs: "Any Site that uses Madara Wordpress Plugin",
     category: "manga",
+    waitFunc: () => findImages().every(
+      (s) => s && /^([\t\n])*(https?:\/\/)?.+(jpg|jpeg|png|gif|bmp|webp)$/.test(s)
+    ),
     run() {
-      const images = [
-        ...document.querySelectorAll(
-          ".wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img"
-        )
-      ];
+      const images = findImages();
       return {
         title: document.querySelector("#chapter-heading")?.textContent?.trim(),
         series: (document.querySelector(".breadcrumb li:nth-child(3) a") ?? document.querySelector(".breadcrumb li:nth-child(2) a"))?.getAttribute("href"),
         pages: images.length,
         prev: document.querySelector(".prev_page")?.getAttribute("href"),
         next: document.querySelector(".next_page")?.getAttribute("href"),
-        listImages: images.map(
-          (img) => _.without(
-            [
-              img?.getAttribute("src"),
-              img?.getAttribute("data-src"),
-              img?.getAttribute("data-full-url")
-            ],
-            null,
-            void 0,
-            ""
-          ).pop()
-        )
+        listImages: images
       };
     }
   };

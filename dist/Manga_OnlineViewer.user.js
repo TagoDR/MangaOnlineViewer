@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, ManhwaFreak, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans
-// @version       2023.07.29
+// @description   Shows all pages at once in online view for these sites: Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, ManhwaFreak, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, mangahosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea
+// @version       2023.08.01
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -73,7 +73,7 @@
 // @include       /https?:\/\/(www.)?(yugenmangas).com\/series\/.+/
 // @include       /https?:\/\/(www.)?zeroscans.com\/comics\/.+/
 // @include       /^(?!.*jaiminisbox).*\/read\/.+/
-// @include       /https?:\/\/.+\/(manga|series|manhua|comic|ch)\/.+\/.+/
+// @include       /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel)\/.+\/.+/
 // @exclude       /https?:\/\/(www.)?tsumino.com\/.+/
 // @exclude       /https?:\/\/(www.)?pururin.io\/.+/
 // ==/UserScript==
@@ -389,6 +389,15 @@
     }
   };
 
+  function findImages() {
+    return [
+      ...document.querySelectorAll(
+        ".wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img"
+      )
+    ].map(
+      (img) => img?.getAttribute("src") ?? img?.getAttribute("data-src") ?? img?.getAttribute("data-full-url")
+    );
+  }
   const madarawp = {
     name: [
       "Madara WordPress Plugin",
@@ -405,9 +414,10 @@
       "TopManhua",
       "NovelMic",
       "Reset-Scans",
-      "LeviatanScans"
+      "LeviatanScans",
+      "Dragon Tea"
     ],
-    url: /https?:\/\/.+\/(manga|series|manhua|comic|ch)\/.+\/.+/,
+    url: /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel)\/.+\/.+/,
     homepage: [
       "#",
       "https://manhuaus.com",
@@ -423,35 +433,24 @@
       "https://www.topmanhua.com/",
       "https://novelmic.com/",
       "https://reset-scans.com/",
-      "https://leviatanscans.com/"
+      "https://leviatanscans.com/",
+      "https://dragontea.ink/"
     ],
     language: ["English"],
     obs: "Any Site that uses Madara Wordpress Plugin",
     category: "manga",
+    waitFunc: () => findImages().every(
+      (s) => s && /^([\t\n])*(https?:\/\/)?.+(jpg|jpeg|png|gif|bmp|webp)$/.test(s)
+    ),
     run() {
-      const images = [
-        ...document.querySelectorAll(
-          ".wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img"
-        )
-      ];
+      const images = findImages();
       return {
         title: document.querySelector("#chapter-heading")?.textContent?.trim(),
         series: (document.querySelector(".breadcrumb li:nth-child(3) a") ?? document.querySelector(".breadcrumb li:nth-child(2) a"))?.getAttribute("href"),
         pages: images.length,
         prev: document.querySelector(".prev_page")?.getAttribute("href"),
         next: document.querySelector(".next_page")?.getAttribute("href"),
-        listImages: images.map(
-          (img) => _.without(
-            [
-              img?.getAttribute("src"),
-              img?.getAttribute("data-src"),
-              img?.getAttribute("data-full-url")
-            ],
-            null,
-            void 0,
-            ""
-          ).pop()
-        )
+        listImages: images
       };
     }
   };
