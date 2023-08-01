@@ -1,7 +1,17 @@
 // == Madara WordPress Plugin ======================================================================
 // https://themeforest.net/item/madara-wordpress-theme-for-manga/20849828
-import _ from 'lodash';
-
+function findImages() {
+  return [
+    ...document.querySelectorAll(
+      '.wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img',
+    ),
+  ].map(
+    (img) =>
+      img?.getAttribute('src') ??
+      img?.getAttribute('data-src') ??
+      img?.getAttribute('data-full-url'),
+  );
+}
 export default {
   name: [
     'Madara WordPress Plugin',
@@ -19,8 +29,9 @@ export default {
     'NovelMic',
     'Reset-Scans',
     'LeviatanScans',
+    'Dragon Tea',
   ],
-  url: /https?:\/\/.+\/(manga|series|manhua|comic|ch)\/.+\/.+/,
+  url: /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel)\/.+\/.+/,
   homepage: [
     '#',
     'https://manhuaus.com',
@@ -37,16 +48,17 @@ export default {
     'https://novelmic.com/',
     'https://reset-scans.com/',
     'https://leviatanscans.com/',
+    'https://dragontea.ink/',
   ],
   language: ['English'],
   obs: 'Any Site that uses Madara Wordpress Plugin',
   category: 'manga',
+  waitFunc: () =>
+    findImages().every(
+      (s) => s && /^([\t\n])*(https?:\/\/)?.+(jpg|jpeg|png|gif|bmp|webp)$/.test(s),
+    ),
   run() {
-    const images = [
-      ...document.querySelectorAll(
-        '.wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img',
-      ),
-    ];
+    const images = findImages();
     return {
       title: document.querySelector('#chapter-heading')?.textContent?.trim(),
       series: (
@@ -56,18 +68,7 @@ export default {
       pages: images.length,
       prev: document.querySelector('.prev_page')?.getAttribute('href'),
       next: document.querySelector('.next_page')?.getAttribute('href'),
-      listImages: images.map((img) =>
-        _.without(
-          [
-            img?.getAttribute('src'),
-            img?.getAttribute('data-src'),
-            img?.getAttribute('data-full-url'),
-          ],
-          null,
-          undefined,
-          '',
-        ).pop(),
-      ),
+      listImages: images,
     };
   },
 };
