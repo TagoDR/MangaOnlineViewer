@@ -29,7 +29,7 @@
 // @include       /https?:\/\/(www.)?doujins.com\/.+/
 // @include       /https?:\/\/8muses.io\/picture\/.+/
 // @include       /https?:\/\/(g.)?(exhentai|e-hentai).org\/s\/.+\/.+/
-// @include       /https?:\/\/(www.)?gntai.net\/.+\/.+/
+// @include       /https?:\/\/(www.)?gntai.net\/(?!(category|tags|autores))[^\/]+\/.+/
 // @include       /https?:\/\/(www.)?hbrowse.com\/.+/
 // @include       /https?:\/\/(www.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//
 // @include       /https?:\/\/(www.)?hentaifox.com\/g\/.+/
