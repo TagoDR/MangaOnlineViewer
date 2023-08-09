@@ -17,9 +17,8 @@ function navigation() {
       applyZoom();
       scrollToElement(
         document.querySelector(
-          `#Page${
-            (event.currentTarget as HTMLElement).querySelector('.ThumbnailIndex')?.textContent
-          }`,
+          `#Page${(event.currentTarget as HTMLElement).querySelector('.ThumbnailIndex')
+            ?.textContent}`,
         ) as HTMLElement,
       );
     });

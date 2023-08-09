@@ -132,13 +132,16 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
   const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
   if (img) {
     if (!useSettings().lazyLoadImages || position <= useSettings().lazyStart) {
-      setTimeout(() => {
-        const imgLoad = imagesLoaded(img.parentElement!);
-        imgLoad.on('done', onImagesSuccess);
-        imgLoad.on('fail', onImagesFail);
-        img.setAttribute('src', src);
-        logScript('Loaded Image:', index, 'Source:', src);
-      }, (manga.timer ?? useSettings().throttlePageLoad) * position);
+      setTimeout(
+        () => {
+          const imgLoad = imagesLoaded(img.parentElement!);
+          imgLoad.on('done', onImagesSuccess);
+          imgLoad.on('fail', onImagesFail);
+          img.setAttribute('src', src);
+          logScript('Loaded Image:', index, 'Source:', src);
+        },
+        (manga.timer ?? useSettings().throttlePageLoad) * position,
+      );
     } else {
       img.setAttribute('data-src', src);
 
@@ -177,9 +180,12 @@ async function addPage(manga: IMangaPages, index: number, pageUrl: string, posit
   const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
   if (img) {
     if (!useSettings().lazyLoadImages || position <= useSettings().lazyStart) {
-      setTimeout(() => {
-        findPage(manga, index, pageUrl, false)().catch(logScript);
-      }, (manga.timer ?? useSettings().throttlePageLoad) * position);
+      setTimeout(
+        () => {
+          findPage(manga, index, pageUrl, false)().catch(logScript);
+        },
+        (manga.timer ?? useSettings().throttlePageLoad) * position,
+      );
     } else {
       img.setAttribute(
         'data-src',

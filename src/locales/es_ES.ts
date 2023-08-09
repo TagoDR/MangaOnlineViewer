@@ -61,9 +61,11 @@ export default {
   ATTENTION: 'Atención',
   WARNING: 'Alerta',
   BUTTON_RESET_SETTINGS: 'Reiniciar ajustes',
-  SETTINGS_RESET: 'Se han restablecido los ajustes, vuelve a cargar la página para que surta efecto',
+  SETTINGS_RESET:
+    'Se han restablecido los ajustes, vuelve a cargar la página para que surta efecto',
   LANGUAGE_CHANGED: 'Se ha cambiado el idioma, vuelve a cargar la página para que surta efecto',
-  AUTO_DOWNLOAD: 'La próxima vez que termine de cargarse un capítulo, se le pedirá que guarde automáticamente',
+  AUTO_DOWNLOAD:
+    'La próxima vez que termine de cargarse un capítulo, se le pedirá que guarde automáticamente',
   LAZY_LOAD:
     "La carga diferida es incompatible con la descarga zip, no podrá descargar con este ajuste activado.<br/> Sugerencia: <span style='color:red;font-weight:bold'>Desactivar miniaturas</span> para ahorrar Ancho de banda/Memoria.",
   LAZY_LOAD_IMAGES_ENABLE: 'Habilitar carga de imágenes diferida',

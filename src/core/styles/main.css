@@ -131,7 +131,9 @@ img {
     left: 0;
     bottom: 0;
     z-index: 1000;
-    transition: transform 0.3s ease-in, background-color 0.3s linear;
+    transition:
+        transform 0.3s ease-in,
+        background-color 0.3s linear;
     transform: translateX(-100%);
     display: flex;
     flex-flow: column;
@@ -687,7 +689,9 @@ img {
     white-space: nowrap;
     width: 100%;
     text-align: center;
-    transition: transform 0.3s ease-in, background-color 0.3s linear;
+    transition:
+        transform 0.3s ease-in,
+        background-color 0.3s linear;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     line-height: 0;
