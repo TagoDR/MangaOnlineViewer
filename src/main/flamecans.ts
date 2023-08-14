@@ -11,7 +11,7 @@ export default {
     'ManhwaFreak',
     'OzulScansEn',
   ],
-  url: /https?:\/\/(www.)?(asurascans|asura|flamescans|realmscans|void-scans|luminousscans|shimascans|nightscans|manhwafreak|ozulscansen).(com|org|gg|xyz)\/.+/,
+  url: /https?:\/\/(www.)?(asura.nacm|asurascans|asura|flamescans|realmscans|void-scans|luminousscans|shimascans|nightscans|manhwafreak|ozulscansen).(com|org|gg|xyz)\/.+/,
   homepage: [
     'https://www.asura.gg/',
     'https://flamescans.org/',
