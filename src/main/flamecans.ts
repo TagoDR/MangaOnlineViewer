@@ -13,7 +13,7 @@ export default {
   ],
   url: /https?:\/\/(www.)?(asura.nacm|asurascans|asura|flamescans|realmscans|void-scans|luminousscans|shimascans|nightscans|manhwafreak|ozulscansen).(com|org|gg|xyz|to)\/.+/,
   homepage: [
-    'https://www.asura.gg/',
+    'https://asura.nacm.xyz/',
     'https://flamescans.org/',
     'https://realmscans.com/',
     'https://void-scans.com/',
@@ -28,7 +28,7 @@ export default {
   waitEle: '#chapter option:nth-child(2)',
   run() {
     const chapter = document.querySelector<HTMLOptionElement>('#chapter option:checked');
-    const images = [...document.querySelectorAll('#readerarea img')];
+    const images = [...document.querySelectorAll('#readerarea img:not(.asurascans)')];
     return {
       title: document.querySelector('.entry-title')?.textContent?.trim(),
       series: document.querySelector('.allc a')?.getAttribute('href'),
