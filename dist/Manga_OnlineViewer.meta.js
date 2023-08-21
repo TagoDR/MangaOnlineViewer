@@ -70,7 +70,7 @@
 // @include       /https?:\/\/(www.)?webnovel.com\/comic\/.+/
 // @include       /https?:\/\/(www.)?webtoons.com\/.+viewer.+/
 // @include       /https?:\/\/(www.)?(manga33).com\/manga\/.+/
-// @include       /https?:\/\/(www.)?(yugenmangas).com\/series\/.+/
+// @include       /https?:\/\/(www.)?(yugenmangas).(com|net|lat)\/series\/.+/
 // @include       /https?:\/\/(www.)?zeroscans.com\/comics\/.+/
 // @include       /^(?!.*jaiminisbox).*\/read\/.+/
 // @include       /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel)\/.+\/.+/

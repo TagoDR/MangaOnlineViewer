@@ -84,7 +84,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
 - [OlympusScans](https://olympusscans.com/) _[Spanish]_
 - [TuMangaOnline](https://lectortmo.com/) _[Spanish]_
 - [TuManhwas](https://tumanhwas.com/) _[Spanish]_
-- [YugenMangas](https://yugenmangas.com/) _[Spanish]_
+- [YugenMangas](https://yugenmangas.lat/) _[Spanish]_
 
 ## Supported Comic Sites
 
