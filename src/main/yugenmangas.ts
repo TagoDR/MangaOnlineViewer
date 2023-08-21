@@ -1,31 +1,27 @@
 // == YugenMangas ==================================================================================
 export default {
   name: 'YugenMangas',
-  url: /https?:\/\/(www.)?(yugenmangas).com\/series\/.+/,
-  homepage: 'https://yugenmangas.com/',
+  url: /https?:\/\/(www.)?(yugenmangas).(com|net|lat)\/series\/.+/,
+  homepage: 'https://yugenmangas.lat/',
   language: ['Spanish'],
   category: 'manga',
   async run() {
-    const data = JSON.parse(document.querySelector('#__NEXT_DATA__')?.textContent ?? '');
-    const { id } =
-      data.props.pageProps.data ??
-      (
-        await fetch(
-          window.location.href
-            .replace('series', `_next/data/${data.buildId}/series`)
-            .concat('.json'),
-        ).then((res) => res.json())
-      ).pageProps.data;
-    const api = await fetch(`https://api.yugenmangas.com/series/chapter/${id}`).then((res) =>
-      res.json(),
-    );
+    const images = [...document.querySelectorAll('p.flex > img')];
     return {
       title: document.querySelector('title')?.textContent?.trim(),
-      series: document.querySelector('.chapter-heading h5 a')?.getAttribute('href'),
-      pages: api.content.images.length,
-      prev: document.querySelector('.prev-chap a')?.getAttribute('href'),
-      next: document.querySelector('.next-chap a')?.getAttribute('href'),
-      listImages: api.content.images.map((url: string) => `https://api.yugenmangas.com/${url}`),
+      series: document
+        .querySelector('div.justify-between:nth-child(2) > a:nth-child(2)')
+        ?.getAttribute('href'),
+      pages: images.length,
+      prev: document
+        .querySelector('div.justify-between:nth-child(2) > a:nth-child(1)')
+        ?.getAttribute('href'),
+      next: document
+        .querySelector('div.justify-between:nth-child(2) > a:nth-child(3)')
+        ?.getAttribute('href'),
+      listImages: images.map((img) =>
+        img.classList.contains('lazy') ? img.getAttribute('data-src') : img.getAttribute('src'),
+      ),
     };
   },
 };
