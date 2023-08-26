@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.08.21
+// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
+// @version       2023.08.26
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -27,7 +27,7 @@
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
 // @include       /https?:\/\/(www.)?bestporncomix.com\/gallery\/.+/
 // @include       /https?:\/\/(www.)?doujins.com\/.+/
-// @include       /https?:\/\/8muses.io\/picture\/.+/
+// @include       /https?:\/\/(comics.)?8muses.(com|io)\/(comics\/)?picture\/.+/
 // @include       /https?:\/\/(g.)?(exhentai|e-hentai).org\/s\/.+\/.+/
 // @include       /https?:\/\/(www.)?gntai.net\/(?!(category|tags|autores))[^/]+\/.+/
 // @include       /https?:\/\/(www.)?hbrowse.com\/.+/
@@ -100,22 +100,134 @@
     }
   };
 
+  function isEmpty(value) {
+    return value === null || // check for null
+    typeof value === "undefined" || value === void 0 || // check for undefined
+    typeof value === "string" && value === "" || // check for empty string
+    Array.isArray(value) && value.length === 0 || // check for empty array
+    typeof value === "object" && Object.keys(value).length === 0;
+  }
+  function isNothing(value) {
+    const isEmptyObject = (a) => {
+      if (!Array.isArray(a)) {
+        const hasNonempty = Object.keys(a).some((element) => !isNothing(a[element]));
+        return hasNonempty ? false : isEmptyObject(Object.keys(a));
+      }
+      return !a.some(
+        (element) => !isNothing(element)
+        //
+      );
+    };
+    return (
+      // eslint-disable-next-line eqeqeq
+      value == false || value === 0 || isEmpty(value) || typeof value === "object" && isEmptyObject(value)
+    );
+  }
+
+  function waitForElm(selector, target = document.body) {
+    return new Promise((resolve) => {
+      if (document.querySelector(selector)) {
+        resolve(document.querySelector(selector));
+        return;
+      }
+      const observer = new MutationObserver(() => {
+        if (document.querySelector(selector)) {
+          resolve(document.querySelector(selector));
+          observer.disconnect();
+        }
+      });
+      observer.observe(target, {
+        childList: true,
+        subtree: true,
+        attributes: true
+      });
+    });
+  }
+  function waitForAtb(selector, atribute, target = document.body) {
+    return new Promise((resolve) => {
+      if (document.querySelector(selector)?.getAttribute(atribute)) {
+        resolve(document.querySelector(selector)?.getAttribute(atribute));
+        return;
+      }
+      const observer = new MutationObserver(() => {
+        if (document.querySelector(selector)?.getAttribute(atribute)) {
+          resolve(document.querySelector(selector)?.getAttribute(atribute));
+          observer.disconnect();
+        }
+      });
+      observer.observe(target, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: [atribute]
+      });
+    });
+  }
+  function waitForVar(name, target = document.body) {
+    const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
+    return new Promise((resolve) => {
+      if (!isNothing(W[name])) {
+        resolve(W[name]);
+        return;
+      }
+      const observer = new MutationObserver(() => {
+        if (!isNothing(W[name])) {
+          resolve(W[name]);
+          observer.disconnect();
+        }
+      });
+      observer.observe(target, {
+        childList: true,
+        subtree: true,
+        attributes: true
+      });
+    });
+  }
+
   const eightMuses = {
-    name: "8Muses",
-    url: /https?:\/\/8muses.io\/picture\/.+/,
-    homepage: "https://comics.8muses.com/",
+    name: ["8Muses.com", "8Muses.io"],
+    obs: "Slow start, bruteforce may be required",
+    url: /https?:\/\/(comics.)?8muses.(com|io)\/(comics\/)?picture\/.+/,
+    homepage: ["https://comics.8muses.com/", "https://8muses.io/"],
     language: ["English"],
     category: "hentai",
     async run() {
       const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-      W.link_images.shift();
+      const img = W.link_images?.slice(1, W.link_images.length);
+      const num = img?.length ?? parseInt(
+        document.querySelector('link[rel="last"]')?.getAttribute("href")?.match(/\d+$/)?.at(0) ?? "",
+        10
+      );
       return {
-        title: document.querySelector(".top-menu-breadcrumb li:nth-last-child(2) a")?.textContent?.trim(),
-        series: W.post_id,
-        pages: W.link_images.length,
+        title: [...document.querySelectorAll(".top-menu-breadcrumb li:not(:last-child)")].map((e) => e?.textContent?.trim()).join("/"),
+        series: document.querySelector(".top-menu-breadcrumb li:nth-last-child(2) a")?.getAttribute("href"),
+        pages: num,
         prev: "#",
         next: "#",
-        listImages: W.link_images
+        listImages: img,
+        async before() {
+          if (!W.link_images?.length) {
+            const div = document.createElement("div");
+            div.setAttribute(
+              "style",
+              "height: 100vh;width: 100vw;position: fixed;top: 0;left: 0;z-index: 100000;background: white;opacity: 0.5;"
+            );
+            document.body.append(div);
+            const prev = document.querySelector(".page-prev");
+            while (document.querySelector(".c-dropdown-toggle")?.textContent?.match(/\d+/)?.at(0) !== "1") {
+              prev?.dispatchEvent(new Event("click"));
+            }
+            const next = document.querySelector(".page-next");
+            const target = document.querySelector(".p-picture");
+            const src = [];
+            for (let i = 1; i <= this.pages; i += 1) {
+              src[i - 1] = await waitForAtb(".photo img", "src", target ?? document.body);
+              target?.querySelector("img")?.removeAttribute("src");
+              next?.dispatchEvent(new Event("click"));
+            }
+            this.listImages = src;
+          }
+        }
       };
     }
   };
@@ -695,90 +807,6 @@
       };
     }
   };
-
-  function isEmpty(value) {
-    return value === null || // check for null
-    typeof value === "undefined" || value === void 0 || // check for undefined
-    typeof value === "string" && value === "" || // check for empty string
-    Array.isArray(value) && value.length === 0 || // check for empty array
-    typeof value === "object" && Object.keys(value).length === 0;
-  }
-  function isNothing(value) {
-    const isEmptyObject = (a) => {
-      if (!Array.isArray(a)) {
-        const hasNonempty = Object.keys(a).some((element) => !isNothing(a[element]));
-        return hasNonempty ? false : isEmptyObject(Object.keys(a));
-      }
-      return !a.some(
-        (element) => !isNothing(element)
-        //
-      );
-    };
-    return (
-      // eslint-disable-next-line eqeqeq
-      value == false || value === 0 || isEmpty(value) || typeof value === "object" && isEmptyObject(value)
-    );
-  }
-
-  function waitForElm(selector, target = document.body) {
-    return new Promise((resolve) => {
-      if (document.querySelector(selector)) {
-        resolve(document.querySelector(selector));
-        return;
-      }
-      const observer = new MutationObserver(() => {
-        if (document.querySelector(selector)) {
-          resolve(document.querySelector(selector));
-          observer.disconnect();
-        }
-      });
-      observer.observe(target, {
-        childList: true,
-        subtree: true,
-        attributes: true
-      });
-    });
-  }
-  function waitForAtb(selector, atribute, target = document.body) {
-    return new Promise((resolve) => {
-      if (document.querySelector(selector)?.getAttribute(atribute)) {
-        resolve(document.querySelector(selector)?.getAttribute(atribute));
-        return;
-      }
-      const observer = new MutationObserver(() => {
-        if (document.querySelector(selector)?.getAttribute(atribute)) {
-          resolve(document.querySelector(selector)?.getAttribute(atribute));
-          observer.disconnect();
-        }
-      });
-      observer.observe(target, {
-        childList: true,
-        subtree: true,
-        attributes: true,
-        attributeFilter: [atribute]
-      });
-    });
-  }
-  function waitForVar(name, target = document.body) {
-    const W = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
-    return new Promise((resolve) => {
-      if (!isNothing(W[name])) {
-        resolve(W[name]);
-        return;
-      }
-      const observer = new MutationObserver(() => {
-        if (!isNothing(W[name])) {
-          resolve(W[name]);
-          observer.disconnect();
-        }
-      });
-      observer.observe(target, {
-        childList: true,
-        subtree: true,
-        attributes: true
-      });
-    });
-  }
 
   const sukebe = {
     name: ["ksk.moe", "Sukebe.moe"],
