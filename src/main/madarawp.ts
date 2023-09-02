@@ -30,6 +30,7 @@ export default {
     'Reset-Scans',
     'LeviatanScans',
     'Dragon Tea',
+    'SetsuScans',
   ],
   url: /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel)\/.+\/.+/,
   homepage: [
@@ -49,13 +50,14 @@ export default {
     'https://reset-scans.com/',
     'https://leviatanscans.com/',
     'https://dragontea.ink/',
+    'https://setsuscans.com/',
   ],
   language: ['English'],
   obs: 'Any Site that uses Madara Wordpress Plugin',
   category: 'manga',
   waitFunc: () =>
     findImages().every(
-      (s) => s && /^([\t\n])*(https?:\/\/)?.+(jpg|jpeg|png|gif|bmp|webp)$/.test(s),
+      (s) => s && /^([\t\n])*(https?:\/\/)?.+\.(jpg|jpeg|png|gif|bmp|webp).*$/.test(s),
     ),
   run() {
     const images = findImages();

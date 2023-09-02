@@ -10,8 +10,9 @@ export default {
     'Night Scans',
     'ManhwaFreak',
     'OzulScansEn',
+    'AzureManga',
   ],
-  url: /https?:\/\/(www.)?(asura.nacm|asurascans|asuracomics|asura|flamescans|realmscans|void-scans|luminousscans|shimascans|nightscans|manhwafreak|ozulscansen).(com|org|gg|xyz|to)\/.+/,
+  url: /https?:\/\/(www.)?(asura.nacm|asurascans|asuracomics|asura|flamescans|realmscans|void-scans|luminousscans|shimascans|nightscans|manhwafreak|ozulscansen|azuremanga).(com|org|gg|xyz|to)\/.+/,
   homepage: [
     'https://asura.nacm.xyz/',
     'https://flamescans.org/',
@@ -22,6 +23,7 @@ export default {
     'https://nightscans.org/',
     'https://manhwafreak.com/',
     'https://ozulscansen.com/',
+    'https://azuremanga.com/',
   ],
   language: ['English'],
   category: 'manga',
