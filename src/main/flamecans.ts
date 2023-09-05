@@ -8,11 +8,11 @@ export default {
     'Luminous Scans',
     'Shimada Scans',
     'Night Scans',
-    'ManhwaFreak',
+    'Manhwa-Freak',
     'OzulScansEn',
     'AzureManga',
   ],
-  url: /https?:\/\/(www.)?(asura.nacm|asurascans|asuracomics|asura|flamescans|realmscans|void-scans|luminousscans|shimascans|nightscans|manhwafreak|ozulscansen|azuremanga).(com|org|gg|xyz|to)\/.+/,
+  url: /https?:\/\/(www.)?(asura.nacm|asurascans|asuracomics|asura|flamescans|realmscans|void-scans|luminousscans|shimascans|nightscans|manhwafreak|manhwa-freak|ozulscansen|azuremanga).(com|org|gg|xyz|to)\/.+/,
   homepage: [
     'https://asura.nacm.xyz/',
     'https://flamescans.org/',
@@ -21,13 +21,14 @@ export default {
     'https://luminousscans.com/',
     'https://shimadascans.com/',
     'https://nightscans.org/',
-    'https://manhwafreak.com/',
+    'https://manhwa-freak.com/',
     'https://ozulscansen.com/',
     'https://azuremanga.com/',
   ],
   language: ['English'],
   category: 'manga',
-  waitEle: '#chapter option:nth-child(2)',
+  waitTime: 2000,
+  // waitEle: '#chapter option:nth-child(2)',
   run() {
     const chapter = document.querySelector<HTMLOptionElement>('#chapter option:checked');
     const images = [...document.querySelectorAll('#readerarea img:not(.asurascans)')];
