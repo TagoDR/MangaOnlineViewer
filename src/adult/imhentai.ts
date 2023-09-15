@@ -15,6 +15,7 @@ function findServer(cId: number) {
   if (cId > 527143 && cId <= 632481) return 'm4.imhentai.xxx';
   if (cId > 632481 && cId <= 816010) return 'm5.imhentai.xxx';
   if (cId > 816010 && cId <= 970098) return 'm6.imhentai.xxx';
+  if (cId > 970098 && cId <= 1124093) return "m8.imhentai.xxx";
   return 'm7.imhentai.xxx'; // id > 970098
 }
 
