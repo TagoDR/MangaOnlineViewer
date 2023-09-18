@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.09.05
+// @version       2023.09.18
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -2180,11 +2180,13 @@
   if (settings$1.bookmarks.length !== refreshedBookmark.length) {
     updateSettings({ bookmarks: refreshedBookmark });
   }
-  if (!isNothing(isBookmarked())) {
-    logScript(`Bookmark Removed ${window.location.href}`);
-    updateSettings({
-      bookmarks: settings$1.bookmarks.filter((el) => el.url !== window.location.href)
-    });
+  function clearBookmark(url = window.location.href) {
+    if (!isNothing(isBookmarked())) {
+      logScript(`Bookmark Removed ${window.location.href}`);
+      updateSettings({
+        bookmarks: settings$1.bookmarks.filter((el) => el.url !== url)
+      });
+    }
   }
 
   function createStyleElement(id, content) {
@@ -2821,7 +2823,7 @@ ${wrapStyle(
         title: getLocaleString("BOOKMARK_REMOVED"),
         timer: 1e4,
         icon: "error"
-      }).catch(logScript);
+      });
       updateSettings({ bookmarks: marks });
       reloadBookmarks();
       document.querySelectorAll(".BookmarkItem .erase")?.forEach(eraseBookmarks);
@@ -2845,14 +2847,14 @@ ${wrapStyle(
           title: getLocaleString("BOOKMARK_REMOVED"),
           timer: 1e4,
           icon: "error"
-        }).catch(logScript);
+        });
       } else {
         updateSettings({ bookmarks: [...useSettings().bookmarks, mark] });
         Swal.fire({
           title: getLocaleString("BOOKMARK_SAVED"),
           html: getLocaleString("BOOKMARK_SAVED").replace("##NUM##", num.toString()),
           icon: "success"
-        }).catch(logScript);
+        });
       }
       reloadBookmarks();
       document.querySelectorAll(".BookmarkItem .erase")?.forEach(eraseBookmarks);
@@ -3403,7 +3405,7 @@ ${wrapStyle(
         icon: "info"
       };
       resetSettings();
-      Swal.fire(msg).catch(logScript);
+      Swal.fire(msg);
     }
     document.querySelector("#ResetSettings")?.addEventListener("click", buttonResetSettings);
     function changeLocale(event) {
@@ -3414,7 +3416,7 @@ ${wrapStyle(
         text: getLocaleString("LANGUAGE_CHANGED"),
         timer: 1e4,
         icon: "info"
-      }).catch(logScript);
+      });
     }
     document.querySelector("#locale")?.addEventListener("change", changeLocale);
     function checkFitWidthOversize(event) {
@@ -3441,7 +3443,7 @@ ${wrapStyle(
           text: getLocaleString("AUTO_DOWNLOAD"),
           timer: 1e4,
           icon: "info"
-        }).catch(logScript);
+        });
       }
     }
     document.querySelector("#downloadZip")?.addEventListener("change", changeAutoDownload);
@@ -3458,7 +3460,7 @@ ${wrapStyle(
           title: getLocaleString("WARNING"),
           html: getLocaleString("LAZY_LOAD"),
           icon: "warning"
-        }).catch(logScript);
+        });
       }
     }
     document.querySelector("#lazyLoadImages")?.addEventListener("change", checkLazyLoad);
@@ -3475,7 +3477,7 @@ ${wrapStyle(
           title: getLocaleString("SPEED_WARNING"),
           html: getLocaleString("SPEED_WARNING_MESSAGE"),
           icon: "warning"
-        }).catch(logScript);
+        });
       }
     }
     document.querySelector("#PagesPerSecond")?.addEventListener("change", changePagesPerSecond);
@@ -3760,6 +3762,7 @@ ${wrapStyle(
       } catch (e) {
         logScript(e);
       }
+      clearBookmark();
     }, 50);
   }
 
@@ -3911,7 +3914,7 @@ ${wrapStyle(
       } else {
         logScript(result.dismiss);
       }
-    }).catch(logScript);
+    });
   }
   function createLateStartButton(site, beginning) {
     const button = document.createElement("button");
@@ -3941,7 +3944,7 @@ ${wrapStyle(
         createLateStartButton(site, manga.begin);
         logScript(result.dismiss);
       }
-    }).catch(logScript);
+    });
   }
   async function preparePage(site) {
     const manga = await site.run();
