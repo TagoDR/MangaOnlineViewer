@@ -5,6 +5,7 @@ import { logScript } from '../utils/tampermonkey';
 import events from './events';
 import { loadManga } from './page';
 import { isBackgroundColorDark } from '../utils/colors';
+import { clearBookmark } from './settings';
 
 export default async function display(manga: IManga) {
   if (manga.before !== undefined) {
@@ -34,5 +35,6 @@ export default async function display(manga: IManga) {
     } catch (e) {
       logScript(e);
     }
+    clearBookmark();
   }, 50);
 }

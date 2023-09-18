@@ -100,18 +100,16 @@ async function lateStart(site: ISite, begin = 1) {
       });
     },
   };
-  Swal.fire(options)
-    .then((result) => {
-      if (result.value) {
-        logScript(`Choice: ${beginPage} - ${endPage}`);
-        manga.begin = beginPage;
-        manga.pages = endPage;
-        formatPage(manga).catch(logScript);
-      } else {
-        logScript(result.dismiss);
-      }
-    })
-    .catch(logScript);
+  Swal.fire(options).then((result) => {
+    if (result.value) {
+      logScript(`Choice: ${beginPage} - ${endPage}`);
+      manga.begin = beginPage;
+      manga.pages = endPage;
+      formatPage(manga).catch(logScript);
+    } else {
+      logScript(result.dismiss);
+    }
+  });
 }
 
 function createLateStartButton(site: ISite, beginning: number) {
@@ -139,16 +137,14 @@ function showWaitPopup(site: ISite, manga: IManga) {
     cancelButtonColor: '#d33',
     reverseButtons: true,
     timer: 3000,
-  })
-    .then((result) => {
-      if (result.value || result.dismiss === Swal.DismissReason.timer) {
-        formatPage(manga).catch(logScript);
-      } else {
-        createLateStartButton(site, manga.begin);
-        logScript(result.dismiss);
-      }
-    })
-    .catch(logScript);
+  }).then((result) => {
+    if (result.value || result.dismiss === Swal.DismissReason.timer) {
+      formatPage(manga).catch(logScript);
+    } else {
+      createLateStartButton(site, manga.begin);
+      logScript(result.dismiss);
+    }
+  });
 }
 
 // Organize the site adding place-holders for the manga pages

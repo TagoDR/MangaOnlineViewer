@@ -10,7 +10,7 @@ import {
 import { ISettings } from '../types';
 import diffObj from '../utils/diffObj';
 import locales from '../locales';
-import { isNothing } from '../utils/checks.js';
+import { isNothing } from '../utils/checks';
 
 export const defaultSettings: ISettings = {
   locale: 'en_US',
@@ -110,9 +110,11 @@ if (settings.bookmarks.length !== refreshedBookmark.length) {
 }
 
 // Clear used Bookmarks
-if (!isNothing(isBookmarked())) {
-  logScript(`Bookmark Removed ${window.location.href}`);
-  updateSettings({
-    bookmarks: settings.bookmarks.filter((el) => el.url !== window.location.href),
-  });
+export function clearBookmark(url: string = window.location.href) {
+  if (!isNothing(isBookmarked())) {
+    logScript(`Bookmark Removed ${window.location.href}`);
+    updateSettings({
+      bookmarks: settings.bookmarks.filter((el) => el.url !== url),
+    });
+  }
 }
