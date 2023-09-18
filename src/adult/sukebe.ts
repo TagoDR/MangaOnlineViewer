@@ -42,6 +42,8 @@ export default {
           next?.dispatchEvent(new Event('click'));
         }
         this.listImages = src;
+        num.item(0).selected = true;
+        document.querySelector('.currentPageNum select')?.dispatchEvent(new Event('change'));
       },
     };
   },
