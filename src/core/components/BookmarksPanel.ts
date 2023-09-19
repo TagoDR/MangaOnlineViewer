@@ -7,23 +7,24 @@ const listBookmarks = () => {
   return useSettings().bookmarks.map(
     (mark, index) => `
       <div id='Bookmark${index + 1}' class='BookmarkItem'>
-  <span class='bookmarkData bookmarkDate'>
-    ${new Date(mark.date).toISOString().slice(0, 10)}
-  </span>
-        <span class='bookmarkData bookmarkURl'
-              title='${mark.url}'>
-    ${mark.url}
-  </span>
+        <span class='bookmarkData bookmarkDate'>
+          ${new Date(mark.date).toISOString().slice(0, 10)}
+        </span>
+        <span class='bookmarkData bookmarkURl'>
+          <a class='' href='${mark.url}' target="_blank">${mark.url}</a>
+        </span>
         <span class='bookmarkData bookmarkPage'>Page: ${mark.page}</span>
         <span class='bookmarkData bookmarkFunctions'>
-    <button class='ControlButton open' title='Open Bookmark' type='button'
-            onclick="window.open('${mark.url}','_blank')">
-      ${IconExternalLink}
-    </button>
-    <button class='ControlButton erase' title='Delete Bookmark' type='button' value='${mark.url}'>
-      ${IconTrash}
-    </button>
-          </pan>
+          <a class='' href='${mark.url}' target="_blank">
+            <button class='ControlButton open' title='Open Bookmark' type='button'>
+              ${IconExternalLink}
+            </button>
+          </a>
+          <button class='ControlButton erase' title='Delete Bookmark'
+           type='button' value='${mark.url}'>
+            ${IconTrash}
+          </button>
+        </span>
       </div>`,
   );
 };
