@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.09.18
+// @version       2023.09.20
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -850,6 +850,8 @@
             next?.dispatchEvent(new Event("click"));
           }
           this.listImages = src;
+          num.item(0).selected = true;
+          document.querySelector(".currentPageNum select")?.dispatchEvent(new Event("change"));
         }
       };
     }
@@ -2626,23 +2628,24 @@ ${wrapStyle(
     return useSettings().bookmarks.map(
       (mark, index) => `
       <div id='Bookmark${index + 1}' class='BookmarkItem'>
-  <span class='bookmarkData bookmarkDate'>
-    ${new Date(mark.date).toISOString().slice(0, 10)}
-  </span>
-        <span class='bookmarkData bookmarkURl'
-              title='${mark.url}'>
-    ${mark.url}
-  </span>
+        <span class='bookmarkData bookmarkDate'>
+          ${new Date(mark.date).toISOString().slice(0, 10)}
+        </span>
+        <span class='bookmarkData bookmarkURl'>
+          <a class='' href='${mark.url}' target="_blank">${mark.url}</a>
+        </span>
         <span class='bookmarkData bookmarkPage'>Page: ${mark.page}</span>
         <span class='bookmarkData bookmarkFunctions'>
-    <button class='ControlButton open' title='Open Bookmark' type='button'
-            onclick="window.open('${mark.url}','_blank')">
-      ${IconExternalLink}
-    </button>
-    <button class='ControlButton erase' title='Delete Bookmark' type='button' value='${mark.url}'>
-      ${IconTrash}
-    </button>
-          </pan>
+          <a class='' href='${mark.url}' target="_blank">
+            <button class='ControlButton open' title='Open Bookmark' type='button'>
+              ${IconExternalLink}
+            </button>
+          </a>
+          <button class='ControlButton erase' title='Delete Bookmark'
+           type='button' value='${mark.url}'>
+            ${IconTrash}
+          </button>
+        </span>
       </div>`
     );
   };
