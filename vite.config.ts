@@ -1,14 +1,21 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { defineConfig } from 'vite';
-import userscript from 'userscript-metadata-generator';
-import externalGlobals from 'rollup-plugin-external-globals';
-import fs from 'fs';
-import metaMain from './src/meta/meta-main';
-import metaAdult from './src/meta/meta-adult';
-import metaDev from './src/meta/meta-dev';
-import { bookmarklet, comicSites, hentaiSites, mangaSites } from './src/meta/readme';
+import { defineConfig } from "vite";
+import userscript, { Metadata } from "userscript-metadata-generator";
+import externalGlobals from "rollup-plugin-external-globals";
+import fs from "fs";
+import metaMain from "./src/meta/meta-main";
+import metaAdult from "./src/meta/meta-adult";
+import metaDev from "./src/meta/meta-dev";
+import { bookmarklet, comicSites, hentaiSites, mangaSites } from "./src/meta/readme";
 
-const scripts = {
+interface IScript {
+  entry: string;
+  name: string;
+  meta: string;
+  banner: Partial<Tampermonkey.ScriptMetadata> | Metadata;
+}
+
+const scripts: Record<string, IScript> = {
   main: {
     entry: 'userscript-main.ts',
     name: 'Manga_OnlineViewer.user.js',
@@ -50,8 +57,8 @@ function generateReadme() {
   fs.writeFileSync('./readme.md', readmefile, 'utf8');
 }
 
-function generateMetadata(script: any) {
-  const banner = userscript(script.banner);
+function generateMetadata(script: IScript) {
+  const banner = userscript(script.banner as Metadata);
   fs.writeFileSync(`./dist/${script.meta}`, banner, 'utf8');
   return banner;
 }

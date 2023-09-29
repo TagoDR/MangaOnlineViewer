@@ -1,13 +1,13 @@
-import { IBookmark } from './IBookmark';
+import { type IBookmark } from './IBookmark';
 
-export interface ITheme {
+export type ITheme = {
   primaryShade: 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
   colorScheme: 'dark' | 'light';
   primaryColor: string;
   other?: {
     variant: 'filled' | 'outline' | 'light';
   };
-}
+};
 
 export type Shade = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 export type ViewMode = 'WebComic' | 'FluidLTR' | 'FluidRTL' | 'Vertical';
@@ -16,7 +16,7 @@ export type ColorScheme = 'dark' | 'light';
 export type Header = 'hover' | 'scroll' | 'click' | 'fixed';
 export type ZoomMode = 'percent' | 'height' | 'width';
 
-export interface ISettings {
+export type ISettings = {
   locale: string;
   colorScheme: ColorScheme;
   theme: string;
@@ -38,5 +38,5 @@ export interface ISettings {
   hidePageControls: boolean;
   header: Header;
   maxReload: number;
-  keybinds: { [key: string]: string[] | undefined };
-}
+  keybinds: Record<string, string[] | undefined>;
+};

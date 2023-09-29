@@ -4,12 +4,12 @@
 import _ from 'lodash';
 import { logScript } from './tampermonkey';
 
-interface ILazyOptions {
+type ILazyOptions = {
   threshold: number;
   throttle: number;
   lazyAttribute: string;
   targetAttribute: string;
-}
+};
 
 /**
  * Settings the lazy load will obey
@@ -24,10 +24,10 @@ const settings: ILazyOptions = {
 /**
  * Interface for the lazy elements
  */
-interface LazyItem {
+type LazyItem = {
   element: HTMLImageElement;
   callback: (element: HTMLImageElement) => void | Promise<void>;
-}
+};
 
 /**
  * List of elements that will be lazy loaded
@@ -55,7 +55,10 @@ function filterInView(value: LazyItem) {
  */
 function showElement(item: LazyItem) {
   const value = item.element.getAttribute(settings.lazyAttribute);
-  if (value) item.element.setAttribute(settings.targetAttribute, value);
+  if (value) {
+    item.element.setAttribute(settings.targetAttribute, value);
+  }
+
   item.callback(item.element)?.catch(logScript);
 }
 
@@ -96,6 +99,7 @@ function lazyLoad(
     });
     setup = true;
   }
+
   listElements.push({ element, callback });
   observerEvent();
 }

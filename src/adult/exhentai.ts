@@ -21,9 +21,9 @@ export default {
 
     const fetchBlocks = Array(maxGalley)
       .fill(0)
-      .map((_, galleryId) =>
+      .map(async (_, galleryId) =>
         fetch(`${gallery}?p=${galleryId}`)
-          .then((res) => res.text())
+          .then(async (res) => res.text())
           .then((html) => new DOMParser().parseFromString(html, 'text/html')),
       );
 

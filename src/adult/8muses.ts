@@ -9,8 +9,7 @@ export default {
   language: ['English'],
   category: 'hentai',
   async run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-    const img = W.link_images?.slice(1, W.link_images.length);
+    const img = unsafeWindow.link_images?.slice(1, unsafeWindow.link_images.length);
     const num =
       img?.length ??
       parseInt(
@@ -30,7 +29,7 @@ export default {
       next: '#',
       listImages: img,
       async before() {
-        if (!W.link_images?.length) {
+        if (!unsafeWindow.link_images?.length) {
           const div = document.createElement('div');
           div.setAttribute(
             'style',
@@ -43,6 +42,7 @@ export default {
           ) {
             prev?.dispatchEvent(new Event('click'));
           }
+
           const next = document.querySelector('.page-next');
           const target = document.querySelector<HTMLDivElement>('.p-picture');
           const src = [];
@@ -52,6 +52,7 @@ export default {
             target?.querySelector('img')?.removeAttribute('src');
             next?.dispatchEvent(new Event('click'));
           }
+
           this.listImages = src;
         }
       },

@@ -1,7 +1,7 @@
 import adult from '../adult';
 import { requiredScripts } from '../core/externals';
 import main from '../main';
-import { ISite } from '../types';
+import type { ISite } from '../types';
 
 const sites = [...main, ...adult];
 const languages: string[] = Array.from(new Set(sites.flatMap((s) => s.language)));
@@ -10,8 +10,11 @@ function linkSite(site: [string, string]) {
   return `[${site[0]}](${site[1]})`;
 }
 
-function normalizeSite(site: ISite): [string, string][] {
-  if (typeof site.name === 'string') return [[site.name, site.homepage as string]];
+function normalizeSite(site: ISite): Array<[string, string]> {
+  if (typeof site.name === 'string') {
+    return [[site.name, site.homepage as string]];
+  }
+
   return site.name.map((n, i) => [n, site.homepage[i]]);
 }
 

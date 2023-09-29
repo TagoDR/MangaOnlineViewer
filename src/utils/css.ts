@@ -15,7 +15,9 @@ function appendStyleSheet(id: string, content: string) {
 }
 
 function removeStyleSheet(id: string) {
-  document.querySelectorAll(`style[id="${id}"]`).forEach((elem) => elem.remove());
+  document.querySelectorAll(`style[id="${id}"]`).forEach((elem) => {
+    elem.remove();
+  });
 }
 
 function replaceStyleSheet(id: string, content: string) {

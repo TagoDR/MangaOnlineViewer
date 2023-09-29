@@ -2,14 +2,14 @@
 export default {
   name: 'Tsumino',
   url: /https?:\/\/(www.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/,
-  homepage: 'http://tsumino.com/',
+  homepage: 'https://tsumino.com/',
   language: ['English'],
   category: 'hentai',
   async run() {
     const dataopt = document.querySelector('#image-container')?.getAttribute('data-opt');
     const datacdn = document.querySelector('#image-container')?.getAttribute('data-cdn') ?? '';
     const url = `https://www.tsumino.com/Read/Load?q=${dataopt}`;
-    const api = await fetch(url).then((res) => res.json());
+    const api = await fetch(url).then(async (res) => res.json());
     return {
       title: document
         .querySelector('title')

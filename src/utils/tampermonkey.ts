@@ -1,10 +1,8 @@
-/* eslint-disable camelcase */
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Encapsulation for the console
-import { ISettings } from '../types';
+import type { ISettings } from '../types';
 
 function logScript(...text: any[]): string[] {
-  // eslint-disable-next-line no-console
   console.log('MangaOnlineViewer: ', ...text);
   return text;
 }
@@ -15,8 +13,9 @@ const logScriptC = (x: string) => (y: string) => logScript(x, y)[1];
 // Clear the Console
 function logClear(...text: string[]) {
   try {
-    // eslint-disable-next-line no-console
-    if (typeof console.clear !== 'undefined') console.clear();
+    if (typeof console.clear !== 'undefined') {
+      console.clear();
+    }
   } finally {
     logScript(...text);
   }
@@ -29,9 +28,11 @@ function getListGM(): string[] {
 
 // Replacement function for GM_listValues allowing for debugging in console
 function removeValueGM(name: string) {
-  return typeof GM_deleteValue !== 'undefined'
-    ? GM_deleteValue(name)
-    : logScript('Removing: ', name);
+  if (typeof GM_deleteValue !== 'undefined') {
+    GM_deleteValue(name);
+  } else {
+    logScript('Removing: ', name);
+  }
 }
 
 // Replacement function for GM_info allowing for debugging in console
@@ -51,13 +52,17 @@ function getValueGM(name: string, defaultValue: any = null): any {
   if (typeof GM_getValue !== 'undefined') {
     return GM_getValue(name, defaultValue);
   }
+
   logScript('Fake Getting: ', name, ' = ', defaultValue);
   return defaultValue;
 }
 
 function getJsonGM(name: string, defaultValue: any = null) {
   const result = getValueGM(name, defaultValue);
-  if (typeof result === 'string') return JSON.parse(result);
+  if (typeof result === 'string') {
+    return JSON.parse(result);
+  }
+
   return result;
 }
 
@@ -69,7 +74,7 @@ function getSettings(defaultSettings?: ISettings): Partial<ISettings> {
 function setValueGM(name: string, value: any): string {
   try {
     GM_setValue(name, value);
-    // logScript('Setting: ', name, ' = ', value as any);
+    // LogScript('Setting: ', name, ' = ', value as any);
     return value.toString();
   } catch (e) {
     logScript('Fake Setting: ', name, ' = ', value);
@@ -82,25 +87,28 @@ function setSettings(value: Partial<ISettings>) {
 }
 
 // See https://stackoverflow.com/a/2401861/331508 for optional browser sniffing code.
-function getBrowser(): string {
-  const ua = navigator.userAgent;
+function getBrowser() {
   let tem;
-  const M = /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i.exec(ua) ?? [];
+  const M =
+    /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i.exec(navigator.userAgent) ?? [];
   if (/trident/i.test(M[1])) {
-    tem = /\brv[ :]+(\d+)/g.exec(ua) ?? [];
+    tem = /\brv[ :]+(\d+)/g.exec(navigator.userAgent) ?? [];
     return `IE ${tem[1] ?? ''}`;
   }
+
   if (M[1] === 'Chrome') {
-    tem = /\b(OPR|Edge)\/(\d+)/.exec(ua);
+    tem = /\b(OPR|Edge)\/(\d+)/.exec(navigator.userAgent);
     if (tem !== null) {
       return tem.slice(1).join(' ').replace('OPR', 'Opera');
     }
   }
-  const tempM = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
-  tem = /version\/(\d+)/i.exec(ua);
+
+  const tempM = [M[1], M[2]];
+  tem = /version\/(\d+)/i.exec(navigator.userAgent);
   if (tem !== null) {
     tempM.splice(1, 1, tem[1]);
   }
+
   return tempM.join(' ');
 }
 

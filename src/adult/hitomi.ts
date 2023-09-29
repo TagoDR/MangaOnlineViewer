@@ -8,15 +8,14 @@ export default {
   waitAttr: ['#comicImages img', 'src'],
   waitVar: 'galleryinfo',
   run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     return {
       title: document.querySelector('title')?.textContent?.replace('| Hitomi.la', '').trim(),
       series: document.querySelector('.brand')?.getAttribute('href'),
-      pages: W.galleryinfo.files.length,
+      pages: unsafeWindow.galleryinfo.files.length,
       prev: '#',
       next: '#',
-      listImages: W.galleryinfo.files.map((file: string) =>
-        W.url_from_url_from_hash(W.galleryinfo, file, 'webp', undefined, 'a'),
+      listImages: unsafeWindow.galleryinfo.files.map((file: string) =>
+        unsafeWindow.url_from_url_from_hash(unsafeWindow.galleryinfo, file, 'webp', undefined, 'a'),
       ),
     };
   },

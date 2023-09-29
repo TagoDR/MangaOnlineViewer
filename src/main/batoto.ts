@@ -2,7 +2,7 @@
 export default {
   name: 'Batoto',
   url: /https?:\/\/(www.)?bato.to\/chapter.*/,
-  homepage: 'http://bato.to/',
+  homepage: 'https://bato.to/',
   language: ['English'],
   category: 'manga',
   run() {

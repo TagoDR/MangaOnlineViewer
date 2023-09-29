@@ -12,7 +12,7 @@ export default {
     'OzulScansEn',
     'AzureManga',
   ],
-  url: /https?:\/\/(www.)?(asura.nacm|asurascans|asuracomics|asura|flamescans|realmscans|void-scans|luminousscans|shimascans|nightscans|manhwafreak|manhwa-freak|ozulscansen|azuremanga).(com|org|gg|xyz|to|net)\/.+/,
+  url: /https?:\/\/(www.)?(asura.*|flamescans|realmscans|void-scans|luminousscans|shimascans|nightscans|manhwafreak|manhwa-freak|ozulscansen|azuremanga).(com|org|gg|xyz|to|net)\/.+/,
   homepage: [
     'https://asura.nacm.xyz/',
     'https://flamescans.org/',
@@ -28,7 +28,7 @@ export default {
   language: ['English'],
   category: 'manga',
   waitTime: 2000,
-  // waitEle: '#chapter option:nth-child(2)',
+  // WaitEle: '#chapter option:nth-child(2)',
   run() {
     const chapter = document.querySelector<HTMLOptionElement>('#chapter option:checked');
     const images = [...document.querySelectorAll('#readerarea img:not(.asurascans)')];

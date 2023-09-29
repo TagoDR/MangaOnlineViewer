@@ -4,7 +4,7 @@
  * @export
  * @param {*} args
  */
-export function log(...args: any) {
+export function log(...args: string[]) {
   console.log('%cUserscript (React Mode):', 'color: purple; font-weight: bold', ...args);
 }
 
@@ -15,7 +15,7 @@ export function log(...args: any) {
  * @param {string} arg
  * @returns {Promise} - the `fetch` promise
  */
-export function logFetch(arg: string) {
+export async function logFetch(arg: string) {
   const url = new URL(arg, window.location.hostname);
   log('fetching', `${url}`);
   return fetch(`${url}`, { credentials: 'include' });
@@ -72,6 +72,7 @@ export async function awaitElement(selector: string) {
         reject();
         return;
       }
+
       const elm = probe();
       if (elm) {
         resolve(elm);

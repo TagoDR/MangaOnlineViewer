@@ -22,18 +22,21 @@ export default {
       if (ChapterString === undefined) {
         return '#';
       }
+
       ChapterString = ChapterString.Chapter;
       let Index = '';
       const IndexString = ChapterString.substring(0, 1);
       if (IndexString !== '1') {
         Index = `-index-${IndexString}`;
       }
+
       const Chapter = parseInt(ChapterString.slice(1, -1), 10);
       let Odd = '';
       const OddString = ChapterString[ChapterString.length - 1];
       if (OddString !== '0') {
         Odd = `.${OddString}`;
       }
+
       return window.location.href.replace(/-chapter-.+/, `-chapter-${Chapter}${Odd}${Index}.html`);
     }
 

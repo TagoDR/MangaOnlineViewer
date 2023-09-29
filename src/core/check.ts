@@ -1,4 +1,4 @@
-import { ISite } from '../types';
+import type { ISite } from '../types';
 import { logScript } from '../utils/tampermonkey';
 import { waitForAtb, waitForElm, waitForVar } from '../utils/waitFor';
 
@@ -25,12 +25,19 @@ export async function testVariable(site: ISite) {
     logScript(`Found Variable ${site.waitVar} = ${wait}`);
   }
 }
-function until(predFn: () => boolean) {
+
+async function until(predFn: () => boolean) {
   const poll = (done: (value: unknown) => void) => {
     const result = predFn();
-    if (result) done(result);
-    else setTimeout(() => poll(done), 500);
+    if (result) {
+      done(result);
+    } else {
+      setTimeout(() => {
+        poll(done);
+      }, 500);
+    }
   };
+
   return new Promise(poll);
 }
 
@@ -41,12 +48,13 @@ export async function testFunc(site: ISite) {
     logScript(`Found Function check ${site.waitFunc} = ${wait}`);
   }
 }
+
 export async function testTime(site: ISite) {
   if (site.waitTime !== undefined) {
     logScript(`Waiting to for ${site.waitTime} milliseconds`);
     await new Promise((resolve) => {
       setTimeout(resolve, site.waitTime);
     });
-    logScript(`Continuing`);
+    logScript('Continuing');
   }
 }

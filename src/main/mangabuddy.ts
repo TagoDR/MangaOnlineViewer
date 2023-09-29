@@ -7,8 +7,7 @@ export default {
   category: 'manga',
   waitVar: 'chapImages',
   run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-    const images = W.chapImages.split(',');
+    const images = unsafeWindow.chapImages.split(',');
     return {
       title: document.querySelector('.chapter-info')?.textContent?.trim(),
       series: document

@@ -16,6 +16,7 @@ export default {
       if (url && img.classList.contains('shuffled')) {
         return (await imgReverser(url)).toDataURL();
       }
+
       return url;
     });
 

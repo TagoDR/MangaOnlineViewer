@@ -7,15 +7,14 @@ export default {
   category: 'hentai',
   waitVar: 'readerPages',
   run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     return {
-      title: W.readerPages.title.replace(/- Page.+/, '').trim(),
-      series: W.readerPages.baseUri.replace('%s', ''),
-      pages: W.readerPages.lastPage,
+      title: unsafeWindow.readerPages.title.replace(/- Page.+/, '').trim(),
+      series: unsafeWindow.readerPages.baseUri.replace('%s', ''),
+      pages: unsafeWindow.readerPages.lastPage,
       prev: '#',
       next: '#',
-      listImages: Object.keys(W.readerPages.pages).map((img) =>
-        W.readerPages.baseUriImg.replace('%s', W.readerPages.pages[img].f),
+      listImages: Object.keys(unsafeWindow.readerPages.pages).map((img) =>
+        unsafeWindow.readerPages.baseUriImg.replace('%s', unsafeWindow.readerPages.pages[img].f),
       ),
     };
   },

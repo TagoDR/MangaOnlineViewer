@@ -1,4 +1,5 @@
 // == ZeroScans ====================================================================================
+/* eslint-disable no-underscore-dangle */
 export default {
   name: 'ZeroScans',
   url: /https?:\/\/(www.)?zeroscans.com\/comics\/.+/,
@@ -7,9 +8,7 @@ export default {
   category: 'manga',
   waitVar: '__ZEROSCANS__',
   run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-    // eslint-disable-next-line no-underscore-dangle
-    const images = W.__ZEROSCANS__.data.at(0).current_chapter.high_quality;
+    const images = unsafeWindow.__ZEROSCANS__.data.at(0).current_chapter.high_quality;
     const chapters = document.querySelectorAll('.v-btn--router');
     return {
       title: document.querySelector('title')?.textContent?.trim(),

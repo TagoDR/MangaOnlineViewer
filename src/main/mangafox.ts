@@ -7,7 +7,6 @@ export default {
   category: 'manga',
   waitVar: 'chapterid',
   async run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     const key = document.querySelector('#dm5_key')?.getAttribute('value');
     const options = {
       method: 'GET',
@@ -15,13 +14,17 @@ export default {
         'Content-Type': 'text/plain',
       },
     };
-    const src = Array(W.imagecount)
+    const src = Array(unsafeWindow.imagecount)
       .fill(0)
       .map(async (_, i) => {
-        const url = `chapterfun.ashx?cid=${W.chapterid ?? W.chapter_id}&page=${i}&key=${key}`;
-        const api: string = await fetch(url, options).then((res) => res.text());
+        const url = `chapterfun.ashx?cid=${
+          unsafeWindow.chapterid ?? unsafeWindow.chapter_id
+        }&page=${i}&key=${key}`;
+        const api: string = await fetch(url, options).then(async (res) => res.text());
+        let d: string[];
         // eslint-disable-next-line no-eval
         (0, eval)(api);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         return d;
       });
@@ -29,10 +32,10 @@ export default {
     return {
       title: document.querySelector('.reader-header-title div')?.textContent?.trim(),
       series: document.querySelector('.reader-header-title a')?.getAttribute('href'),
-      pages: W.imagecount,
-      prev: W.prechapterurl,
-      next: W.nextchapterurl,
-      listImages: images.map((img, i) => img[i === 0 ? 0 : 1]),
+      pages: unsafeWindow.imagecount,
+      prev: unsafeWindow.prechapterurl,
+      next: unsafeWindow.nextchapterurl,
+      listImages: images.map((img: string[], i) => img[i === 0 ? 0 : 1]),
     };
   },
 };

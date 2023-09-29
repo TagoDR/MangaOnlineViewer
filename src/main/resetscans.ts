@@ -1,5 +1,4 @@
 // == Reset-Scans ================================================================================
-declare let CryptoJS: any;
 export default {
   name: 'Reset-Scans',
   url: /https?:\/\/(www.)?reset-scans.com\/manga\/.+\/chapter.+/,
@@ -8,14 +7,13 @@ export default {
   category: 'manga',
   waitVar: 'chapter_data',
   run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-    const images = Array.isArray(W.chapter_data)
-      ? JSON.parse(W.chapter_data)
+    const images = Array.isArray(unsafeWindow.chapter_data)
+      ? JSON.parse(unsafeWindow.chapter_data.toString())
       : JSON.parse(
           JSON.parse(
-            CryptoJS.AES.decrypt(W.chapter_data, W.wpmangaprotectornonce, {
+            CryptoJS.AES.decrypt(unsafeWindow.chapter_data, unsafeWindow.wpmangaprotectornonce, {
               format: {
-                stringify(data: any) {
+                stringify(data) {
                   const cypher = {
                     ct: data.ciphertext.toString(CryptoJS.enc.Base64),
                     iv: data.iv?.toString(),
@@ -23,7 +21,7 @@ export default {
                   };
                   return JSON.stringify(cypher);
                 },
-                parse(text: any) {
+                parse(text) {
                   const result = JSON.parse(text);
                   return CryptoJS.lib.CipherParams.create({
                     ciphertext: CryptoJS.enc.Base64.parse(result.ct),

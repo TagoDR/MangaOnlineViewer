@@ -1,13 +1,13 @@
 import JSZip from 'jszip';
-import * as FileSaver from 'file-saver';
+import type * as FileSaver from 'file-saver';
 import { logScript } from '../utils/tampermonkey';
 
 declare const saveAs: typeof FileSaver.saveAs;
 
-interface ImageFile {
+type ImageFile = {
   name: string;
-  data: any;
-}
+  data: string;
+};
 
 let zip: JSZip;
 
@@ -22,8 +22,8 @@ const getFilename = (name: string, index: number, total: number, ext: string) =>
     'jpg',
   )}`;
 
-function getImage(src: string) {
-  return new Promise<Tampermonkey.Response<any>>((resolve) => {
+async function getImage(src: string) {
+  return new Promise<Tampermonkey.Response<string>>((resolve) => {
     logScript(`Getting Image data: ${src}`);
     GM_xmlhttpRequest({
       method: 'GET',
@@ -37,13 +37,16 @@ function getImage(src: string) {
   });
 }
 
-function getImageData(
+async function getImageData(
   img: HTMLImageElement,
   index: number,
   array: HTMLImageElement[],
 ): Promise<ImageFile> {
   const src = img.getAttribute('src') ?? img.getAttribute('data-src');
-  if (src == null) return Promise.reject(new Error('Image source not specified'));
+  if (src == null) {
+    return Promise.reject(new Error('Image source not specified'));
+  }
+
   const base64 = base64Regex.exec(src);
   if (base64?.groups) {
     return Promise.resolve({
@@ -51,18 +54,19 @@ function getImageData(
       data: base64.groups.data,
     });
   }
+
   return new Promise((resolve) => {
-    // setTimeout(
+    // SetTimeout(
     //   () =>
     getImage(src)
-      .then((res) =>
+      .then((res) => {
         resolve({
           name: getFilename('Page-', index, array.length, getExtension(res.response.type)),
           data: res.response,
-        }),
-      )
+        });
+      })
       .catch(logScript);
-    //   useSettings().throttlePageLoad * index,
+    //   UseSettings().throttlePageLoad * index,
     // );
   });
 }
@@ -87,7 +91,7 @@ async function generateZip() {
       {
         type: 'blob',
       },
-      // logScript, progress
+      // LogScript, progress
     )
     .then((content) => {
       logScript('Download Ready');

@@ -6,9 +6,8 @@ export default {
   language: ['Portuguese'],
   category: 'manga',
   async run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-    const url = `https://leitor.net/leitor/pages/${W.READER_ID_RELEASE}.json?key=${W.READER_TOKEN}`;
-    const api = await fetch(url).then((res) => res.json());
+    const url = `https://leitor.net/leitor/pages/${unsafeWindow.READER_ID_RELEASE}.json?key=${unsafeWindow.READER_TOKEN}`;
+    const api = await fetch(url).then(async (res) => res.json());
     const chapter = document.querySelector<HTMLOptionElement>('.chapter-list .selected');
     return {
       title: document.querySelector('title')?.textContent?.trim(),

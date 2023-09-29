@@ -6,14 +6,15 @@ export default {
   language: ['English'],
   category: 'hentai',
   run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     return {
       title: document.querySelector('.reader-left-text')?.textContent?.trim(),
-      series: W.gData.mainURL,
-      pages: W.gData.images.length,
-      prev: W.gData.previousURL,
-      next: W.gData.nextURL,
-      listImages: W.gData.images.map((i: string) => `https://static.hentaicdn.com/hentai${i}`),
+      series: unsafeWindow.gData.mainURL,
+      pages: unsafeWindow.gData.images.length,
+      prev: unsafeWindow.gData.previousURL,
+      next: unsafeWindow.gData.nextURL,
+      listImages: unsafeWindow.gData.images.map(
+        (i: string) => `https://static.hentaicdn.com/hentai${i}`,
+      ),
     };
   },
 };

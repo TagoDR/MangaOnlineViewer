@@ -12,6 +12,7 @@ function findImages() {
       img?.getAttribute('data-full-url'),
   );
 }
+
 export default {
   name: [
     'Madara WordPress Plugin',

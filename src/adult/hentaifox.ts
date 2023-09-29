@@ -8,7 +8,6 @@ export default {
   waitVar: 'g_th',
   waitFunc: () => document.querySelector('#gimg')?.classList.contains('loaded'),
   run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     const num = parseInt(document.querySelector('.total_pages')?.textContent ?? '', 10);
     const src =
       document
@@ -17,10 +16,19 @@ export default {
         ?.replace(/\d+.\w+$/, '') ?? '';
 
     function findExt(i: number) {
-      const c = W.g_th[i][0];
-      if (c === 'p') return '.png';
-      if (c === 'b') return '.bmp';
-      if (c === 'g') return '.gif';
+      const c = unsafeWindow.g_th[i][0];
+      if (c === 'p') {
+        return '.png';
+      }
+
+      if (c === 'b') {
+        return '.bmp';
+      }
+
+      if (c === 'g') {
+        return '.gif';
+      }
+
       return '.jpg';
     }
 

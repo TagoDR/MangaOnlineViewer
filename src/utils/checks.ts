@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Checks if a JavaScript value is empty
  * @example
@@ -14,13 +15,13 @@
  * @param {any} value - item to test
  * @returns {boolean} true if empty, otherwise false
  */
-function isEmpty<T>(value: T | T[] | null | undefined): value is null | undefined {
+function isEmpty<T>(value: T | T[] | undefined): value is undefined {
   return (
-    value === null || // check for null
+    value === null || // Check for null
     typeof value === 'undefined' ||
-    value === undefined || // check for undefined
-    (typeof value === 'string' && value === '') || // check for empty string
-    (Array.isArray(value) && value.length === 0) || // check for empty array
+    value === undefined || // Check for undefined
+    (typeof value === 'string' && value === '') || // Check for empty string
+    (Array.isArray(value) && value.length === 0) || // Check for empty array
     (typeof value === 'object' && Object.keys(value).length === 0)
   );
 }
@@ -41,18 +42,20 @@ function isEmpty<T>(value: T | T[] | null | undefined): value is null | undefine
  * @param {any} value - item to test
  * @returns {boolean} true if nothing, otherwise false
  */
-function isNothing(value: any): value is null | undefined {
+function isNothing(value: any): value is undefined {
   const isEmptyObject = (a: any): boolean => {
     if (!Array.isArray(a)) {
-      // it's an Object, not an Array
+      // It's an Object, not an Array
       const hasNonempty = Object.keys(a).some((element) => !isNothing(a[element]));
       return hasNonempty ? false : isEmptyObject(Object.keys(a));
     }
-    // check if array is really not empty as JS thinks at least one element should be non-empty
+
+    // Check if array is really not empty as JS thinks at least one element should be non-empty
     return !a.some(
       (element) => !isNothing(element), //
     );
   };
+
   return (
     // eslint-disable-next-line eqeqeq
     value == false ||

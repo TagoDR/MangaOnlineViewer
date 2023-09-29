@@ -6,14 +6,13 @@ export default {
   language: ['English'],
   category: 'manga',
   run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     return {
       title: document.querySelector('#chapter-title')?.textContent?.trim(),
       series: document.querySelector('#chapter-title a')?.getAttribute('href'),
-      pages: W.pages.length,
+      pages: unsafeWindow.pages.length,
       prev: document.querySelector('#prev_link')?.getAttribute('href'),
       next: document.querySelector('#next_link')?.getAttribute('href'),
-      listImages: W.pages.map((x: { image: string }) => x.image),
+      listImages: unsafeWindow.pages.map((x: { image: string }) => x.image),
     };
   },
 };

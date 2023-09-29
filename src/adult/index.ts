@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars,@typescript-eslint/no-unused-vars */
 import bestporncomix from './bestporncomix';
 import doujinmoe from './doujinmoe';
 import eightMuses from './8muses';
@@ -30,7 +29,7 @@ import vercomicsporno from './vercomicsporno';
 import wnacg from './wnacg';
 import xlecxone from './xlecxone';
 import xyzcomics from './xyzcomics';
-import { ISite } from '../types/ISite';
+import { type ISite } from '../types/ISite';
 
 const sites = [
   bestporncomix,

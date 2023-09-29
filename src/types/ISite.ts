@@ -1,4 +1,4 @@
-import { IManga } from './IManga';
+import { type IManga } from './IManga';
 
 export enum Language {
   ENGLISH = 'English',
@@ -14,28 +14,28 @@ export enum Category {
   HENTAI = 'hentai',
 }
 
-export interface ISiteBase {
+export type ISiteBase = {
   url: RegExp;
   language: Language | Language[]; // English, Spanish, Portuguese
   obs?: string;
   category: Category | Category[]; // 'manga','comic','hentai'
   waitAttr?: [string, string]; // ['img#XYZ', "data-src"]
   waitEle?: string; // 'img#XYZ'
-  waitVar?: string; // gallery
-  waitFunc?: () => boolean; // custom validation function
+  waitVar?: string; // Gallery
+  waitFunc?: () => boolean; // Custom validation function
   waitTime?: number;
   start?: 'never' | 'always'; // 'never', 'always'
   run(): IManga;
-}
+};
 
-export interface ISiteSingle extends ISiteBase {
+export type ISiteSingle = {
   name: string;
   homepage: string;
-}
+} & ISiteBase;
 
-export interface ISiteGroup extends ISiteBase {
+export type ISiteGroup = {
   name: string[];
   homepage: string[];
-}
+} & ISiteBase;
 
 export type ISite = ISiteSingle | ISiteGroup;

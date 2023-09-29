@@ -1,4 +1,5 @@
 // == OlympusScans =================================================================================
+/* eslint-disable no-underscore-dangle */
 export default {
   name: 'OlympusScans',
   url: /https?:\/\/(www.)?olympusscans.com\/capitulo\/.+\/.+/,
@@ -7,9 +8,7 @@ export default {
   category: 'manga',
   waitVar: '__NUXT__',
   run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-    // eslint-disable-next-line no-underscore-dangle
-    const images = W.__NUXT__.data[W.location.pathname].chapter.pages;
+    const images = unsafeWindow.__NUXT__.data[window.location.pathname].chapter.pages;
     return {
       title: document.querySelector('title')?.textContent?.trim(),
       series: document.querySelector('h1')?.parentElement?.getAttribute('href'),

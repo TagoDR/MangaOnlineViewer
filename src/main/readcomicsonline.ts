@@ -6,14 +6,13 @@ export default {
   language: ['English'],
   category: 'comic',
   run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     const images = [...document.querySelectorAll('#all img')];
     return {
-      title: W.title.replace(/ - Page \d+/, ''),
+      title: unsafeWindow.title.replace(/ - Page \d+/, ''),
       series: document.querySelector('div.pager-cnt a')?.getAttribute('href'),
-      pages: W.pages.length,
-      prev: W.prev_chapter,
-      next: W.next_chapter,
+      pages: unsafeWindow.pages.length,
+      prev: unsafeWindow.prev_chapter,
+      next: unsafeWindow.next_chapter,
       listImages: images.map((img) => img.getAttribute('data-src')),
     };
   },

@@ -7,7 +7,7 @@ import {
   removeValueGM,
   setSettings,
 } from '../utils/tampermonkey';
-import { ISettings } from '../types';
+import type { ISettings } from '../types';
 import diffObj from '../utils/diffObj';
 import locales from '../locales';
 import { isNothing } from '../utils/checks';
@@ -79,9 +79,11 @@ export function getLocaleString(name: string): string {
   if (locale?.[name]) {
     return locale[name];
   }
+
   if (locales?.at(1)?.[name]) {
     return locales[1][name];
   }
+
   return '##MISSING_STRING##';
 }
 
@@ -92,7 +94,9 @@ export function updateSettings(newValue: Partial<ISettings>) {
 }
 
 export function resetSettings() {
-  getListGM().forEach((setting) => removeValueGM(setting));
+  getListGM().forEach((setting) => {
+    removeValueGM(setting);
+  });
   updateSettings(defaultSettings);
 }
 
@@ -101,7 +105,7 @@ export function isBookmarked(url: string = window.location.href): number | undef
 }
 
 // Clear old Bookmarks
-const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // year
+const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // Year
 const refreshedBookmark = settings.bookmarks.filter(
   (el) => Date.now() - new Date(el.date).valueOf() < bookmarkTimeLimit,
 );

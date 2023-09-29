@@ -1,6 +1,6 @@
 import { isNothing } from '../utils/checks';
 
-export interface IMangaBase {
+export type IMangaBase = {
   begin: number;
   title?: string;
   series?: string;
@@ -9,31 +9,32 @@ export interface IMangaBase {
   next?: string;
   lazy?: boolean;
   timer?: number;
+  comments?: Element | null;
 
   before?(begin: number): void | Promise<void>;
-}
+};
 
-export interface IMangaPages extends IMangaBase {
+export type IMangaPages = {
   listPages: string[];
   img: string;
   lazyAttr?: string;
-}
+} & IMangaBase;
 
-export interface IMangaImages extends IMangaBase {
+export type IMangaImages = {
   listImages: string[];
-}
+} & IMangaBase;
 
-interface IBruteForceObj {
+type IBruteForceObj = {
   begin: number;
   addImg: (manga: IMangaImages, index: number, imageSrc: string, position: number) => void;
   loadImages: (list: string[]) => void;
   loadPages: (list: string[], img: string, lazyAttr: string | undefined) => void;
   wait: number;
-}
+};
 
-export interface IMangaForce extends IMangaBase {
+export type IMangaForce = {
   bruteForce(obj: IBruteForceObj): void;
-}
+} & IMangaBase;
 
 export type IManga = IMangaPages | IMangaImages | IMangaForce;
 

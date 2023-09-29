@@ -2,9 +2,11 @@
 
 ## Description
 
-Loads all pages from a chapter in a nice view, allowing for faster and more comfortable reading, without the need to wait for pages to load.
+Loads all pages from a chapter in a nice view, allowing for faster and more comfortable reading, without the need to
+wait for pages to load.
 
-:exclamation: **Attention**: Some sites require you to reload the page(F5) or open the chapter in a new tab for the script to start.
+:exclamation: **Attention**: Some sites require you to reload the page(F5) or open the chapter in a new tab for the
+script to start.
 
 ## Installation
 
@@ -16,7 +18,8 @@ Loads all pages from a chapter in a nice view, allowing for faster and more comf
 
 ## Supported Browsers
 
-Firefox and Chrome with [Tampermonkey](https://tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/). Other Browsers with other add-ons may also work, but not officially supported.
+Firefox and Chrome with [Tampermonkey](https://tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/).
+Other Browsers with other add-ons may also work, but not officially supported.
 
 ### Mobile Bookmarklet
 
@@ -38,7 +41,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
 
 ## Supported Manga Sites
 
-- [Batoto](http://bato.to/) _[English]_
+- [Batoto](https://bato.to/) _[English]_
 - [BilibiliComics](https://www.bilibilicomics.com/) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
 - [Asura Scans](https://asura.nacm.xyz/) / [Flame Scans](https://flamescans.org/) / [Realm Scans](https://realmscans.com/) / [Voids-Scans](https://void-scans.com/) / [Luminous Scans](https://luminousscans.com/) / [Shimada Scans](https://shimadascans.com/) / [Night Scans](https://nightscans.net/) / [Manhwa-Freak](https://manhwa-freak.com/) / [OzulScansEn](https://ozulscansen.com/) / [AzureManga](https://azuremanga.com/) _[English]_
@@ -73,7 +76,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
 - [FoOlSlide](#) / [Kireicake](https://reader.kireicake.com) _[English]_ **Obs: Any Site that uses FoOLSlide**
 - [Madara WordPress Plugin](#) / [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) / [JaiminisBox](https://jaiminisbox.net) / [DisasterScans](https://disasterscans.com/) / [ManhuaPlus](https://manhuaplus.com/) / [TopManhua](https://www.topmanhua.com/) / [NovelMic](https://novelmic.com/) / [Reset-Scans](https://reset-scans.com/) / [LeviatanScans](https://leviatanscans.com/) / [Dragon Tea](https://dragontea.ink/) / [SetsuScans](https://setsuscans.com/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
 - [Leitor](https://leitor.net/) _[Portuguese]_
-- [mangahosted](https://mangahosted.com/) _[Portuguese]_
+- [MangaHosted](https://mangahosted.com/) _[Portuguese]_
 - [UnionMangas](https://unionleitor.top/) _[Portuguese]_
 - [KLManga](https://klmanga.com/) _[Raw]_
 - [RawDevart](https://rawdevart.com) _[Raw]_
@@ -88,7 +91,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
 
 ## Supported Comic Sites
 
-- [ComiCastle](http://www.comicastle.org/) _[English]_
+- [ComiCastle](https://comic.nizamkomputer.com/) _[English]_
 - [ReadComicsOnline](https://readcomicsonline.ru/) _[English]_
 
 ## Supported Hentai Sites
@@ -118,7 +121,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
 - [Simply-Hentai](https://simply-hentai.com/) _[English]_
 - [ksk.moe](https://ksk.moe/) / [Sukebe.moe](https://sukebe.moe/) _[English]_ **Obs: Slow start, bruteforce required**
 - [3Hentai](https://3hentai.net/) _[English]_
-- [Tsumino](http://tsumino.com/) _[English]_
+- [Tsumino](https://tsumino.com/) _[English]_
 - [XlecxOne](https://xlecx.one/) _[English]_
 - [xyzcomics](https://xyzcomics.com/) _[English]_
 - [Madara WordPress Plugin](#) / [AllPornComic](https://allporncomic.com/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
@@ -129,16 +132,25 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
 
 ## HotKeys
 
--   <span>Scroll Up:</span> <span><kbd class="dark">up</kbd> / <kbd class="dark">W</kbd> / <kbd class="dark">num_8</kbd></span>
--   <span>Scroll Down:</span> <span><kbd class="dark">down</kbd> / <kbd class="dark">S</kbd> / <kbd class="dark">num_2</kbd></span>
--   <span>Next Chapter:</span> <span><kbd class="dark">right</kbd> / <kbd class="dark">/</kbd> / <kbd class="dark">D</kbd> / <kbd class="dark">num_6</kbd></span>
--   <span>Previous Chapter:</span> <span><kbd class="dark">left</kbd> / <kbd class="dark">;</kbd> / <kbd class="dark">A</kbd> / <kbd class="dark">num_4</kbd></span>
--   <span>Enlarge:</span> <span><kbd class="dark">-</kbd> / <kbd class="dark">num_add</kbd> / <kbd class="dark">E</kbd></span>
--   <span>Restore:</span> <span><kbd class="dark">=</kbd> / <kbd class="dark">num_subtract</kbd> / <kbd class="dark">Q</kbd></span>
--   <span>Restore:</span> <span><kbd class="dark">9</kbd> / <kbd class="dark">num_divide</kbd> / <kbd class="dark">R</kbd></span>
--   <span>Fit Width:</span> <span><kbd class="dark">0</kbd> / <kbd class="dark">num_multiply</kbd> / <kbd class="dark">F</kbd></span>
+-   <span>Scroll Up:</span> <span><kbd class="dark">up</kbd> / <kbd class="dark">W</kbd> / <kbd class="dark">
+    num_8</kbd></span>
+-   <span>Scroll Down:</span> <span><kbd class="dark">down</kbd> / <kbd class="dark">S</kbd> / <kbd class="dark">
+    num_2</kbd></span>
+-   <span>Next Chapter:</span> <span><kbd class="dark">right</kbd> / <kbd class="dark">/</kbd> / <kbd class="dark">
+    D</kbd> / <kbd class="dark">num_6</kbd></span>
+-   <span>Previous Chapter:</span> <span><kbd class="dark">left</kbd> / <kbd class="dark">;</kbd> / <kbd class="dark">
+    A</kbd> / <kbd class="dark">num_4</kbd></span>
+-   <span>Enlarge:</span> <span><kbd class="dark">-</kbd> / <kbd class="dark">num_add</kbd> / <kbd class="dark">
+    E</kbd></span>
+-   <span>Restore:</span> <span><kbd class="dark">=</kbd> / <kbd class="dark">num_subtract</kbd> / <kbd class="dark">
+    Q</kbd></span>
+-   <span>Restore:</span> <span><kbd class="dark">9</kbd> / <kbd class="dark">num_divide</kbd> / <kbd class="dark">
+    R</kbd></span>
+-   <span>Fit Width:</span> <span><kbd class="dark">0</kbd> / <kbd class="dark">num_multiply</kbd> / <kbd class="dark">
+    F</kbd></span>
 -   <span>Fit Height:</span> <span><kbd class="dark">H</kbd></span>
--   <span>Settings:</span> <span><kbd class="dark">num_divide</kbd> / <kbd class="dark">num_5</kbd> / <kbd class="dark">X</kbd></span>
+-   <span>Settings:</span> <span><kbd class="dark">num_divide</kbd> / <kbd class="dark">num_5</kbd> / <kbd class="dark">
+    X</kbd></span>
 -   <span>WebComic:</span> <span><kbd class="dark">C</kbd></span>
 -   <span>Vertical:</span> <span><kbd class="dark">V</kbd></span>
 -   <span>Left to Right:</span> <span><kbd class="dark">N</kbd></span>
@@ -165,7 +177,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
     -   Individual image reload, just in case
 -   HotKeys
 -   Goto Page
--   Image Loading Timer[Default 1s](Some sites require longer timers. eg.:ExHentai,e-hentai)
+-   Image Loading Timer[Default 1s](Some sites require longer timers. e.g.:ExHentai,e-hentai)
 -   Thumbnails Navigation[Default on]
 -   Download all images as ZIP File[Automatic Default off]
 -   Lazy Load Images[Default off]
@@ -178,8 +190,10 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
 
 ## Permissions
 
-I allow this script to be posted or used anywhere as long as I am given credit and provided a link to this site. I allow parts of my script to be used freely.
+I allow this script to be posted or used anywhere as long as I am given credit and provided a link to this site. I allow
+parts of my script to be used freely.
 
 ## Disclaimer
 
-In case the owner/admin of one of the supported sites does not want my script to run on their site, I will make it disabled by default. Forcing users to manually activate it.
+In case the owner/admin of one of the supported sites does not want my script to run on their site, I will make it
+disabled by default. Forcing users to manually activate it.

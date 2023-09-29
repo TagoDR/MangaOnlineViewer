@@ -13,19 +13,18 @@ export default {
       return value != null ? decodeURIComponent(value[1]) : null;
     }
 
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-    const slug = W.CURRENT_MANGA_SLUG ?? window.location.pathname.split('/')[2];
+    const slug = unsafeWindow.CURRENT_MANGA_SLUG ?? window.location.pathname.split('/')[2];
     const number = window.location.pathname.split('/')[3].replace('chapter-', '');
     const data = { query: `{chapter(x:m01,slug:"${slug}",number:${number}){pages}}` };
-    const options = {
+    const options: RequestInit = {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
-        'x-mhub-access': getCookie('mhub_access'),
+        'x-mhub-access': getCookie('mhub_access') ?? '',
       },
     };
-    const api = await fetch('https://api.mghubcdn.com/graphql', options as any).then((res) =>
+    const api = await fetch('https://api.mghubcdn.com/graphql', options).then(async (res) =>
       res.json(),
     );
     const images = JSON.parse(api?.data.chapter.pages.toString());

@@ -1,10 +1,10 @@
 import { logScript } from './tampermonkey';
 
-export function fetchText(url: string, format: DOMParserSupportedType): Promise<Document> {
+export async function fetchText(url: string, format: DOMParserSupportedType): Promise<Document> {
   return new Promise((resolve) => {
     logScript('Fetching page: ', url);
     fetch(url)
-      .then((response) =>
+      .then(async (response) =>
         // When the page is loaded convert it to text
         response.text(),
       )
@@ -27,15 +27,15 @@ export function fetchText(url: string, format: DOMParserSupportedType): Promise<
   });
 }
 
-export function fetchHtml(url: string): Promise<Document> {
+export async function fetchHtml(url: string): Promise<Document> {
   return fetchText(url, 'text/html');
 }
 
-export function fetchXml(url: string): Promise<Document> {
+export async function fetchXml(url: string): Promise<Document> {
   return fetchText(url, 'text/xml');
 }
 
-export function getElementAttribute(
+export async function getElementAttribute(
   url: string,
   selector: string,
   attribute: string,

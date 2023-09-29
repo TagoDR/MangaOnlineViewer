@@ -9,7 +9,7 @@ export default {
   run() {
     const data: {
       props: {
-        pages: { url: string }[];
+        pages: Array<{ url: string }>;
         nextChapter: string;
         previousChapter: string;
         home: string;

@@ -7,7 +7,6 @@ export default {
   category: 'manga',
   waitEle: '.read-nav',
   async run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     const api = await fetch(
       'https://www.bilibilicomics.com/twirp/comic.v1.Comic/GetImageIndex?device=pc&platform=web&lang=en&sys_lang=en',
       {
@@ -17,15 +16,15 @@ export default {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          ep_id: W.location.href.split('/').pop(),
+          ep_id: window.location.href.split('/').pop(),
           credential: '',
         }),
       },
     )
-      .then((res) => res.json())
+      .then(async (res) => res.json())
       .then(({ data }) => data.images.map((image: { path: string }) => `${image.path}@2000w.webp`))
       .then(JSON.stringify)
-      .then((urls) =>
+      .then(async (urls) =>
         fetch(
           'https://www.bilibilicomics.com/twirp/comic.v1.Comic/ImageToken?device=pc&platform=web&lang=en&sys_lang=en',
           {
@@ -38,7 +37,7 @@ export default {
           },
         ),
       )
-      .then((res) => res.json())
+      .then(async (res) => res.json())
       .then((tokens) =>
         tokens.data.map((i: { url: string; token: string }) => `${i.url}?token=${i.token}`),
       );

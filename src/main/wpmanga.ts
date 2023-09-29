@@ -6,7 +6,6 @@ export default {
   language: ['English'],
   category: 'manga',
   run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     const images = [...document.querySelectorAll('.chapter-content img')];
     return {
       title: document.querySelector('title')?.textContent?.trim(),
@@ -16,9 +15,12 @@ export default {
       next: document.querySelector('a.next')?.getAttribute('href'),
       listImages: images.map((img) => img.getAttribute('src')),
       before() {
-        if (/all.html$/.exec(W.location.pathname)) return;
-        if (/\d+-\d+.html$/.exec(W.location.pathname)) {
-          W.location.pathname = W.location.pathname.replace(/-\d+.html$/, '-all.html');
+        if (/all.html$/.exec(window.location.pathname)) {
+          return;
+        }
+
+        if (/\d+-\d+.html$/.exec(window.location.pathname)) {
+          window.location.pathname = window.location.pathname.replace(/-\d+.html$/, '-all.html');
         }
       },
     };

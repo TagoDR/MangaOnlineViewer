@@ -1,5 +1,4 @@
-// == Localhost
-// =====================================================================================
+// == Localhost =====================================================================================
 import { placeholder, randomPlaceholder } from '../utils/svgs';
 
 export default {
@@ -8,9 +7,8 @@ export default {
   homepage: 'http://127.0.0.1:8080/index.html',
   language: ['Portuguese'],
   category: 'manga',
-  run: () => {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-    const num: number = parseInt(/\d+/.exec(W.location.search)?.toString() ?? '5', 10);
+  run() {
+    const num: number = parseInt(/\d+/.exec(window.location.search)?.toString() ?? '5', 10);
     return {
       title: 'Placeholder Manga Loaded',
       series: '#Counters',

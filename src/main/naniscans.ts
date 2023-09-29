@@ -7,14 +7,15 @@ export default {
   category: 'manga',
   waitVar: 'chapterListRoute',
   async run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-    const api = await fetch(W.location.href.replace('read', 'json')).then((res) => res.json());
+    const api = await fetch(window.location.href.replace('read', 'json')).then(async (res) =>
+      res.json(),
+    );
     return {
       title: document.querySelector('title')?.textContent?.trim(),
       series: document.querySelector('a[href^="/titles/"]')?.getAttribute('href'),
       pages: api.pages.length,
-      prev: W.previousChapterRoute,
-      next: W.nextChapterRoute,
+      prev: unsafeWindow.previousChapterRoute,
+      next: unsafeWindow.nextChapterRoute,
       listImages: api.pages.map((i: { number: number; address: string }) => i.address),
     };
   },

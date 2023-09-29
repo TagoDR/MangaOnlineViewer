@@ -38,7 +38,7 @@ export default {
       });
     const data = await Promise.all(fetchBlocks);
     const images = data.flatMap((res) =>
-      res.data.picture.list.items.map((img: any) => img.url_to_original),
+      res.data.picture.list.items.map((img: { url_to_original: string }) => img.url_to_original),
     );
     return {
       title: document.querySelector('.album-heading a')?.textContent?.trim(),

@@ -1,4 +1,4 @@
-function indexList(repeat: number, begin: number = 1) {
+function indexList(repeat: number, begin = 1) {
   return Array(repeat)
     .fill(0)
     .map((_, i) => i + 1)

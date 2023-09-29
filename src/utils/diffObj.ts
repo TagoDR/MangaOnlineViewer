@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/ban-ts-comment */
 import _ from 'lodash';
 
 /**
  *  Deep diff between two object, using lodash
  *
- *  We are comparing two objects: a and b.
- *  Object b is newer and similar to a.
- *  We are looking for changes from a to b.
+ *  We are comparing two objects: A and B.
+ *  Object b is newer and similar to A.
+ *  We are looking for changes from A to B.
  *  We assume that data types haven't changed (String to Number).
  *  We assume that parent is either an Array or an Object.
  *
@@ -22,49 +23,59 @@ import _ from 'lodash';
  * @param  {Object} original   Object to compare with
  * @return {Object} Return a new object who represent the diff
  */
-const diffObj = <T extends object>(changed: T, original: T): Partial<object> => {
-  const changes = (object: object, base: object): object =>
+const diffObj = <T extends Record<string, unknown>>(
+  changed: T,
+  original: T,
+): Partial<Record<string, unknown>> => {
+  const changes = (
+    object: Record<string, unknown>,
+    base: Record<string, unknown>,
+  ): Record<string, unknown> =>
     _.transform(
       object,
-      (result: any, value: any, key: keyof object) => {
+      (result: any, value: any, key: keyof Record<string, unknown>) => {
         if (!_.isEqual(value, base[key])) {
           if (_.isArray(value)) {
+            // @ts-ignore
             result[key] = _.difference(value, base[key]);
           } else if (_.isObject(value) && _.isObject(base[key])) {
+            // @ts-ignore
             result[key] = changes(value, base[key]);
           } else {
             result[key] = value;
           }
         }
       },
-      /* omit accumulator */
+      /* Omit accumulator */
     );
   return changes(changed, original);
 };
 
 export const getDiff = (changed: any, original: any) => {
   const accumulator = _.isArray(original) ? [] : {};
+
   function recursiveDiff(base: any, object: any, result: any) {
-    // eslint-disable-next-line guard-for-in,no-restricted-syntax
+    // eslint-disable-next-line no-restricted-syntax,guard-for-in
     for (const key in base) {
-      const value: object = object[key];
+      const value: Record<string, unknown> = object[key];
 
       if (!_.isEqual(base[key], value)) {
         if (_.isArray(value)) {
-          // if array
+          // If array
           result[key] = [];
           recursiveDiff(base[key], value, result[key]);
         } else if (_.isObject(value)) {
-          // if object
+          // If object
           result[key] = {};
           recursiveDiff(base[key], value, result[key]);
         } else {
-          // if value
+          // If value
           result[key] = value;
         }
       }
     }
   }
+
   recursiveDiff(original, changed, accumulator);
   return accumulator;
 };

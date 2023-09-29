@@ -18,7 +18,7 @@ export default {
       prev: '#',
       next: '#',
       listImages: [''],
-      async before(begin: number = 1) {
+      async before(begin = 1) {
         const div = document.createElement('div');
         div.setAttribute(
           'style',
@@ -30,17 +30,19 @@ export default {
           direction.value = '1';
           direction.dispatchEvent(new Event('change'));
         }
+
         num.item(begin - 1).selected = true;
         document.querySelector('.currentPageNum select')?.dispatchEvent(new Event('change'));
         const next = document.querySelector('.next');
         const target = document.querySelector<HTMLDivElement>('.main .pages');
-        const src = [];
+        const src: string[] = [];
         for (let i = begin; i <= this.pages; i += 1) {
           // eslint-disable-next-line no-await-in-loop
           src[i - 1] = await waitForAtb('.page img', 'src', target ?? document.body);
           target?.querySelector('img')?.removeAttribute('src');
           next?.dispatchEvent(new Event('click'));
         }
+
         this.listImages = src;
         num.item(0).selected = true;
         document.querySelector('.currentPageNum select')?.dispatchEvent(new Event('change'));

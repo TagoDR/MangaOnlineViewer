@@ -1,8 +1,8 @@
 // == ComiCastle ===================================================================================
 export default {
   name: 'ComiCastle',
-  url: /https?:\/\/(www.)?comicastle.org\/read\/.+\/\d+.*/,
-  homepage: 'http://www.comicastle.org/',
+  url: /https?:\/\/comic.nizamkomputer.com\/read\/.+\/\d+.*/,
+  homepage: 'https://comic.nizamkomputer.com/',
   language: ['English'],
   category: 'comic',
   waitEle: '.form-control option:nth-child(1)',

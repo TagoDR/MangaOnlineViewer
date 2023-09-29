@@ -8,13 +8,12 @@ export default {
   category: 'manga',
   waitVar: 'pageController',
   run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     const images = [...document.querySelectorAll('#PageList option')];
     const chapter = document.querySelector('#ChapList option:checked');
-    const src = W.pageController._containers.pageUrl;
+    const src = unsafeWindow.pageController._containers.pageUrl;
     return {
       title: document.querySelector('title')?.textContent?.trim(),
-      series: `../${W.pageController._containers.mangaIdentification}`,
+      series: `../${unsafeWindow.pageController._containers.mangaIdentification}`,
       pages: images.length,
       prev: chapter?.previousElementSibling?.getAttribute('value'),
       next: chapter?.nextElementSibling?.getAttribute('value'),

@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars,@typescript-eslint/no-unused-vars */
 import batoto from './batoto';
 import bilibilicomics from './bilibilicomics';
 import comicastle from './comicastle';
 import dysnatyscans from './dysnatyscans';
-import flamecans from './flamecans.js';
+import flamecans from './flamecans';
 import foolslide from './foolslide';
 import inkr from './inkr';
 import inmanga from './inmanga';
@@ -48,10 +47,10 @@ import webtoons from './webtoons';
 import wpmanga from './wpmanga';
 import yugenmangas from './yugenmangas';
 import zeroscans from './zeroscans';
-import { ISite } from '../types/ISite';
+import { type ISite } from '../types/ISite';
 
 const sites = [
-  // asurascans,
+  // Asurascans,
   batoto,
   bilibilicomics,
   comicastle,
@@ -61,7 +60,7 @@ const sites = [
   inmanga,
   klmanga,
   leitor,
-  // leviatanscans,
+  // Leviatanscans,
   lhtranslation,
   lynxscans,
   mangabuddy,
@@ -89,7 +88,7 @@ const sites = [
   readcomicsonline,
   readmangatoday,
   reaperscans,
-  // resetscans, deprecated
+  // Resetscans, deprecated
   senmanga,
   tapas,
   tenmanga,

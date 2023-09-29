@@ -1,4 +1,4 @@
-import { ILocale } from '../types/ILocale';
+import { type ILocale } from '../types/ILocale';
 import en_US from './en_US';
 import pt_BR from './pt_BR';
 import zh_CN from './zh_CN';

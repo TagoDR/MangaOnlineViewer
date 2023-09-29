@@ -33,7 +33,7 @@ export const base = {
   },
 };
 
-export interface IColor {
+export type IColor = {
   name: string;
   50: string;
   100: string;
@@ -45,11 +45,9 @@ export interface IColor {
   700: string;
   800: string;
   900: string;
-}
+};
 
-export interface IPalette {
-  [key: string]: IColor;
-}
+export type IPalette = Record<string, IColor>;
 
 const colors: IPalette = {
   dark: {
@@ -301,6 +299,7 @@ export function getTextColor(hex: string) {
 export function isLight(color: string) {
   return tinycolor(color).getBrightness() > 120;
 }
+
 export function isDark(color: string) {
   return tinycolor(color).getBrightness() <= 120;
 }

@@ -1,4 +1,5 @@
 // == RawDevart  ===================================================================================
+
 export default {
   name: 'RawDevart',
   url: /https?:\/\/(www.)?rawdevart.com\/comic\/.+\/.+\//,
@@ -8,12 +9,11 @@ export default {
   waitVar: 'rconfig',
   waitEle: '#chapter-list select',
   run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     const chapter = document.querySelector<HTMLOptionElement>('#chapter-list option:checked');
     const images = [...document.querySelectorAll('#img-container img')];
     return {
-      title: W.rconfig.chapterTitle,
-      series: W.rconfig.prefix,
+      title: unsafeWindow.rconfig.chapterTitle,
+      series: unsafeWindow.rconfig.prefix,
       pages: images.length,
       prev: chapter?.nextElementSibling?.getAttribute('value'),
       next: chapter?.previousElementSibling?.getAttribute('value'),

@@ -7,11 +7,10 @@ export default {
   category: 'manga',
   waitVar: 'imgsrcs',
   run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     const key = CryptoJS.enc.Hex.parse('e11adc3949ba59abbe56e057f20f131e');
     const iv = CryptoJS.enc.Hex.parse('1234567890abcdef1234567890abcdef');
     const opinion = { iv, padding: CryptoJS.pad.ZeroPadding };
-    const images = CryptoJS.AES.decrypt(W.imgsrcs, key, opinion)
+    const images = CryptoJS.AES.decrypt(unsafeWindow.imgsrcs, key, opinion)
       .toString(CryptoJS.enc.Utf8)
       .split(',');
     return {

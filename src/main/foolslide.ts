@@ -11,7 +11,10 @@ export default {
     const chapter = [...document.querySelectorAll('.topbar_left .dropdown_parent:last-of-type li')];
     const origin = chapter.findIndex((item) => {
       const url = item.querySelector('a')?.getAttribute('href');
-      if (url) return window.location.href.startsWith(url);
+      if (url) {
+        return window.location.href.startsWith(url);
+      }
+
       return false;
     });
     const pages = [...document.querySelectorAll('.topbar_right .dropdown li')];

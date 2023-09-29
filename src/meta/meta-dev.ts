@@ -9,7 +9,7 @@ export default {
   name: 'MOV',
   author: 'TagoDR',
   namespace: 'https://github.com/TagoDR',
-  description: `Shows all pages at once in online view for sites`,
+  description: 'Shows all pages at once in online view for sites',
   version: new Date().valueOf().toString(), // .slice(0, 10).replaceAll('-', '.'),
   license: 'MIT',
   grant: [

@@ -7,15 +7,14 @@ export default {
   category: 'hentai',
   waitVar: 'rff_imageList',
   run() {
-    const W: any = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
     const src = document.querySelector('#arf-reader-img')?.getAttribute('src')?.replace(/\d.+/, '');
     return {
-      title: W.rff_pageTitle.replace(/.+\|/, '').trim(),
-      series: W.rff_thisManga,
-      pages: W.rff_imageList.length,
-      prev: W.rff_previousChapter,
-      next: W.rff_nextChapter,
-      listImages: W.rff_imageList.map((img: string) => src + img),
+      title: unsafeWindow.rff_pageTitle.replace(/.+\|/, '').trim(),
+      series: unsafeWindow.rff_thisManga,
+      pages: unsafeWindow.rff_imageList.length,
+      prev: unsafeWindow.rff_previousChapter,
+      next: unsafeWindow.rff_nextChapter,
+      listImages: unsafeWindow.rff_imageList.map((img: string) => src + img),
     };
   },
 };
