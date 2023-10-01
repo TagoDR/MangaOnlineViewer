@@ -25,6 +25,8 @@
     "bugs": "https://github.com/TagoDR/MangaOnlineViewer/issues",
     "homepage": "https://github.com/TagoDR/MangaOnlineViewer#readme",
     "devDependencies": {
+        "@sveltejs/vite-plugin-svelte": "^4.0.0",
+        "@tsconfig/svelte": "^5.0.4",
         "@types/crypto-js": "^4.2.2",
         "@types/file-saver": "^2.0.7",
         "@types/imagesloaded": "^4.1.6",
@@ -36,7 +38,7 @@
         "@types/ua-parser-js": "^0.7.39",
         "@typescript-eslint/eslint-plugin": "^7.18.0",
         "@typescript-eslint/parser": "^7.18.0",
-        "del": "^7.1.0",
+        "del": "^8.0.0",
         "eslint": "^8.57.1",
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-config-airbnb-typescript": "^18.0.0",
@@ -44,9 +46,12 @@
         "eslint-import-resolver-typescript": "^3.6.3",
         "eslint-plugin-import": "^2.31.0",
         "eslint-plugin-prettier": "^5.2.1",
+        "eslint-plugin-svelte": "^2.46.0",
         "prettier": "^3.3.3",
+        "prettier-plugin-svelte": "^3.2.7",
         "rollup-plugin-external-globals": "^0.12.0",
         "rollup-plugin-prettier": "^4.1.1",
+        "terser": "^5.36.0",
         "typescript": "^5.6.3",
         "userscript-metadata-generator": "^0.2.4",
         "vite": "^5.4.10",
@@ -64,6 +69,8 @@
         "normalize.css": "^8.0.1",
         "nprogress": "^0.2.0",
         "range-slider-input": "^2.4.4",
+        "svelte": "^5.1.9",
+        "svelte-i18n": "^4.0.1",
         "sweetalert2": "=11.4.8",
         "tinycolor2": "^1.6.0",
         "ua-parser-js": "^1.0.39"
@@ -76,6 +83,17 @@
         "semi": true,
         "singleQuote": true,
         "trailingComma": "all",
-        "printWidth": 100
+        "printWidth": 100,
+        "plugins": [
+            "prettier-plugin-svelte"
+        ],
+        "overrides": [
+            {
+                "files": "*.svelte",
+                "options": {
+                    "parser": "svelte"
+                }
+            }
+        ]
     }
 }

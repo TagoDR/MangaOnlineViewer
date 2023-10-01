@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Koharu, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.11.06
+// @version       2024.11.11
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -46,7 +46,7 @@
 // @include       /https?:\/\/hitomi.la\/reader\/.+/
 // @include       /https?:\/\/(www\.)?imhentai.xxx\/view\/.+\/.+\//
 // @include       /https?:\/\/(www\.)?(kingcomix|chochox|comics18).(com|org)\/.+/
-// @include       /https?:\/\/(www\.)?(koharu|niyaniya|seia|shupogaki).(to|moe)/
+// @include       /https?:\/\/(www\.)?(koharu|niyaniya|seia|shupogaki|hoshino).(to|moe|one)/
 // @include       /https?:\/\/(www\.)?luscious.net\/.+\/read\/.+/
 // @include       /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include       /https?:\/\/(www\.)?myhentaigallery.com\/g\/.+\/\d+/

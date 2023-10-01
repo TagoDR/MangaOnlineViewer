@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import { get, writable } from 'svelte/store';
+import { addMessages, init } from 'svelte-i18n';
 import {
   getListGM,
   getSettings,
@@ -10,6 +12,7 @@ import {
 import type { ISettings } from '../types';
 import diffObj from '../utils/diffObj';
 import locales from '../locales';
+import { isNothing } from '../utils/checks';
 
 export const defaultSettings: ISettings = {
   locale: 'en_US',
@@ -70,20 +73,19 @@ const getDefault = () =>
       );
 
 // Configuration
-let settings: ISettings = _.defaultsDeep(getSettings(getDefault()), getDefault());
-
-type SettingsKey = keyof typeof settings;
-
-export function useSettingsValue(key: SettingsKey) {
-  return settings[key];
-}
+const settings = writable<ISettings>(_.defaultsDeep(getSettings(defaultSettings), defaultSettings));
+locales.forEach((locale) => addMessages(locale.ID, locale));
+init({
+  fallbackLocale: 'en_US',
+  initialLocale: get(settings).locale,
+});
 
 export function getUserSettings() {
-  return settings;
+  return get(settings);
 }
 
 export function getLocaleString(name: string): string {
-  const locale = locales.find((l) => l.ID === settings.locale);
+  const locale = locales.find((l) => l.ID === get(settings).locale);
   if (locale?.[name]) {
     return locale[name];
   }
@@ -101,8 +103,8 @@ export function getAllLocaleStrings(name: string): string {
 
 export function updateSettings(newValue: Partial<ISettings>) {
   logScript(JSON.stringify(newValue));
-  settings = { ...settings, ...newValue };
-  setSettings(diffObj(settings, getDefault()));
+  settings.update((_settings: ISettings) => ({ ..._settings, ...newValue }));
+  setSettings(diffObj(get(settings), getDefault()));
 }
 
 export function resetSettings() {
@@ -113,14 +115,26 @@ export function resetSettings() {
 }
 
 export function isBookmarked(url: string = window.location.href): number | undefined {
-  return settings.bookmarks.find((el) => el.url === url)?.page;
+  return get(settings).bookmarks.find((el) => el.url === url)?.page;
 }
 
 // Clear old Bookmarks
 const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // Year
-const refreshedBookmark = settings.bookmarks.filter(
+const refreshedBookmark = get(settings).bookmarks.filter(
   (el) => Date.now() - new Date(el.date).valueOf() < bookmarkTimeLimit,
 );
-if (settings.bookmarks.length !== refreshedBookmark.length) {
+if (get(settings).bookmarks.length !== refreshedBookmark.length) {
   updateSettings({ bookmarks: refreshedBookmark });
 }
+
+// Clear used Bookmarks
+export function clearBookmark(url: string = window.location.href) {
+  if (!isNothing(isBookmarked())) {
+    logScript(`Bookmark Removed ${window.location.href}`);
+    updateSettings({
+      bookmarks: get(settings).bookmarks.filter((el) => el.url !== url),
+    });
+  }
+}
+
+export default settings;
