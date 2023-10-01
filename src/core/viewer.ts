@@ -1,7 +1,7 @@
 import type { IManga } from '../types';
 import { logScript, logScriptVerbose } from '../utils/tampermonkey';
 import { getUserSettings } from './settings';
-import display from '../ui';
+import display from '../svelte';
 import { waitForFunc, waitWithTimeout } from '../utils/waitFor';
 
 async function captureComments() {

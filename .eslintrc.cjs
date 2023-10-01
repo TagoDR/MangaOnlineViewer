@@ -4,15 +4,21 @@ module.exports = {
     es2021: true,
     greasemonkey: true,
   },
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:svelte/recommended',
+    'plugin:svelte/prettier',
+  ],
   overrides: [
     {
       env: {
         node: true,
       },
-      files: ['.eslintrc.{js,cjs}'],
+      files: ['.eslintrc.{js,cjs}', '*.svelte'],
+      parser: 'svelte-eslint-parser',
       parserOptions: {
-        sourceType: 'script',
+        parser: '@typescript-eslint/parser',
       },
     },
   ],
@@ -20,8 +26,10 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
+    project: './tsconfig.json',
+    extraFileExtensions: ['.svelte'],
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['import', '@typescript-eslint'],
   rules: {
     'no-console': 'warn',
     'no-param-reassign': [
@@ -30,6 +38,8 @@ module.exports = {
         props: false,
       },
     ],
+    'import/no-mutable-exports': 'off',
+    'import/prefer-default-export': 'off',
   },
   ignorePatterns: ['node_modules', 'dist'],
 };

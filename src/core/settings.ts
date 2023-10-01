@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import { get, writable } from 'svelte/store';
+import { addMessages, init } from 'svelte-i18n';
 import {
   getListGM,
   getSettings,
@@ -8,7 +10,7 @@ import {
   setSettings,
   settingsChangeListener,
 } from '../utils/tampermonkey';
-import type { ISettings } from '../types';
+import type { IBookmark, ISettings } from '../types';
 import diffObj from '../utils/diffObj';
 import locales from '../locales';
 import { isNothing } from '../utils/checks';
@@ -61,41 +63,41 @@ const getDefault = () =>
   !isMobile()
     ? defaultSettings
     : _.defaultsDeep(
-        {
-          lazyLoadImages: true,
-          fitWidthIfOversize: true,
-          showThumbnails: false,
-          viewMode: 'WebComic',
-          header: 'click',
-        },
-        defaultSettings,
-      );
+      {
+        lazyLoadImages: true,
+        fitWidthIfOversize: true,
+        showThumbnails: false,
+        viewMode: 'WebComic',
+        header: 'click',
+      },
+      defaultSettings,
+    );
 
 // Configuration
-let settings: ISettings = _.defaultsDeep(getSettings(getDefault()), getDefault());
+export const settings = writable<ISettings>(
+  _.defaultsDeep(getSettings(defaultSettings), defaultSettings));
+locales.forEach((locale) => addMessages(locale.ID, locale));
+init({
+  fallbackLocale: 'en_US',
+  initialLocale: get(settings).locale,
+});
 
 settingsChangeListener((newValue: Partial<ISettings>) => {
   const newSettings = _.defaultsDeep(newValue, getDefault());
-  const diff = diffObj(newSettings, settings);
+  const diff = diffObj(newSettings, get(settings));
   if (!isNothing(diff)) {
     logScript('Imported Settings', diff);
-    settings = newSettings;
+    settings.set(newSettings);
     document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
   }
 });
 
-type SettingsKey = keyof typeof settings;
-
-export function useSettingsValue(key: SettingsKey) {
-  return settings[key];
-}
-
 export function getUserSettings() {
-  return settings;
+  return get(settings);
 }
 
 export function getLocaleString(name: string): string {
-  const locale = locales.find((l) => l.ID === settings.locale);
+  const locale = locales.find((l) => l.ID === get(settings).locale);
   if (locale?.[name]) {
     return locale[name];
   }
@@ -113,8 +115,8 @@ export function getAllLocaleStrings(name: string): string {
 
 export function updateSettings(newValue: Partial<ISettings>) {
   logScript(JSON.stringify(newValue));
-  settings = { ...settings, ...newValue };
-  setSettings(diffObj(settings, getDefault()));
+  settings.update((_settings: ISettings) => ({ ..._settings, ...newValue }));
+  setSettings(diffObj(get(settings), getDefault()));
 }
 
 export function resetSettings() {
@@ -125,14 +127,16 @@ export function resetSettings() {
 }
 
 export function isBookmarked(url: string = window.location.href): number | undefined {
-  return settings.bookmarks.find((el) => el.url === url)?.page;
+  return get(settings).bookmarks.find((el: IBookmark) => el.url === url)?.page;
 }
 
 // Clear old Bookmarks
 const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // Year
-const refreshedBookmark = settings.bookmarks.filter(
-  (el) => Date.now() - new Date(el.date).valueOf() < bookmarkTimeLimit,
+const refreshedBookmark = get(settings).bookmarks.filter(
+  (el: IBookmark) => Date.now() - new Date(el.date).valueOf() < bookmarkTimeLimit,
 );
-if (settings.bookmarks.length !== refreshedBookmark.length) {
+if (get(settings).bookmarks.length !== refreshedBookmark.length) {
   updateSettings({ bookmarks: refreshedBookmark });
 }
+
+export default settings;

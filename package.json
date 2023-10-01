@@ -25,6 +25,8 @@
     "bugs": "https://github.com/TagoDR/MangaOnlineViewer/issues",
     "homepage": "https://github.com/TagoDR/MangaOnlineViewer#readme",
     "devDependencies": {
+        "@sveltejs/vite-plugin-svelte": "^5.0.3",
+        "@tsconfig/svelte": "^5.0.4",
         "@types/crypto-js": "^4.2.2",
         "@types/file-saver": "^2.0.7",
         "@types/imagesloaded": "^4.1.6",
@@ -38,9 +40,18 @@
         "@typescript-eslint/parser": "^8.18.2",
         "del": "^8.0.0",
         "eslint": "^9.17.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-import-resolver-typescript": "^3.7.0",
+        "eslint-plugin-import": "^2.31.0",
+        "eslint-plugin-prettier": "^5.2.1",
+        "eslint-plugin-svelte": "^2.46.1",
         "prettier": "^3.4.2",
         "rollup-plugin-external-globals": "^0.13.0",
         "rollup-plugin-prettier": "^4.1.1",
+        "svelte": "^5.16.0",
+        "svelte-check": "^4.1.1",
+        "svelte-i18n": "^4.0.1",
+        "terser": "^5.37.0",
         "typescript": "^5.7.2",
         "userscript-metadata-generator": "^0.2.4",
         "vite": "^6.0.6",
@@ -70,6 +81,17 @@
         "semi": true,
         "singleQuote": true,
         "trailingComma": "all",
-        "printWidth": 100
+        "printWidth": 100,
+        "plugins": [
+            "prettier-plugin-svelte"
+        ],
+        "overrides": [
+            {
+                "files": "*.svelte",
+                "options": {
+                    "parser": "svelte"
+                }
+            }
+        ]
     }
 }

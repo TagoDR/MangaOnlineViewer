@@ -1,5 +1,5 @@
 import localhost from './main/localhost';
-import display from './ui';
+import display from './svelte';
 import { allowUpload } from './core/upload';
 
 allowUpload();
