@@ -5,7 +5,7 @@ export default {
   homepage: 'https://bato.to/',
   language: ['English'],
   category: 'manga',
-  waitEle:'div[name="image-item"] img, .page-img',
+  waitEle: 'div[name="image-item"] img, .page-img',
   run() {
     if (window.location.pathname.startsWith('/title')) {
       if (window.location.search !== '?load=2') {
@@ -24,16 +24,15 @@ export default {
           ?.parentElement?.getAttribute('href'),
         listImages: images.map((img) => img.getAttribute('src')),
       };
-    } else {
-      const images = [...document.querySelectorAll('.page-img')];
-      return {
-        title: document.querySelector('.nav-title a')?.textContent?.trim(),
-        series: document.querySelector('.nav-title a')?.getAttribute('href'),
-        pages: images.length,
-        prev: document.querySelector('.nav-prev a')?.getAttribute('href'),
-        next: document.querySelector('.nav-next a')?.getAttribute('href'),
-        listImages: images.map((img) => img.getAttribute('src')),
-      };
     }
+    const images = [...document.querySelectorAll('.page-img')];
+    return {
+      title: document.querySelector('.nav-title a')?.textContent?.trim(),
+      series: document.querySelector('.nav-title a')?.getAttribute('href'),
+      pages: images.length,
+      prev: document.querySelector('.nav-prev a')?.getAttribute('href'),
+      next: document.querySelector('.nav-next a')?.getAttribute('href'),
+      listImages: images.map((img) => img.getAttribute('src')),
+    };
   },
 };
