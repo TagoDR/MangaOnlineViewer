@@ -25,7 +25,7 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
 // @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.10.3/dist/hotkeys.min.js
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
-// @include       /https?:\/\/(www.)?bato.to\/chapter.*/
+// @include       /https?:\/\/(www.)?bato.to\/(chapter|title).*/
 // @include       /https?:\/\/(www.)?(bilibilicomics).com\/.+\/.+/
 // @include       /https?:\/\/comic.nizamkomputer.com\/read\/.+\/\d+.*/
 // @include       /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/
@@ -82,20 +82,36 @@
 
   const batoto = {
     name: "Batoto",
-    url: /https?:\/\/(www.)?bato.to\/chapter.*/,
+    url: /https?:\/\/(www.)?bato.to\/(chapter|title).*/,
     homepage: "https://bato.to/",
     language: ["English"],
     category: "manga",
+    waitEle: 'div[name="image-item"] img, .page-img',
     run() {
-      const images = [...document.querySelectorAll(".page-img")];
-      return {
-        title: document.querySelector(".nav-title a")?.textContent?.trim(),
-        series: document.querySelector(".nav-title a")?.getAttribute("href"),
-        pages: images.length,
-        prev: document.querySelector(".nav-prev a")?.getAttribute("href"),
-        next: document.querySelector(".nav-next a")?.getAttribute("href"),
-        listImages: images.map((img) => img.getAttribute("src"))
-      };
+      if (window.location.pathname.startsWith("/title")) {
+        if (window.location.search !== "?load=2") {
+          window.location.search = "?load=2";
+        }
+        const images = [...document.querySelectorAll('div[name="image-item"] img')];
+        return {
+          title: document.querySelector("h6")?.textContent?.trim(),
+          series: document.querySelector("h3 a")?.getAttribute("href"),
+          pages: images.length,
+          prev: [...document.querySelectorAll("span")].find((item) => item.textContent?.endsWith("Prev Chapter"))?.parentElement?.getAttribute("href"),
+          next: [...document.querySelectorAll("span")].find((item) => item.textContent?.startsWith("Next Chapter"))?.parentElement?.getAttribute("href"),
+          listImages: images.map((img) => img.getAttribute("src"))
+        };
+      } else {
+        const images = [...document.querySelectorAll(".page-img")];
+        return {
+          title: document.querySelector(".nav-title a")?.textContent?.trim(),
+          series: document.querySelector(".nav-title a")?.getAttribute("href"),
+          pages: images.length,
+          prev: document.querySelector(".nav-prev a")?.getAttribute("href"),
+          next: document.querySelector(".nav-next a")?.getAttribute("href"),
+          listImages: images.map((img) => img.getAttribute("src"))
+        };
+      }
     }
   };
 

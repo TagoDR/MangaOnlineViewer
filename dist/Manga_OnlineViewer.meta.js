@@ -25,7 +25,7 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
 // @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.10.3/dist/hotkeys.min.js
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
-// @include       /https?:\/\/(www.)?bato.to\/chapter.*/
+// @include       /https?:\/\/(www.)?bato.to\/(chapter|title).*/
 // @include       /https?:\/\/(www.)?(bilibilicomics).com\/.+\/.+/
 // @include       /https?:\/\/comic.nizamkomputer.com\/read\/.+\/\d+.*/
 // @include       /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/
