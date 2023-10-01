@@ -1,6 +1,8 @@
 name: Build and commit
 
-on: [push]
+on:
+    push:
+        branches: [master]
 
 jobs:
     release:
