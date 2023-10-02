@@ -167,7 +167,9 @@ const SettingsPanel = `
     <div class='ControlLabel minZoom'>
     <span>
       ${getLocaleString('MINIMUM_ZOOM')}:
-      <output id='minZoomVal' class='RangeValue' for='minZoom'>${getUserSettings().minZoom}%</output>
+      <output id='minZoomVal' class='RangeValue' for='minZoom'>${
+        getUserSettings().minZoom
+      }%</output>
     </span>
       <input type='range'
              value='${getUserSettings().minZoom}'
@@ -183,7 +185,9 @@ const SettingsPanel = `
     <div class='ControlLabel zoomStep'>
     <span>
       ${getLocaleString('ZOOM_STEP')}:
-      <output id='zoomStepVal' class='RangeValue' for='zoomStep'>${getUserSettings().zoomStep}%</output>
+      <output id='zoomStepVal' class='RangeValue' for='zoomStep'>${
+        getUserSettings().zoomStep
+      }%</output>
     </span>
       <input type='range'
              value='${getUserSettings().zoomStep}'

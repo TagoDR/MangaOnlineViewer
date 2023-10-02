@@ -10,13 +10,16 @@ import {
   isImagesManga,
   isPagesManga,
   type ZoomMode,
-} from '../types/index.ts';
+} from '../types';
 import { getElementAttribute } from '../utils/request';
 import lazyLoad from '../utils/lazyLoad';
 import sequence from '../utils/sequence';
 
 // After pages load apply default Zoom
-function applyZoom(zoom: number | ZoomMode = getUserSettings().zoomMode, pages = '.PageContent img') {
+function applyZoom(
+  zoom: number | ZoomMode = getUserSettings().zoomMode,
+  pages = '.PageContent img',
+) {
   const pg = [...document.querySelectorAll<HTMLImageElement>(pages)];
   pg.forEach((img) => {
     img.removeAttribute('width');
@@ -226,7 +229,9 @@ function loadManga(manga: IManga, begin = 1) {
   getUserSettings().lazyLoadImages = manga.lazy ?? getUserSettings().lazyLoadImages;
   logScript('Loading Images');
   logScript(`Intervals: ${manga.timer ?? getUserSettings().throttlePageLoad ?? 'Default(1000)'}`);
-  logScript(`Lazy: ${getUserSettings().lazyLoadImages}, Starting from: ${getUserSettings().lazyStart}`);
+  logScript(
+    `Lazy: ${getUserSettings().lazyLoadImages}, Starting from: ${getUserSettings().lazyStart}`,
+  );
   if (isImagesManga(manga)) {
     logScript('Method: Images:', manga.listImages);
     loadMangaImages(begin, manga);

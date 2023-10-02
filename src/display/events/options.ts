@@ -6,7 +6,7 @@ import {
   updateSettings,
 } from '../../core/settings';
 import type { Header, LoadMode } from '../../types';
-import { applyZoom } from '../page.ts';
+import { applyZoom } from '../page';
 import { replaceStyleSheet } from '../../utils/css';
 
 function options() {

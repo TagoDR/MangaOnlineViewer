@@ -48,7 +48,9 @@ function buttonBookmark(elem: Element) {
       date: new Date().toISOString().slice(0, 10),
     };
     if (isBookmarked(mark.url)) {
-      updateSettings({ bookmarks: getUserSettings().bookmarks.filter((el) => el.url !== mark.url) });
+      updateSettings({
+        bookmarks: getUserSettings().bookmarks.filter((el) => el.url !== mark.url),
+      });
       Swal.fire({
         title: getLocaleString('BOOKMARK_REMOVED'),
         timer: 10000,

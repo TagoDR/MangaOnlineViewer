@@ -1,4 +1,4 @@
-import { applyZoom } from '../page.ts';
+import { applyZoom } from '../page';
 import scrollToElement from './common';
 
 function navigation() {

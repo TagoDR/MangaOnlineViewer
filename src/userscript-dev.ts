@@ -1,7 +1,7 @@
 import main from './main';
 import adult from './adult';
 import localhost from './main/localhost';
-import start from './core/main.ts';
+import start from './core/main';
 import type { ISite } from './types';
 import { logScript } from './utils/tampermonkey';
 

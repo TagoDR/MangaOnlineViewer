@@ -1,4 +1,4 @@
-import { applyZoom } from '../page.ts';
+import { applyZoom } from '../page';
 import { updateSettings } from '../../core/settings';
 import type { ViewMode } from '../../types';
 
