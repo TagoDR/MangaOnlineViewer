@@ -1,5 +1,5 @@
 import type { IManga } from '../../types';
-import { getLocaleString, isBookmarked, useSettings } from '../../core/settings';
+import { getLocaleString, getUserSettings, isBookmarked } from '../../core/settings';
 import listPages from './MangaPages';
 import SettingsPanel from './SettingsPanel';
 import KeybindingsPanel from './KeybindingsPanel';
@@ -35,11 +35,11 @@ const listOptions = (times: number, begin: number) =>
 
 const app = (manga: IManga, begin = 1) => `
   <div id='MangaOnlineViewer'
-       class='${useSettings().colorScheme} 
-    ${useSettings().hidePageControls ? 'hideControls' : ''}
+       class='${getUserSettings().colorScheme} 
+    ${getUserSettings().hidePageControls ? 'hideControls' : ''}
     ${isBookmarked() ? 'bookmarked' : ''}'
-       data-theme='${useSettings().theme}'>
-    <header id='Header' class='${useSettings().header}'>
+       data-theme='${getUserSettings().theme}'>
+    <header id='Header' class='${getUserSettings().header}'>
       <div id='menu'>
         ${IconMenu2}
       </div>
@@ -98,10 +98,10 @@ const app = (manga: IManga, begin = 1) => `
         <output id='ZoomVal'
                 class='RangeValue'
                 for='Zoom'>
-            ${useSettings().defaultZoom}%
+            ${getUserSettings().defaultZoom}%
         </output>
         <input type='range'
-               value='${useSettings().defaultZoom}'
+               value='${getUserSettings().defaultZoom}'
                name='Zoom'
                id='Zoom'
                min='1'
@@ -147,8 +147,8 @@ const app = (manga: IManga, begin = 1) => `
         </div>
       </nav>
     </header>
-    <main id='Chapter' class='${useSettings().fitWidthIfOversize ? 'fitWidthIfOversize' : ''}
-      ${useSettings().viewMode}'>
+    <main id='Chapter' class='${getUserSettings().fitWidthIfOversize ? 'fitWidthIfOversize' : ''}
+      ${getUserSettings().viewMode}'>
       ${listPages(manga.pages, begin).join('')}
     </main>
     <section id='CommentsPainel' class='hide'>
@@ -162,7 +162,7 @@ const app = (manga: IManga, begin = 1) => `
           ${manga.comments?.outerHTML}
       </div>
     </section>
-    <nav id='Navigation' class='panel ${useSettings().showThumbnails ? '' : 'disabled'}'>
+    <nav id='Navigation' class='panel ${getUserSettings().showThumbnails ? '' : 'disabled'}'>
       <div id='NavigationCounters' class='ControlLabel'>
         ${IconCategory}
         <i>0</i> / <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b>

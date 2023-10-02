@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { getBrowser, getEngine, getInfoGM, logScript } from '../utils/tampermonkey';
 import type { IManga, ISite } from '../types';
 import formatPage from './viewer';
-import { getLocaleString, isBookmarked, useSettings } from './settings';
+import { getLocaleString, getUserSettings, isBookmarked } from './settings';
 import sweetalertStyle from '../display/styles/externalStyle';
 import startButton from '../display/styles/startButton.css?inline';
 import { testAttribute, testElement, testFunc, testTime, testVariable } from './check';
@@ -187,7 +187,7 @@ async function preparePage(site: ISite) {
     formatPage(manga);
   };
 
-  switch (site.start ?? useSettings()?.loadMode) {
+  switch (site.start ?? getUserSettings()?.loadMode) {
     case 'never':
       createLateStartButton(site, manga.begin);
       break;

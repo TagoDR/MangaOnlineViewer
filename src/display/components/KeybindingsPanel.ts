@@ -1,23 +1,23 @@
 import { IconDeviceFloppy, IconPencil, IconX } from './icons';
-import { getLocaleString, useSettings } from '../../core/settings';
+import { getLocaleString, getUserSettings } from '../../core/settings';
 
 export const keybindList = () =>
-  Object.keys(useSettings().keybinds).map((kb) => {
-    const keys = useSettings().keybinds[kb]?.length
-      ? useSettings()
+  Object.keys(getUserSettings().keybinds).map((kb) => {
+    const keys = getUserSettings().keybinds[kb]?.length
+      ? getUserSettings()
           .keybinds[kb]?.map((key) => `<kbd class='dark'>${key}</kbd>`)
           .join(' / ')
       : '';
     return `<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
   });
 export const keybindEditor = () =>
-  Object.keys(useSettings().keybinds)
+  Object.keys(getUserSettings().keybinds)
     .map(
       // Language=html
       (kb) =>
         `<label for='${kb}'>${getLocaleString(kb)}:</label>
         <input type='text' class='KeybindInput' id='${kb}' name='${kb}'
-               value='${useSettings().keybinds[kb]?.join(' , ') ?? ''}'>`,
+               value='${getUserSettings().keybinds[kb]?.join(' , ') ?? ''}'>`,
     )
     .concat(`<div id='HotKeysRules'> ${getLocaleString('KEYBIND_RULES')}</div>`);
 

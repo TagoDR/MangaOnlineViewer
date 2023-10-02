@@ -1,15 +1,15 @@
-import { updateSettings, useSettings } from '../../core/settings';
+import { getUserSettings, updateSettings } from '../../core/settings';
 import { addCustomTheme, refreshThemes } from '../themes';
 import type { Shade } from '../../types';
 
 function theming() {
   // ColorScheme Selector
   function changeColorScheme() {
-    const isDark = useSettings().colorScheme === 'dark';
+    const isDark = getUserSettings().colorScheme === 'dark';
     updateSettings({ colorScheme: isDark ? 'light' : 'dark' });
     const elem = document.getElementById('MangaOnlineViewer');
     elem?.classList.remove(isDark ? 'dark' : 'light');
-    elem?.classList.add(useSettings().colorScheme);
+    elem?.classList.add(getUserSettings().colorScheme);
   }
 
   document.querySelector('#ColorScheme')?.addEventListener('click', changeColorScheme);

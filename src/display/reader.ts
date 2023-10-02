@@ -1,5 +1,5 @@
 import cssStyles from './styles/styles';
-import { useSettings } from '../core/settings';
+import { getUserSettings } from '../core/settings';
 import { themesCSS } from './themes';
 import type { IManga } from '../types';
 import externalCSS from './styles/externalStyle';
@@ -14,7 +14,7 @@ ${wrapStyle('reader', cssStyles)}
 ${themesCSS}
 ${wrapStyle(
   'MinZoom',
-  `#MangaOnlineViewer .PageContent .PageImg {min-width: ${useSettings().minZoom}vw;}`,
+  `#MangaOnlineViewer .PageContent .PageImg {min-width: ${getUserSettings().minZoom}vw;}`,
 )}
 `;
 }

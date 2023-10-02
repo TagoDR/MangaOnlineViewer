@@ -1,5 +1,5 @@
 import { keybindEditor, keybindList } from '../components/KeybindingsPanel';
-import { updateSettings, useSettings } from '../../core/settings';
+import { getUserSettings, updateSettings } from '../../core/settings';
 import { isNothing } from '../../utils/checks';
 import keybindings from './keybindings';
 
@@ -43,8 +43,8 @@ function panels() {
   }
 
   function saveKeybindings() {
-    const newkeybinds: Record<string, string[] | undefined> = useSettings().keybinds;
-    Object.keys(useSettings().keybinds).forEach((kb) => {
+    const newkeybinds: Record<string, string[] | undefined> = getUserSettings().keybinds;
+    Object.keys(getUserSettings().keybinds).forEach((kb) => {
       const keys = document
         .querySelector<HTMLInputElement>(`#${kb}`)
         ?.value.split(',')

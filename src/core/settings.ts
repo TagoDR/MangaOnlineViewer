@@ -70,7 +70,7 @@ export function useSettingsValue(key: SettingsKey) {
   return settings[key];
 }
 
-export function useSettings() {
+export function getUserSettings() {
   return settings;
 }
 

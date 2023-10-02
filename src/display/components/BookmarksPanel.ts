@@ -1,13 +1,13 @@
 import { IconExternalLink, IconTrash, IconX } from './icons';
-import { getLocaleString, useSettings } from '../../core/settings';
+import { getLocaleString, getUserSettings } from '../../core/settings';
 import { isEmpty } from '../../utils/checks';
 
 const listBookmarks = () => {
-  if (isEmpty(useSettings().bookmarks)) {
+  if (isEmpty(getUserSettings().bookmarks)) {
     return [getLocaleString('LIST_EMPTY')];
   }
 
-  return useSettings().bookmarks.map(
+  return getUserSettings().bookmarks.map(
     (mark, index) => `
       <div id='Bookmark${index + 1}' class='BookmarkItem'>
         <span class='bookmarkData bookmarkDate'>

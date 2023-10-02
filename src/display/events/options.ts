@@ -1,5 +1,10 @@
 import Swal, { type SweetAlertOptions } from 'sweetalert2';
-import { getLocaleString, resetSettings, updateSettings, useSettings } from '../../core/settings';
+import {
+  getLocaleString,
+  getUserSettings,
+  resetSettings,
+  updateSettings,
+} from '../../core/settings';
 import type { Header, LoadMode } from '../../types';
 import { applyZoom } from '../page.ts';
 import { replaceStyleSheet } from '../../utils/css';
@@ -77,7 +82,7 @@ function options() {
   function checkLazyLoad(event: Event) {
     updateSettings({ lazyLoadImages: (event.currentTarget as HTMLInputElement).checked });
     const start = document.querySelector<HTMLDivElement>('.lazyStart');
-    if (useSettings().lazyLoadImages) {
+    if (getUserSettings().lazyLoadImages) {
       start?.classList.add('show');
     } else {
       start?.classList.remove('show');

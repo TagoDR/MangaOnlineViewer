@@ -1,13 +1,13 @@
-import { updateSettings, useSettings } from '../../core/settings';
-import { applyZoom } from '../page.ts';
+import { getUserSettings, updateSettings } from '../../core/settings';
+import { applyZoom } from '../page';
 import type { ZoomMode } from '../../types';
 
 function changeGlobalZoom(value: number | ZoomMode) {
   return () => {
     if (typeof value !== 'number') {
-      useSettings().zoomMode = value;
+      getUserSettings().zoomMode = value;
     } else {
-      useSettings().zoomMode = 'percent';
+      getUserSettings().zoomMode = 'percent';
     }
 
     const globalZoomVal = document.querySelector('#ZoomVal');
@@ -19,7 +19,7 @@ function changeGlobalZoom(value: number | ZoomMode) {
 function changeZoomByStep(sign = 1) {
   return () => {
     const globalZoom = document.querySelector<HTMLInputElement>('#Zoom');
-    const ratio = parseInt(globalZoom!.value, 10) + sign * useSettings().zoomStep;
+    const ratio = parseInt(globalZoom!.value, 10) + sign * getUserSettings().zoomStep;
     globalZoom!.value = ratio.toString();
     globalZoom?.dispatchEvent(new Event('input', { bubbles: true }));
   };
@@ -32,7 +32,7 @@ function zoom() {
     updateSettings({ zoomMode: target });
     changeGlobalZoom(target)();
     const percent = document.querySelector<HTMLDivElement>('.DefaultZoom');
-    if (useSettings().zoomMode === 'percent') {
+    if (getUserSettings().zoomMode === 'percent') {
       percent?.classList.add('show');
     } else {
       percent?.classList.remove('show');

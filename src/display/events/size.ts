@@ -1,4 +1,4 @@
-import { useSettings } from '../../core/settings';
+import { getUserSettings } from '../../core/settings';
 import { applyZoom } from '../page.ts';
 
 function size() {
@@ -8,7 +8,7 @@ function size() {
       const img = (event.currentTarget as HTMLElement).parentElement?.parentElement?.querySelector(
         '.PageImg',
       ) as HTMLImageElement;
-      const ratio = (img.width / img.naturalWidth) * (100 + useSettings().zoomStep);
+      const ratio = (img.width / img.naturalWidth) * (100 + getUserSettings().zoomStep);
       applyZoom(ratio, `#${img.getAttribute('id')}`);
     });
   }
@@ -21,7 +21,7 @@ function size() {
       const img = (event.currentTarget as HTMLElement).parentElement?.parentElement?.querySelector(
         '.PageImg',
       ) as HTMLImageElement;
-      const ratio = (img.width / img.naturalWidth) * (100 - useSettings().zoomStep);
+      const ratio = (img.width / img.naturalWidth) * (100 - getUserSettings().zoomStep);
       applyZoom(ratio, `#${img.getAttribute('id')}`);
     });
   }
