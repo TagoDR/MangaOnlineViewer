@@ -19,10 +19,8 @@ export default {
       .map(async (_, i) => {
         const url = `chapterfun.ashx?cid=${unsafeWindow.chapter_id}&page=${i}&key=${key}`;
         const api: string = await fetch(url, options).then(async (res) => res.text());
-        let d: string[];
         // eslint-disable-next-line no-eval
         (0, eval)(api);
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         return d;
       });
