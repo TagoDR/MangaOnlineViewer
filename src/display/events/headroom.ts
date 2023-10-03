@@ -23,7 +23,7 @@ function headroom(showEnd = 0) {
     if (
       showEnd &&
       getUserSettings().zoomMode !== 'height' &&
-      scrollY + window.innerHeight + showEnd > document.body.offsetHeight
+      scrollY + window.innerHeight + showEnd > document.body.scrollHeight
     ) {
       setScrollDirection('end');
     } else if (scrollY > prevOffset && scrollY > 50) {
