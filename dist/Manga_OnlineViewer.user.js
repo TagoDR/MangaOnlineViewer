@@ -3226,13 +3226,13 @@ ${wrapStyle(
       ${getUserSettings().viewMode}'>
       ${listPages(manga.pages, begin).join("")}
     </main>
-    <section id='CommentsPainel' class='hide'>
+    <section id='CommentsPainel' class='${manga.comments ? "" : "hide"}'>
       <div id='CommentsButton' class='ControlButton' type='button'
         title='${getLocaleString("DISPLAY_COMMENTS")}'>
         ${IconMessage}
         ${getLocaleString("DISPLAY_COMMENTS")}
       </div>
-      <div id='CommentsArea' class='${manga.comments ? "" : "hide"} 
+      <div id='CommentsArea' class='hide' 
           ${isBackgroundColorDark(manga.comments ?? document.body) ? "dark" : "light"}'>
           ${manga.comments?.outerHTML}
       </div>
@@ -3427,7 +3427,7 @@ ${wrapStyle(
     };
     function toggleScrollDirection() {
       const { scrollY } = window;
-      if (showEnd && getUserSettings().zoomMode !== "height" && scrollY + window.innerHeight + showEnd > document.body.offsetHeight) {
+      if (showEnd && getUserSettings().zoomMode !== "height" && scrollY + window.innerHeight + showEnd > document.body.scrollHeight) {
         setScrollDirection("end");
       } else if (scrollY > prevOffset && scrollY > 50) {
         setScrollDirection("hide");
@@ -4215,6 +4215,7 @@ ${wrapStyle(
     if (manga.before !== void 0) {
       await manga.before(manga.begin);
     }
+    manga.comments = document.querySelector("#disqus_thread, #fb-comments");
     logScript("Rebuilding Site");
     setTimeout(() => {
       try {
@@ -4488,7 +4489,6 @@ ${wrapStyle(
       manga.title = document.querySelector("title")?.textContent?.trim();
     }
     manga.begin = isBookmarked() ?? manga.begin ?? 1;
-    manga.comments = document.querySelector("#disqus_thread, #fb-comments");
     const style = document.createElement("style");
     style.appendChild(document.createTextNode(sweetalertStyle));
     document.body.appendChild(style);
