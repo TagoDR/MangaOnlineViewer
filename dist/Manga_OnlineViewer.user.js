@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans
-// @version       2023.10.01
+// @version       2023.10.03
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -540,7 +540,6 @@
       const src = Array(unsafeWindow.imagecount).fill(0).map(async (_, i) => {
         const url = `chapterfun.ashx?cid=${unsafeWindow.chapterid ?? unsafeWindow.chapter_id}&page=${i}&key=${key}`;
         const api = await fetch(url, options).then(async (res) => res.text());
-        let d;
         (0, eval)(api);
         return d;
       });
@@ -869,7 +868,6 @@
       const src = Array(unsafeWindow.total_pages).fill(0).map(async (_, i) => {
         const url = `chapterfun.ashx?cid=${unsafeWindow.chapter_id}&page=${i}&key=${key}`;
         const api = await fetch(url, options).then(async (res) => res.text());
-        let d;
         (0, eval)(api);
         return d;
       });
@@ -2022,7 +2020,7 @@
     settings$1.viewMode = "WebComic";
     settings$1.header = "click";
   }
-  function useSettings() {
+  function getUserSettings() {
     return settings$1;
   }
   function getLocaleString(name) {
@@ -2664,8 +2662,8 @@
   function getNormalThemeCSS(theme) {
     return generateThemeCSS(
       theme.name,
-      theme[useSettings().themeShade],
-      useSettings().themeShade < 500 ? theme["900"] : theme["50"]
+      theme[getUserSettings().themeShade],
+      getUserSettings().themeShade < 500 ? theme["900"] : theme["50"]
     );
   }
   function getCustomThemeCSS(hex) {
@@ -2680,7 +2678,7 @@
   const themes = () => Object.values(colors);
   const themesSelector = [...Object.keys(colors).map((color) => colors[color].name)].map(
     (theme) => `
-<span class='${theme} ThemeRadio ${useSettings().theme === theme ? "selected" : ""}'
+<span class='${theme} ThemeRadio ${getUserSettings().theme === theme ? "selected" : ""}'
       title='${theme}'      
 >
 ${IconCheck}
@@ -2691,9 +2689,9 @@ ${IconCheck}
     themes().forEach((theme) => {
       replaceStyleSheet(theme.name, getNormalThemeCSS(theme));
     });
-    replaceStyleSheet("custom", getCustomThemeCSS(useSettings().customTheme));
+    replaceStyleSheet("custom", getCustomThemeCSS(getUserSettings().customTheme));
   }
-  const themesCSS = themes().map(addTheme).join("") + wrapStyle("custom", getCustomThemeCSS(useSettings().customTheme));
+  const themesCSS = themes().map(addTheme).join("") + wrapStyle("custom", getCustomThemeCSS(getUserSettings().customTheme));
 
   const sweetalert = ".swal2-popup.swal2-toast{box-sizing:border-box;grid-column:1/4!important;grid-row:1/4!important;grid-template-columns:1fr 99fr 1fr;padding:1em;overflow-y:hidden;background:#fff;box-shadow:0 0 1px rgba(0,0,0,.075),0 1px 2px rgba(0,0,0,.075),1px 2px 4px rgba(0,0,0,.075),1px 3px 8px rgba(0,0,0,.075),2px 4px 16px rgba(0,0,0,.075);pointer-events:all}.swal2-popup.swal2-toast>*{grid-column:2}.swal2-popup.swal2-toast .swal2-title{margin:.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-popup.swal2-toast .swal2-loading{justify-content:center}.swal2-popup.swal2-toast .swal2-input{height:2em;margin:.5em;font-size:1em}.swal2-popup.swal2-toast .swal2-validation-message{font-size:1em}.swal2-popup.swal2-toast .swal2-footer{margin:.5em 0 0;padding:.5em 0 0;font-size:.8em}.swal2-popup.swal2-toast .swal2-close{grid-column:3/3;grid-row:1/99;align-self:center;width:.8em;height:.8em;margin:0;font-size:2em}.swal2-popup.swal2-toast .swal2-html-container{margin:.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-popup.swal2-toast .swal2-html-container:empty{padding:0}.swal2-popup.swal2-toast .swal2-loader{grid-column:1;grid-row:1/99;align-self:center;width:2em;height:2em;margin:.25em}.swal2-popup.swal2-toast .swal2-icon{grid-column:1;grid-row:1/99;align-self:center;width:2em;min-width:2em;height:2em;margin:0 .5em 0 0}.swal2-popup.swal2-toast .swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:1.8em;font-weight:700}.swal2-popup.swal2-toast .swal2-icon.swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line]{top:.875em;width:1.375em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:.3125em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:.3125em}.swal2-popup.swal2-toast .swal2-actions{justify-content:flex-start;height:auto;margin:0;margin-top:.5em;padding:0 .5em}.swal2-popup.swal2-toast .swal2-styled{margin:.25em .5em;padding:.4em .6em;font-size:1em}.swal2-popup.swal2-toast .swal2-success{border-color:#a5dc86}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line]{position:absolute;width:1.6em;height:3em;transform:rotate(45deg);border-radius:50%}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left]{top:-.8em;left:-.5em;transform:rotate(-45deg);transform-origin:2em 2em;border-radius:4em 0 0 4em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right]{top:-.25em;left:.9375em;transform-origin:0 1.5em;border-radius:0 4em 4em 0}.swal2-popup.swal2-toast .swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-popup.swal2-toast .swal2-success .swal2-success-fix{top:0;left:.4375em;width:.4375em;height:2.6875em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line]{height:.3125em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip]{top:1.125em;left:.1875em;width:.75em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=long]{top:.9375em;right:.1875em;width:1.375em}.swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip{-webkit-animation:swal2-toast-animate-success-line-tip .75s;animation:swal2-toast-animate-success-line-tip .75s}.swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long{-webkit-animation:swal2-toast-animate-success-line-long .75s;animation:swal2-toast-animate-success-line-long .75s}.swal2-popup.swal2-toast.swal2-show{-webkit-animation:swal2-toast-show .5s;animation:swal2-toast-show .5s}.swal2-popup.swal2-toast.swal2-hide{-webkit-animation:swal2-toast-hide .1s forwards;animation:swal2-toast-hide .1s forwards}.swal2-container{display:grid;position:fixed;z-index:1060;top:0;right:0;bottom:0;left:0;box-sizing:border-box;grid-template-areas:\"top-start     top            top-end\" \"center-start  center         center-end\" \"bottom-start  bottom-center  bottom-end\";grid-template-rows:minmax(-webkit-min-content,auto) minmax(-webkit-min-content,auto) minmax(-webkit-min-content,auto);grid-template-rows:minmax(min-content,auto) minmax(min-content,auto) minmax(min-content,auto);height:100%;padding:.625em;overflow-x:hidden;transition:background-color .1s;-webkit-overflow-scrolling:touch}.swal2-container.swal2-backdrop-show,.swal2-container.swal2-noanimation{background:rgba(0,0,0,.4)}.swal2-container.swal2-backdrop-hide{background:0 0!important}.swal2-container.swal2-bottom-start,.swal2-container.swal2-center-start,.swal2-container.swal2-top-start{grid-template-columns:minmax(0,1fr) auto auto}.swal2-container.swal2-bottom,.swal2-container.swal2-center,.swal2-container.swal2-top{grid-template-columns:auto minmax(0,1fr) auto}.swal2-container.swal2-bottom-end,.swal2-container.swal2-center-end,.swal2-container.swal2-top-end{grid-template-columns:auto auto minmax(0,1fr)}.swal2-container.swal2-top-start>.swal2-popup{align-self:start}.swal2-container.swal2-top>.swal2-popup{grid-column:2;align-self:start;justify-self:center}.swal2-container.swal2-top-end>.swal2-popup,.swal2-container.swal2-top-right>.swal2-popup{grid-column:3;align-self:start;justify-self:end}.swal2-container.swal2-center-left>.swal2-popup,.swal2-container.swal2-center-start>.swal2-popup{grid-row:2;align-self:center}.swal2-container.swal2-center>.swal2-popup{grid-column:2;grid-row:2;align-self:center;justify-self:center}.swal2-container.swal2-center-end>.swal2-popup,.swal2-container.swal2-center-right>.swal2-popup{grid-column:3;grid-row:2;align-self:center;justify-self:end}.swal2-container.swal2-bottom-left>.swal2-popup,.swal2-container.swal2-bottom-start>.swal2-popup{grid-column:1;grid-row:3;align-self:end}.swal2-container.swal2-bottom>.swal2-popup{grid-column:2;grid-row:3;justify-self:center;align-self:end}.swal2-container.swal2-bottom-end>.swal2-popup,.swal2-container.swal2-bottom-right>.swal2-popup{grid-column:3;grid-row:3;align-self:end;justify-self:end}.swal2-container.swal2-grow-fullscreen>.swal2-popup,.swal2-container.swal2-grow-row>.swal2-popup{grid-column:1/4;width:100%}.swal2-container.swal2-grow-column>.swal2-popup,.swal2-container.swal2-grow-fullscreen>.swal2-popup{grid-row:1/4;align-self:stretch}.swal2-container.swal2-no-transition{transition:none!important}.swal2-popup{display:none;position:relative;box-sizing:border-box;grid-template-columns:minmax(0,100%);width:32em;max-width:100%;padding:0 0 1.25em;border:none;border-radius:5px;background:#fff;color:#545454;font-family:inherit;font-size:1rem}.swal2-popup:focus{outline:0}.swal2-popup.swal2-loading{overflow-y:hidden}.swal2-title{position:relative;max-width:100%;margin:0;padding:.8em 1em 0;color:inherit;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;word-wrap:break-word}.swal2-actions{display:flex;z-index:1;box-sizing:border-box;flex-wrap:wrap;align-items:center;justify-content:center;width:auto;margin:1.25em auto 0;padding:0}.swal2-actions:not(.swal2-loading) .swal2-styled[disabled]{opacity:.4}.swal2-actions:not(.swal2-loading) .swal2-styled:hover{background-image:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1))}.swal2-actions:not(.swal2-loading) .swal2-styled:active{background-image:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2))}.swal2-loader{display:none;align-items:center;justify-content:center;width:2.2em;height:2.2em;margin:0 1.875em;-webkit-animation:swal2-rotate-loading 1.5s linear 0s infinite normal;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;border-width:.25em;border-style:solid;border-radius:100%;border-color:#2778c4 transparent #2778c4 transparent}.swal2-styled{margin:.3125em;padding:.625em 1.1em;transition:box-shadow .1s;box-shadow:0 0 0 3px transparent;font-weight:500}.swal2-styled:not([disabled]){cursor:pointer}.swal2-styled.swal2-confirm{border:0;border-radius:.25em;background:initial;background-color:#7066e0;color:#fff;font-size:1em}.swal2-styled.swal2-confirm:focus{box-shadow:0 0 0 3px rgba(112,102,224,.5)}.swal2-styled.swal2-deny{border:0;border-radius:.25em;background:initial;background-color:#dc3741;color:#fff;font-size:1em}.swal2-styled.swal2-deny:focus{box-shadow:0 0 0 3px rgba(220,55,65,.5)}.swal2-styled.swal2-cancel{border:0;border-radius:.25em;background:initial;background-color:#6e7881;color:#fff;font-size:1em}.swal2-styled.swal2-cancel:focus{box-shadow:0 0 0 3px rgba(110,120,129,.5)}.swal2-styled.swal2-default-outline:focus{box-shadow:0 0 0 3px rgba(100,150,200,.5)}.swal2-styled:focus{outline:0}.swal2-styled::-moz-focus-inner{border:0}.swal2-footer{justify-content:center;margin:1em 0 0;padding:1em 1em 0;border-top:1px solid #eee;color:inherit;font-size:1em}.swal2-timer-progress-bar-container{position:absolute;right:0;bottom:0;left:0;grid-column:auto!important;overflow:hidden;border-bottom-right-radius:5px;border-bottom-left-radius:5px}.swal2-timer-progress-bar{width:100%;height:.25em;background:rgba(0,0,0,.2)}.swal2-image{max-width:100%;margin:2em auto 1em}.swal2-close{z-index:2;align-items:center;justify-content:center;width:1.2em;height:1.2em;margin-top:0;margin-right:0;margin-bottom:-1.2em;padding:0;overflow:hidden;transition:color .1s,box-shadow .1s;border:none;border-radius:5px;background:0 0;color:#ccc;font-family:serif;font-family:monospace;font-size:2.5em;cursor:pointer;justify-self:end}.swal2-close:hover{transform:none;background:0 0;color:#f27474}.swal2-close:focus{outline:0;box-shadow:inset 0 0 0 3px rgba(100,150,200,.5)}.swal2-close::-moz-focus-inner{border:0}.swal2-html-container{z-index:1;justify-content:center;margin:1em 1.6em .3em;padding:0;overflow:auto;color:inherit;font-size:1.125em;font-weight:400;line-height:normal;text-align:center;word-wrap:break-word;word-break:break-word}.swal2-checkbox,.swal2-file,.swal2-input,.swal2-radio,.swal2-select,.swal2-textarea{margin:1em 2em 3px}.swal2-file,.swal2-input,.swal2-textarea{box-sizing:border-box;width:auto;transition:border-color .1s,box-shadow .1s;border:1px solid #d9d9d9;border-radius:.1875em;background:inherit;box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px transparent;color:inherit;font-size:1.125em}.swal2-file.swal2-inputerror,.swal2-input.swal2-inputerror,.swal2-textarea.swal2-inputerror{border-color:#f27474!important;box-shadow:0 0 2px #f27474!important}.swal2-file:focus,.swal2-input:focus,.swal2-textarea:focus{border:1px solid #b4dbed;outline:0;box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(100,150,200,.5)}.swal2-file::-moz-placeholder,.swal2-input::-moz-placeholder,.swal2-textarea::-moz-placeholder{color:#ccc}.swal2-file:-ms-input-placeholder,.swal2-input:-ms-input-placeholder,.swal2-textarea:-ms-input-placeholder{color:#ccc}.swal2-file::placeholder,.swal2-input::placeholder,.swal2-textarea::placeholder{color:#ccc}.swal2-range{margin:1em 2em 3px;background:#fff}.swal2-range input{width:80%}.swal2-range output{width:20%;color:inherit;font-weight:600;text-align:center}.swal2-range input,.swal2-range output{height:2.625em;padding:0;font-size:1.125em;line-height:2.625em}.swal2-input{height:2.625em;padding:0 .75em}.swal2-file{width:75%;margin-right:auto;margin-left:auto;background:inherit;font-size:1.125em}.swal2-textarea{height:6.75em;padding:.75em}.swal2-select{min-width:50%;max-width:100%;padding:.375em .625em;background:inherit;color:inherit;font-size:1.125em}.swal2-checkbox,.swal2-radio{align-items:center;justify-content:center;background:#fff;color:inherit}.swal2-checkbox label,.swal2-radio label{margin:0 .6em;font-size:1.125em}.swal2-checkbox input,.swal2-radio input{flex-shrink:0;margin:0 .4em}.swal2-input-label{display:flex;justify-content:center;margin:1em auto 0}.swal2-validation-message{align-items:center;justify-content:center;margin:1em 0 0;padding:.625em;overflow:hidden;background:#f0f0f0;color:#666;font-size:1em;font-weight:300}.swal2-validation-message::before{content:\"!\";display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 .625em;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center}.swal2-icon{position:relative;box-sizing:content-box;justify-content:center;width:5em;height:5em;margin:2.5em auto .6em;border:.25em solid transparent;border-radius:50%;border-color:#000;font-family:inherit;line-height:5em;cursor:default;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:3.75em}.swal2-icon.swal2-error{border-color:#f27474;color:#f27474}.swal2-icon.swal2-error .swal2-x-mark{position:relative;flex-grow:1}.swal2-icon.swal2-error [class^=swal2-x-mark-line]{display:block;position:absolute;top:2.3125em;width:2.9375em;height:.3125em;border-radius:.125em;background-color:#f27474}.swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:1.0625em;transform:rotate(45deg)}.swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:1em;transform:rotate(-45deg)}.swal2-icon.swal2-error.swal2-icon-show{-webkit-animation:swal2-animate-error-icon .5s;animation:swal2-animate-error-icon .5s}.swal2-icon.swal2-error.swal2-icon-show .swal2-x-mark{-webkit-animation:swal2-animate-error-x-mark .5s;animation:swal2-animate-error-x-mark .5s}.swal2-icon.swal2-warning{border-color:#facea8;color:#f8bb86}.swal2-icon.swal2-warning.swal2-icon-show{-webkit-animation:swal2-animate-error-icon .5s;animation:swal2-animate-error-icon .5s}.swal2-icon.swal2-warning.swal2-icon-show .swal2-icon-content{-webkit-animation:swal2-animate-i-mark .5s;animation:swal2-animate-i-mark .5s}.swal2-icon.swal2-info{border-color:#9de0f6;color:#3fc3ee}.swal2-icon.swal2-info.swal2-icon-show{-webkit-animation:swal2-animate-error-icon .5s;animation:swal2-animate-error-icon .5s}.swal2-icon.swal2-info.swal2-icon-show .swal2-icon-content{-webkit-animation:swal2-animate-i-mark .8s;animation:swal2-animate-i-mark .8s}.swal2-icon.swal2-question{border-color:#c9dae1;color:#87adbd}.swal2-icon.swal2-question.swal2-icon-show{-webkit-animation:swal2-animate-error-icon .5s;animation:swal2-animate-error-icon .5s}.swal2-icon.swal2-question.swal2-icon-show .swal2-icon-content{-webkit-animation:swal2-animate-question-mark .8s;animation:swal2-animate-question-mark .8s}.swal2-icon.swal2-success{border-color:#a5dc86;color:#a5dc86}.swal2-icon.swal2-success [class^=swal2-success-circular-line]{position:absolute;width:3.75em;height:7.5em;transform:rotate(45deg);border-radius:50%}.swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=left]{top:-.4375em;left:-2.0635em;transform:rotate(-45deg);transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}.swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=right]{top:-.6875em;left:1.875em;transform:rotate(-45deg);transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}.swal2-icon.swal2-success .swal2-success-ring{position:absolute;z-index:2;top:-.25em;left:-.25em;box-sizing:content-box;width:100%;height:100%;border:.25em solid rgba(165,220,134,.3);border-radius:50%}.swal2-icon.swal2-success .swal2-success-fix{position:absolute;z-index:1;top:.5em;left:1.625em;width:.4375em;height:5.625em;transform:rotate(-45deg)}.swal2-icon.swal2-success [class^=swal2-success-line]{display:block;position:absolute;z-index:2;height:.3125em;border-radius:.125em;background-color:#a5dc86}.swal2-icon.swal2-success [class^=swal2-success-line][class$=tip]{top:2.875em;left:.8125em;width:1.5625em;transform:rotate(45deg)}.swal2-icon.swal2-success [class^=swal2-success-line][class$=long]{top:2.375em;right:.5em;width:2.9375em;transform:rotate(-45deg)}.swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-tip{-webkit-animation:swal2-animate-success-line-tip .75s;animation:swal2-animate-success-line-tip .75s}.swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-long{-webkit-animation:swal2-animate-success-line-long .75s;animation:swal2-animate-success-line-long .75s}.swal2-icon.swal2-success.swal2-icon-show .swal2-success-circular-line-right{-webkit-animation:swal2-rotate-success-circular-line 4.25s ease-in;animation:swal2-rotate-success-circular-line 4.25s ease-in}.swal2-progress-steps{flex-wrap:wrap;align-items:center;max-width:100%;margin:1.25em auto;padding:0;background:inherit;font-weight:600}.swal2-progress-steps li{display:inline-block;position:relative}.swal2-progress-steps .swal2-progress-step{z-index:20;flex-shrink:0;width:2em;height:2em;border-radius:2em;background:#2778c4;color:#fff;line-height:2em;text-align:center}.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step{background:#2778c4}.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step{background:#add8e6;color:#fff}.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line{background:#add8e6}.swal2-progress-steps .swal2-progress-step-line{z-index:10;flex-shrink:0;width:2.5em;height:.4em;margin:0 -1px;background:#2778c4}[class^=swal2]{-webkit-tap-highlight-color:transparent}.swal2-show{-webkit-animation:swal2-show .3s;animation:swal2-show .3s}.swal2-hide{-webkit-animation:swal2-hide .15s forwards;animation:swal2-hide .15s forwards}.swal2-noanimation{transition:none}.swal2-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}.swal2-rtl .swal2-close{margin-right:initial;margin-left:0}.swal2-rtl .swal2-timer-progress-bar{right:0;left:auto}@-webkit-keyframes swal2-toast-show{0%{transform:translateY(-.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0)}}@keyframes swal2-toast-show{0%{transform:translateY(-.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0)}}@-webkit-keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@-webkit-keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@-webkit-keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}@keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}@-webkit-keyframes swal2-show{0%{transform:scale(.7)}45%{transform:scale(1.05)}80%{transform:scale(.95)}100%{transform:scale(1)}}@keyframes swal2-show{0%{transform:scale(.7)}45%{transform:scale(1.05)}80%{transform:scale(.95)}100%{transform:scale(1)}}@-webkit-keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(.5);opacity:0}}@keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(.5);opacity:0}}@-webkit-keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@-webkit-keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@-webkit-keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@-webkit-keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(.4);opacity:0}50%{margin-top:1.625em;transform:scale(.4);opacity:0}80%{margin-top:-.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(.4);opacity:0}50%{margin-top:1.625em;transform:scale(.4);opacity:0}80%{margin-top:-.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@-webkit-keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0);opacity:1}}@-webkit-keyframes swal2-rotate-loading{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes swal2-rotate-loading{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@-webkit-keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@-webkit-keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:.4}50%{transform:rotateZ(15deg);opacity:.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:.4}50%{transform:rotateZ(15deg);opacity:.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){overflow:hidden}body.swal2-height-auto{height:auto!important}body.swal2-no-backdrop .swal2-container{background-color:transparent!important;pointer-events:none}body.swal2-no-backdrop .swal2-container .swal2-popup{pointer-events:all}body.swal2-no-backdrop .swal2-container .swal2-modal{box-shadow:0 0 10px rgba(0,0,0,.4)}@media print{body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){overflow-y:scroll!important}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown)>[aria-hidden=true]{display:none}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) .swal2-container{position:static!important}}body.swal2-toast-shown .swal2-container{box-sizing:border-box;width:360px;max-width:100%;background-color:transparent;pointer-events:none}body.swal2-toast-shown .swal2-container.swal2-top{top:0;right:auto;bottom:auto;left:50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-top-end,body.swal2-toast-shown .swal2-container.swal2-top-right{top:0;right:0;bottom:auto;left:auto}body.swal2-toast-shown .swal2-container.swal2-top-left,body.swal2-toast-shown .swal2-container.swal2-top-start{top:0;right:auto;bottom:auto;left:0}body.swal2-toast-shown .swal2-container.swal2-center-left,body.swal2-toast-shown .swal2-container.swal2-center-start{top:50%;right:auto;bottom:auto;left:0;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-center{top:50%;right:auto;bottom:auto;left:50%;transform:translate(-50%,-50%)}body.swal2-toast-shown .swal2-container.swal2-center-end,body.swal2-toast-shown .swal2-container.swal2-center-right{top:50%;right:0;bottom:auto;left:auto;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-left,body.swal2-toast-shown .swal2-container.swal2-bottom-start{top:auto;right:auto;bottom:0;left:0}body.swal2-toast-shown .swal2-container.swal2-bottom{top:auto;right:auto;bottom:0;left:50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-end,body.swal2-toast-shown .swal2-container.swal2-bottom-right{top:auto;right:0;bottom:0;left:auto}";
 
@@ -2716,7 +2714,7 @@ ${wrapStyle("reader", cssStyles)}
 ${themesCSS}
 ${wrapStyle(
     "MinZoom",
-    `#MangaOnlineViewer .PageContent .PageImg {min-width: ${useSettings().minZoom}vw;}`
+    `#MangaOnlineViewer .PageContent .PageImg {min-width: ${getUserSettings().minZoom}vw;}`
   )}
 `;
   }
@@ -2765,7 +2763,7 @@ ${wrapStyle(
   );
 
   const localeSelector = locales.map(
-    (locale) => `<option value='${locale.ID}' ${useSettings().locale === locale.ID ? "selected" : ""}>${locale.NAME}</option>`
+    (locale) => `<option value='${locale.ID}' ${getUserSettings().locale === locale.ID ? "selected" : ""}>${locale.NAME}</option>`
   );
   const SettingsPanel = `
   <div id='SettingsOverlay' class='overlay'></div>
@@ -2794,7 +2792,7 @@ ${wrapStyle(
       <!-- =========================================================================================== -->
       <div class='ControlLabel ThemeSelector'>${getLocaleString("THEME")}:
         <span class='custom ThemeRadio 
-            ${useSettings().theme === "custom" ? "selected" : ""}'
+            ${getUserSettings().theme === "custom" ? "selected" : ""}'
               title='custom'>
         ${IconPalette}
         ${IconCheck}
@@ -2803,20 +2801,20 @@ ${wrapStyle(
       </div>
       <!-- =========================================================================================== -->
       <div id='Hue' class='ControlLabel CustomTheme ControlLabelItem 
-          ${useSettings().theme.startsWith("custom") ? "show" : ""}'>
+          ${getUserSettings().theme.startsWith("custom") ? "show" : ""}'>
         ${getLocaleString("THEME_HUE")}:
-        <input id='CustomThemeHue' type='color' value='${useSettings().customTheme}'
+        <input id='CustomThemeHue' type='color' value='${getUserSettings().customTheme}'
                class='colorpicker CustomTheme' />
       </div>
       <!-- =========================================================================================== -->
       <div id='Shade' class='ControlLabel CustomTheme ControlLabelItem
-          ${useSettings().theme.startsWith("custom") ? "" : "show"}'>
+          ${getUserSettings().theme.startsWith("custom") ? "" : "show"}'>
       <span>
         ${getLocaleString("THEME_SHADE")}:
-        <output id='themeShadeVal' class='RangeValue' for='themeShade'>${useSettings().themeShade}</output>
+        <output id='themeShadeVal' class='RangeValue' for='themeShade'>${getUserSettings().themeShade}</output>
       </span>
         <input type='range'
-               value='${useSettings().themeShade}'
+               value='${getUserSettings().themeShade}'
                name='ThemeShade'
                id='ThemeShade'
                min='100'
@@ -2829,13 +2827,13 @@ ${wrapStyle(
     <!-- =========================================================================================== -->
     <div class='ControlLabel loadMode'>${getLocaleString("DEFAULT_LOAD_MODE")}:
       <select id='loadMode'>
-        <option value='wait' ${useSettings().loadMode === "wait" ? "selected" : ""}>
+        <option value='wait' ${getUserSettings().loadMode === "wait" ? "selected" : ""}>
           ${getLocaleString("LOAD_MODE_NORMAL")}
         </option>
-        <option value='always' ${useSettings().loadMode === "always" ? "selected" : ""}>
+        <option value='always' ${getUserSettings().loadMode === "always" ? "selected" : ""}>
           ${getLocaleString("LOAD_MODE_ALWAYS")}
         </option>
-        <option value='never' ${useSettings().loadMode === "never" ? "selected" : ""}>
+        <option value='never' ${getUserSettings().loadMode === "never" ? "selected" : ""}>
           ${getLocaleString("LOAD_MODE_NEVER")}
         </option>
       </select>
@@ -2843,28 +2841,28 @@ ${wrapStyle(
     <!-- =========================================================================================== -->
     <div class='ControlLabel PagesPerSecond'>${getLocaleString("LOAD_SPEED")}:
       <select id='PagesPerSecond'>
-        <option value='3000' ${useSettings().throttlePageLoad === 3e3 ? "selected" : ""}>
+        <option value='3000' ${getUserSettings().throttlePageLoad === 3e3 ? "selected" : ""}>
             0.3(${getLocaleString("SLOWLY")})
         </option>
-        <option value='2000' ${useSettings().throttlePageLoad === 2e3 ? "selected" : ""}>
+        <option value='2000' ${getUserSettings().throttlePageLoad === 2e3 ? "selected" : ""}>
           0.5
         </option>
-        <option value='1000' ${useSettings().throttlePageLoad === 1e3 ? "selected" : ""}>
+        <option value='1000' ${getUserSettings().throttlePageLoad === 1e3 ? "selected" : ""}>
             01(${getLocaleString("NORMAL")})
         </option>
-        <option value='500' ${useSettings().throttlePageLoad === 500 ? "selected" : ""}>
+        <option value='500' ${getUserSettings().throttlePageLoad === 500 ? "selected" : ""}>
           02
         </option>
-        <option value='250' ${useSettings().throttlePageLoad === 250 ? "selected" : ""}>
+        <option value='250' ${getUserSettings().throttlePageLoad === 250 ? "selected" : ""}>
             04(${getLocaleString("FAST")})
         </option>
-        <option value='125' ${useSettings().throttlePageLoad === 125 ? "selected" : ""}>
+        <option value='125' ${getUserSettings().throttlePageLoad === 125 ? "selected" : ""}>
           08
         </option>
-        <option value='100' ${useSettings().throttlePageLoad === 100 ? "selected" : ""}>
+        <option value='100' ${getUserSettings().throttlePageLoad === 100 ? "selected" : ""}>
             10(${getLocaleString("EXTREME")})
         </option>
-        <option value='1' ${useSettings().throttlePageLoad === 1 ? "selected" : ""}>
+        <option value='1' ${getUserSettings().throttlePageLoad === 1 ? "selected" : ""}>
             ${getLocaleString("ALL_PAGES")}
         </option>
       </select>
@@ -2873,30 +2871,30 @@ ${wrapStyle(
     <div class='ControlLabel DefaultZoomMode'>
       ${getLocaleString("DEFAULT_ZOOM_MODE")}:
       <select id='DefaultZoomMode'>
-        <option value='percent' ${useSettings().zoomMode === "percent" ? "selected" : ""}>
+        <option value='percent' ${getUserSettings().zoomMode === "percent" ? "selected" : ""}>
           ${getLocaleString("PERCENT")}
         </option>
-        <option value='width' ${useSettings().zoomMode === "width" ? "selected" : ""}>
+        <option value='width' ${getUserSettings().zoomMode === "width" ? "selected" : ""}>
           ${getLocaleString("FIT_WIDTH")}
         </option>
-        <option value='height' ${useSettings().zoomMode === "height" ? "selected" : ""}>
+        <option value='height' ${getUserSettings().zoomMode === "height" ? "selected" : ""}>
           ${getLocaleString("FIT_HEIGHT")}
         </option>
       </select>
     </div>
     <!-- =========================================================================================== -->
     <div class='ControlLabel DefaultZoom ControlLabelItem
-        ${useSettings().zoomMode === "percent" ? "show" : ""}'>
+        ${getUserSettings().zoomMode === "percent" ? "show" : ""}'>
       <span>
         ${getLocaleString("DEFAULT_ZOOM")}:
         <output id='defaultZoomVal'
                 class='RangeValue'
                 for='DefaultZoom'>
-          ${useSettings().defaultZoom}%
+          ${getUserSettings().defaultZoom}%
         </output>
       </span>
       <input type='range'
-             value='${useSettings().defaultZoom}'
+             value='${getUserSettings().defaultZoom}'
              name='DefaultZoom'
              id='DefaultZoom'
              min='5'
@@ -2921,10 +2919,10 @@ ${wrapStyle(
     <div class='ControlLabel minZoom'>
     <span>
       ${getLocaleString("MINIMUM_ZOOM")}:
-      <output id='minZoomVal' class='RangeValue' for='minZoom'>${useSettings().minZoom}%</output>
+      <output id='minZoomVal' class='RangeValue' for='minZoom'>${getUserSettings().minZoom}%</output>
     </span>
       <input type='range'
-             value='${useSettings().minZoom}'
+             value='${getUserSettings().minZoom}'
              name='minZoom'
              id='minZoom'
              min='30'
@@ -2937,10 +2935,10 @@ ${wrapStyle(
     <div class='ControlLabel zoomStep'>
     <span>
       ${getLocaleString("ZOOM_STEP")}:
-      <output id='zoomStepVal' class='RangeValue' for='zoomStep'>${useSettings().zoomStep}%</output>
+      <output id='zoomStepVal' class='RangeValue' for='zoomStep'>${getUserSettings().zoomStep}%</output>
     </span>
       <input type='range'
-             value='${useSettings().zoomStep}'
+             value='${getUserSettings().zoomStep}'
              name='zoomStep'
              id='zoomStep'
              min='5'
@@ -2952,65 +2950,65 @@ ${wrapStyle(
     <!-- =========================================================================================== -->
     <div class='ControlLabel viewMode'>${getLocaleString("DEFAULT_VIEW_MODE")}:
       <select id='viewMode'>
-        <option value='Vertical' ${useSettings().viewMode === "Vertical" ? "selected" : ""}>
+        <option value='Vertical' ${getUserSettings().viewMode === "Vertical" ? "selected" : ""}>
           ${getLocaleString("VIEW_MODE_VERTICAL")}
         </option>
-        <option value='WebComic' ${useSettings().viewMode === "WebComic" ? "selected" : ""}>
+        <option value='WebComic' ${getUserSettings().viewMode === "WebComic" ? "selected" : ""}>
           ${getLocaleString("VIEW_MODE_WEBCOMIC")}
         </option>
-        <option value='FluidLTR' ${useSettings().viewMode === "FluidLTR" ? "selected" : ""}>
+        <option value='FluidLTR' ${getUserSettings().viewMode === "FluidLTR" ? "selected" : ""}>
           ${getLocaleString("VIEW_MODE_LEFT")}
         </option>
-        <option value='FluidRTL' ${useSettings().viewMode === "FluidRTL" ? "selected" : ""}>
+        <option value='FluidRTL' ${getUserSettings().viewMode === "FluidRTL" ? "selected" : ""}>
           ${getLocaleString("VIEW_MODE_RIGHT")}
         </option>
       </select>
     </div>
     <!-- =========================================================================================== -->
     <div class='ControlLabel fitIfOversize'>${getLocaleString("FIT_WIDTH_OVERSIZED")}:
-      <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${useSettings().fitWidthIfOversize ? "checked" : ""} />
+      <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${getUserSettings().fitWidthIfOversize ? "checked" : ""} />
     </div>
     <!-- =========================================================================================== -->
     <div class='ControlLabel showThumbnails'>${getLocaleString("SHOW_THUMBNAILS")}:
-      <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${useSettings().showThumbnails ? "checked" : ""} />
+      <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${getUserSettings().showThumbnails ? "checked" : ""} />
     </div>
     <!-- =========================================================================================== -->
     <div class='ControlLabel lazyLoadImages'>${getLocaleString("LAZY_LOAD_IMAGES_ENABLE")}:
-      <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${useSettings().lazyLoadImages ? "checked" : ""} />
+      <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${getUserSettings().lazyLoadImages ? "checked" : ""} />
     </div>
     <!-- =========================================================================================== -->
     <div class='ControlLabel lazyStart ControlLabelItem
-        ${useSettings().lazyLoadImages ? "show" : ""}'
+        ${getUserSettings().lazyLoadImages ? "show" : ""}'
     '>
     <span>
       ${getLocaleString("LAZY_LOAD_IMAGES")}:
-      <output id='lazyStartVal' for='lazyStart'>${useSettings().lazyStart}</output>
+      <output id='lazyStartVal' for='lazyStart'>${getUserSettings().lazyStart}</output>
     </span>
-    <input type='range' value='${useSettings().lazyStart}' name='lazyStart' id='lazyStart' min='5' max='100' step='5'
+    <input type='range' value='${getUserSettings().lazyStart}' name='lazyStart' id='lazyStart' min='5' max='100' step='5'
            oninput='lazyStartVal.value = this.value' />
 
   </div>
   <!-- =========================================================================================== -->
   <div class='ControlLabel downloadZip'>${getLocaleString("DOWNLOAD_IMAGES")}:
-    <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${useSettings().downloadZip ? "checked" : ""} />
+    <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${getUserSettings().downloadZip ? "checked" : ""} />
   </div>
   <!-- =========================================================================================== -->
   <div class='ControlLabel hidePageControls'>${getLocaleString("HIDE_CONTROLS")}:
-    <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${useSettings().hidePageControls ? "checked" : ""} />
+    <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${getUserSettings().hidePageControls ? "checked" : ""} />
   </div>
   <!-- =========================================================================================== -->
   <div class='ControlLabel headerType'>${getLocaleString("HEADER_TYPE")}:
     <select id='headerType'>
-      <option value='hover' ${useSettings().header === "hover" ? "selected" : ""}>
+      <option value='hover' ${getUserSettings().header === "hover" ? "selected" : ""}>
         ${getLocaleString("HEADER_HOVER")}
       </option>
-      <option value='scroll' ${useSettings().header === "scroll" ? "selected" : ""}>
+      <option value='scroll' ${getUserSettings().header === "scroll" ? "selected" : ""}>
         ${getLocaleString("HEADER_SCROLL")}
       </option>
-      <option value='click' ${useSettings().header === "click" ? "selected" : ""}>
+      <option value='click' ${getUserSettings().header === "click" ? "selected" : ""}>
         ${getLocaleString("HEADER_CLICK")}
       </option>
-      <option value='fixed' ${useSettings().header === "fixed" ? "selected" : ""}>
+      <option value='fixed' ${getUserSettings().header === "fixed" ? "selected" : ""}>
         ${getLocaleString("HEADER_FIXED")}
       </option>
     </select>
@@ -3018,15 +3016,15 @@ ${wrapStyle(
   </div>
 `;
 
-  const keybindList = () => Object.keys(useSettings().keybinds).map((kb) => {
-    const keys = useSettings().keybinds[kb]?.length ? useSettings().keybinds[kb]?.map((key) => `<kbd class='dark'>${key}</kbd>`).join(" / ") : "";
+  const keybindList = () => Object.keys(getUserSettings().keybinds).map((kb) => {
+    const keys = getUserSettings().keybinds[kb]?.length ? getUserSettings().keybinds[kb]?.map((key) => `<kbd class='dark'>${key}</kbd>`).join(" / ") : "";
     return `<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
   });
-  const keybindEditor = () => Object.keys(useSettings().keybinds).map(
+  const keybindEditor = () => Object.keys(getUserSettings().keybinds).map(
     // Language=html
     (kb) => `<label for='${kb}'>${getLocaleString(kb)}:</label>
         <input type='text' class='KeybindInput' id='${kb}' name='${kb}'
-               value='${useSettings().keybinds[kb]?.join(" , ") ?? ""}'>`
+               value='${getUserSettings().keybinds[kb]?.join(" , ") ?? ""}'>`
   ).concat(`<div id='HotKeysRules'> ${getLocaleString("KEYBIND_RULES")}</div>`);
   const KeybindingsPanel = `
   <div id='KeybindingsOverlay' class='overlay'></div>
@@ -3063,10 +3061,10 @@ ${wrapStyle(
   );
 
   const listBookmarks = () => {
-    if (isEmpty(useSettings().bookmarks)) {
+    if (isEmpty(getUserSettings().bookmarks)) {
       return [getLocaleString("LIST_EMPTY")];
     }
-    return useSettings().bookmarks.map(
+    return getUserSettings().bookmarks.map(
       (mark, index) => `
       <div id='Bookmark${index + 1}' class='BookmarkItem'>
         <span class='bookmarkData bookmarkDate'>
@@ -3112,11 +3110,11 @@ ${wrapStyle(
   const listOptions = (times, begin) => indexList(times, begin).map((index) => `<option value='${index}'>${index}</option>`);
   const app = (manga, begin = 1) => `
   <div id='MangaOnlineViewer'
-       class='${useSettings().colorScheme} 
-    ${useSettings().hidePageControls ? "hideControls" : ""}
+       class='${getUserSettings().colorScheme} 
+    ${getUserSettings().hidePageControls ? "hideControls" : ""}
     ${isBookmarked() ? "bookmarked" : ""}'
-       data-theme='${useSettings().theme}'>
-    <header id='Header' class='${useSettings().header}'>
+       data-theme='${getUserSettings().theme}'>
+    <header id='Header' class='${getUserSettings().header}'>
       <div id='menu'>
         ${IconMenu2}
       </div>
@@ -3175,10 +3173,10 @@ ${wrapStyle(
         <output id='ZoomVal'
                 class='RangeValue'
                 for='Zoom'>
-            ${useSettings().defaultZoom}%
+            ${getUserSettings().defaultZoom}%
         </output>
         <input type='range'
-               value='${useSettings().defaultZoom}'
+               value='${getUserSettings().defaultZoom}'
                name='Zoom'
                id='Zoom'
                min='1'
@@ -3224,8 +3222,8 @@ ${wrapStyle(
         </div>
       </nav>
     </header>
-    <main id='Chapter' class='${useSettings().fitWidthIfOversize ? "fitWidthIfOversize" : ""}
-      ${useSettings().viewMode}'>
+    <main id='Chapter' class='${getUserSettings().fitWidthIfOversize ? "fitWidthIfOversize" : ""}
+      ${getUserSettings().viewMode}'>
       ${listPages(manga.pages, begin).join("")}
     </main>
     <section id='CommentsPainel' class='hide'>
@@ -3239,7 +3237,7 @@ ${wrapStyle(
           ${manga.comments?.outerHTML}
       </div>
     </section>
-    <nav id='Navigation' class='panel ${useSettings().showThumbnails ? "" : "disabled"}'>
+    <nav id='Navigation' class='panel ${getUserSettings().showThumbnails ? "" : "disabled"}'>
       <div id='NavigationCounters' class='ControlLabel'>
         ${IconCategory}
         <i>0</i> / <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b>
@@ -3261,7 +3259,7 @@ ${wrapStyle(
   function eraseBookmarks(elem) {
     elem.addEventListener("click", (event) => {
       const target = event.currentTarget.value;
-      const marks = useSettings().bookmarks.filter((el) => el.url !== target);
+      const marks = getUserSettings().bookmarks.filter((el) => el.url !== target);
       if (target === window.location.href) {
         document.querySelector("#MangaOnlineViewer")?.classList.toggle("bookmarked");
       }
@@ -3289,14 +3287,16 @@ ${wrapStyle(
         date: (/* @__PURE__ */ new Date()).toISOString().slice(0, 10)
       };
       if (isBookmarked(mark.url)) {
-        updateSettings({ bookmarks: useSettings().bookmarks.filter((el) => el.url !== mark.url) });
+        updateSettings({
+          bookmarks: getUserSettings().bookmarks.filter((el) => el.url !== mark.url)
+        });
         Swal.fire({
           title: getLocaleString("BOOKMARK_REMOVED"),
           timer: 1e4,
           icon: "error"
         });
       } else {
-        updateSettings({ bookmarks: [...useSettings().bookmarks, mark] });
+        updateSettings({ bookmarks: [...getUserSettings().bookmarks, mark] });
         Swal.fire({
           title: getLocaleString("BOOKMARK_SAVED"),
           html: getLocaleString("BOOKMARK_SAVED").replace("##NUM##", num.toString()),
@@ -3427,7 +3427,7 @@ ${wrapStyle(
     };
     function toggleScrollDirection() {
       const { scrollY } = window;
-      if (showEnd && useSettings().zoomMode !== "height" && scrollY + window.innerHeight + showEnd > document.body.offsetHeight) {
+      if (showEnd && getUserSettings().zoomMode !== "height" && scrollY + window.innerHeight + showEnd > document.body.offsetHeight) {
         setScrollDirection("end");
       } else if (scrollY > prevOffset && scrollY > 50) {
         setScrollDirection("hide");
@@ -3447,7 +3447,7 @@ ${wrapStyle(
 
   const doClick = (selector) => document.querySelector(selector)?.dispatchEvent(new Event("click"));
   function doScrolling(sign) {
-    if (useSettings().zoomMode === "height") {
+    if (getUserSettings().zoomMode === "height") {
       const pages = [...document.querySelectorAll(".MangaPage")];
       const distance = pages.map((element) => Math.abs(element.offsetTop - window.scrollY));
       const currentPage = distance.findIndex((d) => d <= 5);
@@ -3522,8 +3522,8 @@ ${wrapStyle(
     window.onload = null;
     document.body.onload = null;
     hotkeys.unbind();
-    Object.keys(useSettings().keybinds).forEach((key) => {
-      hotkeys(useSettings().keybinds[key]?.join(",") ?? "", (event) => {
+    Object.keys(getUserSettings().keybinds).forEach((key) => {
+      hotkeys(getUserSettings().keybinds[key]?.join(",") ?? "", (event) => {
         event.preventDefault();
         event.stopImmediatePropagation();
         event.stopPropagation();
@@ -3613,7 +3613,7 @@ ${wrapStyle(
     observerEvent();
   }
 
-  function applyZoom(zoom = useSettings().zoomMode, pages = ".PageContent img") {
+  function applyZoom(zoom = getUserSettings().zoomMode, pages = ".PageContent img") {
     const pg = [...document.querySelectorAll(pages)];
     pg.forEach((img) => {
       img.removeAttribute("width");
@@ -3628,7 +3628,7 @@ ${wrapStyle(
         img.style.height = `${nextHeight}px`;
         img.style.minWidth = "unset";
       } else if (zoom === "percent") {
-        img.style.width = `${img.naturalWidth * (useSettings().defaultZoom / 100)}px`;
+        img.style.width = `${img.naturalWidth * (getUserSettings().defaultZoom / 100)}px`;
       } else {
         img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
       }
@@ -3657,7 +3657,7 @@ ${wrapStyle(
   }
   function onImagesDone() {
     logScript("Images Loading Complete");
-    if (useSettings().downloadZip) {
+    if (getUserSettings().downloadZip) {
       document.getElementById("download")?.dispatchEvent(new Event("click"));
     }
     document.getElementById("download")?.classList.remove("disabled");
@@ -3690,7 +3690,7 @@ ${wrapStyle(
       if (thumb) {
         thumb.setAttribute("src", image.img.getAttribute("src"));
       }
-      applyZoom(useSettings().zoomMode, `#${image.img.id}`);
+      applyZoom(getUserSettings().zoomMode, `#${image.img.id}`);
       updateProgress();
     });
   }
@@ -3698,7 +3698,7 @@ ${wrapStyle(
     instance.images.forEach((image) => {
       image.img.classList.add("imgBroken");
       const src = image.img.getAttribute("src");
-      if (src && getRepeatValue(src) <= useSettings().maxReload) {
+      if (src && getRepeatValue(src) <= getUserSettings().maxReload) {
         setTimeout(() => {
           reloadImage(image.img);
           const imgLoad = imagesLoaded(image.img.parentElement);
@@ -3719,7 +3719,7 @@ ${wrapStyle(
     const src = normalizeUrl(imageSrc);
     const img = document.querySelector(`#PageImg${index}`);
     if (img) {
-      if (!useSettings().lazyLoadImages || position <= useSettings().lazyStart) {
+      if (!getUserSettings().lazyLoadImages || position <= getUserSettings().lazyStart) {
         setTimeout(
           () => {
             const imgLoad = imagesLoaded(img.parentElement);
@@ -3728,7 +3728,7 @@ ${wrapStyle(
             img.setAttribute("src", src);
             logScript("Loaded Image:", index, "Source:", src);
           },
-          (manga.timer ?? useSettings().throttlePageLoad) * position
+          (manga.timer ?? getUserSettings().throttlePageLoad) * position
         );
       } else {
         img.setAttribute("data-src", src);
@@ -3758,12 +3758,12 @@ ${wrapStyle(
   async function addPage(manga, index, pageUrl, position) {
     const img = document.querySelector(`#PageImg${index}`);
     if (img) {
-      if (!useSettings().lazyLoadImages || position <= useSettings().lazyStart) {
+      if (!getUserSettings().lazyLoadImages || position <= getUserSettings().lazyStart) {
         setTimeout(
           () => {
             findPage(manga, index, pageUrl, false)().catch(logScript);
           },
-          (manga.timer ?? useSettings().throttlePageLoad) * position
+          (manga.timer ?? getUserSettings().throttlePageLoad) * position
         );
       } else {
         img.setAttribute(
@@ -3785,10 +3785,12 @@ ${wrapStyle(
     });
   }
   function loadManga(manga, begin = 1) {
-    useSettings().lazyLoadImages = manga.lazy ?? useSettings().lazyLoadImages;
+    getUserSettings().lazyLoadImages = manga.lazy ?? getUserSettings().lazyLoadImages;
     logScript("Loading Images");
-    logScript(`Intervals: ${manga.timer ?? useSettings().throttlePageLoad ?? "Default(1000)"}`);
-    logScript(`Lazy: ${useSettings().lazyLoadImages}, Starting from: ${useSettings().lazyStart}`);
+    logScript(`Intervals: ${manga.timer ?? getUserSettings().throttlePageLoad ?? "Default(1000)"}`);
+    logScript(
+      `Lazy: ${getUserSettings().lazyLoadImages}, Starting from: ${getUserSettings().lazyStart}`
+    );
     if (isImagesManga(manga)) {
       logScript("Method: Images:", manga.listImages);
       loadMangaImages(begin, manga);
@@ -3811,7 +3813,7 @@ ${wrapStyle(
             lazyAttr
           });
         },
-        wait: useSettings().throttlePageLoad
+        wait: getUserSettings().throttlePageLoad
       });
     } else {
       logScript("No Loading Method Found");
@@ -3911,7 +3913,7 @@ ${wrapStyle(
     function checkLazyLoad(event) {
       updateSettings({ lazyLoadImages: event.currentTarget.checked });
       const start = document.querySelector(".lazyStart");
-      if (useSettings().lazyLoadImages) {
+      if (getUserSettings().lazyLoadImages) {
         start?.classList.add("show");
       } else {
         start?.classList.remove("show");
@@ -3998,8 +4000,8 @@ ${wrapStyle(
       document.querySelector("#KeybindingsOverlay")?.classList.toggle("visible");
     }
     function saveKeybindings() {
-      const newkeybinds = useSettings().keybinds;
-      Object.keys(useSettings().keybinds).forEach((kb) => {
+      const newkeybinds = getUserSettings().keybinds;
+      Object.keys(getUserSettings().keybinds).forEach((kb) => {
         const keys = document.querySelector(`#${kb}`)?.value.split(",")?.map((value) => value.trim());
         newkeybinds[kb] = isNothing(keys) ? void 0 : keys;
       });
@@ -4027,7 +4029,7 @@ ${wrapStyle(
         const img = event.currentTarget.parentElement?.parentElement?.querySelector(
           ".PageImg"
         );
-        const ratio = img.width / img.naturalWidth * (100 + useSettings().zoomStep);
+        const ratio = img.width / img.naturalWidth * (100 + getUserSettings().zoomStep);
         applyZoom(ratio, `#${img.getAttribute("id")}`);
       });
     }
@@ -4037,7 +4039,7 @@ ${wrapStyle(
         const img = event.currentTarget.parentElement?.parentElement?.querySelector(
           ".PageImg"
         );
-        const ratio = img.width / img.naturalWidth * (100 - useSettings().zoomStep);
+        const ratio = img.width / img.naturalWidth * (100 - getUserSettings().zoomStep);
         applyZoom(ratio, `#${img.getAttribute("id")}`);
       });
     }
@@ -4070,11 +4072,11 @@ ${wrapStyle(
 
   function theming() {
     function changeColorScheme() {
-      const isDark = useSettings().colorScheme === "dark";
+      const isDark = getUserSettings().colorScheme === "dark";
       updateSettings({ colorScheme: isDark ? "light" : "dark" });
       const elem = document.getElementById("MangaOnlineViewer");
       elem?.classList.remove(isDark ? "dark" : "light");
-      elem?.classList.add(useSettings().colorScheme);
+      elem?.classList.add(getUserSettings().colorScheme);
     }
     document.querySelector("#ColorScheme")?.addEventListener("click", changeColorScheme);
     function changeTheme(event) {
@@ -4138,9 +4140,9 @@ ${wrapStyle(
   function changeGlobalZoom(value) {
     return () => {
       if (typeof value !== "number") {
-        useSettings().zoomMode = value;
+        getUserSettings().zoomMode = value;
       } else {
-        useSettings().zoomMode = "percent";
+        getUserSettings().zoomMode = "percent";
       }
       const globalZoomVal = document.querySelector("#ZoomVal");
       globalZoomVal.textContent = Number.isInteger(value) ? `${value}%` : value;
@@ -4150,7 +4152,7 @@ ${wrapStyle(
   function changeZoomByStep(sign = 1) {
     return () => {
       const globalZoom = document.querySelector("#Zoom");
-      const ratio = parseInt(globalZoom.value, 10) + sign * useSettings().zoomStep;
+      const ratio = parseInt(globalZoom.value, 10) + sign * getUserSettings().zoomStep;
       globalZoom.value = ratio.toString();
       globalZoom?.dispatchEvent(new Event("input", { bubbles: true }));
     };
@@ -4161,7 +4163,7 @@ ${wrapStyle(
       updateSettings({ zoomMode: target });
       changeGlobalZoom(target)();
       const percent = document.querySelector(".DefaultZoom");
-      if (useSettings().zoomMode === "percent") {
+      if (getUserSettings().zoomMode === "percent") {
         percent?.classList.add("show");
       } else {
         percent?.classList.remove("show");
@@ -4499,7 +4501,7 @@ ${wrapStyle(
       }
       viewer(manga);
     };
-    switch (site.start ?? useSettings()?.loadMode) {
+    switch (site.start ?? getUserSettings()?.loadMode) {
       case "never":
         createLateStartButton(site, manga.begin);
         break;
