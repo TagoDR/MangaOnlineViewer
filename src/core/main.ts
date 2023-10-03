@@ -171,7 +171,6 @@ async function preparePage(site: ISite) {
   }
 
   manga.begin = isBookmarked() ?? manga.begin ?? 1;
-  manga.comments = document.querySelector('#disqus_thread, #fb-comments');
   const style = document.createElement('style');
   style.appendChild(document.createTextNode(sweetalertStyle));
   document.body.appendChild(style);

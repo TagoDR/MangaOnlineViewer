@@ -7,6 +7,7 @@ export default async function viewer(manga: IManga) {
   if (manga.before !== undefined) {
     await manga.before(manga.begin);
   }
+  manga.comments = document.querySelector('#disqus_thread, #fb-comments');
   logScript('Rebuilding Site');
   setTimeout(() => {
     try {

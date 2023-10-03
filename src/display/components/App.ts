@@ -151,13 +151,13 @@ const app = (manga: IManga, begin = 1) => `
       ${getUserSettings().viewMode}'>
       ${listPages(manga.pages, begin).join('')}
     </main>
-    <section id='CommentsPainel' class='hide'>
+    <section id='CommentsPainel' class='${manga.comments ? '' : 'hide'}'>
       <div id='CommentsButton' class='ControlButton' type='button'
         title='${getLocaleString('DISPLAY_COMMENTS')}'>
         ${IconMessage}
         ${getLocaleString('DISPLAY_COMMENTS')}
       </div>
-      <div id='CommentsArea' class='${manga.comments ? '' : 'hide'} 
+      <div id='CommentsArea' class='hide' 
           ${isBackgroundColorDark(manga.comments ?? document.body) ? 'dark' : 'light'}'>
           ${manga.comments?.outerHTML}
       </div>
