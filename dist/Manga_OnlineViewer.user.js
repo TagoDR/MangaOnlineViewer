@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans
-// @version       2023.10.03
+// @version       2023.10.04
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -3108,7 +3108,7 @@ ${wrapStyle(
   }
 
   const listOptions = (times, begin) => indexList(times, begin).map((index) => `<option value='${index}'>${index}</option>`);
-  const app = (manga, begin = 1) => `
+  const app = (manga) => `
   <div id='MangaOnlineViewer'
        class='${getUserSettings().colorScheme} 
     ${getUserSettings().hidePageControls ? "hideControls" : ""}
@@ -3193,13 +3193,13 @@ ${wrapStyle(
       <nav id='ChapterNavigation'>
         <div id='Counters' class='ControlLabel'>
           ${getLocaleString("PAGES_LOADED")}:
-          <i>0</i> / <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b>
+          <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
           <span class='ControlLabel'>
           ${getLocaleString("GO_TO_PAGE")}:
         </span>
           <select id='gotoPage'>
             <option selected>#</option>
-            ${listOptions(manga.pages, begin).join("")}
+            ${listOptions(manga.pages, manga.begin).join("")}
           </select>
         </div>
         <div id='ChapterControl' class='ChapterControl'>
@@ -3224,15 +3224,15 @@ ${wrapStyle(
     </header>
     <main id='Chapter' class='${getUserSettings().fitWidthIfOversize ? "fitWidthIfOversize" : ""}
       ${getUserSettings().viewMode}'>
-      ${listPages(manga.pages, begin).join("")}
+      ${listPages(manga.pages, manga.begin).join("")}
     </main>
     <section id='CommentsPainel' class='${manga.comments ? "" : "hide"}'>
-      <div id='CommentsButton' class='ControlButton' type='button'
+      <div id='CommentsButton' class='ControlButton'
         title='${getLocaleString("DISPLAY_COMMENTS")}'>
         ${IconMessage}
         ${getLocaleString("DISPLAY_COMMENTS")}
       </div>
-      <div id='CommentsArea' class='hide' 
+      <div id='CommentsArea' class='hide 
           ${isBackgroundColorDark(manga.comments ?? document.body) ? "dark" : "light"}'>
           ${manga.comments?.outerHTML}
       </div>
@@ -3240,11 +3240,11 @@ ${wrapStyle(
     <nav id='Navigation' class='panel ${getUserSettings().showThumbnails ? "" : "disabled"}'>
       <div id='NavigationCounters' class='ControlLabel'>
         ${IconCategory}
-        <i>0</i> / <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b>
+        <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
         ${getLocaleString("PAGES_LOADED")}
       </div>
       <div id='Thumbnails'>
-        ${ThumbnailsPanel(manga.pages, begin).join("")}
+        ${ThumbnailsPanel(manga.pages, manga.begin).join("")}
       </div>
     </nav>
     ${SettingsPanel}
@@ -4206,9 +4206,9 @@ ${wrapStyle(
 
   function display(manga) {
     document.head.innerHTML = head(manga);
-    document.body.innerHTML = app(manga, manga.begin);
+    document.body.innerHTML = app(manga);
     events();
-    loadManga(manga, manga.begin);
+    loadManga(manga);
   }
 
   async function viewer(manga) {

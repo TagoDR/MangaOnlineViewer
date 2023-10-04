@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.10.03
+// @version       2023.10.04
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -2684,7 +2684,7 @@ ${wrapStyle(
   }
 
   const listOptions = (times, begin) => indexList(times, begin).map((index) => `<option value='${index}'>${index}</option>`);
-  const app = (manga, begin = 1) => `
+  const app = (manga) => `
   <div id='MangaOnlineViewer'
        class='${getUserSettings().colorScheme} 
     ${getUserSettings().hidePageControls ? "hideControls" : ""}
@@ -2769,13 +2769,13 @@ ${wrapStyle(
       <nav id='ChapterNavigation'>
         <div id='Counters' class='ControlLabel'>
           ${getLocaleString("PAGES_LOADED")}:
-          <i>0</i> / <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b>
+          <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
           <span class='ControlLabel'>
           ${getLocaleString("GO_TO_PAGE")}:
         </span>
           <select id='gotoPage'>
             <option selected>#</option>
-            ${listOptions(manga.pages, begin).join("")}
+            ${listOptions(manga.pages, manga.begin).join("")}
           </select>
         </div>
         <div id='ChapterControl' class='ChapterControl'>
@@ -2800,15 +2800,15 @@ ${wrapStyle(
     </header>
     <main id='Chapter' class='${getUserSettings().fitWidthIfOversize ? "fitWidthIfOversize" : ""}
       ${getUserSettings().viewMode}'>
-      ${listPages(manga.pages, begin).join("")}
+      ${listPages(manga.pages, manga.begin).join("")}
     </main>
     <section id='CommentsPainel' class='${manga.comments ? "" : "hide"}'>
-      <div id='CommentsButton' class='ControlButton' type='button'
+      <div id='CommentsButton' class='ControlButton'
         title='${getLocaleString("DISPLAY_COMMENTS")}'>
         ${IconMessage}
         ${getLocaleString("DISPLAY_COMMENTS")}
       </div>
-      <div id='CommentsArea' class='hide' 
+      <div id='CommentsArea' class='hide 
           ${isBackgroundColorDark(manga.comments ?? document.body) ? "dark" : "light"}'>
           ${manga.comments?.outerHTML}
       </div>
@@ -2816,11 +2816,11 @@ ${wrapStyle(
     <nav id='Navigation' class='panel ${getUserSettings().showThumbnails ? "" : "disabled"}'>
       <div id='NavigationCounters' class='ControlLabel'>
         ${IconCategory}
-        <i>0</i> / <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b>
+        <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
         ${getLocaleString("PAGES_LOADED")}
       </div>
       <div id='Thumbnails'>
-        ${ThumbnailsPanel(manga.pages, begin).join("")}
+        ${ThumbnailsPanel(manga.pages, manga.begin).join("")}
       </div>
     </nav>
     ${SettingsPanel}
@@ -3782,9 +3782,9 @@ ${wrapStyle(
 
   function display(manga) {
     document.head.innerHTML = head(manga);
-    document.body.innerHTML = app(manga, manga.begin);
+    document.body.innerHTML = app(manga);
     events();
-    loadManga(manga, manga.begin);
+    loadManga(manga);
   }
 
   async function viewer(manga) {
