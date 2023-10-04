@@ -1,7 +1,7 @@
 import type { IManga } from '../types';
 import { logScript } from '../utils/tampermonkey';
 import { clearBookmark } from './settings';
-import display from '../svelte';
+import display from '../display';
 
 export default async function viewer(manga: IManga) {
   if (manga.before !== undefined) {
