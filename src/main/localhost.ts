@@ -9,6 +9,8 @@ export default {
   category: 'manga',
   run() {
     const num: number = parseInt(/\d+/.exec(window.location.search)?.toString() ?? '5', 10);
+    const comments = document.createElement('div');
+    comments.textContent = 'Testing Comment';
     return {
       title: 'Placeholder Manga Loaded',
       series: '#Counters',
@@ -24,6 +26,7 @@ export default {
         placeholder(1970, 1400, '#806D15'),
         ...Array(num).fill(0).map(randomPlaceholder),
       ],
+      comments,
     };
   },
 };

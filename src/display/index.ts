@@ -6,7 +6,7 @@ import { loadManga } from './page';
 
 export default function display(manga: IManga) {
   document.head.innerHTML = head(manga);
-  document.body.innerHTML = body(manga, manga.begin);
+  document.body.innerHTML = body(manga);
   events();
-  loadManga(manga, manga.begin);
+  loadManga(manga);
 }

@@ -33,7 +33,7 @@ import { isBackgroundColorDark } from '../../utils/colors';
 const listOptions = (times: number, begin: number) =>
   sequence(times, begin).map((index) => `<option value='${index}'>${index}</option>`);
 
-const app = (manga: IManga, begin = 1) => `
+const app = (manga: IManga) => `
   <div id='MangaOnlineViewer'
        class='${getUserSettings().colorScheme} 
     ${getUserSettings().hidePageControls ? 'hideControls' : ''}
@@ -118,13 +118,13 @@ const app = (manga: IManga, begin = 1) => `
       <nav id='ChapterNavigation'>
         <div id='Counters' class='ControlLabel'>
           ${getLocaleString('PAGES_LOADED')}:
-          <i>0</i> / <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b>
+          <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
           <span class='ControlLabel'>
           ${getLocaleString('GO_TO_PAGE')}:
         </span>
           <select id='gotoPage'>
             <option selected>#</option>
-            ${listOptions(manga.pages, begin).join('')}
+            ${listOptions(manga.pages, manga.begin).join('')}
           </select>
         </div>
         <div id='ChapterControl' class='ChapterControl'>
@@ -149,15 +149,15 @@ const app = (manga: IManga, begin = 1) => `
     </header>
     <main id='Chapter' class='${getUserSettings().fitWidthIfOversize ? 'fitWidthIfOversize' : ''}
       ${getUserSettings().viewMode}'>
-      ${listPages(manga.pages, begin).join('')}
+      ${listPages(manga.pages, manga.begin).join('')}
     </main>
     <section id='CommentsPainel' class='${manga.comments ? '' : 'hide'}'>
-      <div id='CommentsButton' class='ControlButton' type='button'
+      <div id='CommentsButton' class='ControlButton'
         title='${getLocaleString('DISPLAY_COMMENTS')}'>
         ${IconMessage}
         ${getLocaleString('DISPLAY_COMMENTS')}
       </div>
-      <div id='CommentsArea' class='hide' 
+      <div id='CommentsArea' class='hide 
           ${isBackgroundColorDark(manga.comments ?? document.body) ? 'dark' : 'light'}'>
           ${manga.comments?.outerHTML}
       </div>
@@ -165,11 +165,11 @@ const app = (manga: IManga, begin = 1) => `
     <nav id='Navigation' class='panel ${getUserSettings().showThumbnails ? '' : 'disabled'}'>
       <div id='NavigationCounters' class='ControlLabel'>
         ${IconCategory}
-        <i>0</i> / <b>${begin > 1 ? manga.pages - (begin - 1) : manga.pages}</b>
+        <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
         ${getLocaleString('PAGES_LOADED')}
       </div>
       <div id='Thumbnails'>
-        ${ThumbnailsPanel(manga.pages, begin).join('')}
+        ${ThumbnailsPanel(manga.pages, manga.begin).join('')}
       </div>
     </nav>
     ${SettingsPanel}
