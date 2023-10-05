@@ -41,6 +41,7 @@ javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/
 
 ## Supported Manga Sites
 
+- [Alandal](https://alandal.com/) _[English]_
 - [Batoto](https://bato.to/) _[English]_
 - [BilibiliComics](https://www.bilibilicomics.com/) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
