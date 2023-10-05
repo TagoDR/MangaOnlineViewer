@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   env: {
     browser: true,
     es2021: true,
@@ -12,8 +13,8 @@ module.exports = {
       },
       files: ['.eslintrc.{js,cjs}'],
       parserOptions: {
-        sourceType: 'script',
-      },
+        parser: '@typescript-eslint/parser'
+      }
     },
   ],
   parser: '@typescript-eslint/parser',
