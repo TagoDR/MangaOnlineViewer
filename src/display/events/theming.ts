@@ -54,7 +54,7 @@ function theming() {
     refreshThemes();
   }
 
-  document.querySelector('#ThemeShade')?.addEventListener('change', changeThemeShade);
+  document.querySelector('#ThemeShade')?.addEventListener('input', changeThemeShade);
 }
 
 export default theming;

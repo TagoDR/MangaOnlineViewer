@@ -1,0 +1,79 @@
+.icon-tabler-file-download > path:nth-child(n + 4) {
+    /* 4, 5 */
+    color: gold;
+}
+.icon-tabler-arrow-autofit-width > path:nth-child(n + 3) {
+    /* 3,4,5,6 */
+    color: yellow;
+}
+.icon-tabler-arrow-autofit-height > path:nth-child(n + 3) {
+    /* 3,4,5,6 */
+    color: yellow;
+}
+.icon-tabler-zoom-in-area > path:nth-child(2),
+.icon-tabler-zoom-in-area > path:nth-child(3) {
+    color: lime;
+}
+.icon-tabler-zoom-out-area > path:nth-child(2) {
+    color: red;
+}
+.icon-tabler-zoom-pan > path:nth-child(n + 4) {
+    color: #9966ff;
+}
+.icon-tabler-arrow-autofit-down > path:nth-child(n + 3) {
+    color: #28ffbf;
+}
+.icon-tabler-arrow-autofit-left > path:nth-child(n + 3) {
+    color: #28ffbf;
+}
+.icon-tabler-arrow-autofit-right > path:nth-child(n + 3) {
+    color: #28ffbf;
+}
+.icon-tabler-spacing-vertical > path:nth-child(4) {
+    color: fuchsia;
+}
+.icon-tabler-list-numbers > path:nth-child(n + 5) {
+    color: #e48900;
+}
+.icon-tabler-bookmarks > path:nth-child(n + 2) {
+    color: orange;
+}
+.icon-tabler-bookmark > path {
+    color: orange;
+}
+.icon-tabler-bookmark-off > path {
+    color: orange;
+}
+.icon-tabler-bookmark-off > line {
+    color: red;
+}
+.icon-tabler-eye-off > line {
+    color: red;
+}
+.icon-tabler-zoom-cancel > line:nth-child(3),
+.icon-tabler-zoom-cancel > line:nth-child(4) {
+    color: #9966ff;
+}
+.icon-tabler-zoom-in > line:nth-child(3),
+.icon-tabler-zoom-in > line:nth-child(4) {
+    color: lime;
+}
+.icon-tabler-zoom-out > line:nth-child(3) {
+    color: red;
+}
+.icon-tabler-refresh > path:nth-child(n + 2) {
+    color: cyan;
+}
+.icon-tabler-photo > * {
+    color: silver;
+}
+.icon-tabler-photo-off > * {
+    color: silver;
+}
+.icon-tabler-photo-off > line:nth-child(5) {
+    color: orange;
+}
+.icon-tabler-message > path:nth-child(2),
+.icon-tabler-message > path:nth-child(3) {
+    color: greenyellow;
+}
