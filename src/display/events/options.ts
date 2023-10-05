@@ -28,6 +28,8 @@ function options() {
   function changeLocale(event: Event) {
     const locale = (event.currentTarget as HTMLInputElement).value;
     updateSettings({ locale });
+    const elem = document.getElementById('MangaOnlineViewer');
+    elem?.setAttribute('locale', locale);
     Swal.fire({
       title: getLocaleString('ATTENTION'),
       text: getLocaleString('LANGUAGE_CHANGED'),

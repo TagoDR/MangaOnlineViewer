@@ -1,5 +1,10 @@
 import type { IManga } from '../../types';
-import { getLocaleString, getUserSettings, isBookmarked } from '../../core/settings';
+import {
+  getAllLocaleStrings,
+  getLocaleString,
+  getUserSettings,
+  isBookmarked,
+} from '../../core/settings';
 import listPages from './MangaPages';
 import SettingsPanel from './SettingsPanel';
 import KeybindingsPanel from './KeybindingsPanel';
@@ -112,15 +117,15 @@ const app = (manga: IManga) => `
       <div class='ViewerTitle'>
         <h1 id='MangaTitle'>${manga.title}</h1>
         <a id='series' href='${manga.series}'>
-            (${getLocaleString('RETURN_CHAPTER_LIST')})
+            (${getAllLocaleStrings('RETURN_CHAPTER_LIST')})
         </a>
       </div>
       <nav id='ChapterNavigation'>
         <div id='Counters' class='ControlLabel'>
-          ${getLocaleString('PAGES_LOADED')}:
+          ${getAllLocaleStrings('PAGES_LOADED')}:
           <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
           <span class='ControlLabel'>
-          ${getLocaleString('GO_TO_PAGE')}:
+          ${getAllLocaleStrings('GO_TO_PAGE')}:
         </span>
           <select id='gotoPage'>
             <option selected>#</option>
@@ -132,16 +137,16 @@ const app = (manga: IManga) => `
                   title='${getLocaleString('DOWNLOAD_ZIP')}'>
             ${IconFileDownload}
             ${IconLoader2}
-            ${getLocaleString('BUTTON_DOWNLOAD')}
+            ${getAllLocaleStrings('BUTTON_DOWNLOAD')}
           </button>
           <a id='prev' class='NavigationControlButton ControlButton' type='button'
              href='${manga.prev ?? ''}' title='${getLocaleString('PREVIOUS_CHAPTER')}'>
             ${IconArrowBigLeft}
-            ${getLocaleString('BUTTON_PREVIOUS')}
+            ${getAllLocaleStrings('BUTTON_PREVIOUS')}
           </a>
           <a id='next' class='NavigationControlButton ControlButton' type='button'
              href='${manga.next ?? ''}' title='${getLocaleString('NEXT_CHAPTER')}'>
-            ${getLocaleString('BUTTON_NEXT')}
+            ${getAllLocaleStrings('BUTTON_NEXT')}
             ${IconArrowBigRight}
           </a>
         </div>
@@ -155,7 +160,7 @@ const app = (manga: IManga) => `
       <div id='CommentsButton' class='ControlButton'
         title='${getLocaleString('DISPLAY_COMMENTS')}'>
         ${IconMessage}
-        ${getLocaleString('DISPLAY_COMMENTS')}
+        ${getAllLocaleStrings('DISPLAY_COMMENTS')}
       </div>
       <div id='CommentsArea' class='hide 
           ${isBackgroundColorDark(manga.comments ?? document.body) ? 'dark' : 'light'}'>
@@ -166,7 +171,7 @@ const app = (manga: IManga) => `
       <div id='NavigationCounters' class='ControlLabel'>
         ${IconCategory}
         <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
-        ${getLocaleString('PAGES_LOADED')}
+        ${getAllLocaleStrings('PAGES_LOADED')}
       </div>
       <div id='Thumbnails'>
         ${ThumbnailsPanel(manga.pages, manga.begin).join('')}

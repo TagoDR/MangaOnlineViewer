@@ -86,6 +86,9 @@ export function getLocaleString(name: string): string {
 
   return '##MISSING_STRING##';
 }
+export function getAllLocaleStrings(name: string): string {
+  return locales.map((locale) => `<span class='${locale.ID}'>${locale[name]}</span>`).join('\n');
+}
 
 export function updateSettings(newValue: Partial<ISettings>) {
   logScript(JSON.stringify(newValue));

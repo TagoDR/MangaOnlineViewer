@@ -1,6 +1,6 @@
 // Translation by lhj5426
 export default {
-  ID: 'zh_cn',
+  ID: 'zh_CN',
   NAME: '中文 (简体)',
   STARTING: '正在启动<br>Manga OnlineViewer',
   RESUME: '从页面继续阅读 ',
