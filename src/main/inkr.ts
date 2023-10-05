@@ -6,14 +6,17 @@ export default {
   language: ['English'],
   category: 'manga',
   waitFunc: () =>
-    document.querySelector<HTMLImageElement>('#editor-v2-scroll-view-id img')?.naturalWidth !==
-      undefined && document.querySelectorAll('#editor-v2-scroll-view-id > div > div').length > 2,
+    document.querySelector<HTMLImageElement>('[data-container="file-horizontal-scroll-view"] img')
+      ?.naturalWidth !== undefined &&
+    document.querySelectorAll('[data-container="file-horizontal-scroll-view"] img').length > 2,
   run() {
-    const images = [...document.querySelectorAll('#editor-v2-scroll-view-id img')];
+    const images = [
+      ...document.querySelectorAll('[data-container="file-horizontal-scroll-view"] img'),
+    ];
     return {
       title: document.querySelector('title')?.textContent?.trim(),
       series: document
-        .querySelector('#chapter-detail-viewer-page div div div a')
+        .querySelector('[aria-label="Previous Chapter"] + div a')
         ?.getAttribute('href'),
       pages: images.length,
       prev: document.querySelector('a[aria-label="Previous Chapter"]')?.getAttribute('href'),
