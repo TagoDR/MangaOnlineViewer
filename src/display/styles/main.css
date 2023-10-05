@@ -498,7 +498,7 @@ img {
     cursor: pointer;
 }
 
-#MangaOnlineViewer #Header.click:not(.headroom-hide) #menu,
+#MangaOnlineViewer #Header.click:not(.headroom-hide, .headroom-show) #menu,
 #MangaOnlineViewer #Header.click.headroom-end #menu,
 #MangaOnlineViewer #Header.click.visible #menu {
     position: static;
