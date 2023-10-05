@@ -1,4 +1,4 @@
-import sequence from '../../utils/sequence';
+import sequence from '../../utils/sequence.ts';
 
 const ThumbnailsPanel = (times: number, begin: number) =>
   sequence(times, begin).map(

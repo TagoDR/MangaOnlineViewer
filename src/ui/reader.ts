@@ -1,9 +1,9 @@
-import cssStyles from './styles/styles';
-import { getUserSettings } from '../core/settings';
-import { themesCSS } from './themes';
-import type { IManga } from '../types';
-import externalCSS from './styles/externalStyle';
-import { wrapStyle } from '../utils/css';
+import cssStyles from './styles/styles.ts';
+import { getUserSettings } from '../core/settings.ts';
+import { themesCSS } from './themes.ts';
+import type { IManga } from '../types/index.ts';
+import externalCSS from './styles/externalStyle.ts';
+import { wrapStyle } from '../utils/css.ts';
 
 function head(manga: IManga) {
   return `

@@ -1,4 +1,4 @@
-import { reloadImage } from '../page';
+import { reloadImage } from '../page.ts';
 
 function individual() {
   // Reload Page

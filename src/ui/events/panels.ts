@@ -1,7 +1,7 @@
-import { keybindEditor, keybindList } from '../components/KeybindingsPanel';
-import { getUserSettings, updateSettings } from '../../core/settings';
-import { isNothing } from '../../utils/checks';
-import keybindings from './keybindings';
+import { keybindEditor, keybindList } from '../components/KeybindingsPanel.ts';
+import { getUserSettings, updateSettings } from '../../core/settings.ts';
+import { isNothing } from '../../utils/checks.ts';
+import keybindings from './keybindings.ts';
 
 function panels() {
   // Show Header list

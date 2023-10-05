@@ -1,13 +1,13 @@
 import Swal from 'sweetalert2';
-import type { IBookmark } from '../../types';
+import type { IBookmark } from '../../types/index.ts';
 import {
   getLocaleString,
   getUserSettings,
   isBookmarked,
   updateSettings,
-} from '../../core/settings';
-import { reloadBookmarks } from '../components/BookmarksPanel';
-import { logScript } from '../../utils/tampermonkey';
+} from '../../core/settings.ts';
+import { reloadBookmarks } from '../components/BookmarksPanel.ts';
+import { logScript } from '../../utils/tampermonkey.ts';
 
 function buttonBookmarks() {
   document.querySelector('#BookmarksPanel')?.classList.toggle('visible');

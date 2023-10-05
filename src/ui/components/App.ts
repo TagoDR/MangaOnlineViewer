@@ -1,14 +1,14 @@
-import type { IManga } from '../../types';
+import type { IManga } from '../../types/index.ts';
 import {
   getAllLocaleStrings,
   getLocaleString,
   getUserSettings,
   isBookmarked,
-} from '../../core/settings';
-import listPages from './MangaPages';
-import SettingsPanel from './SettingsPanel';
-import KeybindingsPanel from './KeybindingsPanel';
-import ThumbnailsPanel from './ThumbnailsPanel';
+} from '../../core/settings.ts';
+import listPages from './MangaPages.ts';
+import SettingsPanel from './SettingsPanel.ts';
+import KeybindingsPanel from './KeybindingsPanel.ts';
+import ThumbnailsPanel from './ThumbnailsPanel.ts';
 import {
   IconArrowAutofitDown,
   IconArrowAutofitHeight,
@@ -30,10 +30,10 @@ import {
   IconZoomInArea,
   IconZoomOutArea,
   IconZoomPan,
-} from './icons';
-import BookmarksPanel from './BookmarksPanel';
-import sequence from '../../utils/sequence';
-import { isBackgroundColorDark } from '../../utils/colors';
+} from './icons.ts';
+import BookmarksPanel from './BookmarksPanel.ts';
+import sequence from '../../utils/sequence.ts';
+import { isBackgroundColorDark } from '../../utils/colors.ts';
 
 const listOptions = (times: number, begin: number) =>
   sequence(times, begin).map((index) => `<option value='${index}'>${index}</option>`);

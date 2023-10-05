@@ -1,7 +1,7 @@
 import NProgress from 'nprogress';
 import imagesLoaded from 'imagesloaded';
-import { logScript } from '../utils/tampermonkey';
-import { getUserSettings } from '../core/settings';
+import { logScript } from '../utils/tampermonkey.ts';
+import { getUserSettings } from '../core/settings.ts';
 import {
   type IManga,
   type IMangaImages,
@@ -10,10 +10,10 @@ import {
   isImagesManga,
   isPagesManga,
   type ZoomMode,
-} from '../types';
-import { getElementAttribute } from '../utils/request';
-import lazyLoad from '../utils/lazyLoad';
-import sequence from '../utils/sequence';
+} from '../types/index.ts';
+import { getElementAttribute } from '../utils/request.ts';
+import lazyLoad from '../utils/lazyLoad.ts';
+import sequence from '../utils/sequence.ts';
 
 // After pages load apply default Zoom
 function applyZoom(

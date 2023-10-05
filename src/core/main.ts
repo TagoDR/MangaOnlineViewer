@@ -6,8 +6,8 @@ import { getBrowser, getEngine, getInfoGM, logScript } from '../utils/tampermonk
 import type { IManga, ISite } from '../types';
 import formatPage from './viewer';
 import { getLocaleString, getUserSettings, isBookmarked } from './settings';
-import sweetalertStyle from '../display/styles/externalStyle';
-import startButton from '../display/styles/startButton.css?inline';
+import sweetalertStyle from '../ui/styles/externalStyle';
+import startButton from '../ui/styles/startButton.css?inline';
 import { testAttribute, testElement, testFunc, testTime, testVariable } from './check';
 
 function validateMin(valBegin: number, endPage: number, rs: RangeSlider) {
