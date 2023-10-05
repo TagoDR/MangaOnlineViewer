@@ -1,3 +1,4 @@
+import alandal from './alandal';
 import batoto from './batoto';
 import bilibilicomics from './bilibilicomics';
 import comicastle from './comicastle';
@@ -50,6 +51,7 @@ import zeroscans from './zeroscans';
 import { type ISite } from '../types/ISite';
 
 const sites = [
+  alandal,
   // Asurascans,
   batoto,
   bilibilicomics,
