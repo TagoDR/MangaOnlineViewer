@@ -29,12 +29,12 @@
         "@types/file-saver": "^2.0.5",
         "@types/imagesloaded": "^4.1.3",
         "@types/lodash": "^4.14.199",
-        "@types/node": "^20.8.0",
+        "@types/node": "^20.8.2",
         "@types/nprogress": "^0.2.1",
         "@types/tampermonkey": "^4.20.3",
         "@types/tinycolor2": "^1.4.4",
-        "@typescript-eslint/eslint-plugin": "^6.7.3",
-        "@typescript-eslint/parser": "^6.7.3",
+        "@typescript-eslint/eslint-plugin": "^6.7.4",
+        "@typescript-eslint/parser": "^6.7.4",
         "del": "^7.1.0",
         "eslint": "^8.50.0",
         "eslint-config-airbnb-base": "^15.0.0",
@@ -47,7 +47,7 @@
         "rollup-plugin-external-globals": "^0.8.0",
         "typescript": "^5.2.2",
         "userscript-metadata-generator": "^0.2.4",
-        "vite": "^4.4.9"
+        "vite": "^4.4.11"
     },
     "dependencies": {
         "@gerhobbelt/keyscss": "^1.1.3-6",

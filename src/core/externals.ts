@@ -6,7 +6,7 @@ const externalScripts: string[] = [
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js" integrity="sha256-XWzSUJ+FIQ38dqC06/48sNRwU1Qh3/afjmJ080SneA8=" crossorigin="anonymous"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js" integrity="sha512-7x7HoEikRZhV0FAORWP+hrUzl75JW/uLHBbg2kHnPdFmScpIeHY0ieUVSacjusrKrlA/RsA2tDOBvisFmKc3xw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>',
   '<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>',
-  '<script src="https://cdn.jsdelivr.net/npm/hotkeys-js@3.10.3/dist/hotkeys.min.js" integrity="sha256-KFPFPIKQcVTsWBdDxGjE0qWLea/wd+kZX6XPV57E0Rg=" crossorigin="anonymous"></script>',
+  '<script src="https://cdn.jsdelivr.net/npm/hotkeys-js@3.12.0/dist/hotkeys.min.js" integrity="sha256-x2MbeiCtKJ9zAlqDqL+7gV1BVA5dWZ57QwkEebfPcY0=" crossorigin="anonymous"></script>',
   '<script src="https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js" integrity="sha256-KJTc4RYlnMMWuc4r2VjaBulFUWIF5ywlqbekhyENaf8=" crossorigin="anonymous"></script>',
 ];
 const requiredScripts = externalScripts.map((script: string) => {
