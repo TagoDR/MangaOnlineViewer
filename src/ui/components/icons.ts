@@ -20,7 +20,7 @@ export const IconFileDownload = `
    <path d='M9.5 14.5l2.5 2.5l2.5 -2.5'></path>
 </svg>`;
 export const IconLoader2 = `
-<svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-loader-2 inverse animate-spin' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
+<svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-loader-2' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
    <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
    <path d='M12 3a9 9 0 1 0 9 9'></path>
 </svg>`;
@@ -184,7 +184,7 @@ export const IconSun = `
    <path d='M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7'></path>
 </svg>`;
 export const IconMoon = `
-<svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-moon inverse' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
+<svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-moon' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
    <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
    <path d='M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z'></path>
 </svg>`;
@@ -208,7 +208,7 @@ export const IconBookmark = `
    <path d='M9 4h6a2 2 0 0 1 2 2v14l-5 -3l-5 3v-14a2 2 0 0 1 2 -2'></path>
 </svg>`;
 export const IconBookmarkOff = `
-<svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-bookmark-off inverse' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
+<svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-bookmark-off' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
    <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
    <line x1='3' y1='3' x2='21' y2='21'></line>
    <path d='M17 17v3l-5 -3l-5 3v-13m1.178 -2.818c.252 -.113 .53 -.176 .822 -.176h6a2 2 0 0 1 2 2v7'></path>
@@ -220,7 +220,7 @@ export const IconEye = `
    <path d='M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7'></path>
 </svg>`;
 export const IconEyeOff = `
-<svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-eye-off inverse' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
+<svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-eye-off' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
    <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
    <line x1='3' y1='3' x2='21' y2='21'></line>
    <path d='M10.584 10.587a2 2 0 0 0 2.828 2.83'></path>

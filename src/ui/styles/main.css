@@ -654,14 +654,14 @@ img {
 }
 
 #MangaOnlineViewer .ControlButton.hidden,
-#MangaOnlineViewer.light #ColorScheme > :not(.inverse),
-#MangaOnlineViewer:not(.light) #ColorScheme > .inverse,
-#MangaOnlineViewer .ChapterControl #download.loading > :not(.inverse),
-#MangaOnlineViewer .ChapterControl #download:not(.loading) > .inverse,
-#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .inverse,
-#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > :not(.inverse),
-#MangaOnlineViewer.bookmarked .ControlButton.Bookmark > :not(.inverse),
-#MangaOnlineViewer:not(.bookmarked) .ControlButton.Bookmark > .inverse,
+#MangaOnlineViewer.light #ColorScheme > .icon-tabler-sun,
+#MangaOnlineViewer:not(.light) #ColorScheme > .icon-tabler-moon,
+#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,
+#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,
+#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,
+#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,
+#MangaOnlineViewer.bookmarked .ControlButton.Bookmark > .icon-tabler-bookmark,
+#MangaOnlineViewer:not(.bookmarked) .ControlButton.Bookmark > .icon-tabler-bookmark-off,
 #MangaOnlineViewer #CommentsPainel.hide,
 #MangaOnlineViewer #CommentsArea.hide {
     display: none;
@@ -894,6 +894,7 @@ img {
     }
 }
 
+.icon-tabler-loader-2,
 .animate-spin {
     -webkit-animation: spin 1s linear infinite;
     animation: spin 1s linear infinite;
