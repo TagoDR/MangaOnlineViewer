@@ -13,8 +13,8 @@ module.exports = {
       },
       files: ['.eslintrc.{js,cjs}'],
       parserOptions: {
-        parser: '@typescript-eslint/parser'
-      }
+        parser: '@typescript-eslint/parser',
+      },
     },
   ],
   parser: '@typescript-eslint/parser',
