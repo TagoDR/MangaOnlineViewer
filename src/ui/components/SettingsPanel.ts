@@ -1,7 +1,7 @@
-import { themesSelector } from '../themes.ts';
-import { getAllLocaleStrings, getLocaleString, getUserSettings } from '../../core/settings.ts';
-import { IconCheck, IconMoon, IconPalette, IconSun, IconX } from './icons.ts';
-import locales from '../../locales/index.ts';
+import { themesSelector } from '../themes';
+import { getAllLocaleStrings, getLocaleString, getUserSettings } from '../../core/settings';
+import { IconCheck, IconMoon, IconPalette, IconSun, IconX } from './icons';
+import locales from '../../locales';
 
 const localeSelector = locales.map(
   (locale) =>

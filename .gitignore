@@ -13,7 +13,6 @@
 
 # misc
 .DS_Store*
-Icon?
 ._*
 .env.local
 .env.development.local

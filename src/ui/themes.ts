@@ -1,7 +1,7 @@
-import { getUserSettings } from '../core/settings.ts';
-import { replaceStyleSheet, wrapStyle } from '../utils/css.ts';
-import colors, { getTextColor, type IColor } from '../utils/colors.ts';
-import { IconCheck } from './components/icons.ts';
+import { getUserSettings } from '../core/settings';
+import { replaceStyleSheet, wrapStyle } from '../utils/css';
+import colors, { getTextColor, type IColor } from '../utils/colors';
+import { IconCheck } from './components/icons';
 
 function generateThemeCSS(name: string, primary: string, text: string) {
   // Language=CSS

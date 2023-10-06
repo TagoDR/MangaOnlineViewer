@@ -1,15 +1,15 @@
-import bookmarks from './events/bookmarks.ts';
-import globals from './events/globals.ts';
-import headroom from './events/headroom.ts';
-import keybindings from './events/keybindings.ts';
-import individual from './events/individual.ts';
-import navigation from './events/navigation.ts';
-import options from './events/options.ts';
-import panels from './events/panels.ts';
-import size from './events/size.ts';
-import theming from './events/theming.ts';
-import viewMode from './events/viewmode.ts';
-import zoom from './events/zoom.ts';
+import bookmarks from './events/bookmarks';
+import globals from './events/globals';
+import headroom from './events/headroom';
+import keybindings from './events/keybindings';
+import individual from './events/individual';
+import navigation from './events/navigation';
+import options from './events/options';
+import panels from './events/panels';
+import size from './events/size';
+import theming from './events/theming';
+import viewMode from './events/viewmode';
+import zoom from './events/zoom';
 
 // Controls for the extra features added to the sites
 function events() {

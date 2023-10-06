@@ -1,6 +1,6 @@
-import { svgToUrl } from '../../utils/svgs.ts';
-import { IconPalette, IconPhoto, IconPhotoOff } from '../components/icons.ts';
-import colors from '../../utils/colors.ts';
+import { svgToUrl } from '../../utils/svgs';
+import { IconPalette, IconPhoto, IconPhotoOff } from '../components/icons';
+import colors from '../../utils/colors';
 import styles from './main.css?inline';
 import icons from './icons.css?inline';
 

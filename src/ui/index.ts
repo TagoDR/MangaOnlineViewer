@@ -1,8 +1,8 @@
-import type { IManga } from '../types/index.ts';
-import head from './reader.ts';
-import body from './components/App.ts';
-import events from './events.ts';
-import { loadManga } from './page.ts';
+import type { IManga } from '../types';
+import head from './reader';
+import body from './components/App';
+import events from './events';
+import { loadManga } from './page';
 
 export default function display(manga: IManga) {
   document.head.innerHTML = head(manga);

@@ -1,4 +1,4 @@
-import sequence from '../../utils/sequence.ts';
+import sequence from '../../utils/sequence';
 import {
   IconArrowAutofitHeight,
   IconArrowAutofitWidth,
@@ -10,8 +10,8 @@ import {
   IconZoomCancel,
   IconZoomIn,
   IconZoomOut,
-} from './icons.ts';
-import { getLocaleString } from '../../core/settings.ts';
+} from './icons';
+import { getLocaleString } from '../../core/settings';
 
 const listPages = (times: number, begin: number) =>
   sequence(times, begin).map(

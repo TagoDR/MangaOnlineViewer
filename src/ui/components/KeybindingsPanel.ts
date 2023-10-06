@@ -1,5 +1,5 @@
-import { IconDeviceFloppy, IconPencil, IconX } from './icons.ts';
-import { getAllLocaleStrings, getLocaleString, getUserSettings } from '../../core/settings.ts';
+import { IconDeviceFloppy, IconPencil, IconX } from './icons';
+import { getAllLocaleStrings, getLocaleString, getUserSettings } from '../../core/settings';
 
 export const keybindList = () =>
   Object.keys(getUserSettings().keybinds).map((kb) => {

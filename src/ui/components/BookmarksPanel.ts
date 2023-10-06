@@ -1,6 +1,6 @@
-import { IconExternalLink, IconTrash, IconX } from './icons.ts';
-import { getAllLocaleStrings, getLocaleString, getUserSettings } from '../../core/settings.ts';
-import { isEmpty } from '../../utils/checks.ts';
+import { IconExternalLink, IconTrash, IconX } from './icons';
+import { getAllLocaleStrings, getLocaleString, getUserSettings } from '../../core/settings';
+import { isEmpty } from '../../utils/checks';
 
 const listBookmarks = () => {
   if (isEmpty(getUserSettings().bookmarks)) {
