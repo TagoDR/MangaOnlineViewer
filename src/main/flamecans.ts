@@ -27,8 +27,8 @@ export default {
   ],
   language: ['English'],
   category: 'manga',
-  waitTime: 2000,
-  // WaitEle: '#chapter option:nth-child(2)',
+  // waitTime: 2000,
+  waitEle: '#chapter option:nth-child(2)',
   run() {
     const chapter = document.querySelector<HTMLOptionElement>('#chapter option:checked');
     const images = [...document.querySelectorAll('#readerarea img:not(.asurascans)')];
