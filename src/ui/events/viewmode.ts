@@ -1,6 +1,6 @@
-import { applyZoom } from '../page.ts';
-import { updateSettings } from '../../core/settings.ts';
-import type { ViewMode } from '../../types/index.ts';
+import { applyZoom } from '../page';
+import { updateSettings } from '../../core/settings';
+import type { ViewMode } from '../../types';
 
 export function updateViewMode(mode: string) {
   return () => {

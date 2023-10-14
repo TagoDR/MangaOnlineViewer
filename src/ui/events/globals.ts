@@ -1,5 +1,5 @@
-import { logScript } from '../../utils/tampermonkey.ts';
-import generateZip from '../../core/download.ts';
+import { logScript } from '../../utils/tampermonkey';
+import generateZip from '../../core/download';
 
 function startDownload(event: Event) {
   const button = event.currentTarget as HTMLInputElement;

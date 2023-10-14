@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { getUserSettings } from '../../core/settings.ts';
+import { getUserSettings } from '../../core/settings';
 
 /**
  * Changes header class when scrolling up or down to show/hide it

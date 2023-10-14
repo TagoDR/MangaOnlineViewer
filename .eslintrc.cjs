@@ -5,7 +5,7 @@ module.exports = {
     es2021: true,
     greasemonkey: true,
   },
-  extends: ['airbnb-base', 'airbnb-typescript/base', 'plugin:prettier/recommended'],
+  extends: ['airbnb-base', 'airbnb-typescript/base', 'prettier', 'plugin:prettier/recommended'],
   overrides: [
     {
       env: {

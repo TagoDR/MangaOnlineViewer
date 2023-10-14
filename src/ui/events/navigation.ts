@@ -1,5 +1,5 @@
-import { applyZoom } from '../page.ts';
-import scrollToElement from './common.ts';
+import { applyZoom } from '../page';
+import scrollToElement from './common';
 
 function navigation() {
   // Goto Navigation Selector

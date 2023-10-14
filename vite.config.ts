@@ -1,12 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { defineConfig } from "vite";
-import userscript, { Metadata } from "userscript-metadata-generator";
-import externalGlobals from "rollup-plugin-external-globals";
-import fs from "fs";
-import metaMain from "./src/meta/meta-main";
-import metaAdult from "./src/meta/meta-adult";
-import metaDev from "./src/meta/meta-dev";
-import { bookmarklet, comicSites, hentaiSites, mangaSites } from "./src/meta/readme";
+import { defineConfig } from 'vite';
+import userscript, { Metadata } from 'userscript-metadata-generator';
+import externalGlobals from 'rollup-plugin-external-globals';
+import fs from 'fs';
+import metaMain from './src/meta/meta-main';
+import metaAdult from './src/meta/meta-adult';
+import metaDev from './src/meta/meta-dev';
+import { bookmarklet, comicSites, hentaiSites, mangaSites } from './src/meta/readme';
 
 interface IScript {
   entry: string;

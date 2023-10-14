@@ -1,6 +1,6 @@
-import { getUserSettings, updateSettings } from '../../core/settings.ts';
-import { applyZoom } from '../page.ts';
-import type { ZoomMode } from '../../types/index.ts';
+import { getUserSettings, updateSettings } from '../../core/settings';
+import { applyZoom } from '../page';
+import type { ZoomMode } from '../../types';
 
 function changeGlobalZoom(value: number | ZoomMode) {
   return () => {

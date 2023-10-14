@@ -1,6 +1,6 @@
-import { getUserSettings, updateSettings } from '../../core/settings.ts';
-import { addCustomTheme, refreshThemes } from '../themes.ts';
-import type { Shade } from '../../types/index.ts';
+import { getUserSettings, updateSettings } from '../../core/settings';
+import { addCustomTheme, refreshThemes } from '../themes';
+import type { Shade } from '../../types';
 
 function theming() {
   // ColorScheme Selector

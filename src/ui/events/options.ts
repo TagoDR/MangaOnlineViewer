@@ -4,10 +4,10 @@ import {
   getUserSettings,
   resetSettings,
   updateSettings,
-} from '../../core/settings.ts';
-import type { Header, LoadMode } from '../../types/index.ts';
-import { applyZoom } from '../page.ts';
-import { replaceStyleSheet } from '../../utils/css.ts';
+} from '../../core/settings';
+import type { Header, LoadMode } from '../../types';
+import { applyZoom } from '../page';
+import { replaceStyleSheet } from '../../utils/css';
 
 function options() {
   // Reset Reader Settings

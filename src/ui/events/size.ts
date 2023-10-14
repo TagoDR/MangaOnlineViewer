@@ -1,5 +1,5 @@
-import { getUserSettings } from '../../core/settings.ts';
-import { applyZoom } from '../page.ts';
+import { getUserSettings } from '../../core/settings';
+import { applyZoom } from '../page';
 
 function size() {
   // ZoomIn
