@@ -60,7 +60,7 @@ export default {
   `,
   ATTENTION: 'Atenção',
   WARNING: 'Alerta',
-  BUTTON_RESET_SETTINGS: 'Limpar Configurações',
+  BUTTON_RESET_SETTINGS: 'Limpar Configurações(Reset Settings)',
   SETTINGS_RESET: 'Configurações foram limpas, recarregue o site para efetivar a alteração',
   LANGUAGE_CHANGED: 'Idioma foi alterado, recarregue o site para efetivar a alteração',
   AUTO_DOWNLOAD: 'Proxima vez que abrir um capitulo download iniciara automaticamente',

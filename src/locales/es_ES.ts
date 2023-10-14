@@ -60,7 +60,7 @@ export default {
   `,
   ATTENTION: 'Atención',
   WARNING: 'Alerta',
-  BUTTON_RESET_SETTINGS: 'Reiniciar ajustes',
+  BUTTON_RESET_SETTINGS: 'Reiniciar ajustes(Reset Settings)',
   SETTINGS_RESET:
     'Se han restablecido los ajustes, vuelve a cargar la página para que surta efecto',
   LANGUAGE_CHANGED: 'Se ha cambiado el idioma, vuelve a cargar la página para que surta efecto',

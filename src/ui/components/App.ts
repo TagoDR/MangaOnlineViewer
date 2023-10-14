@@ -19,6 +19,7 @@ const app = (manga: IManga) => `
       class='${getUserSettings().colorScheme} 
         ${getUserSettings().hidePageControls ? 'hideControls' : ''}
         ${isBookmarked() ? 'bookmarked' : ''}'
+      locale='${getUserSettings().locale}'  
       data-theme='${getUserSettings().theme}'>
     ${Header(manga)}
     <main id='Chapter' class='${getUserSettings().fitWidthIfOversize ? 'fitWidthIfOversize' : ''}

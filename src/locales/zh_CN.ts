@@ -60,7 +60,7 @@ export default {
   `,
   ATTENTION: '注意',
   WARNING: '警告',
-  BUTTON_RESET_SETTINGS: '重置设置',
+  BUTTON_RESET_SETTINGS: '重置设置(Reset Settings)',
   SETTINGS_RESET: '设置已重置、重新加载页面才能生效',
   LANGUAGE_CHANGED: '语言已更改、重新加载页面才能生效',
   AUTO_DOWNLOAD: '下次章节加载完成时、系统将提示您自动保存',

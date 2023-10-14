@@ -19,6 +19,7 @@ function options() {
       icon: 'info',
     };
     resetSettings();
+    document.getElementById('MangaOnlineViewer')?.removeAttribute('locale');
     Swal.fire(msg);
   }
 

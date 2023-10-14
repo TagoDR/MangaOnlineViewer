@@ -2,6 +2,7 @@ import type { IManga } from '../types';
 import { logScript } from '../utils/tampermonkey';
 import { clearBookmark } from './settings';
 import display from '../ui';
+import { cleanUpElement } from '../utils/cleanup';
 
 export default async function viewer(manga: IManga) {
   if (manga.before !== undefined) {
@@ -11,11 +12,7 @@ export default async function viewer(manga: IManga) {
   logScript('Rebuilding Site');
   setTimeout(() => {
     try {
-      [document.documentElement, document.head, document.body].forEach((element: HTMLElement) => {
-        element.getAttributeNames().forEach((attr) => {
-          element.removeAttribute(attr);
-        });
-      });
+      cleanUpElement(document.documentElement, document.head, document.body);
       window.scrollTo(0, 0);
       display(manga);
     } catch (e) {
