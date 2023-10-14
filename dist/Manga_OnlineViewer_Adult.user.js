@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.10.06
+// @version       2023.10.14
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -23,7 +23,7 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
-// @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.10.3/dist/hotkeys.min.js
+// @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.12.0/dist/hotkeys.min.js
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
 // @include       /https?:\/\/(www.)?bestporncomix.com\/gallery\/.+/
 // @include       /https?:\/\/(www.)?doujins.com\/.+/
@@ -1311,7 +1311,7 @@
   `,
     ATTENTION: "Atenção",
     WARNING: "Alerta",
-    BUTTON_RESET_SETTINGS: "Limpar Configurações",
+    BUTTON_RESET_SETTINGS: "Limpar Configurações(Reset Settings)",
     SETTINGS_RESET: "Configurações foram limpas, recarregue o site para efetivar a alteração",
     LANGUAGE_CHANGED: "Idioma foi alterado, recarregue o site para efetivar a alteração",
     AUTO_DOWNLOAD: "Proxima vez que abrir um capitulo download iniciara automaticamente",
@@ -1410,7 +1410,7 @@
   `,
     ATTENTION: "注意",
     WARNING: "警告",
-    BUTTON_RESET_SETTINGS: "重置设置",
+    BUTTON_RESET_SETTINGS: "重置设置(Reset Settings)",
     SETTINGS_RESET: "设置已重置、重新加载页面才能生效",
     LANGUAGE_CHANGED: "语言已更改、重新加载页面才能生效",
     AUTO_DOWNLOAD: "下次章节加载完成时、系统将提示您自动保存",
@@ -1509,7 +1509,7 @@
   `,
     ATTENTION: "Atención",
     WARNING: "Alerta",
-    BUTTON_RESET_SETTINGS: "Reiniciar ajustes",
+    BUTTON_RESET_SETTINGS: "Reiniciar ajustes(Reset Settings)",
     SETTINGS_RESET: "Se han restablecido los ajustes, vuelve a cargar la página para que surta efecto",
     LANGUAGE_CHANGED: "Se ha cambiado el idioma, vuelve a cargar la página para que surta efecto",
     AUTO_DOWNLOAD: "La próxima vez que termine de cargarse un capítulo, se le pedirá que guarde automáticamente",
@@ -2804,6 +2804,7 @@ ${wrapStyle(
       class='${getUserSettings().colorScheme} 
         ${getUserSettings().hidePageControls ? "hideControls" : ""}
         ${isBookmarked() ? "bookmarked" : ""}'
+      locale='${getUserSettings().locale}'  
       data-theme='${getUserSettings().theme}'>
     ${Header(manga)}
     <main id='Chapter' class='${getUserSettings().fitWidthIfOversize ? "fitWidthIfOversize" : ""}
@@ -3452,6 +3453,7 @@ ${wrapStyle(
         icon: "info"
       };
       resetSettings();
+      document.getElementById("MangaOnlineViewer")?.removeAttribute("locale");
       Swal.fire(msg);
     }
     document.querySelector("#ResetSettings")?.addEventListener("click", buttonResetSettings);
@@ -3797,6 +3799,12 @@ ${wrapStyle(
     loadManga(manga);
   }
 
+  const cleanUpElement = (...ele) => ele.forEach((element) => {
+    element.getAttributeNames().forEach((attr) => {
+      element.removeAttribute(attr);
+    });
+  });
+
   async function viewer(manga) {
     if (manga.before !== void 0) {
       await manga.before(manga.begin);
@@ -3805,11 +3813,7 @@ ${wrapStyle(
     logScript("Rebuilding Site");
     setTimeout(() => {
       try {
-        [document.documentElement, document.head, document.body].forEach((element) => {
-          element.getAttributeNames().forEach((attr) => {
-            element.removeAttribute(attr);
-          });
-        });
+        cleanUpElement(document.documentElement, document.head, document.body);
         window.scrollTo(0, 0);
         display(manga);
       } catch (e) {
