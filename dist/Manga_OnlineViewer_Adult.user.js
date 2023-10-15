@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.10.14
+// @version       2023.10.15
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -3442,6 +3442,14 @@ ${wrapStyle(
       });
     }
     document.querySelectorAll(".Thumbnail")?.forEach(clickThumbnail);
+    function transformScrollToHorizontal(event) {
+      if (!event.deltaY) {
+        return;
+      }
+      event.currentTarget.scrollLeft += event.deltaY + event.deltaX;
+      event.preventDefault();
+    }
+    document.querySelector("#Thumbnails")?.addEventListener("wheel", transformScrollToHorizontal);
   }
 
   function options() {
@@ -3733,7 +3741,12 @@ ${wrapStyle(
         getUserSettings().zoomMode = "percent";
       }
       const globalZoomVal = document.querySelector("#ZoomVal");
-      globalZoomVal.textContent = Number.isInteger(value) ? `${value}%` : value;
+      if (Number.isInteger(value)) {
+        globalZoomVal.textContent = `${value}%`;
+        document.querySelector("#Zoom").value = value.toString();
+      } else {
+        globalZoomVal.textContent = value;
+      }
       applyZoom(value);
     };
   }

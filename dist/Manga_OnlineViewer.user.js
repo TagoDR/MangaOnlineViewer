@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans
-// @version       2023.10.14
+// @version       2023.10.15
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -3839,6 +3839,14 @@ ${wrapStyle(
       });
     }
     document.querySelectorAll(".Thumbnail")?.forEach(clickThumbnail);
+    function transformScrollToHorizontal(event) {
+      if (!event.deltaY) {
+        return;
+      }
+      event.currentTarget.scrollLeft += event.deltaY + event.deltaX;
+      event.preventDefault();
+    }
+    document.querySelector("#Thumbnails")?.addEventListener("wheel", transformScrollToHorizontal);
   }
 
   function options() {
@@ -4130,7 +4138,12 @@ ${wrapStyle(
         getUserSettings().zoomMode = "percent";
       }
       const globalZoomVal = document.querySelector("#ZoomVal");
-      globalZoomVal.textContent = Number.isInteger(value) ? `${value}%` : value;
+      if (Number.isInteger(value)) {
+        globalZoomVal.textContent = `${value}%`;
+        document.querySelector("#Zoom").value = value.toString();
+      } else {
+        globalZoomVal.textContent = value;
+      }
       applyZoom(value);
     };
   }
