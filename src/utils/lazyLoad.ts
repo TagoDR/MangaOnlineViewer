@@ -37,16 +37,14 @@ let setup = false;
 
 /**
  * Check if the image ins nearing the viewport, so it needs to load.
+ * https://stackoverflow.com/a/70476497/2453148
  * @param value
  */
 function filterInView(value: LazyItem) {
   const { element } = value;
   const rect = element.getBoundingClientRect();
-  const viewport = {
-    top: 0 - settings.threshold,
-    bottom: window.scrollY + window.innerHeight + settings.threshold,
-  };
-  return rect.bottom >= viewport.top && rect.top <= viewport.bottom;
+  const target = (window.innerHeight || document.documentElement.clientHeight) + settings.threshold;
+  return rect.top <= target || rect.bottom <= target;
 }
 
 /**
