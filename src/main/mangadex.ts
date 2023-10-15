@@ -7,9 +7,7 @@ export default {
   category: 'manga',
   waitEle: ".md--reader-menu a[href^='/chapter/']",
   async run() {
-    const chapterId = RegExp(/\/chapter\/([^/]+)(\/\d+)?/)
-      .exec(window.location.pathname)
-      ?.at(1);
+    const chapterId = /\/chapter\/([^/]+)(\/\d+)?/.exec(window.location.pathname)?.at(1);
     const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
     const server = await fetch(home).then(async (res) => res.json());
     const images = server.chapter.data;

@@ -5,6 +5,7 @@
  * @param {*} args
  */
 export function log(...args: string[]) {
+  // eslint-disable-next-line no-console
   console.log('%cUserscript (React Mode):', 'color: purple; font-weight: bold', ...args);
 }
 
