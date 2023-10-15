@@ -11,7 +11,12 @@ function changeGlobalZoom(value: number | ZoomMode) {
     }
 
     const globalZoomVal = document.querySelector('#ZoomVal');
-    globalZoomVal!.textContent = Number.isInteger(value) ? `${value}%` : (value as string);
+    if (Number.isInteger(value)) {
+      globalZoomVal!.textContent = `${value}%`;
+      document.querySelector<HTMLInputElement>('#Zoom')!.value = value.toString();
+    } else {
+      globalZoomVal!.textContent = value as string;
+    }
     applyZoom(value);
   };
 }
