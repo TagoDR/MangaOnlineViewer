@@ -21,7 +21,6 @@ import omegascans from './omegascans';
 import porncomixonline from './porncomixonline';
 import pururin from './pururin';
 import simplyhentai from './simplyhentai';
-import sukebe from './sukebe';
 import threehentai from './3hentai';
 import tmohhentai from './tmohentai';
 import tsumino from './tsumino';
@@ -54,7 +53,7 @@ const sites = [
   porncomixonline,
   pururin,
   simplyhentai,
-  sukebe,
+  // sukebe, RIP
   tmohhentai,
   threehentai,
   tsumino,
