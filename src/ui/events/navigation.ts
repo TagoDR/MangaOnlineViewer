@@ -25,6 +25,18 @@ function navigation() {
   }
 
   document.querySelectorAll('.Thumbnail')?.forEach(clickThumbnail);
+
+  function transformScrollToHorizontal(this: HTMLElement, event: Event) {
+    if (!(event as WheelEvent).deltaY) {
+      return;
+    }
+
+    (event.currentTarget as Element).scrollLeft +=
+      (event as WheelEvent).deltaY + (event as WheelEvent).deltaX;
+    event.preventDefault();
+  }
+
+  document.querySelector('#Thumbnails')?.addEventListener('wheel', transformScrollToHorizontal);
 }
 
 export default navigation;
