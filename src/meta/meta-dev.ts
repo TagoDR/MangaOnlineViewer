@@ -23,5 +23,5 @@ export default {
   noframes: 'on',
   connect: '*',
   require: requiredScripts,
-  include: sites.map((s) => s.url),
+  include: ['https://github.com/TagoDR/MangaOnlineViewer', ...sites.map((s) => s.url)],
 } as Partial<Tampermonkey.ScriptMetadata>;

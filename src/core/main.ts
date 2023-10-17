@@ -9,6 +9,7 @@ import { getLocaleString, getUserSettings, isBookmarked } from './settings';
 import sweetalertStyle from '../ui/styles/externalStyle';
 import startButton from '../ui/styles/startButton.css?inline';
 import { testAttribute, testElement, testFunc, testTime, testVariable } from './check';
+import setupLocalFileReader from './upload';
 
 function validateMin(valBegin: number, endPage: number, rs: RangeSlider) {
   let val = valBegin;
@@ -207,6 +208,22 @@ async function start(sites: ISite[]) {
       getInfoGM.script.version
     } on ${getBrowser()} with ${getEngine()}`,
   );
+  if (window.location.href === 'https://github.com/TagoDR/MangaOnlineViewer') {
+    const ele = document.createElement('div');
+    ele.innerHTML = `
+        <h2>Load ZIP files(CBZ, CBR...)</h2>
+        <p>
+            Script can load from local zip file to show in the browser
+        </p>
+        <label for='file'>Choose the local zip file:</label>
+        <input type="file" id="file" name="file" class='btn' accept=".zip, .cbz, .cbr, .7z, .rar" value=''/><br />
+    `;
+    document
+      .querySelector('readme-toc article')
+      ?.insertBefore(ele, document.querySelector('#user-content-installation'));
+    setupLocalFileReader();
+    return;
+  }
   logScript(`${sites.length} Known Manga Sites, Looking for a match...`);
 
   const site = sites.find((s: ISite) => s.url.test(window.location.href));
