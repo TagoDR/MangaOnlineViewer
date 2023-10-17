@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, ksk.moe, Sukebe.moe, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.10.15
+// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
+// @version       2023.10.17
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -47,7 +47,6 @@
 // @include       /https?:\/\/(www.)?porncomixone.net\/comic\/.+/
 // @include       /https?:\/\/(www.)?pururin.to\/(view|read)\/.+\/.+\/.+/
 // @include       /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/
-// @include       /https?:\/\/(www.)?(ksk|sukebe).moe\/(archive|g|read)\/\d+\/.+\/\d+/
 // @include       /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/\d+/
 // @include       /https?:\/\/(www.)?3hentai.net\/d\/.+\/.+/
 // @include       /https?:\/\/(www.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/
@@ -816,53 +815,6 @@
     }
   };
 
-  const sukebe = {
-    name: ["ksk.moe", "Sukebe.moe"],
-    obs: "Slow start, bruteforce required",
-    url: /https?:\/\/(www.)?(ksk|sukebe).moe\/(archive|g|read)\/\d+\/.+\/\d+/,
-    homepage: ["https://ksk.moe/", "https://sukebe.moe/"],
-    language: ["English"],
-    category: "hentai",
-    waitEle: "main .page img",
-    async run() {
-      const num = document.querySelectorAll("header .currentPageNum option");
-      return {
-        title: document.querySelector("header h1 a")?.textContent?.trim(),
-        series: document.querySelector("header h1 a")?.getAttribute("href"),
-        pages: num?.length,
-        prev: "#",
-        next: "#",
-        listImages: [""],
-        async before(begin = 1) {
-          const div = document.createElement("div");
-          div.setAttribute(
-            "style",
-            "height: 100vh;width: 100vw;position: fixed;top: 0;left: 0;z-index: 100000;background: white;opacity: 0.5;"
-          );
-          document.body.append(div);
-          const direction = document.querySelector('[name="direction"]');
-          if (direction && direction.value !== "1") {
-            direction.value = "1";
-            direction.dispatchEvent(new Event("change"));
-          }
-          num.item(begin - 1).selected = true;
-          document.querySelector(".currentPageNum select")?.dispatchEvent(new Event("change"));
-          const next = document.querySelector(".next");
-          const target = document.querySelector(".main .pages");
-          const src = [];
-          for (let i = begin; i <= this.pages; i += 1) {
-            src[i - 1] = await waitForAtb(".page img", "src", target ?? document.body);
-            target?.querySelector("img")?.removeAttribute("src");
-            next?.dispatchEvent(new Event("click"));
-          }
-          this.listImages = src;
-          num.item(0).selected = true;
-          document.querySelector(".currentPageNum select")?.dispatchEvent(new Event("change"));
-        }
-      };
-    }
-  };
-
   const threehentai = {
     name: "3Hentai",
     url: /https?:\/\/(www.)?3hentai.net\/d\/.+\/.+/,
@@ -1043,7 +995,7 @@
     porncomixonline,
     pururin,
     simplyhentai,
-    sukebe,
+    // sukebe, RIP
     tmohhentai,
     threehentai,
     tsumino,
@@ -3162,11 +3114,8 @@ ${wrapStyle(
   function filterInView(value) {
     const { element } = value;
     const rect = element.getBoundingClientRect();
-    const viewport = {
-      top: 0 - settings.threshold,
-      bottom: window.scrollY + window.innerHeight + settings.threshold
-    };
-    return rect.bottom >= viewport.top && rect.top <= viewport.bottom;
+    const target = (window.innerHeight || document.documentElement.clientHeight) + settings.threshold;
+    return rect.top <= target || rect.bottom <= target;
   }
   function showElement(item) {
     const value = item.element.getAttribute(settings.lazyAttribute);
@@ -3890,6 +3839,37 @@ ${wrapStyle(
     }
   }
 
+  const getImageBlob = (content) => {
+    const buffer = new Uint8Array(content);
+    const blob = new Blob([buffer.buffer]);
+    return URL.createObjectURL(blob);
+  };
+  async function loadZipFile(filePath) {
+    const zip = await JSZip.loadAsync(filePath);
+    const files = zip.filter((_, item) => !item.dir);
+    logScript("Files in zip:", zip.files);
+    return Promise.all(files.map((file) => file.async("arraybuffer").then(getImageBlob)));
+  }
+  async function displayFromZIP(zipFile) {
+    const listImages = await loadZipFile(zipFile);
+    display({
+      title: typeof zipFile === "string" ? zipFile : zipFile.name,
+      series: "https://github.com/TagoDR/MangaOnlineViewer",
+      pages: listImages.length,
+      begin: 0,
+      prev: "#",
+      next: "#",
+      listImages
+    });
+  }
+  function setupLocalFileReader() {
+    document.querySelector("#file")?.addEventListener("change", (evt) => {
+      const input = evt.target;
+      if (input.files?.[0])
+        displayFromZIP(input.files[0]);
+    });
+  }
+
   function validateMin(valBegin, endPage, rs) {
     let val = valBegin;
     if (Number.isNaN(val) || val < rs.min()) {
@@ -4062,6 +4042,20 @@ ${wrapStyle(
     logScript(
       `Starting ${getInfoGM.script.name} ${getInfoGM.script.version} on ${getBrowser()} with ${getEngine()}`
     );
+    if (window.location.href === "https://github.com/TagoDR/MangaOnlineViewer") {
+      const ele = document.createElement("div");
+      ele.innerHTML = `
+        <h2>Load ZIP files(CBZ, CBR...)</h2>
+        <p>
+            Script can load from local zip file to show in the browser
+        </p>
+        <label for='file'>Choose the local zip file:</label>
+        <input type="file" id="file" name="file" class='btn' accept=".zip, .cbz, .cbr, .7z, .rar" value=''/><br />
+    `;
+      document.querySelector("readme-toc article")?.insertBefore(ele, document.querySelector("#user-content-installation"));
+      setupLocalFileReader();
+      return;
+    }
     logScript(`${sites.length} Known Manga Sites, Looking for a match...`);
     const site = sites.find((s) => s.url.test(window.location.href));
     if (site) {

@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans
-// @version       2023.10.15
+// @version       2023.10.17
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -25,6 +25,7 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
 // @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.12.0/dist/hotkeys.min.js
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
+// @include       https://github.com/TagoDR/MangaOnlineViewer
 // @include       /https?:\/\/alandal.com\/chapter\/.+\/\d+/
 // @include       /https?:\/\/(www.)?bato.to\/(chapter|title).*/
 // @include       /https?:\/\/(www.)?(bilibilicomics).com\/.+\/.+/
@@ -525,7 +526,7 @@
     category: "manga",
     waitEle: ".md--reader-menu a[href^='/chapter/']",
     async run() {
-      const chapterId = RegExp(/\/chapter\/([^/]+)(\/\d+)?/).exec(window.location.pathname)?.at(1);
+      const chapterId = /\/chapter\/([^/]+)(\/\d+)?/.exec(window.location.pathname)?.at(1);
       const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
       const server = await fetch(home).then(async (res) => res.json());
       const images = server.chapter.data;
@@ -3559,11 +3560,8 @@ ${wrapStyle(
   function filterInView(value) {
     const { element } = value;
     const rect = element.getBoundingClientRect();
-    const viewport = {
-      top: 0 - settings.threshold,
-      bottom: window.scrollY + window.innerHeight + settings.threshold
-    };
-    return rect.bottom >= viewport.top && rect.top <= viewport.bottom;
+    const target = (window.innerHeight || document.documentElement.clientHeight) + settings.threshold;
+    return rect.top <= target || rect.bottom <= target;
   }
   function showElement(item) {
     const value = item.element.getAttribute(settings.lazyAttribute);
@@ -4346,6 +4344,37 @@ ${wrapStyle(
     }
   }
 
+  const getImageBlob = (content) => {
+    const buffer = new Uint8Array(content);
+    const blob = new Blob([buffer.buffer]);
+    return URL.createObjectURL(blob);
+  };
+  async function loadZipFile(filePath) {
+    const zip = await JSZip.loadAsync(filePath);
+    const files = zip.filter((_, item) => !item.dir);
+    logScript("Files in zip:", zip.files);
+    return Promise.all(files.map((file) => file.async("arraybuffer").then(getImageBlob)));
+  }
+  async function displayFromZIP(zipFile) {
+    const listImages = await loadZipFile(zipFile);
+    display({
+      title: typeof zipFile === "string" ? zipFile : zipFile.name,
+      series: "https://github.com/TagoDR/MangaOnlineViewer",
+      pages: listImages.length,
+      begin: 0,
+      prev: "#",
+      next: "#",
+      listImages
+    });
+  }
+  function setupLocalFileReader() {
+    document.querySelector("#file")?.addEventListener("change", (evt) => {
+      const input = evt.target;
+      if (input.files?.[0])
+        displayFromZIP(input.files[0]);
+    });
+  }
+
   function validateMin(valBegin, endPage, rs) {
     let val = valBegin;
     if (Number.isNaN(val) || val < rs.min()) {
@@ -4518,6 +4547,20 @@ ${wrapStyle(
     logScript(
       `Starting ${getInfoGM.script.name} ${getInfoGM.script.version} on ${getBrowser()} with ${getEngine()}`
     );
+    if (window.location.href === "https://github.com/TagoDR/MangaOnlineViewer") {
+      const ele = document.createElement("div");
+      ele.innerHTML = `
+        <h2>Load ZIP files(CBZ, CBR...)</h2>
+        <p>
+            Script can load from local zip file to show in the browser
+        </p>
+        <label for='file'>Choose the local zip file:</label>
+        <input type="file" id="file" name="file" class='btn' accept=".zip, .cbz, .cbr, .7z, .rar" value=''/><br />
+    `;
+      document.querySelector("readme-toc article")?.insertBefore(ele, document.querySelector("#user-content-installation"));
+      setupLocalFileReader();
+      return;
+    }
     logScript(`${sites.length} Known Manga Sites, Looking for a match...`);
     const site = sites.find((s) => s.url.test(window.location.href));
     if (site) {
