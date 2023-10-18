@@ -6,7 +6,12 @@
         <title>MangaOnlineViewer Script</title>
     </head>
     <body>
-        <div id="MangaOnlineViewer"></div>
+        <button type='button' id='test'>Run Local Test</button>
+        <h3>Or choose the local(s) zip file(s)</h3>
+        <p class="note">
+            Note : your browser will process the zip file, don't choose a file too big !
+        </p>
+        <input type="file" id="file" name="file" accept=".zip, .cbz, .cbr, .7z, .rar" value=''/><br />
         <script src="/src/index.ts" type="module"></script>
     </body>
 </html>

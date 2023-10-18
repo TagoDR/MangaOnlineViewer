@@ -8,6 +8,11 @@ wait for pages to load.
 :exclamation: **Attention**: Some sites require you to reload the page(F5) or open the chapter in a new tab for the
 script to start.
 
+## Supported Browsers
+
+Firefox and Chrome with [Tampermonkey](https://tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/).
+Other Browsers with other add-ons may also work, but not officially supported.
+
 ## Installation
 
 #### [Main Reader](https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js)
@@ -16,28 +21,9 @@ script to start.
 
 #### Official Source: [GitHub](https://github.com/TagoDR/MangaOnlineViewer)
 
-## Supported Browsers
+## Local ZIP Files (CBZ, CBR)
 
-Firefox and Chrome with [Tampermonkey](https://tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/).
-Other Browsers with other add-ons may also work, but not officially supported.
-
-### Mobile Bookmarklet
-
-_Settings can't be saved, may require to request for Desktop Page_:
-
-Bookmarklet seems to work only in Chrome, open the chapter then use the searchbar to activate your bookmarklet.
-
-##### Main Reader:
-
-```JS
-javascript:(function(){["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
-```
-
-##### Adult Reader:
-
-```JS
-javascript:(function(){["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer_Adult.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
-```
+First install then reload page, there will be an option in this section to select a zip file to read from.
 
 ## Supported Manga Sites
 
@@ -120,3 +106,20 @@ parts of my script to be used freely.
 
 In case the owner/admin of one of the supported sites does not want my script to run on their site, I will make it
 disabled by default. Forcing users to manually activate it.
+
+## Mobile Bookmarklet
+
+_Settings can't be saved, may require to request for Desktop Page_:
+
+Bookmarklet seems to work only in Chrome, open the chapter then use the searchbar to activate your bookmarklet.
+##### Main Reader:
+
+```JS
+javascript:(function(){["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
+```
+
+##### Adult Reader:
+
+```JS
+javascript:(function(){["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer_Adult.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
+```

@@ -1,6 +1,6 @@
 import JSZip from 'jszip';
-import display from '../ui';
 import { logScript } from '../utils/tampermonkey';
+import formatPage from './viewer';
 
 const getImageBlob = (content: ArrayBuffer) => {
   const buffer = new Uint8Array(content);
@@ -12,19 +12,20 @@ const getImageBlob = (content: ArrayBuffer) => {
  * Loads a zip file form disc and returns list of images
  * @param filePath
  */
-async function loadZipFile(filePath: string | File) {
+export async function loadZipFile(filePath: string | File) {
   const zip = await JSZip.loadAsync(filePath);
   const files = zip.filter((_, item) => !item.dir);
   logScript('Files in zip:', zip.files);
   return Promise.all(files.map((file) => file.async('arraybuffer').then(getImageBlob)));
 }
+
 /**
  *  Display manga from zip file images
  * @param zipFile
  */
-async function displayFromZIP(zipFile: File | string) {
+export async function loadMangaFromZip(zipFile: File | string) {
   const listImages = await loadZipFile(zipFile);
-  display({
+  formatPage({
     title: typeof zipFile === 'string' ? zipFile : zipFile.name,
     series: 'https://github.com/TagoDR/MangaOnlineViewer',
     pages: listImages.length,
@@ -34,10 +35,18 @@ async function displayFromZIP(zipFile: File | string) {
     listImages,
   });
 }
-
-export default function setupLocalFileReader() {
+export function allowUpload() {
+  const ele = document.createElement('div');
+  ele.innerHTML = `
+        <label for='file'>Choose the local zip file:</label>
+        <input type="file" id="file" name="file" class='btn' accept=".zip, .cbz, .cbr, .7z, .rar" value=''/><br />
+    `;
+  document
+    .querySelector('readme-toc article')
+    ?.insertBefore(ele, document.querySelector('#user-content-supported-manga-sites'));
   document.querySelector('#file')?.addEventListener('change', (evt) => {
     const input = evt.target as HTMLInputElement;
-    if (input.files?.[0]) displayFromZIP(input.files[0]);
+    if (input.files?.[0]) loadMangaFromZip(input.files[0]);
   });
+  logScript(`Waiting for zip upload`);
 }
