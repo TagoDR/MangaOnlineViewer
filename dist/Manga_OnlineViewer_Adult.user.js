@@ -3865,10 +3865,12 @@ ${wrapStyle(
   function allowUpload() {
     const ele = document.createElement("div");
     ele.innerHTML = `
+        <p>Can read any zip file with images inside and diplay it like any of the supported sites</p>
         <label for='file'>Choose the local zip file:</label>
         <input type="file" id="file" name="file" class='btn' accept=".zip, .cbz, .cbr, .7z, .rar" value=''/><br />
+        <p>Note : your browser will process the zip file, don't choose a file too big !</p>
     `;
-    document.querySelector("readme-toc article")?.insertBefore(ele, document.querySelector("#user-content-supported-manga-sites"));
+    document.querySelector("#user-content-local-zip-files-cbz-cbr + p")?.replaceWith(ele);
     document.querySelector("#file")?.addEventListener("change", (evt) => {
       const input = evt.target;
       if (input.files?.[0])
