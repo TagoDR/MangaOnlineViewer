@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.10.17
+// @version       2023.10.18
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -3850,9 +3850,9 @@ ${wrapStyle(
     logScript("Files in zip:", zip.files);
     return Promise.all(files.map((file) => file.async("arraybuffer").then(getImageBlob)));
   }
-  async function displayFromZIP(zipFile) {
+  async function loadMangaFromZip(zipFile) {
     const listImages = await loadZipFile(zipFile);
-    display({
+    viewer({
       title: typeof zipFile === "string" ? zipFile : zipFile.name,
       series: "https://github.com/TagoDR/MangaOnlineViewer",
       pages: listImages.length,
@@ -3862,12 +3862,19 @@ ${wrapStyle(
       listImages
     });
   }
-  function setupLocalFileReader() {
+  function allowUpload() {
+    const ele = document.createElement("div");
+    ele.innerHTML = `
+        <label for='file'>Choose the local zip file:</label>
+        <input type="file" id="file" name="file" class='btn' accept=".zip, .cbz, .cbr, .7z, .rar" value=''/><br />
+    `;
+    document.querySelector("readme-toc article")?.insertBefore(ele, document.querySelector("#user-content-supported-manga-sites"));
     document.querySelector("#file")?.addEventListener("change", (evt) => {
       const input = evt.target;
       if (input.files?.[0])
-        displayFromZIP(input.files[0]);
+        loadMangaFromZip(input.files[0]);
     });
+    logScript(`Waiting for zip upload`);
   }
 
   function validateMin(valBegin, endPage, rs) {
@@ -4043,17 +4050,7 @@ ${wrapStyle(
       `Starting ${getInfoGM.script.name} ${getInfoGM.script.version} on ${getBrowser()} with ${getEngine()}`
     );
     if (window.location.href === "https://github.com/TagoDR/MangaOnlineViewer") {
-      const ele = document.createElement("div");
-      ele.innerHTML = `
-        <h2>Load ZIP files(CBZ, CBR...)</h2>
-        <p>
-            Script can load from local zip file to show in the browser
-        </p>
-        <label for='file'>Choose the local zip file:</label>
-        <input type="file" id="file" name="file" class='btn' accept=".zip, .cbz, .cbr, .7z, .rar" value=''/><br />
-    `;
-      document.querySelector("readme-toc article")?.insertBefore(ele, document.querySelector("#user-content-installation"));
-      setupLocalFileReader();
+      allowUpload();
       return;
     }
     logScript(`${sites.length} Known Manga Sites, Looking for a match...`);
