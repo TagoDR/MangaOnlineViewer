@@ -112,6 +112,7 @@ disabled by default. Forcing users to manually activate it.
 _Settings can't be saved, may require to request for Desktop Page_:
 
 Bookmarklet seems to work only in Chrome, open the chapter then use the searchbar to activate your bookmarklet.
+
 ##### Main Reader:
 
 ```JS

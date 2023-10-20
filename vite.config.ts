@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { defineConfig } from 'vite';
-import userscript, { Metadata } from 'userscript-metadata-generator';
+import userscript, { type Metadata } from 'userscript-metadata-generator';
 import externalGlobals from 'rollup-plugin-external-globals';
 import fs from 'fs';
 import metaMain from './src/meta/meta-main';
