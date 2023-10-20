@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, Asura Scans, Flame Scans, Realm Scans, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans
-// @version       2023.10.18
+// @version       2023.10.20
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -67,7 +67,7 @@
 // @include       /https?:\/\/(www.)?tapas.io\/episode\/.+/
 // @include       /https?:\/\/(www.)?(tenmanga|gardenmanage).com\/(chapter|statuses)\/.+/
 // @include       /https?:\/\/(www.)?(.+).com\/(viewer|news)\/.+\/(paginated|cascade)/
-// @include       /https?:\/\/(www.)?tumanhwas.com\/view\/.+/
+// @include       /https?:\/\/(www.)?tumanhwas.com\/news\/.+/
 // @include       /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/
 // @include       /https?:\/\/(www.)?webnovel.com\/comic\/.+/
 // @include       /https?:\/\/(www.)?webtoons.com\/.+viewer.+/
@@ -1221,19 +1221,18 @@
 
   const tumanhwas = {
     name: "TuManhwas",
-    url: /https?:\/\/(www.)?tumanhwas.com\/view\/.+/,
+    url: /https?:\/\/(www.)?tumanhwas.com\/news\/.+/,
     homepage: "https://tumanhwas.com/",
     language: ["Spanish"],
     category: "manga",
     run() {
-      const chapter = Array.from(document.querySelectorAll(".listupd a"));
       const images = [...document.querySelectorAll("#chapter_imgs img")];
       return {
-        title: document.querySelector(".releases h1")?.textContent?.trim(),
-        series: chapter.find((el) => el.textContent?.includes("Lista"))?.getAttribute("href"),
+        title: document.querySelector(".entry-title")?.textContent?.trim(),
+        series: document.querySelector(".nextprev a:nth-child(2)")?.getAttribute("href"),
         pages: images.length,
-        prev: chapter.find((el) => el.textContent?.includes("Anterior"))?.getAttribute("href"),
-        next: chapter.find((el) => el.textContent?.includes("Siguiente"))?.getAttribute("href"),
+        prev: document.querySelector(".nextprev a:nth-child(1)")?.getAttribute("href"),
+        next: document.querySelector(".nextprev a:nth-child(3)")?.getAttribute("href"),
         listImages: images.map((item) => $(item).attr("src"))
       };
     }
