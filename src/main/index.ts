@@ -3,7 +3,6 @@ import batoto from './batoto';
 import bilibilicomics from './bilibilicomics';
 import comicastle from './comicastle';
 import dysnatyscans from './dysnatyscans';
-import flamecans from './flamecans';
 import foolslide from './foolslide';
 import inkr from './inkr';
 import inmanga from './inmanga';
@@ -24,6 +23,7 @@ import mangakakalot from './mangakakalot';
 import mangapark from './mangapark';
 import mangareader from './mangareader';
 import mangasee from './mangasee';
+import mangastreamwp from './mangastreamwp';
 import mangatigre from './mangatigre';
 import mangatoon from './mangatoon';
 import mangatown from './mangatown';
@@ -57,7 +57,7 @@ const sites = [
   bilibilicomics,
   comicastle,
   dysnatyscans,
-  flamecans,
+  mangastreamwp,
   inkr,
   inmanga,
   klmanga,

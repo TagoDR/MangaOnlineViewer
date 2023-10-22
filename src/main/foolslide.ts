@@ -2,7 +2,7 @@
 export default {
   name: ['FoOlSlide', 'Kireicake'],
   url: /^(?!.*jaiminisbox).*\/read\/.+/,
-  homepage: ['#', 'https://reader.kireicake.com'],
+  homepage: ['https://github.com/saintly2k/FoOlSlideX', 'https://reader.kireicake.com'],
   language: ['English'],
   obs: 'Any Site that uses FoOLSlide',
   category: 'manga',

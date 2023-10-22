@@ -1,9 +1,10 @@
-// == FlameScans ===================================================================================
+// == MangaStream WordPress Plugin =================================================================
 export default {
   name: [
+    'MangaStream WordPress Plugin',
     'Asura Scans',
     'Flame Scans',
-    'Realm Scans',
+    'Rizzcomic',
     'Voids-Scans',
     'Luminous Scans',
     'Shimada Scans',
@@ -12,11 +13,12 @@ export default {
     'OzulScansEn',
     'AzureManga',
   ],
-  url: /https?:\/\/(www.)?(asura.*|flamescans|realmscans|void-scans|luminousscans|shimascans|nightscans|manhwafreak|manhwa-freak|ozulscansen|azuremanga).(com|org|gg|xyz|to|net)\/.+/,
+  url: /https?:\/\/(www.)?(asura.*|flamescans|rizzcomic|void-scans|luminousscans|shimascans|nightscans|manhwafreak|manhwa-freak|ozulscansen|azuremanga).(com|org|gg|xyz|to|net)\/.+/,
   homepage: [
+    'https://themesia.com/mangastream-wordpress-theme/',
     'https://asura.nacm.xyz/',
     'https://flamescans.org/',
-    'https://realmscans.com/',
+    'https://rizzcomic.com/',
     'https://void-scans.com/',
     'https://luminousscans.com/',
     'https://shimadascans.com/',

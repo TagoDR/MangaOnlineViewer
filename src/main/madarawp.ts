@@ -1,5 +1,4 @@
 // == Madara WordPress Plugin ======================================================================
-// https://themeforest.net/item/madara-wordpress-theme-for-manga/20849828
 function findImages() {
   return [
     ...document.querySelectorAll(
@@ -35,7 +34,7 @@ export default {
   ],
   url: /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel)\/.+\/.+/,
   homepage: [
-    '#',
+    'https://mangabooth.com/',
     'https://manhuaus.com',
     'https://isekaiscan.com/',
     'https://comickiba.com/',
