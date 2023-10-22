@@ -15,7 +15,7 @@ export default {
       title: 'Placeholder Manga Loaded',
       series: '#Counters',
       pages: num,
-      begin: 0,
+      begin: 1,
       prev: '?pages=50',
       next: '?pages=1',
       listImages: [

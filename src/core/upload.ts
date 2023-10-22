@@ -29,7 +29,7 @@ export async function loadMangaFromZip(zipFile: File | string) {
     title: typeof zipFile === 'string' ? zipFile : zipFile.name,
     series: 'https://github.com/TagoDR/MangaOnlineViewer',
     pages: listImages.length,
-    begin: 0,
+    begin: 1,
     prev: '#',
     next: '#',
     listImages,
