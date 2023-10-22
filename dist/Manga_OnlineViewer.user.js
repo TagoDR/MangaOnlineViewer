@@ -2270,291 +2270,291 @@
 </svg>`;
   const IconArrowBigLeft = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-arrow-big-left' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z'></path>
 </svg>`;
   const IconFileDownload = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-file-download' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M14 3v4a1 1 0 0 0 1 1h4'></path>
-   <path d='M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z'></path>
-   <path d='M12 17v-6'></path>
-   <path d='M9.5 14.5l2.5 2.5l2.5 -2.5'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M14 3v4a1 1 0 0 0 1 1h4'></path>
+  <path d='M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z'></path>
+  <path d='M12 17v-6'></path>
+  <path d='M9.5 14.5l2.5 2.5l2.5 -2.5'></path>
 </svg>`;
   const IconLoader2 = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-loader-2' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M12 3a9 9 0 1 0 9 9'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M12 3a9 9 0 1 0 9 9'></path>
 </svg>`;
   const IconCategory = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-category' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M4 4h6v6h-6z'></path>
-   <path d='M14 4h6v6h-6z'></path>
-   <path d='M4 14h6v6h-6z'></path>
-   <circle cx='17' cy='17' r='3'></circle>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M4 4h6v6h-6z'></path>
+  <path d='M14 4h6v6h-6z'></path>
+  <path d='M4 14h6v6h-6z'></path>
+  <circle cx='17' cy='17' r='3'></circle>
 </svg>`;
   const IconX = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-x' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <line x1='18' y1='6' x2='6' y2='18'></line>
-   <line x1='6' y1='6' x2='18' y2='18'></line>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <line x1='18' y1='6' x2='6' y2='18'></line>
+  <line x1='6' y1='6' x2='18' y2='18'></line>
 </svg>`;
   const IconMenu2 = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-menu-2' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <line x1='4' y1='6' x2='20' y2='6'></line>
-   <line x1='4' y1='12' x2='20' y2='12'></line>
-   <line x1='4' y1='18' x2='20' y2='18'></line>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <line x1='4' y1='6' x2='20' y2='6'></line>
+  <line x1='4' y1='12' x2='20' y2='12'></line>
+  <line x1='4' y1='18' x2='20' y2='18'></line>
 </svg>`;
   const IconArrowAutofitWidth = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-arrow-autofit-width' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6'></path>
-   <path d='M10 18h-7'></path>
-   <path d='M21 18h-7'></path>
-   <path d='M6 15l-3 3l3 3'></path>
-   <path d='M18 15l3 3l-3 3'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6'></path>
+  <path d='M10 18h-7'></path>
+  <path d='M21 18h-7'></path>
+  <path d='M6 15l-3 3l3 3'></path>
+  <path d='M18 15l3 3l-3 3'></path>
 </svg>`;
   const IconArrowAutofitHeight = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-arrow-autofit-height' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6'></path>
-   <path d='M18 14v7'></path>
-   <path d='M18 3v7'></path>
-   <path d='M15 18l3 3l3 -3'></path>
-   <path d='M15 6l3 -3l3 3'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6'></path>
+  <path d='M18 14v7'></path>
+  <path d='M18 3v7'></path>
+  <path d='M15 18l3 3l3 -3'></path>
+  <path d='M15 6l3 -3l3 3'></path>
 </svg>`;
   const IconZoomInArea = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-zoom-in-area' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M15 13v4'></path>
-   <path d='M13 15h4'></path>
-   <circle cx='15' cy='15' r='5'></circle>
-   <path d='M22 22l-3 -3'></path>
-   <path d='M6 18h-1a2 2 0 0 1 -2 -2v-1'></path>
-   <path d='M3 11v-1'></path>
-   <path d='M3 6v-1a2 2 0 0 1 2 -2h1'></path>
-   <path d='M10 3h1'></path>
-   <path d='M15 3h1a2 2 0 0 1 2 2v1'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M15 13v4'></path>
+  <path d='M13 15h4'></path>
+  <circle cx='15' cy='15' r='5'></circle>
+  <path d='M22 22l-3 -3'></path>
+  <path d='M6 18h-1a2 2 0 0 1 -2 -2v-1'></path>
+  <path d='M3 11v-1'></path>
+  <path d='M3 6v-1a2 2 0 0 1 2 -2h1'></path>
+  <path d='M10 3h1'></path>
+  <path d='M15 3h1a2 2 0 0 1 2 2v1'></path>
 </svg>`;
   const IconZoomOutArea = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-zoom-out-area' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M13 15h4'></path>
-   <circle cx='15' cy='15' r='5'></circle>
-   <path d='M22 22l-3 -3'></path>
-   <path d='M6 18h-1a2 2 0 0 1 -2 -2v-1'></path>
-   <path d='M3 11v-1'></path>
-   <path d='M3 6v-1a2 2 0 0 1 2 -2h1'></path>
-   <path d='M10 3h1'></path>
-   <path d='M15 3h1a2 2 0 0 1 2 2v1'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M13 15h4'></path>
+  <circle cx='15' cy='15' r='5'></circle>
+  <path d='M22 22l-3 -3'></path>
+  <path d='M6 18h-1a2 2 0 0 1 -2 -2v-1'></path>
+  <path d='M3 11v-1'></path>
+  <path d='M3 6v-1a2 2 0 0 1 2 -2h1'></path>
+  <path d='M10 3h1'></path>
+  <path d='M15 3h1a2 2 0 0 1 2 2v1'></path>
 </svg>`;
   const IconZoomPan = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-zoom-pan' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <circle cx='12' cy='12' r='3'></circle>
-   <path d='M17 17l-2.5 -2.5'></path>
-   <path d='M10 5l2 -2l2 2'></path>
-   <path d='M19 10l2 2l-2 2'></path>
-   <path d='M5 10l-2 2l2 2'></path>
-   <path d='M10 19l2 2l2 -2'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <circle cx='12' cy='12' r='3'></circle>
+  <path d='M17 17l-2.5 -2.5'></path>
+  <path d='M10 5l2 -2l2 2'></path>
+  <path d='M19 10l2 2l-2 2'></path>
+  <path d='M5 10l-2 2l2 2'></path>
+  <path d='M10 19l2 2l2 -2'></path>
 </svg>`;
   const IconArrowAutofitDown = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-arrow-autofit-down' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8'></path>
-   <path d='M18 4v17'></path>
-   <path d='M15 18l3 3l3 -3'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8'></path>
+  <path d='M18 4v17'></path>
+  <path d='M15 18l3 3l3 -3'></path>
 </svg>`;
   const IconArrowAutofitLeft = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-arrow-autofit-left' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8'></path>
-   <path d='M20 18h-17'></path>
-   <path d='M6 15l-3 3l3 3'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8'></path>
+  <path d='M20 18h-17'></path>
+  <path d='M6 15l-3 3l3 3'></path>
 </svg>`;
   const IconArrowAutofitRight = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-arrow-autofit-right' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8'></path>
-   <path d='M4 18h17'></path>
-   <path d='M18 15l3 3l-3 3'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8'></path>
+  <path d='M4 18h17'></path>
+  <path d='M18 15l3 3l-3 3'></path>
 </svg>`;
   const IconSpacingVertical = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-spacing-vertical' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2'></path>
-   <path d='M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2'></path>
-   <path d='M16 12h-8'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2'></path>
+  <path d='M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2'></path>
+  <path d='M16 12h-8'></path>
 </svg>`;
   const IconSettings = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-settings' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z'></path>
-   <circle cx='12' cy='12' r='3'></circle>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z'></path>
+  <circle cx='12' cy='12' r='3'></circle>
 </svg>`;
   const IconKeyboard = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-keyboard' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <rect x='2' y='6' width='20' height='12' rx='2'></rect>
-   <line x1='6' y1='10' x2='6' y2='10'></line>
-   <line x1='10' y1='10' x2='10' y2='10'></line>
-   <line x1='14' y1='10' x2='14' y2='10'></line>
-   <line x1='18' y1='10' x2='18' y2='10'></line>
-   <line x1='6' y1='14' x2='6' y2='14.01'></line>
-   <line x1='18' y1='14' x2='18' y2='14.01'></line>
-   <line x1='10' y1='14' x2='14' y2='14'></line>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <rect x='2' y='6' width='20' height='12' rx='2'></rect>
+  <line x1='6' y1='10' x2='6' y2='10'></line>
+  <line x1='10' y1='10' x2='10' y2='10'></line>
+  <line x1='14' y1='10' x2='14' y2='10'></line>
+  <line x1='18' y1='10' x2='18' y2='10'></line>
+  <line x1='6' y1='14' x2='6' y2='14.01'></line>
+  <line x1='18' y1='14' x2='18' y2='14.01'></line>
+  <line x1='10' y1='14' x2='14' y2='14'></line>
 </svg>`;
   const IconListNumbers = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-list-numbers' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M11 6h9'></path>
-   <path d='M11 12h9'></path>
-   <path d='M12 18h8'></path>
-   <path d='M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4'></path>
-   <path d='M6 10v-6l-2 2'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M11 6h9'></path>
+  <path d='M11 12h9'></path>
+  <path d='M12 18h8'></path>
+  <path d='M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4'></path>
+  <path d='M6 10v-6l-2 2'></path>
 </svg>`;
   const IconBookmarks = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-bookmarks' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M13 7a2 2 0 0 1 2 2v12l-5 -3l-5 3v-12a2 2 0 0 1 2 -2h6z'></path>
-   <path d='M9.265 4a2 2 0 0 1 1.735 -1h6a2 2 0 0 1 2 2v12l-1 -.6'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M13 7a2 2 0 0 1 2 2v12l-5 -3l-5 3v-12a2 2 0 0 1 2 -2h6z'></path>
+  <path d='M9.265 4a2 2 0 0 1 1.735 -1h6a2 2 0 0 1 2 2v12l-1 -.6'></path>
 </svg>`;
   const IconExternalLink = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-external-link' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M11 7h-5a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-5'></path>
-   <line x1='10' y1='14' x2='20' y2='4'></line>
-   <polyline points='15 4 20 4 20 9'></polyline>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M11 7h-5a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-5'></path>
+  <line x1='10' y1='14' x2='20' y2='4'></line>
+  <polyline points='15 4 20 4 20 9'></polyline>
 </svg>`;
   const IconTrash = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-trash' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <line x1='4' y1='7' x2='20' y2='7'></line>
-   <line x1='10' y1='11' x2='10' y2='17'></line>
-   <line x1='14' y1='11' x2='14' y2='17'></line>
-   <path d='M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12'></path>
-   <path d='M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <line x1='4' y1='7' x2='20' y2='7'></line>
+  <line x1='10' y1='11' x2='10' y2='17'></line>
+  <line x1='14' y1='11' x2='14' y2='17'></line>
+  <path d='M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12'></path>
+  <path d='M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3'></path>
 </svg>`;
   const IconSun = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-sun' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <circle cx='12' cy='12' r='4'></circle>
-   <path d='M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <circle cx='12' cy='12' r='4'></circle>
+  <path d='M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7'></path>
 </svg>`;
   const IconMoon = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-moon' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z'></path>
 </svg>`;
   const IconCheck = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-check' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M5 12l5 5l10 -10'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M5 12l5 5l10 -10'></path>
 </svg>`;
   const IconPalette = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-palette' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M12 21a9 9 0 1 1 0 -18a9 8 0 0 1 9 8a4.5 4 0 0 1 -4.5 4h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25'></path>
-   <circle cx='7.5' cy='10.5' r='.5' fill='currentColor'></circle>
-   <circle cx='12' cy='7.5' r='.5' fill='currentColor'></circle>
-   <circle cx='16.5' cy='10.5' r='.5' fill='currentColor'></circle>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M12 21a9 9 0 1 1 0 -18a9 8 0 0 1 9 8a4.5 4 0 0 1 -4.5 4h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25'></path>
+  <circle cx='7.5' cy='10.5' r='.5' fill='currentColor'></circle>
+  <circle cx='12' cy='7.5' r='.5' fill='currentColor'></circle>
+  <circle cx='16.5' cy='10.5' r='.5' fill='currentColor'></circle>
 </svg>`;
   const IconBookmark = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-bookmark' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M9 4h6a2 2 0 0 1 2 2v14l-5 -3l-5 3v-14a2 2 0 0 1 2 -2'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M9 4h6a2 2 0 0 1 2 2v14l-5 -3l-5 3v-14a2 2 0 0 1 2 -2'></path>
 </svg>`;
   const IconBookmarkOff = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-bookmark-off' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <line x1='3' y1='3' x2='21' y2='21'></line>
-   <path d='M17 17v3l-5 -3l-5 3v-13m1.178 -2.818c.252 -.113 .53 -.176 .822 -.176h6a2 2 0 0 1 2 2v7'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'/>
+  <path d='M7.708 3.721a3.982 3.982 0 0 1 2.292 -.721h4a4 4 0 0 1 4 4v7m0 4v3l-6 -4l-6 4v-14c0 -.308 .035 -.609 .1 -.897' />
+  <path d='M3 3l18 18' />
 </svg>`;
   const IconEye = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-eye' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <circle cx='12' cy='12' r='2'></circle>
-   <path d='M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <circle cx='12' cy='12' r='2'></circle>
+  <path d='M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7'></path>
 </svg>`;
   const IconEyeOff = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-eye-off' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <line x1='3' y1='3' x2='21' y2='21'></line>
-   <path d='M10.584 10.587a2 2 0 0 0 2.828 2.83'></path>
-   <path d='M9.363 5.365a9.466 9.466 0 0 1 2.637 -.365c4 0 7.333 2.333 10 7c-.778 1.361 -1.612 2.524 -2.503 3.488m-2.14 1.861c-1.631 1.1 -3.415 1.651 -5.357 1.651c-4 0 -7.333 -2.333 -10 -7c1.369 -2.395 2.913 -4.175 4.632 -5.341'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'/>
+  <path d='M10.585 10.587a2 2 0 0 0 2.829 2.828' />
+  <path d='M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87' />
+  <path d='M3 3l18 18' />
 </svg>`;
   const IconZoomCancel = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-zoom-cancel' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <circle cx='10' cy='10' r='7'></circle>
-   <line x1='8' y1='8' x2='12' y2='12'></line>
-   <line x1='12' y1='8' x2='8' y2='12'></line>
-   <line x1='21' y1='21' x2='15' y2='15'></line>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <circle cx='10' cy='10' r='7'></circle>
+  <line x1='8' y1='8' x2='12' y2='12'></line>
+  <line x1='12' y1='8' x2='8' y2='12'></line>
+  <line x1='21' y1='21' x2='15' y2='15'></line>
 </svg>`;
   const IconZoomIn = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-zoom-in' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <circle cx='10' cy='10' r='7'></circle>
-   <line x1='7' y1='10' x2='13' y2='10'></line>
-   <line x1='10' y1='7' x2='10' y2='13'></line>
-   <line x1='21' y1='21' x2='15' y2='15'></line>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <circle cx='10' cy='10' r='7'></circle>
+  <line x1='7' y1='10' x2='13' y2='10'></line>
+  <line x1='10' y1='7' x2='10' y2='13'></line>
+  <line x1='21' y1='21' x2='15' y2='15'></line>
 </svg>`;
   const IconZoomOut = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-zoom-out' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <circle cx='10' cy='10' r='7'></circle>
-   <line x1='7' y1='10' x2='13' y2='10'></line>
-   <line x1='21' y1='21' x2='15' y2='15'></line>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <circle cx='10' cy='10' r='7'></circle>
+  <line x1='7' y1='10' x2='13' y2='10'></line>
+  <line x1='21' y1='21' x2='15' y2='15'></line>
 </svg>`;
   const IconRefresh = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-refresh' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4'></path>
-   <path d='M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4'></path>
+  <path d='M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4'></path>
 </svg>`;
   const IconPhoto = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-photo' width='24' height='24' viewBox='0 0 24 24' stroke-width='1.25' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <line x1='15' y1='8' x2='15.01' y2='8'></line>
-   <rect x='4' y='4' width='16' height='16' rx='3'></rect>
-   <path d='M4 15l4 -4a3 5 0 0 1 3 0l5 5'></path>
-   <path d='M14 14l1 -1a3 5 0 0 1 3 0l2 2'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <line x1='15' y1='8' x2='15.01' y2='8'></line>
+  <rect x='4' y='4' width='16' height='16' rx='3'></rect>
+  <path d='M4 15l4 -4a3 5 0 0 1 3 0l5 5'></path>
+  <path d='M14 14l1 -1a3 5 0 0 1 3 0l2 2'></path>
 </svg>`;
   const IconPhotoOff = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-photo-off' width='24' height='24' viewBox='0 0 24 24' stroke-width='1.25' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <line x1='15' y1='8' x2='15.01' y2='8'></line>
-   <path d='M19.121 19.122a3 3 0 0 1 -2.121 .878h-10a3 3 0 0 1 -3 -3v-10c0 -.833 .34 -1.587 .888 -2.131m3.112 -.869h9a3 3 0 0 1 3 3v9'></path>
-   <path d='M4 15l4 -4c.928 -.893 2.072 -.893 3 0l5 5'></path>
-   <line x1='3' y1='3' x2='21' y2='21'></line>
-   <path d='M16.32 12.34c.577 -.059 1.162 .162 1.68 .66l2 2'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <line x1='15' y1='8' x2='15.01' y2='8'></line>
+  <path d='M19.121 19.122a3 3 0 0 1 -2.121 .878h-10a3 3 0 0 1 -3 -3v-10c0 -.833 .34 -1.587 .888 -2.131m3.112 -.869h9a3 3 0 0 1 3 3v9'></path>
+  <path d='M4 15l4 -4c.928 -.893 2.072 -.893 3 0l5 5'></path>
+  <line x1='3' y1='3' x2='21' y2='21'></line>
+  <path d='M16.32 12.34c.577 -.059 1.162 .162 1.68 .66l2 2'></path>
 </svg>`;
   const IconPencil = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-pencil' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4'></path>
-   <path d='M13.5 6.5l4 4'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4'></path>
+  <path d='M13.5 6.5l4 4'></path>
 </svg>`;
   const IconDeviceFloppy = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-device-floppy' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2'></path>
-   <path d='M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0'></path>
-   <path d='M14 4l0 4l-6 0l0 -4'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2'></path>
+  <path d='M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0'></path>
+  <path d='M14 4l0 4l-6 0l0 -4'></path>
 </svg>`;
   const IconMessage = `
 <svg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-message' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor' fill='none' stroke-linecap='round' stroke-linejoin='round'>
-   <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-   <path d='M8 9h8'></path>
-   <path d='M8 13h6'></path>
-   <path d='M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z'></path>
+  <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+  <path d='M8 9h8'></path>
+  <path d='M8 13h6'></path>
+  <path d='M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z'></path>
 </svg>`;
 
   const styles = ":root {\n    --theme-body-background: #25262b;\n    --theme-body-text-color: #c1c2c5;\n    --theme-text-color: #c1c2c5;\n    --theme-primary-color: #1a1b1e;\n    --theme-primary-text-color: #c1c2c5;\n    --theme-background-color: #25262b;\n    --theme-hightlight-color: #2c2e33;\n    --theme-border-color: #373a40;\n}\n\n/*  Simple Normalizer */\nhtml {\n    font-size: 100%;\n}\n\nbody {\n    margin: 0;\n    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\n    font-size: 14px;\n    line-height: 20px;\n    color: #333;\n    background-color: #fff;\n    padding: 0;\n}\n\na,\na:link,\na:visited,\na:active,\na:focus {\n    color: var(--theme-body-text-color);\n    text-decoration: none;\n}\n\nimg {\n    height: auto;\n    vertical-align: middle;\n    border: 0 none;\n}\n\n.icon-tabler {\n    height: 1rem;\n    width: 1rem;\n    align-self: center;\n    vertical-align: sub;\n}\n\n#nprogress .bar {\n    background: #29d;\n    position: fixed;\n    z-index: 1031;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 4px;\n}\n\n#MangaOnlineViewer {\n    padding-bottom: 40px;\n    min-height: 760px;\n    min-width: 360px;\n    /*width: 100%;*/\n    /*height: 100%;*/\n    text-decoration: none;\n    color: var(--theme-body-text-color);\n    background-color: var(--theme-body-background);\n}\n\n#MangaOnlineViewer #Chapter {\n    display: grid;\n    grid-template-columns: repeat(1, 1fr);\n    min-width: 225px;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR {\n    direction: ltr;\n}\n\n#MangaOnlineViewer #Chapter.FluidRTL {\n    direction: rtl;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR,\n#MangaOnlineViewer #Chapter.FluidRTL {\n    display: grid;\n    grid-template-columns: repeat(2, 1fr);\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .PageImg,\n#MangaOnlineViewer #Chapter.FluidRTL .PageImg {\n    min-width: unset;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage.DoublePage,\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage.DoublePage {\n    grid-column: span 2;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n),\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n) {\n    display: flex;\n    justify-content: start;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n-1),\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n-1) {\n    display: flex;\n    justify-content: end;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .PageContent {\n    margin-bottom: 15px;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage,\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage {\n    width: auto;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .ZoomWidth .icon-tabler,\n#MangaOnlineViewer #Chapter.FluidRTL .ZoomWidth .icon-tabler {\n    color: red;\n}\n\n#MangaOnlineViewer #SettingsPanel {\n    color: var(--theme-text-color);\n    padding: 10px;\n    position: fixed;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    z-index: 1000;\n    transition:\n        transform 0.3s ease-in,\n        background-color 0.3s linear;\n    transform: translateX(-100%);\n    display: flex;\n    flex-flow: column;\n    gap: 5px;\n    overflow-y: auto;\n    max-width: 100vw;\n    width: 305px;\n}\n\n#MangaOnlineViewer #SettingsPanel.visible {\n    transform: translateX(0);\n}\n\n#MangaOnlineViewer #SettingsPanel .ControlLabel {\n    display: flex;\n    flex-flow: row wrap;\n    justify-content: space-between;\n    align-items: center;\n}\n\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n}\n\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem:not(.show) {\n    display: none;\n}\n\n#MangaOnlineViewer #SettingsPanel input[type='range'] {\n    width: 100%;\n}\n\n#MangaOnlineViewer #SettingsPanel .RangeValue {\n    display: inline-block;\n    color: var(--theme-primary-text-color);\n    line-height: 20px;\n    text-align: center;\n    border-radius: 3px;\n    background: var(--theme-primary-color);\n    padding: 2px 5px;\n    margin-left: 8px;\n}\n\n#MangaOnlineViewer #SettingsPanel datalist {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    align-items: center;\n    writing-mode: vertical-lr;\n    width: 100%;\n}\n\n#MangaOnlineViewer #SettingsPanel datalist option {\n    padding: 0;\n}\n\n#MangaOnlineViewer #ThemeSection {\n    border: 1px solid var(--theme-body-text-color);\n    border-radius: 10px;\n    padding: 10px;\n}\n\n#MangaOnlineViewer .closeButton {\n    width: fit-content;\n    height: fit-content;\n    position: absolute;\n    right: 10px;\n    top: 10px;\n}\n\n#MangaOnlineViewer .overlay {\n    position: fixed;\n    display: none;\n    width: 100%;\n    height: 100%;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: rgba(0, 0, 0, 0.5);\n    z-index: 950;\n    cursor: pointer;\n}\n\n#MangaOnlineViewer .overlay.visible {\n    display: block;\n}\n\n#MangaOnlineViewer .ThemeRadio {\n    border: 1px solid var(--theme-text-color);\n    color: var(--theme-primary-text-color);\n    background-color: var(--theme-primary-color);\n    height: 20px;\n    width: 20px;\n    border-radius: 50%;\n    padding: 1px;\n    margin: 2px 5px;\n    position: relative;\n}\n\n#MangaOnlineViewer .ThemeRadio svg {\n    position: absolute;\n    top: 15%;\n    right: 15%;\n}\n\n#MangaOnlineViewer .ThemeRadio.custom {\n    /*background-image: url(\"${svgToUrl(IconPalette)}\");*/\n    /*background-position: center;*/\n    /*background-repeat: no-repeat;*/\n    /*background-size: 80%;*/\n}\n\n#MangaOnlineViewer .ThemeRadio.selected .icon-tabler-check {\n    display: inline;\n}\n\n#MangaOnlineViewer .ThemeRadio:not(.selected) .icon-tabler-check {\n    display: none;\n}\n\n#MangaOnlineViewer #KeybindingsPanel {\n    padding: 10px;\n    position: fixed;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    transition: transform 0.3s ease-in-out;\n    transform: translateX(100%);\n    line-height: 1.5em;\n    z-index: 1000;\n    overflow-y: auto;\n    width: 360px;\n    max-width: 100vw;\n}\n\n#MangaOnlineViewer #KeybindingsPanel.visible {\n    transform: translateX(0);\n    display: block;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #KeybindingsList {\n    display: grid;\n    grid-template-columns: 1fr 2fr;\n    gap: 5px;\n}\n\n#MangaOnlineViewer #KeybindingsPanel input {\n    display: inline-block;\n    width: 100%;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #HotKeysRules {\n    grid-column: span 2;\n}\n\n#MangaOnlineViewer #BookmarksPanel {\n    position: fixed;\n    top: 10%;\n    width: 50%;\n    left: 25%;\n    right: 25%;\n    text-align: center;\n    max-height: 70%;\n    transition: transform 0.3s ease-in-out;\n    transform: scaleY(0%);\n    z-index: 1000;\n}\n\n#MangaOnlineViewer #BookmarksPanel.visible {\n    transform: scaleY(100%);\n    display: block;\n}\n\n#MangaOnlineViewer #BookmarksList {\n    padding: 0 15px;\n    overflow: auto;\n    max-height: 60vh;\n}\n\n#MangaOnlineViewer #BookmarksList .BookmarkItem {\n    display: flex;\n    flex-flow: row;\n    justify-content: space-between;\n    align-items: center;\n    padding: 2px;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkData {\n    flex-basis: 15%;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkURl {\n    text-overflow: ellipsis;\n    overflow: hidden;\n    white-space: nowrap;\n    flex-basis: 55%;\n}\n\n#MangaOnlineViewer select {\n    height: 20px;\n    padding: 0;\n    margin-bottom: 5px;\n}\n\n#MangaOnlineViewer .ControlButton {\n    cursor: pointer;\n    border-radius: 5px;\n    border-width: 1px;\n    padding: 2px;\n    min-height: 32px;\n    color: var(--theme-primary-text-color);\n    background-color: var(--theme-primary-color);\n    border-color: var(--theme-border-color);\n}\n\n#MangaOnlineViewer .ControlButton:hover {\n    opacity: 0.8;\n}\n\n#MangaOnlineViewer .panel {\n    padding: 5px;\n    position: inherit;\n    border-radius: 5px;\n    background-color: var(--theme-background-color);\n}\n\n#MangaOnlineViewer .MangaPage {\n    width: 100%;\n    display: inline-block;\n    text-align: center;\n    /*transform: translate3d(0, 0, 0);*/\n    /*backface-visibility: hidden;*/\n    /*perspective: 1000px;*/\n    line-height: 0;\n    min-height: 22px;\n    min-width: 100%;\n}\n\n#MangaOnlineViewer .PageContent {\n    text-align: center;\n    display: inline-block;\n    overflow-x: auto;\n    max-width: 100%;\n    transition: all 0.3s ease-in-out;\n    height: 100%;\n    overflow-y: hidden;\n}\n\n#MangaOnlineViewer .MangaPage.hide .PageContent {\n    /*viewer: none;*/\n    height: 0;\n}\n\n#MangaOnlineViewer .MangaPage.hide .PageFunctions {\n    /*position:relative;*/\n}\n\n#MangaOnlineViewer .PageContent .PageImg[src=''],\n#MangaOnlineViewer .PageContent .PageImg:not([src]) {\n    width: 40vw;\n    height: 80vh;\n    display: inline-block;\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 20%;\n    background-color: var(--theme-hightlight-color);\n}\n\n#MangaOnlineViewer .PageContent .PageImg.imgBroken {\n    width: 40vw;\n    height: 80vh;\n    display: inline-block;\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 20%;\n    background-color: var(--theme-hightlight-color);\n}\n\n#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=''],\n#MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {\n    width: 100px;\n    height: 150px;\n    display: inline-block;\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 20%;\n}\n\n#MangaOnlineViewer .fitWidthIfOversize .PageContent .PageImg {\n    max-width: 100%;\n}\n\n#MangaOnlineViewer #gotoPage {\n    min-width: 35px;\n}\n\n#MangaOnlineViewer #ThemeSelector {\n    width: 110px;\n}\n\n#MangaOnlineViewer #Header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    flex-flow: row nowrap;\n    transition: transform 0.3s ease-in;\n    position: sticky;\n    top: 0;\n    left: 0;\n    right: 0;\n    background-color: inherit;\n    z-index: 900;\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-hide {\n    transform: translateY(-100%);\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-show {\n    transform: translateY(-1%);\n}\n\n#MangaOnlineViewer #Header.hover,\n#MangaOnlineViewer #Header.fixed,\n#MangaOnlineViewer #Header.click {\n    position: static;\n    transform: none;\n}\n\n#MangaOnlineViewer #Header.headroom-end,\n#MangaOnlineViewer #Header.visible,\n#MangaOnlineViewer #Header.fixed {\n    transform: translateY(-1%);\n    position: sticky;\n}\n\n#MangaOnlineViewer #Header.hover:hover,\n#MangaOnlineViewer #Header.fixed {\n    position: sticky;\n}\n\n#MangaOnlineViewer #Header.scroll #menu,\n#MangaOnlineViewer #Header.fixed #menu,\n#MangaOnlineViewer #Header.hover:hover #menu,\n#MangaOnlineViewer #Header:not(.click).visible #menu {\n    display: none;\n}\n\n#MangaOnlineViewer #menu {\n    position: fixed;\n    min-height: 70px;\n    width: 100%;\n    top: 0;\n    z-index: 1;\n    color: var(--theme-body-text-color);\n}\n\n#MangaOnlineViewer #Header.click #menu {\n    cursor: pointer;\n}\n\n#MangaOnlineViewer #Header.click:not(.headroom-hide, .headroom-show) #menu,\n#MangaOnlineViewer #Header.click.headroom-end #menu,\n#MangaOnlineViewer #Header.click.visible #menu {\n    position: static;\n    width: 50px;\n    min-height: unset;\n}\n\n#MangaOnlineViewer #MangaTitle {\n    padding: 2px;\n    margin: 0;\n    font-size: 1.2rem;\n    font-weight: normal;\n}\n\n#MangaOnlineViewer #GlobalFunctions {\n    display: flex;\n    gap: 3px;\n    padding-left: 10px;\n    flex-wrap: wrap;\n    width: 300px;\n    z-index: 100;\n}\n\n#MangaOnlineViewer #GlobalFunctions .icon-tabler {\n    width: 25px;\n    height: 25px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomSlider {\n    display: flex;\n    align-items: center;\n}\n\n#MangaOnlineViewer #GlobalFunctions #Zoom {\n    margin-left: 5px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomVal {\n    width: 40px;\n    display: inline-block;\n    color: var(--theme-primary-text-color);\n    line-height: 20px;\n    text-align: center;\n    border-radius: 3px;\n    background: var(--theme-primary-color);\n    padding: 2px 5px;\n}\n\n#MangaOnlineViewer #ChapterNavigation {\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: end;\n    padding-right: 10px;\n    width: 300px;\n}\n\n#MangaOnlineViewer .ChapterControl {\n    display: flex;\n    flex-wrap: nowrap;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton {\n    display: inline-flex;\n    margin-left: 3px;\n    justify-content: center;\n    align-items: center;\n    padding: 5px 10px;\n    gap: 0.5em;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton .icon-tabler {\n    flex-shrink: 0;\n    align-self: center;\n    width: 1rem;\n    height: 1rem;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href='#'],\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href=''],\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href='undefined'] {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer .ChapterControl #download.loading {\n    cursor: not-allowed;\n    pointer-events: none;\n    opacity: 0.6;\n}\n\n#MangaOnlineViewer .ChapterControl #download.disabled {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer .ViewerTitle {\n    text-align: center;\n    min-height: 60px;\n    /*max-width: 500px;*/\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    padding: 5px;\n    flex-basis: 60%;\n}\n\n#MangaOnlineViewer .ViewerTitle #series[href='#'],\n#MangaOnlineViewer .ViewerTitle #series[href=''],\n#MangaOnlineViewer .ViewerTitle #series[href='undefined'] {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer .PageFunctions {\n    font-family: monospace;\n    display: flex;\n    justify-content: flex-end;\n    align-items: center;\n    margin: 0;\n    padding: 0;\n    gap: 3px;\n    position: absolute;\n    right: 0;\n}\n\n#MangaOnlineViewer .PageFunctions > .PageIndex {\n    background-color: var(--theme-primary-color);\n    color: var(--theme-primary-text-color);\n    min-width: 20px;\n    text-align: center;\n    display: inline-block;\n    padding: 3px 5px;\n    line-height: 1rem;\n    border-radius: 5px;\n}\n\n#MangaOnlineViewer .PageFunctions .ControlButton {\n    padding: 3px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    margin: 0;\n    border-width: 0;\n    min-height: auto;\n    opacity: 0.5;\n}\n\n#MangaOnlineViewer .PageFunctions:hover .ControlButton {\n    opacity: 1;\n}\n\n#MangaOnlineViewer .PageFunctions .ControlButton:hover {\n    opacity: 0.9;\n}\n\n#MangaOnlineViewer .ControlButton.hidden,\n#MangaOnlineViewer.light #ColorScheme > .icon-tabler-sun,\n#MangaOnlineViewer:not(.light) #ColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,\n#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,\n#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,\n#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,\n#MangaOnlineViewer.bookmarked .ControlButton.Bookmark > .icon-tabler-bookmark,\n#MangaOnlineViewer:not(.bookmarked) .ControlButton.Bookmark > .icon-tabler-bookmark-off,\n#MangaOnlineViewer #CommentsPainel.hide,\n#MangaOnlineViewer #CommentsArea.hide {\n    display: none;\n}\n\n#MangaOnlineViewer.hideControls .PageFunctions {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer #NavigationCounters {\n    margin: 5px;\n    width: 100%;\n    line-height: 1rem;\n}\n\n#MangaOnlineViewer #Navigation {\n    color: var(--theme-text-color);\n    background-color: var(--theme-hightlight-color);\n    bottom: -180px;\n    height: 185px;\n    overflow-x: hidden;\n    overflow-y: hidden;\n    padding-bottom: 20px;\n    position: fixed;\n    white-space: nowrap;\n    width: 100%;\n    text-align: center;\n    transition:\n        transform 0.3s ease-in,\n        background-color 0.3s linear;\n    border-bottom-left-radius: 0;\n    border-bottom-right-radius: 0;\n    line-height: 0;\n}\n\n#MangaOnlineViewer #Navigation #Thumbnails {\n    overflow-x: auto;\n    overflow-y: hidden;\n    margin-right: 10px;\n}\n\n#MangaOnlineViewer #Navigation:hover {\n    transform: translateY(-180px);\n}\n\n#MangaOnlineViewer #Navigation.disabled {\n    display: none;\n}\n\n#MangaOnlineViewer #Navigation.visible {\n    transform: translateY(-180px);\n}\n\n#MangaOnlineViewer #Navigation .Thumbnail {\n    display: inline-block;\n    height: 150px;\n    margin: 0 5px;\n    border: 1px solid var(--theme-primary-color);\n}\n\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailIndex {\n    color: var(--theme-text-color);\n    background-color: var(--theme-hightlight-color);\n    display: block;\n    opacity: 0.8;\n    position: relative;\n    bottom: 25%;\n    width: 100%;\n    line-height: 1rem;\n}\n\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailImg {\n    cursor: pointer;\n    display: inline-block;\n    max-height: 150px;\n    min-height: 150px;\n    min-width: 80px;\n    max-width: 160px;\n}\n\n#MangaOnlineViewer #menu .icon-tabler {\n    position: absolute;\n    top: 5px;\n    left: 10px;\n    height: 32px;\n    width: 32px;\n}\n\n#MangaOnlineViewer #CommentsPainel {\n    padding: 10px;\n}\n\n#MangaOnlineViewer #CommentsArea {\n    background: var(--theme-body-background);\n}\n\n#MangaOnlineViewer #CommentsButton {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n\n/* Medium devices (landscape phones, tablets) */\n@media (max-width: 992px) {\n    #MangaOnlineViewer #Header {\n        flex-direction: column;\n    }\n\n    #MangaOnlineViewer .PageContent .PageImg {\n        max-width: 100%;\n    }\n\n    #MangaOnlineViewer .ViewerTitle {\n        order: 1;\n        min-height: auto;\n        padding: 0;\n        margin: 0;\n    }\n\n    #MangaOnlineViewer #GlobalFunctions {\n        flex-wrap: nowrap;\n        width: auto;\n        order: 3;\n        padding: 5px;\n    }\n\n    #MangaOnlineViewer #ChapterNavigation {\n        order: 2;\n    }\n\n    #MangaOnlineViewer #GlobalFunctions #ZoomSlider,\n    #MangaOnlineViewer #GlobalFunctions .ControlButton:not(.tablets, .phones) {\n        display: none;\n    }\n}\n\n/* Small devices (portrait phones) */\n@media (max-width: 600px) {\n    #MangaOnlineViewer #Header {\n        flex-direction: row;\n        flex-wrap: wrap;\n        justify-content: center;\n        align-items: center;\n    }\n\n    #MangaOnlineViewer .ViewerTitle {\n        order: 1;\n        flex-basis: 100%;\n        margin-top: 0;\n        height: auto;\n        padding: 0;\n    }\n\n    #MangaOnlineViewer #GlobalFunctions {\n        order: 2;\n        padding: 0;\n        min-width: auto;\n    }\n\n    #MangaOnlineViewer #ChapterNavigation {\n        order: 3;\n        width: auto;\n    }\n\n    #MangaOnlineViewer #Navigation {\n        display: none;\n    }\n\n    #MangaOnlineViewer .PageFunctions {\n        padding: 0;\n    }\n\n    #MangaOnlineViewer .PageFunctions .ControlButton:not(.Bookmark) {\n        display: none;\n    }\n\n    #MangaOnlineViewer .PageFunctions .ControlButton.Bookmark {\n        opacity: 1;\n    }\n\n    #MangaOnlineViewer .PageContent {\n        margin: 0;\n        width: 100%;\n    }\n\n    #MangaOnlineViewer .PageContent .PageImg {\n        max-width: 100%;\n    }\n\n    #MangaOnlineViewer #GlobalFunctions #ZoomSlider,\n    #MangaOnlineViewer #GlobalFunctions .ControlButton:not(.phones) {\n        display: none;\n    }\n\n    #MangaOnlineViewer #SettingsPanel .DefaultZoomMode,\n    #MangaOnlineViewer #SettingsPanel .DefaultZoom,\n    #MangaOnlineViewer #SettingsPanel .viewMode,\n    #MangaOnlineViewer #SettingsPanel .fitIfOversize,\n    #MangaOnlineViewer #SettingsPanel .showThumbnails,\n    #MangaOnlineViewer #SettingsPanel .lazyLoadImages,\n    #MangaOnlineViewer #SettingsPanel .downloadZip,\n    #MangaOnlineViewer #SettingsPanel .minZoom,\n    #MangaOnlineViewer #SettingsPanel .zoomStep,\n    #MangaOnlineViewer #SettingsPanel .headerType {\n        display: none;\n    }\n\n    #MangaOnlineViewer #KeybindingsPanel {\n        display: none;\n    }\n\n    #MangaOnlineViewer .ChapterControl .download {\n        display: none;\n    }\n\n    #MangaOnlineViewer #Counters {\n        display: none;\n    }\n}\n\n@-webkit-keyframes spin {\n    to {\n        transform: rotate(360deg);\n    }\n}\n\n@keyframes spin {\n    to {\n        transform: rotate(360deg);\n    }\n}\n\n.icon-tabler-loader-2,\n.animate-spin {\n    -webkit-animation: spin 1s linear infinite;\n    animation: spin 1s linear infinite;\n}\n\n@-webkit-keyframes spin-reverse {\n    0% {\n        transform: rotate(360deg);\n    }\n    to {\n        transform: rotate(0);\n    }\n}\n\n@keyframes spin-reverse {\n    0% {\n        transform: rotate(360deg);\n    }\n    to {\n        transform: rotate(0);\n    }\n}\n\n.animate-spin-reverse {\n    -webkit-animation: spin-reverse 1s linear infinite;\n    animation: spin-reverse 1s linear infinite;\n}\n\n#MangaOnlineViewer .es_ES,\n#MangaOnlineViewer .pt_BR,\n#MangaOnlineViewer .zh_CN,\n#MangaOnlineViewer:not([locale='en_US']) .en_US {\n    display: none;\n}\n#MangaOnlineViewer:not([locale]) .en_US,\n#MangaOnlineViewer[locale='en_US'] .en_US,\n#MangaOnlineViewer[locale='es_ES'] .es_ES,\n#MangaOnlineViewer[locale='pt_BR'] .pt_BR,\n#MangaOnlineViewer[locale='zh_CN'] .zh_CN {\n    display: initial;\n}\n";
 
-  const icons = ".icon-tabler-file-download > path:nth-child(n + 4) {\n    /* 4, 5 */\n    color: gold;\n}\n.icon-tabler-arrow-autofit-width > path:nth-child(n + 3) {\n    /* 3,4,5,6 */\n    color: yellow;\n}\n.icon-tabler-arrow-autofit-height > path:nth-child(n + 3) {\n    /* 3,4,5,6 */\n    color: yellow;\n}\n.icon-tabler-zoom-in-area > path:nth-child(2),\n.icon-tabler-zoom-in-area > path:nth-child(3) {\n    color: lime;\n}\n.icon-tabler-zoom-out-area > path:nth-child(2) {\n    color: red;\n}\n.icon-tabler-zoom-pan > path:nth-child(n + 4) {\n    color: #9966ff;\n}\n.icon-tabler-arrow-autofit-down > path:nth-child(n + 3) {\n    color: #28ffbf;\n}\n.icon-tabler-arrow-autofit-left > path:nth-child(n + 3) {\n    color: #28ffbf;\n}\n.icon-tabler-arrow-autofit-right > path:nth-child(n + 3) {\n    color: #28ffbf;\n}\n.icon-tabler-spacing-vertical > path:nth-child(4) {\n    color: fuchsia;\n}\n.icon-tabler-list-numbers > path:nth-child(n + 5) {\n    color: #e48900;\n}\n.icon-tabler-bookmarks > path:nth-child(n + 2) {\n    color: orange;\n}\n.icon-tabler-bookmark > path {\n    color: orange;\n}\n.icon-tabler-bookmark-off > path {\n    color: orange;\n}\n.icon-tabler-bookmark-off > line {\n    color: red;\n}\n.icon-tabler-eye-off > line {\n    color: red;\n}\n.icon-tabler-zoom-cancel > line:nth-child(3),\n.icon-tabler-zoom-cancel > line:nth-child(4) {\n    color: #9966ff;\n}\n.icon-tabler-zoom-in > line:nth-child(3),\n.icon-tabler-zoom-in > line:nth-child(4) {\n    color: lime;\n}\n.icon-tabler-zoom-out > line:nth-child(3) {\n    color: red;\n}\n.icon-tabler-refresh > path:nth-child(n + 2) {\n    color: cyan;\n}\n.icon-tabler-photo > * {\n    color: silver;\n}\n.icon-tabler-photo-off > * {\n    color: silver;\n}\n.icon-tabler-photo-off > line:nth-child(5) {\n    color: orange;\n}\n.icon-tabler-message > path:nth-child(2),\n.icon-tabler-message > path:nth-child(3) {\n    color: greenyellow;\n}\n";
+  const icons = ".icon-tabler-file-download > :nth-child(n + 4) {\n    /* 4, 5 */\n    color: gold;\n}\n.icon-tabler-arrow-autofit-width > :nth-child(n + 3) {\n    /* 3,4,5,6 */\n    color: yellow;\n}\n.icon-tabler-arrow-autofit-height > :nth-child(n + 3) {\n    /* 3,4,5,6 */\n    color: yellow;\n}\n.icon-tabler-zoom-in-area > :nth-child(2),\n.icon-tabler-zoom-in-area > :nth-child(3) {\n    color: lime;\n}\n.icon-tabler-zoom-out-area > :nth-child(2) {\n    color: red;\n}\n.icon-tabler-zoom-pan > :nth-child(n + 4) {\n    color: #9966ff;\n}\n.icon-tabler-arrow-autofit-down > :nth-child(n + 3) {\n    color: #28ffbf;\n}\n.icon-tabler-arrow-autofit-left > :nth-child(n + 3) {\n    color: #28ffbf;\n}\n.icon-tabler-arrow-autofit-right > :nth-child(n + 3) {\n    color: #28ffbf;\n}\n.icon-tabler-spacing-vertical > :nth-child(4) {\n    color: fuchsia;\n}\n.icon-tabler-list-numbers > :nth-child(n + 5) {\n    color: #e48900;\n}\n.icon-tabler-bookmarks > :nth-child(n + 2) {\n    color: orange;\n}\n.icon-tabler-bookmark > * {\n    color: orange;\n}\n.icon-tabler-bookmark-off > * {\n    color: orange;\n}\n.icon-tabler-bookmark-off > :nth-child(3) {\n    color: red;\n}\n.icon-tabler-eye-off > :nth-child(4) {\n    color: red;\n}\n.icon-tabler-zoom-cancel > :nth-child(3),\n.icon-tabler-zoom-cancel > :nth-child(4) {\n    color: #9966ff;\n}\n.icon-tabler-zoom-in > :nth-child(3),\n.icon-tabler-zoom-in > :nth-child(4) {\n    color: lime;\n}\n.icon-tabler-zoom-out > :nth-child(3) {\n    color: red;\n}\n.icon-tabler-refresh > :nth-child(n + 2) {\n    color: cyan;\n}\n.icon-tabler-photo > * {\n    color: silver;\n}\n.icon-tabler-photo-off > * {\n    color: silver;\n}\n.icon-tabler-photo-off > :nth-child(5) {\n    color: orange;\n}\n.icon-tabler-message > :nth-child(2),\n.icon-tabler-message > :nth-child(3) {\n    color: greenyellow;\n}\n";
 
   const cssStyles = `
     :root,
@@ -4362,7 +4362,7 @@ ${wrapStyle(
       title: typeof zipFile === "string" ? zipFile : zipFile.name,
       series: "https://github.com/TagoDR/MangaOnlineViewer",
       pages: listImages.length,
-      begin: 0,
+      begin: 1,
       prev: "#",
       next: "#",
       listImages
