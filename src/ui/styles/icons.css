@@ -1,3 +1,9 @@
+.icon-tabler {
+    height: 1rem;
+    width: 1rem;
+    vertical-align: sub;
+}
+
 .icon-tabler-file-download > :nth-child(n + 4) {
     /* 4, 5 */
     color: gold;

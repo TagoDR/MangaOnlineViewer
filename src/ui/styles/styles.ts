@@ -3,6 +3,15 @@ import { IconPalette, IconPhoto, IconPhotoOff } from '../components/icons';
 import colors from '../../utils/colors';
 import styles from './main.css?inline';
 import icons from './icons.css?inline';
+import simplenormalize from './simplenormalize.css?inline';
+import media from './media.css?inline';
+import animation from './animation.css?inline';
+import header from './header.css?inline';
+import keybindings from './keybindings.css?inline';
+import page from './page.css?inline';
+import settings from './settings.css?inline';
+import thumbnails from './thumbnails.css?inline';
+import bookmarks from './bookmarks.css?inline';
 
 // Language=CSS
 export default `
@@ -50,7 +59,15 @@ export default `
     #MangaOnlineViewer .ThemeRadio.custom {
             /*background-image: url("${svgToUrl(IconPalette)}");*/
     }
-
+    ${simplenormalize}
     ${styles}
+    ${header}
     ${icons}
+    ${keybindings}
+    ${page}
+    ${settings}
+    ${thumbnails}
+    ${bookmarks}
+    ${media}
+    ${animation}
 `;

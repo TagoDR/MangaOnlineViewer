@@ -237,7 +237,7 @@ const SettingsPanel = `
     <!-- =========================================================================================== -->
     <div class='ControlLabel lazyStart ControlLabelItem
         ${getUserSettings().lazyLoadImages ? 'show' : ''}'
-    '>
+    >
     <span>
       ${getAllLocaleStrings('LAZY_LOAD_IMAGES')}
       <output id='lazyStartVal' for='lazyStart'>${getUserSettings().lazyStart}</output>

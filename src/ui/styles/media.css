@@ -1,0 +1,82 @@
+@media (max-width: 992px) {
+    #MangaOnlineViewer .PageContent .PageImg {
+        max-width:100%
+    }
+
+    #MangaOnlineViewer .ViewerTitle {
+        min-height:auto;
+        padding:0;
+        margin:0
+    }
+
+    #MangaOnlineViewer #GlobalFunctions {
+        width:auto;
+        padding:5px
+    }
+
+    #MangaOnlineViewer #GlobalFunctions #ZoomSlider,#MangaOnlineViewer #GlobalFunctions .ControlButton:not(.tablets,.phones) {
+        display:none
+    }
+}
+
+@media (max-width: 600px) {
+    #MangaOnlineViewer .ViewerTitle {
+        margin-top:0;
+        height:auto;
+        padding:0
+    }
+
+    #MangaOnlineViewer #GlobalFunctions {
+        padding:0;
+        min-width:auto
+    }
+
+    #MangaOnlineViewer #ChapterNavigation {
+        width:auto
+    }
+
+    #MangaOnlineViewer #Navigation {
+        display:none
+    }
+
+    #MangaOnlineViewer .PageFunctions {
+        padding:0
+    }
+
+    #MangaOnlineViewer .PageFunctions .ControlButton:not(.Bookmark) {
+        display:none
+    }
+
+    #MangaOnlineViewer .PageFunctions .ControlButton.Bookmark {
+        opacity:1
+    }
+
+    #MangaOnlineViewer .PageContent {
+        margin:0;
+        width:100%
+    }
+
+    #MangaOnlineViewer .PageContent .PageImg {
+        max-width:100%
+    }
+
+    #MangaOnlineViewer #GlobalFunctions #ZoomSlider,#MangaOnlineViewer #GlobalFunctions .ControlButton:not(.phones) {
+        display:none
+    }
+
+    #MangaOnlineViewer #SettingsPanel .DefaultZoomMode,#MangaOnlineViewer #SettingsPanel .DefaultZoom,#MangaOnlineViewer #SettingsPanel .viewMode,#MangaOnlineViewer #SettingsPanel .fitIfOversize,#MangaOnlineViewer #SettingsPanel .showThumbnails,#MangaOnlineViewer #SettingsPanel .lazyLoadImages,#MangaOnlineViewer #SettingsPanel .downloadZip,#MangaOnlineViewer #SettingsPanel .minZoom,#MangaOnlineViewer #SettingsPanel .zoomStep,#MangaOnlineViewer #SettingsPanel .headerType {
+        display:none
+    }
+
+    #MangaOnlineViewer #KeybindingsPanel {
+        display:none
+    }
+
+    #MangaOnlineViewer .ChapterControl .download {
+        display:none
+    }
+
+    #MangaOnlineViewer #Counters {
+        display:none
+    }
+}
