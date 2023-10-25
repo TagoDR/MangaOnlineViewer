@@ -106,6 +106,7 @@ First install then reload page, there will be an option in this section to selec
 - [PornComixOnline](https://www.porncomixone.net) _[English]_
 - [Pururin](https://pururin.to/) _[English]_
 - [Simply-Hentai](https://simply-hentai.com/) _[English]_
+- [Anchira](https://anchira.to/) _[English]_ **Obs: Slow start, bruteforce required**
 - [3Hentai](https://3hentai.net/) _[English]_
 - [Tsumino](https://tsumino.com/) _[English]_
 - [XlecxOne](https://xlecx.one/) _[English]_

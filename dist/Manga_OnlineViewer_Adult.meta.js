@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.10.22
+// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
+// @version       2023.10.25
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -47,6 +47,7 @@
 // @include       /https?:\/\/(www.)?porncomixone.net\/comic\/.+/
 // @include       /https?:\/\/(www.)?pururin.to\/(view|read)\/.+\/.+\/.+/
 // @include       /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/
+// @include       /https?:\/\/(www.)?(anchira).to\/(archive|g|read)\/\d+\/.+/
 // @include       /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/\d+/
 // @include       /https?:\/\/(www.)?3hentai.net\/d\/.+\/.+/
 // @include       /https?:\/\/(www.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/
