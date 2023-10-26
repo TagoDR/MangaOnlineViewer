@@ -141,7 +141,7 @@
 #MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,
 #MangaOnlineViewer.bookmarked .ControlButton.Bookmark > .icon-tabler-bookmark,
 #MangaOnlineViewer:not(.bookmarked) .ControlButton.Bookmark > .icon-tabler-bookmark-off,
-#MangaOnlineViewer #CommentsPainel.hide,
+#MangaOnlineViewer #CommentsPanel.hide,
 #MangaOnlineViewer #CommentsArea.hide {
     display: none;
 }
@@ -150,7 +150,7 @@
     visibility: hidden;
 }
 
-#MangaOnlineViewer #CommentsPainel {
+#MangaOnlineViewer #CommentsPanel {
     padding: 10px;
 }
 
