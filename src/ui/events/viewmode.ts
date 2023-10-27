@@ -13,7 +13,7 @@ export function updateViewMode(mode: string) {
   };
 }
 
-function changeViewMode(event: Event) {
+export function changeViewMode(event: Event) {
   const mode = (event.currentTarget as HTMLInputElement).value;
   updateViewMode(mode)();
   updateSettings({ viewMode: mode as ViewMode });
