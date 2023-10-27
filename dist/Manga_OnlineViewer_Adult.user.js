@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.10.26
+// @version       2023.10.27
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -1605,9 +1605,6 @@
     }
     return "##MISSING_STRING##";
   }
-  function getAllLocaleStrings(name) {
-    return locales.map((locale) => `<span class='${locale.ID}'>${locale[name]}</span>`).join("\n");
-  }
   function updateSettings(newValue) {
     logScript(JSON.stringify(newValue));
     settings$2 = { ...settings$2, ...newValue };
@@ -2280,15 +2277,6 @@
     replaceStyleSheet("custom", getCustomThemeCSS(hex));
   }
   const themes = () => Object.values(colors);
-  const themesSelector = [...Object.keys(colors).map((color) => colors[color].name)].map(
-    (theme) => `
-<span class='${theme} ThemeRadio ${getUserSettings().theme === theme ? "selected" : ""}'
-      title='${theme}'      
->
-${IconCheck}
-</span>
-`
-  );
   function refreshThemes() {
     themes().forEach((theme) => {
       replaceStyleSheet(theme.name, getNormalThemeCSS(theme));
@@ -2323,242 +2311,251 @@ ${wrapStyle(
 `;
   }
 
-  const localeSelector = locales.map(
-    (locale) => `<option value='${locale.ID}' ${getUserSettings().locale === locale.ID ? "selected" : ""}>${locale.NAME}</option>`
-  );
-  const SettingsPanel = `
-  <div id='SettingsOverlay' class='overlay'></div>
-  <div id='SettingsPanel' class='panel'>
-    <h2>${getAllLocaleStrings("SETTINGS")}</h2>
-    <button id='CloseSettings' class='closeButton' title='${getLocaleString("CLOSE")}'>
-      ${IconX}
-    </button>
-    <button id='ResetSettings' class='simpleButton'>
-      ${getAllLocaleStrings("BUTTON_RESET_SETTINGS")}
-    </button>
-    <!-- =========================================================================================== -->
-    <div class='ControlLabel locale'>${getAllLocaleStrings("LANGUAGE")}
-      <select id='locale'>
-        ${localeSelector.join("")}
-      </select>
-    </div>
-    <!-- =========================================================================================== -->
-    <div id='ThemeSection'>
-      <div class='ControlLabel ColorSchemeSelector'>${getAllLocaleStrings("COLOR_SCHEME")}
-        <button id='ColorScheme' class='simpleButton'>
-          ${IconSun}
-          ${IconMoon}
-        </button>
-      </div>
-      <!-- =========================================================================================== -->
-      <div class='ControlLabel ThemeSelector'>${getAllLocaleStrings("THEME")}
-        <span class='custom ThemeRadio 
-            ${getUserSettings().theme === "custom" ? "selected" : ""}'
-              title='custom'>
-        ${IconPalette}
-        ${IconCheck}
-      </span>
-        ${themesSelector.join("")}
-      </div>
-      <!-- =========================================================================================== -->
-      <div id='Hue' class='ControlLabel CustomTheme ControlLabelItem 
-          ${getUserSettings().theme.startsWith("custom") ? "show" : ""}'>
-        ${getAllLocaleStrings("THEME_HUE")}
-        <input id='CustomThemeHue' type='color' value='${getUserSettings().customTheme}'
-               class='colorpicker CustomTheme' />
-      </div>
-      <!-- =========================================================================================== -->
-      <div id='Shade' class='ControlLabel CustomTheme ControlLabelItem
-          ${getUserSettings().theme.startsWith("custom") ? "" : "show"}'>
-      <span>
-        ${getAllLocaleStrings("THEME_SHADE")}
-        <output id='themeShadeVal' class='RangeValue' for='themeShade'>${getUserSettings().themeShade}</output>
-      </span>
-        <input type='range'
-               value='${getUserSettings().themeShade}'
-               name='ThemeShade'
-               id='ThemeShade'
-               min='100'
-               max='900'
-               step='100'
-               oninput='themeShadeVal.value = this.value'
-        />
-      </div>
-    </div>
-    <!-- =========================================================================================== -->
-    <div class='ControlLabel loadMode'>${getAllLocaleStrings("DEFAULT_LOAD_MODE")}
-      <select id='loadMode'>
-        <option value='wait' ${getUserSettings().loadMode === "wait" ? "selected" : ""}>
-          ${getLocaleString("LOAD_MODE_NORMAL")}
-        </option>
-        <option value='always' ${getUserSettings().loadMode === "always" ? "selected" : ""}>
-          ${getLocaleString("LOAD_MODE_ALWAYS")}
-        </option>
-        <option value='never' ${getUserSettings().loadMode === "never" ? "selected" : ""}>
-          ${getLocaleString("LOAD_MODE_NEVER")}
-        </option>
-      </select>
-    </div>
-    <!-- =========================================================================================== -->
-    <div class='ControlLabel PagesPerSecond'>${getAllLocaleStrings("LOAD_SPEED")}
-      <select id='PagesPerSecond'>
-        <option value='3000' ${getUserSettings().throttlePageLoad === 3e3 ? "selected" : ""}>
-            0.3(${getLocaleString("SLOWLY")})
-        </option>
-        <option value='2000' ${getUserSettings().throttlePageLoad === 2e3 ? "selected" : ""}>
-          0.5
-        </option>
-        <option value='1000' ${getUserSettings().throttlePageLoad === 1e3 ? "selected" : ""}>
-            01(${getLocaleString("NORMAL")})
-        </option>
-        <option value='500' ${getUserSettings().throttlePageLoad === 500 ? "selected" : ""}>
-          02
-        </option>
-        <option value='250' ${getUserSettings().throttlePageLoad === 250 ? "selected" : ""}>
-            04(${getLocaleString("FAST")})
-        </option>
-        <option value='125' ${getUserSettings().throttlePageLoad === 125 ? "selected" : ""}>
-          08
-        </option>
-        <option value='100' ${getUserSettings().throttlePageLoad === 100 ? "selected" : ""}>
-            10(${getLocaleString("EXTREME")})
-        </option>
-        <option value='1' ${getUserSettings().throttlePageLoad === 1 ? "selected" : ""}>
-            ${getLocaleString("ALL_PAGES")}
-        </option>
-      </select>
-    </div>
-    <!-- =========================================================================================== -->
-    <div class='ControlLabel DefaultZoomMode'>
-      ${getAllLocaleStrings("DEFAULT_ZOOM_MODE")}
-      <select id='DefaultZoomMode'>
-        <option value='percent' ${getUserSettings().zoomMode === "percent" ? "selected" : ""}>
-          ${getLocaleString("PERCENT")}
-        </option>
-        <option value='width' ${getUserSettings().zoomMode === "width" ? "selected" : ""}>
-          ${getLocaleString("FIT_WIDTH")}
-        </option>
-        <option value='height' ${getUserSettings().zoomMode === "height" ? "selected" : ""}>
-          ${getLocaleString("FIT_HEIGHT")}
-        </option>
-      </select>
-    </div>
-    <!-- =========================================================================================== -->
-    <div class='ControlLabel DefaultZoom ControlLabelItem
-        ${getUserSettings().zoomMode === "percent" ? "show" : ""}'>
-      <span>
-        ${getAllLocaleStrings("DEFAULT_ZOOM")}
-        <output id='defaultZoomVal'
-                class='RangeValue'
-                for='DefaultZoom'>
-          ${getUserSettings().defaultZoom}%
-        </output>
-      </span>
-      <input type='range'
-             value='${getUserSettings().defaultZoom}'
-             name='DefaultZoom'
-             id='DefaultZoom'
-             min='5'
-             max='200'
-             step='5'
-             list='tickmarks'
-             oninput='defaultZoomVal.value = this.value + "%"'
-      />
-      <datalist id='tickmarks'>
-        <option value='5'>5</option>
-        <option value='25'>25</option>
-        <option value='50'>50</option>
-        <option value='75'>75</option>
-        <option value='100'>100</option>
-        <option value='125'>125</option>
-        <option value='150'>150</option>
-        <option value='175'>175</option>
-        <option value='200'>200</option>
-      </datalist>
-    </div>
-    <!-- =========================================================================================== -->
-    <div class='ControlLabel minZoom'>
-    <span>
-      ${getAllLocaleStrings("MINIMUM_ZOOM")}
-      <output id='minZoomVal' class='RangeValue' for='minZoom'>${getUserSettings().minZoom}%</output>
-    </span>
-      <input type='range'
-             value='${getUserSettings().minZoom}'
-             name='minZoom'
-             id='minZoom'
-             min='30'
-             max='100'
-             step='10'
-             oninput='minZoomVal.value = this.value + "%"'
-      />
-    </div>
-    <!-- =========================================================================================== -->
-    <div class='ControlLabel zoomStep'>
-    <span>
-      ${getAllLocaleStrings("ZOOM_STEP")}
-      <output id='zoomStepVal' class='RangeValue' for='zoomStep'>${getUserSettings().zoomStep}%</output>
-    </span>
-      <input type='range'
-             value='${getUserSettings().zoomStep}'
-             name='zoomStep'
-             id='zoomStep'
-             min='5'
-             max='50'
-             step='5'
-             oninput='zoomStepVal.value = this.value + "%"'
-      />
-    </div>
-    <!-- =========================================================================================== -->
-    <div class='ControlLabel viewMode'>${getAllLocaleStrings("DEFAULT_VIEW_MODE")}
-      <select id='viewMode'>
-        <option value='Vertical' ${getUserSettings().viewMode === "Vertical" ? "selected" : ""}>
-          ${getLocaleString("VIEW_MODE_VERTICAL")}
-        </option>
-        <option value='WebComic' ${getUserSettings().viewMode === "WebComic" ? "selected" : ""}>
-          ${getLocaleString("VIEW_MODE_WEBCOMIC")}
-        </option>
-        <option value='FluidLTR' ${getUserSettings().viewMode === "FluidLTR" ? "selected" : ""}>
-          ${getLocaleString("VIEW_MODE_LEFT")}
-        </option>
-        <option value='FluidRTL' ${getUserSettings().viewMode === "FluidRTL" ? "selected" : ""}>
-          ${getLocaleString("VIEW_MODE_RIGHT")}
-        </option>
-      </select>
-    </div>
-    <!-- =========================================================================================== -->
-    <div class='ControlLabel fitIfOversize'>${getAllLocaleStrings("FIT_WIDTH_OVERSIZED")}
-      <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${getUserSettings().fitWidthIfOversize ? "checked" : ""} />
-    </div>
-    <!-- =========================================================================================== -->
-    <div class='ControlLabel showThumbnails'>${getAllLocaleStrings("SHOW_THUMBNAILS")}
-      <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${getUserSettings().showThumbnails ? "checked" : ""} />
-    </div>
-    <!-- =========================================================================================== -->
-    <div class='ControlLabel lazyLoadImages'>${getAllLocaleStrings("LAZY_LOAD_IMAGES_ENABLE")}
-      <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${getUserSettings().lazyLoadImages ? "checked" : ""} />
-    </div>
-    <!-- =========================================================================================== -->
-    <div class='ControlLabel lazyStart ControlLabelItem
-        ${getUserSettings().lazyLoadImages ? "show" : ""}'
-    >
-    <span>
-      ${getAllLocaleStrings("LAZY_LOAD_IMAGES")}
-      <output id='lazyStartVal' for='lazyStart'>${getUserSettings().lazyStart}</output>
-    </span>
-    <input type='range' value='${getUserSettings().lazyStart}' name='lazyStart' id='lazyStart' min='5' max='100' step='5'
-           oninput='lazyStartVal.value = this.value' />
-
+  const localeSelector = () => locales.map(
+    (locale) => `
+<option value='${locale.ID}' ${getUserSettings().locale === locale.ID ? "selected" : ""}>
+  ${locale.NAME}
+</option>`
+  ).join("");
+  const themesSelector = () => [...Object.keys(colors).map((color) => colors[color].name)].map(
+    (theme) => `
+<span title='${theme}'
+    class='${theme} ThemeRadio ${getUserSettings().theme === theme ? "selected" : ""}'>
+${IconCheck}
+</span>`
+  ).join("");
+  const SettingsPanel = () => `
+<div id='SettingsPanel' class='panel'>
+  <h2>${getLocaleString("SETTINGS")}</h2>
+  <button id='CloseSettings' class='closeButton' title='${getLocaleString("CLOSE")}'>
+    ${IconX}
+  </button>
+  <button id='ResetSettings' class='simpleButton'>
+    ${getLocaleString("BUTTON_RESET_SETTINGS")}
+  </button>
+  <!-- =========================================================================================== -->
+  <div class='ControlLabel locale'>${getLocaleString("LANGUAGE")}
+    <select id='locale'>
+      ${localeSelector()}
+    </select>
   </div>
   <!-- =========================================================================================== -->
-  <div class='ControlLabel downloadZip'>${getAllLocaleStrings("DOWNLOAD_IMAGES")}
+  <div id='ThemeSection'>
+    <div class='ControlLabel ColorSchemeSelector'>${getLocaleString("COLOR_SCHEME")}
+      <button id='ColorScheme' class='simpleButton'>
+        ${IconSun}
+        ${IconMoon}
+      </button>
+    </div>
+    <!-- =========================================================================================== -->
+    <div class='ControlLabel ThemeSelector'>${getLocaleString("THEME")}
+      <span class='custom ThemeRadio 
+          ${getUserSettings().theme === "custom" ? "selected" : ""}'
+            title='custom'>
+      ${IconPalette}
+      ${IconCheck}
+    </span>
+      ${themesSelector()}
+    </div>
+    <!-- =========================================================================================== -->
+    <div id='Hue' class='ControlLabel CustomTheme ControlLabelItem 
+        ${getUserSettings().theme.startsWith("custom") ? "show" : ""}'>
+      ${getLocaleString("THEME_HUE")}
+      <input id='CustomThemeHue' type='color' value='${getUserSettings().customTheme}'
+            class='colorpicker CustomTheme' />
+    </div>
+    <!-- =========================================================================================== -->
+    <div id='Shade' class='ControlLabel CustomTheme ControlLabelItem
+        ${getUserSettings().theme.startsWith("custom") ? "" : "show"}'>
+    <span>
+      ${getLocaleString("THEME_SHADE")}
+      <output id='themeShadeVal' class='RangeValue' for='themeShade'>${getUserSettings().themeShade}</output>
+    </span>
+      <input type='range'
+            value='${getUserSettings().themeShade}'
+            name='ThemeShade'
+            id='ThemeShade'
+            min='100'
+            max='900'
+            step='100'
+            oninput='themeShadeVal.value = this.value'
+      />
+    </div>
+  </div>
+  <!-- =========================================================================================== -->
+  <div class='ControlLabel loadMode'>${getLocaleString("DEFAULT_LOAD_MODE")}
+    <select id='loadMode'>
+      <option value='wait' ${getUserSettings().loadMode === "wait" ? "selected" : ""}>
+        ${getLocaleString("LOAD_MODE_NORMAL")}
+      </option>
+      <option value='always' ${getUserSettings().loadMode === "always" ? "selected" : ""}>
+        ${getLocaleString("LOAD_MODE_ALWAYS")}
+      </option>
+      <option value='never' ${getUserSettings().loadMode === "never" ? "selected" : ""}>
+        ${getLocaleString("LOAD_MODE_NEVER")}
+      </option>
+    </select>
+  </div>
+  <!-- =========================================================================================== -->
+  <div class='ControlLabel PagesPerSecond'>${getLocaleString("LOAD_SPEED")}
+    <select id='PagesPerSecond'>
+      <option value='3000' ${getUserSettings().throttlePageLoad === 3e3 ? "selected" : ""}>
+          0.3(${getLocaleString("SLOWLY")})
+      </option>
+      <option value='2000' ${getUserSettings().throttlePageLoad === 2e3 ? "selected" : ""}>
+        0.5
+      </option>
+      <option value='1000' ${getUserSettings().throttlePageLoad === 1e3 ? "selected" : ""}>
+          01(${getLocaleString("NORMAL")})
+      </option>
+      <option value='500' ${getUserSettings().throttlePageLoad === 500 ? "selected" : ""}>
+        02
+      </option>
+      <option value='250' ${getUserSettings().throttlePageLoad === 250 ? "selected" : ""}>
+          04(${getLocaleString("FAST")})
+      </option>
+      <option value='125' ${getUserSettings().throttlePageLoad === 125 ? "selected" : ""}>
+        08
+      </option>
+      <option value='100' ${getUserSettings().throttlePageLoad === 100 ? "selected" : ""}>
+          10(${getLocaleString("EXTREME")})
+      </option>
+      <option value='1' ${getUserSettings().throttlePageLoad === 1 ? "selected" : ""}>
+          ${getLocaleString("ALL_PAGES")}
+      </option>
+    </select>
+  </div>
+  <!-- =========================================================================================== -->
+  <div class='ControlLabel DefaultZoomMode'>
+    ${getLocaleString("DEFAULT_ZOOM_MODE")}
+    <select id='DefaultZoomMode'>
+      <option value='percent' ${getUserSettings().zoomMode === "percent" ? "selected" : ""}>
+        ${getLocaleString("PERCENT")}
+      </option>
+      <option value='width' ${getUserSettings().zoomMode === "width" ? "selected" : ""}>
+        ${getLocaleString("FIT_WIDTH")}
+      </option>
+      <option value='height' ${getUserSettings().zoomMode === "height" ? "selected" : ""}>
+        ${getLocaleString("FIT_HEIGHT")}
+      </option>
+    </select>
+  </div>
+  <!-- =========================================================================================== -->
+  <div class='ControlLabel DefaultZoom ControlLabelItem
+      ${getUserSettings().zoomMode === "percent" ? "show" : ""}'>
+    <span>
+      ${getLocaleString("DEFAULT_ZOOM")}
+      <output id='defaultZoomVal'
+              class='RangeValue'
+              for='DefaultZoom'>
+        ${getUserSettings().defaultZoom}%
+      </output>
+    </span>
+    <input type='range'
+          value='${getUserSettings().defaultZoom}'
+          name='DefaultZoom'
+          id='DefaultZoom'
+          min='5'
+          max='200'
+          step='5'
+          list='tickmarks'
+          oninput='defaultZoomVal.value = this.value + "%"'
+    />
+    <datalist id='tickmarks'>
+      <option value='5'>5</option>
+      <option value='25'>25</option>
+      <option value='50'>50</option>
+      <option value='75'>75</option>
+      <option value='100'>100</option>
+      <option value='125'>125</option>
+      <option value='150'>150</option>
+      <option value='175'>175</option>
+      <option value='200'>200</option>
+    </datalist>
+  </div>
+  <!-- =========================================================================================== -->
+  <div class='ControlLabel minZoom'>
+  <span>
+    ${getLocaleString("MINIMUM_ZOOM")}
+    <output id='minZoomVal' class='RangeValue' for='minZoom'>${getUserSettings().minZoom}%</output>
+  </span>
+    <input type='range'
+          value='${getUserSettings().minZoom}'
+          name='minZoom'
+          id='minZoom'
+          min='30'
+          max='100'
+          step='10'
+          oninput='minZoomVal.value = this.value + "%"'
+    />
+  </div>
+  <!-- =========================================================================================== -->
+  <div class='ControlLabel zoomStep'>
+  <span>
+    ${getLocaleString("ZOOM_STEP")}
+    <output id='zoomStepVal' class='RangeValue' for='zoomStep'>${getUserSettings().zoomStep}%</output>
+  </span>
+    <input type='range'
+          value='${getUserSettings().zoomStep}'
+          name='zoomStep'
+          id='zoomStep'
+          min='5'
+          max='50'
+          step='5'
+          oninput='zoomStepVal.value = this.value + "%"'
+    />
+  </div>
+  <!-- =========================================================================================== -->
+  <div class='ControlLabel viewMode'>${getLocaleString("DEFAULT_VIEW_MODE")}
+    <select id='viewMode'>
+      <option value='Vertical' ${getUserSettings().viewMode === "Vertical" ? "selected" : ""}>
+        ${getLocaleString("VIEW_MODE_VERTICAL")}
+      </option>
+      <option value='WebComic' ${getUserSettings().viewMode === "WebComic" ? "selected" : ""}>
+        ${getLocaleString("VIEW_MODE_WEBCOMIC")}
+      </option>
+      <option value='FluidLTR' ${getUserSettings().viewMode === "FluidLTR" ? "selected" : ""}>
+        ${getLocaleString("VIEW_MODE_LEFT")}
+      </option>
+      <option value='FluidRTL' ${getUserSettings().viewMode === "FluidRTL" ? "selected" : ""}>
+        ${getLocaleString("VIEW_MODE_RIGHT")}
+      </option>
+    </select>
+  </div>
+  <!-- =========================================================================================== -->
+  <div class='ControlLabel fitIfOversize'>${getLocaleString("FIT_WIDTH_OVERSIZED")}
+    <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${getUserSettings().fitWidthIfOversize ? "checked" : ""} />
+  </div>
+  <!-- =========================================================================================== -->
+  <div class='ControlLabel showThumbnails'>${getLocaleString("SHOW_THUMBNAILS")}
+    <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${getUserSettings().showThumbnails ? "checked" : ""} />
+  </div>
+  <!-- =========================================================================================== -->
+  <div class='ControlLabel lazyLoadImages'>${getLocaleString("LAZY_LOAD_IMAGES_ENABLE")}
+    <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${getUserSettings().lazyLoadImages ? "checked" : ""} />
+  </div>
+  <!-- =========================================================================================== -->
+  <div class='ControlLabel lazyStart ControlLabelItem
+      ${getUserSettings().lazyLoadImages ? "show" : ""}'
+  >
+  <span>
+    ${getLocaleString("LAZY_LOAD_IMAGES")}
+    <output id='lazyStartVal' for='lazyStart'>${getUserSettings().lazyStart}</output>
+  </span>
+  <input type='range' value='${getUserSettings().lazyStart}'
+    name='lazyStart' id='lazyStart' min='5' max='100' step='5'
+    oninput='lazyStartVal.value = this.value' />
+  </div>
+  <!-- =========================================================================================== -->
+  <div class='ControlLabel downloadZip'>${getLocaleString("DOWNLOAD_IMAGES")}
     <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${getUserSettings().downloadZip ? "checked" : ""} />
   </div>
   <!-- =========================================================================================== -->
-  <div class='ControlLabel hidePageControls'>${getAllLocaleStrings("HIDE_CONTROLS")}
+  <div class='ControlLabel hidePageControls'>${getLocaleString("HIDE_CONTROLS")}
     <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${getUserSettings().hidePageControls ? "checked" : ""} />
   </div>
   <!-- =========================================================================================== -->
-  <div class='ControlLabel headerType'>${getAllLocaleStrings("HEADER_TYPE")}
+  <div class='ControlLabel headerType'>${getLocaleString("HEADER_TYPE")}
     <select id='headerType'>
       <option value='hover' ${getUserSettings().header === "hover" ? "selected" : ""}>
         ${getLocaleString("HEADER_HOVER")}
@@ -2574,42 +2571,41 @@ ${wrapStyle(
       </option>
     </select>
   </div>
-  </div>
+</div>
 `;
 
   const keybindList = () => Object.keys(getUserSettings().keybinds).map((kb) => {
     const keys = getUserSettings().keybinds[kb]?.length ? getUserSettings().keybinds[kb]?.map((key) => `<kbd class='dark'>${key}</kbd>`).join(" / ") : "";
-    return `<span>${getAllLocaleStrings(kb)}:</span> <span>${keys}</span>`;
+    return `<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
   });
   const keybindEditor = () => Object.keys(getUserSettings().keybinds).map(
     // Language=html
-    (kb) => `<label for='${kb}'>${getAllLocaleStrings(kb)}:</label>
+    (kb) => `<label for='${kb}'>${getLocaleString(kb)}:</label>
         <input type='text' class='KeybindInput' id='${kb}' name='${kb}'
                value='${getUserSettings().keybinds[kb]?.join(" , ") ?? ""}'>`
-  ).concat(`<div id='HotKeysRules'> ${getAllLocaleStrings("KEYBIND_RULES")}</div>`);
-  const KeybindingsPanel = `
-  <div id='KeybindingsOverlay' class='overlay'></div>
-  <div id='KeybindingsPanel' class='panel'>
-    <h2>${getAllLocaleStrings("KEYBINDINGS")}</h2>
-    <button id='CloseKeybindings' class='closeButton' title='${getLocaleString("CLOSE")}'>
-      ${IconX}
+  ).concat(`<div id='HotKeysRules'> ${getLocaleString("KEYBIND_RULES")}</div>`);
+  const KeybindingsPanel = () => `
+<div id='KeybindingsPanel' class='panel'>
+  <h2>${getLocaleString("KEYBINDINGS")}</h2>
+  <button id='CloseKeybindings' class='closeButton' title='${getLocaleString("CLOSE")}'>
+    ${IconX}
+  </button>
+  <div class='controls'>
+    <button id='EditKeybindings' class='ControlButton' type='button'
+            title='${getLocaleString("EDIT_KEYBINDS")}'>
+      ${IconPencil}
+      ${getLocaleString("BUTTON_EDIT")}
     </button>
-    <div class='controls'>
-      <button id='EditKeybindings' class='ControlButton' type='button'
-              title='${getLocaleString("EDIT_KEYBINDS")}'>
-        ${IconPencil}
-        ${getAllLocaleStrings("BUTTON_EDIT")}
-      </button>
-      <button id='SaveKeybindings' class='ControlButton hidden' type='button'
-              title='${getLocaleString("SAVE_KEYBINDS")}'>
-        ${IconDeviceFloppy}
-        ${getAllLocaleStrings("BUTTON_SAVE")}
-      </button>
-    </div>
-    <div id='KeybindingsList'>
-      ${keybindList().join("\n")}
-    </div>
+    <button id='SaveKeybindings' class='ControlButton hidden' type='button'
+            title='${getLocaleString("SAVE_KEYBINDS")}'>
+      ${IconDeviceFloppy}
+      ${getLocaleString("BUTTON_SAVE")}
+    </button>
   </div>
+  <div id='KeybindingsList'>
+    ${keybindList().join("\n")}
+  </div>
+</div>
 `;
 
   function indexList(repeat, begin = 1) {
@@ -2618,26 +2614,26 @@ ${wrapStyle(
 
   const ThumbnailsPanel = (manga) => `
 <nav id='Navigation' class='panel ${getUserSettings().showThumbnails ? "" : "disabled"}'>
-      <div id='NavigationCounters' class='ControlLabel'>
-        ${IconCategory}
-        <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
-        ${getAllLocaleStrings("PAGES_LOADED")}
-      </div>
-      <div id='Thumbnails'>
-        ${indexList(manga.pages, manga.begin).map(
+  <div id='NavigationCounters' class='ControlLabel'>
+    ${IconCategory}
+    <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
+    ${getLocaleString("PAGES_LOADED")}
+  </div>
+  <div id='Thumbnails'>
+    ${indexList(manga.pages, manga.begin).map(
   (index) => `
-          <div id='Thumbnail${index}' class='Thumbnail'>
-            <img id='ThumbnailImg${index}' alt='' class='ThumbnailImg' src='' />
-            <span class='ThumbnailIndex'>${index}</span>
-          </div>`
+      <div id='Thumbnail${index}' class='Thumbnail'>
+        <img id='ThumbnailImg${index}' alt='' class='ThumbnailImg' src='' />
+        <span class='ThumbnailIndex'>${index}</span>
+      </div>`
 )}
-      </div>
-    </nav>
+  </div>
+</nav>
 `;
 
   const listBookmarks = () => {
     if (isEmpty(getUserSettings().bookmarks)) {
-      return [getAllLocaleStrings("LIST_EMPTY")];
+      return [getLocaleString("LIST_EMPTY")];
     }
     return getUserSettings().bookmarks.map(
       (mark, index) => `
@@ -2663,13 +2659,13 @@ ${wrapStyle(
       </div>`
     );
   };
-  const BookmarkPanel = `
-<div id='BookmarksOverlay' class='overlay'></div>
+  const BookmarkPanel = () => `
+
 <div id='BookmarksPanel' class='panel'>
   <button id='CloseBookmarks' class='closeButton' title='${getLocaleString("CLOSE")}'>
     ${IconX}
   </button>
-  <h2>${getAllLocaleStrings("BOOKMARKS")}</h2>
+  <h2>${getLocaleString("BOOKMARKS")}</h2>
   <div id='BookmarksList'>
     ${listBookmarks().join("")}
   </div>
@@ -2756,15 +2752,15 @@ ${wrapStyle(
       <div class='ViewerTitle'>
         <h1 id='MangaTitle'>${manga.title}</h1>
         <a id='series' href='${manga.series}'>
-            (${getAllLocaleStrings("RETURN_CHAPTER_LIST")})
+            (${getLocaleString("RETURN_CHAPTER_LIST")})
         </a>
       </div>
       <nav id='ChapterNavigation'>
         <div id='Counters' class='ControlLabel'>
-          ${getAllLocaleStrings("PAGES_LOADED")}:
+          ${getLocaleString("PAGES_LOADED")}:
           <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
           <span class='ControlLabel'>
-          ${getAllLocaleStrings("GO_TO_PAGE")}:
+          ${getLocaleString("GO_TO_PAGE")}:
         </span>
           <select id='gotoPage'>
             <option selected>#</option>
@@ -2776,16 +2772,16 @@ ${wrapStyle(
                   title='${getLocaleString("DOWNLOAD_ZIP")}'>
             ${IconFileDownload}
             ${IconLoader2}
-            ${getAllLocaleStrings("BUTTON_DOWNLOAD")}
+            ${getLocaleString("BUTTON_DOWNLOAD")}
           </button>
           <a id='prev' class='NavigationControlButton ControlButton' type='button'
              href='${manga.prev ?? ""}' title='${getLocaleString("PREVIOUS_CHAPTER")}'>
             ${IconArrowBigLeft}
-            ${getAllLocaleStrings("BUTTON_PREVIOUS")}
+            ${getLocaleString("BUTTON_PREVIOUS")}
           </a>
           <a id='next' class='NavigationControlButton ControlButton' type='button'
              href='${manga.next ?? ""}' title='${getLocaleString("NEXT_CHAPTER")}'>
-            ${getAllLocaleStrings("BUTTON_NEXT")}
+            ${getLocaleString("BUTTON_NEXT")}
             ${IconArrowBigRight}
           </a>
         </div>
@@ -2843,7 +2839,7 @@ ${wrapStyle(
   <div id='CommentsButton' class='ControlButton'
     title='${getLocaleString("DISPLAY_COMMENTS")}'>
     ${IconMessage}
-    ${getAllLocaleStrings("DISPLAY_COMMENTS")}
+    ${getLocaleString("DISPLAY_COMMENTS")}
   </div>
   <div id='CommentsArea' class='hide 
       ${isBackgroundColorDark(manga.comments ?? document.body) ? "dark" : "light"}'>
@@ -2852,27 +2848,15 @@ ${wrapStyle(
 </section> 
 `;
 
-  const app = (manga) => `
-<div id='MangaOnlineViewer' 
-    class='${getUserSettings().colorScheme} 
-      ${getUserSettings().hidePageControls ? "hideControls" : ""}
-      ${isBookmarked() ? "bookmarked" : ""}'
-    locale='${getUserSettings().locale}'  
-    data-theme='${getUserSettings().theme}'>
-  ${Header(manga)}
-  ${Reader(manga)}
-  ${commentsPanel(manga)}  
-  ${ThumbnailsPanel(manga)}
-  ${SettingsPanel}
-  ${KeybindingsPanel}
-  ${BookmarkPanel}
-</div>`;
-
-  function buttonBookmarks() {
-    document.querySelector("#BookmarksPanel")?.classList.toggle("visible");
-    document.querySelector("#BookmarksOverlay")?.classList.toggle("visible");
+  function buttonBookmarksOpen() {
+    document.querySelector("#BookmarksPanel")?.classList.add("visible");
+    document.querySelector("#Overlay")?.classList.add("visible");
   }
-  function eraseBookmarks(elem) {
+  function buttonBookmarksClose() {
+    document.querySelector("#BookmarksPanel")?.classList.remove("visible");
+    document.querySelector("#Overlay")?.classList.remove("visible");
+  }
+  function buttonEraseBookmarks(elem) {
     elem.addEventListener("click", (event) => {
       const target = event.currentTarget.value;
       const marks = getUserSettings().bookmarks.filter((el) => el.url !== target);
@@ -2887,7 +2871,7 @@ ${wrapStyle(
       });
       updateSettings({ bookmarks: marks });
       reloadBookmarks();
-      document.querySelectorAll(".BookmarkItem .erase")?.forEach(eraseBookmarks);
+      document.querySelectorAll(".BookmarkItem .erase")?.forEach(buttonEraseBookmarks);
     });
   }
   function buttonBookmark(elem) {
@@ -2920,14 +2904,14 @@ ${wrapStyle(
         });
       }
       reloadBookmarks();
-      document.querySelectorAll(".BookmarkItem .erase")?.forEach(eraseBookmarks);
+      document.querySelectorAll(".BookmarkItem .erase")?.forEach(buttonEraseBookmarks);
     });
   }
   function bookmarks() {
-    document.querySelector("#bookmarks")?.addEventListener("click", buttonBookmarks);
-    document.querySelector("#CloseBookmarks")?.addEventListener("click", buttonBookmarks);
-    document.querySelector("#BookmarksOverlay")?.addEventListener("click", buttonBookmarks);
-    document.querySelectorAll(".BookmarkItem .erase")?.forEach(eraseBookmarks);
+    document.querySelector("#bookmarks")?.addEventListener("click", buttonBookmarksOpen);
+    document.querySelector("#CloseBookmarks")?.addEventListener("click", buttonBookmarksClose);
+    document.querySelector("#Overlay")?.addEventListener("click", buttonBookmarksClose);
+    document.querySelectorAll(".BookmarkItem .erase")?.forEach(buttonEraseBookmarks);
     document.querySelectorAll(".Bookmark")?.forEach(buttonBookmark);
   }
 
@@ -3000,7 +2984,7 @@ ${wrapStyle(
     }).catch(logScript);
   }
 
-  function startDownload(event) {
+  function buttonStartDownload(event) {
     const button = event.currentTarget;
     if (button.classList.contains("loading")) {
       return;
@@ -3009,25 +2993,26 @@ ${wrapStyle(
     button.classList.add("loading");
     generateZip().catch((err) => logScript("Error downloading chapter", err));
   }
-  function globalHideImageControls() {
+  function buttonGlobalHideImageControls() {
     document.querySelector("#MangaOnlineViewer")?.classList.toggle("hideControls");
   }
-  function redirect(event) {
+  function buttonRedirectURL(event) {
     const element = event.target;
     const url = element.getAttribute("value") ?? element.getAttribute("href");
     if (url) {
       window.location.href = url;
     }
   }
+  function buttonCommentsOpen() {
+    document.getElementById("CommentsArea")?.classList.toggle("hide");
+    document.querySelector("#CommentsButton")?.remove();
+  }
   function globals() {
-    document.querySelector("#download")?.addEventListener("click", startDownload);
-    document.querySelector("#pageControls")?.addEventListener("click", globalHideImageControls);
-    document.querySelector("#next")?.addEventListener("click", redirect);
-    document.querySelector("#prev")?.addEventListener("click", redirect);
-    document.querySelector("#CommentsButton")?.addEventListener("click", () => {
-      document.getElementById("CommentsArea")?.classList.toggle("hide");
-      document.querySelector("#CommentsButton")?.remove();
-    });
+    document.querySelector("#download")?.addEventListener("click", buttonStartDownload);
+    document.querySelector("#pageControls")?.addEventListener("click", buttonGlobalHideImageControls);
+    document.querySelector("#next")?.addEventListener("click", buttonRedirectURL);
+    document.querySelector("#prev")?.addEventListener("click", buttonRedirectURL);
+    document.querySelector("#CommentsButton")?.addEventListener("click", buttonCommentsOpen);
   }
 
   function headroom(showEnd = 0) {
@@ -3433,280 +3418,275 @@ ${wrapStyle(
     }
   }
 
+  function buttonReloadPage(elem) {
+    elem.addEventListener("click", (event) => {
+      const img = event.currentTarget.parentElement?.parentElement?.querySelector(
+        ".PageImg"
+      );
+      reloadImage(img);
+    });
+  }
+  function buttonHidePage(elem) {
+    elem.addEventListener("click", (event) => {
+      const img = event.currentTarget.parentElement?.parentElement;
+      img.classList.toggle("hide");
+    });
+  }
   function individual() {
-    function buttonReloadPage(elem) {
-      elem.addEventListener("click", (event) => {
-        const img = event.currentTarget.parentElement?.parentElement?.querySelector(
-          ".PageImg"
-        );
-        reloadImage(img);
-      });
-    }
     document.querySelectorAll(".Reload")?.forEach(buttonReloadPage);
-    function buttonHidePage(elem) {
-      elem.addEventListener("click", (event) => {
-        const img = event.currentTarget.parentElement?.parentElement;
-        img.classList.toggle("hide");
-      });
-    }
     document.querySelectorAll(".Hide")?.forEach(buttonHidePage);
   }
 
-  function navigation() {
-    function selectGoToPage(event) {
-      const target = event.currentTarget.value;
+  function selectGoToPage(event) {
+    const target = event.currentTarget.value;
+    applyZoom();
+    scrollToElement(document.querySelector(`#Page${target}`));
+  }
+  function clickThumbnail(elem) {
+    elem.addEventListener("click", (event) => {
       applyZoom();
-      scrollToElement(document.querySelector(`#Page${target}`));
+      scrollToElement(
+        document.querySelector(
+          `#Page${event.currentTarget.querySelector(".ThumbnailIndex")?.textContent}`
+        )
+      );
+    });
+  }
+  function transformScrollToHorizontal(event) {
+    if (!event.deltaY) {
+      return;
     }
+    event.currentTarget.scrollLeft += event.deltaY + event.deltaX;
+    event.preventDefault();
+  }
+  function navigation() {
     document.querySelector("#gotoPage")?.addEventListener("change", selectGoToPage);
-    function clickThumbnail(elem) {
-      elem.addEventListener("click", (event) => {
-        applyZoom();
-        scrollToElement(
-          document.querySelector(
-            `#Page${event.currentTarget.querySelector(".ThumbnailIndex")?.textContent}`
-          )
-        );
-      });
-    }
     document.querySelectorAll(".Thumbnail")?.forEach(clickThumbnail);
-    function transformScrollToHorizontal(event) {
-      if (!event.deltaY) {
-        return;
-      }
-      event.currentTarget.scrollLeft += event.deltaY + event.deltaX;
-      event.preventDefault();
-    }
     document.querySelector("#Thumbnails")?.addEventListener("wheel", transformScrollToHorizontal);
   }
 
-  function options() {
-    function buttonResetSettings() {
-      const msg = {
-        title: getLocaleString("ATTENTION"),
-        text: getLocaleString("SETTINGS_RESET"),
-        timer: 1e4,
-        icon: "info"
-      };
-      resetSettings();
-      document.getElementById("MangaOnlineViewer")?.removeAttribute("locale");
-      Swal.fire(msg);
-    }
-    document.querySelector("#ResetSettings")?.addEventListener("click", buttonResetSettings);
-    function changeLocale(event) {
-      const locale = event.currentTarget.value;
-      updateSettings({ locale });
-      const elem = document.getElementById("MangaOnlineViewer");
-      elem?.setAttribute("locale", locale);
+  function buttonResetSettings() {
+    resetSettings();
+    const elem = document.getElementById("MangaOnlineViewer");
+    elem?.removeAttribute("locale");
+    elem?.dispatchEvent(new Event("locale"));
+  }
+  function changeLocale(event) {
+    const locale = event.currentTarget.value;
+    updateSettings({ locale });
+    const elem = document.getElementById("MangaOnlineViewer");
+    elem?.setAttribute("locale", locale);
+    elem?.dispatchEvent(new Event("locale"));
+  }
+  function changeLoadMode(event) {
+    const mode = event.currentTarget.value;
+    updateSettings({ loadMode: mode });
+  }
+  function checkFitWidthOversize(event) {
+    document.querySelector("#Chapter")?.classList.toggle("fitWidthIfOversize");
+    updateSettings({ fitWidthIfOversize: event.currentTarget.checked });
+  }
+  function checkShowThumbnails(event) {
+    document.querySelector("#Navigation")?.classList.toggle("disabled");
+    updateSettings({ showThumbnails: event.currentTarget.checked });
+    applyZoom();
+  }
+  function changeAutoDownload(event) {
+    updateSettings({ downloadZip: event.currentTarget.checked });
+    if (event.currentTarget.checked) {
       Swal.fire({
         title: getLocaleString("ATTENTION"),
-        text: getLocaleString("LANGUAGE_CHANGED"),
+        text: getLocaleString("AUTO_DOWNLOAD"),
         timer: 1e4,
         icon: "info"
       });
     }
+  }
+  function checkLazyLoad(event) {
+    updateSettings({ lazyLoadImages: event.currentTarget.checked });
+    const start = document.querySelector(".lazyStart");
+    if (getUserSettings().lazyLoadImages) {
+      start?.classList.add("show");
+    } else {
+      start?.classList.remove("show");
+    }
+    if (event.currentTarget.checked) {
+      Swal.fire({
+        title: getLocaleString("WARNING"),
+        html: getLocaleString("LAZY_LOAD"),
+        icon: "warning"
+      });
+    }
+  }
+  function changeLazyStart(event) {
+    const start = event.currentTarget.value;
+    updateSettings({ lazyStart: parseInt(start, 10) });
+  }
+  function changePagesPerSecond(event) {
+    const timer = parseInt(event.currentTarget.value, 10);
+    updateSettings({ throttlePageLoad: timer });
+    if (timer < 100) {
+      Swal.fire({
+        title: getLocaleString("SPEED_WARNING"),
+        html: getLocaleString("SPEED_WARNING_MESSAGE"),
+        icon: "warning"
+      });
+    }
+  }
+  function changeZoomStep(event) {
+    const step = event.currentTarget.value;
+    updateSettings({ zoomStep: parseInt(step, 10) });
+  }
+  function changeMinZoom(event) {
+    const min = event.currentTarget.value;
+    replaceStyleSheet("MinZoom", `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
+    updateSettings({ minZoom: parseInt(min, 10) });
+  }
+  function checkHideImageControls(event) {
+    document.querySelector("#MangaOnlineViewer")?.classList.toggle("hideControls");
+    updateSettings({ hidePageControls: event.currentTarget.checked });
+  }
+  function changeHeaderType(event) {
+    document.querySelector("#Header").className = "";
+    const headerType = event.currentTarget.value;
+    document.querySelector("#Header")?.classList.add(headerType);
+    updateSettings({ header: headerType });
+  }
+  function options() {
+    document.querySelector("#ResetSettings")?.addEventListener("click", buttonResetSettings);
     document.querySelector("#locale")?.addEventListener("change", changeLocale);
-    function checkFitWidthOversize(event) {
-      document.querySelector("#Chapter")?.classList.toggle("fitWidthIfOversize");
-      updateSettings({ fitWidthIfOversize: event.currentTarget.checked });
-    }
     document.querySelector("#fitIfOversize")?.addEventListener("change", checkFitWidthOversize);
-    function changeLoadMode(event) {
-      const mode = event.currentTarget.value;
-      updateSettings({ loadMode: mode });
-    }
     document.querySelector("#loadMode")?.addEventListener("change", changeLoadMode);
-    function checkShowThumbnails(event) {
-      document.querySelector("#Navigation")?.classList.toggle("disabled");
-      updateSettings({ showThumbnails: event.currentTarget.checked });
-      applyZoom();
-    }
     document.querySelector("#showThumbnails")?.addEventListener("change", checkShowThumbnails);
-    function changeAutoDownload(event) {
-      updateSettings({ downloadZip: event.currentTarget.checked });
-      if (event.currentTarget.checked) {
-        Swal.fire({
-          title: getLocaleString("ATTENTION"),
-          text: getLocaleString("AUTO_DOWNLOAD"),
-          timer: 1e4,
-          icon: "info"
-        });
-      }
-    }
     document.querySelector("#downloadZip")?.addEventListener("change", changeAutoDownload);
-    function checkLazyLoad(event) {
-      updateSettings({ lazyLoadImages: event.currentTarget.checked });
-      const start = document.querySelector(".lazyStart");
-      if (getUserSettings().lazyLoadImages) {
-        start?.classList.add("show");
-      } else {
-        start?.classList.remove("show");
-      }
-      if (event.currentTarget.checked) {
-        Swal.fire({
-          title: getLocaleString("WARNING"),
-          html: getLocaleString("LAZY_LOAD"),
-          icon: "warning"
-        });
-      }
-    }
     document.querySelector("#lazyLoadImages")?.addEventListener("change", checkLazyLoad);
-    function changeLazyStart(event) {
-      const start = event.currentTarget.value;
-      updateSettings({ lazyStart: parseInt(start, 10) });
-    }
     document.querySelector("#lazyStart")?.addEventListener("change", changeLazyStart);
-    function changePagesPerSecond(event) {
-      const timer = parseInt(event.currentTarget.value, 10);
-      updateSettings({ throttlePageLoad: timer });
-      if (timer < 100) {
-        Swal.fire({
-          title: getLocaleString("SPEED_WARNING"),
-          html: getLocaleString("SPEED_WARNING_MESSAGE"),
-          icon: "warning"
-        });
-      }
-    }
     document.querySelector("#PagesPerSecond")?.addEventListener("change", changePagesPerSecond);
-    function changeZoomStep(event) {
-      const step = event.currentTarget.value;
-      updateSettings({ zoomStep: parseInt(step, 10) });
-    }
     document.querySelector("#zoomStep")?.addEventListener("change", changeZoomStep);
-    function changeMinZoom(event) {
-      const min = event.currentTarget.value;
-      replaceStyleSheet("MinZoom", `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
-      updateSettings({ minZoom: parseInt(min, 10) });
-    }
     document.querySelector("#minZoom")?.addEventListener("input", changeMinZoom);
-    function checkHideImageControls(event) {
-      document.querySelector("#MangaOnlineViewer")?.classList.toggle("hideControls");
-      updateSettings({ hidePageControls: event.currentTarget.checked });
-    }
     document.querySelector("#hidePageControls")?.addEventListener("change", checkHideImageControls);
-    function changeHeaderType(event) {
-      document.querySelector("#Header").className = "";
-      const headerType = event.currentTarget.value;
-      document.querySelector("#Header")?.classList.add(headerType);
-      updateSettings({ header: headerType });
-    }
     document.querySelector("#headerType")?.addEventListener("change", changeHeaderType);
   }
 
+  function buttonHeader() {
+    const header = document.querySelector("#Header");
+    if (header?.classList.contains("click")) {
+      header?.classList.toggle("visible");
+    }
+  }
+  function buttonSettingsOpen() {
+    document.querySelector("#SettingsPanel")?.classList.add("visible");
+    document.querySelector("#Navigation")?.classList.add("visible");
+    document.querySelector("#Header")?.classList.add("visible");
+    document.querySelector("#Overlay")?.classList.add("visible");
+  }
+  function buttonSettingsClose() {
+    document.querySelector("#SettingsPanel")?.classList.remove("visible");
+    document.querySelector("#Navigation")?.classList.remove("visible");
+    document.querySelector("#Header")?.classList.remove("visible");
+    document.querySelector("#Overlay")?.classList.remove("visible");
+  }
+  function buttonKeybindingsOpen() {
+    document.querySelector("#KeybindingsList").innerHTML = keybindList().join("\n");
+    document.querySelector("#SaveKeybindings")?.classList.add("hidden");
+    document.querySelector("#EditKeybindings")?.classList.remove("hidden");
+    document.querySelector("#KeybindingsPanel")?.classList.add("visible");
+    document.querySelector("#Overlay")?.classList.add("visible");
+  }
+  function buttonKeybindingsClose() {
+    document.querySelector("#SaveKeybindings")?.classList.add("hidden");
+    document.querySelector("#EditKeybindings")?.classList.remove("hidden");
+    document.querySelector("#KeybindingsPanel")?.classList.remove("visible");
+    document.querySelector("#Overlay")?.classList.remove("visible");
+  }
+  function saveKeybindings() {
+    const newkeybinds = getUserSettings().keybinds;
+    Object.keys(getUserSettings().keybinds).forEach((kb) => {
+      const keys = document.querySelector(`#${kb}`)?.value.split(",")?.map((value) => value.trim());
+      newkeybinds[kb] = isNothing(keys) ? void 0 : keys;
+    });
+    updateSettings({ keybinds: newkeybinds });
+    document.querySelector("#KeybindingsList").innerHTML = keybindList().join("\n");
+    document.querySelector("#SaveKeybindings")?.classList.add("hidden");
+    document.querySelector("#EditKeybindings")?.classList.remove("hidden");
+    keybindings();
+  }
+  function editKeybindings() {
+    document.querySelector("#KeybindingsList").innerHTML = keybindEditor().join("\n");
+    document.querySelector("#SaveKeybindings")?.classList.remove("hidden");
+    document.querySelector("#EditKeybindings")?.classList.add("hidden");
+  }
   function panels() {
-    function buttonHeader() {
-      const header = document.querySelector("#Header");
-      if (header?.classList.contains("click")) {
-        header?.classList.toggle("visible");
-      }
-    }
     document.querySelector("#menu")?.addEventListener("click", buttonHeader);
-    function buttonSettingsOpen() {
-      document.querySelector("#SettingsPanel")?.classList.add("visible");
-      document.querySelector("#Navigation")?.classList.add("visible");
-      document.querySelector("#Header")?.classList.add("visible");
-      document.querySelector("#SettingsOverlay")?.classList.add("visible");
-    }
-    function buttonSettingsClose() {
-      document.querySelector("#SettingsPanel")?.classList.remove("visible");
-      document.querySelector("#Navigation")?.classList.remove("visible");
-      document.querySelector("#Header")?.classList.remove("visible");
-      document.querySelector("#SettingsOverlay")?.classList.remove("visible");
-    }
     document.querySelector("#settings")?.addEventListener("click", buttonSettingsOpen);
     document.querySelector("#CloseSettings")?.addEventListener("click", buttonSettingsClose);
-    document.querySelector("#SettingsOverlay")?.addEventListener("click", buttonSettingsClose);
-    function buttonKeybindings() {
-      document.querySelector("#KeybindingsList").innerHTML = keybindList().join("\n");
-      document.querySelector("#SaveKeybindings")?.classList.add("hidden");
-      document.querySelector("#EditKeybindings")?.classList.remove("hidden");
-      document.querySelector("#KeybindingsPanel")?.classList.toggle("visible");
-      document.querySelector("#KeybindingsOverlay")?.classList.toggle("visible");
-    }
-    function saveKeybindings() {
-      const newkeybinds = getUserSettings().keybinds;
-      Object.keys(getUserSettings().keybinds).forEach((kb) => {
-        const keys = document.querySelector(`#${kb}`)?.value.split(",")?.map((value) => value.trim());
-        newkeybinds[kb] = isNothing(keys) ? void 0 : keys;
-      });
-      updateSettings({ keybinds: newkeybinds });
-      document.querySelector("#KeybindingsList").innerHTML = keybindList().join("\n");
-      document.querySelector("#SaveKeybindings")?.classList.add("hidden");
-      document.querySelector("#EditKeybindings")?.classList.remove("hidden");
-      keybindings();
-    }
-    function editKeybindings() {
-      document.querySelector("#KeybindingsList").innerHTML = keybindEditor().join("\n");
-      document.querySelector("#SaveKeybindings")?.classList.remove("hidden");
-      document.querySelector("#EditKeybindings")?.classList.add("hidden");
-    }
-    document.querySelector("#keybindings")?.addEventListener("click", buttonKeybindings);
-    document.querySelector("#CloseKeybindings")?.addEventListener("click", buttonKeybindings);
-    document.querySelector("#KeybindingsOverlay")?.addEventListener("click", buttonKeybindings);
+    document.querySelector("#Overlay")?.addEventListener("click", buttonSettingsClose);
+    document.querySelector("#keybindings")?.addEventListener("click", buttonKeybindingsOpen);
+    document.querySelector("#CloseKeybindings")?.addEventListener("click", buttonKeybindingsClose);
+    document.querySelector("#Overlay")?.addEventListener("click", buttonKeybindingsClose);
     document.querySelector("#EditKeybindings")?.addEventListener("click", editKeybindings);
     document.querySelector("#SaveKeybindings")?.addEventListener("click", saveKeybindings);
   }
 
+  function buttonZoomIn(elem) {
+    elem.addEventListener("click", (event) => {
+      const img = event.currentTarget.parentElement?.parentElement?.querySelector(
+        ".PageImg"
+      );
+      const ratio = img.width / img.naturalWidth * (100 + getUserSettings().zoomStep);
+      applyZoom(ratio, `#${img.getAttribute("id")}`);
+    });
+  }
+  function buttonZoomOut(elem) {
+    elem.addEventListener("click", (event) => {
+      const img = event.currentTarget.parentElement?.parentElement?.querySelector(
+        ".PageImg"
+      );
+      const ratio = img.width / img.naturalWidth * (100 - getUserSettings().zoomStep);
+      applyZoom(ratio, `#${img.getAttribute("id")}`);
+    });
+  }
+  function buttonRestoreZoom(elem) {
+    elem.addEventListener("click", () => {
+      document.querySelector(".PageContent .PageImg")?.removeAttribute("width");
+    });
+  }
+  function buttonZoomWidth(elem) {
+    elem.addEventListener("click", (event) => {
+      const page = event.currentTarget.parentElement?.parentElement;
+      const img = page?.querySelector(".PageImg");
+      applyZoom("width", `#${img.getAttribute("id")}`);
+      page?.classList.toggle("DoublePage");
+    });
+  }
+  function buttonZoomHeight(elem) {
+    elem.addEventListener("click", (event) => {
+      const img = event.currentTarget.parentElement?.parentElement?.querySelector(
+        ".PageImg"
+      );
+      applyZoom("height", `#${img.getAttribute("id")}`);
+    });
+  }
   function size() {
-    function buttonZoomIn(elem) {
-      elem.addEventListener("click", (event) => {
-        const img = event.currentTarget.parentElement?.parentElement?.querySelector(
-          ".PageImg"
-        );
-        const ratio = img.width / img.naturalWidth * (100 + getUserSettings().zoomStep);
-        applyZoom(ratio, `#${img.getAttribute("id")}`);
-      });
-    }
     document.querySelectorAll(".ZoomIn")?.forEach(buttonZoomIn);
-    function buttonZoomOut(elem) {
-      elem.addEventListener("click", (event) => {
-        const img = event.currentTarget.parentElement?.parentElement?.querySelector(
-          ".PageImg"
-        );
-        const ratio = img.width / img.naturalWidth * (100 - getUserSettings().zoomStep);
-        applyZoom(ratio, `#${img.getAttribute("id")}`);
-      });
-    }
     document.querySelectorAll(".ZoomOut")?.forEach(buttonZoomOut);
-    function buttonRestoreZoom(elem) {
-      elem.addEventListener("click", () => {
-        document.querySelector(".PageContent .PageImg")?.removeAttribute("width");
-      });
-    }
     document.querySelectorAll(".ZoomRestore")?.forEach(buttonRestoreZoom);
-    function buttonZoomWidth(elem) {
-      elem.addEventListener("click", (event) => {
-        const page = event.currentTarget.parentElement?.parentElement;
-        const img = page?.querySelector(".PageImg");
-        applyZoom("width", `#${img.getAttribute("id")}`);
-        page?.classList.toggle("DoublePage");
-      });
-    }
     document.querySelectorAll(".ZoomWidth")?.forEach(buttonZoomWidth);
-    function buttonZoomHeight(elem) {
-      elem.addEventListener("click", (event) => {
-        const img = event.currentTarget.parentElement?.parentElement?.querySelector(
-          ".PageImg"
-        );
-        applyZoom("height", `#${img.getAttribute("id")}`);
-      });
-    }
     document.querySelectorAll(".ZoomHeight")?.forEach(buttonZoomHeight);
   }
 
-  function theming() {
-    function changeColorScheme() {
-      const isDark = getUserSettings().colorScheme === "dark";
-      updateSettings({ colorScheme: isDark ? "light" : "dark" });
-      const elem = document.getElementById("MangaOnlineViewer");
-      elem?.classList.remove(isDark ? "dark" : "light");
-      elem?.classList.add(getUserSettings().colorScheme);
-    }
-    document.querySelector("#ColorScheme")?.addEventListener("click", changeColorScheme);
-    function changeTheme(event) {
+  function changeColorScheme() {
+    const isDark = getUserSettings().colorScheme === "dark";
+    updateSettings({ colorScheme: isDark ? "light" : "dark" });
+    const elem = document.getElementById("MangaOnlineViewer");
+    elem?.classList.remove(isDark ? "dark" : "light");
+    elem?.classList.add(getUserSettings().colorScheme);
+  }
+  function buttonSelectTheme(elem) {
+    elem.addEventListener("click", (event) => {
       const target = event.currentTarget;
-      [...document.querySelectorAll(".ThemeRadio")].forEach((elem) => {
-        elem.classList.remove("selected");
+      [...document.querySelectorAll(".ThemeRadio")].forEach((theme) => {
+        theme.classList.remove("selected");
       });
       target.classList.add("selected");
       document.getElementById("MangaOnlineViewer")?.setAttribute("data-theme", target.title);
@@ -3720,21 +3700,22 @@ ${wrapStyle(
         hue?.classList.remove("show");
         shade?.classList.add("show");
       }
-    }
-    [...document.querySelectorAll(".ThemeRadio")].forEach((elem) => {
-      elem.addEventListener("click", changeTheme);
     });
-    function changeCustomTheme(event) {
-      const target = event.currentTarget.value;
-      updateSettings({ customTheme: target });
-      addCustomTheme(target);
-    }
+  }
+  function changeCustomTheme(event) {
+    const target = event.currentTarget.value;
+    updateSettings({ customTheme: target });
+    addCustomTheme(target);
+  }
+  function changeThemeShade(event) {
+    const target = parseInt(event.currentTarget.value, 10);
+    updateSettings({ themeShade: target });
+    refreshThemes();
+  }
+  function theming() {
+    document.querySelector("#ColorScheme")?.addEventListener("click", changeColorScheme);
+    document.querySelectorAll(".ThemeRadio").forEach(buttonSelectTheme);
     document.querySelector("#CustomThemeHue")?.addEventListener("change", changeCustomTheme);
-    function changeThemeShade(event) {
-      const target = parseInt(event.currentTarget.value, 10);
-      updateSettings({ themeShade: target });
-      refreshThemes();
-    }
     document.querySelector("#ThemeShade")?.addEventListener("input", changeThemeShade);
   }
 
@@ -3786,30 +3767,30 @@ ${wrapStyle(
       globalZoom?.dispatchEvent(new Event("input", { bubbles: true }));
     };
   }
+  function changeDefaultZoomMode(event) {
+    const target = event.currentTarget.value;
+    updateSettings({ zoomMode: target });
+    changeGlobalZoom(target)();
+    const percent = document.querySelector(".DefaultZoom");
+    if (getUserSettings().zoomMode === "percent") {
+      percent?.classList.add("show");
+    } else {
+      percent?.classList.remove("show");
+    }
+  }
+  function changeDefaultZoom(event) {
+    const target = parseInt(event.currentTarget.value, 10);
+    updateSettings({ defaultZoom: target });
+    changeGlobalZoom(target)();
+  }
+  function changeZoom(event) {
+    const target = parseInt(event.currentTarget.value, 10);
+    changeGlobalZoom(target)();
+    document.querySelector("#ZoomVal").textContent = `${target}%`;
+  }
   function zoom() {
-    function changeDefaultZoomMode(event) {
-      const target = event.currentTarget.value;
-      updateSettings({ zoomMode: target });
-      changeGlobalZoom(target)();
-      const percent = document.querySelector(".DefaultZoom");
-      if (getUserSettings().zoomMode === "percent") {
-        percent?.classList.add("show");
-      } else {
-        percent?.classList.remove("show");
-      }
-    }
     document.querySelector("#DefaultZoomMode")?.addEventListener("change", changeDefaultZoomMode);
-    function changeDefaultZoom(event) {
-      const target = parseInt(event.currentTarget.value, 10);
-      updateSettings({ defaultZoom: target });
-      changeGlobalZoom(target)();
-    }
     document.querySelector("#DefaultZoom")?.addEventListener("input", changeDefaultZoom);
-    function changeZoom(event) {
-      const target = parseInt(event.currentTarget.value, 10);
-      changeGlobalZoom(target)();
-      document.querySelector("#ZoomVal").textContent = `${target}%`;
-    }
     document.querySelector("#Zoom")?.addEventListener("input", changeZoom);
     document.querySelector("#enlarge")?.addEventListener("click", changeZoomByStep());
     document.querySelector("#reduce")?.addEventListener("click", changeZoomByStep(-1));
@@ -3818,26 +3799,69 @@ ${wrapStyle(
     document.querySelector("#fitHeight")?.addEventListener("click", changeGlobalZoom("height"));
   }
 
+  let setupEvents = false;
   function events() {
+    if (!setupEvents) {
+      headroom(100);
+      keybindings();
+      individual();
+      size();
+      setupEvents = true;
+    }
     bookmarks();
     globals();
-    headroom(100);
-    keybindings();
-    individual();
     navigation();
     options();
     panels();
-    size();
     theming();
     viewMode();
     zoom();
   }
+
+  let loadedManga;
+  function hydrateApp() {
+    const elements = {
+      "#Header": Header(loadedManga),
+      "#CommentsPanel": commentsPanel(loadedManga),
+      "#SettingsPanel": SettingsPanel(),
+      "#KeybindingsPanel": KeybindingsPanel(),
+      "#Bookmarks": BookmarkPanel()
+    };
+    Object.entries(elements).forEach(([id, html]) => {
+      const tag = document.querySelector(id);
+      if (tag) {
+        tag.outerHTML = html;
+      }
+    });
+    events();
+    document.querySelector("#Overlay")?.classList.remove("visible");
+  }
+  const app = (manga) => {
+    loadedManga = manga;
+    return `
+<div id='MangaOnlineViewer' 
+    class='${getUserSettings().colorScheme} 
+      ${getUserSettings().hidePageControls ? "hideControls" : ""}
+      ${isBookmarked() ? "bookmarked" : ""}'
+    locale='${getUserSettings().locale}'  
+    data-theme='${getUserSettings().theme}'>
+  ${Header(manga)}
+  ${Reader(manga)}
+  ${commentsPanel(manga)}  
+  ${ThumbnailsPanel(manga)}
+  <div id='Overlay' class='overlay'></div>
+  ${SettingsPanel()}
+  ${KeybindingsPanel()}
+  ${BookmarkPanel()}
+</div>`;
+  };
 
   function display(manga) {
     document.head.innerHTML = head(manga);
     document.body.innerHTML = app(manga);
     events();
     loadManga(manga);
+    document.querySelector("#MangaOnlineViewer")?.addEventListener("locale", hydrateApp);
   }
 
   const cleanUpElement = (...ele) => ele.forEach((element) => {
