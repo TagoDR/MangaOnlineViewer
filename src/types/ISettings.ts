@@ -13,7 +13,7 @@ export type Shade = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 export type ViewMode = 'WebComic' | 'FluidLTR' | 'FluidRTL' | 'Vertical';
 export type LoadMode = 'wait' | 'always' | 'never';
 export type ColorScheme = 'dark' | 'light';
-export type Header = 'hover' | 'scroll' | 'click' | 'fixed';
+export type HeaderMode = 'hover' | 'scroll' | 'click' | 'fixed';
 export type ZoomMode = 'percent' | 'height' | 'width';
 
 export type ISettings = {
@@ -36,7 +36,7 @@ export type ISettings = {
   lazyLoadImages: boolean;
   lazyStart: number;
   hidePageControls: boolean;
-  header: Header;
+  header: HeaderMode;
   maxReload: number;
   keybinds: Record<string, string[] | undefined>;
 };

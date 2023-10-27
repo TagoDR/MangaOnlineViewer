@@ -1,5 +1,5 @@
 import type { IManga } from '../../types';
-import { getAllLocaleStrings, getLocaleString } from '../../core/settings';
+import { getLocaleString } from '../../core/settings';
 import { IconMessage } from './icons';
 import { isBackgroundColorDark } from '../../utils/colors';
 
@@ -8,7 +8,7 @@ const commentsPanel = (manga: IManga) => `
   <div id='CommentsButton' class='ControlButton'
     title='${getLocaleString('DISPLAY_COMMENTS')}'>
     ${IconMessage}
-    ${getAllLocaleStrings('DISPLAY_COMMENTS')}
+    ${getLocaleString('DISPLAY_COMMENTS')}
   </div>
   <div id='CommentsArea' class='hide 
       ${isBackgroundColorDark(manga.comments ?? document.body) ? 'dark' : 'light'}'>

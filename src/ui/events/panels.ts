@@ -19,27 +19,34 @@ function panels() {
     document.querySelector('#SettingsPanel')?.classList.add('visible');
     document.querySelector('#Navigation')?.classList.add('visible');
     document.querySelector('#Header')?.classList.add('visible');
-    document.querySelector('#SettingsOverlay')?.classList.add('visible');
+    document.querySelector('#Overlay')?.classList.add('visible');
   }
 
   function buttonSettingsClose() {
     document.querySelector('#SettingsPanel')?.classList.remove('visible');
     document.querySelector('#Navigation')?.classList.remove('visible');
     document.querySelector('#Header')?.classList.remove('visible');
-    document.querySelector('#SettingsOverlay')?.classList.remove('visible');
+    document.querySelector('#Overlay')?.classList.remove('visible');
   }
 
   document.querySelector('#settings')?.addEventListener('click', buttonSettingsOpen);
   document.querySelector('#CloseSettings')?.addEventListener('click', buttonSettingsClose);
-  document.querySelector('#SettingsOverlay')?.addEventListener('click', buttonSettingsClose);
+  document.querySelector('#Overlay')?.addEventListener('click', buttonSettingsClose);
 
   // Keybindings list
-  function buttonKeybindings() {
+  function buttonKeybindingsOpen() {
     document.querySelector('#KeybindingsList')!.innerHTML = keybindList().join('\n');
     document.querySelector('#SaveKeybindings')?.classList.add('hidden');
     document.querySelector('#EditKeybindings')?.classList.remove('hidden');
-    document.querySelector('#KeybindingsPanel')?.classList.toggle('visible');
-    document.querySelector('#KeybindingsOverlay')?.classList.toggle('visible');
+    document.querySelector('#KeybindingsPanel')?.classList.add('visible');
+    document.querySelector('#Overlay')?.classList.add('visible');
+  }
+
+  function buttonKeybindingsClose() {
+    document.querySelector('#SaveKeybindings')?.classList.add('hidden');
+    document.querySelector('#EditKeybindings')?.classList.remove('hidden');
+    document.querySelector('#KeybindingsPanel')?.classList.remove('visible');
+    document.querySelector('#Overlay')?.classList.remove('visible');
   }
 
   function saveKeybindings() {
@@ -64,9 +71,9 @@ function panels() {
     document.querySelector('#EditKeybindings')?.classList.add('hidden');
   }
 
-  document.querySelector('#keybindings')?.addEventListener('click', buttonKeybindings);
-  document.querySelector('#CloseKeybindings')?.addEventListener('click', buttonKeybindings);
-  document.querySelector('#KeybindingsOverlay')?.addEventListener('click', buttonKeybindings);
+  document.querySelector('#keybindings')?.addEventListener('click', buttonKeybindingsOpen);
+  document.querySelector('#CloseKeybindings')?.addEventListener('click', buttonKeybindingsClose);
+  document.querySelector('#Overlay')?.addEventListener('click', buttonKeybindingsClose);
   document.querySelector('#EditKeybindings')?.addEventListener('click', editKeybindings);
   document.querySelector('#SaveKeybindings')?.addEventListener('click', saveKeybindings);
 }

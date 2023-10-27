@@ -1,14 +1,14 @@
 import sequence from '../../utils/sequence';
 import { IManga } from '../../types';
 import { IconCategory } from './icons';
-import { getAllLocaleStrings, getUserSettings } from '../../core/settings';
+import { getLocaleString, getUserSettings } from '../../core/settings';
 
 const ThumbnailsPanel = (manga: IManga) => `
 <nav id='Navigation' class='panel ${getUserSettings().showThumbnails ? '' : 'disabled'}'>
       <div id='NavigationCounters' class='ControlLabel'>
         ${IconCategory}
         <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
-        ${getAllLocaleStrings('PAGES_LOADED')}
+        ${getLocaleString('PAGES_LOADED')}
       </div>
       <div id='Thumbnails'>
         ${sequence(manga.pages, manga.begin).map(

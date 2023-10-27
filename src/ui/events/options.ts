@@ -5,7 +5,7 @@ import {
   resetSettings,
   updateSettings,
 } from '../../core/settings';
-import type { Header, LoadMode } from '../../types';
+import type { HeaderMode, LoadMode } from '../../types';
 import { applyZoom } from '../page';
 import { replaceStyleSheet } from '../../utils/css';
 
@@ -155,7 +155,7 @@ function options() {
     document.querySelector('#Header')!.className = '';
     const headerType = (event.currentTarget as HTMLInputElement).value;
     document.querySelector('#Header')?.classList.add(headerType);
-    updateSettings({ header: headerType as Header });
+    updateSettings({ header: headerType as HeaderMode });
   }
 
   document.querySelector('#headerType')?.addEventListener('change', changeHeaderType);

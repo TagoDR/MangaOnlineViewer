@@ -1,10 +1,10 @@
 import { IconExternalLink, IconTrash, IconX } from './icons';
-import { getAllLocaleStrings, getLocaleString, getUserSettings } from '../../core/settings';
+import { getLocaleString, getUserSettings } from '../../core/settings';
 import { isEmpty } from '../../utils/checks';
 
 const listBookmarks = () => {
   if (isEmpty(getUserSettings().bookmarks)) {
-    return [getAllLocaleStrings('LIST_EMPTY')];
+    return [getLocaleString('LIST_EMPTY')];
   }
 
   return getUserSettings().bookmarks.map(
@@ -32,13 +32,13 @@ const listBookmarks = () => {
   );
 };
 
-const BookmarkPanel = `
-<div id='BookmarksOverlay' class='overlay'></div>
+const BookmarkPanel = () => `
+
 <div id='BookmarksPanel' class='panel'>
   <button id='CloseBookmarks' class='closeButton' title='${getLocaleString('CLOSE')}'>
     ${IconX}
   </button>
-  <h2>${getAllLocaleStrings('BOOKMARKS')}</h2>
+  <h2>${getLocaleString('BOOKMARKS')}</h2>
   <div id='BookmarksList'>
     ${listBookmarks().join('')}
   </div>

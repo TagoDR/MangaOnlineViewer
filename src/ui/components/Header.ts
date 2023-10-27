@@ -1,4 +1,4 @@
-import { getAllLocaleStrings, getLocaleString, getUserSettings } from '../../core/settings';
+import { getLocaleString, getUserSettings } from '../../core/settings';
 import {
   IconArrowAutofitDown,
   IconArrowAutofitHeight,
@@ -97,15 +97,15 @@ const Header = (manga: IManga) => `<header id='Header' class='${getUserSettings(
       <div class='ViewerTitle'>
         <h1 id='MangaTitle'>${manga.title}</h1>
         <a id='series' href='${manga.series}'>
-            (${getAllLocaleStrings('RETURN_CHAPTER_LIST')})
+            (${getLocaleString('RETURN_CHAPTER_LIST')})
         </a>
       </div>
       <nav id='ChapterNavigation'>
         <div id='Counters' class='ControlLabel'>
-          ${getAllLocaleStrings('PAGES_LOADED')}:
+          ${getLocaleString('PAGES_LOADED')}:
           <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
           <span class='ControlLabel'>
-          ${getAllLocaleStrings('GO_TO_PAGE')}:
+          ${getLocaleString('GO_TO_PAGE')}:
         </span>
           <select id='gotoPage'>
             <option selected>#</option>
@@ -117,16 +117,16 @@ const Header = (manga: IManga) => `<header id='Header' class='${getUserSettings(
                   title='${getLocaleString('DOWNLOAD_ZIP')}'>
             ${IconFileDownload}
             ${IconLoader2}
-            ${getAllLocaleStrings('BUTTON_DOWNLOAD')}
+            ${getLocaleString('BUTTON_DOWNLOAD')}
           </button>
           <a id='prev' class='NavigationControlButton ControlButton' type='button'
              href='${manga.prev ?? ''}' title='${getLocaleString('PREVIOUS_CHAPTER')}'>
             ${IconArrowBigLeft}
-            ${getAllLocaleStrings('BUTTON_PREVIOUS')}
+            ${getLocaleString('BUTTON_PREVIOUS')}
           </a>
           <a id='next' class='NavigationControlButton ControlButton' type='button'
              href='${manga.next ?? ''}' title='${getLocaleString('NEXT_CHAPTER')}'>
-            ${getAllLocaleStrings('BUTTON_NEXT')}
+            ${getLocaleString('BUTTON_NEXT')}
             ${IconArrowBigRight}
           </a>
         </div>

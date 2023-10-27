@@ -19,8 +19,9 @@ const app = (manga: IManga) => `
   ${Reader(manga)}
   ${CommentsPanel(manga)}  
   ${ThumbnailsPanel(manga)}
-  ${SettingsPanel}
-  ${KeybindingsPanel}
-  ${BookmarksPanel}
+  <div id='Overlay' class='overlay'></div>
+  ${SettingsPanel()}
+  ${KeybindingsPanel()}
+  ${BookmarksPanel()}
 </div>`;
 export default app;

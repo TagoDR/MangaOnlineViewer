@@ -9,9 +9,14 @@ import {
 import { reloadBookmarks } from '../components/BookmarksPanel';
 import { logScript } from '../../utils/tampermonkey';
 
-function buttonBookmarks() {
-  document.querySelector('#BookmarksPanel')?.classList.toggle('visible');
-  document.querySelector('#BookmarksOverlay')?.classList.toggle('visible');
+function buttonBookmarksOpen() {
+  document.querySelector('#BookmarksPanel')?.classList.add('visible');
+  document.querySelector('#Overlay')?.classList.add('visible');
+}
+
+function buttonBookmarksClose() {
+  document.querySelector('#BookmarksPanel')?.classList.remove('visible');
+  document.querySelector('#Overlay')?.classList.remove('visible');
 }
 
 function eraseBookmarks(elem: Element) {
@@ -72,9 +77,9 @@ function buttonBookmark(elem: Element) {
 
 function bookmarks() {
   // List of Bookmarks
-  document.querySelector('#bookmarks')?.addEventListener('click', buttonBookmarks);
-  document.querySelector('#CloseBookmarks')?.addEventListener('click', buttonBookmarks);
-  document.querySelector('#BookmarksOverlay')?.addEventListener('click', buttonBookmarks);
+  document.querySelector('#bookmarks')?.addEventListener('click', buttonBookmarksOpen);
+  document.querySelector('#CloseBookmarks')?.addEventListener('click', buttonBookmarksClose);
+  document.querySelector('#Overlay')?.addEventListener('click', buttonBookmarksClose);
   // Erase Bookmark
   document.querySelectorAll('.BookmarkItem .erase')?.forEach(eraseBookmarks);
   // Bookmark Page to resume reading

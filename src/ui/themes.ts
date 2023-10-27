@@ -1,7 +1,6 @@
 import { getUserSettings } from '../core/settings';
 import { replaceStyleSheet, wrapStyle } from '../utils/css';
 import colors, { getTextColor, type IColor } from '../utils/colors';
-import { IconCheck } from './components/icons';
 
 function generateThemeCSS(name: string, primary: string, text: string) {
   // Language=CSS
@@ -37,16 +36,6 @@ function addCustomTheme(hex: string) {
 
 const themes = (): IColor[] => Object.values(colors);
 
-const themesSelector = [...Object.keys(colors).map((color) => colors[color].name)].map(
-  (theme) => `
-<span class='${theme} ThemeRadio ${getUserSettings().theme === theme ? 'selected' : ''}'
-      title='${theme}'      
->
-${IconCheck}
-</span>
-`,
-);
-
 function refreshThemes() {
   themes().forEach((theme: IColor) => {
     replaceStyleSheet(theme.name, getNormalThemeCSS(theme));
@@ -58,4 +47,4 @@ const themesCSS =
   themes().map(addTheme).join('') +
   wrapStyle('custom', getCustomThemeCSS(getUserSettings().customTheme));
 
-export { themesCSS, themesSelector, addCustomTheme, refreshThemes };
+export { themesCSS, addCustomTheme, refreshThemes };
