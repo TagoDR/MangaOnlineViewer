@@ -11,17 +11,21 @@ import theming from './events/theming';
 import viewMode from './events/viewmode';
 import zoom from './events/zoom';
 
+let setupEvents = false;
 // Controls for the extra features added to the sites
 function events() {
+  if (!setupEvents) {
+    headroom(100);
+    keybindings();
+    individual();
+    size();
+    setupEvents = true;
+  }
   bookmarks();
   globals();
-  headroom(100);
-  keybindings();
-  individual();
   navigation();
   options();
   panels();
-  size();
   theming();
   viewMode();
   zoom();

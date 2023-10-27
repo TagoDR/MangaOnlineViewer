@@ -7,8 +7,31 @@ import BookmarksPanel from './BookmarksPanel';
 import Header from './Header';
 import Reader from './Reader';
 import CommentsPanel from './CommentsPanel';
+import events from '../events';
 
-const app = (manga: IManga) => `
+let loadedManga: IManga;
+
+export function hydrateApp() {
+  const elements = {
+    '#Header': Header(loadedManga),
+    '#CommentsPanel': CommentsPanel(loadedManga),
+    '#SettingsPanel': SettingsPanel(),
+    '#KeybindingsPanel': KeybindingsPanel(),
+    '#Bookmarks': BookmarksPanel(),
+  };
+  Object.entries(elements).forEach(([id, html]) => {
+    const tag = document.querySelector(id);
+    if (tag) {
+      tag.outerHTML = html;
+    }
+  });
+  events();
+  document.querySelector('#Overlay')?.classList.remove('visible');
+}
+
+const app = (manga: IManga) => {
+  loadedManga = manga;
+  return `
 <div id='MangaOnlineViewer' 
     class='${getUserSettings().colorScheme} 
       ${getUserSettings().hidePageControls ? 'hideControls' : ''}
@@ -24,4 +47,5 @@ const app = (manga: IManga) => `
   ${KeybindingsPanel()}
   ${BookmarksPanel()}
 </div>`;
+};
 export default app;

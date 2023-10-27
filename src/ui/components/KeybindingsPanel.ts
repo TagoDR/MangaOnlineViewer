@@ -23,28 +23,27 @@ export const keybindEditor = () =>
 
 // Language=html
 const KeybindingsPanel = () => `
-  
-  <div id='KeybindingsPanel' class='panel'>
-    <h2>${getLocaleString('KEYBINDINGS')}</h2>
-    <button id='CloseKeybindings' class='closeButton' title='${getLocaleString('CLOSE')}'>
-      ${IconX}
+<div id='KeybindingsPanel' class='panel'>
+  <h2>${getLocaleString('KEYBINDINGS')}</h2>
+  <button id='CloseKeybindings' class='closeButton' title='${getLocaleString('CLOSE')}'>
+    ${IconX}
+  </button>
+  <div class='controls'>
+    <button id='EditKeybindings' class='ControlButton' type='button'
+            title='${getLocaleString('EDIT_KEYBINDS')}'>
+      ${IconPencil}
+      ${getLocaleString('BUTTON_EDIT')}
     </button>
-    <div class='controls'>
-      <button id='EditKeybindings' class='ControlButton' type='button'
-              title='${getLocaleString('EDIT_KEYBINDS')}'>
-        ${IconPencil}
-        ${getLocaleString('BUTTON_EDIT')}
-      </button>
-      <button id='SaveKeybindings' class='ControlButton hidden' type='button'
-              title='${getLocaleString('SAVE_KEYBINDS')}'>
-        ${IconDeviceFloppy}
-        ${getLocaleString('BUTTON_SAVE')}
-      </button>
-    </div>
-    <div id='KeybindingsList'>
-      ${keybindList().join('\n')}
-    </div>
+    <button id='SaveKeybindings' class='ControlButton hidden' type='button'
+            title='${getLocaleString('SAVE_KEYBINDS')}'>
+      ${IconDeviceFloppy}
+      ${getLocaleString('BUTTON_SAVE')}
+    </button>
   </div>
+  <div id='KeybindingsList'>
+    ${keybindList().join('\n')}
+  </div>
+</div>
 `;
 
 export default KeybindingsPanel;
