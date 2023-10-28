@@ -3,7 +3,7 @@ export default {
   name: [
     'MangaStream WordPress Plugin',
     'Asura Scans',
-    'Flame Scans',
+    'Flame Comics',
     'Rizzcomic',
     'Voids-Scans',
     'Luminous Scans',
@@ -13,11 +13,11 @@ export default {
     'OzulScansEn',
     'AzureManga',
   ],
-  url: /https?:\/\/(www.)?(asura.*|flamescans|rizzcomic|void-scans|luminousscans|shimascans|nightscans|manhwafreak|manhwa-freak|ozulscansen|azuremanga).(com|org|gg|xyz|to|net)\/.+/,
+  url: /https?:\/\/(www.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|nightscans|manhwafreak|manhwa-freak|ozulscansen|azuremanga).(com|org|gg|xyz|to|net)\/.+/,
   homepage: [
     'https://themesia.com/mangastream-wordpress-theme/',
     'https://asura.nacm.xyz/',
-    'https://flamescans.org/',
+    'https://flamecomics.com/',
     'https://rizzcomic.com/',
     'https://void-scans.com/',
     'https://luminousscans.com/',
