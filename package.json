@@ -45,6 +45,7 @@
         "eslint-plugin-prettier": "^5.0.1",
         "prettier": "^3.0.3",
         "rollup-plugin-external-globals": "^0.9.0",
+        "rollup-plugin-prettier": "^4.1.1",
         "typescript": "^5.2.2",
         "userscript-metadata-generator": "^0.2.4",
         "vite": "^4.5.0"
@@ -78,6 +79,7 @@
         "semi": true,
         "singleQuote": true,
         "trailingComma": "all",
-        "printWidth": 100
+        "printWidth": 100,
+        "parser": "typescript"
     }
 }

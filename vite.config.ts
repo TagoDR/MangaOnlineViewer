@@ -2,6 +2,7 @@
 import { defineConfig } from 'vite';
 import userscript, { type Metadata } from 'userscript-metadata-generator';
 import externalGlobals from 'rollup-plugin-external-globals';
+import prettier from 'rollup-plugin-prettier';
 import fs from 'fs';
 import metaMain from './src/meta/meta-main';
 import metaAdult from './src/meta/meta-adult';
@@ -79,7 +80,10 @@ export default defineConfig(({ mode }) => {
       outDir: 'dist',
       rollupOptions: {
         input: `src/${scripts[target].entry}`,
-        plugins: [externalGlobals(globals)],
+        plugins: [
+          externalGlobals(globals),
+          prettier(),
+        ],
         output: {
           banner: metadata,
           format: 'iife',
