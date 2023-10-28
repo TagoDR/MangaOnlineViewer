@@ -163,18 +163,3 @@
     justify-content: center;
     align-items: center;
 }
-
-#MangaOnlineViewer .es_ES,
-#MangaOnlineViewer .pt_BR,
-#MangaOnlineViewer .zh_CN,
-#MangaOnlineViewer:not([locale='en_US']) .en_US {
-    display: none;
-}
-
-#MangaOnlineViewer:not([locale]) .en_US,
-#MangaOnlineViewer[locale='en_US'] .en_US,
-#MangaOnlineViewer[locale='es_ES'] .es_ES,
-#MangaOnlineViewer[locale='pt_BR'] .pt_BR,
-#MangaOnlineViewer[locale='zh_CN'] .zh_CN {
-    display: initial;
-}

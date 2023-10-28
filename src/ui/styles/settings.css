@@ -7,8 +7,8 @@
     bottom: 0;
     z-index: 1000;
     transition:
-            transform 0.3s ease-in,
-            background-color 0.3s linear;
+        transform 0.3s ease-in,
+        background-color 0.3s linear;
     transform: translateX(-100%);
     display: flex;
     flex-flow: column;

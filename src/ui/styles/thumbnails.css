@@ -27,8 +27,8 @@
     width: 100%;
     text-align: center;
     transition:
-            transform 0.3s ease-in,
-            background-color 0.3s linear;
+        transform 0.3s ease-in,
+        background-color 0.3s linear;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     line-height: 0;

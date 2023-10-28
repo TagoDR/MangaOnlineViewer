@@ -66,8 +66,9 @@
 #MangaOnlineViewer #Header.click.headroom-end #menu,
 #MangaOnlineViewer #Header.click.visible #menu {
     position: static;
-    width: 50px;
+    min-width: 50px;
     min-height: unset;
+    width: auto;
 }
 
 #MangaOnlineViewer #MangaTitle {
@@ -174,7 +175,7 @@
     visibility: hidden;
 }
 
-#MangaOnlineViewer #Header  #menu .icon-tabler {
+#MangaOnlineViewer #Header #menu .icon-tabler {
     position: absolute;
     top: 5px;
     left: 10px;
