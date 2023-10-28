@@ -31,7 +31,7 @@ First install then reload page, there will be an option in this section to selec
 - [Batoto](https://bato.to/) _[English]_
 - [BilibiliComics](https://www.bilibilicomics.com/) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
-- [MangaStream WordPress Plugin](https://themesia.com/mangastream-wordpress-theme/) / [Asura Scans](https://asura.nacm.xyz/) / [Flame Scans](https://flamescans.org/) / [Rizzcomic](https://rizzcomic.com/) / [Voids-Scans](https://void-scans.com/) / [Luminous Scans](https://luminousscans.com/) / [Shimada Scans](https://shimadascans.com/) / [Night Scans](https://nightscans.net/) / [Manhwa-Freak](https://manhwa-freak.com/) / [OzulScansEn](https://ozulscansen.com/) / [AzureManga](https://azuremanga.com/) _[English]_
+- [MangaStream WordPress Plugin](https://themesia.com/mangastream-wordpress-theme/) / [Asura Scans](https://asura.nacm.xyz/) / [Flame Comics](https://flamecomics.com/) / [Rizzcomic](https://rizzcomic.com/) / [Voids-Scans](https://void-scans.com/) / [Luminous Scans](https://luminousscans.com/) / [Shimada Scans](https://shimadascans.com/) / [Night Scans](https://nightscans.net/) / [Manhwa-Freak](https://manhwa-freak.com/) / [OzulScansEn](https://ozulscansen.com/) / [AzureManga](https://azuremanga.com/) _[English]_
 - [INKR](https://inkr.com/) _[English]_
 - [LHTranslation](https://lhtranslation.net/) _[English]_
 - [LynxScans](https://lynxscans.com/) _[English]_

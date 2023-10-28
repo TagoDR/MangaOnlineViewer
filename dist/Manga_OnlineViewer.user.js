@@ -5,7 +5,7 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Scans, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans
+// @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans
 // @version       2023.10.28
 // @license       MIT
 // @grant         unsafeWindow
@@ -31,7 +31,7 @@
 // @include       /https?:\/\/(www.)?(bilibilicomics).com\/.+\/.+/
 // @include       /https?:\/\/comic.nizamkomputer.com\/read\/.+\/\d+.*/
 // @include       /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/
-// @include       /https?:\/\/(www.)?(asura.*|flamescans|rizzcomic|void-scans|luminousscans|shimascans|nightscans|manhwafreak|manhwa-freak|ozulscansen|azuremanga).(com|org|gg|xyz|to|net)\/.+/
+// @include       /https?:\/\/(www.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|nightscans|manhwafreak|manhwa-freak|ozulscansen|azuremanga).(com|org|gg|xyz|to|net)\/.+/
 // @include       /https?:\/\/(comics.)?inkr.com\/title\/.+\/chapter\/.+/
 // @include       /https?:\/\/(www.)?inmanga.com\/ver\/manga\/.+\/.+/
 // @include       /https?:\/\/(www.)?klmanga.com\/.+chapter.+/
@@ -792,7 +792,7 @@
     name: [
       "MangaStream WordPress Plugin",
       "Asura Scans",
-      "Flame Scans",
+      "Flame Comics",
       "Rizzcomic",
       "Voids-Scans",
       "Luminous Scans",
@@ -802,11 +802,11 @@
       "OzulScansEn",
       "AzureManga"
     ],
-    url: /https?:\/\/(www.)?(asura.*|flamescans|rizzcomic|void-scans|luminousscans|shimascans|nightscans|manhwafreak|manhwa-freak|ozulscansen|azuremanga).(com|org|gg|xyz|to|net)\/.+/,
+    url: /https?:\/\/(www.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|nightscans|manhwafreak|manhwa-freak|ozulscansen|azuremanga).(com|org|gg|xyz|to|net)\/.+/,
     homepage: [
       "https://themesia.com/mangastream-wordpress-theme/",
       "https://asura.nacm.xyz/",
-      "https://flamescans.org/",
+      "https://flamecomics.com/",
       "https://rizzcomic.com/",
       "https://void-scans.com/",
       "https://luminousscans.com/",
