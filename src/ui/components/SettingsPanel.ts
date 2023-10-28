@@ -70,7 +70,7 @@ const SettingsPanel = () => `
         ${getUserSettings().theme.startsWith('custom') ? '' : 'show'}'>
     <span>
       ${getLocaleString('THEME_SHADE')}
-      <output id='themeShadeVal' class='RangeValue' for='themeShade'>${
+      <output id='themeShadeVal' class='RangeValue' for='ThemeShade'>${
         getUserSettings().themeShade
       }</output>
     </span>
