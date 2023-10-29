@@ -3,6 +3,7 @@ import { defineConfig } from 'vite';
 import userscript, { type Metadata } from 'userscript-metadata-generator';
 import externalGlobals from 'rollup-plugin-external-globals';
 import prettier from 'rollup-plugin-prettier';
+import svgLoader from 'vite-svg-loader';
 import fs from 'fs';
 import metaMain from './src/meta/meta-main';
 import metaAdult from './src/meta/meta-adult';
@@ -73,6 +74,7 @@ export default defineConfig(({ mode }) => {
   const metadata = generateMetadata(scripts[target]);
   return {
     mode: target === 'dev' ? 'development' : 'production',
+    plugins: [svgLoader({ svgo: false, defaultImport: 'raw' })],
     build: {
       target: 'esnext',
       minify: false,
@@ -80,10 +82,7 @@ export default defineConfig(({ mode }) => {
       outDir: 'dist',
       rollupOptions: {
         input: `src/${scripts[target].entry}`,
-        plugins: [
-          externalGlobals(globals),
-          prettier(),
-        ],
+        plugins: [externalGlobals(globals), prettier({ parser: 'typescript' })],
         output: {
           banner: metadata,
           format: 'iife',

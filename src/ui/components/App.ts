@@ -25,8 +25,8 @@ export function hydrateApp() {
       tag.outerHTML = html;
     }
   });
+  document.querySelector('#Overlay')?.dispatchEvent(new Event('click'));
   events();
-  document.querySelector('#Overlay')?.classList.remove('visible');
 }
 
 const app = (manga: IManga) => {
@@ -36,7 +36,6 @@ const app = (manga: IManga) => {
     class='${getUserSettings().colorScheme} 
       ${getUserSettings().hidePageControls ? 'hideControls' : ''}
       ${isBookmarked() ? 'bookmarked' : ''}'
-    locale='${getUserSettings().locale}'  
     data-theme='${getUserSettings().theme}'>
   ${Header(manga)}
   ${Reader(manga)}

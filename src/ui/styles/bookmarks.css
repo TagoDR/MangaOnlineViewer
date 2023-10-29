@@ -7,12 +7,12 @@
     text-align: center;
     max-height: 70%;
     transition: transform 0.3s ease-in-out;
-    transform: scaleY(0%);
+    transform: scaleY(0);
     z-index: 1000;
 }
 
 #MangaOnlineViewer #BookmarksPanel.visible {
-    transform: scaleY(100%);
+    transform: scaleY(1);
     display: block;
 }
 

@@ -1,5 +1,5 @@
 import { getLocaleString, getUserSettings } from '../../core/settings';
-import { IconCheck, IconMoon, IconPalette, IconSun, IconX } from './icons';
+import { IconCheck, IconMoon, IconPalette, IconSun, IconX } from '../icons';
 import locales from '../../locales';
 import colors from '../../utils/colors';
 

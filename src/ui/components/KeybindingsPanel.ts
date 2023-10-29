@@ -1,4 +1,4 @@
-import { IconDeviceFloppy, IconPencil, IconX } from './icons';
+import { IconDeviceFloppy, IconPencil, IconX } from '../icons';
 import { getLocaleString, getUserSettings } from '../../core/settings';
 
 export const keybindList = () =>

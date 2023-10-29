@@ -10,7 +10,7 @@ import {
   IconZoomCancel,
   IconZoomIn,
   IconZoomOut,
-} from './icons';
+} from '../icons';
 import { getLocaleString } from '../../core/settings';
 
 const listPages = (times: number, begin: number) =>

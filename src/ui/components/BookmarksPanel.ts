@@ -1,4 +1,4 @@
-import { IconExternalLink, IconTrash, IconX } from './icons';
+import { IconExternalLink, IconTrash, IconX } from '../icons';
 import { getLocaleString, getUserSettings } from '../../core/settings';
 import { isEmpty } from '../../utils/checks';
 

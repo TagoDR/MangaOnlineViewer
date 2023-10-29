@@ -1,6 +1,6 @@
 import sequence from '../../utils/sequence';
 import { IManga } from '../../types';
-import { IconCategory } from './icons';
+import { IconCategory } from '../icons';
 import { getLocaleString, getUserSettings } from '../../core/settings';
 
 const ThumbnailsPanel = (manga: IManga) => `

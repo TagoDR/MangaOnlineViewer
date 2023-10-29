@@ -18,7 +18,7 @@ import {
   IconZoomInArea,
   IconZoomOutArea,
   IconZoomPan,
-} from './icons';
+} from '../icons';
 import sequence from '../../utils/sequence';
 import type { IManga } from '../../types';
 

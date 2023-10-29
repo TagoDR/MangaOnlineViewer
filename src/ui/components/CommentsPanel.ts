@@ -1,6 +1,6 @@
 import type { IManga } from '../../types';
 import { getLocaleString } from '../../core/settings';
-import { IconMessage } from './icons';
+import { IconMessage } from '../icons';
 import { isBackgroundColorDark } from '../../utils/colors';
 
 const commentsPanel = (manga: IManga) => `
