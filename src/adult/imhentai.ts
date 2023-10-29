@@ -1,47 +1,21 @@
 // == Imhentai =====================================================================================
 function findExt(i: number) {
   const c = unsafeWindow.g_th[i][0];
-  if (c === 'p') {
-    return '.png';
-  }
-
-  if (c === 'b') {
-    return '.bmp';
-  }
-
-  if (c === 'g') {
-    return '.gif';
-  }
-
+  if (c === 'p') return '.png';
+  if (c === 'b') return '.bmp';
+  if (c === 'g') return '.gif';
   return '.jpg';
 }
 
 function findServer(cId: number) {
-  if (cId > 0 && cId <= 274825) {
-    return 'm1.imhentai.xxx';
-  }
-
-  if (cId > 274825 && cId <= 403818) {
-    return 'm2.imhentai.xxx';
-  }
-
-  if (cId > 403818 && cId <= 527143) {
-    return 'm3.imhentai.xxx';
-  }
-
-  if (cId > 527143 && cId <= 632481) {
-    return 'm4.imhentai.xxx';
-  }
-
-  if (cId > 632481 && cId <= 816010) {
-    return 'm5.imhentai.xxx';
-  }
-
-  if (cId > 816010 && cId <= 970098) {
-    return 'm6.imhentai.xxx';
-  }
-
-  return 'm7.imhentai.xxx'; // Id > 970098
+  if (cId > 0 && cId <= 274825) return 'm1.imhentai.xxx';
+  if (cId > 274825 && cId <= 403818) return 'm2.imhentai.xxx';
+  if (cId > 403818 && cId <= 527143) return 'm3.imhentai.xxx';
+  if (cId > 527143 && cId <= 632481) return 'm4.imhentai.xxx';
+  if (cId > 632481 && cId <= 816010) return 'm5.imhentai.xxx';
+  if (cId > 816010 && cId <= 970098) return 'm6.imhentai.xxx';
+  if (cId > 970098 && cId <= 1121113) return 'm7.imhentai.xxx';
+  return 'm8.imhentai.xxx';
 }
 
 export default {
@@ -56,7 +30,7 @@ export default {
     const imageDir = document.querySelector('#image_dir')?.getAttribute('value');
     const num = parseInt(document.querySelector('#pages')?.getAttribute('value') ?? '', 10);
     const cId = parseInt(document.querySelector('#u_id')?.getAttribute('value') ?? '', 10);
-    const randomServer = findServer(cId);
+    const randomServer = unsafeWindow.random_server ?? findServer(cId);
     return {
       title: document.querySelector('title')?.textContent?.trim(),
       series: document.querySelector('.return_btn')?.getAttribute('href'),
