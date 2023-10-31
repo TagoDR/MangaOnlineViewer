@@ -1,7 +1,7 @@
 import hotkeys from 'hotkeys-js';
 import { logScript } from '../../utils/tampermonkey';
 import { getUserSettings } from '../../core/settings';
-import scrollToElement from './common';
+import { scrollToElement } from './common';
 
 const doClick = (selector: string) =>
   document.querySelector(selector)?.dispatchEvent(new Event('click'));
