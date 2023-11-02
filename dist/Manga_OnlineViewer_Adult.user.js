@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.10.29
+// @version       2023.11.02
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -2077,7 +2077,7 @@
     '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-pan" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />\n  <path d="M17 17l-2.5 -2.5" />\n  <path d="M10 5l2 -2l2 2" />\n  <path d="M19 10l2 2l-2 2" />\n  <path d="M5 10l-2 2l2 2" />\n  <path d="M10 19l2 2l2 -2" />\n</svg>\n\n\n';
 
   const styles =
-    ':root {\n    --theme-body-background: #25262b;\n    --theme-body-text-color: #c1c2c5;\n    --theme-text-color: #c1c2c5;\n    --theme-primary-color: #1a1b1e;\n    --theme-primary-text-color: #c1c2c5;\n    --theme-background-color: #25262b;\n    --theme-hightlight-color: #2c2e33;\n    --theme-border-color: #373a40;\n}\n\n#MangaOnlineViewer {\n    padding-bottom: 40px;\n    min-height: 760px;\n    min-width: 360px;\n    text-decoration: none;\n    color: var(--theme-body-text-color);\n    background-color: var(--theme-body-background);\n}\n\n#MangaOnlineViewer #Chapter {\n    display: grid;\n    grid-template-columns: repeat(1, 1fr);\n    min-width: 225px;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR {\n    direction: ltr;\n}\n\n#MangaOnlineViewer #Chapter.FluidRTL {\n    direction: rtl;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR,\n#MangaOnlineViewer #Chapter.FluidRTL {\n    display: grid;\n    grid-template-columns: repeat(2, 1fr);\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .PageImg,\n#MangaOnlineViewer #Chapter.FluidRTL .PageImg {\n    min-width: unset;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage.DoublePage,\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage.DoublePage {\n    grid-column: span 2;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n),\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n) {\n    display: flex;\n    justify-content: start;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n-1),\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n-1) {\n    display: flex;\n    justify-content: end;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .PageContent {\n    margin-bottom: 15px;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage,\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage {\n    width: auto;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .ZoomWidth .icon-tabler,\n#MangaOnlineViewer #Chapter.FluidRTL .ZoomWidth .icon-tabler {\n    color: red;\n}\n\n#MangaOnlineViewer .closeButton {\n    width: fit-content;\n    height: fit-content;\n    position: absolute;\n    right: 10px;\n    top: 10px;\n}\n\n#MangaOnlineViewer .overlay {\n    position: fixed;\n    display: none;\n    width: 100%;\n    height: 100%;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: rgba(0, 0, 0, 0.5);\n    z-index: 950;\n    cursor: pointer;\n}\n\n#MangaOnlineViewer .overlay.visible {\n    display: block;\n}\n\n#MangaOnlineViewer select {\n    height: 20px;\n    padding: 0;\n    margin-bottom: 5px;\n}\n\n#MangaOnlineViewer .ControlButton {\n    cursor: pointer;\n    border-radius: 5px;\n    border-width: 1px;\n    padding: 2px;\n    min-height: 32px;\n    color: var(--theme-primary-text-color);\n    background-color: var(--theme-primary-color);\n    border-color: var(--theme-border-color);\n}\n\n#MangaOnlineViewer .ControlButton:hover {\n    opacity: 0.8;\n}\n\n#MangaOnlineViewer .panel {\n    padding: 5px;\n    position: inherit;\n    border-radius: 5px;\n    background-color: var(--theme-background-color);\n}\n\n#MangaOnlineViewer .fitWidthIfOversize .PageContent .PageImg {\n    max-width: 100%;\n}\n\n#MangaOnlineViewer .ControlButton.hidden,\n#MangaOnlineViewer.light #ColorScheme > .icon-tabler-sun,\n#MangaOnlineViewer:not(.light) #ColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,\n#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,\n#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,\n#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,\n#MangaOnlineViewer.bookmarked .ControlButton.Bookmark > .icon-tabler-bookmark,\n#MangaOnlineViewer:not(.bookmarked) .ControlButton.Bookmark > .icon-tabler-bookmark-off,\n#MangaOnlineViewer #CommentsPanel.hide,\n#MangaOnlineViewer #CommentsArea.hide {\n    display: none;\n}\n\n#MangaOnlineViewer.hideControls .PageFunctions {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer #CommentsPanel {\n    padding: 10px;\n}\n\n#MangaOnlineViewer #CommentsArea {\n    background: var(--theme-body-background);\n}\n\n#MangaOnlineViewer #CommentsButton {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n';
+    ':root {\n    --theme-body-background: #25262b;\n    --theme-body-text-color: #c1c2c5;\n    --theme-text-color: #c1c2c5;\n    --theme-primary-color: #1a1b1e;\n    --theme-primary-text-color: #c1c2c5;\n    --theme-background-color: #25262b;\n    --theme-hightlight-color: #2c2e33;\n    --theme-border-color: #373a40;\n}\n\n#MangaOnlineViewer {\n    padding-bottom: 40px;\n    min-height: 760px;\n    min-width: 360px;\n    text-decoration: none;\n    color: var(--theme-body-text-color);\n    background-color: var(--theme-body-background);\n}\n\n#MangaOnlineViewer #Chapter {\n    display: grid;\n    grid-template-columns: repeat(1, 1fr);\n    min-width: 225px;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR {\n    direction: ltr;\n}\n\n#MangaOnlineViewer #Chapter.FluidRTL {\n    direction: rtl;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR,\n#MangaOnlineViewer #Chapter.FluidRTL {\n    display: grid;\n    grid-template-columns: repeat(2, 1fr);\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .PageImg,\n#MangaOnlineViewer #Chapter.FluidRTL .PageImg {\n    min-width: unset;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage.DoublePage,\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage.DoublePage {\n    grid-column: span 2;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n),\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n) {\n    display: flex;\n    justify-content: start;\n    position: relative;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n-1),\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n-1) {\n    display: flex;\n    justify-content: end;\n    position: relative;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .PageContent {\n    margin-bottom: 15px;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage,\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage {\n    width: auto;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .ZoomWidth .icon-tabler,\n#MangaOnlineViewer #Chapter.FluidRTL .ZoomWidth .icon-tabler {\n    color: red;\n}\n\n#MangaOnlineViewer .closeButton {\n    width: fit-content;\n    height: fit-content;\n    position: absolute;\n    right: 10px;\n    top: 10px;\n}\n\n#MangaOnlineViewer .overlay {\n    position: fixed;\n    display: none;\n    width: 100%;\n    height: 100%;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: rgba(0, 0, 0, 0.5);\n    z-index: 950;\n    cursor: pointer;\n}\n\n#MangaOnlineViewer .overlay.visible {\n    display: block;\n}\n\n#MangaOnlineViewer select {\n    height: 20px;\n    padding: 0;\n    margin-bottom: 5px;\n}\n\n#MangaOnlineViewer .ControlButton {\n    cursor: pointer;\n    border-radius: 5px;\n    border-width: 1px;\n    padding: 2px;\n    min-height: 32px;\n    color: var(--theme-primary-text-color);\n    background-color: var(--theme-primary-color);\n    border-color: var(--theme-border-color);\n}\n\n#MangaOnlineViewer .ControlButton:hover {\n    opacity: 0.8;\n}\n\n#MangaOnlineViewer .panel {\n    padding: 5px;\n    position: inherit;\n    border-radius: 5px;\n    background-color: var(--theme-background-color);\n}\n\n#MangaOnlineViewer .fitWidthIfOversize .PageContent .PageImg {\n    max-width: 100%;\n}\n\n#MangaOnlineViewer .ControlButton.hidden,\n#MangaOnlineViewer.light #ColorScheme > .icon-tabler-sun,\n#MangaOnlineViewer:not(.light) #ColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,\n#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,\n#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,\n#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,\n#MangaOnlineViewer.bookmarked .ControlButton.Bookmark > .icon-tabler-bookmark,\n#MangaOnlineViewer:not(.bookmarked) .ControlButton.Bookmark > .icon-tabler-bookmark-off,\n#MangaOnlineViewer #CommentsPanel.hide,\n#MangaOnlineViewer #CommentsArea.hide {\n    display: none;\n}\n\n#MangaOnlineViewer.hideControls .PageFunctions {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer #CommentsPanel {\n    padding: 10px;\n}\n\n#MangaOnlineViewer #CommentsArea {\n    background: var(--theme-body-background);\n}\n\n#MangaOnlineViewer #CommentsButton {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n';
 
   const icons =
     '.icon-tabler {\n    height: 1rem;\n    width: 1rem;\n    vertical-align: sub;\n}\n\n.icon-tabler-file-download > :nth-child(n + 4) {\n    /* 4, 5 */\n    color: gold;\n}\n.icon-tabler-arrow-autofit-width > :nth-child(n + 3) {\n    /* 3,4,5,6 */\n    color: yellow;\n}\n.icon-tabler-arrow-autofit-height > :nth-child(n + 3) {\n    /* 3,4,5,6 */\n    color: yellow;\n}\n.icon-tabler-zoom-in-area > :nth-child(2),\n.icon-tabler-zoom-in-area > :nth-child(3) {\n    color: lime;\n}\n.icon-tabler-zoom-out-area > :nth-child(2) {\n    color: red;\n}\n.icon-tabler-zoom-pan > :nth-child(n + 4) {\n    color: #9966ff;\n}\n.icon-tabler-arrow-autofit-down > :nth-child(n + 3) {\n    color: #28ffbf;\n}\n.icon-tabler-arrow-autofit-left > :nth-child(n + 3) {\n    color: #28ffbf;\n}\n.icon-tabler-arrow-autofit-right > :nth-child(n + 3) {\n    color: #28ffbf;\n}\n.icon-tabler-spacing-vertical > :nth-child(4) {\n    color: fuchsia;\n}\n.icon-tabler-list-numbers > :nth-child(n + 5) {\n    color: #e48900;\n}\n.icon-tabler-bookmarks > :nth-child(n + 2) {\n    color: orange;\n}\n.icon-tabler-bookmark > * {\n    color: orange;\n}\n.icon-tabler-bookmark-off > * {\n    color: orange;\n}\n.icon-tabler-bookmark-off > :nth-child(3) {\n    color: red;\n}\n.icon-tabler-eye-off > :nth-child(4) {\n    color: red;\n}\n.icon-tabler-zoom-cancel > :nth-child(3),\n.icon-tabler-zoom-cancel > :nth-child(4) {\n    color: #9966ff;\n}\n.icon-tabler-zoom-in > :nth-child(3),\n.icon-tabler-zoom-in > :nth-child(4) {\n    color: lime;\n}\n.icon-tabler-zoom-out > :nth-child(3) {\n    color: red;\n}\n.icon-tabler-refresh > :nth-child(n + 2) {\n    color: cyan;\n}\n.icon-tabler-photo > * {\n    color: silver;\n}\n.icon-tabler-photo-off > * {\n    color: silver;\n}\n.icon-tabler-photo-off > :nth-child(5) {\n    color: orange;\n}\n.icon-tabler-message > :nth-child(2),\n.icon-tabler-message > :nth-child(3) {\n    color: greenyellow;\n}\n';
@@ -2829,6 +2829,13 @@ ${IconCheck}
 </section> 
 `;
 
+  function scrollToElement(ele) {
+    window.scroll(0, ele?.offsetTop ?? 0);
+  }
+  function addEvent(ev, fn) {
+    return (elem) => elem.addEventListener(ev, fn);
+  }
+
   function buttonBookmarksOpen() {
     document.querySelector('#BookmarksPanel')?.classList.add('visible');
     document.querySelector('#Overlay')?.classList.add('visible');
@@ -2837,63 +2844,65 @@ ${IconCheck}
     document.querySelector('#BookmarksPanel')?.classList.remove('visible');
     document.querySelector('#Overlay')?.classList.remove('visible');
   }
-  function buttonEraseBookmarks(elem) {
-    elem.addEventListener('click', (event) => {
-      const target = event.currentTarget.value;
-      const marks = getUserSettings().bookmarks.filter((el) => el.url !== target);
-      if (target === window.location.href) {
-        document.querySelector('#MangaOnlineViewer')?.classList.toggle('bookmarked');
-      }
-      logScript(`Bookmark Removed ${target}`);
+  function buttonEraseBookmarks(event) {
+    const target = event.currentTarget.value;
+    const marks = getUserSettings().bookmarks.filter((el) => el.url !== target);
+    if (target === window.location.href) {
+      document.querySelector('#MangaOnlineViewer')?.classList.toggle('bookmarked');
+    }
+    logScript(`Bookmark Removed ${target}`);
+    Swal.fire({
+      title: getLocaleString('BOOKMARK_REMOVED'),
+      timer: 1e4,
+      icon: 'error',
+    });
+    updateSettings({ bookmarks: marks });
+    reloadBookmarks();
+    document
+      .querySelectorAll('.BookmarkItem .erase')
+      ?.forEach(addEvent('click', buttonEraseBookmarks));
+  }
+  function buttonBookmark(event) {
+    document.querySelector('#MangaOnlineViewer')?.classList.toggle('bookmarked');
+    const num = parseInt(
+      event.currentTarget.parentElement?.querySelector('.PageIndex')?.textContent ?? '0',
+      10,
+    );
+    const mark = {
+      url: window.location.href,
+      page: num,
+      date: /* @__PURE__ */ new Date().toISOString().slice(0, 10),
+    };
+    if (isBookmarked(mark.url)) {
+      updateSettings({
+        bookmarks: getUserSettings().bookmarks.filter((el) => el.url !== mark.url),
+      });
       Swal.fire({
         title: getLocaleString('BOOKMARK_REMOVED'),
         timer: 1e4,
         icon: 'error',
       });
-      updateSettings({ bookmarks: marks });
-      reloadBookmarks();
-      document.querySelectorAll('.BookmarkItem .erase')?.forEach(buttonEraseBookmarks);
-    });
-  }
-  function buttonBookmark(elem) {
-    elem.addEventListener('click', (event) => {
-      document.querySelector('#MangaOnlineViewer')?.classList.toggle('bookmarked');
-      const num = parseInt(
-        event.currentTarget.parentElement?.querySelector('.PageIndex')?.textContent ?? '0',
-        10,
-      );
-      const mark = {
-        url: window.location.href,
-        page: num,
-        date: /* @__PURE__ */ new Date().toISOString().slice(0, 10),
-      };
-      if (isBookmarked(mark.url)) {
-        updateSettings({
-          bookmarks: getUserSettings().bookmarks.filter((el) => el.url !== mark.url),
-        });
-        Swal.fire({
-          title: getLocaleString('BOOKMARK_REMOVED'),
-          timer: 1e4,
-          icon: 'error',
-        });
-      } else {
-        updateSettings({ bookmarks: [...getUserSettings().bookmarks, mark] });
-        Swal.fire({
-          title: getLocaleString('BOOKMARK_SAVED'),
-          html: getLocaleString('BOOKMARK_SAVED').replace('##NUM##', num.toString()),
-          icon: 'success',
-        });
-      }
-      reloadBookmarks();
-      document.querySelectorAll('.BookmarkItem .erase')?.forEach(buttonEraseBookmarks);
-    });
+    } else {
+      updateSettings({ bookmarks: [...getUserSettings().bookmarks, mark] });
+      Swal.fire({
+        title: getLocaleString('BOOKMARK_SAVED'),
+        html: getLocaleString('BOOKMARK_SAVED').replace('##NUM##', num.toString()),
+        icon: 'success',
+      });
+    }
+    reloadBookmarks();
+    document
+      .querySelectorAll('.BookmarkItem .erase')
+      ?.forEach(addEvent('click', buttonEraseBookmarks));
   }
   function bookmarks() {
     document.querySelector('#bookmarks')?.addEventListener('click', buttonBookmarksOpen);
     document.querySelector('#CloseBookmarks')?.addEventListener('click', buttonBookmarksClose);
     document.querySelector('#Overlay')?.addEventListener('click', buttonBookmarksClose);
-    document.querySelectorAll('.BookmarkItem .erase')?.forEach(buttonEraseBookmarks);
-    document.querySelectorAll('.Bookmark')?.forEach(buttonBookmark);
+    document
+      .querySelectorAll('.BookmarkItem .erase')
+      ?.forEach(addEvent('click', buttonEraseBookmarks));
+    document.querySelectorAll('.Bookmark')?.forEach(addEvent('click', buttonBookmark));
   }
 
   let zip;
@@ -3033,10 +3042,6 @@ ${IconCheck}
       prevOffset = scrollY;
     }
     window.addEventListener('scroll', _.debounce(toggleScrollDirection, 50));
-  }
-
-  function scrollToElement(ele) {
-    window.scroll(0, ele?.offsetTop ?? 0);
   }
 
   const doClick = (selector) => document.querySelector(selector)?.dispatchEvent(new Event('click'));
@@ -3413,21 +3418,17 @@ ${IconCheck}
     }
   }
 
-  function buttonReloadPage(elem) {
-    elem.addEventListener('click', (event) => {
-      const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
-      reloadImage(img);
-    });
+  function buttonReloadPage(event) {
+    const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
+    reloadImage(img);
   }
-  function buttonHidePage(elem) {
-    elem.addEventListener('click', (event) => {
-      const img = event.currentTarget.parentElement?.parentElement;
-      img.classList.toggle('hide');
-    });
+  function buttonHidePage(event) {
+    const img = event.currentTarget.parentElement?.parentElement;
+    img.classList.toggle('hide');
   }
   function individual() {
-    document.querySelectorAll('.Reload')?.forEach(buttonReloadPage);
-    document.querySelectorAll('.Hide')?.forEach(buttonHidePage);
+    document.querySelectorAll('.Reload')?.forEach(addEvent('click', buttonReloadPage));
+    document.querySelectorAll('.Hide')?.forEach(addEvent('click', buttonHidePage));
   }
 
   function selectGoToPage(event) {
@@ -3435,15 +3436,13 @@ ${IconCheck}
     applyZoom();
     scrollToElement(document.querySelector(`#Page${target}`));
   }
-  function clickThumbnail(elem) {
-    elem.addEventListener('click', (event) => {
-      applyZoom();
-      scrollToElement(
-        document.querySelector(
-          `#Page${event.currentTarget.querySelector('.ThumbnailIndex')?.textContent}`,
-        ),
-      );
-    });
+  function clickThumbnail(event) {
+    applyZoom();
+    scrollToElement(
+      document.querySelector(
+        `#Page${event.currentTarget.querySelector('.ThumbnailIndex')?.textContent}`,
+      ),
+    );
   }
   function transformScrollToHorizontal(event) {
     if (!event.deltaY) {
@@ -3454,7 +3453,7 @@ ${IconCheck}
   }
   function navigation() {
     document.querySelector('#gotoPage')?.addEventListener('change', selectGoToPage);
-    document.querySelectorAll('.Thumbnail')?.forEach(clickThumbnail);
+    document.querySelectorAll('.Thumbnail')?.forEach(addEvent('click', clickThumbnail));
     document.querySelector('#Thumbnails')?.addEventListener('wheel', transformScrollToHorizontal);
   }
 
@@ -3624,45 +3623,35 @@ ${IconCheck}
     document.querySelector('#SaveKeybindings')?.addEventListener('click', saveKeybindings);
   }
 
-  function buttonZoomIn(elem) {
-    elem.addEventListener('click', (event) => {
-      const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
-      const ratio = (img.width / img.naturalWidth) * (100 + getUserSettings().zoomStep);
-      applyZoom(ratio, `#${img.getAttribute('id')}`);
-    });
+  function buttonZoomIn(event) {
+    const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
+    const ratio = (img.width / img.naturalWidth) * (100 + getUserSettings().zoomStep);
+    applyZoom(ratio, `#${img.getAttribute('id')}`);
   }
-  function buttonZoomOut(elem) {
-    elem.addEventListener('click', (event) => {
-      const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
-      const ratio = (img.width / img.naturalWidth) * (100 - getUserSettings().zoomStep);
-      applyZoom(ratio, `#${img.getAttribute('id')}`);
-    });
+  function buttonZoomOut(event) {
+    const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
+    const ratio = (img.width / img.naturalWidth) * (100 - getUserSettings().zoomStep);
+    applyZoom(ratio, `#${img.getAttribute('id')}`);
   }
-  function buttonRestoreZoom(elem) {
-    elem.addEventListener('click', () => {
-      document.querySelector('.PageContent .PageImg')?.removeAttribute('width');
-    });
+  function buttonRestoreZoom() {
+    document.querySelector('.PageContent .PageImg')?.removeAttribute('width');
   }
-  function buttonZoomWidth(elem) {
-    elem.addEventListener('click', (event) => {
-      const page = event.currentTarget.parentElement?.parentElement;
-      const img = page?.querySelector('.PageImg');
-      applyZoom('width', `#${img.getAttribute('id')}`);
-      page?.classList.toggle('DoublePage');
-    });
+  function buttonZoomWidth(event) {
+    const page = event.currentTarget.parentElement?.parentElement;
+    const img = page?.querySelector('.PageImg');
+    applyZoom('width', `#${img.getAttribute('id')}`);
+    page?.classList.toggle('DoublePage');
   }
-  function buttonZoomHeight(elem) {
-    elem.addEventListener('click', (event) => {
-      const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
-      applyZoom('height', `#${img.getAttribute('id')}`);
-    });
+  function buttonZoomHeight(event) {
+    const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
+    applyZoom('height', `#${img.getAttribute('id')}`);
   }
   function size() {
-    document.querySelectorAll('.ZoomIn')?.forEach(buttonZoomIn);
-    document.querySelectorAll('.ZoomOut')?.forEach(buttonZoomOut);
-    document.querySelectorAll('.ZoomRestore')?.forEach(buttonRestoreZoom);
-    document.querySelectorAll('.ZoomWidth')?.forEach(buttonZoomWidth);
-    document.querySelectorAll('.ZoomHeight')?.forEach(buttonZoomHeight);
+    document.querySelectorAll('.ZoomIn')?.forEach(addEvent('click', buttonZoomIn));
+    document.querySelectorAll('.ZoomOut')?.forEach(addEvent('click', buttonZoomOut));
+    document.querySelectorAll('.ZoomRestore')?.forEach(addEvent('click', buttonRestoreZoom));
+    document.querySelectorAll('.ZoomWidth')?.forEach(addEvent('click', buttonZoomWidth));
+    document.querySelectorAll('.ZoomHeight')?.forEach(addEvent('click', buttonZoomHeight));
   }
 
   function changeColorScheme() {
@@ -3672,25 +3661,23 @@ ${IconCheck}
     elem?.classList.remove(isDark ? 'dark' : 'light');
     elem?.classList.add(getUserSettings().colorScheme);
   }
-  function buttonSelectTheme(elem) {
-    elem.addEventListener('click', (event) => {
-      const target = event.currentTarget;
-      [...document.querySelectorAll('.ThemeRadio')].forEach((theme) => {
-        theme.classList.remove('selected');
-      });
-      target.classList.add('selected');
-      document.getElementById('MangaOnlineViewer')?.setAttribute('data-theme', target.title);
-      updateSettings({ theme: target.title });
-      const hue = document.querySelector('#Hue');
-      const shade = document.querySelector('#Shade');
-      if (target.title.startsWith('custom')) {
-        hue?.classList.add('show');
-        shade?.classList.remove('show');
-      } else {
-        hue?.classList.remove('show');
-        shade?.classList.add('show');
-      }
+  function buttonSelectTheme(event) {
+    const target = event.currentTarget;
+    [...document.querySelectorAll('.ThemeRadio')].forEach((theme) => {
+      theme.classList.remove('selected');
     });
+    target.classList.add('selected');
+    document.getElementById('MangaOnlineViewer')?.setAttribute('data-theme', target.title);
+    updateSettings({ theme: target.title });
+    const hue = document.querySelector('#Hue');
+    const shade = document.querySelector('#Shade');
+    if (target.title.startsWith('custom')) {
+      hue?.classList.add('show');
+      shade?.classList.remove('show');
+    } else {
+      hue?.classList.remove('show');
+      shade?.classList.add('show');
+    }
   }
   function changeCustomTheme(event) {
     const target = event.currentTarget.value;
@@ -3704,7 +3691,7 @@ ${IconCheck}
   }
   function theming() {
     document.querySelector('#ColorScheme')?.addEventListener('click', changeColorScheme);
-    document.querySelectorAll('.ThemeRadio').forEach(buttonSelectTheme);
+    document.querySelectorAll('.ThemeRadio').forEach(addEvent('click', buttonSelectTheme));
     document.querySelector('#CustomThemeHue')?.addEventListener('change', changeCustomTheme);
     document.querySelector('#ThemeShade')?.addEventListener('input', changeThemeShade);
   }
