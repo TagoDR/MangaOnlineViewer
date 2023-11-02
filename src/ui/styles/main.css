@@ -52,12 +52,14 @@
 #MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n) {
     display: flex;
     justify-content: start;
+    position: relative;
 }
 
 #MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n-1),
 #MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n-1) {
     display: flex;
     justify-content: end;
+    position: relative;
 }
 
 #MangaOnlineViewer #Chapter.Vertical .PageContent {
