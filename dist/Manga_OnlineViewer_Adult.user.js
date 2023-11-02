@@ -895,10 +895,10 @@
     homepage: 'https://pururin.to/',
     language: ['English'],
     category: 'hentai',
-    waitAttr: ['.image-holder img', 'src'],
+    waitAttr: ['.img-viewer img', 'src'],
     run() {
-      const src = document.querySelector('.image-holder img')?.getAttribute('src') ?? '';
-      const num = [...document.querySelectorAll('.form-control option')];
+      const src = document.querySelector('.img-viewer img')?.getAttribute('src') ?? '';
+      const num = [...document.querySelectorAll('.img-select option')];
       return {
         title: document.querySelector('.title')?.textContent?.trim(),
         series: document.querySelector('.breadcrumb-item:nth-child(4) a')?.getAttribute('href'),
