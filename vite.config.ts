@@ -75,6 +75,7 @@ export default defineConfig(({ mode }) => {
   return {
     mode: target === 'dev' ? 'development' : 'production',
     plugins: [svgLoader({ svgo: false, defaultImport: 'raw' })],
+
     build: {
       target: 'esnext',
       minify: false,
@@ -82,7 +83,10 @@ export default defineConfig(({ mode }) => {
       outDir: 'dist',
       rollupOptions: {
         input: `src/${scripts[target].entry}`,
-        plugins: [externalGlobals(globals), prettier({ parser: 'typescript' })],
+        plugins: [
+          externalGlobals(globals),
+          target !== 'dev' ? prettier({ parser: 'typescript' }) : null,
+        ],
         output: {
           banner: metadata,
           format: 'iife',
