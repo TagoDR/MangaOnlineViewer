@@ -4433,6 +4433,36 @@ ${IconCheck}
       listImages,
     });
   }
+  function openFileImages(evt) {
+    const input = evt.target;
+    const files = Array.from(input.files)
+      .filter(validFileType)
+      .sort((a, b) =>
+        a.webkitRelativePath.localeCompare(
+          b.webkitRelativePath,
+          navigator.languages[0] || navigator.language,
+          {
+            numeric: true,
+            ignorePunctuation: true,
+          },
+        ),
+      );
+    logScript(
+      'Local Files: ',
+      files.map((f) => f.webkitRelativePath),
+    );
+    if (input.files?.[0]) {
+      viewer({
+        title: input.files[0].webkitRelativePath.split('/')[0],
+        series: 'https://github.com/TagoDR/MangaOnlineViewer',
+        pages: files.length,
+        begin: 1,
+        prev: '#',
+        next: '#',
+        listImages: files.map(URL.createObjectURL),
+      });
+    }
+  }
   function allowUpload() {
     const ele = document.createElement('div');
     ele.innerHTML = `
@@ -4450,22 +4480,8 @@ ${IconCheck}
       const input = evt.target;
       if (input.files?.[0]) loadMangaFromZip(input.files[0]);
     });
-    document.querySelectorAll('#folder, #images')?.forEach((element) =>
-      element.addEventListener('change', (evt) => {
-        const input = evt.target;
-        const files = Array.from(input.files).filter(validFileType).map(URL.createObjectURL);
-        if (input.files?.[0])
-          viewer({
-            title: input.files[0].webkitRelativePath.split('/')[0],
-            series: 'https://github.com/TagoDR/MangaOnlineViewer',
-            pages: files.length,
-            begin: 1,
-            prev: '#',
-            next: '#',
-            listImages: files,
-          });
-      }),
-    );
+    document.querySelector('#folder')?.addEventListener('change', openFileImages);
+    document.querySelector('#images')?.addEventListener('change', openFileImages);
     logScript(`Waiting for zip upload`);
   }
 
