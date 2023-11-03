@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans
-// @version       2023.11.02
+// @version       2023.11.03
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -4395,6 +4395,21 @@ ${IconCheck}
     }
   }
 
+  const fileTypes = [
+    'image/apng',
+    'image/bmp',
+    'image/gif',
+    'image/jpeg',
+    'image/pjpeg',
+    'image/png',
+    'image/svg+xml',
+    'image/tiff',
+    'image/webp',
+    'image/x-icon',
+  ];
+  function validFileType(file) {
+    return fileTypes.includes(file.type);
+  }
   const getImageBlob = (content) => {
     const buffer = new Uint8Array(content);
     const blob = new Blob([buffer.buffer]);
@@ -4425,12 +4440,32 @@ ${IconCheck}
         <label for='file'>Choose the local zip file:</label>
         <input type="file" id="file" name="file" class='btn' accept=".zip, .cbz, .cbr, .7z, .rar" value=''/><br />
         <p>Note : your browser will process the zip file, don't choose a file too big !</p>
+        <label for='file'><b>OR</b> Select a folder with images inside:</label>
+        <input type="file" id="folder" name="folder" class='btn' webkitdirectory mozdirectory msdirectory odirectory directory value='' /><br />
+        <label for='file'><b>OR</b> Select images:</label>
+        <input type="file" id="images" name="images" class='btn' accept="image/*" multiple value='' /><br />
     `;
-    document.querySelector('#user-content-local-zip-files-cbz-cbr + p')?.replaceWith(ele);
+    document.querySelector('#user-content-local-files-zip-cbz-cbr + p')?.replaceWith(ele);
     document.querySelector('#file')?.addEventListener('change', (evt) => {
       const input = evt.target;
       if (input.files?.[0]) loadMangaFromZip(input.files[0]);
     });
+    document.querySelectorAll('#folder, #images')?.forEach((element) =>
+      element.addEventListener('change', (evt) => {
+        const input = evt.target;
+        const files = Array.from(input.files).filter(validFileType).map(URL.createObjectURL);
+        if (input.files?.[0])
+          viewer({
+            title: input.files[0].webkitRelativePath.split('/')[0],
+            series: 'https://github.com/TagoDR/MangaOnlineViewer',
+            pages: files.length,
+            begin: 1,
+            prev: '#',
+            next: '#',
+            listImages: files,
+          });
+      }),
+    );
     logScript(`Waiting for zip upload`);
   }
 
