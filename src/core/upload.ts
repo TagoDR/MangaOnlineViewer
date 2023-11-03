@@ -14,7 +14,14 @@ const fileTypes = [
   'image/webp',
   'image/x-icon',
 ];
+
 const fileImageExt = /.(png|jpg|jpeg|gif|bmp|webp)$/i;
+
+const orderFiles = (a: string, b: string) =>
+  a.localeCompare(b, navigator.languages[0] || navigator.language, {
+    numeric: true,
+    ignorePunctuation: true,
+  });
 
 function validFileType(file: File) {
   return fileTypes.includes(file.type);
@@ -25,28 +32,15 @@ const getImageBlob = (content: ArrayBuffer) => {
   return URL.createObjectURL(blob);
 };
 
-/**
- * Loads a zip file form disc and returns list of images
- * @param filePath
- */
 export async function loadZipFile(filePath: string | File) {
   const zip = await JSZip.loadAsync(filePath);
   const files = zip
     .filter((_, file) => !file.dir && fileImageExt.test(file.name))
-    .sort((a, b) =>
-      a.name.localeCompare(b.name, navigator.languages[0] || navigator.language, {
-        numeric: true,
-        ignorePunctuation: true,
-      }),
-    );
+    .sort((a, b) => orderFiles(a.name, b.name));
   logScript('Files in zip:', zip.files);
   return Promise.all(files.map((file) => file.async('arraybuffer').then(getImageBlob)));
 }
 
-/**
- *  Display manga from zip file images
- * @param zipFile
- */
 export async function loadMangaFromZip(zipFile: File | string) {
   const listImages = await loadZipFile(zipFile);
   formatPage({
@@ -63,23 +57,15 @@ function openFileImages(evt: Event) {
   const input = evt.target as HTMLInputElement;
   const files = Array.from(input.files as Iterable<File>)
     .filter(validFileType)
-    .sort((a, b) =>
-      a.webkitRelativePath.localeCompare(
-        b.webkitRelativePath,
-        navigator.languages[0] || navigator.language,
-        {
-          numeric: true,
-          ignorePunctuation: true,
-        },
-      ),
-    );
+    .sort((a, b) => orderFiles(a.webkitRelativePath || a.name, b.webkitRelativePath || b.name));
   logScript(
     'Local Files: ',
-    files.map((f) => f.webkitRelativePath),
+    files,
+    files.map((f) => f.webkitRelativePath || f.name),
   );
   if (input.files?.[0]) {
     formatPage({
-      title: input.files[0].webkitRelativePath.split('/')[0],
+      title: input.files[0].webkitRelativePath.split('/')[0] || 'Local Images',
       series: 'https://github.com/TagoDR/MangaOnlineViewer',
       pages: files.length,
       begin: 1,
