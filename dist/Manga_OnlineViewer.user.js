@@ -4407,6 +4407,7 @@ ${IconCheck}
     'image/webp',
     'image/x-icon',
   ];
+  const fileImageExt = /.(png|jpg|jpeg|gif|bmp|webp)$/i;
   function validFileType(file) {
     return fileTypes.includes(file.type);
   }
@@ -4417,7 +4418,14 @@ ${IconCheck}
   };
   async function loadZipFile(filePath) {
     const zip = await JSZip.loadAsync(filePath);
-    const files = zip.filter((_, item) => !item.dir);
+    const files = zip
+      .filter((_, file) => !file.dir && fileImageExt.test(file.name))
+      .sort((a, b) =>
+        a.name.localeCompare(b.name, navigator.languages[0] || navigator.language, {
+          numeric: true,
+          ignorePunctuation: true,
+        }),
+      );
     logScript('Files in zip:', zip.files);
     return Promise.all(files.map((file) => file.async('arraybuffer').then(getImageBlob)));
   }
