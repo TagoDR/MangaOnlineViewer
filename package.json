@@ -49,6 +49,7 @@
         "typescript": "^5.2.2",
         "userscript-metadata-generator": "^0.2.4",
         "vite": "^4.5.0",
+        "vite-plugin-banner": "^0.7.1",
         "vite-svg-loader": "^4.0.0"
     },
     "dependencies": {

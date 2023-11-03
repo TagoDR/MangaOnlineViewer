@@ -4,14 +4,18 @@
         <meta charset="UTF-8" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <title>MangaOnlineViewer Script</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
+        />
     </head>
     <body>
-        <button type='button' id='test'>Run Local Test</button>
-        <h3>Or choose the local(s) zip file(s)</h3>
-        <p class="note">
-            Note : your browser will process the zip file, don't choose a file too big !
-        </p>
-        <input type="file" id="file" name="file" accept=".zip, .cbz, .cbr, .7z, .rar" value=''/><br />
-        <script src="/src/index.ts" type="module"></script>
+        <main class="container">
+            <h2 id="run-test">Run local test</h2>
+            <button type="button" id="test">Run Local Test</button>
+            <h2 id="user-content-local-files-zip-cbz-cbr">Local Files (ZIP, CBZ, CBR...)</h2>
+            <p aria-busy="true">Loading Local Files options</p>
+            <script src="/src/index.ts" type="module"></script>
+        </main>
     </body>
 </html>

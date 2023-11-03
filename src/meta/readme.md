@@ -21,9 +21,9 @@ Other Browsers with other add-ons may also work, but not officially supported.
 
 #### Official Source: [GitHub](https://github.com/TagoDR/MangaOnlineViewer)
 
-## Local ZIP Files (CBZ, CBR)
+## Local Files (ZIP, CBZ, CBR...)
 
-First install then reload page, there will be an option in this section to select a zip file to read from.
+First install then reload page, there will be an options in this section to select a zip, folder or individual files to show from.
 
 ## Supported Manga Sites
 

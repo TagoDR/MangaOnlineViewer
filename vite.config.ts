@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { defineConfig } from 'vite';
+import viteBanner from 'vite-plugin-banner';
 import userscript, { type Metadata } from 'userscript-metadata-generator';
 import externalGlobals from 'rollup-plugin-external-globals';
 import prettier from 'rollup-plugin-prettier';
@@ -74,7 +75,10 @@ export default defineConfig(({ mode }) => {
   const metadata = generateMetadata(scripts[target]);
   return {
     mode: target === 'dev' ? 'development' : 'production',
-    plugins: [svgLoader({ svgo: false, defaultImport: 'raw' })],
+    plugins: [
+      viteBanner({ content: metadata, verify: false }),
+      svgLoader({ svgo: false, defaultImport: 'raw' }),
+    ],
 
     build: {
       target: 'esnext',
@@ -88,7 +92,7 @@ export default defineConfig(({ mode }) => {
           target !== 'dev' ? prettier({ parser: 'typescript' }) : null,
         ],
         output: {
-          banner: metadata,
+          // banner: metadata,
           format: 'iife',
           entryFileNames: scripts[target].name,
           sourcemap: false,
