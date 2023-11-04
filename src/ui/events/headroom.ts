@@ -3,7 +3,7 @@ import { getUserSettings } from '../../core/settings';
 
 /**
  * Changes header class when scrolling up or down to show/hide it
- * @param showEnd [default 0]px from end of the screen to show header
+ * @param showEnd default 0px from end of the screen to show header
  */
 function headroom(showEnd = 0) {
   let prevOffset = 0;

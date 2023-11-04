@@ -1,3 +1,4 @@
+import { html } from '../../utils/code-tag';
 import type { IManga } from '../../types';
 import { getUserSettings, isBookmarked } from '../../core/settings';
 import SettingsPanel from './SettingsPanel';
@@ -19,10 +20,10 @@ export function hydrateApp() {
     '#KeybindingsPanel': KeybindingsPanel(),
     '#Bookmarks': BookmarksPanel(),
   };
-  Object.entries(elements).forEach(([id, html]) => {
+  Object.entries(elements).forEach(([id, component]) => {
     const tag = document.querySelector(id);
     if (tag) {
-      tag.outerHTML = html;
+      tag.outerHTML = component;
     }
   });
   document.querySelector('#Overlay')?.dispatchEvent(new Event('click'));
@@ -31,20 +32,18 @@ export function hydrateApp() {
 
 const app = (manga: IManga) => {
   loadedManga = manga;
-  return `
-<div id='MangaOnlineViewer' 
-    class='${getUserSettings().colorScheme} 
-      ${getUserSettings().hidePageControls ? 'hideControls' : ''}
-      ${isBookmarked() ? 'bookmarked' : ''}'
-    data-theme='${getUserSettings().theme}'>
-  ${Header(manga)}
-  ${Reader(manga)}
-  ${CommentsPanel(manga)}  
-  ${ThumbnailsPanel(manga)}
-  <div id='Overlay' class='overlay'></div>
-  ${SettingsPanel()}
-  ${KeybindingsPanel()}
-  ${BookmarksPanel()}
-</div>`;
+  return html`
+    <div
+      id="MangaOnlineViewer"
+      class="${getUserSettings().colorScheme} 
+  ${getUserSettings().hidePageControls ? 'hideControls' : ''}
+  ${isBookmarked() ? 'bookmarked' : ''}"
+      data-theme="${getUserSettings().theme}"
+    >
+      ${Header(manga)} ${Reader(manga)} ${CommentsPanel(manga)} ${ThumbnailsPanel(manga)}
+      <div id="Overlay" class="overlay"></div>
+      ${SettingsPanel()} ${KeybindingsPanel()} ${BookmarksPanel()}
+    </div>
+  `;
 };
 export default app;

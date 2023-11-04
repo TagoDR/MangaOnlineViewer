@@ -1,4 +1,5 @@
 import JSZip from 'jszip';
+import { html } from '../utils/code-tag';
 import { logScript } from '../utils/tampermonkey';
 import formatPage from './viewer';
 
@@ -77,16 +78,42 @@ function openFileImages(evt: Event) {
 }
 export function allowUpload() {
   const ele = document.createElement('div');
-  ele.innerHTML = `
-        <p>Can read any zip file with images inside and diplay it like any of the supported sites</p>
-        <label for='file'>Choose the local zip file:</label>
-        <input type="file" id="file" name="file" class='btn' accept=".zip, .cbz, .cbr, .7z, .rar" value=''/><br />
-        <p>Note : your browser will process the zip file, don't choose a file too big !</p>
-        <label for='file'><b>OR</b> Select a folder with images inside:</label>
-        <input type="file" id="folder" name="folder" class='btn' webkitdirectory mozdirectory msdirectory odirectory directory value='' /><br />
-        <label for='file'><b>OR</b> Select images:</label>
-        <input type="file" id="images" name="images" class='btn' accept="image/*" multiple value='' /><br />
-    `;
+  ele.innerHTML = html`
+    <p>Can read any zip file with images inside and diplay it like any of the supported sites</p>
+    <label for="file">Choose the local zip file:</label>
+    <input
+      type="file"
+      id="file"
+      name="file"
+      class="btn"
+      accept=".zip, .cbz, .cbr, .7z, .rar"
+      value=""
+    /><br />
+    <p>Note : your browser will process the zip file, don't choose a file too big !</p>
+    <label for="file"><b>OR</b> Select a folder with images inside:</label>
+    <input
+      type="file"
+      id="folder"
+      name="folder"
+      class="btn"
+      webkitdirectory
+      mozdirectory
+      msdirectory
+      odirectory
+      directory
+      value=""
+    /><br />
+    <label for="file"><b>OR</b> Select images:</label>
+    <input
+      type="file"
+      id="images"
+      name="images"
+      class="btn"
+      accept="image/*"
+      multiple
+      value=""
+    /><br />
+  `;
   document.querySelector('#user-content-local-files-zip-cbz-cbr + p')?.replaceWith(ele);
   document.querySelector('#file')?.addEventListener('change', (evt) => {
     const input = evt.target as HTMLInputElement;

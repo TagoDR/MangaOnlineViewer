@@ -2,6 +2,7 @@ import Swal, { type SweetAlertOptions } from 'sweetalert2';
 import rangeSlider, { type RangeSlider } from 'range-slider-input';
 import rangeSliderStyles from 'range-slider-input/dist/style.css?inline';
 import _ from 'lodash';
+import { html } from '../utils/code-tag';
 import { getBrowser, getEngine, getInfoGM, logScript } from '../utils/tampermonkey';
 import type { IManga, ISite } from '../types';
 import formatPage from './viewer';
@@ -45,16 +46,33 @@ async function lateStart(site: ISite, begin = 1) {
   const options: SweetAlertOptions = {
     title: getLocaleString('STARTING'),
     // Language=html
-    html: `
+    html: html`
       ${getLocaleString('CHOOSE_BEGINNING')}
-      <div id='pageInputGroup'>
-        <div id='pageInputs'>
-          <input type='number' id='pageBegin' class='pageInput' min='1' inputmode='numeric'
-                 pattern='[0-9]*' max='${manga.pages}' value='${beginPage}' />
-          - <input type='number' id='pageEnd' class='pageInput' min='1' inputmode='numeric'
-                   pattern='[0-9]*' max='${manga.pages}' value='${endPage}' />
+      <div id="pageInputGroup">
+        <div id="pageInputs">
+          <input
+            type="number"
+            id="pageBegin"
+            class="pageInput"
+            min="1"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            max="${manga.pages}"
+            value="${beginPage}"
+          />
+          -
+          <input
+            type="number"
+            id="pageEnd"
+            class="pageInput"
+            min="1"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            max="${manga.pages}"
+            value="${endPage}"
+          />
         </div>
-        <div id='pagesSlider'></div>
+        <div id="pagesSlider"></div>
       </div>
     `,
     showCancelButton: true,
@@ -142,9 +160,9 @@ function createLateStartButton(site: ISite, beginning: number) {
 function showWaitPopup(site: ISite, manga: IManga) {
   Swal.fire({
     title: getLocaleString('STARTING'),
-    html: `${
-      manga.begin > 1 ? `${getLocaleString('RESUME')}${manga.begin}.<br/>` : ''
-    }${getLocaleString('WAITING')}`,
+    html: html`${manga.begin > 1
+      ? `${getLocaleString('RESUME')}${manga.begin}.<br/>`
+      : ''}${getLocaleString('WAITING')}`,
     showCancelButton: true,
     cancelButtonColor: '#d33',
     reverseButtons: true,

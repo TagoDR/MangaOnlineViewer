@@ -1,15 +1,15 @@
+import { css } from '../utils/code-tag';
 import { getUserSettings } from '../core/settings';
 import { replaceStyleSheet, wrapStyle } from '../utils/css';
 import colors, { getTextColor, type IColor } from '../utils/colors';
 
 function generateThemeCSS(name: string, primary: string, text: string) {
   // Language=CSS
-  return `
-      .${name},
-      [data-theme='${name}'] {
-          --theme-primary-color: ${primary};
-          --theme-primary-text-color: ${text};
-      }
+  return css`
+    .${name}, [data-theme='${name}'] {
+      --theme-primary-color: ${primary};
+      --theme-primary-text-color: ${text};
+    }
   `;
 }
 

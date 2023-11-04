@@ -56,7 +56,7 @@ export function addLocationChangeCallback(callback: () => void) {
  *
  * @export
  * @param {string} selector
- * @returns {DOMNode}
+ * @returns {Promise<Element>}
  */
 export async function awaitElement(selector: string) {
   const MAX_TRIES = 60;

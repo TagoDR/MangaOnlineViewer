@@ -1,4 +1,6 @@
 // Creates the style element
+import { html } from './code-tag';
+
 function createStyleElement(id: string, content: string): HTMLStyleElement {
   const style = document.createElement('style');
   style.id = id;
@@ -26,7 +28,11 @@ function replaceStyleSheet(id: string, content: string) {
 }
 
 function wrapStyle(id: string, css: string) {
-  return `<style type='text/css' id='${id}'>${css}</style>`;
+  return html`
+    <style type="text/css" id="${id}">
+      ${css}
+    </style>
+  `;
 }
 
 export { appendStyleSheet, removeStyleSheet, replaceStyleSheet, wrapStyle };

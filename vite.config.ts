@@ -89,7 +89,7 @@ export default defineConfig(({ mode }) => {
         input: `src/${scripts[target].entry}`,
         plugins: [
           externalGlobals(globals),
-          target !== 'dev' ? prettier({ parser: 'typescript' }) : null,
+          target !== 'dev' ? prettier({ parser: 'babel-ts' }) : null,
         ],
         output: {
           // banner: metadata,
