@@ -10,17 +10,10 @@ import { applyZoom } from '../page';
 import { replaceStyleSheet } from '../../utils/css';
 
 export function buttonResetSettings() {
-  // const msg: SweetAlertOptions = {
-  //   title: getLocaleString('ATTENTION'),
-  //   text: getLocaleString('SETTINGS_RESET'),
-  //   timer: 10000,
-  //   icon: 'info',
-  // };
   resetSettings();
   const elem = document.getElementById('MangaOnlineViewer');
   elem?.removeAttribute('locale');
   elem?.dispatchEvent(new Event('locale'));
-  // Swal.fire(msg);
 }
 export function changeLocale(event: Event) {
   const locale = (event.currentTarget as HTMLInputElement).value;
@@ -28,12 +21,6 @@ export function changeLocale(event: Event) {
   const elem = document.getElementById('MangaOnlineViewer');
   elem?.setAttribute('locale', locale);
   elem?.dispatchEvent(new Event('locale'));
-  // Swal.fire({
-  //   title: getLocaleString('ATTENTION'),
-  //   text: getLocaleString('LANGUAGE_CHANGED'),
-  //   timer: 10000,
-  //   icon: 'info',
-  // });
 }
 export function changeLoadMode(event: Event) {
   const mode = (event.currentTarget as HTMLInputElement).value;

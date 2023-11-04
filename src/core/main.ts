@@ -116,7 +116,7 @@ async function lateStart(site: ISite, begin = 1) {
       logScript(`Choice: ${beginPage} - ${endPage}`);
       manga.begin = beginPage;
       manga.pages = endPage;
-      formatPage(manga);
+      formatPage(manga).then(() => logScript('Page loaded'));
     } else {
       logScript(result.dismiss);
     }
@@ -151,7 +151,7 @@ function showWaitPopup(site: ISite, manga: IManga) {
     timer: 3000,
   }).then((result) => {
     if (result.value || result.dismiss === Swal.DismissReason.timer) {
-      formatPage(manga);
+      formatPage(manga).then(() => logScript('Page loaded'));
     } else {
       createLateStartButton(site, manga.begin);
       logScript(result.dismiss);
@@ -184,7 +184,7 @@ async function preparePage(site: ISite) {
       manga.pages = endPage;
     }
 
-    formatPage(manga);
+    formatPage(manga).then(() => logScript('Page loaded'));
   };
 
   switch (site.start ?? getUserSettings()?.loadMode) {
@@ -192,7 +192,7 @@ async function preparePage(site: ISite) {
       createLateStartButton(site, manga.begin);
       break;
     case 'always':
-      formatPage(manga);
+      formatPage(manga).then(() => logScript('Page loaded'));
       break;
     case 'wait':
     default:

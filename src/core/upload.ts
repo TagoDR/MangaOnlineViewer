@@ -51,7 +51,7 @@ export async function loadMangaFromZip(zipFile: File | string) {
     prev: '#',
     next: '#',
     listImages,
-  });
+  }).then(() => logScript('Page loaded'));
 }
 function openFileImages(evt: Event) {
   const input = evt.target as HTMLInputElement;
@@ -72,7 +72,7 @@ function openFileImages(evt: Event) {
       prev: '#',
       next: '#',
       listImages: files.map(URL.createObjectURL),
-    });
+    }).then(() => logScript('Page loaded'));
   }
 }
 export function allowUpload() {

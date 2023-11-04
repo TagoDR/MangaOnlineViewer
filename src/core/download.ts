@@ -1,8 +1,6 @@
 import JSZip from 'jszip';
-import type * as FileSaver from 'file-saver';
+import { saveAs } from 'file-saver';
 import { logScript } from '../utils/tampermonkey';
-
-declare const saveAs: typeof FileSaver.saveAs;
 
 type ImageFile = {
   name: string;
@@ -96,7 +94,7 @@ async function generateZip() {
     .then((content) => {
       logScript('Download Ready');
       const zipName = `${document.querySelector('#MangaTitle')?.textContent?.trim()}.zip`;
-      saveAs(content, zipName, true);
+      saveAs(content, zipName, { autoBom: false });
       document.getElementById('download')?.classList.remove('loading');
     })
     .catch(logScript);
