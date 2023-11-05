@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans
-// @version       2023.11.03
+// @version       2023.11.05
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -1522,6 +1522,11 @@
   const rangeSliderStyles =
     '.range-slider{touch-action:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;cursor:pointer;display:block;position:relative;width:100%;height:8px;background:#ddd;border-radius:4px}.range-slider[data-vertical]{height:100%;width:8px}.range-slider[data-disabled]{opacity:.5;cursor:not-allowed}.range-slider .range-slider__thumb{position:absolute;z-index:3;top:50%;width:24px;height:24px;transform:translate(-50%,-50%);border-radius:50%;background:#2196f3}.range-slider .range-slider__thumb:focus-visible{outline:0;box-shadow:0 0 0 6px rgba(33,150,243,.5)}.range-slider[data-vertical] .range-slider__thumb{left:50%}.range-slider .range-slider__thumb[data-disabled]{z-index:2}.range-slider .range-slider__range{position:absolute;z-index:1;transform:translate(0,-50%);top:50%;width:100%;height:100%;background:#51adf6}.range-slider[data-vertical] .range-slider__range{left:50%;transform:translate(-50%,0)}.range-slider input[type=range]{-webkit-appearance:none;pointer-events:none;position:absolute;z-index:2;top:0;left:0;width:0;height:0;background-color:transparent}.range-slider input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none}.range-slider input[type=range]::-moz-range-thumb{width:0;height:0;border:0}.range-slider input[type=range]:focus{outline:0}';
 
+  const concatenateTemplateLiteralTag = (raw, ...keys) =>
+    keys.length === 0 ? raw[0] : String.raw({ raw }, ...keys);
+  const html = concatenateTemplateLiteralTag;
+  const css = concatenateTemplateLiteralTag;
+
   function logScript(...text) {
     console.log('MangaOnlineViewer: ', ...text);
     return text;
@@ -2525,50 +2530,50 @@
   const bookmarks$1 =
     '#MangaOnlineViewer #BookmarksPanel {\n    position: fixed;\n    top: 10%;\n    width: 50%;\n    left: 25%;\n    right: 25%;\n    text-align: center;\n    max-height: 70%;\n    transition: transform 0.3s ease-in-out;\n    transform: scaleY(0);\n    z-index: 1000;\n}\n\n#MangaOnlineViewer #BookmarksPanel.visible {\n    transform: scaleY(1);\n    display: block;\n}\n\n#MangaOnlineViewer #BookmarksList {\n    padding: 0 15px;\n    overflow: auto;\n    max-height: 60vh;\n}\n\n#MangaOnlineViewer #BookmarksList .BookmarkItem {\n    display: flex;\n    flex-flow: row;\n    justify-content: space-between;\n    align-items: center;\n    padding: 2px;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkData {\n    flex-basis: 15%;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkURl {\n    text-overflow: ellipsis;\n    overflow: hidden;\n    white-space: nowrap;\n    flex-basis: 55%;\n}\n';
 
-  const cssStyles = `
+  const cssStyles = css`
     :root,
     .dark,
     .dark .default,
     [data-theme='dark'] {
-        --theme-body-background: ${colors.dark['600']};
-        --theme-body-text-color: ${colors.dark['50']};
-        --theme-text-color: ${colors.dark['50']};
-        --theme-primary-color: ${colors.dark['700']};
-        --theme-primary-text-color: ${colors.dark['50']};
-        --theme-background-color: ${colors.dark['600']};
-        --theme-hightlight-color: ${colors.dark['500']};
-        --theme-border-color: ${colors.dark['400']};
+      --theme-body-background: ${colors.dark['600']};
+      --theme-body-text-color: ${colors.dark['50']};
+      --theme-text-color: ${colors.dark['50']};
+      --theme-primary-color: ${colors.dark['700']};
+      --theme-primary-text-color: ${colors.dark['50']};
+      --theme-background-color: ${colors.dark['600']};
+      --theme-hightlight-color: ${colors.dark['500']};
+      --theme-border-color: ${colors.dark['400']};
     }
 
     .light,
     .light .default,
     [data-theme='light'] {
-        --theme-body-background: ${colors.gray['50']};
-        --theme-body-text-color: ${colors.gray['900']};
-        --theme-text-color: ${colors.gray['900']};
-        --theme-primary-color: ${colors.gray['300']};
-        --theme-primary-text-color: ${colors.gray['900']};
-        --theme-background-color: ${colors.gray['50']};
-        --theme-hightlight-color: ${colors.gray['500']};
-        --theme-border-color: ${colors.gray['100']};
+      --theme-body-background: ${colors.gray['50']};
+      --theme-body-text-color: ${colors.gray['900']};
+      --theme-text-color: ${colors.gray['900']};
+      --theme-primary-color: ${colors.gray['300']};
+      --theme-primary-text-color: ${colors.gray['900']};
+      --theme-background-color: ${colors.gray['50']};
+      --theme-hightlight-color: ${colors.gray['500']};
+      --theme-border-color: ${colors.gray['100']};
     }
 
-    #MangaOnlineViewer .PageContent .PageImg[src=""],
+    #MangaOnlineViewer .PageContent .PageImg[src=''],
     #MangaOnlineViewer .PageContent .PageImg:not([src]) {
-        background-image: url("${svgToUrl(IconPhoto)}");
+      background-image: url('${svgToUrl(IconPhoto)}');
     }
 
     #MangaOnlineViewer .PageContent .PageImg.imgBroken {
-        background-image: url("${svgToUrl(IconPhotoOff)}");
+      background-image: url('${svgToUrl(IconPhotoOff)}');
     }
 
-    #MangaOnlineViewer .Thumbnail .ThumbnailImg[src=""],
+    #MangaOnlineViewer .Thumbnail .ThumbnailImg[src=''],
     #MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {
-        background-image: url("${svgToUrl(IconPhoto)}");
+      background-image: url('${svgToUrl(IconPhoto)}');
     }
 
     #MangaOnlineViewer .ThemeRadio.custom {
-            /*background-image: url("${svgToUrl(IconPalette)}");*/
+      /*background-image: url("${svgToUrl(IconPalette)}");*/
     }
     ${simplenormalize}
     ${styles}
@@ -2581,7 +2586,7 @@
     ${bookmarks$1}
     ${media}
     ${animation}
-`;
+  `;
 
   function createStyleElement(id, content) {
     const style = document.createElement('style');
@@ -2605,17 +2610,20 @@
     appendStyleSheet(id, content);
   }
   function wrapStyle(id, css) {
-    return `<style type='text/css' id='${id}'>${css}</style>`;
+    return html`
+      <style type="text/css" id="${id}">
+        ${css}
+      </style>
+    `;
   }
 
   function generateThemeCSS(name, primary, text) {
-    return `
-      .${name},
-      [data-theme='${name}'] {
-          --theme-primary-color: ${primary};
-          --theme-primary-text-color: ${text};
+    return css`
+      .${name}, [data-theme='${name}'] {
+        --theme-primary-color: ${primary};
+        --theme-primary-text-color: ${text};
       }
-  `;
+    `;
   }
   function getNormalThemeCSS(theme) {
     return generateThemeCSS(
@@ -2662,343 +2670,393 @@
   const sweetalertStyle = [normalize, sweetalert, fix, nprogress, keyscss].join('\n');
 
   function head(manga) {
-    return `
-<title>${manga.title}</title>
-<meta charset='UTF-8'>
-${wrapStyle('externals', sweetalertStyle)}
-${wrapStyle('reader', cssStyles)}
-${themesCSS}
-${wrapStyle(
-  'MinZoom',
-  `#MangaOnlineViewer .PageContent .PageImg {min-width: ${getUserSettings().minZoom}vw;}`,
-)}
-`;
+    return html`
+      <title>${manga.title}</title>
+      <meta charset="UTF-8" />
+      ${wrapStyle('externals', sweetalertStyle)} ${wrapStyle('reader', cssStyles)} ${themesCSS}
+      ${wrapStyle(
+        'MinZoom',
+        `#MangaOnlineViewer .PageContent .PageImg {min-width: ${getUserSettings().minZoom}vw;}`,
+      )}
+    `;
   }
 
   const localeSelector = () =>
     locales
       .map(
-        (locale) => `
-<option value='${locale.ID}' ${getUserSettings().locale === locale.ID ? 'selected' : ''}>
-  ${locale.NAME}
-</option>`,
+        (locale) =>
+          html` <option
+            value="${locale.ID}"
+            ${getUserSettings().locale === locale.ID ? 'selected' : ''}
+          >
+            ${locale.NAME}
+          </option>`,
       )
       .join('');
   const themesSelector = () =>
     [...Object.keys(colors).map((color) => colors[color].name)]
       .map(
-        (theme) => `
-<span title='${theme}'
-    class='${theme} ThemeRadio ${getUserSettings().theme === theme ? 'selected' : ''}'>
-${IconCheck}
-</span>`,
+        (theme2) =>
+          html` <span
+            title="${theme2}"
+            class="${theme2} ThemeRadio ${getUserSettings().theme === theme2 ? 'selected' : ''}"
+          >
+            ${IconCheck}
+          </span>`,
       )
       .join('');
-  const SettingsPanel = () => `
-<div id='SettingsPanel' class='panel'>
-  <h2>${getLocaleString('SETTINGS')}</h2>
-  <button id='CloseSettings' class='closeButton' title='${getLocaleString('CLOSE')}'>
-    ${IconX}
-  </button>
-  <button id='ResetSettings' class='simpleButton'>
-    ${getLocaleString('BUTTON_RESET_SETTINGS')}
-  </button>
-  <!-- =========================================================================================== -->
-  <div class='ControlLabel locale'>${getLocaleString('LANGUAGE')}
-    <select id='locale'>
+  const language = html` <div class="ControlLabel locale">
+    ${getLocaleString('LANGUAGE')}
+    <select id="locale">
       ${localeSelector()}
     </select>
-  </div>
-  <!-- =========================================================================================== -->
-  <div id='ThemeSection'>
-    <div class='ControlLabel ColorSchemeSelector'>${getLocaleString('COLOR_SCHEME')}
-      <button id='ColorScheme' class='simpleButton'>
-        ${IconSun}
-        ${IconMoon}
-      </button>
+  </div>`;
+  const theme = html` <div id="ThemeSection">
+    <div class="ControlLabel ColorSchemeSelector">
+      ${getLocaleString('COLOR_SCHEME')}
+      <button id="ColorScheme" class="simpleButton">${IconSun} ${IconMoon}</button>
     </div>
-    <!-- =========================================================================================== -->
-    <div class='ControlLabel ThemeSelector'>${getLocaleString('THEME')}
-      <span class='custom ThemeRadio 
-          ${getUserSettings().theme === 'custom' ? 'selected' : ''}'
-            title='custom'>
-      ${IconPalette}
-      ${IconCheck}
-    </span>
+    <div class="ControlLabel ThemeSelector">
+      ${getLocaleString('THEME')}
+      <span
+        class="custom ThemeRadio 
+        ${getUserSettings().theme === 'custom' ? 'selected' : ''}"
+        title="custom"
+      >
+        ${IconPalette} ${IconCheck}
+      </span>
       ${themesSelector()}
     </div>
-    <!-- =========================================================================================== -->
-    <div id='Hue' class='ControlLabel CustomTheme ControlLabelItem 
-        ${getUserSettings().theme.startsWith('custom') ? 'show' : ''}'>
+    <div
+      id="Hue"
+      class="ControlLabel CustomTheme ControlLabelItem 
+      ${getUserSettings().theme.startsWith('custom') ? 'show' : ''}"
+    >
       ${getLocaleString('THEME_HUE')}
-      <input id='CustomThemeHue' type='color' value='${getUserSettings().customTheme}'
-            class='colorpicker CustomTheme' />
-    </div>
-    <!-- =========================================================================================== -->
-    <div id='Shade' class='ControlLabel CustomTheme ControlLabelItem
-        ${getUserSettings().theme.startsWith('custom') ? '' : 'show'}'>
-    <span>
-      ${getLocaleString('THEME_SHADE')}
-      <output id='themeShadeVal' class='RangeValue' for='ThemeShade'>${
-        getUserSettings().themeShade
-      }</output>
-    </span>
-      <input type='range'
-            value='${getUserSettings().themeShade}'
-            name='ThemeShade'
-            id='ThemeShade'
-            min='100'
-            max='900'
-            step='100'
-            oninput='themeShadeVal.value = this.value'
+      <input
+        id="CustomThemeHue"
+        type="color"
+        value="${getUserSettings().customTheme}"
+        class="colorpicker CustomTheme"
       />
     </div>
-  </div>
-  <!-- =========================================================================================== -->
-  <div class='ControlLabel loadMode'>${getLocaleString('DEFAULT_LOAD_MODE')}
-    <select id='loadMode'>
-      <option value='wait' ${getUserSettings().loadMode === 'wait' ? 'selected' : ''}>
+    <div
+      id="Shade"
+      class="ControlLabel CustomTheme ControlLabelItem
+      ${getUserSettings().theme.startsWith('custom') ? '' : 'show'}"
+    >
+      <span>
+        ${getLocaleString('THEME_SHADE')}
+        <output id="themeShadeVal" class="RangeValue" for="ThemeShade">
+          ${getUserSettings().themeShade}
+        </output>
+      </span>
+      <input
+        type="range"
+        value="${getUserSettings().themeShade}"
+        name="ThemeShade"
+        id="ThemeShade"
+        min="100"
+        max="900"
+        step="100"
+        oninput="themeShadeVal.value = this.value"
+      />
+    </div>
+  </div>`;
+  const loadMode = html` <div class="ControlLabel loadMode">
+    ${getLocaleString('DEFAULT_LOAD_MODE')}
+    <select id="loadMode">
+      <option value="wait" ${getUserSettings().loadMode === 'wait' ? 'selected' : ''}>
         ${getLocaleString('LOAD_MODE_NORMAL')}
       </option>
-      <option value='always' ${getUserSettings().loadMode === 'always' ? 'selected' : ''}>
+      <option value="always" ${getUserSettings().loadMode === 'always' ? 'selected' : ''}>
         ${getLocaleString('LOAD_MODE_ALWAYS')}
       </option>
-      <option value='never' ${getUserSettings().loadMode === 'never' ? 'selected' : ''}>
+      <option value="never" ${getUserSettings().loadMode === 'never' ? 'selected' : ''}>
         ${getLocaleString('LOAD_MODE_NEVER')}
       </option>
     </select>
-  </div>
-  <!-- =========================================================================================== -->
-  <div class='ControlLabel PagesPerSecond'>${getLocaleString('LOAD_SPEED')}
-    <select id='PagesPerSecond'>
-      <option value='3000' ${getUserSettings().throttlePageLoad === 3e3 ? 'selected' : ''}>
-          0.3(${getLocaleString('SLOWLY')})
+  </div>`;
+  const loadSpeed = html` <div class="ControlLabel PagesPerSecond">
+    ${getLocaleString('LOAD_SPEED')}
+    <select id="PagesPerSecond">
+      <option value="3000" ${getUserSettings().throttlePageLoad === 3e3 ? 'selected' : ''}>
+        0.3(${getLocaleString('SLOWLY')})
       </option>
-      <option value='2000' ${getUserSettings().throttlePageLoad === 2e3 ? 'selected' : ''}>
+      <option value="2000" ${getUserSettings().throttlePageLoad === 2e3 ? 'selected' : ''}>
         0.5
       </option>
-      <option value='1000' ${getUserSettings().throttlePageLoad === 1e3 ? 'selected' : ''}>
-          01(${getLocaleString('NORMAL')})
+      <option value="1000" ${getUserSettings().throttlePageLoad === 1e3 ? 'selected' : ''}>
+        01(${getLocaleString('NORMAL')})
       </option>
-      <option value='500' ${getUserSettings().throttlePageLoad === 500 ? 'selected' : ''}>
+      <option value="500" ${getUserSettings().throttlePageLoad === 500 ? 'selected' : ''}>
         02
       </option>
-      <option value='250' ${getUserSettings().throttlePageLoad === 250 ? 'selected' : ''}>
-          04(${getLocaleString('FAST')})
+      <option value="250" ${getUserSettings().throttlePageLoad === 250 ? 'selected' : ''}>
+        04(${getLocaleString('FAST')})
       </option>
-      <option value='125' ${getUserSettings().throttlePageLoad === 125 ? 'selected' : ''}>
+      <option value="125" ${getUserSettings().throttlePageLoad === 125 ? 'selected' : ''}>
         08
       </option>
-      <option value='100' ${getUserSettings().throttlePageLoad === 100 ? 'selected' : ''}>
-          10(${getLocaleString('EXTREME')})
+      <option value="100" ${getUserSettings().throttlePageLoad === 100 ? 'selected' : ''}>
+        10(${getLocaleString('EXTREME')})
       </option>
-      <option value='1' ${getUserSettings().throttlePageLoad === 1 ? 'selected' : ''}>
-          ${getLocaleString('ALL_PAGES')}
+      <option value="1" ${getUserSettings().throttlePageLoad === 1 ? 'selected' : ''}>
+        ${getLocaleString('ALL_PAGES')}
       </option>
     </select>
-  </div>
-  <!-- =========================================================================================== -->
-  <div class='ControlLabel DefaultZoomMode'>
+  </div>`;
+  const defaultZoomMode = html` <div class="ControlLabel DefaultZoomMode">
     ${getLocaleString('DEFAULT_ZOOM_MODE')}
-    <select id='DefaultZoomMode'>
-      <option value='percent' ${getUserSettings().zoomMode === 'percent' ? 'selected' : ''}>
+    <select id="DefaultZoomMode">
+      <option value="percent" ${getUserSettings().zoomMode === 'percent' ? 'selected' : ''}>
         ${getLocaleString('PERCENT')}
       </option>
-      <option value='width' ${getUserSettings().zoomMode === 'width' ? 'selected' : ''}>
+      <option value="width" ${getUserSettings().zoomMode === 'width' ? 'selected' : ''}>
         ${getLocaleString('FIT_WIDTH')}
       </option>
-      <option value='height' ${getUserSettings().zoomMode === 'height' ? 'selected' : ''}>
+      <option value="height" ${getUserSettings().zoomMode === 'height' ? 'selected' : ''}>
         ${getLocaleString('FIT_HEIGHT')}
       </option>
     </select>
-  </div>
-  <!-- =========================================================================================== -->
-  <div class='ControlLabel DefaultZoom ControlLabelItem
-      ${getUserSettings().zoomMode === 'percent' ? 'show' : ''}'>
+  </div>`;
+  const defaultZoom = html` <div
+    class="ControlLabel DefaultZoom ControlLabelItem
+  ${getUserSettings().zoomMode === 'percent' ? 'show' : ''}"
+  >
     <span>
       ${getLocaleString('DEFAULT_ZOOM')}
-      <output id='defaultZoomVal'
-              class='RangeValue'
-              for='DefaultZoom'>
+      <output id="defaultZoomVal" class="RangeValue" for="DefaultZoom">
         ${getUserSettings().defaultZoom}%
       </output>
     </span>
-    <input type='range'
-          value='${getUserSettings().defaultZoom}'
-          name='DefaultZoom'
-          id='DefaultZoom'
-          min='5'
-          max='200'
-          step='5'
-          list='tickmarks'
-          oninput='defaultZoomVal.value = this.value + "%"'
+    <input
+      type="range"
+      value="${getUserSettings().defaultZoom}"
+      name="DefaultZoom"
+      id="DefaultZoom"
+      min="5"
+      max="200"
+      step="5"
+      list="tickmarks"
+      oninput='defaultZoomVal.value = this.value + "%"'
     />
-    <datalist id='tickmarks'>
-      <option value='5'>5</option>
-      <option value='25'>25</option>
-      <option value='50'>50</option>
-      <option value='75'>75</option>
-      <option value='100'>100</option>
-      <option value='125'>125</option>
-      <option value='150'>150</option>
-      <option value='175'>175</option>
-      <option value='200'>200</option>
+    <datalist id="tickmarks">
+      <option value="5">5</option>
+      <option value="25">25</option>
+      <option value="50">50</option>
+      <option value="75">75</option>
+      <option value="100">100</option>
+      <option value="125">125</option>
+      <option value="150">150</option>
+      <option value="175">175</option>
+      <option value="200">200</option>
     </datalist>
-  </div>
-  <!-- =========================================================================================== -->
-  <div class='ControlLabel minZoom'>
-  <span>
-    ${getLocaleString('MINIMUM_ZOOM')}
-    <output id='minZoomVal' class='RangeValue' for='minZoom'>${getUserSettings().minZoom}%</output>
-  </span>
-    <input type='range'
-          value='${getUserSettings().minZoom}'
-          name='minZoom'
-          id='minZoom'
-          min='30'
-          max='100'
-          step='10'
-          oninput='minZoomVal.value = this.value + "%"'
+  </div>`;
+  const minZoom = html` <div class="ControlLabel minZoom">
+    <span>
+      ${getLocaleString('MINIMUM_ZOOM')}
+      <output id="minZoomVal" class="RangeValue" for="minZoom">
+        ${getUserSettings().minZoom}%
+      </output>
+    </span>
+    <input
+      type="range"
+      value="${getUserSettings().minZoom}"
+      name="minZoom"
+      id="minZoom"
+      min="30"
+      max="100"
+      step="10"
+      oninput='minZoomVal.value = this.value + "%"'
     />
-  </div>
-  <!-- =========================================================================================== -->
-  <div class='ControlLabel zoomStep'>
-  <span>
-    ${getLocaleString('ZOOM_STEP')}
-    <output id='zoomStepVal' class='RangeValue' for='zoomStep'>${
-      getUserSettings().zoomStep
-    }%</output>
-  </span>
-    <input type='range'
-          value='${getUserSettings().zoomStep}'
-          name='zoomStep'
-          id='zoomStep'
-          min='5'
-          max='50'
-          step='5'
-          oninput='zoomStepVal.value = this.value + "%"'
+  </div>`;
+  const zoomStep = html` <div class="ControlLabel zoomStep">
+    <span>
+      ${getLocaleString('ZOOM_STEP')}
+      <output id="zoomStepVal" class="RangeValue" for="zoomStep">
+        ${getUserSettings().zoomStep}%
+      </output>
+    </span>
+    <input
+      type="range"
+      value="${getUserSettings().zoomStep}"
+      name="zoomStep"
+      id="zoomStep"
+      min="5"
+      max="50"
+      step="5"
+      oninput='zoomStepVal.value = this.value + "%"'
     />
-  </div>
-  <!-- =========================================================================================== -->
-  <div class='ControlLabel viewMode'>${getLocaleString('DEFAULT_VIEW_MODE')}
-    <select id='viewMode'>
-      <option value='Vertical' ${getUserSettings().viewMode === 'Vertical' ? 'selected' : ''}>
+  </div>`;
+  const viewMode$1 = html` <div class="ControlLabel viewMode">
+    ${getLocaleString('DEFAULT_VIEW_MODE')}
+    <select id="viewMode">
+      <option value="Vertical" ${getUserSettings().viewMode === 'Vertical' ? 'selected' : ''}>
         ${getLocaleString('VIEW_MODE_VERTICAL')}
       </option>
-      <option value='WebComic' ${getUserSettings().viewMode === 'WebComic' ? 'selected' : ''}>
+      <option value="WebComic" ${getUserSettings().viewMode === 'WebComic' ? 'selected' : ''}>
         ${getLocaleString('VIEW_MODE_WEBCOMIC')}
       </option>
-      <option value='FluidLTR' ${getUserSettings().viewMode === 'FluidLTR' ? 'selected' : ''}>
+      <option value="FluidLTR" ${getUserSettings().viewMode === 'FluidLTR' ? 'selected' : ''}>
         ${getLocaleString('VIEW_MODE_LEFT')}
       </option>
-      <option value='FluidRTL' ${getUserSettings().viewMode === 'FluidRTL' ? 'selected' : ''}>
+      <option value="FluidRTL" ${getUserSettings().viewMode === 'FluidRTL' ? 'selected' : ''}>
         ${getLocaleString('VIEW_MODE_RIGHT')}
       </option>
     </select>
-  </div>
-  <!-- =========================================================================================== -->
-  <div class='ControlLabel fitIfOversize'>${getLocaleString('FIT_WIDTH_OVERSIZED')}
-    <input type='checkbox' value='true' name='fitIfOversize' id='fitIfOversize' ${
-      getUserSettings().fitWidthIfOversize ? 'checked' : ''
-    } />
-  </div>
-  <!-- =========================================================================================== -->
-  <div class='ControlLabel showThumbnails'>${getLocaleString('SHOW_THUMBNAILS')}
-    <input type='checkbox' value='true' name='showThumbnails' id='showThumbnails' ${
-      getUserSettings().showThumbnails ? 'checked' : ''
-    } />
-  </div>
-  <!-- =========================================================================================== -->
-  <div class='ControlLabel lazyLoadImages'>${getLocaleString('LAZY_LOAD_IMAGES_ENABLE')}
-    <input type='checkbox' value='true' name='lazyLoadImages' id='lazyLoadImages' ${
-      getUserSettings().lazyLoadImages ? 'checked' : ''
-    } />
-  </div>
-  <!-- =========================================================================================== -->
-  <div class='ControlLabel lazyStart ControlLabelItem
-      ${getUserSettings().lazyLoadImages ? 'show' : ''}'
+  </div>`;
+  const lazyLoad$1 = html` <div
+    class="ControlLabel lazyStart ControlLabelItem
+    ${getUserSettings().lazyLoadImages ? 'show' : ''}"
   >
-  <span>
-    ${getLocaleString('LAZY_LOAD_IMAGES')}
-    <output id='lazyStartVal' for='lazyStart'>${getUserSettings().lazyStart}</output>
-  </span>
-  <input type='range' value='${getUserSettings().lazyStart}'
-    name='lazyStart' id='lazyStart' min='5' max='100' step='5'
-    oninput='lazyStartVal.value = this.value' />
-  </div>
-  <!-- =========================================================================================== -->
-  <div class='ControlLabel downloadZip'>${getLocaleString('DOWNLOAD_IMAGES')}
-    <input type='checkbox' value='false' name='downloadZip' id='downloadZip' ${
-      getUserSettings().downloadZip ? 'checked' : ''
-    } />
-  </div>
-  <!-- =========================================================================================== -->
-  <div class='ControlLabel hidePageControls'>${getLocaleString('HIDE_CONTROLS')}
-    <input type='checkbox' value='false' name='hidePageControls' id='hidePageControls' ${
-      getUserSettings().hidePageControls ? 'checked' : ''
-    } />
-  </div>
-  <!-- =========================================================================================== -->
-  <div class='ControlLabel headerType'>${getLocaleString('HEADER_TYPE')}
-    <select id='headerType'>
-      <option value='hover' ${getUserSettings().header === 'hover' ? 'selected' : ''}>
+    <span>
+      ${getLocaleString('LAZY_LOAD_IMAGES')}
+      <output id="lazyStartVal" for="lazyStart"> ${getUserSettings().lazyStart} </output>
+    </span>
+    <input
+      type="range"
+      value="${getUserSettings().lazyStart}"
+      name="lazyStart"
+      id="lazyStart"
+      min="5"
+      max="100"
+      step="5"
+      oninput="lazyStartVal.value = this.value"
+    />
+  </div>`;
+  const headerType = html` <div class="ControlLabel headerType">
+    ${getLocaleString('HEADER_TYPE')}
+    <select id="headerType">
+      <option value="hover" ${getUserSettings().header === 'hover' ? 'selected' : ''}>
         ${getLocaleString('HEADER_HOVER')}
       </option>
-      <option value='scroll' ${getUserSettings().header === 'scroll' ? 'selected' : ''}>
+      <option value="scroll" ${getUserSettings().header === 'scroll' ? 'selected' : ''}>
         ${getLocaleString('HEADER_SCROLL')}
       </option>
-      <option value='click' ${getUserSettings().header === 'click' ? 'selected' : ''}>
+      <option value="click" ${getUserSettings().header === 'click' ? 'selected' : ''}>
         ${getLocaleString('HEADER_CLICK')}
       </option>
-      <option value='fixed' ${getUserSettings().header === 'fixed' ? 'selected' : ''}>
+      <option value="fixed" ${getUserSettings().header === 'fixed' ? 'selected' : ''}>
         ${getLocaleString('HEADER_FIXED')}
       </option>
     </select>
-  </div>
-</div>
-`;
+  </div>`;
+  const checkboxOptions = html` <div class="ControlLabel fitIfOversize">
+      ${getLocaleString('FIT_WIDTH_OVERSIZED')}
+      <input
+        type="checkbox"
+        value="true"
+        name="fitIfOversize"
+        id="fitIfOversize"
+        ${getUserSettings().fitWidthIfOversize ? 'checked' : ''}
+      />
+    </div>
+    <div class="ControlLabel showThumbnails">
+      ${getLocaleString('SHOW_THUMBNAILS')}
+      <input
+        type="checkbox"
+        value="true"
+        name="showThumbnails"
+        id="showThumbnails"
+        ${getUserSettings().showThumbnails ? 'checked' : ''}
+      />
+    </div>
+    <div class="ControlLabel lazyLoadImages">
+      ${getLocaleString('LAZY_LOAD_IMAGES_ENABLE')}
+      <input
+        type="checkbox"
+        value="true"
+        name="lazyLoadImages"
+        id="lazyLoadImages"
+        ${getUserSettings().lazyLoadImages ? 'checked' : ''}
+      />
+    </div>
+    <div class="ControlLabel downloadZip">
+      ${getLocaleString('DOWNLOAD_IMAGES')}
+      <input
+        type="checkbox"
+        value="false"
+        name="downloadZip"
+        id="downloadZip"
+        ${getUserSettings().downloadZip ? 'checked' : ''}
+      />
+    </div>
+    <div class="ControlLabel hidePageControls">
+      ${getLocaleString('HIDE_CONTROLS')}
+      <input
+        type="checkbox"
+        value="false"
+        name="hidePageControls"
+        id="hidePageControls"
+        ${getUserSettings().hidePageControls ? 'checked' : ''}
+      />
+    </div>`;
+  const SettingsPanel = () => html`
+    <div id="SettingsPanel" class="panel">
+      <h2>${getLocaleString('SETTINGS')}</h2>
+      <button id="CloseSettings" class="closeButton" title="${getLocaleString('CLOSE')}">
+        ${IconX}
+      </button>
+      <button id="ResetSettings" class="simpleButton">
+        ${getLocaleString('BUTTON_RESET_SETTINGS')}
+      </button>
+      ${language} ${theme} ${loadMode} ${loadSpeed} ${defaultZoomMode} ${defaultZoom} ${minZoom}
+      ${zoomStep} ${viewMode$1} ${checkboxOptions} ${headerType} ${lazyLoad$1}
+    </div>
+  `;
 
   const keybindList = () =>
     Object.keys(getUserSettings().keybinds).map((kb) => {
       const keys = getUserSettings().keybinds[kb]?.length
         ? getUserSettings()
-            .keybinds[kb]?.map((key) => `<kbd class='dark'>${key}</kbd>`)
+            .keybinds[kb]?.map((key) => html`<kbd class="dark">${key}</kbd>`)
             .join(' / ')
         : '';
-      return `<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
+      return html`<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
     });
   const keybindEditor = () =>
     Object.keys(getUserSettings().keybinds)
       .map(
         // Language=html
-        (kb) => `<label for='${kb}'>${getLocaleString(kb)}:</label>
-        <input type='text' class='KeybindInput' id='${kb}' name='${kb}'
-               value='${getUserSettings().keybinds[kb]?.join(' , ') ?? ''}'>`,
+        (kb) =>
+          html`<label for="${kb}">${getLocaleString(kb)}:</label>
+            <input
+              type="text"
+              class="KeybindInput"
+              id="${kb}"
+              name="${kb}"
+              value="${getUserSettings().keybinds[kb]?.join(' , ') ?? ''}"
+            />`,
       )
-      .concat(`<div id='HotKeysRules'> ${getLocaleString('KEYBIND_RULES')}</div>`);
-  const KeybindingsPanel = () => `
-<div id='KeybindingsPanel' class='panel'>
-  <h2>${getLocaleString('KEYBINDINGS')}</h2>
-  <button id='CloseKeybindings' class='closeButton' title='${getLocaleString('CLOSE')}'>
-    ${IconX}
-  </button>
-  <div class='controls'>
-    <button id='EditKeybindings' class='ControlButton' type='button'
-            title='${getLocaleString('EDIT_KEYBINDS')}'>
-      ${IconPencil}
-      ${getLocaleString('BUTTON_EDIT')}
-    </button>
-    <button id='SaveKeybindings' class='ControlButton hidden' type='button'
-            title='${getLocaleString('SAVE_KEYBINDS')}'>
-      ${IconDeviceFloppy}
-      ${getLocaleString('BUTTON_SAVE')}
-    </button>
-  </div>
-  <div id='KeybindingsList'>
-    ${keybindList().join('\n')}
-  </div>
-</div>
-`;
+      .concat(html`<div id="HotKeysRules">${getLocaleString('KEYBIND_RULES')}</div>`);
+  const KeybindingsPanel = () => html`
+    <div id="KeybindingsPanel" class="panel">
+      <h2>${getLocaleString('KEYBINDINGS')}</h2>
+      <button id="CloseKeybindings" class="closeButton" title="${getLocaleString('CLOSE')}">
+        ${IconX}
+      </button>
+      <div class="controls">
+        <button
+          id="EditKeybindings"
+          class="ControlButton"
+          type="button"
+          title="${getLocaleString('EDIT_KEYBINDS')}"
+        >
+          ${IconPencil} ${getLocaleString('BUTTON_EDIT')}
+        </button>
+        <button
+          id="SaveKeybindings"
+          class="ControlButton hidden"
+          type="button"
+          title="${getLocaleString('SAVE_KEYBINDS')}"
+        >
+          ${IconDeviceFloppy} ${getLocaleString('BUTTON_SAVE')}
+        </button>
+      </div>
+      <div id="KeybindingsList">${keybindList().join('\n')}</div>
+    </div>
+  `;
 
   function indexList(repeat, begin = 1) {
     return Array(repeat)
@@ -3007,65 +3065,67 @@ ${IconCheck}
       .filter((i) => i >= begin);
   }
 
-  const ThumbnailsPanel = (manga) => `
-<nav id='Navigation' class='panel ${getUserSettings().showThumbnails ? '' : 'disabled'}'>
-  <div id='NavigationCounters' class='ControlLabel'>
-    ${IconCategory}
-    <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
-    ${getLocaleString('PAGES_LOADED')}
-  </div>
-  <div id='Thumbnails'>
-    ${indexList(manga.pages, manga.begin).map(
-      (index) => `
+  const ThumbnailsPanel = (manga) => html`
+    <nav id="Navigation" class="panel ${getUserSettings().showThumbnails ? '' : 'disabled'}">
+      <div id="NavigationCounters" class="ControlLabel">
+        ${IconCategory}
+        <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
+        ${getLocaleString('PAGES_LOADED')}
+      </div>
+      <div id="Thumbnails">
+        ${indexList(manga.pages, manga.begin).map(
+          (index) => `
       <div id='Thumbnail${index}' class='Thumbnail'>
         <img id='ThumbnailImg${index}' alt='' class='ThumbnailImg' src='' />
         <span class='ThumbnailIndex'>${index}</span>
       </div>`,
-    )}
-  </div>
-</nav>
-`;
+        )}
+      </div>
+    </nav>
+  `;
 
   const listBookmarks = () => {
     if (isEmpty(getUserSettings().bookmarks)) {
       return [getLocaleString('LIST_EMPTY')];
     }
     return getUserSettings().bookmarks.map(
-      (mark, index) => `
-      <div id='Bookmark${index + 1}' class='BookmarkItem'>
-        <span class='bookmarkData bookmarkDate'>
-          ${new Date(mark.date).toISOString().slice(0, 10)}
-        </span>
-        <span class='bookmarkData bookmarkURl'>
-          <a class='' href='${mark.url}' target='_blank'>${mark.url}</a>
-        </span>
-        <span class='bookmarkData bookmarkPage'>Page: ${mark.page}</span>
-        <span class='bookmarkData bookmarkFunctions'>
-          <a class='' href='${mark.url}' target='_blank'>
-            <button class='ControlButton open' title='Open Bookmark' type='button'>
-              ${IconExternalLink}
+      (mark, index) => html`
+        <div id="Bookmark${index + 1}" class="BookmarkItem">
+          <span class="bookmarkData bookmarkDate">
+            ${new Date(mark.date).toISOString().slice(0, 10)}
+          </span>
+          <span class="bookmarkData bookmarkURl">
+            <a class="" href="${mark.url}" target="_blank">${mark.url}</a>
+          </span>
+          <span class="bookmarkData bookmarkPage">Page: ${mark.page}</span>
+          <span class="bookmarkData bookmarkFunctions">
+            <a class="" href="${mark.url}" target="_blank">
+              <button class="ControlButton open" title="Open Bookmark" type="button">
+                ${IconExternalLink}
+              </button>
+            </a>
+            <button
+              class="ControlButton erase"
+              title="Delete Bookmark"
+              type="button"
+              value="${mark.url}"
+            >
+              ${IconTrash}
             </button>
-          </a>
-          <button class='ControlButton erase' title='Delete Bookmark'
-           type='button' value='${mark.url}'>
-            ${IconTrash}
-          </button>
-        </span>
-      </div>`,
+          </span>
+        </div>
+      `,
     );
   };
-  const BookmarkPanel = () => `
-
-<div id='BookmarksPanel' class='panel'>
-  <button id='CloseBookmarks' class='closeButton' title='${getLocaleString('CLOSE')}'>
-    ${IconX}
-  </button>
-  <h2>${getLocaleString('BOOKMARKS')}</h2>
-  <div id='BookmarksList'>
-    ${listBookmarks().join('')}
-  </div>
-</div>
-`;
+  const BookmarkPanel = () => html`
+    <div id="BookmarksPanel" class="panel">
+      <button id="CloseBookmarks" class="closeButton" title="${getLocaleString('CLOSE')}">
+        ${IconX}
+      </button>
+      <h2>${getLocaleString('BOOKMARKS')}</h2>
+      <div id="BookmarksList">${listBookmarks().join('')}</div>
+    </div>
+  `;
   function reloadBookmarks() {
     const list = document.getElementById('BookmarksList');
     if (list) {
@@ -3074,176 +3134,197 @@ ${IconCheck}
   }
 
   const listOptions = (times, begin) =>
-    indexList(times, begin).map((index) => `<option value='${index}'>${index}</option>`);
-  const Header = (manga) => `<header id='Header' class='${getUserSettings().header}'>
-      <div id='menu'>
-        ${IconMenu2}
-      </div>
-      <aside id='GlobalFunctions'>    
-      <span>
-        <button id='enlarge' title='${getLocaleString('ENLARGE')}' class='ControlButton'>
-          ${IconZoomInArea}
-        </button>
-        <button id='restore' title='${getLocaleString('RESTORE')}' class='ControlButton'>
-          ${IconZoomPan}
-        </button>
-        <button id='reduce' title='${getLocaleString('REDUCE')}' class='ControlButton'>
-          ${IconZoomOutArea}
-        </button>
-        <button id='fitWidth' title='${getLocaleString('FIT_WIDTH')}' class='ControlButton'>
-          ${IconArrowAutofitWidth}
-        </button>
-        <button id='fitHeight' title='${getLocaleString('FIT_HEIGHT')}' class='ControlButton'>
-          ${IconArrowAutofitHeight}
-        </button>
-        <button id='keybindings' title='${getLocaleString('KEYBINDINGS')}' class='ControlButton'>
-          ${IconKeyboard}
-        </button>
-      </span>
+    indexList(times, begin).map((index) => html`<option value="${index}">${index}</option>`);
+  const Header = (manga) => html`
+    <header id="Header" class="${getUserSettings().header}">
+      <div id="menu">${IconMenu2}</div>
+      <aside id="GlobalFunctions">
         <span>
-        <button id='ltrMode' title='${getLocaleString('VIEW_MODE_LEFT')}' class='ControlButton'>
-          ${IconArrowAutofitRight}
-        </button>
-        <button id='verticalMode'
-                title='${getLocaleString('VIEW_MODE_VERTICAL')}' class='ControlButton tablets'>
-          ${IconArrowAutofitDown}
-        </button>
-        <button id='webComic'
-                title='${getLocaleString('VIEW_MODE_WEBCOMIC')}' class='ControlButton tablets'>
-          ${IconSpacingVertical}
-        </button>
-        <button id='rtlMode' title='${getLocaleString('VIEW_MODE_RIGHT')}' class='ControlButton'>
-          ${IconArrowAutofitLeft}
-        </button>
-        <button id='pageControls'
-                title='${getLocaleString('TOGGLE_CONTROLS')}' class='ControlButton tablets'>
-          ${IconListNumbers}
-        </button>
-        <button id='bookmarks' title='${getLocaleString(
-          'BOOKMARKS',
-        )}' class='ControlButton tablets'>
-          ${IconBookmarks}
-        </button>
-        <button id='settings' title='${getLocaleString(
-          'SETTINGS',
-        )}' class='ControlButton tablets phones'>
-          ${IconSettings}
-        </button>
-      </span>
-        <span id='ZoomSlider'>
-        <output id='ZoomVal'
-                class='RangeValue'
-                for='Zoom'>
+          <button id="enlarge" title="${getLocaleString('ENLARGE')}" class="ControlButton">
+            ${IconZoomInArea}
+          </button>
+          <button id="restore" title="${getLocaleString('RESTORE')}" class="ControlButton">
+            ${IconZoomPan}
+          </button>
+          <button id="reduce" title="${getLocaleString('REDUCE')}" class="ControlButton">
+            ${IconZoomOutArea}
+          </button>
+          <button id="fitWidth" title="${getLocaleString('FIT_WIDTH')}" class="ControlButton">
+            ${IconArrowAutofitWidth}
+          </button>
+          <button id="fitHeight" title="${getLocaleString('FIT_HEIGHT')}" class="ControlButton">
+            ${IconArrowAutofitHeight}
+          </button>
+          <button id="keybindings" title="${getLocaleString('KEYBINDINGS')}" class="ControlButton">
+            ${IconKeyboard}
+          </button>
+        </span>
+        <span>
+          <button id="ltrMode" title="${getLocaleString('VIEW_MODE_LEFT')}" class="ControlButton">
+            ${IconArrowAutofitRight}
+          </button>
+          <button
+            id="verticalMode"
+            title="${getLocaleString('VIEW_MODE_VERTICAL')}"
+            class="ControlButton tablets"
+          >
+            ${IconArrowAutofitDown}
+          </button>
+          <button
+            id="webComic"
+            title="${getLocaleString('VIEW_MODE_WEBCOMIC')}"
+            class="ControlButton tablets"
+          >
+            ${IconSpacingVertical}
+          </button>
+          <button id="rtlMode" title="${getLocaleString('VIEW_MODE_RIGHT')}" class="ControlButton">
+            ${IconArrowAutofitLeft}
+          </button>
+          <button
+            id="pageControls"
+            title="${getLocaleString('TOGGLE_CONTROLS')}"
+            class="ControlButton tablets"
+          >
+            ${IconListNumbers}
+          </button>
+          <button
+            id="bookmarks"
+            title="${getLocaleString('BOOKMARKS')}"
+            class="ControlButton tablets"
+          >
+            ${IconBookmarks}
+          </button>
+          <button
+            id="settings"
+            title="${getLocaleString('SETTINGS')}"
+            class="ControlButton tablets phones"
+          >
+            ${IconSettings}
+          </button>
+        </span>
+        <span id="ZoomSlider">
+          <output id="ZoomVal" class="RangeValue" for="Zoom">
             ${getUserSettings().defaultZoom}%
-        </output>
-        <input type='range'
-               value='${getUserSettings().defaultZoom}'
-               name='Zoom'
-               id='Zoom'
-               min='1'
-               max='200'
-        />
-      </span>
+          </output>
+          <input
+            type="range"
+            value="${getUserSettings().defaultZoom}"
+            name="Zoom"
+            id="Zoom"
+            min="1"
+            max="200"
+          />
+        </span>
       </aside>
-      <div class='ViewerTitle'>
-        <h1 id='MangaTitle'>${manga.title}</h1>
-        <a id='series' href='${manga.series}'>
-            (${getLocaleString('RETURN_CHAPTER_LIST')})
-        </a>
+      <div class="ViewerTitle">
+        <h1 id="MangaTitle">${manga.title}</h1>
+        <a id="series" href="${manga.series}"> (${getLocaleString('RETURN_CHAPTER_LIST')}) </a>
       </div>
-      <nav id='ChapterNavigation'>
-        <div id='Counters' class='ControlLabel'>
+      <nav id="ChapterNavigation">
+        <div id="Counters" class="ControlLabel">
           ${getLocaleString('PAGES_LOADED')}:
           <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
-          <span class='ControlLabel'>
-          ${getLocaleString('GO_TO_PAGE')}:
-        </span>
-          <select id='gotoPage'>
+          <span class="ControlLabel"> ${getLocaleString('GO_TO_PAGE')}: </span>
+          <select id="gotoPage">
             <option selected>#</option>
             ${listOptions(manga.pages, manga.begin).join('')}
           </select>
         </div>
-        <div id='ChapterControl' class='ChapterControl'>
-          <button id='download' class='NavigationControlButton ControlButton disabled' type='button'
-                  title='${getLocaleString('DOWNLOAD_ZIP')}'>
-            ${IconFileDownload}
-            ${IconLoader2}
-            ${getLocaleString('BUTTON_DOWNLOAD')}
+        <div id="ChapterControl" class="ChapterControl">
+          <button
+            id="download"
+            class="NavigationControlButton ControlButton disabled"
+            type="button"
+            title="${getLocaleString('DOWNLOAD_ZIP')}"
+          >
+            ${IconFileDownload} ${IconLoader2} ${getLocaleString('BUTTON_DOWNLOAD')}
           </button>
-          <a id='prev' class='NavigationControlButton ControlButton' type='button'
-             href='${manga.prev ?? ''}' title='${getLocaleString('PREVIOUS_CHAPTER')}'>
-            ${IconArrowBigLeft}
-            ${getLocaleString('BUTTON_PREVIOUS')}
+          <a
+            id="prev"
+            class="NavigationControlButton ControlButton"
+            type="button"
+            href="${manga.prev ?? ''}"
+            title="${getLocaleString('PREVIOUS_CHAPTER')}"
+          >
+            ${IconArrowBigLeft} ${getLocaleString('BUTTON_PREVIOUS')}
           </a>
-          <a id='next' class='NavigationControlButton ControlButton' type='button'
-             href='${manga.next ?? ''}' title='${getLocaleString('NEXT_CHAPTER')}'>
-            ${getLocaleString('BUTTON_NEXT')}
-            ${IconArrowBigRight}
+          <a
+            id="next"
+            class="NavigationControlButton ControlButton"
+            type="button"
+            href="${manga.next ?? ''}"
+            title="${getLocaleString('NEXT_CHAPTER')}"
+          >
+            ${getLocaleString('BUTTON_NEXT')} ${IconArrowBigRight}
           </a>
         </div>
       </nav>
-    </header>`;
+    </header>
+  `;
 
   const listPages = (times, begin) =>
     indexList(times, begin).map(
       // Language=html
-      (index) => `
-      <div id='Page${index}' class='MangaPage'>
-        <div class='PageFunctions'>
-          <button class='Bookmark ControlButton' title='${getLocaleString('BOOKMARK')}'>
-            ${IconBookmark}
-            ${IconBookmarkOff}
-          </button>
-          <button class='ZoomIn ControlButton' title='${getLocaleString('ZOOM_IN')}'>
-            ${IconZoomIn}
-          </button>
-          <button class='ZoomRestore ControlButton' title='${getLocaleString('ZOOM_RESET')}'>
-            ${IconZoomCancel}
-          </button>
-          <button class='ZoomOut ControlButton' title='${getLocaleString('ZOOM_OUT')}'>
-            ${IconZoomOut}
-          </button>
-          <button class='ZoomWidth ControlButton' title='${getLocaleString('ZOOM_WIDTH')}'>
-            ${IconArrowAutofitWidth}
-          </button>
-          <button class='ZoomHeight ControlButton' title='${getLocaleString('ZOOM_HEIGHT')}'>
-            ${IconArrowAutofitHeight}
-          </button>
-          <button class='Hide ControlButton' title='${getLocaleString('HIDE')}'>
-            ${IconEye}
-            ${IconEyeOff}
-          </button>
-          <button class='Reload ControlButton' title='${getLocaleString('RELOAD')}'>
-            ${IconRefresh}
-          </button>
-          <span class='PageIndex'>${index}</span>
+      (index) => html`
+        <div id="Page${index}" class="MangaPage">
+          <div class="PageFunctions">
+            <button class="Bookmark ControlButton" title="${getLocaleString('BOOKMARK')}">
+              ${IconBookmark} ${IconBookmarkOff}
+            </button>
+            <button class="ZoomIn ControlButton" title="${getLocaleString('ZOOM_IN')}">
+              ${IconZoomIn}
+            </button>
+            <button class="ZoomRestore ControlButton" title="${getLocaleString('ZOOM_RESET')}">
+              ${IconZoomCancel}
+            </button>
+            <button class="ZoomOut ControlButton" title="${getLocaleString('ZOOM_OUT')}">
+              ${IconZoomOut}
+            </button>
+            <button class="ZoomWidth ControlButton" title="${getLocaleString('ZOOM_WIDTH')}">
+              ${IconArrowAutofitWidth}
+            </button>
+            <button class="ZoomHeight ControlButton" title="${getLocaleString('ZOOM_HEIGHT')}">
+              ${IconArrowAutofitHeight}
+            </button>
+            <button class="Hide ControlButton" title="${getLocaleString('HIDE')}">
+              ${IconEye} ${IconEyeOff}
+            </button>
+            <button class="Reload ControlButton" title="${getLocaleString('RELOAD')}">
+              ${IconRefresh}
+            </button>
+            <span class="PageIndex">${index}</span>
+          </div>
+          <div class="PageContent">
+            <img id="PageImg${index}" alt="" class="PageImg" />
+          </div>
         </div>
-        <div class='PageContent'>
-          <img id='PageImg${index}' alt='' class='PageImg' />
-        </div>
-      </div>`,
+      `,
     );
 
-  const Reader = (manga) => `
-<main id='Chapter' class='${getUserSettings().fitWidthIfOversize ? 'fitWidthIfOversize' : ''}
-  ${getUserSettings().viewMode}'>
-  ${listPages(manga.pages, manga.begin).join('')}
-</main>
-`;
+  const Reader = (manga) => html`
+    <main
+      id="Chapter"
+      class="${getUserSettings().fitWidthIfOversize ? 'fitWidthIfOversize' : ''}
+  ${getUserSettings().viewMode}"
+    >
+      ${listPages(manga.pages, manga.begin).join('')}
+    </main>
+  `;
 
-  const commentsPanel = (manga) => `
-<section id='CommentsPanel' class='${manga.comments ? '' : 'hide'}'>
-  <div id='CommentsButton' class='ControlButton'
-    title='${getLocaleString('DISPLAY_COMMENTS')}'>
-    ${IconMessage}
-    ${getLocaleString('DISPLAY_COMMENTS')}
-  </div>
-  <div id='CommentsArea' class='hide 
-      ${isBackgroundColorDark(manga.comments ?? document.body) ? 'dark' : 'light'}'>
-      ${manga.comments?.outerHTML}
-  </div>
-</section> 
-`;
+  const commentsPanel = (manga) => html`
+    <section id="CommentsPanel" class="${manga.comments ? '' : 'hide'}">
+      <div id="CommentsButton" class="ControlButton" title="${getLocaleString('DISPLAY_COMMENTS')}">
+        ${IconMessage} ${getLocaleString('DISPLAY_COMMENTS')}
+      </div>
+      <div
+        id="CommentsArea"
+        class="hide 
+      ${isBackgroundColorDark(manga.comments ?? document.body) ? 'dark' : 'light'}"
+      >
+        ${manga.comments?.outerHTML}
+      </div>
+    </section>
+  `;
 
   function scrollToElement(ele) {
     window.scroll(0, ele?.offsetTop ?? 0);
@@ -3390,7 +3471,7 @@ ${IconCheck}
       .then((content) => {
         logScript('Download Ready');
         const zipName = `${document.querySelector('#MangaTitle')?.textContent?.trim()}.zip`;
-        saveAs(content, zipName, true);
+        FileSaver.saveAs(content, zipName, { autoBom: false });
         document.getElementById('download')?.classList.remove('loading');
       })
       .catch(logScript);
@@ -4220,10 +4301,10 @@ ${IconCheck}
       '#KeybindingsPanel': KeybindingsPanel(),
       '#Bookmarks': BookmarkPanel(),
     };
-    Object.entries(elements).forEach(([id, html]) => {
+    Object.entries(elements).forEach(([id, component]) => {
       const tag = document.querySelector(id);
       if (tag) {
-        tag.outerHTML = html;
+        tag.outerHTML = component;
       }
     });
     document.querySelector('#Overlay')?.dispatchEvent(new Event('click'));
@@ -4231,21 +4312,19 @@ ${IconCheck}
   }
   const app = (manga) => {
     loadedManga = manga;
-    return `
-<div id='MangaOnlineViewer' 
-    class='${getUserSettings().colorScheme} 
-      ${getUserSettings().hidePageControls ? 'hideControls' : ''}
-      ${isBookmarked() ? 'bookmarked' : ''}'
-    data-theme='${getUserSettings().theme}'>
-  ${Header(manga)}
-  ${Reader(manga)}
-  ${commentsPanel(manga)}  
-  ${ThumbnailsPanel(manga)}
-  <div id='Overlay' class='overlay'></div>
-  ${SettingsPanel()}
-  ${KeybindingsPanel()}
-  ${BookmarkPanel()}
-</div>`;
+    return html`
+      <div
+        id="MangaOnlineViewer"
+        class="${getUserSettings().colorScheme} 
+  ${getUserSettings().hidePageControls ? 'hideControls' : ''}
+  ${isBookmarked() ? 'bookmarked' : ''}"
+        data-theme="${getUserSettings().theme}"
+      >
+        ${Header(manga)} ${Reader(manga)} ${commentsPanel(manga)} ${ThumbnailsPanel(manga)}
+        <div id="Overlay" class="overlay"></div>
+        ${SettingsPanel()} ${KeybindingsPanel()} ${BookmarkPanel()}
+      </div>
+    `;
   };
 
   function display(manga) {
@@ -4439,7 +4518,7 @@ ${IconCheck}
       prev: '#',
       next: '#',
       listImages,
-    });
+    }).then(() => logScript('Page loaded'));
   }
   function openFileImages(evt) {
     const input = evt.target;
@@ -4460,20 +4539,46 @@ ${IconCheck}
         prev: '#',
         next: '#',
         listImages: files.map(URL.createObjectURL),
-      });
+      }).then(() => logScript('Page loaded'));
     }
   }
   function allowUpload() {
     const ele = document.createElement('div');
-    ele.innerHTML = `
-        <p>Can read any zip file with images inside and diplay it like any of the supported sites</p>
-        <label for='file'>Choose the local zip file:</label>
-        <input type="file" id="file" name="file" class='btn' accept=".zip, .cbz, .cbr, .7z, .rar" value=''/><br />
-        <p>Note : your browser will process the zip file, don't choose a file too big !</p>
-        <label for='file'><b>OR</b> Select a folder with images inside:</label>
-        <input type="file" id="folder" name="folder" class='btn' webkitdirectory mozdirectory msdirectory odirectory directory value='' /><br />
-        <label for='file'><b>OR</b> Select images:</label>
-        <input type="file" id="images" name="images" class='btn' accept="image/*" multiple value='' /><br />
+    ele.innerHTML = html`
+      <p>Can read any zip file with images inside and diplay it like any of the supported sites</p>
+      <label for="file">Choose the local zip file:</label>
+      <input
+        type="file"
+        id="file"
+        name="file"
+        class="btn"
+        accept=".zip, .cbz, .cbr, .7z, .rar"
+        value=""
+      /><br />
+      <p>Note : your browser will process the zip file, don't choose a file too big !</p>
+      <label for="file"><b>OR</b> Select a folder with images inside:</label>
+      <input
+        type="file"
+        id="folder"
+        name="folder"
+        class="btn"
+        webkitdirectory
+        mozdirectory
+        msdirectory
+        odirectory
+        directory
+        value=""
+      /><br />
+      <label for="file"><b>OR</b> Select images:</label>
+      <input
+        type="file"
+        id="images"
+        name="images"
+        class="btn"
+        accept="image/*"
+        multiple
+        value=""
+      /><br />
     `;
     document.querySelector('#user-content-local-files-zip-cbz-cbr + p')?.replaceWith(ele);
     document.querySelector('#file')?.addEventListener('change', (evt) => {
@@ -4515,18 +4620,35 @@ ${IconCheck}
     const options = {
       title: getLocaleString('STARTING'),
       // Language=html
-      html: `
-      ${getLocaleString('CHOOSE_BEGINNING')}
-      <div id='pageInputGroup'>
-        <div id='pageInputs'>
-          <input type='number' id='pageBegin' class='pageInput' min='1' inputmode='numeric'
-                 pattern='[0-9]*' max='${manga.pages}' value='${beginPage}' />
-          - <input type='number' id='pageEnd' class='pageInput' min='1' inputmode='numeric'
-                   pattern='[0-9]*' max='${manga.pages}' value='${endPage}' />
+      html: html`
+        ${getLocaleString('CHOOSE_BEGINNING')}
+        <div id="pageInputGroup">
+          <div id="pageInputs">
+            <input
+              type="number"
+              id="pageBegin"
+              class="pageInput"
+              min="1"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              max="${manga.pages}"
+              value="${beginPage}"
+            />
+            -
+            <input
+              type="number"
+              id="pageEnd"
+              class="pageInput"
+              min="1"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              max="${manga.pages}"
+              value="${endPage}"
+            />
+          </div>
+          <div id="pagesSlider"></div>
         </div>
-        <div id='pagesSlider'></div>
-      </div>
-    `,
+      `,
       showCancelButton: true,
       cancelButtonColor: '#d33',
       reverseButtons: true,
@@ -4582,7 +4704,7 @@ ${IconCheck}
         logScript(`Choice: ${beginPage} - ${endPage}`);
         manga.begin = beginPage;
         manga.pages = endPage;
-        viewer(manga);
+        viewer(manga).then(() => logScript('Page loaded'));
       } else {
         logScript(result.dismiss);
       }
@@ -4604,16 +4726,16 @@ ${IconCheck}
   function showWaitPopup(site, manga) {
     Swal.fire({
       title: getLocaleString('STARTING'),
-      html: `${
-        manga.begin > 1 ? `${getLocaleString('RESUME')}${manga.begin}.<br/>` : ''
-      }${getLocaleString('WAITING')}`,
+      html: html`${manga.begin > 1
+        ? `${getLocaleString('RESUME')}${manga.begin}.<br/>`
+        : ''}${getLocaleString('WAITING')}`,
       showCancelButton: true,
       cancelButtonColor: '#d33',
       reverseButtons: true,
       timer: 3e3,
     }).then((result) => {
       if (result.value || result.dismiss === Swal.DismissReason.timer) {
-        viewer(manga);
+        viewer(manga).then(() => logScript('Page loaded'));
       } else {
         createLateStartButton(site, manga.begin);
         logScript(result.dismiss);
@@ -4640,14 +4762,14 @@ ${IconCheck}
       if (endPage !== void 0) {
         manga.pages = endPage;
       }
-      viewer(manga);
+      viewer(manga).then(() => logScript('Page loaded'));
     };
     switch (site.start ?? getUserSettings()?.loadMode) {
       case 'never':
         createLateStartButton(site, manga.begin);
         break;
       case 'always':
-        viewer(manga);
+        viewer(manga).then(() => logScript('Page loaded'));
         break;
       case 'wait':
       default:
