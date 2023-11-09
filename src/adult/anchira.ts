@@ -26,18 +26,15 @@ export default {
         );
         document.body.append(div);
 
-        num.item(begin - 1).selected = true;
-        const select = document.querySelector('nav select');
-        select?.dispatchEvent(new Event('change'));
-
-        const next = document.querySelector('button[aria-label="Go to the next page"]');
+        const select = document.querySelector<HTMLSelectElement>('nav select');
         const target = document.querySelector<HTMLDivElement>('main');
         const src: string[] = [];
-        for (let i = begin; i <= this.pages; i += 1) {
+        for (let i = this.pages; i >= begin; i -= 1) {
+          target?.querySelector('.p img')?.removeAttribute('src');
+          select!.value = String(i - 1);
+          select?.dispatchEvent(new Event('change'));
           // eslint-disable-next-line no-await-in-loop
           src[i - 1] = await waitForAtb('.p img', 'src', target ?? document.body);
-          target?.querySelector('.p img')?.removeAttribute('src');
-          next?.dispatchEvent(new Event('click'));
         }
 
         this.listImages = src;
