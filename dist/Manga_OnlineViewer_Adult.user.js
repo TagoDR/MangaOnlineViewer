@@ -2705,7 +2705,7 @@
         ${IconX}
       </button>
       <h2>${getLocaleString('BOOKMARKS')}</h2>
-      <div id="BookmarksList">${listBookmarks().join('')}</div>
+      <div id="BookmarksList"></div>
     </div>
   `;
   function reloadBookmarks() {
@@ -2916,6 +2916,7 @@
   }
 
   function buttonBookmarksOpen() {
+    reloadBookmarks();
     document.querySelector('#BookmarksPanel')?.classList.add('visible');
     document.querySelector('#Overlay')?.classList.add('visible');
   }
@@ -3405,7 +3406,7 @@
             img.setAttribute('src', src);
             logScript('Loaded Image:', index, 'Source:', src);
           },
-          (manga.timer ?? getUserSettings().throttlePageLoad) * position,
+          (manga.timer ?? getUserSettings().throttlePageLoad) * (position - manga.begin),
         );
       } else {
         img.setAttribute('data-src', src);
@@ -3440,7 +3441,7 @@
           () => {
             findPage(manga, index, pageUrl, false)().catch(logScript);
           },
-          (manga.timer ?? getUserSettings().throttlePageLoad) * position,
+          (manga.timer ?? getUserSettings().throttlePageLoad) * (position - manga.begin),
         );
       } else {
         img.setAttribute(
