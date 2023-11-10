@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.11.05
+// @version       2023.11.10
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -173,16 +173,14 @@
             'height: 100vh;width: 100vw;position: fixed;top: 0;left: 0;z-index: 100000;background: white;opacity: 0.5;',
           );
           document.body.append(div);
-          num.item(begin - 1).selected = true;
           const select = document.querySelector('nav select');
-          select?.dispatchEvent(new Event('change'));
-          const next = document.querySelector('button[aria-label="Go to the next page"]');
           const target = document.querySelector('main');
           const src = [];
-          for (let i = begin; i <= this.pages; i += 1) {
-            src[i - 1] = await waitForAtb('.p img', 'src', target ?? document.body);
+          for (let i = this.pages; i >= begin; i -= 1) {
             target?.querySelector('.p img')?.removeAttribute('src');
-            next?.dispatchEvent(new Event('click'));
+            select.value = String(i - 1);
+            select?.dispatchEvent(new Event('change'));
+            src[i - 1] = await waitForAtb('.p img', 'src', target ?? document.body);
           }
           this.listImages = src;
           num.item(0).selected = true;
