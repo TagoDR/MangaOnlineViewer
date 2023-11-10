@@ -44,7 +44,7 @@ const BookmarkPanel = () => html`
       ${IconX}
     </button>
     <h2>${getLocaleString('BOOKMARKS')}</h2>
-    <div id="BookmarksList">${listBookmarks().join('')}</div>
+    <div id="BookmarksList"></div>
   </div>
 `;
 

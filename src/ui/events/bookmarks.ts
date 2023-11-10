@@ -11,6 +11,7 @@ import { logScript } from '../../utils/tampermonkey';
 import { addEvent } from './common';
 
 export function buttonBookmarksOpen() {
+  reloadBookmarks();
   document.querySelector('#BookmarksPanel')?.classList.add('visible');
   document.querySelector('#Overlay')?.classList.add('visible');
 }
