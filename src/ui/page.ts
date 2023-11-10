@@ -154,7 +154,7 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
           img.setAttribute('src', src);
           logScript('Loaded Image:', index, 'Source:', src);
         },
-        (manga.timer ?? getUserSettings().throttlePageLoad) * position,
+        (manga.timer ?? getUserSettings().throttlePageLoad) * (position - manga.begin),
       );
     } else {
       img.setAttribute('data-src', src);
@@ -198,7 +198,7 @@ async function addPage(manga: IMangaPages, index: number, pageUrl: string, posit
         () => {
           findPage(manga, index, pageUrl, false)().catch(logScript);
         },
-        (manga.timer ?? getUserSettings().throttlePageLoad) * position,
+        (manga.timer ?? getUserSettings().throttlePageLoad) * (position - manga.begin),
       );
     } else {
       img.setAttribute(
