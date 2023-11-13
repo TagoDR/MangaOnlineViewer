@@ -2554,6 +2554,7 @@
         ${getUserSettings().lazyLoadImages ? 'checked' : ''}
       />
     </div>
+    ${lazyLoad$1}
     <div class="ControlLabel downloadZip">
       ${getLocaleString('DOWNLOAD_IMAGES')}
       <input
@@ -2584,7 +2585,7 @@
         ${getLocaleString('BUTTON_RESET_SETTINGS')}
       </button>
       ${language} ${theme} ${loadMode} ${loadSpeed} ${defaultZoomMode} ${defaultZoom} ${minZoom}
-      ${zoomStep} ${viewMode$1} ${checkboxOptions} ${headerType} ${lazyLoad$1}
+      ${zoomStep} ${viewMode$1} ${checkboxOptions} ${headerType}
     </div>
   `;
 
