@@ -142,10 +142,11 @@ function normalizeUrl(url = ''): string {
 
 // Adds an image to the place-holder div
 function addImg(manga: IMangaImages, index: number, imageSrc: string, position: number) {
+  const relativePosition = position - manga.begin;
   const src = normalizeUrl(imageSrc);
   const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
   if (img) {
-    if (!getUserSettings().lazyLoadImages || position <= getUserSettings().lazyStart) {
+    if (!getUserSettings().lazyLoadImages || relativePosition <= getUserSettings().lazyStart) {
       setTimeout(
         () => {
           const imgLoad = imagesLoaded(img.parentElement!);
@@ -154,7 +155,7 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
           img.setAttribute('src', src);
           logScript('Loaded Image:', index, 'Source:', src);
         },
-        (manga.timer ?? getUserSettings().throttlePageLoad) * (position - manga.begin),
+        (manga.timer ?? getUserSettings().throttlePageLoad) * relativePosition,
       );
     } else {
       img.setAttribute('data-src', src);
@@ -191,14 +192,15 @@ function findPage(
 
 // Adds a page to the place-holder div
 async function addPage(manga: IMangaPages, index: number, pageUrl: string, position: number) {
+  const relativePosition = position - manga.begin;
   const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
   if (img) {
-    if (!getUserSettings().lazyLoadImages || position <= getUserSettings().lazyStart) {
+    if (!getUserSettings().lazyLoadImages || relativePosition <= getUserSettings().lazyStart) {
       setTimeout(
         () => {
           findPage(manga, index, pageUrl, false)().catch(logScript);
         },
-        (manga.timer ?? getUserSettings().throttlePageLoad) * (position - manga.begin),
+        (manga.timer ?? getUserSettings().throttlePageLoad) * relativePosition,
       );
     } else {
       img.setAttribute(
