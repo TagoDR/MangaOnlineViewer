@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans
-// @version       2023.11.10
+// @version       2023.11.13
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -3812,10 +3812,11 @@
     return uri;
   }
   function addImg(manga, index, imageSrc, position) {
+    const relativePosition = position - manga.begin;
     const src = normalizeUrl(imageSrc);
     const img = document.querySelector(`#PageImg${index}`);
     if (img) {
-      if (!getUserSettings().lazyLoadImages || position <= getUserSettings().lazyStart) {
+      if (!getUserSettings().lazyLoadImages || relativePosition <= getUserSettings().lazyStart) {
         setTimeout(
           () => {
             const imgLoad = imagesLoaded(img.parentElement);
@@ -3824,7 +3825,7 @@
             img.setAttribute('src', src);
             logScript('Loaded Image:', index, 'Source:', src);
           },
-          (manga.timer ?? getUserSettings().throttlePageLoad) * (position - manga.begin),
+          (manga.timer ?? getUserSettings().throttlePageLoad) * relativePosition,
         );
       } else {
         img.setAttribute('data-src', src);
@@ -3852,14 +3853,15 @@
     };
   }
   async function addPage(manga, index, pageUrl, position) {
+    const relativePosition = position - manga.begin;
     const img = document.querySelector(`#PageImg${index}`);
     if (img) {
-      if (!getUserSettings().lazyLoadImages || position <= getUserSettings().lazyStart) {
+      if (!getUserSettings().lazyLoadImages || relativePosition <= getUserSettings().lazyStart) {
         setTimeout(
           () => {
             findPage(manga, index, pageUrl, false)().catch(logScript);
           },
-          (manga.timer ?? getUserSettings().throttlePageLoad) * (position - manga.begin),
+          (manga.timer ?? getUserSettings().throttlePageLoad) * relativePosition,
         );
       } else {
         img.setAttribute(
