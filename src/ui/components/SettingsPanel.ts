@@ -293,6 +293,7 @@ const checkboxOptions = html` <div class="ControlLabel fitIfOversize">
       ${getUserSettings().lazyLoadImages ? 'checked' : ''}
     />
   </div>
+  ${lazyLoad}
   <div class="ControlLabel downloadZip">
     ${getLocaleString('DOWNLOAD_IMAGES')}
     <input
@@ -323,7 +324,7 @@ const SettingsPanel = () => html`
       ${getLocaleString('BUTTON_RESET_SETTINGS')}
     </button>
     ${language} ${theme} ${loadMode} ${loadSpeed} ${defaultZoomMode} ${defaultZoom} ${minZoom}
-    ${zoomStep} ${viewMode} ${checkboxOptions} ${headerType} ${lazyLoad}
+    ${zoomStep} ${viewMode} ${checkboxOptions} ${headerType}
   </div>
 `;
 export default SettingsPanel;
