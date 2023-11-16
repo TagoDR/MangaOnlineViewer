@@ -9,6 +9,7 @@ import Header from './Header';
 import Reader from './Reader';
 import CommentsPanel from './CommentsPanel';
 import events from '../events';
+import { toggleAutoScroll } from '../events/autoscroll.js';
 
 let loadedManga: IManga;
 
@@ -20,6 +21,9 @@ export function hydrateApp() {
     '#KeybindingsPanel': KeybindingsPanel(),
     '#Bookmarks': BookmarksPanel(),
   };
+  if (document.querySelector('#ScrollControl')?.classList.contains('running')) {
+    toggleAutoScroll();
+  }
   Object.entries(elements).forEach(([id, component]) => {
     const tag = document.querySelector(id);
     if (tag) {
@@ -36,8 +40,8 @@ const app = (manga: IManga) => {
     <div
       id="MangaOnlineViewer"
       class="${getUserSettings().colorScheme} 
-  ${getUserSettings().hidePageControls ? 'hideControls' : ''}
-  ${isBookmarked() ? 'bookmarked' : ''}"
+        ${getUserSettings().hidePageControls ? 'hideControls' : ''}
+        ${isBookmarked() ? 'bookmarked' : ''}"
       data-theme="${getUserSettings().theme}"
     >
       ${Header(manga)} ${Reader(manga)} ${CommentsPanel(manga)} ${ThumbnailsPanel(manga)}

@@ -22,6 +22,7 @@ import {
 } from '../icons';
 import sequence from '../../utils/sequence';
 import type { IManga } from '../../types';
+import ScrollControl from './ScrollControl';
 
 const listOptions = (times: number, begin: number) =>
   sequence(times, begin).map((index) => html`<option value="${index}">${index}</option>`);
@@ -111,6 +112,7 @@ const Header = (manga: IManga) => html`
       <a id="series" href="${manga.series}"> (${getLocaleString('RETURN_CHAPTER_LIST')}) </a>
     </div>
     <nav id="ChapterNavigation">
+      ${ScrollControl()}
       <div id="Counters" class="ControlLabel">
         ${getLocaleString('PAGES_LOADED')}:
         <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>

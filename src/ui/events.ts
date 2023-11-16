@@ -10,6 +10,7 @@ import size from './events/size';
 import theming from './events/theming';
 import viewMode from './events/viewmode';
 import zoom from './events/zoom';
+import autoscroll from './events/autoscroll';
 
 let setupEvents = false;
 // Controls for the extra features added to the sites
@@ -29,6 +30,7 @@ function events() {
   theming();
   viewMode();
   zoom();
+  autoscroll();
 }
 
 export default events;

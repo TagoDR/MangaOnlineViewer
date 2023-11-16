@@ -87,6 +87,7 @@
     z-index: 100;
 }
 
+#MangaOnlineViewer #ScrollControl .icon-tabler,
 #MangaOnlineViewer #GlobalFunctions .icon-tabler {
     width: 25px;
     height: 25px;
@@ -181,4 +182,7 @@
     left: 10px;
     height: 32px;
     width: 32px;
+}
+#MangaOnlineViewer #Header #ScrollControl{
+    font-size: 20px;
 }
