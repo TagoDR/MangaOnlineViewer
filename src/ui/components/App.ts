@@ -9,7 +9,7 @@ import Header from './Header';
 import Reader from './Reader';
 import CommentsPanel from './CommentsPanel';
 import events from '../events';
-import { toggleAutoScroll } from '../events/autoscroll.js';
+import { toggleAutoScroll } from '../events/autoscroll';
 
 let loadedManga: IManga;
 
