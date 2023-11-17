@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans
-// @version       2023.11.13
+// @version       2023.11.17
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -1727,6 +1727,8 @@
     CLOSE: 'Close',
     LIST_EMPTY: 'List Empty',
     DISPLAY_COMMENTS: 'Display Comments',
+    SCROLL_START: 'Toggle Auto Scroll',
+    AUTO_SCROLL_HEIGHT: 'Auto Scroll Speed in Pixels',
   };
 
   const pt_BR = {
@@ -1829,6 +1831,8 @@
     CLOSE: 'Fechar',
     LIST_EMPTY: 'Lista Vazia',
     DISPLAY_COMMENTS: 'Mostar Comentarios',
+    SCROLL_START: 'Ativar Rolagem Automatica',
+    AUTO_SCROLL_HEIGHT: 'Velocidade da Rolagem Automatica em Pixels',
   };
 
   const zh_CN = {
@@ -1930,6 +1934,8 @@
     CLOSE: '关闭',
     LIST_EMPTY: '没有收藏书签',
     DISPLAY_COMMENTS: '显示注释',
+    SCROLL_START: '切换自动滚动',
+    AUTO_SCROLL_HEIGHT: '自动滚动速度（以像素为单位）',
   };
 
   const es_ES = {
@@ -2034,6 +2040,8 @@
     CLOSE: 'Cerrar',
     LIST_EMPTY: 'Lista vacía',
     DISPLAY_COMMENTS: 'Mostrar comentarios',
+    SCROLL_START: 'Alternar desplazamiento automático',
+    AUTO_SCROLL_HEIGHT: 'Velocidad de desplazamiento automático en píxeles',
   };
 
   const locales = [en_US, es_ES, pt_BR, zh_CN];
@@ -2090,6 +2098,7 @@
     hidePageControls: false,
     header: 'hover',
     maxReload: 5,
+    scrollHeight: 20,
     keybinds: {
       SCROLL_UP: ['up', 'W', 'num_8'],
       SCROLL_DOWN: ['down', 'S', 'num_2'],
@@ -2105,6 +2114,7 @@
       VIEW_MODE_VERTICAL: ['V'],
       VIEW_MODE_LEFT: ['N'],
       VIEW_MODE_RIGHT: ['B'],
+      SCROLL_START: ['space'],
     },
   };
   let settings$2 = _.defaultsDeep(getSettings(defaultSettings), defaultSettings);
@@ -2497,8 +2507,14 @@
   const IconZoomPan =
     '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-pan" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />\n  <path d="M17 17l-2.5 -2.5" />\n  <path d="M10 5l2 -2l2 2" />\n  <path d="M19 10l2 2l-2 2" />\n  <path d="M5 10l-2 2l2 2" />\n  <path d="M10 19l2 2l2 -2" />\n</svg>\n\n\n';
 
+  const IconPlayerPlay =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M7 4v16l13 -8z" />\n</svg>\n\n\n';
+
+  const IconPlayerPause =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-pause" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />\n  <path d="M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />\n</svg>\n\n\n';
+
   const styles =
-    ':root {\n    --theme-body-background: #25262b;\n    --theme-body-text-color: #c1c2c5;\n    --theme-text-color: #c1c2c5;\n    --theme-primary-color: #1a1b1e;\n    --theme-primary-text-color: #c1c2c5;\n    --theme-background-color: #25262b;\n    --theme-hightlight-color: #2c2e33;\n    --theme-border-color: #373a40;\n}\n\n#MangaOnlineViewer {\n    padding-bottom: 40px;\n    min-height: 760px;\n    min-width: 360px;\n    text-decoration: none;\n    color: var(--theme-body-text-color);\n    background-color: var(--theme-body-background);\n}\n\n#MangaOnlineViewer #Chapter {\n    display: grid;\n    grid-template-columns: repeat(1, 1fr);\n    min-width: 225px;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR {\n    direction: ltr;\n}\n\n#MangaOnlineViewer #Chapter.FluidRTL {\n    direction: rtl;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR,\n#MangaOnlineViewer #Chapter.FluidRTL {\n    display: grid;\n    grid-template-columns: repeat(2, 1fr);\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .PageImg,\n#MangaOnlineViewer #Chapter.FluidRTL .PageImg {\n    min-width: unset;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage.DoublePage,\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage.DoublePage {\n    grid-column: span 2;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n),\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n) {\n    display: flex;\n    justify-content: start;\n    position: relative;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n-1),\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n-1) {\n    display: flex;\n    justify-content: end;\n    position: relative;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .PageContent {\n    margin-bottom: 15px;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage,\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage {\n    width: auto;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .ZoomWidth .icon-tabler,\n#MangaOnlineViewer #Chapter.FluidRTL .ZoomWidth .icon-tabler {\n    color: red;\n}\n\n#MangaOnlineViewer .closeButton {\n    width: fit-content;\n    height: fit-content;\n    position: absolute;\n    right: 10px;\n    top: 10px;\n}\n\n#MangaOnlineViewer .overlay {\n    position: fixed;\n    display: none;\n    width: 100%;\n    height: 100%;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: rgba(0, 0, 0, 0.5);\n    z-index: 950;\n    cursor: pointer;\n}\n\n#MangaOnlineViewer .overlay.visible {\n    display: block;\n}\n\n#MangaOnlineViewer select {\n    height: 20px;\n    padding: 0;\n    margin-bottom: 5px;\n}\n\n#MangaOnlineViewer .ControlButton {\n    cursor: pointer;\n    border-radius: 5px;\n    border-width: 1px;\n    padding: 2px;\n    min-height: 32px;\n    color: var(--theme-primary-text-color);\n    background-color: var(--theme-primary-color);\n    border-color: var(--theme-border-color);\n}\n\n#MangaOnlineViewer .ControlButton:hover {\n    opacity: 0.8;\n}\n\n#MangaOnlineViewer .panel {\n    padding: 5px;\n    position: inherit;\n    border-radius: 5px;\n    background-color: var(--theme-background-color);\n}\n\n#MangaOnlineViewer .fitWidthIfOversize .PageContent .PageImg {\n    max-width: 100%;\n}\n\n#MangaOnlineViewer .ControlButton.hidden,\n#MangaOnlineViewer.light #ColorScheme > .icon-tabler-sun,\n#MangaOnlineViewer:not(.light) #ColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,\n#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,\n#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,\n#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,\n#MangaOnlineViewer.bookmarked .ControlButton.Bookmark > .icon-tabler-bookmark,\n#MangaOnlineViewer:not(.bookmarked) .ControlButton.Bookmark > .icon-tabler-bookmark-off,\n#MangaOnlineViewer #CommentsPanel.hide,\n#MangaOnlineViewer #CommentsArea.hide {\n    display: none;\n}\n\n#MangaOnlineViewer.hideControls .PageFunctions {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer #CommentsPanel {\n    padding: 10px;\n}\n\n#MangaOnlineViewer #CommentsArea {\n    background: var(--theme-body-background);\n}\n\n#MangaOnlineViewer #CommentsButton {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n';
+    ':root {\n    --theme-body-background: #25262b;\n    --theme-body-text-color: #c1c2c5;\n    --theme-text-color: #c1c2c5;\n    --theme-primary-color: #1a1b1e;\n    --theme-primary-text-color: #c1c2c5;\n    --theme-background-color: #25262b;\n    --theme-hightlight-color: #2c2e33;\n    --theme-border-color: #373a40;\n}\n\n#MangaOnlineViewer {\n    padding-bottom: 40px;\n    min-height: 760px;\n    min-width: 360px;\n    text-decoration: none;\n    color: var(--theme-body-text-color);\n    background-color: var(--theme-body-background);\n}\n\n#MangaOnlineViewer #Chapter {\n    display: grid;\n    grid-template-columns: repeat(1, 1fr);\n    min-width: 225px;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR {\n    direction: ltr;\n}\n\n#MangaOnlineViewer #Chapter.FluidRTL {\n    direction: rtl;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR,\n#MangaOnlineViewer #Chapter.FluidRTL {\n    display: grid;\n    grid-template-columns: repeat(2, 1fr);\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .PageImg,\n#MangaOnlineViewer #Chapter.FluidRTL .PageImg {\n    min-width: unset;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage.DoublePage,\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage.DoublePage {\n    grid-column: span 2;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n),\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n) {\n    display: flex;\n    justify-content: start;\n    position: relative;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage:not(.DoublePage):nth-child(2n-1),\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage:not(.DoublePage):nth-child(2n-1) {\n    display: flex;\n    justify-content: end;\n    position: relative;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .PageContent {\n    margin-bottom: 15px;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .MangaPage,\n#MangaOnlineViewer #Chapter.FluidRTL .MangaPage {\n    width: auto;\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR .ZoomWidth .icon-tabler,\n#MangaOnlineViewer #Chapter.FluidRTL .ZoomWidth .icon-tabler {\n    color: red;\n}\n\n#MangaOnlineViewer .closeButton {\n    width: fit-content;\n    height: fit-content;\n    position: absolute;\n    right: 10px;\n    top: 10px;\n}\n\n#MangaOnlineViewer .overlay {\n    position: fixed;\n    display: none;\n    width: 100%;\n    height: 100%;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: rgba(0, 0, 0, 0.5);\n    z-index: 950;\n    cursor: pointer;\n}\n\n#MangaOnlineViewer .overlay.visible {\n    display: block;\n}\n\n#MangaOnlineViewer select {\n    height: 20px;\n    padding: 0;\n    margin-bottom: 5px;\n}\n\n#MangaOnlineViewer .ControlButton {\n    cursor: pointer;\n    border-radius: 5px;\n    border-width: 1px;\n    padding: 2px;\n    min-height: 32px;\n    color: var(--theme-primary-text-color);\n    background-color: var(--theme-primary-color);\n    border-color: var(--theme-border-color);\n}\n\n#MangaOnlineViewer .ControlButton:hover {\n    opacity: 0.8;\n}\n\n#MangaOnlineViewer .panel {\n    padding: 5px;\n    position: inherit;\n    border-radius: 5px;\n    background-color: var(--theme-background-color);\n}\n\n#MangaOnlineViewer .fitWidthIfOversize .PageContent .PageImg {\n    max-width: 100%;\n}\n\n#MangaOnlineViewer .ControlButton.hidden,\n#MangaOnlineViewer.light #ColorScheme > .icon-tabler-sun,\n#MangaOnlineViewer:not(.light) #ColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,\n#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,\n#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,\n#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,\n#MangaOnlineViewer.bookmarked .ControlButton.Bookmark > .icon-tabler-bookmark,\n#MangaOnlineViewer:not(.bookmarked) .ControlButton.Bookmark > .icon-tabler-bookmark-off,\n#MangaOnlineViewer #CommentsPanel.hide,\n#MangaOnlineViewer #CommentsArea.hide,\n#MangaOnlineViewer #AutoScroll.running > .icon-tabler-player-play,\n#MangaOnlineViewer #AutoScroll:not(.running) > .icon-tabler-player-pause {\n    display: none;\n}\n\n#MangaOnlineViewer.hideControls .PageFunctions {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer #CommentsPanel {\n    padding: 10px;\n}\n\n#MangaOnlineViewer #CommentsArea {\n    background: var(--theme-body-background);\n}\n\n#MangaOnlineViewer #CommentsButton {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n';
 
   const icons =
     '.icon-tabler {\n    height: 1rem;\n    width: 1rem;\n    vertical-align: sub;\n}\n\n.icon-tabler-file-download > :nth-child(n + 4) {\n    /* 4, 5 */\n    color: gold;\n}\n.icon-tabler-arrow-autofit-width > :nth-child(n + 3) {\n    /* 3,4,5,6 */\n    color: yellow;\n}\n.icon-tabler-arrow-autofit-height > :nth-child(n + 3) {\n    /* 3,4,5,6 */\n    color: yellow;\n}\n.icon-tabler-zoom-in-area > :nth-child(2),\n.icon-tabler-zoom-in-area > :nth-child(3) {\n    color: lime;\n}\n.icon-tabler-zoom-out-area > :nth-child(2) {\n    color: red;\n}\n.icon-tabler-zoom-pan > :nth-child(n + 4) {\n    color: #9966ff;\n}\n.icon-tabler-arrow-autofit-down > :nth-child(n + 3) {\n    color: #28ffbf;\n}\n.icon-tabler-arrow-autofit-left > :nth-child(n + 3) {\n    color: #28ffbf;\n}\n.icon-tabler-arrow-autofit-right > :nth-child(n + 3) {\n    color: #28ffbf;\n}\n.icon-tabler-spacing-vertical > :nth-child(4) {\n    color: fuchsia;\n}\n.icon-tabler-list-numbers > :nth-child(n + 5) {\n    color: #e48900;\n}\n.icon-tabler-bookmarks > :nth-child(n + 2) {\n    color: orange;\n}\n.icon-tabler-bookmark > * {\n    color: orange;\n}\n.icon-tabler-bookmark-off > * {\n    color: orange;\n}\n.icon-tabler-bookmark-off > :nth-child(3) {\n    color: red;\n}\n.icon-tabler-eye-off > :nth-child(4) {\n    color: red;\n}\n.icon-tabler-zoom-cancel > :nth-child(3),\n.icon-tabler-zoom-cancel > :nth-child(4) {\n    color: #9966ff;\n}\n.icon-tabler-zoom-in > :nth-child(3),\n.icon-tabler-zoom-in > :nth-child(4) {\n    color: lime;\n}\n.icon-tabler-zoom-out > :nth-child(3) {\n    color: red;\n}\n.icon-tabler-refresh > :nth-child(n + 2) {\n    color: cyan;\n}\n.icon-tabler-photo > * {\n    color: silver;\n}\n.icon-tabler-photo-off > * {\n    color: silver;\n}\n.icon-tabler-photo-off > :nth-child(5) {\n    color: orange;\n}\n.icon-tabler-message > :nth-child(2),\n.icon-tabler-message > :nth-child(3) {\n    color: greenyellow;\n}\n';
@@ -2513,7 +2529,7 @@
     '@-webkit-keyframes spin {\n    to {\n        transform: rotate(360deg);\n    }\n}\n\n@keyframes spin {\n    to {\n        transform: rotate(360deg);\n    }\n}\n\n@-webkit-keyframes spin-reverse {\n    0% {\n        transform: rotate(360deg);\n    }\n\n    to {\n        transform: rotate(0);\n    }\n}\n\n@keyframes spin-reverse {\n    0% {\n        transform: rotate(360deg);\n    }\n\n    to {\n        transform: rotate(0);\n    }\n}\n\n.icon-tabler-loader-2,\n.animate-spin {\n    -webkit-animation: spin 1s linear infinite;\n    animation: spin 1s linear infinite;\n}\n\n.animate-spin-reverse {\n    -webkit-animation: spin-reverse 1s linear infinite;\n    animation: spin-reverse 1s linear infinite;\n}\n';
 
   const header =
-    "#MangaOnlineViewer #gotoPage {\n    min-width: 35px;\n}\n\n#MangaOnlineViewer #Header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    flex-flow: row nowrap;\n    transition: transform 0.3s ease-in;\n    position: sticky;\n    top: 0;\n    left: 0;\n    right: 0;\n    background-color: inherit;\n    z-index: 900;\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-hide {\n    transform: translateY(-100%);\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-show {\n    transform: translateY(-1%);\n}\n\n#MangaOnlineViewer #Header.hover,\n#MangaOnlineViewer #Header.fixed,\n#MangaOnlineViewer #Header.click {\n    position: static;\n    transform: none;\n}\n\n#MangaOnlineViewer #Header.headroom-end,\n#MangaOnlineViewer #Header.visible,\n#MangaOnlineViewer #Header.fixed {\n    transform: translateY(-1%);\n    position: sticky;\n}\n\n#MangaOnlineViewer #Header.hover:hover,\n#MangaOnlineViewer #Header.fixed {\n    position: sticky;\n}\n\n#MangaOnlineViewer #Header.scroll #menu,\n#MangaOnlineViewer #Header.fixed #menu,\n#MangaOnlineViewer #Header.hover:hover #menu,\n#MangaOnlineViewer #Header:not(.click).visible #menu {\n    display: none;\n}\n#MangaOnlineViewer #menu {\n    position: fixed;\n    min-height: 70px;\n    width: 100%;\n    top: 0;\n    z-index: 1;\n    color: var(--theme-body-text-color);\n}\n\n#MangaOnlineViewer #Header.click #menu {\n    cursor: pointer;\n}\n\n#MangaOnlineViewer #Header.click:not(.headroom-hide, .headroom-show) #menu,\n#MangaOnlineViewer #Header.click.headroom-end #menu,\n#MangaOnlineViewer #Header.click.visible #menu {\n    position: static;\n    min-width: 50px;\n    min-height: unset;\n    width: auto;\n}\n\n#MangaOnlineViewer #MangaTitle {\n    padding: 2px;\n    margin: 0;\n    font-size: 1.2rem;\n    font-weight: 400;\n}\n\n#MangaOnlineViewer #GlobalFunctions {\n    display: flex;\n    gap: 3px;\n    padding-left: 10px;\n    flex-wrap: wrap;\n    width: 300px;\n    z-index: 100;\n}\n\n#MangaOnlineViewer #GlobalFunctions .icon-tabler {\n    width: 25px;\n    height: 25px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomSlider {\n    display: flex;\n    align-items: center;\n}\n\n#MangaOnlineViewer #GlobalFunctions #Zoom {\n    margin-left: 5px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomVal {\n    width: 40px;\n    display: inline-block;\n    color: var(--theme-primary-text-color);\n    line-height: 20px;\n    text-align: center;\n    border-radius: 3px;\n    background: var(--theme-primary-color);\n    padding: 2px 5px;\n}\n\n#MangaOnlineViewer #ChapterNavigation {\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: end;\n    padding-right: 10px;\n    width: 300px;\n}\n\n#MangaOnlineViewer .ChapterControl {\n    display: flex;\n    flex-wrap: nowrap;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton {\n    display: inline-flex;\n    margin-left: 3px;\n    justify-content: center;\n    align-items: center;\n    padding: 5px 10px;\n    gap: 0.5em;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton .icon-tabler {\n    flex-shrink: 0;\n    align-self: center;\n    width: 1rem;\n    height: 1rem;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href='#'],\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href=''],\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href='undefined'] {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer .ChapterControl #download.loading {\n    cursor: not-allowed;\n    pointer-events: none;\n    opacity: 0.6;\n}\n\n#MangaOnlineViewer .ChapterControl #download.disabled {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer .ViewerTitle {\n    text-align: center;\n    min-height: 60px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    padding: 5px;\n    flex-basis: 60%;\n}\n\n#MangaOnlineViewer #Header .ViewerTitle #series[href='#'],\n#MangaOnlineViewer #Header .ViewerTitle #series[href=''],\n#MangaOnlineViewer #Header .ViewerTitle #series[href='undefined'] {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer #Header #menu .icon-tabler {\n    position: absolute;\n    top: 5px;\n    left: 10px;\n    height: 32px;\n    width: 32px;\n}\n";
+    "#MangaOnlineViewer #gotoPage {\n    min-width: 35px;\n}\n\n#MangaOnlineViewer #Header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    flex-flow: row nowrap;\n    transition: transform 0.3s ease-in;\n    position: sticky;\n    top: 0;\n    left: 0;\n    right: 0;\n    background-color: inherit;\n    z-index: 900;\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-hide {\n    transform: translateY(-100%);\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-show {\n    transform: translateY(-1%);\n}\n\n#MangaOnlineViewer #Header.hover,\n#MangaOnlineViewer #Header.fixed,\n#MangaOnlineViewer #Header.click {\n    position: static;\n    transform: none;\n}\n\n#MangaOnlineViewer #Header.headroom-end,\n#MangaOnlineViewer #Header.visible,\n#MangaOnlineViewer #Header.fixed {\n    transform: translateY(-1%);\n    position: sticky;\n}\n\n#MangaOnlineViewer #Header.hover:hover,\n#MangaOnlineViewer #Header.fixed {\n    position: sticky;\n}\n\n#MangaOnlineViewer #Header.scroll #menu,\n#MangaOnlineViewer #Header.fixed #menu,\n#MangaOnlineViewer #Header.hover:hover #menu,\n#MangaOnlineViewer #Header:not(.click).visible #menu {\n    display: none;\n}\n#MangaOnlineViewer #menu {\n    position: fixed;\n    min-height: 70px;\n    width: 100%;\n    top: 0;\n    z-index: 1;\n    color: var(--theme-body-text-color);\n}\n\n#MangaOnlineViewer #Header.click #menu {\n    cursor: pointer;\n}\n\n#MangaOnlineViewer #Header.click:not(.headroom-hide, .headroom-show) #menu,\n#MangaOnlineViewer #Header.click.headroom-end #menu,\n#MangaOnlineViewer #Header.click.visible #menu {\n    position: static;\n    min-width: 50px;\n    min-height: unset;\n    width: auto;\n}\n\n#MangaOnlineViewer #MangaTitle {\n    padding: 2px;\n    margin: 0;\n    font-size: 1.2rem;\n    font-weight: 400;\n}\n\n#MangaOnlineViewer #GlobalFunctions {\n    display: flex;\n    gap: 3px;\n    padding-left: 10px;\n    flex-wrap: wrap;\n    width: 300px;\n    z-index: 100;\n}\n\n#MangaOnlineViewer #ScrollControl .icon-tabler,\n#MangaOnlineViewer #GlobalFunctions .icon-tabler {\n    width: 25px;\n    height: 25px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomSlider {\n    display: flex;\n    align-items: center;\n}\n\n#MangaOnlineViewer #GlobalFunctions #Zoom {\n    margin-left: 5px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomVal {\n    width: 40px;\n    display: inline-block;\n    color: var(--theme-primary-text-color);\n    line-height: 20px;\n    text-align: center;\n    border-radius: 3px;\n    background: var(--theme-primary-color);\n    padding: 2px 5px;\n}\n\n#MangaOnlineViewer #ChapterNavigation {\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: end;\n    padding-right: 10px;\n    width: 300px;\n}\n\n#MangaOnlineViewer .ChapterControl {\n    display: flex;\n    flex-wrap: nowrap;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton {\n    display: inline-flex;\n    margin-left: 3px;\n    justify-content: center;\n    align-items: center;\n    padding: 5px 10px;\n    gap: 0.5em;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton .icon-tabler {\n    flex-shrink: 0;\n    align-self: center;\n    width: 1rem;\n    height: 1rem;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href='#'],\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href=''],\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href='undefined'] {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer .ChapterControl #download.loading {\n    cursor: not-allowed;\n    pointer-events: none;\n    opacity: 0.6;\n}\n\n#MangaOnlineViewer .ChapterControl #download.disabled {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer .ViewerTitle {\n    text-align: center;\n    min-height: 60px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    padding: 5px;\n    flex-basis: 60%;\n}\n\n#MangaOnlineViewer #Header .ViewerTitle #series[href='#'],\n#MangaOnlineViewer #Header .ViewerTitle #series[href=''],\n#MangaOnlineViewer #Header .ViewerTitle #series[href='undefined'] {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer #Header #menu .icon-tabler {\n    position: absolute;\n    top: 5px;\n    left: 10px;\n    height: 32px;\n    width: 32px;\n}\n#MangaOnlineViewer #Header #ScrollControl{\n    font-size: 20px;\n}\n";
 
   const keybindings$1 =
     '#MangaOnlineViewer #KeybindingsPanel {\n    padding: 10px;\n    position: fixed;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    transition: transform 0.3s ease-in-out;\n    transform: translateX(100%);\n    line-height: 1.5em;\n    z-index: 1000;\n    overflow-y: auto;\n    width: 360px;\n    max-width: 100vw;\n}\n\n#MangaOnlineViewer #KeybindingsPanel.visible {\n    transform: translateX(0);\n    display: block;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #KeybindingsList {\n    display: grid;\n    grid-template-columns: 1fr 2fr;\n    gap: 5px;\n}\n\n#MangaOnlineViewer #KeybindingsPanel .ControlButton {\n    margin-left: 3px;\n    justify-content: center;\n    align-items: center;\n    padding: 5px 10px;\n    gap: 0.5em;\n}\n\n#MangaOnlineViewer #KeybindingsPanel label {\n    display: ruby;\n}\n#MangaOnlineViewer #KeybindingsPanel input {\n    display: inline-block;\n    width: 100%;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #HotKeysRules {\n    grid-column: span 2;\n}\n';
@@ -2684,25 +2700,24 @@
   const localeSelector = () =>
     locales
       .map(
-        (locale) =>
-          html` <option
-            value="${locale.ID}"
-            ${getUserSettings().locale === locale.ID ? 'selected' : ''}
-          >
+        (locale) => html`
+          <option value="${locale.ID}" ${getUserSettings().locale === locale.ID ? 'selected' : ''}>
             ${locale.NAME}
-          </option>`,
+          </option>
+        `,
       )
       .join('');
   const themesSelector = () =>
     [...Object.keys(colors).map((color) => colors[color].name)]
       .map(
-        (theme2) =>
-          html` <span
+        (theme2) => html`
+          <span
             title="${theme2}"
             class="${theme2} ThemeRadio ${getUserSettings().theme === theme2 ? 'selected' : ''}"
           >
             ${IconCheck}
-          </span>`,
+          </span>
+        `,
       )
       .join('');
   const language = html` <div class="ControlLabel locale">
@@ -2711,101 +2726,107 @@
       ${localeSelector()}
     </select>
   </div>`;
-  const theme = html` <div id="ThemeSection">
-    <div class="ControlLabel ColorSchemeSelector">
-      ${getLocaleString('COLOR_SCHEME')}
-      <button id="ColorScheme" class="simpleButton">${IconSun} ${IconMoon}</button>
-    </div>
-    <div class="ControlLabel ThemeSelector">
-      ${getLocaleString('THEME')}
-      <span
-        class="custom ThemeRadio 
+  const theme = html`
+    <div id="ThemeSection">
+      <div class="ControlLabel ColorSchemeSelector">
+        ${getLocaleString('COLOR_SCHEME')}
+        <button id="ColorScheme" class="simpleButton">${IconSun} ${IconMoon}</button>
+      </div>
+      <div class="ControlLabel ThemeSelector">
+        ${getLocaleString('THEME')}
+        <span
+          class="custom ThemeRadio 
         ${getUserSettings().theme === 'custom' ? 'selected' : ''}"
-        title="custom"
-      >
-        ${IconPalette} ${IconCheck}
-      </span>
-      ${themesSelector()}
-    </div>
-    <div
-      id="Hue"
-      class="ControlLabel CustomTheme ControlLabelItem 
+          title="custom"
+        >
+          ${IconPalette} ${IconCheck}
+        </span>
+        ${themesSelector()}
+      </div>
+      <div
+        id="Hue"
+        class="ControlLabel CustomTheme ControlLabelItem 
       ${getUserSettings().theme.startsWith('custom') ? 'show' : ''}"
-    >
-      ${getLocaleString('THEME_HUE')}
-      <input
-        id="CustomThemeHue"
-        type="color"
-        value="${getUserSettings().customTheme}"
-        class="colorpicker CustomTheme"
-      />
-    </div>
-    <div
-      id="Shade"
-      class="ControlLabel CustomTheme ControlLabelItem
+      >
+        ${getLocaleString('THEME_HUE')}
+        <input
+          id="CustomThemeHue"
+          type="color"
+          value="${getUserSettings().customTheme}"
+          class="colorpicker CustomTheme"
+        />
+      </div>
+      <div
+        id="Shade"
+        class="ControlLabel CustomTheme ControlLabelItem
       ${getUserSettings().theme.startsWith('custom') ? '' : 'show'}"
-    >
-      <span>
-        ${getLocaleString('THEME_SHADE')}
-        <output id="themeShadeVal" class="RangeValue" for="ThemeShade">
-          ${getUserSettings().themeShade}
-        </output>
-      </span>
-      <input
-        type="range"
-        value="${getUserSettings().themeShade}"
-        name="ThemeShade"
-        id="ThemeShade"
-        min="100"
-        max="900"
-        step="100"
-        oninput="themeShadeVal.value = this.value"
-      />
+      >
+        <span>
+          ${getLocaleString('THEME_SHADE')}
+          <output id="themeShadeVal" class="RangeValue" for="ThemeShade">
+            ${getUserSettings().themeShade}
+          </output>
+        </span>
+        <input
+          type="range"
+          value="${getUserSettings().themeShade}"
+          name="ThemeShade"
+          id="ThemeShade"
+          min="100"
+          max="900"
+          step="100"
+          oninput="themeShadeVal.value = this.value"
+        />
+      </div>
     </div>
-  </div>`;
-  const loadMode = html` <div class="ControlLabel loadMode">
-    ${getLocaleString('DEFAULT_LOAD_MODE')}
-    <select id="loadMode">
-      <option value="wait" ${getUserSettings().loadMode === 'wait' ? 'selected' : ''}>
-        ${getLocaleString('LOAD_MODE_NORMAL')}
-      </option>
-      <option value="always" ${getUserSettings().loadMode === 'always' ? 'selected' : ''}>
-        ${getLocaleString('LOAD_MODE_ALWAYS')}
-      </option>
-      <option value="never" ${getUserSettings().loadMode === 'never' ? 'selected' : ''}>
-        ${getLocaleString('LOAD_MODE_NEVER')}
-      </option>
-    </select>
-  </div>`;
-  const loadSpeed = html` <div class="ControlLabel PagesPerSecond">
-    ${getLocaleString('LOAD_SPEED')}
-    <select id="PagesPerSecond">
-      <option value="3000" ${getUserSettings().throttlePageLoad === 3e3 ? 'selected' : ''}>
-        0.3(${getLocaleString('SLOWLY')})
-      </option>
-      <option value="2000" ${getUserSettings().throttlePageLoad === 2e3 ? 'selected' : ''}>
-        0.5
-      </option>
-      <option value="1000" ${getUserSettings().throttlePageLoad === 1e3 ? 'selected' : ''}>
-        01(${getLocaleString('NORMAL')})
-      </option>
-      <option value="500" ${getUserSettings().throttlePageLoad === 500 ? 'selected' : ''}>
-        02
-      </option>
-      <option value="250" ${getUserSettings().throttlePageLoad === 250 ? 'selected' : ''}>
-        04(${getLocaleString('FAST')})
-      </option>
-      <option value="125" ${getUserSettings().throttlePageLoad === 125 ? 'selected' : ''}>
-        08
-      </option>
-      <option value="100" ${getUserSettings().throttlePageLoad === 100 ? 'selected' : ''}>
-        10(${getLocaleString('EXTREME')})
-      </option>
-      <option value="1" ${getUserSettings().throttlePageLoad === 1 ? 'selected' : ''}>
-        ${getLocaleString('ALL_PAGES')}
-      </option>
-    </select>
-  </div>`;
+  `;
+  const loadMode = html`
+    <div class="ControlLabel loadMode">
+      ${getLocaleString('DEFAULT_LOAD_MODE')}
+      <select id="loadMode">
+        <option value="wait" ${getUserSettings().loadMode === 'wait' ? 'selected' : ''}>
+          ${getLocaleString('LOAD_MODE_NORMAL')}
+        </option>
+        <option value="always" ${getUserSettings().loadMode === 'always' ? 'selected' : ''}>
+          ${getLocaleString('LOAD_MODE_ALWAYS')}
+        </option>
+        <option value="never" ${getUserSettings().loadMode === 'never' ? 'selected' : ''}>
+          ${getLocaleString('LOAD_MODE_NEVER')}
+        </option>
+      </select>
+    </div>
+  `;
+  const loadSpeed = html`
+    <div class="ControlLabel PagesPerSecond">
+      ${getLocaleString('LOAD_SPEED')}
+      <select id="PagesPerSecond">
+        <option value="3000" ${getUserSettings().throttlePageLoad === 3e3 ? 'selected' : ''}>
+          0.3(${getLocaleString('SLOWLY')})
+        </option>
+        <option value="2000" ${getUserSettings().throttlePageLoad === 2e3 ? 'selected' : ''}>
+          0.5
+        </option>
+        <option value="1000" ${getUserSettings().throttlePageLoad === 1e3 ? 'selected' : ''}>
+          01(${getLocaleString('NORMAL')})
+        </option>
+        <option value="500" ${getUserSettings().throttlePageLoad === 500 ? 'selected' : ''}>
+          02
+        </option>
+        <option value="250" ${getUserSettings().throttlePageLoad === 250 ? 'selected' : ''}>
+          04(${getLocaleString('FAST')})
+        </option>
+        <option value="125" ${getUserSettings().throttlePageLoad === 125 ? 'selected' : ''}>
+          08
+        </option>
+        <option value="100" ${getUserSettings().throttlePageLoad === 100 ? 'selected' : ''}>
+          10(${getLocaleString('EXTREME')})
+        </option>
+        <option value="1" ${getUserSettings().throttlePageLoad === 1 ? 'selected' : ''}>
+          ${getLocaleString('ALL_PAGES')}
+        </option>
+      </select>
+    </div>
+  `;
   const defaultZoomMode = html` <div class="ControlLabel DefaultZoomMode">
     ${getLocaleString('DEFAULT_ZOOM_MODE')}
     <select id="DefaultZoomMode">
@@ -2820,129 +2841,142 @@
       </option>
     </select>
   </div>`;
-  const defaultZoom = html` <div
-    class="ControlLabel DefaultZoom ControlLabelItem
+  const defaultZoom = html`
+    <div
+      class="ControlLabel DefaultZoom ControlLabelItem
   ${getUserSettings().zoomMode === 'percent' ? 'show' : ''}"
-  >
-    <span>
-      ${getLocaleString('DEFAULT_ZOOM')}
-      <output id="defaultZoomVal" class="RangeValue" for="DefaultZoom">
-        ${getUserSettings().defaultZoom}%
-      </output>
-    </span>
-    <input
-      type="range"
-      value="${getUserSettings().defaultZoom}"
-      name="DefaultZoom"
-      id="DefaultZoom"
-      min="5"
-      max="200"
-      step="5"
-      list="tickmarks"
-      oninput='defaultZoomVal.value = this.value + "%"'
-    />
-    <datalist id="tickmarks">
-      <option value="5">5</option>
-      <option value="25">25</option>
-      <option value="50">50</option>
-      <option value="75">75</option>
-      <option value="100">100</option>
-      <option value="125">125</option>
-      <option value="150">150</option>
-      <option value="175">175</option>
-      <option value="200">200</option>
-    </datalist>
-  </div>`;
-  const minZoom = html` <div class="ControlLabel minZoom">
-    <span>
-      ${getLocaleString('MINIMUM_ZOOM')}
-      <output id="minZoomVal" class="RangeValue" for="minZoom">
-        ${getUserSettings().minZoom}%
-      </output>
-    </span>
-    <input
-      type="range"
-      value="${getUserSettings().minZoom}"
-      name="minZoom"
-      id="minZoom"
-      min="30"
-      max="100"
-      step="10"
-      oninput='minZoomVal.value = this.value + "%"'
-    />
-  </div>`;
-  const zoomStep = html` <div class="ControlLabel zoomStep">
-    <span>
-      ${getLocaleString('ZOOM_STEP')}
-      <output id="zoomStepVal" class="RangeValue" for="zoomStep">
-        ${getUserSettings().zoomStep}%
-      </output>
-    </span>
-    <input
-      type="range"
-      value="${getUserSettings().zoomStep}"
-      name="zoomStep"
-      id="zoomStep"
-      min="5"
-      max="50"
-      step="5"
-      oninput='zoomStepVal.value = this.value + "%"'
-    />
-  </div>`;
-  const viewMode$1 = html` <div class="ControlLabel viewMode">
-    ${getLocaleString('DEFAULT_VIEW_MODE')}
-    <select id="viewMode">
-      <option value="Vertical" ${getUserSettings().viewMode === 'Vertical' ? 'selected' : ''}>
-        ${getLocaleString('VIEW_MODE_VERTICAL')}
-      </option>
-      <option value="WebComic" ${getUserSettings().viewMode === 'WebComic' ? 'selected' : ''}>
-        ${getLocaleString('VIEW_MODE_WEBCOMIC')}
-      </option>
-      <option value="FluidLTR" ${getUserSettings().viewMode === 'FluidLTR' ? 'selected' : ''}>
-        ${getLocaleString('VIEW_MODE_LEFT')}
-      </option>
-      <option value="FluidRTL" ${getUserSettings().viewMode === 'FluidRTL' ? 'selected' : ''}>
-        ${getLocaleString('VIEW_MODE_RIGHT')}
-      </option>
-    </select>
-  </div>`;
-  const lazyLoad$1 = html` <div
-    class="ControlLabel lazyStart ControlLabelItem
+    >
+      <span>
+        ${getLocaleString('DEFAULT_ZOOM')}
+        <output id="defaultZoomVal" class="RangeValue" for="DefaultZoom">
+          ${getUserSettings().defaultZoom}%
+        </output>
+      </span>
+      <input
+        type="range"
+        value="${getUserSettings().defaultZoom}"
+        name="DefaultZoom"
+        id="DefaultZoom"
+        min="5"
+        max="200"
+        step="5"
+        list="tickmarks"
+        oninput='defaultZoomVal.value = this.value + "%"'
+      />
+      <datalist id="tickmarks">
+        <option value="5">5</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="75">75</option>
+        <option value="100">100</option>
+        <option value="125">125</option>
+        <option value="150">150</option>
+        <option value="175">175</option>
+        <option value="200">200</option>
+      </datalist>
+    </div>
+  `;
+  const minZoom = html`
+    <div class="ControlLabel minZoom">
+      <span>
+        ${getLocaleString('MINIMUM_ZOOM')}
+        <output id="minZoomVal" class="RangeValue" for="minZoom">
+          ${getUserSettings().minZoom}%
+        </output>
+      </span>
+      <input
+        type="range"
+        value="${getUserSettings().minZoom}"
+        name="minZoom"
+        id="minZoom"
+        min="30"
+        max="100"
+        step="10"
+        oninput='minZoomVal.value = this.value + "%"'
+      />
+    </div>
+  `;
+  const zoomStep = html`
+    <div class="ControlLabel zoomStep">
+      <span>
+        ${getLocaleString('ZOOM_STEP')}
+        <output id="zoomStepVal" class="RangeValue" for="zoomStep">
+          ${getUserSettings().zoomStep}%
+        </output>
+      </span>
+      <input
+        type="range"
+        value="${getUserSettings().zoomStep}"
+        name="zoomStep"
+        id="zoomStep"
+        min="5"
+        max="50"
+        step="5"
+        oninput='zoomStepVal.value = this.value + "%"'
+      />
+    </div>
+  `;
+  const viewMode$1 = html`
+    <div class="ControlLabel viewMode">
+      ${getLocaleString('DEFAULT_VIEW_MODE')}
+      <select id="viewMode">
+        <option value="Vertical" ${getUserSettings().viewMode === 'Vertical' ? 'selected' : ''}>
+          ${getLocaleString('VIEW_MODE_VERTICAL')}
+        </option>
+        <option value="WebComic" ${getUserSettings().viewMode === 'WebComic' ? 'selected' : ''}>
+          ${getLocaleString('VIEW_MODE_WEBCOMIC')}
+        </option>
+        <option value="FluidLTR" ${getUserSettings().viewMode === 'FluidLTR' ? 'selected' : ''}>
+          ${getLocaleString('VIEW_MODE_LEFT')}
+        </option>
+        <option value="FluidRTL" ${getUserSettings().viewMode === 'FluidRTL' ? 'selected' : ''}>
+          ${getLocaleString('VIEW_MODE_RIGHT')}
+        </option>
+      </select>
+    </div>
+  `;
+  const lazyLoad$1 = html`
+    <div
+      class="ControlLabel lazyStart ControlLabelItem
     ${getUserSettings().lazyLoadImages ? 'show' : ''}"
-  >
-    <span>
-      ${getLocaleString('LAZY_LOAD_IMAGES')}
-      <output id="lazyStartVal" for="lazyStart"> ${getUserSettings().lazyStart} </output>
-    </span>
-    <input
-      type="range"
-      value="${getUserSettings().lazyStart}"
-      name="lazyStart"
-      id="lazyStart"
-      min="5"
-      max="100"
-      step="5"
-      oninput="lazyStartVal.value = this.value"
-    />
-  </div>`;
-  const headerType = html` <div class="ControlLabel headerType">
-    ${getLocaleString('HEADER_TYPE')}
-    <select id="headerType">
-      <option value="hover" ${getUserSettings().header === 'hover' ? 'selected' : ''}>
-        ${getLocaleString('HEADER_HOVER')}
-      </option>
-      <option value="scroll" ${getUserSettings().header === 'scroll' ? 'selected' : ''}>
-        ${getLocaleString('HEADER_SCROLL')}
-      </option>
-      <option value="click" ${getUserSettings().header === 'click' ? 'selected' : ''}>
-        ${getLocaleString('HEADER_CLICK')}
-      </option>
-      <option value="fixed" ${getUserSettings().header === 'fixed' ? 'selected' : ''}>
-        ${getLocaleString('HEADER_FIXED')}
-      </option>
-    </select>
-  </div>`;
-  const checkboxOptions = html` <div class="ControlLabel fitIfOversize">
+    >
+      <span>
+        ${getLocaleString('LAZY_LOAD_IMAGES')}
+        <output id="lazyStartVal" for="lazyStart"> ${getUserSettings().lazyStart} </output>
+      </span>
+      <input
+        type="range"
+        value="${getUserSettings().lazyStart}"
+        name="lazyStart"
+        id="lazyStart"
+        min="5"
+        max="100"
+        step="5"
+        oninput="lazyStartVal.value = this.value"
+      />
+    </div>
+  `;
+  const headerType = html`
+    <div class="ControlLabel headerType">
+      ${getLocaleString('HEADER_TYPE')}
+      <select id="headerType">
+        <option value="hover" ${getUserSettings().header === 'hover' ? 'selected' : ''}>
+          ${getLocaleString('HEADER_HOVER')}
+        </option>
+        <option value="scroll" ${getUserSettings().header === 'scroll' ? 'selected' : ''}>
+          ${getLocaleString('HEADER_SCROLL')}
+        </option>
+        <option value="click" ${getUserSettings().header === 'click' ? 'selected' : ''}>
+          ${getLocaleString('HEADER_CLICK')}
+        </option>
+        <option value="fixed" ${getUserSettings().header === 'fixed' ? 'selected' : ''}>
+          ${getLocaleString('HEADER_FIXED')}
+        </option>
+      </select>
+    </div>
+  `;
+  const checkboxOptions = html`
+    <div class="ControlLabel fitIfOversize">
       ${getLocaleString('FIT_WIDTH_OVERSIZED')}
       <input
         type="checkbox"
@@ -2992,7 +3026,27 @@
         id="hidePageControls"
         ${getUserSettings().hidePageControls ? 'checked' : ''}
       />
-    </div>`;
+    </div>
+  `;
+  const autoScroll = html`
+    <div class="ControlLabel autoScroll">
+      <span>
+        ${getLocaleString('AUTO_SCROLL_HEIGHT')}
+        <output id="scrollHeightVal" for="scrollHeight"> ${getUserSettings().scrollHeight} </output
+        >px
+      </span>
+      <input
+        type="range"
+        value="${getUserSettings().scrollHeight}"
+        name="scrollHeight"
+        id="scrollHeight"
+        min="1"
+        max="100"
+        step="1"
+        oninput="scrollHeightVal.value = this.value"
+      />
+    </div>
+  `;
   const SettingsPanel = () => html`
     <div id="SettingsPanel" class="panel">
       <h2>${getLocaleString('SETTINGS')}</h2>
@@ -3003,7 +3057,7 @@
         ${getLocaleString('BUTTON_RESET_SETTINGS')}
       </button>
       ${language} ${theme} ${loadMode} ${loadSpeed} ${defaultZoomMode} ${defaultZoom} ${minZoom}
-      ${zoomStep} ${viewMode$1} ${checkboxOptions} ${headerType}
+      ${zoomStep} ${viewMode$1} ${checkboxOptions} ${headerType} ${autoScroll}
     </div>
   `;
 
@@ -3158,6 +3212,9 @@
           </button>
           <button id="keybindings" title="${getLocaleString('KEYBINDINGS')}" class="ControlButton">
             ${IconKeyboard}
+          </button>
+          <button id="AutoScroll" title="${getLocaleString('SCROLL_START')}" class="ControlButton">
+            ${IconPlayerPlay} ${IconPlayerPause}
           </button>
         </span>
         <span>
@@ -3609,6 +3666,9 @@
     VIEW_MODE_RIGHT() {
       doClick('#ltrMode');
     },
+    SCROLL_START() {
+      doClick('#AutoScroll');
+    },
   };
   function keybindings() {
     document.onkeydown = null;
@@ -4045,6 +4105,10 @@
     document.querySelector('#Header')?.classList.add(headerType);
     updateSettings({ header: headerType });
   }
+  function changeScrollHeight(event) {
+    const { value } = event.currentTarget;
+    updateSettings({ scrollHeight: parseInt(value, 10) });
+  }
   function options() {
     document.querySelector('#ResetSettings')?.addEventListener('click', buttonResetSettings);
     document.querySelector('#locale')?.addEventListener('change', changeLocale);
@@ -4059,6 +4123,7 @@
     document.querySelector('#minZoom')?.addEventListener('input', changeMinZoom);
     document.querySelector('#hidePageControls')?.addEventListener('change', checkHideImageControls);
     document.querySelector('#headerType')?.addEventListener('change', changeHeaderType);
+    document.querySelector('#scrollHeight')?.addEventListener('change', changeScrollHeight);
   }
 
   function buttonHeader() {
@@ -4277,6 +4342,38 @@
     document.querySelector('#fitHeight')?.addEventListener('click', changeGlobalZoom('height'));
   }
 
+  let scrollInterval;
+  function scroll() {
+    window.scrollBy({
+      top: getUserSettings().scrollHeight,
+      left: 0,
+      behavior: 'smooth',
+    });
+    if (document.querySelector('#Header')?.classList.contains('headroom-end')) {
+      clearInterval(scrollInterval);
+      scrollInterval = void 0;
+      document.querySelector('#ScrollControl')?.classList.remove('running');
+      logScript('Finished auto scroll');
+    }
+  }
+  function toggleAutoScroll() {
+    const control = document.querySelector('#AutoScroll');
+    if (scrollInterval) {
+      clearInterval(scrollInterval);
+      scrollInterval = void 0;
+      control?.classList.remove('running');
+      logScript('Stopped auto scroll');
+    } else {
+      scroll();
+      scrollInterval = setInterval(scroll, 1e3 / 60);
+      control?.classList.add('running');
+      logScript('Start auto scroll');
+    }
+  }
+  function autoscroll() {
+    document.querySelector('#AutoScroll')?.addEventListener('click', toggleAutoScroll);
+  }
+
   let setupEvents = false;
   function events() {
     if (!setupEvents) {
@@ -4294,6 +4391,7 @@
     theming();
     viewMode();
     zoom();
+    autoscroll();
   }
 
   let loadedManga;
@@ -4305,6 +4403,9 @@
       '#KeybindingsPanel': KeybindingsPanel(),
       '#Bookmarks': BookmarkPanel(),
     };
+    if (document.querySelector('#ScrollControl')?.classList.contains('running')) {
+      toggleAutoScroll();
+    }
     Object.entries(elements).forEach(([id, component]) => {
       const tag = document.querySelector(id);
       if (tag) {
@@ -4320,8 +4421,8 @@
       <div
         id="MangaOnlineViewer"
         class="${getUserSettings().colorScheme} 
-  ${getUserSettings().hidePageControls ? 'hideControls' : ''}
-  ${isBookmarked() ? 'bookmarked' : ''}"
+        ${getUserSettings().hidePageControls ? 'hideControls' : ''}
+        ${isBookmarked() ? 'bookmarked' : ''}"
         data-theme="${getUserSettings().theme}"
       >
         ${Header(manga)} ${Reader(manga)} ${commentsPanel(manga)} ${ThumbnailsPanel(manga)}

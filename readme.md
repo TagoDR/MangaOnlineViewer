@@ -118,7 +118,7 @@ First install then reload page, there will be an options in this section to sele
 - [vermangasporno](https://vermangasporno.com/) / [vercomicsporno](https://vercomicsporno.com/) _[Spanish]_
 
 ## HotKeys
-
+-   <span>Auto Scroll:</span> <span><kbd class="dark">space</kbd>
 -   <span>Scroll Up:</span> <span><kbd class="dark">up</kbd> / <kbd class="dark">W</kbd> / <kbd class="dark">
     num_8</kbd></span>
 -   <span>Scroll Down:</span> <span><kbd class="dark">down</kbd> / <kbd class="dark">S</kbd> / <kbd class="dark">
@@ -144,7 +144,7 @@ First install then reload page, there will be an options in this section to sele
 -   <span>Right to Left:</span> <span><kbd class="dark">B</kbd></span>
 
 ## Features
-
+-   Auto Scroll
 -   View Modes:
     -   Vertical/WebComic [Default]
     -   Fluid Left to Right
