@@ -98,4 +98,9 @@ export default {
   CLOSE: '关闭',
   LIST_EMPTY: '没有收藏书签',
   DISPLAY_COMMENTS: '显示注释',
+  SCROLL_START: '切换自动滚动',
+  SCROLL_SLOWER: '自动滚动速度较慢',
+  SCROLL_FASTER: '更快的自动滚动',
+  AUTO_SCROLL_TIMER: '自动滚动步骤之间的默认延迟',
+  AUTO_SCROLL_PERCENT: '自动滚动屏幕百分比',
 };

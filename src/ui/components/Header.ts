@@ -9,11 +9,15 @@ import {
   IconArrowBigLeft,
   IconArrowBigRight,
   IconBookmarks,
+  IconClockMinus,
+  IconClockPlus,
   IconFileDownload,
   IconKeyboard,
   IconListNumbers,
   IconLoader2,
   IconMenu2,
+  IconPlayerPlay,
+  IconPlayerStop,
   IconSettings,
   IconSpacingVertical,
   IconZoomInArea,
@@ -22,7 +26,6 @@ import {
 } from '../icons';
 import sequence from '../../utils/sequence';
 import type { IManga } from '../../types';
-import ScrollControl from './ScrollControl';
 
 const listOptions = (times: number, begin: number) =>
   sequence(times, begin).map((index) => html`<option value="${index}">${index}</option>`);
@@ -112,7 +115,18 @@ const Header = (manga: IManga) => html`
       <a id="series" href="${manga.series}"> (${getLocaleString('RETURN_CHAPTER_LIST')}) </a>
     </div>
     <nav id="ChapterNavigation">
-      ${ScrollControl()}
+      <div id="ScrollControl" class="">
+        <button id="AutoScroll" title="${getLocaleString('SCROLL_START')}" class="ControlButton">
+          ${IconPlayerPlay} ${IconPlayerStop}
+        </button>
+        <button id="ScrollSlower" title="${getLocaleString('SCROLL_SLOWER')}" class="ControlButton">
+          ${IconClockMinus}
+        </button>
+        <span id="ScrollSpeed">${getUserSettings().scrollTimer / 1000}</span><i>s</i>
+        <button id="ScrollFaster" title="${getLocaleString('SCROLL_FASTER')}" class="ControlButton">
+          ${IconClockPlus}
+        </button>
+      </div>
       <div id="Counters" class="ControlLabel">
         ${getLocaleString('PAGES_LOADED')}:
         <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>

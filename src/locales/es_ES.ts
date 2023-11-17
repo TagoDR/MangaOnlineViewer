@@ -100,4 +100,9 @@ export default {
   CLOSE: 'Cerrar',
   LIST_EMPTY: 'Lista vacía',
   DISPLAY_COMMENTS: 'Mostrar comentarios',
+  SCROLL_START: 'Alternar desplazamiento automático',
+  SCROLL_SLOWER: 'Desplazamiento automático más lento',
+  SCROLL_FASTER: 'Desplazamiento automático más rápido',
+  AUTO_SCROLL_TIMER: 'Retraso predeterminado de desplazamiento automático entre pasos',
+  AUTO_SCROLL_PERCENT: 'Porcentaje de pantalla de desplazamiento automático',
 };

@@ -50,6 +50,8 @@ export const defaultSettings: ISettings = {
     VIEW_MODE_LEFT: ['N'],
     VIEW_MODE_RIGHT: ['B'],
   },
+  scrollTimer: 1000,
+  scrollPercent: 80,
 };
 
 // Configuration

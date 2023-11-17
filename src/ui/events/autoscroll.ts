@@ -1,11 +1,12 @@
 import { logScript } from '../../utils/tampermonkey';
+import { getUserSettings } from '../../core/settings';
 
 let scrollInterval: ReturnType<typeof setInterval> | undefined;
-let scrolTimer = 5000;
+let scrollSpeed = getUserSettings().scrollTimer;
 
 function scroll() {
   window.scrollBy({
-    top: window.innerHeight * 0.8,
+    top: window.innerHeight * (getUserSettings().scrollPercent / 100),
     left: 0,
     behavior: 'smooth',
   });
@@ -19,16 +20,16 @@ function scroll() {
 
 function updateTimer(timer: number) {
   return () => {
-    scrolTimer += timer;
-    if (scrolTimer < 1000) scrolTimer = 1000;
+    scrollSpeed += timer;
+    if (scrollSpeed < 1000) scrollSpeed = 1000;
     const label = document.querySelector('#ScrollSpeed');
-    logScript('Updated auto scroll speed to ', scrolTimer);
+    logScript('Updated auto scroll speed to ', scrollSpeed);
     if (label) {
-      label.textContent = String(scrolTimer / 1000);
+      label.textContent = String(scrollSpeed / 1000);
     }
     if (scrollInterval) {
       clearInterval(scrollInterval);
-      scrollInterval = setInterval(scroll, scrolTimer);
+      scrollInterval = setInterval(scroll, scrollSpeed);
     }
   };
 }
@@ -42,7 +43,7 @@ export function toggleAutoScroll() {
     logScript('Stopped auto scroll');
   } else {
     scroll();
-    scrollInterval = setInterval(scroll, scrolTimer);
+    scrollInterval = setInterval(scroll, scrollSpeed);
     control?.classList.add('running');
     logScript('Start auto scroll');
   }

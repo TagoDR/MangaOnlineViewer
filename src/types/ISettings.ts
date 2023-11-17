@@ -39,4 +39,6 @@ export type ISettings = {
   header: HeaderMode;
   maxReload: number;
   keybinds: Record<string, string[] | undefined>;
+  scrollTimer: number;
+  scrollPercent: number;
 };
