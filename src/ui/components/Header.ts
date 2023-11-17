@@ -9,15 +9,13 @@ import {
   IconArrowBigLeft,
   IconArrowBigRight,
   IconBookmarks,
-  IconClockMinus,
-  IconClockPlus,
   IconFileDownload,
   IconKeyboard,
   IconListNumbers,
   IconLoader2,
   IconMenu2,
+  IconPlayerPause,
   IconPlayerPlay,
-  IconPlayerStop,
   IconSettings,
   IconSpacingVertical,
   IconZoomInArea,
@@ -51,6 +49,9 @@ const Header = (manga: IManga) => html`
         </button>
         <button id="keybindings" title="${getLocaleString('KEYBINDINGS')}" class="ControlButton">
           ${IconKeyboard}
+        </button>
+        <button id="AutoScroll" title="${getLocaleString('SCROLL_START')}" class="ControlButton">
+          ${IconPlayerPlay} ${IconPlayerPause}
         </button>
       </span>
       <span>
@@ -115,18 +116,6 @@ const Header = (manga: IManga) => html`
       <a id="series" href="${manga.series}"> (${getLocaleString('RETURN_CHAPTER_LIST')}) </a>
     </div>
     <nav id="ChapterNavigation">
-      <div id="ScrollControl" class="">
-        <button id="AutoScroll" title="${getLocaleString('SCROLL_START')}" class="ControlButton">
-          ${IconPlayerPlay} ${IconPlayerStop}
-        </button>
-        <button id="ScrollSlower" title="${getLocaleString('SCROLL_SLOWER')}" class="ControlButton">
-          ${IconClockMinus}
-        </button>
-        <span id="ScrollSpeed">${getUserSettings().scrollTimer / 1000}</span><i>s</i>
-        <button id="ScrollFaster" title="${getLocaleString('SCROLL_FASTER')}" class="ControlButton">
-          ${IconClockPlus}
-        </button>
-      </div>
       <div id="Counters" class="ControlLabel">
         ${getLocaleString('PAGES_LOADED')}:
         <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>

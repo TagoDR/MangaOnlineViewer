@@ -145,8 +145,8 @@
 #MangaOnlineViewer:not(.bookmarked) .ControlButton.Bookmark > .icon-tabler-bookmark-off,
 #MangaOnlineViewer #CommentsPanel.hide,
 #MangaOnlineViewer #CommentsArea.hide,
-#MangaOnlineViewer #ScrollControl.running #AutoScroll > .icon-tabler-player-play,
-#MangaOnlineViewer #ScrollControl:not(.running) #AutoScroll > .icon-tabler-player-stop {
+#MangaOnlineViewer #AutoScroll.running > .icon-tabler-player-play,
+#MangaOnlineViewer #AutoScroll:not(.running) > .icon-tabler-player-pause {
     display: none;
 }
 

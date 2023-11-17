@@ -99,8 +99,5 @@ export default {
   LIST_EMPTY: 'Lista Vazia',
   DISPLAY_COMMENTS: 'Mostar Comentarios',
   SCROLL_START: 'Ativar Rolagem Automatica',
-  SCROLL_SLOWER: 'Rolagem Automatica mais Devegar',
-  SCROLL_FASTER: 'Rolagem Automatica mais Rapida',
-  AUTO_SCROLL_TIMER: 'Padrão de espera entre passos da Rolagem Automatica',
-  AUTO_SCROLL_PERCENT: 'Percentual de Tela para Rolagem Automatica',
+  AUTO_SCROLL_HEIGHT: 'Velocidade da Rolagem Automatica em Pixels',
 };

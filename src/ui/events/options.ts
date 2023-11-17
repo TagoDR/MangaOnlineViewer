@@ -97,13 +97,9 @@ export function changeHeaderType(event: Event) {
   document.querySelector('#Header')?.classList.add(headerType);
   updateSettings({ header: headerType as HeaderMode });
 }
-export function changeScrollTimer(event: Event) {
+export function changeScrollHeight(event: Event) {
   const { value } = event.currentTarget as HTMLInputElement;
-  updateSettings({ scrollTimer: parseInt(value, 10) });
-}
-export function changeScrollPercent(event: Event) {
-  const { value } = event.currentTarget as HTMLInputElement;
-  updateSettings({ scrollPercent: parseInt(value, 10) });
+  updateSettings({ scrollHeight: parseInt(value, 10) });
 }
 function options() {
   // Reset Reader Settings
@@ -132,10 +128,8 @@ function options() {
   document.querySelector('#hidePageControls')?.addEventListener('change', checkHideImageControls);
   // Change Header Type
   document.querySelector('#headerType')?.addEventListener('change', changeHeaderType);
-  // Change Auto Scroll Timer
-  document.querySelector('#scrollTimer')?.addEventListener('change', changeScrollTimer);
   // Change Auto Scroll Percent
-  document.querySelector('#scrollPercent')?.addEventListener('change', changeScrollPercent);
+  document.querySelector('#scrollHeight')?.addEventListener('change', changeScrollHeight);
 }
 
 export default options;

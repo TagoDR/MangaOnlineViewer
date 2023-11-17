@@ -340,35 +340,18 @@ const checkboxOptions = html`
 const autoScroll = html`
   <div class="ControlLabel autoScroll">
     <span>
-      ${getLocaleString('AUTO_SCROLL_TIMER')}
-      <output id="scrollTimerVal" for="scrollTimer">
-        ${getUserSettings().scrollTimer / 1000} </output
-      >s
+      ${getLocaleString('AUTO_SCROLL_HEIGHT')}
+      <output id="scrollHeightVal" for="scrollHeight"> ${getUserSettings().scrollHeight} </output>px
     </span>
     <input
       type="range"
-      value="${getUserSettings().scrollTimer}"
-      name="scrollTimer"
-      id="scrollTimer"
-      min="250"
-      max="30000"
-      step="250"
-      oninput="scrollTimerVal.value = this.value/1000"
-    />
-    <span>
-      ${getLocaleString('AUTO_SCROLL_PERCENT')}
-      <output id="scrollPercentVal" for="scrollPercent"> ${getUserSettings().scrollPercent} </output
-      >%
-    </span>
-    <input
-      type="range"
-      value="${getUserSettings().scrollPercent}"
-      name="scrollPercent"
-      id="scrollPercent"
-      min="5"
+      value="${getUserSettings().scrollHeight}"
+      name="scrollHeight"
+      id="scrollHeight"
+      min="1"
       max="100"
-      step="5"
-      oninput="scrollPercentVal.value = this.value"
+      step="1"
+      oninput="scrollHeightVal.value = this.value"
     />
   </div>
 `;

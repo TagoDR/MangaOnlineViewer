@@ -99,8 +99,5 @@ export default {
   LIST_EMPTY: 'List Empty',
   DISPLAY_COMMENTS: 'Display Comments',
   SCROLL_START: 'Toggle Auto Scroll',
-  SCROLL_SLOWER: 'Slower Auto Scroll',
-  SCROLL_FASTER: 'Faster Auto Scroll',
-  AUTO_SCROLL_TIMER: 'Auto Scroll Default Delay between steps',
-  AUTO_SCROLL_PERCENT: 'Auto Scroll Screen Percentage',
+  AUTO_SCROLL_HEIGHT: 'Auto Scroll Speed in Pixels',
 };

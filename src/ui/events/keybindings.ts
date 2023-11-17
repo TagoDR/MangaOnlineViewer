@@ -73,6 +73,9 @@ const actions: Record<string, () => void> = {
   VIEW_MODE_RIGHT() {
     doClick('#ltrMode');
   },
+  SCROLL_START() {
+    doClick('#AutoScroll');
+  },
 };
 
 // Clean key press configurations and set some when specified

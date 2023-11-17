@@ -34,6 +34,7 @@ export const defaultSettings: ISettings = {
   hidePageControls: false,
   header: 'hover',
   maxReload: 5,
+  scrollHeight: 20,
   keybinds: {
     SCROLL_UP: ['up', 'W', 'num_8'],
     SCROLL_DOWN: ['down', 'S', 'num_2'],
@@ -49,9 +50,8 @@ export const defaultSettings: ISettings = {
     VIEW_MODE_VERTICAL: ['V'],
     VIEW_MODE_LEFT: ['N'],
     VIEW_MODE_RIGHT: ['B'],
+    SCROLL_START: ['space'],
   },
-  scrollTimer: 1000,
-  scrollPercent: 80,
 };
 
 // Configuration

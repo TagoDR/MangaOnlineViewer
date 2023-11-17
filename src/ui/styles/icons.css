@@ -83,10 +83,3 @@
 .icon-tabler-message > :nth-child(3) {
     color: greenyellow;
 }
-.icon-tabler-clock-plus > :nth-child(3),
-.icon-tabler-clock-plus > :nth-child(4) {
-    color: greenyellow;
-}
-.icon-tabler-clock-minus > :nth-child(4){
-    color: red;
-}

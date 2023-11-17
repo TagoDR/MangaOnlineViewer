@@ -38,7 +38,6 @@ export type ISettings = {
   hidePageControls: boolean;
   header: HeaderMode;
   maxReload: number;
+  scrollHeight: number;
   keybinds: Record<string, string[] | undefined>;
-  scrollTimer: number;
-  scrollPercent: number;
 };
