@@ -1,5 +1,11 @@
 // == Anchira ======================================================================================
-import { waitForAtb } from '../utils/waitFor';
+import { waitFor } from '../utils/waitFor';
+
+declare global {
+  interface Element {
+    originalAttachShadow: typeof Element.prototype.attachShadow;
+  }
+}
 
 export default {
   name: 'Anchira',
@@ -8,8 +14,13 @@ export default {
   homepage: 'https://anchira.to/',
   language: ['English'],
   category: 'hentai',
-  waitEle: 'main .p img',
+  waitEle: 'nav select option',
   async run() {
+    // Forbids Shadow Dom Closed
+    Element.prototype.originalAttachShadow = Element.prototype.attachShadow;
+    Element.prototype.attachShadow = function attachShadow() {
+      return this.originalAttachShadow({ mode: 'open' });
+    };
     const num = document.querySelectorAll<HTMLOptionElement>('nav select option');
     return {
       title: document.querySelector('title')?.textContent?.trim(),
@@ -27,14 +38,22 @@ export default {
         document.body.append(div);
 
         const select = document.querySelector<HTMLSelectElement>('nav select');
-        const target = document.querySelector<HTMLDivElement>('main');
         const src: string[] = [];
         for (let i = this.pages; i >= begin; i -= 1) {
-          target?.querySelector('.p img')?.removeAttribute('src');
+          document
+            .querySelector<HTMLDivElement>('main .p div')
+            ?.shadowRoot?.querySelector('img')
+            ?.removeAttribute('src');
           select!.value = String(i - 1);
           select?.dispatchEvent(new Event('change'));
           // eslint-disable-next-line no-await-in-loop
-          src[i - 1] = await waitForAtb('.p img', 'src', target ?? document.body);
+          src[i - 1] = await waitFor(
+            () =>
+              document
+                ?.querySelector('main .p div')
+                ?.shadowRoot?.querySelector('img')
+                ?.getAttribute('src'),
+          );
         }
 
         this.listImages = src;

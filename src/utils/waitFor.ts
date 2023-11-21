@@ -22,20 +22,21 @@ export function waitForElm(selector: string, target = document.body) {
   });
 }
 
-export function waitForAtb(
-  selector: string,
-  atribute: string,
+export function waitFor(
+  fn: () => string | undefined | null,
   target = document.body,
 ): Promise<string> {
   return new Promise((resolve) => {
-    if (document.querySelector(selector)?.getAttribute(atribute)) {
-      resolve(document.querySelector(selector)?.getAttribute(atribute) ?? '');
+    const result = fn();
+    if (result) {
+      resolve(result);
       return;
     }
 
     const observer = new MutationObserver(() => {
-      if (document.querySelector(selector)?.getAttribute(atribute)) {
-        resolve(document.querySelector(selector)?.getAttribute(atribute) ?? '');
+      const res = fn();
+      if (res) {
+        resolve(res);
         observer.disconnect();
       }
     });
@@ -44,7 +45,33 @@ export function waitForAtb(
       childList: true,
       subtree: true,
       attributes: true,
-      attributeFilter: [atribute],
+    });
+  });
+}
+
+export function waitForAtb(
+  selector: string,
+  attribute: string,
+  target = document.body,
+): Promise<string> {
+  return new Promise((resolve) => {
+    if (target.querySelector(selector)?.getAttribute(attribute)) {
+      resolve(target.querySelector(selector)?.getAttribute(attribute) ?? '');
+      return;
+    }
+
+    const observer = new MutationObserver(() => {
+      if (target.querySelector(selector)?.getAttribute(attribute)) {
+        resolve(target.querySelector(selector)?.getAttribute(attribute) ?? '');
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(target, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: [attribute],
     });
   });
 }
