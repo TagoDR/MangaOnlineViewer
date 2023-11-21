@@ -114,7 +114,9 @@ export function allowUpload() {
       value=""
     /><br />
   `;
-  document.querySelector('#user-content-local-files-zip-cbz-cbr + p')?.replaceWith(ele);
+  document
+    .querySelector('#user-content-local-files-zip-cbz-cbr')
+    ?.parentElement?.nextElementSibling?.replaceWith(ele);
   document.querySelector('#file')?.addEventListener('change', (evt) => {
     const input = evt.target as HTMLInputElement;
     if (input.files?.[0]) loadMangaFromZip(input.files[0]);
