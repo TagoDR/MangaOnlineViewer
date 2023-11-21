@@ -44,7 +44,6 @@ const globals = {
   sweetalert2: 'Swal',
   nprogress: 'NProgress',
   imagesloaded: 'imagesLoaded',
-  'file-saver': 'FileSaver',
   lodash: '_',
   'hotkeys-js': 'hotkeys',
   'range-slider-input': 'rangeSlider',
