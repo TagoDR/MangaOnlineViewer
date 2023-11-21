@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.11.17
+// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
+// @version       2023.11.21
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -47,7 +47,6 @@
 // @include       /https?:\/\/(www.)?porncomixone.net\/comic\/.+/
 // @include       /https?:\/\/(www.)?pururin.to\/(view|read)\/.+\/.+\/.+/
 // @include       /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/
-// @include       /https?:\/\/(www.)?(anchira).to\/(archive|g|read)\/\d+\/.+/
 // @include       /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/\d+/
 // @include       /https?:\/\/(www.)?3hentai.net\/d\/.+\/.+/
 // @include       /https?:\/\/(www.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/
@@ -59,6 +58,46 @@
 // ==/UserScript==
 (function () {
   'use strict';
+
+  const bestporncomix = {
+    name: 'BestPornComix',
+    url: /https?:\/\/(www.)?bestporncomix.com\/gallery\/.+/,
+    homepage: 'https://www.bestporncomix.com',
+    language: ['English'],
+    category: 'hentai',
+    timer: 5e3,
+    run() {
+      const images = [...document.querySelectorAll('figure a')];
+      return {
+        title: document.querySelector('h1.entry-title')?.textContent?.trim(),
+        series: '#',
+        pages: images.length,
+        prev: '#',
+        next: '#',
+        listImages: images.map((img) => img.getAttribute('href')),
+      };
+    },
+  };
+
+  const doujinmoe = {
+    name: 'DoujinMoeNM',
+    url: /https?:\/\/(www.)?doujins.com\/.+/,
+    homepage: 'https://doujins.com/',
+    language: ['English'],
+    category: 'hentai',
+    waitEle: '.doujin',
+    run() {
+      const images = [...document.querySelectorAll('.doujin')];
+      return {
+        title: document.querySelector('.folder-title a:last-child')?.textContent?.trim(),
+        series: document.querySelector('.folder-title a:nth-last-child(2)')?.getAttribute('href'),
+        pages: images.length,
+        prev: '#',
+        next: '#',
+        listImages: images.map((img) => img.getAttribute('data-file')),
+      };
+    },
+  };
 
   function isEmpty(value) {
     return (
@@ -148,87 +187,6 @@
       });
     });
   }
-
-  const anchira = {
-    name: 'Anchira',
-    obs: 'Slow start, bruteforce required',
-    url: /https?:\/\/(www.)?(anchira).to\/(archive|g|read)\/\d+\/.+/,
-    homepage: 'https://anchira.to/',
-    language: ['English'],
-    category: 'hentai',
-    waitEle: 'main .p img',
-    async run() {
-      const num = document.querySelectorAll('nav select option');
-      return {
-        title: document.querySelector('title')?.textContent?.trim(),
-        series: document.querySelector('a.back')?.getAttribute('href'),
-        pages: num?.length,
-        prev: '#',
-        next: '#',
-        listImages: [''],
-        async before(begin = 1) {
-          const div = document.createElement('div');
-          div.setAttribute(
-            'style',
-            'height: 100vh;width: 100vw;position: fixed;top: 0;left: 0;z-index: 100000;background: white;opacity: 0.5;',
-          );
-          document.body.append(div);
-          const select = document.querySelector('nav select');
-          const target = document.querySelector('main');
-          const src = [];
-          for (let i = this.pages; i >= begin; i -= 1) {
-            target?.querySelector('.p img')?.removeAttribute('src');
-            select.value = String(i - 1);
-            select?.dispatchEvent(new Event('change'));
-            src[i - 1] = await waitForAtb('.p img', 'src', target ?? document.body);
-          }
-          this.listImages = src;
-          num.item(0).selected = true;
-          select?.dispatchEvent(new Event('change'));
-        },
-      };
-    },
-  };
-
-  const bestporncomix = {
-    name: 'BestPornComix',
-    url: /https?:\/\/(www.)?bestporncomix.com\/gallery\/.+/,
-    homepage: 'https://www.bestporncomix.com',
-    language: ['English'],
-    category: 'hentai',
-    timer: 5e3,
-    run() {
-      const images = [...document.querySelectorAll('figure a')];
-      return {
-        title: document.querySelector('h1.entry-title')?.textContent?.trim(),
-        series: '#',
-        pages: images.length,
-        prev: '#',
-        next: '#',
-        listImages: images.map((img) => img.getAttribute('href')),
-      };
-    },
-  };
-
-  const doujinmoe = {
-    name: 'DoujinMoeNM',
-    url: /https?:\/\/(www.)?doujins.com\/.+/,
-    homepage: 'https://doujins.com/',
-    language: ['English'],
-    category: 'hentai',
-    waitEle: '.doujin',
-    run() {
-      const images = [...document.querySelectorAll('.doujin')];
-      return {
-        title: document.querySelector('.folder-title a:last-child')?.textContent?.trim(),
-        series: document.querySelector('.folder-title a:nth-last-child(2)')?.getAttribute('href'),
-        pages: images.length,
-        prev: '#',
-        next: '#',
-        listImages: images.map((img) => img.getAttribute('data-file')),
-      };
-    },
-  };
 
   const eightMuses = {
     name: ['8Muses.com', '8Muses.io'],
@@ -1119,7 +1077,7 @@
     porncomixonline,
     pururin,
     simplyhentai,
-    anchira,
+    // anchira,
     tmohhentai,
     threehentai,
     tsumino,
@@ -4208,7 +4166,9 @@
         value=""
       /><br />
     `;
-    document.querySelector('#user-content-local-files-zip-cbz-cbr + p')?.replaceWith(ele);
+    document
+      .querySelector('#user-content-local-files-zip-cbz-cbr')
+      ?.parentElement?.nextElementSibling?.replaceWith(ele);
     document.querySelector('#file')?.addEventListener('change', (evt) => {
       const input = evt.target;
       if (input.files?.[0]) loadMangaFromZip(input.files[0]);
