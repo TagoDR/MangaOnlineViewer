@@ -58,7 +58,7 @@ export const defaultSettings: ISettings = {
 let settings: ISettings = _.defaultsDeep(getSettings(defaultSettings), defaultSettings);
 
 // Force Settings for mobile
-if (isMobile) {
+if (isMobile()) {
   settings.lazyLoadImages = true;
   settings.fitWidthIfOversize = true;
   settings.showThumbnails = false;
