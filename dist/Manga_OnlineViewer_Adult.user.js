@@ -5,7 +5,7 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
+// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
 // @version       2023.11.21
 // @license       MIT
 // @grant         unsafeWindow
@@ -17,7 +17,6 @@
 // @noframes      on
 // @connect       *
 // @require       https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js
-// @require       https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
@@ -47,6 +46,7 @@
 // @include       /https?:\/\/(www.)?porncomixone.net\/comic\/.+/
 // @include       /https?:\/\/(www.)?pururin.to\/(view|read)\/.+\/.+\/.+/
 // @include       /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/
+// @include       /https?:\/\/(www.)?(anchira).to\/(archive|g|read)\/\d+\/.+/
 // @include       /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/\d+/
 // @include       /https?:\/\/(www.)?3hentai.net\/d\/.+\/.+/
 // @include       /https?:\/\/(www.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/
@@ -58,46 +58,6 @@
 // ==/UserScript==
 (function () {
   'use strict';
-
-  const bestporncomix = {
-    name: 'BestPornComix',
-    url: /https?:\/\/(www.)?bestporncomix.com\/gallery\/.+/,
-    homepage: 'https://www.bestporncomix.com',
-    language: ['English'],
-    category: 'hentai',
-    timer: 5e3,
-    run() {
-      const images = [...document.querySelectorAll('figure a')];
-      return {
-        title: document.querySelector('h1.entry-title')?.textContent?.trim(),
-        series: '#',
-        pages: images.length,
-        prev: '#',
-        next: '#',
-        listImages: images.map((img) => img.getAttribute('href')),
-      };
-    },
-  };
-
-  const doujinmoe = {
-    name: 'DoujinMoeNM',
-    url: /https?:\/\/(www.)?doujins.com\/.+/,
-    homepage: 'https://doujins.com/',
-    language: ['English'],
-    category: 'hentai',
-    waitEle: '.doujin',
-    run() {
-      const images = [...document.querySelectorAll('.doujin')];
-      return {
-        title: document.querySelector('.folder-title a:last-child')?.textContent?.trim(),
-        series: document.querySelector('.folder-title a:nth-last-child(2)')?.getAttribute('href'),
-        pages: images.length,
-        prev: '#',
-        next: '#',
-        listImages: images.map((img) => img.getAttribute('data-file')),
-      };
-    },
-  };
 
   function isEmpty(value) {
     return (
@@ -148,15 +108,17 @@
       });
     });
   }
-  function waitForAtb(selector, atribute, target = document.body) {
+  function waitFor(fn, target = document.body) {
     return new Promise((resolve) => {
-      if (document.querySelector(selector)?.getAttribute(atribute)) {
-        resolve(document.querySelector(selector)?.getAttribute(atribute) ?? '');
+      const result = fn();
+      if (result) {
+        resolve(result);
         return;
       }
       const observer = new MutationObserver(() => {
-        if (document.querySelector(selector)?.getAttribute(atribute)) {
-          resolve(document.querySelector(selector)?.getAttribute(atribute) ?? '');
+        const res = fn();
+        if (res) {
+          resolve(res);
           observer.disconnect();
         }
       });
@@ -164,7 +126,26 @@
         childList: true,
         subtree: true,
         attributes: true,
-        attributeFilter: [atribute],
+      });
+    });
+  }
+  function waitForAtb(selector, attribute, target = document.body) {
+    return new Promise((resolve) => {
+      if (target.querySelector(selector)?.getAttribute(attribute)) {
+        resolve(target.querySelector(selector)?.getAttribute(attribute) ?? '');
+        return;
+      }
+      const observer = new MutationObserver(() => {
+        if (target.querySelector(selector)?.getAttribute(attribute)) {
+          resolve(target.querySelector(selector)?.getAttribute(attribute) ?? '');
+          observer.disconnect();
+        }
+      });
+      observer.observe(target, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: [attribute],
       });
     });
   }
@@ -187,6 +168,98 @@
       });
     });
   }
+
+  const anchira = {
+    name: 'Anchira',
+    obs: 'Slow start, bruteforce required',
+    url: /https?:\/\/(www.)?(anchira).to\/(archive|g|read)\/\d+\/.+/,
+    homepage: 'https://anchira.to/',
+    language: ['English'],
+    category: 'hentai',
+    waitEle: 'nav select option',
+    async run() {
+      Element.prototype.originalAttachShadow = Element.prototype.attachShadow;
+      Element.prototype.attachShadow = function attachShadow() {
+        return this.originalAttachShadow({ mode: 'open' });
+      };
+      const num = document.querySelectorAll('nav select option');
+      return {
+        title: document.querySelector('title')?.textContent?.trim(),
+        series: document.querySelector('a.back')?.getAttribute('href'),
+        pages: num?.length,
+        prev: '#',
+        next: '#',
+        listImages: [''],
+        async before(begin = 1) {
+          const div = document.createElement('div');
+          div.setAttribute(
+            'style',
+            'height: 100vh;width: 100vw;position: fixed;top: 0;left: 0;z-index: 100000;background: white;opacity: 0.5;',
+          );
+          document.body.append(div);
+          const select = document.querySelector('nav select');
+          const src = [];
+          for (let i = this.pages; i >= begin; i -= 1) {
+            document
+              .querySelector('main .p div')
+              ?.shadowRoot?.querySelector('img')
+              ?.removeAttribute('src');
+            select.value = String(i - 1);
+            select?.dispatchEvent(new Event('change'));
+            src[i - 1] = await waitFor(() =>
+              document
+                ?.querySelector('main .p div')
+                ?.shadowRoot?.querySelector('img')
+                ?.getAttribute('src'),
+            );
+          }
+          this.listImages = src;
+          num.item(0).selected = true;
+          select?.dispatchEvent(new Event('change'));
+        },
+      };
+    },
+  };
+
+  const bestporncomix = {
+    name: 'BestPornComix',
+    url: /https?:\/\/(www.)?bestporncomix.com\/gallery\/.+/,
+    homepage: 'https://www.bestporncomix.com',
+    language: ['English'],
+    category: 'hentai',
+    timer: 5e3,
+    run() {
+      const images = [...document.querySelectorAll('figure a')];
+      return {
+        title: document.querySelector('h1.entry-title')?.textContent?.trim(),
+        series: '#',
+        pages: images.length,
+        prev: '#',
+        next: '#',
+        listImages: images.map((img) => img.getAttribute('href')),
+      };
+    },
+  };
+
+  const doujinmoe = {
+    name: 'DoujinMoeNM',
+    url: /https?:\/\/(www.)?doujins.com\/.+/,
+    homepage: 'https://doujins.com/',
+    language: ['English'],
+    category: 'hentai',
+    waitEle: '.doujin',
+    run() {
+      const images = [...document.querySelectorAll('.doujin')];
+      return {
+        title: document.querySelector('.folder-title a:last-child')?.textContent?.trim(),
+        series: document.querySelector('.folder-title a:nth-last-child(2)')?.getAttribute('href'),
+        pages: images.length,
+        prev: '#',
+        next: '#',
+        listImages: images.map((img) => img.getAttribute('data-file')),
+      };
+    },
+  };
 
   const eightMuses = {
     name: ['8Muses.com', '8Muses.io'],
@@ -1077,7 +1150,7 @@
     porncomixonline,
     pururin,
     simplyhentai,
-    // anchira,
+    anchira,
     tmohhentai,
     threehentai,
     tsumino,
@@ -1175,7 +1248,7 @@
   function getEngine() {
     return getInfoGM.scriptHandler ?? 'Greasemonkey';
   }
-  const isMobile = window.matchMedia('screen and (max-width: 768px)').matches;
+  const isMobile = () => window.matchMedia('screen and (max-width: 768px)').matches;
 
   const diffObj = (changed, original) => {
     const changes = (object, base) =>
@@ -1658,7 +1731,7 @@
     },
   };
   let settings$2 = _.defaultsDeep(getSettings(defaultSettings), defaultSettings);
-  if (isMobile) {
+  if (isMobile()) {
     settings$2.lazyLoadImages = true;
     settings$2.fitWidthIfOversize = true;
     settings$2.showThumbnails = false;
@@ -3001,6 +3074,153 @@
     document.querySelectorAll('.Bookmark')?.forEach(addEvent('click', buttonBookmark));
   }
 
+  var commonjsGlobal =
+    typeof globalThis !== 'undefined'
+      ? globalThis
+      : typeof window !== 'undefined'
+        ? window
+        : typeof global !== 'undefined'
+          ? global
+          : typeof self !== 'undefined'
+            ? self
+            : {};
+
+  var FileSaver_min = { exports: {} };
+
+  (function (module, exports) {
+    (function (a, b) {
+      b();
+    })(commonjsGlobal, function () {
+      function b(a, b) {
+        return (
+          'undefined' == typeof b
+            ? (b = { autoBom: !1 })
+            : 'object' != typeof b &&
+              (console.warn('Deprecated: Expected third argument to be a object'),
+              (b = { autoBom: !b })),
+          b.autoBom &&
+          /^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(a.type)
+            ? new Blob(['\uFEFF', a], { type: a.type })
+            : a
+        );
+      }
+      function c(a, b, c) {
+        var d = new XMLHttpRequest();
+        d.open('GET', a),
+          (d.responseType = 'blob'),
+          (d.onload = function () {
+            g(d.response, b, c);
+          }),
+          (d.onerror = function () {
+            console.error('could not download file');
+          }),
+          d.send();
+      }
+      function d(a) {
+        var b = new XMLHttpRequest();
+        b.open('HEAD', a, !1);
+        try {
+          b.send();
+        } catch (a) {}
+        return 200 <= b.status && 299 >= b.status;
+      }
+      function e(a) {
+        try {
+          a.dispatchEvent(new MouseEvent('click'));
+        } catch (c) {
+          var b = document.createEvent('MouseEvents');
+          b.initMouseEvent('click', !0, !0, window, 0, 0, 0, 80, 20, !1, !1, !1, !1, 0, null),
+            a.dispatchEvent(b);
+        }
+      }
+      var f =
+          'object' == typeof window && window.window === window
+            ? window
+            : 'object' == typeof self && self.self === self
+              ? self
+              : 'object' == typeof commonjsGlobal && commonjsGlobal.global === commonjsGlobal
+                ? commonjsGlobal
+                : void 0,
+        a =
+          f.navigator &&
+          /Macintosh/.test(navigator.userAgent) &&
+          /AppleWebKit/.test(navigator.userAgent) &&
+          !/Safari/.test(navigator.userAgent),
+        g =
+          f.saveAs ||
+          ('object' != typeof window || window !== f
+            ? function () {}
+            : 'download' in HTMLAnchorElement.prototype && !a
+              ? function (b, g, h) {
+                  var i = f.URL || f.webkitURL,
+                    j = document.createElement('a');
+                  (g = g || b.name || 'download'),
+                    (j.download = g),
+                    (j.rel = 'noopener'),
+                    'string' == typeof b
+                      ? ((j.href = b),
+                        j.origin === location.origin
+                          ? e(j)
+                          : d(j.href)
+                            ? c(b, g, h)
+                            : e(j, (j.target = '_blank')))
+                      : ((j.href = i.createObjectURL(b)),
+                        setTimeout(function () {
+                          i.revokeObjectURL(j.href);
+                        }, 4e4),
+                        setTimeout(function () {
+                          e(j);
+                        }, 0));
+                }
+              : 'msSaveOrOpenBlob' in navigator
+                ? function (f, g, h) {
+                    if (((g = g || f.name || 'download'), 'string' != typeof f))
+                      navigator.msSaveOrOpenBlob(b(f, h), g);
+                    else if (d(f)) c(f, g, h);
+                    else {
+                      var i = document.createElement('a');
+                      (i.href = f),
+                        (i.target = '_blank'),
+                        setTimeout(function () {
+                          e(i);
+                        });
+                    }
+                  }
+                : function (b, d, e, g) {
+                    if (
+                      ((g = g || open('', '_blank')),
+                      g && (g.document.title = g.document.body.innerText = 'downloading...'),
+                      'string' == typeof b)
+                    )
+                      return c(b, d, e);
+                    var h = 'application/octet-stream' === b.type,
+                      i = /constructor/i.test(f.HTMLElement) || f.safari,
+                      j = /CriOS\/[\d]+/.test(navigator.userAgent);
+                    if ((j || (h && i) || a) && 'undefined' != typeof FileReader) {
+                      var k = new FileReader();
+                      (k.onloadend = function () {
+                        var a = k.result;
+                        (a = j ? a : a.replace(/^data:[^;]*;/, 'data:attachment/file;')),
+                          g ? (g.location.href = a) : (location = a),
+                          (g = null);
+                      }),
+                        k.readAsDataURL(b);
+                    } else {
+                      var l = f.URL || f.webkitURL,
+                        m = l.createObjectURL(b);
+                      g ? (g.location = m) : (location.href = m),
+                        (g = null),
+                        setTimeout(function () {
+                          l.revokeObjectURL(m);
+                        }, 4e4);
+                    }
+                  });
+      (f.saveAs = g.saveAs = g), (module.exports = g);
+    });
+  })(FileSaver_min);
+
+  var FileSaver_minExports = FileSaver_min.exports;
+
   let zip;
   const base64Regex = /^data:(?<mimeType>image\/\w+);base64,+(?<data>.+)/;
   const getExtension = (mimeType) =>
@@ -3070,7 +3290,7 @@
       .then((content) => {
         logScript('Download Ready');
         const zipName = `${document.querySelector('#MangaTitle')?.textContent?.trim()}.zip`;
-        FileSaver.saveAs(content, zipName, { autoBom: false });
+        FileSaver_minExports.saveAs(content, zipName, { autoBom: false });
         document.getElementById('download')?.classList.remove('loading');
       })
       .catch(logScript);
