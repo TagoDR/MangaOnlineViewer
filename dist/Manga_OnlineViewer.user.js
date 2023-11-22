@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans
-// @version       2023.11.21
+// @version       2023.11.22
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -4796,6 +4796,7 @@
   function allowUpload() {
     const ele = document.createElement('div');
     ele.innerHTML = html`
+      <h3>Only works with <i style="color:orange">Firefox</i>!</h3>
       <p>Can read any zip file with images inside and diplay it like any of the supported sites</p>
       <label for="file">Choose the local zip file:</label>
       <input
@@ -4815,8 +4816,6 @@
         class="btn"
         webkitdirectory
         mozdirectory
-        msdirectory
-        odirectory
         directory
         value=""
       /><br />

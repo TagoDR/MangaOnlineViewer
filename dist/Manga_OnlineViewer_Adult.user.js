@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.11.21
+// @version       2023.11.22
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -4351,6 +4351,7 @@
   function allowUpload() {
     const ele = document.createElement('div');
     ele.innerHTML = html`
+      <h3>Only works with <i style="color:orange">Firefox</i>!</h3>
       <p>Can read any zip file with images inside and diplay it like any of the supported sites</p>
       <label for="file">Choose the local zip file:</label>
       <input
@@ -4370,8 +4371,6 @@
         class="btn"
         webkitdirectory
         mozdirectory
-        msdirectory
-        odirectory
         directory
         value=""
       /><br />
