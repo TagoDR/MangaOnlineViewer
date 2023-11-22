@@ -226,10 +226,7 @@ async function start(sites: ISite[]) {
       getInfoGM.script.version
     } on ${getBrowser()} with ${getEngine()}`,
   );
-  if (window.location.href === 'https://github.com/TagoDR/MangaOnlineViewer') {
-    allowUpload();
-    return;
-  }
+  if (allowUpload()) return;
   logScript(`${sites.length} Known Manga Sites, Looking for a match...`);
 
   const site = sites.find((s: ISite) => s.url.test(window.location.href));

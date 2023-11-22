@@ -11,11 +11,20 @@
     </head>
     <body>
         <main class="container">
-            <h2 id="run-test">Run local test</h2>
-            <button type="button" id="test">Run Local Test</button>
-            <h2 id="user-content-local-files-zip-cbz-cbr">Local Files (ZIP, CBZ, CBR...)</h2>
-            <p aria-busy="true">Loading Local Files options</p>
-            <script src="/src/index.ts" type="module"></script>
+            <h1>MangaOnlineViewer</h1>
+            <div id="LocalTest">
+                <h2 id="run-test">Run local test</h2>
+                <button type="button" id="test">Run Local Test</button>
+            </div>
+            <div id="LocalFiles">
+                <h2>
+                    <span id="user-content-local-files-zip-cbz-cbr"
+                        >Local Files (ZIP, CBZ, CBR...)
+                    </span>
+                </h2>
+                <p aria-busy="true">Loading Local Files options</p>
+            </div>
         </main>
+        <script src="/src/index.ts" type="module"></script>
     </body>
 </html>
