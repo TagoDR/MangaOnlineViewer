@@ -79,6 +79,7 @@ function openFileImages(evt: Event) {
 export function allowUpload() {
   const ele = document.createElement('div');
   ele.innerHTML = html`
+    <h3>Only works with <i style="color:orange">Firefox</i>!</h3>
     <p>Can read any zip file with images inside and diplay it like any of the supported sites</p>
     <label for="file">Choose the local zip file:</label>
     <input
@@ -98,8 +99,6 @@ export function allowUpload() {
       class="btn"
       webkitdirectory
       mozdirectory
-      msdirectory
-      odirectory
       directory
       value=""
     /><br />
