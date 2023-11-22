@@ -2387,7 +2387,40 @@
     const encoded = encodeURIComponent(cleaned).replace(/\(/g, '%28').replace(/\)/g, '%29');
     return `data:image/svg+xml;charset=UTF-8,${encoded}`;
   }
-  Object.values(colors).map((i) => i['900']);
+  function placeholder(width, height, bgColor = '#0F1C3F', textColor = '#ECEAD9') {
+    const str = html`
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="${width}"
+        height="${height}"
+        viewBox="0 0 ${width} ${height}"
+      >
+        <rect fill="${bgColor}" width="${width}" height="${height}" />
+        <text
+          fill="${textColor}"
+          font-family="sans-serif"
+          font-size="30"
+          dy="10.5"
+          font-weight="bold"
+          x="50%"
+          y="50%"
+          text-anchor="middle"
+        >
+          ${width}x${height}
+        </text>
+      </svg>
+    `;
+    return svgToUrl(str);
+  }
+  const backgrounds = Object.values(colors).map((i) => i['900']);
+  const widths = [400, 600, 900, 1200, 1400, 1600, 1970];
+  const heights = [600, 800, 1e3, 1200, 1400, 2e3, 2600];
+  function randomPlaceholder() {
+    const randomWidth = Math.floor(Math.random() * widths.length);
+    const randomHeight = Math.floor(Math.random() * heights.length);
+    const randomColor = Math.floor(Math.random() * backgrounds.length);
+    return placeholder(widths[randomWidth], heights[randomHeight], backgrounds[randomColor]);
+  }
 
   const IconArrowAutofitDown =
     '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8" />\n  <path d="M18 4v17" />\n  <path d="M15 18l3 3l3 -3" />\n</svg>\n\n\n';
@@ -4725,6 +4758,36 @@
     }
   }
 
+  const localhost = {
+    name: 'Localhost',
+    url: /(file:\/\/\/.+index.html)/,
+    homepage: 'http://127.0.0.1:8080/index.html',
+    language: ['Portuguese'],
+    category: 'manga',
+    run() {
+      const num = parseInt(/\d+/.exec(window.location.search)?.toString() ?? '5', 10);
+      const comments = document.createElement('div');
+      comments.textContent = 'Testing Comment';
+      return {
+        title: 'Placeholder Manga Loaded',
+        series: '#Counters',
+        pages: num,
+        begin: 1,
+        prev: '?pages=50',
+        next: '?pages=1',
+        listImages: [
+          placeholder(985, 1400, '#152C55'),
+          placeholder(1970, 1400, '#2D1657'),
+          placeholder(985, 1400, '#7A1420'),
+          placeholder(985, 1400, '#0F5B30'),
+          placeholder(1970, 1400, '#806D15'),
+          ...Array(num).fill(0).map(randomPlaceholder),
+        ],
+        comments,
+      };
+    },
+  };
+
   const fileTypes = [
     'image/apng',
     'image/bmp',
@@ -4793,53 +4856,73 @@
       }).then(() => logScript('Page loaded'));
     }
   }
+  const browserMessage = html`
+    <h3>For <i style="color:crimson">Chrome</i> and similar browsers</h3>
+    Save this file
+    <a href="https://github.com/TagoDR/MangaOnlineViewer/blob/master/index.html?raw=1">index.html</a
+    >, then open it in the browser, and you will see the options below.
+    <h3>Below only works with <i style="color:orange">Firefox</i>!</h3>
+  `;
+  const filesSelectors = html`
+    <p>Can read any zip file with images inside and diplay it like any of the supported sites</p>
+    <label for="file">Choose the local zip file:</label>
+    <input
+      type="file"
+      id="file"
+      name="file"
+      class="btn"
+      accept=".zip, .cbz, .cbr, .7z, .rar"
+      value=""
+    /><br />
+    <p>Note : your browser will process the zip file, don't choose a file too big !</p>
+    <label for="file"><b>OR</b> Select a folder with images inside:</label>
+    <input
+      type="file"
+      id="folder"
+      name="folder"
+      class="btn"
+      webkitdirectory
+      mozdirectory
+      directory
+      value=""
+    /><br />
+    <label for="file"><b>OR</b> Select images:</label>
+    <input
+      type="file"
+      id="images"
+      name="images"
+      class="btn"
+      accept="image/*"
+      multiple
+      value=""
+    /><br />
+  `;
   function allowUpload() {
-    const ele = document.createElement('div');
-    ele.innerHTML = html`
-      <h3>Only works with <i style="color:orange">Firefox</i>!</h3>
-      <p>Can read any zip file with images inside and diplay it like any of the supported sites</p>
-      <label for="file">Choose the local zip file:</label>
-      <input
-        type="file"
-        id="file"
-        name="file"
-        class="btn"
-        accept=".zip, .cbz, .cbr, .7z, .rar"
-        value=""
-      /><br />
-      <p>Note : your browser will process the zip file, don't choose a file too big !</p>
-      <label for="file"><b>OR</b> Select a folder with images inside:</label>
-      <input
-        type="file"
-        id="folder"
-        name="folder"
-        class="btn"
-        webkitdirectory
-        mozdirectory
-        directory
-        value=""
-      /><br />
-      <label for="file"><b>OR</b> Select images:</label>
-      <input
-        type="file"
-        id="images"
-        name="images"
-        class="btn"
-        accept="image/*"
-        multiple
-        value=""
-      /><br />
-    `;
-    document
-      .querySelector('#user-content-local-files-zip-cbz-cbr')
-      ?.parentElement?.nextElementSibling?.replaceWith(ele);
-    document.querySelector('#file')?.addEventListener('change', (evt) => {
-      const input = evt.target;
-      if (input.files?.[0]) loadMangaFromZip(input.files[0]);
-    });
-    document.querySelector('#folder')?.addEventListener('change', openFileImages);
-    document.querySelector('#images')?.addEventListener('change', openFileImages);
-    logScript(`Waiting for zip upload`);
+    if (localhost.url.test(window.location.href)) document.querySelector('#LocalTest')?.remove();
+    if (
+      window.location.href === 'https://github.com/TagoDR/MangaOnlineViewer' ||
+      localhost.url.test(window.location.href) ||
+      window.location.href === 'http://localhost:5173/'
+    ) {
+      const ele = document.createElement('div');
+      ele.id = 'LocalMangaOnlineViewer';
+      ele.innerHTML =
+        (window.location.href === 'https://github.com/TagoDR/MangaOnlineViewer'
+          ? browserMessage
+          : '') + filesSelectors;
+      document
+        .querySelector('#user-content-local-files-zip-cbz-cbr')
+        ?.parentElement?.nextElementSibling?.replaceWith(ele);
+      document.querySelector('#file')?.addEventListener('change', (evt) => {
+        const input = evt.target;
+        if (input.files?.[0]) loadMangaFromZip(input.files[0]);
+      });
+      document.querySelector('#folder')?.addEventListener('change', openFileImages);
+      document.querySelector('#images')?.addEventListener('change', openFileImages);
+      logScript(`Waiting for zip upload`);
+      return true;
+    }
+    return false;
   }
 
   function validateMin(valBegin, endPage, rs) {
@@ -5035,10 +5118,7 @@
         getInfoGM.script.version
       } on ${getBrowser()} with ${getEngine()}`,
     );
-    if (window.location.href === 'https://github.com/TagoDR/MangaOnlineViewer') {
-      allowUpload();
-      return;
-    }
+    if (allowUpload()) return;
     logScript(`${sites.length} Known Manga Sites, Looking for a match...`);
     const site = sites.find((s) => s.url.test(window.location.href));
     if (site) {
