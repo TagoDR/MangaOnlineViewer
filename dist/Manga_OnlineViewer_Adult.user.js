@@ -4164,7 +4164,7 @@
     }
   }
   let resume = false;
-  const debaunceAutoScroll = _.debounce(() => {
+  const debounceAutoScroll = _.debounce(() => {
     toggleAutoScroll();
     resume = false;
   }, 500);
@@ -4174,7 +4174,7 @@
       resume = true;
     }
     if (resume && !scrollInterval) {
-      debaunceAutoScroll();
+      debounceAutoScroll();
     }
   }
   function autoscroll() {
