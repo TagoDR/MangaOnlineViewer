@@ -4163,7 +4163,22 @@
       logScript('Start auto scroll');
     }
   }
+  let resume = false;
+  const debaunceAutoScroll = _.debounce(() => {
+    toggleAutoScroll();
+    resume = false;
+  }, 500);
+  function manualScroll() {
+    if (!resume && scrollInterval) {
+      toggleAutoScroll();
+      resume = true;
+    }
+    if (resume && !scrollInterval) {
+      debaunceAutoScroll();
+    }
+  }
   function autoscroll() {
+    window.addEventListener('wheel', _.throttle(manualScroll, 500));
     document.querySelector('#AutoScroll')?.addEventListener('click', toggleAutoScroll);
   }
 
