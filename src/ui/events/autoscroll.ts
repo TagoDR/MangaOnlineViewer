@@ -1,5 +1,6 @@
 import { logScript } from '../../utils/tampermonkey';
 import { getUserSettings } from '../../core/settings';
+import _ from 'lodash';
 
 let scrollInterval: ReturnType<typeof setInterval> | undefined;
 
@@ -31,8 +32,23 @@ export function toggleAutoScroll() {
     logScript('Start auto scroll');
   }
 }
+let resume = false;
+const debaunceAutoScroll = _.debounce(() => {
+  toggleAutoScroll();
+  resume = false;
+}, 500);
+function manualScroll() {
+  if (!resume && scrollInterval) {
+    toggleAutoScroll();
+    resume = true;
+  }
+  if (resume && !scrollInterval) {
+    debaunceAutoScroll();
+  }
+}
 
 function autoscroll() {
+  window.addEventListener('wheel', _.throttle(manualScroll, 500));
   // Toggle Auto Scroll;
   document.querySelector('#AutoScroll')?.addEventListener('click', toggleAutoScroll);
 }
