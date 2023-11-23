@@ -185,7 +185,6 @@
       const num = document.querySelectorAll('nav select option');
       return {
         title: document.querySelector('title')?.textContent?.trim(),
-        series: '',
         pages: num?.length,
         prev: '#',
         next: '#',
@@ -232,7 +231,6 @@
       const images = [...document.querySelectorAll('figure a')];
       return {
         title: document.querySelector('h1.entry-title')?.textContent?.trim(),
-        series: '#',
         pages: images.length,
         prev: '#',
         next: '#',
@@ -376,7 +374,6 @@
         .match(/https?[^"]+/g);
       return {
         title: document.querySelector('.entry-header h1')?.textContent?.trim(),
-        series: '#',
         pages: images?.length,
         prev: '#',
         next: '#',
@@ -595,7 +592,6 @@
       const src = [...document.querySelectorAll('figure img, .entry-content img.lazy')];
       return {
         title: document.querySelector('h1.singleTitle-h1')?.textContent?.trim(),
-        series: '#',
         pages: src.length,
         prev: '#',
         next: '#',
@@ -764,7 +760,6 @@
       const images = [...api.querySelectorAll('image')];
       return {
         title: document.querySelector('#page-title')?.textContent?.trim(),
-        series: '#',
         pages: images.length,
         prev: '#',
         next: '#',
@@ -909,7 +904,6 @@
       const images = [...document.querySelectorAll('figure a')];
       return {
         title: document.querySelector('.post-title')?.textContent?.trim(),
-        series: '#',
         pages: images.length,
         prev: '#',
         next: '#',
@@ -1049,7 +1043,6 @@
       ];
       return {
         title: document.querySelector('h1.titl, title')?.textContent?.trim(),
-        series: '#',
         pages: images.length,
         prev: '#',
         next: '#',
@@ -1073,7 +1066,6 @@
       const pages = [...document.querySelectorAll('.pageselect option')];
       return {
         title: document.querySelector('.bread a:last-of-type')?.textContent?.trim(),
-        series: '#',
         pages: pages.length,
         prev: '#',
         next: '#',
@@ -1099,7 +1091,6 @@
       ];
       return {
         title: document.querySelector('title')?.textContent?.trim(),
-        series: '#',
         pages: src.length,
         prev: '#',
         next: '#',
@@ -1118,7 +1109,6 @@
       const images = [...document.querySelectorAll('.jig-link')];
       return {
         title: document.querySelector('.entry-title')?.textContent?.trim(),
-        series: '#',
         pages: images.length,
         prev: '#',
         next: '#',
