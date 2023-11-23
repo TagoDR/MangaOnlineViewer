@@ -27,7 +27,7 @@
 // @include       /https?:\/\/(www\.)?bestporncomix.com\/gallery\/.+/
 // @include       /https?:\/\/(www\.)?doujins.com\/.+/
 // @include       /https?:\/\/(comics.)?8muses.(com|io)\/(comics\/)?picture\/.+/
-// @include       /https?:\/\/(g.)?(exhentai|e-hentai).org\/s\/.+\/.+/
+// @include       /https?:\/\/(g\.)?(exhentai|e-hentai).org\/s\/.+\/.+/
 // @include       /https?:\/\/(www\.)?gntai.net\/(?!(category|tags|autores))[^/]+\/.+/
 // @include       /https?:\/\/(www\.)?hbrowse.com\/.+/
 // @include       /https?:\/\/(www\.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//

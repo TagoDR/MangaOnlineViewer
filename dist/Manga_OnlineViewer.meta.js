@@ -28,10 +28,10 @@
 // @include       /https?:\/\/alandal.com\/chapter\/.+\/\d+/
 // @include       /https?:\/\/(www\.)?bato.to\/(chapter|title).*/
 // @include       /https?:\/\/(www\.)?(bilibilicomics).com\/.+\/.+/
-// @include       /https?:\/\/comic.nizamkomputer.com\/read\/.+\/\d+.*/
+// @include       /https?:\/\/comic\.nizamkomputer.com\/read\/.+\/\d+.*/
 // @include       /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/
 // @include       /https?:\/\/(www\.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|nightscans|manhwafreak|manhwa-freak|ozulscansen|azuremanga).(com|org|gg|xyz|to|net)\/.+/
-// @include       /https?:\/\/(comics.)?inkr.com\/title\/.+\/chapter\/.+/
+// @include       /https?:\/\/(comics\.)?inkr.com\/title\/.+\/chapter\/.+/
 // @include       /https?:\/\/(www\.)?inmanga.com\/ver\/manga\/.+\/.+/
 // @include       /https?:\/\/(www\.)?klmanga.com\/.+chapter.+/
 // @include       /https?:\/\/(www\.)?leitor.net\/manga\/.+\/.+\/.+/
@@ -52,7 +52,7 @@
 // @include       /https?:\/\/(www\.)?(mangasee123|manga4life).com\/read-online\/.+/
 // @include       /https?:\/\/(www\.)?mangatigre.net\/.+\/.+\/.+/
 // @include       /https?:\/\/.*mangatoon.mobi\/.+\/watch\/.+/
-// @include       /https?:\/\/(www.|m.)?mangatown.com\/manga\/.+\/.+/
+// @include       /https?:\/\/(www\.|m\.)?mangatown.com\/manga\/.+\/.+/
 // @include       /https?:\/\/(www\.)?manhuascan.io\/.+chapter.+/
 // @include       /https?:\/\/(www\.)?(mreader|mangageko).com?\/reader\/.*/
 // @include       /https?:\/\/(www\.)?(naniscans).com\/chapters\/.+\/read/
@@ -63,7 +63,7 @@
 // @include       /https?:\/\/(www\.)?readcomicsonline.ru\/comic\/.*\/\d*/
 // @include       /https?:\/\/(www\.)?(funmanga|mngdoom|readmng|mangainn).(com|net)\/.+\/\d+/
 // @include       /https?:\/\/(www\.)?reaperscans.com\/comics\/.+\/chapters\/.+/
-// @include       /https?:\/\/raw.senmanga.com\/.+\/.+\/?/
+// @include       /https?:\/\/raw\.senmanga.com\/.+\/.+\/?/
 // @include       /https?:\/\/(www\.)?tapas.io\/episode\/.+/
 // @include       /https?:\/\/(www\.)?(tenmanga|gardenmanage).com\/(chapter|statuses)\/.+/
 // @include       /https?:\/\/(www\.)?(.+).com\/(viewer|news)\/.+\/(paginated|cascade)/
