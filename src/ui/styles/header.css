@@ -173,7 +173,7 @@
 #MangaOnlineViewer #Header .ViewerTitle #series[href='#'],
 #MangaOnlineViewer #Header .ViewerTitle #series[href=''],
 #MangaOnlineViewer #Header .ViewerTitle #series[href='undefined'] {
-    visibility: hidden;
+    /*visibility: hidden;*/
 }
 
 #MangaOnlineViewer #Header #menu .icon-tabler {

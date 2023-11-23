@@ -33,6 +33,9 @@ function globals() {
   document.querySelector('#pageControls')?.addEventListener('click', buttonGlobalHideImageControls);
   document.querySelector('#next')?.addEventListener('click', buttonRedirectURL);
   document.querySelector('#prev')?.addEventListener('click', buttonRedirectURL);
+  document
+    .querySelector('#series[href="#"],#series[href="undefined"],#series[href=""]')
+    ?.addEventListener('click', window.history.back);
   document.querySelector('#CommentsButton')?.addEventListener('click', buttonCommentsOpen);
 }
 
