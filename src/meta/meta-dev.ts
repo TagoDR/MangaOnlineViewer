@@ -1,9 +1,8 @@
 import adult from '../adult';
 import main from '../main';
-import localhost from '../main/localhost';
 import { requiredScripts } from '../core/externals';
 
-const sites = [...main, ...adult, localhost];
+const sites = [...main, ...adult];
 
 export default {
   name: 'MOV',

@@ -9,6 +9,7 @@ import inmanga from './inmanga';
 import klmanga from './klmanga';
 import leitor from './leitor';
 import lhtranslation from './lhtranslation';
+import localhost from './localhost';
 import lynxscans from './lynxscans';
 import madarawp from './madarawp';
 import mangabuddy from './mangabuddy';
@@ -64,6 +65,7 @@ const sites = [
   leitor,
   // Leviatanscans,
   lhtranslation,
+  localhost,
   lynxscans,
   mangabuddy,
   mangadex,

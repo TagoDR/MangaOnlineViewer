@@ -2,10 +2,10 @@
 import { placeholder, randomPlaceholder } from '../utils/svgs';
 
 export default {
-  name: 'Localhost',
-  url: /(file:\/\/\/.+index.html)/,
-  homepage: 'http://127.0.0.1:8080/index.html',
-  language: ['Portuguese'],
+  name: 'Local Files',
+  url: /(file:\/\/\/.+(index)?.html)/,
+  homepage: 'https://github.com/TagoDR/MangaOnlineViewer/blob/master/index.html?raw=1',
+  language: ['Raw'],
   category: 'manga',
   run() {
     const num: number = parseInt(/\d+/.exec(window.location.search)?.toString() ?? '5', 10);
@@ -13,7 +13,7 @@ export default {
     comments.textContent = 'Testing Comment';
     return {
       title: 'Placeholder Manga Loaded',
-      series: '#Counters',
+      series: '',
       pages: num,
       begin: 1,
       prev: '?pages=50',
