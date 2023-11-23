@@ -1,7 +1,7 @@
 // == SenManga =====================================================================================
 export default {
   name: 'SenManga(Raw)',
-  url: /https?:\/\/raw.senmanga.com\/.+\/.+\/?/,
+  url: /https?:\/\/raw\.senmanga.com\/.+\/.+\/?/,
   homepage: 'https://raw.senmanga.com/',
   language: ['Raw'],
   category: 'manga',

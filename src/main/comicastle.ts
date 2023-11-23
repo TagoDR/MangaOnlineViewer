@@ -1,7 +1,7 @@
 // == ComiCastle ===================================================================================
 export default {
   name: 'ComiCastle',
-  url: /https?:\/\/comic.nizamkomputer.com\/read\/.+\/\d+.*/,
+  url: /https?:\/\/comic\.nizamkomputer.com\/read\/.+\/\d+.*/,
   homepage: 'https://comic.nizamkomputer.com/',
   language: ['English'],
   category: 'comic',

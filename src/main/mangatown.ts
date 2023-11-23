@@ -1,7 +1,7 @@
 // == MangaTown ====================================================================================
 export default {
   name: 'MangaTown',
-  url: /https?:\/\/(www.|m.)?mangatown.com\/manga\/.+\/.+/,
+  url: /https?:\/\/(www\.|m\.)?mangatown.com\/manga\/.+\/.+/,
   homepage: 'https://www.mangatown.com/',
   language: ['English'],
   category: 'manga',

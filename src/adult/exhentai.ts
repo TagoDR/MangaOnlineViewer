@@ -1,7 +1,7 @@
 // == ExHentai =====================================================================================
 export default {
   name: ['ExHentai', 'e-Hentai'],
-  url: /https?:\/\/(g.)?(exhentai|e-hentai).org\/s\/.+\/.+/,
+  url: /https?:\/\/(g\.)?(exhentai|e-hentai).org\/s\/.+\/.+/,
   homepage: ['https://exhentai.org/', 'https://e-hentai.org/'],
   language: ['English'],
   obs: 'May get your IP Banned, use with moderation',

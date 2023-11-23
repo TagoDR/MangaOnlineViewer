@@ -1,7 +1,7 @@
 // == INKR =========================================================================================
 export default {
   name: 'INKR',
-  url: /https?:\/\/(comics.)?inkr.com\/title\/.+\/chapter\/.+/,
+  url: /https?:\/\/(comics\.)?inkr.com\/title\/.+\/chapter\/.+/,
   homepage: 'https://inkr.com/',
   language: ['English'],
   category: 'manga',
