@@ -24,36 +24,36 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
 // @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.12.0/dist/hotkeys.min.js
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
-// @include       /https?:\/\/(www.)?bestporncomix.com\/gallery\/.+/
-// @include       /https?:\/\/(www.)?doujins.com\/.+/
+// @include       /https?:\/\/(www\.)?bestporncomix.com\/gallery\/.+/
+// @include       /https?:\/\/(www\.)?doujins.com\/.+/
 // @include       /https?:\/\/(comics.)?8muses.(com|io)\/(comics\/)?picture\/.+/
 // @include       /https?:\/\/(g.)?(exhentai|e-hentai).org\/s\/.+\/.+/
-// @include       /https?:\/\/(www.)?gntai.net\/(?!(category|tags|autores))[^/]+\/.+/
-// @include       /https?:\/\/(www.)?hbrowse.com\/.+/
-// @include       /https?:\/\/(www.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//
-// @include       /https?:\/\/(www.)?hentaifox.com\/g\/.+/
-// @include       /https?:\/\/(www.)?(hentaihand|nhentai).com\/.+\/reader/
-// @include       /https?:\/\/(www.)?hentaihere.com\/.+\/.+\/.+/
+// @include       /https?:\/\/(www\.)?gntai.net\/(?!(category|tags|autores))[^/]+\/.+/
+// @include       /https?:\/\/(www\.)?hbrowse.com\/.+/
+// @include       /https?:\/\/(www\.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//
+// @include       /https?:\/\/(www\.)?hentaifox.com\/g\/.+/
+// @include       /https?:\/\/(www\.)?(hentaihand|nhentai).com\/.+\/reader/
+// @include       /https?:\/\/(www\.)?hentaihere.com\/.+\/.+\/.+/
 // @include       /https?:\/\/hitomi.la\/reader\/.+/
-// @include       /https?:\/\/(www.)?imhentai.xxx\/view\/.+\/.+\//
-// @include       /https?:\/\/(www.)?kingcomix.com\/.+/
-// @include       /https?:\/\/(www.)?luscious.net\/.+\/read\/.+/
-// @include       /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/
-// @include       /https?:\/\/(www.)?myhentaigallery.com\/gallery\/show\/.+\/\d+/
-// @include       /https?:\/\/(www.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/
-// @include       /https?:\/\/(www.)?9hentai.(ru|to)\/g\/.+\/.+/
-// @include       /https?:\/\/(www.)?(omegascans).(org)\/.+/
-// @include       /https?:\/\/(www.)?porncomixone.net\/comic\/.+/
-// @include       /https?:\/\/(www.)?pururin.to\/(view|read)\/.+\/.+\/.+/
-// @include       /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/
-// @include       /https?:\/\/(www.)?(anchira).to\/(archive|g|read)\/\d+\/.+/
-// @include       /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/\d+/
-// @include       /https?:\/\/(www.)?3hentai.net\/d\/.+\/.+/
-// @include       /https?:\/\/(www.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/
-// @include       /https?:\/\/(www.)?(vermangasporno|vercomicsporno).com\/.+/
-// @include       /https?:\/\/(www.)?wnacg.com\/photos-view-id-.+/
-// @include       /https?:\/\/(www.)?xlecx.one\/.+/
-// @include       /https?:\/\/(www.)?xyzcomics.com\/.+/
+// @include       /https?:\/\/(www\.)?imhentai.xxx\/view\/.+\/.+\//
+// @include       /https?:\/\/(www\.)?kingcomix.com\/.+/
+// @include       /https?:\/\/(www\.)?luscious.net\/.+\/read\/.+/
+// @include       /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/
+// @include       /https?:\/\/(www\.)?myhentaigallery.com\/gallery\/show\/.+\/\d+/
+// @include       /https?:\/\/(www\.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/
+// @include       /https?:\/\/(www\.)?9hentai.(ru|to)\/g\/.+\/.+/
+// @include       /https?:\/\/(www\.)?(omegascans).(org)\/.+/
+// @include       /https?:\/\/(www\.)?porncomixone.net\/comic\/.+/
+// @include       /https?:\/\/(www\.)?pururin.to\/(view|read)\/.+\/.+\/.+/
+// @include       /https?:\/\/(www\.)?simply-hentai.com\/.+\/page\/.+/
+// @include       /https?:\/\/(www\.)?(anchira).to\/(archive|g|read)\/\d+\/.+/
+// @include       /https?:\/\/(www\.)?tmohentai.com\/reader\/.+\/paginated\/\d+/
+// @include       /https?:\/\/(www\.)?3hentai.net\/d\/.+\/.+/
+// @include       /https?:\/\/(www\.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/
+// @include       /https?:\/\/(www\.)?(vermangasporno|vercomicsporno).com\/.+/
+// @include       /https?:\/\/(www\.)?wnacg.com\/photos-view-id-.+/
+// @include       /https?:\/\/(www\.)?xlecx.one\/.+/
+// @include       /https?:\/\/(www\.)?xyzcomics.com\/.+/
 // @include       /https?:\/\/.+\/(porncomic)\/.+\/.+/
 // ==/UserScript==
 (function () {
@@ -172,16 +172,12 @@
   const anchira = {
     name: 'Anchira',
     obs: 'Slow start, bruteforce required',
-    url: /https?:\/\/(www.)?(anchira).to\/(archive|g|read)\/\d+\/.+/,
+    url: /https?:\/\/(www\.)?(anchira).to\/(archive|g|read)\/\d+\/.+/,
     homepage: 'https://anchira.to/',
     language: ['English'],
     category: 'hentai',
     waitEle: 'nav select option',
     async run() {
-      Element.prototype.originalAttachShadow = Element.prototype.attachShadow;
-      Element.prototype.attachShadow = function attachShadow() {
-        return this.originalAttachShadow({ mode: 'open' });
-      };
       const num = document.querySelectorAll('nav select option');
       return {
         title: document.querySelector('title')?.textContent?.trim(),
@@ -222,7 +218,7 @@
 
   const bestporncomix = {
     name: 'BestPornComix',
-    url: /https?:\/\/(www.)?bestporncomix.com\/gallery\/.+/,
+    url: /https?:\/\/(www\.)?bestporncomix.com\/gallery\/.+/,
     homepage: 'https://www.bestporncomix.com',
     language: ['English'],
     category: 'hentai',
@@ -241,7 +237,7 @@
 
   const doujinmoe = {
     name: 'DoujinMoeNM',
-    url: /https?:\/\/(www.)?doujins.com\/.+/,
+    url: /https?:\/\/(www\.)?doujins.com\/.+/,
     homepage: 'https://doujins.com/',
     language: ['English'],
     category: 'hentai',
@@ -361,7 +357,7 @@
 
   const gntai = {
     name: 'GNTAI.net',
-    url: /https?:\/\/(www.)?gntai.net\/(?!(category|tags|autores))[^/]+\/.+/,
+    url: /https?:\/\/(www\.)?gntai.net\/(?!(category|tags|autores))[^/]+\/.+/,
     homepage: 'https://www.gntai.net/',
     language: ['Spanish'],
     category: 'hentai',
@@ -384,7 +380,7 @@
 
   const hbrowse = {
     name: 'HBrowser',
-    url: /https?:\/\/(www.)?hbrowse.com\/.+/,
+    url: /https?:\/\/(www\.)?hbrowse.com\/.+/,
     homepage: 'https://www.hbrowse.com/',
     language: ['English'],
     category: 'hentai',
@@ -414,7 +410,7 @@
 
   const hentai2read = {
     name: 'Hentai2Read',
-    url: /https?:\/\/(www.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//,
+    url: /https?:\/\/(www\.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//,
     homepage: 'https://hentai2read.com/',
     language: ['English'],
     category: 'hentai',
@@ -432,7 +428,7 @@
 
   const hentaifox = {
     name: 'HentaiFox',
-    url: /https?:\/\/(www.)?hentaifox.com\/g\/.+/,
+    url: /https?:\/\/(www\.)?hentaifox.com\/g\/.+/,
     homepage: 'https://www.hentaifox.com/',
     language: ['English'],
     category: 'hentai',
@@ -476,7 +472,7 @@
 
   const hentaihand = {
     name: ['HentaiHand', 'nHentai.com'],
-    url: /https?:\/\/(www.)?(hentaihand|nhentai).com\/.+\/reader/,
+    url: /https?:\/\/(www\.)?(hentaihand|nhentai).com\/.+\/reader/,
     homepage: ['https://hentaihand.com/', 'https://nhentai.com'],
     language: ['English'],
     category: 'hentai',
@@ -496,7 +492,7 @@
 
   const hentaihere = {
     name: 'HentaIHere',
-    url: /https?:\/\/(www.)?hentaihere.com\/.+\/.+\/.+/,
+    url: /https?:\/\/(www\.)?hentaihere.com\/.+\/.+\/.+/,
     homepage: 'https://www.hentaihere.com/',
     language: ['English'],
     category: 'hentai',
@@ -558,7 +554,7 @@
   }
   const imhentai = {
     name: 'Imhentai',
-    url: /https?:\/\/(www.)?imhentai.xxx\/view\/.+\/.+\//,
+    url: /https?:\/\/(www\.)?imhentai.xxx\/view\/.+\/.+\//,
     homepage: 'https://imhentai.xxx/',
     language: ['English'],
     category: 'hentai',
@@ -584,7 +580,7 @@
 
   const kingcomix = {
     name: 'KingComix',
-    url: /https?:\/\/(www.)?kingcomix.com\/.+/,
+    url: /https?:\/\/(www\.)?kingcomix.com\/.+/,
     homepage: 'https://kingcomix.com/',
     language: ['English'],
     category: 'hentai',
@@ -608,7 +604,7 @@
 
   const luscious = {
     name: 'Luscious',
-    url: /https?:\/\/(www.)?luscious.net\/.+\/read\/.+/,
+    url: /https?:\/\/(www\.)?luscious.net\/.+\/read\/.+/,
     homepage: 'https://luscious.net/',
     language: ['English'],
     category: 'hentai',
@@ -743,7 +739,7 @@
 
   const multporn = {
     name: 'MultPorn',
-    url: /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/,
+    url: /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/,
     homepage: 'https://multporn.net/',
     language: ['English'],
     category: 'hentai',
@@ -770,7 +766,7 @@
 
   const myhentaigallery = {
     name: 'MyHentaiGallery',
-    url: /https?:\/\/(www.)?myhentaigallery.com\/gallery\/show\/.+\/\d+/,
+    url: /https?:\/\/(www\.)?myhentaigallery.com\/gallery\/show\/.+\/\d+/,
     homepage: 'https://www.myhentaigallery.com',
     language: ['English'],
     category: 'hentai',
@@ -802,7 +798,7 @@
 
   const nhentainet = {
     name: ['nHentai.net', 'nHentai.xxx', 'lhentai'],
-    url: /https?:\/\/(www.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/,
+    url: /https?:\/\/(www\.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/,
     homepage: ['https://nhentai.net/', 'https://nhentai.xxx/', 'https://lhentai.com/'],
     language: ['English'],
     category: 'hentai',
@@ -843,7 +839,7 @@
 
   const ninehentai = {
     name: '9Hentai',
-    url: /https?:\/\/(www.)?9hentai.(ru|to)\/g\/.+\/.+/,
+    url: /https?:\/\/(www\.)?9hentai.(ru|to)\/g\/.+\/.+/,
     homepage: 'https://9hentai.to',
     language: ['English'],
     category: 'hentai',
@@ -873,7 +869,7 @@
 
   const omegascans = {
     name: ['OmegaScans'],
-    url: /https?:\/\/(www.)?(omegascans).(org)\/.+/,
+    url: /https?:\/\/(www\.)?(omegascans).(org)\/.+/,
     homepage: ['https://omegascans.org/'],
     language: ['English'],
     category: 'manga',
@@ -896,7 +892,7 @@
 
   const porncomixonline = {
     name: 'PornComixOnline',
-    url: /https?:\/\/(www.)?porncomixone.net\/comic\/.+/,
+    url: /https?:\/\/(www\.)?porncomixone.net\/comic\/.+/,
     homepage: 'https://www.porncomixone.net',
     language: ['English'],
     category: 'hentai',
@@ -914,7 +910,7 @@
 
   const pururin = {
     name: 'Pururin',
-    url: /https?:\/\/(www.)?pururin.to\/(view|read)\/.+\/.+\/.+/,
+    url: /https?:\/\/(www\.)?pururin.to\/(view|read)\/.+\/.+\/.+/,
     homepage: 'https://pururin.to/',
     language: ['English'],
     category: 'hentai',
@@ -935,7 +931,7 @@
 
   const simplyhentai = {
     name: 'Simply-Hentai',
-    url: /https?:\/\/(www.)?simply-hentai.com\/.+\/page\/.+/,
+    url: /https?:\/\/(www\.)?simply-hentai.com\/.+\/page\/.+/,
     homepage: 'https://simply-hentai.com/',
     language: ['English'],
     category: 'hentai',
@@ -956,7 +952,7 @@
 
   const threehentai = {
     name: '3Hentai',
-    url: /https?:\/\/(www.)?3hentai.net\/d\/.+\/.+/,
+    url: /https?:\/\/(www\.)?3hentai.net\/d\/.+\/.+/,
     homepage: 'https://3hentai.net/',
     language: ['English'],
     category: 'hentai',
@@ -977,7 +973,7 @@
 
   const tmohhentai = {
     name: 'TMOHentai',
-    url: /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/\d+/,
+    url: /https?:\/\/(www\.)?tmohentai.com\/reader\/.+\/paginated\/\d+/,
     homepage: 'https://tmohentai.com/',
     language: ['Spanish'],
     category: 'hentai',
@@ -1003,7 +999,7 @@
 
   const tsumino = {
     name: 'Tsumino',
-    url: /https?:\/\/(www.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/,
+    url: /https?:\/\/(www\.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/,
     homepage: 'https://tsumino.com/',
     language: ['English'],
     category: 'hentai',
@@ -1030,7 +1026,7 @@
 
   const vercomicsporno = {
     name: ['vermangasporno', 'vercomicsporno'],
-    url: /https?:\/\/(www.)?(vermangasporno|vercomicsporno).com\/.+/,
+    url: /https?:\/\/(www\.)?(vermangasporno|vercomicsporno).com\/.+/,
     homepage: ['https://vermangasporno.com/', 'https://vercomicsporno.com/'],
     language: ['Spanish'],
     category: 'hentai',
@@ -1058,7 +1054,7 @@
 
   const wnacg = {
     name: 'wnacg',
-    url: /https?:\/\/(www.)?wnacg.com\/photos-view-id-.+/,
+    url: /https?:\/\/(www\.)?wnacg.com\/photos-view-id-.+/,
     homepage: 'https://wnacg.com/',
     language: ['English', 'Raw', 'Chinese'],
     category: 'hentai',
@@ -1077,7 +1073,7 @@
 
   const xlecxone = {
     name: 'XlecxOne',
-    url: /https?:\/\/(www.)?xlecx.one\/.+/,
+    url: /https?:\/\/(www\.)?xlecx.one\/.+/,
     homepage: 'https://xlecx.one/',
     language: ['English'],
     category: 'hentai',
@@ -1101,7 +1097,7 @@
 
   const xyzcomics = {
     name: 'xyzcomics',
-    url: /https?:\/\/(www.)?xyzcomics.com\/.+/,
+    url: /https?:\/\/(www\.)?xyzcomics.com\/.+/,
     homepage: 'https://xyzcomics.com/',
     language: ['English'],
     category: 'hentai',
@@ -2165,7 +2161,7 @@
     '@-webkit-keyframes spin {\n    to {\n        transform: rotate(360deg);\n    }\n}\n\n@keyframes spin {\n    to {\n        transform: rotate(360deg);\n    }\n}\n\n@-webkit-keyframes spin-reverse {\n    0% {\n        transform: rotate(360deg);\n    }\n\n    to {\n        transform: rotate(0);\n    }\n}\n\n@keyframes spin-reverse {\n    0% {\n        transform: rotate(360deg);\n    }\n\n    to {\n        transform: rotate(0);\n    }\n}\n\n.icon-tabler-loader-2,\n.animate-spin {\n    -webkit-animation: spin 1s linear infinite;\n    animation: spin 1s linear infinite;\n}\n\n.animate-spin-reverse {\n    -webkit-animation: spin-reverse 1s linear infinite;\n    animation: spin-reverse 1s linear infinite;\n}\n';
 
   const header =
-    "#MangaOnlineViewer #gotoPage {\n    min-width: 35px;\n}\n\n#MangaOnlineViewer #Header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    flex-flow: row nowrap;\n    transition: transform 0.3s ease-in;\n    position: sticky;\n    top: 0;\n    left: 0;\n    right: 0;\n    background-color: inherit;\n    z-index: 900;\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-hide {\n    transform: translateY(-100%);\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-show {\n    transform: translateY(-1%);\n}\n\n#MangaOnlineViewer #Header.hover,\n#MangaOnlineViewer #Header.fixed,\n#MangaOnlineViewer #Header.click {\n    position: static;\n    transform: none;\n}\n\n#MangaOnlineViewer #Header.headroom-end,\n#MangaOnlineViewer #Header.visible,\n#MangaOnlineViewer #Header.fixed {\n    transform: translateY(-1%);\n    position: sticky;\n}\n\n#MangaOnlineViewer #Header.hover:hover,\n#MangaOnlineViewer #Header.fixed {\n    position: sticky;\n}\n\n#MangaOnlineViewer #Header.scroll #menu,\n#MangaOnlineViewer #Header.fixed #menu,\n#MangaOnlineViewer #Header.hover:hover #menu,\n#MangaOnlineViewer #Header:not(.click).visible #menu {\n    display: none;\n}\n#MangaOnlineViewer #menu {\n    position: fixed;\n    min-height: 70px;\n    width: 100%;\n    top: 0;\n    z-index: 1;\n    color: var(--theme-body-text-color);\n}\n\n#MangaOnlineViewer #Header.click #menu {\n    cursor: pointer;\n}\n\n#MangaOnlineViewer #Header.click:not(.headroom-hide, .headroom-show) #menu,\n#MangaOnlineViewer #Header.click.headroom-end #menu,\n#MangaOnlineViewer #Header.click.visible #menu {\n    position: static;\n    min-width: 50px;\n    min-height: unset;\n    width: auto;\n}\n\n#MangaOnlineViewer #MangaTitle {\n    padding: 2px;\n    margin: 0;\n    font-size: 1.2rem;\n    font-weight: 400;\n}\n\n#MangaOnlineViewer #GlobalFunctions {\n    display: flex;\n    gap: 3px;\n    padding-left: 10px;\n    flex-wrap: wrap;\n    width: 300px;\n    z-index: 100;\n}\n\n#MangaOnlineViewer #ScrollControl .icon-tabler,\n#MangaOnlineViewer #GlobalFunctions .icon-tabler {\n    width: 25px;\n    height: 25px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomSlider {\n    display: flex;\n    align-items: center;\n}\n\n#MangaOnlineViewer #GlobalFunctions #Zoom {\n    margin-left: 5px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomVal {\n    width: 40px;\n    display: inline-block;\n    color: var(--theme-primary-text-color);\n    line-height: 20px;\n    text-align: center;\n    border-radius: 3px;\n    background: var(--theme-primary-color);\n    padding: 2px 5px;\n}\n\n#MangaOnlineViewer #ChapterNavigation {\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: end;\n    padding-right: 10px;\n    width: 300px;\n}\n\n#MangaOnlineViewer .ChapterControl {\n    display: flex;\n    flex-wrap: nowrap;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton {\n    display: inline-flex;\n    margin-left: 3px;\n    justify-content: center;\n    align-items: center;\n    padding: 5px 10px;\n    gap: 0.5em;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton .icon-tabler {\n    flex-shrink: 0;\n    align-self: center;\n    width: 1rem;\n    height: 1rem;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href='#'],\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href=''],\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href='undefined'] {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer .ChapterControl #download.loading {\n    cursor: not-allowed;\n    pointer-events: none;\n    opacity: 0.6;\n}\n\n#MangaOnlineViewer .ChapterControl #download.disabled {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer .ViewerTitle {\n    text-align: center;\n    min-height: 60px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    padding: 5px;\n    flex-basis: 60%;\n}\n\n#MangaOnlineViewer #Header .ViewerTitle #series[href='#'],\n#MangaOnlineViewer #Header .ViewerTitle #series[href=''],\n#MangaOnlineViewer #Header .ViewerTitle #series[href='undefined'] {\n    /*visibility: hidden;*/\n}\n\n#MangaOnlineViewer #Header #menu .icon-tabler {\n    position: absolute;\n    top: 5px;\n    left: 10px;\n    height: 32px;\n    width: 32px;\n}\n#MangaOnlineViewer #Header #ScrollControl{\n    font-size: 20px;\n}\n";
+    "#MangaOnlineViewer #gotoPage {\n    min-width: 35px;\n}\n\n#MangaOnlineViewer #Header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    flex-flow: row nowrap;\n    transition: transform 0.3s ease-in;\n    position: sticky;\n    top: 0;\n    left: 0;\n    right: 0;\n    background-color: inherit;\n    z-index: 900;\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-hide {\n    transform: translateY(-100%);\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-show {\n    transform: translateY(-1%);\n}\n\n#MangaOnlineViewer #Header.hover,\n#MangaOnlineViewer #Header.fixed,\n#MangaOnlineViewer #Header.click {\n    position: static;\n    transform: none;\n}\n\n#MangaOnlineViewer #Header.headroom-end,\n#MangaOnlineViewer #Header.visible,\n#MangaOnlineViewer #Header.fixed {\n    transform: translateY(-1%);\n    position: sticky;\n}\n\n#MangaOnlineViewer #Header.hover:hover,\n#MangaOnlineViewer #Header.fixed {\n    position: sticky;\n}\n\n#MangaOnlineViewer #Header.scroll #menu,\n#MangaOnlineViewer #Header.fixed #menu,\n#MangaOnlineViewer #Header.hover:hover #menu,\n#MangaOnlineViewer #Header:not(.click).visible #menu {\n    display: none;\n}\n#MangaOnlineViewer #menu {\n    position: fixed;\n    min-height: 70px;\n    width: 100%;\n    top: 0;\n    z-index: 1;\n    color: var(--theme-body-text-color);\n}\n\n#MangaOnlineViewer #Header.click #menu {\n    cursor: pointer;\n}\n\n#MangaOnlineViewer #Header.click:not(.headroom-hide, .headroom-show) #menu,\n#MangaOnlineViewer #Header.click.headroom-end #menu,\n#MangaOnlineViewer #Header.click.visible #menu {\n    position: static;\n    min-width: 50px;\n    min-height: unset;\n    width: auto;\n}\n\n#MangaOnlineViewer #MangaTitle {\n    padding: 2px;\n    margin: 0;\n    font-size: 1.2rem;\n    font-weight: 400;\n}\n\n#MangaOnlineViewer #GlobalFunctions {\n    display: flex;\n    gap: 3px;\n    padding-left: 10px;\n    flex-wrap: wrap;\n    width: 300px;\n    z-index: 100;\n}\n\n#MangaOnlineViewer #ScrollControl .icon-tabler,\n#MangaOnlineViewer #GlobalFunctions .icon-tabler {\n    width: 25px;\n    height: 25px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomSlider {\n    display: flex;\n    align-items: center;\n}\n\n#MangaOnlineViewer #GlobalFunctions #Zoom {\n    margin-left: 5px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomVal {\n    width: 40px;\n    display: inline-block;\n    color: var(--theme-primary-text-color);\n    line-height: 20px;\n    text-align: center;\n    border-radius: 3px;\n    background: var(--theme-primary-color);\n    padding: 2px 5px;\n}\n\n#MangaOnlineViewer #ChapterNavigation {\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: end;\n    padding-right: 10px;\n    width: 300px;\n}\n\n#MangaOnlineViewer .ChapterControl {\n    display: flex;\n    flex-wrap: nowrap;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton {\n    display: inline-flex;\n    margin-left: 3px;\n    justify-content: center;\n    align-items: center;\n    padding: 5px 10px;\n    gap: 0.5em;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton .icon-tabler {\n    flex-shrink: 0;\n    align-self: center;\n    width: 1rem;\n    height: 1rem;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href='#'],\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href=''],\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href='undefined'] {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer .ChapterControl #download.loading {\n    cursor: not-allowed;\n    pointer-events: none;\n    opacity: 0.6;\n}\n\n#MangaOnlineViewer .ChapterControl #download.disabled {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer .ViewerTitle {\n    text-align: center;\n    min-height: 60px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    padding: 5px;\n    flex-basis: 60%;\n}\n\n#MangaOnlineViewer #Header .ViewerTitle #series[href='#'],\n#MangaOnlineViewer #Header .ViewerTitle #series[href=''],\n#MangaOnlineViewer #Header .ViewerTitle #series[href='undefined'] {\n    /*visibility: hidden;*/\n}\n\n#MangaOnlineViewer #Header #menu .icon-tabler {\n    position: absolute;\n    top: 5px;\n    left: 10px;\n    height: 32px;\n    width: 32px;\n}\n#MangaOnlineViewer #Header #ScrollControl {\n    font-size: 20px;\n}\n";
 
   const keybindings$1 =
     '#MangaOnlineViewer #KeybindingsPanel {\n    padding: 10px;\n    position: fixed;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    transition: transform 0.3s ease-in-out;\n    transform: translateX(100%);\n    line-height: 1.5em;\n    z-index: 1000;\n    overflow-y: auto;\n    width: 360px;\n    max-width: 100vw;\n}\n\n#MangaOnlineViewer #KeybindingsPanel.visible {\n    transform: translateX(0);\n    display: block;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #KeybindingsList {\n    display: grid;\n    grid-template-columns: 1fr 2fr;\n    gap: 5px;\n}\n\n#MangaOnlineViewer #KeybindingsPanel .ControlButton {\n    margin-left: 3px;\n    justify-content: center;\n    align-items: center;\n    padding: 5px 10px;\n    gap: 0.5em;\n}\n\n#MangaOnlineViewer #KeybindingsPanel label {\n    display: ruby;\n}\n#MangaOnlineViewer #KeybindingsPanel input {\n    display: inline-block;\n    width: 100%;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #HotKeysRules {\n    grid-column: span 2;\n}\n';
@@ -3336,6 +3332,8 @@
     const url = element.getAttribute('value') ?? element.getAttribute('href');
     if (url) {
       window.location.href = url;
+    } else {
+      window.history.back();
     }
   }
   function buttonCommentsOpen() {
@@ -3349,9 +3347,7 @@
       ?.addEventListener('click', buttonGlobalHideImageControls);
     document.querySelector('#next')?.addEventListener('click', buttonRedirectURL);
     document.querySelector('#prev')?.addEventListener('click', buttonRedirectURL);
-    document
-      .querySelector('#series[href="#"],#series[href="undefined"],#series[href=""]')
-      ?.addEventListener('click', window.history.back);
+    document.querySelector('#series')?.addEventListener('click', buttonRedirectURL);
     document.querySelector('#CommentsButton')?.addEventListener('click', buttonCommentsOpen);
   }
 
@@ -3611,7 +3607,7 @@
     const percentage = Math.floor((loaded / total) * 100);
     const title = document.querySelector('title');
     if (title) {
-      title.innerHTML = `(${percentage}%) ${document.querySelector('#MangaTitle')?.textContent}`;
+      title.innerHTML = html`(${percentage}%) ${document.querySelector('#MangaTitle')?.textContent}`;
     }
     document.querySelectorAll('#Counters i, #NavigationCounters i').forEach((ele) => {
       ele.textContent = loaded.toString();
@@ -4676,6 +4672,11 @@
     }
   }
   async function start(sites) {
+    Element.prototype.originalAttachShadow = Element.prototype.attachShadow;
+    Element.prototype.attachShadow = function attachShadow() {
+      return this.originalAttachShadow({ mode: 'open' });
+    };
+    Object.preventExtensions(Element);
     logScript(
       `Starting ${getInfoGM.script.name} ${
         getInfoGM.script.version

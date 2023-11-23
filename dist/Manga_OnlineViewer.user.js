@@ -26,58 +26,58 @@
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
 // @include       https://github.com/TagoDR/MangaOnlineViewer
 // @include       /https?:\/\/alandal.com\/chapter\/.+\/\d+/
-// @include       /https?:\/\/(www.)?bato.to\/(chapter|title).*/
-// @include       /https?:\/\/(www.)?(bilibilicomics).com\/.+\/.+/
+// @include       /https?:\/\/(www\.)?bato.to\/(chapter|title).*/
+// @include       /https?:\/\/(www\.)?(bilibilicomics).com\/.+\/.+/
 // @include       /https?:\/\/comic.nizamkomputer.com\/read\/.+\/\d+.*/
-// @include       /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/
-// @include       /https?:\/\/(www.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|nightscans|manhwafreak|manhwa-freak|ozulscansen|azuremanga).(com|org|gg|xyz|to|net)\/.+/
+// @include       /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/
+// @include       /https?:\/\/(www\.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|nightscans|manhwafreak|manhwa-freak|ozulscansen|azuremanga).(com|org|gg|xyz|to|net)\/.+/
 // @include       /https?:\/\/(comics.)?inkr.com\/title\/.+\/chapter\/.+/
-// @include       /https?:\/\/(www.)?inmanga.com\/ver\/manga\/.+\/.+/
-// @include       /https?:\/\/(www.)?klmanga.com\/.+chapter.+/
-// @include       /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
-// @include       /https?:\/\/(www.)?lhtranslation.net\/read.+/
+// @include       /https?:\/\/(www\.)?inmanga.com\/ver\/manga\/.+\/.+/
+// @include       /https?:\/\/(www\.)?klmanga.com\/.+chapter.+/
+// @include       /https?:\/\/(www\.)?leitor.net\/manga\/.+\/.+\/.+/
+// @include       /https?:\/\/(www\.)?lhtranslation.net\/read.+/
 // @include       /(file:\/\/\/.+(index)?.html)/
-// @include       /https?:\/\/(www.)?lynxscans.com\/comics?\/.+/
-// @include       /https?:\/\/(www.)?mangabuddy.com\/.+\/chapter.+/
-// @include       /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/
-// @include       /https?:\/\/(www.)?(fanfox.net|mangahere.cc)\/manga\/.+\/.+\//
+// @include       /https?:\/\/(www\.)?lynxscans.com\/comics?\/.+/
+// @include       /https?:\/\/(www\.)?mangabuddy.com\/.+\/chapter.+/
+// @include       /https?:\/\/(www\.)?mangadex.org\/chapter\/.+(\/.+)?/
+// @include       /https?:\/\/(www\.)?(fanfox.net|mangahere.cc)\/manga\/.+\/.+\//
 // @include       /https?:\/\/.{3,4}?(mangafreak).net\/Read.+/
-// @include       /https?:\/\/(www.)?mangago.me\/.*\/.*\/.*/
-// @include       /https?:\/\/(www.)?mangahosted.com\/manga\/.+\/.+/
-// @include       /https?:\/\/(www.)?(mangahub).io\/chapter\/.+\/.+/
-// @include       /https?:\/\/(www.)?mangas.in\/manga\/.+\/.+\/\d+/
-// @include       /https?:\/\/(www.)?((manganelo|mangakakalot).com\/chapter\/.+\/.+|(manganato|readmanganato|chapmanganato).com\/manga-\w\w\d+\/chapter-\d+)/
-// @include       /https?:\/\/(www.)?mangapark.(com|me|org|net)\/title\/.+\/.+/
-// @include       /https?:\/\/(www.)?mangareader.to\/read\/.+\/.+\/.+/
-// @include       /https?:\/\/(www.)?(mangasee123|manga4life).com\/read-online\/.+/
-// @include       /https?:\/\/(www.)?mangatigre.net\/.+\/.+\/.+/
+// @include       /https?:\/\/(www\.)?mangago.me\/.*\/.*\/.*/
+// @include       /https?:\/\/(www\.)?mangahosted.com\/manga\/.+\/.+/
+// @include       /https?:\/\/(www\.)?(mangahub).io\/chapter\/.+\/.+/
+// @include       /https?:\/\/(www\.)?mangas.in\/manga\/.+\/.+\/\d+/
+// @include       /https?:\/\/(www\.)?((manganelo|mangakakalot).com\/chapter\/.+\/.+|(manganato|readmanganato|chapmanganato).com\/manga-\w\w\d+\/chapter-\d+)/
+// @include       /https?:\/\/(www\.)?mangapark.(com|me|org|net)\/title\/.+\/.+/
+// @include       /https?:\/\/(www\.)?mangareader.to\/read\/.+\/.+\/.+/
+// @include       /https?:\/\/(www\.)?(mangasee123|manga4life).com\/read-online\/.+/
+// @include       /https?:\/\/(www\.)?mangatigre.net\/.+\/.+\/.+/
 // @include       /https?:\/\/.*mangatoon.mobi\/.+\/watch\/.+/
 // @include       /https?:\/\/(www.|m.)?mangatown.com\/manga\/.+\/.+/
-// @include       /https?:\/\/(www.)?manhuascan.io\/.+chapter.+/
-// @include       /https?:\/\/(www.)?(mreader|mangageko).com?\/reader\/.*/
-// @include       /https?:\/\/(www.)?(naniscans).com\/chapters\/.+\/read/
-// @include       /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/
-// @include       /https?:\/\/(www.)?olympusscans.com\/capitulo\/.+\/.+/
-// @include       /https?:\/\/(www.)?pandamanga.xyz\/.+\/.+\/.+/
-// @include       /https?:\/\/(www.)?rawdevart.com\/comic\/.+\/.+\//
-// @include       /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/\d*/
-// @include       /https?:\/\/(www.)?(funmanga|mngdoom|readmng|mangainn).(com|net)\/.+\/\d+/
-// @include       /https?:\/\/(www.)?reaperscans.com\/comics\/.+\/chapters\/.+/
+// @include       /https?:\/\/(www\.)?manhuascan.io\/.+chapter.+/
+// @include       /https?:\/\/(www\.)?(mreader|mangageko).com?\/reader\/.*/
+// @include       /https?:\/\/(www\.)?(naniscans).com\/chapters\/.+\/read/
+// @include       /https?:\/\/(www\.)?ninemanga.com\/chapter\/.+\/.+\.html/
+// @include       /https?:\/\/(www\.)?olympusscans.com\/capitulo\/.+\/.+/
+// @include       /https?:\/\/(www\.)?pandamanga.xyz\/.+\/.+\/.+/
+// @include       /https?:\/\/(www\.)?rawdevart.com\/comic\/.+\/.+\//
+// @include       /https?:\/\/(www\.)?readcomicsonline.ru\/comic\/.*\/\d*/
+// @include       /https?:\/\/(www\.)?(funmanga|mngdoom|readmng|mangainn).(com|net)\/.+\/\d+/
+// @include       /https?:\/\/(www\.)?reaperscans.com\/comics\/.+\/chapters\/.+/
 // @include       /https?:\/\/raw.senmanga.com\/.+\/.+\/?/
-// @include       /https?:\/\/(www.)?tapas.io\/episode\/.+/
-// @include       /https?:\/\/(www.)?(tenmanga|gardenmanage).com\/(chapter|statuses)\/.+/
-// @include       /https?:\/\/(www.)?(.+).com\/(viewer|news)\/.+\/(paginated|cascade)/
-// @include       /https?:\/\/(www.)?tumanhwas.com\/news\/.+/
-// @include       /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/
-// @include       /https?:\/\/(www.)?webnovel.com\/comic\/.+/
-// @include       /https?:\/\/(www.)?webtoons.com\/.+viewer.+/
-// @include       /https?:\/\/(www.)?(manga33).com\/manga\/.+/
-// @include       /https?:\/\/(www.)?(yugenmangas).(com|net|lat)\/series\/.+/
-// @include       /https?:\/\/(www.)?zeroscans.com\/comics\/.+/
+// @include       /https?:\/\/(www\.)?tapas.io\/episode\/.+/
+// @include       /https?:\/\/(www\.)?(tenmanga|gardenmanage).com\/(chapter|statuses)\/.+/
+// @include       /https?:\/\/(www\.)?(.+).com\/(viewer|news)\/.+\/(paginated|cascade)/
+// @include       /https?:\/\/(www\.)?tumanhwas.com\/news\/.+/
+// @include       /https?:\/\/(www\.)?unionleitor.top\/leitor\/.+\/.+/
+// @include       /https?:\/\/(www\.)?webnovel.com\/comic\/.+/
+// @include       /https?:\/\/(www\.)?webtoons.com\/.+viewer.+/
+// @include       /https?:\/\/(www\.)?(manga33).com\/manga\/.+/
+// @include       /https?:\/\/(www\.)?(yugenmangas).(com|net|lat)\/series\/.+/
+// @include       /https?:\/\/(www\.)?zeroscans.com\/comics\/.+/
 // @include       /^(?!.*jaiminisbox).*\/read\/.+/
 // @include       /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel)\/.+\/.+/
-// @exclude       /https?:\/\/(www.)?tsumino.com\/.+/
-// @exclude       /https?:\/\/(www.)?pururin.io\/.+/
+// @exclude       /https?:\/\/(www\.)?tsumino.com\/.+/
+// @exclude       /https?:\/\/(www\.)?pururin.io\/.+/
 // ==/UserScript==
 (function () {
   'use strict';
@@ -106,7 +106,7 @@
 
   const batoto = {
     name: 'Batoto',
-    url: /https?:\/\/(www.)?bato.to\/(chapter|title).*/,
+    url: /https?:\/\/(www\.)?bato.to\/(chapter|title).*/,
     homepage: 'https://bato.to/',
     language: ['English'],
     category: 'manga',
@@ -144,7 +144,7 @@
 
   const bilibilicomics = {
     name: 'BilibiliComics',
-    url: /https?:\/\/(www.)?(bilibilicomics).com\/.+\/.+/,
+    url: /https?:\/\/(www\.)?(bilibilicomics).com\/.+\/.+/,
     homepage: 'https://www.bilibilicomics.com/',
     language: ['English'],
     category: 'manga',
@@ -220,7 +220,7 @@
 
   const dysnatyscans = {
     name: 'Dynasty-Scans',
-    url: /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/,
+    url: /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/,
     homepage: 'https://dynasty-scans.com/',
     language: ['English'],
     category: 'manga',
@@ -313,7 +313,7 @@
 
   const inmanga = {
     name: 'InManga',
-    url: /https?:\/\/(www.)?inmanga.com\/ver\/manga\/.+\/.+/,
+    url: /https?:\/\/(www\.)?inmanga.com\/ver\/manga\/.+\/.+/,
     homepage: 'https://inmanga.com//',
     language: ['Spanish'],
     category: 'manga',
@@ -337,7 +337,7 @@
 
   const klmanga = {
     name: 'KLManga',
-    url: /https?:\/\/(www.)?klmanga.com\/.+chapter.+/,
+    url: /https?:\/\/(www\.)?klmanga.com\/.+chapter.+/,
     homepage: 'https://klmanga.com/',
     language: ['Raw'],
     category: 'manga',
@@ -357,7 +357,7 @@
 
   const leitor = {
     name: 'Leitor',
-    url: /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/,
+    url: /https?:\/\/(www\.)?leitor.net\/manga\/.+\/.+\/.+/,
     homepage: 'https://leitor.net/',
     language: ['Portuguese'],
     category: 'manga',
@@ -378,7 +378,7 @@
 
   const lhtranslation = {
     name: 'LHTranslation',
-    url: /https?:\/\/(www.)?lhtranslation.net\/read.+/,
+    url: /https?:\/\/(www\.)?lhtranslation.net\/read.+/,
     homepage: 'https://lhtranslation.net/',
     language: ['English'],
     category: 'manga',
@@ -688,7 +688,7 @@
 
   const lynxscans = {
     name: 'LynxScans',
-    url: /https?:\/\/(www.)?lynxscans.com\/comics?\/.+/,
+    url: /https?:\/\/(www\.)?lynxscans.com\/comics?\/.+/,
     homepage: 'https://lynxscans.com/',
     language: ['English'],
     category: 'manga',
@@ -783,7 +783,7 @@
 
   const mangabuddy = {
     name: 'MangaBuddy',
-    url: /https?:\/\/(www.)?mangabuddy.com\/.+\/chapter.+/,
+    url: /https?:\/\/(www\.)?mangabuddy.com\/.+\/chapter.+/,
     homepage: 'https://mangabuddy.com/',
     language: ['English'],
     category: 'manga',
@@ -805,7 +805,7 @@
 
   const mangadex = {
     name: 'MangaDex',
-    url: /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/,
+    url: /https?:\/\/(www\.)?mangadex.org\/chapter\/.+(\/.+)?/,
     homepage: 'https://mangadex.org/',
     language: ['English'],
     category: 'manga',
@@ -831,7 +831,7 @@
 
   const mangafox = {
     name: ['MangaFox', 'MangaHere'],
-    url: /https?:\/\/(www.)?(fanfox.net|mangahere.cc)\/manga\/.+\/.+\//,
+    url: /https?:\/\/(www\.)?(fanfox.net|mangahere.cc)\/manga\/.+\/.+\//,
     homepage: ['https://fanfox.net/', 'https://www.mangahere.cc/'],
     language: ['English'],
     category: 'manga',
@@ -888,7 +888,7 @@
 
   const mangago = {
     name: 'Mangago',
-    url: /https?:\/\/(www.)?mangago.me\/.*\/.*\/.*/,
+    url: /https?:\/\/(www\.)?mangago.me\/.*\/.*\/.*/,
     homepage: 'https://www.mangago.me/',
     language: ['English'],
     category: 'manga',
@@ -913,7 +913,7 @@
 
   const mangahosted = {
     name: 'MangaHosted',
-    url: /https?:\/\/(www.)?mangahosted.com\/manga\/.+\/.+/,
+    url: /https?:\/\/(www\.)?mangahosted.com\/manga\/.+\/.+/,
     homepage: 'https://mangahosted.com/',
     language: ['Portuguese'],
     category: 'manga',
@@ -932,7 +932,7 @@
 
   const mangahub = {
     name: 'MangaHub',
-    url: /https?:\/\/(www.)?(mangahub).io\/chapter\/.+\/.+/,
+    url: /https?:\/\/(www\.)?(mangahub).io\/chapter\/.+\/.+/,
     homepage: 'https://mangahub.io/',
     language: ['English'],
     category: 'manga',
@@ -971,7 +971,7 @@
 
   const mangasin = {
     name: 'MangasIn',
-    url: /https?:\/\/(www.)?mangas.in\/manga\/.+\/.+\/\d+/,
+    url: /https?:\/\/(www\.)?mangas.in\/manga\/.+\/.+\/\d+/,
     homepage: 'https://mangas.in/',
     language: ['Spanish'],
     category: 'manga',
@@ -993,7 +993,7 @@
 
   const mangakakalot = {
     name: ['MangaKakalot', 'MangaNelo', 'MangaNato'],
-    url: /https?:\/\/(www.)?((manganelo|mangakakalot).com\/chapter\/.+\/.+|(manganato|readmanganato|chapmanganato).com\/manga-\w\w\d+\/chapter-\d+)/,
+    url: /https?:\/\/(www\.)?((manganelo|mangakakalot).com\/chapter\/.+\/.+|(manganato|readmanganato|chapmanganato).com\/manga-\w\w\d+\/chapter-\d+)/,
     homepage: [
       'https://mangakakalot.com/page',
       'https://www.manganelo.com/',
@@ -1020,7 +1020,7 @@
 
   const mangapark = {
     name: 'MangaPark',
-    url: /https?:\/\/(www.)?mangapark.(com|me|org|net)\/title\/.+\/.+/,
+    url: /https?:\/\/(www\.)?mangapark.(com|me|org|net)\/title\/.+\/.+/,
     homepage: 'https://mangapark.net/',
     language: ['English'],
     category: 'manga',
@@ -1050,7 +1050,7 @@
 
   const mangareader = {
     name: 'Mangareader',
-    url: /https?:\/\/(www.)?mangareader.to\/read\/.+\/.+\/.+/,
+    url: /https?:\/\/(www\.)?mangareader.to\/read\/.+\/.+\/.+/,
     homepage: 'https://mangareader.to',
     language: ['English'],
     category: 'manga',
@@ -1079,7 +1079,7 @@
 
   const mangasee = {
     name: ['MangaSee', 'Manga4life'],
-    url: /https?:\/\/(www.)?(mangasee123|manga4life).com\/read-online\/.+/,
+    url: /https?:\/\/(www\.)?(mangasee123|manga4life).com\/read-online\/.+/,
     homepage: ['https://mangasee123.com/', 'https://manga4life.com/'],
     language: ['English'],
     category: 'manga',
@@ -1151,7 +1151,7 @@
       'OzulScansEn',
       'AzureManga',
     ],
-    url: /https?:\/\/(www.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|nightscans|manhwafreak|manhwa-freak|ozulscansen|azuremanga).(com|org|gg|xyz|to|net)\/.+/,
+    url: /https?:\/\/(www\.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|nightscans|manhwafreak|manhwa-freak|ozulscansen|azuremanga).(com|org|gg|xyz|to|net)\/.+/,
     homepage: [
       'https://themesia.com/mangastream-wordpress-theme/',
       'https://asura.nacm.xyz/',
@@ -1190,7 +1190,7 @@
 
   const mangatigre = {
     name: 'MangaTigre',
-    url: /https?:\/\/(www.)?mangatigre.net\/.+\/.+\/.+/,
+    url: /https?:\/\/(www\.)?mangatigre.net\/.+\/.+\/.+/,
     homepage: 'https://www.mangatigre.net/',
     language: ['Spanish'],
     category: 'manga',
@@ -1266,7 +1266,7 @@
 
   const manhuascan = {
     name: 'ManhuaScan',
-    url: /https?:\/\/(www.)?manhuascan.io\/.+chapter.+/,
+    url: /https?:\/\/(www\.)?manhuascan.io\/.+chapter.+/,
     homepage: 'https://manhuascan.io/',
     language: ['English'],
     category: 'manga',
@@ -1291,7 +1291,7 @@
 
   const mreader = {
     name: ['MReader', 'MangaGeko'],
-    url: /https?:\/\/(www.)?(mreader|mangageko).com?\/reader\/.*/,
+    url: /https?:\/\/(www\.)?(mreader|mangageko).com?\/reader\/.*/,
     homepage: ['https://www.mreader.co/', 'https://www.mangageko.com/'],
     language: ['English'],
     category: 'manga',
@@ -1310,7 +1310,7 @@
 
   const naniscans = {
     name: 'NaniScans',
-    url: /https?:\/\/(www.)?(naniscans).com\/chapters\/.+\/read/,
+    url: /https?:\/\/(www\.)?(naniscans).com\/chapters\/.+\/read/,
     homepage: 'https://naniscans.com/',
     language: ['English'],
     category: 'manga',
@@ -1332,7 +1332,7 @@
 
   const ninemanga = {
     name: 'NineManga',
-    url: /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/,
+    url: /https?:\/\/(www\.)?ninemanga.com\/chapter\/.+\/.+\.html/,
     homepage: 'https://ninemanga.com/',
     language: ['English'],
     category: 'manga',
@@ -1353,7 +1353,7 @@
 
   const olympusscans = {
     name: 'OlympusScans',
-    url: /https?:\/\/(www.)?olympusscans.com\/capitulo\/.+\/.+/,
+    url: /https?:\/\/(www\.)?olympusscans.com\/capitulo\/.+\/.+/,
     homepage: 'https://olympusscans.com/',
     language: ['Spanish'],
     category: 'manga',
@@ -1377,7 +1377,7 @@
 
   const pandamanga = {
     name: 'PandaManga',
-    url: /https?:\/\/(www.)?pandamanga.xyz\/.+\/.+\/.+/,
+    url: /https?:\/\/(www\.)?pandamanga.xyz\/.+\/.+\/.+/,
     homepage: 'https://www.pandamanga.com/',
     language: ['English'],
     category: 'manga',
@@ -1400,7 +1400,7 @@
 
   const rawdevart = {
     name: 'RawDevart',
-    url: /https?:\/\/(www.)?rawdevart.com\/comic\/.+\/.+\//,
+    url: /https?:\/\/(www\.)?rawdevart.com\/comic\/.+\/.+\//,
     homepage: 'https://rawdevart.com',
     language: ['Raw'],
     category: 'manga',
@@ -1422,7 +1422,7 @@
 
   const readcomicsonline = {
     name: 'ReadComicsOnline',
-    url: /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/\d*/,
+    url: /https?:\/\/(www\.)?readcomicsonline.ru\/comic\/.*\/\d*/,
     homepage: 'https://readcomicsonline.ru/',
     language: ['English'],
     category: 'comic',
@@ -1441,7 +1441,7 @@
 
   const readmangatoday = {
     name: ['ReadManga Today', 'Funmanga', 'MangaDoom', 'MangaInn'],
-    url: /https?:\/\/(www.)?(funmanga|mngdoom|readmng|mangainn).(com|net)\/.+\/\d+/,
+    url: /https?:\/\/(www\.)?(funmanga|mngdoom|readmng|mangainn).(com|net)\/.+\/\d+/,
     homepage: [
       'https://www.readmng.com/',
       'https://funmanga.com/',
@@ -1464,7 +1464,7 @@
 
   const reaperscans = {
     name: 'ReaperScans',
-    url: /https?:\/\/(www.)?reaperscans.com\/comics\/.+\/chapters\/.+/,
+    url: /https?:\/\/(www\.)?reaperscans.com\/comics\/.+\/chapters\/.+/,
     homepage: 'https://reaperscans.com/',
     language: ['English'],
     category: 'manga',
@@ -1522,7 +1522,7 @@
 
   const tapas = {
     name: 'KLManga',
-    url: /https?:\/\/(www.)?tapas.io\/episode\/.+/,
+    url: /https?:\/\/(www\.)?tapas.io\/episode\/.+/,
     homepage: 'https://tapas.io/',
     language: ['English'],
     category: 'manga',
@@ -1542,7 +1542,7 @@
 
   const tenmanga = {
     name: 'TenManga',
-    url: /https?:\/\/(www.)?(tenmanga|gardenmanage).com\/(chapter|statuses)\/.+/,
+    url: /https?:\/\/(www\.)?(tenmanga|gardenmanage).com\/(chapter|statuses)\/.+/,
     homepage: 'https://www.tenmanga.com/',
     language: ['English'],
     category: 'manga',
@@ -1563,7 +1563,7 @@
 
   const tmofans = {
     name: 'TuMangaOnline',
-    url: /https?:\/\/(www.)?(.+).com\/(viewer|news)\/.+\/(paginated|cascade)/,
+    url: /https?:\/\/(www\.)?(.+).com\/(viewer|news)\/.+\/(paginated|cascade)/,
     homepage: 'https://lectortmo.com/',
     language: ['Spanish'],
     category: 'manga',
@@ -1597,7 +1597,7 @@
 
   const tumanhwas = {
     name: 'TuManhwas',
-    url: /https?:\/\/(www.)?tumanhwas.com\/news\/.+/,
+    url: /https?:\/\/(www\.)?tumanhwas.com\/news\/.+/,
     homepage: 'https://tumanhwas.com/',
     language: ['Spanish'],
     category: 'manga',
@@ -1616,7 +1616,7 @@
 
   const unionmangas = {
     name: 'UnionMangas',
-    url: /https?:\/\/(www.)?unionleitor.top\/leitor\/.+\/.+/,
+    url: /https?:\/\/(www\.)?unionleitor.top\/leitor\/.+\/.+/,
     homepage: 'https://unionleitor.top/',
     language: ['Portuguese'],
     category: 'manga',
@@ -1636,7 +1636,7 @@
 
   const webnovel = {
     name: 'WebNovel',
-    url: /https?:\/\/(www.)?webnovel.com\/comic\/.+/,
+    url: /https?:\/\/(www\.)?webnovel.com\/comic\/.+/,
     homepage: 'https://www.webnovel.com/',
     language: ['English'],
     category: 'manga',
@@ -1656,7 +1656,7 @@
 
   const webtoons = {
     name: 'WebToons',
-    url: /https?:\/\/(www.)?webtoons.com\/.+viewer.+/,
+    url: /https?:\/\/(www\.)?webtoons.com\/.+viewer.+/,
     homepage: 'https://www.webtoons.com/',
     language: ['English'],
     category: 'manga',
@@ -1678,7 +1678,7 @@
 
   const wpmanga = {
     name: ['Manga33'],
-    url: /https?:\/\/(www.)?(manga33).com\/manga\/.+/,
+    url: /https?:\/\/(www\.)?(manga33).com\/manga\/.+/,
     homepage: ['https://manga33.com/'],
     language: ['English'],
     category: 'manga',
@@ -1705,7 +1705,7 @@
 
   const yugenmangas = {
     name: 'YugenMangas',
-    url: /https?:\/\/(www.)?(yugenmangas).(com|net|lat)\/series\/.+/,
+    url: /https?:\/\/(www\.)?(yugenmangas).(com|net|lat)\/series\/.+/,
     homepage: 'https://yugenmangas.lat/',
     language: ['Spanish'],
     category: 'manga',
@@ -1732,7 +1732,7 @@
 
   const zeroscans = {
     name: 'ZeroScans',
-    url: /https?:\/\/(www.)?zeroscans.com\/comics\/.+/,
+    url: /https?:\/\/(www\.)?zeroscans.com\/comics\/.+/,
     homepage: 'https://zeroscans.com/',
     language: ['English'],
     category: 'manga',
@@ -2593,7 +2593,7 @@
     '@-webkit-keyframes spin {\n    to {\n        transform: rotate(360deg);\n    }\n}\n\n@keyframes spin {\n    to {\n        transform: rotate(360deg);\n    }\n}\n\n@-webkit-keyframes spin-reverse {\n    0% {\n        transform: rotate(360deg);\n    }\n\n    to {\n        transform: rotate(0);\n    }\n}\n\n@keyframes spin-reverse {\n    0% {\n        transform: rotate(360deg);\n    }\n\n    to {\n        transform: rotate(0);\n    }\n}\n\n.icon-tabler-loader-2,\n.animate-spin {\n    -webkit-animation: spin 1s linear infinite;\n    animation: spin 1s linear infinite;\n}\n\n.animate-spin-reverse {\n    -webkit-animation: spin-reverse 1s linear infinite;\n    animation: spin-reverse 1s linear infinite;\n}\n';
 
   const header =
-    "#MangaOnlineViewer #gotoPage {\n    min-width: 35px;\n}\n\n#MangaOnlineViewer #Header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    flex-flow: row nowrap;\n    transition: transform 0.3s ease-in;\n    position: sticky;\n    top: 0;\n    left: 0;\n    right: 0;\n    background-color: inherit;\n    z-index: 900;\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-hide {\n    transform: translateY(-100%);\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-show {\n    transform: translateY(-1%);\n}\n\n#MangaOnlineViewer #Header.hover,\n#MangaOnlineViewer #Header.fixed,\n#MangaOnlineViewer #Header.click {\n    position: static;\n    transform: none;\n}\n\n#MangaOnlineViewer #Header.headroom-end,\n#MangaOnlineViewer #Header.visible,\n#MangaOnlineViewer #Header.fixed {\n    transform: translateY(-1%);\n    position: sticky;\n}\n\n#MangaOnlineViewer #Header.hover:hover,\n#MangaOnlineViewer #Header.fixed {\n    position: sticky;\n}\n\n#MangaOnlineViewer #Header.scroll #menu,\n#MangaOnlineViewer #Header.fixed #menu,\n#MangaOnlineViewer #Header.hover:hover #menu,\n#MangaOnlineViewer #Header:not(.click).visible #menu {\n    display: none;\n}\n#MangaOnlineViewer #menu {\n    position: fixed;\n    min-height: 70px;\n    width: 100%;\n    top: 0;\n    z-index: 1;\n    color: var(--theme-body-text-color);\n}\n\n#MangaOnlineViewer #Header.click #menu {\n    cursor: pointer;\n}\n\n#MangaOnlineViewer #Header.click:not(.headroom-hide, .headroom-show) #menu,\n#MangaOnlineViewer #Header.click.headroom-end #menu,\n#MangaOnlineViewer #Header.click.visible #menu {\n    position: static;\n    min-width: 50px;\n    min-height: unset;\n    width: auto;\n}\n\n#MangaOnlineViewer #MangaTitle {\n    padding: 2px;\n    margin: 0;\n    font-size: 1.2rem;\n    font-weight: 400;\n}\n\n#MangaOnlineViewer #GlobalFunctions {\n    display: flex;\n    gap: 3px;\n    padding-left: 10px;\n    flex-wrap: wrap;\n    width: 300px;\n    z-index: 100;\n}\n\n#MangaOnlineViewer #ScrollControl .icon-tabler,\n#MangaOnlineViewer #GlobalFunctions .icon-tabler {\n    width: 25px;\n    height: 25px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomSlider {\n    display: flex;\n    align-items: center;\n}\n\n#MangaOnlineViewer #GlobalFunctions #Zoom {\n    margin-left: 5px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomVal {\n    width: 40px;\n    display: inline-block;\n    color: var(--theme-primary-text-color);\n    line-height: 20px;\n    text-align: center;\n    border-radius: 3px;\n    background: var(--theme-primary-color);\n    padding: 2px 5px;\n}\n\n#MangaOnlineViewer #ChapterNavigation {\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: end;\n    padding-right: 10px;\n    width: 300px;\n}\n\n#MangaOnlineViewer .ChapterControl {\n    display: flex;\n    flex-wrap: nowrap;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton {\n    display: inline-flex;\n    margin-left: 3px;\n    justify-content: center;\n    align-items: center;\n    padding: 5px 10px;\n    gap: 0.5em;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton .icon-tabler {\n    flex-shrink: 0;\n    align-self: center;\n    width: 1rem;\n    height: 1rem;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href='#'],\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href=''],\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href='undefined'] {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer .ChapterControl #download.loading {\n    cursor: not-allowed;\n    pointer-events: none;\n    opacity: 0.6;\n}\n\n#MangaOnlineViewer .ChapterControl #download.disabled {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer .ViewerTitle {\n    text-align: center;\n    min-height: 60px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    padding: 5px;\n    flex-basis: 60%;\n}\n\n#MangaOnlineViewer #Header .ViewerTitle #series[href='#'],\n#MangaOnlineViewer #Header .ViewerTitle #series[href=''],\n#MangaOnlineViewer #Header .ViewerTitle #series[href='undefined'] {\n    /*visibility: hidden;*/\n}\n\n#MangaOnlineViewer #Header #menu .icon-tabler {\n    position: absolute;\n    top: 5px;\n    left: 10px;\n    height: 32px;\n    width: 32px;\n}\n#MangaOnlineViewer #Header #ScrollControl{\n    font-size: 20px;\n}\n";
+    "#MangaOnlineViewer #gotoPage {\n    min-width: 35px;\n}\n\n#MangaOnlineViewer #Header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    flex-flow: row nowrap;\n    transition: transform 0.3s ease-in;\n    position: sticky;\n    top: 0;\n    left: 0;\n    right: 0;\n    background-color: inherit;\n    z-index: 900;\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-hide {\n    transform: translateY(-100%);\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-show {\n    transform: translateY(-1%);\n}\n\n#MangaOnlineViewer #Header.hover,\n#MangaOnlineViewer #Header.fixed,\n#MangaOnlineViewer #Header.click {\n    position: static;\n    transform: none;\n}\n\n#MangaOnlineViewer #Header.headroom-end,\n#MangaOnlineViewer #Header.visible,\n#MangaOnlineViewer #Header.fixed {\n    transform: translateY(-1%);\n    position: sticky;\n}\n\n#MangaOnlineViewer #Header.hover:hover,\n#MangaOnlineViewer #Header.fixed {\n    position: sticky;\n}\n\n#MangaOnlineViewer #Header.scroll #menu,\n#MangaOnlineViewer #Header.fixed #menu,\n#MangaOnlineViewer #Header.hover:hover #menu,\n#MangaOnlineViewer #Header:not(.click).visible #menu {\n    display: none;\n}\n#MangaOnlineViewer #menu {\n    position: fixed;\n    min-height: 70px;\n    width: 100%;\n    top: 0;\n    z-index: 1;\n    color: var(--theme-body-text-color);\n}\n\n#MangaOnlineViewer #Header.click #menu {\n    cursor: pointer;\n}\n\n#MangaOnlineViewer #Header.click:not(.headroom-hide, .headroom-show) #menu,\n#MangaOnlineViewer #Header.click.headroom-end #menu,\n#MangaOnlineViewer #Header.click.visible #menu {\n    position: static;\n    min-width: 50px;\n    min-height: unset;\n    width: auto;\n}\n\n#MangaOnlineViewer #MangaTitle {\n    padding: 2px;\n    margin: 0;\n    font-size: 1.2rem;\n    font-weight: 400;\n}\n\n#MangaOnlineViewer #GlobalFunctions {\n    display: flex;\n    gap: 3px;\n    padding-left: 10px;\n    flex-wrap: wrap;\n    width: 300px;\n    z-index: 100;\n}\n\n#MangaOnlineViewer #ScrollControl .icon-tabler,\n#MangaOnlineViewer #GlobalFunctions .icon-tabler {\n    width: 25px;\n    height: 25px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomSlider {\n    display: flex;\n    align-items: center;\n}\n\n#MangaOnlineViewer #GlobalFunctions #Zoom {\n    margin-left: 5px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomVal {\n    width: 40px;\n    display: inline-block;\n    color: var(--theme-primary-text-color);\n    line-height: 20px;\n    text-align: center;\n    border-radius: 3px;\n    background: var(--theme-primary-color);\n    padding: 2px 5px;\n}\n\n#MangaOnlineViewer #ChapterNavigation {\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: end;\n    padding-right: 10px;\n    width: 300px;\n}\n\n#MangaOnlineViewer .ChapterControl {\n    display: flex;\n    flex-wrap: nowrap;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton {\n    display: inline-flex;\n    margin-left: 3px;\n    justify-content: center;\n    align-items: center;\n    padding: 5px 10px;\n    gap: 0.5em;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton .icon-tabler {\n    flex-shrink: 0;\n    align-self: center;\n    width: 1rem;\n    height: 1rem;\n}\n\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href='#'],\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href=''],\n#MangaOnlineViewer .ChapterControl .NavigationControlButton[href='undefined'] {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer .ChapterControl #download.loading {\n    cursor: not-allowed;\n    pointer-events: none;\n    opacity: 0.6;\n}\n\n#MangaOnlineViewer .ChapterControl #download.disabled {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer .ViewerTitle {\n    text-align: center;\n    min-height: 60px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    padding: 5px;\n    flex-basis: 60%;\n}\n\n#MangaOnlineViewer #Header .ViewerTitle #series[href='#'],\n#MangaOnlineViewer #Header .ViewerTitle #series[href=''],\n#MangaOnlineViewer #Header .ViewerTitle #series[href='undefined'] {\n    /*visibility: hidden;*/\n}\n\n#MangaOnlineViewer #Header #menu .icon-tabler {\n    position: absolute;\n    top: 5px;\n    left: 10px;\n    height: 32px;\n    width: 32px;\n}\n#MangaOnlineViewer #Header #ScrollControl {\n    font-size: 20px;\n}\n";
 
   const keybindings$1 =
     '#MangaOnlineViewer #KeybindingsPanel {\n    padding: 10px;\n    position: fixed;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    transition: transform 0.3s ease-in-out;\n    transform: translateX(100%);\n    line-height: 1.5em;\n    z-index: 1000;\n    overflow-y: auto;\n    width: 360px;\n    max-width: 100vw;\n}\n\n#MangaOnlineViewer #KeybindingsPanel.visible {\n    transform: translateX(0);\n    display: block;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #KeybindingsList {\n    display: grid;\n    grid-template-columns: 1fr 2fr;\n    gap: 5px;\n}\n\n#MangaOnlineViewer #KeybindingsPanel .ControlButton {\n    margin-left: 3px;\n    justify-content: center;\n    align-items: center;\n    padding: 5px 10px;\n    gap: 0.5em;\n}\n\n#MangaOnlineViewer #KeybindingsPanel label {\n    display: ruby;\n}\n#MangaOnlineViewer #KeybindingsPanel input {\n    display: inline-block;\n    width: 100%;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #HotKeysRules {\n    grid-column: span 2;\n}\n';
@@ -3764,6 +3764,8 @@
     const url = element.getAttribute('value') ?? element.getAttribute('href');
     if (url) {
       window.location.href = url;
+    } else {
+      window.history.back();
     }
   }
   function buttonCommentsOpen() {
@@ -3777,9 +3779,7 @@
       ?.addEventListener('click', buttonGlobalHideImageControls);
     document.querySelector('#next')?.addEventListener('click', buttonRedirectURL);
     document.querySelector('#prev')?.addEventListener('click', buttonRedirectURL);
-    document
-      .querySelector('#series[href="#"],#series[href="undefined"],#series[href=""]')
-      ?.addEventListener('click', window.history.back);
+    document.querySelector('#series')?.addEventListener('click', buttonRedirectURL);
     document.querySelector('#CommentsButton')?.addEventListener('click', buttonCommentsOpen);
   }
 
@@ -4039,7 +4039,7 @@
     const percentage = Math.floor((loaded / total) * 100);
     const title = document.querySelector('title');
     if (title) {
-      title.innerHTML = `(${percentage}%) ${document.querySelector('#MangaTitle')?.textContent}`;
+      title.innerHTML = html`(${percentage}%) ${document.querySelector('#MangaTitle')?.textContent}`;
     }
     document.querySelectorAll('#Counters i, #NavigationCounters i').forEach((ele) => {
       ele.textContent = loaded.toString();
@@ -5133,6 +5133,11 @@
     }
   }
   async function start(sites) {
+    Element.prototype.originalAttachShadow = Element.prototype.attachShadow;
+    Element.prototype.attachShadow = function attachShadow() {
+      return this.originalAttachShadow({ mode: 'open' });
+    };
+    Object.preventExtensions(Element);
     logScript(
       `Starting ${getInfoGM.script.name} ${
         getInfoGM.script.version
