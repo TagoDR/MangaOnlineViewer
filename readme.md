@@ -66,6 +66,7 @@ First install then reload page, there will be an options in this section to sele
 - [MangaHosted](https://mangahosted.com/) _[Portuguese]_
 - [UnionMangas](https://unionleitor.top/) _[Portuguese]_
 - [KLManga](https://klmanga.com/) _[Raw]_
+- [Local Files](https://github.com/TagoDR/MangaOnlineViewer/blob/master/index.html?raw=1) _[Raw]_
 - [RawDevart](https://rawdevart.com) _[Raw]_
 - [SenManga(Raw)](https://raw.senmanga.com/) _[Raw]_
 - [InManga](https://inmanga.com//) _[Spanish]_

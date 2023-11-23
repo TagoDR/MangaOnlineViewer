@@ -5,7 +5,7 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, INKR, InManga, KLManga, Leitor, LHTranslation, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans
+// @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans
 // @version       2023.11.23
 // @license       MIT
 // @grant         unsafeWindow
@@ -36,6 +36,7 @@
 // @include       /https?:\/\/(www.)?klmanga.com\/.+chapter.+/
 // @include       /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/
 // @include       /https?:\/\/(www.)?lhtranslation.net\/read.+/
+// @include       /(file:\/\/\/.+(index)?.html)/
 // @include       /https?:\/\/(www.)?lynxscans.com\/comics?\/.+/
 // @include       /https?:\/\/(www.)?mangabuddy.com\/.+\/chapter.+/
 // @include       /https?:\/\/(www.)?mangadex.org\/chapter\/.+(\/.+)?/
@@ -391,6 +392,296 @@
         prev: chapter?.nextElementSibling?.getAttribute('value'),
         next: chapter?.previousElementSibling?.getAttribute('value'),
         listImages: images.map((img) => img.getAttribute('src')),
+      };
+    },
+  };
+
+  const concatenateTemplateLiteralTag = (raw, ...keys) =>
+    keys.length === 0 ? raw[0] : String.raw({ raw }, ...keys);
+  const html = concatenateTemplateLiteralTag;
+  const css = concatenateTemplateLiteralTag;
+
+  const colors = {
+    dark: {
+      name: 'dark',
+      50: '#C1C2C5',
+      100: '#A6A7AB',
+      200: '#909296',
+      300: '#5c5f66',
+      400: '#373A40',
+      500: '#2C2E33',
+      600: '#25262b',
+      700: '#1A1B1E',
+      800: '#141517',
+      900: '#101113',
+    },
+    gray: {
+      name: 'gray',
+      50: '#f8f9fa',
+      100: '#f1f3f5',
+      200: '#e9ecef',
+      300: '#dee2e6',
+      400: '#ced4da',
+      500: '#adb5bd',
+      600: '#868e96',
+      700: '#495057',
+      800: '#343a40',
+      900: '#212529',
+    },
+    red: {
+      name: 'red',
+      50: '#fff5f5',
+      100: '#ffe3e3',
+      200: '#ffc9c9',
+      300: '#ffa8a8',
+      400: '#ff8787',
+      500: '#ff6b6b',
+      600: '#fa5252',
+      700: '#f03e3e',
+      800: '#e03131',
+      900: '#c92a2a',
+    },
+    pink: {
+      name: 'pink',
+      50: '#fff0f6',
+      100: '#ffdeeb',
+      200: '#fcc2d7',
+      300: '#faa2c1',
+      400: '#f783ac',
+      500: '#f06595',
+      600: '#e64980',
+      700: '#d6336c',
+      800: '#c2255c',
+      900: '#a61e4d',
+    },
+    grape: {
+      name: 'grape',
+      50: '#f8f0fc',
+      100: '#f3d9fa',
+      200: '#eebefa',
+      300: '#e599f7',
+      400: '#da77f2',
+      500: '#cc5de8',
+      600: '#be4bdb',
+      700: '#ae3ec9',
+      800: '#9c36b5',
+      900: '#862e9c',
+    },
+    violet: {
+      name: 'violet',
+      50: '#f3f0ff',
+      100: '#e5dbff',
+      200: '#d0bfff',
+      300: '#b197fc',
+      400: '#9775fa',
+      500: '#845ef7',
+      600: '#7950f2',
+      700: '#7048e8',
+      800: '#6741d9',
+      900: '#5f3dc4',
+    },
+    indigo: {
+      name: 'purple',
+      50: '#edf2ff',
+      100: '#dbe4ff',
+      200: '#bac8ff',
+      300: '#91a7ff',
+      400: '#748ffc',
+      500: '#5c7cfa',
+      600: '#4c6ef5',
+      700: '#4263eb',
+      800: '#3b5bdb',
+      900: '#364fc7',
+    },
+    blue: {
+      name: 'blue',
+      50: '#e7f5ff',
+      100: '#d0ebff',
+      200: '#a5d8ff',
+      300: '#74c0fc',
+      400: '#4dabf7',
+      500: '#339af0',
+      600: '#228be6',
+      700: '#1c7ed6',
+      800: '#1971c2',
+      900: '#1864ab',
+    },
+    cyan: {
+      name: 'cyan',
+      50: '#e3fafc',
+      100: '#c5f6fa',
+      200: '#99e9f2',
+      300: '#66d9e8',
+      400: '#3bc9db',
+      500: '#22b8cf',
+      600: '#15aabf',
+      700: '#1098ad',
+      800: '#0c8599',
+      900: '#0b7285',
+    },
+    teal: {
+      name: 'teal',
+      50: '#e6fcf5',
+      100: '#c3fae8',
+      200: '#96f2d7',
+      300: '#63e6be',
+      400: '#38d9a9',
+      500: '#20c997',
+      600: '#12b886',
+      700: '#0ca678',
+      800: '#099268',
+      900: '#087f5b',
+    },
+    green: {
+      name: 'green',
+      50: '#ebfbee',
+      100: '#d3f9d8',
+      200: '#b2f2bb',
+      300: '#8ce99a',
+      400: '#69db7c',
+      500: '#51cf66',
+      600: '#40c057',
+      700: '#37b24d',
+      800: '#2f9e44',
+      900: '#2b8a3e',
+    },
+    lime: {
+      name: 'lime',
+      50: '#f4fce3',
+      100: '#e9fac8',
+      200: '#d8f5a2',
+      300: '#c0eb75',
+      400: '#a9e34b',
+      500: '#94d82d',
+      600: '#82c91e',
+      700: '#74b816',
+      800: '#66a80f',
+      900: '#5c940d',
+    },
+    yellow: {
+      name: 'yellow',
+      50: '#fff9db',
+      100: '#fff3bf',
+      200: '#ffec99',
+      300: '#ffe066',
+      400: '#ffd43b',
+      500: '#fcc419',
+      600: '#fab005',
+      700: '#f59f00',
+      800: '#f08c00',
+      900: '#e67700',
+    },
+    orange: {
+      name: 'orange',
+      50: '#fff4e6',
+      100: '#ffe8cc',
+      200: '#ffd8a8',
+      300: '#ffc078',
+      400: '#ffa94d',
+      500: '#ff922b',
+      600: '#fd7e14',
+      700: '#f76707',
+      800: '#e8590c',
+      900: '#d9480f',
+    },
+    darkblue: {
+      name: 'darkblue',
+      50: '#E8F4F9',
+      100: '#D9DEE9',
+      200: '#B7C2DA',
+      300: '#6482C0',
+      400: '#4267B2',
+      500: '#385898',
+      600: '#314E89',
+      700: '#29487D',
+      800: '#223B67',
+      900: '#1E355B',
+    },
+  };
+  const darkest = 10;
+  const lightest = 95;
+  function setLightness(hsl, lightness) {
+    hsl.l = lightness;
+    return tinycolor(hsl).toHexString();
+  }
+  function getTextColor(hex) {
+    const color = tinycolor(hex);
+    const hsl = color.toHsl();
+    return setLightness(hsl, color.isDark() ? lightest : darkest);
+  }
+  function isDark(color) {
+    return tinycolor(color).getBrightness() <= 120;
+  }
+  function isBackgroundColorDark(element) {
+    return isDark(window.getComputedStyle(element).backgroundColor);
+  }
+
+  function svgToUrl(str) {
+    const cleaned = str.replace(/[\t\n\r]/gim, '').replace(/\s\s+/g, ' ');
+    const encoded = encodeURIComponent(cleaned).replace(/\(/g, '%28').replace(/\)/g, '%29');
+    return `data:image/svg+xml;charset=UTF-8,${encoded}`;
+  }
+  function placeholder(width, height, bgColor = '#0F1C3F', textColor = '#ECEAD9') {
+    const str = html`
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="${width}"
+        height="${height}"
+        viewBox="0 0 ${width} ${height}"
+      >
+        <rect fill="${bgColor}" width="${width}" height="${height}" />
+        <text
+          fill="${textColor}"
+          font-family="sans-serif"
+          font-size="30"
+          dy="10.5"
+          font-weight="bold"
+          x="50%"
+          y="50%"
+          text-anchor="middle"
+        >
+          ${width}x${height}
+        </text>
+      </svg>
+    `;
+    return svgToUrl(str);
+  }
+  const backgrounds = Object.values(colors).map((i) => i['900']);
+  const widths = [400, 600, 900, 1200, 1400, 1600, 1970];
+  const heights = [600, 800, 1e3, 1200, 1400, 2e3, 2600];
+  function randomPlaceholder() {
+    const randomWidth = Math.floor(Math.random() * widths.length);
+    const randomHeight = Math.floor(Math.random() * heights.length);
+    const randomColor = Math.floor(Math.random() * backgrounds.length);
+    return placeholder(widths[randomWidth], heights[randomHeight], backgrounds[randomColor]);
+  }
+
+  const localhost = {
+    name: 'Local Files',
+    url: /(file:\/\/\/.+(index)?.html)/,
+    homepage: 'https://github.com/TagoDR/MangaOnlineViewer/blob/master/index.html?raw=1',
+    language: ['Raw'],
+    category: 'manga',
+    run() {
+      const num = parseInt(/\d+/.exec(window.location.search)?.toString() ?? '5', 10);
+      const comments = document.createElement('div');
+      comments.textContent = 'Testing Comment';
+      return {
+        title: 'Placeholder Manga Loaded',
+        series: '',
+        pages: num,
+        begin: 1,
+        prev: '?pages=50',
+        next: '?pages=1',
+        listImages: [
+          placeholder(985, 1400, '#152C55'),
+          placeholder(1970, 1400, '#2D1657'),
+          placeholder(985, 1400, '#7A1420'),
+          placeholder(985, 1400, '#0F5B30'),
+          placeholder(1970, 1400, '#806D15'),
+          ...Array(num).fill(0).map(randomPlaceholder),
+        ],
+        comments,
       };
     },
   };
@@ -1474,6 +1765,7 @@
     leitor,
     // Leviatanscans,
     lhtranslation,
+    localhost,
     lynxscans,
     mangabuddy,
     mangadex,
@@ -1520,11 +1812,6 @@
 
   const rangeSliderStyles =
     '.range-slider{touch-action:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;cursor:pointer;display:block;position:relative;width:100%;height:8px;background:#ddd;border-radius:4px}.range-slider[data-vertical]{height:100%;width:8px}.range-slider[data-disabled]{opacity:.5;cursor:not-allowed}.range-slider .range-slider__thumb{position:absolute;z-index:3;top:50%;width:24px;height:24px;transform:translate(-50%,-50%);border-radius:50%;background:#2196f3}.range-slider .range-slider__thumb:focus-visible{outline:0;box-shadow:0 0 0 6px rgba(33,150,243,.5)}.range-slider[data-vertical] .range-slider__thumb{left:50%}.range-slider .range-slider__thumb[data-disabled]{z-index:2}.range-slider .range-slider__range{position:absolute;z-index:1;transform:translate(0,-50%);top:50%;width:100%;height:100%;background:#51adf6}.range-slider[data-vertical] .range-slider__range{left:50%;transform:translate(-50%,0)}.range-slider input[type=range]{-webkit-appearance:none;pointer-events:none;position:absolute;z-index:2;top:0;left:0;width:0;height:0;background-color:transparent}.range-slider input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none}.range-slider input[type=range]::-moz-range-thumb{width:0;height:0;border:0}.range-slider input[type=range]:focus{outline:0}';
-
-  const concatenateTemplateLiteralTag = (raw, ...keys) =>
-    keys.length === 0 ? raw[0] : String.raw({ raw }, ...keys);
-  const html = concatenateTemplateLiteralTag;
-  const css = concatenateTemplateLiteralTag;
 
   function logScript(...text) {
     console.log('MangaOnlineViewer: ', ...text);
@@ -2165,261 +2452,6 @@
         bookmarks: settings$2.bookmarks.filter((el) => el.url !== url),
       });
     }
-  }
-
-  const colors = {
-    dark: {
-      name: 'dark',
-      50: '#C1C2C5',
-      100: '#A6A7AB',
-      200: '#909296',
-      300: '#5c5f66',
-      400: '#373A40',
-      500: '#2C2E33',
-      600: '#25262b',
-      700: '#1A1B1E',
-      800: '#141517',
-      900: '#101113',
-    },
-    gray: {
-      name: 'gray',
-      50: '#f8f9fa',
-      100: '#f1f3f5',
-      200: '#e9ecef',
-      300: '#dee2e6',
-      400: '#ced4da',
-      500: '#adb5bd',
-      600: '#868e96',
-      700: '#495057',
-      800: '#343a40',
-      900: '#212529',
-    },
-    red: {
-      name: 'red',
-      50: '#fff5f5',
-      100: '#ffe3e3',
-      200: '#ffc9c9',
-      300: '#ffa8a8',
-      400: '#ff8787',
-      500: '#ff6b6b',
-      600: '#fa5252',
-      700: '#f03e3e',
-      800: '#e03131',
-      900: '#c92a2a',
-    },
-    pink: {
-      name: 'pink',
-      50: '#fff0f6',
-      100: '#ffdeeb',
-      200: '#fcc2d7',
-      300: '#faa2c1',
-      400: '#f783ac',
-      500: '#f06595',
-      600: '#e64980',
-      700: '#d6336c',
-      800: '#c2255c',
-      900: '#a61e4d',
-    },
-    grape: {
-      name: 'grape',
-      50: '#f8f0fc',
-      100: '#f3d9fa',
-      200: '#eebefa',
-      300: '#e599f7',
-      400: '#da77f2',
-      500: '#cc5de8',
-      600: '#be4bdb',
-      700: '#ae3ec9',
-      800: '#9c36b5',
-      900: '#862e9c',
-    },
-    violet: {
-      name: 'violet',
-      50: '#f3f0ff',
-      100: '#e5dbff',
-      200: '#d0bfff',
-      300: '#b197fc',
-      400: '#9775fa',
-      500: '#845ef7',
-      600: '#7950f2',
-      700: '#7048e8',
-      800: '#6741d9',
-      900: '#5f3dc4',
-    },
-    indigo: {
-      name: 'purple',
-      50: '#edf2ff',
-      100: '#dbe4ff',
-      200: '#bac8ff',
-      300: '#91a7ff',
-      400: '#748ffc',
-      500: '#5c7cfa',
-      600: '#4c6ef5',
-      700: '#4263eb',
-      800: '#3b5bdb',
-      900: '#364fc7',
-    },
-    blue: {
-      name: 'blue',
-      50: '#e7f5ff',
-      100: '#d0ebff',
-      200: '#a5d8ff',
-      300: '#74c0fc',
-      400: '#4dabf7',
-      500: '#339af0',
-      600: '#228be6',
-      700: '#1c7ed6',
-      800: '#1971c2',
-      900: '#1864ab',
-    },
-    cyan: {
-      name: 'cyan',
-      50: '#e3fafc',
-      100: '#c5f6fa',
-      200: '#99e9f2',
-      300: '#66d9e8',
-      400: '#3bc9db',
-      500: '#22b8cf',
-      600: '#15aabf',
-      700: '#1098ad',
-      800: '#0c8599',
-      900: '#0b7285',
-    },
-    teal: {
-      name: 'teal',
-      50: '#e6fcf5',
-      100: '#c3fae8',
-      200: '#96f2d7',
-      300: '#63e6be',
-      400: '#38d9a9',
-      500: '#20c997',
-      600: '#12b886',
-      700: '#0ca678',
-      800: '#099268',
-      900: '#087f5b',
-    },
-    green: {
-      name: 'green',
-      50: '#ebfbee',
-      100: '#d3f9d8',
-      200: '#b2f2bb',
-      300: '#8ce99a',
-      400: '#69db7c',
-      500: '#51cf66',
-      600: '#40c057',
-      700: '#37b24d',
-      800: '#2f9e44',
-      900: '#2b8a3e',
-    },
-    lime: {
-      name: 'lime',
-      50: '#f4fce3',
-      100: '#e9fac8',
-      200: '#d8f5a2',
-      300: '#c0eb75',
-      400: '#a9e34b',
-      500: '#94d82d',
-      600: '#82c91e',
-      700: '#74b816',
-      800: '#66a80f',
-      900: '#5c940d',
-    },
-    yellow: {
-      name: 'yellow',
-      50: '#fff9db',
-      100: '#fff3bf',
-      200: '#ffec99',
-      300: '#ffe066',
-      400: '#ffd43b',
-      500: '#fcc419',
-      600: '#fab005',
-      700: '#f59f00',
-      800: '#f08c00',
-      900: '#e67700',
-    },
-    orange: {
-      name: 'orange',
-      50: '#fff4e6',
-      100: '#ffe8cc',
-      200: '#ffd8a8',
-      300: '#ffc078',
-      400: '#ffa94d',
-      500: '#ff922b',
-      600: '#fd7e14',
-      700: '#f76707',
-      800: '#e8590c',
-      900: '#d9480f',
-    },
-    darkblue: {
-      name: 'darkblue',
-      50: '#E8F4F9',
-      100: '#D9DEE9',
-      200: '#B7C2DA',
-      300: '#6482C0',
-      400: '#4267B2',
-      500: '#385898',
-      600: '#314E89',
-      700: '#29487D',
-      800: '#223B67',
-      900: '#1E355B',
-    },
-  };
-  const darkest = 10;
-  const lightest = 95;
-  function setLightness(hsl, lightness) {
-    hsl.l = lightness;
-    return tinycolor(hsl).toHexString();
-  }
-  function getTextColor(hex) {
-    const color = tinycolor(hex);
-    const hsl = color.toHsl();
-    return setLightness(hsl, color.isDark() ? lightest : darkest);
-  }
-  function isDark(color) {
-    return tinycolor(color).getBrightness() <= 120;
-  }
-  function isBackgroundColorDark(element) {
-    return isDark(window.getComputedStyle(element).backgroundColor);
-  }
-
-  function svgToUrl(str) {
-    const cleaned = str.replace(/[\t\n\r]/gim, '').replace(/\s\s+/g, ' ');
-    const encoded = encodeURIComponent(cleaned).replace(/\(/g, '%28').replace(/\)/g, '%29');
-    return `data:image/svg+xml;charset=UTF-8,${encoded}`;
-  }
-  function placeholder(width, height, bgColor = '#0F1C3F', textColor = '#ECEAD9') {
-    const str = html`
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="${width}"
-        height="${height}"
-        viewBox="0 0 ${width} ${height}"
-      >
-        <rect fill="${bgColor}" width="${width}" height="${height}" />
-        <text
-          fill="${textColor}"
-          font-family="sans-serif"
-          font-size="30"
-          dy="10.5"
-          font-weight="bold"
-          x="50%"
-          y="50%"
-          text-anchor="middle"
-        >
-          ${width}x${height}
-        </text>
-      </svg>
-    `;
-    return svgToUrl(str);
-  }
-  const backgrounds = Object.values(colors).map((i) => i['900']);
-  const widths = [400, 600, 900, 1200, 1400, 1600, 1970];
-  const heights = [600, 800, 1e3, 1200, 1400, 2e3, 2600];
-  function randomPlaceholder() {
-    const randomWidth = Math.floor(Math.random() * widths.length);
-    const randomHeight = Math.floor(Math.random() * heights.length);
-    const randomColor = Math.floor(Math.random() * backgrounds.length);
-    return placeholder(widths[randomWidth], heights[randomHeight], backgrounds[randomColor]);
   }
 
   const IconArrowAutofitDown =
@@ -4775,36 +4807,6 @@
       logScript('Continuing');
     }
   }
-
-  const localhost = {
-    name: 'Localhost',
-    url: /(file:\/\/\/.+index.html)/,
-    homepage: 'http://127.0.0.1:8080/index.html',
-    language: ['Portuguese'],
-    category: 'manga',
-    run() {
-      const num = parseInt(/\d+/.exec(window.location.search)?.toString() ?? '5', 10);
-      const comments = document.createElement('div');
-      comments.textContent = 'Testing Comment';
-      return {
-        title: 'Placeholder Manga Loaded',
-        series: '#Counters',
-        pages: num,
-        begin: 1,
-        prev: '?pages=50',
-        next: '?pages=1',
-        listImages: [
-          placeholder(985, 1400, '#152C55'),
-          placeholder(1970, 1400, '#2D1657'),
-          placeholder(985, 1400, '#7A1420'),
-          placeholder(985, 1400, '#0F5B30'),
-          placeholder(1970, 1400, '#806D15'),
-          ...Array(num).fill(0).map(randomPlaceholder),
-        ],
-        comments,
-      };
-    },
-  };
 
   const fileTypes = [
     'image/apng',
