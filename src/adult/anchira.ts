@@ -24,7 +24,6 @@ export default {
     const num = document.querySelectorAll<HTMLOptionElement>('nav select option');
     return {
       title: document.querySelector('title')?.textContent?.trim(),
-      series: '',
       pages: num?.length,
       prev: '#',
       next: '#',

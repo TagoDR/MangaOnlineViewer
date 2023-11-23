@@ -15,7 +15,6 @@ export default {
     ];
     return {
       title: document.querySelector('title')?.textContent?.trim(),
-      series: '#',
       pages: src.length,
       prev: '#',
       next: '#',

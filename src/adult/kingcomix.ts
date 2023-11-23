@@ -9,7 +9,6 @@ export default {
     const src = [...document.querySelectorAll('figure img, .entry-content img.lazy')];
     return {
       title: document.querySelector('h1.singleTitle-h1')?.textContent?.trim(),
-      series: '#',
       pages: src.length,
       prev: '#',
       next: '#',

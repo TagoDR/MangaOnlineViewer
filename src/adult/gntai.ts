@@ -14,7 +14,6 @@ export default {
       .match(/https?[^"]+/g);
     return {
       title: document.querySelector('.entry-header h1')?.textContent?.trim(),
-      series: '#',
       pages: images?.length,
       prev: '#',
       next: '#',

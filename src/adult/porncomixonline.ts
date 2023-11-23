@@ -9,7 +9,6 @@ export default {
     const images = [...document.querySelectorAll('figure a')];
     return {
       title: document.querySelector('.post-title')?.textContent?.trim(),
-      series: '#',
       pages: images.length,
       prev: '#',
       next: '#',

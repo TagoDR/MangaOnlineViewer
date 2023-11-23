@@ -9,7 +9,6 @@ export default {
     const images = [...document.querySelectorAll('.jig-link')];
     return {
       title: document.querySelector('.entry-title')?.textContent?.trim(),
-      series: '#',
       pages: images.length,
       prev: '#',
       next: '#',

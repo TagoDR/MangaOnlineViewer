@@ -9,7 +9,6 @@ export default {
     const pages = [...document.querySelectorAll<HTMLOptionElement>('.pageselect option')];
     return {
       title: document.querySelector('.bread a:last-of-type')?.textContent?.trim(),
-      series: '#',
       pages: pages.length,
       prev: '#',
       next: '#',

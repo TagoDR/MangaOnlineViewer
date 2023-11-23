@@ -18,7 +18,6 @@ export default {
     const images = [...api.querySelectorAll('image')];
     return {
       title: document.querySelector('#page-title')?.textContent?.trim(),
-      series: '#',
       pages: images.length,
       prev: '#',
       next: '#',
