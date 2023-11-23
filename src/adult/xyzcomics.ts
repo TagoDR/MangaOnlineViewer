@@ -1,7 +1,7 @@
 // == xyzcomics ====================================================================================
 export default {
   name: 'xyzcomics',
-  url: /https?:\/\/(www.)?xyzcomics.com\/.+/,
+  url: /https?:\/\/(www\.)?xyzcomics.com\/.+/,
   homepage: 'https://xyzcomics.com/',
   language: ['English'],
   category: 'hentai',

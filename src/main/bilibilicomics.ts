@@ -1,7 +1,7 @@
 // == BilibiliComics ===============================================================================
 export default {
   name: 'BilibiliComics',
-  url: /https?:\/\/(www.)?(bilibilicomics).com\/.+\/.+/,
+  url: /https?:\/\/(www\.)?(bilibilicomics).com\/.+\/.+/,
   homepage: 'https://www.bilibilicomics.com/',
   language: ['English'],
   category: 'manga',

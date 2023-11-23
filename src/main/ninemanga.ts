@@ -1,7 +1,7 @@
 // == NineManga ====================================================================================
 export default {
   name: 'NineManga',
-  url: /https?:\/\/(www.)?ninemanga.com\/chapter\/.+\/.+\.html/,
+  url: /https?:\/\/(www\.)?ninemanga.com\/chapter\/.+\/.+\.html/,
   homepage: 'https://ninemanga.com/',
   language: ['English'],
   category: 'manga',

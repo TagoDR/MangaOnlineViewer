@@ -1,7 +1,7 @@
 // == ReadManga.Today ==============================================================================
 export default {
   name: ['ReadManga Today', 'Funmanga', 'MangaDoom', 'MangaInn'],
-  url: /https?:\/\/(www.)?(funmanga|mngdoom|readmng|mangainn).(com|net)\/.+\/\d+/,
+  url: /https?:\/\/(www\.)?(funmanga|mngdoom|readmng|mangainn).(com|net)\/.+\/\d+/,
   homepage: [
     'https://www.readmng.com/',
     'https://funmanga.com/',

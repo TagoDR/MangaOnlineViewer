@@ -1,7 +1,7 @@
 // == PandaManga ==================================================================================
 export default {
   name: 'PandaManga',
-  url: /https?:\/\/(www.)?pandamanga.xyz\/.+\/.+\/.+/,
+  url: /https?:\/\/(www\.)?pandamanga.xyz\/.+\/.+\/.+/,
   homepage: 'https://www.pandamanga.com/',
   language: ['English'],
   category: 'manga',

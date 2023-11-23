@@ -1,7 +1,7 @@
 // == GNTAI ========================================================================================
 export default {
   name: 'GNTAI.net',
-  url: /https?:\/\/(www.)?gntai.net\/(?!(category|tags|autores))[^/]+\/.+/,
+  url: /https?:\/\/(www\.)?gntai.net\/(?!(category|tags|autores))[^/]+\/.+/,
   homepage: 'https://www.gntai.net/',
   language: ['Spanish'],
   category: 'hentai',

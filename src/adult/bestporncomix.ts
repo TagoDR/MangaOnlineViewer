@@ -1,7 +1,7 @@
 // == BestPornComix ================================================================================
 export default {
   name: 'BestPornComix',
-  url: /https?:\/\/(www.)?bestporncomix.com\/gallery\/.+/,
+  url: /https?:\/\/(www\.)?bestporncomix.com\/gallery\/.+/,
   homepage: 'https://www.bestporncomix.com',
   language: ['English'],
   category: 'hentai',

@@ -1,7 +1,7 @@
 // == KLManga ======================================================================================
 export default {
   name: 'KLManga',
-  url: /https?:\/\/(www.)?klmanga.com\/.+chapter.+/,
+  url: /https?:\/\/(www\.)?klmanga.com\/.+chapter.+/,
   homepage: 'https://klmanga.com/',
   language: ['Raw'],
   category: 'manga',

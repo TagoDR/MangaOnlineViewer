@@ -1,7 +1,7 @@
 // == MangaFox =====================================================================================
 export default {
   name: ['MangaFox', 'MangaHere'],
-  url: /https?:\/\/(www.)?(fanfox.net|mangahere.cc)\/manga\/.+\/.+\//,
+  url: /https?:\/\/(www\.)?(fanfox.net|mangahere.cc)\/manga\/.+\/.+\//,
   homepage: ['https://fanfox.net/', 'https://www.mangahere.cc/'],
   language: ['English'],
   category: 'manga',

@@ -1,7 +1,7 @@
 // == Pururin ======================================================================================
 export default {
   name: 'Pururin',
-  url: /https?:\/\/(www.)?pururin.to\/(view|read)\/.+\/.+\/.+/,
+  url: /https?:\/\/(www\.)?pururin.to\/(view|read)\/.+\/.+\/.+/,
   homepage: 'https://pururin.to/',
   language: ['English'],
   category: 'hentai',

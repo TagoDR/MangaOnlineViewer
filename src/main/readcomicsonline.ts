@@ -1,7 +1,7 @@
 // == ReadComicsOnline =============================================================================
 export default {
   name: 'ReadComicsOnline',
-  url: /https?:\/\/(www.)?readcomicsonline.ru\/comic\/.*\/\d*/,
+  url: /https?:\/\/(www\.)?readcomicsonline.ru\/comic\/.*\/\d*/,
   homepage: 'https://readcomicsonline.ru/',
   language: ['English'],
   category: 'comic',

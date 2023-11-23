@@ -1,7 +1,7 @@
 // == TMOHentai ====================================================================================
 export default {
   name: 'TMOHentai',
-  url: /https?:\/\/(www.)?tmohentai.com\/reader\/.+\/paginated\/\d+/,
+  url: /https?:\/\/(www\.)?tmohentai.com\/reader\/.+\/paginated\/\d+/,
   homepage: 'https://tmohentai.com/',
   language: ['Spanish'],
   category: 'hentai',

@@ -1,7 +1,7 @@
 // == Batoto =======================================================================================
 export default {
   name: 'Batoto',
-  url: /https?:\/\/(www.)?bato.to\/(chapter|title).*/,
+  url: /https?:\/\/(www\.)?bato.to\/(chapter|title).*/,
   homepage: 'https://bato.to/',
   language: ['English'],
   category: 'manga',

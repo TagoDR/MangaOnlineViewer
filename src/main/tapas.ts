@@ -1,7 +1,7 @@
 // == Tapas ======================================================================================
 export default {
   name: 'KLManga',
-  url: /https?:\/\/(www.)?tapas.io\/episode\/.+/,
+  url: /https?:\/\/(www\.)?tapas.io\/episode\/.+/,
   homepage: 'https://tapas.io/',
   language: ['English'],
   category: 'manga',

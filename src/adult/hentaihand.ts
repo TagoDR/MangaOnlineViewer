@@ -1,7 +1,7 @@
 // == HentaiHand ==================================================================================
 export default {
   name: ['HentaiHand', 'nHentai.com'],
-  url: /https?:\/\/(www.)?(hentaihand|nhentai).com\/.+\/reader/,
+  url: /https?:\/\/(www\.)?(hentaihand|nhentai).com\/.+\/reader/,
   homepage: ['https://hentaihand.com/', 'https://nhentai.com'],
   language: ['English'],
   category: 'hentai',

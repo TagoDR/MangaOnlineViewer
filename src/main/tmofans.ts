@@ -1,7 +1,7 @@
 // == TMOFans ==================================================================================
 export default {
   name: 'TuMangaOnline',
-  url: /https?:\/\/(www.)?(.+).com\/(viewer|news)\/.+\/(paginated|cascade)/,
+  url: /https?:\/\/(www\.)?(.+).com\/(viewer|news)\/.+\/(paginated|cascade)/,
   homepage: 'https://lectortmo.com/',
   language: ['Spanish'],
   category: 'manga',

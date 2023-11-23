@@ -1,7 +1,7 @@
 // == DynastyScans =================================================================================
 export default {
   name: 'Dynasty-Scans',
-  url: /https?:\/\/(www.)?dynasty-scans.com\/chapters\/.+/,
+  url: /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/,
   homepage: 'https://dynasty-scans.com/',
   language: ['English'],
   category: 'manga',

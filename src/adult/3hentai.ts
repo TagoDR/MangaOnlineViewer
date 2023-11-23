@@ -1,7 +1,7 @@
 // == 3Hentai ======================================================================================
 export default {
   name: '3Hentai',
-  url: /https?:\/\/(www.)?3hentai.net\/d\/.+\/.+/,
+  url: /https?:\/\/(www\.)?3hentai.net\/d\/.+\/.+/,
   homepage: 'https://3hentai.net/',
   language: ['English'],
   category: 'hentai',

@@ -1,7 +1,7 @@
 // == WebNovel =====================================================================================
 export default {
   name: 'WebNovel',
-  url: /https?:\/\/(www.)?webnovel.com\/comic\/.+/,
+  url: /https?:\/\/(www\.)?webnovel.com\/comic\/.+/,
   homepage: 'https://www.webnovel.com/',
   language: ['English'],
   category: 'manga',

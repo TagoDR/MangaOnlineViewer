@@ -20,7 +20,7 @@ function findServer(cId: number) {
 
 export default {
   name: 'Imhentai',
-  url: /https?:\/\/(www.)?imhentai.xxx\/view\/.+\/.+\//,
+  url: /https?:\/\/(www\.)?imhentai.xxx\/view\/.+\/.+\//,
   homepage: 'https://imhentai.xxx/',
   language: ['English'],
   category: 'hentai',

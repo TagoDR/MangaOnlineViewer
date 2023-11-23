@@ -1,26 +1,15 @@
 // == Anchira ======================================================================================
 import { waitFor } from '../utils/waitFor';
 
-declare global {
-  interface Element {
-    originalAttachShadow: typeof Element.prototype.attachShadow;
-  }
-}
-
 export default {
   name: 'Anchira',
   obs: 'Slow start, bruteforce required',
-  url: /https?:\/\/(www.)?(anchira).to\/(archive|g|read)\/\d+\/.+/,
+  url: /https?:\/\/(www\.)?(anchira).to\/(archive|g|read)\/\d+\/.+/,
   homepage: 'https://anchira.to/',
   language: ['English'],
   category: 'hentai',
   waitEle: 'nav select option',
   async run() {
-    // Forbids Shadow Dom Closed
-    Element.prototype.originalAttachShadow = Element.prototype.attachShadow;
-    Element.prototype.attachShadow = function attachShadow() {
-      return this.originalAttachShadow({ mode: 'open' });
-    };
     const num = document.querySelectorAll<HTMLOptionElement>('nav select option');
     return {
       title: document.querySelector('title')?.textContent?.trim(),

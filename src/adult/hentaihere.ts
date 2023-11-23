@@ -1,7 +1,7 @@
 // == HentaIHere ===================================================================================
 export default {
   name: 'HentaIHere',
-  url: /https?:\/\/(www.)?hentaihere.com\/.+\/.+\/.+/,
+  url: /https?:\/\/(www\.)?hentaihere.com\/.+\/.+\/.+/,
   homepage: 'https://www.hentaihere.com/',
   language: ['English'],
   category: 'hentai',

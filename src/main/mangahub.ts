@@ -1,7 +1,7 @@
 // == MangaHub =====================================================================================
 export default {
   name: 'MangaHub',
-  url: /https?:\/\/(www.)?(mangahub).io\/chapter\/.+\/.+/,
+  url: /https?:\/\/(www\.)?(mangahub).io\/chapter\/.+\/.+/,
   homepage: 'https://mangahub.io/',
   language: ['English'],
   category: 'manga',

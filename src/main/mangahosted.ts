@@ -1,7 +1,7 @@
 // == MangaHosted ===================================================================================
 export default {
   name: 'MangaHosted',
-  url: /https?:\/\/(www.)?mangahosted.com\/manga\/.+\/.+/,
+  url: /https?:\/\/(www\.)?mangahosted.com\/manga\/.+\/.+/,
   homepage: 'https://mangahosted.com/',
   language: ['Portuguese'],
   category: 'manga',

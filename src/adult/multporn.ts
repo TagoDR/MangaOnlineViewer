@@ -1,7 +1,7 @@
 // == MultPorn =====================================================================================
 export default {
   name: 'MultPorn',
-  url: /https?:\/\/(www.)?multporn.net\/(comics|hentai_manga)\/.+/,
+  url: /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/,
   homepage: 'https://multporn.net/',
   language: ['English'],
   category: 'hentai',

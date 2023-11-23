@@ -14,6 +14,7 @@ import {
 import { getElementAttribute } from '../utils/request';
 import lazyLoad from '../utils/lazyLoad';
 import sequence from '../utils/sequence';
+import { html } from '../utils/code-tag';
 
 // After pages load apply default Zoom
 function applyZoom(
@@ -85,7 +86,7 @@ function updateProgress() {
   const percentage = Math.floor((loaded / total) * 100);
   const title = document.querySelector('title');
   if (title) {
-    title.innerHTML = `(${percentage}%) ${document.querySelector('#MangaTitle')?.textContent}`;
+    title.innerHTML = html`(${percentage}%) ${document.querySelector('#MangaTitle')?.textContent}`;
   }
 
   document.querySelectorAll('#Counters i, #NavigationCounters i').forEach((ele) => {

@@ -1,7 +1,7 @@
 // == LHTranslation ================================================================================
 export default {
   name: 'LHTranslation',
-  url: /https?:\/\/(www.)?lhtranslation.net\/read.+/,
+  url: /https?:\/\/(www\.)?lhtranslation.net\/read.+/,
   homepage: 'https://lhtranslation.net/',
   language: ['English'],
   category: 'manga',

@@ -1,7 +1,7 @@
 // == XlecxOne =====================================================================================
 export default {
   name: 'XlecxOne',
-  url: /https?:\/\/(www.)?xlecx.one\/.+/,
+  url: /https?:\/\/(www\.)?xlecx.one\/.+/,
   homepage: 'https://xlecx.one/',
   language: ['English'],
   category: 'hentai',

@@ -1,7 +1,7 @@
 // == Reset-Scans ================================================================================
 export default {
   name: 'Reset-Scans',
-  url: /https?:\/\/(www.)?reset-scans.com\/manga\/.+\/chapter.+/,
+  url: /https?:\/\/(www\.)?reset-scans.com\/manga\/.+\/chapter.+/,
   homepage: 'https://reset-scans.com/',
   language: ['English'],
   category: 'manga',

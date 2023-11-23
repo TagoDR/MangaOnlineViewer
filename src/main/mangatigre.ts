@@ -1,7 +1,7 @@
 // == MangaTigre ===================================================================================
 export default {
   name: 'MangaTigre',
-  url: /https?:\/\/(www.)?mangatigre.net\/.+\/.+\/.+/,
+  url: /https?:\/\/(www\.)?mangatigre.net\/.+\/.+\/.+/,
   homepage: 'https://www.mangatigre.net/',
   language: ['Spanish'],
   category: 'manga',

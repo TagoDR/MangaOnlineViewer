@@ -1,7 +1,7 @@
 // == TuManhwas  ===================================================================================
 export default {
   name: 'TuManhwas',
-  url: /https?:\/\/(www.)?tumanhwas.com\/news\/.+/,
+  url: /https?:\/\/(www\.)?tumanhwas.com\/news\/.+/,
   homepage: 'https://tumanhwas.com/',
   language: ['Spanish'],
   category: 'manga',

@@ -1,7 +1,7 @@
 // == Luscious =====================================================================================
 export default {
   name: 'Luscious',
-  url: /https?:\/\/(www.)?luscious.net\/.+\/read\/.+/,
+  url: /https?:\/\/(www\.)?luscious.net\/.+\/read\/.+/,
   homepage: 'https://luscious.net/',
   language: ['English'],
   category: 'hentai',

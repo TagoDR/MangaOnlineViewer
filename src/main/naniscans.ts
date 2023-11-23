@@ -1,7 +1,7 @@
 // == NaniScans ====================================================================================
 export default {
   name: 'NaniScans',
-  url: /https?:\/\/(www.)?(naniscans).com\/chapters\/.+\/read/,
+  url: /https?:\/\/(www\.)?(naniscans).com\/chapters\/.+\/read/,
   homepage: 'https://naniscans.com/',
   language: ['English'],
   category: 'manga',

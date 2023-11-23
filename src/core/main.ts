@@ -221,6 +221,11 @@ async function preparePage(site: ISite) {
 
 // Script Entry point
 async function start(sites: ISite[]) {
+  Element.prototype.originalAttachShadow = Element.prototype.attachShadow;
+  Element.prototype.attachShadow = function attachShadow() {
+    return this.originalAttachShadow({ mode: 'open' });
+  };
+  Object.preventExtensions(Element);
   logScript(
     `Starting ${getInfoGM.script.name} ${
       getInfoGM.script.version
@@ -228,7 +233,6 @@ async function start(sites: ISite[]) {
   );
   if (allowUpload()) return;
   logScript(`${sites.length} Known Manga Sites, Looking for a match...`);
-
   const site = sites.find((s: ISite) => s.url.test(window.location.href));
   if (site) {
     logScript(`Found site: ${site.name}`);

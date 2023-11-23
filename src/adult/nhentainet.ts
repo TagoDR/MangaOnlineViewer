@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 export default {
   name: ['nHentai.net', 'nHentai.xxx', 'lhentai'],
-  url: /https?:\/\/(www.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/,
+  url: /https?:\/\/(www\.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/,
   homepage: ['https://nhentai.net/', 'https://nhentai.xxx/', 'https://lhentai.com/'],
   language: ['English'],
   category: 'hentai',

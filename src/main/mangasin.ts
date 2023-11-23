@@ -1,7 +1,7 @@
 // == MangasIn ===================================================================================
 export default {
   name: 'MangasIn',
-  url: /https?:\/\/(www.)?mangas.in\/manga\/.+\/.+\/\d+/,
+  url: /https?:\/\/(www\.)?mangas.in\/manga\/.+\/.+\/\d+/,
   homepage: 'https://mangas.in/',
   language: ['Spanish'],
   category: 'manga',

@@ -1,7 +1,7 @@
 // == KingComix ====================================================================================
 export default {
   name: 'KingComix',
-  url: /https?:\/\/(www.)?kingcomix.com\/.+/,
+  url: /https?:\/\/(www\.)?kingcomix.com\/.+/,
   homepage: 'https://kingcomix.com/',
   language: ['English'],
   category: 'hentai',

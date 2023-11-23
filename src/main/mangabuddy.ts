@@ -1,7 +1,7 @@
 // == MangaBuddy ===================================================================================
 export default {
   name: 'MangaBuddy',
-  url: /https?:\/\/(www.)?mangabuddy.com\/.+\/chapter.+/,
+  url: /https?:\/\/(www\.)?mangabuddy.com\/.+\/chapter.+/,
   homepage: 'https://mangabuddy.com/',
   language: ['English'],
   category: 'manga',

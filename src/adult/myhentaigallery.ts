@@ -1,7 +1,7 @@
 // == MyHentaiGallery ==============================================================================
 export default {
   name: 'MyHentaiGallery',
-  url: /https?:\/\/(www.)?myhentaigallery.com\/gallery\/show\/.+\/\d+/,
+  url: /https?:\/\/(www\.)?myhentaigallery.com\/gallery\/show\/.+\/\d+/,
   homepage: 'https://www.myhentaigallery.com',
   language: ['English'],
   category: 'hentai',

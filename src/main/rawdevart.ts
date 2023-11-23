@@ -2,7 +2,7 @@
 
 export default {
   name: 'RawDevart',
-  url: /https?:\/\/(www.)?rawdevart.com\/comic\/.+\/.+\//,
+  url: /https?:\/\/(www\.)?rawdevart.com\/comic\/.+\/.+\//,
   homepage: 'https://rawdevart.com',
   language: ['Raw'],
   category: 'manga',

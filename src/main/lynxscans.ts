@@ -1,7 +1,7 @@
 // == LynxScans ====================================================================================
 export default {
   name: 'LynxScans',
-  url: /https?:\/\/(www.)?lynxscans.com\/comics?\/.+/,
+  url: /https?:\/\/(www\.)?lynxscans.com\/comics?\/.+/,
   homepage: 'https://lynxscans.com/',
   language: ['English'],
   category: 'manga',

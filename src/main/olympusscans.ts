@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 export default {
   name: 'OlympusScans',
-  url: /https?:\/\/(www.)?olympusscans.com\/capitulo\/.+\/.+/,
+  url: /https?:\/\/(www\.)?olympusscans.com\/capitulo\/.+\/.+/,
   homepage: 'https://olympusscans.com/',
   language: ['Spanish'],
   category: 'manga',

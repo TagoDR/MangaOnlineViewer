@@ -1,7 +1,7 @@
 // == Doujin-Moe Non-members =======================================================================
 export default {
   name: 'DoujinMoeNM',
-  url: /https?:\/\/(www.)?doujins.com\/.+/,
+  url: /https?:\/\/(www\.)?doujins.com\/.+/,
   homepage: 'https://doujins.com/',
   language: ['English'],
   category: 'hentai',

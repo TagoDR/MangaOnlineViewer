@@ -1,7 +1,7 @@
 // == Leitor =======================================================================================
 export default {
   name: 'Leitor',
-  url: /https?:\/\/(www.)?leitor.net\/manga\/.+\/.+\/.+/,
+  url: /https?:\/\/(www\.)?leitor.net\/manga\/.+\/.+\/.+/,
   homepage: 'https://leitor.net/',
   language: ['Portuguese'],
   category: 'manga',

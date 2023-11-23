@@ -1,7 +1,7 @@
 // == HBrowser =====================================================================================
 export default {
   name: 'HBrowser',
-  url: /https?:\/\/(www.)?hbrowse.com\/.+/,
+  url: /https?:\/\/(www\.)?hbrowse.com\/.+/,
   homepage: 'https://www.hbrowse.com/',
   language: ['English'],
   category: 'hentai',

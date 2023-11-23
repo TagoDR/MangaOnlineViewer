@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 export default {
   name: 'InManga',
-  url: /https?:\/\/(www.)?inmanga.com\/ver\/manga\/.+\/.+/,
+  url: /https?:\/\/(www\.)?inmanga.com\/ver\/manga\/.+\/.+/,
   homepage: 'https://inmanga.com//',
   language: ['Spanish'],
   category: 'manga',

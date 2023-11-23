@@ -1,7 +1,7 @@
 // == WPManga ======================================================================================
 export default {
   name: ['Manga33'],
-  url: /https?:\/\/(www.)?(manga33).com\/manga\/.+/,
+  url: /https?:\/\/(www\.)?(manga33).com\/manga\/.+/,
   homepage: ['https://manga33.com/'],
   language: ['English'],
   category: 'manga',

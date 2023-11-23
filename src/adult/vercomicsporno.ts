@@ -1,7 +1,7 @@
 // == Ver Mangas Porno =============================================================================
 export default {
   name: ['vermangasporno', 'vercomicsporno'],
-  url: /https?:\/\/(www.)?(vermangasporno|vercomicsporno).com\/.+/,
+  url: /https?:\/\/(www\.)?(vermangasporno|vercomicsporno).com\/.+/,
   homepage: ['https://vermangasporno.com/', 'https://vercomicsporno.com/'],
   language: ['Spanish'],
   category: 'hentai',

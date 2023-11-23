@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 export default {
   name: 'TenManga',
-  url: /https?:\/\/(www.)?(tenmanga|gardenmanage).com\/(chapter|statuses)\/.+/,
+  url: /https?:\/\/(www\.)?(tenmanga|gardenmanage).com\/(chapter|statuses)\/.+/,
   homepage: 'https://www.tenmanga.com/',
   language: ['English'],
   category: 'manga',

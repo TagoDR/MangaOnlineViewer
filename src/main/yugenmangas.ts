@@ -1,7 +1,7 @@
 // == YugenMangas ==================================================================================
 export default {
   name: 'YugenMangas',
-  url: /https?:\/\/(www.)?(yugenmangas).(com|net|lat)\/series\/.+/,
+  url: /https?:\/\/(www\.)?(yugenmangas).(com|net|lat)\/series\/.+/,
   homepage: 'https://yugenmangas.lat/',
   language: ['Spanish'],
   category: 'manga',

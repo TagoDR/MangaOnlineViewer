@@ -1,7 +1,7 @@
 // == ManhuaScan ===================================================================================
 export default {
   name: 'ManhuaScan',
-  url: /https?:\/\/(www.)?manhuascan.io\/.+chapter.+/,
+  url: /https?:\/\/(www\.)?manhuascan.io\/.+chapter.+/,
   homepage: 'https://manhuascan.io/',
   language: ['English'],
   category: 'manga',

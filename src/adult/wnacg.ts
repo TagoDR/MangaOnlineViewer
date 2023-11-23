@@ -1,7 +1,7 @@
 // == wnacg ========================================================================================
 export default {
   name: 'wnacg',
-  url: /https?:\/\/(www.)?wnacg.com\/photos-view-id-.+/,
+  url: /https?:\/\/(www\.)?wnacg.com\/photos-view-id-.+/,
   homepage: 'https://wnacg.com/',
   language: ['English', 'Raw', 'Chinese'],
   category: 'hentai',

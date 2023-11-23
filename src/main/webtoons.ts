@@ -1,7 +1,7 @@
 // == WebToons =====================================================================================
 export default {
   name: 'WebToons',
-  url: /https?:\/\/(www.)?webtoons.com\/.+viewer.+/,
+  url: /https?:\/\/(www\.)?webtoons.com\/.+viewer.+/,
   homepage: 'https://www.webtoons.com/',
   language: ['English'],
   category: 'manga',

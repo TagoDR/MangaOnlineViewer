@@ -2,7 +2,7 @@
 declare let imgReverser: (url: string) => Promise<HTMLCanvasElement>;
 export default {
   name: 'Mangareader',
-  url: /https?:\/\/(www.)?mangareader.to\/read\/.+\/.+\/.+/,
+  url: /https?:\/\/(www\.)?mangareader.to\/read\/.+\/.+\/.+/,
   homepage: 'https://mangareader.to',
   language: ['English'],
   category: 'manga',

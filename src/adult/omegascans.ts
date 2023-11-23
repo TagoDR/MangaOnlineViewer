@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 export default {
   name: ['OmegaScans'],
-  url: /https?:\/\/(www.)?(omegascans).(org)\/.+/,
+  url: /https?:\/\/(www\.)?(omegascans).(org)\/.+/,
   homepage: ['https://omegascans.org/'],
   language: ['English'],
   category: 'manga',

@@ -1,7 +1,7 @@
 // == PornComixOnline ==============================================================================
 export default {
   name: 'PornComixOnline',
-  url: /https?:\/\/(www.)?porncomixone.net\/comic\/.+/,
+  url: /https?:\/\/(www\.)?porncomixone.net\/comic\/.+/,
   homepage: 'https://www.porncomixone.net',
   language: ['English'],
   category: 'hentai',

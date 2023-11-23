@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 export default {
   name: 'ZeroScans',
-  url: /https?:\/\/(www.)?zeroscans.com\/comics\/.+/,
+  url: /https?:\/\/(www\.)?zeroscans.com\/comics\/.+/,
   homepage: 'https://zeroscans.com/',
   language: ['English'],
   category: 'manga',

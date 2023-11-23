@@ -28,5 +28,5 @@ export default {
   connect: '*',
   require: requiredScripts,
   include: ['https://github.com/TagoDR/MangaOnlineViewer', ...sites.map((s) => s.url)],
-  exclude: [/https?:\/\/(www.)?tsumino.com\/.+/, /https?:\/\/(www.)?pururin.io\/.+/],
+  exclude: [/https?:\/\/(www\.)?tsumino.com\/.+/, /https?:\/\/(www\.)?pururin.io\/.+/],
 } as Partial<Tampermonkey.ScriptMetadata>;
