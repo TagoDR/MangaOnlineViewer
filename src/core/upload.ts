@@ -79,12 +79,20 @@ function openFileImages(evt: Event) {
 }
 const browserMessage = html`
   <h3>For <i style="color:crimson">Chrome</i> and similar browsers</h3>
-  Save this file
-  <a href="https://github.com/TagoDR/MangaOnlineViewer/blob/master/index.html?raw=1">index.html</a>,
-  then open it in the browser, and you will see the options below.
+  <p>
+    Save this file
+    <a href="https://github.com/TagoDR/MangaOnlineViewer/blob/master/index.html?raw=1">
+      index.html
+    </a>
+    , then open it in the browser, and you will see the options below.
+  </p>
   <h3>Below only works with <i style="color:orange">Firefox</i>!</h3>
 `;
 const filesSelectors = html`
+  <p>
+    <b>Attention</b>: You will need to "Allow access to file URLs" for tampermonkey, just go to the
+    browser extension settings.
+  </p>
   <p>Can read any zip file with images inside and diplay it like any of the supported sites</p>
   <label for="file">Choose the local zip file:</label>
   <input
