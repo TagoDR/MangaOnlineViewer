@@ -26,7 +26,7 @@ import sequence from '../../utils/sequence';
 import type { IManga } from '../../types';
 
 const listOptions = (times: number, begin: number) =>
-  sequence(times, begin).map((index) => html`<option value="${index}">${index}</option>`);
+  sequence(times, begin).map((index) => html` <option value="${index}">${index}</option>`);
 const Header = (manga: IManga) => html`
   <header id="Header" class="${getUserSettings().header}">
     <div id="menu">${IconMenu2}</div>
@@ -113,7 +113,7 @@ const Header = (manga: IManga) => html`
     </aside>
     <div class="ViewerTitle">
       <h1 id="MangaTitle">${manga.title}</h1>
-      <a id="series" href="${manga.series}"> (${getLocaleString('RETURN_CHAPTER_LIST')}) </a>
+      <a id="series" href="${manga.series ?? ''}"> (${getLocaleString('RETURN_CHAPTER_LIST')}) </a>
     </div>
     <nav id="ChapterNavigation">
       <div id="Counters" class="ControlLabel">

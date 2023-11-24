@@ -9,6 +9,9 @@ export default {
   language: ['English'],
   category: 'hentai',
   waitEle: 'nav select option',
+  waitFunc() {
+    return document?.querySelector('main .p div')?.shadowRoot;
+  },
   async run() {
     const num = document.querySelectorAll<HTMLOptionElement>('nav select option');
     return {
