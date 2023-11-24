@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.11.23
+// @version       2023.11.24
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -4417,12 +4417,20 @@
   }
   const browserMessage = html`
     <h3>For <i style="color:crimson">Chrome</i> and similar browsers</h3>
-    Save this file
-    <a href="https://github.com/TagoDR/MangaOnlineViewer/blob/master/index.html?raw=1">index.html</a
-    >, then open it in the browser, and you will see the options below.
+    <p>
+      Save this file
+      <a href="https://github.com/TagoDR/MangaOnlineViewer/blob/master/index.html?raw=1">
+        index.html
+      </a>
+      , then open it in the browser, and you will see the options below.
+    </p>
     <h3>Below only works with <i style="color:orange">Firefox</i>!</h3>
   `;
   const filesSelectors = html`
+    <p>
+      <b>Attention</b>: You will need to "Allow access to file URLs" for tampermonkey, just go to
+      the browser extension settings.
+    </p>
     <p>Can read any zip file with images inside and diplay it like any of the supported sites</p>
     <label for="file">Choose the local zip file:</label>
     <input
@@ -4482,6 +4490,17 @@
       return true;
     }
     return false;
+  }
+
+  function Unlock() {
+    if (!Object.isExtensible(Element)) {
+      Element = Element.constructor();
+    }
+    const originalAttachShadow = Element.prototype.attachShadow;
+    Element.prototype.attachShadow = function attachShadow() {
+      return originalAttachShadow.apply(this, [{ mode: 'open' }]);
+    };
+    Object.preventExtensions(Element);
   }
 
   function validateMin(valBegin, endPage, rs) {
@@ -4672,11 +4691,7 @@
     }
   }
   async function start(sites) {
-    Element.prototype.originalAttachShadow = Element.prototype.attachShadow;
-    Element.prototype.attachShadow = function attachShadow() {
-      return this.originalAttachShadow({ mode: 'open' });
-    };
-    Object.preventExtensions(Element);
+    Unlock();
     logScript(
       `Starting ${getInfoGM.script.name} ${
         getInfoGM.script.version
