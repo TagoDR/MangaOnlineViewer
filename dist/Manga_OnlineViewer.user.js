@@ -8,6 +8,7 @@
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans
 // @version       2023.11.25
 // @license       MIT
+// @run-at        document-end
 // @grant         unsafeWindow
 // @grant         GM_getValue
 // @grant         GM_setValue
@@ -4962,8 +4963,7 @@
         return originalAttachShadow.apply(this, [{ mode: 'open' }]);
       };
     } catch (e) {
-      logScript('Fail to unlock Closed Shadow DOM', e);
-      setTimeout(() => window.location.reload(), 1e3);
+      logScript('Failed to unlock Closed Shadow DOM', e);
     }
   }
 
