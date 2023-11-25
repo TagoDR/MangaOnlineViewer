@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.11.24
+// @version       2023.11.25
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -177,6 +177,9 @@
     language: ['English'],
     category: 'hentai',
     waitEle: 'nav select option',
+    waitFunc() {
+      return document?.querySelector('main .p div')?.shadowRoot;
+    },
     async run() {
       const num = document.querySelectorAll('nav select option');
       return {
@@ -2821,7 +2824,7 @@
   }
 
   const listOptions = (times, begin) =>
-    indexList(times, begin).map((index) => html`<option value="${index}">${index}</option>`);
+    indexList(times, begin).map((index) => html` <option value="${index}">${index}</option>`);
   const Header = (manga) => html`
     <header id="Header" class="${getUserSettings().header}">
       <div id="menu">${IconMenu2}</div>
@@ -2908,7 +2911,9 @@
       </aside>
       <div class="ViewerTitle">
         <h1 id="MangaTitle">${manga.title}</h1>
-        <a id="series" href="${manga.series}"> (${getLocaleString('RETURN_CHAPTER_LIST')}) </a>
+        <a id="series" href="${manga.series ?? ''}">
+          (${getLocaleString('RETURN_CHAPTER_LIST')})
+        </a>
       </div>
       <nav id="ChapterNavigation">
         <div id="Counters" class="ControlLabel">
@@ -4493,14 +4498,15 @@
   }
 
   function Unlock() {
-    if (!Object.isExtensible(Element)) {
-      Element = Element.constructor();
+    try {
+      const originalAttachShadow = Element.prototype.attachShadow;
+      Element.prototype.attachShadow = function customAttachShadow() {
+        return originalAttachShadow.apply(this, [{ mode: 'open' }]);
+      };
+    } catch (e) {
+      logScript('Fail to unlock Closed Shadow DOM', e);
+      setTimeout(() => window.location.reload(), 1e3);
     }
-    const originalAttachShadow = Element.prototype.attachShadow;
-    Element.prototype.attachShadow = function attachShadow() {
-      return originalAttachShadow.apply(this, [{ mode: 'open' }]);
-    };
-    Object.preventExtensions(Element);
   }
 
   function validateMin(valBegin, endPage, rs) {

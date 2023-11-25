@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MReader, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans
-// @version       2023.11.24
+// @version       2023.11.25
 // @license       MIT
 // @grant         unsafeWindow
 // @grant         GM_getValue
@@ -3253,7 +3253,7 @@
   }
 
   const listOptions = (times, begin) =>
-    indexList(times, begin).map((index) => html`<option value="${index}">${index}</option>`);
+    indexList(times, begin).map((index) => html` <option value="${index}">${index}</option>`);
   const Header = (manga) => html`
     <header id="Header" class="${getUserSettings().header}">
       <div id="menu">${IconMenu2}</div>
@@ -3340,7 +3340,9 @@
       </aside>
       <div class="ViewerTitle">
         <h1 id="MangaTitle">${manga.title}</h1>
-        <a id="series" href="${manga.series}"> (${getLocaleString('RETURN_CHAPTER_LIST')}) </a>
+        <a id="series" href="${manga.series ?? ''}">
+          (${getLocaleString('RETURN_CHAPTER_LIST')})
+        </a>
       </div>
       <nav id="ChapterNavigation">
         <div id="Counters" class="ControlLabel">
@@ -4954,14 +4956,15 @@
   }
 
   function Unlock() {
-    if (!Object.isExtensible(Element)) {
-      Element = Element.constructor();
+    try {
+      const originalAttachShadow = Element.prototype.attachShadow;
+      Element.prototype.attachShadow = function customAttachShadow() {
+        return originalAttachShadow.apply(this, [{ mode: 'open' }]);
+      };
+    } catch (e) {
+      logScript('Fail to unlock Closed Shadow DOM', e);
+      setTimeout(() => window.location.reload(), 1e3);
     }
-    const originalAttachShadow = Element.prototype.attachShadow;
-    Element.prototype.attachShadow = function attachShadow() {
-      return originalAttachShadow.apply(this, [{ mode: 'open' }]);
-    };
-    Object.preventExtensions(Element);
   }
 
   function validateMin(valBegin, endPage, rs) {
