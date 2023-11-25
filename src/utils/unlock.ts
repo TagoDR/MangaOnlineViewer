@@ -7,7 +7,6 @@ export default function Unlock() {
       return originalAttachShadow.apply(this, [{ mode: 'open' }]);
     };
   } catch (e) {
-    logScript('Fail to unlock Closed Shadow DOM', e);
-    setTimeout(() => window.location.reload(), 1000);
+    logScript('Failed to unlock Closed Shadow DOM', e);
   }
 }

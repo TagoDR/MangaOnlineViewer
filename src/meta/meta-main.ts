@@ -16,6 +16,7 @@ export default {
     .join(', ')}`,
   version: new Date().toISOString().slice(0, 10).replaceAll('-', '.'),
   license: 'MIT',
+  'run-at': 'document-end',
   grant: [
     'unsafeWindow',
     'GM_getValue',

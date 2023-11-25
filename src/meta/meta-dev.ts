@@ -11,6 +11,7 @@ export default {
   description: 'Shows all pages at once in online view for sites',
   version: new Date().valueOf().toString(), // .slice(0, 10).replaceAll('-', '.'),
   license: 'MIT',
+  'run-at': 'document-end',
   grant: [
     'unsafeWindow',
     'GM_getValue',
