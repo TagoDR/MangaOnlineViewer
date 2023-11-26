@@ -3,7 +3,7 @@ export default {
   name: ['MangaKakalot', 'MangaNelo', 'MangaNato'],
   url: /https?:\/\/(www\.)?((manganelo|mangakakalot).com\/chapter\/.+\/.+|(manganato|readmanganato|chapmanganato).com\/manga-\w\w\d+\/chapter-\d+)/,
   homepage: [
-    'https://mangakakalot.com/page',
+    'https://mangakakalot.com/',
     'https://www.manganelo.com/',
     'https://www.manganato.com/',
   ],

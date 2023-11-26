@@ -76,6 +76,18 @@
     color: red;
 }
 
+#MangaOnlineViewer #Chapter.FluidLTR .MangaPage:nth-child(2n-1) .PageFunctions,
+#MangaOnlineViewer #Chapter.FluidRTL .MangaPage:nth-child(2n) .PageFunctions {
+    right: auto;
+    left: 0;
+    direction: rtl;
+}
+
+#MangaOnlineViewer #Chapter.FluidLTR .MangaPage:nth-child(2n) .PageFunctions,
+#MangaOnlineViewer #Chapter.FluidRTL .MangaPage:nth-child(2n-1) .PageFunctions {
+    direction: ltr;
+}
+
 #MangaOnlineViewer .closeButton {
     width: fit-content;
     height: fit-content;
