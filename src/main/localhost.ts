@@ -1,4 +1,5 @@
-// == Localhost =====================================================================================
+// == Localhost
+// =====================================================================================
 import { placeholder, randomPlaceholder } from '../utils/svgs';
 
 export default {
@@ -19,8 +20,8 @@ export default {
       prev: '?pages=50',
       next: '?pages=1',
       listImages: [
-        placeholder(985, 1400, '#152C55'),
         placeholder(1970, 1400, '#2D1657'),
+        placeholder(985, 1400, '#152C55'),
         placeholder(985, 1400, '#7A1420'),
         placeholder(985, 1400, '#0F5B30'),
         placeholder(1970, 1400, '#806D15'),

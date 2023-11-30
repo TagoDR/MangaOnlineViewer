@@ -10,6 +10,7 @@ import animation from './animation.css?inline';
 import header from './header.css?inline';
 import keybindings from './keybindings.css?inline';
 import page from './page.css?inline';
+import fluid from './fluid.css?inline';
 import settings from './settings.css?inline';
 import thumbnails from './thumbnails.css?inline';
 import bookmarks from './bookmarks.css?inline';
@@ -60,15 +61,17 @@ export default css`
   #MangaOnlineViewer .ThemeRadio.custom {
     /*background-image: url("${svgToUrl(IconPalette)}");*/
   }
+
   ${simplenormalize}
   ${styles}
-    ${header}
-    ${icons}
-    ${keybindings}
-    ${page}
-    ${settings}
-    ${thumbnails}
-    ${bookmarks}
-    ${media}
-    ${animation}
+  ${header}
+  ${icons}
+  ${keybindings}
+  ${page}
+  ${fluid}
+  ${settings}
+  ${thumbnails}
+  ${bookmarks}
+  ${media}
+  ${animation}
 `;
