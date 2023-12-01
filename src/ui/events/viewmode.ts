@@ -20,7 +20,7 @@ export function updateViewMode(mode: string) {
     chapter?.removeEventListener('wheel', transformScrollToHorizontal);
     chapter?.removeEventListener('wheel', transformScrollToHorizontalReverse);
     if (mode === 'FluidLTR' || mode === 'FluidRTL') {
-      header?.classList.add('none');
+      header?.classList.add('click');
       changeGlobalZoom('height')();
       scrollToElement(chapter!);
       chapter?.addEventListener(
