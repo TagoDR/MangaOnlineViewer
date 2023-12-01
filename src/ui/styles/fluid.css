@@ -1,10 +1,11 @@
 #MangaOnlineViewer #Chapter.FluidLTR,
 #MangaOnlineViewer #Chapter.FluidRTL {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    overflow-x: auto;
+    min-width: auto;
 
-    .ZoomWidth .icon-tabler {
-        color: red;
+    .ZoomWidth {
+        display: none;
     }
 
     .PageImg {
@@ -12,7 +13,10 @@
     }
 
     .MangaPage {
-        width: auto;
+        width: initial;
+        min-width: fit-content;
+        position: relative;
+        max-height: 100%;
     }
 
     .MangaPage.DoublePage {
@@ -21,61 +25,15 @@
 }
 
 #MangaOnlineViewer #Chapter.FluidLTR {
-    direction: ltr;
+    flex-direction: row;
 
-    .MangaPage:nth-child(2n-1) {
-        /*Left*/
-        display: flex;
-        justify-content: end;
-        position: relative;
-
-        .PageFunctions {
-            right: auto;
-            left: 0;
-            direction: rtl;
-            /*background-color: red;*/
-        }
-    }
-
-    .MangaPage:nth-child(2n) {
-        /*Right*/
-        display: flex;
-        justify-content: start;
-        position: relative;
-
-        .PageFunctions {
-            direction: ltr;
-            /*background-color: lawngreen;*/
-        }
+    .MangaPage .PageFunctions {
+        right: auto;
+        left: 0;
+        direction: rtl;
     }
 }
 
 #MangaOnlineViewer #Chapter.FluidRTL {
-    direction: rtl;
-
-    .MangaPage:nth-child(2n) {
-        /*Left*/
-        display: flex;
-        justify-content: start;
-        position: relative;
-
-        .PageFunctions {
-            right: auto;
-            left: 0;
-            direction: rtl;
-            /*background-color: red;*/
-        }
-    }
-
-    .MangaPage:nth-child(2n-1) {
-        /*Right*/
-        display: flex;
-        justify-content: end;
-        position: relative;
-
-        .PageFunctions {
-            direction: ltr;
-            /*background-color: lawngreen;*/
-        }
-    }
+    flex-direction: row-reverse;
 }

@@ -12,13 +12,16 @@ const ThumbnailsPanel = (manga: IManga) => html`
       ${getLocaleString('PAGES_LOADED')}
     </div>
     <div id="Thumbnails">
-      ${sequence(manga.pages, manga.begin).map(
-        (index) => `
-      <div id='Thumbnail${index}' class='Thumbnail'>
-        <img id='ThumbnailImg${index}' alt='' class='ThumbnailImg' src='' />
-        <span class='ThumbnailIndex'>${index}</span>
-      </div>`,
-      )}
+      ${sequence(manga.pages, manga.begin)
+        .map(
+          (index) => html`
+            <div id="Thumbnail${index}" class="Thumbnail">
+              <img id="ThumbnailImg${index}" alt="" class="ThumbnailImg" src="" />
+              <span class="ThumbnailIndex">${index}</span>
+            </div>
+          `,
+        )
+        .join('')}
     </div>
   </nav>
 `;

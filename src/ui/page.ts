@@ -33,7 +33,7 @@ function applyZoom(
       // Fit height
       const nav = document.querySelector('#Navigation')?.classList.contains('disabled');
       const chap = document.querySelector('#Chapter')?.classList.contains('WebComic');
-      const nextHeight = window.innerHeight + (nav ? 0 : -30) + (chap ? 0 : -35);
+      const nextHeight = window.innerHeight + (nav ? 0 : -22) + (chap ? 0 : -35);
       img.style.height = `${nextHeight}px`;
       img.style.minWidth = 'unset';
     } else if (zoom === 'percent') {

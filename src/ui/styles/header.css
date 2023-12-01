@@ -26,7 +26,8 @@
 
 #MangaOnlineViewer #Header.hover,
 #MangaOnlineViewer #Header.fixed,
-#MangaOnlineViewer #Header.click {
+#MangaOnlineViewer #Header.click,
+#MangaOnlineViewer #Header.none {
     position: static;
     transform: none;
 }
@@ -46,9 +47,11 @@
 #MangaOnlineViewer #Header.scroll #menu,
 #MangaOnlineViewer #Header.fixed #menu,
 #MangaOnlineViewer #Header.hover:hover #menu,
+#MangaOnlineViewer #Header.none #menu,
 #MangaOnlineViewer #Header:not(.click).visible #menu {
     display: none;
 }
+
 #MangaOnlineViewer #menu {
     position: fixed;
     min-height: 70px;
@@ -62,8 +65,6 @@
     cursor: pointer;
 }
 
-#MangaOnlineViewer #Header.click:not(.headroom-hide, .headroom-show) #menu,
-#MangaOnlineViewer #Header.click.headroom-end #menu,
 #MangaOnlineViewer #Header.click.visible #menu {
     position: static;
     min-width: 50px;
@@ -183,6 +184,7 @@
     height: 32px;
     width: 32px;
 }
+
 #MangaOnlineViewer #Header #ScrollControl {
     font-size: 20px;
 }

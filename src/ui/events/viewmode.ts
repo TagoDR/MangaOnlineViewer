@@ -1,15 +1,35 @@
-import { applyZoom } from '../page';
-import { updateSettings } from '../../core/settings';
+import { getUserSettings, updateSettings } from '../../core/settings';
 import type { ViewMode } from '../../types';
+import {
+  scrollToElement,
+  transformScrollToHorizontal,
+  transformScrollToHorizontalReverse,
+} from './common';
+import { changeGlobalZoom } from './zoom';
 
 export function updateViewMode(mode: string) {
   return () => {
-    document.querySelector('#Chapter')?.classList.remove('Vertical');
-    document.querySelector('#Chapter')?.classList.remove('WebComic');
-    document.querySelector('#Chapter')?.classList.remove('FluidLTR');
-    document.querySelector('#Chapter')?.classList.remove('FluidRTL');
-    document.querySelector('#Chapter')?.classList.add(mode);
-    applyZoom();
+    const ele = document.querySelector<HTMLElement>('#Chapter');
+    ele?.classList.remove('Vertical');
+    ele?.classList.remove('WebComic');
+    ele?.classList.remove('FluidLTR');
+    ele?.classList.remove('FluidRTL');
+    ele?.classList.add(mode);
+    document.querySelector('#Header')!.className = '';
+    ele?.removeEventListener('wheel', transformScrollToHorizontal);
+    ele?.removeEventListener('wheel', transformScrollToHorizontalReverse);
+    if (mode === 'FluidLTR' || mode === 'FluidRTL') {
+      document.querySelector('#Header')?.classList.add('none');
+      changeGlobalZoom('height')();
+      scrollToElement(ele!);
+      ele?.addEventListener(
+        'wheel',
+        mode === 'FluidLTR' ? transformScrollToHorizontal : transformScrollToHorizontalReverse,
+      );
+    } else {
+      document.querySelector('#Header')!.className = getUserSettings().header;
+      changeGlobalZoom(100)();
+    }
   };
 }
 

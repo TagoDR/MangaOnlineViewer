@@ -1,11 +1,12 @@
 import { applyZoom } from '../page';
-import { addEvent, scrollToElement } from './common';
+import { addEvent, scrollToElement, transformScrollToHorizontal } from './common';
 
 export function selectGoToPage(event: Event) {
   const target = (event.currentTarget as HTMLOptionElement).value;
   applyZoom();
   scrollToElement(document.querySelector<HTMLElement>(`#Page${target}`)!);
 }
+
 export function clickThumbnail(event: Event) {
   applyZoom();
   scrollToElement(
@@ -14,15 +15,7 @@ export function clickThumbnail(event: Event) {
     )!,
   );
 }
-export function transformScrollToHorizontal(this: HTMLElement, event: Event) {
-  if (!(event as WheelEvent).deltaY) {
-    return;
-  }
 
-  (event.currentTarget as Element).scrollLeft +=
-    (event as WheelEvent).deltaY + (event as WheelEvent).deltaX;
-  event.preventDefault();
-}
 function navigation() {
   // Goto Navigation Selector
   document.querySelector('#gotoPage')?.addEventListener('change', selectGoToPage);
