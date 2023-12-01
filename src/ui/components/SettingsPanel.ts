@@ -281,6 +281,9 @@ const headerType = html`
       <option value="fixed" ${getUserSettings().header === 'fixed' ? 'selected' : ''}>
         ${getLocaleString('HEADER_FIXED')}
       </option>
+      <option value="simple" ${getUserSettings().header === 'simple' ? 'selected' : ''}>
+        ${getLocaleString('HEADER_SIMPLE')}
+      </option>
     </select>
   </div>
 `;

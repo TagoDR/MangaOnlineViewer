@@ -34,6 +34,7 @@ export default {
   HEADER_SCROLL: 'Rolagem do Mouse',
   HEADER_CLICK: 'Click',
   HEADER_FIXED: 'Fixo',
+  HEADER_SIMPLE: 'Simples',
   BUTTON_DOWNLOAD: 'Download',
   DOWNLOAD_ZIP: 'Baixar arquivo Zip',
   DOWNLOAD_IMAGES: 'Download das Imagens como Zip Automaticamente',

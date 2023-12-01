@@ -35,6 +35,7 @@ export default {
   HEADER_SCROLL: '滚动',
   HEADER_CLICK: '点击',
   HEADER_FIXED: '固定',
+  HEADER_SIMPLE: '简单',
   BUTTON_DOWNLOAD: '下载',
   DOWNLOAD_ZIP: '下载压缩文件',
   DOWNLOAD_IMAGES: '自动将图片下载成ZIP',
