@@ -9,25 +9,26 @@ import { changeGlobalZoom } from './zoom';
 
 export function updateViewMode(mode: string) {
   return () => {
-    const ele = document.querySelector<HTMLElement>('#Chapter');
-    ele?.classList.remove('Vertical');
-    ele?.classList.remove('WebComic');
-    ele?.classList.remove('FluidLTR');
-    ele?.classList.remove('FluidRTL');
-    ele?.classList.add(mode);
-    document.querySelector('#Header')!.className = '';
-    ele?.removeEventListener('wheel', transformScrollToHorizontal);
-    ele?.removeEventListener('wheel', transformScrollToHorizontalReverse);
+    const chapter = document.querySelector<HTMLElement>('#Chapter');
+    const header = document.querySelector('#Header');
+    chapter?.classList.remove('Vertical');
+    chapter?.classList.remove('WebComic');
+    chapter?.classList.remove('FluidLTR');
+    chapter?.classList.remove('FluidRTL');
+    chapter?.classList.add(mode);
+    header!.className = '';
+    chapter?.removeEventListener('wheel', transformScrollToHorizontal);
+    chapter?.removeEventListener('wheel', transformScrollToHorizontalReverse);
     if (mode === 'FluidLTR' || mode === 'FluidRTL') {
-      document.querySelector('#Header')?.classList.add('none');
+      header?.classList.add('none');
       changeGlobalZoom('height')();
-      scrollToElement(ele!);
-      ele?.addEventListener(
+      scrollToElement(chapter!);
+      chapter?.addEventListener(
         'wheel',
         mode === 'FluidLTR' ? transformScrollToHorizontal : transformScrollToHorizontalReverse,
       );
     } else {
-      document.querySelector('#Header')!.className = getUserSettings().header;
+      header!.className = getUserSettings().header;
       changeGlobalZoom(100)();
     }
   };

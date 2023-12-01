@@ -5,11 +5,20 @@ import { getUserSettings } from '../../core/settings';
 let scrollInterval: ReturnType<typeof setInterval> | undefined;
 
 function scroll() {
-  window.scrollBy({
-    top: getUserSettings().scrollHeight,
-    left: 0,
-    behavior: 'smooth',
-  });
+  const chapter = document.querySelector<HTMLElement>('#Chapter');
+  if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
+    chapter?.scrollBy({
+      top: 0,
+      left: getUserSettings().scrollHeight * (chapter?.classList.contains('FluidRTL') ? -1 : 1),
+      behavior: 'smooth',
+    });
+  } else {
+    window.scrollBy({
+      top: getUserSettings().scrollHeight,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }
   if (document.querySelector('#Header')?.classList.contains('headroom-end')) {
     clearInterval(scrollInterval);
     scrollInterval = undefined;
@@ -32,11 +41,13 @@ export function toggleAutoScroll() {
     logScript('Start auto scroll');
   }
 }
+
 let resume = false;
 const debounceAutoScroll = _.debounce(() => {
   toggleAutoScroll();
   resume = false;
 }, 500);
+
 function manualScroll() {
   if (!resume && scrollInterval) {
     toggleAutoScroll();
