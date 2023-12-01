@@ -101,6 +101,7 @@ export default {
   CLOSE: 'Cerrar',
   LIST_EMPTY: 'Lista vacía',
   DISPLAY_COMMENTS: 'Mostrar comentarios',
+  COMMENTS: 'Sección de comentarios',
   SCROLL_START: 'Alternar desplazamiento automático',
   AUTO_SCROLL_HEIGHT: 'Velocidad de desplazamiento automático en píxeles',
 };

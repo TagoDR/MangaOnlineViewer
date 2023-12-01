@@ -11,8 +11,8 @@
 
 #MangaOnlineViewer {
     padding-bottom: 40px;
-    min-height: 760px;
-    min-width: 360px;
+    height: 100%;
+    width: 100%;
     text-decoration: none;
     color: var(--theme-body-text-color);
     background-color: var(--theme-body-background);
@@ -95,8 +95,6 @@
 #MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,
 #MangaOnlineViewer.bookmarked .ControlButton.Bookmark > .icon-tabler-bookmark,
 #MangaOnlineViewer:not(.bookmarked) .ControlButton.Bookmark > .icon-tabler-bookmark-off,
-#MangaOnlineViewer #CommentsPanel.hide,
-#MangaOnlineViewer #CommentsArea.hide,
 #MangaOnlineViewer #AutoScroll.running > .icon-tabler-player-play,
 #MangaOnlineViewer #AutoScroll:not(.running) > .icon-tabler-player-pause {
     display: none;
@@ -104,18 +102,4 @@
 
 #MangaOnlineViewer.hideControls .PageFunctions {
     visibility: hidden;
-}
-
-#MangaOnlineViewer #CommentsPanel {
-    padding: 10px;
-}
-
-#MangaOnlineViewer #CommentsArea {
-    background: var(--theme-body-background);
-}
-
-#MangaOnlineViewer #CommentsButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }

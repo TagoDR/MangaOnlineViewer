@@ -99,6 +99,7 @@ export default {
   CLOSE: 'Fechar',
   LIST_EMPTY: 'Lista Vazia',
   DISPLAY_COMMENTS: 'Mostar Comentarios',
+  COMMENTS: 'Seção de comentários',
   SCROLL_START: 'Ativar Rolagem Automatica',
   AUTO_SCROLL_HEIGHT: 'Velocidade da Rolagem Automatica em Pixels',
 };

@@ -99,6 +99,7 @@ export default {
   CLOSE: 'Close',
   LIST_EMPTY: 'List Empty',
   DISPLAY_COMMENTS: 'Display Comments',
+  COMMENTS: 'Comments Section',
   SCROLL_START: 'Toggle Auto Scroll',
   AUTO_SCROLL_HEIGHT: 'Auto Scroll Speed in Pixels',
 };

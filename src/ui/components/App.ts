@@ -44,9 +44,9 @@ const app = (manga: IManga) => {
         ${isBookmarked() ? 'bookmarked' : ''}"
       data-theme="${getUserSettings().theme}"
     >
-      ${Header(manga)} ${Reader(manga)} ${CommentsPanel(manga)} ${ThumbnailsPanel(manga)}
+      ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
       <div id="Overlay" class="overlay"></div>
-      ${SettingsPanel()} ${KeybindingsPanel()} ${BookmarksPanel()}
+      ${CommentsPanel(manga)} ${KeybindingsPanel()} ${BookmarksPanel()} ${SettingsPanel()}
     </div>
   `;
 };

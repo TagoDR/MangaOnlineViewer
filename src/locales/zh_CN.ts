@@ -99,6 +99,7 @@ export default {
   CLOSE: '关闭',
   LIST_EMPTY: '没有收藏书签',
   DISPLAY_COMMENTS: '显示注释',
+  COMMENTS: '评论部分',
   SCROLL_START: '切换自动滚动',
   AUTO_SCROLL_HEIGHT: '自动滚动速度（以像素为单位）',
 };

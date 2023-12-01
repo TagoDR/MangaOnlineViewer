@@ -14,6 +14,7 @@ import fluid from './fluid.css?inline';
 import settings from './settings.css?inline';
 import thumbnails from './thumbnails.css?inline';
 import bookmarks from './bookmarks.css?inline';
+import comments from './comments.css?inline';
 
 // Language=CSS
 export default css`
@@ -72,6 +73,7 @@ export default css`
   ${settings}
   ${thumbnails}
   ${bookmarks}
+  ${comments}
   ${media}
   ${animation}
 `;

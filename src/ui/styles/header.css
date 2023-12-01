@@ -157,8 +157,8 @@
     opacity: 0.6;
 }
 
-#MangaOnlineViewer .ChapterControl #download.disabled {
-    visibility: hidden;
+#MangaOnlineViewer .ChapterControl .NavigationControlButton.disabled {
+    display: none;
 }
 
 #MangaOnlineViewer .ViewerTitle {

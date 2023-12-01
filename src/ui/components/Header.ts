@@ -14,6 +14,7 @@ import {
   IconListNumbers,
   IconLoader2,
   IconMenu2,
+  IconMessage,
   IconPlayerPause,
   IconPlayerPlay,
   IconSettings,
@@ -126,6 +127,13 @@ const Header = (manga: IManga) => html`
         </select>
       </div>
       <div id="ChapterControl" class="ChapterControl">
+        <button
+          id="CommentsButton"
+          class="NavigationControlButton ControlButton ${manga.comments ? '' : 'disabled'}"
+          title="${getLocaleString('DISPLAY_COMMENTS')}"
+        >
+          ${IconMessage} ${getLocaleString('DISPLAY_COMMENTS')}
+        </button>
         <button
           id="download"
           class="NavigationControlButton ControlButton disabled"

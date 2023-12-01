@@ -1,21 +1,21 @@
 import { html } from '../../utils/code-tag';
 import type { IManga } from '../../types';
-import { getLocaleString } from '../../core/settings';
-import { IconMessage } from '../icons';
 import { isBackgroundColorDark } from '../../utils/colors';
+import { getLocaleString } from '../../core/settings';
+import { IconX } from '../icons';
 
 const commentsPanel = (manga: IManga) => html`
-  <section id="CommentsPanel" class="${manga.comments ? '' : 'hide'}">
-    <div id="CommentsButton" class="ControlButton" title="${getLocaleString('DISPLAY_COMMENTS')}">
-      ${IconMessage} ${getLocaleString('DISPLAY_COMMENTS')}
-    </div>
+  <div id="CommentsPanel" class="panel">
+    <button id="CloseComments" class="closeButton" title="${getLocaleString('CLOSE')}">
+      ${IconX}
+    </button>
+    <h2>${getLocaleString('COMMENTS')}</h2>
     <div
       id="CommentsArea"
-      class="hide 
-      ${isBackgroundColorDark(manga.comments ?? document.body) ? 'dark' : 'light'}"
+      class="${isBackgroundColorDark(manga.comments ?? document.body) ? 'dark' : 'light'}"
     >
       ${manga.comments?.outerHTML}
     </div>
-  </section>
+  </div>
 `;
 export default commentsPanel;

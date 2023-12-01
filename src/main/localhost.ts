@@ -11,7 +11,7 @@ export default {
   run() {
     const num: number = parseInt(/\d+/.exec(window.location.search)?.toString() ?? '5', 10);
     const comments = document.createElement('div');
-    comments.textContent = 'Testing Comment';
+    comments.innerHTML = Array(100).fill('Testing Comment<br/>').join('');
     return {
       title: 'Placeholder Manga Loaded',
       series: '',

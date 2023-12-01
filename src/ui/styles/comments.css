@@ -1,0 +1,26 @@
+#MangaOnlineViewer #CommentsPanel {
+    position: fixed;
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    left: 10%;
+    right: 10%;
+    bottom: 10%;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+    transform: scaleY(0);
+    z-index: 1000;
+    overflow-y: initial;
+    background: var(--theme-body-background);
+}
+
+#MangaOnlineViewer #CommentsPanel.visible {
+    transform: scaleY(1);
+    display: block;
+}
+
+#MangaOnlineViewer #CommentsArea {
+    height: inherit;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}

@@ -25,9 +25,15 @@ function buttonRedirectURL(event: Event) {
     window.history.back();
   }
 }
+
 export function buttonCommentsOpen() {
-  document.getElementById('CommentsArea')?.classList.toggle('hide');
-  document.querySelector('#CommentsButton')?.remove();
+  document.querySelector('#CommentsPanel')?.classList.add('visible');
+  document.querySelector('#Overlay')?.classList.add('visible');
+}
+
+export function buttonCommentsClose() {
+  document.querySelector('#CommentsPanel')?.classList.remove('visible');
+  document.querySelector('#Overlay')?.classList.remove('visible');
 }
 
 function globals() {
@@ -37,6 +43,8 @@ function globals() {
   document.querySelector('#prev')?.addEventListener('click', buttonRedirectURL);
   document.querySelector('#series')?.addEventListener('click', buttonRedirectURL);
   document.querySelector('#CommentsButton')?.addEventListener('click', buttonCommentsOpen);
+  document.querySelector('#CloseComments')?.addEventListener('click', buttonCommentsClose);
+  document.querySelector('#Overlay')?.addEventListener('click', buttonCommentsClose);
 }
 
 export default globals;
