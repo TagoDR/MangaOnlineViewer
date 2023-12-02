@@ -5,6 +5,10 @@
         flex-wrap: wrap;
     }
 
+    #MangaOnlineViewer #Header.click {
+        padding-left: initial;
+    }
+
     #MangaOnlineViewer .PageContent .PageImg {
         max-width: 100%;
     }
@@ -27,7 +31,7 @@
     }
 
     #MangaOnlineViewer #ChapterNavigation {
-        order: 2;
+        order: 3;
     }
 
     #MangaOnlineViewer #GlobalFunctions #ZoomSlider,
@@ -60,12 +64,23 @@
     #MangaOnlineViewer #GlobalFunctions {
         order: 2;
         padding: 0;
-        min-width: auto;
+        width: auto;
+        flex-basis: 35px;
     }
 
     #MangaOnlineViewer #ChapterNavigation {
         order: 3;
-        width: auto;
+        width: min-content;
+        flex-basis: 90%;
+    }
+
+    #MangaOnlineViewer .ChapterControl {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    #MangaOnlineViewer .ChapterControl .NavigationControlButton {
+        flex-grow: 1;
     }
 
     #MangaOnlineViewer .PageFunctions {

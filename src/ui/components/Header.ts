@@ -127,39 +127,43 @@ const Header = (manga: IManga) => html`
         </select>
       </div>
       <div id="ChapterControl" class="ChapterControl">
-        <button
-          id="CommentsButton"
-          class="NavigationControlButton ControlButton ${manga.comments ? '' : 'disabled'}"
-          title="${getLocaleString('DISPLAY_COMMENTS')}"
+        <span>
+          <button
+            id="CommentsButton"
+            class="NavigationControlButton ControlButton ${manga.comments ? '' : 'disabled'}"
+            title="${getLocaleString('DISPLAY_COMMENTS')}"
+          >
+            ${IconMessage} ${getLocaleString('DISPLAY_COMMENTS')}
+          </button>
+          <button
+            id="download"
+            class="NavigationControlButton ControlButton disabled"
+            type="button"
+            title="${getLocaleString('DOWNLOAD_ZIP')}"
+          >
+            ${IconFileDownload} ${IconLoader2} ${getLocaleString('BUTTON_DOWNLOAD')}
+          </button></span
         >
-          ${IconMessage} ${getLocaleString('DISPLAY_COMMENTS')}
-        </button>
-        <button
-          id="download"
-          class="NavigationControlButton ControlButton disabled"
-          type="button"
-          title="${getLocaleString('DOWNLOAD_ZIP')}"
-        >
-          ${IconFileDownload} ${IconLoader2} ${getLocaleString('BUTTON_DOWNLOAD')}
-        </button>
-        <a
-          id="prev"
-          class="NavigationControlButton ControlButton"
-          type="button"
-          href="${manga.prev ?? ''}"
-          title="${getLocaleString('PREVIOUS_CHAPTER')}"
-        >
-          ${IconArrowBigLeft} ${getLocaleString('BUTTON_PREVIOUS')}
-        </a>
-        <a
-          id="next"
-          class="NavigationControlButton ControlButton"
-          type="button"
-          href="${manga.next ?? ''}"
-          title="${getLocaleString('NEXT_CHAPTER')}"
-        >
-          ${getLocaleString('BUTTON_NEXT')} ${IconArrowBigRight}
-        </a>
+        <span>
+          <a
+            id="prev"
+            class="NavigationControlButton ControlButton"
+            type="button"
+            href="${manga.prev ?? ''}"
+            title="${getLocaleString('PREVIOUS_CHAPTER')}"
+          >
+            ${IconArrowBigLeft} ${getLocaleString('BUTTON_PREVIOUS')}
+          </a>
+          <a
+            id="next"
+            class="NavigationControlButton ControlButton"
+            type="button"
+            href="${manga.next ?? ''}"
+            title="${getLocaleString('NEXT_CHAPTER')}"
+          >
+            ${getLocaleString('BUTTON_NEXT')} ${IconArrowBigRight}
+          </a>
+        </span>
       </div>
     </nav>
   </header>
