@@ -11,16 +11,14 @@ export function updateViewMode(mode: string) {
   return () => {
     const chapter = document.querySelector<HTMLElement>('#Chapter');
     const header = document.querySelector('#Header');
-    chapter?.classList.remove('Vertical');
-    chapter?.classList.remove('WebComic');
-    chapter?.classList.remove('FluidLTR');
-    chapter?.classList.remove('FluidRTL');
+    ['Vertical', 'WebComic', 'FluidLTR', 'FluidRTL'].forEach((c) => chapter?.classList.remove(c));
     chapter?.classList.add(mode);
     header!.className = '';
     chapter?.removeEventListener('wheel', transformScrollToHorizontal);
     chapter?.removeEventListener('wheel', transformScrollToHorizontalReverse);
     if (mode === 'FluidLTR' || mode === 'FluidRTL') {
-      header?.classList.add('click');
+      document.querySelector('#Header')!.className = 'click';
+      document.querySelector('#menu')!.className = 'click';
       changeGlobalZoom('height')();
       scrollToElement(chapter!);
       chapter?.addEventListener(
@@ -28,7 +26,8 @@ export function updateViewMode(mode: string) {
         mode === 'FluidLTR' ? transformScrollToHorizontal : transformScrollToHorizontalReverse,
       );
     } else {
-      header!.className = getUserSettings().header;
+      document.querySelector('#Header')!.className = getUserSettings().header;
+      document.querySelector('#menu')!.className = getUserSettings().header;
       changeGlobalZoom(100)();
     }
   };

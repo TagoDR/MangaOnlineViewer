@@ -29,8 +29,8 @@ import type { IManga } from '../../types';
 const listOptions = (times: number, begin: number) =>
   sequence(times, begin).map((index) => html` <option value="${index}">${index}</option>`);
 const Header = (manga: IManga) => html`
+  <div id="menu" class="${getUserSettings().header}">${IconMenu2}</div>
   <header id="Header" class="${getUserSettings().header}">
-    <div id="menu">${IconMenu2}</div>
     <aside id="GlobalFunctions">
       <span>
         <button id="enlarge" title="${getLocaleString('ENLARGE')}" class="ControlButton">
