@@ -48,7 +48,7 @@ First install then reload page, there will be an options in this section to sele
 - [MangaToons](https://mangatoon.mobi/) _[English]_
 - [MangaTown](https://www.mangatown.com/) _[English]_
 - [ManhuaScan](https://manhuascan.io/) _[English]_
-- [MReader](https://www.mreader.co/) / [MangaGeko](https://www.mangageko.com/) _[English]_
+- [MangaGeko](https://www.mgeko.com/) _[English]_
 - [NaniScans](https://naniscans.com/) _[English]_
 - [NineManga](https://ninemanga.com/) _[English]_
 - [PandaManga](https://www.pandamanga.com/) _[English]_
