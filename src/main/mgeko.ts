@@ -1,8 +1,8 @@
-// == MReader ======================================================================================
+// == MangaGeko ====================================================================================
 export default {
-  name: ['MReader', 'MangaGeko'],
-  url: /https?:\/\/(www\.)?(mreader|mangageko).com?\/reader\/.*/,
-  homepage: ['https://www.mreader.co/', 'https://www.mangageko.com/'],
+  name: ['MangaGeko'],
+  url: /https?:\/\/(www\.)?mgeko.com?\/reader\/.*/,
+  homepage: ['https://www.mgeko.com/'],
   language: ['English'],
   category: 'manga',
   run() {
