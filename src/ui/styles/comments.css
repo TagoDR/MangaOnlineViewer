@@ -12,6 +12,7 @@
     z-index: 1000;
     overflow-y: initial;
     background: var(--theme-body-background);
+    display: none;
 }
 
 #MangaOnlineViewer #CommentsPanel.visible {
