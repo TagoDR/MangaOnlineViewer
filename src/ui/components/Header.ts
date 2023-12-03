@@ -13,7 +13,6 @@ import {
   IconKeyboard,
   IconListNumbers,
   IconLoader2,
-  IconMenu2,
   IconMessage,
   IconPlayerPause,
   IconPlayerPlay,
@@ -29,7 +28,6 @@ import type { IManga } from '../../types';
 const listOptions = (times: number, begin: number) =>
   sequence(times, begin).map((index) => html` <option value="${index}">${index}</option>`);
 const Header = (manga: IManga) => html`
-  <div id="menu" class="${getUserSettings().header}">${IconMenu2}</div>
   <header id="Header" class="${getUserSettings().header}">
     <aside id="GlobalFunctions">
       <span>

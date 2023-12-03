@@ -29,17 +29,17 @@
         "@types/file-saver": "^2.0.7",
         "@types/imagesloaded": "^4.1.6",
         "@types/lodash": "^4.14.202",
-        "@types/node": "^20.10.2",
+        "@types/node": "^20.10.3",
         "@types/nprogress": "^0.2.3",
         "@types/tampermonkey": "^5.0.2",
         "@types/tinycolor2": "^1.4.6",
         "@typescript-eslint/eslint-plugin": "^6.13.1",
         "@typescript-eslint/parser": "^6.13.1",
         "del": "^7.1.0",
-        "eslint": "^8.54.0",
+        "eslint": "^8.55.0",
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-config-airbnb-typescript": "^17.1.0",
-        "eslint-config-prettier": "^9.0.0",
+        "eslint-config-prettier": "^9.1.0",
         "eslint-import-resolver-typescript": "^3.6.1",
         "eslint-plugin-import": "^2.29.0",
         "eslint-plugin-prettier": "^5.0.1",
@@ -65,18 +65,10 @@
         "sweetalert2": "=11.4.8",
         "tinycolor2": "^1.6.0"
     },
-    "browserslist": {
-        "production": [
-            ">20.0%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
+    "browserslist": [
+        "defaults and fully supports es6-module",
+        "maintained node versions"
+    ],
     "prettier": {
         "semi": true,
         "singleQuote": true,

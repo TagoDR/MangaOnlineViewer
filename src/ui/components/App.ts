@@ -10,6 +10,7 @@ import Reader from './Reader';
 import CommentsPanel from './CommentsPanel';
 import events from '../events';
 import { toggleAutoScroll } from '../events/autoscroll';
+import { IconMenu2 } from '../icons';
 
 let loadedManga: IManga;
 
@@ -44,6 +45,7 @@ const app = (manga: IManga) => {
         ${isBookmarked() ? 'bookmarked' : ''}"
       data-theme="${getUserSettings().theme}"
     >
+      <div id="menu" class="${getUserSettings().header}">${IconMenu2}</div>
       ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
       <div id="Overlay" class="overlay"></div>
       ${CommentsPanel(manga)} ${KeybindingsPanel()} ${BookmarksPanel()} ${SettingsPanel()}
