@@ -98,8 +98,11 @@
 #MangaOnlineViewer .ChapterControl span {
     display: flex;
     flex-wrap: nowrap;
-    flex-grow: 1;
     justify-content: space-evenly;
+}
+
+#MangaOnlineViewer .ChapterControl span {
+    flex-grow: 1;
 }
 
 #MangaOnlineViewer .ChapterControl span > * {
@@ -118,7 +121,8 @@
 }
 
 #MangaOnlineViewer #GlobalFunctions #Zoom {
-    margin: 2px 3px;
+    margin: 2px 5px;
+    width: 160px;
 }
 
 #MangaOnlineViewer #GlobalFunctions #ZoomVal {
@@ -138,7 +142,7 @@
     justify-content: center;
     align-items: end;
     padding: 5px;
-    width: 300px;
+    max-width: 350px;
 }
 
 #MangaOnlineViewer #Counters {
