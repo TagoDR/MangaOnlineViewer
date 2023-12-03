@@ -2850,7 +2850,6 @@
   const listOptions = (times, begin) =>
     indexList(times, begin).map((index) => html` <option value="${index}">${index}</option>`);
   const Header = (manga) => html`
-    <div id="menu" class="${getUserSettings().header}">${IconMenu2}</div>
     <header id="Header" class="${getUserSettings().header}">
       <aside id="GlobalFunctions">
         <span>
@@ -4320,6 +4319,7 @@
         ${isBookmarked() ? 'bookmarked' : ''}"
         data-theme="${getUserSettings().theme}"
       >
+        <div id="menu" class="${getUserSettings().header}">${IconMenu2}</div>
         ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
         <div id="Overlay" class="overlay"></div>
         ${commentsPanel(manga)} ${KeybindingsPanel()} ${BookmarkPanel()} ${SettingsPanel()}
