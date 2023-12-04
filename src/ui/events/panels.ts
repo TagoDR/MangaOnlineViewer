@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { keybindEditor, keybindList } from '../components/KeybindingsPanel';
 import { getUserSettings, updateSettings } from '../../core/settings';
 import { isNothing } from '../../utils/checks';
@@ -11,19 +12,26 @@ function buttonHeaderClick() {
   }
 }
 
-function buttonHeaderMouseOver() {
-  const header = document.querySelector('#Header');
-  if (header?.classList.contains('hover')) {
-    document.querySelector('#menu')?.classList.add('hide');
-    header?.classList.add('visible');
-  }
+export function isMouseInsideRegion(event: MouseEvent, headerWidth: number, headerHeight: number) {
+  // Check if the mouse is inside the region
+  return (
+    event.clientX >= 0 &&
+    event.clientX <= headerWidth &&
+    event.clientY >= 0 &&
+    event.clientY <= headerHeight
+  );
 }
 
-function buttonHeaderMouseOut() {
+export function headerHover(event: MouseEvent) {
   const header = document.querySelector('#Header');
   if (header?.classList.contains('hover')) {
-    document.querySelector('#menu')?.classList.remove('hide');
-    header?.classList.remove('visible');
+    if (isMouseInsideRegion(event, header.clientWidth, header.clientHeight)) {
+      document.querySelector('#menu')?.classList.add('hide');
+      header?.classList.add('visible');
+    } else {
+      document.querySelector('#menu')?.classList.remove('hide');
+      header?.classList.remove('visible');
+    }
   }
 }
 
@@ -81,10 +89,7 @@ export function editKeybindings() {
 function panels() {
   // Show Header list
   document.querySelector('#menu')?.addEventListener('click', buttonHeaderClick);
-  document.querySelector('#menu')?.addEventListener('mouseover', buttonHeaderMouseOver);
-  document.querySelector('#Header')?.addEventListener('mouseout', buttonHeaderMouseOut);
-  document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonHeaderMouseOut));
-  document.querySelector('#Overlay')?.addEventListener('click', buttonHeaderMouseOut);
+  document.addEventListener('mousemove', _.throttle(headerHover, 300));
   // Settings Control
   document.querySelector('#settings')?.addEventListener('click', buttonSettingsOpen);
   document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonSettingsClose));
