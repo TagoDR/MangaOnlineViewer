@@ -31,7 +31,7 @@ First install then reload page, there will be an options in this section to sele
 - [Batoto](https://bato.to/) _[English]_
 - [BilibiliComics](https://www.bilibilicomics.com/) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
-- [MangaStream WordPress Plugin](https://themesia.com/mangastream-wordpress-theme/) / [Asura Scans](https://asura.nacm.xyz/) / [Flame Comics](https://flamecomics.com/) / [Rizzcomic](https://rizzcomic.com/) / [Voids-Scans](https://void-scans.com/) / [Luminous Scans](https://luminousscans.com/) / [Shimada Scans](https://shimadascans.com/) / [Night Scans](https://nightscans.net/) / [Manhwa-Freak](https://manhwa-freak.com/) / [OzulScansEn](https://ozulscansen.com/) / [AzureManga](https://azuremanga.com/) _[English]_
+- [MangaStream WordPress Plugin](https://themesia.com/mangastream-wordpress-theme/) / [Asura Scans](https://asuratoon.com/) / [Reaper-Scans](https://reaper-scans.com/) / [Flame Comics](https://flamecomics.com/) / [Rizzcomic](https://rizzcomic.com/) / [Voids-Scans](https://void-scans.com/) / [Luminous Scans](https://luminousscans.com/) / [Shimada Scans](https://shimadascans.com/) / [Night Scans](https://nightscans.net/) / [Manhwa-Freak](https://manhwa-freak.com/) / [OzulScansEn](https://ozulscansen.com/) / [AzureManga](https://azuremanga.com/) _[English]_
 - [INKR](https://inkr.com/) _[English]_
 - [LHTranslation](https://lhtranslation.net/) _[English]_
 - [LynxScans](https://lynxscans.com/) _[English]_
@@ -53,7 +53,6 @@ First install then reload page, there will be an options in this section to sele
 - [NineManga](https://ninemanga.com/) _[English]_
 - [PandaManga](https://www.pandamanga.com/) _[English]_
 - [ReadManga Today](https://www.readmng.com/) / [Funmanga](https://funmanga.com/) / [MangaDoom](https://mngdoom.com/) / [MangaInn](https://www.mangainn.net/) _[English]_
-- [ReaperScans](https://reaperscans.com/) _[English]_
 - [KLManga](https://tapas.io/) _[English]_
 - [TenManga](https://www.tenmanga.com/) _[English]_
 - [WebNovel](https://www.webnovel.com/) _[English]_
