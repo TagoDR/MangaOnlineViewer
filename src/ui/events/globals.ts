@@ -1,5 +1,6 @@
 import { logScript } from '../../utils/tampermonkey';
 import generateZip from '../../core/download';
+import { addEvent } from './common';
 
 export function buttonStartDownload(event: Event) {
   const button = event.currentTarget as HTMLInputElement;
@@ -43,7 +44,7 @@ function globals() {
   document.querySelector('#prev')?.addEventListener('click', buttonRedirectURL);
   document.querySelector('#series')?.addEventListener('click', buttonRedirectURL);
   document.querySelector('#CommentsButton')?.addEventListener('click', buttonCommentsOpen);
-  document.querySelector('#CloseComments')?.addEventListener('click', buttonCommentsClose);
+  document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonCommentsClose));
   document.querySelector('#Overlay')?.addEventListener('click', buttonCommentsClose);
 }
 

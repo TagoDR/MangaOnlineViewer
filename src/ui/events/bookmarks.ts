@@ -80,7 +80,7 @@ export function buttonBookmark(event: Event) {
 function bookmarks() {
   // List of Bookmarks
   document.querySelector('#bookmarks')?.addEventListener('click', buttonBookmarksOpen);
-  document.querySelector('#CloseBookmarks')?.addEventListener('click', buttonBookmarksClose);
+  document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonBookmarksClose));
   document.querySelector('#Overlay')?.addEventListener('click', buttonBookmarksClose);
   // Erase Bookmark
   document

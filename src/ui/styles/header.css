@@ -16,41 +16,30 @@
     z-index: 900;
 }
 
+#MangaOnlineViewer #Header.click {
+    position: fixed;
+    top: -100%;
+    padding-left: 40px;
+}
+
+#MangaOnlineViewer #Header.hover,
+#MangaOnlineViewer #Header.simple {
+    position: static;
+}
+
+/*#MangaOnlineViewer #Header.hover.headroom-hide,*/
 #MangaOnlineViewer #Header.scroll.headroom-hide {
     transform: translateY(-100%);
 }
 
-#MangaOnlineViewer #Header.scroll.headroom-show {
-    transform: translateY(0%);
-}
-
-#MangaOnlineViewer #Header.hover,
-#MangaOnlineViewer #Header.fixed,
-#MangaOnlineViewer #Header.click,
-#MangaOnlineViewer #Header.simple {
-    position: static;
-    transform: none;
-}
-
 #MangaOnlineViewer #Header.headroom-end,
-#MangaOnlineViewer #Header:not(.click).visible,
+#MangaOnlineViewer #Header.scroll.headroom-show,
+#MangaOnlineViewer #Header.hover.visible,
+#MangaOnlineViewer #Header.click.visible,
 #MangaOnlineViewer #Header.fixed {
     transform: translateY(0%);
     position: sticky;
-}
-
-#MangaOnlineViewer #Header.hover:hover,
-#MangaOnlineViewer #Header.fixed {
-    position: sticky;
-}
-
-#MangaOnlineViewer #menu:not(.click, .hover),
-#MangaOnlineViewer #menu.hide {
-    display: none;
-}
-
-#MangaOnlineViewer #menu.hover {
-    width: 100%;
+    top: 0;
 }
 
 #MangaOnlineViewer #menu {
@@ -62,20 +51,17 @@
     color: var(--theme-body-text-color);
 }
 
+#MangaOnlineViewer #menu:not(.click, .hover),
+#MangaOnlineViewer #menu.hide {
+    display: none;
+}
+
+#MangaOnlineViewer #menu.hover {
+    width: 100%;
+}
+
 #MangaOnlineViewer #menu.click {
     z-index: 901;
-}
-
-#MangaOnlineViewer #Header.click.headroom-end,
-#MangaOnlineViewer #Header.click.visible {
-    top: 0 !important;
-}
-
-#MangaOnlineViewer #Header.click {
-    position: fixed;
-    left: 0;
-    top: -100%;
-    padding-left: 40px;
 }
 
 #MangaOnlineViewer #MangaTitle {
