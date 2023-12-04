@@ -53,6 +53,7 @@ First install then reload page, there will be an options in this section to sele
 - [NineManga](https://ninemanga.com/) _[English]_
 - [PandaManga](https://www.pandamanga.com/) _[English]_
 - [ReadManga Today](https://www.readmng.com/) / [Funmanga](https://funmanga.com/) / [MangaDoom](https://mngdoom.com/) / [MangaInn](https://www.mangainn.net/) _[English]_
+- [ReaperScans](https://reapercomics.com/) _[English]_
 - [KLManga](https://tapas.io/) _[English]_
 - [TenManga](https://www.tenmanga.com/) _[English]_
 - [WebNovel](https://www.webnovel.com/) _[English]_
