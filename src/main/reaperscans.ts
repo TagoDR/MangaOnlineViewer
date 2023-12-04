@@ -1,8 +1,8 @@
 // == ReaperScans ==================================================================================
 export default {
   name: 'ReaperScans',
-  url: /https?:\/\/(www\.)?reaperscans.com\/comics\/.+\/chapters\/.+/,
-  homepage: 'https://reaperscans.com/',
+  url: /https?:\/\/(www\.)?reaper.*\.com\/comics\/.+\/chapters\/.+/,
+  homepage: 'https://reaper-scans.com/',
   language: ['English'],
   category: 'manga',
   waitEle: 'main img',

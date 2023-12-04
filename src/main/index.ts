@@ -37,7 +37,6 @@ import pandamanga from './pandamanga';
 import rawdevart from './rawdevart';
 import readcomicsonline from './readcomicsonline';
 import readmangatoday from './readmangatoday';
-import reaperscans from './reaperscans';
 import senmanga from './senmanga';
 import tapas from './tapas';
 import tenmanga from './tenmanga';
@@ -53,7 +52,7 @@ import { type ISite } from '../types/ISite';
 
 const sites = [
   alandal,
-  // Asurascans,
+  // Asurascans, deprecated
   batoto,
   bilibilicomics,
   comicastle,
@@ -63,7 +62,7 @@ const sites = [
   inmanga,
   klmanga,
   leitor,
-  // Leviatanscans,
+  // Leviatanscans, deprecated
   lhtranslation,
   localhost,
   lynxscans,
@@ -91,7 +90,7 @@ const sites = [
   rawdevart,
   readcomicsonline,
   readmangatoday,
-  reaperscans,
+  // reaperscans, deprecated
   // Resetscans, deprecated
   senmanga,
   tapas,
