@@ -71,6 +71,7 @@
     border-color: var(--theme-border-color);
 }
 
+#MangaOnlineViewer .ControlButton:active,
 #MangaOnlineViewer .ControlButton:hover {
     opacity: 0.8;
 }

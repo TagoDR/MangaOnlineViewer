@@ -44,20 +44,24 @@
 
 #MangaOnlineViewer #menu {
     position: fixed;
-    min-height: 70px;
-    width: auto;
-    top: 0;
     z-index: 1;
     color: var(--theme-body-text-color);
+    height: 40px;
+    width: 40px;
+}
+
+#MangaOnlineViewer #menu .icon-tabler {
+    position: relative;
+    top: 4px;
+    left: 4px;
+    height: 32px;
+    width: 32px;
+    stroke-width: 1.25;
 }
 
 #MangaOnlineViewer #menu:not(.click, .hover),
 #MangaOnlineViewer #menu.hide {
     display: none;
-}
-
-#MangaOnlineViewer #menu.hover {
-    width: 100%;
 }
 
 #MangaOnlineViewer #menu.click {
@@ -74,7 +78,7 @@
 #MangaOnlineViewer #GlobalFunctions {
     display: flex;
     gap: 3px;
-    padding: 3px;
+    padding: 3px 3px 3px 0;
     flex-wrap: wrap;
     width: 300px;
     z-index: 100;
@@ -186,12 +190,4 @@
 #MangaOnlineViewer #Header .ViewerTitle #series[href=''],
 #MangaOnlineViewer #Header .ViewerTitle #series[href='undefined'] {
     /*visibility: hidden;*/
-}
-
-#MangaOnlineViewer #menu .icon-tabler {
-    position: absolute;
-    top: 5px;
-    left: 10px;
-    height: 32px;
-    width: 32px;
 }

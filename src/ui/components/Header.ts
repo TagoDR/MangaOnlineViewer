@@ -49,7 +49,11 @@ const Header = (manga: IManga) => html`
         <button id="keybindings" title="${getLocaleString('KEYBINDINGS')}" class="ControlButton">
           ${IconKeyboard}
         </button>
-        <button id="AutoScroll" title="${getLocaleString('SCROLL_START')}" class="ControlButton">
+        <button
+          id="AutoScroll"
+          title="${getLocaleString('SCROLL_START')}"
+          class="ControlButton phones"
+        >
           ${IconPlayerPlay} ${IconPlayerPause}
         </button>
       </span>

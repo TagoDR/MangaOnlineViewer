@@ -24,7 +24,7 @@
     }
 
     #MangaOnlineViewer #GlobalFunctions {
-        flex-wrap: nowrap;
+        /*flex-wrap: nowrap;*/
         width: auto;
         order: 2;
         padding: 5px;
@@ -59,7 +59,6 @@
 
     #MangaOnlineViewer .ViewerTitle {
         order: 1;
-        flex-basis: 100%;
         margin-top: 0;
         height: auto;
         padding: 0;
@@ -75,7 +74,7 @@
     #MangaOnlineViewer #ChapterNavigation {
         order: 3;
         width: min-content;
-        flex-basis: 205px;
+        min-width: 205px;
     }
 
     #MangaOnlineViewer .ChapterControl {
@@ -118,6 +117,7 @@
     #MangaOnlineViewer #SettingsPanel .minZoom,
     #MangaOnlineViewer #SettingsPanel .zoomStep,
     #MangaOnlineViewer #SettingsPanel .headerType,
+    #MangaOnlineViewer #SettingsPanel .autoScroll,
     #MangaOnlineViewer #KeybindingsPanel,
     #MangaOnlineViewer .ChapterControl .download,
     #MangaOnlineViewer #Counters {
