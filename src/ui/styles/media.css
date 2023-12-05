@@ -49,6 +49,10 @@
         align-items: center;
     }
 
+    #MangaOnlineViewer #Header.click {
+        position: sticky;
+    }
+
     #MangaOnlineViewer #MangaTitle {
         word-wrap: anywhere;
     }
@@ -71,7 +75,7 @@
     #MangaOnlineViewer #ChapterNavigation {
         order: 3;
         width: min-content;
-        flex-basis: 90%;
+        flex-basis: 205px;
     }
 
     #MangaOnlineViewer .ChapterControl {
