@@ -31,14 +31,15 @@ function applyZoom(
       img.style.width = `${window.innerWidth}px`;
     } else if (zoom === 'height') {
       // Fit height
-      const nav = document.querySelector('#Navigation')?.classList.contains('disabled');
-      const chap = document.querySelector('#Chapter')?.classList.contains('WebComic');
-      const nextHeight = window.innerHeight + (nav ? 0 : -22) + (chap ? 0 : -35);
-      img.style.height = `${nextHeight}px`;
+      const chapter = document.querySelector('#Chapter');
+      const fluid =
+        chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL');
+      const nextHeight = window.innerHeight + (getUserSettings().showThumbnails || fluid ? -30 : 0);
+      img.style.maxHeight = `${nextHeight}px`;
       img.style.minWidth = 'unset';
     } else if (zoom === 'percent') {
       img.style.width = `${img.naturalWidth * (getUserSettings().defaultZoom / 100)}px`;
-    } else {
+    } else if (zoom >= 0 && zoom !== 100) {
       img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
     }
   });

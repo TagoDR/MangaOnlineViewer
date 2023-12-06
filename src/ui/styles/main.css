@@ -10,7 +10,6 @@
 }
 
 #MangaOnlineViewer {
-    padding-bottom: 40px;
     height: 100%;
     width: 100%;
     text-decoration: none;
@@ -22,6 +21,11 @@
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     min-width: 225px;
+}
+
+#MangaOnlineViewer #Chapter.Vertical,
+#MangaOnlineViewer #Chapter.WebComic {
+    padding-bottom: 40px;
 }
 
 #MangaOnlineViewer #Chapter.Vertical .PageContent {

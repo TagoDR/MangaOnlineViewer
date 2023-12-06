@@ -4,7 +4,7 @@ import { IconPalette, IconPhoto, IconPhotoOff } from '../icons';
 import colors from '../../utils/colors';
 import styles from './main.css?inline';
 import icons from './icons.css?inline';
-import simplenormalize from './simplenormalize.css?inline';
+import normalize from './simplenormalize.css?inline';
 import media from './media.css?inline';
 import animation from './animation.css?inline';
 import header from './header.css?inline';
@@ -63,7 +63,7 @@ export default css`
     /*background-image: url("${svgToUrl(IconPalette)}");*/
   }
 
-  ${simplenormalize}
+  ${normalize}
   ${styles}
   ${header}
   ${icons}

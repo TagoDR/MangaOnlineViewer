@@ -3,6 +3,7 @@
     display: flex;
     overflow-x: auto;
     min-width: auto;
+    /*height: 100%;*/
 
     .ZoomWidth {
         display: none;
