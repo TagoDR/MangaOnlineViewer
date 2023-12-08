@@ -35,7 +35,7 @@ function applyZoom(
       const fluid =
         chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL');
       const nextHeight = window.innerHeight + (getUserSettings().showThumbnails || fluid ? -30 : 0);
-      img.style.maxHeight = `${nextHeight}px`;
+      img.style.height = `${nextHeight}px`;
       img.style.minWidth = 'unset';
     } else if (zoom === 'percent') {
       img.style.width = `${img.naturalWidth * (getUserSettings().defaultZoom / 100)}px`;
