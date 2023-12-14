@@ -9,6 +9,12 @@
         padding-left: initial;
     }
 
+    #MangaOnlineViewer #Header.click.headroom-end {
+        transform: translateY(0%);
+        position: sticky;
+        top: 0;
+    }
+
     #MangaOnlineViewer .PageContent .PageImg {
         max-width: 100%;
     }
@@ -24,7 +30,6 @@
     }
 
     #MangaOnlineViewer #GlobalFunctions {
-        /*flex-wrap: nowrap;*/
         width: auto;
         order: 2;
         padding: 5px;
