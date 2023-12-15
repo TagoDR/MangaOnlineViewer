@@ -2,15 +2,18 @@
 
 ## Description
 
-Loads all pages from a chapter in a nice view, allowing for faster and more comfortable reading, without the need to
+Loads all pages from a chapter in a nice view, allowing for faster and more comfortable reading,
+without the need to
 wait for pages to load.
 
-:exclamation: **Attention**: Some sites require you to reload the page(F5) or open the chapter in a new tab for the
+:exclamation: **Attention**: Some sites require you to reload the page(F5) or open the chapter in a
+new tab for the
 script to start.
 
 ## Supported Browsers
 
-Firefox and Chrome with [Tampermonkey](https://tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/).
+Firefox and Chrome with [Tampermonkey](https://tampermonkey.net/)
+or [Violentmonkey](https://violentmonkey.github.io/).
 Other Browsers with other add-ons may also work, but not officially supported.
 
 ## Installation
@@ -21,9 +24,11 @@ Other Browsers with other add-ons may also work, but not officially supported.
 
 #### Official Source: [GitHub](https://github.com/TagoDR/MangaOnlineViewer)
 
-## Local Files (ZIP, CBZ, CBR...)
+## Local Files (ZIP, CBZ, CBR..., PNGs, JPGs...)
 
-First install then reload page, there will be an options in this section to select a zip, folder or individual files to show from.
+Save this
+file [index.html](/index.html?raw=1),
+then open it in the browser, and you will see the options to load local Files.
 
 ## Supported Manga Sites
 
@@ -66,7 +71,7 @@ First install then reload page, there will be an options in this section to sele
 - [MangaHosted](https://mangahosted.com/) _[Portuguese]_
 - [UnionMangas](https://unionleitor.top/) _[Portuguese]_
 - [KLManga](https://klmanga.com/) _[Raw]_
-- [Local Files](https://github.com/TagoDR/MangaOnlineViewer/blob/master/index.html?raw=1) _[Raw]_
+- [Local Files](/index.html?raw=1) _[Raw]_
 - [RawDevart](https://rawdevart.com) _[Raw]_
 - [SenManga(Raw)](https://raw.senmanga.com/) _[Raw]_
 - [InManga](https://inmanga.com//) _[Spanish]_
@@ -120,88 +125,105 @@ First install then reload page, there will be an options in this section to sele
 
 ## HotKeys
 
--   <span>Auto Scroll:</span> <span><kbd class="dark">space</kbd>
--   <span>Scroll Up:</span> <span><kbd class="dark">up</kbd> / <kbd class="dark">W</kbd> / <kbd class="dark">
-    num_8</kbd></span>
--   <span>Scroll Down:</span> <span><kbd class="dark">down</kbd> / <kbd class="dark">S</kbd> / <kbd class="dark">
-    num_2</kbd></span>
--   <span>Next Chapter:</span> <span><kbd class="dark">right</kbd> / <kbd class="dark">/</kbd> / <kbd class="dark">
-    D</kbd> / <kbd class="dark">num_6</kbd></span>
--   <span>Previous Chapter:</span> <span><kbd class="dark">left</kbd> / <kbd class="dark">;</kbd> / <kbd class="dark">
-    A</kbd> / <kbd class="dark">num_4</kbd></span>
--   <span>Enlarge:</span> <span><kbd class="dark">-</kbd> / <kbd class="dark">num_add</kbd> / <kbd class="dark">
-    E</kbd></span>
--   <span>Restore:</span> <span><kbd class="dark">=</kbd> / <kbd class="dark">num_subtract</kbd> / <kbd class="dark">
-    Q</kbd></span>
--   <span>Restore:</span> <span><kbd class="dark">9</kbd> / <kbd class="dark">num_divide</kbd> / <kbd class="dark">
-    R</kbd></span>
--   <span>Fit Width:</span> <span><kbd class="dark">0</kbd> / <kbd class="dark">num_multiply</kbd> / <kbd class="dark">
-    F</kbd></span>
--   <span>Fit Height:</span> <span><kbd class="dark">H</kbd></span>
--   <span>Settings:</span> <span><kbd class="dark">num_divide</kbd> / <kbd class="dark">num_5</kbd> / <kbd class="dark">
-    X</kbd></span>
--   <span>WebComic:</span> <span><kbd class="dark">C</kbd></span>
--   <span>Vertical:</span> <span><kbd class="dark">V</kbd></span>
--   <span>Left to Right:</span> <span><kbd class="dark">N</kbd></span>
--   <span>Right to Left:</span> <span><kbd class="dark">B</kbd></span>
+- <span>Auto Scroll:</span> <span><kbd class="dark">space</kbd>
+- <span>Scroll Up:</span> <span><kbd class="dark">up</kbd> / <kbd class="dark">
+  W</kbd> / <kbd class="dark">
+  num_8</kbd></span>
+- <span>Scroll Down:</span> <span><kbd class="dark">down</kbd> / <kbd class="dark">
+  S</kbd> / <kbd class="dark">
+  num_2</kbd></span>
+- <span>Next Chapter:</span> <span><kbd class="dark">
+  right</kbd> / <kbd class="dark">/</kbd> / <kbd class="dark">
+  D</kbd> / <kbd class="dark">num_6</kbd></span>
+- <span>Previous Chapter:</span> <span><kbd class="dark">
+  left</kbd> / <kbd class="dark">;</kbd> / <kbd class="dark">
+  A</kbd> / <kbd class="dark">num_4</kbd></span>
+- <span>Enlarge:</span> <span><kbd class="dark">-</kbd> / <kbd class="dark">
+  num_add</kbd> / <kbd class="dark">
+  E</kbd></span>
+- <span>Restore:</span> <span><kbd class="dark">=</kbd> / <kbd class="dark">
+  num_subtract</kbd> / <kbd class="dark">
+  Q</kbd></span>
+- <span>Restore:</span> <span><kbd class="dark">9</kbd> / <kbd class="dark">
+  num_divide</kbd> / <kbd class="dark">
+  R</kbd></span>
+- <span>Fit Width:</span> <span><kbd class="dark">0</kbd> / <kbd class="dark">
+  num_multiply</kbd> / <kbd class="dark">
+  F</kbd></span>
+- <span>Fit Height:</span> <span><kbd class="dark">H</kbd></span>
+- <span>Settings:</span> <span><kbd class="dark">num_divide</kbd> / <kbd class="dark">
+  num_5</kbd> / <kbd class="dark">
+  X</kbd></span>
+- <span>WebComic:</span> <span><kbd class="dark">C</kbd></span>
+- <span>Vertical:</span> <span><kbd class="dark">V</kbd></span>
+- <span>Left to Right:</span> <span><kbd class="dark">N</kbd></span>
+- <span>Right to Left:</span> <span><kbd class="dark">B</kbd></span>
 
 ## Features
 
--   Auto Scroll
--   View Modes:
-    -   Vertical/WebComic [Default]
-    -   Fluid Left to Right
-    -   Fluid Right to Left
--   Bookmark Pages (To resume reading)
--   Full Themes and Customizable
--   Global and Individual images zoom
-    -   In(Global one may stretch images beyond window width)
-    -   Out
-    -   Restore original(Toggle fit width if oversize)
-    -   Fit width
-    -   Fit width if oversize[Default on]
-    -   Fit Height (with scroll pages)
-    -   Hide
--   Auto reload Images
-    -   Counter for loaded Images
-    -   Individual image reload, just in case
--   HotKeys
--   Goto Page
--   Image Loading Timer[Default 1s](Some sites require longer timers. e.g.:ExHentai,e-hentai)
--   Thumbnails Navigation[Default on]
--   Download all images as ZIP File[Automatic Default off]
--   Lazy Load Images[Default off]
+- Auto Scroll
+- View Modes:
+    - Vertical/WebComic [Default]
+    - Fluid Left to Right
+    - Fluid Right to Left
+- Bookmark Pages (To resume reading)
+- Full Themes and Customizable
+- Global and Individual images zoom
+    - In(Global one may stretch images beyond window width)
+    - Out
+    - Restore original(Toggle fit width if oversize)
+    - Fit width
+    - Fit width if oversize[Default on]
+    - Fit Height (with scroll pages)
+    - Hide
+- Auto reload Images
+    - Counter for loaded Images
+    - Individual image reload, just in case
+- HotKeys
+- Goto Page
+- Image Loading Timer[Default 1s](Some sites require longer timers. e.g.:ExHentai,e-hentai)
+- Thumbnails Navigation[Default on]
+- Download all images as ZIP File[Automatic Default off]
+- Lazy Load Images[Default off]
 
 ## Rules For adding new Manga Sites
 
-1. The site must have rare/unique mangas (Meaning: it's not available in other sites, or is of better quality)
+1. The site must have rare/unique mangas (Meaning: it's not available in other sites, or is of
+   better quality)
 2. The site must be strong enough or else my script may crash it
 3. The site must not be exclusive to a handful of manga titles (Meaning: no small Scanlators)
 
 ## Permissions
 
-I allow this script to be posted or used anywhere as long as I am given credit and provided a link to this site. I allow
+I allow this script to be posted or used anywhere as long as I am given credit and provided a link
+to this site. I allow
 parts of my script to be used freely.
 
 ## Disclaimer
 
-In case the owner/admin of one of the supported sites does not want my script to run on their site, I will make it
+In case the owner/admin of one of the supported sites does not want my script to run on their site,
+I will make it
 disabled by default. Forcing users to manually activate it.
 
 ## Mobile Bookmarklet
 
 _Settings can't be saved, may require to request for Desktop Page_:
 
-Bookmarklet seems to work only in Chrome, open the chapter then use the searchbar to activate your bookmarklet.
+Bookmarklet seems to work only in Chrome, open the chapter then use the searchbar to activate your
+bookmarklet.
 
 ##### Main Reader:
 
 ```JS
-javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", "https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.0/dist/hotkeys.min.js", "https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
+javascript:(function() {
+    ["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", "https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.0/dist/hotkeys.min.js", "https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
+})();
 ```
 
 ##### Adult Reader:
 
 ```JS
-javascript:(function(){["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", "https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.0/dist/hotkeys.min.js", "https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer_Adult.user.min.js"].map( s => document.body.appendChild(document.createElement('script')).src=s)})();
+javascript:(function() {
+    ["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", "https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.0/dist/hotkeys.min.js", "https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer_Adult.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
+})();
 ```
