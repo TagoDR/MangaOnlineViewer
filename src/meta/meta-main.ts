@@ -28,6 +28,6 @@ export default {
   noframes: 'on',
   connect: '*',
   require: requiredScripts,
-  include: ['https://github.com/TagoDR/MangaOnlineViewer', ...sites.map((s) => s.url)],
+  include: sites.map((s) => s.url),
   exclude: [/https?:\/\/(www\.)?tsumino.com\/.+/, /https?:\/\/(www\.)?pururin.io\/.+/],
 } as Partial<Tampermonkey.ScriptMetadata>;
