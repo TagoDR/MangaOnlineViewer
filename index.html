@@ -1,30 +1,66 @@
 <!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <title>MangaOnlineViewer Script</title>
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
-        />
-    </head>
-    <body>
-        <main class="container">
-            <h1>MangaOnlineViewer</h1>
-            <div id="LocalTest">
-                <h2 id="run-test">Run local test</h2>
-                <button type="button" id="test">Run Local Test</button>
-            </div>
-            <div id="LocalFiles">
-                <h2>
-                    <span id="user-content-local-files-zip-cbz-cbr"
-                        >Local Files (ZIP, CBZ, CBR...)
-                    </span>
-                </h2>
-                <p aria-busy="true">Loading Local Files options</p>
-            </div>
-        </main>
-        <script src="/src/index.ts" type="module"></script>
-    </body>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8' />
+    <meta content='width=device-width, initial-scale=1.0' name='viewport' />
+    <title>MangaOnlineViewer Script</title>
+    <link
+            rel='stylesheet'
+            href='https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css'
+    />
+</head>
+<body>
+<main class='container'>
+    <h1>MangaOnlineViewer</h1>
+    <div id='LocalTest'>
+        <h2 id='run-test'>Run local test</h2>
+        <button type='button' id='test'>Run Local Test</button>
+    </div>
+    <div id='LocalFiles'>
+        <h2>
+            Local Files (ZIP, CBZ, CBR..., PNGs, JPGs...)
+        </h2>
+        <p>
+            <b>Attention</b>: You will need to "Allow access to file URLs" for tampermonkey,
+            just go to the browser extension settings.
+        </p>
+        <p>
+            Can read any zip file with images inside and display it like any of the supported
+            sites
+        </p>
+        <label for='file'>Choose the local zip file:</label>
+        <input
+                type='file'
+                id='file'
+                name='file'
+                class='btn'
+                accept='.zip, .cbz, .cbr, .7z, .rar'
+                value=''
+        /><br />
+        <p>Note : your browser will process the zip file, don't choose a file too big !</p>
+        <label for='file'><b>OR</b> Select a folder with images inside:</label>
+        <input
+                type='file'
+                id='folder'
+                name='folder'
+                class='btn'
+                webkitdirectory
+                mozdirectory
+                directory
+                value=''
+        /><br />
+        <label for='file'><b>OR</b> Select images:</label>
+        <input
+                type='file'
+                id='images'
+                name='images'
+                class='btn'
+                accept='image/*'
+                multiple
+                value=''
+        /><br />
+    </div>
+</main>
+<script src='/src/index.ts' type='module'></script>
+</body>
 </html>

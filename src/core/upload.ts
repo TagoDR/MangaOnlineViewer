@@ -1,5 +1,4 @@
 import JSZip from 'jszip';
-import { html } from '../utils/code-tag';
 import { logScript } from '../utils/tampermonkey';
 import formatPage from './viewer';
 import localhost from '../main/localhost';
@@ -28,6 +27,7 @@ const orderFiles = (a: string, b: string) =>
 function validFileType(file: File) {
   return fileTypes.includes(file.type);
 }
+
 const getImageBlob = (content: ArrayBuffer) => {
   const buffer = new Uint8Array(content);
   const blob = new Blob([buffer.buffer]);
@@ -43,11 +43,10 @@ export async function loadZipFile(filePath: string | File) {
   return Promise.all(files.map((file) => file.async('arraybuffer').then(getImageBlob)));
 }
 
-export async function loadMangaFromZip(zipFile: File | string) {
-  const listImages = await loadZipFile(zipFile);
+function displayUploadedFiles(title: string, listImages: string[]) {
   formatPage({
-    title: typeof zipFile === 'string' ? zipFile : zipFile.name,
-    series: 'https://github.com/TagoDR/MangaOnlineViewer',
+    title,
+    series: '?reload',
     pages: listImages.length,
     begin: 1,
     prev: '#',
@@ -55,6 +54,12 @@ export async function loadMangaFromZip(zipFile: File | string) {
     listImages,
   }).then(() => logScript('Page loaded'));
 }
+
+export async function loadMangaFromZip(zipFile: File | string) {
+  const listImages = await loadZipFile(zipFile);
+  displayUploadedFiles(typeof zipFile === 'string' ? zipFile : zipFile.name, listImages);
+}
+
 function openFileImages(evt: Event) {
   const input = evt.target as HTMLInputElement;
   const files = Array.from(input.files as Iterable<File>)
@@ -66,89 +71,24 @@ function openFileImages(evt: Event) {
     files.map((f) => f.webkitRelativePath || f.name),
   );
   if (input.files?.[0]) {
-    formatPage({
-      title: input.files[0].webkitRelativePath.split('/')[0] || 'Local Images',
-      series: 'https://github.com/TagoDR/MangaOnlineViewer',
-      pages: files.length,
-      begin: 1,
-      prev: '#',
-      next: '#',
-      listImages: files.map(URL.createObjectURL),
-    }).then(() => logScript('Page loaded'));
+    displayUploadedFiles(
+      input.files[0].webkitRelativePath.split('/')[0] || 'Local Images',
+      files.map(URL.createObjectURL),
+    );
   }
 }
-const browserMessage = html`
-  <h3>For <i style="color:crimson">Chrome</i> and similar browsers</h3>
-  <p>
-    Save this file
-    <a href="https://github.com/TagoDR/MangaOnlineViewer/blob/master/index.html?raw=1">
-      index.html
-    </a>
-    , then open it in the browser, and you will see the options below.
-  </p>
-  <h3>Below only works with <i style="color:orange">Firefox</i>!</h3>
-`;
-const filesSelectors = html`
-  <p>
-    <b>Attention</b>: You will need to "Allow access to file URLs" for tampermonkey, just go to the
-    browser extension settings.
-  </p>
-  <p>Can read any zip file with images inside and diplay it like any of the supported sites</p>
-  <label for="file">Choose the local zip file:</label>
-  <input
-    type="file"
-    id="file"
-    name="file"
-    class="btn"
-    accept=".zip, .cbz, .cbr, .7z, .rar"
-    value=""
-  /><br />
-  <p>Note : your browser will process the zip file, don't choose a file too big !</p>
-  <label for="file"><b>OR</b> Select a folder with images inside:</label>
-  <input
-    type="file"
-    id="folder"
-    name="folder"
-    class="btn"
-    webkitdirectory
-    mozdirectory
-    directory
-    value=""
-  /><br />
-  <label for="file"><b>OR</b> Select images:</label>
-  <input
-    type="file"
-    id="images"
-    name="images"
-    class="btn"
-    accept="image/*"
-    multiple
-    value=""
-  /><br />
-`;
+
 export function allowUpload() {
-  if (localhost.url.test(window.location.href)) document.querySelector('#LocalTest')?.remove();
-  if (
-    window.location.href === 'https://github.com/TagoDR/MangaOnlineViewer' ||
-    localhost.url.test(window.location.href) ||
-    window.location.href === 'http://localhost:5173/'
-  ) {
-    const ele = document.createElement('div');
-    ele.id = 'LocalMangaOnlineViewer';
-    ele.innerHTML =
-      (window.location.href === 'https://github.com/TagoDR/MangaOnlineViewer'
-        ? browserMessage
-        : '') + filesSelectors;
-    document
-      .querySelector('#user-content-local-files-zip-cbz-cbr')
-      ?.parentElement?.nextElementSibling?.replaceWith(ele);
+  const test = document.querySelector('#LocalTest');
+  if (localhost.url.test(window.location.href) && test) {
+    test?.remove();
     document.querySelector('#file')?.addEventListener('change', (evt) => {
       const input = evt.target as HTMLInputElement;
       if (input.files?.[0]) loadMangaFromZip(input.files[0]);
     });
     document.querySelector('#folder')?.addEventListener('change', openFileImages);
     document.querySelector('#images')?.addEventListener('change', openFileImages);
-    logScript(`Waiting for zip upload`);
+    logScript(`Waiting for zip/images upload`);
     return true;
   }
   return false;

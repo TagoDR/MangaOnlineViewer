@@ -5,7 +5,7 @@ import { placeholder, randomPlaceholder } from '../utils/svgs';
 export default {
   name: 'Local Files',
   url: /(file:\/\/\/.+(index)?.html)/,
-  homepage: 'https://github.com/TagoDR/MangaOnlineViewer/blob/master/index.html?raw=1',
+  homepage: '/index.html?raw=1',
   language: ['Raw'],
   category: 'manga',
   run() {
@@ -14,7 +14,7 @@ export default {
     comments.innerHTML = Array(100).fill('Testing Comment<br/>').join('');
     return {
       title: 'Placeholder Manga Loaded',
-      series: '',
+      series: '?reload',
       pages: num,
       begin: 1,
       prev: '?pages=50',
