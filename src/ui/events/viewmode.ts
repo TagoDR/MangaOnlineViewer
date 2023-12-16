@@ -7,7 +7,19 @@ import {
 } from './common';
 import { changeGlobalZoom } from './zoom';
 
-export function updateViewMode(mode: string) {
+function setupFluid(mode: ViewMode) {
+  const chapter = document.querySelector<HTMLElement>('#Chapter');
+  document.querySelector('#Header')!.className = 'click';
+  document.querySelector('#menu')!.className = 'click';
+  changeGlobalZoom('height')();
+  scrollToElement(chapter);
+  chapter?.addEventListener(
+    'wheel',
+    mode === 'FluidLTR' ? transformScrollToHorizontal : transformScrollToHorizontalReverse,
+  );
+}
+
+export function updateViewMode(mode: ViewMode) {
   return () => {
     const chapter = document.querySelector<HTMLElement>('#Chapter');
     const header = document.querySelector('#Header');
@@ -17,14 +29,7 @@ export function updateViewMode(mode: string) {
     chapter?.removeEventListener('wheel', transformScrollToHorizontal);
     chapter?.removeEventListener('wheel', transformScrollToHorizontalReverse);
     if (mode === 'FluidLTR' || mode === 'FluidRTL') {
-      document.querySelector('#Header')!.className = 'click';
-      document.querySelector('#menu')!.className = 'click';
-      changeGlobalZoom('height')();
-      scrollToElement(chapter!);
-      chapter?.addEventListener(
-        'wheel',
-        mode === 'FluidLTR' ? transformScrollToHorizontal : transformScrollToHorizontalReverse,
-      );
+      setupFluid(mode);
     } else {
       document.querySelector('#Header')!.className = getUserSettings().header;
       document.querySelector('#menu')!.className = getUserSettings().header;
@@ -34,9 +39,9 @@ export function updateViewMode(mode: string) {
 }
 
 export function changeViewMode(event: Event) {
-  const mode = (event.currentTarget as HTMLInputElement).value;
+  const mode = (event.currentTarget as HTMLInputElement).value as ViewMode;
   updateViewMode(mode)();
-  updateSettings({ viewMode: mode as ViewMode });
+  updateSettings({ viewMode: mode });
 }
 
 function viewMode() {
@@ -50,6 +55,9 @@ function viewMode() {
   document.querySelector('#rtlMode')?.addEventListener('click', updateViewMode('FluidRTL'));
   // Vertical View Mode Button
   document.querySelector('#verticalMode')?.addEventListener('click', updateViewMode('Vertical'));
+  if (getUserSettings().viewMode === 'FluidLTR' || getUserSettings().viewMode === 'FluidRTL') {
+    setupFluid(getUserSettings().viewMode);
+  }
 }
 
 export default viewMode;
