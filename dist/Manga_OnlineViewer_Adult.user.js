@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.12.15
+// @version       2023.12.16
 // @license       MIT
 // @run-at        document-end
 // @grant         unsafeWindow
@@ -1999,29 +1999,84 @@
     const encoded = encodeURIComponent(cleaned).replace(/\(/g, '%28').replace(/\)/g, '%29');
     return `data:image/svg+xml;charset=UTF-8,${encoded}`;
   }
-  function placeholder(width, height, bgColor = '#0F1C3F', textColor = '#ECEAD9') {
-    const str = html`
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="${width}"
-        height="${height}"
-        viewBox="0 0 ${width} ${height}"
-      >
-        <rect fill="${bgColor}" width="${width}" height="${height}" />
-        <text
-          fill="${textColor}"
-          font-family="sans-serif"
-          font-size="30"
-          dy="10.5"
-          font-weight="bold"
-          x="50%"
-          y="50%"
+  const rulerMarkerLength = (len) => {
+    if (len % 100 === 0) {
+      return 15;
+    }
+    if (len % 50 === 0) {
+      return 10;
+    }
+    if (len % 25 === 0) {
+      return 5;
+    }
+    return 2.5;
+  };
+  function rectangleRuler(width, height, bgColor, textColor) {
+    let markers = '';
+    for (let x = 0; x <= width; x += 5) {
+      const tick = html` <line x1="${x}" y1="0" x2="${x}" y2="${rulerMarkerLength(x)}" />`;
+      markers += tick;
+      if (x !== 0 && x % 50 === 0) {
+        const label = html` <text
+          x="${x}"
+          y="25"
           text-anchor="middle"
+          font-size="${rulerMarkerLength(x)}px"
         >
-          ${width}x${height}
-        </text>
-      </svg>
-    `;
+          ${x}
+        </text>`;
+        markers += label;
+      }
+    }
+    for (let y = 0; y <= height; y += 5) {
+      const tick = html` <line x1="0" y1="${y}" x2="${rulerMarkerLength(y)}" y2="${y}" />`;
+      markers += tick;
+      if (y !== 0 && y % 50 === 0) {
+        const label = html` <text
+          x="25"
+          y="${y}"
+          text-anchor="middle"
+          dominant-baseline="middle"
+          font-size="${rulerMarkerLength(y)}px"
+        >
+          ${y}
+        </text>`;
+        markers += label;
+      }
+    }
+    return html` <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="${width}"
+      height="${height}"
+      viewBox="0 0 ${width} ${height}"
+    >
+      <rect width="${width}" height="${height}" fill="${bgColor}" />
+      <text
+        fill="${textColor}"
+        font-family="Verdana, Arial, Helvetica, sans-serif"
+        font-size="30"
+        dy="10.5"
+        font-weight="bold"
+        x="50%"
+        y="50%"
+        text-anchor="middle"
+      >
+        ${width}x${height}
+      </text>
+      <g
+        stroke-width="1"
+        font-family="Verdana, Arial, Helvetica, sans-serif"
+        font-size="10px"
+        font-weight="100"
+        fill="${textColor}"
+        stroke="${textColor}"
+      >
+        ${markers}
+      </g>
+    </svg>`;
+  }
+  function placeholder(width, height, bgColor = '#0F1C3F', textColor = '#ECEAD9') {
+    const str = rectangleRuler(width, height, bgColor, textColor);
     return svgToUrl(str);
   }
   const backgrounds = Object.values(colors).map((i) => i['900']);
@@ -4185,6 +4240,17 @@
     document.querySelector('#fitHeight')?.addEventListener('click', changeGlobalZoom('height'));
   }
 
+  function setupFluid(mode) {
+    const chapter = document.querySelector('#Chapter');
+    document.querySelector('#Header').className = 'click';
+    document.querySelector('#menu').className = 'click';
+    changeGlobalZoom('height')();
+    scrollToElement(chapter);
+    chapter?.addEventListener(
+      'wheel',
+      mode === 'FluidLTR' ? transformScrollToHorizontal : transformScrollToHorizontalReverse,
+    );
+  }
   function updateViewMode(mode) {
     return () => {
       const chapter = document.querySelector('#Chapter');
@@ -4195,14 +4261,7 @@
       chapter?.removeEventListener('wheel', transformScrollToHorizontal);
       chapter?.removeEventListener('wheel', transformScrollToHorizontalReverse);
       if (mode === 'FluidLTR' || mode === 'FluidRTL') {
-        document.querySelector('#Header').className = 'click';
-        document.querySelector('#menu').className = 'click';
-        changeGlobalZoom('height')();
-        scrollToElement(chapter);
-        chapter?.addEventListener(
-          'wheel',
-          mode === 'FluidLTR' ? transformScrollToHorizontal : transformScrollToHorizontalReverse,
-        );
+        setupFluid(mode);
       } else {
         document.querySelector('#Header').className = getUserSettings().header;
         document.querySelector('#menu').className = getUserSettings().header;
@@ -4221,6 +4280,9 @@
     document.querySelector('#ltrMode')?.addEventListener('click', updateViewMode('FluidLTR'));
     document.querySelector('#rtlMode')?.addEventListener('click', updateViewMode('FluidRTL'));
     document.querySelector('#verticalMode')?.addEventListener('click', updateViewMode('Vertical'));
+    if (getUserSettings().viewMode === 'FluidLTR' || getUserSettings().viewMode === 'FluidRTL') {
+      setupFluid(getUserSettings().viewMode);
+    }
   }
 
   let scrollInterval;
