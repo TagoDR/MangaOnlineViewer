@@ -79,16 +79,17 @@ function openFileImages(evt: Event) {
 }
 
 export function allowUpload() {
-  const test = document.querySelector('#LocalTest');
-  if (localhost.url.test(window.location.href) && test) {
-    test?.remove();
-    document.querySelector('#file')?.addEventListener('change', (evt) => {
-      const input = evt.target as HTMLInputElement;
-      if (input.files?.[0]) loadMangaFromZip(input.files[0]);
-    });
-    document.querySelector('#folder')?.addEventListener('change', openFileImages);
-    document.querySelector('#images')?.addEventListener('change', openFileImages);
-    logScript(`Waiting for zip/images upload`);
+  if (localhost.url.test(window.location.href)) {
+    if (document.querySelector('#MangaOnlineViewer, #LocalTest')) {
+      document.querySelector('#LocalTest')?.setAttribute('style', 'display:none');
+      document.querySelector('#file')?.addEventListener('change', (evt) => {
+        const input = evt.target as HTMLInputElement;
+        if (input.files?.[0]) loadMangaFromZip(input.files[0]);
+      });
+      document.querySelector('#folder')?.addEventListener('change', openFileImages);
+      document.querySelector('#images')?.addEventListener('change', openFileImages);
+      logScript(`Waiting for zip/images upload`);
+    }
     return true;
   }
   return false;
