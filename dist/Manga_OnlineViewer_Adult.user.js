@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.12.16
+// @version       2023.12.17
 // @license       MIT
 // @run-at        document-end
 // @grant         unsafeWindow
@@ -4585,16 +4585,17 @@
     }
   }
   function allowUpload() {
-    const test = document.querySelector('#LocalTest');
-    if (localhost.url.test(window.location.href) && test) {
-      test?.remove();
-      document.querySelector('#file')?.addEventListener('change', (evt) => {
-        const input = evt.target;
-        if (input.files?.[0]) loadMangaFromZip(input.files[0]);
-      });
-      document.querySelector('#folder')?.addEventListener('change', openFileImages);
-      document.querySelector('#images')?.addEventListener('change', openFileImages);
-      logScript(`Waiting for zip/images upload`);
+    if (localhost.url.test(window.location.href)) {
+      if (document.querySelector('#MangaOnlineViewer, #LocalTest')) {
+        document.querySelector('#LocalTest')?.setAttribute('style', 'display:none');
+        document.querySelector('#file')?.addEventListener('change', (evt) => {
+          const input = evt.target;
+          if (input.files?.[0]) loadMangaFromZip(input.files[0]);
+        });
+        document.querySelector('#folder')?.addEventListener('change', openFileImages);
+        document.querySelector('#images')?.addEventListener('change', openFileImages);
+        logScript(`Waiting for zip/images upload`);
+      }
       return true;
     }
     return false;
