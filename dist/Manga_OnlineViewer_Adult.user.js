@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2023.12.18
+// @version       2023.12.20
 // @license       MIT
 // @run-at        document-end
 // @grant         unsafeWindow
@@ -971,33 +971,42 @@
     },
   };
 
+  const yugenmangas = {
+    name: "YugenMangas",
+    url: /https?:\/\/(www\.)?(yugenmangas).(com|net|lat)\/series\/.+/,
+    homepage: "https://yugenmangas.lat/",
+    language: ["Spanish"],
+    category: "manga",
+    async run() {
+      const images = [...document.querySelectorAll("p.flex > img")];
+      return {
+        title: document.querySelector("title")?.textContent?.trim(),
+        series: document
+          .querySelector("div.justify-between:nth-child(2) > a:nth-child(2)")
+          ?.getAttribute("href"),
+        pages: images.length,
+        prev: document
+          .querySelector("div.justify-between:nth-child(2) > a:nth-child(1)")
+          ?.getAttribute("href"),
+        next: document
+          .querySelector("div.justify-between:nth-child(2) > a:nth-child(3)")
+          ?.getAttribute("href"),
+        listImages: images.map((img) =>
+          img.classList.contains("lazy")
+            ? img.getAttribute("data-src")
+            : img.getAttribute("src"),
+        ),
+      };
+    },
+  };
+
   const omegascans = {
+    ...yugenmangas,
     name: ["OmegaScans"],
     url: /https?:\/\/(www\.)?(omegascans).(org)\/.+/,
     homepage: ["https://omegascans.org/"],
     language: ["English"],
-    category: "manga",
-    waitVar: "__NEXT_DATA__",
-    async run() {
-      const api = await fetch(
-        `https://api.omegascans.org/series/chapter/${unsafeWindow.__NEXT_DATA__.props.pageProps.data.id}`,
-      ).then(async (res) => res.json());
-      const { images } = api.content;
-      return {
-        title: document.querySelector("h5")?.textContent?.trim(),
-        series: document.querySelector("h5 a")?.getAttribute("href"),
-        pages: images.length,
-        prev: document
-          .querySelector(".fa-arrow-left")
-          ?.closest("a")
-          ?.getAttribute("href"),
-        next: document
-          .querySelector(".fa-arrow-right")
-          ?.closest("a")
-          ?.getAttribute("href"),
-        listImages: images,
-      };
-    },
+    category: "hentai",
   };
 
   const porncomixonline = {
