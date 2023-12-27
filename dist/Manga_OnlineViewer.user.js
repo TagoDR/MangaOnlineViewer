@@ -46,7 +46,7 @@
 // @include       /https?:\/\/(www\.)?mangahosted.com\/manga\/.+\/.+/
 // @include       /https?:\/\/(www\.)?(mangahub).io\/chapter\/.+\/.+/
 // @include       /https?:\/\/(www\.)?mangas.in\/manga\/.+\/.+\/\d+/
-// @include       /https?:\/\/(www\.)?((manganelo|mangakakalot).com\/chapter\/.+\/.+|(manganato|readmanganato|chapmanganato).com\/manga-\w\w\d+\/chapter-\d+)/
+// @include       /https?:\/\/(www\.)?((manganelo|mangakakalot).com\/chapter\/.+\/.+|(manganato|readmanganato|chapmanganato).(com|to)\/manga-\w\w\d+\/chapter-\d+)/
 // @include       /https?:\/\/(www\.)?mangapark.(com|me|org|net)\/title\/.+\/.+/
 // @include       /https?:\/\/(www\.)?mangareader.to\/read\/.+\/.+\/.+/
 // @include       /https?:\/\/(www\.)?(mangasee123|manga4life).com\/read-online\/.+/
@@ -1158,7 +1158,7 @@
 
   const mangakakalot = {
     name: ["MangaKakalot", "MangaNelo", "MangaNato"],
-    url: /https?:\/\/(www\.)?((manganelo|mangakakalot).com\/chapter\/.+\/.+|(manganato|readmanganato|chapmanganato).com\/manga-\w\w\d+\/chapter-\d+)/,
+    url: /https?:\/\/(www\.)?((manganelo|mangakakalot).com\/chapter\/.+\/.+|(manganato|readmanganato|chapmanganato).(com|to)\/manga-\w\w\d+\/chapter-\d+)/,
     homepage: [
       "https://mangakakalot.com/",
       "https://www.manganelo.com/",
