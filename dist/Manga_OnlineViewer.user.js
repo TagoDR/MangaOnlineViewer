@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Reaper-Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans
-// @version       2023.12.27
+// @version       2023.12.28
 // @license       MIT
 // @run-at        document-end
 // @grant         unsafeWindow
@@ -46,7 +46,7 @@
 // @include       /https?:\/\/(www\.)?mangahosted.com\/manga\/.+\/.+/
 // @include       /https?:\/\/(www\.)?(mangahub).io\/chapter\/.+\/.+/
 // @include       /https?:\/\/(www\.)?mangas.in\/manga\/.+\/.+\/\d+/
-// @include       /https?:\/\/(www\.)?((manganelo|mangakakalot).com\/chapter\/.+\/.+|(manganato|readmanganato|chapmanganato|chapmanganelo).(com|to)\/manga-\w\w\d+\/chapter-\d+)/
+// @include       /https?:\/\/(www\.)?(read|chap)?(manganelo|mangakakalot|manganato).(com|to).*\/chapter.+/
 // @include       /https?:\/\/(www\.)?mangapark.(com|me|org|net)\/title\/.+\/.+/
 // @include       /https?:\/\/(www\.)?mangareader.to\/read\/.+\/.+\/.+/
 // @include       /https?:\/\/(www\.)?(mangasee123|manga4life).com\/read-online\/.+/
@@ -1158,7 +1158,7 @@
 
   const mangakakalot = {
     name: ["MangaKakalot", "MangaNelo", "MangaNato"],
-    url: /https?:\/\/(www\.)?((manganelo|mangakakalot).com\/chapter\/.+\/.+|(manganato|readmanganato|chapmanganato|chapmanganelo).(com|to)\/manga-\w\w\d+\/chapter-\d+)/,
+    url: /https?:\/\/(www\.)?(read|chap)?(manganelo|mangakakalot|manganato).(com|to).*\/chapter.+/,
     homepage: [
       "https://mangakakalot.com/",
       "https://www.manganelo.com/",
