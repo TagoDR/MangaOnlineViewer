@@ -3479,9 +3479,7 @@
         class="${isBackgroundColorDark(manga.comments ?? document.body)
           ? "dark"
           : "light"}"
-      >
-        ${manga.comments?.outerHTML}
-      </div>
+      ></div>
     </div>
   `;
 
@@ -5051,6 +5049,8 @@
     document
       .querySelector("#MangaOnlineViewer")
       ?.addEventListener("locale", hydrateApp);
+    if (manga.comments)
+      document.querySelector("#CommentsArea")?.append(manga.comments);
   }
 
   const cleanUpElement = (...ele) =>
