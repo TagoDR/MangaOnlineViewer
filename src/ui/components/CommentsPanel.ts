@@ -13,9 +13,7 @@ const commentsPanel = (manga: IManga) => html`
     <div
       id="CommentsArea"
       class="${isBackgroundColorDark(manga.comments ?? document.body) ? 'dark' : 'light'}"
-    >
-      ${manga.comments?.outerHTML}
-    </div>
+    ></div>
   </div>
 `;
 export default commentsPanel;
