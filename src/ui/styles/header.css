@@ -166,14 +166,15 @@
     visibility: hidden;
 }
 
-#MangaOnlineViewer .ChapterControl #download.loading {
+#MangaOnlineViewer #ChapterControl #download.loading {
     cursor: not-allowed;
     pointer-events: none;
     opacity: 0.6;
 }
 
-#MangaOnlineViewer .ChapterControl .NavigationControlButton.disabled {
-    display: none;
+#MangaOnlineViewer #ChapterControl .NavigationControlButton.disabled {
+    pointer-events: none;
+    filter: grayscale(0.9);
 }
 
 #MangaOnlineViewer .ViewerTitle {
