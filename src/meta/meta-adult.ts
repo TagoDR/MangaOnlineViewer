@@ -16,6 +16,7 @@ export default {
     .join(', ')}`,
   version: new Date().toISOString().slice(0, 10).replaceAll('-', '.'),
   license: 'MIT',
+  icon: 'https://cdn-icons-png.flaticon.com/32/9824/9824312.png', // https://www.freepik.com/icon/comic_9824312
   'run-at': 'document-end',
   grant: [
     'unsafeWindow',

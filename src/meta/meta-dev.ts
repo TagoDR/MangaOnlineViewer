@@ -11,6 +11,7 @@ export default {
   description: 'Shows all pages at once in online view for sites',
   version: new Date().valueOf().toString(), // .slice(0, 10).replaceAll('-', '.'),
   license: 'MIT',
+  icon: 'https://cdn-icons-png.flaticon.com/32/9824/9824248.png', // https://www.freepik.com/icon/comic_9824248
   'run-at': 'document-end',
   grant: [
     'unsafeWindow',

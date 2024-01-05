@@ -1,5 +1,9 @@
 # Manga OnlineViewer
 
+![Manga Icon Adult Script](https://cdn-icons-png.flaticon.com/128/9824/9824312.png)
+![Manga Icon Main Script](https://cdn-icons-png.flaticon.com/128/2281/2281832.png)
+![Manga Icon Dev Script](https://cdn-icons-png.flaticon.com/128/9824/9824248.png)
+
 ## Description
 
 Loads all pages from a chapter in a nice view, allowing for faster and more comfortable reading,
