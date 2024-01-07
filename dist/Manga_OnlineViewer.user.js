@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans
-// @version       2024.01.05
+// @version       2024.01.07
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -74,7 +74,7 @@
 // @include       /https?:\/\/(www\.)?webtoons.com\/.+viewer.+/
 // @include       /https?:\/\/(www\.)?(manga33).com\/manga\/.+/
 // @include       /https?:\/\/(www\.)?(yugenmangas).(com|net|lat)\/series\/.+/
-// @include       /https?:\/\/(www\.)?zeroscans.com\/comics\/.+/
+// @include       /https?:\/\/(www\.)?zscans.com\/comics\/.+/
 // @include       /^(?!.*jaiminisbox).*\/read\/.+/
 // @include       /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel)\/.+\/.+/
 // @exclude       /https?:\/\/(www\.)?tsumino.com\/.+/
@@ -2015,8 +2015,8 @@
 
   const zeroscans = {
     name: "ZeroScans",
-    url: /https?:\/\/(www\.)?zeroscans.com\/comics\/.+/,
-    homepage: "https://zeroscans.com/",
+    url: /https?:\/\/(www\.)?zscans.com\/comics\/.+/,
+    homepage: "https://zscans.com/",
     language: ["English"],
     category: "manga",
     waitVar: "__ZEROSCANS__",

@@ -68,7 +68,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [WebNovel](https://www.webnovel.com/) _[English]_
 - [WebToons](https://www.webtoons.com/) _[English]_
 - [Manga33](https://manga33.com/) _[English]_
-- [ZeroScans](https://zeroscans.com/) _[English]_
+- [ZeroScans](https://zscans.com/) _[English]_
 - [FoOlSlide](https://github.com/saintly2k/FoOlSlideX) / [Kireicake](https://reader.kireicake.com) _[English]_ **Obs: Any Site that uses FoOLSlide**
 - [Madara WordPress Plugin](https://mangabooth.com/) / [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) / [JaiminisBox](https://jaiminisbox.net) / [DisasterScans](https://disasterscans.com/) / [ManhuaPlus](https://manhuaplus.com/) / [TopManhua](https://www.topmanhua.com/) / [NovelMic](https://novelmic.com/) / [Reset-Scans](https://reset-scans.com/) / [LeviatanScans](https://leviatanscans.com/) / [Dragon Tea](https://dragontea.ink/) / [SetsuScans](https://setsuscans.com/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
 - [Leitor](https://leitor.net/) _[Portuguese]_
