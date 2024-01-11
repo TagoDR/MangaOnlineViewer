@@ -130,9 +130,13 @@ In case the owner/admin of one of the supported sites does not want my script to
 I will make it
 disabled by default. Forcing users to manually activate it.
 
-## Mobile Bookmarklet
+## Mobile
 
-_Settings can't be saved, may require to request for Desktop Page_:
+It's recommended to use Tampermonkey with Firefox mobile or Kiwi Browser.
+
+### Bookmarklet (Not Recommended)
+
+_Settings can't be saved with Bookmarklet_:
 
 Bookmarklet seems to work only in Chrome, open the chapter then use the searchbar to activate your
 bookmarklet.
@@ -141,6 +145,7 @@ bookmarklet.
 
 ```JS
 javascript:(function() {
+    if (unsafeWindow === undefined) unsafeWindow = window;
     ["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
 })();
 ```
@@ -149,6 +154,7 @@ javascript:(function() {
 
 ```JS
 javascript:(function() {
+    if (unsafeWindow === undefined) unsafeWindow = window;
     ["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer_Adult.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
 })();
 ```
