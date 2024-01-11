@@ -7,7 +7,13 @@ const doClick = (selector: string) =>
   document.querySelector(selector)?.dispatchEvent(new Event('click'));
 
 function doScrolling(sign: 1 | -1) {
-  if (getUserSettings().zoomMode === 'height') {
+  const chapter = document.querySelector<HTMLElement>('#Chapter');
+  if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
+    chapter.scrollBy({
+      left: (window.innerWidth / 2) * sign * (chapter?.classList.contains('FluidRTL') ? -1 : 1),
+      behavior: 'smooth',
+    });
+  } else if (getUserSettings().zoomMode === 'height') {
     // Fit height
     const pages = [...document.querySelectorAll<HTMLElement>('.MangaPage')];
     const distance = pages.map((element) => Math.abs(element.offsetTop - window.scrollY));
