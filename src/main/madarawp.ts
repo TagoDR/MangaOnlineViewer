@@ -31,8 +31,9 @@ export default {
     'LeviatanScans',
     'Dragon Tea',
     'SetsuScans',
+    'ToonGod',
   ],
-  url: /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel)\/.+\/.+/,
+  url: /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon)\/.+\/.+/,
   homepage: [
     'https://mangabooth.com/',
     'https://manhuaus.com',
@@ -51,6 +52,7 @@ export default {
     'https://leviatanscans.com/',
     'https://dragontea.ink/',
     'https://setsuscans.com/',
+    'https://toongod.org/home/',
   ],
   language: ['English'],
   obs: 'Any Site that uses Madara Wordpress Plugin',
