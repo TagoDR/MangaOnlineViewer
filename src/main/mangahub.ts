@@ -24,7 +24,7 @@ export default {
         'x-mhub-access': getCookie('mhub_access') ?? '',
       },
     };
-    const api = await fetch('https://api.mghubcdn.com/graphql', options).then(async (res) =>
+    const api = await fetch('https://api2.mangahub.io/graphql', options).then(async (res) =>
       res.json(),
     );
     const images = JSON.parse(api?.data.chapter.pages.toString());
@@ -34,9 +34,7 @@ export default {
       pages: images.i.length,
       prev: document.querySelector('.previous a')?.getAttribute('href'),
       next: document.querySelector('.next a')?.getAttribute('href'),
-      listImages: images.i.map(
-        (i: string) => `https://img.mghubcdn.com/file/imghub/${images.p + i}`,
-      ),
+      listImages: images.i.map((i: string) => `https://imgx.mangahub.io/${images.p + i}`),
     };
   },
 };
