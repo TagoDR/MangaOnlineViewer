@@ -24,7 +24,7 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
-// @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.2/dist/hotkeys.min.js
+// @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.5/dist/hotkeys.min.js
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
 // @include       /https?:\/\/(www\.)?bestporncomix.com\/gallery\/.+/
 // @include       /https?:\/\/(www\.)?doujins.com\/.+/
@@ -669,9 +669,7 @@
           .fill(0)
           .map(
             (_, i) =>
-              `//${randomServer}/${imageDir}/${galleryId}/${i + 1}${findExt(
-                i + 1,
-              )}`,
+              `//${randomServer}/${imageDir}/${galleryId}/${i + 1}${findExt(i + 1)}`,
           ),
       };
     },
@@ -732,9 +730,7 @@
       const fetchBlocks = Array(totalBlocks)
         .fill(0)
         .map(async (_, block) => {
-          const url = `https://apicdn.luscious.net/graphql/nobatch/?operationName=PictureListInsideAlbum&variables={"input":{"filters":[{"name":"album_id","value":"${id}"}],"display":"position","items_per_page":50,"page":${
-            block + 1
-          }}}${query}`;
+          const url = `https://apicdn.luscious.net/graphql/nobatch/?operationName=PictureListInsideAlbum&variables={"input":{"filters":[{"name":"album_id","value":"${id}"}],"display":"position","items_per_page":50,"page":${block + 1}}}${query}`;
           return GM.xmlHttpRequest({
             method: "GET",
             url,
@@ -2612,9 +2608,7 @@
       ${wrapStyle("reader", cssStyles)} ${themesCSS}
       ${wrapStyle(
         "MinZoom",
-        `#MangaOnlineViewer .PageContent .PageImg {min-width: ${
-          getUserSettings().minZoom
-        }vw;}`,
+        `#MangaOnlineViewer .PageContent .PageImg {min-width: ${getUserSettings().minZoom}vw;}`,
       )}
     `;
   }
@@ -3804,9 +3798,7 @@
   const getExtension = (mimeType) =>
     /image\/(?<ext>jpe?g|png|webp)/.exec(mimeType)?.groups?.ext ?? "png";
   const getFilename = (name, index, total, ext) =>
-    `${name}${(index + 1)
-      .toString()
-      .padStart(Math.floor(Math.log10(total)) + 1, "0")}.${ext.replace(
+    `${name}${(index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, "0")}.${ext.replace(
       "jpeg",
       "jpg",
     )}`;
@@ -3880,9 +3872,7 @@
       )
       .then((content) => {
         logScript("Download Ready");
-        const zipName = `${document
-          .querySelector("#MangaTitle")
-          ?.textContent?.trim()}.zip`;
+        const zipName = `${document.querySelector("#MangaTitle")?.textContent?.trim()}.zip`;
         FileSaver_minExports.saveAs(content, zipName, { autoBom: false });
         document.getElementById("download")?.classList.remove("loading");
       })
@@ -4191,9 +4181,7 @@
         img.style.height = `${nextHeight}px`;
         img.style.minWidth = "unset";
       } else if (zoom === "percent") {
-        img.style.width = `${
-          img.naturalWidth * (getUserSettings().defaultZoom / 100)
-        }px`;
+        img.style.width = `${img.naturalWidth * (getUserSettings().defaultZoom / 100)}px`;
       } else if (zoom >= 0 && zoom !== 100) {
         img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
       }
@@ -4385,14 +4373,10 @@
       manga.lazy ?? getUserSettings().lazyLoadImages;
     logScript("Loading Images");
     logScript(
-      `Intervals: ${
-        manga.timer ?? getUserSettings().throttlePageLoad ?? "Default(1000)"
-      }`,
+      `Intervals: ${manga.timer ?? getUserSettings().throttlePageLoad ?? "Default(1000)"}`,
     );
     logScript(
-      `Lazy: ${getUserSettings().lazyLoadImages}, Starting from: ${
-        getUserSettings().lazyStart
-      }`,
+      `Lazy: ${getUserSettings().lazyLoadImages}, Starting from: ${getUserSettings().lazyStart}`,
     );
     if (isImagesManga(manga)) {
       logScript("Method: Images:", manga.listImages);
@@ -4452,9 +4436,7 @@
     applyZoom();
     scrollToElement(
       document.querySelector(
-        `#Page${
-          event.currentTarget.querySelector(".ThumbnailIndex")?.textContent
-        }`,
+        `#Page${event.currentTarget.querySelector(".ThumbnailIndex")?.textContent}`,
       ),
     );
   }
@@ -5096,28 +5078,6 @@
       });
     });
 
-  async function viewer(manga) {
-    if (manga.before !== void 0) {
-      await manga.before(manga.begin);
-    }
-    manga.comments = document.querySelector("#disqus_thread, #fb-comments");
-    logScript("Rebuilding Site");
-    setTimeout(() => {
-      try {
-        cleanUpElement(document.documentElement, document.head, document.body);
-        window.scrollTo(0, 0);
-        display(manga);
-      } catch (e) {
-        logScript(e);
-      } finally {
-        clearBookmark();
-      }
-    }, 50);
-  }
-
-  const startButton =
-    "#StartMOV {\n    font-size: 2em;\n    color: #fff;\n    cursor: pointer;\n    margin: 10px auto;\n    padding: 10px 20px;\n    text-align: center;\n    border: none;\n    background-size: 300% 100%;\n    border-radius: 50px;\n    transition: all 0.4s ease-in-out;\n    background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\n    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\n    position: fixed;\n    right: 0;\n    left: 0;\n    bottom: 0;\n    z-index: 105000;\n    height: 3em;\n    min-height: 50px;\n    width: 80%;\n}\n\n#StartMOV:hover {\n    background-position: 100% 0;\n    transition: all 0.4s ease-in-out;\n}\n\n#StartMOV:focus {\n    outline: none;\n}\n";
-
   async function testAttribute(site) {
     if (site.waitAttr !== void 0) {
       logScript(
@@ -5172,6 +5132,38 @@
       logScript("Continuing");
     }
   }
+
+  async function viewer(manga) {
+    if (manga.before !== void 0) {
+      await manga.before(manga.begin);
+    }
+    manga.comments = document.querySelector("#disqus_thread, #fb-comments");
+    if (manga.comments) {
+      logScript(`Waiting to Comments to load`, manga.comments);
+      await until(() => {
+        const iframe = manga.comments?.querySelector("iframe");
+        return (
+          iframe !== void 0 &&
+          (iframe?.contentDocument !== void 0 ||
+            iframe?.contentWindow?.document !== void 0)
+        );
+      });
+    }
+    setTimeout(() => {
+      try {
+        cleanUpElement(document.documentElement, document.head, document.body);
+        window.scrollTo(0, 0);
+        display(manga);
+      } catch (e) {
+        logScript(e);
+      } finally {
+        clearBookmark();
+      }
+    }, 50);
+  }
+
+  const startButton =
+    "#StartMOV {\n    font-size: 2em;\n    color: #fff;\n    cursor: pointer;\n    margin: 10px auto;\n    padding: 10px 20px;\n    text-align: center;\n    border: none;\n    background-size: 300% 100%;\n    border-radius: 50px;\n    transition: all 0.4s ease-in-out;\n    background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\n    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\n    position: fixed;\n    right: 0;\n    left: 0;\n    bottom: 0;\n    z-index: 105000;\n    height: 3em;\n    min-height: 50px;\n    width: 80%;\n}\n\n#StartMOV:hover {\n    background-position: 100% 0;\n    transition: all 0.4s ease-in-out;\n}\n\n#StartMOV:focus {\n    outline: none;\n}\n";
 
   const localhost = {
     name: "Local Files",
@@ -5509,9 +5501,7 @@
   async function start(sites) {
     Unlock();
     logScript(
-      `Starting ${getInfoGM.script.name} ${
-        getInfoGM.script.version
-      } on ${getBrowser()} with ${getEngine()}`,
+      `Starting ${getInfoGM.script.name} ${getInfoGM.script.version} on ${getBrowser()} with ${getEngine()}`,
     );
     if (allowUpload()) return;
     logScript(`${sites.length} Known Manga Sites, Looking for a match...`);
