@@ -37,8 +37,8 @@ const externalScripts: string[] = [
     referrerpolicy="no-referrer"
   ></script>`,
   html` <script
-    src="https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.2/dist/hotkeys.min.js"
-    integrity="sha256-OfWFcK6jlOlEq/60gyPUmdsQyuWxgx19vBpmjgoG6bg="
+    src="https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.5/dist/hotkeys.min.js"
+    integrity="sha256-3cnyqZqt+Ecgu3NHg4kYRZAxHhRpEc8QCj9jbL5pZEQ="
     crossorigin="anonymous"
   ></script>`,
   html` <script
