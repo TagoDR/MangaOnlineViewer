@@ -26,7 +26,7 @@ export async function testVariable(site: ISite) {
   }
 }
 
-async function until(predFn: () => boolean) {
+export async function until(predFn: () => boolean) {
   const poll = (done: (value: unknown) => void) => {
     const result = predFn();
     if (result) {
