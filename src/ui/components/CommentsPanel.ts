@@ -1,19 +1,17 @@
 import { html } from '../../utils/code-tag';
-import type { IManga } from '../../types';
-import { isBackgroundColorDark } from '../../utils/colors';
-import { getLocaleString } from '../../core/settings';
-import { IconX } from '../icons';
+import { getLocaleString, getUserSettings } from '../../core/settings';
+import { IconMoon, IconSun, IconX } from '../icons';
 
-const commentsPanel = (manga: IManga) => html`
+const commentsPanel = () => html`
   <div id="CommentsPanel" class="panel">
     <button id="CloseComments" class="closeButton" title="${getLocaleString('CLOSE')}">
       ${IconX}
     </button>
     <h2>${getLocaleString('COMMENTS')}</h2>
-    <div
-      id="CommentsArea"
-      class="${isBackgroundColorDark(manga.comments ?? document.body) ? 'dark' : 'light'}"
-    ></div>
+    <div id="CommentsArea" class="${getUserSettings().colorScheme}"></div>
+    <button id="CommentsColorScheme" class="simpleButton ColorScheme">
+      ${IconSun} ${IconMoon}
+    </button>
   </div>
 `;
 export default commentsPanel;

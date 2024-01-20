@@ -37,6 +37,12 @@ export function buttonCommentsClose() {
   document.querySelector('#Overlay')?.classList.remove('visible');
 }
 
+export function changeCommentsColor() {
+  const elem = document.querySelector('#CommentsArea');
+  elem?.classList.toggle('light');
+  elem?.classList.toggle('dark');
+}
+
 function globals() {
   document.querySelector('#download')?.addEventListener('click', buttonStartDownload);
   document.querySelector('#pageControls')?.addEventListener('click', buttonGlobalHideImageControls);
@@ -44,6 +50,7 @@ function globals() {
   document.querySelector('#prev')?.addEventListener('click', buttonRedirectURL);
   document.querySelector('#series')?.addEventListener('click', buttonRedirectURL);
   document.querySelector('#CommentsButton')?.addEventListener('click', buttonCommentsOpen);
+  document.querySelector('#CommentsColorScheme')?.addEventListener('click', changeCommentsColor);
   document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonCommentsClose));
   document.querySelector('#Overlay')?.addEventListener('click', buttonCommentsClose);
 }

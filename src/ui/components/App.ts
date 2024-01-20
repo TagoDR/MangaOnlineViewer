@@ -17,7 +17,7 @@ let loadedManga: IManga;
 export function hydrateApp() {
   const elements = {
     '#Header': Header(loadedManga),
-    '#CommentsPanel': CommentsPanel(loadedManga),
+    '#CommentsPanel': CommentsPanel(),
     '#SettingsPanel': SettingsPanel(),
     '#KeybindingsPanel': KeybindingsPanel(),
     '#Bookmarks': BookmarksPanel(),
@@ -48,7 +48,7 @@ const app = (manga: IManga) => {
       <div id="menu" class="${getUserSettings().header}">${IconMenu2}</div>
       ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
       <div id="Overlay" class="overlay"></div>
-      ${CommentsPanel(manga)} ${KeybindingsPanel()} ${BookmarksPanel()} ${SettingsPanel()}
+      ${CommentsPanel()} ${KeybindingsPanel()} ${BookmarksPanel()} ${SettingsPanel()}
     </div>
   `;
 };

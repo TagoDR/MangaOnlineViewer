@@ -80,6 +80,10 @@
     opacity: 0.8;
 }
 
+#MangaOnlineViewer .simpleButton {
+    font-size: initial;
+}
+
 #MangaOnlineViewer .panel {
     padding: 5px;
     position: inherit;
@@ -94,6 +98,8 @@
 #MangaOnlineViewer .ControlButton.hidden,
 #MangaOnlineViewer.light #ColorScheme > .icon-tabler-sun,
 #MangaOnlineViewer:not(.light) #ColorScheme > .icon-tabler-moon,
+#MangaOnlineViewer .light + #CommentsColorScheme > .icon-tabler-sun,
+#MangaOnlineViewer .dark + #CommentsColorScheme > .icon-tabler-moon,
 #MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,
 #MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,
 #MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,
