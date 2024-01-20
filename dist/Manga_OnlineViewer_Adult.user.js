@@ -5103,6 +5103,11 @@
       logScript(`Found Variable ${site.waitVar} = ${wait}`);
     }
   }
+  function timeoutPromise(ms) {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(void 0), ms);
+    });
+  }
   async function until(predFn) {
     const poll = (done) => {
       const result = predFn();
@@ -5115,6 +5120,9 @@
       }
     };
     return new Promise(poll);
+  }
+  async function untilTimeout(predFn, timeout) {
+    return Promise.race([until(predFn), timeoutPromise(timeout)]);
   }
   async function testFunc(site) {
     if (site.waitFunc !== void 0) {
@@ -5133,24 +5141,29 @@
     }
   }
 
-  async function viewer(manga) {
-    if (manga.before !== void 0) {
-      await manga.before(manga.begin);
-    }
-    manga.comments = document.querySelector("#disqus_thread, #fb-comments");
-    if (manga.comments) {
-      logScript(`Waiting to Comments to load`, manga.comments);
+  async function captureComments() {
+    const comments = document.querySelector("#disqus_thread, #fb-comments");
+    if (comments) {
+      logScript(`Waiting to Comments to load`, comments);
       window.scrollTo(0, document.body.scrollHeight);
-      await until(() => {
-        const iframe = manga.comments?.querySelector("iframe");
+      const load = await untilTimeout(() => {
+        const iframe = comments?.querySelector("iframe");
         return (
           iframe !== void 0 &&
           !isEmpty(iframe?.src) &&
           (iframe?.contentDocument !== void 0 ||
             iframe?.contentWindow?.document !== void 0)
         );
-      });
+      }, 5e3);
+      if (!load) logScript(`Timeout Comments`, comments);
     }
+    return comments;
+  }
+  async function viewer(manga) {
+    if (manga.before !== void 0) {
+      await manga.before(manga.begin);
+    }
+    manga.comments = await captureComments();
     setTimeout(() => {
       try {
         cleanUpElement(document.documentElement, document.head, document.body);
