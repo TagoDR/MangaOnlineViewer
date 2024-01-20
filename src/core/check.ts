@@ -26,6 +26,12 @@ export async function testVariable(site: ISite) {
   }
 }
 
+export function timeoutPromise(ms: number) {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(undefined), ms);
+  });
+}
+
 export async function until(predFn: () => boolean) {
   const poll = (done: (value: unknown) => void) => {
     const result = predFn();
@@ -39,6 +45,10 @@ export async function until(predFn: () => boolean) {
   };
 
   return new Promise(poll);
+}
+
+export async function untilTimeout(predFn: () => boolean, timeout: number) {
+  return Promise.race([until(predFn), timeoutPromise(timeout)]);
 }
 
 export async function testFunc(site: ISite) {
