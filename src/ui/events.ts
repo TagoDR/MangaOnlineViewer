@@ -11,8 +11,10 @@ import theming from './events/theming';
 import viewMode from './events/viewmode';
 import zoom from './events/zoom';
 import autoscroll from './events/autoscroll';
+import { getDevice } from '../utils/tampermonkey';
 
 let setupEvents = false;
+
 // Controls for the extra features added to the sites
 function events() {
   if (!setupEvents) {
@@ -20,6 +22,11 @@ function events() {
     keybindings();
     individual();
     size();
+    window.addEventListener('resize', () => {
+      const reader = document.querySelector('#MangaOnlineViewer');
+      ['mobile', 'tablet', 'desktop'].forEach((c) => reader?.classList.remove(c));
+      reader?.classList.add(getDevice());
+    });
     setupEvents = true;
   }
   bookmarks();

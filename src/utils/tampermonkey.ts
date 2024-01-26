@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, no-console */
 // Encapsulation for the console
+import UAParser from 'ua-parser-js';
 import type { ISettings } from '../types';
 
 function logScript(...text: any[]): string[] {
@@ -117,7 +118,19 @@ function getEngine(): string {
   return getInfoGM.scriptHandler ?? 'Greasemonkey';
 }
 
-const isMobile = () => window.matchMedia('screen and (max-width: 768px)').matches;
+const parser = new UAParser();
+const getDevice = () => {
+  const device = parser.getDevice().type;
+  if (device !== 'mobile' && device !== 'tablet') {
+    if (window.matchMedia('screen and (max-width: 600px)').matches) return 'mobile';
+    if (window.matchMedia('screen and (max-width: 992px)').matches) return 'tablet';
+    return 'desktop';
+  }
+  return device;
+};
+const isMobile = () =>
+  // @ts-ignore
+  navigator?.userAgentData?.mobile || getDevice() === 'mobile' || getDevice() === 'tablet';
 
 export {
   logScript,
@@ -134,4 +147,5 @@ export {
   logScriptC,
   logClear,
   isMobile,
+  getDevice,
 };

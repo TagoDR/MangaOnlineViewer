@@ -11,6 +11,7 @@ import CommentsPanel from './CommentsPanel';
 import events from '../events';
 import { toggleAutoScroll } from '../events/autoscroll';
 import { IconMenu2 } from '../icons';
+import { getDevice } from '../../utils/tampermonkey';
 
 let loadedManga: IManga;
 
@@ -42,7 +43,8 @@ const app = (manga: IManga) => {
       id="MangaOnlineViewer"
       class="${getUserSettings().colorScheme} 
         ${getUserSettings().hidePageControls ? 'hideControls' : ''}
-        ${isBookmarked() ? 'bookmarked' : ''}"
+        ${isBookmarked() ? 'bookmarked' : ''}
+        ${getDevice()}"
       data-theme="${getUserSettings().theme}"
     >
       <div id="menu" class="${getUserSettings().header}">${IconMenu2}</div>
