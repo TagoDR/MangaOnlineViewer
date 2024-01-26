@@ -26,6 +26,7 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
 // @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.5/dist/hotkeys.min.js
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.37/ua-parser.min.js
 // @include       /https?:\/\/alandal.com\/chapter\/.+\/\d+/
 // @include       /https?:\/\/(www\.)?bato.to\/(chapter|title).*/
 // @include       /https?:\/\/(www\.)?(bilibilicomics).com\/.+\/.+/
