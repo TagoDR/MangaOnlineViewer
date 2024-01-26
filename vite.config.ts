@@ -47,6 +47,7 @@ const globals = {
   lodash: '_',
   'hotkeys-js': 'hotkeys',
   'range-slider-input': 'rangeSlider',
+  'ua-parser-js': 'UAParser',
 };
 
 function generateReadme() {

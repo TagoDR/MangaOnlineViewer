@@ -46,6 +46,12 @@ const externalScripts: string[] = [
     integrity="sha256-KJTc4RYlnMMWuc4r2VjaBulFUWIF5ywlqbekhyENaf8="
     crossorigin="anonymous"
   ></script>`,
+  html` <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.37/ua-parser.min.js"
+    integrity="sha512-LAchvH0Y4sxYM1ouOaqHQ6WbSXvOgkioPaiyW0oPOFNNMNfpsBEpvzYmsxgDf8pQM/fMaMdxYP/nFenquTAkdw=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>`,
 ];
 const requiredScripts = externalScripts.map((script: string) => {
   const find = /src="(.+?)"/.exec(script);
