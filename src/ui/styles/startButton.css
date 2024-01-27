@@ -1,24 +1,23 @@
 #StartMOV {
-    font-size: 2em;
+    font-size: 2rem;
     color: #fff;
     cursor: pointer;
-    margin: 10px auto;
-    padding: 10px 20px;
+    margin: 0 auto;
+    padding: 0.5rem 1rem;
     text-align: center;
     border: none;
-    background-size: 300% 100%;
     border-radius: 50px;
-    transition: all 0.4s ease-in-out;
-    background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);
-    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
+    min-height: 50px;
+    width: 80%;
     position: fixed;
     right: 0;
     left: 0;
     bottom: 0;
     z-index: 105000;
-    height: 3em;
-    min-height: 50px;
-    width: 80%;
+    transition: all 0.4s ease-in-out;
+    background-size: 300% 100%;
+    background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);
+    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
 }
 
 #StartMOV:hover {

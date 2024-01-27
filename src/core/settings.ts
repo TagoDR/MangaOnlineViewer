@@ -54,17 +54,22 @@ export const defaultSettings: ISettings = {
   },
 };
 
-// Configuration
-let settings: ISettings = _.defaultsDeep(getSettings(defaultSettings), defaultSettings);
+const getDefault = () =>
+  !isMobile()
+    ? defaultSettings
+    : _.defaultsDeep(
+        {
+          lazyLoadImages: true,
+          fitWidthIfOversize: true,
+          showThumbnails: false,
+          viewMode: 'WebComic',
+          header: 'click',
+        },
+        defaultSettings,
+      );
 
-// Force Settings for mobile
-if (isMobile()) {
-  settings.lazyLoadImages = true;
-  settings.fitWidthIfOversize = true;
-  settings.showThumbnails = false;
-  settings.viewMode = 'WebComic';
-  settings.header = 'click';
-}
+// Configuration
+let settings: ISettings = _.defaultsDeep(getSettings(getDefault()), getDefault());
 
 type SettingsKey = keyof typeof settings;
 
@@ -88,6 +93,7 @@ export function getLocaleString(name: string): string {
 
   return '##MISSING_STRING##';
 }
+
 export function getAllLocaleStrings(name: string): string {
   return locales.map((locale) => `<span class='${locale.ID}'>${locale[name]}</span>`).join('\n');
 }
@@ -95,14 +101,14 @@ export function getAllLocaleStrings(name: string): string {
 export function updateSettings(newValue: Partial<ISettings>) {
   logScript(JSON.stringify(newValue));
   settings = { ...settings, ...newValue };
-  setSettings(diffObj(settings, defaultSettings));
+  setSettings(diffObj(settings, getDefault()));
 }
 
 export function resetSettings() {
   getListGM().forEach((setting) => {
     removeValueGM(setting);
   });
-  updateSettings(defaultSettings);
+  updateSettings(getDefault());
 }
 
 export function isBookmarked(url: string = window.location.href): number | undefined {

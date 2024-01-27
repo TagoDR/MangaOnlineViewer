@@ -119,7 +119,7 @@
 #MangaOnlineViewer.mobile .PageFunctions .ControlButton:not(.Bookmark),
 #MangaOnlineViewer.mobile #SettingsPanel .DefaultZoomMode,
 #MangaOnlineViewer.mobile #SettingsPanel .DefaultZoom,
-#MangaOnlineViewer.mobile #SettingsPanel .viewMode,
+    /*#MangaOnlineViewer.mobile #SettingsPanel .viewMode,*/
 #MangaOnlineViewer.mobile #SettingsPanel .fitIfOversize,
 #MangaOnlineViewer.mobile #SettingsPanel .showThumbnails,
 #MangaOnlineViewer.mobile #SettingsPanel .lazyLoadImages,
