@@ -91,7 +91,7 @@
     background-color: var(--theme-background-color);
 }
 
-#MangaOnlineViewer .fitWidthIfOversize .PageContent .PageImg {
+#MangaOnlineViewer :not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {
     max-width: 100%;
 }
 
