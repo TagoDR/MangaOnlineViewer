@@ -49,6 +49,11 @@ export function buttonBookmark(event: Event) {
     10,
   );
   const mark: IBookmark = {
+    name:
+      document
+        .querySelector('title')
+        ?.textContent?.trim()
+        .replace(/^\(\d+%\) */, '') ?? '',
     url: window.location.href,
     page: num,
     date: new Date().toISOString().slice(0, 10),

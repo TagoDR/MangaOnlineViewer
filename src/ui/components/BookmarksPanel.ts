@@ -15,6 +15,7 @@ const listBookmarks = () => {
           ${new Date(mark.date).toISOString().slice(0, 10)}
         </span>
         <span class="bookmarkData bookmarkURl">
+          <span>${mark.name}</span><br />
           <a class="" href="${mark.url}" target="_blank">${mark.url}</a>
         </span>
         <span class="bookmarkData bookmarkPage">Page: ${mark.page}</span>
