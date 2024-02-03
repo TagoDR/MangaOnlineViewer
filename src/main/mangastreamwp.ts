@@ -35,13 +35,21 @@ export default {
   waitEle: '#chapter option:nth-child(2)',
   run() {
     const chapter = document.querySelector<HTMLOptionElement>('#chapter option:checked');
-    const images = [...document.querySelectorAll('#readerarea img:not(.asurascans)')];
+    const images = [
+      ...document.querySelectorAll('#readerarea img:not(.asurascans):not([src*="loader"])'),
+    ];
     return {
       title: document.querySelector('.entry-title')?.textContent?.trim(),
-      series: document.querySelector('.allc a')?.getAttribute('href'),
+      series:
+        document.querySelector('.allc a')?.getAttribute('href') ??
+        document.querySelectorAll('[class*="breadcrumb"] a').item(1)?.getAttribute('href'),
       pages: images.length,
-      prev: chapter?.nextElementSibling?.getAttribute('value'),
-      next: chapter?.previousElementSibling?.getAttribute('value'),
+      prev:
+        document.querySelector('.nextprev a:first-child:not(.disabled)')?.getAttribute('href') ??
+        chapter?.nextElementSibling?.getAttribute('value'),
+      next:
+        document.querySelector('.nextprev a:last-child:not(.disabled)')?.getAttribute('href') ??
+        chapter?.previousElementSibling?.getAttribute('value'),
       listImages: images.map(
         (img) =>
           img.getAttribute('data-src') ??

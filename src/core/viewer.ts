@@ -19,6 +19,7 @@ async function captureComments() {
         (iframe?.contentDocument !== undefined || iframe?.contentWindow?.document !== undefined)
       );
     }, 5000);
+    window.scrollTo(0, 0);
     if (!load) logScript(`Timeout Comments`, comments);
   }
   return comments;
