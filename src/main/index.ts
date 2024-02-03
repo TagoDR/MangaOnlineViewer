@@ -2,6 +2,7 @@ import alandal from './alandal';
 import batoto from './batoto';
 import bilibilicomics from './bilibilicomics';
 import comicastle from './comicastle';
+import comick from './comick';
 import dysnatyscans from './dysnatyscans';
 import foolslide from './foolslide';
 import inkr from './inkr';
@@ -57,6 +58,7 @@ const sites = [
   batoto,
   bilibilicomics,
   comicastle,
+  comick,
   dysnatyscans,
   mangastreamwp,
   inkr,
