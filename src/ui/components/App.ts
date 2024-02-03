@@ -12,10 +12,12 @@ import events from '../events';
 import { toggleAutoScroll } from '../events/autoscroll';
 import { IconMenu2 } from '../icons';
 import { getDevice } from '../../utils/tampermonkey';
+import { updateViewMode } from '../events/viewmode';
 
 let loadedManga: IManga;
 
 export function hydrateApp() {
+  updateViewMode(getUserSettings().viewMode)();
   const elements = {
     '#Header': Header(loadedManga),
     '#CommentsPanel': CommentsPanel(),

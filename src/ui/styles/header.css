@@ -16,7 +16,7 @@
     z-index: 900;
 }
 
-#MangaOnlineViewer #Header.click.headroom-end,
+#MangaOnlineViewer #Header.click.headroom-end + #Chapter:not(.webcomic, .vertical),
 #MangaOnlineViewer #Header.click {
     position: fixed;
     top: -100%;
