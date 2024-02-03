@@ -1,4 +1,6 @@
 #StartMOV {
+    all: revert;
+    backface-visibility: hidden;
     font-size: 2rem;
     color: #fff;
     cursor: pointer;
@@ -6,7 +8,7 @@
     padding: 0.5rem 1rem;
     text-align: center;
     border: none;
-    border-radius: 50px;
+    border-radius: 10px;
     min-height: 50px;
     width: 80%;
     position: fixed;
