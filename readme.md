@@ -39,6 +39,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [Alandal](https://alandal.com/) _[English]_
 - [Batoto](https://bato.to/) _[English]_
 - [BilibiliComics](https://www.bilibilicomics.com/) _[English]_
+- [Comick](https://comick.cc/home) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
 - [MangaStream WordPress Plugin](https://themesia.com/mangastream-wordpress-theme/) / [Asura Scans](https://asuratoon.com/) / [Flame Comics](https://flamecomics.com/) / [Rizzcomic](https://rizzcomic.com/) / [Voids-Scans](https://void-scans.com/) / [Luminous Scans](https://luminousscans.com/) / [Shimada Scans](https://shimadascans.com/) / [Night Scans](https://nightscans.net/) / [Manhwa-Freak](https://manhwa-freak.com/) / [OzulScansEn](https://ozulscansen.com/) / [AzureManga](https://azuremanga.com/) / [CypherScans](https://cypherscans.xyz/) _[English]_
 - [INKR](https://inkr.com/) _[English]_
