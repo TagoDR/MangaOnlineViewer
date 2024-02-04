@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2024.02.03
+// @version       2024.02.04
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -1475,6 +1475,7 @@
     VIEW_MODE_WEBCOMIC: "WebComic",
     FIT_WIDTH_OVERSIZED: "Fit Width if Oversized",
     SHOW_THUMBNAILS: "Show Thumbnails",
+    ENABLE_COMMENTS: "Capture Comments (When available)",
     HIDE_CONTROLS: "Always Hide Page Controls",
     HEADER_TYPE: "Change Header Type",
     HEADER_HOVER: "Hover",
@@ -1583,6 +1584,7 @@
     VIEW_MODE_WEBCOMIC: "WebComic",
     FIT_WIDTH_OVERSIZED: "Encher a tela se grande demais",
     SHOW_THUMBNAILS: "Mostra Miniaturas",
+    ENABLE_COMMENTS: "Capturar comentários (quando disponível)",
     HIDE_CONTROLS: "Sempre esconder controles das paginas",
     HEADER_TYPE: "Mudar Tipo de Cabeçalho",
     HEADER_HOVER: "Passar por perto",
@@ -1693,6 +1695,7 @@
     VIEW_MODE_WEBCOMIC: "垂直无缝",
     FIT_WIDTH_OVERSIZED: "如果尺寸过大、则适合宽度",
     SHOW_THUMBNAILS: "显示缩略图",
+    ENABLE_COMMENTS: "捕获评论（如果可用）",
     HIDE_CONTROLS: "始终隐藏页面控件",
     HEADER_TYPE: "更改标题显示方式",
     HEADER_HOVER: "悬停",
@@ -1799,6 +1802,7 @@
     VIEW_MODE_WEBCOMIC: "WebComic",
     FIT_WIDTH_OVERSIZED: "Ajustar ancho si es demasiado grande",
     SHOW_THUMBNAILS: "Mostrar miniaturas",
+    ENABLE_COMMENTS: "Capturar comentarios (cuando esté disponible)",
     HIDE_CONTROLS: "Ocultar siempre la barra de controles",
     HEADER_TYPE: "Cambiar tipo de cabecera",
     HEADER_HOVER: "Pasar por encima",
@@ -1889,6 +1893,7 @@
     colorScheme: "dark",
     fitWidthIfOversize: true,
     showThumbnails: true,
+    enableComments: true,
     downloadZip: false,
     throttlePageLoad: 1e3,
     zoomMode: "percent",
@@ -3004,6 +3009,16 @@
         name="showThumbnails"
         id="showThumbnails"
         ${getUserSettings().showThumbnails ? "checked" : ""}
+      />
+    </div>
+    <div class="ControlLabel enableComments">
+      ${getLocaleString("ENABLE_COMMENTS")}
+      <input
+        type="checkbox"
+        value="true"
+        name="enableComments"
+        id="enableComments"
+        ${getUserSettings().enableComments ? "checked" : ""}
       />
     </div>
     <div class="ControlLabel lazyLoadImages">
@@ -4503,6 +4518,11 @@
     updateSettings({ showThumbnails: event.currentTarget.checked });
     applyZoom();
   }
+  function checkEnableComments(event) {
+    document.querySelector("#CommentsButton")?.classList.toggle("disabled");
+    updateSettings({ enableComments: event.currentTarget.checked });
+    applyZoom();
+  }
   function changeAutoDownload(event) {
     updateSettings({ downloadZip: event.currentTarget.checked });
     if (event.currentTarget.checked) {
@@ -4587,6 +4607,9 @@
     document
       .querySelector("#showThumbnails")
       ?.addEventListener("change", checkShowThumbnails);
+    document
+      .querySelector("#enableComments")
+      ?.addEventListener("change", checkEnableComments);
     document
       .querySelector("#downloadZip")
       ?.addEventListener("change", changeAutoDownload);
@@ -5176,6 +5199,7 @@
   }
 
   async function captureComments() {
+    if (!getUserSettings().enableComments) return null;
     const comments = document.querySelector("#disqus_thread, #fb-comments");
     if (comments) {
       logScript(`Waiting to Comments to load`, comments);

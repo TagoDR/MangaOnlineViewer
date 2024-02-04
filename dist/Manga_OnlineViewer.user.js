@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.02.03
+// @version       2024.02.04
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -33,7 +33,7 @@
 // @include       /https?:\/\/comic\.nizamkomputer.com\/read\/.+\/\d+.*/
 // @include       /https?:\/\/(www\.)?comick.cc\/comic\/.+\/.+/
 // @include       /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/
-// @include       /https?:\/\/(www\.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|nightscans|manhwafreak|manhwa-freak|ozulscansen|azuremanga|cypherscans).(com|org|gg|xyz|to|net)\/.+/
+// @include       /https?:\/\/(www\.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|night-scans|manhwafreak|manhwa-freak|ozulscansen|azuremanga|cypherscans).(com|org|gg|xyz|to|net)\/.+/
 // @include       /https?:\/\/(comics\.)?inkr.com\/title\/.+\/chapter\/.+/
 // @include       /https?:\/\/(www\.)?inmanga.com\/ver\/manga\/.+\/.+/
 // @include       /https?:\/\/(www\.)?klmanga.com\/.+chapter.+/
@@ -1376,7 +1376,7 @@
       "AzureManga",
       "CypherScans",
     ],
-    url: /https?:\/\/(www\.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|nightscans|manhwafreak|manhwa-freak|ozulscansen|azuremanga|cypherscans).(com|org|gg|xyz|to|net)\/.+/,
+    url: /https?:\/\/(www\.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|night-scans|manhwafreak|manhwa-freak|ozulscansen|azuremanga|cypherscans).(com|org|gg|xyz|to|net)\/.+/,
     homepage: [
       "https://themesia.com/mangastream-wordpress-theme/",
       "https://asuratoon.com/",
@@ -1385,7 +1385,7 @@
       "https://void-scans.com/",
       "https://luminousscans.com/",
       "https://shimadascans.com/",
-      "https://nightscans.net/",
+      "https://night-scans.com/",
       "https://manhwa-freak.com/",
       "https://ozulscansen.com/",
       "https://azuremanga.com/",
@@ -2285,6 +2285,7 @@
     VIEW_MODE_WEBCOMIC: "WebComic",
     FIT_WIDTH_OVERSIZED: "Fit Width if Oversized",
     SHOW_THUMBNAILS: "Show Thumbnails",
+    ENABLE_COMMENTS: "Capture Comments (When available)",
     HIDE_CONTROLS: "Always Hide Page Controls",
     HEADER_TYPE: "Change Header Type",
     HEADER_HOVER: "Hover",
@@ -2393,6 +2394,7 @@
     VIEW_MODE_WEBCOMIC: "WebComic",
     FIT_WIDTH_OVERSIZED: "Encher a tela se grande demais",
     SHOW_THUMBNAILS: "Mostra Miniaturas",
+    ENABLE_COMMENTS: "Capturar comentários (quando disponível)",
     HIDE_CONTROLS: "Sempre esconder controles das paginas",
     HEADER_TYPE: "Mudar Tipo de Cabeçalho",
     HEADER_HOVER: "Passar por perto",
@@ -2503,6 +2505,7 @@
     VIEW_MODE_WEBCOMIC: "垂直无缝",
     FIT_WIDTH_OVERSIZED: "如果尺寸过大、则适合宽度",
     SHOW_THUMBNAILS: "显示缩略图",
+    ENABLE_COMMENTS: "捕获评论（如果可用）",
     HIDE_CONTROLS: "始终隐藏页面控件",
     HEADER_TYPE: "更改标题显示方式",
     HEADER_HOVER: "悬停",
@@ -2609,6 +2612,7 @@
     VIEW_MODE_WEBCOMIC: "WebComic",
     FIT_WIDTH_OVERSIZED: "Ajustar ancho si es demasiado grande",
     SHOW_THUMBNAILS: "Mostrar miniaturas",
+    ENABLE_COMMENTS: "Capturar comentarios (cuando esté disponible)",
     HIDE_CONTROLS: "Ocultar siempre la barra de controles",
     HEADER_TYPE: "Cambiar tipo de cabecera",
     HEADER_HOVER: "Pasar por encima",
@@ -2731,6 +2735,7 @@
     colorScheme: "dark",
     fitWidthIfOversize: true,
     showThumbnails: true,
+    enableComments: true,
     downloadZip: false,
     throttlePageLoad: 1e3,
     zoomMode: "percent",
@@ -3521,6 +3526,16 @@
         name="showThumbnails"
         id="showThumbnails"
         ${getUserSettings().showThumbnails ? "checked" : ""}
+      />
+    </div>
+    <div class="ControlLabel enableComments">
+      ${getLocaleString("ENABLE_COMMENTS")}
+      <input
+        type="checkbox"
+        value="true"
+        name="enableComments"
+        id="enableComments"
+        ${getUserSettings().enableComments ? "checked" : ""}
       />
     </div>
     <div class="ControlLabel lazyLoadImages">
@@ -5020,6 +5035,11 @@
     updateSettings({ showThumbnails: event.currentTarget.checked });
     applyZoom();
   }
+  function checkEnableComments(event) {
+    document.querySelector("#CommentsButton")?.classList.toggle("disabled");
+    updateSettings({ enableComments: event.currentTarget.checked });
+    applyZoom();
+  }
   function changeAutoDownload(event) {
     updateSettings({ downloadZip: event.currentTarget.checked });
     if (event.currentTarget.checked) {
@@ -5104,6 +5124,9 @@
     document
       .querySelector("#showThumbnails")
       ?.addEventListener("change", checkShowThumbnails);
+    document
+      .querySelector("#enableComments")
+      ?.addEventListener("change", checkEnableComments);
     document
       .querySelector("#downloadZip")
       ?.addEventListener("change", changeAutoDownload);
@@ -5754,6 +5777,7 @@
   }
 
   async function captureComments() {
+    if (!getUserSettings().enableComments) return null;
     const comments = document.querySelector("#disqus_thread, #fb-comments");
     if (comments) {
       logScript(`Waiting to Comments to load`, comments);
