@@ -28,6 +28,7 @@ export default {
   VIEW_MODE_WEBCOMIC: 'WebComic',
   FIT_WIDTH_OVERSIZED: 'Fit Width if Oversized',
   SHOW_THUMBNAILS: 'Show Thumbnails',
+  ENABLE_COMMENTS: 'Capture Comments (When available)',
   HIDE_CONTROLS: 'Always Hide Page Controls',
   HEADER_TYPE: 'Change Header Type',
   HEADER_HOVER: 'Hover',

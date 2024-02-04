@@ -29,6 +29,7 @@ export default {
   VIEW_MODE_WEBCOMIC: '垂直无缝',
   FIT_WIDTH_OVERSIZED: '如果尺寸过大、则适合宽度',
   SHOW_THUMBNAILS: '显示缩略图',
+  ENABLE_COMMENTS: '捕获评论（如果可用）',
   HIDE_CONTROLS: '始终隐藏页面控件',
   HEADER_TYPE: '更改标题显示方式',
   HEADER_HOVER: '悬停',

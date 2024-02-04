@@ -40,6 +40,12 @@ export function checkShowThumbnails(event: Event) {
   applyZoom();
 }
 
+export function checkEnableComments(event: Event) {
+  document.querySelector('#CommentsButton')?.classList.toggle('disabled');
+  updateSettings({ enableComments: (event.currentTarget as HTMLInputElement).checked });
+  applyZoom();
+}
+
 export function changeAutoDownload(event: Event) {
   updateSettings({ downloadZip: (event.currentTarget as HTMLInputElement).checked });
   if ((event.currentTarget as HTMLInputElement).checked) {
@@ -126,6 +132,8 @@ function options() {
   document.querySelector('#loadMode')?.addEventListener('change', changeLoadMode);
   // Show Thumbnail Toggle
   document.querySelector('#showThumbnails')?.addEventListener('change', checkShowThumbnails);
+  // Enable Comments Toggle
+  document.querySelector('#enableComments')?.addEventListener('change', checkEnableComments);
   // Download auto start toggle
   document.querySelector('#downloadZip')?.addEventListener('change', changeAutoDownload);
   // Lazy load Toggle

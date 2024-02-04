@@ -308,6 +308,16 @@ const checkboxOptions = html`
       ${getUserSettings().showThumbnails ? 'checked' : ''}
     />
   </div>
+  <div class="ControlLabel enableComments">
+    ${getLocaleString('ENABLE_COMMENTS')}
+    <input
+      type="checkbox"
+      value="true"
+      name="enableComments"
+      id="enableComments"
+      ${getUserSettings().enableComments ? 'checked' : ''}
+    />
+  </div>
   <div class="ControlLabel lazyLoadImages">
     ${getLocaleString('LAZY_LOAD_IMAGES_ENABLE')}
     <input

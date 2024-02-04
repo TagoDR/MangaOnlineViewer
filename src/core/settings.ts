@@ -20,6 +20,7 @@ export const defaultSettings: ISettings = {
   colorScheme: 'dark',
   fitWidthIfOversize: true,
   showThumbnails: true,
+  enableComments: true,
   downloadZip: false,
   throttlePageLoad: 1000,
   zoomMode: 'percent',

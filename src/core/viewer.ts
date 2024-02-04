@@ -1,12 +1,13 @@
 import type { IManga } from '../types';
 import { logScript } from '../utils/tampermonkey';
-import { clearBookmark } from './settings';
+import { clearBookmark, getUserSettings } from './settings';
 import display from '../ui';
 import { cleanUpElement } from '../utils/cleanup';
 import { untilTimeout } from './check';
 import { isEmpty } from '../utils/checks';
 
 async function captureComments() {
+  if (!getUserSettings().enableComments) return null;
   const comments = document.querySelector('#disqus_thread, #fb-comments');
   if (comments) {
     logScript(`Waiting to Comments to load`, comments);

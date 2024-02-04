@@ -28,6 +28,7 @@ export default {
   VIEW_MODE_WEBCOMIC: 'WebComic',
   FIT_WIDTH_OVERSIZED: 'Ajustar ancho si es demasiado grande',
   SHOW_THUMBNAILS: 'Mostrar miniaturas',
+  ENABLE_COMMENTS: 'Capturar comentarios (cuando esté disponible)',
   HIDE_CONTROLS: 'Ocultar siempre la barra de controles',
   HEADER_TYPE: 'Cambiar tipo de cabecera',
   HEADER_HOVER: 'Pasar por encima',

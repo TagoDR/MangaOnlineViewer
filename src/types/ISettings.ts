@@ -27,6 +27,7 @@ export type ISettings = {
   loadMode: LoadMode;
   fitWidthIfOversize?: boolean;
   showThumbnails?: boolean;
+  enableComments?: boolean;
   downloadZip?: boolean;
   throttlePageLoad: number;
   defaultZoom: number;
