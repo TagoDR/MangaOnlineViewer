@@ -6,12 +6,15 @@ import {
   transformScrollToHorizontalReverse,
 } from './common';
 import { changeGlobalZoom } from './zoom';
+import { updateHeaderType } from './options';
 
 function setupFluid(mode: ViewMode) {
   const chapter = document.querySelector<HTMLElement>('#Chapter');
-  document.querySelector('#Header')!.className = 'click';
-  document.querySelector('#menu')!.className = 'click';
+  document.querySelector('#Header')?.classList.remove('visible');
+  document.querySelector('#menu')?.classList.remove('hide');
+  updateHeaderType('click');
   changeGlobalZoom('height')();
+  // document.querySelectorAll('.PageContent img').forEach((i) => i.removeAttribute('style'));
   scrollToElement(chapter);
   chapter?.addEventListener(
     'wheel',
@@ -22,10 +25,8 @@ function setupFluid(mode: ViewMode) {
 export function updateViewMode(mode: ViewMode) {
   return () => {
     const chapter = document.querySelector<HTMLElement>('#Chapter');
-    const header = document.querySelector('#Header');
     ['Vertical', 'WebComic', 'FluidLTR', 'FluidRTL'].forEach((c) => chapter?.classList.remove(c));
     chapter?.classList.add(mode);
-    header!.className = '';
     chapter?.removeEventListener('wheel', transformScrollToHorizontal);
     chapter?.removeEventListener('wheel', transformScrollToHorizontalReverse);
     if (mode === 'FluidLTR' || mode === 'FluidRTL') {

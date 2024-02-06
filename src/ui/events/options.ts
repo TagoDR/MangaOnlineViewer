@@ -109,10 +109,20 @@ export function checkHideImageControls(event: Event) {
   updateSettings({ hidePageControls: (event.currentTarget as HTMLInputElement).checked });
 }
 
-export function changeHeaderType(event: Event) {
+export function updateHeaderType(mode: HeaderMode) {
+  const header = document.querySelector('#Header');
+  const menu = document.querySelector('#menu');
+  ['scroll', 'click', 'hover', 'fixed', 'simple'].forEach((c) => {
+    header?.classList.remove(c);
+    menu?.classList.remove(c);
+  });
+  header?.classList.add(mode);
+  menu?.classList.add(mode);
+}
+
+function changeHeaderType(event: Event) {
   const headerType = (event.currentTarget as HTMLInputElement).value as HeaderMode;
-  document.querySelector('#Header')!.className = headerType;
-  document.querySelector('#menu')!.className = headerType;
+  updateHeaderType(headerType);
   updateSettings({ header: headerType });
 }
 

@@ -1,6 +1,6 @@
 import NProgress from 'nprogress';
 import imagesLoaded from 'imagesloaded';
-import { logScript } from '../utils/tampermonkey';
+import { isMobile, logScript } from '../utils/tampermonkey';
 import { getUserSettings } from '../core/settings';
 import {
   type IManga,
@@ -34,7 +34,8 @@ function applyZoom(
       const chapter = document.querySelector('#Chapter');
       const fluid =
         chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL');
-      const nextHeight = window.innerHeight + (getUserSettings().showThumbnails || fluid ? -30 : 0);
+      const nextHeight =
+        window.innerHeight + (getUserSettings().showThumbnails || !fluid || !isMobile() ? -31 : 0);
       img.style.height = `${nextHeight}px`;
       img.style.minWidth = 'unset';
     } else if (zoom === 'percent') {

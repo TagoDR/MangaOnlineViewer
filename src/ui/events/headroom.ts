@@ -13,6 +13,7 @@ function headroom(showEnd = 0) {
     header.classList.remove('headroom-end');
     header.classList.remove('headroom-hide');
     header.classList.remove('headroom-show');
+    header.classList.remove('headroom-top');
     if (classSuffix) {
       header.classList.add(`headroom-${classSuffix}`);
     }
@@ -26,10 +27,12 @@ function headroom(showEnd = 0) {
       scrollY + window.innerHeight + showEnd > document.body.scrollHeight
     ) {
       setScrollDirection('end');
-    } else if (scrollY > prevOffset && scrollY > 50) {
+    } else if (scrollY > prevOffset && scrollY > 100) {
       setScrollDirection('hide');
-    } else if (scrollY < prevOffset && scrollY > 50) {
+    } else if (scrollY < prevOffset && scrollY > 100) {
       setScrollDirection('show');
+    } else if (scrollY <= 100) {
+      setScrollDirection('top');
     } else {
       setScrollDirection('');
     }

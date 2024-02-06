@@ -5,18 +5,6 @@
     flex-wrap: wrap;
 }
 
-#MangaOnlineViewer.mobile #Header.click + #Chapter:not(.webcomic, .vertical),
-#MangaOnlineViewer.tablet #Header.click + #Chapter:not(.webcomic, .vertical) {
-    padding-left: initial;
-}
-
-#MangaOnlineViewer.mobile #Header.click.headroom-end + #Chapter:not(.webcomic, .vertical),
-#MangaOnlineViewer.tablet #Header.click.headroom-end + #Chapter:not(.webcomic, .vertical) {
-    transform: translateY(0%);
-    position: sticky;
-    top: 0;
-}
-
 #MangaOnlineViewer.mobile .ViewerTitle,
 #MangaOnlineViewer.tablet .ViewerTitle {
     order: 1;
