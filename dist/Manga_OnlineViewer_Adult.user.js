@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2024.02.04
+// @version       2024.02.06
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -2442,13 +2442,13 @@
     "/*  Simple Normalizer */\nhtml {\n    font-size: 100%;\n}\n\nbody {\n    margin: 0;\n    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\n    font-size: 14px;\n    line-height: 20px;\n    color: var(--theme-body-text-color);\n    background-color: var(--theme-body-background);\n    padding: 0;\n}\n\na,\na:link,\na:visited,\na:active,\na:focus {\n    color: var(--theme-body-text-color);\n    text-decoration: none;\n}\n\nimg {\n    height: auto;\n    vertical-align: middle;\n    border: 0 none;\n}\n";
 
   const media =
-    "#MangaOnlineViewer.mobile #Header,\n#MangaOnlineViewer.tablet #Header {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n}\n\n#MangaOnlineViewer.mobile #Header.click + #Chapter:not(.webcomic, .vertical),\n#MangaOnlineViewer.tablet #Header.click + #Chapter:not(.webcomic, .vertical) {\n    padding-left: initial;\n}\n\n#MangaOnlineViewer.mobile #Header.click.headroom-end + #Chapter:not(.webcomic, .vertical),\n#MangaOnlineViewer.tablet #Header.click.headroom-end + #Chapter:not(.webcomic, .vertical) {\n    transform: translateY(0%);\n    position: sticky;\n    top: 0;\n}\n\n#MangaOnlineViewer.mobile .ViewerTitle,\n#MangaOnlineViewer.tablet .ViewerTitle {\n    order: 1;\n    min-height: auto;\n    padding: 0;\n    margin: 0;\n    flex-grow: 1;\n    flex-shrink: 1;\n    flex-basis: 100%;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions,\n#MangaOnlineViewer.tablet #GlobalFunctions {\n    width: auto;\n    order: 2;\n    padding: 5px;\n}\n\n#MangaOnlineViewer.mobile #ChapterNavigation,\n#MangaOnlineViewer.tablet #ChapterNavigation {\n    order: 3;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.tablet #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.tablets, .phones),\n#MangaOnlineViewer.tablet #GlobalFunctions .ControlButton:not(.tablets, .phones) {\n    display: none;\n}\n\n#MangaOnlineViewer.mobile #Header {\n    flex-direction: row;\n    flex-wrap: wrap;\n    justify-content: center;\n    align-items: center;\n}\n\n#MangaOnlineViewer.mobile #Header.click + #Chapter:not(.webcomic, .vertical) {\n    position: sticky;\n}\n\n#MangaOnlineViewer.mobile #MangaTitle {\n    word-wrap: anywhere;\n}\n\n#MangaOnlineViewer.mobile .ViewerTitle {\n    order: 1;\n    margin-top: 0;\n    height: auto;\n    padding: 0;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions {\n    order: 2;\n    padding: 0;\n    width: auto;\n    flex-basis: 35px;\n}\n\n#MangaOnlineViewer.mobile #ChapterNavigation {\n    order: 3;\n    width: min-content;\n    min-width: 205px;\n}\n\n#MangaOnlineViewer.mobile .ChapterControl {\n    flex-direction: row;\n    flex-wrap: wrap;\n}\n\n#MangaOnlineViewer.mobile .ChapterControl .NavigationControlButton {\n    flex-grow: 1;\n}\n\n#MangaOnlineViewer.mobile .PageFunctions {\n    padding: 0;\n}\n\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton.Bookmark {\n    opacity: 1;\n}\n\n\n#MangaOnlineViewer.mobile #Navigation,\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.phones),\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton:not(.Bookmark),\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoomMode,\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoom,\n#MangaOnlineViewer.mobile #SettingsPanel .fitIfOversize,\n#MangaOnlineViewer.mobile #SettingsPanel .showThumbnails,\n#MangaOnlineViewer.mobile #SettingsPanel .lazyLoadImages,\n#MangaOnlineViewer.mobile #SettingsPanel .downloadZip,\n#MangaOnlineViewer.mobile #SettingsPanel .minZoom,\n#MangaOnlineViewer.mobile #SettingsPanel .zoomStep,\n#MangaOnlineViewer.mobile #SettingsPanel .headerType,\n#MangaOnlineViewer.mobile #SettingsPanel .autoScroll,\n#MangaOnlineViewer.mobile #KeybindingsPanel,\n#MangaOnlineViewer.mobile .ChapterControl .download,\n#MangaOnlineViewer.mobile #Counters {\n    display: none;\n}\n";
+    "#MangaOnlineViewer.mobile #Header,\n#MangaOnlineViewer.tablet #Header {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n}\n\n#MangaOnlineViewer.mobile .ViewerTitle,\n#MangaOnlineViewer.tablet .ViewerTitle {\n    order: 1;\n    min-height: auto;\n    padding: 0;\n    margin: 0;\n    flex-grow: 1;\n    flex-shrink: 1;\n    flex-basis: 100%;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions,\n#MangaOnlineViewer.tablet #GlobalFunctions {\n    width: auto;\n    order: 2;\n    padding: 5px;\n}\n\n#MangaOnlineViewer.mobile #ChapterNavigation,\n#MangaOnlineViewer.tablet #ChapterNavigation {\n    order: 3;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.tablet #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.tablets, .phones),\n#MangaOnlineViewer.tablet #GlobalFunctions .ControlButton:not(.tablets, .phones) {\n    display: none;\n}\n\n#MangaOnlineViewer.mobile #Header {\n    flex-direction: row;\n    flex-wrap: wrap;\n    justify-content: center;\n    align-items: center;\n}\n\n#MangaOnlineViewer.mobile #Header.click + #Chapter:not(.webcomic, .vertical) {\n    position: sticky;\n}\n\n#MangaOnlineViewer.mobile #MangaTitle {\n    word-wrap: anywhere;\n}\n\n#MangaOnlineViewer.mobile .ViewerTitle {\n    order: 1;\n    margin-top: 0;\n    height: auto;\n    padding: 0;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions {\n    order: 2;\n    padding: 0;\n    width: auto;\n    flex-basis: 35px;\n}\n\n#MangaOnlineViewer.mobile #ChapterNavigation {\n    order: 3;\n    width: min-content;\n    min-width: 205px;\n}\n\n#MangaOnlineViewer.mobile .ChapterControl {\n    flex-direction: row;\n    flex-wrap: wrap;\n}\n\n#MangaOnlineViewer.mobile .ChapterControl .NavigationControlButton {\n    flex-grow: 1;\n}\n\n#MangaOnlineViewer.mobile .PageFunctions {\n    padding: 0;\n}\n\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton.Bookmark {\n    opacity: 1;\n}\n\n\n#MangaOnlineViewer.mobile #Navigation,\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.phones),\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton:not(.Bookmark),\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoomMode,\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoom,\n#MangaOnlineViewer.mobile #SettingsPanel .fitIfOversize,\n#MangaOnlineViewer.mobile #SettingsPanel .showThumbnails,\n#MangaOnlineViewer.mobile #SettingsPanel .lazyLoadImages,\n#MangaOnlineViewer.mobile #SettingsPanel .downloadZip,\n#MangaOnlineViewer.mobile #SettingsPanel .minZoom,\n#MangaOnlineViewer.mobile #SettingsPanel .zoomStep,\n#MangaOnlineViewer.mobile #SettingsPanel .headerType,\n#MangaOnlineViewer.mobile #SettingsPanel .autoScroll,\n#MangaOnlineViewer.mobile #KeybindingsPanel,\n#MangaOnlineViewer.mobile .ChapterControl .download,\n#MangaOnlineViewer.mobile #Counters {\n    display: none;\n}\n";
 
   const animation =
     "@-webkit-keyframes spin {\n    to {\n        transform: rotate(360deg);\n    }\n}\n\n@keyframes spin {\n    to {\n        transform: rotate(360deg);\n    }\n}\n\n@-webkit-keyframes spin-reverse {\n    0% {\n        transform: rotate(360deg);\n    }\n\n    to {\n        transform: rotate(0);\n    }\n}\n\n@keyframes spin-reverse {\n    0% {\n        transform: rotate(360deg);\n    }\n\n    to {\n        transform: rotate(0);\n    }\n}\n\n.icon-tabler-loader-2,\n.animate-spin {\n    -webkit-animation: spin 1s linear infinite;\n    animation: spin 1s linear infinite;\n}\n\n.animate-spin-reverse {\n    -webkit-animation: spin-reverse 1s linear infinite;\n    animation: spin-reverse 1s linear infinite;\n}\n";
 
   const header =
-    "#MangaOnlineViewer #gotoPage {\n    min-width: 35px;\n}\n\n#MangaOnlineViewer #Header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    flex-flow: row nowrap;\n    transition: transform 0.3s ease-in;\n    position: sticky;\n    top: 0;\n    left: 0;\n    right: 0;\n    background-color: inherit;\n    z-index: 900;\n}\n\n#MangaOnlineViewer #Header.click.headroom-end + #Chapter:not(.webcomic, .vertical),\n#MangaOnlineViewer #Header.click {\n    position: fixed;\n    top: -100%;\n    padding-left: 40px;\n}\n\n#MangaOnlineViewer #Header.hover,\n#MangaOnlineViewer #Header.simple {\n    position: static;\n}\n\n/*#MangaOnlineViewer #Header.hover.headroom-hide,*/\n#MangaOnlineViewer #Header.scroll.headroom-hide {\n    transform: translateY(-100%);\n}\n\n#MangaOnlineViewer #Header.headroom-end,\n#MangaOnlineViewer #Header.scroll.headroom-show,\n#MangaOnlineViewer #Header.hover.visible,\n#MangaOnlineViewer #Header.click.visible,\n#MangaOnlineViewer #Header.fixed {\n    transform: translateY(0%);\n    position: sticky;\n    top: 0;\n}\n\n#MangaOnlineViewer #menu {\n    position: fixed;\n    z-index: 1;\n    color: var(--theme-body-text-color);\n    height: 40px;\n    width: 40px;\n}\n\n#MangaOnlineViewer #menu .icon-tabler {\n    position: relative;\n    top: 4px;\n    left: 4px;\n    height: 32px;\n    width: 32px;\n    stroke-width: 1.25;\n}\n\n#MangaOnlineViewer #menu:not(.click, .hover),\n#MangaOnlineViewer #menu.hide {\n    display: none;\n}\n\n#MangaOnlineViewer #menu.click {\n    z-index: 901;\n}\n\n#MangaOnlineViewer #MangaTitle {\n    padding: 2px;\n    margin: 0;\n    font-size: 1.2rem;\n    font-weight: 400;\n}\n\n#MangaOnlineViewer #GlobalFunctions {\n    display: flex;\n    gap: 3px;\n    padding: 3px 3px 3px 0;\n    flex-wrap: wrap;\n    width: 300px;\n    z-index: 100;\n}\n\n#MangaOnlineViewer #GlobalFunctions span,\n#MangaOnlineViewer .ChapterControl span {\n    display: flex;\n    flex-wrap: nowrap;\n    justify-content: space-evenly;\n}\n\n#MangaOnlineViewer .ChapterControl span {\n    flex-grow: 1;\n}\n\n#MangaOnlineViewer .ChapterControl span > * {\n    flex-basis: 50%;\n}\n\n#MangaOnlineViewer #ScrollControl .icon-tabler,\n#MangaOnlineViewer #GlobalFunctions .icon-tabler {\n    width: 25px;\n    height: 25px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomSlider {\n    display: flex;\n    align-items: center;\n}\n\n#MangaOnlineViewer #GlobalFunctions #Zoom {\n    margin: 2px 5px;\n    width: 160px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomVal {\n    width: 40px;\n    display: inline-block;\n    color: var(--theme-primary-text-color);\n    line-height: 20px;\n    text-align: center;\n    border-radius: 3px;\n    background: var(--theme-primary-color);\n    padding: 2px 5px;\n}\n\n#MangaOnlineViewer #ChapterNavigation {\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: end;\n    padding: 5px;\n    max-width: 350px;\n}\n\n#MangaOnlineViewer #Counters {\n    padding-right: 5px;\n}\n\n#MangaOnlineViewer #ChapterControl {\n    display: flex;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton {\n    display: inline-flex;\n    margin: 2px;\n    justify-content: center;\n    align-items: center;\n    padding: 3px;\n    gap: 0.5em;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton .icon-tabler {\n    flex-shrink: 0;\n    align-self: center;\n    width: 1rem;\n    height: 1rem;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href='#'],\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href=''],\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href='undefined'] {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer #ChapterControl #download.loading {\n    cursor: not-allowed;\n    pointer-events: none;\n    opacity: 0.6;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton.disabled {\n    pointer-events: none;\n    filter: grayscale(0.9);\n}\n\n#MangaOnlineViewer .ViewerTitle {\n    text-align: center;\n    min-height: 60px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    padding: 5px;\n    flex-basis: 60%;\n}\n\n#MangaOnlineViewer #Header .ViewerTitle #series[href='#'],\n#MangaOnlineViewer #Header .ViewerTitle #series[href=''],\n#MangaOnlineViewer #Header .ViewerTitle #series[href='undefined'] {\n    /*visibility: hidden;*/\n}\n";
+    "#MangaOnlineViewer #gotoPage {\n    min-width: 35px;\n}\n\n#MangaOnlineViewer #Header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    flex-flow: row nowrap;\n    transition: transform 0.3s ease-in;\n    position: sticky;\n    top: 0;\n    left: 0;\n    right: 0;\n    background-color: inherit;\n    z-index: 900;\n}\n\n#MangaOnlineViewer #Header.click {\n    padding-left: 40px;\n}\n\n@keyframes headroom {\n    from {\n        transform: translateY(-100%);\n        position: sticky;\n        top: 0;\n    }\n    to {\n        transform: translateY(0%);\n        position: sticky;\n        top: 0;\n    }\n}\n\n#MangaOnlineViewer #Header:not(.visible, .headroom-top, .fixed, .simple) {\n    animation: headroom 0.3s ease-in reverse;\n    transform: translateY(-100%);\n    position: sticky;\n    top: 0;\n}\n\n#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR,+ #Chapter.FluidRTL ) {\n    position: fixed;\n    padding-left: 40px;\n    top: -100%;\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-hide {\n    animation: none;\n    transform: translateY(-100%);\n    position: sticky;\n    top: 0;\n}\n\n\n#MangaOnlineViewer #Header.scroll.headroom-show,\n#MangaOnlineViewer #Header.headroom-end,\n#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR,+ #Chapter.FluidRTL ).visible,\n#MangaOnlineViewer #Header.visible {\n    animation: headroom 0.3s ease-in;\n    transform: translateY(0%);\n    position: sticky;\n    top: 0;\n}\n\n#MangaOnlineViewer #Header.headroom-top {\n    animation: none;\n}\n\n#MangaOnlineViewer #Header.fixed {\n    position: sticky;\n    animation: none;\n    top: 0;\n    transform: translateY(0%);\n}\n\n#MangaOnlineViewer #Header.simple {\n    position: static;\n    animation: none;\n    top: 0;\n    transform: translateY(0%);\n}\n\n#MangaOnlineViewer #menu {\n    position: fixed;\n    z-index: 1;\n    color: var(--theme-body-text-color);\n    height: 40px;\n    width: 40px;\n}\n\n#MangaOnlineViewer #menu .icon-tabler {\n    position: relative;\n    top: 4px;\n    left: 4px;\n    height: 32px;\n    width: 32px;\n    stroke-width: 1.25;\n}\n\n#MangaOnlineViewer #menu:not(.click, .hover),\n#MangaOnlineViewer #menu.hide {\n    display: none;\n}\n\n#MangaOnlineViewer #menu.click {\n    z-index: 901;\n}\n\n#MangaOnlineViewer #MangaTitle {\n    padding: 2px;\n    margin: 0;\n    font-size: 1.2rem;\n    font-weight: 400;\n}\n\n#MangaOnlineViewer #GlobalFunctions {\n    display: flex;\n    gap: 3px;\n    padding: 3px 3px 3px 0;\n    flex-wrap: wrap;\n    width: 300px;\n    z-index: 100;\n}\n\n#MangaOnlineViewer #GlobalFunctions span,\n#MangaOnlineViewer .ChapterControl span {\n    display: flex;\n    flex-wrap: nowrap;\n    justify-content: space-evenly;\n}\n\n#MangaOnlineViewer .ChapterControl span {\n    flex-grow: 1;\n}\n\n#MangaOnlineViewer .ChapterControl span > * {\n    flex-basis: 50%;\n}\n\n#MangaOnlineViewer #ScrollControl .icon-tabler,\n#MangaOnlineViewer #GlobalFunctions .icon-tabler {\n    width: 25px;\n    height: 25px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomSlider {\n    display: flex;\n    align-items: center;\n}\n\n#MangaOnlineViewer #GlobalFunctions #Zoom {\n    margin: 2px 5px;\n    width: 160px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomVal {\n    width: 40px;\n    display: inline-block;\n    color: var(--theme-primary-text-color);\n    line-height: 20px;\n    text-align: center;\n    border-radius: 3px;\n    background: var(--theme-primary-color);\n    padding: 2px 5px;\n}\n\n#MangaOnlineViewer #ChapterNavigation {\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: end;\n    padding: 5px;\n    max-width: 350px;\n}\n\n#MangaOnlineViewer #Counters {\n    padding-right: 5px;\n}\n\n#MangaOnlineViewer #ChapterControl {\n    display: flex;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton {\n    display: inline-flex;\n    margin: 2px;\n    justify-content: center;\n    align-items: center;\n    padding: 3px;\n    gap: 0.5em;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton .icon-tabler {\n    flex-shrink: 0;\n    align-self: center;\n    width: 1rem;\n    height: 1rem;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href='#'],\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href=''],\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href='undefined'] {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer #ChapterControl #download.loading {\n    cursor: not-allowed;\n    pointer-events: none;\n    opacity: 0.6;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton.disabled {\n    pointer-events: none;\n    filter: grayscale(0.9);\n}\n\n#MangaOnlineViewer .ViewerTitle {\n    text-align: center;\n    min-height: 60px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    padding: 5px;\n    flex-basis: 60%;\n}\n";
 
   const keybindings$1 =
     "#MangaOnlineViewer #KeybindingsPanel {\n    padding: 10px;\n    position: fixed;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    transition: transform 0.3s ease-in-out;\n    transform: translateX(100%);\n    line-height: 1.5em;\n    z-index: 1000;\n    overflow-y: auto;\n    width: 360px;\n    max-width: 100vw;\n}\n\n#MangaOnlineViewer #KeybindingsPanel.visible {\n    transform: translateX(0);\n    display: block;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #KeybindingsList {\n    display: grid;\n    grid-template-columns: 1fr 2fr;\n    gap: 5px;\n}\n\n#MangaOnlineViewer #KeybindingsPanel .ControlButton {\n    margin-left: 3px;\n    justify-content: center;\n    align-items: center;\n    padding: 5px 10px;\n    gap: 0.5em;\n}\n\n#MangaOnlineViewer #KeybindingsPanel label {\n    display: ruby;\n}\n#MangaOnlineViewer #KeybindingsPanel input {\n    display: inline-block;\n    width: 100%;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #HotKeysRules {\n    grid-column: span 2;\n}\n";
@@ -3253,7 +3253,7 @@
       (index) => html` <option value="${index}">${index}</option>`,
     );
   const Header = (manga) => html`
-    <header id="Header" class="${getUserSettings().header}">
+    <header id="Header" class="${getUserSettings().header} headroom-top">
       <aside id="GlobalFunctions">
         <span>
           <button
@@ -3984,6 +3984,7 @@
       header.classList.remove("headroom-end");
       header.classList.remove("headroom-hide");
       header.classList.remove("headroom-show");
+      header.classList.remove("headroom-top");
       if (classSuffix) {
         header.classList.add(`headroom-${classSuffix}`);
       }
@@ -3996,10 +3997,12 @@
         scrollY + window.innerHeight + showEnd > document.body.scrollHeight
       ) {
         setScrollDirection("end");
-      } else if (scrollY > prevOffset && scrollY > 50) {
+      } else if (scrollY > prevOffset && scrollY > 100) {
         setScrollDirection("hide");
-      } else if (scrollY < prevOffset && scrollY > 50) {
+      } else if (scrollY < prevOffset && scrollY > 100) {
         setScrollDirection("show");
+      } else if (scrollY <= 100) {
+        setScrollDirection("top");
       } else {
         setScrollDirection("");
       }
@@ -4217,7 +4220,7 @@
           chapter?.classList.contains("FluidRTL");
         const nextHeight =
           window.innerHeight +
-          (getUserSettings().showThumbnails || fluid ? -30 : 0);
+          (getUserSettings().showThumbnails || !fluid || !isMobile() ? -31 : 0);
         img.style.height = `${nextHeight}px`;
         img.style.minWidth = "unset";
       } else if (zoom === "percent") {
@@ -4583,10 +4586,19 @@
       ?.classList.toggle("hideControls");
     updateSettings({ hidePageControls: event.currentTarget.checked });
   }
+  function updateHeaderType(mode) {
+    const header = document.querySelector("#Header");
+    const menu = document.querySelector("#menu");
+    ["scroll", "click", "hover", "fixed", "simple"].forEach((c) => {
+      header?.classList.remove(c);
+      menu?.classList.remove(c);
+    });
+    header?.classList.add(mode);
+    menu?.classList.add(mode);
+  }
   function changeHeaderType(event) {
     const headerType = event.currentTarget.value;
-    document.querySelector("#Header").className = headerType;
-    document.querySelector("#menu").className = headerType;
+    updateHeaderType(headerType);
     updateSettings({ header: headerType });
   }
   function changeScrollHeight(event) {
@@ -4922,8 +4934,9 @@
 
   function setupFluid(mode) {
     const chapter = document.querySelector("#Chapter");
-    document.querySelector("#Header").className = "click";
-    document.querySelector("#menu").className = "click";
+    document.querySelector("#Header")?.classList.remove("visible");
+    document.querySelector("#menu")?.classList.remove("hide");
+    updateHeaderType("click");
     changeGlobalZoom("height")();
     scrollToElement(chapter);
     chapter?.addEventListener(
@@ -4936,12 +4949,10 @@
   function updateViewMode(mode) {
     return () => {
       const chapter = document.querySelector("#Chapter");
-      const header = document.querySelector("#Header");
       ["Vertical", "WebComic", "FluidLTR", "FluidRTL"].forEach((c) =>
         chapter?.classList.remove(c),
       );
       chapter?.classList.add(mode);
-      header.className = "";
       chapter?.removeEventListener("wheel", transformScrollToHorizontal);
       chapter?.removeEventListener("wheel", transformScrollToHorizontalReverse);
       if (mode === "FluidLTR" || mode === "FluidRTL") {
