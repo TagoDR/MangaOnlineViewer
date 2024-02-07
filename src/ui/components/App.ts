@@ -28,6 +28,18 @@ export function hydrateApp() {
   if (document.querySelector('#ScrollControl')?.classList.contains('running')) {
     toggleAutoScroll();
   }
+  const outer = document.querySelector('#MangaOnlineViewer');
+  if (outer) {
+    outer.className = `${getUserSettings().colorScheme} 
+        ${getUserSettings().hidePageControls ? 'hideControls' : ''}
+        ${isBookmarked() ? 'bookmarked' : ''}
+        ${getDevice()}`;
+    outer.setAttribute('data-theme', getUserSettings().theme);
+  }
+  const reader = document.querySelector('#Chapter');
+  if (reader) {
+    reader.className = `${getUserSettings().fitWidthIfOversize ? 'fitWidthIfOversize' : ''}  ${getUserSettings().viewMode}`;
+  }
   Object.entries(elements).forEach(([id, component]) => {
     const tag = document.querySelector(id);
     if (tag) {
