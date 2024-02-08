@@ -25,7 +25,7 @@ function setupFluid(mode: ViewMode) {
 export function updateViewMode(mode: ViewMode) {
   return () => {
     const chapter = document.querySelector<HTMLElement>('#Chapter');
-    ['Vertical', 'WebComic', 'FluidLTR', 'FluidRTL'].forEach((c) => chapter?.classList.remove(c));
+    chapter?.classList.remove('Vertical', 'WebComic', 'FluidLTR', 'FluidRTL');
     chapter?.classList.add(mode);
     chapter?.removeEventListener('wheel', transformScrollToHorizontal);
     chapter?.removeEventListener('wheel', transformScrollToHorizontalReverse);

@@ -112,10 +112,8 @@ export function checkHideImageControls(event: Event) {
 export function updateHeaderType(mode: HeaderMode) {
   const header = document.querySelector('#Header');
   const menu = document.querySelector('#menu');
-  ['scroll', 'click', 'hover', 'fixed', 'simple'].forEach((c) => {
-    header?.classList.remove(c);
-    menu?.classList.remove(c);
-  });
+  header?.classList.remove('scroll', 'click', 'hover', 'fixed', 'simple');
+  menu?.classList.remove('scroll', 'click', 'hover', 'fixed', 'simple');
   header?.classList.add(mode);
   menu?.classList.add(mode);
 }

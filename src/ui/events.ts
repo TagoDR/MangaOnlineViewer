@@ -24,7 +24,7 @@ function events() {
     size();
     window.addEventListener('resize', () => {
       const reader = document.querySelector('#MangaOnlineViewer');
-      ['mobile', 'tablet', 'desktop'].forEach((c) => reader?.classList.remove(c));
+      reader?.classList.remove('mobile', 'tablet', 'desktop');
       reader?.classList.add(getDevice());
     });
     setupEvents = true;
