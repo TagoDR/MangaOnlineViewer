@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2024.02.07
+// @version       2024.02.10
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -3981,10 +3981,12 @@
     let prevOffset = 0;
     const setScrollDirection = (classSuffix) => {
       const header = document.querySelector("#Header");
-      header.classList.remove("headroom-end");
-      header.classList.remove("headroom-hide");
-      header.classList.remove("headroom-show");
-      header.classList.remove("headroom-top");
+      header.classList.remove(
+        "headroom-end",
+        "headroom-hide",
+        "headroom-show",
+        "headroom-top",
+      );
       if (classSuffix) {
         header.classList.add(`headroom-${classSuffix}`);
       }
@@ -3997,9 +3999,9 @@
         scrollY + window.innerHeight + showEnd > document.body.scrollHeight
       ) {
         setScrollDirection("end");
-      } else if (scrollY > prevOffset && scrollY > 100) {
+      } else if (scrollY > prevOffset && scrollY > 50) {
         setScrollDirection("hide");
-      } else if (scrollY < prevOffset && scrollY > 100) {
+      } else if (scrollY < prevOffset && scrollY > 50) {
         setScrollDirection("show");
       } else if (scrollY <= 100) {
         setScrollDirection("top");
@@ -4589,10 +4591,8 @@
   function updateHeaderType(mode) {
     const header = document.querySelector("#Header");
     const menu = document.querySelector("#menu");
-    ["scroll", "click", "hover", "fixed", "simple"].forEach((c) => {
-      header?.classList.remove(c);
-      menu?.classList.remove(c);
-    });
+    header?.classList.remove("scroll", "click", "hover", "fixed", "simple");
+    menu?.classList.remove("scroll", "click", "hover", "fixed", "simple");
     header?.classList.add(mode);
     menu?.classList.add(mode);
   }
@@ -4949,9 +4949,7 @@
   function updateViewMode(mode) {
     return () => {
       const chapter = document.querySelector("#Chapter");
-      ["Vertical", "WebComic", "FluidLTR", "FluidRTL"].forEach((c) =>
-        chapter?.classList.remove(c),
-      );
+      chapter?.classList.remove("Vertical", "WebComic", "FluidLTR", "FluidRTL");
       chapter?.classList.add(mode);
       chapter?.removeEventListener("wheel", transformScrollToHorizontal);
       chapter?.removeEventListener("wheel", transformScrollToHorizontalReverse);
@@ -5065,9 +5063,7 @@
       size();
       window.addEventListener("resize", () => {
         const reader = document.querySelector("#MangaOnlineViewer");
-        ["mobile", "tablet", "desktop"].forEach((c) =>
-          reader?.classList.remove(c),
-        );
+        reader?.classList.remove("mobile", "tablet", "desktop");
         reader?.classList.add(getDevice());
       });
       setupEvents = true;
