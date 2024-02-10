@@ -30,8 +30,16 @@
     padding: 2px;
 }
 
-#MangaOnlineViewer #BookmarksList .bookmarkData {
-    flex-basis: 15%;
+#MangaOnlineViewer #BookmarksList .bookmarkColumnLarge {
+    flex-basis: 90%;
+}
+
+#MangaOnlineViewer #BookmarksList .bookmarkColumnSmall {
+    width: 90px;
+}
+
+#MangaOnlineViewer #BookmarksList .bookmarkFunctions {
+    width: 52px;
 }
 
 #MangaOnlineViewer #BookmarksList .bookmarkURl {

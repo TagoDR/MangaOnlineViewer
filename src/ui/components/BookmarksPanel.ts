@@ -11,15 +11,17 @@ const listBookmarks = () => {
   return getUserSettings().bookmarks.map(
     (mark, index) => html`
       <div id="Bookmark${index + 1}" class="BookmarkItem">
-        <span class="bookmarkData bookmarkDate">
-          ${new Date(mark.date).toISOString().slice(0, 10)}
+        <span class="bookmarkColumnLarge">
+          <span class="bookmarkName">${mark.name}</span>
+          <br />
+          <a class="bookmarkURl" href="${mark.url}" target="_blank">${mark.url}</a>
         </span>
-        <span class="bookmarkData bookmarkURl">
-          <span>${mark.name}</span><br />
-          <a class="" href="${mark.url}" target="_blank">${mark.url}</a>
+        <span class="bookmarkColumnSmall">
+          <span class="bookmarkDate"> ${new Date(mark.date).toISOString().slice(0, 10)}</span>
+          <br />
+          <span class="bookmarkPage">Page: ${mark.page}</span>
         </span>
-        <span class="bookmarkData bookmarkPage">Page: ${mark.page}</span>
-        <span class="bookmarkData bookmarkFunctions">
+        <span class="bookmarkFunctions">
           <a class="" href="${mark.url}" target="_blank">
             <button class="ControlButton open" title="Open Bookmark" type="button">
               ${IconExternalLink}
