@@ -34,7 +34,7 @@ export default {
       pages: images.i.length,
       prev: document.querySelector('.previous a')?.getAttribute('href'),
       next: document.querySelector('.next a')?.getAttribute('href'),
-      listImages: images.i.map((i: string) => `https://imgx.mangahub.io/${images.p + i}`),
+      listImages: images.i.map((i: string) => `https://imgx.mghcdn.com/${images.p + i}`),
     };
   },
 };
