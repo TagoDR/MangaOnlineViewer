@@ -4448,14 +4448,19 @@
       .querySelector("#MangaOnlineViewer")
       ?.classList.toggle("hideControls");
   }
-  function buttonRedirectURL(event) {
-    const element = event.target;
-    const url = element.getAttribute("value") ?? element.getAttribute("href");
-    if (url) {
-      window.location.href = url;
-    } else {
-      window.history.back();
-    }
+  function buttonRedirectURL(back = false) {
+    return (event) => {
+      const element = event.target;
+      const url = element.getAttribute("value") ?? element.getAttribute("href");
+      if (event.button !== 1 && !event.ctrlKey) {
+        event.preventDefault();
+        if (url) {
+          window.location.href = url;
+        } else if (back) {
+          window.history.back();
+        }
+      }
+    };
   }
   function buttonCommentsOpen() {
     document.querySelector("#CommentsPanel")?.classList.add("visible");
@@ -4479,13 +4484,13 @@
       ?.addEventListener("click", buttonGlobalHideImageControls);
     document
       .querySelector("#next")
-      ?.addEventListener("click", buttonRedirectURL);
+      ?.addEventListener("click", buttonRedirectURL());
     document
       .querySelector("#prev")
-      ?.addEventListener("click", buttonRedirectURL);
+      ?.addEventListener("click", buttonRedirectURL());
     document
       .querySelector("#series")
-      ?.addEventListener("click", buttonRedirectURL);
+      ?.addEventListener("click", buttonRedirectURL(true));
     document
       .querySelector("#CommentsButton")
       ?.addEventListener("click", buttonCommentsOpen);
