@@ -106,6 +106,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [HentaiFox](https://www.hentaifox.com/) _[English]_
 - [HentaiHand](https://hentaihand.com/) / [nHentai.com](https://nhentai.com) _[English]_
 - [HentaIHere](https://www.hentaihere.com/) _[English]_
+- [HentaiNexus](https://hentainexus.com/) _[English]_
 - [hitomi](https://hitomi.la/) _[English]_
 - [Imhentai](https://imhentai.xxx/) _[English]_
 - [KingComix](https://kingcomix.com/) _[English]_
