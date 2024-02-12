@@ -10,6 +10,7 @@ import hentai2read from './hentai2read';
 import hentaifox from './hentaifox';
 import hentaihand from './hentaihand';
 import hentaihere from './hentaihere';
+import hentainexus from './hentainexus';
 import hitomi from './hitomi';
 import imhentai from './imhentai';
 import kingcomix from './kingcomix';
@@ -44,6 +45,7 @@ const sites = [
   hentaifox,
   hentaihand,
   hentaihere,
+  hentainexus,
   hitomi,
   imhentai,
   kingcomix,
