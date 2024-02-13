@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2024.02.12
+// @version       2024.02.13
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -3959,19 +3959,16 @@
       .querySelector("#MangaOnlineViewer")
       ?.classList.toggle("hideControls");
   }
-  function buttonRedirectURL(back = false) {
-    return (event) => {
-      const element = event.target;
-      const url = element.getAttribute("value") ?? element.getAttribute("href");
-      if (event.button !== 1 && !event.ctrlKey) {
-        event.preventDefault();
-        if (url) {
-          window.location.href = url;
-        } else if (back) {
-          window.history.back();
-        }
+  function buttonRedirectURL(event) {
+    const element = event.target;
+    const url = element.getAttribute("value") ?? element.getAttribute("href");
+    if (event.button !== 1 && !event.ctrlKey) {
+      if (url) {
+        window.location.href = url;
+      } else if (element.id === "series") {
+        window.history.back();
       }
-    };
+    }
   }
   function buttonCommentsOpen() {
     document.querySelector("#CommentsPanel")?.classList.add("visible");
@@ -3995,13 +3992,13 @@
       ?.addEventListener("click", buttonGlobalHideImageControls);
     document
       .querySelector("#next")
-      ?.addEventListener("click", buttonRedirectURL());
+      ?.addEventListener("click", buttonRedirectURL);
     document
       .querySelector("#prev")
-      ?.addEventListener("click", buttonRedirectURL());
+      ?.addEventListener("click", buttonRedirectURL);
     document
       .querySelector("#series")
-      ?.addEventListener("click", buttonRedirectURL(true));
+      ?.addEventListener("click", buttonRedirectURL);
     document
       .querySelector("#CommentsButton")
       ?.addEventListener("click", buttonCommentsOpen);

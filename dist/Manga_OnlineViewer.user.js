@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.02.12
+// @version       2024.02.13
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -975,7 +975,7 @@
     homepage: "https://mangadex.org/",
     language: ["English"],
     category: "manga",
-    waitEle: ".md--reader-menu a[href^='/chapter/']",
+    waitEle: ".md--reader-menu a",
     async run() {
       const chapterId = /\/chapter\/([^/]+)(\/\d+)?/
         .exec(window.location.pathname)
@@ -983,17 +983,17 @@
       const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
       const server = await fetch(home).then(async (res) => res.json());
       const images = server.chapter.data;
-      const chapters = [
-        ...document.querySelectorAll(".md--reader-menu a[href^='/chapter/']"),
-      ].map((a) => a.getAttribute("href"));
+      const chapters = document.querySelectorAll(
+        ".md--reader-menu a[href^='/chapter/']",
+      );
       return {
         title: document.querySelector("title")?.text.replace(" - MangaDex", ""),
         series: document
           .querySelector("a.text-primary[href^='/title/']")
           ?.getAttribute("href"),
         pages: images.length,
-        prev: chapters[0] !== window.location.pathname ? chapters[0] : "#",
-        next: chapters[1] !== window.location.pathname ? chapters[1] : "#",
+        prev: chapters?.item(0)?.getAttribute("href"),
+        next: chapters?.item(1)?.getAttribute("href"),
         listImages: images.map(
           (img) => `${server.baseUrl}/data/${server.chapter.hash}/${img}`,
         ),
@@ -4448,19 +4448,16 @@
       .querySelector("#MangaOnlineViewer")
       ?.classList.toggle("hideControls");
   }
-  function buttonRedirectURL(back = false) {
-    return (event) => {
-      const element = event.target;
-      const url = element.getAttribute("value") ?? element.getAttribute("href");
-      if (event.button !== 1 && !event.ctrlKey) {
-        event.preventDefault();
-        if (url) {
-          window.location.href = url;
-        } else if (back) {
-          window.history.back();
-        }
+  function buttonRedirectURL(event) {
+    const element = event.target;
+    const url = element.getAttribute("value") ?? element.getAttribute("href");
+    if (event.button !== 1 && !event.ctrlKey) {
+      if (url) {
+        window.location.href = url;
+      } else if (element.id === "series") {
+        window.history.back();
       }
-    };
+    }
   }
   function buttonCommentsOpen() {
     document.querySelector("#CommentsPanel")?.classList.add("visible");
@@ -4484,13 +4481,13 @@
       ?.addEventListener("click", buttonGlobalHideImageControls);
     document
       .querySelector("#next")
-      ?.addEventListener("click", buttonRedirectURL());
+      ?.addEventListener("click", buttonRedirectURL);
     document
       .querySelector("#prev")
-      ?.addEventListener("click", buttonRedirectURL());
+      ?.addEventListener("click", buttonRedirectURL);
     document
       .querySelector("#series")
-      ?.addEventListener("click", buttonRedirectURL(true));
+      ?.addEventListener("click", buttonRedirectURL);
     document
       .querySelector("#CommentsButton")
       ?.addEventListener("click", buttonCommentsOpen);
