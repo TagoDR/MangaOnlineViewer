@@ -975,7 +975,7 @@
     homepage: "https://mangadex.org/",
     language: ["English"],
     category: "manga",
-    waitEle: ".md--reader-menu a",
+    waitEle: "#chapter-selector a",
     async run() {
       const chapterId = /\/chapter\/([^/]+)(\/\d+)?/
         .exec(window.location.pathname)
@@ -983,9 +983,7 @@
       const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
       const server = await fetch(home).then(async (res) => res.json());
       const images = server.chapter.data;
-      const chapters = document.querySelectorAll(
-        ".md--reader-menu a[href^='/chapter/']",
-      );
+      const chapters = document.querySelectorAll("#chapter-selector a");
       return {
         title: document.querySelector("title")?.text.replace(" - MangaDex", ""),
         series: document
