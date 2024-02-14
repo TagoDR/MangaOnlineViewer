@@ -13,8 +13,9 @@ export default {
     'OzulScansEn',
     'AzureManga',
     'CypherScans',
+    'MangaGalaxy',
   ],
-  url: /https?:\/\/(www\.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|night-scans|manhwafreak|manhwa-freak|ozulscansen|azuremanga|cypherscans).(com|org|gg|xyz|to|net)\/.+/,
+  url: /https?:\/\/(www\.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|night-scans|manhwafreak|manhwa-freak|ozulscansen|azuremanga|cypherscans|mangagalaxy).(com|org|gg|xyz|to|net|me)\/.+/,
   homepage: [
     'https://themesia.com/mangastream-wordpress-theme/',
     'https://asuratoon.com/',
@@ -28,6 +29,7 @@ export default {
     'https://ozulscansen.com/',
     'https://azuremanga.com/',
     'https://cypherscans.xyz/',
+    'https://mangagalaxy.me/',
   ],
   language: ['English'],
   category: 'manga',
