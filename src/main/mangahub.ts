@@ -24,7 +24,7 @@ export default {
         'x-mhub-access': getCookie('mhub_access') ?? '',
       },
     };
-    const api = await fetch('https://mangahub.io/api/graphql', options).then(async (res) =>
+    const api = await fetch('https://api.mghcdn.com/graphql', options).then(async (res) =>
       res.json(),
     );
     const images = JSON.parse(api?.data.chapter.pages.toString());
