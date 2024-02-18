@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, MangaFreak, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.02.16
+// @version       2024.02.18
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -1396,7 +1396,10 @@
     // waitTime: 2000,
     waitEle: "#chapter option:nth-child(2)",
     run() {
-      const chapter = document.querySelector("#chapter option:checked");
+      const chapterSelector = document.querySelector("#chapter option:checked");
+      const chapter = [
+        ...document.querySelectorAll(".nextprev").item(0).querySelectorAll("a"),
+      ];
       const images = [
         ...document.querySelectorAll(
           '#readerarea img:not(.asurascans):not([src*="loader"])',
@@ -1412,15 +1415,15 @@
             ?.getAttribute("href"),
         pages: images.length,
         prev:
-          document
-            .querySelector(".nextprev a:first-child:not(.disabled)")
-            ?.getAttribute("href") ??
-          chapter?.nextElementSibling?.getAttribute("value"),
+          (chapter.at(0)?.classList.contains("disabled")
+            ? void 0
+            : chapter.at(0)?.getAttribute("href")) ??
+          chapterSelector?.nextElementSibling?.getAttribute("value"),
         next:
-          document
-            .querySelector(".nextprev a:last-child:not(.disabled)")
-            ?.getAttribute("href") ??
-          chapter?.previousElementSibling?.getAttribute("value"),
+          (chapter.at(1)?.classList.contains("disabled")
+            ? void 0
+            : chapter.at(1)?.getAttribute("href")) ??
+          chapterSelector?.previousElementSibling?.getAttribute("value"),
         listImages: images.map(
           (img) =>
             img.getAttribute("data-src") ??
