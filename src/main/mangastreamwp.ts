@@ -36,7 +36,8 @@ export default {
   // waitTime: 2000,
   waitEle: '#chapter option:nth-child(2)',
   run() {
-    const chapter = document.querySelector<HTMLOptionElement>('#chapter option:checked');
+    const chapterSelector = document.querySelector<HTMLOptionElement>('#chapter option:checked');
+    const chapter = [...document.querySelectorAll('.nextprev').item(0).querySelectorAll('a')];
     const images = [
       ...document.querySelectorAll('#readerarea img:not(.asurascans):not([src*="loader"])'),
     ];
@@ -47,11 +48,15 @@ export default {
         document.querySelectorAll('[class*="breadcrumb"] a').item(1)?.getAttribute('href'),
       pages: images.length,
       prev:
-        document.querySelector('.nextprev a:first-child:not(.disabled)')?.getAttribute('href') ??
-        chapter?.nextElementSibling?.getAttribute('value'),
+        (chapter.at(0)?.classList.contains('disabled')
+          ? undefined
+          : chapter.at(0)?.getAttribute('href')) ??
+        chapterSelector?.nextElementSibling?.getAttribute('value'),
       next:
-        document.querySelector('.nextprev a:last-child:not(.disabled)')?.getAttribute('href') ??
-        chapter?.previousElementSibling?.getAttribute('value'),
+        (chapter.at(1)?.classList.contains('disabled')
+          ? undefined
+          : chapter.at(1)?.getAttribute('href')) ??
+        chapterSelector?.previousElementSibling?.getAttribute('value'),
       listImages: images.map(
         (img) =>
           img.getAttribute('data-src') ??
