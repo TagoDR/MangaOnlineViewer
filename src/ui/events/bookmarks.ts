@@ -37,7 +37,7 @@ export function buttonEraseBookmarks(event: Event) {
   updateSettings({ bookmarks: marks });
   reloadBookmarks();
   document
-    .querySelectorAll('.BookmarkItem .erase')
+    .querySelectorAll('.bookmarkFunctions .erase')
     ?.forEach(addEvent('click', buttonEraseBookmarks));
 }
 
@@ -78,7 +78,7 @@ export function buttonBookmark(event: Event) {
 
   reloadBookmarks();
   document
-    .querySelectorAll('.BookmarkItem .erase')
+    .querySelectorAll('.bookmarkFunctions .erase')
     ?.forEach(addEvent('click', buttonEraseBookmarks));
 }
 
@@ -89,7 +89,7 @@ function bookmarks() {
   document.querySelector('#Overlay')?.addEventListener('click', buttonBookmarksClose);
   // Erase Bookmark
   document
-    .querySelectorAll('.BookmarkItem .erase')
+    .querySelectorAll('.bookmarkFunctions .erase')
     ?.forEach(addEvent('click', buttonEraseBookmarks));
 
   // Bookmark Page to resume reading
