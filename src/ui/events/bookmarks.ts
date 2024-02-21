@@ -43,11 +43,15 @@ export function buttonEraseBookmarks(event: Event) {
 
 export function buttonBookmark(event: Event) {
   document.querySelector('#MangaOnlineViewer')?.classList.toggle('bookmarked');
-  const num = parseInt(
+  const pagesDistance = [...document.querySelectorAll<HTMLElement>('.MangaPage')].map((element) =>
+    Math.abs(element.offsetTop - window.scrollY),
+  );
+  const currentPage = parseInt(
     (event.currentTarget as HTMLElement).parentElement?.querySelector('.PageIndex')?.textContent ??
       '0',
     10,
   );
+  const num = currentPage || pagesDistance.indexOf(Math.min(...pagesDistance)) + 1;
   const mark: IBookmark = {
     name:
       document
@@ -94,6 +98,7 @@ function bookmarks() {
 
   // Bookmark Page to resume reading
   document.querySelectorAll('.Bookmark')?.forEach(addEvent('click', buttonBookmark));
+  document.querySelector('.AddBookmark')?.addEventListener('click', buttonBookmark);
 }
 
 export default bookmarks;

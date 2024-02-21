@@ -82,6 +82,12 @@
     font-size: initial;
 }
 
+#MangaOnlineViewer .panel .simpleButton {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
 #MangaOnlineViewer .panel {
     padding: 5px;
     position: inherit;
@@ -102,8 +108,8 @@
 #MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,
 #MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,
 #MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,
-#MangaOnlineViewer.bookmarked .ControlButton.Bookmark > .icon-tabler-bookmark,
-#MangaOnlineViewer:not(.bookmarked) .ControlButton.Bookmark > .icon-tabler-bookmark-off,
+#MangaOnlineViewer.bookmarked .Bookmark > .icon-tabler-bookmark,
+#MangaOnlineViewer:not(.bookmarked) .Bookmark > .icon-tabler-bookmark-off,
 #MangaOnlineViewer #AutoScroll.running > .icon-tabler-player-play,
 #MangaOnlineViewer #AutoScroll:not(.running) > .icon-tabler-player-pause {
     display: none;

@@ -1,5 +1,5 @@
 import { html } from '../../utils/code-tag';
-import { IconExternalLink, IconTrash, IconX } from '../icons';
+import { IconBookmark, IconBookmarkOff, IconExternalLink, IconTrash, IconX } from '../icons';
 import { getLocaleString, getUserSettings } from '../../core/settings';
 import { isEmpty } from '../../utils/checks';
 
@@ -45,6 +45,9 @@ const BookmarkPanel = () => html`
   <div id="BookmarksPanel" class="panel">
     <button id="CloseBookmarks" class="closeButton" title="${getLocaleString('CLOSE')}">
       ${IconX}
+    </button>
+    <button class="Bookmark simpleButton" title="${getLocaleString('BOOKMARK')}">
+      ${IconBookmark} ${IconBookmarkOff}
     </button>
     <h2>${getLocaleString('BOOKMARKS')}</h2>
     <div id="BookmarksList"></div>

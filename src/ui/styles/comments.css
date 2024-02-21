@@ -31,9 +31,3 @@
     width: 100%;
     background-color: var(--theme-body-background);
 }
-
-#MangaOnlineViewer #CommentsColorScheme {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-}
