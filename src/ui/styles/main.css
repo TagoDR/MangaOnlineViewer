@@ -62,7 +62,8 @@
     margin-bottom: 5px;
 }
 
-#MangaOnlineViewer .ControlButton {
+#MangaOnlineViewer .ControlButton,
+#MangaOnlineViewer .simpleButton {
     cursor: pointer;
     border-radius: 5px;
     border-width: 1px;
@@ -80,6 +81,7 @@
 
 #MangaOnlineViewer .simpleButton {
     font-size: initial;
+    min-width: 32px;
 }
 
 #MangaOnlineViewer .panel .simpleButton {

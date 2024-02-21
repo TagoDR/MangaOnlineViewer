@@ -10,12 +10,6 @@ import { reloadBookmarks } from '../components/BookmarksPanel';
 import { logScript } from '../../utils/tampermonkey';
 import { addEvent } from './common';
 
-export function buttonBookmarksOpen() {
-  reloadBookmarks();
-  document.querySelector('#BookmarksPanel')?.classList.add('visible');
-  document.querySelector('#Overlay')?.classList.add('visible');
-}
-
 export function buttonBookmarksClose() {
   document.querySelector('#BookmarksPanel')?.classList.remove('visible');
   document.querySelector('#Overlay')?.classList.remove('visible');
@@ -39,6 +33,15 @@ export function buttonEraseBookmarks(event: Event) {
   document
     .querySelectorAll('.bookmarkFunctions .erase')
     ?.forEach(addEvent('click', buttonEraseBookmarks));
+}
+
+export function buttonBookmarksOpen() {
+  reloadBookmarks();
+  document
+    .querySelectorAll('.bookmarkFunctions .erase')
+    ?.forEach(addEvent('click', buttonEraseBookmarks));
+  document.querySelector('#BookmarksPanel')?.classList.add('visible');
+  document.querySelector('#Overlay')?.classList.add('visible');
 }
 
 export function buttonBookmark(event: Event) {
