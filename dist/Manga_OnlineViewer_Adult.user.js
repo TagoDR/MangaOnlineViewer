@@ -813,6 +813,7 @@
       "Dragon Tea",
       "SetsuScans",
       "ToonGod",
+      "ManhuaScan",
     ],
     url: /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon)\/.+\/.+/,
     homepage: [
@@ -834,6 +835,7 @@
       "https://dragontea.ink/",
       "https://setsuscans.com/",
       "https://toongod.org/home/",
+      "https://manhuascan.com/",
     ],
     language: ["English"],
     obs: "Any Site that uses Madara Wordpress Plugin",
