@@ -2697,7 +2697,7 @@
     <div id="ThemeSection">
       <div class="ControlLabel ColorSchemeSelector">
         ${getLocaleString("COLOR_SCHEME")}
-        <button id="ColorScheme" class="simpleButton">
+        <button id="ColorScheme" class="ControlButton">
           ${IconSun} ${IconMoon}
         </button>
       </div>
@@ -3111,7 +3111,7 @@
       >
         ${IconX}
       </button>
-      <button id="ResetSettings" class="simpleButton">
+      <button id="ResetSettings" class="ControlButton">
         ${getLocaleString("BUTTON_RESET_SETTINGS")}
       </button>
       ${language} ${theme} ${loadMode} ${loadSpeed} ${defaultZoomMode}

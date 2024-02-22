@@ -31,7 +31,7 @@
 // @include       /https?:\/\/(www\.)?bato.to\/(chapter|title).*/
 // @include       /https?:\/\/(www\.)?(bilibilicomics).com\/.+\/.+/
 // @include       /https?:\/\/comic\.nizamkomputer.com\/read\/.+\/\d+.*/
-// @include       /https?:\/\/(www\.)?comick.cc\/comic\/.+\/.+/
+// @include       /https?:\/\/(www\.)?comick.io\/comic\/.+\/.+/
 // @include       /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/
 // @include       /https?:\/\/(www\.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|night-scans|manhwafreak|manhwa-freak|ozulscansen|azuremanga|cypherscans|mangagalaxy).(com|org|gg|xyz|to|net|me)\/.+/
 // @include       /https?:\/\/(comics\.)?inkr.com\/title\/.+\/chapter\/.+/

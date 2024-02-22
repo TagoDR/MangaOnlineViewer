@@ -31,7 +31,7 @@
 // @include       /https?:\/\/(www\.)?bato.to\/(chapter|title).*/
 // @include       /https?:\/\/(www\.)?(bilibilicomics).com\/.+\/.+/
 // @include       /https?:\/\/comic\.nizamkomputer.com\/read\/.+\/\d+.*/
-// @include       /https?:\/\/(www\.)?comick.cc\/comic\/.+\/.+/
+// @include       /https?:\/\/(www\.)?comick.io\/comic\/.+\/.+/
 // @include       /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/
 // @include       /https?:\/\/(www\.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|night-scans|manhwafreak|manhwa-freak|ozulscansen|azuremanga|cypherscans|mangagalaxy).(com|org|gg|xyz|to|net|me)\/.+/
 // @include       /https?:\/\/(comics\.)?inkr.com\/title\/.+\/chapter\/.+/
@@ -239,8 +239,8 @@
 
   const comick = {
     name: "Comick",
-    url: /https?:\/\/(www\.)?comick.cc\/comic\/.+\/.+/,
-    homepage: "https://comick.cc/home",
+    url: /https?:\/\/(www\.)?comick.io\/comic\/.+\/.+/,
+    homepage: "https://comick.io/home",
     language: ["English"],
     category: "manga",
     waitEle: "#images-reader-container img",
@@ -3189,7 +3189,7 @@
     <div id="ThemeSection">
       <div class="ControlLabel ColorSchemeSelector">
         ${getLocaleString("COLOR_SCHEME")}
-        <button id="ColorScheme" class="simpleButton">
+        <button id="ColorScheme" class="ControlButton">
           ${IconSun} ${IconMoon}
         </button>
       </div>
@@ -3603,7 +3603,7 @@
       >
         ${IconX}
       </button>
-      <button id="ResetSettings" class="simpleButton">
+      <button id="ResetSettings" class="ControlButton">
         ${getLocaleString("BUTTON_RESET_SETTINGS")}
       </button>
       ${language} ${theme} ${loadMode} ${loadSpeed} ${defaultZoomMode}
