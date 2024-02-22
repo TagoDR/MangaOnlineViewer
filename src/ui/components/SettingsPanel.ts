@@ -39,7 +39,7 @@ const theme = html`
   <div id="ThemeSection">
     <div class="ControlLabel ColorSchemeSelector">
       ${getLocaleString('COLOR_SCHEME')}
-      <button id="ColorScheme" class="simpleButton">${IconSun} ${IconMoon}</button>
+      <button id="ColorScheme" class="ControlButton">${IconSun} ${IconMoon}</button>
     </div>
     <div class="ControlLabel ThemeSelector">
       ${getLocaleString('THEME')}
@@ -374,7 +374,7 @@ const SettingsPanel = () => html`
     <button id="CloseSettings" class="closeButton" title="${getLocaleString('CLOSE')}">
       ${IconX}
     </button>
-    <button id="ResetSettings" class="simpleButton">
+    <button id="ResetSettings" class="ControlButton">
       ${getLocaleString('BUTTON_RESET_SETTINGS')}
     </button>
     ${language} ${theme} ${loadMode} ${loadSpeed} ${defaultZoomMode} ${defaultZoom} ${minZoom}
