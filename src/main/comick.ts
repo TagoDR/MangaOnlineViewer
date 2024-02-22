@@ -1,8 +1,8 @@
 // == Comick =======================================================================================
 export default {
   name: 'Comick',
-  url: /https?:\/\/(www\.)?comick.cc\/comic\/.+\/.+/,
-  homepage: 'https://comick.cc/home',
+  url: /https?:\/\/(www\.)?comick.io\/comic\/.+\/.+/,
+  homepage: 'https://comick.io/home',
   language: ['English'],
   category: 'manga',
   waitEle: '#images-reader-container img',
