@@ -2,7 +2,7 @@
 function findImages() {
   return [
     ...document.querySelectorAll(
-      '.wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img',
+      '.wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img, #chapter-images img',
     ),
   ].map(
     (img) =>
@@ -57,10 +57,13 @@ export default {
   language: ['English'],
   obs: 'Any Site that uses Madara Wordpress Plugin',
   category: 'manga',
-  waitFunc: () =>
-    findImages().every(
-      (s) => s && /^([\t\n])*(https?:\/\/)?.+\.(jpg|jpeg|png|gif|bmp|webp).*$/.test(s),
-    ),
+  waitFunc: () => {
+    const images = findImages();
+    return (
+      images.length > 0 &&
+      images.every((s) => s && /^([\t\n])*(https?:\/\/)?.+\.(jpg|jpeg|png|gif|bmp|webp).*$/.test(s))
+    );
+  },
   run() {
     const images = findImages();
     return {
