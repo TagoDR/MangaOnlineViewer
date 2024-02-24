@@ -2,14 +2,16 @@
 function findImages() {
   return [
     ...document.querySelectorAll(
-      '.wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img, #chapter-images img',
+      '.wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img, #chapter-images img, #chapterContent img',
     ),
-  ].map(
-    (img) =>
-      img?.getAttribute('src') ??
-      img?.getAttribute('data-src') ??
-      img?.getAttribute('data-full-url'),
-  );
+  ]
+    .map(
+      (img) =>
+        img?.getAttribute('src') ??
+        img?.getAttribute('data-src') ??
+        img?.getAttribute('data-full-url'),
+    )
+    .filter((src) => !src?.match(/lazy|loading/i));
 }
 
 export default {
@@ -46,7 +48,7 @@ export default {
     'https://mangazuki.me/',
     'https://jaiminisbox.net',
     'https://disasterscans.com/',
-    'https://manhuaplus.com/',
+    'https://manhuaplus.org/',
     'https://www.topmanhua.com/',
     'https://novelmic.com/',
     'https://reset-scans.com/',
