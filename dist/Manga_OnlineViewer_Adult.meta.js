@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2024.02.24
+// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
+// @version       2024.03.05
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -35,6 +35,7 @@
 // @include       /https?:\/\/(www\.)?gntai.net\/(?!(category|tags|autores))[^/]+\/.+/
 // @include       /https?:\/\/(www\.)?hbrowse.com\/.+/
 // @include       /https?:\/\/(www\.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//
+// @include       /https?:\/\/(www\.)?hentaiera.com\/view\/.+\/\d+\/?/
 // @include       /https?:\/\/(www\.)?hentaifox.com\/g\/.+/
 // @include       /https?:\/\/(www\.)?(hentaihand|nhentai).com\/.+\/reader/
 // @include       /https?:\/\/(www\.)?hentaihere.com\/.+\/.+\/.+/
