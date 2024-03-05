@@ -7,6 +7,7 @@ import fsicomics from './fsicomics';
 import gntai from './gntai';
 import hbrowse from './hbrowse';
 import hentai2read from './hentai2read';
+import hentaiera from './hentaiera';
 import hentaifox from './hentaifox';
 import hentaihand from './hentaihand';
 import hentaihere from './hentaihere';
@@ -42,6 +43,7 @@ const sites = [
   gntai,
   hbrowse,
   hentai2read,
+  hentaiera,
   hentaifox,
   hentaihand,
   hentaihere,
