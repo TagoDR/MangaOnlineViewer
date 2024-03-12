@@ -11,7 +11,7 @@ function findImages() {
         img?.getAttribute('data-src') ??
         img?.getAttribute('data-full-url'),
     )
-    .filter((src) => !src?.match(/lazy|loading/i));
+    .filter((src) => !src?.match(/loading/i));
 }
 
 export default {
