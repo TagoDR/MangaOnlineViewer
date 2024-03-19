@@ -105,4 +105,6 @@ export default {
   COMMENTS: 'Sección de comentarios',
   SCROLL_START: 'Alternar desplazamiento automático',
   AUTO_SCROLL_HEIGHT: 'Velocidad de desplazamiento automático en píxeles',
+  VERTICAL_SEPARATOR: 'Mostrar separadores verticales',
+  END: 'Fin',
 };

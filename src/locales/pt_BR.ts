@@ -103,4 +103,6 @@ export default {
   COMMENTS: 'Seção de comentários',
   SCROLL_START: 'Ativar Rolagem Automatica',
   AUTO_SCROLL_HEIGHT: 'Velocidade da Rolagem Automatica em Pixels',
+  VERTICAL_SEPARATOR: 'Mostrar Separadores Verticais',
+  END: 'Fin',
 };

@@ -22,6 +22,7 @@ export const defaultSettings: ISettings = {
   showThumbnails: true,
   enableComments: true,
   downloadZip: false,
+  verticalSeparator: false,
   throttlePageLoad: 1000,
   zoomMode: 'percent',
   defaultZoom: 100,

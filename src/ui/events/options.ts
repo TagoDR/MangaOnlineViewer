@@ -34,6 +34,11 @@ export function checkFitWidthOversize(event: Event) {
   updateSettings({ fitWidthIfOversize: (event.currentTarget as HTMLInputElement).checked });
 }
 
+export function checkVerticalSeparator(event: Event) {
+  document.querySelector('#Chapter')?.classList.toggle('separator');
+  updateSettings({ verticalSeparator: (event.currentTarget as HTMLInputElement).checked });
+}
+
 export function checkShowThumbnails(event: Event) {
   document.querySelector('#Navigation')?.classList.toggle('disabled');
   updateSettings({ showThumbnails: (event.currentTarget as HTMLInputElement).checked });
@@ -136,6 +141,8 @@ function options() {
   document.querySelector('#locale')?.addEventListener('change', changeLocale);
   // Image Fit width if Oversize Toggle
   document.querySelector('#fitIfOversize')?.addEventListener('change', checkFitWidthOversize);
+  // Vertical Separator Toggle
+  document.querySelector('#verticalSeparator')?.addEventListener('change', checkVerticalSeparator);
   // Start/Load mode Selector
   document.querySelector('#loadMode')?.addEventListener('change', changeLoadMode);
   // Show Thumbnail Toggle

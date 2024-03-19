@@ -288,6 +288,16 @@ const headerType = html`
   </div>
 `;
 const checkboxOptions = html`
+  <div class="ControlLabel verticalSeparator">
+    ${getLocaleString('VERTICAL_SEPARATOR')}
+    <input
+      type="checkbox"
+      value="true"
+      name="verticalSeparator"
+      id="verticalSeparator"
+      ${getUserSettings().verticalSeparator ? 'checked' : ''}
+    />
+  </div>
   <div class="ControlLabel fitIfOversize">
     ${getLocaleString('FIT_WIDTH_OVERSIZED')}
     <input

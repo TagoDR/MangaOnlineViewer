@@ -29,6 +29,7 @@ export type ISettings = {
   showThumbnails?: boolean;
   enableComments?: boolean;
   downloadZip?: boolean;
+  verticalSeparator?: boolean;
   throttlePageLoad: number;
   defaultZoom: number;
   zoomMode: ZoomMode;

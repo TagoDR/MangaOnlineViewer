@@ -7,6 +7,7 @@ const Reader = (manga: IManga) => html`
   <main
     id="Chapter"
     class="${getUserSettings().fitWidthIfOversize ? 'fitWidthIfOversize' : ''}
+  ${getUserSettings().verticalSeparator ? 'separator' : ''}
   ${getUserSettings().viewMode}"
   >
     ${listPages(manga.pages, manga.begin).join('')}

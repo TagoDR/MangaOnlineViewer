@@ -50,6 +50,9 @@ const listPages = (times: number, begin: number) =>
           <img id="PageImg${index}" alt="" class="PageImg" />
         </div>
       </div>
+      <div class="separator">
+        [ ${index === times ? getLocaleString('END') : `${index} / ${times}`} ]
+      </div>
     `,
   );
 export default listPages;

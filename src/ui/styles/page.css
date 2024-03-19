@@ -83,3 +83,30 @@
 #MangaOnlineViewer .PageFunctions .ControlButton:hover {
     opacity: 0.9;
 }
+
+#MangaOnlineViewer #Chapter.Vertical .separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-style: italic;
+}
+
+#MangaOnlineViewer #Chapter.Vertical .separator::before,
+#MangaOnlineViewer #Chapter.Vertical .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--theme-text-color);
+}
+
+#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::before {
+    margin-right: 0.25em;
+}
+
+#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::after {
+    margin-left: 0.25em;
+}
+
+#MangaOnlineViewer #Chapter:not(.separator) .separator,
+#MangaOnlineViewer #Chapter:not(.Vertical) .separator {
+    display: none;
+}

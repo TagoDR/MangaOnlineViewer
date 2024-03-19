@@ -27,7 +27,8 @@
 }
 
 #MangaOnlineViewer #Chapter.Vertical .PageContent {
-    margin-bottom: 15px;
+    margin-bottom: 8px;
+    margin-top: 8px;
 }
 
 #MangaOnlineViewer .closeButton {

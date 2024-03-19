@@ -103,4 +103,6 @@ export default {
   COMMENTS: 'Comments Section',
   SCROLL_START: 'Toggle Auto Scroll',
   AUTO_SCROLL_HEIGHT: 'Auto Scroll Speed in Pixels',
+  VERTICAL_SEPARATOR: 'Show Vertical Separators',
+  END: 'End',
 };
