@@ -6,9 +6,8 @@
     left: 0;
     bottom: 0;
     z-index: 1000;
-    transition:
-        transform 0.3s ease-in,
-        background-color 0.3s linear;
+    transition: transform 0.3s ease-in,
+    background-color 0.3s linear;
     transform: translateX(-100%);
     display: flex;
     flex-flow: column;
@@ -66,6 +65,7 @@
 #MangaOnlineViewer #SettingsPanel datalist option {
     padding: 0;
 }
+
 #MangaOnlineViewer #ThemeSection {
     border: 1px solid var(--theme-body-text-color);
     border-radius: 10px;
@@ -100,4 +100,8 @@
 
 #MangaOnlineViewer #ThemeSelector {
     width: 110px;
+}
+
+#MangaOnlineViewer #Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {
+    display: none;
 }
