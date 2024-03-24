@@ -9,26 +9,34 @@ import {
 import { reloadBookmarks } from '../components/BookmarksPanel';
 import { logScript } from '../../utils/tampermonkey';
 import { addEvent } from './common';
+import { isNothing } from '../../utils/checks';
 
 export function buttonBookmarksClose() {
   document.querySelector('#BookmarksPanel')?.classList.remove('visible');
   document.querySelector('#Overlay')?.classList.remove('visible');
 }
 
+export function removeURLBookmark(url: string = window.location.href) {
+  if (!isNothing(isBookmarked())) {
+    logScript(`Bookmark Removed ${url}`);
+    updateSettings({
+      bookmarks: getUserSettings().bookmarks.filter((el) => el.url !== url),
+    });
+    if (url === window.location.href) {
+      document.querySelector('#MangaOnlineViewer')?.classList.remove('bookmarked');
+    }
+  }
+}
+
 export function buttonEraseBookmarks(event: Event) {
   const target = (event.currentTarget as HTMLButtonElement).value;
-  const marks = getUserSettings().bookmarks.filter((el) => el.url !== target);
-  if (target === window.location.href) {
-    document.querySelector('#MangaOnlineViewer')?.classList.toggle('bookmarked');
-  }
-
   logScript(`Bookmark Removed ${target}`);
   Swal.fire({
     title: getLocaleString('BOOKMARK_REMOVED'),
     timer: 10000,
     icon: 'error',
   });
-  updateSettings({ bookmarks: marks });
+  removeURLBookmark(target);
   reloadBookmarks();
   document
     .querySelectorAll('.bookmarkFunctions .erase')

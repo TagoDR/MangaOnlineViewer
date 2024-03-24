@@ -15,6 +15,7 @@ import { getElementAttribute } from '../utils/request';
 import lazyLoad from '../utils/lazyLoad';
 import sequence from '../utils/sequence';
 import { html } from '../utils/code-tag';
+import { removeURLBookmark } from './events/bookmarks';
 
 // After pages load apply default Zoom
 function applyZoom(
@@ -166,6 +167,7 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
         logScript('Lazy Image: ', index, ' Source: ', img.getAttribute('src'));
       });
     }
+    if (manga.pages === position) removeURLBookmark();
   }
 }
 
@@ -208,6 +210,7 @@ async function addPage(manga: IMangaPages, index: number, pageUrl: string, posit
       );
       lazyLoad(img, findPage(manga, index, pageUrl, true));
     }
+    if (manga.pages === position) removeURLBookmark();
   }
 }
 

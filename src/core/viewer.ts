@@ -1,6 +1,6 @@
 import type { IManga } from '../types';
 import { logScript } from '../utils/tampermonkey';
-import { clearBookmark, getUserSettings } from './settings';
+import { getUserSettings } from './settings';
 import display from '../ui';
 import { cleanUpElement } from '../utils/cleanup';
 import { untilTimeout } from './check';
@@ -38,8 +38,6 @@ export default async function viewer(manga: IManga) {
       display(manga);
     } catch (e) {
       logScript(e);
-    } finally {
-      clearBookmark();
     }
   }, 50);
 }
