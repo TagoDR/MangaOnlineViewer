@@ -6,13 +6,11 @@ import {
   transformScrollToHorizontalReverse,
 } from './common';
 import { changeGlobalZoom } from './zoom';
-import { updateHeaderType } from './options';
 
 function setupFluid(mode: ViewMode) {
   const chapter = document.querySelector<HTMLElement>('#Chapter');
   document.querySelector('#Header')?.classList.remove('visible');
   document.querySelector('#menu')?.classList.remove('hide');
-  updateHeaderType('click');
   changeGlobalZoom('height')();
   // document.querySelectorAll('.PageContent img').forEach((i) => i.removeAttribute('style'));
   scrollToElement(chapter);
