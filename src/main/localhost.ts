@@ -19,6 +19,7 @@ export default {
       begin: 1,
       prev: '?pages=50',
       next: '?pages=1',
+      lazy: false,
       listImages: [
         placeholder(1970, 1400, '#2D1657'),
         placeholder(985, 1400, '#152C55'),

@@ -19,6 +19,7 @@ export default {
       pages: num?.length,
       prev: '#',
       next: '#',
+      lazy: false,
       listImages: [''],
       async before(begin = 1) {
         const div = document.createElement('div');
@@ -38,12 +39,11 @@ export default {
           select!.value = String(i - 1);
           select?.dispatchEvent(new Event('change'));
           // eslint-disable-next-line no-await-in-loop
-          src[i - 1] = await waitFor(
-            () =>
-              document
-                ?.querySelector('main .p div')
-                ?.shadowRoot?.querySelector('img')
-                ?.getAttribute('src'),
+          src[i - 1] = await waitFor(() =>
+            document
+              ?.querySelector('main .p div')
+              ?.shadowRoot?.querySelector('img')
+              ?.getAttribute('src'),
           );
         }
 
