@@ -100,6 +100,15 @@ function updateProgress() {
   }
 }
 
+export const applyLastGlobalZoom = (pages = '.PageContent img') => {
+  const zoomVal = document.querySelector('#ZoomVal')?.textContent;
+  if (zoomVal?.trim().match(/^\d+%$/)) {
+    applyZoom(parseInt(zoomVal, 10), pages);
+  } else {
+    applyZoom(parseInt(zoomVal as ZoomMode, 10), pages);
+  }
+};
+
 function onImagesSuccess(instance: ImagesLoaded.ImagesLoaded) {
   instance.images.forEach((image) => {
     image.img.classList.add('imgLoaded');
@@ -109,8 +118,7 @@ function onImagesSuccess(instance: ImagesLoaded.ImagesLoaded) {
     if (thumb) {
       thumb.setAttribute('src', image.img.getAttribute('src')!);
     }
-
-    applyZoom(getUserSettings().zoomMode, `#${image.img.id}`);
+    applyLastGlobalZoom(`#${image.img.id}`);
     updateProgress();
   });
 }
