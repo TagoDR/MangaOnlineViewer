@@ -51,6 +51,7 @@ function displayUploadedFiles(title: string, listImages: string[]) {
     begin: 1,
     prev: '#',
     next: '#',
+    lazy: false,
     listImages,
   }).then(() => logScript('Page loaded'));
 }
