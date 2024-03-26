@@ -16,7 +16,6 @@ import madarawp from './madarawp';
 import mangabuddy from './mangabuddy';
 import mangadex from './mangadex';
 import mangafox from './mangafox';
-import mangafreak from './mangafreak';
 import mangago from './mangago';
 import mangahosted from './mangahosted';
 import mangahub from './mangahub';
@@ -72,7 +71,7 @@ const sites = [
   mangabuddy,
   mangadex,
   mangafox,
-  mangafreak,
+  // mangafreak,
   mangago,
   mangahosted,
   mangahub,
