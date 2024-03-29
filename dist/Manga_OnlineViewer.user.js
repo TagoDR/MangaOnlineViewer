@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, ManhuaScan
-// @version       2024.03.26
+// @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @version       2024.03.29
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -33,7 +33,7 @@
 // @include       /https?:\/\/comic\.nizamkomputer.com\/read\/.+\/\d+.*/
 // @include       /https?:\/\/(www\.)?comick.io\/comic\/.+\/.+/
 // @include       /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/
-// @include       /https?:\/\/(www\.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|night-scans|manhwafreak|freakcomic|ozulscansen|azuremanga|cypherscans|mangagalaxy).(com|org|gg|xyz|to|net|me)\/.+/
+// @include       /https?:\/\/(www.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|night-scans|manhwafreak|freakcomic|ozulscansen|azuremanga|cypherscans|mangagalaxy).(com|org|gg|xyz|to|net|me)\/.+/
 // @include       /https?:\/\/(comics\.)?inkr.com\/title\/.+\/chapter\/.+/
 // @include       /https?:\/\/(www\.)?inmanga.com\/ver\/manga\/.+\/.+/
 // @include       /https?:\/\/(www\.)?klmanga.com\/.+chapter.+/
@@ -55,7 +55,7 @@
 // @include       /https?:\/\/(www\.)?mangatigre.net\/.+\/.+\/.+/
 // @include       /https?:\/\/.*mangatoon.mobi\/.+\/watch\/.+/
 // @include       /https?:\/\/(www\.|m\.)?mangatown.com\/manga\/.+\/.+/
-// @include       /https?:\/\/(www\.)?manhuascan.io\/.+chapter.+/
+// @include       /https?:\/\/(www\.)?manhuascan.com\/manga\/.+\/chapter.+/
 // @include       /https?:\/\/(www\.)?mgeko.com?\/reader\/.*/
 // @include       /https?:\/\/(www\.)?(naniscans).com\/chapters\/.+\/read/
 // @include       /https?:\/\/(www\.)?ninemanga.com\/chapter\/.+\/.+\.html/
@@ -878,7 +878,6 @@
       "Dragon Tea",
       "SetsuScans",
       "ToonGod",
-      "ManhuaScan",
     ],
     url: /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon)\/.+\/.+/,
     homepage: [
@@ -900,7 +899,6 @@
       "https://dragontea.ink/",
       "https://setsuscans.com/",
       "https://toongod.org/home/",
-      "https://manhuascan.com/",
     ],
     language: ["English"],
     obs: "Any Site that uses Madara Wordpress Plugin",
@@ -1324,6 +1322,21 @@
     },
   };
 
+  const domains = [
+    "asura.*",
+    "flamecomics",
+    "rizzcomic",
+    "void-scans",
+    "luminousscans",
+    "shimascans",
+    "night-scans",
+    "manhwafreak",
+    "freakcomic",
+    "ozulscansen",
+    "azuremanga",
+    "cypherscans",
+    "mangagalaxy",
+  ];
   const mangastreamwp = {
     name: [
       "MangaStream WordPress Plugin",
@@ -1340,7 +1353,9 @@
       "CypherScans",
       "MangaGalaxy",
     ],
-    url: /https?:\/\/(www\.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|night-scans|manhwafreak|freakcomic|ozulscansen|azuremanga|cypherscans|mangagalaxy).(com|org|gg|xyz|to|net|me)\/.+/,
+    url: new RegExp(
+      `https?:\\/\\/(www.)?(${domains.join("|")}).(com|org|gg|xyz|to|net|me)\\/.+`,
+    ),
     homepage: [
       "https://themesia.com/mangastream-wordpress-theme/",
       "https://asuratoon.com/",
@@ -1485,29 +1500,36 @@
 
   const manhuascan = {
     name: "ManhuaScan",
-    url: /https?:\/\/(www\.)?manhuascan.io\/.+chapter.+/,
-    homepage: "https://manhuascan.io/",
+    url: /https?:\/\/(www\.)?manhuascan.com\/manga\/.+\/chapter.+/,
+    homepage: "https://manhuascan.com/",
     language: ["English"],
     category: "manga",
-    waitVar: "imgsrcs",
+    waitFunc: () => {
+      const images = findImages();
+      return (
+        images.length > 0 &&
+        images.every(
+          (s) =>
+            s &&
+            /^([\t\n])*(https?:\/\/)?.+\.(jpg|jpeg|png|gif|bmp|webp).*$/.test(
+              s,
+            ),
+        )
+      );
+    },
     run() {
-      const key = CryptoJS.enc.Hex.parse("e11adc3949ba59abbe56e057f20f131e");
-      const iv = CryptoJS.enc.Hex.parse("1234567890abcdef1234567890abcdef");
-      const opinion = { iv, padding: CryptoJS.pad.ZeroPadding };
-      const images = CryptoJS.AES.decrypt(unsafeWindow.imgsrcs, key, opinion)
-        .toString(CryptoJS.enc.Utf8)
-        .split(",");
+      const images = findImages();
       return {
         title: document.querySelector("title")?.textContent?.trim(),
         series: document
-          .querySelector(".breadcrumb li:nth-child(3) a")
+          .querySelector('#breadcrumbs-container div a[title="Plaything"]')
           ?.getAttribute("href"),
         pages: images.length,
         prev: document
-          .querySelector(".chapter-select a:first-of-type")
+          .querySelector("#chapter-list ~ div li:nth-of-type(2) a")
           ?.getAttribute("href"),
         next: document
-          .querySelector(".chapter-select a:last-of-type")
+          .querySelector("#chapter-list ~ div li:nth-of-type(3) a")
           ?.getAttribute("href"),
         listImages: images,
       };
