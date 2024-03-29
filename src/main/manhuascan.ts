@@ -1,24 +1,29 @@
 // == ManhuaScan ===================================================================================
+import { findImages } from './madarawp';
+
 export default {
   name: 'ManhuaScan',
-  url: /https?:\/\/(www\.)?manhuascan.io\/.+chapter.+/,
-  homepage: 'https://manhuascan.io/',
+  url: /https?:\/\/(www\.)?manhuascan.com\/manga\/.+\/chapter.+/,
+  homepage: 'https://manhuascan.com/',
   language: ['English'],
   category: 'manga',
-  waitVar: 'imgsrcs',
+  waitFunc: () => {
+    const images = findImages();
+    return (
+      images.length > 0 &&
+      images.every((s) => s && /^([\t\n])*(https?:\/\/)?.+\.(jpg|jpeg|png|gif|bmp|webp).*$/.test(s))
+    );
+  },
   run() {
-    const key = CryptoJS.enc.Hex.parse('e11adc3949ba59abbe56e057f20f131e');
-    const iv = CryptoJS.enc.Hex.parse('1234567890abcdef1234567890abcdef');
-    const opinion = { iv, padding: CryptoJS.pad.ZeroPadding };
-    const images = CryptoJS.AES.decrypt(unsafeWindow.imgsrcs, key, opinion)
-      .toString(CryptoJS.enc.Utf8)
-      .split(',');
+    const images = findImages();
     return {
       title: document.querySelector('title')?.textContent?.trim(),
-      series: document.querySelector('.breadcrumb li:nth-child(3) a')?.getAttribute('href'),
+      series: document
+        .querySelector('#breadcrumbs-container div a[title="Plaything"]')
+        ?.getAttribute('href'),
       pages: images.length,
-      prev: document.querySelector('.chapter-select a:first-of-type')?.getAttribute('href'),
-      next: document.querySelector('.chapter-select a:last-of-type')?.getAttribute('href'),
+      prev: document.querySelector('#chapter-list ~ div li:nth-of-type(2) a')?.getAttribute('href'),
+      next: document.querySelector('#chapter-list ~ div li:nth-of-type(3) a')?.getAttribute('href'),
       listImages: images,
     };
   },

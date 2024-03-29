@@ -1,5 +1,5 @@
 // == Madara WordPress Plugin ======================================================================
-function findImages() {
+export function findImages() {
   return [
     ...document.querySelectorAll(
       '.wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img, #chapter-images img, #chapterContent img',
@@ -34,7 +34,6 @@ export default {
     'Dragon Tea',
     'SetsuScans',
     'ToonGod',
-    'ManhuaScan',
   ],
   url: /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon)\/.+\/.+/,
   homepage: [
@@ -56,7 +55,6 @@ export default {
     'https://dragontea.ink/',
     'https://setsuscans.com/',
     'https://toongod.org/home/',
-    'https://manhuascan.com/',
   ],
   language: ['English'],
   obs: 'Any Site that uses Madara Wordpress Plugin',
