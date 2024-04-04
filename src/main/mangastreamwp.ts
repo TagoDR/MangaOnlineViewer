@@ -13,6 +13,7 @@ const domains = [
   'azuremanga',
   'cypherscans',
   'mangagalaxy',
+  'luascans',
 ];
 export default {
   name: [
@@ -29,6 +30,7 @@ export default {
     'AzureManga',
     'CypherScans',
     'MangaGalaxy',
+    'LuaScans',
   ],
   url: new RegExp(`https?:\\/\\/(www.)?(${domains.join('|')}).(com|org|gg|xyz|to|net|me)\\/.+`),
   homepage: [
@@ -45,6 +47,7 @@ export default {
     'https://azuremanga.com/',
     'https://cypherscans.xyz/',
     'https://mangagalaxy.me/',
+    'https://luascans.com/',
   ],
   language: ['English'],
   category: 'manga',
