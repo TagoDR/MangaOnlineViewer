@@ -17,7 +17,7 @@ export function buttonBookmarksClose() {
 }
 
 export function removeURLBookmark(url: string = window.location.href) {
-  if (!isNothing(isBookmarked())) {
+  if (!isNothing(isBookmarked(url))) {
     logScript(`Bookmark Removed ${url}`);
     updateSettings({
       bookmarks: getUserSettings().bookmarks.filter((el) => el.url !== url),
