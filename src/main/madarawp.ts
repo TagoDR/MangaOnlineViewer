@@ -1,5 +1,5 @@
 // == Madara WordPress Plugin ======================================================================
-export function findImages() {
+function findImages() {
   return [
     ...document.querySelectorAll(
       '.wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img, #chapter-images img, #chapterContent img',

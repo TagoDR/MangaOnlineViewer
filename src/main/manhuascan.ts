@@ -1,5 +1,15 @@
 // == ManhuaScan ===================================================================================
-import { findImages } from './madarawp';
+function findImages() {
+  return [...document.querySelectorAll('.chapter-image')]
+    .map((div) => div.querySelector('img'))
+    .map(
+      (img) =>
+        img?.getAttribute('src') ??
+        img?.getAttribute('data-src') ??
+        img?.getAttribute('data-full-url'),
+    )
+    .filter((src) => !src?.match(/loading/i));
+}
 
 export default {
   name: 'ManhuaScan',
