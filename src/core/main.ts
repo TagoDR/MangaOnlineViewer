@@ -11,7 +11,6 @@ import sweetalertStyle from '../ui/styles/externalStyle';
 import startButton from '../ui/styles/startButton.css?inline';
 import { testAttribute, testElement, testFunc, testTime, testVariable } from './check';
 import { allowUpload } from './upload';
-import Unlock from '../utils/unlock';
 
 function validateMin(valBegin: number, endPage: number, rs: RangeSlider) {
   let val = valBegin;
@@ -222,7 +221,6 @@ async function preparePage(site: ISite) {
 
 // Script Entry point
 async function start(sites: ISite[]) {
-  Unlock();
   logScript(
     `Starting ${getInfoGM.script.name} ${
       getInfoGM.script.version

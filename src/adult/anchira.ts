@@ -1,56 +1,35 @@
 // == Anchira ======================================================================================
-import { waitFor } from '../utils/waitFor';
-
 export default {
   name: 'Anchira',
-  obs: 'Slow start, bruteforce required',
-  url: /https?:\/\/(www\.)?(anchira).to\/(archive|g|read)\/\d+\/.+/,
+  url: /https?:\/\/(www\.)?(anchira).to/,
   homepage: 'https://anchira.to/',
   language: ['English'],
   category: 'hentai',
   waitEle: 'nav select option',
-  waitFunc() {
-    return document?.querySelector('main .p div')?.shadowRoot;
-  },
   async run() {
-    const num = document.querySelectorAll<HTMLOptionElement>('nav select option');
+    const libraryUrl = 'https://anchira.to/api/v1/library/';
+    const cdnUrl = 'https://kisakisexo.xyz';
+    const chapterId = window.location.pathname.slice(3);
+    const options = {
+      method: 'GET',
+      headers: {
+        Accept: '*/*',
+        Referer: window.location.href,
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+    };
+    const api = await fetch(libraryUrl + chapterId, options).then(async (res) => res.json());
+    const data = await fetch(`${libraryUrl + chapterId}/data`, options).then(async (res) =>
+      res.json(),
+    );
     return {
-      title: document.querySelector('title')?.textContent?.trim(),
-      pages: num?.length,
+      title: api.title,
+      pages: api.pages,
       prev: '#',
       next: '#',
-      lazy: false,
-      listImages: [''],
-      async before(begin = 1) {
-        const div = document.createElement('div');
-        div.setAttribute(
-          'style',
-          'height: 100vh;width: 100vw;position: fixed;top: 0;left: 0;z-index: 100000;background: white;opacity: 0.5;',
-        );
-        document.body.append(div);
-
-        const select = document.querySelector<HTMLSelectElement>('nav select');
-        const src: string[] = [];
-        for (let i = this.pages; i >= begin; i -= 1) {
-          document
-            .querySelector<HTMLDivElement>('main .p div')
-            ?.shadowRoot?.querySelector('img')
-            ?.removeAttribute('src');
-          select!.value = String(i - 1);
-          select?.dispatchEvent(new Event('change'));
-          // eslint-disable-next-line no-await-in-loop
-          src[i - 1] = await waitFor(() =>
-            document
-              ?.querySelector('main .p div')
-              ?.shadowRoot?.querySelector('img')
-              ?.getAttribute('src'),
-          );
-        }
-
-        this.listImages = src;
-        num.item(0).selected = true;
-        select?.dispatchEvent(new Event('change'));
-      },
+      listImages: data.names.map(
+        (name: string) => `${cdnUrl}/${data.id}/${data.key}/${data.hash}/a/${name}`,
+      ),
     };
   },
 };
