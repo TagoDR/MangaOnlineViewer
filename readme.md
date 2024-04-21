@@ -119,7 +119,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [PornComixOnline](https://www.porncomixone.net) _[English]_
 - [Pururin](https://pururin.to/) _[English]_
 - [Simply-Hentai](https://simply-hentai.com/) _[English]_
-- [Anchira](https://anchira.to/) _[English]_ **Obs: Slow start, bruteforce required**
+- [Anchira](https://anchira.to/) _[English]_
 - [3Hentai](https://3hentai.net/) _[English]_
 - [Tsumino](https://tsumino.com/) _[English]_
 - [XlecxOne](https://xlecx.one/) _[English]_
