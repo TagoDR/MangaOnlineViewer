@@ -8,12 +8,14 @@ import { isEmpty } from '../utils/checks';
 
 async function captureComments() {
   if (!getUserSettings().enableComments) return null;
-  const comments = document.querySelector('#disqus_thread, #fb-comments');
+  const comments = document.querySelector('#disqus_thread, #fb-comments, #comments');
   if (comments) {
     logScript(`Waiting to Comments to load`, comments);
     window.scrollTo(0, document.body.scrollHeight);
     const load = await untilTimeout((): boolean => {
-      const iframe = comments?.querySelector<HTMLIFrameElement>('iframe');
+      const iframe = comments?.querySelector<HTMLIFrameElement>(
+        'iframe:not(#indicator-north, #indicator-south)',
+      );
       return (
         iframe !== undefined &&
         !isEmpty(iframe?.src) &&
