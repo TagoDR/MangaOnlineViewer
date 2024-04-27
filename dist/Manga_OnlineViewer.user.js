@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, LuaScans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.04.21
+// @version       2024.04.27
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -33,7 +33,7 @@
 // @include       /https?:\/\/comic\.nizamkomputer.com\/read\/.+\/\d+.*/
 // @include       /https?:\/\/(www\.)?comick.io\/comic\/.+\/.+/
 // @include       /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/
-// @include       /https?:\/\/(www.)?(asura.*|flamecomics|rizzcomic|void-scans|luminousscans|shimascans|night-scans|manhwafreak|freakcomic|ozulscansen|azuremanga|cypherscans|mangagalaxy|luascans).(com|org|gg|xyz|to|net|me)\/.+/
+// @include       /https?:\/\/(www.)?(asura.*|flamecomics|rizz.*|void-scans|luminousscans|shimascans|night-scans|manhwafreak|freakcomic|ozulscansen|azuremanga|cypherscans|mangagalaxy|luascans).(com|org|gg|xyz|to|net|me)\/.+/
 // @include       /https?:\/\/(comics\.)?inkr.com\/title\/.+\/chapter\/.+/
 // @include       /https?:\/\/(www\.)?inmanga.com\/ver\/manga\/.+\/.+/
 // @include       /https?:\/\/(www\.)?klmanga.com\/.+chapter.+/
@@ -1325,7 +1325,7 @@
   const domains = [
     "asura.*",
     "flamecomics",
-    "rizzcomic",
+    "rizz.*",
     "void-scans",
     "luminousscans",
     "shimascans",
