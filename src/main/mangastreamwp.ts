@@ -2,7 +2,7 @@
 const domains = [
   'asura.*',
   'flamecomics',
-  'rizzcomic',
+  'rizz.*',
   'void-scans',
   'luminousscans',
   'shimascans',
