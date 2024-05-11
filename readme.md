@@ -80,6 +80,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [SenManga(Raw)](https://raw.senmanga.com/) _[Raw]_
 - [InManga](https://inmanga.com//) _[Spanish]_
 - [MangasIn](https://mangas.in/) _[Spanish]_
+- [MangaOni](hhttps://manga-oni.com/) _[Spanish]_
 - [MangaTigre](https://www.mangatigre.net/) _[Spanish]_
 - [OlympusScans](https://olympusscans.com/) _[Spanish]_
 - [TuMangaOnline](https://lectortmo.com/) _[Spanish]_
