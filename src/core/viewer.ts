@@ -8,7 +8,7 @@ import { isEmpty } from '../utils/checks';
 
 async function captureComments() {
   if (!getUserSettings().enableComments) return null;
-  const comments = document.querySelector('#disqus_thread, #fb-comments, #comments');
+  const comments = document.querySelector('#disqus_thread, #fb-comments');
   if (comments) {
     logScript(`Waiting to Comments to load`, comments);
     window.scrollTo(0, document.body.scrollHeight);
