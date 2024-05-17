@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2024.05.12
+// @version       2024.05.17
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -73,7 +73,7 @@
     category: "hentai",
     waitEle: "nav select option",
     async run() {
-      const libraryUrl = "https://anchira.to/api/v1/library/";
+      const libraryUrl = "https://api.anchira.to/library/";
       const cdnUrl = "https://kisakisexo.xyz";
       const chapterId = window.location.pathname.slice(3);
       const options = {
@@ -95,8 +95,9 @@
         pages: api.pages,
         prev: "#",
         next: "#",
-        listImages: data.names.map(
-          (name) => `${cdnUrl}/${data.id}/${data.key}/${data.hash}/a/${name}`,
+        listImages: api.data.map(
+          (image) =>
+            `${cdnUrl}/${api.id}/${data.key}/${data.hash}/a/${image.n}`,
         ),
       };
     },
