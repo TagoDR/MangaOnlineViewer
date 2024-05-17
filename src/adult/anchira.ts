@@ -7,7 +7,7 @@ export default {
   category: 'hentai',
   waitEle: 'nav select option',
   async run() {
-    const libraryUrl = 'https://anchira.to/api/v1/library/';
+    const libraryUrl = 'https://api.anchira.to/library/';
     const cdnUrl = 'https://kisakisexo.xyz';
     const chapterId = window.location.pathname.slice(3);
     const options = {
@@ -27,8 +27,8 @@ export default {
       pages: api.pages,
       prev: '#',
       next: '#',
-      listImages: data.names.map(
-        (name: string) => `${cdnUrl}/${data.id}/${data.key}/${data.hash}/a/${name}`,
+      listImages: api.data.map(
+        (image: { n: string }) => `${cdnUrl}/${api.id}/${data.key}/${data.hash}/a/${image.n}`,
       ),
     };
   },
