@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, LuaScans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.05.17
+// @version       2024.05.20
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -5787,6 +5787,27 @@
       });
     });
   }
+  function waitForFunc(fn, target = document.body) {
+    return new Promise((resolve) => {
+      const result = fn();
+      if (result) {
+        resolve(result);
+        return;
+      }
+      const observer = new MutationObserver(() => {
+        const res = fn();
+        if (res) {
+          resolve(res);
+          observer.disconnect();
+        }
+      });
+      observer.observe(target, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+      });
+    });
+  }
   function waitForAtb(selector, attribute, target = document.body) {
     return new Promise((resolve) => {
       if (target.querySelector(selector)?.getAttribute(attribute)) {
@@ -5828,35 +5849,9 @@
       });
     });
   }
-
-  async function testAttribute(site) {
-    if (site.waitAttr !== void 0) {
-      logScript(
-        `Waiting for Attribute ${site.waitAttr[1]} of ${site.waitAttr[0]}`,
-      );
-      const wait = await waitForAtb(site.waitAttr[0], site.waitAttr[1]);
-      logScript(
-        `Found Attribute ${site.waitAttr[1]} of ${site.waitAttr[0]} = ${wait}`,
-      );
-    }
-  }
-  async function testElement(site) {
-    if (site.waitEle !== void 0) {
-      logScript(`Waiting for Element ${site.waitEle}`);
-      const wait = await waitForElm(site.waitEle);
-      logScript(`Found Element ${site.waitEle} = `, wait);
-    }
-  }
-  async function testVariable(site) {
-    if (site.waitVar !== void 0) {
-      logScript(`Waiting for Variable ${site.waitVar}`);
-      const wait = await waitForVar(site.waitVar);
-      logScript(`Found Variable ${site.waitVar} = ${wait}`);
-    }
-  }
-  function timeoutPromise(ms) {
+  function waitForTimer(millis = 1e3, result = true) {
     return new Promise((resolve) => {
-      setTimeout(() => resolve(void 0), ms);
+      setTimeout(() => resolve(result), millis);
     });
   }
   async function until(predFn) {
@@ -5872,24 +5867,8 @@
     };
     return new Promise(poll);
   }
-  async function untilTimeout(predFn, timeout) {
-    return Promise.race([until(predFn), timeoutPromise(timeout)]);
-  }
-  async function testFunc(site) {
-    if (site.waitFunc !== void 0) {
-      logScript(`Waiting to pass Function check ${site.waitFunc}`);
-      const wait = await until(site.waitFunc);
-      logScript(`Found Function check ${site.waitFunc} = ${wait}`);
-    }
-  }
-  async function testTime(site) {
-    if (site.waitTime !== void 0) {
-      logScript(`Waiting to for ${site.waitTime} milliseconds`);
-      await new Promise((resolve) => {
-        setTimeout(resolve, site.waitTime);
-      });
-      logScript("Continuing");
-    }
+  async function waitWithTimeout(predFn, timeout) {
+    return Promise.race([until(predFn), waitForTimer(timeout, false)]);
   }
 
   async function captureComments() {
@@ -5898,7 +5877,7 @@
     if (comments) {
       logScript(`Waiting to Comments to load`, comments);
       window.scrollTo(0, document.body.scrollHeight);
-      const load = await untilTimeout(() => {
+      const load = await waitWithTimeout(() => {
         const iframe = comments?.querySelector(
           "iframe:not(#indicator-north, #indicator-south)",
         );
@@ -5932,6 +5911,48 @@
 
   const startButton =
     "#StartMOV {\n    all: revert;\n    backface-visibility: hidden;\n    font-size: 2rem;\n    color: #fff;\n    cursor: pointer;\n    margin: 0 auto;\n    padding: 0.5rem 1rem;\n    text-align: center;\n    border: none;\n    border-radius: 10px;\n    min-height: 50px;\n    width: 80%;\n    position: fixed;\n    right: 0;\n    left: 0;\n    bottom: 0;\n    z-index: 105000;\n    transition: all 0.4s ease-in-out;\n    background-size: 300% 100%;\n    background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\n    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\n}\n\n#StartMOV:hover {\n    background-position: 100% 0;\n    transition: all 0.4s ease-in-out;\n}\n\n#StartMOV:focus {\n    outline: none;\n}\n";
+
+  async function testAttribute(site) {
+    if (site.waitAttr !== void 0) {
+      logScript(
+        `Waiting for Attribute ${site.waitAttr[1]} of ${site.waitAttr[0]}`,
+      );
+      const wait = await waitForAtb(site.waitAttr[0], site.waitAttr[1]);
+      logScript(
+        `Found Attribute ${site.waitAttr[1]} of ${site.waitAttr[0]} = ${wait}`,
+      );
+    }
+  }
+  async function testElement(site) {
+    if (site.waitEle !== void 0) {
+      logScript(`Waiting for Element ${site.waitEle}`);
+      const wait = await waitForElm(site.waitEle);
+      logScript(`Found Element ${site.waitEle} = `, wait);
+    }
+  }
+  async function testVariable(site) {
+    if (site.waitVar !== void 0) {
+      logScript(`Waiting for Variable ${site.waitVar}`);
+      const wait = await waitForVar(site.waitVar);
+      logScript(`Found Variable ${site.waitVar} = ${wait}`);
+    }
+  }
+  async function testFunc(site) {
+    if (site.waitFunc !== void 0) {
+      logScript(`Waiting to pass Function check ${site.waitFunc}`);
+      const wait = await waitForFunc(site.waitFunc);
+      logScript(`Found Function check ${site.waitFunc} = ${wait}`);
+    }
+  }
+  async function testTime(site) {
+    if (site.waitTime !== void 0) {
+      logScript(`Waiting to for ${site.waitTime} milliseconds`);
+      await new Promise((resolve) => {
+        setTimeout(resolve, site.waitTime);
+      });
+      logScript("Continuing");
+    }
+  }
 
   const fileTypes = [
     "image/apng",

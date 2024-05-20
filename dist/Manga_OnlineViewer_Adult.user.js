@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2024.05.17
+// @version       2024.05.20
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -71,17 +71,20 @@
     homepage: "https://anchira.to/",
     language: ["English"],
     category: "hentai",
+    lazy: false,
     waitEle: "nav select option",
     async run() {
+      const baseUrl = "https://anchira.to";
       const libraryUrl = "https://api.anchira.to/library/";
-      const cdnUrl = "https://kisakisexo.xyz";
+      const getCdn = (page) =>
+        page % 2 === 0 ? "https://kisakisexo.xyz" : "https://aronasexo.xyz";
       const chapterId = window.location.pathname.slice(3);
       const options = {
         method: "GET",
         headers: {
           Accept: "*/*",
-          Referer: window.location.href,
-          "X-Requested-With": "XMLHttpRequest",
+          Referer: `${baseUrl}/`,
+          Origin: baseUrl,
         },
       };
       const api = await fetch(libraryUrl + chapterId, options).then(
@@ -95,9 +98,20 @@
         pages: api.pages,
         prev: "#",
         next: "#",
-        listImages: api.data.map(
-          (image) =>
-            `${cdnUrl}/${api.id}/${data.key}/${data.hash}/a/${image.n}`,
+        listImages: await Promise.all(
+          api.data.map((image, page) =>
+            fetch(
+              `${getCdn(page)}/${data.id}/${data.key}/${data.hash}/a/${image.n}`,
+              {
+                method: "GET",
+                redirect: "follow",
+              },
+            )
+              .then((resp) => resp.blob())
+              .then((blob) => {
+                return URL.createObjectURL(blob);
+              }),
+          ),
         ),
       };
     },
@@ -197,6 +211,27 @@
       });
     });
   }
+  function waitForFunc(fn, target = document.body) {
+    return new Promise((resolve) => {
+      const result = fn();
+      if (result) {
+        resolve(result);
+        return;
+      }
+      const observer = new MutationObserver(() => {
+        const res = fn();
+        if (res) {
+          resolve(res);
+          observer.disconnect();
+        }
+      });
+      observer.observe(target, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+      });
+    });
+  }
   function waitForAtb(selector, attribute, target = document.body) {
     return new Promise((resolve) => {
       if (target.querySelector(selector)?.getAttribute(attribute)) {
@@ -237,6 +272,27 @@
         attributes: true,
       });
     });
+  }
+  function waitForTimer(millis = 1e3, result = true) {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(result), millis);
+    });
+  }
+  async function until(predFn) {
+    const poll = (done) => {
+      const result = predFn();
+      if (result) {
+        done(result);
+      } else {
+        setTimeout(() => {
+          poll(done);
+        }, 500);
+      }
+    };
+    return new Promise(poll);
+  }
+  async function waitWithTimeout(predFn, timeout) {
+    return Promise.race([until(predFn), waitForTimer(timeout, false)]);
   }
 
   const eightMuses = {
@@ -5258,76 +5314,13 @@
       });
     });
 
-  async function testAttribute(site) {
-    if (site.waitAttr !== void 0) {
-      logScript(
-        `Waiting for Attribute ${site.waitAttr[1]} of ${site.waitAttr[0]}`,
-      );
-      const wait = await waitForAtb(site.waitAttr[0], site.waitAttr[1]);
-      logScript(
-        `Found Attribute ${site.waitAttr[1]} of ${site.waitAttr[0]} = ${wait}`,
-      );
-    }
-  }
-  async function testElement(site) {
-    if (site.waitEle !== void 0) {
-      logScript(`Waiting for Element ${site.waitEle}`);
-      const wait = await waitForElm(site.waitEle);
-      logScript(`Found Element ${site.waitEle} = `, wait);
-    }
-  }
-  async function testVariable(site) {
-    if (site.waitVar !== void 0) {
-      logScript(`Waiting for Variable ${site.waitVar}`);
-      const wait = await waitForVar(site.waitVar);
-      logScript(`Found Variable ${site.waitVar} = ${wait}`);
-    }
-  }
-  function timeoutPromise(ms) {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(void 0), ms);
-    });
-  }
-  async function until(predFn) {
-    const poll = (done) => {
-      const result = predFn();
-      if (result) {
-        done(result);
-      } else {
-        setTimeout(() => {
-          poll(done);
-        }, 500);
-      }
-    };
-    return new Promise(poll);
-  }
-  async function untilTimeout(predFn, timeout) {
-    return Promise.race([until(predFn), timeoutPromise(timeout)]);
-  }
-  async function testFunc(site) {
-    if (site.waitFunc !== void 0) {
-      logScript(`Waiting to pass Function check ${site.waitFunc}`);
-      const wait = await until(site.waitFunc);
-      logScript(`Found Function check ${site.waitFunc} = ${wait}`);
-    }
-  }
-  async function testTime(site) {
-    if (site.waitTime !== void 0) {
-      logScript(`Waiting to for ${site.waitTime} milliseconds`);
-      await new Promise((resolve) => {
-        setTimeout(resolve, site.waitTime);
-      });
-      logScript("Continuing");
-    }
-  }
-
   async function captureComments() {
     if (!getUserSettings().enableComments) return null;
     const comments = document.querySelector("#disqus_thread, #fb-comments");
     if (comments) {
       logScript(`Waiting to Comments to load`, comments);
       window.scrollTo(0, document.body.scrollHeight);
-      const load = await untilTimeout(() => {
+      const load = await waitWithTimeout(() => {
         const iframe = comments?.querySelector(
           "iframe:not(#indicator-north, #indicator-south)",
         );
@@ -5361,6 +5354,48 @@
 
   const startButton =
     "#StartMOV {\n    all: revert;\n    backface-visibility: hidden;\n    font-size: 2rem;\n    color: #fff;\n    cursor: pointer;\n    margin: 0 auto;\n    padding: 0.5rem 1rem;\n    text-align: center;\n    border: none;\n    border-radius: 10px;\n    min-height: 50px;\n    width: 80%;\n    position: fixed;\n    right: 0;\n    left: 0;\n    bottom: 0;\n    z-index: 105000;\n    transition: all 0.4s ease-in-out;\n    background-size: 300% 100%;\n    background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\n    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\n}\n\n#StartMOV:hover {\n    background-position: 100% 0;\n    transition: all 0.4s ease-in-out;\n}\n\n#StartMOV:focus {\n    outline: none;\n}\n";
+
+  async function testAttribute(site) {
+    if (site.waitAttr !== void 0) {
+      logScript(
+        `Waiting for Attribute ${site.waitAttr[1]} of ${site.waitAttr[0]}`,
+      );
+      const wait = await waitForAtb(site.waitAttr[0], site.waitAttr[1]);
+      logScript(
+        `Found Attribute ${site.waitAttr[1]} of ${site.waitAttr[0]} = ${wait}`,
+      );
+    }
+  }
+  async function testElement(site) {
+    if (site.waitEle !== void 0) {
+      logScript(`Waiting for Element ${site.waitEle}`);
+      const wait = await waitForElm(site.waitEle);
+      logScript(`Found Element ${site.waitEle} = `, wait);
+    }
+  }
+  async function testVariable(site) {
+    if (site.waitVar !== void 0) {
+      logScript(`Waiting for Variable ${site.waitVar}`);
+      const wait = await waitForVar(site.waitVar);
+      logScript(`Found Variable ${site.waitVar} = ${wait}`);
+    }
+  }
+  async function testFunc(site) {
+    if (site.waitFunc !== void 0) {
+      logScript(`Waiting to pass Function check ${site.waitFunc}`);
+      const wait = await waitForFunc(site.waitFunc);
+      logScript(`Found Function check ${site.waitFunc} = ${wait}`);
+    }
+  }
+  async function testTime(site) {
+    if (site.waitTime !== void 0) {
+      logScript(`Waiting to for ${site.waitTime} milliseconds`);
+      await new Promise((resolve) => {
+        setTimeout(resolve, site.waitTime);
+      });
+      logScript("Continuing");
+    }
+  }
 
   const localhost = {
     name: "Local Files",
