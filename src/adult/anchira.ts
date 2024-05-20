@@ -5,17 +5,20 @@ export default {
   homepage: 'https://anchira.to/',
   language: ['English'],
   category: 'hentai',
+  lazy: false,
   waitEle: 'nav select option',
   async run() {
+    const baseUrl = 'https://anchira.to';
     const libraryUrl = 'https://api.anchira.to/library/';
-    const cdnUrl = 'https://kisakisexo.xyz';
+    const getCdn = (page: number) =>
+      page % 2 === 0 ? 'https://kisakisexo.xyz' : 'https://aronasexo.xyz';
     const chapterId = window.location.pathname.slice(3);
     const options = {
       method: 'GET',
       headers: {
         Accept: '*/*',
-        Referer: window.location.href,
-        'X-Requested-With': 'XMLHttpRequest',
+        Referer: `${baseUrl}/`,
+        Origin: baseUrl,
       },
     };
     const api = await fetch(libraryUrl + chapterId, options).then(async (res) => res.json());
@@ -27,8 +30,17 @@ export default {
       pages: api.pages,
       prev: '#',
       next: '#',
-      listImages: api.data.map(
-        (image: { n: string }) => `${cdnUrl}/${api.id}/${data.key}/${data.hash}/a/${image.n}`,
+      listImages: await Promise.all(
+        api.data.map((image: { n: string }, page: number) =>
+          fetch(`${getCdn(page)}/${data.id}/${data.key}/${data.hash}/a/${image.n}`, {
+            method: 'GET',
+            redirect: 'follow',
+          })
+            .then((resp) => resp.blob())
+            .then((blob) => {
+              return URL.createObjectURL(blob);
+            }),
+        ),
       ),
     };
   },
