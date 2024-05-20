@@ -25,7 +25,7 @@ export type ISiteBase = {
   waitFunc?: () => boolean; // Custom validation function
   waitTime?: number;
   start?: 'never' | 'always'; // 'never', 'always'
-  run(): IManga;
+  run(): IManga | Promise<IManga>;
 };
 
 export type ISiteSingle = {

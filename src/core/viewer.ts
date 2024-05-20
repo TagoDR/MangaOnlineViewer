@@ -3,8 +3,8 @@ import { logScript } from '../utils/tampermonkey';
 import { getUserSettings } from './settings';
 import display from '../ui';
 import { cleanUpElement } from '../utils/cleanup';
-import { untilTimeout } from './check';
 import { isEmpty } from '../utils/checks';
+import { waitWithTimeout } from '../utils/waitFor';
 
 async function captureComments() {
   if (!getUserSettings().enableComments) return null;
@@ -12,7 +12,7 @@ async function captureComments() {
   if (comments) {
     logScript(`Waiting to Comments to load`, comments);
     window.scrollTo(0, document.body.scrollHeight);
-    const load = await untilTimeout((): boolean => {
+    const load = await waitWithTimeout((): boolean => {
       const iframe = comments?.querySelector<HTMLIFrameElement>(
         'iframe:not(#indicator-north, #indicator-south)',
       );

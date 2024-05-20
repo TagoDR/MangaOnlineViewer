@@ -1,6 +1,7 @@
 import { logScript } from './tampermonkey';
+import { awaitElement } from './userscript';
 
-export default function Unlock() {
+export default async function Unlock() {
   try {
     const originalAttachShadow = Element.prototype.attachShadow;
     Element.prototype.attachShadow = function customAttachShadow() {
@@ -9,4 +10,5 @@ export default function Unlock() {
   } catch (e) {
     logScript('Failed to unlock Closed Shadow DOM', e);
   }
+  await awaitElement('body');
 }

@@ -22,10 +22,7 @@ export function waitForElm(selector: string, target = document.body) {
   });
 }
 
-export function waitFor(
-  fn: () => string | undefined | null,
-  target = document.body,
-): Promise<string> {
+export function waitForFunc(fn: () => any, target = document.body): Promise<any> {
   return new Promise((resolve) => {
     const result = fn();
     if (result) {
@@ -96,4 +93,43 @@ export function waitForVar(name: keyof typeof unsafeWindow | string, target = do
       attributes: true,
     });
   });
+}
+
+export function waitForTimer(millis: number = 1000, result: any = true) {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(result), millis);
+  });
+}
+
+export async function until(predFn: () => boolean) {
+  const poll = (done: (value: unknown) => void) => {
+    const result = predFn();
+    if (result) {
+      done(result);
+    } else {
+      setTimeout(() => {
+        poll(done);
+      }, 500);
+    }
+  };
+
+  return new Promise(poll);
+}
+
+/**
+ * Wait for promise to resolve and for the timer to complete
+ * @param promise
+ * @param timer
+ */
+export async function waitWithTimer(promise: Promise<any>, timer: number = 1000) {
+  return (await Promise.all([promise, waitForTimer(timer)]))[0];
+}
+
+/**
+ * Wait for promise to resolve or for the timeout
+ * @param predFn
+ * @param timeout
+ */
+export async function waitWithTimeout(predFn: () => boolean, timeout: number) {
+  return Promise.race([until(predFn), waitForTimer(timeout, false)]);
 }
