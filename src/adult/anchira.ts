@@ -1,4 +1,5 @@
 // == Anchira ======================================================================================
+import blobUtil from 'blob-util';
 
 export default {
   name: 'Anchira',
@@ -38,7 +39,7 @@ export default {
             redirect: 'follow',
           })
             .then((resp) => resp.blob())
-            .then((blob) => URL.createObjectURL(blob)),
+            .then((blob) => blobUtil.blobToDataURL(blob)),
       ),
     };
   },

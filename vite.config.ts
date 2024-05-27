@@ -39,14 +39,15 @@ const scripts: Record<string, IScript> = {
   },
 };
 const globals = {
-  tinycolor2: 'tinycolor',
-  jszip: 'JSZip',
-  sweetalert2: 'Swal',
-  nprogress: 'NProgress',
-  imagesloaded: 'imagesLoaded',
-  lodash: '_',
+  'blob-util': 'blobUtil',
   'hotkeys-js': 'hotkeys',
+  imagesloaded: 'imagesLoaded',
+  jszip: 'JSZip',
+  lodash: '_',
+  nprogress: 'NProgress',
   'range-slider-input': 'rangeSlider',
+  sweetalert2: 'Swal',
+  tinycolor2: 'tinycolor',
   'ua-parser-js': 'UAParser',
 };
 
