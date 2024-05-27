@@ -52,6 +52,12 @@ const externalScripts: string[] = [
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   ></script>`,
+  html` <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js"
+    integrity="sha512-QX8zbIM1bENBmyyvWXAO/MnnZ+lMLuIxESquZAGbVR+2MOrvpsnosfgYa9h6EiPq9upqsiBa3ft/r1SP5tLhbA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>`,
 ];
 const requiredScripts = externalScripts.map((script: string) => {
   const find = /src="(.+?)"/.exec(script);
