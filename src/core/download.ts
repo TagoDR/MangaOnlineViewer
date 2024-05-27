@@ -11,8 +11,14 @@ let zip: JSZip;
 
 const base64Regex = /^data:(?<mimeType>image\/\w+);base64,+(?<data>.+)/;
 
+const objectURLRegex = /^blob:(.+?)\/(.+)$/;
+
 const getExtension = (mimeType: string) =>
   /image\/(?<ext>jpe?g|png|webp)/.exec(mimeType)?.groups?.ext ?? 'png';
+
+function isObjectURL(url: string) {
+  return objectURLRegex.test(url);
+}
 
 const getFilename = (name: string, index: number, total: number, ext: string) =>
   `${name}${(index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, '0')}.${ext.replace(
@@ -40,9 +46,12 @@ async function getImageData(
   index: number,
   array: HTMLImageElement[],
 ): Promise<ImageFile> {
-  const src = img.getAttribute('src') ?? img.getAttribute('data-src');
-  if (src == null) {
-    return Promise.reject(new Error('Image source not specified'));
+  let src = img.getAttribute('src');
+  if (src == null || isObjectURL(src)) {
+    src = img.getAttribute('data-src');
+    if (src == null || isObjectURL(src)) {
+      return Promise.reject(new Error('Image source not specified'));
+    }
   }
 
   const base64 = base64Regex.exec(src);
@@ -81,23 +90,26 @@ function addZip(img: ImageFile) {
 async function generateZip() {
   zip = new JSZip();
   const images = [...document.querySelectorAll<HTMLImageElement>('.PageImg')];
-  const data = await Promise.all(images.map(getImageData));
-  data.forEach(addZip);
-  logScript('Generating Zip');
-  zip
-    .generateAsync(
-      {
-        type: 'blob',
-      },
-      // LogScript, progress
-    )
-    .then((content) => {
-      logScript('Download Ready');
-      const zipName = `${document.querySelector('#MangaTitle')?.textContent?.trim()}.zip`;
-      saveAs(content, zipName, { autoBom: false });
-      document.getElementById('download')?.classList.remove('loading');
+  Promise.all(images.map(getImageData))
+    .then((data) => {
+      data.forEach(addZip);
+      logScript('Generating Zip');
+      zip
+        .generateAsync(
+          {
+            type: 'blob',
+          },
+          // LogScript, progress
+        )
+        .then((content) => {
+          logScript('Download Ready');
+          const zipName = `${document.querySelector('#MangaTitle')?.textContent?.trim()}.zip`;
+          saveAs(content, zipName, { autoBom: false });
+          document.getElementById('download')?.classList.remove('loading');
+        })
+        .catch(logScript);
     })
-    .catch(logScript);
+    .catch((msg) => logScript("One or more images couldn't be Downloaded", msg));
 }
 
 export default generateZip;
