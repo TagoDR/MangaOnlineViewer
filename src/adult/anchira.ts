@@ -1,4 +1,5 @@
 // == Anchira ======================================================================================
+
 export default {
   name: 'Anchira',
   url: /https?:\/\/(www\.)?(anchira).to/,
@@ -30,17 +31,14 @@ export default {
       pages: api.pages,
       prev: '#',
       next: '#',
-      listImages: await Promise.all(
-        api.data.map((image: { n: string }, page: number) =>
+      listImages: api.data.map(
+        (image: { n: string }, page: number): Promise<string> =>
           fetch(`${getCdn(page)}/${data.id}/${data.key}/${data.hash}/a/${image.n}`, {
             method: 'GET',
             redirect: 'follow',
           })
             .then((resp) => resp.blob())
-            .then((blob) => {
-              return URL.createObjectURL(blob);
-            }),
-        ),
+            .then((blob) => URL.createObjectURL(blob)),
       ),
     };
   },

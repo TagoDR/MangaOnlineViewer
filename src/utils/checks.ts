@@ -51,9 +51,7 @@ function isNothing(value: any): value is undefined {
     }
 
     // Check if array is really not empty as JS thinks at least one element should be non-empty
-    return !a.some(
-      (element) => !isNothing(element), //
-    );
+    return !a.some((element) => element instanceof Promise || !isNothing(element));
   };
 
   return (

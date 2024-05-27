@@ -149,9 +149,14 @@ function normalizeUrl(url = ''): string {
 }
 
 // Adds an image to the place-holder div
-function addImg(manga: IMangaImages, index: number, imageSrc: string, position: number) {
+async function addImg(
+  manga: IMangaImages,
+  index: number,
+  imageSrc: string | Promise<string>,
+  position: number,
+) {
   const relativePosition = position - manga.begin;
-  const src = normalizeUrl(imageSrc);
+  const src = normalizeUrl(await imageSrc);
   const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
   if (img) {
     if (!getUserSettings().lazyLoadImages || relativePosition <= getUserSettings().lazyStart) {

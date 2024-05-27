@@ -21,12 +21,17 @@ export type IMangaPages = {
 } & IMangaBase;
 
 export type IMangaImages = {
-  listImages: string[];
+  listImages: string[] | Promise<string>[];
 } & IMangaBase;
 
 type IBruteForceObj = {
   begin: number;
-  addImg: (manga: IMangaImages, index: number, imageSrc: string, position: number) => void;
+  addImg: (
+    manga: IMangaImages,
+    index: number,
+    imageSrc: string | Promise<string>,
+    position: number,
+  ) => void;
   loadImages: (list: string[]) => void;
   loadPages: (list: string[], img: string, lazyAttr: string | undefined) => void;
   wait: number;
