@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2024.05.20
+// @version       2024.05.27
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -98,20 +98,16 @@
         pages: api.pages,
         prev: "#",
         next: "#",
-        listImages: await Promise.all(
-          api.data.map((image, page) =>
-            fetch(
-              `${getCdn(page)}/${data.id}/${data.key}/${data.hash}/a/${image.n}`,
-              {
-                method: "GET",
-                redirect: "follow",
-              },
-            )
-              .then((resp) => resp.blob())
-              .then((blob) => {
-                return URL.createObjectURL(blob);
-              }),
-          ),
+        listImages: api.data.map((image, page) =>
+          fetch(
+            `${getCdn(page)}/${data.id}/${data.key}/${data.hash}/a/${image.n}`,
+            {
+              method: "GET",
+              redirect: "follow",
+            },
+          )
+            .then((resp) => resp.blob())
+            .then((blob) => URL.createObjectURL(blob)),
         ),
       };
     },
@@ -179,8 +175,7 @@
         return hasNonempty ? false : isEmptyObject(Object.keys(a));
       }
       return !a.some(
-        (element) => !isNothing(element),
-        //
+        (element) => element instanceof Promise || !isNothing(element),
       );
     };
     return (
@@ -4465,9 +4460,9 @@
     }
     return uri;
   }
-  function addImg(manga, index, imageSrc, position) {
+  async function addImg(manga, index, imageSrc, position) {
     const relativePosition = position - manga.begin;
-    const src = normalizeUrl(imageSrc);
+    const src = normalizeUrl(await imageSrc);
     const img = document.querySelector(`#PageImg${index}`);
     if (img) {
       if (
