@@ -13,6 +13,11 @@ const base64Regex = /^data:(?<mimeType>image\/\w+);base64,+(?<data>.+)/;
 
 const objectURLRegex = /^blob:(.+?)\/(.+)$/;
 
+export function isBase64ImageUrl(imageUrl: string) {
+  const base64Pattern = /^data:image\/(png|jpg|jpeg|gif);base64,/;
+  return base64Pattern.test(imageUrl);
+}
+
 const getExtension = (mimeType: string) =>
   /image\/(?<ext>jpe?g|png|webp)/.exec(mimeType)?.groups?.ext ?? 'png';
 

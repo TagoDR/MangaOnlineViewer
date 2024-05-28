@@ -16,6 +16,7 @@ import lazyLoad from '../utils/lazyLoad';
 import sequence from '../utils/sequence';
 import { html } from '../utils/code-tag';
 import { removeURLBookmark } from './events/bookmarks';
+import { isBase64ImageUrl } from '../core/download';
 
 // After pages load apply default Zoom
 function applyZoom(
@@ -65,9 +66,12 @@ function reloadImage(img: HTMLImageElement) {
   if (!src) {
     return;
   }
-
   img.removeAttribute('src');
-  img.setAttribute('src', invalidateImageCache(src, getRepeatValue(src)));
+  if (isBase64ImageUrl(src)) {
+    img.setAttribute('src', src);
+  } else {
+    img.setAttribute('src', invalidateImageCache(src, getRepeatValue(src)));
+  }
 }
 
 function onImagesDone() {
