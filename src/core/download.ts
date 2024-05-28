@@ -18,12 +18,12 @@ export function isBase64ImageUrl(imageUrl: string) {
   return base64Pattern.test(imageUrl);
 }
 
-const getExtension = (mimeType: string) =>
-  /image\/(?<ext>jpe?g|png|webp)/.exec(mimeType)?.groups?.ext ?? 'png';
-
-function isObjectURL(url: string) {
+export function isObjectURL(url: string) {
   return objectURLRegex.test(url);
 }
+
+const getExtension = (mimeType: string) =>
+  /image\/(?<ext>jpe?g|png|webp)/.exec(mimeType)?.groups?.ext ?? 'png';
 
 const getFilename = (name: string, index: number, total: number, ext: string) =>
   `${name}${(index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, '0')}.${ext.replace(

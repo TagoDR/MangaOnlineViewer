@@ -1,5 +1,5 @@
 // == 8Muses =======================================================================================
-import { waitForAtb } from '../utils/waitFor';
+import { waitForAtb, waitWithTimer } from '../utils/waitFor';
 
 export default {
   name: ['8Muses.com', '8Muses.io'],
@@ -27,6 +27,8 @@ export default {
       pages: num,
       prev: '#',
       next: '#',
+      lazy: false,
+      timer: 10,
       listImages: img,
       async before() {
         if (!unsafeWindow.link_images?.length) {
@@ -48,7 +50,10 @@ export default {
           const src = [];
           for (let i = 1; i <= this.pages; i += 1) {
             // eslint-disable-next-line no-await-in-loop
-            src[i - 1] = await waitForAtb('.photo img', 'src', target ?? document.body);
+            src[i - 1] = await waitWithTimer(
+              waitForAtb('.photo img', 'src', target ?? document.body),
+              100,
+            );
             target?.querySelector('img')?.removeAttribute('src');
             next?.dispatchEvent(new Event('click'));
           }

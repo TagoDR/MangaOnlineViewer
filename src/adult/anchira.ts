@@ -1,6 +1,4 @@
 // == Anchira ======================================================================================
-import blobUtil from 'blob-util';
-
 export default {
   name: 'Anchira',
   url: /https?:\/\/(www\.)?(anchira).to/,
@@ -32,14 +30,13 @@ export default {
       pages: api.pages,
       prev: '#',
       next: '#',
+      fetchOptions: {
+        method: 'GET',
+        redirect: 'follow',
+      },
       listImages: api.data.map(
-        (image: { n: string }, page: number): Promise<string> =>
-          fetch(`${getCdn(page)}/${data.id}/${data.key}/${data.hash}/a/${image.n}`, {
-            method: 'GET',
-            redirect: 'follow',
-          })
-            .then((resp) => resp.blob())
-            .then((blob) => blobUtil.blobToDataURL(blob)),
+        (image: { n: string }, page: number) =>
+          `${getCdn(page)}/${data.id}/${data.key}/${data.hash}/a/${image.n}`,
       ),
     };
   },

@@ -1,5 +1,6 @@
 import NProgress from 'nprogress';
 import imagesLoaded from 'imagesloaded';
+import blobUtil from 'blob-util';
 import { logScript } from '../utils/tampermonkey';
 import { getUserSettings } from '../core/settings';
 import {
@@ -16,7 +17,7 @@ import lazyLoad from '../utils/lazyLoad';
 import sequence from '../utils/sequence';
 import { html } from '../utils/code-tag';
 import { removeURLBookmark } from './events/bookmarks';
-import { isBase64ImageUrl } from '../core/download';
+import { isBase64ImageUrl, isObjectURL } from '../core/download';
 
 // After pages load apply default Zoom
 function applyZoom(
@@ -67,7 +68,7 @@ function reloadImage(img: HTMLImageElement) {
     return;
   }
   img.removeAttribute('src');
-  if (isBase64ImageUrl(src)) {
+  if (isBase64ImageUrl(src) || isObjectURL(src)) {
     img.setAttribute('src', src);
   } else {
     img.setAttribute('src', invalidateImageCache(src, getRepeatValue(src)));
@@ -153,19 +154,23 @@ function normalizeUrl(url = ''): string {
 }
 
 // Adds an image to the place-holder div
-async function addImg(
-  manga: IMangaImages,
-  index: number,
-  imageSrc: string | Promise<string>,
-  position: number,
-) {
+function addImg(manga: IMangaImages, index: number, imageSrc: string, position: number) {
   const relativePosition = position - manga.begin;
-  const src = normalizeUrl(await imageSrc);
+  let src = normalizeUrl(imageSrc);
   const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
   if (img) {
-    if (!getUserSettings().lazyLoadImages || relativePosition <= getUserSettings().lazyStart) {
+    if (
+      !getUserSettings().lazyLoadImages ||
+      relativePosition <= getUserSettings().lazyStart ||
+      manga.fetchOptions
+    ) {
       setTimeout(
-        () => {
+        async () => {
+          if (manga.fetchOptions) {
+            src = await fetch(src, manga.fetchOptions)
+              .then((resp) => resp.blob())
+              .then((blob) => blobUtil.blobToDataURL(blob));
+          }
           const imgLoad = imagesLoaded(img.parentElement!);
           imgLoad.on('done', onImagesSuccess);
           imgLoad.on('fail', onImagesFail);
