@@ -4790,8 +4790,13 @@
       settings.threshold;
     return rect.top <= target || rect.bottom <= target;
   }
-  function showElement(item) {
-    const value = item.element.getAttribute(settings.lazyAttribute);
+  async function showElement(item) {
+    let value = item.element.getAttribute(settings.lazyAttribute);
+    if (value && item.fetchOptions) {
+      value = await fetch(value, item.fetchOptions)
+        .then((resp) => resp.blob())
+        .then((blob) => blobUtil.blobToDataURL(blob));
+    }
     if (value) {
       item.element.setAttribute(settings.targetAttribute, value);
     }
@@ -4803,7 +4808,7 @@
     inView.forEach(showElement);
   }
   const observerEvent = _.throttle(executeCheck, settings.throttle);
-  function lazyLoad(element, callback) {
+  function lazyLoad(element, callback, fetchOptions) {
     if (!setup) {
       window.addEventListener("scroll", observerEvent, {
         passive: true,
@@ -4816,7 +4821,7 @@
       });
       setup = true;
     }
-    listElements.push({ element, callback });
+    listElements.push({ element, callback, fetchOptions });
     observerEvent();
   }
 
@@ -4948,8 +4953,7 @@
     if (img) {
       if (
         !getUserSettings().lazyLoadImages ||
-        relativePosition <= getUserSettings().lazyStart ||
-        manga.fetchOptions
+        relativePosition <= getUserSettings().lazyStart
       ) {
         setTimeout(
           async () => {
@@ -4969,17 +4973,21 @@
         );
       } else {
         img.setAttribute("data-src", src);
-        lazyLoad(img, () => {
-          const imgLoad = imagesLoaded(img.parentElement);
-          imgLoad.on("done", onImagesSuccess);
-          imgLoad.on("fail", onImagesFail);
-          logScript(
-            "Lazy Image: ",
-            index,
-            " Source: ",
-            img.getAttribute("src"),
-          );
-        });
+        lazyLoad(
+          img,
+          () => {
+            const imgLoad = imagesLoaded(img.parentElement);
+            imgLoad.on("done", onImagesSuccess);
+            imgLoad.on("fail", onImagesFail);
+            logScript(
+              "Lazy Image: ",
+              index,
+              " Source: ",
+              img.getAttribute("src"),
+            );
+          },
+          manga.fetchOptions,
+        );
       }
       if (manga.pages === position) removeURLBookmark();
     }
