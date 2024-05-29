@@ -32,7 +32,7 @@
 // @include       /https?:\/\/(www\.)?bato.to\/(chapter|title).*/
 // @include       /https?:\/\/(www\.)?(bilibilicomics).net\/episode\/.+/
 // @include       /https?:\/\/comic\.nizamkomputer.com\/read\/.+\/\d+.*/
-// @include       /https?:\/\/(www\.)?comick.io\/comic\/.+\/.+/
+// @include       /https?:\/\/(www\.)?comick.io\/.+/
 // @include       /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/
 // @include       /https?:\/\/(www.)?(asura.*|flamecomics|rizz.*|void-scans|luminousscans|shimascans|night-scans|manhwafreak|freakcomic|ozulscansen|azuremanga|cypherscans|mangagalaxy|luascans|manhwa-freak).(com|org|gg|xyz|to|net|me)\/.+/
 // @include       /https?:\/\/(comics\.)?inkr.com\/title\/.+\/chapter\/.+/
@@ -217,7 +217,7 @@
 
   const comick = {
     name: "Comick",
-    url: /https?:\/\/(www\.)?comick.io\/comic\/.+\/.+/,
+    url: /https?:\/\/(www\.)?comick.io\/.+/,
     homepage: "https://comick.io/home",
     language: ["English"],
     category: "manga",
@@ -4420,7 +4420,6 @@
 
   var FileSaver_minExports = FileSaver_min.exports;
 
-  let zip;
   const base64Regex = /^data:(?<mimeType>image\/\w+);base64,+(?<data>.+)/;
   const objectURLRegex = /^blob:(.+?)\/(.+)$/;
   function isBase64ImageUrl(imageUrl) {
@@ -4432,6 +4431,8 @@
   }
   const getExtension = (mimeType) =>
     /image\/(?<ext>jpe?g|png|webp)/.exec(mimeType)?.groups?.ext ?? "png";
+
+  let zip;
   const getFilename = (name, index, total, ext) =>
     `${name}${(index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, "0")}.${ext.replace(
       "jpeg",
@@ -4791,13 +4792,17 @@
     return rect.top <= target || rect.bottom <= target;
   }
   async function showElement(item) {
-    let value = item.element.getAttribute(settings.lazyAttribute);
-    if (value && item.fetchOptions) {
-      value = await fetch(value, item.fetchOptions)
-        .then((resp) => resp.blob())
-        .then((blob) => blobUtil.blobToDataURL(blob));
-    }
+    let value = item.element.getAttribute(settings.lazyAttribute) ?? "";
     if (value) {
+      if (
+        !isObjectURL(value) &&
+        !isBase64ImageUrl(value) &&
+        item.fetchOptions
+      ) {
+        value = await fetch(value, item.fetchOptions)
+          .then((resp) => resp.blob())
+          .then((blob) => blobUtil.blobToDataURL(blob));
+      }
       item.element.setAttribute(settings.targetAttribute, value);
     }
     item.callback(item.element)?.catch(logScript);
@@ -4957,7 +4962,11 @@
       ) {
         setTimeout(
           async () => {
-            if (manga.fetchOptions) {
+            if (
+              !isObjectURL(src) &&
+              !isBase64ImageUrl(src) &&
+              manga.fetchOptions
+            ) {
               src = await fetch(src, manga.fetchOptions)
                 .then((resp) => resp.blob())
                 .then((blob) => blobUtil.blobToDataURL(blob));
@@ -4972,7 +4981,7 @@
             relativePosition,
         );
       } else {
-        img.setAttribute("data-src", src);
+        img.setAttribute("data-src", normalizeUrl(src));
         lazyLoad(
           img,
           () => {
