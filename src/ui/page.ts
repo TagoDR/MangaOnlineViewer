@@ -159,11 +159,7 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
   let src = normalizeUrl(imageSrc);
   const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
   if (img) {
-    if (
-      !getUserSettings().lazyLoadImages ||
-      relativePosition <= getUserSettings().lazyStart ||
-      manga.fetchOptions
-    ) {
+    if (!getUserSettings().lazyLoadImages || relativePosition <= getUserSettings().lazyStart) {
       setTimeout(
         async () => {
           if (manga.fetchOptions) {
@@ -182,12 +178,16 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
     } else {
       img.setAttribute('data-src', src);
 
-      lazyLoad(img, () => {
-        const imgLoad = imagesLoaded(img.parentElement!);
-        imgLoad.on('done', onImagesSuccess);
-        imgLoad.on('fail', onImagesFail);
-        logScript('Lazy Image: ', index, ' Source: ', img.getAttribute('src'));
-      });
+      lazyLoad(
+        img,
+        () => {
+          const imgLoad = imagesLoaded(img.parentElement!);
+          imgLoad.on('done', onImagesSuccess);
+          imgLoad.on('fail', onImagesFail);
+          logScript('Lazy Image: ', index, ' Source: ', img.getAttribute('src'));
+        },
+        manga.fetchOptions,
+      );
     }
     if (manga.pages === position) removeURLBookmark();
   }

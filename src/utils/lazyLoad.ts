@@ -2,6 +2,7 @@
  * Interface for the settings
  */
 import _ from 'lodash';
+import blobUtil from 'blob-util';
 import { logScript } from './tampermonkey';
 
 type ILazyOptions = {
@@ -27,6 +28,7 @@ const settings: ILazyOptions = {
 type LazyItem = {
   element: HTMLImageElement;
   callback: (element: HTMLImageElement) => void | Promise<void>;
+  fetchOptions?: RequestInit;
 };
 
 /**
@@ -51,8 +53,13 @@ function filterInView(value: LazyItem) {
  * Execute the loading of the image
  * @param item
  */
-function showElement(item: LazyItem) {
-  const value = item.element.getAttribute(settings.lazyAttribute);
+async function showElement(item: LazyItem) {
+  let value = item.element.getAttribute(settings.lazyAttribute);
+  if (value && item.fetchOptions) {
+    value = await fetch(value, item.fetchOptions)
+      .then((resp) => resp.blob())
+      .then((blob) => blobUtil.blobToDataURL(blob));
+  }
   if (value) {
     item.element.setAttribute(settings.targetAttribute, value);
   }
@@ -80,10 +87,12 @@ const observerEvent = _.throttle(executeCheck, settings.throttle);
  * 'src' from 'data-src' then call a callback function.
  * @param element
  * @param callback
+ * @fetch fetchOptions
  */
 function lazyLoad(
   element: HTMLImageElement,
   callback: (element: HTMLImageElement) => void | Promise<void>,
+  fetchOptions?: RequestInit,
 ): void {
   if (!setup) {
     window.addEventListener('scroll', observerEvent, {
@@ -98,7 +107,7 @@ function lazyLoad(
     setup = true;
   }
 
-  listElements.push({ element, callback });
+  listElements.push({ element, callback, fetchOptions });
   observerEvent();
 }
 
