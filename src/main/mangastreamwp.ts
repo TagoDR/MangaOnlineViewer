@@ -14,6 +14,7 @@ const domains = [
   'cypherscans',
   'mangagalaxy',
   'luascans',
+  'manhwa-freak',
 ];
 export default {
   name: [
@@ -48,6 +49,7 @@ export default {
     'https://cypherscans.xyz/',
     'https://mangagalaxy.me/',
     'https://luascans.com/',
+    'https://manhwa-freak.org/',
   ],
   language: ['English'],
   category: 'manga',
