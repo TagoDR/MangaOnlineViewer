@@ -2,7 +2,7 @@
 export default {
   name: ['MangaGeko'],
   url: /https?:\/\/(www\.)?mgeko.(com|cc)?\/reader\/.*/,
-  homepage: ['https://www.mgeko.com/','https://www.mgeko.cc/'],
+  homepage: ['https://www.mgeko.com/', 'https://www.mgeko.cc/'],
   language: ['English'],
   category: 'manga',
   run() {
