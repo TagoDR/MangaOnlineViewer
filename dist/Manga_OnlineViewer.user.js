@@ -5,7 +5,7 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, LuaScans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MangaGeko, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, LuaScans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, Funmanga, MangaDoom, MangaInn, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
 // @version       2024.05.29
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
@@ -1185,7 +1185,7 @@
   const mangaoni = {
     name: "MangaOni",
     url: /https?:\/\/(www\.)?manga-oni.com\/lector\/.+\/\d+\/cascada/,
-    homepage: "hhttps://manga-oni.com/",
+    homepage: "https://manga-oni.com/",
     language: ["Spanish"],
     category: "manga",
     run() {
@@ -1579,7 +1579,7 @@
   };
 
   const mgeko = {
-    name: ["MangaGeko"],
+    name: ["MangaGeko.com", "MangaGeko.cc"],
     url: /https?:\/\/(www\.)?mgeko.(com|cc)?\/reader\/.*/,
     homepage: ["https://www.mgeko.com/", "https://www.mgeko.cc/"],
     language: ["English"],
@@ -4423,11 +4423,15 @@
   let zip;
   const base64Regex = /^data:(?<mimeType>image\/\w+);base64,+(?<data>.+)/;
   const objectURLRegex = /^blob:(.+?)\/(.+)$/;
-  const getExtension = (mimeType) =>
-    /image\/(?<ext>jpe?g|png|webp)/.exec(mimeType)?.groups?.ext ?? "png";
+  function isBase64ImageUrl(imageUrl) {
+    const base64Pattern = /^data:image\/(png|jpg|jpeg|gif);base64,/;
+    return base64Pattern.test(imageUrl);
+  }
   function isObjectURL(url) {
     return objectURLRegex.test(url);
   }
+  const getExtension = (mimeType) =>
+    /image\/(?<ext>jpe?g|png|webp)/.exec(mimeType)?.groups?.ext ?? "png";
   const getFilename = (name, index, total, ext) =>
     `${name}${(index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, "0")}.${ext.replace(
       "jpeg",
@@ -4858,7 +4862,11 @@
       return;
     }
     img.removeAttribute("src");
-    img.setAttribute("src", invalidateImageCache(src, getRepeatValue(src)));
+    if (isBase64ImageUrl(src) || isObjectURL(src)) {
+      img.setAttribute("src", src);
+    } else {
+      img.setAttribute("src", invalidateImageCache(src, getRepeatValue(src)));
+    }
   }
   function onImagesDone() {
     logScript("Images Loading Complete");
@@ -4933,17 +4941,23 @@
     }
     return uri;
   }
-  async function addImg(manga, index, imageSrc, position) {
+  function addImg(manga, index, imageSrc, position) {
     const relativePosition = position - manga.begin;
-    const src = normalizeUrl(await imageSrc);
+    let src = normalizeUrl(imageSrc);
     const img = document.querySelector(`#PageImg${index}`);
     if (img) {
       if (
         !getUserSettings().lazyLoadImages ||
-        relativePosition <= getUserSettings().lazyStart
+        relativePosition <= getUserSettings().lazyStart ||
+        manga.fetchOptions
       ) {
         setTimeout(
-          () => {
+          async () => {
+            if (manga.fetchOptions) {
+              src = await fetch(src, manga.fetchOptions)
+                .then((resp) => resp.blob())
+                .then((blob) => blobUtil.blobToDataURL(blob));
+            }
             const imgLoad = imagesLoaded(img.parentElement);
             imgLoad.on("done", onImagesSuccess);
             imgLoad.on("fail", onImagesFail);

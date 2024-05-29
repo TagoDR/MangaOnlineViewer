@@ -57,7 +57,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [MangaToons](https://mangatoon.mobi/) _[English]_
 - [MangaTown](https://www.mangatown.com/) _[English]_
 - [ManhuaScan](https://manhuascan.com/) _[English]_
-- [MangaGeko](https://www.mgeko.com/) _[English]_
+- [MangaGeko.com](https://www.mgeko.com/) / [MangaGeko.cc](https://www.mgeko.cc/) _[English]_
 - [NaniScans](https://naniscans.com/) _[English]_
 - [NineManga](https://ninemanga.com/) _[English]_
 - [PandaManga](https://www.pandamanga.com/) _[English]_
@@ -80,7 +80,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [SenManga(Raw)](https://raw.senmanga.com/) _[Raw]_
 - [InManga](https://inmanga.com//) _[Spanish]_
 - [MangasIn](https://mangas.in/) _[Spanish]_
-- [MangaOni](hhttps://manga-oni.com/) _[Spanish]_
+- [MangaOni](https://manga-oni.com/) _[Spanish]_
 - [MangaTigre](https://www.mangatigre.net/) _[Spanish]_
 - [OlympusScans](https://olympusscans.com/) _[Spanish]_
 - [TuMangaOnline](https://lectortmo.com/) _[Spanish]_

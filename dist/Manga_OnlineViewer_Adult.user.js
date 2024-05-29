@@ -99,16 +99,13 @@
         pages: api.pages,
         prev: "#",
         next: "#",
-        listImages: api.data.map((image, page) =>
-          fetch(
+        fetchOptions: {
+          method: "GET",
+          redirect: "follow",
+        },
+        listImages: api.data.map(
+          (image, page) =>
             `${getCdn(page)}/${data.id}/${data.key}/${data.hash}/a/${image.n}`,
-            {
-              method: "GET",
-              redirect: "follow",
-            },
-          )
-            .then((resp) => resp.blob())
-            .then((blob) => blobUtil.blobToDataURL(blob)),
         ),
       };
     },
@@ -287,6 +284,9 @@
     };
     return new Promise(poll);
   }
+  async function waitWithTimer(promise, timer = 1e3) {
+    return (await Promise.all([promise, waitForTimer(timer)]))[0];
+  }
   async function waitWithTimeout(predFn, timeout) {
     return Promise.race([until(predFn), waitForTimer(timeout, false)]);
   }
@@ -327,6 +327,8 @@
         pages: num,
         prev: "#",
         next: "#",
+        lazy: false,
+        timer: 10,
         listImages: img,
         async before() {
           if (!unsafeWindow.link_images?.length) {
@@ -349,10 +351,9 @@
             const target = document.querySelector(".p-picture");
             const src = [];
             for (let i = 1; i <= this.pages; i += 1) {
-              src[i - 1] = await waitForAtb(
-                ".photo img",
-                "src",
-                target ?? document.body,
+              src[i - 1] = await waitWithTimer(
+                waitForAtb(".photo img", "src", target ?? document.body),
+                100,
               );
               target?.querySelector("img")?.removeAttribute("src");
               next?.dispatchEvent(new Event("click"));
@@ -3963,11 +3964,15 @@
   let zip;
   const base64Regex = /^data:(?<mimeType>image\/\w+);base64,+(?<data>.+)/;
   const objectURLRegex = /^blob:(.+?)\/(.+)$/;
-  const getExtension = (mimeType) =>
-    /image\/(?<ext>jpe?g|png|webp)/.exec(mimeType)?.groups?.ext ?? "png";
+  function isBase64ImageUrl(imageUrl) {
+    const base64Pattern = /^data:image\/(png|jpg|jpeg|gif);base64,/;
+    return base64Pattern.test(imageUrl);
+  }
   function isObjectURL(url) {
     return objectURLRegex.test(url);
   }
+  const getExtension = (mimeType) =>
+    /image\/(?<ext>jpe?g|png|webp)/.exec(mimeType)?.groups?.ext ?? "png";
   const getFilename = (name, index, total, ext) =>
     `${name}${(index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, "0")}.${ext.replace(
       "jpeg",
@@ -4398,7 +4403,11 @@
       return;
     }
     img.removeAttribute("src");
-    img.setAttribute("src", invalidateImageCache(src, getRepeatValue(src)));
+    if (isBase64ImageUrl(src) || isObjectURL(src)) {
+      img.setAttribute("src", src);
+    } else {
+      img.setAttribute("src", invalidateImageCache(src, getRepeatValue(src)));
+    }
   }
   function onImagesDone() {
     logScript("Images Loading Complete");
@@ -4473,17 +4482,23 @@
     }
     return uri;
   }
-  async function addImg(manga, index, imageSrc, position) {
+  function addImg(manga, index, imageSrc, position) {
     const relativePosition = position - manga.begin;
-    const src = normalizeUrl(await imageSrc);
+    let src = normalizeUrl(imageSrc);
     const img = document.querySelector(`#PageImg${index}`);
     if (img) {
       if (
         !getUserSettings().lazyLoadImages ||
-        relativePosition <= getUserSettings().lazyStart
+        relativePosition <= getUserSettings().lazyStart ||
+        manga.fetchOptions
       ) {
         setTimeout(
-          () => {
+          async () => {
+            if (manga.fetchOptions) {
+              src = await fetch(src, manga.fetchOptions)
+                .then((resp) => resp.blob())
+                .then((blob) => blobUtil.blobToDataURL(blob));
+            }
             const imgLoad = imagesLoaded(img.parentElement);
             imgLoad.on("done", onImagesSuccess);
             imgLoad.on("fail", onImagesFail);
