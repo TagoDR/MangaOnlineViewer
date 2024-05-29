@@ -2,7 +2,7 @@
 export default {
   name: 'MangaOni',
   url: /https?:\/\/(www\.)?manga-oni.com\/lector\/.+\/\d+\/cascada/,
-  homepage: 'hhttps://manga-oni.com/',
+  homepage: 'https://manga-oni.com/',
   language: ['Spanish'],
   category: 'manga',
   run() {
