@@ -1,6 +1,7 @@
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { logScript } from '../utils/tampermonkey';
+import { base64Regex, getExtension, isObjectURL } from '../utils/urls';
 
 type ImageFile = {
   name: string;
@@ -8,22 +9,6 @@ type ImageFile = {
 };
 
 let zip: JSZip;
-
-const base64Regex = /^data:(?<mimeType>image\/\w+);base64,+(?<data>.+)/;
-
-const objectURLRegex = /^blob:(.+?)\/(.+)$/;
-
-export function isBase64ImageUrl(imageUrl: string) {
-  const base64Pattern = /^data:image\/(png|jpg|jpeg|gif);base64,/;
-  return base64Pattern.test(imageUrl);
-}
-
-export function isObjectURL(url: string) {
-  return objectURLRegex.test(url);
-}
-
-const getExtension = (mimeType: string) =>
-  /image\/(?<ext>jpe?g|png|webp)/.exec(mimeType)?.groups?.ext ?? 'png';
 
 const getFilename = (name: string, index: number, total: number, ext: string) =>
   `${name}${(index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, '0')}.${ext.replace(

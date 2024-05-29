@@ -4,6 +4,7 @@
 import _ from 'lodash';
 import blobUtil from 'blob-util';
 import { logScript } from './tampermonkey';
+import { isBase64ImageUrl, isObjectURL } from './urls';
 
 type ILazyOptions = {
   threshold: number;
@@ -54,13 +55,13 @@ function filterInView(value: LazyItem) {
  * @param item
  */
 async function showElement(item: LazyItem) {
-  let value = item.element.getAttribute(settings.lazyAttribute);
-  if (value && item.fetchOptions) {
-    value = await fetch(value, item.fetchOptions)
-      .then((resp) => resp.blob())
-      .then((blob) => blobUtil.blobToDataURL(blob));
-  }
+  let value = item.element.getAttribute(settings.lazyAttribute) ?? '';
   if (value) {
+    if (!isObjectURL(value) && !isBase64ImageUrl(value) && item.fetchOptions) {
+      value = await fetch(value, item.fetchOptions)
+        .then((resp) => resp.blob())
+        .then((blob) => blobUtil.blobToDataURL(blob));
+    }
     item.element.setAttribute(settings.targetAttribute, value);
   }
 

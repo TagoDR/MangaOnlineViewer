@@ -17,7 +17,7 @@ import lazyLoad from '../utils/lazyLoad';
 import sequence from '../utils/sequence';
 import { html } from '../utils/code-tag';
 import { removeURLBookmark } from './events/bookmarks';
-import { isBase64ImageUrl, isObjectURL } from '../core/download';
+import { isBase64ImageUrl, isObjectURL } from '../utils/urls';
 
 // After pages load apply default Zoom
 function applyZoom(
@@ -162,7 +162,7 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
     if (!getUserSettings().lazyLoadImages || relativePosition <= getUserSettings().lazyStart) {
       setTimeout(
         async () => {
-          if (manga.fetchOptions) {
+          if (!isObjectURL(src) && !isBase64ImageUrl(src) && manga.fetchOptions) {
             src = await fetch(src, manga.fetchOptions)
               .then((resp) => resp.blob())
               .then((blob) => blobUtil.blobToDataURL(blob));
@@ -176,7 +176,7 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
         (manga.timer ?? getUserSettings().throttlePageLoad) * relativePosition,
       );
     } else {
-      img.setAttribute('data-src', src);
+      img.setAttribute('data-src', normalizeUrl(src));
 
       lazyLoad(
         img,
