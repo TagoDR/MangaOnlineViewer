@@ -9,7 +9,10 @@ export default {
     const src = [
       ...new Set(
         [...document.querySelectorAll('article .page__text img , article #content-2 img')].map(
-          (img) => img.getAttribute('data-src') ?? img.getAttribute('src'),
+          (img) =>
+            img.getAttribute('data-src') ??
+            img.getAttribute('data-srce') ??
+            img.getAttribute('src'),
         ),
       ),
     ];

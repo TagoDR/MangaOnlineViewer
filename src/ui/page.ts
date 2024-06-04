@@ -144,13 +144,16 @@ function onImagesFail(instance: ImagesLoaded.ImagesLoaded) {
 }
 
 // Corrects urls
-function normalizeUrl(url = ''): string {
-  let uri = url.trim();
-  if (uri.startsWith('//')) {
-    uri = `https:${uri}`;
-  }
+function normalizeUrl(url: string): string {
+  if (url) {
+    let uri = url.trim();
+    if (uri.startsWith('//')) {
+      uri = `https:${uri}`;
+    }
 
-  return uri;
+    return uri;
+  }
+  return '';
 }
 
 // Adds an image to the place-holder div
