@@ -1,4 +1,3 @@
-import anchira from './anchira';
 import bestporncomix from './bestporncomix';
 import doujinmoe from './doujinmoe';
 import eightMuses from './8muses';
@@ -60,7 +59,6 @@ const sites = [
   porncomixonline,
   pururin,
   simplyhentai,
-  anchira,
   tmohhentai,
   threehentai,
   tsumino,
