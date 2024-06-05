@@ -1,23 +1,18 @@
 // == ReadManga.Today ==============================================================================
 export default {
-  name: ['ReadManga Today', 'Funmanga', 'MangaDoom', 'MangaInn'],
-  url: /https?:\/\/(www\.)?(funmanga|mngdoom|readmng|mangainn).(com|net)\/.+\/\d+/,
-  homepage: [
-    'https://www.readmng.com/',
-    'https://funmanga.com/',
-    'https://mngdoom.com/',
-    'https://www.mangainn.net/',
-  ],
+  name: ['ReadManga Today'],
+  url: /https?:\/\/(www\.)?readm.today\/.+\/\d+/,
+  homepage: ['https://readm.today/'],
   language: ['English'],
   category: 'manga',
   run() {
     return {
-      title: unsafeWindow.chapter_page_title,
-      series: unsafeWindow.manga_url,
-      pages: unsafeWindow.images.length,
-      prev: unsafeWindow.prev_chapter_url,
-      next: unsafeWindow.next_chapter_url,
-      listImages: unsafeWindow.images.map((item: { url: string }) => item.url),
+      title: document.querySelector('.page-title')?.textContent?.trim(),
+      series: document.querySelector('.page-title a')?.getAttribute('href'),
+      pages: unsafeWindow.chapter.pages.length,
+      prev: unsafeWindow.chapter.prev,
+      next: unsafeWindow.chapter.next,
+      listImages: unsafeWindow.chapter.pages.map((item: { src: string }) => item.src),
     };
   },
 };
