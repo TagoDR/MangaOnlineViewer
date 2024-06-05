@@ -1,21 +1,4 @@
 // == MangaStream WordPress Plugin =================================================================
-const domains = [
-  'asura.*',
-  'flamecomics',
-  'rizz.*',
-  'void-scans',
-  'luminousscans',
-  'shimascans',
-  'night-scans',
-  'manhwafreak',
-  'freakcomic',
-  'ozulscansen',
-  'azuremanga',
-  'cypherscans',
-  'mangagalaxy',
-  'luascans',
-  'manhwa-freak',
-];
 export default {
   name: [
     'MangaStream WordPress Plugin',
@@ -32,8 +15,9 @@ export default {
     'CypherScans',
     'MangaGalaxy',
     'LuaScans',
+    'Drake Scans',
   ],
-  url: new RegExp(`https?:\\/\\/(www.)?(${domains.join('|')}).(com|org|gg|xyz|to|net|me)\\/.+`),
+  url: /https?:\/\/.+\/.+.\//,
   homepage: [
     'https://themesia.com/mangastream-wordpress-theme/',
     'https://asuratoon.com/',
@@ -50,6 +34,7 @@ export default {
     'https://mangagalaxy.me/',
     'https://luascans.com/',
     'https://manhwa-freak.org/',
+    'https://drake-scans.com/',
   ],
   language: ['English'],
   category: 'manga',
