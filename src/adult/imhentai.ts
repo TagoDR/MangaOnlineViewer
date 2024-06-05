@@ -8,14 +8,18 @@ function findExt(i: number) {
 }
 
 function findServer(cId: number) {
-  if (cId > 0 && cId <= 274825) return 'm1.imhentai.xxx';
-  if (cId > 274825 && cId <= 403818) return 'm2.imhentai.xxx';
-  if (cId > 403818 && cId <= 527143) return 'm3.imhentai.xxx';
-  if (cId > 527143 && cId <= 632481) return 'm4.imhentai.xxx';
-  if (cId > 632481 && cId <= 816010) return 'm5.imhentai.xxx';
-  if (cId > 816010 && cId <= 970098) return 'm6.imhentai.xxx';
-  if (cId > 970098 && cId <= 1121113) return 'm7.imhentai.xxx';
-  return 'm8.imhentai.xxx';
+  const serverRanges = [
+    { min: 0, max: 274825, name: 'm1' },
+    { min: 274826, max: 403818, name: 'm2' },
+    { min: 403819, max: 527143, name: 'm3' },
+    { min: 527144, max: 632481, name: 'm4' },
+    { min: 632482, max: 816010, name: 'm5' },
+    { min: 816011, max: 970098, name: 'm6' },
+    { min: 970099, max: 1121113, name: 'm7' },
+    { min: 1121114, max: 1259410, name: 'm8' },
+    { min: 1259411, max: Infinity, name: 'm9' },
+  ];
+  return serverRanges.find((server) => cId >= server.min && cId <= server.max)?.name;
 }
 
 export default {
@@ -30,7 +34,7 @@ export default {
     const imageDir = document.querySelector('#image_dir')?.getAttribute('value');
     const num = parseInt(document.querySelector('#pages')?.getAttribute('value') ?? '', 10);
     const cId = parseInt(document.querySelector('#u_id')?.getAttribute('value') ?? '', 10);
-    const randomServer = unsafeWindow.random_server ?? findServer(cId);
+    const randomServer = unsafeWindow.random_server ?? `${findServer(cId)}.imhentai.xxx`;
     return {
       title: document.querySelector('title')?.textContent?.trim(),
       series: document.querySelector('.return_btn')?.getAttribute('href'),
