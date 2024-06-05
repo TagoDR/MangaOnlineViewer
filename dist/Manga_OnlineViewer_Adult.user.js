@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, Anchira, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2024.05.29
+// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
+// @version       2024.06.05
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -53,7 +53,6 @@
 // @include       /https?:\/\/(www\.)?porncomixone.net\/comic\/.+/
 // @include       /https?:\/\/(www\.)?pururin.to\/(view|read)\/.+\/.+\/.+/
 // @include       /https?:\/\/(www\.)?simply-hentai.com\/.+\/page\/.+/
-// @include       /https?:\/\/(www\.)?(anchira).to/
 // @include       /https?:\/\/(www\.)?tmohentai.com\/reader\/.+\/paginated\/\d+/
 // @include       /https?:\/\/(www\.)?3hentai.net\/d\/.+\/.+/
 // @include       /https?:\/\/(www\.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/
@@ -65,51 +64,6 @@
 // ==/UserScript==
 (function () {
   "use strict";
-
-  const anchira = {
-    name: "Anchira",
-    url: /https?:\/\/(www\.)?(anchira).to/,
-    homepage: "https://anchira.to/",
-    language: ["English"],
-    category: "hentai",
-    lazy: false,
-    waitEle: "nav select option",
-    async run() {
-      const baseUrl = "https://anchira.to";
-      const libraryUrl = "https://api.anchira.to/library/";
-      const getCdn = (page) =>
-        page % 2 === 0 ? "https://kisakisexo.xyz" : "https://aronasexo.xyz";
-      const chapterId = window.location.pathname.slice(3);
-      const options = {
-        method: "GET",
-        headers: {
-          Accept: "*/*",
-          Referer: `${baseUrl}/`,
-          Origin: baseUrl,
-        },
-      };
-      const api = await fetch(libraryUrl + chapterId, options).then(
-        async (res) => res.json(),
-      );
-      const data = await fetch(`${libraryUrl + chapterId}/data`, options).then(
-        async (res) => res.json(),
-      );
-      return {
-        title: api.title,
-        pages: api.pages,
-        prev: "#",
-        next: "#",
-        fetchOptions: {
-          method: "GET",
-          redirect: "follow",
-        },
-        listImages: api.data.map(
-          (image, page) =>
-            `${getCdn(page)}/${data.id}/${data.key}/${data.hash}/a/${image.n}`,
-        ),
-      };
-    },
-  };
 
   const bestporncomix = {
     name: "BestPornComix",
@@ -707,14 +661,19 @@
     return ".jpg";
   }
   function findServer(cId) {
-    if (cId > 0 && cId <= 274825) return "m1.imhentai.xxx";
-    if (cId > 274825 && cId <= 403818) return "m2.imhentai.xxx";
-    if (cId > 403818 && cId <= 527143) return "m3.imhentai.xxx";
-    if (cId > 527143 && cId <= 632481) return "m4.imhentai.xxx";
-    if (cId > 632481 && cId <= 816010) return "m5.imhentai.xxx";
-    if (cId > 816010 && cId <= 970098) return "m6.imhentai.xxx";
-    if (cId > 970098 && cId <= 1121113) return "m7.imhentai.xxx";
-    return "m8.imhentai.xxx";
+    const serverRanges = [
+      { min: 0, max: 274825, name: "m1" },
+      { min: 274826, max: 403818, name: "m2" },
+      { min: 403819, max: 527143, name: "m3" },
+      { min: 527144, max: 632481, name: "m4" },
+      { min: 632482, max: 816010, name: "m5" },
+      { min: 816011, max: 970098, name: "m6" },
+      { min: 970099, max: 1121113, name: "m7" },
+      { min: 1121114, max: 1259410, name: "m8" },
+      { min: 1259411, max: Infinity, name: "m9" },
+    ];
+    return serverRanges.find((server) => cId >= server.min && cId <= server.max)
+      ?.name;
   }
   const imhentai = {
     name: "Imhentai",
@@ -738,7 +697,8 @@
         document.querySelector("#u_id")?.getAttribute("value") ?? "",
         10,
       );
-      const randomServer = unsafeWindow.random_server ?? findServer(cId);
+      const randomServer =
+        unsafeWindow.random_server ?? `${findServer(cId)}.imhentai.xxx`;
       return {
         title: document.querySelector("title")?.textContent?.trim(),
         series: document.querySelector(".return_btn")?.getAttribute("href"),
@@ -1339,7 +1299,10 @@
               "article .page__text img , article #content-2 img",
             ),
           ].map(
-            (img) => img.getAttribute("data-src") ?? img.getAttribute("src"),
+            (img) =>
+              img.getAttribute("data-src") ??
+              img.getAttribute("data-srce") ??
+              img.getAttribute("src"),
           ),
         ),
       ];
@@ -1397,7 +1360,6 @@
     porncomixonline,
     pururin,
     simplyhentai,
-    anchira,
     tmohhentai,
     threehentai,
     tsumino,
@@ -4485,12 +4447,15 @@
       }
     });
   }
-  function normalizeUrl(url = "") {
-    let uri = url.trim();
-    if (uri.startsWith("//")) {
-      uri = `https:${uri}`;
+  function normalizeUrl(url) {
+    if (url) {
+      let uri = url.trim();
+      if (uri.startsWith("//")) {
+        uri = `https:${uri}`;
+      }
+      return uri;
     }
-    return uri;
+    return "";
   }
   function addImg(manga, index, imageSrc, position) {
     const relativePosition = position - manga.begin;

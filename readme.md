@@ -61,7 +61,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [NaniScans](https://naniscans.com/) _[English]_
 - [NineManga](https://ninemanga.com/) _[English]_
 - [PandaManga](https://www.pandamanga.com/) _[English]_
-- [ReadManga Today](https://www.readmng.com/) / [Funmanga](https://funmanga.com/) / [MangaDoom](https://mngdoom.com/) / [MangaInn](https://www.mangainn.net/) _[English]_
+- [ReadManga Today](https://readm.today/) _[English]_
 - [ReaperScans](https://reaperscans.com/) _[English]_
 - [KLManga](https://tapas.io/) _[English]_
 - [TenManga](https://www.tenmanga.com/) _[English]_
@@ -120,7 +120,6 @@ then open it in the browser, and you will see the options to load local Files.
 - [PornComixOnline](https://www.porncomixone.net) _[English]_
 - [Pururin](https://pururin.to/) _[English]_
 - [Simply-Hentai](https://simply-hentai.com/) _[English]_
-- [Anchira](https://anchira.to/) _[English]_
 - [3Hentai](https://3hentai.net/) _[English]_
 - [Tsumino](https://tsumino.com/) _[English]_
 - [XlecxOne](https://xlecx.one/) _[English]_
