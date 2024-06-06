@@ -32,7 +32,7 @@ export default async function viewer(manga: IManga) {
   if (manga.before !== undefined) {
     await manga.before(manga.begin);
   }
-  if (!manga.comments) manga.comments = await captureComments();
+  if (getUserSettings().enableComments && !manga.comments) manga.comments = await captureComments();
   setTimeout(() => {
     try {
       cleanUpElement(document.documentElement, document.head, document.body);
