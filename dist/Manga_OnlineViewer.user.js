@@ -5287,6 +5287,14 @@
       ?.addEventListener("change", changeScrollHeight);
   }
 
+  function toggleFunction(open, close) {
+    let isOpen = true;
+    return () => {
+      const func = isOpen ? open : close;
+      func();
+      isOpen = !isOpen;
+    };
+  }
   function buttonHeaderClick() {
     const header = document.querySelector("#Header");
     if (header?.classList.contains("click")) {
@@ -5368,7 +5376,10 @@
     document.addEventListener("mousemove", _.throttle(headerHover, 300));
     document
       .querySelector("#settings")
-      ?.addEventListener("click", buttonSettingsOpen);
+      ?.addEventListener(
+        "click",
+        toggleFunction(buttonSettingsOpen, buttonSettingsClose),
+      );
     document
       .querySelectorAll(".closeButton")
       ?.forEach(addEvent("click", buttonSettingsClose));
