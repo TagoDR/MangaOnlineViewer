@@ -5,6 +5,16 @@ import { isNothing } from '../../utils/checks';
 import keybindings from './keybindings';
 import { addEvent } from './common';
 
+function toggleFunction(open: () => void, close: () => void) {
+  let isOpen = true;
+
+  return () => {
+    const func = isOpen ? open : close;
+    func();
+    isOpen = !isOpen;
+  };
+}
+
 function buttonHeaderClick() {
   const header = document.querySelector('#Header');
   if (header?.classList.contains('click')) {
@@ -91,7 +101,9 @@ function panels() {
   document.querySelector('#menu')?.addEventListener('click', buttonHeaderClick);
   document.addEventListener('mousemove', _.throttle(headerHover, 300));
   // Settings Control
-  document.querySelector('#settings')?.addEventListener('click', buttonSettingsOpen);
+  document
+    .querySelector('#settings')
+    ?.addEventListener('click', toggleFunction(buttonSettingsOpen, buttonSettingsClose));
   document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonSettingsClose));
   document.querySelector('#Overlay')?.addEventListener('click', buttonSettingsClose);
   // Keybindings list
