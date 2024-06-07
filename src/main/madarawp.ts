@@ -35,7 +35,7 @@ export default {
     'SetsuScans',
     'ToonGod',
   ],
-  url: /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon)\/.+\/.+/,
+  url: /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon|chapter)\/.+(\/.+)?/,
   homepage: [
     'https://mangabooth.com/',
     'https://manhuaus.com',
