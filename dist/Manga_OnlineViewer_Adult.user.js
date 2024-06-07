@@ -5,7 +5,7 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
+// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, Fakku.cc, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
 // @version       2024.06.07
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
@@ -32,6 +32,7 @@
 // @include       /https?:\/\/(www\.)?doujins.com\/.+/
 // @include       /https?:\/\/(comics.)?8muses.(com|io)\/(comics\/)?picture\/.+/
 // @include       /https?:\/\/(g\.)?(exhentai|e-hentai).org\/s\/.+\/.+/
+// @include       /https?:\/\/spy.fakku.cc\/archive\/\d+\/.+\/\d+/
 // @include       /https?:\/\/(www\.)?fsicomics.com\/.+/
 // @include       /https?:\/\/(www\.)?gntai.net\/(?!(category|tags|autores))[^/]+\/.+/
 // @include       /https?:\/\/(www\.)?hbrowse.com\/.+/
@@ -367,6 +368,30 @@
         listPages: pages,
         img: "#img",
         lazy: true,
+      };
+    },
+  };
+
+  const fakku = {
+    name: "Fakku.cc",
+    url: /https?:\/\/spy.fakku.cc\/archive\/\d+\/.+\/\d+/,
+    homepage: "https://spy.fakku.cc/",
+    language: ["English"],
+    category: "hentai",
+    run() {
+      const cdn = "https://cdn.fakku.cc";
+      const num = parseInt(document.body.dataset.totalPages ?? "0", 10);
+      return {
+        title: document.querySelector(".title")?.textContent?.trim(),
+        series: document.querySelector("a.back")?.getAttribute("href"),
+        pages: num,
+        prev: "#",
+        next: "#",
+        listImages: Array(num)
+          .fill(0)
+          .map(
+            (_, i) => `${cdn}/data/${document.body.dataset.id}/${i + 1}.jpg`,
+          ),
       };
     },
   };
@@ -1339,6 +1364,7 @@
     doujinmoe,
     eightMuses,
     exhentai,
+    fakku,
     fsicomics,
     gntai,
     hbrowse,
