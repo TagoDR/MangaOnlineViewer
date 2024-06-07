@@ -2,6 +2,7 @@ import bestporncomix from './bestporncomix';
 import doujinmoe from './doujinmoe';
 import eightMuses from './8muses';
 import exhentai from './exhentai';
+import fakku from './fakku';
 import fsicomics from './fsicomics';
 import gntai from './gntai';
 import hbrowse from './hbrowse';
@@ -38,6 +39,7 @@ const sites = [
   doujinmoe,
   eightMuses,
   exhentai,
+  fakku,
   fsicomics,
   gntai,
   hbrowse,
