@@ -34,7 +34,7 @@
 // @include       /https?:\/\/comic\.nizamkomputer.com\/read\/.+\/\d+.*/
 // @include       /https?:\/\/(www\.)?comick.io\/.+/
 // @include       /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/
-// @include       /https?:\/\/[^/]+\/[^/]+\/$/
+// @include       /https?:\/\/[^/]+\/(chapter\/)?[^/]+\/?$/
 // @include       /https?:\/\/(comics\.)?inkr.com\/title\/.+\/chapter\/.+/
 // @include       /https?:\/\/(www\.)?inmanga.com\/ver\/manga\/.+\/.+/
 // @include       /https?:\/\/(www\.)?klmanga.com\/.+chapter.+/
@@ -79,7 +79,7 @@
 // @include       /https?:\/\/(www\.)?(yugenmangas).(com|net|lat)\/series\/.+/
 // @include       /https?:\/\/(www\.)?zscans.com\/comics\/.+/
 // @include       /^(?!.*jaiminisbox).*\/read\/.+/
-// @include       /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon|chapter)\/.+(\/.+)?/
+// @include       /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon)\/.+\/.+/
 // @exclude       /https?:\/\/(www\.)?tsumino.com\/.+/
 // @exclude       /https?:\/\/(www\.)?pururin.io\/.+/
 // ==/UserScript==
@@ -881,7 +881,7 @@
       "SetsuScans",
       "ToonGod",
     ],
-    url: /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon|chapter)\/.+(\/.+)?/,
+    url: /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon)\/.+\/.+/,
     homepage: [
       "https://mangabooth.com/",
       "https://manhuaus.com",
@@ -1366,7 +1366,7 @@
       "LuaScans",
       "Drake Scans",
     ],
-    url: /https?:\/\/[^/]+\/[^/]+\/$/,
+    url: /https?:\/\/[^/]+\/(chapter\/)?[^/]+\/?$/,
     homepage: [
       "https://themesia.com/mangastream-wordpress-theme/",
       "https://asuratoon.com/",
