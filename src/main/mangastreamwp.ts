@@ -17,7 +17,7 @@ export default {
     'LuaScans',
     'Drake Scans',
   ],
-  url: /https?:\/\/[^/]+\/[^/]+\/$/,
+  url: /https?:\/\/[^/]+\/(chapter\/)?[^/]+\/?$/,
   homepage: [
     'https://themesia.com/mangastream-wordpress-theme/',
     'https://asuratoon.com/',
