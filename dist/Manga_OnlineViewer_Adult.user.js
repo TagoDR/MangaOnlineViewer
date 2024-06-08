@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, Fakku.cc, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic
-// @version       2024.06.07
+// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, Fakku.cc, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
+// @version       2024.06.08
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -41,7 +41,7 @@
 // @include       /https?:\/\/(www\.)?hentaifox.com\/g\/.+/
 // @include       /https?:\/\/(www\.)?(hentaihand|nhentai).com\/.+\/reader/
 // @include       /https?:\/\/(www\.)?hentaihere.com\/.+\/.+\/.+/
-// @include       /https?:\/\/(www\.)?hentainexus.com\/read\/.+/
+// @include       /https?:\/\/((www\.)?hentainexus.com|nexus.fakku.cc)\/read\/.+/
 // @include       /https?:\/\/hitomi.la\/reader\/.+/
 // @include       /https?:\/\/(www\.)?imhentai.xxx\/view\/.+\/.+\//
 // @include       /https?:\/\/(www\.)?kingcomix.com\/.+/
@@ -61,7 +61,7 @@
 // @include       /https?:\/\/(www\.)?wnacg.com\/photos-view-id-.+/
 // @include       /https?:\/\/(www\.)?xlecx.one\/.+/
 // @include       /https?:\/\/(www\.)?xyzcomics.com\/.+/
-// @include       /https?:\/\/.+\/(porncomic)\/.+\/.+/
+// @include       /https?:\/\/.+\/(porncomic|read-scan)\/.+\/.+/
 // ==/UserScript==
 (function () {
   "use strict";
@@ -623,7 +623,7 @@
 
   const hentainexus = {
     name: "HentaiNexus",
-    url: /https?:\/\/(www\.)?hentainexus.com\/read\/.+/,
+    url: /https?:\/\/((www\.)?hentainexus.com|nexus.fakku.cc)\/read\/.+/,
     homepage: "https://hentainexus.com/",
     language: ["English"],
     category: "hentai",
@@ -818,19 +818,24 @@
     },
   };
 
+  const imageRegex =
+    /^([\t\n])*(https?:\/\/)?.+\.(jpg|jpeg|png|gif|bmp|webp).*$/;
   function findImages() {
     return [
       ...document.querySelectorAll(
         ".wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img, #chapter-images img, #chapterContent img",
       ),
-    ]
-      .map(
-        (img) =>
-          img?.getAttribute("src") ??
-          img?.getAttribute("data-src") ??
-          img?.getAttribute("data-full-url"),
-      )
-      .filter((src) => !src?.match(/loading/i));
+    ].map(
+      (img) =>
+        [...img.attributes]
+          .filter(
+            (attr) =>
+              /.*(src|url).*/i.test(attr.name) &&
+              !/^.*(blank|lazy|load).*$/.test(attr.value),
+          )
+          .find((attr) => imageRegex.test(attr.value))?.value ??
+        img?.getAttribute("src"),
+    );
   }
   const madarawp$1 = {
     name: [
@@ -879,16 +884,7 @@
     category: "manga",
     waitFunc: () => {
       const images = findImages();
-      return (
-        images.length > 0 &&
-        images.every(
-          (s) =>
-            s &&
-            /^([\t\n])*(https?:\/\/)?.+\.(jpg|jpeg|png|gif|bmp|webp).*$/.test(
-              s,
-            ),
-        )
-      );
+      return images.length > 0 && images.every((s) => s && imageRegex.test(s));
     },
     run() {
       const images = findImages();
@@ -908,9 +904,19 @@
 
   const madarawp = {
     ...madarawp$1,
-    name: ["Madara WordPress Plugin", "AllPornComic"],
-    url: /https?:\/\/.+\/(porncomic)\/.+\/.+/,
-    homepage: ["#", "https://allporncomic.com/"],
+    name: [
+      "Madara WordPress Plugin",
+      "AllPornComic",
+      "Manytoon",
+      "Manga District",
+    ],
+    url: /https?:\/\/.+\/(porncomic|read-scan)\/.+\/.+/,
+    homepage: [
+      "#",
+      "https://allporncomic.com/",
+      "https://manytoon.com/",
+      "https://mangadistrict.com/",
+    ],
     category: "hentai",
   };
 

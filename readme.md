@@ -41,7 +41,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [BilibiliComics](https://www.bilibilicomics.net/) _[English]_
 - [Comick](https://comick.io/home) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
-- [MangaStream WordPress Plugin](https://themesia.com/mangastream-wordpress-theme/) / [Asura Scans](https://asuratoon.com/) / [Flame Comics](https://flamecomics.com/) / [Rizzcomic](https://rizzcomic.com/) / [Voids-Scans](https://void-scans.com/) / [Luminous Scans](https://luminousscans.com/) / [Shimada Scans](https://shimadascans.com/) / [Night Scans](https://night-scans.com/) / [Manhwa-Freak](https://freakcomic.com/) / [OzulScansEn](https://ozulscansen.com/) / [AzureManga](https://azuremanga.com/) / [CypherScans](https://cypherscans.xyz/) / [MangaGalaxy](https://mangagalaxy.me/) / [LuaScans](https://luascans.com/) / [Drake Scans](https://manhwa-freak.org/) _[English]_
+- [MangaStream WordPress Plugin](https://themesia.com/mangastream-wordpress-theme/) / [Asura Scans](https://asuratoon.com/) / [Flame Comics](https://flamecomics.com/) / [Rizzcomic](https://rizzfables.com/) / [Voids-Scans](https://void-scans.com/) / [Luminous Scans](https://luminousscans.com/) / [Shimada Scans](https://shimadascans.com/) / [Night Scans](https://night-scans.com/) / [Manhwa-Freak](https://freakcomic.com/) / [OzulScansEn](https://ozulscansen.com/) / [AzureManga](https://azuremanga.com/) / [CypherScans](https://cypherscans.xyz/) / [MangaGalaxy](https://mangagalaxy.me/) / [LuaScans](https://luascans.com/) / [Drake Scans](https://manhwa-freak.org/) _[English]_
 - [INKR](https://inkr.com/) _[English]_
 - [LHTranslation](https://lhtranslation.net/) _[English]_
 - [LynxScans](https://lynxscans.com/) _[English]_
@@ -125,7 +125,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [Tsumino](https://tsumino.com/) _[English]_
 - [XlecxOne](https://xlecx.one/) _[English]_
 - [xyzcomics](https://xyzcomics.com/) _[English]_
-- [Madara WordPress Plugin](#) / [AllPornComic](https://allporncomic.com/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
+- [Madara WordPress Plugin](#) / [AllPornComic](https://allporncomic.com/) / [Manytoon](https://manytoon.com/) / [Manga District](https://mangadistrict.com/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
 - [wnacg](https://wnacg.com/) _[English,Raw,Chinese]_
 - [GNTAI.net](https://www.gntai.net/) _[Spanish]_
 - [TMOHentai](https://tmohentai.com/) _[Spanish]_
