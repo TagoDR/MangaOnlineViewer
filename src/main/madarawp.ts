@@ -1,17 +1,19 @@
 // == Madara WordPress Plugin ======================================================================
+const imageRegex = /^([\t\n])*(https?:\/\/)?.+\.(jpg|jpeg|png|gif|bmp|webp).*$/;
+
 function findImages() {
   return [
     ...document.querySelectorAll(
       '.wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img, #chapter-images img, #chapterContent img',
     ),
-  ]
-    .map(
-      (img) =>
-        img?.getAttribute('src') ??
-        img?.getAttribute('data-src') ??
-        img?.getAttribute('data-full-url'),
-    )
-    .filter((src) => !src?.match(/loading/i));
+  ].map(
+    (img) =>
+      [...img.attributes]
+        .filter(
+          (attr) => /.*(src|url).*/i.test(attr.name) && !/^.*(blank|lazy|load).*$/.test(attr.value),
+        )
+        .find((attr) => imageRegex.test(attr.value))?.value ?? img?.getAttribute('src'),
+  );
 }
 
 export default {
@@ -61,10 +63,7 @@ export default {
   category: 'manga',
   waitFunc: () => {
     const images = findImages();
-    return (
-      images.length > 0 &&
-      images.every((s) => s && /^([\t\n])*(https?:\/\/)?.+\.(jpg|jpeg|png|gif|bmp|webp).*$/.test(s))
-    );
+    return images.length > 0 && images.every((s) => s && imageRegex.test(s));
   },
   run() {
     const images = findImages();
