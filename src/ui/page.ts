@@ -1,6 +1,6 @@
 import NProgress from 'nprogress';
 import imagesLoaded from 'imagesloaded';
-import blobUtil from 'blob-util';
+import { blobToDataURL } from 'blob-util';
 import { logScript } from '../utils/tampermonkey';
 import { getUserSettings } from '../core/settings';
 import {
@@ -168,7 +168,7 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
           if (!isObjectURL(src) && !isBase64ImageUrl(src) && manga.fetchOptions) {
             src = await fetch(src, manga.fetchOptions)
               .then((resp) => resp.blob())
-              .then((blob) => blobUtil.blobToDataURL(blob));
+              .then((blob) => blobToDataURL(blob));
           }
           const imgLoad = imagesLoaded(img.parentElement!);
           imgLoad.on('done', onImagesSuccess);

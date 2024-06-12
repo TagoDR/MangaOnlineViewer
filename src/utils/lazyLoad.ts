@@ -2,7 +2,7 @@
  * Interface for the settings
  */
 import _ from 'lodash';
-import blobUtil from 'blob-util';
+import { blobToDataURL } from 'blob-util';
 import { logScript } from './tampermonkey';
 import { isBase64ImageUrl, isObjectURL } from './urls';
 
@@ -60,7 +60,7 @@ async function showElement(item: LazyItem) {
     if (!isObjectURL(value) && !isBase64ImageUrl(value) && item.fetchOptions) {
       value = await fetch(value, item.fetchOptions)
         .then((resp) => resp.blob())
-        .then((blob) => blobUtil.blobToDataURL(blob));
+        .then((blob) => blobToDataURL(blob));
     }
     item.element.setAttribute(settings.targetAttribute, value);
   }
