@@ -102,7 +102,9 @@ const Header = (manga: IManga) => html`
       </span>
       <span id="ZoomSlider">
         <output id="ZoomVal" class="RangeValue" for="Zoom">
-          ${getUserSettings().defaultZoom}%
+          ${getUserSettings().zoomMode === 'percent'
+            ? `${getUserSettings().defaultZoom}%`
+            : getUserSettings().zoomMode}
         </output>
         <input
           type="range"

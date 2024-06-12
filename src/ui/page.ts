@@ -106,11 +106,11 @@ function updateProgress() {
 }
 
 export const applyLastGlobalZoom = (pages = '.PageContent img') => {
-  const zoomVal = document.querySelector('#ZoomVal')?.textContent;
-  if (zoomVal?.trim().match(/^\d+%$/)) {
+  const zoomVal = document.querySelector('#ZoomVal')?.textContent?.trim();
+  if (zoomVal?.match(/^\d+%$/)) {
     applyZoom(parseInt(zoomVal, 10), pages);
   } else {
-    applyZoom(parseInt(zoomVal as ZoomMode, 10), pages);
+    applyZoom(zoomVal as ZoomMode, pages);
   }
 };
 
