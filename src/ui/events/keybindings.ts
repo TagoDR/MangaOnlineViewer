@@ -99,7 +99,7 @@ function keybindings() {
   Object.keys(getUserSettings().keybinds).forEach((key) => {
     hotkeys(
       getUserSettings().keybinds[key]?.join(',') ?? '',
-      _.debounce((event) => {
+      _.throttle((event) => {
         event.preventDefault();
         event.stopImmediatePropagation();
         event.stopPropagation();

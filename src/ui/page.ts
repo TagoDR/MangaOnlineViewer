@@ -34,7 +34,7 @@ function applyZoom(
       img.style.width = `${window.innerWidth}px`;
     } else if (zoom === 'height') {
       // Fit height
-      const nextHeight = window.innerHeight + (getUserSettings().showThumbnails ? -31 : 0);
+      const nextHeight = window.innerHeight + (getUserSettings().showThumbnails ? -29 : 0);
       img.style.height = `${nextHeight}px`;
       img.style.minWidth = 'unset';
     } else if (zoom === 'percent') {
