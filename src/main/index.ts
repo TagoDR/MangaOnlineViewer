@@ -60,20 +60,19 @@ const sites = [
   comicastle,
   comick,
   dysnatyscans,
-  mangastreamwp,
   inkr,
   inmanga,
   klmanga,
   leitor,
-  // Leviatanscans,
   lhtranslation,
+  // Leviatanscans,
   localhost,
   lynxscans,
   mangabuddy,
   mangadex,
   mangafox,
-  // mangafreak,
   mangago,
+  // mangafreak,
   mangahosted,
   mangahub,
   mangasin,
@@ -95,8 +94,8 @@ const sites = [
   readcomicsonline,
   readmangatoday,
   reaperscans,
-  // Resetscans, deprecated
   senmanga,
+  // Resetscans, deprecated
   tapas,
   tenmanga,
   tmofans,
@@ -107,6 +106,7 @@ const sites = [
   wpmanga,
   yugenmangas,
   zeroscans,
+  mangastreamwp, // Must be at the end because is a generic check
   foolslide, // Must be at the end because is a generic check
   madarawp, // Must be at the end because is a generic check
 ] as ISite[];
