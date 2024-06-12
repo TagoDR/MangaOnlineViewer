@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, LuaScans, Drake Scans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.06.08
+// @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, LuaScans, Drake Scans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @version       2024.06.12
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -34,7 +34,6 @@
 // @include       /https?:\/\/comic\.nizamkomputer.com\/read\/.+\/\d+.*/
 // @include       /https?:\/\/(www\.)?comick.io\/.+/
 // @include       /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/
-// @include       /https?:\/\/[^/]+\/(chapter\/)?[^/?&=]+\/?$/
 // @include       /https?:\/\/(comics\.)?inkr.com\/title\/.+\/chapter\/.+/
 // @include       /https?:\/\/(www\.)?inmanga.com\/ver\/manga\/.+\/.+/
 // @include       /https?:\/\/(www\.)?klmanga.com\/.+chapter.+/
@@ -78,6 +77,7 @@
 // @include       /https?:\/\/(www\.)?(manga33).com\/manga\/.+/
 // @include       /https?:\/\/(www\.)?(yugenmangas).(com|net|lat)\/series\/.+/
 // @include       /https?:\/\/(www\.)?zscans.com\/comics\/.+/
+// @include       /https?:\/\/[^/]+\/(chapter\/)?[^/?&=]+\/?$/
 // @include       /^(?!.*jaiminisbox).*\/read\/.+/
 // @include       /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon)\/.+\/.+/
 // @exclude       /https?:\/\/(www\.)?tsumino.com\/.+/
@@ -2088,20 +2088,19 @@
     comicastle,
     comick,
     dysnatyscans,
-    mangastreamwp,
     inkr,
     inmanga,
     klmanga,
     leitor,
-    // Leviatanscans,
     lhtranslation,
+    // Leviatanscans,
     localhost,
     lynxscans,
     mangabuddy,
     mangadex,
     mangafox,
-    // mangafreak,
     mangago,
+    // mangafreak,
     mangahosted,
     mangahub,
     mangasin,
@@ -2123,8 +2122,8 @@
     readcomicsonline,
     readmangatoday,
     reaperscans,
-    // Resetscans, deprecated
     senmanga,
+    // Resetscans, deprecated
     tapas,
     tenmanga,
     tmofans,
@@ -2135,6 +2134,8 @@
     wpmanga,
     yugenmangas,
     zeroscans,
+    mangastreamwp,
+    // Must be at the end because is a generic check
     foolslide,
     // Must be at the end because is a generic check
     madarawp,
@@ -3905,7 +3906,9 @@
         </span>
         <span id="ZoomSlider">
           <output id="ZoomVal" class="RangeValue" for="Zoom">
-            ${getUserSettings().defaultZoom}%
+            ${getUserSettings().zoomMode === "percent"
+              ? `${getUserSettings().defaultZoom}%`
+              : getUserSettings().zoomMode}
           </output>
           <input
             type="range"
@@ -4702,7 +4705,7 @@
     Object.keys(getUserSettings().keybinds).forEach((key) => {
       hotkeys(
         getUserSettings().keybinds[key]?.join(",") ?? "",
-        _.debounce((event) => {
+        _.throttle((event) => {
           event.preventDefault();
           event.stopImmediatePropagation();
           event.stopPropagation();
@@ -4817,7 +4820,7 @@
         img.style.width = `${window.innerWidth}px`;
       } else if (zoom === "height") {
         const nextHeight =
-          window.innerHeight + (getUserSettings().showThumbnails ? -31 : 0);
+          window.innerHeight + (getUserSettings().showThumbnails ? -29 : 0);
         img.style.height = `${nextHeight}px`;
         img.style.minWidth = "unset";
       } else if (zoom === "percent") {
@@ -4884,11 +4887,11 @@
     }
   }
   const applyLastGlobalZoom = (pages = ".PageContent img") => {
-    const zoomVal = document.querySelector("#ZoomVal")?.textContent;
-    if (zoomVal?.trim().match(/^\d+%$/)) {
+    const zoomVal = document.querySelector("#ZoomVal")?.textContent?.trim();
+    if (zoomVal?.match(/^\d+%$/)) {
       applyZoom(parseInt(zoomVal, 10), pages);
     } else {
-      applyZoom(parseInt(zoomVal, 10), pages);
+      applyZoom(zoomVal, pages);
     }
   };
   function onImagesSuccess(instance) {
@@ -5220,8 +5223,22 @@
   function updateHeaderType(mode) {
     const header = document.querySelector("#Header");
     const menu = document.querySelector("#menu");
-    header?.classList.remove("scroll", "click", "hover", "fixed", "simple");
-    menu?.classList.remove("scroll", "click", "hover", "fixed", "simple");
+    header?.classList.remove(
+      "scroll",
+      "click",
+      "hover",
+      "fixed",
+      "simple",
+      "visible",
+    );
+    menu?.classList.remove(
+      "scroll",
+      "click",
+      "hover",
+      "fixed",
+      "simple",
+      "hide",
+    );
     header?.classList.add(mode);
     menu?.classList.add(mode);
   }

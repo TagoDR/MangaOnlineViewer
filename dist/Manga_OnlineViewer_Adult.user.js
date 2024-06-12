@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, Fakku.cc, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.06.08
+// @version       2024.06.12
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -3466,7 +3466,9 @@
         </span>
         <span id="ZoomSlider">
           <output id="ZoomVal" class="RangeValue" for="Zoom">
-            ${getUserSettings().defaultZoom}%
+            ${getUserSettings().zoomMode === "percent"
+              ? `${getUserSettings().defaultZoom}%`
+              : getUserSettings().zoomMode}
           </output>
           <input
             type="range"
@@ -4263,7 +4265,7 @@
     Object.keys(getUserSettings().keybinds).forEach((key) => {
       hotkeys(
         getUserSettings().keybinds[key]?.join(",") ?? "",
-        _.debounce((event) => {
+        _.throttle((event) => {
           event.preventDefault();
           event.stopImmediatePropagation();
           event.stopPropagation();
@@ -4378,7 +4380,7 @@
         img.style.width = `${window.innerWidth}px`;
       } else if (zoom === "height") {
         const nextHeight =
-          window.innerHeight + (getUserSettings().showThumbnails ? -31 : 0);
+          window.innerHeight + (getUserSettings().showThumbnails ? -29 : 0);
         img.style.height = `${nextHeight}px`;
         img.style.minWidth = "unset";
       } else if (zoom === "percent") {
@@ -4445,11 +4447,11 @@
     }
   }
   const applyLastGlobalZoom = (pages = ".PageContent img") => {
-    const zoomVal = document.querySelector("#ZoomVal")?.textContent;
-    if (zoomVal?.trim().match(/^\d+%$/)) {
+    const zoomVal = document.querySelector("#ZoomVal")?.textContent?.trim();
+    if (zoomVal?.match(/^\d+%$/)) {
       applyZoom(parseInt(zoomVal, 10), pages);
     } else {
-      applyZoom(parseInt(zoomVal, 10), pages);
+      applyZoom(zoomVal, pages);
     }
   };
   function onImagesSuccess(instance) {
@@ -4781,8 +4783,22 @@
   function updateHeaderType(mode) {
     const header = document.querySelector("#Header");
     const menu = document.querySelector("#menu");
-    header?.classList.remove("scroll", "click", "hover", "fixed", "simple");
-    menu?.classList.remove("scroll", "click", "hover", "fixed", "simple");
+    header?.classList.remove(
+      "scroll",
+      "click",
+      "hover",
+      "fixed",
+      "simple",
+      "visible",
+    );
+    menu?.classList.remove(
+      "scroll",
+      "click",
+      "hover",
+      "fixed",
+      "simple",
+      "hide",
+    );
     header?.classList.add(mode);
     menu?.classList.add(mode);
   }
