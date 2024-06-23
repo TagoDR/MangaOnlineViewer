@@ -55,11 +55,7 @@ function isNothing(value: any): value is undefined {
   };
 
   return (
-    // eslint-disable-next-line eqeqeq
-    value == false ||
-    value === 0 ||
-    isEmpty(value) ||
-    (typeof value === 'object' && isEmptyObject(value))
+    !value || value === 0 || isEmpty(value) || (typeof value === 'object' && isEmptyObject(value))
   );
 }
 

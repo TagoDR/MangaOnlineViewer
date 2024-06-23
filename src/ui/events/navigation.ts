@@ -4,7 +4,7 @@ import { addEvent, scrollToElement, transformScrollToHorizontal } from './common
 export function selectGoToPage(event: Event) {
   const target = (event.currentTarget as HTMLOptionElement).value;
   applyZoom();
-  scrollToElement(document.querySelector<HTMLElement>(`#Page${target}`)!);
+  scrollToElement(document.querySelector<HTMLElement>(`#Page${target}`));
 }
 
 export function clickThumbnail(event: Event) {
@@ -12,7 +12,7 @@ export function clickThumbnail(event: Event) {
   scrollToElement(
     document.querySelector<HTMLElement>(
       `#Page${(event.currentTarget as HTMLElement).querySelector('.ThumbnailIndex')?.textContent}`,
-    )!,
+    ),
   );
 }
 

@@ -89,10 +89,8 @@ const actions: Record<string, () => void> = {
 function keybindings() {
   document.onkeydown = null;
   document.onkeyup = null;
-  document.onkeypress = null;
   window.onkeydown = null;
   window.onkeyup = null;
-  window.onkeypress = null;
   window.onload = null;
   document.body.onload = null;
   hotkeys.unbind();

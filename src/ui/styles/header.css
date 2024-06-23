@@ -40,7 +40,7 @@
     top: 0;
 }
 
-#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR,+ #Chapter.FluidRTL ) {
+#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL) {
     position: fixed;
     padding-left: 40px;
     top: -100%;
@@ -53,10 +53,9 @@
     top: 0;
 }
 
-
 #MangaOnlineViewer #Header.scroll.headroom-show,
 #MangaOnlineViewer #Header.headroom-end,
-#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR,+ #Chapter.FluidRTL ).visible,
+#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL).visible,
 #MangaOnlineViewer #Header.visible {
     animation: headroom 0.3s ease-in;
     transform: translateY(0%);

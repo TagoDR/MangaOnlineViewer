@@ -227,9 +227,11 @@ async function start(sites: ISite[]) {
     } on ${getBrowser()} with ${getEngine()}`,
   );
   if (allowUpload()) return;
-  logScript(`${sites.length} Known Manga Sites, Looking for a match...`);
-  const site = sites.find((s: ISite) => s.url.test(window.location.href));
-  if (site) {
+  logScript(sites.length, ' Known Manga Sites:', sites);
+  const foundSites = sites.filter((s: ISite) => s.url.test(window.location.href));
+  logScript(foundSites.length, ' Matches Possible:', foundSites);
+  if (foundSites.length > 0) {
+    const site = foundSites[0];
     logScript(`Found site: ${site.name}`);
     await Promise.all([
       testTime(site),

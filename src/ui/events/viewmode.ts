@@ -12,7 +12,6 @@ function setupFluid(mode: ViewMode) {
   document.querySelector('#Header')?.classList.remove('visible');
   document.querySelector('#menu')?.classList.remove('hide');
   changeGlobalZoom('height')();
-  // document.querySelectorAll('.PageContent img').forEach((i) => i.removeAttribute('style'));
   scrollToElement(chapter);
   chapter?.addEventListener(
     'wheel',

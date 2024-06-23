@@ -2,7 +2,7 @@
 // https://github.com/prettier/prettier/blob/e46aba0ab279c764dc26e0f41f15c55122440c51/src/language-js/embed.js#L13
 
 const concatenateTemplateLiteralTag = (raw: TemplateStringsArray, ...keys: unknown[]): string =>
-  keys.length === 0 ? raw[0]! : String.raw({ raw }, ...keys);
+  keys.length === 0 ? raw[0] : String.raw({ raw }, ...keys);
 
 /**
  Enable highlighting/prettifying when used as html`<div>`
