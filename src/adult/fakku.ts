@@ -12,21 +12,28 @@ export default {
     const api = await fetch(`${window.location.href}/__data.json?x-sveltekit-invalidated=011`).then(
       async (res) => res.text(),
     );
-    const { data } = JSON.parse(api.split('\n').filter((s) => s.length)[1]);
-    const slug = data[5];
-    const num = data[12].length;
+    const data = /const data = ([^;]+);/.exec(api)?.[0];
+    const slug =
+      data?.match(/hash:"(\w+)"/)?.[1] ??
+      document
+        .querySelector('div div + img[alt^=Page]')
+        ?.getAttribute('src')
+        ?.match(/image\/(.+)\//)?.[1];
+    const images = /const data = ([^;]+);/
+      .exec(api)?.[0]
+      ?.match(/images:\[([^\]]+)\]/)?.[1]
+      ?.match(/filename:"[\w.]+"/g)
+      ?.map((s) => s.replace('filename:"', '').replace('"', ''));
     return {
       title: document
-        .querySelector('.title')
+        .querySelector('title')
         ?.textContent?.trim()
         .replace(/Page \d+ • /, ''),
       series: window.location.href.replace(/read\/.+/, ''),
-      pages: num,
+      pages: images?.length,
       prev: '#',
       next: '#',
-      listImages: Array(num)
-        .fill(0)
-        .map((_, i) => `${cdn}/image/${slug}/${i + 1}`),
+      listImages: images?.map((src) => `${cdn}/image/${slug}/${src}`),
     };
   },
 };
