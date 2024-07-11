@@ -15,6 +15,7 @@ import hentainexus from './hentainexus';
 import hitomi from './hitomi';
 import imhentai from './imhentai';
 import kingcomix from './kingcomix';
+import koharu from './koharu';
 import luscious from './luscious';
 import madarawp from './madarawp';
 import multporn from './multporn';
@@ -32,7 +33,7 @@ import vercomicsporno from './vercomicsporno';
 import wnacg from './wnacg';
 import xlecxone from './xlecxone';
 import xyzcomics from './xyzcomics';
-import { type ISite } from '../types/ISite';
+import { type ISite } from '../types';
 
 const sites = [
   bestporncomix,
@@ -52,6 +53,7 @@ const sites = [
   hitomi,
   imhentai,
   kingcomix,
+  koharu,
   luscious,
   multporn,
   myhentaigallery,
