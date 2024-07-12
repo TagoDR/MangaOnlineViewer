@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, Fakku.cc, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.06.23
+// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, Fakku.cc, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Koharu, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
+// @version       2024.07.12
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -45,6 +45,7 @@
 // @include       /https?:\/\/hitomi.la\/reader\/.+/
 // @include       /https?:\/\/(www\.)?imhentai.xxx\/view\/.+\/.+\//
 // @include       /https?:\/\/(www\.)?kingcomix.com\/.+/
+// @include       /https?:\/\/(www\.)?(koharu).to/
 // @include       /https?:\/\/(www\.)?luscious.net\/.+\/read\/.+/
 // @include       /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include       /https?:\/\/(www\.)?myhentaigallery.com\/gallery\/show\/.+\/\d+/
@@ -383,21 +384,28 @@
       const api = await fetch(
         `${window.location.href}/__data.json?x-sveltekit-invalidated=011`,
       ).then(async (res) => res.text());
-      const { data } = JSON.parse(api.split("\n").filter((s) => s.length)[1]);
-      const slug = data[5];
-      const num = data[12].length;
+      const data = /const data = ([^;]+);/.exec(api)?.[0];
+      const slug =
+        data?.match(/hash:"(\w+)"/)?.[1] ??
+        document
+          .querySelector("div div + img[alt^=Page]")
+          ?.getAttribute("src")
+          ?.match(/image\/(.+)\//)?.[1];
+      const images = /const data = ([^;]+);/
+        .exec(api)?.[0]
+        ?.match(/images:\[([^\]]+)\]/)?.[1]
+        ?.match(/filename:"[\w.]+"/g)
+        ?.map((s) => s.replace('filename:"', "").replace('"', ""));
       return {
         title: document
-          .querySelector(".title")
+          .querySelector("title")
           ?.textContent?.trim()
           .replace(/Page \d+ • /, ""),
         series: window.location.href.replace(/read\/.+/, ""),
-        pages: num,
+        pages: images?.length,
         prev: "#",
         next: "#",
-        listImages: Array(num)
-          .fill(0)
-          .map((_, i) => `${cdn}/image/${slug}/${i + 1}`),
+        listImages: images?.map((src) => `${cdn}/image/${slug}/${src}`),
       };
     },
   };
@@ -768,6 +776,53 @@
             img.getAttribute("data-lazy-src") ??
             img.getAttribute("src"),
         ),
+      };
+    },
+  };
+
+  const koharu = {
+    name: "Koharu",
+    url: /https?:\/\/(www\.)?(koharu).to/,
+    homepage: "https://koharu.to/",
+    language: ["English"],
+    category: "hentai",
+    lazy: false,
+    waitEle: "nav select option",
+    async run() {
+      const baseUrl = "https://koharu.to";
+      const libraryUrl = "https://api.koharu.to/books/detail/";
+      const dataUrl = "https://api.koharu.to/books/data/";
+      const url = window.location.pathname.split("/");
+      const chapterId = `${url[2]}/${url[3]}`;
+      const options = {
+        method: "GET",
+        headers: {
+          Accept: "*/*",
+          Referer: `${baseUrl}/`,
+          Origin: baseUrl,
+        },
+      };
+      const api = await fetch(libraryUrl + chapterId, options).then(
+        async (res) => res.json(),
+      );
+      const data = await fetch(
+        `${dataUrl + chapterId}/${api.data["0"].id}/${api.data["0"].public_key}`,
+        {
+          ...options,
+          method: "POST",
+        },
+      ).then(async (res) => res.json());
+      return {
+        title: api.title,
+        series: `/g/${chapterId}/`,
+        pages: data.entries.length,
+        prev: "#",
+        next: "#",
+        fetchOptions: {
+          method: "GET",
+          redirect: "follow",
+        },
+        listImages: data.entries.map((image) => `${data.base}/${image.path}`),
       };
     },
   };
@@ -1389,6 +1444,7 @@
     hitomi,
     imhentai,
     kingcomix,
+    koharu,
     luscious,
     multporn,
     myhentaigallery,

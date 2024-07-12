@@ -112,6 +112,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [hitomi](https://hitomi.la/) _[English]_
 - [Imhentai](https://imhentai.xxx/) _[English]_
 - [KingComix](https://kingcomix.com/) _[English]_
+- [Koharu](https://koharu.to/) _[English]_
 - [Luscious](https://luscious.net/) _[English]_
 - [MultPorn](https://multporn.net/) _[English]_
 - [MyHentaiGallery](https://www.myhentaigallery.com) _[English]_
