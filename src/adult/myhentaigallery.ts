@@ -1,12 +1,11 @@
 // == MyHentaiGallery ==============================================================================
 export default {
   name: 'MyHentaiGallery',
-  url: /https?:\/\/(www\.)?myhentaigallery.com\/gallery\/show\/.+\/\d+/,
+  url: /https?:\/\/(www\.)?myhentaigallery.com\/g\/.+\/\d+/,
   homepage: 'https://www.myhentaigallery.com',
   language: ['English'],
   category: 'hentai',
   run() {
-    const src = document.querySelector('.gallery-slide img')?.getAttribute('src') ?? '';
     const lastPage = document
       .getElementById('js__pagination__next')
       ?.parentElement?.previousElementSibling?.querySelector('a');
@@ -17,16 +16,10 @@ export default {
       pages: num,
       prev: '#',
       next: '#',
-      listImages: Array(num)
+      listPages: Array(num)
         .fill(0)
-        .map((_, i) =>
-          src.replace(
-            /\d+\./,
-            `${String(i + 1)
-              .padStart(3, '0')
-              .slice(-3)}.`,
-          ),
-        ),
+        .map((_, i) => window.location.href.replace(/\/\d+$/, `/${i + 1}`)),
+      img: '.gallery-slide img',
     };
   },
 };
