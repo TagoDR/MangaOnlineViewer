@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, LuaScans, Drake Scans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.07.12
+// @version       2024.07.15
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -1044,6 +1044,11 @@
           ?.getAttribute("href"),
         next: unsafeWindow.next_c_url,
         listImages: images,
+        before() {
+          if (images.some((s) => s === "")) {
+            document.querySelector("#nform")?.submit();
+          }
+        },
       };
     },
   };
@@ -2149,6 +2154,7 @@
     console.log("MangaOnlineViewer: ", ...text);
     return text;
   }
+  const logScriptC = (x) => (y) => logScript(x, y)[1];
   function getListGM() {
     return typeof GM_listValues !== "undefined" ? GM_listValues() : [];
   }
@@ -4396,8 +4402,10 @@
 
   var FileSaver_minExports = FileSaver_min.exports;
 
-  const base64Regex = /^data:(?<mimeType>image\/\w+);base64,+(?<data>.+)/;
   const objectURLRegex = /^blob:(.+?)\/(.+)$/;
+  function getDataFromBase64(src) {
+    return src.slice(src.indexOf(";base64,") + 8);
+  }
   function isBase64ImageUrl(imageUrl) {
     const base64Pattern = /^data:image\/(png|jpg|jpeg|gif);base64,/;
     return base64Pattern.test(imageUrl);
@@ -4405,8 +4413,29 @@
   function isObjectURL(url) {
     return objectURLRegex.test(url);
   }
-  const getExtension = (mimeType) =>
-    /image\/(?<ext>jpe?g|png|webp)/.exec(mimeType)?.groups?.ext ?? "png";
+  function getExtension(url) {
+    const parts = url.split("?");
+    const filename = parts[0].split("/").pop();
+    const extensionMatch = filename?.match(/\.[A-Za-z]{2,4}$/);
+    return extensionMatch ? extensionMatch[0].slice(1) : "";
+  }
+  const getExtensionBase64 = (base64) => {
+    const c = base64.substring(
+      base64.indexOf("/") + 1,
+      base64.indexOf(";base64"),
+    );
+    switch (c) {
+      case "/":
+        return "jpg";
+      case "R":
+        return "gif";
+      case "U":
+        return "webp";
+      case "i":
+      default:
+        return "png";
+    }
+  };
 
   let zip;
   const getFilename = (name, index, total, ext) =>
@@ -4415,53 +4444,50 @@
       "jpg",
     )}`;
   async function getImage(src) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       logScript(`Getting Image data: ${src}`);
       GM_xmlhttpRequest({
         method: "GET",
         url: src,
-        headers: { referer: src, origin: src },
+        headers: {
+          referer: window.location.host,
+          origin: window.location.host,
+        },
         responseType: "blob",
         onload(response) {
+          if (response.status !== 200) {
+            reject(response);
+          }
           resolve(response);
         },
       });
     });
   }
   async function getImageData(img, index, array) {
-    let src = img.getAttribute("src");
-    if (src == null || isObjectURL(src)) {
-      src = img.getAttribute("data-src");
-      if (src == null || isObjectURL(src)) {
-        return Promise.reject(new Error("Image source not specified"));
-      }
+    const src = img.getAttribute("src") ?? img.getAttribute("data-src") ?? "";
+    if (isObjectURL(src)) {
+      throw new Error("Image source unusable");
     }
-    const base64 = base64Regex.exec(src);
-    if (base64?.groups) {
+    if (isBase64ImageUrl(src)) {
       return Promise.resolve({
         name: getFilename(
           "Page-",
           index,
           array.length,
-          getExtension(base64.groups?.mimeType),
+          getExtensionBase64(src),
         ),
-        data: base64.groups.data,
+        data: getDataFromBase64(src) ?? "",
       });
     }
     return new Promise((resolve) => {
       getImage(src)
         .then((res) => {
           resolve({
-            name: getFilename(
-              "Page-",
-              index,
-              array.length,
-              getExtension(res.response.type),
-            ),
+            name: getFilename("Page-", index, array.length, getExtension(src)),
             data: res.response,
           });
         })
-        .catch(logScript);
+        .catch(logScriptC("Image not Available"));
     });
   }
   function addZip(img) {

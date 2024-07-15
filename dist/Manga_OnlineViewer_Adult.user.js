@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, Fakku.cc, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Koharu, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.07.12
+// @version       2024.07.15
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -48,7 +48,7 @@
 // @include       /https?:\/\/(www\.)?(koharu).to/
 // @include       /https?:\/\/(www\.)?luscious.net\/.+\/read\/.+/
 // @include       /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/
-// @include       /https?:\/\/(www\.)?myhentaigallery.com\/gallery\/show\/.+\/\d+/
+// @include       /https?:\/\/(www\.)?myhentaigallery.com\/g\/.+\/\d+/
 // @include       /https?:\/\/(www\.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?9hentai.(ru|to|com)\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?(omegascans).(org)\/.+/
@@ -1010,13 +1010,11 @@
 
   const myhentaigallery = {
     name: "MyHentaiGallery",
-    url: /https?:\/\/(www\.)?myhentaigallery.com\/gallery\/show\/.+\/\d+/,
+    url: /https?:\/\/(www\.)?myhentaigallery.com\/g\/.+\/\d+/,
     homepage: "https://www.myhentaigallery.com",
     language: ["English"],
     category: "hentai",
     run() {
-      const src =
-        document.querySelector(".gallery-slide img")?.getAttribute("src") ?? "";
       const lastPage = document
         .getElementById("js__pagination__next")
         ?.parentElement?.previousElementSibling?.querySelector("a");
@@ -1029,16 +1027,10 @@
         pages: num,
         prev: "#",
         next: "#",
-        listImages: Array(num)
+        listPages: Array(num)
           .fill(0)
-          .map((_, i) =>
-            src.replace(
-              /\d+\./,
-              `${String(i + 1)
-                .padStart(3, "0")
-                .slice(-3)}.`,
-            ),
-          ),
+          .map((_, i) => window.location.href.replace(/\/\d+$/, `/${i + 1}`)),
+        img: ".gallery-slide img",
       };
     },
   };
@@ -1477,6 +1469,7 @@
     console.log("MangaOnlineViewer: ", ...text);
     return text;
   }
+  const logScriptC = (x) => (y) => logScript(x, y)[1];
   function getListGM() {
     return typeof GM_listValues !== "undefined" ? GM_listValues() : [];
   }
@@ -4019,8 +4012,10 @@
 
   var FileSaver_minExports = FileSaver_min.exports;
 
-  const base64Regex = /^data:(?<mimeType>image\/\w+);base64,+(?<data>.+)/;
   const objectURLRegex = /^blob:(.+?)\/(.+)$/;
+  function getDataFromBase64(src) {
+    return src.slice(src.indexOf(";base64,") + 8);
+  }
   function isBase64ImageUrl(imageUrl) {
     const base64Pattern = /^data:image\/(png|jpg|jpeg|gif);base64,/;
     return base64Pattern.test(imageUrl);
@@ -4028,8 +4023,29 @@
   function isObjectURL(url) {
     return objectURLRegex.test(url);
   }
-  const getExtension = (mimeType) =>
-    /image\/(?<ext>jpe?g|png|webp)/.exec(mimeType)?.groups?.ext ?? "png";
+  function getExtension(url) {
+    const parts = url.split("?");
+    const filename = parts[0].split("/").pop();
+    const extensionMatch = filename?.match(/\.[A-Za-z]{2,4}$/);
+    return extensionMatch ? extensionMatch[0].slice(1) : "";
+  }
+  const getExtensionBase64 = (base64) => {
+    const c = base64.substring(
+      base64.indexOf("/") + 1,
+      base64.indexOf(";base64"),
+    );
+    switch (c) {
+      case "/":
+        return "jpg";
+      case "R":
+        return "gif";
+      case "U":
+        return "webp";
+      case "i":
+      default:
+        return "png";
+    }
+  };
 
   let zip;
   const getFilename = (name, index, total, ext) =>
@@ -4038,53 +4054,50 @@
       "jpg",
     )}`;
   async function getImage(src) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       logScript(`Getting Image data: ${src}`);
       GM_xmlhttpRequest({
         method: "GET",
         url: src,
-        headers: { referer: src, origin: src },
+        headers: {
+          referer: window.location.host,
+          origin: window.location.host,
+        },
         responseType: "blob",
         onload(response) {
+          if (response.status !== 200) {
+            reject(response);
+          }
           resolve(response);
         },
       });
     });
   }
   async function getImageData(img, index, array) {
-    let src = img.getAttribute("src");
-    if (src == null || isObjectURL(src)) {
-      src = img.getAttribute("data-src");
-      if (src == null || isObjectURL(src)) {
-        return Promise.reject(new Error("Image source not specified"));
-      }
+    const src = img.getAttribute("src") ?? img.getAttribute("data-src") ?? "";
+    if (isObjectURL(src)) {
+      throw new Error("Image source unusable");
     }
-    const base64 = base64Regex.exec(src);
-    if (base64?.groups) {
+    if (isBase64ImageUrl(src)) {
       return Promise.resolve({
         name: getFilename(
           "Page-",
           index,
           array.length,
-          getExtension(base64.groups?.mimeType),
+          getExtensionBase64(src),
         ),
-        data: base64.groups.data,
+        data: getDataFromBase64(src) ?? "",
       });
     }
     return new Promise((resolve) => {
       getImage(src)
         .then((res) => {
           resolve({
-            name: getFilename(
-              "Page-",
-              index,
-              array.length,
-              getExtension(res.response.type),
-            ),
+            name: getFilename("Page-", index, array.length, getExtension(src)),
             data: res.response,
           });
         })
-        .catch(logScript);
+        .catch(logScriptC("Image not Available"));
     });
   }
   function addZip(img) {
