@@ -20,6 +20,11 @@ export default {
       prev: document.querySelector('.recom p:nth-child(5) a')?.getAttribute('href'),
       next: unsafeWindow.next_c_url,
       listImages: images,
+      before() {
+        if (images.some((s) => s === '')) {
+          document.querySelector<HTMLFormElement>('#nform')?.submit();
+        }
+      },
     };
   },
 };
