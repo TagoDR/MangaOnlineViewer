@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, LuaScans, Drake Scans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.07.15
+// @version       2024.07.16
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -5245,25 +5245,27 @@
   }
   function updateHeaderType(mode) {
     const header = document.querySelector("#Header");
-    const menu = document.querySelector("#menu");
-    header?.classList.remove(
-      "scroll",
-      "click",
-      "hover",
-      "fixed",
-      "simple",
-      "visible",
-    );
-    menu?.classList.remove(
-      "scroll",
-      "click",
-      "hover",
-      "fixed",
-      "simple",
-      "hide",
-    );
-    header?.classList.add(mode);
-    menu?.classList.add(mode);
+    if (!header?.classList.contains(mode)) {
+      const menu = document.querySelector("#menu");
+      header?.classList.remove(
+        "scroll",
+        "click",
+        "hover",
+        "fixed",
+        "simple",
+        "visible",
+      );
+      menu?.classList.remove(
+        "scroll",
+        "click",
+        "hover",
+        "fixed",
+        "simple",
+        "hide",
+      );
+      header?.classList.add(mode);
+      menu?.classList.add(mode);
+    }
   }
   function changeHeaderType(event) {
     const headerType = event.currentTarget.value;
