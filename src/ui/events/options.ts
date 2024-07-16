@@ -116,11 +116,13 @@ export function checkHideImageControls(event: Event) {
 
 export function updateHeaderType(mode: HeaderMode) {
   const header = document.querySelector('#Header');
-  const menu = document.querySelector('#menu');
-  header?.classList.remove('scroll', 'click', 'hover', 'fixed', 'simple', 'visible');
-  menu?.classList.remove('scroll', 'click', 'hover', 'fixed', 'simple', 'hide');
-  header?.classList.add(mode);
-  menu?.classList.add(mode);
+  if (!header?.classList.contains(mode)) {
+    const menu = document.querySelector('#menu');
+    header?.classList.remove('scroll', 'click', 'hover', 'fixed', 'simple', 'visible');
+    menu?.classList.remove('scroll', 'click', 'hover', 'fixed', 'simple', 'hide');
+    header?.classList.add(mode);
+    menu?.classList.add(mode);
+  }
 }
 
 function changeHeaderType(event: Event) {
