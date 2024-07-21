@@ -82,6 +82,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [MangasIn](https://mangas.in/) _[Spanish]_
 - [MangaOni](https://manga-oni.com/) _[Spanish]_
 - [MangaTigre](https://www.mangatigre.net/) _[Spanish]_
+- [ManhwaWeb](https://manhwaweb.com/) _[Spanish]_
 - [OlympusScans](https://olympusscans.com/) _[Spanish]_
 - [TuMangaOnline](https://lectortmo.com/) _[Spanish]_
 - [TuManhwas](https://tumanhwas.com/) _[Spanish]_
@@ -195,12 +196,48 @@ then open it in the browser, and you will see the options to load local Files.
 - Download all images as ZIP File[Automatic Default off]
 - Lazy Load Images[Default off]
 
-## Rules For adding new Manga Sites
+## Adding new Manga Sites
 
-1. The site must have rare/unique mangas (Meaning: it's not available in other sites, or is of
-   better quality)
-2. The site must be strong enough or else my script may crash it
-3. The site must not be exclusive to a handful of manga titles (Meaning: no small Scanlators)
+Fork this project and make a pull request, in the folders "main" or "adult" create a new file .ts
+with
+The name of the site.
+After writing the module like below, import it from the index. This file in the selected folder
+
+Inside the file, gather the information needed using any means, look at other sites for inspiration,
+Below is an example with descriptions.
+
+```ts
+// == MangaDex =====================================================================================
+export default {
+    name: 'MangaDex', // The name of the to be listed, may be an array of names
+    url: /https?:\/\/(www\.)?mangadex.org/, // Regex to detect the site, usually just the reader part of the site, but can be the root if is has a lot of dynamic content
+    homepage: 'https://mangadex.org/',   // Link for the home page of the site, may be an array of urls
+    language: ['English'], // Array of languages the site serve
+    category: 'manga', // Category of the site
+    waitEle: '#chapter-selector a', // Wait for something before running, some site requires some steps before the information is available
+    async run() {
+        // Logic for obtaining the required information
+        const chapterId = /\/chapter\/([^/]+)(\/\d+)?/.exec(window.location.pathname)?.at(1);
+        const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
+        const server = await fetch(home).then(async (res) => res.json());
+        const images = server.chapter.data;
+        const chapters = document.querySelectorAll('#chapter-selector a');
+        return {
+            title: document.querySelector('title')?.text.replace(' - MangaDex', ''), // Title of the Chapter/Manga
+            series: document.querySelector("a.text-primary[href^='/title/']")?.getAttribute('href'), // Url for the gallery or chapter list
+            pages: images.length, // Quantity of pages
+            prev: chapters?.item(0)?.getAttribute('href'), // Previous Chapter
+            next: chapters?.item(1)?.getAttribute('href'), // Next Chapter
+            listImages: images.map(  // List of images
+                    (img: string) => `${server.baseUrl}/data/${server.chapter.hash}/${img}`,
+            ),
+        };
+    },
+};
+
+```
+
+Look inside the types folder to better understand the structure and valid values.
 
 ## Permissions
 
@@ -222,7 +259,7 @@ It's recommended to use Tampermonkey with Firefox mobile or Kiwi Browser.
 
 _Settings can't be saved with Bookmarklet_:
 
-Bookmarklet seems to work only in Chrome, open the chapter then use the searchbar to activate your
+Bookmarklet seems to work only in Chrome, open the chapter then use the search bar to activate your
 bookmarklet.
 
 ##### Main Reader:

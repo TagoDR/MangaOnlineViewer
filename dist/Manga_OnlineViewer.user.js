@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, LuaScans, Drake Scans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.07.16
+// @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, LuaScans, Drake Scans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @version       2024.07.21
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -57,6 +57,7 @@
 // @include       /https?:\/\/.*mangatoon.mobi\/.+\/watch\/.+/
 // @include       /https?:\/\/(www\.|m\.)?mangatown.com\/manga\/.+\/.+/
 // @include       /https?:\/\/(www\.)?manhuascan.com\/manga\/.+\/chapter.+/
+// @include       /https?:\/\/(www\.)?manhwaweb.com\/leer\/.+/
 // @include       /https?:\/\/(www\.)?mgeko.(com|cc)?\/reader\/.*/
 // @include       /https?:\/\/(www\.)?(naniscans).com\/chapters\/.+\/read/
 // @include       /https?:\/\/(www\.)?ninemanga.com\/chapter\/.+\/.+\.html/
@@ -1562,6 +1563,33 @@
     },
   };
 
+  const manhwaweb = {
+    name: "ManhwaWeb",
+    url: /https?:\/\/(www\.)?manhwaweb.com\/leer\/.+/,
+    homepage: "https://manhwaweb.com/",
+    language: ["Spanish"],
+    category: "manga",
+    async run() {
+      const slug = window.location.pathname.replace("/leer", "");
+      const api = await fetch(
+        `https://manhwawebbackend-production.up.railway.app/chapters/see${slug}`,
+      ).then(async (res) => res.json());
+      const data = await fetch(
+        `https://manhwawebbackend-production.up.railway.app/chapters/seeprevpost${slug}`,
+      ).then(async (res) => res.json());
+      return {
+        title: `${api.name} ${api.chapter.chapter}`,
+        series: [...document.querySelectorAll("div")]
+          .filter((i) => i.textContent === "Episodios")?.[0]
+          ?.parentElement?.getAttribute("href"),
+        pages: api.chapter.img.length,
+        prev: data.chapterAnterior,
+        next: data.chapterSiguiente,
+        listImages: api.chapter.img,
+      };
+    },
+  };
+
   const mgeko = {
     name: ["MangaGeko.com", "MangaGeko.cc"],
     url: /https?:\/\/(www\.)?mgeko.(com|cc)?\/reader\/.*/,
@@ -2118,6 +2146,7 @@
     mangatoon,
     mangatown,
     manhuascan,
+    manhwaweb,
     mgeko,
     naniscans,
     ninemanga,
