@@ -30,6 +30,7 @@ import mangatigre from './mangatigre';
 import mangatoon from './mangatoon';
 import mangatown from './mangatown';
 import manhuascan from './manhuascan';
+import manhwaweb from './manhwaweb';
 import mgeko from './mgeko';
 import naniscans from './naniscans';
 import ninemanga from './ninemanga';
@@ -85,6 +86,7 @@ const sites = [
   mangatoon,
   mangatown,
   manhuascan,
+  manhwaweb,
   mgeko,
   naniscans,
   ninemanga,
