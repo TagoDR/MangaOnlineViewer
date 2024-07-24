@@ -2,7 +2,6 @@
 export default {
   name: [
     'MangaStream WordPress Plugin',
-    'Asura Scans',
     'Flame Comics',
     'Rizzcomic',
     'Voids-Scans',
@@ -20,7 +19,6 @@ export default {
   url: /https?:\/\/[^/]+\/(chapter\/)?[^/?&=]+\/?$/,
   homepage: [
     'https://themesia.com/mangastream-wordpress-theme/',
-    'https://asuratoon.com/',
     'https://flamecomics.com/',
     'https://rizzfables.com/',
     'https://void-scans.com/',

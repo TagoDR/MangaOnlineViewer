@@ -33,7 +33,7 @@ export default {
       pages: unsafeWindow.imagecount,
       prev: unsafeWindow.prechapterurl,
       next: unsafeWindow.nextchapterurl,
-      listImages: images.map((img: string[], i) => img[i === 0 ? 0 : 1]),
+      listImages: images.map((img: string[], i: number) => img[i === 0 ? 0 : 1]),
     };
   },
 };

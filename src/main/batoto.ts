@@ -1,4 +1,7 @@
 // == Batoto =======================================================================================
+
+import { findClosestByContentEnds, findClosestByContentStarts } from '../utils/find';
+
 export default {
   name: 'Batoto',
   url: /https?:\/\/(www\.)?bato.to\/(chapter|title).*/,
@@ -16,12 +19,8 @@ export default {
         title: document.querySelector('h6')?.textContent?.trim(),
         series: document.querySelector('h3 a')?.getAttribute('href'),
         pages: images.length,
-        prev: [...document.querySelectorAll('span')]
-          .find((item) => item.textContent?.endsWith('Prev Chapter'))
-          ?.parentElement?.getAttribute('href'),
-        next: [...document.querySelectorAll('span')]
-          .find((item) => item.textContent?.startsWith('Next Chapter'))
-          ?.parentElement?.getAttribute('href'),
+        prev: findClosestByContentEnds('span', 'Prev Chapter', 'a')?.getAttribute('href'),
+        next: findClosestByContentStarts('span', 'Next Chapter', 'a')?.getAttribute('href'),
         listImages: images.map((img) => img.getAttribute('src')),
       };
     }
