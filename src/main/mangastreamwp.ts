@@ -20,7 +20,7 @@ export default {
   url: /https?:\/\/[^/]+\/(chapter\/)?[^/?&=]+\/?$/,
   homepage: [
     'https://themesia.com/mangastream-wordpress-theme/',
-    'https://asuratoon.com/',
+    'https://asuratoon.net/',
     'https://flamecomics.com/',
     'https://rizzfables.com/',
     'https://void-scans.com/',
