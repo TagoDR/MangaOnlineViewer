@@ -1,4 +1,4 @@
-// == AsuraScans and FlameScans ====================================================================
+// == AsuraScans ===================================================================================
 import { findClosestByContentEq, findOneByContentStarts } from '../utils/find';
 
 export default {
