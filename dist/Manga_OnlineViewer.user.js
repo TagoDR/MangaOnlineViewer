@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Alandal, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Asura Scans, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, LuaScans, Drake Scans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.07.21
+// @description   Shows all pages at once in online view for these sites: Alandal, Asura Scans, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, LuaScans, Drake Scans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @version       2024.07.24
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -29,6 +29,7 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.37/ua-parser.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
 // @include       /https?:\/\/alandal.com\/chapter\/.+\/\d+/
+// @include       /https?:\/\/(www.)?(asuracomic).(net)\/.+/
 // @include       /https?:\/\/(www\.)?bato.to\/(chapter|title).*/
 // @include       /https?:\/\/(www\.)?(bilibilicomics).net\/episode\/.+/
 // @include       /https?:\/\/comic\.nizamkomputer.com\/read\/.+\/\d+.*/
@@ -113,6 +114,55 @@
     },
   };
 
+  function findByContentEq(selector, content) {
+    return [...document.querySelectorAll(selector)].filter(
+      (e) => e.textContent === content,
+    );
+  }
+  function findByContentStarts(selector, content) {
+    return [...document.querySelectorAll(selector)].filter((e) =>
+      e.textContent?.startsWith(content),
+    );
+  }
+  function findOneByContentEq(selector, content) {
+    return findByContentEq(selector, content)?.[0];
+  }
+  function findOneByContentStarts(selector, content) {
+    return findByContentStarts(selector, content)?.[0];
+  }
+  function findClosestByContentEq(selector, content, ancestor = "a") {
+    return findOneByContentEq(selector, content).closest(ancestor);
+  }
+  function findClosestByContentStarts(selector, content, ancestor = "a") {
+    return findOneByContentEq(selector, content).closest(ancestor);
+  }
+  function findClosestByContentEnds(selector, content, ancestor = "a") {
+    return findOneByContentEq(selector, content).closest(ancestor);
+  }
+
+  const asura = {
+    name: "Asura Scans",
+    url: /https?:\/\/(www.)?(asuracomic).(net)\/.+/,
+    homepage: "https://asuracomic.net/",
+    language: ["English"],
+    category: "manga",
+    waitEle: 'img[alt="chapter"]',
+    run() {
+      const images = [...document.querySelectorAll('img[alt="chapter"]')];
+      return {
+        title: document.querySelector("h2")?.textContent?.trim(),
+        series: findOneByContentStarts(
+          "p a",
+          "All chapters are in",
+        )?.getAttribute("href"),
+        pages: images.length,
+        prev: findClosestByContentEq("h2", "Prev", "a")?.getAttribute("href"),
+        next: findClosestByContentEq("h2", "Next", "a")?.getAttribute("href"),
+        listImages: images.map((img) => img.getAttribute("src")),
+      };
+    },
+  };
+
   const batoto = {
     name: "Batoto",
     url: /https?:\/\/(www\.)?bato.to\/(chapter|title).*/,
@@ -132,12 +182,16 @@
           title: document.querySelector("h6")?.textContent?.trim(),
           series: document.querySelector("h3 a")?.getAttribute("href"),
           pages: images2.length,
-          prev: [...document.querySelectorAll("span")]
-            .find((item) => item.textContent?.endsWith("Prev Chapter"))
-            ?.parentElement?.getAttribute("href"),
-          next: [...document.querySelectorAll("span")]
-            .find((item) => item.textContent?.startsWith("Next Chapter"))
-            ?.parentElement?.getAttribute("href"),
+          prev: findClosestByContentEnds(
+            "span",
+            "Prev Chapter",
+            "a",
+          )?.getAttribute("href"),
+          next: findClosestByContentStarts(
+            "span",
+            "Next Chapter",
+            "a",
+          )?.getAttribute("href"),
           listImages: images2.map((img) => img.getAttribute("src")),
         };
       }
@@ -1353,7 +1407,6 @@
   const mangastreamwp = {
     name: [
       "MangaStream WordPress Plugin",
-      "Asura Scans",
       "Flame Comics",
       "Rizzcomic",
       "Voids-Scans",
@@ -1371,7 +1424,6 @@
     url: /https?:\/\/[^/]+\/(chapter\/)?[^/?&=]+\/?$/,
     homepage: [
       "https://themesia.com/mangastream-wordpress-theme/",
-      "https://asuratoon.com/",
       "https://flamecomics.com/",
       "https://rizzfables.com/",
       "https://void-scans.com/",
@@ -2115,7 +2167,7 @@
 
   const sites = [
     alandal,
-    // Asurascans,
+    asura,
     batoto,
     bilibilicomics,
     comicastle,

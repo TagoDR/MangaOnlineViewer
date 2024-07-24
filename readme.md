@@ -37,6 +37,7 @@ then open it in the browser, and you will see the options to load local Files.
 ## Supported Manga Sites
 
 - [Alandal](https://alandal.com/) _[English]_
+- [Asura Scans](https://asuracomic.net/) _[English]_
 - [Batoto](https://bato.to/) _[English]_
 - [BilibiliComics](https://www.bilibilicomics.net/) _[English]_
 - [Comick](https://comick.io/home) _[English]_
@@ -68,7 +69,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [WebToons](https://www.webtoons.com/) _[English]_
 - [Manga33](https://manga33.com/) _[English]_
 - [ZeroScans](https://zscans.com/) _[English]_
-- [MangaStream WordPress Plugin](https://themesia.com/mangastream-wordpress-theme/) / [Asura Scans](https://asuratoon.com/) / [Flame Comics](https://flamecomics.com/) / [Rizzcomic](https://rizzfables.com/) / [Voids-Scans](https://void-scans.com/) / [Luminous Scans](https://luminousscans.com/) / [Shimada Scans](https://shimadascans.com/) / [Night Scans](https://night-scans.com/) / [Manhwa-Freak](https://freakcomic.com/) / [OzulScansEn](https://ozulscansen.com/) / [AzureManga](https://azuremanga.com/) / [CypherScans](https://cypherscans.xyz/) / [MangaGalaxy](https://mangagalaxy.me/) / [LuaScans](https://luascans.com/) / [Drake Scans](https://manhwa-freak.org/) _[English]_
+- [MangaStream WordPress Plugin](https://themesia.com/mangastream-wordpress-theme/) / [Flame Comics](https://flamecomics.com/) / [Rizzcomic](https://rizzfables.com/) / [Voids-Scans](https://void-scans.com/) / [Luminous Scans](https://luminousscans.com/) / [Shimada Scans](https://shimadascans.com/) / [Night Scans](https://night-scans.com/) / [Manhwa-Freak](https://freakcomic.com/) / [OzulScansEn](https://ozulscansen.com/) / [AzureManga](https://azuremanga.com/) / [CypherScans](https://cypherscans.xyz/) / [MangaGalaxy](https://mangagalaxy.me/) / [LuaScans](https://luascans.com/) / [Drake Scans](https://manhwa-freak.org/) _[English]_
 - [FoOlSlide](https://github.com/saintly2k/FoOlSlideX) / [Kireicake](https://reader.kireicake.com) _[English]_ **Obs: Any Site that uses FoOLSlide**
 - [Madara WordPress Plugin](https://mangabooth.com/) / [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) / [JaiminisBox](https://jaiminisbox.net) / [DisasterScans](https://disasterscans.com/) / [ManhuaPlus](https://manhuaplus.org/) / [TopManhua](https://www.topmanhua.com/) / [NovelMic](https://novelmic.com/) / [Reset-Scans](https://reset-scans.com/) / [LeviatanScans](https://leviatanscans.com/) / [Dragon Tea](https://dragontea.ink/) / [SetsuScans](https://setsuscans.com/) / [ToonGod](https://toongod.org/home/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
 - [Leitor](https://leitor.net/) _[Portuguese]_
@@ -201,7 +202,7 @@ then open it in the browser, and you will see the options to load local Files.
 Fork this project and make a pull request, in the folders "main" or "adult" create a new file .ts
 with
 The name of the site.
-After writing the module like below, import it from the index. This file in the selected folder
+After writing the module like below, import it from the index of the selected folder
 
 Inside the file, gather the information needed using any means, look at other sites for inspiration,
 Below is an example with descriptions.
