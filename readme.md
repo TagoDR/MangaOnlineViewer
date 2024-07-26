@@ -113,7 +113,6 @@ then open it in the browser, and you will see the options to load local Files.
 - [HentaiNexus](https://hentainexus.com/) _[English]_
 - [hitomi](https://hitomi.la/) _[English]_
 - [Imhentai](https://imhentai.xxx/) _[English]_
-- [KingComix](https://kingcomix.com/) _[English]_
 - [Koharu](https://koharu.to/) _[English]_
 - [Luscious](https://luscious.net/) _[English]_
 - [MultPorn](https://multporn.net/) _[English]_
@@ -130,6 +129,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [xyzcomics](https://xyzcomics.com/) _[English]_
 - [Madara WordPress Plugin](#) / [AllPornComic](https://allporncomic.com/) / [Manytoon](https://manytoon.com/) / [Manga District](https://mangadistrict.com/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
 - [wnacg](https://wnacg.com/) _[English,Raw,Chinese]_
+- [KingComix](https://kingcomix.com/) / [Chochox](https://chochox.com/porno/) / [Comics18](https://comics18.org/) _[English,Spanish]_
 - [GNTAI.net](https://www.gntai.net/) _[Spanish]_
 - [TMOHentai](https://tmohentai.com/) _[Spanish]_
 - [vermangasporno](https://vermangasporno.com/) / [vercomicsporno](https://vercomicsporno.com/) _[Spanish]_
