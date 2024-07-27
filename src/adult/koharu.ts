@@ -8,30 +8,15 @@ export default {
   lazy: false,
   waitEle: 'nav select option',
   async run() {
-    const baseUrl = 'https://koharu.to';
-    const libraryUrl = 'https://api.koharu.to/books/detail/';
-    const dataUrl = 'https://api.koharu.to/books/data/';
     const url = window.location.pathname.split('/');
-    const chapterId = `${url[2]}/${url[3]}`;
-    const options = {
-      method: 'GET',
-      headers: {
-        Accept: '*/*',
-        Referer: `${baseUrl}/`,
-        Origin: baseUrl,
-      },
-    };
-    const api = await fetch(libraryUrl + chapterId, options).then(async (res) => res.json());
-    const data = await fetch(
-      `${dataUrl + chapterId}/${api.data['0'].id}/${api.data['0'].public_key}`,
-      {
-        ...options,
-        method: 'POST',
-      },
-    ).then(async (res) => res.json());
+    const galleryID = `${url[2]}/${url[3]}`;
+    const detailAPI = `https://api.koharu.to/books/detail/${galleryID}`;
+    const detail = await fetch(detailAPI).then(async (res) => res.json());
+    const dataAPI = `https://api.koharu.to/books/data/${galleryID}/${detail.data['0'].id}/${detail.data['0'].public_key}?v=${detail.updated_at ?? detail.created_at}&w=0`;
+    const data = await fetch(dataAPI).then(async (res) => res.json());
     return {
-      title: api.title,
-      series: `/g/${chapterId}/`,
+      title: detail.title,
+      series: `/g/${galleryID}/`,
       pages: data.entries.length,
       prev: '#',
       next: '#',
