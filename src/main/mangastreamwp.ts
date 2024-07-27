@@ -2,7 +2,6 @@
 export default {
   name: [
     'MangaStream WordPress Plugin',
-    'Asura Scans',
     'Flame Comics',
     'Rizzcomic',
     'Voids-Scans',

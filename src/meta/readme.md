@@ -116,7 +116,7 @@ then open it in the browser, and you will see the options to load local Files.
 Fork this project and make a pull request, in the folders "main" or "adult" create a new file .ts
 with
 The name of the site.
-After writing the module like below, import it from the index. This file in the selected folder
+After writing the module like below, import it from the index of the selected folder
 
 Inside the file, gather the information needed using any means, look at other sites for inspiration,
 Below is an example with descriptions.

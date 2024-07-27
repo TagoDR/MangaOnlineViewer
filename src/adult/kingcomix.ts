@@ -1,12 +1,14 @@
 // == KingComix ====================================================================================
 export default {
-  name: 'KingComix',
-  url: /https?:\/\/(www\.)?kingcomix.com\/.+/,
-  homepage: 'https://kingcomix.com/',
-  language: ['English'],
+  name: ['KingComix', 'Chochox', 'Comics18'],
+  url: /https?:\/\/(www\.)?(kingcomix|chochox|comics18).(com|org)\/.+/,
+  homepage: ['https://kingcomix.com/', 'https://chochox.com/porno/', 'https://comics18.org/'],
+  language: ['English', 'Spanish'],
   category: 'hentai',
   run() {
-    const src = [...document.querySelectorAll('figure img, .entry-content img.lazy')];
+    const src = [
+      ...document.querySelectorAll('figure img, .entry-content img:not(a img), .wp-content img'),
+    ];
     return {
       title: document.querySelector('h1.singleTitle-h1')?.textContent?.trim(),
       pages: src.length,
