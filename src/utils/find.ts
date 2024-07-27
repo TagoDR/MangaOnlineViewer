@@ -17,15 +17,21 @@ export function findByContentEnds(selector: string, content: string): HTMLElemen
 }
 
 export function findOneByContentEq(selector: string, content: string): HTMLElement {
-  return findByContentEq(selector, content)?.[0];
+  return [...document.querySelectorAll<HTMLElement>(selector)].filter(
+    (e) => e.textContent === content,
+  )?.[0];
 }
 
 export function findOneByContentStarts(selector: string, content: string): HTMLElement {
-  return findByContentStarts(selector, content)?.[0];
+  return [...document.querySelectorAll<HTMLElement>(selector)].filter((e) =>
+    e.textContent?.startsWith(content),
+  )?.[0];
 }
 
 export function findOneByContentEnds(selector: string, content: string): HTMLElement {
-  return findByContentEnds(selector, content)?.[0];
+  return [...document.querySelectorAll<HTMLElement>(selector)].filter((e) =>
+    e.textContent?.endsWith(content),
+  )?.[0];
 }
 
 export function findClosestByContentEq(
@@ -33,7 +39,9 @@ export function findClosestByContentEq(
   content: string,
   ancestor: string = 'a',
 ): HTMLElement | null {
-  return findOneByContentEq(selector, content).closest(ancestor);
+  return [...document.querySelectorAll<HTMLElement>(selector)]
+    .filter((e) => e.textContent === content)?.[0]
+    .closest(ancestor);
 }
 
 export function findClosestByContentStarts(
@@ -41,7 +49,9 @@ export function findClosestByContentStarts(
   content: string,
   ancestor: string = 'a',
 ): HTMLElement | null {
-  return findOneByContentEq(selector, content).closest(ancestor);
+  return [...document.querySelectorAll<HTMLElement>(selector)]
+    .filter((e) => e.textContent?.startsWith(content))?.[0]
+    .closest(ancestor);
 }
 
 export function findClosestByContentEnds(
@@ -49,5 +59,7 @@ export function findClosestByContentEnds(
   content: string,
   ancestor: string = 'a',
 ): HTMLElement | null {
-  return findOneByContentEq(selector, content).closest(ancestor);
+  return [...document.querySelectorAll<HTMLElement>(selector)]
+    .filter((e) => e.textContent?.endsWith(content))?.[0]
+    .closest(ancestor);
 }

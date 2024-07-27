@@ -1,5 +1,5 @@
 import type { IManga } from '../types';
-import { logScript } from '../utils/tampermonkey';
+import { logScript, logScriptVerbose } from '../utils/tampermonkey';
 import { getUserSettings } from './settings';
 import display from '../ui';
 import { cleanUpElement } from '../utils/cleanup';
@@ -30,13 +30,18 @@ async function captureComments() {
 
 export default async function viewer(manga: IManga) {
   if (manga.before !== undefined) {
+    logScriptVerbose(`Executing Preparation`);
     await manga.before(manga.begin);
   }
-  if (getUserSettings().enableComments && !manga.comments) manga.comments = await captureComments();
+  if (getUserSettings().enableComments && !manga.comments) {
+    manga.comments = await captureComments();
+    logScriptVerbose(`Comments Captured`);
+  }
   setTimeout(() => {
     try {
       cleanUpElement(document.documentElement, document.head, document.body);
       window.scrollTo(0, 0);
+      logScriptVerbose(`Page Cleaned Up`);
       display(manga);
     } catch (e) {
       logScript(e);

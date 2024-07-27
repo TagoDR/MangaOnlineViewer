@@ -8,6 +8,7 @@ export default {
   language: ['English'],
   category: 'manga',
   waitEle: 'img[alt="chapter"]',
+  waitTime: 2000,
   run() {
     const images = [...document.querySelectorAll('img[alt="chapter"]')];
     return {

@@ -8,6 +8,11 @@ function logScript(...text: any[]): string[] {
   return text;
 }
 
+function logScriptVerbose(...text: any[]): string[] {
+  if (import.meta.env.MODE === 'dev') console.info('MangaOnlineViewer: ', ...text);
+  return text;
+}
+
 // Compose console output
 const logScriptC = (x: string) => (y: string) => logScript(x, y)[1];
 
@@ -134,6 +139,7 @@ const isMobile = () =>
 
 export {
   logScript,
+  logScriptVerbose,
   getListGM,
   getInfoGM,
   getValueGM,
