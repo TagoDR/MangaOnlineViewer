@@ -12,6 +12,7 @@ export default {
           (img) =>
             img.getAttribute('data-src') ??
             img.getAttribute('data-srce') ??
+            img.closest('a')?.getAttribute('href') ??
             img.getAttribute('src'),
         ),
       ),
