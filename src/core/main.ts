@@ -3,7 +3,7 @@ import rangeSlider, { type RangeSlider } from 'range-slider-input';
 import rangeSliderStyles from 'range-slider-input/dist/style.css?inline';
 import _ from 'lodash';
 import { html } from '../utils/code-tag';
-import { getBrowser, getEngine, getInfoGM, logScript } from '../utils/tampermonkey';
+import { getBrowser, getEngine, getInfoGM, logScript, logScriptC } from '../utils/tampermonkey';
 import type { IManga, ISite } from '../types';
 import formatPage from './viewer';
 import { getLocaleString, getUserSettings, isBookmarked } from './settings';
@@ -178,13 +178,8 @@ function showWaitPopup(site: ISite, manga: IManga) {
 }
 
 // Organize the site adding place-holders for the manga pages
-async function preparePage(site: ISite) {
-  const manga = await site.run();
-  logScript(`Found Pages: ${manga.pages}`);
-  if (manga.pages <= 0) {
-    return;
-  }
-
+async function preparePage([site, manga]: [ISite, IManga]) {
+  logScript(`Found Pages: ${manga.pages} in ${site.name}`);
   if (!manga.title) {
     manga.title = document.querySelector('title')?.textContent?.trim();
   }
@@ -227,22 +222,31 @@ async function start(sites: ISite[]) {
     } on ${getBrowser()} with ${getEngine()}`,
   );
   if (allowUpload()) return;
-  logScript(sites.length, ' Known Manga Sites:', sites);
+  logScript(sites.length, 'Known Manga Sites:', sites);
   const foundSites = sites.filter((s: ISite) => s.url.test(window.location.href));
-  logScript(foundSites.length, ' Matches Possible:', foundSites);
-  if (foundSites.length > 0) {
-    const site = foundSites[0];
-    logScript(`Found site: ${site.name}`);
-    await Promise.all([
-      testTime(site),
-      testElement(site),
-      testAttribute(site),
-      testVariable(site),
-      testFunc(site),
-    ]).then(async () => preparePage(site).catch(logScript));
-  } else {
-    logScript('Sorry, didnt find any valid site');
-  }
+  logScript(foundSites.length, 'Found sites:', foundSites);
+  const testedSites = foundSites.map(async (site): Promise<[ISite, IManga]> => {
+    logScript(`Testing site: ${site.name}`);
+    return new Promise((resolve, reject) => {
+      Promise.all([
+        testTime(site),
+        testElement(site),
+        testAttribute(site),
+        testVariable(site),
+        testFunc(site),
+      ])
+        .then(async () => site.run())
+        .then((manga) =>
+          manga.pages > 0
+            ? resolve([site, manga])
+            : reject(new Error(`${site.name} found ${manga.pages} pages`)),
+        );
+    });
+  });
+
+  Promise.race(testedSites)
+    .then(([site, manga]: [ISite, IManga]) => preparePage([site, manga]))
+    .catch(logScriptC('Sorry, didnt find any valid site'));
 }
 
 export default start;
