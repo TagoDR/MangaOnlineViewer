@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, Fakku.cc, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Chochox, Comics18, Koharu, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.07.27
+// @version       2024.07.28
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -5819,12 +5819,8 @@
       }
     });
   }
-  async function preparePage(site) {
-    const manga = await site.run();
-    logScript(`Found Pages: ${manga.pages}`);
-    if (manga.pages <= 0) {
-      return;
-    }
+  async function preparePage([site, manga]) {
+    logScript(`Found Pages: ${manga.pages} in ${site.name}`);
     if (!manga.title) {
       manga.title = document.querySelector("title")?.textContent?.trim();
     }
@@ -5859,22 +5855,30 @@
       `Starting ${getInfoGM.script.name} ${getInfoGM.script.version} on ${getBrowser()} with ${getEngine()}`,
     );
     if (allowUpload()) return;
-    logScript(sites.length, " Known Manga Sites:", sites);
+    logScript(sites.length, "Known Manga Sites:", sites);
     const foundSites = sites.filter((s) => s.url.test(window.location.href));
-    logScript(foundSites.length, " Matches Possible:", foundSites);
-    if (foundSites.length > 0) {
-      const site = foundSites[0];
-      logScript(`Found site: ${site.name}`);
-      await Promise.all([
-        testTime(site),
-        testElement(site),
-        testAttribute(site),
-        testVariable(site),
-        testFunc(site),
-      ]).then(async () => preparePage(site).catch(logScript));
-    } else {
-      logScript("Sorry, didnt find any valid site");
-    }
+    logScript(foundSites.length, "Found sites:", foundSites);
+    const testedSites = foundSites.map(async (site) => {
+      logScript(`Testing site: ${site.name}`);
+      return new Promise((resolve, reject) => {
+        Promise.all([
+          testTime(site),
+          testElement(site),
+          testAttribute(site),
+          testVariable(site),
+          testFunc(site),
+        ])
+          .then(async () => site.run())
+          .then((manga) =>
+            manga.pages > 0
+              ? resolve([site, manga])
+              : reject(new Error(`${site.name} found ${manga.pages} pages`)),
+          );
+      });
+    });
+    Promise.race(testedSites)
+      .then(([site, manga]) => preparePage([site, manga]))
+      .catch(logScriptC("Sorry, didnt find any valid site"));
   }
 
   start(sites).catch(logScript);

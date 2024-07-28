@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Alandal, Asura Scans, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Flame Comics, Rizzcomic, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, LuaScans, Drake Scans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.07.27
+// @description   Shows all pages at once in online view for these sites: Alandal, Asura Scans, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Flame Comics, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, LuaScans, Drake Scans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @version       2024.07.28
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -79,7 +79,7 @@
 // @include       /https?:\/\/(www\.)?(manga33).com\/manga\/.+/
 // @include       /https?:\/\/(www\.)?(yugenmangas).(com|net|lat)\/series\/.+/
 // @include       /https?:\/\/(www\.)?zscans.com\/comics\/.+/
-// @include       /https?:\/\/[^/]+\/(chapter\/)?[^/?&=]+\/?$/
+// @include       /https?:\/\/.+\/(chapter\/)?.+$/
 // @include       /^(?!.*jaiminisbox).*\/read\/.+/
 // @include       /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon)\/.+\/.+/
 // @exclude       /https?:\/\/(www\.)?tsumino.com\/.+/
@@ -1404,7 +1404,7 @@
     name: [
       "MangaStream WordPress Plugin",
       "Flame Comics",
-      "Rizzcomic",
+      "Realm Oasis",
       "Voids-Scans",
       "Luminous Scans",
       "Shimada Scans",
@@ -1417,11 +1417,11 @@
       "LuaScans",
       "Drake Scans",
     ],
-    url: /https?:\/\/[^/]+\/(chapter\/)?[^/?&=]+\/?$/,
+    url: /https?:\/\/.+\/(chapter\/)?.+$/,
     homepage: [
       "https://themesia.com/mangastream-wordpress-theme/",
       "https://flamecomics.com/",
-      "https://rizzfables.com/",
+      "https://realmoasis.com/",
       "https://void-scans.com/",
       "https://luminousscans.com/",
       "https://shimadascans.com/",
@@ -6367,12 +6367,8 @@
       }
     });
   }
-  async function preparePage(site) {
-    const manga = await site.run();
-    logScript(`Found Pages: ${manga.pages}`);
-    if (manga.pages <= 0) {
-      return;
-    }
+  async function preparePage([site, manga]) {
+    logScript(`Found Pages: ${manga.pages} in ${site.name}`);
     if (!manga.title) {
       manga.title = document.querySelector("title")?.textContent?.trim();
     }
@@ -6407,22 +6403,30 @@
       `Starting ${getInfoGM.script.name} ${getInfoGM.script.version} on ${getBrowser()} with ${getEngine()}`,
     );
     if (allowUpload()) return;
-    logScript(sites.length, " Known Manga Sites:", sites);
+    logScript(sites.length, "Known Manga Sites:", sites);
     const foundSites = sites.filter((s) => s.url.test(window.location.href));
-    logScript(foundSites.length, " Matches Possible:", foundSites);
-    if (foundSites.length > 0) {
-      const site = foundSites[0];
-      logScript(`Found site: ${site.name}`);
-      await Promise.all([
-        testTime(site),
-        testElement(site),
-        testAttribute(site),
-        testVariable(site),
-        testFunc(site),
-      ]).then(async () => preparePage(site).catch(logScript));
-    } else {
-      logScript("Sorry, didnt find any valid site");
-    }
+    logScript(foundSites.length, "Found sites:", foundSites);
+    const testedSites = foundSites.map(async (site) => {
+      logScript(`Testing site: ${site.name}`);
+      return new Promise((resolve, reject) => {
+        Promise.all([
+          testTime(site),
+          testElement(site),
+          testAttribute(site),
+          testVariable(site),
+          testFunc(site),
+        ])
+          .then(async () => site.run())
+          .then((manga) =>
+            manga.pages > 0
+              ? resolve([site, manga])
+              : reject(new Error(`${site.name} found ${manga.pages} pages`)),
+          );
+      });
+    });
+    Promise.race(testedSites)
+      .then(([site, manga]) => preparePage([site, manga]))
+      .catch(logScriptC("Sorry, didnt find any valid site"));
   }
 
   start(sites).catch(logScript);
