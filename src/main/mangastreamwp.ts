@@ -3,7 +3,7 @@ export default {
   name: [
     'MangaStream WordPress Plugin',
     'Flame Comics',
-    'Rizzcomic',
+    'Realm Oasis',
     'Voids-Scans',
     'Luminous Scans',
     'Shimada Scans',
@@ -16,11 +16,11 @@ export default {
     'LuaScans',
     'Drake Scans',
   ],
-  url: /https?:\/\/[^/]+\/(chapter\/)?[^/?&=]+\/?$/,
+  url: /https?:\/\/.+\/(chapter\/)?.+$/,
   homepage: [
     'https://themesia.com/mangastream-wordpress-theme/',
     'https://flamecomics.com/',
-    'https://rizzfables.com/',
+    'https://realmoasis.com/',
     'https://void-scans.com/',
     'https://luminousscans.com/',
     'https://shimadascans.com/',
