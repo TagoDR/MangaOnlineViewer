@@ -114,33 +114,43 @@ export const applyLastGlobalZoom = (pages = '.PageContent img') => {
   }
 };
 
-function onImagesSuccess(instance: ImagesLoaded.ImagesLoaded) {
-  instance.images.forEach((image) => {
-    image.img.classList.add('imgLoaded');
-    image.img.classList.remove('imgBroken');
-    const thumbId = image.img.id.replace('PageImg', 'ThumbnailImg');
-    const thumb = document.getElementById(thumbId);
-    if (thumb) {
-      thumb.setAttribute('src', image.img.getAttribute('src')!);
-    }
-    applyLastGlobalZoom(`#${image.img.id}`);
-    updateProgress();
-  });
+function onImagesSuccess() {
+  return (instance: ImagesLoaded.ImagesLoaded) => {
+    instance.images.forEach((image) => {
+      image.img.classList.add('imgLoaded');
+      image.img.classList.remove('imgBroken');
+      const thumbId = image.img.id.replace('PageImg', 'ThumbnailImg');
+      const thumb = document.getElementById(thumbId);
+      if (thumb) {
+        thumb.setAttribute('src', image.img.getAttribute('src')!);
+      }
+      applyLastGlobalZoom(`#${image.img.id}`);
+      updateProgress();
+    });
+  };
 }
 
-function onImagesFail(instance: ImagesLoaded.ImagesLoaded) {
-  instance.images.forEach((image) => {
-    image.img.classList.add('imgBroken');
-    const src = image.img.getAttribute('src');
-    if (src && getRepeatValue(src) <= getUserSettings().maxReload) {
-      setTimeout(() => {
-        reloadImage(image.img);
-        const imgLoad = imagesLoaded(image.img.parentElement!);
-        imgLoad.on('done', onImagesSuccess);
-        imgLoad.on('fail', onImagesFail);
-      }, 2000);
-    }
-  });
+function onImagesFail(manga: IManga) {
+  return (instance: ImagesLoaded.ImagesLoaded) => {
+    instance.images.forEach((image) => {
+      image.img.classList.add('imgBroken');
+      const src = image.img.getAttribute('src');
+      if (src && getRepeatValue(src) <= getUserSettings().maxReload) {
+        setTimeout(async () => {
+          if (manga.reload) {
+            const id = parseInt(`0${/\d+/.exec(image.img.id)}`, 10);
+            const alt = await manga.reload(id);
+            image.img.setAttribute('src', alt);
+          } else {
+            reloadImage(image.img);
+          }
+          const imgLoad = imagesLoaded(image.img.parentElement!);
+          imgLoad.on('done', onImagesSuccess());
+          imgLoad.on('fail', onImagesFail(manga));
+        }, 2000);
+      }
+    });
+  };
 }
 
 // Corrects urls
@@ -171,8 +181,8 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
               .then((blob) => blobToDataURL(blob));
           }
           const imgLoad = imagesLoaded(img.parentElement!);
-          imgLoad.on('done', onImagesSuccess);
-          imgLoad.on('fail', onImagesFail);
+          imgLoad.on('done', onImagesSuccess());
+          imgLoad.on('fail', onImagesFail(manga));
           img.setAttribute('src', src);
           logScript('Loaded Image:', index, 'Source:', src);
         },
@@ -185,8 +195,8 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
         img,
         () => {
           const imgLoad = imagesLoaded(img.parentElement!);
-          imgLoad.on('done', onImagesSuccess);
-          imgLoad.on('fail', onImagesFail);
+          imgLoad.on('done', onImagesSuccess());
+          imgLoad.on('fail', onImagesFail(manga));
           logScript('Lazy Image: ', index, ' Source: ', img.getAttribute('src'));
         },
         manga.fetchOptions,
@@ -208,8 +218,8 @@ function findPage(
     if (src && img) {
       img.style.width = 'auto';
       const imgLoad = imagesLoaded(img.parentElement!);
-      imgLoad.on('done', onImagesSuccess);
-      imgLoad.on('fail', onImagesFail);
+      imgLoad.on('done', onImagesSuccess());
+      imgLoad.on('fail', onImagesFail(manga));
       img.setAttribute('src', src);
       logScript(`${lazy && 'Lazy '}Page: `, index, ' Source: ', img.getAttribute('src'));
     }

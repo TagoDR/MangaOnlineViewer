@@ -12,6 +12,7 @@ export type IMangaBase = {
   comments?: Element | null;
 
   before?(begin: number): void | Promise<void>;
+  reload?(page: number): Promise<string> | string;
 };
 
 export type IMangaPages = {
