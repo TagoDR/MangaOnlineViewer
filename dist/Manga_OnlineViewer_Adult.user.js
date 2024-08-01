@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, Fakku.cc, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Chochox, Comics18, Koharu, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.07.31
+// @version       2024.08.01
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -368,6 +368,21 @@
         listPages: pages,
         img: "#img",
         lazy: true,
+        async reload(page) {
+          const oldUrl = `${pages[page - 1]}`;
+          const slug = await fetch(oldUrl)
+            .then((res) => res.text())
+            .then((html) => /nl\('([\d-]+)'\)/.exec(html)?.[1]);
+          const newUrl = `${oldUrl}${oldUrl.indexOf("?") ? "&" : "?"}nl=${slug}`;
+          return fetch(newUrl)
+            .then((res) => res.text())
+            .then((html) =>
+              new DOMParser()
+                .parseFromString(html, "text/html")
+                .querySelector(this.img)
+                ?.getAttribute("src"),
+            );
+        },
       };
     },
   };
@@ -4520,32 +4535,42 @@
       applyZoom(zoomVal, pages);
     }
   };
-  function onImagesSuccess(instance) {
-    instance.images.forEach((image) => {
-      image.img.classList.add("imgLoaded");
-      image.img.classList.remove("imgBroken");
-      const thumbId = image.img.id.replace("PageImg", "ThumbnailImg");
-      const thumb = document.getElementById(thumbId);
-      if (thumb) {
-        thumb.setAttribute("src", image.img.getAttribute("src"));
-      }
-      applyLastGlobalZoom(`#${image.img.id}`);
-      updateProgress();
-    });
+  function onImagesSuccess() {
+    return (instance) => {
+      instance.images.forEach((image) => {
+        image.img.classList.add("imgLoaded");
+        image.img.classList.remove("imgBroken");
+        const thumbId = image.img.id.replace("PageImg", "ThumbnailImg");
+        const thumb = document.getElementById(thumbId);
+        if (thumb) {
+          thumb.setAttribute("src", image.img.getAttribute("src"));
+        }
+        applyLastGlobalZoom(`#${image.img.id}`);
+        updateProgress();
+      });
+    };
   }
-  function onImagesFail(instance) {
-    instance.images.forEach((image) => {
-      image.img.classList.add("imgBroken");
-      const src = image.img.getAttribute("src");
-      if (src && getRepeatValue(src) <= getUserSettings().maxReload) {
-        setTimeout(() => {
-          reloadImage(image.img);
-          const imgLoad = imagesLoaded(image.img.parentElement);
-          imgLoad.on("done", onImagesSuccess);
-          imgLoad.on("fail", onImagesFail);
-        }, 2e3);
-      }
-    });
+  function onImagesFail(manga) {
+    return (instance) => {
+      instance.images.forEach((image) => {
+        image.img.classList.add("imgBroken");
+        const src = image.img.getAttribute("src");
+        if (src && getRepeatValue(src) <= getUserSettings().maxReload) {
+          setTimeout(async () => {
+            if (manga.reload) {
+              const id = parseInt(`0${/\d+/.exec(image.img.id)}`, 10);
+              const alt = await manga.reload(id);
+              image.img.setAttribute("src", alt);
+            } else {
+              reloadImage(image.img);
+            }
+            const imgLoad = imagesLoaded(image.img.parentElement);
+            imgLoad.on("done", onImagesSuccess());
+            imgLoad.on("fail", onImagesFail(manga));
+          }, 2e3);
+        }
+      });
+    };
   }
   function normalizeUrl(url) {
     if (url) {
@@ -4578,8 +4603,8 @@
                 .then((blob) => blobUtil.blobToDataURL(blob));
             }
             const imgLoad = imagesLoaded(img.parentElement);
-            imgLoad.on("done", onImagesSuccess);
-            imgLoad.on("fail", onImagesFail);
+            imgLoad.on("done", onImagesSuccess());
+            imgLoad.on("fail", onImagesFail(manga));
             img.setAttribute("src", src);
             logScript("Loaded Image:", index, "Source:", src);
           },
@@ -4592,8 +4617,8 @@
           img,
           () => {
             const imgLoad = imagesLoaded(img.parentElement);
-            imgLoad.on("done", onImagesSuccess);
-            imgLoad.on("fail", onImagesFail);
+            imgLoad.on("done", onImagesSuccess());
+            imgLoad.on("fail", onImagesFail(manga));
             logScript(
               "Lazy Image: ",
               index,
@@ -4618,8 +4643,8 @@
       if (src && img) {
         img.style.width = "auto";
         const imgLoad = imagesLoaded(img.parentElement);
-        imgLoad.on("done", onImagesSuccess);
-        imgLoad.on("fail", onImagesFail);
+        imgLoad.on("done", onImagesSuccess());
+        imgLoad.on("fail", onImagesFail(manga));
         img.setAttribute("src", src);
         logScript(
           `${lazy && "Lazy "}Page: `,

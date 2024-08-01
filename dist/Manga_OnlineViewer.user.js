@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Asura Scans, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Flame Comics, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, LuaScans, Drake Scans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.07.31
+// @version       2024.08.01
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -5001,32 +5001,42 @@
       applyZoom(zoomVal, pages);
     }
   };
-  function onImagesSuccess(instance) {
-    instance.images.forEach((image) => {
-      image.img.classList.add("imgLoaded");
-      image.img.classList.remove("imgBroken");
-      const thumbId = image.img.id.replace("PageImg", "ThumbnailImg");
-      const thumb = document.getElementById(thumbId);
-      if (thumb) {
-        thumb.setAttribute("src", image.img.getAttribute("src"));
-      }
-      applyLastGlobalZoom(`#${image.img.id}`);
-      updateProgress();
-    });
+  function onImagesSuccess() {
+    return (instance) => {
+      instance.images.forEach((image) => {
+        image.img.classList.add("imgLoaded");
+        image.img.classList.remove("imgBroken");
+        const thumbId = image.img.id.replace("PageImg", "ThumbnailImg");
+        const thumb = document.getElementById(thumbId);
+        if (thumb) {
+          thumb.setAttribute("src", image.img.getAttribute("src"));
+        }
+        applyLastGlobalZoom(`#${image.img.id}`);
+        updateProgress();
+      });
+    };
   }
-  function onImagesFail(instance) {
-    instance.images.forEach((image) => {
-      image.img.classList.add("imgBroken");
-      const src = image.img.getAttribute("src");
-      if (src && getRepeatValue(src) <= getUserSettings().maxReload) {
-        setTimeout(() => {
-          reloadImage(image.img);
-          const imgLoad = imagesLoaded(image.img.parentElement);
-          imgLoad.on("done", onImagesSuccess);
-          imgLoad.on("fail", onImagesFail);
-        }, 2e3);
-      }
-    });
+  function onImagesFail(manga) {
+    return (instance) => {
+      instance.images.forEach((image) => {
+        image.img.classList.add("imgBroken");
+        const src = image.img.getAttribute("src");
+        if (src && getRepeatValue(src) <= getUserSettings().maxReload) {
+          setTimeout(async () => {
+            if (manga.reload) {
+              const id = parseInt(`0${/\d+/.exec(image.img.id)}`, 10);
+              const alt = await manga.reload(id);
+              image.img.setAttribute("src", alt);
+            } else {
+              reloadImage(image.img);
+            }
+            const imgLoad = imagesLoaded(image.img.parentElement);
+            imgLoad.on("done", onImagesSuccess());
+            imgLoad.on("fail", onImagesFail(manga));
+          }, 2e3);
+        }
+      });
+    };
   }
   function normalizeUrl(url) {
     if (url) {
@@ -5059,8 +5069,8 @@
                 .then((blob) => blobUtil.blobToDataURL(blob));
             }
             const imgLoad = imagesLoaded(img.parentElement);
-            imgLoad.on("done", onImagesSuccess);
-            imgLoad.on("fail", onImagesFail);
+            imgLoad.on("done", onImagesSuccess());
+            imgLoad.on("fail", onImagesFail(manga));
             img.setAttribute("src", src);
             logScript("Loaded Image:", index, "Source:", src);
           },
@@ -5073,8 +5083,8 @@
           img,
           () => {
             const imgLoad = imagesLoaded(img.parentElement);
-            imgLoad.on("done", onImagesSuccess);
-            imgLoad.on("fail", onImagesFail);
+            imgLoad.on("done", onImagesSuccess());
+            imgLoad.on("fail", onImagesFail(manga));
             logScript(
               "Lazy Image: ",
               index,
@@ -5099,8 +5109,8 @@
       if (src && img) {
         img.style.width = "auto";
         const imgLoad = imagesLoaded(img.parentElement);
-        imgLoad.on("done", onImagesSuccess);
-        imgLoad.on("fail", onImagesFail);
+        imgLoad.on("done", onImagesSuccess());
+        imgLoad.on("fail", onImagesFail(manga));
         img.setAttribute("src", src);
         logScript(
           `${lazy && "Lazy "}Page: `,
