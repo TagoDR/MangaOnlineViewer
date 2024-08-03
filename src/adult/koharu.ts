@@ -8,12 +8,23 @@ export default {
   lazy: false,
   waitEle: 'nav select option',
   async run() {
+    const options = {
+      method: 'GET',
+      headers: {
+        Accept: '*/*',
+        Referer: `${window.location.host}/`,
+        Origin: window.location.host,
+      },
+    };
     const url = window.location.pathname.split('/');
     const galleryID = `${url[2]}/${url[3]}`;
     const detailAPI = `https://api.koharu.to/books/detail/${galleryID}`;
-    const detail = await fetch(detailAPI).then(async (res) => res.json());
-    const dataAPI = `https://api.koharu.to/books/data/${galleryID}/${detail.data['0'].id}/${detail.data['0'].public_key}?v=${detail.updated_at ?? detail.created_at}&w=0`;
-    const data = await fetch(dataAPI).then(async (res) => res.json());
+    const detail = await fetch(detailAPI, options).then(async (res) => res.json());
+    const dataID = Object.keys(detail.data)
+      .map(Number)
+      .sort((a, b) => b - a)[0];
+    const dataAPI = `https://api.koharu.to/books/data/${galleryID}/${detail.data[dataID].id}/${detail.data[dataID].public_key}?v=${detail.updated_at ?? detail.created_at}&w=${dataID}`;
+    const data = await fetch(dataAPI, options).then(async (res) => res.json());
     return {
       title: detail.title,
       series: `/g/${galleryID}/`,
