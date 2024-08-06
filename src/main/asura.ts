@@ -7,10 +7,10 @@ export default {
   homepage: 'https://asuracomic.net/',
   language: ['English'],
   category: 'manga',
-  waitEle: 'img[alt="chapter"]',
+  waitEle: 'img[alt*="chapter"]',
   waitTime: 2000,
   run() {
-    const images = [...document.querySelectorAll('img[alt="chapter"]')];
+    const images = [...document.querySelectorAll('img[alt*="chapter"]')];
     return {
       title: document.querySelector('h2')?.textContent?.trim(),
       series: findOneByContentStarts('p a', 'All chapters are in')?.getAttribute('href'),

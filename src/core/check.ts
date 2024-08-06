@@ -40,6 +40,6 @@ export async function testTime(site: ISite) {
     await new Promise((resolve) => {
       setTimeout(resolve, site.waitTime);
     });
-    logScript('Continuing');
+    logScript('Continuing after timer');
   }
 }

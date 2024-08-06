@@ -3,7 +3,7 @@ import rangeSlider, { type RangeSlider } from 'range-slider-input';
 import rangeSliderStyles from 'range-slider-input/dist/style.css?inline';
 import _ from 'lodash';
 import { html } from '../utils/code-tag';
-import { getBrowser, getEngine, getInfoGM, logScript, logScriptC } from '../utils/tampermonkey';
+import { getBrowser, getEngine, getInfoGM, logScript } from '../utils/tampermonkey';
 import type { IManga, ISite } from '../types';
 import formatPage from './viewer';
 import { getLocaleString, getUserSettings, isBookmarked } from './settings';
@@ -243,10 +243,16 @@ async function start(sites: ISite[]) {
         );
     });
   });
-
-  Promise.race(testedSites)
-    .then(([site, manga]: [ISite, IManga]) => preparePage([site, manga]))
-    .catch(logScriptC('Sorry, didnt find any valid site'));
+  Promise.race(testedSites.map((promise, index) => promise.then(() => index))).then(
+    (fastestIndex) => {
+      testedSites.forEach((_promise, i) => {
+        if (i !== fastestIndex) logScript(`Failed/Skipped: ${foundSites[i].name}`);
+      });
+      testedSites[fastestIndex].then((result) => {
+        preparePage(result);
+      });
+    },
+  );
 }
 
 export default start;
