@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Asura Scans, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Flame Comics, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, AzureManga, CypherScans, MangaGalaxy, LuaScans, Drake Scans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.08.03
+// @version       2024.08.06
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -141,10 +141,10 @@
     homepage: "https://asuracomic.net/",
     language: ["English"],
     category: "manga",
-    waitEle: 'img[alt="chapter"]',
+    waitEle: 'img[alt*="chapter"]',
     waitTime: 2e3,
     run() {
-      const images = [...document.querySelectorAll('img[alt="chapter"]')];
+      const images = [...document.querySelectorAll('img[alt*="chapter"]')];
       return {
         title: document.querySelector("h2")?.textContent?.trim(),
         series: findOneByContentStarts(
@@ -6122,7 +6122,7 @@
       await new Promise((resolve) => {
         setTimeout(resolve, site.waitTime);
       });
-      logScript("Continuing");
+      logScript("Continuing after timer");
     }
   }
 
@@ -6438,9 +6438,17 @@
           );
       });
     });
-    Promise.race(testedSites)
-      .then(([site, manga]) => preparePage([site, manga]))
-      .catch(logScriptC("Sorry, didnt find any valid site"));
+    Promise.race(
+      testedSites.map((promise, index) => promise.then(() => index)),
+    ).then((fastestIndex) => {
+      testedSites.forEach((_promise, i) => {
+        if (i !== fastestIndex)
+          logScript(`Failed/Skipped: ${foundSites[i].name}`);
+      });
+      testedSites[fastestIndex].then((result) => {
+        preparePage(result);
+      });
+    });
   }
 
   start(sites).catch(logScript);
