@@ -1,4 +1,5 @@
 // == Koharu ======================================================================================
+
 export default {
   name: 'Koharu',
   url: /https?:\/\/(www\.)?(koharu).to/,
@@ -24,18 +25,22 @@ export default {
       .map(Number)
       .sort((a, b) => b - a)[0];
     const dataAPI = `https://api.koharu.to/books/data/${galleryID}/${detail.data[dataID].id}/${detail.data[dataID].public_key}?v=${detail.updated_at ?? detail.created_at}&w=${dataID}`;
-    const data = await fetch(dataAPI, options).then(async (res) => res.json());
+    const data = await fetch(dataAPI, options)
+      .then(async (res) => res.json())
+      .then(({ base, entries }) =>
+        entries.map((image: { path: string }) => `${base}/${image.path}?w=${dataID}`),
+      );
     return {
       title: detail.title,
       series: `/g/${galleryID}/`,
-      pages: data.entries.length,
+      pages: data.length,
       prev: '#',
       next: '#',
       fetchOptions: {
         method: 'GET',
         redirect: 'follow',
       },
-      listImages: data.entries.map((image: { path: string }) => `${data.base}/${image.path}`),
+      listImages: data,
     };
   },
 };
