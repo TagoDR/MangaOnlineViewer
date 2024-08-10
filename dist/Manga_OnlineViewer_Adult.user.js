@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, Fakku.cc, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Chochox, Comics18, Koharu, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.08.06
+// @version       2024.08.10
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -828,20 +828,22 @@
         .map(Number)
         .sort((a, b) => b - a)[0];
       const dataAPI = `https://api.koharu.to/books/data/${galleryID}/${detail.data[dataID].id}/${detail.data[dataID].public_key}?v=${detail.updated_at ?? detail.created_at}&w=${dataID}`;
-      const data = await fetch(dataAPI, options).then(async (res) =>
-        res.json(),
-      );
+      const data = await fetch(dataAPI, options)
+        .then(async (res) => res.json())
+        .then(({ base, entries }) =>
+          entries.map((image) => `${base}/${image.path}?w=${dataID}`),
+        );
       return {
         title: detail.title,
         series: `/g/${galleryID}/`,
-        pages: data.entries.length,
+        pages: data.length,
         prev: "#",
         next: "#",
         fetchOptions: {
           method: "GET",
           redirect: "follow",
         },
-        listImages: data.entries.map((image) => `${data.base}/${image.path}`),
+        listImages: data,
       };
     },
   };
