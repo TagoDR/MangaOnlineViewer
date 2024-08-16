@@ -5,6 +5,7 @@ export default {
   homepage: 'https://reaperscans.com/',
   language: ['English'],
   category: 'manga',
+  waitEle: '#content .container img:not(.rounded)',
   run() {
     const images = [...document.querySelectorAll('#content .container img:not(.rounded)')];
     return {
