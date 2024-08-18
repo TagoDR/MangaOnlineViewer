@@ -147,10 +147,9 @@
       const images = [...document.querySelectorAll('img[alt*="chapter"]')];
       return {
         title: document.querySelector("h2")?.textContent?.trim(),
-        series: findOneByContentStarts(
-          "p a",
-          "All chapters are in",
-        )?.getAttribute("href"),
+        series: findOneByContentStarts("p", "All chapters are in")
+          ?.querySelector("a")
+          ?.getAttribute("href"),
         pages: images.length,
         prev: findClosestByContentEq("h2", "Prev", "a")?.getAttribute("href"),
         next: findClosestByContentEq("h2", "Next", "a")?.getAttribute("href"),
@@ -272,24 +271,20 @@
     homepage: "https://comick.io/home",
     language: ["English"],
     category: "manga",
-    waitEle: "#images-reader-container img",
+    waitEle: "#__NEXT_DATA__",
     run() {
-      const images = [
-        ...document.querySelectorAll("#images-reader-container img"),
-      ];
+      const data = JSON.parse(
+        document.querySelector("#__NEXT_DATA__")?.textContent ?? "",
+      );
       return {
-        title: document.querySelector("title")?.textContent?.trim(),
-        series: document
-          .querySelector("main div div div div div div div div a")
-          ?.getAttribute("href"),
-        pages: images.length,
-        prev: document
-          .querySelector("a:first-child button")
-          ?.parentElement?.getAttribute("href"),
-        next: document
-          .querySelector("a:last-child button")
-          ?.parentElement?.getAttribute("href"),
-        listImages: images.map((img) => img.getAttribute("src")),
+        title: data.props.pageProps.chapter.title,
+        series: `/comic/${data.props.pageProps.chapter.md_comics.slug}`,
+        pages: data.props.pageProps.chapter.md_images.length,
+        prev: data.props.pageProps.prev?.href,
+        next: data.props.pageProps.next?.href,
+        listImages: data.props.pageProps.chapter.md_images.map(
+          (img) => `https://s3.comick.ink/comick/${img.b2key}`,
+        ),
       };
     },
   };
