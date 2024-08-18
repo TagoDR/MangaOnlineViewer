@@ -13,7 +13,9 @@ export default {
     const images = [...document.querySelectorAll('img[alt*="chapter"]')];
     return {
       title: document.querySelector('h2')?.textContent?.trim(),
-      series: findOneByContentStarts('p a', 'All chapters are in')?.getAttribute('href'),
+      series: findOneByContentStarts('p', 'All chapters are in')
+        ?.querySelector('a')
+        ?.getAttribute('href'),
       pages: images.length,
       prev: findClosestByContentEq('h2', 'Prev', 'a')?.getAttribute('href'),
       next: findClosestByContentEq('h2', 'Next', 'a')?.getAttribute('href'),
