@@ -68,6 +68,7 @@
     cursor: pointer;
     border-radius: 5px;
     border-width: 1px;
+    border-style: solid;
     padding: 2px;
     min-height: 32px;
     color: var(--theme-primary-text-color);
