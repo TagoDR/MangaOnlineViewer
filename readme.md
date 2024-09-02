@@ -46,6 +46,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [LHTranslation](https://lhtranslation.net/) _[English]_
 - [LynxScans](https://lynxscans.com/) _[English]_
 - [MangaBuddy](https://mangabuddy.com/) _[English]_
+- [MangaDemon](https://demonicscans.org/) _[English]_
 - [MangaDex](https://mangadex.org/) _[English]_
 - [MangaFox](https://fanfox.net/) / [MangaHere](https://www.mangahere.cc/) _[English]_
 - [Mangago](https://www.mangago.me/) _[English]_

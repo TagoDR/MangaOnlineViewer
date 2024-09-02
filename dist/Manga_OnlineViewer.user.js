@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Alandal, Asura Scans, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Flame Comics, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.08.21
+// @description   Shows all pages at once in online view for these sites: Alandal, Asura Scans, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Flame Comics, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @version       2024.09.02
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -43,6 +43,7 @@
 // @include       /(file:\/\/\/.+(index)?.html)/
 // @include       /https?:\/\/(www\.)?lynxscans.com\/comics?\/.+/
 // @include       /https?:\/\/(www\.)?mangabuddy.com\/.+\/chapter.+/
+// @include       /https?:\/\/(www\.)?demonicscans\.org\/title\/.+\/chapter\/.+/
 // @include       /https?:\/\/(www\.)?mangadex.org/
 // @include       /https?:\/\/(www\.)?(fanfox.net|mangahere.cc)\/manga\/.+\/.+\//
 // @include       /https?:\/\/(www\.)?mangago.me\/.*\/.*\/.*/
@@ -994,6 +995,27 @@
         prev: document.querySelector("a.prev")?.getAttribute("href"),
         next: document.querySelector("a.next")?.getAttribute("href"),
         listImages: images,
+      };
+    },
+  };
+
+  const mangademon = {
+    name: "MangaDemon",
+    url: /https?:\/\/(www\.)?demonicscans\.org\/title\/.+\/chapter\/.+/,
+    homepage: "https://demonicscans.org/",
+    language: ["English"],
+    category: "manga",
+    run() {
+      const images = [...document.querySelectorAll(".imgholder")];
+      return {
+        title: document.querySelector("title")?.textContent?.trim(),
+        series: document.querySelector("h1 a")?.getAttribute("href"),
+        pages: images.length,
+        prev: document.querySelector(".prevchap")?.getAttribute("href"),
+        next: document.querySelector(".nextchap")?.getAttribute("href"),
+        listImages: images.map(
+          (img) => img.getAttribute("data-src") || img.getAttribute("src"),
+        ),
       };
     },
   };
@@ -2177,6 +2199,7 @@
     localhost,
     lynxscans,
     mangabuddy,
+    mangademon,
     mangadex,
     mangafox,
     mangago,
