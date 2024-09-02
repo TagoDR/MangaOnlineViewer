@@ -15,6 +15,7 @@ import localhost from './localhost';
 import lynxscans from './lynxscans';
 import madarawp from './madarawp';
 import mangabuddy from './mangabuddy';
+import mangademon from './mangademon';
 import mangadex from './mangadex';
 import mangafox from './mangafox';
 import mangago from './mangago';
@@ -52,7 +53,7 @@ import webtoons from './webtoons';
 import wpmanga from './wpmanga';
 import yugenmangas from './yugenmangas';
 import zeroscans from './zeroscans';
-import { type ISite } from '../types/ISite';
+import { type ISite } from '../types';
 
 const sites = [
   alandal,
@@ -71,6 +72,7 @@ const sites = [
   localhost,
   lynxscans,
   mangabuddy,
+  mangademon,
   mangadex,
   mangafox,
   mangago,
