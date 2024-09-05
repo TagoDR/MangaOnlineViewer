@@ -1,8 +1,8 @@
 // == 3Hentai ======================================================================================
 export default {
-  name: '3Hentai',
-  url: /https?:\/\/(www\.)?3hentai.net\/d\/.+\/.+/,
-  homepage: 'https://3hentai.net/',
+  name: ['3Hentai', 'HentaiVox'],
+  url: /https?:\/\/(www\.)?(3hentai|hentaivox).(net|com)\/(d|view)\/.+\/.+/,
+  homepage: ['https://3hentai.net/', 'https://hentaivox.com/'],
   language: ['English'],
   category: 'hentai',
   waitVar: 'readerPages',
