@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, Fakku.cc, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Chochox, Comics18, Koharu, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.09.02
+// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, Fakku.cc, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Chochox, Comics18, Koharu, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
+// @version       2024.09.05
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -56,7 +56,7 @@
 // @include       /https?:\/\/(www\.)?pururin.to\/(view|read)\/.+\/.+\/.+/
 // @include       /https?:\/\/(www\.)?simply-hentai.com\/.+\/page\/.+/
 // @include       /https?:\/\/(www\.)?tmohentai.com\/reader\/.+\/paginated\/\d+/
-// @include       /https?:\/\/(www\.)?3hentai.net\/d\/.+\/.+/
+// @include       /https?:\/\/(www\.)?(3hentai|hentaivox).(net|com)\/(d|view)\/.+\/.+/
 // @include       /https?:\/\/(www\.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/
 // @include       /https?:\/\/(www\.)?(vermangasporno|vercomicsporno).com\/.+/
 // @include       /https?:\/\/(www\.)?wnacg.com\/photos-view-id-.+/
@@ -1254,9 +1254,9 @@
   };
 
   const threehentai = {
-    name: "3Hentai",
-    url: /https?:\/\/(www\.)?3hentai.net\/d\/.+\/.+/,
-    homepage: "https://3hentai.net/",
+    name: ["3Hentai", "HentaiVox"],
+    url: /https?:\/\/(www\.)?(3hentai|hentaivox).(net|com)\/(d|view)\/.+\/.+/,
+    homepage: ["https://3hentai.net/", "https://hentaivox.com/"],
     language: ["English"],
     category: "hentai",
     waitVar: "readerPages",
