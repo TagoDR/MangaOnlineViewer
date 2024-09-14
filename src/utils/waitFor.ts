@@ -114,9 +114,9 @@ export async function waitWithTimer(promise: Promise<any>, timer: number = 1000)
 
 /**
  * Wait for promise to resolve or for the timeout
- * @param predFn
+ * @param promise
  * @param timeout
  */
-export async function waitWithTimeout(predFn: () => boolean, timeout: number) {
-  return Promise.race([until(predFn), waitForTimer(timeout, false)]);
+export async function waitWithTimeout(promise: Promise<any>, timeout: number = 5000) {
+  return Promise.race([promise, waitForTimer(timeout, false)]);
 }
