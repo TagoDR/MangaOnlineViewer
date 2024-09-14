@@ -6030,41 +6030,33 @@
       setTimeout(() => resolve(result), millis);
     });
   }
-  async function until(predFn) {
-    const poll = (done) => {
-      const result = predFn();
-      if (result) {
-        done(result);
-      } else {
-        setTimeout(() => {
-          poll(done);
-        }, 500);
-      }
-    };
-    return new Promise(poll);
-  }
-  async function waitWithTimeout(predFn, timeout) {
-    return Promise.race([until(predFn), waitForTimer(timeout, false)]);
+  async function waitWithTimeout(promise, timeout = 5e3) {
+    return Promise.race([promise, waitForTimer(timeout, false)]);
   }
 
   async function captureComments() {
     if (!getUserSettings().enableComments) return null;
-    const comments = document.querySelector("#disqus_thread, #fb-comments");
+    let comments = document.querySelector("#disqus_thread, #fb-comments");
     if (comments) {
       logScript(`Waiting to Comments to load`, comments);
       window.scrollTo(0, document.body.scrollHeight);
-      const load = await waitWithTimeout(() => {
-        const iframe = comments?.querySelector(
-          "iframe:not(#indicator-north, #indicator-south)",
-        );
-        return (
-          iframe !== void 0 &&
-          !isEmpty(iframe?.src) &&
-          (iframe?.contentDocument !== void 0 ||
-            iframe?.contentWindow?.document !== void 0)
-        );
-      }, 5e3);
-      if (!load) logScript(`Timeout Comments`, comments);
+      await waitWithTimeout(
+        waitForFunc(() => {
+          comments = document.querySelector("#disqus_thread, #fb-comments");
+          const iframe = comments?.querySelector(
+            "iframe:not(#indicator-north, #indicator-south)",
+          );
+          return (
+            iframe?.contentWindow?.document.readyState === "complete" &&
+            iframe?.contentWindow?.document?.body?.textContent?.length
+          );
+        }),
+      );
+      if (comments.children.length) {
+        logScript(`Got Comments`, comments);
+      } else {
+        logScript(`Timeout Comments`);
+      }
     }
     window.scrollTo(0, 0);
     return comments;
