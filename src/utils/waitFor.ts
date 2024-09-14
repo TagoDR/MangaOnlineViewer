@@ -22,27 +22,14 @@ export function waitForElm(selector: string, target = document.body) {
   });
 }
 
-export function waitForFunc(fn: () => any, target = document.body): Promise<any> {
+export function waitForFunc(fn: () => any, timer: number = 250): Promise<any> {
   return new Promise((resolve) => {
-    const result = fn();
-    if (result) {
-      resolve(result);
-      return;
-    }
-
-    const observer = new MutationObserver(() => {
-      const res = fn();
-      if (res) {
-        resolve(res);
-        observer.disconnect();
+    const intervalId = setInterval(() => {
+      if (fn()) {
+        clearInterval(intervalId);
+        resolve(true);
       }
-    });
-
-    observer.observe(target, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-    });
+    }, timer);
   });
 }
 
