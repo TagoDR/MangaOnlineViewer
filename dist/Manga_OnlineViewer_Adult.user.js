@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, Fakku.cc, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Chochox, Comics18, Koharu, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.09.05
+// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, Fakku.cc, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Chochox, Comics18, Koharu, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
+// @version       2024.09.14
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -28,6 +28,7 @@
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.37/ua-parser.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
+// @include       /https?:\/\/(www\.)?akuma\.moe\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?bestporncomix.com\/gallery\/.+/
 // @include       /https?:\/\/(www\.)?doujins.com\/.+/
 // @include       /https?:\/\/(comics.)?8muses.(com|io)\/(comics\/)?picture\/.+/
@@ -66,6 +67,33 @@
 // ==/UserScript==
 (function () {
   "use strict";
+
+  const akumamoe = {
+    name: "AkumaMoe",
+    url: /https?:\/\/(www\.)?akuma\.moe\/g\/.+\/.+/,
+    homepage: "https://akuma.moe",
+    language: ["Raw"],
+    category: "hentai",
+    waitFunc: () =>
+      unsafeWindow.img_lst?.length ===
+      document.querySelectorAll(".reader-nav:first-child .nav-select option")
+        ?.length,
+    async run() {
+      return {
+        title: document
+          .querySelector("h1.sr-only")
+          ?.textContent?.trim()
+          .replace(/^Reading /, ""),
+        series: `https://akuma.moe/g/${/\/g\/([^/]+)\//.exec(window.location.pathname)?.[1]}/`,
+        pages: unsafeWindow.img_lst.length,
+        prev: "#",
+        next: "#",
+        listImages: unsafeWindow.img_lst.map(
+          (img) => `${unsafeWindow.img_prt}/${img}`,
+        ),
+      };
+    },
+  };
 
   const bestporncomix = {
     name: "BestPornComix",
@@ -159,25 +187,14 @@
       });
     });
   }
-  function waitForFunc(fn, target = document.body) {
+  function waitForFunc(fn, timer = 250) {
     return new Promise((resolve) => {
-      const result = fn();
-      if (result) {
-        resolve(result);
-        return;
-      }
-      const observer = new MutationObserver(() => {
-        const res = fn();
-        if (res) {
-          resolve(res);
-          observer.disconnect();
+      const intervalId = setInterval(() => {
+        if (fn()) {
+          clearInterval(intervalId);
+          resolve(true);
         }
-      });
-      observer.observe(target, {
-        childList: true,
-        subtree: true,
-        attributes: true,
-      });
+      }, timer);
     });
   }
   function waitForAtb(selector, attribute, target = document.body) {
@@ -1441,6 +1458,7 @@
   };
 
   const sites = [
+    akumamoe,
     bestporncomix,
     doujinmoe,
     eightMuses,
