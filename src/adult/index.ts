@@ -1,3 +1,4 @@
+import akumamoe from './akumamoe';
 import bestporncomix from './bestporncomix';
 import doujinmoe from './doujinmoe';
 import eightMuses from './8muses';
@@ -36,6 +37,7 @@ import xyzcomics from './xyzcomics';
 import { type ISite } from '../types';
 
 const sites = [
+  akumamoe,
   bestporncomix,
   doujinmoe,
   eightMuses,
