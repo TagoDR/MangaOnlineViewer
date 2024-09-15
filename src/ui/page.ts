@@ -121,6 +121,7 @@ function onImagesSuccess() {
       image.img.classList.remove('imgBroken');
       const thumbId = image.img.id.replace('PageImg', 'ThumbnailImg');
       const thumb = document.getElementById(thumbId);
+      thumb?.classList.remove('imgBroken');
       if (thumb) {
         thumb.setAttribute('src', image.img.getAttribute('src')!);
       }
@@ -134,6 +135,9 @@ function onImagesFail(manga: IManga) {
   return (instance: ImagesLoaded.ImagesLoaded) => {
     instance.images.forEach((image) => {
       image.img.classList.add('imgBroken');
+      const thumbId = image.img.id.replace('PageImg', 'ThumbnailImg');
+      const thumb = document.getElementById(thumbId);
+      thumb?.classList.add('imgBroken');
       const src = image.img.getAttribute('src');
       if (src && getRepeatValue(src) <= getUserSettings().maxReload) {
         setTimeout(async () => {
@@ -148,6 +152,8 @@ function onImagesFail(manga: IManga) {
           imgLoad.on('done', onImagesSuccess());
           imgLoad.on('fail', onImagesFail(manga));
         }, 2000);
+      } else {
+        // image.img.closest('.MangaPage')?.classList.add('hide');
       }
     });
   };

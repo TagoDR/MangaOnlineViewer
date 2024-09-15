@@ -50,13 +50,14 @@ export default css`
     background-image: url('${svgToUrl(IconPhoto)}');
   }
 
-  #MangaOnlineViewer .PageContent .PageImg.imgBroken {
-    background-image: url('${svgToUrl(IconPhotoOff)}');
-  }
-
   #MangaOnlineViewer .Thumbnail .ThumbnailImg[src=''],
   #MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {
     background-image: url('${svgToUrl(IconPhoto)}');
+  }
+
+  #MangaOnlineViewer .PageContent .PageImg.imgBroken,
+  #MangaOnlineViewer .Thumbnail .ThumbnailImg.imgBroken {
+    background-image: url('${svgToUrl(IconPhotoOff)}');
   }
 
   #MangaOnlineViewer .ThemeRadio.custom {
