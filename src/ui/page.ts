@@ -46,14 +46,14 @@ function applyZoom(
 }
 
 function invalidateImageCache(src: string, repeat: number) {
-  const url = src.replace(/[?&]cache=\d+$/, '');
+  const url = src.replace(/[?&]forceReload=\d+$/, '');
   const symbol = !url.includes('?') ? '?' : '&';
-  return `${url + symbol}cache=${repeat}`;
+  return `${url + symbol}forceReload=${repeat}`;
 }
 
 function getRepeatValue(src: string | undefined): number {
   let repeat = 1;
-  const cache = src?.match(/cache=(\d+)$/);
+  const cache = src?.match(/forceReload=(\d+)$/);
   if (cache?.at(1)) {
     repeat = parseInt(cache[1], 10) + 1;
   }
