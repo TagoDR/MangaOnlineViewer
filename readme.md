@@ -40,7 +40,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [Asura Scans](https://asuracomic.net/) _[English]_
 - [Batoto](https://bato.to/) _[English]_
 - [BilibiliComics](https://www.bilibilicomics.net/) _[English]_
-- [Comick](https://comick.io/home) _[English]_
+- [Comick](https://comick.io/) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
 - [INKR](https://inkr.com/) _[English]_
 - [LHTranslation](https://lhtranslation.net/) _[English]_
