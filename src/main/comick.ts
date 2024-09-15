@@ -2,21 +2,24 @@
 export default {
   name: 'Comick',
   url: /https?:\/\/(www\.)?comick.io\/.+/,
-  homepage: 'https://comick.io/home',
+  homepage: 'https://comick.io/',
   language: ['English'],
   category: 'manga',
-  waitEle: '#__NEXT_DATA__',
-  run() {
-    const data = JSON.parse(document.querySelector('#__NEXT_DATA__')?.textContent ?? '');
+  async run() {
+    const apiUrl = 'https://api.comick.io';
+    const chapterId = /\/([^/]+)-chapter.+$/.exec(window.location.pathname)?.[1];
+    const data = await fetch(`${apiUrl}/chapter/${chapterId}`).then((res) => res.json());
+    const pages: { img: string; page: number }[] = data.chapter.md_images.map(
+      (image: { b2key: string; w: string }) =>
+        `https://meo.comick.pictures/${image.b2key}?width=${image.w}`,
+    );
     return {
-      title: data.props.pageProps.chapter.title,
-      series: `/comic/${data.props.pageProps.chapter.md_comics.slug}`,
-      pages: data.props.pageProps.chapter.md_images.length,
-      prev: data.props.pageProps.prev?.href,
-      next: data.props.pageProps.next?.href,
-      listImages: data.props.pageProps.chapter.md_images.map(
-        (img: { b2key: string }) => `https://s3.comick.ink/comick/${img.b2key}`,
-      ),
+      title: data.chapter.md_comics.title,
+      series: `/comic/${data.chapter.md_comics.slug}`,
+      pages: pages.length,
+      prev: data.prev?.href,
+      next: data.next?.href,
+      listImages: pages,
     };
   },
 };
