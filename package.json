@@ -49,7 +49,7 @@
         "rollup-plugin-prettier": "^4.1.1",
         "typescript": "^5.6.2",
         "userscript-metadata-generator": "^0.2.4",
-        "vite": "^5.4.5",
+        "vite": "^5.4.6",
         "vite-plugin-banner": "^0.8.0",
         "vite-svg-loader": "^5.1.0"
     },
