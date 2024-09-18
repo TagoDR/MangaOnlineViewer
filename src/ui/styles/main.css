@@ -101,6 +101,7 @@
 
 #MangaOnlineViewer :not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {
     max-width: 100%;
+    object-fit: contain;
 }
 
 #MangaOnlineViewer .ControlButton.hidden,
