@@ -652,7 +652,7 @@
     async run() {
       const cdn = "https://hentalk.pw";
       const api = await fetch(
-        `${window.location.href}/__data.json?x-sveltekit-invalidated=011`,
+        `${window.location.pathname}/__data.json?x-sveltekit-invalidated=011`,
       ).then(async (res) => res.json());
       const slug = document
         .querySelector("div div + img[alt^=Page]")
