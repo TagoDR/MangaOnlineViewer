@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, Fakku.cc, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, hitomi, Imhentai, KingComix, Chochox, Comics18, Koharu, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.09.24
+// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Koharu, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
+// @version       2024.10.22
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -33,7 +33,6 @@
 // @include       /https?:\/\/(www\.)?doujins.com\/.+/
 // @include       /https?:\/\/(comics.)?8muses.(com|io)\/(comics\/)?picture\/.+/
 // @include       /https?:\/\/(g\.)?(exhentai|e-hentai).org\/s\/.+\/.+/
-// @include       /https?:\/\/(spy.)?fakku.cc/
 // @include       /https?:\/\/(www\.)?fsicomics.com\/.+/
 // @include       /https?:\/\/(www\.)?gntai.net\/(?!(category|tags|autores))[^/]+\/.+/
 // @include       /https?:\/\/(www\.)?hbrowse.com\/.+/
@@ -43,6 +42,7 @@
 // @include       /https?:\/\/(www\.)?(hentaihand|nhentai).com\/.+\/reader/
 // @include       /https?:\/\/(www\.)?hentaihere.com\/.+\/.+\/.+/
 // @include       /https?:\/\/((www\.)?hentainexus.com|nexus.fakku.cc)\/read\/.+/
+// @include       /https?:\/\/(www.)?hentalk.pw/
 // @include       /https?:\/\/hitomi.la\/reader\/.+/
 // @include       /https?:\/\/(www\.)?imhentai.xxx\/view\/.+\/.+\//
 // @include       /https?:\/\/(www\.)?(kingcomix|chochox|comics18).(com|org)\/.+/
@@ -391,44 +391,6 @@
     },
   };
 
-  const fakku = {
-    name: "Fakku.cc",
-    url: /https?:\/\/(spy.)?fakku.cc/,
-    homepage: "https://spy.fakku.cc/",
-    language: ["English"],
-    category: "hentai",
-    waitEle: "div div + img[alt^=Page]",
-    async run() {
-      const cdn = "https://cdn.fakku.cc";
-      const api = await fetch(
-        `${window.location.href}/__data.json?x-sveltekit-invalidated=011`,
-      ).then(async (res) => res.text());
-      const data = /const data = ([^;]+);/.exec(api)?.[0];
-      const slug =
-        data?.match(/hash:"(\w+)"/)?.[1] ??
-        document
-          .querySelector("div div + img[alt^=Page]")
-          ?.getAttribute("src")
-          ?.match(/image\/(.+)\//)?.[1];
-      const images = /const data = ([^;]+);/
-        .exec(api)?.[0]
-        ?.match(/images:\[([^\]]+)\]/)?.[1]
-        ?.match(/filename:"[\w.]+"/g)
-        ?.map((s) => s.replace('filename:"', "").replace('"', ""));
-      return {
-        title: document
-          .querySelector("title")
-          ?.textContent?.trim()
-          .replace(/Page \d+ • /, ""),
-        series: window.location.href.replace(/read\/.+/, ""),
-        pages: images?.length,
-        prev: "#",
-        next: "#",
-        listImages: images?.map((src) => `${cdn}/image/${slug}/${src}`),
-      };
-    },
-  };
-
   const fsicomics = {
     name: "FSIComics",
     url: /https?:\/\/(www\.)?fsicomics.com\/.+/,
@@ -676,6 +638,39 @@
         prev: "#",
         next: "#",
         listImages: images,
+      };
+    },
+  };
+
+  const hentalk = {
+    name: "HenTalk",
+    url: /https?:\/\/(www.)?hentalk.pw/,
+    homepage: "https://hentalk.pw/",
+    language: ["English"],
+    category: "hentai",
+    waitEle: "div div + img[alt^=Page]",
+    async run() {
+      const cdn = "https://hentalk.pw";
+      const api = await fetch(
+        `${window.location.href}/__data.json?x-sveltekit-invalidated=011`,
+      ).then(async (res) => res.json());
+      const slug = document
+        .querySelector("div div + img[alt^=Page]")
+        ?.getAttribute("src")
+        ?.match(/image\/(.+)\//)?.[1];
+      const images = api.nodes[1].data.filter(
+        (e) => typeof e === "string" && e.endsWith(".png"),
+      );
+      return {
+        title: document
+          .querySelector("title")
+          ?.textContent?.trim()
+          .replace(/Page \d+ • /, ""),
+        series: window.location.href.replace(/read\/.+/, ""),
+        pages: images?.length,
+        prev: "#",
+        next: "#",
+        listImages: images?.map((src) => `${cdn}/image/${slug}/${src}`),
       };
     },
   };
@@ -1450,7 +1445,6 @@
     doujinmoe,
     eightMuses,
     exhentai,
-    fakku,
     fsicomics,
     gntai,
     hbrowse,
@@ -1460,6 +1454,7 @@
     hentaihand,
     hentaihere,
     hentainexus,
+    hentalk,
     hitomi,
     imhentai,
     kingcomix,

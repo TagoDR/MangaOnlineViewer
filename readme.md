@@ -103,7 +103,6 @@ then open it in the browser, and you will see the options to load local Files.
 - [DoujinMoeNM](https://doujins.com/) _[English]_
 - [8Muses.com](https://comics.8muses.com/) / [8Muses.io](https://8muses.io/) _[English]_ **Obs: Slow start, bruteforce may be required**
 - [ExHentai](https://exhentai.org/) / [e-Hentai](https://e-hentai.org/) _[English]_ **Obs: May get your IP Banned, use with moderation**
-- [Fakku.cc](https://spy.fakku.cc/) _[English]_
 - [FSIComics](https://fsicomics.com/) _[English]_
 - [HBrowser](https://www.hbrowse.com/) _[English]_
 - [Hentai2Read](https://hentai2read.com/) _[English]_
@@ -112,6 +111,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [HentaiHand](https://hentaihand.com/) / [nHentai.com](https://nhentai.com) _[English]_
 - [HentaIHere](https://www.hentaihere.com/) _[English]_
 - [HentaiNexus](https://hentainexus.com/) _[English]_
+- [HenTalk](https://hentalk.pw/) _[English]_
 - [hitomi](https://hitomi.la/) _[English]_
 - [Imhentai](https://imhentai.xxx/) _[English]_
 - [Koharu](https://koharu.to/) _[English]_
