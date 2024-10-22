@@ -3,7 +3,6 @@ import bestporncomix from './bestporncomix';
 import doujinmoe from './doujinmoe';
 import eightMuses from './8muses';
 import exhentai from './exhentai';
-import fakku from './fakku';
 import fsicomics from './fsicomics';
 import gntai from './gntai';
 import hbrowse from './hbrowse';
@@ -13,6 +12,7 @@ import hentaifox from './hentaifox';
 import hentaihand from './hentaihand';
 import hentaihere from './hentaihere';
 import hentainexus from './hentainexus';
+import hentalk from './hentalk';
 import hitomi from './hitomi';
 import imhentai from './imhentai';
 import kingcomix from './kingcomix';
@@ -42,7 +42,6 @@ const sites = [
   doujinmoe,
   eightMuses,
   exhentai,
-  fakku,
   fsicomics,
   gntai,
   hbrowse,
@@ -52,6 +51,7 @@ const sites = [
   hentaihand,
   hentaihere,
   hentainexus,
+  hentalk,
   hitomi,
   imhentai,
   kingcomix,
