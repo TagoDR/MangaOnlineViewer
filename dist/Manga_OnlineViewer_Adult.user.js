@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Koharu, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.10.22
+// @version       2024.10.24
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -56,7 +56,7 @@
 // @include       /https?:\/\/(www\.)?porncomixone.net\/comic\/.+/
 // @include       /https?:\/\/(www\.)?pururin.to\/(view|read)\/.+\/.+\/.+/
 // @include       /https?:\/\/(www\.)?simply-hentai.com\/.+\/page\/.+/
-// @include       /https?:\/\/(www\.)?tmohentai.com\/reader\/.+\/paginated\/\d+/
+// @include       /https?:\/\/(www\.)?tmohentai.com\/reader\/.+\/(paginated\/\d+|cascade)/
 // @include       /https?:\/\/(www\.)?(3hentai|hentaivox).(net|com)\/(d|view)\/.+\/.+/
 // @include       /https?:\/\/(www\.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/
 // @include       /https?:\/\/(www\.)?(vermangasporno|vercomicsporno).com\/.+/
@@ -1278,30 +1278,31 @@
 
   const tmohhentai = {
     name: "TMOHentai",
-    url: /https?:\/\/(www\.)?tmohentai.com\/reader\/.+\/paginated\/\d+/,
+    url: /https?:\/\/(www\.)?tmohentai.com\/reader\/.+\/(paginated\/\d+|cascade)/,
     homepage: "https://tmohentai.com/",
     language: ["Spanish"],
     category: "hentai",
     run() {
-      const num = parseInt(
-        document
-          .querySelector("#select-page option:last-child")
-          ?.getAttribute("value") ?? "",
-        10,
+      const src = [...document.querySelectorAll(".content-image")].map(
+        (i) => i.getAttribute("data-original") ?? i.getAttribute("src"),
       );
       return {
+        before() {
+          if (window.location.pathname.includes("paginated")) {
+            window.location.pathname = window.location.pathname.replace(
+              /paginated.*/,
+              "cascade",
+            );
+          }
+        },
         title: document.querySelector(".reader-title")?.textContent?.trim(),
         series: document
           .querySelector(".nav-justified li a")
           ?.getAttribute("href"),
-        pages: num,
+        pages: src.length,
         prev: "#",
         next: "#",
-        listPages: Array(num)
-          .fill(0)
-          .map((_, i) => window.location.href.replace(/\/\d*$/, `/${i + 1}`)),
-        img: ".content-image",
-        lazyAttr: "data-original",
+        listImages: src,
       };
     },
   };
