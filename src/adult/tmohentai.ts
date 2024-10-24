@@ -1,26 +1,26 @@
 // == TMOHentai ====================================================================================
 export default {
   name: 'TMOHentai',
-  url: /https?:\/\/(www\.)?tmohentai.com\/reader\/.+\/paginated\/\d+/,
+  url: /https?:\/\/(www\.)?tmohentai.com\/reader\/.+\/(paginated\/\d+|cascade)/,
   homepage: 'https://tmohentai.com/',
   language: ['Spanish'],
   category: 'hentai',
   run() {
-    const num = parseInt(
-      document.querySelector('#select-page option:last-child')?.getAttribute('value') ?? '',
-      10,
+    const src = [...document.querySelectorAll('.content-image')].map(
+      (i) => i.getAttribute('data-original') ?? i.getAttribute('src'),
     );
     return {
+      before() {
+        if (window.location.pathname.includes('paginated')) {
+          window.location.pathname = window.location.pathname.replace(/paginated.*/, 'cascade');
+        }
+      },
       title: document.querySelector('.reader-title')?.textContent?.trim(),
       series: document.querySelector('.nav-justified li a')?.getAttribute('href'),
-      pages: num,
+      pages: src.length,
       prev: '#',
       next: '#',
-      listPages: Array(num)
-        .fill(0)
-        .map((_, i) => window.location.href.replace(/\/\d*$/, `/${i + 1}`)),
-      img: '.content-image',
-      lazyAttr: 'data-original',
+      listImages: src,
     };
   },
 };
