@@ -17,7 +17,7 @@ export default {
       ?.getAttribute('src')
       ?.match(/image\/(.+)\//)?.[1];
     const images = api.nodes[1].data.filter(
-      (e: any) => typeof e === 'string' && e.endsWith('.png'),
+      (e: any) => typeof e === 'string' && /\.(png|gif|jpg|jpeg|webp)$/.test(e),
     );
     return {
       title: document
@@ -28,7 +28,10 @@ export default {
       pages: images?.length,
       prev: '#',
       next: '#',
-      listImages: images?.map((src: string) => `${cdn}/image/${slug}/${src}`),
+      listImages: images?.map(
+        (src: string, i: number) =>
+          `${cdn}/image/${slug}/${i + 1}${/\.(png|gif|jpg|jpeg|webp)$/.exec(src)?.[0]}`,
+      ),
     };
   },
 };
