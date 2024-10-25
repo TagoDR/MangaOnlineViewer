@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Koharu, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.10.24
+// @version       2024.10.25
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -659,7 +659,7 @@
         ?.getAttribute("src")
         ?.match(/image\/(.+)\//)?.[1];
       const images = api.nodes[1].data.filter(
-        (e) => typeof e === "string" && e.endsWith(".png"),
+        (e) => typeof e === "string" && /\.(png|gif|jpg|jpeg|webp)$/.test(e),
       );
       return {
         title: document
@@ -670,7 +670,10 @@
         pages: images?.length,
         prev: "#",
         next: "#",
-        listImages: images?.map((src) => `${cdn}/image/${slug}/${src}`),
+        listImages: images?.map(
+          (src, i) =>
+            `${cdn}/image/${slug}/${i + 1}${/\.(png|gif|jpg|jpeg|webp)$/.exec(src)?.[0]}`,
+        ),
       };
     },
   };
