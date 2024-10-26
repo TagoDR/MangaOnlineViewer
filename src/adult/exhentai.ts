@@ -11,9 +11,7 @@ export default {
       document.querySelector('.sn div span:nth-child(2)')?.textContent ?? '0',
       10,
     );
-    const maxGalley =
-      parseInt(document.querySelector('.ptt td:nth-last-of-type(2) a')?.textContent ?? '0', 10) ||
-      Math.ceil(num / 40);
+    const maxGalley = Math.ceil(num / 20);
     const gallery = document
       .querySelector('.sb a')
       ?.getAttribute('href')
@@ -29,7 +27,7 @@ export default {
 
     const data = await Promise.all(fetchBlocks);
     const pages = data.flatMap((html) =>
-      [...html.querySelectorAll('.gdtm a, .gdtl a')].map((item) => item.getAttribute('href')),
+      [...html.querySelectorAll('#gdt a')].map((item) => item.getAttribute('href')),
     );
 
     return {
