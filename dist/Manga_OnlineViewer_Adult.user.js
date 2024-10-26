@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Koharu, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.10.25
+// @version       2024.10.26
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -336,12 +336,7 @@
         document.querySelector(".sn div span:nth-child(2)")?.textContent ?? "0",
         10,
       );
-      const maxGalley =
-        parseInt(
-          document.querySelector(".ptt td:nth-last-of-type(2) a")
-            ?.textContent ?? "0",
-          10,
-        ) || Math.ceil(num / 40);
+      const maxGalley = Math.ceil(num / 20);
       const gallery = document
         .querySelector(".sb a")
         ?.getAttribute("href")
@@ -355,7 +350,7 @@
         );
       const data = await Promise.all(fetchBlocks);
       const pages = data.flatMap((html) =>
-        [...html.querySelectorAll(".gdtm a, .gdtl a")].map((item) =>
+        [...html.querySelectorAll("#gdt a")].map((item) =>
           item.getAttribute("href"),
         ),
       );
