@@ -41,7 +41,9 @@ export default {
     const chapterSelector = document.querySelector<HTMLOptionElement>('#chapter option:checked');
     const chapter = [...document.querySelectorAll('.nextprev').item(0).querySelectorAll('a')];
     const images = [
-      ...document.querySelectorAll('#readerarea img:not(.asurascans):not([src*="loader"])'),
+      ...document.querySelectorAll(
+        '#readerarea img:not(.asurascans):not([src*="loader"]):not([src*="chevron"])',
+      ),
     ];
     return {
       title: document.querySelector('.entry-title')?.textContent?.trim(),
