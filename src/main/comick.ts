@@ -5,6 +5,9 @@ export default {
   homepage: 'https://comick.io/',
   language: ['English'],
   category: 'manga',
+  waitFunc() {
+    return /\/([^/]+)-chapter.+$/.test(window.location.pathname);
+  },
   async run() {
     const apiUrl = 'https://api.comick.io';
     const chapterId = /\/([^/]+)-chapter.+$/.exec(window.location.pathname)?.[1];
