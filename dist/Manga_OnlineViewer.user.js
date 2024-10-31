@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Alandal, Asura Scans, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Flame Comics, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.10.28
+// @description   Shows all pages at once in online view for these sites: Alandal, Asura Scans, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Flame Comics, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @version       2024.10.31
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -115,24 +115,29 @@
     },
   };
 
+  function findByContentEq(selector, content) {
+    return [...document.querySelectorAll(selector)].filter(
+      (e) => e.textContent?.trim() === content,
+    );
+  }
   function findOneByContentStarts(selector, content) {
     return [...document.querySelectorAll(selector)].filter((e) =>
-      e.textContent?.startsWith(content),
+      e.textContent?.trim()?.startsWith(content),
     )?.[0];
   }
   function findClosestByContentEq(selector, content, ancestor = "a") {
     return [...document.querySelectorAll(selector)]
-      .filter((e) => e.textContent === content)?.[0]
+      .filter((e) => e.textContent?.trim() === content)?.[0]
       .closest(ancestor);
   }
   function findClosestByContentStarts(selector, content, ancestor = "a") {
     return [...document.querySelectorAll(selector)]
-      .filter((e) => e.textContent?.startsWith(content))?.[0]
+      .filter((e) => e.textContent?.trim()?.startsWith(content))?.[0]
       .closest(ancestor);
   }
   function findClosestByContentEnds(selector, content, ancestor = "a") {
     return [...document.querySelectorAll(selector)]
-      .filter((e) => e.textContent?.endsWith(content))?.[0]
+      .filter((e) => e.textContent?.trim()?.endsWith(content))?.[0]
       .closest(ancestor);
   }
 
@@ -1441,6 +1446,7 @@
       "LuaScans",
       "Drake Scans",
       "Rizzfables",
+      "NovatoScans",
     ],
     url: /https?:\/\/[^/]*(scans|comic|realmoasis|hivetoon|rizzfables)[^/]*\/.+/,
     homepage: [
@@ -1458,40 +1464,37 @@
       "https://luascans.com/",
       "https://drake-scans.com/",
       "https://rizzfables.com/",
+      "https://www.novatoscans.top/",
     ],
     language: ["English"],
     category: "manga",
     // waitTime: 2000,
-    waitEle: "#chapter option:nth-child(2)",
+    waitEle: ":where(#chapter, #nPL_select) option:nth-child(2)",
     run() {
-      const chapterSelector = document.querySelector("#chapter option:checked");
-      const chapter = [
-        ...document.querySelectorAll(".nextprev").item(0).querySelectorAll("a"),
-      ];
       const images = [
         ...document.querySelectorAll(
-          '#readerarea img:not(.asurascans):not([src*="loader"]):not([src*="chevron"])',
+          ':where(#readerarea, .check-box) img:not(.asurascans):not([src*="loader"]):not([src*="chevron"])',
         ),
       ];
       return {
-        title: document.querySelector(".entry-title")?.textContent?.trim(),
+        title: document.querySelector("title")?.textContent?.trim(),
         series:
-          document.querySelector(".allc a")?.getAttribute("href") ??
+          document
+            .querySelector(":where(.allc, .tac) a")
+            ?.getAttribute("href") ??
           document
             .querySelectorAll('[class*="breadcrumb"] a')
             .item(1)
             ?.getAttribute("href"),
         pages: images.length,
-        prev:
-          (chapter.at(0)?.classList.contains("disabled")
-            ? void 0
-            : chapter.at(0)?.getAttribute("href")) ??
-          chapterSelector?.nextElementSibling?.getAttribute("value"),
-        next:
-          (chapter.at(1)?.classList.contains("disabled")
-            ? void 0
-            : chapter.at(1)?.getAttribute("href")) ??
-          chapterSelector?.previousElementSibling?.getAttribute("value"),
+        prev: findByContentEq(
+          ":where(.nextprev, .inner_nPL) a",
+          "Prev",
+        )?.[0]?.getAttribute("href"),
+        next: findByContentEq(
+          ":where(.nextprev, .inner_nPL) a",
+          "Next",
+        )?.[0]?.getAttribute("href"),
         listImages: images.map(
           (img) =>
             img.getAttribute("data-src") ??
