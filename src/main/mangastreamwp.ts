@@ -1,4 +1,6 @@
 // == MangaStream WordPress Plugin =================================================================
+import { findByContentEq } from '../utils/find';
+
 export default {
   name: [
     'MangaStream WordPress Plugin',
@@ -15,6 +17,7 @@ export default {
     'LuaScans',
     'Drake Scans',
     'Rizzfables',
+    'NovatoScans',
   ],
   url: /https?:\/\/[^/]*(scans|comic|realmoasis|hivetoon|rizzfables)[^/]*\/.+/,
   homepage: [
@@ -32,35 +35,26 @@ export default {
     'https://luascans.com/',
     'https://drake-scans.com/',
     'https://rizzfables.com/',
+    'https://www.novatoscans.top/',
   ],
   language: ['English'],
   category: 'manga',
   // waitTime: 2000,
-  waitEle: '#chapter option:nth-child(2)',
+  waitEle: ':where(#chapter, #nPL_select) option:nth-child(2)',
   run() {
-    const chapterSelector = document.querySelector<HTMLOptionElement>('#chapter option:checked');
-    const chapter = [...document.querySelectorAll('.nextprev').item(0).querySelectorAll('a')];
     const images = [
       ...document.querySelectorAll(
-        '#readerarea img:not(.asurascans):not([src*="loader"]):not([src*="chevron"])',
+        ':where(#readerarea, .check-box) img:not(.asurascans):not([src*="loader"]):not([src*="chevron"])',
       ),
     ];
     return {
-      title: document.querySelector('.entry-title')?.textContent?.trim(),
+      title: document.querySelector('title')?.textContent?.trim(),
       series:
-        document.querySelector('.allc a')?.getAttribute('href') ??
+        document.querySelector(':where(.allc, .tac) a')?.getAttribute('href') ??
         document.querySelectorAll('[class*="breadcrumb"] a').item(1)?.getAttribute('href'),
       pages: images.length,
-      prev:
-        (chapter.at(0)?.classList.contains('disabled')
-          ? undefined
-          : chapter.at(0)?.getAttribute('href')) ??
-        chapterSelector?.nextElementSibling?.getAttribute('value'),
-      next:
-        (chapter.at(1)?.classList.contains('disabled')
-          ? undefined
-          : chapter.at(1)?.getAttribute('href')) ??
-        chapterSelector?.previousElementSibling?.getAttribute('value'),
+      prev: findByContentEq(':where(.nextprev, .inner_nPL) a', 'Prev')?.[0]?.getAttribute('href'),
+      next: findByContentEq(':where(.nextprev, .inner_nPL) a', 'Next')?.[0]?.getAttribute('href'),
       listImages: images.map(
         (img) =>
           img.getAttribute('data-src') ??
