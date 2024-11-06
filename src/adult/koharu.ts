@@ -2,8 +2,8 @@
 
 export default {
   name: 'Koharu',
-  url: /https?:\/\/(www\.)?(koharu).to/,
-  homepage: 'https://koharu.to/',
+  url: /https?:\/\/(www\.)?(koharu|niyaniya|seia|shupogaki).(to|moe)/,
+  homepage: 'https://schale.network/',
   language: ['English'],
   category: 'hentai',
   lazy: false,
@@ -17,14 +17,15 @@ export default {
         Origin: window.location.host,
       },
     };
+    const api = 'https://api.schale.network';
     const url = window.location.pathname.split('/');
     const galleryID = `${url[2]}/${url[3]}`;
-    const detailAPI = `https://api.koharu.to/books/detail/${galleryID}`;
+    const detailAPI = `${api}/books/detail/${galleryID}`;
     const detail = await fetch(detailAPI, options).then(async (res) => res.json());
     const dataID = Object.keys(detail.data)
       .map(Number)
       .sort((a, b) => b - a)[0];
-    const dataAPI = `https://api.koharu.to/books/data/${galleryID}/${detail.data[dataID].id}/${detail.data[dataID].public_key}?v=${detail.updated_at ?? detail.created_at}&w=${dataID}`;
+    const dataAPI = `${api}/books/data/${galleryID}/${detail.data[dataID].id}/${detail.data[dataID].public_key}?v=${detail.updated_at ?? detail.created_at}&w=${dataID}`;
     const data = await fetch(dataAPI, options)
       .then(async (res) => res.json())
       .then(({ base, entries }) =>
