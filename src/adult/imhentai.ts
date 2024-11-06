@@ -4,6 +4,7 @@ function findExt(i: number) {
   if (c === 'p') return '.png';
   if (c === 'b') return '.bmp';
   if (c === 'g') return '.gif';
+  if (c === 'w') return '.webp';
   return '.jpg';
 }
 

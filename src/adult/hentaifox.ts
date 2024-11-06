@@ -17,18 +17,10 @@ export default {
 
     function findExt(i: number) {
       const c = unsafeWindow.g_th[i][0];
-      if (c === 'p') {
-        return '.png';
-      }
-
-      if (c === 'b') {
-        return '.bmp';
-      }
-
-      if (c === 'g') {
-        return '.gif';
-      }
-
+      if (c === 'p') return '.png';
+      if (c === 'b') return '.bmp';
+      if (c === 'g') return '.gif';
+      if (c === 'w') return '.webp';
       return '.jpg';
     }
 
