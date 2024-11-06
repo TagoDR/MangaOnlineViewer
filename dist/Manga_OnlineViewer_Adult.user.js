@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Koharu, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.10.31
+// @version       2024.11.06
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -46,7 +46,7 @@
 // @include       /https?:\/\/hitomi.la\/reader\/.+/
 // @include       /https?:\/\/(www\.)?imhentai.xxx\/view\/.+\/.+\//
 // @include       /https?:\/\/(www\.)?(kingcomix|chochox|comics18).(com|org)\/.+/
-// @include       /https?:\/\/(www\.)?(koharu).to/
+// @include       /https?:\/\/(www\.)?(koharu|niyaniya|seia|shupogaki).(to|moe)/
 // @include       /https?:\/\/(www\.)?luscious.net\/.+\/read\/.+/
 // @include       /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include       /https?:\/\/(www\.)?myhentaigallery.com\/g\/.+\/\d+/
@@ -535,15 +535,10 @@
           ?.replace(/\d+.\w+$/, "") ?? "";
       function findExt(i) {
         const c = unsafeWindow.g_th[i][0];
-        if (c === "p") {
-          return ".png";
-        }
-        if (c === "b") {
-          return ".bmp";
-        }
-        if (c === "g") {
-          return ".gif";
-        }
+        if (c === "p") return ".png";
+        if (c === "b") return ".bmp";
+        if (c === "g") return ".gif";
+        if (c === "w") return ".webp";
         return ".jpg";
       }
       return {
@@ -709,6 +704,7 @@
     if (c === "p") return ".png";
     if (c === "b") return ".bmp";
     if (c === "g") return ".gif";
+    if (c === "w") return ".webp";
     return ".jpg";
   }
   function findServer(cId) {
@@ -800,8 +796,8 @@
 
   const koharu = {
     name: "Koharu",
-    url: /https?:\/\/(www\.)?(koharu).to/,
-    homepage: "https://koharu.to/",
+    url: /https?:\/\/(www\.)?(koharu|niyaniya|seia|shupogaki).(to|moe)/,
+    homepage: "https://schale.network/",
     language: ["English"],
     category: "hentai",
     lazy: false,
@@ -815,16 +811,17 @@
           Origin: window.location.host,
         },
       };
+      const api = "https://api.schale.network";
       const url = window.location.pathname.split("/");
       const galleryID = `${url[2]}/${url[3]}`;
-      const detailAPI = `https://api.koharu.to/books/detail/${galleryID}`;
+      const detailAPI = `${api}/books/detail/${galleryID}`;
       const detail = await fetch(detailAPI, options).then(async (res) =>
         res.json(),
       );
       const dataID = Object.keys(detail.data)
         .map(Number)
         .sort((a, b) => b - a)[0];
-      const dataAPI = `https://api.koharu.to/books/data/${galleryID}/${detail.data[dataID].id}/${detail.data[dataID].public_key}?v=${detail.updated_at ?? detail.created_at}&w=${dataID}`;
+      const dataAPI = `${api}/books/data/${galleryID}/${detail.data[dataID].id}/${detail.data[dataID].public_key}?v=${detail.updated_at ?? detail.created_at}&w=${dataID}`;
       const data = await fetch(dataAPI, options)
         .then(async (res) => res.json())
         .then(({ base, entries }) =>
