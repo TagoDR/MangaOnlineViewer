@@ -42,3 +42,18 @@ export async function getElementAttribute(
 ): Promise<string | null | undefined> {
   return fetchHtml(url).then((doc) => doc.querySelector(selector)?.getAttribute(attribute));
 }
+
+export async function fetchJsonFromUrls(options: RequestInit, ...urls: string[]) {
+  for (const url of urls) {
+    try {
+      const response = await fetch(url, options);
+      if (response.ok) {
+        return await response.json();
+      }
+      logScript(`Fetch ${url} failed.`);
+    } catch (error) {
+      logScript(`Failed to fetch from ${url}:`, error);
+    }
+  }
+  throw new Error('All fetch attempts failed');
+}
