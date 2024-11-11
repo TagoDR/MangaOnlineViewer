@@ -1,4 +1,6 @@
 // == HentaiFox ====================================================================================
+import { extensionByCode } from '../utils/urls';
+
 export default {
   name: 'HentaiFox',
   url: /https?:\/\/(www\.)?hentaifox.com\/g\/.+/,
@@ -15,15 +17,6 @@ export default {
         ?.getAttribute('src')
         ?.replace(/\d+.\w+$/, '') ?? '';
 
-    function findExt(i: number) {
-      const c = unsafeWindow.g_th[i][0];
-      if (c === 'p') return '.png';
-      if (c === 'b') return '.bmp';
-      if (c === 'g') return '.gif';
-      if (c === 'w') return '.webp';
-      return '.jpg';
-    }
-
     return {
       title: document
         .querySelector('title')
@@ -35,7 +28,7 @@ export default {
       next: '#',
       listImages: Array(num)
         .fill(0)
-        .map((_, i) => src + (i + 1) + findExt(i + 1)),
+        .map((_, i) => `${src + (i + 1)}.${extensionByCode(unsafeWindow.g_th[i + 1][0])}`),
     };
   },
 };

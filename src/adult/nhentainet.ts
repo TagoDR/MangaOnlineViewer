@@ -1,5 +1,7 @@
 // == nHentai.net ==================================================================================
 /* eslint-disable no-underscore-dangle */
+import { extensionByCode } from '../utils/urls';
+
 export default {
   name: ['nHentai.net', 'nHentai.xxx', 'lhentai'],
   url: /https?:\/\/(www\.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/,
@@ -7,32 +9,15 @@ export default {
   language: ['English'],
   category: 'hentai',
   run() {
-    function getExt(extension: string) {
-      if (extension === 'g') {
-        return 'gif';
-      }
-
-      if (extension === 'b') {
-        return 'bmp';
-      }
-
-      if (extension === 'p') {
-        return 'png';
-      }
-
-      return 'jpg';
-    }
-
     const num = parseInt(document.querySelector('.num-pages')?.textContent ?? '', 10);
     const src = document
       .querySelector('#image-container img')
       ?.getAttribute('src')
-      ?.replace(/\d+.\w\w\w$/, '');
+      ?.replace(/\d+.\w+$/, '');
 
-    const ext =
-      unsafeWindow.images_ext?.map(getExt) ??
-      unsafeWindow._gallery?.images?.pages?.map((i: { t: string }) => getExt(i.t)) ??
-      Array(num).fill('jpg');
+    const ext = unsafeWindow._gallery?.images?.pages?.map((i: { t: string }) =>
+      extensionByCode(i.t),
+    );
     return {
       title: document.querySelector('title')?.textContent?.split('- Page')[0].trim(),
       series: document.querySelector('.go-back')?.getAttribute('href'),

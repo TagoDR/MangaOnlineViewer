@@ -35,3 +35,19 @@ export const getExtensionBase64 = (base64: string) => {
       return 'png';
   }
 };
+
+export function extensionByCode(c: string) {
+  switch (c) {
+    case 'p':
+      return 'png';
+    case 'b':
+      return 'bmp';
+    case 'g':
+      return 'gif';
+    case 'w':
+      return 'webp';
+    case 'j':
+    default:
+      return 'jpg';
+  }
+}
