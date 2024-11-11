@@ -106,7 +106,7 @@
 
 #MangaOnlineViewer .ControlButton.hidden,
 #MangaOnlineViewer.light #ColorScheme > .icon-tabler-sun,
-#MangaOnlineViewer:not(.light) #ColorScheme > .icon-tabler-moon,
+#MangaOnlineViewer.dark #ColorScheme > .icon-tabler-moon,
 #MangaOnlineViewer .light + #CommentsColorScheme > .icon-tabler-sun,
 #MangaOnlineViewer .dark + #CommentsColorScheme > .icon-tabler-moon,
 #MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,

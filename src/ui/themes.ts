@@ -6,7 +6,7 @@ import colors, { getTextColor, type IColor } from '../utils/colors';
 function generateThemeCSS(name: string, primary: string, text: string) {
   // Language=CSS
   return css`
-    .${name}, [data-theme='${name}'] {
+    .ThemeRadio.${name}, #MangaOnlineViewer[data-theme='${name}'] {
       --theme-primary-color: ${primary};
       --theme-primary-text-color: ${text};
     }

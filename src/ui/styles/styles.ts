@@ -19,9 +19,7 @@ import comments from './comments.css?inline';
 // Language=CSS
 export default css`
   :root,
-  .dark,
-  .dark .default,
-  [data-theme='dark'] {
+  .dark {
     --theme-body-background: ${colors.dark['600']};
     --theme-body-text-color: ${colors.dark['50']};
     --theme-text-color: ${colors.dark['50']};
@@ -32,9 +30,7 @@ export default css`
     --theme-border-color: ${colors.dark['400']};
   }
 
-  .light,
-  .light .default,
-  [data-theme='light'] {
+  .light {
     --theme-body-background: ${colors.gray['50']};
     --theme-body-text-color: ${colors.gray['900']};
     --theme-text-color: ${colors.gray['900']};
