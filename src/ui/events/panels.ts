@@ -5,13 +5,14 @@ import { isNothing } from '../../utils/checks';
 import keybindings from './keybindings';
 import { addEvent } from './common';
 
-function toggleFunction(open: () => void, close: () => void) {
-  let isOpen = true;
-
+function toggleFunction(selector: string, classname: string, open: () => void, close: () => void) {
   return () => {
-    const func = isOpen ? open : close;
-    func();
-    isOpen = !isOpen;
+    const isOpen = document.querySelector(selector)?.className.includes(classname);
+    if (isOpen) {
+      close();
+    } else {
+      open();
+    }
   };
 }
 
@@ -103,7 +104,10 @@ function panels() {
   // Settings Control
   document
     .querySelector('#settings')
-    ?.addEventListener('click', toggleFunction(buttonSettingsOpen, buttonSettingsClose));
+    ?.addEventListener(
+      'click',
+      toggleFunction('#SettingsPanel', 'visible', buttonSettingsOpen, buttonSettingsClose),
+    );
   document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonSettingsClose));
   document.querySelector('#Overlay')?.addEventListener('click', buttonSettingsClose);
   // Keybindings list
