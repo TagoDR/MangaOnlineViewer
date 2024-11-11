@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Koharu, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.11.06
+// @version       2024.11.11
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -46,7 +46,7 @@
 // @include       /https?:\/\/hitomi.la\/reader\/.+/
 // @include       /https?:\/\/(www\.)?imhentai.xxx\/view\/.+\/.+\//
 // @include       /https?:\/\/(www\.)?(kingcomix|chochox|comics18).(com|org)\/.+/
-// @include       /https?:\/\/(www\.)?(koharu|niyaniya|seia|shupogaki).(to|moe)/
+// @include       /https?:\/\/(www\.)?(koharu|niyaniya|seia|shupogaki|hoshino).(to|moe|one)/
 // @include       /https?:\/\/(www\.)?luscious.net\/.+\/read\/.+/
 // @include       /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include       /https?:\/\/(www\.)?myhentaigallery.com\/g\/.+\/\d+/
@@ -514,6 +514,56 @@
     },
   };
 
+  const objectURLRegex = /^blob:(.+?)\/(.+)$/;
+  function getDataFromBase64(src) {
+    return src.slice(src.indexOf(";base64,") + 8);
+  }
+  function isBase64ImageUrl(imageUrl) {
+    const base64Pattern = /^data:image\/(png|jpg|jpeg|gif);base64,/;
+    return base64Pattern.test(imageUrl);
+  }
+  function isObjectURL(url) {
+    return objectURLRegex.test(url);
+  }
+  function getExtension(url) {
+    const parts = url.split("?");
+    const filename = parts[0].split("/").pop();
+    const extensionMatch = filename?.match(/\.[A-Za-z]{2,4}$/);
+    return extensionMatch ? extensionMatch[0].slice(1) : "";
+  }
+  const getExtensionBase64 = (base64) => {
+    const c = base64.substring(
+      base64.indexOf("/") + 1,
+      base64.indexOf(";base64"),
+    );
+    switch (c) {
+      case "/":
+        return "jpg";
+      case "R":
+        return "gif";
+      case "U":
+        return "webp";
+      case "i":
+      default:
+        return "png";
+    }
+  };
+  function extensionByCode(c) {
+    switch (c) {
+      case "p":
+        return "png";
+      case "b":
+        return "bmp";
+      case "g":
+        return "gif";
+      case "w":
+        return "webp";
+      case "j":
+      default:
+        return "jpg";
+    }
+  }
+
   const hentaifox = {
     name: "HentaiFox",
     url: /https?:\/\/(www\.)?hentaifox.com\/g\/.+/,
@@ -533,14 +583,6 @@
           .querySelector("#gimg")
           ?.getAttribute("src")
           ?.replace(/\d+.\w+$/, "") ?? "";
-      function findExt(i) {
-        const c = unsafeWindow.g_th[i][0];
-        if (c === "p") return ".png";
-        if (c === "b") return ".bmp";
-        if (c === "g") return ".gif";
-        if (c === "w") return ".webp";
-        return ".jpg";
-      }
       return {
         title: document
           .querySelector("title")
@@ -554,7 +596,10 @@
         next: "#",
         listImages: Array(num)
           .fill(0)
-          .map((_, i) => src + (i + 1) + findExt(i + 1)),
+          .map(
+            (_, i) =>
+              `${src + (i + 1)}.${extensionByCode(unsafeWindow.g_th[i + 1][0])}`,
+          ),
       };
     },
   };
@@ -699,14 +744,6 @@
     },
   };
 
-  function findExt(i) {
-    const c = unsafeWindow.g_th[i][0];
-    if (c === "p") return ".png";
-    if (c === "b") return ".bmp";
-    if (c === "g") return ".gif";
-    if (c === "w") return ".webp";
-    return ".jpg";
-  }
   function findServer(cId) {
     const serverRanges = [
       { min: 0, max: 274825, name: "m1" },
@@ -756,7 +793,9 @@
           .fill(0)
           .map(
             (_, i) =>
-              `//${randomServer}/${imageDir}/${galleryId}/${i + 1}${findExt(i + 1)}`,
+              `//${randomServer}/${imageDir}/${galleryId}/${i + 1}.${extensionByCode(
+                unsafeWindow.g_th[i + 1][0],
+              )}`,
           ),
       };
     },
@@ -794,9 +833,151 @@
     },
   };
 
+  function logScript(...text) {
+    console.log("MangaOnlineViewer: ", ...text);
+    return text;
+  }
+  function logScriptVerbose(...text) {
+    return text;
+  }
+  const logScriptC = (x) => (y) => logScript(x, y)[1];
+  function getListGM() {
+    return typeof GM_listValues !== "undefined" ? GM_listValues() : [];
+  }
+  function removeValueGM(name) {
+    if (typeof GM_deleteValue !== "undefined") {
+      GM_deleteValue(name);
+    } else {
+      logScript("Removing: ", name);
+    }
+  }
+  const getInfoGM =
+    typeof GM_info !== "undefined"
+      ? GM_info
+      : {
+          scriptHandler: "Console",
+          script: {
+            name: "Debug",
+            version: "Testing",
+          },
+        };
+  function getValueGM(name, defaultValue = null) {
+    if (typeof GM_getValue !== "undefined") {
+      return GM_getValue(name, defaultValue);
+    }
+    logScript("Fake Getting: ", name, " = ", defaultValue);
+    return defaultValue;
+  }
+  function getJsonGM(name, defaultValue = null) {
+    const result = getValueGM(name, defaultValue);
+    if (typeof result === "string") {
+      return JSON.parse(result);
+    }
+    return result;
+  }
+  function getSettings(defaultSettings) {
+    return getJsonGM("settings", defaultSettings);
+  }
+  function setValueGM(name, value) {
+    try {
+      GM_setValue(name, value);
+      return value.toString();
+    } catch (e) {
+      logScript("Fake Setting: ", name, " = ", value);
+      return String(value);
+    }
+  }
+  function setSettings(value) {
+    return setValueGM("settings", value);
+  }
+  function getBrowser() {
+    let tem;
+    const M =
+      /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i.exec(
+        navigator.userAgent,
+      ) ?? [];
+    if (/trident/i.test(M[1])) {
+      tem = /\brv[ :]+(\d+)/g.exec(navigator.userAgent) ?? [];
+      return `IE ${tem[1] ?? ""}`;
+    }
+    if (M[1] === "Chrome") {
+      tem = /\b(OPR|Edge)\/(\d+)/.exec(navigator.userAgent);
+      if (tem !== null) {
+        return tem.slice(1).join(" ").replace("OPR", "Opera");
+      }
+    }
+    const tempM = [M[1], M[2]];
+    tem = /version\/(\d+)/i.exec(navigator.userAgent);
+    if (tem !== null) {
+      tempM.splice(1, 1, tem[1]);
+    }
+    return tempM.join(" ");
+  }
+  function getEngine() {
+    return getInfoGM.scriptHandler ?? "Greasemonkey";
+  }
+  const parser = new UAParser();
+  const getDevice = () => {
+    const device = parser.getDevice().type;
+    if (device !== "mobile" && device !== "tablet") {
+      if (window.matchMedia("screen and (max-width: 600px)").matches)
+        return "mobile";
+      if (window.matchMedia("screen and (max-width: 992px)").matches)
+        return "tablet";
+      return "desktop";
+    }
+    return device;
+  };
+  const isMobile = () =>
+    // @ts-ignore
+    navigator?.userAgentData?.mobile ||
+    getDevice() === "mobile" ||
+    getDevice() === "tablet";
+
+  async function fetchText(url, format) {
+    return new Promise((resolve) => {
+      logScript("Fetching page: ", url);
+      fetch(url)
+        .then(async (response) =>
+          // When the page is loaded convert it to text
+          response.text(),
+        )
+        .then((html) => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, format);
+          resolve(doc);
+        })
+        .catch((err) => {
+          logScript("Failed to fetch page: ", err);
+        });
+    });
+  }
+  async function fetchHtml(url) {
+    return fetchText(url, "text/html");
+  }
+  async function getElementAttribute(url, selector, attribute) {
+    return fetchHtml(url).then((doc) =>
+      doc.querySelector(selector)?.getAttribute(attribute),
+    );
+  }
+  async function fetchJsonFromUrls(options, ...urls) {
+    for (const url of urls) {
+      try {
+        const response = await fetch(url, options);
+        if (response.ok) {
+          return await response.json();
+        }
+        logScript(`Fetch ${url} failed.`);
+      } catch (error) {
+        logScript(`Failed to fetch from ${url}:`, error);
+      }
+    }
+    throw new Error("All fetch attempts failed");
+  }
+
   const koharu = {
     name: "Koharu",
-    url: /https?:\/\/(www\.)?(koharu|niyaniya|seia|shupogaki).(to|moe)/,
+    url: /https?:\/\/(www\.)?(koharu|niyaniya|seia|shupogaki|hoshino).(to|moe|one)/,
     homepage: "https://schale.network/",
     language: ["English"],
     category: "hentai",
@@ -811,22 +992,20 @@
           Origin: window.location.host,
         },
       };
-      const api = "https://api.schale.network";
+      const api = ["https://api.schale.network", "https://api.gehenna.jp/"];
       const url = window.location.pathname.split("/");
       const galleryID = `${url[2]}/${url[3]}`;
-      const detailAPI = `${api}/books/detail/${galleryID}`;
-      const detail = await fetch(detailAPI, options).then(async (res) =>
-        res.json(),
-      );
+      const detailAPI = api.map((a) => `${a}/books/detail/${galleryID}`);
+      const detail = await fetchJsonFromUrls(options, ...detailAPI);
       const dataID = Object.keys(detail.data)
         .map(Number)
         .sort((a, b) => b - a)[0];
-      const dataAPI = `${api}/books/data/${galleryID}/${detail.data[dataID].id}/${detail.data[dataID].public_key}?v=${detail.updated_at ?? detail.created_at}&w=${dataID}`;
-      const data = await fetch(dataAPI, options)
-        .then(async (res) => res.json())
-        .then(({ base, entries }) =>
-          entries.map((image) => `${base}/${image.path}?w=${dataID}`),
-        );
+      const dataAPI = api.map(
+        (a) =>
+          `${a}/books/data/${galleryID}/${detail.data[dataID].id}/${detail.data[dataID].public_key}?v=${detail.updated_at ?? detail.created_at}&w=${dataID}`,
+      );
+      const { base, entries } = await fetchJsonFromUrls(options, ...dataAPI);
+      const data = entries.map((image) => `${base}/${image.path}?w=${dataID}`);
       return {
         title: detail.title,
         series: `/g/${galleryID}/`,
@@ -1061,18 +1240,6 @@
     language: ["English"],
     category: "hentai",
     run() {
-      function getExt(extension) {
-        if (extension === "g") {
-          return "gif";
-        }
-        if (extension === "b") {
-          return "bmp";
-        }
-        if (extension === "p") {
-          return "png";
-        }
-        return "jpg";
-      }
       const num = parseInt(
         document.querySelector(".num-pages")?.textContent ?? "",
         10,
@@ -1080,11 +1247,10 @@
       const src = document
         .querySelector("#image-container img")
         ?.getAttribute("src")
-        ?.replace(/\d+.\w\w\w$/, "");
-      const ext =
-        unsafeWindow.images_ext?.map(getExt) ??
-        unsafeWindow._gallery?.images?.pages?.map((i) => getExt(i.t)) ??
-        Array(num).fill("jpg");
+        ?.replace(/\d+.\w+$/, "");
+      const ext = unsafeWindow._gallery?.images?.pages?.map((i) =>
+        extensionByCode(i.t),
+      );
       return {
         title: document
           .querySelector("title")
@@ -1482,107 +1648,6 @@
     keys.length === 0 ? raw[0] : String.raw({ raw }, ...keys);
   const html = concatenateTemplateLiteralTag;
   const css = concatenateTemplateLiteralTag;
-
-  function logScript(...text) {
-    console.log("MangaOnlineViewer: ", ...text);
-    return text;
-  }
-  function logScriptVerbose(...text) {
-    return text;
-  }
-  const logScriptC = (x) => (y) => logScript(x, y)[1];
-  function getListGM() {
-    return typeof GM_listValues !== "undefined" ? GM_listValues() : [];
-  }
-  function removeValueGM(name) {
-    if (typeof GM_deleteValue !== "undefined") {
-      GM_deleteValue(name);
-    } else {
-      logScript("Removing: ", name);
-    }
-  }
-  const getInfoGM =
-    typeof GM_info !== "undefined"
-      ? GM_info
-      : {
-          scriptHandler: "Console",
-          script: {
-            name: "Debug",
-            version: "Testing",
-          },
-        };
-  function getValueGM(name, defaultValue = null) {
-    if (typeof GM_getValue !== "undefined") {
-      return GM_getValue(name, defaultValue);
-    }
-    logScript("Fake Getting: ", name, " = ", defaultValue);
-    return defaultValue;
-  }
-  function getJsonGM(name, defaultValue = null) {
-    const result = getValueGM(name, defaultValue);
-    if (typeof result === "string") {
-      return JSON.parse(result);
-    }
-    return result;
-  }
-  function getSettings(defaultSettings) {
-    return getJsonGM("settings", defaultSettings);
-  }
-  function setValueGM(name, value) {
-    try {
-      GM_setValue(name, value);
-      return value.toString();
-    } catch (e) {
-      logScript("Fake Setting: ", name, " = ", value);
-      return String(value);
-    }
-  }
-  function setSettings(value) {
-    return setValueGM("settings", value);
-  }
-  function getBrowser() {
-    let tem;
-    const M =
-      /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i.exec(
-        navigator.userAgent,
-      ) ?? [];
-    if (/trident/i.test(M[1])) {
-      tem = /\brv[ :]+(\d+)/g.exec(navigator.userAgent) ?? [];
-      return `IE ${tem[1] ?? ""}`;
-    }
-    if (M[1] === "Chrome") {
-      tem = /\b(OPR|Edge)\/(\d+)/.exec(navigator.userAgent);
-      if (tem !== null) {
-        return tem.slice(1).join(" ").replace("OPR", "Opera");
-      }
-    }
-    const tempM = [M[1], M[2]];
-    tem = /version\/(\d+)/i.exec(navigator.userAgent);
-    if (tem !== null) {
-      tempM.splice(1, 1, tem[1]);
-    }
-    return tempM.join(" ");
-  }
-  function getEngine() {
-    return getInfoGM.scriptHandler ?? "Greasemonkey";
-  }
-  const parser = new UAParser();
-  const getDevice = () => {
-    const device = parser.getDevice().type;
-    if (device !== "mobile" && device !== "tablet") {
-      if (window.matchMedia("screen and (max-width: 600px)").matches)
-        return "mobile";
-      if (window.matchMedia("screen and (max-width: 992px)").matches)
-        return "tablet";
-      return "desktop";
-    }
-    return device;
-  };
-  const isMobile = () =>
-    // @ts-ignore
-    navigator?.userAgentData?.mobile ||
-    getDevice() === "mobile" ||
-    getDevice() === "tablet";
 
   const diffObj = (changed, original) => {
     const changes = (object, base) =>
@@ -2594,7 +2659,7 @@
     '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-pause" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />\n  <path d="M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />\n</svg>\n\n\n';
 
   const styles =
-    ":root {\n    --theme-body-background: #25262b;\n    --theme-body-text-color: #c1c2c5;\n    --theme-text-color: #c1c2c5;\n    --theme-primary-color: #1a1b1e;\n    --theme-primary-text-color: #c1c2c5;\n    --theme-background-color: #25262b;\n    --theme-hightlight-color: #2c2e33;\n    --theme-border-color: #373a40;\n}\n\n#MangaOnlineViewer {\n    text-decoration: none;\n    color: var(--theme-body-text-color);\n    background-color: var(--theme-body-background);\n}\n\n#MangaOnlineViewer #Chapter {\n    display: grid;\n    grid-template-columns: repeat(1, 1fr);\n    min-width: 225px;\n}\n\n#MangaOnlineViewer #Chapter.Vertical:has(+ #Navigation:not(.disabled)),\n#MangaOnlineViewer #Chapter.WebComic:has(+ #Navigation:not(.disabled)) {\n    padding-bottom: 31px;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .PageContent {\n    margin-bottom: 8px;\n    margin-top: 8px;\n}\n\n#MangaOnlineViewer .closeButton {\n    width: fit-content;\n    height: fit-content;\n    position: absolute;\n    right: 10px;\n    top: 10px;\n}\n\n#MangaOnlineViewer .overlay {\n    position: fixed;\n    display: none;\n    width: 100%;\n    height: 100%;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: rgba(0, 0, 0, 0.5);\n    z-index: 950;\n    cursor: pointer;\n}\n\n#MangaOnlineViewer .overlay.visible {\n    display: block;\n}\n\n#MangaOnlineViewer select {\n    height: 20px;\n    padding: 0;\n    margin-bottom: 5px;\n}\n\n#MangaOnlineViewer .ControlButton,\n#MangaOnlineViewer .simpleButton {\n    cursor: pointer;\n    border-radius: 5px;\n    border-width: 1px;\n    border-style: solid;\n    padding: 2px;\n    min-height: 32px;\n    color: var(--theme-primary-text-color);\n    background-color: var(--theme-primary-color);\n    border-color: var(--theme-border-color);\n}\n\n#MangaOnlineViewer .ControlButton:active,\n#MangaOnlineViewer .ControlButton:hover {\n    opacity: 0.8;\n}\n\n#MangaOnlineViewer .simpleButton {\n    font-size: initial;\n    min-width: 32px;\n}\n\n#MangaOnlineViewer .panel .simpleButton {\n    position: absolute;\n    top: 10px;\n    left: 10px;\n}\n\n#MangaOnlineViewer .panel {\n    padding: 5px;\n    position: inherit;\n    border-radius: 5px;\n    background-color: var(--theme-background-color);\n}\n\n#MangaOnlineViewer :not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {\n    max-width: 100%;\n    object-fit: contain;\n}\n\n#MangaOnlineViewer .ControlButton.hidden,\n#MangaOnlineViewer.light #ColorScheme > .icon-tabler-sun,\n#MangaOnlineViewer:not(.light) #ColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .light + #CommentsColorScheme > .icon-tabler-sun,\n#MangaOnlineViewer .dark + #CommentsColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,\n#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,\n#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,\n#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,\n#MangaOnlineViewer.bookmarked .Bookmark > .icon-tabler-bookmark,\n#MangaOnlineViewer:not(.bookmarked) .Bookmark > .icon-tabler-bookmark-off,\n#MangaOnlineViewer #AutoScroll.running > .icon-tabler-player-play,\n#MangaOnlineViewer #AutoScroll:not(.running) > .icon-tabler-player-pause {\n    display: none;\n}\n\n#MangaOnlineViewer.hideControls .PageFunctions {\n    visibility: hidden;\n}\n";
+    ":root {\n    --theme-body-background: #25262b;\n    --theme-body-text-color: #c1c2c5;\n    --theme-text-color: #c1c2c5;\n    --theme-primary-color: #1a1b1e;\n    --theme-primary-text-color: #c1c2c5;\n    --theme-background-color: #25262b;\n    --theme-hightlight-color: #2c2e33;\n    --theme-border-color: #373a40;\n}\n\n#MangaOnlineViewer {\n    text-decoration: none;\n    color: var(--theme-body-text-color);\n    background-color: var(--theme-body-background);\n}\n\n#MangaOnlineViewer #Chapter {\n    display: grid;\n    grid-template-columns: repeat(1, 1fr);\n    min-width: 225px;\n}\n\n#MangaOnlineViewer #Chapter.Vertical:has(+ #Navigation:not(.disabled)),\n#MangaOnlineViewer #Chapter.WebComic:has(+ #Navigation:not(.disabled)) {\n    padding-bottom: 31px;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .PageContent {\n    margin-bottom: 8px;\n    margin-top: 8px;\n}\n\n#MangaOnlineViewer .closeButton {\n    width: fit-content;\n    height: fit-content;\n    position: absolute;\n    right: 10px;\n    top: 10px;\n}\n\n#MangaOnlineViewer .overlay {\n    position: fixed;\n    display: none;\n    width: 100%;\n    height: 100%;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: rgba(0, 0, 0, 0.5);\n    z-index: 950;\n    cursor: pointer;\n}\n\n#MangaOnlineViewer .overlay.visible {\n    display: block;\n}\n\n#MangaOnlineViewer select {\n    height: 20px;\n    padding: 0;\n    margin-bottom: 5px;\n}\n\n#MangaOnlineViewer .ControlButton,\n#MangaOnlineViewer .simpleButton {\n    cursor: pointer;\n    border-radius: 5px;\n    border-width: 1px;\n    border-style: solid;\n    padding: 2px;\n    min-height: 32px;\n    color: var(--theme-primary-text-color);\n    background-color: var(--theme-primary-color);\n    border-color: var(--theme-border-color);\n}\n\n#MangaOnlineViewer .ControlButton:active,\n#MangaOnlineViewer .ControlButton:hover {\n    opacity: 0.8;\n}\n\n#MangaOnlineViewer .simpleButton {\n    font-size: initial;\n    min-width: 32px;\n}\n\n#MangaOnlineViewer .panel .simpleButton {\n    position: absolute;\n    top: 10px;\n    left: 10px;\n}\n\n#MangaOnlineViewer .panel {\n    padding: 5px;\n    position: inherit;\n    border-radius: 5px;\n    background-color: var(--theme-background-color);\n}\n\n#MangaOnlineViewer :not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {\n    max-width: 100%;\n    object-fit: contain;\n}\n\n#MangaOnlineViewer .ControlButton.hidden,\n#MangaOnlineViewer.light #ColorScheme > .icon-tabler-sun,\n#MangaOnlineViewer.dark #ColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .light + #CommentsColorScheme > .icon-tabler-sun,\n#MangaOnlineViewer .dark + #CommentsColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,\n#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,\n#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,\n#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,\n#MangaOnlineViewer.bookmarked .Bookmark > .icon-tabler-bookmark,\n#MangaOnlineViewer:not(.bookmarked) .Bookmark > .icon-tabler-bookmark-off,\n#MangaOnlineViewer #AutoScroll.running > .icon-tabler-player-play,\n#MangaOnlineViewer #AutoScroll:not(.running) > .icon-tabler-player-pause {\n    display: none;\n}\n\n#MangaOnlineViewer.hideControls .PageFunctions {\n    visibility: hidden;\n}\n";
 
   const icons =
     ".icon-tabler {\n    height: 1rem;\n    width: 1rem;\n    vertical-align: sub;\n}\n\n.icon-tabler-file-download > :nth-child(n + 4) {\n    /* 4, 5 */\n    color: gold;\n}\n\n.icon-tabler-arrow-autofit-width > :nth-child(n + 3) {\n    /* 3,4,5,6 */\n    color: yellow;\n}\n\n.icon-tabler-arrow-autofit-height > :nth-child(n + 3) {\n    /* 3,4,5,6 */\n    color: yellow;\n}\n\n.icon-tabler-zoom-in-area > :nth-child(2),\n.icon-tabler-zoom-in-area > :nth-child(3) {\n    color: lime;\n}\n\n.icon-tabler-zoom-out-area > :nth-child(2) {\n    color: red;\n}\n\n.icon-tabler-zoom-pan > :nth-child(n + 4) {\n    color: #9966ff;\n}\n\n.icon-tabler-arrow-autofit-down > :nth-child(n + 3) {\n    color: #28ffbf;\n}\n\n.icon-tabler-arrow-autofit-left > :nth-child(n + 3) {\n    color: #28ffbf;\n}\n\n.icon-tabler-arrow-autofit-right > :nth-child(n + 3) {\n    color: #28ffbf;\n}\n\n.icon-tabler-spacing-vertical > :nth-child(4) {\n    color: fuchsia;\n}\n\n.icon-tabler-list-numbers > :nth-child(n + 5) {\n    color: #e48900;\n}\n\n.icon-tabler-bookmarks > :nth-child(n + 2) {\n    color: orange;\n}\n\n.icon-tabler-bookmark > * {\n    color: orange;\n}\n\n.icon-tabler-bookmark-off > * {\n    color: orange;\n}\n\n.icon-tabler-bookmark-off > :nth-child(3) {\n    color: red;\n}\n\n.icon-tabler-eye-off > :nth-child(4) {\n    color: red;\n}\n\n.icon-tabler-zoom-cancel > :nth-child(3),\n.icon-tabler-zoom-cancel > :nth-child(4) {\n    color: #9966ff;\n}\n\n.icon-tabler-zoom-in > :nth-child(3),\n.icon-tabler-zoom-in > :nth-child(4) {\n    color: lime;\n}\n\n.icon-tabler-zoom-out > :nth-child(3) {\n    color: red;\n}\n\n.icon-tabler-refresh > :nth-child(n + 2) {\n    color: cyan;\n}\n\n.icon-tabler-photo > * {\n    color: silver;\n}\n\n.icon-tabler-photo-off > * {\n    color: silver;\n}\n\n.icon-tabler-photo-off > :nth-child(6) {\n    color: orange;\n}\n\n.icon-tabler-message > :nth-child(2),\n.icon-tabler-message > :nth-child(3) {\n    color: greenyellow;\n}\n";
@@ -2634,9 +2699,7 @@
 
   const cssStyles = css`
     :root,
-    .dark,
-    .dark .default,
-    [data-theme="dark"] {
+    .dark {
       --theme-body-background: ${colors.dark["600"]};
       --theme-body-text-color: ${colors.dark["50"]};
       --theme-text-color: ${colors.dark["50"]};
@@ -2647,9 +2710,7 @@
       --theme-border-color: ${colors.dark["400"]};
     }
 
-    .light,
-    .light .default,
-    [data-theme="light"] {
+    .light {
       --theme-body-background: ${colors.gray["50"]};
       --theme-body-text-color: ${colors.gray["900"]};
       --theme-text-color: ${colors.gray["900"]};
@@ -2725,7 +2786,7 @@
 
   function generateThemeCSS(name, primary, text) {
     return css`
-      .${name}, [data-theme="${name}"] {
+      .ThemeRadio.${name}, #MangaOnlineViewer[data-theme="${name}"] {
         --theme-primary-color: ${primary};
         --theme-primary-text-color: ${text};
       }
@@ -4034,41 +4095,6 @@
 
   var FileSaver_minExports = FileSaver_min.exports;
 
-  const objectURLRegex = /^blob:(.+?)\/(.+)$/;
-  function getDataFromBase64(src) {
-    return src.slice(src.indexOf(";base64,") + 8);
-  }
-  function isBase64ImageUrl(imageUrl) {
-    const base64Pattern = /^data:image\/(png|jpg|jpeg|gif);base64,/;
-    return base64Pattern.test(imageUrl);
-  }
-  function isObjectURL(url) {
-    return objectURLRegex.test(url);
-  }
-  function getExtension(url) {
-    const parts = url.split("?");
-    const filename = parts[0].split("/").pop();
-    const extensionMatch = filename?.match(/\.[A-Za-z]{2,4}$/);
-    return extensionMatch ? extensionMatch[0].slice(1) : "";
-  }
-  const getExtensionBase64 = (base64) => {
-    const c = base64.substring(
-      base64.indexOf("/") + 1,
-      base64.indexOf(";base64"),
-    );
-    switch (c) {
-      case "/":
-        return "jpg";
-      case "R":
-        return "gif";
-      case "U":
-        return "webp";
-      case "i":
-      default:
-        return "png";
-    }
-  };
-
   let zip;
   const getFilename = (name, index, total, ext) =>
     `${name}${(index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, "0")}.${ext.replace(
@@ -4378,33 +4404,6 @@
   }
   function isBruteforceManga(manga) {
     return "bruteForce" in manga && !isNothing(manga.bruteForce);
-  }
-
-  async function fetchText(url, format) {
-    return new Promise((resolve) => {
-      logScript("Fetching page: ", url);
-      fetch(url)
-        .then(async (response) =>
-          // When the page is loaded convert it to text
-          response.text(),
-        )
-        .then((html) => {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, format);
-          resolve(doc);
-        })
-        .catch((err) => {
-          logScript("Failed to fetch page: ", err);
-        });
-    });
-  }
-  async function fetchHtml(url) {
-    return fetchText(url, "text/html");
-  }
-  async function getElementAttribute(url, selector, attribute) {
-    return fetchHtml(url).then((doc) =>
-      doc.querySelector(selector)?.getAttribute(attribute),
-    );
   }
 
   const settings = {
@@ -4971,12 +4970,16 @@
       ?.addEventListener("change", changeScrollHeight);
   }
 
-  function toggleFunction(open, close) {
-    let isOpen = true;
+  function toggleFunction(selector, classname, open, close) {
     return () => {
-      const func = isOpen ? open : close;
-      func();
-      isOpen = !isOpen;
+      const isOpen = document
+        .querySelector(selector)
+        ?.className.includes(classname);
+      if (isOpen) {
+        close();
+      } else {
+        open();
+      }
     };
   }
   function buttonHeaderClick() {
@@ -5062,7 +5065,12 @@
       .querySelector("#settings")
       ?.addEventListener(
         "click",
-        toggleFunction(buttonSettingsOpen, buttonSettingsClose),
+        toggleFunction(
+          "#SettingsPanel",
+          "visible",
+          buttonSettingsOpen,
+          buttonSettingsClose,
+        ),
       );
     document
       .querySelectorAll(".closeButton")
