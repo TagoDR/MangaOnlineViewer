@@ -47,8 +47,7 @@ const externalScripts: string[] = [
     crossorigin="anonymous"
   ></script>`,
   html` <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.37/ua-parser.min.js"
-    integrity="sha512-LAchvH0Y4sxYM1ouOaqHQ6WbSXvOgkioPaiyW0oPOFNNMNfpsBEpvzYmsxgDf8pQM/fMaMdxYP/nFenquTAkdw=="
+    src="https://cdn.jsdelivr.net/npm/ua-parser-js@2.0.0/dist/ua-parser.pack.min.js"
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   ></script>`,
