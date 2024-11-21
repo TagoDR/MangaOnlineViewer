@@ -114,8 +114,8 @@ then open it in the browser, and you will see the options to load local Files.
 - [HenTalk](https://hentalk.pw/) _[English]_
 - [hitomi](https://hitomi.la/) _[English]_
 - [Imhentai](https://imhentai.xxx/) _[English]_
-- [Koharu](https://schale.network/) _[English]_
 - [Luscious](https://luscious.net/) _[English]_
+- [ManhwaRead](https://www.manhwaread.com) _[English]_
 - [MultPorn](https://multporn.net/) _[English]_
 - [MyHentaiGallery](https://www.myhentaigallery.com) _[English]_
 - [nHentai.net](https://nhentai.net/) / [nHentai.xxx](https://nhentai.xxx/) / [lhentai](https://lhentai.com/) _[English]_
@@ -123,6 +123,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [OmegaScans](https://omegascans.org/) _[English]_
 - [PornComixOnline](https://www.porncomixone.net) _[English]_
 - [Pururin](https://pururin.to/) _[English]_
+- [SchaleNetwork](https://schale.network/) _[English]_
 - [Simply-Hentai](https://simply-hentai.com/) _[English]_
 - [3Hentai](https://3hentai.net/) / [HentaiVox](https://hentaivox.com/) _[English]_
 - [Tsumino](https://tsumino.com/) _[English]_
@@ -270,7 +271,7 @@ bookmarklet.
 ```JS
 javascript:(function() {
     if (unsafeWindow === undefined) unsafeWindow = window;
-    ["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", "https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.7/dist/hotkeys.min.js", "https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.37/ua-parser.min.js", "https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
+    ["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", "https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.7/dist/hotkeys.min.js", "https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js", "https://cdn.jsdelivr.net/npm/ua-parser-js@2.0.0/dist/ua-parser.pack.min.js", "https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
 })();
 ```
 
@@ -279,6 +280,6 @@ javascript:(function() {
 ```JS
 javascript:(function() {
     if (unsafeWindow === undefined) unsafeWindow = window;
-    ["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", "https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.7/dist/hotkeys.min.js", "https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.37/ua-parser.min.js", "https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer_Adult.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
+    ["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", "https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.7/dist/hotkeys.min.js", "https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js", "https://cdn.jsdelivr.net/npm/ua-parser-js@2.0.0/dist/ua-parser.pack.min.js", "https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer_Adult.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
 })();
 ```

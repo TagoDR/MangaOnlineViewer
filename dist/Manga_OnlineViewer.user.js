@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Asura Scans, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Flame Comics, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.11.11
+// @version       2024.11.21
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -26,7 +26,7 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
 // @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.7/dist/hotkeys.min.js
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
-// @require       https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.37/ua-parser.min.js
+// @require       https://cdn.jsdelivr.net/npm/ua-parser-js@2.0.0/dist/ua-parser.pack.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
 // @include       /https?:\/\/alandal.com\/chapter\/.+\/\d+/
 // @include       /https?:\/\/(www.)?(asuracomic).(net)\/.+/
@@ -127,18 +127,18 @@
   }
   function findClosestByContentEq(selector, content, ancestor = "a") {
     return [...document.querySelectorAll(selector)]
-      .filter((e) => e.textContent?.trim() === content)?.[0]
-      .closest(ancestor);
+      ?.filter((e) => e.textContent?.trim() === content)?.[0]
+      ?.closest(ancestor);
   }
   function findClosestByContentStarts(selector, content, ancestor = "a") {
     return [...document.querySelectorAll(selector)]
-      .filter((e) => e.textContent?.trim()?.startsWith(content))?.[0]
-      .closest(ancestor);
+      ?.filter((e) => e.textContent?.trim()?.startsWith(content))?.[0]
+      ?.closest(ancestor);
   }
   function findClosestByContentEnds(selector, content, ancestor = "a") {
     return [...document.querySelectorAll(selector)]
-      .filter((e) => e.textContent?.trim()?.endsWith(content))?.[0]
-      .closest(ancestor);
+      ?.filter((e) => e.textContent?.trim()?.endsWith(content))?.[0]
+      ?.closest(ancestor);
   }
 
   const asura = {
@@ -2343,7 +2343,7 @@
   function getEngine() {
     return getInfoGM.scriptHandler ?? "Greasemonkey";
   }
-  const parser = new UAParser();
+  const parser = new UAParser.UAParser();
   const getDevice = () => {
     const device = parser.getDevice().type;
     if (device !== "mobile" && device !== "tablet") {

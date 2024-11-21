@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Koharu, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.11.11
+// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, ManhwaRead, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
+// @version       2024.11.21
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -26,7 +26,7 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
 // @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.7/dist/hotkeys.min.js
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
-// @require       https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.37/ua-parser.min.js
+// @require       https://cdn.jsdelivr.net/npm/ua-parser-js@2.0.0/dist/ua-parser.pack.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
 // @include       /https?:\/\/(www\.)?akuma\.moe\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?bestporncomix.com\/gallery\/.+/
@@ -46,8 +46,8 @@
 // @include       /https?:\/\/hitomi.la\/reader\/.+/
 // @include       /https?:\/\/(www\.)?imhentai.xxx\/view\/.+\/.+\//
 // @include       /https?:\/\/(www\.)?(kingcomix|chochox|comics18).(com|org)\/.+/
-// @include       /https?:\/\/(www\.)?(koharu|niyaniya|seia|shupogaki|hoshino).(to|moe|one)/
 // @include       /https?:\/\/(www\.)?luscious.net\/.+\/read\/.+/
+// @include       /https?:\/\/(www\.)?manhwaread.com\/.+/
 // @include       /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include       /https?:\/\/(www\.)?myhentaigallery.com\/g\/.+\/\d+/
 // @include       /https?:\/\/(www\.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/
@@ -55,6 +55,7 @@
 // @include       /https?:\/\/(www\.)?(omegascans).(org)\/.+/
 // @include       /https?:\/\/(www\.)?porncomixone.net\/comic\/.+/
 // @include       /https?:\/\/(www\.)?pururin.to\/(view|read)\/.+\/.+\/.+/
+// @include       /https?:\/\/(www\.)?(niyaniya|shupogaki|hoshino).(moe|one)/
 // @include       /https?:\/\/(www\.)?simply-hentai.com\/.+\/page\/.+/
 // @include       /https?:\/\/(www\.)?tmohentai.com\/reader\/.+\/(paginated\/\d+|cascade)/
 // @include       /https?:\/\/(www\.)?(3hentai|hentaivox).(net|com)\/(d|view)\/.+\/.+/
@@ -833,194 +834,6 @@
     },
   };
 
-  function logScript(...text) {
-    console.log("MangaOnlineViewer: ", ...text);
-    return text;
-  }
-  function logScriptVerbose(...text) {
-    return text;
-  }
-  const logScriptC = (x) => (y) => logScript(x, y)[1];
-  function getListGM() {
-    return typeof GM_listValues !== "undefined" ? GM_listValues() : [];
-  }
-  function removeValueGM(name) {
-    if (typeof GM_deleteValue !== "undefined") {
-      GM_deleteValue(name);
-    } else {
-      logScript("Removing: ", name);
-    }
-  }
-  const getInfoGM =
-    typeof GM_info !== "undefined"
-      ? GM_info
-      : {
-          scriptHandler: "Console",
-          script: {
-            name: "Debug",
-            version: "Testing",
-          },
-        };
-  function getValueGM(name, defaultValue = null) {
-    if (typeof GM_getValue !== "undefined") {
-      return GM_getValue(name, defaultValue);
-    }
-    logScript("Fake Getting: ", name, " = ", defaultValue);
-    return defaultValue;
-  }
-  function getJsonGM(name, defaultValue = null) {
-    const result = getValueGM(name, defaultValue);
-    if (typeof result === "string") {
-      return JSON.parse(result);
-    }
-    return result;
-  }
-  function getSettings(defaultSettings) {
-    return getJsonGM("settings", defaultSettings);
-  }
-  function setValueGM(name, value) {
-    try {
-      GM_setValue(name, value);
-      return value.toString();
-    } catch (e) {
-      logScript("Fake Setting: ", name, " = ", value);
-      return String(value);
-    }
-  }
-  function setSettings(value) {
-    return setValueGM("settings", value);
-  }
-  function getBrowser() {
-    let tem;
-    const M =
-      /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i.exec(
-        navigator.userAgent,
-      ) ?? [];
-    if (/trident/i.test(M[1])) {
-      tem = /\brv[ :]+(\d+)/g.exec(navigator.userAgent) ?? [];
-      return `IE ${tem[1] ?? ""}`;
-    }
-    if (M[1] === "Chrome") {
-      tem = /\b(OPR|Edge)\/(\d+)/.exec(navigator.userAgent);
-      if (tem !== null) {
-        return tem.slice(1).join(" ").replace("OPR", "Opera");
-      }
-    }
-    const tempM = [M[1], M[2]];
-    tem = /version\/(\d+)/i.exec(navigator.userAgent);
-    if (tem !== null) {
-      tempM.splice(1, 1, tem[1]);
-    }
-    return tempM.join(" ");
-  }
-  function getEngine() {
-    return getInfoGM.scriptHandler ?? "Greasemonkey";
-  }
-  const parser = new UAParser();
-  const getDevice = () => {
-    const device = parser.getDevice().type;
-    if (device !== "mobile" && device !== "tablet") {
-      if (window.matchMedia("screen and (max-width: 600px)").matches)
-        return "mobile";
-      if (window.matchMedia("screen and (max-width: 992px)").matches)
-        return "tablet";
-      return "desktop";
-    }
-    return device;
-  };
-  const isMobile = () =>
-    // @ts-ignore
-    navigator?.userAgentData?.mobile ||
-    getDevice() === "mobile" ||
-    getDevice() === "tablet";
-
-  async function fetchText(url, format) {
-    return new Promise((resolve) => {
-      logScript("Fetching page: ", url);
-      fetch(url)
-        .then(async (response) =>
-          // When the page is loaded convert it to text
-          response.text(),
-        )
-        .then((html) => {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, format);
-          resolve(doc);
-        })
-        .catch((err) => {
-          logScript("Failed to fetch page: ", err);
-        });
-    });
-  }
-  async function fetchHtml(url) {
-    return fetchText(url, "text/html");
-  }
-  async function getElementAttribute(url, selector, attribute) {
-    return fetchHtml(url).then((doc) =>
-      doc.querySelector(selector)?.getAttribute(attribute),
-    );
-  }
-  async function fetchJsonFromUrls(options, ...urls) {
-    for (const url of urls) {
-      try {
-        const response = await fetch(url, options);
-        if (response.ok) {
-          return await response.json();
-        }
-        logScript(`Fetch ${url} failed.`);
-      } catch (error) {
-        logScript(`Failed to fetch from ${url}:`, error);
-      }
-    }
-    throw new Error("All fetch attempts failed");
-  }
-
-  const koharu = {
-    name: "Koharu",
-    url: /https?:\/\/(www\.)?(koharu|niyaniya|seia|shupogaki|hoshino).(to|moe|one)/,
-    homepage: "https://schale.network/",
-    language: ["English"],
-    category: "hentai",
-    lazy: false,
-    waitEle: "nav select option",
-    async run() {
-      const options = {
-        method: "GET",
-        headers: {
-          Accept: "*/*",
-          Referer: `${window.location.host}/`,
-          Origin: window.location.host,
-        },
-      };
-      const api = ["https://api.schale.network", "https://api.gehenna.jp/"];
-      const url = window.location.pathname.split("/");
-      const galleryID = `${url[2]}/${url[3]}`;
-      const detailAPI = api.map((a) => `${a}/books/detail/${galleryID}`);
-      const detail = await fetchJsonFromUrls(options, ...detailAPI);
-      const dataID = Object.keys(detail.data)
-        .map(Number)
-        .sort((a, b) => b - a)[0];
-      const dataAPI = api.map(
-        (a) =>
-          `${a}/books/data/${galleryID}/${detail.data[dataID].id}/${detail.data[dataID].public_key}?v=${detail.updated_at ?? detail.created_at}&w=${dataID}`,
-      );
-      const { base, entries } = await fetchJsonFromUrls(options, ...dataAPI);
-      const data = entries.map((image) => `${base}/${image.path}?w=${dataID}`);
-      return {
-        title: detail.title,
-        series: `/g/${galleryID}/`,
-        pages: data.length,
-        prev: "#",
-        next: "#",
-        fetchOptions: {
-          method: "GET",
-          redirect: "follow",
-        },
-        listImages: data,
-      };
-    },
-  };
-
   const luscious = {
     name: "Luscious",
     url: /https?:\/\/(www\.)?luscious.net\/.+\/read\/.+/,
@@ -1173,6 +986,37 @@
       "https://mangadistrict.com/",
     ],
     category: "hentai",
+  };
+
+  function findClosestByContentEq(selector, content, ancestor = "a") {
+    return [...document.querySelectorAll(selector)]
+      ?.filter((e) => e.textContent?.trim() === content)?.[0]
+      ?.closest(ancestor);
+  }
+
+  const manhwaread = {
+    name: "ManhwaRead",
+    url: /https?:\/\/(www\.)?manhwaread.com\/.+/,
+    homepage: "https://www.manhwaread.com",
+    language: ["English"],
+    category: "hentai",
+    waitEle: "#readingContent img",
+    run() {
+      const images = [...document.querySelectorAll("#readingContent img")];
+      return {
+        title: document
+          .querySelector("#readingNavTop div:has(>h1)")
+          ?.textContent?.trim()
+          .replace(/\n/g, ""),
+        series: document
+          .querySelector("#readingNavTop a")
+          ?.getAttribute("href"),
+        pages: images.length,
+        prev: findClosestByContentEq("span", "Previous")?.getAttribute("href"),
+        next: findClosestByContentEq("span", "Next")?.getAttribute("href"),
+        listImages: images.map((img) => img.getAttribute("src")),
+      };
+    },
   };
 
   const multporn = {
@@ -1380,6 +1224,194 @@
         prev: "#",
         next: "#",
         listImages: num.map((_, i) => src.replace(/\/\d+\./, `/${i + 1}.`)),
+      };
+    },
+  };
+
+  function logScript(...text) {
+    console.log("MangaOnlineViewer: ", ...text);
+    return text;
+  }
+  function logScriptVerbose(...text) {
+    return text;
+  }
+  const logScriptC = (x) => (y) => logScript(x, y)[1];
+  function getListGM() {
+    return typeof GM_listValues !== "undefined" ? GM_listValues() : [];
+  }
+  function removeValueGM(name) {
+    if (typeof GM_deleteValue !== "undefined") {
+      GM_deleteValue(name);
+    } else {
+      logScript("Removing: ", name);
+    }
+  }
+  const getInfoGM =
+    typeof GM_info !== "undefined"
+      ? GM_info
+      : {
+          scriptHandler: "Console",
+          script: {
+            name: "Debug",
+            version: "Testing",
+          },
+        };
+  function getValueGM(name, defaultValue = null) {
+    if (typeof GM_getValue !== "undefined") {
+      return GM_getValue(name, defaultValue);
+    }
+    logScript("Fake Getting: ", name, " = ", defaultValue);
+    return defaultValue;
+  }
+  function getJsonGM(name, defaultValue = null) {
+    const result = getValueGM(name, defaultValue);
+    if (typeof result === "string") {
+      return JSON.parse(result);
+    }
+    return result;
+  }
+  function getSettings(defaultSettings) {
+    return getJsonGM("settings", defaultSettings);
+  }
+  function setValueGM(name, value) {
+    try {
+      GM_setValue(name, value);
+      return value.toString();
+    } catch (e) {
+      logScript("Fake Setting: ", name, " = ", value);
+      return String(value);
+    }
+  }
+  function setSettings(value) {
+    return setValueGM("settings", value);
+  }
+  function getBrowser() {
+    let tem;
+    const M =
+      /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i.exec(
+        navigator.userAgent,
+      ) ?? [];
+    if (/trident/i.test(M[1])) {
+      tem = /\brv[ :]+(\d+)/g.exec(navigator.userAgent) ?? [];
+      return `IE ${tem[1] ?? ""}`;
+    }
+    if (M[1] === "Chrome") {
+      tem = /\b(OPR|Edge)\/(\d+)/.exec(navigator.userAgent);
+      if (tem !== null) {
+        return tem.slice(1).join(" ").replace("OPR", "Opera");
+      }
+    }
+    const tempM = [M[1], M[2]];
+    tem = /version\/(\d+)/i.exec(navigator.userAgent);
+    if (tem !== null) {
+      tempM.splice(1, 1, tem[1]);
+    }
+    return tempM.join(" ");
+  }
+  function getEngine() {
+    return getInfoGM.scriptHandler ?? "Greasemonkey";
+  }
+  const parser = new UAParser.UAParser();
+  const getDevice = () => {
+    const device = parser.getDevice().type;
+    if (device !== "mobile" && device !== "tablet") {
+      if (window.matchMedia("screen and (max-width: 600px)").matches)
+        return "mobile";
+      if (window.matchMedia("screen and (max-width: 992px)").matches)
+        return "tablet";
+      return "desktop";
+    }
+    return device;
+  };
+  const isMobile = () =>
+    // @ts-ignore
+    navigator?.userAgentData?.mobile ||
+    getDevice() === "mobile" ||
+    getDevice() === "tablet";
+
+  async function fetchText(url, format) {
+    return new Promise((resolve) => {
+      logScript("Fetching page: ", url);
+      fetch(url)
+        .then(async (response) =>
+          // When the page is loaded convert it to text
+          response.text(),
+        )
+        .then((html) => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, format);
+          resolve(doc);
+        })
+        .catch((err) => {
+          logScript("Failed to fetch page: ", err);
+        });
+    });
+  }
+  async function fetchHtml(url) {
+    return fetchText(url, "text/html");
+  }
+  async function getElementAttribute(url, selector, attribute) {
+    return fetchHtml(url).then((doc) =>
+      doc.querySelector(selector)?.getAttribute(attribute),
+    );
+  }
+  async function fetchJsonFromUrls(options, ...urls) {
+    for (const url of urls) {
+      try {
+        const response = await fetch(url, options);
+        if (response.ok) {
+          return await response.json();
+        }
+        logScript(`Fetch ${url} failed.`);
+      } catch (error) {
+        logScript(`Failed to fetch from ${url}:`, error);
+      }
+    }
+    throw new Error("All fetch attempts failed");
+  }
+
+  const schalenetwork = {
+    name: "SchaleNetwork",
+    url: /https?:\/\/(www\.)?(niyaniya|shupogaki|hoshino).(moe|one)/,
+    homepage: "https://schale.network/",
+    language: ["English"],
+    category: "hentai",
+    lazy: false,
+    waitEle: "nav select option",
+    async run() {
+      const options = {
+        method: "GET",
+        headers: {
+          Accept: "*/*",
+          Referer: `${window.location.host}/`,
+          Origin: window.location.host,
+        },
+      };
+      const api = ["https://api.schale.network", "https://api.gehenna.jp/"];
+      const url = window.location.pathname.split("/");
+      const galleryID = `${url[2]}/${url[3]}`;
+      const detailAPI = api.map((a) => `${a}/books/detail/${galleryID}`);
+      const detail = await fetchJsonFromUrls(options, ...detailAPI);
+      const dataID = Object.keys(detail.data)
+        .map(Number)
+        .sort((a, b) => b - a)[0];
+      const dataAPI = api.map(
+        (a) =>
+          `${a}/books/data/${galleryID}/${detail.data[dataID].id}/${detail.data[dataID].public_key}?v=${detail.updated_at ?? detail.created_at}&w=${dataID}`,
+      );
+      const { base, entries } = await fetchJsonFromUrls(options, ...dataAPI);
+      const data = entries.map((image) => `${base}/${image.path}?w=${dataID}`);
+      return {
+        title: detail.title,
+        series: `/g/${galleryID}/`,
+        pages: data.length,
+        prev: "#",
+        next: "#",
+        fetchOptions: {
+          method: "GET",
+          redirect: "follow",
+        },
+        listImages: data,
       };
     },
   };
@@ -1620,8 +1652,8 @@
     hitomi,
     imhentai,
     kingcomix,
-    koharu,
     luscious,
+    manhwaread,
     multporn,
     myhentaigallery,
     nhentainet,
@@ -1629,6 +1661,7 @@
     omegascans,
     porncomixonline,
     pururin,
+    schalenetwork,
     simplyhentai,
     tmohhentai,
     threehentai,
