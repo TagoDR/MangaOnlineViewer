@@ -19,6 +19,7 @@ import kingcomix from './kingcomix';
 import koharu from './koharu';
 import luscious from './luscious';
 import madarawp from './madarawp';
+import manhwaread from './manhwaread';
 import multporn from './multporn';
 import myhentaigallery from './myhentaigallery';
 import nhentainet from './nhentainet';
@@ -57,6 +58,7 @@ const sites = [
   kingcomix,
   koharu,
   luscious,
+  manhwaread,
   multporn,
   myhentaigallery,
   nhentainet,

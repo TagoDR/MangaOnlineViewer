@@ -40,8 +40,8 @@ export function findClosestByContentEq(
   ancestor: string = 'a',
 ): HTMLElement | null {
   return [...document.querySelectorAll<HTMLElement>(selector)]
-    .filter((e) => e.textContent?.trim() === content)?.[0]
-    .closest(ancestor);
+    ?.filter((e) => e.textContent?.trim() === content)?.[0]
+    ?.closest(ancestor);
 }
 
 export function findClosestByContentStarts(
@@ -50,8 +50,8 @@ export function findClosestByContentStarts(
   ancestor: string = 'a',
 ): HTMLElement | null {
   return [...document.querySelectorAll<HTMLElement>(selector)]
-    .filter((e) => e.textContent?.trim()?.startsWith(content))?.[0]
-    .closest(ancestor);
+    ?.filter((e) => e.textContent?.trim()?.startsWith(content))?.[0]
+    ?.closest(ancestor);
 }
 
 export function findClosestByContentEnds(
@@ -60,6 +60,6 @@ export function findClosestByContentEnds(
   ancestor: string = 'a',
 ): HTMLElement | null {
   return [...document.querySelectorAll<HTMLElement>(selector)]
-    .filter((e) => e.textContent?.trim()?.endsWith(content))?.[0]
-    .closest(ancestor);
+    ?.filter((e) => e.textContent?.trim()?.endsWith(content))?.[0]
+    ?.closest(ancestor);
 }
