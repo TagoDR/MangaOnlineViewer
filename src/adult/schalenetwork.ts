@@ -1,10 +1,10 @@
-// == Koharu =======================================================================================
+// == SchaleNetwork ================================================================================
 
 import { fetchJsonFromUrls } from '../utils/request';
 
 export default {
-  name: 'Koharu',
-  url: /https?:\/\/(www\.)?(koharu|niyaniya|seia|shupogaki|hoshino).(to|moe|one)/,
+  name: 'SchaleNetwork',
+  url: /https?:\/\/(www\.)?(niyaniya|shupogaki|hoshino).(moe|one)/,
   homepage: 'https://schale.network/',
   language: ['English'],
   category: 'hentai',

@@ -16,7 +16,6 @@ import hentalk from './hentalk';
 import hitomi from './hitomi';
 import imhentai from './imhentai';
 import kingcomix from './kingcomix';
-import koharu from './koharu';
 import luscious from './luscious';
 import madarawp from './madarawp';
 import manhwaread from './manhwaread';
@@ -27,6 +26,7 @@ import ninehentai from './9hentai';
 import omegascans from './omegascans';
 import porncomixonline from './porncomixonline';
 import pururin from './pururin';
+import schalenetwork from './schalenetwork';
 import simplyhentai from './simplyhentai';
 import threehentai from './3hentai';
 import tmohhentai from './tmohentai';
@@ -56,7 +56,6 @@ const sites = [
   hitomi,
   imhentai,
   kingcomix,
-  koharu,
   luscious,
   manhwaread,
   multporn,
@@ -66,6 +65,7 @@ const sites = [
   omegascans,
   porncomixonline,
   pururin,
+  schalenetwork,
   simplyhentai,
   tmohhentai,
   threehentai,
