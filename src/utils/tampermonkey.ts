@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, no-console */
 // Encapsulation for the console
-import UAParser from 'ua-parser-js';
+import { UAParser } from 'ua-parser-js';
 import type { ISettings } from '../types';
 
 function logScript(...text: any[]): string[] {
