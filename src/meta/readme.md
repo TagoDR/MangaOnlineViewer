@@ -126,7 +126,7 @@ Below is an example with descriptions.
 export default {
     name: 'MangaDex', // The name of the to be listed, may be an array of names
     url: /https?:\/\/(www\.)?mangadex.org/, // Regex to detect the site, usually just the reader part of the site, but can be the root if is has a lot of dynamic content
-    homepage: 'https://mangadex.org/',   // Link for the home page of the site, may be an array of urls
+    homepage: 'https://mangadex.org/', // Link for the home page of the site, may be an array of urls
     language: ['English'], // Array of languages the site serve
     category: 'manga', // Category of the site
     waitEle: '#chapter-selector a', // Wait for something before running, some site requires some steps before the information is available
@@ -143,13 +143,13 @@ export default {
             pages: images.length, // Quantity of pages
             prev: chapters?.item(0)?.getAttribute('href'), // Previous Chapter
             next: chapters?.item(1)?.getAttribute('href'), // Next Chapter
-            listImages: images.map(  // List of images
-                    (img: string) => `${server.baseUrl}/data/${server.chapter.hash}/${img}`,
+            listImages: images.map(
+                // List of images
+                (img: string) => `${server.baseUrl}/data/${server.chapter.hash}/${img}`,
             ),
         };
     },
 };
-
 ```
 
 Look inside the types folder to better understand the structure and valid values.

@@ -1,11 +1,10 @@
 module.exports = {
-  root: true,
   env: {
     browser: true,
     es2021: true,
     greasemonkey: true,
   },
-  extends: ['airbnb-base', 'airbnb-typescript/base', 'prettier', 'plugin:prettier/recommended'],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
   overrides: [
     {
       env: {
@@ -13,7 +12,7 @@ module.exports = {
       },
       files: ['.eslintrc.{js,cjs}'],
       parserOptions: {
-        parser: '@typescript-eslint/parser',
+        sourceType: 'script',
       },
     },
   ],
@@ -21,9 +20,8 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: './tsconfig.json',
   },
-  plugins: ['import', '@typescript-eslint'],
+  plugins: ['@typescript-eslint'],
   rules: {
     'no-console': 'warn',
     'no-param-reassign': [
