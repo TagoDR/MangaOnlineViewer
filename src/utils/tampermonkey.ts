@@ -78,11 +78,10 @@ function getSettings(defaultSettings?: ISettings): Partial<ISettings> {
 
 // Replacement function for GM_setValue allowing for debugging in console
 function setValueGM(name: string, value: any): string {
-  try {
+  if (typeof GM_setValue !== 'undefined') {
     GM_setValue(name, value);
-    // LogScript('Setting: ', name, ' = ', value as any);
     return value.toString();
-  } catch (e) {
+  } else {
     logScript('Fake Setting: ', name, ' = ', value);
     return String(value);
   }
@@ -133,9 +132,7 @@ const getDevice = () => {
   }
   return device;
 };
-const isMobile = () =>
-  // @ts-ignore
-  navigator?.userAgentData?.mobile || getDevice() === 'mobile' || getDevice() === 'tablet';
+const isMobile = () => getDevice() === 'mobile' || getDevice() === 'tablet';
 
 export {
   logScript,
