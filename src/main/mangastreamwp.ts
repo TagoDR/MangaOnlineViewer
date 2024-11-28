@@ -19,7 +19,7 @@ export default {
     'Rizzfables',
     'NovatoScans',
   ],
-  url: /https?:\/\/[^/]*(scans|comic|realmoasis|hivetoon|rizzfables)[^/]*\/.+/,
+  url: /https?:\/\/[^/]*(scans?|comic|realmoasis|hivetoon|rizzfables)[^/]*\/.+/,
   homepage: [
     'https://themesia.com/mangastream-wordpress-theme/',
     'https://flamecomics.com/',
