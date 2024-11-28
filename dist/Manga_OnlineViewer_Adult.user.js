@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, ManhwaRead, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.11.21
+// @version       2024.11.28
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -3964,169 +3964,183 @@
             ? self
             : {};
 
-  var FileSaver_min = { exports: {} };
+  var FileSaver_min$1 = { exports: {} };
 
-  (function (module, exports) {
-    (function (a, b) {
-      b();
-    })(commonjsGlobal, function () {
-      function b(a, b) {
-        return (
-          "undefined" == typeof b
-            ? (b = { autoBom: !1 })
-            : "object" != typeof b &&
-              (console.warn(
-                "Deprecated: Expected third argument to be a object",
-              ),
-              (b = { autoBom: !b })),
-          b.autoBom &&
-          /^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(
-            a.type,
-          )
-            ? new Blob(["\uFEFF", a], { type: a.type })
-            : a
-        );
-      }
-      function c(a, b, c) {
-        var d = new XMLHttpRequest();
-        d.open("GET", a),
-          (d.responseType = "blob"),
-          (d.onload = function () {
-            g(d.response, b, c);
-          }),
-          (d.onerror = function () {
-            console.error("could not download file");
-          }),
-          d.send();
-      }
-      function d(a) {
-        var b = new XMLHttpRequest();
-        b.open("HEAD", a, !1);
-        try {
-          b.send();
-        } catch (a) {}
-        return 200 <= b.status && 299 >= b.status;
-      }
-      function e(a) {
-        try {
-          a.dispatchEvent(new MouseEvent("click"));
-        } catch (c) {
-          var b = document.createEvent("MouseEvents");
-          b.initMouseEvent(
-            "click",
-            !0,
-            !0,
-            window,
-            0,
-            0,
-            0,
-            80,
-            20,
-            !1,
-            !1,
-            !1,
-            !1,
-            0,
-            null,
-          ),
-            a.dispatchEvent(b);
+  var FileSaver_min = FileSaver_min$1.exports;
+
+  var hasRequiredFileSaver_min;
+
+  function requireFileSaver_min() {
+    if (hasRequiredFileSaver_min) return FileSaver_min$1.exports;
+    hasRequiredFileSaver_min = 1;
+    (function (module, exports) {
+      (function (a, b) {
+        b();
+      })(FileSaver_min, function () {
+        function b(a, b) {
+          return (
+            "undefined" == typeof b
+              ? (b = { autoBom: !1 })
+              : "object" != typeof b &&
+                (console.warn(
+                  "Deprecated: Expected third argument to be a object",
+                ),
+                (b = { autoBom: !b })),
+            b.autoBom &&
+            /^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(
+              a.type,
+            )
+              ? new Blob(["\uFEFF", a], { type: a.type })
+              : a
+          );
         }
-      }
-      var f =
-          "object" == typeof window && window.window === window
-            ? window
-            : "object" == typeof self && self.self === self
-              ? self
-              : "object" == typeof commonjsGlobal &&
-                  commonjsGlobal.global === commonjsGlobal
-                ? commonjsGlobal
-                : void 0,
-        a =
-          f.navigator &&
-          /Macintosh/.test(navigator.userAgent) &&
-          /AppleWebKit/.test(navigator.userAgent) &&
-          !/Safari/.test(navigator.userAgent),
-        g =
-          f.saveAs ||
-          ("object" != typeof window || window !== f
-            ? function () {}
-            : "download" in HTMLAnchorElement.prototype && !a
-              ? function (b, g, h) {
-                  var i = f.URL || f.webkitURL,
-                    j = document.createElement("a");
-                  (g = g || b.name || "download"),
-                    (j.download = g),
-                    (j.rel = "noopener"),
-                    "string" == typeof b
-                      ? ((j.href = b),
-                        j.origin === location.origin
-                          ? e(j)
-                          : d(j.href)
-                            ? c(b, g, h)
-                            : e(j, (j.target = "_blank")))
-                      : ((j.href = i.createObjectURL(b)),
-                        setTimeout(function () {
-                          i.revokeObjectURL(j.href);
-                        }, 4e4),
-                        setTimeout(function () {
-                          e(j);
-                        }, 0));
-                }
-              : "msSaveOrOpenBlob" in navigator
-                ? function (f, g, h) {
-                    if (((g = g || f.name || "download"), "string" != typeof f))
-                      navigator.msSaveOrOpenBlob(b(f, h), g);
-                    else if (d(f)) c(f, g, h);
-                    else {
-                      var i = document.createElement("a");
-                      (i.href = f),
-                        (i.target = "_blank"),
-                        setTimeout(function () {
-                          e(i);
-                        });
-                    }
+        function c(a, b, c) {
+          var d = new XMLHttpRequest();
+          d.open("GET", a),
+            (d.responseType = "blob"),
+            (d.onload = function () {
+              g(d.response, b, c);
+            }),
+            (d.onerror = function () {
+              console.error("could not download file");
+            }),
+            d.send();
+        }
+        function d(a) {
+          var b = new XMLHttpRequest();
+          b.open("HEAD", a, !1);
+          try {
+            b.send();
+          } catch (a) {}
+          return 200 <= b.status && 299 >= b.status;
+        }
+        function e(a) {
+          try {
+            a.dispatchEvent(new MouseEvent("click"));
+          } catch (c) {
+            var b = document.createEvent("MouseEvents");
+            b.initMouseEvent(
+              "click",
+              !0,
+              !0,
+              window,
+              0,
+              0,
+              0,
+              80,
+              20,
+              !1,
+              !1,
+              !1,
+              !1,
+              0,
+              null,
+            ),
+              a.dispatchEvent(b);
+          }
+        }
+        var f =
+            "object" == typeof window && window.window === window
+              ? window
+              : "object" == typeof self && self.self === self
+                ? self
+                : "object" == typeof commonjsGlobal &&
+                    commonjsGlobal.global === commonjsGlobal
+                  ? commonjsGlobal
+                  : void 0,
+          a =
+            f.navigator &&
+            /Macintosh/.test(navigator.userAgent) &&
+            /AppleWebKit/.test(navigator.userAgent) &&
+            !/Safari/.test(navigator.userAgent),
+          g =
+            f.saveAs ||
+            ("object" != typeof window || window !== f
+              ? function () {}
+              : "download" in HTMLAnchorElement.prototype && !a
+                ? function (b, g, h) {
+                    var i = f.URL || f.webkitURL,
+                      j = document.createElement("a");
+                    (g = g || b.name || "download"),
+                      (j.download = g),
+                      (j.rel = "noopener"),
+                      "string" == typeof b
+                        ? ((j.href = b),
+                          j.origin === location.origin
+                            ? e(j)
+                            : d(j.href)
+                              ? c(b, g, h)
+                              : e(j, (j.target = "_blank")))
+                        : ((j.href = i.createObjectURL(b)),
+                          setTimeout(function () {
+                            i.revokeObjectURL(j.href);
+                          }, 4e4),
+                          setTimeout(function () {
+                            e(j);
+                          }, 0));
                   }
-                : function (b, d, e, g) {
-                    if (
-                      ((g = g || open("", "_blank")),
-                      g &&
-                        (g.document.title = g.document.body.innerText =
-                          "downloading..."),
-                      "string" == typeof b)
-                    )
-                      return c(b, d, e);
-                    var h = "application/octet-stream" === b.type,
-                      i = /constructor/i.test(f.HTMLElement) || f.safari,
-                      j = /CriOS\/[\d]+/.test(navigator.userAgent);
-                    if (
-                      (j || (h && i) || a) &&
-                      "undefined" != typeof FileReader
-                    ) {
-                      var k = new FileReader();
-                      (k.onloadend = function () {
-                        var a = k.result;
-                        (a = j
-                          ? a
-                          : a.replace(/^data:[^;]*;/, "data:attachment/file;")),
-                          g ? (g.location.href = a) : (location = a),
-                          (g = null);
-                      }),
-                        k.readAsDataURL(b);
-                    } else {
-                      var l = f.URL || f.webkitURL,
-                        m = l.createObjectURL(b);
-                      g ? (g.location = m) : (location.href = m),
-                        (g = null),
-                        setTimeout(function () {
-                          l.revokeObjectURL(m);
-                        }, 4e4);
+                : "msSaveOrOpenBlob" in navigator
+                  ? function (f, g, h) {
+                      if (
+                        ((g = g || f.name || "download"), "string" != typeof f)
+                      )
+                        navigator.msSaveOrOpenBlob(b(f, h), g);
+                      else if (d(f)) c(f, g, h);
+                      else {
+                        var i = document.createElement("a");
+                        (i.href = f),
+                          (i.target = "_blank"),
+                          setTimeout(function () {
+                            e(i);
+                          });
+                      }
                     }
-                  });
-      (f.saveAs = g.saveAs = g), (module.exports = g);
-    });
-  })(FileSaver_min);
+                  : function (b, d, e, g) {
+                      if (
+                        ((g = g || open("", "_blank")),
+                        g &&
+                          (g.document.title = g.document.body.innerText =
+                            "downloading..."),
+                        "string" == typeof b)
+                      )
+                        return c(b, d, e);
+                      var h = "application/octet-stream" === b.type,
+                        i = /constructor/i.test(f.HTMLElement) || f.safari,
+                        j = /CriOS\/[\d]+/.test(navigator.userAgent);
+                      if (
+                        (j || (h && i) || a) &&
+                        "undefined" != typeof FileReader
+                      ) {
+                        var k = new FileReader();
+                        (k.onloadend = function () {
+                          var a = k.result;
+                          (a = j
+                            ? a
+                            : a.replace(
+                                /^data:[^;]*;/,
+                                "data:attachment/file;",
+                              )),
+                            g ? (g.location.href = a) : (location = a),
+                            (g = null);
+                        }),
+                          k.readAsDataURL(b);
+                      } else {
+                        var l = f.URL || f.webkitURL,
+                          m = l.createObjectURL(b);
+                        g ? (g.location = m) : (location.href = m),
+                          (g = null),
+                          setTimeout(function () {
+                            l.revokeObjectURL(m);
+                          }, 4e4);
+                      }
+                    });
+        (f.saveAs = g.saveAs = g), (module.exports = g);
+      });
+    })(FileSaver_min$1);
+    return FileSaver_min$1.exports;
+  }
 
-  var FileSaver_minExports = FileSaver_min.exports;
+  var FileSaver_minExports = requireFileSaver_min();
 
   let zip;
   const getFilename = (name, index, total, ext) =>
