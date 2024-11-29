@@ -51,6 +51,7 @@ import unionmangas from './unionmangas';
 import webnovel from './webnovel';
 import webtoons from './webtoons';
 import wpmanga from './wpmanga';
+import vortexscans from './vortexscans';
 import yugenmangas from './yugenmangas';
 import zeroscans from './zeroscans';
 import { type ISite } from '../types';
@@ -109,6 +110,7 @@ const sites = [
   webnovel,
   webtoons,
   wpmanga,
+  vortexscans,
   yugenmangas,
   zeroscans,
   mangastreamwp, // Must be at the end because is a generic check
