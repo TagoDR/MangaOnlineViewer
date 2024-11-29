@@ -69,6 +69,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [WebNovel](https://www.webnovel.com/) _[English]_
 - [WebToons](https://www.webtoons.com/) _[English]_
 - [Manga33](https://manga33.com/) _[English]_
+- [Vortex Scans](https://vortexscans.org/) _[English]_
 - [ZeroScans](https://zscans.com/) _[English]_
 - [MangaStream WordPress Plugin](https://themesia.com/mangastream-wordpress-theme/) / [Flame Comics](https://flamecomics.com/) / [Realm Oasis](https://realmoasis.com/) / [Voids-Scans](https://void-scans.com/) / [Luminous Scans](https://luminous-scans.com/) / [Shimada Scans](https://shimadascans.com/) / [Night Scans](https://night-scans.com/) / [Manhwa-Freak](https://freakcomic.com/) / [OzulScansEn](https://ozulscansen.com/) / [CypherScans](https://cypherscans.xyz/) / [MangaGalaxy](https://mangagalaxy.me/) / [LuaScans](https://luascans.com/) / [Drake Scans](https://drake-scans.com/) / [Rizzfables](https://rizzfables.com/) / [NovatoScans](https://www.novatoscans.top/) _[English]_
 - [FoOlSlide](https://github.com/saintly2k/FoOlSlideX) / [Kireicake](https://reader.kireicake.com) _[English]_ **Obs: Any Site that uses FoOLSlide**

@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, ManhwaRead, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.11.28
+// @version       2024.11.29
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -1274,10 +1274,10 @@
     return getJsonGM("settings", defaultSettings);
   }
   function setValueGM(name, value) {
-    try {
+    if (typeof GM_setValue !== "undefined") {
       GM_setValue(name, value);
       return value.toString();
-    } catch (e) {
+    } else {
       logScript("Fake Setting: ", name, " = ", value);
       return String(value);
     }
@@ -1323,11 +1323,7 @@
     }
     return device;
   };
-  const isMobile = () =>
-    // @ts-ignore
-    navigator?.userAgentData?.mobile ||
-    getDevice() === "mobile" ||
-    getDevice() === "tablet";
+  const isMobile = () => getDevice() === "mobile" || getDevice() === "tablet";
 
   async function fetchText(url, format) {
     return new Promise((resolve) => {
