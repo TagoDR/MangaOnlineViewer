@@ -123,7 +123,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [9Hentai](https://9hentai.to) _[English]_
 - [OmegaScans](https://omegascans.org/) _[English]_
 - [PornComixOnline](https://www.porncomixone.net) _[English]_
-- [Pururin](https://pururin.to/) _[English]_
+- [Pururin](https://pururin.me/) _[English]_
 - [SchaleNetwork](https://schale.network/) _[English]_
 - [Simply-Hentai](https://simply-hentai.com/) _[English]_
 - [3Hentai](https://3hentai.net/) / [HentaiVox](https://hentaivox.com/) _[English]_
