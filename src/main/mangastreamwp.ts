@@ -4,7 +4,6 @@ import { findByContentEq } from '../utils/find';
 export default {
   name: [
     'MangaStream WordPress Plugin',
-    'Flame Comics',
     'Realm Oasis',
     'Voids-Scans',
     'Luminous Scans',
@@ -22,7 +21,6 @@ export default {
   url: /https?:\/\/[^/]*(scans?|comic|realmoasis|hivetoon|rizzfables)[^/]*\/.+/,
   homepage: [
     'https://themesia.com/mangastream-wordpress-theme/',
-    'https://flamecomics.com/',
     'https://realmoasis.com/',
     'https://void-scans.com/',
     'https://luminous-scans.com/',
