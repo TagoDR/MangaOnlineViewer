@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Alandal, Asura Scans, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, Vortex Scans, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Flame Comics, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.12.07
+// @description   Shows all pages at once in online view for these sites: Alandal, Asura Scans, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, Flame Comics, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, Vortex Scans, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @version       2024.12.17
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -24,7 +24,7 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
-// @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.7/dist/hotkeys.min.js
+// @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.9/dist/hotkeys.min.js
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.37/ua-parser.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
@@ -35,6 +35,7 @@
 // @include       /https?:\/\/comic\.nizamkomputer.com\/read\/.+\/\d+.*/
 // @include       /https?:\/\/(www\.)?comick.io\/.+/
 // @include       /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/
+// @include       /https?:\/\/(www.)?(flamecomics).(xyz)\/series\/.+/
 // @include       /https?:\/\/(comics\.)?inkr.com\/title\/.+\/chapter\/.+/
 // @include       /https?:\/\/(www\.)?inmanga.com\/ver\/manga\/.+\/.+/
 // @include       /https?:\/\/(www\.)?klmanga.com\/.+chapter.+/
@@ -383,6 +384,33 @@
             ? images.map((img) => img.getAttribute("src"))
             : null,
         img: "img.open",
+      };
+    },
+  };
+
+  const flamecomics = {
+    name: "Flame Comics",
+    url: /https?:\/\/(www.)?(flamecomics).(xyz)\/series\/.+/,
+    homepage: "https://flamecomics.xyz/",
+    language: ["English"],
+    category: "manga",
+    run() {
+      const cdn = "https://cdn.flamecomics.xyz/series";
+      const json = JSON.parse(
+        document.getElementById("__NEXT_DATA__")?.textContent ?? "",
+      );
+      const { chapter, previous, next } = json.props.pageProps;
+      const images = Object.keys(chapter.images).map(
+        (i) =>
+          `${cdn}/${chapter.series_id}/${chapter.token}/${chapter.images[i].name}`,
+      );
+      return {
+        title: `${chapter.title} ${chapter.chapter}`,
+        series: `../${chapter.series_id}`,
+        pages: images.length,
+        prev: previous,
+        next,
+        listImages: images,
       };
     },
   };
@@ -1434,7 +1462,6 @@
   const mangastreamwp = {
     name: [
       "MangaStream WordPress Plugin",
-      "Flame Comics",
       "Realm Oasis",
       "Voids-Scans",
       "Luminous Scans",
@@ -1452,7 +1479,6 @@
     url: /https?:\/\/[^/]*(scans?|comic|realmoasis|hivetoon|rizzfables)[^/]*\/.+/,
     homepage: [
       "https://themesia.com/mangastream-wordpress-theme/",
-      "https://flamecomics.com/",
       "https://realmoasis.com/",
       "https://void-scans.com/",
       "https://luminous-scans.com/",
@@ -2233,6 +2259,7 @@
     comicastle,
     comick,
     dysnatyscans,
+    flamecomics,
     inkr,
     inmanga,
     klmanga,
