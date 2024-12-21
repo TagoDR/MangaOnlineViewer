@@ -134,6 +134,22 @@ const getDevice = () => {
 };
 const isMobile = () => getDevice() === 'mobile' || getDevice() === 'tablet';
 
+const settingsChangeListener = (fn: (newSettings: Partial<ISettings>) => void) => {
+  if (typeof GM_addValueChangeListener !== 'undefined') {
+    return GM_addValueChangeListener(
+      'settings',
+      (_name: string, _oldValue: any, newValue: any, remote: boolean) => {
+        if (remote) fn(newValue);
+      },
+    );
+  } else {
+    // setInterval(() => {
+    //   fn(getSettings());
+    // }, 10000);
+    return false;
+  }
+};
+
 export {
   logScript,
   logScriptVerbose,
@@ -151,4 +167,5 @@ export {
   logClear,
   isMobile,
   getDevice,
+  settingsChangeListener,
 };

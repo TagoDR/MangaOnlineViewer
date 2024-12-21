@@ -52,20 +52,21 @@ export function hydrateApp() {
 
 const app = (manga: IManga) => {
   loadedManga = manga;
-  return html`
-    <div
-      id="MangaOnlineViewer"
-      class="${getUserSettings().colorScheme} 
+  const main = document.createElement('div');
+  main.id = 'MangaOnlineViewer';
+  main.className = `
+        ${getUserSettings().colorScheme} 
         ${getUserSettings().hidePageControls ? 'hideControls' : ''}
         ${isBookmarked() ? 'bookmarked' : ''}
-        ${getDevice()}"
-      data-theme="${getUserSettings().theme}"
-    >
-      <div id="menu" class="${getUserSettings().header}">${IconMenu2}</div>
-      ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
-      <div id="Overlay" class="overlay"></div>
-      ${CommentsPanel()} ${KeybindingsPanel()} ${BookmarksPanel()} ${SettingsPanel()}
-    </div>
+        ${getDevice()}`;
+  main.setAttribute('data-theme', getUserSettings().theme);
+
+  main.innerHTML = html`
+    <div id="menu" class="${getUserSettings().header}">${IconMenu2}</div>
+    ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
+    <div id="Overlay" class="overlay"></div>
+    ${CommentsPanel()} ${KeybindingsPanel()} ${BookmarksPanel()} ${SettingsPanel()}
   `;
+  return main.outerHTML;
 };
 export default app;

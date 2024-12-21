@@ -25,6 +25,7 @@ export default {
     'GM_listValues',
     'GM_deleteValue',
     'GM_xmlhttpRequest',
+    'GM_addValueChangeListener',
   ],
   noframes: 'on',
   connect: '*',

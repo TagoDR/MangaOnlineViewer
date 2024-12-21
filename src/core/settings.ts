@@ -6,10 +6,12 @@ import {
   logScript,
   removeValueGM,
   setSettings,
+  settingsChangeListener,
 } from '../utils/tampermonkey';
 import type { ISettings } from '../types';
 import diffObj from '../utils/diffObj';
 import locales from '../locales';
+import { isNothing } from '../utils/checks';
 
 export const defaultSettings: ISettings = {
   locale: 'en_US',
@@ -71,6 +73,16 @@ const getDefault = () =>
 
 // Configuration
 let settings: ISettings = _.defaultsDeep(getSettings(getDefault()), getDefault());
+
+settingsChangeListener((newValue: Partial<ISettings>) => {
+  const newSettings = _.defaultsDeep(newValue, getDefault());
+  const diff = diffObj(newSettings, settings);
+  if (!isNothing(diff)) {
+    logScript('Imported Settings', diff);
+    settings = newSettings;
+    document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
+  }
+});
 
 type SettingsKey = keyof typeof settings;
 

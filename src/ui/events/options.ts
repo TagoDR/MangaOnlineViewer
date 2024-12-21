@@ -13,7 +13,7 @@ export function buttonResetSettings() {
   resetSettings();
   const elem = document.getElementById('MangaOnlineViewer');
   elem?.removeAttribute('locale');
-  elem?.dispatchEvent(new Event('locale'));
+  elem?.dispatchEvent(new Event('hydrate'));
 }
 
 export function changeLocale(event: Event) {
@@ -21,7 +21,7 @@ export function changeLocale(event: Event) {
   updateSettings({ locale });
   const elem = document.getElementById('MangaOnlineViewer');
   elem?.setAttribute('locale', locale);
-  elem?.dispatchEvent(new Event('locale'));
+  elem?.dispatchEvent(new Event('hydrate'));
 }
 
 export function changeLoadMode(event: Event) {

@@ -9,6 +9,6 @@ export default function display(manga: IManga) {
   document.body.innerHTML = body(manga);
   events();
   loadManga(manga);
-  document.querySelector('#MangaOnlineViewer')?.addEventListener('locale', hydrateApp);
+  document.querySelector('#MangaOnlineViewer')?.addEventListener('hydrate', hydrateApp);
   if (manga.comments) document.querySelector('#CommentsArea')?.append(manga.comments);
 }
