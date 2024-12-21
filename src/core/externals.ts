@@ -46,12 +46,7 @@ const externalScripts: string[] = [
     integrity="sha256-KJTc4RYlnMMWuc4r2VjaBulFUWIF5ywlqbekhyENaf8="
     crossorigin="anonymous"
   ></script>`,
-  html` <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.37/ua-parser.min.js"
-    integrity="sha512-LAchvH0Y4sxYM1ouOaqHQ6WbSXvOgkioPaiyW0oPOFNNMNfpsBEpvzYmsxgDf8pQM/fMaMdxYP/nFenquTAkdw=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  ></script>`,
+  html` <script src="https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.40/src/ua-parser.min.js"></script>`,
   html` <script
     src="https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js"
     integrity="sha512-QX8zbIM1bENBmyyvWXAO/MnnZ+lMLuIxESquZAGbVR+2MOrvpsnosfgYa9h6EiPq9upqsiBa3ft/r1SP5tLhbA=="
