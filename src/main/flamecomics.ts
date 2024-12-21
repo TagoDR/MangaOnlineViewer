@@ -5,19 +5,19 @@ export default {
   homepage: 'https://flamecomics.xyz/',
   language: ['English'],
   category: 'manga',
-  run() {
+  run: function () {
     const cdn = 'https://cdn.flamecomics.xyz/series';
-    const json = JSON.parse(document.getElementById('__NEXT_DATA__')?.textContent ?? '');
-    const { chapter, previous, next } = json.props.pageProps;
-    const images = Object.keys(chapter.images).map(
-      (i) => `${cdn}/${chapter.series_id}/${chapter.token}/${chapter.images[i].name}`,
+    const json = JSON.parse(document.getElementById('__NEXT_DATA__')?.innerHTML ?? '');
+    const chapter = json?.props?.pageProps?.chapter;
+    const images = Object.keys(chapter?.images).map(
+      (i) => `${cdn}/${chapter?.series_id}/${chapter?.token}/${chapter?.images?.[i]?.name}`,
     );
     return {
-      title: `${chapter.title} ${chapter.chapter}`,
-      series: `../${chapter.series_id}`,
+      title: `${chapter?.title} ${chapter?.chapter}`,
+      series: `../${chapter?.series_id}`,
       pages: images.length,
-      prev: previous,
-      next: next,
+      prev: json?.props?.pageProps?.previous,
+      next: json?.props?.pageProps?.next,
       listImages: images,
     };
   },
