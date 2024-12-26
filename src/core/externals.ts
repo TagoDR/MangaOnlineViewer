@@ -58,9 +58,4 @@ const requiredScripts = externalScripts.map((script: string) => {
   const find = /src="(.+?)"/.exec(script);
   return find ? find[1] : '';
 });
-const externalCSS: string[] = [];
-const requiredCSS = externalCSS.map((script: string) => {
-  const find = /href="(.+?)"/.exec(script);
-  return find ? find[1] : '';
-});
-export { externalScripts, requiredScripts, externalCSS, requiredCSS };
+export { externalScripts, requiredScripts };

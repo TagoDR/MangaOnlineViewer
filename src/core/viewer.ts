@@ -2,7 +2,6 @@ import type { IManga } from '../types';
 import { logScript, logScriptVerbose } from '../utils/tampermonkey';
 import { getUserSettings } from './settings';
 import display from '../ui';
-import { cleanUpElement } from '../utils/cleanup';
 import { waitForFunc, waitWithTimeout } from '../utils/waitFor';
 
 async function captureComments() {
@@ -43,9 +42,6 @@ export default async function viewer(manga: IManga) {
   }
   setTimeout(() => {
     try {
-      cleanUpElement(document.documentElement, document.head, document.body);
-      window.scrollTo(0, 0);
-      logScriptVerbose(`Page Cleaned Up`);
       display(manga);
     } catch (e) {
       logScript(e);
