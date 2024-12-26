@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, ManhwaRead, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.12.17
+// @version       2024.12.26
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -16,6 +16,7 @@
 // @grant         GM_listValues
 // @grant         GM_deleteValue
 // @grant         GM_xmlhttpRequest
+// @grant         GM_addValueChangeListener
 // @noframes      on
 // @connect       *
 // @require       https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js
@@ -26,7 +27,7 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
 // @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.9/dist/hotkeys.min.js
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
-// @require       https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.37/ua-parser.min.js
+// @require       https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.40/src/ua-parser.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
 // @include       /https?:\/\/(www\.)?akuma\.moe\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?bestporncomix.com\/gallery\/.+/
@@ -1232,9 +1233,6 @@
     console.log("MangaOnlineViewer: ", ...text);
     return text;
   }
-  function logScriptVerbose(...text) {
-    return text;
-  }
   const logScriptC = (x) => (y) => logScript(x, y)[1];
   function getListGM() {
     return typeof GM_listValues !== "undefined" ? GM_listValues() : [];
@@ -1324,6 +1322,18 @@
     return device;
   };
   const isMobile = () => getDevice() === "mobile" || getDevice() === "tablet";
+  const settingsChangeListener = (fn) => {
+    if (typeof GM_addValueChangeListener !== "undefined") {
+      return GM_addValueChangeListener(
+        "settings",
+        (_name, _oldValue, newValue, remote) => {
+          if (remote) fn(newValue);
+        },
+      );
+    } else {
+      return false;
+    }
+  };
 
   async function fetchText(url, format) {
     return new Promise((resolve) => {
@@ -2204,6 +2214,17 @@
           defaultSettings,
         );
   let settings$2 = _.defaultsDeep(getSettings(getDefault()), getDefault());
+  settingsChangeListener((newValue) => {
+    const newSettings = _.defaultsDeep(newValue, getDefault());
+    const diff = diffObj(newSettings, settings$2);
+    if (!isNothing(diff)) {
+      logScript("Imported Settings", diff);
+      settings$2 = newSettings;
+      document
+        .getElementById("MangaOnlineViewer")
+        ?.dispatchEvent(new Event("hydrate"));
+    }
+  });
   function getUserSettings() {
     return settings$2;
   }
@@ -4840,14 +4861,14 @@
     resetSettings();
     const elem = document.getElementById("MangaOnlineViewer");
     elem?.removeAttribute("locale");
-    elem?.dispatchEvent(new Event("locale"));
+    elem?.dispatchEvent(new Event("hydrate"));
   }
   function changeLocale(event) {
     const locale = event.currentTarget.value;
     updateSettings({ locale });
     const elem = document.getElementById("MangaOnlineViewer");
     elem?.setAttribute("locale", locale);
-    elem?.dispatchEvent(new Event("locale"));
+    elem?.dispatchEvent(new Event("hydrate"));
   }
   function changeLoadMode(event) {
     const mode = event.currentTarget.value;
@@ -5503,35 +5524,23 @@
   }
   const app = (manga) => {
     loadedManga = manga;
-    return html`
-      <div
-        id="MangaOnlineViewer"
-        class="${getUserSettings().colorScheme} 
+    const main = document.createElement("div");
+    main.id = "MangaOnlineViewer";
+    main.className = `
+        ${getUserSettings().colorScheme} 
         ${getUserSettings().hidePageControls ? "hideControls" : ""}
         ${isBookmarked() ? "bookmarked" : ""}
-        ${getDevice()}"
-        data-theme="${getUserSettings().theme}"
-      >
-        <div id="menu" class="${getUserSettings().header}">${IconMenu2}</div>
-        ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
-        <div id="Overlay" class="overlay"></div>
-        ${commentsPanel()} ${KeybindingsPanel()} ${BookmarkPanel()}
-        ${SettingsPanel()}
-      </div>
+        ${getDevice()}`;
+    main.setAttribute("data-theme", getUserSettings().theme);
+    main.innerHTML = html`
+      <div id="menu" class="${getUserSettings().header}">${IconMenu2}</div>
+      ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
+      <div id="Overlay" class="overlay"></div>
+      ${commentsPanel()} ${KeybindingsPanel()} ${BookmarkPanel()}
+      ${SettingsPanel()}
     `;
+    return main.outerHTML;
   };
-
-  function display(manga) {
-    document.head.innerHTML = head(manga);
-    document.body.innerHTML = app(manga);
-    events();
-    loadManga(manga);
-    document
-      .querySelector("#MangaOnlineViewer")
-      ?.addEventListener("locale", hydrateApp);
-    if (manga.comments)
-      document.querySelector("#CommentsArea")?.append(manga.comments);
-  }
 
   const cleanUpElement = (...ele) =>
     ele.forEach((element) => {
@@ -5539,6 +5548,20 @@
         element.removeAttribute(attr);
       });
     });
+
+  function display(manga) {
+    cleanUpElement(document.documentElement, document.head, document.body);
+    window.scrollTo(0, 0);
+    document.head.innerHTML = head(manga);
+    document.body.innerHTML = app(manga);
+    events();
+    loadManga(manga);
+    document
+      .querySelector("#MangaOnlineViewer")
+      ?.addEventListener("hydrate", hydrateApp);
+    if (manga.comments)
+      document.querySelector("#CommentsArea")?.append(manga.comments);
+  }
 
   async function captureComments() {
     if (!getUserSettings().enableComments) return null;
@@ -5576,9 +5599,6 @@
     }
     setTimeout(() => {
       try {
-        cleanUpElement(document.documentElement, document.head, document.body);
-        window.scrollTo(0, 0);
-        logScriptVerbose(`Page Cleaned Up`);
         display(manga);
       } catch (e) {
         logScript(e);

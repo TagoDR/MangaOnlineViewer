@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Alandal, Asura Scans, Batoto, BilibiliComics, ComiCastle, Comick, Dynasty-Scans, Flame Comics, INKR, InManga, KLManga, Leitor, LHTranslation, Local Files, LynxScans, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHosted, MangaHub, MangasIn, MangaKakalot, MangaNelo, MangaNato, MangaOni, MangaPark, Mangareader, MangaSee, Manga4life, MangaTigre, MangaToons, MangaTown, ManhuaScan, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NaniScans, NineManga, OlympusScans, PandaManga, RawDevart, ReadComicsOnline, ReadManga Today, ReaperScans, SenManga(Raw), KLManga, TenManga, TuMangaOnline, TuManhwas, UnionMangas, WebNovel, WebToons, Manga33, Vortex Scans, YugenMangas, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.12.17
+// @version       2024.12.26
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -16,6 +16,7 @@
 // @grant         GM_listValues
 // @grant         GM_deleteValue
 // @grant         GM_xmlhttpRequest
+// @grant         GM_addValueChangeListener
 // @noframes      on
 // @connect       *
 // @require       https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js
@@ -26,7 +27,7 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
 // @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.9/dist/hotkeys.min.js
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
-// @require       https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.37/ua-parser.min.js
+// @require       https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.40/src/ua-parser.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
 // @include       /https?:\/\/alandal.com\/chapter\/.+\/\d+/
 // @include       /https?:\/\/(www.)?(asuracomic).(net)\/.+/
@@ -282,24 +283,22 @@
     waitFunc() {
       return /\/([^/]+)-chapter.+$/.test(window.location.pathname);
     },
-    async run() {
-      const apiUrl = "https://api.comick.io";
-      const chapterId = /\/([^/]+)-chapter.+$/.exec(
-        window.location.pathname,
-      )?.[1];
-      const data = await fetch(`${apiUrl}/chapter/${chapterId}`).then((res) =>
-        res.json(),
-      );
-      const pages = data.chapter.md_images.map(
-        (image) =>
-          `https://meo.comick.pictures/${image.b2key}?width=${image.w}`,
+    waitEle: "#__NEXT_DATA__",
+    run() {
+      const data = JSON.parse(
+        document.getElementById("__NEXT_DATA__")?.innerHTML ?? "",
+      )?.props?.pageProps;
+      const pages = data?.chapter?.md_images?.map(
+        (image) => `https://meo.comick.pictures/${image?.b2key}`,
       );
       return {
-        title: data.chapter.md_comics.title,
-        series: `/comic/${data.chapter.md_comics.slug}`,
-        pages: pages.length,
-        prev: data.prev?.href,
-        next: data.next?.href,
+        title:
+          data?.seoTitle ??
+          `${data.chapter?.md_comics?.title} ${data?.chapter?.chap}`,
+        series: `/comic/${data?.chapter?.md_comics?.slug}`,
+        pages: pages?.length,
+        prev: data?.prev?.href,
+        next: data?.next?.href,
         listImages: pages,
       };
     },
@@ -394,22 +393,22 @@
     homepage: "https://flamecomics.xyz/",
     language: ["English"],
     category: "manga",
-    run() {
+    run: function () {
       const cdn = "https://cdn.flamecomics.xyz/series";
       const json = JSON.parse(
-        document.getElementById("__NEXT_DATA__")?.textContent ?? "",
+        document.getElementById("__NEXT_DATA__")?.innerHTML ?? "",
       );
-      const { chapter, previous, next } = json.props.pageProps;
-      const images = Object.keys(chapter.images).map(
+      const chapter = json?.props?.pageProps?.chapter;
+      const images = Object.keys(chapter?.images).map(
         (i) =>
-          `${cdn}/${chapter.series_id}/${chapter.token}/${chapter.images[i].name}`,
+          `${cdn}/${chapter?.series_id}/${chapter?.token}/${chapter?.images?.[i]?.name}`,
       );
       return {
-        title: `${chapter.title} ${chapter.chapter}`,
-        series: `../${chapter.series_id}`,
+        title: `${chapter?.title} ${chapter?.chapter}`,
+        series: `../${chapter?.series_id}`,
         pages: images.length,
-        prev: previous,
-        next,
+        prev: json?.props?.pageProps?.previous,
+        next: json?.props?.pageProps?.next,
         listImages: images,
       };
     },
@@ -2324,9 +2323,6 @@
     console.log("MangaOnlineViewer: ", ...text);
     return text;
   }
-  function logScriptVerbose(...text) {
-    return text;
-  }
   const logScriptC = (x) => (y) => logScript(x, y)[1];
   function getListGM() {
     return typeof GM_listValues !== "undefined" ? GM_listValues() : [];
@@ -2416,6 +2412,18 @@
     return device;
   };
   const isMobile = () => getDevice() === "mobile" || getDevice() === "tablet";
+  const settingsChangeListener = (fn) => {
+    if (typeof GM_addValueChangeListener !== "undefined") {
+      return GM_addValueChangeListener(
+        "settings",
+        (_name, _oldValue, newValue, remote) => {
+          if (remote) fn(newValue);
+        },
+      );
+    } else {
+      return false;
+    }
+  };
 
   const diffObj = (changed, original) => {
     const changes = (object, base) =>
@@ -2886,6 +2894,36 @@
 
   const locales = [en_US, es_ES, pt_BR, zh_CN];
 
+  function isEmpty(value) {
+    return (
+      value === null || // Check for null
+      typeof value === "undefined" ||
+      value === void 0 || // Check for undefined
+      (typeof value === "string" && value === "") || // Check for empty string
+      (Array.isArray(value) && value.length === 0) || // Check for empty array
+      (typeof value === "object" && Object.keys(value).length === 0)
+    );
+  }
+  function isNothing(value) {
+    const isEmptyObject = (a) => {
+      if (!Array.isArray(a)) {
+        const hasNonempty = Object.keys(a).some(
+          (element) => !isNothing(a[element]),
+        );
+        return hasNonempty ? false : isEmptyObject(Object.keys(a));
+      }
+      return !a.some(
+        (element) => element instanceof Promise || !isNothing(element),
+      );
+    };
+    return (
+      !value ||
+      value === 0 ||
+      isEmpty(value) ||
+      (typeof value === "object" && isEmptyObject(value))
+    );
+  }
+
   const defaultSettings = {
     locale: "en_US",
     theme: "darkblue",
@@ -2943,6 +2981,17 @@
           defaultSettings,
         );
   let settings$2 = _.defaultsDeep(getSettings(getDefault()), getDefault());
+  settingsChangeListener((newValue) => {
+    const newSettings = _.defaultsDeep(newValue, getDefault());
+    const diff = diffObj(newSettings, settings$2);
+    if (!isNothing(diff)) {
+      logScript("Imported Settings", diff);
+      settings$2 = newSettings;
+      document
+        .getElementById("MangaOnlineViewer")
+        ?.dispatchEvent(new Event("hydrate"));
+    }
+  });
   function getUserSettings() {
     return settings$2;
   }
@@ -3865,36 +3914,6 @@
       </div>
     </nav>
   `;
-
-  function isEmpty(value) {
-    return (
-      value === null || // Check for null
-      typeof value === "undefined" ||
-      value === void 0 || // Check for undefined
-      (typeof value === "string" && value === "") || // Check for empty string
-      (Array.isArray(value) && value.length === 0) || // Check for empty array
-      (typeof value === "object" && Object.keys(value).length === 0)
-    );
-  }
-  function isNothing(value) {
-    const isEmptyObject = (a) => {
-      if (!Array.isArray(a)) {
-        const hasNonempty = Object.keys(a).some(
-          (element) => !isNothing(a[element]),
-        );
-        return hasNonempty ? false : isEmptyObject(Object.keys(a));
-      }
-      return !a.some(
-        (element) => element instanceof Promise || !isNothing(element),
-      );
-    };
-    return (
-      !value ||
-      value === 0 ||
-      isEmpty(value) ||
-      (typeof value === "object" && isEmptyObject(value))
-    );
-  }
 
   const listBookmarks = () => {
     if (isEmpty(getUserSettings().bookmarks)) {
@@ -5346,14 +5365,14 @@
     resetSettings();
     const elem = document.getElementById("MangaOnlineViewer");
     elem?.removeAttribute("locale");
-    elem?.dispatchEvent(new Event("locale"));
+    elem?.dispatchEvent(new Event("hydrate"));
   }
   function changeLocale(event) {
     const locale = event.currentTarget.value;
     updateSettings({ locale });
     const elem = document.getElementById("MangaOnlineViewer");
     elem?.setAttribute("locale", locale);
-    elem?.dispatchEvent(new Event("locale"));
+    elem?.dispatchEvent(new Event("hydrate"));
   }
   function changeLoadMode(event) {
     const mode = event.currentTarget.value;
@@ -6009,35 +6028,23 @@
   }
   const app = (manga) => {
     loadedManga = manga;
-    return html`
-      <div
-        id="MangaOnlineViewer"
-        class="${getUserSettings().colorScheme} 
+    const main = document.createElement("div");
+    main.id = "MangaOnlineViewer";
+    main.className = `
+        ${getUserSettings().colorScheme} 
         ${getUserSettings().hidePageControls ? "hideControls" : ""}
         ${isBookmarked() ? "bookmarked" : ""}
-        ${getDevice()}"
-        data-theme="${getUserSettings().theme}"
-      >
-        <div id="menu" class="${getUserSettings().header}">${IconMenu2}</div>
-        ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
-        <div id="Overlay" class="overlay"></div>
-        ${commentsPanel()} ${KeybindingsPanel()} ${BookmarkPanel()}
-        ${SettingsPanel()}
-      </div>
+        ${getDevice()}`;
+    main.setAttribute("data-theme", getUserSettings().theme);
+    main.innerHTML = html`
+      <div id="menu" class="${getUserSettings().header}">${IconMenu2}</div>
+      ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
+      <div id="Overlay" class="overlay"></div>
+      ${commentsPanel()} ${KeybindingsPanel()} ${BookmarkPanel()}
+      ${SettingsPanel()}
     `;
+    return main.outerHTML;
   };
-
-  function display(manga) {
-    document.head.innerHTML = head(manga);
-    document.body.innerHTML = app(manga);
-    events();
-    loadManga(manga);
-    document
-      .querySelector("#MangaOnlineViewer")
-      ?.addEventListener("locale", hydrateApp);
-    if (manga.comments)
-      document.querySelector("#CommentsArea")?.append(manga.comments);
-  }
 
   const cleanUpElement = (...ele) =>
     ele.forEach((element) => {
@@ -6045,6 +6052,20 @@
         element.removeAttribute(attr);
       });
     });
+
+  function display(manga) {
+    cleanUpElement(document.documentElement, document.head, document.body);
+    window.scrollTo(0, 0);
+    document.head.innerHTML = head(manga);
+    document.body.innerHTML = app(manga);
+    events();
+    loadManga(manga);
+    document
+      .querySelector("#MangaOnlineViewer")
+      ?.addEventListener("hydrate", hydrateApp);
+    if (manga.comments)
+      document.querySelector("#CommentsArea")?.append(manga.comments);
+  }
 
   function waitForElm(selector, target = document.body) {
     return new Promise((resolve) => {
@@ -6161,9 +6182,6 @@
     }
     setTimeout(() => {
       try {
-        cleanUpElement(document.documentElement, document.head, document.body);
-        window.scrollTo(0, 0);
-        logScriptVerbose(`Page Cleaned Up`);
         display(manga);
       } catch (e) {
         logScript(e);
