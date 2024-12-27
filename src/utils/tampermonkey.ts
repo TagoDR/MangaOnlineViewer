@@ -136,18 +136,21 @@ const isMobile = () => getDevice() === 'mobile' || getDevice() === 'tablet';
 
 const settingsChangeListener = (fn: (newSettings: Partial<ISettings>) => void) => {
   if (typeof GM_addValueChangeListener !== 'undefined') {
-    return GM_addValueChangeListener(
-      'settings',
-      (_name: string, _oldValue: any, newValue: any, remote: boolean) => {
-        if (remote) fn(newValue);
-      },
-    );
-  } else {
-    // setInterval(() => {
-    //   fn(getSettings());
-    // }, 10000);
-    return false;
+    try {
+      return GM_addValueChangeListener(
+        'settings',
+        (_name: string, _oldValue: any, newValue: any, remote: boolean) => {
+          if (remote) fn(newValue);
+        },
+      );
+    } finally {
+      /* empty */
+    }
   }
+  logScript('Using Interval Settings Change Listener');
+  return setInterval(() => {
+    fn(getSettings());
+  }, 10000);
 };
 
 export {
