@@ -4,8 +4,8 @@ import { findClosestByContentEnds, findClosestByContentStarts } from '../utils/f
 
 export default {
   name: 'Batoto',
-  url: /https?:\/\/(www\.)?bato.to\/(chapter|title).*/,
-  homepage: 'https://bato.to/',
+  url: /https?:\/\/(www\.)?(\w(ba)?to|readtoto|batocomic|comiko|battwo|batotoo|batotwo).(to|com|net|org)\/(chapter|title).*/,
+  homepage: 'https://rentry.co/batoto',
   language: ['English'],
   category: 'manga',
   waitEle: 'div[name="image-item"] img, .page-img',
