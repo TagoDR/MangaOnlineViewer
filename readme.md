@@ -36,16 +36,13 @@ then open it in the browser, and you will see the options to load local Files.
 
 ## Supported Manga Sites
 
-- [Alandal](https://alandal.com/) _[English]_
 - [Asura Scans](https://asuracomic.net/) _[English]_
-- [Batoto](https://bato.to/) _[English]_
+- [Batoto](https://rentry.co/batoto) _[English]_
 - [BilibiliComics](https://www.bilibilicomics.net/) _[English]_
 - [Comick](https://comick.io/) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
 - [Flame Comics](https://flamecomics.xyz/) _[English]_
-- [INKR](https://inkr.com/) _[English]_
 - [LHTranslation](https://lhtranslation.net/) _[English]_
-- [LynxScans](https://lynxscans.com/) _[English]_
 - [MangaBuddy](https://mangabuddy.com/) _[English]_
 - [MangaDemon](https://demonicscans.org/) _[English]_
 - [MangaDex](https://mangadex.org/) _[English]_
@@ -53,48 +50,25 @@ then open it in the browser, and you will see the options to load local Files.
 - [Mangago](https://www.mangago.me/) _[English]_
 - [MangaHub](https://mangahub.io/) _[English]_
 - [MangaKakalot](https://mangakakalot.com/) / [MangaNelo](https://www.manganelo.com/) / [MangaNato](https://www.manganato.com/) _[English]_
-- [MangaPark](https://mangapark.net/) _[English]_
 - [Mangareader](https://mangareader.to) _[English]_ **Obs: Some galleries will not be usable**
 - [MangaSee](https://mangasee123.com/) / [Manga4life](https://manga4life.com/) _[English]_
 - [MangaToons](https://mangatoon.mobi/) _[English]_
-- [MangaTown](https://www.mangatown.com/) _[English]_
-- [ManhuaScan](https://manhuascan.com/) _[English]_
 - [MangaGeko.com](https://www.mgeko.com/) / [MangaGeko.cc](https://www.mgeko.cc/) _[English]_
-- [NaniScans](https://naniscans.com/) _[English]_
-- [NineManga](https://ninemanga.com/) _[English]_
-- [PandaManga](https://www.pandamanga.com/) _[English]_
-- [ReadManga Today](https://readm.today/) _[English]_
 - [ReaperScans](https://reaperscans.com/) _[English]_
-- [KLManga](https://tapas.io/) _[English]_
-- [TenManga](https://www.tenmanga.com/) _[English]_
 - [WebNovel](https://www.webnovel.com/) _[English]_
 - [WebToons](https://www.webtoons.com/) _[English]_
-- [Manga33](https://manga33.com/) _[English]_
 - [Vortex Scans](https://vortexscans.org/) _[English]_
 - [ZeroScans](https://zscans.com/) _[English]_
 - [MangaStream WordPress Plugin](https://themesia.com/mangastream-wordpress-theme/) / [Realm Oasis](https://realmoasis.com/) / [Voids-Scans](https://void-scans.com/) / [Luminous Scans](https://luminous-scans.com/) / [Shimada Scans](https://shimadascans.com/) / [Night Scans](https://night-scans.com/) / [Manhwa-Freak](https://freakcomic.com/) / [OzulScansEn](https://ozulscansen.com/) / [CypherScans](https://cypherscans.xyz/) / [MangaGalaxy](https://mangagalaxy.me/) / [LuaScans](https://luascans.com/) / [Drake Scans](https://drake-scans.com/) / [Rizzfables](https://rizzfables.com/) / [NovatoScans](https://www.novatoscans.top/) _[English]_
 - [FoOlSlide](https://github.com/saintly2k/FoOlSlideX) / [Kireicake](https://reader.kireicake.com) _[English]_ **Obs: Any Site that uses FoOLSlide**
 - [Madara WordPress Plugin](https://mangabooth.com/) / [MangaHaus](https://manhuaus.com) / [Isekai Scan](https://isekaiscan.com/) / [Comic Kiba](https://comickiba.com/) / [Zinmanga](https://zinmanga.com/) / [mangatx](https://mangatx.com/) / [Toonily](https://toonily.net/) / [Mngazuki](https://mangazuki.me/) / [JaiminisBox](https://jaiminisbox.net) / [DisasterScans](https://disasterscans.com/) / [ManhuaPlus](https://manhuaplus.org/) / [TopManhua](https://www.topmanhua.com/) / [NovelMic](https://novelmic.com/) / [Reset-Scans](https://reset-scans.com/) / [LeviatanScans](https://leviatanscans.com/) / [Dragon Tea](https://dragontea.ink/) / [SetsuScans](https://setsuscans.com/) / [ToonGod](https://toongod.org/home/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
-- [Leitor](https://leitor.net/) _[Portuguese]_
-- [MangaHosted](https://mangahosted.com/) _[Portuguese]_
-- [UnionMangas](https://unionleitor.top/) _[Portuguese]_
-- [KLManga](https://klmanga.com/) _[Raw]_
 - [Local Files](/index.html?raw=1) _[Raw]_
-- [RawDevart](https://rawdevart.com) _[Raw]_
-- [SenManga(Raw)](https://raw.senmanga.com/) _[Raw]_
-- [InManga](https://inmanga.com//) _[Spanish]_
-- [MangasIn](https://mangas.in/) _[Spanish]_
 - [MangaOni](https://manga-oni.com/) _[Spanish]_
-- [MangaTigre](https://www.mangatigre.net/) _[Spanish]_
 - [ManhwaWeb](https://manhwaweb.com/) _[Spanish]_
-- [OlympusScans](https://olympusscans.com/) _[Spanish]_
 - [TuMangaOnline](https://lectortmo.com/) _[Spanish]_
-- [TuManhwas](https://tumanhwas.com/) _[Spanish]_
-- [YugenMangas](https://yugenmangas.lat/) _[Spanish]_
 
 ## Supported Comic Sites
 
-- [ComiCastle](https://comic.nizamkomputer.com/) _[English]_
 - [ReadComicsOnline](https://readcomicsonline.ru/) _[English]_
 
 ## Supported Hentai Sites
@@ -106,7 +80,6 @@ then open it in the browser, and you will see the options to load local Files.
 - [8Muses.com](https://comics.8muses.com/) / [8Muses.io](https://8muses.io/) _[English]_ **Obs: Slow start, bruteforce may be required**
 - [ExHentai](https://exhentai.org/) / [e-Hentai](https://e-hentai.org/) _[English]_ **Obs: May get your IP Banned, use with moderation**
 - [FSIComics](https://fsicomics.com/) _[English]_
-- [HBrowser](https://www.hbrowse.com/) _[English]_
 - [Hentai2Read](https://hentai2read.com/) _[English]_
 - [HentaiEra](https://hentaiera.com/) _[English]_
 - [HentaiFox](https://www.hentaifox.com/) _[English]_
@@ -117,13 +90,10 @@ then open it in the browser, and you will see the options to load local Files.
 - [hitomi](https://hitomi.la/) _[English]_
 - [Imhentai](https://imhentai.xxx/) _[English]_
 - [Luscious](https://luscious.net/) _[English]_
-- [ManhwaRead](https://www.manhwaread.com) _[English]_
 - [MultPorn](https://multporn.net/) _[English]_
 - [MyHentaiGallery](https://www.myhentaigallery.com) _[English]_
 - [nHentai.net](https://nhentai.net/) / [nHentai.xxx](https://nhentai.xxx/) / [lhentai](https://lhentai.com/) _[English]_
-- [9Hentai](https://9hentai.to) _[English]_
-- [OmegaScans](https://omegascans.org/) _[English]_
-- [PornComixOnline](https://www.porncomixone.net) _[English]_
+- [9Hentai](https://9hentai.so) _[English]_
 - [Pururin](https://pururin.me/) _[English]_
 - [SchaleNetwork](https://schale.network/) _[English]_
 - [Simply-Hentai](https://simply-hentai.com/) _[English]_

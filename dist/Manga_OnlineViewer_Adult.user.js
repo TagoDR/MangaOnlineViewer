@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, ManhwaRead, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.12.27
+// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
+// @version       2024.12.30
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -36,7 +36,6 @@
 // @include       /https?:\/\/(g\.)?(exhentai|e-hentai).org\/s\/.+\/.+/
 // @include       /https?:\/\/(www\.)?fsicomics.com\/.+/
 // @include       /https?:\/\/(www\.)?gntai.net\/(?!(category|tags|autores))[^/]+\/.+/
-// @include       /https?:\/\/(www\.)?hbrowse.com\/.+/
 // @include       /https?:\/\/(www\.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//
 // @include       /https?:\/\/(www\.)?hentaiera.com\/view\/.+\/\d+\/?/
 // @include       /https?:\/\/(www\.)?hentaifox.com\/g\/.+/
@@ -48,13 +47,10 @@
 // @include       /https?:\/\/(www\.)?imhentai.xxx\/view\/.+\/.+\//
 // @include       /https?:\/\/(www\.)?(kingcomix|chochox|comics18).(com|org)\/.+/
 // @include       /https?:\/\/(www\.)?luscious.net\/.+\/read\/.+/
-// @include       /https?:\/\/(www\.)?manhwaread.com\/.+/
 // @include       /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include       /https?:\/\/(www\.)?myhentaigallery.com\/g\/.+\/\d+/
 // @include       /https?:\/\/(www\.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/
-// @include       /https?:\/\/(www\.)?9hentai.(ru|to|com)\/g\/.+\/.+/
-// @include       /https?:\/\/(www\.)?(omegascans).(org)\/.+/
-// @include       /https?:\/\/(www\.)?porncomixone.net\/comic\/.+/
+// @include       /https?:\/\/(www\.)?9hentai.(so)\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?pururin.me\/(view|read)\/.+\/.+\/.+/
 // @include       /https?:\/\/(www\.)?(niyaniya|shupogaki|hoshino).(moe|one)/
 // @include       /https?:\/\/(www\.)?simply-hentai.com\/.+\/page\/.+/
@@ -426,41 +422,6 @@
         prev: "#",
         next: "#",
         listImages: images,
-      };
-    },
-  };
-
-  const hbrowse = {
-    name: "HBrowser",
-    url: /https?:\/\/(www\.)?hbrowse.com\/.+/,
-    homepage: "https://www.hbrowse.com/",
-    language: ["English"],
-    category: "hentai",
-    run() {
-      const url =
-        window.location.href + (window.location.href.endsWith("/") ? "" : "/");
-      const num = parseInt(
-        document.querySelector("#jsPageList a:last-child")?.textContent ?? "",
-        10,
-      );
-      const chapter = [
-        ...document.querySelectorAll("#chapters + table a.listLink"),
-      ];
-      const origin = chapter.findIndex((chp) =>
-        window.location.href.endsWith(chp.getAttribute("href") ?? "undefined"),
-      );
-      return {
-        title: document
-          .querySelector(".listTable td.listLong")
-          ?.textContent?.trim(),
-        series: /.+\/\d+\//.exec(window.location.href)?.at(0),
-        pages: num,
-        prev: chapter.at(origin - 1)?.getAttribute("href"),
-        next: chapter.at(origin + 1)?.getAttribute("href"),
-        listPages: Array(num)
-          .fill(0)
-          .map((_, i) => url + String(`0000${i + 1}`).slice(-5)),
-        img: "td.pageImage a img",
       };
     },
   };
@@ -989,37 +950,6 @@
     category: "hentai",
   };
 
-  function findClosestByContentEq(selector, content, ancestor = "a") {
-    return [...document.querySelectorAll(selector)]
-      ?.filter((e) => e.textContent?.trim() === content)?.[0]
-      ?.closest(ancestor);
-  }
-
-  const manhwaread = {
-    name: "ManhwaRead",
-    url: /https?:\/\/(www\.)?manhwaread.com\/.+/,
-    homepage: "https://www.manhwaread.com",
-    language: ["English"],
-    category: "hentai",
-    waitEle: "#readingContent img",
-    run() {
-      const images = [...document.querySelectorAll("#readingContent img")];
-      return {
-        title: document
-          .querySelector("#readingNavTop div:has(>h1)")
-          ?.textContent?.trim()
-          .replace(/\n/g, ""),
-        series: document
-          .querySelector("#readingNavTop a")
-          ?.getAttribute("href"),
-        pages: images.length,
-        prev: findClosestByContentEq("span", "Previous")?.getAttribute("href"),
-        next: findClosestByContentEq("span", "Next")?.getAttribute("href"),
-        listImages: images.map((img) => img.getAttribute("src")),
-      };
-    },
-  };
-
   const multporn = {
     name: "MultPorn",
     url: /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/,
@@ -1114,8 +1044,8 @@
 
   const ninehentai = {
     name: "9Hentai",
-    url: /https?:\/\/(www\.)?9hentai.(ru|to|com)\/g\/.+\/.+/,
-    homepage: "https://9hentai.to",
+    url: /https?:\/\/(www\.)?9hentai.(so)\/g\/.+\/.+/,
+    homepage: "https://9hentai.so",
     language: ["English"],
     category: "hentai",
     waitAttr: ["#jumpPageModal input", "max"],
@@ -1145,62 +1075,6 @@
             (_, i) =>
               `${api.results.image_server + api.results.id}/${i + 1}.jpg`,
           ),
-      };
-    },
-  };
-
-  const yugenmangas = {
-    name: "YugenMangas",
-    url: /https?:\/\/(www\.)?(yugenmangas).(com|net|lat)\/series\/.+/,
-    homepage: "https://yugenmangas.lat/",
-    language: ["Spanish"],
-    category: "manga",
-    async run() {
-      const images = [...document.querySelectorAll("p.flex > img")];
-      return {
-        title: document.querySelector("title")?.textContent?.trim(),
-        series: document
-          .querySelector("div.justify-between:nth-child(2) > a:nth-child(2)")
-          ?.getAttribute("href"),
-        pages: images.length,
-        prev: document
-          .querySelector("div.justify-between:nth-child(2) > a:nth-child(1)")
-          ?.getAttribute("href"),
-        next: document
-          .querySelector("div.justify-between:nth-child(2) > a:nth-child(3)")
-          ?.getAttribute("href"),
-        listImages: images.map((img) =>
-          img.classList.contains("lazy")
-            ? img.getAttribute("data-src")
-            : img.getAttribute("src"),
-        ),
-      };
-    },
-  };
-
-  const omegascans = {
-    ...yugenmangas,
-    name: ["OmegaScans"],
-    url: /https?:\/\/(www\.)?(omegascans).(org)\/.+/,
-    homepage: ["https://omegascans.org/"],
-    language: ["English"],
-    category: "hentai",
-  };
-
-  const porncomixonline = {
-    name: "PornComixOnline",
-    url: /https?:\/\/(www\.)?porncomixone.net\/comic\/.+/,
-    homepage: "https://www.porncomixone.net",
-    language: ["English"],
-    category: "hentai",
-    run() {
-      const images = [...document.querySelectorAll("figure a")];
-      return {
-        title: document.querySelector(".post-title")?.textContent?.trim(),
-        pages: images.length,
-        prev: "#",
-        next: "#",
-        listImages: images.map((img) => img.getAttribute("href")),
       };
     },
   };
@@ -1652,7 +1526,6 @@
     exhentai,
     fsicomics,
     gntai,
-    hbrowse,
     hentai2read,
     hentaiera,
     hentaifox,
@@ -1664,13 +1537,14 @@
     imhentai,
     kingcomix,
     luscious,
-    manhwaread,
+    // manhwaread, // Fixme
     multporn,
     myhentaigallery,
     nhentainet,
+    // Fixme
     ninehentai,
-    omegascans,
-    porncomixonline,
+    // omegascans, // Fixme
+    // porncomixonline, // Fixme
     pururin,
     schalenetwork,
     simplyhentai,

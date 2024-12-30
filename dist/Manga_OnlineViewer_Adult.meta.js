@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, HBrowser, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, ManhwaRead, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, OmegaScans, PornComixOnline, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2024.12.27
+// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
+// @version       2024.12.30
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -36,7 +36,6 @@
 // @include       /https?:\/\/(g\.)?(exhentai|e-hentai).org\/s\/.+\/.+/
 // @include       /https?:\/\/(www\.)?fsicomics.com\/.+/
 // @include       /https?:\/\/(www\.)?gntai.net\/(?!(category|tags|autores))[^/]+\/.+/
-// @include       /https?:\/\/(www\.)?hbrowse.com\/.+/
 // @include       /https?:\/\/(www\.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//
 // @include       /https?:\/\/(www\.)?hentaiera.com\/view\/.+\/\d+\/?/
 // @include       /https?:\/\/(www\.)?hentaifox.com\/g\/.+/
@@ -48,13 +47,10 @@
 // @include       /https?:\/\/(www\.)?imhentai.xxx\/view\/.+\/.+\//
 // @include       /https?:\/\/(www\.)?(kingcomix|chochox|comics18).(com|org)\/.+/
 // @include       /https?:\/\/(www\.)?luscious.net\/.+\/read\/.+/
-// @include       /https?:\/\/(www\.)?manhwaread.com\/.+/
 // @include       /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include       /https?:\/\/(www\.)?myhentaigallery.com\/g\/.+\/\d+/
 // @include       /https?:\/\/(www\.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/
-// @include       /https?:\/\/(www\.)?9hentai.(ru|to|com)\/g\/.+\/.+/
-// @include       /https?:\/\/(www\.)?(omegascans).(org)\/.+/
-// @include       /https?:\/\/(www\.)?porncomixone.net\/comic\/.+/
+// @include       /https?:\/\/(www\.)?9hentai.(so)\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?pururin.me\/(view|read)\/.+\/.+\/.+/
 // @include       /https?:\/\/(www\.)?(niyaniya|shupogaki|hoshino).(moe|one)/
 // @include       /https?:\/\/(www\.)?simply-hentai.com\/.+\/page\/.+/
