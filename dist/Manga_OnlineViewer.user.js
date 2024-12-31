@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, LHTranslation, Local Files, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaOni, Mangareader, MangaSee, Manga4life, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2024.12.30
+// @version       2024.12.31
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -1447,9 +1447,19 @@
     homepage: "https://vortexscans.org/",
     language: ["English"],
     category: "manga",
-    waitEle: 'img[alt*="Chapter"]',
+    waitVar: "__next_f",
+    waitFunc() {
+      return (
+        unsafeWindow.__next_f.find((i) => /images/.test(i?.[1]))?.length > 0
+      );
+    },
     run() {
-      const images = [...document.querySelectorAll('img[alt*="Chapter"]')];
+      const data = unsafeWindow.__next_f.find((i) =>
+        /images/.test(i?.[1]),
+      )?.[1];
+      const images = data
+        .slice(data.indexOf("images"))
+        .match(/http[^"]+\.(png|gif|jpg|jpeg|webp)/g);
       return {
         title: document
           .querySelector("time")
@@ -1460,14 +1470,14 @@
           .querySelector("time")
           ?.closest("a")
           ?.getAttribute("href"),
-        pages: images.length,
+        pages: images?.length,
         prev: findClosestByContentEq("button", "Prev", "a")?.getAttribute(
           "href",
         ),
         next: findClosestByContentEq("button", "Next", "a")?.getAttribute(
           "href",
         ),
-        listImages: images.map((img) => img.getAttribute("src")),
+        listImages: images,
       };
     },
   };
