@@ -26,7 +26,10 @@ export default {
       next: '#',
       listImages: Array(api.results.total_page)
         .fill(0)
-        .map((_, i) => `${api.results.image_server + api.results.id}/${i + 1}.jpg`),
+        .map(
+          (_, i) =>
+            `${api.results.image_server.replace('.com', '.so') + api.results.id}/${i + 1}.jpg`,
+        ),
     };
   },
 };
