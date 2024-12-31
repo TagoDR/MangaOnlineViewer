@@ -7,9 +7,15 @@ export default {
   homepage: 'https://vortexscans.org/',
   language: ['English'],
   category: 'manga',
-  waitEle: 'img[alt*="Chapter"]',
+  waitVar: '__next_f',
+  waitFunc() {
+    return unsafeWindow.__next_f.find((i: [number, string]) => /images/.test(i?.[1]))?.length > 0;
+  },
   run() {
-    const images = [...document.querySelectorAll('img[alt*="Chapter"]')];
+    const data: string = unsafeWindow.__next_f.find((i: [number, string]) =>
+      /images/.test(i?.[1]),
+    )?.[1];
+    const images = data.slice(data.indexOf('images')).match(/http[^"]+\.(png|gif|jpg|jpeg|webp)/g);
     return {
       title: document
         .querySelector('time')
@@ -17,10 +23,10 @@ export default {
         ?.querySelector('div')
         ?.textContent?.trim(),
       series: document.querySelector('time')?.closest('a')?.getAttribute('href'),
-      pages: images.length,
+      pages: images?.length,
       prev: findClosestByContentEq('button', 'Prev', 'a')?.getAttribute('href'),
       next: findClosestByContentEq('button', 'Next', 'a')?.getAttribute('href'),
-      listImages: images.map((img) => img.getAttribute('src')),
+      listImages: images,
     };
   },
 };
