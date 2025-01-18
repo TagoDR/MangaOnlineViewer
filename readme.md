@@ -64,6 +64,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [MangaStream WordPress Plugin](https://themesia.com/mangastream-wordpress-theme/) / [Realm Oasis](https://realmoasis.com/) / [Voids-Scans](https://void-scans.com/) / [Luminous Scans](https://luminous-scans.com/) / [Shimada Scans](https://shimadascans.com/) / [Night Scans](https://night-scans.com/) / [Manhwa-Freak](https://freakcomic.com/) / [OzulScansEn](https://ozulscansen.com/) / [CypherScans](https://cypherscans.xyz/) / [MangaGalaxy](https://mangagalaxy.me/) / [LuaScans](https://luascans.com/) / [Drake Scans](https://drake-scans.com/) / [Rizzfables](https://rizzfables.com/) / [NovatoScans](https://www.novatoscans.top/) / [TresDaos](https://tresdaos.com) _[English,Spanish]_
 - [Local Files](/index.html?raw=1) _[Raw]_
 - [Ikigai Mangas - EltaNews](https://visorikigai.eltanews.com/) / [Ikigai Mangas - Ajaco](https://visorikigai.ajaco.net/) _[Spanish]_
+- [KuManga](https://www.kumanga.com/) _[Spanish]_
 - [MangaOni](https://manga-oni.com/) _[Spanish]_
 - [ManhwaWeb](https://manhwaweb.com/) _[Spanish]_
 - [TuMangaOnline](https://lectortmo.com/) _[Spanish]_

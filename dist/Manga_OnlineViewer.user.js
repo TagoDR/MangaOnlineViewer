@@ -5,7 +5,7 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, LHTranslation, Local Files, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaOni, Mangareader, MangaSee, Manga4life, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LHTranslation, Local Files, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaOni, Mangareader, MangaSee, Manga4life, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
 // @version       2025.01.18
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
@@ -36,6 +36,7 @@
 // @include       /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/
 // @include       /https?:\/\/(www.)?(flamecomics).(xyz)\/series\/.+/
 // @include       /https?:\/\/visorikigai.(ajaco|eltanews).(com|net)\/capitulo\/\d+/
+// @include       /https?:\/\/(www\.)?kumanga.com\/manga\/leer\/.+/
 // @include       /https?:\/\/(www\.)?lhtranslation.net\/read.+/
 // @include       /(file:\/\/\/.+(index)?.html)/
 // @include       /https?:\/\/(www\.)?mangabuddy.com\/.+\/chapter.+/
@@ -356,6 +357,28 @@
         prev: findClosestByContentEq("span", "Siguiente")?.getAttribute("href"),
         next: findClosestByContentEq("span", "Anterior")?.getAttribute("href"),
         listImages: images,
+      };
+    },
+  };
+
+  const kumanga = {
+    name: "KuManga",
+    url: /https?:\/\/(www\.)?kumanga.com\/manga\/leer\/.+/,
+    homepage: "https://www.kumanga.com/",
+    language: ["Spanish"],
+    category: "manga",
+    run() {
+      const chapter = document
+        .querySelectorAll("select")
+        .item(1)
+        .querySelector("option[selected]");
+      return {
+        title: document.querySelector("title")?.textContent?.trim(),
+        series: document.querySelector("h2 a")?.getAttribute("href"),
+        pages: unsafeWindow.pUrl.length,
+        prev: `/manga/leer/${chapter?.nextElementSibling?.getAttribute("value")}`,
+        next: `/manga/leer/${chapter?.previousElementSibling?.getAttribute("value")}`,
+        listImages: unsafeWindow.pUrl.map((item) => item.imgURL),
       };
     },
   };
@@ -1548,6 +1571,7 @@
     // inkr, // Fixme
     // inmanga, //Fixme
     // klmanga, // Fixme
+    kumanga,
     lhtranslation,
     localhost,
     mangabuddy,
