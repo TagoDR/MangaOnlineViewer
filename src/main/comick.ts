@@ -9,6 +9,7 @@ export default {
     return /\/([^/]+)-chapter.+$/.test(window.location.pathname);
   },
   waitEle: '#__NEXT_DATA__',
+  waitTime: 3000,
   run() {
     const data = JSON.parse(document.getElementById('__NEXT_DATA__')?.innerHTML ?? '')?.props
       ?.pageProps;
