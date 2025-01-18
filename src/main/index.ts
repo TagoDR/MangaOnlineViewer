@@ -6,6 +6,7 @@ import dysnatyscans from './dysnatyscans';
 import foolslide from './foolslide';
 import flamecomics from './flamecomics';
 import ikigai from './ikigai';
+import kumanga from './kumanga';
 import lhtranslation from './lhtranslation';
 import localhost from './localhost';
 import madarawp from './madarawp';
@@ -45,6 +46,7 @@ const sites = [
   // inkr, // Fixme
   // inmanga, //Fixme
   // klmanga, // Fixme
+  kumanga,
   lhtranslation,
   localhost,
   mangabuddy,
