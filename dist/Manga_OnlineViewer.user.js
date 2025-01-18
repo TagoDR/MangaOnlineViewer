@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, LHTranslation, Local Files, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaOni, Mangareader, MangaSee, Manga4life, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.01.12
+// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, LHTranslation, Local Files, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaOni, Mangareader, MangaSee, Manga4life, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @version       2025.01.18
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -35,6 +35,7 @@
 // @include       /https?:\/\/(www\.)?comick.io\/.+/
 // @include       /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/
 // @include       /https?:\/\/(www.)?(flamecomics).(xyz)\/series\/.+/
+// @include       /https?:\/\/visorikigai.(ajaco|eltanews).(com|net)\/capitulo\/\d+/
 // @include       /https?:\/\/(www\.)?lhtranslation.net\/read.+/
 // @include       /(file:\/\/\/.+(index)?.html)/
 // @include       /https?:\/\/(www\.)?mangabuddy.com\/.+\/chapter.+/
@@ -57,7 +58,7 @@
 // @include       /https?:\/\/(www\.)?webtoons.com\/.+viewer.+/
 // @include       /https?:\/\/(www.)?(vortexscans).(org)\/.+/
 // @include       /https?:\/\/(www\.)?zscans.com\/comics\/.+/
-// @include       /https?:\/\/[^/]*(scans?|comic|realmoasis|hivetoon|rizzfables)[^/]*\/.+/
+// @include       /https?:\/\/[^/]*(scans?|comic|realmoasis|hivetoon|rizzfables|tresdaos)[^/]*\/.+/
 // @include       /^(?!.*jaiminisbox).*\/read\/.+/
 // @include       /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon)\/.+\/.+/
 // @exclude       /https?:\/\/(www\.)?tsumino.com\/.+/
@@ -328,6 +329,31 @@
         pages: images.length,
         prev: json?.props?.pageProps?.previous,
         next: json?.props?.pageProps?.next,
+        listImages: images,
+      };
+    },
+  };
+
+  const ikigai = {
+    name: ["Ikigai Mangas - EltaNews", "Ikigai Mangas - Ajaco"],
+    url: /https?:\/\/visorikigai.(ajaco|eltanews).(com|net)\/capitulo\/\d+/,
+    homepage: [
+      "https://visorikigai.eltanews.com/",
+      "https://visorikigai.ajaco.net/",
+    ],
+    language: ["Spanish"],
+    category: "manga",
+    run() {
+      const images = document
+        .querySelector('script[type="qwik/json"]')
+        ?.textContent?.match(/http[^'"]+webp/gi);
+      return {
+        title: document
+          .querySelector("title")
+          ?.text.replace(" — Manga en línea | MangaOni", ""),
+        pages: images?.length,
+        prev: findClosestByContentEq("span", "Siguiente")?.getAttribute("href"),
+        next: findClosestByContentEq("span", "Anterior")?.getAttribute("href"),
         listImages: images,
       };
     },
@@ -1114,7 +1140,7 @@
       );
       function ChapterURLEncode(reference) {
         let ChapterString = CHAPTERS[CurChapterIndex + reference];
-        if (ChapterString === void 0) {
+        if (ChapterString === undefined) {
           return "#";
         }
         ChapterString = ChapterString.Chapter;
@@ -1175,8 +1201,9 @@
       "Drake Scans",
       "Rizzfables",
       "NovatoScans",
+      "TresDaos",
     ],
-    url: /https?:\/\/[^/]*(scans?|comic|realmoasis|hivetoon|rizzfables)[^/]*\/.+/,
+    url: /https?:\/\/[^/]*(scans?|comic|realmoasis|hivetoon|rizzfables|tresdaos)[^/]*\/.+/,
     homepage: [
       "https://themesia.com/mangastream-wordpress-theme/",
       "https://realmoasis.com/",
@@ -1192,8 +1219,9 @@
       "https://drake-scans.com/",
       "https://rizzfables.com/",
       "https://www.novatoscans.top/",
+      "https://tresdaos.com",
     ],
-    language: ["English"],
+    language: ["English", "Spanish"],
     category: "manga",
     // waitTime: 2000,
     waitEle: ":where(#chapter, #nPL_select) option:nth-child(2)",
@@ -1515,6 +1543,7 @@
     comick,
     dysnatyscans,
     flamecomics,
+    ikigai,
     // inkr, // Fixme
     // inmanga, //Fixme
     // klmanga, // Fixme
@@ -2144,7 +2173,7 @@
     return (
       value === null || // Check for null
       typeof value === "undefined" ||
-      value === void 0 || // Check for undefined
+      value === undefined || // Check for undefined
       (typeof value === "string" && value === "") || // Check for empty string
       (Array.isArray(value) && value.length === 0) || // Check for empty array
       (typeof value === "object" && Object.keys(value).length === 0)
@@ -3685,7 +3714,7 @@
         function b(a, b) {
           return (
             "undefined" == typeof b
-              ? (b = { autoBom: !1 })
+              ? (b = { autoBom: false })
               : "object" != typeof b &&
                 (console.warn(
                   "Deprecated: Expected third argument to be a object",
@@ -3713,7 +3742,7 @@
         }
         function d(a) {
           var b = new XMLHttpRequest();
-          b.open("HEAD", a, !1);
+          b.open("HEAD", a, false);
           try {
             b.send();
           } catch (a) {}
@@ -3726,18 +3755,18 @@
             var b = document.createEvent("MouseEvents");
             b.initMouseEvent(
               "click",
-              !0,
-              !0,
+              true,
+              true,
               window,
               0,
               0,
               0,
               80,
               20,
-              !1,
-              !1,
-              !1,
-              !1,
+              false,
+              false,
+              false,
+              false,
               0,
               null,
             ),
@@ -3752,7 +3781,7 @@
                 : "object" == typeof commonjsGlobal &&
                     commonjsGlobal.global === commonjsGlobal
                   ? commonjsGlobal
-                  : void 0,
+                  : undefined,
           a =
             f.navigator &&
             /Macintosh/.test(navigator.userAgent) &&
@@ -4855,7 +4884,7 @@
         .querySelector(`#${kb}`)
         ?.value.split(",")
         ?.map((value) => value.trim());
-      newkeybinds[kb] = isNothing(keys) ? void 0 : keys;
+      newkeybinds[kb] = isNothing(keys) ? undefined : keys;
     });
     updateSettings({ keybinds: newkeybinds });
     document.querySelector("#KeybindingsList").innerHTML =
@@ -5171,7 +5200,7 @@
     }
     if (document.querySelector("#Header")?.classList.contains("headroom-end")) {
       clearInterval(scrollInterval);
-      scrollInterval = void 0;
+      scrollInterval = undefined;
       document.querySelector("#ScrollControl")?.classList.remove("running");
       logScript("Finished auto scroll");
     }
@@ -5180,7 +5209,7 @@
     const control = document.querySelector("#AutoScroll");
     if (scrollInterval) {
       clearInterval(scrollInterval);
-      scrollInterval = void 0;
+      scrollInterval = undefined;
       control?.classList.remove("running");
       logScript("Stopped auto scroll");
     } else {
@@ -5420,7 +5449,7 @@
     return comments;
   }
   async function viewer(manga) {
-    if (manga.before !== void 0) {
+    if (manga.before !== undefined) {
       await manga.before(manga.begin);
     }
     if (getUserSettings().enableComments && !manga.comments) {
@@ -5439,7 +5468,7 @@
     "#StartMOV {\n    all: revert;\n    backface-visibility: hidden;\n    font-size: 2rem;\n    color: #fff;\n    cursor: pointer;\n    margin: 0 auto;\n    padding: 0.5rem 1rem;\n    text-align: center;\n    border: none;\n    border-radius: 10px;\n    min-height: 50px;\n    width: 80%;\n    position: fixed;\n    right: 0;\n    left: 0;\n    bottom: 0;\n    z-index: 105000;\n    transition: all 0.4s ease-in-out;\n    background-size: 300% 100%;\n    background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\n    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\n}\n\n#StartMOV:hover {\n    background-position: 100% 0;\n    transition: all 0.4s ease-in-out;\n}\n\n#StartMOV:focus {\n    outline: none;\n}\n";
 
   async function testAttribute(site) {
-    if (site.waitAttr !== void 0) {
+    if (site.waitAttr !== undefined) {
       logScript(
         `Waiting for Attribute ${site.waitAttr[1]} of ${site.waitAttr[0]}`,
       );
@@ -5450,28 +5479,28 @@
     }
   }
   async function testElement(site) {
-    if (site.waitEle !== void 0) {
+    if (site.waitEle !== undefined) {
       logScript(`Waiting for Element ${site.waitEle}`);
       const wait = await waitForElm(site.waitEle);
       logScript(`Found Element ${site.waitEle} = `, wait);
     }
   }
   async function testVariable(site) {
-    if (site.waitVar !== void 0) {
+    if (site.waitVar !== undefined) {
       logScript(`Waiting for Variable ${site.waitVar}`);
       const wait = await waitForVar(site.waitVar);
       logScript(`Found Variable ${site.waitVar} = ${wait}`);
     }
   }
   async function testFunc(site) {
-    if (site.waitFunc !== void 0) {
+    if (site.waitFunc !== undefined) {
       logScript(`Waiting to pass Function check ${site.waitFunc}`);
       const wait = await waitForFunc(site.waitFunc);
       logScript(`Found Function check ${site.waitFunc} = ${wait}`);
     }
   }
   async function testTime(site) {
-    if (site.waitTime !== void 0) {
+    if (site.waitTime !== undefined) {
       logScript(`Waiting to for ${site.waitTime} milliseconds`);
       await new Promise((resolve) => {
         setTimeout(resolve, site.waitTime);
@@ -5745,10 +5774,10 @@
     style.appendChild(document.createTextNode(sweetalertStyle));
     document.body.appendChild(style);
     unsafeWindow.MOV = (startPage, endPage) => {
-      if (startPage !== void 0) {
+      if (startPage !== undefined) {
         manga.begin = startPage;
       }
-      if (endPage !== void 0) {
+      if (endPage !== undefined) {
         manga.pages = endPage;
       }
       viewer(manga).then(() => logScript("Page loaded"));

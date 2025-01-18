@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, LHTranslation, Local Files, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaOni, Mangareader, MangaSee, Manga4life, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.01.12
+// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, LHTranslation, Local Files, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaOni, Mangareader, MangaSee, Manga4life, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @version       2025.01.18
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -35,6 +35,7 @@
 // @include       /https?:\/\/(www\.)?comick.io\/.+/
 // @include       /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/
 // @include       /https?:\/\/(www.)?(flamecomics).(xyz)\/series\/.+/
+// @include       /https?:\/\/visorikigai.(ajaco|eltanews).(com|net)\/capitulo\/\d+/
 // @include       /https?:\/\/(www\.)?lhtranslation.net\/read.+/
 // @include       /(file:\/\/\/.+(index)?.html)/
 // @include       /https?:\/\/(www\.)?mangabuddy.com\/.+\/chapter.+/
@@ -57,7 +58,7 @@
 // @include       /https?:\/\/(www\.)?webtoons.com\/.+viewer.+/
 // @include       /https?:\/\/(www.)?(vortexscans).(org)\/.+/
 // @include       /https?:\/\/(www\.)?zscans.com\/comics\/.+/
-// @include       /https?:\/\/[^/]*(scans?|comic|realmoasis|hivetoon|rizzfables)[^/]*\/.+/
+// @include       /https?:\/\/[^/]*(scans?|comic|realmoasis|hivetoon|rizzfables|tresdaos)[^/]*\/.+/
 // @include       /^(?!.*jaiminisbox).*\/read\/.+/
 // @include       /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon)\/.+\/.+/
 // @exclude       /https?:\/\/(www\.)?tsumino.com\/.+/

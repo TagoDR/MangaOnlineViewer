@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.01.12
+// @version       2025.01.18
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -140,7 +140,7 @@
     return (
       value === null || // Check for null
       typeof value === "undefined" ||
-      value === void 0 || // Check for undefined
+      value === undefined || // Check for undefined
       (typeof value === "string" && value === "") || // Check for empty string
       (Array.isArray(value) && value.length === 0) || // Check for empty array
       (typeof value === "object" && Object.keys(value).length === 0)
@@ -699,7 +699,7 @@
             unsafeWindow.galleryinfo,
             file,
             "webp",
-            void 0,
+            undefined,
             "a",
           ),
         ),
@@ -3876,7 +3876,7 @@
         function b(a, b) {
           return (
             "undefined" == typeof b
-              ? (b = { autoBom: !1 })
+              ? (b = { autoBom: false })
               : "object" != typeof b &&
                 (console.warn(
                   "Deprecated: Expected third argument to be a object",
@@ -3904,7 +3904,7 @@
         }
         function d(a) {
           var b = new XMLHttpRequest();
-          b.open("HEAD", a, !1);
+          b.open("HEAD", a, false);
           try {
             b.send();
           } catch (a) {}
@@ -3917,18 +3917,18 @@
             var b = document.createEvent("MouseEvents");
             b.initMouseEvent(
               "click",
-              !0,
-              !0,
+              true,
+              true,
               window,
               0,
               0,
               0,
               80,
               20,
-              !1,
-              !1,
-              !1,
-              !1,
+              false,
+              false,
+              false,
+              false,
               0,
               null,
             ),
@@ -3943,7 +3943,7 @@
                 : "object" == typeof commonjsGlobal &&
                     commonjsGlobal.global === commonjsGlobal
                   ? commonjsGlobal
-                  : void 0,
+                  : undefined,
           a =
             f.navigator &&
             /Macintosh/.test(navigator.userAgent) &&
@@ -4984,7 +4984,7 @@
         .querySelector(`#${kb}`)
         ?.value.split(",")
         ?.map((value) => value.trim());
-      newkeybinds[kb] = isNothing(keys) ? void 0 : keys;
+      newkeybinds[kb] = isNothing(keys) ? undefined : keys;
     });
     updateSettings({ keybinds: newkeybinds });
     document.querySelector("#KeybindingsList").innerHTML =
@@ -5300,7 +5300,7 @@
     }
     if (document.querySelector("#Header")?.classList.contains("headroom-end")) {
       clearInterval(scrollInterval);
-      scrollInterval = void 0;
+      scrollInterval = undefined;
       document.querySelector("#ScrollControl")?.classList.remove("running");
       logScript("Finished auto scroll");
     }
@@ -5309,7 +5309,7 @@
     const control = document.querySelector("#AutoScroll");
     if (scrollInterval) {
       clearInterval(scrollInterval);
-      scrollInterval = void 0;
+      scrollInterval = undefined;
       control?.classList.remove("running");
       logScript("Stopped auto scroll");
     } else {
@@ -5470,7 +5470,7 @@
     return comments;
   }
   async function viewer(manga) {
-    if (manga.before !== void 0) {
+    if (manga.before !== undefined) {
       await manga.before(manga.begin);
     }
     if (getUserSettings().enableComments && !manga.comments) {
@@ -5489,7 +5489,7 @@
     "#StartMOV {\n    all: revert;\n    backface-visibility: hidden;\n    font-size: 2rem;\n    color: #fff;\n    cursor: pointer;\n    margin: 0 auto;\n    padding: 0.5rem 1rem;\n    text-align: center;\n    border: none;\n    border-radius: 10px;\n    min-height: 50px;\n    width: 80%;\n    position: fixed;\n    right: 0;\n    left: 0;\n    bottom: 0;\n    z-index: 105000;\n    transition: all 0.4s ease-in-out;\n    background-size: 300% 100%;\n    background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\n    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\n}\n\n#StartMOV:hover {\n    background-position: 100% 0;\n    transition: all 0.4s ease-in-out;\n}\n\n#StartMOV:focus {\n    outline: none;\n}\n";
 
   async function testAttribute(site) {
-    if (site.waitAttr !== void 0) {
+    if (site.waitAttr !== undefined) {
       logScript(
         `Waiting for Attribute ${site.waitAttr[1]} of ${site.waitAttr[0]}`,
       );
@@ -5500,28 +5500,28 @@
     }
   }
   async function testElement(site) {
-    if (site.waitEle !== void 0) {
+    if (site.waitEle !== undefined) {
       logScript(`Waiting for Element ${site.waitEle}`);
       const wait = await waitForElm(site.waitEle);
       logScript(`Found Element ${site.waitEle} = `, wait);
     }
   }
   async function testVariable(site) {
-    if (site.waitVar !== void 0) {
+    if (site.waitVar !== undefined) {
       logScript(`Waiting for Variable ${site.waitVar}`);
       const wait = await waitForVar(site.waitVar);
       logScript(`Found Variable ${site.waitVar} = ${wait}`);
     }
   }
   async function testFunc(site) {
-    if (site.waitFunc !== void 0) {
+    if (site.waitFunc !== undefined) {
       logScript(`Waiting to pass Function check ${site.waitFunc}`);
       const wait = await waitForFunc(site.waitFunc);
       logScript(`Found Function check ${site.waitFunc} = ${wait}`);
     }
   }
   async function testTime(site) {
-    if (site.waitTime !== void 0) {
+    if (site.waitTime !== undefined) {
       logScript(`Waiting to for ${site.waitTime} milliseconds`);
       await new Promise((resolve) => {
         setTimeout(resolve, site.waitTime);
@@ -5828,10 +5828,10 @@
     style.appendChild(document.createTextNode(sweetalertStyle));
     document.body.appendChild(style);
     unsafeWindow.MOV = (startPage, endPage) => {
-      if (startPage !== void 0) {
+      if (startPage !== undefined) {
         manga.begin = startPage;
       }
-      if (endPage !== void 0) {
+      if (endPage !== undefined) {
         manga.pages = endPage;
       }
       viewer(manga).then(() => logScript("Page loaded"));
