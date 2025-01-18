@@ -204,6 +204,7 @@
       return /\/([^/]+)-chapter.+$/.test(window.location.pathname);
     },
     waitEle: "#__NEXT_DATA__",
+    waitTime: 3e3,
     run() {
       const data = JSON.parse(
         document.getElementById("__NEXT_DATA__")?.innerHTML ?? "",
