@@ -1,65 +1,77 @@
-export function findByContentEq(selector: string, content: string): HTMLElement[] {
-  return [...document.querySelectorAll<HTMLElement>(selector)].filter(
-    (e) => e.textContent?.trim() === content,
+type ContentMatcher = (element: HTMLElement, content: string) => boolean;
+
+const matchers: Record<string, ContentMatcher> = {
+  eq: (element, content) => element.textContent?.trim() === content,
+  starts: (element, content) => !!element.textContent?.trim()?.startsWith(content),
+  ends: (element, content) => !!element.textContent?.trim()?.endsWith(content),
+};
+
+function findElements(
+  selector: string,
+  content: string | string[],
+  matcherKey: string,
+): HTMLElement[] {
+  const matcher = matchers[matcherKey];
+  if (!matcher) {
+    throw new Error(`Invalid matcherKey: ${matcherKey}`);
+  }
+
+  return [...document.querySelectorAll<HTMLElement>(selector)].filter((element) =>
+    Array.isArray(content) ? content.some((c) => matcher(element, c)) : matcher(element, content),
   );
 }
 
-export function findByContentStarts(selector: string, content: string): HTMLElement[] {
-  return [...document.querySelectorAll<HTMLElement>(selector)].filter((e) =>
-    e.textContent?.trim()?.startsWith(content),
-  );
-}
-
-export function findByContentEnds(selector: string, content: string): HTMLElement[] {
-  return [...document.querySelectorAll<HTMLElement>(selector)].filter((e) =>
-    e.textContent?.trim()?.endsWith(content),
-  );
-}
-
-export function findOneByContentEq(selector: string, content: string): HTMLElement {
-  return [...document.querySelectorAll<HTMLElement>(selector)].filter(
-    (e) => e.textContent?.trim() === content,
-  )?.[0];
-}
-
-export function findOneByContentStarts(selector: string, content: string): HTMLElement {
-  return [...document.querySelectorAll<HTMLElement>(selector)].filter((e) =>
-    e.textContent?.trim()?.startsWith(content),
-  )?.[0];
-}
-
-export function findOneByContentEnds(selector: string, content: string): HTMLElement {
-  return [...document.querySelectorAll<HTMLElement>(selector)].filter((e) =>
-    e.textContent?.trim()?.endsWith(content),
-  )?.[0];
-}
-
-export function findClosestByContentEq(
+function findOneElement(
   selector: string,
-  content: string,
+  content: string | string[],
+  matcherKey: string,
+): HTMLElement | undefined {
+  return findElements(selector, content, matcherKey)?.[0];
+}
+
+function findClosest(
+  selector: string,
+  content: string | string[],
+  matcherKey: string,
   ancestor: string = 'a',
 ): HTMLElement | null {
-  return [...document.querySelectorAll<HTMLElement>(selector)]
-    ?.filter((e) => e.textContent?.trim() === content)?.[0]
-    ?.closest(ancestor);
+  const element = findOneElement(selector, content, matcherKey);
+  return element?.closest(ancestor) ?? null;
 }
 
-export function findClosestByContentStarts(
-  selector: string,
-  content: string,
-  ancestor: string = 'a',
-): HTMLElement | null {
-  return [...document.querySelectorAll<HTMLElement>(selector)]
-    ?.filter((e) => e.textContent?.trim()?.startsWith(content))?.[0]
-    ?.closest(ancestor);
-}
+// Export functions
+export const findByContentEq = (selector: string, content: string | string[]) =>
+  findElements(selector, content, 'eq');
 
-export function findClosestByContentEnds(
+export const findByContentStarts = (selector: string, content: string | string[]) =>
+  findElements(selector, content, 'starts');
+
+export const findByContentEnds = (selector: string, content: string | string[]) =>
+  findElements(selector, content, 'ends');
+
+export const findOneByContentEq = (selector: string, content: string | string[]) =>
+  findOneElement(selector, content, 'eq');
+
+export const findOneByContentStarts = (selector: string, content: string | string[]) =>
+  findOneElement(selector, content, 'starts');
+
+export const findOneByContentEnds = (selector: string, content: string | string[]) =>
+  findOneElement(selector, content, 'ends');
+
+export const findClosestByContentEq = (
   selector: string,
-  content: string,
+  content: string | string[],
   ancestor: string = 'a',
-): HTMLElement | null {
-  return [...document.querySelectorAll<HTMLElement>(selector)]
-    ?.filter((e) => e.textContent?.trim()?.endsWith(content))?.[0]
-    ?.closest(ancestor);
-}
+) => findClosest(selector, content, 'eq', ancestor);
+
+export const findClosestByContentStarts = (
+  selector: string,
+  content: string | string[],
+  ancestor: string = 'a',
+) => findClosest(selector, content, 'starts', ancestor);
+
+export const findClosestByContentEnds = (
+  selector: string,
+  content: string | string[],
+  ancestor: string = 'a',
+) => findClosest(selector, content, 'ends', ancestor);

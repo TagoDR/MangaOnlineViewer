@@ -55,8 +55,14 @@ export default {
         document.querySelector(':where(.allc, .tac) a')?.getAttribute('href') ??
         document.querySelectorAll('[class*="breadcrumb"] a').item(1)?.getAttribute('href'),
       pages: images.length,
-      prev: findByContentEq(':where(.nextprev, .inner_nPL) a', 'Prev')?.[0]?.getAttribute('href'),
-      next: findByContentEq(':where(.nextprev, .inner_nPL) a', 'Next')?.[0]?.getAttribute('href'),
+      prev: findByContentEq(':where(.nextprev, .inner_nPL) a', [
+        'Prev',
+        'Anterior',
+      ])?.[0]?.getAttribute('href'),
+      next: findByContentEq(':where(.nextprev, .inner_nPL) a', [
+        'Next',
+        'Siguiente',
+      ])?.[0]?.getAttribute('href'),
       listImages: images.map(
         (img) =>
           img.getAttribute('data-src') ??
