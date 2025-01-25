@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LHTranslation, Local Files, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaOni, Mangareader, MangaSee, Manga4life, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.01.21
+// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LHTranslation, Local Files, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaOni, Mangareader, MangaSee, Manga4life, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @version       2025.01.25
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -59,7 +59,7 @@
 // @include       /https?:\/\/(www\.)?webtoons.com\/.+viewer.+/
 // @include       /https?:\/\/(www.)?(vortexscans).(org)\/.+/
 // @include       /https?:\/\/(www\.)?zscans.com\/comics\/.+/
-// @include       /https?:\/\/[^/]*(scans?|comic|realmoasis|hivetoon|rizzfables|tresdaos)[^/]*\/.+/
+// @include       /https?:\/\/[^/]*(scans?|comic|realmoasis|hivetoon|rizzfables|tresdaos|zonamiau)[^/]*\/.+/
 // @include       /^(?!.*jaiminisbox).*\/read\/.+/
 // @include       /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon)\/.+\/.+/
 // @exclude       /https?:\/\/(www\.)?tsumino.com\/.+/
@@ -68,31 +68,41 @@
 (function () {
   "use strict";
 
-  function findByContentEq(selector, content) {
-    return [...document.querySelectorAll(selector)].filter(
-      (e) => e.textContent?.trim() === content,
+  const matchers = {
+    eq: (element, content) => element.textContent?.trim() === content,
+    starts: (element, content) =>
+      !!element.textContent?.trim()?.startsWith(content),
+    ends: (element, content) =>
+      !!element.textContent?.trim()?.endsWith(content),
+  };
+  function findElements(selector, content, matcherKey) {
+    const matcher = matchers[matcherKey];
+    if (!matcher) {
+      throw new Error(`Invalid matcherKey: ${matcherKey}`);
+    }
+    return [...document.querySelectorAll(selector)].filter((element) =>
+      Array.isArray(content)
+        ? content.some((c) => matcher(element, c))
+        : matcher(element, content),
     );
   }
-  function findOneByContentStarts(selector, content) {
-    return [...document.querySelectorAll(selector)].filter((e) =>
-      e.textContent?.trim()?.startsWith(content),
-    )?.[0];
+  function findOneElement(selector, content, matcherKey) {
+    return findElements(selector, content, matcherKey)?.[0];
   }
-  function findClosestByContentEq(selector, content, ancestor = "a") {
-    return [...document.querySelectorAll(selector)]
-      ?.filter((e) => e.textContent?.trim() === content)?.[0]
-      ?.closest(ancestor);
+  function findClosest(selector, content, matcherKey, ancestor = "a") {
+    const element = findOneElement(selector, content, matcherKey);
+    return element?.closest(ancestor) ?? null;
   }
-  function findClosestByContentStarts(selector, content, ancestor = "a") {
-    return [...document.querySelectorAll(selector)]
-      ?.filter((e) => e.textContent?.trim()?.startsWith(content))?.[0]
-      ?.closest(ancestor);
-  }
-  function findClosestByContentEnds(selector, content, ancestor = "a") {
-    return [...document.querySelectorAll(selector)]
-      ?.filter((e) => e.textContent?.trim()?.endsWith(content))?.[0]
-      ?.closest(ancestor);
-  }
+  const findByContentEq = (selector, content) =>
+    findElements(selector, content, "eq");
+  const findOneByContentStarts = (selector, content) =>
+    findOneElement(selector, content, "starts");
+  const findClosestByContentEq = (selector, content, ancestor = "a") =>
+    findClosest(selector, content, "eq", ancestor);
+  const findClosestByContentStarts = (selector, content, ancestor = "a") =>
+    findClosest(selector, content, "starts", ancestor);
+  const findClosestByContentEnds = (selector, content, ancestor = "a") =>
+    findClosest(selector, content, "ends", ancestor);
 
   const asura = {
     name: "Asura Scans",
@@ -1226,8 +1236,9 @@
       "Rizzfables",
       "NovatoScans",
       "TresDaos",
+      "Lectormiau",
     ],
-    url: /https?:\/\/[^/]*(scans?|comic|realmoasis|hivetoon|rizzfables|tresdaos)[^/]*\/.+/,
+    url: /https?:\/\/[^/]*(scans?|comic|realmoasis|hivetoon|rizzfables|tresdaos|zonamiau)[^/]*\/.+/,
     homepage: [
       "https://themesia.com/mangastream-wordpress-theme/",
       "https://realmoasis.com/",
@@ -1244,6 +1255,7 @@
       "https://rizzfables.com/",
       "https://www.novatoscans.top/",
       "https://tresdaos.com",
+      "https://zonamiau.com/",
     ],
     language: ["English", "Spanish"],
     category: "manga",
@@ -1266,14 +1278,14 @@
             .item(1)
             ?.getAttribute("href"),
         pages: images.length,
-        prev: findByContentEq(
-          ":where(.nextprev, .inner_nPL) a",
+        prev: findByContentEq(":where(.nextprev, .inner_nPL) a", [
           "Prev",
-        )?.[0]?.getAttribute("href"),
-        next: findByContentEq(
-          ":where(.nextprev, .inner_nPL) a",
+          "Anterior",
+        ])?.[0]?.getAttribute("href"),
+        next: findByContentEq(":where(.nextprev, .inner_nPL) a", [
           "Next",
-        )?.[0]?.getAttribute("href"),
+          "Siguiente",
+        ])?.[0]?.getAttribute("href"),
         listImages: images.map(
           (img) =>
             img.getAttribute("data-src") ??
@@ -5346,12 +5358,14 @@
     return main.outerHTML;
   };
 
-  const cleanUpElement = (...ele) =>
-    ele.forEach((element) => {
-      element.getAttributeNames().forEach((attr) => {
-        element.removeAttribute(attr);
-      });
-    });
+  const removeAttributes = (element) => {
+    element
+      .getAttributeNames()
+      .forEach((attr) => element?.removeAttribute(attr));
+  };
+  const cleanUpElement = (...elements) => {
+    elements?.forEach(removeAttributes);
+  };
 
   function display(manga) {
     cleanUpElement(document.documentElement, document.head, document.body);
