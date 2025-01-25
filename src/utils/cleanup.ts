@@ -1,14 +1,19 @@
-export const cleanUpElement = (...ele: HTMLElement[]) =>
-  ele.forEach((element: HTMLElement) => {
-    element.getAttributeNames().forEach((attr) => {
-      element.removeAttribute(attr);
-    });
-  });
-export const cleanUpSelector = (...sel: string[]) =>
-  sel.forEach((selector: string) => {
+const removeAttributes = (element: HTMLElement) => {
+  element.getAttributeNames().forEach((attr) => element?.removeAttribute(attr));
+};
+
+export const cleanUpElement = (...elements: HTMLElement[]) => {
+  elements?.forEach(removeAttributes);
+};
+
+export const cleanUpSelector = (...selectors: string[]) => {
+  selectors?.forEach((selector) => {
     const element = document.querySelector<HTMLElement>(selector);
-    if (element) cleanUpElement(element);
+    if (element) {
+      removeAttributes(element);
+    }
   });
+};
 
 export function hideElements(selector: string) {
   // Get all elements on the page
@@ -43,13 +48,13 @@ export function hideElements(selector: string) {
 export function removeElements(selector: string) {
   // Select all script elements in the document
   const elements = document.querySelectorAll(selector);
-  elements.forEach((e) => {
-    e.remove();
+  elements?.forEach((e) => {
+    e?.remove();
   });
 }
 
 export default () => {
-  removeElements('style, link, meta');
+  removeElements('head :not(script)');
   hideElements('*');
   cleanUpElement(document.documentElement, document.head, document.body);
 };
