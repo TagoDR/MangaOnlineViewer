@@ -18,8 +18,9 @@ export default {
     'Rizzfables',
     'NovatoScans',
     'TresDaos',
+    'Lectormiau',
   ],
-  url: /https?:\/\/[^/]*(scans?|comic|realmoasis|hivetoon|rizzfables|tresdaos)[^/]*\/.+/,
+  url: /https?:\/\/[^/]*(scans?|comic|realmoasis|hivetoon|rizzfables|tresdaos|zonamiau)[^/]*\/.+/,
   homepage: [
     'https://themesia.com/mangastream-wordpress-theme/',
     'https://realmoasis.com/',
@@ -36,6 +37,7 @@ export default {
     'https://rizzfables.com/',
     'https://www.novatoscans.top/',
     'https://tresdaos.com',
+    'https://zonamiau.com/',
   ],
   language: ['English', 'Spanish'],
   category: 'manga',
