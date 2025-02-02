@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LHTranslation, Local Files, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaOni, Mangareader, MangaSee, Manga4life, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.01.25
+// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LHTranslation, Local Files, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, MangaNelo, MangaNato, MangaOni, Mangareader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @version       2025.02.02
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -48,7 +48,6 @@
 // @include       /https?:\/\/(www\.)?(read|chap)?(manganelo|mangakakalot|manganato).(com|to).*\/chapter.+/
 // @include       /https?:\/\/(www\.)?manga-oni.com\/lector\/.+\/\d+\/cascada/
 // @include       /https?:\/\/(www\.)?mangareader.to\/read\/.+\/.+\/.+/
-// @include       /https?:\/\/(www\.)?(mangasee123|manga4life).com\/read-online\/.+/
 // @include       /https?:\/\/.*mangatoon.mobi\/.+\/watch\/.+/
 // @include       /https?:\/\/(www\.)?manhwaweb.com\/leer\/.+/
 // @include       /https?:\/\/(www\.)?mgeko.(com|cc)?\/reader\/.*/
@@ -57,6 +56,7 @@
 // @include       /https?:\/\/(www\.)?(.+).com\/(viewer|news)\/.+\/(paginated|cascade)/
 // @include       /https?:\/\/(www\.)?webnovel.com\/comic\/.+/
 // @include       /https?:\/\/(www\.)?webtoons.com\/.+viewer.+/
+// @include       /https?:\/\/(www\.)?(weebcentral).com\/chapters\/.+/
 // @include       /https?:\/\/(www.)?(vortexscans).(org)\/.+/
 // @include       /https?:\/\/(www\.)?zscans.com\/comics\/.+/
 // @include       /https?:\/\/[^/]*(scans?|comic|realmoasis|hivetoon|rizzfables|tresdaos|zonamiau)[^/]*\/.+/
@@ -1152,73 +1152,6 @@
     },
   };
 
-  const mangasee = {
-    name: ["MangaSee", "Manga4life"],
-    url: /https?:\/\/(www\.)?(mangasee123|manga4life).com\/read-online\/.+/,
-    homepage: ["https://mangasee123.com/", "https://manga4life.com/"],
-    language: ["English"],
-    category: "manga",
-    waitAttr: [".img-fluid", "src"],
-    run() {
-      const src =
-        document.querySelector(".img-fluid")?.getAttribute("src") ?? "";
-      const script = [
-        ...document.querySelectorAll("body script:not([src])"),
-      ].at(-1)?.textContent;
-      const textCurChapter = script?.match(/CurChapter = ({.+});/) ?? [];
-      const CurChapter = JSON.parse(textCurChapter[1]);
-      const textCHAPTERS = script?.match(/CHAPTERS = (\[\{.+}]);/) ?? [];
-      const CHAPTERS = JSON.parse(textCHAPTERS[1]);
-      const CurChapterIndex = CHAPTERS.findIndex(
-        (chap) => chap.Chapter === CurChapter.Chapter,
-      );
-      function ChapterURLEncode(reference) {
-        let ChapterString = CHAPTERS[CurChapterIndex + reference];
-        if (ChapterString === undefined) {
-          return "#";
-        }
-        ChapterString = ChapterString.Chapter;
-        let Index = "";
-        const IndexString = ChapterString.substring(0, 1);
-        if (IndexString !== "1") {
-          Index = `-index-${IndexString}`;
-        }
-        const Chapter = parseInt(ChapterString.slice(1, -1), 10);
-        let Odd = "";
-        const OddString = ChapterString[ChapterString.length - 1];
-        if (OddString !== "0") {
-          Odd = `.${OddString}`;
-        }
-        return window.location.href.replace(
-          /-chapter-.+/,
-          `-chapter-${Chapter}${Odd}${Index}.html`,
-        );
-      }
-      return {
-        title: document
-          .querySelector("title")
-          ?.textContent?.replace(/ Page .+/, "")
-          .trim(),
-        series: document
-          .querySelector(".MainContainer a")
-          ?.getAttribute("href"),
-        pages: parseInt(CurChapter.Page, 10),
-        prev: ChapterURLEncode(-1),
-        next: ChapterURLEncode(1),
-        listImages: Array(parseInt(CurChapter.Page, 10))
-          .fill(0)
-          .map((_, i) =>
-            src.replace(
-              /-\d\d\d.png/,
-              `-${String(i + 1)
-                .padStart(3, "0")
-                .slice(-3)}.png`,
-            ),
-          ),
-      };
-    },
-  };
-
   const mangastreamwp = {
     name: [
       "MangaStream WordPress Plugin",
@@ -1505,6 +1438,42 @@
     },
   };
 
+  const weebcentral = {
+    name: "WeebCentral",
+    url: /https?:\/\/(www\.)?(weebcentral).com\/chapters\/.+/,
+    homepage: "https://weebcentral.com/",
+    language: ["English"],
+    category: "manga",
+    waitEle: "main section img",
+    async run() {
+      const src = [...document.querySelectorAll("main section img")].map(
+        (elem) => elem.getAttribute("src"),
+      );
+      const chaptersList = await fetch(
+        document
+          .querySelector("main section a + button")
+          ?.getAttribute("hx-get") ?? "",
+      ).then((res) => res.text());
+      const parser = new DOMParser();
+      const chapters = parser.parseFromString(chaptersList, "text/html");
+      return {
+        title: document
+          .querySelector("title")
+          ?.textContent?.replace(/ | .+/, "")
+          .trim(),
+        series: document.querySelector("main section a")?.getAttribute("href"),
+        pages: src.length,
+        prev: chapters
+          .querySelector("#selected_chapter")
+          ?.nextElementSibling?.getAttribute("href"),
+        next: chapters
+          .querySelector("#selected_chapter")
+          ?.previousElementSibling?.getAttribute("href"),
+        listImages: src,
+      };
+    },
+  };
+
   const vortexscans = {
     name: "Vortex Scans",
     url: /https?:\/\/(www.)?(vortexscans).(org)\/.+/,
@@ -1598,20 +1567,20 @@
     mangaoni,
     // mangapark, // Fixme
     mangareader,
-    mangasee,
     mangatoon,
-    // mangatown, // Fixme
     manhwaweb,
+    // mangatown, // Fixme
     mgeko,
-    // ninemanga, // Fixme
     readcomicsonline,
+    // ninemanga, // Fixme
     reaperscans,
+    tmofans,
     // senmanga, // Fixme
     // tapas, // Fixme
     // tenmanga, // Fixme
-    tmofans,
     webnovel,
     webtoons,
+    weebcentral,
     // wpmanga, // Archived
     vortexscans,
     zeroscans,
