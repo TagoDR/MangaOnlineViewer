@@ -19,7 +19,6 @@ import mangahub from './mangahub';
 import mangakakalot from './mangakakalot';
 import mangaoni from './mangaoni';
 import mangareader from './mangareader';
-import mangasee from './mangasee';
 import mangastreamwp from './mangastreamwp';
 import mangatoon from './mangatoon';
 import manhwaweb from './manhwaweb';
@@ -29,6 +28,7 @@ import reaperscans from './reaperscans';
 import tmofans from './tmofans';
 import webnovel from './webnovel';
 import webtoons from './webtoons';
+import weebcentral from './weebcentral';
 import vortexscans from './vortexscans';
 import zeroscans from './zeroscans';
 import { type ISite } from '../types';
@@ -61,20 +61,20 @@ const sites = [
   mangaoni,
   // mangapark, // Fixme
   mangareader,
-  mangasee,
   mangatoon,
-  // mangatown, // Fixme
   manhwaweb,
+  // mangatown, // Fixme
   mgeko,
-  // ninemanga, // Fixme
   readcomicsonline,
+  // ninemanga, // Fixme
   reaperscans,
+  tmofans,
   // senmanga, // Fixme
   // tapas, // Fixme
   // tenmanga, // Fixme
-  tmofans,
   webnovel,
   webtoons,
+  weebcentral,
   // wpmanga, // Archived
   vortexscans,
   zeroscans,
