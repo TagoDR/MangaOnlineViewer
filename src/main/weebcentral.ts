@@ -5,9 +5,9 @@ export default {
   homepage: 'https://weebcentral.com/',
   language: ['English'],
   category: 'manga',
-  waitEle: 'main section img',
+  waitEle: 'main section .maw-w-full',
   async run() {
-    const src = [...document.querySelectorAll('main section img')].map((elem) =>
+    const src = [...document.querySelectorAll('main section .maw-w-full')].map((elem) =>
       elem.getAttribute('src'),
     );
     const chaptersList = await fetch(
