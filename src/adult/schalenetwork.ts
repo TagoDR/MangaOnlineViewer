@@ -1,7 +1,5 @@
 // == SchaleNetwork ================================================================================
 
-import { fetchJsonFromUrls } from '../utils/request';
-
 export default {
   name: 'SchaleNetwork',
   url: /https?:\/\/(www\.)?(niyaniya|shupogaki|hoshino).(moe|one)/,
@@ -11,39 +9,36 @@ export default {
   lazy: false,
   waitEle: 'nav select option',
   async run() {
-    const options = {
-      method: 'GET',
-      headers: {
-        Accept: '*/*',
-        Referer: `${window.location.host}/`,
-        Origin: window.location.host,
-      },
-    };
-    const api = ['https://api.schale.network', 'https://api.gehenna.jp/'];
-    const url = window.location.pathname.split('/');
-    const galleryID = `${url[2]}/${url[3]}`;
-    const detailAPI = api.map((a) => `${a}/books/detail/${galleryID}`);
-    const detail = await fetchJsonFromUrls(options, ...detailAPI);
-    const dataID = Object.keys(detail.data)
-      .map(Number)
-      .sort((a, b) => b - a)[0];
-    const dataAPI = api.map(
-      (a) =>
-        `${a}/books/data/${galleryID}/${detail.data[dataID].id}/${detail.data[dataID].public_key}?v=${detail.updated_at ?? detail.created_at}&w=${dataID}`,
-    );
-    const { base, entries } = await fetchJsonFromUrls(options, ...dataAPI);
-    const data = entries.map((image: { path: string }) => `${base}/${image.path}?w=${dataID}`);
+    // const options = {
+    //   method: 'GET',
+    //   headers: {
+    //     Accept: '*/*',
+    //     Referer: `${window.location.host}/`,
+    //     Origin: window.location.host,
+    //   },
+    // };
+    const gallery = history.state.memo.gallery;
+    const size = gallery.resolution;
+    const { base, entries }  = history.state.memo.data;
+    // const extra = history.state.memo.extra.data[gallery.resolution];
+    // const api = ['https://api.schale.network', 'https://api.gehenna.jp/'];
+    // const clearance = localStorage.getItem('clearance');
+    // const dataAPI = api.map(
+    //   (a) => `${a}/books/data/${gallery.id}/${gallery.key}/${extra.data[size].id}/${extra.data[size].key}/${size}?crt=${clearance}`,
+    // );
+    // const { base, entries } = await fetch(dataAPI[0], options).then(res=>res.json());
+    const src = entries.map((image: { path: string }) => `${base}/${image.path}?w=${size}`);
     return {
-      title: detail.title,
-      series: `/g/${galleryID}/`,
-      pages: data.length,
+      title: gallery.title,
+      series: `/g/${gallery.id}/${gallery.key}/`,
+      pages: src.length,
       prev: '#',
       next: '#',
       fetchOptions: {
         method: 'GET',
         redirect: 'follow',
       },
-      listImages: data,
+      listImages: src,
     };
   },
 };
