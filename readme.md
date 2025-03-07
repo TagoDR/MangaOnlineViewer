@@ -49,7 +49,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [MangaFox](https://fanfox.net/) / [MangaHere](https://www.mangahere.cc/) _[English]_
 - [Mangago](https://www.mangago.me/) _[English]_
 - [MangaHub](https://mangahub.io/) _[English]_
-- [MangaKakalot](https://mangakakalot.com/) / [MangaNelo](https://www.manganelo.com/) / [MangaNato](https://www.manganato.com/) _[English]_
+- [MangaKakalot](https://mangakakalot.gg/) / [NeloManga ](https://www.nelomanga.com/) / [MangaNato](https://www.manganato.gg/) / [Natomanga](https://www.natomanga.com/) _[English]_
 - [Mangareader](https://mangareader.to) _[English]_ **Obs: Some galleries will not be usable**
 - [MangaToons](https://mangatoon.mobi/) _[English]_
 - [MangaGeko.com](https://www.mgeko.com/) / [MangaGeko.cc](https://www.mgeko.cc/) _[English]_
