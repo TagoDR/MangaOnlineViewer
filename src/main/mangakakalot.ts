@@ -1,11 +1,12 @@
 // == MangaKakalot =================================================================================
 export default {
-  name: ['MangaKakalot', 'MangaNelo', 'MangaNato'],
-  url: /https?:\/\/(www\.)?(read|chap)?(manganelo|mangakakalot|manganato).(com|to).*\/chapter.+/,
+  name: ['MangaKakalot', 'NeloManga ', 'MangaNato', 'Natomanga'],
+  url: /https?:\/\/(www\.)?(read|chap)?(nelomanga|mangakakalot|natomanga|manganato).(com|gg).*\/chapter.+/,
   homepage: [
-    'https://mangakakalot.com/',
-    'https://www.manganelo.com/',
-    'https://www.manganato.com/',
+    'https://mangakakalot.gg/',
+    'https://www.nelomanga.com/',
+    'https://www.manganato.gg/',
+    'https://www.natomanga.com/',
   ],
   language: ['English'],
   category: 'manga',
