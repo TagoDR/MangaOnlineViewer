@@ -7,6 +7,7 @@ import foolslide from './foolslide';
 import flamecomics from './flamecomics';
 import ikigai from './ikigai';
 import kumanga from './kumanga';
+import leercapitulo from './leercapitulo';
 import lhtranslation from './lhtranslation';
 import localhost from './localhost';
 import madarawp from './madarawp';
@@ -47,6 +48,7 @@ const sites = [
   // inmanga, //Fixme
   // klmanga, // Fixme
   kumanga,
+  leercapitulo,
   lhtranslation,
   localhost,
   mangabuddy,
