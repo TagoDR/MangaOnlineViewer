@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LHTranslation, Local Files, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, Natomanga, MangaOni, Mangareader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.03.07
+// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, Natomanga, MangaOni, Mangareader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @version       2025.03.13
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -37,6 +37,7 @@
 // @include       /https?:\/\/(www.)?(flamecomics).(xyz)\/series\/.+/
 // @include       /https?:\/\/visorikigai.(ajaco|eltanews).(com|net)\/capitulo\/\d+/
 // @include       /https?:\/\/(www\.)?kumanga.com\/manga\/leer\/.+/
+// @include       /https?:\/\/(www.)?leercapitulo.co\/leer\/.+/
 // @include       /https?:\/\/(www\.)?lhtranslation.net\/read.+/
 // @include       /(file:\/\/\/.+(index)?.html)/
 // @include       /https?:\/\/(www\.)?mangabuddy.com\/.+\/chapter.+/
@@ -331,6 +332,28 @@
         prev: `/manga/leer/${chapter?.nextElementSibling?.getAttribute('value')}`,
         next: `/manga/leer/${chapter?.previousElementSibling?.getAttribute('value')}`,
         listImages: unsafeWindow.pUrl.map((item) => item.imgURL),
+      };
+    },
+  };
+
+  const leercapitulo = {
+    name: 'LeerCapitulo',
+    url: /https?:\/\/(www.)?leercapitulo.co\/leer\/.+/,
+    homepage: 'https://www.leercapitulo.co/',
+    language: ['Spanish'],
+    category: 'manga',
+    waitEle: '#page_select',
+    run() {
+      const img = [...document.querySelectorAll('#page_select option')].map((el) =>
+        el.getAttribute('value'),
+      );
+      return {
+        title: document.querySelector('h1')?.textContent?.trim(),
+        series: document.querySelector('.chapter-title a')?.getAttribute('href'),
+        pages: img.length,
+        prev: document.querySelector('.pre')?.getAttribute('href'),
+        next: document.querySelector('.next')?.getAttribute('href'),
+        listImages: img,
       };
     },
   };
@@ -1368,6 +1391,7 @@
     // inmanga, //Fixme
     // klmanga, // Fixme
     kumanga,
+    leercapitulo,
     lhtranslation,
     localhost,
     mangabuddy,

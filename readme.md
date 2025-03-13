@@ -65,6 +65,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [Local Files](/index.html?raw=1) _[Raw]_
 - [Ikigai Mangas - EltaNews](https://visorikigai.eltanews.com/) / [Ikigai Mangas - Ajaco](https://visorikigai.ajaco.net/) _[Spanish]_
 - [KuManga](https://www.kumanga.com/) _[Spanish]_
+- [LeerCapitulo](https://www.leercapitulo.co/) _[Spanish]_
 - [MangaOni](https://manga-oni.com/) _[Spanish]_
 - [ManhwaWeb](https://manhwaweb.com/) _[Spanish]_
 - [TuMangaOnline](https://lectortmo.com/) _[Spanish]_
