@@ -19,8 +19,9 @@ export default {
     'NovatoScans',
     'TresDaos',
     'Lectormiau',
+    'NTRGod'
   ],
-  url: /https?:\/\/[^/]*(scans?|comic|realm|rizz|hivetoon|tresdaos|zonamiau)[^/]*\/.+/,
+  url: /https?:\/\/[^/]*(scans?|comic|realm|rizz|hivetoon|tresdaos|zonamiau|ntrgod)[^/]*\/.+/,
   homepage: [
     'https://themesia.com/mangastream-wordpress-theme/',
     'https://realmoasis.com/',
@@ -38,6 +39,7 @@ export default {
     'https://www.novatoscans.top/',
     'https://tresdaos.com',
     'https://zonamiau.com/',
+    'https://ntrgod.com/'
   ],
   language: ['English', 'Spanish'],
   category: 'manga',
