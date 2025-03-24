@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, GNTAI.net, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.03.18
+// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
+// @version       2025.03.24
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -27,7 +27,7 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
 // @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.9/dist/hotkeys.min.js
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
-// @require       https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.40/src/ua-parser.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
 // @include       /https?:\/\/(www\.)?akuma\.moe\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?bestporncomix.com\/gallery\/.+/
@@ -35,6 +35,7 @@
 // @include       /https?:\/\/(comics.)?8muses.(com|io)\/(comics\/)?picture\/.+/
 // @include       /https?:\/\/(g\.)?(exhentai|e-hentai).org\/s\/.+\/.+/
 // @include       /https?:\/\/(www\.)?fsicomics.com\/.+/
+// @include       /https?:\/\/(www\.)?freeadultcomix.com\/.+/
 // @include       /https?:\/\/(www\.)?gntai.net\/(?!(category|tags|autores))[^/]+\/.+/
 // @include       /https?:\/\/(www\.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//
 // @include       /https?:\/\/(www\.)?hentaiera.com\/view\/.+\/\d+\/?/
@@ -365,6 +366,25 @@
         prev: '#',
         next: '#',
         listImages: images.map((img) => img.getAttribute('data-large-file')),
+      };
+    },
+  };
+
+  const freeadultcomix = {
+    name: 'FreeAdultComix',
+    url: /https?:\/\/(www\.)?freeadultcomix.com\/.+/,
+    homepage: 'https://www.freeadultcomix.com',
+    language: ['English'],
+    category: 'hentai',
+    timer: 5e3,
+    run() {
+      const images = [...document.querySelectorAll('.foto img')];
+      return {
+        title: document.querySelector('.post-conteudo h1')?.textContent?.trim(),
+        pages: images.length,
+        prev: '#',
+        next: '#',
+        listImages: images.map((img) => img.getAttribute('src')),
       };
     },
   };
@@ -1207,6 +1227,7 @@
     eightMuses,
     exhentai,
     fsicomics,
+    freeadultcomix,
     gntai,
     hentai2read,
     hentaiera,
@@ -1328,15 +1349,16 @@
   function getEngine() {
     return getInfoGM.scriptHandler ?? 'Greasemonkey';
   }
-  const parser = new UAParser();
+  const parser = bowser.getParser(window.navigator.userAgent);
   const getDevice = () => {
-    const device = parser.getDevice().type;
-    if (device !== 'mobile' && device !== 'tablet') {
-      if (window.matchMedia('screen and (max-width: 600px)').matches) return 'mobile';
-      if (window.matchMedia('screen and (max-width: 992px)').matches) return 'tablet';
-      return 'desktop';
+    const device = parser.getPlatformType(true);
+    if (device === 'mobile' || window.matchMedia('screen and (max-width: 600px)').matches) {
+      return 'mobile';
     }
-    return device;
+    if (device === 'tablet' || window.matchMedia('screen and (max-width: 992px)').matches) {
+      return 'tablet';
+    }
+    return 'desktop';
   };
   const isMobile = () => getDevice() === 'mobile' || getDevice() === 'tablet';
   const settingsChangeListener = (fn) => {
@@ -5006,7 +5028,7 @@
   }
   async function start(sites) {
     logScript(
-      `Starting ${getInfoGM.script.name} ${getInfoGM.script.version} on ${getBrowser()} with ${getEngine()}`,
+      `Starting ${getInfoGM.script.name} ${getInfoGM.script.version} on ${getDevice()} ${getBrowser()} with ${getEngine()}`,
     );
     if (allowUpload()) return;
     logScript(sites.length, 'Known Manga Sites:', sites);
