@@ -3,7 +3,7 @@ import rangeSlider, { type RangeSlider } from 'range-slider-input';
 import rangeSliderStyles from 'range-slider-input/dist/style.css?inline';
 import _ from 'lodash';
 import { html } from '../utils/code-tag';
-import { getBrowser, getEngine, getInfoGM, logScript } from '../utils/tampermonkey';
+import { getBrowser, getDevice, getEngine, getInfoGM, logScript } from '../utils/tampermonkey';
 import type { IManga, ISite } from '../types';
 import formatPage from './viewer';
 import { getLocaleString, getUserSettings, isBookmarked } from './settings';
@@ -219,7 +219,7 @@ async function start(sites: ISite[]) {
   logScript(
     `Starting ${getInfoGM.script.name} ${
       getInfoGM.script.version
-    } on ${getBrowser()} with ${getEngine()}`,
+    } on ${getDevice()} ${getBrowser()} with ${getEngine()}`,
   );
   if (allowUpload()) return;
   logScript(sites.length, 'Known Manga Sites:', sites);

@@ -48,7 +48,7 @@ const globals = {
   'range-slider-input': 'rangeSlider',
   sweetalert2: 'Swal',
   tinycolor2: 'tinycolor',
-  'ua-parser-js': 'UAParser',
+  'bowser': 'bowser',
 };
 
 function generateReadme() {

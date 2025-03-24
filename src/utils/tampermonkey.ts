@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, no-console */
 // Encapsulation for the console
-import UAParser from 'ua-parser-js';
 import type { ISettings } from '../types';
+import Bowser from 'bowser';
 
 function logScript(...text: any[]): string[] {
   console.log('MangaOnlineViewer: ', ...text);
@@ -46,12 +46,12 @@ const getInfoGM =
   typeof GM_info !== 'undefined'
     ? GM_info
     : {
-        scriptHandler: 'Console',
-        script: {
-          name: 'Debug',
-          version: 'Testing',
-        },
-      };
+      scriptHandler: 'Console',
+      script: {
+        name: 'Debug',
+        version: 'Testing',
+      },
+    };
 
 // Replacement function for GM_getValue allowing for debugging in console
 function getValueGM(name: string, defaultValue: any = null): any {
@@ -122,15 +122,18 @@ function getEngine(): string {
   return getInfoGM.scriptHandler ?? 'Greasemonkey';
 }
 
-const parser = new UAParser();
+const parser = Bowser.getParser(window.navigator.userAgent);
 const getDevice = () => {
-  const device = parser.getDevice().type;
-  if (device !== 'mobile' && device !== 'tablet') {
-    if (window.matchMedia('screen and (max-width: 600px)').matches) return 'mobile';
-    if (window.matchMedia('screen and (max-width: 992px)').matches) return 'tablet';
-    return 'desktop';
+  const device = parser.getPlatformType(true);
+  if (device === 'mobile' || window.matchMedia(
+    'screen and (max-width: 600px)').matches) {
+    return 'mobile';
   }
-  return device;
+  if (device === 'tablet' || window.matchMedia(
+    'screen and (max-width: 992px)').matches) {
+    return 'tablet';
+  }
+  return 'desktop';
 };
 const isMobile = () => getDevice() === 'mobile' || getDevice() === 'tablet';
 
