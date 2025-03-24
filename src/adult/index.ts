@@ -4,6 +4,7 @@ import doujinmoe from './doujinmoe';
 import eightMuses from './8muses';
 import exhentai from './exhentai';
 import fsicomics from './fsicomics';
+import freeadultcomix from './freeadultcomix';
 import gntai from './gntai';
 import hentai2read from './hentai2read';
 import hentaiera from './hentaiera';
@@ -40,6 +41,7 @@ const sites = [
   eightMuses,
   exhentai,
   fsicomics,
+  freeadultcomix,
   gntai,
   hentai2read,
   hentaiera,
