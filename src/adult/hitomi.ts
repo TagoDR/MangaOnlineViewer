@@ -1,6 +1,6 @@
-// == hitomi =======================================================================================
+// == Hitomi =======================================================================================
 export default {
-  name: 'hitomi',
+  name: 'Hitomi',
   url: /https?:\/\/hitomi.la\/reader\/.+/,
   homepage: 'https://hitomi.la/',
   language: ['English'],
@@ -15,7 +15,7 @@ export default {
       prev: '#',
       next: '#',
       listImages: unsafeWindow.galleryinfo.files.map((file: string) =>
-        unsafeWindow.url_from_url_from_hash(unsafeWindow.galleryinfo, file, 'webp', undefined, 'a'),
+        unsafeWindow.url_from_url_from_hash(unsafeWindow.galleryinfo, file, 'webp'),
       ),
     };
   },
