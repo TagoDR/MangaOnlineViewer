@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { defineConfig } from 'vite';
 import viteBanner from 'vite-plugin-banner';
 import userscript, { type Metadata } from 'userscript-metadata-generator';
