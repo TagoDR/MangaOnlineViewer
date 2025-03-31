@@ -91,7 +91,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [HentaIHere](https://www.hentaihere.com/) _[English]_
 - [HentaiNexus](https://hentainexus.com/) _[English]_
 - [HenTalk](https://hentalk.pw/) _[English]_
-- [hitomi](https://hitomi.la/) _[English]_
+- [Hitomi](https://hitomi.la/) _[English]_
 - [Imhentai](https://imhentai.xxx/) _[English]_
 - [Luscious](https://luscious.net/) _[English]_
 - [MultPorn](https://multporn.net/) _[English]_
