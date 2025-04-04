@@ -1,8 +1,8 @@
-// == MangasIn ===================================================================================
+// == M440 ===================================================================================
 export default {
-  name: 'MangasIn',
-  url: /https?:\/\/(www\.)?mangas.in\/manga\/.+\/.+\/\d+/,
-  homepage: 'https://mangas.in/',
+  name: 'M440',
+  url: /https?:\/\/(www\.)?m440.in\/manga\/.+\/.+\/\d+/,
+  homepage: 'https://m440.in/',
   language: ['Spanish'],
   category: 'manga',
   run() {

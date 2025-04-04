@@ -10,6 +10,7 @@ import kumanga from './kumanga';
 import leercapitulo from './leercapitulo';
 import lhtranslation from './lhtranslation';
 import localhost from './localhost';
+import m440 from './m440.ts';
 import madarawp from './madarawp';
 import mangabuddy from './mangabuddy';
 import mangademon from './mangademon';
@@ -51,6 +52,7 @@ const sites = [
   leercapitulo,
   lhtranslation,
   localhost,
+  m440,
   mangabuddy,
   mangademon,
   mangadex,
@@ -58,7 +60,6 @@ const sites = [
   mangago,
   // mangafreak, // Fixme
   mangahub,
-  // mangasin, //Fixme
   mangakakalot,
   mangaoni,
   // mangapark, // Fixme
