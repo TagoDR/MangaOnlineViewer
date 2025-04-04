@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, Natomanga, MangaOni, Mangareader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.03.31
+// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, Natomanga, MangaOni, Mangareader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @version       2025.04.04
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -40,6 +40,7 @@
 // @include       /https?:\/\/(www.)?leercapitulo.co\/leer\/.+/
 // @include       /https?:\/\/(www\.)?lhtranslation.net\/read.+/
 // @include       /(file:\/\/\/.+(index)?.html)/
+// @include       /https?:\/\/(www\.)?m440.in\/manga\/.+\/.+\/\d+/
 // @include       /https?:\/\/(www\.)?mangabuddy.com\/.+\/chapter.+/
 // @include       /https?:\/\/(www\.)?demonicscans\.org\/title\/.+\/chapter\/.+/
 // @include       /https?:\/\/(www\.)?mangadex.org/
@@ -713,6 +714,28 @@
           ...Array(num).fill(0).map(randomPlaceholder),
         ],
         comments,
+      };
+    },
+  };
+
+  const m440 = {
+    name: 'M440',
+    url: /https?:\/\/(www\.)?m440.in\/manga\/.+\/.+\/\d+/,
+    homepage: 'https://m440.in/',
+    language: ['Spanish'],
+    category: 'manga',
+    run() {
+      const images = [...document.querySelectorAll('#all img')];
+      const chapter = document.querySelector('#chapter-list li.active');
+      return {
+        title: document.querySelector('title')?.textContent?.trim(),
+        series: document
+          .querySelector('#navbar-collapse-1 ul:nth-child(2) a')
+          ?.getAttribute('href'),
+        pages: images.length,
+        prev: chapter?.nextElementSibling?.firstElementChild?.getAttribute('href'),
+        next: chapter?.previousElementSibling?.firstElementChild?.getAttribute('href'),
+        listImages: images.map((img) => img.getAttribute('data-src')),
       };
     },
   };
@@ -1396,6 +1419,7 @@
     leercapitulo,
     lhtranslation,
     localhost,
+    m440,
     mangabuddy,
     mangademon,
     mangadex,
@@ -1403,7 +1427,6 @@
     mangago,
     // mangafreak, // Fixme
     mangahub,
-    // mangasin, //Fixme
     mangakakalot,
     mangaoni,
     // mangapark, // Fixme

@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.03.31
+// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
+// @version       2025.04.04
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -62,6 +62,7 @@
 // @include       /https?:\/\/(www\.)?wnacg.com\/photos-view-id-.+/
 // @include       /https?:\/\/(www\.)?xlecx.one\/.+/
 // @include       /https?:\/\/(www\.)?xyzcomics.com\/.+/
+// @include       /https?:\/\/(www\.)?yabai.si\/g\/.+\/read/
 // @include       /https?:\/\/.+\/(porncomic|read-scan)\/.+\/.+/
 // ==/UserScript==
 (function () {
@@ -233,6 +234,35 @@
     return Promise.race([promise, waitForTimer(timeout, false)]);
   }
 
+  async function bruteforce(
+    resetPosition,
+    quantPages,
+    nextSelector,
+    targetSelector,
+    imageSelector = 'img',
+    imageAttribute = 'src',
+  ) {
+    const div = document.createElement('div');
+    div.setAttribute(
+      'style',
+      'height: 100vh;width: 100vw;position: fixed;top: 0;left: 0;z-index: 100000;background: white;opacity: 0.5;',
+    );
+    document.body.append(div);
+    resetPosition();
+    const next = document.querySelector(nextSelector);
+    const target = document.querySelector(targetSelector);
+    const src = [];
+    for (let i = 1; i <= quantPages; i += 1) {
+      src[i - 1] = await waitWithTimer(
+        waitForAtb(imageSelector, imageAttribute, target ?? document.body),
+        100,
+      );
+      target?.querySelector(imageSelector)?.removeAttribute(imageAttribute);
+      next?.dispatchEvent(new Event('click'));
+    }
+    return src;
+  }
+
   const eightMuses = {
     name: ['8Muses.com', '8Muses.io'],
     obs: 'Slow start, bruteforce may be required',
@@ -264,30 +294,22 @@
         listImages: img,
         async before() {
           if (!unsafeWindow.link_images?.length) {
-            const div = document.createElement('div');
-            div.setAttribute(
-              'style',
-              'height: 100vh;width: 100vw;position: fixed;top: 0;left: 0;z-index: 100000;background: white;opacity: 0.5;',
+            this.listImages = await bruteforce(
+              () => {
+                const prev = document.querySelector('.page-prev');
+                while (
+                  document.querySelector('.c-dropdown-toggle')?.textContent?.match(/\d+/)?.at(0) !==
+                  '1'
+                ) {
+                  prev?.dispatchEvent(new Event('click'));
+                }
+              },
+              this.pages,
+              '.page-next',
+              '.p-picture',
+              '.photo img',
+              'src',
             );
-            document.body.append(div);
-            const prev = document.querySelector('.page-prev');
-            while (
-              document.querySelector('.c-dropdown-toggle')?.textContent?.match(/\d+/)?.at(0) !== '1'
-            ) {
-              prev?.dispatchEvent(new Event('click'));
-            }
-            const next = document.querySelector('.page-next');
-            const target = document.querySelector('.p-picture');
-            const src = [];
-            for (let i = 1; i <= this.pages; i += 1) {
-              src[i - 1] = await waitWithTimer(
-                waitForAtb('.photo img', 'src', target ?? document.body),
-                100,
-              );
-              target?.querySelector('img')?.removeAttribute('src');
-              next?.dispatchEvent(new Event('click'));
-            }
-            this.listImages = src;
           }
         },
       };
@@ -1220,6 +1242,39 @@
     },
   };
 
+  const yabai = {
+    name: 'Yabai',
+    url: /https?:\/\/(www\.)?yabai.si\/g\/.+\/read/,
+    homepage: 'https://yabai.si/',
+    language: ['English'],
+    category: 'hentai',
+    async run() {
+      const num = document.querySelectorAll('nav select option').length;
+      return {
+        title: document.querySelector('title')?.textContent?.trim(),
+        series: '../',
+        pages: num,
+        prev: '#',
+        next: '#',
+        listImages: [''],
+        async before() {
+          this.listImages = await bruteforce(
+            () => {
+              const item = document.querySelector('select option');
+              if (item) item.selected = true;
+              document.querySelector('select')?.dispatchEvent(new Event('change'));
+            },
+            num,
+            'button[title="Next"]',
+            'h1 + div',
+            'img.mx-auto',
+            'src',
+          );
+        },
+      };
+    },
+  };
+
   const sites = [
     akumamoe,
     bestporncomix,
@@ -1258,6 +1313,7 @@
     wnacg,
     xlecxone,
     xyzcomics,
+    yabai,
     madarawp,
     // Must be at the end because is a generic check
   ];

@@ -66,6 +66,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [Ikigai Mangas - EltaNews](https://visorikigai.eltanews.com/) / [Ikigai Mangas - Ajaco](https://visorikigai.ajaco.net/) _[Spanish]_
 - [KuManga](https://www.kumanga.com/) _[Spanish]_
 - [LeerCapitulo](https://www.leercapitulo.co/) _[Spanish]_
+- [M440](https://m440.in/) _[Spanish]_
 - [MangaOni](https://manga-oni.com/) _[Spanish]_
 - [ManhwaWeb](https://manhwaweb.com/) _[Spanish]_
 - [TuMangaOnline](https://lectortmo.com/) _[Spanish]_
@@ -105,6 +106,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [Tsumino](https://tsumino.com/) _[English]_
 - [XlecxOne](https://xlecx.one/) _[English]_
 - [xyzcomics](https://xyzcomics.com/) _[English]_
+- [Yabai](https://yabai.si/) _[English]_
 - [Madara WordPress Plugin](#) / [AllPornComic](https://allporncomic.com/) / [Manytoon](https://manytoon.com/) / [Manga District](https://mangadistrict.com/) _[English]_ **Obs: Any Site that uses Madara Wordpress Plugin**
 - [wnacg](https://wnacg.com/) _[English,Raw,Chinese]_
 - [KingComix](https://kingcomix.com/) / [Chochox](https://chochox.com/porno/) / [Comics18](https://comics18.org/) _[English,Spanish]_
