@@ -1,5 +1,5 @@
 // == 8Muses =======================================================================================
-import { waitForAtb, waitWithTimer } from '../utils/waitFor';
+import { bruteforce } from '../utils/bruteforce';
 
 export default {
   name: ['8Muses.com', '8Muses.io'],
@@ -32,33 +32,22 @@ export default {
       listImages: img,
       async before() {
         if (!unsafeWindow.link_images?.length) {
-          const div = document.createElement('div');
-          div.setAttribute(
-            'style',
-            'height: 100vh;width: 100vw;position: fixed;top: 0;left: 0;z-index: 100000;background: white;opacity: 0.5;',
+          this.listImages = await bruteforce(
+            () => {
+              const prev = document.querySelector('.page-prev');
+              while (
+                document.querySelector('.c-dropdown-toggle')?.textContent?.match(/\d+/)?.at(0) !==
+                '1'
+              ) {
+                prev?.dispatchEvent(new Event('click'));
+              }
+            },
+            this.pages,
+            '.page-next',
+            '.p-picture',
+            '.photo img',
+            'src',
           );
-          document.body.append(div);
-          const prev = document.querySelector('.page-prev');
-          while (
-            document.querySelector('.c-dropdown-toggle')?.textContent?.match(/\d+/)?.at(0) !== '1'
-          ) {
-            prev?.dispatchEvent(new Event('click'));
-          }
-
-          const next = document.querySelector('.page-next');
-          const target = document.querySelector<HTMLDivElement>('.p-picture');
-          const src = [];
-          for (let i = 1; i <= this.pages; i += 1) {
-            // eslint-disable-next-line no-await-in-loop
-            src[i - 1] = await waitWithTimer(
-              waitForAtb('.photo img', 'src', target ?? document.body),
-              100,
-            );
-            target?.querySelector('img')?.removeAttribute('src');
-            next?.dispatchEvent(new Event('click'));
-          }
-
-          this.listImages = src;
         }
       },
     };

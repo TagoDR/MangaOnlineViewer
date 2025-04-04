@@ -32,6 +32,7 @@ import vercomicsporno from './vercomicsporno';
 import wnacg from './wnacg';
 import xlecxone from './xlecxone';
 import xyzcomics from './xyzcomics';
+import yabai from './yabai';
 import { type ISite } from '../types';
 
 const sites = [
@@ -71,6 +72,7 @@ const sites = [
   wnacg,
   xlecxone,
   xyzcomics,
+  yabai,
   madarawp, // Must be at the end because is a generic check
 ] as ISite[];
 export default sites;
