@@ -11,8 +11,8 @@ export default {
       title: document.querySelector('title')?.textContent?.trim(),
       series: document.querySelector('h2 a')?.getAttribute('href'),
       pages: unsafeWindow.pUrl.length,
-      prev: `/manga/leer/${chapter?.nextElementSibling?.getAttribute('value')}`,
-      next: `/manga/leer/${chapter?.previousElementSibling?.getAttribute('value')}`,
+      prev: `/manga/leer/${chapter?.previousElementSibling?.getAttribute('value')}`,
+      next: `/manga/leer/${chapter?.nextElementSibling?.getAttribute('value')}`,
       listImages: unsafeWindow.pUrl.map((item: { imgURL: string }) => item.imgURL),
     };
   },
