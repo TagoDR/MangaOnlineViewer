@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, Natomanga, MangaOni, Mangareader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.04.04
+// @version       2025.04.10
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -330,8 +330,8 @@
         title: document.querySelector('title')?.textContent?.trim(),
         series: document.querySelector('h2 a')?.getAttribute('href'),
         pages: unsafeWindow.pUrl.length,
-        prev: `/manga/leer/${chapter?.nextElementSibling?.getAttribute('value')}`,
-        next: `/manga/leer/${chapter?.previousElementSibling?.getAttribute('value')}`,
+        prev: `/manga/leer/${chapter?.previousElementSibling?.getAttribute('value')}`,
+        next: `/manga/leer/${chapter?.nextElementSibling?.getAttribute('value')}`,
         listImages: unsafeWindow.pUrl.map((item) => item.imgURL),
       };
     },
