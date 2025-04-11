@@ -59,7 +59,7 @@ export default {
     'https://toongod.org/home/',
   ],
   language: ['English'],
-  obs: 'Any Site that uses Madara Wordpress Plugin',
+  obs: 'Any Site that uses Madara WordPress Plugin',
   category: 'manga',
   waitFunc: () => {
     const images = findImages();

@@ -88,7 +88,7 @@ const observerEvent = _.throttle(executeCheck, settings.throttle);
  * 'src' from 'data-src' then call a callback function.
  * @param element
  * @param callback
- * @fetch fetchOptions
+ * @param fetchOptions
  */
 function lazyLoad(
   element: HTMLImageElement,

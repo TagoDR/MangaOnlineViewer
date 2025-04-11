@@ -32,7 +32,7 @@ export default {
       pages: images.length,
       prev: chapter?.previousElementSibling?.getAttribute('value'),
       next: chapter?.nextElementSibling?.getAttribute('value'),
-      listImages: images.map((img, i) => img[i === 0 ? 0 : 1]),
+      listImages: images.map((img:string[], i:number) => img[i === 0 ? 0 : 1]),
     };
   },
 };

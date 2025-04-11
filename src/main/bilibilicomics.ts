@@ -7,7 +7,7 @@ export default {
   category: 'manga',
   waitEle: '#__NUXT_DATA__',
   async run() {
-    const json: [any] = JSON.parse(document.querySelector('#__NUXT_DATA__')?.innerHTML ?? '');
+    const json: unknown[] = JSON.parse(document.querySelector('#__NUXT_DATA__')?.innerHTML ?? '');
     const images = json.filter(
       (x) => typeof x === 'string' && /.(png|jpg|jpeg|gif|bmp|webp)$/i.exec(x),
     );

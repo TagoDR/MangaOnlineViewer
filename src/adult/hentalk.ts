@@ -17,7 +17,7 @@ export default {
       ?.getAttribute('src')
       ?.match(/image\/(.+)\//)?.[1];
     const images = api.nodes[1].data.filter(
-      (e: any) => typeof e === 'string' && /\.(png|gif|jpg|jpeg|webp)$/.test(e),
+      (e: unknown) => typeof e === 'string' && /\.(png|gif|jpg|jpeg|webp)$/.test(e),
     );
     return {
       title: document
