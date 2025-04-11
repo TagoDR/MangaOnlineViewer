@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.04.10
+// @version       2025.04.11
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -859,7 +859,7 @@
       'https://toongod.org/home/',
     ],
     language: ['English'],
-    obs: 'Any Site that uses Madara Wordpress Plugin',
+    obs: 'Any Site that uses Madara WordPress Plugin',
     category: 'manga',
     waitFunc: () => {
       const images = findImages();
@@ -3645,7 +3645,7 @@
     const url = element.getAttribute('value') ?? element.getAttribute('href');
     if (event.button !== 1 && !event.ctrlKey) {
       if (url && url !== '#') {
-        window.location.href = url;
+        window.location.href = new URL(url).href;
       } else if (element.id === 'series') {
         window.history.back();
       }
