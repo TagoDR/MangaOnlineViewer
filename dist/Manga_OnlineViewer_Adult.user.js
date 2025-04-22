@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.04.11
+// @version       2025.04.22
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -679,20 +679,6 @@
     },
   };
 
-  function findServer(cId) {
-    const serverRanges = [
-      { min: 0, max: 274825, name: 'm1' },
-      { min: 274826, max: 403818, name: 'm2' },
-      { min: 403819, max: 527143, name: 'm3' },
-      { min: 527144, max: 632481, name: 'm4' },
-      { min: 632482, max: 816010, name: 'm5' },
-      { min: 816011, max: 970098, name: 'm6' },
-      { min: 970099, max: 1121113, name: 'm7' },
-      { min: 1121114, max: 1259410, name: 'm8' },
-      { min: 1259411, max: Infinity, name: 'm9' },
-    ];
-    return serverRanges.find((server) => cId >= server.min && cId <= server.max)?.name;
-  }
   const imhentai = {
     name: 'Imhentai',
     url: /https?:\/\/(www\.)?imhentai.xxx\/view\/.+\/.+\//,
@@ -700,12 +686,11 @@
     language: ['English'],
     category: 'hentai',
     waitVar: 'g_th',
-    run() {
+    async run() {
       const galleryId = document.querySelector('#gallery_id')?.getAttribute('value');
       const imageDir = document.querySelector('#image_dir')?.getAttribute('value');
       const num = parseInt(document.querySelector('#pages')?.getAttribute('value') ?? '', 10);
-      const cId = parseInt(document.querySelector('#u_id')?.getAttribute('value') ?? '', 10);
-      const randomServer = unsafeWindow.random_server ?? `${findServer(cId)}.imhentai.xxx`;
+      const randomServer = await waitForVar('random_server');
       return {
         title: document.querySelector('title')?.textContent?.trim(),
         series: document.querySelector('.return_btn')?.getAttribute('href'),
