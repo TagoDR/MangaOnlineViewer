@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, Natomanga, MangaOni, Mangareader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.04.30
+// @version       2025.05.08
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -3600,6 +3600,125 @@
       .catch((msg) => logScript("One or more images couldn't be Downloaded", msg));
   }
 
+  var dist = {};
+
+  var constants = {};
+
+  var hasRequiredConstants;
+
+  function requireConstants() {
+    if (hasRequiredConstants) return constants;
+    hasRequiredConstants = 1;
+    Object.defineProperty(constants, '__esModule', { value: true });
+    constants.BLANK_URL =
+      constants.relativeFirstCharacters =
+      constants.whitespaceEscapeCharsRegex =
+      constants.urlSchemeRegex =
+      constants.ctrlCharactersRegex =
+      constants.htmlCtrlEntityRegex =
+      constants.htmlEntitiesRegex =
+      constants.invalidProtocolRegex =
+        void 0;
+    constants.invalidProtocolRegex = /^([^\w]*)(javascript|data|vbscript)/im;
+    constants.htmlEntitiesRegex = /&#(\w+)(^\w|;)?/g;
+    constants.htmlCtrlEntityRegex = /&(newline|tab);/gi;
+    constants.ctrlCharactersRegex = /[\u0000-\u001F\u007F-\u009F\u2000-\u200D\uFEFF]/gim;
+    constants.urlSchemeRegex = /^.+(:|&colon;)/gim;
+    constants.whitespaceEscapeCharsRegex = /(\\|%5[cC])((%(6[eE]|72|74))|[nrt])/g;
+    constants.relativeFirstCharacters = ['.', '/'];
+    constants.BLANK_URL = 'about:blank';
+    return constants;
+  }
+
+  var hasRequiredDist;
+
+  function requireDist() {
+    if (hasRequiredDist) return dist;
+    hasRequiredDist = 1;
+    Object.defineProperty(dist, '__esModule', { value: true });
+    dist.sanitizeUrl = void 0;
+    var constants_1 = requireConstants();
+    function isRelativeUrlWithoutProtocol(url) {
+      return constants_1.relativeFirstCharacters.indexOf(url[0]) > -1;
+    }
+    function decodeHtmlCharacters(str) {
+      var removedNullByte = str.replace(constants_1.ctrlCharactersRegex, '');
+      return removedNullByte.replace(constants_1.htmlEntitiesRegex, function (match, dec) {
+        return String.fromCharCode(dec);
+      });
+    }
+    function isValidUrl(url) {
+      return URL.canParse(url);
+    }
+    function decodeURI(uri) {
+      try {
+        return decodeURIComponent(uri);
+      } catch (e) {
+        // Ignoring error
+        // It is possible that the URI contains a `%` not associated
+        // with URI/URL-encoding.
+        return uri;
+      }
+    }
+    function sanitizeUrl(url) {
+      if (!url) {
+        return constants_1.BLANK_URL;
+      }
+      var charsToDecode;
+      var decodedUrl = decodeURI(url.trim());
+      do {
+        decodedUrl = decodeHtmlCharacters(decodedUrl)
+          .replace(constants_1.htmlCtrlEntityRegex, '')
+          .replace(constants_1.ctrlCharactersRegex, '')
+          .replace(constants_1.whitespaceEscapeCharsRegex, '')
+          .trim();
+        decodedUrl = decodeURI(decodedUrl);
+        charsToDecode =
+          decodedUrl.match(constants_1.ctrlCharactersRegex) ||
+          decodedUrl.match(constants_1.htmlEntitiesRegex) ||
+          decodedUrl.match(constants_1.htmlCtrlEntityRegex) ||
+          decodedUrl.match(constants_1.whitespaceEscapeCharsRegex);
+      } while (charsToDecode && charsToDecode.length > 0);
+      var sanitizedUrl = decodedUrl;
+      if (!sanitizedUrl) {
+        return constants_1.BLANK_URL;
+      }
+      if (isRelativeUrlWithoutProtocol(sanitizedUrl)) {
+        return sanitizedUrl;
+      }
+      // Remove any leading whitespace before checking the URL scheme
+      var trimmedUrl = sanitizedUrl.trimStart();
+      var urlSchemeParseResults = trimmedUrl.match(constants_1.urlSchemeRegex);
+      if (!urlSchemeParseResults) {
+        return sanitizedUrl;
+      }
+      var urlScheme = urlSchemeParseResults[0].toLowerCase().trim();
+      if (constants_1.invalidProtocolRegex.test(urlScheme)) {
+        return constants_1.BLANK_URL;
+      }
+      var backSanitized = trimmedUrl.replace(/\\/g, '/');
+      // Handle special cases for mailto: and custom deep-link protocols
+      if (urlScheme === 'mailto:' || urlScheme.includes('://')) {
+        return backSanitized;
+      }
+      // For http and https URLs, perform additional validation
+      if (urlScheme === 'http:' || urlScheme === 'https:') {
+        if (!isValidUrl(backSanitized)) {
+          return constants_1.BLANK_URL;
+        }
+        var url_1 = new URL(backSanitized);
+        url_1.protocol = url_1.protocol.toLowerCase();
+        url_1.hostname = url_1.hostname.toLowerCase();
+        return url_1.toString();
+      }
+      return backSanitized;
+    }
+    dist.sanitizeUrl = sanitizeUrl;
+    return dist;
+  }
+
+  var distExports = requireDist();
+
   function buttonStartDownload(event) {
     const button = event.currentTarget;
     if (button.classList.contains('loading')) {
@@ -3617,7 +3736,7 @@
     const url = element.getAttribute('value') ?? element.getAttribute('href');
     if (event.button !== 1 && !event.ctrlKey) {
       if (url && url !== '#') {
-        window.location.href = new URL(url).href;
+        window.location.href = distExports.sanitizeUrl(url);
       } else if (element.id === 'series') {
         window.history.back();
       }
