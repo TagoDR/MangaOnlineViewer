@@ -1,6 +1,7 @@
 import { logScript } from '../../utils/tampermonkey';
 import generateZip from '../../core/download';
 import { addEvent } from './common';
+import { sanitizeUrl } from '@braintree/sanitize-url';
 
 export function buttonStartDownload(event: Event) {
   const button = event.currentTarget as HTMLInputElement;
@@ -22,7 +23,7 @@ function buttonRedirectURL(event: Event) {
   const url = element.getAttribute('value') ?? element.getAttribute('href');
   if ((event as MouseEvent).button !== 1 && !(event as MouseEvent).ctrlKey) {
     if (url && url !== '#') {
-      window.location.href = new URL(url).href;
+      window.location.href = sanitizeUrl(url);
     } else if (element.id === 'series') {
       window.history.back();
     }
