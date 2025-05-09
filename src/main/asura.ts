@@ -20,6 +20,9 @@ export default {
       prev: findClosestByContentEq('h2', 'Prev', 'a')?.getAttribute('href'),
       next: findClosestByContentEq('h2', 'Next', 'a')?.getAttribute('href'),
       listImages: images.map((img) => img.getAttribute('src')),
+      before(){
+        document.querySelector('button.absolute:nth-child(2)')?.dispatchEvent(new Event('click', { bubbles: true }));
+      }
     };
   },
 };
