@@ -87,6 +87,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [FreeAdultComix](https://www.freeadultcomix.com) _[English]_
 - [Hentai2Read](https://hentai2read.com/) _[English]_
 - [HentaiEra](https://hentaiera.com/) _[English]_
+- [HentaiForce](https://hentaiforce.net/) _[English]_
 - [HentaiFox](https://www.hentaifox.com/) _[English]_
 - [HentaiHand](https://hentaihand.com/) / [nHentai.com](https://nhentai.com) _[English]_
 - [HentaIHere](https://www.hentaihere.com/) _[English]_

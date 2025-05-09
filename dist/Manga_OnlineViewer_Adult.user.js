@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.05.08
+// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
+// @version       2025.05.09
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -39,6 +39,7 @@
 // @include       /https?:\/\/(www\.)?gntai.net\/(?!(category|tags|autores))[^/]+\/.+/
 // @include       /https?:\/\/(www\.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//
 // @include       /https?:\/\/(www\.)?hentaiera.com\/view\/.+\/\d+\/?/
+// @include       /https?:\/\/(www\.)?hentaiforce.net\/view\/.+\/\d+/
 // @include       /https?:\/\/(www\.)?hentaifox.com\/g\/.+/
 // @include       /https?:\/\/(www\.)?(hentaihand|nhentai).com\/.+\/reader/
 // @include       /https?:\/\/(www\.)?hentaihere.com\/.+\/.+\/.+/
@@ -474,6 +475,33 @@
           .map((_, i) => window.location.href.replace(/\/\d*\/?$/, `/${i + 1}`)),
         img: '#gimg',
         lazyAttr: 'data-src',
+      };
+    },
+  };
+
+  const hentaiforce = {
+    name: 'HentaiForce',
+    url: /https?:\/\/(www\.)?hentaiforce.net\/view\/.+\/\d+/,
+    homepage: 'https://hentaiforce.net/',
+    language: ['English'],
+    category: 'hentai',
+    run() {
+      return {
+        title: document
+          .querySelector('h1')
+          ?.textContent?.trim()
+          .replace(/ - Page .+$/, ''),
+        series: document.querySelector('.reader-go-back ')?.getAttribute('href'),
+        pages: unsafeWindow.readerPages.lastPage,
+        prev: '#',
+        next: '#',
+        listImages: Array(unsafeWindow.readerPages.lastPage)
+          .fill(0)
+          .map((_, i) =>
+            unsafeWindow.readerPages.baseUriImg
+              .replace('%c', unsafeWindow.readerPages.pages[i + 1].l)
+              .replace('%s', unsafeWindow.readerPages.pages[i + 1].f),
+          ),
       };
     },
   };
@@ -1271,6 +1299,7 @@
     gntai,
     hentai2read,
     hentaiera,
+    hentaiforce,
     hentaifox,
     hentaihand,
     hentaihere,
