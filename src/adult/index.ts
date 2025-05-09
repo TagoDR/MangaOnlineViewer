@@ -8,6 +8,7 @@ import freeadultcomix from './freeadultcomix';
 import gntai from './gntai';
 import hentai2read from './hentai2read';
 import hentaiera from './hentaiera';
+import hentaiforce from './hentaiforce';
 import hentaifox from './hentaifox';
 import hentaihand from './hentaihand';
 import hentaihere from './hentaihere';
@@ -46,6 +47,7 @@ const sites = [
   gntai,
   hentai2read,
   hentaiera,
+  hentaiforce,
   hentaifox,
   hentaihand,
   hentaihere,
