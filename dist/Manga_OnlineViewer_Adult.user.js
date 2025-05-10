@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.05.09
+// @version       2025.05.10
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -656,31 +656,23 @@
     homepage: 'https://hentalk.pw/',
     language: ['English'],
     category: 'hentai',
-    waitEle: 'div div + img[alt^=Page]',
     async run() {
       const cdn = 'https://hentalk.pw';
       const api = await fetch(
-        `${window.location.pathname}/__data.json?x-sveltekit-invalidated=011`,
-      ).then(async (res) => res.json());
-      const slug = document
-        .querySelector('div div + img[alt^=Page]')
-        ?.getAttribute('src')
-        ?.match(/image\/(.+)\//)?.[1];
-      const images = api.nodes[1].data.filter(
-        (e) => typeof e === 'string' && /\.(png|gif|jpg|jpeg|webp)$/.test(e),
-      );
+        `${window.location.pathname}/__data.json?x-sveltekit-trailing-slash=1&x-sveltekit-invalidated=001`,
+      )
+        .then(async (res) => res.json())
+        .then((j) => j.nodes[2].data);
+      const gallery = api?.[api.find((e) => e?.gallery)?.gallery];
+      const slug = api?.[gallery?.hash] || api?.[api.find((e) => e?.hash && e?.id).hash];
+      const images = api?.[gallery.images].map((i) => api[i]).map((i) => api[i.filename]);
       return {
-        title: document
-          .querySelector('title')
-          ?.textContent?.trim()
-          .replace(/Page \d+ • /, ''),
+        title: api?.[gallery.title],
         series: window.location.href.replace(/read\/.+/, ''),
         pages: images?.length,
         prev: '#',
         next: '#',
-        listImages: images?.map(
-          (src, i) => `${cdn}/image/${slug}/${i + 1}${/\.(png|gif|jpg|jpeg|webp)$/.exec(src)?.[0]}`,
-        ),
+        listImages: images?.map((src) => `${cdn}/image/${slug}/${src}`),
       };
     },
   };

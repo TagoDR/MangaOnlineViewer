@@ -69,6 +69,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [M440](https://m440.in/) _[Spanish]_
 - [MangaOni](https://manga-oni.com/) _[Spanish]_
 - [ManhwaWeb](https://manhwaweb.com/) _[Spanish]_
+- [OlympusBiblioteca](https://olympusbiblioteca.com/) _[Spanish]_
 - [TuMangaOnline](https://lectortmo.com/) _[Spanish]_
 
 ## Supported Comic Sites
