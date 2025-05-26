@@ -4,7 +4,7 @@ import madarawp from '../main/madarawp';
 export default {
   ...madarawp,
   name: ['Madara WordPress Plugin', 'AllPornComic', 'Manytoon', 'Manga District'],
-  url: /https?:\/\/.+\/(porncomic|read-scan)\/.+\/.+/,
+  url: /https?:\/\/.+\/(porncomic|read-scan|title)\/.+\/.+/,
   homepage: [
     '#',
     'https://allporncomic.com/',
