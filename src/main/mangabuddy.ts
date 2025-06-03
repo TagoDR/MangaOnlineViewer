@@ -7,7 +7,9 @@ export default {
   category: 'manga',
   waitVar: 'chapImages',
   run() {
-    const images = unsafeWindow.chapImages.split(',');
+    const images = unsafeWindow.chapImages
+      .split(',')
+      .map((s: string) => new URL(s).pathname.replace('/res/', 'https://sb.mbcdn.xyz/'));
     return {
       title: document.querySelector('.chapter-info')?.textContent?.trim(),
       series: document
