@@ -53,7 +53,7 @@
 // @include       /https?:\/\/.*mangatoon.mobi\/.+\/watch\/.+/
 // @include       /https?:\/\/(www\.)?manhwaweb.com\/leer\/.+/
 // @include       /https?:\/\/(www\.)?mgeko.(com|cc)?\/reader\/.*/
-// @include       /https?:\/\/(www.)?olympusbiblioteca.com\/capitulo\/\d+\/.+/
+// @include       /https?:\/\/(www\.)?olympusbiblioteca.com\/capitulo\/\d+\/.+/
 // @include       /https?:\/\/(www\.)?readcomicsonline.ru\/comic\/.*\/\d*/
 // @include       /https?:\/\/(www\.)?reaperscans\.com\/series\/.+\/chapter.+/
 // @include       /https?:\/\/(www\.)?(.+).com\/(viewer|news)\/.+\/(paginated|cascade)/
@@ -1217,7 +1217,7 @@
 
   const olympusbiblioteca = {
     name: 'OlympusBiblioteca',
-    url: /https?:\/\/(www.)?olympusbiblioteca.com\/capitulo\/\d+\/.+/,
+    url: /https?:\/\/(www\.)?olympusbiblioteca.com\/capitulo\/\d+\/.+/,
     homepage: 'https://olympusbiblioteca.com/',
     language: ['Spanish'],
     category: 'manga',
@@ -3764,7 +3764,7 @@
     const url = element.getAttribute('value') ?? element.getAttribute('href');
     if (event.button !== 1 && !event.ctrlKey) {
       if (url && url !== '#') {
-        window.location.href = distExports.sanitizeUrl(url);
+        window.location.href = encodeURIComponent(distExports.sanitizeUrl(url));
       } else if (element.id === 'series') {
         window.history.back();
       }

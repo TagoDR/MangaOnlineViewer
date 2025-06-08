@@ -3770,7 +3770,7 @@
     const url = element.getAttribute('value') ?? element.getAttribute('href');
     if (event.button !== 1 && !event.ctrlKey) {
       if (url && url !== '#') {
-        window.location.href = distExports.sanitizeUrl(url);
+        window.location.href = encodeURIComponent(distExports.sanitizeUrl(url));
       } else if (element.id === 'series') {
         window.history.back();
       }
