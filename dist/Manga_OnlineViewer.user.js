@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, Natomanga, MangaOni, Mangareader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.06.03
+// @version       2025.06.08
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -3832,8 +3832,9 @@
   function doScrolling(sign) {
     const chapter = document.querySelector('#Chapter');
     if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
+      const scrollDirection = chapter.classList.contains('FluidRTL') ? -1 : 1;
       chapter.scrollBy({
-        left: (window.innerWidth / 2) * sign * (chapter?.classList.contains('FluidRTL') ? -1 : 1),
+        left: (window.innerWidth / 2) * sign * scrollDirection,
         behavior: 'smooth',
       });
     } else if (getUserSettings().zoomMode === 'height') {
@@ -4696,13 +4697,14 @@
     }
   }
 
-  let scrollInterval;
+  let scrollActive = false;
   function scroll() {
     const chapter = document.querySelector('#Chapter');
     if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
+      const scrollDirection = chapter.classList.contains('FluidRTL') ? -1 : 1;
       chapter?.scrollBy({
         top: 0,
-        left: getUserSettings().scrollHeight * (chapter?.classList.contains('FluidRTL') ? -1 : 1),
+        left: getUserSettings().scrollHeight * scrollDirection,
         behavior: 'smooth',
       });
     } else {
@@ -4713,22 +4715,23 @@
       });
     }
     if (document.querySelector('#Header')?.classList.contains('headroom-end')) {
-      clearInterval(scrollInterval);
-      scrollInterval = void 0;
+      scrollActive = false;
       document.querySelector('#ScrollControl')?.classList.remove('running');
       logScript('Finished auto scroll');
+    }
+    if (scrollActive) {
+      requestAnimationFrame(scroll);
     }
   }
   function toggleAutoScroll() {
     const control = document.querySelector('#AutoScroll');
-    if (scrollInterval) {
-      clearInterval(scrollInterval);
-      scrollInterval = void 0;
+    if (scrollActive) {
+      scrollActive = false;
       control?.classList.remove('running');
       logScript('Stopped auto scroll');
     } else {
-      scroll();
-      scrollInterval = setInterval(scroll, 1e3 / 60);
+      scrollActive = true;
+      requestAnimationFrame(scroll);
       control?.classList.add('running');
       logScript('Start auto scroll');
     }
@@ -4739,11 +4742,11 @@
     resume = false;
   }, 500);
   function manualScroll() {
-    if (!resume && scrollInterval) {
+    if (!resume && scrollActive) {
       toggleAutoScroll();
       resume = true;
     }
-    if (resume && !scrollInterval) {
+    if (resume && !scrollActive) {
       debounceAutoScroll();
     }
   }
