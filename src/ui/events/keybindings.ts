@@ -10,8 +10,9 @@ const doClick = (selector: string) =>
 function doScrolling(sign: 1 | -1) {
   const chapter = document.querySelector<HTMLElement>('#Chapter');
   if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
+    const scrollDirection = chapter.classList.contains('FluidRTL') ? -1 : 1;
     chapter.scrollBy({
-      left: (window.innerWidth / 2) * sign * (chapter?.classList.contains('FluidRTL') ? -1 : 1),
+      left: (window.innerWidth / 2) * sign * scrollDirection,
       behavior: 'smooth',
     });
   } else if (getUserSettings().zoomMode === 'height') {

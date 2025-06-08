@@ -2,14 +2,15 @@ import _ from 'lodash';
 import { logScript } from '../../utils/tampermonkey';
 import { getUserSettings } from '../../core/settings';
 
-let scrollInterval: ReturnType<typeof setInterval> | undefined;
+let scrollActive = false;
 
 function scroll() {
   const chapter = document.querySelector<HTMLElement>('#Chapter');
   if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
+    const scrollDirection = chapter.classList.contains('FluidRTL') ? -1 : 1;
     chapter?.scrollBy({
       top: 0,
-      left: getUserSettings().scrollHeight * (chapter?.classList.contains('FluidRTL') ? -1 : 1),
+      left: getUserSettings().scrollHeight * scrollDirection,
       behavior: 'smooth',
     });
   } else {
@@ -20,23 +21,24 @@ function scroll() {
     });
   }
   if (document.querySelector('#Header')?.classList.contains('headroom-end')) {
-    clearInterval(scrollInterval);
-    scrollInterval = undefined;
+    scrollActive = false;
     document.querySelector('#ScrollControl')?.classList.remove('running');
     logScript('Finished auto scroll');
+  }
+  if (scrollActive) {
+    requestAnimationFrame(scroll);
   }
 }
 
 export function toggleAutoScroll() {
   const control = document.querySelector('#AutoScroll');
-  if (scrollInterval) {
-    clearInterval(scrollInterval);
-    scrollInterval = undefined;
+  if (scrollActive) {
+    scrollActive = false;
     control?.classList.remove('running');
     logScript('Stopped auto scroll');
   } else {
-    scroll();
-    scrollInterval = setInterval(scroll, 1000 / 60);
+    scrollActive = true;
+    requestAnimationFrame(scroll);
     control?.classList.add('running');
     logScript('Start auto scroll');
   }
@@ -49,17 +51,16 @@ const debounceAutoScroll = _.debounce(() => {
 }, 500);
 
 function manualScroll() {
-  if (!resume && scrollInterval) {
+  if (!resume && scrollActive) {
     toggleAutoScroll();
     resume = true;
   }
-  if (resume && !scrollInterval) {
+  if (resume && !scrollActive) {
     debounceAutoScroll();
   }
 }
 
 function autoscroll() {
-  // Toggle Auto Scroll;
   window.addEventListener('wheel', _.throttle(manualScroll, 500));
   document.querySelector('#AutoScroll')?.addEventListener('click', toggleAutoScroll);
 }
