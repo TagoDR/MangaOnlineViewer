@@ -2,7 +2,7 @@
 
 export default {
   name: 'OlympusBiblioteca',
-  url: /https?:\/\/(www.)?olympusbiblioteca.com\/capitulo\/\d+\/.+/,
+  url: /https?:\/\/(www\.)?olympusbiblioteca.com\/capitulo\/\d+\/.+/,
   homepage: 'https://olympusbiblioteca.com/',
   language: ['Spanish'],
   category: 'manga',
