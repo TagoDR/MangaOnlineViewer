@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, Natomanga, MangaOni, Mangareader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.06.08
+// @version       2025.06.11
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -122,8 +122,8 @@
         listImages: images.map((img) => img.getAttribute('src')),
         before() {
           document
-            .querySelector('button.absolute:nth-child(2)')
-            ?.dispatchEvent(new Event('click', { bubbles: true }));
+            .querySelectorAll('button.absolute')
+            .forEach((e) => e.dispatchEvent(new Event('click', { bubbles: true })));
         },
       };
     },
@@ -3834,7 +3834,7 @@
     if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
       const scrollDirection = chapter.classList.contains('FluidRTL') ? -1 : 1;
       chapter.scrollBy({
-        left: (window.innerWidth / 2) * sign * scrollDirection,
+        left: 0.8 * window.innerWidth * sign * scrollDirection,
         behavior: 'smooth',
       });
     } else if (getUserSettings().zoomMode === 'height') {
@@ -3853,7 +3853,7 @@
       }
     } else {
       window.scrollBy({
-        top: (sign * window.innerHeight) / 2,
+        top: 0.8 * window.innerHeight * sign,
         behavior: 'smooth',
       });
     }
