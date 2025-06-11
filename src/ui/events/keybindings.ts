@@ -12,7 +12,7 @@ function doScrolling(sign: 1 | -1) {
   if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
     const scrollDirection = chapter.classList.contains('FluidRTL') ? -1 : 1;
     chapter.scrollBy({
-      left: (window.innerWidth / 2) * sign * scrollDirection,
+      left: 0.8 * window.innerWidth * sign * scrollDirection,
       behavior: 'smooth',
     });
   } else if (getUserSettings().zoomMode === 'height') {
@@ -32,7 +32,7 @@ function doScrolling(sign: 1 | -1) {
     }
   } else {
     window.scrollBy({
-      top: (sign * window.innerHeight) / 2,
+      top: 0.8 * window.innerHeight * sign,
       behavior: 'smooth',
     });
   }
