@@ -113,6 +113,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [wnacg](https://wnacg.com/) _[English,Raw,Chinese]_
 - [KingComix](https://kingcomix.com/) / [Chochox](https://chochox.com/porno/) / [Comics18](https://comics18.org/) _[English,Spanish]_
 - [AkumaMoe](https://akuma.moe) _[Raw]_
+- [Dragon Translation](https://dragontranslation.net/es) _[Spanish]_
 - [GNTAI.net](https://www.gntai.net/) _[Spanish]_
 - [TMOHentai](https://tmohentai.com/) _[Spanish]_
 - [vermangasporno](https://vermangasporno.com/) / [vercomicsporno](https://vercomicsporno.com/) _[Spanish]_
