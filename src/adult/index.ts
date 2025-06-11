@@ -1,6 +1,7 @@
 import akumamoe from './akumamoe';
 import bestporncomix from './bestporncomix';
 import doujinmoe from './doujinmoe';
+import dragontranslation from './dragontranslation';
 import eightMuses from './8muses';
 import exhentai from './exhentai';
 import fsicomics from './fsicomics';
@@ -40,6 +41,7 @@ const sites = [
   akumamoe,
   bestporncomix,
   doujinmoe,
+  dragontranslation,
   eightMuses,
   exhentai,
   fsicomics,
