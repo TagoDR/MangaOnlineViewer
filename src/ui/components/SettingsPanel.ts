@@ -1,5 +1,5 @@
 import { html } from '../../utils/code-tag';
-import { getLocaleString, getUserSettings } from '../../core/settings';
+import { getLocaleString, getSettingsValue } from '../../core/settings';
 import { IconCheck, IconMoon, IconPalette, IconSun, IconX } from '../icons';
 import locales from '../../locales';
 import colors from '../../utils/colors';
@@ -8,7 +8,7 @@ const localeSelector = () =>
   locales
     .map(
       (locale) => html`
-        <option value="${locale.ID}" ${getUserSettings().locale === locale.ID ? 'selected' : ''}>
+        <option value="${locale.ID}" ${getSettingsValue('locale') === locale.ID ? 'selected' : ''}>
           ${locale.NAME}
         </option>
       `,
@@ -21,7 +21,7 @@ const themesSelector = () =>
       (theme) => html`
         <span
           title="${theme}"
-          class="${theme} ThemeRadio ${getUserSettings().theme === theme ? 'selected' : ''}"
+          class="${theme} ThemeRadio ${getSettingsValue('theme') === theme ? 'selected' : ''}"
         >
           ${IconCheck}
         </span>
@@ -45,7 +45,7 @@ const theme = html`
       ${getLocaleString('THEME')}
       <span
         class="custom ThemeRadio 
-        ${getUserSettings().theme === 'custom' ? 'selected' : ''}"
+        ${getSettingsValue('theme') === 'custom' ? 'selected' : ''}"
         title="custom"
       >
         ${IconPalette} ${IconCheck}
@@ -55,30 +55,30 @@ const theme = html`
     <div
       id="Hue"
       class="ControlLabel CustomTheme ControlLabelItem 
-      ${getUserSettings().theme.startsWith('custom') ? 'show' : ''}"
+      ${getSettingsValue('theme').startsWith('custom') ? 'show' : ''}"
     >
       ${getLocaleString('THEME_HUE')}
       <input
         id="CustomThemeHue"
         type="color"
-        value="${getUserSettings().customTheme}"
+        value="${getSettingsValue('customTheme')}"
         class="colorpicker CustomTheme"
       />
     </div>
     <div
       id="Shade"
       class="ControlLabel CustomTheme ControlLabelItem
-      ${getUserSettings().theme.startsWith('custom') ? '' : 'show'}"
+      ${getSettingsValue('theme').startsWith('custom') ? '' : 'show'}"
     >
       <span>
         ${getLocaleString('THEME_SHADE')}
         <output id="themeShadeVal" class="RangeValue" for="ThemeShade">
-          ${getUserSettings().themeShade}
+          ${getSettingsValue('themeShade')}
         </output>
       </span>
       <input
         type="range"
-        value="${getUserSettings().themeShade}"
+        value="${getSettingsValue('themeShade')}"
         name="ThemeShade"
         id="ThemeShade"
         min="100"
@@ -93,13 +93,13 @@ const loadMode = html`
   <div class="ControlLabel loadMode">
     ${getLocaleString('DEFAULT_LOAD_MODE')}
     <select id="loadMode">
-      <option value="wait" ${getUserSettings().loadMode === 'wait' ? 'selected' : ''}>
+      <option value="wait" ${getSettingsValue('loadMode') === 'wait' ? 'selected' : ''}>
         ${getLocaleString('LOAD_MODE_NORMAL')}
       </option>
-      <option value="always" ${getUserSettings().loadMode === 'always' ? 'selected' : ''}>
+      <option value="always" ${getSettingsValue('loadMode') === 'always' ? 'selected' : ''}>
         ${getLocaleString('LOAD_MODE_ALWAYS')}
       </option>
-      <option value="never" ${getUserSettings().loadMode === 'never' ? 'selected' : ''}>
+      <option value="never" ${getSettingsValue('loadMode') === 'never' ? 'selected' : ''}>
         ${getLocaleString('LOAD_MODE_NEVER')}
       </option>
     </select>
@@ -109,28 +109,28 @@ const loadSpeed = html`
   <div class="ControlLabel PagesPerSecond">
     ${getLocaleString('LOAD_SPEED')}
     <select id="PagesPerSecond">
-      <option value="3000" ${getUserSettings().throttlePageLoad === 3000 ? 'selected' : ''}>
+      <option value="3000" ${getSettingsValue('throttlePageLoad') === 3000 ? 'selected' : ''}>
         0.3(${getLocaleString('SLOWLY')})
       </option>
-      <option value="2000" ${getUserSettings().throttlePageLoad === 2000 ? 'selected' : ''}>
+      <option value="2000" ${getSettingsValue('throttlePageLoad') === 2000 ? 'selected' : ''}>
         0.5
       </option>
-      <option value="1000" ${getUserSettings().throttlePageLoad === 1000 ? 'selected' : ''}>
+      <option value="1000" ${getSettingsValue('throttlePageLoad') === 1000 ? 'selected' : ''}>
         01(${getLocaleString('NORMAL')})
       </option>
-      <option value="500" ${getUserSettings().throttlePageLoad === 500 ? 'selected' : ''}>
+      <option value="500" ${getSettingsValue('throttlePageLoad') === 500 ? 'selected' : ''}>
         02
       </option>
-      <option value="250" ${getUserSettings().throttlePageLoad === 250 ? 'selected' : ''}>
+      <option value="250" ${getSettingsValue('throttlePageLoad') === 250 ? 'selected' : ''}>
         04(${getLocaleString('FAST')})
       </option>
-      <option value="125" ${getUserSettings().throttlePageLoad === 125 ? 'selected' : ''}>
+      <option value="125" ${getSettingsValue('throttlePageLoad') === 125 ? 'selected' : ''}>
         08
       </option>
-      <option value="100" ${getUserSettings().throttlePageLoad === 100 ? 'selected' : ''}>
+      <option value="100" ${getSettingsValue('throttlePageLoad') === 100 ? 'selected' : ''}>
         10(${getLocaleString('EXTREME')})
       </option>
-      <option value="1" ${getUserSettings().throttlePageLoad === 1 ? 'selected' : ''}>
+      <option value="1" ${getSettingsValue('throttlePageLoad') === 1 ? 'selected' : ''}>
         ${getLocaleString('ALL_PAGES')}
       </option>
     </select>
@@ -139,13 +139,13 @@ const loadSpeed = html`
 const defaultZoomMode = html` <div class="ControlLabel DefaultZoomMode">
   ${getLocaleString('DEFAULT_ZOOM_MODE')}
   <select id="DefaultZoomMode">
-    <option value="percent" ${getUserSettings().zoomMode === 'percent' ? 'selected' : ''}>
+    <option value="percent" ${getSettingsValue('zoomMode') === 'percent' ? 'selected' : ''}>
       ${getLocaleString('PERCENT')}
     </option>
-    <option value="width" ${getUserSettings().zoomMode === 'width' ? 'selected' : ''}>
+    <option value="width" ${getSettingsValue('zoomMode') === 'width' ? 'selected' : ''}>
       ${getLocaleString('FIT_WIDTH')}
     </option>
-    <option value="height" ${getUserSettings().zoomMode === 'height' ? 'selected' : ''}>
+    <option value="height" ${getSettingsValue('zoomMode') === 'height' ? 'selected' : ''}>
       ${getLocaleString('FIT_HEIGHT')}
     </option>
   </select>
@@ -153,17 +153,17 @@ const defaultZoomMode = html` <div class="ControlLabel DefaultZoomMode">
 const defaultZoom = html`
   <div
     class="ControlLabel DefaultZoom ControlLabelItem
-  ${getUserSettings().zoomMode === 'percent' ? 'show' : ''}"
+  ${getSettingsValue('zoomMode') === 'percent' ? 'show' : ''}"
   >
     <span>
       ${getLocaleString('DEFAULT_ZOOM')}
       <output id="defaultZoomVal" class="RangeValue" for="DefaultZoom">
-        ${getUserSettings().defaultZoom}%
+        ${getSettingsValue('defaultZoom')}%
       </output>
     </span>
     <input
       type="range"
-      value="${getUserSettings().defaultZoom}"
+      value="${getSettingsValue('defaultZoom')}"
       name="DefaultZoom"
       id="DefaultZoom"
       min="5"
@@ -190,12 +190,12 @@ const minZoom = html`
     <span>
       ${getLocaleString('MINIMUM_ZOOM')}
       <output id="minZoomVal" class="RangeValue" for="minZoom">
-        ${getUserSettings().minZoom}%
+        ${getSettingsValue('minZoom')}%
       </output>
     </span>
     <input
       type="range"
-      value="${getUserSettings().minZoom}"
+      value="${getSettingsValue('minZoom')}"
       name="minZoom"
       id="minZoom"
       min="30"
@@ -210,12 +210,12 @@ const zoomStep = html`
     <span>
       ${getLocaleString('ZOOM_STEP')}
       <output id="zoomStepVal" class="RangeValue" for="zoomStep">
-        ${getUserSettings().zoomStep}%
+        ${getSettingsValue('zoomStep')}%
       </output>
     </span>
     <input
       type="range"
-      value="${getUserSettings().zoomStep}"
+      value="${getSettingsValue('zoomStep')}"
       name="zoomStep"
       id="zoomStep"
       min="5"
@@ -229,16 +229,16 @@ const viewMode = html`
   <div class="ControlLabel viewMode">
     ${getLocaleString('DEFAULT_VIEW_MODE')}
     <select id="viewMode">
-      <option value="Vertical" ${getUserSettings().viewMode === 'Vertical' ? 'selected' : ''}>
+      <option value="Vertical" ${getSettingsValue('viewMode') === 'Vertical' ? 'selected' : ''}>
         ${getLocaleString('VIEW_MODE_VERTICAL')}
       </option>
-      <option value="WebComic" ${getUserSettings().viewMode === 'WebComic' ? 'selected' : ''}>
+      <option value="WebComic" ${getSettingsValue('viewMode') === 'WebComic' ? 'selected' : ''}>
         ${getLocaleString('VIEW_MODE_WEBCOMIC')}
       </option>
-      <option value="FluidLTR" ${getUserSettings().viewMode === 'FluidLTR' ? 'selected' : ''}>
+      <option value="FluidLTR" ${getSettingsValue('viewMode') === 'FluidLTR' ? 'selected' : ''}>
         ${getLocaleString('VIEW_MODE_LEFT')}
       </option>
-      <option value="FluidRTL" ${getUserSettings().viewMode === 'FluidRTL' ? 'selected' : ''}>
+      <option value="FluidRTL" ${getSettingsValue('viewMode') === 'FluidRTL' ? 'selected' : ''}>
         ${getLocaleString('VIEW_MODE_RIGHT')}
       </option>
     </select>
@@ -247,15 +247,15 @@ const viewMode = html`
 const lazyLoad = html`
   <div
     class="ControlLabel lazyStart ControlLabelItem
-    ${getUserSettings().lazyLoadImages ? 'show' : ''}"
+    ${getSettingsValue('lazyLoadImages') ? 'show' : ''}"
   >
     <span>
       ${getLocaleString('LAZY_LOAD_IMAGES')}
-      <output id="lazyStartVal" for="lazyStart"> ${getUserSettings().lazyStart} </output>
+      <output id="lazyStartVal" for="lazyStart"> ${getSettingsValue('lazyStart')} </output>
     </span>
     <input
       type="range"
-      value="${getUserSettings().lazyStart}"
+      value="${getSettingsValue('lazyStart')}"
       name="lazyStart"
       id="lazyStart"
       min="5"
@@ -269,19 +269,19 @@ const headerType = html`
   <div class="ControlLabel headerType">
     ${getLocaleString('HEADER_TYPE')}
     <select id="headerType">
-      <option value="hover" ${getUserSettings().header === 'hover' ? 'selected' : ''}>
+      <option value="hover" ${getSettingsValue('header') === 'hover' ? 'selected' : ''}>
         ${getLocaleString('HEADER_HOVER')}
       </option>
-      <option value="scroll" ${getUserSettings().header === 'scroll' ? 'selected' : ''}>
+      <option value="scroll" ${getSettingsValue('header') === 'scroll' ? 'selected' : ''}>
         ${getLocaleString('HEADER_SCROLL')}
       </option>
-      <option value="click" ${getUserSettings().header === 'click' ? 'selected' : ''}>
+      <option value="click" ${getSettingsValue('header') === 'click' ? 'selected' : ''}>
         ${getLocaleString('HEADER_CLICK')}
       </option>
-      <option value="fixed" ${getUserSettings().header === 'fixed' ? 'selected' : ''}>
+      <option value="fixed" ${getSettingsValue('header') === 'fixed' ? 'selected' : ''}>
         ${getLocaleString('HEADER_FIXED')}
       </option>
-      <option value="simple" ${getUserSettings().header === 'simple' ? 'selected' : ''}>
+      <option value="simple" ${getSettingsValue('header') === 'simple' ? 'selected' : ''}>
         ${getLocaleString('HEADER_SIMPLE')}
       </option>
     </select>
@@ -295,7 +295,7 @@ const checkboxOptions = html`
       value="true"
       name="verticalSeparator"
       id="verticalSeparator"
-      ${getUserSettings().verticalSeparator ? 'checked' : ''}
+      ${getSettingsValue('verticalSeparator') ? 'checked' : ''}
     />
   </div>
   <div class="ControlLabel fitIfOversize">
@@ -305,7 +305,7 @@ const checkboxOptions = html`
       value="true"
       name="fitIfOversize"
       id="fitIfOversize"
-      ${getUserSettings().fitWidthIfOversize ? 'checked' : ''}
+      ${getSettingsValue('fitWidthIfOversize') ? 'checked' : ''}
     />
   </div>
   <div class="ControlLabel showThumbnails">
@@ -315,7 +315,7 @@ const checkboxOptions = html`
       value="true"
       name="showThumbnails"
       id="showThumbnails"
-      ${getUserSettings().showThumbnails ? 'checked' : ''}
+      ${getSettingsValue('showThumbnails') ? 'checked' : ''}
     />
   </div>
   <div class="ControlLabel enableComments">
@@ -325,7 +325,7 @@ const checkboxOptions = html`
       value="true"
       name="enableComments"
       id="enableComments"
-      ${getUserSettings().enableComments ? 'checked' : ''}
+      ${getSettingsValue('enableComments') ? 'checked' : ''}
     />
   </div>
   <div class="ControlLabel lazyLoadImages">
@@ -335,7 +335,7 @@ const checkboxOptions = html`
       value="true"
       name="lazyLoadImages"
       id="lazyLoadImages"
-      ${getUserSettings().lazyLoadImages ? 'checked' : ''}
+      ${getSettingsValue('lazyLoadImages') ? 'checked' : ''}
     />
   </div>
   ${lazyLoad}
@@ -346,7 +346,7 @@ const checkboxOptions = html`
       value="false"
       name="downloadZip"
       id="downloadZip"
-      ${getUserSettings().downloadZip ? 'checked' : ''}
+      ${getSettingsValue('downloadZip') ? 'checked' : ''}
     />
   </div>
   <div class="ControlLabel hidePageControls">
@@ -356,7 +356,7 @@ const checkboxOptions = html`
       value="false"
       name="hidePageControls"
       id="hidePageControls"
-      ${getUserSettings().hidePageControls ? 'checked' : ''}
+      ${getSettingsValue('hidePageControls') ? 'checked' : ''}
     />
   </div>
 `;
@@ -364,11 +364,11 @@ const autoScroll = html`
   <div class="ControlLabel autoScroll">
     <span>
       ${getLocaleString('AUTO_SCROLL_HEIGHT')}
-      <output id="scrollHeightVal" for="scrollHeight"> ${getUserSettings().scrollHeight} </output>px
+      <output id="scrollHeightVal" for="scrollHeight"> ${getSettingsValue('scrollHeight')} </output>px
     </span>
     <input
       type="range"
-      value="${getUserSettings().scrollHeight}"
+      value="${getSettingsValue('scrollHeight')}"
       name="scrollHeight"
       id="scrollHeight"
       min="1"

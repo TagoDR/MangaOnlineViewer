@@ -1,5 +1,5 @@
 import { css } from '../utils/code-tag';
-import { getUserSettings } from '../core/settings';
+import { getSettingsValue } from '../core/settings';
 import { replaceStyleSheet, wrapStyle } from '../utils/css';
 import colors, { getTextColor, type IColor } from '../utils/colors';
 
@@ -16,8 +16,8 @@ function generateThemeCSS(name: string, primary: string, text: string) {
 function getNormalThemeCSS(theme: IColor) {
   return generateThemeCSS(
     theme.name,
-    theme[getUserSettings().themeShade],
-    getUserSettings().themeShade < 500 ? theme['900'] : theme['50'],
+    theme[getSettingsValue('themeShade')],
+    getSettingsValue('themeShade') < 500 ? theme['900'] : theme['50'],
   );
 }
 
@@ -40,11 +40,11 @@ function refreshThemes() {
   themes().forEach((theme: IColor) => {
     replaceStyleSheet(theme.name, getNormalThemeCSS(theme));
   });
-  replaceStyleSheet('custom', getCustomThemeCSS(getUserSettings().customTheme));
+  replaceStyleSheet('custom', getCustomThemeCSS(getSettingsValue('customTheme')));
 }
 
 const themesCSS =
   themes().map(addTheme).join('') +
-  wrapStyle('custom', getCustomThemeCSS(getUserSettings().customTheme));
+  wrapStyle('custom', getCustomThemeCSS(getSettingsValue('customTheme')));
 
 export { themesCSS, addCustomTheme, refreshThemes };

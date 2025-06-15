@@ -1,14 +1,16 @@
 import _ from 'lodash';
 import {
+  getGlobalSettings,
   getListGM,
-  getSettings,
+  getLocalSettings,
   isMobile,
   logScript,
   removeValueGM,
-  setSettings,
+  setGlobalSettings,
+  setLocalSettings,
   settingsChangeListener,
 } from '../utils/tampermonkey';
-import type { ISettings } from '../types';
+import type { ISettings, ISettingsKey } from '../types';
 import diffObj from '../utils/diffObj';
 import locales from '../locales';
 import { isNothing } from '../utils/checks';
@@ -72,30 +74,77 @@ const getDefault = () =>
       );
 
 // Configuration
-let settings: ISettings = _.defaultsDeep(getSettings(getDefault()), getDefault());
+let globalSettings: ISettings = _.defaultsDeep(getGlobalSettings(getDefault()), getDefault());
+let localSettings: ISettings | null = getListGM().includes(window.location.hostname)
+  ? _.defaultsDeep(getLocalSettings(getDefault()))
+  : null;
 
 settingsChangeListener((newValue: Partial<ISettings>) => {
   const newSettings = _.defaultsDeep(newValue, getDefault());
-  const diff = diffObj(newSettings, settings);
+  const diff = diffObj(newSettings, globalSettings);
   if (!isNothing(diff)) {
     logScript('Imported Settings', diff);
-    settings = newSettings;
+    globalSettings = newSettings;
     document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
   }
 });
 
-type SettingsKey = keyof typeof settings;
-
-export function useSettingsValue(key: SettingsKey) {
-  return settings[key];
+/**
+ * Gets the effective value for a setting, considering site-specific overrides,
+ * then global settings, then session defaults.
+ *
+ * @param key The key of the setting to retrieve.
+ * @returns The effective value of the setting.
+ */
+export function getSettingsValue<K extends ISettingsKey>(key: K): ISettings[K] {
+  return localSettings?.[key] || globalSettings?.[key];
 }
 
+/**
+ * Sets a single setting value by its key and persists the change.
+ * The value provided must match the type of the setting defined in ISettings.
+ *
+ * @param key The key of the setting to update.
+ * @param value The new value for the setting.
+ */
+export function setSettingsValue<K extends ISettingsKey>(key: K, value: ISettings[K]): void {
+  if (localSettings) {
+    localSettings[key] = value;
+    setLocalSettings(diffObj(localSettings, getDefault()));
+  } else {
+    globalSettings[key] = value;
+    setGlobalSettings(diffObj(globalSettings, getDefault()));
+  }
+}
+
+/**
+ * Changes a single setting value by its key and persists the change.
+ * The function provided must match the type of the setting defined in ISettings.
+ *
+ * @param key The key of the setting to update.
+ * @param fn function that receives the current value and must return the new value
+ */
+export function changeSettingsValue<K extends ISettingsKey>(
+  key: K,
+  fn: (value: ISettings[K]) => ISettings[K],
+): void {
+  if (localSettings) {
+    localSettings[key] = fn(localSettings[key]);
+    setLocalSettings(diffObj(localSettings, getDefault()));
+  } else {
+    globalSettings[key] = fn(globalSettings[key]);
+    setGlobalSettings(diffObj(globalSettings, getDefault()));
+  }
+}
+
+/*
 export function getUserSettings() {
-  return settings;
+  return localSettings ?? globalSettings;
 }
+*/
 
 export function getLocaleString(name: string): string {
-  const locale = locales.find((l) => l.ID === settings.locale);
+  const locale = locales.find((l) => l.ID === globalSettings.locale);
   if (locale?.[name]) {
     return locale[name];
   }
@@ -107,32 +156,54 @@ export function getLocaleString(name: string): string {
   return '##MISSING_STRING##';
 }
 
+/*
 export function getAllLocaleStrings(name: string): string {
   return locales.map((locale) => `<span class='${locale.ID}'>${locale[name]}</span>`).join('\n');
 }
+*/
 
+/*
 export function updateSettings(newValue: Partial<ISettings>) {
   logScript(JSON.stringify(newValue));
-  settings = { ...settings, ...newValue };
-  setSettings(diffObj(settings, getDefault()));
+  if (localSettings) {
+    localSettings = { ...localSettings, ...newValue };
+    setLocalSettings(diffObj(localSettings, getDefault()));
+  } else {
+    globalSettings = { ...globalSettings, ...newValue };
+    setGlobalSettings(diffObj(globalSettings, getDefault()));
+  }
 }
+*/
 
 export function resetSettings() {
-  getListGM().forEach((setting) => {
-    removeValueGM(setting);
-  });
-  updateSettings(getDefault());
+  if (localSettings) {
+    removeValueGM(window.location.hostname);
+  } else {
+    removeValueGM('settings');
+  }
+  localSettings = null;
+  globalSettings = _.defaultsDeep(getGlobalSettings(getDefault()), getDefault());
+  document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
+}
+
+export function toggleLocalSettings(activate = false) {
+  if (activate && !localSettings) {
+    localSettings = globalSettings;
+    setLocalSettings(diffObj(globalSettings, getDefault()));
+  } else if (!activate && localSettings) {
+    resetSettings();
+  }
 }
 
 export function isBookmarked(url: string = window.location.href): number | undefined {
-  return settings.bookmarks.find((el) => el.url === url)?.page;
+  return globalSettings.bookmarks.find((el) => el.url === url)?.page;
 }
 
 // Clear old Bookmarks
 const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // Year
-const refreshedBookmark = settings.bookmarks.filter(
+const refreshedBookmark = globalSettings.bookmarks.filter(
   (el) => Date.now() - new Date(el.date).valueOf() < bookmarkTimeLimit,
 );
-if (settings.bookmarks.length !== refreshedBookmark.length) {
-  updateSettings({ bookmarks: refreshedBookmark });
+if (globalSettings.bookmarks.length !== refreshedBookmark.length) {
+  setSettingsValue('bookmarks', refreshedBookmark);
 }

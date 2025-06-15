@@ -46,12 +46,12 @@ const getInfoGM =
   typeof GM_info !== 'undefined'
     ? GM_info
     : {
-      scriptHandler: 'Console',
-      script: {
-        name: 'Debug',
-        version: 'Testing',
-      },
-    };
+        scriptHandler: 'Console',
+        script: {
+          name: 'Debug',
+          version: 'Testing',
+        },
+      };
 
 // Replacement function for GM_getValue allowing for debugging in console
 function getValueGM(name: string, defaultValue: any = null): any {
@@ -72,8 +72,12 @@ function getJsonGM(name: string, defaultValue: any = null) {
   return result;
 }
 
-function getSettings(defaultSettings?: ISettings): Partial<ISettings> {
+function getGlobalSettings(defaultSettings?: ISettings): Partial<ISettings> {
   return getJsonGM('settings', defaultSettings);
+}
+
+function getLocalSettings(defaultSettings?: ISettings): Partial<ISettings> {
+  return getJsonGM(window.location.hostname, defaultSettings);
 }
 
 // Replacement function for GM_setValue allowing for debugging in console
@@ -87,8 +91,12 @@ function setValueGM(name: string, value: any): string {
   }
 }
 
-function setSettings(value: Partial<ISettings>) {
+function setGlobalSettings(value: Partial<ISettings>) {
   return setValueGM('settings', value);
+}
+
+function setLocalSettings(value: Partial<ISettings>) {
+  return setValueGM(window.location.hostname, value);
 }
 
 // See https://stackoverflow.com/a/2401861/331508 for optional browser sniffing code.
@@ -125,23 +133,24 @@ function getEngine(): string {
 const parser = Bowser.getParser(window.navigator.userAgent);
 const getDevice = () => {
   const device = parser.getPlatformType(true);
-  if (device === 'mobile' || window.matchMedia(
-    'screen and (max-width: 600px)').matches) {
+  if (device === 'mobile' || window.matchMedia('screen and (max-width: 600px)').matches) {
     return 'mobile';
   }
-  if (device === 'tablet' || window.matchMedia(
-    'screen and (max-width: 992px)').matches) {
+  if (device === 'tablet' || window.matchMedia('screen and (max-width: 992px)').matches) {
     return 'tablet';
   }
   return 'desktop';
 };
 const isMobile = () => getDevice() === 'mobile' || getDevice() === 'tablet';
 
-const settingsChangeListener = (fn: (newSettings: Partial<ISettings>) => void) => {
+const settingsChangeListener = (
+  fn: (newSettings: Partial<ISettings>) => void,
+  gmValue: string = 'settings',
+) => {
   if (typeof GM_addValueChangeListener !== 'undefined') {
     try {
       return GM_addValueChangeListener(
-        'settings',
+        gmValue,
         (_name: string, _oldValue: any, newValue: any, remote: boolean) => {
           if (remote) fn(newValue);
         },
@@ -152,7 +161,7 @@ const settingsChangeListener = (fn: (newSettings: Partial<ISettings>) => void) =
   }
   logScript('Using Interval Settings Change Listener');
   return setInterval(() => {
-    fn(getSettings());
+    fn(getGlobalSettings());
   }, 10000);
 };
 
@@ -163,9 +172,11 @@ export {
   getInfoGM,
   getValueGM,
   getJsonGM,
-  getSettings,
+  getGlobalSettings,
+  getLocalSettings,
   setValueGM,
-  setSettings,
+  setGlobalSettings,
+  setLocalSettings,
   removeValueGM,
   getBrowser,
   getEngine,

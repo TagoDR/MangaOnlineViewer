@@ -1,4 +1,4 @@
-import { getUserSettings, updateSettings } from '../../core/settings';
+import { getSettingsValue, setSettingsValue } from '../../core/settings';
 import type { ViewMode } from '../../types';
 import {
   scrollToElement,
@@ -29,8 +29,8 @@ export function updateViewMode(mode: ViewMode) {
     if (mode === 'FluidLTR' || mode === 'FluidRTL') {
       setupFluid(mode);
     } else {
-      document.querySelector('#Header')!.className = getUserSettings().header;
-      document.querySelector('#menu')!.className = getUserSettings().header;
+      document.querySelector('#Header')!.className = getSettingsValue('header');
+      document.querySelector('#menu')!.className = getSettingsValue('header');
       changeGlobalZoom(100)();
     }
   };
@@ -39,7 +39,7 @@ export function updateViewMode(mode: ViewMode) {
 export function changeViewMode(event: Event) {
   const mode = (event.currentTarget as HTMLInputElement).value as ViewMode;
   updateViewMode(mode)();
-  updateSettings({ viewMode: mode });
+  setSettingsValue('viewMode', mode);
 }
 
 function viewMode() {
@@ -53,8 +53,8 @@ function viewMode() {
   document.querySelector('#rtlMode')?.addEventListener('click', updateViewMode('FluidRTL'));
   // Vertical View Mode Button
   document.querySelector('#verticalMode')?.addEventListener('click', updateViewMode('Vertical'));
-  if (getUserSettings().viewMode === 'FluidLTR' || getUserSettings().viewMode === 'FluidRTL') {
-    setupFluid(getUserSettings().viewMode);
+  if (getSettingsValue('viewMode') === 'FluidLTR' || getSettingsValue('viewMode') === 'FluidRTL') {
+    setupFluid(getSettingsValue('viewMode'));
   }
 }
 

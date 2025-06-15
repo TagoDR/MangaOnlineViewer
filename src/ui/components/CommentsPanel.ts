@@ -1,5 +1,5 @@
 import { html } from '../../utils/code-tag';
-import { getLocaleString, getUserSettings } from '../../core/settings';
+import { getLocaleString, getSettingsValue } from '../../core/settings';
 import { IconMoon, IconSun, IconX } from '../icons';
 
 const commentsPanel = () => html`
@@ -8,7 +8,7 @@ const commentsPanel = () => html`
       ${IconX}
     </button>
     <h2>${getLocaleString('COMMENTS')}</h2>
-    <div id="CommentsArea" class="${getUserSettings().colorScheme}"></div>
+    <div id="CommentsArea" class="${getSettingsValue('colorScheme')}"></div>
     <button id="CommentsColorScheme" class="simpleButton ColorScheme">
       ${IconSun} ${IconMoon}
     </button>

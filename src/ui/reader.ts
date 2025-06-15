@@ -1,6 +1,6 @@
 import { html } from '../utils/code-tag';
 import cssStyles from './styles/styles';
-import { getUserSettings } from '../core/settings';
+import { getSettingsValue } from '../core/settings';
 import { themesCSS } from './themes';
 import type { IManga } from '../types';
 import externalCSS from './styles/externalStyle';
@@ -13,7 +13,7 @@ function head(manga: IManga) {
     ${wrapStyle('externals', externalCSS)} ${wrapStyle('reader', cssStyles)} ${themesCSS}
     ${wrapStyle(
       'MinZoom',
-      `#MangaOnlineViewer .PageContent .PageImg {min-width: ${getUserSettings().minZoom}vw;}`,
+      `#MangaOnlineViewer .PageContent .PageImg {min-width: ${getSettingsValue('minZoom')}vw;}`,
     )}
   `;
 }

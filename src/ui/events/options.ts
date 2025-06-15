@@ -1,9 +1,9 @@
 import Swal from 'sweetalert2';
 import {
   getLocaleString,
-  getUserSettings,
+  getSettingsValue,
   resetSettings,
-  updateSettings,
+  setSettingsValue,
 } from '../../core/settings';
 import type { HeaderMode, LoadMode } from '../../types';
 import { applyZoom } from '../page';
@@ -18,7 +18,7 @@ export function buttonResetSettings() {
 
 export function changeLocale(event: Event) {
   const locale = (event.currentTarget as HTMLInputElement).value;
-  updateSettings({ locale });
+  setSettingsValue('locale', locale);
   const elem = document.getElementById('MangaOnlineViewer');
   elem?.setAttribute('locale', locale);
   elem?.dispatchEvent(new Event('hydrate'));
@@ -26,33 +26,33 @@ export function changeLocale(event: Event) {
 
 export function changeLoadMode(event: Event) {
   const mode = (event.currentTarget as HTMLInputElement).value;
-  updateSettings({ loadMode: mode as LoadMode });
+  setSettingsValue('loadMode', mode as LoadMode);
 }
 
 export function checkFitWidthOversize(event: Event) {
   document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize');
-  updateSettings({ fitWidthIfOversize: (event.currentTarget as HTMLInputElement).checked });
+  setSettingsValue('fitWidthIfOversize', (event.currentTarget as HTMLInputElement).checked);
 }
 
 export function checkVerticalSeparator(event: Event) {
   document.querySelector('#Chapter')?.classList.toggle('separator');
-  updateSettings({ verticalSeparator: (event.currentTarget as HTMLInputElement).checked });
+  setSettingsValue('verticalSeparator', (event.currentTarget as HTMLInputElement).checked);
 }
 
 export function checkShowThumbnails(event: Event) {
   document.querySelector('#Navigation')?.classList.toggle('disabled');
-  updateSettings({ showThumbnails: (event.currentTarget as HTMLInputElement).checked });
+  setSettingsValue('showThumbnails', (event.currentTarget as HTMLInputElement).checked);
   applyZoom();
 }
 
 export function checkEnableComments(event: Event) {
   document.querySelector('#CommentsButton')?.classList.toggle('disabled');
-  updateSettings({ enableComments: (event.currentTarget as HTMLInputElement).checked });
+  setSettingsValue('enableComments', (event.currentTarget as HTMLInputElement).checked);
   applyZoom();
 }
 
 export function changeAutoDownload(event: Event) {
-  updateSettings({ downloadZip: (event.currentTarget as HTMLInputElement).checked });
+  setSettingsValue('downloadZip', (event.currentTarget as HTMLInputElement).checked);
   if ((event.currentTarget as HTMLInputElement).checked) {
     Swal.fire({
       title: getLocaleString('ATTENTION'),
@@ -64,9 +64,9 @@ export function changeAutoDownload(event: Event) {
 }
 
 export function checkLazyLoad(event: Event) {
-  updateSettings({ lazyLoadImages: (event.currentTarget as HTMLInputElement).checked });
+  setSettingsValue('lazyLoadImages', (event.currentTarget as HTMLInputElement).checked);
   const start = document.querySelector<HTMLDivElement>('.lazyStart');
-  if (getUserSettings().lazyLoadImages) {
+  if (getSettingsValue('lazyLoadImages')) {
     start?.classList.add('show');
   } else {
     start?.classList.remove('show');
@@ -83,12 +83,12 @@ export function checkLazyLoad(event: Event) {
 
 export function changeLazyStart(event: Event) {
   const start = (event.currentTarget as HTMLInputElement).value;
-  updateSettings({ lazyStart: parseInt(start, 10) });
+  setSettingsValue('lazyStart', parseInt(start, 10));
 }
 
 export function changePagesPerSecond(event: Event) {
   const timer = parseInt((event.currentTarget as HTMLInputElement).value, 10);
-  updateSettings({ throttlePageLoad: timer });
+  setSettingsValue('throttlePageLoad', timer);
   if (timer < 100) {
     Swal.fire({
       title: getLocaleString('SPEED_WARNING'),
@@ -100,18 +100,18 @@ export function changePagesPerSecond(event: Event) {
 
 export function changeZoomStep(event: Event) {
   const step = (event.currentTarget as HTMLInputElement).value;
-  updateSettings({ zoomStep: parseInt(step, 10) });
+  setSettingsValue('zoomStep', parseInt(step, 10));
 }
 
 export function changeMinZoom(event: Event) {
   const min = (event.currentTarget as HTMLInputElement).value;
   replaceStyleSheet('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
-  updateSettings({ minZoom: parseInt(min, 10) });
+  setSettingsValue('minZoom', parseInt(min, 10));
 }
 
 export function checkHideImageControls(event: Event) {
   document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
-  updateSettings({ hidePageControls: (event.currentTarget as HTMLInputElement).checked });
+  setSettingsValue('hidePageControls', (event.currentTarget as HTMLInputElement).checked);
 }
 
 export function updateHeaderType(mode: HeaderMode) {
@@ -128,12 +128,12 @@ export function updateHeaderType(mode: HeaderMode) {
 function changeHeaderType(event: Event) {
   const headerType = (event.currentTarget as HTMLInputElement).value as HeaderMode;
   updateHeaderType(headerType);
-  updateSettings({ header: headerType });
+  setSettingsValue('header', headerType);
 }
 
 export function changeScrollHeight(event: Event) {
   const { value } = event.currentTarget as HTMLInputElement;
-  updateSettings({ scrollHeight: parseInt(value, 10) });
+  setSettingsValue('scrollHeight', parseInt(value, 10));
 }
 
 function options() {

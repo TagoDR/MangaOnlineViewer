@@ -1,14 +1,5 @@
 import { type IBookmark } from './IBookmark';
 
-export type ITheme = {
-  primaryShade: 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
-  colorScheme: 'dark' | 'light';
-  primaryColor: string;
-  other?: {
-    variant: 'filled' | 'outline' | 'light';
-  };
-};
-
 export type Shade = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 export type ViewMode = 'WebComic' | 'FluidLTR' | 'FluidRTL' | 'Vertical';
 export type LoadMode = 'wait' | 'always' | 'never';
@@ -43,3 +34,5 @@ export type ISettings = {
   scrollHeight: number;
   keybinds: Record<string, string[] | undefined>;
 };
+
+export type ISettingsKey = keyof ISettings;
