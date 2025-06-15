@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, Natomanga, MangaOni, Mangareader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.06.11
+// @version       2025.06.15
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -101,6 +101,106 @@
   const findClosestByContentEnds = (selector, content, ancestor = 'a') =>
     findClosest(selector, content, 'ends', ancestor);
 
+  function isEmpty(value) {
+    return (
+      value === null || // Check for null
+      typeof value === 'undefined' ||
+      value === void 0 || // Check for undefined
+      (typeof value === 'string' && value === '') || // Check for empty string
+      (Array.isArray(value) && value.length === 0) || // Check for empty array
+      (typeof value === 'object' && Object.keys(value).length === 0)
+    );
+  }
+  function isNothing(value) {
+    const isEmptyObject = (a) => {
+      if (!Array.isArray(a)) {
+        const hasNonempty = Object.keys(a).some((element) => !isNothing(a[element]));
+        return hasNonempty ? false : isEmptyObject(Object.keys(a));
+      }
+      return !a.some((element) => element instanceof Promise || !isNothing(element));
+    };
+    return (
+      !value || value === 0 || isEmpty(value) || (typeof value === 'object' && isEmptyObject(value))
+    );
+  }
+
+  function waitForElm(selector, target = document.body) {
+    return new Promise((resolve) => {
+      if (document.querySelector(selector)) {
+        resolve(document.querySelector(selector));
+        return;
+      }
+      const observer = new MutationObserver(() => {
+        if (document.querySelector(selector)) {
+          resolve(document.querySelector(selector));
+          observer.disconnect();
+        }
+      });
+      observer.observe(target, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+      });
+    });
+  }
+  function waitForFunc(fn, timer = 250) {
+    return new Promise((resolve) => {
+      const intervalId = setInterval(() => {
+        if (fn()) {
+          clearInterval(intervalId);
+          resolve(true);
+        }
+      }, timer);
+    });
+  }
+  function waitForAtb(selector, attribute, target = document.body) {
+    return new Promise((resolve) => {
+      if (target.querySelector(selector)?.getAttribute(attribute)) {
+        resolve(target.querySelector(selector)?.getAttribute(attribute) ?? '');
+        return;
+      }
+      const observer = new MutationObserver(() => {
+        if (target.querySelector(selector)?.getAttribute(attribute)) {
+          resolve(target.querySelector(selector)?.getAttribute(attribute) ?? '');
+          observer.disconnect();
+        }
+      });
+      observer.observe(target, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: [attribute],
+      });
+    });
+  }
+  function waitForVar(name, target = document.body) {
+    return new Promise((resolve) => {
+      if (!isNothing(unsafeWindow[name])) {
+        resolve(unsafeWindow[name]);
+        return;
+      }
+      const observer = new MutationObserver(() => {
+        if (!isNothing(unsafeWindow[name])) {
+          resolve(unsafeWindow[name]);
+          observer.disconnect();
+        }
+      });
+      observer.observe(target, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+      });
+    });
+  }
+  function waitForTimer(millis = 1e3, result = true) {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(result), millis);
+    });
+  }
+  async function waitWithTimeout(promise, timeout = 5e3) {
+    return Promise.race([promise, waitForTimer(timeout, false)]);
+  }
+
   const asura = {
     name: 'Asura Scans',
     url: /https?:\/\/(www.)?(asuracomic).(net)\/.+/,
@@ -111,19 +211,19 @@
     waitTime: 2e3,
     run() {
       const images = [...document.querySelectorAll('img[alt*="chapter"]')];
+      const ref = findOneByContentStarts('p', 'All chapters are in');
       return {
-        title: document.querySelector('h2')?.textContent?.trim(),
-        series: findOneByContentStarts('p', 'All chapters are in')
-          ?.querySelector('a')
-          ?.getAttribute('href'),
+        title: ref?.previousSibling?.textContent?.trim(),
+        series: ref?.querySelector('a')?.getAttribute('href'),
         pages: images.length,
         prev: findClosestByContentEq('h2', 'Prev', 'a')?.getAttribute('href'),
         next: findClosestByContentEq('h2', 'Next', 'a')?.getAttribute('href'),
         listImages: images.map((img) => img.getAttribute('src')),
-        before() {
+        async before() {
           document
             .querySelectorAll('button.absolute')
             .forEach((e) => e.dispatchEvent(new Event('click', { bubbles: true })));
+          await waitForTimer(1e3);
         },
       };
     },
@@ -1189,8 +1289,8 @@
           .filter((i) => i.textContent === 'Episodios')?.[0]
           ?.parentElement?.getAttribute('href'),
         pages: api.chapter.img.length,
-        prev: data.chapterAnterior,
-        next: data.chapterSiguiente,
+        prev: data.chapterAnterior.replace(api._id, api.real_id),
+        next: data.chapterSiguiente.replace(api._id, api.real_id),
         listImages: api.chapter.img,
       };
     },
@@ -2051,29 +2151,6 @@
   };
 
   const locales = [en_US, es_ES, pt_BR, zh_CN];
-
-  function isEmpty(value) {
-    return (
-      value === null || // Check for null
-      typeof value === 'undefined' ||
-      value === void 0 || // Check for undefined
-      (typeof value === 'string' && value === '') || // Check for empty string
-      (Array.isArray(value) && value.length === 0) || // Check for empty array
-      (typeof value === 'object' && Object.keys(value).length === 0)
-    );
-  }
-  function isNothing(value) {
-    const isEmptyObject = (a) => {
-      if (!Array.isArray(a)) {
-        const hasNonempty = Object.keys(a).some((element) => !isNothing(a[element]));
-        return hasNonempty ? false : isEmptyObject(Object.keys(a));
-      }
-      return !a.some((element) => element instanceof Promise || !isNothing(element));
-    };
-    return (
-      !value || value === 0 || isEmpty(value) || (typeof value === 'object' && isEmptyObject(value))
-    );
-  }
 
   const defaultSettings = {
     locale: 'en_US',
@@ -4849,83 +4926,6 @@
     loadManga(manga);
     document.querySelector('#MangaOnlineViewer')?.addEventListener('hydrate', hydrateApp);
     if (manga.comments) document.querySelector('#CommentsArea')?.append(manga.comments);
-  }
-
-  function waitForElm(selector, target = document.body) {
-    return new Promise((resolve) => {
-      if (document.querySelector(selector)) {
-        resolve(document.querySelector(selector));
-        return;
-      }
-      const observer = new MutationObserver(() => {
-        if (document.querySelector(selector)) {
-          resolve(document.querySelector(selector));
-          observer.disconnect();
-        }
-      });
-      observer.observe(target, {
-        childList: true,
-        subtree: true,
-        attributes: true,
-      });
-    });
-  }
-  function waitForFunc(fn, timer = 250) {
-    return new Promise((resolve) => {
-      const intervalId = setInterval(() => {
-        if (fn()) {
-          clearInterval(intervalId);
-          resolve(true);
-        }
-      }, timer);
-    });
-  }
-  function waitForAtb(selector, attribute, target = document.body) {
-    return new Promise((resolve) => {
-      if (target.querySelector(selector)?.getAttribute(attribute)) {
-        resolve(target.querySelector(selector)?.getAttribute(attribute) ?? '');
-        return;
-      }
-      const observer = new MutationObserver(() => {
-        if (target.querySelector(selector)?.getAttribute(attribute)) {
-          resolve(target.querySelector(selector)?.getAttribute(attribute) ?? '');
-          observer.disconnect();
-        }
-      });
-      observer.observe(target, {
-        childList: true,
-        subtree: true,
-        attributes: true,
-        attributeFilter: [attribute],
-      });
-    });
-  }
-  function waitForVar(name, target = document.body) {
-    return new Promise((resolve) => {
-      if (!isNothing(unsafeWindow[name])) {
-        resolve(unsafeWindow[name]);
-        return;
-      }
-      const observer = new MutationObserver(() => {
-        if (!isNothing(unsafeWindow[name])) {
-          resolve(unsafeWindow[name]);
-          observer.disconnect();
-        }
-      });
-      observer.observe(target, {
-        childList: true,
-        subtree: true,
-        attributes: true,
-      });
-    });
-  }
-  function waitForTimer(millis = 1e3, result = true) {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(result), millis);
-    });
-  }
-  async function waitWithTimeout(promise, timeout = 5e3) {
-    return Promise.race([promise, waitForTimer(timeout, false)]);
   }
 
   async function captureComments() {
