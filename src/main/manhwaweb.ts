@@ -19,8 +19,8 @@ export default {
         .filter((i) => i.textContent === 'Episodios')?.[0]
         ?.parentElement?.getAttribute('href'),
       pages: api.chapter.img.length,
-      prev: data.chapterAnterior,
-      next: data.chapterSiguiente,
+      prev: data.chapterAnterior.replace(api._id, api.real_id),
+      next: data.chapterSiguiente.replace(api._id, api.real_id),
       listImages: api.chapter.img,
     };
   },
