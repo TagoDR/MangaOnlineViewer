@@ -1,4 +1,4 @@
-import { getUserSettings, updateSettings } from '../../core/settings';
+import { getSettingsValue, setSettingsValue } from '../../core/settings';
 import { applyZoom } from '../page';
 import type { ZoomMode } from '../../types';
 import { updateHeaderType } from './options';
@@ -6,14 +6,14 @@ import { updateHeaderType } from './options';
 export function changeGlobalZoom(value: number | ZoomMode) {
   return () => {
     if (typeof value !== 'number') {
-      getUserSettings().zoomMode = value;
+      setSettingsValue('zoomMode', value);
     } else {
-      getUserSettings().zoomMode = 'percent';
+      setSettingsValue('zoomMode', 'percent');
     }
     if (value === 'height') {
       updateHeaderType('click');
     } else {
-      updateHeaderType(getUserSettings().header);
+      updateHeaderType(getSettingsValue('header'));
     }
 
     const globalZoomVal = document.querySelector('#ZoomVal');
@@ -30,7 +30,7 @@ export function changeGlobalZoom(value: number | ZoomMode) {
 export function changeZoomByStep(sign = 1) {
   return () => {
     const globalZoom = document.querySelector<HTMLInputElement>('#Zoom');
-    const ratio = parseInt(globalZoom!.value, 10) + sign * getUserSettings().zoomStep;
+    const ratio = parseInt(globalZoom!.value, 10) + sign * getSettingsValue('zoomStep');
     globalZoom!.value = ratio.toString();
     globalZoom?.dispatchEvent(new Event('input', { bubbles: true }));
   };
@@ -38,10 +38,10 @@ export function changeZoomByStep(sign = 1) {
 
 export function changeDefaultZoomMode(event: Event) {
   const target = (event.currentTarget as HTMLInputElement).value as ZoomMode;
-  updateSettings({ zoomMode: target });
+  setSettingsValue('zoomMode', target);
   changeGlobalZoom(target)();
   const percent = document.querySelector<HTMLDivElement>('.DefaultZoom');
-  if (getUserSettings().zoomMode === 'percent') {
+  if (getSettingsValue('zoomMode') === 'percent') {
     percent?.classList.add('show');
   } else {
     percent?.classList.remove('show');
@@ -50,7 +50,7 @@ export function changeDefaultZoomMode(event: Event) {
 
 export function changeDefaultZoom(event: Event) {
   const target = parseInt((event.currentTarget as HTMLInputElement).value, 10);
-  updateSettings({ defaultZoom: target });
+  setSettingsValue('defaultZoom', target);
   changeGlobalZoom(target)();
 }
 

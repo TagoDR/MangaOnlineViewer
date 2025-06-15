@@ -1,18 +1,18 @@
 import { html } from '../../utils/code-tag';
 import { IconDeviceFloppy, IconPencil, IconX } from '../icons';
-import { getLocaleString, getUserSettings } from '../../core/settings';
+import { getLocaleString, getSettingsValue } from '../../core/settings';
 
-export const keybindList = () =>
-  Object.keys(getUserSettings().keybinds).map((kb) => {
-    const keys = getUserSettings().keybinds[kb]?.length
-      ? getUserSettings()
-          .keybinds[kb]?.map((key) => html`<kbd class="dark">${key}</kbd>`)
-          .join(' / ')
+export const keybindList = () => {
+  const keybinds = getSettingsValue('keybinds');
+  return Object.keys(keybinds).map((kb) => {
+    const keys = keybinds[kb]?.length
+      ? keybinds[kb]?.map((key) => html`<kbd class="dark">${key}</kbd>`).join(' / ')
       : '';
     return html`<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
   });
+};
 export const keybindEditor = () =>
-  Object.keys(getUserSettings().keybinds)
+  Object.keys(getSettingsValue('keybinds'))
     .map(
       // Language=html
       (kb) =>
@@ -22,10 +22,10 @@ export const keybindEditor = () =>
             class="KeybindInput"
             id="${kb}"
             name="${kb}"
-            value="${getUserSettings().keybinds[kb]?.join(' , ') ?? ''}"
+            value="${getSettingsValue('keybinds')[kb]?.join(' , ') ?? ''}"
           />`,
     )
-    .concat(html`<div id="HotKeysRules">${getLocaleString('KEYBIND_RULES')}</div>`);
+    .concat(html` <div id="HotKeysRules">${getLocaleString('KEYBIND_RULES')}</div>`);
 
 // Language=html
 const KeybindingsPanel = () => html`

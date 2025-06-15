@@ -1,11 +1,6 @@
 import Swal from 'sweetalert2';
 import type { IBookmark } from '../../types';
-import {
-  getLocaleString,
-  getUserSettings,
-  isBookmarked,
-  updateSettings,
-} from '../../core/settings';
+import { changeSettingsValue, getLocaleString, isBookmarked } from '../../core/settings';
 import { reloadBookmarks } from '../components/BookmarksPanel';
 import { logScript } from '../../utils/tampermonkey';
 import { addEvent } from './common';
@@ -19,9 +14,7 @@ export function buttonBookmarksClose() {
 export function removeURLBookmark(url: string = window.location.href) {
   if (!isNothing(isBookmarked(url))) {
     logScript(`Bookmark Removed ${url}`);
-    updateSettings({
-      bookmarks: getUserSettings().bookmarks.filter((el) => el.url !== url),
-    });
+    changeSettingsValue('bookmarks', (b) => b.filter((el) => el.url !== url));
     if (url === window.location.href) {
       document.querySelector('#MangaOnlineViewer')?.classList.remove('bookmarked');
     }
@@ -74,16 +67,14 @@ export function buttonBookmark(event: Event) {
     date: new Date().toISOString().slice(0, 10),
   };
   if (isBookmarked(mark.url)) {
-    updateSettings({
-      bookmarks: getUserSettings().bookmarks.filter((el) => el.url !== mark.url),
-    });
+    changeSettingsValue('bookmarks', (b) => b.filter((el) => el.url !== mark.url));
     Swal.fire({
       title: getLocaleString('BOOKMARK_REMOVED'),
       timer: 10000,
       icon: 'error',
     });
   } else {
-    updateSettings({ bookmarks: [...getUserSettings().bookmarks, mark] });
+    changeSettingsValue('bookmarks', (b) => [...b, mark]);
     Swal.fire({
       title: getLocaleString('BOOKMARK_SAVED'),
       html: getLocaleString('BOOKMARK_SAVED').replace('##NUM##', num.toString()),

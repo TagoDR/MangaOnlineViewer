@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { logScript } from '../../utils/tampermonkey';
-import { getUserSettings } from '../../core/settings';
+import { getSettingsValue } from '../../core/settings';
 
 let scrollActive = false;
 
@@ -10,12 +10,12 @@ function scroll() {
     const scrollDirection = chapter.classList.contains('FluidRTL') ? -1 : 1;
     chapter?.scrollBy({
       top: 0,
-      left: getUserSettings().scrollHeight * scrollDirection,
+      left: getSettingsValue('scrollHeight') * scrollDirection,
       behavior: 'smooth',
     });
   } else {
     window.scrollBy({
-      top: getUserSettings().scrollHeight,
+      top: getSettingsValue('scrollHeight'),
       left: 0,
       behavior: 'smooth',
     });

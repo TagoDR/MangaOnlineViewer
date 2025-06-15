@@ -1,6 +1,6 @@
 import { html } from '../../utils/code-tag';
 import type { IManga } from '../../types';
-import { getUserSettings, isBookmarked } from '../../core/settings';
+import { getSettingsValue, isBookmarked } from '../../core/settings';
 import SettingsPanel from './SettingsPanel';
 import KeybindingsPanel from './KeybindingsPanel';
 import ThumbnailsPanel from './ThumbnailsPanel';
@@ -17,7 +17,7 @@ import { updateViewMode } from '../events/viewmode';
 let loadedManga: IManga;
 
 export function hydrateApp() {
-  updateViewMode(getUserSettings().viewMode)();
+  updateViewMode(getSettingsValue('viewMode'))();
   const elements = {
     '#Header': Header(loadedManga),
     '#CommentsPanel': CommentsPanel(),
@@ -30,15 +30,15 @@ export function hydrateApp() {
   }
   const outer = document.querySelector('#MangaOnlineViewer');
   if (outer) {
-    outer.className = `${getUserSettings().colorScheme} 
-        ${getUserSettings().hidePageControls ? 'hideControls' : ''}
+    outer.className = `${getSettingsValue('colorScheme')} 
+        ${getSettingsValue('hidePageControls') ? 'hideControls' : ''}
         ${isBookmarked() ? 'bookmarked' : ''}
         ${getDevice()}`;
-    outer.setAttribute('data-theme', getUserSettings().theme);
+    outer.setAttribute('data-theme', getSettingsValue('theme'));
   }
   const reader = document.querySelector('#Chapter');
   if (reader) {
-    reader.className = `${getUserSettings().fitWidthIfOversize ? 'fitWidthIfOversize' : ''}  ${getUserSettings().viewMode}`;
+    reader.className = `${getSettingsValue('fitWidthIfOversize') ? 'fitWidthIfOversize' : ''}  ${getSettingsValue('viewMode')}`;
   }
   Object.entries(elements).forEach(([id, component]) => {
     const tag = document.querySelector(id);
@@ -55,14 +55,14 @@ const app = (manga: IManga) => {
   const main = document.createElement('div');
   main.id = 'MangaOnlineViewer';
   main.className = `
-        ${getUserSettings().colorScheme} 
-        ${getUserSettings().hidePageControls ? 'hideControls' : ''}
+        ${getSettingsValue('colorScheme')} 
+        ${getSettingsValue('hidePageControls') ? 'hideControls' : ''}
         ${isBookmarked() ? 'bookmarked' : ''}
         ${getDevice()}`;
-  main.setAttribute('data-theme', getUserSettings().theme);
+  main.setAttribute('data-theme', getSettingsValue('theme'));
 
   main.innerHTML = html`
-    <div id="menu" class="${getUserSettings().header}">${IconMenu2}</div>
+    <div id="menu" class="${getSettingsValue('header')}">${IconMenu2}</div>
     ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
     <div id="Overlay" class="overlay"></div>
     ${CommentsPanel()} ${KeybindingsPanel()} ${BookmarksPanel()} ${SettingsPanel()}
