@@ -1,5 +1,6 @@
 // == AsuraScans ===================================================================================
 import { findClosestByContentEq, findOneByContentStarts } from '../utils/find';
+import { waitForTimer } from '../utils/waitFor.ts';
 
 export default {
   name: 'Asura Scans',
@@ -11,18 +12,20 @@ export default {
   waitTime: 2000,
   run() {
     const images = [...document.querySelectorAll('img[alt*="chapter"]')];
+    const ref = findOneByContentStarts('p', 'All chapters are in');
     return {
-      title: document.querySelector('h2')?.textContent?.trim(),
-      series: findOneByContentStarts('p', 'All chapters are in')
-        ?.querySelector('a')
-        ?.getAttribute('href'),
+      title: ref?.previousSibling?.textContent?.trim(),
+      series: ref?.querySelector('a')?.getAttribute('href'),
       pages: images.length,
       prev: findClosestByContentEq('h2', 'Prev', 'a')?.getAttribute('href'),
       next: findClosestByContentEq('h2', 'Next', 'a')?.getAttribute('href'),
       listImages: images.map((img) => img.getAttribute('src')),
-      before(){
-        document.querySelectorAll('button.absolute').forEach(e => e.dispatchEvent(new Event('click', { bubbles: true })));
-      }
+      async before() {
+        document
+          .querySelectorAll('button.absolute')
+          .forEach((e) => e.dispatchEvent(new Event('click', { bubbles: true })));
+        await waitForTimer(1000);
+      },
     };
   },
 };
