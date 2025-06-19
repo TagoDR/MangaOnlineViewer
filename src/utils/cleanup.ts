@@ -1,9 +1,20 @@
+function removeAllEventListeners(element: HTMLElement): HTMLElement {
+  if (!element || !element.parentNode) {
+    // Or handle this case as appropriate, maybe return the original element
+    return element;
+  }
+  const newElement = element.cloneNode(true) as HTMLElement; // true for deep clone
+  element.parentNode.replaceChild(newElement, element);
+  return newElement;
+}
+
 const removeAttributes = (element: HTMLElement) => {
   element.getAttributeNames().forEach((attr) => element?.removeAttribute(attr));
 };
 
 export const cleanUpElement = (...elements: HTMLElement[]) => {
-  elements?.forEach(removeAttributes);
+  elements?.forEach(removeAttributes)
+  elements?.forEach(removeAllEventListeners);
 };
 
 export const cleanUpSelector = (...selectors: string[]) => {
@@ -11,6 +22,7 @@ export const cleanUpSelector = (...selectors: string[]) => {
     const element = document.querySelector<HTMLElement>(selector);
     if (element) {
       removeAttributes(element);
+      removeAllEventListeners(element);
     }
   });
 };
