@@ -1,6 +1,15 @@
 import { html } from '../../utils/code-tag';
-import { getLocaleString, getSettingsValue } from '../../core/settings';
-import { IconCheck, IconMoon, IconPalette, IconSun, IconX } from '../icons';
+import { getLocaleString, getSettingsValue, isSettingsLocal } from '../../core/settings';
+import {
+  IconCheck,
+  IconLocationCog,
+  IconMoon,
+  IconPalette,
+  IconSettingsOff,
+  IconSun,
+  IconWorldCog,
+  IconX,
+} from '../icons';
 import locales from '../../locales';
 import colors from '../../utils/colors';
 
@@ -29,13 +38,41 @@ const themesSelector = () =>
     )
     .join('');
 
-const language = html` <div class="ControlLabel locale">
-  ${getLocaleString('LANGUAGE')}
-  <select id="locale">
-    ${localeSelector()}
-  </select>
-</div>`;
-const theme = html`
+const settingsScope = () =>
+  html` <div class="ControlLabel">
+    ${getLocaleString('SCOPE')}
+    <div id="SettingsScope" class="radio-inputs">
+      <label class="radio">
+        <input
+          type="radio"
+          id="globalSettings"
+          name="settingsScope"
+          ${!isSettingsLocal() ? 'checked' : ''}
+          value="false"
+        />
+        <span class="name">${IconWorldCog} ${getLocaleString('GLOBAL')}</span>
+      </label>
+      <label class="radio">
+        <input
+          type="radio"
+          id="localSettings"
+          name="settingsScope"
+          ${isSettingsLocal() ? 'checked' : ''}
+          value="true"
+        />
+        <span class="name">${IconLocationCog} ${window.location.hostname}</span>
+      </label>
+    </div>
+  </div>`;
+
+const language = () =>
+  html` <div class="ControlLabel locale">
+    ${getLocaleString('LANGUAGE')}
+    <select id="locale">
+      ${localeSelector()}
+    </select>
+  </div>`;
+const theme = () => html`
   <div id="ThemeSection">
     <div class="ControlLabel ColorSchemeSelector">
       ${getLocaleString('COLOR_SCHEME')}
@@ -89,7 +126,7 @@ const theme = html`
     </div>
   </div>
 `;
-const loadMode = html`
+const loadMode = () => html`
   <div class="ControlLabel loadMode">
     ${getLocaleString('DEFAULT_LOAD_MODE')}
     <select id="loadMode">
@@ -105,7 +142,7 @@ const loadMode = html`
     </select>
   </div>
 `;
-const loadSpeed = html`
+const loadSpeed = () => html`
   <div class="ControlLabel PagesPerSecond">
     ${getLocaleString('LOAD_SPEED')}
     <select id="PagesPerSecond">
@@ -136,21 +173,22 @@ const loadSpeed = html`
     </select>
   </div>
 `;
-const defaultZoomMode = html` <div class="ControlLabel DefaultZoomMode">
-  ${getLocaleString('DEFAULT_ZOOM_MODE')}
-  <select id="DefaultZoomMode">
-    <option value="percent" ${getSettingsValue('zoomMode') === 'percent' ? 'selected' : ''}>
-      ${getLocaleString('PERCENT')}
-    </option>
-    <option value="width" ${getSettingsValue('zoomMode') === 'width' ? 'selected' : ''}>
-      ${getLocaleString('FIT_WIDTH')}
-    </option>
-    <option value="height" ${getSettingsValue('zoomMode') === 'height' ? 'selected' : ''}>
-      ${getLocaleString('FIT_HEIGHT')}
-    </option>
-  </select>
-</div>`;
-const defaultZoom = html`
+const defaultZoomMode = () =>
+  html` <div class="ControlLabel DefaultZoomMode">
+    ${getLocaleString('DEFAULT_ZOOM_MODE')}
+    <select id="DefaultZoomMode">
+      <option value="percent" ${getSettingsValue('zoomMode') === 'percent' ? 'selected' : ''}>
+        ${getLocaleString('PERCENT')}
+      </option>
+      <option value="width" ${getSettingsValue('zoomMode') === 'width' ? 'selected' : ''}>
+        ${getLocaleString('FIT_WIDTH')}
+      </option>
+      <option value="height" ${getSettingsValue('zoomMode') === 'height' ? 'selected' : ''}>
+        ${getLocaleString('FIT_HEIGHT')}
+      </option>
+    </select>
+  </div>`;
+const defaultZoom = () => html`
   <div
     class="ControlLabel DefaultZoom ControlLabelItem
   ${getSettingsValue('zoomMode') === 'percent' ? 'show' : ''}"
@@ -185,7 +223,7 @@ const defaultZoom = html`
     </datalist>
   </div>
 `;
-const minZoom = html`
+const minZoom = () => html`
   <div class="ControlLabel minZoom">
     <span>
       ${getLocaleString('MINIMUM_ZOOM')}
@@ -205,7 +243,7 @@ const minZoom = html`
     />
   </div>
 `;
-const zoomStep = html`
+const zoomStep = () => html`
   <div class="ControlLabel zoomStep">
     <span>
       ${getLocaleString('ZOOM_STEP')}
@@ -225,7 +263,7 @@ const zoomStep = html`
     />
   </div>
 `;
-const viewMode = html`
+const viewMode = () => html`
   <div class="ControlLabel viewMode">
     ${getLocaleString('DEFAULT_VIEW_MODE')}
     <select id="viewMode">
@@ -244,7 +282,7 @@ const viewMode = html`
     </select>
   </div>
 `;
-const lazyLoad = html`
+const lazyLoad = () => html`
   <div
     class="ControlLabel lazyStart ControlLabelItem
     ${getSettingsValue('lazyLoadImages') ? 'show' : ''}"
@@ -265,7 +303,7 @@ const lazyLoad = html`
     />
   </div>
 `;
-const headerType = html`
+const headerType = () => html`
   <div class="ControlLabel headerType">
     ${getLocaleString('HEADER_TYPE')}
     <select id="headerType">
@@ -287,7 +325,7 @@ const headerType = html`
     </select>
   </div>
 `;
-const checkboxOptions = html`
+const checkboxOptions = () => html`
   <div class="ControlLabel verticalSeparator">
     ${getLocaleString('VERTICAL_SEPARATOR')}
     <input
@@ -360,11 +398,12 @@ const checkboxOptions = html`
     />
   </div>
 `;
-const autoScroll = html`
+const autoScroll = () => html`
   <div class="ControlLabel autoScroll">
     <span>
       ${getLocaleString('AUTO_SCROLL_HEIGHT')}
-      <output id="scrollHeightVal" for="scrollHeight"> ${getSettingsValue('scrollHeight')} </output>px
+      <output id="scrollHeightVal" for="scrollHeight"> ${getSettingsValue('scrollHeight')} </output
+      >px
     </span>
     <input
       type="range"
@@ -385,10 +424,11 @@ const SettingsPanel = () => html`
       ${IconX}
     </button>
     <button id="ResetSettings" class="ControlButton">
-      ${getLocaleString('BUTTON_RESET_SETTINGS')}
+      ${IconSettingsOff} ${getLocaleString('BUTTON_RESET_SETTINGS')}
     </button>
-    ${language} ${theme} ${loadMode} ${loadSpeed} ${defaultZoomMode} ${defaultZoom} ${minZoom}
-    ${zoomStep} ${viewMode} ${checkboxOptions} ${headerType} ${autoScroll}
+    ${settingsScope()} ${language()} ${theme()} ${loadMode()} ${loadSpeed()} ${defaultZoomMode()}
+    ${defaultZoom()} ${minZoom()} ${zoomStep()} ${viewMode()} ${checkboxOptions()} ${headerType()}
+    ${autoScroll()}
   </div>
 `;
 export default SettingsPanel;

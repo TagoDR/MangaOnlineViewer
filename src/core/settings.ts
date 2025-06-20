@@ -59,9 +59,9 @@ export const defaultSettings: ISettings = {
   },
 };
 
-const getDefault = () =>
-  !isMobile()
-    ? defaultSettings
+function getDefault() {
+  return !isMobile()
+    ? { ...defaultSettings }
     : _.defaultsDeep(
         {
           lazyLoadImages: true,
@@ -72,6 +72,7 @@ const getDefault = () =>
         },
         defaultSettings,
       );
+}
 
 // Configuration
 let globalSettings: ISettings = _.defaultsDeep(getGlobalSettings(getDefault()), getDefault());
@@ -81,13 +82,23 @@ let localSettings: ISettings | null = getListGM().includes(window.location.hostn
 
 settingsChangeListener((newValue: Partial<ISettings>) => {
   const newSettings = _.defaultsDeep(newValue, getDefault());
-  const diff = diffObj(newSettings, globalSettings);
+  const diff = globalSettings ? diffObj(newSettings, globalSettings) : newSettings;
   if (!isNothing(diff)) {
-    logScript('Imported Settings', diff);
+    logScript('Imported Global Settings', diff);
     globalSettings = newSettings;
     document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
   }
-});
+}, 'settings');
+
+settingsChangeListener((newValue: Partial<ISettings>) => {
+  const newSettings = _.defaultsDeep(newValue, getDefault());
+  const diff = localSettings ? diffObj(newSettings, localSettings) : newSettings;
+  if (!isNothing(diff)) {
+    logScript('Imported Local Settings', diff);
+    localSettings = newSettings;
+    document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
+  }
+}, window.location.hostname);
 
 /**
  * Gets the effective value for a setting, considering site-specific overrides,
@@ -144,7 +155,7 @@ export function getUserSettings() {
 */
 
 export function getLocaleString(name: string): string {
-  const locale = locales.find((l) => l.ID === globalSettings.locale);
+  const locale = locales.find((l) => l.ID === getSettingsValue('locale'));
   if (locale?.[name]) {
     return locale[name];
   }
@@ -178,21 +189,30 @@ export function updateSettings(newValue: Partial<ISettings>) {
 export function resetSettings() {
   if (localSettings) {
     removeValueGM(window.location.hostname);
+    localSettings = getDefault();
+    setLocalSettings(diffObj(localSettings, getDefault()));
   } else {
     removeValueGM('settings');
+    globalSettings = getDefault();
+    setGlobalSettings(diffObj(globalSettings, getDefault()));
   }
-  localSettings = null;
-  globalSettings = _.defaultsDeep(getGlobalSettings(getDefault()), getDefault());
   document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
 }
 
+export const isSettingsLocal = () => !isNothing(localSettings);
+
 export function toggleLocalSettings(activate = false) {
-  if (activate && !localSettings) {
-    localSettings = globalSettings;
+  if (activate) {
+    localSettings = { ...globalSettings };
     setLocalSettings(diffObj(globalSettings, getDefault()));
-  } else if (!activate && localSettings) {
-    resetSettings();
+    logScript('Local Settings Enabled');
+  } else {
+    localSettings = null;
+    removeValueGM(window.location.hostname);
+    logScript('Local Settings Disabled');
   }
+  document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
+  return isSettingsLocal();
 }
 
 export function isBookmarked(url: string = window.location.href): number | undefined {

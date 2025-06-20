@@ -3,17 +3,25 @@ import {
   getLocaleString,
   getSettingsValue,
   resetSettings,
-  setSettingsValue,
+  setSettingsValue, toggleLocalSettings,
 } from '../../core/settings';
 import type { HeaderMode, LoadMode } from '../../types';
 import { applyZoom } from '../page';
 import { replaceStyleSheet } from '../../utils/css';
+import { addEvent } from './common';
+import { buttonSettingsOpen } from './panels';
 
 export function buttonResetSettings() {
   resetSettings();
   const elem = document.getElementById('MangaOnlineViewer');
   elem?.removeAttribute('locale');
-  elem?.dispatchEvent(new Event('hydrate'));
+  buttonSettingsOpen();
+}
+
+export function changeSettingsScope(event: Event) {
+  const scope = (event.currentTarget as HTMLInputElement);
+  toggleLocalSettings(scope.value === 'true');
+  buttonSettingsOpen();
 }
 
 export function changeLocale(event: Event) {
@@ -139,6 +147,8 @@ export function changeScrollHeight(event: Event) {
 function options() {
   // Reset Reader Settings
   document.querySelector('#ResetSettings')?.addEventListener('click', buttonResetSettings);
+  // Change Settings Scope
+  document.querySelectorAll('#SettingsScope input[type=radio]').forEach(addEvent('change', changeSettingsScope))
   // Change Locale
   document.querySelector('#locale')?.addEventListener('change', changeLocale);
   // Image Fit width if Oversize Toggle

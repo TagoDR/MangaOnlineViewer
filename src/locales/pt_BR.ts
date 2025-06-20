@@ -105,4 +105,6 @@ export default {
   AUTO_SCROLL_HEIGHT: 'Velocidade da Rolagem Automatica em Pixels',
   VERTICAL_SEPARATOR: 'Mostrar Separadores Verticais',
   END: 'Fin',
+  SCOPE: 'Escopo',
+  GLOBAL: 'Global',
 };

@@ -105,3 +105,56 @@
 #MangaOnlineViewer #Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {
     display: none;
 }
+
+#MangaOnlineViewer .radio-inputs {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0.5rem;
+    background-color: var(--theme-border-color);
+    color:var(--theme-text-color);
+    box-sizing: border-box;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+    padding: 0.25rem;
+    width: 300px;
+    font-size: 14px;
+}
+
+#MangaOnlineViewer .radio-inputs .radio {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+#MangaOnlineViewer .radio-inputs .radio input {
+    display: none;
+}
+
+#MangaOnlineViewer .radio-inputs .radio .name .icon{
+    margin: 0 0.5rem;
+}
+
+#MangaOnlineViewer .radio-inputs .radio .name {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    border: none;
+    padding: .5rem 0;
+    color: var(--theme-text-color);
+    background-color: var(--theme-border-color);
+    transition: all .15s ease-in-out;
+}
+
+#MangaOnlineViewer .radio-inputs .radio input:checked + .name {
+    background-color: var(--theme-primary-color);
+    color:var(--theme-primary-text-color);
+    font-weight: 600;
+}
+
+#MangaOnlineViewer #ColorScheme{
+    padding: 5px;
+    min-height: 28px;
+    min-width: 28px;
+}
+
