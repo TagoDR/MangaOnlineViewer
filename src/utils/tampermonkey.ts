@@ -37,7 +37,7 @@ function removeValueGM(name: string) {
   if (typeof GM_deleteValue !== 'undefined') {
     GM_deleteValue(name);
   } else {
-    logScript('Removing: ', name);
+    logScript('Fake Removing: ', name);
   }
 }
 
@@ -159,10 +159,10 @@ const settingsChangeListener = (
       /* empty */
     }
   }
-  logScript('Using Interval Settings Change Listener');
-  return setInterval(() => {
-    fn(getGlobalSettings());
-  }, 10000);
+  // logScript('Using Interval Settings Change Listener');
+  // return setInterval(() => {
+  //   fn(gmValue === 'settings' ? getGlobalSettings() : getLocalSettings());
+  // }, 10000);
 };
 
 export {

@@ -105,4 +105,6 @@ export default {
   AUTO_SCROLL_HEIGHT: '自动滚动速度（以像素为单位）',
   VERTICAL_SEPARATOR: '显示垂直分隔符',
   END: '结尾',
+  SCOPE: '范围',
+  GLOBAL: '全球',
 };

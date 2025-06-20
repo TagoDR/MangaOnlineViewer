@@ -28,7 +28,7 @@ export function hydrateApp() {
   if (document.querySelector('#ScrollControl')?.classList.contains('running')) {
     toggleAutoScroll();
   }
-  const outer = document.querySelector('#MangaOnlineViewer');
+  const outer = document.getElementById('MangaOnlineViewer');
   if (outer) {
     outer.className = `${getSettingsValue('colorScheme')} 
         ${getSettingsValue('hidePageControls') ? 'hideControls' : ''}
