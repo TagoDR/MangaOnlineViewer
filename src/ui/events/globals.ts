@@ -23,7 +23,7 @@ function buttonRedirectURL(event: Event) {
   const url = element.getAttribute('value') ?? element.getAttribute('href');
   if ((event as MouseEvent).button !== 1 && !(event as MouseEvent).ctrlKey) {
     if (url && url !== '#') {
-      window.location.href = encodeURIComponent(sanitizeUrl(url));
+      window.location.href = sanitizeUrl(url);
     } else if (element.id === 'series') {
       window.history.back();
     }
