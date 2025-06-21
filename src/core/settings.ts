@@ -121,7 +121,7 @@ export function getSettingsValue<K extends ISettingsKey>(key: K): ISettings[K] {
 export function setSettingsValue<K extends ISettingsKey>(key: K, value: ISettings[K]): void {
   if (localSettings) {
     localSettings[key] = value;
-    setLocalSettings(diffObj(localSettings, getDefault()));
+    setLocalSettings(diffObj(localSettings, globalSettings));
   } else {
     globalSettings[key] = value;
     setGlobalSettings(diffObj(globalSettings, getDefault()));
