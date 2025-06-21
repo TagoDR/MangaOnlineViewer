@@ -46,6 +46,9 @@ export function hydrateApp() {
       tag.outerHTML = component;
     }
   });
+  document
+    .querySelector('#Navigation')
+    ?.classList.toggle('disabled', !getSettingsValue('showThumbnails'));
   document.querySelector('#Overlay')?.dispatchEvent(new Event('click'));
   events();
 }

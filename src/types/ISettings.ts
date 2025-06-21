@@ -8,6 +8,7 @@ export type HeaderMode = 'hover' | 'scroll' | 'click' | 'fixed' | 'simple';
 export type ZoomMode = 'percent' | 'height' | 'width';
 
 export type ISettings = {
+  enabled: boolean;
   locale: string;
   colorScheme: ColorScheme;
   theme: string;
