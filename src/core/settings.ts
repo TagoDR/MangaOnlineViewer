@@ -2,8 +2,10 @@ import _ from 'lodash';
 import {
   getGlobalSettings,
   getLocalSettings,
+  giveToWindow,
   isMobile,
   logScript,
+  logScriptVerbose,
   removeValueGM,
   setGlobalSettings,
   setLocalSettings,
@@ -81,14 +83,12 @@ let localSettings: ISettings = _.defaultsDeep(
   getDefault(false),
 );
 
-unsafeWindow.MOVSettings = <K extends ISettingsKey>(key: K | null = null) => {
-  logScript(
-    'Global',
-    key ? globalSettings[key] : globalSettings,
-    '\nLocal',
-    key ? localSettings[key] : localSettings,
-  );
-};
+export function showSettings<K extends ISettingsKey>(key: K | null = null) {
+  logScriptVerbose('Global Settings', key ? globalSettings[key] : globalSettings);
+  logScriptVerbose('Local Settings', key ? localSettings[key] : localSettings);
+}
+
+giveToWindow('MOVSettings', showSettings);
 
 export const isSettingsLocal = () => localSettings?.enabled === true;
 

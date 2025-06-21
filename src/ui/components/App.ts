@@ -1,6 +1,6 @@
 import { html } from '../../utils/code-tag';
 import type { IManga } from '../../types';
-import { getSettingsValue, isBookmarked } from '../../core/settings';
+import { getSettingsValue, isBookmarked, showSettings } from '../../core/settings';
 import SettingsPanel from './SettingsPanel';
 import KeybindingsPanel from './KeybindingsPanel';
 import ThumbnailsPanel from './ThumbnailsPanel';
@@ -13,10 +13,12 @@ import { toggleAutoScroll } from '../events/autoscroll';
 import { IconMenu2 } from '../icons';
 import { getDevice } from '../../utils/tampermonkey';
 import { updateViewMode } from '../events/viewmode';
+import { refreshThemes } from '../themes';
 
 let loadedManga: IManga;
 
 export function hydrateApp() {
+  showSettings();
   updateViewMode(getSettingsValue('viewMode'))();
   const elements = {
     '#Header': Header(loadedManga),
@@ -28,6 +30,7 @@ export function hydrateApp() {
   if (document.querySelector('#ScrollControl')?.classList.contains('running')) {
     toggleAutoScroll();
   }
+  refreshThemes();
   const outer = document.getElementById('MangaOnlineViewer');
   if (outer) {
     outer.className = `${getSettingsValue('colorScheme')} 

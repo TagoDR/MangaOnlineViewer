@@ -1587,8 +1587,16 @@
   const rangeSliderStyles =
     '.range-slider{touch-action:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;cursor:pointer;display:block;position:relative;width:100%;height:8px;background:#ddd;border-radius:4px}.range-slider[data-vertical]{height:100%;width:8px}.range-slider[data-disabled]{opacity:.5;cursor:not-allowed}.range-slider .range-slider__thumb{position:absolute;z-index:3;top:50%;width:24px;height:24px;transform:translate(-50%,-50%);border-radius:50%;background:#2196f3}.range-slider .range-slider__thumb:focus-visible{outline:0;box-shadow:0 0 0 6px rgba(33,150,243,.5)}.range-slider[data-vertical] .range-slider__thumb{left:50%}.range-slider .range-slider__thumb[data-disabled]{z-index:2}.range-slider .range-slider__range{position:absolute;z-index:1;transform:translate(0,-50%);top:50%;width:100%;height:100%;background:#51adf6}.range-slider[data-vertical] .range-slider__range{left:50%;transform:translate(-50%,0)}.range-slider input[type=range]{-webkit-appearance:none;pointer-events:none;position:absolute;z-index:2;top:0;left:0;width:0;height:0;background-color:transparent}.range-slider input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none}.range-slider input[type=range]::-moz-range-thumb{width:0;height:0;border:0}.range-slider input[type=range]:focus{outline:0}';
 
+  function giveToWindow(key, content) {
+    if (typeof unsafeWindow !== 'undefined') unsafeWindow[key] = content;
+    window[key] = content;
+  }
   function logScript(...text) {
     console.log('MangaOnlineViewer: ', ...text);
+    return text;
+  }
+  function logScriptVerbose(...text) {
+    if (['dev', 'development'].includes('main')) console.info('MangaOnlineViewer: ', ...text);
     return text;
   }
   const logScriptC = (x) => (y) => logScript(x, y)[1];
@@ -2219,14 +2227,11 @@
   }
   let globalSettings = _.defaultsDeep(getGlobalSettings(getDefault()), getDefault());
   let localSettings = _.defaultsDeep(getLocalSettings(getDefault(false)), getDefault(false));
-  unsafeWindow.MOVSettings = (key = null) => {
-    logScript(
-      'Global',
-      key ? globalSettings[key] : globalSettings,
-      '\nLocal',
-      key ? localSettings[key] : localSettings,
-    );
-  };
+  function showSettings(key = null) {
+    logScriptVerbose('Global Settings', key ? globalSettings[key] : globalSettings);
+    logScriptVerbose('Local Settings', key ? localSettings[key] : localSettings);
+  }
+  giveToWindow('MOVSettings', showSettings);
   const isSettingsLocal = () => localSettings?.enabled === true;
   settingsChangeListener((newValue) => {
     const newSettings = _.defaultsDeep(newValue, getDefault());
@@ -2446,7 +2451,7 @@
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\r\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\r\n     class="icon icon-tabler icons-tabler-outline icon-tabler-settings-off">\r\n    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n    <path d="M9.451 5.437c.418 -.218 .75 -.609 .874 -1.12c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35c-.486 .118 -.894 .44 -1.123 .878m-.188 3.803c-.517 .523 -1.349 .734 -2.125 .262a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.472 -.774 -.262 -1.604 .259 -2.121"/>\r\n    <path d="M9.889 9.869a3 3 0 1 0 4.226 4.26m.592 -3.424a3.012 3.012 0 0 0 -1.419 -1.415"/>\r\n    <path d="M3 3l18 18"/>\r\n</svg>';
 
   const styles =
-    ':root {\r\n    --theme-body-background: #25262b;\r\n    --theme-body-text-color: #c1c2c5;\r\n    --theme-text-color: #c1c2c5;\r\n    --theme-primary-color: #1a1b1e;\r\n    --theme-primary-text-color: #c1c2c5;\r\n    --theme-background-color: #25262b;\r\n    --theme-hightlight-color: #2c2e33;\r\n    --theme-border-color: #373a40;\r\n}\r\n\r\n#MangaOnlineViewer {\r\n    text-decoration: none;\r\n    color: var(--theme-body-text-color);\r\n    background-color: var(--theme-body-background);\r\n}\r\n\r\n#MangaOnlineViewer #Chapter {\r\n    display: grid;\r\n    grid-template-columns: repeat(1, 1fr);\r\n    min-width: 225px;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical:has(+ #Navigation:not(.disabled)),\r\n#MangaOnlineViewer #Chapter.WebComic:has(+ #Navigation:not(.disabled)) {\r\n    padding-bottom: 31px;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical .PageContent {\r\n    margin-bottom: 8px;\r\n    margin-top: 8px;\r\n}\r\n\r\n#MangaOnlineViewer .closeButton {\r\n    width: fit-content;\r\n    height: fit-content;\r\n    position: absolute;\r\n    right: 10px;\r\n    top: 10px;\r\n}\r\n\r\n#MangaOnlineViewer .overlay {\r\n    position: fixed;\r\n    display: none;\r\n    width: 100%;\r\n    height: 100%;\r\n    top: 0;\r\n    left: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    background-color: rgba(0, 0, 0, 0.5);\r\n    z-index: 950;\r\n    cursor: pointer;\r\n}\r\n\r\n#MangaOnlineViewer .overlay.visible {\r\n    display: block;\r\n}\r\n\r\n#MangaOnlineViewer select {\r\n    height: 20px;\r\n    padding: 0;\r\n    margin-bottom: 5px;\r\n}\r\n\r\n#MangaOnlineViewer .ControlButton,\r\n#MangaOnlineViewer .simpleButton {\r\n    cursor: pointer;\r\n    border-radius: 5px;\r\n    border-width: 1px;\r\n    border-style: solid;\r\n    padding: 2px;\r\n    min-height: 32px;\r\n    color: var(--theme-primary-text-color);\r\n    background-color: var(--theme-primary-color);\r\n    border-color: var(--theme-border-color);\r\n}\r\n\r\n#MangaOnlineViewer .ControlButton:active,\r\n#MangaOnlineViewer .ControlButton:hover {\r\n    opacity: 0.8;\r\n}\r\n\r\n#MangaOnlineViewer .simpleButton {\r\n    font-size: initial;\r\n    min-width: 32px;\r\n}\r\n\r\n#MangaOnlineViewer .panel .simpleButton {\r\n    position: absolute;\r\n    top: 10px;\r\n    left: 10px;\r\n}\r\n\r\n#MangaOnlineViewer .panel {\r\n    padding: 5px;\r\n    position: inherit;\r\n    border-radius: 5px;\r\n    background-color: var(--theme-background-color);\r\n}\r\n\r\n#MangaOnlineViewer :not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {\r\n    max-width: 100%;\r\n    object-fit: contain;\r\n}\r\n\r\n#MangaOnlineViewer .ControlButton.hidden,\r\n#MangaOnlineViewer.light #ColorScheme > .icon-tabler-sun,\r\n#MangaOnlineViewer.dark #ColorScheme > .icon-tabler-moon,\r\n#MangaOnlineViewer .light + #CommentsColorScheme > .icon-tabler-sun,\r\n#MangaOnlineViewer .dark + #CommentsColorScheme > .icon-tabler-moon,\r\n#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,\r\n#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,\r\n#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,\r\n#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,\r\n#MangaOnlineViewer.bookmarked .Bookmark > .icon-tabler-bookmark,\r\n#MangaOnlineViewer:not(.bookmarked) .Bookmark > .icon-tabler-bookmark-off,\r\n#MangaOnlineViewer #AutoScroll.running > .icon-tabler-player-play,\r\n#MangaOnlineViewer #AutoScroll:not(.running) > .icon-tabler-player-pause {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer.hideControls .PageFunctions {\r\n    visibility: hidden;\r\n}\r\n';
+    ':root {\r\n    --theme-body-background: #25262b;\r\n    --theme-body-text-color: #c1c2c5;\r\n    --theme-text-color: #c1c2c5;\r\n    --theme-primary-color: #1a1b1e;\r\n    --theme-primary-text-color: #c1c2c5;\r\n    --theme-background-color: #25262b;\r\n    --theme-hightlight-color: #2c2e33;\r\n    --theme-border-color: #373a40;\r\n}\r\n\r\n#MangaOnlineViewer {\r\n    text-decoration: none;\r\n    color: var(--theme-body-text-color);\r\n    background-color: var(--theme-body-background);\r\n}\r\n\r\n#MangaOnlineViewer #Chapter {\r\n    display: grid;\r\n    grid-template-columns: repeat(1, 1fr);\r\n    min-width: 225px;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical:has(+ #Navigation:not(.disabled)),\r\n#MangaOnlineViewer #Chapter.WebComic:has(+ #Navigation:not(.disabled)) {\r\n    padding-bottom: 31px;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical .PageContent {\r\n    margin-bottom: 8px;\r\n    margin-top: 8px;\r\n}\r\n\r\n#MangaOnlineViewer .closeButton {\r\n    width: fit-content;\r\n    height: fit-content;\r\n    position: absolute;\r\n    right: 10px;\r\n    top: 10px;\r\n}\r\n\r\n#MangaOnlineViewer .overlay {\r\n    position: fixed;\r\n    display: none;\r\n    width: 100%;\r\n    height: 100%;\r\n    top: 0;\r\n    left: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    background-color: rgba(0, 0, 0, 0.5);\r\n    z-index: 950;\r\n    cursor: pointer;\r\n}\r\n\r\n#MangaOnlineViewer .overlay.visible {\r\n    display: block;\r\n}\r\n\r\n#MangaOnlineViewer select {\r\n    height: 20px;\r\n    /*padding: 0;*/\r\n    margin: 2px;\r\n}\r\n\r\n#MangaOnlineViewer .ControlButton,\r\n#MangaOnlineViewer .simpleButton {\r\n    cursor: pointer;\r\n    border-radius: 5px;\r\n    border-width: 1px;\r\n    border-style: solid;\r\n    padding: 2px;\r\n    min-height: 32px;\r\n    color: var(--theme-primary-text-color);\r\n    background-color: var(--theme-primary-color);\r\n    border-color: var(--theme-border-color);\r\n}\r\n\r\n#MangaOnlineViewer .ControlButton:active,\r\n#MangaOnlineViewer .ControlButton:hover {\r\n    opacity: 0.8;\r\n}\r\n\r\n#MangaOnlineViewer .simpleButton {\r\n    font-size: initial;\r\n    min-width: 32px;\r\n}\r\n\r\n#MangaOnlineViewer .panel .simpleButton {\r\n    position: absolute;\r\n    top: 10px;\r\n    left: 10px;\r\n}\r\n\r\n#MangaOnlineViewer .panel {\r\n    padding: 5px;\r\n    position: inherit;\r\n    border-radius: 5px;\r\n    background-color: var(--theme-background-color);\r\n}\r\n\r\n#MangaOnlineViewer :not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {\r\n    max-width: 100%;\r\n    object-fit: contain;\r\n}\r\n\r\n#MangaOnlineViewer .ControlButton.hidden,\r\n#MangaOnlineViewer.light #ColorScheme > .icon-tabler-sun,\r\n#MangaOnlineViewer.dark #ColorScheme > .icon-tabler-moon,\r\n#MangaOnlineViewer .light + #CommentsColorScheme > .icon-tabler-sun,\r\n#MangaOnlineViewer .dark + #CommentsColorScheme > .icon-tabler-moon,\r\n#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,\r\n#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,\r\n#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,\r\n#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,\r\n#MangaOnlineViewer.bookmarked .Bookmark > .icon-tabler-bookmark,\r\n#MangaOnlineViewer:not(.bookmarked) .Bookmark > .icon-tabler-bookmark-off,\r\n#MangaOnlineViewer #AutoScroll.running > .icon-tabler-player-play,\r\n#MangaOnlineViewer #AutoScroll:not(.running) > .icon-tabler-player-pause {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer.hideControls .PageFunctions {\r\n    visibility: hidden;\r\n}\r\n';
 
   const icons =
     '.icon-tabler {\r\n    height: 1rem;\r\n    width: 1rem;\r\n    vertical-align: sub;\r\n}\r\n\r\n.icon-tabler-file-download > :nth-child(n + 4) {\r\n    /* 4, 5 */\r\n    color: gold;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-width > :nth-child(n + 3) {\r\n    /* 3,4,5,6 */\r\n    color: yellow;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-height > :nth-child(n + 3) {\r\n    /* 3,4,5,6 */\r\n    color: yellow;\r\n}\r\n\r\n.icon-tabler-zoom-in-area > :nth-child(2),\r\n.icon-tabler-zoom-in-area > :nth-child(3) {\r\n    color: lime;\r\n}\r\n\r\n.icon-tabler-zoom-out-area > :nth-child(2) {\r\n    color: red;\r\n}\r\n\r\n.icon-tabler-zoom-pan > :nth-child(n + 4) {\r\n    color: #9966ff;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-down > :nth-child(n + 3) {\r\n    color: #28ffbf;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-left > :nth-child(n + 3) {\r\n    color: #28ffbf;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-right > :nth-child(n + 3) {\r\n    color: #28ffbf;\r\n}\r\n\r\n.icon-tabler-spacing-vertical > :nth-child(4) {\r\n    color: fuchsia;\r\n}\r\n\r\n.icon-tabler-list-numbers > :nth-child(n + 5) {\r\n    color: #e48900;\r\n}\r\n\r\n.icon-tabler-bookmarks > :nth-child(n + 2) {\r\n    color: orange;\r\n}\r\n\r\n.icon-tabler-bookmark > * {\r\n    color: orange;\r\n}\r\n\r\n.icon-tabler-bookmark-off > * {\r\n    color: orange;\r\n}\r\n\r\n.icon-tabler-bookmark-off > :nth-child(3) {\r\n    color: red;\r\n}\r\n\r\n.icon-tabler-eye-off > :nth-child(4) {\r\n    color: red;\r\n}\r\n\r\n.icon-tabler-zoom-cancel > :nth-child(3),\r\n.icon-tabler-zoom-cancel > :nth-child(4) {\r\n    color: #9966ff;\r\n}\r\n\r\n.icon-tabler-zoom-in > :nth-child(3),\r\n.icon-tabler-zoom-in > :nth-child(4) {\r\n    color: lime;\r\n}\r\n\r\n.icon-tabler-zoom-out > :nth-child(3) {\r\n    color: red;\r\n}\r\n\r\n.icon-tabler-refresh > :nth-child(n + 2) {\r\n    color: cyan;\r\n}\r\n\r\n.icon-tabler-photo > * {\r\n    color: silver;\r\n}\r\n\r\n.icon-tabler-photo-off > * {\r\n    color: silver;\r\n}\r\n\r\n.icon-tabler-photo-off > :nth-child(6) {\r\n    color: orange;\r\n}\r\n\r\n.icon-tabler-message > :nth-child(2),\r\n.icon-tabler-message > :nth-child(3) {\r\n    color: greenyellow;\r\n}\r\n';
@@ -2473,7 +2478,7 @@
     '#MangaOnlineViewer #Chapter.FluidLTR,\r\n#MangaOnlineViewer #Chapter.FluidRTL {\r\n    display: flex;\r\n    overflow-x: auto;\r\n    min-width: auto;\r\n\r\n    .ZoomWidth {\r\n        display: none;\r\n    }\r\n\r\n    .PageImg {\r\n        min-width: unset;\r\n    }\r\n\r\n    .MangaPage {\r\n        width: initial;\r\n        min-width: fit-content;\r\n        position: relative;\r\n        max-height: 100%;\r\n    }\r\n\r\n    .MangaPage.DoublePage {\r\n        grid-column: span 2;\r\n    }\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.FluidLTR {\r\n    flex-direction: row;\r\n\r\n    .MangaPage .PageFunctions {\r\n        right: auto;\r\n        left: 0;\r\n        direction: rtl;\r\n    }\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.FluidRTL {\r\n    flex-direction: row-reverse;\r\n}\r\n';
 
   const settings$1 =
-    "#MangaOnlineViewer #SettingsPanel {\r\n    color: var(--theme-text-color);\r\n    padding: 10px;\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n    bottom: 0;\r\n    z-index: 1000;\r\n    transition: transform 0.3s ease-in,\r\n    background-color 0.3s linear;\r\n    transform: translateX(-100%);\r\n    display: flex;\r\n    flex-flow: column;\r\n    gap: 5px;\r\n    overflow-y: auto;\r\n    max-width: 100vw;\r\n    width: 305px;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel.visible {\r\n    transform: translateX(0);\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .ControlLabel {\r\n    display: flex;\r\n    flex-flow: row wrap;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem {\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: space-between;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem:not(.show) {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel input[type='range'] {\r\n    width: 100%;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .RangeValue {\r\n    display: inline-block;\r\n    color: var(--theme-primary-text-color);\r\n    line-height: 20px;\r\n    text-align: center;\r\n    border-radius: 3px;\r\n    background: var(--theme-primary-color);\r\n    padding: 2px 5px;\r\n    margin-left: 8px;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel datalist {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    writing-mode: vertical-lr;\r\n    width: 100%;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel datalist option {\r\n    padding: 0;\r\n}\r\n\r\n#MangaOnlineViewer #ThemeSection {\r\n    border: 1px solid var(--theme-body-text-color);\r\n    border-radius: 10px;\r\n    padding: 10px;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio {\r\n    border: 1px solid var(--theme-text-color);\r\n    color: var(--theme-primary-text-color);\r\n    background-color: var(--theme-primary-color);\r\n    height: 20px;\r\n    width: 20px;\r\n    border-radius: 50%;\r\n    padding: 1px;\r\n    margin: 2px 5px;\r\n    position: relative;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio svg {\r\n    position: absolute;\r\n    top: 15%;\r\n    right: 15%;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio.selected .icon-tabler-check {\r\n    display: inline;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio:not(.selected) .icon-tabler-check {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer #ThemeSelector {\r\n    width: 110px;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs {\r\n    position: relative;\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    border-radius: 0.5rem;\r\n    background-color: var(--theme-border-color);\r\n    color:var(--theme-text-color);\r\n    box-sizing: border-box;\r\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);\r\n    padding: 0.25rem;\r\n    width: 300px;\r\n    font-size: 14px;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio {\r\n    flex: 1 1 auto;\r\n    text-align: center;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio input {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio .name .icon{\r\n    margin: 0 0.5rem;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio .name {\r\n    display: flex;\r\n    cursor: pointer;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border-radius: 0.5rem;\r\n    border: none;\r\n    padding: .5rem 0;\r\n    color: var(--theme-text-color);\r\n    background-color: var(--theme-border-color);\r\n    transition: all .15s ease-in-out;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio input:checked + .name {\r\n    background-color: var(--theme-primary-color);\r\n    color:var(--theme-primary-text-color);\r\n    font-weight: 600;\r\n}\r\n\r\n#MangaOnlineViewer #ColorScheme{\r\n    padding: 5px;\r\n    min-height: 28px;\r\n    min-width: 28px;\r\n}\r\n\r\n#MangaOnlineViewer .toggler {\r\n    width: 36px;\r\n    /*margin: 40px auto;*/\r\n}\r\n\r\n#MangaOnlineViewer .toggler input {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer .toggler label {\r\n    display: block;\r\n    position: relative;\r\n    width: 36px;\r\n    height: 18px;\r\n    border: 1px solid #d6d6d6;\r\n    border-radius: 36px;\r\n    background: #e4e8e8;\r\n    cursor: pointer;\r\n}\r\n\r\n#MangaOnlineViewer .toggler label::after {\r\n    display: block;\r\n    border-radius: 100%;\r\n    background-color: #d7062a;\r\n    content: '';\r\n    animation-name: toggler-size;\r\n    animation-duration: 0.15s;\r\n    animation-timing-function: ease-out;\r\n    animation-direction: normal;\r\n    animation-iteration-count: 1;\r\n    animation-play-state: running;\r\n}\r\n\r\n#MangaOnlineViewer .toggler label::after, .toggler label .toggler-on, .toggler label .toggler-off {\r\n    position: absolute;\r\n    /*top: 50%;*/\r\n    top: 9px;\r\n    left: 25%;\r\n    width: 16px;\r\n    height: 16px;\r\n    transform: translateY(-50%) translateX(-50%);\r\n    transition: left 0.15s ease-in-out, background-color 0.2s ease-out, width 0.15s ease-in-out, height 0.15s ease-in-out, opacity 0.15s ease-in-out;\r\n}\r\n\r\n#MangaOnlineViewer .toggler input:checked + label::after, .toggler input:checked + label .toggler-on, .toggler input:checked + label .toggler-off {\r\n    left: 75%;\r\n}\r\n\r\n#MangaOnlineViewer .toggler input:checked + label::after {\r\n    background-color: #50ac5d;\r\n    animation-name: toggler-size2;\r\n}\r\n\r\n#MangaOnlineViewer .toggler .toggler-on, .toggler .toggler-off {\r\n    opacity: 1;\r\n    z-index: 2;\r\n}\r\n\r\n#MangaOnlineViewer .toggler input:checked + label .toggler-off, .toggler input:not(:checked) + label .toggler-on {\r\n    width: 0;\r\n    height: 0;\r\n    opacity: 0;\r\n}\r\n\r\n#MangaOnlineViewer .toggler .path {\r\n    fill: none;\r\n    stroke: #fefefe;\r\n    stroke-width: 7px;\r\n    stroke-linecap: round;\r\n    stroke-miterlimit: 10;\r\n}\r\n\r\n#MangaOnlineViewer @keyframes toggler-size {\r\n    0%, 100% {\r\n        width: 26px;\r\n        height: 26px;\r\n    }\r\n\r\n    50% {\r\n        width: 20px;\r\n        height: 20px;\r\n    }\r\n}\r\n\r\n#MangaOnlineViewer @keyframes toggler-size2 {\r\n    0%, 100% {\r\n        width: 26px;\r\n        height: 26px;\r\n    }\r\n\r\n    50% {\r\n        width: 20px;\r\n        height: 20px;\r\n    }\r\n}";
+    "#MangaOnlineViewer #SettingsPanel {\r\n    color: var(--theme-text-color);\r\n    padding: 10px;\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n    bottom: 0;\r\n    z-index: 1000;\r\n    transition: transform 0.3s ease-in,\r\n    background-color 0.3s linear;\r\n    transform: translateX(-100%);\r\n    display: flex;\r\n    flex-flow: column;\r\n    gap: 5px;\r\n    overflow-y: auto;\r\n    max-width: 100vw;\r\n    width: 308px;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel.visible {\r\n    transform: translateX(0);\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .ControlLabel {\r\n    display: flex;\r\n    flex-flow: row wrap;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    border: 1px solid var(--theme-body-text-color);\r\n    padding: 3px;\r\n    border-radius: 10px;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem {\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: space-between;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem:not(.show) {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel input[type='range'] {\r\n    width: 100%;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .RangeValue {\r\n    display: inline-block;\r\n    color: var(--theme-primary-text-color);\r\n    line-height: 20px;\r\n    text-align: center;\r\n    border-radius: 3px;\r\n    background: var(--theme-primary-color);\r\n    padding: 2px 5px;\r\n    margin-left: 8px;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel datalist {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    writing-mode: vertical-lr;\r\n    width: 100%;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel datalist option {\r\n    padding: 0;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio {\r\n    border: 1px solid var(--theme-text-color);\r\n    color: var(--theme-primary-text-color);\r\n    background-color: var(--theme-primary-color);\r\n    height: 20px;\r\n    width: 20px;\r\n    border-radius: 50%;\r\n    padding: 1px;\r\n    margin: 2px 5px;\r\n    position: relative;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio svg {\r\n    position: absolute;\r\n    top: 15%;\r\n    right: 15%;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio.selected .icon-tabler-check {\r\n    display: inline;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio:not(.selected) .icon-tabler-check {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer #ThemeSelector {\r\n    width: 110px;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs {\r\n    position: relative;\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    border-radius: 0.5rem;\r\n    background-color: var(--theme-border-color);\r\n    color:var(--theme-text-color);\r\n    box-sizing: border-box;\r\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);\r\n    padding: 0.25rem;\r\n    width: 300px;\r\n    font-size: 14px;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio {\r\n    flex: 1 1 auto;\r\n    text-align: center;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio input {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio .name .icon{\r\n    margin: 0 0.5rem;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio .name {\r\n    display: flex;\r\n    cursor: pointer;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border-radius: 0.5rem;\r\n    border: none;\r\n    padding: .5rem 0;\r\n    color: var(--theme-text-color);\r\n    background-color: var(--theme-border-color);\r\n    transition: all .15s ease-in-out;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio input:checked + .name {\r\n    background-color: var(--theme-primary-color);\r\n    color:var(--theme-primary-text-color);\r\n    font-weight: 600;\r\n}\r\n\r\n#MangaOnlineViewer #ColorScheme{\r\n    padding: 5px;\r\n    min-height: 28px;\r\n    min-width: 28px;\r\n}\r\n\r\n#MangaOnlineViewer .toggler {\r\n    width: 36px;\r\n    /*margin: 40px auto;*/\r\n}\r\n\r\n#MangaOnlineViewer .toggler input {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer .toggler label {\r\n    display: block;\r\n    position: relative;\r\n    width: 36px;\r\n    height: 18px;\r\n    border: 1px solid #d6d6d6;\r\n    border-radius: 36px;\r\n    background: #e4e8e8;\r\n    cursor: pointer;\r\n}\r\n\r\n#MangaOnlineViewer .toggler label::after {\r\n    display: block;\r\n    border-radius: 100%;\r\n    background-color: #d7062a;\r\n    content: '';\r\n    animation-name: toggler-size;\r\n    animation-duration: 0.15s;\r\n    animation-timing-function: ease-out;\r\n    animation-direction: normal;\r\n    animation-iteration-count: 1;\r\n    animation-play-state: running;\r\n}\r\n\r\n#MangaOnlineViewer .toggler label::after, .toggler label .toggler-on, .toggler label .toggler-off {\r\n    position: absolute;\r\n    /*top: 50%;*/\r\n    top: 9px;\r\n    left: 25%;\r\n    width: 16px;\r\n    height: 16px;\r\n    transform: translateY(-50%) translateX(-50%);\r\n    transition: left 0.15s ease-in-out, background-color 0.2s ease-out, width 0.15s ease-in-out, height 0.15s ease-in-out, opacity 0.15s ease-in-out;\r\n}\r\n\r\n#MangaOnlineViewer .toggler input:checked + label::after, .toggler input:checked + label .toggler-on, .toggler input:checked + label .toggler-off {\r\n    left: 75%;\r\n}\r\n\r\n#MangaOnlineViewer .toggler input:checked + label::after {\r\n    background-color: #50ac5d;\r\n    animation-name: toggler-size2;\r\n}\r\n\r\n#MangaOnlineViewer .toggler .toggler-on, .toggler .toggler-off {\r\n    opacity: 1;\r\n    z-index: 2;\r\n}\r\n\r\n#MangaOnlineViewer .toggler input:checked + label .toggler-off, .toggler input:not(:checked) + label .toggler-on {\r\n    width: 0;\r\n    height: 0;\r\n    opacity: 0;\r\n}\r\n\r\n#MangaOnlineViewer .toggler .path {\r\n    fill: none;\r\n    stroke: #fefefe;\r\n    stroke-width: 7px;\r\n    stroke-linecap: round;\r\n    stroke-miterlimit: 10;\r\n}\r\n\r\n#MangaOnlineViewer @keyframes toggler-size {\r\n    0%, 100% {\r\n        width: 26px;\r\n        height: 26px;\r\n    }\r\n\r\n    50% {\r\n        width: 20px;\r\n        height: 20px;\r\n    }\r\n}\r\n\r\n#MangaOnlineViewer @keyframes toggler-size2 {\r\n    0%, 100% {\r\n        width: 26px;\r\n        height: 26px;\r\n    }\r\n\r\n    50% {\r\n        width: 20px;\r\n        height: 20px;\r\n    }\r\n}";
 
   const thumbnails =
     "#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=''],\r\n#MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {\r\n    width: 100px;\r\n    height: 150px;\r\n    display: inline-block;\r\n    background-position: center;\r\n    background-repeat: no-repeat;\r\n    background-size: 20%;\r\n}\r\n\r\n#MangaOnlineViewer #NavigationCounters {\r\n    margin: 5px;\r\n    width: 100%;\r\n    line-height: 1rem;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation {\r\n    color: var(--theme-text-color);\r\n    background-color: var(--theme-hightlight-color);\r\n    bottom: -180px;\r\n    height: 185px;\r\n    overflow-x: hidden;\r\n    overflow-y: hidden;\r\n    padding-bottom: 20px;\r\n    position: fixed;\r\n    white-space: nowrap;\r\n    width: 100%;\r\n    text-align: center;\r\n    transition:\r\n        transform 0.3s ease-in,\r\n        background-color 0.3s linear;\r\n    border-bottom-left-radius: 0;\r\n    border-bottom-right-radius: 0;\r\n    line-height: 0;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation #Thumbnails {\r\n    overflow-x: auto;\r\n    overflow-y: hidden;\r\n    margin-right: 10px;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation:hover {\r\n    transform: translateY(-180px);\r\n}\r\n\r\n#MangaOnlineViewer #Navigation.disabled {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation.visible {\r\n    transform: translateY(-180px);\r\n}\r\n\r\n#MangaOnlineViewer #Navigation .Thumbnail {\r\n    display: inline-block;\r\n    height: 150px;\r\n    margin: 0 5px;\r\n    border: 1px solid var(--theme-primary-color);\r\n}\r\n\r\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailIndex {\r\n    color: var(--theme-text-color);\r\n    background-color: var(--theme-hightlight-color);\r\n    display: block;\r\n    opacity: 0.8;\r\n    position: relative;\r\n    bottom: 25%;\r\n    width: 100%;\r\n    line-height: 1rem;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailImg {\r\n    cursor: pointer;\r\n    display: inline-block;\r\n    max-height: 150px;\r\n    min-height: 150px;\r\n    min-width: 80px;\r\n    max-width: 160px;\r\n}\r\n";
@@ -2695,57 +2700,55 @@
       </select>
     </div>`;
   const theme = () => html`
-    <div id="ThemeSection">
-      <div class="ControlLabel ColorSchemeSelector">
-        ${getLocaleString('COLOR_SCHEME')}
-        <button id="ColorScheme" class="ControlButton">${IconSun} ${IconMoon}</button>
-      </div>
-      <div class="ControlLabel ThemeSelector">
-        ${getLocaleString('THEME')}
-        <span
-          class="custom ThemeRadio 
+    <div class="ControlLabel ColorSchemeSelector">
+      ${getLocaleString('COLOR_SCHEME')}
+      <button id="ColorScheme" class="ControlButton">${IconSun} ${IconMoon}</button>
+    </div>
+    <div class="ControlLabel ThemeSelector">
+      <label>${getLocaleString('THEME')}</label>
+      <span
+        class="custom ThemeRadio 
         ${getSettingsValue('theme') === 'custom' ? 'selected' : ''}"
-          title="custom"
-        >
-          ${IconPalette} ${IconCheck}
-        </span>
-        ${themesSelector()}
-      </div>
-      <div
-        id="Hue"
-        class="ControlLabel CustomTheme ControlLabelItem 
+        title="custom"
+      >
+        ${IconPalette} ${IconCheck}
+      </span>
+      ${themesSelector()}
+    </div>
+    <div
+      id="Hue"
+      class="ControlLabel CustomTheme ControlLabelItem 
       ${getSettingsValue('theme').startsWith('custom') ? 'show' : ''}"
-      >
-        ${getLocaleString('THEME_HUE')}
-        <input
-          id="CustomThemeHue"
-          type="color"
-          value="${getSettingsValue('customTheme')}"
-          class="colorpicker CustomTheme"
-        />
-      </div>
-      <div
-        id="Shade"
-        class="ControlLabel CustomTheme ControlLabelItem
+    >
+      ${getLocaleString('THEME_HUE')}
+      <input
+        id="CustomThemeHue"
+        type="color"
+        value="${getSettingsValue('customTheme')}"
+        class="colorpicker CustomTheme"
+      />
+    </div>
+    <div
+      id="Shade"
+      class="ControlLabel CustomTheme ControlLabelItem
       ${getSettingsValue('theme').startsWith('custom') ? '' : 'show'}"
-      >
-        <span>
-          ${getLocaleString('THEME_SHADE')}
-          <output id="themeShadeVal" class="RangeValue" for="ThemeShade">
-            ${getSettingsValue('themeShade')}
-          </output>
-        </span>
-        <input
-          type="range"
-          value="${getSettingsValue('themeShade')}"
-          name="ThemeShade"
-          id="ThemeShade"
-          min="100"
-          max="900"
-          step="100"
-          oninput="themeShadeVal.value = this.value"
-        />
-      </div>
+    >
+      <span>
+        ${getLocaleString('THEME_SHADE')}
+        <output id="themeShadeVal" class="RangeValue" for="ThemeShade">
+          ${getSettingsValue('themeShade')}
+        </output>
+      </span>
+      <input
+        type="range"
+        value="${getSettingsValue('themeShade')}"
+        name="ThemeShade"
+        id="ThemeShade"
+        min="100"
+        max="900"
+        step="100"
+        oninput="themeShadeVal.value = this.value"
+      />
     </div>
   `;
   const loadMode = () => html`
@@ -4946,6 +4949,7 @@
 
   let loadedManga;
   function hydrateApp() {
+    showSettings();
     updateViewMode(getSettingsValue('viewMode'))();
     const elements = {
       '#Header': Header(loadedManga),
@@ -4957,6 +4961,7 @@
     if (document.querySelector('#ScrollControl')?.classList.contains('running')) {
       toggleAutoScroll();
     }
+    refreshThemes();
     const outer = document.getElementById('MangaOnlineViewer');
     if (outer) {
       outer.className = `${getSettingsValue('colorScheme')} 
@@ -5019,6 +5024,7 @@
   function display(manga) {
     cleanUpElement(document.documentElement, document.head, document.body);
     window.scrollTo(0, 0);
+    logScriptVerbose(`Page Cleaned Up`);
     document.head.innerHTML = head(manga);
     document.body.innerHTML = app(manga);
     events();
@@ -5054,6 +5060,7 @@
   }
   async function viewer(manga) {
     if (manga.before !== void 0) {
+      logScriptVerbose(`Executing Preparation`);
       await manga.before(manga.begin);
     }
     if (getSettingsValue('enableComments') && !manga.comments) {

@@ -3,13 +3,20 @@
 import type { ISettings } from '../types';
 import Bowser from 'bowser';
 
+export function giveToWindow(key: string, content: any) {
+  if (typeof unsafeWindow !== 'undefined') unsafeWindow[key] = content;
+  // @ts-ignore
+  window[key] = content;
+}
+
 function logScript(...text: any[]): string[] {
   console.log('MangaOnlineViewer: ', ...text);
   return text;
 }
 
 function logScriptVerbose(...text: any[]): string[] {
-  if (import.meta.env.MODE === 'dev') console.info('MangaOnlineViewer: ', ...text);
+  if (['dev', 'development'].includes(import.meta.env.MODE))
+    console.info('MangaOnlineViewer: ', ...text);
   return text;
 }
 
