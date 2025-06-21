@@ -2,10 +2,10 @@ import { html } from '../../utils/code-tag';
 import sequence from '../../utils/sequence';
 import { IManga } from '../../types';
 import { IconCategory } from '../icons';
-import { getLocaleString, getUserSettings } from '../../core/settings';
+import { getLocaleString, getSettingsValue } from '../../core/settings';
 
 const ThumbnailsPanel = (manga: IManga) => html`
-  <nav id="Navigation" class="panel ${getUserSettings().showThumbnails ? '' : 'disabled'}">
+  <nav id="Navigation" class="panel ${getSettingsValue('showThumbnails') ? '' : 'disabled'}">
     <div id="NavigationCounters" class="ControlLabel">
       ${IconCategory}
       <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>

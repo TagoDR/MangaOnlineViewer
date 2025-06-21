@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { getUserSettings } from '../../core/settings';
+import { getSettingsValue } from '../../core/settings';
 
 /**
  * Changes header class when scrolling up or down to show/hide it
@@ -20,7 +20,7 @@ function headroom(showEnd = 0) {
     const { scrollY } = window;
     if (
       showEnd &&
-      getUserSettings().zoomMode !== 'height' &&
+      getSettingsValue('zoomMode') !== 'height' &&
       scrollY + window.innerHeight + showEnd > document.body.scrollHeight
     ) {
       setScrollDirection('end');

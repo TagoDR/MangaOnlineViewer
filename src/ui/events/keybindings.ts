@@ -1,7 +1,7 @@
 import hotkeys from 'hotkeys-js';
 import _ from 'lodash';
 import { logScript } from '../../utils/tampermonkey';
-import { getUserSettings } from '../../core/settings';
+import { getSettingsValue } from '../../core/settings';
 import { scrollToElement } from './common';
 
 const doClick = (selector: string) =>
@@ -15,7 +15,7 @@ function doScrolling(sign: 1 | -1) {
       left: 0.8 * window.innerWidth * sign * scrollDirection,
       behavior: 'smooth',
     });
-  } else if (getUserSettings().zoomMode === 'height') {
+  } else if (getSettingsValue('zoomMode') === 'height') {
     // Fit height
     const pages = [...document.querySelectorAll<HTMLElement>('.MangaPage')];
     const distance = pages.map((element) => Math.abs(element.offsetTop - window.scrollY));
@@ -95,9 +95,9 @@ function keybindings() {
   window.onload = null;
   document.body.onload = null;
   hotkeys.unbind();
-  Object.keys(getUserSettings().keybinds).forEach((key) => {
+  Object.keys(getSettingsValue('keybinds')).forEach((key) => {
     hotkeys(
-      getUserSettings().keybinds[key]?.join(',') ?? '',
+      getSettingsValue('keybinds')[key]?.join(',') ?? '',
       _.throttle((event) => {
         event.preventDefault();
         event.stopImmediatePropagation();

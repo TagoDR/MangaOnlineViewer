@@ -105,4 +105,6 @@ export default {
   AUTO_SCROLL_HEIGHT: 'Auto Scroll Speed in Pixels',
   VERTICAL_SEPARATOR: 'Show Vertical Separators',
   END: 'End',
+  SCOPE: 'Scope',
+  GLOBAL: 'Global',
 };

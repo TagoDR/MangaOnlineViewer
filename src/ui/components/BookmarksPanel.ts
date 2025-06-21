@@ -1,14 +1,14 @@
 import { html } from '../../utils/code-tag';
 import { IconBookmark, IconBookmarkOff, IconExternalLink, IconTrash, IconX } from '../icons';
-import { getLocaleString, getUserSettings } from '../../core/settings';
+import { getLocaleString, getSettingsValue } from '../../core/settings';
 import { isEmpty } from '../../utils/checks';
 
 const listBookmarks = () => {
-  if (isEmpty(getUserSettings().bookmarks)) {
+  if (isEmpty(getSettingsValue('bookmarks'))) {
     return [getLocaleString('LIST_EMPTY')];
   }
 
-  return getUserSettings().bookmarks.map(
+  return getSettingsValue('bookmarks').map(
     (mark, index) => html`
       <div id="Bookmark${index + 1}" class="BookmarkItem">
         <span class="bookmarkColumnLarge">

@@ -1,11 +1,11 @@
 import type { IManga } from '../types';
 import { logScript, logScriptVerbose } from '../utils/tampermonkey';
-import { getUserSettings } from './settings';
+import { getSettingsValue } from './settings';
 import display from '../ui';
 import { waitForFunc, waitWithTimeout } from '../utils/waitFor';
 
 async function captureComments() {
-  if (!getUserSettings().enableComments) return null;
+  if (!getSettingsValue('enableComments')) return null;
   let comments = document.querySelector('#disqus_thread, #fb-comments');
   if (comments) {
     logScript(`Waiting to Comments to load`, comments);
@@ -37,7 +37,7 @@ export default async function viewer(manga: IManga) {
     logScriptVerbose(`Executing Preparation`);
     await manga.before(manga.begin);
   }
-  if (getUserSettings().enableComments && !manga.comments) {
+  if (getSettingsValue('enableComments') && !manga.comments) {
     manga.comments = await captureComments();
   }
   setTimeout(() => {

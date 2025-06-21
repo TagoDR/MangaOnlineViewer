@@ -1,24 +1,32 @@
 import Swal from 'sweetalert2';
 import {
   getLocaleString,
-  getUserSettings,
+  getSettingsValue,
   resetSettings,
-  updateSettings,
+  setSettingsValue, toggleLocalSettings,
 } from '../../core/settings';
 import type { HeaderMode, LoadMode } from '../../types';
 import { applyZoom } from '../page';
 import { replaceStyleSheet } from '../../utils/css';
+import { addEvent } from './common';
+import { buttonSettingsOpen } from './panels';
 
 export function buttonResetSettings() {
   resetSettings();
   const elem = document.getElementById('MangaOnlineViewer');
   elem?.removeAttribute('locale');
-  elem?.dispatchEvent(new Event('hydrate'));
+  buttonSettingsOpen();
+}
+
+export function changeSettingsScope(event: Event) {
+  const scope = (event.currentTarget as HTMLInputElement);
+  toggleLocalSettings(scope.value === 'true');
+  buttonSettingsOpen();
 }
 
 export function changeLocale(event: Event) {
   const locale = (event.currentTarget as HTMLInputElement).value;
-  updateSettings({ locale });
+  setSettingsValue('locale', locale);
   const elem = document.getElementById('MangaOnlineViewer');
   elem?.setAttribute('locale', locale);
   elem?.dispatchEvent(new Event('hydrate'));
@@ -26,34 +34,39 @@ export function changeLocale(event: Event) {
 
 export function changeLoadMode(event: Event) {
   const mode = (event.currentTarget as HTMLInputElement).value;
-  updateSettings({ loadMode: mode as LoadMode });
+  setSettingsValue('loadMode', mode as LoadMode);
 }
 
 export function checkFitWidthOversize(event: Event) {
-  document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize');
-  updateSettings({ fitWidthIfOversize: (event.currentTarget as HTMLInputElement).checked });
+  const checked = (event.currentTarget as HTMLInputElement).checked;
+  document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize', checked);
+  setSettingsValue('fitWidthIfOversize', checked);
 }
 
 export function checkVerticalSeparator(event: Event) {
-  document.querySelector('#Chapter')?.classList.toggle('separator');
-  updateSettings({ verticalSeparator: (event.currentTarget as HTMLInputElement).checked });
+  const checked = (event.currentTarget as HTMLInputElement).checked;
+  document.querySelector('#Chapter')?.classList.toggle('separator', checked);
+  setSettingsValue('verticalSeparator', checked);
 }
 
 export function checkShowThumbnails(event: Event) {
-  document.querySelector('#Navigation')?.classList.toggle('disabled');
-  updateSettings({ showThumbnails: (event.currentTarget as HTMLInputElement).checked });
+  const checked = (event.currentTarget as HTMLInputElement).checked;
+  document.querySelector('#Navigation')?.classList.toggle('disabled', !checked);
+  setSettingsValue('showThumbnails', checked);
   applyZoom();
 }
 
 export function checkEnableComments(event: Event) {
-  document.querySelector('#CommentsButton')?.classList.toggle('disabled');
-  updateSettings({ enableComments: (event.currentTarget as HTMLInputElement).checked });
+  const checked = (event.currentTarget as HTMLInputElement).checked;
+  document.querySelector('#CommentsButton')?.classList.toggle('disabled', !checked);
+  setSettingsValue('enableComments', checked);
   applyZoom();
 }
 
 export function changeAutoDownload(event: Event) {
-  updateSettings({ downloadZip: (event.currentTarget as HTMLInputElement).checked });
-  if ((event.currentTarget as HTMLInputElement).checked) {
+  const checked = (event.currentTarget as HTMLInputElement).checked;
+  setSettingsValue('downloadZip', checked);
+  if (checked) {
     Swal.fire({
       title: getLocaleString('ATTENTION'),
       text: getLocaleString('AUTO_DOWNLOAD'),
@@ -64,15 +77,11 @@ export function changeAutoDownload(event: Event) {
 }
 
 export function checkLazyLoad(event: Event) {
-  updateSettings({ lazyLoadImages: (event.currentTarget as HTMLInputElement).checked });
+  const checked = (event.currentTarget as HTMLInputElement).checked;
+  setSettingsValue('lazyLoadImages', checked);
   const start = document.querySelector<HTMLDivElement>('.lazyStart');
-  if (getUserSettings().lazyLoadImages) {
-    start?.classList.add('show');
-  } else {
-    start?.classList.remove('show');
-  }
-
-  if ((event.currentTarget as HTMLInputElement).checked) {
+  start?.classList.toggle('show', getSettingsValue('lazyLoadImages'));
+  if (checked) {
     Swal.fire({
       title: getLocaleString('WARNING'),
       html: getLocaleString('LAZY_LOAD'),
@@ -83,12 +92,12 @@ export function checkLazyLoad(event: Event) {
 
 export function changeLazyStart(event: Event) {
   const start = (event.currentTarget as HTMLInputElement).value;
-  updateSettings({ lazyStart: parseInt(start, 10) });
+  setSettingsValue('lazyStart', parseInt(start, 10));
 }
 
 export function changePagesPerSecond(event: Event) {
   const timer = parseInt((event.currentTarget as HTMLInputElement).value, 10);
-  updateSettings({ throttlePageLoad: timer });
+  setSettingsValue('throttlePageLoad', timer);
   if (timer < 100) {
     Swal.fire({
       title: getLocaleString('SPEED_WARNING'),
@@ -100,18 +109,19 @@ export function changePagesPerSecond(event: Event) {
 
 export function changeZoomStep(event: Event) {
   const step = (event.currentTarget as HTMLInputElement).value;
-  updateSettings({ zoomStep: parseInt(step, 10) });
+  setSettingsValue('zoomStep', parseInt(step, 10));
 }
 
 export function changeMinZoom(event: Event) {
   const min = (event.currentTarget as HTMLInputElement).value;
   replaceStyleSheet('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
-  updateSettings({ minZoom: parseInt(min, 10) });
+  setSettingsValue('minZoom', parseInt(min, 10));
 }
 
 export function checkHideImageControls(event: Event) {
-  document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
-  updateSettings({ hidePageControls: (event.currentTarget as HTMLInputElement).checked });
+  const checked = (event.currentTarget as HTMLInputElement).checked;
+  document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls', checked);
+  setSettingsValue('hidePageControls', checked);
 }
 
 export function updateHeaderType(mode: HeaderMode) {
@@ -128,17 +138,19 @@ export function updateHeaderType(mode: HeaderMode) {
 function changeHeaderType(event: Event) {
   const headerType = (event.currentTarget as HTMLInputElement).value as HeaderMode;
   updateHeaderType(headerType);
-  updateSettings({ header: headerType });
+  setSettingsValue('header', headerType);
 }
 
 export function changeScrollHeight(event: Event) {
   const { value } = event.currentTarget as HTMLInputElement;
-  updateSettings({ scrollHeight: parseInt(value, 10) });
+  setSettingsValue('scrollHeight', parseInt(value, 10));
 }
 
 function options() {
   // Reset Reader Settings
   document.querySelector('#ResetSettings')?.addEventListener('click', buttonResetSettings);
+  // Change Settings Scope
+  document.querySelectorAll('#SettingsScope input[type=radio]').forEach(addEvent('change', changeSettingsScope));
   // Change Locale
   document.querySelector('#locale')?.addEventListener('change', changeLocale);
   // Image Fit width if Oversize Toggle

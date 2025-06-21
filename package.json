@@ -1,7 +1,7 @@
 {
     "name": "mangaonlineviewer",
     "description": "Userscript that helps to read Manga faster by loading all the pages at once",
-    "version": "44.0.0",
+    "version": "45.0.0",
     "scripts": {
         "start": "vite",
         "build": "vite build --mode dev",

@@ -1,5 +1,5 @@
 import { html } from '../../utils/code-tag';
-import { getLocaleString, getUserSettings } from '../../core/settings';
+import { getLocaleString, getSettingsValue } from '../../core/settings';
 import {
   IconArrowAutofitDown,
   IconArrowAutofitHeight,
@@ -28,7 +28,7 @@ import type { IManga } from '../../types';
 const listOptions = (times: number, begin: number) =>
   sequence(times, begin).map((index) => html` <option value="${index}">${index}</option>`);
 const Header = (manga: IManga) => html`
-  <header id="Header" class="${getUserSettings().header} headroom-top">
+  <header id="Header" class="${getSettingsValue('header')} headroom-top">
     <aside id="GlobalFunctions">
       <span>
         <button id="enlarge" title="${getLocaleString('ENLARGE')}" class="ControlButton">
@@ -102,13 +102,13 @@ const Header = (manga: IManga) => html`
       </span>
       <span id="ZoomSlider">
         <output id="ZoomVal" class="RangeValue" for="Zoom">
-          ${getUserSettings().zoomMode === 'percent'
-            ? `${getUserSettings().defaultZoom}%`
-            : getUserSettings().zoomMode}
+          ${getSettingsValue('zoomMode') === 'percent'
+            ? `${getSettingsValue('defaultZoom')}%`
+            : getSettingsValue('zoomMode')}
         </output>
         <input
           type="range"
-          value="${getUserSettings().defaultZoom}"
+          value="${getSettingsValue('defaultZoom')}"
           name="Zoom"
           id="Zoom"
           min="1"

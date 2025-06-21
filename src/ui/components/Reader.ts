@@ -1,14 +1,14 @@
 import { html } from '../../utils/code-tag';
 import { IManga } from '../../types';
-import { getUserSettings } from '../../core/settings';
+import { getSettingsValue } from '../../core/settings';
 import listPages from './MangaPages';
 
 const Reader = (manga: IManga) => html`
   <main
     id="Chapter"
-    class="${getUserSettings().fitWidthIfOversize ? 'fitWidthIfOversize' : ''}
-  ${getUserSettings().verticalSeparator ? 'separator' : ''}
-  ${getUserSettings().viewMode}"
+    class="${getSettingsValue('fitWidthIfOversize') ? 'fitWidthIfOversize' : ''}
+  ${getSettingsValue('verticalSeparator') ? 'separator' : ''}
+  ${getSettingsValue('viewMode')}"
   >
     ${listPages(manga.pages, manga.begin).join('')}
   </main>

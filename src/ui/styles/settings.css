@@ -14,7 +14,7 @@
     gap: 5px;
     overflow-y: auto;
     max-width: 100vw;
-    width: 305px;
+    width: 308px;
 }
 
 #MangaOnlineViewer #SettingsPanel.visible {
@@ -26,6 +26,9 @@
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: center;
+    border: 1px solid var(--theme-body-text-color);
+    padding: 3px;
+    border-radius: 10px;
 }
 
 #MangaOnlineViewer #SettingsPanel .ControlLabelItem {
@@ -66,12 +69,6 @@
     padding: 0;
 }
 
-#MangaOnlineViewer #ThemeSection {
-    border: 1px solid var(--theme-body-text-color);
-    border-radius: 10px;
-    padding: 10px;
-}
-
 #MangaOnlineViewer .ThemeRadio {
     border: 1px solid var(--theme-text-color);
     color: var(--theme-primary-text-color);
@@ -104,4 +101,152 @@
 
 #MangaOnlineViewer #Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {
     display: none;
+}
+
+#MangaOnlineViewer .radio-inputs {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0.5rem;
+    background-color: var(--theme-border-color);
+    color:var(--theme-text-color);
+    box-sizing: border-box;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+    padding: 0.25rem;
+    width: 300px;
+    font-size: 14px;
+}
+
+#MangaOnlineViewer .radio-inputs .radio {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+#MangaOnlineViewer .radio-inputs .radio input {
+    display: none;
+}
+
+#MangaOnlineViewer .radio-inputs .radio .name .icon{
+    margin: 0 0.5rem;
+}
+
+#MangaOnlineViewer .radio-inputs .radio .name {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    border: none;
+    padding: .5rem 0;
+    color: var(--theme-text-color);
+    background-color: var(--theme-border-color);
+    transition: all .15s ease-in-out;
+}
+
+#MangaOnlineViewer .radio-inputs .radio input:checked + .name {
+    background-color: var(--theme-primary-color);
+    color:var(--theme-primary-text-color);
+    font-weight: 600;
+}
+
+#MangaOnlineViewer #ColorScheme{
+    padding: 5px;
+    min-height: 28px;
+    min-width: 28px;
+}
+
+#MangaOnlineViewer .toggler {
+    width: 36px;
+    /*margin: 40px auto;*/
+}
+
+#MangaOnlineViewer .toggler input {
+    display: none;
+}
+
+#MangaOnlineViewer .toggler label {
+    display: block;
+    position: relative;
+    width: 36px;
+    height: 18px;
+    border: 1px solid #d6d6d6;
+    border-radius: 36px;
+    background: #e4e8e8;
+    cursor: pointer;
+}
+
+#MangaOnlineViewer .toggler label::after {
+    display: block;
+    border-radius: 100%;
+    background-color: #d7062a;
+    content: '';
+    animation-name: toggler-size;
+    animation-duration: 0.15s;
+    animation-timing-function: ease-out;
+    animation-direction: normal;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+}
+
+#MangaOnlineViewer .toggler label::after, .toggler label .toggler-on, .toggler label .toggler-off {
+    position: absolute;
+    /*top: 50%;*/
+    top: 9px;
+    left: 25%;
+    width: 16px;
+    height: 16px;
+    transform: translateY(-50%) translateX(-50%);
+    transition: left 0.15s ease-in-out, background-color 0.2s ease-out, width 0.15s ease-in-out, height 0.15s ease-in-out, opacity 0.15s ease-in-out;
+}
+
+#MangaOnlineViewer .toggler input:checked + label::after, .toggler input:checked + label .toggler-on, .toggler input:checked + label .toggler-off {
+    left: 75%;
+}
+
+#MangaOnlineViewer .toggler input:checked + label::after {
+    background-color: #50ac5d;
+    animation-name: toggler-size2;
+}
+
+#MangaOnlineViewer .toggler .toggler-on, .toggler .toggler-off {
+    opacity: 1;
+    z-index: 2;
+}
+
+#MangaOnlineViewer .toggler input:checked + label .toggler-off, .toggler input:not(:checked) + label .toggler-on {
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+#MangaOnlineViewer .toggler .path {
+    fill: none;
+    stroke: #fefefe;
+    stroke-width: 7px;
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
+}
+
+#MangaOnlineViewer @keyframes toggler-size {
+    0%, 100% {
+        width: 26px;
+        height: 26px;
+    }
+
+    50% {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+#MangaOnlineViewer @keyframes toggler-size2 {
+    0%, 100% {
+        width: 26px;
+        height: 26px;
+    }
+
+    50% {
+        width: 20px;
+        height: 20px;
+    }
 }

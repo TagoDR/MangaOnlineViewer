@@ -1,6 +1,15 @@
 import { html } from '../../utils/code-tag';
-import { getLocaleString, getUserSettings } from '../../core/settings';
-import { IconCheck, IconMoon, IconPalette, IconSun, IconX } from '../icons';
+import { getLocaleString, getSettingsValue, isSettingsLocal } from '../../core/settings';
+import {
+  IconCheck,
+  IconLocationCog,
+  IconMoon,
+  IconPalette,
+  IconSettingsOff,
+  IconSun,
+  IconWorldCog,
+  IconX,
+} from '../icons';
 import locales from '../../locales';
 import colors from '../../utils/colors';
 
@@ -8,7 +17,7 @@ const localeSelector = () =>
   locales
     .map(
       (locale) => html`
-        <option value="${locale.ID}" ${getUserSettings().locale === locale.ID ? 'selected' : ''}>
+        <option value="${locale.ID}" ${getSettingsValue('locale') === locale.ID ? 'selected' : ''}>
           ${locale.NAME}
         </option>
       `,
@@ -21,7 +30,7 @@ const themesSelector = () =>
       (theme) => html`
         <span
           title="${theme}"
-          class="${theme} ThemeRadio ${getUserSettings().theme === theme ? 'selected' : ''}"
+          class="${theme} ThemeRadio ${getSettingsValue('theme') === theme ? 'selected' : ''}"
         >
           ${IconCheck}
         </span>
@@ -29,141 +38,172 @@ const themesSelector = () =>
     )
     .join('');
 
-const language = html` <div class="ControlLabel locale">
-  ${getLocaleString('LANGUAGE')}
-  <select id="locale">
-    ${localeSelector()}
-  </select>
-</div>`;
-const theme = html`
-  <div id="ThemeSection">
-    <div class="ControlLabel ColorSchemeSelector">
-      ${getLocaleString('COLOR_SCHEME')}
-      <button id="ColorScheme" class="ControlButton">${IconSun} ${IconMoon}</button>
+const settingsScope = () =>
+  html` <div class="ControlLabel">
+    ${getLocaleString('SCOPE')}
+    <div id="SettingsScope" class="radio-inputs">
+      <label class="radio">
+        <input
+          type="radio"
+          id="globalSettings"
+          name="settingsScope"
+          ${!isSettingsLocal() ? 'checked' : ''}
+          value="false"
+        />
+        <span class="name">${IconWorldCog} ${getLocaleString('GLOBAL')}</span>
+      </label>
+      <label class="radio">
+        <input
+          type="radio"
+          id="localSettings"
+          name="settingsScope"
+          ${isSettingsLocal() ? 'checked' : ''}
+          value="true"
+        />
+        <span class="name">${IconLocationCog} ${window.location.hostname}</span>
+      </label>
     </div>
-    <div class="ControlLabel ThemeSelector">
-      ${getLocaleString('THEME')}
-      <span
-        class="custom ThemeRadio 
-        ${getUserSettings().theme === 'custom' ? 'selected' : ''}"
-        title="custom"
-      >
+  </div>`;
+
+const language = () =>
+  html` <div class="ControlLabel locale">
+    ${getLocaleString('LANGUAGE')}
+    <select id="locale">
+      ${localeSelector()}
+    </select>
+  </div>`;
+
+const theme = () => html`
+  <div class="ControlLabel ColorSchemeSelector">
+    ${getLocaleString('COLOR_SCHEME')}
+    <button id="ColorScheme" class="ControlButton">${IconSun} ${IconMoon}</button>
+  </div>
+  <div class="ControlLabel ThemeSelector">
+    <label>${getLocaleString('THEME')}</label>
+    <span
+      class="custom ThemeRadio 
+        ${getSettingsValue('theme') === 'custom' ? 'selected' : ''}"
+      title="custom"
+    >
         ${IconPalette} ${IconCheck}
       </span>
-      ${themesSelector()}
-    </div>
-    <div
-      id="Hue"
-      class="ControlLabel CustomTheme ControlLabelItem 
-      ${getUserSettings().theme.startsWith('custom') ? 'show' : ''}"
-    >
-      ${getLocaleString('THEME_HUE')}
-      <input
-        id="CustomThemeHue"
-        type="color"
-        value="${getUserSettings().customTheme}"
-        class="colorpicker CustomTheme"
-      />
-    </div>
-    <div
-      id="Shade"
-      class="ControlLabel CustomTheme ControlLabelItem
-      ${getUserSettings().theme.startsWith('custom') ? '' : 'show'}"
-    >
+    ${themesSelector()}
+  </div>
+  <div
+    id="Hue"
+    class="ControlLabel CustomTheme ControlLabelItem 
+      ${getSettingsValue('theme').startsWith('custom') ? 'show' : ''}"
+  >
+    ${getLocaleString('THEME_HUE')}
+    <input
+      id="CustomThemeHue"
+      type="color"
+      value="${getSettingsValue('customTheme')}"
+      class="colorpicker CustomTheme"
+    />
+  </div>
+  <div
+    id="Shade"
+    class="ControlLabel CustomTheme ControlLabelItem
+      ${getSettingsValue('theme').startsWith('custom') ? '' : 'show'}"
+  >
       <span>
         ${getLocaleString('THEME_SHADE')}
         <output id="themeShadeVal" class="RangeValue" for="ThemeShade">
-          ${getUserSettings().themeShade}
+          ${getSettingsValue('themeShade')}
         </output>
       </span>
-      <input
-        type="range"
-        value="${getUserSettings().themeShade}"
-        name="ThemeShade"
-        id="ThemeShade"
-        min="100"
-        max="900"
-        step="100"
-        oninput="themeShadeVal.value = this.value"
-      />
-    </div>
+    <input
+      type="range"
+      value="${getSettingsValue('themeShade')}"
+      name="ThemeShade"
+      id="ThemeShade"
+      min="100"
+      max="900"
+      step="100"
+      oninput="themeShadeVal.value = this.value"
+    />
   </div>
 `;
-const loadMode = html`
+
+const loadMode = () => html`
   <div class="ControlLabel loadMode">
     ${getLocaleString('DEFAULT_LOAD_MODE')}
     <select id="loadMode">
-      <option value="wait" ${getUserSettings().loadMode === 'wait' ? 'selected' : ''}>
+      <option value="wait" ${getSettingsValue('loadMode') === 'wait' ? 'selected' : ''}>
         ${getLocaleString('LOAD_MODE_NORMAL')}
       </option>
-      <option value="always" ${getUserSettings().loadMode === 'always' ? 'selected' : ''}>
+      <option value="always" ${getSettingsValue('loadMode') === 'always' ? 'selected' : ''}>
         ${getLocaleString('LOAD_MODE_ALWAYS')}
       </option>
-      <option value="never" ${getUserSettings().loadMode === 'never' ? 'selected' : ''}>
+      <option value="never" ${getSettingsValue('loadMode') === 'never' ? 'selected' : ''}>
         ${getLocaleString('LOAD_MODE_NEVER')}
       </option>
     </select>
   </div>
 `;
-const loadSpeed = html`
+
+const loadSpeed = () => html`
   <div class="ControlLabel PagesPerSecond">
     ${getLocaleString('LOAD_SPEED')}
     <select id="PagesPerSecond">
-      <option value="3000" ${getUserSettings().throttlePageLoad === 3000 ? 'selected' : ''}>
+      <option value="3000" ${getSettingsValue('throttlePageLoad') === 3000 ? 'selected' : ''}>
         0.3(${getLocaleString('SLOWLY')})
       </option>
-      <option value="2000" ${getUserSettings().throttlePageLoad === 2000 ? 'selected' : ''}>
+      <option value="2000" ${getSettingsValue('throttlePageLoad') === 2000 ? 'selected' : ''}>
         0.5
       </option>
-      <option value="1000" ${getUserSettings().throttlePageLoad === 1000 ? 'selected' : ''}>
+      <option value="1000" ${getSettingsValue('throttlePageLoad') === 1000 ? 'selected' : ''}>
         01(${getLocaleString('NORMAL')})
       </option>
-      <option value="500" ${getUserSettings().throttlePageLoad === 500 ? 'selected' : ''}>
+      <option value="500" ${getSettingsValue('throttlePageLoad') === 500 ? 'selected' : ''}>
         02
       </option>
-      <option value="250" ${getUserSettings().throttlePageLoad === 250 ? 'selected' : ''}>
+      <option value="250" ${getSettingsValue('throttlePageLoad') === 250 ? 'selected' : ''}>
         04(${getLocaleString('FAST')})
       </option>
-      <option value="125" ${getUserSettings().throttlePageLoad === 125 ? 'selected' : ''}>
+      <option value="125" ${getSettingsValue('throttlePageLoad') === 125 ? 'selected' : ''}>
         08
       </option>
-      <option value="100" ${getUserSettings().throttlePageLoad === 100 ? 'selected' : ''}>
+      <option value="100" ${getSettingsValue('throttlePageLoad') === 100 ? 'selected' : ''}>
         10(${getLocaleString('EXTREME')})
       </option>
-      <option value="1" ${getUserSettings().throttlePageLoad === 1 ? 'selected' : ''}>
+      <option value="1" ${getSettingsValue('throttlePageLoad') === 1 ? 'selected' : ''}>
         ${getLocaleString('ALL_PAGES')}
       </option>
     </select>
   </div>
 `;
-const defaultZoomMode = html` <div class="ControlLabel DefaultZoomMode">
-  ${getLocaleString('DEFAULT_ZOOM_MODE')}
-  <select id="DefaultZoomMode">
-    <option value="percent" ${getUserSettings().zoomMode === 'percent' ? 'selected' : ''}>
-      ${getLocaleString('PERCENT')}
-    </option>
-    <option value="width" ${getUserSettings().zoomMode === 'width' ? 'selected' : ''}>
-      ${getLocaleString('FIT_WIDTH')}
-    </option>
-    <option value="height" ${getUserSettings().zoomMode === 'height' ? 'selected' : ''}>
-      ${getLocaleString('FIT_HEIGHT')}
-    </option>
-  </select>
-</div>`;
-const defaultZoom = html`
+
+const defaultZoomMode = () =>
+  html` <div class="ControlLabel DefaultZoomMode">
+    ${getLocaleString('DEFAULT_ZOOM_MODE')}
+    <select id="DefaultZoomMode">
+      <option value="percent" ${getSettingsValue('zoomMode') === 'percent' ? 'selected' : ''}>
+        ${getLocaleString('PERCENT')}
+      </option>
+      <option value="width" ${getSettingsValue('zoomMode') === 'width' ? 'selected' : ''}>
+        ${getLocaleString('FIT_WIDTH')}
+      </option>
+      <option value="height" ${getSettingsValue('zoomMode') === 'height' ? 'selected' : ''}>
+        ${getLocaleString('FIT_HEIGHT')}
+      </option>
+    </select>
+  </div>`;
+const defaultZoom = () => html`
   <div
     class="ControlLabel DefaultZoom ControlLabelItem
-  ${getUserSettings().zoomMode === 'percent' ? 'show' : ''}"
+  ${getSettingsValue('zoomMode') === 'percent' ? 'show' : ''}"
   >
     <span>
       ${getLocaleString('DEFAULT_ZOOM')}
       <output id="defaultZoomVal" class="RangeValue" for="DefaultZoom">
-        ${getUserSettings().defaultZoom}%
+        ${getSettingsValue('defaultZoom')}%
       </output>
     </span>
     <input
       type="range"
-      value="${getUserSettings().defaultZoom}"
+      value="${getSettingsValue('defaultZoom')}"
       name="DefaultZoom"
       id="DefaultZoom"
       min="5"
@@ -185,17 +225,18 @@ const defaultZoom = html`
     </datalist>
   </div>
 `;
-const minZoom = html`
+
+const minZoom = () => html`
   <div class="ControlLabel minZoom">
     <span>
       ${getLocaleString('MINIMUM_ZOOM')}
       <output id="minZoomVal" class="RangeValue" for="minZoom">
-        ${getUserSettings().minZoom}%
+        ${getSettingsValue('minZoom')}%
       </output>
     </span>
     <input
       type="range"
-      value="${getUserSettings().minZoom}"
+      value="${getSettingsValue('minZoom')}"
       name="minZoom"
       id="minZoom"
       min="30"
@@ -205,17 +246,18 @@ const minZoom = html`
     />
   </div>
 `;
-const zoomStep = html`
+
+const zoomStep = () => html`
   <div class="ControlLabel zoomStep">
     <span>
       ${getLocaleString('ZOOM_STEP')}
       <output id="zoomStepVal" class="RangeValue" for="zoomStep">
-        ${getUserSettings().zoomStep}%
+        ${getSettingsValue('zoomStep')}%
       </output>
     </span>
     <input
       type="range"
-      value="${getUserSettings().zoomStep}"
+      value="${getSettingsValue('zoomStep')}"
       name="zoomStep"
       id="zoomStep"
       min="5"
@@ -225,37 +267,39 @@ const zoomStep = html`
     />
   </div>
 `;
-const viewMode = html`
+
+const viewMode = () => html`
   <div class="ControlLabel viewMode">
     ${getLocaleString('DEFAULT_VIEW_MODE')}
     <select id="viewMode">
-      <option value="Vertical" ${getUserSettings().viewMode === 'Vertical' ? 'selected' : ''}>
+      <option value="Vertical" ${getSettingsValue('viewMode') === 'Vertical' ? 'selected' : ''}>
         ${getLocaleString('VIEW_MODE_VERTICAL')}
       </option>
-      <option value="WebComic" ${getUserSettings().viewMode === 'WebComic' ? 'selected' : ''}>
+      <option value="WebComic" ${getSettingsValue('viewMode') === 'WebComic' ? 'selected' : ''}>
         ${getLocaleString('VIEW_MODE_WEBCOMIC')}
       </option>
-      <option value="FluidLTR" ${getUserSettings().viewMode === 'FluidLTR' ? 'selected' : ''}>
+      <option value="FluidLTR" ${getSettingsValue('viewMode') === 'FluidLTR' ? 'selected' : ''}>
         ${getLocaleString('VIEW_MODE_LEFT')}
       </option>
-      <option value="FluidRTL" ${getUserSettings().viewMode === 'FluidRTL' ? 'selected' : ''}>
+      <option value="FluidRTL" ${getSettingsValue('viewMode') === 'FluidRTL' ? 'selected' : ''}>
         ${getLocaleString('VIEW_MODE_RIGHT')}
       </option>
     </select>
   </div>
 `;
-const lazyLoad = html`
+
+const lazyLoad = () => html`
   <div
     class="ControlLabel lazyStart ControlLabelItem
-    ${getUserSettings().lazyLoadImages ? 'show' : ''}"
+    ${getSettingsValue('lazyLoadImages') ? 'show' : ''}"
   >
     <span>
       ${getLocaleString('LAZY_LOAD_IMAGES')}
-      <output id="lazyStartVal" for="lazyStart"> ${getUserSettings().lazyStart} </output>
+      <output id="lazyStartVal" for="lazyStart"> ${getSettingsValue('lazyStart')} </output>
     </span>
     <input
       type="range"
-      value="${getUserSettings().lazyStart}"
+      value="${getSettingsValue('lazyStart')}"
       name="lazyStart"
       id="lazyStart"
       min="5"
@@ -265,110 +309,84 @@ const lazyLoad = html`
     />
   </div>
 `;
-const headerType = html`
+
+const headerType = () => html`
   <div class="ControlLabel headerType">
     ${getLocaleString('HEADER_TYPE')}
     <select id="headerType">
-      <option value="hover" ${getUserSettings().header === 'hover' ? 'selected' : ''}>
+      <option value="hover" ${getSettingsValue('header') === 'hover' ? 'selected' : ''}>
         ${getLocaleString('HEADER_HOVER')}
       </option>
-      <option value="scroll" ${getUserSettings().header === 'scroll' ? 'selected' : ''}>
+      <option value="scroll" ${getSettingsValue('header') === 'scroll' ? 'selected' : ''}>
         ${getLocaleString('HEADER_SCROLL')}
       </option>
-      <option value="click" ${getUserSettings().header === 'click' ? 'selected' : ''}>
+      <option value="click" ${getSettingsValue('header') === 'click' ? 'selected' : ''}>
         ${getLocaleString('HEADER_CLICK')}
       </option>
-      <option value="fixed" ${getUserSettings().header === 'fixed' ? 'selected' : ''}>
+      <option value="fixed" ${getSettingsValue('header') === 'fixed' ? 'selected' : ''}>
         ${getLocaleString('HEADER_FIXED')}
       </option>
-      <option value="simple" ${getUserSettings().header === 'simple' ? 'selected' : ''}>
+      <option value="simple" ${getSettingsValue('header') === 'simple' ? 'selected' : ''}>
         ${getLocaleString('HEADER_SIMPLE')}
       </option>
     </select>
   </div>
 `;
-const checkboxOptions = html`
+
+function toggler(name: string, checked: boolean = false) {
+  return html`
+    <div class="toggler">
+      <input id="${name}" name="${name}" type="checkbox" value="true" ${checked ? 'checked' : ''} />
+      <label for="${name}">
+        ${IconCheck}
+        ${IconX}
+      </label>
+    </div>
+  `;
+}
+
+const checkboxOptions = () => html`
   <div class="ControlLabel verticalSeparator">
     ${getLocaleString('VERTICAL_SEPARATOR')}
-    <input
-      type="checkbox"
-      value="true"
-      name="verticalSeparator"
-      id="verticalSeparator"
-      ${getUserSettings().verticalSeparator ? 'checked' : ''}
-    />
+    ${toggler('verticalSeparator', getSettingsValue('verticalSeparator'))}
   </div>
   <div class="ControlLabel fitIfOversize">
     ${getLocaleString('FIT_WIDTH_OVERSIZED')}
-    <input
-      type="checkbox"
-      value="true"
-      name="fitIfOversize"
-      id="fitIfOversize"
-      ${getUserSettings().fitWidthIfOversize ? 'checked' : ''}
-    />
+    ${toggler('fitIfOversize', getSettingsValue('fitWidthIfOversize'))}
   </div>
   <div class="ControlLabel showThumbnails">
     ${getLocaleString('SHOW_THUMBNAILS')}
-    <input
-      type="checkbox"
-      value="true"
-      name="showThumbnails"
-      id="showThumbnails"
-      ${getUserSettings().showThumbnails ? 'checked' : ''}
-    />
+    ${toggler('showThumbnails', getSettingsValue('showThumbnails'))}
   </div>
   <div class="ControlLabel enableComments">
     ${getLocaleString('ENABLE_COMMENTS')}
-    <input
-      type="checkbox"
-      value="true"
-      name="enableComments"
-      id="enableComments"
-      ${getUserSettings().enableComments ? 'checked' : ''}
-    />
+    ${toggler('enableComments', getSettingsValue('enableComments'))}
   </div>
   <div class="ControlLabel lazyLoadImages">
     ${getLocaleString('LAZY_LOAD_IMAGES_ENABLE')}
-    <input
-      type="checkbox"
-      value="true"
-      name="lazyLoadImages"
-      id="lazyLoadImages"
-      ${getUserSettings().lazyLoadImages ? 'checked' : ''}
-    />
+    ${toggler('lazyLoadImages', getSettingsValue('lazyLoadImages'))}
   </div>
-  ${lazyLoad}
+  ${lazyLoad()}
   <div class="ControlLabel downloadZip">
     ${getLocaleString('DOWNLOAD_IMAGES')}
-    <input
-      type="checkbox"
-      value="false"
-      name="downloadZip"
-      id="downloadZip"
-      ${getUserSettings().downloadZip ? 'checked' : ''}
-    />
+    ${toggler('downloadZip', getSettingsValue('downloadZip'))}
   </div>
   <div class="ControlLabel hidePageControls">
     ${getLocaleString('HIDE_CONTROLS')}
-    <input
-      type="checkbox"
-      value="false"
-      name="hidePageControls"
-      id="hidePageControls"
-      ${getUserSettings().hidePageControls ? 'checked' : ''}
-    />
+    ${toggler('hidePageControls', getSettingsValue('hidePageControls'))}
   </div>
 `;
-const autoScroll = html`
+
+const autoScroll = () => html`
   <div class="ControlLabel autoScroll">
     <span>
       ${getLocaleString('AUTO_SCROLL_HEIGHT')}
-      <output id="scrollHeightVal" for="scrollHeight"> ${getUserSettings().scrollHeight} </output>px
+      <output id="scrollHeightVal" for="scrollHeight"> ${getSettingsValue('scrollHeight')} </output
+      >px
     </span>
     <input
       type="range"
-      value="${getUserSettings().scrollHeight}"
+      value="${getSettingsValue('scrollHeight')}"
       name="scrollHeight"
       id="scrollHeight"
       min="1"
@@ -378,6 +396,7 @@ const autoScroll = html`
     />
   </div>
 `;
+
 const SettingsPanel = () => html`
   <div id="SettingsPanel" class="panel">
     <h2>${getLocaleString('SETTINGS')}</h2>
@@ -385,10 +404,12 @@ const SettingsPanel = () => html`
       ${IconX}
     </button>
     <button id="ResetSettings" class="ControlButton">
-      ${getLocaleString('BUTTON_RESET_SETTINGS')}
+      ${IconSettingsOff} ${getLocaleString('BUTTON_RESET_SETTINGS')}
     </button>
-    ${language} ${theme} ${loadMode} ${loadSpeed} ${defaultZoomMode} ${defaultZoom} ${minZoom}
-    ${zoomStep} ${viewMode} ${checkboxOptions} ${headerType} ${autoScroll}
+    ${settingsScope()} ${language()} ${theme()} ${loadMode()} ${loadSpeed()} ${defaultZoomMode()}
+    ${defaultZoom()} ${minZoom()} ${zoomStep()} ${viewMode()} ${checkboxOptions()} ${headerType()}
+    ${autoScroll()}
   </div>
 `;
+
 export default SettingsPanel;

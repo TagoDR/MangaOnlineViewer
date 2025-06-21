@@ -1,4 +1,4 @@
-import { getUserSettings } from '../../core/settings';
+import { getSettingsValue } from '../../core/settings';
 import { applyZoom } from '../page';
 import { addEvent } from './common';
 
@@ -6,14 +6,14 @@ export function buttonZoomIn(event: Event) {
   const img = (event.currentTarget as HTMLElement).parentElement?.parentElement?.querySelector(
     '.PageImg',
   ) as HTMLImageElement;
-  const ratio = (img.width / img.naturalWidth) * (100 + getUserSettings().zoomStep);
+  const ratio = (img.width / img.naturalWidth) * (100 + getSettingsValue('zoomStep'));
   applyZoom(ratio, `#${img.getAttribute('id')}`);
 }
 export function buttonZoomOut(event: Event) {
   const img = (event.currentTarget as HTMLElement).parentElement?.parentElement?.querySelector(
     '.PageImg',
   ) as HTMLImageElement;
-  const ratio = (img.width / img.naturalWidth) * (100 - getUserSettings().zoomStep);
+  const ratio = (img.width / img.naturalWidth) * (100 - getSettingsValue('zoomStep'));
   applyZoom(ratio, `#${img.getAttribute('id')}`);
 }
 export function buttonRestoreZoom() {

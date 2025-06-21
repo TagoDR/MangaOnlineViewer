@@ -2,7 +2,7 @@ import NProgress from 'nprogress';
 import imagesLoaded from 'imagesloaded';
 import { blobToDataURL } from 'blob-util';
 import { logScript } from '../utils/tampermonkey';
-import { getUserSettings } from '../core/settings';
+import { getSettingsValue } from '../core/settings';
 import {
   type IManga,
   type IMangaImages,
@@ -21,7 +21,7 @@ import { isBase64ImageUrl, isObjectURL } from '../utils/urls';
 
 // After pages load apply default Zoom
 function applyZoom(
-  zoom: number | ZoomMode = getUserSettings().zoomMode,
+  zoom: number | ZoomMode = getSettingsValue('zoomMode'),
   pages = '.PageContent img',
 ) {
   const pg = [...document.querySelectorAll<HTMLImageElement>(pages)];
@@ -34,11 +34,11 @@ function applyZoom(
       img.style.width = `${window.innerWidth}px`;
     } else if (zoom === 'height') {
       // Fit height
-      const nextHeight = window.innerHeight + (getUserSettings().showThumbnails ? -29 : 0);
+      const nextHeight = window.innerHeight + (getSettingsValue('showThumbnails') ? -29 : 0);
       img.style.height = `${nextHeight}px`;
       img.style.minWidth = 'unset';
     } else if (zoom === 'percent') {
-      img.style.width = `${img.naturalWidth * (getUserSettings().defaultZoom / 100)}px`;
+      img.style.width = `${img.naturalWidth * (getSettingsValue('defaultZoom') / 100)}px`;
     } else if (zoom >= 0 && zoom !== 100) {
       img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
     }
@@ -77,7 +77,7 @@ function reloadImage(img: HTMLImageElement) {
 
 function onImagesDone() {
   logScript('Images Loading Complete');
-  if (getUserSettings().downloadZip) {
+  if (getSettingsValue('downloadZip')) {
     document.getElementById('download')?.dispatchEvent(new Event('click'));
   }
 
@@ -139,7 +139,7 @@ function onImagesFail(manga: IManga) {
       const thumb = document.getElementById(thumbId);
       thumb?.classList.add('imgBroken');
       const src = image.img.getAttribute('src');
-      if (src && getRepeatValue(src) <= getUserSettings().maxReload) {
+      if (src && getRepeatValue(src) <= getSettingsValue('maxReload')) {
         setTimeout(async () => {
           if (manga.reload) {
             const id = parseInt(`0${/\d+/.exec(image.img.id)}`, 10);
@@ -178,7 +178,10 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
   let src = normalizeUrl(imageSrc);
   const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
   if (img) {
-    if (!getUserSettings().lazyLoadImages || relativePosition <= getUserSettings().lazyStart) {
+    if (
+      !(manga.lazy ?? getSettingsValue('lazyLoadImages')) ||
+      relativePosition <= getSettingsValue('lazyStart')
+    ) {
       setTimeout(
         async () => {
           if (!isObjectURL(src) && !isBase64ImageUrl(src) && manga.fetchOptions) {
@@ -192,7 +195,7 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
           img.setAttribute('src', src);
           logScript('Loaded Image:', index, 'Source:', src);
         },
-        (manga.timer ?? getUserSettings().throttlePageLoad) * relativePosition,
+        (manga.timer ?? getSettingsValue('throttlePageLoad')) * relativePosition,
       );
     } else {
       img.setAttribute('data-src', normalizeUrl(src));
@@ -237,12 +240,12 @@ async function addPage(manga: IMangaPages, index: number, pageUrl: string, posit
   const relativePosition = position - manga.begin;
   const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
   if (img) {
-    if (!getUserSettings().lazyLoadImages || relativePosition <= getUserSettings().lazyStart) {
+    if (!(manga.lazy ?? getSettingsValue('lazyLoadImages')) || relativePosition <= getSettingsValue('lazyStart')) {
       setTimeout(
         () => {
           findPage(manga, index, pageUrl, false)().catch(logScript);
         },
-        (manga.timer ?? getUserSettings().throttlePageLoad) * relativePosition,
+        (manga.timer ?? getSettingsValue('throttlePageLoad')) * relativePosition,
       );
     } else {
       img.setAttribute(
@@ -271,11 +274,10 @@ function loadMangaImages(begin: number, manga: IMangaImages) {
 
 // Entry point for loading hte Manga pages
 function loadManga(manga: IManga, begin = 1) {
-  getUserSettings().lazyLoadImages = manga.lazy ?? getUserSettings().lazyLoadImages;
   logScript('Loading Images');
-  logScript(`Intervals: ${manga.timer ?? getUserSettings().throttlePageLoad ?? 'Default(1000)'}`);
+  logScript(`Intervals: ${manga.timer ?? getSettingsValue('throttlePageLoad') ?? 'Default(1000)'}`);
   logScript(
-    `Lazy: ${getUserSettings().lazyLoadImages}, Starting from: ${getUserSettings().lazyStart}`,
+    `Lazy: ${manga.lazy ?? getSettingsValue('lazyLoadImages')}, Starting from: ${getSettingsValue('lazyStart')}`,
   );
   if (isImagesManga(manga)) {
     logScript('Method: Images:', manga.listImages);
@@ -299,7 +301,7 @@ function loadManga(manga: IManga, begin = 1) {
           lazyAttr,
         });
       },
-      wait: getUserSettings().throttlePageLoad,
+      wait: getSettingsValue('throttlePageLoad'),
     });
   } else {
     logScript('No Loading Method Found');
