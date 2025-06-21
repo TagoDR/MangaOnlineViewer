@@ -325,77 +325,48 @@ const headerType = () => html`
     </select>
   </div>
 `;
+
+function toggler(name: string, checked: boolean = false) {
+  return html`
+    <div class="toggler">
+      <input id="${name}" name="${name}" type="checkbox" value="true" ${checked ? 'checked' : ''} />
+      <label for="${name}">
+        ${IconCheck}
+        ${IconX}
+      </label>
+    </div>
+  `;
+}
+
 const checkboxOptions = () => html`
   <div class="ControlLabel verticalSeparator">
     ${getLocaleString('VERTICAL_SEPARATOR')}
-    <input
-      type="checkbox"
-      value="true"
-      name="verticalSeparator"
-      id="verticalSeparator"
-      ${getSettingsValue('verticalSeparator') ? 'checked' : ''}
-    />
+    ${toggler('verticalSeparator', getSettingsValue('verticalSeparator'))}
   </div>
   <div class="ControlLabel fitIfOversize">
     ${getLocaleString('FIT_WIDTH_OVERSIZED')}
-    <input
-      type="checkbox"
-      value="true"
-      name="fitIfOversize"
-      id="fitIfOversize"
-      ${getSettingsValue('fitWidthIfOversize') ? 'checked' : ''}
-    />
+    ${toggler('fitIfOversize', getSettingsValue('fitWidthIfOversize'))}
   </div>
   <div class="ControlLabel showThumbnails">
     ${getLocaleString('SHOW_THUMBNAILS')}
-    <input
-      type="checkbox"
-      value="true"
-      name="showThumbnails"
-      id="showThumbnails"
-      ${getSettingsValue('showThumbnails') ? 'checked' : ''}
-    />
+    ${toggler('showThumbnails', getSettingsValue('showThumbnails'))}
   </div>
   <div class="ControlLabel enableComments">
     ${getLocaleString('ENABLE_COMMENTS')}
-    <input
-      type="checkbox"
-      value="true"
-      name="enableComments"
-      id="enableComments"
-      ${getSettingsValue('enableComments') ? 'checked' : ''}
-    />
+    ${toggler('enableComments', getSettingsValue('enableComments'))}
   </div>
   <div class="ControlLabel lazyLoadImages">
     ${getLocaleString('LAZY_LOAD_IMAGES_ENABLE')}
-    <input
-      type="checkbox"
-      value="true"
-      name="lazyLoadImages"
-      id="lazyLoadImages"
-      ${getSettingsValue('lazyLoadImages') ? 'checked' : ''}
-    />
+    ${toggler('lazyLoadImages', getSettingsValue('lazyLoadImages'))}
   </div>
-  ${lazyLoad}
+  ${lazyLoad()}
   <div class="ControlLabel downloadZip">
     ${getLocaleString('DOWNLOAD_IMAGES')}
-    <input
-      type="checkbox"
-      value="false"
-      name="downloadZip"
-      id="downloadZip"
-      ${getSettingsValue('downloadZip') ? 'checked' : ''}
-    />
+    ${toggler('downloadZip', getSettingsValue('downloadZip'))}
   </div>
   <div class="ControlLabel hidePageControls">
     ${getLocaleString('HIDE_CONTROLS')}
-    <input
-      type="checkbox"
-      value="false"
-      name="hidePageControls"
-      id="hidePageControls"
-      ${getSettingsValue('hidePageControls') ? 'checked' : ''}
-    />
+    ${toggler('hidePageControls', getSettingsValue('hidePageControls'))}
   </div>
 `;
 const autoScroll = () => html`
