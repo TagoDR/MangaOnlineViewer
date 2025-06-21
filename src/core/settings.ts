@@ -173,7 +173,7 @@ export function getLocaleString(name: string): string {
     return locales[1][name];
   }
 
-  return '##MISSING_STRING##';
+  return `##MISSING_STRING_${name.toLocaleUpperCase()}##`;
 }
 
 /*

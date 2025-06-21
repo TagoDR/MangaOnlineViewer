@@ -75,11 +75,11 @@ const language = () =>
 
 const theme = () => html`
   <div class="ControlLabel ColorSchemeSelector">
-    ${getLocaleString('COLOR_SCHEME')}
+    <label>${getLocaleString('COLOR_SCHEME')}</label>
     <button id="ColorScheme" class="ControlButton">${IconSun} ${IconMoon}</button>
   </div>
   <div class="ControlLabel ThemeSelector">
-    <label>${getLocaleString('THEME')}</label>
+    <label>${getLocaleString('THEME_COLOR')}</label>
     <span
       class="custom ThemeRadio 
         ${getSettingsValue('theme') === 'custom' ? 'selected' : ''}"
@@ -94,7 +94,7 @@ const theme = () => html`
     class="ControlLabel CustomTheme ControlLabelItem 
       ${getSettingsValue('theme').startsWith('custom') ? 'show' : ''}"
   >
-    ${getLocaleString('THEME_HUE')}
+    <label>${getLocaleString('THEME_HUE')}</label>
     <input
       id="CustomThemeHue"
       type="color"
@@ -108,7 +108,7 @@ const theme = () => html`
       ${getSettingsValue('theme').startsWith('custom') ? '' : 'show'}"
   >
       <span>
-        ${getLocaleString('THEME_SHADE')}
+        <label>${getLocaleString('THEME_SHADE')}</label>
         <output id="themeShadeVal" class="RangeValue" for="ThemeShade">
           ${getSettingsValue('themeShade')}
         </output>
@@ -406,9 +406,28 @@ const SettingsPanel = () => html`
     <button id="ResetSettings" class="ControlButton">
       ${IconSettingsOff} ${getLocaleString('BUTTON_RESET_SETTINGS')}
     </button>
-    ${settingsScope()} ${language()} ${theme()} ${loadMode()} ${loadSpeed()} ${defaultZoomMode()}
-    ${defaultZoom()} ${minZoom()} ${zoomStep()} ${viewMode()} ${checkboxOptions()} ${headerType()}
-    ${autoScroll()}
+    <fieldset>
+      <legend>${getLocaleString('GENERAL')}</legend>
+      ${settingsScope()} ${language()}
+    </fieldset>
+    <fieldset>
+      <legend>${getLocaleString('THEME')}</legend>
+      ${theme()}
+    </fieldset>
+    <fieldset>
+      <legend>${getLocaleString('LOADING')}</legend>
+      ${loadMode()} ${loadSpeed()}
+    </fieldset>
+    <fieldset>
+      <legend>${getLocaleString('ZOOM')}</legend>
+      ${defaultZoomMode()}
+      ${defaultZoom()} ${minZoom()} ${zoomStep()} ${viewMode()}
+    </fieldset>
+    <fieldset>
+      <legend>${getLocaleString('OTHERS')}</legend>
+      ${checkboxOptions()} ${headerType()}
+      ${autoScroll()}
+    </fieldset>
   </div>
 `;
 

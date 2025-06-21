@@ -30,6 +30,7 @@ export function changeLocale(event: Event) {
   const elem = document.getElementById('MangaOnlineViewer');
   elem?.setAttribute('locale', locale);
   elem?.dispatchEvent(new Event('hydrate'));
+  buttonSettingsOpen();
 }
 
 export function changeLoadMode(event: Event) {

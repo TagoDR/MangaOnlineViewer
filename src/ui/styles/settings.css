@@ -21,14 +21,18 @@
     transform: translateX(0);
 }
 
+#MangaOnlineViewer #SettingsPanel fieldset{
+    border: 1px solid var(--theme-body-text-color);
+    padding: 3px;
+    border-radius: 10px;
+}
+
 #MangaOnlineViewer #SettingsPanel .ControlLabel {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid var(--theme-body-text-color);
-    padding: 3px;
-    border-radius: 10px;
+    padding: 2px;
 }
 
 #MangaOnlineViewer #SettingsPanel .ControlLabelItem {
