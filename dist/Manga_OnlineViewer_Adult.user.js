@@ -2020,7 +2020,7 @@
   function setSettingsValue(key, value) {
     if (localSettings) {
       localSettings[key] = value;
-      setLocalSettings(diffObj(localSettings, getDefault()));
+      setLocalSettings(diffObj(localSettings, globalSettings));
     } else {
       globalSettings[key] = value;
       setGlobalSettings(diffObj(globalSettings, getDefault()));
@@ -4743,11 +4743,7 @@
     setSettingsValue('zoomMode', target);
     changeGlobalZoom(target)();
     const percent = document.querySelector('.DefaultZoom');
-    if (getSettingsValue('zoomMode') === 'percent') {
-      percent?.classList.add('show');
-    } else {
-      percent?.classList.remove('show');
-    }
+    percent?.classList.toggle('show', target === 'percent');
   }
   function changeDefaultZoom(event) {
     const target = parseInt(event.currentTarget.value, 10);
