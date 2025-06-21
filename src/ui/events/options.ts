@@ -38,23 +38,27 @@ export function changeLoadMode(event: Event) {
 }
 
 export function checkFitWidthOversize(event: Event) {
-  document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize');
+  const ck = (event.currentTarget as HTMLInputElement).checked;
+  document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize',ck);
   setSettingsValue('fitWidthIfOversize', (event.currentTarget as HTMLInputElement).checked);
 }
 
 export function checkVerticalSeparator(event: Event) {
-  document.querySelector('#Chapter')?.classList.toggle('separator');
+  const ck = (event.currentTarget as HTMLInputElement).checked;
+  document.querySelector('#Chapter')?.classList.toggle('separator',ck);
   setSettingsValue('verticalSeparator', (event.currentTarget as HTMLInputElement).checked);
 }
 
 export function checkShowThumbnails(event: Event) {
-  document.querySelector('#Navigation')?.classList.toggle('disabled');
-  setSettingsValue('showThumbnails', (event.currentTarget as HTMLInputElement).checked);
+  const ck = (event.currentTarget as HTMLInputElement).checked;
+  document.querySelector('#Navigation')?.classList.toggle('disabled',!ck);
+  setSettingsValue('showThumbnails', !(event.currentTarget as HTMLInputElement).checked);
   applyZoom();
 }
 
 export function checkEnableComments(event: Event) {
-  document.querySelector('#CommentsButton')?.classList.toggle('disabled');
+  const ck = (event.currentTarget as HTMLInputElement).checked;
+  document.querySelector('#CommentsButton')?.classList.toggle('disabled',ck);
   setSettingsValue('enableComments', (event.currentTarget as HTMLInputElement).checked);
   applyZoom();
 }
@@ -74,12 +78,7 @@ export function changeAutoDownload(event: Event) {
 export function checkLazyLoad(event: Event) {
   setSettingsValue('lazyLoadImages', (event.currentTarget as HTMLInputElement).checked);
   const start = document.querySelector<HTMLDivElement>('.lazyStart');
-  if (getSettingsValue('lazyLoadImages')) {
-    start?.classList.add('show');
-  } else {
-    start?.classList.remove('show');
-  }
-
+  start?.classList.toggle('show',getSettingsValue('lazyLoadImages'));
   if ((event.currentTarget as HTMLInputElement).checked) {
     Swal.fire({
       title: getLocaleString('WARNING'),
@@ -118,7 +117,8 @@ export function changeMinZoom(event: Event) {
 }
 
 export function checkHideImageControls(event: Event) {
-  document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
+  const ck = (event.currentTarget as HTMLInputElement).checked;
+  document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls', ck);
   setSettingsValue('hidePageControls', (event.currentTarget as HTMLInputElement).checked);
 }
 
