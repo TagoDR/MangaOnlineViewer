@@ -63,7 +63,7 @@ export const defaultSettings: ISettings = {
 
 function getDefault(global = true) {
   return !isMobile()
-    ? { ...defaultSettings, enabled: global }
+    ? { ...defaultSettings, enabled: global, theme: global ? 'darkblue' : 'darkgreen' }
     : _.defaultsDeep(
         {
           lazyLoadImages: true,
@@ -72,7 +72,7 @@ function getDefault(global = true) {
           viewMode: 'WebComic',
           header: 'click',
         },
-        { ...defaultSettings, enabled: global },
+        { ...defaultSettings, enabled: global, theme: global ? 'darkblue' : 'darkgreen' },
       );
 }
 
