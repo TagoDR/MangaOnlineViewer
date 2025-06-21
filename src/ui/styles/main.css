@@ -59,8 +59,8 @@
 
 #MangaOnlineViewer select {
     height: 20px;
-    padding: 0;
-    margin-bottom: 5px;
+    /*padding: 0;*/
+    margin: 2px;
 }
 
 #MangaOnlineViewer .ControlButton,

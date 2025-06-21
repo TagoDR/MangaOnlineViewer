@@ -72,60 +72,60 @@ const language = () =>
       ${localeSelector()}
     </select>
   </div>`;
+
 const theme = () => html`
-  <div id="ThemeSection">
-    <div class="ControlLabel ColorSchemeSelector">
-      ${getLocaleString('COLOR_SCHEME')}
-      <button id="ColorScheme" class="ControlButton">${IconSun} ${IconMoon}</button>
-    </div>
-    <div class="ControlLabel ThemeSelector">
-      ${getLocaleString('THEME')}
-      <span
-        class="custom ThemeRadio 
+  <div class="ControlLabel ColorSchemeSelector">
+    ${getLocaleString('COLOR_SCHEME')}
+    <button id="ColorScheme" class="ControlButton">${IconSun} ${IconMoon}</button>
+  </div>
+  <div class="ControlLabel ThemeSelector">
+    <label>${getLocaleString('THEME')}</label>
+    <span
+      class="custom ThemeRadio 
         ${getSettingsValue('theme') === 'custom' ? 'selected' : ''}"
-        title="custom"
-      >
+      title="custom"
+    >
         ${IconPalette} ${IconCheck}
       </span>
-      ${themesSelector()}
-    </div>
-    <div
-      id="Hue"
-      class="ControlLabel CustomTheme ControlLabelItem 
+    ${themesSelector()}
+  </div>
+  <div
+    id="Hue"
+    class="ControlLabel CustomTheme ControlLabelItem 
       ${getSettingsValue('theme').startsWith('custom') ? 'show' : ''}"
-    >
-      ${getLocaleString('THEME_HUE')}
-      <input
-        id="CustomThemeHue"
-        type="color"
-        value="${getSettingsValue('customTheme')}"
-        class="colorpicker CustomTheme"
-      />
-    </div>
-    <div
-      id="Shade"
-      class="ControlLabel CustomTheme ControlLabelItem
+  >
+    ${getLocaleString('THEME_HUE')}
+    <input
+      id="CustomThemeHue"
+      type="color"
+      value="${getSettingsValue('customTheme')}"
+      class="colorpicker CustomTheme"
+    />
+  </div>
+  <div
+    id="Shade"
+    class="ControlLabel CustomTheme ControlLabelItem
       ${getSettingsValue('theme').startsWith('custom') ? '' : 'show'}"
-    >
+  >
       <span>
         ${getLocaleString('THEME_SHADE')}
         <output id="themeShadeVal" class="RangeValue" for="ThemeShade">
           ${getSettingsValue('themeShade')}
         </output>
       </span>
-      <input
-        type="range"
-        value="${getSettingsValue('themeShade')}"
-        name="ThemeShade"
-        id="ThemeShade"
-        min="100"
-        max="900"
-        step="100"
-        oninput="themeShadeVal.value = this.value"
-      />
-    </div>
+    <input
+      type="range"
+      value="${getSettingsValue('themeShade')}"
+      name="ThemeShade"
+      id="ThemeShade"
+      min="100"
+      max="900"
+      step="100"
+      oninput="themeShadeVal.value = this.value"
+    />
   </div>
 `;
+
 const loadMode = () => html`
   <div class="ControlLabel loadMode">
     ${getLocaleString('DEFAULT_LOAD_MODE')}
@@ -142,6 +142,7 @@ const loadMode = () => html`
     </select>
   </div>
 `;
+
 const loadSpeed = () => html`
   <div class="ControlLabel PagesPerSecond">
     ${getLocaleString('LOAD_SPEED')}
@@ -173,6 +174,7 @@ const loadSpeed = () => html`
     </select>
   </div>
 `;
+
 const defaultZoomMode = () =>
   html` <div class="ControlLabel DefaultZoomMode">
     ${getLocaleString('DEFAULT_ZOOM_MODE')}
@@ -223,6 +225,7 @@ const defaultZoom = () => html`
     </datalist>
   </div>
 `;
+
 const minZoom = () => html`
   <div class="ControlLabel minZoom">
     <span>
@@ -243,6 +246,7 @@ const minZoom = () => html`
     />
   </div>
 `;
+
 const zoomStep = () => html`
   <div class="ControlLabel zoomStep">
     <span>
@@ -263,6 +267,7 @@ const zoomStep = () => html`
     />
   </div>
 `;
+
 const viewMode = () => html`
   <div class="ControlLabel viewMode">
     ${getLocaleString('DEFAULT_VIEW_MODE')}
@@ -282,6 +287,7 @@ const viewMode = () => html`
     </select>
   </div>
 `;
+
 const lazyLoad = () => html`
   <div
     class="ControlLabel lazyStart ControlLabelItem
@@ -303,6 +309,7 @@ const lazyLoad = () => html`
     />
   </div>
 `;
+
 const headerType = () => html`
   <div class="ControlLabel headerType">
     ${getLocaleString('HEADER_TYPE')}
@@ -369,6 +376,7 @@ const checkboxOptions = () => html`
     ${toggler('hidePageControls', getSettingsValue('hidePageControls'))}
   </div>
 `;
+
 const autoScroll = () => html`
   <div class="ControlLabel autoScroll">
     <span>
@@ -388,6 +396,7 @@ const autoScroll = () => html`
     />
   </div>
 `;
+
 const SettingsPanel = () => html`
   <div id="SettingsPanel" class="panel">
     <h2>${getLocaleString('SETTINGS')}</h2>
@@ -402,4 +411,5 @@ const SettingsPanel = () => html`
     ${autoScroll()}
   </div>
 `;
+
 export default SettingsPanel;
