@@ -20,7 +20,7 @@ export const defaultSettings: ISettings = {
   enabled: true,
   locale: 'en_US',
   theme: 'darkblue',
-  customTheme: '#263e3a',
+  customTheme: '#004526',
   themeShade: 600,
   colorScheme: 'dark',
   fitWidthIfOversize: true,
