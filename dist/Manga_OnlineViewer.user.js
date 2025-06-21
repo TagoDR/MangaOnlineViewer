@@ -1592,9 +1592,6 @@
     return text;
   }
   const logScriptC = (x) => (y) => logScript(x, y)[1];
-  function getListGM() {
-    return typeof GM_listValues !== 'undefined' ? GM_listValues() : [];
-  }
   function removeValueGM(name) {
     if (typeof GM_deleteValue !== 'undefined') {
       GM_deleteValue(name);
@@ -2163,6 +2160,7 @@
   const locales = [en_US, es_ES, pt_BR, zh_CN];
 
   const defaultSettings = {
+    enabled: true,
     locale: 'en_US',
     theme: 'darkblue',
     customTheme: '#263e3a',
@@ -2205,9 +2203,9 @@
       SCROLL_START: ['space'],
     },
   };
-  function getDefault() {
+  function getDefault(global = true) {
     return !isMobile()
-      ? { ...defaultSettings }
+      ? { ...defaultSettings, enabled: global }
       : _.defaultsDeep(
           {
             lazyLoadImages: true,
@@ -2216,13 +2214,20 @@
             viewMode: 'WebComic',
             header: 'click',
           },
-          defaultSettings,
+          { ...defaultSettings, enabled: global },
         );
   }
   let globalSettings = _.defaultsDeep(getGlobalSettings(getDefault()), getDefault());
-  let localSettings = getListGM().includes(window.location.hostname)
-    ? _.defaultsDeep(getLocalSettings(getDefault()))
-    : null;
+  let localSettings = _.defaultsDeep(getLocalSettings(getDefault(false)), getDefault(false));
+  unsafeWindow.MOVSettings = (key = null) => {
+    logScript(
+      'Global',
+      key ? globalSettings[key] : globalSettings,
+      '\nLocal',
+      key ? localSettings[key] : localSettings,
+    );
+  };
+  const isSettingsLocal = () => localSettings?.enabled === true;
   settingsChangeListener((newValue) => {
     const newSettings = _.defaultsDeep(newValue, getDefault());
     const diff = globalSettings ? diffObj(newSettings, globalSettings) : newSettings;
@@ -2233,7 +2238,7 @@
     }
   }, 'settings');
   settingsChangeListener((newValue) => {
-    const newSettings = _.defaultsDeep(newValue, getDefault());
+    const newSettings = _.defaultsDeep(newValue, getDefault(false));
     const diff = localSettings ? diffObj(newSettings, localSettings) : newSettings;
     if (!isNothing(diff)) {
       logScript('Imported Local Settings', diff);
@@ -2242,21 +2247,24 @@
     }
   }, window.location.hostname);
   function getSettingsValue(key) {
-    return localSettings?.[key] || globalSettings?.[key];
+    if (isSettingsLocal()) {
+      return localSettings[key];
+    }
+    return globalSettings[key];
   }
   function setSettingsValue(key, value) {
-    if (localSettings) {
+    if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
       localSettings[key] = value;
-      setLocalSettings(diffObj(localSettings, globalSettings));
+      setLocalSettings(diffObj(localSettings, getDefault(false)));
     } else {
       globalSettings[key] = value;
       setGlobalSettings(diffObj(globalSettings, getDefault()));
     }
   }
   function changeSettingsValue(key, fn) {
-    if (localSettings) {
+    if (isSettingsLocal()) {
       localSettings[key] = fn(localSettings[key]);
-      setLocalSettings(diffObj(localSettings, getDefault()));
+      setLocalSettings(diffObj(localSettings, getDefault(false)));
     } else {
       globalSettings[key] = fn(globalSettings[key]);
       setGlobalSettings(diffObj(globalSettings, getDefault()));
@@ -2273,26 +2281,29 @@
     return '##MISSING_STRING##';
   }
   function resetSettings() {
-    if (localSettings) {
+    if (isSettingsLocal()) {
       removeValueGM(window.location.hostname);
-      localSettings = getDefault();
-      setLocalSettings(diffObj(localSettings, getDefault()));
+      localSettings = getDefault(false);
     } else {
       removeValueGM('settings');
       globalSettings = getDefault();
-      setGlobalSettings(diffObj(globalSettings, getDefault()));
     }
     document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
   }
-  const isSettingsLocal = () => !isNothing(localSettings);
   function toggleLocalSettings(activate = false) {
     if (activate) {
-      localSettings = { ...globalSettings };
-      setLocalSettings(diffObj(globalSettings, getDefault()));
+      if (!localSettings) {
+        localSettings = { ...globalSettings };
+      } else {
+        localSettings.enabled = true;
+      }
+      setLocalSettings(diffObj(localSettings, getDefault(false)));
       logScript('Local Settings Enabled');
     } else {
-      localSettings = null;
-      removeValueGM(window.location.hostname);
+      if (isSettingsLocal()) {
+        localSettings.enabled = false;
+      }
+      setLocalSettings(diffObj(localSettings, getDefault(false)));
       logScript('Local Settings Disabled');
     }
     document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
@@ -2300,13 +2311,6 @@
   }
   function isBookmarked(url = window.location.href) {
     return globalSettings.bookmarks.find((el) => el.url === url)?.page;
-  }
-  const bookmarkTimeLimit = 1e3 * 60 * 60 * 24 * 30 * 12;
-  const refreshedBookmark = globalSettings.bookmarks.filter(
-    (el) => Date.now() - new Date(el.date).valueOf() < bookmarkTimeLimit,
-  );
-  if (globalSettings.bookmarks.length !== refreshedBookmark.length) {
-    setSettingsValue('bookmarks', refreshedBookmark);
   }
 
   const IconArrowAutofitDown =
@@ -4562,30 +4566,31 @@
     setSettingsValue('loadMode', mode);
   }
   function checkFitWidthOversize(event) {
-    const ck = event.currentTarget.checked;
-    document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize', ck);
-    setSettingsValue('fitWidthIfOversize', event.currentTarget.checked);
+    const checked = event.currentTarget.checked;
+    document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize', checked);
+    setSettingsValue('fitWidthIfOversize', checked);
   }
   function checkVerticalSeparator(event) {
-    const ck = event.currentTarget.checked;
-    document.querySelector('#Chapter')?.classList.toggle('separator', ck);
-    setSettingsValue('verticalSeparator', event.currentTarget.checked);
+    const checked = event.currentTarget.checked;
+    document.querySelector('#Chapter')?.classList.toggle('separator', checked);
+    setSettingsValue('verticalSeparator', checked);
   }
   function checkShowThumbnails(event) {
-    const ck = event.currentTarget.checked;
-    document.querySelector('#Navigation')?.classList.toggle('disabled', !ck);
-    setSettingsValue('showThumbnails', !event.currentTarget.checked);
+    const checked = event.currentTarget.checked;
+    document.querySelector('#Navigation')?.classList.toggle('disabled', !checked);
+    setSettingsValue('showThumbnails', checked);
     applyZoom();
   }
   function checkEnableComments(event) {
-    const ck = event.currentTarget.checked;
-    document.querySelector('#CommentsButton')?.classList.toggle('disabled', ck);
-    setSettingsValue('enableComments', event.currentTarget.checked);
+    const checked = event.currentTarget.checked;
+    document.querySelector('#CommentsButton')?.classList.toggle('disabled', !checked);
+    setSettingsValue('enableComments', checked);
     applyZoom();
   }
   function changeAutoDownload(event) {
-    setSettingsValue('downloadZip', event.currentTarget.checked);
-    if (event.currentTarget.checked) {
+    const checked = event.currentTarget.checked;
+    setSettingsValue('downloadZip', checked);
+    if (checked) {
       Swal.fire({
         title: getLocaleString('ATTENTION'),
         text: getLocaleString('AUTO_DOWNLOAD'),
@@ -4595,10 +4600,11 @@
     }
   }
   function checkLazyLoad(event) {
-    setSettingsValue('lazyLoadImages', event.currentTarget.checked);
+    const checked = event.currentTarget.checked;
+    setSettingsValue('lazyLoadImages', checked);
     const start = document.querySelector('.lazyStart');
     start?.classList.toggle('show', getSettingsValue('lazyLoadImages'));
-    if (event.currentTarget.checked) {
+    if (checked) {
       Swal.fire({
         title: getLocaleString('WARNING'),
         html: getLocaleString('LAZY_LOAD'),
@@ -4631,9 +4637,9 @@
     setSettingsValue('minZoom', parseInt(min, 10));
   }
   function checkHideImageControls(event) {
-    const ck = event.currentTarget.checked;
-    document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls', ck);
-    setSettingsValue('hidePageControls', event.currentTarget.checked);
+    const checked = event.currentTarget.checked;
+    document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls', checked);
+    setSettingsValue('hidePageControls', checked);
   }
   function updateHeaderType(mode) {
     const header = document.querySelector('#Header');
@@ -4969,6 +4975,9 @@
         tag.outerHTML = component;
       }
     });
+    document
+      .querySelector('#Navigation')
+      ?.classList.toggle('disabled', !getSettingsValue('showThumbnails'));
     document.querySelector('#Overlay')?.dispatchEvent(new Event('click'));
     events();
   }

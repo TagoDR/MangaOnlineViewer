@@ -38,34 +38,35 @@ export function changeLoadMode(event: Event) {
 }
 
 export function checkFitWidthOversize(event: Event) {
-  const ck = (event.currentTarget as HTMLInputElement).checked;
-  document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize',ck);
-  setSettingsValue('fitWidthIfOversize', (event.currentTarget as HTMLInputElement).checked);
+  const checked = (event.currentTarget as HTMLInputElement).checked;
+  document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize', checked);
+  setSettingsValue('fitWidthIfOversize', checked);
 }
 
 export function checkVerticalSeparator(event: Event) {
-  const ck = (event.currentTarget as HTMLInputElement).checked;
-  document.querySelector('#Chapter')?.classList.toggle('separator',ck);
-  setSettingsValue('verticalSeparator', (event.currentTarget as HTMLInputElement).checked);
+  const checked = (event.currentTarget as HTMLInputElement).checked;
+  document.querySelector('#Chapter')?.classList.toggle('separator', checked);
+  setSettingsValue('verticalSeparator', checked);
 }
 
 export function checkShowThumbnails(event: Event) {
-  const ck = (event.currentTarget as HTMLInputElement).checked;
-  document.querySelector('#Navigation')?.classList.toggle('disabled',!ck);
-  setSettingsValue('showThumbnails', !(event.currentTarget as HTMLInputElement).checked);
+  const checked = (event.currentTarget as HTMLInputElement).checked;
+  document.querySelector('#Navigation')?.classList.toggle('disabled', !checked);
+  setSettingsValue('showThumbnails', checked);
   applyZoom();
 }
 
 export function checkEnableComments(event: Event) {
-  const ck = (event.currentTarget as HTMLInputElement).checked;
-  document.querySelector('#CommentsButton')?.classList.toggle('disabled',ck);
-  setSettingsValue('enableComments', (event.currentTarget as HTMLInputElement).checked);
+  const checked = (event.currentTarget as HTMLInputElement).checked;
+  document.querySelector('#CommentsButton')?.classList.toggle('disabled', !checked);
+  setSettingsValue('enableComments', checked);
   applyZoom();
 }
 
 export function changeAutoDownload(event: Event) {
-  setSettingsValue('downloadZip', (event.currentTarget as HTMLInputElement).checked);
-  if ((event.currentTarget as HTMLInputElement).checked) {
+  const checked = (event.currentTarget as HTMLInputElement).checked;
+  setSettingsValue('downloadZip', checked);
+  if (checked) {
     Swal.fire({
       title: getLocaleString('ATTENTION'),
       text: getLocaleString('AUTO_DOWNLOAD'),
@@ -76,10 +77,11 @@ export function changeAutoDownload(event: Event) {
 }
 
 export function checkLazyLoad(event: Event) {
-  setSettingsValue('lazyLoadImages', (event.currentTarget as HTMLInputElement).checked);
+  const checked = (event.currentTarget as HTMLInputElement).checked;
+  setSettingsValue('lazyLoadImages', checked);
   const start = document.querySelector<HTMLDivElement>('.lazyStart');
-  start?.classList.toggle('show',getSettingsValue('lazyLoadImages'));
-  if ((event.currentTarget as HTMLInputElement).checked) {
+  start?.classList.toggle('show', getSettingsValue('lazyLoadImages'));
+  if (checked) {
     Swal.fire({
       title: getLocaleString('WARNING'),
       html: getLocaleString('LAZY_LOAD'),
@@ -117,9 +119,9 @@ export function changeMinZoom(event: Event) {
 }
 
 export function checkHideImageControls(event: Event) {
-  const ck = (event.currentTarget as HTMLInputElement).checked;
-  document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls', ck);
-  setSettingsValue('hidePageControls', (event.currentTarget as HTMLInputElement).checked);
+  const checked = (event.currentTarget as HTMLInputElement).checked;
+  document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls', checked);
+  setSettingsValue('hidePageControls', checked);
 }
 
 export function updateHeaderType(mode: HeaderMode) {
@@ -148,7 +150,7 @@ function options() {
   // Reset Reader Settings
   document.querySelector('#ResetSettings')?.addEventListener('click', buttonResetSettings);
   // Change Settings Scope
-  document.querySelectorAll('#SettingsScope input[type=radio]').forEach(addEvent('change', changeSettingsScope))
+  document.querySelectorAll('#SettingsScope input[type=radio]').forEach(addEvent('change', changeSettingsScope));
   // Change Locale
   document.querySelector('#locale')?.addEventListener('change', changeLocale);
   // Image Fit width if Oversize Toggle

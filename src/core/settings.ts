@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import {
   getGlobalSettings,
-  getListGM,
   getLocalSettings,
   isMobile,
   logScript,
@@ -16,6 +15,7 @@ import locales from '../locales';
 import { isNothing } from '../utils/checks';
 
 export const defaultSettings: ISettings = {
+  enabled: true,
   locale: 'en_US',
   theme: 'darkblue',
   customTheme: '#263e3a',
@@ -59,9 +59,9 @@ export const defaultSettings: ISettings = {
   },
 };
 
-function getDefault() {
+function getDefault(global = true) {
   return !isMobile()
-    ? { ...defaultSettings }
+    ? { ...defaultSettings, enabled: global }
     : _.defaultsDeep(
         {
           lazyLoadImages: true,
@@ -70,15 +70,27 @@ function getDefault() {
           viewMode: 'WebComic',
           header: 'click',
         },
-        defaultSettings,
+        { ...defaultSettings, enabled: global },
       );
 }
 
 // Configuration
 let globalSettings: ISettings = _.defaultsDeep(getGlobalSettings(getDefault()), getDefault());
-let localSettings: ISettings | null = getListGM().includes(window.location.hostname)
-  ? _.defaultsDeep(getLocalSettings(getDefault()))
-  : null;
+let localSettings: ISettings = _.defaultsDeep(
+  getLocalSettings(getDefault(false)),
+  getDefault(false),
+);
+
+unsafeWindow.MOVSettings = <K extends ISettingsKey>(key: K | null = null) => {
+  logScript(
+    'Global',
+    key ? globalSettings[key] : globalSettings,
+    '\nLocal',
+    key ? localSettings[key] : localSettings,
+  );
+};
+
+export const isSettingsLocal = () => localSettings?.enabled === true;
 
 settingsChangeListener((newValue: Partial<ISettings>) => {
   const newSettings = _.defaultsDeep(newValue, getDefault());
@@ -91,7 +103,7 @@ settingsChangeListener((newValue: Partial<ISettings>) => {
 }, 'settings');
 
 settingsChangeListener((newValue: Partial<ISettings>) => {
-  const newSettings = _.defaultsDeep(newValue, getDefault());
+  const newSettings = _.defaultsDeep(newValue, getDefault(false));
   const diff = localSettings ? diffObj(newSettings, localSettings) : newSettings;
   if (!isNothing(diff)) {
     logScript('Imported Local Settings', diff);
@@ -108,7 +120,10 @@ settingsChangeListener((newValue: Partial<ISettings>) => {
  * @returns The effective value of the setting.
  */
 export function getSettingsValue<K extends ISettingsKey>(key: K): ISettings[K] {
-  return localSettings?.[key] || globalSettings?.[key];
+  if (isSettingsLocal()) {
+    return localSettings[key];
+  }
+  return globalSettings[key];
 }
 
 /**
@@ -119,9 +134,9 @@ export function getSettingsValue<K extends ISettingsKey>(key: K): ISettings[K] {
  * @param value The new value for the setting.
  */
 export function setSettingsValue<K extends ISettingsKey>(key: K, value: ISettings[K]): void {
-  if (localSettings) {
+  if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
     localSettings[key] = value;
-    setLocalSettings(diffObj(localSettings, globalSettings));
+    setLocalSettings(diffObj(localSettings, getDefault(false)));
   } else {
     globalSettings[key] = value;
     setGlobalSettings(diffObj(globalSettings, getDefault()));
@@ -139,20 +154,14 @@ export function changeSettingsValue<K extends ISettingsKey>(
   key: K,
   fn: (value: ISettings[K]) => ISettings[K],
 ): void {
-  if (localSettings) {
+  if (isSettingsLocal()) {
     localSettings[key] = fn(localSettings[key]);
-    setLocalSettings(diffObj(localSettings, getDefault()));
+    setLocalSettings(diffObj(localSettings, getDefault(false)));
   } else {
     globalSettings[key] = fn(globalSettings[key]);
     setGlobalSettings(diffObj(globalSettings, getDefault()));
   }
 }
-
-/*
-export function getUserSettings() {
-  return localSettings ?? globalSettings;
-}
-*/
 
 export function getLocaleString(name: string): string {
   const locale = locales.find((l) => l.ID === getSettingsValue('locale'));
@@ -187,28 +196,30 @@ export function updateSettings(newValue: Partial<ISettings>) {
 */
 
 export function resetSettings() {
-  if (localSettings) {
+  if (isSettingsLocal()) {
     removeValueGM(window.location.hostname);
-    localSettings = getDefault();
-    setLocalSettings(diffObj(localSettings, getDefault()));
+    localSettings = getDefault(false);
   } else {
     removeValueGM('settings');
     globalSettings = getDefault();
-    setGlobalSettings(diffObj(globalSettings, getDefault()));
   }
   document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
 }
 
-export const isSettingsLocal = () => !isNothing(localSettings);
-
 export function toggleLocalSettings(activate = false) {
   if (activate) {
-    localSettings = { ...globalSettings };
-    setLocalSettings(diffObj(globalSettings, getDefault()));
+    if (!localSettings) {
+      localSettings = { ...globalSettings };
+    } else {
+      localSettings.enabled = true;
+    }
+    setLocalSettings(diffObj(localSettings, getDefault(false)));
     logScript('Local Settings Enabled');
   } else {
-    localSettings = null;
-    removeValueGM(window.location.hostname);
+    if (isSettingsLocal()) {
+      localSettings.enabled = false;
+    }
+    setLocalSettings(diffObj(localSettings, getDefault(false)));
     logScript('Local Settings Disabled');
   }
   document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
@@ -219,6 +230,7 @@ export function isBookmarked(url: string = window.location.href): number | undef
   return globalSettings.bookmarks.find((el) => el.url === url)?.page;
 }
 
+/*
 // Clear old Bookmarks
 const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // Year
 const refreshedBookmark = globalSettings.bookmarks.filter(
@@ -227,3 +239,4 @@ const refreshedBookmark = globalSettings.bookmarks.filter(
 if (globalSettings.bookmarks.length !== refreshedBookmark.length) {
   setSettingsValue('bookmarks', refreshedBookmark);
 }
+*/
