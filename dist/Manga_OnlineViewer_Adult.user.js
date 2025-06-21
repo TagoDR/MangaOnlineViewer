@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.06.20
+// @version       2025.06.21
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -1372,7 +1372,7 @@
     if (typeof GM_deleteValue !== 'undefined') {
       GM_deleteValue(name);
     } else {
-      logScript('Removing: ', name);
+      logScript('Fake Removing: ', name);
     }
   }
   const getInfoGM =
@@ -1399,8 +1399,11 @@
     }
     return result;
   }
-  function getSettings(defaultSettings) {
+  function getGlobalSettings(defaultSettings) {
     return getJsonGM('settings', defaultSettings);
+  }
+  function getLocalSettings(defaultSettings) {
+    return getJsonGM(window.location.hostname, defaultSettings);
   }
   function setValueGM(name, value) {
     if (typeof GM_setValue !== 'undefined') {
@@ -1411,8 +1414,11 @@
       return String(value);
     }
   }
-  function setSettings(value) {
+  function setGlobalSettings(value) {
     return setValueGM('settings', value);
+  }
+  function setLocalSettings(value) {
+    return setValueGM(window.location.hostname, value);
   }
   function getBrowser() {
     let tem;
@@ -1451,19 +1457,15 @@
     return 'desktop';
   };
   const isMobile = () => getDevice() === 'mobile' || getDevice() === 'tablet';
-  const settingsChangeListener = (fn) => {
+  const settingsChangeListener = (fn, gmValue = 'settings') => {
     if (typeof GM_addValueChangeListener !== 'undefined') {
       try {
-        return GM_addValueChangeListener('settings', (_name, _oldValue, newValue, remote) => {
+        return GM_addValueChangeListener(gmValue, (_name, _oldValue, newValue, remote) => {
           if (remote) fn(newValue);
         });
       } finally {
       }
     }
-    logScript('Using Interval Settings Change Listener');
-    return setInterval(() => {
-      fn(getSettings());
-    }, 1e4);
   };
 
   const diffObj = (changed, original) => {
@@ -1593,6 +1595,8 @@
     AUTO_SCROLL_HEIGHT: 'Auto Scroll Speed in Pixels',
     VERTICAL_SEPARATOR: 'Show Vertical Separators',
     END: 'End',
+    SCOPE: 'Scope',
+    GLOBAL: 'Global',
   };
 
   const pt_BR = {
@@ -1702,6 +1706,8 @@
     AUTO_SCROLL_HEIGHT: 'Velocidade da Rolagem Automatica em Pixels',
     VERTICAL_SEPARATOR: 'Mostrar Separadores Verticais',
     END: 'Fin',
+    SCOPE: 'Escopo',
+    GLOBAL: 'Global',
   };
 
   const zh_CN = {
@@ -1810,6 +1816,8 @@
     AUTO_SCROLL_HEIGHT: '自动滚动速度（以像素为单位）',
     VERTICAL_SEPARATOR: '显示垂直分隔符',
     END: '结尾',
+    SCOPE: '范围',
+    GLOBAL: '全球',
   };
 
   const es_ES = {
@@ -1921,6 +1929,8 @@
     AUTO_SCROLL_HEIGHT: 'Velocidad de desplazamiento automático en píxeles',
     VERTICAL_SEPARATOR: 'Mostrar separadores verticales',
     END: 'Fin',
+    SCOPE: 'Alcance',
+    GLOBAL: 'Global',
   };
 
   const locales = [en_US, es_ES, pt_BR, zh_CN];
@@ -1968,9 +1978,9 @@
       SCROLL_START: ['space'],
     },
   };
-  const getDefault = () =>
-    !isMobile()
-      ? defaultSettings
+  function getDefault() {
+    return !isMobile()
+      ? { ...defaultSettings }
       : _.defaultsDeep(
           {
             lazyLoadImages: true,
@@ -1981,21 +1991,52 @@
           },
           defaultSettings,
         );
-  let settings$2 = _.defaultsDeep(getSettings(getDefault()), getDefault());
+  }
+  let globalSettings = _.defaultsDeep(getGlobalSettings(getDefault()), getDefault());
+  let localSettings = getListGM().includes(window.location.hostname)
+    ? _.defaultsDeep(getLocalSettings(getDefault()))
+    : null;
   settingsChangeListener((newValue) => {
     const newSettings = _.defaultsDeep(newValue, getDefault());
-    const diff = diffObj(newSettings, settings$2);
+    const diff = globalSettings ? diffObj(newSettings, globalSettings) : newSettings;
     if (!isNothing(diff)) {
-      logScript('Imported Settings', diff);
-      settings$2 = newSettings;
+      logScript('Imported Global Settings', diff);
+      globalSettings = newSettings;
       document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
     }
-  });
-  function getUserSettings() {
-    return settings$2;
+  }, 'settings');
+  settingsChangeListener((newValue) => {
+    const newSettings = _.defaultsDeep(newValue, getDefault());
+    const diff = localSettings ? diffObj(newSettings, localSettings) : newSettings;
+    if (!isNothing(diff)) {
+      logScript('Imported Local Settings', diff);
+      localSettings = newSettings;
+      document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
+    }
+  }, window.location.hostname);
+  function getSettingsValue(key) {
+    return localSettings?.[key] || globalSettings?.[key];
+  }
+  function setSettingsValue(key, value) {
+    if (localSettings) {
+      localSettings[key] = value;
+      setLocalSettings(diffObj(localSettings, getDefault()));
+    } else {
+      globalSettings[key] = value;
+      setGlobalSettings(diffObj(globalSettings, getDefault()));
+    }
+  }
+  function changeSettingsValue(key, fn) {
+    if (localSettings) {
+      localSettings[key] = fn(localSettings[key]);
+      setLocalSettings(diffObj(localSettings, getDefault()));
+    } else {
+      globalSettings[key] = fn(globalSettings[key]);
+      setGlobalSettings(diffObj(globalSettings, getDefault()));
+    }
   }
   function getLocaleString(name) {
-    const locale = locales.find((l) => l.ID === settings$2.locale);
+    const locale = locales.find((l) => l.ID === getSettingsValue('locale'));
     if (locale?.[name]) {
       return locale[name];
     }
@@ -2004,26 +2045,41 @@
     }
     return '##MISSING_STRING##';
   }
-  function updateSettings(newValue) {
-    logScript(JSON.stringify(newValue));
-    settings$2 = { ...settings$2, ...newValue };
-    setSettings(diffObj(settings$2, getDefault()));
-  }
   function resetSettings() {
-    getListGM().forEach((setting) => {
-      removeValueGM(setting);
-    });
-    updateSettings(getDefault());
+    if (localSettings) {
+      removeValueGM(window.location.hostname);
+      localSettings = getDefault();
+      setLocalSettings(diffObj(localSettings, getDefault()));
+    } else {
+      removeValueGM('settings');
+      globalSettings = getDefault();
+      setGlobalSettings(diffObj(globalSettings, getDefault()));
+    }
+    document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
+  }
+  const isSettingsLocal = () => !isNothing(localSettings);
+  function toggleLocalSettings(activate = false) {
+    if (activate) {
+      localSettings = { ...globalSettings };
+      setLocalSettings(diffObj(globalSettings, getDefault()));
+      logScript('Local Settings Enabled');
+    } else {
+      localSettings = null;
+      removeValueGM(window.location.hostname);
+      logScript('Local Settings Disabled');
+    }
+    document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
+    return isSettingsLocal();
   }
   function isBookmarked(url = window.location.href) {
-    return settings$2.bookmarks.find((el) => el.url === url)?.page;
+    return globalSettings.bookmarks.find((el) => el.url === url)?.page;
   }
   const bookmarkTimeLimit = 1e3 * 60 * 60 * 24 * 30 * 12;
-  const refreshedBookmark = settings$2.bookmarks.filter(
+  const refreshedBookmark = globalSettings.bookmarks.filter(
     (el) => Date.now() - new Date(el.date).valueOf() < bookmarkTimeLimit,
   );
-  if (settings$2.bookmarks.length !== refreshedBookmark.length) {
-    updateSettings({ bookmarks: refreshedBookmark });
+  if (globalSettings.bookmarks.length !== refreshedBookmark.length) {
+    setSettingsValue('bookmarks', refreshedBookmark);
   }
 
   const colors = {
@@ -2243,166 +2299,175 @@
   Object.values(colors).map((i) => i['900']);
 
   const IconArrowAutofitDown =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8" />\n  <path d="M18 4v17" />\n  <path d="M15 18l3 3l3 -3" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8" />\r\n  <path d="M18 4v17" />\r\n  <path d="M15 18l3 3l3 -3" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconArrowAutofitHeight =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-height" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6" />\n  <path d="M18 14v7" />\n  <path d="M18 3v7" />\n  <path d="M15 18l3 3l3 -3" />\n  <path d="M15 6l3 -3l3 3" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-height" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6" />\r\n  <path d="M18 14v7" />\r\n  <path d="M18 3v7" />\r\n  <path d="M15 18l3 3l3 -3" />\r\n  <path d="M15 6l3 -3l3 3" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconArrowAutofitLeft =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8" />\n  <path d="M20 18h-17" />\n  <path d="M6 15l-3 3l3 3" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8" />\r\n  <path d="M20 18h-17" />\r\n  <path d="M6 15l-3 3l3 3" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconArrowAutofitRight =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8" />\n  <path d="M4 18h17" />\n  <path d="M18 15l3 3l-3 3" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8" />\r\n  <path d="M4 18h17" />\r\n  <path d="M18 15l3 3l-3 3" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconArrowAutofitWidth =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-width" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" />\n  <path d="M10 18h-7" />\n  <path d="M21 18h-7" />\n  <path d="M6 15l-3 3l3 3" />\n  <path d="M18 15l3 3l-3 3" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-width" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" />\r\n  <path d="M10 18h-7" />\r\n  <path d="M21 18h-7" />\r\n  <path d="M6 15l-3 3l3 3" />\r\n  <path d="M18 15l3 3l-3 3" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconArrowBigLeft =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconArrowBigRight =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconBookmark =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconBookmarkOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M7.708 3.721a3.982 3.982 0 0 1 2.292 -.721h4a4 4 0 0 1 4 4v7m0 4v3l-6 -4l-6 4v-14c0 -.308 .035 -.609 .1 -.897" />\n  <path d="M3 3l18 18" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M7.708 3.721a3.982 3.982 0 0 1 2.292 -.721h4a4 4 0 0 1 4 4v7m0 4v3l-6 -4l-6 4v-14c0 -.308 .035 -.609 .1 -.897" />\r\n  <path d="M3 3l18 18" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconBookmarks =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmarks" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z" />\n  <path d="M11 3h5a3 3 0 0 1 3 3v11" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmarks" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z" />\r\n  <path d="M11 3h5a3 3 0 0 1 3 3v11" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconCategory =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 4h6v6h-6z" />\n  <path d="M14 4h6v6h-6z" />\n  <path d="M4 14h6v6h-6z" />\n  <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 4h6v6h-6z" />\r\n  <path d="M14 4h6v6h-6z" />\r\n  <path d="M4 14h6v6h-6z" />\r\n  <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconCheck =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M5 12l5 5l10 -10" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check toggler-on" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M5 12l5 5l10 -10" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconDeviceFloppy =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />\n  <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />\n  <path d="M14 4l0 4l-6 0l0 -4" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />\r\n  <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />\r\n  <path d="M14 4l0 4l-6 0l0 -4" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconExternalLink =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-external-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />\n  <path d="M11 13l9 -9" />\n  <path d="M15 4h5v5" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-external-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />\r\n  <path d="M11 13l9 -9" />\r\n  <path d="M15 4h5v5" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconEye =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />\n  <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />\r\n  <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconEyeOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />\n  <path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" />\n  <path d="M3 3l18 18" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />\r\n  <path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" />\r\n  <path d="M3 3l18 18" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconFileDownload =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M14 3v4a1 1 0 0 0 1 1h4" />\n  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />\n  <path d="M12 17v-6" />\n  <path d="M9.5 14.5l2.5 2.5l2.5 -2.5" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M14 3v4a1 1 0 0 0 1 1h4" />\r\n  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />\r\n  <path d="M12 17v-6" />\r\n  <path d="M9.5 14.5l2.5 2.5l2.5 -2.5" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconKeyboard =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-keyboard" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z" />\n  <path d="M6 10l0 .01" />\n  <path d="M10 10l0 .01" />\n  <path d="M14 10l0 .01" />\n  <path d="M18 10l0 .01" />\n  <path d="M6 14l0 .01" />\n  <path d="M18 14l0 .01" />\n  <path d="M10 14l4 .01" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-keyboard" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z" />\r\n  <path d="M6 10l0 .01" />\r\n  <path d="M10 10l0 .01" />\r\n  <path d="M14 10l0 .01" />\r\n  <path d="M18 10l0 .01" />\r\n  <path d="M6 14l0 .01" />\r\n  <path d="M18 14l0 .01" />\r\n  <path d="M10 14l4 .01" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconListNumbers =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-numbers" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M11 6h9" />\n  <path d="M11 12h9" />\n  <path d="M12 18h8" />\n  <path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4" />\n  <path d="M6 10v-6l-2 2" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-numbers" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M11 6h9" />\r\n  <path d="M11 12h9" />\r\n  <path d="M12 18h8" />\r\n  <path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4" />\r\n  <path d="M6 10v-6l-2 2" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconLoader2 =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-loader-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 3a9 9 0 1 0 9 9" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-loader-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 3a9 9 0 1 0 9 9" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconMenu2 =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 6l16 0" />\n  <path d="M4 12l16 0" />\n  <path d="M4 18l16 0" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 6l16 0" />\r\n  <path d="M4 12l16 0" />\r\n  <path d="M4 18l16 0" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconMessage =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M8 9h8" />\n  <path d="M8 13h6" />\n  <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M8 9h8" />\r\n  <path d="M8 13h6" />\r\n  <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconMoon =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconPalette =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-palette" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25" />\n  <path d="M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\n  <path d="M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\n  <path d="M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-palette" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25" />\r\n  <path d="M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\r\n  <path d="M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\r\n  <path d="M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconPencil =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />\n  <path d="M13.5 6.5l4 4" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />\r\n  <path d="M13.5 6.5l4 4" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconPhoto =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 8h.01" />\n  <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />\n  <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M15 8h.01" />\r\n  <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />\r\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />\r\n  <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconPhotoOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo-off" width="24"\n     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"\n     stroke-linecap="round" stroke-linejoin="round">\n    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n    <path d="M15 8h.01"/>\n    <path d="M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153"/>\n    <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/>\n    <path d="M16.33 12.338c.574 -.054 1.155 .166 1.67 .662l3 3"/>\n    <path d="M3 3l18 18" color="orange"/>\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo-off" width="24"\r\n     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"\r\n     stroke-linecap="round" stroke-linejoin="round">\r\n    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n    <path d="M15 8h.01"/>\r\n    <path d="M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153"/>\r\n    <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/>\r\n    <path d="M16.33 12.338c.574 -.054 1.155 .166 1.67 .662l3 3"/>\r\n    <path d="M3 3l18 18" color="orange"/>\r\n</svg>\r\n\r\n\r\n';
 
   const IconRefresh =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />\n  <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />\r\n  <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconSettings =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />\n  <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />\r\n  <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconSpacingVertical =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-spacing-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2" />\n  <path d="M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />\n  <path d="M16 12h-8" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-spacing-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2" />\r\n  <path d="M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />\r\n  <path d="M16 12h-8" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconSun =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />\n  <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />\r\n  <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconTrash =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 7l16 0" />\n  <path d="M10 11l0 6" />\n  <path d="M14 11l0 6" />\n  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />\n  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 7l16 0" />\r\n  <path d="M10 11l0 6" />\r\n  <path d="M14 11l0 6" />\r\n  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />\r\n  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconX =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M18 6l-12 12" />\n  <path d="M6 6l12 12" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x toggler-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M18 6l-12 12" />\r\n  <path d="M6 6l12 12" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconZoomCancel =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-cancel" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\n  <path d="M8 8l4 4" />\n  <path d="M12 8l-4 4" />\n  <path d="M21 21l-6 -6" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-cancel" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\r\n  <path d="M8 8l4 4" />\r\n  <path d="M12 8l-4 4" />\r\n  <path d="M21 21l-6 -6" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconZoomIn =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\n  <path d="M7 10l6 0" />\n  <path d="M10 7l0 6" />\n  <path d="M21 21l-6 -6" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\r\n  <path d="M7 10l6 0" />\r\n  <path d="M10 7l0 6" />\r\n  <path d="M21 21l-6 -6" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconZoomInArea =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 13v4" />\n  <path d="M13 15h4" />\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />\n  <path d="M22 22l-3 -3" />\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1" />\n  <path d="M3 11v-1" />\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1" />\n  <path d="M10 3h1" />\n  <path d="M15 3h1a2 2 0 0 1 2 2v1" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M15 13v4" />\r\n  <path d="M13 15h4" />\r\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />\r\n  <path d="M22 22l-3 -3" />\r\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1" />\r\n  <path d="M3 11v-1" />\r\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1" />\r\n  <path d="M10 3h1" />\r\n  <path d="M15 3h1a2 2 0 0 1 2 2v1" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconZoomOut =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\n  <path d="M7 10l6 0" />\n  <path d="M21 21l-6 -6" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\r\n  <path d="M7 10l6 0" />\r\n  <path d="M21 21l-6 -6" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconZoomOutArea =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M13 15h4" />\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />\n  <path d="M22 22l-3 -3" />\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1" />\n  <path d="M3 11v-1" />\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1" />\n  <path d="M10 3h1" />\n  <path d="M15 3h1a2 2 0 0 1 2 2v1" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M13 15h4" />\r\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />\r\n  <path d="M22 22l-3 -3" />\r\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1" />\r\n  <path d="M3 11v-1" />\r\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1" />\r\n  <path d="M10 3h1" />\r\n  <path d="M15 3h1a2 2 0 0 1 2 2v1" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconZoomPan =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-pan" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />\n  <path d="M17 17l-2.5 -2.5" />\n  <path d="M10 5l2 -2l2 2" />\n  <path d="M19 10l2 2l-2 2" />\n  <path d="M5 10l-2 2l2 2" />\n  <path d="M10 19l2 2l2 -2" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-pan" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />\r\n  <path d="M17 17l-2.5 -2.5" />\r\n  <path d="M10 5l2 -2l2 2" />\r\n  <path d="M19 10l2 2l-2 2" />\r\n  <path d="M5 10l-2 2l2 2" />\r\n  <path d="M10 19l2 2l2 -2" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconPlayerPlay =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M7 4v16l13 -8z" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M7 4v16l13 -8z" />\r\n</svg>\r\n\r\n\r\n';
 
   const IconPlayerPause =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-pause" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />\n  <path d="M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-pause" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />\r\n  <path d="M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />\r\n</svg>\r\n\r\n\r\n';
+
+  const IconWorldCog =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\r\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\r\n     class="icon icon-tabler icons-tabler-outline icon-tabler-world-cog">\r\n    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n    <path d="M21 12a9 9 0 1 0 -8.979 9"/>\r\n    <path d="M3.6 9h16.8"/>\r\n    <path d="M3.6 15h8.9"/>\r\n    <path d="M11.5 3a17 17 0 0 0 0 18"/>\r\n    <path d="M12.5 3a16.992 16.992 0 0 1 2.522 10.376"/>\r\n    <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\r\n    <path d="M19.001 15.5v1.5"/>\r\n    <path d="M19.001 21v1.5"/>\r\n    <path d="M22.032 17.25l-1.299 .75"/>\r\n    <path d="M17.27 20l-1.3 .75"/>\r\n    <path d="M15.97 17.25l1.3 .75"/>\r\n    <path d="M20.733 20l1.3 .75"/>\r\n</svg>';
+
+  const IconLocationCog =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\r\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\r\n     class="icon icon-tabler icons-tabler-outline icon-tabler-location-cog">\r\n    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n    <path d="M12 18l-2 -4l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5l-3.14 8.697"/>\r\n    <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\r\n    <path d="M19.001 15.5v1.5"/>\r\n    <path d="M19.001 21v1.5"/>\r\n    <path d="M22.032 17.25l-1.299 .75"/>\r\n    <path d="M17.27 20l-1.3 .75"/>\r\n    <path d="M15.97 17.25l1.3 .75"/>\r\n    <path d="M20.733 20l1.3 .75"/>\r\n</svg>';
+
+  const IconSettingsOff =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\r\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\r\n     class="icon icon-tabler icons-tabler-outline icon-tabler-settings-off">\r\n    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n    <path d="M9.451 5.437c.418 -.218 .75 -.609 .874 -1.12c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35c-.486 .118 -.894 .44 -1.123 .878m-.188 3.803c-.517 .523 -1.349 .734 -2.125 .262a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.472 -.774 -.262 -1.604 .259 -2.121"/>\r\n    <path d="M9.889 9.869a3 3 0 1 0 4.226 4.26m.592 -3.424a3.012 3.012 0 0 0 -1.419 -1.415"/>\r\n    <path d="M3 3l18 18"/>\r\n</svg>';
 
   const styles =
-    ':root {\n    --theme-body-background: #25262b;\n    --theme-body-text-color: #c1c2c5;\n    --theme-text-color: #c1c2c5;\n    --theme-primary-color: #1a1b1e;\n    --theme-primary-text-color: #c1c2c5;\n    --theme-background-color: #25262b;\n    --theme-hightlight-color: #2c2e33;\n    --theme-border-color: #373a40;\n}\n\n#MangaOnlineViewer {\n    text-decoration: none;\n    color: var(--theme-body-text-color);\n    background-color: var(--theme-body-background);\n}\n\n#MangaOnlineViewer #Chapter {\n    display: grid;\n    grid-template-columns: repeat(1, 1fr);\n    min-width: 225px;\n}\n\n#MangaOnlineViewer #Chapter.Vertical:has(+ #Navigation:not(.disabled)),\n#MangaOnlineViewer #Chapter.WebComic:has(+ #Navigation:not(.disabled)) {\n    padding-bottom: 31px;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .PageContent {\n    margin-bottom: 8px;\n    margin-top: 8px;\n}\n\n#MangaOnlineViewer .closeButton {\n    width: fit-content;\n    height: fit-content;\n    position: absolute;\n    right: 10px;\n    top: 10px;\n}\n\n#MangaOnlineViewer .overlay {\n    position: fixed;\n    display: none;\n    width: 100%;\n    height: 100%;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: rgba(0, 0, 0, 0.5);\n    z-index: 950;\n    cursor: pointer;\n}\n\n#MangaOnlineViewer .overlay.visible {\n    display: block;\n}\n\n#MangaOnlineViewer select {\n    height: 20px;\n    padding: 0;\n    margin-bottom: 5px;\n}\n\n#MangaOnlineViewer .ControlButton,\n#MangaOnlineViewer .simpleButton {\n    cursor: pointer;\n    border-radius: 5px;\n    border-width: 1px;\n    border-style: solid;\n    padding: 2px;\n    min-height: 32px;\n    color: var(--theme-primary-text-color);\n    background-color: var(--theme-primary-color);\n    border-color: var(--theme-border-color);\n}\n\n#MangaOnlineViewer .ControlButton:active,\n#MangaOnlineViewer .ControlButton:hover {\n    opacity: 0.8;\n}\n\n#MangaOnlineViewer .simpleButton {\n    font-size: initial;\n    min-width: 32px;\n}\n\n#MangaOnlineViewer .panel .simpleButton {\n    position: absolute;\n    top: 10px;\n    left: 10px;\n}\n\n#MangaOnlineViewer .panel {\n    padding: 5px;\n    position: inherit;\n    border-radius: 5px;\n    background-color: var(--theme-background-color);\n}\n\n#MangaOnlineViewer :not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {\n    max-width: 100%;\n    object-fit: contain;\n}\n\n#MangaOnlineViewer .ControlButton.hidden,\n#MangaOnlineViewer.light #ColorScheme > .icon-tabler-sun,\n#MangaOnlineViewer.dark #ColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .light + #CommentsColorScheme > .icon-tabler-sun,\n#MangaOnlineViewer .dark + #CommentsColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,\n#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,\n#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,\n#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,\n#MangaOnlineViewer.bookmarked .Bookmark > .icon-tabler-bookmark,\n#MangaOnlineViewer:not(.bookmarked) .Bookmark > .icon-tabler-bookmark-off,\n#MangaOnlineViewer #AutoScroll.running > .icon-tabler-player-play,\n#MangaOnlineViewer #AutoScroll:not(.running) > .icon-tabler-player-pause {\n    display: none;\n}\n\n#MangaOnlineViewer.hideControls .PageFunctions {\n    visibility: hidden;\n}\n';
+    ':root {\r\n    --theme-body-background: #25262b;\r\n    --theme-body-text-color: #c1c2c5;\r\n    --theme-text-color: #c1c2c5;\r\n    --theme-primary-color: #1a1b1e;\r\n    --theme-primary-text-color: #c1c2c5;\r\n    --theme-background-color: #25262b;\r\n    --theme-hightlight-color: #2c2e33;\r\n    --theme-border-color: #373a40;\r\n}\r\n\r\n#MangaOnlineViewer {\r\n    text-decoration: none;\r\n    color: var(--theme-body-text-color);\r\n    background-color: var(--theme-body-background);\r\n}\r\n\r\n#MangaOnlineViewer #Chapter {\r\n    display: grid;\r\n    grid-template-columns: repeat(1, 1fr);\r\n    min-width: 225px;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical:has(+ #Navigation:not(.disabled)),\r\n#MangaOnlineViewer #Chapter.WebComic:has(+ #Navigation:not(.disabled)) {\r\n    padding-bottom: 31px;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical .PageContent {\r\n    margin-bottom: 8px;\r\n    margin-top: 8px;\r\n}\r\n\r\n#MangaOnlineViewer .closeButton {\r\n    width: fit-content;\r\n    height: fit-content;\r\n    position: absolute;\r\n    right: 10px;\r\n    top: 10px;\r\n}\r\n\r\n#MangaOnlineViewer .overlay {\r\n    position: fixed;\r\n    display: none;\r\n    width: 100%;\r\n    height: 100%;\r\n    top: 0;\r\n    left: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    background-color: rgba(0, 0, 0, 0.5);\r\n    z-index: 950;\r\n    cursor: pointer;\r\n}\r\n\r\n#MangaOnlineViewer .overlay.visible {\r\n    display: block;\r\n}\r\n\r\n#MangaOnlineViewer select {\r\n    height: 20px;\r\n    padding: 0;\r\n    margin-bottom: 5px;\r\n}\r\n\r\n#MangaOnlineViewer .ControlButton,\r\n#MangaOnlineViewer .simpleButton {\r\n    cursor: pointer;\r\n    border-radius: 5px;\r\n    border-width: 1px;\r\n    border-style: solid;\r\n    padding: 2px;\r\n    min-height: 32px;\r\n    color: var(--theme-primary-text-color);\r\n    background-color: var(--theme-primary-color);\r\n    border-color: var(--theme-border-color);\r\n}\r\n\r\n#MangaOnlineViewer .ControlButton:active,\r\n#MangaOnlineViewer .ControlButton:hover {\r\n    opacity: 0.8;\r\n}\r\n\r\n#MangaOnlineViewer .simpleButton {\r\n    font-size: initial;\r\n    min-width: 32px;\r\n}\r\n\r\n#MangaOnlineViewer .panel .simpleButton {\r\n    position: absolute;\r\n    top: 10px;\r\n    left: 10px;\r\n}\r\n\r\n#MangaOnlineViewer .panel {\r\n    padding: 5px;\r\n    position: inherit;\r\n    border-radius: 5px;\r\n    background-color: var(--theme-background-color);\r\n}\r\n\r\n#MangaOnlineViewer :not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {\r\n    max-width: 100%;\r\n    object-fit: contain;\r\n}\r\n\r\n#MangaOnlineViewer .ControlButton.hidden,\r\n#MangaOnlineViewer.light #ColorScheme > .icon-tabler-sun,\r\n#MangaOnlineViewer.dark #ColorScheme > .icon-tabler-moon,\r\n#MangaOnlineViewer .light + #CommentsColorScheme > .icon-tabler-sun,\r\n#MangaOnlineViewer .dark + #CommentsColorScheme > .icon-tabler-moon,\r\n#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,\r\n#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,\r\n#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,\r\n#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,\r\n#MangaOnlineViewer.bookmarked .Bookmark > .icon-tabler-bookmark,\r\n#MangaOnlineViewer:not(.bookmarked) .Bookmark > .icon-tabler-bookmark-off,\r\n#MangaOnlineViewer #AutoScroll.running > .icon-tabler-player-play,\r\n#MangaOnlineViewer #AutoScroll:not(.running) > .icon-tabler-player-pause {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer.hideControls .PageFunctions {\r\n    visibility: hidden;\r\n}\r\n';
 
   const icons =
-    '.icon-tabler {\n    height: 1rem;\n    width: 1rem;\n    vertical-align: sub;\n}\n\n.icon-tabler-file-download > :nth-child(n + 4) {\n    /* 4, 5 */\n    color: gold;\n}\n\n.icon-tabler-arrow-autofit-width > :nth-child(n + 3) {\n    /* 3,4,5,6 */\n    color: yellow;\n}\n\n.icon-tabler-arrow-autofit-height > :nth-child(n + 3) {\n    /* 3,4,5,6 */\n    color: yellow;\n}\n\n.icon-tabler-zoom-in-area > :nth-child(2),\n.icon-tabler-zoom-in-area > :nth-child(3) {\n    color: lime;\n}\n\n.icon-tabler-zoom-out-area > :nth-child(2) {\n    color: red;\n}\n\n.icon-tabler-zoom-pan > :nth-child(n + 4) {\n    color: #9966ff;\n}\n\n.icon-tabler-arrow-autofit-down > :nth-child(n + 3) {\n    color: #28ffbf;\n}\n\n.icon-tabler-arrow-autofit-left > :nth-child(n + 3) {\n    color: #28ffbf;\n}\n\n.icon-tabler-arrow-autofit-right > :nth-child(n + 3) {\n    color: #28ffbf;\n}\n\n.icon-tabler-spacing-vertical > :nth-child(4) {\n    color: fuchsia;\n}\n\n.icon-tabler-list-numbers > :nth-child(n + 5) {\n    color: #e48900;\n}\n\n.icon-tabler-bookmarks > :nth-child(n + 2) {\n    color: orange;\n}\n\n.icon-tabler-bookmark > * {\n    color: orange;\n}\n\n.icon-tabler-bookmark-off > * {\n    color: orange;\n}\n\n.icon-tabler-bookmark-off > :nth-child(3) {\n    color: red;\n}\n\n.icon-tabler-eye-off > :nth-child(4) {\n    color: red;\n}\n\n.icon-tabler-zoom-cancel > :nth-child(3),\n.icon-tabler-zoom-cancel > :nth-child(4) {\n    color: #9966ff;\n}\n\n.icon-tabler-zoom-in > :nth-child(3),\n.icon-tabler-zoom-in > :nth-child(4) {\n    color: lime;\n}\n\n.icon-tabler-zoom-out > :nth-child(3) {\n    color: red;\n}\n\n.icon-tabler-refresh > :nth-child(n + 2) {\n    color: cyan;\n}\n\n.icon-tabler-photo > * {\n    color: silver;\n}\n\n.icon-tabler-photo-off > * {\n    color: silver;\n}\n\n.icon-tabler-photo-off > :nth-child(6) {\n    color: orange;\n}\n\n.icon-tabler-message > :nth-child(2),\n.icon-tabler-message > :nth-child(3) {\n    color: greenyellow;\n}\n';
+    '.icon-tabler {\r\n    height: 1rem;\r\n    width: 1rem;\r\n    vertical-align: sub;\r\n}\r\n\r\n.icon-tabler-file-download > :nth-child(n + 4) {\r\n    /* 4, 5 */\r\n    color: gold;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-width > :nth-child(n + 3) {\r\n    /* 3,4,5,6 */\r\n    color: yellow;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-height > :nth-child(n + 3) {\r\n    /* 3,4,5,6 */\r\n    color: yellow;\r\n}\r\n\r\n.icon-tabler-zoom-in-area > :nth-child(2),\r\n.icon-tabler-zoom-in-area > :nth-child(3) {\r\n    color: lime;\r\n}\r\n\r\n.icon-tabler-zoom-out-area > :nth-child(2) {\r\n    color: red;\r\n}\r\n\r\n.icon-tabler-zoom-pan > :nth-child(n + 4) {\r\n    color: #9966ff;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-down > :nth-child(n + 3) {\r\n    color: #28ffbf;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-left > :nth-child(n + 3) {\r\n    color: #28ffbf;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-right > :nth-child(n + 3) {\r\n    color: #28ffbf;\r\n}\r\n\r\n.icon-tabler-spacing-vertical > :nth-child(4) {\r\n    color: fuchsia;\r\n}\r\n\r\n.icon-tabler-list-numbers > :nth-child(n + 5) {\r\n    color: #e48900;\r\n}\r\n\r\n.icon-tabler-bookmarks > :nth-child(n + 2) {\r\n    color: orange;\r\n}\r\n\r\n.icon-tabler-bookmark > * {\r\n    color: orange;\r\n}\r\n\r\n.icon-tabler-bookmark-off > * {\r\n    color: orange;\r\n}\r\n\r\n.icon-tabler-bookmark-off > :nth-child(3) {\r\n    color: red;\r\n}\r\n\r\n.icon-tabler-eye-off > :nth-child(4) {\r\n    color: red;\r\n}\r\n\r\n.icon-tabler-zoom-cancel > :nth-child(3),\r\n.icon-tabler-zoom-cancel > :nth-child(4) {\r\n    color: #9966ff;\r\n}\r\n\r\n.icon-tabler-zoom-in > :nth-child(3),\r\n.icon-tabler-zoom-in > :nth-child(4) {\r\n    color: lime;\r\n}\r\n\r\n.icon-tabler-zoom-out > :nth-child(3) {\r\n    color: red;\r\n}\r\n\r\n.icon-tabler-refresh > :nth-child(n + 2) {\r\n    color: cyan;\r\n}\r\n\r\n.icon-tabler-photo > * {\r\n    color: silver;\r\n}\r\n\r\n.icon-tabler-photo-off > * {\r\n    color: silver;\r\n}\r\n\r\n.icon-tabler-photo-off > :nth-child(6) {\r\n    color: orange;\r\n}\r\n\r\n.icon-tabler-message > :nth-child(2),\r\n.icon-tabler-message > :nth-child(3) {\r\n    color: greenyellow;\r\n}\r\n';
 
   const normalize$1 =
-    "/*  Simple Normalizer */\nhtml {\n    font-size: 100%;\n}\n\nbody {\n    margin: 0;\n    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\n    font-size: 14px;\n    line-height: 20px;\n    color: var(--theme-body-text-color);\n    background-color: var(--theme-body-background);\n    padding: 0;\n}\n\na,\na:link,\na:visited,\na:active,\na:focus {\n    color: var(--theme-body-text-color);\n    text-decoration: none;\n}\n\nimg {\n    height: auto;\n    vertical-align: middle;\n    border: 0 none;\n}\n";
+    "/*  Simple Normalizer */\r\nhtml {\r\n    font-size: 100%;\r\n}\r\n\r\nbody {\r\n    margin: 0;\r\n    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\r\n    font-size: 14px;\r\n    line-height: 20px;\r\n    color: var(--theme-body-text-color);\r\n    background-color: var(--theme-body-background);\r\n    padding: 0;\r\n}\r\n\r\na,\r\na:link,\r\na:visited,\r\na:active,\r\na:focus {\r\n    color: var(--theme-body-text-color);\r\n    text-decoration: none;\r\n}\r\n\r\nimg {\r\n    height: auto;\r\n    vertical-align: middle;\r\n    border: 0 none;\r\n}\r\n";
 
   const media =
-    '#MangaOnlineViewer.mobile #Header,\n#MangaOnlineViewer.tablet #Header {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n}\n\n#MangaOnlineViewer.mobile .ViewerTitle,\n#MangaOnlineViewer.tablet .ViewerTitle {\n    order: 1;\n    min-height: auto;\n    padding: 0;\n    margin: 0;\n    flex-grow: 1;\n    flex-shrink: 1;\n    flex-basis: 100%;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions,\n#MangaOnlineViewer.tablet #GlobalFunctions {\n    width: auto;\n    order: 2;\n    padding: 5px;\n}\n\n#MangaOnlineViewer.mobile #ChapterNavigation,\n#MangaOnlineViewer.tablet #ChapterNavigation {\n    order: 3;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.tablet #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.tablets, .phones),\n#MangaOnlineViewer.tablet #GlobalFunctions .ControlButton:not(.tablets, .phones) {\n    display: none;\n}\n\n#MangaOnlineViewer.mobile #Header {\n    flex-direction: row;\n    flex-wrap: wrap;\n    justify-content: center;\n    align-items: center;\n}\n\n#MangaOnlineViewer.mobile #Header.click + #Chapter:not(.webcomic, .vertical) {\n    position: sticky;\n}\n\n#MangaOnlineViewer.mobile #MangaTitle {\n    word-wrap: anywhere;\n}\n\n#MangaOnlineViewer.mobile .ViewerTitle {\n    order: 1;\n    margin-top: 0;\n    height: auto;\n    padding: 0;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions {\n    order: 2;\n    padding: 0;\n    width: auto;\n    flex-basis: 35px;\n}\n\n#MangaOnlineViewer.mobile #ChapterNavigation {\n    order: 3;\n    width: min-content;\n    min-width: 205px;\n}\n\n#MangaOnlineViewer.mobile .ChapterControl {\n    flex-direction: row;\n    flex-wrap: wrap;\n}\n\n#MangaOnlineViewer.mobile .ChapterControl .NavigationControlButton {\n    flex-grow: 1;\n}\n\n#MangaOnlineViewer.mobile .PageFunctions {\n    padding: 0;\n}\n\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton.Bookmark {\n    opacity: 1;\n}\n\n#MangaOnlineViewer.mobile #Navigation,\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.phones),\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton:not(.Bookmark),\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoomMode,\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoom,\n#MangaOnlineViewer.mobile #SettingsPanel .fitIfOversize,\n#MangaOnlineViewer.mobile #SettingsPanel .showThumbnails,\n#MangaOnlineViewer.mobile #SettingsPanel .lazyLoadImages,\n#MangaOnlineViewer.mobile #SettingsPanel .downloadZip,\n#MangaOnlineViewer.mobile #SettingsPanel .minZoom,\n#MangaOnlineViewer.mobile #SettingsPanel .zoomStep,\n#MangaOnlineViewer.mobile #SettingsPanel .headerType,\n#MangaOnlineViewer.mobile #SettingsPanel .autoScroll,\n#MangaOnlineViewer.mobile #KeybindingsPanel,\n#MangaOnlineViewer.mobile .ChapterControl .download,\n#MangaOnlineViewer.mobile #Counters {\n    display: none;\n}\n';
+    '#MangaOnlineViewer.mobile #Header,\r\n#MangaOnlineViewer.tablet #Header {\r\n    display: flex;\r\n    flex-direction: row;\r\n    flex-wrap: wrap;\r\n}\r\n\r\n#MangaOnlineViewer.mobile .ViewerTitle,\r\n#MangaOnlineViewer.tablet .ViewerTitle {\r\n    order: 1;\r\n    min-height: auto;\r\n    padding: 0;\r\n    margin: 0;\r\n    flex-grow: 1;\r\n    flex-shrink: 1;\r\n    flex-basis: 100%;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #GlobalFunctions,\r\n#MangaOnlineViewer.tablet #GlobalFunctions {\r\n    width: auto;\r\n    order: 2;\r\n    padding: 5px;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #ChapterNavigation,\r\n#MangaOnlineViewer.tablet #ChapterNavigation {\r\n    order: 3;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\r\n#MangaOnlineViewer.tablet #GlobalFunctions #ZoomSlider,\r\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.tablets, .phones),\r\n#MangaOnlineViewer.tablet #GlobalFunctions .ControlButton:not(.tablets, .phones) {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #Header {\r\n    flex-direction: row;\r\n    flex-wrap: wrap;\r\n    justify-content: center;\r\n    align-items: center;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #Header.click + #Chapter:not(.webcomic, .vertical) {\r\n    position: sticky;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #MangaTitle {\r\n    word-wrap: anywhere;\r\n}\r\n\r\n#MangaOnlineViewer.mobile .ViewerTitle {\r\n    order: 1;\r\n    margin-top: 0;\r\n    height: auto;\r\n    padding: 0;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #GlobalFunctions {\r\n    order: 2;\r\n    padding: 0;\r\n    width: auto;\r\n    flex-basis: 35px;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #ChapterNavigation {\r\n    order: 3;\r\n    width: min-content;\r\n    min-width: 205px;\r\n}\r\n\r\n#MangaOnlineViewer.mobile .ChapterControl {\r\n    flex-direction: row;\r\n    flex-wrap: wrap;\r\n}\r\n\r\n#MangaOnlineViewer.mobile .ChapterControl .NavigationControlButton {\r\n    flex-grow: 1;\r\n}\r\n\r\n#MangaOnlineViewer.mobile .PageFunctions {\r\n    padding: 0;\r\n}\r\n\r\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton.Bookmark {\r\n    opacity: 1;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #Navigation,\r\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\r\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.phones),\r\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton:not(.Bookmark),\r\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoomMode,\r\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoom,\r\n#MangaOnlineViewer.mobile #SettingsPanel .fitIfOversize,\r\n#MangaOnlineViewer.mobile #SettingsPanel .showThumbnails,\r\n#MangaOnlineViewer.mobile #SettingsPanel .lazyLoadImages,\r\n#MangaOnlineViewer.mobile #SettingsPanel .downloadZip,\r\n#MangaOnlineViewer.mobile #SettingsPanel .minZoom,\r\n#MangaOnlineViewer.mobile #SettingsPanel .zoomStep,\r\n#MangaOnlineViewer.mobile #SettingsPanel .headerType,\r\n#MangaOnlineViewer.mobile #SettingsPanel .autoScroll,\r\n#MangaOnlineViewer.mobile #KeybindingsPanel,\r\n#MangaOnlineViewer.mobile .ChapterControl .download,\r\n#MangaOnlineViewer.mobile #Counters {\r\n    display: none;\r\n}\r\n';
 
   const animation =
-    '@-webkit-keyframes spin {\n    to {\n        transform: rotate(360deg);\n    }\n}\n\n@keyframes spin {\n    to {\n        transform: rotate(360deg);\n    }\n}\n\n@-webkit-keyframes spin-reverse {\n    0% {\n        transform: rotate(360deg);\n    }\n\n    to {\n        transform: rotate(0);\n    }\n}\n\n@keyframes spin-reverse {\n    0% {\n        transform: rotate(360deg);\n    }\n\n    to {\n        transform: rotate(0);\n    }\n}\n\n.icon-tabler-loader-2,\n.animate-spin {\n    -webkit-animation: spin 1s linear infinite;\n    animation: spin 1s linear infinite;\n}\n\n.animate-spin-reverse {\n    -webkit-animation: spin-reverse 1s linear infinite;\n    animation: spin-reverse 1s linear infinite;\n}\n';
+    '@-webkit-keyframes spin {\r\n    to {\r\n        transform: rotate(360deg);\r\n    }\r\n}\r\n\r\n@keyframes spin {\r\n    to {\r\n        transform: rotate(360deg);\r\n    }\r\n}\r\n\r\n@-webkit-keyframes spin-reverse {\r\n    0% {\r\n        transform: rotate(360deg);\r\n    }\r\n\r\n    to {\r\n        transform: rotate(0);\r\n    }\r\n}\r\n\r\n@keyframes spin-reverse {\r\n    0% {\r\n        transform: rotate(360deg);\r\n    }\r\n\r\n    to {\r\n        transform: rotate(0);\r\n    }\r\n}\r\n\r\n.icon-tabler-loader-2,\r\n.animate-spin {\r\n    -webkit-animation: spin 1s linear infinite;\r\n    animation: spin 1s linear infinite;\r\n}\r\n\r\n.animate-spin-reverse {\r\n    -webkit-animation: spin-reverse 1s linear infinite;\r\n    animation: spin-reverse 1s linear infinite;\r\n}\r\n';
 
   const header =
-    "#MangaOnlineViewer #gotoPage {\n    min-width: 35px;\n}\n\n#MangaOnlineViewer #Header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    flex-flow: row nowrap;\n    transition: transform 0.3s ease-in;\n    position: sticky;\n    top: 0;\n    left: 0;\n    right: 0;\n    background-color: inherit;\n    z-index: 900;\n}\n\n#MangaOnlineViewer #Header.click {\n    padding-left: 40px;\n}\n\n@keyframes headroom {\n    from {\n        transform: translateY(-100%);\n        position: sticky;\n        top: 0;\n    }\n    to {\n        transform: translateY(0%);\n        position: sticky;\n        top: 0;\n    }\n}\n\n#MangaOnlineViewer #Header:not(.visible, .headroom-top, .fixed, .simple) {\n    animation: headroom 0.3s ease-in reverse;\n    transform: translateY(-100%);\n    position: sticky;\n    top: 0;\n}\n\n#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL) {\n    position: fixed;\n    padding-left: 40px;\n    top: -100%;\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-hide {\n    animation: none;\n    transform: translateY(-100%);\n    position: sticky;\n    top: 0;\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-show,\n#MangaOnlineViewer #Header.headroom-end,\n#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL).visible,\n#MangaOnlineViewer #Header.visible {\n    animation: headroom 0.3s ease-in;\n    transform: translateY(0%);\n    position: sticky;\n    top: 0;\n}\n\n#MangaOnlineViewer #Header.headroom-top {\n    animation: none;\n}\n\n#MangaOnlineViewer #Header.fixed {\n    position: sticky;\n    animation: none;\n    top: 0;\n    transform: translateY(0%);\n}\n\n#MangaOnlineViewer #Header.simple {\n    position: static;\n    animation: none;\n    top: 0;\n    transform: translateY(0%);\n}\n\n#MangaOnlineViewer #menu {\n    position: fixed;\n    z-index: 1;\n    color: var(--theme-body-text-color);\n    height: 40px;\n    width: 40px;\n}\n\n#MangaOnlineViewer #menu .icon-tabler {\n    position: relative;\n    top: 4px;\n    left: 4px;\n    height: 32px;\n    width: 32px;\n    stroke-width: 1.25;\n}\n\n#MangaOnlineViewer #menu:not(.click, .hover),\n#MangaOnlineViewer #menu.hide {\n    display: none;\n}\n\n#MangaOnlineViewer #menu.click {\n    z-index: 901;\n}\n\n#MangaOnlineViewer #MangaTitle {\n    padding: 2px;\n    margin: 0;\n    font-size: 1.2rem;\n    font-weight: 400;\n}\n\n#MangaOnlineViewer #GlobalFunctions {\n    display: flex;\n    gap: 3px;\n    padding: 3px 3px 3px 0;\n    flex-wrap: wrap;\n    width: 300px;\n    z-index: 100;\n}\n\n#MangaOnlineViewer #GlobalFunctions span,\n#MangaOnlineViewer .ChapterControl span {\n    display: flex;\n    flex-wrap: nowrap;\n    justify-content: space-evenly;\n}\n\n#MangaOnlineViewer .ChapterControl span {\n    flex-grow: 1;\n}\n\n#MangaOnlineViewer .ChapterControl span > * {\n    flex-basis: 50%;\n}\n\n#MangaOnlineViewer #ScrollControl .icon-tabler,\n#MangaOnlineViewer #GlobalFunctions .icon-tabler {\n    width: 25px;\n    height: 25px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomSlider {\n    display: flex;\n    align-items: center;\n}\n\n#MangaOnlineViewer #GlobalFunctions #Zoom {\n    margin: 2px 5px;\n    width: 160px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomVal {\n    width: 40px;\n    display: inline-block;\n    color: var(--theme-primary-text-color);\n    line-height: 20px;\n    text-align: center;\n    border-radius: 3px;\n    background: var(--theme-primary-color);\n    padding: 2px 5px;\n}\n\n#MangaOnlineViewer #ChapterNavigation {\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: end;\n    padding: 5px;\n    max-width: 350px;\n}\n\n#MangaOnlineViewer #Counters {\n    padding-right: 5px;\n}\n\n#MangaOnlineViewer #ChapterControl {\n    display: flex;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton {\n    display: inline-flex;\n    margin: 2px;\n    justify-content: center;\n    align-items: center;\n    padding: 3px;\n    gap: 0.5em;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton .icon-tabler {\n    flex-shrink: 0;\n    align-self: center;\n    width: 1rem;\n    height: 1rem;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href='#'],\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href=''],\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href='undefined'] {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer #ChapterControl #download.loading {\n    cursor: not-allowed;\n    pointer-events: none;\n    opacity: 0.6;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton.disabled {\n    pointer-events: none;\n    filter: grayscale(0.9);\n}\n\n#MangaOnlineViewer .ViewerTitle {\n    text-align: center;\n    min-height: 60px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    padding: 5px;\n    flex-basis: 60%;\n}\n";
+    "#MangaOnlineViewer #gotoPage {\r\n    min-width: 35px;\r\n}\r\n\r\n#MangaOnlineViewer #Header {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    flex-flow: row nowrap;\r\n    transition: transform 0.3s ease-in;\r\n    position: sticky;\r\n    top: 0;\r\n    left: 0;\r\n    right: 0;\r\n    background-color: inherit;\r\n    z-index: 900;\r\n}\r\n\r\n#MangaOnlineViewer #Header.click {\r\n    padding-left: 40px;\r\n}\r\n\r\n@keyframes headroom {\r\n    from {\r\n        transform: translateY(-100%);\r\n        position: sticky;\r\n        top: 0;\r\n    }\r\n    to {\r\n        transform: translateY(0%);\r\n        position: sticky;\r\n        top: 0;\r\n    }\r\n}\r\n\r\n#MangaOnlineViewer #Header:not(.visible, .headroom-top, .fixed, .simple) {\r\n    animation: headroom 0.3s ease-in reverse;\r\n    transform: translateY(-100%);\r\n    position: sticky;\r\n    top: 0;\r\n}\r\n\r\n#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL) {\r\n    position: fixed;\r\n    padding-left: 40px;\r\n    top: -100%;\r\n}\r\n\r\n#MangaOnlineViewer #Header.scroll.headroom-hide {\r\n    animation: none;\r\n    transform: translateY(-100%);\r\n    position: sticky;\r\n    top: 0;\r\n}\r\n\r\n#MangaOnlineViewer #Header.scroll.headroom-show,\r\n#MangaOnlineViewer #Header.headroom-end,\r\n#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL).visible,\r\n#MangaOnlineViewer #Header.visible {\r\n    animation: headroom 0.3s ease-in;\r\n    transform: translateY(0%);\r\n    position: sticky;\r\n    top: 0;\r\n}\r\n\r\n#MangaOnlineViewer #Header.headroom-top {\r\n    animation: none;\r\n}\r\n\r\n#MangaOnlineViewer #Header.fixed {\r\n    position: sticky;\r\n    animation: none;\r\n    top: 0;\r\n    transform: translateY(0%);\r\n}\r\n\r\n#MangaOnlineViewer #Header.simple {\r\n    position: static;\r\n    animation: none;\r\n    top: 0;\r\n    transform: translateY(0%);\r\n}\r\n\r\n#MangaOnlineViewer #menu {\r\n    position: fixed;\r\n    z-index: 1;\r\n    color: var(--theme-body-text-color);\r\n    height: 40px;\r\n    width: 40px;\r\n}\r\n\r\n#MangaOnlineViewer #menu .icon-tabler {\r\n    position: relative;\r\n    top: 4px;\r\n    left: 4px;\r\n    height: 32px;\r\n    width: 32px;\r\n    stroke-width: 1.25;\r\n}\r\n\r\n#MangaOnlineViewer #menu:not(.click, .hover),\r\n#MangaOnlineViewer #menu.hide {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer #menu.click {\r\n    z-index: 901;\r\n}\r\n\r\n#MangaOnlineViewer #MangaTitle {\r\n    padding: 2px;\r\n    margin: 0;\r\n    font-size: 1.2rem;\r\n    font-weight: 400;\r\n}\r\n\r\n#MangaOnlineViewer #GlobalFunctions {\r\n    display: flex;\r\n    gap: 3px;\r\n    padding: 3px 3px 3px 0;\r\n    flex-wrap: wrap;\r\n    width: 300px;\r\n    z-index: 100;\r\n}\r\n\r\n#MangaOnlineViewer #GlobalFunctions span,\r\n#MangaOnlineViewer .ChapterControl span {\r\n    display: flex;\r\n    flex-wrap: nowrap;\r\n    justify-content: space-evenly;\r\n}\r\n\r\n#MangaOnlineViewer .ChapterControl span {\r\n    flex-grow: 1;\r\n}\r\n\r\n#MangaOnlineViewer .ChapterControl span > * {\r\n    flex-basis: 50%;\r\n}\r\n\r\n#MangaOnlineViewer #ScrollControl .icon-tabler,\r\n#MangaOnlineViewer #GlobalFunctions .icon-tabler {\r\n    width: 25px;\r\n    height: 25px;\r\n}\r\n\r\n#MangaOnlineViewer #GlobalFunctions #ZoomSlider {\r\n    display: flex;\r\n    align-items: center;\r\n}\r\n\r\n#MangaOnlineViewer #GlobalFunctions #Zoom {\r\n    margin: 2px 5px;\r\n    width: 160px;\r\n}\r\n\r\n#MangaOnlineViewer #GlobalFunctions #ZoomVal {\r\n    width: 40px;\r\n    display: inline-block;\r\n    color: var(--theme-primary-text-color);\r\n    line-height: 20px;\r\n    text-align: center;\r\n    border-radius: 3px;\r\n    background: var(--theme-primary-color);\r\n    padding: 2px 5px;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterNavigation {\r\n    display: flex;\r\n    flex-flow: column nowrap;\r\n    justify-content: center;\r\n    align-items: end;\r\n    padding: 5px;\r\n    max-width: 350px;\r\n}\r\n\r\n#MangaOnlineViewer #Counters {\r\n    padding-right: 5px;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterControl {\r\n    display: flex;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterControl .NavigationControlButton {\r\n    display: inline-flex;\r\n    margin: 2px;\r\n    justify-content: center;\r\n    align-items: center;\r\n    padding: 3px;\r\n    gap: 0.5em;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterControl .NavigationControlButton .icon-tabler {\r\n    flex-shrink: 0;\r\n    align-self: center;\r\n    width: 1rem;\r\n    height: 1rem;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href='#'],\r\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href=''],\r\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href='undefined'] {\r\n    visibility: hidden;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterControl #download.loading {\r\n    cursor: not-allowed;\r\n    pointer-events: none;\r\n    opacity: 0.6;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterControl .NavigationControlButton.disabled {\r\n    pointer-events: none;\r\n    filter: grayscale(0.9);\r\n}\r\n\r\n#MangaOnlineViewer .ViewerTitle {\r\n    text-align: center;\r\n    min-height: 60px;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    flex-direction: column;\r\n    padding: 5px;\r\n    flex-basis: 60%;\r\n}\r\n";
 
   const keybindings$1 =
-    '#MangaOnlineViewer #KeybindingsPanel {\n    padding: 10px;\n    position: fixed;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    transition: transform 0.3s ease-in-out;\n    transform: translateX(100%);\n    line-height: 1.5em;\n    z-index: 1000;\n    overflow-y: auto;\n    width: 360px;\n    max-width: 100vw;\n}\n\n#MangaOnlineViewer #KeybindingsPanel.visible {\n    transform: translateX(0);\n    display: block;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #KeybindingsList {\n    display: grid;\n    grid-template-columns: 1fr 2fr;\n    gap: 5px;\n}\n\n#MangaOnlineViewer #KeybindingsPanel .ControlButton {\n    margin-left: 3px;\n    justify-content: center;\n    align-items: center;\n    padding: 5px 10px;\n    gap: 0.5em;\n}\n\n#MangaOnlineViewer #KeybindingsPanel label {\n    display: ruby;\n}\n#MangaOnlineViewer #KeybindingsPanel input {\n    display: inline-block;\n    width: 100%;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #HotKeysRules {\n    grid-column: span 2;\n}\n';
+    '#MangaOnlineViewer #KeybindingsPanel {\r\n    padding: 10px;\r\n    position: fixed;\r\n    top: 0;\r\n    right: 0;\r\n    bottom: 0;\r\n    transition: transform 0.3s ease-in-out;\r\n    transform: translateX(100%);\r\n    line-height: 1.5em;\r\n    z-index: 1000;\r\n    overflow-y: auto;\r\n    width: 360px;\r\n    max-width: 100vw;\r\n}\r\n\r\n#MangaOnlineViewer #KeybindingsPanel.visible {\r\n    transform: translateX(0);\r\n    display: block;\r\n}\r\n\r\n#MangaOnlineViewer #KeybindingsPanel #KeybindingsList {\r\n    display: grid;\r\n    grid-template-columns: 1fr 2fr;\r\n    gap: 5px;\r\n}\r\n\r\n#MangaOnlineViewer #KeybindingsPanel .ControlButton {\r\n    margin-left: 3px;\r\n    justify-content: center;\r\n    align-items: center;\r\n    padding: 5px 10px;\r\n    gap: 0.5em;\r\n}\r\n\r\n#MangaOnlineViewer #KeybindingsPanel label {\r\n    display: ruby;\r\n}\r\n#MangaOnlineViewer #KeybindingsPanel input {\r\n    display: inline-block;\r\n    width: 100%;\r\n}\r\n\r\n#MangaOnlineViewer #KeybindingsPanel #HotKeysRules {\r\n    grid-column: span 2;\r\n}\r\n';
 
   const page =
-    "#MangaOnlineViewer .MangaPage {\n    width: 100%;\n    display: inline-block;\n    text-align: center;\n    line-height: 0;\n    min-height: 22px;\n    min-width: 100%;\n}\n\n#MangaOnlineViewer .PageContent {\n    text-align: center;\n    display: inline-block;\n    overflow-x: auto;\n    max-width: 100%;\n    transition: all 0.3s ease-in-out;\n    height: 100%;\n    overflow-y: hidden;\n}\n\n#MangaOnlineViewer .MangaPage.hide .PageContent {\n    height: 0;\n}\n\n#MangaOnlineViewer .PageContent .PageImg[src=''],\n#MangaOnlineViewer .PageContent .PageImg:not([src]) {\n    width: 40vw;\n    height: 80vh;\n    display: inline-block;\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 20%;\n    background-color: var(--theme-hightlight-color);\n}\n\n#MangaOnlineViewer .PageContent .PageImg.imgBroken {\n    width: 40vw;\n    height: 80vh;\n    display: inline-block;\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 20%;\n    background-color: var(--theme-hightlight-color);\n}\n\n#MangaOnlineViewer .PageFunctions {\n    font-family: monospace;\n    display: flex;\n    justify-content: flex-end;\n    align-items: center;\n    margin: 0;\n    padding: 0;\n    gap: 3px;\n    position: absolute;\n    right: 0;\n}\n\n#MangaOnlineViewer .PageFunctions > .PageIndex {\n    background-color: var(--theme-primary-color);\n    color: var(--theme-primary-text-color);\n    min-width: 20px;\n    text-align: center;\n    display: inline-block;\n    padding: 3px 5px;\n    line-height: 1rem;\n    border-radius: 5px;\n}\n\n#MangaOnlineViewer .PageFunctions .ControlButton {\n    padding: 3px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    margin: 0;\n    border-width: 0;\n    min-height: auto;\n    opacity: 0.5;\n}\n\n#MangaOnlineViewer .PageFunctions:hover .ControlButton {\n    opacity: 1;\n}\n\n#MangaOnlineViewer .PageFunctions .ControlButton:hover {\n    opacity: 0.9;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .separator {\n    display: flex;\n    align-items: center;\n    text-align: center;\n    font-style: italic;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .separator::before,\n#MangaOnlineViewer #Chapter.Vertical .separator::after {\n    content: '';\n    flex: 1;\n    border-bottom: 1px solid var(--theme-text-color);\n}\n\n#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::before {\n    margin-right: 0.25em;\n}\n\n#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::after {\n    margin-left: 0.25em;\n}\n\n#MangaOnlineViewer #Chapter:not(.separator) .separator,\n#MangaOnlineViewer #Chapter:not(.Vertical) .separator {\n    display: none;\n}\n";
+    "#MangaOnlineViewer .MangaPage {\r\n    width: 100%;\r\n    display: inline-block;\r\n    text-align: center;\r\n    line-height: 0;\r\n    min-height: 22px;\r\n    min-width: 100%;\r\n}\r\n\r\n#MangaOnlineViewer .PageContent {\r\n    text-align: center;\r\n    display: inline-block;\r\n    overflow-x: auto;\r\n    max-width: 100%;\r\n    transition: all 0.3s ease-in-out;\r\n    height: 100%;\r\n    overflow-y: hidden;\r\n}\r\n\r\n#MangaOnlineViewer .MangaPage.hide .PageContent {\r\n    height: 0;\r\n}\r\n\r\n#MangaOnlineViewer .PageContent .PageImg[src=''],\r\n#MangaOnlineViewer .PageContent .PageImg:not([src]) {\r\n    width: 40vw;\r\n    height: 80vh;\r\n    display: inline-block;\r\n    background-position: center;\r\n    background-repeat: no-repeat;\r\n    background-size: 20%;\r\n    background-color: var(--theme-hightlight-color);\r\n}\r\n\r\n#MangaOnlineViewer .PageContent .PageImg.imgBroken {\r\n    width: 40vw;\r\n    height: 80vh;\r\n    display: inline-block;\r\n    background-position: center;\r\n    background-repeat: no-repeat;\r\n    background-size: 20%;\r\n    background-color: var(--theme-hightlight-color);\r\n}\r\n\r\n#MangaOnlineViewer .PageFunctions {\r\n    font-family: monospace;\r\n    display: flex;\r\n    justify-content: flex-end;\r\n    align-items: center;\r\n    margin: 0;\r\n    padding: 0;\r\n    gap: 3px;\r\n    position: absolute;\r\n    right: 0;\r\n}\r\n\r\n#MangaOnlineViewer .PageFunctions > .PageIndex {\r\n    background-color: var(--theme-primary-color);\r\n    color: var(--theme-primary-text-color);\r\n    min-width: 20px;\r\n    text-align: center;\r\n    display: inline-block;\r\n    padding: 3px 5px;\r\n    line-height: 1rem;\r\n    border-radius: 5px;\r\n}\r\n\r\n#MangaOnlineViewer .PageFunctions .ControlButton {\r\n    padding: 3px;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    margin: 0;\r\n    border-width: 0;\r\n    min-height: auto;\r\n    opacity: 0.5;\r\n}\r\n\r\n#MangaOnlineViewer .PageFunctions:hover .ControlButton {\r\n    opacity: 1;\r\n}\r\n\r\n#MangaOnlineViewer .PageFunctions .ControlButton:hover {\r\n    opacity: 0.9;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical .separator {\r\n    display: flex;\r\n    align-items: center;\r\n    text-align: center;\r\n    font-style: italic;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical .separator::before,\r\n#MangaOnlineViewer #Chapter.Vertical .separator::after {\r\n    content: '';\r\n    flex: 1;\r\n    border-bottom: 1px solid var(--theme-text-color);\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::before {\r\n    margin-right: 0.25em;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::after {\r\n    margin-left: 0.25em;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter:not(.separator) .separator,\r\n#MangaOnlineViewer #Chapter:not(.Vertical) .separator {\r\n    display: none;\r\n}\r\n";
 
   const fluid =
-    '#MangaOnlineViewer #Chapter.FluidLTR,\n#MangaOnlineViewer #Chapter.FluidRTL {\n    display: flex;\n    overflow-x: auto;\n    min-width: auto;\n\n    .ZoomWidth {\n        display: none;\n    }\n\n    .PageImg {\n        min-width: unset;\n    }\n\n    .MangaPage {\n        width: initial;\n        min-width: fit-content;\n        position: relative;\n        max-height: 100%;\n    }\n\n    .MangaPage.DoublePage {\n        grid-column: span 2;\n    }\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR {\n    flex-direction: row;\n\n    .MangaPage .PageFunctions {\n        right: auto;\n        left: 0;\n        direction: rtl;\n    }\n}\n\n#MangaOnlineViewer #Chapter.FluidRTL {\n    flex-direction: row-reverse;\n}\n';
+    '#MangaOnlineViewer #Chapter.FluidLTR,\r\n#MangaOnlineViewer #Chapter.FluidRTL {\r\n    display: flex;\r\n    overflow-x: auto;\r\n    min-width: auto;\r\n\r\n    .ZoomWidth {\r\n        display: none;\r\n    }\r\n\r\n    .PageImg {\r\n        min-width: unset;\r\n    }\r\n\r\n    .MangaPage {\r\n        width: initial;\r\n        min-width: fit-content;\r\n        position: relative;\r\n        max-height: 100%;\r\n    }\r\n\r\n    .MangaPage.DoublePage {\r\n        grid-column: span 2;\r\n    }\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.FluidLTR {\r\n    flex-direction: row;\r\n\r\n    .MangaPage .PageFunctions {\r\n        right: auto;\r\n        left: 0;\r\n        direction: rtl;\r\n    }\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.FluidRTL {\r\n    flex-direction: row-reverse;\r\n}\r\n';
 
   const settings$1 =
-    "#MangaOnlineViewer #SettingsPanel {\n    color: var(--theme-text-color);\n    padding: 10px;\n    position: fixed;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    z-index: 1000;\n    transition: transform 0.3s ease-in,\n    background-color 0.3s linear;\n    transform: translateX(-100%);\n    display: flex;\n    flex-flow: column;\n    gap: 5px;\n    overflow-y: auto;\n    max-width: 100vw;\n    width: 305px;\n}\n\n#MangaOnlineViewer #SettingsPanel.visible {\n    transform: translateX(0);\n}\n\n#MangaOnlineViewer #SettingsPanel .ControlLabel {\n    display: flex;\n    flex-flow: row wrap;\n    justify-content: space-between;\n    align-items: center;\n}\n\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n}\n\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem:not(.show) {\n    display: none;\n}\n\n#MangaOnlineViewer #SettingsPanel input[type='range'] {\n    width: 100%;\n}\n\n#MangaOnlineViewer #SettingsPanel .RangeValue {\n    display: inline-block;\n    color: var(--theme-primary-text-color);\n    line-height: 20px;\n    text-align: center;\n    border-radius: 3px;\n    background: var(--theme-primary-color);\n    padding: 2px 5px;\n    margin-left: 8px;\n}\n\n#MangaOnlineViewer #SettingsPanel datalist {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    align-items: center;\n    writing-mode: vertical-lr;\n    width: 100%;\n}\n\n#MangaOnlineViewer #SettingsPanel datalist option {\n    padding: 0;\n}\n\n#MangaOnlineViewer #ThemeSection {\n    border: 1px solid var(--theme-body-text-color);\n    border-radius: 10px;\n    padding: 10px;\n}\n\n#MangaOnlineViewer .ThemeRadio {\n    border: 1px solid var(--theme-text-color);\n    color: var(--theme-primary-text-color);\n    background-color: var(--theme-primary-color);\n    height: 20px;\n    width: 20px;\n    border-radius: 50%;\n    padding: 1px;\n    margin: 2px 5px;\n    position: relative;\n}\n\n#MangaOnlineViewer .ThemeRadio svg {\n    position: absolute;\n    top: 15%;\n    right: 15%;\n}\n\n#MangaOnlineViewer .ThemeRadio.selected .icon-tabler-check {\n    display: inline;\n}\n\n#MangaOnlineViewer .ThemeRadio:not(.selected) .icon-tabler-check {\n    display: none;\n}\n\n#MangaOnlineViewer #ThemeSelector {\n    width: 110px;\n}\n\n#MangaOnlineViewer #Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {\n    display: none;\n}\n";
+    "#MangaOnlineViewer #SettingsPanel {\r\n    color: var(--theme-text-color);\r\n    padding: 10px;\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n    bottom: 0;\r\n    z-index: 1000;\r\n    transition: transform 0.3s ease-in,\r\n    background-color 0.3s linear;\r\n    transform: translateX(-100%);\r\n    display: flex;\r\n    flex-flow: column;\r\n    gap: 5px;\r\n    overflow-y: auto;\r\n    max-width: 100vw;\r\n    width: 305px;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel.visible {\r\n    transform: translateX(0);\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .ControlLabel {\r\n    display: flex;\r\n    flex-flow: row wrap;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem {\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: space-between;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem:not(.show) {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel input[type='range'] {\r\n    width: 100%;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .RangeValue {\r\n    display: inline-block;\r\n    color: var(--theme-primary-text-color);\r\n    line-height: 20px;\r\n    text-align: center;\r\n    border-radius: 3px;\r\n    background: var(--theme-primary-color);\r\n    padding: 2px 5px;\r\n    margin-left: 8px;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel datalist {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    writing-mode: vertical-lr;\r\n    width: 100%;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel datalist option {\r\n    padding: 0;\r\n}\r\n\r\n#MangaOnlineViewer #ThemeSection {\r\n    border: 1px solid var(--theme-body-text-color);\r\n    border-radius: 10px;\r\n    padding: 10px;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio {\r\n    border: 1px solid var(--theme-text-color);\r\n    color: var(--theme-primary-text-color);\r\n    background-color: var(--theme-primary-color);\r\n    height: 20px;\r\n    width: 20px;\r\n    border-radius: 50%;\r\n    padding: 1px;\r\n    margin: 2px 5px;\r\n    position: relative;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio svg {\r\n    position: absolute;\r\n    top: 15%;\r\n    right: 15%;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio.selected .icon-tabler-check {\r\n    display: inline;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio:not(.selected) .icon-tabler-check {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer #ThemeSelector {\r\n    width: 110px;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs {\r\n    position: relative;\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    border-radius: 0.5rem;\r\n    background-color: var(--theme-border-color);\r\n    color:var(--theme-text-color);\r\n    box-sizing: border-box;\r\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);\r\n    padding: 0.25rem;\r\n    width: 300px;\r\n    font-size: 14px;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio {\r\n    flex: 1 1 auto;\r\n    text-align: center;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio input {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio .name .icon{\r\n    margin: 0 0.5rem;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio .name {\r\n    display: flex;\r\n    cursor: pointer;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border-radius: 0.5rem;\r\n    border: none;\r\n    padding: .5rem 0;\r\n    color: var(--theme-text-color);\r\n    background-color: var(--theme-border-color);\r\n    transition: all .15s ease-in-out;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio input:checked + .name {\r\n    background-color: var(--theme-primary-color);\r\n    color:var(--theme-primary-text-color);\r\n    font-weight: 600;\r\n}\r\n\r\n#MangaOnlineViewer #ColorScheme{\r\n    padding: 5px;\r\n    min-height: 28px;\r\n    min-width: 28px;\r\n}\r\n\r\n#MangaOnlineViewer .toggler {\r\n    width: 36px;\r\n    /*margin: 40px auto;*/\r\n}\r\n\r\n#MangaOnlineViewer .toggler input {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer .toggler label {\r\n    display: block;\r\n    position: relative;\r\n    width: 36px;\r\n    height: 18px;\r\n    border: 1px solid #d6d6d6;\r\n    border-radius: 36px;\r\n    background: #e4e8e8;\r\n    cursor: pointer;\r\n}\r\n\r\n#MangaOnlineViewer .toggler label::after {\r\n    display: block;\r\n    border-radius: 100%;\r\n    background-color: #d7062a;\r\n    content: '';\r\n    animation-name: toggler-size;\r\n    animation-duration: 0.15s;\r\n    animation-timing-function: ease-out;\r\n    animation-direction: normal;\r\n    animation-iteration-count: 1;\r\n    animation-play-state: running;\r\n}\r\n\r\n#MangaOnlineViewer .toggler label::after, .toggler label .toggler-on, .toggler label .toggler-off {\r\n    position: absolute;\r\n    /*top: 50%;*/\r\n    top: 9px;\r\n    left: 25%;\r\n    width: 16px;\r\n    height: 16px;\r\n    transform: translateY(-50%) translateX(-50%);\r\n    transition: left 0.15s ease-in-out, background-color 0.2s ease-out, width 0.15s ease-in-out, height 0.15s ease-in-out, opacity 0.15s ease-in-out;\r\n}\r\n\r\n#MangaOnlineViewer .toggler input:checked + label::after, .toggler input:checked + label .toggler-on, .toggler input:checked + label .toggler-off {\r\n    left: 75%;\r\n}\r\n\r\n#MangaOnlineViewer .toggler input:checked + label::after {\r\n    background-color: #50ac5d;\r\n    animation-name: toggler-size2;\r\n}\r\n\r\n#MangaOnlineViewer .toggler .toggler-on, .toggler .toggler-off {\r\n    opacity: 1;\r\n    z-index: 2;\r\n}\r\n\r\n#MangaOnlineViewer .toggler input:checked + label .toggler-off, .toggler input:not(:checked) + label .toggler-on {\r\n    width: 0;\r\n    height: 0;\r\n    opacity: 0;\r\n}\r\n\r\n#MangaOnlineViewer .toggler .path {\r\n    fill: none;\r\n    stroke: #fefefe;\r\n    stroke-width: 7px;\r\n    stroke-linecap: round;\r\n    stroke-miterlimit: 10;\r\n}\r\n\r\n#MangaOnlineViewer @keyframes toggler-size {\r\n    0%, 100% {\r\n        width: 26px;\r\n        height: 26px;\r\n    }\r\n\r\n    50% {\r\n        width: 20px;\r\n        height: 20px;\r\n    }\r\n}\r\n\r\n#MangaOnlineViewer @keyframes toggler-size2 {\r\n    0%, 100% {\r\n        width: 26px;\r\n        height: 26px;\r\n    }\r\n\r\n    50% {\r\n        width: 20px;\r\n        height: 20px;\r\n    }\r\n}";
 
   const thumbnails =
-    "#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=''],\n#MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {\n    width: 100px;\n    height: 150px;\n    display: inline-block;\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 20%;\n}\n\n#MangaOnlineViewer #NavigationCounters {\n    margin: 5px;\n    width: 100%;\n    line-height: 1rem;\n}\n\n#MangaOnlineViewer #Navigation {\n    color: var(--theme-text-color);\n    background-color: var(--theme-hightlight-color);\n    bottom: -180px;\n    height: 185px;\n    overflow-x: hidden;\n    overflow-y: hidden;\n    padding-bottom: 20px;\n    position: fixed;\n    white-space: nowrap;\n    width: 100%;\n    text-align: center;\n    transition:\n        transform 0.3s ease-in,\n        background-color 0.3s linear;\n    border-bottom-left-radius: 0;\n    border-bottom-right-radius: 0;\n    line-height: 0;\n}\n\n#MangaOnlineViewer #Navigation #Thumbnails {\n    overflow-x: auto;\n    overflow-y: hidden;\n    margin-right: 10px;\n}\n\n#MangaOnlineViewer #Navigation:hover {\n    transform: translateY(-180px);\n}\n\n#MangaOnlineViewer #Navigation.disabled {\n    display: none;\n}\n\n#MangaOnlineViewer #Navigation.visible {\n    transform: translateY(-180px);\n}\n\n#MangaOnlineViewer #Navigation .Thumbnail {\n    display: inline-block;\n    height: 150px;\n    margin: 0 5px;\n    border: 1px solid var(--theme-primary-color);\n}\n\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailIndex {\n    color: var(--theme-text-color);\n    background-color: var(--theme-hightlight-color);\n    display: block;\n    opacity: 0.8;\n    position: relative;\n    bottom: 25%;\n    width: 100%;\n    line-height: 1rem;\n}\n\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailImg {\n    cursor: pointer;\n    display: inline-block;\n    max-height: 150px;\n    min-height: 150px;\n    min-width: 80px;\n    max-width: 160px;\n}\n";
+    "#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=''],\r\n#MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {\r\n    width: 100px;\r\n    height: 150px;\r\n    display: inline-block;\r\n    background-position: center;\r\n    background-repeat: no-repeat;\r\n    background-size: 20%;\r\n}\r\n\r\n#MangaOnlineViewer #NavigationCounters {\r\n    margin: 5px;\r\n    width: 100%;\r\n    line-height: 1rem;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation {\r\n    color: var(--theme-text-color);\r\n    background-color: var(--theme-hightlight-color);\r\n    bottom: -180px;\r\n    height: 185px;\r\n    overflow-x: hidden;\r\n    overflow-y: hidden;\r\n    padding-bottom: 20px;\r\n    position: fixed;\r\n    white-space: nowrap;\r\n    width: 100%;\r\n    text-align: center;\r\n    transition:\r\n        transform 0.3s ease-in,\r\n        background-color 0.3s linear;\r\n    border-bottom-left-radius: 0;\r\n    border-bottom-right-radius: 0;\r\n    line-height: 0;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation #Thumbnails {\r\n    overflow-x: auto;\r\n    overflow-y: hidden;\r\n    margin-right: 10px;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation:hover {\r\n    transform: translateY(-180px);\r\n}\r\n\r\n#MangaOnlineViewer #Navigation.disabled {\r\n    display: none;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation.visible {\r\n    transform: translateY(-180px);\r\n}\r\n\r\n#MangaOnlineViewer #Navigation .Thumbnail {\r\n    display: inline-block;\r\n    height: 150px;\r\n    margin: 0 5px;\r\n    border: 1px solid var(--theme-primary-color);\r\n}\r\n\r\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailIndex {\r\n    color: var(--theme-text-color);\r\n    background-color: var(--theme-hightlight-color);\r\n    display: block;\r\n    opacity: 0.8;\r\n    position: relative;\r\n    bottom: 25%;\r\n    width: 100%;\r\n    line-height: 1rem;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailImg {\r\n    cursor: pointer;\r\n    display: inline-block;\r\n    max-height: 150px;\r\n    min-height: 150px;\r\n    min-width: 80px;\r\n    max-width: 160px;\r\n}\r\n";
 
   const bookmarks$1 =
-    '#MangaOnlineViewer #BookmarksPanel {\n    position: fixed;\n    top: 10%;\n    width: 50%;\n    left: 25%;\n    right: 25%;\n    text-align: center;\n    max-height: 70%;\n    transition: transform 0.3s ease-in-out;\n    transform: scaleY(0);\n    z-index: 1000;\n}\n\n#MangaOnlineViewer #BookmarksPanel.visible {\n    transform: scaleY(1);\n    display: block;\n}\n\n#MangaOnlineViewer #BookmarksList {\n    padding: 0 15px;\n    overflow: auto;\n    max-height: 60vh;\n}\n\n#MangaOnlineViewer #BookmarksList .BookmarkItem {\n    display: flex;\n    flex-flow: row;\n    justify-content: space-between;\n    align-items: center;\n    padding: 2px;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkColumnLarge {\n    flex-basis: 90%;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkColumnSmall {\n    width: 90px;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkFunctions {\n    width: 75px;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkURl {\n    text-overflow: ellipsis;\n    overflow: hidden;\n    white-space: nowrap;\n    flex-basis: 55%;\n}\n';
+    '#MangaOnlineViewer #BookmarksPanel {\r\n    position: fixed;\r\n    top: 10%;\r\n    width: 50%;\r\n    left: 25%;\r\n    right: 25%;\r\n    text-align: center;\r\n    max-height: 70%;\r\n    transition: transform 0.3s ease-in-out;\r\n    transform: scaleY(0);\r\n    z-index: 1000;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksPanel.visible {\r\n    transform: scaleY(1);\r\n    display: block;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksList {\r\n    padding: 0 15px;\r\n    overflow: auto;\r\n    max-height: 60vh;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksList .BookmarkItem {\r\n    display: flex;\r\n    flex-flow: row;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    padding: 2px;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksList .bookmarkColumnLarge {\r\n    flex-basis: 90%;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksList .bookmarkColumnSmall {\r\n    width: 90px;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksList .bookmarkFunctions {\r\n    width: 75px;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksList .bookmarkURl {\r\n    text-overflow: ellipsis;\r\n    overflow: hidden;\r\n    white-space: nowrap;\r\n    flex-basis: 55%;\r\n}\r\n';
 
   const comments =
-    '#MangaOnlineViewer #CommentsPanel {\n    position: static;\n    width: 90%;\n    height: 0;\n    top: 5%;\n    left: 5%;\n    text-align: center;\n    transition: transform 0.3s ease-in-out;\n    transform: scaleY(0);\n    z-index: 1000;\n    overflow-y: initial;\n    background-color: var(--theme-body-background);\n    opacity: 0;\n}\n\n#MangaOnlineViewer #CommentsPanel.visible {\n    position: fixed;\n    height: 90%;\n    transform: scaleY(1);\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    opacity: 1;\n}\n\n#MangaOnlineViewer #CommentsArea {\n    overflow-y: auto;\n    overscroll-behavior: contain;\n    height: 100%;\n    width: 100%;\n    background-color: var(--theme-body-background);\n}\n';
+    '#MangaOnlineViewer #CommentsPanel {\r\n    position: static;\r\n    width: 90%;\r\n    height: 0;\r\n    top: 5%;\r\n    left: 5%;\r\n    text-align: center;\r\n    transition: transform 0.3s ease-in-out;\r\n    transform: scaleY(0);\r\n    z-index: 1000;\r\n    overflow-y: initial;\r\n    background-color: var(--theme-body-background);\r\n    opacity: 0;\r\n}\r\n\r\n#MangaOnlineViewer #CommentsPanel.visible {\r\n    position: fixed;\r\n    height: 90%;\r\n    transform: scaleY(1);\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    flex-direction: column;\r\n    opacity: 1;\r\n}\r\n\r\n#MangaOnlineViewer #CommentsArea {\r\n    overflow-y: auto;\r\n    overscroll-behavior: contain;\r\n    height: 100%;\r\n    width: 100%;\r\n    background-color: var(--theme-body-background);\r\n}\r\n';
 
   const cssStyles = css`
     :root,
@@ -2502,8 +2567,8 @@
   function getNormalThemeCSS(theme) {
     return generateThemeCSS(
       theme.name,
-      theme[getUserSettings().themeShade],
-      getUserSettings().themeShade < 500 ? theme['900'] : theme['50'],
+      theme[getSettingsValue('themeShade')],
+      getSettingsValue('themeShade') < 500 ? theme['900'] : theme['50'],
     );
   }
   function getCustomThemeCSS(hex) {
@@ -2520,11 +2585,11 @@
     themes().forEach((theme) => {
       replaceStyleSheet(theme.name, getNormalThemeCSS(theme));
     });
-    replaceStyleSheet('custom', getCustomThemeCSS(getUserSettings().customTheme));
+    replaceStyleSheet('custom', getCustomThemeCSS(getSettingsValue('customTheme')));
   }
   const themesCSS =
     themes().map(addTheme).join('') +
-    wrapStyle('custom', getCustomThemeCSS(getUserSettings().customTheme));
+    wrapStyle('custom', getCustomThemeCSS(getSettingsValue('customTheme')));
 
   const sweetalert =
     '.swal2-popup.swal2-toast{box-sizing:border-box;grid-column:1/4!important;grid-row:1/4!important;grid-template-columns:1fr 99fr 1fr;padding:1em;overflow-y:hidden;background:#fff;box-shadow:0 0 1px rgba(0,0,0,.075),0 1px 2px rgba(0,0,0,.075),1px 2px 4px rgba(0,0,0,.075),1px 3px 8px rgba(0,0,0,.075),2px 4px 16px rgba(0,0,0,.075);pointer-events:all}.swal2-popup.swal2-toast>*{grid-column:2}.swal2-popup.swal2-toast .swal2-title{margin:.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-popup.swal2-toast .swal2-loading{justify-content:center}.swal2-popup.swal2-toast .swal2-input{height:2em;margin:.5em;font-size:1em}.swal2-popup.swal2-toast .swal2-validation-message{font-size:1em}.swal2-popup.swal2-toast .swal2-footer{margin:.5em 0 0;padding:.5em 0 0;font-size:.8em}.swal2-popup.swal2-toast .swal2-close{grid-column:3/3;grid-row:1/99;align-self:center;width:.8em;height:.8em;margin:0;font-size:2em}.swal2-popup.swal2-toast .swal2-html-container{margin:.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-popup.swal2-toast .swal2-html-container:empty{padding:0}.swal2-popup.swal2-toast .swal2-loader{grid-column:1;grid-row:1/99;align-self:center;width:2em;height:2em;margin:.25em}.swal2-popup.swal2-toast .swal2-icon{grid-column:1;grid-row:1/99;align-self:center;width:2em;min-width:2em;height:2em;margin:0 .5em 0 0}.swal2-popup.swal2-toast .swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:1.8em;font-weight:700}.swal2-popup.swal2-toast .swal2-icon.swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line]{top:.875em;width:1.375em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:.3125em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:.3125em}.swal2-popup.swal2-toast .swal2-actions{justify-content:flex-start;height:auto;margin:0;margin-top:.5em;padding:0 .5em}.swal2-popup.swal2-toast .swal2-styled{margin:.25em .5em;padding:.4em .6em;font-size:1em}.swal2-popup.swal2-toast .swal2-success{border-color:#a5dc86}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line]{position:absolute;width:1.6em;height:3em;transform:rotate(45deg);border-radius:50%}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left]{top:-.8em;left:-.5em;transform:rotate(-45deg);transform-origin:2em 2em;border-radius:4em 0 0 4em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right]{top:-.25em;left:.9375em;transform-origin:0 1.5em;border-radius:0 4em 4em 0}.swal2-popup.swal2-toast .swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-popup.swal2-toast .swal2-success .swal2-success-fix{top:0;left:.4375em;width:.4375em;height:2.6875em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line]{height:.3125em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip]{top:1.125em;left:.1875em;width:.75em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=long]{top:.9375em;right:.1875em;width:1.375em}.swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip{-webkit-animation:swal2-toast-animate-success-line-tip .75s;animation:swal2-toast-animate-success-line-tip .75s}.swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long{-webkit-animation:swal2-toast-animate-success-line-long .75s;animation:swal2-toast-animate-success-line-long .75s}.swal2-popup.swal2-toast.swal2-show{-webkit-animation:swal2-toast-show .5s;animation:swal2-toast-show .5s}.swal2-popup.swal2-toast.swal2-hide{-webkit-animation:swal2-toast-hide .1s forwards;animation:swal2-toast-hide .1s forwards}.swal2-container{display:grid;position:fixed;z-index:1060;top:0;right:0;bottom:0;left:0;box-sizing:border-box;grid-template-areas:"top-start     top            top-end" "center-start  center         center-end" "bottom-start  bottom-center  bottom-end";grid-template-rows:minmax(-webkit-min-content,auto) minmax(-webkit-min-content,auto) minmax(-webkit-min-content,auto);grid-template-rows:minmax(min-content,auto) minmax(min-content,auto) minmax(min-content,auto);height:100%;padding:.625em;overflow-x:hidden;transition:background-color .1s;-webkit-overflow-scrolling:touch}.swal2-container.swal2-backdrop-show,.swal2-container.swal2-noanimation{background:rgba(0,0,0,.4)}.swal2-container.swal2-backdrop-hide{background:0 0!important}.swal2-container.swal2-bottom-start,.swal2-container.swal2-center-start,.swal2-container.swal2-top-start{grid-template-columns:minmax(0,1fr) auto auto}.swal2-container.swal2-bottom,.swal2-container.swal2-center,.swal2-container.swal2-top{grid-template-columns:auto minmax(0,1fr) auto}.swal2-container.swal2-bottom-end,.swal2-container.swal2-center-end,.swal2-container.swal2-top-end{grid-template-columns:auto auto minmax(0,1fr)}.swal2-container.swal2-top-start>.swal2-popup{align-self:start}.swal2-container.swal2-top>.swal2-popup{grid-column:2;align-self:start;justify-self:center}.swal2-container.swal2-top-end>.swal2-popup,.swal2-container.swal2-top-right>.swal2-popup{grid-column:3;align-self:start;justify-self:end}.swal2-container.swal2-center-left>.swal2-popup,.swal2-container.swal2-center-start>.swal2-popup{grid-row:2;align-self:center}.swal2-container.swal2-center>.swal2-popup{grid-column:2;grid-row:2;align-self:center;justify-self:center}.swal2-container.swal2-center-end>.swal2-popup,.swal2-container.swal2-center-right>.swal2-popup{grid-column:3;grid-row:2;align-self:center;justify-self:end}.swal2-container.swal2-bottom-left>.swal2-popup,.swal2-container.swal2-bottom-start>.swal2-popup{grid-column:1;grid-row:3;align-self:end}.swal2-container.swal2-bottom>.swal2-popup{grid-column:2;grid-row:3;justify-self:center;align-self:end}.swal2-container.swal2-bottom-end>.swal2-popup,.swal2-container.swal2-bottom-right>.swal2-popup{grid-column:3;grid-row:3;align-self:end;justify-self:end}.swal2-container.swal2-grow-fullscreen>.swal2-popup,.swal2-container.swal2-grow-row>.swal2-popup{grid-column:1/4;width:100%}.swal2-container.swal2-grow-column>.swal2-popup,.swal2-container.swal2-grow-fullscreen>.swal2-popup{grid-row:1/4;align-self:stretch}.swal2-container.swal2-no-transition{transition:none!important}.swal2-popup{display:none;position:relative;box-sizing:border-box;grid-template-columns:minmax(0,100%);width:32em;max-width:100%;padding:0 0 1.25em;border:none;border-radius:5px;background:#fff;color:#545454;font-family:inherit;font-size:1rem}.swal2-popup:focus{outline:0}.swal2-popup.swal2-loading{overflow-y:hidden}.swal2-title{position:relative;max-width:100%;margin:0;padding:.8em 1em 0;color:inherit;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;word-wrap:break-word}.swal2-actions{display:flex;z-index:1;box-sizing:border-box;flex-wrap:wrap;align-items:center;justify-content:center;width:auto;margin:1.25em auto 0;padding:0}.swal2-actions:not(.swal2-loading) .swal2-styled[disabled]{opacity:.4}.swal2-actions:not(.swal2-loading) .swal2-styled:hover{background-image:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1))}.swal2-actions:not(.swal2-loading) .swal2-styled:active{background-image:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2))}.swal2-loader{display:none;align-items:center;justify-content:center;width:2.2em;height:2.2em;margin:0 1.875em;-webkit-animation:swal2-rotate-loading 1.5s linear 0s infinite normal;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;border-width:.25em;border-style:solid;border-radius:100%;border-color:#2778c4 transparent #2778c4 transparent}.swal2-styled{margin:.3125em;padding:.625em 1.1em;transition:box-shadow .1s;box-shadow:0 0 0 3px transparent;font-weight:500}.swal2-styled:not([disabled]){cursor:pointer}.swal2-styled.swal2-confirm{border:0;border-radius:.25em;background:initial;background-color:#7066e0;color:#fff;font-size:1em}.swal2-styled.swal2-confirm:focus{box-shadow:0 0 0 3px rgba(112,102,224,.5)}.swal2-styled.swal2-deny{border:0;border-radius:.25em;background:initial;background-color:#dc3741;color:#fff;font-size:1em}.swal2-styled.swal2-deny:focus{box-shadow:0 0 0 3px rgba(220,55,65,.5)}.swal2-styled.swal2-cancel{border:0;border-radius:.25em;background:initial;background-color:#6e7881;color:#fff;font-size:1em}.swal2-styled.swal2-cancel:focus{box-shadow:0 0 0 3px rgba(110,120,129,.5)}.swal2-styled.swal2-default-outline:focus{box-shadow:0 0 0 3px rgba(100,150,200,.5)}.swal2-styled:focus{outline:0}.swal2-styled::-moz-focus-inner{border:0}.swal2-footer{justify-content:center;margin:1em 0 0;padding:1em 1em 0;border-top:1px solid #eee;color:inherit;font-size:1em}.swal2-timer-progress-bar-container{position:absolute;right:0;bottom:0;left:0;grid-column:auto!important;overflow:hidden;border-bottom-right-radius:5px;border-bottom-left-radius:5px}.swal2-timer-progress-bar{width:100%;height:.25em;background:rgba(0,0,0,.2)}.swal2-image{max-width:100%;margin:2em auto 1em}.swal2-close{z-index:2;align-items:center;justify-content:center;width:1.2em;height:1.2em;margin-top:0;margin-right:0;margin-bottom:-1.2em;padding:0;overflow:hidden;transition:color .1s,box-shadow .1s;border:none;border-radius:5px;background:0 0;color:#ccc;font-family:serif;font-family:monospace;font-size:2.5em;cursor:pointer;justify-self:end}.swal2-close:hover{transform:none;background:0 0;color:#f27474}.swal2-close:focus{outline:0;box-shadow:inset 0 0 0 3px rgba(100,150,200,.5)}.swal2-close::-moz-focus-inner{border:0}.swal2-html-container{z-index:1;justify-content:center;margin:1em 1.6em .3em;padding:0;overflow:auto;color:inherit;font-size:1.125em;font-weight:400;line-height:normal;text-align:center;word-wrap:break-word;word-break:break-word}.swal2-checkbox,.swal2-file,.swal2-input,.swal2-radio,.swal2-select,.swal2-textarea{margin:1em 2em 3px}.swal2-file,.swal2-input,.swal2-textarea{box-sizing:border-box;width:auto;transition:border-color .1s,box-shadow .1s;border:1px solid #d9d9d9;border-radius:.1875em;background:inherit;box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px transparent;color:inherit;font-size:1.125em}.swal2-file.swal2-inputerror,.swal2-input.swal2-inputerror,.swal2-textarea.swal2-inputerror{border-color:#f27474!important;box-shadow:0 0 2px #f27474!important}.swal2-file:focus,.swal2-input:focus,.swal2-textarea:focus{border:1px solid #b4dbed;outline:0;box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(100,150,200,.5)}.swal2-file::-moz-placeholder,.swal2-input::-moz-placeholder,.swal2-textarea::-moz-placeholder{color:#ccc}.swal2-file:-ms-input-placeholder,.swal2-input:-ms-input-placeholder,.swal2-textarea:-ms-input-placeholder{color:#ccc}.swal2-file::placeholder,.swal2-input::placeholder,.swal2-textarea::placeholder{color:#ccc}.swal2-range{margin:1em 2em 3px;background:#fff}.swal2-range input{width:80%}.swal2-range output{width:20%;color:inherit;font-weight:600;text-align:center}.swal2-range input,.swal2-range output{height:2.625em;padding:0;font-size:1.125em;line-height:2.625em}.swal2-input{height:2.625em;padding:0 .75em}.swal2-file{width:75%;margin-right:auto;margin-left:auto;background:inherit;font-size:1.125em}.swal2-textarea{height:6.75em;padding:.75em}.swal2-select{min-width:50%;max-width:100%;padding:.375em .625em;background:inherit;color:inherit;font-size:1.125em}.swal2-checkbox,.swal2-radio{align-items:center;justify-content:center;background:#fff;color:inherit}.swal2-checkbox label,.swal2-radio label{margin:0 .6em;font-size:1.125em}.swal2-checkbox input,.swal2-radio input{flex-shrink:0;margin:0 .4em}.swal2-input-label{display:flex;justify-content:center;margin:1em auto 0}.swal2-validation-message{align-items:center;justify-content:center;margin:1em 0 0;padding:.625em;overflow:hidden;background:#f0f0f0;color:#666;font-size:1em;font-weight:300}.swal2-validation-message::before{content:"!";display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 .625em;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center}.swal2-icon{position:relative;box-sizing:content-box;justify-content:center;width:5em;height:5em;margin:2.5em auto .6em;border:.25em solid transparent;border-radius:50%;border-color:#000;font-family:inherit;line-height:5em;cursor:default;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:3.75em}.swal2-icon.swal2-error{border-color:#f27474;color:#f27474}.swal2-icon.swal2-error .swal2-x-mark{position:relative;flex-grow:1}.swal2-icon.swal2-error [class^=swal2-x-mark-line]{display:block;position:absolute;top:2.3125em;width:2.9375em;height:.3125em;border-radius:.125em;background-color:#f27474}.swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:1.0625em;transform:rotate(45deg)}.swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:1em;transform:rotate(-45deg)}.swal2-icon.swal2-error.swal2-icon-show{-webkit-animation:swal2-animate-error-icon .5s;animation:swal2-animate-error-icon .5s}.swal2-icon.swal2-error.swal2-icon-show .swal2-x-mark{-webkit-animation:swal2-animate-error-x-mark .5s;animation:swal2-animate-error-x-mark .5s}.swal2-icon.swal2-warning{border-color:#facea8;color:#f8bb86}.swal2-icon.swal2-warning.swal2-icon-show{-webkit-animation:swal2-animate-error-icon .5s;animation:swal2-animate-error-icon .5s}.swal2-icon.swal2-warning.swal2-icon-show .swal2-icon-content{-webkit-animation:swal2-animate-i-mark .5s;animation:swal2-animate-i-mark .5s}.swal2-icon.swal2-info{border-color:#9de0f6;color:#3fc3ee}.swal2-icon.swal2-info.swal2-icon-show{-webkit-animation:swal2-animate-error-icon .5s;animation:swal2-animate-error-icon .5s}.swal2-icon.swal2-info.swal2-icon-show .swal2-icon-content{-webkit-animation:swal2-animate-i-mark .8s;animation:swal2-animate-i-mark .8s}.swal2-icon.swal2-question{border-color:#c9dae1;color:#87adbd}.swal2-icon.swal2-question.swal2-icon-show{-webkit-animation:swal2-animate-error-icon .5s;animation:swal2-animate-error-icon .5s}.swal2-icon.swal2-question.swal2-icon-show .swal2-icon-content{-webkit-animation:swal2-animate-question-mark .8s;animation:swal2-animate-question-mark .8s}.swal2-icon.swal2-success{border-color:#a5dc86;color:#a5dc86}.swal2-icon.swal2-success [class^=swal2-success-circular-line]{position:absolute;width:3.75em;height:7.5em;transform:rotate(45deg);border-radius:50%}.swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=left]{top:-.4375em;left:-2.0635em;transform:rotate(-45deg);transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}.swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=right]{top:-.6875em;left:1.875em;transform:rotate(-45deg);transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}.swal2-icon.swal2-success .swal2-success-ring{position:absolute;z-index:2;top:-.25em;left:-.25em;box-sizing:content-box;width:100%;height:100%;border:.25em solid rgba(165,220,134,.3);border-radius:50%}.swal2-icon.swal2-success .swal2-success-fix{position:absolute;z-index:1;top:.5em;left:1.625em;width:.4375em;height:5.625em;transform:rotate(-45deg)}.swal2-icon.swal2-success [class^=swal2-success-line]{display:block;position:absolute;z-index:2;height:.3125em;border-radius:.125em;background-color:#a5dc86}.swal2-icon.swal2-success [class^=swal2-success-line][class$=tip]{top:2.875em;left:.8125em;width:1.5625em;transform:rotate(45deg)}.swal2-icon.swal2-success [class^=swal2-success-line][class$=long]{top:2.375em;right:.5em;width:2.9375em;transform:rotate(-45deg)}.swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-tip{-webkit-animation:swal2-animate-success-line-tip .75s;animation:swal2-animate-success-line-tip .75s}.swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-long{-webkit-animation:swal2-animate-success-line-long .75s;animation:swal2-animate-success-line-long .75s}.swal2-icon.swal2-success.swal2-icon-show .swal2-success-circular-line-right{-webkit-animation:swal2-rotate-success-circular-line 4.25s ease-in;animation:swal2-rotate-success-circular-line 4.25s ease-in}.swal2-progress-steps{flex-wrap:wrap;align-items:center;max-width:100%;margin:1.25em auto;padding:0;background:inherit;font-weight:600}.swal2-progress-steps li{display:inline-block;position:relative}.swal2-progress-steps .swal2-progress-step{z-index:20;flex-shrink:0;width:2em;height:2em;border-radius:2em;background:#2778c4;color:#fff;line-height:2em;text-align:center}.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step{background:#2778c4}.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step{background:#add8e6;color:#fff}.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line{background:#add8e6}.swal2-progress-steps .swal2-progress-step-line{z-index:10;flex-shrink:0;width:2.5em;height:.4em;margin:0 -1px;background:#2778c4}[class^=swal2]{-webkit-tap-highlight-color:transparent}.swal2-show{-webkit-animation:swal2-show .3s;animation:swal2-show .3s}.swal2-hide{-webkit-animation:swal2-hide .15s forwards;animation:swal2-hide .15s forwards}.swal2-noanimation{transition:none}.swal2-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}.swal2-rtl .swal2-close{margin-right:initial;margin-left:0}.swal2-rtl .swal2-timer-progress-bar{right:0;left:auto}@-webkit-keyframes swal2-toast-show{0%{transform:translateY(-.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0)}}@keyframes swal2-toast-show{0%{transform:translateY(-.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0)}}@-webkit-keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@-webkit-keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@-webkit-keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}@keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}@-webkit-keyframes swal2-show{0%{transform:scale(.7)}45%{transform:scale(1.05)}80%{transform:scale(.95)}100%{transform:scale(1)}}@keyframes swal2-show{0%{transform:scale(.7)}45%{transform:scale(1.05)}80%{transform:scale(.95)}100%{transform:scale(1)}}@-webkit-keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(.5);opacity:0}}@keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(.5);opacity:0}}@-webkit-keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@-webkit-keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@-webkit-keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@-webkit-keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(.4);opacity:0}50%{margin-top:1.625em;transform:scale(.4);opacity:0}80%{margin-top:-.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(.4);opacity:0}50%{margin-top:1.625em;transform:scale(.4);opacity:0}80%{margin-top:-.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@-webkit-keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0);opacity:1}}@-webkit-keyframes swal2-rotate-loading{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes swal2-rotate-loading{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@-webkit-keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@-webkit-keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:.4}50%{transform:rotateZ(15deg);opacity:.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:.4}50%{transform:rotateZ(15deg);opacity:.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){overflow:hidden}body.swal2-height-auto{height:auto!important}body.swal2-no-backdrop .swal2-container{background-color:transparent!important;pointer-events:none}body.swal2-no-backdrop .swal2-container .swal2-popup{pointer-events:all}body.swal2-no-backdrop .swal2-container .swal2-modal{box-shadow:0 0 10px rgba(0,0,0,.4)}@media print{body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){overflow-y:scroll!important}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown)>[aria-hidden=true]{display:none}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) .swal2-container{position:static!important}}body.swal2-toast-shown .swal2-container{box-sizing:border-box;width:360px;max-width:100%;background-color:transparent;pointer-events:none}body.swal2-toast-shown .swal2-container.swal2-top{top:0;right:auto;bottom:auto;left:50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-top-end,body.swal2-toast-shown .swal2-container.swal2-top-right{top:0;right:0;bottom:auto;left:auto}body.swal2-toast-shown .swal2-container.swal2-top-left,body.swal2-toast-shown .swal2-container.swal2-top-start{top:0;right:auto;bottom:auto;left:0}body.swal2-toast-shown .swal2-container.swal2-center-left,body.swal2-toast-shown .swal2-container.swal2-center-start{top:50%;right:auto;bottom:auto;left:0;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-center{top:50%;right:auto;bottom:auto;left:50%;transform:translate(-50%,-50%)}body.swal2-toast-shown .swal2-container.swal2-center-end,body.swal2-toast-shown .swal2-container.swal2-center-right{top:50%;right:0;bottom:auto;left:auto;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-left,body.swal2-toast-shown .swal2-container.swal2-bottom-start{top:auto;right:auto;bottom:0;left:0}body.swal2-toast-shown .swal2-container.swal2-bottom{top:auto;right:auto;bottom:0;left:50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-end,body.swal2-toast-shown .swal2-container.swal2-bottom-right{top:auto;right:0;bottom:0;left:auto}';
@@ -2539,7 +2604,7 @@
     '/**\r\n * KEYS.css\r\n *\r\n * A simple stylesheet for rendering beautiful keyboard-style elements.\r\n *\r\n * Author:  Michael Hüneburg\r\n * Website: http://michaelhue.com/keyscss\r\n * License: MIT License (see LICENSE.txt)\r\n */\r\n\r\nkbd,\r\n.key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  background-color: #505050;\r\n  background-color: gradient(linear, left top, left bottom, from(#3c3c3c), to(#505050));\r\n  color: #fafafa;\r\n  text-shadow: -1px -1px 0 #464646;\r\n  -webkit-box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n          box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n  font-size: .85em;\r\n  line-height: 1;\r\n  cursor: default;\r\n  -webkit-user-select: none;\r\n     -moz-user-select: none;\r\n      -ms-user-select: none;\r\n          user-select: none;\r\n}\r\nkbd[title],\r\n.key[title] {\r\n  cursor: help;\r\n}\r\nkbd.dark,\r\n.dark-keys kbd,\r\n.key.dark,\r\n.dark-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  background-color: #505050;\r\n  background-color: gradient(linear, left top, left bottom, from(#3c3c3c), to(#505050));\r\n  color: #fafafa;\r\n  text-shadow: -1px -1px 0 #464646;\r\n  -webkit-box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n          box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n}\r\nkbd.light,\r\n.light-keys kbd,\r\n.key.light,\r\n.light-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  background-color: #fafafa;\r\n  background-color: gradient(linear, left top, left bottom, from(#d2d2d2), to(#ffffff));\r\n  color: #323232;\r\n  text-shadow: 0 0 2px #ffffff;\r\n  -webkit-box-shadow: inset 0 0 1px #ffffff, inset 0 0 0.4em #c8c8c8, 0 0.1em 0 #828282, 0 0.11em 0 rgba(0, 0, 0, 0.4), 0 0.1em 0.11em rgba(0, 0, 0, 0.9);\r\n          box-shadow: inset 0 0 1px #ffffff, inset 0 0 0.4em #c8c8c8, 0 0.1em 0 #828282, 0 0.11em 0 rgba(0, 0, 0, 0.4), 0 0.1em 0.11em rgba(0, 0, 0, 0.9);\r\n}\r\nkbd.so,\r\n.so-keys kbd,\r\n.key.so,\r\n.so-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  margin: 0 .1em;\r\n  padding: .1em .6em;\r\n  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;\r\n  line-height: 1.4;\r\n  color: #242729;\r\n  text-shadow: 0 1px 0 #FFF;\r\n  background-color: #e1e3e5;\r\n  border: 1px solid #adb3b9;\r\n  border-radius: 0.27272727em;\r\n  -webkit-box-shadow: 0 1px 0 rgba(12, 13, 14, 0.2), 0 0 0 2px #FFF inset;\r\n          box-shadow: 0 1px 0 rgba(12, 13, 14, 0.2), 0 0 0 2px #FFF inset;\r\n}\r\nkbd.github,\r\n.github-keys kbd,\r\n.key.github,\r\n.github-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  padding: 0.27272727em 0.45454545em;\r\n  font-size: 68.75%;\r\n  line-height: 0.90909091;\r\n  color: #444d56;\r\n  vertical-align: middle;\r\n  background-color: #fafbfc;\r\n  border: solid 1px #c6cbd1;\r\n  border-bottom-color: #959da5;\r\n  border-radius: 0.27272727em;\r\n  -webkit-box-shadow: inset 0 -1px 0 #959da5;\r\n          box-shadow: inset 0 -1px 0 #959da5;\r\n  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;\r\n  -webkit-box-sizing: border-box;\r\n          box-sizing: border-box;\r\n  text-shadow: none;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImtleXMuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztFQUVFLGdCQUFnQjtFQUNoQixzQkFBc0I7RUFDdEIsb0JBQW9CO0VBQ3BCLGVBQWU7RUFDZiw2QkFBNkI7RUFDN0IsbUJBQW1CO0VBQ25CLHdEQUF3RDtFQUN4RCxtQkFBbUI7RUFDbkIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixhQUFhO0VBQ2IsMEJBQTBCO0VBQzFCLHNGQUFzRjtFQUN0RixlQUFlO0VBQ2YsaUNBQWlDO0VBQ2pDLDhIQUFzSDtVQUF0SCxzSEFBc0g7RUFDdEgsaUJBQWlCO0VBQ2pCLGVBQWU7RUFDZixnQkFBZ0I7RUFDaEIsMEJBQWtCO0tBQWxCLHVCQUFrQjtNQUFsQixzQkFBa0I7VUFBbEIsa0JBQWtCO0NBQ25CO0FBQ0Q7O0VBRUUsYUFBYTtDQUNkO0FBQ0Q7Ozs7RUFJRSxnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixlQUFlO0VBQ2YsNkJBQTZCO0VBQzdCLG1CQUFtQjtFQUNuQix3REFBd0Q7RUFDeEQsbUJBQW1CO0VBQ25CLHNCQUFzQjtFQUN0QixvQkFBb0I7RUFDcEIsYUFBYTtFQUNiLDBCQUEwQjtFQUMxQixzRkFBc0Y7RUFDdEYsZUFBZTtFQUNmLGlDQUFpQztFQUNqQyw4SEFBc0g7VUFBdEgsc0hBQXNIO0NBQ3ZIO0FBQ0Q7Ozs7RUFJRSxnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixlQUFlO0VBQ2YsNkJBQTZCO0VBQzdCLG1CQUFtQjtFQUNuQix3REFBd0Q7RUFDeEQsbUJBQW1CO0VBQ25CLHNCQUFzQjtFQUN0QixvQkFBb0I7RUFDcEIsYUFBYTtFQUNiLDBCQUEwQjtFQUMxQixzRkFBc0Y7RUFDdEYsZUFBZTtFQUNmLDZCQUE2QjtFQUM3Qix3SkFBZ0o7VUFBaEosZ0pBQWdKO0NBQ2pKO0FBQ0Q7Ozs7RUFJRSxnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixlQUFlO0VBQ2YsNkJBQTZCO0VBQzdCLG1CQUFtQjtFQUNuQix3REFBd0Q7RUFDeEQsbUJBQW1CO0VBQ25CLHNCQUFzQjtFQUN0QixvQkFBb0I7RUFDcEIsYUFBYTtFQUNiLGVBQWU7RUFDZixtQkFBbUI7RUFDbkIsNERBQTREO0VBQzVELGlCQUFpQjtFQUNqQixlQUFlO0VBQ2YsMEJBQTBCO0VBQzFCLDBCQUEwQjtFQUMxQiwwQkFBMEI7RUFDMUIsNEJBQTRCO0VBQzVCLHdFQUFnRTtVQUFoRSxnRUFBZ0U7Q0FDakU7QUFDRDs7OztFQUlFLGdCQUFnQjtFQUNoQixzQkFBc0I7RUFDdEIsb0JBQW9CO0VBQ3BCLGVBQWU7RUFDZiw2QkFBNkI7RUFDN0IsbUJBQW1CO0VBQ25CLHdEQUF3RDtFQUN4RCxtQkFBbUI7RUFDbkIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixhQUFhO0VBQ2IsbUNBQW1DO0VBQ25DLGtCQUFrQjtFQUNsQix3QkFBd0I7RUFDeEIsZUFBZTtFQUNmLHVCQUF1QjtFQUN2QiwwQkFBMEI7RUFDMUIsMEJBQTBCO0VBQzFCLDZCQUE2QjtFQUM3Qiw0QkFBNEI7RUFDNUIsMkNBQW1DO1VBQW5DLG1DQUFtQztFQUNuQyxzRkFBc0Y7RUFDdEYsK0JBQXVCO1VBQXZCLHVCQUF1QjtFQUN2QixrQkFBa0I7Q0FDbkIiLCJmaWxlIjoidG1wMi5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJrYmQsXG4ua2V5IHtcbiAgZGlzcGxheTogaW5saW5lO1xuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIHdoaXRlLXNwYWNlOiBub3dyYXA7XG4gIG1pbi13aWR0aDogMWVtO1xuICBwYWRkaW5nOiAuM2VtIC40ZW0gLjJlbSAuM2VtO1xuICBmb250LXN0eWxlOiBub3JtYWw7XG4gIGZvbnQtZmFtaWx5OiBcIkx1Y2lkYSBHcmFuZGVcIiwgTHVjaWRhLCBBcmlhbCwgc2Fucy1zZXJpZjtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG4gIGJvcmRlci1yYWRpdXM6IC4zZW07XG4gIGJvcmRlcjogbm9uZTtcbiAgYmFja2dyb3VuZC1jb2xvcjogIzUwNTA1MDtcbiAgYmFja2dyb3VuZC1jb2xvcjogZ3JhZGllbnQobGluZWFyLCBsZWZ0IHRvcCwgbGVmdCBib3R0b20sIGZyb20oIzNjM2MzYyksIHRvKCM1MDUwNTApKTtcbiAgY29sb3I6ICNmYWZhZmE7XG4gIHRleHQtc2hhZG93OiAtMXB4IC0xcHggMCAjNDY0NjQ2O1xuICBib3gtc2hhZG93OiBpbnNldCAwIDAgMXB4ICM5Njk2OTYsIGluc2V0IDAgLTAuMDVlbSAwLjRlbSAjNTA1MDUwLCAwIDAuMWVtIDAgIzFlMWUxZSwgMCAwLjFlbSAwLjFlbSByZ2JhKDAsIDAsIDAsIDAuMyk7XG4gIGZvbnQtc2l6ZTogLjg1ZW07XG4gIGxpbmUtaGVpZ2h0OiAxO1xuICBjdXJzb3I6IGRlZmF1bHQ7XG4gIHVzZXItc2VsZWN0OiBub25lO1xufVxua2JkW3RpdGxlXSxcbi5rZXlbdGl0bGVdIHtcbiAgY3Vyc29yOiBoZWxwO1xufVxua2JkLmRhcmssXG4uZGFyay1rZXlzIGtiZCxcbi5rZXkuZGFyayxcbi5kYXJrLWtleXMgLmtleSB7XG4gIGRpc3BsYXk6IGlubGluZTtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICBtaW4td2lkdGg6IDFlbTtcbiAgcGFkZGluZzogLjNlbSAuNGVtIC4yZW0gLjNlbTtcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xuICBmb250LWZhbWlseTogXCJMdWNpZGEgR3JhbmRlXCIsIEx1Y2lkYSwgQXJpYWwsIHNhbnMtc2VyaWY7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBib3JkZXItcmFkaXVzOiAuM2VtO1xuICBib3JkZXI6IG5vbmU7XG4gIGJhY2tncm91bmQtY29sb3I6ICM1MDUwNTA7XG4gIGJhY2tncm91bmQtY29sb3I6IGdyYWRpZW50KGxpbmVhciwgbGVmdCB0b3AsIGxlZnQgYm90dG9tLCBmcm9tKCMzYzNjM2MpLCB0bygjNTA1MDUwKSk7XG4gIGNvbG9yOiAjZmFmYWZhO1xuICB0ZXh0LXNoYWRvdzogLTFweCAtMXB4IDAgIzQ2NDY0NjtcbiAgYm94LXNoYWRvdzogaW5zZXQgMCAwIDFweCAjOTY5Njk2LCBpbnNldCAwIC0wLjA1ZW0gMC40ZW0gIzUwNTA1MCwgMCAwLjFlbSAwICMxZTFlMWUsIDAgMC4xZW0gMC4xZW0gcmdiYSgwLCAwLCAwLCAwLjMpO1xufVxua2JkLmxpZ2h0LFxuLmxpZ2h0LWtleXMga2JkLFxuLmtleS5saWdodCxcbi5saWdodC1rZXlzIC5rZXkge1xuICBkaXNwbGF5OiBpbmxpbmU7XG4gIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgd2hpdGUtc3BhY2U6IG5vd3JhcDtcbiAgbWluLXdpZHRoOiAxZW07XG4gIHBhZGRpbmc6IC4zZW0gLjRlbSAuMmVtIC4zZW07XG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcbiAgZm9udC1mYW1pbHk6IFwiTHVjaWRhIEdyYW5kZVwiLCBMdWNpZGEsIEFyaWFsLCBzYW5zLXNlcmlmO1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgYm9yZGVyLXJhZGl1czogLjNlbTtcbiAgYm9yZGVyOiBub25lO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmFmYWZhO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiBncmFkaWVudChsaW5lYXIsIGxlZnQgdG9wLCBsZWZ0IGJvdHRvbSwgZnJvbSgjZDJkMmQyKSwgdG8oI2ZmZmZmZikpO1xuICBjb2xvcjogIzMyMzIzMjtcbiAgdGV4dC1zaGFkb3c6IDAgMCAycHggI2ZmZmZmZjtcbiAgYm94LXNoYWRvdzogaW5zZXQgMCAwIDFweCAjZmZmZmZmLCBpbnNldCAwIDAgMC40ZW0gI2M4YzhjOCwgMCAwLjFlbSAwICM4MjgyODIsIDAgMC4xMWVtIDAgcmdiYSgwLCAwLCAwLCAwLjQpLCAwIDAuMWVtIDAuMTFlbSByZ2JhKDAsIDAsIDAsIDAuOSk7XG59XG5rYmQuc28sXG4uc28ta2V5cyBrYmQsXG4ua2V5LnNvLFxuLnNvLWtleXMgLmtleSB7XG4gIGRpc3BsYXk6IGlubGluZTtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICBtaW4td2lkdGg6IDFlbTtcbiAgcGFkZGluZzogLjNlbSAuNGVtIC4yZW0gLjNlbTtcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xuICBmb250LWZhbWlseTogXCJMdWNpZGEgR3JhbmRlXCIsIEx1Y2lkYSwgQXJpYWwsIHNhbnMtc2VyaWY7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBib3JkZXItcmFkaXVzOiAuM2VtO1xuICBib3JkZXI6IG5vbmU7XG4gIG1hcmdpbjogMCAuMWVtO1xuICBwYWRkaW5nOiAuMWVtIC42ZW07XG4gIGZvbnQtZmFtaWx5OiBBcmlhbCwgXCJIZWx2ZXRpY2EgTmV1ZVwiLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7XG4gIGxpbmUtaGVpZ2h0OiAxLjQ7XG4gIGNvbG9yOiAjMjQyNzI5O1xuICB0ZXh0LXNoYWRvdzogMCAxcHggMCAjRkZGO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZTFlM2U1O1xuICBib3JkZXI6IDFweCBzb2xpZCAjYWRiM2I5O1xuICBib3JkZXItcmFkaXVzOiAwLjI3MjcyNzI3ZW07XG4gIGJveC1zaGFkb3c6IDAgMXB4IDAgcmdiYSgxMiwgMTMsIDE0LCAwLjIpLCAwIDAgMCAycHggI0ZGRiBpbnNldDtcbn1cbmtiZC5naXRodWIsXG4uZ2l0aHViLWtleXMga2JkLFxuLmtleS5naXRodWIsXG4uZ2l0aHViLWtleXMgLmtleSB7XG4gIGRpc3BsYXk6IGlubGluZTtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICBtaW4td2lkdGg6IDFlbTtcbiAgcGFkZGluZzogLjNlbSAuNGVtIC4yZW0gLjNlbTtcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xuICBmb250LWZhbWlseTogXCJMdWNpZGEgR3JhbmRlXCIsIEx1Y2lkYSwgQXJpYWwsIHNhbnMtc2VyaWY7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBib3JkZXItcmFkaXVzOiAuM2VtO1xuICBib3JkZXI6IG5vbmU7XG4gIHBhZGRpbmc6IDAuMjcyNzI3MjdlbSAwLjQ1NDU0NTQ1ZW07XG4gIGZvbnQtc2l6ZTogNjguNzUlO1xuICBsaW5lLWhlaWdodDogMC45MDkwOTA5MTtcbiAgY29sb3I6ICM0NDRkNTY7XG4gIHZlcnRpY2FsLWFsaWduOiBtaWRkbGU7XG4gIGJhY2tncm91bmQtY29sb3I6ICNmYWZiZmM7XG4gIGJvcmRlcjogc29saWQgMXB4ICNjNmNiZDE7XG4gIGJvcmRlci1ib3R0b20tY29sb3I6ICM5NTlkYTU7XG4gIGJvcmRlci1yYWRpdXM6IDAuMjcyNzI3MjdlbTtcbiAgYm94LXNoYWRvdzogaW5zZXQgMCAtMXB4IDAgIzk1OWRhNTtcbiAgZm9udC1mYW1pbHk6IFwiU0ZNb25vLVJlZ3VsYXJcIiwgQ29uc29sYXMsIFwiTGliZXJhdGlvbiBNb25vXCIsIE1lbmxvLCBDb3VyaWVyLCBtb25vc3BhY2U7XG4gIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG4gIHRleHQtc2hhZG93OiBub25lO1xufVxuIl19 */';
 
   const fix =
-    '#nprogress .bar {\n    background: #29d;\n    position: fixed;\n    z-index: 1031;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 4px;\n}\n\n#pagesSlider {\n    margin: 10px 0;\n}\n\n#pageInputs {\n    display: flex;\n    gap: 5px;\n    align-items: center;\n    justify-content: center;\n}\n\n#swal2-html-container .pageInput {\n    border: 1px darkblue dashed;\n    border-radius: 5px;\n    text-align: center;\n    background-color: aliceblue;\n    color: black;\n    max-width: 40%;\n}\n\n#swal2-title {\n    color: navy;\n}\n\nbutton.swal2-styled {\n    position: inherit;\n    transform: inherit;\n}\n';
+    '#nprogress .bar {\r\n    background: #29d;\r\n    position: fixed;\r\n    z-index: 1031;\r\n    top: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 4px;\r\n}\r\n\r\n#pagesSlider {\r\n    margin: 10px 0;\r\n}\r\n\r\n#pageInputs {\r\n    display: flex;\r\n    gap: 5px;\r\n    align-items: center;\r\n    justify-content: center;\r\n}\r\n\r\n#swal2-html-container .pageInput {\r\n    border: 1px darkblue dashed;\r\n    border-radius: 5px;\r\n    text-align: center;\r\n    background-color: aliceblue;\r\n    color: black;\r\n    max-width: 40%;\r\n}\r\n\r\n#swal2-title {\r\n    color: navy;\r\n}\r\n\r\nbutton.swal2-styled {\r\n    position: inherit;\r\n    transform: inherit;\r\n}\r\n';
 
   const sweetalertStyle = [normalize, sweetalert, fix, nprogress, keyscss].join('\n');
 
@@ -2550,7 +2615,7 @@
       ${wrapStyle('externals', sweetalertStyle)} ${wrapStyle('reader', cssStyles)} ${themesCSS}
       ${wrapStyle(
         'MinZoom',
-        `#MangaOnlineViewer .PageContent .PageImg {min-width: ${getUserSettings().minZoom}vw;}`,
+        `#MangaOnlineViewer .PageContent .PageImg {min-width: ${getSettingsValue('minZoom')}vw;}`,
       )}
     `;
   }
@@ -2559,7 +2624,10 @@
     locales
       .map(
         (locale) => html`
-          <option value="${locale.ID}" ${getUserSettings().locale === locale.ID ? 'selected' : ''}>
+          <option
+            value="${locale.ID}"
+            ${getSettingsValue('locale') === locale.ID ? 'selected' : ''}
+          >
             ${locale.NAME}
           </option>
         `,
@@ -2571,20 +2639,47 @@
         (theme2) => html`
           <span
             title="${theme2}"
-            class="${theme2} ThemeRadio ${getUserSettings().theme === theme2 ? 'selected' : ''}"
+            class="${theme2} ThemeRadio ${getSettingsValue('theme') === theme2 ? 'selected' : ''}"
           >
             ${IconCheck}
           </span>
         `,
       )
       .join('');
-  const language = html` <div class="ControlLabel locale">
-    ${getLocaleString('LANGUAGE')}
-    <select id="locale">
-      ${localeSelector()}
-    </select>
-  </div>`;
-  const theme = html`
+  const settingsScope = () =>
+    html` <div class="ControlLabel">
+      ${getLocaleString('SCOPE')}
+      <div id="SettingsScope" class="radio-inputs">
+        <label class="radio">
+          <input
+            type="radio"
+            id="globalSettings"
+            name="settingsScope"
+            ${!isSettingsLocal() ? 'checked' : ''}
+            value="false"
+          />
+          <span class="name">${IconWorldCog} ${getLocaleString('GLOBAL')}</span>
+        </label>
+        <label class="radio">
+          <input
+            type="radio"
+            id="localSettings"
+            name="settingsScope"
+            ${isSettingsLocal() ? 'checked' : ''}
+            value="true"
+          />
+          <span class="name">${IconLocationCog} ${window.location.hostname}</span>
+        </label>
+      </div>
+    </div>`;
+  const language = () =>
+    html` <div class="ControlLabel locale">
+      ${getLocaleString('LANGUAGE')}
+      <select id="locale">
+        ${localeSelector()}
+      </select>
+    </div>`;
+  const theme = () => html`
     <div id="ThemeSection">
       <div class="ControlLabel ColorSchemeSelector">
         ${getLocaleString('COLOR_SCHEME')}
@@ -2594,7 +2689,7 @@
         ${getLocaleString('THEME')}
         <span
           class="custom ThemeRadio 
-        ${getUserSettings().theme === 'custom' ? 'selected' : ''}"
+        ${getSettingsValue('theme') === 'custom' ? 'selected' : ''}"
           title="custom"
         >
           ${IconPalette} ${IconCheck}
@@ -2604,30 +2699,30 @@
       <div
         id="Hue"
         class="ControlLabel CustomTheme ControlLabelItem 
-      ${getUserSettings().theme.startsWith('custom') ? 'show' : ''}"
+      ${getSettingsValue('theme').startsWith('custom') ? 'show' : ''}"
       >
         ${getLocaleString('THEME_HUE')}
         <input
           id="CustomThemeHue"
           type="color"
-          value="${getUserSettings().customTheme}"
+          value="${getSettingsValue('customTheme')}"
           class="colorpicker CustomTheme"
         />
       </div>
       <div
         id="Shade"
         class="ControlLabel CustomTheme ControlLabelItem
-      ${getUserSettings().theme.startsWith('custom') ? '' : 'show'}"
+      ${getSettingsValue('theme').startsWith('custom') ? '' : 'show'}"
       >
         <span>
           ${getLocaleString('THEME_SHADE')}
           <output id="themeShadeVal" class="RangeValue" for="ThemeShade">
-            ${getUserSettings().themeShade}
+            ${getSettingsValue('themeShade')}
           </output>
         </span>
         <input
           type="range"
-          value="${getUserSettings().themeShade}"
+          value="${getSettingsValue('themeShade')}"
           name="ThemeShade"
           id="ThemeShade"
           min="100"
@@ -2638,81 +2733,82 @@
       </div>
     </div>
   `;
-  const loadMode = html`
+  const loadMode = () => html`
     <div class="ControlLabel loadMode">
       ${getLocaleString('DEFAULT_LOAD_MODE')}
       <select id="loadMode">
-        <option value="wait" ${getUserSettings().loadMode === 'wait' ? 'selected' : ''}>
+        <option value="wait" ${getSettingsValue('loadMode') === 'wait' ? 'selected' : ''}>
           ${getLocaleString('LOAD_MODE_NORMAL')}
         </option>
-        <option value="always" ${getUserSettings().loadMode === 'always' ? 'selected' : ''}>
+        <option value="always" ${getSettingsValue('loadMode') === 'always' ? 'selected' : ''}>
           ${getLocaleString('LOAD_MODE_ALWAYS')}
         </option>
-        <option value="never" ${getUserSettings().loadMode === 'never' ? 'selected' : ''}>
+        <option value="never" ${getSettingsValue('loadMode') === 'never' ? 'selected' : ''}>
           ${getLocaleString('LOAD_MODE_NEVER')}
         </option>
       </select>
     </div>
   `;
-  const loadSpeed = html`
+  const loadSpeed = () => html`
     <div class="ControlLabel PagesPerSecond">
       ${getLocaleString('LOAD_SPEED')}
       <select id="PagesPerSecond">
-        <option value="3000" ${getUserSettings().throttlePageLoad === 3e3 ? 'selected' : ''}>
+        <option value="3000" ${getSettingsValue('throttlePageLoad') === 3e3 ? 'selected' : ''}>
           0.3(${getLocaleString('SLOWLY')})
         </option>
-        <option value="2000" ${getUserSettings().throttlePageLoad === 2e3 ? 'selected' : ''}>
+        <option value="2000" ${getSettingsValue('throttlePageLoad') === 2e3 ? 'selected' : ''}>
           0.5
         </option>
-        <option value="1000" ${getUserSettings().throttlePageLoad === 1e3 ? 'selected' : ''}>
+        <option value="1000" ${getSettingsValue('throttlePageLoad') === 1e3 ? 'selected' : ''}>
           01(${getLocaleString('NORMAL')})
         </option>
-        <option value="500" ${getUserSettings().throttlePageLoad === 500 ? 'selected' : ''}>
+        <option value="500" ${getSettingsValue('throttlePageLoad') === 500 ? 'selected' : ''}>
           02
         </option>
-        <option value="250" ${getUserSettings().throttlePageLoad === 250 ? 'selected' : ''}>
+        <option value="250" ${getSettingsValue('throttlePageLoad') === 250 ? 'selected' : ''}>
           04(${getLocaleString('FAST')})
         </option>
-        <option value="125" ${getUserSettings().throttlePageLoad === 125 ? 'selected' : ''}>
+        <option value="125" ${getSettingsValue('throttlePageLoad') === 125 ? 'selected' : ''}>
           08
         </option>
-        <option value="100" ${getUserSettings().throttlePageLoad === 100 ? 'selected' : ''}>
+        <option value="100" ${getSettingsValue('throttlePageLoad') === 100 ? 'selected' : ''}>
           10(${getLocaleString('EXTREME')})
         </option>
-        <option value="1" ${getUserSettings().throttlePageLoad === 1 ? 'selected' : ''}>
+        <option value="1" ${getSettingsValue('throttlePageLoad') === 1 ? 'selected' : ''}>
           ${getLocaleString('ALL_PAGES')}
         </option>
       </select>
     </div>
   `;
-  const defaultZoomMode = html` <div class="ControlLabel DefaultZoomMode">
-    ${getLocaleString('DEFAULT_ZOOM_MODE')}
-    <select id="DefaultZoomMode">
-      <option value="percent" ${getUserSettings().zoomMode === 'percent' ? 'selected' : ''}>
-        ${getLocaleString('PERCENT')}
-      </option>
-      <option value="width" ${getUserSettings().zoomMode === 'width' ? 'selected' : ''}>
-        ${getLocaleString('FIT_WIDTH')}
-      </option>
-      <option value="height" ${getUserSettings().zoomMode === 'height' ? 'selected' : ''}>
-        ${getLocaleString('FIT_HEIGHT')}
-      </option>
-    </select>
-  </div>`;
-  const defaultZoom = html`
+  const defaultZoomMode = () =>
+    html` <div class="ControlLabel DefaultZoomMode">
+      ${getLocaleString('DEFAULT_ZOOM_MODE')}
+      <select id="DefaultZoomMode">
+        <option value="percent" ${getSettingsValue('zoomMode') === 'percent' ? 'selected' : ''}>
+          ${getLocaleString('PERCENT')}
+        </option>
+        <option value="width" ${getSettingsValue('zoomMode') === 'width' ? 'selected' : ''}>
+          ${getLocaleString('FIT_WIDTH')}
+        </option>
+        <option value="height" ${getSettingsValue('zoomMode') === 'height' ? 'selected' : ''}>
+          ${getLocaleString('FIT_HEIGHT')}
+        </option>
+      </select>
+    </div>`;
+  const defaultZoom = () => html`
     <div
       class="ControlLabel DefaultZoom ControlLabelItem
-  ${getUserSettings().zoomMode === 'percent' ? 'show' : ''}"
+  ${getSettingsValue('zoomMode') === 'percent' ? 'show' : ''}"
     >
       <span>
         ${getLocaleString('DEFAULT_ZOOM')}
         <output id="defaultZoomVal" class="RangeValue" for="DefaultZoom">
-          ${getUserSettings().defaultZoom}%
+          ${getSettingsValue('defaultZoom')}%
         </output>
       </span>
       <input
         type="range"
-        value="${getUserSettings().defaultZoom}"
+        value="${getSettingsValue('defaultZoom')}"
         name="DefaultZoom"
         id="DefaultZoom"
         min="5"
@@ -2734,17 +2830,17 @@
       </datalist>
     </div>
   `;
-  const minZoom = html`
+  const minZoom = () => html`
     <div class="ControlLabel minZoom">
       <span>
         ${getLocaleString('MINIMUM_ZOOM')}
         <output id="minZoomVal" class="RangeValue" for="minZoom">
-          ${getUserSettings().minZoom}%
+          ${getSettingsValue('minZoom')}%
         </output>
       </span>
       <input
         type="range"
-        value="${getUserSettings().minZoom}"
+        value="${getSettingsValue('minZoom')}"
         name="minZoom"
         id="minZoom"
         min="30"
@@ -2754,17 +2850,17 @@
       />
     </div>
   `;
-  const zoomStep = html`
+  const zoomStep = () => html`
     <div class="ControlLabel zoomStep">
       <span>
         ${getLocaleString('ZOOM_STEP')}
         <output id="zoomStepVal" class="RangeValue" for="zoomStep">
-          ${getUserSettings().zoomStep}%
+          ${getSettingsValue('zoomStep')}%
         </output>
       </span>
       <input
         type="range"
-        value="${getUserSettings().zoomStep}"
+        value="${getSettingsValue('zoomStep')}"
         name="zoomStep"
         id="zoomStep"
         min="5"
@@ -2774,37 +2870,37 @@
       />
     </div>
   `;
-  const viewMode$1 = html`
+  const viewMode$1 = () => html`
     <div class="ControlLabel viewMode">
       ${getLocaleString('DEFAULT_VIEW_MODE')}
       <select id="viewMode">
-        <option value="Vertical" ${getUserSettings().viewMode === 'Vertical' ? 'selected' : ''}>
+        <option value="Vertical" ${getSettingsValue('viewMode') === 'Vertical' ? 'selected' : ''}>
           ${getLocaleString('VIEW_MODE_VERTICAL')}
         </option>
-        <option value="WebComic" ${getUserSettings().viewMode === 'WebComic' ? 'selected' : ''}>
+        <option value="WebComic" ${getSettingsValue('viewMode') === 'WebComic' ? 'selected' : ''}>
           ${getLocaleString('VIEW_MODE_WEBCOMIC')}
         </option>
-        <option value="FluidLTR" ${getUserSettings().viewMode === 'FluidLTR' ? 'selected' : ''}>
+        <option value="FluidLTR" ${getSettingsValue('viewMode') === 'FluidLTR' ? 'selected' : ''}>
           ${getLocaleString('VIEW_MODE_LEFT')}
         </option>
-        <option value="FluidRTL" ${getUserSettings().viewMode === 'FluidRTL' ? 'selected' : ''}>
+        <option value="FluidRTL" ${getSettingsValue('viewMode') === 'FluidRTL' ? 'selected' : ''}>
           ${getLocaleString('VIEW_MODE_RIGHT')}
         </option>
       </select>
     </div>
   `;
-  const lazyLoad$1 = html`
+  const lazyLoad$1 = () => html`
     <div
       class="ControlLabel lazyStart ControlLabelItem
-    ${getUserSettings().lazyLoadImages ? 'show' : ''}"
+    ${getSettingsValue('lazyLoadImages') ? 'show' : ''}"
     >
       <span>
         ${getLocaleString('LAZY_LOAD_IMAGES')}
-        <output id="lazyStartVal" for="lazyStart"> ${getUserSettings().lazyStart} </output>
+        <output id="lazyStartVal" for="lazyStart"> ${getSettingsValue('lazyStart')} </output>
       </span>
       <input
         type="range"
-        value="${getUserSettings().lazyStart}"
+        value="${getSettingsValue('lazyStart')}"
         name="lazyStart"
         id="lazyStart"
         min="5"
@@ -2814,111 +2910,84 @@
       />
     </div>
   `;
-  const headerType = html`
+  const headerType = () => html`
     <div class="ControlLabel headerType">
       ${getLocaleString('HEADER_TYPE')}
       <select id="headerType">
-        <option value="hover" ${getUserSettings().header === 'hover' ? 'selected' : ''}>
+        <option value="hover" ${getSettingsValue('header') === 'hover' ? 'selected' : ''}>
           ${getLocaleString('HEADER_HOVER')}
         </option>
-        <option value="scroll" ${getUserSettings().header === 'scroll' ? 'selected' : ''}>
+        <option value="scroll" ${getSettingsValue('header') === 'scroll' ? 'selected' : ''}>
           ${getLocaleString('HEADER_SCROLL')}
         </option>
-        <option value="click" ${getUserSettings().header === 'click' ? 'selected' : ''}>
+        <option value="click" ${getSettingsValue('header') === 'click' ? 'selected' : ''}>
           ${getLocaleString('HEADER_CLICK')}
         </option>
-        <option value="fixed" ${getUserSettings().header === 'fixed' ? 'selected' : ''}>
+        <option value="fixed" ${getSettingsValue('header') === 'fixed' ? 'selected' : ''}>
           ${getLocaleString('HEADER_FIXED')}
         </option>
-        <option value="simple" ${getUserSettings().header === 'simple' ? 'selected' : ''}>
+        <option value="simple" ${getSettingsValue('header') === 'simple' ? 'selected' : ''}>
           ${getLocaleString('HEADER_SIMPLE')}
         </option>
       </select>
     </div>
   `;
-  const checkboxOptions = html`
+  function toggler(name, checked = false) {
+    return html`
+      <div class="toggler">
+        <input
+          id="${name}"
+          name="${name}"
+          type="checkbox"
+          value="true"
+          ${checked ? 'checked' : ''}
+        />
+        <label for="${name}"> ${IconCheck} ${IconX} </label>
+      </div>
+    `;
+  }
+  const checkboxOptions = () => html`
     <div class="ControlLabel verticalSeparator">
       ${getLocaleString('VERTICAL_SEPARATOR')}
-      <input
-        type="checkbox"
-        value="true"
-        name="verticalSeparator"
-        id="verticalSeparator"
-        ${getUserSettings().verticalSeparator ? 'checked' : ''}
-      />
+      ${toggler('verticalSeparator', getSettingsValue('verticalSeparator'))}
     </div>
     <div class="ControlLabel fitIfOversize">
       ${getLocaleString('FIT_WIDTH_OVERSIZED')}
-      <input
-        type="checkbox"
-        value="true"
-        name="fitIfOversize"
-        id="fitIfOversize"
-        ${getUserSettings().fitWidthIfOversize ? 'checked' : ''}
-      />
+      ${toggler('fitIfOversize', getSettingsValue('fitWidthIfOversize'))}
     </div>
     <div class="ControlLabel showThumbnails">
       ${getLocaleString('SHOW_THUMBNAILS')}
-      <input
-        type="checkbox"
-        value="true"
-        name="showThumbnails"
-        id="showThumbnails"
-        ${getUserSettings().showThumbnails ? 'checked' : ''}
-      />
+      ${toggler('showThumbnails', getSettingsValue('showThumbnails'))}
     </div>
     <div class="ControlLabel enableComments">
       ${getLocaleString('ENABLE_COMMENTS')}
-      <input
-        type="checkbox"
-        value="true"
-        name="enableComments"
-        id="enableComments"
-        ${getUserSettings().enableComments ? 'checked' : ''}
-      />
+      ${toggler('enableComments', getSettingsValue('enableComments'))}
     </div>
     <div class="ControlLabel lazyLoadImages">
       ${getLocaleString('LAZY_LOAD_IMAGES_ENABLE')}
-      <input
-        type="checkbox"
-        value="true"
-        name="lazyLoadImages"
-        id="lazyLoadImages"
-        ${getUserSettings().lazyLoadImages ? 'checked' : ''}
-      />
+      ${toggler('lazyLoadImages', getSettingsValue('lazyLoadImages'))}
     </div>
-    ${lazyLoad$1}
+    ${lazyLoad$1()}
     <div class="ControlLabel downloadZip">
       ${getLocaleString('DOWNLOAD_IMAGES')}
-      <input
-        type="checkbox"
-        value="false"
-        name="downloadZip"
-        id="downloadZip"
-        ${getUserSettings().downloadZip ? 'checked' : ''}
-      />
+      ${toggler('downloadZip', getSettingsValue('downloadZip'))}
     </div>
     <div class="ControlLabel hidePageControls">
       ${getLocaleString('HIDE_CONTROLS')}
-      <input
-        type="checkbox"
-        value="false"
-        name="hidePageControls"
-        id="hidePageControls"
-        ${getUserSettings().hidePageControls ? 'checked' : ''}
-      />
+      ${toggler('hidePageControls', getSettingsValue('hidePageControls'))}
     </div>
   `;
-  const autoScroll = html`
+  const autoScroll = () => html`
     <div class="ControlLabel autoScroll">
       <span>
         ${getLocaleString('AUTO_SCROLL_HEIGHT')}
-        <output id="scrollHeightVal" for="scrollHeight"> ${getUserSettings().scrollHeight} </output
+        <output id="scrollHeightVal" for="scrollHeight">
+          ${getSettingsValue('scrollHeight')} </output
         >px
       </span>
       <input
         type="range"
-        value="${getUserSettings().scrollHeight}"
+        value="${getSettingsValue('scrollHeight')}"
         name="scrollHeight"
         id="scrollHeight"
         min="1"
@@ -2935,24 +3004,25 @@
         ${IconX}
       </button>
       <button id="ResetSettings" class="ControlButton">
-        ${getLocaleString('BUTTON_RESET_SETTINGS')}
+        ${IconSettingsOff} ${getLocaleString('BUTTON_RESET_SETTINGS')}
       </button>
-      ${language} ${theme} ${loadMode} ${loadSpeed} ${defaultZoomMode} ${defaultZoom} ${minZoom}
-      ${zoomStep} ${viewMode$1} ${checkboxOptions} ${headerType} ${autoScroll}
+      ${settingsScope()} ${language()} ${theme()} ${loadMode()} ${loadSpeed()} ${defaultZoomMode()}
+      ${defaultZoom()} ${minZoom()} ${zoomStep()} ${viewMode$1()} ${checkboxOptions()}
+      ${headerType()} ${autoScroll()}
     </div>
   `;
 
-  const keybindList = () =>
-    Object.keys(getUserSettings().keybinds).map((kb) => {
-      const keys = getUserSettings().keybinds[kb]?.length
-        ? getUserSettings()
-            .keybinds[kb]?.map((key) => html`<kbd class="dark">${key}</kbd>`)
-            .join(' / ')
+  const keybindList = () => {
+    const keybinds = getSettingsValue('keybinds');
+    return Object.keys(keybinds).map((kb) => {
+      const keys = keybinds[kb]?.length
+        ? keybinds[kb]?.map((key) => html`<kbd class="dark">${key}</kbd>`).join(' / ')
         : '';
       return html`<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
     });
+  };
   const keybindEditor = () =>
-    Object.keys(getUserSettings().keybinds)
+    Object.keys(getSettingsValue('keybinds'))
       .map(
         // Language=html
         (kb) =>
@@ -2962,10 +3032,10 @@
               class="KeybindInput"
               id="${kb}"
               name="${kb}"
-              value="${getUserSettings().keybinds[kb]?.join(' , ') ?? ''}"
+              value="${getSettingsValue('keybinds')[kb]?.join(' , ') ?? ''}"
             />`,
       )
-      .concat(html`<div id="HotKeysRules">${getLocaleString('KEYBIND_RULES')}</div>`);
+      .concat(html` <div id="HotKeysRules">${getLocaleString('KEYBIND_RULES')}</div>`);
   const KeybindingsPanel = () => html`
     <div id="KeybindingsPanel" class="panel">
       <h2>${getLocaleString('KEYBINDINGS')}</h2>
@@ -3002,7 +3072,7 @@
   }
 
   const ThumbnailsPanel = (manga) => html`
-    <nav id="Navigation" class="panel ${getUserSettings().showThumbnails ? '' : 'disabled'}">
+    <nav id="Navigation" class="panel ${getSettingsValue('showThumbnails') ? '' : 'disabled'}">
       <div id="NavigationCounters" class="ControlLabel">
         ${IconCategory}
         <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
@@ -3024,10 +3094,10 @@
   `;
 
   const listBookmarks = () => {
-    if (isEmpty(getUserSettings().bookmarks)) {
+    if (isEmpty(getSettingsValue('bookmarks'))) {
       return [getLocaleString('LIST_EMPTY')];
     }
-    return getUserSettings().bookmarks.map(
+    return getSettingsValue('bookmarks').map(
       (mark, index) => html`
         <div id="Bookmark${index + 1}" class="BookmarkItem">
           <span class="bookmarkColumnLarge">
@@ -3081,7 +3151,7 @@
   const listOptions = (times, begin) =>
     indexList(times, begin).map((index) => html` <option value="${index}">${index}</option>`);
   const Header = (manga) => html`
-    <header id="Header" class="${getUserSettings().header} headroom-top">
+    <header id="Header" class="${getSettingsValue('header')} headroom-top">
       <aside id="GlobalFunctions">
         <span>
           <button id="enlarge" title="${getLocaleString('ENLARGE')}" class="ControlButton">
@@ -3155,13 +3225,13 @@
         </span>
         <span id="ZoomSlider">
           <output id="ZoomVal" class="RangeValue" for="Zoom">
-            ${getUserSettings().zoomMode === 'percent'
-              ? `${getUserSettings().defaultZoom}%`
-              : getUserSettings().zoomMode}
+            ${getSettingsValue('zoomMode') === 'percent'
+              ? `${getSettingsValue('defaultZoom')}%`
+              : getSettingsValue('zoomMode')}
           </output>
           <input
             type="range"
-            value="${getUserSettings().defaultZoom}"
+            value="${getSettingsValue('defaultZoom')}"
             name="Zoom"
             id="Zoom"
             min="1"
@@ -3273,9 +3343,9 @@
   const Reader = (manga) => html`
     <main
       id="Chapter"
-      class="${getUserSettings().fitWidthIfOversize ? 'fitWidthIfOversize' : ''}
-  ${getUserSettings().verticalSeparator ? 'separator' : ''}
-  ${getUserSettings().viewMode}"
+      class="${getSettingsValue('fitWidthIfOversize') ? 'fitWidthIfOversize' : ''}
+  ${getSettingsValue('verticalSeparator') ? 'separator' : ''}
+  ${getSettingsValue('viewMode')}"
     >
       ${listPages(manga.pages, manga.begin).join('')}
     </main>
@@ -3287,7 +3357,7 @@
         ${IconX}
       </button>
       <h2>${getLocaleString('COMMENTS')}</h2>
-      <div id="CommentsArea" class="${getUserSettings().colorScheme}"></div>
+      <div id="CommentsArea" class="${getSettingsValue('colorScheme')}"></div>
       <button id="CommentsColorScheme" class="simpleButton ColorScheme">
         ${IconSun} ${IconMoon}
       </button>
@@ -3327,9 +3397,7 @@
   function removeURLBookmark(url = window.location.href) {
     if (!isNothing(isBookmarked(url))) {
       logScript(`Bookmark Removed ${url}`);
-      updateSettings({
-        bookmarks: getUserSettings().bookmarks.filter((el) => el.url !== url),
-      });
+      changeSettingsValue('bookmarks', (b) => b.filter((el) => el.url !== url));
       if (url === window.location.href) {
         document.querySelector('#MangaOnlineViewer')?.classList.remove('bookmarked');
       }
@@ -3378,16 +3446,14 @@
       date: /* @__PURE__ */ new Date().toISOString().slice(0, 10),
     };
     if (isBookmarked(mark.url)) {
-      updateSettings({
-        bookmarks: getUserSettings().bookmarks.filter((el) => el.url !== mark.url),
-      });
+      changeSettingsValue('bookmarks', (b) => b.filter((el) => el.url !== mark.url));
       Swal.fire({
         title: getLocaleString('BOOKMARK_REMOVED'),
         timer: 1e4,
         icon: 'error',
       });
     } else {
-      updateSettings({ bookmarks: [...getUserSettings().bookmarks, mark] });
+      changeSettingsValue('bookmarks', (b) => [...b, mark]);
       Swal.fire({
         title: getLocaleString('BOOKMARK_SAVED'),
         html: getLocaleString('BOOKMARK_SAVED').replace('##NUM##', num.toString()),
@@ -3844,7 +3910,7 @@
       const { scrollY } = window;
       if (
         showEnd &&
-        getUserSettings().zoomMode !== 'height' &&
+        getSettingsValue('zoomMode') !== 'height' &&
         scrollY + window.innerHeight + showEnd > document.body.scrollHeight
       ) {
         setScrollDirection('end');
@@ -3871,7 +3937,7 @@
         left: 0.8 * window.innerWidth * sign * scrollDirection,
         behavior: 'smooth',
       });
-    } else if (getUserSettings().zoomMode === 'height') {
+    } else if (getSettingsValue('zoomMode') === 'height') {
       const pages = [...document.querySelectorAll('.MangaPage')];
       const distance = pages.map((element) => Math.abs(element.offsetTop - window.scrollY));
       const currentPage = _.indexOf(distance, _.min(distance));
@@ -3947,9 +4013,9 @@
     window.onload = null;
     document.body.onload = null;
     hotkeys.unbind();
-    Object.keys(getUserSettings().keybinds).forEach((key) => {
+    Object.keys(getSettingsValue('keybinds')).forEach((key) => {
       hotkeys(
-        getUserSettings().keybinds[key]?.join(',') ?? '',
+        getSettingsValue('keybinds')[key]?.join(',') ?? '',
         _.throttle((event) => {
           event.preventDefault();
           event.stopImmediatePropagation();
@@ -4045,7 +4111,7 @@
     observerEvent();
   }
 
-  function applyZoom(zoom = getUserSettings().zoomMode, pages = '.PageContent img') {
+  function applyZoom(zoom = getSettingsValue('zoomMode'), pages = '.PageContent img') {
     const pg = [...document.querySelectorAll(pages)];
     pg.forEach((img) => {
       img.removeAttribute('width');
@@ -4054,11 +4120,11 @@
       if (zoom === 'width') {
         img.style.width = `${window.innerWidth}px`;
       } else if (zoom === 'height') {
-        const nextHeight = window.innerHeight + (getUserSettings().showThumbnails ? -29 : 0);
+        const nextHeight = window.innerHeight + (getSettingsValue('showThumbnails') ? -29 : 0);
         img.style.height = `${nextHeight}px`;
         img.style.minWidth = 'unset';
       } else if (zoom === 'percent') {
-        img.style.width = `${img.naturalWidth * (getUserSettings().defaultZoom / 100)}px`;
+        img.style.width = `${img.naturalWidth * (getSettingsValue('defaultZoom') / 100)}px`;
       } else if (zoom >= 0 && zoom !== 100) {
         img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
       }
@@ -4091,7 +4157,7 @@
   }
   function onImagesDone() {
     logScript('Images Loading Complete');
-    if (getUserSettings().downloadZip) {
+    if (getSettingsValue('downloadZip')) {
       document.getElementById('download')?.dispatchEvent(new Event('click'));
     }
     document.getElementById('download')?.classList.remove('disabled');
@@ -4147,7 +4213,7 @@
         const thumb = document.getElementById(thumbId);
         thumb?.classList.add('imgBroken');
         const src = image.img.getAttribute('src');
-        if (src && getRepeatValue(src) <= getUserSettings().maxReload) {
+        if (src && getRepeatValue(src) <= getSettingsValue('maxReload')) {
           setTimeout(async () => {
             if (manga.reload) {
               const id = parseInt(`0${/\d+/.exec(image.img.id)}`, 10);
@@ -4179,7 +4245,10 @@
     let src = normalizeUrl(imageSrc);
     const img = document.querySelector(`#PageImg${index}`);
     if (img) {
-      if (!getUserSettings().lazyLoadImages || relativePosition <= getUserSettings().lazyStart) {
+      if (
+        !(manga.lazy ?? getSettingsValue('lazyLoadImages')) ||
+        relativePosition <= getSettingsValue('lazyStart')
+      ) {
         setTimeout(
           async () => {
             if (!isObjectURL(src) && !isBase64ImageUrl(src) && manga.fetchOptions) {
@@ -4193,7 +4262,7 @@
             img.setAttribute('src', src);
             logScript('Loaded Image:', index, 'Source:', src);
           },
-          (manga.timer ?? getUserSettings().throttlePageLoad) * relativePosition,
+          (manga.timer ?? getSettingsValue('throttlePageLoad')) * relativePosition,
         );
       } else {
         img.setAttribute('data-src', normalizeUrl(src));
@@ -4229,12 +4298,15 @@
     const relativePosition = position - manga.begin;
     const img = document.querySelector(`#PageImg${index}`);
     if (img) {
-      if (!getUserSettings().lazyLoadImages || relativePosition <= getUserSettings().lazyStart) {
+      if (
+        !(manga.lazy ?? getSettingsValue('lazyLoadImages')) ||
+        relativePosition <= getSettingsValue('lazyStart')
+      ) {
         setTimeout(
           () => {
             findPage(manga, index, pageUrl, false)().catch(logScript);
           },
-          (manga.timer ?? getUserSettings().throttlePageLoad) * relativePosition,
+          (manga.timer ?? getSettingsValue('throttlePageLoad')) * relativePosition,
         );
       } else {
         img.setAttribute(
@@ -4257,11 +4329,12 @@
     });
   }
   function loadManga(manga, begin = 1) {
-    getUserSettings().lazyLoadImages = manga.lazy ?? getUserSettings().lazyLoadImages;
     logScript('Loading Images');
-    logScript(`Intervals: ${manga.timer ?? getUserSettings().throttlePageLoad ?? 'Default(1000)'}`);
     logScript(
-      `Lazy: ${getUserSettings().lazyLoadImages}, Starting from: ${getUserSettings().lazyStart}`,
+      `Intervals: ${manga.timer ?? getSettingsValue('throttlePageLoad') ?? 'Default(1000)'}`,
+    );
+    logScript(
+      `Lazy: ${manga.lazy ?? getSettingsValue('lazyLoadImages')}, Starting from: ${getSettingsValue('lazyStart')}`,
     );
     if (isImagesManga(manga)) {
       logScript('Method: Images:', manga.listImages);
@@ -4285,7 +4358,7 @@
             lazyAttr,
           });
         },
-        wait: getUserSettings().throttlePageLoad,
+        wait: getSettingsValue('throttlePageLoad'),
       });
     } else {
       logScript('No Loading Method Found');
@@ -4322,136 +4395,6 @@
     document.querySelector('#gotoPage')?.addEventListener('change', selectGoToPage);
     document.querySelectorAll('.Thumbnail')?.forEach(addEvent('click', clickThumbnail));
     document.querySelector('#Thumbnails')?.addEventListener('wheel', transformScrollToHorizontal);
-  }
-
-  function buttonResetSettings() {
-    resetSettings();
-    const elem = document.getElementById('MangaOnlineViewer');
-    elem?.removeAttribute('locale');
-    elem?.dispatchEvent(new Event('hydrate'));
-  }
-  function changeLocale(event) {
-    const locale = event.currentTarget.value;
-    updateSettings({ locale });
-    const elem = document.getElementById('MangaOnlineViewer');
-    elem?.setAttribute('locale', locale);
-    elem?.dispatchEvent(new Event('hydrate'));
-  }
-  function changeLoadMode(event) {
-    const mode = event.currentTarget.value;
-    updateSettings({ loadMode: mode });
-  }
-  function checkFitWidthOversize(event) {
-    document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize');
-    updateSettings({ fitWidthIfOversize: event.currentTarget.checked });
-  }
-  function checkVerticalSeparator(event) {
-    document.querySelector('#Chapter')?.classList.toggle('separator');
-    updateSettings({ verticalSeparator: event.currentTarget.checked });
-  }
-  function checkShowThumbnails(event) {
-    document.querySelector('#Navigation')?.classList.toggle('disabled');
-    updateSettings({ showThumbnails: event.currentTarget.checked });
-    applyZoom();
-  }
-  function checkEnableComments(event) {
-    document.querySelector('#CommentsButton')?.classList.toggle('disabled');
-    updateSettings({ enableComments: event.currentTarget.checked });
-    applyZoom();
-  }
-  function changeAutoDownload(event) {
-    updateSettings({ downloadZip: event.currentTarget.checked });
-    if (event.currentTarget.checked) {
-      Swal.fire({
-        title: getLocaleString('ATTENTION'),
-        text: getLocaleString('AUTO_DOWNLOAD'),
-        timer: 1e4,
-        icon: 'info',
-      });
-    }
-  }
-  function checkLazyLoad(event) {
-    updateSettings({ lazyLoadImages: event.currentTarget.checked });
-    const start = document.querySelector('.lazyStart');
-    if (getUserSettings().lazyLoadImages) {
-      start?.classList.add('show');
-    } else {
-      start?.classList.remove('show');
-    }
-    if (event.currentTarget.checked) {
-      Swal.fire({
-        title: getLocaleString('WARNING'),
-        html: getLocaleString('LAZY_LOAD'),
-        icon: 'warning',
-      });
-    }
-  }
-  function changeLazyStart(event) {
-    const start = event.currentTarget.value;
-    updateSettings({ lazyStart: parseInt(start, 10) });
-  }
-  function changePagesPerSecond(event) {
-    const timer = parseInt(event.currentTarget.value, 10);
-    updateSettings({ throttlePageLoad: timer });
-    if (timer < 100) {
-      Swal.fire({
-        title: getLocaleString('SPEED_WARNING'),
-        html: getLocaleString('SPEED_WARNING_MESSAGE'),
-        icon: 'warning',
-      });
-    }
-  }
-  function changeZoomStep(event) {
-    const step = event.currentTarget.value;
-    updateSettings({ zoomStep: parseInt(step, 10) });
-  }
-  function changeMinZoom(event) {
-    const min = event.currentTarget.value;
-    replaceStyleSheet('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
-    updateSettings({ minZoom: parseInt(min, 10) });
-  }
-  function checkHideImageControls(event) {
-    document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
-    updateSettings({ hidePageControls: event.currentTarget.checked });
-  }
-  function updateHeaderType(mode) {
-    const header = document.querySelector('#Header');
-    if (!header?.classList.contains(mode)) {
-      const menu = document.querySelector('#menu');
-      header?.classList.remove('scroll', 'click', 'hover', 'fixed', 'simple', 'visible');
-      menu?.classList.remove('scroll', 'click', 'hover', 'fixed', 'simple', 'hide');
-      header?.classList.add(mode);
-      menu?.classList.add(mode);
-    }
-  }
-  function changeHeaderType(event) {
-    const headerType = event.currentTarget.value;
-    updateHeaderType(headerType);
-    updateSettings({ header: headerType });
-  }
-  function changeScrollHeight(event) {
-    const { value } = event.currentTarget;
-    updateSettings({ scrollHeight: parseInt(value, 10) });
-  }
-  function options() {
-    document.querySelector('#ResetSettings')?.addEventListener('click', buttonResetSettings);
-    document.querySelector('#locale')?.addEventListener('change', changeLocale);
-    document.querySelector('#fitIfOversize')?.addEventListener('change', checkFitWidthOversize);
-    document
-      .querySelector('#verticalSeparator')
-      ?.addEventListener('change', checkVerticalSeparator);
-    document.querySelector('#loadMode')?.addEventListener('change', changeLoadMode);
-    document.querySelector('#showThumbnails')?.addEventListener('change', checkShowThumbnails);
-    document.querySelector('#enableComments')?.addEventListener('change', checkEnableComments);
-    document.querySelector('#downloadZip')?.addEventListener('change', changeAutoDownload);
-    document.querySelector('#lazyLoadImages')?.addEventListener('change', checkLazyLoad);
-    document.querySelector('#lazyStart')?.addEventListener('change', changeLazyStart);
-    document.querySelector('#PagesPerSecond')?.addEventListener('change', changePagesPerSecond);
-    document.querySelector('#zoomStep')?.addEventListener('change', changeZoomStep);
-    document.querySelector('#minZoom')?.addEventListener('input', changeMinZoom);
-    document.querySelector('#hidePageControls')?.addEventListener('change', checkHideImageControls);
-    document.querySelector('#headerType')?.addEventListener('change', changeHeaderType);
-    document.querySelector('#scrollHeight')?.addEventListener('change', changeScrollHeight);
   }
 
   function toggleFunction(selector, classname, open, close) {
@@ -4516,15 +4459,15 @@
     document.querySelector('#Overlay')?.classList.remove('visible');
   }
   function saveKeybindings() {
-    const newkeybinds = getUserSettings().keybinds;
-    Object.keys(getUserSettings().keybinds).forEach((kb) => {
+    const newkeybinds = getSettingsValue('keybinds');
+    Object.keys(getSettingsValue('keybinds')).forEach((kb) => {
       const keys = document
         .querySelector(`#${kb}`)
         ?.value.split(',')
         ?.map((value) => value.trim());
       newkeybinds[kb] = isNothing(keys) ? void 0 : keys;
     });
-    updateSettings({ keybinds: newkeybinds });
+    setSettingsValue('keybinds', newkeybinds);
     document.querySelector('#KeybindingsList').innerHTML = keybindList().join('\n');
     document.querySelector('#SaveKeybindings')?.classList.add('hidden');
     document.querySelector('#EditKeybindings')?.classList.remove('hidden');
@@ -4553,14 +4496,153 @@
     document.querySelector('#SaveKeybindings')?.addEventListener('click', saveKeybindings);
   }
 
+  function buttonResetSettings() {
+    resetSettings();
+    const elem = document.getElementById('MangaOnlineViewer');
+    elem?.removeAttribute('locale');
+    buttonSettingsOpen();
+  }
+  function changeSettingsScope(event) {
+    const scope = event.currentTarget;
+    toggleLocalSettings(scope.value === 'true');
+    buttonSettingsOpen();
+  }
+  function changeLocale(event) {
+    const locale = event.currentTarget.value;
+    setSettingsValue('locale', locale);
+    const elem = document.getElementById('MangaOnlineViewer');
+    elem?.setAttribute('locale', locale);
+    elem?.dispatchEvent(new Event('hydrate'));
+  }
+  function changeLoadMode(event) {
+    const mode = event.currentTarget.value;
+    setSettingsValue('loadMode', mode);
+  }
+  function checkFitWidthOversize(event) {
+    const ck = event.currentTarget.checked;
+    document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize', ck);
+    setSettingsValue('fitWidthIfOversize', event.currentTarget.checked);
+  }
+  function checkVerticalSeparator(event) {
+    const ck = event.currentTarget.checked;
+    document.querySelector('#Chapter')?.classList.toggle('separator', ck);
+    setSettingsValue('verticalSeparator', event.currentTarget.checked);
+  }
+  function checkShowThumbnails(event) {
+    const ck = event.currentTarget.checked;
+    document.querySelector('#Navigation')?.classList.toggle('disabled', !ck);
+    setSettingsValue('showThumbnails', !event.currentTarget.checked);
+    applyZoom();
+  }
+  function checkEnableComments(event) {
+    const ck = event.currentTarget.checked;
+    document.querySelector('#CommentsButton')?.classList.toggle('disabled', ck);
+    setSettingsValue('enableComments', event.currentTarget.checked);
+    applyZoom();
+  }
+  function changeAutoDownload(event) {
+    setSettingsValue('downloadZip', event.currentTarget.checked);
+    if (event.currentTarget.checked) {
+      Swal.fire({
+        title: getLocaleString('ATTENTION'),
+        text: getLocaleString('AUTO_DOWNLOAD'),
+        timer: 1e4,
+        icon: 'info',
+      });
+    }
+  }
+  function checkLazyLoad(event) {
+    setSettingsValue('lazyLoadImages', event.currentTarget.checked);
+    const start = document.querySelector('.lazyStart');
+    start?.classList.toggle('show', getSettingsValue('lazyLoadImages'));
+    if (event.currentTarget.checked) {
+      Swal.fire({
+        title: getLocaleString('WARNING'),
+        html: getLocaleString('LAZY_LOAD'),
+        icon: 'warning',
+      });
+    }
+  }
+  function changeLazyStart(event) {
+    const start = event.currentTarget.value;
+    setSettingsValue('lazyStart', parseInt(start, 10));
+  }
+  function changePagesPerSecond(event) {
+    const timer = parseInt(event.currentTarget.value, 10);
+    setSettingsValue('throttlePageLoad', timer);
+    if (timer < 100) {
+      Swal.fire({
+        title: getLocaleString('SPEED_WARNING'),
+        html: getLocaleString('SPEED_WARNING_MESSAGE'),
+        icon: 'warning',
+      });
+    }
+  }
+  function changeZoomStep(event) {
+    const step = event.currentTarget.value;
+    setSettingsValue('zoomStep', parseInt(step, 10));
+  }
+  function changeMinZoom(event) {
+    const min = event.currentTarget.value;
+    replaceStyleSheet('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
+    setSettingsValue('minZoom', parseInt(min, 10));
+  }
+  function checkHideImageControls(event) {
+    const ck = event.currentTarget.checked;
+    document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls', ck);
+    setSettingsValue('hidePageControls', event.currentTarget.checked);
+  }
+  function updateHeaderType(mode) {
+    const header = document.querySelector('#Header');
+    if (!header?.classList.contains(mode)) {
+      const menu = document.querySelector('#menu');
+      header?.classList.remove('scroll', 'click', 'hover', 'fixed', 'simple', 'visible');
+      menu?.classList.remove('scroll', 'click', 'hover', 'fixed', 'simple', 'hide');
+      header?.classList.add(mode);
+      menu?.classList.add(mode);
+    }
+  }
+  function changeHeaderType(event) {
+    const headerType = event.currentTarget.value;
+    updateHeaderType(headerType);
+    setSettingsValue('header', headerType);
+  }
+  function changeScrollHeight(event) {
+    const { value } = event.currentTarget;
+    setSettingsValue('scrollHeight', parseInt(value, 10));
+  }
+  function options() {
+    document.querySelector('#ResetSettings')?.addEventListener('click', buttonResetSettings);
+    document
+      .querySelectorAll('#SettingsScope input[type=radio]')
+      .forEach(addEvent('change', changeSettingsScope));
+    document.querySelector('#locale')?.addEventListener('change', changeLocale);
+    document.querySelector('#fitIfOversize')?.addEventListener('change', checkFitWidthOversize);
+    document
+      .querySelector('#verticalSeparator')
+      ?.addEventListener('change', checkVerticalSeparator);
+    document.querySelector('#loadMode')?.addEventListener('change', changeLoadMode);
+    document.querySelector('#showThumbnails')?.addEventListener('change', checkShowThumbnails);
+    document.querySelector('#enableComments')?.addEventListener('change', checkEnableComments);
+    document.querySelector('#downloadZip')?.addEventListener('change', changeAutoDownload);
+    document.querySelector('#lazyLoadImages')?.addEventListener('change', checkLazyLoad);
+    document.querySelector('#lazyStart')?.addEventListener('change', changeLazyStart);
+    document.querySelector('#PagesPerSecond')?.addEventListener('change', changePagesPerSecond);
+    document.querySelector('#zoomStep')?.addEventListener('change', changeZoomStep);
+    document.querySelector('#minZoom')?.addEventListener('input', changeMinZoom);
+    document.querySelector('#hidePageControls')?.addEventListener('change', checkHideImageControls);
+    document.querySelector('#headerType')?.addEventListener('change', changeHeaderType);
+    document.querySelector('#scrollHeight')?.addEventListener('change', changeScrollHeight);
+  }
+
   function buttonZoomIn(event) {
     const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
-    const ratio = (img.width / img.naturalWidth) * (100 + getUserSettings().zoomStep);
+    const ratio = (img.width / img.naturalWidth) * (100 + getSettingsValue('zoomStep'));
     applyZoom(ratio, `#${img.getAttribute('id')}`);
   }
   function buttonZoomOut(event) {
     const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
-    const ratio = (img.width / img.naturalWidth) * (100 - getUserSettings().zoomStep);
+    const ratio = (img.width / img.naturalWidth) * (100 - getSettingsValue('zoomStep'));
     applyZoom(ratio, `#${img.getAttribute('id')}`);
   }
   function buttonRestoreZoom() {
@@ -4585,11 +4667,11 @@
   }
 
   function changeColorScheme() {
-    const isDark = getUserSettings().colorScheme === 'dark';
-    updateSettings({ colorScheme: isDark ? 'light' : 'dark' });
+    const isDark = getSettingsValue('colorScheme') === 'dark';
+    setSettingsValue('colorScheme', isDark ? 'light' : 'dark');
     const elem = document.getElementById('MangaOnlineViewer');
     elem?.classList.remove(isDark ? 'dark' : 'light');
-    elem?.classList.add(getUserSettings().colorScheme);
+    elem?.classList.add(getSettingsValue('colorScheme'));
   }
   function buttonSelectTheme(event) {
     const target = event.currentTarget;
@@ -4598,7 +4680,7 @@
     });
     target.classList.add('selected');
     document.getElementById('MangaOnlineViewer')?.setAttribute('data-theme', target.title);
-    updateSettings({ theme: target.title });
+    setSettingsValue('theme', target.title);
     const hue = document.querySelector('#Hue');
     const shade = document.querySelector('#Shade');
     if (target.title.startsWith('custom')) {
@@ -4611,12 +4693,12 @@
   }
   function changeCustomTheme(event) {
     const target = event.currentTarget.value;
-    updateSettings({ customTheme: target });
+    setSettingsValue('customTheme', target);
     addCustomTheme(target);
   }
   function changeThemeShade(event) {
     const target = parseInt(event.currentTarget.value, 10);
-    updateSettings({ themeShade: target });
+    setSettingsValue('themeShade', target);
     refreshThemes();
   }
   function theming() {
@@ -4629,14 +4711,14 @@
   function changeGlobalZoom(value) {
     return () => {
       if (typeof value !== 'number') {
-        getUserSettings().zoomMode = value;
+        setSettingsValue('zoomMode', value);
       } else {
-        getUserSettings().zoomMode = 'percent';
+        setSettingsValue('zoomMode', 'percent');
       }
       if (value === 'height') {
         updateHeaderType('click');
       } else {
-        updateHeaderType(getUserSettings().header);
+        updateHeaderType(getSettingsValue('header'));
       }
       const globalZoomVal = document.querySelector('#ZoomVal');
       if (Number.isInteger(value)) {
@@ -4651,17 +4733,17 @@
   function changeZoomByStep(sign = 1) {
     return () => {
       const globalZoom = document.querySelector('#Zoom');
-      const ratio = parseInt(globalZoom.value, 10) + sign * getUserSettings().zoomStep;
+      const ratio = parseInt(globalZoom.value, 10) + sign * getSettingsValue('zoomStep');
       globalZoom.value = ratio.toString();
       globalZoom?.dispatchEvent(new Event('input', { bubbles: true }));
     };
   }
   function changeDefaultZoomMode(event) {
     const target = event.currentTarget.value;
-    updateSettings({ zoomMode: target });
+    setSettingsValue('zoomMode', target);
     changeGlobalZoom(target)();
     const percent = document.querySelector('.DefaultZoom');
-    if (getUserSettings().zoomMode === 'percent') {
+    if (getSettingsValue('zoomMode') === 'percent') {
       percent?.classList.add('show');
     } else {
       percent?.classList.remove('show');
@@ -4669,7 +4751,7 @@
   }
   function changeDefaultZoom(event) {
     const target = parseInt(event.currentTarget.value, 10);
-    updateSettings({ defaultZoom: target });
+    setSettingsValue('defaultZoom', target);
     changeGlobalZoom(target)();
   }
   function changeZoom(event) {
@@ -4709,8 +4791,8 @@
       if (mode === 'FluidLTR' || mode === 'FluidRTL') {
         setupFluid(mode);
       } else {
-        document.querySelector('#Header').className = getUserSettings().header;
-        document.querySelector('#menu').className = getUserSettings().header;
+        document.querySelector('#Header').className = getSettingsValue('header');
+        document.querySelector('#menu').className = getSettingsValue('header');
         changeGlobalZoom(100)();
       }
     };
@@ -4718,7 +4800,7 @@
   function changeViewMode(event) {
     const mode = event.currentTarget.value;
     updateViewMode(mode)();
-    updateSettings({ viewMode: mode });
+    setSettingsValue('viewMode', mode);
   }
   function viewMode() {
     document.querySelector('#viewMode')?.addEventListener('change', changeViewMode);
@@ -4726,8 +4808,11 @@
     document.querySelector('#ltrMode')?.addEventListener('click', updateViewMode('FluidLTR'));
     document.querySelector('#rtlMode')?.addEventListener('click', updateViewMode('FluidRTL'));
     document.querySelector('#verticalMode')?.addEventListener('click', updateViewMode('Vertical'));
-    if (getUserSettings().viewMode === 'FluidLTR' || getUserSettings().viewMode === 'FluidRTL') {
-      setupFluid(getUserSettings().viewMode);
+    if (
+      getSettingsValue('viewMode') === 'FluidLTR' ||
+      getSettingsValue('viewMode') === 'FluidRTL'
+    ) {
+      setupFluid(getSettingsValue('viewMode'));
     }
   }
 
@@ -4738,12 +4823,12 @@
       const scrollDirection = chapter.classList.contains('FluidRTL') ? -1 : 1;
       chapter?.scrollBy({
         top: 0,
-        left: getUserSettings().scrollHeight * scrollDirection,
+        left: getSettingsValue('scrollHeight') * scrollDirection,
         behavior: 'smooth',
       });
     } else {
       window.scrollBy({
-        top: getUserSettings().scrollHeight,
+        top: getSettingsValue('scrollHeight'),
         left: 0,
         behavior: 'smooth',
       });
@@ -4816,7 +4901,7 @@
 
   let loadedManga;
   function hydrateApp() {
-    updateViewMode(getUserSettings().viewMode)();
+    updateViewMode(getSettingsValue('viewMode'))();
     const elements = {
       '#Header': Header(loadedManga),
       '#CommentsPanel': commentsPanel(),
@@ -4827,17 +4912,17 @@
     if (document.querySelector('#ScrollControl')?.classList.contains('running')) {
       toggleAutoScroll();
     }
-    const outer = document.querySelector('#MangaOnlineViewer');
+    const outer = document.getElementById('MangaOnlineViewer');
     if (outer) {
-      outer.className = `${getUserSettings().colorScheme} 
-        ${getUserSettings().hidePageControls ? 'hideControls' : ''}
+      outer.className = `${getSettingsValue('colorScheme')} 
+        ${getSettingsValue('hidePageControls') ? 'hideControls' : ''}
         ${isBookmarked() ? 'bookmarked' : ''}
         ${getDevice()}`;
-      outer.setAttribute('data-theme', getUserSettings().theme);
+      outer.setAttribute('data-theme', getSettingsValue('theme'));
     }
     const reader = document.querySelector('#Chapter');
     if (reader) {
-      reader.className = `${getUserSettings().fitWidthIfOversize ? 'fitWidthIfOversize' : ''}  ${getUserSettings().viewMode}`;
+      reader.className = `${getSettingsValue('fitWidthIfOversize') ? 'fitWidthIfOversize' : ''}  ${getSettingsValue('viewMode')}`;
     }
     Object.entries(elements).forEach(([id, component]) => {
       const tag = document.querySelector(id);
@@ -4853,13 +4938,13 @@
     const main = document.createElement('div');
     main.id = 'MangaOnlineViewer';
     main.className = `
-        ${getUserSettings().colorScheme} 
-        ${getUserSettings().hidePageControls ? 'hideControls' : ''}
+        ${getSettingsValue('colorScheme')} 
+        ${getSettingsValue('hidePageControls') ? 'hideControls' : ''}
         ${isBookmarked() ? 'bookmarked' : ''}
         ${getDevice()}`;
-    main.setAttribute('data-theme', getUserSettings().theme);
+    main.setAttribute('data-theme', getSettingsValue('theme'));
     main.innerHTML = html`
-      <div id="menu" class="${getUserSettings().header}">${IconMenu2}</div>
+      <div id="menu" class="${getSettingsValue('header')}">${IconMenu2}</div>
       ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
       <div id="Overlay" class="overlay"></div>
       ${commentsPanel()} ${KeybindingsPanel()} ${BookmarkPanel()} ${SettingsPanel()}
@@ -4895,7 +4980,7 @@
   }
 
   async function captureComments() {
-    if (!getUserSettings().enableComments) return null;
+    if (!getSettingsValue('enableComments')) return null;
     let comments = document.querySelector('#disqus_thread, #fb-comments');
     if (comments) {
       logScript(`Waiting to Comments to load`, comments);
@@ -4923,7 +5008,7 @@
     if (manga.before !== void 0) {
       await manga.before(manga.begin);
     }
-    if (getUserSettings().enableComments && !manga.comments) {
+    if (getSettingsValue('enableComments') && !manga.comments) {
       manga.comments = await captureComments();
     }
     setTimeout(() => {
@@ -4936,7 +5021,7 @@
   }
 
   const startButton =
-    '#StartMOV {\n    all: revert;\n    backface-visibility: hidden;\n    font-size: 2rem;\n    color: #fff;\n    cursor: pointer;\n    margin: 0 auto;\n    padding: 0.5rem 1rem;\n    text-align: center;\n    border: none;\n    border-radius: 10px;\n    min-height: 50px;\n    width: 80%;\n    position: fixed;\n    right: 0;\n    left: 0;\n    bottom: 0;\n    z-index: 105000;\n    transition: all 0.4s ease-in-out;\n    background-size: 300% 100%;\n    background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\n    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\n}\n\n#StartMOV:hover {\n    background-position: 100% 0;\n    transition: all 0.4s ease-in-out;\n}\n\n#StartMOV:focus {\n    outline: none;\n}\n';
+    '#StartMOV {\r\n    all: revert;\r\n    backface-visibility: hidden;\r\n    font-size: 2rem;\r\n    color: #fff;\r\n    cursor: pointer;\r\n    margin: 0 auto;\r\n    padding: 0.5rem 1rem;\r\n    text-align: center;\r\n    border: none;\r\n    border-radius: 10px;\r\n    min-height: 50px;\r\n    width: 80%;\r\n    position: fixed;\r\n    right: 0;\r\n    left: 0;\r\n    bottom: 0;\r\n    z-index: 105000;\r\n    transition: all 0.4s ease-in-out;\r\n    background-size: 300% 100%;\r\n    background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\r\n    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\r\n}\r\n\r\n#StartMOV:hover {\r\n    background-position: 100% 0;\r\n    transition: all 0.4s ease-in-out;\r\n}\r\n\r\n#StartMOV:focus {\r\n    outline: none;\r\n}\r\n';
 
   async function testAttribute(site) {
     if (site.waitAttr !== void 0) {
@@ -5234,7 +5319,7 @@
       }
       viewer(manga).then(() => logScript('Page loaded'));
     };
-    switch (site.start ?? getUserSettings()?.loadMode) {
+    switch (site.start ?? getSettingsValue('loadMode')) {
       case 'never':
         createLateStartButton(site, manga.begin);
         break;
