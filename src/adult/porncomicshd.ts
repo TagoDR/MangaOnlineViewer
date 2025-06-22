@@ -1,7 +1,7 @@
 // == PornComicsHD =================================================================================
 export default {
   name: 'PornComicsHD',
-  url: /https?:\/\/(www\.)?porncomicshd.com\/es\/comics-porno-hd\/.+/,
+  url: /https?:\/\/(www\.)?porncomicshd.com\/es.*/,
   homepage: 'https://porncomicshd.com/es',
   language: ['Spanish'],
   category: 'hentai',
