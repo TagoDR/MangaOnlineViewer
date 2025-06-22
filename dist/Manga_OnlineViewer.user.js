@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, Natomanga, MangaOni, Mangareader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.06.21
+// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, Natomanga, MangaOni, Mangareader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @version       2025.06.22
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -53,6 +53,7 @@
 // @include       /https?:\/\/.*mangatoon.mobi\/.+\/watch\/.+/
 // @include       /https?:\/\/(www\.)?manhwaweb.com\/leer\/.+/
 // @include       /https?:\/\/(www\.)?mgeko.(com|cc)?\/reader\/.*/
+// @include       /https?:\/\/(www\.)?nineanime.com\/chapter\/.+/
 // @include       /https?:\/\/(www\.)?olympusbiblioteca.com\/capitulo\/\d+\/.+/
 // @include       /https?:\/\/(www\.)?readcomicsonline.ru\/comic\/.*\/\d*/
 // @include       /https?:\/\/(www\.)?reaperscans\.com\/series\/.+\/chapter.+/
@@ -1393,6 +1394,27 @@
     },
   };
 
+  const nineanime = {
+    name: 'NineAnime',
+    url: /https?:\/\/(www\.)?nineanime.com\/chapter\/.+/,
+    homepage: 'https://www.nineanime.com/',
+    language: ['English'],
+    category: 'manga',
+    run() {
+      const pages = [...document.querySelectorAll('.sl-page option')];
+      const chapter = document.querySelector('.mangaread-pagenav select option[selected]');
+      return {
+        title: `${document.querySelector('.title h1')?.textContent?.trim()}/${document.querySelector('.title h2')?.textContent?.trim()}`,
+        series: document.querySelector('.title a:has(h2)')?.getAttribute('href'),
+        pages: pages.length,
+        prev: chapter?.nextElementSibling?.getAttribute('value'),
+        next: chapter?.previousElementSibling?.getAttribute('value'),
+        listPages: pages.map((o) => o.getAttribute('value')),
+        img: '.manga_pic',
+      };
+    },
+  };
+
   const olympusbiblioteca = {
     name: 'OlympusBiblioteca',
     url: /https?:\/\/(www\.)?olympusbiblioteca.com\/capitulo\/\d+\/.+/,
@@ -1640,6 +1662,7 @@
     manhwaweb,
     // mangatown, // Fixme
     mgeko,
+    nineanime,
     olympusbiblioteca,
     readcomicsonline,
     // ninemanga, // Fixme

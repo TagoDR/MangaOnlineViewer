@@ -53,6 +53,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [Mangareader](https://mangareader.to) _[English]_ **Obs: Some galleries will not be usable**
 - [MangaToons](https://mangatoon.mobi/) _[English]_
 - [MangaGeko.com](https://www.mgeko.com/) / [MangaGeko.cc](https://www.mgeko.cc/) _[English]_
+- [NineAnime](https://www.nineanime.com/) _[English]_
 - [ReaperScans](https://reaperscans.com/) _[English]_
 - [WebNovel](https://www.webnovel.com/) _[English]_
 - [WebToons](https://www.webtoons.com/) _[English]_
@@ -115,6 +116,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [AkumaMoe](https://akuma.moe) _[Raw]_
 - [Dragon Translation](https://dragontranslation.net/es) _[Spanish]_
 - [GNTAI.net](https://www.gntai.net/) _[Spanish]_
+- [PornComicsHD](https://porncomicshd.com/es) _[Spanish]_
 - [TMOHentai](https://tmohentai.com/) _[Spanish]_
 - [vermangasporno](https://vermangasporno.com/) / [vercomicsporno](https://vercomicsporno.com/) _[Spanish]_
 
