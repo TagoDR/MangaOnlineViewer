@@ -25,6 +25,7 @@ import mangastreamwp from './mangastreamwp';
 import mangatoon from './mangatoon';
 import manhwaweb from './manhwaweb';
 import mgeko from './mgeko';
+import nineanime from './nineanime';
 import olympusbiblioteca from './olympusbiblioteca';
 import readcomicsonline from './readcomicsonline';
 import reaperscans from './reaperscans';
@@ -69,6 +70,7 @@ const sites = [
   manhwaweb,
   // mangatown, // Fixme
   mgeko,
+  nineanime,
   olympusbiblioteca,
   readcomicsonline,
   // ninemanga, // Fixme
