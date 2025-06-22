@@ -15,7 +15,6 @@ export default {
       next: '#',
       lazy: false,
       listImages: img.map((i) => i.getAttribute('src')),
-      // async before() {},
     };
   },
 };
