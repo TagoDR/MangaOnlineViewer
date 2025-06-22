@@ -9,7 +9,6 @@ export default {
     const images = [...document.querySelectorAll('.wp-block-gallery img')];
     return {
       title: document.querySelector('.s-title')?.textContent?.trim(),
-      series: '',
       pages: images.length,
       prev: '#',
       next: '#',

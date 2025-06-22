@@ -24,6 +24,7 @@ import multporn from './multporn';
 import myhentaigallery from './myhentaigallery';
 import nhentainet from './nhentainet';
 import ninehentai from './9hentai';
+import porncomicshd from './porncomicshd';
 import pururin from './pururin';
 import schalenetwork from './schalenetwork';
 import simplyhentai from './simplyhentai';
@@ -66,6 +67,7 @@ const sites = [
   ninehentai,
   // omegascans, // Fixme
   // porncomixonline, // Fixme
+  porncomicshd,
   pururin,
   schalenetwork,
   simplyhentai,
