@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.06.22
+// @version       2025.06.26
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -27,7 +27,7 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
 // @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.9/dist/hotkeys.min.js
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
-// @require       https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js
+// @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.14/dist/hotkeys.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
 // @include       /https?:\/\/(www\.)?akuma\.moe\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?bestporncomix.com\/gallery\/.+/
@@ -54,7 +54,7 @@
 // @include       /https?:\/\/(www\.)?myhentaigallery.com\/g\/.+\/\d+/
 // @include       /https?:\/\/(www\.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?9hentai.(so)\/g\/.+\/.+/
-// @include       /https?:\/\/(www\.)?porncomicshd.com\/es\/comics-porno-hd\/.+/
+// @include       /https?:\/\/(www\.)?porncomicshd.com\/es.*/
 // @include       /https?:\/\/(www\.)?pururin.me\/(view|read)\/.+\/.+\/.+/
 // @include       /https?:\/\/(www\.)?(niyaniya|shupogaki|hoshino).(moe|one)/
 // @include       /https?:\/\/(www\.)?simply-hentai.com\/.+\/page\/.+/

@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, Natomanga, MangaOni, Mangareader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.06.22
+// @version       2025.06.26
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -27,7 +27,7 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
 // @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.9/dist/hotkeys.min.js
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
-// @require       https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js
+// @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.14/dist/hotkeys.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
 // @include       /https?:\/\/(www.)?(asuracomic).(net)\/.+/
 // @include       /https?:\/\/(www\.)?(\w(ba)?to|readtoto|batocomic|comiko|battwo|batotoo|batotwo).(to|com|net|org)\/(chapter|title).*/
@@ -3695,7 +3695,7 @@
         }
         function c(a, b, c) {
           var d = new XMLHttpRequest();
-          d.open('GET', a),
+          (d.open('GET', a),
             (d.responseType = 'blob'),
             (d.onload = function () {
               g(d.response, b, c);
@@ -3703,7 +3703,7 @@
             (d.onerror = function () {
               console.error('could not download file');
             }),
-            d.send();
+            d.send());
         }
         function d(a) {
           var b = new XMLHttpRequest();
@@ -3718,7 +3718,7 @@
             a.dispatchEvent(new MouseEvent('click'));
           } catch (c) {
             var b = document.createEvent('MouseEvents');
-            b.initMouseEvent(
+            (b.initMouseEvent(
               'click',
               true,
               true,
@@ -3735,7 +3735,7 @@
               0,
               null,
             ),
-              a.dispatchEvent(b);
+              a.dispatchEvent(b));
           }
         }
         var f =
@@ -3759,7 +3759,7 @@
                 ? function (b, g, h) {
                     var i = f.URL || f.webkitURL,
                       j = document.createElement('a');
-                    (g = g || b.name || 'download'),
+                    ((g = g || b.name || 'download'),
                       (j.download = g),
                       (j.rel = 'noopener'),
                       'string' == typeof b
@@ -3775,7 +3775,7 @@
                           }, 4e4),
                           setTimeout(function () {
                             e(j);
-                          }, 0));
+                          }, 0)));
                   }
                 : 'msSaveOrOpenBlob' in navigator
                   ? function (f, g, h) {
@@ -3784,11 +3784,11 @@
                       else if (d(f)) c(f, g, h);
                       else {
                         var i = document.createElement('a');
-                        (i.href = f),
+                        ((i.href = f),
                           (i.target = '_blank'),
                           setTimeout(function () {
                             e(i);
-                          });
+                          }));
                       }
                     }
                   : function (b, d, e, g) {
@@ -3803,24 +3803,24 @@
                         j = /CriOS\/[\d]+/.test(navigator.userAgent);
                       if ((j || (h && i) || a) && 'undefined' != typeof FileReader) {
                         var k = new FileReader();
-                        (k.onloadend = function () {
+                        ((k.onloadend = function () {
                           var a = k.result;
-                          (a = j ? a : a.replace(/^data:[^;]*;/, 'data:attachment/file;')),
+                          ((a = j ? a : a.replace(/^data:[^;]*;/, 'data:attachment/file;')),
                             g ? (g.location.href = a) : (location = a),
-                            (g = null);
+                            (g = null));
                         }),
-                          k.readAsDataURL(b);
+                          k.readAsDataURL(b));
                       } else {
                         var l = f.URL || f.webkitURL,
                           m = l.createObjectURL(b);
-                        g ? (g.location = m) : (location.href = m),
+                        (g ? (g.location = m) : (location.href = m),
                           (g = null),
                           setTimeout(function () {
                             l.revokeObjectURL(m);
-                          }, 4e4);
+                          }, 4e4));
                       }
                     });
-        (f.saveAs = g.saveAs = g), (module.exports = g);
+        ((f.saveAs = g.saveAs = g), (module.exports = g));
       });
     })(FileSaver_min$1);
     return FileSaver_min$1.exports;
