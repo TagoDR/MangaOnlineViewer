@@ -1,3 +1,5 @@
+import { framework } from '../index.ts';
+import render from '../svelte';
 import type { IManga } from '../types';
 import display from '../ui';
 import { logScript, logScriptVerbose } from '../utils/tampermonkey';
@@ -42,7 +44,8 @@ export default async function viewer(manga: IManga) {
   }
   setTimeout(() => {
     try {
-      display(manga);
+      if (framework) render(manga);
+      else display(manga);
     } catch (e) {
       logScript(e);
     }

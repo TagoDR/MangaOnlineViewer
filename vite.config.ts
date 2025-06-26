@@ -1,4 +1,5 @@
 import * as fs from 'node:fs';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
 import externalGlobals from 'rollup-plugin-external-globals';
 import prettier from 'rollup-plugin-prettier';
 import userscript, { type Metadata } from 'userscript-metadata-generator';
@@ -76,6 +77,7 @@ export default defineConfig(({ mode }) => {
   return {
     mode: target === 'dev' ? 'development' : 'production',
     plugins: [
+      svelte(),
       viteBanner({ content: metadata, verify: false }),
       svgLoader({ svgo: false, defaultImport: 'raw' }),
     ],
@@ -83,19 +85,16 @@ export default defineConfig(({ mode }) => {
     build: {
       target: 'esnext',
       minify: false,
+      sourcemap: false,
       emptyOutDir: false,
       outDir: 'dist',
       rollupOptions: {
         input: `src/${scripts[target].entry}`,
-        plugins: [
-          externalGlobals(globals),
-          target !== 'dev' ? prettier({ parser: 'babel-ts' }) : null,
-        ],
+        plugins: [externalGlobals(globals), prettier({ parser: 'babel-ts' })],
         output: {
           // banner: metadata,
           format: 'iife',
           entryFileNames: scripts[target].name,
-          sourcemap: false,
         },
       },
     },

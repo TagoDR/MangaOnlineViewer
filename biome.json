@@ -21,7 +21,7 @@
     "rules": {
       "recommended": true
     },
-    "includes": ["**", "!node_modules", "!dist"]
+    "includes": ["**", "!node_modules", "!dist", "!**/*.svelte"]
   },
   "javascript": {
     "formatter": {
