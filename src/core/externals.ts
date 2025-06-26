@@ -47,8 +47,8 @@ const externalScripts: string[] = [
     crossorigin="anonymous"
   ></script>`,
   html` <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js"
-    integrity="sha512-FS3rpwhhjq9Tjt/U+qIrgOIa60xmW+Kr71CSGS5ifKJl/E9DdODyUrtentDS6eRmrfXPRzqq0DhywHd06qpdGw=="
+    src="https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.14/dist/hotkeys.min.js"
+    integrity="sha256-c/hIbXEcIHIxw3XrWr9nco7BPMdLAJFqxp05Jg3L3QI="
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   ></script>`,
