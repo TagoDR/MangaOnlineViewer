@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import { get, writable } from 'svelte/store';
+import { addMessages, init } from 'svelte-i18n';
 import {
   getGlobalSettings,
   getLocalSettings,
@@ -82,6 +84,12 @@ let localSettings: ISettings = _.defaultsDeep(
   getLocalSettings(getDefault(false)),
   getDefault(false),
 );
+export const settings = writable<ISettings>(localSettings ?? globalSettings);
+locales.forEach((locale) => addMessages(locale.ID, locale));
+init({
+  fallbackLocale: 'en_US',
+  initialLocale: get(settings).locale,
+});
 
 export function showSettings<K extends ISettingsKey>(key: K | null = null) {
   logScriptVerbose('Global Settings', key ? globalSettings[key] : globalSettings);
@@ -111,6 +119,10 @@ settingsChangeListener((newValue: Partial<ISettings>) => {
     document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
   }
 }, window.location.hostname);
+
+export function getUserSettings() {
+  return get(settings);
+}
 
 /**
  * Gets the effective value for a setting, considering site-specific overrides,
@@ -176,25 +188,6 @@ export function getLocaleString(name: string): string {
   return `##MISSING_STRING_${name.toLocaleUpperCase()}##`;
 }
 
-/*
-export function getAllLocaleStrings(name: string): string {
-  return locales.map((locale) => `<span class='${locale.ID}'>${locale[name]}</span>`).join('\n');
-}
-*/
-
-/*
-export function updateSettings(newValue: Partial<ISettings>) {
-  logScript(JSON.stringify(newValue));
-  if (localSettings) {
-    localSettings = { ...localSettings, ...newValue };
-    setLocalSettings(diffObj(localSettings, getDefault()));
-  } else {
-    globalSettings = { ...globalSettings, ...newValue };
-    setGlobalSettings(diffObj(globalSettings, getDefault()));
-  }
-}
-*/
-
 export function resetSettings() {
   if (isSettingsLocal()) {
     removeValueGM(window.location.hostname);
@@ -230,13 +223,5 @@ export function isBookmarked(url: string = window.location.href): number | undef
   return globalSettings.bookmarks.find((el) => el.url === url)?.page;
 }
 
-/*
-// Clear old Bookmarks
-const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // Year
-const refreshedBookmark = globalSettings.bookmarks.filter(
-  (el) => Date.now() - new Date(el.date).valueOf() < bookmarkTimeLimit,
-);
-if (globalSettings.bookmarks.length !== refreshedBookmark.length) {
-  setSettingsValue('bookmarks', refreshedBookmark);
-}
-*/
+
+export default settings;
