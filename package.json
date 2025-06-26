@@ -30,6 +30,8 @@
   "homepage": "https://github.com/TagoDR/MangaOnlineViewer#readme",
   "devDependencies": {
     "@biomejs/biome": "^2.1.2",
+    "@sveltejs/vite-plugin-svelte": "^6.1.0",
+    "@tsconfig/svelte": "^5.0.4",
     "@types/crypto-js": "^4.2.2",
     "@types/file-saver": "^2.0.7",
     "@types/imagesloaded": "^4.1.7",
@@ -39,8 +41,11 @@
     "@types/tampermonkey": "^5.0.4",
     "@types/tinycolor2": "^1.4.6",
     "del": "^8.0.0",
+    "prettier-plugin-svelte": "^3.4.0",
     "rollup-plugin-external-globals": "^0.13.0",
     "rollup-plugin-prettier": "^4.1.2",
+    "svelte": "^5.36.10",
+    "terser": "^5.43.1",
     "typescript": "^5.8.3",
     "userscript-metadata-generator": "^0.2.4",
     "vite": "^7.0.5",
@@ -74,6 +79,10 @@
     "trailingComma": "all",
     "printWidth": 100,
     "arrowParens": "avoid",
-    "endOfLine": "crlf"
+    "endOfLine": "crlf",
+    "singleAttributePerLine": true,
+    "plugins": [
+      "prettier-plugin-svelte"
+    ]
   }
 }
