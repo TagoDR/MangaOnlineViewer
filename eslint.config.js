@@ -22,6 +22,7 @@ export default defineConfig([
         },
       ],
       'import/no-unresolved': 'off',
+      'prettier/prettier': ['warn', { endOfLine: 'auto' }],
     },
   },
   {
