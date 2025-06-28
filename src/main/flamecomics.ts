@@ -1,16 +1,18 @@
 // == Flame Comics =================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'Flame Comics',
   url: /https?:\/\/(www.)?(flamecomics).(xyz)\/series\/.+/,
   homepage: 'https://flamecomics.xyz/',
-  language: ['English'],
-  category: 'manga',
-  run: function () {
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
+  run(): IManga {
     const cdn = 'https://cdn.flamecomics.xyz/series';
     const json = JSON.parse(document.getElementById('__NEXT_DATA__')?.innerHTML ?? '');
     const chapter = json?.props?.pageProps?.chapter;
     const images = Object.keys(chapter?.images).map(
-      (i) => `${cdn}/${chapter?.series_id}/${chapter?.token}/${chapter?.images?.[i]?.name}`,
+      i => `${cdn}/${chapter?.series_id}/${chapter?.token}/${chapter?.images?.[i]?.name}`,
     );
     return {
       title: `${chapter?.title} ${chapter?.chapter}`,
@@ -22,3 +24,4 @@ export default {
     };
   },
 };
+export default site;

@@ -1,22 +1,24 @@
 // == Ikigai Mangas ================================================================================
 import { findClosestByContentEq } from '../utils/find';
+import { Category, IManga, ISite, Language } from '../types';
 
-export default {
+const site: ISite = {
   name: ['Ikigai Mangas - EltaNews', 'Ikigai Mangas - Ajaco'],
   url: /https?:\/\/visorikigai.(ajaco|eltanews).(com|net)\/capitulo\/\d+/,
   homepage: ['https://visorikigai.eltanews.com/', 'https://visorikigai.ajaco.net/'],
-  language: ['Spanish'],
-  category: 'manga',
-  run() {
-    const images = document
-      .querySelector('script[type="qwik/json"]')
-      ?.textContent?.match(/http[^'"]+webp/gi);
+  language: [Language.SPANISH],
+  category: Category.MANGA,
+  run(): IManga {
+    const images =
+      document.querySelector('script[type="qwik/json"]')?.textContent?.match(/http[^'"]+webp/gi) ??
+      [];
     return {
       title: document.querySelector('title')?.text.replace(' — Manga en línea | MangaOni', ''),
       pages: images?.length,
-      prev: findClosestByContentEq('span','Siguiente')?.getAttribute('href'),
-      next: findClosestByContentEq('span','Anterior')?.getAttribute('href'),
+      prev: findClosestByContentEq('span', 'Siguiente')?.getAttribute('href'),
+      next: findClosestByContentEq('span', 'Anterior')?.getAttribute('href'),
       listImages: images,
     };
   },
 };
+export default site;

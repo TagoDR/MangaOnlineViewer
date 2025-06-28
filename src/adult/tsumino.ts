@@ -1,15 +1,17 @@
 // == Tsumino ======================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'Tsumino',
   url: /https?:\/\/(www\.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/,
   homepage: 'https://tsumino.com/',
-  language: ['English'],
-  category: 'hentai',
-  async run() {
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
+  async run(): Promise<IManga> {
     const dataopt = document.querySelector('#image-container')?.getAttribute('data-opt');
     const datacdn = document.querySelector('#image-container')?.getAttribute('data-cdn') ?? '';
     const url = `https://www.tsumino.com/Read/Load?q=${dataopt}`;
-    const api = await fetch(url).then(async (res) => res.json());
+    const api = await fetch(url).then(async res => res.json());
     return {
       title: document
         .querySelector('title')
@@ -25,3 +27,4 @@ export default {
     };
   },
 };
+export default site;

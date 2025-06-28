@@ -1,11 +1,13 @@
 // == SenManga =====================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'SenManga(Raw)',
   url: /https?:\/\/raw\.senmanga.com\/.+\/.+\/?/,
   homepage: 'https://raw.senmanga.com/',
-  language: ['Raw'],
-  category: 'manga',
-  run() {
+  language: [Language.RAW],
+  category: Category.MANGA,
+  run(): IManga {
     const url = `/${window.location.pathname.split('/')[1]}/${
       window.location.pathname.split('/')[2]
     }`;
@@ -15,7 +17,7 @@ export default {
     );
     const chapter = [...document.querySelectorAll('.dropdown-chapter li')];
     const origin = chapter.findIndex(
-      (item) => item.querySelector('a')?.getAttribute('href') === window.location.href,
+      item => item.querySelector('a')?.getAttribute('href') === window.location.href,
     );
     return {
       title: $('.title').text().trim(),
@@ -36,3 +38,4 @@ export default {
     };
   },
 };
+export default site;

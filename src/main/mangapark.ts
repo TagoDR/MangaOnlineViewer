@@ -1,12 +1,14 @@
 // == MangaPark ====================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'MangaPark',
   url: /https?:\/\/(www\.)?mangapark.(com|me|org|net)\/title\/.+\/.+/,
   homepage: 'https://mangapark.net/',
-  language: ['English'],
-  category: 'manga',
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
   waitEle: 'main div div a.btn-primary',
-  run() {
+  run(): IManga {
     const json = JSON.parse(document.querySelector('#__NEXT_DATA__')?.innerHTML ?? '');
     const data = json.props.pageProps.dehydratedState.queries[0].state.data.data.imageSet;
     const images = data.httpLis.map(
@@ -14,7 +16,7 @@ export default {
     );
     return {
       title: [...document.querySelectorAll('.comic-detail h3 a, .comic-detail h6 span')]
-        .map((e) => e.textContent?.trim())
+        .map(e => e.textContent?.trim())
         .join(' '),
       series: document.querySelector('.comic-detail a')?.getAttribute('href'),
       pages: images.length,
@@ -24,3 +26,4 @@ export default {
     };
   },
 };
+export default site;

@@ -1,12 +1,14 @@
 // == Ver Mangas Porno =============================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: ['vermangasporno', 'vercomicsporno'],
   url: /https?:\/\/(www\.)?(vermangasporno|vercomicsporno).com\/.+/,
   homepage: ['https://vermangasporno.com/', 'https://vercomicsporno.com/'],
-  language: ['Spanish'],
-  category: 'hentai',
+  language: [Language.SPANISH],
+  category: Category.HENTAI,
   waitEle: 'img[loading="lazy"].size-full, .comicimg picture img, .wp-content img',
-  run() {
+  run(): IManga {
     const images = [
       ...document.querySelectorAll(
         'img[loading="lazy"].size-full, .comicimg picture img, .wp-content img',
@@ -18,11 +20,12 @@ export default {
       prev: '#',
       next: '#',
       listImages: images.map(
-        (img) =>
+        img =>
           img.getAttribute('data-lazy-src') ??
           img.getAttribute('data-src') ??
-          img.getAttribute('src'),
+          img.getAttribute('src')!,
       ),
     };
   },
 };
+export default site;

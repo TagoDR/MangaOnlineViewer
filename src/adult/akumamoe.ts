@@ -1,14 +1,16 @@
 // == AkumaMoe =====================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'AkumaMoe',
   url: /https?:\/\/(www\.)?akuma\.moe\/g\/.+\/.+/,
   homepage: 'https://akuma.moe',
-  language: ['Raw'],
-  category: 'hentai',
+  language: [Language.RAW],
+  category: Category.HENTAI,
   waitFunc: () =>
     unsafeWindow.img_lst?.length ===
     document.querySelectorAll('.reader-nav:first-child .nav-select option')?.length,
-  async run() {
+  async run(): Promise<IManga> {
     return {
       title: document
         .querySelector('h1.sr-only')
@@ -22,3 +24,4 @@ export default {
     };
   },
 };
+export default site;

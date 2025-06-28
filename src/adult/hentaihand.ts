@@ -1,12 +1,14 @@
-// == HentaiHand ==================================================================================
-export default {
+// == HentaiHand ===================================================================================
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: ['HentaiHand', 'nHentai.com'],
   url: /https?:\/\/(www\.)?(hentaihand|nhentai).com\/.+\/reader/,
   homepage: ['https://hentaihand.com/', 'https://nhentai.com'],
-  language: ['English'],
-  category: 'hentai',
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
   waitEle: '.reader img',
-  run() {
+  run(): IManga {
     const images = [...document.querySelectorAll('.reader img')];
     return {
       title: document.querySelector('.reader-header h5')?.textContent?.trim(),
@@ -14,7 +16,8 @@ export default {
       pages: images.length,
       prev: '#',
       next: '#',
-      listImages: images.map((img) => img.getAttribute('data-src') ?? img.getAttribute('src')),
+      listImages: images.map(img => img.getAttribute('data-src') ?? img.getAttribute('src')!),
     };
   },
 };
+export default site;

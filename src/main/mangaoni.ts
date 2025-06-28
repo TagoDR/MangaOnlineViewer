@@ -1,11 +1,13 @@
 // == MangaOni =====================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'MangaOni',
   url: /https?:\/\/(www\.)?manga-oni.com\/lector\/.+\/\d+\/cascada/,
   homepage: 'https://manga-oni.com/',
-  language: ['Spanish'],
-  category: 'manga',
-  run() {
+  language: [Language.SPANISH],
+  category: Category.MANGA,
+  run(): IManga {
     document.querySelector('#c_list')?.dispatchEvent(new Event('mouseover'));
     const chapter = document.querySelector<HTMLOptionElement>('#c_list option:checked');
     const images = [...document.querySelectorAll('#slider img')];
@@ -14,7 +16,8 @@ export default {
       pages: images?.length,
       prev: chapter?.nextElementSibling?.getAttribute('value'),
       next: chapter?.previousElementSibling?.getAttribute('value'),
-      listImages: images.map((img) => img.getAttribute('data-src') ?? img.getAttribute('src')),
+      listImages: images.map(img => img.getAttribute('data-src') ?? img.getAttribute('src')!),
     };
   },
 };
+export default site;

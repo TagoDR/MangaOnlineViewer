@@ -1,12 +1,14 @@
 // == HentaIHere ===================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'HentaIHere',
   url: /https?:\/\/(www\.)?hentaihere.com\/.+\/.+\/.+/,
   homepage: 'https://www.hentaihere.com/',
-  language: ['English'],
-  category: 'hentai',
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
   waitVar: 'rff_imageList',
-  run() {
+  run(): IManga {
     const src = document.querySelector('#arf-reader-img')?.getAttribute('src')?.replace(/\d.+/, '');
     return {
       title: unsafeWindow.rff_pageTitle.replace(/.+\|/, '').trim(),
@@ -18,3 +20,4 @@ export default {
     };
   },
 };
+export default site;

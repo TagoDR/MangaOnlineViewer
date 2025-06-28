@@ -88,22 +88,22 @@ then open it in the browser, and you will see the options to load local Files.
 
 - Auto Scroll
 - View Modes:
-    - Vertical/WebComic [Default]
-    - Fluid Left to Right
-    - Fluid Right to Left
+  - Vertical/WebComic [Default]
+  - Fluid Left to Right
+  - Fluid Right to Left
 - Bookmark Pages (To resume reading)
 - Full Themes and Customizable
 - Global and Individual images zoom
-    - In(Global one may stretch images beyond window width)
-    - Out
-    - Restore original(Toggle fit width if oversize)
-    - Fit width
-    - Fit width if oversize[Default on]
-    - Fit Height (with scroll pages)
-    - Hide
+  - In(Global one may stretch images beyond window width)
+  - Out
+  - Restore original(Toggle fit width if oversize)
+  - Fit width
+  - Fit width if oversize[Default on]
+  - Fit Height (with scroll pages)
+  - Hide
 - Auto reload Images
-    - Counter for loaded Images
-    - Individual image reload, just in case
+  - Counter for loaded Images
+  - Individual image reload, just in case
 - HotKeys
 - Goto Page
 - Image Loading Timer[Default 1s](Some sites require longer timers. e.g.:ExHentai,e-hentai)
@@ -123,33 +123,36 @@ Below is an example with descriptions.
 
 ```ts
 // == MangaDex =====================================================================================
-export default {
-    name: 'MangaDex', // The name of the to be listed, may be an array of names
-    url: /https?:\/\/(www\.)?mangadex.org/, // Regex to detect the site, usually just the reader part of the site, but can be the root if is has a lot of dynamic content
-    homepage: 'https://mangadex.org/', // Link for the home page of the site, may be an array of urls
-    language: ['English'], // Array of languages the site serve
-    category: 'manga', // Category of the site
-    waitEle: '#chapter-selector a', // Wait for something before running, some site requires some steps before the information is available
-    async run() {
-        // Logic for obtaining the required information
-        const chapterId = /\/chapter\/([^/]+)(\/\d+)?/.exec(window.location.pathname)?.at(1);
-        const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
-        const server = await fetch(home).then(async (res) => res.json());
-        const images = server.chapter.data;
-        const chapters = document.querySelectorAll('#chapter-selector a');
-        return {
-            title: document.querySelector('title')?.text.replace(' - MangaDex', ''), // Title of the Chapter/Manga
-            series: document.querySelector("a.text-primary[href^='/title/']")?.getAttribute('href'), // Url for the gallery or chapter list
-            pages: images.length, // Quantity of pages
-            prev: chapters?.item(0)?.getAttribute('href'), // Previous Chapter
-            next: chapters?.item(1)?.getAttribute('href'), // Next Chapter
-            listImages: images.map(
-                // List of images
-                (img: string) => `${server.baseUrl}/data/${server.chapter.hash}/${img}`,
-            ),
-        };
-    },
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
+  name: 'MangaDex', // The name of the to be listed, may be an array of names
+  url: /https?:\/\/(www\.)?mangadex.org/, // Regex to detect the site, usually just the reader part of the site, but can be the root if is has a lot of dynamic content
+  homepage: 'https://mangadex.org/',
+  language: [Language.ENGLISH], // Array of languages the site serve
+  category: Category.MANGA, // Category of the site
+  waitEle: '#chapter-selector a', // Wait for something before running, some site requires some steps before the information is available
+  async run(): Promise<IManga> {
+    // Logic for obtaining the required information
+    const chapterId = /\/chapter\/([^/]+)(\/\d+)?/.exec(window.location.pathname)?.at(1);
+    const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
+    const server = await fetch(home).then(async (res) => res.json());
+    const images = server.chapter.data;
+    const chapters = document.querySelectorAll('#chapter-selector a');
+    return {
+      title: document.querySelector('title')?.text.replace(' - MangaDex', ''), // Title of the Chapter/Manga
+      series: document.querySelector("a.text-primary[href^='/title/']")?.getAttribute('href'), // Url for the gallery or chapter list
+      pages: images.length, // Quantity of pages
+      prev: chapters?.item(0)?.getAttribute('href'), // Previous Chapter
+      next: chapters?.item(1)?.getAttribute('href'), // Next Chapter
+      listImages: images.map(
+        // List of images
+        (img: string) => `${server.baseUrl}/data/${server.chapter.hash}/${img}`,
+      ),
+    };
+  },
 };
+export default site;
 ```
 
 Look inside the types folder to better understand the structure and valid values.
@@ -181,8 +184,8 @@ bookmarklet.
 
 ```JS
 javascript:(function() {
-    if (unsafeWindow === undefined) unsafeWindow = window;
-    ["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
+  if (unsafeWindow === undefined) unsafeWindow = window;
+  ["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
 })();
 ```
 
@@ -190,7 +193,7 @@ javascript:(function() {
 
 ```JS
 javascript:(function() {
-    if (unsafeWindow === undefined) unsafeWindow = window;
-    ["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer_Adult.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
+  if (unsafeWindow === undefined) unsafeWindow = window;
+  ["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer_Adult.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
 })();
 ```

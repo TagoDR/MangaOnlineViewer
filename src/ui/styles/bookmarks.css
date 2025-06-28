@@ -1,50 +1,50 @@
 #MangaOnlineViewer #BookmarksPanel {
-    position: fixed;
-    top: 10%;
-    width: 50%;
-    left: 25%;
-    right: 25%;
-    text-align: center;
-    max-height: 70%;
-    transition: transform 0.3s ease-in-out;
-    transform: scaleY(0);
-    z-index: 1000;
+  position: fixed;
+  top: 10%;
+  width: 50%;
+  left: 25%;
+  right: 25%;
+  text-align: center;
+  max-height: 70%;
+  transition: transform 0.3s ease-in-out;
+  transform: scaleY(0);
+  z-index: 1000;
 }
 
 #MangaOnlineViewer #BookmarksPanel.visible {
-    transform: scaleY(1);
-    display: block;
+  transform: scaleY(1);
+  display: block;
 }
 
 #MangaOnlineViewer #BookmarksList {
-    padding: 0 15px;
-    overflow: auto;
-    max-height: 60vh;
+  padding: 0 15px;
+  overflow: auto;
+  max-height: 60vh;
 }
 
 #MangaOnlineViewer #BookmarksList .BookmarkItem {
-    display: flex;
-    flex-flow: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2px;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px;
 }
 
 #MangaOnlineViewer #BookmarksList .bookmarkColumnLarge {
-    flex-basis: 90%;
+  flex-basis: 90%;
 }
 
 #MangaOnlineViewer #BookmarksList .bookmarkColumnSmall {
-    width: 90px;
+  width: 90px;
 }
 
 #MangaOnlineViewer #BookmarksList .bookmarkFunctions {
-    width: 75px;
+  width: 75px;
 }
 
 #MangaOnlineViewer #BookmarksList .bookmarkURl {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    flex-basis: 55%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  flex-basis: 55%;
 }

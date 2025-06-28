@@ -1,11 +1,13 @@
 // == MangaDemon ===================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'MangaDemon',
   url: /https?:\/\/(www\.)?demonicscans\.org\/title\/.+\/chapter\/.+/,
   homepage: 'https://demonicscans.org/',
-  language: ['English'],
-  category: 'manga',
-  run() {
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
+  run(): IManga {
     const images = [...document.querySelectorAll('.imgholder')];
     return {
       title: document.querySelector('title')?.textContent?.trim(),
@@ -13,7 +15,8 @@ export default {
       pages: images.length,
       prev: document.querySelector('.prevchap')?.getAttribute('href'),
       next: document.querySelector('.nextchap')?.getAttribute('href'),
-      listImages: images.map((img) => img.getAttribute('data-src') || img.getAttribute('src')),
+      listImages: images.map(img => img.getAttribute('data-src') || img.getAttribute('src')!),
     };
   },
 };
+export default site;

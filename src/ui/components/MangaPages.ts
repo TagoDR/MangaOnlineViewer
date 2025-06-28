@@ -17,7 +17,7 @@ import { getLocaleString } from '../../core/settings';
 const listPages = (times: number, begin: number) =>
   sequence(times, begin).map(
     // Language=html
-    (index) => html`
+    index => html`
       <div id="Page${index}" class="MangaPage">
         <div class="PageFunctions">
           <button class="Bookmark ControlButton" title="${getLocaleString('BOOKMARK')}">
@@ -47,7 +47,7 @@ const listPages = (times: number, begin: number) =>
           <span class="PageIndex">${index}</span>
         </div>
         <div class="PageContent">
-          <img id="PageImg${index}" alt="" class="PageImg" />
+          <img id="PageImg${index}" alt="" class="PageImg" src="" />
         </div>
       </div>
       <div class="separator">

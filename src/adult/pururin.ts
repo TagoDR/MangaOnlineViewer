@@ -1,12 +1,14 @@
 // == Pururin ======================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'Pururin',
   url: /https?:\/\/(www\.)?pururin.me\/(view|read)\/.+\/.+\/.+/,
   homepage: 'https://pururin.me/',
-  language: ['English'],
-  category: 'hentai',
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
   waitAttr: ['.img-viewer img', 'src'],
-  run() {
+  run(): IManga {
     const src = document.querySelector('.img-viewer img')?.getAttribute('src') ?? '';
     const num = [...document.querySelectorAll('.img-select option')];
     return {
@@ -19,3 +21,4 @@ export default {
     };
   },
 };
+export default site;

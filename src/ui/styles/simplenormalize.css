@@ -1,16 +1,16 @@
 /*  Simple Normalizer */
 html {
-    font-size: 100%;
+  font-size: 100%;
 }
 
 body {
-    margin: 0;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    line-height: 20px;
-    color: var(--theme-body-text-color);
-    background-color: var(--theme-body-background);
-    padding: 0;
+  margin: 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--theme-body-text-color);
+  background-color: var(--theme-body-background);
+  padding: 0;
 }
 
 a,
@@ -18,12 +18,12 @@ a:link,
 a:visited,
 a:active,
 a:focus {
-    color: var(--theme-body-text-color);
-    text-decoration: none;
+  color: var(--theme-body-text-color);
+  text-decoration: none;
 }
 
 img {
-    height: auto;
-    vertical-align: middle;
-    border: 0 none;
+  height: auto;
+  vertical-align: middle;
+  border: 0 none;
 }

@@ -1,15 +1,16 @@
-// == Yabai ================================================================================
-import { bruteforce } from '../utils/bruteforce.ts';
+// == Yabai ========================================================================================
+import { Category, IMangaImages, ISite, Language } from '../types';
+import { bruteforce } from '../utils/bruteforce';
 
-export default {
+const site: ISite = {
   name: 'Yabai',
   url: /https?:\/\/(www\.)?yabai.si\/g\/.+\/read/,
   homepage: 'https://yabai.si/',
-  language: ['English'],
-  category: 'hentai',
-  async run() {
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
+  async run(): Promise<IMangaImages> {
     const num = document.querySelectorAll('nav select option').length;
-    return {
+    const manga = {
       title: document.querySelector('title')?.textContent?.trim(),
       series: '../',
       pages: num,
@@ -17,7 +18,7 @@ export default {
       next: '#',
       listImages: [''],
       async before() {
-        this.listImages = await bruteforce(
+        manga.listImages = await bruteforce(
           () => {
             const item = document.querySelector<HTMLOptionElement>('select option');
             if (item) item.selected = true;
@@ -31,5 +32,7 @@ export default {
         );
       },
     };
+    return manga;
   },
 };
+export default site;

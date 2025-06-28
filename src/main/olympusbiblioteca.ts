@@ -1,12 +1,13 @@
 // == OlympusBiblioteca ============================================================================
+import { Category, IManga, ISite, Language } from '../types';
 
-export default {
+const site: ISite = {
   name: 'OlympusBiblioteca',
   url: /https?:\/\/(www\.)?olympusbiblioteca.com\/capitulo\/\d+\/.+/,
   homepage: 'https://olympusbiblioteca.com/',
-  language: ['Spanish'],
-  category: 'manga',
-  run() {
+  language: [Language.SPANISH],
+  category: Category.MANGA,
+  run(): IManga {
     const images = [...document.querySelectorAll('section img.w-full.h-full')];
     return {
       title: document.querySelector('title')?.textContent?.replace(/\|.+/, '').trim(),
@@ -14,7 +15,8 @@ export default {
       pages: images.length,
       prev: document.querySelector('a[name="capitulo anterior"]')?.getAttribute('href'),
       next: document.querySelector('a[name="capitulo siguiente"]')?.getAttribute('href'),
-      listImages: images.map((img) => img.getAttribute('src')),
+      listImages: images.map(img => img.getAttribute('src')!),
     };
   },
 };
+export default site;

@@ -1,12 +1,14 @@
 // == MangaFox =====================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: ['MangaFox', 'MangaHere'],
   url: /https?:\/\/(www\.)?(fanfox.net|mangahere.cc)\/manga\/.+\/.+\//,
   homepage: ['https://fanfox.net/', 'https://www.mangahere.cc/'],
-  language: ['English'],
-  category: 'manga',
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
   waitVar: 'chapterid',
-  async run() {
+  async run(): Promise<IManga> {
     const key = document.querySelector('#dm5_key')?.getAttribute('value');
     const options = {
       method: 'GET',
@@ -20,9 +22,10 @@ export default {
         const url = `chapterfun.ashx?cid=${
           unsafeWindow.chapterid ?? unsafeWindow.chapter_id
         }&page=${i}&key=${key}`;
-        const api: string = await fetch(url, options).then(async (res) => res.text());
-        // eslint-disable-next-line no-eval
+        const api: string = await fetch(url, options).then(async res => res.text());
+
         (0, eval)(api);
+        /* eslint @typescript-eslint/ban-ts-comment: "off" */
         // @ts-ignore
         return d;
       });
@@ -37,3 +40,4 @@ export default {
     };
   },
 };
+export default site;

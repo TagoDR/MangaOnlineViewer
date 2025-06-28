@@ -1,11 +1,13 @@
 // == Alandal ======================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'Alandal',
   url: /https?:\/\/alandal.com\/chapter\/.+\/\d+/,
   homepage: 'https://alandal.com/',
-  language: ['English'],
-  category: 'manga',
-  run() {
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
+  run(): IManga {
     const images = [...document.querySelectorAll('img[alt^="Page"]')];
     const chapter = document
       ?.querySelector('[aria-label="chapter list"]')
@@ -16,7 +18,8 @@ export default {
       pages: images.length,
       prev: chapter?.item(0)?.getAttribute('href'),
       next: chapter?.item(1)?.getAttribute('href'),
-      listImages: images.map((img) => img.getAttribute('src')),
+      listImages: images.map(img => img.getAttribute('src')!),
     };
   },
 };
+export default site;

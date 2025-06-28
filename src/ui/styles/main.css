@@ -1,107 +1,107 @@
 :root {
-    --theme-body-background: #25262b;
-    --theme-body-text-color: #c1c2c5;
-    --theme-text-color: #c1c2c5;
-    --theme-primary-color: #1a1b1e;
-    --theme-primary-text-color: #c1c2c5;
-    --theme-background-color: #25262b;
-    --theme-hightlight-color: #2c2e33;
-    --theme-border-color: #373a40;
+  --theme-body-background: #25262b;
+  --theme-body-text-color: #c1c2c5;
+  --theme-text-color: #c1c2c5;
+  --theme-primary-color: #1a1b1e;
+  --theme-primary-text-color: #c1c2c5;
+  --theme-background-color: #25262b;
+  --theme-hightlight-color: #2c2e33;
+  --theme-border-color: #373a40;
 }
 
 #MangaOnlineViewer {
-    text-decoration: none;
-    color: var(--theme-body-text-color);
-    background-color: var(--theme-body-background);
+  text-decoration: none;
+  color: var(--theme-body-text-color);
+  background-color: var(--theme-body-background);
 }
 
 #MangaOnlineViewer #Chapter {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    min-width: 225px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  min-width: 225px;
 }
 
 #MangaOnlineViewer #Chapter.Vertical:has(+ #Navigation:not(.disabled)),
 #MangaOnlineViewer #Chapter.WebComic:has(+ #Navigation:not(.disabled)) {
-    padding-bottom: 31px;
+  padding-bottom: 31px;
 }
 
 #MangaOnlineViewer #Chapter.Vertical .PageContent {
-    margin-bottom: 8px;
-    margin-top: 8px;
+  margin-bottom: 8px;
+  margin-top: 8px;
 }
 
 #MangaOnlineViewer .closeButton {
-    width: fit-content;
-    height: fit-content;
-    position: absolute;
-    right: 10px;
-    top: 10px;
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
 #MangaOnlineViewer .overlay {
-    position: fixed;
-    display: none;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 950;
-    cursor: pointer;
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 950;
+  cursor: pointer;
 }
 
 #MangaOnlineViewer .overlay.visible {
-    display: block;
+  display: block;
 }
 
 #MangaOnlineViewer select {
-    height: 20px;
-    /*padding: 0;*/
-    margin: 2px;
+  height: 20px;
+  /*padding: 0;*/
+  margin: 2px;
 }
 
 #MangaOnlineViewer .ControlButton,
 #MangaOnlineViewer .simpleButton {
-    cursor: pointer;
-    border-radius: 5px;
-    border-width: 1px;
-    border-style: solid;
-    padding: 2px;
-    min-height: 32px;
-    color: var(--theme-primary-text-color);
-    background-color: var(--theme-primary-color);
-    border-color: var(--theme-border-color);
+  cursor: pointer;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  padding: 2px;
+  min-height: 32px;
+  color: var(--theme-primary-text-color);
+  background-color: var(--theme-primary-color);
+  border-color: var(--theme-border-color);
 }
 
 #MangaOnlineViewer .ControlButton:active,
 #MangaOnlineViewer .ControlButton:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 #MangaOnlineViewer .simpleButton {
-    font-size: initial;
-    min-width: 32px;
+  font-size: initial;
+  min-width: 32px;
 }
 
 #MangaOnlineViewer .panel .simpleButton {
-    position: absolute;
-    top: 10px;
-    left: 10px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
 
 #MangaOnlineViewer .panel {
-    padding: 5px;
-    position: inherit;
-    border-radius: 5px;
-    background-color: var(--theme-background-color);
+  padding: 5px;
+  position: inherit;
+  border-radius: 5px;
+  background-color: var(--theme-background-color);
 }
 
 #MangaOnlineViewer :not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {
-    max-width: 100%;
-    object-fit: contain;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 #MangaOnlineViewer .ControlButton.hidden,
@@ -117,9 +117,9 @@
 #MangaOnlineViewer:not(.bookmarked) .Bookmark > .icon-tabler-bookmark-off,
 #MangaOnlineViewer #AutoScroll.running > .icon-tabler-player-play,
 #MangaOnlineViewer #AutoScroll:not(.running) > .icon-tabler-player-pause {
-    display: none;
+  display: none;
 }
 
 #MangaOnlineViewer.hideControls .PageFunctions {
-    visibility: hidden;
+  visibility: hidden;
 }

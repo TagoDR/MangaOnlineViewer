@@ -13,7 +13,7 @@ export function changeColorScheme() {
 
 export function buttonSelectTheme(event: Event) {
   const target = event.currentTarget as HTMLElement;
-  [...document.querySelectorAll('.ThemeRadio')].forEach((theme) => {
+  [...document.querySelectorAll('.ThemeRadio')].forEach(theme => {
     theme.classList.remove('selected');
   });
   target.classList.add('selected');

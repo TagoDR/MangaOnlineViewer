@@ -18,7 +18,7 @@ async function captureComments() {
         );
         return (
           iframe?.contentWindow?.document.readyState === 'complete' &&
-          iframe?.contentWindow?.document?.body?.textContent?.length
+          !!iframe?.contentWindow?.document?.body?.textContent?.length
         );
       }),
     );
@@ -35,7 +35,7 @@ async function captureComments() {
 export default async function viewer(manga: IManga) {
   if (manga.before !== undefined) {
     logScriptVerbose(`Executing Preparation`);
-    await manga.before(manga.begin);
+    await manga.before(manga.begin ?? 0);
   }
   if (getSettingsValue('enableComments') && !manga.comments) {
     manga.comments = await captureComments();

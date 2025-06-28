@@ -1,22 +1,24 @@
-// == Mangareader ==================================================================================
+// == MangaReader ==================================================================================
+import { Category, IManga, ISite, Language } from '../types';
+
 declare let imgReverser: (url: string) => Promise<HTMLCanvasElement>;
-export default {
-  name: 'Mangareader',
+
+const site: ISite = {
+  name: 'MangaReader',
   url: /https?:\/\/(www\.)?mangareader.to\/read\/.+\/.+\/.+/,
   homepage: 'https://mangareader.to',
-  language: ['English'],
-  category: 'manga',
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
   obs: 'Some galleries will not be usable',
   waitEle: '.ds-image, .iv-card',
-  async run() {
+  async run(): Promise<IManga> {
     const chapter = document.querySelector('.chapter-item.active');
     const images = [...document.querySelectorAll('.ds-image[data-url], .iv-card[data-url]')];
-    const src = images.map(async (img) => {
-      const url = img.getAttribute('data-url');
+    const src = images.map(async img => {
+      const url = img.getAttribute('data-url')!;
       if (url && img.classList.contains('shuffled')) {
         return (await imgReverser(url)).toDataURL();
       }
-
       return url;
     });
 
@@ -30,3 +32,4 @@ export default {
     };
   },
 };
+export default site;

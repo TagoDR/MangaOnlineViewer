@@ -1,227 +1,227 @@
 #MangaOnlineViewer #gotoPage {
-    min-width: 35px;
+  min-width: 35px;
 }
 
 #MangaOnlineViewer #Header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-flow: row nowrap;
-    transition: transform 0.3s ease-in;
-    position: sticky;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: inherit;
-    z-index: 900;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: row nowrap;
+  transition: transform 0.3s ease-in;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: inherit;
+  z-index: 900;
 }
 
 #MangaOnlineViewer #Header.click {
-    padding-left: 40px;
+  padding-left: 40px;
 }
 
 @keyframes headroom {
-    from {
-        transform: translateY(-100%);
-        position: sticky;
-        top: 0;
-    }
-    to {
-        transform: translateY(0%);
-        position: sticky;
-        top: 0;
-    }
+  from {
+    transform: translateY(-100%);
+    position: sticky;
+    top: 0;
+  }
+  to {
+    transform: translateY(0%);
+    position: sticky;
+    top: 0;
+  }
 }
 
 #MangaOnlineViewer #Header:not(.visible, .headroom-top, .fixed, .simple) {
-    animation: headroom 0.3s ease-in reverse;
-    transform: translateY(-100%);
-    position: sticky;
-    top: 0;
+  animation: headroom 0.3s ease-in reverse;
+  transform: translateY(-100%);
+  position: sticky;
+  top: 0;
 }
 
 #MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL) {
-    position: fixed;
-    padding-left: 40px;
-    top: -100%;
+  position: fixed;
+  padding-left: 40px;
+  top: -100%;
 }
 
 #MangaOnlineViewer #Header.scroll.headroom-hide {
-    animation: none;
-    transform: translateY(-100%);
-    position: sticky;
-    top: 0;
+  animation: none;
+  transform: translateY(-100%);
+  position: sticky;
+  top: 0;
 }
 
 #MangaOnlineViewer #Header.scroll.headroom-show,
 #MangaOnlineViewer #Header.headroom-end,
 #MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL).visible,
 #MangaOnlineViewer #Header.visible {
-    animation: headroom 0.3s ease-in;
-    transform: translateY(0%);
-    position: sticky;
-    top: 0;
+  animation: headroom 0.3s ease-in;
+  transform: translateY(0%);
+  position: sticky;
+  top: 0;
 }
 
 #MangaOnlineViewer #Header.headroom-top {
-    animation: none;
+  animation: none;
 }
 
 #MangaOnlineViewer #Header.fixed {
-    position: sticky;
-    animation: none;
-    top: 0;
-    transform: translateY(0%);
+  position: sticky;
+  animation: none;
+  top: 0;
+  transform: translateY(0%);
 }
 
 #MangaOnlineViewer #Header.simple {
-    position: static;
-    animation: none;
-    top: 0;
-    transform: translateY(0%);
+  position: static;
+  animation: none;
+  top: 0;
+  transform: translateY(0%);
 }
 
 #MangaOnlineViewer #menu {
-    position: fixed;
-    z-index: 1;
-    color: var(--theme-body-text-color);
-    height: 40px;
-    width: 40px;
+  position: fixed;
+  z-index: 1;
+  color: var(--theme-body-text-color);
+  height: 40px;
+  width: 40px;
 }
 
 #MangaOnlineViewer #menu .icon-tabler {
-    position: relative;
-    top: 4px;
-    left: 4px;
-    height: 32px;
-    width: 32px;
-    stroke-width: 1.25;
+  position: relative;
+  top: 4px;
+  left: 4px;
+  height: 32px;
+  width: 32px;
+  stroke-width: 1.25;
 }
 
 #MangaOnlineViewer #menu:not(.click, .hover),
 #MangaOnlineViewer #menu.hide {
-    display: none;
+  display: none;
 }
 
 #MangaOnlineViewer #menu.click {
-    z-index: 901;
+  z-index: 901;
 }
 
 #MangaOnlineViewer #MangaTitle {
-    padding: 2px;
-    margin: 0;
-    font-size: 1.2rem;
-    font-weight: 400;
+  padding: 2px;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 400;
 }
 
 #MangaOnlineViewer #GlobalFunctions {
-    display: flex;
-    gap: 3px;
-    padding: 3px 3px 3px 0;
-    flex-wrap: wrap;
-    width: 300px;
-    z-index: 100;
+  display: flex;
+  gap: 3px;
+  padding: 3px 3px 3px 0;
+  flex-wrap: wrap;
+  width: 300px;
+  z-index: 100;
 }
 
 #MangaOnlineViewer #GlobalFunctions span,
 #MangaOnlineViewer .ChapterControl span {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
 }
 
 #MangaOnlineViewer .ChapterControl span {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 #MangaOnlineViewer .ChapterControl span > * {
-    flex-basis: 50%;
+  flex-basis: 50%;
 }
 
 #MangaOnlineViewer #ScrollControl .icon-tabler,
 #MangaOnlineViewer #GlobalFunctions .icon-tabler {
-    width: 25px;
-    height: 25px;
+  width: 25px;
+  height: 25px;
 }
 
 #MangaOnlineViewer #GlobalFunctions #ZoomSlider {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 #MangaOnlineViewer #GlobalFunctions #Zoom {
-    margin: 2px 5px;
-    width: 160px;
+  margin: 2px 5px;
+  width: 160px;
 }
 
 #MangaOnlineViewer #GlobalFunctions #ZoomVal {
-    width: 40px;
-    display: inline-block;
-    color: var(--theme-primary-text-color);
-    line-height: 20px;
-    text-align: center;
-    border-radius: 3px;
-    background: var(--theme-primary-color);
-    padding: 2px 5px;
+  width: 40px;
+  display: inline-block;
+  color: var(--theme-primary-text-color);
+  line-height: 20px;
+  text-align: center;
+  border-radius: 3px;
+  background: var(--theme-primary-color);
+  padding: 2px 5px;
 }
 
 #MangaOnlineViewer #ChapterNavigation {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: end;
-    padding: 5px;
-    max-width: 350px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: end;
+  padding: 5px;
+  max-width: 350px;
 }
 
 #MangaOnlineViewer #Counters {
-    padding-right: 5px;
+  padding-right: 5px;
 }
 
 #MangaOnlineViewer #ChapterControl {
-    display: flex;
+  display: flex;
 }
 
 #MangaOnlineViewer #ChapterControl .NavigationControlButton {
-    display: inline-flex;
-    margin: 2px;
-    justify-content: center;
-    align-items: center;
-    padding: 3px;
-    gap: 0.5em;
+  display: inline-flex;
+  margin: 2px;
+  justify-content: center;
+  align-items: center;
+  padding: 3px;
+  gap: 0.5em;
 }
 
 #MangaOnlineViewer #ChapterControl .NavigationControlButton .icon-tabler {
-    flex-shrink: 0;
-    align-self: center;
-    width: 1rem;
-    height: 1rem;
+  flex-shrink: 0;
+  align-self: center;
+  width: 1rem;
+  height: 1rem;
 }
 
 #MangaOnlineViewer #ChapterControl .NavigationControlButton[href='#'],
 #MangaOnlineViewer #ChapterControl .NavigationControlButton[href=''],
 #MangaOnlineViewer #ChapterControl .NavigationControlButton[href='undefined'] {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 #MangaOnlineViewer #ChapterControl #download.loading {
-    cursor: not-allowed;
-    pointer-events: none;
-    opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 #MangaOnlineViewer #ChapterControl .NavigationControlButton.disabled {
-    pointer-events: none;
-    filter: grayscale(0.9);
+  pointer-events: none;
+  filter: grayscale(0.9);
 }
 
 #MangaOnlineViewer .ViewerTitle {
-    text-align: center;
-    min-height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 5px;
-    flex-basis: 60%;
+  text-align: center;
+  min-height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 5px;
+  flex-basis: 60%;
 }

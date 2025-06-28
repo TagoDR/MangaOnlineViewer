@@ -164,7 +164,7 @@ export function changeSettingsValue<K extends ISettingsKey>(
 }
 
 export function getLocaleString(name: string): string {
-  const locale = locales.find((l) => l.ID === getSettingsValue('locale'));
+  const locale = locales.find(l => l.ID === getSettingsValue('locale'));
   if (locale?.[name]) {
     return locale[name];
   }
@@ -227,7 +227,7 @@ export function toggleLocalSettings(activate = false) {
 }
 
 export function isBookmarked(url: string = window.location.href): number | undefined {
-  return globalSettings.bookmarks.find((el) => el.url === url)?.page;
+  return globalSettings.bookmarks.find(el => el.url === url)?.page;
 }
 
 /*

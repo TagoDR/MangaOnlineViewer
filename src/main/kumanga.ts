@@ -1,11 +1,13 @@
 // == KuManga ======================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'KuManga',
   url: /https?:\/\/(www\.)?kumanga.com\/manga\/leer\/.+/,
   homepage: 'https://www.kumanga.com/',
-  language: ['Spanish'],
-  category: 'manga',
-  run() {
+  language: [Language.SPANISH],
+  category: Category.MANGA,
+  run(): IManga {
     const chapter = document.querySelectorAll('select').item(1).querySelector('option[selected]');
     return {
       title: document.querySelector('title')?.textContent?.trim(),
@@ -17,3 +19,4 @@ export default {
     };
   },
 };
+export default site;

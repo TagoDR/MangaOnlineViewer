@@ -1,39 +1,39 @@
 #MangaOnlineViewer #Chapter.FluidLTR,
 #MangaOnlineViewer #Chapter.FluidRTL {
-    display: flex;
-    overflow-x: auto;
-    min-width: auto;
+  display: flex;
+  overflow-x: auto;
+  min-width: auto;
 
-    .ZoomWidth {
-        display: none;
-    }
+  .ZoomWidth {
+    display: none;
+  }
 
-    .PageImg {
-        min-width: unset;
-    }
+  .PageImg {
+    min-width: unset;
+  }
 
-    .MangaPage {
-        width: initial;
-        min-width: fit-content;
-        position: relative;
-        max-height: 100%;
-    }
+  .MangaPage {
+    width: initial;
+    min-width: fit-content;
+    position: relative;
+    max-height: 100%;
+  }
 
-    .MangaPage.DoublePage {
-        grid-column: span 2;
-    }
+  .MangaPage.DoublePage {
+    grid-column: span 2;
+  }
 }
 
 #MangaOnlineViewer #Chapter.FluidLTR {
-    flex-direction: row;
+  flex-direction: row;
 
-    .MangaPage .PageFunctions {
-        right: auto;
-        left: 0;
-        direction: rtl;
-    }
+  .MangaPage .PageFunctions {
+    right: auto;
+    left: 0;
+    direction: rtl;
+  }
 }
 
 #MangaOnlineViewer #Chapter.FluidRTL {
-    flex-direction: row-reverse;
+  flex-direction: row-reverse;
 }

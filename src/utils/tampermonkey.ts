@@ -5,8 +5,10 @@ import Bowser from 'bowser';
 
 export function giveToWindow(key: string, content: any) {
   if (typeof unsafeWindow !== 'undefined') unsafeWindow[key] = content;
-  // @ts-ignore
-  window[key] = content;
+  if (typeof window !== 'undefined') {
+    // @ts-expect-error key is missing
+    window[key] = content;
+  }
 }
 
 function logScript(...text: any[]): string[] {

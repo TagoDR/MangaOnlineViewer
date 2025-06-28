@@ -1,13 +1,15 @@
 // == Hitomi =======================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'Hitomi',
   url: /https?:\/\/hitomi.la\/reader\/.+/,
   homepage: 'https://hitomi.la/',
-  language: ['English'],
-  category: 'hentai',
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
   waitAttr: ['#comicImages img', 'src'],
   waitVar: 'galleryinfo',
-  run() {
+  run(): IManga {
     return {
       title: document.querySelector('title')?.textContent?.replace('| Hitomi.la', '').trim(),
       series: document.querySelector('.brand')?.getAttribute('href'),
@@ -20,3 +22,4 @@ export default {
     };
   },
 };
+export default site;

@@ -4,7 +4,7 @@ import main from '../main';
 import type { ISite } from '../types';
 
 const sites = [...main, ...adult];
-const languages: string[] = Array.from(new Set(sites.flatMap((s) => s.language)));
+const languages: string[] = Array.from(new Set(sites.flatMap(s => s.language)));
 
 function linkSite(site: [string, string]) {
   return `[${site[0]}](${site[1]})`;
@@ -32,8 +32,8 @@ const sortSites = (s: ISite[]) =>
   [...s].sort((a, b) => `${a.language}`.localeCompare(b.language.toString()));
 const sitesList = (s: ISite[]) => sortSites(s).map(siteListEntry).join('\n');
 
-const mangaSites = sitesList(main.filter((s) => s.category === 'manga'));
-const comicSites = sitesList(main.filter((s) => s.category === 'comic'));
+const mangaSites = sitesList(main.filter(s => s.category === 'manga'));
+const comicSites = sitesList(main.filter(s => s.category === 'comic'));
 const hentaiSites = sitesList(adult);
 const bookmarklet = `${requiredScripts.join('", "')}`;
 

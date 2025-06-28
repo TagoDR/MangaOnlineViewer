@@ -55,7 +55,6 @@ export const getDiff = (changed: any, original: any) => {
   const accumulator = _.isArray(original) ? [] : {};
 
   function recursiveDiff(base: any, object: any, result: any) {
-    // eslint-disable-next-line no-restricted-syntax,guard-for-in
     for (const key in base) {
       const value: Record<string, unknown> = object[key];
 

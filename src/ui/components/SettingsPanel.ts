@@ -16,7 +16,7 @@ import colors from '../../utils/colors';
 const localeSelector = () =>
   locales
     .map(
-      (locale) => html`
+      locale => html`
         <option value="${locale.ID}" ${getSettingsValue('locale') === locale.ID ? 'selected' : ''}>
           ${locale.NAME}
         </option>
@@ -25,9 +25,9 @@ const localeSelector = () =>
     .join('');
 
 const themesSelector = () =>
-  [...Object.keys(colors).map((color) => colors[color].name)]
+  [...Object.keys(colors).map(color => colors[color].name)]
     .map(
-      (theme) => html`
+      theme => html`
         <span
           title="${theme}"
           class="${theme} ThemeRadio ${getSettingsValue('theme') === theme ? 'selected' : ''}"
@@ -85,8 +85,8 @@ const theme = () => html`
         ${getSettingsValue('theme') === 'custom' ? 'selected' : ''}"
       title="custom"
     >
-        ${IconPalette} ${IconCheck}
-      </span>
+      ${IconPalette} ${IconCheck}
+    </span>
     ${themesSelector()}
   </div>
   <div
@@ -107,12 +107,12 @@ const theme = () => html`
     class="ControlLabel CustomTheme ControlLabelItem
       ${getSettingsValue('theme').startsWith('custom') ? '' : 'show'}"
   >
-      <span>
-        <label>${getLocaleString('THEME_SHADE')}</label>
-        <output id="themeShadeVal" class="RangeValue" for="ThemeShade">
-          ${getSettingsValue('themeShade')}
-        </output>
-      </span>
+    <span>
+      <label>${getLocaleString('THEME_SHADE')}</label>
+      <output id="themeShadeVal" class="RangeValue" for="ThemeShade">
+        ${getSettingsValue('themeShade')}
+      </output>
+    </span>
     <input
       type="range"
       value="${getSettingsValue('themeShade')}"
@@ -337,10 +337,7 @@ function toggler(name: string, checked: boolean = false) {
   return html`
     <div class="toggler">
       <input id="${name}" name="${name}" type="checkbox" value="true" ${checked ? 'checked' : ''} />
-      <label for="${name}">
-        ${IconCheck}
-        ${IconX}
-      </label>
+      <label for="${name}"> ${IconCheck} ${IconX} </label>
     </div>
   `;
 }
@@ -368,8 +365,7 @@ const checkboxOptions = () => html`
   </div>
   ${lazyLoad()}
   <div class="ControlLabel downloadZip">
-    ${getLocaleString('DOWNLOAD_IMAGES')}
-    ${toggler('downloadZip', getSettingsValue('downloadZip'))}
+    ${getLocaleString('DOWNLOAD_IMAGES')} ${toggler('downloadZip', getSettingsValue('downloadZip'))}
   </div>
   <div class="ControlLabel hidePageControls">
     ${getLocaleString('HIDE_CONTROLS')}
@@ -420,13 +416,11 @@ const SettingsPanel = () => html`
     </fieldset>
     <fieldset>
       <legend>${getLocaleString('ZOOM')}</legend>
-      ${defaultZoomMode()}
-      ${defaultZoom()} ${minZoom()} ${zoomStep()} ${viewMode()}
+      ${defaultZoomMode()} ${defaultZoom()} ${minZoom()} ${zoomStep()} ${viewMode()}
     </fieldset>
     <fieldset>
       <legend>${getLocaleString('OTHERS')}</legend>
-      ${checkboxOptions()} ${headerType()}
-      ${autoScroll()}
+      ${checkboxOptions()} ${headerType()} ${autoScroll()}
     </fieldset>
   </div>
 `;

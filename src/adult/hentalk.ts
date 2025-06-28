@@ -1,18 +1,19 @@
 // == HenTalk ======================================================================================
+import { Category, IManga, ISite, Language } from '../types';
 
-export default {
+const site: ISite = {
   name: 'HenTalk',
   url: /https?:\/\/(www.)?hentalk.pw/,
   homepage: 'https://hentalk.pw/',
-  language: ['English'],
-  category: 'hentai',
-  async run() {
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
+  async run(): Promise<IManga> {
     const cdn = 'https://hentalk.pw';
     const api = await fetch(
       `${window.location.pathname}/__data.json?x-sveltekit-trailing-slash=1&x-sveltekit-invalidated=001`,
     )
-      .then(async (res) => res.json())
-      .then((j) => j.nodes[2].data);
+      .then(async res => res.json())
+      .then(j => j.nodes[2].data);
     const gallery = api?.[api.find((e: { gallery?: number }) => e?.gallery)?.gallery];
     const slug =
       api?.[gallery?.hash] ||
@@ -30,3 +31,4 @@ export default {
     };
   },
 };
+export default site;

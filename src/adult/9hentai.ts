@@ -1,12 +1,14 @@
 // == 9Hentai ======================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: '9Hentai',
   url: /https?:\/\/(www\.)?9hentai.(so)\/g\/.+\/.+/,
   homepage: 'https://9hentai.so',
-  language: ['English'],
-  category: 'hentai',
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
   waitAttr: ['#jumpPageModal input', 'max'],
-  async run() {
+  async run(): Promise<IManga> {
     const data = { id: parseInt(/\d+/.exec(window.location.pathname)?.at(0) ?? '0', 10) };
     const options = {
       method: 'POST',
@@ -17,7 +19,7 @@ export default {
     };
     const api: {
       results: { title: string; total_page: number; id: number; image_server: string };
-    } = await fetch('/api/getBookByID', options).then(async (res) => res.json());
+    } = await fetch('/api/getBookByID', options).then(async res => res.json());
     return {
       title: api.results.title,
       series: `/g/${api.results.id}/`,
@@ -33,3 +35,4 @@ export default {
     };
   },
 };
+export default site;

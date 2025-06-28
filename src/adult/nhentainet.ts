@@ -1,14 +1,14 @@
 // == nHentai.net ==================================================================================
-/* eslint-disable no-underscore-dangle */
+import { Category, IManga, ISite, Language } from '../types';
 import { extensionByCode } from '../utils/urls';
 
-export default {
+const site: ISite = {
   name: ['nHentai.net', 'nHentai.xxx', 'lhentai'],
   url: /https?:\/\/(www\.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/,
   homepage: ['https://nhentai.net/', 'https://nhentai.xxx/', 'https://lhentai.com/'],
-  language: ['English'],
-  category: 'hentai',
-  run() {
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
+  run(): IManga {
     const num = parseInt(document.querySelector('.num-pages')?.textContent ?? '', 10);
     const src = document
       .querySelector('#image-container img')
@@ -30,3 +30,4 @@ export default {
     };
   },
 };
+export default site;

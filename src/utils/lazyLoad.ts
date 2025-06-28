@@ -59,8 +59,8 @@ async function showElement(item: LazyItem) {
   if (value) {
     if (!isObjectURL(value) && !isBase64ImageUrl(value) && item.fetchOptions) {
       value = await fetch(value, item.fetchOptions)
-        .then((resp) => resp.blob())
-        .then((blob) => blobToDataURL(blob));
+        .then(resp => resp.blob())
+        .then(blob => blobToDataURL(blob));
     }
     item.element.setAttribute(settings.targetAttribute, value);
   }
@@ -73,7 +73,7 @@ async function showElement(item: LazyItem) {
  */
 function executeCheck() {
   const inView = listElements.filter(filterInView);
-  listElements = listElements.filter((item) => !filterInView(item));
+  listElements = listElements.filter(item => !filterInView(item));
   inView.forEach(showElement);
 }
 

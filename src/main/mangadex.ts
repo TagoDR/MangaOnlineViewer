@@ -1,15 +1,17 @@
 // == MangaDex =====================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'MangaDex',
   url: /https?:\/\/(www\.)?mangadex.org/,
   homepage: 'https://mangadex.org/',
-  language: ['English'],
-  category: 'manga',
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
   waitEle: '#chapter-selector a',
-  async run() {
+  async run(): Promise<IManga> {
     const chapterId = /\/chapter\/([^/]+)(\/\d+)?/.exec(window.location.pathname)?.at(1);
     const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
-    const server = await fetch(home).then(async (res) => res.json());
+    const server = await fetch(home).then(async res => res.json());
     const images = server.chapter.data;
     const chapters = document.querySelectorAll('#chapter-selector a');
     return {
@@ -24,3 +26,4 @@ export default {
     };
   },
 };
+export default site;

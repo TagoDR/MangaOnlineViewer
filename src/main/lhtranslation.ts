@@ -1,11 +1,13 @@
 // == LHTranslation ================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'LHTranslation',
   url: /https?:\/\/(www\.)?lhtranslation.net\/read.+/,
   homepage: 'https://lhtranslation.net/',
-  language: ['English'],
-  category: 'manga',
-  run() {
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
+  run(): IManga {
     const chapter = document.querySelector<HTMLOptionElement>('.form-control option:checked');
     const images = [...document.querySelectorAll('img.chapter-img')];
     return {
@@ -14,7 +16,8 @@ export default {
       pages: images.length,
       prev: chapter?.nextElementSibling?.getAttribute('value'),
       next: chapter?.previousElementSibling?.getAttribute('value'),
-      listImages: images.map((img) => img.getAttribute('src')),
+      listImages: images.map(img => img.getAttribute('src')!),
     };
   },
 };
+export default site;

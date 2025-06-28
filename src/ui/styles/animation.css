@@ -1,42 +1,42 @@
 @-webkit-keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @-webkit-keyframes spin-reverse {
-    0% {
-        transform: rotate(360deg);
-    }
+  0% {
+    transform: rotate(360deg);
+  }
 
-    to {
-        transform: rotate(0);
-    }
+  to {
+    transform: rotate(0);
+  }
 }
 
 @keyframes spin-reverse {
-    0% {
-        transform: rotate(360deg);
-    }
+  0% {
+    transform: rotate(360deg);
+  }
 
-    to {
-        transform: rotate(0);
-    }
+  to {
+    transform: rotate(0);
+  }
 }
 
 .icon-tabler-loader-2,
 .animate-spin {
-    -webkit-animation: spin 1s linear infinite;
-    animation: spin 1s linear infinite;
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
 }
 
 .animate-spin-reverse {
-    -webkit-animation: spin-reverse 1s linear infinite;
-    animation: spin-reverse 1s linear infinite;
+  -webkit-animation: spin-reverse 1s linear infinite;
+  animation: spin-reverse 1s linear infinite;
 }

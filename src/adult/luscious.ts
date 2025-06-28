@@ -1,12 +1,14 @@
 // == Luscious =====================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'Luscious',
   url: /https?:\/\/(www\.)?luscious.net\/.+\/read\/.+/,
   homepage: 'https://luscious.net/',
-  language: ['English'],
-  category: 'hentai',
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
   waitEle: '.album-info div',
-  async run() {
+  async run(): Promise<IManga> {
     const num = parseInt(
       document
         .querySelector('input[name="page_number"] + span')
@@ -34,10 +36,10 @@ export default {
         return GM.xmlHttpRequest({
           method: 'GET',
           url,
-        }).then((res) => JSON.parse(res.responseText));
+        }).then(res => JSON.parse(res.responseText));
       });
     const data = await Promise.all(fetchBlocks);
-    const images = data.flatMap((res) =>
+    const images = data.flatMap(res =>
       res.data.picture.list.items.map((img: { url_to_original: string }) => img.url_to_original),
     );
     return {
@@ -50,3 +52,4 @@ export default {
     };
   },
 };
+export default site;

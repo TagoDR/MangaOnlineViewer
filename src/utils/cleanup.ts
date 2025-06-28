@@ -9,16 +9,16 @@ function removeAllEventListeners(element: HTMLElement): HTMLElement {
 }
 
 const removeAttributes = (element: HTMLElement) => {
-  element.getAttributeNames().forEach((attr) => element?.removeAttribute(attr));
+  element.getAttributeNames().forEach(attr => element?.removeAttribute(attr));
 };
 
 export const cleanUpElement = (...elements: HTMLElement[]) => {
-  elements?.forEach(removeAttributes)
+  elements?.forEach(removeAttributes);
   elements?.forEach(removeAllEventListeners);
 };
 
 export const cleanUpSelector = (...selectors: string[]) => {
-  selectors?.forEach((selector) => {
+  selectors?.forEach(selector => {
     const element = document.querySelector<HTMLElement>(selector);
     if (element) {
       removeAttributes(element);
@@ -30,7 +30,7 @@ export const cleanUpSelector = (...selectors: string[]) => {
 export function hideElements(selector: string) {
   // Get all elements on the page
   const allElements = document.body.querySelectorAll<HTMLElement>(selector);
-  allElements.forEach((element) => {
+  allElements.forEach(element => {
     // Hide the element
     element.style.display = 'none';
     // Disable form elements (inputs, selects, textareas, buttons)
@@ -60,7 +60,7 @@ export function hideElements(selector: string) {
 export function removeElements(selector: string) {
   // Select all script elements in the document
   const elements = document.querySelectorAll(selector);
-  elements?.forEach((e) => {
+  elements?.forEach(e => {
     e?.remove();
   });
 }

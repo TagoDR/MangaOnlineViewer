@@ -1,15 +1,17 @@
 // == BilibiliComics ===============================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'BilibiliComics',
   url: /https?:\/\/(www\.)?(bilibilicomics).net\/episode\/.+/,
   homepage: 'https://www.bilibilicomics.net/',
-  language: ['English'],
-  category: 'manga',
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
   waitEle: '#__NUXT_DATA__',
-  async run() {
+  async run(): Promise<IManga> {
     const json: unknown[] = JSON.parse(document.querySelector('#__NUXT_DATA__')?.innerHTML ?? '');
     const images = json.filter(
-      (x) => typeof x === 'string' && /.(png|jpg|jpeg|gif|bmp|webp)$/i.exec(x),
+      x => typeof x === 'string' && /.(png|jpg|jpeg|gif|bmp|webp)$/i.exec(x),
     );
     return {
       title: document.querySelector('.chapterTitle')?.textContent?.trim(),
@@ -17,7 +19,8 @@ export default {
       pages: images.length,
       prev: document.querySelectorAll('.pre-next-btns').item(0)?.getAttribute('href'),
       next: document.querySelectorAll('.pre-next-btns').item(2)?.getAttribute('href'),
-      listImages: images.map((image) => `https://static.comicfans.io/${image}`),
+      listImages: images.map(image => `https://static.comicfans.io/${image}`),
     };
   },
 };
+export default site;

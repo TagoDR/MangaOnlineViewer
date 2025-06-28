@@ -1,12 +1,14 @@
 // == Mangago ======================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'Mangago',
   url: /https?:\/\/(www\.)?mangago.me\/.*\/.*\/.*/,
   homepage: 'https://www.mangago.me/',
-  language: ['English'],
-  category: 'manga',
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
   waitVar: 'imgsrcs',
-  run() {
+  run(): IManga {
     const key = CryptoJS.enc.Hex.parse('e11adc3949ba59abbe56e057f20f883e');
     const iv = CryptoJS.enc.Hex.parse('1234567890abcdef1234567890abcdef');
     const opinion = { iv, padding: CryptoJS.pad.ZeroPadding };
@@ -21,10 +23,11 @@ export default {
       next: unsafeWindow.next_c_url,
       listImages: images,
       before() {
-        if (images.some((s) => s === '')) {
+        if (images.some(s => s === '')) {
           document.querySelector<HTMLFormElement>('#nform')?.submit();
         }
       },
     };
   },
 };
+export default site;

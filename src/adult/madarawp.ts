@@ -1,7 +1,8 @@
-import madarawp from '../main/madarawp';
 // == Madara WordPress Plugin ======================================================================
-// https://themeforest.net/item/madara-wordpress-theme-for-manga/20849828
-export default {
+import { Category, ISite } from '../types';
+import madarawp from '../main/madarawp';
+
+const site: ISite = {
   ...madarawp,
   name: ['Madara WordPress Plugin', 'AllPornComic', 'Manytoon', 'Manga District'],
   url: /https?:\/\/.+\/(porncomic|read-scan|title)\/.+\/.+/,
@@ -11,5 +12,6 @@ export default {
     'https://manytoon.com/',
     'https://mangadistrict.com/',
   ],
-  category: 'hentai',
+  category: Category.HENTAI,
 };
+export default site;

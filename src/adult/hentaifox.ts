@@ -1,15 +1,16 @@
 // == HentaiFox ====================================================================================
+import { Category, IManga, ISite, Language } from '../types';
 import { extensionByCode } from '../utils/urls';
 
-export default {
+const site: ISite = {
   name: 'HentaiFox',
   url: /https?:\/\/(www\.)?hentaifox.com\/g\/.+/,
   homepage: 'https://www.hentaifox.com/',
-  language: ['English'],
-  category: 'hentai',
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
   waitVar: 'g_th',
-  waitFunc: () => document.querySelector('#gimg')?.classList.contains('loaded'),
-  run() {
+  waitFunc: () => document.querySelector('#gimg')?.classList.contains('loaded') ?? false,
+  run(): IManga {
     const num = parseInt(document.querySelector('.total_pages')?.textContent ?? '', 10);
     const src =
       document
@@ -32,3 +33,4 @@ export default {
     };
   },
 };
+export default site;

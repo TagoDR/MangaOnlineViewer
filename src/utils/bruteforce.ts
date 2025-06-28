@@ -18,9 +18,8 @@ export async function bruteforce(
 
   const next = document.querySelector(nextSelector);
   const target = document.querySelector<HTMLDivElement>(targetSelector);
-  const src = [];
+  const src: string[] = [];
   for (let i = 1; i <= quantPages; i += 1) {
-    // eslint-disable-next-line no-await-in-loop
     src[i - 1] = await waitWithTimer(
       waitForAtb(imageSelector, imageAttribute, target ?? document.body),
       100,

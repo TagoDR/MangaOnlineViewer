@@ -10,7 +10,7 @@ const Reader = (manga: IManga) => html`
   ${getSettingsValue('verticalSeparator') ? 'separator' : ''}
   ${getSettingsValue('viewMode')}"
   >
-    ${listPages(manga.pages, manga.begin).join('')}
+    ${listPages(manga.pages, manga.begin ?? 0).join('')}
   </main>
 `;
 export default Reader;

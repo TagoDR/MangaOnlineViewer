@@ -1,11 +1,13 @@
-// == Tapas ======================================================================================
-export default {
+// == Tapas ========================================================================================
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'KLManga',
   url: /https?:\/\/(www\.)?tapas.io\/episode\/.+/,
   homepage: 'https://tapas.io/',
-  language: ['English'],
-  category: 'manga',
-  run() {
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
+  run(): IManga {
     const images = [...document.querySelectorAll('.viewer__body img.content__img')];
     const chapter = document.querySelector('.js-episodes .body__item--selected');
     return {
@@ -14,7 +16,8 @@ export default {
       pages: images.length,
       prev: chapter?.previousElementSibling?.getAttribute('data-href'),
       next: chapter?.nextElementSibling?.getAttribute('data-href'),
-      listImages: images.map((img) => img.getAttribute('data-src') ?? img.getAttribute('src')),
+      listImages: images.map(img => img.getAttribute('data-src') ?? img.getAttribute('src')!),
     };
   },
 };
+export default site;

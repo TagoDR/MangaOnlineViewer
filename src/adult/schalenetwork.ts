@@ -1,14 +1,14 @@
 // == SchaleNetwork ================================================================================
+import { Category, IManga, ISite, Language } from '../types';
 
-export default {
+const site: ISite = {
   name: 'SchaleNetwork',
   url: /https?:\/\/(www\.)?(niyaniya|shupogaki|hoshino).(moe|one)/,
   homepage: 'https://schale.network/',
-  language: ['English'],
-  category: 'hentai',
-  lazy: false,
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
   waitEle: 'nav select option',
-  async run() {
+  async run(): Promise<IManga> {
     // const options = {
     //   method: 'GET',
     //   headers: {
@@ -19,7 +19,7 @@ export default {
     // };
     const gallery = history.state.memo.gallery;
     const size = gallery.resolution;
-    const { base, entries }  = history.state.memo.data;
+    const { base, entries } = history.state.memo.data;
     // const extra = history.state.memo.extra.data[gallery.resolution];
     // const api = ['https://api.schale.network', 'https://api.gehenna.jp/'];
     // const clearance = localStorage.getItem('clearance');
@@ -42,3 +42,4 @@ export default {
     };
   },
 };
+export default site;

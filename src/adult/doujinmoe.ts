@@ -1,12 +1,14 @@
 // == Doujin-Moe Non-members =======================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'DoujinMoeNM',
   url: /https?:\/\/(www\.)?doujins.com\/.+/,
   homepage: 'https://doujins.com/',
-  language: ['English'],
-  category: 'hentai',
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
   waitEle: '.doujin',
-  run() {
+  run(): IManga {
     const images = [...document.querySelectorAll('.doujin')];
     return {
       title: document.querySelector('.folder-title a:last-child')?.textContent?.trim(),
@@ -14,7 +16,8 @@ export default {
       pages: images.length,
       prev: '#',
       next: '#',
-      listImages: images.map((img) => img.getAttribute('data-file')),
+      listImages: images.map(img => img.getAttribute('data-file')!),
     };
   },
 };
+export default site;

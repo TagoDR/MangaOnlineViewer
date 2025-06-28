@@ -41,7 +41,7 @@ export function changeDefaultZoomMode(event: Event) {
   setSettingsValue('zoomMode', target);
   changeGlobalZoom(target)();
   const percent = document.querySelector<HTMLDivElement>('.DefaultZoom');
-  percent?.classList.toggle('show',target=== 'percent');
+  percent?.classList.toggle('show', target === 'percent');
 }
 
 export function changeDefaultZoom(event: Event) {

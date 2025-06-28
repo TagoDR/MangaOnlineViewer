@@ -1,7 +1,8 @@
 // == MangaStream WordPress Plugin =================================================================
+import { Category, IManga, ISite, Language } from '../types';
 import { findByContentEq } from '../utils/find';
 
-export default {
+const site: ISite = {
   name: [
     'MangaStream WordPress Plugin',
     'Realm Oasis',
@@ -19,7 +20,7 @@ export default {
     'NovatoScans',
     'TresDaos',
     'Lectormiau',
-    'NTRGod'
+    'NTRGod',
   ],
   url: /https?:\/\/[^/]*(scans?|comic|realm|rizz|hivetoon|tresdaos|zonamiau|ntrgod)[^/]*\/.+/,
   homepage: [
@@ -39,13 +40,13 @@ export default {
     'https://www.novatoscans.top/',
     'https://tresdaos.com',
     'https://zonamiau.com/',
-    'https://ntrgod.com/'
+    'https://ntrgod.com/',
   ],
-  language: ['English', 'Spanish'],
-  category: 'manga',
+  language: [Language.ENGLISH, Language.SPANISH],
+  category: Category.MANGA,
   // waitTime: 2000,
   waitEle: ':where(#chapter, #nPL_select) option:nth-child(2)',
-  run() {
+  run(): IManga {
     const images = [
       ...document.querySelectorAll(
         ':where(#readerarea, .check-box) img:not(.asurascans):not([src*="loader"]):not([src*="chevron"])',
@@ -66,11 +67,12 @@ export default {
         'Siguiente',
       ])?.[0]?.getAttribute('href'),
       listImages: images.map(
-        (img) =>
+        img =>
           img.getAttribute('data-src') ??
           img.getAttribute('data-lazy-src') ??
-          img.getAttribute('src'),
+          img.getAttribute('src')!,
       ),
     };
   },
 };
+export default site;

@@ -1,13 +1,14 @@
-// == InManga ===================================================================================
-/* eslint-disable no-underscore-dangle */
-export default {
+// == InManga ======================================================================================
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'InManga',
   url: /https?:\/\/(www\.)?inmanga.com\/ver\/manga\/.+\/.+/,
   homepage: 'https://inmanga.com//',
-  language: ['Spanish'],
-  category: 'manga',
+  language: [Language.SPANISH],
+  category: Category.MANGA,
   waitVar: 'pageController',
-  run() {
+  run(): IManga {
     const images = [...document.querySelectorAll('#PageList option')];
     const chapter = document.querySelector('#ChapList option:checked');
     const src = unsafeWindow.pageController._containers.pageUrl;
@@ -23,3 +24,4 @@ export default {
     };
   },
 };
+export default site;

@@ -1,21 +1,23 @@
 // == VortexScans ==================================================================================
+import { Category, IManga, ISite, Language } from '../types';
 import { findClosestByContentEq } from '../utils/find';
 
-export default {
+const site: ISite = {
   name: 'Vortex Scans',
   url: /https?:\/\/(www.)?(vortexscans).(org)\/.+/,
   homepage: 'https://vortexscans.org/',
-  language: ['English'],
-  category: 'manga',
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
   waitVar: '__next_f',
   waitFunc() {
     return unsafeWindow.__next_f.find((i: [number, string]) => /images/.test(i?.[1]))?.length > 0;
   },
-  run() {
+  run(): IManga {
     const data: string = unsafeWindow.__next_f.find((i: [number, string]) =>
       /images/.test(i?.[1]),
     )?.[1];
-    const images = data.slice(data.indexOf('images')).match(/http[^"]+\.(png|gif|jpg|jpeg|webp)/g);
+    const images =
+      data.slice(data.indexOf('images')).match(/http[^"]+\.(png|gif|jpg|jpeg|webp)/g) ?? [];
     return {
       title: document
         .querySelector('time')
@@ -30,3 +32,4 @@ export default {
     };
   },
 };
+export default site;

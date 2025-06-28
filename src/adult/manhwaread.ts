@@ -1,14 +1,15 @@
 // == ManhwaRead ===================================================================================
+import { Category, IManga, ISite, Language } from '../types';
 import { findClosestByContentEq } from '../utils/find';
 
-export default {
+const site: ISite = {
   name: 'ManhwaRead',
   url: /https?:\/\/(www\.)?manhwaread.com\/.+/,
   homepage: 'https://www.manhwaread.com',
-  language: ['English'],
-  category: 'hentai',
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
   waitEle: '#readingContent img',
-  run() {
+  run(): IManga {
     const images = [...document.querySelectorAll('#readingContent img')];
     return {
       title: document
@@ -19,7 +20,8 @@ export default {
       pages: images.length,
       prev: findClosestByContentEq('span', 'Previous')?.getAttribute('href'),
       next: findClosestByContentEq('span', 'Next')?.getAttribute('href'),
-      listImages: images.map((img) => img.getAttribute('src')),
+      listImages: images.map(img => img.getAttribute('src')!),
     };
   },
 };
+export default site;

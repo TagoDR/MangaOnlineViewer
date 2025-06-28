@@ -1,16 +1,17 @@
 // == AsuraScans ===================================================================================
 import { findClosestByContentEq, findOneByContentStarts } from '../utils/find';
 import { waitForTimer } from '../utils/waitFor.ts';
+import { Category, IManga, ISite, Language } from '../types';
 
-export default {
+const site: ISite = {
   name: 'Asura Scans',
   url: /https?:\/\/(www.)?(asuracomic).(net)\/.+/,
   homepage: 'https://asuracomic.net/',
-  language: ['English'],
-  category: 'manga',
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
   waitEle: 'img[alt*="chapter"]',
   waitTime: 2000,
-  run() {
+  run(): IManga {
     const images = [...document.querySelectorAll('img[alt*="chapter"]')];
     const ref = findOneByContentStarts('p', 'All chapters are in');
     return {
@@ -19,13 +20,14 @@ export default {
       pages: images.length,
       prev: findClosestByContentEq('h2', 'Prev', 'a')?.getAttribute('href'),
       next: findClosestByContentEq('h2', 'Next', 'a')?.getAttribute('href'),
-      listImages: images.map((img) => img.getAttribute('src')),
+      listImages: images.map(img => img.getAttribute('src')!),
       async before() {
         document
           .querySelectorAll('button.absolute')
-          .forEach((e) => e.dispatchEvent(new Event('click', { bubbles: true })));
+          .forEach(e => e.dispatchEvent(new Event('click', { bubbles: true })));
         await waitForTimer(1000);
       },
     };
   },
 };
+export default site;

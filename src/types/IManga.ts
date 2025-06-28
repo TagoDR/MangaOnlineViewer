@@ -1,12 +1,12 @@
 import { isNothing } from '../utils/checks';
 
 export type IMangaBase = {
-  begin: number;
+  begin?: number;
   title?: string;
-  series?: string;
+  series?: string | null;
   pages: number;
-  prev?: string;
-  next?: string;
+  prev?: string | null;
+  next?: string | null;
   lazy?: boolean;
   timer?: number;
   comments?: Element | null;

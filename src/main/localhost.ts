@@ -1,14 +1,15 @@
-// == Localhost
-// =====================================================================================
+// == Localhost ====================================================================================
 import { placeholder, randomPlaceholder } from '../utils/svgs';
 
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'Local Files',
   url: /(file:\/\/\/.+(index)?.html)/,
   homepage: '/index.html?raw=1',
-  language: ['Raw'],
-  category: 'manga',
-  run() {
+  language: [Language.RAW],
+  category: Category.MANGA,
+  run(): IManga {
     const num: number = parseInt(/\d+/.exec(window.location.search)?.toString() ?? '5', 10);
     const comments = document.createElement('div');
     comments.innerHTML = Array(100).fill('Testing Comment<br/>').join('');
@@ -31,3 +32,4 @@ export default {
     };
   },
 };
+export default site;

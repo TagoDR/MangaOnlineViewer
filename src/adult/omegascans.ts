@@ -1,11 +1,13 @@
 // == OmegaScans ===================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: ['OmegaScans'],
   url: /https?:\/\/(www\.)?(omegascans).(org)\/.+/,
   homepage: ['https://omegascans.org/'],
-  language: ['English'],
-  category: 'hentai',
-  async run() {
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
+  async run(): Promise<IManga> {
     const images = [...document.querySelectorAll('p.flex > img')];
     return {
       title: document.querySelector('title')?.textContent?.trim(),
@@ -19,10 +21,10 @@ export default {
       next: document
         .querySelector('div.justify-between:nth-child(2) > a:nth-child(3)')
         ?.getAttribute('href'),
-      listImages: images.map((img) =>
-        img.classList.contains('lazy') ? img.getAttribute('data-src') : img.getAttribute('src'),
+      listImages: images.map(img =>
+        img.classList.contains('lazy') ? img.getAttribute('data-src')! : img.getAttribute('src')!,
       ),
     };
   },
 };
-
+export default site;

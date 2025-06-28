@@ -1,15 +1,15 @@
 // == Batoto =======================================================================================
-
+import { Category, IManga, ISite, Language } from '../types';
 import { findClosestByContentEnds, findClosestByContentStarts } from '../utils/find';
 
-export default {
+const site: ISite = {
   name: 'Batoto',
   url: /https?:\/\/(www\.)?(\w(ba)?to|readtoto|batocomic|comiko|battwo|batotoo|batotwo).(to|com|net|org)\/(chapter|title).*/,
   homepage: 'https://rentry.co/batoto',
-  language: ['English'],
-  category: 'manga',
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
   waitEle: 'div[name="image-item"] img, .page-img',
-  run() {
+  run(): IManga {
     if (window.location.pathname.startsWith('/title')) {
       if (window.location.search !== '?load=2') {
         window.location.search = '?load=2';
@@ -21,7 +21,7 @@ export default {
         pages: images.length,
         prev: findClosestByContentEnds('span', 'Prev Chapter', 'a')?.getAttribute('href'),
         next: findClosestByContentStarts('span', 'Next Chapter', 'a')?.getAttribute('href'),
-        listImages: images.map((img) => img.getAttribute('src')),
+        listImages: images.map(img => img.getAttribute('src')!),
       };
     }
     const images = [...document.querySelectorAll('.page-img')];
@@ -31,7 +31,8 @@ export default {
       pages: images.length,
       prev: document.querySelector('.nav-prev a')?.getAttribute('href'),
       next: document.querySelector('.nav-next a')?.getAttribute('href'),
-      listImages: images.map((img) => img.getAttribute('src')),
+      listImages: images.map(img => img.getAttribute('src')!),
     };
   },
 };
+export default site;

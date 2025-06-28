@@ -1,12 +1,14 @@
 // == MangaBuddy ===================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'MangaBuddy',
   url: /https?:\/\/(www\.)?mangabuddy.com\/.+\/chapter.+/,
   homepage: 'https://mangabuddy.com/',
-  language: ['English'],
-  category: 'manga',
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
   waitVar: 'chapImages',
-  run() {
+  run(): IManga {
     const images = unsafeWindow.chapImages
       .split(',')
       .map((s: string) => new URL(s).pathname.replace('/res/', 'https://sb.mbcdn.xyz/'));
@@ -22,3 +24,4 @@ export default {
     };
   },
 };
+export default site;

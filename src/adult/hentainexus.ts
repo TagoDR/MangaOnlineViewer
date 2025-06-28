@@ -1,11 +1,13 @@
 // == HentaiNexus ==================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'HentaiNexus',
   url: /https?:\/\/((www\.)?hentainexus.com|nexus.fakku.cc)\/read\/.+/,
   homepage: 'https://hentainexus.com/',
-  language: ['English'],
-  category: 'hentai',
-  run() {
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
+  run(): IManga {
     const images =
       unsafeWindow.pageData?.map((i: { image: string }) => i.image) ??
       unsafeWindow.images?.map((i: { url: string }) => i.url);
@@ -22,3 +24,4 @@ export default {
     };
   },
 };
+export default site;

@@ -4,9 +4,9 @@ import { getLocaleString, getSettingsValue } from '../../core/settings';
 
 export const keybindList = () => {
   const keybinds = getSettingsValue('keybinds');
-  return Object.keys(keybinds).map((kb) => {
+  return Object.keys(keybinds).map(kb => {
     const keys = keybinds[kb]?.length
-      ? keybinds[kb]?.map((key) => html`<kbd class="dark">${key}</kbd>`).join(' / ')
+      ? keybinds[kb]?.map(key => html`<kbd class="dark">${key}</kbd>`).join(' / ')
       : '';
     return html`<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
   });
@@ -15,7 +15,7 @@ export const keybindEditor = () =>
   Object.keys(getSettingsValue('keybinds'))
     .map(
       // Language=html
-      (kb) =>
+      kb =>
         html`<label for="${kb}">${getLocaleString(kb)}:</label>
           <input
             type="text"

@@ -1,15 +1,16 @@
 // == Imhentai =====================================================================================
+import { Category, IManga, ISite, Language } from '../types';
 import { extensionByCode } from '../utils/urls';
-import { waitForVar } from '../utils/waitFor.ts';
+import { waitForVar } from '../utils/waitFor';
 
-export default {
+const site: ISite = {
   name: 'Imhentai',
   url: /https?:\/\/(www\.)?imhentai.xxx\/view\/.+\/.+\//,
   homepage: 'https://imhentai.xxx/',
-  language: ['English'],
-  category: 'hentai',
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
   waitVar: 'g_th',
-  async run() {
+  async run(): Promise<IManga> {
     const galleryId = document.querySelector('#gallery_id')?.getAttribute('value');
     const imageDir = document.querySelector('#image_dir')?.getAttribute('value');
     const num = parseInt(document.querySelector('#pages')?.getAttribute('value') ?? '', 10);
@@ -31,3 +32,4 @@ export default {
     };
   },
 };
+export default site;

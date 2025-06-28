@@ -38,7 +38,7 @@ import xyzcomics from './xyzcomics';
 import yabai from './yabai';
 import { type ISite } from '../types';
 
-const sites = [
+const sites: ISite[] = [
   akumamoe,
   bestporncomix,
   doujinmoe,
@@ -80,5 +80,5 @@ const sites = [
   xyzcomics,
   yabai,
   madarawp, // Must be at the end because is a generic check
-] as ISite[];
+];
 export default sites;

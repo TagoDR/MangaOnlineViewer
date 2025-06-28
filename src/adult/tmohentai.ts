@@ -1,13 +1,15 @@
 // == TMOHentai ====================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'TMOHentai',
   url: /https?:\/\/(www\.)?tmohentai.com\/reader\/.+\/(paginated\/\d+|cascade)/,
   homepage: 'https://tmohentai.com/',
-  language: ['Spanish'],
-  category: 'hentai',
-  run() {
+  language: [Language.SPANISH],
+  category: Category.HENTAI,
+  run(): IManga {
     const src = [...document.querySelectorAll('.content-image')].map(
-      (i) => i.getAttribute('data-original') ?? i.getAttribute('src'),
+      i => i.getAttribute('data-original') ?? i.getAttribute('src')!,
     );
     return {
       before() {
@@ -24,3 +26,4 @@ export default {
     };
   },
 };
+export default site;

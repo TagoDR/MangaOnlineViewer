@@ -17,7 +17,7 @@ function appendStyleSheet(id: string, content: string) {
 }
 
 function removeStyleSheet(id: string) {
-  document.querySelectorAll(`style[id="${id}"]`).forEach((elem) => {
+  document.querySelectorAll(`style[id="${id}"]`).forEach(elem => {
     elem.remove();
   });
 }
@@ -29,7 +29,7 @@ function replaceStyleSheet(id: string, content: string) {
 
 function wrapStyle(id: string, css: string) {
   return html`
-    <style type="text/css" id="${id}">
+    <style id="${id}">
       ${css}
     </style>
   `;

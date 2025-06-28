@@ -1,12 +1,14 @@
 // == MangaHub =====================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'MangaHub',
   url: /https?:\/\/(www\.)?(mangahub).io\/chapter\/.+\/.+/,
   homepage: 'https://mangahub.io/',
-  language: ['English'],
-  category: 'manga',
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
   waitEle: '#select-chapter',
-  async run() {
+  async run(): Promise<IManga> {
     function getCookie(name: string) {
       const re = new RegExp(`${name}=([^;]+)`);
       const value = re.exec(document.cookie);
@@ -24,7 +26,7 @@ export default {
         'x-mhub-access': getCookie('mhub_access') ?? '',
       },
     };
-    const api = await fetch('https://api.mghcdn.com/graphql', options).then(async (res) =>
+    const api = await fetch('https://api.mghcdn.com/graphql', options).then(async res =>
       res.json(),
     );
     const images = JSON.parse(api?.data.chapter.pages.toString());
@@ -38,3 +40,4 @@ export default {
     };
   },
 };
+export default site;

@@ -1,11 +1,13 @@
 // == HentaiEra ====================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'HentaiEra',
   url: /https?:\/\/(www\.)?hentaiera.com\/view\/.+\/\d+\/?/,
   homepage: 'https://hentaiera.com/',
-  language: ['English'],
-  category: 'hentai',
-  run() {
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
+  run(): IManga {
     const num = parseInt(document.querySelector('.total_pages')?.textContent ?? '0', 10);
     return {
       title: document
@@ -24,3 +26,4 @@ export default {
     };
   },
 };
+export default site;

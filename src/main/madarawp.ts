@@ -1,4 +1,6 @@
 // == Madara WordPress Plugin ======================================================================
+import { Category, IManga, ISite, Language } from '../types';
+
 const imageRegex = /^([\t\n])*(https?:\/\/)?.+\.(jpg|jpeg|png|gif|bmp|webp).*$/;
 
 function findImages() {
@@ -6,17 +8,16 @@ function findImages() {
     ...document.querySelectorAll(
       '.wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img, #chapter-images img, #chapterContent img',
     ),
-  ].map(
-    (img) =>
-      [...img.attributes]
-        .filter(
-          (attr) => /.*(src|url).*/i.test(attr.name) && !/^.*(blank|lazy|load).*$/.test(attr.value),
-        )
-        .find((attr) => imageRegex.test(attr.value))?.value ?? img?.getAttribute('src'),
-  );
+  ].map(img => {
+    const attrs = [...img.attributes].filter(
+      attr => /.*(src|url).*/i.test(attr.name) && !/^.*(blank|lazy|load).*$/.test(attr.value),
+    );
+    if (attrs.length === 0) return '';
+    return attrs.find(attr => imageRegex.test(attr.value))?.value ?? img?.getAttribute('src') ?? '';
+  });
 }
 
-export default {
+const site: ISite = {
   name: [
     'Madara WordPress Plugin',
     'MangaHaus',
@@ -58,14 +59,14 @@ export default {
     'https://setsuscans.com/',
     'https://toongod.org/home/',
   ],
-  language: ['English'],
+  language: [Language.ENGLISH],
   obs: 'Any Site that uses Madara WordPress Plugin',
-  category: 'manga',
+  category: Category.MANGA,
   waitFunc: () => {
     const images = findImages();
-    return images.length > 0 && images.every((s) => s && imageRegex.test(s));
+    return images.length > 0 && images.every(s => s && imageRegex.test(s));
   },
-  run() {
+  run(): IManga {
     const images = findImages();
     return {
       title: document.querySelector('#chapter-heading')?.textContent?.trim(),
@@ -80,3 +81,4 @@ export default {
     };
   },
 };
+export default site;

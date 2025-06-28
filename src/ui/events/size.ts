@@ -9,6 +9,7 @@ export function buttonZoomIn(event: Event) {
   const ratio = (img.width / img.naturalWidth) * (100 + getSettingsValue('zoomStep'));
   applyZoom(ratio, `#${img.getAttribute('id')}`);
 }
+
 export function buttonZoomOut(event: Event) {
   const img = (event.currentTarget as HTMLElement).parentElement?.parentElement?.querySelector(
     '.PageImg',
@@ -16,21 +17,25 @@ export function buttonZoomOut(event: Event) {
   const ratio = (img.width / img.naturalWidth) * (100 - getSettingsValue('zoomStep'));
   applyZoom(ratio, `#${img.getAttribute('id')}`);
 }
+
 export function buttonRestoreZoom() {
   document.querySelector('.PageContent .PageImg')?.removeAttribute('width');
 }
+
 export function buttonZoomWidth(event: Event) {
   const page = (event.currentTarget as HTMLElement).parentElement?.parentElement;
   const img = page?.querySelector('.PageImg') as HTMLImageElement;
   applyZoom('width', `#${img.getAttribute('id')}`);
   page?.classList.toggle('DoublePage');
 }
+
 export function buttonZoomHeight(event: Event): void {
   const img = (event.currentTarget as HTMLElement).parentElement?.parentElement?.querySelector(
     '.PageImg',
   ) as HTMLImageElement;
   applyZoom('height', `#${img.getAttribute('id')}`);
 }
+
 function size() {
   // ZoomIn
   document.querySelectorAll('.ZoomIn')?.forEach(addEvent('click', buttonZoomIn));

@@ -1,11 +1,13 @@
 // == NineManga ====================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'NineManga',
   url: /https?:\/\/(www\.)?ninemanga.com\/chapter\/.+\/.+\.html/,
   homepage: 'https://ninemanga.com/',
-  language: ['English'],
-  category: 'manga',
-  run() {
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
+  run(): IManga {
     const chapter = document.querySelector<HTMLOptionElement>('#chapter option:checked');
     const pages = [...document.querySelector('#page')!.querySelectorAll('option')];
     return {
@@ -14,8 +16,9 @@ export default {
       pages: pages.length,
       prev: chapter?.nextElementSibling?.getAttribute('value'),
       next: chapter?.previousElementSibling?.getAttribute('value'),
-      listPages: pages.map((item) => $(item).val()),
+      listPages: pages.map(item => item.value),
       img: '.manga_pic',
     };
   },
 };
+export default site;

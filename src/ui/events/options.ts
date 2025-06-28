@@ -3,7 +3,8 @@ import {
   getLocaleString,
   getSettingsValue,
   resetSettings,
-  setSettingsValue, toggleLocalSettings,
+  setSettingsValue,
+  toggleLocalSettings,
 } from '../../core/settings';
 import type { HeaderMode, LoadMode } from '../../types';
 import { applyZoom } from '../page';
@@ -19,7 +20,7 @@ export function buttonResetSettings() {
 }
 
 export function changeSettingsScope(event: Event) {
-  const scope = (event.currentTarget as HTMLInputElement);
+  const scope = event.currentTarget as HTMLInputElement;
   toggleLocalSettings(scope.value === 'true');
   buttonSettingsOpen();
 }
@@ -151,7 +152,9 @@ function options() {
   // Reset Reader Settings
   document.querySelector('#ResetSettings')?.addEventListener('click', buttonResetSettings);
   // Change Settings Scope
-  document.querySelectorAll('#SettingsScope input[type=radio]').forEach(addEvent('change', changeSettingsScope));
+  document
+    .querySelectorAll('#SettingsScope input[type=radio]')
+    .forEach(addEvent('change', changeSettingsScope));
   // Change Locale
   document.querySelector('#locale')?.addEventListener('change', changeLocale);
   // Image Fit width if Oversize Toggle

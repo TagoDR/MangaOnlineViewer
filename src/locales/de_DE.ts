@@ -48,7 +48,7 @@ export default {
   BOOKMARK: 'Lesezeichen',
   BOOKMARK_REMOVED: 'Lesezeichen entfernt',
   BOOKMARK_SAVED: 'Lesezeichen gespeichert',
-  BOOKMARK_MESSAGE: 
+  BOOKMARK_MESSAGE:
     'Beim nächsten Öffnen dieses Kapitels wird ab fortgesetzt:<h4>Seite ##num##</h4>(Nur <i>EINMAL</i> pro Lesezeichen)',
   KEYBINDINGS: 'Tastenkürzel',
   EDIT_KEYBINDS: 'Tastenkürzel bearbeiten',
@@ -63,12 +63,13 @@ export default {
   `,
   ATTENTION: 'Achtung',
   WARNING: 'Warnung',
-  BUTTON_RESET_SETTINGS: 'Einstellungen zurücksetzen',
+  BUTTON_RESET_SETTINGS: 'Einstellungen zurücksetzen(Reset Settings)',
   SETTINGS_RESET: 'Die Einstellungen wurden zurückgesetzt, bitte Seite neu laden',
   LANGUAGE_CHANGED: 'Die Sprache wurde geändert, bitte Seite neu laden',
-  AUTO_DOWNLOAD: 'Beim nächsten Laden eines Kapitels wirst du automatisch gefragt, ob du speichern möchtest',
-  LAZY_LOAD: 
-    'Lazy Load ist mit Zip-Download nicht kompatibel, mit dieser Einstellung kannst du nicht herunterladen.<br/> Empfehlung: <span style=\'color:red;font-weight:bold\'>Miniaturansichten deaktivieren</span> um Bandbreite/Speicher zu sparen.',
+  AUTO_DOWNLOAD:
+    'Beim nächsten Laden eines Kapitels wirst du automatisch gefragt, ob du speichern möchtest',
+  LAZY_LOAD:
+    "Lazy Load ist mit Zip-Download nicht kompatibel, mit dieser Einstellung kannst du nicht herunterladen.<br/> Empfehlung: <span style='color:red;font-weight:bold'>Miniaturansichten deaktivieren</span> um Bandbreite/Speicher zu sparen.",
   LAZY_LOAD_IMAGES_ENABLE: 'Lazy Load Bilder aktivieren',
   LAZY_LOAD_IMAGES: 'Lazy Start ab Seite (zwischen 5 und 100)',
   RETURN_CHAPTER_LIST: 'Zur Kapitelübersicht zurückkehren',
@@ -94,7 +95,7 @@ export default {
   EXTREME: 'Extrem',
   ALL_PAGES: 'Alle Seiten',
   SPEED_WARNING: 'Ladegeschwindigkeit zu hoch',
-  SPEED_WARNING_MESSAGE: 
+  SPEED_WARNING_MESSAGE:
     'Diese Geschwindigkeit wird nicht empfohlen.<br> Sie kann einige Server überlasten oder deine IP als DDoS-Angreifer markieren.<br> Bitte mit Vorsicht verwenden!',
   SCROLL_UP: 'Nach oben scrollen',
   SCROLL_DOWN: 'Nach unten scrollen',
@@ -112,4 +113,4 @@ export default {
   LOADING: 'Lädt',
   ZOOM: 'Zoom',
   OTHERS: 'Sonstiges',
-}
+};

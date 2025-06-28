@@ -43,4 +43,3 @@ export { default as IconPlayerPause } from './player-pause.svg';
 export { default as IconWorldCog } from './world-cog.svg';
 export { default as IconLocationCog } from './location-cog.svg';
 export { default as IconSettingsOff } from './settings-off.svg';
-

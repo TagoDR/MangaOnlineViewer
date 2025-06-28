@@ -1,13 +1,14 @@
 // == ZeroScans ====================================================================================
-/* eslint-disable no-underscore-dangle */
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'ZeroScans',
   url: /https?:\/\/(www\.)?zscans.com\/comics\/.+/,
   homepage: 'https://zscans.com/',
-  language: ['English'],
-  category: 'manga',
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
   waitVar: '__ZEROSCANS__',
-  run() {
+  run(): IManga {
     const images = unsafeWindow.__ZEROSCANS__.data.at(0).current_chapter.high_quality;
     const chapters = document.querySelectorAll('.v-btn--router');
     return {
@@ -20,3 +21,4 @@ export default {
     };
   },
 };
+export default site;

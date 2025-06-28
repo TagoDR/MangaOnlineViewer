@@ -1,12 +1,14 @@
 // == PornComicsHD =================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'PornComicsHD',
   url: /https?:\/\/(www\.)?porncomicshd.com\/es.*/,
   homepage: 'https://porncomicshd.com/es',
-  language: ['Spanish'],
-  category: 'hentai',
+  language: [Language.SPANISH],
+  category: Category.HENTAI,
   waitEle: 'app-comic-reader img',
-  async run() {
+  async run(): Promise<IManga> {
     const img = [...document.querySelectorAll('app-comic-reader img')];
     return {
       title: document.querySelector('h1')?.textContent?.trim(),
@@ -14,7 +16,8 @@ export default {
       prev: '#',
       next: '#',
       lazy: false,
-      listImages: img.map((i) => i.getAttribute('src')),
+      listImages: img.map(i => i.getAttribute('src')!),
     };
   },
 };
+export default site;

@@ -1,13 +1,14 @@
 // == TenManga =====================================================================================
-/* eslint-disable no-underscore-dangle */
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'TenManga',
   url: /https?:\/\/(www\.)?(tenmanga|gardenmanage).com\/(chapter|statuses)\/.+/,
   homepage: 'https://www.tenmanga.com/',
-  language: ['English'],
-  category: 'manga',
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
   waitVar: '_pageCtrl',
-  run() {
+  run(): IManga {
     const chapter = document.querySelector<HTMLOptionElement>(
       '.mangaread-pagenav select option:checked',
     );
@@ -23,3 +24,4 @@ export default {
     };
   },
 };
+export default site;

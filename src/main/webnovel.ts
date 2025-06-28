@@ -1,12 +1,14 @@
 // == WebNovel =====================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'WebNovel',
   url: /https?:\/\/(www\.)?webnovel.com\/comic\/.+/,
   homepage: 'https://www.webnovel.com/',
-  language: ['English'],
-  category: 'manga',
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
   waitVar: 'g_data',
-  run() {
+  run(): IManga {
     const images = unsafeWindow.g_data.chapter.chapterInfo.chapterPage.map(
       (img: { url: string }) => img.url,
     );
@@ -20,3 +22,4 @@ export default {
     };
   },
 };
+export default site;

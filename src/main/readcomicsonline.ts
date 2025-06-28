@@ -1,11 +1,13 @@
 // == ReadComicsOnline =============================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'ReadComicsOnline',
   url: /https?:\/\/(www\.)?readcomicsonline.ru\/comic\/.*\/\d*/,
   homepage: 'https://readcomicsonline.ru/',
-  language: ['English'],
-  category: 'comic',
-  run() {
+  language: [Language.ENGLISH],
+  category: Category.COMIC,
+  run(): IManga {
     const images = [...document.querySelectorAll('#all img')];
     return {
       title: unsafeWindow.title.replace(/ - Page \d+/, ''),
@@ -13,7 +15,8 @@ export default {
       pages: unsafeWindow.pages.length,
       prev: unsafeWindow.prev_chapter,
       next: unsafeWindow.next_chapter,
-      listImages: images.map((img) => img.getAttribute('data-src')),
+      listImages: images.map(img => img.getAttribute('data-src')!),
     };
   },
 };
+export default site;

@@ -26,7 +26,7 @@ import sequence from '../../utils/sequence';
 import type { IManga } from '../../types';
 
 const listOptions = (times: number, begin: number) =>
-  sequence(times, begin).map((index) => html` <option value="${index}">${index}</option>`);
+  sequence(times, begin).map(index => html` <option value="${index}">${index}</option>`);
 const Header = (manga: IManga) => html`
   <header id="Header" class="${getSettingsValue('header')} headroom-top">
     <aside id="GlobalFunctions">
@@ -123,11 +123,12 @@ const Header = (manga: IManga) => html`
     <nav id="ChapterNavigation">
       <div id="Counters" class="ControlLabel">
         ${getLocaleString('PAGES_LOADED')}:
-        <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
+        <i>0</i> /
+        <b>${manga.begin && manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
         <span class="ControlLabel"> ${getLocaleString('GO_TO_PAGE')}: </span>
         <select id="gotoPage">
           <option selected>#</option>
-          ${listOptions(manga.pages, manga.begin).join('')}
+          ${listOptions(manga.pages, manga.begin ?? 0).join('')}
         </select>
       </div>
       <div id="ChapterControl" class="ChapterControl">

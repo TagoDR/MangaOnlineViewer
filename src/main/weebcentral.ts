@@ -1,18 +1,20 @@
 // == WeebCentral ==================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'WeebCentral',
   url: /https?:\/\/(www\.)?(weebcentral).com\/chapters\/.+/,
   homepage: 'https://weebcentral.com/',
-  language: ['English'],
-  category: 'manga',
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
   waitEle: 'main section .maw-w-full',
-  async run() {
-    const src = [...document.querySelectorAll('main section .maw-w-full')].map((elem) =>
-      elem.getAttribute('src'),
+  async run(): Promise<IManga> {
+    const src = [...document.querySelectorAll('main section .maw-w-full')].map(
+      elem => elem.getAttribute('src')!,
     );
     const chaptersList = await fetch(
       document.querySelector('main section a + button')?.getAttribute('hx-get') ?? '',
-    ).then((res) => res.text());
+    ).then(res => res.text());
     const parser = new DOMParser();
     const chapters = parser.parseFromString(chaptersList, 'text/html');
     return {
@@ -27,3 +29,4 @@ export default {
     };
   },
 };
+export default site;

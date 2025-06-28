@@ -1,11 +1,13 @@
 // == MangaFreak ===================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'MangaFreak',
   url: /https?:\/\/.{3,4}?(mangafreak).net\/Read.+/,
   homepage: 'https://mangafreak.net/',
-  language: ['English'],
-  category: 'manga',
-  run() {
+  language: [Language.ENGLISH],
+  category: Category.MANGA,
+  run(): IManga {
     const chapter = document.querySelector<HTMLOptionElement>(
       '.chapter_list select option:checked',
     );
@@ -16,7 +18,8 @@ export default {
       pages: images.length,
       prev: chapter?.previousElementSibling?.getAttribute('value'),
       next: chapter?.nextElementSibling?.getAttribute('value'),
-      listImages: images.map((img) => img.getAttribute('src')),
+      listImages: images.map(img => img.getAttribute('src')!),
     };
   },
 };
+export default site;

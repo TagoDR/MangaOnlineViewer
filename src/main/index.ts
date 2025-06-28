@@ -37,7 +37,7 @@ import vortexscans from './vortexscans';
 import zeroscans from './zeroscans';
 import { type ISite } from '../types';
 
-const sites = [
+const sites: ISite[] = [
   // alandal, // Fixme
   asura,
   batoto,
@@ -88,5 +88,5 @@ const sites = [
   mangastreamwp, // Must be at the end because is a generic check
   foolslide, // Must be at the end because is a generic check
   madarawp, // Must be at the end because is a generic check
-] as ISite[];
+];
 export default sites;

@@ -1,12 +1,14 @@
 // == ExHentai =====================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: ['ExHentai', 'e-Hentai'],
   url: /https?:\/\/(g\.)?(exhentai|e-hentai).org\/s\/.+\/.+/,
   homepage: ['https://exhentai.org/', 'https://e-hentai.org/'],
-  language: ['English'],
+  language: [Language.ENGLISH],
   obs: 'May get your IP Banned, use with moderation',
-  category: 'hentai',
-  async run() {
+  category: Category.HENTAI,
+  async run(): Promise<IManga> {
     const num = parseInt(
       document.querySelector('.sn div span:nth-child(2)')?.textContent ?? '0',
       10,
@@ -21,13 +23,13 @@ export default {
       .fill(0)
       .map(async (_, galleryId) =>
         fetch(`${gallery}?p=${galleryId}`)
-          .then(async (res) => res.text())
-          .then((html) => new DOMParser().parseFromString(html, 'text/html')),
+          .then(async res => res.text())
+          .then(html => new DOMParser().parseFromString(html, 'text/html')),
       );
 
     const data = await Promise.all(fetchBlocks);
-    const pages = data.flatMap((html) =>
-      [...html.querySelectorAll('#gdt a')].map((item) => item.getAttribute('href')),
+    const pages = data.flatMap(html =>
+      [...html.querySelectorAll('#gdt a')].map(item => item.getAttribute('href')!),
     );
 
     return {
@@ -43,18 +45,20 @@ export default {
       async reload(page: number) {
         const oldUrl = `${pages[page - 1]}`;
         const slug = await fetch(oldUrl)
-          .then((res) => res.text())
-          .then((html) => /nl\('([\d-]+)'\)/.exec(html)?.[1]);
+          .then(res => res.text())
+          .then(html => /nl\('([\d-]+)'\)/.exec(html)?.[1]);
         const newUrl = `${oldUrl}${oldUrl.indexOf('?') ? '&' : '?'}nl=${slug}`;
         return fetch(newUrl)
-          .then((res) => res.text())
-          .then((html) =>
-            new DOMParser()
-              .parseFromString(html, 'text/html')
-              .querySelector(this.img)
-              ?.getAttribute('src'),
+          .then(res => res.text())
+          .then(
+            html =>
+              new DOMParser()
+                ?.parseFromString(html, 'text/html')
+                ?.querySelector('#img')
+                ?.getAttribute('src') ?? '',
           );
       },
     };
   },
 };
+export default site;

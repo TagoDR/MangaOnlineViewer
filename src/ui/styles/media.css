@@ -1,90 +1,90 @@
 #MangaOnlineViewer.mobile #Header,
 #MangaOnlineViewer.tablet #Header {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 #MangaOnlineViewer.mobile .ViewerTitle,
 #MangaOnlineViewer.tablet .ViewerTitle {
-    order: 1;
-    min-height: auto;
-    padding: 0;
-    margin: 0;
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 100%;
+  order: 1;
+  min-height: auto;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 100%;
 }
 
 #MangaOnlineViewer.mobile #GlobalFunctions,
 #MangaOnlineViewer.tablet #GlobalFunctions {
-    width: auto;
-    order: 2;
-    padding: 5px;
+  width: auto;
+  order: 2;
+  padding: 5px;
 }
 
 #MangaOnlineViewer.mobile #ChapterNavigation,
 #MangaOnlineViewer.tablet #ChapterNavigation {
-    order: 3;
+  order: 3;
 }
 
 #MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,
 #MangaOnlineViewer.tablet #GlobalFunctions #ZoomSlider,
 #MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.tablets, .phones),
 #MangaOnlineViewer.tablet #GlobalFunctions .ControlButton:not(.tablets, .phones) {
-    display: none;
+  display: none;
 }
 
 #MangaOnlineViewer.mobile #Header {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 #MangaOnlineViewer.mobile #Header.click + #Chapter:not(.webcomic, .vertical) {
-    position: sticky;
+  position: sticky;
 }
 
 #MangaOnlineViewer.mobile #MangaTitle {
-    word-wrap: anywhere;
+  word-wrap: anywhere;
 }
 
 #MangaOnlineViewer.mobile .ViewerTitle {
-    order: 1;
-    margin-top: 0;
-    height: auto;
-    padding: 0;
+  order: 1;
+  margin-top: 0;
+  height: auto;
+  padding: 0;
 }
 
 #MangaOnlineViewer.mobile #GlobalFunctions {
-    order: 2;
-    padding: 0;
-    width: auto;
-    flex-basis: 35px;
+  order: 2;
+  padding: 0;
+  width: auto;
+  flex-basis: 35px;
 }
 
 #MangaOnlineViewer.mobile #ChapterNavigation {
-    order: 3;
-    width: min-content;
-    min-width: 205px;
+  order: 3;
+  width: min-content;
+  min-width: 205px;
 }
 
 #MangaOnlineViewer.mobile .ChapterControl {
-    flex-direction: row;
-    flex-wrap: wrap;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 #MangaOnlineViewer.mobile .ChapterControl .NavigationControlButton {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 #MangaOnlineViewer.mobile .PageFunctions {
-    padding: 0;
+  padding: 0;
 }
 
 #MangaOnlineViewer.mobile .PageFunctions .ControlButton.Bookmark {
-    opacity: 1;
+  opacity: 1;
 }
 
 #MangaOnlineViewer.mobile #Navigation,
@@ -104,5 +104,5 @@
 #MangaOnlineViewer.mobile #KeybindingsPanel,
 #MangaOnlineViewer.mobile .ChapterControl .download,
 #MangaOnlineViewer.mobile #Counters {
-    display: none;
+  display: none;
 }

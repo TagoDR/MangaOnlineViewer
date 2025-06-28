@@ -1,11 +1,13 @@
 // == MyHentaiGallery ==============================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'MyHentaiGallery',
   url: /https?:\/\/(www\.)?myhentaigallery.com\/g\/.+\/\d+/,
   homepage: 'https://www.myhentaigallery.com',
-  language: ['English'],
-  category: 'hentai',
-  run() {
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
+  run(): IManga {
     const lastPage = document
       .getElementById('js__pagination__next')
       ?.parentElement?.previousElementSibling?.querySelector('a');
@@ -23,3 +25,4 @@ export default {
     };
   },
 };
+export default site;

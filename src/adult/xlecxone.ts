@@ -1,19 +1,21 @@
 // == XlecxOne =====================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'XlecxOne',
   url: /https?:\/\/(www\.)?xlecx.one\/.+/,
   homepage: 'https://xlecx.one/',
-  language: ['English'],
-  category: 'hentai',
-  run() {
+  language: [Language.ENGLISH],
+  category: Category.HENTAI,
+  run(): IManga {
     const src = [
       ...new Set(
         [...document.querySelectorAll('article .page__text img , article #content-2 img')].map(
-          (img) =>
+          img =>
             img.getAttribute('data-src') ??
             img.getAttribute('data-srce') ??
             img.closest('a')?.getAttribute('href') ??
-            img.getAttribute('src'),
+            img.getAttribute('src')!,
         ),
       ),
     ];
@@ -26,3 +28,4 @@ export default {
     };
   },
 };
+export default site;

@@ -1,13 +1,17 @@
 // == LeerCapitulo =================================================================================
-export default {
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
   name: 'LeerCapitulo',
   url: /https?:\/\/(www.)?leercapitulo.co\/leer\/.+/,
   homepage: 'https://www.leercapitulo.co/',
-  language: ['Spanish'],
-  category: 'manga',
-  waitEle:"#page_select",
-  run() {
-    const img = [...document.querySelectorAll('#page_select option')].map(el => el.getAttribute('value'));
+  language: [Language.SPANISH],
+  category: Category.MANGA,
+  waitEle: '#page_select',
+  run(): IManga {
+    const img = [...document.querySelectorAll('#page_select option')].map(
+      el => el.getAttribute('value')!,
+    );
     return {
       title: document.querySelector('h1')?.textContent?.trim(),
       series: document.querySelector('.chapter-title a')?.getAttribute('href'),
@@ -18,3 +22,4 @@ export default {
     };
   },
 };
+export default site;
