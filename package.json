@@ -1,76 +1,84 @@
 {
-    "name": "mangaonlineviewer",
-    "description": "Userscript that helps to read Manga faster by loading all the pages at once",
-    "version": "45.0.0",
-    "scripts": {
-        "start": "vite",
-        "build": "vite build --mode dev",
-        "release": "vite build --mode main && vite build --mode adult"
-    },
-    "author": "TagoDR",
-    "license": "MIT",
-    "type": "module",
-    "private": true,
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/TagoDR/MangaOnlineViewer.git"
-    },
-    "keywords": [
-        "manga",
-        "reader",
-        "viewer",
-        "online",
-        "loader"
-    ],
-    "bugs": "https://github.com/TagoDR/MangaOnlineViewer/issues",
-    "homepage": "https://github.com/TagoDR/MangaOnlineViewer#readme",
-    "devDependencies": {
-        "@types/crypto-js": "^4.2.2",
-        "@types/file-saver": "^2.0.7",
-        "@types/imagesloaded": "^4.1.7",
-        "@types/lodash": "^4.17.19",
-        "@types/node": "^24.0.4",
-        "@types/nprogress": "^0.2.3",
-        "@types/tampermonkey": "^5.0.4",
-        "@types/tinycolor2": "^1.4.6",
-        "@types/ua-parser-js": "^0.7.39",
-        "@typescript-eslint/eslint-plugin": "^8.35.0",
-        "@typescript-eslint/parser": "^8.35.0",
-        "del": "^8.0.0",
-        "eslint": "^9.29.0",
-        "prettier": "^3.6.1",
-        "rollup-plugin-external-globals": "^0.13.0",
-        "rollup-plugin-prettier": "^4.1.2",
-        "typescript": "^5.8.3",
-        "userscript-metadata-generator": "^0.2.4",
-        "vite": "^7.0.0",
-        "vite-plugin-banner": "^0.8.1",
-        "vite-svg-loader": "^5.1.0"
-    },
-    "dependencies": {
-        "@braintree/sanitize-url": "^7.1.1",
-        "@gerhobbelt/keyscss": "^1.1.3-6",
-        "blob-util": "^2.0.2",
-        "bowser": "^2.11.0",
-        "file-saver": "^2.0.5",
-        "hotkeys-js": "^3.13.14",
-        "imagesloaded": "^5.0.0",
-        "jszip": "=3.9.1",
-        "lodash": "^4.17.21",
-        "normalize.css": "^8.0.1",
-        "nprogress": "^0.2.0",
-        "range-slider-input": "^2.4.4",
-        "sweetalert2": "=11.4.8",
-        "tinycolor2": "^1.6.0"
-    },
-    "browserslist": [
-        "defaults and fully supports es6-module",
-        "maintained node versions"
-    ],
-    "prettier": {
-        "semi": true,
-        "singleQuote": true,
-        "trailingComma": "all",
-        "printWidth": 100
-    }
+  "name": "mangaonlineviewer",
+  "description": "Userscript that helps to read Manga faster by loading all the pages at once",
+  "version": "45.0.0",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build --mode dev",
+    "release": "vite build --mode main && vite build --mode adult",
+    "lint": "eslint --ext .ts,.html . --ignore-pattern .gitignore && prettier \"**/*.ts\" --check --ignore-pattern .gitignore",
+    "format": "eslint --ext .ts,.html . --fix --ignore-pattern .gitignore && prettier \"**/*.ts\" --write --ignore-pattern .gitignore"
+  },
+  "author": "TagoDR",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TagoDR/MangaOnlineViewer.git"
+  },
+  "keywords": [
+    "manga",
+    "reader",
+    "viewer",
+    "online",
+    "loader"
+  ],
+  "bugs": "https://github.com/TagoDR/MangaOnlineViewer/issues",
+  "homepage": "https://github.com/TagoDR/MangaOnlineViewer#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.30.0",
+    "@types/crypto-js": "^4.2.2",
+    "@types/file-saver": "^2.0.7",
+    "@types/imagesloaded": "^4.1.7",
+    "@types/lodash": "^4.17.19",
+    "@types/node": "^24.0.7",
+    "@types/nprogress": "^0.2.3",
+    "@types/tampermonkey": "^5.0.4",
+    "@types/tinycolor2": "^1.4.6",
+    "@types/ua-parser-js": "^0.7.39",
+    "@typescript-eslint/eslint-plugin": "^8.35.0",
+    "@typescript-eslint/parser": "^8.35.0",
+    "del": "^8.0.0",
+    "eslint": "^9.30.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.5.1",
+    "globals": "^16.2.0",
+    "prettier": "^3.6.2",
+    "rollup-plugin-external-globals": "^0.13.0",
+    "rollup-plugin-prettier": "^4.1.2",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.35.0",
+    "userscript-metadata-generator": "^0.2.4",
+    "vite": "^7.0.0",
+    "vite-plugin-banner": "^0.8.1",
+    "vite-svg-loader": "^5.1.0"
+  },
+  "dependencies": {
+    "@braintree/sanitize-url": "^7.1.1",
+    "@gerhobbelt/keyscss": "^1.1.3-6",
+    "blob-util": "^2.0.2",
+    "bowser": "^2.11.0",
+    "file-saver": "^2.0.5",
+    "hotkeys-js": "^3.13.14",
+    "imagesloaded": "^5.0.0",
+    "jszip": "=3.9.1",
+    "lodash": "^4.17.21",
+    "normalize.css": "^8.0.1",
+    "nprogress": "^0.2.0",
+    "range-slider-input": "^2.4.4",
+    "sweetalert2": "=11.4.8",
+    "tinycolor2": "^1.6.0"
+  },
+  "browserslist": [
+    "defaults and fully supports es6-module",
+    "maintained node versions"
+  ],
+  "prettier": {
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 100,
+    "arrowParens": "avoid"
+  }
 }

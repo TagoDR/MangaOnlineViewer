@@ -47,7 +47,7 @@ const globals = {
   'range-slider-input': 'rangeSlider',
   sweetalert2: 'Swal',
   tinycolor2: 'tinycolor',
-  'bowser': 'bowser',
+  bowser: 'bowser',
 };
 
 function generateReadme() {
