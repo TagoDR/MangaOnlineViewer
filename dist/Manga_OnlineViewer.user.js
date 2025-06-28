@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, Natomanga, MangaOni, Mangareader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.06.26
+// @version       2025.06.28
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -2310,7 +2310,7 @@
 
   const de_DE = {
     ID: 'de_DE',
-   NAME: 'Deutsch',
+    NAME: 'Deutsch',
     STARTING: 'Starte<br>Manga OnlineViewer',
     RESUME: 'Fortsetzen ab Seite ',
     WAITING: 'Bitte warten, 3 Sekunden...',
@@ -2358,7 +2358,7 @@
     BOOKMARK: 'Lesezeichen',
     BOOKMARK_REMOVED: 'Lesezeichen entfernt',
     BOOKMARK_SAVED: 'Lesezeichen gespeichert',
-    BOOKMARK_MESSAGE: 
+    BOOKMARK_MESSAGE:
       'Beim nächsten Öffnen dieses Kapitels wird ab fortgesetzt:<h4>Seite ##num##</h4>(Nur <i>EINMAL</i> pro Lesezeichen)',
     KEYBINDINGS: 'Tastenkürzel',
     EDIT_KEYBINDS: 'Tastenkürzel bearbeiten',
@@ -2366,19 +2366,20 @@
     BUTTON_EDIT: 'Bearbeiten',
     BUTTON_SAVE: 'Speichern',
     KEYBIND_RULES: `
-      <h3>Unterstützte Tasten</h3>
-      Erlaubte Modifikatoren: shift, option, alt, ctrl, control, command. </br>
-      Spezielle Tasten: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. </br>
-     Beispiele: <kbd>a</kbd>, <kbd>ctrl+a</kbd>, <kbd>shift+a</kbd>, <kbd>num_2</kbd>, <kbd>2</kbd>
-    `,
+    <h3>Unterstützte Tasten</h3>
+    Erlaubte Modifikatoren: shift, option, alt, ctrl, control, command. </br>
+    Spezielle Tasten: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. </br>
+    Beispiele: <kbd>a</kbd>, <kbd>ctrl+a</kbd>, <kbd>shift+a</kbd>, <kbd>num_2</kbd>, <kbd>2</kbd>
+  `,
     ATTENTION: 'Achtung',
     WARNING: 'Warnung',
     BUTTON_RESET_SETTINGS: 'Einstellungen zurücksetzen',
     SETTINGS_RESET: 'Die Einstellungen wurden zurückgesetzt, bitte Seite neu laden',
     LANGUAGE_CHANGED: 'Die Sprache wurde geändert, bitte Seite neu laden',
-    AUTO_DOWNLOAD: 'Beim nächsten Laden eines Kapitels wirst du automatisch gefragt, ob du speichern möchtest',
-    LAZY_LOAD: 
-      'Lazy Load ist mit Zip-Download nicht kompatibel, mit dieser Einstellung kannst du nicht herunterladen.<br/> Empfehlung: <span style=\'color:red;font-weight:bold\'>Miniaturansichten deaktivieren</span> um Bandbreite/Speicher zu sparen.',
+    AUTO_DOWNLOAD:
+      'Beim nächsten Laden eines Kapitels wirst du automatisch gefragt, ob du speichern möchtest',
+    LAZY_LOAD:
+      "Lazy Load ist mit Zip-Download nicht kompatibel, mit dieser Einstellung kannst du nicht herunterladen.<br/> Empfehlung: <span style='color:red;font-weight:bold'>Miniaturansichten deaktivieren</span> um Bandbreite/Speicher zu sparen.",
     LAZY_LOAD_IMAGES_ENABLE: 'Lazy Load Bilder aktivieren',
     LAZY_LOAD_IMAGES: 'Lazy Start ab Seite (zwischen 5 und 100)',
     RETURN_CHAPTER_LIST: 'Zur Kapitelübersicht zurückkehren',
@@ -2404,12 +2405,12 @@
     EXTREME: 'Extrem',
     ALL_PAGES: 'Alle Seiten',
     SPEED_WARNING: 'Ladegeschwindigkeit zu hoch',
-    SPEED_WARNING_MESSAGE: 
-    'Diese Geschwindigkeit wird nicht empfohlen.<br> Sie kann einige Server überlasten oder deine IP als DDoS-Angreifer markieren.<br> Bitte mit Vorsicht verwenden!',
+    SPEED_WARNING_MESSAGE:
+      'Diese Geschwindigkeit wird nicht empfohlen.<br> Sie kann einige Server überlasten oder deine IP als DDoS-Angreifer markieren.<br> Bitte mit Vorsicht verwenden!',
     SCROLL_UP: 'Nach oben scrollen',
-   SCROLL_DOWN: 'Nach unten scrollen',
+    SCROLL_DOWN: 'Nach unten scrollen',
     CLOSE: 'Schließen',
-    IST_EMPTY: 'Liste leer',
+    LIST_EMPTY: 'Liste leer',
     DISPLAY_COMMENTS: 'Kommentare anzeigen',
     COMMENTS: 'Kommentarbereich',
     SCROLL_START: 'Auto-Scroll umschalten',
