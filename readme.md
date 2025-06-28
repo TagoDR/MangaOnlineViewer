@@ -49,8 +49,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [MangaFox](https://fanfox.net/) / [MangaHere](https://www.mangahere.cc/) _[English]_
 - [Mangago](https://www.mangago.me/) _[English]_
 - [MangaHub](https://mangahub.io/) _[English]_
-- [MangaKakalot](https://mangakakalot.gg/) / [NeloManga ](https://www.nelomanga.com/) / [MangaNato](https://www.manganato.gg/) / [Natomanga](https://www.natomanga.com/) _[English]_
-- [Mangareader](https://mangareader.to) _[English]_ **Obs: Some galleries will not be usable**
+- [MangaReader](https://mangareader.to) _[English]_ **Obs: Some galleries will not be usable**
 - [MangaToons](https://mangatoon.mobi/) _[English]_
 - [MangaGeko.com](https://www.mgeko.com/) / [MangaGeko.cc](https://www.mgeko.cc/) _[English]_
 - [NineAnime](https://www.nineanime.com/) _[English]_
@@ -68,6 +67,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [KuManga](https://www.kumanga.com/) _[Spanish]_
 - [LeerCapitulo](https://www.leercapitulo.co/) _[Spanish]_
 - [M440](https://m440.in/) _[Spanish]_
+- [MangaKakalot](https://mangakakalot.gg/) / [NeloManga ](https://www.nelomanga.com/) / [MangaNato](https://www.manganato.gg/) / [NatoManga](https://www.natomanga.com/) / [MangaBats](https://www.mangabats.com/) _[Spanish]_
 - [MangaOni](https://manga-oni.com/) _[Spanish]_
 - [ManhwaWeb](https://manhwaweb.com/) _[Spanish]_
 - [OlympusBiblioteca](https://olympusbiblioteca.com/) _[Spanish]_
@@ -160,22 +160,22 @@ then open it in the browser, and you will see the options to load local Files.
 
 - Auto Scroll
 - View Modes:
-    - Vertical/WebComic [Default]
-    - Fluid Left to Right
-    - Fluid Right to Left
+  - Vertical/WebComic [Default]
+  - Fluid Left to Right
+  - Fluid Right to Left
 - Bookmark Pages (To resume reading)
 - Full Themes and Customizable
 - Global and Individual images zoom
-    - In(Global one may stretch images beyond window width)
-    - Out
-    - Restore original(Toggle fit width if oversize)
-    - Fit width
-    - Fit width if oversize[Default on]
-    - Fit Height (with scroll pages)
-    - Hide
+  - In(Global one may stretch images beyond window width)
+  - Out
+  - Restore original(Toggle fit width if oversize)
+  - Fit width
+  - Fit width if oversize[Default on]
+  - Fit Height (with scroll pages)
+  - Hide
 - Auto reload Images
-    - Counter for loaded Images
-    - Individual image reload, just in case
+  - Counter for loaded Images
+  - Individual image reload, just in case
 - HotKeys
 - Goto Page
 - Image Loading Timer[Default 1s](Some sites require longer timers. e.g.:ExHentai,e-hentai)
@@ -195,33 +195,36 @@ Below is an example with descriptions.
 
 ```ts
 // == MangaDex =====================================================================================
-export default {
-    name: 'MangaDex', // The name of the to be listed, may be an array of names
-    url: /https?:\/\/(www\.)?mangadex.org/, // Regex to detect the site, usually just the reader part of the site, but can be the root if is has a lot of dynamic content
-    homepage: 'https://mangadex.org/', // Link for the home page of the site, may be an array of urls
-    language: ['English'], // Array of languages the site serve
-    category: 'manga', // Category of the site
-    waitEle: '#chapter-selector a', // Wait for something before running, some site requires some steps before the information is available
-    async run() {
-        // Logic for obtaining the required information
-        const chapterId = /\/chapter\/([^/]+)(\/\d+)?/.exec(window.location.pathname)?.at(1);
-        const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
-        const server = await fetch(home).then(async (res) => res.json());
-        const images = server.chapter.data;
-        const chapters = document.querySelectorAll('#chapter-selector a');
-        return {
-            title: document.querySelector('title')?.text.replace(' - MangaDex', ''), // Title of the Chapter/Manga
-            series: document.querySelector("a.text-primary[href^='/title/']")?.getAttribute('href'), // Url for the gallery or chapter list
-            pages: images.length, // Quantity of pages
-            prev: chapters?.item(0)?.getAttribute('href'), // Previous Chapter
-            next: chapters?.item(1)?.getAttribute('href'), // Next Chapter
-            listImages: images.map(
-                // List of images
-                (img: string) => `${server.baseUrl}/data/${server.chapter.hash}/${img}`,
-            ),
-        };
-    },
+import { Category, IManga, ISite, Language } from '../types';
+
+const site: ISite = {
+  name: 'MangaDex', // The name of the to be listed, may be an array of names
+  url: /https?:\/\/(www\.)?mangadex.org/, // Regex to detect the site, usually just the reader part of the site, but can be the root if is has a lot of dynamic content
+  homepage: 'https://mangadex.org/',
+  language: [Language.ENGLISH], // Array of languages the site serve
+  category: Category.MANGA, // Category of the site
+  waitEle: '#chapter-selector a', // Wait for something before running, some site requires some steps before the information is available
+  async run(): Promise<IManga> {
+    // Logic for obtaining the required information
+    const chapterId = /\/chapter\/([^/]+)(\/\d+)?/.exec(window.location.pathname)?.at(1);
+    const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
+    const server = await fetch(home).then(async (res) => res.json());
+    const images = server.chapter.data;
+    const chapters = document.querySelectorAll('#chapter-selector a');
+    return {
+      title: document.querySelector('title')?.text.replace(' - MangaDex', ''), // Title of the Chapter/Manga
+      series: document.querySelector("a.text-primary[href^='/title/']")?.getAttribute('href'), // Url for the gallery or chapter list
+      pages: images.length, // Quantity of pages
+      prev: chapters?.item(0)?.getAttribute('href'), // Previous Chapter
+      next: chapters?.item(1)?.getAttribute('href'), // Next Chapter
+      listImages: images.map(
+        // List of images
+        (img: string) => `${server.baseUrl}/data/${server.chapter.hash}/${img}`,
+      ),
+    };
+  },
 };
+export default site;
 ```
 
 Look inside the types folder to better understand the structure and valid values.
@@ -253,8 +256,8 @@ bookmarklet.
 
 ```JS
 javascript:(function() {
-    if (unsafeWindow === undefined) unsafeWindow = window;
-    ["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", "https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.14/dist/hotkeys.min.js", "https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js", "https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
+  if (unsafeWindow === undefined) unsafeWindow = window;
+  ["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", "https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.14/dist/hotkeys.min.js", "https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js", "https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
 })();
 ```
 
@@ -262,7 +265,7 @@ javascript:(function() {
 
 ```JS
 javascript:(function() {
-    if (unsafeWindow === undefined) unsafeWindow = window;
-    ["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", "https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.14/dist/hotkeys.min.js", "https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js", "https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer_Adult.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
+  if (unsafeWindow === undefined) unsafeWindow = window;
+  ["https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js", "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", "https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.14/dist/hotkeys.min.js", "https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js", "https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js", "https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer_Adult.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
 })();
 ```

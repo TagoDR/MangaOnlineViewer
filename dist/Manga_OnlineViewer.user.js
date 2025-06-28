@@ -5,7 +5,7 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, Natomanga, MangaOni, Mangareader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaOni, MangaReader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
 // @version       2025.06.28
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
@@ -47,7 +47,7 @@
 // @include       /https?:\/\/(www\.)?(fanfox.net|mangahere.cc)\/manga\/.+\/.+\//
 // @include       /https?:\/\/(www\.)?mangago.me\/.*\/.*\/.*/
 // @include       /https?:\/\/(www\.)?(mangahub).io\/chapter\/.+\/.+/
-// @include       /https?:\/\/(www\.)?(read|chap)?(nelomanga|mangakakalot|natomanga|manganato).(com|gg).*\/chapter.+/
+// @include       /https?:\/\/(www\.)?(read|chap)?(nelomanga|mangakakalot|natomanga|manganato|mangabats|mangakakalove).(com|gg|net).*\/(chapter|manga)\/.+\/.+/
 // @include       /https?:\/\/(www\.)?manga-oni.com\/lector\/.+\/\d+\/cascada/
 // @include       /https?:\/\/(www\.)?mangareader.to\/read\/.+\/.+\/.+/
 // @include       /https?:\/\/.*mangatoon.mobi\/.+\/watch\/.+/
@@ -82,8 +82,8 @@
     if (!matcher) {
       throw new Error(`Invalid matcherKey: ${matcherKey}`);
     }
-    return [...document.querySelectorAll(selector)].filter((element) =>
-      Array.isArray(content) ? content.some((c) => matcher(element, c)) : matcher(element, content),
+    return [...document.querySelectorAll(selector)].filter(element =>
+      Array.isArray(content) ? content.some(c => matcher(element, c)) : matcher(element, content),
     );
   }
   function findOneElement(selector, content, matcherKey) {
@@ -113,12 +113,12 @@
     );
   }
   function isNothing(value) {
-    const isEmptyObject = (a) => {
+    const isEmptyObject = a => {
       if (!Array.isArray(a)) {
-        const hasNonempty = Object.keys(a).some((element) => !isNothing(a[element]));
+        const hasNonempty = Object.keys(a).some(element => !isNothing(a[element]));
         return hasNonempty ? false : isEmptyObject(Object.keys(a));
       }
-      return !a.some((element) => element instanceof Promise || !isNothing(element));
+      return !a.some(element => element instanceof Promise || !isNothing(element));
     };
     return (
       !value || value === 0 || isEmpty(value) || (typeof value === 'object' && isEmptyObject(value))
@@ -126,7 +126,7 @@
   }
 
   function waitForElm(selector, target = document.body) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       if (document.querySelector(selector)) {
         resolve(document.querySelector(selector));
         return;
@@ -145,7 +145,7 @@
     });
   }
   function waitForFunc(fn, timer = 250) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const intervalId = setInterval(() => {
         if (fn()) {
           clearInterval(intervalId);
@@ -155,7 +155,7 @@
     });
   }
   function waitForAtb(selector, attribute, target = document.body) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       if (target.querySelector(selector)?.getAttribute(attribute)) {
         resolve(target.querySelector(selector)?.getAttribute(attribute) ?? '');
         return;
@@ -175,7 +175,7 @@
     });
   }
   function waitForVar(name, target = document.body) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       if (!isNothing(unsafeWindow[name])) {
         resolve(unsafeWindow[name]);
         return;
@@ -194,7 +194,7 @@
     });
   }
   function waitForTimer(millis = 1e3, result = true) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(() => resolve(result), millis);
     });
   }
@@ -202,12 +202,37 @@
     return Promise.race([promise, waitForTimer(timeout, false)]);
   }
 
-  const asura = {
+  function isImagesManga(manga) {
+    return 'listImages' in manga && !isNothing(manga.listImages);
+  }
+  function isPagesManga(manga) {
+    return 'listPages' in manga && !isNothing(manga.listPages);
+  }
+  function isBruteforceManga(manga) {
+    return 'bruteForce' in manga && !isNothing(manga.bruteForce);
+  }
+
+  var Language = /* @__PURE__ */ (Language2 => {
+    Language2['ENGLISH'] = 'English';
+    Language2['SPANISH'] = 'Spanish';
+    Language2['PORTUGUESE'] = 'Portuguese';
+    Language2['CHINESE'] = 'Chinese';
+    Language2['RAW'] = 'Raw';
+    return Language2;
+  })(Language || {});
+  var Category = /* @__PURE__ */ (Category2 => {
+    Category2['MANGA'] = 'manga';
+    Category2['COMIC'] = 'comic';
+    Category2['HENTAI'] = 'hentai';
+    return Category2;
+  })(Category || {});
+
+  const site$A = {
     name: 'Asura Scans',
     url: /https?:\/\/(www.)?(asuracomic).(net)\/.+/,
     homepage: 'https://asuracomic.net/',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     waitEle: 'img[alt*="chapter"]',
     waitTime: 2e3,
     run() {
@@ -219,23 +244,23 @@
         pages: images.length,
         prev: findClosestByContentEq('h2', 'Prev', 'a')?.getAttribute('href'),
         next: findClosestByContentEq('h2', 'Next', 'a')?.getAttribute('href'),
-        listImages: images.map((img) => img.getAttribute('src')),
+        listImages: images.map(img => img.getAttribute('src')),
         async before() {
           document
             .querySelectorAll('button.absolute')
-            .forEach((e) => e.dispatchEvent(new Event('click', { bubbles: true })));
+            .forEach(e => e.dispatchEvent(new Event('click', { bubbles: true })));
           await waitForTimer(1e3);
         },
       };
     },
   };
 
-  const batoto = {
+  const site$z = {
     name: 'Batoto',
     url: /https?:\/\/(www\.)?(\w(ba)?to|readtoto|batocomic|comiko|battwo|batotoo|batotwo).(to|com|net|org)\/(chapter|title).*/,
     homepage: 'https://rentry.co/batoto',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     waitEle: 'div[name="image-item"] img, .page-img',
     run() {
       if (window.location.pathname.startsWith('/title')) {
@@ -249,7 +274,7 @@
           pages: images2.length,
           prev: findClosestByContentEnds('span', 'Prev Chapter', 'a')?.getAttribute('href'),
           next: findClosestByContentStarts('span', 'Next Chapter', 'a')?.getAttribute('href'),
-          listImages: images2.map((img) => img.getAttribute('src')),
+          listImages: images2.map(img => img.getAttribute('src')),
         };
       }
       const images = [...document.querySelectorAll('.page-img')];
@@ -259,22 +284,22 @@
         pages: images.length,
         prev: document.querySelector('.nav-prev a')?.getAttribute('href'),
         next: document.querySelector('.nav-next a')?.getAttribute('href'),
-        listImages: images.map((img) => img.getAttribute('src')),
+        listImages: images.map(img => img.getAttribute('src')),
       };
     },
   };
 
-  const bilibilicomics = {
+  const site$y = {
     name: 'BilibiliComics',
     url: /https?:\/\/(www\.)?(bilibilicomics).net\/episode\/.+/,
     homepage: 'https://www.bilibilicomics.net/',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     waitEle: '#__NUXT_DATA__',
     async run() {
       const json = JSON.parse(document.querySelector('#__NUXT_DATA__')?.innerHTML ?? '');
       const images = json.filter(
-        (x) => typeof x === 'string' && /.(png|jpg|jpeg|gif|bmp|webp)$/i.exec(x),
+        x => typeof x === 'string' && /.(png|jpg|jpeg|gif|bmp|webp)$/i.exec(x),
       );
       return {
         title: document.querySelector('.chapterTitle')?.textContent?.trim(),
@@ -282,7 +307,7 @@
         pages: images.length,
         prev: document.querySelectorAll('.pre-next-btns').item(0)?.getAttribute('href'),
         next: document.querySelectorAll('.pre-next-btns').item(2)?.getAttribute('href'),
-        listImages: images.map((image) => `https://static.comicfans.io/${image}`),
+        listImages: images.map(image => `https://static.comicfans.io/${image}`),
       };
     },
   };
@@ -291,12 +316,8 @@
     const comments = document.querySelector('#comments-container');
     if (!comments) return null;
     const css = [...document.styleSheets]
-      .filter(
-        (stylesheet) => !stylesheet.href || stylesheet.href.startsWith(window.location.origin),
-      )
-      .map(
-        (stylesheet) => [...stylesheet.cssRules]?.map(({ cssText }) => cssText)?.join('\n') ?? '',
-      );
+      .filter(stylesheet => !stylesheet.href || stylesheet.href.startsWith(window.location.origin))
+      .map(stylesheet => [...stylesheet.cssRules]?.map(({ cssText }) => cssText)?.join('\n') ?? '');
     comments.classList.remove('blur-sm');
     const container = document.createElement('div');
     const shadowRoot = container.attachShadow({ mode: 'open' });
@@ -308,12 +329,12 @@
     shadowRoot.appendChild(style);
     return container;
   }
-  const comick = {
+  const site$x = {
     name: 'Comick',
     url: /https?:\/\/(www\.)?comick.io\/.+/,
     homepage: 'https://comick.io/',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     waitFunc() {
       return /\/([^/]+)-chapter.+$/.test(window.location.pathname);
     },
@@ -323,7 +344,7 @@
       const data = JSON.parse(document.getElementById('__NEXT_DATA__')?.innerHTML ?? '')?.props
         ?.pageProps;
       const pages = data?.chapter?.md_images?.map(
-        (image) => `https://meo.comick.pictures/${image?.b2key}`,
+        image => `https://meo.comick.pictures/${image?.b2key}`,
       );
       return {
         title: data?.seoTitle ?? `${data.chapter?.md_comics?.title} ${data?.chapter?.chap}`,
@@ -337,12 +358,12 @@
     },
   };
 
-  const dysnatyscans = {
+  const site$w = {
     name: 'Dynasty-Scans',
     url: /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/,
     homepage: 'https://dynasty-scans.com/',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     run() {
       return {
         title: document.querySelector('#chapter-title')?.textContent?.trim(),
@@ -350,24 +371,24 @@
         pages: unsafeWindow.pages.length,
         prev: document.querySelector('#prev_link')?.getAttribute('href'),
         next: document.querySelector('#next_link')?.getAttribute('href'),
-        listImages: unsafeWindow.pages.map((x) => x.image),
+        listImages: unsafeWindow.pages.map(x => x.image),
       };
     },
   };
 
-  const foolslide = {
+  const site$v = {
     name: ['FoOlSlide', 'Kireicake'],
     url: /^(?!.*jaiminisbox).*\/read\/.+/,
     homepage: ['https://github.com/saintly2k/FoOlSlideX', 'https://reader.kireicake.com'],
-    language: ['English'],
+    language: [Language.ENGLISH],
     obs: 'Any Site that uses FoOLSlide',
-    category: 'manga',
+    category: Category.MANGA,
     waitEle: 'img.open',
     run() {
       const chapter = [
         ...document.querySelectorAll('.topbar_left .dropdown_parent:last-of-type li'),
       ];
-      const origin = chapter.findIndex((item) => {
+      const origin = chapter.findIndex(item => {
         const url = item.querySelector('a')?.getAttribute('href');
         if (url) {
           return window.location.href.startsWith(url);
@@ -377,7 +398,7 @@
       const pages = [...document.querySelectorAll('.topbar_right .dropdown li')];
       const images = [...document.querySelectorAll('.inner img:not(.open)')];
       const num = images.length > 1 ? images.length : pages.length;
-      return {
+      const manga = {
         title:
           chapter.at(origin)?.querySelector('a')?.textContent?.trim() ??
           document.querySelector('title')?.textContent?.trim(),
@@ -391,30 +412,32 @@
           .at(origin - 1)
           ?.querySelector('a')
           ?.getAttribute('href'),
-        listPages:
-          images.length > 1
-            ? null
-            : Array(num)
-                .fill(0)
-                .map((_, i) => `${window.location.href.replace(/\/\d+$/, '')}/${i + 1}`),
-        listImages: images.length > 1 ? images.map((img) => img.getAttribute('src')) : null,
+      };
+      if (images.length > 1) {
+        return { ...manga, listImages: images.map(img => img.getAttribute('src')) };
+      }
+      return {
+        ...manga,
+        listPages: Array(num)
+          .fill(0)
+          .map((_, i) => `${window.location.href.replace(/\/\d+$/, '')}/${i + 1}`),
         img: 'img.open',
       };
     },
   };
 
-  const flamecomics = {
+  const site$u = {
     name: 'Flame Comics',
     url: /https?:\/\/(www.)?(flamecomics).(xyz)\/series\/.+/,
     homepage: 'https://flamecomics.xyz/',
-    language: ['English'],
-    category: 'manga',
-    run: function () {
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
+    run() {
       const cdn = 'https://cdn.flamecomics.xyz/series';
       const json = JSON.parse(document.getElementById('__NEXT_DATA__')?.innerHTML ?? '');
       const chapter = json?.props?.pageProps?.chapter;
       const images = Object.keys(chapter?.images).map(
-        (i) => `${cdn}/${chapter?.series_id}/${chapter?.token}/${chapter?.images?.[i]?.name}`,
+        i => `${cdn}/${chapter?.series_id}/${chapter?.token}/${chapter?.images?.[i]?.name}`,
       );
       return {
         title: `${chapter?.title} ${chapter?.chapter}`,
@@ -427,16 +450,17 @@
     },
   };
 
-  const ikigai = {
+  const site$t = {
     name: ['Ikigai Mangas - EltaNews', 'Ikigai Mangas - Ajaco'],
     url: /https?:\/\/visorikigai.(ajaco|eltanews).(com|net)\/capitulo\/\d+/,
     homepage: ['https://visorikigai.eltanews.com/', 'https://visorikigai.ajaco.net/'],
-    language: ['Spanish'],
-    category: 'manga',
+    language: [Language.SPANISH],
+    category: Category.MANGA,
     run() {
-      const images = document
-        .querySelector('script[type="qwik/json"]')
-        ?.textContent?.match(/http[^'"]+webp/gi);
+      const images =
+        document
+          .querySelector('script[type="qwik/json"]')
+          ?.textContent?.match(/http[^'"]+webp/gi) ?? [];
       return {
         title: document.querySelector('title')?.text.replace(' — Manga en línea | MangaOni', ''),
         pages: images?.length,
@@ -447,12 +471,12 @@
     },
   };
 
-  const kumanga = {
+  const site$s = {
     name: 'KuManga',
     url: /https?:\/\/(www\.)?kumanga.com\/manga\/leer\/.+/,
     homepage: 'https://www.kumanga.com/',
-    language: ['Spanish'],
-    category: 'manga',
+    language: [Language.SPANISH],
+    category: Category.MANGA,
     run() {
       const chapter = document.querySelectorAll('select').item(1).querySelector('option[selected]');
       return {
@@ -461,20 +485,20 @@
         pages: unsafeWindow.pUrl.length,
         prev: `/manga/leer/${chapter?.previousElementSibling?.getAttribute('value')}`,
         next: `/manga/leer/${chapter?.nextElementSibling?.getAttribute('value')}`,
-        listImages: unsafeWindow.pUrl.map((item) => item.imgURL),
+        listImages: unsafeWindow.pUrl.map(item => item.imgURL),
       };
     },
   };
 
-  const leercapitulo = {
+  const site$r = {
     name: 'LeerCapitulo',
     url: /https?:\/\/(www.)?leercapitulo.co\/leer\/.+/,
     homepage: 'https://www.leercapitulo.co/',
-    language: ['Spanish'],
-    category: 'manga',
+    language: [Language.SPANISH],
+    category: Category.MANGA,
     waitEle: '#page_select',
     run() {
-      const img = [...document.querySelectorAll('#page_select option')].map((el) =>
+      const img = [...document.querySelectorAll('#page_select option')].map(el =>
         el.getAttribute('value'),
       );
       return {
@@ -488,12 +512,12 @@
     },
   };
 
-  const lhtranslation = {
+  const site$q = {
     name: 'LHTranslation',
     url: /https?:\/\/(www\.)?lhtranslation.net\/read.+/,
     homepage: 'https://lhtranslation.net/',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     run() {
       const chapter = document.querySelector('.form-control option:checked');
       const images = [...document.querySelectorAll('img.chapter-img')];
@@ -503,7 +527,7 @@
         pages: images.length,
         prev: chapter?.nextElementSibling?.getAttribute('value'),
         next: chapter?.previousElementSibling?.getAttribute('value'),
-        listImages: images.map((img) => img.getAttribute('src')),
+        listImages: images.map(img => img.getAttribute('src')),
       };
     },
   };
@@ -805,7 +829,7 @@
     const encoded = encodeURIComponent(cleaned).replace(/\(/g, '%28').replace(/\)/g, '%29');
     return `data:image/svg+xml;charset=UTF-8,${encoded}`;
   }
-  const rulerMarkerLength = (len) => {
+  const rulerMarkerLength = len => {
     if (len % 100 === 0) {
       return 15;
     }
@@ -885,7 +909,7 @@
     const str = rectangleRuler(width, height, bgColor, textColor);
     return svgToUrl(str);
   }
-  const backgrounds = Object.values(colors).map((i) => i['900']);
+  const backgrounds = Object.values(colors).map(i => i['900']);
   const widths = [400, 600, 900, 1200, 1400, 1600, 1970];
   const heights = [600, 800, 1e3, 1200, 1400, 2e3, 2600];
   function randomPlaceholder() {
@@ -895,12 +919,12 @@
     return placeholder(widths[randomWidth], heights[randomHeight], backgrounds[randomColor]);
   }
 
-  const localhost = {
+  const site$p = {
     name: 'Local Files',
     url: /(file:\/\/\/.+(index)?.html)/,
     homepage: '/index.html?raw=1',
-    language: ['Raw'],
-    category: 'manga',
+    language: [Language.RAW],
+    category: Category.MANGA,
     run() {
       const num = parseInt(/\d+/.exec(window.location.search)?.toString() ?? '5', 10);
       const comments = document.createElement('div');
@@ -925,12 +949,12 @@
     },
   };
 
-  const m440 = {
+  const site$o = {
     name: 'M440',
     url: /https?:\/\/(www\.)?m440.in\/manga\/.+\/.+\/\d+/,
     homepage: 'https://m440.in/',
-    language: ['Spanish'],
-    category: 'manga',
+    language: [Language.SPANISH],
+    category: Category.MANGA,
     run() {
       const images = [...document.querySelectorAll('#all img')];
       const chapter = document.querySelector('#chapter-list li.active');
@@ -942,7 +966,7 @@
         pages: images.length,
         prev: chapter?.nextElementSibling?.firstElementChild?.getAttribute('href'),
         next: chapter?.previousElementSibling?.firstElementChild?.getAttribute('href'),
-        listImages: images.map((img) => img.getAttribute('data-src')),
+        listImages: images.map(img => img.getAttribute('data-src')),
       };
     },
   };
@@ -953,17 +977,17 @@
       ...document.querySelectorAll(
         '.wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img, #chapter-images img, #chapterContent img',
       ),
-    ].map(
-      (img) =>
-        [...img.attributes]
-          .filter(
-            (attr) =>
-              /.*(src|url).*/i.test(attr.name) && !/^.*(blank|lazy|load).*$/.test(attr.value),
-          )
-          .find((attr) => imageRegex.test(attr.value))?.value ?? img?.getAttribute('src'),
-    );
+    ].map(img => {
+      const attrs = [...img.attributes].filter(
+        attr => /.*(src|url).*/i.test(attr.name) && !/^.*(blank|lazy|load).*$/.test(attr.value),
+      );
+      if (attrs.length === 0) return '';
+      return (
+        attrs.find(attr => imageRegex.test(attr.value))?.value ?? img?.getAttribute('src') ?? ''
+      );
+    });
   }
-  const madarawp = {
+  const site$n = {
     name: [
       'Madara WordPress Plugin',
       'MangaHaus',
@@ -1005,12 +1029,12 @@
       'https://setsuscans.com/',
       'https://toongod.org/home/',
     ],
-    language: ['English'],
+    language: [Language.ENGLISH],
     obs: 'Any Site that uses Madara WordPress Plugin',
-    category: 'manga',
+    category: Category.MANGA,
     waitFunc: () => {
       const images = findImages();
-      return images.length > 0 && images.every((s) => s && imageRegex.test(s));
+      return images.length > 0 && images.every(s => s && imageRegex.test(s));
     },
     run() {
       const images = findImages();
@@ -1028,17 +1052,17 @@
     },
   };
 
-  const mangabuddy = {
+  const site$m = {
     name: 'MangaBuddy',
     url: /https?:\/\/(www\.)?mangabuddy.com\/.+\/chapter.+/,
     homepage: 'https://mangabuddy.com/',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     waitVar: 'chapImages',
     run() {
       const images = unsafeWindow.chapImages
         .split(',')
-        .map((s) => new URL(s).pathname.replace('/res/', 'https://sb.mbcdn.xyz/'));
+        .map(s => new URL(s).pathname.replace('/res/', 'https://sb.mbcdn.xyz/'));
       return {
         title: document.querySelector('.chapter-info')?.textContent?.trim(),
         series: document
@@ -1052,12 +1076,12 @@
     },
   };
 
-  const mangademon = {
+  const site$l = {
     name: 'MangaDemon',
     url: /https?:\/\/(www\.)?demonicscans\.org\/title\/.+\/chapter\/.+/,
     homepage: 'https://demonicscans.org/',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     run() {
       const images = [...document.querySelectorAll('.imgholder')];
       return {
@@ -1066,22 +1090,22 @@
         pages: images.length,
         prev: document.querySelector('.prevchap')?.getAttribute('href'),
         next: document.querySelector('.nextchap')?.getAttribute('href'),
-        listImages: images.map((img) => img.getAttribute('data-src') || img.getAttribute('src')),
+        listImages: images.map(img => img.getAttribute('data-src') || img.getAttribute('src')),
       };
     },
   };
 
-  const mangadex = {
+  const site$k = {
     name: 'MangaDex',
     url: /https?:\/\/(www\.)?mangadex.org/,
     homepage: 'https://mangadex.org/',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     waitEle: '#chapter-selector a',
     async run() {
       const chapterId = /\/chapter\/([^/]+)(\/\d+)?/.exec(window.location.pathname)?.at(1);
       const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
-      const server = await fetch(home).then(async (res) => res.json());
+      const server = await fetch(home).then(async res => res.json());
       const images = server.chapter.data;
       const chapters = document.querySelectorAll('#chapter-selector a');
       return {
@@ -1090,17 +1114,17 @@
         pages: images.length,
         prev: chapters?.item(0)?.getAttribute('href'),
         next: chapters?.item(1)?.getAttribute('href'),
-        listImages: images.map((img) => `${server.baseUrl}/data/${server.chapter.hash}/${img}`),
+        listImages: images.map(img => `${server.baseUrl}/data/${server.chapter.hash}/${img}`),
       };
     },
   };
 
-  const mangafox = {
+  const site$j = {
     name: ['MangaFox', 'MangaHere'],
     url: /https?:\/\/(www\.)?(fanfox.net|mangahere.cc)\/manga\/.+\/.+\//,
     homepage: ['https://fanfox.net/', 'https://www.mangahere.cc/'],
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     waitVar: 'chapterid',
     async run() {
       const key = document.querySelector('#dm5_key')?.getAttribute('value');
@@ -1114,7 +1138,7 @@
         .fill(0)
         .map(async (_, i) => {
           const url = `chapterfun.ashx?cid=${unsafeWindow.chapterid ?? unsafeWindow.chapter_id}&page=${i}&key=${key}`;
-          const api = await fetch(url, options).then(async (res) => res.text());
+          const api = await fetch(url, options).then(async res => res.text());
           (0, eval)(api);
           return d;
         });
@@ -1130,12 +1154,12 @@
     },
   };
 
-  const mangago = {
+  const site$i = {
     name: 'Mangago',
     url: /https?:\/\/(www\.)?mangago.me\/.*\/.*\/.*/,
     homepage: 'https://www.mangago.me/',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     waitVar: 'imgsrcs',
     run() {
       const key = CryptoJS.enc.Hex.parse('e11adc3949ba59abbe56e057f20f883e');
@@ -1152,7 +1176,7 @@
         next: unsafeWindow.next_c_url,
         listImages: images,
         before() {
-          if (images.some((s) => s === '')) {
+          if (images.some(s => s === '')) {
             document.querySelector('#nform')?.submit();
           }
         },
@@ -1160,12 +1184,12 @@
     },
   };
 
-  const mangahub = {
+  const site$h = {
     name: 'MangaHub',
     url: /https?:\/\/(www\.)?(mangahub).io\/chapter\/.+\/.+/,
     homepage: 'https://mangahub.io/',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     waitEle: '#select-chapter',
     async run() {
       function getCookie(name) {
@@ -1184,7 +1208,7 @@
           'x-mhub-access': getCookie('mhub_access') ?? '',
         },
       };
-      const api = await fetch('https://api.mghcdn.com/graphql', options).then(async (res) =>
+      const api = await fetch('https://api.mghcdn.com/graphql', options).then(async res =>
         res.json(),
       );
       const images = JSON.parse(api?.data.chapter.pages.toString());
@@ -1194,22 +1218,23 @@
         pages: images.i.length,
         prev: document.querySelector('.previous a')?.getAttribute('href'),
         next: document.querySelector('.next a')?.getAttribute('href'),
-        listImages: images.i.map((i) => `https://imgx.mghcdn.com/${images.p + i}`),
+        listImages: images.i.map(i => `https://imgx.mghcdn.com/${images.p + i}`),
       };
     },
   };
 
-  const mangakakalot = {
-    name: ['MangaKakalot', 'NeloManga ', 'MangaNato', 'Natomanga'],
-    url: /https?:\/\/(www\.)?(read|chap)?(nelomanga|mangakakalot|natomanga|manganato).(com|gg).*\/chapter.+/,
+  const site$g = {
+    name: ['MangaKakalot', 'NeloManga ', 'MangaNato', 'NatoManga', 'MangaBats'],
+    url: /https?:\/\/(www\.)?(read|chap)?(nelomanga|mangakakalot|natomanga|manganato|mangabats|mangakakalove).(com|gg|net).*\/(chapter|manga)\/.+\/.+/,
     homepage: [
       'https://mangakakalot.gg/',
       'https://www.nelomanga.com/',
       'https://www.manganato.gg/',
       'https://www.natomanga.com/',
+      'https://www.mangabats.com/',
     ],
-    language: ['English'],
-    category: 'manga',
+    language: [Language.SPANISH],
+    category: Category.MANGA,
     run() {
       const images = [...document.querySelectorAll('#vungdoc img, .container-chapter-reader img')];
       return {
@@ -1222,17 +1247,17 @@
         pages: images.length,
         prev: document.querySelector('.navi-change-chapter-btn-prev, .next')?.getAttribute('href'),
         next: document.querySelector('.navi-change-chapter-btn-next, .back')?.getAttribute('href'),
-        listImages: images.map((img) => img.getAttribute('src')),
+        listImages: images.map(img => img.getAttribute('src')),
       };
     },
   };
 
-  const mangaoni = {
+  const site$f = {
     name: 'MangaOni',
     url: /https?:\/\/(www\.)?manga-oni.com\/lector\/.+\/\d+\/cascada/,
     homepage: 'https://manga-oni.com/',
-    language: ['Spanish'],
-    category: 'manga',
+    language: [Language.SPANISH],
+    category: Category.MANGA,
     run() {
       document.querySelector('#c_list')?.dispatchEvent(new Event('mouseover'));
       const chapter = document.querySelector('#c_list option:checked');
@@ -1242,23 +1267,23 @@
         pages: images?.length,
         prev: chapter?.nextElementSibling?.getAttribute('value'),
         next: chapter?.previousElementSibling?.getAttribute('value'),
-        listImages: images.map((img) => img.getAttribute('data-src') ?? img.getAttribute('src')),
+        listImages: images.map(img => img.getAttribute('data-src') ?? img.getAttribute('src')),
       };
     },
   };
 
-  const mangareader = {
-    name: 'Mangareader',
+  const site$e = {
+    name: 'MangaReader',
     url: /https?:\/\/(www\.)?mangareader.to\/read\/.+\/.+\/.+/,
     homepage: 'https://mangareader.to',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     obs: 'Some galleries will not be usable',
     waitEle: '.ds-image, .iv-card',
     async run() {
       const chapter = document.querySelector('.chapter-item.active');
       const images = [...document.querySelectorAll('.ds-image[data-url], .iv-card[data-url]')];
-      const src = images.map(async (img) => {
+      const src = images.map(async img => {
         const url = img.getAttribute('data-url');
         if (url && img.classList.contains('shuffled')) {
           return (await imgReverser(url)).toDataURL();
@@ -1276,7 +1301,7 @@
     },
   };
 
-  const mangastreamwp = {
+  const site$d = {
     name: [
       'MangaStream WordPress Plugin',
       'Realm Oasis',
@@ -1316,8 +1341,8 @@
       'https://zonamiau.com/',
       'https://ntrgod.com/',
     ],
-    language: ['English', 'Spanish'],
-    category: 'manga',
+    language: [Language.ENGLISH, Language.SPANISH],
+    category: Category.MANGA,
     // waitTime: 2000,
     waitEle: ':where(#chapter, #nPL_select) option:nth-child(2)',
     run() {
@@ -1341,7 +1366,7 @@
           'Siguiente',
         ])?.[0]?.getAttribute('href'),
         listImages: images.map(
-          (img) =>
+          img =>
             img.getAttribute('data-src') ??
             img.getAttribute('data-lazy-src') ??
             img.getAttribute('src'),
@@ -1350,12 +1375,12 @@
     },
   };
 
-  const mangatoon = {
+  const site$c = {
     name: 'MangaToons',
     url: /https?:\/\/.*mangatoon.mobi\/.+\/watch\/.+/,
     homepage: 'https://mangatoon.mobi/',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     waitEle: '.pictures img:not(.cover)',
     run() {
       const images = [...document.querySelectorAll('.pictures img:not(.cover)')];
@@ -1365,29 +1390,29 @@
         pages: images.length,
         prev: document.querySelector('.page-icons-prev')?.getAttribute('href'),
         next: document.querySelector('.page-icons-next')?.getAttribute('href'),
-        listImages: images.map((img) => img.getAttribute('data-src')),
+        listImages: images.map(img => img.getAttribute('data-src')),
       };
     },
   };
 
-  const manhwaweb = {
+  const site$b = {
     name: 'ManhwaWeb',
     url: /https?:\/\/(www\.)?manhwaweb.com\/leer\/.+/,
     homepage: 'https://manhwaweb.com/',
-    language: ['Spanish'],
-    category: 'manga',
+    language: [Language.SPANISH],
+    category: Category.MANGA,
     async run() {
       const slug = window.location.pathname.replace('/leer', '');
       const api = await fetch(
         `https://manhwawebbackend-production.up.railway.app/chapters/see${slug}`,
-      ).then(async (res) => res.json());
+      ).then(async res => res.json());
       const data = await fetch(
         `https://manhwawebbackend-production.up.railway.app/chapters/seeprevpost${slug}`,
-      ).then(async (res) => res.json());
+      ).then(async res => res.json());
       return {
         title: `${api.name} ${api.chapter.chapter}`,
         series: [...document.querySelectorAll('div')]
-          .filter((i) => i.textContent === 'Episodios')?.[0]
+          .filter(i => i.textContent === 'Episodios')?.[0]
           ?.parentElement?.getAttribute('href'),
         pages: api.chapter.img.length,
         prev: data.chapterAnterior.replace(api._id, api.real_id),
@@ -1397,12 +1422,12 @@
     },
   };
 
-  const mgeko = {
+  const site$a = {
     name: ['MangaGeko.com', 'MangaGeko.cc'],
     url: /https?:\/\/(www\.)?mgeko.(com|cc)?\/reader\/.*/,
     homepage: ['https://www.mgeko.com/', 'https://www.mgeko.cc/'],
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     run() {
       const images = [...document.querySelectorAll('#chapter-reader img')];
       return {
@@ -1411,17 +1436,17 @@
         pages: images.length,
         prev: document.querySelector('.chnav.prev')?.getAttribute('href'),
         next: document.querySelector('.chnav.next')?.getAttribute('href'),
-        listImages: images.map((img) => img.getAttribute('src')),
+        listImages: images.map(img => img.getAttribute('src')),
       };
     },
   };
 
-  const nineanime = {
+  const site$9 = {
     name: 'NineAnime',
     url: /https?:\/\/(www\.)?nineanime.com\/chapter\/.+/,
     homepage: 'https://www.nineanime.com/',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     run() {
       const pages = [...document.querySelectorAll('.sl-page option')];
       const chapter = document.querySelector('.mangaread-pagenav select option[selected]');
@@ -1431,18 +1456,18 @@
         pages: pages.length,
         prev: chapter?.nextElementSibling?.getAttribute('value'),
         next: chapter?.previousElementSibling?.getAttribute('value'),
-        listPages: pages.map((o) => o.getAttribute('value')),
+        listPages: pages.map(o => o.getAttribute('value')),
         img: '.manga_pic',
       };
     },
   };
 
-  const olympusbiblioteca = {
+  const site$8 = {
     name: 'OlympusBiblioteca',
     url: /https?:\/\/(www\.)?olympusbiblioteca.com\/capitulo\/\d+\/.+/,
     homepage: 'https://olympusbiblioteca.com/',
-    language: ['Spanish'],
-    category: 'manga',
+    language: [Language.SPANISH],
+    category: Category.MANGA,
     run() {
       const images = [...document.querySelectorAll('section img.w-full.h-full')];
       return {
@@ -1451,17 +1476,17 @@
         pages: images.length,
         prev: document.querySelector('a[name="capitulo anterior"]')?.getAttribute('href'),
         next: document.querySelector('a[name="capitulo siguiente"]')?.getAttribute('href'),
-        listImages: images.map((img) => img.getAttribute('src')),
+        listImages: images.map(img => img.getAttribute('src')),
       };
     },
   };
 
-  const readcomicsonline = {
+  const site$7 = {
     name: 'ReadComicsOnline',
     url: /https?:\/\/(www\.)?readcomicsonline.ru\/comic\/.*\/\d*/,
     homepage: 'https://readcomicsonline.ru/',
-    language: ['English'],
-    category: 'comic',
+    language: [Language.ENGLISH],
+    category: Category.COMIC,
     run() {
       const images = [...document.querySelectorAll('#all img')];
       return {
@@ -1470,17 +1495,17 @@
         pages: unsafeWindow.pages.length,
         prev: unsafeWindow.prev_chapter,
         next: unsafeWindow.next_chapter,
-        listImages: images.map((img) => img.getAttribute('data-src')),
+        listImages: images.map(img => img.getAttribute('data-src')),
       };
     },
   };
 
-  const reaperscans = {
+  const site$6 = {
     name: 'ReaperScans',
     url: /https?:\/\/(www\.)?reaperscans\.com\/series\/.+\/chapter.+/,
     homepage: 'https://reaperscans.com/',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     waitEle: '#content .container img:not(.rounded)',
     run() {
       const images = [...document.querySelectorAll('#content .container img:not(.rounded)')];
@@ -1490,17 +1515,17 @@
         pages: images.length,
         prev: document.querySelector('.fa-chevron-left')?.closest('a')?.getAttribute('href'),
         next: document.querySelector('.fa-chevron-right')?.closest('a')?.getAttribute('href'),
-        listImages: images.map((img) => img.getAttribute('data-src') || img.getAttribute('src')),
+        listImages: images.map(img => img.getAttribute('data-src') || img.getAttribute('src')),
       };
     },
   };
 
-  const tmofans = {
+  const site$5 = {
     name: 'TuMangaOnline',
     url: /https?:\/\/(www\.)?(.+).com\/(viewer|news)\/.+\/(paginated|cascade)/,
     homepage: 'https://lectortmo.com/',
-    language: ['Spanish'],
-    category: 'manga',
+    language: [Language.SPANISH],
+    category: Category.MANGA,
     run() {
       const images = [...document.querySelectorAll('.img-container img, .viewer-container img')];
       const pages = [
@@ -1509,35 +1534,35 @@
         ),
       ];
       const num = images.length > 1 ? images.length : pages.length;
-      return {
+      const manga = {
         title: document.querySelector('title')?.textContent?.trim(),
         series: document.querySelector('a[title="Volver"]')?.getAttribute('href'),
         pages: num,
         prev: document.querySelector('.chapter-prev a')?.getAttribute('href'),
         next: document.querySelector('.chapter-next a')?.getAttribute('href'),
-        ...(images.length > 1
-          ? {
-              listImages: images.map((item) => $(item).attr('data-src')),
-            }
-          : {
-              listPages: Array(pages.length)
-                .fill(0)
-                .map((_, i) => `${window.location.href.replace(/\/\d+$/, '')}/${i + 1}`),
-              img: '#viewer-container img, .viewer-page',
-            }),
+      };
+      if (images.length > 1) {
+        return { ...manga, listImages: images.map(item => $(item).attr('data-src')) };
+      }
+      return {
+        ...manga,
+        listPages: Array(pages.length)
+          .fill(0)
+          .map((_, i) => `${window.location.href.replace(/\/\d+$/, '')}/${i + 1}`),
+        img: '#viewer-container img, .viewer-page',
       };
     },
   };
 
-  const webnovel = {
+  const site$4 = {
     name: 'WebNovel',
     url: /https?:\/\/(www\.)?webnovel.com\/comic\/.+/,
     homepage: 'https://www.webnovel.com/',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     waitVar: 'g_data',
     run() {
-      const images = unsafeWindow.g_data.chapter.chapterInfo.chapterPage.map((img) => img.url);
+      const images = unsafeWindow.g_data.chapter.chapterInfo.chapterPage.map(img => img.url);
       return {
         title: document.querySelector('title')?.textContent?.trim(),
         series: './',
@@ -1549,12 +1574,12 @@
     },
   };
 
-  const webtoons = {
+  const site$3 = {
     name: 'WebToons',
     url: /https?:\/\/(www\.)?webtoons.com\/.+viewer.+/,
     homepage: 'https://www.webtoons.com/',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     run() {
       const images = [...document.querySelectorAll('#_imageList img')];
       return {
@@ -1564,27 +1589,27 @@
         prev: document.querySelector('._prevEpisode')?.getAttribute('href'),
         next: document.querySelector('._nextEpisode')?.getAttribute('href'),
         listImages: images.map(
-          (img) =>
+          img =>
             img.getAttribute('data-url') ?? img.getAttribute('data-src') ?? img.getAttribute('src'),
         ),
       };
     },
   };
 
-  const weebcentral = {
+  const site$2 = {
     name: 'WeebCentral',
     url: /https?:\/\/(www\.)?(weebcentral).com\/chapters\/.+/,
     homepage: 'https://weebcentral.com/',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     waitEle: 'main section .maw-w-full',
     async run() {
-      const src = [...document.querySelectorAll('main section .maw-w-full')].map((elem) =>
+      const src = [...document.querySelectorAll('main section .maw-w-full')].map(elem =>
         elem.getAttribute('src'),
       );
       const chaptersList = await fetch(
         document.querySelector('main section a + button')?.getAttribute('hx-get') ?? '',
-      ).then((res) => res.text());
+      ).then(res => res.text());
       const parser = new DOMParser();
       const chapters = parser.parseFromString(chaptersList, 'text/html');
       return {
@@ -1600,21 +1625,20 @@
     },
   };
 
-  const vortexscans = {
+  const site$1 = {
     name: 'Vortex Scans',
     url: /https?:\/\/(www.)?(vortexscans).(org)\/.+/,
     homepage: 'https://vortexscans.org/',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     waitVar: '__next_f',
     waitFunc() {
-      return unsafeWindow.__next_f.find((i) => /images/.test(i?.[1]))?.length > 0;
+      return unsafeWindow.__next_f.find(i => /images/.test(i?.[1]))?.length > 0;
     },
     run() {
-      const data = unsafeWindow.__next_f.find((i) => /images/.test(i?.[1]))?.[1];
-      const images = data
-        .slice(data.indexOf('images'))
-        .match(/http[^"]+\.(png|gif|jpg|jpeg|webp)/g);
+      const data = unsafeWindow.__next_f.find(i => /images/.test(i?.[1]))?.[1];
+      const images =
+        data.slice(data.indexOf('images')).match(/http[^"]+\.(png|gif|jpg|jpeg|webp)/g) ?? [];
       return {
         title: document
           .querySelector('time')
@@ -1630,12 +1654,12 @@
     },
   };
 
-  const zeroscans = {
+  const site = {
     name: 'ZeroScans',
     url: /https?:\/\/(www\.)?zscans.com\/comics\/.+/,
     homepage: 'https://zscans.com/',
-    language: ['English'],
-    category: 'manga',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
     waitVar: '__ZEROSCANS__',
     run() {
       const images = unsafeWindow.__ZEROSCANS__.data.at(0).current_chapter.high_quality;
@@ -1653,57 +1677,57 @@
 
   const sites = [
     // alandal, // Fixme
-    asura,
-    batoto,
-    bilibilicomics,
+    site$A,
+    site$z,
+    site$y,
     // comicastle, // Fixme
-    comick,
-    dysnatyscans,
-    flamecomics,
-    ikigai,
+    site$x,
+    site$w,
+    site$u,
+    site$t,
     // inkr, // Fixme
     // inmanga, //Fixme
     // klmanga, // Fixme
-    kumanga,
-    leercapitulo,
-    lhtranslation,
-    localhost,
-    m440,
-    mangabuddy,
-    mangademon,
-    mangadex,
-    mangafox,
-    mangago,
+    site$s,
+    site$r,
+    site$q,
+    site$p,
+    site$o,
+    site$m,
+    site$l,
+    site$k,
+    site$j,
+    site$i,
     // mangafreak, // Fixme
-    mangahub,
-    mangakakalot,
-    mangaoni,
+    site$h,
+    site$g,
+    site$f,
     // mangapark, // Fixme
-    mangareader,
-    mangatoon,
-    manhwaweb,
+    site$e,
+    site$c,
+    site$b,
     // mangatown, // Fixme
-    mgeko,
-    nineanime,
-    olympusbiblioteca,
-    readcomicsonline,
+    site$a,
+    site$9,
+    site$8,
+    site$7,
     // ninemanga, // Fixme
-    reaperscans,
-    tmofans,
+    site$6,
+    site$5,
     // senmanga, // Fixme
     // tapas, // Fixme
     // tenmanga, // Fixme
-    webnovel,
-    webtoons,
-    weebcentral,
+    site$4,
+    site$3,
+    site$2,
     // wpmanga, // Archived
-    vortexscans,
-    zeroscans,
-    mangastreamwp,
+    site$1,
+    site,
+    site$d,
     // Must be at the end because is a generic check
-    foolslide,
+    site$v,
     // Must be at the end because is a generic check
-    madarawp,
+    site$n,
     // Must be at the end because is a generic check
   ];
 
@@ -1712,7 +1736,9 @@
 
   function giveToWindow(key, content) {
     if (typeof unsafeWindow !== 'undefined') unsafeWindow[key] = content;
-    window[key] = content;
+    if (typeof window !== 'undefined') {
+      window[key] = content;
+    }
   }
   function logScript(...text) {
     console.log('MangaOnlineViewer: ', ...text);
@@ -1722,7 +1748,7 @@
     if (['dev', 'development'].includes('main')) console.info('MangaOnlineViewer: ', ...text);
     return text;
   }
-  const logScriptC = (x) => (y) => logScript(x, y)[1];
+  const logScriptC = x => y => logScript(x, y)[1];
   function removeValueGM(name) {
     if (typeof GM_deleteValue !== 'undefined') {
       GM_deleteValue(name);
@@ -2373,7 +2399,7 @@
   `,
     ATTENTION: 'Achtung',
     WARNING: 'Warnung',
-    BUTTON_RESET_SETTINGS: 'Einstellungen zurücksetzen',
+    BUTTON_RESET_SETTINGS: 'Einstellungen zurücksetzen(Reset Settings)',
     SETTINGS_RESET: 'Die Einstellungen wurden zurückgesetzt, bitte Seite neu laden',
     LANGUAGE_CHANGED: 'Die Sprache wurde geändert, bitte Seite neu laden',
     AUTO_DOWNLOAD:
@@ -2493,7 +2519,7 @@
   }
   giveToWindow('MOVSettings', showSettings);
   const isSettingsLocal = () => localSettings?.enabled === true;
-  settingsChangeListener((newValue) => {
+  settingsChangeListener(newValue => {
     const newSettings = _.defaultsDeep(newValue, getDefault());
     const diff = globalSettings ? diffObj(newSettings, globalSettings) : newSettings;
     if (!isNothing(diff)) {
@@ -2502,7 +2528,7 @@
       document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
     }
   }, 'settings');
-  settingsChangeListener((newValue) => {
+  settingsChangeListener(newValue => {
     const newSettings = _.defaultsDeep(newValue, getDefault(false));
     const diff = localSettings ? diffObj(newSettings, localSettings) : newSettings;
     if (!isNothing(diff)) {
@@ -2536,7 +2562,7 @@
     }
   }
   function getLocaleString(name) {
-    const locale = locales.find((l) => l.ID === getSettingsValue('locale'));
+    const locale = locales.find(l => l.ID === getSettingsValue('locale'));
     if (locale?.[name]) {
       return locale[name];
     }
@@ -2575,179 +2601,179 @@
     return isSettingsLocal();
   }
   function isBookmarked(url = window.location.href) {
-    return globalSettings.bookmarks.find((el) => el.url === url)?.page;
+    return globalSettings.bookmarks.find(el => el.url === url)?.page;
   }
 
   const IconArrowAutofitDown =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8" />\n  <path d="M18 4v17" />\n  <path d="M15 18l3 3l3 -3" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8"/>\n  <path d="M18 4v17"/>\n  <path d="M15 18l3 3l3 -3"/>\n</svg>\n';
 
   const IconArrowAutofitHeight =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-height" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6" />\n  <path d="M18 14v7" />\n  <path d="M18 3v7" />\n  <path d="M15 18l3 3l3 -3" />\n  <path d="M15 6l3 -3l3 3" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-height" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6"/>\n  <path d="M18 14v7"/>\n  <path d="M18 3v7"/>\n  <path d="M15 18l3 3l3 -3"/>\n  <path d="M15 6l3 -3l3 3"/>\n</svg>\n';
 
   const IconArrowAutofitLeft =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8" />\n  <path d="M20 18h-17" />\n  <path d="M6 15l-3 3l3 3" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8"/>\n  <path d="M20 18h-17"/>\n  <path d="M6 15l-3 3l3 3"/>\n</svg>\n';
 
   const IconArrowAutofitRight =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8" />\n  <path d="M4 18h17" />\n  <path d="M18 15l3 3l-3 3" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8"/>\n  <path d="M4 18h17"/>\n  <path d="M18 15l3 3l-3 3"/>\n</svg>\n';
 
   const IconArrowAutofitWidth =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-width" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" />\n  <path d="M10 18h-7" />\n  <path d="M21 18h-7" />\n  <path d="M6 15l-3 3l3 3" />\n  <path d="M18 15l3 3l-3 3" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-width" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6"/>\n  <path d="M10 18h-7"/>\n  <path d="M21 18h-7"/>\n  <path d="M6 15l-3 3l3 3"/>\n  <path d="M18 15l3 3l-3 3"/>\n</svg>\n';
 
   const IconArrowBigLeft =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z"/>\n</svg>\n';
 
   const IconArrowBigRight =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z"/>\n</svg>\n';
 
   const IconBookmark =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z"/>\n</svg>\n';
 
   const IconBookmarkOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M7.708 3.721a3.982 3.982 0 0 1 2.292 -.721h4a4 4 0 0 1 4 4v7m0 4v3l-6 -4l-6 4v-14c0 -.308 .035 -.609 .1 -.897" />\n  <path d="M3 3l18 18" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M7.708 3.721a3.982 3.982 0 0 1 2.292 -.721h4a4 4 0 0 1 4 4v7m0 4v3l-6 -4l-6 4v-14c0 -.308 .035 -.609 .1 -.897"/>\n  <path d="M3 3l18 18"/>\n</svg>\n';
 
   const IconBookmarks =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmarks" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z" />\n  <path d="M11 3h5a3 3 0 0 1 3 3v11" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmarks" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z"/>\n  <path d="M11 3h5a3 3 0 0 1 3 3v11"/>\n</svg>\n';
 
   const IconCategory =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 4h6v6h-6z" />\n  <path d="M14 4h6v6h-6z" />\n  <path d="M4 14h6v6h-6z" />\n  <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 4h6v6h-6z"/>\n  <path d="M14 4h6v6h-6z"/>\n  <path d="M4 14h6v6h-6z"/>\n  <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>\n</svg>\n';
 
   const IconCheck =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check toggler-on" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M5 12l5 5l10 -10" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check toggler-on" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M5 12l5 5l10 -10"/>\n</svg>\n';
 
   const IconDeviceFloppy =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />\n  <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />\n  <path d="M14 4l0 4l-6 0l0 -4" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"/>\n  <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\n  <path d="M14 4l0 4l-6 0l0 -4"/>\n</svg>\n';
 
   const IconExternalLink =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-external-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />\n  <path d="M11 13l9 -9" />\n  <path d="M15 4h5v5" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-external-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"/>\n  <path d="M11 13l9 -9"/>\n  <path d="M15 4h5v5"/>\n</svg>\n';
 
   const IconEye =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />\n  <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/>\n  <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/>\n</svg>\n';
 
   const IconEyeOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />\n  <path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" />\n  <path d="M3 3l18 18" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828"/>\n  <path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87"/>\n  <path d="M3 3l18 18"/>\n</svg>\n';
 
   const IconFileDownload =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M14 3v4a1 1 0 0 0 1 1h4" />\n  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />\n  <path d="M12 17v-6" />\n  <path d="M9.5 14.5l2.5 2.5l2.5 -2.5" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M14 3v4a1 1 0 0 0 1 1h4"/>\n  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>\n  <path d="M12 17v-6"/>\n  <path d="M9.5 14.5l2.5 2.5l2.5 -2.5"/>\n</svg>\n';
 
   const IconKeyboard =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-keyboard" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z" />\n  <path d="M6 10l0 .01" />\n  <path d="M10 10l0 .01" />\n  <path d="M14 10l0 .01" />\n  <path d="M18 10l0 .01" />\n  <path d="M6 14l0 .01" />\n  <path d="M18 14l0 .01" />\n  <path d="M10 14l4 .01" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-keyboard" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z"/>\n  <path d="M6 10l0 .01"/>\n  <path d="M10 10l0 .01"/>\n  <path d="M14 10l0 .01"/>\n  <path d="M18 10l0 .01"/>\n  <path d="M6 14l0 .01"/>\n  <path d="M18 14l0 .01"/>\n  <path d="M10 14l4 .01"/>\n</svg>\n';
 
   const IconListNumbers =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-numbers" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M11 6h9" />\n  <path d="M11 12h9" />\n  <path d="M12 18h8" />\n  <path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4" />\n  <path d="M6 10v-6l-2 2" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-numbers" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M11 6h9"/>\n  <path d="M11 12h9"/>\n  <path d="M12 18h8"/>\n  <path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4"/>\n  <path d="M6 10v-6l-2 2"/>\n</svg>\n';
 
   const IconLoader2 =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-loader-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 3a9 9 0 1 0 9 9" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-loader-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 3a9 9 0 1 0 9 9"/>\n</svg>\n';
 
   const IconMenu2 =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 6l16 0" />\n  <path d="M4 12l16 0" />\n  <path d="M4 18l16 0" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 6l16 0"/>\n  <path d="M4 12l16 0"/>\n  <path d="M4 18l16 0"/>\n</svg>\n';
 
   const IconMessage =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M8 9h8" />\n  <path d="M8 13h6" />\n  <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M8 9h8"/>\n  <path d="M8 13h6"/>\n  <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"/>\n</svg>\n';
 
   const IconMoon =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/>\n</svg>\n';
 
   const IconPalette =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-palette" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25" />\n  <path d="M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\n  <path d="M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\n  <path d="M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-palette" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"/>\n  <path d="M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\n  <path d="M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\n  <path d="M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\n</svg>\n';
 
   const IconPencil =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />\n  <path d="M13.5 6.5l4 4" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/>\n  <path d="M13.5 6.5l4 4"/>\n</svg>\n';
 
   const IconPhoto =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 8h.01" />\n  <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />\n  <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 8h.01"/>\n  <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/>\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/>\n  <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/>\n</svg>\n';
 
   const IconPhotoOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo-off" width="24"\n     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"\n     stroke-linecap="round" stroke-linejoin="round">\n    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n    <path d="M15 8h.01"/>\n    <path d="M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153"/>\n    <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/>\n    <path d="M16.33 12.338c.574 -.054 1.155 .166 1.67 .662l3 3"/>\n    <path d="M3 3l18 18" color="orange"/>\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo-off" width="24"\n     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"\n     stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 8h.01"/>\n  <path d="M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153"/>\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/>\n  <path d="M16.33 12.338c.574 -.054 1.155 .166 1.67 .662l3 3"/>\n  <path d="M3 3l18 18" color="orange"/>\n</svg>\n';
 
   const IconRefresh =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />\n  <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>\n  <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>\n</svg>\n';
 
   const IconSettings =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />\n  <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/>\n  <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/>\n</svg>\n';
 
   const IconSpacingVertical =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-spacing-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2" />\n  <path d="M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />\n  <path d="M16 12h-8" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-spacing-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2"/>\n  <path d="M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/>\n  <path d="M16 12h-8"/>\n</svg>\n';
 
   const IconSun =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />\n  <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/>\n  <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/>\n</svg>\n';
 
   const IconTrash =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 7l16 0" />\n  <path d="M10 11l0 6" />\n  <path d="M14 11l0 6" />\n  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />\n  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 7l16 0"/>\n  <path d="M10 11l0 6"/>\n  <path d="M14 11l0 6"/>\n  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>\n  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>\n</svg>\n';
 
   const IconX =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x toggler-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M18 6l-12 12" />\n  <path d="M6 6l12 12" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x toggler-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M18 6l-12 12"/>\n  <path d="M6 6l12 12"/>\n</svg>\n';
 
   const IconZoomCancel =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-cancel" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\n  <path d="M8 8l4 4" />\n  <path d="M12 8l-4 4" />\n  <path d="M21 21l-6 -6" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-cancel" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\n  <path d="M8 8l4 4"/>\n  <path d="M12 8l-4 4"/>\n  <path d="M21 21l-6 -6"/>\n</svg>\n';
 
   const IconZoomIn =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\n  <path d="M7 10l6 0" />\n  <path d="M10 7l0 6" />\n  <path d="M21 21l-6 -6" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\n  <path d="M7 10l6 0"/>\n  <path d="M10 7l0 6"/>\n  <path d="M21 21l-6 -6"/>\n</svg>\n';
 
   const IconZoomInArea =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 13v4" />\n  <path d="M13 15h4" />\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />\n  <path d="M22 22l-3 -3" />\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1" />\n  <path d="M3 11v-1" />\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1" />\n  <path d="M10 3h1" />\n  <path d="M15 3h1a2 2 0 0 1 2 2v1" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 13v4"/>\n  <path d="M13 15h4"/>\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/>\n  <path d="M22 22l-3 -3"/>\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1"/>\n  <path d="M3 11v-1"/>\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1"/>\n  <path d="M10 3h1"/>\n  <path d="M15 3h1a2 2 0 0 1 2 2v1"/>\n</svg>\n';
 
   const IconZoomOut =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\n  <path d="M7 10l6 0" />\n  <path d="M21 21l-6 -6" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\n  <path d="M7 10l6 0"/>\n  <path d="M21 21l-6 -6"/>\n</svg>\n';
 
   const IconZoomOutArea =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M13 15h4" />\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />\n  <path d="M22 22l-3 -3" />\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1" />\n  <path d="M3 11v-1" />\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1" />\n  <path d="M10 3h1" />\n  <path d="M15 3h1a2 2 0 0 1 2 2v1" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M13 15h4"/>\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/>\n  <path d="M22 22l-3 -3"/>\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1"/>\n  <path d="M3 11v-1"/>\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1"/>\n  <path d="M10 3h1"/>\n  <path d="M15 3h1a2 2 0 0 1 2 2v1"/>\n</svg>\n';
 
   const IconZoomPan =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-pan" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />\n  <path d="M17 17l-2.5 -2.5" />\n  <path d="M10 5l2 -2l2 2" />\n  <path d="M19 10l2 2l-2 2" />\n  <path d="M5 10l-2 2l2 2" />\n  <path d="M10 19l2 2l2 -2" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-pan" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>\n  <path d="M17 17l-2.5 -2.5"/>\n  <path d="M10 5l2 -2l2 2"/>\n  <path d="M19 10l2 2l-2 2"/>\n  <path d="M5 10l-2 2l2 2"/>\n  <path d="M10 19l2 2l2 -2"/>\n</svg>\n';
 
   const IconPlayerPlay =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M7 4v16l13 -8z" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M7 4v16l13 -8z"/>\n</svg>\n';
 
   const IconPlayerPause =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-pause" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />\n  <path d="M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />\n</svg>\n\n\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-pause" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"/>\n  <path d="M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"/>\n</svg>\n';
 
   const IconWorldCog =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n     class="icon icon-tabler icons-tabler-outline icon-tabler-world-cog">\n    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n    <path d="M21 12a9 9 0 1 0 -8.979 9"/>\n    <path d="M3.6 9h16.8"/>\n    <path d="M3.6 15h8.9"/>\n    <path d="M11.5 3a17 17 0 0 0 0 18"/>\n    <path d="M12.5 3a16.992 16.992 0 0 1 2.522 10.376"/>\n    <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\n    <path d="M19.001 15.5v1.5"/>\n    <path d="M19.001 21v1.5"/>\n    <path d="M22.032 17.25l-1.299 .75"/>\n    <path d="M17.27 20l-1.3 .75"/>\n    <path d="M15.97 17.25l1.3 .75"/>\n    <path d="M20.733 20l1.3 .75"/>\n</svg>';
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n     class="icon icon-tabler icons-tabler-outline icon-tabler-world-cog">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M21 12a9 9 0 1 0 -8.979 9"/>\n  <path d="M3.6 9h16.8"/>\n  <path d="M3.6 15h8.9"/>\n  <path d="M11.5 3a17 17 0 0 0 0 18"/>\n  <path d="M12.5 3a16.992 16.992 0 0 1 2.522 10.376"/>\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\n  <path d="M19.001 15.5v1.5"/>\n  <path d="M19.001 21v1.5"/>\n  <path d="M22.032 17.25l-1.299 .75"/>\n  <path d="M17.27 20l-1.3 .75"/>\n  <path d="M15.97 17.25l1.3 .75"/>\n  <path d="M20.733 20l1.3 .75"/>\n</svg>\n';
 
   const IconLocationCog =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n     class="icon icon-tabler icons-tabler-outline icon-tabler-location-cog">\n    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n    <path d="M12 18l-2 -4l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5l-3.14 8.697"/>\n    <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\n    <path d="M19.001 15.5v1.5"/>\n    <path d="M19.001 21v1.5"/>\n    <path d="M22.032 17.25l-1.299 .75"/>\n    <path d="M17.27 20l-1.3 .75"/>\n    <path d="M15.97 17.25l1.3 .75"/>\n    <path d="M20.733 20l1.3 .75"/>\n</svg>';
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n     class="icon icon-tabler icons-tabler-outline icon-tabler-location-cog">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 18l-2 -4l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5l-3.14 8.697"/>\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\n  <path d="M19.001 15.5v1.5"/>\n  <path d="M19.001 21v1.5"/>\n  <path d="M22.032 17.25l-1.299 .75"/>\n  <path d="M17.27 20l-1.3 .75"/>\n  <path d="M15.97 17.25l1.3 .75"/>\n  <path d="M20.733 20l1.3 .75"/>\n</svg>\n';
 
   const IconSettingsOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n     class="icon icon-tabler icons-tabler-outline icon-tabler-settings-off">\n    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n    <path d="M9.451 5.437c.418 -.218 .75 -.609 .874 -1.12c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35c-.486 .118 -.894 .44 -1.123 .878m-.188 3.803c-.517 .523 -1.349 .734 -2.125 .262a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.472 -.774 -.262 -1.604 .259 -2.121"/>\n    <path d="M9.889 9.869a3 3 0 1 0 4.226 4.26m.592 -3.424a3.012 3.012 0 0 0 -1.419 -1.415"/>\n    <path d="M3 3l18 18"/>\n</svg>';
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n     class="icon icon-tabler icons-tabler-outline icon-tabler-settings-off">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M9.451 5.437c.418 -.218 .75 -.609 .874 -1.12c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35c-.486 .118 -.894 .44 -1.123 .878m-.188 3.803c-.517 .523 -1.349 .734 -2.125 .262a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.472 -.774 -.262 -1.604 .259 -2.121"/>\n  <path d="M9.889 9.869a3 3 0 1 0 4.226 4.26m.592 -3.424a3.012 3.012 0 0 0 -1.419 -1.415"/>\n  <path d="M3 3l18 18"/>\n</svg>\n';
 
   const styles =
-    ':root {\n    --theme-body-background: #25262b;\n    --theme-body-text-color: #c1c2c5;\n    --theme-text-color: #c1c2c5;\n    --theme-primary-color: #1a1b1e;\n    --theme-primary-text-color: #c1c2c5;\n    --theme-background-color: #25262b;\n    --theme-hightlight-color: #2c2e33;\n    --theme-border-color: #373a40;\n}\n\n#MangaOnlineViewer {\n    text-decoration: none;\n    color: var(--theme-body-text-color);\n    background-color: var(--theme-body-background);\n}\n\n#MangaOnlineViewer #Chapter {\n    display: grid;\n    grid-template-columns: repeat(1, 1fr);\n    min-width: 225px;\n}\n\n#MangaOnlineViewer #Chapter.Vertical:has(+ #Navigation:not(.disabled)),\n#MangaOnlineViewer #Chapter.WebComic:has(+ #Navigation:not(.disabled)) {\n    padding-bottom: 31px;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .PageContent {\n    margin-bottom: 8px;\n    margin-top: 8px;\n}\n\n#MangaOnlineViewer .closeButton {\n    width: fit-content;\n    height: fit-content;\n    position: absolute;\n    right: 10px;\n    top: 10px;\n}\n\n#MangaOnlineViewer .overlay {\n    position: fixed;\n    display: none;\n    width: 100%;\n    height: 100%;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background-color: rgba(0, 0, 0, 0.5);\n    z-index: 950;\n    cursor: pointer;\n}\n\n#MangaOnlineViewer .overlay.visible {\n    display: block;\n}\n\n#MangaOnlineViewer select {\n    height: 20px;\n    /*padding: 0;*/\n    margin: 2px;\n}\n\n#MangaOnlineViewer .ControlButton,\n#MangaOnlineViewer .simpleButton {\n    cursor: pointer;\n    border-radius: 5px;\n    border-width: 1px;\n    border-style: solid;\n    padding: 2px;\n    min-height: 32px;\n    color: var(--theme-primary-text-color);\n    background-color: var(--theme-primary-color);\n    border-color: var(--theme-border-color);\n}\n\n#MangaOnlineViewer .ControlButton:active,\n#MangaOnlineViewer .ControlButton:hover {\n    opacity: 0.8;\n}\n\n#MangaOnlineViewer .simpleButton {\n    font-size: initial;\n    min-width: 32px;\n}\n\n#MangaOnlineViewer .panel .simpleButton {\n    position: absolute;\n    top: 10px;\n    left: 10px;\n}\n\n#MangaOnlineViewer .panel {\n    padding: 5px;\n    position: inherit;\n    border-radius: 5px;\n    background-color: var(--theme-background-color);\n}\n\n#MangaOnlineViewer :not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {\n    max-width: 100%;\n    object-fit: contain;\n}\n\n#MangaOnlineViewer .ControlButton.hidden,\n#MangaOnlineViewer.light #ColorScheme > .icon-tabler-sun,\n#MangaOnlineViewer.dark #ColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .light + #CommentsColorScheme > .icon-tabler-sun,\n#MangaOnlineViewer .dark + #CommentsColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,\n#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,\n#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,\n#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,\n#MangaOnlineViewer.bookmarked .Bookmark > .icon-tabler-bookmark,\n#MangaOnlineViewer:not(.bookmarked) .Bookmark > .icon-tabler-bookmark-off,\n#MangaOnlineViewer #AutoScroll.running > .icon-tabler-player-play,\n#MangaOnlineViewer #AutoScroll:not(.running) > .icon-tabler-player-pause {\n    display: none;\n}\n\n#MangaOnlineViewer.hideControls .PageFunctions {\n    visibility: hidden;\n}\n';
+    ':root {\n  --theme-body-background: #25262b;\n  --theme-body-text-color: #c1c2c5;\n  --theme-text-color: #c1c2c5;\n  --theme-primary-color: #1a1b1e;\n  --theme-primary-text-color: #c1c2c5;\n  --theme-background-color: #25262b;\n  --theme-hightlight-color: #2c2e33;\n  --theme-border-color: #373a40;\n}\n\n#MangaOnlineViewer {\n  text-decoration: none;\n  color: var(--theme-body-text-color);\n  background-color: var(--theme-body-background);\n}\n\n#MangaOnlineViewer #Chapter {\n  display: grid;\n  grid-template-columns: repeat(1, 1fr);\n  min-width: 225px;\n}\n\n#MangaOnlineViewer #Chapter.Vertical:has(+ #Navigation:not(.disabled)),\n#MangaOnlineViewer #Chapter.WebComic:has(+ #Navigation:not(.disabled)) {\n  padding-bottom: 31px;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .PageContent {\n  margin-bottom: 8px;\n  margin-top: 8px;\n}\n\n#MangaOnlineViewer .closeButton {\n  width: fit-content;\n  height: fit-content;\n  position: absolute;\n  right: 10px;\n  top: 10px;\n}\n\n#MangaOnlineViewer .overlay {\n  position: fixed;\n  display: none;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 950;\n  cursor: pointer;\n}\n\n#MangaOnlineViewer .overlay.visible {\n  display: block;\n}\n\n#MangaOnlineViewer select {\n  height: 20px;\n  /*padding: 0;*/\n  margin: 2px;\n}\n\n#MangaOnlineViewer .ControlButton,\n#MangaOnlineViewer .simpleButton {\n  cursor: pointer;\n  border-radius: 5px;\n  border-width: 1px;\n  border-style: solid;\n  padding: 2px;\n  min-height: 32px;\n  color: var(--theme-primary-text-color);\n  background-color: var(--theme-primary-color);\n  border-color: var(--theme-border-color);\n}\n\n#MangaOnlineViewer .ControlButton:active,\n#MangaOnlineViewer .ControlButton:hover {\n  opacity: 0.8;\n}\n\n#MangaOnlineViewer .simpleButton {\n  font-size: initial;\n  min-width: 32px;\n}\n\n#MangaOnlineViewer .panel .simpleButton {\n  position: absolute;\n  top: 10px;\n  left: 10px;\n}\n\n#MangaOnlineViewer .panel {\n  padding: 5px;\n  position: inherit;\n  border-radius: 5px;\n  background-color: var(--theme-background-color);\n}\n\n#MangaOnlineViewer :not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {\n  max-width: 100%;\n  object-fit: contain;\n}\n\n#MangaOnlineViewer .ControlButton.hidden,\n#MangaOnlineViewer.light #ColorScheme > .icon-tabler-sun,\n#MangaOnlineViewer.dark #ColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .light + #CommentsColorScheme > .icon-tabler-sun,\n#MangaOnlineViewer .dark + #CommentsColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,\n#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,\n#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,\n#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,\n#MangaOnlineViewer.bookmarked .Bookmark > .icon-tabler-bookmark,\n#MangaOnlineViewer:not(.bookmarked) .Bookmark > .icon-tabler-bookmark-off,\n#MangaOnlineViewer #AutoScroll.running > .icon-tabler-player-play,\n#MangaOnlineViewer #AutoScroll:not(.running) > .icon-tabler-player-pause {\n  display: none;\n}\n\n#MangaOnlineViewer.hideControls .PageFunctions {\n  visibility: hidden;\n}\n';
 
   const icons =
-    '.icon-tabler {\n    height: 1rem;\n    width: 1rem;\n    vertical-align: sub;\n}\n\n.icon-tabler-file-download > :nth-child(n + 4) {\n    /* 4, 5 */\n    color: gold;\n}\n\n.icon-tabler-arrow-autofit-width > :nth-child(n + 3) {\n    /* 3,4,5,6 */\n    color: yellow;\n}\n\n.icon-tabler-arrow-autofit-height > :nth-child(n + 3) {\n    /* 3,4,5,6 */\n    color: yellow;\n}\n\n.icon-tabler-zoom-in-area > :nth-child(2),\n.icon-tabler-zoom-in-area > :nth-child(3) {\n    color: lime;\n}\n\n.icon-tabler-zoom-out-area > :nth-child(2) {\n    color: red;\n}\n\n.icon-tabler-zoom-pan > :nth-child(n + 4) {\n    color: #9966ff;\n}\n\n.icon-tabler-arrow-autofit-down > :nth-child(n + 3) {\n    color: #28ffbf;\n}\n\n.icon-tabler-arrow-autofit-left > :nth-child(n + 3) {\n    color: #28ffbf;\n}\n\n.icon-tabler-arrow-autofit-right > :nth-child(n + 3) {\n    color: #28ffbf;\n}\n\n.icon-tabler-spacing-vertical > :nth-child(4) {\n    color: fuchsia;\n}\n\n.icon-tabler-list-numbers > :nth-child(n + 5) {\n    color: #e48900;\n}\n\n.icon-tabler-bookmarks > :nth-child(n + 2) {\n    color: orange;\n}\n\n.icon-tabler-bookmark > * {\n    color: orange;\n}\n\n.icon-tabler-bookmark-off > * {\n    color: orange;\n}\n\n.icon-tabler-bookmark-off > :nth-child(3) {\n    color: red;\n}\n\n.icon-tabler-eye-off > :nth-child(4) {\n    color: red;\n}\n\n.icon-tabler-zoom-cancel > :nth-child(3),\n.icon-tabler-zoom-cancel > :nth-child(4) {\n    color: #9966ff;\n}\n\n.icon-tabler-zoom-in > :nth-child(3),\n.icon-tabler-zoom-in > :nth-child(4) {\n    color: lime;\n}\n\n.icon-tabler-zoom-out > :nth-child(3) {\n    color: red;\n}\n\n.icon-tabler-refresh > :nth-child(n + 2) {\n    color: cyan;\n}\n\n.icon-tabler-photo > * {\n    color: silver;\n}\n\n.icon-tabler-photo-off > * {\n    color: silver;\n}\n\n.icon-tabler-photo-off > :nth-child(6) {\n    color: orange;\n}\n\n.icon-tabler-message > :nth-child(2),\n.icon-tabler-message > :nth-child(3) {\n    color: greenyellow;\n}\n';
+    '.icon-tabler {\n  height: 1rem;\n  width: 1rem;\n  vertical-align: sub;\n}\n\n.icon-tabler-file-download > :nth-child(n + 4) {\n  /* 4, 5 */\n  color: gold;\n}\n\n.icon-tabler-arrow-autofit-width > :nth-child(n + 3) {\n  /* 3,4,5,6 */\n  color: yellow;\n}\n\n.icon-tabler-arrow-autofit-height > :nth-child(n + 3) {\n  /* 3,4,5,6 */\n  color: yellow;\n}\n\n.icon-tabler-zoom-in-area > :nth-child(2),\n.icon-tabler-zoom-in-area > :nth-child(3) {\n  color: lime;\n}\n\n.icon-tabler-zoom-out-area > :nth-child(2) {\n  color: red;\n}\n\n.icon-tabler-zoom-pan > :nth-child(n + 4) {\n  color: #9966ff;\n}\n\n.icon-tabler-arrow-autofit-down > :nth-child(n + 3) {\n  color: #28ffbf;\n}\n\n.icon-tabler-arrow-autofit-left > :nth-child(n + 3) {\n  color: #28ffbf;\n}\n\n.icon-tabler-arrow-autofit-right > :nth-child(n + 3) {\n  color: #28ffbf;\n}\n\n.icon-tabler-spacing-vertical > :nth-child(4) {\n  color: fuchsia;\n}\n\n.icon-tabler-list-numbers > :nth-child(n + 5) {\n  color: #e48900;\n}\n\n.icon-tabler-bookmarks > :nth-child(n + 2) {\n  color: orange;\n}\n\n.icon-tabler-bookmark > * {\n  color: orange;\n}\n\n.icon-tabler-bookmark-off > * {\n  color: orange;\n}\n\n.icon-tabler-bookmark-off > :nth-child(3) {\n  color: red;\n}\n\n.icon-tabler-eye-off > :nth-child(4) {\n  color: red;\n}\n\n.icon-tabler-zoom-cancel > :nth-child(3),\n.icon-tabler-zoom-cancel > :nth-child(4) {\n  color: #9966ff;\n}\n\n.icon-tabler-zoom-in > :nth-child(3),\n.icon-tabler-zoom-in > :nth-child(4) {\n  color: lime;\n}\n\n.icon-tabler-zoom-out > :nth-child(3) {\n  color: red;\n}\n\n.icon-tabler-refresh > :nth-child(n + 2) {\n  color: cyan;\n}\n\n.icon-tabler-photo > * {\n  color: silver;\n}\n\n.icon-tabler-photo-off > * {\n  color: silver;\n}\n\n.icon-tabler-photo-off > :nth-child(6) {\n  color: orange;\n}\n\n.icon-tabler-message > :nth-child(2),\n.icon-tabler-message > :nth-child(3) {\n  color: greenyellow;\n}\n';
 
   const normalize$1 =
-    "/*  Simple Normalizer */\nhtml {\n    font-size: 100%;\n}\n\nbody {\n    margin: 0;\n    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\n    font-size: 14px;\n    line-height: 20px;\n    color: var(--theme-body-text-color);\n    background-color: var(--theme-body-background);\n    padding: 0;\n}\n\na,\na:link,\na:visited,\na:active,\na:focus {\n    color: var(--theme-body-text-color);\n    text-decoration: none;\n}\n\nimg {\n    height: auto;\n    vertical-align: middle;\n    border: 0 none;\n}\n";
+    "/*  Simple Normalizer */\nhtml {\n  font-size: 100%;\n}\n\nbody {\n  margin: 0;\n  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\n  font-size: 14px;\n  line-height: 20px;\n  color: var(--theme-body-text-color);\n  background-color: var(--theme-body-background);\n  padding: 0;\n}\n\na,\na:link,\na:visited,\na:active,\na:focus {\n  color: var(--theme-body-text-color);\n  text-decoration: none;\n}\n\nimg {\n  height: auto;\n  vertical-align: middle;\n  border: 0 none;\n}\n";
 
   const media =
-    '#MangaOnlineViewer.mobile #Header,\n#MangaOnlineViewer.tablet #Header {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n}\n\n#MangaOnlineViewer.mobile .ViewerTitle,\n#MangaOnlineViewer.tablet .ViewerTitle {\n    order: 1;\n    min-height: auto;\n    padding: 0;\n    margin: 0;\n    flex-grow: 1;\n    flex-shrink: 1;\n    flex-basis: 100%;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions,\n#MangaOnlineViewer.tablet #GlobalFunctions {\n    width: auto;\n    order: 2;\n    padding: 5px;\n}\n\n#MangaOnlineViewer.mobile #ChapterNavigation,\n#MangaOnlineViewer.tablet #ChapterNavigation {\n    order: 3;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.tablet #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.tablets, .phones),\n#MangaOnlineViewer.tablet #GlobalFunctions .ControlButton:not(.tablets, .phones) {\n    display: none;\n}\n\n#MangaOnlineViewer.mobile #Header {\n    flex-direction: row;\n    flex-wrap: wrap;\n    justify-content: center;\n    align-items: center;\n}\n\n#MangaOnlineViewer.mobile #Header.click + #Chapter:not(.webcomic, .vertical) {\n    position: sticky;\n}\n\n#MangaOnlineViewer.mobile #MangaTitle {\n    word-wrap: anywhere;\n}\n\n#MangaOnlineViewer.mobile .ViewerTitle {\n    order: 1;\n    margin-top: 0;\n    height: auto;\n    padding: 0;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions {\n    order: 2;\n    padding: 0;\n    width: auto;\n    flex-basis: 35px;\n}\n\n#MangaOnlineViewer.mobile #ChapterNavigation {\n    order: 3;\n    width: min-content;\n    min-width: 205px;\n}\n\n#MangaOnlineViewer.mobile .ChapterControl {\n    flex-direction: row;\n    flex-wrap: wrap;\n}\n\n#MangaOnlineViewer.mobile .ChapterControl .NavigationControlButton {\n    flex-grow: 1;\n}\n\n#MangaOnlineViewer.mobile .PageFunctions {\n    padding: 0;\n}\n\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton.Bookmark {\n    opacity: 1;\n}\n\n#MangaOnlineViewer.mobile #Navigation,\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.phones),\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton:not(.Bookmark),\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoomMode,\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoom,\n#MangaOnlineViewer.mobile #SettingsPanel .fitIfOversize,\n#MangaOnlineViewer.mobile #SettingsPanel .showThumbnails,\n#MangaOnlineViewer.mobile #SettingsPanel .lazyLoadImages,\n#MangaOnlineViewer.mobile #SettingsPanel .downloadZip,\n#MangaOnlineViewer.mobile #SettingsPanel .minZoom,\n#MangaOnlineViewer.mobile #SettingsPanel .zoomStep,\n#MangaOnlineViewer.mobile #SettingsPanel .headerType,\n#MangaOnlineViewer.mobile #SettingsPanel .autoScroll,\n#MangaOnlineViewer.mobile #KeybindingsPanel,\n#MangaOnlineViewer.mobile .ChapterControl .download,\n#MangaOnlineViewer.mobile #Counters {\n    display: none;\n}\n';
+    '#MangaOnlineViewer.mobile #Header,\n#MangaOnlineViewer.tablet #Header {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\n#MangaOnlineViewer.mobile .ViewerTitle,\n#MangaOnlineViewer.tablet .ViewerTitle {\n  order: 1;\n  min-height: auto;\n  padding: 0;\n  margin: 0;\n  flex-grow: 1;\n  flex-shrink: 1;\n  flex-basis: 100%;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions,\n#MangaOnlineViewer.tablet #GlobalFunctions {\n  width: auto;\n  order: 2;\n  padding: 5px;\n}\n\n#MangaOnlineViewer.mobile #ChapterNavigation,\n#MangaOnlineViewer.tablet #ChapterNavigation {\n  order: 3;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.tablet #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.tablets, .phones),\n#MangaOnlineViewer.tablet #GlobalFunctions .ControlButton:not(.tablets, .phones) {\n  display: none;\n}\n\n#MangaOnlineViewer.mobile #Header {\n  flex-direction: row;\n  flex-wrap: wrap;\n  justify-content: center;\n  align-items: center;\n}\n\n#MangaOnlineViewer.mobile #Header.click + #Chapter:not(.webcomic, .vertical) {\n  position: sticky;\n}\n\n#MangaOnlineViewer.mobile #MangaTitle {\n  word-wrap: anywhere;\n}\n\n#MangaOnlineViewer.mobile .ViewerTitle {\n  order: 1;\n  margin-top: 0;\n  height: auto;\n  padding: 0;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions {\n  order: 2;\n  padding: 0;\n  width: auto;\n  flex-basis: 35px;\n}\n\n#MangaOnlineViewer.mobile #ChapterNavigation {\n  order: 3;\n  width: min-content;\n  min-width: 205px;\n}\n\n#MangaOnlineViewer.mobile .ChapterControl {\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\n#MangaOnlineViewer.mobile .ChapterControl .NavigationControlButton {\n  flex-grow: 1;\n}\n\n#MangaOnlineViewer.mobile .PageFunctions {\n  padding: 0;\n}\n\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton.Bookmark {\n  opacity: 1;\n}\n\n#MangaOnlineViewer.mobile #Navigation,\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.phones),\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton:not(.Bookmark),\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoomMode,\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoom,\n#MangaOnlineViewer.mobile #SettingsPanel .fitIfOversize,\n#MangaOnlineViewer.mobile #SettingsPanel .showThumbnails,\n#MangaOnlineViewer.mobile #SettingsPanel .lazyLoadImages,\n#MangaOnlineViewer.mobile #SettingsPanel .downloadZip,\n#MangaOnlineViewer.mobile #SettingsPanel .minZoom,\n#MangaOnlineViewer.mobile #SettingsPanel .zoomStep,\n#MangaOnlineViewer.mobile #SettingsPanel .headerType,\n#MangaOnlineViewer.mobile #SettingsPanel .autoScroll,\n#MangaOnlineViewer.mobile #KeybindingsPanel,\n#MangaOnlineViewer.mobile .ChapterControl .download,\n#MangaOnlineViewer.mobile #Counters {\n  display: none;\n}\n';
 
   const animation =
-    '@-webkit-keyframes spin {\n    to {\n        transform: rotate(360deg);\n    }\n}\n\n@keyframes spin {\n    to {\n        transform: rotate(360deg);\n    }\n}\n\n@-webkit-keyframes spin-reverse {\n    0% {\n        transform: rotate(360deg);\n    }\n\n    to {\n        transform: rotate(0);\n    }\n}\n\n@keyframes spin-reverse {\n    0% {\n        transform: rotate(360deg);\n    }\n\n    to {\n        transform: rotate(0);\n    }\n}\n\n.icon-tabler-loader-2,\n.animate-spin {\n    -webkit-animation: spin 1s linear infinite;\n    animation: spin 1s linear infinite;\n}\n\n.animate-spin-reverse {\n    -webkit-animation: spin-reverse 1s linear infinite;\n    animation: spin-reverse 1s linear infinite;\n}\n';
+    '@-webkit-keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n\n@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n\n@-webkit-keyframes spin-reverse {\n  0% {\n    transform: rotate(360deg);\n  }\n\n  to {\n    transform: rotate(0);\n  }\n}\n\n@keyframes spin-reverse {\n  0% {\n    transform: rotate(360deg);\n  }\n\n  to {\n    transform: rotate(0);\n  }\n}\n\n.icon-tabler-loader-2,\n.animate-spin {\n  -webkit-animation: spin 1s linear infinite;\n  animation: spin 1s linear infinite;\n}\n\n.animate-spin-reverse {\n  -webkit-animation: spin-reverse 1s linear infinite;\n  animation: spin-reverse 1s linear infinite;\n}\n';
 
   const header =
-    "#MangaOnlineViewer #gotoPage {\n    min-width: 35px;\n}\n\n#MangaOnlineViewer #Header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    flex-flow: row nowrap;\n    transition: transform 0.3s ease-in;\n    position: sticky;\n    top: 0;\n    left: 0;\n    right: 0;\n    background-color: inherit;\n    z-index: 900;\n}\n\n#MangaOnlineViewer #Header.click {\n    padding-left: 40px;\n}\n\n@keyframes headroom {\n    from {\n        transform: translateY(-100%);\n        position: sticky;\n        top: 0;\n    }\n    to {\n        transform: translateY(0%);\n        position: sticky;\n        top: 0;\n    }\n}\n\n#MangaOnlineViewer #Header:not(.visible, .headroom-top, .fixed, .simple) {\n    animation: headroom 0.3s ease-in reverse;\n    transform: translateY(-100%);\n    position: sticky;\n    top: 0;\n}\n\n#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL) {\n    position: fixed;\n    padding-left: 40px;\n    top: -100%;\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-hide {\n    animation: none;\n    transform: translateY(-100%);\n    position: sticky;\n    top: 0;\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-show,\n#MangaOnlineViewer #Header.headroom-end,\n#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL).visible,\n#MangaOnlineViewer #Header.visible {\n    animation: headroom 0.3s ease-in;\n    transform: translateY(0%);\n    position: sticky;\n    top: 0;\n}\n\n#MangaOnlineViewer #Header.headroom-top {\n    animation: none;\n}\n\n#MangaOnlineViewer #Header.fixed {\n    position: sticky;\n    animation: none;\n    top: 0;\n    transform: translateY(0%);\n}\n\n#MangaOnlineViewer #Header.simple {\n    position: static;\n    animation: none;\n    top: 0;\n    transform: translateY(0%);\n}\n\n#MangaOnlineViewer #menu {\n    position: fixed;\n    z-index: 1;\n    color: var(--theme-body-text-color);\n    height: 40px;\n    width: 40px;\n}\n\n#MangaOnlineViewer #menu .icon-tabler {\n    position: relative;\n    top: 4px;\n    left: 4px;\n    height: 32px;\n    width: 32px;\n    stroke-width: 1.25;\n}\n\n#MangaOnlineViewer #menu:not(.click, .hover),\n#MangaOnlineViewer #menu.hide {\n    display: none;\n}\n\n#MangaOnlineViewer #menu.click {\n    z-index: 901;\n}\n\n#MangaOnlineViewer #MangaTitle {\n    padding: 2px;\n    margin: 0;\n    font-size: 1.2rem;\n    font-weight: 400;\n}\n\n#MangaOnlineViewer #GlobalFunctions {\n    display: flex;\n    gap: 3px;\n    padding: 3px 3px 3px 0;\n    flex-wrap: wrap;\n    width: 300px;\n    z-index: 100;\n}\n\n#MangaOnlineViewer #GlobalFunctions span,\n#MangaOnlineViewer .ChapterControl span {\n    display: flex;\n    flex-wrap: nowrap;\n    justify-content: space-evenly;\n}\n\n#MangaOnlineViewer .ChapterControl span {\n    flex-grow: 1;\n}\n\n#MangaOnlineViewer .ChapterControl span > * {\n    flex-basis: 50%;\n}\n\n#MangaOnlineViewer #ScrollControl .icon-tabler,\n#MangaOnlineViewer #GlobalFunctions .icon-tabler {\n    width: 25px;\n    height: 25px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomSlider {\n    display: flex;\n    align-items: center;\n}\n\n#MangaOnlineViewer #GlobalFunctions #Zoom {\n    margin: 2px 5px;\n    width: 160px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomVal {\n    width: 40px;\n    display: inline-block;\n    color: var(--theme-primary-text-color);\n    line-height: 20px;\n    text-align: center;\n    border-radius: 3px;\n    background: var(--theme-primary-color);\n    padding: 2px 5px;\n}\n\n#MangaOnlineViewer #ChapterNavigation {\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: end;\n    padding: 5px;\n    max-width: 350px;\n}\n\n#MangaOnlineViewer #Counters {\n    padding-right: 5px;\n}\n\n#MangaOnlineViewer #ChapterControl {\n    display: flex;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton {\n    display: inline-flex;\n    margin: 2px;\n    justify-content: center;\n    align-items: center;\n    padding: 3px;\n    gap: 0.5em;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton .icon-tabler {\n    flex-shrink: 0;\n    align-self: center;\n    width: 1rem;\n    height: 1rem;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href='#'],\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href=''],\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href='undefined'] {\n    visibility: hidden;\n}\n\n#MangaOnlineViewer #ChapterControl #download.loading {\n    cursor: not-allowed;\n    pointer-events: none;\n    opacity: 0.6;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton.disabled {\n    pointer-events: none;\n    filter: grayscale(0.9);\n}\n\n#MangaOnlineViewer .ViewerTitle {\n    text-align: center;\n    min-height: 60px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    padding: 5px;\n    flex-basis: 60%;\n}\n";
+    "#MangaOnlineViewer #gotoPage {\n  min-width: 35px;\n}\n\n#MangaOnlineViewer #Header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  flex-flow: row nowrap;\n  transition: transform 0.3s ease-in;\n  position: sticky;\n  top: 0;\n  left: 0;\n  right: 0;\n  background-color: inherit;\n  z-index: 900;\n}\n\n#MangaOnlineViewer #Header.click {\n  padding-left: 40px;\n}\n\n@keyframes headroom {\n  from {\n    transform: translateY(-100%);\n    position: sticky;\n    top: 0;\n  }\n  to {\n    transform: translateY(0%);\n    position: sticky;\n    top: 0;\n  }\n}\n\n#MangaOnlineViewer #Header:not(.visible, .headroom-top, .fixed, .simple) {\n  animation: headroom 0.3s ease-in reverse;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL) {\n  position: fixed;\n  padding-left: 40px;\n  top: -100%;\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-hide {\n  animation: none;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-show,\n#MangaOnlineViewer #Header.headroom-end,\n#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL).visible,\n#MangaOnlineViewer #Header.visible {\n  animation: headroom 0.3s ease-in;\n  transform: translateY(0%);\n  position: sticky;\n  top: 0;\n}\n\n#MangaOnlineViewer #Header.headroom-top {\n  animation: none;\n}\n\n#MangaOnlineViewer #Header.fixed {\n  position: sticky;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#MangaOnlineViewer #Header.simple {\n  position: static;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#MangaOnlineViewer #menu {\n  position: fixed;\n  z-index: 1;\n  color: var(--theme-body-text-color);\n  height: 40px;\n  width: 40px;\n}\n\n#MangaOnlineViewer #menu .icon-tabler {\n  position: relative;\n  top: 4px;\n  left: 4px;\n  height: 32px;\n  width: 32px;\n  stroke-width: 1.25;\n}\n\n#MangaOnlineViewer #menu:not(.click, .hover),\n#MangaOnlineViewer #menu.hide {\n  display: none;\n}\n\n#MangaOnlineViewer #menu.click {\n  z-index: 901;\n}\n\n#MangaOnlineViewer #MangaTitle {\n  padding: 2px;\n  margin: 0;\n  font-size: 1.2rem;\n  font-weight: 400;\n}\n\n#MangaOnlineViewer #GlobalFunctions {\n  display: flex;\n  gap: 3px;\n  padding: 3px 3px 3px 0;\n  flex-wrap: wrap;\n  width: 300px;\n  z-index: 100;\n}\n\n#MangaOnlineViewer #GlobalFunctions span,\n#MangaOnlineViewer .ChapterControl span {\n  display: flex;\n  flex-wrap: nowrap;\n  justify-content: space-evenly;\n}\n\n#MangaOnlineViewer .ChapterControl span {\n  flex-grow: 1;\n}\n\n#MangaOnlineViewer .ChapterControl span > * {\n  flex-basis: 50%;\n}\n\n#MangaOnlineViewer #ScrollControl .icon-tabler,\n#MangaOnlineViewer #GlobalFunctions .icon-tabler {\n  width: 25px;\n  height: 25px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomSlider {\n  display: flex;\n  align-items: center;\n}\n\n#MangaOnlineViewer #GlobalFunctions #Zoom {\n  margin: 2px 5px;\n  width: 160px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomVal {\n  width: 40px;\n  display: inline-block;\n  color: var(--theme-primary-text-color);\n  line-height: 20px;\n  text-align: center;\n  border-radius: 3px;\n  background: var(--theme-primary-color);\n  padding: 2px 5px;\n}\n\n#MangaOnlineViewer #ChapterNavigation {\n  display: flex;\n  flex-flow: column nowrap;\n  justify-content: center;\n  align-items: end;\n  padding: 5px;\n  max-width: 350px;\n}\n\n#MangaOnlineViewer #Counters {\n  padding-right: 5px;\n}\n\n#MangaOnlineViewer #ChapterControl {\n  display: flex;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton {\n  display: inline-flex;\n  margin: 2px;\n  justify-content: center;\n  align-items: center;\n  padding: 3px;\n  gap: 0.5em;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton .icon-tabler {\n  flex-shrink: 0;\n  align-self: center;\n  width: 1rem;\n  height: 1rem;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href='#'],\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href=''],\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href='undefined'] {\n  visibility: hidden;\n}\n\n#MangaOnlineViewer #ChapterControl #download.loading {\n  cursor: not-allowed;\n  pointer-events: none;\n  opacity: 0.6;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton.disabled {\n  pointer-events: none;\n  filter: grayscale(0.9);\n}\n\n#MangaOnlineViewer .ViewerTitle {\n  text-align: center;\n  min-height: 60px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex-direction: column;\n  padding: 5px;\n  flex-basis: 60%;\n}\n";
 
   const keybindings$1 =
-    '#MangaOnlineViewer #KeybindingsPanel {\n    padding: 10px;\n    position: fixed;\n    top: 0;\n    right: 0;\n    bottom: 0;\n    transition: transform 0.3s ease-in-out;\n    transform: translateX(100%);\n    line-height: 1.5em;\n    z-index: 1000;\n    overflow-y: auto;\n    width: 360px;\n    max-width: 100vw;\n}\n\n#MangaOnlineViewer #KeybindingsPanel.visible {\n    transform: translateX(0);\n    display: block;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #KeybindingsList {\n    display: grid;\n    grid-template-columns: 1fr 2fr;\n    gap: 5px;\n}\n\n#MangaOnlineViewer #KeybindingsPanel .ControlButton {\n    margin-left: 3px;\n    justify-content: center;\n    align-items: center;\n    padding: 5px 10px;\n    gap: 0.5em;\n}\n\n#MangaOnlineViewer #KeybindingsPanel label {\n    display: ruby;\n}\n#MangaOnlineViewer #KeybindingsPanel input {\n    display: inline-block;\n    width: 100%;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #HotKeysRules {\n    grid-column: span 2;\n}\n';
+    '#MangaOnlineViewer #KeybindingsPanel {\n  padding: 10px;\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  transition: transform 0.3s ease-in-out;\n  transform: translateX(100%);\n  line-height: 1.5em;\n  z-index: 1000;\n  overflow-y: auto;\n  width: 360px;\n  max-width: 100vw;\n}\n\n#MangaOnlineViewer #KeybindingsPanel.visible {\n  transform: translateX(0);\n  display: block;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #KeybindingsList {\n  display: grid;\n  grid-template-columns: 1fr 2fr;\n  gap: 5px;\n}\n\n#MangaOnlineViewer #KeybindingsPanel .ControlButton {\n  margin-left: 3px;\n  justify-content: center;\n  align-items: center;\n  padding: 5px 10px;\n  gap: 0.5em;\n}\n\n#MangaOnlineViewer #KeybindingsPanel label {\n  display: ruby;\n}\n\n#MangaOnlineViewer #KeybindingsPanel input {\n  display: inline-block;\n  width: 100%;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #HotKeysRules {\n  grid-column: span 2;\n}\n';
 
   const page =
-    "#MangaOnlineViewer .MangaPage {\n    width: 100%;\n    display: inline-block;\n    text-align: center;\n    line-height: 0;\n    min-height: 22px;\n    min-width: 100%;\n}\n\n#MangaOnlineViewer .PageContent {\n    text-align: center;\n    display: inline-block;\n    overflow-x: auto;\n    max-width: 100%;\n    transition: all 0.3s ease-in-out;\n    height: 100%;\n    overflow-y: hidden;\n}\n\n#MangaOnlineViewer .MangaPage.hide .PageContent {\n    height: 0;\n}\n\n#MangaOnlineViewer .PageContent .PageImg[src=''],\n#MangaOnlineViewer .PageContent .PageImg:not([src]) {\n    width: 40vw;\n    height: 80vh;\n    display: inline-block;\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 20%;\n    background-color: var(--theme-hightlight-color);\n}\n\n#MangaOnlineViewer .PageContent .PageImg.imgBroken {\n    width: 40vw;\n    height: 80vh;\n    display: inline-block;\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 20%;\n    background-color: var(--theme-hightlight-color);\n}\n\n#MangaOnlineViewer .PageFunctions {\n    font-family: monospace;\n    display: flex;\n    justify-content: flex-end;\n    align-items: center;\n    margin: 0;\n    padding: 0;\n    gap: 3px;\n    position: absolute;\n    right: 0;\n}\n\n#MangaOnlineViewer .PageFunctions > .PageIndex {\n    background-color: var(--theme-primary-color);\n    color: var(--theme-primary-text-color);\n    min-width: 20px;\n    text-align: center;\n    display: inline-block;\n    padding: 3px 5px;\n    line-height: 1rem;\n    border-radius: 5px;\n}\n\n#MangaOnlineViewer .PageFunctions .ControlButton {\n    padding: 3px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    margin: 0;\n    border-width: 0;\n    min-height: auto;\n    opacity: 0.5;\n}\n\n#MangaOnlineViewer .PageFunctions:hover .ControlButton {\n    opacity: 1;\n}\n\n#MangaOnlineViewer .PageFunctions .ControlButton:hover {\n    opacity: 0.9;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .separator {\n    display: flex;\n    align-items: center;\n    text-align: center;\n    font-style: italic;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .separator::before,\n#MangaOnlineViewer #Chapter.Vertical .separator::after {\n    content: '';\n    flex: 1;\n    border-bottom: 1px solid var(--theme-text-color);\n}\n\n#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::before {\n    margin-right: 0.25em;\n}\n\n#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::after {\n    margin-left: 0.25em;\n}\n\n#MangaOnlineViewer #Chapter:not(.separator) .separator,\n#MangaOnlineViewer #Chapter:not(.Vertical) .separator {\n    display: none;\n}\n";
+    "#MangaOnlineViewer .MangaPage {\n  width: 100%;\n  display: inline-block;\n  text-align: center;\n  line-height: 0;\n  min-height: 22px;\n  min-width: 100%;\n}\n\n#MangaOnlineViewer .PageContent {\n  text-align: center;\n  display: inline-block;\n  overflow-x: auto;\n  max-width: 100%;\n  transition: all 0.3s ease-in-out;\n  height: 100%;\n  overflow-y: hidden;\n}\n\n#MangaOnlineViewer .MangaPage.hide .PageContent {\n  height: 0;\n}\n\n#MangaOnlineViewer .PageContent .PageImg[src=''],\n#MangaOnlineViewer .PageContent .PageImg:not([src]) {\n  width: 40vw;\n  height: 80vh;\n  display: inline-block;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: 20%;\n  background-color: var(--theme-hightlight-color);\n}\n\n#MangaOnlineViewer .PageContent .PageImg.imgBroken {\n  width: 40vw;\n  height: 80vh;\n  display: inline-block;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: 20%;\n  background-color: var(--theme-hightlight-color);\n}\n\n#MangaOnlineViewer .PageFunctions {\n  font-family: monospace;\n  display: flex;\n  justify-content: flex-end;\n  align-items: center;\n  margin: 0;\n  padding: 0;\n  gap: 3px;\n  position: absolute;\n  right: 0;\n}\n\n#MangaOnlineViewer .PageFunctions > .PageIndex {\n  background-color: var(--theme-primary-color);\n  color: var(--theme-primary-text-color);\n  min-width: 20px;\n  text-align: center;\n  display: inline-block;\n  padding: 3px 5px;\n  line-height: 1rem;\n  border-radius: 5px;\n}\n\n#MangaOnlineViewer .PageFunctions .ControlButton {\n  padding: 3px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  margin: 0;\n  border-width: 0;\n  min-height: auto;\n  opacity: 0.5;\n}\n\n#MangaOnlineViewer .PageFunctions:hover .ControlButton {\n  opacity: 1;\n}\n\n#MangaOnlineViewer .PageFunctions .ControlButton:hover {\n  opacity: 0.9;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .separator {\n  display: flex;\n  align-items: center;\n  text-align: center;\n  font-style: italic;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .separator::before,\n#MangaOnlineViewer #Chapter.Vertical .separator::after {\n  content: '';\n  flex: 1;\n  border-bottom: 1px solid var(--theme-text-color);\n}\n\n#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::before {\n  margin-right: 0.25em;\n}\n\n#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::after {\n  margin-left: 0.25em;\n}\n\n#MangaOnlineViewer #Chapter:not(.separator) .separator,\n#MangaOnlineViewer #Chapter:not(.Vertical) .separator {\n  display: none;\n}\n";
 
   const fluid =
-    '#MangaOnlineViewer #Chapter.FluidLTR,\n#MangaOnlineViewer #Chapter.FluidRTL {\n    display: flex;\n    overflow-x: auto;\n    min-width: auto;\n\n    .ZoomWidth {\n        display: none;\n    }\n\n    .PageImg {\n        min-width: unset;\n    }\n\n    .MangaPage {\n        width: initial;\n        min-width: fit-content;\n        position: relative;\n        max-height: 100%;\n    }\n\n    .MangaPage.DoublePage {\n        grid-column: span 2;\n    }\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR {\n    flex-direction: row;\n\n    .MangaPage .PageFunctions {\n        right: auto;\n        left: 0;\n        direction: rtl;\n    }\n}\n\n#MangaOnlineViewer #Chapter.FluidRTL {\n    flex-direction: row-reverse;\n}\n';
+    '#MangaOnlineViewer #Chapter.FluidLTR,\n#MangaOnlineViewer #Chapter.FluidRTL {\n  display: flex;\n  overflow-x: auto;\n  min-width: auto;\n\n  .ZoomWidth {\n    display: none;\n  }\n\n  .PageImg {\n    min-width: unset;\n  }\n\n  .MangaPage {\n    width: initial;\n    min-width: fit-content;\n    position: relative;\n    max-height: 100%;\n  }\n\n  .MangaPage.DoublePage {\n    grid-column: span 2;\n  }\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR {\n  flex-direction: row;\n\n  .MangaPage .PageFunctions {\n    right: auto;\n    left: 0;\n    direction: rtl;\n  }\n}\n\n#MangaOnlineViewer #Chapter.FluidRTL {\n  flex-direction: row-reverse;\n}\n';
 
   const settings$1 =
-    "#MangaOnlineViewer #SettingsPanel {\n    color: var(--theme-text-color);\n    padding: 10px;\n    position: fixed;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    z-index: 1000;\n    transition: transform 0.3s ease-in,\n    background-color 0.3s linear;\n    transform: translateX(-100%);\n    display: flex;\n    flex-flow: column;\n    gap: 5px;\n    overflow-y: auto;\n    max-width: 100vw;\n    width: 308px;\n}\n\n#MangaOnlineViewer #SettingsPanel.visible {\n    transform: translateX(0);\n}\n\n#MangaOnlineViewer #SettingsPanel fieldset{\n    border: 1px solid var(--theme-body-text-color);\n    padding: 3px;\n    border-radius: 10px;\n}\n\n#MangaOnlineViewer #SettingsPanel .ControlLabel {\n    display: flex;\n    flex-flow: row wrap;\n    justify-content: space-between;\n    align-items: center;\n    padding: 2px;\n}\n\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n}\n\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem:not(.show) {\n    display: none;\n}\n\n#MangaOnlineViewer #SettingsPanel input[type='range'] {\n    width: 100%;\n}\n\n#MangaOnlineViewer #SettingsPanel .RangeValue {\n    display: inline-block;\n    color: var(--theme-primary-text-color);\n    line-height: 20px;\n    text-align: center;\n    border-radius: 3px;\n    background: var(--theme-primary-color);\n    padding: 2px 5px;\n    margin-left: 8px;\n}\n\n#MangaOnlineViewer #SettingsPanel datalist {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    align-items: center;\n    writing-mode: vertical-lr;\n    width: 100%;\n}\n\n#MangaOnlineViewer #SettingsPanel datalist option {\n    padding: 0;\n}\n\n#MangaOnlineViewer .ThemeRadio {\n    border: 1px solid var(--theme-text-color);\n    color: var(--theme-primary-text-color);\n    background-color: var(--theme-primary-color);\n    height: 20px;\n    width: 20px;\n    border-radius: 50%;\n    padding: 1px;\n    margin: 2px 5px;\n    position: relative;\n}\n\n#MangaOnlineViewer .ThemeRadio svg {\n    position: absolute;\n    top: 15%;\n    right: 15%;\n}\n\n#MangaOnlineViewer .ThemeRadio.selected .icon-tabler-check {\n    display: inline;\n}\n\n#MangaOnlineViewer .ThemeRadio:not(.selected) .icon-tabler-check {\n    display: none;\n}\n\n#MangaOnlineViewer #ThemeSelector {\n    width: 110px;\n}\n\n#MangaOnlineViewer #Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {\n    display: none;\n}\n\n#MangaOnlineViewer .radio-inputs {\n    position: relative;\n    display: flex;\n    flex-wrap: wrap;\n    border-radius: 0.5rem;\n    background-color: var(--theme-border-color);\n    color:var(--theme-text-color);\n    box-sizing: border-box;\n    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);\n    padding: 0.25rem;\n    width: 300px;\n    font-size: 14px;\n}\n\n#MangaOnlineViewer .radio-inputs .radio {\n    flex: 1 1 auto;\n    text-align: center;\n}\n\n#MangaOnlineViewer .radio-inputs .radio input {\n    display: none;\n}\n\n#MangaOnlineViewer .radio-inputs .radio .name .icon{\n    margin: 0 0.5rem;\n}\n\n#MangaOnlineViewer .radio-inputs .radio .name {\n    display: flex;\n    cursor: pointer;\n    align-items: center;\n    justify-content: center;\n    border-radius: 0.5rem;\n    border: none;\n    padding: .5rem 0;\n    color: var(--theme-text-color);\n    background-color: var(--theme-border-color);\n    transition: all .15s ease-in-out;\n}\n\n#MangaOnlineViewer .radio-inputs .radio input:checked + .name {\n    background-color: var(--theme-primary-color);\n    color:var(--theme-primary-text-color);\n    font-weight: 600;\n}\n\n#MangaOnlineViewer #ColorScheme{\n    padding: 5px;\n    min-height: 28px;\n    min-width: 28px;\n}\n\n#MangaOnlineViewer .toggler {\n    width: 36px;\n    /*margin: 40px auto;*/\n}\n\n#MangaOnlineViewer .toggler input {\n    display: none;\n}\n\n#MangaOnlineViewer .toggler label {\n    display: block;\n    position: relative;\n    width: 36px;\n    height: 18px;\n    border: 1px solid #d6d6d6;\n    border-radius: 36px;\n    background: #e4e8e8;\n    cursor: pointer;\n}\n\n#MangaOnlineViewer .toggler label::after {\n    display: block;\n    border-radius: 100%;\n    background-color: #d7062a;\n    content: '';\n    animation-name: toggler-size;\n    animation-duration: 0.15s;\n    animation-timing-function: ease-out;\n    animation-direction: normal;\n    animation-iteration-count: 1;\n    animation-play-state: running;\n}\n\n#MangaOnlineViewer .toggler label::after, .toggler label .toggler-on, .toggler label .toggler-off {\n    position: absolute;\n    /*top: 50%;*/\n    top: 9px;\n    left: 25%;\n    width: 16px;\n    height: 16px;\n    transform: translateY(-50%) translateX(-50%);\n    transition: left 0.15s ease-in-out, background-color 0.2s ease-out, width 0.15s ease-in-out, height 0.15s ease-in-out, opacity 0.15s ease-in-out;\n}\n\n#MangaOnlineViewer .toggler input:checked + label::after, .toggler input:checked + label .toggler-on, .toggler input:checked + label .toggler-off {\n    left: 75%;\n}\n\n#MangaOnlineViewer .toggler input:checked + label::after {\n    background-color: #50ac5d;\n    animation-name: toggler-size2;\n}\n\n#MangaOnlineViewer .toggler .toggler-on, .toggler .toggler-off {\n    opacity: 1;\n    z-index: 2;\n}\n\n#MangaOnlineViewer .toggler input:checked + label .toggler-off, .toggler input:not(:checked) + label .toggler-on {\n    width: 0;\n    height: 0;\n    opacity: 0;\n}\n\n#MangaOnlineViewer .toggler .path {\n    fill: none;\n    stroke: #fefefe;\n    stroke-width: 7px;\n    stroke-linecap: round;\n    stroke-miterlimit: 10;\n}\n\n#MangaOnlineViewer @keyframes toggler-size {\n    0%, 100% {\n        width: 26px;\n        height: 26px;\n    }\n\n    50% {\n        width: 20px;\n        height: 20px;\n    }\n}\n\n#MangaOnlineViewer @keyframes toggler-size2 {\n    0%, 100% {\n        width: 26px;\n        height: 26px;\n    }\n\n    50% {\n        width: 20px;\n        height: 20px;\n    }\n}";
+    "#MangaOnlineViewer #SettingsPanel {\n  color: var(--theme-text-color);\n  padding: 10px;\n  position: fixed;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  z-index: 1000;\n  transition: transform 0.3s ease-in,\n  background-color 0.3s linear;\n  transform: translateX(-100%);\n  display: flex;\n  flex-flow: column;\n  gap: 5px;\n  overflow-y: auto;\n  max-width: 100vw;\n  width: 308px;\n}\n\n#MangaOnlineViewer #SettingsPanel.visible {\n  transform: translateX(0);\n}\n\n#MangaOnlineViewer #SettingsPanel fieldset {\n  border: 1px solid var(--theme-body-text-color);\n  padding: 3px;\n  border-radius: 10px;\n}\n\n#MangaOnlineViewer #SettingsPanel .ControlLabel {\n  display: flex;\n  flex-flow: row wrap;\n  justify-content: space-between;\n  align-items: center;\n  padding: 2px;\n}\n\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem:not(.show) {\n  display: none;\n}\n\n#MangaOnlineViewer #SettingsPanel input[type='range'] {\n  width: 100%;\n}\n\n#MangaOnlineViewer #SettingsPanel .RangeValue {\n  display: inline-block;\n  color: var(--theme-primary-text-color);\n  line-height: 20px;\n  text-align: center;\n  border-radius: 3px;\n  background: var(--theme-primary-color);\n  padding: 2px 5px;\n  margin-left: 8px;\n}\n\n#MangaOnlineViewer #SettingsPanel datalist {\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-items: center;\n  writing-mode: vertical-lr;\n  width: 100%;\n}\n\n#MangaOnlineViewer #SettingsPanel datalist option {\n  padding: 0;\n}\n\n#MangaOnlineViewer .ThemeRadio {\n  border: 1px solid var(--theme-text-color);\n  color: var(--theme-primary-text-color);\n  background-color: var(--theme-primary-color);\n  height: 20px;\n  width: 20px;\n  border-radius: 50%;\n  padding: 1px;\n  margin: 2px 5px;\n  position: relative;\n}\n\n#MangaOnlineViewer .ThemeRadio svg {\n  position: absolute;\n  top: 15%;\n  right: 15%;\n}\n\n#MangaOnlineViewer .ThemeRadio.selected .icon-tabler-check {\n  display: inline;\n}\n\n#MangaOnlineViewer .ThemeRadio:not(.selected) .icon-tabler-check {\n  display: none;\n}\n\n#MangaOnlineViewer #ThemeSelector {\n  width: 110px;\n}\n\n#MangaOnlineViewer #Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {\n  display: none;\n}\n\n#MangaOnlineViewer .radio-inputs {\n  position: relative;\n  display: flex;\n  flex-wrap: wrap;\n  border-radius: 0.5rem;\n  background-color: var(--theme-border-color);\n  color: var(--theme-text-color);\n  box-sizing: border-box;\n  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);\n  padding: 0.25rem;\n  width: 300px;\n  font-size: 14px;\n}\n\n#MangaOnlineViewer .radio-inputs .radio {\n  flex: 1 1 auto;\n  text-align: center;\n}\n\n#MangaOnlineViewer .radio-inputs .radio input {\n  display: none;\n}\n\n#MangaOnlineViewer .radio-inputs .radio .name .icon {\n  margin: 0 0.5rem;\n}\n\n#MangaOnlineViewer .radio-inputs .radio .name {\n  display: flex;\n  cursor: pointer;\n  align-items: center;\n  justify-content: center;\n  border-radius: 0.5rem;\n  border: none;\n  padding: .5rem 0;\n  color: var(--theme-text-color);\n  background-color: var(--theme-border-color);\n  transition: all .15s ease-in-out;\n}\n\n#MangaOnlineViewer .radio-inputs .radio input:checked + .name {\n  background-color: var(--theme-primary-color);\n  color: var(--theme-primary-text-color);\n  font-weight: 600;\n}\n\n#MangaOnlineViewer #ColorScheme {\n  padding: 5px;\n  min-height: 28px;\n  min-width: 28px;\n}\n\n#MangaOnlineViewer .toggler {\n  width: 36px;\n  /*margin: 40px auto;*/\n}\n\n#MangaOnlineViewer .toggler input {\n  display: none;\n}\n\n#MangaOnlineViewer .toggler label {\n  display: block;\n  position: relative;\n  width: 36px;\n  height: 18px;\n  border: 1px solid #d6d6d6;\n  border-radius: 36px;\n  background: #e4e8e8;\n  cursor: pointer;\n}\n\n#MangaOnlineViewer .toggler label::after {\n  display: block;\n  border-radius: 100%;\n  background-color: #d7062a;\n  content: '';\n  animation-name: toggler-size;\n  animation-duration: 0.15s;\n  animation-timing-function: ease-out;\n  animation-direction: normal;\n  animation-iteration-count: 1;\n  animation-play-state: running;\n}\n\n#MangaOnlineViewer .toggler label::after, .toggler label .toggler-on, .toggler label .toggler-off {\n  position: absolute;\n  /*top: 50%;*/\n  top: 9px;\n  left: 25%;\n  width: 16px;\n  height: 16px;\n  transform: translateY(-50%) translateX(-50%);\n  transition: left 0.15s ease-in-out, background-color 0.2s ease-out, width 0.15s ease-in-out, height 0.15s ease-in-out, opacity 0.15s ease-in-out;\n}\n\n#MangaOnlineViewer .toggler input:checked + label::after, .toggler input:checked + label .toggler-on, .toggler input:checked + label .toggler-off {\n  left: 75%;\n}\n\n#MangaOnlineViewer .toggler input:checked + label::after {\n  background-color: #50ac5d;\n  animation-name: toggler-size2;\n}\n\n#MangaOnlineViewer .toggler .toggler-on, .toggler .toggler-off {\n  opacity: 1;\n  z-index: 2;\n}\n\n#MangaOnlineViewer .toggler input:checked + label .toggler-off, .toggler input:not(:checked) + label .toggler-on {\n  width: 0;\n  height: 0;\n  opacity: 0;\n}\n\n#MangaOnlineViewer .toggler .path {\n  fill: none;\n  stroke: #fefefe;\n  stroke-width: 7px;\n  stroke-linecap: round;\n  stroke-miterlimit: 10;\n}\n\n#MangaOnlineViewer\n\n@keyframes toggler-size {\n  0%, 100% {\n    width: 26px;\n    height: 26px;\n  }\n\n  50% {\n    width: 20px;\n    height: 20px;\n  }\n}\n\n#MangaOnlineViewer\n\n@keyframes toggler-size2 {\n  0%, 100% {\n    width: 26px;\n    height: 26px;\n  }\n\n  50% {\n    width: 20px;\n    height: 20px;\n  }\n}\n";
 
   const thumbnails =
-    "#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=''],\n#MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {\n    width: 100px;\n    height: 150px;\n    display: inline-block;\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: 20%;\n}\n\n#MangaOnlineViewer #NavigationCounters {\n    margin: 5px;\n    width: 100%;\n    line-height: 1rem;\n}\n\n#MangaOnlineViewer #Navigation {\n    color: var(--theme-text-color);\n    background-color: var(--theme-hightlight-color);\n    bottom: -180px;\n    height: 185px;\n    overflow-x: hidden;\n    overflow-y: hidden;\n    padding-bottom: 20px;\n    position: fixed;\n    white-space: nowrap;\n    width: 100%;\n    text-align: center;\n    transition:\n        transform 0.3s ease-in,\n        background-color 0.3s linear;\n    border-bottom-left-radius: 0;\n    border-bottom-right-radius: 0;\n    line-height: 0;\n}\n\n#MangaOnlineViewer #Navigation #Thumbnails {\n    overflow-x: auto;\n    overflow-y: hidden;\n    margin-right: 10px;\n}\n\n#MangaOnlineViewer #Navigation:hover {\n    transform: translateY(-180px);\n}\n\n#MangaOnlineViewer #Navigation.disabled {\n    display: none;\n}\n\n#MangaOnlineViewer #Navigation.visible {\n    transform: translateY(-180px);\n}\n\n#MangaOnlineViewer #Navigation .Thumbnail {\n    display: inline-block;\n    height: 150px;\n    margin: 0 5px;\n    border: 1px solid var(--theme-primary-color);\n}\n\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailIndex {\n    color: var(--theme-text-color);\n    background-color: var(--theme-hightlight-color);\n    display: block;\n    opacity: 0.8;\n    position: relative;\n    bottom: 25%;\n    width: 100%;\n    line-height: 1rem;\n}\n\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailImg {\n    cursor: pointer;\n    display: inline-block;\n    max-height: 150px;\n    min-height: 150px;\n    min-width: 80px;\n    max-width: 160px;\n}\n";
+    "#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=''],\n#MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {\n  width: 100px;\n  height: 150px;\n  display: inline-block;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: 20%;\n}\n\n#MangaOnlineViewer #NavigationCounters {\n  margin: 5px;\n  width: 100%;\n  line-height: 1rem;\n}\n\n#MangaOnlineViewer #Navigation {\n  color: var(--theme-text-color);\n  background-color: var(--theme-hightlight-color);\n  bottom: -180px;\n  height: 185px;\n  overflow-x: hidden;\n  overflow-y: hidden;\n  padding-bottom: 20px;\n  position: fixed;\n  white-space: nowrap;\n  width: 100%;\n  text-align: center;\n  transition: transform 0.3s ease-in,\n  background-color 0.3s linear;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n  line-height: 0;\n}\n\n#MangaOnlineViewer #Navigation #Thumbnails {\n  overflow-x: auto;\n  overflow-y: hidden;\n  margin-right: 10px;\n}\n\n#MangaOnlineViewer #Navigation:hover {\n  transform: translateY(-180px);\n}\n\n#MangaOnlineViewer #Navigation.disabled {\n  display: none;\n}\n\n#MangaOnlineViewer #Navigation.visible {\n  transform: translateY(-180px);\n}\n\n#MangaOnlineViewer #Navigation .Thumbnail {\n  display: inline-block;\n  height: 150px;\n  margin: 0 5px;\n  border: 1px solid var(--theme-primary-color);\n}\n\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailIndex {\n  color: var(--theme-text-color);\n  background-color: var(--theme-hightlight-color);\n  display: block;\n  opacity: 0.8;\n  position: relative;\n  bottom: 25%;\n  width: 100%;\n  line-height: 1rem;\n}\n\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailImg {\n  cursor: pointer;\n  display: inline-block;\n  max-height: 150px;\n  min-height: 150px;\n  min-width: 80px;\n  max-width: 160px;\n}\n";
 
   const bookmarks$1 =
-    '#MangaOnlineViewer #BookmarksPanel {\n    position: fixed;\n    top: 10%;\n    width: 50%;\n    left: 25%;\n    right: 25%;\n    text-align: center;\n    max-height: 70%;\n    transition: transform 0.3s ease-in-out;\n    transform: scaleY(0);\n    z-index: 1000;\n}\n\n#MangaOnlineViewer #BookmarksPanel.visible {\n    transform: scaleY(1);\n    display: block;\n}\n\n#MangaOnlineViewer #BookmarksList {\n    padding: 0 15px;\n    overflow: auto;\n    max-height: 60vh;\n}\n\n#MangaOnlineViewer #BookmarksList .BookmarkItem {\n    display: flex;\n    flex-flow: row;\n    justify-content: space-between;\n    align-items: center;\n    padding: 2px;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkColumnLarge {\n    flex-basis: 90%;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkColumnSmall {\n    width: 90px;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkFunctions {\n    width: 75px;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkURl {\n    text-overflow: ellipsis;\n    overflow: hidden;\n    white-space: nowrap;\n    flex-basis: 55%;\n}\n';
+    '#MangaOnlineViewer #BookmarksPanel {\n  position: fixed;\n  top: 10%;\n  width: 50%;\n  left: 25%;\n  right: 25%;\n  text-align: center;\n  max-height: 70%;\n  transition: transform 0.3s ease-in-out;\n  transform: scaleY(0);\n  z-index: 1000;\n}\n\n#MangaOnlineViewer #BookmarksPanel.visible {\n  transform: scaleY(1);\n  display: block;\n}\n\n#MangaOnlineViewer #BookmarksList {\n  padding: 0 15px;\n  overflow: auto;\n  max-height: 60vh;\n}\n\n#MangaOnlineViewer #BookmarksList .BookmarkItem {\n  display: flex;\n  flex-flow: row;\n  justify-content: space-between;\n  align-items: center;\n  padding: 2px;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkColumnLarge {\n  flex-basis: 90%;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkColumnSmall {\n  width: 90px;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkFunctions {\n  width: 75px;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkURl {\n  text-overflow: ellipsis;\n  overflow: hidden;\n  white-space: nowrap;\n  flex-basis: 55%;\n}\n';
 
   const comments =
-    '#MangaOnlineViewer #CommentsPanel {\n    position: static;\n    width: 90%;\n    height: 0;\n    top: 5%;\n    left: 5%;\n    text-align: center;\n    transition: transform 0.3s ease-in-out;\n    transform: scaleY(0);\n    z-index: 1000;\n    overflow-y: initial;\n    background-color: var(--theme-body-background);\n    opacity: 0;\n}\n\n#MangaOnlineViewer #CommentsPanel.visible {\n    position: fixed;\n    height: 90%;\n    transform: scaleY(1);\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    opacity: 1;\n}\n\n#MangaOnlineViewer #CommentsArea {\n    overflow-y: auto;\n    overscroll-behavior: contain;\n    height: 100%;\n    width: 100%;\n    background-color: var(--theme-body-background);\n}\n';
+    '#MangaOnlineViewer #CommentsPanel {\n  position: static;\n  width: 90%;\n  height: 0;\n  top: 5%;\n  left: 5%;\n  text-align: center;\n  transition: transform 0.3s ease-in-out;\n  transform: scaleY(0);\n  z-index: 1000;\n  overflow-y: initial;\n  background-color: var(--theme-body-background);\n  opacity: 0;\n}\n\n#MangaOnlineViewer #CommentsPanel.visible {\n  position: fixed;\n  height: 90%;\n  transform: scaleY(1);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex-direction: column;\n  opacity: 1;\n}\n\n#MangaOnlineViewer #CommentsArea {\n  overflow-y: auto;\n  overscroll-behavior: contain;\n  height: 100%;\n  width: 100%;\n  background-color: var(--theme-body-background);\n}\n';
 
   const cssStyles = css`
     :root,
@@ -2820,7 +2846,7 @@
     }
   }
   function removeStyleSheet(id) {
-    document.querySelectorAll(`style[id="${id}"]`).forEach((elem) => {
+    document.querySelectorAll(`style[id="${id}"]`).forEach(elem => {
       elem.remove();
     });
   }
@@ -2830,7 +2856,7 @@
   }
   function wrapStyle(id, css) {
     return html`
-      <style type="text/css" id="${id}">
+      <style id="${id}">
         ${css}
       </style>
     `;
@@ -2862,7 +2888,7 @@
   }
   const themes = () => Object.values(colors);
   function refreshThemes() {
-    themes().forEach((theme) => {
+    themes().forEach(theme => {
       replaceStyleSheet(theme.name, getNormalThemeCSS(theme));
     });
     replaceStyleSheet('custom', getCustomThemeCSS(getSettingsValue('customTheme')));
@@ -2884,7 +2910,7 @@
     '/**\r\n * KEYS.css\r\n *\r\n * A simple stylesheet for rendering beautiful keyboard-style elements.\r\n *\r\n * Author:  Michael Hüneburg\r\n * Website: http://michaelhue.com/keyscss\r\n * License: MIT License (see LICENSE.txt)\r\n */\r\n\r\nkbd,\r\n.key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  background-color: #505050;\r\n  background-color: gradient(linear, left top, left bottom, from(#3c3c3c), to(#505050));\r\n  color: #fafafa;\r\n  text-shadow: -1px -1px 0 #464646;\r\n  -webkit-box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n          box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n  font-size: .85em;\r\n  line-height: 1;\r\n  cursor: default;\r\n  -webkit-user-select: none;\r\n     -moz-user-select: none;\r\n      -ms-user-select: none;\r\n          user-select: none;\r\n}\r\nkbd[title],\r\n.key[title] {\r\n  cursor: help;\r\n}\r\nkbd.dark,\r\n.dark-keys kbd,\r\n.key.dark,\r\n.dark-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  background-color: #505050;\r\n  background-color: gradient(linear, left top, left bottom, from(#3c3c3c), to(#505050));\r\n  color: #fafafa;\r\n  text-shadow: -1px -1px 0 #464646;\r\n  -webkit-box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n          box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n}\r\nkbd.light,\r\n.light-keys kbd,\r\n.key.light,\r\n.light-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  background-color: #fafafa;\r\n  background-color: gradient(linear, left top, left bottom, from(#d2d2d2), to(#ffffff));\r\n  color: #323232;\r\n  text-shadow: 0 0 2px #ffffff;\r\n  -webkit-box-shadow: inset 0 0 1px #ffffff, inset 0 0 0.4em #c8c8c8, 0 0.1em 0 #828282, 0 0.11em 0 rgba(0, 0, 0, 0.4), 0 0.1em 0.11em rgba(0, 0, 0, 0.9);\r\n          box-shadow: inset 0 0 1px #ffffff, inset 0 0 0.4em #c8c8c8, 0 0.1em 0 #828282, 0 0.11em 0 rgba(0, 0, 0, 0.4), 0 0.1em 0.11em rgba(0, 0, 0, 0.9);\r\n}\r\nkbd.so,\r\n.so-keys kbd,\r\n.key.so,\r\n.so-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  margin: 0 .1em;\r\n  padding: .1em .6em;\r\n  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;\r\n  line-height: 1.4;\r\n  color: #242729;\r\n  text-shadow: 0 1px 0 #FFF;\r\n  background-color: #e1e3e5;\r\n  border: 1px solid #adb3b9;\r\n  border-radius: 0.27272727em;\r\n  -webkit-box-shadow: 0 1px 0 rgba(12, 13, 14, 0.2), 0 0 0 2px #FFF inset;\r\n          box-shadow: 0 1px 0 rgba(12, 13, 14, 0.2), 0 0 0 2px #FFF inset;\r\n}\r\nkbd.github,\r\n.github-keys kbd,\r\n.key.github,\r\n.github-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  padding: 0.27272727em 0.45454545em;\r\n  font-size: 68.75%;\r\n  line-height: 0.90909091;\r\n  color: #444d56;\r\n  vertical-align: middle;\r\n  background-color: #fafbfc;\r\n  border: solid 1px #c6cbd1;\r\n  border-bottom-color: #959da5;\r\n  border-radius: 0.27272727em;\r\n  -webkit-box-shadow: inset 0 -1px 0 #959da5;\r\n          box-shadow: inset 0 -1px 0 #959da5;\r\n  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;\r\n  -webkit-box-sizing: border-box;\r\n          box-sizing: border-box;\r\n  text-shadow: none;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImtleXMuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztFQUVFLGdCQUFnQjtFQUNoQixzQkFBc0I7RUFDdEIsb0JBQW9CO0VBQ3BCLGVBQWU7RUFDZiw2QkFBNkI7RUFDN0IsbUJBQW1CO0VBQ25CLHdEQUF3RDtFQUN4RCxtQkFBbUI7RUFDbkIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixhQUFhO0VBQ2IsMEJBQTBCO0VBQzFCLHNGQUFzRjtFQUN0RixlQUFlO0VBQ2YsaUNBQWlDO0VBQ2pDLDhIQUFzSDtVQUF0SCxzSEFBc0g7RUFDdEgsaUJBQWlCO0VBQ2pCLGVBQWU7RUFDZixnQkFBZ0I7RUFDaEIsMEJBQWtCO0tBQWxCLHVCQUFrQjtNQUFsQixzQkFBa0I7VUFBbEIsa0JBQWtCO0NBQ25CO0FBQ0Q7O0VBRUUsYUFBYTtDQUNkO0FBQ0Q7Ozs7RUFJRSxnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixlQUFlO0VBQ2YsNkJBQTZCO0VBQzdCLG1CQUFtQjtFQUNuQix3REFBd0Q7RUFDeEQsbUJBQW1CO0VBQ25CLHNCQUFzQjtFQUN0QixvQkFBb0I7RUFDcEIsYUFBYTtFQUNiLDBCQUEwQjtFQUMxQixzRkFBc0Y7RUFDdEYsZUFBZTtFQUNmLGlDQUFpQztFQUNqQyw4SEFBc0g7VUFBdEgsc0hBQXNIO0NBQ3ZIO0FBQ0Q7Ozs7RUFJRSxnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixlQUFlO0VBQ2YsNkJBQTZCO0VBQzdCLG1CQUFtQjtFQUNuQix3REFBd0Q7RUFDeEQsbUJBQW1CO0VBQ25CLHNCQUFzQjtFQUN0QixvQkFBb0I7RUFDcEIsYUFBYTtFQUNiLDBCQUEwQjtFQUMxQixzRkFBc0Y7RUFDdEYsZUFBZTtFQUNmLDZCQUE2QjtFQUM3Qix3SkFBZ0o7VUFBaEosZ0pBQWdKO0NBQ2pKO0FBQ0Q7Ozs7RUFJRSxnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixlQUFlO0VBQ2YsNkJBQTZCO0VBQzdCLG1CQUFtQjtFQUNuQix3REFBd0Q7RUFDeEQsbUJBQW1CO0VBQ25CLHNCQUFzQjtFQUN0QixvQkFBb0I7RUFDcEIsYUFBYTtFQUNiLGVBQWU7RUFDZixtQkFBbUI7RUFDbkIsNERBQTREO0VBQzVELGlCQUFpQjtFQUNqQixlQUFlO0VBQ2YsMEJBQTBCO0VBQzFCLDBCQUEwQjtFQUMxQiwwQkFBMEI7RUFDMUIsNEJBQTRCO0VBQzVCLHdFQUFnRTtVQUFoRSxnRUFBZ0U7Q0FDakU7QUFDRDs7OztFQUlFLGdCQUFnQjtFQUNoQixzQkFBc0I7RUFDdEIsb0JBQW9CO0VBQ3BCLGVBQWU7RUFDZiw2QkFBNkI7RUFDN0IsbUJBQW1CO0VBQ25CLHdEQUF3RDtFQUN4RCxtQkFBbUI7RUFDbkIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixhQUFhO0VBQ2IsbUNBQW1DO0VBQ25DLGtCQUFrQjtFQUNsQix3QkFBd0I7RUFDeEIsZUFBZTtFQUNmLHVCQUF1QjtFQUN2QiwwQkFBMEI7RUFDMUIsMEJBQTBCO0VBQzFCLDZCQUE2QjtFQUM3Qiw0QkFBNEI7RUFDNUIsMkNBQW1DO1VBQW5DLG1DQUFtQztFQUNuQyxzRkFBc0Y7RUFDdEYsK0JBQXVCO1VBQXZCLHVCQUF1QjtFQUN2QixrQkFBa0I7Q0FDbkIiLCJmaWxlIjoidG1wMi5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJrYmQsXG4ua2V5IHtcbiAgZGlzcGxheTogaW5saW5lO1xuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIHdoaXRlLXNwYWNlOiBub3dyYXA7XG4gIG1pbi13aWR0aDogMWVtO1xuICBwYWRkaW5nOiAuM2VtIC40ZW0gLjJlbSAuM2VtO1xuICBmb250LXN0eWxlOiBub3JtYWw7XG4gIGZvbnQtZmFtaWx5OiBcIkx1Y2lkYSBHcmFuZGVcIiwgTHVjaWRhLCBBcmlhbCwgc2Fucy1zZXJpZjtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG4gIGJvcmRlci1yYWRpdXM6IC4zZW07XG4gIGJvcmRlcjogbm9uZTtcbiAgYmFja2dyb3VuZC1jb2xvcjogIzUwNTA1MDtcbiAgYmFja2dyb3VuZC1jb2xvcjogZ3JhZGllbnQobGluZWFyLCBsZWZ0IHRvcCwgbGVmdCBib3R0b20sIGZyb20oIzNjM2MzYyksIHRvKCM1MDUwNTApKTtcbiAgY29sb3I6ICNmYWZhZmE7XG4gIHRleHQtc2hhZG93OiAtMXB4IC0xcHggMCAjNDY0NjQ2O1xuICBib3gtc2hhZG93OiBpbnNldCAwIDAgMXB4ICM5Njk2OTYsIGluc2V0IDAgLTAuMDVlbSAwLjRlbSAjNTA1MDUwLCAwIDAuMWVtIDAgIzFlMWUxZSwgMCAwLjFlbSAwLjFlbSByZ2JhKDAsIDAsIDAsIDAuMyk7XG4gIGZvbnQtc2l6ZTogLjg1ZW07XG4gIGxpbmUtaGVpZ2h0OiAxO1xuICBjdXJzb3I6IGRlZmF1bHQ7XG4gIHVzZXItc2VsZWN0OiBub25lO1xufVxua2JkW3RpdGxlXSxcbi5rZXlbdGl0bGVdIHtcbiAgY3Vyc29yOiBoZWxwO1xufVxua2JkLmRhcmssXG4uZGFyay1rZXlzIGtiZCxcbi5rZXkuZGFyayxcbi5kYXJrLWtleXMgLmtleSB7XG4gIGRpc3BsYXk6IGlubGluZTtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICBtaW4td2lkdGg6IDFlbTtcbiAgcGFkZGluZzogLjNlbSAuNGVtIC4yZW0gLjNlbTtcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xuICBmb250LWZhbWlseTogXCJMdWNpZGEgR3JhbmRlXCIsIEx1Y2lkYSwgQXJpYWwsIHNhbnMtc2VyaWY7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBib3JkZXItcmFkaXVzOiAuM2VtO1xuICBib3JkZXI6IG5vbmU7XG4gIGJhY2tncm91bmQtY29sb3I6ICM1MDUwNTA7XG4gIGJhY2tncm91bmQtY29sb3I6IGdyYWRpZW50KGxpbmVhciwgbGVmdCB0b3AsIGxlZnQgYm90dG9tLCBmcm9tKCMzYzNjM2MpLCB0bygjNTA1MDUwKSk7XG4gIGNvbG9yOiAjZmFmYWZhO1xuICB0ZXh0LXNoYWRvdzogLTFweCAtMXB4IDAgIzQ2NDY0NjtcbiAgYm94LXNoYWRvdzogaW5zZXQgMCAwIDFweCAjOTY5Njk2LCBpbnNldCAwIC0wLjA1ZW0gMC40ZW0gIzUwNTA1MCwgMCAwLjFlbSAwICMxZTFlMWUsIDAgMC4xZW0gMC4xZW0gcmdiYSgwLCAwLCAwLCAwLjMpO1xufVxua2JkLmxpZ2h0LFxuLmxpZ2h0LWtleXMga2JkLFxuLmtleS5saWdodCxcbi5saWdodC1rZXlzIC5rZXkge1xuICBkaXNwbGF5OiBpbmxpbmU7XG4gIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgd2hpdGUtc3BhY2U6IG5vd3JhcDtcbiAgbWluLXdpZHRoOiAxZW07XG4gIHBhZGRpbmc6IC4zZW0gLjRlbSAuMmVtIC4zZW07XG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcbiAgZm9udC1mYW1pbHk6IFwiTHVjaWRhIEdyYW5kZVwiLCBMdWNpZGEsIEFyaWFsLCBzYW5zLXNlcmlmO1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgYm9yZGVyLXJhZGl1czogLjNlbTtcbiAgYm9yZGVyOiBub25lO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmFmYWZhO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiBncmFkaWVudChsaW5lYXIsIGxlZnQgdG9wLCBsZWZ0IGJvdHRvbSwgZnJvbSgjZDJkMmQyKSwgdG8oI2ZmZmZmZikpO1xuICBjb2xvcjogIzMyMzIzMjtcbiAgdGV4dC1zaGFkb3c6IDAgMCAycHggI2ZmZmZmZjtcbiAgYm94LXNoYWRvdzogaW5zZXQgMCAwIDFweCAjZmZmZmZmLCBpbnNldCAwIDAgMC40ZW0gI2M4YzhjOCwgMCAwLjFlbSAwICM4MjgyODIsIDAgMC4xMWVtIDAgcmdiYSgwLCAwLCAwLCAwLjQpLCAwIDAuMWVtIDAuMTFlbSByZ2JhKDAsIDAsIDAsIDAuOSk7XG59XG5rYmQuc28sXG4uc28ta2V5cyBrYmQsXG4ua2V5LnNvLFxuLnNvLWtleXMgLmtleSB7XG4gIGRpc3BsYXk6IGlubGluZTtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICBtaW4td2lkdGg6IDFlbTtcbiAgcGFkZGluZzogLjNlbSAuNGVtIC4yZW0gLjNlbTtcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xuICBmb250LWZhbWlseTogXCJMdWNpZGEgR3JhbmRlXCIsIEx1Y2lkYSwgQXJpYWwsIHNhbnMtc2VyaWY7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBib3JkZXItcmFkaXVzOiAuM2VtO1xuICBib3JkZXI6IG5vbmU7XG4gIG1hcmdpbjogMCAuMWVtO1xuICBwYWRkaW5nOiAuMWVtIC42ZW07XG4gIGZvbnQtZmFtaWx5OiBBcmlhbCwgXCJIZWx2ZXRpY2EgTmV1ZVwiLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7XG4gIGxpbmUtaGVpZ2h0OiAxLjQ7XG4gIGNvbG9yOiAjMjQyNzI5O1xuICB0ZXh0LXNoYWRvdzogMCAxcHggMCAjRkZGO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZTFlM2U1O1xuICBib3JkZXI6IDFweCBzb2xpZCAjYWRiM2I5O1xuICBib3JkZXItcmFkaXVzOiAwLjI3MjcyNzI3ZW07XG4gIGJveC1zaGFkb3c6IDAgMXB4IDAgcmdiYSgxMiwgMTMsIDE0LCAwLjIpLCAwIDAgMCAycHggI0ZGRiBpbnNldDtcbn1cbmtiZC5naXRodWIsXG4uZ2l0aHViLWtleXMga2JkLFxuLmtleS5naXRodWIsXG4uZ2l0aHViLWtleXMgLmtleSB7XG4gIGRpc3BsYXk6IGlubGluZTtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICBtaW4td2lkdGg6IDFlbTtcbiAgcGFkZGluZzogLjNlbSAuNGVtIC4yZW0gLjNlbTtcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xuICBmb250LWZhbWlseTogXCJMdWNpZGEgR3JhbmRlXCIsIEx1Y2lkYSwgQXJpYWwsIHNhbnMtc2VyaWY7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBib3JkZXItcmFkaXVzOiAuM2VtO1xuICBib3JkZXI6IG5vbmU7XG4gIHBhZGRpbmc6IDAuMjcyNzI3MjdlbSAwLjQ1NDU0NTQ1ZW07XG4gIGZvbnQtc2l6ZTogNjguNzUlO1xuICBsaW5lLWhlaWdodDogMC45MDkwOTA5MTtcbiAgY29sb3I6ICM0NDRkNTY7XG4gIHZlcnRpY2FsLWFsaWduOiBtaWRkbGU7XG4gIGJhY2tncm91bmQtY29sb3I6ICNmYWZiZmM7XG4gIGJvcmRlcjogc29saWQgMXB4ICNjNmNiZDE7XG4gIGJvcmRlci1ib3R0b20tY29sb3I6ICM5NTlkYTU7XG4gIGJvcmRlci1yYWRpdXM6IDAuMjcyNzI3MjdlbTtcbiAgYm94LXNoYWRvdzogaW5zZXQgMCAtMXB4IDAgIzk1OWRhNTtcbiAgZm9udC1mYW1pbHk6IFwiU0ZNb25vLVJlZ3VsYXJcIiwgQ29uc29sYXMsIFwiTGliZXJhdGlvbiBNb25vXCIsIE1lbmxvLCBDb3VyaWVyLCBtb25vc3BhY2U7XG4gIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG4gIHRleHQtc2hhZG93OiBub25lO1xufVxuIl19 */';
 
   const fix =
-    '#nprogress .bar {\n    background: #29d;\n    position: fixed;\n    z-index: 1031;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 4px;\n}\n\n#pagesSlider {\n    margin: 10px 0;\n}\n\n#pageInputs {\n    display: flex;\n    gap: 5px;\n    align-items: center;\n    justify-content: center;\n}\n\n#swal2-html-container .pageInput {\n    border: 1px darkblue dashed;\n    border-radius: 5px;\n    text-align: center;\n    background-color: aliceblue;\n    color: black;\n    max-width: 40%;\n}\n\n#swal2-title {\n    color: navy;\n}\n\nbutton.swal2-styled {\n    position: inherit;\n    transform: inherit;\n}\n';
+    '#nprogress .bar {\n  background: #29d;\n  position: fixed;\n  z-index: 1031;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 4px;\n}\n\n#pagesSlider {\n  margin: 10px 0;\n}\n\n#pageInputs {\n  display: flex;\n  gap: 5px;\n  align-items: center;\n  justify-content: center;\n}\n\n#swal2-html-container .pageInput {\n  border: 1px darkblue dashed;\n  border-radius: 5px;\n  text-align: center;\n  background-color: aliceblue;\n  color: black;\n  max-width: 40%;\n}\n\n#swal2-title {\n  color: navy;\n}\n\nbutton.swal2-styled {\n  position: inherit;\n  transform: inherit;\n}\n';
 
   const sweetalertStyle = [normalize, sweetalert, fix, nprogress, keyscss].join('\n');
 
@@ -2903,7 +2929,7 @@
   const localeSelector = () =>
     locales
       .map(
-        (locale) => html`
+        locale => html`
           <option
             value="${locale.ID}"
             ${getSettingsValue('locale') === locale.ID ? 'selected' : ''}
@@ -2914,9 +2940,9 @@
       )
       .join('');
   const themesSelector = () =>
-    [...Object.keys(colors).map((color) => colors[color].name)]
+    [...Object.keys(colors).map(color => colors[color].name)]
       .map(
-        (theme2) => html`
+        theme2 => html`
           <span
             title="${theme2}"
             class="${theme2} ThemeRadio ${getSettingsValue('theme') === theme2 ? 'selected' : ''}"
@@ -3309,9 +3335,9 @@
 
   const keybindList = () => {
     const keybinds = getSettingsValue('keybinds');
-    return Object.keys(keybinds).map((kb) => {
+    return Object.keys(keybinds).map(kb => {
       const keys = keybinds[kb]?.length
-        ? keybinds[kb]?.map((key) => html`<kbd class="dark">${key}</kbd>`).join(' / ')
+        ? keybinds[kb]?.map(key => html`<kbd class="dark">${key}</kbd>`).join(' / ')
         : '';
       return html`<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
     });
@@ -3320,7 +3346,7 @@
     Object.keys(getSettingsValue('keybinds'))
       .map(
         // Language=html
-        (kb) =>
+        kb =>
           html`<label for="${kb}">${getLocaleString(kb)}:</label>
             <input
               type="text"
@@ -3363,20 +3389,21 @@
     return Array(repeat)
       .fill(0)
       .map((_, i) => i + 1)
-      .filter((i) => i >= begin);
+      .filter(i => i >= begin);
   }
 
-  const ThumbnailsPanel = (manga) => html`
+  const ThumbnailsPanel = manga => html`
     <nav id="Navigation" class="panel ${getSettingsValue('showThumbnails') ? '' : 'disabled'}">
       <div id="NavigationCounters" class="ControlLabel">
         ${IconCategory}
-        <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
+        <i>0</i> /
+        <b>${manga.begin && manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
         ${getLocaleString('PAGES_LOADED')}
       </div>
       <div id="Thumbnails">
         ${indexList(manga.pages, manga.begin)
           .map(
-            (index) => html`
+            index => html`
               <div id="Thumbnail${index}" class="Thumbnail">
                 <img id="ThumbnailImg${index}" alt="" class="ThumbnailImg" src="" />
                 <span class="ThumbnailIndex">${index}</span>
@@ -3444,8 +3471,8 @@
   }
 
   const listOptions = (times, begin) =>
-    indexList(times, begin).map((index) => html` <option value="${index}">${index}</option>`);
-  const Header = (manga) => html`
+    indexList(times, begin).map(index => html` <option value="${index}">${index}</option>`);
+  const Header = manga => html`
     <header id="Header" class="${getSettingsValue('header')} headroom-top">
       <aside id="GlobalFunctions">
         <span>
@@ -3543,11 +3570,12 @@
       <nav id="ChapterNavigation">
         <div id="Counters" class="ControlLabel">
           ${getLocaleString('PAGES_LOADED')}:
-          <i>0</i> / <b>${manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
+          <i>0</i> /
+          <b>${manga.begin && manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
           <span class="ControlLabel"> ${getLocaleString('GO_TO_PAGE')}: </span>
           <select id="gotoPage">
             <option selected>#</option>
-            ${listOptions(manga.pages, manga.begin).join('')}
+            ${listOptions(manga.pages, manga.begin ?? 0).join('')}
           </select>
         </div>
         <div id="ChapterControl" class="ChapterControl">
@@ -3596,7 +3624,7 @@
   const listPages = (times, begin) =>
     indexList(times, begin).map(
       // Language=html
-      (index) => html`
+      index => html`
         <div id="Page${index}" class="MangaPage">
           <div class="PageFunctions">
             <button class="Bookmark ControlButton" title="${getLocaleString('BOOKMARK')}">
@@ -3626,7 +3654,7 @@
             <span class="PageIndex">${index}</span>
           </div>
           <div class="PageContent">
-            <img id="PageImg${index}" alt="" class="PageImg" />
+            <img id="PageImg${index}" alt="" class="PageImg" src="" />
           </div>
         </div>
         <div class="separator">
@@ -3635,14 +3663,14 @@
       `,
     );
 
-  const Reader = (manga) => html`
+  const Reader = manga => html`
     <main
       id="Chapter"
       class="${getSettingsValue('fitWidthIfOversize') ? 'fitWidthIfOversize' : ''}
   ${getSettingsValue('verticalSeparator') ? 'separator' : ''}
   ${getSettingsValue('viewMode')}"
     >
-      ${listPages(manga.pages, manga.begin).join('')}
+      ${listPages(manga.pages, manga.begin ?? 0).join('')}
     </main>
   `;
 
@@ -3668,7 +3696,7 @@
     }
   }
   function addEvent(ev, fn) {
-    return (elem) => elem.addEventListener(ev, fn);
+    return elem => elem.addEventListener(ev, fn);
   }
   function transformScrollToHorizontal(event) {
     if (!event.deltaY) {
@@ -3692,7 +3720,7 @@
   function removeURLBookmark(url = window.location.href) {
     if (!isNothing(isBookmarked(url))) {
       logScript(`Bookmark Removed ${url}`);
-      changeSettingsValue('bookmarks', (b) => b.filter((el) => el.url !== url));
+      changeSettingsValue('bookmarks', b => b.filter(el => el.url !== url));
       if (url === window.location.href) {
         document.querySelector('#MangaOnlineViewer')?.classList.remove('bookmarked');
       }
@@ -3722,7 +3750,7 @@
   }
   function buttonBookmark(event) {
     document.querySelector('#MangaOnlineViewer')?.classList.toggle('bookmarked');
-    const pagesDistance = [...document.querySelectorAll('.MangaPage')].map((element) =>
+    const pagesDistance = [...document.querySelectorAll('.MangaPage')].map(element =>
       Math.abs(element.offsetTop - window.scrollY),
     );
     const currentPage = parseInt(
@@ -3741,14 +3769,14 @@
       date: /* @__PURE__ */ new Date().toISOString().slice(0, 10),
     };
     if (isBookmarked(mark.url)) {
-      changeSettingsValue('bookmarks', (b) => b.filter((el) => el.url !== mark.url));
+      changeSettingsValue('bookmarks', b => b.filter(el => el.url !== mark.url));
       Swal.fire({
         title: getLocaleString('BOOKMARK_REMOVED'),
         timer: 1e4,
         icon: 'error',
       });
     } else {
-      changeSettingsValue('bookmarks', (b) => [...b, mark]);
+      changeSettingsValue('bookmarks', b => [...b, mark]);
       Swal.fire({
         title: getLocaleString('BOOKMARK_SAVED'),
         html: getLocaleString('BOOKMARK_SAVED').replace('##NUM##', num.toString()),
@@ -3962,7 +3990,7 @@
     const extensionMatch = filename?.match(/\.[A-Za-z]{2,4}$/);
     return extensionMatch ? extensionMatch[0].slice(1) : '';
   }
-  const getExtensionBase64 = (base64) => {
+  const getExtensionBase64 = base64 => {
     const c = base64.substring(base64.indexOf('/') + 1, base64.indexOf(';base64'));
     switch (c) {
       case '/':
@@ -4011,9 +4039,9 @@
         data: getDataFromBase64(src) ?? '',
       });
     }
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       getImage(src)
-        .then((res) => {
+        .then(res => {
           resolve({
             name: getFilename('Page-', index, array.length, getExtension(src)),
             data: res.response,
@@ -4034,7 +4062,7 @@
     zip = new JSZip();
     const images = [...document.querySelectorAll('.PageImg')];
     Promise.all(images.map(getImageData))
-      .then((data) => {
+      .then(data => {
         data.forEach(addZip);
         logScript('Generating Zip');
         zip
@@ -4044,7 +4072,7 @@
             },
             // LogScript, progress
           )
-          .then((content) => {
+          .then(content => {
             logScript('Download Ready');
             const zipName = `${document.querySelector('#MangaTitle')?.textContent?.trim()}.zip`;
             FileSaver_minExports.saveAs(content, zipName, { autoBom: false });
@@ -4052,7 +4080,7 @@
           })
           .catch(logScript);
       })
-      .catch((msg) => logScript("One or more images couldn't be Downloaded", msg));
+      .catch(msg => logScript("One or more images couldn't be Downloaded", msg));
   }
 
   var dist = {};
@@ -4181,7 +4209,7 @@
     }
     logScript('Downloading Chapter');
     button.classList.add('loading');
-    generateZip().catch((err) => logScript('Error downloading chapter', err));
+    generateZip().catch(err => logScript('Error downloading chapter', err));
   }
   function buttonGlobalHideImageControls() {
     document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
@@ -4226,7 +4254,7 @@
 
   function headroom(showEnd = 0) {
     let prevOffset = 0;
-    const setScrollDirection = (classSuffix) => {
+    const setScrollDirection = classSuffix => {
       const header = document.querySelector('#Header');
       header.classList.remove('headroom-end', 'headroom-hide', 'headroom-show', 'headroom-top');
       if (classSuffix) {
@@ -4255,7 +4283,7 @@
     window.addEventListener('scroll', _.debounce(toggleScrollDirection, 50));
   }
 
-  const doClick = (selector) => document.querySelector(selector)?.dispatchEvent(new Event('click'));
+  const doClick = selector => document.querySelector(selector)?.dispatchEvent(new Event('click'));
   function doScrolling(sign) {
     const chapter = document.querySelector('#Chapter');
     if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
@@ -4266,7 +4294,7 @@
       });
     } else if (getSettingsValue('zoomMode') === 'height') {
       const pages = [...document.querySelectorAll('.MangaPage')];
-      const distance = pages.map((element) => Math.abs(element.offsetTop - window.scrollY));
+      const distance = pages.map(element => Math.abs(element.offsetTop - window.scrollY));
       const currentPage = _.indexOf(distance, _.min(distance));
       const target = currentPage + sign;
       const header = document.querySelector('#Header');
@@ -4340,10 +4368,10 @@
     window.onload = null;
     document.body.onload = null;
     hotkeys.unbind();
-    Object.keys(getSettingsValue('keybinds')).forEach((key) => {
+    Object.keys(getSettingsValue('keybinds')).forEach(key => {
       hotkeys(
         getSettingsValue('keybinds')[key]?.join(',') ?? '',
-        _.throttle((event) => {
+        _.throttle(event => {
           event.preventDefault();
           event.stopImmediatePropagation();
           event.stopPropagation();
@@ -4353,30 +4381,20 @@
     });
   }
 
-  function isImagesManga(manga) {
-    return 'listImages' in manga && !isNothing(manga.listImages);
-  }
-  function isPagesManga(manga) {
-    return 'listPages' in manga && !isNothing(manga.listPages);
-  }
-  function isBruteforceManga(manga) {
-    return 'bruteForce' in manga && !isNothing(manga.bruteForce);
-  }
-
   async function fetchText(url, format) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       logScript('Fetching page: ', url);
       fetch(url)
-        .then(async (response) =>
+        .then(async response =>
           // When the page is loaded convert it to text
           response.text(),
         )
-        .then((html) => {
+        .then(html => {
           const parser = new DOMParser();
           const doc = parser.parseFromString(html, format);
           resolve(doc);
         })
-        .catch((err) => {
+        .catch(err => {
           logScript('Failed to fetch page: ', err);
         });
     });
@@ -4385,7 +4403,7 @@
     return fetchText(url, 'text/html');
   }
   async function getElementAttribute(url, selector, attribute) {
-    return fetchHtml(url).then((doc) => doc.querySelector(selector)?.getAttribute(attribute));
+    return fetchHtml(url).then(doc => doc.querySelector(selector)?.getAttribute(attribute));
   }
 
   const settings = {
@@ -4408,8 +4426,8 @@
     if (value) {
       if (!isObjectURL(value) && !isBase64ImageUrl(value) && item.fetchOptions) {
         value = await fetch(value, item.fetchOptions)
-          .then((resp) => resp.blob())
-          .then((blob) => blobUtil.blobToDataURL(blob));
+          .then(resp => resp.blob())
+          .then(blob => blobUtil.blobToDataURL(blob));
       }
       item.element.setAttribute(settings.targetAttribute, value);
     }
@@ -4417,7 +4435,7 @@
   }
   function executeCheck() {
     const inView = listElements.filter(filterInView);
-    listElements = listElements.filter((item) => !filterInView(item));
+    listElements = listElements.filter(item => !filterInView(item));
     inView.forEach(showElement);
   }
   const observerEvent = _.throttle(executeCheck, settings.throttle);
@@ -4440,7 +4458,7 @@
 
   function applyZoom(zoom = getSettingsValue('zoomMode'), pages = '.PageContent img') {
     const pg = [...document.querySelectorAll(pages)];
-    pg.forEach((img) => {
+    pg.forEach(img => {
       img.removeAttribute('width');
       img.removeAttribute('height');
       img.removeAttribute('style');
@@ -4497,7 +4515,7 @@
     if (title) {
       title.innerHTML = html`(${percentage}%) ${document.querySelector('#MangaTitle')?.textContent}`;
     }
-    document.querySelectorAll('#Counters i, #NavigationCounters i').forEach((ele) => {
+    document.querySelectorAll('#Counters i, #NavigationCounters i').forEach(ele => {
       ele.textContent = loaded.toString();
     });
     NProgress.configure({
@@ -4517,8 +4535,8 @@
     }
   };
   function onImagesSuccess() {
-    return (instance) => {
-      instance.images.forEach((image) => {
+    return instance => {
+      instance.images.forEach(image => {
         image.img.classList.add('imgLoaded');
         image.img.classList.remove('imgBroken');
         const thumbId = image.img.id.replace('PageImg', 'ThumbnailImg');
@@ -4533,8 +4551,8 @@
     };
   }
   function onImagesFail(manga) {
-    return (instance) => {
-      instance.images.forEach((image) => {
+    return instance => {
+      instance.images.forEach(image => {
         image.img.classList.add('imgBroken');
         const thumbId = image.img.id.replace('PageImg', 'ThumbnailImg');
         const thumb = document.getElementById(thumbId);
@@ -4568,7 +4586,7 @@
     return '';
   }
   function addImg(manga, index, imageSrc, position) {
-    const relativePosition = position - manga.begin;
+    const relativePosition = position - (manga.begin ?? 0);
     let src = normalizeUrl(imageSrc);
     const img = document.querySelector(`#PageImg${index}`);
     if (img) {
@@ -4580,8 +4598,8 @@
           async () => {
             if (!isObjectURL(src) && !isBase64ImageUrl(src) && manga.fetchOptions) {
               src = await fetch(src, manga.fetchOptions)
-                .then((resp) => resp.blob())
-                .then((blob) => blobUtil.blobToDataURL(blob));
+                .then(resp => resp.blob())
+                .then(blob => blobUtil.blobToDataURL(blob));
             }
             const imgLoad = imagesLoaded(img.parentElement);
             imgLoad.on('done', onImagesSuccess());
@@ -4622,7 +4640,7 @@
     };
   }
   async function addPage(manga, index, pageUrl, position) {
-    const relativePosition = position - manga.begin;
+    const relativePosition = position - (manga.begin ?? 0);
     const img = document.querySelector(`#PageImg${index}`);
     if (img) {
       if (
@@ -4787,11 +4805,11 @@
   }
   function saveKeybindings() {
     const newkeybinds = getSettingsValue('keybinds');
-    Object.keys(getSettingsValue('keybinds')).forEach((kb) => {
+    Object.keys(getSettingsValue('keybinds')).forEach(kb => {
       const keys = document
         .querySelector(`#${kb}`)
         ?.value.split(',')
-        ?.map((value) => value.trim());
+        ?.map(value => value.trim());
       newkeybinds[kb] = isNothing(keys) ? void 0 : keys;
     });
     setSettingsValue('keybinds', newkeybinds);
@@ -5005,7 +5023,7 @@
   }
   function buttonSelectTheme(event) {
     const target = event.currentTarget;
-    [...document.querySelectorAll('.ThemeRadio')].forEach((theme) => {
+    [...document.querySelectorAll('.ThemeRadio')].forEach(theme => {
       theme.classList.remove('selected');
     });
     target.classList.add('selected');
@@ -5264,7 +5282,7 @@
     document.querySelector('#Overlay')?.dispatchEvent(new Event('click'));
     events();
   }
-  const app = (manga) => {
+  const app = manga => {
     loadedManga = manga;
     const main = document.createElement('div');
     main.id = 'MangaOnlineViewer';
@@ -5291,8 +5309,8 @@
     element.parentNode.replaceChild(newElement, element);
     return newElement;
   }
-  const removeAttributes = (element) => {
-    element.getAttributeNames().forEach((attr) => element?.removeAttribute(attr));
+  const removeAttributes = element => {
+    element.getAttributeNames().forEach(attr => element?.removeAttribute(attr));
   };
   const cleanUpElement = (...elements) => {
     elements?.forEach(removeAttributes);
@@ -5323,7 +5341,7 @@
           const iframe = comments?.querySelector('iframe:not(#indicator-north, #indicator-south)');
           return (
             iframe?.contentWindow?.document.readyState === 'complete' &&
-            iframe?.contentWindow?.document?.body?.textContent?.length
+            !!iframe?.contentWindow?.document?.body?.textContent?.length
           );
         }),
       );
@@ -5339,7 +5357,7 @@
   async function viewer(manga) {
     if (manga.before !== void 0) {
       logScriptVerbose(`Executing Preparation`);
-      await manga.before(manga.begin);
+      await manga.before(manga.begin ?? 0);
     }
     if (getSettingsValue('enableComments') && !manga.comments) {
       manga.comments = await captureComments();
@@ -5354,7 +5372,7 @@
   }
 
   const startButton =
-    '#StartMOV {\n    all: revert;\n    backface-visibility: hidden;\n    font-size: 2rem;\n    color: #fff;\n    cursor: pointer;\n    margin: 0 auto;\n    padding: 0.5rem 1rem;\n    text-align: center;\n    border: none;\n    border-radius: 10px;\n    min-height: 50px;\n    width: 80%;\n    position: fixed;\n    right: 0;\n    left: 0;\n    bottom: 0;\n    z-index: 105000;\n    transition: all 0.4s ease-in-out;\n    background-size: 300% 100%;\n    background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\n    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\n}\n\n#StartMOV:hover {\n    background-position: 100% 0;\n    transition: all 0.4s ease-in-out;\n}\n\n#StartMOV:focus {\n    outline: none;\n}\n';
+    '#StartMOV {\n  all: revert;\n  backface-visibility: hidden;\n  font-size: 2rem;\n  color: #fff;\n  cursor: pointer;\n  margin: 0 auto;\n  padding: 0.5rem 1rem;\n  text-align: center;\n  border: none;\n  border-radius: 10px;\n  min-height: 50px;\n  width: 80%;\n  position: fixed;\n  right: 0;\n  left: 0;\n  bottom: 0;\n  z-index: 105000;\n  transition: all 0.4s ease-in-out;\n  background-size: 300% 100%;\n  background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\n  box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\n}\n\n#StartMOV:hover {\n  background-position: 100% 0;\n  transition: all 0.4s ease-in-out;\n}\n\n#StartMOV:focus {\n  outline: none;\n}\n';
 
   async function testAttribute(site) {
     if (site.waitAttr !== void 0) {
@@ -5387,7 +5405,7 @@
   async function testTime(site) {
     if (site.waitTime !== void 0) {
       logScript(`Waiting to for ${site.waitTime} milliseconds`);
-      await new Promise((resolve) => {
+      await new Promise(resolve => {
         setTimeout(resolve, site.waitTime);
       });
       logScript('Continuing after timer');
@@ -5415,7 +5433,7 @@
   function validFileType(file) {
     return fileTypes.includes(file.type);
   }
-  const getImageBlob = (content) => {
+  const getImageBlob = content => {
     const buffer = new Uint8Array(content);
     const blob = new Blob([buffer.buffer]);
     return URL.createObjectURL(blob);
@@ -5426,7 +5444,7 @@
       .filter((_, file) => !file.dir && fileImageExt.test(file.name))
       .sort((a, b) => orderFiles(a.name, b.name));
     logScript('Files in zip:', zip.files);
-    return Promise.all(files.map((file) => file.async('arraybuffer').then(getImageBlob)));
+    return Promise.all(files.map(file => file.async('arraybuffer').then(getImageBlob)));
   }
   function displayUploadedFiles(title, listImages) {
     viewer({
@@ -5452,7 +5470,7 @@
     logScript(
       'Local Files: ',
       files,
-      files.map((f) => f.webkitRelativePath || f.name),
+      files.map(f => f.webkitRelativePath || f.name),
     );
     if (input.files?.[0]) {
       displayUploadedFiles(
@@ -5462,10 +5480,10 @@
     }
   }
   function allowUpload() {
-    if (localhost.url.test(window.location.href)) {
+    if (site$p.url.test(window.location.href)) {
       if (document.querySelector('#MangaOnlineViewer, #LocalTest')) {
         document.querySelector('#LocalTest')?.setAttribute('style', 'display:none');
-        document.querySelector('#file')?.addEventListener('change', (evt) => {
+        document.querySelector('#file')?.addEventListener('change', evt => {
           const input = evt.target;
           if (input.files?.[0]) loadMangaFromZip(input.files[0]);
         });
@@ -5581,13 +5599,13 @@
           rangeSliderElement.value([valBegin, valEnd]);
         }
         const observerEvent = _.debounce(changedInput, 600);
-        ['change', 'mouseup', 'keyup', 'touchend'].forEach((event) => {
+        ['change', 'mouseup', 'keyup', 'touchend'].forEach(event => {
           pageBeginInput?.addEventListener(event, observerEvent);
           pageEndInput?.addEventListener(event, observerEvent);
         });
       },
     };
-    Swal.fire(options).then((result) => {
+    Swal.fire(options).then(result => {
       if (result.value) {
         logScript(`Choice: ${beginPage} - ${endPage}`);
         manga.begin = beginPage;
@@ -5614,18 +5632,18 @@
   function showWaitPopup(site, manga) {
     Swal.fire({
       title: getLocaleString('STARTING'),
-      html: html`${manga.begin > 1
+      html: html`${manga.begin && manga.begin > 1
         ? `${getLocaleString('RESUME')}${manga.begin}.<br/>`
         : ''}${getLocaleString('WAITING')}`,
       showCancelButton: true,
       cancelButtonColor: '#d33',
       reverseButtons: true,
       timer: 3e3,
-    }).then((result) => {
+    }).then(result => {
       if (result.value || result.dismiss === Swal.DismissReason.timer) {
         viewer(manga).then(() => logScript('Page loaded'));
       } else {
-        createLateStartButton(site, manga.begin);
+        createLateStartButton(site, manga.begin ?? 0);
         logScript(result.dismiss);
       }
     });
@@ -5667,9 +5685,9 @@
     );
     if (allowUpload()) return;
     logScript(sites.length, 'Known Manga Sites:', sites);
-    const foundSites = sites.filter((s) => s.url.test(window.location.href));
+    const foundSites = sites.filter(s => s.url.test(window.location.href));
     logScript(foundSites.length, 'Found sites:', foundSites);
-    const testedSites = foundSites.map(async (site) => {
+    const testedSites = foundSites.map(async site => {
       logScript(`Testing site: ${site.name}`);
       return new Promise((resolve, reject) => {
         Promise.all([
@@ -5680,7 +5698,7 @@
           testFunc(site),
         ])
           .then(async () => site.run())
-          .then((manga) =>
+          .then(manga =>
             manga.pages > 0
               ? resolve([site, manga])
               : reject(new Error(`${site.name} found ${manga.pages} pages`)),
@@ -5688,11 +5706,11 @@
       });
     });
     Promise.race(testedSites.map((promise, index) => promise.then(() => index))).then(
-      (fastestIndex) => {
+      fastestIndex => {
         testedSites.forEach((_promise, i) => {
           if (i !== fastestIndex) logScript(`Failed/Skipped: ${foundSites[i].name}`);
         });
-        testedSites[fastestIndex].then((result) => {
+        testedSites[fastestIndex].then(result => {
           preparePage(result);
         });
       },
