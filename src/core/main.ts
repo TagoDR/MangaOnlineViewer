@@ -1,16 +1,16 @@
-import Swal, { type SweetAlertOptions } from 'sweetalert2';
+import _ from 'lodash';
 import rangeSlider, { type RangeSlider } from 'range-slider-input';
 import rangeSliderStyles from 'range-slider-input/dist/style.css?inline';
-import _ from 'lodash';
-import { html } from '../utils/code-tag';
-import { getBrowser, getDevice, getEngine, getInfoGM, logScript } from '../utils/tampermonkey';
+import Swal, { type SweetAlertOptions } from 'sweetalert2';
 import type { IManga, ISite } from '../types';
-import formatPage from './viewer';
-import { getLocaleString, getSettingsValue, isBookmarked } from './settings';
 import sweetalertStyle from '../ui/styles/externalStyle';
 import startButton from '../ui/styles/startButton.css?inline';
+import { html } from '../utils/code-tag';
+import { getBrowser, getDevice, getEngine, getInfoGM, logScript } from '../utils/tampermonkey';
 import { testAttribute, testElement, testFunc, testTime, testVariable } from './check';
+import { getLocaleString, getSettingsValue, isBookmarked } from './settings';
 import { allowUpload } from './upload';
+import formatPage from './viewer';
 
 function validateMin(valBegin: number, endPage: number, rs: RangeSlider) {
   let val = valBegin;
@@ -82,51 +82,55 @@ async function lateStart(site: ISite, begin = 1) {
     didOpen() {
       const pageBeginInput = document.querySelector<HTMLInputElement>('#pageBegin');
       const pageEndInput = document.querySelector<HTMLInputElement>('#pageEnd');
-      const rangeSliderElement = rangeSlider(document.getElementById('pagesSlider')!, {
-        min: 1,
-        max: manga.pages,
-        value: [beginPage, endPage],
-        onInput(value, userInteraction) {
-          if (userInteraction) {
-            [beginPage, endPage] = value;
-            if (pageBeginInput) {
-              pageBeginInput.value = beginPage.toString();
-            }
+      const inputSlider = document.getElementById('pagesSlider');
+      if (inputSlider) {
+        const rangeSliderElement = rangeSlider(inputSlider, {
+          min: 1,
+          max: manga.pages,
+          value: [beginPage, endPage],
+          onInput(value, userInteraction) {
+            if (userInteraction) {
+              [beginPage, endPage] = value;
+              if (pageBeginInput) {
+                pageBeginInput.value = beginPage.toString();
+              }
 
-            if (pageEndInput) {
-              pageEndInput.value = endPage.toString();
+              if (pageEndInput) {
+                pageEndInput.value = endPage.toString();
+              }
             }
+          },
+        });
+        function changedInput() {
+          if (
+            (pageBeginInput && pageBeginInput.value === '') ||
+            (pageEndInput && pageEndInput.value === '')
+          ) {
+            return;
           }
-        },
-      });
 
-      function changedInput() {
-        if (pageBeginInput!.value === '' || pageEndInput!.value === '') {
-          return;
+          const valBegin = validateMin(
+            parseInt(pageBeginInput?.value ?? '0', 10),
+            endPage,
+            rangeSliderElement,
+          );
+          const valEnd = validateMax(
+            parseInt(pageEndInput?.value ?? '0', 10),
+            beginPage,
+            rangeSliderElement,
+          );
+          if (pageBeginInput) pageBeginInput.value = valBegin.toString();
+          if (pageEndInput) pageEndInput.value = valEnd.toString();
+          beginPage = valBegin;
+          endPage = valEnd;
+          rangeSliderElement.value([valBegin, valEnd]);
         }
-
-        const valBegin = validateMin(
-          parseInt(pageBeginInput!.value, 10),
-          endPage,
-          rangeSliderElement,
-        );
-        const valEnd = validateMax(
-          parseInt(pageEndInput!.value, 10),
-          beginPage,
-          rangeSliderElement,
-        );
-        pageBeginInput!.value = valBegin.toString();
-        pageEndInput!.value = valEnd.toString();
-        beginPage = valBegin;
-        endPage = valEnd;
-        rangeSliderElement.value([valBegin, valEnd]);
+        const observerEvent = _.debounce(changedInput, 600);
+        ['change', 'mouseup', 'keyup', 'touchend'].forEach(event => {
+          pageBeginInput?.addEventListener(event, observerEvent);
+          pageEndInput?.addEventListener(event, observerEvent);
+        });
       }
-
-      const observerEvent = _.debounce(changedInput, 600);
-      ['change', 'mouseup', 'keyup', 'touchend'].forEach(event => {
-        pageBeginInput?.addEventListener(event, observerEvent);
-        pageEndInput?.addEventListener(event, observerEvent);
-      });
     },
   };
   Swal.fire(options).then(result => {
@@ -207,7 +211,7 @@ async function preparePage([site, manga]: [ISite, IManga]) {
     case 'always':
       formatPage(manga).then(() => logScript('Page loaded'));
       break;
-    case 'wait':
+    // case 'wait':
     default:
       showWaitPopup(site, manga);
       break;

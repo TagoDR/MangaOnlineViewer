@@ -1,3 +1,4 @@
+import { getLocaleString } from '../../core/settings';
 import { html } from '../../utils/code-tag';
 import sequence from '../../utils/sequence';
 import {
@@ -12,7 +13,6 @@ import {
   IconZoomIn,
   IconZoomOut,
 } from '../icons';
-import { getLocaleString } from '../../core/settings';
 
 const listPages = (times: number, begin: number) =>
   sequence(times, begin).map(

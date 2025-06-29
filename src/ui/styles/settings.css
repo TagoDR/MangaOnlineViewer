@@ -6,8 +6,9 @@
   left: 0;
   bottom: 0;
   z-index: 1000;
-  transition: transform 0.3s ease-in,
-  background-color 0.3s linear;
+  transition:
+    transform 0.3s ease-in,
+    background-color 0.3s linear;
   transform: translateX(-100%);
   display: flex;
   flex-flow: column;
@@ -45,7 +46,7 @@
   display: none;
 }
 
-#MangaOnlineViewer #SettingsPanel input[type='range'] {
+#MangaOnlineViewer #SettingsPanel input[type="range"] {
   width: 100%;
 }
 
@@ -126,6 +127,10 @@
   text-align: center;
 }
 
+#MangaOnlineViewer .toggler input {
+  display: none;
+}
+
 #MangaOnlineViewer .radio-inputs .radio input {
   display: none;
 }
@@ -141,10 +146,10 @@
   justify-content: center;
   border-radius: 0.5rem;
   border: none;
-  padding: .5rem 0;
+  padding: 0.5rem 0;
   color: var(--theme-text-color);
   background-color: var(--theme-border-color);
-  transition: all .15s ease-in-out;
+  transition: all 0.15s ease-in-out;
 }
 
 #MangaOnlineViewer .radio-inputs .radio input:checked + .name {
@@ -164,10 +169,6 @@
   /*margin: 40px auto;*/
 }
 
-#MangaOnlineViewer .toggler input {
-  display: none;
-}
-
 #MangaOnlineViewer .toggler label {
   display: block;
   position: relative;
@@ -183,7 +184,7 @@
   display: block;
   border-radius: 100%;
   background-color: #d7062a;
-  content: '';
+  content: "";
   animation-name: toggler-size;
   animation-duration: 0.15s;
   animation-timing-function: ease-out;
@@ -192,7 +193,15 @@
   animation-play-state: running;
 }
 
-#MangaOnlineViewer .toggler label::after, .toggler label .toggler-on, .toggler label .toggler-off {
+#MangaOnlineViewer .toggler .toggler-on,
+#MangaOnlineViewer .toggler .toggler-off {
+  opacity: 1;
+  z-index: 2;
+}
+
+#MangaOnlineViewer .toggler label::after,
+#MangaOnlineViewer .toggler label .toggler-on,
+#MangaOnlineViewer .toggler label .toggler-off {
   position: absolute;
   /*top: 50%;*/
   top: 9px;
@@ -200,10 +209,17 @@
   width: 16px;
   height: 16px;
   transform: translateY(-50%) translateX(-50%);
-  transition: left 0.15s ease-in-out, background-color 0.2s ease-out, width 0.15s ease-in-out, height 0.15s ease-in-out, opacity 0.15s ease-in-out;
+  transition:
+    left 0.15s ease-in-out,
+    background-color 0.2s ease-out,
+    width 0.15s ease-in-out,
+    height 0.15s ease-in-out,
+    opacity 0.15s ease-in-out;
 }
 
-#MangaOnlineViewer .toggler input:checked + label::after, .toggler input:checked + label .toggler-on, .toggler input:checked + label .toggler-off {
+#MangaOnlineViewer .toggler input:checked + label::after,
+#MangaOnlineViewer .toggler input:checked + label .toggler-on,
+#MangaOnlineViewer .toggler input:checked + label .toggler-off {
   left: 75%;
 }
 
@@ -212,12 +228,8 @@
   animation-name: toggler-size2;
 }
 
-#MangaOnlineViewer .toggler .toggler-on, .toggler .toggler-off {
-  opacity: 1;
-  z-index: 2;
-}
-
-#MangaOnlineViewer .toggler input:checked + label .toggler-off, .toggler input:not(:checked) + label .toggler-on {
+#MangaOnlineViewer .toggler input:checked + label .toggler-off,
+#MangaOnlineViewer .toggler input:not(:checked) + label .toggler-on {
   width: 0;
   height: 0;
   opacity: 0;
@@ -231,10 +243,9 @@
   stroke-miterlimit: 10;
 }
 
-#MangaOnlineViewer
-
 @keyframes toggler-size {
-  0%, 100% {
+  0%,
+  100% {
     width: 26px;
     height: 26px;
   }
@@ -245,10 +256,9 @@
   }
 }
 
-#MangaOnlineViewer
-
 @keyframes toggler-size2 {
-  0%, 100% {
+  0%,
+  100% {
     width: 26px;
     height: 26px;
   }

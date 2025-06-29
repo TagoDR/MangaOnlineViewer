@@ -1,10 +1,10 @@
-import { html } from '../utils/code-tag';
-import cssStyles from './styles/styles';
 import { getSettingsValue } from '../core/settings';
-import { themesCSS } from './themes';
 import type { IManga } from '../types';
-import externalCSS from './styles/externalStyle';
+import { html } from '../utils/code-tag';
 import { wrapStyle } from '../utils/css';
+import externalCSS from './styles/externalStyle';
+import cssStyles from './styles/styles';
+import { themesCSS } from './themes';
 
 function head(manga: IManga) {
   return html`

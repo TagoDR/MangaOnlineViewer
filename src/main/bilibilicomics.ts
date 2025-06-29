@@ -1,5 +1,5 @@
 // == BilibiliComics ===============================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'BilibiliComics',

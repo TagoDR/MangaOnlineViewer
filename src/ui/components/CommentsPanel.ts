@@ -1,5 +1,5 @@
-import { html } from '../../utils/code-tag';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
+import { html } from '../../utils/code-tag';
 import { IconMoon, IconSun, IconX } from '../icons';
 
 const commentsPanel = () => html`

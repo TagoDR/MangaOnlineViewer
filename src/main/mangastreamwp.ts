@@ -1,5 +1,5 @@
 // == MangaStream WordPress Plugin =================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 import { findByContentEq } from '../utils/find';
 
 const site: ISite = {
@@ -70,7 +70,8 @@ const site: ISite = {
         img =>
           img.getAttribute('data-src') ??
           img.getAttribute('data-lazy-src') ??
-          img.getAttribute('src')!,
+          img.getAttribute('src') ??
+          '',
       ),
     };
   },

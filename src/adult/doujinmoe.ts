@@ -1,5 +1,5 @@
 // == Doujin-Moe Non-members =======================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'DoujinMoeNM',
@@ -16,7 +16,7 @@ const site: ISite = {
       pages: images.length,
       prev: '#',
       next: '#',
-      listImages: images.map(img => img.getAttribute('data-file')!),
+      listImages: images.map(img => img.getAttribute('data-file') ?? ''),
     };
   },
 };

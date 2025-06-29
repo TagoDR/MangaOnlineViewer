@@ -1,7 +1,7 @@
-import { css } from '../utils/code-tag';
 import { getSettingsValue } from '../core/settings';
-import { replaceStyleSheet, wrapStyle } from '../utils/css';
+import { css } from '../utils/code-tag';
 import colors, { getTextColor, type IColor } from '../utils/colors';
+import { replaceStyleSheet, wrapStyle } from '../utils/css';
 
 function generateThemeCSS(name: string, primary: string, text: string) {
   // Language=CSS

@@ -1,5 +1,5 @@
 // == OmegaScans ===================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: ['OmegaScans'],
@@ -22,7 +22,9 @@ const site: ISite = {
         .querySelector('div.justify-between:nth-child(2) > a:nth-child(3)')
         ?.getAttribute('href'),
       listImages: images.map(img =>
-        img.classList.contains('lazy') ? img.getAttribute('data-src')! : img.getAttribute('src')!,
+        img.classList.contains('lazy')
+          ? (img.getAttribute('data-src') ?? '')
+          : (img.getAttribute('src') ?? ''),
       ),
     };
   },

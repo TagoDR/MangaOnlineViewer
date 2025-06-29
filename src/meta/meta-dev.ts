@@ -1,6 +1,6 @@
 import adult from '../adult';
-import main from '../main';
 import { requiredScripts } from '../core/externals';
+import main from '../main';
 
 const sites = [...main, ...adult];
 
@@ -9,7 +9,7 @@ export default {
   author: 'TagoDR',
   namespace: 'https://github.com/TagoDR',
   description: 'Shows all pages at once in online view for sites',
-  version: new Date().valueOf().toString(), // .slice(0, 10).replaceAll('-', '.'),
+  version: Date.now().toString(), // .slice(0, 10).replaceAll('-', '.'),
   license: 'MIT',
   icon: 'https://cdn-icons-png.flaticon.com/32/9824/9824248.png', // https://www.freepik.com/icon/comic_9824248
   'run-at': 'document-end',

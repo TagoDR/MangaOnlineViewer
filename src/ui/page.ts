@@ -1,7 +1,6 @@
-import NProgress from 'nprogress';
-import imagesLoaded from 'imagesloaded';
 import { blobToDataURL } from 'blob-util';
-import { logScript } from '../utils/tampermonkey';
+import imagesLoaded from 'imagesloaded';
+import NProgress from 'nprogress';
 import { getSettingsValue } from '../core/settings';
 import {
   type IManga,
@@ -12,12 +11,13 @@ import {
   isPagesManga,
   type ZoomMode,
 } from '../types';
-import { getElementAttribute } from '../utils/request';
-import lazyLoad from '../utils/lazyLoad';
-import sequence from '../utils/sequence';
 import { html } from '../utils/code-tag';
-import { removeURLBookmark } from './events/bookmarks';
+import lazyLoad from '../utils/lazyLoad';
+import { getElementAttribute } from '../utils/request';
+import sequence from '../utils/sequence';
+import { logScript } from '../utils/tampermonkey';
 import { isBase64ImageUrl, isObjectURL } from '../utils/urls';
+import { removeURLBookmark } from './events/bookmarks';
 
 // After pages load apply default Zoom
 function applyZoom(
@@ -123,7 +123,7 @@ function onImagesSuccess() {
       const thumb = document.getElementById(thumbId);
       thumb?.classList.remove('imgBroken');
       if (thumb) {
-        thumb.setAttribute('src', image.img.getAttribute('src')!);
+        thumb.setAttribute('src', image.img.getAttribute('src') ?? '');
       }
       applyLastGlobalZoom(`#${image.img.id}`);
       updateProgress();
@@ -148,9 +148,11 @@ function onImagesFail(manga: IManga) {
           } else {
             reloadImage(image.img);
           }
-          const imgLoad = imagesLoaded(image.img.parentElement!);
-          imgLoad.on('done', onImagesSuccess());
-          imgLoad.on('fail', onImagesFail(manga));
+          if (image.img.parentElement) {
+            const imgLoad = imagesLoaded(image.img.parentElement);
+            imgLoad.on('done', onImagesSuccess());
+            imgLoad.on('fail', onImagesFail(manga));
+          }
         }, 2000);
       } else {
         // image.img.closest('.MangaPage')?.classList.add('hide');
@@ -189,9 +191,11 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
               .then(resp => resp.blob())
               .then(blob => blobToDataURL(blob));
           }
-          const imgLoad = imagesLoaded(img.parentElement!);
-          imgLoad.on('done', onImagesSuccess());
-          imgLoad.on('fail', onImagesFail(manga));
+          if (img.parentElement) {
+            const imgLoad = imagesLoaded(img.parentElement);
+            imgLoad.on('done', onImagesSuccess());
+            imgLoad.on('fail', onImagesFail(manga));
+          }
           img.setAttribute('src', src);
           logScript('Loaded Image:', index, 'Source:', src);
         },
@@ -203,10 +207,12 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
       lazyLoad(
         img,
         () => {
-          const imgLoad = imagesLoaded(img.parentElement!);
-          imgLoad.on('done', onImagesSuccess());
-          imgLoad.on('fail', onImagesFail(manga));
-          logScript('Lazy Image: ', index, ' Source: ', img.getAttribute('src'));
+          if (img.parentElement) {
+            const imgLoad = imagesLoaded(img.parentElement);
+            imgLoad.on('done', onImagesSuccess());
+            imgLoad.on('fail', onImagesFail(manga));
+            logScript('Lazy Image: ', index, ' Source: ', img.getAttribute('src'));
+          }
         },
         manga.fetchOptions,
       );
@@ -226,9 +232,11 @@ function findPage(
     const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
     if (src && img) {
       img.style.width = 'auto';
-      const imgLoad = imagesLoaded(img.parentElement!);
-      imgLoad.on('done', onImagesSuccess());
-      imgLoad.on('fail', onImagesFail(manga));
+      if (img.parentElement) {
+        const imgLoad = imagesLoaded(img.parentElement);
+        imgLoad.on('done', onImagesSuccess());
+        imgLoad.on('fail', onImagesFail(manga));
+      }
       img.setAttribute('src', src);
       logScript(`${lazy && 'Lazy '}Page: `, index, ' Source: ', img.getAttribute('src'));
     }

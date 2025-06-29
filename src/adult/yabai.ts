@@ -1,5 +1,5 @@
 // == Yabai ========================================================================================
-import { Category, IMangaImages, ISite, Language } from '../types';
+import { Category, type IMangaImages, type ISite, Language } from '../types';
 import { bruteforce } from '../utils/bruteforce';
 
 const site: ISite = {

@@ -1,5 +1,5 @@
 // == FoOlSlide ====================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: ['FoOlSlide', 'Kireicake'],
@@ -38,7 +38,7 @@ const site: ISite = {
         ?.getAttribute('href'),
     };
     if (images.length > 1) {
-      return { ...manga, listImages: images.map(img => img.getAttribute('src')!) };
+      return { ...manga, listImages: images.map(img => img.getAttribute('src') ?? '') };
     }
     return {
       ...manga,

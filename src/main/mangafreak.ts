@@ -1,5 +1,5 @@
 // == MangaFreak ===================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'MangaFreak',
@@ -18,7 +18,7 @@ const site: ISite = {
       pages: images.length,
       prev: chapter?.previousElementSibling?.getAttribute('value'),
       next: chapter?.nextElementSibling?.getAttribute('value'),
-      listImages: images.map(img => img.getAttribute('src')!),
+      listImages: images.map(img => img.getAttribute('src') ?? ''),
     };
   },
 };

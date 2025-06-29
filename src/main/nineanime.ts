@@ -1,5 +1,5 @@
 // == NineAnime ====================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'NineAnime',
@@ -16,7 +16,7 @@ const site: ISite = {
       pages: pages.length,
       prev: chapter?.nextElementSibling?.getAttribute('value'),
       next: chapter?.previousElementSibling?.getAttribute('value'),
-      listPages: pages.map(o => o.getAttribute('value')!),
+      listPages: pages.map(o => o.getAttribute('value') ?? ''),
       img: '.manga_pic',
     };
   },

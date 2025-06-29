@@ -1,5 +1,5 @@
 // == MangaKakalot =================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: ['MangaKakalot', 'NeloManga ', 'MangaNato', 'NatoManga', 'MangaBats'],
@@ -25,7 +25,7 @@ const site: ISite = {
       pages: images.length,
       prev: document.querySelector('.navi-change-chapter-btn-prev, .next')?.getAttribute('href'),
       next: document.querySelector('.navi-change-chapter-btn-next, .back')?.getAttribute('href'),
-      listImages: images.map(img => img.getAttribute('src')!),
+      listImages: images.map(img => img.getAttribute('src') ?? ''),
     };
   },
 };

@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, no-console */
-// Encapsulation for the console
-import type { ISettings } from '../types';
+/* eslint  @typescript-eslint/no-explicit-any: "off", no-console: "off" */
+
 import Bowser from 'bowser';
+import type { ISettings } from '../types';
 
 export function giveToWindow(key: string, content: any) {
   if (typeof unsafeWindow !== 'undefined') unsafeWindow[key] = content;
@@ -110,7 +110,7 @@ function setLocalSettings(value: Partial<ISettings>) {
 
 // See https://stackoverflow.com/a/2401861/331508 for optional browser sniffing code.
 function getBrowser() {
-  let tem;
+  let tem: RegExpExecArray | [] | null;
   const M =
     /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i.exec(navigator.userAgent) ?? [];
   if (/trident/i.test(M[1])) {

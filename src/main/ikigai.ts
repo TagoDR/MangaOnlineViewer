@@ -1,6 +1,7 @@
 // == Ikigai Mangas ================================================================================
+
+import { Category, type IManga, type ISite, Language } from '../types';
 import { findClosestByContentEq } from '../utils/find';
-import { Category, IManga, ISite, Language } from '../types';
 
 const site: ISite = {
   name: ['Ikigai Mangas - EltaNews', 'Ikigai Mangas - Ajaco'],

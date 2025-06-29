@@ -1,5 +1,5 @@
 // == PornComicsHD =================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'PornComicsHD',
@@ -16,7 +16,7 @@ const site: ISite = {
       prev: '#',
       next: '#',
       lazy: false,
-      listImages: img.map(i => i.getAttribute('src')!),
+      listImages: img.map(i => i.getAttribute('src') ?? ''),
     };
   },
 };

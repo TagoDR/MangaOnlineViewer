@@ -1,7 +1,8 @@
 // == AsuraScans ===================================================================================
+
+import { Category, type IManga, type ISite, Language } from '../types';
 import { findClosestByContentEq, findOneByContentStarts } from '../utils/find';
 import { waitForTimer } from '../utils/waitFor.ts';
-import { Category, IManga, ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'Asura Scans',
@@ -20,7 +21,7 @@ const site: ISite = {
       pages: images.length,
       prev: findClosestByContentEq('h2', 'Prev', 'a')?.getAttribute('href'),
       next: findClosestByContentEq('h2', 'Next', 'a')?.getAttribute('href'),
-      listImages: images.map(img => img.getAttribute('src')!),
+      listImages: images.map(img => img.getAttribute('src') ?? ''),
       async before() {
         document
           .querySelectorAll('button.absolute')

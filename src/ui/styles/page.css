@@ -21,7 +21,7 @@
   height: 0;
 }
 
-#MangaOnlineViewer .PageContent .PageImg[src=''],
+#MangaOnlineViewer .PageContent .PageImg[src=""],
 #MangaOnlineViewer .PageContent .PageImg:not([src]) {
   width: 40vw;
   height: 80vh;
@@ -93,7 +93,7 @@
 
 #MangaOnlineViewer #Chapter.Vertical .separator::before,
 #MangaOnlineViewer #Chapter.Vertical .separator::after {
-  content: '';
+  content: "";
   flex: 1;
   border-bottom: 1px solid var(--theme-text-color);
 }

@@ -1,5 +1,5 @@
 // == KingComix ====================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: ['KingComix', 'Chochox', 'Comics18'],
@@ -21,7 +21,8 @@ const site: ISite = {
           img.getAttribute('data-src') ??
           img.getAttribute('data-full-url') ??
           img.getAttribute('data-lazy-src') ??
-          img.getAttribute('src')!,
+          img.getAttribute('src') ??
+          '',
       ),
     };
   },

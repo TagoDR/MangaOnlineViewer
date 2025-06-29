@@ -1,8 +1,10 @@
+import { getDevice } from '../utils/tampermonkey';
+import autoscroll from './events/autoscroll';
 import bookmarks from './events/bookmarks';
 import globals from './events/globals';
 import headroom from './events/headroom';
-import keybindings from './events/keybindings';
 import individual from './events/individual';
+import keybindings from './events/keybindings';
 import navigation from './events/navigation';
 import options from './events/options';
 import panels from './events/panels';
@@ -10,8 +12,6 @@ import size from './events/size';
 import theming from './events/theming';
 import viewMode from './events/viewmode';
 import zoom from './events/zoom';
-import autoscroll from './events/autoscroll';
-import { getDevice } from '../utils/tampermonkey';
 
 let setupEvents = false;
 

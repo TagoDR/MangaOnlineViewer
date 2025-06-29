@@ -1,5 +1,5 @@
-import sites from '../main';
 import { requiredScripts } from '../core/externals';
+import sites from '../main';
 
 export default {
   name: 'Manga OnlineViewer',

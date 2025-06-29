@@ -1,5 +1,5 @@
 // == TMOFans ======================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'TuMangaOnline',
@@ -23,7 +23,7 @@ const site: ISite = {
       next: document.querySelector('.chapter-next a')?.getAttribute('href'),
     };
     if (images.length > 1) {
-      return { ...manga, listImages: images.map(item => $(item).attr('data-src')!) };
+      return { ...manga, listImages: images.map(item => $(item).attr('data-src') ?? '') };
     }
     return {
       ...manga,

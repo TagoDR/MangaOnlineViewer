@@ -1,4 +1,4 @@
-#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=''],
+#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=""],
 #MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {
   width: 100px;
   height: 150px;
@@ -26,8 +26,9 @@
   white-space: nowrap;
   width: 100%;
   text-align: center;
-  transition: transform 0.3s ease-in,
-  background-color 0.3s linear;
+  transition:
+    transform 0.3s ease-in,
+    background-color 0.3s linear;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   line-height: 0;

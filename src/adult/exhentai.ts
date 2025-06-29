@@ -1,5 +1,5 @@
 // == ExHentai =====================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: ['ExHentai', 'e-Hentai'],
@@ -29,7 +29,7 @@ const site: ISite = {
 
     const data = await Promise.all(fetchBlocks);
     const pages = data.flatMap(html =>
-      [...html.querySelectorAll('#gdt a')].map(item => item.getAttribute('href')!),
+      [...html.querySelectorAll('#gdt a')].map(item => item.getAttribute('href') ?? ''),
     );
 
     return {

@@ -1,5 +1,5 @@
 // == nHentai.net ==================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 import { extensionByCode } from '../utils/urls';
 
 const site: ISite = {

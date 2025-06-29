@@ -1,5 +1,5 @@
-import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import JSZip from 'jszip';
 import { logScript, logScriptC } from '../utils/tampermonkey';
 import {
   getDataFromBase64,

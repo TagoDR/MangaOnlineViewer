@@ -1,19 +1,19 @@
-import { html } from '../../utils/code-tag';
-import type { IManga } from '../../types';
 import { getSettingsValue, isBookmarked, showSettings } from '../../core/settings';
-import SettingsPanel from './SettingsPanel';
-import KeybindingsPanel from './KeybindingsPanel';
-import ThumbnailsPanel from './ThumbnailsPanel';
-import BookmarksPanel from './BookmarksPanel';
-import Header from './Header';
-import Reader from './Reader';
-import CommentsPanel from './CommentsPanel';
+import type { IManga } from '../../types';
+import { html } from '../../utils/code-tag';
+import { getDevice } from '../../utils/tampermonkey';
 import events from '../events';
 import { toggleAutoScroll } from '../events/autoscroll';
-import { IconMenu2 } from '../icons';
-import { getDevice } from '../../utils/tampermonkey';
 import { updateViewMode } from '../events/viewmode';
+import { IconMenu2 } from '../icons';
 import { refreshThemes } from '../themes';
+import BookmarksPanel from './BookmarksPanel';
+import CommentsPanel from './CommentsPanel';
+import Header from './Header';
+import KeybindingsPanel from './KeybindingsPanel';
+import Reader from './Reader';
+import SettingsPanel from './SettingsPanel';
+import ThumbnailsPanel from './ThumbnailsPanel';
 
 let loadedManga: IManga;
 

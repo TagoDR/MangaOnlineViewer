@@ -1,5 +1,5 @@
 // == NineManga ====================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'NineManga',
@@ -9,7 +9,7 @@ const site: ISite = {
   category: Category.MANGA,
   run(): IManga {
     const chapter = document.querySelector<HTMLOptionElement>('#chapter option:checked');
-    const pages = [...document.querySelector('#page')!.querySelectorAll('option')];
+    const pages = [...(document.querySelector('#page')?.querySelectorAll('option') ?? [])];
     return {
       title: document.querySelector('.tip a')?.textContent?.trim(),
       series: document.querySelector('.subgiude > li:nth-child(2) > a')?.getAttribute('href'),

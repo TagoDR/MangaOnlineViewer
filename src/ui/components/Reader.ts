@@ -1,6 +1,6 @@
-import { html } from '../../utils/code-tag';
-import { IManga } from '../../types';
 import { getSettingsValue } from '../../core/settings';
+import type { IManga } from '../../types';
+import { html } from '../../utils/code-tag';
 import listPages from './MangaPages';
 
 const Reader = (manga: IManga) => html`

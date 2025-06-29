@@ -1,5 +1,5 @@
 // == INKR =========================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'INKR',
@@ -23,7 +23,7 @@ const site: ISite = {
       pages: images.length,
       prev: document.querySelector('a[aria-label="Previous Chapter"]')?.getAttribute('href'),
       next: document.querySelector('a[aria-label="Next Chapter"]')?.getAttribute('href'),
-      listImages: images.map(img => img.getAttribute('src')!.replace('/t.', '/p.')),
+      listImages: images.map(img => img.getAttribute('src') ?? ''.replace('/t.', '/p.')),
     };
   },
 };

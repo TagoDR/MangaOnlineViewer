@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint  @typescript-eslint/no-explicit-any: "off" */
 /**
  * Checks if a JavaScript value is empty
  * @example

@@ -1,8 +1,9 @@
 /**
  * Interface for the settings
  */
-import _ from 'lodash';
+
 import { blobToDataURL } from 'blob-util';
+import _ from 'lodash';
 import { logScript } from './tampermonkey';
 import { isBase64ImageUrl, isObjectURL } from './urls';
 

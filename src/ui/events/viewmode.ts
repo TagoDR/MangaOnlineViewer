@@ -29,8 +29,11 @@ export function updateViewMode(mode: ViewMode) {
     if (mode === 'FluidLTR' || mode === 'FluidRTL') {
       setupFluid(mode);
     } else {
-      document.querySelector('#Header')!.className = getSettingsValue('header');
-      document.querySelector('#menu')!.className = getSettingsValue('header');
+      const headerClass = getSettingsValue('header');
+      const header = document.querySelector<HTMLElement>('#Header');
+      if (header) header.className = headerClass;
+      const menu = document.querySelector<HTMLElement>('#menu');
+      if (menu) menu.className = headerClass;
       changeGlobalZoom(100)();
     }
   };

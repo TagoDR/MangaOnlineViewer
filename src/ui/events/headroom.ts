@@ -9,7 +9,8 @@ function headroom(showEnd = 0) {
   let prevOffset = 0;
 
   const setScrollDirection = (classSuffix: string) => {
-    const header = document.querySelector<HTMLDivElement>('#Header')!;
+    const header = document.querySelector<HTMLDivElement>('#Header');
+    if (!header) return;
     header.classList.remove('headroom-end', 'headroom-hide', 'headroom-show', 'headroom-top');
     if (classSuffix) {
       header.classList.add(`headroom-${classSuffix}`);

@@ -1,11 +1,14 @@
+import type { ISite } from '../types';
+import threehentai from './3hentai';
+import eightMuses from './8muses';
+import ninehentai from './9hentai';
 import akumamoe from './akumamoe';
 import bestporncomix from './bestporncomix';
 import doujinmoe from './doujinmoe';
 import dragontranslation from './dragontranslation';
-import eightMuses from './8muses';
 import exhentai from './exhentai';
-import fsicomics from './fsicomics';
 import freeadultcomix from './freeadultcomix';
+import fsicomics from './fsicomics';
 import gntai from './gntai';
 import hentai2read from './hentai2read';
 import hentaiera from './hentaiera';
@@ -23,12 +26,10 @@ import madarawp from './madarawp';
 import multporn from './multporn';
 import myhentaigallery from './myhentaigallery';
 import nhentainet from './nhentainet';
-import ninehentai from './9hentai';
 import porncomicshd from './porncomicshd';
 import pururin from './pururin';
 import schalenetwork from './schalenetwork';
 import simplyhentai from './simplyhentai';
-import threehentai from './3hentai';
 import tmohhentai from './tmohentai';
 import tsumino from './tsumino';
 import vercomicsporno from './vercomicsporno';
@@ -36,7 +37,6 @@ import wnacg from './wnacg';
 import xlecxone from './xlecxone';
 import xyzcomics from './xyzcomics';
 import yabai from './yabai';
-import { type ISite } from '../types';
 
 const sites: ISite[] = [
   akumamoe,

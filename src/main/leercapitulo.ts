@@ -1,5 +1,5 @@
 // == LeerCapitulo =================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'LeerCapitulo',
@@ -10,7 +10,7 @@ const site: ISite = {
   waitEle: '#page_select',
   run(): IManga {
     const img = [...document.querySelectorAll('#page_select option')].map(
-      el => el.getAttribute('value')!,
+      el => el.getAttribute('value') ?? '',
     );
     return {
       title: document.querySelector('h1')?.textContent?.trim(),

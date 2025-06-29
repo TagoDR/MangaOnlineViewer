@@ -7,8 +7,8 @@ import {
   toggleLocalSettings,
 } from '../../core/settings';
 import type { HeaderMode, LoadMode } from '../../types';
-import { applyZoom } from '../page';
 import { replaceStyleSheet } from '../../utils/css';
+import { applyZoom } from '../page';
 import { addEvent } from './common';
 import { buttonSettingsOpen } from './panels';
 

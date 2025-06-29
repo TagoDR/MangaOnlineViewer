@@ -1,7 +1,7 @@
-import { logScript } from '../../utils/tampermonkey';
-import generateZip from '../../core/download';
-import { addEvent } from './common';
 import { sanitizeUrl } from '@braintree/sanitize-url';
+import generateZip from '../../core/download';
+import { logScript } from '../../utils/tampermonkey';
+import { addEvent } from './common';
 
 export function buttonStartDownload(event: Event) {
   const button = event.currentTarget as HTMLInputElement;

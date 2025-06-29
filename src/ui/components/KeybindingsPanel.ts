@@ -1,6 +1,6 @@
+import { getLocaleString, getSettingsValue } from '../../core/settings';
 import { html } from '../../utils/code-tag';
 import { IconDeviceFloppy, IconPencil, IconX } from '../icons';
-import { getLocaleString, getSettingsValue } from '../../core/settings';
 
 export const keybindList = () => {
   const keybinds = getSettingsValue('keybinds');

@@ -1,4 +1,4 @@
-import { type IManga } from './IManga';
+import type { IManga } from './IManga';
 
 export enum Language {
   ENGLISH = 'English',

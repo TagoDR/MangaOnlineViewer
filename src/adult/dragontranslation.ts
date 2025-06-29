@@ -1,5 +1,5 @@
 // == Dragon Translation ===========================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'Dragon Translation',
@@ -10,7 +10,7 @@ const site: ISite = {
   waitEle: '#chapter_imgs img',
   run(): IManga {
     const images = [...document.querySelectorAll('#chapter_imgs img')]
-      .map(img => img.getAttribute('src')!)
+      .map(img => img.getAttribute('src') ?? '')
       .filter(src => src && src !== '/discord2.jpg');
     return {
       title: document.querySelector('h1')?.textContent?.trim(),

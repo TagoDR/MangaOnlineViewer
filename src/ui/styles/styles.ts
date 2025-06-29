@@ -1,20 +1,20 @@
 import { css } from '../../utils/code-tag';
+import colors from '../../utils/colors';
 import { svgToUrl } from '../../utils/svgs';
 import { IconPalette, IconPhoto, IconPhotoOff } from '../icons';
-import colors from '../../utils/colors';
-import styles from './main.css?inline';
-import icons from './icons.css?inline';
-import normalize from './simplenormalize.css?inline';
-import media from './media.css?inline';
 import animation from './animation.css?inline';
-import header from './header.css?inline';
-import keybindings from './keybindings.css?inline';
-import page from './page.css?inline';
-import fluid from './fluid.css?inline';
-import settings from './settings.css?inline';
-import thumbnails from './thumbnails.css?inline';
 import bookmarks from './bookmarks.css?inline';
 import comments from './comments.css?inline';
+import fluid from './fluid.css?inline';
+import header from './header.css?inline';
+import icons from './icons.css?inline';
+import keybindings from './keybindings.css?inline';
+import styles from './main.css?inline';
+import media from './media.css?inline';
+import page from './page.css?inline';
+import settings from './settings.css?inline';
+import normalize from './simplenormalize.css?inline';
+import thumbnails from './thumbnails.css?inline';
 
 // Language=CSS
 export default css`

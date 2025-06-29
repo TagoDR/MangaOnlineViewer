@@ -1,5 +1,7 @@
-import { html } from '../../utils/code-tag';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
+import type { IManga } from '../../types';
+import { html } from '../../utils/code-tag';
+import sequence from '../../utils/sequence';
 import {
   IconArrowAutofitDown,
   IconArrowAutofitHeight,
@@ -22,8 +24,6 @@ import {
   IconZoomOutArea,
   IconZoomPan,
 } from '../icons';
-import sequence from '../../utils/sequence';
-import type { IManga } from '../../types';
 
 const listOptions = (times: number, begin: number) =>
   sequence(times, begin).map(index => html` <option value="${index}">${index}</option>`);

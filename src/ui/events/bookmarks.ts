@@ -1,10 +1,10 @@
 import Swal from 'sweetalert2';
-import type { IBookmark } from '../../types';
 import { changeSettingsValue, getLocaleString, isBookmarked } from '../../core/settings';
-import { reloadBookmarks } from '../components/BookmarksPanel';
-import { logScript } from '../../utils/tampermonkey';
-import { addEvent } from './common';
+import type { IBookmark } from '../../types';
 import { isNothing } from '../../utils/checks';
+import { logScript } from '../../utils/tampermonkey';
+import { reloadBookmarks } from '../components/BookmarksPanel';
+import { addEvent } from './common';
 
 export function buttonBookmarksClose() {
   document.querySelector('#BookmarksPanel')?.classList.remove('visible');

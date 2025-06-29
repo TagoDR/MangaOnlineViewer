@@ -1,5 +1,5 @@
 // == ReaperScans ==================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'ReaperScans',
@@ -16,7 +16,9 @@ const site: ISite = {
       pages: images.length,
       prev: document.querySelector('.fa-chevron-left')?.closest('a')?.getAttribute('href'),
       next: document.querySelector('.fa-chevron-right')?.closest('a')?.getAttribute('href'),
-      listImages: images.map(img => img.getAttribute('data-src') || img.getAttribute('src')!),
+      listImages: images.map(
+        img => (img.getAttribute('data-src') || img.getAttribute('src')) ?? '',
+      ),
     };
   },
 };

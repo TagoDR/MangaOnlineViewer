@@ -1,5 +1,5 @@
 // == Imhentai =====================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 import { extensionByCode } from '../utils/urls';
 import { waitForVar } from '../utils/waitFor';
 

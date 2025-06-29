@@ -1,10 +1,11 @@
+import type { ISite } from '../types';
 import asura from './asura';
 import batoto from './batoto';
 import bilibilicomics from './bilibilicomics';
 import comick from './comick';
 import dysnatyscans from './dysnatyscans';
-import foolslide from './foolslide';
 import flamecomics from './flamecomics';
+import foolslide from './foolslide';
 import ikigai from './ikigai';
 import kumanga from './kumanga';
 import leercapitulo from './leercapitulo';
@@ -30,12 +31,11 @@ import olympusbiblioteca from './olympusbiblioteca';
 import readcomicsonline from './readcomicsonline';
 import reaperscans from './reaperscans';
 import tmofans from './tmofans';
+import vortexscans from './vortexscans';
 import webnovel from './webnovel';
 import webtoons from './webtoons';
 import weebcentral from './weebcentral';
-import vortexscans from './vortexscans';
 import zeroscans from './zeroscans';
-import { type ISite } from '../types';
 
 const sites: ISite[] = [
   // alandal, // Fixme

@@ -1,5 +1,5 @@
 // == BestPornComix ================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'BestPornComix',
@@ -15,7 +15,7 @@ const site: ISite = {
       pages: images.length,
       prev: '#',
       next: '#',
-      listImages: images.map(img => img.getAttribute('href')!),
+      listImages: images.map(img => img.getAttribute('href') ?? ''),
     };
   },
 };

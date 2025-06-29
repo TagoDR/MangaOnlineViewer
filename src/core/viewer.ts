@@ -1,8 +1,8 @@
 import type { IManga } from '../types';
-import { logScript, logScriptVerbose } from '../utils/tampermonkey';
-import { getSettingsValue } from './settings';
 import display from '../ui';
+import { logScript, logScriptVerbose } from '../utils/tampermonkey';
 import { waitForFunc, waitWithTimeout } from '../utils/waitFor';
+import { getSettingsValue } from './settings';
 
 async function captureComments() {
   if (!getSettingsValue('enableComments')) return null;

@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import { keybindEditor, keybindList } from '../components/KeybindingsPanel';
 import { getSettingsValue, setSettingsValue } from '../../core/settings';
 import { isNothing } from '../../utils/checks';
-import keybindings from './keybindings';
+import { keybindEditor, keybindList } from '../components/KeybindingsPanel';
 import { addEvent } from './common';
+import keybindings from './keybindings';
 
 function toggleFunction(selector: string, classname: string, open: () => void, close: () => void) {
   return () => {
@@ -61,7 +61,8 @@ export function buttonSettingsClose() {
 }
 
 export function buttonKeybindingsOpen() {
-  document.querySelector('#KeybindingsList')!.innerHTML = keybindList().join('\n');
+  const keybindingList = document.querySelector('#KeybindingsList');
+  if (keybindingList) keybindingList.innerHTML = keybindList().join('\n');
   document.querySelector('#SaveKeybindings')?.classList.add('hidden');
   document.querySelector('#EditKeybindings')?.classList.remove('hidden');
   document.querySelector('#KeybindingsPanel')?.classList.add('visible');
@@ -85,14 +86,16 @@ export function saveKeybindings() {
     newkeybinds[kb] = isNothing(keys) ? undefined : keys;
   });
   setSettingsValue('keybinds', newkeybinds);
-  document.querySelector('#KeybindingsList')!.innerHTML = keybindList().join('\n');
+  const keybindingList = document.querySelector('#KeybindingsList');
+  if (keybindingList) keybindingList.innerHTML = keybindList().join('\n');
   document.querySelector('#SaveKeybindings')?.classList.add('hidden');
   document.querySelector('#EditKeybindings')?.classList.remove('hidden');
   keybindings();
 }
 
 export function editKeybindings() {
-  document.querySelector('#KeybindingsList')!.innerHTML = keybindEditor().join('\n');
+  const keybindingList = document.querySelector('#KeybindingsList');
+  if (keybindingList) keybindingList.innerHTML = keybindEditor().join('\n');
   document.querySelector('#SaveKeybindings')?.classList.remove('hidden');
   document.querySelector('#EditKeybindings')?.classList.add('hidden');
 }

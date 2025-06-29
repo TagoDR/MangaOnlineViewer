@@ -1,7 +1,7 @@
 // == Localhost ====================================================================================
-import { placeholder, randomPlaceholder } from '../utils/svgs';
 
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
+import { placeholder, randomPlaceholder } from '../utils/svgs';
 
 const site: ISite = {
   name: 'Local Files',

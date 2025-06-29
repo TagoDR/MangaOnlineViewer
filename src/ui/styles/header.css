@@ -123,8 +123,8 @@
   z-index: 100;
 }
 
-#MangaOnlineViewer #GlobalFunctions span,
-#MangaOnlineViewer .ChapterControl span {
+#MangaOnlineViewer .ChapterControl span,
+#MangaOnlineViewer #GlobalFunctions span {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-evenly;
@@ -198,9 +198,9 @@
   height: 1rem;
 }
 
-#MangaOnlineViewer #ChapterControl .NavigationControlButton[href='#'],
-#MangaOnlineViewer #ChapterControl .NavigationControlButton[href=''],
-#MangaOnlineViewer #ChapterControl .NavigationControlButton[href='undefined'] {
+#MangaOnlineViewer #ChapterControl .NavigationControlButton[href="#"],
+#MangaOnlineViewer #ChapterControl .NavigationControlButton[href=""],
+#MangaOnlineViewer #ChapterControl .NavigationControlButton[href="undefined"] {
   visibility: hidden;
 }
 

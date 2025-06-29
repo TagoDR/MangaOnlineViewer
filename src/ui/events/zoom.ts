@@ -1,6 +1,6 @@
 import { getSettingsValue, setSettingsValue } from '../../core/settings';
-import { applyZoom } from '../page';
 import type { ZoomMode } from '../../types';
+import { applyZoom } from '../page';
 import { updateHeaderType } from './options';
 
 export function changeGlobalZoom(value: number | ZoomMode) {
@@ -17,11 +17,14 @@ export function changeGlobalZoom(value: number | ZoomMode) {
     }
 
     const globalZoomVal = document.querySelector('#ZoomVal');
-    if (Number.isInteger(value)) {
-      globalZoomVal!.textContent = `${value}%`;
-      document.querySelector<HTMLInputElement>('#Zoom')!.value = value.toString();
-    } else {
-      globalZoomVal!.textContent = value as string;
+    const zoom = document.querySelector<HTMLInputElement>('#Zoom');
+    if (globalZoomVal) {
+      if (zoom && Number.isInteger(value)) {
+        globalZoomVal.textContent = `${value}%`;
+        zoom.value = value.toString();
+      } else {
+        globalZoomVal.textContent = value as string;
+      }
     }
     applyZoom(value);
   };
@@ -30,9 +33,11 @@ export function changeGlobalZoom(value: number | ZoomMode) {
 export function changeZoomByStep(sign = 1) {
   return () => {
     const globalZoom = document.querySelector<HTMLInputElement>('#Zoom');
-    const ratio = parseInt(globalZoom!.value, 10) + sign * getSettingsValue('zoomStep');
-    globalZoom!.value = ratio.toString();
-    globalZoom?.dispatchEvent(new Event('input', { bubbles: true }));
+    if (globalZoom) {
+      const ratio = parseInt(globalZoom.value, 10) + sign * getSettingsValue('zoomStep');
+      globalZoom.value = ratio.toString();
+      globalZoom.dispatchEvent(new Event('input', { bubbles: true }));
+    }
   };
 }
 
@@ -53,7 +58,8 @@ export function changeDefaultZoom(event: Event) {
 export function changeZoom(event: Event) {
   const target = parseInt((event.currentTarget as HTMLInputElement).value, 10);
   changeGlobalZoom(target)();
-  document.querySelector('#ZoomVal')!.textContent = `${target}%`;
+  const zoomVal = document.querySelector('#ZoomVal');
+  if (zoomVal) zoomVal.textContent = `${target}%`;
 }
 
 function zoom() {

@@ -1,4 +1,8 @@
 import _ from 'lodash';
+import locales from '../locales';
+import type { ISettings, ISettingsKey } from '../types';
+import { isNothing } from '../utils/checks';
+import diffObj from '../utils/diffObj';
 import {
   getGlobalSettings,
   getLocalSettings,
@@ -11,10 +15,6 @@ import {
   setLocalSettings,
   settingsChangeListener,
 } from '../utils/tampermonkey';
-import type { ISettings, ISettingsKey } from '../types';
-import diffObj from '../utils/diffObj';
-import locales from '../locales';
-import { isNothing } from '../utils/checks';
 
 export const defaultSettings: ISettings = {
   enabled: true,

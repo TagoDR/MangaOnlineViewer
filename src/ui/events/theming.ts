@@ -1,6 +1,6 @@
 import { getSettingsValue, setSettingsValue } from '../../core/settings';
-import { addCustomTheme, refreshThemes } from '../themes';
 import type { Shade } from '../../types';
+import { addCustomTheme, refreshThemes } from '../themes';
 import { addEvent } from './common';
 
 export function changeColorScheme() {

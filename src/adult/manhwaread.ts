@@ -1,5 +1,5 @@
 // == ManhwaRead ===================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 import { findClosestByContentEq } from '../utils/find';
 
 const site: ISite = {
@@ -20,7 +20,7 @@ const site: ISite = {
       pages: images.length,
       prev: findClosestByContentEq('span', 'Previous')?.getAttribute('href'),
       next: findClosestByContentEq('span', 'Next')?.getAttribute('href'),
-      listImages: images.map(img => img.getAttribute('src')!),
+      listImages: images.map(img => img.getAttribute('src') ?? ''),
     };
   },
 };

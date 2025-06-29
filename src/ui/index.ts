@@ -1,10 +1,10 @@
 import type { IManga } from '../types';
-import head from './reader';
+import { cleanUpElement } from '../utils/cleanup';
+import { logScriptVerbose } from '../utils/tampermonkey';
 import body, { hydrateApp } from './components/App';
 import events from './events';
 import { loadManga } from './page';
-import { cleanUpElement } from '../utils/cleanup';
-import { logScriptVerbose } from '../utils/tampermonkey';
+import head from './reader';
 
 export default function display(manga: IManga) {
   cleanUpElement(document.documentElement, document.head, document.body);

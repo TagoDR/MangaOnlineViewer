@@ -1,5 +1,7 @@
-import { html } from '../../utils/code-tag';
 import { getLocaleString, getSettingsValue, isSettingsLocal } from '../../core/settings';
+import locales from '../../locales';
+import { html } from '../../utils/code-tag';
+import colors from '../../utils/colors';
 import {
   IconCheck,
   IconLocationCog,
@@ -10,8 +12,6 @@ import {
   IconWorldCog,
   IconX,
 } from '../icons';
-import locales from '../../locales';
-import colors from '../../utils/colors';
 
 const localeSelector = () =>
   locales

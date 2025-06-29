@@ -1,5 +1,5 @@
 // == Alandal ======================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'Alandal',
@@ -18,7 +18,7 @@ const site: ISite = {
       pages: images.length,
       prev: chapter?.item(0)?.getAttribute('href'),
       next: chapter?.item(1)?.getAttribute('href'),
-      listImages: images.map(img => img.getAttribute('src')!),
+      listImages: images.map(img => img.getAttribute('src') ?? ''),
     };
   },
 };

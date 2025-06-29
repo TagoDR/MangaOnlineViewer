@@ -1,7 +1,7 @@
-import { html } from '../../utils/code-tag';
-import { IconBookmark, IconBookmarkOff, IconExternalLink, IconTrash, IconX } from '../icons';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
 import { isEmpty } from '../../utils/checks';
+import { html } from '../../utils/code-tag';
+import { IconBookmark, IconBookmarkOff, IconExternalLink, IconTrash, IconX } from '../icons';
 
 const listBookmarks = () => {
   if (isEmpty(getSettingsValue('bookmarks'))) {

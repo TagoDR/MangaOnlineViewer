@@ -1,7 +1,7 @@
 import JSZip from 'jszip';
+import localhost from '../main/localhost';
 import { logScript } from '../utils/tampermonkey';
 import formatPage from './viewer';
-import localhost from '../main/localhost';
 
 const fileTypes = [
   'image/apng',

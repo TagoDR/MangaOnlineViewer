@@ -1,7 +1,7 @@
 import hotkeys from 'hotkeys-js';
 import _ from 'lodash';
-import { logScript } from '../../utils/tampermonkey';
 import { getSettingsValue } from '../../core/settings';
+import { logScript } from '../../utils/tampermonkey';
 import { scrollToElement } from './common';
 
 const doClick = (selector: string) =>
@@ -21,10 +21,10 @@ function doScrolling(sign: 1 | -1) {
     const distance = pages.map(element => Math.abs(element.offsetTop - window.scrollY));
     const currentPage = _.indexOf(distance, _.min(distance));
     const target = currentPage + sign;
-    const header = document.querySelector<HTMLDivElement>('#Header')!;
-    if (target < 0) {
+    const header = document.querySelector<HTMLDivElement>('#Header');
+    if (header && target < 0) {
       scrollToElement(header);
-    } else if (target >= pages.length) {
+    } else if (header && target >= pages.length) {
       header.classList.add('headroom-end');
     } else {
       logScript(`Current array page ${currentPage},`, `Scrolling to page ${target}`);

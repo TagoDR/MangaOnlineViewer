@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import { logScript } from '../../utils/tampermonkey';
 import { getSettingsValue } from '../../core/settings';
+import { logScript } from '../../utils/tampermonkey';
 
 let scrollActive = false;
 

@@ -1,5 +1,5 @@
 // == XlecxOne =====================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'XlecxOne',
@@ -15,7 +15,8 @@ const site: ISite = {
             img.getAttribute('data-src') ??
             img.getAttribute('data-srce') ??
             img.closest('a')?.getAttribute('href') ??
-            img.getAttribute('src')!,
+            img.getAttribute('src') ??
+            '',
         ),
       ),
     ];

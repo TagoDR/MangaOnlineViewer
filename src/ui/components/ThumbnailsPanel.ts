@@ -1,8 +1,8 @@
+import { getLocaleString, getSettingsValue } from '../../core/settings';
+import type { IManga } from '../../types';
 import { html } from '../../utils/code-tag';
 import sequence from '../../utils/sequence';
-import { IManga } from '../../types';
 import { IconCategory } from '../icons';
-import { getLocaleString, getSettingsValue } from '../../core/settings';
 
 const ThumbnailsPanel = (manga: IManga) => html`
   <nav id="Navigation" class="panel ${getSettingsValue('showThumbnails') ? '' : 'disabled'}">

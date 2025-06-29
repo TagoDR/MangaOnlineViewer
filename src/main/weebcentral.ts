@@ -1,5 +1,5 @@
 // == WeebCentral ==================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'WeebCentral',
@@ -10,7 +10,7 @@ const site: ISite = {
   waitEle: 'main section .maw-w-full',
   async run(): Promise<IManga> {
     const src = [...document.querySelectorAll('main section .maw-w-full')].map(
-      elem => elem.getAttribute('src')!,
+      elem => elem.getAttribute('src') ?? '',
     );
     const chaptersList = await fetch(
       document.querySelector('main section a + button')?.getAttribute('hx-get') ?? '',

@@ -46,7 +46,7 @@ export function hideElements(selector: string) {
     // Disable links to prevent navigation
 
     if (element instanceof HTMLAnchorElement) {
-      element.addEventListener('click', function (event) {
+      element.addEventListener('click', event => {
         event.preventDefault(); // Prevent link from working
       });
       element.style.pointerEvents = 'none'; // Further prevent interaction

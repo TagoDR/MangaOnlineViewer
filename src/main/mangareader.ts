@@ -1,5 +1,5 @@
 // == MangaReader ==================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 declare let imgReverser: (url: string) => Promise<HTMLCanvasElement>;
 
@@ -15,7 +15,7 @@ const site: ISite = {
     const chapter = document.querySelector('.chapter-item.active');
     const images = [...document.querySelectorAll('.ds-image[data-url], .iv-card[data-url]')];
     const src = images.map(async img => {
-      const url = img.getAttribute('data-url')!;
+      const url = img.getAttribute('data-url') ?? '';
       if (url && img.classList.contains('shuffled')) {
         return (await imgReverser(url)).toDataURL();
       }

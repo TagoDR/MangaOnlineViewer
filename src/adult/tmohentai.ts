@@ -1,5 +1,5 @@
 // == TMOHentai ====================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'TMOHentai',
@@ -9,7 +9,7 @@ const site: ISite = {
   category: Category.HENTAI,
   run(): IManga {
     const src = [...document.querySelectorAll('.content-image')].map(
-      i => i.getAttribute('data-original') ?? i.getAttribute('src')!,
+      i => i.getAttribute('data-original') ?? i.getAttribute('src') ?? '',
     );
     return {
       before() {

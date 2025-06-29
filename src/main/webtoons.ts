@@ -1,5 +1,5 @@
 // == WebToons =====================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'WebToons',
@@ -17,7 +17,10 @@ const site: ISite = {
       next: document.querySelector('._nextEpisode')?.getAttribute('href'),
       listImages: images.map(
         img =>
-          img.getAttribute('data-url') ?? img.getAttribute('data-src') ?? img.getAttribute('src')!,
+          img.getAttribute('data-url') ??
+          img.getAttribute('data-src') ??
+          img.getAttribute('src') ??
+          '',
       ),
     };
   },

@@ -1,13 +1,13 @@
-import { defineConfig } from 'vite';
-import viteBanner from 'vite-plugin-banner';
-import userscript, { type Metadata } from 'userscript-metadata-generator';
+import * as fs from 'node:fs';
 import externalGlobals from 'rollup-plugin-external-globals';
 import prettier from 'rollup-plugin-prettier';
+import userscript, { type Metadata } from 'userscript-metadata-generator';
+import { defineConfig } from 'vite';
+import viteBanner from 'vite-plugin-banner';
 import svgLoader from 'vite-svg-loader';
-import fs from 'fs';
-import metaMain from './src/meta/meta-main';
 import metaAdult from './src/meta/meta-adult';
 import metaDev from './src/meta/meta-dev';
+import metaMain from './src/meta/meta-main';
 import { bookmarklet, comicSites, hentaiSites, mangaSites } from './src/meta/readme';
 
 interface IScript {

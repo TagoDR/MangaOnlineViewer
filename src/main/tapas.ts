@@ -1,5 +1,5 @@
 // == Tapas ========================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'KLManga',
@@ -16,7 +16,7 @@ const site: ISite = {
       pages: images.length,
       prev: chapter?.previousElementSibling?.getAttribute('data-href'),
       next: chapter?.nextElementSibling?.getAttribute('data-href'),
-      listImages: images.map(img => img.getAttribute('data-src') ?? img.getAttribute('src')!),
+      listImages: images.map(img => img.getAttribute('data-src') ?? img.getAttribute('src') ?? ''),
     };
   },
 };

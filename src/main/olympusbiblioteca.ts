@@ -1,5 +1,5 @@
 // == OlympusBiblioteca ============================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 
 const site: ISite = {
   name: 'OlympusBiblioteca',
@@ -15,7 +15,7 @@ const site: ISite = {
       pages: images.length,
       prev: document.querySelector('a[name="capitulo anterior"]')?.getAttribute('href'),
       next: document.querySelector('a[name="capitulo siguiente"]')?.getAttribute('href'),
-      listImages: images.map(img => img.getAttribute('src')!),
+      listImages: images.map(img => img.getAttribute('src') ?? ''),
     };
   },
 };

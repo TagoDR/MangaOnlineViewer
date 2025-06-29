@@ -1,5 +1,5 @@
 // == VortexScans ==================================================================================
-import { Category, IManga, ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types';
 import { findClosestByContentEq } from '../utils/find';
 
 const site: ISite = {

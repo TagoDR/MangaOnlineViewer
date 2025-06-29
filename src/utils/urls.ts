@@ -30,7 +30,7 @@ export const getExtensionBase64 = (base64: string) => {
       return 'gif';
     case 'U':
       return 'webp';
-    case 'i':
+    // case 'i':
     default:
       return 'png';
   }
@@ -46,7 +46,7 @@ export function extensionByCode(c: string) {
       return 'gif';
     case 'w':
       return 'webp';
-    case 'j':
+    // case 'j':
     default:
       return 'jpg';
   }
