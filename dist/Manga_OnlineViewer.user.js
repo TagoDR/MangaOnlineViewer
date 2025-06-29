@@ -5,7 +5,7 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaOni, MangaReader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
+// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaOni, MangaPark, MangaReader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
 // @version       2025.06.29
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
@@ -49,6 +49,7 @@
 // @include       /https?:\/\/(www\.)?(mangahub).io\/chapter\/.+\/.+/
 // @include       /https?:\/\/(www\.)?(read|chap)?(nelomanga|mangakakalot|natomanga|manganato|mangabats|mangakakalove).(com|gg|net).*\/(chapter|manga)\/.+\/.+/
 // @include       /https?:\/\/(www\.)?manga-oni.com\/lector\/.+\/\d+\/cascada/
+// @include       /https?:\/\/(www\.)?(mangapark|mpark|comicpark|readpark|parkmanga).(com|me|org|net|io|to)\/title\/.+\/.+/
 // @include       /https?:\/\/(www\.)?mangareader.to\/read\/.+\/.+\/.+/
 // @include       /https?:\/\/.*mangatoon.mobi\/.+\/watch\/.+/
 // @include       /https?:\/\/(www\.)?manhwaweb.com\/leer\/.+/
@@ -1515,7 +1516,7 @@
     return placeholder(widths[randomWidth], heights[randomHeight], backgrounds[randomColor]);
   }
 
-  const site$A = {
+  const localhost = {
     name: 'Local Files',
     url: /(file:\/\/\/.+(index)?.html)/,
     homepage: '/index.html?raw=1',
@@ -4384,7 +4385,7 @@
     }
   }
   function allowUpload() {
-    if (site$A.url.test(window.location.href)) {
+    if (localhost.url.test(window.location.href)) {
       if (document.querySelector('#MangaOnlineViewer, #LocalTest')) {
         document.querySelector('#LocalTest')?.setAttribute('style', 'display:none');
         document.querySelector('#file')?.addEventListener('change', evt => {
@@ -4657,7 +4658,7 @@
   const findClosestByContentEnds = (selector, content, ancestor = 'a') =>
     findClosest(selector, content, 'ends', ancestor);
 
-  const site$z = {
+  const asura = {
     name: 'Asura Scans',
     url: /https?:\/\/(www.)?(asuracomic).(net)\/.+/,
     homepage: 'https://asuracomic.net/',
@@ -4685,7 +4686,7 @@
     },
   };
 
-  const site$y = {
+  const batoto = {
     name: 'Batoto',
     url: /https?:\/\/(www\.)?(\w(ba)?to|readtoto|batocomic|comiko|battwo|batotoo|batotwo).(to|com|net|org)\/(chapter|title).*/,
     homepage: 'https://rentry.co/batoto',
@@ -4719,7 +4720,7 @@
     },
   };
 
-  const site$x = {
+  const bilibilicomics = {
     name: 'BilibiliComics',
     url: /https?:\/\/(www\.)?(bilibilicomics).net\/episode\/.+/,
     homepage: 'https://www.bilibilicomics.net/',
@@ -4759,7 +4760,7 @@
     shadowRoot.appendChild(style);
     return container;
   }
-  const site$w = {
+  const comick = {
     name: 'Comick',
     url: /https?:\/\/(www\.)?comick.io\/.+/,
     homepage: 'https://comick.io/',
@@ -4788,7 +4789,7 @@
     },
   };
 
-  const site$v = {
+  const dynastyscans = {
     name: 'Dynasty-Scans',
     url: /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/,
     homepage: 'https://dynasty-scans.com/',
@@ -4806,7 +4807,7 @@
     },
   };
 
-  const site$u = {
+  const flamecomics = {
     name: 'Flame Comics',
     url: /https?:\/\/(www.)?(flamecomics).(xyz)\/series\/.+/,
     homepage: 'https://flamecomics.xyz/',
@@ -4830,7 +4831,7 @@
     },
   };
 
-  const site$t = {
+  const foolslide = {
     name: ['FoOlSlide', 'Kireicake'],
     url: /^(?!.*jaiminisbox).*\/read\/.+/,
     homepage: ['https://github.com/saintly2k/FoOlSlideX', 'https://reader.kireicake.com'],
@@ -4880,7 +4881,7 @@
     },
   };
 
-  const site$s = {
+  const ikigai = {
     name: ['Ikigai Mangas - EltaNews', 'Ikigai Mangas - Ajaco'],
     url: /https?:\/\/visorikigai.(ajaco|eltanews).(com|net)\/capitulo\/\d+/,
     homepage: ['https://visorikigai.eltanews.com/', 'https://visorikigai.ajaco.net/'],
@@ -4901,7 +4902,7 @@
     },
   };
 
-  const site$r = {
+  const kumanga = {
     name: 'KuManga',
     url: /https?:\/\/(www\.)?kumanga.com\/manga\/leer\/.+/,
     homepage: 'https://www.kumanga.com/',
@@ -4920,7 +4921,7 @@
     },
   };
 
-  const site$q = {
+  const leercapitulo = {
     name: 'LeerCapitulo',
     url: /https?:\/\/(www.)?leercapitulo.co\/leer\/.+/,
     homepage: 'https://www.leercapitulo.co/',
@@ -4942,7 +4943,7 @@
     },
   };
 
-  const site$p = {
+  const lhtranslation = {
     name: 'LHTranslation',
     url: /https?:\/\/(www\.)?lhtranslation.net\/read.+/,
     homepage: 'https://lhtranslation.net/',
@@ -4962,7 +4963,7 @@
     },
   };
 
-  const site$o = {
+  const m440 = {
     name: 'M440',
     url: /https?:\/\/(www\.)?m440.in\/manga\/.+\/.+\/\d+/,
     homepage: 'https://m440.in/',
@@ -5000,7 +5001,7 @@
       );
     });
   }
-  const site$n = {
+  const madarawp = {
     name: [
       'Madara WordPress Plugin',
       'MangaHaus',
@@ -5065,7 +5066,7 @@
     },
   };
 
-  const site$m = {
+  const mangabuddy = {
     name: 'MangaBuddy',
     url: /https?:\/\/(www\.)?mangabuddy.com\/.+\/chapter.+/,
     homepage: 'https://mangabuddy.com/',
@@ -5089,7 +5090,7 @@
     },
   };
 
-  const site$l = {
+  const mangademon = {
     name: 'MangaDemon',
     url: /https?:\/\/(www\.)?demonicscans\.org\/title\/.+\/chapter\/.+/,
     homepage: 'https://demonicscans.org/',
@@ -5110,7 +5111,7 @@
     },
   };
 
-  const site$k = {
+  const mangadex = {
     name: 'MangaDex',
     url: /https?:\/\/(www\.)?mangadex.org/,
     homepage: 'https://mangadex.org/',
@@ -5134,7 +5135,7 @@
     },
   };
 
-  const site$j = {
+  const mangafox = {
     name: ['MangaFox', 'MangaHere'],
     url: /https?:\/\/(www\.)?(fanfox.net|mangahere.cc)\/manga\/.+\/.+\//,
     homepage: ['https://fanfox.net/', 'https://www.mangahere.cc/'],
@@ -5169,7 +5170,7 @@
     },
   };
 
-  const site$i = {
+  const mangago = {
     name: 'Mangago',
     url: /https?:\/\/(www\.)?mangago.me\/.*\/.*\/.*/,
     homepage: 'https://www.mangago.me/',
@@ -5199,7 +5200,7 @@
     },
   };
 
-  const site$h = {
+  const mangahub = {
     name: 'MangaHub',
     url: /https?:\/\/(www\.)?(mangahub).io\/chapter\/.+\/.+/,
     homepage: 'https://mangahub.io/',
@@ -5238,7 +5239,7 @@
     },
   };
 
-  const site$g = {
+  const mangakakalot = {
     name: ['MangaKakalot', 'NeloManga ', 'MangaNato', 'NatoManga', 'MangaBats'],
     url: /https?:\/\/(www\.)?(read|chap)?(nelomanga|mangakakalot|natomanga|manganato|mangabats|mangakakalove).(com|gg|net).*\/(chapter|manga)\/.+\/.+/,
     homepage: [
@@ -5267,7 +5268,7 @@
     },
   };
 
-  const site$f = {
+  const mangaoni = {
     name: 'MangaOni',
     url: /https?:\/\/(www\.)?manga-oni.com\/lector\/.+\/\d+\/cascada/,
     homepage: 'https://manga-oni.com/',
@@ -5289,7 +5290,35 @@
     },
   };
 
-  const site$e = {
+  const mangapark = {
+    name: 'MangaPark',
+    url: /https?:\/\/(www\.)?(mangapark|mpark|comicpark|readpark|parkmanga).(com|me|org|net|io|to)\/title\/.+\/.+/,
+    homepage: 'https://mangapark.net/',
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
+    waitEle: 'main div div a.btn-primary',
+    run() {
+      const images = [...document.querySelectorAll('main div div > img.w-full')];
+      return {
+        title: [...document.querySelectorAll('.comic-detail h3 a, .comic-detail h6 span')]
+          .map(e => e.textContent?.trim())
+          .join(' '),
+        series: document.querySelector('.comic-detail a')?.getAttribute('href'),
+        pages: images.length,
+        prev: document
+          .querySelectorAll('main div div a.btn-primary')
+          ?.item(0)
+          ?.getAttribute('href'),
+        next: document
+          .querySelectorAll('main div div a.btn-primary')
+          ?.item(1)
+          ?.getAttribute('href'),
+        listImages: images.map(src => src.getAttribute('src') ?? ''),
+      };
+    },
+  };
+
+  const mangareader = {
     name: 'MangaReader',
     url: /https?:\/\/(www\.)?mangareader.to\/read\/.+\/.+\/.+/,
     homepage: 'https://mangareader.to',
@@ -5318,7 +5347,7 @@
     },
   };
 
-  const site$d = {
+  const mangastreamwp = {
     name: [
       'MangaStream WordPress Plugin',
       'Realm Oasis',
@@ -5393,7 +5422,7 @@
     },
   };
 
-  const site$c = {
+  const mangatoon = {
     name: 'MangaToons',
     url: /https?:\/\/.*mangatoon.mobi\/.+\/watch\/.+/,
     homepage: 'https://mangatoon.mobi/',
@@ -5413,7 +5442,7 @@
     },
   };
 
-  const site$b = {
+  const manhwaweb = {
     name: 'ManhwaWeb',
     url: /https?:\/\/(www\.)?manhwaweb.com\/leer\/.+/,
     homepage: 'https://manhwaweb.com/',
@@ -5440,7 +5469,7 @@
     },
   };
 
-  const site$a = {
+  const mgeko = {
     name: ['MangaGeko.com', 'MangaGeko.cc'],
     url: /https?:\/\/(www\.)?mgeko.(com|cc)?\/reader\/.*/,
     homepage: ['https://www.mgeko.com/', 'https://www.mgeko.cc/'],
@@ -5459,7 +5488,7 @@
     },
   };
 
-  const site$9 = {
+  const nineanime = {
     name: 'NineAnime',
     url: /https?:\/\/(www\.)?nineanime.com\/chapter\/.+/,
     homepage: 'https://www.nineanime.com/',
@@ -5480,7 +5509,7 @@
     },
   };
 
-  const site$8 = {
+  const olympusbiblioteca = {
     name: 'OlympusBiblioteca',
     url: /https?:\/\/(www\.)?olympusbiblioteca.com\/capitulo\/\d+\/.+/,
     homepage: 'https://olympusbiblioteca.com/',
@@ -5499,7 +5528,7 @@
     },
   };
 
-  const site$7 = {
+  const readcomicsonline = {
     name: 'ReadComicsOnline',
     url: /https?:\/\/(www\.)?readcomicsonline.ru\/comic\/.*\/\d*/,
     homepage: 'https://readcomicsonline.ru/',
@@ -5518,7 +5547,7 @@
     },
   };
 
-  const site$6 = {
+  const reaperscans = {
     name: 'ReaperScans',
     url: /https?:\/\/(www\.)?reaperscans\.com\/series\/.+\/chapter.+/,
     homepage: 'https://reaperscans.com/',
@@ -5540,7 +5569,7 @@
     },
   };
 
-  const site$5 = {
+  const tmofans = {
     name: 'TuMangaOnline',
     url: /https?:\/\/(www\.)?(.+).com\/(viewer|news)\/.+\/(paginated|cascade)/,
     homepage: 'https://lectortmo.com/',
@@ -5574,7 +5603,7 @@
     },
   };
 
-  const site$4 = {
+  const vortexscans = {
     name: 'Vortex Scans',
     url: /https?:\/\/(www.)?(vortexscans).(org)\/.+/,
     homepage: 'https://vortexscans.org/',
@@ -5603,7 +5632,7 @@
     },
   };
 
-  const site$3 = {
+  const webnovel = {
     name: 'WebNovel',
     url: /https?:\/\/(www\.)?webnovel.com\/comic\/.+/,
     homepage: 'https://www.webnovel.com/',
@@ -5623,7 +5652,7 @@
     },
   };
 
-  const site$2 = {
+  const webtoons = {
     name: 'WebToons',
     url: /https?:\/\/(www\.)?webtoons.com\/.+viewer.+/,
     homepage: 'https://www.webtoons.com/',
@@ -5648,7 +5677,7 @@
     },
   };
 
-  const site$1 = {
+  const weebcentral = {
     name: 'WeebCentral',
     url: /https?:\/\/(www\.)?(weebcentral).com\/chapters\/.+/,
     homepage: 'https://weebcentral.com/',
@@ -5677,7 +5706,7 @@
     },
   };
 
-  const site = {
+  const zeroscans = {
     name: 'ZeroScans',
     url: /https?:\/\/(www\.)?zscans.com\/comics\/.+/,
     homepage: 'https://zscans.com/',
@@ -5699,58 +5728,47 @@
   };
 
   const sites = [
-    // alandal, // Fixme
-    site$z,
-    site$y,
-    site$x,
-    // comicastle, // Fixme
-    site$w,
-    site$v,
-    site$u,
-    site$s,
-    // inkr, // Fixme
-    // inmanga, //Fixme
-    // klmanga, // Fixme
-    site$r,
-    site$q,
-    site$p,
-    site$A,
-    site$o,
-    site$m,
-    site$l,
-    site$k,
-    site$j,
-    site$i,
-    // mangafreak, // Fixme
-    site$h,
-    site$g,
-    site$f,
-    // mangapark, // Fixme
-    site$e,
-    site$c,
-    site$b,
-    // mangatown, // Fixme
-    site$a,
-    site$9,
-    site$8,
-    site$7,
-    // ninemanga, // Fixme
-    site$6,
-    site$5,
-    // senmanga, // Fixme
-    // tapas, // Fixme
-    // tenmanga, // Fixme
-    site$3,
-    site$2,
-    site$1,
+    asura,
+    batoto,
+    bilibilicomics,
+    comick,
+    dynastyscans,
+    flamecomics,
+    ikigai,
+    kumanga,
+    leercapitulo,
+    lhtranslation,
+    localhost,
+    m440,
+    mangabuddy,
+    mangademon,
+    mangadex,
+    mangafox,
+    mangago,
+    mangahub,
+    mangakakalot,
+    mangaoni,
+    mangapark,
+    mangareader,
+    mangatoon,
+    manhwaweb,
+    mgeko,
+    nineanime,
+    olympusbiblioteca,
+    readcomicsonline,
+    reaperscans,
+    tmofans,
+    webnovel,
+    webtoons,
+    weebcentral,
     // wpmanga, // Archived
-    site$4,
-    site,
-    site$d,
+    vortexscans,
+    zeroscans,
+    mangastreamwp,
     // Must be at the end because is a generic check
-    site$t,
+    foolslide,
     // Must be at the end because is a generic check
-    site$n,
+    madarawp,
     // Must be at the end because is a generic check
   ];
 

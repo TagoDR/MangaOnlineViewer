@@ -119,7 +119,7 @@
     return Category2;
   })(Category || {});
 
-  const site$D = {
+  const threehentai = {
     name: ['3Hentai', 'HentaiVox'],
     url: /https?:\/\/(www\.)?(3hentai|hentaivox).(net|com)\/(d|view)\/.+\/.+/,
     homepage: ['https://3hentai.net/', 'https://hentaivox.com/'],
@@ -249,7 +249,7 @@
     return src;
   }
 
-  const site$C = {
+  const eightMuses = {
     name: ['8Muses.com', '8Muses.io'],
     obs: 'Slow start, bruteforce may be required',
     url: /https?:\/\/(comics.)?8muses.(com|io)\/(comics\/)?picture\/.+/,
@@ -302,7 +302,7 @@
     },
   };
 
-  const site$B = {
+  const ninehentai = {
     name: '9Hentai',
     url: /https?:\/\/(www\.)?9hentai.(so)\/g\/.+\/.+/,
     homepage: 'https://9hentai.so',
@@ -335,7 +335,7 @@
     },
   };
 
-  const site$A = {
+  const akumamoe = {
     name: 'AkumaMoe',
     url: /https?:\/\/(www\.)?akuma\.moe\/g\/.+\/.+/,
     homepage: 'https://akuma.moe',
@@ -359,7 +359,7 @@
     },
   };
 
-  const site$z = {
+  const bestporncomix = {
     name: 'BestPornComix',
     url: /https?:\/\/(www\.)?bestporncomix.com\/gallery\/.+/,
     homepage: 'https://www.bestporncomix.com',
@@ -378,7 +378,7 @@
     },
   };
 
-  const site$y = {
+  const doujinmoe = {
     name: 'DoujinMoeNM',
     url: /https?:\/\/(www\.)?doujins.com\/.+/,
     homepage: 'https://doujins.com/',
@@ -398,7 +398,7 @@
     },
   };
 
-  const site$x = {
+  const dragontranslation = {
     name: 'Dragon Translation',
     url: /https?:\/\/(www\.)?dragontranslation.net\/leer\/.+/,
     homepage: 'https://dragontranslation.net/es',
@@ -424,7 +424,7 @@
     },
   };
 
-  const site$w = {
+  const exhentai = {
     name: ['ExHentai', 'e-Hentai'],
     url: /https?:\/\/(g\.)?(exhentai|e-hentai).org\/s\/.+\/.+/,
     homepage: ['https://exhentai.org/', 'https://e-hentai.org/'],
@@ -482,7 +482,7 @@
     },
   };
 
-  const site$v = {
+  const freeadultcomix = {
     name: 'FreeAdultComix',
     url: /https?:\/\/(www\.)?freeadultcomix.com\/.+/,
     homepage: 'https://www.freeadultcomix.com',
@@ -501,7 +501,7 @@
     },
   };
 
-  const site$u = {
+  const fsicomics = {
     name: 'FSIComics',
     url: /https?:\/\/(www\.)?fsicomics.com\/.+/,
     homepage: 'https://fsicomics.com/',
@@ -519,7 +519,7 @@
     },
   };
 
-  const site$t = {
+  const gntai = {
     name: 'GNTAI.net',
     url: /https?:\/\/(www\.)?gntai.net\/(?!(category|tags|autores))[^/]+\/.+/,
     homepage: 'https://www.gntai.net/',
@@ -543,7 +543,7 @@
     },
   };
 
-  const site$s = {
+  const hentai2read = {
     name: 'Hentai2Read',
     url: /https?:\/\/(www\.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//,
     homepage: 'https://hentai2read.com/',
@@ -561,7 +561,7 @@
     },
   };
 
-  const site$r = {
+  const hentaiera = {
     name: 'HentaiEra',
     url: /https?:\/\/(www\.)?hentaiera.com\/view\/.+\/\d+\/?/,
     homepage: 'https://hentaiera.com/',
@@ -587,7 +587,7 @@
     },
   };
 
-  const site$q = {
+  const hentaiforce = {
     name: 'HentaiForce',
     url: /https?:\/\/(www\.)?hentaiforce.net\/view\/.+\/\d+/,
     homepage: 'https://hentaiforce.net/',
@@ -661,7 +661,7 @@
     }
   }
 
-  const site$p = {
+  const hentaifox = {
     name: 'HentaiFox',
     url: /https?:\/\/(www\.)?hentaifox.com\/g\/.+/,
     homepage: 'https://www.hentaifox.com/',
@@ -692,7 +692,7 @@
     },
   };
 
-  const site$o = {
+  const hentaihand = {
     name: ['HentaiHand', 'nHentai.com'],
     url: /https?:\/\/(www\.)?(hentaihand|nhentai).com\/.+\/reader/,
     homepage: ['https://hentaihand.com/', 'https://nhentai.com'],
@@ -714,7 +714,7 @@
     },
   };
 
-  const site$n = {
+  const hentaihere = {
     name: 'HentaIHere',
     url: /https?:\/\/(www\.)?hentaihere.com\/.+\/.+\/.+/,
     homepage: 'https://www.hentaihere.com/',
@@ -737,7 +737,7 @@
     },
   };
 
-  const site$m = {
+  const hentainexus = {
     name: 'HentaiNexus',
     url: /https?:\/\/((www\.)?hentainexus.com|nexus.fakku.cc)\/read\/.+/,
     homepage: 'https://hentainexus.com/',
@@ -760,7 +760,7 @@
     },
   };
 
-  const site$l = {
+  const hentalk = {
     name: 'HenTalk',
     url: /https?:\/\/(www.)?hentalk.pw/,
     homepage: 'https://hentalk.pw/',
@@ -787,7 +787,7 @@
     },
   };
 
-  const site$k = {
+  const hitomi = {
     name: 'Hitomi',
     url: /https?:\/\/hitomi.la\/reader\/.+/,
     homepage: 'https://hitomi.la/',
@@ -809,7 +809,7 @@
     },
   };
 
-  const site$j = {
+  const imhentai = {
     name: 'Imhentai',
     url: /https?:\/\/(www\.)?imhentai.xxx\/view\/.+\/.+\//,
     homepage: 'https://imhentai.xxx/',
@@ -839,7 +839,7 @@
     },
   };
 
-  const site$i = {
+  const kingcomix = {
     name: ['KingComix', 'Chochox', 'Comics18'],
     url: /https?:\/\/(www\.)?(kingcomix|chochox|comics18).(com|org)\/.+/,
     homepage: ['https://kingcomix.com/', 'https://chochox.com/porno/', 'https://comics18.org/'],
@@ -866,7 +866,7 @@
     },
   };
 
-  const site$h = {
+  const luscious = {
     name: 'Luscious',
     url: /https?:\/\/(www\.)?luscious.net\/.+\/read\/.+/,
     homepage: 'https://luscious.net/',
@@ -932,7 +932,7 @@
       );
     });
   }
-  const site$g = {
+  const madarawp = {
     name: [
       'Madara WordPress Plugin',
       'MangaHaus',
@@ -997,8 +997,8 @@
     },
   };
 
-  const site$f = {
-    ...site$g,
+  const madarawph = {
+    ...madarawp,
     name: ['Madara WordPress Plugin', 'AllPornComic', 'Manytoon', 'Manga District'],
     url: /https?:\/\/.+\/(porncomic|read-scan|title)\/.+\/.+/,
     homepage: [
@@ -1010,7 +1010,7 @@
     category: Category.HENTAI,
   };
 
-  const site$e = {
+  const multporn = {
     name: 'MultPorn',
     url: /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/,
     homepage: 'https://multporn.net/',
@@ -1037,7 +1037,7 @@
     },
   };
 
-  const site$d = {
+  const myhentaigallery = {
     name: 'MyHentaiGallery',
     url: /https?:\/\/(www\.)?myhentaigallery.com\/g\/.+\/\d+/,
     homepage: 'https://www.myhentaigallery.com',
@@ -1062,7 +1062,7 @@
     },
   };
 
-  const site$c = {
+  const nhentainet = {
     name: ['nHentai.net', 'nHentai.xxx', 'lhentai'],
     url: /https?:\/\/(www\.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/,
     homepage: ['https://nhentai.net/', 'https://nhentai.xxx/', 'https://lhentai.com/'],
@@ -1088,7 +1088,7 @@
     },
   };
 
-  const site$b = {
+  const porncomicshd = {
     name: 'PornComicsHD',
     url: /https?:\/\/(www\.)?porncomicshd.com\/es.*/,
     homepage: 'https://porncomicshd.com/es',
@@ -1108,7 +1108,7 @@
     },
   };
 
-  const site$a = {
+  const pururin = {
     name: 'Pururin',
     url: /https?:\/\/(www\.)?pururin.me\/(view|read)\/.+\/.+\/.+/,
     homepage: 'https://pururin.me/',
@@ -1129,7 +1129,7 @@
     },
   };
 
-  const site$9 = {
+  const schalenetwork = {
     name: 'SchaleNetwork',
     url: /https?:\/\/(www\.)?(niyaniya|shupogaki|hoshino).(moe|one)/,
     homepage: 'https://schale.network/',
@@ -1156,7 +1156,7 @@
     },
   };
 
-  const site$8 = {
+  const simplyhentai = {
     name: 'Simply-Hentai',
     url: /https?:\/\/(www\.)?simply-hentai.com\/.+\/page\/.+/,
     homepage: 'https://simply-hentai.com/',
@@ -1177,7 +1177,7 @@
     },
   };
 
-  const site$7 = {
+  const tmohhentai = {
     name: 'TMOHentai',
     url: /https?:\/\/(www\.)?tmohentai.com\/reader\/.+\/(paginated\/\d+|cascade)/,
     homepage: 'https://tmohentai.com/',
@@ -1203,7 +1203,7 @@
     },
   };
 
-  const site$6 = {
+  const tsumino = {
     name: 'Tsumino',
     url: /https?:\/\/(www\.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/,
     homepage: 'https://tsumino.com/',
@@ -1230,7 +1230,7 @@
     },
   };
 
-  const site$5 = {
+  const vercomicsporno = {
     name: ['vermangasporno', 'vercomicsporno'],
     url: /https?:\/\/(www\.)?(vermangasporno|vercomicsporno).com\/.+/,
     homepage: ['https://vermangasporno.com/', 'https://vercomicsporno.com/'],
@@ -1259,7 +1259,7 @@
     },
   };
 
-  const site$4 = {
+  const wnacg = {
     name: 'wnacg',
     url: /https?:\/\/(www\.)?wnacg.com\/photos-view-id-.+/,
     homepage: 'https://wnacg.com/',
@@ -1278,7 +1278,7 @@
     },
   };
 
-  const site$3 = {
+  const xlecxone = {
     name: 'XlecxOne',
     url: /https?:\/\/(www\.)?xlecx.one\/.+/,
     homepage: 'https://xlecx.one/',
@@ -1307,7 +1307,7 @@
     },
   };
 
-  const site$2 = {
+  const xyzcomics = {
     name: 'xyzcomics',
     url: /https?:\/\/(www\.)?xyzcomics.com\/.+/,
     homepage: 'https://xyzcomics.com/',
@@ -1325,7 +1325,7 @@
     },
   };
 
-  const site$1 = {
+  const yabai = {
     name: 'Yabai',
     url: /https?:\/\/(www\.)?yabai.si\/g\/.+\/read/,
     homepage: 'https://yabai.si/',
@@ -1360,48 +1360,44 @@
   };
 
   const sites = [
-    site$A,
-    site$z,
-    site$y,
-    site$x,
-    site$C,
-    site$w,
-    site$u,
-    site$v,
-    site$t,
-    site$s,
-    site$r,
-    site$q,
-    site$p,
-    site$o,
-    site$n,
-    site$m,
-    site$l,
-    site$k,
-    site$j,
-    site$i,
-    site$h,
-    // manhwaread, // Fixme
-    site$e,
-    site$d,
-    site$c,
-    // Fixme
-    site$B,
-    // omegascans, // Fixme
-    // porncomixonline, // Fixme
-    site$b,
-    site$a,
-    site$9,
-    site$8,
-    site$7,
-    site$D,
-    site$6,
-    site$5,
-    site$4,
-    site$3,
-    site$2,
-    site$1,
-    site$f,
+    akumamoe,
+    bestporncomix,
+    doujinmoe,
+    dragontranslation,
+    eightMuses,
+    exhentai,
+    fsicomics,
+    freeadultcomix,
+    gntai,
+    hentai2read,
+    hentaiera,
+    hentaiforce,
+    hentaifox,
+    hentaihand,
+    hentaihere,
+    hentainexus,
+    hentalk,
+    hitomi,
+    imhentai,
+    kingcomix,
+    luscious,
+    multporn,
+    myhentaigallery,
+    nhentainet,
+    ninehentai,
+    porncomicshd,
+    pururin,
+    schalenetwork,
+    simplyhentai,
+    tmohhentai,
+    threehentai,
+    tsumino,
+    vercomicsporno,
+    wnacg,
+    xlecxone,
+    xyzcomics,
+    yabai,
+    madarawph,
     // Must be at the end because is a generic check
   ];
 
@@ -2635,7 +2631,7 @@
   }
   Object.values(colors).map(i => i['900']);
 
-  const site = {
+  const localhost = {
     url: /(file:\/\/\/.+(index)?.html)/,
     language: [Language.RAW],
     category: Category.MANGA,
@@ -5448,7 +5444,7 @@
     }
   }
   function allowUpload() {
-    if (site.url.test(window.location.href)) {
+    if (localhost.url.test(window.location.href)) {
       if (document.querySelector('#MangaOnlineViewer, #LocalTest')) {
         document.querySelector('#LocalTest')?.setAttribute('style', 'display:none');
         document.querySelector('#file')?.addEventListener('change', evt => {
