@@ -11,8 +11,8 @@ export default {
   supportURL: 'https://github.com/TagoDR/MangaOnlineViewer/issues',
   namespace: 'https://github.com/TagoDR',
   description: `Shows all pages at once in online view for these sites: ${sites
-    .flatMap(s => s.name)
-    .map(s => s.trim())
+    .flatMap((s) => s.name)
+    .map((s) => s.trim())
     .join(', ')}`,
   version: new Date().toISOString().slice(0, 10).replaceAll('-', '.'),
   license: 'MIT',
@@ -30,6 +30,6 @@ export default {
   noframes: 'on',
   connect: '*',
   require: requiredScripts,
-  include: sites.map(s => s.url),
+  include: sites.map((s) => s.url),
   exclude: [/https?:\/\/(www\.)?tsumino.com\/.+/, /https?:\/\/(www\.)?pururin.io\/.+/],
 } as Partial<Tampermonkey.ScriptMetadata>;

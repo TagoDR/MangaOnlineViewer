@@ -20,7 +20,7 @@ const vercomicsporno: ISite = {
       prev: '#',
       next: '#',
       listImages: images.map(
-        img =>
+        (img) =>
           img.getAttribute('data-lazy-src') ??
           img.getAttribute('data-src') ??
           img.getAttribute('src') ??

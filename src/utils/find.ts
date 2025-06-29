@@ -16,8 +16,8 @@ function findElements(
     throw new Error(`Invalid matcherKey: ${matcherKey}`);
   }
 
-  return [...document.querySelectorAll<HTMLElement>(selector)].filter(element =>
-    Array.isArray(content) ? content.some(c => matcher(element, c)) : matcher(element, content),
+  return [...document.querySelectorAll<HTMLElement>(selector)].filter((element) =>
+    Array.isArray(content) ? content.some((c) => matcher(element, c)) : matcher(element, content),
   );
 }
 

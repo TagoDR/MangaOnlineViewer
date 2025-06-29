@@ -16,7 +16,9 @@ const hentaihand: ISite = {
       pages: images.length,
       prev: '#',
       next: '#',
-      listImages: images.map(img => img.getAttribute('data-src') ?? img.getAttribute('src') ?? ''),
+      listImages: images.map(
+        (img) => img.getAttribute('data-src') ?? img.getAttribute('src') ?? '',
+      ),
     };
   },
 };

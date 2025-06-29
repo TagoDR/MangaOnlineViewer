@@ -40,7 +40,7 @@ export async function loadZipFile(filePath: string | File) {
     .filter((_, file) => !file.dir && fileImageExt.test(file.name))
     .sort((a, b) => orderFiles(a.name, b.name));
   logScript('Files in zip:', zip.files);
-  return Promise.all(files.map(file => file.async('arraybuffer').then(getImageBlob)));
+  return Promise.all(files.map((file) => file.async('arraybuffer').then(getImageBlob)));
 }
 
 function displayUploadedFiles(title: string, listImages: string[]) {
@@ -69,7 +69,7 @@ function openFileImages(evt: Event) {
   logScript(
     'Local Files: ',
     files,
-    files.map(f => f.webkitRelativePath || f.name),
+    files.map((f) => f.webkitRelativePath || f.name),
   );
   if (input.files?.[0]) {
     displayUploadedFiles(
@@ -83,7 +83,7 @@ export function allowUpload() {
   if (localhost.url.test(window.location.href)) {
     if (document.querySelector('#MangaOnlineViewer, #LocalTest')) {
       document.querySelector('#LocalTest')?.setAttribute('style', 'display:none');
-      document.querySelector('#file')?.addEventListener('change', evt => {
+      document.querySelector('#file')?.addEventListener('change', (evt) => {
         const input = evt.target as HTMLInputElement;
         if (input.files?.[0]) loadMangaFromZip(input.files[0]);
       });

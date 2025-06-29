@@ -15,15 +15,15 @@ const multporn: ISite = {
         ?.at(1)
         ?.replaceAll('\\', '') ?? '';
     const api = await fetch(url)
-      .then(async res => res.text())
-      .then(html => new DOMParser().parseFromString(html, 'text/xml'));
+      .then(async (res) => res.text())
+      .then((html) => new DOMParser().parseFromString(html, 'text/xml'));
     const images = [...api.querySelectorAll('image')];
     return {
       title: document.querySelector('#page-title')?.textContent?.trim(),
       pages: images.length,
       prev: '#',
       next: '#',
-      listImages: images.map(img => img.getAttribute('imageURL') ?? ''),
+      listImages: images.map((img) => img.getAttribute('imageURL') ?? ''),
     };
   },
 };

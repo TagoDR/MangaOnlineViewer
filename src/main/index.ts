@@ -21,6 +21,7 @@ import mangago from './mangago';
 import mangahub from './mangahub';
 import mangakakalot from './mangakakalot';
 import mangaoni from './mangaoni';
+import mangapark from './mangapark';
 import mangareader from './mangareader';
 import mangastreamwp from './mangastreamwp';
 import mangatoon from './mangatoon';
@@ -36,7 +37,6 @@ import webnovel from './webnovel';
 import webtoons from './webtoons';
 import weebcentral from './weebcentral';
 import zeroscans from './zeroscans';
-import mangapark from './mangapark';
 
 const sites: ISite[] = [
   asura,

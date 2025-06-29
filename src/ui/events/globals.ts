@@ -11,7 +11,7 @@ export function buttonStartDownload(event: Event) {
 
   logScript('Downloading Chapter');
   button.classList.add('loading');
-  generateZip().catch(err => logScript('Error downloading chapter', err));
+  generateZip().catch((err) => logScript('Error downloading chapter', err));
 }
 
 export function buttonGlobalHideImageControls() {

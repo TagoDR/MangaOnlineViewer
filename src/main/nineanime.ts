@@ -16,7 +16,7 @@ const nineanime: ISite = {
       pages: pages.length,
       prev: chapter?.nextElementSibling?.getAttribute('value'),
       next: chapter?.previousElementSibling?.getAttribute('value'),
-      listPages: pages.map(o => o.getAttribute('value') ?? ''),
+      listPages: pages.map((o) => o.getAttribute('value') ?? ''),
       img: '.manga_pic',
     };
   },

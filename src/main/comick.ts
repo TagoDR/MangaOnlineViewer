@@ -5,8 +5,8 @@ function captureComments() {
   const comments = document.querySelector('#comments-container');
   if (!comments) return null;
   const css = [...document.styleSheets]
-    .filter(stylesheet => !stylesheet.href || stylesheet.href.startsWith(window.location.origin))
-    .map(stylesheet => [...stylesheet.cssRules]?.map(({ cssText }) => cssText)?.join('\n') ?? '');
+    .filter((stylesheet) => !stylesheet.href || stylesheet.href.startsWith(window.location.origin))
+    .map((stylesheet) => [...stylesheet.cssRules]?.map(({ cssText }) => cssText)?.join('\n') ?? '');
   comments.classList.remove('blur-sm');
   const container = document.createElement('div');
   const shadowRoot = container.attachShadow({ mode: 'open' });

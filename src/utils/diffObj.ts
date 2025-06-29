@@ -1,4 +1,4 @@
-/* eslint  @typescript-eslint/no-explicit-any: "off" */
+/** biome-ignore-all lint/suspicious/noExplicitAny: must be generic */
 import _ from 'lodash';
 
 /**
@@ -36,10 +36,10 @@ const diffObj = <T extends Record<string, unknown>>(
       (result: any, value: any, key: keyof Record<string, unknown>) => {
         if (!_.isEqual(value, base[key])) {
           if (_.isArray(value)) {
-            // @ts-expect-error key is missing
+            // @ts-ignore
             result[key] = _.difference(value, base[key]);
           } else if (_.isObject(value) && _.isObject(base[key])) {
-            // @ts-expect-error key is missing
+            // @ts-ignore
             result[key] = changes(value, base[key]);
           } else {
             result[key] = value;

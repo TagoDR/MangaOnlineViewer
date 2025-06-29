@@ -1,4 +1,4 @@
-/* eslint  @typescript-eslint/no-explicit-any: "off", no-console: "off" */
+/** biome-ignore-all lint/suspicious/noExplicitAny: the values truly does not matter */
 
 import Bowser from 'bowser';
 import type { ISettings } from '../types';

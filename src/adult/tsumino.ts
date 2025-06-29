@@ -11,7 +11,7 @@ const tsumino: ISite = {
     const dataopt = document.querySelector('#image-container')?.getAttribute('data-opt');
     const datacdn = document.querySelector('#image-container')?.getAttribute('data-cdn') ?? '';
     const url = `https://www.tsumino.com/Read/Load?q=${dataopt}`;
-    const api = await fetch(url).then(async res => res.json());
+    const api = await fetch(url).then(async (res) => res.json());
     return {
       title: document
         .querySelector('title')

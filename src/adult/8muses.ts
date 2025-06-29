@@ -19,7 +19,7 @@ const eightMuses: ISite = {
     const num: number = img?.length ?? parseInt(count ?? '0', 10);
     const manga = {
       title: [...document.querySelectorAll('.top-menu-breadcrumb li:not(:last-child)')]
-        .map(e => e?.textContent?.trim())
+        .map((e) => e?.textContent?.trim())
         .join('/'),
       series: document
         .querySelector('.top-menu-breadcrumb li:nth-last-child(2) a')

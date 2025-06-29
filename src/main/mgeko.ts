@@ -15,7 +15,7 @@ const mgeko: ISite = {
       pages: images.length,
       prev: document.querySelector('.chnav.prev')?.getAttribute('href'),
       next: document.querySelector('.chnav.next')?.getAttribute('href'),
-      listImages: images.map(img => img.getAttribute('src') ?? ''),
+      listImages: images.map((img) => img.getAttribute('src') ?? ''),
     };
   },
 };

@@ -11,7 +11,7 @@ const xlecxone: ISite = {
     const src = [
       ...new Set(
         [...document.querySelectorAll('article .page__text img , article #content-2 img')].map(
-          img =>
+          (img) =>
             img.getAttribute('data-src') ??
             img.getAttribute('data-srce') ??
             img.closest('a')?.getAttribute('href') ??

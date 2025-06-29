@@ -10,8 +10,8 @@ const dragontranslation: ISite = {
   waitEle: '#chapter_imgs img',
   run(): IManga {
     const images = [...document.querySelectorAll('#chapter_imgs img')]
-      .map(img => img.getAttribute('src') ?? '')
-      .filter(src => src && src !== '/discord2.jpg');
+      .map((img) => img.getAttribute('src') ?? '')
+      .filter((src) => src && src !== '/discord2.jpg');
     return {
       title: document.querySelector('h1')?.textContent?.trim(),
       series: document.querySelector('h2 + div a')?.getAttribute('href'),

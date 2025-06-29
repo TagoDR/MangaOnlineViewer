@@ -16,7 +16,7 @@ import {
 const localeSelector = () =>
   locales
     .map(
-      locale => html`
+      (locale) => html`
         <option value="${locale.ID}" ${getSettingsValue('locale') === locale.ID ? 'selected' : ''}>
           ${locale.NAME}
         </option>
@@ -25,9 +25,9 @@ const localeSelector = () =>
     .join('');
 
 const themesSelector = () =>
-  [...Object.keys(colors).map(color => colors[color].name)]
+  [...Object.keys(colors).map((color) => colors[color].name)]
     .map(
-      theme => html`
+      (theme) => html`
         <span
           title="${theme}"
           class="${theme} ThemeRadio ${getSettingsValue('theme') === theme ? 'selected' : ''}"

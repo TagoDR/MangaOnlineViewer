@@ -23,13 +23,13 @@ const exhentai: ISite = {
       .fill(0)
       .map(async (_, galleryId) =>
         fetch(`${gallery}?p=${galleryId}`)
-          .then(async res => res.text())
-          .then(html => new DOMParser().parseFromString(html, 'text/html')),
+          .then(async (res) => res.text())
+          .then((html) => new DOMParser().parseFromString(html, 'text/html')),
       );
 
     const data = await Promise.all(fetchBlocks);
-    const pages = data.flatMap(html =>
-      [...html.querySelectorAll('#gdt a')].map(item => item.getAttribute('href') ?? ''),
+    const pages = data.flatMap((html) =>
+      [...html.querySelectorAll('#gdt a')].map((item) => item.getAttribute('href') ?? ''),
     );
 
     return {
@@ -45,13 +45,13 @@ const exhentai: ISite = {
       async reload(page: number) {
         const oldUrl = `${pages[page - 1]}`;
         const slug = await fetch(oldUrl)
-          .then(res => res.text())
-          .then(html => /nl\('([\d-]+)'\)/.exec(html)?.[1]);
+          .then((res) => res.text())
+          .then((html) => /nl\('([\d-]+)'\)/.exec(html)?.[1]);
         const newUrl = `${oldUrl}${oldUrl.indexOf('?') ? '&' : '?'}nl=${slug}`;
         return fetch(newUrl)
-          .then(res => res.text())
+          .then((res) => res.text())
           .then(
-            html =>
+            (html) =>
               new DOMParser()
                 ?.parseFromString(html, 'text/html')
                 ?.querySelector('#img')

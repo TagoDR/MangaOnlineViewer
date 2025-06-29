@@ -137,7 +137,7 @@ function placeholder(width: number, height: number, bgColor = '#0F1C3F', textCol
   return svgToUrl(str);
 }
 
-const backgrounds = Object.values(colors).map(i => i['900']);
+const backgrounds = Object.values(colors).map((i) => i['900']);
 const widths = [400, 600, 900, 1200, 1400, 1600, 1970];
 const heights = [600, 800, 1000, 1200, 1400, 2000, 2600];
 

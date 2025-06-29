@@ -15,7 +15,7 @@ const threehentai: ISite = {
       pages: unsafeWindow.readerPages.lastPage,
       prev: '#',
       next: '#',
-      listImages: Object.keys(unsafeWindow.readerPages.pages).map(img =>
+      listImages: Object.keys(unsafeWindow.readerPages.pages).map((img) =>
         unsafeWindow.readerPages.baseUriImg.replace('%s', unsafeWindow.readerPages.pages[img].f),
       ),
     };

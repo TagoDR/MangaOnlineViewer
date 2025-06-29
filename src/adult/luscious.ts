@@ -36,10 +36,10 @@ const luscious: ISite = {
         return GM.xmlHttpRequest({
           method: 'GET',
           url,
-        }).then(res => JSON.parse(res.responseText));
+        }).then((res) => JSON.parse(res.responseText));
       });
     const data = await Promise.all(fetchBlocks);
-    const images = data.flatMap(res =>
+    const images = data.flatMap((res) =>
       res.data.picture.list.items.map((img: { url_to_original: string }) => img.url_to_original),
     );
     return {

@@ -19,7 +19,7 @@ const ninehentai: ISite = {
     };
     const api: {
       results: { title: string; total_page: number; id: number; image_server: string };
-    } = await fetch('/api/getBookByID', options).then(async res => res.json());
+    } = await fetch('/api/getBookByID', options).then(async (res) => res.json());
     return {
       title: api.results.title,
       series: `/g/${api.results.id}/`,

@@ -11,7 +11,7 @@ const bilibilicomics: ISite = {
   async run(): Promise<IManga> {
     const json: unknown[] = JSON.parse(document.querySelector('#__NUXT_DATA__')?.innerHTML ?? '');
     const images = json.filter(
-      x => typeof x === 'string' && /.(png|jpg|jpeg|gif|bmp|webp)$/i.exec(x),
+      (x) => typeof x === 'string' && /.(png|jpg|jpeg|gif|bmp|webp)$/i.exec(x),
     );
     return {
       title: document.querySelector('.chapterTitle')?.textContent?.trim(),
@@ -19,7 +19,7 @@ const bilibilicomics: ISite = {
       pages: images.length,
       prev: document.querySelectorAll('.pre-next-btns').item(0)?.getAttribute('href'),
       next: document.querySelectorAll('.pre-next-btns').item(2)?.getAttribute('href'),
-      listImages: images.map(image => `https://static.comicfans.io/${image}`),
+      listImages: images.map((image) => `https://static.comicfans.io/${image}`),
     };
   },
 };

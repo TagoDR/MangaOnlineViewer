@@ -1,14 +1,14 @@
 import { logScript } from './tampermonkey';
 
 export async function fetchText(url: string, format: DOMParserSupportedType): Promise<Document> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     logScript('Fetching page: ', url);
     fetch(url)
-      .then(async response =>
+      .then(async (response) =>
         // When the page is loaded convert it to text
         response.text(),
       )
-      .then(html => {
+      .then((html) => {
         // Initialize the DOM parser
         const parser = new DOMParser();
 
@@ -21,7 +21,7 @@ export async function fetchText(url: string, format: DOMParserSupportedType): Pr
         // console.log(doc);
         resolve(doc);
       })
-      .catch(err => {
+      .catch((err) => {
         logScript('Failed to fetch page: ', err);
       });
   });
@@ -40,7 +40,7 @@ export async function getElementAttribute(
   selector: string,
   attribute: string,
 ): Promise<string | null | undefined> {
-  return fetchHtml(url).then(doc => doc.querySelector(selector)?.getAttribute(attribute));
+  return fetchHtml(url).then((doc) => doc.querySelector(selector)?.getAttribute(attribute));
 }
 
 export async function fetchJsonFromUrls(options: RequestInit, ...urls: string[]) {

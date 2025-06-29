@@ -16,7 +16,7 @@ const porncomicshd: ISite = {
       prev: '#',
       next: '#',
       lazy: false,
-      listImages: img.map(i => i.getAttribute('src') ?? ''),
+      listImages: img.map((i) => i.getAttribute('src') ?? ''),
     };
   },
 };

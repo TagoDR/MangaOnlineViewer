@@ -16,7 +16,7 @@ const doujinmoe: ISite = {
       pages: images.length,
       prev: '#',
       next: '#',
-      listImages: images.map(img => img.getAttribute('data-file') ?? ''),
+      listImages: images.map((img) => img.getAttribute('data-file') ?? ''),
     };
   },
 };

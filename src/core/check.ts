@@ -37,7 +37,7 @@ export async function testFunc(site: ISite) {
 export async function testTime(site: ISite) {
   if (site.waitTime !== undefined) {
     logScript(`Waiting to for ${site.waitTime} milliseconds`);
-    await new Promise(resolve => {
+    await new Promise((resolve) => {
       setTimeout(resolve, site.waitTime);
     });
     logScript('Continuing after timer');

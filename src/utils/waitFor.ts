@@ -1,7 +1,7 @@
 import { isNothing } from './checks';
 
 export function waitForElm(selector: string, target = document.body) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     if (document.querySelector(selector)) {
       resolve(document.querySelector(selector));
       return;
@@ -23,7 +23,7 @@ export function waitForElm(selector: string, target = document.body) {
 }
 
 export function waitForFunc(fn: () => boolean, timer: number = 250): Promise<boolean> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const intervalId = setInterval(() => {
       if (fn()) {
         clearInterval(intervalId);
@@ -38,7 +38,7 @@ export function waitForAtb(
   attribute: string,
   target = document.body,
 ): Promise<string> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     if (target.querySelector(selector)?.getAttribute(attribute)) {
       resolve(target.querySelector(selector)?.getAttribute(attribute) ?? '');
       return;
@@ -61,7 +61,7 @@ export function waitForAtb(
 }
 
 export function waitForVar(name: keyof typeof unsafeWindow | string, target = document.body) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     if (!isNothing(unsafeWindow[name])) {
       resolve(unsafeWindow[name]);
       return;
@@ -83,7 +83,7 @@ export function waitForVar(name: keyof typeof unsafeWindow | string, target = do
 }
 
 export function waitForTimer(millis: number = 1000, result: boolean = true) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => resolve(result), millis);
   });
 }

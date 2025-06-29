@@ -26,7 +26,7 @@ import {
 } from '../icons';
 
 const listOptions = (times: number, begin: number) =>
-  sequence(times, begin).map(index => html` <option value="${index}">${index}</option>`);
+  sequence(times, begin).map((index) => html` <option value="${index}">${index}</option>`);
 const Header = (manga: IManga) => html`
   <header id="Header" class="${getSettingsValue('header')} headroom-top">
     <aside id="GlobalFunctions">
@@ -102,9 +102,11 @@ const Header = (manga: IManga) => html`
       </span>
       <span id="ZoomSlider">
         <output id="ZoomVal" class="RangeValue" for="Zoom">
-          ${getSettingsValue('zoomMode') === 'percent'
-            ? `${getSettingsValue('defaultZoom')}%`
-            : getSettingsValue('zoomMode')}
+          ${
+            getSettingsValue('zoomMode') === 'percent'
+              ? `${getSettingsValue('defaultZoom')}%`
+              : getSettingsValue('zoomMode')
+          }
         </output>
         <input
           type="range"

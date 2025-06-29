@@ -17,7 +17,7 @@ import {
 const listPages = (times: number, begin: number) =>
   sequence(times, begin).map(
     // Language=html
-    index => html`
+    (index) => html`
       <div id="Page${index}" class="MangaPage">
         <div class="PageFunctions">
           <button class="Bookmark ControlButton" title="${getLocaleString('BOOKMARK')}">
