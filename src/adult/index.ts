@@ -62,7 +62,7 @@ const sites: ISite[] = [
   luscious,
   multporn,
   myhentaigallery,
-  nhentainet, // Fixme
+  nhentainet,
   ninehentai,
   porncomicshd,
   pururin,

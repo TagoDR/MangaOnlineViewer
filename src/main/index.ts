@@ -36,6 +36,7 @@ import webnovel from './webnovel';
 import webtoons from './webtoons';
 import weebcentral from './weebcentral';
 import zeroscans from './zeroscans';
+import mangapark from './mangapark';
 
 const sites: ISite[] = [
   asura,
@@ -58,7 +59,7 @@ const sites: ISite[] = [
   mangahub,
   mangakakalot,
   mangaoni,
-  // mangapark, // Fixme
+  mangapark,
   mangareader,
   mangatoon,
   manhwaweb,
