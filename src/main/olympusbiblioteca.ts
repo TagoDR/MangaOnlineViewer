@@ -1,7 +1,7 @@
 // == OlympusBiblioteca ============================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const olympusbiblioteca: ISite = {
   name: 'OlympusBiblioteca',
   url: /https?:\/\/(www\.)?olympusbiblioteca.com\/capitulo\/\d+\/.+/,
   homepage: 'https://olympusbiblioteca.com/',
@@ -19,4 +19,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default olympusbiblioteca;

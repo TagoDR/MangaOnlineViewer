@@ -1,7 +1,7 @@
 // == MangaDemon ===================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const mangademon: ISite = {
   name: 'MangaDemon',
   url: /https?:\/\/(www\.)?demonicscans\.org\/title\/.+\/chapter\/.+/,
   homepage: 'https://demonicscans.org/',
@@ -21,4 +21,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default mangademon;

@@ -2,7 +2,7 @@
 import { Category, type IManga, type ISite, Language } from '../types';
 import { findClosestByContentEq } from '../utils/find';
 
-const site: ISite = {
+const vortexscans: ISite = {
   name: 'Vortex Scans',
   url: /https?:\/\/(www.)?(vortexscans).(org)\/.+/,
   homepage: 'https://vortexscans.org/',
@@ -32,4 +32,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default vortexscans;

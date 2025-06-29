@@ -1,7 +1,7 @@
 // == MangaFox =====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const mangafox: ISite = {
   name: ['MangaFox', 'MangaHere'],
   url: /https?:\/\/(www\.)?(fanfox.net|mangahere.cc)\/manga\/.+\/.+\//,
   homepage: ['https://fanfox.net/', 'https://www.mangahere.cc/'],
@@ -40,4 +40,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default mangafox;

@@ -1,7 +1,7 @@
 // == HentaiForce ==================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const hentaiforce: ISite = {
   name: 'HentaiForce',
   url: /https?:\/\/(www\.)?hentaiforce.net\/view\/.+\/\d+/,
   homepage: 'https://hentaiforce.net/',
@@ -27,4 +27,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default hentaiforce;

@@ -1,7 +1,7 @@
 // == DynastyScans =================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const dynastyscans: ISite = {
   name: 'Dynasty-Scans',
   url: /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/,
   homepage: 'https://dynasty-scans.com/',
@@ -18,4 +18,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default dynastyscans;

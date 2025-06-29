@@ -1,7 +1,7 @@
 // == WPManga ======================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const wpmanga: ISite = {
   name: ['Manga33'],
   url: /https?:\/\/(www\.)?(manga33).com\/manga\/.+/,
   homepage: ['https://manga33.com/'],
@@ -27,4 +27,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default wpmanga;

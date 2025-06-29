@@ -1,7 +1,7 @@
 // == NineAnime ====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const nineanime: ISite = {
   name: 'NineAnime',
   url: /https?:\/\/(www\.)?nineanime.com\/chapter\/.+/,
   homepage: 'https://www.nineanime.com/',
@@ -21,4 +21,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default nineanime;

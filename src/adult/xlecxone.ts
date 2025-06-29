@@ -1,7 +1,7 @@
 // == XlecxOne =====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const xlecxone: ISite = {
   name: 'XlecxOne',
   url: /https?:\/\/(www\.)?xlecx.one\/.+/,
   homepage: 'https://xlecx.one/',
@@ -29,4 +29,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default xlecxone;

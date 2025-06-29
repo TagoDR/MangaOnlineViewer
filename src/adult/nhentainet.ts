@@ -2,7 +2,7 @@
 import { Category, type IManga, type ISite, Language } from '../types';
 import { extensionByCode } from '../utils/urls';
 
-const site: ISite = {
+const nhentainet: ISite = {
   name: ['nHentai.net', 'nHentai.xxx', 'lhentai'],
   url: /https?:\/\/(www\.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/,
   homepage: ['https://nhentai.net/', 'https://nhentai.xxx/', 'https://lhentai.com/'],
@@ -30,4 +30,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default nhentainet;

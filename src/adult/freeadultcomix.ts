@@ -1,7 +1,7 @@
 // == FreeAdultComix ===============================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const freeadultcomix: ISite = {
   name: 'FreeAdultComix',
   url: /https?:\/\/(www\.)?freeadultcomix.com\/.+/,
   homepage: 'https://www.freeadultcomix.com',
@@ -19,4 +19,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default freeadultcomix;

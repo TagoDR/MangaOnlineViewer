@@ -1,7 +1,7 @@
 // == Doujin-Moe Non-members =======================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const doujinmoe: ISite = {
   name: 'DoujinMoeNM',
   url: /https?:\/\/(www\.)?doujins.com\/.+/,
   homepage: 'https://doujins.com/',
@@ -20,4 +20,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default doujinmoe;

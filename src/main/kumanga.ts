@@ -1,7 +1,7 @@
 // == KuManga ======================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const kumanga: ISite = {
   name: 'KuManga',
   url: /https?:\/\/(www\.)?kumanga.com\/manga\/leer\/.+/,
   homepage: 'https://www.kumanga.com/',
@@ -19,4 +19,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default kumanga;

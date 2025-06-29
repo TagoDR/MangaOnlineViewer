@@ -1,7 +1,7 @@
 // == PornComicsHD =================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const porncomicshd: ISite = {
   name: 'PornComicsHD',
   url: /https?:\/\/(www\.)?porncomicshd.com\/es.*/,
   homepage: 'https://porncomicshd.com/es',
@@ -20,4 +20,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default porncomicshd;

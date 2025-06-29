@@ -1,7 +1,7 @@
 // == MangaKakalot =================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const mangakakalot: ISite = {
   name: ['MangaKakalot', 'NeloManga ', 'MangaNato', 'NatoManga', 'MangaBats'],
   url: /https?:\/\/(www\.)?(read|chap)?(nelomanga|mangakakalot|natomanga|manganato|mangabats|mangakakalove).(com|gg|net).*\/(chapter|manga)\/.+\/.+/,
   homepage: [
@@ -29,4 +29,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default mangakakalot;

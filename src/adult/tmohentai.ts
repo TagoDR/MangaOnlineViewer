@@ -1,7 +1,7 @@
 // == TMOHentai ====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const tmohhentai: ISite = {
   name: 'TMOHentai',
   url: /https?:\/\/(www\.)?tmohentai.com\/reader\/.+\/(paginated\/\d+|cascade)/,
   homepage: 'https://tmohentai.com/',
@@ -26,4 +26,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default tmohhentai;

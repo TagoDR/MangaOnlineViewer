@@ -1,7 +1,7 @@
 // == MangaHub =====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const mangahub: ISite = {
   name: 'MangaHub',
   url: /https?:\/\/(www\.)?(mangahub).io\/chapter\/.+\/.+/,
   homepage: 'https://mangahub.io/',
@@ -40,4 +40,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default mangahub;

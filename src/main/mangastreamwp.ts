@@ -2,7 +2,7 @@
 import { Category, type IManga, type ISite, Language } from '../types';
 import { findByContentEq } from '../utils/find';
 
-const site: ISite = {
+const mangastreamwp: ISite = {
   name: [
     'MangaStream WordPress Plugin',
     'Realm Oasis',
@@ -76,4 +76,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default mangastreamwp;

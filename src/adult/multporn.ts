@@ -1,7 +1,7 @@
 // == MultPorn =====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const multporn: ISite = {
   name: 'MultPorn',
   url: /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/,
   homepage: 'https://multporn.net/',
@@ -27,4 +27,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default multporn;

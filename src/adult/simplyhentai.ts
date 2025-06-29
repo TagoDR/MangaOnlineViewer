@@ -1,7 +1,7 @@
 // == Simply-Hentai ================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const simplyhentai: ISite = {
   name: 'Simply-Hentai',
   url: /https?:\/\/(www\.)?simply-hentai.com\/.+\/page\/.+/,
   homepage: 'https://simply-hentai.com/',
@@ -23,4 +23,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default simplyhentai;

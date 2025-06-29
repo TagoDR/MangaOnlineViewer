@@ -1,9 +1,8 @@
 // == MangaReader ==================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
-
 declare let imgReverser: (url: string) => Promise<HTMLCanvasElement>;
 
-const site: ISite = {
+const mangareader: ISite = {
   name: 'MangaReader',
   url: /https?:\/\/(www\.)?mangareader.to\/read\/.+\/.+\/.+/,
   homepage: 'https://mangareader.to',
@@ -32,4 +31,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default mangareader;

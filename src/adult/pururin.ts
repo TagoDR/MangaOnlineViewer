@@ -1,7 +1,7 @@
 // == Pururin ======================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const pururin: ISite = {
   name: 'Pururin',
   url: /https?:\/\/(www\.)?pururin.me\/(view|read)\/.+\/.+\/.+/,
   homepage: 'https://pururin.me/',
@@ -21,4 +21,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default pururin;

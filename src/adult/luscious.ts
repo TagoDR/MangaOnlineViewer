@@ -1,7 +1,7 @@
 // == Luscious =====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const luscious: ISite = {
   name: 'Luscious',
   url: /https?:\/\/(www\.)?luscious.net\/.+\/read\/.+/,
   homepage: 'https://luscious.net/',
@@ -52,4 +52,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default luscious;

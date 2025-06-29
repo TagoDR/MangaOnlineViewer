@@ -2,7 +2,7 @@
 import { Category, type IMangaImages, type ISite, Language } from '../types';
 import { bruteforce } from '../utils/bruteforce';
 
-const site: ISite = {
+const eightMuses: ISite = {
   name: ['8Muses.com', '8Muses.io'],
   obs: 'Slow start, bruteforce may be required',
   url: /https?:\/\/(comics.)?8muses.(com|io)\/(comics\/)?picture\/.+/,
@@ -54,4 +54,4 @@ const site: ISite = {
     return manga;
   },
 };
-export default site;
+export default eightMuses;

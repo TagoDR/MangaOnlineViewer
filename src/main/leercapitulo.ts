@@ -1,7 +1,7 @@
 // == LeerCapitulo =================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const leercapitulo: ISite = {
   name: 'LeerCapitulo',
   url: /https?:\/\/(www.)?leercapitulo.co\/leer\/.+/,
   homepage: 'https://www.leercapitulo.co/',
@@ -22,4 +22,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default leercapitulo;

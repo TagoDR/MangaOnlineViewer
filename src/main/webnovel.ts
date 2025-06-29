@@ -1,7 +1,7 @@
 // == WebNovel =====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const webnovel: ISite = {
   name: 'WebNovel',
   url: /https?:\/\/(www\.)?webnovel.com\/comic\/.+/,
   homepage: 'https://www.webnovel.com/',
@@ -22,4 +22,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default webnovel;

@@ -3,7 +3,7 @@ import { Category, type IManga, type ISite, Language } from '../types';
 import { extensionByCode } from '../utils/urls';
 import { waitForVar } from '../utils/waitFor';
 
-const site: ISite = {
+const imhentai: ISite = {
   name: 'Imhentai',
   url: /https?:\/\/(www\.)?imhentai.xxx\/view\/.+\/.+\//,
   homepage: 'https://imhentai.xxx/',
@@ -32,4 +32,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default imhentai;

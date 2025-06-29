@@ -1,9 +1,8 @@
 // == Localhost ====================================================================================
-
 import { Category, type IManga, type ISite, Language } from '../types';
 import { placeholder, randomPlaceholder } from '../utils/svgs';
 
-const site: ISite = {
+const localhost: ISite = {
   name: 'Local Files',
   url: /(file:\/\/\/.+(index)?.html)/,
   homepage: '/index.html?raw=1',
@@ -32,4 +31,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default localhost;

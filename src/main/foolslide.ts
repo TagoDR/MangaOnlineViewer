@@ -1,7 +1,7 @@
 // == FoOlSlide ====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const foolslide: ISite = {
   name: ['FoOlSlide', 'Kireicake'],
   url: /^(?!.*jaiminisbox).*\/read\/.+/,
   homepage: ['https://github.com/saintly2k/FoOlSlideX', 'https://reader.kireicake.com'],
@@ -49,4 +49,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default foolslide;

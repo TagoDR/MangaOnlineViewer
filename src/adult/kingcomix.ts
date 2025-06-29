@@ -1,7 +1,7 @@
 // == KingComix ====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const kingcomix: ISite = {
   name: ['KingComix', 'Chochox', 'Comics18'],
   url: /https?:\/\/(www\.)?(kingcomix|chochox|comics18).(com|org)\/.+/,
   homepage: ['https://kingcomix.com/', 'https://chochox.com/porno/', 'https://comics18.org/'],
@@ -27,4 +27,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default kingcomix;

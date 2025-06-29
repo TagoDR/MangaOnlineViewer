@@ -2,7 +2,7 @@
 import { Category, type IMangaImages, type ISite, Language } from '../types';
 import { bruteforce } from '../utils/bruteforce';
 
-const site: ISite = {
+const yabai: ISite = {
   name: 'Yabai',
   url: /https?:\/\/(www\.)?yabai.si\/g\/.+\/read/,
   homepage: 'https://yabai.si/',
@@ -35,4 +35,4 @@ const site: ISite = {
     return manga;
   },
 };
-export default site;
+export default yabai;

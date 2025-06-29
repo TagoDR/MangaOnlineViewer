@@ -1,9 +1,8 @@
 // == Madara WordPress Plugin ======================================================================
-
 import madarawp from '../main/madarawp';
 import { Category, type ISite } from '../types';
 
-const site: ISite = {
+const madarawph: ISite = {
   ...madarawp,
   name: ['Madara WordPress Plugin', 'AllPornComic', 'Manytoon', 'Manga District'],
   url: /https?:\/\/.+\/(porncomic|read-scan|title)\/.+\/.+/,
@@ -15,4 +14,4 @@ const site: ISite = {
   ],
   category: Category.HENTAI,
 };
-export default site;
+export default madarawph;

@@ -1,7 +1,7 @@
 // == Flame Comics =================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const flamecomics: ISite = {
   name: 'Flame Comics',
   url: /https?:\/\/(www.)?(flamecomics).(xyz)\/series\/.+/,
   homepage: 'https://flamecomics.xyz/',
@@ -24,4 +24,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default flamecomics;

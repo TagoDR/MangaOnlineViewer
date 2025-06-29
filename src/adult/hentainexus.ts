@@ -1,7 +1,7 @@
 // == HentaiNexus ==================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const hentainexus: ISite = {
   name: 'HentaiNexus',
   url: /https?:\/\/((www\.)?hentainexus.com|nexus.fakku.cc)\/read\/.+/,
   homepage: 'https://hentainexus.com/',
@@ -24,4 +24,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default hentainexus;

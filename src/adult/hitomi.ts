@@ -1,7 +1,7 @@
 // == Hitomi =======================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const hitomi: ISite = {
   name: 'Hitomi',
   url: /https?:\/\/hitomi.la\/reader\/.+/,
   homepage: 'https://hitomi.la/',
@@ -22,4 +22,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default hitomi;

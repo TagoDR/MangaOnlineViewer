@@ -1,7 +1,7 @@
 // == MangaOni =====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const mangaoni: ISite = {
   name: 'MangaOni',
   url: /https?:\/\/(www\.)?manga-oni.com\/lector\/.+\/\d+\/cascada/,
   homepage: 'https://manga-oni.com/',
@@ -20,4 +20,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default mangaoni;

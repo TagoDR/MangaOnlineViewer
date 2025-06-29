@@ -1,7 +1,7 @@
 // == HentaiHand ===================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const hentaihand: ISite = {
   name: ['HentaiHand', 'nHentai.com'],
   url: /https?:\/\/(www\.)?(hentaihand|nhentai).com\/.+\/reader/,
   homepage: ['https://hentaihand.com/', 'https://nhentai.com'],
@@ -20,4 +20,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default hentaihand;

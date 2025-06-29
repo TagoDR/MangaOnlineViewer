@@ -1,7 +1,7 @@
 // == SchaleNetwork ================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const schalenetwork: ISite = {
   name: 'SchaleNetwork',
   url: /https?:\/\/(www\.)?(niyaniya|shupogaki|hoshino).(moe|one)/,
   homepage: 'https://schale.network/',
@@ -42,4 +42,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default schalenetwork;

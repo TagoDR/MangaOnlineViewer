@@ -1,7 +1,7 @@
 // == ExHentai =====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const exhentai: ISite = {
   name: ['ExHentai', 'e-Hentai'],
   url: /https?:\/\/(g\.)?(exhentai|e-hentai).org\/s\/.+\/.+/,
   homepage: ['https://exhentai.org/', 'https://e-hentai.org/'],
@@ -61,4 +61,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default exhentai;

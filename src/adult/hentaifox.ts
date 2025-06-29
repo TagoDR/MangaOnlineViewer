@@ -2,7 +2,7 @@
 import { Category, type IManga, type ISite, Language } from '../types';
 import { extensionByCode } from '../utils/urls';
 
-const site: ISite = {
+const hentaifox: ISite = {
   name: 'HentaiFox',
   url: /https?:\/\/(www\.)?hentaifox.com\/g\/.+/,
   homepage: 'https://www.hentaifox.com/',
@@ -33,4 +33,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default hentaifox;

@@ -1,7 +1,7 @@
 // == Ver Mangas Porno =============================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const vercomicsporno: ISite = {
   name: ['vermangasporno', 'vercomicsporno'],
   url: /https?:\/\/(www\.)?(vermangasporno|vercomicsporno).com\/.+/,
   homepage: ['https://vermangasporno.com/', 'https://vercomicsporno.com/'],
@@ -29,4 +29,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default vercomicsporno;

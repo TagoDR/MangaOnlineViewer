@@ -1,7 +1,7 @@
 // == 9Hentai ======================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const ninehentai: ISite = {
   name: '9Hentai',
   url: /https?:\/\/(www\.)?9hentai.(so)\/g\/.+\/.+/,
   homepage: 'https://9hentai.so',
@@ -35,4 +35,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default ninehentai;

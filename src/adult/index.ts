@@ -60,13 +60,10 @@ const sites: ISite[] = [
   imhentai,
   kingcomix,
   luscious,
-  // manhwaread, // Fixme
   multporn,
   myhentaigallery,
   nhentainet, // Fixme
   ninehentai,
-  // omegascans, // Fixme
-  // porncomixonline, // Fixme
   porncomicshd,
   pururin,
   schalenetwork,

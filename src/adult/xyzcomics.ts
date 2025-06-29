@@ -1,7 +1,7 @@
 // == xyzcomics ====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const xyzcomics: ISite = {
   name: 'xyzcomics',
   url: /https?:\/\/(www\.)?xyzcomics.com\/.+/,
   homepage: 'https://xyzcomics.com/',
@@ -18,4 +18,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default xyzcomics;

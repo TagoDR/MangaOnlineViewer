@@ -1,9 +1,8 @@
 // == Ikigai Mangas ================================================================================
-
 import { Category, type IManga, type ISite, Language } from '../types';
 import { findClosestByContentEq } from '../utils/find';
 
-const site: ISite = {
+const ikigai: ISite = {
   name: ['Ikigai Mangas - EltaNews', 'Ikigai Mangas - Ajaco'],
   url: /https?:\/\/visorikigai.(ajaco|eltanews).(com|net)\/capitulo\/\d+/,
   homepage: ['https://visorikigai.eltanews.com/', 'https://visorikigai.ajaco.net/'],
@@ -22,4 +21,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default ikigai;

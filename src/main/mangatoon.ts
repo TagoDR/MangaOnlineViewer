@@ -1,7 +1,7 @@
 // == MangaToons ===================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const mangatoon: ISite = {
   name: 'MangaToons',
   url: /https?:\/\/.*mangatoon.mobi\/.+\/watch\/.+/,
   homepage: 'https://mangatoon.mobi/',
@@ -20,4 +20,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default mangatoon;

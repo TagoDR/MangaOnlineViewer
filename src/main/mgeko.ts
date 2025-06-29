@@ -1,7 +1,7 @@
 // == MangaGeko ====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const mgeko: ISite = {
   name: ['MangaGeko.com', 'MangaGeko.cc'],
   url: /https?:\/\/(www\.)?mgeko.(com|cc)?\/reader\/.*/,
   homepage: ['https://www.mgeko.com/', 'https://www.mgeko.cc/'],
@@ -19,4 +19,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default mgeko;

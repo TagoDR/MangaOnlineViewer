@@ -19,7 +19,7 @@ function captureComments() {
   return container;
 }
 
-const site: ISite = {
+const comick: ISite = {
   name: 'Comick',
   url: /https?:\/\/(www\.)?comick.io\/.+/,
   homepage: 'https://comick.io/',
@@ -47,4 +47,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default comick;

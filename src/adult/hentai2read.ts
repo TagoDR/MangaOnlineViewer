@@ -1,7 +1,7 @@
 // == Hentai2Read ==================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const hentai2read: ISite = {
   name: 'Hentai2Read',
   url: /https?:\/\/(www\.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//,
   homepage: 'https://hentai2read.com/',
@@ -20,4 +20,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default hentai2read;

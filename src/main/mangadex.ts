@@ -1,7 +1,7 @@
 // == MangaDex =====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const mangadex: ISite = {
   name: 'MangaDex',
   url: /https?:\/\/(www\.)?mangadex.org/,
   homepage: 'https://mangadex.org/',
@@ -26,4 +26,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default mangadex;

@@ -1,7 +1,7 @@
 // == 3Hentai ======================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const threehentai: ISite = {
   name: ['3Hentai', 'HentaiVox'],
   url: /https?:\/\/(www\.)?(3hentai|hentaivox).(net|com)\/(d|view)\/.+\/.+/,
   homepage: ['https://3hentai.net/', 'https://hentaivox.com/'],
@@ -21,4 +21,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default threehentai;

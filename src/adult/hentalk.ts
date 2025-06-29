@@ -1,7 +1,7 @@
 // == HenTalk ======================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const hentalk: ISite = {
   name: 'HenTalk',
   url: /https?:\/\/(www.)?hentalk.pw/,
   homepage: 'https://hentalk.pw/',
@@ -31,4 +31,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default hentalk;

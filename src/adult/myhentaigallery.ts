@@ -1,7 +1,7 @@
 // == MyHentaiGallery ==============================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const myhentaigallery: ISite = {
   name: 'MyHentaiGallery',
   url: /https?:\/\/(www\.)?myhentaigallery.com\/g\/.+\/\d+/,
   homepage: 'https://www.myhentaigallery.com',
@@ -25,4 +25,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default myhentaigallery;

@@ -1,7 +1,7 @@
 // == WeebCentral ==================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const weebcentral: ISite = {
   name: 'WeebCentral',
   url: /https?:\/\/(www\.)?(weebcentral).com\/chapters\/.+/,
   homepage: 'https://weebcentral.com/',
@@ -29,4 +29,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default weebcentral;

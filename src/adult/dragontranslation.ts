@@ -1,7 +1,7 @@
 // == Dragon Translation ===========================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const dragontranslation: ISite = {
   name: 'Dragon Translation',
   url: /https?:\/\/(www\.)?dragontranslation.net\/leer\/.+/,
   homepage: 'https://dragontranslation.net/es',
@@ -22,4 +22,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default dragontranslation;

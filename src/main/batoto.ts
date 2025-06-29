@@ -2,7 +2,7 @@
 import { Category, type IManga, type ISite, Language } from '../types';
 import { findClosestByContentEnds, findClosestByContentStarts } from '../utils/find';
 
-const site: ISite = {
+const batoto: ISite = {
   name: 'Batoto',
   url: /https?:\/\/(www\.)?(\w(ba)?to|readtoto|batocomic|comiko|battwo|batotoo|batotwo).(to|com|net|org)\/(chapter|title).*/,
   homepage: 'https://rentry.co/batoto',
@@ -35,4 +35,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default batoto;

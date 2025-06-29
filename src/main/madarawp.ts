@@ -17,7 +17,7 @@ function findImages() {
   });
 }
 
-const site: ISite = {
+const madarawp: ISite = {
   name: [
     'Madara WordPress Plugin',
     'MangaHaus',
@@ -81,4 +81,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default madarawp;

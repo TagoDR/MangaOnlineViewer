@@ -1,7 +1,7 @@
 // == LHTranslation ================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const lhtranslation: ISite = {
   name: 'LHTranslation',
   url: /https?:\/\/(www\.)?lhtranslation.net\/read.+/,
   homepage: 'https://lhtranslation.net/',
@@ -20,4 +20,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default lhtranslation;

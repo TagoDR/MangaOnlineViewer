@@ -1,7 +1,7 @@
 // == Tsumino ======================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const tsumino: ISite = {
   name: 'Tsumino',
   url: /https?:\/\/(www\.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/,
   homepage: 'https://tsumino.com/',
@@ -27,4 +27,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default tsumino;

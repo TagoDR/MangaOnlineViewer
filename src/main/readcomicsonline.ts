@@ -1,7 +1,7 @@
 // == ReadComicsOnline =============================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const readcomicsonline: ISite = {
   name: 'ReadComicsOnline',
   url: /https?:\/\/(www\.)?readcomicsonline.ru\/comic\/.*\/\d*/,
   homepage: 'https://readcomicsonline.ru/',
@@ -19,4 +19,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default readcomicsonline;

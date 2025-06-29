@@ -1,7 +1,7 @@
 // == wnacg ========================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const wnacg: ISite = {
   name: 'wnacg',
   url: /https?:\/\/(www\.)?wnacg.com\/photos-view-id-.+/,
   homepage: 'https://wnacg.com/',
@@ -19,4 +19,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default wnacg;

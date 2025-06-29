@@ -1,7 +1,7 @@
 // == BilibiliComics ===============================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const bilibilicomics: ISite = {
   name: 'BilibiliComics',
   url: /https?:\/\/(www\.)?(bilibilicomics).net\/episode\/.+/,
   homepage: 'https://www.bilibilicomics.net/',
@@ -23,4 +23,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default bilibilicomics;

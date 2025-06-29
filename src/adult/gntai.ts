@@ -1,7 +1,7 @@
 // == GNTAI ========================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const gntai: ISite = {
   name: 'GNTAI.net',
   url: /https?:\/\/(www\.)?gntai.net\/(?!(category|tags|autores))[^/]+\/.+/,
   homepage: 'https://www.gntai.net/',
@@ -24,4 +24,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default gntai;

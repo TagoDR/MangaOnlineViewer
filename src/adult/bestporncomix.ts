@@ -1,7 +1,7 @@
 // == BestPornComix ================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const bestporncomix: ISite = {
   name: 'BestPornComix',
   url: /https?:\/\/(www\.)?bestporncomix.com\/gallery\/.+/,
   homepage: 'https://www.bestporncomix.com',
@@ -19,4 +19,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default bestporncomix;

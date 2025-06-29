@@ -1,7 +1,7 @@
 // == FSIComics ====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const fsicomics: ISite = {
   name: 'FSIComics',
   url: /https?:\/\/(www\.)?fsicomics.com\/.+/,
   homepage: 'https://fsicomics.com/',
@@ -18,4 +18,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default fsicomics;

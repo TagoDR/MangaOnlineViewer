@@ -1,7 +1,7 @@
 // == ZeroScans ====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const zeroscans: ISite = {
   name: 'ZeroScans',
   url: /https?:\/\/(www\.)?zscans.com\/comics\/.+/,
   homepage: 'https://zscans.com/',
@@ -21,4 +21,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default zeroscans;

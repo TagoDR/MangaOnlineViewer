@@ -1,7 +1,7 @@
 // == M440 =========================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const m440: ISite = {
   name: 'M440',
   url: /https?:\/\/(www\.)?m440.in\/manga\/.+\/.+\/\d+/,
   homepage: 'https://m440.in/',
@@ -20,4 +20,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default m440;

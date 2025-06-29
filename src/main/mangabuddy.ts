@@ -1,7 +1,7 @@
 // == MangaBuddy ===================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const mangabuddy: ISite = {
   name: 'MangaBuddy',
   url: /https?:\/\/(www\.)?mangabuddy.com\/.+\/chapter.+/,
   homepage: 'https://mangabuddy.com/',
@@ -24,4 +24,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default mangabuddy;

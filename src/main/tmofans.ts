@@ -1,7 +1,7 @@
 // == TMOFans ======================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const tmofans: ISite = {
   name: 'TuMangaOnline',
   url: /https?:\/\/(www\.)?(.+).com\/(viewer|news)\/.+\/(paginated|cascade)/,
   homepage: 'https://lectortmo.com/',
@@ -34,4 +34,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default tmofans;

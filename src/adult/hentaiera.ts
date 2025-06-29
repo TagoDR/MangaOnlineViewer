@@ -1,7 +1,7 @@
 // == HentaiEra ====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const hentaiera: ISite = {
   name: 'HentaiEra',
   url: /https?:\/\/(www\.)?hentaiera.com\/view\/.+\/\d+\/?/,
   homepage: 'https://hentaiera.com/',
@@ -26,4 +26,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default hentaiera;

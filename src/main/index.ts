@@ -38,18 +38,13 @@ import weebcentral from './weebcentral';
 import zeroscans from './zeroscans';
 
 const sites: ISite[] = [
-  // alandal, // Fixme
   asura,
   batoto,
   bilibilicomics,
-  // comicastle, // Fixme
   comick,
   dysnatyscans,
   flamecomics,
   ikigai,
-  // inkr, // Fixme
-  // inmanga, //Fixme
-  // klmanga, // Fixme
   kumanga,
   leercapitulo,
   lhtranslation,
@@ -60,7 +55,6 @@ const sites: ISite[] = [
   mangadex,
   mangafox,
   mangago,
-  // mangafreak, // Fixme
   mangahub,
   mangakakalot,
   mangaoni,
@@ -68,17 +62,12 @@ const sites: ISite[] = [
   mangareader,
   mangatoon,
   manhwaweb,
-  // mangatown, // Fixme
   mgeko,
   nineanime,
   olympusbiblioteca,
   readcomicsonline,
-  // ninemanga, // Fixme
   reaperscans,
   tmofans,
-  // senmanga, // Fixme
-  // tapas, // Fixme
-  // tenmanga, // Fixme
   webnovel,
   webtoons,
   weebcentral,

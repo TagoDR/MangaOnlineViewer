@@ -1,10 +1,9 @@
 // == AsuraScans ===================================================================================
-
 import { Category, type IManga, type ISite, Language } from '../types';
 import { findClosestByContentEq, findOneByContentStarts } from '../utils/find';
 import { waitForTimer } from '../utils/waitFor.ts';
 
-const site: ISite = {
+const asura: ISite = {
   name: 'Asura Scans',
   url: /https?:\/\/(www.)?(asuracomic).(net)\/.+/,
   homepage: 'https://asuracomic.net/',
@@ -31,4 +30,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default asura;

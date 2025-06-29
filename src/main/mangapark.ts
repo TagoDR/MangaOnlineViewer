@@ -1,9 +1,9 @@
 // == MangaPark ====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const mangapark: ISite = {
   name: 'MangaPark',
-  url: /https?:\/\/(www\.)?mangapark.(com|me|org|net)\/title\/.+\/.+/,
+  url: /https?:\/\/(www\.)?(mangapark|mpark|comicpark|readpark|parkmanga).(com|me|org|net|io|to)\/title\/.+\/.+/,
   homepage: 'https://mangapark.net/',
   language: [Language.ENGLISH],
   category: Category.MANGA,
@@ -26,4 +26,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default mangapark;

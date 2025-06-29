@@ -1,7 +1,7 @@
 // == HentaIHere ===================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const hentaihere: ISite = {
   name: 'HentaIHere',
   url: /https?:\/\/(www\.)?hentaihere.com\/.+\/.+\/.+/,
   homepage: 'https://www.hentaihere.com/',
@@ -20,4 +20,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default hentaihere;

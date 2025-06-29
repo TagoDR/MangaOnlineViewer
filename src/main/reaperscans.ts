@@ -1,7 +1,7 @@
 // == ReaperScans ==================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const reaperscans: ISite = {
   name: 'ReaperScans',
   url: /https?:\/\/(www\.)?reaperscans\.com\/series\/.+\/chapter.+/,
   homepage: 'https://reaperscans.com/',
@@ -22,4 +22,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default reaperscans;

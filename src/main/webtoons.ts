@@ -1,7 +1,7 @@
 // == WebToons =====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const webtoons: ISite = {
   name: 'WebToons',
   url: /https?:\/\/(www\.)?webtoons.com\/.+viewer.+/,
   homepage: 'https://www.webtoons.com/',
@@ -25,4 +25,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default webtoons;

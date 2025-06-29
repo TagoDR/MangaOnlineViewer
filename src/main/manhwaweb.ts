@@ -1,7 +1,7 @@
 // == ManhwaWeb ====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const manhwaweb: ISite = {
   name: 'ManhwaWeb',
   url: /https?:\/\/(www\.)?manhwaweb.com\/leer\/.+/,
   homepage: 'https://manhwaweb.com/',
@@ -27,4 +27,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default manhwaweb;

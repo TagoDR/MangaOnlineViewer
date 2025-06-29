@@ -1,7 +1,7 @@
 // == AkumaMoe =====================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const akumamoe: ISite = {
   name: 'AkumaMoe',
   url: /https?:\/\/(www\.)?akuma\.moe\/g\/.+\/.+/,
   homepage: 'https://akuma.moe',
@@ -24,4 +24,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default akumamoe;

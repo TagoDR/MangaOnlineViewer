@@ -1,7 +1,7 @@
 // == Mangago ======================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const site: ISite = {
+const mangago: ISite = {
   name: 'Mangago',
   url: /https?:\/\/(www\.)?mangago.me\/.*\/.*\/.*/,
   homepage: 'https://www.mangago.me/',
@@ -30,4 +30,4 @@ const site: ISite = {
     };
   },
 };
-export default site;
+export default mangago;
