@@ -93,6 +93,7 @@ function getLocalSettings(defaultSettings?: ISettings): Partial<ISettings> {
 function setValueGM(name: string, value: any): string {
   if (typeof GM_setValue !== 'undefined') {
     GM_setValue(name, value);
+    logScript('Setting: ', name, ' = ', value);
     return value.toString();
   } else {
     logScript('Fake Setting: ', name, ' = ', value);

@@ -1,17 +1,17 @@
-import { getSettingsValue, setSettingsValue } from '../../core/settings';
+import { getSettingsValue } from '../../core/settings';
 import type { ViewMode } from '../../types';
 import {
   scrollToElement,
   transformScrollToHorizontal,
   transformScrollToHorizontalReverse,
 } from './common';
-import { changeGlobalZoom } from './zoom';
+import { applyZoom } from '../page';
 
 function setupFluid(mode: ViewMode) {
   const chapter = document.querySelector<HTMLElement>('#Chapter');
   document.querySelector('#Header')?.classList.remove('visible');
   document.querySelector('#menu')?.classList.remove('hide');
-  changeGlobalZoom('height')();
+  applyZoom('height');
   scrollToElement(chapter);
   chapter?.addEventListener(
     'wheel',
@@ -34,7 +34,7 @@ export function updateViewMode(mode: ViewMode) {
       if (header) header.className = headerClass;
       const menu = document.querySelector<HTMLElement>('#menu');
       if (menu) menu.className = headerClass;
-      changeGlobalZoom(100)();
+      applyZoom();
     }
   };
 }
@@ -42,7 +42,6 @@ export function updateViewMode(mode: ViewMode) {
 export function changeViewMode(event: Event) {
   const mode = (event.currentTarget as HTMLInputElement).value as ViewMode;
   updateViewMode(mode)();
-  setSettingsValue('viewMode', mode);
 }
 
 function viewMode() {

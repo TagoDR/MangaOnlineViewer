@@ -18,29 +18,44 @@ import sequence from '../utils/sequence';
 import { logScript } from '../utils/tampermonkey';
 import { isBase64ImageUrl, isObjectURL } from '../utils/urls';
 import { removeURLBookmark } from './events/bookmarks';
+import { updateHeaderType } from './events/options.ts';
 
 // After pages load apply default Zoom
 function applyZoom(
-  zoom: number | ZoomMode = getSettingsValue('zoomMode'),
+  mode: ZoomMode = getSettingsValue('zoomMode'),
+  value = getSettingsValue('defaultZoom'),
   pages = '.PageContent img',
 ) {
+  const globalZoomVal = document.querySelector('#ZoomVal');
+  const zoom = document.querySelector<HTMLInputElement>('#Zoom');
+  if (globalZoomVal) {
+    if (zoom && mode === 'percent') {
+      globalZoomVal.textContent = `${value}%`;
+      zoom.value = value.toString();
+    } else {
+      globalZoomVal.textContent = mode as string;
+    }
+  }
+  if (mode === 'height') {
+    updateHeaderType('click');
+  } else {
+    updateHeaderType(getSettingsValue('header'));
+  }
   const pg = [...document.querySelectorAll<HTMLImageElement>(pages)];
   pg.forEach((img) => {
     img.removeAttribute('width');
     img.removeAttribute('height');
     img.removeAttribute('style');
-    if (zoom === 'width') {
+    if (mode === 'width') {
       // Fit width
       img.style.width = `${window.innerWidth}px`;
-    } else if (zoom === 'height') {
+    } else if (mode === 'height') {
       // Fit height
       const nextHeight = window.innerHeight + (getSettingsValue('showThumbnails') ? -29 : 0);
       img.style.height = `${nextHeight}px`;
       img.style.minWidth = 'unset';
-    } else if (zoom === 'percent') {
-      img.style.width = `${img.naturalWidth * (getSettingsValue('defaultZoom') / 100)}px`;
-    } else if (zoom >= 0 && zoom !== 100) {
-      img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
+    } else if (mode === 'percent' && value >= 0 && value !== 100) {
+      img.style.width = `${img.naturalWidth * (value / 100)}px`;
     }
   });
 }
@@ -108,9 +123,9 @@ function updateProgress() {
 export const applyLastGlobalZoom = (pages = '.PageContent img') => {
   const zoomVal = document.querySelector('#ZoomVal')?.textContent?.trim();
   if (zoomVal?.match(/^\d+%$/)) {
-    applyZoom(parseInt(zoomVal, 10), pages);
+    applyZoom('percent', parseInt(zoomVal, 10), pages);
   } else {
-    applyZoom(zoomVal as ZoomMode, pages);
+    applyZoom(zoomVal as ZoomMode, 100, pages);
   }
 };
 

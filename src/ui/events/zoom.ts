@@ -1,32 +1,10 @@
 import { getSettingsValue, setSettingsValue } from '../../core/settings';
 import type { ZoomMode } from '../../types';
 import { applyZoom } from '../page';
-import { updateHeaderType } from './options';
 
-export function changeGlobalZoom(value: number | ZoomMode) {
+export function changeGlobalZoom(mode: ZoomMode, value = getSettingsValue('defaultZoom')) {
   return () => {
-    if (typeof value !== 'number') {
-      setSettingsValue('zoomMode', value);
-    } else {
-      setSettingsValue('zoomMode', 'percent');
-    }
-    if (value === 'height') {
-      updateHeaderType('click');
-    } else {
-      updateHeaderType(getSettingsValue('header'));
-    }
-
-    const globalZoomVal = document.querySelector('#ZoomVal');
-    const zoom = document.querySelector<HTMLInputElement>('#Zoom');
-    if (globalZoomVal) {
-      if (zoom && Number.isInteger(value)) {
-        globalZoomVal.textContent = `${value}%`;
-        zoom.value = value.toString();
-      } else {
-        globalZoomVal.textContent = value as string;
-      }
-    }
-    applyZoom(value);
+    applyZoom(mode, value);
   };
 }
 
@@ -44,7 +22,7 @@ export function changeZoomByStep(sign = 1) {
 export function changeDefaultZoomMode(event: Event) {
   const target = (event.currentTarget as HTMLInputElement).value as ZoomMode;
   setSettingsValue('zoomMode', target);
-  changeGlobalZoom(target)();
+  applyZoom(target);
   const percent = document.querySelector<HTMLDivElement>('.DefaultZoom');
   percent?.classList.toggle('show', target === 'percent');
 }
@@ -52,12 +30,12 @@ export function changeDefaultZoomMode(event: Event) {
 export function changeDefaultZoom(event: Event) {
   const target = parseInt((event.currentTarget as HTMLInputElement).value, 10);
   setSettingsValue('defaultZoom', target);
-  changeGlobalZoom(target)();
+  applyZoom('percent', target);
 }
 
 export function changeZoom(event: Event) {
   const target = parseInt((event.currentTarget as HTMLInputElement).value, 10);
-  changeGlobalZoom(target)();
+  applyZoom('percent', target);
   const zoomVal = document.querySelector('#ZoomVal');
   if (zoomVal) zoomVal.textContent = `${target}%`;
 }
@@ -74,7 +52,7 @@ function zoom() {
   // Global Zoom Out Button
   document.querySelector('#reduce')?.addEventListener('click', changeZoomByStep(-1));
   // Global Zoom Restore Button
-  document.querySelector('#restore')?.addEventListener('click', changeGlobalZoom(100));
+  document.querySelector('#restore')?.addEventListener('click', changeGlobalZoom('percent'));
   // Global Fit Width Button
   document.querySelector('#fitWidth')?.addEventListener('click', changeGlobalZoom('width'));
   // Global Fit height Button

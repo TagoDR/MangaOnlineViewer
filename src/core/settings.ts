@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import locales from '../locales';
 import type { ISettings, ISettingsKey } from '../types';
-import { isNothing } from '../utils/checks';
 import diffObj from '../utils/diffObj';
 import {
   getGlobalSettings,
@@ -15,6 +14,8 @@ import {
   setLocalSettings,
   settingsChangeListener,
 } from '../utils/tampermonkey';
+import { isNothing } from '../utils/checks';
+import { applyZoom } from '../ui/page';
 
 export const defaultSettings: ISettings = {
   enabled: true,
@@ -61,19 +62,22 @@ export const defaultSettings: ISettings = {
   },
 };
 
+const mobileSettings: Partial<ISettings> = {
+  lazyLoadImages: true,
+  fitWidthIfOversize: true,
+  showThumbnails: false,
+  viewMode: 'WebComic',
+  header: 'click',
+};
+
 function getDefault(global = true) {
   return !isMobile()
     ? { ...defaultSettings, enabled: global, theme: global ? 'darkblue' : 'darkgreen' }
-    : _.defaultsDeep(
-        {
-          lazyLoadImages: true,
-          fitWidthIfOversize: true,
-          showThumbnails: false,
-          viewMode: 'WebComic',
-          header: 'click',
-        },
-        { ...defaultSettings, enabled: global, theme: global ? 'darkblue' : 'darkgreen' },
-      );
+    : _.defaultsDeep(mobileSettings, {
+        ...defaultSettings,
+        enabled: global,
+        theme: global ? 'darkblue' : 'darkgreen',
+      });
 }
 
 // Configuration
@@ -92,25 +96,31 @@ giveToWindow('MOVSettings', showSettings);
 
 export const isSettingsLocal = () => localSettings?.enabled === true;
 
-settingsChangeListener((newValue: Partial<ISettings>) => {
+function syncGlobalSettings(newValue: Partial<ISettings>) {
   const newSettings = _.defaultsDeep(newValue, getDefault());
   const diff = globalSettings ? diffObj(newSettings, globalSettings) : newSettings;
   if (!isNothing(diff)) {
     logScript('Imported Global Settings', diff);
     globalSettings = newSettings;
     document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
+    applyZoom(getSettingsValue('zoomMode'), getSettingsValue('defaultZoom'));
   }
-}, 'settings');
+}
 
-settingsChangeListener((newValue: Partial<ISettings>) => {
+settingsChangeListener(_.debounce(syncGlobalSettings, 300), 'settings');
+
+function syncLocalSettings(newValue: Partial<ISettings>) {
   const newSettings = _.defaultsDeep(newValue, getDefault(false));
   const diff = localSettings ? diffObj(newSettings, localSettings) : newSettings;
   if (!isNothing(diff)) {
     logScript('Imported Local Settings', diff);
     localSettings = newSettings;
     document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
+    applyZoom(getSettingsValue('zoomMode'), getSettingsValue('defaultZoom'));
   }
-}, window.location.hostname);
+}
+
+settingsChangeListener(_.debounce(syncLocalSettings, 300), window.location.hostname);
 
 /**
  * Gets the effective value for a setting, considering site-specific overrides,
@@ -135,10 +145,10 @@ export function getSettingsValue<K extends ISettingsKey>(key: K): ISettings[K] {
  */
 export function setSettingsValue<K extends ISettingsKey>(key: K, value: ISettings[K]): void {
   if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
-    localSettings[key] = value;
+    localSettings = { ...localSettings, [key]: value };
     setLocalSettings(diffObj(localSettings, getDefault(false)));
   } else {
-    globalSettings[key] = value;
+    globalSettings = { ...globalSettings, [key]: value };
     setGlobalSettings(diffObj(globalSettings, getDefault()));
   }
 }
@@ -154,13 +164,14 @@ export function changeSettingsValue<K extends ISettingsKey>(
   key: K,
   fn: (value: ISettings[K]) => ISettings[K],
 ): void {
-  if (isSettingsLocal()) {
-    localSettings[key] = fn(localSettings[key]);
-    setLocalSettings(diffObj(localSettings, getDefault(false)));
-  } else {
-    globalSettings[key] = fn(globalSettings[key]);
-    setGlobalSettings(diffObj(globalSettings, getDefault()));
-  }
+  setSettingsValue(
+    key,
+    fn(
+      isSettingsLocal() && !['locale', 'bookmarks'].includes(key)
+        ? localSettings[key]
+        : globalSettings[key],
+    ),
+  );
 }
 
 export function getLocaleString(name: string): string {
@@ -175,25 +186,6 @@ export function getLocaleString(name: string): string {
 
   return `##MISSING_STRING_${name.toLocaleUpperCase()}##`;
 }
-
-/*
-export function getAllLocaleStrings(name: string): string {
-  return locales.map((locale) => `<span class='${locale.ID}'>${locale[name]}</span>`).join('\n');
-}
-*/
-
-/*
-export function updateSettings(newValue: Partial<ISettings>) {
-  logScript(JSON.stringify(newValue));
-  if (localSettings) {
-    localSettings = { ...localSettings, ...newValue };
-    setLocalSettings(diffObj(localSettings, getDefault()));
-  } else {
-    globalSettings = { ...globalSettings, ...newValue };
-    setGlobalSettings(diffObj(globalSettings, getDefault()));
-  }
-}
-*/
 
 export function resetSettings() {
   if (isSettingsLocal()) {
