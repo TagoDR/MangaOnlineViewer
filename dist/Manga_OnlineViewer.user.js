@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaOni, MangaPark, MangaReader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.06.29
+// @version       2025.06.30
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -156,6 +156,7 @@
   function setValueGM(name, value) {
     if (typeof GM_setValue !== 'undefined') {
       GM_setValue(name, value);
+      logScript('Setting: ', name, ' = ', value);
       return value.toString();
     } else {
       logScript('Fake Setting: ', name, ' = ', value);
@@ -958,6 +959,1146 @@
     return changes(changed, original);
   };
 
+  function isImagesManga(manga) {
+    return 'listImages' in manga && !isNothing(manga.listImages);
+  }
+  function isPagesManga(manga) {
+    return 'listPages' in manga && !isNothing(manga.listPages);
+  }
+  function isBruteforceManga(manga) {
+    return 'bruteForce' in manga && !isNothing(manga.bruteForce);
+  }
+
+  var Language = /* @__PURE__ */ (Language2 => {
+    Language2['ENGLISH'] = 'English';
+    Language2['SPANISH'] = 'Spanish';
+    Language2['PORTUGUESE'] = 'Portuguese';
+    Language2['CHINESE'] = 'Chinese';
+    Language2['RAW'] = 'Raw';
+    return Language2;
+  })(Language || {});
+  var Category = /* @__PURE__ */ (Category2 => {
+    Category2['MANGA'] = 'manga';
+    Category2['COMIC'] = 'comic';
+    Category2['HENTAI'] = 'hentai';
+    return Category2;
+  })(Category || {});
+
+  const objectURLRegex = /^blob:(.+?)\/(.+)$/;
+  function getDataFromBase64(src) {
+    return src.slice(src.indexOf(';base64,') + 8);
+  }
+  function isBase64ImageUrl(imageUrl) {
+    const base64Pattern = /^data:image\/(png|jpg|jpeg|gif);base64,/;
+    return base64Pattern.test(imageUrl);
+  }
+  function isObjectURL(url) {
+    return objectURLRegex.test(url);
+  }
+  function getExtension(url) {
+    const parts = url.split('?');
+    const filename = parts[0].split('/').pop();
+    const extensionMatch = filename?.match(/\.[A-Za-z]{2,4}$/);
+    return extensionMatch ? extensionMatch[0].slice(1) : '';
+  }
+  const getExtensionBase64 = base64 => {
+    const c = base64.substring(base64.indexOf('/') + 1, base64.indexOf(';base64'));
+    switch (c) {
+      case '/':
+        return 'jpg';
+      case 'R':
+        return 'gif';
+      case 'U':
+        return 'webp';
+      // case 'i':
+      default:
+        return 'png';
+    }
+  };
+
+  const settings$1 = {
+    threshold: 2e3,
+    throttle: 500,
+    lazyAttribute: 'data-src',
+    targetAttribute: 'src',
+  };
+  let listElements = [];
+  let setup = false;
+  function filterInView(value) {
+    const { element } = value;
+    const rect = element.getBoundingClientRect();
+    const target =
+      (window.innerHeight || document.documentElement.clientHeight) + settings$1.threshold;
+    return rect.top <= target || rect.bottom <= target;
+  }
+  async function showElement(item) {
+    let value = item.element.getAttribute(settings$1.lazyAttribute) ?? '';
+    if (value) {
+      if (!isObjectURL(value) && !isBase64ImageUrl(value) && item.fetchOptions) {
+        value = await fetch(value, item.fetchOptions)
+          .then(resp => resp.blob())
+          .then(blob => blobUtil.blobToDataURL(blob));
+      }
+      item.element.setAttribute(settings$1.targetAttribute, value);
+    }
+    item.callback(item.element)?.catch(logScript);
+  }
+  function executeCheck() {
+    const inView = listElements.filter(filterInView);
+    listElements = listElements.filter(item => !filterInView(item));
+    inView.forEach(showElement);
+  }
+  const observerEvent = _.throttle(executeCheck, settings$1.throttle);
+  function lazyLoad$1(element, callback, fetchOptions) {
+    if (!setup) {
+      window.addEventListener('scroll', observerEvent, {
+        passive: true,
+      });
+      window.addEventListener('touchmove', observerEvent, {
+        passive: true,
+      });
+      window.addEventListener('resize', observerEvent, {
+        passive: true,
+      });
+      setup = true;
+    }
+    listElements.push({ element, callback, fetchOptions });
+    observerEvent();
+  }
+
+  async function fetchText(url, format) {
+    return new Promise(resolve => {
+      logScript('Fetching page: ', url);
+      fetch(url)
+        .then(async response =>
+          // When the page is loaded convert it to text
+          response.text(),
+        )
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, format);
+          resolve(doc);
+        })
+        .catch(err => {
+          logScript('Failed to fetch page: ', err);
+        });
+    });
+  }
+  async function fetchHtml(url) {
+    return fetchText(url, 'text/html');
+  }
+  async function getElementAttribute(url, selector, attribute) {
+    return fetchHtml(url).then(doc => doc.querySelector(selector)?.getAttribute(attribute));
+  }
+
+  function indexList(repeat, begin = 1) {
+    return Array(repeat)
+      .fill(0)
+      .map((_, i) => i + 1)
+      .filter(i => i >= begin);
+  }
+
+  const IconArrowAutofitDown =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8"/>\n  <path d="M18 4v17"/>\n  <path d="M15 18l3 3l3 -3"/>\n</svg>\n';
+
+  const IconArrowAutofitHeight =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-height" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6"/>\n  <path d="M18 14v7"/>\n  <path d="M18 3v7"/>\n  <path d="M15 18l3 3l3 -3"/>\n  <path d="M15 6l3 -3l3 3"/>\n</svg>\n';
+
+  const IconArrowAutofitLeft =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8"/>\n  <path d="M20 18h-17"/>\n  <path d="M6 15l-3 3l3 3"/>\n</svg>\n';
+
+  const IconArrowAutofitRight =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8"/>\n  <path d="M4 18h17"/>\n  <path d="M18 15l3 3l-3 3"/>\n</svg>\n';
+
+  const IconArrowAutofitWidth =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-width" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6"/>\n  <path d="M10 18h-7"/>\n  <path d="M21 18h-7"/>\n  <path d="M6 15l-3 3l3 3"/>\n  <path d="M18 15l3 3l-3 3"/>\n</svg>\n';
+
+  const IconArrowBigLeft =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z"/>\n</svg>\n';
+
+  const IconArrowBigRight =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z"/>\n</svg>\n';
+
+  const IconBookmark =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z"/>\n</svg>\n';
+
+  const IconBookmarkOff =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M7.708 3.721a3.982 3.982 0 0 1 2.292 -.721h4a4 4 0 0 1 4 4v7m0 4v3l-6 -4l-6 4v-14c0 -.308 .035 -.609 .1 -.897"/>\n  <path d="M3 3l18 18"/>\n</svg>\n';
+
+  const IconBookmarks =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmarks" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z"/>\n  <path d="M11 3h5a3 3 0 0 1 3 3v11"/>\n</svg>\n';
+
+  const IconCategory =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 4h6v6h-6z"/>\n  <path d="M14 4h6v6h-6z"/>\n  <path d="M4 14h6v6h-6z"/>\n  <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>\n</svg>\n';
+
+  const IconCheck =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check toggler-on" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M5 12l5 5l10 -10"/>\n</svg>\n';
+
+  const IconDeviceFloppy =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"/>\n  <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\n  <path d="M14 4l0 4l-6 0l0 -4"/>\n</svg>\n';
+
+  const IconExternalLink =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-external-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"/>\n  <path d="M11 13l9 -9"/>\n  <path d="M15 4h5v5"/>\n</svg>\n';
+
+  const IconEye =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/>\n  <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/>\n</svg>\n';
+
+  const IconEyeOff =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828"/>\n  <path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87"/>\n  <path d="M3 3l18 18"/>\n</svg>\n';
+
+  const IconFileDownload =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M14 3v4a1 1 0 0 0 1 1h4"/>\n  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>\n  <path d="M12 17v-6"/>\n  <path d="M9.5 14.5l2.5 2.5l2.5 -2.5"/>\n</svg>\n';
+
+  const IconKeyboard =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-keyboard" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z"/>\n  <path d="M6 10l0 .01"/>\n  <path d="M10 10l0 .01"/>\n  <path d="M14 10l0 .01"/>\n  <path d="M18 10l0 .01"/>\n  <path d="M6 14l0 .01"/>\n  <path d="M18 14l0 .01"/>\n  <path d="M10 14l4 .01"/>\n</svg>\n';
+
+  const IconListNumbers =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-numbers" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M11 6h9"/>\n  <path d="M11 12h9"/>\n  <path d="M12 18h8"/>\n  <path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4"/>\n  <path d="M6 10v-6l-2 2"/>\n</svg>\n';
+
+  const IconLoader2 =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-loader-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 3a9 9 0 1 0 9 9"/>\n</svg>\n';
+
+  const IconLocationCog =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n     class="icon icon-tabler icons-tabler-outline icon-tabler-location-cog">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 18l-2 -4l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5l-3.14 8.697"/>\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\n  <path d="M19.001 15.5v1.5"/>\n  <path d="M19.001 21v1.5"/>\n  <path d="M22.032 17.25l-1.299 .75"/>\n  <path d="M17.27 20l-1.3 .75"/>\n  <path d="M15.97 17.25l1.3 .75"/>\n  <path d="M20.733 20l1.3 .75"/>\n</svg>\n';
+
+  const IconMenu2 =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 6l16 0"/>\n  <path d="M4 12l16 0"/>\n  <path d="M4 18l16 0"/>\n</svg>\n';
+
+  const IconMessage =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M8 9h8"/>\n  <path d="M8 13h6"/>\n  <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"/>\n</svg>\n';
+
+  const IconMoon =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/>\n</svg>\n';
+
+  const IconPalette =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-palette" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"/>\n  <path d="M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\n  <path d="M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\n  <path d="M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\n</svg>\n';
+
+  const IconPencil =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/>\n  <path d="M13.5 6.5l4 4"/>\n</svg>\n';
+
+  const IconPhoto =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 8h.01"/>\n  <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/>\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/>\n  <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/>\n</svg>\n';
+
+  const IconPhotoOff =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo-off" width="24"\n     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"\n     stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 8h.01"/>\n  <path d="M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153"/>\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/>\n  <path d="M16.33 12.338c.574 -.054 1.155 .166 1.67 .662l3 3"/>\n  <path d="M3 3l18 18" color="orange"/>\n</svg>\n';
+
+  const IconPlayerPause =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-pause" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"/>\n  <path d="M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"/>\n</svg>\n';
+
+  const IconPlayerPlay =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M7 4v16l13 -8z"/>\n</svg>\n';
+
+  const IconRefresh =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>\n  <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>\n</svg>\n';
+
+  const IconSettings =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/>\n  <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/>\n</svg>\n';
+
+  const IconSettingsOff =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n     class="icon icon-tabler icons-tabler-outline icon-tabler-settings-off">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M9.451 5.437c.418 -.218 .75 -.609 .874 -1.12c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35c-.486 .118 -.894 .44 -1.123 .878m-.188 3.803c-.517 .523 -1.349 .734 -2.125 .262a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.472 -.774 -.262 -1.604 .259 -2.121"/>\n  <path d="M9.889 9.869a3 3 0 1 0 4.226 4.26m.592 -3.424a3.012 3.012 0 0 0 -1.419 -1.415"/>\n  <path d="M3 3l18 18"/>\n</svg>\n';
+
+  const IconSpacingVertical =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-spacing-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2"/>\n  <path d="M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/>\n  <path d="M16 12h-8"/>\n</svg>\n';
+
+  const IconSun =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/>\n  <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/>\n</svg>\n';
+
+  const IconTrash =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 7l16 0"/>\n  <path d="M10 11l0 6"/>\n  <path d="M14 11l0 6"/>\n  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>\n  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>\n</svg>\n';
+
+  const IconWorldCog =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n     class="icon icon-tabler icons-tabler-outline icon-tabler-world-cog">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M21 12a9 9 0 1 0 -8.979 9"/>\n  <path d="M3.6 9h16.8"/>\n  <path d="M3.6 15h8.9"/>\n  <path d="M11.5 3a17 17 0 0 0 0 18"/>\n  <path d="M12.5 3a16.992 16.992 0 0 1 2.522 10.376"/>\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\n  <path d="M19.001 15.5v1.5"/>\n  <path d="M19.001 21v1.5"/>\n  <path d="M22.032 17.25l-1.299 .75"/>\n  <path d="M17.27 20l-1.3 .75"/>\n  <path d="M15.97 17.25l1.3 .75"/>\n  <path d="M20.733 20l1.3 .75"/>\n</svg>\n';
+
+  const IconX =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x toggler-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M18 6l-12 12"/>\n  <path d="M6 6l12 12"/>\n</svg>\n';
+
+  const IconZoomCancel =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-cancel" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\n  <path d="M8 8l4 4"/>\n  <path d="M12 8l-4 4"/>\n  <path d="M21 21l-6 -6"/>\n</svg>\n';
+
+  const IconZoomIn =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\n  <path d="M7 10l6 0"/>\n  <path d="M10 7l0 6"/>\n  <path d="M21 21l-6 -6"/>\n</svg>\n';
+
+  const IconZoomInArea =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 13v4"/>\n  <path d="M13 15h4"/>\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/>\n  <path d="M22 22l-3 -3"/>\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1"/>\n  <path d="M3 11v-1"/>\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1"/>\n  <path d="M10 3h1"/>\n  <path d="M15 3h1a2 2 0 0 1 2 2v1"/>\n</svg>\n';
+
+  const IconZoomOut =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\n  <path d="M7 10l6 0"/>\n  <path d="M21 21l-6 -6"/>\n</svg>\n';
+
+  const IconZoomOutArea =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M13 15h4"/>\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/>\n  <path d="M22 22l-3 -3"/>\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1"/>\n  <path d="M3 11v-1"/>\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1"/>\n  <path d="M10 3h1"/>\n  <path d="M15 3h1a2 2 0 0 1 2 2v1"/>\n</svg>\n';
+
+  const IconZoomPan =
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-pan" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>\n  <path d="M17 17l-2.5 -2.5"/>\n  <path d="M10 5l2 -2l2 2"/>\n  <path d="M19 10l2 2l-2 2"/>\n  <path d="M5 10l-2 2l2 2"/>\n  <path d="M10 19l2 2l2 -2"/>\n</svg>\n';
+
+  const listBookmarks = () => {
+    if (isEmpty(getSettingsValue('bookmarks'))) {
+      return [getLocaleString('LIST_EMPTY')];
+    }
+    return getSettingsValue('bookmarks').map(
+      (mark, index) => html`
+        <div id="Bookmark${index + 1}" class="BookmarkItem">
+          <span class="bookmarkColumnLarge">
+            <span class="bookmarkName">${mark.name}</span>
+            <br />
+            <a class="bookmarkURl" href="${mark.url}" target="_blank">${mark.url}</a>
+          </span>
+          <span class="bookmarkColumnSmall">
+            <span class="bookmarkDate"> ${new Date(mark.date).toISOString().slice(0, 10)}</span>
+            <br />
+            <span class="bookmarkPage">Page: ${mark.page}</span>
+          </span>
+          <span class="bookmarkFunctions">
+            <a class="" href="${mark.url}" target="_blank">
+              <button class="ControlButton open" title="Open Bookmark" type="button">
+                ${IconExternalLink}
+              </button>
+            </a>
+            <button
+              class="ControlButton erase"
+              title="Delete Bookmark"
+              type="button"
+              value="${mark.url}"
+            >
+              ${IconTrash}
+            </button>
+          </span>
+        </div>
+      `,
+    );
+  };
+  const BookmarkPanel = () => html`
+    <div id="BookmarksPanel" class="panel">
+      <button id="CloseBookmarks" class="closeButton" title="${getLocaleString('CLOSE')}">
+        ${IconX}
+      </button>
+      <button class="Bookmark simpleButton" title="${getLocaleString('BOOKMARK')}">
+        ${IconBookmark} ${IconBookmarkOff}
+      </button>
+      <h2>${getLocaleString('BOOKMARKS')}</h2>
+      <div id="BookmarksList"></div>
+    </div>
+  `;
+  function reloadBookmarks() {
+    const list = document.getElementById('BookmarksList');
+    if (list) {
+      list.innerHTML = listBookmarks().join('');
+    }
+  }
+
+  function scrollToElement(ele) {
+    const chapter = document.querySelector('#Chapter');
+    if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
+      chapter?.scroll(ele?.offsetLeft ?? 0, ele?.offsetTop ?? 0);
+    } else {
+      window?.scroll(ele?.offsetLeft ?? 0, ele?.offsetTop ?? 0);
+    }
+  }
+  function addEvent(ev, fn) {
+    return elem => elem.addEventListener(ev, fn);
+  }
+  function transformScrollToHorizontal(event) {
+    if (!event.deltaY) {
+      return;
+    }
+    event.currentTarget.scrollLeft += event.deltaY + event.deltaX;
+    event.preventDefault();
+  }
+  function transformScrollToHorizontalReverse(event) {
+    if (!event.deltaY) {
+      return;
+    }
+    event.currentTarget.scrollLeft -= event.deltaY + event.deltaX;
+    event.preventDefault();
+  }
+
+  function buttonBookmarksClose() {
+    document.querySelector('#BookmarksPanel')?.classList.remove('visible');
+    document.querySelector('#Overlay')?.classList.remove('visible');
+  }
+  function removeURLBookmark(url = window.location.href) {
+    if (!isNothing(isBookmarked(url))) {
+      logScript(`Bookmark Removed ${url}`);
+      changeSettingsValue('bookmarks', b => b.filter(el => el.url !== url));
+      if (url === window.location.href) {
+        document.querySelector('#MangaOnlineViewer')?.classList.remove('bookmarked');
+      }
+    }
+  }
+  function buttonEraseBookmarks(event) {
+    const target = event.currentTarget.value;
+    logScript(`Bookmark Removed ${target}`);
+    Swal.fire({
+      title: getLocaleString('BOOKMARK_REMOVED'),
+      timer: 1e4,
+      icon: 'error',
+    });
+    removeURLBookmark(target);
+    reloadBookmarks();
+    document
+      .querySelectorAll('.bookmarkFunctions .erase')
+      ?.forEach(addEvent('click', buttonEraseBookmarks));
+  }
+  function buttonBookmarksOpen() {
+    reloadBookmarks();
+    document
+      .querySelectorAll('.bookmarkFunctions .erase')
+      ?.forEach(addEvent('click', buttonEraseBookmarks));
+    document.querySelector('#BookmarksPanel')?.classList.add('visible');
+    document.querySelector('#Overlay')?.classList.add('visible');
+  }
+  function buttonBookmark(event) {
+    document.querySelector('#MangaOnlineViewer')?.classList.toggle('bookmarked');
+    const pagesDistance = [...document.querySelectorAll('.MangaPage')].map(element =>
+      Math.abs(element.offsetTop - window.scrollY),
+    );
+    const currentPage = parseInt(
+      event.currentTarget.parentElement?.querySelector('.PageIndex')?.textContent ?? '0',
+      10,
+    );
+    const num = currentPage || pagesDistance.indexOf(Math.min(...pagesDistance)) + 1;
+    const mark = {
+      name:
+        document
+          .querySelector('title')
+          ?.textContent?.trim()
+          .replace(/^\(\d+%\) */, '') ?? '',
+      url: window.location.href,
+      page: num,
+      date: /* @__PURE__ */ new Date().toISOString().slice(0, 10),
+    };
+    if (isBookmarked(mark.url)) {
+      changeSettingsValue('bookmarks', b => b.filter(el => el.url !== mark.url));
+      Swal.fire({
+        title: getLocaleString('BOOKMARK_REMOVED'),
+        timer: 1e4,
+        icon: 'error',
+      });
+    } else {
+      changeSettingsValue('bookmarks', b => [...b, mark]);
+      Swal.fire({
+        title: getLocaleString('BOOKMARK_SAVED'),
+        html: getLocaleString('BOOKMARK_SAVED').replace('##NUM##', num.toString()),
+        icon: 'success',
+      });
+    }
+    reloadBookmarks();
+    document
+      .querySelectorAll('.bookmarkFunctions .erase')
+      ?.forEach(addEvent('click', buttonEraseBookmarks));
+  }
+  function bookmarks$1() {
+    document.querySelector('#bookmarks')?.addEventListener('click', buttonBookmarksOpen);
+    document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonBookmarksClose));
+    document.querySelector('#Overlay')?.addEventListener('click', buttonBookmarksClose);
+    document
+      .querySelectorAll('.bookmarkFunctions .erase')
+      ?.forEach(addEvent('click', buttonEraseBookmarks));
+    document.querySelectorAll('.Bookmark')?.forEach(addEvent('click', buttonBookmark));
+    document.querySelector('.AddBookmark')?.addEventListener('click', buttonBookmark);
+  }
+
+  function createStyleElement(id, content) {
+    const style = document.createElement('style');
+    style.id = id;
+    style.appendChild(document.createTextNode(content));
+    return style;
+  }
+  function appendStyleSheet(id, content) {
+    if (!document.querySelector(`#${id}`)) {
+      const head = document.head ?? document.querySelector('head');
+      head.appendChild(createStyleElement(id, content));
+    }
+  }
+  function removeStyleSheet(id) {
+    document.querySelectorAll(`style[id="${id}"]`).forEach(elem => {
+      elem.remove();
+    });
+  }
+  function replaceStyleSheet(id, content) {
+    removeStyleSheet(id);
+    appendStyleSheet(id, content);
+  }
+  function wrapStyle(id, css) {
+    return html`
+      <style id="${id}">
+        ${css}
+      </style>
+    `;
+  }
+
+  const keybindList = () => {
+    const keybinds = getSettingsValue('keybinds');
+    return Object.keys(keybinds).map(kb => {
+      const keys = keybinds[kb]?.length
+        ? keybinds[kb]?.map(key => html`<kbd class="dark">${key}</kbd>`).join(' / ')
+        : '';
+      return html`<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
+    });
+  };
+  const keybindEditor = () =>
+    Object.keys(getSettingsValue('keybinds'))
+      .map(
+        // Language=html
+        kb =>
+          html`<label for="${kb}">${getLocaleString(kb)}:</label>
+            <input
+              type="text"
+              class="KeybindInput"
+              id="${kb}"
+              name="${kb}"
+              value="${getSettingsValue('keybinds')[kb]?.join(' , ') ?? ''}"
+            />`,
+      )
+      .concat(html` <div id="HotKeysRules">${getLocaleString('KEYBIND_RULES')}</div>`);
+  const KeybindingsPanel = () => html`
+    <div id="KeybindingsPanel" class="panel">
+      <h2>${getLocaleString('KEYBINDINGS')}</h2>
+      <button id="CloseKeybindings" class="closeButton" title="${getLocaleString('CLOSE')}">
+        ${IconX}
+      </button>
+      <div class="controls">
+        <button
+          id="EditKeybindings"
+          class="ControlButton"
+          type="button"
+          title="${getLocaleString('EDIT_KEYBINDS')}"
+        >
+          ${IconPencil} ${getLocaleString('BUTTON_EDIT')}
+        </button>
+        <button
+          id="SaveKeybindings"
+          class="ControlButton hidden"
+          type="button"
+          title="${getLocaleString('SAVE_KEYBINDS')}"
+        >
+          ${IconDeviceFloppy} ${getLocaleString('BUTTON_SAVE')}
+        </button>
+      </div>
+      <div id="KeybindingsList">${keybindList().join('\n')}</div>
+    </div>
+  `;
+
+  const doClick = selector => document.querySelector(selector)?.dispatchEvent(new Event('click'));
+  function doScrolling(sign) {
+    const chapter = document.querySelector('#Chapter');
+    if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
+      const scrollDirection = chapter.classList.contains('FluidRTL') ? -1 : 1;
+      chapter.scrollBy({
+        left: 0.8 * window.innerWidth * sign * scrollDirection,
+        behavior: 'smooth',
+      });
+    } else if (getSettingsValue('zoomMode') === 'height') {
+      const pages = [...document.querySelectorAll('.MangaPage')];
+      const distance = pages.map(element => Math.abs(element.offsetTop - window.scrollY));
+      const currentPage = _.indexOf(distance, _.min(distance));
+      const target = currentPage + sign;
+      const header = document.querySelector('#Header');
+      if (header && target < 0) {
+        scrollToElement(header);
+      } else if (header && target >= pages.length) {
+        header.classList.add('headroom-end');
+      } else {
+        logScript(`Current array page ${currentPage},`, `Scrolling to page ${target}`);
+        scrollToElement(pages.at(target));
+      }
+    } else {
+      window.scrollBy({
+        top: 0.8 * window.innerHeight * sign,
+        behavior: 'smooth',
+      });
+    }
+  }
+  const actions = {
+    SCROLL_UP() {
+      doScrolling(-1);
+    },
+    SCROLL_DOWN() {
+      doScrolling(1);
+    },
+    NEXT_CHAPTER() {
+      doClick('#next');
+    },
+    PREVIOUS_CHAPTER() {
+      doClick('#prev');
+    },
+    ENLARGE() {
+      doClick('#enlarge');
+    },
+    REDUCE() {
+      doClick('#reduce');
+    },
+    RESTORE() {
+      doClick('#restore');
+    },
+    FIT_WIDTH() {
+      doClick('#fitWidth');
+    },
+    FIT_HEIGHT() {
+      doClick('#fitHeight');
+    },
+    SETTINGS() {
+      doClick('#settings');
+    },
+    VIEW_MODE_WEBCOMIC() {
+      doClick('#webComic');
+    },
+    VIEW_MODE_VERTICAL() {
+      doClick('#verticalMode');
+    },
+    VIEW_MODE_LEFT() {
+      doClick('#rtlMode');
+    },
+    VIEW_MODE_RIGHT() {
+      doClick('#ltrMode');
+    },
+    SCROLL_START() {
+      doClick('#AutoScroll');
+    },
+  };
+  function keybindings$1() {
+    document.onkeydown = null;
+    document.onkeyup = null;
+    window.onkeydown = null;
+    window.onkeyup = null;
+    window.onload = null;
+    document.body.onload = null;
+    hotkeys.unbind();
+    Object.keys(getSettingsValue('keybinds')).forEach(key => {
+      hotkeys(
+        getSettingsValue('keybinds')[key]?.join(',') ?? '',
+        _.throttle(event => {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          event.stopPropagation();
+          actions[key]();
+        }, 100),
+      );
+    });
+  }
+
+  function toggleFunction(selector, classname, open, close) {
+    return () => {
+      const isOpen = document.querySelector(selector)?.className.includes(classname);
+      if (isOpen) {
+        close();
+      } else {
+        open();
+      }
+    };
+  }
+  function buttonHeaderClick() {
+    const header = document.querySelector('#Header');
+    if (header?.classList.contains('click')) {
+      header?.classList.toggle('visible');
+    }
+  }
+  function isMouseInsideRegion(event, headerWidth, headerHeight) {
+    return (
+      event.clientX >= 0 &&
+      event.clientX <= headerWidth &&
+      event.clientY >= 0 &&
+      event.clientY <= headerHeight
+    );
+  }
+  function headerHover(event) {
+    const header = document.querySelector('#Header');
+    if (header?.classList.contains('hover')) {
+      if (isMouseInsideRegion(event, header.clientWidth, header.clientHeight)) {
+        document.querySelector('#menu')?.classList.add('hide');
+        header?.classList.add('visible');
+      } else {
+        document.querySelector('#menu')?.classList.remove('hide');
+        header?.classList.remove('visible');
+      }
+    }
+  }
+  function buttonSettingsOpen() {
+    document.querySelector('#SettingsPanel')?.classList.add('visible');
+    document.querySelector('#Navigation')?.classList.add('visible');
+    document.querySelector('#Header')?.classList.add('visible');
+    document.querySelector('#Overlay')?.classList.add('visible');
+  }
+  function buttonSettingsClose() {
+    document.querySelector('#SettingsPanel')?.classList.remove('visible');
+    document.querySelector('#Navigation')?.classList.remove('visible');
+    document.querySelector('#Header')?.classList.remove('visible');
+    document.querySelector('#Overlay')?.classList.remove('visible');
+  }
+  function buttonKeybindingsOpen() {
+    const keybindingList = document.querySelector('#KeybindingsList');
+    if (keybindingList) keybindingList.innerHTML = keybindList().join('\n');
+    document.querySelector('#SaveKeybindings')?.classList.add('hidden');
+    document.querySelector('#EditKeybindings')?.classList.remove('hidden');
+    document.querySelector('#KeybindingsPanel')?.classList.add('visible');
+    document.querySelector('#Overlay')?.classList.add('visible');
+  }
+  function buttonKeybindingsClose() {
+    document.querySelector('#SaveKeybindings')?.classList.add('hidden');
+    document.querySelector('#EditKeybindings')?.classList.remove('hidden');
+    document.querySelector('#KeybindingsPanel')?.classList.remove('visible');
+    document.querySelector('#Overlay')?.classList.remove('visible');
+  }
+  function saveKeybindings() {
+    const newkeybinds = getSettingsValue('keybinds');
+    Object.keys(getSettingsValue('keybinds')).forEach(kb => {
+      const keys = document
+        .querySelector(`#${kb}`)
+        ?.value.split(',')
+        ?.map(value => value.trim());
+      newkeybinds[kb] = isNothing(keys) ? void 0 : keys;
+    });
+    setSettingsValue('keybinds', newkeybinds);
+    const keybindingList = document.querySelector('#KeybindingsList');
+    if (keybindingList) keybindingList.innerHTML = keybindList().join('\n');
+    document.querySelector('#SaveKeybindings')?.classList.add('hidden');
+    document.querySelector('#EditKeybindings')?.classList.remove('hidden');
+    keybindings$1();
+  }
+  function editKeybindings() {
+    const keybindingList = document.querySelector('#KeybindingsList');
+    if (keybindingList) keybindingList.innerHTML = keybindEditor().join('\n');
+    document.querySelector('#SaveKeybindings')?.classList.remove('hidden');
+    document.querySelector('#EditKeybindings')?.classList.add('hidden');
+  }
+  function panels() {
+    document.querySelector('#menu')?.addEventListener('click', buttonHeaderClick);
+    document.addEventListener('mousemove', _.throttle(headerHover, 300));
+    document
+      .querySelector('#settings')
+      ?.addEventListener(
+        'click',
+        toggleFunction('#SettingsPanel', 'visible', buttonSettingsOpen, buttonSettingsClose),
+      );
+    document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonSettingsClose));
+    document.querySelector('#Overlay')?.addEventListener('click', buttonSettingsClose);
+    document.querySelector('#keybindings')?.addEventListener('click', buttonKeybindingsOpen);
+    document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonKeybindingsClose));
+    document.querySelector('#Overlay')?.addEventListener('click', buttonKeybindingsClose);
+    document.querySelector('#EditKeybindings')?.addEventListener('click', editKeybindings);
+    document.querySelector('#SaveKeybindings')?.addEventListener('click', saveKeybindings);
+  }
+
+  function buttonResetSettings() {
+    resetSettings();
+    const elem = document.getElementById('MangaOnlineViewer');
+    elem?.removeAttribute('locale');
+    buttonSettingsOpen();
+  }
+  function changeSettingsScope(event) {
+    const scope = event.currentTarget;
+    toggleLocalSettings(scope.value === 'true');
+    buttonSettingsOpen();
+  }
+  function changeLocale(event) {
+    const locale = event.currentTarget.value;
+    setSettingsValue('locale', locale);
+    const elem = document.getElementById('MangaOnlineViewer');
+    elem?.setAttribute('locale', locale);
+    elem?.dispatchEvent(new Event('hydrate'));
+    buttonSettingsOpen();
+  }
+  function changeLoadMode(event) {
+    const mode = event.currentTarget.value;
+    setSettingsValue('loadMode', mode);
+  }
+  function checkFitWidthOversize(event) {
+    const checked = event.currentTarget.checked;
+    document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize', checked);
+    setSettingsValue('fitWidthIfOversize', checked);
+  }
+  function checkVerticalSeparator(event) {
+    const checked = event.currentTarget.checked;
+    document.querySelector('#Chapter')?.classList.toggle('separator', checked);
+    setSettingsValue('verticalSeparator', checked);
+  }
+  function checkShowThumbnails(event) {
+    const checked = event.currentTarget.checked;
+    document.querySelector('#Navigation')?.classList.toggle('disabled', !checked);
+    setSettingsValue('showThumbnails', checked);
+    applyZoom();
+  }
+  function checkEnableComments(event) {
+    const checked = event.currentTarget.checked;
+    document.querySelector('#CommentsButton')?.classList.toggle('disabled', !checked);
+    setSettingsValue('enableComments', checked);
+    applyZoom();
+  }
+  function changeAutoDownload(event) {
+    const checked = event.currentTarget.checked;
+    setSettingsValue('downloadZip', checked);
+    if (checked) {
+      Swal.fire({
+        title: getLocaleString('ATTENTION'),
+        text: getLocaleString('AUTO_DOWNLOAD'),
+        timer: 1e4,
+        icon: 'info',
+      });
+    }
+  }
+  function checkLazyLoad(event) {
+    const checked = event.currentTarget.checked;
+    setSettingsValue('lazyLoadImages', checked);
+    const start = document.querySelector('.lazyStart');
+    start?.classList.toggle('show', getSettingsValue('lazyLoadImages'));
+    if (checked) {
+      Swal.fire({
+        title: getLocaleString('WARNING'),
+        html: getLocaleString('LAZY_LOAD'),
+        icon: 'warning',
+      });
+    }
+  }
+  function changeLazyStart(event) {
+    const start = event.currentTarget.value;
+    setSettingsValue('lazyStart', parseInt(start, 10));
+  }
+  function changePagesPerSecond(event) {
+    const timer = parseInt(event.currentTarget.value, 10);
+    setSettingsValue('throttlePageLoad', timer);
+    if (timer < 100) {
+      Swal.fire({
+        title: getLocaleString('SPEED_WARNING'),
+        html: getLocaleString('SPEED_WARNING_MESSAGE'),
+        icon: 'warning',
+      });
+    }
+  }
+  function changeZoomStep(event) {
+    const step = event.currentTarget.value;
+    setSettingsValue('zoomStep', parseInt(step, 10));
+  }
+  function changeMinZoom(event) {
+    const min = event.currentTarget.value;
+    replaceStyleSheet('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
+    setSettingsValue('minZoom', parseInt(min, 10));
+  }
+  function checkHideImageControls(event) {
+    const checked = event.currentTarget.checked;
+    document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls', checked);
+    setSettingsValue('hidePageControls', checked);
+  }
+  function updateHeaderType(mode) {
+    const header = document.querySelector('#Header');
+    if (!header?.classList.contains(mode)) {
+      const menu = document.querySelector('#menu');
+      header?.classList.remove('scroll', 'click', 'hover', 'fixed', 'simple', 'visible');
+      menu?.classList.remove('scroll', 'click', 'hover', 'fixed', 'simple', 'hide');
+      header?.classList.add(mode);
+      menu?.classList.add(mode);
+    }
+  }
+  function changeHeaderType(event) {
+    const headerType = event.currentTarget.value;
+    updateHeaderType(headerType);
+    setSettingsValue('header', headerType);
+  }
+  function changeScrollHeight(event) {
+    const { value } = event.currentTarget;
+    setSettingsValue('scrollHeight', parseInt(value, 10));
+  }
+  function options() {
+    document.querySelector('#ResetSettings')?.addEventListener('click', buttonResetSettings);
+    document
+      .querySelectorAll('#SettingsScope input[type=radio]')
+      .forEach(addEvent('change', changeSettingsScope));
+    document.querySelector('#locale')?.addEventListener('change', changeLocale);
+    document.querySelector('#fitIfOversize')?.addEventListener('change', checkFitWidthOversize);
+    document
+      .querySelector('#verticalSeparator')
+      ?.addEventListener('change', checkVerticalSeparator);
+    document.querySelector('#loadMode')?.addEventListener('change', changeLoadMode);
+    document.querySelector('#showThumbnails')?.addEventListener('change', checkShowThumbnails);
+    document.querySelector('#enableComments')?.addEventListener('change', checkEnableComments);
+    document.querySelector('#downloadZip')?.addEventListener('change', changeAutoDownload);
+    document.querySelector('#lazyLoadImages')?.addEventListener('change', checkLazyLoad);
+    document.querySelector('#lazyStart')?.addEventListener('change', changeLazyStart);
+    document.querySelector('#PagesPerSecond')?.addEventListener('change', changePagesPerSecond);
+    document.querySelector('#zoomStep')?.addEventListener('change', changeZoomStep);
+    document.querySelector('#minZoom')?.addEventListener('input', changeMinZoom);
+    document.querySelector('#hidePageControls')?.addEventListener('change', checkHideImageControls);
+    document.querySelector('#headerType')?.addEventListener('change', changeHeaderType);
+    document.querySelector('#scrollHeight')?.addEventListener('change', changeScrollHeight);
+  }
+
+  function applyZoom(
+    mode = getSettingsValue('zoomMode'),
+    value = getSettingsValue('defaultZoom'),
+    pages = '.PageContent img',
+  ) {
+    const globalZoomVal = document.querySelector('#ZoomVal');
+    const zoom = document.querySelector('#Zoom');
+    if (globalZoomVal) {
+      if (zoom && mode === 'percent') {
+        globalZoomVal.textContent = `${value}%`;
+        zoom.value = value.toString();
+      } else {
+        globalZoomVal.textContent = mode;
+      }
+    }
+    if (mode === 'height') {
+      updateHeaderType('click');
+    } else {
+      updateHeaderType(getSettingsValue('header'));
+    }
+    const pg = [...document.querySelectorAll(pages)];
+    pg.forEach(img => {
+      img.removeAttribute('width');
+      img.removeAttribute('height');
+      img.removeAttribute('style');
+      if (mode === 'width') {
+        img.style.width = `${window.innerWidth}px`;
+      } else if (mode === 'height') {
+        const nextHeight = window.innerHeight + (getSettingsValue('showThumbnails') ? -29 : 0);
+        img.style.height = `${nextHeight}px`;
+        img.style.minWidth = 'unset';
+      } else if (mode === 'percent' && value >= 0 && value !== 100) {
+        img.style.width = `${img.naturalWidth * (value / 100)}px`;
+      }
+    });
+  }
+  function invalidateImageCache(src, repeat) {
+    const url = src.replace(/[?&]forceReload=\d+$/, '');
+    const symbol = !url.includes('?') ? '?' : '&';
+    return `${url + symbol}forceReload=${repeat}`;
+  }
+  function getRepeatValue(src) {
+    let repeat = 1;
+    const cache = src?.match(/forceReload=(\d+)$/);
+    if (cache?.at(1)) {
+      repeat = parseInt(cache[1], 10) + 1;
+    }
+    return repeat;
+  }
+  function reloadImage(img) {
+    const src = img.getAttribute('src');
+    if (!src) {
+      return;
+    }
+    img.removeAttribute('src');
+    if (isBase64ImageUrl(src) || isObjectURL(src)) {
+      img.setAttribute('src', src);
+    } else {
+      img.setAttribute('src', invalidateImageCache(src, getRepeatValue(src)));
+    }
+  }
+  function onImagesDone() {
+    logScript('Images Loading Complete');
+    if (getSettingsValue('downloadZip')) {
+      document.getElementById('download')?.dispatchEvent(new Event('click'));
+    }
+    document.getElementById('download')?.classList.remove('disabled');
+  }
+  function updateProgress() {
+    const total = document.querySelectorAll('.PageContent .PageImg').length;
+    const loaded = document.querySelectorAll('.PageContent .PageImg.imgLoaded').length;
+    const percentage = Math.floor((loaded / total) * 100);
+    const title = document.querySelector('title');
+    if (title) {
+      title.innerHTML = html`(${percentage}%) ${document.querySelector('#MangaTitle')?.textContent}`;
+    }
+    document.querySelectorAll('#Counters i, #NavigationCounters i').forEach(ele => {
+      ele.textContent = loaded.toString();
+    });
+    NProgress.configure({
+      showSpinner: false,
+    }).set(loaded / total);
+    logScript(`Progress: ${percentage}%`);
+    if (loaded === total) {
+      onImagesDone();
+    }
+  }
+  const applyLastGlobalZoom = (pages = '.PageContent img') => {
+    const zoomVal = document.querySelector('#ZoomVal')?.textContent?.trim();
+    if (zoomVal?.match(/^\d+%$/)) {
+      applyZoom('percent', parseInt(zoomVal, 10), pages);
+    } else {
+      applyZoom(zoomVal, 100, pages);
+    }
+  };
+  function onImagesSuccess() {
+    return instance => {
+      instance.images.forEach(image => {
+        image.img.classList.add('imgLoaded');
+        image.img.classList.remove('imgBroken');
+        const thumbId = image.img.id.replace('PageImg', 'ThumbnailImg');
+        const thumb = document.getElementById(thumbId);
+        thumb?.classList.remove('imgBroken');
+        if (thumb) {
+          thumb.setAttribute('src', image.img.getAttribute('src') ?? '');
+        }
+        applyLastGlobalZoom(`#${image.img.id}`);
+        updateProgress();
+      });
+    };
+  }
+  function onImagesFail(manga) {
+    return instance => {
+      instance.images.forEach(image => {
+        image.img.classList.add('imgBroken');
+        const thumbId = image.img.id.replace('PageImg', 'ThumbnailImg');
+        const thumb = document.getElementById(thumbId);
+        thumb?.classList.add('imgBroken');
+        const src = image.img.getAttribute('src');
+        if (src && getRepeatValue(src) <= getSettingsValue('maxReload')) {
+          setTimeout(async () => {
+            if (manga.reload) {
+              const id = parseInt(`0${/\d+/.exec(image.img.id)}`, 10);
+              const alt = await manga.reload(id);
+              image.img.setAttribute('src', alt);
+            } else {
+              reloadImage(image.img);
+            }
+            if (image.img.parentElement) {
+              const imgLoad = imagesLoaded(image.img.parentElement);
+              imgLoad.on('done', onImagesSuccess());
+              imgLoad.on('fail', onImagesFail(manga));
+            }
+          }, 2e3);
+        }
+      });
+    };
+  }
+  function normalizeUrl(url) {
+    if (url) {
+      let uri = url.trim();
+      if (uri.startsWith('//')) {
+        uri = `https:${uri}`;
+      }
+      return uri;
+    }
+    return '';
+  }
+  function addImg(manga, index, imageSrc, position) {
+    const relativePosition = position - (manga.begin ?? 0);
+    let src = normalizeUrl(imageSrc);
+    const img = document.querySelector(`#PageImg${index}`);
+    if (img) {
+      if (
+        !(manga.lazy ?? getSettingsValue('lazyLoadImages')) ||
+        relativePosition <= getSettingsValue('lazyStart')
+      ) {
+        setTimeout(
+          async () => {
+            if (!isObjectURL(src) && !isBase64ImageUrl(src) && manga.fetchOptions) {
+              src = await fetch(src, manga.fetchOptions)
+                .then(resp => resp.blob())
+                .then(blob => blobUtil.blobToDataURL(blob));
+            }
+            if (img.parentElement) {
+              const imgLoad = imagesLoaded(img.parentElement);
+              imgLoad.on('done', onImagesSuccess());
+              imgLoad.on('fail', onImagesFail(manga));
+            }
+            img.setAttribute('src', src);
+            logScript('Loaded Image:', index, 'Source:', src);
+          },
+          (manga.timer ?? getSettingsValue('throttlePageLoad')) * relativePosition,
+        );
+      } else {
+        img.setAttribute('data-src', normalizeUrl(src));
+        lazyLoad$1(
+          img,
+          () => {
+            if (img.parentElement) {
+              const imgLoad = imagesLoaded(img.parentElement);
+              imgLoad.on('done', onImagesSuccess());
+              imgLoad.on('fail', onImagesFail(manga));
+              logScript('Lazy Image: ', index, ' Source: ', img.getAttribute('src'));
+            }
+          },
+          manga.fetchOptions,
+        );
+      }
+      if (manga.pages === position) removeURLBookmark();
+    }
+  }
+  function findPage(manga, index, pageUrl, lazy) {
+    return async () => {
+      const src = await getElementAttribute(pageUrl, manga.img, manga.lazyAttr ?? 'src');
+      const img = document.querySelector(`#PageImg${index}`);
+      if (src && img) {
+        img.style.width = 'auto';
+        if (img.parentElement) {
+          const imgLoad = imagesLoaded(img.parentElement);
+          imgLoad.on('done', onImagesSuccess());
+          imgLoad.on('fail', onImagesFail(manga));
+        }
+        img.setAttribute('src', src);
+        logScript(`${lazy && 'Lazy '}Page: `, index, ' Source: ', img.getAttribute('src'));
+      }
+    };
+  }
+  async function addPage(manga, index, pageUrl, position) {
+    const relativePosition = position - (manga.begin ?? 0);
+    const img = document.querySelector(`#PageImg${index}`);
+    if (img) {
+      if (
+        !(manga.lazy ?? getSettingsValue('lazyLoadImages')) ||
+        relativePosition <= getSettingsValue('lazyStart')
+      ) {
+        setTimeout(
+          () => {
+            findPage(manga, index, pageUrl, false)().catch(logScript);
+          },
+          (manga.timer ?? getSettingsValue('throttlePageLoad')) * relativePosition,
+        );
+      } else {
+        img.setAttribute(
+          'data-src',
+          'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
+        );
+        lazyLoad$1(img, findPage(manga, index, pageUrl, true));
+      }
+      if (manga.pages === position) removeURLBookmark();
+    }
+  }
+  function loadMangaPages(begin, manga) {
+    indexList(manga.pages, begin).forEach((index, position) => {
+      addPage(manga, index, manga.listPages[index - 1], position).catch(logScript);
+    });
+  }
+  function loadMangaImages(begin, manga) {
+    indexList(manga.pages, begin).forEach((index, position) => {
+      addImg(manga, index, manga.listImages[index - 1], position);
+    });
+  }
+  function loadManga(manga, begin = 1) {
+    logScript('Loading Images');
+    logScript(
+      `Intervals: ${manga.timer ?? getSettingsValue('throttlePageLoad') ?? 'Default(1000)'}`,
+    );
+    logScript(
+      `Lazy: ${manga.lazy ?? getSettingsValue('lazyLoadImages')}, Starting from: ${getSettingsValue('lazyStart')}`,
+    );
+    if (isImagesManga(manga)) {
+      logScript('Method: Images:', manga.listImages);
+      loadMangaImages(begin, manga);
+    } else if (isPagesManga(manga)) {
+      logScript('Method: Pages:', manga.listPages);
+      loadMangaPages(begin, manga);
+    } else if (isBruteforceManga(manga)) {
+      logScript('Method: Brute Force');
+      manga.bruteForce({
+        begin,
+        addImg,
+        loadImages(list) {
+          loadMangaImages(begin, { ...manga, listImages: list });
+        },
+        loadPages(list, img, lazyAttr) {
+          loadMangaPages(begin, {
+            ...manga,
+            listPages: list,
+            img,
+            lazyAttr,
+          });
+        },
+        wait: getSettingsValue('throttlePageLoad'),
+      });
+    } else {
+      logScript('No Loading Method Found');
+    }
+  }
+
   const defaultSettings = {
     enabled: true,
     locale: 'en_US',
@@ -1002,19 +2143,21 @@
       SCROLL_START: ['space'],
     },
   };
+  const mobileSettings = {
+    lazyLoadImages: true,
+    fitWidthIfOversize: true,
+    showThumbnails: false,
+    viewMode: 'WebComic',
+    header: 'click',
+  };
   function getDefault(global = true) {
     return !isMobile()
       ? { ...defaultSettings, enabled: global, theme: global ? 'darkblue' : 'darkgreen' }
-      : _.defaultsDeep(
-          {
-            lazyLoadImages: true,
-            fitWidthIfOversize: true,
-            showThumbnails: false,
-            viewMode: 'WebComic',
-            header: 'click',
-          },
-          { ...defaultSettings, enabled: global, theme: global ? 'darkblue' : 'darkgreen' },
-        );
+      : _.defaultsDeep(mobileSettings, {
+          ...defaultSettings,
+          enabled: global,
+          theme: global ? 'darkblue' : 'darkgreen',
+        });
   }
   let globalSettings = _.defaultsDeep(getGlobalSettings(getDefault()), getDefault());
   let localSettings = _.defaultsDeep(getLocalSettings(getDefault(false)), getDefault(false));
@@ -1024,24 +2167,28 @@
   }
   giveToWindow('MOVSettings', showSettings);
   const isSettingsLocal = () => localSettings?.enabled === true;
-  settingsChangeListener(newValue => {
+  function syncGlobalSettings(newValue) {
     const newSettings = _.defaultsDeep(newValue, getDefault());
     const diff = globalSettings ? diffObj(newSettings, globalSettings) : newSettings;
     if (!isNothing(diff)) {
       logScript('Imported Global Settings', diff);
       globalSettings = newSettings;
       document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
+      applyZoom(getSettingsValue('zoomMode'), getSettingsValue('defaultZoom'));
     }
-  }, 'settings');
-  settingsChangeListener(newValue => {
+  }
+  settingsChangeListener(_.debounce(syncGlobalSettings, 300), 'settings');
+  function syncLocalSettings(newValue) {
     const newSettings = _.defaultsDeep(newValue, getDefault(false));
     const diff = localSettings ? diffObj(newSettings, localSettings) : newSettings;
     if (!isNothing(diff)) {
       logScript('Imported Local Settings', diff);
       localSettings = newSettings;
       document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
+      applyZoom(getSettingsValue('zoomMode'), getSettingsValue('defaultZoom'));
     }
-  }, window.location.hostname);
+  }
+  settingsChangeListener(_.debounce(syncLocalSettings, 300), window.location.hostname);
   function getSettingsValue(key) {
     if (isSettingsLocal()) {
       return localSettings[key];
@@ -1050,21 +2197,22 @@
   }
   function setSettingsValue(key, value) {
     if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
-      localSettings[key] = value;
+      localSettings = { ...localSettings, [key]: value };
       setLocalSettings(diffObj(localSettings, getDefault(false)));
     } else {
-      globalSettings[key] = value;
+      globalSettings = { ...globalSettings, [key]: value };
       setGlobalSettings(diffObj(globalSettings, getDefault()));
     }
   }
   function changeSettingsValue(key, fn) {
-    if (isSettingsLocal()) {
-      localSettings[key] = fn(localSettings[key]);
-      setLocalSettings(diffObj(localSettings, getDefault(false)));
-    } else {
-      globalSettings[key] = fn(globalSettings[key]);
-      setGlobalSettings(diffObj(globalSettings, getDefault()));
-    }
+    setSettingsValue(
+      key,
+      fn(
+        isSettingsLocal() && !['locale', 'bookmarks'].includes(key)
+          ? localSettings[key]
+          : globalSettings[key],
+      ),
+    );
   }
   function getLocaleString(name) {
     const locale = locales.find(l => l.ID === getSettingsValue('locale'));
@@ -1108,31 +2256,6 @@
   function isBookmarked(url = window.location.href) {
     return globalSettings.bookmarks.find(el => el.url === url)?.page;
   }
-
-  function isImagesManga(manga) {
-    return 'listImages' in manga && !isNothing(manga.listImages);
-  }
-  function isPagesManga(manga) {
-    return 'listPages' in manga && !isNothing(manga.listPages);
-  }
-  function isBruteforceManga(manga) {
-    return 'bruteForce' in manga && !isNothing(manga.bruteForce);
-  }
-
-  var Language = /* @__PURE__ */ (Language2 => {
-    Language2['ENGLISH'] = 'English';
-    Language2['SPANISH'] = 'Spanish';
-    Language2['PORTUGUESE'] = 'Portuguese';
-    Language2['CHINESE'] = 'Chinese';
-    Language2['RAW'] = 'Raw';
-    return Language2;
-  })(Language || {});
-  var Category = /* @__PURE__ */ (Category2 => {
-    Category2['MANGA'] = 'manga';
-    Category2['COMIC'] = 'comic';
-    Category2['HENTAI'] = 'hentai';
-    return Category2;
-  })(Category || {});
 
   const colors = {
     dark: {
@@ -1620,305 +2743,6 @@
     document.querySelector('#AutoScroll')?.addEventListener('click', toggleAutoScroll);
   }
 
-  const IconArrowAutofitDown =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8"/>\n  <path d="M18 4v17"/>\n  <path d="M15 18l3 3l3 -3"/>\n</svg>\n';
-
-  const IconArrowAutofitHeight =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-height" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6"/>\n  <path d="M18 14v7"/>\n  <path d="M18 3v7"/>\n  <path d="M15 18l3 3l3 -3"/>\n  <path d="M15 6l3 -3l3 3"/>\n</svg>\n';
-
-  const IconArrowAutofitLeft =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8"/>\n  <path d="M20 18h-17"/>\n  <path d="M6 15l-3 3l3 3"/>\n</svg>\n';
-
-  const IconArrowAutofitRight =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8"/>\n  <path d="M4 18h17"/>\n  <path d="M18 15l3 3l-3 3"/>\n</svg>\n';
-
-  const IconArrowAutofitWidth =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-width" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6"/>\n  <path d="M10 18h-7"/>\n  <path d="M21 18h-7"/>\n  <path d="M6 15l-3 3l3 3"/>\n  <path d="M18 15l3 3l-3 3"/>\n</svg>\n';
-
-  const IconArrowBigLeft =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z"/>\n</svg>\n';
-
-  const IconArrowBigRight =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z"/>\n</svg>\n';
-
-  const IconBookmark =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z"/>\n</svg>\n';
-
-  const IconBookmarkOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M7.708 3.721a3.982 3.982 0 0 1 2.292 -.721h4a4 4 0 0 1 4 4v7m0 4v3l-6 -4l-6 4v-14c0 -.308 .035 -.609 .1 -.897"/>\n  <path d="M3 3l18 18"/>\n</svg>\n';
-
-  const IconBookmarks =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmarks" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z"/>\n  <path d="M11 3h5a3 3 0 0 1 3 3v11"/>\n</svg>\n';
-
-  const IconCategory =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 4h6v6h-6z"/>\n  <path d="M14 4h6v6h-6z"/>\n  <path d="M4 14h6v6h-6z"/>\n  <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>\n</svg>\n';
-
-  const IconCheck =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check toggler-on" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M5 12l5 5l10 -10"/>\n</svg>\n';
-
-  const IconDeviceFloppy =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"/>\n  <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\n  <path d="M14 4l0 4l-6 0l0 -4"/>\n</svg>\n';
-
-  const IconExternalLink =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-external-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"/>\n  <path d="M11 13l9 -9"/>\n  <path d="M15 4h5v5"/>\n</svg>\n';
-
-  const IconEye =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/>\n  <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/>\n</svg>\n';
-
-  const IconEyeOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828"/>\n  <path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87"/>\n  <path d="M3 3l18 18"/>\n</svg>\n';
-
-  const IconFileDownload =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M14 3v4a1 1 0 0 0 1 1h4"/>\n  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>\n  <path d="M12 17v-6"/>\n  <path d="M9.5 14.5l2.5 2.5l2.5 -2.5"/>\n</svg>\n';
-
-  const IconKeyboard =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-keyboard" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z"/>\n  <path d="M6 10l0 .01"/>\n  <path d="M10 10l0 .01"/>\n  <path d="M14 10l0 .01"/>\n  <path d="M18 10l0 .01"/>\n  <path d="M6 14l0 .01"/>\n  <path d="M18 14l0 .01"/>\n  <path d="M10 14l4 .01"/>\n</svg>\n';
-
-  const IconListNumbers =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-numbers" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M11 6h9"/>\n  <path d="M11 12h9"/>\n  <path d="M12 18h8"/>\n  <path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4"/>\n  <path d="M6 10v-6l-2 2"/>\n</svg>\n';
-
-  const IconLoader2 =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-loader-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 3a9 9 0 1 0 9 9"/>\n</svg>\n';
-
-  const IconLocationCog =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n     class="icon icon-tabler icons-tabler-outline icon-tabler-location-cog">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 18l-2 -4l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5l-3.14 8.697"/>\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\n  <path d="M19.001 15.5v1.5"/>\n  <path d="M19.001 21v1.5"/>\n  <path d="M22.032 17.25l-1.299 .75"/>\n  <path d="M17.27 20l-1.3 .75"/>\n  <path d="M15.97 17.25l1.3 .75"/>\n  <path d="M20.733 20l1.3 .75"/>\n</svg>\n';
-
-  const IconMenu2 =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 6l16 0"/>\n  <path d="M4 12l16 0"/>\n  <path d="M4 18l16 0"/>\n</svg>\n';
-
-  const IconMessage =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M8 9h8"/>\n  <path d="M8 13h6"/>\n  <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"/>\n</svg>\n';
-
-  const IconMoon =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/>\n</svg>\n';
-
-  const IconPalette =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-palette" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"/>\n  <path d="M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\n  <path d="M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\n  <path d="M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\n</svg>\n';
-
-  const IconPencil =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/>\n  <path d="M13.5 6.5l4 4"/>\n</svg>\n';
-
-  const IconPhoto =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 8h.01"/>\n  <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/>\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/>\n  <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/>\n</svg>\n';
-
-  const IconPhotoOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo-off" width="24"\n     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"\n     stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 8h.01"/>\n  <path d="M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153"/>\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/>\n  <path d="M16.33 12.338c.574 -.054 1.155 .166 1.67 .662l3 3"/>\n  <path d="M3 3l18 18" color="orange"/>\n</svg>\n';
-
-  const IconPlayerPause =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-pause" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"/>\n  <path d="M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"/>\n</svg>\n';
-
-  const IconPlayerPlay =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M7 4v16l13 -8z"/>\n</svg>\n';
-
-  const IconRefresh =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>\n  <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>\n</svg>\n';
-
-  const IconSettings =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/>\n  <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/>\n</svg>\n';
-
-  const IconSettingsOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n     class="icon icon-tabler icons-tabler-outline icon-tabler-settings-off">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M9.451 5.437c.418 -.218 .75 -.609 .874 -1.12c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35c-.486 .118 -.894 .44 -1.123 .878m-.188 3.803c-.517 .523 -1.349 .734 -2.125 .262a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.472 -.774 -.262 -1.604 .259 -2.121"/>\n  <path d="M9.889 9.869a3 3 0 1 0 4.226 4.26m.592 -3.424a3.012 3.012 0 0 0 -1.419 -1.415"/>\n  <path d="M3 3l18 18"/>\n</svg>\n';
-
-  const IconSpacingVertical =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-spacing-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2"/>\n  <path d="M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/>\n  <path d="M16 12h-8"/>\n</svg>\n';
-
-  const IconSun =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/>\n  <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/>\n</svg>\n';
-
-  const IconTrash =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 7l16 0"/>\n  <path d="M10 11l0 6"/>\n  <path d="M14 11l0 6"/>\n  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>\n  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>\n</svg>\n';
-
-  const IconWorldCog =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n     class="icon icon-tabler icons-tabler-outline icon-tabler-world-cog">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M21 12a9 9 0 1 0 -8.979 9"/>\n  <path d="M3.6 9h16.8"/>\n  <path d="M3.6 15h8.9"/>\n  <path d="M11.5 3a17 17 0 0 0 0 18"/>\n  <path d="M12.5 3a16.992 16.992 0 0 1 2.522 10.376"/>\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\n  <path d="M19.001 15.5v1.5"/>\n  <path d="M19.001 21v1.5"/>\n  <path d="M22.032 17.25l-1.299 .75"/>\n  <path d="M17.27 20l-1.3 .75"/>\n  <path d="M15.97 17.25l1.3 .75"/>\n  <path d="M20.733 20l1.3 .75"/>\n</svg>\n';
-
-  const IconX =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x toggler-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M18 6l-12 12"/>\n  <path d="M6 6l12 12"/>\n</svg>\n';
-
-  const IconZoomCancel =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-cancel" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\n  <path d="M8 8l4 4"/>\n  <path d="M12 8l-4 4"/>\n  <path d="M21 21l-6 -6"/>\n</svg>\n';
-
-  const IconZoomIn =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\n  <path d="M7 10l6 0"/>\n  <path d="M10 7l0 6"/>\n  <path d="M21 21l-6 -6"/>\n</svg>\n';
-
-  const IconZoomInArea =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 13v4"/>\n  <path d="M13 15h4"/>\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/>\n  <path d="M22 22l-3 -3"/>\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1"/>\n  <path d="M3 11v-1"/>\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1"/>\n  <path d="M10 3h1"/>\n  <path d="M15 3h1a2 2 0 0 1 2 2v1"/>\n</svg>\n';
-
-  const IconZoomOut =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\n  <path d="M7 10l6 0"/>\n  <path d="M21 21l-6 -6"/>\n</svg>\n';
-
-  const IconZoomOutArea =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M13 15h4"/>\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/>\n  <path d="M22 22l-3 -3"/>\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1"/>\n  <path d="M3 11v-1"/>\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1"/>\n  <path d="M10 3h1"/>\n  <path d="M15 3h1a2 2 0 0 1 2 2v1"/>\n</svg>\n';
-
-  const IconZoomPan =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-pan" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>\n  <path d="M17 17l-2.5 -2.5"/>\n  <path d="M10 5l2 -2l2 2"/>\n  <path d="M19 10l2 2l-2 2"/>\n  <path d="M5 10l-2 2l2 2"/>\n  <path d="M10 19l2 2l2 -2"/>\n</svg>\n';
-
-  const listBookmarks = () => {
-    if (isEmpty(getSettingsValue('bookmarks'))) {
-      return [getLocaleString('LIST_EMPTY')];
-    }
-    return getSettingsValue('bookmarks').map(
-      (mark, index) => html`
-        <div id="Bookmark${index + 1}" class="BookmarkItem">
-          <span class="bookmarkColumnLarge">
-            <span class="bookmarkName">${mark.name}</span>
-            <br />
-            <a class="bookmarkURl" href="${mark.url}" target="_blank">${mark.url}</a>
-          </span>
-          <span class="bookmarkColumnSmall">
-            <span class="bookmarkDate"> ${new Date(mark.date).toISOString().slice(0, 10)}</span>
-            <br />
-            <span class="bookmarkPage">Page: ${mark.page}</span>
-          </span>
-          <span class="bookmarkFunctions">
-            <a class="" href="${mark.url}" target="_blank">
-              <button class="ControlButton open" title="Open Bookmark" type="button">
-                ${IconExternalLink}
-              </button>
-            </a>
-            <button
-              class="ControlButton erase"
-              title="Delete Bookmark"
-              type="button"
-              value="${mark.url}"
-            >
-              ${IconTrash}
-            </button>
-          </span>
-        </div>
-      `,
-    );
-  };
-  const BookmarkPanel = () => html`
-    <div id="BookmarksPanel" class="panel">
-      <button id="CloseBookmarks" class="closeButton" title="${getLocaleString('CLOSE')}">
-        ${IconX}
-      </button>
-      <button class="Bookmark simpleButton" title="${getLocaleString('BOOKMARK')}">
-        ${IconBookmark} ${IconBookmarkOff}
-      </button>
-      <h2>${getLocaleString('BOOKMARKS')}</h2>
-      <div id="BookmarksList"></div>
-    </div>
-  `;
-  function reloadBookmarks() {
-    const list = document.getElementById('BookmarksList');
-    if (list) {
-      list.innerHTML = listBookmarks().join('');
-    }
-  }
-
-  function scrollToElement(ele) {
-    const chapter = document.querySelector('#Chapter');
-    if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
-      chapter?.scroll(ele?.offsetLeft ?? 0, ele?.offsetTop ?? 0);
-    } else {
-      window?.scroll(ele?.offsetLeft ?? 0, ele?.offsetTop ?? 0);
-    }
-  }
-  function addEvent(ev, fn) {
-    return elem => elem.addEventListener(ev, fn);
-  }
-  function transformScrollToHorizontal(event) {
-    if (!event.deltaY) {
-      return;
-    }
-    event.currentTarget.scrollLeft += event.deltaY + event.deltaX;
-    event.preventDefault();
-  }
-  function transformScrollToHorizontalReverse(event) {
-    if (!event.deltaY) {
-      return;
-    }
-    event.currentTarget.scrollLeft -= event.deltaY + event.deltaX;
-    event.preventDefault();
-  }
-
-  function buttonBookmarksClose() {
-    document.querySelector('#BookmarksPanel')?.classList.remove('visible');
-    document.querySelector('#Overlay')?.classList.remove('visible');
-  }
-  function removeURLBookmark(url = window.location.href) {
-    if (!isNothing(isBookmarked(url))) {
-      logScript(`Bookmark Removed ${url}`);
-      changeSettingsValue('bookmarks', b => b.filter(el => el.url !== url));
-      if (url === window.location.href) {
-        document.querySelector('#MangaOnlineViewer')?.classList.remove('bookmarked');
-      }
-    }
-  }
-  function buttonEraseBookmarks(event) {
-    const target = event.currentTarget.value;
-    logScript(`Bookmark Removed ${target}`);
-    Swal.fire({
-      title: getLocaleString('BOOKMARK_REMOVED'),
-      timer: 1e4,
-      icon: 'error',
-    });
-    removeURLBookmark(target);
-    reloadBookmarks();
-    document
-      .querySelectorAll('.bookmarkFunctions .erase')
-      ?.forEach(addEvent('click', buttonEraseBookmarks));
-  }
-  function buttonBookmarksOpen() {
-    reloadBookmarks();
-    document
-      .querySelectorAll('.bookmarkFunctions .erase')
-      ?.forEach(addEvent('click', buttonEraseBookmarks));
-    document.querySelector('#BookmarksPanel')?.classList.add('visible');
-    document.querySelector('#Overlay')?.classList.add('visible');
-  }
-  function buttonBookmark(event) {
-    document.querySelector('#MangaOnlineViewer')?.classList.toggle('bookmarked');
-    const pagesDistance = [...document.querySelectorAll('.MangaPage')].map(element =>
-      Math.abs(element.offsetTop - window.scrollY),
-    );
-    const currentPage = parseInt(
-      event.currentTarget.parentElement?.querySelector('.PageIndex')?.textContent ?? '0',
-      10,
-    );
-    const num = currentPage || pagesDistance.indexOf(Math.min(...pagesDistance)) + 1;
-    const mark = {
-      name:
-        document
-          .querySelector('title')
-          ?.textContent?.trim()
-          .replace(/^\(\d+%\) */, '') ?? '',
-      url: window.location.href,
-      page: num,
-      date: /* @__PURE__ */ new Date().toISOString().slice(0, 10),
-    };
-    if (isBookmarked(mark.url)) {
-      changeSettingsValue('bookmarks', b => b.filter(el => el.url !== mark.url));
-      Swal.fire({
-        title: getLocaleString('BOOKMARK_REMOVED'),
-        timer: 1e4,
-        icon: 'error',
-      });
-    } else {
-      changeSettingsValue('bookmarks', b => [...b, mark]);
-      Swal.fire({
-        title: getLocaleString('BOOKMARK_SAVED'),
-        html: getLocaleString('BOOKMARK_SAVED').replace('##NUM##', num.toString()),
-        icon: 'success',
-      });
-    }
-    reloadBookmarks();
-    document
-      .querySelectorAll('.bookmarkFunctions .erase')
-      ?.forEach(addEvent('click', buttonEraseBookmarks));
-  }
-  function bookmarks$1() {
-    document.querySelector('#bookmarks')?.addEventListener('click', buttonBookmarksOpen);
-    document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonBookmarksClose));
-    document.querySelector('#Overlay')?.addEventListener('click', buttonBookmarksClose);
-    document
-      .querySelectorAll('.bookmarkFunctions .erase')
-      ?.forEach(addEvent('click', buttonEraseBookmarks));
-    document.querySelectorAll('.Bookmark')?.forEach(addEvent('click', buttonBookmark));
-    document.querySelector('.AddBookmark')?.addEventListener('click', buttonBookmark);
-  }
-
   var commonjsGlobal =
     typeof globalThis !== 'undefined'
       ? globalThis
@@ -2212,38 +3036,6 @@
 
   var FileSaver_minExports = requireFileSaver_min();
 
-  const objectURLRegex = /^blob:(.+?)\/(.+)$/;
-  function getDataFromBase64(src) {
-    return src.slice(src.indexOf(';base64,') + 8);
-  }
-  function isBase64ImageUrl(imageUrl) {
-    const base64Pattern = /^data:image\/(png|jpg|jpeg|gif);base64,/;
-    return base64Pattern.test(imageUrl);
-  }
-  function isObjectURL(url) {
-    return objectURLRegex.test(url);
-  }
-  function getExtension(url) {
-    const parts = url.split('?');
-    const filename = parts[0].split('/').pop();
-    const extensionMatch = filename?.match(/\.[A-Za-z]{2,4}$/);
-    return extensionMatch ? extensionMatch[0].slice(1) : '';
-  }
-  const getExtensionBase64 = base64 => {
-    const c = base64.substring(base64.indexOf('/') + 1, base64.indexOf(';base64'));
-    switch (c) {
-      case '/':
-        return 'jpg';
-      case 'R':
-        return 'gif';
-      case 'U':
-        return 'webp';
-      // case 'i':
-      default:
-        return 'png';
-    }
-  };
-
   let zip;
   const getFilename = (name, index, total, ext) =>
     `${name}${(index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, '0')}.${ext.replace(
@@ -2404,350 +3196,6 @@
     window.addEventListener('scroll', _.debounce(toggleScrollDirection, 50));
   }
 
-  const settings$1 = {
-    threshold: 2e3,
-    throttle: 500,
-    lazyAttribute: 'data-src',
-    targetAttribute: 'src',
-  };
-  let listElements = [];
-  let setup = false;
-  function filterInView(value) {
-    const { element } = value;
-    const rect = element.getBoundingClientRect();
-    const target =
-      (window.innerHeight || document.documentElement.clientHeight) + settings$1.threshold;
-    return rect.top <= target || rect.bottom <= target;
-  }
-  async function showElement(item) {
-    let value = item.element.getAttribute(settings$1.lazyAttribute) ?? '';
-    if (value) {
-      if (!isObjectURL(value) && !isBase64ImageUrl(value) && item.fetchOptions) {
-        value = await fetch(value, item.fetchOptions)
-          .then(resp => resp.blob())
-          .then(blob => blobUtil.blobToDataURL(blob));
-      }
-      item.element.setAttribute(settings$1.targetAttribute, value);
-    }
-    item.callback(item.element)?.catch(logScript);
-  }
-  function executeCheck() {
-    const inView = listElements.filter(filterInView);
-    listElements = listElements.filter(item => !filterInView(item));
-    inView.forEach(showElement);
-  }
-  const observerEvent = _.throttle(executeCheck, settings$1.throttle);
-  function lazyLoad$1(element, callback, fetchOptions) {
-    if (!setup) {
-      window.addEventListener('scroll', observerEvent, {
-        passive: true,
-      });
-      window.addEventListener('touchmove', observerEvent, {
-        passive: true,
-      });
-      window.addEventListener('resize', observerEvent, {
-        passive: true,
-      });
-      setup = true;
-    }
-    listElements.push({ element, callback, fetchOptions });
-    observerEvent();
-  }
-
-  async function fetchText(url, format) {
-    return new Promise(resolve => {
-      logScript('Fetching page: ', url);
-      fetch(url)
-        .then(async response =>
-          // When the page is loaded convert it to text
-          response.text(),
-        )
-        .then(html => {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, format);
-          resolve(doc);
-        })
-        .catch(err => {
-          logScript('Failed to fetch page: ', err);
-        });
-    });
-  }
-  async function fetchHtml(url) {
-    return fetchText(url, 'text/html');
-  }
-  async function getElementAttribute(url, selector, attribute) {
-    return fetchHtml(url).then(doc => doc.querySelector(selector)?.getAttribute(attribute));
-  }
-
-  function indexList(repeat, begin = 1) {
-    return Array(repeat)
-      .fill(0)
-      .map((_, i) => i + 1)
-      .filter(i => i >= begin);
-  }
-
-  function applyZoom(zoom = getSettingsValue('zoomMode'), pages = '.PageContent img') {
-    const pg = [...document.querySelectorAll(pages)];
-    pg.forEach(img => {
-      img.removeAttribute('width');
-      img.removeAttribute('height');
-      img.removeAttribute('style');
-      if (zoom === 'width') {
-        img.style.width = `${window.innerWidth}px`;
-      } else if (zoom === 'height') {
-        const nextHeight = window.innerHeight + (getSettingsValue('showThumbnails') ? -29 : 0);
-        img.style.height = `${nextHeight}px`;
-        img.style.minWidth = 'unset';
-      } else if (zoom === 'percent') {
-        img.style.width = `${img.naturalWidth * (getSettingsValue('defaultZoom') / 100)}px`;
-      } else if (zoom >= 0 && zoom !== 100) {
-        img.style.width = `${img.naturalWidth * (zoom / 100)}px`;
-      }
-    });
-  }
-  function invalidateImageCache(src, repeat) {
-    const url = src.replace(/[?&]forceReload=\d+$/, '');
-    const symbol = !url.includes('?') ? '?' : '&';
-    return `${url + symbol}forceReload=${repeat}`;
-  }
-  function getRepeatValue(src) {
-    let repeat = 1;
-    const cache = src?.match(/forceReload=(\d+)$/);
-    if (cache?.at(1)) {
-      repeat = parseInt(cache[1], 10) + 1;
-    }
-    return repeat;
-  }
-  function reloadImage(img) {
-    const src = img.getAttribute('src');
-    if (!src) {
-      return;
-    }
-    img.removeAttribute('src');
-    if (isBase64ImageUrl(src) || isObjectURL(src)) {
-      img.setAttribute('src', src);
-    } else {
-      img.setAttribute('src', invalidateImageCache(src, getRepeatValue(src)));
-    }
-  }
-  function onImagesDone() {
-    logScript('Images Loading Complete');
-    if (getSettingsValue('downloadZip')) {
-      document.getElementById('download')?.dispatchEvent(new Event('click'));
-    }
-    document.getElementById('download')?.classList.remove('disabled');
-  }
-  function updateProgress() {
-    const total = document.querySelectorAll('.PageContent .PageImg').length;
-    const loaded = document.querySelectorAll('.PageContent .PageImg.imgLoaded').length;
-    const percentage = Math.floor((loaded / total) * 100);
-    const title = document.querySelector('title');
-    if (title) {
-      title.innerHTML = html`(${percentage}%) ${document.querySelector('#MangaTitle')?.textContent}`;
-    }
-    document.querySelectorAll('#Counters i, #NavigationCounters i').forEach(ele => {
-      ele.textContent = loaded.toString();
-    });
-    NProgress.configure({
-      showSpinner: false,
-    }).set(loaded / total);
-    logScript(`Progress: ${percentage}%`);
-    if (loaded === total) {
-      onImagesDone();
-    }
-  }
-  const applyLastGlobalZoom = (pages = '.PageContent img') => {
-    const zoomVal = document.querySelector('#ZoomVal')?.textContent?.trim();
-    if (zoomVal?.match(/^\d+%$/)) {
-      applyZoom(parseInt(zoomVal, 10), pages);
-    } else {
-      applyZoom(zoomVal, pages);
-    }
-  };
-  function onImagesSuccess() {
-    return instance => {
-      instance.images.forEach(image => {
-        image.img.classList.add('imgLoaded');
-        image.img.classList.remove('imgBroken');
-        const thumbId = image.img.id.replace('PageImg', 'ThumbnailImg');
-        const thumb = document.getElementById(thumbId);
-        thumb?.classList.remove('imgBroken');
-        if (thumb) {
-          thumb.setAttribute('src', image.img.getAttribute('src') ?? '');
-        }
-        applyLastGlobalZoom(`#${image.img.id}`);
-        updateProgress();
-      });
-    };
-  }
-  function onImagesFail(manga) {
-    return instance => {
-      instance.images.forEach(image => {
-        image.img.classList.add('imgBroken');
-        const thumbId = image.img.id.replace('PageImg', 'ThumbnailImg');
-        const thumb = document.getElementById(thumbId);
-        thumb?.classList.add('imgBroken');
-        const src = image.img.getAttribute('src');
-        if (src && getRepeatValue(src) <= getSettingsValue('maxReload')) {
-          setTimeout(async () => {
-            if (manga.reload) {
-              const id = parseInt(`0${/\d+/.exec(image.img.id)}`, 10);
-              const alt = await manga.reload(id);
-              image.img.setAttribute('src', alt);
-            } else {
-              reloadImage(image.img);
-            }
-            if (image.img.parentElement) {
-              const imgLoad = imagesLoaded(image.img.parentElement);
-              imgLoad.on('done', onImagesSuccess());
-              imgLoad.on('fail', onImagesFail(manga));
-            }
-          }, 2e3);
-        }
-      });
-    };
-  }
-  function normalizeUrl(url) {
-    if (url) {
-      let uri = url.trim();
-      if (uri.startsWith('//')) {
-        uri = `https:${uri}`;
-      }
-      return uri;
-    }
-    return '';
-  }
-  function addImg(manga, index, imageSrc, position) {
-    const relativePosition = position - (manga.begin ?? 0);
-    let src = normalizeUrl(imageSrc);
-    const img = document.querySelector(`#PageImg${index}`);
-    if (img) {
-      if (
-        !(manga.lazy ?? getSettingsValue('lazyLoadImages')) ||
-        relativePosition <= getSettingsValue('lazyStart')
-      ) {
-        setTimeout(
-          async () => {
-            if (!isObjectURL(src) && !isBase64ImageUrl(src) && manga.fetchOptions) {
-              src = await fetch(src, manga.fetchOptions)
-                .then(resp => resp.blob())
-                .then(blob => blobUtil.blobToDataURL(blob));
-            }
-            if (img.parentElement) {
-              const imgLoad = imagesLoaded(img.parentElement);
-              imgLoad.on('done', onImagesSuccess());
-              imgLoad.on('fail', onImagesFail(manga));
-            }
-            img.setAttribute('src', src);
-            logScript('Loaded Image:', index, 'Source:', src);
-          },
-          (manga.timer ?? getSettingsValue('throttlePageLoad')) * relativePosition,
-        );
-      } else {
-        img.setAttribute('data-src', normalizeUrl(src));
-        lazyLoad$1(
-          img,
-          () => {
-            if (img.parentElement) {
-              const imgLoad = imagesLoaded(img.parentElement);
-              imgLoad.on('done', onImagesSuccess());
-              imgLoad.on('fail', onImagesFail(manga));
-              logScript('Lazy Image: ', index, ' Source: ', img.getAttribute('src'));
-            }
-          },
-          manga.fetchOptions,
-        );
-      }
-      if (manga.pages === position) removeURLBookmark();
-    }
-  }
-  function findPage(manga, index, pageUrl, lazy) {
-    return async () => {
-      const src = await getElementAttribute(pageUrl, manga.img, manga.lazyAttr ?? 'src');
-      const img = document.querySelector(`#PageImg${index}`);
-      if (src && img) {
-        img.style.width = 'auto';
-        if (img.parentElement) {
-          const imgLoad = imagesLoaded(img.parentElement);
-          imgLoad.on('done', onImagesSuccess());
-          imgLoad.on('fail', onImagesFail(manga));
-        }
-        img.setAttribute('src', src);
-        logScript(`${lazy && 'Lazy '}Page: `, index, ' Source: ', img.getAttribute('src'));
-      }
-    };
-  }
-  async function addPage(manga, index, pageUrl, position) {
-    const relativePosition = position - (manga.begin ?? 0);
-    const img = document.querySelector(`#PageImg${index}`);
-    if (img) {
-      if (
-        !(manga.lazy ?? getSettingsValue('lazyLoadImages')) ||
-        relativePosition <= getSettingsValue('lazyStart')
-      ) {
-        setTimeout(
-          () => {
-            findPage(manga, index, pageUrl, false)().catch(logScript);
-          },
-          (manga.timer ?? getSettingsValue('throttlePageLoad')) * relativePosition,
-        );
-      } else {
-        img.setAttribute(
-          'data-src',
-          'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
-        );
-        lazyLoad$1(img, findPage(manga, index, pageUrl, true));
-      }
-      if (manga.pages === position) removeURLBookmark();
-    }
-  }
-  function loadMangaPages(begin, manga) {
-    indexList(manga.pages, begin).forEach((index, position) => {
-      addPage(manga, index, manga.listPages[index - 1], position).catch(logScript);
-    });
-  }
-  function loadMangaImages(begin, manga) {
-    indexList(manga.pages, begin).forEach((index, position) => {
-      addImg(manga, index, manga.listImages[index - 1], position);
-    });
-  }
-  function loadManga(manga, begin = 1) {
-    logScript('Loading Images');
-    logScript(
-      `Intervals: ${manga.timer ?? getSettingsValue('throttlePageLoad') ?? 'Default(1000)'}`,
-    );
-    logScript(
-      `Lazy: ${manga.lazy ?? getSettingsValue('lazyLoadImages')}, Starting from: ${getSettingsValue('lazyStart')}`,
-    );
-    if (isImagesManga(manga)) {
-      logScript('Method: Images:', manga.listImages);
-      loadMangaImages(begin, manga);
-    } else if (isPagesManga(manga)) {
-      logScript('Method: Pages:', manga.listPages);
-      loadMangaPages(begin, manga);
-    } else if (isBruteforceManga(manga)) {
-      logScript('Method: Brute Force');
-      manga.bruteForce({
-        begin,
-        addImg,
-        loadImages(list) {
-          loadMangaImages(begin, { ...manga, listImages: list });
-        },
-        loadPages(list, img, lazyAttr) {
-          loadMangaPages(begin, {
-            ...manga,
-            listPages: list,
-            img,
-            lazyAttr,
-          });
-        },
-        wait: getSettingsValue('throttlePageLoad'),
-      });
-    } else {
-      logScript('No Loading Method Found');
-    }
-  }
-
   function buttonReloadPage(event) {
     const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
     reloadImage(img);
@@ -2759,104 +3207,6 @@
   function individual() {
     document.querySelectorAll('.Reload')?.forEach(addEvent('click', buttonReloadPage));
     document.querySelectorAll('.Hide')?.forEach(addEvent('click', buttonHidePage));
-  }
-
-  const doClick = selector => document.querySelector(selector)?.dispatchEvent(new Event('click'));
-  function doScrolling(sign) {
-    const chapter = document.querySelector('#Chapter');
-    if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
-      const scrollDirection = chapter.classList.contains('FluidRTL') ? -1 : 1;
-      chapter.scrollBy({
-        left: 0.8 * window.innerWidth * sign * scrollDirection,
-        behavior: 'smooth',
-      });
-    } else if (getSettingsValue('zoomMode') === 'height') {
-      const pages = [...document.querySelectorAll('.MangaPage')];
-      const distance = pages.map(element => Math.abs(element.offsetTop - window.scrollY));
-      const currentPage = _.indexOf(distance, _.min(distance));
-      const target = currentPage + sign;
-      const header = document.querySelector('#Header');
-      if (header && target < 0) {
-        scrollToElement(header);
-      } else if (header && target >= pages.length) {
-        header.classList.add('headroom-end');
-      } else {
-        logScript(`Current array page ${currentPage},`, `Scrolling to page ${target}`);
-        scrollToElement(pages.at(target));
-      }
-    } else {
-      window.scrollBy({
-        top: 0.8 * window.innerHeight * sign,
-        behavior: 'smooth',
-      });
-    }
-  }
-  const actions = {
-    SCROLL_UP() {
-      doScrolling(-1);
-    },
-    SCROLL_DOWN() {
-      doScrolling(1);
-    },
-    NEXT_CHAPTER() {
-      doClick('#next');
-    },
-    PREVIOUS_CHAPTER() {
-      doClick('#prev');
-    },
-    ENLARGE() {
-      doClick('#enlarge');
-    },
-    REDUCE() {
-      doClick('#reduce');
-    },
-    RESTORE() {
-      doClick('#restore');
-    },
-    FIT_WIDTH() {
-      doClick('#fitWidth');
-    },
-    FIT_HEIGHT() {
-      doClick('#fitHeight');
-    },
-    SETTINGS() {
-      doClick('#settings');
-    },
-    VIEW_MODE_WEBCOMIC() {
-      doClick('#webComic');
-    },
-    VIEW_MODE_VERTICAL() {
-      doClick('#verticalMode');
-    },
-    VIEW_MODE_LEFT() {
-      doClick('#rtlMode');
-    },
-    VIEW_MODE_RIGHT() {
-      doClick('#ltrMode');
-    },
-    SCROLL_START() {
-      doClick('#AutoScroll');
-    },
-  };
-  function keybindings$1() {
-    document.onkeydown = null;
-    document.onkeyup = null;
-    window.onkeydown = null;
-    window.onkeyup = null;
-    window.onload = null;
-    document.body.onload = null;
-    hotkeys.unbind();
-    Object.keys(getSettingsValue('keybinds')).forEach(key => {
-      hotkeys(
-        getSettingsValue('keybinds')[key]?.join(',') ?? '',
-        _.throttle(event => {
-          event.preventDefault();
-          event.stopImmediatePropagation();
-          event.stopPropagation();
-          actions[key]();
-        }, 100),
-      );
-    });
   }
 
   function selectGoToPage(event) {
@@ -2876,331 +3226,6 @@
     document.querySelector('#gotoPage')?.addEventListener('change', selectGoToPage);
     document.querySelectorAll('.Thumbnail')?.forEach(addEvent('click', clickThumbnail));
     document.querySelector('#Thumbnails')?.addEventListener('wheel', transformScrollToHorizontal);
-  }
-
-  function createStyleElement(id, content) {
-    const style = document.createElement('style');
-    style.id = id;
-    style.appendChild(document.createTextNode(content));
-    return style;
-  }
-  function appendStyleSheet(id, content) {
-    if (!document.querySelector(`#${id}`)) {
-      const head = document.head ?? document.querySelector('head');
-      head.appendChild(createStyleElement(id, content));
-    }
-  }
-  function removeStyleSheet(id) {
-    document.querySelectorAll(`style[id="${id}"]`).forEach(elem => {
-      elem.remove();
-    });
-  }
-  function replaceStyleSheet(id, content) {
-    removeStyleSheet(id);
-    appendStyleSheet(id, content);
-  }
-  function wrapStyle(id, css) {
-    return html`
-      <style id="${id}">
-        ${css}
-      </style>
-    `;
-  }
-
-  const keybindList = () => {
-    const keybinds = getSettingsValue('keybinds');
-    return Object.keys(keybinds).map(kb => {
-      const keys = keybinds[kb]?.length
-        ? keybinds[kb]?.map(key => html`<kbd class="dark">${key}</kbd>`).join(' / ')
-        : '';
-      return html`<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
-    });
-  };
-  const keybindEditor = () =>
-    Object.keys(getSettingsValue('keybinds'))
-      .map(
-        // Language=html
-        kb =>
-          html`<label for="${kb}">${getLocaleString(kb)}:</label>
-            <input
-              type="text"
-              class="KeybindInput"
-              id="${kb}"
-              name="${kb}"
-              value="${getSettingsValue('keybinds')[kb]?.join(' , ') ?? ''}"
-            />`,
-      )
-      .concat(html` <div id="HotKeysRules">${getLocaleString('KEYBIND_RULES')}</div>`);
-  const KeybindingsPanel = () => html`
-    <div id="KeybindingsPanel" class="panel">
-      <h2>${getLocaleString('KEYBINDINGS')}</h2>
-      <button id="CloseKeybindings" class="closeButton" title="${getLocaleString('CLOSE')}">
-        ${IconX}
-      </button>
-      <div class="controls">
-        <button
-          id="EditKeybindings"
-          class="ControlButton"
-          type="button"
-          title="${getLocaleString('EDIT_KEYBINDS')}"
-        >
-          ${IconPencil} ${getLocaleString('BUTTON_EDIT')}
-        </button>
-        <button
-          id="SaveKeybindings"
-          class="ControlButton hidden"
-          type="button"
-          title="${getLocaleString('SAVE_KEYBINDS')}"
-        >
-          ${IconDeviceFloppy} ${getLocaleString('BUTTON_SAVE')}
-        </button>
-      </div>
-      <div id="KeybindingsList">${keybindList().join('\n')}</div>
-    </div>
-  `;
-
-  function toggleFunction(selector, classname, open, close) {
-    return () => {
-      const isOpen = document.querySelector(selector)?.className.includes(classname);
-      if (isOpen) {
-        close();
-      } else {
-        open();
-      }
-    };
-  }
-  function buttonHeaderClick() {
-    const header = document.querySelector('#Header');
-    if (header?.classList.contains('click')) {
-      header?.classList.toggle('visible');
-    }
-  }
-  function isMouseInsideRegion(event, headerWidth, headerHeight) {
-    return (
-      event.clientX >= 0 &&
-      event.clientX <= headerWidth &&
-      event.clientY >= 0 &&
-      event.clientY <= headerHeight
-    );
-  }
-  function headerHover(event) {
-    const header = document.querySelector('#Header');
-    if (header?.classList.contains('hover')) {
-      if (isMouseInsideRegion(event, header.clientWidth, header.clientHeight)) {
-        document.querySelector('#menu')?.classList.add('hide');
-        header?.classList.add('visible');
-      } else {
-        document.querySelector('#menu')?.classList.remove('hide');
-        header?.classList.remove('visible');
-      }
-    }
-  }
-  function buttonSettingsOpen() {
-    document.querySelector('#SettingsPanel')?.classList.add('visible');
-    document.querySelector('#Navigation')?.classList.add('visible');
-    document.querySelector('#Header')?.classList.add('visible');
-    document.querySelector('#Overlay')?.classList.add('visible');
-  }
-  function buttonSettingsClose() {
-    document.querySelector('#SettingsPanel')?.classList.remove('visible');
-    document.querySelector('#Navigation')?.classList.remove('visible');
-    document.querySelector('#Header')?.classList.remove('visible');
-    document.querySelector('#Overlay')?.classList.remove('visible');
-  }
-  function buttonKeybindingsOpen() {
-    const keybindingList = document.querySelector('#KeybindingsList');
-    if (keybindingList) keybindingList.innerHTML = keybindList().join('\n');
-    document.querySelector('#SaveKeybindings')?.classList.add('hidden');
-    document.querySelector('#EditKeybindings')?.classList.remove('hidden');
-    document.querySelector('#KeybindingsPanel')?.classList.add('visible');
-    document.querySelector('#Overlay')?.classList.add('visible');
-  }
-  function buttonKeybindingsClose() {
-    document.querySelector('#SaveKeybindings')?.classList.add('hidden');
-    document.querySelector('#EditKeybindings')?.classList.remove('hidden');
-    document.querySelector('#KeybindingsPanel')?.classList.remove('visible');
-    document.querySelector('#Overlay')?.classList.remove('visible');
-  }
-  function saveKeybindings() {
-    const newkeybinds = getSettingsValue('keybinds');
-    Object.keys(getSettingsValue('keybinds')).forEach(kb => {
-      const keys = document
-        .querySelector(`#${kb}`)
-        ?.value.split(',')
-        ?.map(value => value.trim());
-      newkeybinds[kb] = isNothing(keys) ? void 0 : keys;
-    });
-    setSettingsValue('keybinds', newkeybinds);
-    const keybindingList = document.querySelector('#KeybindingsList');
-    if (keybindingList) keybindingList.innerHTML = keybindList().join('\n');
-    document.querySelector('#SaveKeybindings')?.classList.add('hidden');
-    document.querySelector('#EditKeybindings')?.classList.remove('hidden');
-    keybindings$1();
-  }
-  function editKeybindings() {
-    const keybindingList = document.querySelector('#KeybindingsList');
-    if (keybindingList) keybindingList.innerHTML = keybindEditor().join('\n');
-    document.querySelector('#SaveKeybindings')?.classList.remove('hidden');
-    document.querySelector('#EditKeybindings')?.classList.add('hidden');
-  }
-  function panels() {
-    document.querySelector('#menu')?.addEventListener('click', buttonHeaderClick);
-    document.addEventListener('mousemove', _.throttle(headerHover, 300));
-    document
-      .querySelector('#settings')
-      ?.addEventListener(
-        'click',
-        toggleFunction('#SettingsPanel', 'visible', buttonSettingsOpen, buttonSettingsClose),
-      );
-    document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonSettingsClose));
-    document.querySelector('#Overlay')?.addEventListener('click', buttonSettingsClose);
-    document.querySelector('#keybindings')?.addEventListener('click', buttonKeybindingsOpen);
-    document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonKeybindingsClose));
-    document.querySelector('#Overlay')?.addEventListener('click', buttonKeybindingsClose);
-    document.querySelector('#EditKeybindings')?.addEventListener('click', editKeybindings);
-    document.querySelector('#SaveKeybindings')?.addEventListener('click', saveKeybindings);
-  }
-
-  function buttonResetSettings() {
-    resetSettings();
-    const elem = document.getElementById('MangaOnlineViewer');
-    elem?.removeAttribute('locale');
-    buttonSettingsOpen();
-  }
-  function changeSettingsScope(event) {
-    const scope = event.currentTarget;
-    toggleLocalSettings(scope.value === 'true');
-    buttonSettingsOpen();
-  }
-  function changeLocale(event) {
-    const locale = event.currentTarget.value;
-    setSettingsValue('locale', locale);
-    const elem = document.getElementById('MangaOnlineViewer');
-    elem?.setAttribute('locale', locale);
-    elem?.dispatchEvent(new Event('hydrate'));
-    buttonSettingsOpen();
-  }
-  function changeLoadMode(event) {
-    const mode = event.currentTarget.value;
-    setSettingsValue('loadMode', mode);
-  }
-  function checkFitWidthOversize(event) {
-    const checked = event.currentTarget.checked;
-    document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize', checked);
-    setSettingsValue('fitWidthIfOversize', checked);
-  }
-  function checkVerticalSeparator(event) {
-    const checked = event.currentTarget.checked;
-    document.querySelector('#Chapter')?.classList.toggle('separator', checked);
-    setSettingsValue('verticalSeparator', checked);
-  }
-  function checkShowThumbnails(event) {
-    const checked = event.currentTarget.checked;
-    document.querySelector('#Navigation')?.classList.toggle('disabled', !checked);
-    setSettingsValue('showThumbnails', checked);
-    applyZoom();
-  }
-  function checkEnableComments(event) {
-    const checked = event.currentTarget.checked;
-    document.querySelector('#CommentsButton')?.classList.toggle('disabled', !checked);
-    setSettingsValue('enableComments', checked);
-    applyZoom();
-  }
-  function changeAutoDownload(event) {
-    const checked = event.currentTarget.checked;
-    setSettingsValue('downloadZip', checked);
-    if (checked) {
-      Swal.fire({
-        title: getLocaleString('ATTENTION'),
-        text: getLocaleString('AUTO_DOWNLOAD'),
-        timer: 1e4,
-        icon: 'info',
-      });
-    }
-  }
-  function checkLazyLoad(event) {
-    const checked = event.currentTarget.checked;
-    setSettingsValue('lazyLoadImages', checked);
-    const start = document.querySelector('.lazyStart');
-    start?.classList.toggle('show', getSettingsValue('lazyLoadImages'));
-    if (checked) {
-      Swal.fire({
-        title: getLocaleString('WARNING'),
-        html: getLocaleString('LAZY_LOAD'),
-        icon: 'warning',
-      });
-    }
-  }
-  function changeLazyStart(event) {
-    const start = event.currentTarget.value;
-    setSettingsValue('lazyStart', parseInt(start, 10));
-  }
-  function changePagesPerSecond(event) {
-    const timer = parseInt(event.currentTarget.value, 10);
-    setSettingsValue('throttlePageLoad', timer);
-    if (timer < 100) {
-      Swal.fire({
-        title: getLocaleString('SPEED_WARNING'),
-        html: getLocaleString('SPEED_WARNING_MESSAGE'),
-        icon: 'warning',
-      });
-    }
-  }
-  function changeZoomStep(event) {
-    const step = event.currentTarget.value;
-    setSettingsValue('zoomStep', parseInt(step, 10));
-  }
-  function changeMinZoom(event) {
-    const min = event.currentTarget.value;
-    replaceStyleSheet('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
-    setSettingsValue('minZoom', parseInt(min, 10));
-  }
-  function checkHideImageControls(event) {
-    const checked = event.currentTarget.checked;
-    document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls', checked);
-    setSettingsValue('hidePageControls', checked);
-  }
-  function updateHeaderType(mode) {
-    const header = document.querySelector('#Header');
-    if (!header?.classList.contains(mode)) {
-      const menu = document.querySelector('#menu');
-      header?.classList.remove('scroll', 'click', 'hover', 'fixed', 'simple', 'visible');
-      menu?.classList.remove('scroll', 'click', 'hover', 'fixed', 'simple', 'hide');
-      header?.classList.add(mode);
-      menu?.classList.add(mode);
-    }
-  }
-  function changeHeaderType(event) {
-    const headerType = event.currentTarget.value;
-    updateHeaderType(headerType);
-    setSettingsValue('header', headerType);
-  }
-  function changeScrollHeight(event) {
-    const { value } = event.currentTarget;
-    setSettingsValue('scrollHeight', parseInt(value, 10));
-  }
-  function options() {
-    document.querySelector('#ResetSettings')?.addEventListener('click', buttonResetSettings);
-    document
-      .querySelectorAll('#SettingsScope input[type=radio]')
-      .forEach(addEvent('change', changeSettingsScope));
-    document.querySelector('#locale')?.addEventListener('change', changeLocale);
-    document.querySelector('#fitIfOversize')?.addEventListener('change', checkFitWidthOversize);
-    document
-      .querySelector('#verticalSeparator')
-      ?.addEventListener('change', checkVerticalSeparator);
-    document.querySelector('#loadMode')?.addEventListener('change', changeLoadMode);
-    document.querySelector('#showThumbnails')?.addEventListener('change', checkShowThumbnails);
-    document.querySelector('#enableComments')?.addEventListener('change', checkEnableComments);
-    document.querySelector('#downloadZip')?.addEventListener('change', changeAutoDownload);
-    document.querySelector('#lazyLoadImages')?.addEventListener('change', checkLazyLoad);
-    document.querySelector('#lazyStart')?.addEventListener('change', changeLazyStart);
-    document.querySelector('#PagesPerSecond')?.addEventListener('change', changePagesPerSecond);
-    document.querySelector('#zoomStep')?.addEventListener('change', changeZoomStep);
-    document.querySelector('#minZoom')?.addEventListener('input', changeMinZoom);
-    document.querySelector('#hidePageControls')?.addEventListener('change', checkHideImageControls);
-    document.querySelector('#headerType')?.addEventListener('change', changeHeaderType);
-    document.querySelector('#scrollHeight')?.addEventListener('change', changeScrollHeight);
   }
 
   function buttonZoomIn(event) {
@@ -3311,75 +3336,11 @@
     document.querySelector('#ThemeShade')?.addEventListener('input', changeThemeShade);
   }
 
-  function changeGlobalZoom(value) {
-    return () => {
-      if (typeof value !== 'number') {
-        setSettingsValue('zoomMode', value);
-      } else {
-        setSettingsValue('zoomMode', 'percent');
-      }
-      if (value === 'height') {
-        updateHeaderType('click');
-      } else {
-        updateHeaderType(getSettingsValue('header'));
-      }
-      const globalZoomVal = document.querySelector('#ZoomVal');
-      const zoom2 = document.querySelector('#Zoom');
-      if (globalZoomVal) {
-        if (zoom2 && Number.isInteger(value)) {
-          globalZoomVal.textContent = `${value}%`;
-          zoom2.value = value.toString();
-        } else {
-          globalZoomVal.textContent = value;
-        }
-      }
-      applyZoom(value);
-    };
-  }
-  function changeZoomByStep(sign = 1) {
-    return () => {
-      const globalZoom = document.querySelector('#Zoom');
-      if (globalZoom) {
-        const ratio = parseInt(globalZoom.value, 10) + sign * getSettingsValue('zoomStep');
-        globalZoom.value = ratio.toString();
-        globalZoom.dispatchEvent(new Event('input', { bubbles: true }));
-      }
-    };
-  }
-  function changeDefaultZoomMode(event) {
-    const target = event.currentTarget.value;
-    setSettingsValue('zoomMode', target);
-    changeGlobalZoom(target)();
-    const percent = document.querySelector('.DefaultZoom');
-    percent?.classList.toggle('show', target === 'percent');
-  }
-  function changeDefaultZoom(event) {
-    const target = parseInt(event.currentTarget.value, 10);
-    setSettingsValue('defaultZoom', target);
-    changeGlobalZoom(target)();
-  }
-  function changeZoom(event) {
-    const target = parseInt(event.currentTarget.value, 10);
-    changeGlobalZoom(target)();
-    const zoomVal = document.querySelector('#ZoomVal');
-    if (zoomVal) zoomVal.textContent = `${target}%`;
-  }
-  function zoom() {
-    document.querySelector('#DefaultZoomMode')?.addEventListener('change', changeDefaultZoomMode);
-    document.querySelector('#DefaultZoom')?.addEventListener('input', changeDefaultZoom);
-    document.querySelector('#Zoom')?.addEventListener('input', changeZoom);
-    document.querySelector('#enlarge')?.addEventListener('click', changeZoomByStep());
-    document.querySelector('#reduce')?.addEventListener('click', changeZoomByStep(-1));
-    document.querySelector('#restore')?.addEventListener('click', changeGlobalZoom(100));
-    document.querySelector('#fitWidth')?.addEventListener('click', changeGlobalZoom('width'));
-    document.querySelector('#fitHeight')?.addEventListener('click', changeGlobalZoom('height'));
-  }
-
   function setupFluid(mode) {
     const chapter = document.querySelector('#Chapter');
     document.querySelector('#Header')?.classList.remove('visible');
     document.querySelector('#menu')?.classList.remove('hide');
-    changeGlobalZoom('height')();
+    applyZoom('height');
     scrollToElement(chapter);
     chapter?.addEventListener(
       'wheel',
@@ -3401,14 +3362,13 @@
         if (header) header.className = headerClass;
         const menu = document.querySelector('#menu');
         if (menu) menu.className = headerClass;
-        changeGlobalZoom(100)();
+        applyZoom();
       }
     };
   }
   function changeViewMode(event) {
     const mode = event.currentTarget.value;
     updateViewMode(mode)();
-    setSettingsValue('viewMode', mode);
   }
   function viewMode$1() {
     document.querySelector('#viewMode')?.addEventListener('change', changeViewMode);
@@ -3422,6 +3382,50 @@
     ) {
       setupFluid(getSettingsValue('viewMode'));
     }
+  }
+
+  function changeGlobalZoom(mode, value = getSettingsValue('defaultZoom')) {
+    return () => {
+      applyZoom(mode, value);
+    };
+  }
+  function changeZoomByStep(sign = 1) {
+    return () => {
+      const globalZoom = document.querySelector('#Zoom');
+      if (globalZoom) {
+        const ratio = parseInt(globalZoom.value, 10) + sign * getSettingsValue('zoomStep');
+        globalZoom.value = ratio.toString();
+        globalZoom.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    };
+  }
+  function changeDefaultZoomMode(event) {
+    const target = event.currentTarget.value;
+    setSettingsValue('zoomMode', target);
+    applyZoom(target);
+    const percent = document.querySelector('.DefaultZoom');
+    percent?.classList.toggle('show', target === 'percent');
+  }
+  function changeDefaultZoom(event) {
+    const target = parseInt(event.currentTarget.value, 10);
+    setSettingsValue('defaultZoom', target);
+    applyZoom('percent', target);
+  }
+  function changeZoom(event) {
+    const target = parseInt(event.currentTarget.value, 10);
+    applyZoom('percent', target);
+    const zoomVal = document.querySelector('#ZoomVal');
+    if (zoomVal) zoomVal.textContent = `${target}%`;
+  }
+  function zoom() {
+    document.querySelector('#DefaultZoomMode')?.addEventListener('change', changeDefaultZoomMode);
+    document.querySelector('#DefaultZoom')?.addEventListener('input', changeDefaultZoom);
+    document.querySelector('#Zoom')?.addEventListener('input', changeZoom);
+    document.querySelector('#enlarge')?.addEventListener('click', changeZoomByStep());
+    document.querySelector('#reduce')?.addEventListener('click', changeZoomByStep(-1));
+    document.querySelector('#restore')?.addEventListener('click', changeGlobalZoom('percent'));
+    document.querySelector('#fitWidth')?.addEventListener('click', changeGlobalZoom('width'));
+    document.querySelector('#fitHeight')?.addEventListener('click', changeGlobalZoom('height'));
   }
 
   let setupEvents = false;
