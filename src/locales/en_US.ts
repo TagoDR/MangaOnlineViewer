@@ -1,3 +1,5 @@
+import type { ILocale } from '../types';
+
 export default {
   ID: 'en_US',
   NAME: 'English (US)',
@@ -59,7 +61,7 @@ export default {
     <h3>Supported Keys</h3>
     Allowed modifiers: shift, option, alt, ctrl, control, command. </br>
     Special keys: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. </br>
-    Examples: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd> 
+    Examples: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd>
   `,
   ATTENTION: 'Attention',
   WARNING: 'Warning',
@@ -112,4 +114,4 @@ export default {
   LOADING: 'Loading',
   ZOOM: 'Zoom',
   OTHERS: 'Others',
-};
+} satisfies ILocale;

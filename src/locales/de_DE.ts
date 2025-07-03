@@ -1,3 +1,5 @@
+import type { ILocale } from '../types';
+
 export default {
   ID: 'de_DE',
   NAME: 'Deutsch',
@@ -113,4 +115,4 @@ export default {
   LOADING: 'Lädt',
   ZOOM: 'Zoom',
   OTHERS: 'Sonstiges',
-};
+} satisfies ILocale;

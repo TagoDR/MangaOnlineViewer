@@ -1,11 +1,11 @@
-import { getSettingsValue, setSettingsValue } from '../../core/settings';
+import { getSettingsValue, saveSettingsValue } from '../../core/settings';
 import type { Shade } from '../../types';
 import { addCustomTheme, refreshThemes } from '../themes';
 import { addEvent } from './common';
 
 export function changeColorScheme() {
   const isDark = getSettingsValue('colorScheme') === 'dark';
-  setSettingsValue('colorScheme', isDark ? 'light' : 'dark');
+  saveSettingsValue('colorScheme', isDark ? 'light' : 'dark');
   const elem = document.getElementById('MangaOnlineViewer');
   elem?.classList.remove(isDark ? 'dark' : 'light');
   elem?.classList.add(getSettingsValue('colorScheme'));
@@ -18,7 +18,7 @@ export function buttonSelectTheme(event: Event) {
   });
   target.classList.add('selected');
   document.getElementById('MangaOnlineViewer')?.setAttribute('data-theme', target.title);
-  setSettingsValue('theme', target.title);
+  saveSettingsValue('theme', target.title);
   const hue = document.querySelector<HTMLDivElement>('#Hue');
   const shade = document.querySelector<HTMLDivElement>('#Shade');
   if (target.title.startsWith('custom')) {
@@ -32,13 +32,13 @@ export function buttonSelectTheme(event: Event) {
 
 export function changeCustomTheme(event: Event) {
   const target = (event.currentTarget as HTMLInputElement).value;
-  setSettingsValue('customTheme', target);
+  saveSettingsValue('customTheme', target);
   addCustomTheme(target);
 }
 
 export function changeThemeShade(event: Event) {
   const target = parseInt((event.currentTarget as HTMLInputElement).value, 10);
-  setSettingsValue('themeShade', target as Shade);
+  saveSettingsValue('themeShade', target as Shade);
   refreshThemes();
 }
 

@@ -3,7 +3,7 @@ import {
   getLocaleString,
   getSettingsValue,
   resetSettings,
-  setSettingsValue,
+  saveSettingsValue,
   toggleLocalSettings,
 } from '../../core/settings';
 import type { HeaderMode, LoadMode } from '../../types';
@@ -27,7 +27,7 @@ export function changeSettingsScope(event: Event) {
 
 export function changeLocale(event: Event) {
   const locale = (event.currentTarget as HTMLInputElement).value;
-  setSettingsValue('locale', locale);
+  saveSettingsValue('locale', locale);
   const elem = document.getElementById('MangaOnlineViewer');
   elem?.setAttribute('locale', locale);
   elem?.dispatchEvent(new Event('hydrate'));
@@ -36,38 +36,38 @@ export function changeLocale(event: Event) {
 
 export function changeLoadMode(event: Event) {
   const mode = (event.currentTarget as HTMLInputElement).value;
-  setSettingsValue('loadMode', mode as LoadMode);
+  saveSettingsValue('loadMode', mode as LoadMode);
 }
 
 export function checkFitWidthOversize(event: Event) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
   document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize', checked);
-  setSettingsValue('fitWidthIfOversize', checked);
+  saveSettingsValue('fitWidthIfOversize', checked);
 }
 
 export function checkVerticalSeparator(event: Event) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
   document.querySelector('#Chapter')?.classList.toggle('separator', checked);
-  setSettingsValue('verticalSeparator', checked);
+  saveSettingsValue('verticalSeparator', checked);
 }
 
 export function checkShowThumbnails(event: Event) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
   document.querySelector('#Navigation')?.classList.toggle('disabled', !checked);
-  setSettingsValue('showThumbnails', checked);
+  saveSettingsValue('showThumbnails', checked);
   applyZoom();
 }
 
 export function checkEnableComments(event: Event) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
   document.querySelector('#CommentsButton')?.classList.toggle('disabled', !checked);
-  setSettingsValue('enableComments', checked);
+  saveSettingsValue('enableComments', checked);
   applyZoom();
 }
 
 export function changeAutoDownload(event: Event) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
-  setSettingsValue('downloadZip', checked);
+  saveSettingsValue('downloadZip', checked);
   if (checked) {
     Swal.fire({
       title: getLocaleString('ATTENTION'),
@@ -80,7 +80,7 @@ export function changeAutoDownload(event: Event) {
 
 export function checkLazyLoad(event: Event) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
-  setSettingsValue('lazyLoadImages', checked);
+  saveSettingsValue('lazyLoadImages', checked);
   const start = document.querySelector<HTMLDivElement>('.lazyStart');
   start?.classList.toggle('show', getSettingsValue('lazyLoadImages'));
   if (checked) {
@@ -94,12 +94,12 @@ export function checkLazyLoad(event: Event) {
 
 export function changeLazyStart(event: Event) {
   const start = (event.currentTarget as HTMLInputElement).value;
-  setSettingsValue('lazyStart', parseInt(start, 10));
+  saveSettingsValue('lazyStart', parseInt(start, 10));
 }
 
 export function changePagesPerSecond(event: Event) {
   const timer = parseInt((event.currentTarget as HTMLInputElement).value, 10);
-  setSettingsValue('throttlePageLoad', timer);
+  saveSettingsValue('throttlePageLoad', timer);
   if (timer < 100) {
     Swal.fire({
       title: getLocaleString('SPEED_WARNING'),
@@ -111,19 +111,19 @@ export function changePagesPerSecond(event: Event) {
 
 export function changeZoomStep(event: Event) {
   const step = (event.currentTarget as HTMLInputElement).value;
-  setSettingsValue('zoomStep', parseInt(step, 10));
+  saveSettingsValue('zoomStep', parseInt(step, 10));
 }
 
 export function changeMinZoom(event: Event) {
   const min = (event.currentTarget as HTMLInputElement).value;
   replaceStyleSheet('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
-  setSettingsValue('minZoom', parseInt(min, 10));
+  saveSettingsValue('minZoom', parseInt(min, 10));
 }
 
 export function checkHideImageControls(event: Event) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
   document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls', checked);
-  setSettingsValue('hidePageControls', checked);
+  saveSettingsValue('hidePageControls', checked);
 }
 
 export function updateHeaderType(mode: HeaderMode) {
@@ -140,12 +140,12 @@ export function updateHeaderType(mode: HeaderMode) {
 function changeHeaderType(event: Event) {
   const headerType = (event.currentTarget as HTMLInputElement).value as HeaderMode;
   updateHeaderType(headerType);
-  setSettingsValue('header', headerType);
+  saveSettingsValue('header', headerType);
 }
 
 export function changeScrollHeight(event: Event) {
   const { value } = event.currentTarget as HTMLInputElement;
-  setSettingsValue('scrollHeight', parseInt(value, 10));
+  saveSettingsValue('scrollHeight', parseInt(value, 10));
 }
 
 function options() {

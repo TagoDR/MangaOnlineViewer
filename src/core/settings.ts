@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import locales from '../locales';
-import type { ISettings, ISettingsKey } from '../types';
+import type { ILocaleKey, ISettings, ISettingsKey } from '../types';
 import diffObj from '../utils/diffObj';
 import {
   getGlobalSettings,
@@ -137,7 +137,7 @@ export function getSettingsValue<K extends ISettingsKey>(key: K): ISettings[K] {
 }
 
 /**
- * Sets a single setting value by its key and persists the change.
+ * Sets a single setting value by its key without persisting the change.
  * The value provided must match the type of the setting defined in ISettings.
  *
  * @param key The key of the setting to update.
@@ -146,10 +146,29 @@ export function getSettingsValue<K extends ISettingsKey>(key: K): ISettings[K] {
 export function setSettingsValue<K extends ISettingsKey>(key: K, value: ISettings[K]): void {
   if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
     localSettings = { ...localSettings, [key]: value };
-    setLocalSettings(diffObj(localSettings, getDefault(false)));
   } else {
     globalSettings = { ...globalSettings, [key]: value };
-    setGlobalSettings(diffObj(globalSettings, getDefault()));
+  }
+}
+
+/**
+ * Saves a single setting value by its key and persists the change.
+ * The value provided must match the type of the setting defined in ISettings.
+ *
+ * @param key The key of the setting to update.
+ * @param value The new value for the setting.
+ */
+export function saveSettingsValue<K extends ISettingsKey>(key: K, value: ISettings[K]): void {
+  setSettingsValue(key, value);
+  if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
+    const alter = _.defaultsDeep(getLocalSettings(getDefault(false)), getDefault(false));
+    setLocalSettings(diffObj(alter, getDefault(false)));
+  } else {
+    const alter = {
+      ..._.defaultsDeep(getGlobalSettings(getDefault()), getDefault()),
+      [key]: value,
+    };
+    setGlobalSettings(diffObj(alter, getDefault()));
   }
 }
 
@@ -164,7 +183,7 @@ export function changeSettingsValue<K extends ISettingsKey>(
   key: K,
   fn: (value: ISettings[K]) => ISettings[K],
 ): void {
-  setSettingsValue(
+  saveSettingsValue(
     key,
     fn(
       isSettingsLocal() && !['locale', 'bookmarks'].includes(key)
@@ -174,7 +193,7 @@ export function changeSettingsValue<K extends ISettingsKey>(
   );
 }
 
-export function getLocaleString(name: string): string {
+export function getLocaleString<K extends ILocaleKey>(name: K): string {
   const locale = locales.find((l) => l.ID === getSettingsValue('locale'));
   if (locale?.[name]) {
     return locale[name];

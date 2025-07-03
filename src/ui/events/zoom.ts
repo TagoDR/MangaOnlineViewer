@@ -1,4 +1,4 @@
-import { getSettingsValue, setSettingsValue } from '../../core/settings';
+import { getSettingsValue, saveSettingsValue } from '../../core/settings';
 import type { ZoomMode } from '../../types';
 import { applyZoom } from '../page';
 
@@ -21,7 +21,7 @@ export function changeZoomByStep(sign = 1) {
 
 export function changeDefaultZoomMode(event: Event) {
   const target = (event.currentTarget as HTMLInputElement).value as ZoomMode;
-  setSettingsValue('zoomMode', target);
+  saveSettingsValue('zoomMode', target);
   applyZoom(target);
   const percent = document.querySelector<HTMLDivElement>('.DefaultZoom');
   percent?.classList.toggle('show', target === 'percent');
@@ -29,7 +29,7 @@ export function changeDefaultZoomMode(event: Event) {
 
 export function changeDefaultZoom(event: Event) {
   const target = parseInt((event.currentTarget as HTMLInputElement).value, 10);
-  setSettingsValue('defaultZoom', target);
+  saveSettingsValue('defaultZoom', target);
   applyZoom('percent', target);
 }
 

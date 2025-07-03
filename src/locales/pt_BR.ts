@@ -1,3 +1,5 @@
+import type { ILocale } from '../types';
+
 export default {
   ID: 'pt_BR',
   NAME: 'Portugues (Brasil)',
@@ -59,7 +61,7 @@ export default {
     <h3>Teclas Suportadas</h3>
     Modificadores permitidos: shift, option, alt, ctrl, control, command. </br>
     Teclas Especiais: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide.</br>
-    Exemplos: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd> 
+    Exemplos: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd>
   `,
   ATTENTION: 'Atenção',
   WARNING: 'Alerta',
@@ -112,4 +114,4 @@ export default {
   LOADING: 'Carregamento',
   ZOOM: 'Zoom',
   OTHERS: 'Outros',
-};
+} satisfies ILocale;

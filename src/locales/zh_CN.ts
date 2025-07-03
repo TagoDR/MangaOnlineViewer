@@ -1,4 +1,6 @@
 // Translation by lhj5426
+import type { ILocale } from '../types';
+
 export default {
   ID: 'zh_CN',
   NAME: '中文 (简体)',
@@ -59,7 +61,7 @@ export default {
     <h3>支持的密钥</h3>
     允许的修饰符: shift, option, alt, ctrl, control, command. </br>
     特殊键: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide.</br>
-    例子: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd> 
+    例子: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd>
   `,
   ATTENTION: '注意',
   WARNING: '警告',
@@ -112,4 +114,4 @@ export default {
   LOADING: '装载',
   ZOOM: '缩放',
   OTHERS: '别人',
-};
+} satisfies ILocale;
