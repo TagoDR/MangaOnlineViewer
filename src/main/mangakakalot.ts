@@ -11,8 +11,9 @@ const mangakakalot: ISite = {
     'https://www.natomanga.com/',
     'https://www.mangabats.com/',
   ],
-  language: [Language.SPANISH],
+  language: [Language.ENGLISH],
   category: Category.MANGA,
+  waitEle: '.navi-change-chapter-btn-prev, .next, .navi-change-chapter-btn-next, .back',
   run(): IManga {
     const images = [...document.querySelectorAll('#vungdoc img, .container-chapter-reader img')];
     return {
