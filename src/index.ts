@@ -4,4 +4,4 @@ import display from './ui';
 
 const site = await localhost.run();
 allowUpload();
-display(site);
+document.querySelector('#test')?.addEventListener('click', () => display(site));

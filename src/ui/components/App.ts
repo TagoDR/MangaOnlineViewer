@@ -61,8 +61,6 @@ export function hydrateApp() {
   if (SettingsPanelOpened) buttonSettingsOpen();
 }
 
-settings.listen(hydrateApp);
-
 const app = (manga: IManga) => {
   loadedManga = manga;
   const main = document.createElement('div');
@@ -80,6 +78,7 @@ const app = (manga: IManga) => {
     <div id="Overlay" class="overlay"></div>
     ${CommentsPanel()} ${KeybindingsPanel()} ${BookmarksPanel()} ${SettingsPanel()}
   `;
+  settings.listen(hydrateApp);
   return main.outerHTML;
 };
 export default app;

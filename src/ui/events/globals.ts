@@ -18,7 +18,7 @@ export function buttonGlobalHideImageControls() {
   document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
 }
 
-function buttonRedirectURL(event: Event) {
+export function buttonRedirectURL(event: Event) {
   const element = event.target as HTMLElement;
   const url = element.getAttribute('value') ?? element.getAttribute('href');
   if ((event as MouseEvent).button !== 1 && !(event as MouseEvent).ctrlKey) {

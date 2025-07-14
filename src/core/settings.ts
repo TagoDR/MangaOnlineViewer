@@ -99,8 +99,9 @@ export const locale = computed(
 function refresh() {
   if (isSettingsLocal()) {
     settings.set({ ...localSettings });
+  } else {
+    settings.set({ ...globalSettings });
   }
-  settings.set({ ...globalSettings });
 }
 
 function syncGlobalSettings(newValue: Partial<ISettings>) {
@@ -215,6 +216,7 @@ export function resetSettings() {
     removeValueGM('settings');
     globalSettings = getDefault();
   }
+  logScript('Settings Reset');
   refresh();
 }
 

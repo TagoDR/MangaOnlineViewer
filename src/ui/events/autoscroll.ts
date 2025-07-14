@@ -50,7 +50,7 @@ const debounceAutoScroll = _.debounce(() => {
   resume = false;
 }, 500);
 
-function manualScroll() {
+export function manualScroll() {
   if (!resume && scrollActive) {
     toggleAutoScroll();
     resume = true;

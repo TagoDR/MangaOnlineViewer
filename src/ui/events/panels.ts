@@ -16,7 +16,7 @@ function toggleFunction(selector: string, classname: string, open: () => void, c
   };
 }
 
-function buttonHeaderClick() {
+export function buttonHeaderClick() {
   const header = document.querySelector('#Header');
   if (header?.classList.contains('click')) {
     header?.classList.toggle('visible');

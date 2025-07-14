@@ -18,8 +18,8 @@ export function buttonResetSettings() {
 }
 
 export function changeSettingsScope(event: Event) {
-  const scope = event.currentTarget as HTMLInputElement;
-  toggleLocalSettings(scope.value === 'true');
+  const scope = (event.currentTarget as HTMLInputElement).value;
+  toggleLocalSettings(scope === 'true');
 }
 
 export function changeLocale(event: Event) {
@@ -60,7 +60,7 @@ export function checkEnableComments(event: Event) {
   applyZoom();
 }
 
-export function changeAutoDownload(event: Event) {
+export function checkAutoDownload(event: Event) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
   saveSettingsValue('downloadZip', checked);
   if (checked) {
@@ -132,7 +132,7 @@ export function updateHeaderType(mode: HeaderMode) {
   }
 }
 
-function changeHeaderType(event: Event) {
+export function changeHeaderType(event: Event) {
   const headerType = (event.currentTarget as HTMLInputElement).value as HeaderMode;
   updateHeaderType(headerType);
   saveSettingsValue('header', headerType);
@@ -163,7 +163,7 @@ function options() {
   // Enable Comments Toggle
   document.querySelector('#enableComments')?.addEventListener('change', checkEnableComments);
   // Download auto start toggle
-  document.querySelector('#downloadZip')?.addEventListener('change', changeAutoDownload);
+  document.querySelector('#downloadZip')?.addEventListener('change', checkAutoDownload);
   // Lazy load Toggle
   document.querySelector('#lazyLoadImages')?.addEventListener('change', checkLazyLoad);
   // Lazy load starting point Slider
