@@ -1,4 +1,4 @@
-import { useStore } from '@nanostores/react';
+import { useStore } from '@nanostores/preact';
 import { locale, settings } from '../core/settings.ts';
 import { buttonCommentsClose } from '../ui/events/globals.ts';
 import { IconMoon, IconSun, IconX } from './Icons.ts';

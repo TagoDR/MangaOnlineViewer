@@ -1,4 +1,4 @@
-import { useStore } from '@nanostores/react';
+import { useStore } from '@nanostores/preact';
 import { settings } from '../core/settings.ts';
 import type { IManga } from '../types';
 import MangaPage from './MangaPage.tsx';

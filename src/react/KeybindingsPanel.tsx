@@ -1,4 +1,4 @@
-import { useStore } from '@nanostores/react';
+import { useStore } from '@nanostores/preact';
 import { useState } from 'react';
 import { locale, settings } from '../core/settings.ts';
 import { isKey } from '../types';

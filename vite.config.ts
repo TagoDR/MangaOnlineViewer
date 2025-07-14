@@ -1,4 +1,5 @@
 import * as fs from 'node:fs';
+import preact from '@preact/preset-vite';
 import externalGlobals from 'rollup-plugin-external-globals';
 import prettier from 'rollup-plugin-prettier';
 import userscript, { type Metadata } from 'userscript-metadata-generator';
@@ -10,7 +11,6 @@ import metaAdult from './src/meta/meta-adult';
 import metaDev from './src/meta/meta-dev';
 import metaMain from './src/meta/meta-main';
 import { bookmarklet, comicSites, hentaiSites, mangaSites } from './src/meta/readme';
-import react from '@vitejs/plugin-react';
 
 interface IScript {
   entry: string;
@@ -50,8 +50,11 @@ const globals = {
   sweetalert2: 'Swal',
   tinycolor2: 'tinycolor',
   bowser: 'bowser',
-  react: 'React',
-  'react-dom/client': 'ReactDOM',
+  preact: 'preact',
+  'preact/compat': 'preactCompat',
+  'preact/hooks': 'preactHooks',
+  React: 'preactCompat',
+  ReactDOM: 'preactCompat',
 };
 
 function generateReadme() {
@@ -80,14 +83,13 @@ export default defineConfig(({ mode }) => {
   return {
     mode: target === 'dev' ? 'development' : 'production',
     plugins: [
-      react(),
+      preact(),
       svgr({
         exclude: '**/*.svg?raw',
       }),
       viteBanner({ content: metadata, verify: false }),
       svgLoader({ svgo: false, defaultImport: 'raw' }),
     ],
-
     build: {
       target: 'esnext',
       minify: false,
@@ -101,6 +103,7 @@ export default defineConfig(({ mode }) => {
           // banner: metadata,
           format: 'iife',
           entryFileNames: scripts[target].name,
+          globals,
         },
       },
     },

@@ -1,4 +1,4 @@
-import { useStore } from '@nanostores/react';
+import { useStore } from '@nanostores/preact';
 import _ from 'lodash';
 import { useEffect } from 'react';
 import { isBookmarked, settings } from '../core/settings.ts';

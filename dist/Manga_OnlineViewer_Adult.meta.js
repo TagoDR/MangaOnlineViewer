@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.07.20
+// @version       2025.07.21
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -29,8 +29,6 @@
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
-// @require       https://cdn.jsdelivr.net/npm/umd-react@19.1.0/dist/react.production.min.js
-// @require       https://cdn.jsdelivr.net/npm/umd-react@19.1.0/dist/react-dom.production.min.js
 // @include       /https?:\/\/(www\.)?akuma\.moe\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?bestporncomix.com\/gallery\/.+/
 // @include       /https?:\/\/(www\.)?doujins.com\/.+/

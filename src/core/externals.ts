@@ -59,14 +59,22 @@ const externalScripts: string[] = [
     referrerpolicy="no-referrer"
   ></script>`,
   html` <script
-    src="https://cdn.jsdelivr.net/npm/umd-react@19.1.0/dist/react.production.min.js"
-    integrity="sha256-eNBw3fiE4ttVcPRf7OhOtZ6s8F5XCiNKTXNo0XwPeUc="
+    src="https://cdnjs.cloudflare.com/ajax/libs/preact/10.26.9/preact.umd.min.js"
+    integrity="sha512-UJjSFjyufSp7NN3ie2tPpH7sOJHeOKeoF5/bv8WrgbZvc+rI8KI3oNY7b+bUjV1WaIucW5oIQerNn18vL4H81w=="
     crossorigin="anonymous"
+    referrerpolicy="no-referrer"
   ></script>`,
-  html` <script
-    src="https://cdn.jsdelivr.net/npm/umd-react@19.1.0/dist/react-dom.production.min.js"
-    integrity="sha256-MnsAyPMMAoHuxlO/29i4fQu/AzSeFOFXoTcWhSUuy+I="
+  html`<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/preact/10.26.9/hooks.umd.min.js"
+    integrity="sha512-mODWC9TZn8iSfmbGnNgHErn0TQSFstq5vEBnkKJK7HPDgt9MpTECcYg50whbqW2yAHIYVnvpnW+owcEx/FnR3g=="
     crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>`,
+  html`<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/preact/10.26.9/compat.umd.min.js"
+    integrity="sha512-S61kC956BPqJjMyzsbkuxJtBe+11RNZ0EJaokxgb4zEDCBqcCRhWWBb+3AmOUAk1q4HazwSTJrWplMwTF/IAkg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
   ></script>`,
 ];
 const requiredScripts = externalScripts.map((script: string) => {

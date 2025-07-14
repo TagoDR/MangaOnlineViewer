@@ -1,4 +1,4 @@
-import { useStore } from '@nanostores/react';
+import { useStore } from '@nanostores/preact';
 import { locale } from '../core/settings.ts';
 import { buttonSettingsClose } from '../ui/events/panels.ts';
 import { IconSettingsOff, IconX } from './Icons.ts';

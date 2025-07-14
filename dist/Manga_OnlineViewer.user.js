@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaOni, MangaPark, MangaReader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.07.20
+// @version       2025.07.21
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -29,8 +29,6 @@
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
-// @require       https://cdn.jsdelivr.net/npm/umd-react@19.1.0/dist/react.production.min.js
-// @require       https://cdn.jsdelivr.net/npm/umd-react@19.1.0/dist/react-dom.production.min.js
 // @include       /https?:\/\/(www.)?(asuracomic).(net)\/.+/
 // @include       /https?:\/\/(www\.)?(\w(ba)?to|readtoto|batocomic|comiko|battwo|batotoo|batotwo).(to|com|net|org)\/(chapter|title).*/
 // @include       /https?:\/\/(www\.)?(bilibilicomics).net\/episode\/.+/
@@ -428,7 +426,7 @@
   const MOUNT = 5;
   const UNMOUNT = 6;
   const REVERT_MUTATION = 10;
-  let on = (object, listener, eventKey, mutateStore) => {
+  let on$1 = (object, listener, eventKey, mutateStore) => {
     object.events = object.events || {};
     if (!object.events[eventKey + REVERT_MUTATION]) {
       object.events[eventKey + REVERT_MUTATION] = mutateStore(eventProps => {
@@ -457,7 +455,7 @@
       let destroy = initialize(payload);
       if (destroy) $store.events[UNMOUNT].push(destroy);
     };
-    return on($store, listener, MOUNT, runListeners => {
+    return on$1($store, listener, MOUNT, runListeners => {
       let originListen = $store.listen;
       $store.listen = (...args) => {
         if (!$store.lc && !$store.active) {
@@ -2617,73 +2615,1144 @@
     },
   };
 
-  var commonjsGlobal =
-    typeof globalThis !== 'undefined'
-      ? globalThis
-      : typeof window !== 'undefined'
-        ? window
-        : typeof global !== 'undefined'
-          ? global
-          : typeof self !== 'undefined'
-            ? self
-            : {};
+  var n,
+    l$1,
+    u$2,
+    i$1,
+    r$1,
+    o$1,
+    e$1,
+    f$2,
+    c$1,
+    s$1,
+    a$1,
+    p$1 = {},
+    v$1 = [],
+    y$1 = /acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i,
+    w$1 = Array.isArray;
+  function d$2(n, l) {
+    for (var u in l) n[u] = l[u];
+    return n;
+  }
+  function g$1(n) {
+    n && n.parentNode && n.parentNode.removeChild(n);
+  }
+  function _$1(l, u, t) {
+    var i,
+      r,
+      o,
+      e = {};
+    for (o in u) 'key' == o ? (i = u[o]) : 'ref' == o ? (r = u[o]) : (e[o] = u[o]);
+    if (
+      (arguments.length > 2 && (e.children = arguments.length > 3 ? n.call(arguments, 2) : t),
+      'function' == typeof l && null != l.defaultProps)
+    )
+      for (o in l.defaultProps) void 0 === e[o] && (e[o] = l.defaultProps[o]);
+    return m$1(l, e, i, r, null);
+  }
+  function m$1(n, t, i, r, o) {
+    var e = {
+      type: n,
+      props: t,
+      key: i,
+      ref: r,
+      __k: null,
+      __: null,
+      __b: 0,
+      __e: null,
+      __c: null,
+      constructor: void 0,
+      __v: null == o ? ++u$2 : o,
+      __i: -1,
+      __u: 0,
+    };
+    return (null == o && null != l$1.vnode && l$1.vnode(e), e);
+  }
+  function k$1(n) {
+    return n.children;
+  }
+  function x(n, l) {
+    ((this.props = n), (this.context = l));
+  }
+  function S(n, l) {
+    if (null == l) return n.__ ? S(n.__, n.__i + 1) : null;
+    for (var u; l < n.__k.length; l++) if (null != (u = n.__k[l]) && null != u.__e) return u.__e;
+    return 'function' == typeof n.type ? S(n) : null;
+  }
+  function C$1(n) {
+    var l, u;
+    if (null != (n = n.__) && null != n.__c) {
+      for (n.__e = n.__c.base = null, l = 0; l < n.__k.length; l++)
+        if (null != (u = n.__k[l]) && null != u.__e) {
+          n.__e = n.__c.base = u.__e;
+          break;
+        }
+      return C$1(n);
+    }
+  }
+  function M(n) {
+    ((!n.__d && (n.__d = true) && i$1.push(n) && !$$1.__r++) || r$1 != l$1.debounceRendering) &&
+      ((r$1 = l$1.debounceRendering) || o$1)($$1);
+  }
+  function $$1() {
+    for (var n, u, t, r, o, f, c, s = 1; i$1.length; )
+      (i$1.length > s && i$1.sort(e$1),
+        (n = i$1.shift()),
+        (s = i$1.length),
+        n.__d &&
+          ((t = void 0),
+          (o = (r = (u = n).__v).__e),
+          (f = []),
+          (c = []),
+          u.__P &&
+            (((t = d$2({}, r)).__v = r.__v + 1),
+            l$1.vnode && l$1.vnode(t),
+            O(
+              u.__P,
+              t,
+              r,
+              u.__n,
+              u.__P.namespaceURI,
+              32 & r.__u ? [o] : null,
+              f,
+              null == o ? S(r) : o,
+              !!(32 & r.__u),
+              c,
+            ),
+            (t.__v = r.__v),
+            (t.__.__k[t.__i] = t),
+            z$1(f, t, c),
+            t.__e != o && C$1(t))));
+    $$1.__r = 0;
+  }
+  function I(n, l, u, t, i, r, o, e, f, c, s) {
+    var a,
+      h,
+      y,
+      w,
+      d,
+      g,
+      _ = (t && t.__k) || v$1,
+      m = l.length;
+    for (f = P$1(u, l, _, f, m), a = 0; a < m; a++)
+      null != (y = u.__k[a]) &&
+        ((h = -1 == y.__i ? p$1 : _[y.__i] || p$1),
+        (y.__i = a),
+        (g = O(n, y, h, i, r, o, e, f, c, s)),
+        (w = y.__e),
+        y.ref && h.ref != y.ref && (h.ref && q$1(h.ref, null, y), s.push(y.ref, y.__c || w, y)),
+        null == d && null != w && (d = w),
+        4 & y.__u || h.__k === y.__k
+          ? (f = A(y, f, n))
+          : 'function' == typeof y.type && void 0 !== g
+            ? (f = g)
+            : w && (f = w.nextSibling),
+        (y.__u &= -7));
+    return ((u.__e = d), f);
+  }
+  function P$1(n, l, u, t, i) {
+    var r,
+      o,
+      e,
+      f,
+      c,
+      s = u.length,
+      a = s,
+      h = 0;
+    for (n.__k = new Array(i), r = 0; r < i; r++)
+      null != (o = l[r]) && 'boolean' != typeof o && 'function' != typeof o
+        ? ((f = r + h),
+          ((o = n.__k[r] =
+            'string' == typeof o ||
+            'number' == typeof o ||
+            'bigint' == typeof o ||
+            o.constructor == String
+              ? m$1(null, o, null, null, null)
+              : w$1(o)
+                ? m$1(k$1, { children: o }, null, null, null)
+                : null == o.constructor && o.__b > 0
+                  ? m$1(o.type, o.props, o.key, o.ref ? o.ref : null, o.__v)
+                  : o).__ = n),
+          (o.__b = n.__b + 1),
+          (e = null),
+          -1 != (c = o.__i = L(o, u, f, a)) && (a--, (e = u[c]) && (e.__u |= 2)),
+          null == e || null == e.__v
+            ? (-1 == c && (i > s ? h-- : i < s && h++), 'function' != typeof o.type && (o.__u |= 4))
+            : c != f && (c == f - 1 ? h-- : c == f + 1 ? h++ : (c > f ? h-- : h++, (o.__u |= 4))))
+        : (n.__k[r] = null);
+    if (a)
+      for (r = 0; r < s; r++)
+        null != (e = u[r]) && 0 == (2 & e.__u) && (e.__e == t && (t = S(e)), B$2(e, e));
+    return t;
+  }
+  function A(n, l, u) {
+    var t, i;
+    if ('function' == typeof n.type) {
+      for (t = n.__k, i = 0; t && i < t.length; i++) t[i] && ((t[i].__ = n), (l = A(t[i], l, u)));
+      return l;
+    }
+    n.__e != l &&
+      (l && n.type && !u.contains(l) && (l = S(n)), u.insertBefore(n.__e, l || null), (l = n.__e));
+    do {
+      l = l && l.nextSibling;
+    } while (null != l && 8 == l.nodeType);
+    return l;
+  }
+  function H$1(n, l) {
+    return (
+      (l = l || []),
+      null == n ||
+        'boolean' == typeof n ||
+        (w$1(n)
+          ? n.some(function (n) {
+              H$1(n, l);
+            })
+          : l.push(n)),
+      l
+    );
+  }
+  function L(n, l, u, t) {
+    var i,
+      r,
+      o = n.key,
+      e = n.type,
+      f = l[u];
+    if ((null === f && null == n.key) || (f && o == f.key && e == f.type && 0 == (2 & f.__u)))
+      return u;
+    if (t > (null != f && 0 == (2 & f.__u) ? 1 : 0))
+      for (i = u - 1, r = u + 1; i >= 0 || r < l.length; ) {
+        if (i >= 0) {
+          if ((f = l[i]) && 0 == (2 & f.__u) && o == f.key && e == f.type) return i;
+          i--;
+        }
+        if (r < l.length) {
+          if ((f = l[r]) && 0 == (2 & f.__u) && o == f.key && e == f.type) return r;
+          r++;
+        }
+      }
+    return -1;
+  }
+  function T$1(n, l, u) {
+    '-' == l[0]
+      ? n.setProperty(l, null == u ? '' : u)
+      : (n[l] = null == u ? '' : 'number' != typeof u || y$1.test(l) ? u : u + 'px');
+  }
+  function j$2(n, l, u, t, i) {
+    var r, o;
+    n: if ('style' == l)
+      if ('string' == typeof u) n.style.cssText = u;
+      else {
+        if (('string' == typeof t && (n.style.cssText = t = ''), t))
+          for (l in t) (u && l in u) || T$1(n.style, l, '');
+        if (u) for (l in u) (t && u[l] == t[l]) || T$1(n.style, l, u[l]);
+      }
+    else if ('o' == l[0] && 'n' == l[1])
+      ((r = l != (l = l.replace(f$2, '$1'))),
+        (o = l.toLowerCase()),
+        (l = o in n || 'onFocusOut' == l || 'onFocusIn' == l ? o.slice(2) : l.slice(2)),
+        n.l || (n.l = {}),
+        (n.l[l + r] = u),
+        u
+          ? t
+            ? (u.u = t.u)
+            : ((u.u = c$1), n.addEventListener(l, r ? a$1 : s$1, r))
+          : n.removeEventListener(l, r ? a$1 : s$1, r));
+    else {
+      if ('http://www.w3.org/2000/svg' == i)
+        l = l.replace(/xlink(H|:h)/, 'h').replace(/sName$/, 's');
+      else if (
+        'width' != l &&
+        'height' != l &&
+        'href' != l &&
+        'list' != l &&
+        'form' != l &&
+        'tabIndex' != l &&
+        'download' != l &&
+        'rowSpan' != l &&
+        'colSpan' != l &&
+        'role' != l &&
+        'popover' != l &&
+        l in n
+      )
+        try {
+          n[l] = null == u ? '' : u;
+          break n;
+        } catch (n) {}
+      'function' == typeof u ||
+        (null == u || (false === u && '-' != l[4])
+          ? n.removeAttribute(l)
+          : n.setAttribute(l, 'popover' == l && 1 == u ? '' : u));
+    }
+  }
+  function F$1(n) {
+    return function (u) {
+      if (this.l) {
+        var t = this.l[u.type + n];
+        if (null == u.t) u.t = c$1++;
+        else if (u.t < t.u) return;
+        return t(l$1.event ? l$1.event(u) : u);
+      }
+    };
+  }
+  function O(n, u, t, i, r, o, e, f, c, s) {
+    var a,
+      h,
+      p,
+      v,
+      y,
+      _,
+      m,
+      b,
+      S,
+      C,
+      M,
+      $,
+      P,
+      A,
+      H,
+      L,
+      T,
+      j = u.type;
+    if (null != u.constructor) return null;
+    (128 & t.__u && ((c = !!(32 & t.__u)), (o = [(f = u.__e = t.__e)])), (a = l$1.__b) && a(u));
+    n: if ('function' == typeof j)
+      try {
+        if (
+          ((b = u.props),
+          (S = 'prototype' in j && j.prototype.render),
+          (C = (a = j.contextType) && i[a.__c]),
+          (M = a ? (C ? C.props.value : a.__) : i),
+          t.__c
+            ? (m = (h = u.__c = t.__c).__ = h.__E)
+            : (S
+                ? (u.__c = h = new j(b, M))
+                : ((u.__c = h = new x(b, M)), (h.constructor = j), (h.render = D$1)),
+              C && C.sub(h),
+              (h.props = b),
+              h.state || (h.state = {}),
+              (h.context = M),
+              (h.__n = i),
+              (p = h.__d = !0),
+              (h.__h = []),
+              (h._sb = [])),
+          S && null == h.__s && (h.__s = h.state),
+          S &&
+            null != j.getDerivedStateFromProps &&
+            (h.__s == h.state && (h.__s = d$2({}, h.__s)),
+            d$2(h.__s, j.getDerivedStateFromProps(b, h.__s))),
+          (v = h.props),
+          (y = h.state),
+          (h.__v = u),
+          p)
+        )
+          (S &&
+            null == j.getDerivedStateFromProps &&
+            null != h.componentWillMount &&
+            h.componentWillMount(),
+            S && null != h.componentDidMount && h.__h.push(h.componentDidMount));
+        else {
+          if (
+            (S &&
+              null == j.getDerivedStateFromProps &&
+              b !== v &&
+              null != h.componentWillReceiveProps &&
+              h.componentWillReceiveProps(b, M),
+            (!h.__e &&
+              null != h.shouldComponentUpdate &&
+              !1 === h.shouldComponentUpdate(b, h.__s, M)) ||
+              u.__v == t.__v)
+          ) {
+            for (
+              u.__v != t.__v && ((h.props = b), (h.state = h.__s), (h.__d = !1)),
+                u.__e = t.__e,
+                u.__k = t.__k,
+                u.__k.some(function (n) {
+                  n && (n.__ = u);
+                }),
+                $ = 0;
+              $ < h._sb.length;
+              $++
+            )
+              h.__h.push(h._sb[$]);
+            ((h._sb = []), h.__h.length && e.push(h));
+            break n;
+          }
+          (null != h.componentWillUpdate && h.componentWillUpdate(b, h.__s, M),
+            S &&
+              null != h.componentDidUpdate &&
+              h.__h.push(function () {
+                h.componentDidUpdate(v, y, _);
+              }));
+        }
+        if (
+          ((h.context = M), (h.props = b), (h.__P = n), (h.__e = !1), (P = l$1.__r), (A = 0), S)
+        ) {
+          for (
+            h.state = h.__s,
+              h.__d = !1,
+              P && P(u),
+              a = h.render(h.props, h.state, h.context),
+              H = 0;
+            H < h._sb.length;
+            H++
+          )
+            h.__h.push(h._sb[H]);
+          h._sb = [];
+        } else
+          do {
+            ((h.__d = !1),
+              P && P(u),
+              (a = h.render(h.props, h.state, h.context)),
+              (h.state = h.__s));
+          } while (h.__d && ++A < 25);
+        ((h.state = h.__s),
+          null != h.getChildContext && (i = d$2(d$2({}, i), h.getChildContext())),
+          S && !p && null != h.getSnapshotBeforeUpdate && (_ = h.getSnapshotBeforeUpdate(v, y)),
+          (L = a),
+          null != a && a.type === k$1 && null == a.key && (L = N$1(a.props.children)),
+          (f = I(n, w$1(L) ? L : [L], u, t, i, r, o, e, f, c, s)),
+          (h.base = u.__e),
+          (u.__u &= -161),
+          h.__h.length && e.push(h),
+          m && (h.__E = h.__ = null));
+      } catch (n) {
+        if (((u.__v = null), c || null != o))
+          if (n.then) {
+            for (u.__u |= c ? 160 : 128; f && 8 == f.nodeType && f.nextSibling; ) f = f.nextSibling;
+            ((o[o.indexOf(f)] = null), (u.__e = f));
+          } else for (T = o.length; T--; ) g$1(o[T]);
+        else ((u.__e = t.__e), (u.__k = t.__k));
+        l$1.__e(n, u, t);
+      }
+    else
+      null == o && u.__v == t.__v
+        ? ((u.__k = t.__k), (u.__e = t.__e))
+        : (f = u.__e = V$1(t.__e, u, t, i, r, o, e, c, s));
+    return ((a = l$1.diffed) && a(u), 128 & u.__u ? void 0 : f);
+  }
+  function z$1(n, u, t) {
+    for (var i = 0; i < t.length; i++) q$1(t[i], t[++i], t[++i]);
+    (l$1.__c && l$1.__c(u, n),
+      n.some(function (u) {
+        try {
+          ((n = u.__h),
+            (u.__h = []),
+            n.some(function (n) {
+              n.call(u);
+            }));
+        } catch (n) {
+          l$1.__e(n, u.__v);
+        }
+      }));
+  }
+  function N$1(n) {
+    return 'object' != typeof n || null == n || (n.__b && n.__b > 0)
+      ? n
+      : w$1(n)
+        ? n.map(N$1)
+        : d$2({}, n);
+  }
+  function V$1(u, t, i, r, o, e, f, c, s) {
+    var a,
+      h,
+      v,
+      y,
+      d,
+      _,
+      m,
+      b = i.props,
+      k = t.props,
+      x = t.type;
+    if (
+      ('svg' == x
+        ? (o = 'http://www.w3.org/2000/svg')
+        : 'math' == x
+          ? (o = 'http://www.w3.org/1998/Math/MathML')
+          : o || (o = 'http://www.w3.org/1999/xhtml'),
+      null != e)
+    )
+      for (a = 0; a < e.length; a++)
+        if ((d = e[a]) && 'setAttribute' in d == !!x && (x ? d.localName == x : 3 == d.nodeType)) {
+          ((u = d), (e[a] = null));
+          break;
+        }
+    if (null == u) {
+      if (null == x) return document.createTextNode(k);
+      ((u = document.createElementNS(o, x, k.is && k)),
+        c && (l$1.__m && l$1.__m(t, e), (c = false)),
+        (e = null));
+    }
+    if (null == x) b === k || (c && u.data == k) || (u.data = k);
+    else {
+      if (((e = e && n.call(u.childNodes)), (b = i.props || p$1), !c && null != e))
+        for (b = {}, a = 0; a < u.attributes.length; a++) b[(d = u.attributes[a]).name] = d.value;
+      for (a in b)
+        if (((d = b[a]), 'children' == a));
+        else if ('dangerouslySetInnerHTML' == a) v = d;
+        else if (!(a in k)) {
+          if (('value' == a && 'defaultValue' in k) || ('checked' == a && 'defaultChecked' in k))
+            continue;
+          j$2(u, a, null, d, o);
+        }
+      for (a in k)
+        ((d = k[a]),
+          'children' == a
+            ? (y = d)
+            : 'dangerouslySetInnerHTML' == a
+              ? (h = d)
+              : 'value' == a
+                ? (_ = d)
+                : 'checked' == a
+                  ? (m = d)
+                  : (c && 'function' != typeof d) || b[a] === d || j$2(u, a, d, b[a], o));
+      if (h)
+        (c || (v && (h.__html == v.__html || h.__html == u.innerHTML)) || (u.innerHTML = h.__html),
+          (t.__k = []));
+      else if (
+        (v && (u.innerHTML = ''),
+        I(
+          'template' == t.type ? u.content : u,
+          w$1(y) ? y : [y],
+          t,
+          i,
+          r,
+          'foreignObject' == x ? 'http://www.w3.org/1999/xhtml' : o,
+          e,
+          f,
+          e ? e[0] : i.__k && S(i, 0),
+          c,
+          s,
+        ),
+        null != e)
+      )
+        for (a = e.length; a--; ) g$1(e[a]);
+      c ||
+        ((a = 'value'),
+        'progress' == x && null == _
+          ? u.removeAttribute('value')
+          : null != _ &&
+            (_ !== u[a] || ('progress' == x && !_) || ('option' == x && _ != b[a])) &&
+            j$2(u, a, _, b[a], o),
+        (a = 'checked'),
+        null != m && m != u[a] && j$2(u, a, m, b[a], o));
+    }
+    return u;
+  }
+  function q$1(n, u, t) {
+    try {
+      if ('function' == typeof n) {
+        var i = 'function' == typeof n.__u;
+        (i && n.__u(), (i && null == u) || (n.__u = n(u)));
+      } else n.current = u;
+    } catch (n) {
+      l$1.__e(n, t);
+    }
+  }
+  function B$2(n, u, t) {
+    var i, r;
+    if (
+      (l$1.unmount && l$1.unmount(n),
+      (i = n.ref) && ((i.current && i.current != n.__e) || q$1(i, null, u)),
+      null != (i = n.__c))
+    ) {
+      if (i.componentWillUnmount)
+        try {
+          i.componentWillUnmount();
+        } catch (n) {
+          l$1.__e(n, u);
+        }
+      i.base = i.__P = null;
+    }
+    if ((i = n.__k))
+      for (r = 0; r < i.length; r++) i[r] && B$2(i[r], u, t || 'function' != typeof n.type);
+    (t || g$1(n.__e), (n.__c = n.__ = n.__e = void 0));
+  }
+  function D$1(n, l, u) {
+    return this.constructor(n, u);
+  }
+  function E$1(u, t, i) {
+    var r, o, e, f;
+    (t == document && (t = document.documentElement),
+      l$1.__ && l$1.__(u, t),
+      (o = (r = 'function' == 'undefined') ? null : t.__k),
+      (e = []),
+      (f = []),
+      O(
+        t,
+        (u = t.__k = _$1(k$1, null, [u])),
+        o || p$1,
+        p$1,
+        t.namespaceURI,
+        o ? null : t.firstChild ? n.call(t.childNodes) : null,
+        e,
+        o ? o.__e : t.firstChild,
+        r,
+        f,
+      ),
+      z$1(e, u, f));
+  }
+  ((n = v$1.slice),
+    (l$1 = {
+      __e: function (n, l, u, t) {
+        for (var i, r, o; (l = l.__); )
+          if ((i = l.__c) && !i.__)
+            try {
+              if (
+                ((r = i.constructor) &&
+                  null != r.getDerivedStateFromError &&
+                  (i.setState(r.getDerivedStateFromError(n)), (o = i.__d)),
+                null != i.componentDidCatch && (i.componentDidCatch(n, t || {}), (o = i.__d)),
+                o)
+              )
+                return (i.__E = i);
+            } catch (l) {
+              n = l;
+            }
+        throw n;
+      },
+    }),
+    (u$2 = 0),
+    (x.prototype.setState = function (n, l) {
+      var u;
+      ((u =
+        null != this.__s && this.__s != this.state ? this.__s : (this.__s = d$2({}, this.state))),
+        'function' == typeof n && (n = n(d$2({}, u), this.props)),
+        n && d$2(u, n),
+        null != n && this.__v && (l && this._sb.push(l), M(this)));
+    }),
+    (x.prototype.forceUpdate = function (n) {
+      this.__v && ((this.__e = true), n && this.__h.push(n), M(this));
+    }),
+    (x.prototype.render = k$1),
+    (i$1 = []),
+    (o$1 =
+      'function' == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout),
+    (e$1 = function (n, l) {
+      return n.__v.__b - l.__v.__b;
+    }),
+    ($$1.__r = 0),
+    (f$2 = /(PointerCapture)$|Capture$/i),
+    (c$1 = 0),
+    (s$1 = F$1(false)),
+    (a$1 = F$1(true)));
 
-  var jsxRuntime = { exports: {} };
+  var f$1 = 0;
+  function u$1(e, t, n, o, i, u) {
+    t || (t = {});
+    var a,
+      c,
+      p = t;
+    if ('ref' in p) for (c in ((p = {}), t)) 'ref' == c ? (a = t[c]) : (p[c] = t[c]);
+    var l = {
+      type: e,
+      props: p,
+      key: n,
+      ref: a,
+      __k: null,
+      __: null,
+      __b: 0,
+      __e: null,
+      __c: null,
+      constructor: void 0,
+      __v: --f$1,
+      __i: -1,
+      __u: 0,
+      __source: i,
+      __self: u,
+    };
+    if ('function' == typeof e && (a = e.defaultProps))
+      for (c in a) void 0 === p[c] && (p[c] = a[c]);
+    return (l$1.vnode && l$1.vnode(l), l);
+  }
 
-  var reactJsxRuntime_production = {};
-
-  /**
-   * @license React
-   * react-jsx-runtime.production.js
-   *
-   * Copyright (c) Meta Platforms, Inc. and affiliates.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
-   */
-
-  var hasRequiredReactJsxRuntime_production;
-
-  function requireReactJsxRuntime_production() {
-    if (hasRequiredReactJsxRuntime_production) return reactJsxRuntime_production;
-    hasRequiredReactJsxRuntime_production = 1;
-    var REACT_ELEMENT_TYPE = Symbol.for('react.transitional.element'),
-      REACT_FRAGMENT_TYPE = Symbol.for('react.fragment');
-    function jsxProd(type, config, maybeKey) {
-      var key = null;
-      void 0 !== maybeKey && (key = '' + maybeKey);
-      void 0 !== config.key && (key = '' + config.key);
-      if ('key' in config) {
-        maybeKey = {};
-        for (var propName in config) 'key' !== propName && (maybeKey[propName] = config[propName]);
-      } else maybeKey = config;
-      config = maybeKey.ref;
-      return {
-        $$typeof: REACT_ELEMENT_TYPE,
-        type: type,
-        key: key,
-        ref: void 0 !== config ? config : null,
-        props: maybeKey,
+  var t,
+    r,
+    u,
+    i,
+    o = 0,
+    f = [],
+    c = l$1,
+    e = c.__b,
+    a = c.__r,
+    v = c.diffed,
+    l = c.__c,
+    m = c.unmount,
+    s = c.__;
+  function p(n, t) {
+    (c.__h && c.__h(r, n, o || t), (o = 0));
+    var u = r.__H || (r.__H = { __: [], __h: [] });
+    return (n >= u.__.length && u.__.push({}), u.__[n]);
+  }
+  function d$1(n) {
+    return ((o = 1), h(D, n));
+  }
+  function h(n, u, i) {
+    var o = p(t++, 2);
+    if (
+      ((o.t = n),
+      !o.__c &&
+        ((o.__ = [
+          i ? i(u) : D(void 0, u),
+          function (n) {
+            var t = o.__N ? o.__N[0] : o.__[0],
+              r = o.t(t, n);
+            t !== r && ((o.__N = [r, o.__[1]]), o.__c.setState({}));
+          },
+        ]),
+        (o.__c = r),
+        !r.__f))
+    ) {
+      var f = function (n, t, r) {
+        if (!o.__c.__H) return true;
+        var u = o.__c.__H.__.filter(function (n) {
+          return !!n.__c;
+        });
+        if (
+          u.every(function (n) {
+            return !n.__N;
+          })
+        )
+          return !c || c.call(this, n, t, r);
+        var i = o.__c.props !== n;
+        return (
+          u.forEach(function (n) {
+            if (n.__N) {
+              var t = n.__[0];
+              ((n.__ = n.__N), (n.__N = void 0), t !== n.__[0] && (i = true));
+            }
+          }),
+          (c && c.call(this, n, t, r)) || i
+        );
       };
+      r.__f = true;
+      var c = r.shouldComponentUpdate,
+        e = r.componentWillUpdate;
+      ((r.componentWillUpdate = function (n, t, r) {
+        if (this.__e) {
+          var u = c;
+          ((c = void 0), f(n, t, r), (c = u));
+        }
+        e && e.call(this, n, t, r);
+      }),
+        (r.shouldComponentUpdate = f));
     }
-    reactJsxRuntime_production.Fragment = REACT_FRAGMENT_TYPE;
-    reactJsxRuntime_production.jsx = jsxProd;
-    reactJsxRuntime_production.jsxs = jsxProd;
-    return reactJsxRuntime_production;
+    return o.__N || o.__;
+  }
+  function y(n, u) {
+    var i = p(t++, 3);
+    !c.__s && C(i.__H, u) && ((i.__ = n), (i.u = u), r.__H.__h.push(i));
+  }
+  function j$1() {
+    for (var n; (n = f.shift()); )
+      if (n.__P && n.__H)
+        try {
+          (n.__H.__h.forEach(z), n.__H.__h.forEach(B$1), (n.__H.__h = []));
+        } catch (t) {
+          ((n.__H.__h = []), c.__e(t, n.__v));
+        }
+  }
+  ((c.__b = function (n) {
+    ((r = null), e && e(n));
+  }),
+    (c.__ = function (n, t) {
+      (n && t.__k && t.__k.__m && (n.__m = t.__k.__m), s && s(n, t));
+    }),
+    (c.__r = function (n) {
+      (a && a(n), (t = 0));
+      var i = (r = n.__c).__H;
+      (i &&
+        (u === r
+          ? ((i.__h = []),
+            (r.__h = []),
+            i.__.forEach(function (n) {
+              (n.__N && (n.__ = n.__N), (n.u = n.__N = void 0));
+            }))
+          : (i.__h.forEach(z), i.__h.forEach(B$1), (i.__h = []), (t = 0))),
+        (u = r));
+    }),
+    (c.diffed = function (n) {
+      v && v(n);
+      var t = n.__c;
+      (t &&
+        t.__H &&
+        (t.__H.__h.length &&
+          ((1 !== f.push(t) && i === c.requestAnimationFrame) ||
+            ((i = c.requestAnimationFrame) || w)(j$1)),
+        t.__H.__.forEach(function (n) {
+          (n.u && (n.__H = n.u), (n.u = void 0));
+        })),
+        (u = r = null));
+    }),
+    (c.__c = function (n, t) {
+      (t.some(function (n) {
+        try {
+          (n.__h.forEach(z),
+            (n.__h = n.__h.filter(function (n) {
+              return !n.__ || B$1(n);
+            })));
+        } catch (r) {
+          (t.some(function (n) {
+            n.__h && (n.__h = []);
+          }),
+            (t = []),
+            c.__e(r, n.__v));
+        }
+      }),
+        l && l(n, t));
+    }),
+    (c.unmount = function (n) {
+      m && m(n);
+      var t,
+        r = n.__c;
+      r &&
+        r.__H &&
+        (r.__H.__.forEach(function (n) {
+          try {
+            z(n);
+          } catch (n) {
+            t = n;
+          }
+        }),
+        (r.__H = void 0),
+        t && c.__e(t, r.__v));
+    }));
+  var k = 'function' == typeof requestAnimationFrame;
+  function w(n) {
+    var t,
+      r = function () {
+        (clearTimeout(u), k && cancelAnimationFrame(t), setTimeout(n));
+      },
+      u = setTimeout(r, 35);
+    k && (t = requestAnimationFrame(r));
+  }
+  function z(n) {
+    var t = r,
+      u = n.__c;
+    ('function' == typeof u && ((n.__c = void 0), u()), (r = t));
+  }
+  function B$1(n) {
+    var t = r;
+    ((n.__c = n.__()), (r = t));
+  }
+  function C(n, t) {
+    return (
+      !n ||
+      n.length !== t.length ||
+      t.some(function (t, r) {
+        return t !== n[r];
+      })
+    );
+  }
+  function D(n, t) {
+    return 'function' == typeof t ? t(n) : t;
   }
 
-  var hasRequiredJsxRuntime;
-
-  function requireJsxRuntime() {
-    if (hasRequiredJsxRuntime) return jsxRuntime.exports;
-    hasRequiredJsxRuntime = 1;
-    {
-      jsxRuntime.exports = requireReactJsxRuntime_production();
-    }
-    return jsxRuntime.exports;
+  function g(n, t) {
+    for (var e in t) n[e] = t[e];
+    return n;
+  }
+  function E(n, t) {
+    for (var e in n) if ('__source' !== e && !(e in t)) return true;
+    for (var r in t) if ('__source' !== r && n[r] !== t[r]) return true;
+    return false;
+  }
+  function N(n, t) {
+    ((this.props = n), (this.context = t));
+  }
+  (((N.prototype = new x()).isPureReactComponent = true),
+    (N.prototype.shouldComponentUpdate = function (n, t) {
+      return E(this.props, n) || E(this.state, t);
+    }));
+  var T = l$1.__b;
+  l$1.__b = function (n) {
+    (n.type && n.type.__f && n.ref && ((n.props.ref = n.ref), (n.ref = null)), T && T(n));
+  };
+  var F = l$1.__e;
+  l$1.__e = function (n, t, e, r) {
+    if (n.then)
+      for (var u, o = t; (o = o.__); )
+        if ((u = o.__c) && u.__c)
+          return (null == t.__e && ((t.__e = e.__e), (t.__k = e.__k)), u.__c(n, t));
+    F(n, t, e, r);
+  };
+  var U = l$1.unmount;
+  function V(n, t, e) {
+    return (
+      n &&
+        (n.__c &&
+          n.__c.__H &&
+          (n.__c.__H.__.forEach(function (n) {
+            'function' == typeof n.__c && n.__c();
+          }),
+          (n.__c.__H = null)),
+        null != (n = g({}, n)).__c &&
+          (n.__c.__P === e && (n.__c.__P = t), (n.__c.__e = true), (n.__c = null)),
+        (n.__k =
+          n.__k &&
+          n.__k.map(function (n) {
+            return V(n, t, e);
+          }))),
+      n
+    );
+  }
+  function W(n, t, e) {
+    return (
+      n &&
+        e &&
+        ((n.__v = null),
+        (n.__k =
+          n.__k &&
+          n.__k.map(function (n) {
+            return W(n, t, e);
+          })),
+        n.__c &&
+          n.__c.__P === t &&
+          (n.__e && e.appendChild(n.__e), (n.__c.__e = true), (n.__c.__P = e))),
+      n
+    );
+  }
+  function P() {
+    ((this.__u = 0), (this.o = null), (this.__b = null));
+  }
+  function j(n) {
+    var t = n.__.__c;
+    return t && t.__a && t.__a(n);
+  }
+  function B() {
+    ((this.i = null), (this.l = null));
+  }
+  ((l$1.unmount = function (n) {
+    var t = n.__c;
+    (t && t.__R && t.__R(), t && 32 & n.__u && (n.type = null), U && U(n));
+  }),
+    ((P.prototype = new x()).__c = function (n, t) {
+      var e = t.__c,
+        r = this;
+      (null == r.o && (r.o = []), r.o.push(e));
+      var u = j(r.__v),
+        o = false,
+        i = function () {
+          o || ((o = true), (e.__R = null), u ? u(l) : l());
+        };
+      e.__R = i;
+      var l = function () {
+        if (!--r.__u) {
+          if (r.state.__a) {
+            var n = r.state.__a;
+            r.__v.__k[0] = W(n, n.__c.__P, n.__c.__O);
+          }
+          var t;
+          for (r.setState({ __a: (r.__b = null) }); (t = r.o.pop()); ) t.forceUpdate();
+        }
+      };
+      (r.__u++ || 32 & t.__u || r.setState({ __a: (r.__b = r.__v.__k[0]) }), n.then(i, i));
+    }),
+    (P.prototype.componentWillUnmount = function () {
+      this.o = [];
+    }),
+    (P.prototype.render = function (n, e) {
+      if (this.__b) {
+        if (this.__v.__k) {
+          var r = document.createElement('div'),
+            o = this.__v.__k[0].__c;
+          this.__v.__k[0] = V(this.__b, r, (o.__O = o.__P));
+        }
+        this.__b = null;
+      }
+      var i = e.__a && _$1(k$1, null, n.fallback);
+      return (i && (i.__u &= -33), [_$1(k$1, null, e.__a ? null : n.children), i]);
+    }));
+  var H = function (n, t, e) {
+    if (
+      (++e[1] === e[0] && n.l.delete(t),
+      n.props.revealOrder && ('t' !== n.props.revealOrder[0] || !n.l.size))
+    )
+      for (e = n.i; e; ) {
+        for (; e.length > 3; ) e.pop()();
+        if (e[1] < e[0]) break;
+        n.i = e = e[2];
+      }
+  };
+  (((B.prototype = new x()).__a = function (n) {
+    var t = this,
+      e = j(t.__v),
+      r = t.l.get(n);
+    return (
+      r[0]++,
+      function (u) {
+        var o = function () {
+          t.props.revealOrder ? (r.push(u), H(t, n, r)) : u();
+        };
+        e ? e(o) : o();
+      }
+    );
+  }),
+    (B.prototype.render = function (n) {
+      ((this.i = null), (this.l = new Map()));
+      var t = H$1(n.children);
+      n.revealOrder && 'b' === n.revealOrder[0] && t.reverse();
+      for (var e = t.length; e--; ) this.l.set(t[e], (this.i = [1, 0, this.i]));
+      return n.children;
+    }),
+    (B.prototype.componentDidUpdate = B.prototype.componentDidMount =
+      function () {
+        var n = this;
+        this.l.forEach(function (t, e) {
+          H(n, e, t);
+        });
+      }));
+  var q = ('undefined' != typeof Symbol && Symbol.for && Symbol.for('react.element')) || 60103,
+    G =
+      /^(?:accent|alignment|arabic|baseline|cap|clip(?!PathU)|color|dominant|fill|flood|font|glyph(?!R)|horiz|image(!S)|letter|lighting|marker(?!H|W|U)|overline|paint|pointer|shape|stop|strikethrough|stroke|text(?!L)|transform|underline|unicode|units|v|vector|vert|word|writing|x(?!C))[A-Z]/,
+    J = /^on(Ani|Tra|Tou|BeforeInp|Compo)/,
+    K = /[A-Z0-9]/g,
+    Q = 'undefined' != typeof document,
+    X = function (n) {
+      return (
+        'undefined' != typeof Symbol && 'symbol' == typeof Symbol() ? /fil|che|rad/ : /fil|che|ra/
+      ).test(n);
+    };
+  function nn(n, t, e) {
+    return (
+      null == t.__k && (t.textContent = ''),
+      E$1(n, t),
+      'function' == typeof e && e(),
+      n ? n.__c : null
+    );
+  }
+  ((x.prototype.isReactComponent = {}),
+    ['componentWillMount', 'componentWillReceiveProps', 'componentWillUpdate'].forEach(
+      function (t) {
+        Object.defineProperty(x.prototype, t, {
+          configurable: true,
+          get: function () {
+            return this['UNSAFE_' + t];
+          },
+          set: function (n) {
+            Object.defineProperty(this, t, { configurable: true, writable: true, value: n });
+          },
+        });
+      },
+    ));
+  var en = l$1.event;
+  function rn() {}
+  function un() {
+    return this.cancelBubble;
+  }
+  function on() {
+    return this.defaultPrevented;
+  }
+  l$1.event = function (n) {
+    return (
+      en && (n = en(n)),
+      (n.persist = rn),
+      (n.isPropagationStopped = un),
+      (n.isDefaultPrevented = on),
+      (n.nativeEvent = n)
+    );
+  };
+  var cn = {
+      enumerable: false,
+      configurable: true,
+      get: function () {
+        return this.class;
+      },
+    },
+    fn = l$1.vnode;
+  l$1.vnode = function (n) {
+    ('string' == typeof n.type &&
+      (function (n) {
+        var t = n.props,
+          e = n.type,
+          u = {},
+          o = -1 === e.indexOf('-');
+        for (var i in t) {
+          var l = t[i];
+          if (
+            !(
+              ('value' === i && 'defaultValue' in t && null == l) ||
+              (Q && 'children' === i && 'noscript' === e) ||
+              'class' === i ||
+              'className' === i
+            )
+          ) {
+            var c = i.toLowerCase();
+            ('defaultValue' === i && 'value' in t && null == t.value
+              ? (i = 'value')
+              : 'download' === i && true === l
+                ? (l = '')
+                : 'translate' === c && 'no' === l
+                  ? (l = false)
+                  : 'o' === c[0] && 'n' === c[1]
+                    ? 'ondoubleclick' === c
+                      ? (i = 'ondblclick')
+                      : 'onchange' !== c || ('input' !== e && 'textarea' !== e) || X(t.type)
+                        ? 'onfocus' === c
+                          ? (i = 'onfocusin')
+                          : 'onblur' === c
+                            ? (i = 'onfocusout')
+                            : J.test(i) && (i = c)
+                        : (c = i = 'oninput')
+                    : o && G.test(i)
+                      ? (i = i.replace(K, '-$&').toLowerCase())
+                      : null === l && (l = void 0),
+              'oninput' === c && u[(i = c)] && (i = 'oninputCapture'),
+              (u[i] = l));
+          }
+        }
+        ('select' == e &&
+          u.multiple &&
+          Array.isArray(u.value) &&
+          (u.value = H$1(t.children).forEach(function (n) {
+            n.props.selected = -1 != u.value.indexOf(n.props.value);
+          })),
+          'select' == e &&
+            null != u.defaultValue &&
+            (u.value = H$1(t.children).forEach(function (n) {
+              n.props.selected = u.multiple
+                ? -1 != u.defaultValue.indexOf(n.props.value)
+                : u.defaultValue == n.props.value;
+            })),
+          t.class && !t.className
+            ? ((u.class = t.class), Object.defineProperty(u, 'className', cn))
+            : ((t.className && !t.class) || (t.class && t.className)) &&
+              (u.class = u.className = t.className),
+          (n.props = u));
+      })(n),
+      (n.$$typeof = q),
+      fn && fn(n));
+  };
+  var an = l$1.__r;
+  l$1.__r = function (n) {
+    (an && an(n), n.__c);
+  };
+  var sn = l$1.diffed;
+  l$1.diffed = function (n) {
+    sn && sn(n);
+    var t = n.props,
+      e = n.__e;
+    null != e &&
+      'textarea' === n.type &&
+      'value' in t &&
+      t.value !== e.value &&
+      (e.value = null == t.value ? '' : t.value);
+  };
+  function bn(n) {
+    return !!n.__k && (E$1(null, n), true);
   }
 
-  var jsxRuntimeExports = requireJsxRuntime();
+  function createRoot(container) {
+    return {
+      // eslint-disable-next-line
+      render: function (children) {
+        nn(children, container);
+      },
+      // eslint-disable-next-line
+      unmount: function () {
+        bn(container);
+      },
+    };
+  }
 
   const animation =
     '@-webkit-keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\n@keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\n@-webkit-keyframes spin-reverse {\r\n  0% {\r\n    transform: rotate(360deg);\r\n  }\r\n\r\n  to {\r\n    transform: rotate(0);\r\n  }\r\n}\r\n\r\n@keyframes spin-reverse {\r\n  0% {\r\n    transform: rotate(360deg);\r\n  }\r\n\r\n  to {\r\n    transform: rotate(0);\r\n  }\r\n}\r\n\r\n.icon-tabler-loader-2,\r\n.animate-spin {\r\n  -webkit-animation: spin 1s linear infinite;\r\n  animation: spin 1s linear infinite;\r\n}\r\n\r\n.animate-spin-reverse {\r\n  -webkit-animation: spin-reverse 1s linear infinite;\r\n  animation: spin-reverse 1s linear infinite;\r\n}\r\n';
@@ -2826,26 +3895,37 @@
     `;
   }
 
-  let emit = (snapshotRef, onChange) => value => {
-    if (snapshotRef.current === value) return;
-    snapshotRef.current = value;
-    onChange();
-  };
+  function useStore(store, opts = {}) {
+    let [, forceRender] = d$1({});
+    let [valueBeforeEffect] = d$1(store.get());
 
-  function useStore(store, { keys, deps = [store, keys] } = {}) {
-    let snapshotRef = React.useRef();
-    snapshotRef.current = store.get();
+    y(() => {
+      valueBeforeEffect !== store.get() && forceRender({});
+    }, []);
 
-    let subscribe = React.useCallback(onChange => {
-      emit(snapshotRef, onChange)(store.value);
+    y(() => {
+      let batching, timer, unlisten;
+      let rerender = () => {
+        if (!batching) {
+          batching = 1;
+          timer = setTimeout(() => {
+            batching = undefined;
+            forceRender({});
+          });
+        }
+      };
+      if (opts.keys) {
+        unlisten = listenKeys(store, opts.keys, rerender);
+      } else {
+        unlisten = store.listen(rerender);
+      }
+      return () => {
+        unlisten();
+        clearTimeout(timer);
+      };
+    }, [store, '' + opts.keys]);
 
-      return keys?.length > 0
-        ? listenKeys(store, keys, emit(snapshotRef, onChange))
-        : store.listen(emit(snapshotRef, onChange));
-    }, deps);
-    let get = () => snapshotRef.current;
-
-    return React.useSyncExternalStore(subscribe, get, get);
+    return store.get();
   }
 
   let scrollActive = false;
@@ -2905,6 +3985,17 @@
     window.addEventListener('wheel', _.throttle(manualScroll, 500));
     document.querySelector('#AutoScroll')?.addEventListener('click', toggleAutoScroll);
   }
+
+  var commonjsGlobal =
+    typeof globalThis !== 'undefined'
+      ? globalThis
+      : typeof window !== 'undefined'
+        ? window
+        : typeof global !== 'undefined'
+          ? global
+          : typeof self !== 'undefined'
+            ? self
+            : {};
 
   var dist = {};
 
@@ -3602,7 +4693,7 @@
   }
 
   const SvgArrowAutofitDown = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -3617,20 +4708,14 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M18 4v17' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M15 18l3 3l3 -3' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8' }),
+      /* @__PURE__ */ _$1('path', { d: 'M18 4v17' }),
+      /* @__PURE__ */ _$1('path', { d: 'M15 18l3 3l3 -3' }),
     );
 
   const SvgArrowAutofitHeight = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -3645,22 +4730,16 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M18 14v7' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M18 3v7' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M15 18l3 3l3 -3' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M15 6l3 -3l3 3' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6' }),
+      /* @__PURE__ */ _$1('path', { d: 'M18 14v7' }),
+      /* @__PURE__ */ _$1('path', { d: 'M18 3v7' }),
+      /* @__PURE__ */ _$1('path', { d: 'M15 18l3 3l3 -3' }),
+      /* @__PURE__ */ _$1('path', { d: 'M15 6l3 -3l3 3' }),
     );
 
   const SvgArrowAutofitLeft = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -3675,20 +4754,14 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M20 18h-17' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M6 15l-3 3l3 3' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8' }),
+      /* @__PURE__ */ _$1('path', { d: 'M20 18h-17' }),
+      /* @__PURE__ */ _$1('path', { d: 'M6 15l-3 3l3 3' }),
     );
 
   const SvgArrowAutofitRight = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -3703,20 +4776,14 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M4 18h17' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M18 15l3 3l-3 3' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8' }),
+      /* @__PURE__ */ _$1('path', { d: 'M4 18h17' }),
+      /* @__PURE__ */ _$1('path', { d: 'M18 15l3 3l-3 3' }),
     );
 
   const SvgArrowAutofitWidth = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -3731,22 +4798,16 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 18h-7' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M21 18h-7' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M6 15l-3 3l3 3' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M18 15l3 3l-3 3' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6' }),
+      /* @__PURE__ */ _$1('path', { d: 'M10 18h-7' }),
+      /* @__PURE__ */ _$1('path', { d: 'M21 18h-7' }),
+      /* @__PURE__ */ _$1('path', { d: 'M6 15l-3 3l3 3' }),
+      /* @__PURE__ */ _$1('path', { d: 'M18 15l3 3l-3 3' }),
     );
 
   const SvgArrowBigLeft = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -3761,18 +4822,14 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', {
         d: 'M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z',
       }),
     );
 
   const SvgArrowBigRight = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -3787,18 +4844,14 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', {
         d: 'M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z',
       }),
     );
 
   const SvgBookmark = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -3813,18 +4866,12 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z',
-      }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z' }),
     );
 
   const SvgBookmarkOff = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -3839,19 +4886,15 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', {
         d: 'M7.708 3.721a3.982 3.982 0 0 1 2.292 -.721h4a4 4 0 0 1 4 4v7m0 4v3l-6 -4l-6 4v-14c0 -.308 .035 -.609 .1 -.897',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M3 3l18 18' }),
+      /* @__PURE__ */ _$1('path', { d: 'M3 3l18 18' }),
     );
 
   const SvgBookmarks = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -3866,19 +4909,15 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', {
         d: 'M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M11 3h5a3 3 0 0 1 3 3v11' }),
+      /* @__PURE__ */ _$1('path', { d: 'M11 3h5a3 3 0 0 1 3 3v11' }),
     );
 
   const SvgCategory = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -3893,21 +4932,15 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M4 4h6v6h-6z' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M14 4h6v6h-6z' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M4 14h6v6h-6z' }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0',
-      }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M4 4h6v6h-6z' }),
+      /* @__PURE__ */ _$1('path', { d: 'M14 4h6v6h-6z' }),
+      /* @__PURE__ */ _$1('path', { d: 'M4 14h6v6h-6z' }),
+      /* @__PURE__ */ _$1('path', { d: 'M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0' }),
     );
 
   const SvgCheck = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -3922,16 +4955,12 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M5 12l5 5l10 -10' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M5 12l5 5l10 -10' }),
     );
 
   const SvgDeviceFloppy = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -3946,22 +4975,16 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', {
         d: 'M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2',
       }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M14 4l0 4l-6 0l0 -4' }),
+      /* @__PURE__ */ _$1('path', { d: 'M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0' }),
+      /* @__PURE__ */ _$1('path', { d: 'M14 4l0 4l-6 0l0 -4' }),
     );
 
   const SvgExternalLink = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -3976,20 +4999,16 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', {
         d: 'M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M11 13l9 -9' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M15 4h5v5' }),
+      /* @__PURE__ */ _$1('path', { d: 'M11 13l9 -9' }),
+      /* @__PURE__ */ _$1('path', { d: 'M15 4h5v5' }),
     );
 
   const SvgEye = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4004,19 +5023,15 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0' }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0' }),
+      /* @__PURE__ */ _$1('path', {
         d: 'M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6',
       }),
     );
 
   const SvgEyeOff = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4031,20 +5046,16 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10.585 10.587a2 2 0 0 0 2.829 2.828' }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M10.585 10.587a2 2 0 0 0 2.829 2.828' }),
+      /* @__PURE__ */ _$1('path', {
         d: 'M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M3 3l18 18' }),
+      /* @__PURE__ */ _$1('path', { d: 'M3 3l18 18' }),
     );
 
   const SvgFileDownload = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4059,21 +5070,17 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M14 3v4a1 1 0 0 0 1 1h4' }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M14 3v4a1 1 0 0 0 1 1h4' }),
+      /* @__PURE__ */ _$1('path', {
         d: 'M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M12 17v-6' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M9.5 14.5l2.5 2.5l2.5 -2.5' }),
+      /* @__PURE__ */ _$1('path', { d: 'M12 17v-6' }),
+      /* @__PURE__ */ _$1('path', { d: 'M9.5 14.5l2.5 2.5l2.5 -2.5' }),
     );
 
   const SvgKeyboard = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4088,25 +5095,21 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', {
         d: 'M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M6 10l0 .01' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 10l0 .01' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M14 10l0 .01' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M18 10l0 .01' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M6 14l0 .01' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M18 14l0 .01' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 14l4 .01' }),
+      /* @__PURE__ */ _$1('path', { d: 'M6 10l0 .01' }),
+      /* @__PURE__ */ _$1('path', { d: 'M10 10l0 .01' }),
+      /* @__PURE__ */ _$1('path', { d: 'M14 10l0 .01' }),
+      /* @__PURE__ */ _$1('path', { d: 'M18 10l0 .01' }),
+      /* @__PURE__ */ _$1('path', { d: 'M6 14l0 .01' }),
+      /* @__PURE__ */ _$1('path', { d: 'M18 14l0 .01' }),
+      /* @__PURE__ */ _$1('path', { d: 'M10 14l4 .01' }),
     );
 
   const SvgListNumbers = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4121,22 +5124,16 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M11 6h9' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M11 12h9' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M12 18h8' }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M6 10v-6l-2 2' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M11 6h9' }),
+      /* @__PURE__ */ _$1('path', { d: 'M11 12h9' }),
+      /* @__PURE__ */ _$1('path', { d: 'M12 18h8' }),
+      /* @__PURE__ */ _$1('path', { d: 'M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4' }),
+      /* @__PURE__ */ _$1('path', { d: 'M6 10v-6l-2 2' }),
     );
 
   const SvgLoader2 = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4151,16 +5148,12 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M12 3a9 9 0 1 0 9 9' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M12 3a9 9 0 1 0 9 9' }),
     );
 
   const SvgLocationCog = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4175,27 +5168,21 @@
         className: 'icon icon-tabler icons-tabler-outline icon-tabler-location-cog',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', {
         d: 'M12 18l-2 -4l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5l-3.14 8.697',
       }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M19.001 15.5v1.5' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M19.001 21v1.5' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M22.032 17.25l-1.299 .75' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M17.27 20l-1.3 .75' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M15.97 17.25l1.3 .75' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M20.733 20l1.3 .75' }),
+      /* @__PURE__ */ _$1('path', { d: 'M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0' }),
+      /* @__PURE__ */ _$1('path', { d: 'M19.001 15.5v1.5' }),
+      /* @__PURE__ */ _$1('path', { d: 'M19.001 21v1.5' }),
+      /* @__PURE__ */ _$1('path', { d: 'M22.032 17.25l-1.299 .75' }),
+      /* @__PURE__ */ _$1('path', { d: 'M17.27 20l-1.3 .75' }),
+      /* @__PURE__ */ _$1('path', { d: 'M15.97 17.25l1.3 .75' }),
+      /* @__PURE__ */ _$1('path', { d: 'M20.733 20l1.3 .75' }),
     );
 
   const SvgMenu2 = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4210,18 +5197,14 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M4 6l16 0' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M4 12l16 0' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M4 18l16 0' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M4 6l16 0' }),
+      /* @__PURE__ */ _$1('path', { d: 'M4 12l16 0' }),
+      /* @__PURE__ */ _$1('path', { d: 'M4 18l16 0' }),
     );
 
   const SvgMessage = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4236,20 +5219,16 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M8 9h8' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M8 13h6' }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M8 9h8' }),
+      /* @__PURE__ */ _$1('path', { d: 'M8 13h6' }),
+      /* @__PURE__ */ _$1('path', {
         d: 'M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z',
       }),
     );
 
   const SvgMoon = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4264,18 +5243,14 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', {
         d: 'M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z',
       }),
     );
 
   const SvgPalette = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4290,27 +5265,17 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', {
         d: 'M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25',
       }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0',
-      }),
+      /* @__PURE__ */ _$1('path', { d: 'M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0' }),
+      /* @__PURE__ */ _$1('path', { d: 'M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0' }),
+      /* @__PURE__ */ _$1('path', { d: 'M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0' }),
     );
 
   const SvgPencil = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4325,19 +5290,13 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M13.5 6.5l4 4' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4' }),
+      /* @__PURE__ */ _$1('path', { d: 'M13.5 6.5l4 4' }),
     );
 
   const SvgPlayerPause = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4352,21 +5311,17 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', {
         d: 'M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', {
         d: 'M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z',
       }),
     );
 
   const SvgPlayerPlay = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4381,16 +5336,12 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M7 4v16l13 -8z' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M7 4v16l13 -8z' }),
     );
 
   const SvgRefresh = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4405,19 +5356,13 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4' }),
+      /* @__PURE__ */ _$1('path', { d: 'M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4' }),
     );
 
   const SvgSettings = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4432,19 +5377,15 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', {
         d: 'M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0' }),
+      /* @__PURE__ */ _$1('path', { d: 'M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0' }),
     );
 
   const SvgSettingsOff = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4459,22 +5400,18 @@
         className: 'icon icon-tabler icons-tabler-outline icon-tabler-settings-off',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', {
         d: 'M9.451 5.437c.418 -.218 .75 -.609 .874 -1.12c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35c-.486 .118 -.894 .44 -1.123 .878m-.188 3.803c-.517 .523 -1.349 .734 -2.125 .262a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.472 -.774 -.262 -1.604 .259 -2.121',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', {
         d: 'M9.889 9.869a3 3 0 1 0 4.226 4.26m.592 -3.424a3.012 3.012 0 0 0 -1.419 -1.415',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M3 3l18 18' }),
+      /* @__PURE__ */ _$1('path', { d: 'M3 3l18 18' }),
     );
 
   const SvgSpacingVertical = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4489,22 +5426,14 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M16 12h-8' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2' }),
+      /* @__PURE__ */ _$1('path', { d: 'M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2' }),
+      /* @__PURE__ */ _$1('path', { d: 'M16 12h-8' }),
     );
 
   const SvgSun = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4519,21 +5448,15 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0' }),
+      /* @__PURE__ */ _$1('path', {
         d: 'M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7',
       }),
     );
 
   const SvgTrash = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4548,24 +5471,16 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M4 7l16 0' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 11l0 6' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M14 11l0 6' }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3',
-      }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M4 7l16 0' }),
+      /* @__PURE__ */ _$1('path', { d: 'M10 11l0 6' }),
+      /* @__PURE__ */ _$1('path', { d: 'M14 11l0 6' }),
+      /* @__PURE__ */ _$1('path', { d: 'M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12' }),
+      /* @__PURE__ */ _$1('path', { d: 'M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3' }),
     );
 
   const SvgWorldCog = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4580,31 +5495,23 @@
         className: 'icon icon-tabler icons-tabler-outline icon-tabler-world-cog',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M21 12a9 9 0 1 0 -8.979 9' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M3.6 9h16.8' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M3.6 15h8.9' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M11.5 3a17 17 0 0 0 0 18' }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M12.5 3a16.992 16.992 0 0 1 2.522 10.376',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M19.001 15.5v1.5' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M19.001 21v1.5' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M22.032 17.25l-1.299 .75' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M17.27 20l-1.3 .75' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M15.97 17.25l1.3 .75' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M20.733 20l1.3 .75' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M21 12a9 9 0 1 0 -8.979 9' }),
+      /* @__PURE__ */ _$1('path', { d: 'M3.6 9h16.8' }),
+      /* @__PURE__ */ _$1('path', { d: 'M3.6 15h8.9' }),
+      /* @__PURE__ */ _$1('path', { d: 'M11.5 3a17 17 0 0 0 0 18' }),
+      /* @__PURE__ */ _$1('path', { d: 'M12.5 3a16.992 16.992 0 0 1 2.522 10.376' }),
+      /* @__PURE__ */ _$1('path', { d: 'M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0' }),
+      /* @__PURE__ */ _$1('path', { d: 'M19.001 15.5v1.5' }),
+      /* @__PURE__ */ _$1('path', { d: 'M19.001 21v1.5' }),
+      /* @__PURE__ */ _$1('path', { d: 'M22.032 17.25l-1.299 .75' }),
+      /* @__PURE__ */ _$1('path', { d: 'M17.27 20l-1.3 .75' }),
+      /* @__PURE__ */ _$1('path', { d: 'M15.97 17.25l1.3 .75' }),
+      /* @__PURE__ */ _$1('path', { d: 'M20.733 20l1.3 .75' }),
     );
 
   const SvgX = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4619,17 +5526,13 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M18 6l-12 12' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M6 6l12 12' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M18 6l-12 12' }),
+      /* @__PURE__ */ _$1('path', { d: 'M6 6l12 12' }),
     );
 
   const SvgZoomCancel = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4644,21 +5547,15 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M8 8l4 4' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M12 8l-4 4' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M21 21l-6 -6' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0' }),
+      /* @__PURE__ */ _$1('path', { d: 'M8 8l4 4' }),
+      /* @__PURE__ */ _$1('path', { d: 'M12 8l-4 4' }),
+      /* @__PURE__ */ _$1('path', { d: 'M21 21l-6 -6' }),
     );
 
   const SvgZoomIn = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4673,21 +5570,15 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M7 10l6 0' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 7l0 6' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M21 21l-6 -6' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0' }),
+      /* @__PURE__ */ _$1('path', { d: 'M7 10l6 0' }),
+      /* @__PURE__ */ _$1('path', { d: 'M10 7l0 6' }),
+      /* @__PURE__ */ _$1('path', { d: 'M21 21l-6 -6' }),
     );
 
   const SvgZoomInArea = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4702,26 +5593,20 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M15 13v4' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M13 15h4' }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M22 22l-3 -3' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M6 18h-1a2 2 0 0 1 -2 -2v-1' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M3 11v-1' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M3 6v-1a2 2 0 0 1 2 -2h1' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 3h1' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M15 3h1a2 2 0 0 1 2 2v1' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M15 13v4' }),
+      /* @__PURE__ */ _$1('path', { d: 'M13 15h4' }),
+      /* @__PURE__ */ _$1('path', { d: 'M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0' }),
+      /* @__PURE__ */ _$1('path', { d: 'M22 22l-3 -3' }),
+      /* @__PURE__ */ _$1('path', { d: 'M6 18h-1a2 2 0 0 1 -2 -2v-1' }),
+      /* @__PURE__ */ _$1('path', { d: 'M3 11v-1' }),
+      /* @__PURE__ */ _$1('path', { d: 'M3 6v-1a2 2 0 0 1 2 -2h1' }),
+      /* @__PURE__ */ _$1('path', { d: 'M10 3h1' }),
+      /* @__PURE__ */ _$1('path', { d: 'M15 3h1a2 2 0 0 1 2 2v1' }),
     );
 
   const SvgZoomOut = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4736,20 +5621,14 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M7 10l6 0' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M21 21l-6 -6' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0' }),
+      /* @__PURE__ */ _$1('path', { d: 'M7 10l6 0' }),
+      /* @__PURE__ */ _$1('path', { d: 'M21 21l-6 -6' }),
     );
 
   const SvgZoomOutArea = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4764,25 +5643,19 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M13 15h4' }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M22 22l-3 -3' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M6 18h-1a2 2 0 0 1 -2 -2v-1' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M3 11v-1' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M3 6v-1a2 2 0 0 1 2 -2h1' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 3h1' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M15 3h1a2 2 0 0 1 2 2v1' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M13 15h4' }),
+      /* @__PURE__ */ _$1('path', { d: 'M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0' }),
+      /* @__PURE__ */ _$1('path', { d: 'M22 22l-3 -3' }),
+      /* @__PURE__ */ _$1('path', { d: 'M6 18h-1a2 2 0 0 1 -2 -2v-1' }),
+      /* @__PURE__ */ _$1('path', { d: 'M3 11v-1' }),
+      /* @__PURE__ */ _$1('path', { d: 'M3 6v-1a2 2 0 0 1 2 -2h1' }),
+      /* @__PURE__ */ _$1('path', { d: 'M10 3h1' }),
+      /* @__PURE__ */ _$1('path', { d: 'M15 3h1a2 2 0 0 1 2 2v1' }),
     );
 
   const SvgZoomPan = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ _$1(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4797,67 +5670,58 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
-        stroke: 'none',
-        d: 'M0 0h24v24H0z',
-        fill: 'none',
-      }),
-      /* @__PURE__ */ React.createElement('path', {
-        d: 'M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0',
-      }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M17 17l-2.5 -2.5' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 5l2 -2l2 2' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M19 10l2 2l-2 2' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M5 10l-2 2l2 2' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 19l2 2l2 -2' }),
+      /* @__PURE__ */ _$1('path', { stroke: 'none', d: 'M0 0h24v24H0z', fill: 'none' }),
+      /* @__PURE__ */ _$1('path', { d: 'M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0' }),
+      /* @__PURE__ */ _$1('path', { d: 'M17 17l-2.5 -2.5' }),
+      /* @__PURE__ */ _$1('path', { d: 'M10 5l2 -2l2 2' }),
+      /* @__PURE__ */ _$1('path', { d: 'M19 10l2 2l-2 2' }),
+      /* @__PURE__ */ _$1('path', { d: 'M5 10l-2 2l2 2' }),
+      /* @__PURE__ */ _$1('path', { d: 'M10 19l2 2l2 -2' }),
     );
 
   function BookmarksPanel() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u$1('div', {
       id: 'BookmarksPanel',
       className: 'panel',
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+        /* @__PURE__ */ u$1('button', {
           id: 'CloseBookmarks',
           className: 'closeButton',
           title: l.CLOSE,
           onClick: buttonBookmarksClose,
           type: 'button',
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
+          children: /* @__PURE__ */ u$1(SvgX, {}),
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+        /* @__PURE__ */ u$1('button', {
           className: 'Bookmark simpleButton',
           title: l.BOOKMARK,
           type: 'button',
           onClick: buttonBookmark,
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmark, {}),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmarkOff, {}),
-          ],
+          children: [/* @__PURE__ */ u$1(SvgBookmark, {}), /* @__PURE__ */ u$1(SvgBookmarkOff, {})],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('h2', { children: l.BOOKMARKS }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+        /* @__PURE__ */ u$1('h2', { children: l.BOOKMARKS }),
+        /* @__PURE__ */ u$1('div', {
           id: 'BookmarksList',
           children: isEmpty(s.bookmarks)
             ? l.LIST_EMPTY
             : s.bookmarks.map((mark, index) =>
-                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                /* @__PURE__ */ u$1(
                   'div',
                   {
                     id: `Bookmark${index + 1}`,
                     className: 'BookmarkItem',
                     children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                      /* @__PURE__ */ u$1('span', {
                         className: 'bookmarkColumnLarge',
                         children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
+                          /* @__PURE__ */ u$1('span', {
                             className: 'bookmarkName',
                             children: mark.name,
                           }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('br', {}),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('a', {
+                          /* @__PURE__ */ u$1('br', {}),
+                          /* @__PURE__ */ u$1('a', {
                             className: 'bookmarkURl',
                             href: mark.url,
                             target: '_blank',
@@ -4866,41 +5730,41 @@
                           }),
                         ],
                       }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                      /* @__PURE__ */ u$1('span', {
                         className: 'bookmarkColumnSmall',
                         children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
+                          /* @__PURE__ */ u$1('span', {
                             className: 'bookmarkDate',
                             children: new Date(mark.date).toISOString().slice(0, 10),
                           }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('br', {}),
-                          /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                          /* @__PURE__ */ u$1('br', {}),
+                          /* @__PURE__ */ u$1('span', {
                             className: 'bookmarkPage',
                             children: ['Page: ', mark.page],
                           }),
                         ],
                       }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                      /* @__PURE__ */ u$1('span', {
                         className: 'bookmarkFunctions',
                         children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('a', {
+                          /* @__PURE__ */ u$1('a', {
                             href: mark.url,
                             target: '_blank',
                             rel: 'noreferrer',
-                            children: /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                            children: /* @__PURE__ */ u$1('button', {
                               className: 'ControlButton open',
                               title: 'Open Bookmark',
                               type: 'button',
-                              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgExternalLink, {}),
+                              children: /* @__PURE__ */ u$1(SvgExternalLink, {}),
                             }),
                           }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                          /* @__PURE__ */ u$1('button', {
                             className: 'ControlButton erase',
                             title: 'Delete Bookmark',
                             type: 'button',
                             value: mark.url,
                             onClick: buttonEraseBookmarks,
-                            children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgTrash, {}),
+                            children: /* @__PURE__ */ u$1(SvgTrash, {}),
                           }),
                         ],
                       }),
@@ -4917,31 +5781,25 @@
   function CommentsPanel() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('section', {
+    return /* @__PURE__ */ u$1('section', {
       id: 'CommentsPanel',
       className: 'panel',
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+        /* @__PURE__ */ u$1('button', {
           id: 'CloseComments',
           className: 'closeButton',
           title: l.CLOSE,
           onClick: buttonCommentsClose,
           type: 'button',
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
+          children: /* @__PURE__ */ u$1(SvgX, {}),
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('h2', { children: l.COMMENTS }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
-          id: 'CommentsArea',
-          className: s.colorScheme,
-        }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+        /* @__PURE__ */ u$1('h2', { children: l.COMMENTS }),
+        /* @__PURE__ */ u$1('div', { id: 'CommentsArea', className: s.colorScheme }),
+        /* @__PURE__ */ u$1('button', {
           id: 'CommentsColorScheme',
           className: 'simpleButton ColorScheme',
           type: 'button',
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSun, {}),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMoon, {}),
-          ],
+          children: [/* @__PURE__ */ u$1(SvgSun, {}), /* @__PURE__ */ u$1(SvgMoon, {})],
         }),
       ],
     });
@@ -5061,152 +5919,149 @@
   function Header$1({ manga }) {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    return /* @__PURE__ */ u$1(k$1, {
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
-          id: 'menu',
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMenu2, {}),
-        }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('header', {
+        /* @__PURE__ */ u$1('div', { id: 'menu', children: /* @__PURE__ */ u$1(SvgMenu2, {}) }),
+        /* @__PURE__ */ u$1('header', {
           id: 'Header',
           className: `${s.header} headroom-top`,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('aside', {
+            /* @__PURE__ */ u$1('aside', {
               id: 'GlobalFunctions',
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                /* @__PURE__ */ u$1('span', {
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u$1('button', {
                       id: 'enlarge',
                       title: l.ENLARGE,
                       className: 'ControlButton',
                       onClick: changeZoomByStep(1),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomInArea, {}),
+                      children: /* @__PURE__ */ u$1(SvgZoomInArea, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u$1('button', {
                       id: 'restore',
                       title: l.RESTORE,
                       className: 'ControlButton',
                       onClick: () => changeGlobalZoom('percent'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomPan, {}),
+                      children: /* @__PURE__ */ u$1(SvgZoomPan, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u$1('button', {
                       id: 'reduce',
                       title: l.REDUCE,
                       className: 'ControlButton',
                       onClick: changeZoomByStep(-1),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomOutArea, {}),
+                      children: /* @__PURE__ */ u$1(SvgZoomOutArea, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u$1('button', {
                       id: 'fitWidth',
                       title: l.FIT_WIDTH,
                       className: 'ControlButton',
                       onClick: () => changeGlobalZoom('width'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitWidth, {}),
+                      children: /* @__PURE__ */ u$1(SvgArrowAutofitWidth, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u$1('button', {
                       id: 'fitHeight',
                       title: l.FIT_HEIGHT,
                       className: 'ControlButton',
                       onClick: () => changeGlobalZoom('height'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitHeight, {}),
+                      children: /* @__PURE__ */ u$1(SvgArrowAutofitHeight, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u$1('button', {
                       id: 'keybindings',
                       title: l.KEYBINDINGS,
                       className: 'ControlButton',
                       onClick: buttonKeybindingsOpen,
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgKeyboard, {}),
+                      children: /* @__PURE__ */ u$1(SvgKeyboard, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+                    /* @__PURE__ */ u$1('button', {
                       id: 'AutoScroll',
                       title: l.SCROLL_START,
                       className: 'ControlButton phones',
                       onClick: toggleAutoScroll,
                       type: 'button',
                       children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgPlayerPlay, {}),
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgPlayerPause, {}),
+                        /* @__PURE__ */ u$1(SvgPlayerPlay, {}),
+                        /* @__PURE__ */ u$1(SvgPlayerPause, {}),
                       ],
                     }),
                   ],
                 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                /* @__PURE__ */ u$1('span', {
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u$1('button', {
                       id: 'ltrMode',
                       title: l.VIEW_MODE_LEFT,
                       className: 'ControlButton',
                       onClick: () => updateViewMode('FluidLTR'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitRight, {}),
+                      children: /* @__PURE__ */ u$1(SvgArrowAutofitRight, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u$1('button', {
                       id: 'verticalMode',
                       title: l.VIEW_MODE_VERTICAL,
                       className: 'ControlButton tablets',
                       onClick: () => updateViewMode('Vertical'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitDown, {}),
+                      children: /* @__PURE__ */ u$1(SvgArrowAutofitDown, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u$1('button', {
                       id: 'webComic',
                       title: l.VIEW_MODE_WEBCOMIC,
                       className: 'ControlButton tablets',
                       onClick: () => updateViewMode('WebComic'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSpacingVertical, {}),
+                      children: /* @__PURE__ */ u$1(SvgSpacingVertical, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u$1('button', {
                       id: 'rtlMode',
                       title: l.VIEW_MODE_RIGHT,
                       className: 'ControlButton',
                       onClick: () => updateViewMode('FluidRTL'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitLeft, {}),
+                      children: /* @__PURE__ */ u$1(SvgArrowAutofitLeft, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u$1('button', {
                       id: 'pageControls',
                       title: l.TOGGLE_CONTROLS,
                       className: 'ControlButton tablets',
                       onClick: buttonGlobalHideImageControls,
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgListNumbers, {}),
+                      children: /* @__PURE__ */ u$1(SvgListNumbers, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u$1('button', {
                       id: 'bookmarks',
                       title: l.BOOKMARKS,
                       className: 'ControlButton tablets',
                       onClick: buttonBookmarksOpen,
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmarks, {}),
+                      children: /* @__PURE__ */ u$1(SvgBookmarks, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u$1('button', {
                       id: 'settings',
                       title: l.SETTINGS,
                       className: 'ControlButton tablets phones',
                       onClick: buttonSettingsOpen,
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSettings, {}),
+                      children: /* @__PURE__ */ u$1(SvgSettings, {}),
                     }),
                   ],
                 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                /* @__PURE__ */ u$1('span', {
                   id: 'ZoomSlider',
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('output', {
+                    /* @__PURE__ */ u$1('output', {
                       id: 'ZoomVal',
                       className: 'RangeValue',
                       htmlFor: 'Zoom',
                       children: s.zoomMode === 'percent' ? `${s.defaultZoom}%` : s.zoomMode,
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+                    /* @__PURE__ */ u$1('input', {
                       type: 'range',
                       value: s.defaultZoom,
                       name: 'Zoom',
@@ -5219,14 +6074,11 @@
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+            /* @__PURE__ */ u$1('div', {
               className: 'ViewerTitle',
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('h1', {
-                  id: 'MangaTitle',
-                  children: manga.title,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('a', {
+                /* @__PURE__ */ u$1('h1', { id: 'MangaTitle', children: manga.title }),
+                /* @__PURE__ */ u$1('a', {
                   id: 'series',
                   href: manga.series ?? '',
                   onClick: buttonRedirectURL,
@@ -5234,98 +6086,82 @@
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('nav', {
+            /* @__PURE__ */ u$1('nav', {
               id: 'ChapterNavigation',
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+                /* @__PURE__ */ u$1('div', {
                   id: 'Counters',
                   className: 'ControlLabel',
                   children: [
                     l.PAGES_LOADED,
                     ':',
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('i', { children: '0' }),
+                    /* @__PURE__ */ u$1('i', { children: '0' }),
                     ' /',
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('b', {
+                    /* @__PURE__ */ u$1('b', {
                       children:
                         manga.begin && manga.begin > 1
                           ? manga.pages - (manga.begin - 1)
                           : manga.pages,
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                    /* @__PURE__ */ u$1('span', {
                       className: 'ControlLabel',
                       children: [l.GO_TO_PAGE, ':'],
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+                    /* @__PURE__ */ u$1('select', {
                       id: 'gotoPage',
                       onChange: selectGoToPage,
                       children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                          selected: true,
-                          children: '#',
-                        }),
+                        /* @__PURE__ */ u$1('option', { selected: true, children: '#' }),
                         Array.from(Array(manga.pages + 1).keys())
                           .slice(manga.begin)
                           .map(index =>
-                            /* @__PURE__ */ jsxRuntimeExports.jsx(
-                              'option',
-                              { value: index, children: index },
-                              index,
-                            ),
+                            /* @__PURE__ */ u$1('option', { value: index, children: index }, index),
                           ),
                       ],
                     }),
                   ],
                 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+                /* @__PURE__ */ u$1('div', {
                   id: 'ChapterControl',
                   className: 'ChapterControl',
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+                    /* @__PURE__ */ u$1('button', {
                       id: 'CommentsButton',
                       className: `NavigationControlButton ControlButton ${manga.comments ? '' : 'disabled'}`,
                       title: l.DISPLAY_COMMENTS,
                       onClick: buttonCommentsOpen,
                       type: 'button',
-                      children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMessage, {}),
-                        l.DISPLAY_COMMENTS,
-                      ],
+                      children: [/* @__PURE__ */ u$1(SvgMessage, {}), l.DISPLAY_COMMENTS],
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+                    /* @__PURE__ */ u$1('button', {
                       id: 'download',
                       className: 'NavigationControlButton ControlButton disabled',
                       type: 'button',
                       title: l.DOWNLOAD_ZIP,
                       onClick: buttonStartDownload,
                       children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgFileDownload, {}),
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgLoader2, {}),
+                        /* @__PURE__ */ u$1(SvgFileDownload, {}),
+                        /* @__PURE__ */ u$1(SvgLoader2, {}),
                         l.BUTTON_DOWNLOAD,
                       ],
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('a', {
+                    /* @__PURE__ */ u$1('a', {
                       id: 'prev',
                       className: 'NavigationControlButton ControlButton',
                       type: 'button',
                       href: manga.prev ?? '',
                       title: l.PREVIOUS_CHAPTER,
                       onClick: buttonRedirectURL,
-                      children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowBigLeft, {}),
-                        l.BUTTON_PREVIOUS,
-                      ],
+                      children: [/* @__PURE__ */ u$1(SvgArrowBigLeft, {}), l.BUTTON_PREVIOUS],
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('a', {
+                    /* @__PURE__ */ u$1('a', {
                       id: 'next',
                       className: 'NavigationControlButton ControlButton',
                       type: 'button',
                       href: manga.next ?? '',
                       title: l.NEXT_CHAPTER,
                       onClick: buttonRedirectURL,
-                      children: [
-                        l.BUTTON_NEXT,
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowBigRight, {}),
-                      ],
+                      children: [l.BUTTON_NEXT, /* @__PURE__ */ u$1(SvgArrowBigRight, {})],
                     }),
                   ],
                 }),
@@ -5340,7 +6176,7 @@
   function KeybindingsPanel() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    const [editor, setEditor] = React.useState(false);
+    const [editor, setEditor] = d$1(false);
     const handleEdit = () => {
       editKeybindings();
       setEditor(true);
@@ -5349,58 +6185,52 @@
       saveKeybindings();
       setEditor(false);
     };
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u$1('div', {
       id: 'KeybindingsPanel',
       className: 'panel',
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('h2', { children: l.KEYBINDINGS }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+        /* @__PURE__ */ u$1('h2', { children: l.KEYBINDINGS }),
+        /* @__PURE__ */ u$1('button', {
           id: 'CloseKeybindings',
           className: 'closeButton',
           title: l.CLOSE,
           onClick: buttonKeybindingsClose,
           type: 'button',
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
+          children: /* @__PURE__ */ u$1(SvgX, {}),
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'controls',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+            /* @__PURE__ */ u$1('button', {
               id: 'EditKeybindings',
               className: 'ControlButton',
               type: 'button',
               title: l.EDIT_KEYBINDS,
               onClick: handleEdit,
-              children: [/* @__PURE__ */ jsxRuntimeExports.jsx(SvgPencil, {}), l.BUTTON_EDIT],
+              children: [/* @__PURE__ */ u$1(SvgPencil, {}), l.BUTTON_EDIT],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+            /* @__PURE__ */ u$1('button', {
               id: 'SaveKeybindings',
               className: 'ControlButton hidden',
               type: 'button',
               title: l.SAVE_KEYBINDS,
               onClick: handleSave,
-              children: [/* @__PURE__ */ jsxRuntimeExports.jsx(SvgDeviceFloppy, {}), l.BUTTON_SAVE],
+              children: [/* @__PURE__ */ u$1(SvgDeviceFloppy, {}), l.BUTTON_SAVE],
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+        /* @__PURE__ */ u$1('div', {
           id: 'KeybindingsList',
           children: !editor
             ? Object.keys(s.keybinds).map(kb =>
-                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                /* @__PURE__ */ u$1(
                   'span',
                   {
                     children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
-                        children: [isKey(l, kb) ? l[kb] : '', ':'],
-                      }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
+                      /* @__PURE__ */ u$1('span', { children: [isKey(l, kb) ? l[kb] : '', ':'] }),
+                      /* @__PURE__ */ u$1('span', {
                         children: s.keybinds[kb]?.map(key =>
-                          /* @__PURE__ */ jsxRuntimeExports.jsx(
-                            'kbd',
-                            { className: 'dark', children: key },
-                            key,
-                          ),
+                          /* @__PURE__ */ u$1('kbd', { className: 'dark', children: key }, key),
                         ),
                       }),
                     ],
@@ -5408,17 +6238,17 @@
                   kb,
                 ),
               )
-            : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+            : /* @__PURE__ */ u$1(k$1, {
                 children: [
                   Object.keys(s.keybinds).map(kb =>
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    /* @__PURE__ */ u$1(
                       'label',
                       {
                         htmlFor: kb,
                         children: [
                           isKey(l, kb) ? l[kb] : '',
                           ':',
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+                          /* @__PURE__ */ u$1('input', {
                             type: 'text',
                             className: 'KeybindInput',
                             id: kb,
@@ -5430,10 +6260,7 @@
                       kb,
                     ),
                   ),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
-                    id: 'HotKeysRules',
-                    children: l.KEYBIND_RULES,
-                  }),
+                  /* @__PURE__ */ u$1('div', { id: 'HotKeysRules', children: l.KEYBIND_RULES }),
                 ],
               }),
         }),
@@ -5487,84 +6314,78 @@
 
   function MangaPage({ index, src = '' }) {
     const l = useStore(locale);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u$1('div', {
       id: `Page${index}`,
       className: 'MangaPage',
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'PageFunctions',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+            /* @__PURE__ */ u$1('button', {
               className: 'Bookmark ControlButton',
               title: l.BOOKMARK,
               onClick: buttonBookmark,
               type: 'button',
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmark, {}),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmarkOff, {}),
+                /* @__PURE__ */ u$1(SvgBookmark, {}),
+                /* @__PURE__ */ u$1(SvgBookmarkOff, {}),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+            /* @__PURE__ */ u$1('button', {
               className: 'ZoomIn ControlButton',
               title: l.ZOOM_IN,
               onClick: buttonZoomIn,
               type: 'button',
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomIn, {}),
+              children: /* @__PURE__ */ u$1(SvgZoomIn, {}),
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+            /* @__PURE__ */ u$1('button', {
               className: 'ZoomRestore ControlButton',
               title: l.ZOOM_RESET,
               onClick: buttonRestoreZoom,
               type: 'button',
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomCancel, {}),
+              children: /* @__PURE__ */ u$1(SvgZoomCancel, {}),
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+            /* @__PURE__ */ u$1('button', {
               className: 'ZoomOut ControlButton',
               title: l.ZOOM_OUT,
               onClick: buttonZoomOut,
               type: 'button',
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomOut, {}),
+              children: /* @__PURE__ */ u$1(SvgZoomOut, {}),
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+            /* @__PURE__ */ u$1('button', {
               className: 'ZoomWidth ControlButton',
               title: l.ZOOM_WIDTH,
               onClick: buttonZoomWidth,
               type: 'button',
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitWidth, {}),
+              children: /* @__PURE__ */ u$1(SvgArrowAutofitWidth, {}),
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+            /* @__PURE__ */ u$1('button', {
               className: 'ZoomHeight ControlButton',
               title: l.ZOOM_HEIGHT,
               onClick: buttonZoomHeight,
               type: 'button',
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitHeight, {}),
+              children: /* @__PURE__ */ u$1(SvgArrowAutofitHeight, {}),
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+            /* @__PURE__ */ u$1('button', {
               className: 'Hide ControlButton',
               title: l.HIDE,
               onClick: buttonHidePage,
               type: 'button',
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgEye, {}),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgEyeOff, {}),
-              ],
+              children: [/* @__PURE__ */ u$1(SvgEye, {}), /* @__PURE__ */ u$1(SvgEyeOff, {})],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+            /* @__PURE__ */ u$1('button', {
               className: 'Reload ControlButton',
               title: l.RELOAD,
               onClick: buttonReloadPage,
               type: 'button',
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgRefresh, {}),
+              children: /* @__PURE__ */ u$1(SvgRefresh, {}),
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
-              className: 'PageIndex',
-              children: index,
-            }),
+            /* @__PURE__ */ u$1('span', { className: 'PageIndex', children: index }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'PageContent',
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx('img', {
+          children: /* @__PURE__ */ u$1('img', {
             id: `PageImg${index}`,
             alt: '',
             className: 'PageImg',
@@ -5577,32 +6398,32 @@
 
   function Reader$1({ manga }) {
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx('main', {
+    return /* @__PURE__ */ u$1('main', {
       id: 'Chapter',
       className: `${s.fitWidthIfOversize ? 'fitWidthIfOversize' : ''} ${s.viewMode}`,
       children: Array.from(Array(manga.pages + 1).keys())
         .slice(manga.begin)
-        .map(index => /* @__PURE__ */ jsxRuntimeExports.jsx(MangaPage, { index }, index)),
+        .map(index => /* @__PURE__ */ u$1(MangaPage, { index }, index)),
     });
   }
 
   function SettingsPanelGeneral$1() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    return /* @__PURE__ */ u$1(k$1, {
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel',
           children: [
             l.SCOPE,
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+            /* @__PURE__ */ u$1('div', {
               id: 'SettingsScope',
               className: 'radio-inputs',
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('label', {
+                /* @__PURE__ */ u$1('label', {
                   className: 'radio',
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+                    /* @__PURE__ */ u$1('input', {
                       type: 'radio',
                       id: 'globalSettings',
                       name: 'settingsScope',
@@ -5610,20 +6431,16 @@
                       checked: !isSettingsLocal(),
                       onChange: changeSettingsScope,
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                    /* @__PURE__ */ u$1('span', {
                       className: 'name',
-                      children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgWorldCog, {}),
-                        ' ',
-                        l.GLOBAL,
-                      ],
+                      children: [/* @__PURE__ */ u$1(SvgWorldCog, {}), ' ', l.GLOBAL],
                     }),
                   ],
                 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('label', {
+                /* @__PURE__ */ u$1('label', {
                   className: 'radio',
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+                    /* @__PURE__ */ u$1('input', {
                       type: 'radio',
                       id: 'localSettings',
                       name: 'settingsScope',
@@ -5631,10 +6448,10 @@
                       checked: isSettingsLocal(),
                       onChange: changeSettingsScope,
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                    /* @__PURE__ */ u$1('span', {
                       className: 'name',
                       children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgLocationCog, {}),
+                        /* @__PURE__ */ u$1(SvgLocationCog, {}),
                         ' ',
                         window.location.hostname,
                       ],
@@ -5645,20 +6462,16 @@
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel locale',
           children: [
             l.LANGUAGE,
-            /* @__PURE__ */ jsxRuntimeExports.jsx('select', {
+            /* @__PURE__ */ u$1('select', {
               id: 'locale',
               value: s.locale,
               onChange: changeLocale,
               children: locales.map(loc =>
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  'option',
-                  { value: loc.ID, children: loc.NAME },
-                  loc.ID,
-                ),
+                /* @__PURE__ */ u$1('option', { value: loc.ID, children: loc.NAME }, loc.ID),
               ),
             }),
           ],
@@ -5670,65 +6483,41 @@
   function SettingsPanelLoading$1() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    return /* @__PURE__ */ u$1(k$1, {
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel loadMode',
           children: [
             l.DEFAULT_LOAD_MODE,
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+            /* @__PURE__ */ u$1('select', {
               id: 'loadMode',
               value: s.loadMode,
               onChange: changeLoadMode,
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'wait',
-                  children: l.LOAD_MODE_NORMAL,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'always',
-                  children: l.LOAD_MODE_ALWAYS,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'never',
-                  children: l.LOAD_MODE_NEVER,
-                }),
+                /* @__PURE__ */ u$1('option', { value: 'wait', children: l.LOAD_MODE_NORMAL }),
+                /* @__PURE__ */ u$1('option', { value: 'always', children: l.LOAD_MODE_ALWAYS }),
+                /* @__PURE__ */ u$1('option', { value: 'never', children: l.LOAD_MODE_NEVER }),
               ],
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel PagesPerSecond',
           children: [
             l.LOAD_SPEED,
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+            /* @__PURE__ */ u$1('select', {
               id: 'PagesPerSecond',
               value: s.throttlePageLoad,
               onChange: changePagesPerSecond,
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('option', {
-                  value: '3000',
-                  children: ['0.3(', l.SLOWLY, ')'],
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '2000', children: '0.5' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('option', {
-                  value: '1000',
-                  children: ['01(', l.NORMAL, ')'],
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '500', children: '02' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('option', {
-                  value: '250',
-                  children: ['04(', l.FAST, ')'],
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '125', children: '08' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('option', {
-                  value: '100',
-                  children: ['10(', l.EXTREME, ')'],
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: '1',
-                  children: l.ALL_PAGES,
-                }),
+                /* @__PURE__ */ u$1('option', { value: '3000', children: ['0.3(', l.SLOWLY, ')'] }),
+                /* @__PURE__ */ u$1('option', { value: '2000', children: '0.5' }),
+                /* @__PURE__ */ u$1('option', { value: '1000', children: ['01(', l.NORMAL, ')'] }),
+                /* @__PURE__ */ u$1('option', { value: '500', children: '02' }),
+                /* @__PURE__ */ u$1('option', { value: '250', children: ['04(', l.FAST, ')'] }),
+                /* @__PURE__ */ u$1('option', { value: '125', children: '08' }),
+                /* @__PURE__ */ u$1('option', { value: '100', children: ['10(', l.EXTREME, ')'] }),
+                /* @__PURE__ */ u$1('option', { value: '1', children: l.ALL_PAGES }),
               ],
             }),
           ],
@@ -5738,10 +6527,10 @@
   }
 
   function Toggler({ name, checked = false, onChange }) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u$1('div', {
       className: 'toggler',
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+        /* @__PURE__ */ u$1('input', {
           id: name,
           name,
           type: 'checkbox',
@@ -5749,12 +6538,9 @@
           checked,
           onChange,
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('label', {
+        /* @__PURE__ */ u$1('label', {
           htmlFor: name,
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgCheck, {}),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
-          ],
+          children: [/* @__PURE__ */ u$1(SvgCheck, {}), /* @__PURE__ */ u$1(SvgX, {})],
         }),
       ],
     });
@@ -5763,99 +6549,99 @@
   function SettingsPanelOthers$1() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    return /* @__PURE__ */ u$1(k$1, {
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel verticalSeparator',
           children: [
             l.VERTICAL_SEPARATOR,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u$1(Toggler, {
               name: 'verticalSeparator',
               checked: s.verticalSeparator,
               onChange: checkVerticalSeparator,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel fitIfOversize',
           children: [
             l.FIT_WIDTH_OVERSIZED,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u$1(Toggler, {
               name: 'fitIfOversize',
               checked: s.fitWidthIfOversize,
               onChange: checkFitWidthOversize,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel showThumbnails',
           children: [
             l.SHOW_THUMBNAILS,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u$1(Toggler, {
               name: 'showThumbnails',
               checked: s.showThumbnails,
               onChange: checkShowThumbnails,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel enableComments',
           children: [
             l.ENABLE_COMMENTS,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u$1(Toggler, {
               name: 'enableComments',
               checked: s.enableComments,
               onChange: checkEnableComments,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel downloadZip',
           children: [
             l.DOWNLOAD_IMAGES,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u$1(Toggler, {
               name: 'downloadZip',
               checked: s.downloadZip,
               onChange: checkAutoDownload,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel hidePageControls',
           children: [
             l.HIDE_CONTROLS,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u$1(Toggler, {
               name: 'hidePageControls',
               checked: s.hidePageControls,
               onChange: checkHideImageControls,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel lazyLoadImages',
           children: [
             l.LAZY_LOAD_IMAGES_ENABLE,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u$1(Toggler, {
               name: 'lazyLoadImages',
               checked: s.lazyLoadImages,
               onChange: checkLazyLoad,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: `ControlLabel lazyStart ControlLabelItem ${s.lazyLoadImages ? 'show' : ''}`,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u$1('span', {
               children: [
                 l.LAZY_LOAD_IMAGES,
-                /* @__PURE__ */ jsxRuntimeExports.jsx('output', {
+                /* @__PURE__ */ u$1('output', {
                   id: 'lazyStartVal',
                   htmlFor: 'lazyStart',
                   children: s.lazyStart,
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u$1('input', {
               type: 'range',
               value: s.lazyStart,
               onInput: changeLazyStart,
@@ -5867,13 +6653,13 @@
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel autoScroll',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u$1('span', {
               children: [
                 l.AUTO_SCROLL_HEIGHT,
-                /* @__PURE__ */ jsxRuntimeExports.jsx('output', {
+                /* @__PURE__ */ u$1('output', {
                   id: 'scrollHeightVal',
                   htmlFor: 'scrollHeight',
                   children: s.scrollHeight,
@@ -5881,7 +6667,7 @@
                 'px',
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u$1('input', {
               type: 'range',
               value: s.scrollHeight,
               onInput: changeScrollHeight,
@@ -5893,35 +6679,20 @@
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel headerType',
           children: [
             l.HEADER_TYPE,
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+            /* @__PURE__ */ u$1('select', {
               id: 'headerType',
               value: s.header,
               onChange: changeHeaderType,
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'hover',
-                  children: l.HEADER_HOVER,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'scroll',
-                  children: l.HEADER_SCROLL,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'click',
-                  children: l.HEADER_CLICK,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'fixed',
-                  children: l.HEADER_FIXED,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'simple',
-                  children: l.HEADER_SIMPLE,
-                }),
+                /* @__PURE__ */ u$1('option', { value: 'hover', children: l.HEADER_HOVER }),
+                /* @__PURE__ */ u$1('option', { value: 'scroll', children: l.HEADER_SCROLL }),
+                /* @__PURE__ */ u$1('option', { value: 'click', children: l.HEADER_CLICK }),
+                /* @__PURE__ */ u$1('option', { value: 'fixed', children: l.HEADER_FIXED }),
+                /* @__PURE__ */ u$1('option', { value: 'simple', children: l.HEADER_SIMPLE }),
               ],
             }),
           ],
@@ -5959,57 +6730,51 @@
   function SettingsPanelTheme() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    return /* @__PURE__ */ u$1(k$1, {
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel ColorSchemeSelector',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('label', { children: l.COLOR_SCHEME }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+            /* @__PURE__ */ u$1('label', { children: l.COLOR_SCHEME }),
+            /* @__PURE__ */ u$1('button', {
               id: 'ColorScheme',
               className: 'ControlButton',
               onClick: changeColorScheme,
               type: 'button',
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSun, {}),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMoon, {}),
-              ],
+              children: [/* @__PURE__ */ u$1(SvgSun, {}), /* @__PURE__ */ u$1(SvgMoon, {})],
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel ThemeSelector',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('label', { children: l.THEME_COLOR }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u$1('label', { children: l.THEME_COLOR }),
+            /* @__PURE__ */ u$1('span', {
               className: `custom ThemeRadio ${s.theme === 'custom' ? 'selected' : ''}`,
               title: 'custom',
               onClick: buttonSelectTheme,
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgPalette, {}),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgCheck, {}),
-              ],
+              children: [/* @__PURE__ */ u$1(SvgPalette, {}), /* @__PURE__ */ u$1(SvgCheck, {})],
             }),
             Object.keys(colors).map(color =>
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
+              /* @__PURE__ */ u$1(
                 'span',
                 {
                   title: colors[color].name,
                   className: `${colors[color].name} ThemeRadio ${s.theme === colors[color].name ? 'selected' : ''}`,
                   onClick: buttonSelectTheme,
-                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgCheck, {}),
+                  children: /* @__PURE__ */ u$1(SvgCheck, {}),
                 },
                 colors[color].name,
               ),
             ),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           id: 'Hue',
           className: `ControlLabel CustomTheme ControlLabelItem ${s.theme.startsWith('custom') ? 'show' : ''}`,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('label', { children: l.THEME_HUE }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u$1('label', { children: l.THEME_HUE }),
+            /* @__PURE__ */ u$1('input', {
               id: 'CustomThemeHue',
               type: 'color',
               value: s.customTheme,
@@ -6018,14 +6783,14 @@
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           id: 'Shade',
           className: `ControlLabel CustomTheme ControlLabelItem ${s.theme.startsWith('custom') ? '' : 'show'}`,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u$1('span', {
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('label', { children: l.THEME_SHADE }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('output', {
+                /* @__PURE__ */ u$1('label', { children: l.THEME_SHADE }),
+                /* @__PURE__ */ u$1('output', {
                   id: 'themeShadeVal',
                   className: 'RangeValue',
                   htmlFor: 'ThemeShade',
@@ -6033,7 +6798,7 @@
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u$1('input', {
               type: 'range',
               value: s.themeShade,
               onInput: changeThemeShade,
@@ -6052,40 +6817,31 @@
   function SettingsPanelZoom$1() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    return /* @__PURE__ */ u$1(k$1, {
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel DefaultZoomMode',
           children: [
             l.DEFAULT_ZOOM_MODE,
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+            /* @__PURE__ */ u$1('select', {
               id: 'DefaultZoomMode',
               value: s.zoomMode,
               onChange: changeDefaultZoomMode,
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'percent',
-                  children: l.PERCENT,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'width',
-                  children: l.FIT_WIDTH,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'height',
-                  children: l.FIT_HEIGHT,
-                }),
+                /* @__PURE__ */ u$1('option', { value: 'percent', children: l.PERCENT }),
+                /* @__PURE__ */ u$1('option', { value: 'width', children: l.FIT_WIDTH }),
+                /* @__PURE__ */ u$1('option', { value: 'height', children: l.FIT_HEIGHT }),
               ],
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: `ControlLabel DefaultZoom ControlLabelItem ${s.zoomMode === 'percent' ? 'show' : ''}`,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u$1('span', {
               children: [
                 l.DEFAULT_ZOOM,
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('output', {
+                /* @__PURE__ */ u$1('output', {
                   id: 'defaultZoomVal',
                   className: 'RangeValue',
                   htmlFor: 'DefaultZoom',
@@ -6093,7 +6849,7 @@
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u$1('input', {
               type: 'range',
               value: s.defaultZoom,
               onInput: changeDefaultZoom,
@@ -6104,29 +6860,29 @@
               step: '5',
               list: 'tickmarks',
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('datalist', {
+            /* @__PURE__ */ u$1('datalist', {
               id: 'tickmarks',
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '5', children: '5' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '25', children: '25' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '50', children: '50' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '75', children: '75' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '100', children: '100' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '125', children: '125' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '150', children: '150' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '175', children: '175' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '200', children: '200' }),
+                /* @__PURE__ */ u$1('option', { value: '5', children: '5' }),
+                /* @__PURE__ */ u$1('option', { value: '25', children: '25' }),
+                /* @__PURE__ */ u$1('option', { value: '50', children: '50' }),
+                /* @__PURE__ */ u$1('option', { value: '75', children: '75' }),
+                /* @__PURE__ */ u$1('option', { value: '100', children: '100' }),
+                /* @__PURE__ */ u$1('option', { value: '125', children: '125' }),
+                /* @__PURE__ */ u$1('option', { value: '150', children: '150' }),
+                /* @__PURE__ */ u$1('option', { value: '175', children: '175' }),
+                /* @__PURE__ */ u$1('option', { value: '200', children: '200' }),
               ],
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel minZoom',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u$1('span', {
               children: [
                 l.MINIMUM_ZOOM,
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('output', {
+                /* @__PURE__ */ u$1('output', {
                   id: 'minZoomVal',
                   className: 'RangeValue',
                   htmlFor: 'minZoom',
@@ -6134,7 +6890,7 @@
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u$1('input', {
               type: 'range',
               value: s.minZoom,
               onInput: changeMinZoom,
@@ -6146,13 +6902,13 @@
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel zoomStep',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u$1('span', {
               children: [
                 l.ZOOM_STEP,
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('output', {
+                /* @__PURE__ */ u$1('output', {
                   id: 'zoomStepVal',
                   className: 'RangeValue',
                   htmlFor: 'zoomStep',
@@ -6160,7 +6916,7 @@
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u$1('input', {
               type: 'range',
               value: s.zoomStep,
               onInput: changeZoomStep,
@@ -6172,31 +6928,25 @@
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           className: 'ControlLabel viewMode',
           children: [
             l.DEFAULT_VIEW_MODE,
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+            /* @__PURE__ */ u$1('select', {
               id: 'viewMode',
               value: s.viewMode,
               onChange: changeViewMode,
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                /* @__PURE__ */ u$1('option', {
                   value: 'Vertical',
                   children: l.VIEW_MODE_VERTICAL,
                 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                /* @__PURE__ */ u$1('option', {
                   value: 'WebComic',
                   children: l.VIEW_MODE_WEBCOMIC,
                 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'FluidLTR',
-                  children: l.VIEW_MODE_LEFT,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'FluidRTL',
-                  children: l.VIEW_MODE_RIGHT,
-                }),
+                /* @__PURE__ */ u$1('option', { value: 'FluidLTR', children: l.VIEW_MODE_LEFT }),
+                /* @__PURE__ */ u$1('option', { value: 'FluidRTL', children: l.VIEW_MODE_RIGHT }),
               ],
             }),
           ],
@@ -6207,56 +6957,53 @@
 
   function SettingsPanel$1() {
     const l = useStore(locale);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u$1('div', {
       id: 'SettingsPanel',
       className: 'panel',
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('h2', { children: l.SETTINGS }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+        /* @__PURE__ */ u$1('h2', { children: l.SETTINGS }),
+        /* @__PURE__ */ u$1('button', {
           id: 'CloseSettings',
           className: 'closeButton',
           title: l.CLOSE,
           onClick: buttonSettingsClose,
           type: 'button',
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
+          children: /* @__PURE__ */ u$1(SvgX, {}),
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+        /* @__PURE__ */ u$1('button', {
           id: 'ResetSettings',
           className: 'ControlButton',
           type: 'button',
+          children: [/* @__PURE__ */ u$1(SvgSettingsOff, {}), l.BUTTON_RESET_SETTINGS],
+        }),
+        /* @__PURE__ */ u$1('fieldset', {
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSettingsOff, {}),
-            l.BUTTON_RESET_SETTINGS,
+            /* @__PURE__ */ u$1('legend', { children: l.GENERAL }),
+            /* @__PURE__ */ u$1(SettingsPanelGeneral$1, {}),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
+        /* @__PURE__ */ u$1('fieldset', {
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.GENERAL }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelGeneral$1, {}),
+            /* @__PURE__ */ u$1('legend', { children: l.THEME }),
+            /* @__PURE__ */ u$1(SettingsPanelTheme, {}),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
+        /* @__PURE__ */ u$1('fieldset', {
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.THEME }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelTheme, {}),
+            /* @__PURE__ */ u$1('legend', { children: l.LOADING }),
+            /* @__PURE__ */ u$1(SettingsPanelLoading$1, {}),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
+        /* @__PURE__ */ u$1('fieldset', {
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.LOADING }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelLoading$1, {}),
+            /* @__PURE__ */ u$1('legend', { children: l.ZOOM }),
+            /* @__PURE__ */ u$1(SettingsPanelZoom$1, {}),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
+        /* @__PURE__ */ u$1('fieldset', {
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.ZOOM }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelZoom$1, {}),
-          ],
-        }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.OTHERS }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelOthers$1, {}),
+            /* @__PURE__ */ u$1('legend', { children: l.OTHERS }),
+            /* @__PURE__ */ u$1(SettingsPanelOthers$1, {}),
           ],
         }),
       ],
@@ -6264,21 +7011,18 @@
   }
 
   function Thumbnail({ index, src = '' }) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u$1('div', {
       id: `Thumbnail${index}`,
       className: 'Thumbnail',
       onClick: clickThumbnail,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('img', {
+        /* @__PURE__ */ u$1('img', {
           id: `ThumbnailImg${index}`,
           alt: '',
           className: 'ThumbnailImg',
           src,
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
-          className: 'ThumbnailIndex',
-          children: index,
-        }),
+        /* @__PURE__ */ u$1('span', { className: 'ThumbnailIndex', children: index }),
       ],
     });
   }
@@ -6286,30 +7030,30 @@
   function ThumbnailPanel({ manga }) {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('nav', {
+    return /* @__PURE__ */ u$1('nav', {
       id: 'Navigation',
       className: `panel ${s.showThumbnails ? '' : 'disabled'}`,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u$1('div', {
           id: 'NavigationCounters',
           className: 'ControlLabel',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgCategory, {}),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('i', { children: '0' }),
+            /* @__PURE__ */ u$1(SvgCategory, {}),
+            /* @__PURE__ */ u$1('i', { children: '0' }),
             ' /',
-            /* @__PURE__ */ jsxRuntimeExports.jsx('b', {
+            /* @__PURE__ */ u$1('b', {
               children:
                 manga.begin && manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages,
             }),
             l.PAGES_LOADED,
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+        /* @__PURE__ */ u$1('div', {
           id: 'Thumbnails',
           onWheel: transformScrollToHorizontal,
           children: Array.from(Array(manga.pages + 1).keys())
             .slice(manga.begin)
-            .map(index => /* @__PURE__ */ jsxRuntimeExports.jsx(Thumbnail, { index }, index)),
+            .map(index => /* @__PURE__ */ u$1(Thumbnail, { index }, index)),
         }),
       ],
     });
@@ -6323,7 +7067,7 @@
       buttonBookmarksClose();
       buttonKeybindingsClose();
     }
-    React.useEffect(() => {
+    y(() => {
       const handleScroll = _.debounce(toggleScrollDirection, 50);
       const handleWheel = _.throttle(manualScroll, 500);
       const handleMouseOver = _.throttle(headerHover, 300);
@@ -6336,40 +7080,34 @@
         window.removeEventListener('mouseover', handleMouseOver);
       };
     }, []);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u$1('div', {
       id: 'MangaOnlineViewer',
       className: `${s.colorScheme} ${s.hidePageControls ? 'hideControls' : ''} ${isBookmarked() ? 'bookmarked' : ''} ${getDevice()}`,
       'data-theme': s.theme,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+        /* @__PURE__ */ u$1('div', {
           id: 'menu',
           className: s.header,
           onClick: buttonHeaderClick,
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMenu2, {}),
+          children: /* @__PURE__ */ u$1(SvgMenu2, {}),
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Header$1, { manga }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Reader$1, { manga }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(ThumbnailPanel, { manga }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
-          id: 'Overlay',
-          className: 'overlay',
-          onClick: buttonOverlay,
-        }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CommentsPanel, {}),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(KeybindingsPanel, {}),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(BookmarksPanel, {}),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanel$1, {}),
+        /* @__PURE__ */ u$1(Header$1, { manga }),
+        /* @__PURE__ */ u$1(Reader$1, { manga }),
+        /* @__PURE__ */ u$1(ThumbnailPanel, { manga }),
+        /* @__PURE__ */ u$1('div', { id: 'Overlay', className: 'overlay', onClick: buttonOverlay }),
+        /* @__PURE__ */ u$1(CommentsPanel, {}),
+        /* @__PURE__ */ u$1(KeybindingsPanel, {}),
+        /* @__PURE__ */ u$1(BookmarksPanel, {}),
+        /* @__PURE__ */ u$1(SettingsPanel$1, {}),
       ],
     });
   }
 
   function loadReader(manga) {
-    console.warn('Using React');
+    console.warn('Using Preact');
     document.head.innerHTML = head(manga);
     document.body.innerHTML = "<div id='MangaOnlineViewer'></div>";
-    ReactDOM.createRoot(document.body).render(
-      /* @__PURE__ */ jsxRuntimeExports.jsx(App, { manga }),
-    );
+    createRoot(document.body).render(/* @__PURE__ */ u$1(App, { manga }));
     setTimeout(() => {
       loadManga(manga, 0);
     }, 1e3);
