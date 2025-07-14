@@ -37,9 +37,9 @@ const externalScripts: string[] = [
     referrerpolicy="no-referrer"
   ></script>`,
   html` <script
-    src="https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.14/dist/hotkeys.min.js"
-    integrity="sha256-c/hIbXEcIHIxw3XrWr9nco7BPMdLAJFqxp05Jg3L3QI="
-    crossorigin="anonymous"
+      src="https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.15/dist/hotkeys.min.js"
+      integrity="sha256-CfwzajGV2JBS5lpGVlsM20eqGWnDCT6dY5uMfCXQnUA="
+      crossorigin="anonymous"
   ></script>`,
   html` <script
     src="https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js"
