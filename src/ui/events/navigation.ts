@@ -1,13 +1,13 @@
 import { applyZoom } from '../page';
 import { addEvent, scrollToElement, transformScrollToHorizontal } from './common';
 
-export function selectGoToPage(event: Event) {
+export function selectGoToPage(event: Event | React.ChangeEvent) {
   const target = (event.currentTarget as HTMLOptionElement).value;
   applyZoom();
   scrollToElement(document.querySelector<HTMLElement>(`#Page${target}`));
 }
 
-export function clickThumbnail(event: Event) {
+export function clickThumbnail(event: Event | React.MouseEvent) {
   applyZoom();
   scrollToElement(
     document.querySelector<HTMLElement>(

@@ -1,3 +1,4 @@
+import render from '../react';
 import type { IManga } from '../types';
 import display from '../ui';
 import { logScript, logScriptVerbose } from '../utils/tampermonkey';
@@ -42,7 +43,8 @@ export default async function viewer(manga: IManga) {
   }
   setTimeout(() => {
     try {
-      display(manga);
+      render(manga);
+      (unsafeWindow ?? window).MOVLegacy = () => display(manga);
     } catch (e) {
       logScript(e);
     }

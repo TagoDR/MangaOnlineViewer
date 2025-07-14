@@ -37,9 +37,9 @@ const externalScripts: string[] = [
     referrerpolicy="no-referrer"
   ></script>`,
   html` <script
-      src="https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.15/dist/hotkeys.min.js"
-      integrity="sha256-CfwzajGV2JBS5lpGVlsM20eqGWnDCT6dY5uMfCXQnUA="
-      crossorigin="anonymous"
+    src="https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.15/dist/hotkeys.min.js"
+    integrity="sha256-CfwzajGV2JBS5lpGVlsM20eqGWnDCT6dY5uMfCXQnUA="
+    crossorigin="anonymous"
   ></script>`,
   html` <script
     src="https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js"
@@ -57,6 +57,16 @@ const externalScripts: string[] = [
     integrity="sha512-QX8zbIM1bENBmyyvWXAO/MnnZ+lMLuIxESquZAGbVR+2MOrvpsnosfgYa9h6EiPq9upqsiBa3ft/r1SP5tLhbA=="
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
+  ></script>`,
+  html` <script
+    src="https://cdn.jsdelivr.net/npm/umd-react@19.1.0/dist/react.production.min.js"
+    integrity="sha256-eNBw3fiE4ttVcPRf7OhOtZ6s8F5XCiNKTXNo0XwPeUc="
+    crossorigin="anonymous"
+  ></script>`,
+  html` <script
+    src="https://cdn.jsdelivr.net/npm/umd-react@19.1.0/dist/react-dom.production.min.js"
+    integrity="sha256-MnsAyPMMAoHuxlO/29i4fQu/AzSeFOFXoTcWhSUuy+I="
+    crossorigin="anonymous"
   ></script>`,
 ];
 const requiredScripts = externalScripts.map((script: string) => {

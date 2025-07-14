@@ -4,11 +4,13 @@ import prettier from 'rollup-plugin-prettier';
 import userscript, { type Metadata } from 'userscript-metadata-generator';
 import { defineConfig } from 'vite';
 import viteBanner from 'vite-plugin-banner';
+import svgr from 'vite-plugin-svgr';
 import svgLoader from 'vite-svg-loader';
 import metaAdult from './src/meta/meta-adult';
 import metaDev from './src/meta/meta-dev';
 import metaMain from './src/meta/meta-main';
 import { bookmarklet, comicSites, hentaiSites, mangaSites } from './src/meta/readme';
+import react from '@vitejs/plugin-react';
 
 interface IScript {
   entry: string;
@@ -48,6 +50,8 @@ const globals = {
   sweetalert2: 'Swal',
   tinycolor2: 'tinycolor',
   bowser: 'bowser',
+  react: 'React',
+  'react-dom/client': 'ReactDOM',
 };
 
 function generateReadme() {
@@ -76,6 +80,10 @@ export default defineConfig(({ mode }) => {
   return {
     mode: target === 'dev' ? 'development' : 'production',
     plugins: [
+      react(),
+      svgr({
+        exclude: '**/*.svg?raw',
+      }),
       viteBanner({ content: metadata, verify: false }),
       svgLoader({ svgo: false, defaultImport: 'raw' }),
     ],
@@ -83,19 +91,16 @@ export default defineConfig(({ mode }) => {
     build: {
       target: 'esnext',
       minify: false,
+      sourcemap: false,
       emptyOutDir: false,
       outDir: 'dist',
       rollupOptions: {
         input: `src/${scripts[target].entry}`,
-        plugins: [
-          externalGlobals(globals),
-          target !== 'dev' ? prettier({ parser: 'babel-ts' }) : null,
-        ],
+        plugins: [externalGlobals(globals), prettier({ parser: 'babel-ts' })],
         output: {
           // banner: metadata,
           format: 'iife',
           entryFileNames: scripts[target].name,
-          sourcemap: false,
         },
       },
     },
