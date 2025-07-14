@@ -29,8 +29,9 @@
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
-// @require       https://cdn.jsdelivr.net/npm/umd-react@19.1.1/dist/react.production.min.js
-// @require       https://cdn.jsdelivr.net/npm/umd-react@19.1.1/dist/react-dom.production.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/preact/10.27.1/preact.umd.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/preact/10.27.1/hooks.umd.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/preact/10.27.1/compat.umd.min.js
 // @include       /https?:\/\/(www\.)?akuma\.moe\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?bestporncomix.com\/gallery\/.+/
 // @include       /https?:\/\/(www\.)?doujins.com\/.+/
@@ -70,8 +71,33 @@
 // @include       /https?:\/\/(www\.)?yabai.si\/g\/.+\/read/
 // @include       /https?:\/\/.+\/(porncomic|read-scan|title)\/.+\/.+/
 // ==/UserScript==
-(function () {
+(function (React) {
   'use strict';
+
+  function _interopNamespaceDefault(e) {
+    const n = Object.create(null, { [Symbol.toStringTag]: { value: 'Module' } });
+    if (e) {
+      for (const k in e) {
+        if (k !== 'default') {
+          const d = Object.getOwnPropertyDescriptor(e, k);
+          Object.defineProperty(
+            n,
+            k,
+            d.get
+              ? d
+              : {
+                  enumerable: true,
+                  get: () => e[k],
+                },
+          );
+        }
+      }
+    }
+    n.default = e;
+    return Object.freeze(n);
+  }
+
+  const React__namespace = /*#__PURE__*/ _interopNamespaceDefault(React);
 
   function isEmpty(value) {
     return (
@@ -2476,136 +2502,136 @@
   }
 
   const IconArrowAutofitDown =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8"/>\r\n  <path d="M18 4v17"/>\r\n  <path d="M15 18l3 3l3 -3"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-autofit-down"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8" />\r\n  <path d="M18 4v17" />\r\n  <path d="M15 18l3 3l3 -3" />\r\n</svg>\r\n';
 
   const IconArrowAutofitHeight =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-height" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6"/>\r\n  <path d="M18 14v7"/>\r\n  <path d="M18 3v7"/>\r\n  <path d="M15 18l3 3l3 -3"/>\r\n  <path d="M15 6l3 -3l3 3"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-autofit-height"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6" />\r\n  <path d="M18 14v7" />\r\n  <path d="M18 3v7" />\r\n  <path d="M15 18l3 3l3 -3" />\r\n  <path d="M15 6l3 -3l3 3" />\r\n</svg>\r\n';
 
   const IconArrowAutofitLeft =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8"/>\r\n  <path d="M20 18h-17"/>\r\n  <path d="M6 15l-3 3l3 3"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-autofit-left"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8" />\r\n  <path d="M20 18h-17" />\r\n  <path d="M6 15l-3 3l3 3" />\r\n</svg>\r\n';
 
   const IconArrowAutofitRight =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8"/>\r\n  <path d="M4 18h17"/>\r\n  <path d="M18 15l3 3l-3 3"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-autofit-right"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8" />\r\n  <path d="M4 18h17" />\r\n  <path d="M18 15l3 3l-3 3" />\r\n</svg>\r\n';
 
   const IconArrowAutofitWidth =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-width" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6"/>\r\n  <path d="M10 18h-7"/>\r\n  <path d="M21 18h-7"/>\r\n  <path d="M6 15l-3 3l3 3"/>\r\n  <path d="M18 15l3 3l-3 3"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-autofit-width"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" />\r\n  <path d="M10 18h-7" />\r\n  <path d="M21 18h-7" />\r\n  <path d="M6 15l-3 3l3 3" />\r\n  <path d="M18 15l3 3l-3 3" />\r\n</svg>\r\n';
 
   const IconArrowBigLeft =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-big-left"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path\r\n    d="M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z"\r\n  />\r\n</svg>\r\n';
 
   const IconArrowBigRight =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-big-right"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path\r\n    d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z"\r\n  />\r\n</svg>\r\n';
 
   const IconBookmark =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-bookmark"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z" />\r\n</svg>\r\n';
 
   const IconBookmarkOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M7.708 3.721a3.982 3.982 0 0 1 2.292 -.721h4a4 4 0 0 1 4 4v7m0 4v3l-6 -4l-6 4v-14c0 -.308 .035 -.609 .1 -.897"/>\r\n  <path d="M3 3l18 18"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-bookmark-off"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path\r\n    d="M7.708 3.721a3.982 3.982 0 0 1 2.292 -.721h4a4 4 0 0 1 4 4v7m0 4v3l-6 -4l-6 4v-14c0 -.308 .035 -.609 .1 -.897"\r\n  />\r\n  <path d="M3 3l18 18" />\r\n</svg>\r\n';
 
   const IconBookmarks =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmarks" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z"/>\r\n  <path d="M11 3h5a3 3 0 0 1 3 3v11"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-bookmarks"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z" />\r\n  <path d="M11 3h5a3 3 0 0 1 3 3v11" />\r\n</svg>\r\n';
 
   const IconCategory =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 4h6v6h-6z"/>\r\n  <path d="M14 4h6v6h-6z"/>\r\n  <path d="M4 14h6v6h-6z"/>\r\n  <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-category"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 4h6v6h-6z" />\r\n  <path d="M14 4h6v6h-6z" />\r\n  <path d="M4 14h6v6h-6z" />\r\n  <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />\r\n</svg>\r\n';
 
   const IconCheck =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check toggler-on" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M5 12l5 5l10 -10"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-check toggler-on"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M5 12l5 5l10 -10" />\r\n</svg>\r\n';
 
   const IconDeviceFloppy =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"/>\r\n  <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\r\n  <path d="M14 4l0 4l-6 0l0 -4"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-device-floppy"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />\r\n  <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />\r\n  <path d="M14 4l0 4l-6 0l0 -4" />\r\n</svg>\r\n';
 
   const IconExternalLink =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-external-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"/>\r\n  <path d="M11 13l9 -9"/>\r\n  <path d="M15 4h5v5"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-external-link"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />\r\n  <path d="M11 13l9 -9" />\r\n  <path d="M15 4h5v5" />\r\n</svg>\r\n';
 
   const IconEye =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/>\r\n  <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-eye"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />\r\n  <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />\r\n</svg>\r\n';
 
   const IconEyeOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828"/>\r\n  <path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87"/>\r\n  <path d="M3 3l18 18"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-eye-off"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />\r\n  <path\r\n    d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87"\r\n  />\r\n  <path d="M3 3l18 18" />\r\n</svg>\r\n';
 
   const IconFileDownload =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M14 3v4a1 1 0 0 0 1 1h4"/>\r\n  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>\r\n  <path d="M12 17v-6"/>\r\n  <path d="M9.5 14.5l2.5 2.5l2.5 -2.5"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-file-download"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M14 3v4a1 1 0 0 0 1 1h4" />\r\n  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />\r\n  <path d="M12 17v-6" />\r\n  <path d="M9.5 14.5l2.5 2.5l2.5 -2.5" />\r\n</svg>\r\n';
 
   const IconKeyboard =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-keyboard" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z"/>\r\n  <path d="M6 10l0 .01"/>\r\n  <path d="M10 10l0 .01"/>\r\n  <path d="M14 10l0 .01"/>\r\n  <path d="M18 10l0 .01"/>\r\n  <path d="M6 14l0 .01"/>\r\n  <path d="M18 14l0 .01"/>\r\n  <path d="M10 14l4 .01"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-keyboard"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z" />\r\n  <path d="M6 10l0 .01" />\r\n  <path d="M10 10l0 .01" />\r\n  <path d="M14 10l0 .01" />\r\n  <path d="M18 10l0 .01" />\r\n  <path d="M6 14l0 .01" />\r\n  <path d="M18 14l0 .01" />\r\n  <path d="M10 14l4 .01" />\r\n</svg>\r\n';
 
   const IconListNumbers =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-numbers" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M11 6h9"/>\r\n  <path d="M11 12h9"/>\r\n  <path d="M12 18h8"/>\r\n  <path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4"/>\r\n  <path d="M6 10v-6l-2 2"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-list-numbers"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M11 6h9" />\r\n  <path d="M11 12h9" />\r\n  <path d="M12 18h8" />\r\n  <path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4" />\r\n  <path d="M6 10v-6l-2 2" />\r\n</svg>\r\n';
 
   const IconLoader2 =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-loader-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 3a9 9 0 1 0 9 9"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-loader-2"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 3a9 9 0 1 0 9 9" />\r\n</svg>\r\n';
 
   const IconLocationCog =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\r\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\r\n     class="icon icon-tabler icons-tabler-outline icon-tabler-location-cog">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 18l-2 -4l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5l-3.14 8.697"/>\r\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\r\n  <path d="M19.001 15.5v1.5"/>\r\n  <path d="M19.001 21v1.5"/>\r\n  <path d="M22.032 17.25l-1.299 .75"/>\r\n  <path d="M17.27 20l-1.3 .75"/>\r\n  <path d="M15.97 17.25l1.3 .75"/>\r\n  <path d="M20.733 20l1.3 .75"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-location-cog"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 18l-2 -4l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5l-3.14 8.697" />\r\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />\r\n  <path d="M19.001 15.5v1.5" />\r\n  <path d="M19.001 21v1.5" />\r\n  <path d="M22.032 17.25l-1.299 .75" />\r\n  <path d="M17.27 20l-1.3 .75" />\r\n  <path d="M15.97 17.25l1.3 .75" />\r\n  <path d="M20.733 20l1.3 .75" />\r\n</svg>\r\n';
 
   const IconMenu2 =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 6l16 0"/>\r\n  <path d="M4 12l16 0"/>\r\n  <path d="M4 18l16 0"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-menu-2"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 6l16 0" />\r\n  <path d="M4 12l16 0" />\r\n  <path d="M4 18l16 0" />\r\n</svg>\r\n';
 
   const IconMessage =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M8 9h8"/>\r\n  <path d="M8 13h6"/>\r\n  <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-message"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M8 9h8" />\r\n  <path d="M8 13h6" />\r\n  <path\r\n    d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"\r\n  />\r\n</svg>\r\n';
 
   const IconMoon =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-moon"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />\r\n</svg>\r\n';
 
   const IconPalette =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-palette" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"/>\r\n  <path d="M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\r\n  <path d="M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\r\n  <path d="M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-palette"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path\r\n    d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"\r\n  />\r\n  <path d="M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\r\n  <path d="M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\r\n  <path d="M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\r\n</svg>\r\n';
 
   const IconPencil =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/>\r\n  <path d="M13.5 6.5l4 4"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-pencil"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />\r\n  <path d="M13.5 6.5l4 4" />\r\n</svg>\r\n';
 
   const IconPhoto =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M15 8h.01"/>\r\n  <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/>\r\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/>\r\n  <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-photo"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M15 8h.01" />\r\n  <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />\r\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />\r\n  <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />\r\n</svg>\r\n';
 
   const IconPhotoOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo-off" width="24"\r\n     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"\r\n     stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M15 8h.01"/>\r\n  <path d="M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153"/>\r\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/>\r\n  <path d="M16.33 12.338c.574 -.054 1.155 .166 1.67 .662l3 3"/>\r\n  <path d="M3 3l18 18" color="orange"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-photo-off"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M15 8h.01" />\r\n  <path\r\n    d="M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153"\r\n  />\r\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />\r\n  <path d="M16.33 12.338c.574 -.054 1.155 .166 1.67 .662l3 3" />\r\n  <path\r\n    d="M3 3l18 18"\r\n    color="orange"\r\n  />\r\n</svg>\r\n';
 
   const IconPlayerPause =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-pause" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"/>\r\n  <path d="M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-player-pause"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />\r\n  <path d="M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />\r\n</svg>\r\n';
 
   const IconPlayerPlay =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M7 4v16l13 -8z"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-player-play"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M7 4v16l13 -8z" />\r\n</svg>\r\n';
 
   const IconRefresh =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>\r\n  <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-refresh"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />\r\n  <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />\r\n</svg>\r\n';
 
   const IconSettings =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/>\r\n  <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-settings"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path\r\n    d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"\r\n  />\r\n  <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />\r\n</svg>\r\n';
 
   const IconSettingsOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\r\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\r\n     class="icon icon-tabler icons-tabler-outline icon-tabler-settings-off">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M9.451 5.437c.418 -.218 .75 -.609 .874 -1.12c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35c-.486 .118 -.894 .44 -1.123 .878m-.188 3.803c-.517 .523 -1.349 .734 -2.125 .262a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.472 -.774 -.262 -1.604 .259 -2.121"/>\r\n  <path d="M9.889 9.869a3 3 0 1 0 4.226 4.26m.592 -3.424a3.012 3.012 0 0 0 -1.419 -1.415"/>\r\n  <path d="M3 3l18 18"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-settings-off"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path\r\n    d="M9.451 5.437c.418 -.218 .75 -.609 .874 -1.12c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35c-.486 .118 -.894 .44 -1.123 .878m-.188 3.803c-.517 .523 -1.349 .734 -2.125 .262a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.472 -.774 -.262 -1.604 .259 -2.121"\r\n  />\r\n  <path d="M9.889 9.869a3 3 0 1 0 4.226 4.26m.592 -3.424a3.012 3.012 0 0 0 -1.419 -1.415" />\r\n  <path d="M3 3l18 18" />\r\n</svg>\r\n';
 
   const IconSpacingVertical =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-spacing-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2"/>\r\n  <path d="M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/>\r\n  <path d="M16 12h-8"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-spacing-vertical"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2" />\r\n  <path d="M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />\r\n  <path d="M16 12h-8" />\r\n</svg>\r\n';
 
   const IconSun =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/>\r\n  <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-sun"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />\r\n  <path\r\n    d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"\r\n  />\r\n</svg>\r\n';
 
   const IconTrash =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 7l16 0"/>\r\n  <path d="M10 11l0 6"/>\r\n  <path d="M14 11l0 6"/>\r\n  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>\r\n  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-trash"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 7l16 0" />\r\n  <path d="M10 11l0 6" />\r\n  <path d="M14 11l0 6" />\r\n  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />\r\n  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />\r\n</svg>\r\n';
 
   const IconWorldCog =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\r\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\r\n     class="icon icon-tabler icons-tabler-outline icon-tabler-world-cog">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M21 12a9 9 0 1 0 -8.979 9"/>\r\n  <path d="M3.6 9h16.8"/>\r\n  <path d="M3.6 15h8.9"/>\r\n  <path d="M11.5 3a17 17 0 0 0 0 18"/>\r\n  <path d="M12.5 3a16.992 16.992 0 0 1 2.522 10.376"/>\r\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\r\n  <path d="M19.001 15.5v1.5"/>\r\n  <path d="M19.001 21v1.5"/>\r\n  <path d="M22.032 17.25l-1.299 .75"/>\r\n  <path d="M17.27 20l-1.3 .75"/>\r\n  <path d="M15.97 17.25l1.3 .75"/>\r\n  <path d="M20.733 20l1.3 .75"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-world-cog"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M21 12a9 9 0 1 0 -8.979 9" />\r\n  <path d="M3.6 9h16.8" />\r\n  <path d="M3.6 15h8.9" />\r\n  <path d="M11.5 3a17 17 0 0 0 0 18" />\r\n  <path d="M12.5 3a16.992 16.992 0 0 1 2.522 10.376" />\r\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />\r\n  <path d="M19.001 15.5v1.5" />\r\n  <path d="M19.001 21v1.5" />\r\n  <path d="M22.032 17.25l-1.299 .75" />\r\n  <path d="M17.27 20l-1.3 .75" />\r\n  <path d="M15.97 17.25l1.3 .75" />\r\n  <path d="M20.733 20l1.3 .75" />\r\n</svg>\r\n';
 
   const IconX =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x toggler-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M18 6l-12 12"/>\r\n  <path d="M6 6l12 12"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-x toggler-off"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M18 6l-12 12" />\r\n  <path d="M6 6l12 12" />\r\n</svg>\r\n';
 
   const IconZoomCancel =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-cancel" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\r\n  <path d="M8 8l4 4"/>\r\n  <path d="M12 8l-4 4"/>\r\n  <path d="M21 21l-6 -6"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-zoom-cancel"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\r\n  <path d="M8 8l4 4" />\r\n  <path d="M12 8l-4 4" />\r\n  <path d="M21 21l-6 -6" />\r\n</svg>\r\n';
 
   const IconZoomIn =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\r\n  <path d="M7 10l6 0"/>\r\n  <path d="M10 7l0 6"/>\r\n  <path d="M21 21l-6 -6"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-zoom-in"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\r\n  <path d="M7 10l6 0" />\r\n  <path d="M10 7l0 6" />\r\n  <path d="M21 21l-6 -6" />\r\n</svg>\r\n';
 
   const IconZoomInArea =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M15 13v4"/>\r\n  <path d="M13 15h4"/>\r\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/>\r\n  <path d="M22 22l-3 -3"/>\r\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1"/>\r\n  <path d="M3 11v-1"/>\r\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1"/>\r\n  <path d="M10 3h1"/>\r\n  <path d="M15 3h1a2 2 0 0 1 2 2v1"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-zoom-in-area"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M15 13v4" />\r\n  <path d="M13 15h4" />\r\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />\r\n  <path d="M22 22l-3 -3" />\r\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1" />\r\n  <path d="M3 11v-1" />\r\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1" />\r\n  <path d="M10 3h1" />\r\n  <path d="M15 3h1a2 2 0 0 1 2 2v1" />\r\n</svg>\r\n';
 
   const IconZoomOut =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\r\n  <path d="M7 10l6 0"/>\r\n  <path d="M21 21l-6 -6"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-zoom-out"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\r\n  <path d="M7 10l6 0" />\r\n  <path d="M21 21l-6 -6" />\r\n</svg>\r\n';
 
   const IconZoomOutArea =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M13 15h4"/>\r\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/>\r\n  <path d="M22 22l-3 -3"/>\r\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1"/>\r\n  <path d="M3 11v-1"/>\r\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1"/>\r\n  <path d="M10 3h1"/>\r\n  <path d="M15 3h1a2 2 0 0 1 2 2v1"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-zoom-out-area"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M13 15h4" />\r\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />\r\n  <path d="M22 22l-3 -3" />\r\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1" />\r\n  <path d="M3 11v-1" />\r\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1" />\r\n  <path d="M10 3h1" />\r\n  <path d="M15 3h1a2 2 0 0 1 2 2v1" />\r\n</svg>\r\n';
 
   const IconZoomPan =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-pan" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>\r\n  <path d="M17 17l-2.5 -2.5"/>\r\n  <path d="M10 5l2 -2l2 2"/>\r\n  <path d="M19 10l2 2l-2 2"/>\r\n  <path d="M5 10l-2 2l2 2"/>\r\n  <path d="M10 19l2 2l2 -2"/>\r\n</svg>\r\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-zoom-pan"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />\r\n  <path d="M17 17l-2.5 -2.5" />\r\n  <path d="M10 5l2 -2l2 2" />\r\n  <path d="M19 10l2 2l-2 2" />\r\n  <path d="M5 10l-2 2l2 2" />\r\n  <path d="M10 19l2 2l2 -2" />\r\n</svg>\r\n';
 
   const listBookmarks = () => {
     if (isEmpty(getSettingsValue('bookmarks'))) {
@@ -3733,73 +3759,48 @@
     category: Category.MANGA,
   };
 
-  var commonjsGlobal =
-    typeof globalThis !== 'undefined'
-      ? globalThis
-      : typeof window !== 'undefined'
-        ? window
-        : typeof global !== 'undefined'
-          ? global
-          : typeof self !== 'undefined'
-            ? self
-            : {};
-
-  var jsxRuntime = { exports: {} };
-
-  var reactJsxRuntime_production = {};
-
-  /**
-   * @license React
-   * react-jsx-runtime.production.js
-   *
-   * Copyright (c) Meta Platforms, Inc. and affiliates.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
-   */
-
-  var hasRequiredReactJsxRuntime_production;
-
-  function requireReactJsxRuntime_production() {
-    if (hasRequiredReactJsxRuntime_production) return reactJsxRuntime_production;
-    hasRequiredReactJsxRuntime_production = 1;
-    var REACT_ELEMENT_TYPE = Symbol.for('react.transitional.element'),
-      REACT_FRAGMENT_TYPE = Symbol.for('react.fragment');
-    function jsxProd(type, config, maybeKey) {
-      var key = null;
-      void 0 !== maybeKey && (key = '' + maybeKey);
-      void 0 !== config.key && (key = '' + config.key);
-      if ('key' in config) {
-        maybeKey = {};
-        for (var propName in config) 'key' !== propName && (maybeKey[propName] = config[propName]);
-      } else maybeKey = config;
-      config = maybeKey.ref;
-      return {
-        $$typeof: REACT_ELEMENT_TYPE,
-        type: type,
-        key: key,
-        ref: void 0 !== config ? config : null,
-        props: maybeKey,
-      };
-    }
-    reactJsxRuntime_production.Fragment = REACT_FRAGMENT_TYPE;
-    reactJsxRuntime_production.jsx = jsxProd;
-    reactJsxRuntime_production.jsxs = jsxProd;
-    return reactJsxRuntime_production;
+  var _global_preact_Fragment = preact.Fragment;
+  var f = 0;
+  function u(e, t, n, o, i, u) {
+    t || (t = {});
+    var a,
+      c,
+      p = t;
+    if ('ref' in p) for (c in ((p = {}), t)) 'ref' == c ? (a = t[c]) : (p[c] = t[c]);
+    var l = {
+      type: e,
+      props: p,
+      key: n,
+      ref: a,
+      __k: null,
+      __: null,
+      __b: 0,
+      __e: null,
+      __c: null,
+      constructor: void 0,
+      __v: --f,
+      __i: -1,
+      __u: 0,
+      __source: i,
+      __self: u,
+    };
+    if ('function' == typeof e && (a = e.defaultProps))
+      for (c in a) void 0 === p[c] && (p[c] = a[c]);
+    return (preact.options.vnode && preact.options.vnode(l), l);
   }
 
-  var hasRequiredJsxRuntime;
-
-  function requireJsxRuntime() {
-    if (hasRequiredJsxRuntime) return jsxRuntime.exports;
-    hasRequiredJsxRuntime = 1;
-    {
-      jsxRuntime.exports = requireReactJsxRuntime_production();
-    }
-    return jsxRuntime.exports;
+  function createRoot(container) {
+    return {
+      // eslint-disable-next-line
+      render: function (children) {
+        preactCompat.render(children, container);
+      },
+      // eslint-disable-next-line
+      unmount: function () {
+        preactCompat.unmountComponentAtNode(container);
+      },
+    };
   }
-
-  var jsxRuntimeExports = requireJsxRuntime();
 
   const animation =
     '@-webkit-keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\n@keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\n@-webkit-keyframes spin-reverse {\r\n  0% {\r\n    transform: rotate(360deg);\r\n  }\r\n\r\n  to {\r\n    transform: rotate(0);\r\n  }\r\n}\r\n\r\n@keyframes spin-reverse {\r\n  0% {\r\n    transform: rotate(360deg);\r\n  }\r\n\r\n  to {\r\n    transform: rotate(0);\r\n  }\r\n}\r\n\r\n.icon-tabler-loader-2,\r\n.animate-spin {\r\n  -webkit-animation: spin 1s linear infinite;\r\n  animation: spin 1s linear infinite;\r\n}\r\n\r\n.animate-spin-reverse {\r\n  -webkit-animation: spin-reverse 1s linear infinite;\r\n  animation: spin-reverse 1s linear infinite;\r\n}\r\n';
@@ -3942,26 +3943,37 @@
     `;
   }
 
-  let emit = (snapshotRef, onChange) => value => {
-    if (snapshotRef.current === value) return;
-    snapshotRef.current = value;
-    onChange();
-  };
+  function useStore(store, opts = {}) {
+    let [, forceRender] = preactHooks.useState({});
+    let [valueBeforeEffect] = preactHooks.useState(store.get());
 
-  function useStore(store, { keys, deps = [store, keys] } = {}) {
-    let snapshotRef = React.useRef();
-    snapshotRef.current = store.get();
+    preactHooks.useEffect(() => {
+      valueBeforeEffect !== store.get() && forceRender({});
+    }, []);
 
-    let subscribe = React.useCallback(onChange => {
-      emit(snapshotRef, onChange)(store.value);
+    preactHooks.useEffect(() => {
+      let batching, timer, unlisten;
+      let rerender = () => {
+        if (!batching) {
+          batching = 1;
+          timer = setTimeout(() => {
+            batching = undefined;
+            forceRender({});
+          });
+        }
+      };
+      if (opts.keys) {
+        unlisten = listenKeys(store, opts.keys, rerender);
+      } else {
+        unlisten = store.listen(rerender);
+      }
+      return () => {
+        unlisten();
+        clearTimeout(timer);
+      };
+    }, [store, '' + opts.keys]);
 
-      return keys?.length > 0
-        ? listenKeys(store, keys, emit(snapshotRef, onChange))
-        : store.listen(emit(snapshotRef, onChange));
-    }, deps);
-    let get = () => snapshotRef.current;
-
-    return React.useSyncExternalStore(subscribe, get, get);
+    return store.get();
   }
 
   let scrollActive = false;
@@ -4021,6 +4033,17 @@
     window.addEventListener('wheel', _.throttle(manualScroll, 500));
     document.querySelector('#AutoScroll')?.addEventListener('click', toggleAutoScroll);
   }
+
+  var commonjsGlobal =
+    typeof globalThis !== 'undefined'
+      ? globalThis
+      : typeof window !== 'undefined'
+        ? window
+        : typeof global !== 'undefined'
+          ? global
+          : typeof self !== 'undefined'
+            ? self
+            : {};
 
   var dist = {};
 
@@ -4725,7 +4748,7 @@
   }
 
   const SvgArrowAutofitDown = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4740,20 +4763,20 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M18 4v17' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M15 18l3 3l3 -3' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M18 4v17' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M15 18l3 3l3 -3' }),
     );
 
   const SvgArrowAutofitHeight = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4768,22 +4791,22 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M18 14v7' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M18 3v7' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M15 18l3 3l3 -3' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M15 6l3 -3l3 3' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M18 14v7' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M18 3v7' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M15 18l3 3l3 -3' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M15 6l3 -3l3 3' }),
     );
 
   const SvgArrowAutofitLeft = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4798,20 +4821,20 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M20 18h-17' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M6 15l-3 3l3 3' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M20 18h-17' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M6 15l-3 3l3 3' }),
     );
 
   const SvgArrowAutofitRight = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4826,20 +4849,20 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M4 18h17' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M18 15l3 3l-3 3' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M4 18h17' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M18 15l3 3l-3 3' }),
     );
 
   const SvgArrowAutofitWidth = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4854,22 +4877,22 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 18h-7' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M21 18h-7' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M6 15l-3 3l3 3' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M18 15l3 3l-3 3' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M10 18h-7' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M21 18h-7' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M6 15l-3 3l3 3' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M18 15l3 3l-3 3' }),
     );
 
   const SvgArrowBigLeft = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4884,18 +4907,18 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z',
       }),
     );
 
   const SvgArrowBigRight = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4910,18 +4933,18 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z',
       }),
     );
 
   const SvgBookmark = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4936,18 +4959,18 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z',
       }),
     );
 
   const SvgBookmarkOff = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4962,19 +4985,19 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M7.708 3.721a3.982 3.982 0 0 1 2.292 -.721h4a4 4 0 0 1 4 4v7m0 4v3l-6 -4l-6 4v-14c0 -.308 .035 -.609 .1 -.897',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M3 3l18 18' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M3 3l18 18' }),
     );
 
   const SvgBookmarks = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -4989,19 +5012,19 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M11 3h5a3 3 0 0 1 3 3v11' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M11 3h5a3 3 0 0 1 3 3v11' }),
     );
 
   const SvgCategory = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5016,21 +5039,21 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M4 4h6v6h-6z' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M14 4h6v6h-6z' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M4 14h6v6h-6z' }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M4 4h6v6h-6z' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M14 4h6v6h-6z' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M4 14h6v6h-6z' }),
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0',
       }),
     );
 
   const SvgCheck = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5045,16 +5068,16 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M5 12l5 5l10 -10' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M5 12l5 5l10 -10' }),
     );
 
   const SvgDeviceFloppy = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5069,22 +5092,22 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M14 4l0 4l-6 0l0 -4' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M14 4l0 4l-6 0l0 -4' }),
     );
 
   const SvgExternalLink = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5099,20 +5122,20 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M11 13l9 -9' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M15 4h5v5' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M11 13l9 -9' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M15 4h5v5' }),
     );
 
   const SvgEye = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5127,19 +5150,21 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0' }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
+        d: 'M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0',
+      }),
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6',
       }),
     );
 
   const SvgEyeOff = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5154,20 +5179,22 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10.585 10.587a2 2 0 0 0 2.829 2.828' }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
+        d: 'M10.585 10.587a2 2 0 0 0 2.829 2.828',
+      }),
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M3 3l18 18' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M3 3l18 18' }),
     );
 
   const SvgFileDownload = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5182,21 +5209,21 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M14 3v4a1 1 0 0 0 1 1h4' }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M14 3v4a1 1 0 0 0 1 1h4' }),
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M12 17v-6' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M9.5 14.5l2.5 2.5l2.5 -2.5' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M12 17v-6' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M9.5 14.5l2.5 2.5l2.5 -2.5' }),
     );
 
   const SvgKeyboard = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5211,25 +5238,25 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M6 10l0 .01' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 10l0 .01' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M14 10l0 .01' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M18 10l0 .01' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M6 14l0 .01' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M18 14l0 .01' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 14l4 .01' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M6 10l0 .01' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M10 10l0 .01' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M14 10l0 .01' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M18 10l0 .01' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M6 14l0 .01' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M18 14l0 .01' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M10 14l4 .01' }),
     );
 
   const SvgListNumbers = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5244,22 +5271,22 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M11 6h9' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M11 12h9' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M12 18h8' }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M11 6h9' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M11 12h9' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M12 18h8' }),
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M6 10v-6l-2 2' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M6 10v-6l-2 2' }),
     );
 
   const SvgLoader2 = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5274,16 +5301,16 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M12 3a9 9 0 1 0 9 9' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M12 3a9 9 0 1 0 9 9' }),
     );
 
   const SvgLocationCog = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5298,27 +5325,27 @@
         className: 'icon icon-tabler icons-tabler-outline icon-tabler-location-cog',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M12 18l-2 -4l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5l-3.14 8.697',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M19.001 15.5v1.5' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M19.001 21v1.5' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M22.032 17.25l-1.299 .75' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M17.27 20l-1.3 .75' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M15.97 17.25l1.3 .75' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M20.733 20l1.3 .75' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M19.001 15.5v1.5' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M19.001 21v1.5' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M22.032 17.25l-1.299 .75' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M17.27 20l-1.3 .75' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M15.97 17.25l1.3 .75' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M20.733 20l1.3 .75' }),
     );
 
   const SvgMenu2 = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5333,18 +5360,18 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M4 6l16 0' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M4 12l16 0' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M4 18l16 0' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M4 6l16 0' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M4 12l16 0' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M4 18l16 0' }),
     );
 
   const SvgMessage = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5359,20 +5386,20 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M8 9h8' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M8 13h6' }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M8 9h8' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M8 13h6' }),
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z',
       }),
     );
 
   const SvgMoon = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5387,18 +5414,18 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z',
       }),
     );
 
   const SvgPalette = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5413,27 +5440,27 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0',
       }),
     );
 
   const SvgPencil = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5448,19 +5475,19 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M13.5 6.5l4 4' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M13.5 6.5l4 4' }),
     );
 
   const SvgPlayerPause = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5475,21 +5502,21 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z',
       }),
     );
 
   const SvgPlayerPlay = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5504,16 +5531,16 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M7 4v16l13 -8z' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M7 4v16l13 -8z' }),
     );
 
   const SvgRefresh = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5528,19 +5555,21 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4' }),
+      /* @__PURE__ */ React__namespace.createElement('path', {
+        d: 'M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4',
+      }),
     );
 
   const SvgSettings = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5555,19 +5584,21 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0' }),
+      /* @__PURE__ */ React__namespace.createElement('path', {
+        d: 'M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0',
+      }),
     );
 
   const SvgSettingsOff = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5582,22 +5613,22 @@
         className: 'icon icon-tabler icons-tabler-outline icon-tabler-settings-off',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M9.451 5.437c.418 -.218 .75 -.609 .874 -1.12c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35c-.486 .118 -.894 .44 -1.123 .878m-.188 3.803c-.517 .523 -1.349 .734 -2.125 .262a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.472 -.774 -.262 -1.604 .259 -2.121',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M9.889 9.869a3 3 0 1 0 4.226 4.26m.592 -3.424a3.012 3.012 0 0 0 -1.419 -1.415',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M3 3l18 18' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M3 3l18 18' }),
     );
 
   const SvgSpacingVertical = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5612,22 +5643,22 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M16 12h-8' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M16 12h-8' }),
     );
 
   const SvgSun = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5642,21 +5673,21 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7',
       }),
     );
 
   const SvgTrash = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5671,24 +5702,24 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M4 7l16 0' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 11l0 6' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M14 11l0 6' }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M4 7l16 0' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M10 11l0 6' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M14 11l0 6' }),
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3',
       }),
     );
 
   const SvgWorldCog = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5703,31 +5734,31 @@
         className: 'icon icon-tabler icons-tabler-outline icon-tabler-world-cog',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M21 12a9 9 0 1 0 -8.979 9' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M3.6 9h16.8' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M3.6 15h8.9' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M11.5 3a17 17 0 0 0 0 18' }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M21 12a9 9 0 1 0 -8.979 9' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M3.6 9h16.8' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M3.6 15h8.9' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M11.5 3a17 17 0 0 0 0 18' }),
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M12.5 3a16.992 16.992 0 0 1 2.522 10.376',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M19.001 15.5v1.5' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M19.001 21v1.5' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M22.032 17.25l-1.299 .75' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M17.27 20l-1.3 .75' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M15.97 17.25l1.3 .75' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M20.733 20l1.3 .75' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M19.001 15.5v1.5' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M19.001 21v1.5' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M22.032 17.25l-1.299 .75' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M17.27 20l-1.3 .75' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M15.97 17.25l1.3 .75' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M20.733 20l1.3 .75' }),
     );
 
   const SvgX = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5742,17 +5773,17 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M18 6l-12 12' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M6 6l12 12' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M18 6l-12 12' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M6 6l12 12' }),
     );
 
   const SvgZoomCancel = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5767,21 +5798,21 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M8 8l4 4' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M12 8l-4 4' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M21 21l-6 -6' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M8 8l4 4' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M12 8l-4 4' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M21 21l-6 -6' }),
     );
 
   const SvgZoomIn = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5796,21 +5827,21 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M7 10l6 0' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 7l0 6' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M21 21l-6 -6' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M7 10l6 0' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M10 7l0 6' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M21 21l-6 -6' }),
     );
 
   const SvgZoomInArea = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5825,26 +5856,26 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M15 13v4' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M13 15h4' }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M15 13v4' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M13 15h4' }),
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M22 22l-3 -3' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M6 18h-1a2 2 0 0 1 -2 -2v-1' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M3 11v-1' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M3 6v-1a2 2 0 0 1 2 -2h1' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 3h1' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M15 3h1a2 2 0 0 1 2 2v1' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M22 22l-3 -3' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M6 18h-1a2 2 0 0 1 -2 -2v-1' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M3 11v-1' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M3 6v-1a2 2 0 0 1 2 -2h1' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M10 3h1' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M15 3h1a2 2 0 0 1 2 2v1' }),
     );
 
   const SvgZoomOut = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5859,20 +5890,20 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M7 10l6 0' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M21 21l-6 -6' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M7 10l6 0' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M21 21l-6 -6' }),
     );
 
   const SvgZoomOutArea = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5887,25 +5918,25 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M13 15h4' }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M13 15h4' }),
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M22 22l-3 -3' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M6 18h-1a2 2 0 0 1 -2 -2v-1' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M3 11v-1' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M3 6v-1a2 2 0 0 1 2 -2h1' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 3h1' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M15 3h1a2 2 0 0 1 2 2v1' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M22 22l-3 -3' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M6 18h-1a2 2 0 0 1 -2 -2v-1' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M3 11v-1' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M3 6v-1a2 2 0 0 1 2 -2h1' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M10 3h1' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M15 3h1a2 2 0 0 1 2 2v1' }),
     );
 
   const SvgZoomPan = props =>
-    /* @__PURE__ */ React.createElement(
+    /* @__PURE__ */ React__namespace.createElement(
       'svg',
       {
         xmlns: 'http://www.w3.org/2000/svg',
@@ -5920,67 +5951,64 @@
         strokeLinejoin: 'round',
         ...props,
       },
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         stroke: 'none',
         d: 'M0 0h24v24H0z',
         fill: 'none',
       }),
-      /* @__PURE__ */ React.createElement('path', {
+      /* @__PURE__ */ React__namespace.createElement('path', {
         d: 'M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0',
       }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M17 17l-2.5 -2.5' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 5l2 -2l2 2' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M19 10l2 2l-2 2' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M5 10l-2 2l2 2' }),
-      /* @__PURE__ */ React.createElement('path', { d: 'M10 19l2 2l2 -2' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M17 17l-2.5 -2.5' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M10 5l2 -2l2 2' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M19 10l2 2l-2 2' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M5 10l-2 2l2 2' }),
+      /* @__PURE__ */ React__namespace.createElement('path', { d: 'M10 19l2 2l2 -2' }),
     );
 
   function BookmarksPanel() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u('div', {
       id: 'BookmarksPanel',
       className: 'panel',
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+        /* @__PURE__ */ u('button', {
           id: 'CloseBookmarks',
           className: 'closeButton',
           title: l.CLOSE,
           onClick: buttonBookmarksClose,
           type: 'button',
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
+          children: /* @__PURE__ */ u(SvgX, {}),
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+        /* @__PURE__ */ u('button', {
           className: 'Bookmark simpleButton',
           title: l.BOOKMARK,
           type: 'button',
           onClick: buttonBookmark,
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmark, {}),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmarkOff, {}),
-          ],
+          children: [/* @__PURE__ */ u(SvgBookmark, {}), /* @__PURE__ */ u(SvgBookmarkOff, {})],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('h2', { children: l.BOOKMARKS }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+        /* @__PURE__ */ u('h2', { children: l.BOOKMARKS }),
+        /* @__PURE__ */ u('div', {
           id: 'BookmarksList',
           children: isEmpty(s.bookmarks)
             ? l.LIST_EMPTY
             : s.bookmarks.map((mark, index) =>
-                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                /* @__PURE__ */ u(
                   'div',
                   {
                     id: `Bookmark${index + 1}`,
                     className: 'BookmarkItem',
                     children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                      /* @__PURE__ */ u('span', {
                         className: 'bookmarkColumnLarge',
                         children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
+                          /* @__PURE__ */ u('span', {
                             className: 'bookmarkName',
                             children: mark.name,
                           }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('br', {}),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('a', {
+                          /* @__PURE__ */ u('br', {}),
+                          /* @__PURE__ */ u('a', {
                             className: 'bookmarkURl',
                             href: mark.url,
                             target: '_blank',
@@ -5989,41 +6017,41 @@
                           }),
                         ],
                       }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                      /* @__PURE__ */ u('span', {
                         className: 'bookmarkColumnSmall',
                         children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
+                          /* @__PURE__ */ u('span', {
                             className: 'bookmarkDate',
                             children: new Date(mark.date).toISOString().slice(0, 10),
                           }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('br', {}),
-                          /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                          /* @__PURE__ */ u('br', {}),
+                          /* @__PURE__ */ u('span', {
                             className: 'bookmarkPage',
                             children: ['Page: ', mark.page],
                           }),
                         ],
                       }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                      /* @__PURE__ */ u('span', {
                         className: 'bookmarkFunctions',
                         children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('a', {
+                          /* @__PURE__ */ u('a', {
                             href: mark.url,
                             target: '_blank',
                             rel: 'noreferrer',
-                            children: /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                            children: /* @__PURE__ */ u('button', {
                               className: 'ControlButton open',
                               title: 'Open Bookmark',
                               type: 'button',
-                              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgExternalLink, {}),
+                              children: /* @__PURE__ */ u(SvgExternalLink, {}),
                             }),
                           }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                          /* @__PURE__ */ u('button', {
                             className: 'ControlButton erase',
                             title: 'Delete Bookmark',
                             type: 'button',
                             value: mark.url,
                             onClick: buttonEraseBookmarks,
-                            children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgTrash, {}),
+                            children: /* @__PURE__ */ u(SvgTrash, {}),
                           }),
                         ],
                       }),
@@ -6040,31 +6068,28 @@
   function CommentsPanel() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('section', {
+    return /* @__PURE__ */ u('section', {
       id: 'CommentsPanel',
       className: 'panel',
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+        /* @__PURE__ */ u('button', {
           id: 'CloseComments',
           className: 'closeButton',
           title: l.CLOSE,
           onClick: buttonCommentsClose,
           type: 'button',
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
+          children: /* @__PURE__ */ u(SvgX, {}),
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('h2', { children: l.COMMENTS }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+        /* @__PURE__ */ u('h2', { children: l.COMMENTS }),
+        /* @__PURE__ */ u('div', {
           id: 'CommentsArea',
           className: s.colorScheme,
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+        /* @__PURE__ */ u('button', {
           id: 'CommentsColorScheme',
           className: 'simpleButton ColorScheme',
           type: 'button',
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSun, {}),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMoon, {}),
-          ],
+          children: [/* @__PURE__ */ u(SvgSun, {}), /* @__PURE__ */ u(SvgMoon, {})],
         }),
       ],
     });
@@ -6185,152 +6210,149 @@
   function Header$1({ manga }) {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    return /* @__PURE__ */ u(_global_preact_Fragment, {
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
-          id: 'menu',
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMenu2, {}),
-        }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('header', {
+        /* @__PURE__ */ u('div', { id: 'menu', children: /* @__PURE__ */ u(SvgMenu2, {}) }),
+        /* @__PURE__ */ u('header', {
           id: 'Header',
           className: `${s.header} headroom-top`,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('aside', {
+            /* @__PURE__ */ u('aside', {
               id: 'GlobalFunctions',
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                /* @__PURE__ */ u('span', {
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'enlarge',
                       title: l.ENLARGE,
                       className: 'ControlButton',
                       onClick: changeZoomByStep(1),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomInArea, {}),
+                      children: /* @__PURE__ */ u(SvgZoomInArea, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'restore',
                       title: l.RESTORE,
                       className: 'ControlButton',
                       onClick: () => changeGlobalZoom('percent'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomPan, {}),
+                      children: /* @__PURE__ */ u(SvgZoomPan, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'reduce',
                       title: l.REDUCE,
                       className: 'ControlButton',
                       onClick: changeZoomByStep(-1),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomOutArea, {}),
+                      children: /* @__PURE__ */ u(SvgZoomOutArea, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'fitWidth',
                       title: l.FIT_WIDTH,
                       className: 'ControlButton',
                       onClick: () => changeGlobalZoom('width'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitWidth, {}),
+                      children: /* @__PURE__ */ u(SvgArrowAutofitWidth, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'fitHeight',
                       title: l.FIT_HEIGHT,
                       className: 'ControlButton',
                       onClick: () => changeGlobalZoom('height'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitHeight, {}),
+                      children: /* @__PURE__ */ u(SvgArrowAutofitHeight, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'keybindings',
                       title: l.KEYBINDINGS,
                       className: 'ControlButton',
                       onClick: buttonKeybindingsOpen,
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgKeyboard, {}),
+                      children: /* @__PURE__ */ u(SvgKeyboard, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'AutoScroll',
                       title: l.SCROLL_START,
                       className: 'ControlButton phones',
                       onClick: toggleAutoScroll,
                       type: 'button',
                       children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgPlayerPlay, {}),
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgPlayerPause, {}),
+                        /* @__PURE__ */ u(SvgPlayerPlay, {}),
+                        /* @__PURE__ */ u(SvgPlayerPause, {}),
                       ],
                     }),
                   ],
                 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                /* @__PURE__ */ u('span', {
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'ltrMode',
                       title: l.VIEW_MODE_LEFT,
                       className: 'ControlButton',
                       onClick: () => updateViewMode('FluidLTR'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitRight, {}),
+                      children: /* @__PURE__ */ u(SvgArrowAutofitRight, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'verticalMode',
                       title: l.VIEW_MODE_VERTICAL,
                       className: 'ControlButton tablets',
                       onClick: () => updateViewMode('Vertical'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitDown, {}),
+                      children: /* @__PURE__ */ u(SvgArrowAutofitDown, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'webComic',
                       title: l.VIEW_MODE_WEBCOMIC,
                       className: 'ControlButton tablets',
                       onClick: () => updateViewMode('WebComic'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSpacingVertical, {}),
+                      children: /* @__PURE__ */ u(SvgSpacingVertical, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'rtlMode',
                       title: l.VIEW_MODE_RIGHT,
                       className: 'ControlButton',
                       onClick: () => updateViewMode('FluidRTL'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitLeft, {}),
+                      children: /* @__PURE__ */ u(SvgArrowAutofitLeft, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'pageControls',
                       title: l.TOGGLE_CONTROLS,
                       className: 'ControlButton tablets',
                       onClick: buttonGlobalHideImageControls,
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgListNumbers, {}),
+                      children: /* @__PURE__ */ u(SvgListNumbers, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'bookmarks',
                       title: l.BOOKMARKS,
                       className: 'ControlButton tablets',
                       onClick: buttonBookmarksOpen,
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmarks, {}),
+                      children: /* @__PURE__ */ u(SvgBookmarks, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'settings',
                       title: l.SETTINGS,
                       className: 'ControlButton tablets phones',
                       onClick: buttonSettingsOpen,
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSettings, {}),
+                      children: /* @__PURE__ */ u(SvgSettings, {}),
                     }),
                   ],
                 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                /* @__PURE__ */ u('span', {
                   id: 'ZoomSlider',
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('output', {
+                    /* @__PURE__ */ u('output', {
                       id: 'ZoomVal',
                       className: 'RangeValue',
                       htmlFor: 'Zoom',
                       children: s.zoomMode === 'percent' ? `${s.defaultZoom}%` : s.zoomMode,
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+                    /* @__PURE__ */ u('input', {
                       type: 'range',
                       value: s.defaultZoom,
                       name: 'Zoom',
@@ -6343,14 +6365,11 @@
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+            /* @__PURE__ */ u('div', {
               className: 'ViewerTitle',
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('h1', {
-                  id: 'MangaTitle',
-                  children: manga.title,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('a', {
+                /* @__PURE__ */ u('h1', { id: 'MangaTitle', children: manga.title }),
+                /* @__PURE__ */ u('a', {
                   id: 'series',
                   href: manga.series ?? '',
                   onClick: buttonRedirectURL,
@@ -6358,41 +6377,41 @@
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('nav', {
+            /* @__PURE__ */ u('nav', {
               id: 'ChapterNavigation',
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+                /* @__PURE__ */ u('div', {
                   id: 'Counters',
                   className: 'ControlLabel',
                   children: [
                     l.PAGES_LOADED,
                     ':',
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('i', { children: '0' }),
+                    /* @__PURE__ */ u('i', { children: '0' }),
                     ' /',
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('b', {
+                    /* @__PURE__ */ u('b', {
                       children:
                         manga.begin && manga.begin > 1
                           ? manga.pages - (manga.begin - 1)
                           : manga.pages,
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                    /* @__PURE__ */ u('span', {
                       className: 'ControlLabel',
                       children: [l.GO_TO_PAGE, ':'],
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+                    /* @__PURE__ */ u('select', {
                       id: 'gotoPage',
                       onChange: selectGoToPage,
                       children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                          selected: true,
-                          children: '#',
-                        }),
+                        /* @__PURE__ */ u('option', { selected: true, children: '#' }),
                         Array.from(Array(manga.pages + 1).keys())
                           .slice(manga.begin)
                           .map(index =>
-                            /* @__PURE__ */ jsxRuntimeExports.jsx(
+                            /* @__PURE__ */ u(
                               'option',
-                              { value: index, children: index },
+                              {
+                                value: index,
+                                children: index,
+                              },
                               index,
                             ),
                           ),
@@ -6400,56 +6419,47 @@
                     }),
                   ],
                 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+                /* @__PURE__ */ u('div', {
                   id: 'ChapterControl',
                   className: 'ChapterControl',
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'CommentsButton',
                       className: `NavigationControlButton ControlButton ${manga.comments ? '' : 'disabled'}`,
                       title: l.DISPLAY_COMMENTS,
                       onClick: buttonCommentsOpen,
                       type: 'button',
-                      children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMessage, {}),
-                        l.DISPLAY_COMMENTS,
-                      ],
+                      children: [/* @__PURE__ */ u(SvgMessage, {}), l.DISPLAY_COMMENTS],
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'download',
                       className: 'NavigationControlButton ControlButton disabled',
                       type: 'button',
                       title: l.DOWNLOAD_ZIP,
                       onClick: buttonStartDownload,
                       children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgFileDownload, {}),
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgLoader2, {}),
+                        /* @__PURE__ */ u(SvgFileDownload, {}),
+                        /* @__PURE__ */ u(SvgLoader2, {}),
                         l.BUTTON_DOWNLOAD,
                       ],
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('a', {
+                    /* @__PURE__ */ u('a', {
                       id: 'prev',
                       className: 'NavigationControlButton ControlButton',
                       type: 'button',
                       href: manga.prev ?? '',
                       title: l.PREVIOUS_CHAPTER,
                       onClick: buttonRedirectURL,
-                      children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowBigLeft, {}),
-                        l.BUTTON_PREVIOUS,
-                      ],
+                      children: [/* @__PURE__ */ u(SvgArrowBigLeft, {}), l.BUTTON_PREVIOUS],
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('a', {
+                    /* @__PURE__ */ u('a', {
                       id: 'next',
                       className: 'NavigationControlButton ControlButton',
                       type: 'button',
                       href: manga.next ?? '',
                       title: l.NEXT_CHAPTER,
                       onClick: buttonRedirectURL,
-                      children: [
-                        l.BUTTON_NEXT,
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowBigRight, {}),
-                      ],
+                      children: [l.BUTTON_NEXT, /* @__PURE__ */ u(SvgArrowBigRight, {})],
                     }),
                   ],
                 }),
@@ -6464,7 +6474,7 @@
   function KeybindingsPanel() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    const [editor, setEditor] = React.useState(false);
+    const [editor, setEditor] = preactHooks.useState(false);
     const handleEdit = () => {
       editKeybindings();
       setEditor(true);
@@ -6473,56 +6483,57 @@
       saveKeybindings();
       setEditor(false);
     };
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u('div', {
       id: 'KeybindingsPanel',
       className: 'panel',
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('h2', { children: l.KEYBINDINGS }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+        /* @__PURE__ */ u('h2', { children: l.KEYBINDINGS }),
+        /* @__PURE__ */ u('button', {
           id: 'CloseKeybindings',
           className: 'closeButton',
           title: l.CLOSE,
           onClick: buttonKeybindingsClose,
           type: 'button',
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
+          children: /* @__PURE__ */ u(SvgX, {}),
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'controls',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+            /* @__PURE__ */ u('button', {
               id: 'EditKeybindings',
               className: 'ControlButton',
               type: 'button',
               title: l.EDIT_KEYBINDS,
               onClick: handleEdit,
-              children: [/* @__PURE__ */ jsxRuntimeExports.jsx(SvgPencil, {}), l.BUTTON_EDIT],
+              children: [/* @__PURE__ */ u(SvgPencil, {}), l.BUTTON_EDIT],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+            /* @__PURE__ */ u('button', {
               id: 'SaveKeybindings',
               className: 'ControlButton hidden',
               type: 'button',
               title: l.SAVE_KEYBINDS,
               onClick: handleSave,
-              children: [/* @__PURE__ */ jsxRuntimeExports.jsx(SvgDeviceFloppy, {}), l.BUTTON_SAVE],
+              children: [/* @__PURE__ */ u(SvgDeviceFloppy, {}), l.BUTTON_SAVE],
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+        /* @__PURE__ */ u('div', {
           id: 'KeybindingsList',
           children: !editor
             ? Object.keys(s.keybinds).map(kb =>
-                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                /* @__PURE__ */ u(
                   'span',
                   {
                     children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
-                        children: [isKey(l, kb) ? l[kb] : '', ':'],
-                      }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
+                      /* @__PURE__ */ u('span', { children: [isKey(l, kb) ? l[kb] : '', ':'] }),
+                      /* @__PURE__ */ u('span', {
                         children: s.keybinds[kb]?.map(key =>
-                          /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          /* @__PURE__ */ u(
                             'kbd',
-                            { className: 'dark', children: key },
+                            {
+                              className: 'dark',
+                              children: key,
+                            },
                             key,
                           ),
                         ),
@@ -6532,17 +6543,17 @@
                   kb,
                 ),
               )
-            : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+            : /* @__PURE__ */ u(_global_preact_Fragment, {
                 children: [
                   Object.keys(s.keybinds).map(kb =>
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    /* @__PURE__ */ u(
                       'label',
                       {
                         htmlFor: kb,
                         children: [
                           isKey(l, kb) ? l[kb] : '',
                           ':',
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+                          /* @__PURE__ */ u('input', {
                             type: 'text',
                             className: 'KeybindInput',
                             id: kb,
@@ -6554,10 +6565,7 @@
                       kb,
                     ),
                   ),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
-                    id: 'HotKeysRules',
-                    children: l.KEYBIND_RULES,
-                  }),
+                  /* @__PURE__ */ u('div', { id: 'HotKeysRules', children: l.KEYBIND_RULES }),
                 ],
               }),
         }),
@@ -6611,84 +6619,75 @@
 
   function MangaPage({ index, src = '' }) {
     const l = useStore(locale);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u('div', {
       id: `Page${index}`,
       className: 'MangaPage',
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'PageFunctions',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+            /* @__PURE__ */ u('button', {
               className: 'Bookmark ControlButton',
               title: l.BOOKMARK,
               onClick: buttonBookmark,
               type: 'button',
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmark, {}),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmarkOff, {}),
-              ],
+              children: [/* @__PURE__ */ u(SvgBookmark, {}), /* @__PURE__ */ u(SvgBookmarkOff, {})],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+            /* @__PURE__ */ u('button', {
               className: 'ZoomIn ControlButton',
               title: l.ZOOM_IN,
               onClick: buttonZoomIn,
               type: 'button',
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomIn, {}),
+              children: /* @__PURE__ */ u(SvgZoomIn, {}),
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+            /* @__PURE__ */ u('button', {
               className: 'ZoomRestore ControlButton',
               title: l.ZOOM_RESET,
               onClick: buttonRestoreZoom,
               type: 'button',
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomCancel, {}),
+              children: /* @__PURE__ */ u(SvgZoomCancel, {}),
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+            /* @__PURE__ */ u('button', {
               className: 'ZoomOut ControlButton',
               title: l.ZOOM_OUT,
               onClick: buttonZoomOut,
               type: 'button',
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomOut, {}),
+              children: /* @__PURE__ */ u(SvgZoomOut, {}),
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+            /* @__PURE__ */ u('button', {
               className: 'ZoomWidth ControlButton',
               title: l.ZOOM_WIDTH,
               onClick: buttonZoomWidth,
               type: 'button',
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitWidth, {}),
+              children: /* @__PURE__ */ u(SvgArrowAutofitWidth, {}),
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+            /* @__PURE__ */ u('button', {
               className: 'ZoomHeight ControlButton',
               title: l.ZOOM_HEIGHT,
               onClick: buttonZoomHeight,
               type: 'button',
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitHeight, {}),
+              children: /* @__PURE__ */ u(SvgArrowAutofitHeight, {}),
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+            /* @__PURE__ */ u('button', {
               className: 'Hide ControlButton',
               title: l.HIDE,
               onClick: buttonHidePage,
               type: 'button',
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgEye, {}),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgEyeOff, {}),
-              ],
+              children: [/* @__PURE__ */ u(SvgEye, {}), /* @__PURE__ */ u(SvgEyeOff, {})],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+            /* @__PURE__ */ u('button', {
               className: 'Reload ControlButton',
               title: l.RELOAD,
               onClick: buttonReloadPage,
               type: 'button',
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgRefresh, {}),
+              children: /* @__PURE__ */ u(SvgRefresh, {}),
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
-              className: 'PageIndex',
-              children: index,
-            }),
+            /* @__PURE__ */ u('span', { className: 'PageIndex', children: index }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+        /* @__PURE__ */ u('div', {
           className: 'PageContent',
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx('img', {
+          children: /* @__PURE__ */ u('img', {
             id: `PageImg${index}`,
             alt: '',
             className: 'PageImg',
@@ -6701,32 +6700,40 @@
 
   function Reader$1({ manga }) {
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx('main', {
+    return /* @__PURE__ */ u('main', {
       id: 'Chapter',
       className: `${s.fitWidthIfOversize ? 'fitWidthIfOversize' : ''} ${s.viewMode}`,
       children: Array.from(Array(manga.pages + 1).keys())
         .slice(manga.begin)
-        .map(index => /* @__PURE__ */ jsxRuntimeExports.jsx(MangaPage, { index }, index)),
+        .map(index =>
+          /* @__PURE__ */ u(
+            MangaPage,
+            {
+              index,
+            },
+            index,
+          ),
+        ),
     });
   }
 
   function SettingsPanelGeneral$1() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    return /* @__PURE__ */ u(_global_preact_Fragment, {
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel',
           children: [
             l.SCOPE,
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+            /* @__PURE__ */ u('div', {
               id: 'SettingsScope',
               className: 'radio-inputs',
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('label', {
+                /* @__PURE__ */ u('label', {
                   className: 'radio',
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+                    /* @__PURE__ */ u('input', {
                       type: 'radio',
                       id: 'globalSettings',
                       name: 'settingsScope',
@@ -6734,20 +6741,16 @@
                       checked: !isSettingsLocal(),
                       onChange: changeSettingsScope,
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                    /* @__PURE__ */ u('span', {
                       className: 'name',
-                      children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgWorldCog, {}),
-                        ' ',
-                        l.GLOBAL,
-                      ],
+                      children: [/* @__PURE__ */ u(SvgWorldCog, {}), ' ', l.GLOBAL],
                     }),
                   ],
                 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('label', {
+                /* @__PURE__ */ u('label', {
                   className: 'radio',
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+                    /* @__PURE__ */ u('input', {
                       type: 'radio',
                       id: 'localSettings',
                       name: 'settingsScope',
@@ -6755,10 +6758,10 @@
                       checked: isSettingsLocal(),
                       onChange: changeSettingsScope,
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                    /* @__PURE__ */ u('span', {
                       className: 'name',
                       children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgLocationCog, {}),
+                        /* @__PURE__ */ u(SvgLocationCog, {}),
                         ' ',
                         window.location.hostname,
                       ],
@@ -6769,18 +6772,21 @@
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel locale',
           children: [
             l.LANGUAGE,
-            /* @__PURE__ */ jsxRuntimeExports.jsx('select', {
+            /* @__PURE__ */ u('select', {
               id: 'locale',
               value: s.locale,
               onChange: changeLocale,
               children: locales.map(loc =>
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                /* @__PURE__ */ u(
                   'option',
-                  { value: loc.ID, children: loc.NAME },
+                  {
+                    value: loc.ID,
+                    children: loc.NAME,
+                  },
                   loc.ID,
                 ),
               ),
@@ -6794,65 +6800,41 @@
   function SettingsPanelLoading$1() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    return /* @__PURE__ */ u(_global_preact_Fragment, {
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel loadMode',
           children: [
             l.DEFAULT_LOAD_MODE,
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+            /* @__PURE__ */ u('select', {
               id: 'loadMode',
               value: s.loadMode,
               onChange: changeLoadMode,
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'wait',
-                  children: l.LOAD_MODE_NORMAL,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'always',
-                  children: l.LOAD_MODE_ALWAYS,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'never',
-                  children: l.LOAD_MODE_NEVER,
-                }),
+                /* @__PURE__ */ u('option', { value: 'wait', children: l.LOAD_MODE_NORMAL }),
+                /* @__PURE__ */ u('option', { value: 'always', children: l.LOAD_MODE_ALWAYS }),
+                /* @__PURE__ */ u('option', { value: 'never', children: l.LOAD_MODE_NEVER }),
               ],
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel PagesPerSecond',
           children: [
             l.LOAD_SPEED,
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+            /* @__PURE__ */ u('select', {
               id: 'PagesPerSecond',
               value: s.throttlePageLoad,
               onChange: changePagesPerSecond,
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('option', {
-                  value: '3000',
-                  children: ['0.3(', l.SLOWLY, ')'],
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '2000', children: '0.5' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('option', {
-                  value: '1000',
-                  children: ['01(', l.NORMAL, ')'],
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '500', children: '02' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('option', {
-                  value: '250',
-                  children: ['04(', l.FAST, ')'],
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '125', children: '08' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('option', {
-                  value: '100',
-                  children: ['10(', l.EXTREME, ')'],
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: '1',
-                  children: l.ALL_PAGES,
-                }),
+                /* @__PURE__ */ u('option', { value: '3000', children: ['0.3(', l.SLOWLY, ')'] }),
+                /* @__PURE__ */ u('option', { value: '2000', children: '0.5' }),
+                /* @__PURE__ */ u('option', { value: '1000', children: ['01(', l.NORMAL, ')'] }),
+                /* @__PURE__ */ u('option', { value: '500', children: '02' }),
+                /* @__PURE__ */ u('option', { value: '250', children: ['04(', l.FAST, ')'] }),
+                /* @__PURE__ */ u('option', { value: '125', children: '08' }),
+                /* @__PURE__ */ u('option', { value: '100', children: ['10(', l.EXTREME, ')'] }),
+                /* @__PURE__ */ u('option', { value: '1', children: l.ALL_PAGES }),
               ],
             }),
           ],
@@ -6862,10 +6844,10 @@
   }
 
   function Toggler({ name, checked = false, onChange }) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u('div', {
       className: 'toggler',
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+        /* @__PURE__ */ u('input', {
           id: name,
           name,
           type: 'checkbox',
@@ -6873,12 +6855,9 @@
           checked,
           onChange,
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('label', {
+        /* @__PURE__ */ u('label', {
           htmlFor: name,
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgCheck, {}),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
-          ],
+          children: [/* @__PURE__ */ u(SvgCheck, {}), /* @__PURE__ */ u(SvgX, {})],
         }),
       ],
     });
@@ -6887,99 +6866,99 @@
   function SettingsPanelOthers$1() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    return /* @__PURE__ */ u(_global_preact_Fragment, {
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel verticalSeparator',
           children: [
             l.VERTICAL_SEPARATOR,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u(Toggler, {
               name: 'verticalSeparator',
               checked: s.verticalSeparator,
               onChange: checkVerticalSeparator,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel fitIfOversize',
           children: [
             l.FIT_WIDTH_OVERSIZED,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u(Toggler, {
               name: 'fitIfOversize',
               checked: s.fitWidthIfOversize,
               onChange: checkFitWidthOversize,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel showThumbnails',
           children: [
             l.SHOW_THUMBNAILS,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u(Toggler, {
               name: 'showThumbnails',
               checked: s.showThumbnails,
               onChange: checkShowThumbnails,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel enableComments',
           children: [
             l.ENABLE_COMMENTS,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u(Toggler, {
               name: 'enableComments',
               checked: s.enableComments,
               onChange: checkEnableComments,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel downloadZip',
           children: [
             l.DOWNLOAD_IMAGES,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u(Toggler, {
               name: 'downloadZip',
               checked: s.downloadZip,
               onChange: checkAutoDownload,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel hidePageControls',
           children: [
             l.HIDE_CONTROLS,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u(Toggler, {
               name: 'hidePageControls',
               checked: s.hidePageControls,
               onChange: checkHideImageControls,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel lazyLoadImages',
           children: [
             l.LAZY_LOAD_IMAGES_ENABLE,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u(Toggler, {
               name: 'lazyLoadImages',
               checked: s.lazyLoadImages,
               onChange: checkLazyLoad,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: `ControlLabel lazyStart ControlLabelItem ${s.lazyLoadImages ? 'show' : ''}`,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u('span', {
               children: [
                 l.LAZY_LOAD_IMAGES,
-                /* @__PURE__ */ jsxRuntimeExports.jsx('output', {
+                /* @__PURE__ */ u('output', {
                   id: 'lazyStartVal',
                   htmlFor: 'lazyStart',
                   children: s.lazyStart,
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u('input', {
               type: 'range',
               value: s.lazyStart,
               onInput: changeLazyStart,
@@ -6991,13 +6970,13 @@
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel autoScroll',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u('span', {
               children: [
                 l.AUTO_SCROLL_HEIGHT,
-                /* @__PURE__ */ jsxRuntimeExports.jsx('output', {
+                /* @__PURE__ */ u('output', {
                   id: 'scrollHeightVal',
                   htmlFor: 'scrollHeight',
                   children: s.scrollHeight,
@@ -7005,7 +6984,7 @@
                 'px',
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u('input', {
               type: 'range',
               value: s.scrollHeight,
               onInput: changeScrollHeight,
@@ -7017,35 +6996,20 @@
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel headerType',
           children: [
             l.HEADER_TYPE,
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+            /* @__PURE__ */ u('select', {
               id: 'headerType',
               value: s.header,
               onChange: changeHeaderType,
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'hover',
-                  children: l.HEADER_HOVER,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'scroll',
-                  children: l.HEADER_SCROLL,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'click',
-                  children: l.HEADER_CLICK,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'fixed',
-                  children: l.HEADER_FIXED,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'simple',
-                  children: l.HEADER_SIMPLE,
-                }),
+                /* @__PURE__ */ u('option', { value: 'hover', children: l.HEADER_HOVER }),
+                /* @__PURE__ */ u('option', { value: 'scroll', children: l.HEADER_SCROLL }),
+                /* @__PURE__ */ u('option', { value: 'click', children: l.HEADER_CLICK }),
+                /* @__PURE__ */ u('option', { value: 'fixed', children: l.HEADER_FIXED }),
+                /* @__PURE__ */ u('option', { value: 'simple', children: l.HEADER_SIMPLE }),
               ],
             }),
           ],
@@ -7083,57 +7047,51 @@
   function SettingsPanelTheme() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    return /* @__PURE__ */ u(_global_preact_Fragment, {
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel ColorSchemeSelector',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('label', { children: l.COLOR_SCHEME }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+            /* @__PURE__ */ u('label', { children: l.COLOR_SCHEME }),
+            /* @__PURE__ */ u('button', {
               id: 'ColorScheme',
               className: 'ControlButton',
               onClick: changeColorScheme,
               type: 'button',
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSun, {}),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMoon, {}),
-              ],
+              children: [/* @__PURE__ */ u(SvgSun, {}), /* @__PURE__ */ u(SvgMoon, {})],
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel ThemeSelector',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('label', { children: l.THEME_COLOR }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u('label', { children: l.THEME_COLOR }),
+            /* @__PURE__ */ u('span', {
               className: `custom ThemeRadio ${s.theme === 'custom' ? 'selected' : ''}`,
               title: 'custom',
               onClick: buttonSelectTheme,
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgPalette, {}),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgCheck, {}),
-              ],
+              children: [/* @__PURE__ */ u(SvgPalette, {}), /* @__PURE__ */ u(SvgCheck, {})],
             }),
             Object.keys(colors).map(color =>
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
+              /* @__PURE__ */ u(
                 'span',
                 {
                   title: colors[color].name,
                   className: `${colors[color].name} ThemeRadio ${s.theme === colors[color].name ? 'selected' : ''}`,
                   onClick: buttonSelectTheme,
-                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgCheck, {}),
+                  children: /* @__PURE__ */ u(SvgCheck, {}),
                 },
                 colors[color].name,
               ),
             ),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           id: 'Hue',
           className: `ControlLabel CustomTheme ControlLabelItem ${s.theme.startsWith('custom') ? 'show' : ''}`,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('label', { children: l.THEME_HUE }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u('label', { children: l.THEME_HUE }),
+            /* @__PURE__ */ u('input', {
               id: 'CustomThemeHue',
               type: 'color',
               value: s.customTheme,
@@ -7142,14 +7100,14 @@
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           id: 'Shade',
           className: `ControlLabel CustomTheme ControlLabelItem ${s.theme.startsWith('custom') ? '' : 'show'}`,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u('span', {
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('label', { children: l.THEME_SHADE }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('output', {
+                /* @__PURE__ */ u('label', { children: l.THEME_SHADE }),
+                /* @__PURE__ */ u('output', {
                   id: 'themeShadeVal',
                   className: 'RangeValue',
                   htmlFor: 'ThemeShade',
@@ -7157,7 +7115,7 @@
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u('input', {
               type: 'range',
               value: s.themeShade,
               onInput: changeThemeShade,
@@ -7176,40 +7134,31 @@
   function SettingsPanelZoom$1() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    return /* @__PURE__ */ u(_global_preact_Fragment, {
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel DefaultZoomMode',
           children: [
             l.DEFAULT_ZOOM_MODE,
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+            /* @__PURE__ */ u('select', {
               id: 'DefaultZoomMode',
               value: s.zoomMode,
               onChange: changeDefaultZoomMode,
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'percent',
-                  children: l.PERCENT,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'width',
-                  children: l.FIT_WIDTH,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'height',
-                  children: l.FIT_HEIGHT,
-                }),
+                /* @__PURE__ */ u('option', { value: 'percent', children: l.PERCENT }),
+                /* @__PURE__ */ u('option', { value: 'width', children: l.FIT_WIDTH }),
+                /* @__PURE__ */ u('option', { value: 'height', children: l.FIT_HEIGHT }),
               ],
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: `ControlLabel DefaultZoom ControlLabelItem ${s.zoomMode === 'percent' ? 'show' : ''}`,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u('span', {
               children: [
                 l.DEFAULT_ZOOM,
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('output', {
+                /* @__PURE__ */ u('output', {
                   id: 'defaultZoomVal',
                   className: 'RangeValue',
                   htmlFor: 'DefaultZoom',
@@ -7217,7 +7166,7 @@
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u('input', {
               type: 'range',
               value: s.defaultZoom,
               onInput: changeDefaultZoom,
@@ -7228,29 +7177,29 @@
               step: '5',
               list: 'tickmarks',
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('datalist', {
+            /* @__PURE__ */ u('datalist', {
               id: 'tickmarks',
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '5', children: '5' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '25', children: '25' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '50', children: '50' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '75', children: '75' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '100', children: '100' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '125', children: '125' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '150', children: '150' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '175', children: '175' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '200', children: '200' }),
+                /* @__PURE__ */ u('option', { value: '5', children: '5' }),
+                /* @__PURE__ */ u('option', { value: '25', children: '25' }),
+                /* @__PURE__ */ u('option', { value: '50', children: '50' }),
+                /* @__PURE__ */ u('option', { value: '75', children: '75' }),
+                /* @__PURE__ */ u('option', { value: '100', children: '100' }),
+                /* @__PURE__ */ u('option', { value: '125', children: '125' }),
+                /* @__PURE__ */ u('option', { value: '150', children: '150' }),
+                /* @__PURE__ */ u('option', { value: '175', children: '175' }),
+                /* @__PURE__ */ u('option', { value: '200', children: '200' }),
               ],
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel minZoom',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u('span', {
               children: [
                 l.MINIMUM_ZOOM,
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('output', {
+                /* @__PURE__ */ u('output', {
                   id: 'minZoomVal',
                   className: 'RangeValue',
                   htmlFor: 'minZoom',
@@ -7258,7 +7207,7 @@
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u('input', {
               type: 'range',
               value: s.minZoom,
               onInput: changeMinZoom,
@@ -7270,13 +7219,13 @@
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel zoomStep',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u('span', {
               children: [
                 l.ZOOM_STEP,
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('output', {
+                /* @__PURE__ */ u('output', {
                   id: 'zoomStepVal',
                   className: 'RangeValue',
                   htmlFor: 'zoomStep',
@@ -7284,7 +7233,7 @@
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u('input', {
               type: 'range',
               value: s.zoomStep,
               onInput: changeZoomStep,
@@ -7296,31 +7245,19 @@
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel viewMode',
           children: [
             l.DEFAULT_VIEW_MODE,
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+            /* @__PURE__ */ u('select', {
               id: 'viewMode',
               value: s.viewMode,
               onChange: changeDefaultViewMode,
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'Vertical',
-                  children: l.VIEW_MODE_VERTICAL,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'WebComic',
-                  children: l.VIEW_MODE_WEBCOMIC,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'FluidLTR',
-                  children: l.VIEW_MODE_LEFT,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'FluidRTL',
-                  children: l.VIEW_MODE_RIGHT,
-                }),
+                /* @__PURE__ */ u('option', { value: 'Vertical', children: l.VIEW_MODE_VERTICAL }),
+                /* @__PURE__ */ u('option', { value: 'WebComic', children: l.VIEW_MODE_WEBCOMIC }),
+                /* @__PURE__ */ u('option', { value: 'FluidLTR', children: l.VIEW_MODE_LEFT }),
+                /* @__PURE__ */ u('option', { value: 'FluidRTL', children: l.VIEW_MODE_RIGHT }),
               ],
             }),
           ],
@@ -7331,56 +7268,53 @@
 
   function SettingsPanel$1() {
     const l = useStore(locale);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u('div', {
       id: 'SettingsPanel',
       className: 'panel',
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('h2', { children: l.SETTINGS }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+        /* @__PURE__ */ u('h2', { children: l.SETTINGS }),
+        /* @__PURE__ */ u('button', {
           id: 'CloseSettings',
           className: 'closeButton',
           title: l.CLOSE,
           onClick: buttonSettingsClose,
           type: 'button',
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
+          children: /* @__PURE__ */ u(SvgX, {}),
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+        /* @__PURE__ */ u('button', {
           id: 'ResetSettings',
           className: 'ControlButton',
           type: 'button',
+          children: [/* @__PURE__ */ u(SvgSettingsOff, {}), l.BUTTON_RESET_SETTINGS],
+        }),
+        /* @__PURE__ */ u('fieldset', {
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSettingsOff, {}),
-            l.BUTTON_RESET_SETTINGS,
+            /* @__PURE__ */ u('legend', { children: l.GENERAL }),
+            /* @__PURE__ */ u(SettingsPanelGeneral$1, {}),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
+        /* @__PURE__ */ u('fieldset', {
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.GENERAL }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelGeneral$1, {}),
+            /* @__PURE__ */ u('legend', { children: l.THEME }),
+            /* @__PURE__ */ u(SettingsPanelTheme, {}),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
+        /* @__PURE__ */ u('fieldset', {
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.THEME }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelTheme, {}),
+            /* @__PURE__ */ u('legend', { children: l.LOADING }),
+            /* @__PURE__ */ u(SettingsPanelLoading$1, {}),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
+        /* @__PURE__ */ u('fieldset', {
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.LOADING }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelLoading$1, {}),
+            /* @__PURE__ */ u('legend', { children: l.ZOOM }),
+            /* @__PURE__ */ u(SettingsPanelZoom$1, {}),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
+        /* @__PURE__ */ u('fieldset', {
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.ZOOM }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelZoom$1, {}),
-          ],
-        }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.OTHERS }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelOthers$1, {}),
+            /* @__PURE__ */ u('legend', { children: l.OTHERS }),
+            /* @__PURE__ */ u(SettingsPanelOthers$1, {}),
           ],
         }),
       ],
@@ -7388,21 +7322,18 @@
   }
 
   function Thumbnail({ index, src = '' }) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u('div', {
       id: `Thumbnail${index}`,
       className: 'Thumbnail',
       onClick: clickThumbnail,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('img', {
+        /* @__PURE__ */ u('img', {
           id: `ThumbnailImg${index}`,
           alt: '',
           className: 'ThumbnailImg',
           src,
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
-          className: 'ThumbnailIndex',
-          children: index,
-        }),
+        /* @__PURE__ */ u('span', { className: 'ThumbnailIndex', children: index }),
       ],
     });
   }
@@ -7410,30 +7341,38 @@
   function ThumbnailPanel({ manga }) {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('nav', {
+    return /* @__PURE__ */ u('nav', {
       id: 'Navigation',
       className: `panel ${s.showThumbnails ? '' : 'disabled'}`,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           id: 'NavigationCounters',
           className: 'ControlLabel',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgCategory, {}),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('i', { children: '0' }),
+            /* @__PURE__ */ u(SvgCategory, {}),
+            /* @__PURE__ */ u('i', { children: '0' }),
             ' /',
-            /* @__PURE__ */ jsxRuntimeExports.jsx('b', {
+            /* @__PURE__ */ u('b', {
               children:
                 manga.begin && manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages,
             }),
             l.PAGES_LOADED,
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+        /* @__PURE__ */ u('div', {
           id: 'Thumbnails',
           onWheel: transformScrollToHorizontal,
           children: Array.from(Array(manga.pages + 1).keys())
             .slice(manga.begin)
-            .map(index => /* @__PURE__ */ jsxRuntimeExports.jsx(Thumbnail, { index }, index)),
+            .map(index =>
+              /* @__PURE__ */ u(
+                Thumbnail,
+                {
+                  index,
+                },
+                index,
+              ),
+            ),
         }),
       ],
     });
@@ -7447,7 +7386,7 @@
       buttonBookmarksClose();
       buttonKeybindingsClose();
     }
-    React.useEffect(() => {
+    preactHooks.useEffect(() => {
       const handleScroll = _.debounce(toggleScrollDirection, 50);
       const handleWheel = _.throttle(manualScroll, 500);
       const handleMouseOver = _.throttle(headerHover, 300);
@@ -7460,40 +7399,38 @@
         window.removeEventListener('mouseover', handleMouseOver);
       };
     }, []);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u('div', {
       id: 'MangaOnlineViewer',
       className: `${s.colorScheme} ${s.hidePageControls ? 'hideControls' : ''} ${isBookmarked() ? 'bookmarked' : ''} ${getDevice()}`,
       'data-theme': s.theme,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+        /* @__PURE__ */ u('div', {
           id: 'menu',
           className: s.header,
           onClick: buttonHeaderClick,
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMenu2, {}),
+          children: /* @__PURE__ */ u(SvgMenu2, {}),
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Header$1, { manga }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Reader$1, { manga }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(ThumbnailPanel, { manga }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+        /* @__PURE__ */ u(Header$1, { manga }),
+        /* @__PURE__ */ u(Reader$1, { manga }),
+        /* @__PURE__ */ u(ThumbnailPanel, { manga }),
+        /* @__PURE__ */ u('div', {
           id: 'Overlay',
           className: 'overlay',
           onClick: buttonOverlay,
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CommentsPanel, {}),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(KeybindingsPanel, {}),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(BookmarksPanel, {}),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanel$1, {}),
+        /* @__PURE__ */ u(CommentsPanel, {}),
+        /* @__PURE__ */ u(KeybindingsPanel, {}),
+        /* @__PURE__ */ u(BookmarksPanel, {}),
+        /* @__PURE__ */ u(SettingsPanel$1, {}),
       ],
     });
   }
 
   function loadReader(manga) {
-    console.warn('Using React');
+    console.warn('Using Preact');
     document.head.innerHTML = head(manga);
     document.body.innerHTML = "<div id='MangaOnlineViewer'></div>";
-    ReactDOM.createRoot(document.body).render(
-      /* @__PURE__ */ jsxRuntimeExports.jsx(App, { manga }),
-    );
+    createRoot(document.body).render(/* @__PURE__ */ u(App, { manga }));
     setTimeout(() => {
       loadManga(manga, 0);
     }, 1e3);
@@ -8881,4 +8818,4 @@
   }
 
   start(sites).catch(logScript);
-})();
+})(preactCompat);

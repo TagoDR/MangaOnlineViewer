@@ -6,6 +6,7 @@
  */
 
 import * as fs from 'node:fs';
+import preact from '@preact/preset-vite';
 import externalGlobals from 'rollup-plugin-external-globals';
 import prettier from 'rollup-plugin-prettier';
 import userscript, { type Metadata } from 'userscript-metadata-generator';
@@ -17,7 +18,6 @@ import metaAdult from './src/meta/meta-adult';
 import metaDev from './src/meta/meta-dev';
 import metaMain from './src/meta/meta-main';
 import { bookmarklet, comicSites, hentaiSites, mangaSites } from './src/meta/readme';
-import react from '@vitejs/plugin-react';
 
 /**
  * The main Vite configuration function.
@@ -53,7 +53,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      react(),
+      preact(),
       svgr({
         exclude: '**/*.svg?raw',
       }),
@@ -79,8 +79,11 @@ export default defineConfig(({ mode }) => {
             'sweetalert2-neutral': 'Swal',
             tinycolor2: 'tinycolor',
             bowser: 'bowser',
-            react: 'React',
-            'react-dom/client': 'ReactDOM',
+            preact: 'preact',
+            'preact/compat': 'preactCompat',
+            'preact/hooks': 'preactHooks',
+            React: 'preactCompat',
+            ReactDOM: 'preactCompat',
           }),
           prettier({ parser: 'babel-ts' }),
         ],
@@ -88,6 +91,13 @@ export default defineConfig(({ mode }) => {
           format: 'iife',
           entryFileNames: `${meta?.name?.replace(/ /g, '_')}.user.js`,
           sourcemap: false,
+          globals: {
+            preact: 'preact',
+            'preact/compat': 'preactCompat',
+            'preact/hooks': 'preactHooks',
+            React: 'preactCompat',
+            ReactDOM: 'preactCompat',
+          },
         },
       },
     },

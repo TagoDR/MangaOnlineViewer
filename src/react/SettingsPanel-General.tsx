@@ -1,4 +1,4 @@
-import { useStore } from '@nanostores/react';
+import { useStore } from '@nanostores/preact';
 import { isSettingsLocal, locale, settings } from '../core/settings.ts';
 import locales from '../locales';
 import { changeLocale, changeSettingsScope } from '../ui/events/options.ts';

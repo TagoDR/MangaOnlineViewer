@@ -1,10 +1,9 @@
-import type { ChangeEventHandler } from 'react';
 import { IconCheck, IconX } from './Icons.ts';
 
 type Props = {
   name: string;
   checked?: boolean;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 };
 
 function Toggler({ name, checked = false, onChange }: Props) {

@@ -29,8 +29,9 @@
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
-// @require       https://cdn.jsdelivr.net/npm/umd-react@19.1.1/dist/react.production.min.js
-// @require       https://cdn.jsdelivr.net/npm/umd-react@19.1.1/dist/react-dom.production.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/preact/10.27.1/preact.umd.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/preact/10.27.1/hooks.umd.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/preact/10.27.1/compat.umd.min.js
 // @include       /https?:\/\/(www\.)?akuma\.moe\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?bestporncomix.com\/gallery\/.+/
 // @include       /https?:\/\/(www\.)?doujins.com\/.+/

@@ -1,5 +1,5 @@
-import { useStore } from '@nanostores/react';
-import { useState } from 'react';
+import { useStore } from '@nanostores/preact';
+import { useState } from 'preact/hooks';
 import { locale, settings } from '../core/settings.ts';
 import { isKey } from '../types';
 import { buttonKeybindingsClose, editKeybindings, saveKeybindings } from '../ui/events/panels.ts';

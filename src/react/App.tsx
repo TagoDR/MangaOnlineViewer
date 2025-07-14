@@ -1,6 +1,6 @@
-import { useStore } from '@nanostores/react';
+import { useStore } from '@nanostores/preact';
 import _ from 'lodash';
-import { useEffect } from 'react';
+import { useEffect } from 'preact/hooks';
 import { isBookmarked, settings } from '../core/settings.ts';
 import type { IManga } from '../types';
 import { manualScroll } from '../ui/events/autoscroll.ts';

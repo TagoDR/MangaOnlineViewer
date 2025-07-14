@@ -1,4 +1,4 @@
-import { useStore } from '@nanostores/react';
+import { useStore } from '@nanostores/preact';
 import { locale, settings } from '../core/settings.ts';
 import {
   changeHeaderType,
