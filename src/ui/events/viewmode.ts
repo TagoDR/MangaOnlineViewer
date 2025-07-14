@@ -1,11 +1,11 @@
 import { getSettingsValue } from '../../core/settings';
 import type { ViewMode } from '../../types';
+import { applyZoom } from '../page';
 import {
   scrollToElement,
   transformScrollToHorizontal,
   transformScrollToHorizontalReverse,
 } from './common';
-import { applyZoom } from '../page';
 
 function setupFluid(mode: ViewMode) {
   const chapter = document.querySelector<HTMLElement>('#Chapter');

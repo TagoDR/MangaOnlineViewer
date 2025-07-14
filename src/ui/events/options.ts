@@ -10,21 +10,16 @@ import type { HeaderMode, LoadMode } from '../../types';
 import { replaceStyleSheet } from '../../utils/css';
 import { applyZoom } from '../page';
 import { addEvent } from './common';
-import { buttonSettingsOpen } from './panels';
 
 export function buttonResetSettings() {
   resetSettings();
   const elem = document.getElementById('MangaOnlineViewer');
   elem?.removeAttribute('locale');
-  elem?.dispatchEvent(new Event('hydrate'));
-  buttonSettingsOpen();
 }
 
 export function changeSettingsScope(event: Event) {
   const scope = event.currentTarget as HTMLInputElement;
   toggleLocalSettings(scope.value === 'true');
-  document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
-  buttonSettingsOpen();
 }
 
 export function changeLocale(event: Event) {
@@ -32,8 +27,6 @@ export function changeLocale(event: Event) {
   saveSettingsValue('locale', locale);
   const elem = document.getElementById('MangaOnlineViewer');
   elem?.setAttribute('locale', locale);
-  elem?.dispatchEvent(new Event('hydrate'));
-  buttonSettingsOpen();
 }
 
 export function changeLoadMode(event: Event) {

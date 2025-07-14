@@ -45,7 +45,7 @@ async function lateStart(site: ISite, begin = 1) {
   let endPage = manga.pages;
   const options: SweetAlertOptions = {
     title: getLocaleString('STARTING'),
-    // Language=html
+
     html: html`
       ${getLocaleString('CHOOSE_BEGINNING')}
       <div id="pageInputGroup">

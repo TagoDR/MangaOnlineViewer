@@ -14,7 +14,6 @@ export const keybindList = () => {
 export const keybindEditor = () =>
   Object.keys(getSettingsValue('keybinds'))
     .map(
-      // Language=html
       (kb) =>
         html`<label for="${kb}">${getLocaleString(kb)}:</label>
           <input
@@ -27,7 +26,6 @@ export const keybindEditor = () =>
     )
     .concat(html` <div id="HotKeysRules">${getLocaleString('KEYBIND_RULES')}</div>`);
 
-// Language=html
 const KeybindingsPanel = () => html`
   <div id="KeybindingsPanel" class="panel">
     <h2>${getLocaleString('KEYBINDINGS')}</h2>

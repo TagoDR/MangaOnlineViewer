@@ -1,6 +1,9 @@
 import _ from 'lodash';
+import { atom, computed } from 'nanostores';
 import locales from '../locales';
-import type { ILocaleKey, ISettings, ISettingsKey } from '../types';
+import { type ILocale, type ILocaleKey, type ISettings, type ISettingsKey, isKey } from '../types';
+import { applyZoom } from '../ui/page';
+import { isNothing } from '../utils/checks';
 import diffObj from '../utils/diffObj';
 import {
   getGlobalSettings,
@@ -14,8 +17,6 @@ import {
   setLocalSettings,
   settingsChangeListener,
 } from '../utils/tampermonkey';
-import { isNothing } from '../utils/checks';
-import { applyZoom } from '../ui/page';
 
 export const defaultSettings: ISettings = {
   enabled: true,
@@ -89,13 +90,26 @@ let localSettings: ISettings = _.defaultsDeep(
 
 export const isSettingsLocal = () => localSettings?.enabled === true;
 
+export const settings = atom<ISettings>(isSettingsLocal() ? localSettings : globalSettings);
+export const locale = computed(
+  settings,
+  (current): ILocale => locales.find((l) => l.ID === current.locale) ?? locales[1],
+);
+
+function refresh() {
+  if (isSettingsLocal()) {
+    settings.set({ ...localSettings });
+  }
+  settings.set({ ...globalSettings });
+}
+
 function syncGlobalSettings(newValue: Partial<ISettings>) {
   const newSettings = _.defaultsDeep(newValue, getDefault());
   const diff = globalSettings ? diffObj(newSettings, globalSettings) : newSettings;
   if (!isNothing(diff)) {
     logScript('Imported Global Settings', diff);
     globalSettings = newSettings;
-    document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
+    refresh();
     applyZoom(getSettingsValue('zoomMode'), getSettingsValue('defaultZoom'));
   }
 }
@@ -108,7 +122,7 @@ function syncLocalSettings(newValue: Partial<ISettings>) {
   if (!isNothing(diff)) {
     logScript('Imported Local Settings', diff);
     localSettings = newSettings;
-    document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
+    refresh();
     applyZoom(getSettingsValue('zoomMode'), getSettingsValue('defaultZoom'));
   }
 }
@@ -123,10 +137,11 @@ settingsChangeListener(_.debounce(syncLocalSettings, 300), window.location.hostn
  * @returns The effective value of the setting.
  */
 export function getSettingsValue<K extends ISettingsKey>(key: K): ISettings[K] {
-  if (isSettingsLocal()) {
+  if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
     return localSettings[key];
   }
   return globalSettings[key];
+  // return settings.get()?.[key];
 }
 
 /**
@@ -142,6 +157,7 @@ export function setSettingsValue<K extends ISettingsKey>(key: K, value: ISetting
   } else {
     globalSettings = { ...globalSettings, [key]: value };
   }
+  settings.set({ ...settings.get(), [key]: value });
 }
 
 /**
@@ -182,11 +198,13 @@ export function changeSettingsValue<K extends ISettingsKey>(
       : globalSettings[key],
   );
   saveSettingsValue(key, newValue);
+  settings.set({ ...settings.get(), [key]: newValue });
 }
 
-export function getLocaleString<K extends ILocaleKey>(name: K): string {
-  const locale = locales.find((l) => l.ID === getSettingsValue('locale'));
-  return locale?.[name] ?? locales[1]?.[name] ?? `##MISSING_STRING_${name.toLocaleUpperCase()}##`;
+export function getLocaleString<K extends ILocaleKey>(name: K | string): string {
+  const locale = locales.find((l) => l.ID === getSettingsValue('locale')) ?? locales[1];
+  if (isKey(locale, name)) return locale?.[name] ?? locales[1]?.[name];
+  return `##MISSING_STRING_${name}##`;
 }
 
 export function resetSettings() {
@@ -197,24 +215,14 @@ export function resetSettings() {
     removeValueGM('settings');
     globalSettings = getDefault();
   }
+  refresh();
 }
 
 export function toggleLocalSettings(activate = false) {
-  if (activate) {
-    if (!localSettings) {
-      localSettings = { ...globalSettings };
-    } else {
-      localSettings.enabled = true;
-    }
-    setLocalSettings(diffObj(localSettings, getDefault(false)));
-    logScript('Local Settings Enabled');
-  } else {
-    if (isSettingsLocal()) {
-      localSettings.enabled = false;
-    }
-    setLocalSettings(diffObj(localSettings, getDefault(false)));
-    logScript('Local Settings Disabled');
-  }
+  localSettings.enabled = activate;
+  setLocalSettings(diffObj(localSettings, getDefault(false)));
+  logScript('Local Settings ', activate ? 'Enabled' : 'Disabled');
+  refresh();
   return isSettingsLocal();
 }
 
@@ -223,8 +231,16 @@ export function isBookmarked(url: string = window.location.href): number | undef
 }
 
 export function showSettings<K extends ISettingsKey>(key: K | null = null) {
-  logScriptVerbose('Global Settings', key ? globalSettings[key] : globalSettings);
-  logScriptVerbose('Local Settings', key ? localSettings[key] : localSettings);
+  logScriptVerbose(
+    'Current Settings (Local:',
+    isSettingsLocal(),
+    ') ',
+    key ? settings.get()[key] : settings.get(),
+    '\nGlobal Settings',
+    key ? globalSettings[key] : globalSettings,
+    '\nLocal Settings',
+    key ? localSettings[key] : localSettings,
+  );
 }
 
 giveToWindow('MOVSettings', showSettings);

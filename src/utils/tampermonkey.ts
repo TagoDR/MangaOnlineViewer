@@ -36,6 +36,10 @@ function logClear(...text: string[]) {
   }
 }
 
+function printStackTrace(...text: string[]) {
+  console.trace('MangaOnlineViewer:', ...text);
+}
+
 // Replacement function for GM_listValues allowing for debugging in console
 function getListGM(): string[] {
   return typeof GM_listValues !== 'undefined' ? GM_listValues() : [];
@@ -46,7 +50,7 @@ function removeValueGM(name: string) {
   if (typeof GM_deleteValue !== 'undefined') {
     GM_deleteValue(name);
   } else {
-    logScript('Fake Removing: ', name);
+    logScriptVerbose('Fake Removing: ', name);
   }
 }
 
@@ -68,7 +72,7 @@ function getValueGM(name: string, defaultValue: any = null): any {
     return GM_getValue(name, defaultValue);
   }
 
-  logScript('Fake Getting: ', name, ' = ', defaultValue);
+  logScriptVerbose('Fake Getting: ', name, ' = ', defaultValue);
   return defaultValue;
 }
 
@@ -96,7 +100,7 @@ function setValueGM(name: string, value: any): string {
     logScript('Setting: ', name, ' = ', value);
     return value.toString();
   } else {
-    logScript('Fake Setting: ', name, ' = ', value);
+    logScriptVerbose('Fake Setting: ', name, ' = ', value);
     return String(value);
   }
 }
@@ -195,4 +199,5 @@ export {
   isMobile,
   getDevice,
   settingsChangeListener,
+  printStackTrace,
 };

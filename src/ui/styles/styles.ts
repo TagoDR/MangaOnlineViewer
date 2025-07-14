@@ -16,7 +16,6 @@ import settings from './settings.css?inline';
 import normalize from './simplenormalize.css?inline';
 import thumbnails from './thumbnails.css?inline';
 
-// Language=CSS
 export default css`
   :root,
   .dark {

@@ -4,7 +4,6 @@ import colors, { getTextColor, type IColor } from '../utils/colors';
 import { replaceStyleSheet, wrapStyle } from '../utils/css';
 
 function generateThemeCSS(name: string, primary: string, text: string) {
-  // Language=CSS
   return css`
     .ThemeRadio.${name},
     #MangaOnlineViewer[data-theme='${name}'] {

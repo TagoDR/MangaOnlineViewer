@@ -57,6 +57,7 @@
     "imagesloaded": "^5.0.0",
     "jszip": "=3.9.1",
     "lodash": "^4.17.21",
+    "nanostores": "^1.0.1",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "range-slider-input": "^2.4.4",

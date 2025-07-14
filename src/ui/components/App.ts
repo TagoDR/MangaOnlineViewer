@@ -1,9 +1,10 @@
-import { getSettingsValue, isBookmarked, showSettings } from '../../core/settings';
+import { getSettingsValue, isBookmarked, settings, showSettings } from '../../core/settings';
 import type { IManga } from '../../types';
 import { html } from '../../utils/code-tag';
 import { getDevice } from '../../utils/tampermonkey';
 import events from '../events';
 import { toggleAutoScroll } from '../events/autoscroll';
+import { buttonSettingsOpen } from '../events/panels.ts';
 import { updateViewMode } from '../events/viewmode';
 import { IconMenu2 } from '../icons';
 import { refreshThemes } from '../themes';
@@ -27,13 +28,16 @@ export function hydrateApp() {
     '#KeybindingsPanel': KeybindingsPanel(),
     '#Bookmarks': BookmarksPanel(),
   };
+  const SettingsPanelOpened = document
+    .querySelector('#SettingsPanel')
+    ?.classList.contains('visible');
   if (document.querySelector('#ScrollControl')?.classList.contains('running')) {
     toggleAutoScroll();
   }
   refreshThemes();
   const outer = document.getElementById('MangaOnlineViewer');
   if (outer) {
-    outer.className = `${getSettingsValue('colorScheme')} 
+    outer.className = `${getSettingsValue('colorScheme')}
         ${getSettingsValue('hidePageControls') ? 'hideControls' : ''}
         ${isBookmarked() ? 'bookmarked' : ''}
         ${getDevice()}`;
@@ -54,14 +58,17 @@ export function hydrateApp() {
     ?.classList.toggle('disabled', !getSettingsValue('showThumbnails'));
   document.querySelector('#Overlay')?.dispatchEvent(new Event('click'));
   events();
+  if (SettingsPanelOpened) buttonSettingsOpen();
 }
+
+settings.listen(hydrateApp);
 
 const app = (manga: IManga) => {
   loadedManga = manga;
   const main = document.createElement('div');
   main.id = 'MangaOnlineViewer';
   main.className = `
-        ${getSettingsValue('colorScheme')} 
+        ${getSettingsValue('colorScheme')}
         ${getSettingsValue('hidePageControls') ? 'hideControls' : ''}
         ${isBookmarked() ? 'bookmarked' : ''}
         ${getDevice()}`;

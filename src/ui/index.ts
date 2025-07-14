@@ -1,7 +1,7 @@
 import type { IManga } from '../types';
 import { cleanUpElement } from '../utils/cleanup';
 import { logScriptVerbose } from '../utils/tampermonkey';
-import body, { hydrateApp } from './components/App';
+import body from './components/App';
 import events from './events';
 import { loadManga } from './page';
 import head from './reader';
@@ -14,6 +14,5 @@ export default function display(manga: IManga) {
   document.body.innerHTML = body(manga);
   events();
   loadManga(manga);
-  document.querySelector('#MangaOnlineViewer')?.addEventListener('hydrate', hydrateApp);
   if (manga.comments) document.querySelector('#CommentsArea')?.append(manga.comments);
 }
