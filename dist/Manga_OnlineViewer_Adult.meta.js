@@ -29,7 +29,8 @@
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
-// @require       https://cdnjs.cloudflare.com/ajax/libs/react/19.1.0/cjs/react.production.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/preact/10.26.9/preact.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/preact/10.26.9/compat.min.js
 // @include       /https?:\/\/(www\.)?akuma\.moe\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?bestporncomix.com\/gallery\/.+/
 // @include       /https?:\/\/(www\.)?doujins.com\/.+/

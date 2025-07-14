@@ -10,7 +10,7 @@ import metaAdult from './src/meta/meta-adult';
 import metaDev from './src/meta/meta-dev';
 import metaMain from './src/meta/meta-main';
 import { bookmarklet, comicSites, hentaiSites, mangaSites } from './src/meta/readme';
-import react from '@vitejs/plugin-react';
+import preact from '@preact/preset-vite';
 
 interface IScript {
   entry: string;
@@ -80,7 +80,7 @@ export default defineConfig(({ mode }) => {
   return {
     mode: target === 'dev' ? 'development' : 'production',
     plugins: [
-      react(),
+      preact(),
       svgr({
         exclude: '**/*.svg?raw',
       }),

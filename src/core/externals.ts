@@ -59,8 +59,14 @@ const externalScripts: string[] = [
     referrerpolicy="no-referrer"
   ></script>`,
   html` <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/react/19.1.0/cjs/react.production.min.js"
-    integrity="sha512-ucTHJmK7Vbk1b/20lV/YDoAy2C23upVS8WP7+QBFkkktwDICiljB3uEWxUa+lZRQ+eNWAfbbOSLJlXf90hE7LA=="
+    src="https://cdnjs.cloudflare.com/ajax/libs/preact/10.26.9/preact.min.js"
+    integrity="sha512-CovslFsXGiU7K+63c+5DkIimJwWrlhVtk7AZlZV6Gzdx7rHVYFIz4/6GEB8syYabWIbe8QpbJDDuHrL7X8VCYg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>`,
+  html`<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/preact/10.26.9/compat.min.js"
+    integrity="sha512-bQWfccgLtS5RcyUp16CUhxQcKyF/G+FxwI0jfmealAlEpBfnHIkhhIMDkziLbAKk4TIcsGx/lpkUzRwnD1+SvQ=="
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   ></script>`,

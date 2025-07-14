@@ -29,7 +29,8 @@
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
-// @require       https://cdnjs.cloudflare.com/ajax/libs/react/19.1.0/cjs/react.production.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/preact/10.26.9/preact.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/preact/10.26.9/compat.min.js
 // @include       /https?:\/\/(www\.)?akuma\.moe\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?bestporncomix.com\/gallery\/.+/
 // @include       /https?:\/\/(www\.)?doujins.com\/.+/
@@ -3787,73 +3788,59 @@
     },
   };
 
-  var commonjsGlobal =
-    typeof globalThis !== 'undefined'
-      ? globalThis
-      : typeof window !== 'undefined'
-        ? window
-        : typeof global !== 'undefined'
-          ? global
-          : typeof self !== 'undefined'
-            ? self
-            : {};
-
-  var jsxRuntime = { exports: {} };
-
-  var reactJsxRuntime_production = {};
-
-  /**
-   * @license React
-   * react-jsx-runtime.production.js
-   *
-   * Copyright (c) Meta Platforms, Inc. and affiliates.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
-   */
-
-  var hasRequiredReactJsxRuntime_production;
-
-  function requireReactJsxRuntime_production() {
-    if (hasRequiredReactJsxRuntime_production) return reactJsxRuntime_production;
-    hasRequiredReactJsxRuntime_production = 1;
-    var REACT_ELEMENT_TYPE = Symbol.for('react.transitional.element'),
-      REACT_FRAGMENT_TYPE = Symbol.for('react.fragment');
-    function jsxProd(type, config, maybeKey) {
-      var key = null;
-      void 0 !== maybeKey && (key = '' + maybeKey);
-      void 0 !== config.key && (key = '' + config.key);
-      if ('key' in config) {
-        maybeKey = {};
-        for (var propName in config) 'key' !== propName && (maybeKey[propName] = config[propName]);
-      } else maybeKey = config;
-      config = maybeKey.ref;
-      return {
-        $$typeof: REACT_ELEMENT_TYPE,
-        type: type,
-        key: key,
-        ref: void 0 !== config ? config : null,
-        props: maybeKey,
-      };
-    }
-    reactJsxRuntime_production.Fragment = REACT_FRAGMENT_TYPE;
-    reactJsxRuntime_production.jsx = jsxProd;
-    reactJsxRuntime_production.jsxs = jsxProd;
-    return reactJsxRuntime_production;
+  var l;
+  function k(n) {
+    return n.children;
   }
+  ((l = {
+    __e: function (n, l, u, t) {
+      for (var i, r, o; (l = l.__); )
+        if ((i = l.__c) && !i.__)
+          try {
+            if (
+              ((r = i.constructor) &&
+                null != r.getDerivedStateFromError &&
+                (i.setState(r.getDerivedStateFromError(n)), (o = i.__d)),
+              null != i.componentDidCatch && (i.componentDidCatch(n, t || {}), (o = i.__d)),
+              o)
+            )
+              return (i.__E = i);
+          } catch (l) {
+            n = l;
+          }
+      throw n;
+    },
+  }),
+    'function' == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout);
 
-  var hasRequiredJsxRuntime;
-
-  function requireJsxRuntime() {
-    if (hasRequiredJsxRuntime) return jsxRuntime.exports;
-    hasRequiredJsxRuntime = 1;
-    {
-      jsxRuntime.exports = requireReactJsxRuntime_production();
-    }
-    return jsxRuntime.exports;
+  var f = 0;
+  function u(e, t, n, o, i, u) {
+    t || (t = {});
+    var a,
+      c,
+      p = t;
+    if ('ref' in p) for (c in ((p = {}), t)) 'ref' == c ? (a = t[c]) : (p[c] = t[c]);
+    var l$1 = {
+      type: e,
+      props: p,
+      key: n,
+      ref: a,
+      __k: null,
+      __: null,
+      __b: 0,
+      __e: null,
+      __c: null,
+      constructor: void 0,
+      __v: --f,
+      __i: -1,
+      __u: 0,
+      __source: i,
+      __self: u,
+    };
+    if ('function' == typeof e && (a = e.defaultProps))
+      for (c in a) void 0 === p[c] && (p[c] = a[c]);
+    return (l.vnode && l.vnode(l$1), l$1);
   }
-
-  var jsxRuntimeExports = requireJsxRuntime();
 
   const animation =
     '@-webkit-keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\n@keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\n@-webkit-keyframes spin-reverse {\r\n  0% {\r\n    transform: rotate(360deg);\r\n  }\r\n\r\n  to {\r\n    transform: rotate(0);\r\n  }\r\n}\r\n\r\n@keyframes spin-reverse {\r\n  0% {\r\n    transform: rotate(360deg);\r\n  }\r\n\r\n  to {\r\n    transform: rotate(0);\r\n  }\r\n}\r\n\r\n.icon-tabler-loader-2,\r\n.animate-spin {\r\n  -webkit-animation: spin 1s linear infinite;\r\n  animation: spin 1s linear infinite;\r\n}\r\n\r\n.animate-spin-reverse {\r\n  -webkit-animation: spin-reverse 1s linear infinite;\r\n  animation: spin-reverse 1s linear infinite;\r\n}\r\n';
@@ -4078,6 +4065,17 @@
     window.addEventListener('wheel', _.throttle(manualScroll, 500));
     document.querySelector('#AutoScroll')?.addEventListener('click', toggleAutoScroll);
   }
+
+  var commonjsGlobal =
+    typeof globalThis !== 'undefined'
+      ? globalThis
+      : typeof window !== 'undefined'
+        ? window
+        : typeof global !== 'undefined'
+          ? global
+          : typeof self !== 'undefined'
+            ? self
+            : {};
 
   var dist = {};
 
@@ -5988,49 +5986,46 @@
   function BookmarksPanel() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u('div', {
       id: 'BookmarksPanel',
       className: 'panel',
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+        /* @__PURE__ */ u('button', {
           id: 'CloseBookmarks',
           className: 'closeButton',
           title: l.CLOSE,
           onClick: buttonBookmarksClose,
           type: 'button',
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
+          children: /* @__PURE__ */ u(SvgX, {}),
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+        /* @__PURE__ */ u('button', {
           className: 'Bookmark simpleButton',
           title: l.BOOKMARK,
           type: 'button',
           onClick: buttonBookmark,
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmark, {}),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmarkOff, {}),
-          ],
+          children: [/* @__PURE__ */ u(SvgBookmark, {}), /* @__PURE__ */ u(SvgBookmarkOff, {})],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('h2', { children: l.BOOKMARKS }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+        /* @__PURE__ */ u('h2', { children: l.BOOKMARKS }),
+        /* @__PURE__ */ u('div', {
           id: 'BookmarksList',
           children: isEmpty(s.bookmarks)
             ? l.LIST_EMPTY
             : s.bookmarks.map((mark, index) =>
-                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                /* @__PURE__ */ u(
                   'div',
                   {
                     id: `Bookmark${index + 1}`,
                     className: 'BookmarkItem',
                     children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                      /* @__PURE__ */ u('span', {
                         className: 'bookmarkColumnLarge',
                         children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
+                          /* @__PURE__ */ u('span', {
                             className: 'bookmarkName',
                             children: mark.name,
                           }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('br', {}),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('a', {
+                          /* @__PURE__ */ u('br', {}),
+                          /* @__PURE__ */ u('a', {
                             className: 'bookmarkURl',
                             href: mark.url,
                             target: '_blank',
@@ -6039,41 +6034,41 @@
                           }),
                         ],
                       }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                      /* @__PURE__ */ u('span', {
                         className: 'bookmarkColumnSmall',
                         children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
+                          /* @__PURE__ */ u('span', {
                             className: 'bookmarkDate',
                             children: new Date(mark.date).toISOString().slice(0, 10),
                           }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('br', {}),
-                          /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                          /* @__PURE__ */ u('br', {}),
+                          /* @__PURE__ */ u('span', {
                             className: 'bookmarkPage',
                             children: ['Page: ', mark.page],
                           }),
                         ],
                       }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                      /* @__PURE__ */ u('span', {
                         className: 'bookmarkFunctions',
                         children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('a', {
+                          /* @__PURE__ */ u('a', {
                             href: mark.url,
                             target: '_blank',
                             rel: 'noreferrer',
-                            children: /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                            children: /* @__PURE__ */ u('button', {
                               className: 'ControlButton open',
                               title: 'Open Bookmark',
                               type: 'button',
-                              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgExternalLink, {}),
+                              children: /* @__PURE__ */ u(SvgExternalLink, {}),
                             }),
                           }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                          /* @__PURE__ */ u('button', {
                             className: 'ControlButton erase',
                             title: 'Delete Bookmark',
                             type: 'button',
                             value: mark.url,
                             onClick: buttonEraseBookmarks,
-                            children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgTrash, {}),
+                            children: /* @__PURE__ */ u(SvgTrash, {}),
                           }),
                         ],
                       }),
@@ -6090,31 +6085,25 @@
   function CommentsPanel() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('section', {
+    return /* @__PURE__ */ u('section', {
       id: 'CommentsPanel',
       className: 'panel',
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+        /* @__PURE__ */ u('button', {
           id: 'CloseComments',
           className: 'closeButton',
           title: l.CLOSE,
           onClick: buttonCommentsClose,
           type: 'button',
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
+          children: /* @__PURE__ */ u(SvgX, {}),
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('h2', { children: l.COMMENTS }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
-          id: 'CommentsArea',
-          className: s.colorScheme,
-        }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+        /* @__PURE__ */ u('h2', { children: l.COMMENTS }),
+        /* @__PURE__ */ u('div', { id: 'CommentsArea', className: s.colorScheme }),
+        /* @__PURE__ */ u('button', {
           id: 'CommentsColorScheme',
           className: 'simpleButton ColorScheme',
           type: 'button',
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSun, {}),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMoon, {}),
-          ],
+          children: [/* @__PURE__ */ u(SvgSun, {}), /* @__PURE__ */ u(SvgMoon, {})],
         }),
       ],
     });
@@ -6234,152 +6223,149 @@
   function Header$1({ manga }) {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    return /* @__PURE__ */ u(k, {
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
-          id: 'menu',
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMenu2, {}),
-        }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('header', {
+        /* @__PURE__ */ u('div', { id: 'menu', children: /* @__PURE__ */ u(SvgMenu2, {}) }),
+        /* @__PURE__ */ u('header', {
           id: 'Header',
           className: `${s.header} headroom-top`,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('aside', {
+            /* @__PURE__ */ u('aside', {
               id: 'GlobalFunctions',
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                /* @__PURE__ */ u('span', {
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'enlarge',
                       title: l.ENLARGE,
                       className: 'ControlButton',
                       onClick: changeZoomByStep(1),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomInArea, {}),
+                      children: /* @__PURE__ */ u(SvgZoomInArea, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'restore',
                       title: l.RESTORE,
                       className: 'ControlButton',
                       onClick: () => changeGlobalZoom('percent'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomPan, {}),
+                      children: /* @__PURE__ */ u(SvgZoomPan, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'reduce',
                       title: l.REDUCE,
                       className: 'ControlButton',
                       onClick: changeZoomByStep(-1),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomOutArea, {}),
+                      children: /* @__PURE__ */ u(SvgZoomOutArea, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'fitWidth',
                       title: l.FIT_WIDTH,
                       className: 'ControlButton',
                       onClick: () => changeGlobalZoom('width'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitWidth, {}),
+                      children: /* @__PURE__ */ u(SvgArrowAutofitWidth, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'fitHeight',
                       title: l.FIT_HEIGHT,
                       className: 'ControlButton',
                       onClick: () => changeGlobalZoom('height'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitHeight, {}),
+                      children: /* @__PURE__ */ u(SvgArrowAutofitHeight, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'keybindings',
                       title: l.KEYBINDINGS,
                       className: 'ControlButton',
                       onClick: buttonKeybindingsOpen,
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgKeyboard, {}),
+                      children: /* @__PURE__ */ u(SvgKeyboard, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'AutoScroll',
                       title: l.SCROLL_START,
                       className: 'ControlButton phones',
                       onClick: toggleAutoScroll,
                       type: 'button',
                       children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgPlayerPlay, {}),
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgPlayerPause, {}),
+                        /* @__PURE__ */ u(SvgPlayerPlay, {}),
+                        /* @__PURE__ */ u(SvgPlayerPause, {}),
                       ],
                     }),
                   ],
                 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                /* @__PURE__ */ u('span', {
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'ltrMode',
                       title: l.VIEW_MODE_LEFT,
                       className: 'ControlButton',
                       onClick: () => updateViewMode('FluidLTR'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitRight, {}),
+                      children: /* @__PURE__ */ u(SvgArrowAutofitRight, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'verticalMode',
                       title: l.VIEW_MODE_VERTICAL,
                       className: 'ControlButton tablets',
                       onClick: () => updateViewMode('Vertical'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitDown, {}),
+                      children: /* @__PURE__ */ u(SvgArrowAutofitDown, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'webComic',
                       title: l.VIEW_MODE_WEBCOMIC,
                       className: 'ControlButton tablets',
                       onClick: () => updateViewMode('WebComic'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSpacingVertical, {}),
+                      children: /* @__PURE__ */ u(SvgSpacingVertical, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'rtlMode',
                       title: l.VIEW_MODE_RIGHT,
                       className: 'ControlButton',
                       onClick: () => updateViewMode('FluidRTL'),
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitLeft, {}),
+                      children: /* @__PURE__ */ u(SvgArrowAutofitLeft, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'pageControls',
                       title: l.TOGGLE_CONTROLS,
                       className: 'ControlButton tablets',
                       onClick: buttonGlobalHideImageControls,
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgListNumbers, {}),
+                      children: /* @__PURE__ */ u(SvgListNumbers, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'bookmarks',
                       title: l.BOOKMARKS,
                       className: 'ControlButton tablets',
                       onClick: buttonBookmarksOpen,
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmarks, {}),
+                      children: /* @__PURE__ */ u(SvgBookmarks, {}),
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'settings',
                       title: l.SETTINGS,
                       className: 'ControlButton tablets phones',
                       onClick: buttonSettingsOpen,
                       type: 'button',
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSettings, {}),
+                      children: /* @__PURE__ */ u(SvgSettings, {}),
                     }),
                   ],
                 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                /* @__PURE__ */ u('span', {
                   id: 'ZoomSlider',
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('output', {
+                    /* @__PURE__ */ u('output', {
                       id: 'ZoomVal',
                       className: 'RangeValue',
                       htmlFor: 'Zoom',
                       children: s.zoomMode === 'percent' ? `${s.defaultZoom}%` : s.zoomMode,
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+                    /* @__PURE__ */ u('input', {
                       type: 'range',
                       value: s.defaultZoom,
                       name: 'Zoom',
@@ -6392,14 +6378,11 @@
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+            /* @__PURE__ */ u('div', {
               className: 'ViewerTitle',
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('h1', {
-                  id: 'MangaTitle',
-                  children: manga.title,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('a', {
+                /* @__PURE__ */ u('h1', { id: 'MangaTitle', children: manga.title }),
+                /* @__PURE__ */ u('a', {
                   id: 'series',
                   href: manga.series ?? '',
                   onClick: buttonRedirectURL,
@@ -6407,98 +6390,82 @@
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('nav', {
+            /* @__PURE__ */ u('nav', {
               id: 'ChapterNavigation',
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+                /* @__PURE__ */ u('div', {
                   id: 'Counters',
                   className: 'ControlLabel',
                   children: [
                     l.PAGES_LOADED,
                     ':',
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('i', { children: '0' }),
+                    /* @__PURE__ */ u('i', { children: '0' }),
                     ' /',
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('b', {
+                    /* @__PURE__ */ u('b', {
                       children:
                         manga.begin && manga.begin > 1
                           ? manga.pages - (manga.begin - 1)
                           : manga.pages,
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                    /* @__PURE__ */ u('span', {
                       className: 'ControlLabel',
                       children: [l.GO_TO_PAGE, ':'],
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+                    /* @__PURE__ */ u('select', {
                       id: 'gotoPage',
                       onChange: selectGoToPage,
                       children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                          selected: true,
-                          children: '#',
-                        }),
+                        /* @__PURE__ */ u('option', { selected: true, children: '#' }),
                         Array.from(Array(manga.pages + 1).keys())
                           .slice(manga.begin)
                           .map(index =>
-                            /* @__PURE__ */ jsxRuntimeExports.jsx(
-                              'option',
-                              { value: index, children: index },
-                              index,
-                            ),
+                            /* @__PURE__ */ u('option', { value: index, children: index }, index),
                           ),
                       ],
                     }),
                   ],
                 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+                /* @__PURE__ */ u('div', {
                   id: 'ChapterControl',
                   className: 'ChapterControl',
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'CommentsButton',
                       className: `NavigationControlButton ControlButton ${manga.comments ? '' : 'disabled'}`,
                       title: l.DISPLAY_COMMENTS,
                       onClick: buttonCommentsOpen,
                       type: 'button',
-                      children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMessage, {}),
-                        l.DISPLAY_COMMENTS,
-                      ],
+                      children: [/* @__PURE__ */ u(SvgMessage, {}), l.DISPLAY_COMMENTS],
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+                    /* @__PURE__ */ u('button', {
                       id: 'download',
                       className: 'NavigationControlButton ControlButton disabled',
                       type: 'button',
                       title: l.DOWNLOAD_ZIP,
                       onClick: buttonStartDownload,
                       children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgFileDownload, {}),
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgLoader2, {}),
+                        /* @__PURE__ */ u(SvgFileDownload, {}),
+                        /* @__PURE__ */ u(SvgLoader2, {}),
                         l.BUTTON_DOWNLOAD,
                       ],
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('a', {
+                    /* @__PURE__ */ u('a', {
                       id: 'prev',
                       className: 'NavigationControlButton ControlButton',
                       type: 'button',
                       href: manga.prev ?? '',
                       title: l.PREVIOUS_CHAPTER,
                       onClick: buttonRedirectURL,
-                      children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowBigLeft, {}),
-                        l.BUTTON_PREVIOUS,
-                      ],
+                      children: [/* @__PURE__ */ u(SvgArrowBigLeft, {}), l.BUTTON_PREVIOUS],
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('a', {
+                    /* @__PURE__ */ u('a', {
                       id: 'next',
                       className: 'NavigationControlButton ControlButton',
                       type: 'button',
                       href: manga.next ?? '',
                       title: l.NEXT_CHAPTER,
                       onClick: buttonRedirectURL,
-                      children: [
-                        l.BUTTON_NEXT,
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowBigRight, {}),
-                      ],
+                      children: [l.BUTTON_NEXT, /* @__PURE__ */ u(SvgArrowBigRight, {})],
                     }),
                   ],
                 }),
@@ -6522,58 +6489,52 @@
       saveKeybindings();
       setEditor(false);
     };
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u('div', {
       id: 'KeybindingsPanel',
       className: 'panel',
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('h2', { children: l.KEYBINDINGS }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+        /* @__PURE__ */ u('h2', { children: l.KEYBINDINGS }),
+        /* @__PURE__ */ u('button', {
           id: 'CloseKeybindings',
           className: 'closeButton',
           title: l.CLOSE,
           onClick: buttonKeybindingsClose,
           type: 'button',
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
+          children: /* @__PURE__ */ u(SvgX, {}),
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'controls',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+            /* @__PURE__ */ u('button', {
               id: 'EditKeybindings',
               className: 'ControlButton',
               type: 'button',
               title: l.EDIT_KEYBINDS,
               onClick: handleEdit,
-              children: [/* @__PURE__ */ jsxRuntimeExports.jsx(SvgPencil, {}), l.BUTTON_EDIT],
+              children: [/* @__PURE__ */ u(SvgPencil, {}), l.BUTTON_EDIT],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+            /* @__PURE__ */ u('button', {
               id: 'SaveKeybindings',
               className: 'ControlButton hidden',
               type: 'button',
               title: l.SAVE_KEYBINDS,
               onClick: handleSave,
-              children: [/* @__PURE__ */ jsxRuntimeExports.jsx(SvgDeviceFloppy, {}), l.BUTTON_SAVE],
+              children: [/* @__PURE__ */ u(SvgDeviceFloppy, {}), l.BUTTON_SAVE],
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+        /* @__PURE__ */ u('div', {
           id: 'KeybindingsList',
           children: !editor
             ? Object.keys(s.keybinds).map(kb =>
-                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                /* @__PURE__ */ u(
                   'span',
                   {
                     children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
-                        children: [isKey(l, kb) ? l[kb] : '', ':'],
-                      }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
+                      /* @__PURE__ */ u('span', { children: [isKey(l, kb) ? l[kb] : '', ':'] }),
+                      /* @__PURE__ */ u('span', {
                         children: s.keybinds[kb]?.map(key =>
-                          /* @__PURE__ */ jsxRuntimeExports.jsx(
-                            'kbd',
-                            { className: 'dark', children: key },
-                            key,
-                          ),
+                          /* @__PURE__ */ u('kbd', { className: 'dark', children: key }, key),
                         ),
                       }),
                     ],
@@ -6581,17 +6542,17 @@
                   kb,
                 ),
               )
-            : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+            : /* @__PURE__ */ u(k, {
                 children: [
                   Object.keys(s.keybinds).map(kb =>
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    /* @__PURE__ */ u(
                       'label',
                       {
                         htmlFor: kb,
                         children: [
                           isKey(l, kb) ? l[kb] : '',
                           ':',
-                          /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+                          /* @__PURE__ */ u('input', {
                             type: 'text',
                             className: 'KeybindInput',
                             id: kb,
@@ -6603,10 +6564,7 @@
                       kb,
                     ),
                   ),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
-                    id: 'HotKeysRules',
-                    children: l.KEYBIND_RULES,
-                  }),
+                  /* @__PURE__ */ u('div', { id: 'HotKeysRules', children: l.KEYBIND_RULES }),
                 ],
               }),
         }),
@@ -6660,84 +6618,75 @@
 
   function MangaPage({ index, src = '' }) {
     const l = useStore(locale);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u('div', {
       id: `Page${index}`,
       className: 'MangaPage',
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'PageFunctions',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+            /* @__PURE__ */ u('button', {
               className: 'Bookmark ControlButton',
               title: l.BOOKMARK,
               onClick: buttonBookmark,
               type: 'button',
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmark, {}),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmarkOff, {}),
-              ],
+              children: [/* @__PURE__ */ u(SvgBookmark, {}), /* @__PURE__ */ u(SvgBookmarkOff, {})],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+            /* @__PURE__ */ u('button', {
               className: 'ZoomIn ControlButton',
               title: l.ZOOM_IN,
               onClick: buttonZoomIn,
               type: 'button',
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomIn, {}),
+              children: /* @__PURE__ */ u(SvgZoomIn, {}),
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+            /* @__PURE__ */ u('button', {
               className: 'ZoomRestore ControlButton',
               title: l.ZOOM_RESET,
               onClick: buttonRestoreZoom,
               type: 'button',
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomCancel, {}),
+              children: /* @__PURE__ */ u(SvgZoomCancel, {}),
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+            /* @__PURE__ */ u('button', {
               className: 'ZoomOut ControlButton',
               title: l.ZOOM_OUT,
               onClick: buttonZoomOut,
               type: 'button',
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomOut, {}),
+              children: /* @__PURE__ */ u(SvgZoomOut, {}),
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+            /* @__PURE__ */ u('button', {
               className: 'ZoomWidth ControlButton',
               title: l.ZOOM_WIDTH,
               onClick: buttonZoomWidth,
               type: 'button',
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitWidth, {}),
+              children: /* @__PURE__ */ u(SvgArrowAutofitWidth, {}),
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+            /* @__PURE__ */ u('button', {
               className: 'ZoomHeight ControlButton',
               title: l.ZOOM_HEIGHT,
               onClick: buttonZoomHeight,
               type: 'button',
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitHeight, {}),
+              children: /* @__PURE__ */ u(SvgArrowAutofitHeight, {}),
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+            /* @__PURE__ */ u('button', {
               className: 'Hide ControlButton',
               title: l.HIDE,
               onClick: buttonHidePage,
               type: 'button',
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgEye, {}),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgEyeOff, {}),
-              ],
+              children: [/* @__PURE__ */ u(SvgEye, {}), /* @__PURE__ */ u(SvgEyeOff, {})],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+            /* @__PURE__ */ u('button', {
               className: 'Reload ControlButton',
               title: l.RELOAD,
               onClick: buttonReloadPage,
               type: 'button',
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgRefresh, {}),
+              children: /* @__PURE__ */ u(SvgRefresh, {}),
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
-              className: 'PageIndex',
-              children: index,
-            }),
+            /* @__PURE__ */ u('span', { className: 'PageIndex', children: index }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+        /* @__PURE__ */ u('div', {
           className: 'PageContent',
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx('img', {
+          children: /* @__PURE__ */ u('img', {
             id: `PageImg${index}`,
             alt: '',
             className: 'PageImg',
@@ -6750,32 +6699,32 @@
 
   function Reader$1({ manga }) {
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx('main', {
+    return /* @__PURE__ */ u('main', {
       id: 'Chapter',
       className: `${s.fitWidthIfOversize ? 'fitWidthIfOversize' : ''} ${s.viewMode}`,
       children: Array.from(Array(manga.pages + 1).keys())
         .slice(manga.begin)
-        .map(index => /* @__PURE__ */ jsxRuntimeExports.jsx(MangaPage, { index }, index)),
+        .map(index => /* @__PURE__ */ u(MangaPage, { index }, index)),
     });
   }
 
   function SettingsPanelGeneral$1() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    return /* @__PURE__ */ u(k, {
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel',
           children: [
             l.SCOPE,
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+            /* @__PURE__ */ u('div', {
               id: 'SettingsScope',
               className: 'radio-inputs',
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('label', {
+                /* @__PURE__ */ u('label', {
                   className: 'radio',
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+                    /* @__PURE__ */ u('input', {
                       type: 'radio',
                       id: 'globalSettings',
                       name: 'settingsScope',
@@ -6783,20 +6732,16 @@
                       checked: !isSettingsLocal(),
                       onChange: changeSettingsScope,
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                    /* @__PURE__ */ u('span', {
                       className: 'name',
-                      children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgWorldCog, {}),
-                        ' ',
-                        l.GLOBAL,
-                      ],
+                      children: [/* @__PURE__ */ u(SvgWorldCog, {}), ' ', l.GLOBAL],
                     }),
                   ],
                 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('label', {
+                /* @__PURE__ */ u('label', {
                   className: 'radio',
                   children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+                    /* @__PURE__ */ u('input', {
                       type: 'radio',
                       id: 'localSettings',
                       name: 'settingsScope',
@@ -6804,10 +6749,10 @@
                       checked: isSettingsLocal(),
                       onChange: changeSettingsScope,
                     }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                    /* @__PURE__ */ u('span', {
                       className: 'name',
                       children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgLocationCog, {}),
+                        /* @__PURE__ */ u(SvgLocationCog, {}),
                         ' ',
                         window.location.hostname,
                       ],
@@ -6818,20 +6763,16 @@
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel locale',
           children: [
             l.LANGUAGE,
-            /* @__PURE__ */ jsxRuntimeExports.jsx('select', {
+            /* @__PURE__ */ u('select', {
               id: 'locale',
               value: s.locale,
               onChange: changeLocale,
               children: locales.map(loc =>
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  'option',
-                  { value: loc.ID, children: loc.NAME },
-                  loc.ID,
-                ),
+                /* @__PURE__ */ u('option', { value: loc.ID, children: loc.NAME }, loc.ID),
               ),
             }),
           ],
@@ -6843,65 +6784,41 @@
   function SettingsPanelLoading$1() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    return /* @__PURE__ */ u(k, {
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel loadMode',
           children: [
             l.DEFAULT_LOAD_MODE,
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+            /* @__PURE__ */ u('select', {
               id: 'loadMode',
               value: s.loadMode,
               onChange: changeLoadMode,
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'wait',
-                  children: l.LOAD_MODE_NORMAL,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'always',
-                  children: l.LOAD_MODE_ALWAYS,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'never',
-                  children: l.LOAD_MODE_NEVER,
-                }),
+                /* @__PURE__ */ u('option', { value: 'wait', children: l.LOAD_MODE_NORMAL }),
+                /* @__PURE__ */ u('option', { value: 'always', children: l.LOAD_MODE_ALWAYS }),
+                /* @__PURE__ */ u('option', { value: 'never', children: l.LOAD_MODE_NEVER }),
               ],
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel PagesPerSecond',
           children: [
             l.LOAD_SPEED,
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+            /* @__PURE__ */ u('select', {
               id: 'PagesPerSecond',
               value: s.throttlePageLoad,
               onChange: changePagesPerSecond,
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('option', {
-                  value: '3000',
-                  children: ['0.3(', l.SLOWLY, ')'],
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '2000', children: '0.5' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('option', {
-                  value: '1000',
-                  children: ['01(', l.NORMAL, ')'],
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '500', children: '02' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('option', {
-                  value: '250',
-                  children: ['04(', l.FAST, ')'],
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '125', children: '08' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('option', {
-                  value: '100',
-                  children: ['10(', l.EXTREME, ')'],
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: '1',
-                  children: l.ALL_PAGES,
-                }),
+                /* @__PURE__ */ u('option', { value: '3000', children: ['0.3(', l.SLOWLY, ')'] }),
+                /* @__PURE__ */ u('option', { value: '2000', children: '0.5' }),
+                /* @__PURE__ */ u('option', { value: '1000', children: ['01(', l.NORMAL, ')'] }),
+                /* @__PURE__ */ u('option', { value: '500', children: '02' }),
+                /* @__PURE__ */ u('option', { value: '250', children: ['04(', l.FAST, ')'] }),
+                /* @__PURE__ */ u('option', { value: '125', children: '08' }),
+                /* @__PURE__ */ u('option', { value: '100', children: ['10(', l.EXTREME, ')'] }),
+                /* @__PURE__ */ u('option', { value: '1', children: l.ALL_PAGES }),
               ],
             }),
           ],
@@ -6911,10 +6828,10 @@
   }
 
   function Toggler({ name, checked = false, onChange }) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u('div', {
       className: 'toggler',
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+        /* @__PURE__ */ u('input', {
           id: name,
           name,
           type: 'checkbox',
@@ -6922,12 +6839,9 @@
           checked,
           onChange,
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('label', {
+        /* @__PURE__ */ u('label', {
           htmlFor: name,
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgCheck, {}),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
-          ],
+          children: [/* @__PURE__ */ u(SvgCheck, {}), /* @__PURE__ */ u(SvgX, {})],
         }),
       ],
     });
@@ -6936,99 +6850,99 @@
   function SettingsPanelOthers$1() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    return /* @__PURE__ */ u(k, {
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel verticalSeparator',
           children: [
             l.VERTICAL_SEPARATOR,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u(Toggler, {
               name: 'verticalSeparator',
               checked: s.verticalSeparator,
               onChange: checkVerticalSeparator,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel fitIfOversize',
           children: [
             l.FIT_WIDTH_OVERSIZED,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u(Toggler, {
               name: 'fitIfOversize',
               checked: s.fitWidthIfOversize,
               onChange: checkFitWidthOversize,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel showThumbnails',
           children: [
             l.SHOW_THUMBNAILS,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u(Toggler, {
               name: 'showThumbnails',
               checked: s.showThumbnails,
               onChange: checkShowThumbnails,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel enableComments',
           children: [
             l.ENABLE_COMMENTS,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u(Toggler, {
               name: 'enableComments',
               checked: s.enableComments,
               onChange: checkEnableComments,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel downloadZip',
           children: [
             l.DOWNLOAD_IMAGES,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u(Toggler, {
               name: 'downloadZip',
               checked: s.downloadZip,
               onChange: checkAutoDownload,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel hidePageControls',
           children: [
             l.HIDE_CONTROLS,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u(Toggler, {
               name: 'hidePageControls',
               checked: s.hidePageControls,
               onChange: checkHideImageControls,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel lazyLoadImages',
           children: [
             l.LAZY_LOAD_IMAGES_ENABLE,
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+            /* @__PURE__ */ u(Toggler, {
               name: 'lazyLoadImages',
               checked: s.lazyLoadImages,
               onChange: checkLazyLoad,
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: `ControlLabel lazyStart ControlLabelItem ${s.lazyLoadImages ? 'show' : ''}`,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u('span', {
               children: [
                 l.LAZY_LOAD_IMAGES,
-                /* @__PURE__ */ jsxRuntimeExports.jsx('output', {
+                /* @__PURE__ */ u('output', {
                   id: 'lazyStartVal',
                   htmlFor: 'lazyStart',
                   children: s.lazyStart,
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u('input', {
               type: 'range',
               value: s.lazyStart,
               onInput: changeLazyStart,
@@ -7040,13 +6954,13 @@
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel autoScroll',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u('span', {
               children: [
                 l.AUTO_SCROLL_HEIGHT,
-                /* @__PURE__ */ jsxRuntimeExports.jsx('output', {
+                /* @__PURE__ */ u('output', {
                   id: 'scrollHeightVal',
                   htmlFor: 'scrollHeight',
                   children: s.scrollHeight,
@@ -7054,7 +6968,7 @@
                 'px',
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u('input', {
               type: 'range',
               value: s.scrollHeight,
               onInput: changeScrollHeight,
@@ -7066,35 +6980,20 @@
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel headerType',
           children: [
             l.HEADER_TYPE,
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+            /* @__PURE__ */ u('select', {
               id: 'headerType',
               value: s.header,
               onChange: changeHeaderType,
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'hover',
-                  children: l.HEADER_HOVER,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'scroll',
-                  children: l.HEADER_SCROLL,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'click',
-                  children: l.HEADER_CLICK,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'fixed',
-                  children: l.HEADER_FIXED,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'simple',
-                  children: l.HEADER_SIMPLE,
-                }),
+                /* @__PURE__ */ u('option', { value: 'hover', children: l.HEADER_HOVER }),
+                /* @__PURE__ */ u('option', { value: 'scroll', children: l.HEADER_SCROLL }),
+                /* @__PURE__ */ u('option', { value: 'click', children: l.HEADER_CLICK }),
+                /* @__PURE__ */ u('option', { value: 'fixed', children: l.HEADER_FIXED }),
+                /* @__PURE__ */ u('option', { value: 'simple', children: l.HEADER_SIMPLE }),
               ],
             }),
           ],
@@ -7148,57 +7047,51 @@
   function SettingsPanelTheme() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    return /* @__PURE__ */ u(k, {
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel ColorSchemeSelector',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('label', { children: l.COLOR_SCHEME }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+            /* @__PURE__ */ u('label', { children: l.COLOR_SCHEME }),
+            /* @__PURE__ */ u('button', {
               id: 'ColorScheme',
               className: 'ControlButton',
               onClick: changeColorScheme,
               type: 'button',
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSun, {}),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMoon, {}),
-              ],
+              children: [/* @__PURE__ */ u(SvgSun, {}), /* @__PURE__ */ u(SvgMoon, {})],
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel ThemeSelector',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('label', { children: l.THEME_COLOR }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u('label', { children: l.THEME_COLOR }),
+            /* @__PURE__ */ u('span', {
               className: `custom ThemeRadio ${s.theme === 'custom' ? 'selected' : ''}`,
               title: 'custom',
               onClick: buttonSelectTheme,
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgPalette, {}),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgCheck, {}),
-              ],
+              children: [/* @__PURE__ */ u(SvgPalette, {}), /* @__PURE__ */ u(SvgCheck, {})],
             }),
             Object.keys(colors).map(color =>
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
+              /* @__PURE__ */ u(
                 'span',
                 {
                   title: colors[color].name,
                   className: `${colors[color].name} ThemeRadio ${s.theme === colors[color].name ? 'selected' : ''}`,
                   onClick: buttonSelectTheme,
-                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgCheck, {}),
+                  children: /* @__PURE__ */ u(SvgCheck, {}),
                 },
                 colors[color].name,
               ),
             ),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           id: 'Hue',
           className: `ControlLabel CustomTheme ControlLabelItem ${s.theme.startsWith('custom') ? 'show' : ''}`,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('label', { children: l.THEME_HUE }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u('label', { children: l.THEME_HUE }),
+            /* @__PURE__ */ u('input', {
               id: 'CustomThemeHue',
               type: 'color',
               value: s.customTheme,
@@ -7207,14 +7100,14 @@
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           id: 'Shade',
           className: `ControlLabel CustomTheme ControlLabelItem ${s.theme.startsWith('custom') ? '' : 'show'}`,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u('span', {
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('label', { children: l.THEME_SHADE }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('output', {
+                /* @__PURE__ */ u('label', { children: l.THEME_SHADE }),
+                /* @__PURE__ */ u('output', {
                   id: 'themeShadeVal',
                   className: 'RangeValue',
                   htmlFor: 'ThemeShade',
@@ -7222,7 +7115,7 @@
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u('input', {
               type: 'range',
               value: s.themeShade,
               onInput: changeThemeShade,
@@ -7241,40 +7134,31 @@
   function SettingsPanelZoom$1() {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+    return /* @__PURE__ */ u(k, {
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel DefaultZoomMode',
           children: [
             l.DEFAULT_ZOOM_MODE,
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+            /* @__PURE__ */ u('select', {
               id: 'DefaultZoomMode',
               value: s.zoomMode,
               onChange: changeDefaultZoomMode,
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'percent',
-                  children: l.PERCENT,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'width',
-                  children: l.FIT_WIDTH,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'height',
-                  children: l.FIT_HEIGHT,
-                }),
+                /* @__PURE__ */ u('option', { value: 'percent', children: l.PERCENT }),
+                /* @__PURE__ */ u('option', { value: 'width', children: l.FIT_WIDTH }),
+                /* @__PURE__ */ u('option', { value: 'height', children: l.FIT_HEIGHT }),
               ],
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: `ControlLabel DefaultZoom ControlLabelItem ${s.zoomMode === 'percent' ? 'show' : ''}`,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u('span', {
               children: [
                 l.DEFAULT_ZOOM,
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('output', {
+                /* @__PURE__ */ u('output', {
                   id: 'defaultZoomVal',
                   className: 'RangeValue',
                   htmlFor: 'DefaultZoom',
@@ -7282,7 +7166,7 @@
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u('input', {
               type: 'range',
               value: s.defaultZoom,
               onInput: changeDefaultZoom,
@@ -7293,29 +7177,29 @@
               step: '5',
               list: 'tickmarks',
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('datalist', {
+            /* @__PURE__ */ u('datalist', {
               id: 'tickmarks',
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '5', children: '5' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '25', children: '25' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '50', children: '50' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '75', children: '75' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '100', children: '100' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '125', children: '125' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '150', children: '150' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '175', children: '175' }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '200', children: '200' }),
+                /* @__PURE__ */ u('option', { value: '5', children: '5' }),
+                /* @__PURE__ */ u('option', { value: '25', children: '25' }),
+                /* @__PURE__ */ u('option', { value: '50', children: '50' }),
+                /* @__PURE__ */ u('option', { value: '75', children: '75' }),
+                /* @__PURE__ */ u('option', { value: '100', children: '100' }),
+                /* @__PURE__ */ u('option', { value: '125', children: '125' }),
+                /* @__PURE__ */ u('option', { value: '150', children: '150' }),
+                /* @__PURE__ */ u('option', { value: '175', children: '175' }),
+                /* @__PURE__ */ u('option', { value: '200', children: '200' }),
               ],
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel minZoom',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u('span', {
               children: [
                 l.MINIMUM_ZOOM,
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('output', {
+                /* @__PURE__ */ u('output', {
                   id: 'minZoomVal',
                   className: 'RangeValue',
                   htmlFor: 'minZoom',
@@ -7323,7 +7207,7 @@
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u('input', {
               type: 'range',
               value: s.minZoom,
               onInput: changeMinZoom,
@@ -7335,13 +7219,13 @@
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel zoomStep',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+            /* @__PURE__ */ u('span', {
               children: [
                 l.ZOOM_STEP,
-                /* @__PURE__ */ jsxRuntimeExports.jsxs('output', {
+                /* @__PURE__ */ u('output', {
                   id: 'zoomStepVal',
                   className: 'RangeValue',
                   htmlFor: 'zoomStep',
@@ -7349,7 +7233,7 @@
                 }),
               ],
             }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+            /* @__PURE__ */ u('input', {
               type: 'range',
               value: s.zoomStep,
               onInput: changeZoomStep,
@@ -7361,31 +7245,19 @@
             }),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           className: 'ControlLabel viewMode',
           children: [
             l.DEFAULT_VIEW_MODE,
-            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+            /* @__PURE__ */ u('select', {
               id: 'viewMode',
               value: s.viewMode,
               onChange: changeViewMode,
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'Vertical',
-                  children: l.VIEW_MODE_VERTICAL,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'WebComic',
-                  children: l.VIEW_MODE_WEBCOMIC,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'FluidLTR',
-                  children: l.VIEW_MODE_LEFT,
-                }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
-                  value: 'FluidRTL',
-                  children: l.VIEW_MODE_RIGHT,
-                }),
+                /* @__PURE__ */ u('option', { value: 'Vertical', children: l.VIEW_MODE_VERTICAL }),
+                /* @__PURE__ */ u('option', { value: 'WebComic', children: l.VIEW_MODE_WEBCOMIC }),
+                /* @__PURE__ */ u('option', { value: 'FluidLTR', children: l.VIEW_MODE_LEFT }),
+                /* @__PURE__ */ u('option', { value: 'FluidRTL', children: l.VIEW_MODE_RIGHT }),
               ],
             }),
           ],
@@ -7396,56 +7268,53 @@
 
   function SettingsPanel$1() {
     const l = useStore(locale);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u('div', {
       id: 'SettingsPanel',
       className: 'panel',
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('h2', { children: l.SETTINGS }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+        /* @__PURE__ */ u('h2', { children: l.SETTINGS }),
+        /* @__PURE__ */ u('button', {
           id: 'CloseSettings',
           className: 'closeButton',
           title: l.CLOSE,
           onClick: buttonSettingsClose,
           type: 'button',
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
+          children: /* @__PURE__ */ u(SvgX, {}),
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+        /* @__PURE__ */ u('button', {
           id: 'ResetSettings',
           className: 'ControlButton',
           type: 'button',
+          children: [/* @__PURE__ */ u(SvgSettingsOff, {}), l.BUTTON_RESET_SETTINGS],
+        }),
+        /* @__PURE__ */ u('fieldset', {
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSettingsOff, {}),
-            l.BUTTON_RESET_SETTINGS,
+            /* @__PURE__ */ u('legend', { children: l.GENERAL }),
+            /* @__PURE__ */ u(SettingsPanelGeneral$1, {}),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
+        /* @__PURE__ */ u('fieldset', {
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.GENERAL }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelGeneral$1, {}),
+            /* @__PURE__ */ u('legend', { children: l.THEME }),
+            /* @__PURE__ */ u(SettingsPanelTheme, {}),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
+        /* @__PURE__ */ u('fieldset', {
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.THEME }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelTheme, {}),
+            /* @__PURE__ */ u('legend', { children: l.LOADING }),
+            /* @__PURE__ */ u(SettingsPanelLoading$1, {}),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
+        /* @__PURE__ */ u('fieldset', {
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.LOADING }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelLoading$1, {}),
+            /* @__PURE__ */ u('legend', { children: l.ZOOM }),
+            /* @__PURE__ */ u(SettingsPanelZoom$1, {}),
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
+        /* @__PURE__ */ u('fieldset', {
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.ZOOM }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelZoom$1, {}),
-          ],
-        }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.OTHERS }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelOthers$1, {}),
+            /* @__PURE__ */ u('legend', { children: l.OTHERS }),
+            /* @__PURE__ */ u(SettingsPanelOthers$1, {}),
           ],
         }),
       ],
@@ -7453,21 +7322,18 @@
   }
 
   function Thumbnail({ index, src = '' }) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u('div', {
       id: `Thumbnail${index}`,
       className: 'Thumbnail',
       onClick: clickThumbnail,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('img', {
+        /* @__PURE__ */ u('img', {
           id: `ThumbnailImg${index}`,
           alt: '',
           className: 'ThumbnailImg',
           src,
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
-          className: 'ThumbnailIndex',
-          children: index,
-        }),
+        /* @__PURE__ */ u('span', { className: 'ThumbnailIndex', children: index }),
       ],
     });
   }
@@ -7475,30 +7341,30 @@
   function ThumbnailPanel({ manga }) {
     const l = useStore(locale);
     const s = useStore(settings$1);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('nav', {
+    return /* @__PURE__ */ u('nav', {
       id: 'Navigation',
       className: `panel ${s.showThumbnails ? '' : 'disabled'}`,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+        /* @__PURE__ */ u('div', {
           id: 'NavigationCounters',
           className: 'ControlLabel',
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgCategory, {}),
-            /* @__PURE__ */ jsxRuntimeExports.jsx('i', { children: '0' }),
+            /* @__PURE__ */ u(SvgCategory, {}),
+            /* @__PURE__ */ u('i', { children: '0' }),
             ' /',
-            /* @__PURE__ */ jsxRuntimeExports.jsx('b', {
+            /* @__PURE__ */ u('b', {
               children:
                 manga.begin && manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages,
             }),
             l.PAGES_LOADED,
           ],
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+        /* @__PURE__ */ u('div', {
           id: 'Thumbnails',
           onWheel: transformScrollToHorizontal,
           children: Array.from(Array(manga.pages + 1).keys())
             .slice(manga.begin)
-            .map(index => /* @__PURE__ */ jsxRuntimeExports.jsx(Thumbnail, { index }, index)),
+            .map(index => /* @__PURE__ */ u(Thumbnail, { index }, index)),
         }),
       ],
     });
@@ -7525,40 +7391,34 @@
         window.removeEventListener('mouseover', handleMouseOver);
       };
     }, []);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+    return /* @__PURE__ */ u('div', {
       id: 'MangaOnlineViewer',
       className: `${s.colorScheme} ${s.hidePageControls ? 'hideControls' : ''} ${isBookmarked() ? 'bookmarked' : ''} ${getDevice()}`,
       'data-theme': s.theme,
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+        /* @__PURE__ */ u('div', {
           id: 'menu',
           className: s.header,
           onClick: buttonHeaderClick,
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMenu2, {}),
+          children: /* @__PURE__ */ u(SvgMenu2, {}),
         }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Header$1, { manga }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Reader$1, { manga }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(ThumbnailPanel, { manga }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
-          id: 'Overlay',
-          className: 'overlay',
-          onClick: buttonOverlay,
-        }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CommentsPanel, {}),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(KeybindingsPanel, {}),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(BookmarksPanel, {}),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanel$1, {}),
+        /* @__PURE__ */ u(Header$1, { manga }),
+        /* @__PURE__ */ u(Reader$1, { manga }),
+        /* @__PURE__ */ u(ThumbnailPanel, { manga }),
+        /* @__PURE__ */ u('div', { id: 'Overlay', className: 'overlay', onClick: buttonOverlay }),
+        /* @__PURE__ */ u(CommentsPanel, {}),
+        /* @__PURE__ */ u(KeybindingsPanel, {}),
+        /* @__PURE__ */ u(BookmarksPanel, {}),
+        /* @__PURE__ */ u(SettingsPanel$1, {}),
       ],
     });
   }
 
   function loadReader(manga) {
-    console.warn('Using React');
+    console.warn('Using Preact');
     document.head.innerHTML = head(manga);
     document.body.innerHTML = "<div id='MangaOnlineViewer'></div>";
-    ReactDOM.createRoot(document.body).render(
-      /* @__PURE__ */ jsxRuntimeExports.jsx(App, { manga }),
-    );
+    ReactDOM.createRoot(document.body).render(/* @__PURE__ */ u(App, { manga }));
     setTimeout(() => {
       loadManga(manga, 0);
     }, 1e3);

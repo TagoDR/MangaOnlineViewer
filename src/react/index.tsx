@@ -5,7 +5,7 @@ import head from '../ui/reader';
 import App from './components/App';
 
 export default function loadReader(manga: IManga) {
-  console.warn('Using React');
+  console.warn('Using Preact');
   document.head.innerHTML = head(manga);
   document.body.innerHTML = "<div id='MangaOnlineViewer'></div>";
   createRoot(document.body).render(<App manga={manga} />);
