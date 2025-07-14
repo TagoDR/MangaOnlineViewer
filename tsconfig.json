@@ -1,39 +1,40 @@
 {
   "compilerOptions": {
-    "allowImportingTsExtensions": true,
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "declaration": true,
-    "esModuleInterop": false,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "importHelpers": true,
-    "incremental": true,
-    "inlineSources": true,
-    "isolatedModules": true,
-    "lib": [
-      "ESNext",
-      "DOM",
-      "DOM.Iterable"
-    ],
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "noEmit": true,
-    "noEmitOnError": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "outDir": "dist",
-    "resolveJsonModule": true,
-    "rootDir": "./",
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "strict": true,
-    "target": "ESNext",
-    "useDefineForClassFields": false
+      "allowImportingTsExtensions": true,
+      "allowJs": true,
+      "allowSyntheticDefaultImports": true,
+      "declaration": true,
+      "esModuleInterop": false,
+      "experimentalDecorators": true,
+      "forceConsistentCasingInFileNames": true,
+      "importHelpers": true,
+      "incremental": true,
+      "inlineSources": true,
+      "isolatedModules": true,
+      "jsx": "react-jsx",
+      "lib": [
+          "ESNext",
+          "DOM",
+          "DOM.Iterable"
+      ],
+      "module": "ESNext",
+      "moduleResolution": "bundler",
+      "noEmit": true,
+      "noEmitOnError": true,
+      "noFallthroughCasesInSwitch": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "outDir": "dist",
+      "resolveJsonModule": true,
+      "rootDir": "./",
+      "skipLibCheck": true,
+      "sourceMap": true,
+      "strict": true,
+      "target": "ESNext",
+      "useDefineForClassFields": false
   },
   "include": [
-    "**/*.ts"
+    "**/*.ts",
+    "**/*.tsx"
   ]
 }
-

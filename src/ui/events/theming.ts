@@ -11,7 +11,7 @@ export function changeColorScheme() {
   elem?.classList.add(getSettingsValue('colorScheme'));
 }
 
-export function buttonSelectTheme(event: Event) {
+export function buttonSelectTheme(event: Event | React.MouseEvent) {
   const target = event.currentTarget as HTMLElement;
   [...document.querySelectorAll('.ThemeRadio')].forEach((theme) => {
     theme.classList.remove('selected');
@@ -30,13 +30,13 @@ export function buttonSelectTheme(event: Event) {
   }
 }
 
-export function changeCustomTheme(event: Event) {
+export function changeCustomTheme(event: Event | React.ChangeEvent) {
   const target = (event.currentTarget as HTMLInputElement).value;
   saveSettingsValue('customTheme', target);
   addCustomTheme(target);
 }
 
-export function changeThemeShade(event: Event) {
+export function changeThemeShade(event: Event | React.FormEvent) {
   const target = parseInt((event.currentTarget as HTMLInputElement).value, 10);
   saveSettingsValue('themeShade', target as Shade);
   refreshThemes();

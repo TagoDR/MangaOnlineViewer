@@ -17,50 +17,50 @@ export function buttonResetSettings() {
   elem?.removeAttribute('locale');
 }
 
-export function changeSettingsScope(event: Event) {
+export function changeSettingsScope(event: Event | React.ChangeEvent) {
   const scope = (event.currentTarget as HTMLInputElement).value;
   toggleLocalSettings(scope === 'true');
 }
 
-export function changeLocale(event: Event) {
+export function changeLocale(event: Event | React.ChangeEvent) {
   const locale = (event.currentTarget as HTMLInputElement).value;
   saveSettingsValue('locale', locale);
   const elem = document.getElementById('MangaOnlineViewer');
   elem?.setAttribute('locale', locale);
 }
 
-export function changeLoadMode(event: Event) {
+export function changeLoadMode(event: Event | React.ChangeEvent) {
   const mode = (event.currentTarget as HTMLInputElement).value;
   saveSettingsValue('loadMode', mode as LoadMode);
 }
 
-export function checkFitWidthOversize(event: Event) {
+export function checkFitWidthOversize(event: Event | React.ChangeEvent) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
   document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize', checked);
   saveSettingsValue('fitWidthIfOversize', checked);
 }
 
-export function checkVerticalSeparator(event: Event) {
+export function checkVerticalSeparator(event: Event | React.ChangeEvent) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
   document.querySelector('#Chapter')?.classList.toggle('separator', checked);
   saveSettingsValue('verticalSeparator', checked);
 }
 
-export function checkShowThumbnails(event: Event) {
+export function checkShowThumbnails(event: Event | React.ChangeEvent) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
   document.querySelector('#Navigation')?.classList.toggle('disabled', !checked);
   saveSettingsValue('showThumbnails', checked);
   applyZoom();
 }
 
-export function checkEnableComments(event: Event) {
+export function checkEnableComments(event: Event | React.ChangeEvent) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
   document.querySelector('#CommentsButton')?.classList.toggle('disabled', !checked);
   saveSettingsValue('enableComments', checked);
   applyZoom();
 }
 
-export function checkAutoDownload(event: Event) {
+export function checkAutoDownload(event: Event | React.ChangeEvent) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
   saveSettingsValue('downloadZip', checked);
   if (checked) {
@@ -73,7 +73,7 @@ export function checkAutoDownload(event: Event) {
   }
 }
 
-export function checkLazyLoad(event: Event) {
+export function checkLazyLoad(event: Event | React.ChangeEvent) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
   saveSettingsValue('lazyLoadImages', checked);
   const start = document.querySelector<HTMLDivElement>('.lazyStart');
@@ -87,12 +87,12 @@ export function checkLazyLoad(event: Event) {
   }
 }
 
-export function changeLazyStart(event: Event) {
+export function changeLazyStart(event: Event | React.FormEvent) {
   const start = (event.currentTarget as HTMLInputElement).value;
   saveSettingsValue('lazyStart', parseInt(start, 10));
 }
 
-export function changePagesPerSecond(event: Event) {
+export function changePagesPerSecond(event: Event | React.ChangeEvent) {
   const timer = parseInt((event.currentTarget as HTMLInputElement).value, 10);
   saveSettingsValue('throttlePageLoad', timer);
   if (timer < 100) {
@@ -104,18 +104,18 @@ export function changePagesPerSecond(event: Event) {
   }
 }
 
-export function changeZoomStep(event: Event) {
+export function changeZoomStep(event: Event | React.FormEvent) {
   const step = (event.currentTarget as HTMLInputElement).value;
   saveSettingsValue('zoomStep', parseInt(step, 10));
 }
 
-export function changeMinZoom(event: Event) {
+export function changeMinZoom(event: Event | React.FormEvent) {
   const min = (event.currentTarget as HTMLInputElement).value;
   replaceStyleSheet('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
   saveSettingsValue('minZoom', parseInt(min, 10));
 }
 
-export function checkHideImageControls(event: Event) {
+export function checkHideImageControls(event: Event | React.ChangeEvent) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
   document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls', checked);
   saveSettingsValue('hidePageControls', checked);
@@ -132,13 +132,13 @@ export function updateHeaderType(mode: HeaderMode) {
   }
 }
 
-export function changeHeaderType(event: Event) {
+export function changeHeaderType(event: Event | React.ChangeEvent) {
   const headerType = (event.currentTarget as HTMLInputElement).value as HeaderMode;
   updateHeaderType(headerType);
   saveSettingsValue('header', headerType);
 }
 
-export function changeScrollHeight(event: Event) {
+export function changeScrollHeight(event: Event | React.FormEvent) {
   const { value } = event.currentTarget as HTMLInputElement;
   saveSettingsValue('scrollHeight', parseInt(value, 10));
 }

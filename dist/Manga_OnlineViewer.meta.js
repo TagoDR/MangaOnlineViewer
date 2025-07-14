@@ -29,6 +29,7 @@
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/react/19.1.0/cjs/react.production.min.js
 // @include       /https?:\/\/(www.)?(asuracomic).(net)\/.+/
 // @include       /https?:\/\/(www\.)?(\w(ba)?to|readtoto|batocomic|comiko|battwo|batotoo|batotwo).(to|com|net|org)\/(chapter|title).*/
 // @include       /https?:\/\/(www\.)?(bilibilicomics).net\/episode\/.+/

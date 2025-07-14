@@ -58,6 +58,12 @@ const externalScripts: string[] = [
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   ></script>`,
+  html` <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/react/19.1.0/cjs/react.production.min.js"
+    integrity="sha512-ucTHJmK7Vbk1b/20lV/YDoAy2C23upVS8WP7+QBFkkktwDICiljB3uEWxUa+lZRQ+eNWAfbbOSLJlXf90hE7LA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>`,
 ];
 const requiredScripts = externalScripts.map((script: string) => {
   const find = /src="(.+?)"/.exec(script);

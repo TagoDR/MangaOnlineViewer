@@ -39,7 +39,7 @@ export function updateViewMode(mode: ViewMode) {
   };
 }
 
-export function changeViewMode(event: Event) {
+export function changeViewMode(event: Event | React.ChangeEvent) {
   const mode = (event.currentTarget as HTMLInputElement).value as ViewMode;
   updateViewMode(mode)();
 }
