@@ -87,13 +87,6 @@ let localSettings: ISettings = _.defaultsDeep(
   getDefault(false),
 );
 
-export function showSettings<K extends ISettingsKey>(key: K | null = null) {
-  logScriptVerbose('Global Settings', key ? globalSettings[key] : globalSettings);
-  logScriptVerbose('Local Settings', key ? localSettings[key] : localSettings);
-}
-
-giveToWindow('MOVSettings', showSettings);
-
 export const isSettingsLocal = () => localSettings?.enabled === true;
 
 function syncGlobalSettings(newValue: Partial<ISettings>) {
@@ -183,27 +176,17 @@ export function changeSettingsValue<K extends ISettingsKey>(
   key: K,
   fn: (value: ISettings[K]) => ISettings[K],
 ): void {
-  saveSettingsValue(
-    key,
-    fn(
-      isSettingsLocal() && !['locale', 'bookmarks'].includes(key)
-        ? localSettings[key]
-        : globalSettings[key],
-    ),
+  const newValue = fn(
+    isSettingsLocal() && !['locale', 'bookmarks'].includes(key)
+      ? localSettings[key]
+      : globalSettings[key],
   );
+  saveSettingsValue(key, newValue);
 }
 
 export function getLocaleString<K extends ILocaleKey>(name: K): string {
   const locale = locales.find((l) => l.ID === getSettingsValue('locale'));
-  if (locale?.[name]) {
-    return locale[name];
-  }
-
-  if (locales?.at(1)?.[name]) {
-    return locales[1][name];
-  }
-
-  return `##MISSING_STRING_${name.toLocaleUpperCase()}##`;
+  return locale?.[name] ?? locales[1]?.[name] ?? `##MISSING_STRING_${name.toLocaleUpperCase()}##`;
 }
 
 export function resetSettings() {
@@ -214,7 +197,6 @@ export function resetSettings() {
     removeValueGM('settings');
     globalSettings = getDefault();
   }
-  document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
 }
 
 export function toggleLocalSettings(activate = false) {
@@ -233,7 +215,6 @@ export function toggleLocalSettings(activate = false) {
     setLocalSettings(diffObj(localSettings, getDefault(false)));
     logScript('Local Settings Disabled');
   }
-  document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
   return isSettingsLocal();
 }
 
@@ -241,13 +222,9 @@ export function isBookmarked(url: string = window.location.href): number | undef
   return globalSettings.bookmarks.find((el) => el.url === url)?.page;
 }
 
-/*
-// Clear old Bookmarks
-const bookmarkTimeLimit = 1000 * 60 * 60 * 24 * 30 * 12; // Year
-const refreshedBookmark = globalSettings.bookmarks.filter(
-  (el) => Date.now() - new Date(el.date).valueOf() < bookmarkTimeLimit,
-);
-if (globalSettings.bookmarks.length !== refreshedBookmark.length) {
-  setSettingsValue('bookmarks', refreshedBookmark);
+export function showSettings<K extends ISettingsKey>(key: K | null = null) {
+  logScriptVerbose('Global Settings', key ? globalSettings[key] : globalSettings);
+  logScriptVerbose('Local Settings', key ? localSettings[key] : localSettings);
 }
-*/
+
+giveToWindow('MOVSettings', showSettings);

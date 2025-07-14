@@ -6,7 +6,8 @@ import { replaceStyleSheet, wrapStyle } from '../utils/css';
 function generateThemeCSS(name: string, primary: string, text: string) {
   // Language=CSS
   return css`
-    .ThemeRadio.${name}, #MangaOnlineViewer[data-theme='${name}'] {
+    .ThemeRadio.${name},
+    #MangaOnlineViewer[data-theme='${name}'] {
       --theme-primary-color: ${primary};
       --theme-primary-text-color: ${text};
     }

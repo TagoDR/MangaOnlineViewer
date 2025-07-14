@@ -16,12 +16,14 @@ export function buttonResetSettings() {
   resetSettings();
   const elem = document.getElementById('MangaOnlineViewer');
   elem?.removeAttribute('locale');
+  elem?.dispatchEvent(new Event('hydrate'));
   buttonSettingsOpen();
 }
 
 export function changeSettingsScope(event: Event) {
   const scope = event.currentTarget as HTMLInputElement;
   toggleLocalSettings(scope.value === 'true');
+  document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
   buttonSettingsOpen();
 }
 
