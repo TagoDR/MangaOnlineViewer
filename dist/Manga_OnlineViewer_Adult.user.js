@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.06.30
+// @version       2025.07.15
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -25,7 +25,7 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.8/sweetalert2.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
-// @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.14/dist/hotkeys.min.js
+// @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.15/dist/hotkeys.min.js
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
@@ -118,6 +118,10 @@
     Category2['HENTAI'] = 'hentai';
     return Category2;
   })(Category || {});
+
+  function isKey(obj, key) {
+    return key in obj;
+  }
 
   const threehentai = {
     name: ['3Hentai', 'HentaiVox'],
@@ -1448,7 +1452,7 @@
     if (typeof GM_deleteValue !== 'undefined') {
       GM_deleteValue(name);
     } else {
-      logScript('Fake Removing: ', name);
+      logScriptVerbose('Fake Removing: ', name);
     }
   }
   const getInfoGM =
@@ -1465,7 +1469,7 @@
     if (typeof GM_getValue !== 'undefined') {
       return GM_getValue(name, defaultValue);
     }
-    logScript('Fake Getting: ', name, ' = ', defaultValue);
+    logScriptVerbose('Fake Getting: ', name, ' = ', defaultValue);
     return defaultValue;
   }
   function getJsonGM(name, defaultValue = null) {
@@ -1487,7 +1491,7 @@
       logScript('Setting: ', name, ' = ', value);
       return value.toString();
     } else {
-      logScript('Fake Setting: ', name, ' = ', value);
+      logScriptVerbose('Fake Setting: ', name, ' = ', value);
       return String(value);
     }
   }
@@ -1582,6 +1586,180 @@
       logScript('Continuing after timer');
     }
   }
+
+  let listenerQueue = [];
+  let lqIndex = 0;
+  const QUEUE_ITEMS_PER_LISTENER = 4;
+  let epoch = 0;
+  let atom = initialValue => {
+    let listeners = [];
+    let $atom = {
+      get() {
+        if (!$atom.lc) {
+          $atom.listen(() => {})();
+        }
+        return $atom.value;
+      },
+      lc: 0,
+      listen(listener) {
+        $atom.lc = listeners.push(listener);
+        return () => {
+          for (let i = lqIndex + QUEUE_ITEMS_PER_LISTENER; i < listenerQueue.length; ) {
+            if (listenerQueue[i] === listener) {
+              listenerQueue.splice(i, QUEUE_ITEMS_PER_LISTENER);
+            } else {
+              i += QUEUE_ITEMS_PER_LISTENER;
+            }
+          }
+          let index = listeners.indexOf(listener);
+          if (~index) {
+            listeners.splice(index, 1);
+            if (!--$atom.lc) $atom.off();
+          }
+        };
+      },
+      notify(oldValue, changedKey) {
+        epoch++;
+        let runListenerQueue = !listenerQueue.length;
+        for (let listener of listeners) {
+          listenerQueue.push(listener, $atom.value, oldValue, changedKey);
+        }
+        if (runListenerQueue) {
+          for (lqIndex = 0; lqIndex < listenerQueue.length; lqIndex += QUEUE_ITEMS_PER_LISTENER) {
+            listenerQueue[lqIndex](
+              listenerQueue[lqIndex + 1],
+              listenerQueue[lqIndex + 2],
+              listenerQueue[lqIndex + 3],
+            );
+          }
+          listenerQueue.length = 0;
+        }
+      },
+      /* It will be called on last listener unsubscribing.
+         We will redefine it in onMount and onStop. */
+      off() {},
+      set(newValue) {
+        let oldValue = $atom.value;
+        if (oldValue !== newValue) {
+          $atom.value = newValue;
+          $atom.notify(oldValue);
+        }
+      },
+      subscribe(listener) {
+        let unbind = $atom.listen(listener);
+        listener($atom.value);
+        return unbind;
+      },
+      value: initialValue,
+    };
+    return $atom;
+  };
+
+  const MOUNT = 5;
+  const UNMOUNT = 6;
+  const REVERT_MUTATION = 10;
+  let on = (object, listener, eventKey, mutateStore) => {
+    object.events = object.events || {};
+    if (!object.events[eventKey + REVERT_MUTATION]) {
+      object.events[eventKey + REVERT_MUTATION] = mutateStore(eventProps => {
+        object.events[eventKey].reduceRight((event, l) => (l(event), event), {
+          shared: {},
+          ...eventProps,
+        });
+      });
+    }
+    object.events[eventKey] = object.events[eventKey] || [];
+    object.events[eventKey].push(listener);
+    return () => {
+      let currentListeners = object.events[eventKey];
+      let index = currentListeners.indexOf(listener);
+      currentListeners.splice(index, 1);
+      if (!currentListeners.length) {
+        delete object.events[eventKey];
+        object.events[eventKey + REVERT_MUTATION]();
+        delete object.events[eventKey + REVERT_MUTATION];
+      }
+    };
+  };
+  let STORE_UNMOUNT_DELAY = 1e3;
+  let onMount = ($store, initialize) => {
+    let listener = payload => {
+      let destroy = initialize(payload);
+      if (destroy) $store.events[UNMOUNT].push(destroy);
+    };
+    return on($store, listener, MOUNT, runListeners => {
+      let originListen = $store.listen;
+      $store.listen = (...args) => {
+        if (!$store.lc && !$store.active) {
+          $store.active = true;
+          runListeners();
+        }
+        return originListen(...args);
+      };
+      let originOff = $store.off;
+      $store.events[UNMOUNT] = [];
+      $store.off = () => {
+        originOff();
+        setTimeout(() => {
+          if ($store.active && !$store.lc) {
+            $store.active = false;
+            for (let destroy of $store.events[UNMOUNT]) destroy();
+            $store.events[UNMOUNT] = [];
+          }
+        }, STORE_UNMOUNT_DELAY);
+      };
+      return () => {
+        $store.listen = originListen;
+        $store.off = originOff;
+      };
+    });
+  };
+
+  let computedStore = (stores, cb, batched) => {
+    if (!Array.isArray(stores)) stores = [stores];
+
+    let previousArgs;
+    let currentEpoch;
+    let set = () => {
+      if (currentEpoch === epoch) return;
+      currentEpoch = epoch;
+      let args = stores.map($store => $store.get());
+      if (!previousArgs || args.some((arg, i) => arg !== previousArgs[i])) {
+        previousArgs = args;
+        let value = cb(...args);
+        if (value && value.then && value.t) {
+          value.then(asyncValue => {
+            if (previousArgs === args) {
+              // Prevent a stale set
+              $computed.set(asyncValue);
+            }
+          });
+        } else {
+          $computed.set(value);
+          currentEpoch = epoch;
+        }
+      }
+    };
+    let $computed = atom(undefined);
+    let get = $computed.get;
+    $computed.get = () => {
+      set();
+      return get();
+    };
+    let run = set;
+
+    onMount($computed, () => {
+      let unbinds = stores.map($store => $store.listen(run));
+      set();
+      return () => {
+        for (let unbind of unbinds) unbind();
+      };
+    });
+
+    return $computed;
+  };
+
+  let computed = (stores, fn) => computedStore(stores, fn);
 
   const de_DE = {
     ID: 'de_DE',
@@ -1761,7 +1939,7 @@
     <h3>Supported Keys</h3>
     Allowed modifiers: shift, option, alt, ctrl, control, command. </br>
     Special keys: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. </br>
-    Examples: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd> 
+    Examples: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd>
   `,
     ATTENTION: 'Attention',
     WARNING: 'Warning',
@@ -1877,7 +2055,7 @@
     <h3>Teclas soportadas</h3>
     Modificadores permitidos: shift, option, alt, ctrl, control, command. </br>
     Teclas especiales: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. <br>
-    Ejemplos: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd> 
+    Ejemplos: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd>
   `,
     ATTENTION: 'Atención',
     WARNING: 'Alerta',
@@ -1995,7 +2173,7 @@
     <h3>Teclas Suportadas</h3>
     Modificadores permitidos: shift, option, alt, ctrl, control, command. </br>
     Teclas Especiais: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide.</br>
-    Exemplos: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd> 
+    Exemplos: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd>
   `,
     ATTENTION: 'Atenção',
     WARNING: 'Alerta',
@@ -2110,7 +2288,7 @@
     <h3>支持的密钥</h3>
     允许的修饰符: shift, option, alt, ctrl, control, command. </br>
     特殊键: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide.</br>
-    例子: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd> 
+    例子: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd>
   `,
     ATTENTION: '注意',
     WARNING: '警告',
@@ -2167,27 +2345,7 @@
 
   const locales = [en_US, es_ES, pt_BR, zh_CN, de_DE];
 
-  const diffObj = (changed, original) => {
-    const changes = (object, base) =>
-      _.transform(
-        object,
-        (result, value, key) => {
-          if (!_.isEqual(value, base[key])) {
-            if (_.isArray(value)) {
-              result[key] = _.difference(value, base[key]);
-            } else if (_.isObject(value) && _.isObject(base[key])) {
-              result[key] = changes(value, base[key]);
-            } else {
-              result[key] = value;
-            }
-          }
-        },
-        /* Omit accumulator */
-      );
-    return changes(changed, original);
-  };
-
-  const settings$1 = {
+  const settings$2 = {
     threshold: 2e3,
     throttle: 500,
     lazyAttribute: 'data-src',
@@ -2199,18 +2357,18 @@
     const { element } = value;
     const rect = element.getBoundingClientRect();
     const target =
-      (window.innerHeight || document.documentElement.clientHeight) + settings$1.threshold;
+      (window.innerHeight || document.documentElement.clientHeight) + settings$2.threshold;
     return rect.top <= target || rect.bottom <= target;
   }
   async function showElement(item) {
-    let value = item.element.getAttribute(settings$1.lazyAttribute) ?? '';
+    let value = item.element.getAttribute(settings$2.lazyAttribute) ?? '';
     if (value) {
       if (!isObjectURL(value) && !isBase64ImageUrl(value) && item.fetchOptions) {
         value = await fetch(value, item.fetchOptions)
           .then(resp => resp.blob())
           .then(blob => blobUtil.blobToDataURL(blob));
       }
-      item.element.setAttribute(settings$1.targetAttribute, value);
+      item.element.setAttribute(settings$2.targetAttribute, value);
     }
     item.callback(item.element)?.catch(logScript);
   }
@@ -2219,7 +2377,7 @@
     listElements = listElements.filter(item => !filterInView(item));
     inView.forEach(showElement);
   }
-  const observerEvent = _.throttle(executeCheck, settings$1.throttle);
+  const observerEvent = _.throttle(executeCheck, settings$2.throttle);
   function lazyLoad$1(element, callback, fetchOptions) {
     if (!setup) {
       window.addEventListener('scroll', observerEvent, {
@@ -2597,306 +2755,50 @@
     `;
   }
 
-  const keybindList = () => {
-    const keybinds = getSettingsValue('keybinds');
-    return Object.keys(keybinds).map(kb => {
-      const keys = keybinds[kb]?.length
-        ? keybinds[kb]?.map(key => html`<kbd class="dark">${key}</kbd>`).join(' / ')
-        : '';
-      return html`<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
-    });
-  };
-  const keybindEditor = () =>
-    Object.keys(getSettingsValue('keybinds'))
-      .map(
-        // Language=html
-        kb =>
-          html`<label for="${kb}">${getLocaleString(kb)}:</label>
-            <input
-              type="text"
-              class="KeybindInput"
-              id="${kb}"
-              name="${kb}"
-              value="${getSettingsValue('keybinds')[kb]?.join(' , ') ?? ''}"
-            />`,
-      )
-      .concat(html` <div id="HotKeysRules">${getLocaleString('KEYBIND_RULES')}</div>`);
-  const KeybindingsPanel = () => html`
-    <div id="KeybindingsPanel" class="panel">
-      <h2>${getLocaleString('KEYBINDINGS')}</h2>
-      <button id="CloseKeybindings" class="closeButton" title="${getLocaleString('CLOSE')}">
-        ${IconX}
-      </button>
-      <div class="controls">
-        <button
-          id="EditKeybindings"
-          class="ControlButton"
-          type="button"
-          title="${getLocaleString('EDIT_KEYBINDS')}"
-        >
-          ${IconPencil} ${getLocaleString('BUTTON_EDIT')}
-        </button>
-        <button
-          id="SaveKeybindings"
-          class="ControlButton hidden"
-          type="button"
-          title="${getLocaleString('SAVE_KEYBINDS')}"
-        >
-          ${IconDeviceFloppy} ${getLocaleString('BUTTON_SAVE')}
-        </button>
-      </div>
-      <div id="KeybindingsList">${keybindList().join('\n')}</div>
-    </div>
-  `;
-
-  const doClick = selector => document.querySelector(selector)?.dispatchEvent(new Event('click'));
-  function doScrolling(sign) {
-    const chapter = document.querySelector('#Chapter');
-    if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
-      const scrollDirection = chapter.classList.contains('FluidRTL') ? -1 : 1;
-      chapter.scrollBy({
-        left: 0.8 * window.innerWidth * sign * scrollDirection,
-        behavior: 'smooth',
-      });
-    } else if (getSettingsValue('zoomMode') === 'height') {
-      const pages = [...document.querySelectorAll('.MangaPage')];
-      const distance = pages.map(element => Math.abs(element.offsetTop - window.scrollY));
-      const currentPage = _.indexOf(distance, _.min(distance));
-      const target = currentPage + sign;
-      const header = document.querySelector('#Header');
-      if (header && target < 0) {
-        scrollToElement(header);
-      } else if (header && target >= pages.length) {
-        header.classList.add('headroom-end');
-      } else {
-        logScript(`Current array page ${currentPage},`, `Scrolling to page ${target}`);
-        scrollToElement(pages.at(target));
-      }
-    } else {
-      window.scrollBy({
-        top: 0.8 * window.innerHeight * sign,
-        behavior: 'smooth',
-      });
-    }
-  }
-  const actions = {
-    SCROLL_UP() {
-      doScrolling(-1);
-    },
-    SCROLL_DOWN() {
-      doScrolling(1);
-    },
-    NEXT_CHAPTER() {
-      doClick('#next');
-    },
-    PREVIOUS_CHAPTER() {
-      doClick('#prev');
-    },
-    ENLARGE() {
-      doClick('#enlarge');
-    },
-    REDUCE() {
-      doClick('#reduce');
-    },
-    RESTORE() {
-      doClick('#restore');
-    },
-    FIT_WIDTH() {
-      doClick('#fitWidth');
-    },
-    FIT_HEIGHT() {
-      doClick('#fitHeight');
-    },
-    SETTINGS() {
-      doClick('#settings');
-    },
-    VIEW_MODE_WEBCOMIC() {
-      doClick('#webComic');
-    },
-    VIEW_MODE_VERTICAL() {
-      doClick('#verticalMode');
-    },
-    VIEW_MODE_LEFT() {
-      doClick('#rtlMode');
-    },
-    VIEW_MODE_RIGHT() {
-      doClick('#ltrMode');
-    },
-    SCROLL_START() {
-      doClick('#AutoScroll');
-    },
-  };
-  function keybindings$1() {
-    document.onkeydown = null;
-    document.onkeyup = null;
-    window.onkeydown = null;
-    window.onkeyup = null;
-    window.onload = null;
-    document.body.onload = null;
-    hotkeys.unbind();
-    Object.keys(getSettingsValue('keybinds')).forEach(key => {
-      hotkeys(
-        getSettingsValue('keybinds')[key]?.join(',') ?? '',
-        _.throttle(event => {
-          event.preventDefault();
-          event.stopImmediatePropagation();
-          event.stopPropagation();
-          actions[key]();
-        }, 100),
-      );
-    });
-  }
-
-  function toggleFunction(selector, classname, open, close) {
-    return () => {
-      const isOpen = document.querySelector(selector)?.className.includes(classname);
-      if (isOpen) {
-        close();
-      } else {
-        open();
-      }
-    };
-  }
-  function buttonHeaderClick() {
-    const header = document.querySelector('#Header');
-    if (header?.classList.contains('click')) {
-      header?.classList.toggle('visible');
-    }
-  }
-  function isMouseInsideRegion(event, headerWidth, headerHeight) {
-    return (
-      event.clientX >= 0 &&
-      event.clientX <= headerWidth &&
-      event.clientY >= 0 &&
-      event.clientY <= headerHeight
-    );
-  }
-  function headerHover(event) {
-    const header = document.querySelector('#Header');
-    if (header?.classList.contains('hover')) {
-      if (isMouseInsideRegion(event, header.clientWidth, header.clientHeight)) {
-        document.querySelector('#menu')?.classList.add('hide');
-        header?.classList.add('visible');
-      } else {
-        document.querySelector('#menu')?.classList.remove('hide');
-        header?.classList.remove('visible');
-      }
-    }
-  }
-  function buttonSettingsOpen() {
-    document.querySelector('#SettingsPanel')?.classList.add('visible');
-    document.querySelector('#Navigation')?.classList.add('visible');
-    document.querySelector('#Header')?.classList.add('visible');
-    document.querySelector('#Overlay')?.classList.add('visible');
-  }
-  function buttonSettingsClose() {
-    document.querySelector('#SettingsPanel')?.classList.remove('visible');
-    document.querySelector('#Navigation')?.classList.remove('visible');
-    document.querySelector('#Header')?.classList.remove('visible');
-    document.querySelector('#Overlay')?.classList.remove('visible');
-  }
-  function buttonKeybindingsOpen() {
-    const keybindingList = document.querySelector('#KeybindingsList');
-    if (keybindingList) keybindingList.innerHTML = keybindList().join('\n');
-    document.querySelector('#SaveKeybindings')?.classList.add('hidden');
-    document.querySelector('#EditKeybindings')?.classList.remove('hidden');
-    document.querySelector('#KeybindingsPanel')?.classList.add('visible');
-    document.querySelector('#Overlay')?.classList.add('visible');
-  }
-  function buttonKeybindingsClose() {
-    document.querySelector('#SaveKeybindings')?.classList.add('hidden');
-    document.querySelector('#EditKeybindings')?.classList.remove('hidden');
-    document.querySelector('#KeybindingsPanel')?.classList.remove('visible');
-    document.querySelector('#Overlay')?.classList.remove('visible');
-  }
-  function saveKeybindings() {
-    const newkeybinds = getSettingsValue('keybinds');
-    Object.keys(getSettingsValue('keybinds')).forEach(kb => {
-      const keys = document
-        .querySelector(`#${kb}`)
-        ?.value.split(',')
-        ?.map(value => value.trim());
-      newkeybinds[kb] = isNothing(keys) ? void 0 : keys;
-    });
-    setSettingsValue('keybinds', newkeybinds);
-    const keybindingList = document.querySelector('#KeybindingsList');
-    if (keybindingList) keybindingList.innerHTML = keybindList().join('\n');
-    document.querySelector('#SaveKeybindings')?.classList.add('hidden');
-    document.querySelector('#EditKeybindings')?.classList.remove('hidden');
-    keybindings$1();
-  }
-  function editKeybindings() {
-    const keybindingList = document.querySelector('#KeybindingsList');
-    if (keybindingList) keybindingList.innerHTML = keybindEditor().join('\n');
-    document.querySelector('#SaveKeybindings')?.classList.remove('hidden');
-    document.querySelector('#EditKeybindings')?.classList.add('hidden');
-  }
-  function panels() {
-    document.querySelector('#menu')?.addEventListener('click', buttonHeaderClick);
-    document.addEventListener('mousemove', _.throttle(headerHover, 300));
-    document
-      .querySelector('#settings')
-      ?.addEventListener(
-        'click',
-        toggleFunction('#SettingsPanel', 'visible', buttonSettingsOpen, buttonSettingsClose),
-      );
-    document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonSettingsClose));
-    document.querySelector('#Overlay')?.addEventListener('click', buttonSettingsClose);
-    document.querySelector('#keybindings')?.addEventListener('click', buttonKeybindingsOpen);
-    document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonKeybindingsClose));
-    document.querySelector('#Overlay')?.addEventListener('click', buttonKeybindingsClose);
-    document.querySelector('#EditKeybindings')?.addEventListener('click', editKeybindings);
-    document.querySelector('#SaveKeybindings')?.addEventListener('click', saveKeybindings);
-  }
-
   function buttonResetSettings() {
     resetSettings();
     const elem = document.getElementById('MangaOnlineViewer');
     elem?.removeAttribute('locale');
-    buttonSettingsOpen();
   }
   function changeSettingsScope(event) {
-    const scope = event.currentTarget;
-    toggleLocalSettings(scope.value === 'true');
-    buttonSettingsOpen();
+    const scope = event.currentTarget.value;
+    toggleLocalSettings(scope === 'true');
   }
   function changeLocale(event) {
     const locale = event.currentTarget.value;
-    setSettingsValue('locale', locale);
+    saveSettingsValue('locale', locale);
     const elem = document.getElementById('MangaOnlineViewer');
     elem?.setAttribute('locale', locale);
-    elem?.dispatchEvent(new Event('hydrate'));
-    buttonSettingsOpen();
   }
   function changeLoadMode(event) {
     const mode = event.currentTarget.value;
-    setSettingsValue('loadMode', mode);
+    saveSettingsValue('loadMode', mode);
   }
   function checkFitWidthOversize(event) {
     const checked = event.currentTarget.checked;
     document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize', checked);
-    setSettingsValue('fitWidthIfOversize', checked);
+    saveSettingsValue('fitWidthIfOversize', checked);
   }
   function checkVerticalSeparator(event) {
     const checked = event.currentTarget.checked;
     document.querySelector('#Chapter')?.classList.toggle('separator', checked);
-    setSettingsValue('verticalSeparator', checked);
+    saveSettingsValue('verticalSeparator', checked);
   }
   function checkShowThumbnails(event) {
     const checked = event.currentTarget.checked;
     document.querySelector('#Navigation')?.classList.toggle('disabled', !checked);
-    setSettingsValue('showThumbnails', checked);
+    saveSettingsValue('showThumbnails', checked);
     applyZoom();
   }
   function checkEnableComments(event) {
     const checked = event.currentTarget.checked;
     document.querySelector('#CommentsButton')?.classList.toggle('disabled', !checked);
-    setSettingsValue('enableComments', checked);
+    saveSettingsValue('enableComments', checked);
     applyZoom();
   }
-  function changeAutoDownload(event) {
+  function checkAutoDownload(event) {
     const checked = event.currentTarget.checked;
-    setSettingsValue('downloadZip', checked);
+    saveSettingsValue('downloadZip', checked);
     if (checked) {
       Swal.fire({
         title: getLocaleString('ATTENTION'),
@@ -2908,7 +2810,7 @@
   }
   function checkLazyLoad(event) {
     const checked = event.currentTarget.checked;
-    setSettingsValue('lazyLoadImages', checked);
+    saveSettingsValue('lazyLoadImages', checked);
     const start = document.querySelector('.lazyStart');
     start?.classList.toggle('show', getSettingsValue('lazyLoadImages'));
     if (checked) {
@@ -2921,11 +2823,11 @@
   }
   function changeLazyStart(event) {
     const start = event.currentTarget.value;
-    setSettingsValue('lazyStart', parseInt(start, 10));
+    saveSettingsValue('lazyStart', parseInt(start, 10));
   }
   function changePagesPerSecond(event) {
     const timer = parseInt(event.currentTarget.value, 10);
-    setSettingsValue('throttlePageLoad', timer);
+    saveSettingsValue('throttlePageLoad', timer);
     if (timer < 100) {
       Swal.fire({
         title: getLocaleString('SPEED_WARNING'),
@@ -2936,17 +2838,17 @@
   }
   function changeZoomStep(event) {
     const step = event.currentTarget.value;
-    setSettingsValue('zoomStep', parseInt(step, 10));
+    saveSettingsValue('zoomStep', parseInt(step, 10));
   }
   function changeMinZoom(event) {
     const min = event.currentTarget.value;
     replaceStyleSheet('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
-    setSettingsValue('minZoom', parseInt(min, 10));
+    saveSettingsValue('minZoom', parseInt(min, 10));
   }
   function checkHideImageControls(event) {
     const checked = event.currentTarget.checked;
     document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls', checked);
-    setSettingsValue('hidePageControls', checked);
+    saveSettingsValue('hidePageControls', checked);
   }
   function updateHeaderType(mode) {
     const header = document.querySelector('#Header');
@@ -2961,11 +2863,11 @@
   function changeHeaderType(event) {
     const headerType = event.currentTarget.value;
     updateHeaderType(headerType);
-    setSettingsValue('header', headerType);
+    saveSettingsValue('header', headerType);
   }
   function changeScrollHeight(event) {
     const { value } = event.currentTarget;
-    setSettingsValue('scrollHeight', parseInt(value, 10));
+    saveSettingsValue('scrollHeight', parseInt(value, 10));
   }
   function options() {
     document.querySelector('#ResetSettings')?.addEventListener('click', buttonResetSettings);
@@ -2980,7 +2882,7 @@
     document.querySelector('#loadMode')?.addEventListener('change', changeLoadMode);
     document.querySelector('#showThumbnails')?.addEventListener('change', checkShowThumbnails);
     document.querySelector('#enableComments')?.addEventListener('change', checkEnableComments);
-    document.querySelector('#downloadZip')?.addEventListener('change', changeAutoDownload);
+    document.querySelector('#downloadZip')?.addEventListener('change', checkAutoDownload);
     document.querySelector('#lazyLoadImages')?.addEventListener('change', checkLazyLoad);
     document.querySelector('#lazyStart')?.addEventListener('change', changeLazyStart);
     document.querySelector('#PagesPerSecond')?.addEventListener('change', changePagesPerSecond);
@@ -3270,6 +3172,26 @@
     }
   }
 
+  const diffObj = (changed, original) => {
+    const changes = (object, base) =>
+      _.transform(
+        object,
+        (result, value, key) => {
+          if (!_.isEqual(value, base[key])) {
+            if (_.isArray(value)) {
+              result[key] = _.difference(value, base[key]);
+            } else if (_.isObject(value) && _.isObject(base[key])) {
+              result[key] = changes(value, base[key]);
+            } else {
+              result[key] = value;
+            }
+          }
+        },
+        /* Omit accumulator */
+      );
+    return changes(changed, original);
+  };
+
   const defaultSettings = {
     enabled: true,
     locale: 'en_US',
@@ -3332,19 +3254,23 @@
   }
   let globalSettings = _.defaultsDeep(getGlobalSettings(getDefault()), getDefault());
   let localSettings = _.defaultsDeep(getLocalSettings(getDefault(false)), getDefault(false));
-  function showSettings(key = null) {
-    logScriptVerbose('Global Settings', key ? globalSettings[key] : globalSettings);
-    logScriptVerbose('Local Settings', key ? localSettings[key] : localSettings);
-  }
-  giveToWindow('MOVSettings', showSettings);
   const isSettingsLocal = () => localSettings?.enabled === true;
+  const settings$1 = atom(isSettingsLocal() ? localSettings : globalSettings);
+  computed(settings$1, current => locales.find(l => l.ID === current.locale) ?? locales[1]);
+  function refresh() {
+    if (isSettingsLocal()) {
+      settings$1.set({ ...localSettings });
+    } else {
+      settings$1.set({ ...globalSettings });
+    }
+  }
   function syncGlobalSettings(newValue) {
     const newSettings = _.defaultsDeep(newValue, getDefault());
     const diff = globalSettings ? diffObj(newSettings, globalSettings) : newSettings;
     if (!isNothing(diff)) {
       logScript('Imported Global Settings', diff);
       globalSettings = newSettings;
-      document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
+      refresh();
       applyZoom(getSettingsValue('zoomMode'), getSettingsValue('defaultZoom'));
     }
   }
@@ -3355,13 +3281,13 @@
     if (!isNothing(diff)) {
       logScript('Imported Local Settings', diff);
       localSettings = newSettings;
-      document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
+      refresh();
       applyZoom(getSettingsValue('zoomMode'), getSettingsValue('defaultZoom'));
     }
   }
   settingsChangeListener(_.debounce(syncLocalSettings, 300), window.location.hostname);
   function getSettingsValue(key) {
-    if (isSettingsLocal()) {
+    if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
       return localSettings[key];
     }
     return globalSettings[key];
@@ -3369,31 +3295,37 @@
   function setSettingsValue(key, value) {
     if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
       localSettings = { ...localSettings, [key]: value };
-      setLocalSettings(diffObj(localSettings, getDefault(false)));
     } else {
       globalSettings = { ...globalSettings, [key]: value };
-      setGlobalSettings(diffObj(globalSettings, getDefault()));
+    }
+    settings$1.set({ ...settings$1.get(), [key]: value });
+  }
+  function saveSettingsValue(key, value) {
+    setSettingsValue(key, value);
+    if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
+      const alter = _.defaultsDeep(getLocalSettings(getDefault(false)), getDefault(false));
+      setLocalSettings(diffObj(alter, getDefault(false)));
+    } else {
+      const alter = {
+        ..._.defaultsDeep(getGlobalSettings(getDefault()), getDefault()),
+        [key]: value,
+      };
+      setGlobalSettings(diffObj(alter, getDefault()));
     }
   }
   function changeSettingsValue(key, fn) {
-    setSettingsValue(
-      key,
-      fn(
-        isSettingsLocal() && !['locale', 'bookmarks'].includes(key)
-          ? localSettings[key]
-          : globalSettings[key],
-      ),
+    const newValue = fn(
+      isSettingsLocal() && !['locale', 'bookmarks'].includes(key)
+        ? localSettings[key]
+        : globalSettings[key],
     );
+    saveSettingsValue(key, newValue);
+    settings$1.set({ ...settings$1.get(), [key]: newValue });
   }
   function getLocaleString(name) {
-    const locale = locales.find(l => l.ID === getSettingsValue('locale'));
-    if (locale?.[name]) {
-      return locale[name];
-    }
-    if (locales?.at(1)?.[name]) {
-      return locales[1][name];
-    }
-    return `##MISSING_STRING_${name.toLocaleUpperCase()}##`;
+    const locale2 = locales.find(l => l.ID === getSettingsValue('locale')) ?? locales[1];
+    if (isKey(locale2, name)) return locale2?.[name] ?? locales[1]?.[name];
+    return `##MISSING_STRING_${name}##`;
   }
   function resetSettings() {
     if (isSettingsLocal()) {
@@ -3403,30 +3335,32 @@
       removeValueGM('settings');
       globalSettings = getDefault();
     }
-    document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
+    logScript('Settings Reset');
+    refresh();
   }
   function toggleLocalSettings(activate = false) {
-    if (activate) {
-      if (!localSettings) {
-        localSettings = { ...globalSettings };
-      } else {
-        localSettings.enabled = true;
-      }
-      setLocalSettings(diffObj(localSettings, getDefault(false)));
-      logScript('Local Settings Enabled');
-    } else {
-      if (isSettingsLocal()) {
-        localSettings.enabled = false;
-      }
-      setLocalSettings(diffObj(localSettings, getDefault(false)));
-      logScript('Local Settings Disabled');
-    }
-    document.getElementById('MangaOnlineViewer')?.dispatchEvent(new Event('hydrate'));
+    localSettings.enabled = activate;
+    setLocalSettings(diffObj(localSettings, getDefault(false)));
+    logScript('Local Settings ', activate ? 'Enabled' : 'Disabled');
+    refresh();
     return isSettingsLocal();
   }
   function isBookmarked(url = window.location.href) {
     return globalSettings.bookmarks.find(el => el.url === url)?.page;
   }
+  function showSettings(key = null) {
+    logScriptVerbose(
+      'Current Settings (Local:',
+      isSettingsLocal(),
+      ') ',
+      key ? settings$1.get()[key] : settings$1.get(),
+      '\nGlobal Settings',
+      key ? globalSettings[key] : globalSettings,
+      '\nLocal Settings',
+      key ? localSettings[key] : localSettings,
+    );
+  }
+  giveToWindow('MOVSettings', showSettings);
 
   const colors = {
     dark: {
@@ -4223,35 +4157,37 @@
     document.querySelector('#Overlay')?.addEventListener('click', buttonCommentsClose);
   }
 
-  function headroom(showEnd = 0) {
-    let prevOffset = 0;
-    const setScrollDirection = classSuffix => {
-      const header = document.querySelector('#Header');
-      if (!header) return;
-      header.classList.remove('headroom-end', 'headroom-hide', 'headroom-show', 'headroom-top');
-      if (classSuffix) {
-        header.classList.add(`headroom-${classSuffix}`);
-      }
-    };
-    function toggleScrollDirection() {
-      const { scrollY } = window;
-      if (
-        showEnd &&
-        getSettingsValue('zoomMode') !== 'height' &&
-        scrollY + window.innerHeight + showEnd > document.body.scrollHeight
-      ) {
-        setScrollDirection('end');
-      } else if (scrollY > prevOffset && scrollY > 50) {
-        setScrollDirection('hide');
-      } else if (scrollY < prevOffset && scrollY > 50) {
-        setScrollDirection('show');
-      } else if (scrollY <= 100) {
-        setScrollDirection('top');
-      } else {
-        setScrollDirection('');
-      }
-      prevOffset = scrollY;
+  let prevOffset = 0;
+  let showEnd = 0;
+  const setScrollDirection = classSuffix => {
+    const header = document.querySelector('#Header');
+    if (!header) return;
+    header.classList.remove('headroom-end', 'headroom-hide', 'headroom-show', 'headroom-top');
+    if (classSuffix) {
+      header.classList.add(`headroom-${classSuffix}`);
     }
+  };
+  function toggleScrollDirection() {
+    const { scrollY } = window;
+    if (
+      showEnd &&
+      getSettingsValue('zoomMode') !== 'height' &&
+      scrollY + window.innerHeight + showEnd > document.body.scrollHeight
+    ) {
+      setScrollDirection('end');
+    } else if (scrollY > prevOffset && scrollY > 50) {
+      setScrollDirection('hide');
+    } else if (scrollY < prevOffset && scrollY > 50) {
+      setScrollDirection('show');
+    } else if (scrollY <= 100) {
+      setScrollDirection('top');
+    } else {
+      setScrollDirection('');
+    }
+    prevOffset = scrollY;
+  }
+  function headroom(pixelsToShowEnd = 0) {
+    showEnd = pixelsToShowEnd;
     window.addEventListener('scroll', _.debounce(toggleScrollDirection, 50));
   }
 
@@ -4266,6 +4202,104 @@
   function individual() {
     document.querySelectorAll('.Reload')?.forEach(addEvent('click', buttonReloadPage));
     document.querySelectorAll('.Hide')?.forEach(addEvent('click', buttonHidePage));
+  }
+
+  const doClick = selector => document.querySelector(selector)?.dispatchEvent(new Event('click'));
+  function doScrolling(sign) {
+    const chapter = document.querySelector('#Chapter');
+    if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
+      const scrollDirection = chapter.classList.contains('FluidRTL') ? -1 : 1;
+      chapter.scrollBy({
+        left: 0.8 * window.innerWidth * sign * scrollDirection,
+        behavior: 'smooth',
+      });
+    } else if (getSettingsValue('zoomMode') === 'height') {
+      const pages = [...document.querySelectorAll('.MangaPage')];
+      const distance = pages.map(element => Math.abs(element.offsetTop - window.scrollY));
+      const currentPage = _.indexOf(distance, _.min(distance));
+      const target = currentPage + sign;
+      const header = document.querySelector('#Header');
+      if (header && target < 0) {
+        scrollToElement(header);
+      } else if (header && target >= pages.length) {
+        header.classList.add('headroom-end');
+      } else {
+        logScript(`Current array page ${currentPage},`, `Scrolling to page ${target}`);
+        scrollToElement(pages.at(target));
+      }
+    } else {
+      window.scrollBy({
+        top: 0.8 * window.innerHeight * sign,
+        behavior: 'smooth',
+      });
+    }
+  }
+  const actions = {
+    SCROLL_UP() {
+      doScrolling(-1);
+    },
+    SCROLL_DOWN() {
+      doScrolling(1);
+    },
+    NEXT_CHAPTER() {
+      doClick('#next');
+    },
+    PREVIOUS_CHAPTER() {
+      doClick('#prev');
+    },
+    ENLARGE() {
+      doClick('#enlarge');
+    },
+    REDUCE() {
+      doClick('#reduce');
+    },
+    RESTORE() {
+      doClick('#restore');
+    },
+    FIT_WIDTH() {
+      doClick('#fitWidth');
+    },
+    FIT_HEIGHT() {
+      doClick('#fitHeight');
+    },
+    SETTINGS() {
+      doClick('#settings');
+    },
+    VIEW_MODE_WEBCOMIC() {
+      doClick('#webComic');
+    },
+    VIEW_MODE_VERTICAL() {
+      doClick('#verticalMode');
+    },
+    VIEW_MODE_LEFT() {
+      doClick('#rtlMode');
+    },
+    VIEW_MODE_RIGHT() {
+      doClick('#ltrMode');
+    },
+    SCROLL_START() {
+      doClick('#AutoScroll');
+    },
+  };
+  function keybindings$1() {
+    document.onkeydown = null;
+    document.onkeyup = null;
+    window.onkeydown = null;
+    window.onkeyup = null;
+    window.onload = null;
+    document.body.onload = null;
+    hotkeys.unbind();
+    Object.keys(getSettingsValue('keybinds')).forEach(key => {
+      hotkeys(
+        getSettingsValue('keybinds')[key]?.join(',') ?? '',
+        _.throttle(event => {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          event.stopPropagation();
+          actions[key]();
+        }, 100),
+      );
+    });
   }
 
   function selectGoToPage(event) {
@@ -4287,15 +4321,168 @@
     document.querySelector('#Thumbnails')?.addEventListener('wheel', transformScrollToHorizontal);
   }
 
+  const keybindList = () => {
+    const keybinds = getSettingsValue('keybinds');
+    return Object.keys(keybinds).map(kb => {
+      const keys = keybinds[kb]?.length
+        ? keybinds[kb]?.map(key => html`<kbd class="dark">${key}</kbd>`).join(' / ')
+        : '';
+      return html`<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
+    });
+  };
+  const keybindEditor = () =>
+    Object.keys(getSettingsValue('keybinds'))
+      .map(
+        kb =>
+          html`<label for="${kb}">${getLocaleString(kb)}:</label>
+            <input
+              type="text"
+              class="KeybindInput"
+              id="${kb}"
+              name="${kb}"
+              value="${getSettingsValue('keybinds')[kb]?.join(' , ') ?? ''}"
+            />`,
+      )
+      .concat(html` <div id="HotKeysRules">${getLocaleString('KEYBIND_RULES')}</div>`);
+  const KeybindingsPanel = () => html`
+    <div id="KeybindingsPanel" class="panel">
+      <h2>${getLocaleString('KEYBINDINGS')}</h2>
+      <button id="CloseKeybindings" class="closeButton" title="${getLocaleString('CLOSE')}">
+        ${IconX}
+      </button>
+      <div class="controls">
+        <button
+          id="EditKeybindings"
+          class="ControlButton"
+          type="button"
+          title="${getLocaleString('EDIT_KEYBINDS')}"
+        >
+          ${IconPencil} ${getLocaleString('BUTTON_EDIT')}
+        </button>
+        <button
+          id="SaveKeybindings"
+          class="ControlButton hidden"
+          type="button"
+          title="${getLocaleString('SAVE_KEYBINDS')}"
+        >
+          ${IconDeviceFloppy} ${getLocaleString('BUTTON_SAVE')}
+        </button>
+      </div>
+      <div id="KeybindingsList">${keybindList().join('\n')}</div>
+    </div>
+  `;
+
+  function toggleFunction(selector, classname, open, close) {
+    return () => {
+      const isOpen = document.querySelector(selector)?.className.includes(classname);
+      if (isOpen) {
+        close();
+      } else {
+        open();
+      }
+    };
+  }
+  function buttonHeaderClick() {
+    const header = document.querySelector('#Header');
+    if (header?.classList.contains('click')) {
+      header?.classList.toggle('visible');
+    }
+  }
+  function isMouseInsideRegion(event, headerWidth, headerHeight) {
+    return (
+      event.clientX >= 0 &&
+      event.clientX <= headerWidth &&
+      event.clientY >= 0 &&
+      event.clientY <= headerHeight
+    );
+  }
+  function headerHover(event) {
+    const header = document.querySelector('#Header');
+    if (header?.classList.contains('hover')) {
+      if (isMouseInsideRegion(event, header.clientWidth, header.clientHeight)) {
+        document.querySelector('#menu')?.classList.add('hide');
+        header?.classList.add('visible');
+      } else {
+        document.querySelector('#menu')?.classList.remove('hide');
+        header?.classList.remove('visible');
+      }
+    }
+  }
+  function buttonSettingsOpen() {
+    document.querySelector('#SettingsPanel')?.classList.add('visible');
+    document.querySelector('#Navigation')?.classList.add('visible');
+    document.querySelector('#Header')?.classList.add('visible');
+    document.querySelector('#Overlay')?.classList.add('visible');
+  }
+  function buttonSettingsClose() {
+    document.querySelector('#SettingsPanel')?.classList.remove('visible');
+    document.querySelector('#Navigation')?.classList.remove('visible');
+    document.querySelector('#Header')?.classList.remove('visible');
+    document.querySelector('#Overlay')?.classList.remove('visible');
+  }
+  function buttonKeybindingsOpen() {
+    const keybindingList = document.querySelector('#KeybindingsList');
+    if (keybindingList) keybindingList.innerHTML = keybindList().join('\n');
+    document.querySelector('#SaveKeybindings')?.classList.add('hidden');
+    document.querySelector('#EditKeybindings')?.classList.remove('hidden');
+    document.querySelector('#KeybindingsPanel')?.classList.add('visible');
+    document.querySelector('#Overlay')?.classList.add('visible');
+  }
+  function buttonKeybindingsClose() {
+    document.querySelector('#SaveKeybindings')?.classList.add('hidden');
+    document.querySelector('#EditKeybindings')?.classList.remove('hidden');
+    document.querySelector('#KeybindingsPanel')?.classList.remove('visible');
+    document.querySelector('#Overlay')?.classList.remove('visible');
+  }
+  function saveKeybindings() {
+    const newkeybinds = getSettingsValue('keybinds');
+    Object.keys(getSettingsValue('keybinds')).forEach(kb => {
+      const keys = document
+        .querySelector(`#${kb}`)
+        ?.value.split(',')
+        ?.map(value => value.trim());
+      newkeybinds[kb] = isNothing(keys) ? void 0 : keys;
+    });
+    saveSettingsValue('keybinds', newkeybinds);
+    const keybindingList = document.querySelector('#KeybindingsList');
+    if (keybindingList) keybindingList.innerHTML = keybindList().join('\n');
+    document.querySelector('#SaveKeybindings')?.classList.add('hidden');
+    document.querySelector('#EditKeybindings')?.classList.remove('hidden');
+    keybindings$1();
+  }
+  function editKeybindings() {
+    const keybindingList = document.querySelector('#KeybindingsList');
+    if (keybindingList) keybindingList.innerHTML = keybindEditor().join('\n');
+    document.querySelector('#SaveKeybindings')?.classList.remove('hidden');
+    document.querySelector('#EditKeybindings')?.classList.add('hidden');
+  }
+  function panels() {
+    document.querySelector('#menu')?.addEventListener('click', buttonHeaderClick);
+    document.addEventListener('mousemove', _.throttle(headerHover, 300));
+    document
+      .querySelector('#settings')
+      ?.addEventListener(
+        'click',
+        toggleFunction('#SettingsPanel', 'visible', buttonSettingsOpen, buttonSettingsClose),
+      );
+    document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonSettingsClose));
+    document.querySelector('#Overlay')?.addEventListener('click', buttonSettingsClose);
+    document.querySelector('#keybindings')?.addEventListener('click', buttonKeybindingsOpen);
+    document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonKeybindingsClose));
+    document.querySelector('#Overlay')?.addEventListener('click', buttonKeybindingsClose);
+    document.querySelector('#EditKeybindings')?.addEventListener('click', editKeybindings);
+    document.querySelector('#SaveKeybindings')?.addEventListener('click', saveKeybindings);
+  }
+
   function buttonZoomIn(event) {
     const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
     const ratio = (img.width / img.naturalWidth) * (100 + getSettingsValue('zoomStep'));
-    applyZoom(ratio, `#${img.getAttribute('id')}`);
+    applyZoom('percent', ratio, `#${img.getAttribute('id')}`);
   }
   function buttonZoomOut(event) {
     const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
     const ratio = (img.width / img.naturalWidth) * (100 - getSettingsValue('zoomStep'));
-    applyZoom(ratio, `#${img.getAttribute('id')}`);
+    applyZoom('percent', ratio, `#${img.getAttribute('id')}`);
   }
   function buttonRestoreZoom() {
     document.querySelector('.PageContent .PageImg')?.removeAttribute('width');
@@ -4303,12 +4490,12 @@
   function buttonZoomWidth(event) {
     const page = event.currentTarget.parentElement?.parentElement;
     const img = page?.querySelector('.PageImg');
-    applyZoom('width', `#${img.getAttribute('id')}`);
+    applyZoom('width', 0, `#${img.getAttribute('id')}`);
     page?.classList.toggle('DoublePage');
   }
   function buttonZoomHeight(event) {
     const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
-    applyZoom('height', `#${img.getAttribute('id')}`);
+    applyZoom('height', 0, `#${img.getAttribute('id')}`);
   }
   function size() {
     document.querySelectorAll('.ZoomIn')?.forEach(addEvent('click', buttonZoomIn));
@@ -4355,7 +4542,7 @@
 
   function changeColorScheme() {
     const isDark = getSettingsValue('colorScheme') === 'dark';
-    setSettingsValue('colorScheme', isDark ? 'light' : 'dark');
+    saveSettingsValue('colorScheme', isDark ? 'light' : 'dark');
     const elem = document.getElementById('MangaOnlineViewer');
     elem?.classList.remove(isDark ? 'dark' : 'light');
     elem?.classList.add(getSettingsValue('colorScheme'));
@@ -4367,7 +4554,7 @@
     });
     target.classList.add('selected');
     document.getElementById('MangaOnlineViewer')?.setAttribute('data-theme', target.title);
-    setSettingsValue('theme', target.title);
+    saveSettingsValue('theme', target.title);
     const hue = document.querySelector('#Hue');
     const shade = document.querySelector('#Shade');
     if (target.title.startsWith('custom')) {
@@ -4380,12 +4567,12 @@
   }
   function changeCustomTheme(event) {
     const target = event.currentTarget.value;
-    setSettingsValue('customTheme', target);
+    saveSettingsValue('customTheme', target);
     addCustomTheme(target);
   }
   function changeThemeShade(event) {
     const target = parseInt(event.currentTarget.value, 10);
-    setSettingsValue('themeShade', target);
+    saveSettingsValue('themeShade', target);
     refreshThemes();
   }
   function theming() {
@@ -4460,14 +4647,14 @@
   }
   function changeDefaultZoomMode(event) {
     const target = event.currentTarget.value;
-    setSettingsValue('zoomMode', target);
+    saveSettingsValue('zoomMode', target);
     applyZoom(target);
     const percent = document.querySelector('.DefaultZoom');
     percent?.classList.toggle('show', target === 'percent');
   }
   function changeDefaultZoom(event) {
     const target = parseInt(event.currentTarget.value, 10);
-    setSettingsValue('defaultZoom', target);
+    saveSettingsValue('defaultZoom', target);
     applyZoom('percent', target);
   }
   function changeZoom(event) {
@@ -4678,7 +4865,6 @@
 
   const listPages = (times, begin) =>
     indexList(times, begin).map(
-      // Language=html
       index => html`
         <div id="Page${index}" class="MangaPage">
           <div class="PageFunctions">
@@ -4729,34 +4915,8 @@
     </main>
   `;
 
-  const localeSelector = () =>
-    locales
-      .map(
-        locale => html`
-          <option
-            value="${locale.ID}"
-            ${getSettingsValue('locale') === locale.ID ? 'selected' : ''}
-          >
-            ${locale.NAME}
-          </option>
-        `,
-      )
-      .join('');
-  const themesSelector = () =>
-    [...Object.keys(colors).map(color => colors[color].name)]
-      .map(
-        theme2 => html`
-          <span
-            title="${theme2}"
-            class="${theme2} ThemeRadio ${getSettingsValue('theme') === theme2 ? 'selected' : ''}"
-          >
-            ${IconCheck}
-          </span>
-        `,
-      )
-      .join('');
-  const settingsScope = () =>
-    html` <div class="ControlLabel">
+  function settingsScope() {
+    return html` <div class="ControlLabel">
       ${getLocaleString('SCOPE')}
       <div id="SettingsScope" class="radio-inputs">
         <label class="radio">
@@ -4781,264 +4941,84 @@
         </label>
       </div>
     </div>`;
-  const language = () =>
-    html` <div class="ControlLabel locale">
+  }
+  function localeSelector() {
+    return locales
+      .map(
+        locale => html`
+          <option
+            value="${locale.ID}"
+            ${getSettingsValue('locale') === locale.ID ? 'selected' : ''}
+          >
+            ${locale.NAME}
+          </option>
+        `,
+      )
+      .join('');
+  }
+  function language() {
+    return html` <div class="ControlLabel locale">
       ${getLocaleString('LANGUAGE')}
       <select id="locale">
         ${localeSelector()}
       </select>
     </div>`;
-  const theme = () => html`
-    <div class="ControlLabel ColorSchemeSelector">
-      <label>${getLocaleString('COLOR_SCHEME')}</label>
-      <button id="ColorScheme" class="ControlButton">${IconSun} ${IconMoon}</button>
-    </div>
-    <div class="ControlLabel ThemeSelector">
-      <label>${getLocaleString('THEME_COLOR')}</label>
-      <span
-        class="custom ThemeRadio 
-        ${getSettingsValue('theme') === 'custom' ? 'selected' : ''}"
-        title="custom"
-      >
-        ${IconPalette} ${IconCheck}
-      </span>
-      ${themesSelector()}
-    </div>
-    <div
-      id="Hue"
-      class="ControlLabel CustomTheme ControlLabelItem 
-      ${getSettingsValue('theme').startsWith('custom') ? 'show' : ''}"
-    >
-      <label>${getLocaleString('THEME_HUE')}</label>
-      <input
-        id="CustomThemeHue"
-        type="color"
-        value="${getSettingsValue('customTheme')}"
-        class="colorpicker CustomTheme"
-      />
-    </div>
-    <div
-      id="Shade"
-      class="ControlLabel CustomTheme ControlLabelItem
-      ${getSettingsValue('theme').startsWith('custom') ? '' : 'show'}"
-    >
-      <span>
-        <label>${getLocaleString('THEME_SHADE')}</label>
-        <output id="themeShadeVal" class="RangeValue" for="ThemeShade">
-          ${getSettingsValue('themeShade')}
-        </output>
-      </span>
-      <input
-        type="range"
-        value="${getSettingsValue('themeShade')}"
-        name="ThemeShade"
-        id="ThemeShade"
-        min="100"
-        max="900"
-        step="100"
-        oninput="themeShadeVal.value = this.value"
-      />
-    </div>
-  `;
-  const loadMode = () => html`
-    <div class="ControlLabel loadMode">
-      ${getLocaleString('DEFAULT_LOAD_MODE')}
-      <select id="loadMode">
-        <option value="wait" ${getSettingsValue('loadMode') === 'wait' ? 'selected' : ''}>
-          ${getLocaleString('LOAD_MODE_NORMAL')}
-        </option>
-        <option value="always" ${getSettingsValue('loadMode') === 'always' ? 'selected' : ''}>
-          ${getLocaleString('LOAD_MODE_ALWAYS')}
-        </option>
-        <option value="never" ${getSettingsValue('loadMode') === 'never' ? 'selected' : ''}>
-          ${getLocaleString('LOAD_MODE_NEVER')}
-        </option>
-      </select>
-    </div>
-  `;
-  const loadSpeed = () => html`
-    <div class="ControlLabel PagesPerSecond">
-      ${getLocaleString('LOAD_SPEED')}
-      <select id="PagesPerSecond">
-        <option value="3000" ${getSettingsValue('throttlePageLoad') === 3e3 ? 'selected' : ''}>
-          0.3(${getLocaleString('SLOWLY')})
-        </option>
-        <option value="2000" ${getSettingsValue('throttlePageLoad') === 2e3 ? 'selected' : ''}>
-          0.5
-        </option>
-        <option value="1000" ${getSettingsValue('throttlePageLoad') === 1e3 ? 'selected' : ''}>
-          01(${getLocaleString('NORMAL')})
-        </option>
-        <option value="500" ${getSettingsValue('throttlePageLoad') === 500 ? 'selected' : ''}>
-          02
-        </option>
-        <option value="250" ${getSettingsValue('throttlePageLoad') === 250 ? 'selected' : ''}>
-          04(${getLocaleString('FAST')})
-        </option>
-        <option value="125" ${getSettingsValue('throttlePageLoad') === 125 ? 'selected' : ''}>
-          08
-        </option>
-        <option value="100" ${getSettingsValue('throttlePageLoad') === 100 ? 'selected' : ''}>
-          10(${getLocaleString('EXTREME')})
-        </option>
-        <option value="1" ${getSettingsValue('throttlePageLoad') === 1 ? 'selected' : ''}>
-          ${getLocaleString('ALL_PAGES')}
-        </option>
-      </select>
-    </div>
-  `;
-  const defaultZoomMode = () =>
-    html` <div class="ControlLabel DefaultZoomMode">
-      ${getLocaleString('DEFAULT_ZOOM_MODE')}
-      <select id="DefaultZoomMode">
-        <option value="percent" ${getSettingsValue('zoomMode') === 'percent' ? 'selected' : ''}>
-          ${getLocaleString('PERCENT')}
-        </option>
-        <option value="width" ${getSettingsValue('zoomMode') === 'width' ? 'selected' : ''}>
-          ${getLocaleString('FIT_WIDTH')}
-        </option>
-        <option value="height" ${getSettingsValue('zoomMode') === 'height' ? 'selected' : ''}>
-          ${getLocaleString('FIT_HEIGHT')}
-        </option>
-      </select>
-    </div>`;
-  const defaultZoom = () => html`
-    <div
-      class="ControlLabel DefaultZoom ControlLabelItem
-  ${getSettingsValue('zoomMode') === 'percent' ? 'show' : ''}"
-    >
-      <span>
-        ${getLocaleString('DEFAULT_ZOOM')}
-        <output id="defaultZoomVal" class="RangeValue" for="DefaultZoom">
-          ${getSettingsValue('defaultZoom')}%
-        </output>
-      </span>
-      <input
-        type="range"
-        value="${getSettingsValue('defaultZoom')}"
-        name="DefaultZoom"
-        id="DefaultZoom"
-        min="5"
-        max="200"
-        step="5"
-        list="tickmarks"
-        oninput='defaultZoomVal.value = this.value + "%"'
-      />
-      <datalist id="tickmarks">
-        <option value="5">5</option>
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="75">75</option>
-        <option value="100">100</option>
-        <option value="125">125</option>
-        <option value="150">150</option>
-        <option value="175">175</option>
-        <option value="200">200</option>
-      </datalist>
-    </div>
-  `;
-  const minZoom = () => html`
-    <div class="ControlLabel minZoom">
-      <span>
-        ${getLocaleString('MINIMUM_ZOOM')}
-        <output id="minZoomVal" class="RangeValue" for="minZoom">
-          ${getSettingsValue('minZoom')}%
-        </output>
-      </span>
-      <input
-        type="range"
-        value="${getSettingsValue('minZoom')}"
-        name="minZoom"
-        id="minZoom"
-        min="30"
-        max="100"
-        step="10"
-        oninput='minZoomVal.value = this.value + "%"'
-      />
-    </div>
-  `;
-  const zoomStep = () => html`
-    <div class="ControlLabel zoomStep">
-      <span>
-        ${getLocaleString('ZOOM_STEP')}
-        <output id="zoomStepVal" class="RangeValue" for="zoomStep">
-          ${getSettingsValue('zoomStep')}%
-        </output>
-      </span>
-      <input
-        type="range"
-        value="${getSettingsValue('zoomStep')}"
-        name="zoomStep"
-        id="zoomStep"
-        min="5"
-        max="50"
-        step="5"
-        oninput='zoomStepVal.value = this.value + "%"'
-      />
-    </div>
-  `;
-  const viewMode = () => html`
-    <div class="ControlLabel viewMode">
-      ${getLocaleString('DEFAULT_VIEW_MODE')}
-      <select id="viewMode">
-        <option value="Vertical" ${getSettingsValue('viewMode') === 'Vertical' ? 'selected' : ''}>
-          ${getLocaleString('VIEW_MODE_VERTICAL')}
-        </option>
-        <option value="WebComic" ${getSettingsValue('viewMode') === 'WebComic' ? 'selected' : ''}>
-          ${getLocaleString('VIEW_MODE_WEBCOMIC')}
-        </option>
-        <option value="FluidLTR" ${getSettingsValue('viewMode') === 'FluidLTR' ? 'selected' : ''}>
-          ${getLocaleString('VIEW_MODE_LEFT')}
-        </option>
-        <option value="FluidRTL" ${getSettingsValue('viewMode') === 'FluidRTL' ? 'selected' : ''}>
-          ${getLocaleString('VIEW_MODE_RIGHT')}
-        </option>
-      </select>
-    </div>
-  `;
-  const lazyLoad = () => html`
-    <div
-      class="ControlLabel lazyStart ControlLabelItem
-    ${getSettingsValue('lazyLoadImages') ? 'show' : ''}"
-    >
-      <span>
-        ${getLocaleString('LAZY_LOAD_IMAGES')}
-        <output id="lazyStartVal" for="lazyStart"> ${getSettingsValue('lazyStart')} </output>
-      </span>
-      <input
-        type="range"
-        value="${getSettingsValue('lazyStart')}"
-        name="lazyStart"
-        id="lazyStart"
-        min="5"
-        max="100"
-        step="5"
-        oninput="lazyStartVal.value = this.value"
-      />
-    </div>
-  `;
-  const headerType = () => html`
-    <div class="ControlLabel headerType">
-      ${getLocaleString('HEADER_TYPE')}
-      <select id="headerType">
-        <option value="hover" ${getSettingsValue('header') === 'hover' ? 'selected' : ''}>
-          ${getLocaleString('HEADER_HOVER')}
-        </option>
-        <option value="scroll" ${getSettingsValue('header') === 'scroll' ? 'selected' : ''}>
-          ${getLocaleString('HEADER_SCROLL')}
-        </option>
-        <option value="click" ${getSettingsValue('header') === 'click' ? 'selected' : ''}>
-          ${getLocaleString('HEADER_CLICK')}
-        </option>
-        <option value="fixed" ${getSettingsValue('header') === 'fixed' ? 'selected' : ''}>
-          ${getLocaleString('HEADER_FIXED')}
-        </option>
-        <option value="simple" ${getSettingsValue('header') === 'simple' ? 'selected' : ''}>
-          ${getLocaleString('HEADER_SIMPLE')}
-        </option>
-      </select>
-    </div>
-  `;
+  }
+  const SettingsPanelGeneral = () => settingsScope() + language();
+
+  function loadMode() {
+    return html`
+      <div class="ControlLabel loadMode">
+        ${getLocaleString('DEFAULT_LOAD_MODE')}
+        <select id="loadMode">
+          <option value="wait" ${getSettingsValue('loadMode') === 'wait' ? 'selected' : ''}>
+            ${getLocaleString('LOAD_MODE_NORMAL')}
+          </option>
+          <option value="always" ${getSettingsValue('loadMode') === 'always' ? 'selected' : ''}>
+            ${getLocaleString('LOAD_MODE_ALWAYS')}
+          </option>
+          <option value="never" ${getSettingsValue('loadMode') === 'never' ? 'selected' : ''}>
+            ${getLocaleString('LOAD_MODE_NEVER')}
+          </option>
+        </select>
+      </div>
+    `;
+  }
+  function loadSpeed() {
+    return html`
+      <div class="ControlLabel PagesPerSecond">
+        ${getLocaleString('LOAD_SPEED')}
+        <select id="PagesPerSecond">
+          <option value="3000" ${getSettingsValue('throttlePageLoad') === 3e3 ? 'selected' : ''}>
+            0.3(${getLocaleString('SLOWLY')})
+          </option>
+          <option value="2000" ${getSettingsValue('throttlePageLoad') === 2e3 ? 'selected' : ''}>
+            0.5
+          </option>
+          <option value="1000" ${getSettingsValue('throttlePageLoad') === 1e3 ? 'selected' : ''}>
+            01(${getLocaleString('NORMAL')})
+          </option>
+          <option value="500" ${getSettingsValue('throttlePageLoad') === 500 ? 'selected' : ''}>
+            02
+          </option>
+          <option value="250" ${getSettingsValue('throttlePageLoad') === 250 ? 'selected' : ''}>
+            04(${getLocaleString('FAST')})
+          </option>
+          <option value="125" ${getSettingsValue('throttlePageLoad') === 125 ? 'selected' : ''}>
+            08
+          </option>
+          <option value="100" ${getSettingsValue('throttlePageLoad') === 100 ? 'selected' : ''}>
+            10(${getLocaleString('EXTREME')})
+          </option>
+          <option value="1" ${getSettingsValue('throttlePageLoad') === 1 ? 'selected' : ''}>
+            ${getLocaleString('ALL_PAGES')}
+          </option>
+        </select>
+      </div>
+    `;
+  }
+  const SettingsPanelLoading = () => loadMode() + loadSpeed();
+
   function toggler(name, checked = false) {
     return html`
       <div class="toggler">
@@ -5053,57 +5033,302 @@
       </div>
     `;
   }
-  const checkboxOptions = () => html`
-    <div class="ControlLabel verticalSeparator">
-      ${getLocaleString('VERTICAL_SEPARATOR')}
-      ${toggler('verticalSeparator', getSettingsValue('verticalSeparator'))}
-    </div>
-    <div class="ControlLabel fitIfOversize">
-      ${getLocaleString('FIT_WIDTH_OVERSIZED')}
-      ${toggler('fitIfOversize', getSettingsValue('fitWidthIfOversize'))}
-    </div>
-    <div class="ControlLabel showThumbnails">
-      ${getLocaleString('SHOW_THUMBNAILS')}
-      ${toggler('showThumbnails', getSettingsValue('showThumbnails'))}
-    </div>
-    <div class="ControlLabel enableComments">
-      ${getLocaleString('ENABLE_COMMENTS')}
-      ${toggler('enableComments', getSettingsValue('enableComments'))}
-    </div>
-    <div class="ControlLabel lazyLoadImages">
-      ${getLocaleString('LAZY_LOAD_IMAGES_ENABLE')}
-      ${toggler('lazyLoadImages', getSettingsValue('lazyLoadImages'))}
-    </div>
-    ${lazyLoad()}
-    <div class="ControlLabel downloadZip">
-      ${getLocaleString('DOWNLOAD_IMAGES')}
-      ${toggler('downloadZip', getSettingsValue('downloadZip'))}
-    </div>
-    <div class="ControlLabel hidePageControls">
-      ${getLocaleString('HIDE_CONTROLS')}
-      ${toggler('hidePageControls', getSettingsValue('hidePageControls'))}
-    </div>
-  `;
-  const autoScroll = () => html`
-    <div class="ControlLabel autoScroll">
-      <span>
-        ${getLocaleString('AUTO_SCROLL_HEIGHT')}
-        <output id="scrollHeightVal" for="scrollHeight">
-          ${getSettingsValue('scrollHeight')} </output
-        >px
-      </span>
-      <input
-        type="range"
-        value="${getSettingsValue('scrollHeight')}"
-        name="scrollHeight"
-        id="scrollHeight"
-        min="1"
-        max="100"
-        step="1"
-        oninput="scrollHeightVal.value = this.value"
-      />
-    </div>
-  `;
+
+  function checkboxOptions() {
+    return html`
+      <div class="ControlLabel verticalSeparator">
+        ${getLocaleString('VERTICAL_SEPARATOR')}
+        ${toggler('verticalSeparator', getSettingsValue('verticalSeparator'))}
+      </div>
+      <div class="ControlLabel fitIfOversize">
+        ${getLocaleString('FIT_WIDTH_OVERSIZED')}
+        ${toggler('fitIfOversize', getSettingsValue('fitWidthIfOversize'))}
+      </div>
+      <div class="ControlLabel showThumbnails">
+        ${getLocaleString('SHOW_THUMBNAILS')}
+        ${toggler('showThumbnails', getSettingsValue('showThumbnails'))}
+      </div>
+      <div class="ControlLabel enableComments">
+        ${getLocaleString('ENABLE_COMMENTS')}
+        ${toggler('enableComments', getSettingsValue('enableComments'))}
+      </div>
+      <div class="ControlLabel downloadZip">
+        ${getLocaleString('DOWNLOAD_IMAGES')}
+        ${toggler('downloadZip', getSettingsValue('downloadZip'))}
+      </div>
+      <div class="ControlLabel hidePageControls">
+        ${getLocaleString('HIDE_CONTROLS')}
+        ${toggler('hidePageControls', getSettingsValue('hidePageControls'))}
+      </div>
+      <div class="ControlLabel lazyLoadImages">
+        ${getLocaleString('LAZY_LOAD_IMAGES_ENABLE')}
+        ${toggler('lazyLoadImages', getSettingsValue('lazyLoadImages'))}
+      </div>
+    `;
+  }
+  function lazyLoad() {
+    return html`
+      <div
+        class="ControlLabel lazyStart ControlLabelItem
+    ${getSettingsValue('lazyLoadImages') ? 'show' : ''}"
+      >
+        <span>
+          ${getLocaleString('LAZY_LOAD_IMAGES')}
+          <output id="lazyStartVal" for="lazyStart"> ${getSettingsValue('lazyStart')} </output>
+        </span>
+        <input
+          type="range"
+          value="${getSettingsValue('lazyStart')}"
+          name="lazyStart"
+          id="lazyStart"
+          min="5"
+          max="100"
+          step="5"
+          oninput="lazyStartVal.value = this.value"
+        />
+      </div>
+    `;
+  }
+  function headerType() {
+    return html`
+      <div class="ControlLabel headerType">
+        ${getLocaleString('HEADER_TYPE')}
+        <select id="headerType">
+          <option value="hover" ${getSettingsValue('header') === 'hover' ? 'selected' : ''}>
+            ${getLocaleString('HEADER_HOVER')}
+          </option>
+          <option value="scroll" ${getSettingsValue('header') === 'scroll' ? 'selected' : ''}>
+            ${getLocaleString('HEADER_SCROLL')}
+          </option>
+          <option value="click" ${getSettingsValue('header') === 'click' ? 'selected' : ''}>
+            ${getLocaleString('HEADER_CLICK')}
+          </option>
+          <option value="fixed" ${getSettingsValue('header') === 'fixed' ? 'selected' : ''}>
+            ${getLocaleString('HEADER_FIXED')}
+          </option>
+          <option value="simple" ${getSettingsValue('header') === 'simple' ? 'selected' : ''}>
+            ${getLocaleString('HEADER_SIMPLE')}
+          </option>
+        </select>
+      </div>
+    `;
+  }
+  function autoScroll() {
+    return html`
+      <div class="ControlLabel autoScroll">
+        <span>
+          ${getLocaleString('AUTO_SCROLL_HEIGHT')}
+          <output id="scrollHeightVal" for="scrollHeight">
+            ${getSettingsValue('scrollHeight')} </output
+          >px
+        </span>
+        <input
+          type="range"
+          value="${getSettingsValue('scrollHeight')}"
+          name="scrollHeight"
+          id="scrollHeight"
+          min="1"
+          max="100"
+          step="1"
+          oninput="scrollHeightVal.value = this.value"
+        />
+      </div>
+    `;
+  }
+  const SettingsPanelOthers = () => checkboxOptions() + lazyLoad() + headerType() + autoScroll();
+
+  function themesSelector() {
+    return [...Object.keys(colors).map(color => colors[color].name)]
+      .map(
+        theme2 => html`
+          <span
+            title="${theme2}"
+            class="${theme2} ThemeRadio ${getSettingsValue('theme') === theme2 ? 'selected' : ''}"
+          >
+            ${IconCheck}
+          </span>
+        `,
+      )
+      .join('');
+  }
+  function theme() {
+    return html`
+      <div class="ControlLabel ColorSchemeSelector">
+        <label>${getLocaleString('COLOR_SCHEME')}</label>
+        <button id="ColorScheme" class="ControlButton">${IconSun} ${IconMoon}</button>
+      </div>
+      <div class="ControlLabel ThemeSelector">
+        <label>${getLocaleString('THEME_COLOR')}</label>
+        <span
+          class="custom ThemeRadio
+        ${getSettingsValue('theme') === 'custom' ? 'selected' : ''}"
+          title="custom"
+        >
+          ${IconPalette} ${IconCheck}
+        </span>
+        ${themesSelector()}
+      </div>
+      <div
+        id="Hue"
+        class="ControlLabel CustomTheme ControlLabelItem
+      ${getSettingsValue('theme').startsWith('custom') ? 'show' : ''}"
+      >
+        <label>${getLocaleString('THEME_HUE')}</label>
+        <input
+          id="CustomThemeHue"
+          type="color"
+          value="${getSettingsValue('customTheme')}"
+          class="colorpicker CustomTheme"
+        />
+      </div>
+      <div
+        id="Shade"
+        class="ControlLabel CustomTheme ControlLabelItem
+      ${getSettingsValue('theme').startsWith('custom') ? '' : 'show'}"
+      >
+        <span>
+          <label>${getLocaleString('THEME_SHADE')}</label>
+          <output id="themeShadeVal" class="RangeValue" for="ThemeShade">
+            ${getSettingsValue('themeShade')}
+          </output>
+        </span>
+        <input
+          type="range"
+          value="${getSettingsValue('themeShade')}"
+          name="ThemeShade"
+          id="ThemeShade"
+          min="100"
+          max="900"
+          step="100"
+          oninput="themeShadeVal.value = this.value"
+        />
+      </div>
+    `;
+  }
+
+  function defaultZoomMode() {
+    return html` <div class="ControlLabel DefaultZoomMode">
+      ${getLocaleString('DEFAULT_ZOOM_MODE')}
+      <select id="DefaultZoomMode">
+        <option value="percent" ${getSettingsValue('zoomMode') === 'percent' ? 'selected' : ''}>
+          ${getLocaleString('PERCENT')}
+        </option>
+        <option value="width" ${getSettingsValue('zoomMode') === 'width' ? 'selected' : ''}>
+          ${getLocaleString('FIT_WIDTH')}
+        </option>
+        <option value="height" ${getSettingsValue('zoomMode') === 'height' ? 'selected' : ''}>
+          ${getLocaleString('FIT_HEIGHT')}
+        </option>
+      </select>
+    </div>`;
+  }
+  function defaultZoom() {
+    return html`
+      <div
+        class="ControlLabel DefaultZoom ControlLabelItem ${getSettingsValue('zoomMode') ===
+        'percent'
+          ? 'show'
+          : ''}"
+      >
+        <span>
+          ${getLocaleString('DEFAULT_ZOOM')}
+          <output id="defaultZoomVal" class="RangeValue" for="DefaultZoom">
+            ${getSettingsValue('defaultZoom')}%
+          </output>
+        </span>
+        <input
+          type="range"
+          value="${getSettingsValue('defaultZoom')}"
+          name="DefaultZoom"
+          id="DefaultZoom"
+          min="5"
+          max="200"
+          step="5"
+          list="tickmarks"
+          oninput='defaultZoomVal.value = this.value + "%"'
+        />
+        <datalist id="tickmarks">
+          <option value="5">5</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="75">75</option>
+          <option value="100">100</option>
+          <option value="125">125</option>
+          <option value="150">150</option>
+          <option value="175">175</option>
+          <option value="200">200</option>
+        </datalist>
+      </div>
+    `;
+  }
+  function minZoom() {
+    return html`
+      <div class="ControlLabel minZoom">
+        <span>
+          ${getLocaleString('MINIMUM_ZOOM')}
+          <output id="minZoomVal" class="RangeValue" for="minZoom">
+            ${getSettingsValue('minZoom')}%
+          </output>
+        </span>
+        <input
+          type="range"
+          value="${getSettingsValue('minZoom')}"
+          name="minZoom"
+          id="minZoom"
+          min="30"
+          max="100"
+          step="10"
+          oninput='minZoomVal.value = this.value + "%"'
+        />
+      </div>
+    `;
+  }
+  function zoomStep() {
+    return html`
+      <div class="ControlLabel zoomStep">
+        <span>
+          ${getLocaleString('ZOOM_STEP')}
+          <output id="zoomStepVal" class="RangeValue" for="zoomStep">
+            ${getSettingsValue('zoomStep')}%
+          </output>
+        </span>
+        <input
+          type="range"
+          value="${getSettingsValue('zoomStep')}"
+          name="zoomStep"
+          id="zoomStep"
+          min="5"
+          max="50"
+          step="5"
+          oninput='zoomStepVal.value = this.value + "%"'
+        />
+      </div>
+    `;
+  }
+  function viewMode() {
+    return html`
+      <div class="ControlLabel viewMode">
+        ${getLocaleString('DEFAULT_VIEW_MODE')}
+        <select id="viewMode">
+          <option value="Vertical" ${getSettingsValue('viewMode') === 'Vertical' ? 'selected' : ''}>
+            ${getLocaleString('VIEW_MODE_VERTICAL')}
+          </option>
+          <option value="WebComic" ${getSettingsValue('viewMode') === 'WebComic' ? 'selected' : ''}>
+            ${getLocaleString('VIEW_MODE_WEBCOMIC')}
+          </option>
+          <option value="FluidLTR" ${getSettingsValue('viewMode') === 'FluidLTR' ? 'selected' : ''}>
+            ${getLocaleString('VIEW_MODE_LEFT')}
+          </option>
+          <option value="FluidRTL" ${getSettingsValue('viewMode') === 'FluidRTL' ? 'selected' : ''}>
+            ${getLocaleString('VIEW_MODE_RIGHT')}
+          </option>
+        </select>
+      </div>
+    `;
+  }
+  const SettingsPanelZoom = () =>
+    defaultZoomMode() + defaultZoom() + minZoom() + zoomStep() + viewMode();
+
   const SettingsPanel = () => html`
     <div id="SettingsPanel" class="panel">
       <h2>${getLocaleString('SETTINGS')}</h2>
@@ -5115,7 +5340,7 @@
       </button>
       <fieldset>
         <legend>${getLocaleString('GENERAL')}</legend>
-        ${settingsScope()} ${language()}
+        ${SettingsPanelGeneral()}
       </fieldset>
       <fieldset>
         <legend>${getLocaleString('THEME')}</legend>
@@ -5123,15 +5348,15 @@
       </fieldset>
       <fieldset>
         <legend>${getLocaleString('LOADING')}</legend>
-        ${loadMode()} ${loadSpeed()}
+        ${SettingsPanelLoading()}
       </fieldset>
       <fieldset>
         <legend>${getLocaleString('ZOOM')}</legend>
-        ${defaultZoomMode()} ${defaultZoom()} ${minZoom()} ${zoomStep()} ${viewMode()}
+        ${SettingsPanelZoom()}
       </fieldset>
       <fieldset>
         <legend>${getLocaleString('OTHERS')}</legend>
-        ${checkboxOptions()} ${headerType()} ${autoScroll()}
+        ${SettingsPanelOthers()}
       </fieldset>
     </div>
   `;
@@ -5170,13 +5395,16 @@
       '#KeybindingsPanel': KeybindingsPanel(),
       '#Bookmarks': BookmarkPanel(),
     };
+    const SettingsPanelOpened = document
+      .querySelector('#SettingsPanel')
+      ?.classList.contains('visible');
     if (document.querySelector('#ScrollControl')?.classList.contains('running')) {
       toggleAutoScroll();
     }
     refreshThemes();
     const outer = document.getElementById('MangaOnlineViewer');
     if (outer) {
-      outer.className = `${getSettingsValue('colorScheme')} 
+      outer.className = `${getSettingsValue('colorScheme')}
         ${getSettingsValue('hidePageControls') ? 'hideControls' : ''}
         ${isBookmarked() ? 'bookmarked' : ''}
         ${getDevice()}`;
@@ -5197,13 +5425,14 @@
       ?.classList.toggle('disabled', !getSettingsValue('showThumbnails'));
     document.querySelector('#Overlay')?.dispatchEvent(new Event('click'));
     events();
+    if (SettingsPanelOpened) buttonSettingsOpen();
   }
   const app = manga => {
     loadedManga = manga;
     const main = document.createElement('div');
     main.id = 'MangaOnlineViewer';
     main.className = `
-        ${getSettingsValue('colorScheme')} 
+        ${getSettingsValue('colorScheme')}
         ${getSettingsValue('hidePageControls') ? 'hideControls' : ''}
         ${isBookmarked() ? 'bookmarked' : ''}
         ${getDevice()}`;
@@ -5214,6 +5443,7 @@
       <div id="Overlay" class="overlay"></div>
       ${commentsPanel()} ${KeybindingsPanel()} ${BookmarkPanel()} ${SettingsPanel()}
     `;
+    settings$1.listen(hydrateApp);
     return main.outerHTML;
   };
 
@@ -5334,7 +5564,6 @@
     document.body.innerHTML = app(manga);
     events();
     loadManga(manga);
-    document.querySelector('#MangaOnlineViewer')?.addEventListener('hydrate', hydrateApp);
     if (manga.comments) document.querySelector('#CommentsArea')?.append(manga.comments);
   }
 
@@ -5493,7 +5722,6 @@
     let endPage = manga.pages;
     const options = {
       title: getLocaleString('STARTING'),
-      // Language=html
       html: html`
         ${getLocaleString('CHOOSE_BEGINNING')}
         <div id="pageInputGroup">
