@@ -35,13 +35,15 @@ export function hydrateApp() {
     toggleAutoScroll();
   }
   refreshThemes();
+  document.documentElement.classList.remove('light', 'dark');
+  document.documentElement.classList.add(getSettingsValue('colorScheme'));
+  document.documentElement.setAttribute('data-theme', getSettingsValue('theme'));
   const outer = document.getElementById('MangaOnlineViewer');
   if (outer) {
-    outer.className = `${getSettingsValue('colorScheme')}
+    outer.className = `
         ${getSettingsValue('hidePageControls') ? 'hideControls' : ''}
         ${isBookmarked() ? 'bookmarked' : ''}
         ${getDevice()}`;
-    outer.setAttribute('data-theme', getSettingsValue('theme'));
   }
   const reader = document.querySelector('#Chapter');
   if (reader) {
@@ -56,7 +58,7 @@ export function hydrateApp() {
   document
     .querySelector('#Navigation')
     ?.classList.toggle('disabled', !getSettingsValue('showThumbnails'));
-  document.querySelector('#Overlay')?.dispatchEvent(new Event('click'));
+  document.querySelector('#Overlay')?.classList.remove('visible');
   events();
   if (SettingsPanelOpened) buttonSettingsOpen();
 }
@@ -66,12 +68,9 @@ const app = (manga: IManga) => {
   const main = document.createElement('div');
   main.id = 'MangaOnlineViewer';
   main.className = `
-        ${getSettingsValue('colorScheme')}
         ${getSettingsValue('hidePageControls') ? 'hideControls' : ''}
         ${isBookmarked() ? 'bookmarked' : ''}
         ${getDevice()}`;
-  main.setAttribute('data-theme', getSettingsValue('theme'));
-
   main.innerHTML = html`
     <div id="menu" class="${getSettingsValue('header')}">${IconMenu2}</div>
     ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
