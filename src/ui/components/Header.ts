@@ -26,27 +26,54 @@ import {
 } from '../icons';
 
 const listOptions = (times: number, begin: number) =>
-  sequence(times, begin).map((index) => html` <option value="${index}">${index}</option>`);
+  sequence(times, begin).map(index => html` <option value="${index}">${index}</option>`);
 const Header = (manga: IManga) => html`
-  <header id="Header" class="${getSettingsValue('header')} headroom-top">
+  <header
+    id="Header"
+    class="${getSettingsValue('header')} headroom-top"
+  >
     <aside id="GlobalFunctions">
       <span>
-        <button id="enlarge" title="${getLocaleString('ENLARGE')}" class="ControlButton">
+        <button
+          id="enlarge"
+          title="${getLocaleString('ENLARGE')}"
+          class="ControlButton"
+        >
           ${IconZoomInArea}
         </button>
-        <button id="restore" title="${getLocaleString('RESTORE')}" class="ControlButton">
+        <button
+          id="restore"
+          title="${getLocaleString('RESTORE')}"
+          class="ControlButton"
+        >
           ${IconZoomPan}
         </button>
-        <button id="reduce" title="${getLocaleString('REDUCE')}" class="ControlButton">
+        <button
+          id="reduce"
+          title="${getLocaleString('REDUCE')}"
+          class="ControlButton"
+        >
           ${IconZoomOutArea}
         </button>
-        <button id="fitWidth" title="${getLocaleString('FIT_WIDTH')}" class="ControlButton">
+        <button
+          id="fitWidth"
+          title="${getLocaleString('FIT_WIDTH')}"
+          class="ControlButton"
+        >
           ${IconArrowAutofitWidth}
         </button>
-        <button id="fitHeight" title="${getLocaleString('FIT_HEIGHT')}" class="ControlButton">
+        <button
+          id="fitHeight"
+          title="${getLocaleString('FIT_HEIGHT')}"
+          class="ControlButton"
+        >
           ${IconArrowAutofitHeight}
         </button>
-        <button id="keybindings" title="${getLocaleString('KEYBINDINGS')}" class="ControlButton">
+        <button
+          id="keybindings"
+          title="${getLocaleString('KEYBINDINGS')}"
+          class="ControlButton"
+        >
           ${IconKeyboard}
         </button>
         <button
@@ -58,7 +85,11 @@ const Header = (manga: IManga) => html`
         </button>
       </span>
       <span>
-        <button id="ltrMode" title="${getLocaleString('VIEW_MODE_LEFT')}" class="ControlButton">
+        <button
+          id="ltrMode"
+          title="${getLocaleString('VIEW_MODE_LEFT')}"
+          class="ControlButton"
+        >
           ${IconArrowAutofitRight}
         </button>
         <button
@@ -75,7 +106,11 @@ const Header = (manga: IManga) => html`
         >
           ${IconSpacingVertical}
         </button>
-        <button id="rtlMode" title="${getLocaleString('VIEW_MODE_RIGHT')}" class="ControlButton">
+        <button
+          id="rtlMode"
+          title="${getLocaleString('VIEW_MODE_RIGHT')}"
+          class="ControlButton"
+        >
           ${IconArrowAutofitLeft}
         </button>
         <button
@@ -101,7 +136,11 @@ const Header = (manga: IManga) => html`
         </button>
       </span>
       <span id="ZoomSlider">
-        <output id="ZoomVal" class="RangeValue" for="Zoom">
+        <output
+          id="ZoomVal"
+          class="RangeValue"
+          for="Zoom"
+        >
           ${
             getSettingsValue('zoomMode') === 'percent'
               ? `${getSettingsValue('defaultZoom')}%`
@@ -120,10 +159,18 @@ const Header = (manga: IManga) => html`
     </aside>
     <div class="ViewerTitle">
       <h1 id="MangaTitle">${manga.title}</h1>
-      <a id="series" href="${manga.series ?? ''}"> (${getLocaleString('RETURN_CHAPTER_LIST')}) </a>
+      <a
+        id="series"
+        href="${manga.series ?? ''}"
+      >
+        (${getLocaleString('RETURN_CHAPTER_LIST')})
+      </a>
     </div>
     <nav id="ChapterNavigation">
-      <div id="Counters" class="ControlLabel">
+      <div
+        id="Counters"
+        class="ControlLabel"
+      >
         ${getLocaleString('PAGES_LOADED')}:
         <i>0</i> /
         <b>${manga.begin && manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
@@ -133,7 +180,10 @@ const Header = (manga: IManga) => html`
           ${listOptions(manga.pages, manga.begin ?? 0).join('')}
         </select>
       </div>
-      <div id="ChapterControl" class="ChapterControl">
+      <div
+        id="ChapterControl"
+        class="ChapterControl"
+      >
         <span>
           <button
             id="CommentsButton"

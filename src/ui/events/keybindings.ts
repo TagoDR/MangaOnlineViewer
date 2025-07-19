@@ -18,7 +18,7 @@ function doScrolling(sign: 1 | -1) {
   } else if (getSettingsValue('zoomMode') === 'height') {
     // Fit height
     const pages = [...document.querySelectorAll<HTMLElement>('.MangaPage')];
-    const distance = pages.map((element) => Math.abs(element.offsetTop - window.scrollY));
+    const distance = pages.map(element => Math.abs(element.offsetTop - window.scrollY));
     const currentPage = _.indexOf(distance, _.min(distance));
     const target = currentPage + sign;
     const header = document.querySelector<HTMLDivElement>('#Header');
@@ -95,10 +95,10 @@ function keybindings() {
   window.onload = null;
   document.body.onload = null;
   hotkeys.unbind();
-  Object.keys(getSettingsValue('keybinds')).forEach((key) => {
+  Object.keys(getSettingsValue('keybinds')).forEach(key => {
     hotkeys(
       getSettingsValue('keybinds')[key]?.join(',') ?? '',
-      _.throttle((event) => {
+      _.throttle(event => {
         event.preventDefault();
         event.stopImmediatePropagation();
         event.stopPropagation();

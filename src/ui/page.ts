@@ -42,7 +42,7 @@ function applyZoom(
     updateHeaderType(getSettingsValue('header'));
   }
   const pg = [...document.querySelectorAll<HTMLImageElement>(pages)];
-  pg.forEach((img) => {
+  pg.forEach(img => {
     img.removeAttribute('width');
     img.removeAttribute('height');
     img.removeAttribute('style');
@@ -108,7 +108,7 @@ function updateProgress() {
     title.innerHTML = html`(${percentage}%) ${document.querySelector('#MangaTitle')?.textContent}`;
   }
 
-  document.querySelectorAll('#Counters i, #NavigationCounters i').forEach((ele) => {
+  document.querySelectorAll('#Counters i, #NavigationCounters i').forEach(ele => {
     ele.textContent = loaded.toString();
   });
   NProgress.configure({
@@ -131,7 +131,7 @@ export const applyLastGlobalZoom = (pages = '.PageContent img') => {
 
 function onImagesSuccess() {
   return (instance: ImagesLoaded.ImagesLoaded) => {
-    instance.images.forEach((image) => {
+    instance.images.forEach(image => {
       image.img.classList.add('imgLoaded');
       image.img.classList.remove('imgBroken');
       const thumbId = image.img.id.replace('PageImg', 'ThumbnailImg');
@@ -148,7 +148,7 @@ function onImagesSuccess() {
 
 function onImagesFail(manga: IManga) {
   return (instance: ImagesLoaded.ImagesLoaded) => {
-    instance.images.forEach((image) => {
+    instance.images.forEach(image => {
       image.img.classList.add('imgBroken');
       const thumbId = image.img.id.replace('PageImg', 'ThumbnailImg');
       const thumb = document.getElementById(thumbId);
@@ -203,8 +203,8 @@ function addImg(manga: IMangaImages, index: number, imageSrc: string, position: 
         async () => {
           if (!isObjectURL(src) && !isBase64ImageUrl(src) && manga.fetchOptions) {
             src = await fetch(src, manga.fetchOptions)
-              .then((resp) => resp.blob())
-              .then((blob) => blobToDataURL(blob));
+              .then(resp => resp.blob())
+              .then(blob => blobToDataURL(blob));
           }
           if (img.parentElement) {
             const imgLoad = imagesLoaded(img.parentElement);

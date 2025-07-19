@@ -27,7 +27,7 @@ const mangafox: ISite = {
         // biome-ignore lint/security/noGlobalEval: only solution found
         // biome-ignore lint/complexity/noCommaOperator: only solution found
         (0, eval)(api);
-        // @ts-ignore
+        // @ts-expect-error
         return d;
       });
     const images = await Promise.all(src);

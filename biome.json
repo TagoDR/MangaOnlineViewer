@@ -30,7 +30,7 @@
         "noUnusedVariables": "warn"
       }
     },
-    "includes": ["**", "!node_modules", "!dist"]
+    "includes": ["**", "!node_modules", "!dist", "!**/*.svelte"]
   },
   "javascript": {
     "formatter": {

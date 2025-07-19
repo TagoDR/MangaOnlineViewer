@@ -1,3 +1,4 @@
+import render from '../svelte';
 import type { IManga } from '../types';
 import display from '../ui';
 import { logScript, logScriptVerbose } from '../utils/tampermonkey';
@@ -55,7 +56,8 @@ export default async function viewer(manga: IManga): Promise<void> {
   // Use a timeout to ensure the page has time to reflow before rendering the viewer.
   setTimeout(() => {
     try {
-      display(manga);
+      render(manga);
+      (unsafeWindow ?? window).MOVLegacy = () => display(manga);
     } catch (e) {
       logScript(e);
     }

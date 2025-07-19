@@ -6,6 +6,7 @@
  */
 
 import * as fs from 'node:fs';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
 import externalGlobals from 'rollup-plugin-external-globals';
 import prettier from 'rollup-plugin-prettier';
 import userscript, { type Metadata } from 'userscript-metadata-generator';
@@ -51,6 +52,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
+      svelte(),
       viteBanner({ content: banner, verify: false }),
       svgLoader({ svgo: false, defaultImport: 'raw' }),
     ],

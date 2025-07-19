@@ -9,16 +9,18 @@
 import { preparePage } from './core/main.ts';
 import { allowUpload } from './core/upload';
 import localhost from './main/localhost';
-import display from './ui';
+import render from './svelte';
+import type { IManga } from './types';
 
 // Immediately execute the localhost site configuration to get the mock manga data.
-const site = await localhost.run();
+const site = (await localhost.run()) as IManga;
 
 // Enable local file upload functionality.
 allowUpload();
 
 // Add a click listener to a test button for re-rendering the display.
 document.querySelector('#test')?.addEventListener('click', () => preparePage([localhost, site]));
+document.querySelector('#testFramework')?.addEventListener('click', () => render(site));
 
 // Immediately render the main application UI with the mock data.
-display(site);
+render(site);

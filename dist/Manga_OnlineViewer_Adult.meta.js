@@ -19,7 +19,7 @@
 // @grant         GM_addValueChangeListener
 // @noframes      on
 // @connect       *
-// @require       https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js
+// @require       https://cdn.jsdelivr.net/npm/tinycolor2@1.6.0/tinycolor.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js

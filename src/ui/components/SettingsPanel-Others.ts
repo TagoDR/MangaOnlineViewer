@@ -43,7 +43,12 @@ function lazyLoad() {
     >
       <span>
         ${getLocaleString('LAZY_LOAD_IMAGES')}
-        <output id="lazyStartVal" for="lazyStart"> ${getSettingsValue('lazyStart')} </output>
+        <output
+          id="lazyStartVal"
+          for="lazyStart"
+        >
+          ${getSettingsValue('lazyStart')}
+        </output>
       </span>
       <input
         type="range"
@@ -64,19 +69,34 @@ function headerType() {
     <div class="ControlLabel headerType">
       ${getLocaleString('HEADER_TYPE')}
       <select id="headerType">
-        <option value="hover" ${getSettingsValue('header') === 'hover' ? 'selected' : ''}>
+        <option
+          value="hover"
+          ${getSettingsValue('header') === 'hover' ? 'selected' : ''}
+        >
           ${getLocaleString('HEADER_HOVER')}
         </option>
-        <option value="scroll" ${getSettingsValue('header') === 'scroll' ? 'selected' : ''}>
+        <option
+          value="scroll"
+          ${getSettingsValue('header') === 'scroll' ? 'selected' : ''}
+        >
           ${getLocaleString('HEADER_SCROLL')}
         </option>
-        <option value="click" ${getSettingsValue('header') === 'click' ? 'selected' : ''}>
+        <option
+          value="click"
+          ${getSettingsValue('header') === 'click' ? 'selected' : ''}
+        >
           ${getLocaleString('HEADER_CLICK')}
         </option>
-        <option value="fixed" ${getSettingsValue('header') === 'fixed' ? 'selected' : ''}>
+        <option
+          value="fixed"
+          ${getSettingsValue('header') === 'fixed' ? 'selected' : ''}
+        >
           ${getLocaleString('HEADER_FIXED')}
         </option>
-        <option value="simple" ${getSettingsValue('header') === 'simple' ? 'selected' : ''}>
+        <option
+          value="simple"
+          ${getSettingsValue('header') === 'simple' ? 'selected' : ''}
+        >
           ${getLocaleString('HEADER_SIMPLE')}
         </option>
       </select>
@@ -89,7 +109,10 @@ function autoScroll() {
     <div class="ControlLabel autoScroll">
       <span>
         ${getLocaleString('AUTO_SCROLL_HEIGHT')}
-        <output id="scrollHeightVal" for="scrollHeight">
+        <output
+          id="scrollHeightVal"
+          for="scrollHeight"
+        >
           ${getSettingsValue('scrollHeight')} </output
         >px
       </span>
