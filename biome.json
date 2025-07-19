@@ -27,8 +27,10 @@
     "rules": {
       "recommended": true,
       "correctness": {
-        "noUnusedVariables": "warn"
-      }
+        "noUnusedVariables": "warn",
+        "useUniqueElementIds": "off"
+      },
+      "a11y": "off"
     },
     "includes": ["**", "!node_modules", "!dist"]
   },

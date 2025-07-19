@@ -4,9 +4,9 @@ import colors from '../../utils/colors.ts';
 import { IconCheck, IconMoon, IconPalette, IconSun } from '../icons';
 
 function themesSelector() {
-  return [...Object.keys(colors).map((color) => colors[color].name)]
+  return [...Object.keys(colors).map(color => colors[color].name)]
     .map(
-      (theme) => html`
+      theme => html`
         <span
           title="${theme}"
           class="${theme} ThemeRadio ${getSettingsValue('theme') === theme ? 'selected' : ''}"
@@ -22,7 +22,12 @@ function theme() {
   return html`
     <div class="ControlLabel ColorSchemeSelector">
       <label>${getLocaleString('COLOR_SCHEME')}</label>
-      <button id="ColorScheme" class="ControlButton">${IconSun} ${IconMoon}</button>
+      <button
+        id="ColorScheme"
+        class="ControlButton"
+      >
+        ${IconSun} ${IconMoon}
+      </button>
     </div>
     <div class="ControlLabel ThemeSelector">
       <label>${getLocaleString('THEME_COLOR')}</label>
@@ -55,7 +60,11 @@ function theme() {
     >
       <span>
         <label>${getLocaleString('THEME_SHADE')}</label>
-        <output id="themeShadeVal" class="RangeValue" for="ThemeShade">
+        <output
+          id="themeShadeVal"
+          class="RangeValue"
+          for="ThemeShade"
+        >
           ${getSettingsValue('themeShade')}
         </output>
       </span>

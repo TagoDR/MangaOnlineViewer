@@ -1,14 +1,14 @@
 import { reloadImage } from '../page';
 import { addEvent } from './common';
 
-export function buttonReloadPage(event: Event): void {
+export function buttonReloadPage(event: Event | React.MouseEvent): void {
   const img = (event.currentTarget as HTMLElement).parentElement?.parentElement?.querySelector(
     '.PageImg',
   ) as HTMLImageElement;
   reloadImage(img);
 }
 
-export function buttonHidePage(event: Event): void {
+export function buttonHidePage(event: Event | React.MouseEvent): void {
   const img = (event.currentTarget as HTMLElement).parentElement?.parentElement as HTMLElement;
   img.classList.toggle('hide');
 }

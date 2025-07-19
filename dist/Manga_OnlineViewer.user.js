@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaOni, MangaPark, MangaReader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.08.23
+// @version       2025.08.24
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -19,7 +19,7 @@
 // @grant         GM_addValueChangeListener
 // @noframes      on
 // @connect       *
-// @require       https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js
+// @require       https://cdn.jsdelivr.net/npm/tinycolor2@1.6.0/tinycolor.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
@@ -29,6 +29,8 @@
 // @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
+// @require       https://cdn.jsdelivr.net/npm/umd-react@19.1.1/dist/react.production.min.js
+// @require       https://cdn.jsdelivr.net/npm/umd-react@19.1.1/dist/react-dom.production.min.js
 // @include       /https?:\/\/(www.)?(asuracomic).(net)\/.+/
 // @include       /https?:\/\/(?:www\.)?(?:fto|jto|hto|dto|mto|wto|bato|battwo|batotwo|comiko|batocomic|readtoto|zbato|xbato|mangatoto)\.(?:to|com|net|org)\/(chapter|title).*/
 // @include       /https?:\/\/(www\.)?(bilibilicomics).net\/episode\/.+/
@@ -89,12 +91,12 @@
     ':root{--swal2-container-padding: 0.625em;--swal2-backdrop: rgba(0, 0, 0, 0.4);--swal2-width: 32em;--swal2-padding: 0 0 1.25em;--swal2-border: none;--swal2-border-radius: 0.3125rem;--swal2-background: white;--swal2-color: #545454;--swal2-footer-border-color: #eee;--swal2-show-animation: swal2-show 0.3s;--swal2-hide-animation: swal2-hide 0.15s forwards;--swal2-title-padding: 0.8em 1em 0;--swal2-html-container-padding: 1em 1.6em 0.3em;--swal2-input-background: transparent;--swal2-progress-step-background: #add8e6;--swal2-validation-message-background: #f0f0f0;--swal2-validation-message-color: #666;--swal2-close-button-position: initial;--swal2-close-button-inset: auto;--swal2-close-button-font-size: 2.5em;--swal2-close-button-color: #ccc;--swal2-close-button-transition: color 0.1s, box-shadow 0.1s;--swal2-close-button-outline: initial;--swal2-close-button-hover-transform: none}[data-swal2-theme=dark]{--swal2-dark-theme-black: #19191a;--swal2-dark-theme-white: #e1e1e1;--swal2-background: var(--swal2-dark-theme-black);--swal2-color: var(--swal2-dark-theme-white);--swal2-footer-border-color: #555;--swal2-input-background: color-mix(in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10%);--swal2-validation-message-background: color-mix( in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10% );--swal2-validation-message-color: var(--swal2-dark-theme-white)}@media(prefers-color-scheme: dark){[data-swal2-theme=auto]{--swal2-dark-theme-black: #19191a;--swal2-dark-theme-white: #e1e1e1;--swal2-background: var(--swal2-dark-theme-black);--swal2-color: var(--swal2-dark-theme-white);--swal2-footer-border-color: #555;--swal2-input-background: color-mix(in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10%);--swal2-validation-message-background: color-mix( in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10% );--swal2-validation-message-color: var(--swal2-dark-theme-white)}}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown){overflow:hidden}body.swal2-height-auto{height:auto !important}body.swal2-no-backdrop .swal2-container{background-color:rgba(0,0,0,0) !important;pointer-events:none}body.swal2-no-backdrop .swal2-container .swal2-popup{pointer-events:all}body.swal2-no-backdrop .swal2-container .swal2-modal{box-shadow:0 0 10px var(--swal2-backdrop)}body.swal2-toast-shown .swal2-container{box-sizing:border-box;width:360px;max-width:100%;background-color:rgba(0,0,0,0);pointer-events:none}body.swal2-toast-shown .swal2-container.swal2-top{inset:0 auto auto 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-top-end,body.swal2-toast-shown .swal2-container.swal2-top-right{inset:0 0 auto auto}body.swal2-toast-shown .swal2-container.swal2-top-start,body.swal2-toast-shown .swal2-container.swal2-top-left{inset:0 auto auto 0}body.swal2-toast-shown .swal2-container.swal2-center-start,body.swal2-toast-shown .swal2-container.swal2-center-left{inset:50% auto auto 0;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-center{inset:50% auto auto 50%;transform:translate(-50%, -50%)}body.swal2-toast-shown .swal2-container.swal2-center-end,body.swal2-toast-shown .swal2-container.swal2-center-right{inset:50% 0 auto auto;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-start,body.swal2-toast-shown .swal2-container.swal2-bottom-left{inset:auto auto 0 0}body.swal2-toast-shown .swal2-container.swal2-bottom{inset:auto auto 0 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-end,body.swal2-toast-shown .swal2-container.swal2-bottom-right{inset:auto 0 0 auto}@media print{body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown){overflow-y:scroll !important}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown)>[aria-hidden=true]{display:none}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown) .swal2-container{position:static !important}}div:where(.swal2-container){display:grid;position:fixed;z-index:1060;inset:0;box-sizing:border-box;grid-template-areas:"top-start     top            top-end" "center-start  center         center-end" "bottom-start  bottom-center  bottom-end";grid-template-rows:minmax(min-content, auto) minmax(min-content, auto) minmax(min-content, auto);height:100%;padding:var(--swal2-container-padding);overflow-x:hidden;transition:background-color .1s;-webkit-overflow-scrolling:touch}div:where(.swal2-container).swal2-backdrop-show,div:where(.swal2-container).swal2-noanimation{background:var(--swal2-backdrop)}div:where(.swal2-container).swal2-backdrop-hide{background:rgba(0,0,0,0) !important}div:where(.swal2-container).swal2-top-start,div:where(.swal2-container).swal2-center-start,div:where(.swal2-container).swal2-bottom-start{grid-template-columns:minmax(0, 1fr) auto auto}div:where(.swal2-container).swal2-top,div:where(.swal2-container).swal2-center,div:where(.swal2-container).swal2-bottom{grid-template-columns:auto minmax(0, 1fr) auto}div:where(.swal2-container).swal2-top-end,div:where(.swal2-container).swal2-center-end,div:where(.swal2-container).swal2-bottom-end{grid-template-columns:auto auto minmax(0, 1fr)}div:where(.swal2-container).swal2-top-start>.swal2-popup{align-self:start}div:where(.swal2-container).swal2-top>.swal2-popup{grid-column:2;place-self:start center}div:where(.swal2-container).swal2-top-end>.swal2-popup,div:where(.swal2-container).swal2-top-right>.swal2-popup{grid-column:3;place-self:start end}div:where(.swal2-container).swal2-center-start>.swal2-popup,div:where(.swal2-container).swal2-center-left>.swal2-popup{grid-row:2;align-self:center}div:where(.swal2-container).swal2-center>.swal2-popup{grid-column:2;grid-row:2;place-self:center center}div:where(.swal2-container).swal2-center-end>.swal2-popup,div:where(.swal2-container).swal2-center-right>.swal2-popup{grid-column:3;grid-row:2;place-self:center end}div:where(.swal2-container).swal2-bottom-start>.swal2-popup,div:where(.swal2-container).swal2-bottom-left>.swal2-popup{grid-column:1;grid-row:3;align-self:end}div:where(.swal2-container).swal2-bottom>.swal2-popup{grid-column:2;grid-row:3;place-self:end center}div:where(.swal2-container).swal2-bottom-end>.swal2-popup,div:where(.swal2-container).swal2-bottom-right>.swal2-popup{grid-column:3;grid-row:3;place-self:end end}div:where(.swal2-container).swal2-grow-row>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-column:1/4;width:100%}div:where(.swal2-container).swal2-grow-column>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-row:1/4;align-self:stretch}div:where(.swal2-container).swal2-no-transition{transition:none !important}div:where(.swal2-container) div:where(.swal2-popup){display:none;position:relative;box-sizing:border-box;grid-template-columns:minmax(0, 100%);width:var(--swal2-width);max-width:100%;padding:var(--swal2-padding);border:var(--swal2-border);border-radius:var(--swal2-border-radius);background:var(--swal2-background);color:var(--swal2-color);font-family:inherit;font-size:1rem}div:where(.swal2-container) div:where(.swal2-popup):focus{outline:none}div:where(.swal2-container) div:where(.swal2-popup).swal2-loading{overflow-y:hidden}div:where(.swal2-container) div:where(.swal2-popup).swal2-draggable{cursor:grab}div:where(.swal2-container) div:where(.swal2-popup).swal2-draggable div:where(.swal2-icon){cursor:grab}div:where(.swal2-container) div:where(.swal2-popup).swal2-dragging{cursor:grabbing}div:where(.swal2-container) div:where(.swal2-popup).swal2-dragging div:where(.swal2-icon){cursor:grabbing}div:where(.swal2-container) h2:where(.swal2-title){position:relative;max-width:100%;margin:0;padding:var(--swal2-title-padding);color:inherit;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;word-wrap:break-word;cursor:initial}div:where(.swal2-container) div:where(.swal2-actions){display:flex;z-index:1;box-sizing:border-box;flex-wrap:wrap;align-items:center;justify-content:center;width:auto;margin:1.25em auto 0;padding:0}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled[disabled]{opacity:.4}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:hover{background-image:linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1))}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:active{background-image:linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))}div:where(.swal2-container) div:where(.swal2-loader){display:none;align-items:center;justify-content:center;width:2.2em;height:2.2em;margin:0 1.875em;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;border-width:.25em;border-style:solid;border-radius:100%;border-color:#2778c4 rgba(0,0,0,0) #2778c4 rgba(0,0,0,0)}div:where(.swal2-container) button:where(.swal2-styled){margin:.3125em;padding:.625em 1.1em;transition:box-shadow .1s;box-shadow:0 0 0 3px rgba(0,0,0,0);font-weight:500}div:where(.swal2-container) button:where(.swal2-styled):not([disabled]){cursor:pointer}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm){border:0;border-radius:.25em;background:initial;background-color:#7066e0;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm):focus-visible{box-shadow:0 0 0 3px rgba(112,102,224,.5)}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny){border:0;border-radius:.25em;background:initial;background-color:#dc3741;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny):focus-visible{box-shadow:0 0 0 3px rgba(220,55,65,.5)}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel){border:0;border-radius:.25em;background:initial;background-color:#6e7881;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel):focus-visible{box-shadow:0 0 0 3px rgba(110,120,129,.5)}div:where(.swal2-container) button:where(.swal2-styled).swal2-default-outline:focus-visible{box-shadow:0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) button:where(.swal2-styled):focus-visible{outline:none}div:where(.swal2-container) button:where(.swal2-styled)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-footer){margin:1em 0 0;padding:1em 1em 0;border-top:1px solid var(--swal2-footer-border-color);color:inherit;font-size:1em;text-align:center;cursor:initial}div:where(.swal2-container) .swal2-timer-progress-bar-container{position:absolute;right:0;bottom:0;left:0;grid-column:auto !important;overflow:hidden;border-bottom-right-radius:var(--swal2-border-radius);border-bottom-left-radius:var(--swal2-border-radius)}div:where(.swal2-container) div:where(.swal2-timer-progress-bar){width:100%;height:.25em;background:rgba(0,0,0,.2)}div:where(.swal2-container) img:where(.swal2-image){max-width:100%;margin:2em auto 1em;cursor:initial}div:where(.swal2-container) button:where(.swal2-close){position:var(--swal2-close-button-position);inset:var(--swal2-close-button-inset);z-index:2;align-items:center;justify-content:center;width:1.2em;height:1.2em;margin-top:0;margin-right:0;margin-bottom:-1.2em;padding:0;overflow:hidden;transition:var(--swal2-close-button-transition);border:none;border-radius:var(--swal2-border-radius);outline:var(--swal2-close-button-outline);background:rgba(0,0,0,0);color:var(--swal2-close-button-color);font-family:monospace;font-size:var(--swal2-close-button-font-size);cursor:pointer;justify-self:end}div:where(.swal2-container) button:where(.swal2-close):hover{transform:var(--swal2-close-button-hover-transform);background:rgba(0,0,0,0);color:#f27474}div:where(.swal2-container) button:where(.swal2-close):focus-visible{outline:none;box-shadow:inset 0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) button:where(.swal2-close)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-html-container){z-index:1;justify-content:center;margin:0;padding:var(--swal2-html-container-padding);overflow:auto;color:inherit;font-size:1.125em;font-weight:normal;line-height:normal;text-align:center;word-wrap:break-word;word-break:break-word;cursor:initial}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea),div:where(.swal2-container) select:where(.swal2-select),div:where(.swal2-container) div:where(.swal2-radio),div:where(.swal2-container) label:where(.swal2-checkbox){margin:1em 2em 3px}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea){box-sizing:border-box;width:auto;transition:border-color .1s,box-shadow .1s;border:1px solid #d9d9d9;border-radius:.1875em;background:var(--swal2-input-background);box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(0,0,0,0);color:inherit;font-size:1.125em}div:where(.swal2-container) input:where(.swal2-input).swal2-inputerror,div:where(.swal2-container) input:where(.swal2-file).swal2-inputerror,div:where(.swal2-container) textarea:where(.swal2-textarea).swal2-inputerror{border-color:#f27474 !important;box-shadow:0 0 2px #f27474 !important}div:where(.swal2-container) input:where(.swal2-input):focus,div:where(.swal2-container) input:where(.swal2-file):focus,div:where(.swal2-container) textarea:where(.swal2-textarea):focus{border:1px solid #b4dbed;outline:none;box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) input:where(.swal2-input)::placeholder,div:where(.swal2-container) input:where(.swal2-file)::placeholder,div:where(.swal2-container) textarea:where(.swal2-textarea)::placeholder{color:#ccc}div:where(.swal2-container) .swal2-range{margin:1em 2em 3px;background:var(--swal2-background)}div:where(.swal2-container) .swal2-range input{width:80%}div:where(.swal2-container) .swal2-range output{width:20%;color:inherit;font-weight:600;text-align:center}div:where(.swal2-container) .swal2-range input,div:where(.swal2-container) .swal2-range output{height:2.625em;padding:0;font-size:1.125em;line-height:2.625em}div:where(.swal2-container) .swal2-input{height:2.625em;padding:0 .75em}div:where(.swal2-container) .swal2-file{width:75%;margin-right:auto;margin-left:auto;background:var(--swal2-input-background);font-size:1.125em}div:where(.swal2-container) .swal2-textarea{height:6.75em;padding:.75em}div:where(.swal2-container) .swal2-select{min-width:50%;max-width:100%;padding:.375em .625em;background:var(--swal2-input-background);color:inherit;font-size:1.125em}div:where(.swal2-container) .swal2-radio,div:where(.swal2-container) .swal2-checkbox{align-items:center;justify-content:center;background:var(--swal2-background);color:inherit}div:where(.swal2-container) .swal2-radio label,div:where(.swal2-container) .swal2-checkbox label{margin:0 .6em;font-size:1.125em}div:where(.swal2-container) .swal2-radio input,div:where(.swal2-container) .swal2-checkbox input{flex-shrink:0;margin:0 .4em}div:where(.swal2-container) label:where(.swal2-input-label){display:flex;justify-content:center;margin:1em auto 0}div:where(.swal2-container) div:where(.swal2-validation-message){align-items:center;justify-content:center;margin:1em 0 0;padding:.625em;overflow:hidden;background:var(--swal2-validation-message-background);color:var(--swal2-validation-message-color);font-size:1em;font-weight:300}div:where(.swal2-container) div:where(.swal2-validation-message)::before{content:"!";display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 .625em;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center}div:where(.swal2-container) .swal2-progress-steps{flex-wrap:wrap;align-items:center;max-width:100%;margin:1.25em auto;padding:0;background:rgba(0,0,0,0);font-weight:600}div:where(.swal2-container) .swal2-progress-steps li{display:inline-block;position:relative}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step{z-index:20;flex-shrink:0;width:2em;height:2em;border-radius:2em;background:#2778c4;color:#fff;line-height:2em;text-align:center}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step{background:#2778c4}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step{background:var(--swal2-progress-step-background);color:#fff}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line{background:var(--swal2-progress-step-background)}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step-line{z-index:10;flex-shrink:0;width:2.5em;height:.4em;margin:0 -1px;background:#2778c4}div:where(.swal2-icon){position:relative;box-sizing:content-box;justify-content:center;width:5em;height:5em;margin:2.5em auto .6em;border:.25em solid rgba(0,0,0,0);border-radius:50%;border-color:#000;font-family:inherit;line-height:5em;cursor:default;user-select:none}div:where(.swal2-icon) .swal2-icon-content{display:flex;align-items:center;font-size:3.75em}div:where(.swal2-icon).swal2-error{border-color:#f27474;color:#f27474}div:where(.swal2-icon).swal2-error .swal2-x-mark{position:relative;flex-grow:1}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line]{display:block;position:absolute;top:2.3125em;width:2.9375em;height:.3125em;border-radius:.125em;background-color:#f27474}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=left]{left:1.0625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=right]{right:1em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-error.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-error.swal2-icon-show .swal2-x-mark{animation:swal2-animate-error-x-mark .5s}div:where(.swal2-icon).swal2-warning{border-color:#f8bb86;color:#f8bb86}div:where(.swal2-icon).swal2-warning.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-warning.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .5s}div:where(.swal2-icon).swal2-info{border-color:#3fc3ee;color:#3fc3ee}div:where(.swal2-icon).swal2-info.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-info.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .8s}div:where(.swal2-icon).swal2-question{border-color:#87adbd;color:#87adbd}div:where(.swal2-icon).swal2-question.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-question.swal2-icon-show .swal2-icon-content{animation:swal2-animate-question-mark .8s}div:where(.swal2-icon).swal2-success{border-color:#a5dc86;color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line]{position:absolute;width:3.75em;height:7.5em;border-radius:50%}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.4375em;left:-2.0635em;transform:rotate(-45deg);transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.6875em;left:1.875em;transform:rotate(-45deg);transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}div:where(.swal2-icon).swal2-success .swal2-success-ring{position:absolute;z-index:2;top:-0.25em;left:-0.25em;box-sizing:content-box;width:100%;height:100%;border:.25em solid rgba(165,220,134,.3);border-radius:50%}div:where(.swal2-icon).swal2-success .swal2-success-fix{position:absolute;z-index:1;top:.5em;left:1.625em;width:.4375em;height:5.625em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line]{display:block;position:absolute;z-index:2;height:.3125em;border-radius:.125em;background-color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=tip]{top:2.875em;left:.8125em;width:1.5625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=long]{top:2.375em;right:.5em;width:2.9375em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-animate-success-line-tip .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-animate-success-line-long .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-circular-line-right{animation:swal2-rotate-success-circular-line 4.25s ease-in}[class^=swal2]{-webkit-tap-highlight-color:rgba(0,0,0,0)}.swal2-show{animation:var(--swal2-show-animation)}.swal2-hide{animation:var(--swal2-hide-animation)}.swal2-noanimation{transition:none}.swal2-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}.swal2-rtl .swal2-close{margin-right:initial;margin-left:0}.swal2-rtl .swal2-timer-progress-bar{right:0;left:auto}.swal2-toast{box-sizing:border-box;grid-column:1/4 !important;grid-row:1/4 !important;grid-template-columns:min-content auto min-content;padding:1em;overflow-y:hidden;background:var(--swal2-background);box-shadow:0 0 1px rgba(0,0,0,.075),0 1px 2px rgba(0,0,0,.075),1px 2px 4px rgba(0,0,0,.075),1px 3px 8px rgba(0,0,0,.075),2px 4px 16px rgba(0,0,0,.075);pointer-events:all}.swal2-toast>*{grid-column:2}.swal2-toast h2:where(.swal2-title){margin:.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-toast .swal2-loading{justify-content:center}.swal2-toast input:where(.swal2-input){height:2em;margin:.5em;font-size:1em}.swal2-toast .swal2-validation-message{font-size:1em}.swal2-toast div:where(.swal2-footer){margin:.5em 0 0;padding:.5em 0 0;font-size:.8em}.swal2-toast button:where(.swal2-close){grid-column:3/3;grid-row:1/99;align-self:center;width:.8em;height:.8em;margin:0;font-size:2em}.swal2-toast div:where(.swal2-html-container){margin:.5em 1em;padding:0;overflow:initial;font-size:1em;text-align:initial}.swal2-toast div:where(.swal2-html-container):empty{padding:0}.swal2-toast .swal2-loader{grid-column:1;grid-row:1/99;align-self:center;width:2em;height:2em;margin:.25em}.swal2-toast .swal2-icon{grid-column:1;grid-row:1/99;align-self:center;width:2em;min-width:2em;height:2em;margin:0 .5em 0 0}.swal2-toast .swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:1.8em;font-weight:bold}.swal2-toast .swal2-icon.swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line]{top:.875em;width:1.375em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:.3125em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:.3125em}.swal2-toast div:where(.swal2-actions){justify-content:flex-start;height:auto;margin:0;margin-top:.5em;padding:0 .5em}.swal2-toast button:where(.swal2-styled){margin:.25em .5em;padding:.4em .6em;font-size:1em}.swal2-toast .swal2-success{border-color:#a5dc86}.swal2-toast .swal2-success [class^=swal2-success-circular-line]{position:absolute;width:1.6em;height:3em;border-radius:50%}.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.8em;left:-0.5em;transform:rotate(-45deg);transform-origin:2em 2em;border-radius:4em 0 0 4em}.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.25em;left:.9375em;transform-origin:0 1.5em;border-radius:0 4em 4em 0}.swal2-toast .swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-toast .swal2-success .swal2-success-fix{top:0;left:.4375em;width:.4375em;height:2.6875em}.swal2-toast .swal2-success [class^=swal2-success-line]{height:.3125em}.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip]{top:1.125em;left:.1875em;width:.75em}.swal2-toast .swal2-success [class^=swal2-success-line][class$=long]{top:.9375em;right:.1875em;width:1.375em}.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-toast-animate-success-line-tip .75s}.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-toast-animate-success-line-long .75s}.swal2-toast.swal2-show{animation:swal2-toast-show .5s}.swal2-toast.swal2-hide{animation:swal2-toast-hide .1s forwards}@keyframes swal2-show{0%{transform:scale(0.7)}45%{transform:scale(1.05)}80%{transform:scale(0.95)}100%{transform:scale(1)}}@keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(0.5);opacity:0}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-0.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(0.4);opacity:0}50%{margin-top:1.625em;transform:scale(0.4);opacity:0}80%{margin-top:-0.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0deg);opacity:1}}@keyframes swal2-rotate-loading{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:.4}50%{transform:rotateZ(15deg);opacity:.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-toast-show{0%{transform:translateY(-0.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(0.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0deg)}}@keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-0.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}\n';
 
   const fix =
-    '#nprogress .bar {\n  background: #29d;\n  position: fixed;\n  z-index: 1031;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 4px;\n}\n\n#pagesSlider {\n  margin: 10px 0;\n}\n\n#pageInputs {\n  display: flex;\n  gap: 5px;\n  align-items: center;\n  justify-content: center;\n}\n\n#swal2-html-container .pageInput {\n  border: 1px darkblue dashed;\n  border-radius: 5px;\n  text-align: center;\n  background-color: aliceblue;\n  color: black;\n  max-width: 40%;\n}\n\n#swal2-title {\n  color: navy;\n}\n\nbutton.swal2-styled {\n  position: inherit;\n  transform: inherit;\n}\n';
+    '#nprogress .bar {\r\n  background: #29d;\r\n  position: fixed;\r\n  z-index: 1031;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 4px;\r\n}\r\n\r\n#pagesSlider {\r\n  margin: 10px 0;\r\n}\r\n\r\n#pageInputs {\r\n  display: flex;\r\n  gap: 5px;\r\n  align-items: center;\r\n  justify-content: center;\r\n}\r\n\r\n#swal2-html-container .pageInput {\r\n  border: 1px darkblue dashed;\r\n  border-radius: 5px;\r\n  text-align: center;\r\n  background-color: aliceblue;\r\n  color: black;\r\n  max-width: 40%;\r\n}\r\n\r\n#swal2-title {\r\n  color: navy;\r\n}\r\n\r\nbutton.swal2-styled {\r\n  position: inherit;\r\n  transform: inherit;\r\n}\r\n';
 
   const sweetalertStyle = [normalize$1, sweetalert, fix, nprogress, keyscss].join('\n');
 
   const startButton =
-    '#StartMOV {\n  all: revert;\n  backface-visibility: hidden;\n  font-size: 2rem;\n  color: #fff;\n  cursor: pointer;\n  margin: 0 auto;\n  padding: 0.5rem 1rem;\n  text-align: center;\n  border: none;\n  border-radius: 10px;\n  min-height: 50px;\n  width: 80%;\n  position: fixed;\n  right: 0;\n  left: 0;\n  bottom: 0;\n  z-index: 105000;\n  transition: all 0.4s ease-in-out;\n  background-size: 300% 100%;\n  background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\n  box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\n}\n\n#StartMOV:hover {\n  background-position: 100% 0;\n  transition: all 0.4s ease-in-out;\n}\n\n#StartMOV:focus {\n  outline: none;\n}\n';
+    '#StartMOV {\r\n  all: revert;\r\n  backface-visibility: hidden;\r\n  font-size: 2rem;\r\n  color: #fff;\r\n  cursor: pointer;\r\n  margin: 0 auto;\r\n  padding: 0.5rem 1rem;\r\n  text-align: center;\r\n  border: none;\r\n  border-radius: 10px;\r\n  min-height: 50px;\r\n  width: 80%;\r\n  position: fixed;\r\n  right: 0;\r\n  left: 0;\r\n  bottom: 0;\r\n  z-index: 105000;\r\n  transition: all 0.4s ease-in-out;\r\n  background-size: 300% 100%;\r\n  background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\r\n  box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\r\n}\r\n\r\n#StartMOV:hover {\r\n  background-position: 100% 0;\r\n  transition: all 0.4s ease-in-out;\r\n}\r\n\r\n#StartMOV:focus {\r\n  outline: none;\r\n}\r\n';
 
   const concatenateTemplateLiteralTag = (raw, ...keys) =>
     keys.length === 0 ? raw[0] : String.raw({ raw }, ...keys);
@@ -518,6 +520,15 @@
   };
 
   let computed = (stores, fn) => computedStore(stores, fn);
+
+  function listenKeys($store, keys, listener) {
+    let keysSet = new Set(keys).add(undefined);
+    return $store.listen((value, oldValue, changed) => {
+      if (keysSet.has(changed)) {
+        listener(value, oldValue, changed);
+      }
+    });
+  }
 
   let map = (initial = {}) => {
     let $map = atom(initial);
@@ -1293,136 +1304,136 @@
   }
 
   const IconArrowAutofitDown =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8"/>\n  <path d="M18 4v17"/>\n  <path d="M15 18l3 3l3 -3"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8"/>\r\n  <path d="M18 4v17"/>\r\n  <path d="M15 18l3 3l3 -3"/>\r\n</svg>\r\n';
 
   const IconArrowAutofitHeight =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-height" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6"/>\n  <path d="M18 14v7"/>\n  <path d="M18 3v7"/>\n  <path d="M15 18l3 3l3 -3"/>\n  <path d="M15 6l3 -3l3 3"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-height" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6"/>\r\n  <path d="M18 14v7"/>\r\n  <path d="M18 3v7"/>\r\n  <path d="M15 18l3 3l3 -3"/>\r\n  <path d="M15 6l3 -3l3 3"/>\r\n</svg>\r\n';
 
   const IconArrowAutofitLeft =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8"/>\n  <path d="M20 18h-17"/>\n  <path d="M6 15l-3 3l3 3"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8"/>\r\n  <path d="M20 18h-17"/>\r\n  <path d="M6 15l-3 3l3 3"/>\r\n</svg>\r\n';
 
   const IconArrowAutofitRight =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8"/>\n  <path d="M4 18h17"/>\n  <path d="M18 15l3 3l-3 3"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8"/>\r\n  <path d="M4 18h17"/>\r\n  <path d="M18 15l3 3l-3 3"/>\r\n</svg>\r\n';
 
   const IconArrowAutofitWidth =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-width" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6"/>\n  <path d="M10 18h-7"/>\n  <path d="M21 18h-7"/>\n  <path d="M6 15l-3 3l3 3"/>\n  <path d="M18 15l3 3l-3 3"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-width" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6"/>\r\n  <path d="M10 18h-7"/>\r\n  <path d="M21 18h-7"/>\r\n  <path d="M6 15l-3 3l3 3"/>\r\n  <path d="M18 15l3 3l-3 3"/>\r\n</svg>\r\n';
 
   const IconArrowBigLeft =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z"/>\r\n</svg>\r\n';
 
   const IconArrowBigRight =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z"/>\r\n</svg>\r\n';
 
   const IconBookmark =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z"/>\r\n</svg>\r\n';
 
   const IconBookmarkOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M7.708 3.721a3.982 3.982 0 0 1 2.292 -.721h4a4 4 0 0 1 4 4v7m0 4v3l-6 -4l-6 4v-14c0 -.308 .035 -.609 .1 -.897"/>\n  <path d="M3 3l18 18"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M7.708 3.721a3.982 3.982 0 0 1 2.292 -.721h4a4 4 0 0 1 4 4v7m0 4v3l-6 -4l-6 4v-14c0 -.308 .035 -.609 .1 -.897"/>\r\n  <path d="M3 3l18 18"/>\r\n</svg>\r\n';
 
   const IconBookmarks =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmarks" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z"/>\n  <path d="M11 3h5a3 3 0 0 1 3 3v11"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmarks" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z"/>\r\n  <path d="M11 3h5a3 3 0 0 1 3 3v11"/>\r\n</svg>\r\n';
 
   const IconCategory =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 4h6v6h-6z"/>\n  <path d="M14 4h6v6h-6z"/>\n  <path d="M4 14h6v6h-6z"/>\n  <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 4h6v6h-6z"/>\r\n  <path d="M14 4h6v6h-6z"/>\r\n  <path d="M4 14h6v6h-6z"/>\r\n  <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>\r\n</svg>\r\n';
 
   const IconCheck =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check toggler-on" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M5 12l5 5l10 -10"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check toggler-on" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M5 12l5 5l10 -10"/>\r\n</svg>\r\n';
 
   const IconDeviceFloppy =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"/>\n  <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\n  <path d="M14 4l0 4l-6 0l0 -4"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"/>\r\n  <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\r\n  <path d="M14 4l0 4l-6 0l0 -4"/>\r\n</svg>\r\n';
 
   const IconExternalLink =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-external-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"/>\n  <path d="M11 13l9 -9"/>\n  <path d="M15 4h5v5"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-external-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"/>\r\n  <path d="M11 13l9 -9"/>\r\n  <path d="M15 4h5v5"/>\r\n</svg>\r\n';
 
   const IconEye =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/>\n  <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/>\r\n  <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/>\r\n</svg>\r\n';
 
   const IconEyeOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828"/>\n  <path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87"/>\n  <path d="M3 3l18 18"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828"/>\r\n  <path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87"/>\r\n  <path d="M3 3l18 18"/>\r\n</svg>\r\n';
 
   const IconFileDownload =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M14 3v4a1 1 0 0 0 1 1h4"/>\n  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>\n  <path d="M12 17v-6"/>\n  <path d="M9.5 14.5l2.5 2.5l2.5 -2.5"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M14 3v4a1 1 0 0 0 1 1h4"/>\r\n  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>\r\n  <path d="M12 17v-6"/>\r\n  <path d="M9.5 14.5l2.5 2.5l2.5 -2.5"/>\r\n</svg>\r\n';
 
   const IconKeyboard =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-keyboard" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z"/>\n  <path d="M6 10l0 .01"/>\n  <path d="M10 10l0 .01"/>\n  <path d="M14 10l0 .01"/>\n  <path d="M18 10l0 .01"/>\n  <path d="M6 14l0 .01"/>\n  <path d="M18 14l0 .01"/>\n  <path d="M10 14l4 .01"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-keyboard" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z"/>\r\n  <path d="M6 10l0 .01"/>\r\n  <path d="M10 10l0 .01"/>\r\n  <path d="M14 10l0 .01"/>\r\n  <path d="M18 10l0 .01"/>\r\n  <path d="M6 14l0 .01"/>\r\n  <path d="M18 14l0 .01"/>\r\n  <path d="M10 14l4 .01"/>\r\n</svg>\r\n';
 
   const IconListNumbers =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-numbers" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M11 6h9"/>\n  <path d="M11 12h9"/>\n  <path d="M12 18h8"/>\n  <path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4"/>\n  <path d="M6 10v-6l-2 2"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-numbers" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M11 6h9"/>\r\n  <path d="M11 12h9"/>\r\n  <path d="M12 18h8"/>\r\n  <path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4"/>\r\n  <path d="M6 10v-6l-2 2"/>\r\n</svg>\r\n';
 
   const IconLoader2 =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-loader-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 3a9 9 0 1 0 9 9"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-loader-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 3a9 9 0 1 0 9 9"/>\r\n</svg>\r\n';
 
   const IconLocationCog =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n     class="icon icon-tabler icons-tabler-outline icon-tabler-location-cog">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 18l-2 -4l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5l-3.14 8.697"/>\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\n  <path d="M19.001 15.5v1.5"/>\n  <path d="M19.001 21v1.5"/>\n  <path d="M22.032 17.25l-1.299 .75"/>\n  <path d="M17.27 20l-1.3 .75"/>\n  <path d="M15.97 17.25l1.3 .75"/>\n  <path d="M20.733 20l1.3 .75"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\r\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\r\n     class="icon icon-tabler icons-tabler-outline icon-tabler-location-cog">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 18l-2 -4l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5l-3.14 8.697"/>\r\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\r\n  <path d="M19.001 15.5v1.5"/>\r\n  <path d="M19.001 21v1.5"/>\r\n  <path d="M22.032 17.25l-1.299 .75"/>\r\n  <path d="M17.27 20l-1.3 .75"/>\r\n  <path d="M15.97 17.25l1.3 .75"/>\r\n  <path d="M20.733 20l1.3 .75"/>\r\n</svg>\r\n';
 
   const IconMenu2 =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 6l16 0"/>\n  <path d="M4 12l16 0"/>\n  <path d="M4 18l16 0"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 6l16 0"/>\r\n  <path d="M4 12l16 0"/>\r\n  <path d="M4 18l16 0"/>\r\n</svg>\r\n';
 
   const IconMessage =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M8 9h8"/>\n  <path d="M8 13h6"/>\n  <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M8 9h8"/>\r\n  <path d="M8 13h6"/>\r\n  <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"/>\r\n</svg>\r\n';
 
   const IconMoon =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/>\r\n</svg>\r\n';
 
   const IconPalette =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-palette" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"/>\n  <path d="M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\n  <path d="M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\n  <path d="M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-palette" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"/>\r\n  <path d="M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\r\n  <path d="M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\r\n  <path d="M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\r\n</svg>\r\n';
 
   const IconPencil =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/>\n  <path d="M13.5 6.5l4 4"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/>\r\n  <path d="M13.5 6.5l4 4"/>\r\n</svg>\r\n';
 
   const IconPhoto =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 8h.01"/>\n  <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/>\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/>\n  <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M15 8h.01"/>\r\n  <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/>\r\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/>\r\n  <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/>\r\n</svg>\r\n';
 
   const IconPhotoOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo-off" width="24"\n     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"\n     stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 8h.01"/>\n  <path d="M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153"/>\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/>\n  <path d="M16.33 12.338c.574 -.054 1.155 .166 1.67 .662l3 3"/>\n  <path d="M3 3l18 18" color="orange"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo-off" width="24"\r\n     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"\r\n     stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M15 8h.01"/>\r\n  <path d="M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153"/>\r\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/>\r\n  <path d="M16.33 12.338c.574 -.054 1.155 .166 1.67 .662l3 3"/>\r\n  <path d="M3 3l18 18" color="orange"/>\r\n</svg>\r\n';
 
   const IconPlayerPause =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-pause" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"/>\n  <path d="M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-pause" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"/>\r\n  <path d="M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"/>\r\n</svg>\r\n';
 
   const IconPlayerPlay =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M7 4v16l13 -8z"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M7 4v16l13 -8z"/>\r\n</svg>\r\n';
 
   const IconRefresh =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>\n  <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>\r\n  <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>\r\n</svg>\r\n';
 
   const IconSettings =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/>\n  <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/>\r\n  <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/>\r\n</svg>\r\n';
 
   const IconSettingsOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n     class="icon icon-tabler icons-tabler-outline icon-tabler-settings-off">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M9.451 5.437c.418 -.218 .75 -.609 .874 -1.12c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35c-.486 .118 -.894 .44 -1.123 .878m-.188 3.803c-.517 .523 -1.349 .734 -2.125 .262a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.472 -.774 -.262 -1.604 .259 -2.121"/>\n  <path d="M9.889 9.869a3 3 0 1 0 4.226 4.26m.592 -3.424a3.012 3.012 0 0 0 -1.419 -1.415"/>\n  <path d="M3 3l18 18"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\r\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\r\n     class="icon icon-tabler icons-tabler-outline icon-tabler-settings-off">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M9.451 5.437c.418 -.218 .75 -.609 .874 -1.12c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35c-.486 .118 -.894 .44 -1.123 .878m-.188 3.803c-.517 .523 -1.349 .734 -2.125 .262a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.472 -.774 -.262 -1.604 .259 -2.121"/>\r\n  <path d="M9.889 9.869a3 3 0 1 0 4.226 4.26m.592 -3.424a3.012 3.012 0 0 0 -1.419 -1.415"/>\r\n  <path d="M3 3l18 18"/>\r\n</svg>\r\n';
 
   const IconSpacingVertical =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-spacing-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2"/>\n  <path d="M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/>\n  <path d="M16 12h-8"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-spacing-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2"/>\r\n  <path d="M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/>\r\n  <path d="M16 12h-8"/>\r\n</svg>\r\n';
 
   const IconSun =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/>\n  <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/>\r\n  <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/>\r\n</svg>\r\n';
 
   const IconTrash =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 7l16 0"/>\n  <path d="M10 11l0 6"/>\n  <path d="M14 11l0 6"/>\n  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>\n  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M4 7l16 0"/>\r\n  <path d="M10 11l0 6"/>\r\n  <path d="M14 11l0 6"/>\r\n  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>\r\n  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>\r\n</svg>\r\n';
 
   const IconWorldCog =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n     class="icon icon-tabler icons-tabler-outline icon-tabler-world-cog">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M21 12a9 9 0 1 0 -8.979 9"/>\n  <path d="M3.6 9h16.8"/>\n  <path d="M3.6 15h8.9"/>\n  <path d="M11.5 3a17 17 0 0 0 0 18"/>\n  <path d="M12.5 3a16.992 16.992 0 0 1 2.522 10.376"/>\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\n  <path d="M19.001 15.5v1.5"/>\n  <path d="M19.001 21v1.5"/>\n  <path d="M22.032 17.25l-1.299 .75"/>\n  <path d="M17.27 20l-1.3 .75"/>\n  <path d="M15.97 17.25l1.3 .75"/>\n  <path d="M20.733 20l1.3 .75"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\r\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\r\n     class="icon icon-tabler icons-tabler-outline icon-tabler-world-cog">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M21 12a9 9 0 1 0 -8.979 9"/>\r\n  <path d="M3.6 9h16.8"/>\r\n  <path d="M3.6 15h8.9"/>\r\n  <path d="M11.5 3a17 17 0 0 0 0 18"/>\r\n  <path d="M12.5 3a16.992 16.992 0 0 1 2.522 10.376"/>\r\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\r\n  <path d="M19.001 15.5v1.5"/>\r\n  <path d="M19.001 21v1.5"/>\r\n  <path d="M22.032 17.25l-1.299 .75"/>\r\n  <path d="M17.27 20l-1.3 .75"/>\r\n  <path d="M15.97 17.25l1.3 .75"/>\r\n  <path d="M20.733 20l1.3 .75"/>\r\n</svg>\r\n';
 
   const IconX =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x toggler-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M18 6l-12 12"/>\n  <path d="M6 6l12 12"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x toggler-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M18 6l-12 12"/>\r\n  <path d="M6 6l12 12"/>\r\n</svg>\r\n';
 
   const IconZoomCancel =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-cancel" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\n  <path d="M8 8l4 4"/>\n  <path d="M12 8l-4 4"/>\n  <path d="M21 21l-6 -6"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-cancel" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\r\n  <path d="M8 8l4 4"/>\r\n  <path d="M12 8l-4 4"/>\r\n  <path d="M21 21l-6 -6"/>\r\n</svg>\r\n';
 
   const IconZoomIn =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\n  <path d="M7 10l6 0"/>\n  <path d="M10 7l0 6"/>\n  <path d="M21 21l-6 -6"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\r\n  <path d="M7 10l6 0"/>\r\n  <path d="M10 7l0 6"/>\r\n  <path d="M21 21l-6 -6"/>\r\n</svg>\r\n';
 
   const IconZoomInArea =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 13v4"/>\n  <path d="M13 15h4"/>\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/>\n  <path d="M22 22l-3 -3"/>\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1"/>\n  <path d="M3 11v-1"/>\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1"/>\n  <path d="M10 3h1"/>\n  <path d="M15 3h1a2 2 0 0 1 2 2v1"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M15 13v4"/>\r\n  <path d="M13 15h4"/>\r\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/>\r\n  <path d="M22 22l-3 -3"/>\r\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1"/>\r\n  <path d="M3 11v-1"/>\r\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1"/>\r\n  <path d="M10 3h1"/>\r\n  <path d="M15 3h1a2 2 0 0 1 2 2v1"/>\r\n</svg>\r\n';
 
   const IconZoomOut =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\n  <path d="M7 10l6 0"/>\n  <path d="M21 21l-6 -6"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\r\n  <path d="M7 10l6 0"/>\r\n  <path d="M21 21l-6 -6"/>\r\n</svg>\r\n';
 
   const IconZoomOutArea =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M13 15h4"/>\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/>\n  <path d="M22 22l-3 -3"/>\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1"/>\n  <path d="M3 11v-1"/>\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1"/>\n  <path d="M10 3h1"/>\n  <path d="M15 3h1a2 2 0 0 1 2 2v1"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M13 15h4"/>\r\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/>\r\n  <path d="M22 22l-3 -3"/>\r\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1"/>\r\n  <path d="M3 11v-1"/>\r\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1"/>\r\n  <path d="M10 3h1"/>\r\n  <path d="M15 3h1a2 2 0 0 1 2 2v1"/>\r\n</svg>\r\n';
 
   const IconZoomPan =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-pan" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>\n  <path d="M17 17l-2.5 -2.5"/>\n  <path d="M10 5l2 -2l2 2"/>\n  <path d="M19 10l2 2l-2 2"/>\n  <path d="M5 10l-2 2l2 2"/>\n  <path d="M10 19l2 2l2 -2"/>\n</svg>\n';
+    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-pan" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\r\n  <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>\r\n  <path d="M17 17l-2.5 -2.5"/>\r\n  <path d="M10 5l2 -2l2 2"/>\r\n  <path d="M19 10l2 2l-2 2"/>\r\n  <path d="M5 10l-2 2l2 2"/>\r\n  <path d="M10 19l2 2l2 -2"/>\r\n</svg>\r\n';
 
   const listBookmarks = () => {
     if (isEmpty(getSettingsValue('bookmarks'))) {
@@ -2149,7 +2160,10 @@
   const settings$1 = map(
     isSettingsLocal() ? { ...localSettings, locale: globalSettings.locale } : globalSettings,
   );
-  computed(settings$1, current => locales.find(l => l.ID === current.locale) ?? locales[1]);
+  const locale = computed(
+    settings$1,
+    current => locales.find(l => l.ID === current.locale) ?? locales[1],
+  );
   function refreshSettings(key) {
     const newObj = isSettingsLocal()
       ? { ...localSettings, locale: globalSettings.locale }
@@ -2673,21 +2687,236 @@
     },
   };
 
-  function removeAllEventListeners(element) {
-    if (!element || !element.parentNode) {
-      return element;
+  var commonjsGlobal =
+    typeof globalThis !== 'undefined'
+      ? globalThis
+      : typeof window !== 'undefined'
+        ? window
+        : typeof global !== 'undefined'
+          ? global
+          : typeof self !== 'undefined'
+            ? self
+            : {};
+
+  var jsxRuntime = { exports: {} };
+
+  var reactJsxRuntime_production = {};
+
+  /**
+   * @license React
+   * react-jsx-runtime.production.js
+   *
+   * Copyright (c) Meta Platforms, Inc. and affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */
+
+  var hasRequiredReactJsxRuntime_production;
+
+  function requireReactJsxRuntime_production() {
+    if (hasRequiredReactJsxRuntime_production) return reactJsxRuntime_production;
+    hasRequiredReactJsxRuntime_production = 1;
+    var REACT_ELEMENT_TYPE = Symbol.for('react.transitional.element'),
+      REACT_FRAGMENT_TYPE = Symbol.for('react.fragment');
+    function jsxProd(type, config, maybeKey) {
+      var key = null;
+      void 0 !== maybeKey && (key = '' + maybeKey);
+      void 0 !== config.key && (key = '' + config.key);
+      if ('key' in config) {
+        maybeKey = {};
+        for (var propName in config) 'key' !== propName && (maybeKey[propName] = config[propName]);
+      } else maybeKey = config;
+      config = maybeKey.ref;
+      return {
+        $$typeof: REACT_ELEMENT_TYPE,
+        type: type,
+        key: key,
+        ref: void 0 !== config ? config : null,
+        props: maybeKey,
+      };
     }
-    const newElement = element.cloneNode(true);
-    element.parentNode.replaceChild(newElement, element);
-    return newElement;
+    reactJsxRuntime_production.Fragment = REACT_FRAGMENT_TYPE;
+    reactJsxRuntime_production.jsx = jsxProd;
+    reactJsxRuntime_production.jsxs = jsxProd;
+    return reactJsxRuntime_production;
   }
-  const removeAttributes = element => {
-    element.getAttributeNames().forEach(attr => element?.removeAttribute(attr));
+
+  var hasRequiredJsxRuntime;
+
+  function requireJsxRuntime() {
+    if (hasRequiredJsxRuntime) return jsxRuntime.exports;
+    hasRequiredJsxRuntime = 1;
+    {
+      jsxRuntime.exports = requireReactJsxRuntime_production();
+    }
+    return jsxRuntime.exports;
+  }
+
+  var jsxRuntimeExports = requireJsxRuntime();
+
+  const animation =
+    '@-webkit-keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\n@keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\n@-webkit-keyframes spin-reverse {\r\n  0% {\r\n    transform: rotate(360deg);\r\n  }\r\n\r\n  to {\r\n    transform: rotate(0);\r\n  }\r\n}\r\n\r\n@keyframes spin-reverse {\r\n  0% {\r\n    transform: rotate(360deg);\r\n  }\r\n\r\n  to {\r\n    transform: rotate(0);\r\n  }\r\n}\r\n\r\n.icon-tabler-loader-2,\r\n.animate-spin {\r\n  -webkit-animation: spin 1s linear infinite;\r\n  animation: spin 1s linear infinite;\r\n}\r\n\r\n.animate-spin-reverse {\r\n  -webkit-animation: spin-reverse 1s linear infinite;\r\n  animation: spin-reverse 1s linear infinite;\r\n}\r\n';
+
+  const bookmarks =
+    '#MangaOnlineViewer #BookmarksPanel {\r\n  position: fixed;\r\n  top: 10%;\r\n  width: 50%;\r\n  left: 25%;\r\n  right: 25%;\r\n  text-align: center;\r\n  max-height: 70%;\r\n  transition: transform 0.3s ease-in-out;\r\n  transform: scaleY(0);\r\n  z-index: 1000;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksPanel.visible {\r\n  transform: scaleY(1);\r\n  display: block;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksList {\r\n  padding: 0 15px;\r\n  overflow: auto;\r\n  max-height: 60vh;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksList .BookmarkItem {\r\n  display: flex;\r\n  flex-flow: row;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 2px;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksList .bookmarkColumnLarge {\r\n  flex-basis: 90%;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksList .bookmarkColumnSmall {\r\n  width: 90px;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksList .bookmarkFunctions {\r\n  width: 75px;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksList .bookmarkURl {\r\n  text-overflow: ellipsis;\r\n  overflow: hidden;\r\n  white-space: nowrap;\r\n  flex-basis: 55%;\r\n}\r\n';
+
+  const comments =
+    '#MangaOnlineViewer #CommentsPanel {\r\n  position: static;\r\n  width: 90%;\r\n  height: 0;\r\n  top: 5%;\r\n  left: 5%;\r\n  text-align: center;\r\n  transition: transform 0.3s ease-in-out;\r\n  transform: scaleY(0);\r\n  z-index: 1000;\r\n  overflow-y: initial;\r\n  background-color: var(--theme-body-background);\r\n  opacity: 0;\r\n}\r\n\r\n#MangaOnlineViewer #CommentsPanel.visible {\r\n  position: fixed;\r\n  height: 90%;\r\n  transform: scaleY(1);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex-direction: column;\r\n  opacity: 1;\r\n}\r\n\r\n#MangaOnlineViewer #CommentsArea {\r\n  overflow-y: auto;\r\n  overscroll-behavior: contain;\r\n  height: 100%;\r\n  width: 100%;\r\n  background-color: var(--theme-body-background);\r\n}\r\n';
+
+  const fluid =
+    '#MangaOnlineViewer #Chapter.FluidLTR,\r\n#MangaOnlineViewer #Chapter.FluidRTL {\r\n  display: flex;\r\n  overflow-x: auto;\r\n  min-width: auto;\r\n\r\n  .ZoomWidth {\r\n    display: none;\r\n  }\r\n\r\n  .PageImg {\r\n    min-width: unset;\r\n  }\r\n\r\n  .MangaPage {\r\n    width: initial;\r\n    min-width: fit-content;\r\n    position: relative;\r\n    max-height: 100%;\r\n  }\r\n\r\n  .MangaPage.DoublePage {\r\n    grid-column: span 2;\r\n  }\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.FluidLTR {\r\n  flex-direction: row;\r\n\r\n  .MangaPage .PageFunctions {\r\n    right: auto;\r\n    left: 0;\r\n    direction: rtl;\r\n  }\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.FluidRTL {\r\n  flex-direction: row-reverse;\r\n}\r\n';
+
+  const header =
+    '#MangaOnlineViewer #gotoPage {\r\n  min-width: 35px;\r\n}\r\n\r\n#MangaOnlineViewer #Header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  flex-flow: row nowrap;\r\n  transition: transform 0.3s ease-in;\r\n  position: sticky;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  background-color: inherit;\r\n  z-index: 900;\r\n}\r\n\r\n#MangaOnlineViewer #Header.click {\r\n  padding-left: 40px;\r\n}\r\n\r\n@keyframes headroom {\r\n  from {\r\n    transform: translateY(-100%);\r\n    position: sticky;\r\n    top: 0;\r\n  }\r\n  to {\r\n    transform: translateY(0%);\r\n    position: sticky;\r\n    top: 0;\r\n  }\r\n}\r\n\r\n#MangaOnlineViewer #Header:not(.visible, .headroom-top, .fixed, .simple) {\r\n  animation: headroom 0.3s ease-in reverse;\r\n  transform: translateY(-100%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL) {\r\n  position: fixed;\r\n  padding-left: 40px;\r\n  top: -100%;\r\n}\r\n\r\n#MangaOnlineViewer #Header.scroll.headroom-hide {\r\n  animation: none;\r\n  transform: translateY(-100%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#MangaOnlineViewer #Header.scroll.headroom-show,\r\n#MangaOnlineViewer #Header.headroom-end,\r\n#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL).visible,\r\n#MangaOnlineViewer #Header.visible {\r\n  animation: headroom 0.3s ease-in;\r\n  transform: translateY(0%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#MangaOnlineViewer #Header.headroom-top {\r\n  animation: none;\r\n}\r\n\r\n#MangaOnlineViewer #Header.fixed {\r\n  position: sticky;\r\n  animation: none;\r\n  top: 0;\r\n  transform: translateY(0%);\r\n}\r\n\r\n#MangaOnlineViewer #Header.simple {\r\n  position: static;\r\n  animation: none;\r\n  top: 0;\r\n  transform: translateY(0%);\r\n}\r\n\r\n#MangaOnlineViewer #menu {\r\n  position: fixed;\r\n  z-index: 1;\r\n  color: var(--theme-body-text-color);\r\n  height: 40px;\r\n  width: 40px;\r\n}\r\n\r\n#MangaOnlineViewer #menu .icon-tabler {\r\n  position: relative;\r\n  top: 4px;\r\n  left: 4px;\r\n  height: 32px;\r\n  width: 32px;\r\n  stroke-width: 1.25;\r\n}\r\n\r\n#MangaOnlineViewer #menu:not(.click, .hover),\r\n#MangaOnlineViewer #menu.hide {\r\n  display: none;\r\n}\r\n\r\n#MangaOnlineViewer #menu.click {\r\n  z-index: 901;\r\n}\r\n\r\n#MangaOnlineViewer #MangaTitle {\r\n  padding: 2px;\r\n  margin: 0;\r\n  font-size: 1.2rem;\r\n  font-weight: 400;\r\n}\r\n\r\n#MangaOnlineViewer #GlobalFunctions {\r\n  display: flex;\r\n  gap: 3px;\r\n  padding: 3px 3px 3px 0;\r\n  flex-wrap: wrap;\r\n  width: 300px;\r\n  z-index: 100;\r\n}\r\n\r\n#MangaOnlineViewer .ChapterControl span,\r\n#MangaOnlineViewer #GlobalFunctions span {\r\n  display: flex;\r\n  flex-wrap: nowrap;\r\n  justify-content: space-evenly;\r\n}\r\n\r\n#MangaOnlineViewer .ChapterControl span {\r\n  flex-grow: 1;\r\n}\r\n\r\n#MangaOnlineViewer .ChapterControl span > * {\r\n  flex-basis: 50%;\r\n}\r\n\r\n#MangaOnlineViewer #ScrollControl .icon-tabler,\r\n#MangaOnlineViewer #GlobalFunctions .icon-tabler {\r\n  width: 25px;\r\n  height: 25px;\r\n}\r\n\r\n#MangaOnlineViewer #GlobalFunctions #ZoomSlider {\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n\r\n#MangaOnlineViewer #GlobalFunctions #Zoom {\r\n  margin: 2px 5px;\r\n  width: 160px;\r\n}\r\n\r\n#MangaOnlineViewer #GlobalFunctions #ZoomVal {\r\n  width: 40px;\r\n  display: inline-block;\r\n  color: var(--theme-primary-text-color);\r\n  line-height: 20px;\r\n  text-align: center;\r\n  border-radius: 3px;\r\n  background: var(--theme-primary-color);\r\n  padding: 2px 5px;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterNavigation {\r\n  display: flex;\r\n  flex-flow: column nowrap;\r\n  justify-content: center;\r\n  align-items: end;\r\n  padding: 5px;\r\n  max-width: 350px;\r\n}\r\n\r\n#MangaOnlineViewer #Counters {\r\n  padding-right: 5px;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterControl {\r\n  display: flex;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterControl .NavigationControlButton {\r\n  display: inline-flex;\r\n  margin: 2px;\r\n  justify-content: center;\r\n  align-items: center;\r\n  padding: 3px;\r\n  gap: 0.5em;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterControl .NavigationControlButton .icon-tabler {\r\n  flex-shrink: 0;\r\n  align-self: center;\r\n  width: 1rem;\r\n  height: 1rem;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href="#"],\r\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href=""],\r\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href="undefined"] {\r\n  visibility: hidden;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterControl #download.loading {\r\n  cursor: not-allowed;\r\n  pointer-events: none;\r\n  opacity: 0.6;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterControl .NavigationControlButton.disabled {\r\n  pointer-events: none;\r\n  filter: grayscale(0.9);\r\n}\r\n\r\n#MangaOnlineViewer .ViewerTitle {\r\n  text-align: center;\r\n  min-height: 60px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex-direction: column;\r\n  padding: 5px;\r\n  flex-basis: 60%;\r\n}\r\n';
+
+  const icons =
+    '.icon-tabler {\r\n  height: 1rem;\r\n  width: 1rem;\r\n  vertical-align: sub;\r\n}\r\n\r\n.icon-tabler-file-download > :nth-child(n + 4) {\r\n  /* 4, 5 */\r\n  color: gold;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-width > :nth-child(n + 3) {\r\n  /* 3,4,5,6 */\r\n  color: yellow;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-height > :nth-child(n + 3) {\r\n  /* 3,4,5,6 */\r\n  color: yellow;\r\n}\r\n\r\n.icon-tabler-zoom-in-area > :nth-child(2),\r\n.icon-tabler-zoom-in-area > :nth-child(3) {\r\n  color: lime;\r\n}\r\n\r\n.icon-tabler-zoom-out-area > :nth-child(2) {\r\n  color: red;\r\n}\r\n\r\n.icon-tabler-zoom-pan > :nth-child(n + 4) {\r\n  color: #9966ff;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-down > :nth-child(n + 3) {\r\n  color: #28ffbf;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-left > :nth-child(n + 3) {\r\n  color: #28ffbf;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-right > :nth-child(n + 3) {\r\n  color: #28ffbf;\r\n}\r\n\r\n.icon-tabler-spacing-vertical > :nth-child(4) {\r\n  color: fuchsia;\r\n}\r\n\r\n.icon-tabler-list-numbers > :nth-child(n + 5) {\r\n  color: #e48900;\r\n}\r\n\r\n.icon-tabler-bookmarks > :nth-child(n + 2) {\r\n  color: orange;\r\n}\r\n\r\n.icon-tabler-bookmark > * {\r\n  color: orange;\r\n}\r\n\r\n.icon-tabler-bookmark-off > * {\r\n  color: orange;\r\n}\r\n\r\n.icon-tabler-bookmark-off > :nth-child(3) {\r\n  color: red;\r\n}\r\n\r\n.icon-tabler-eye-off > :nth-child(4) {\r\n  color: red;\r\n}\r\n\r\n.icon-tabler-zoom-cancel > :nth-child(3),\r\n.icon-tabler-zoom-cancel > :nth-child(4) {\r\n  color: #9966ff;\r\n}\r\n\r\n.icon-tabler-zoom-in > :nth-child(3),\r\n.icon-tabler-zoom-in > :nth-child(4) {\r\n  color: lime;\r\n}\r\n\r\n.icon-tabler-zoom-out > :nth-child(3) {\r\n  color: red;\r\n}\r\n\r\n.icon-tabler-refresh > :nth-child(n + 2) {\r\n  color: cyan;\r\n}\r\n\r\n.icon-tabler-photo > * {\r\n  color: silver;\r\n}\r\n\r\n.icon-tabler-photo-off > * {\r\n  color: silver;\r\n}\r\n\r\n.icon-tabler-photo-off > :nth-child(6) {\r\n  color: orange;\r\n}\r\n\r\n.icon-tabler-message > :nth-child(2),\r\n.icon-tabler-message > :nth-child(3) {\r\n  color: greenyellow;\r\n}\r\n';
+
+  const keybindings$1 =
+    '#MangaOnlineViewer #KeybindingsPanel {\r\n  padding: 10px;\r\n  position: fixed;\r\n  top: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  transition: transform 0.3s ease-in-out;\r\n  transform: translateX(100%);\r\n  line-height: 1.5em;\r\n  z-index: 1000;\r\n  overflow-y: auto;\r\n  width: 360px;\r\n  max-width: 100vw;\r\n}\r\n\r\n#MangaOnlineViewer #KeybindingsPanel.visible {\r\n  transform: translateX(0);\r\n  display: block;\r\n}\r\n\r\n#MangaOnlineViewer #KeybindingsPanel #KeybindingsList {\r\n  display: grid;\r\n  grid-template-columns: 1fr 2fr;\r\n  gap: 5px;\r\n}\r\n\r\n#MangaOnlineViewer #KeybindingsPanel .ControlButton {\r\n  margin-left: 3px;\r\n  justify-content: center;\r\n  align-items: center;\r\n  padding: 5px 10px;\r\n  gap: 0.5em;\r\n}\r\n\r\n#MangaOnlineViewer #KeybindingsPanel label {\r\n  display: ruby;\r\n}\r\n\r\n#MangaOnlineViewer #KeybindingsPanel input {\r\n  display: inline-block;\r\n  width: 100%;\r\n}\r\n\r\n#MangaOnlineViewer #KeybindingsPanel #HotKeysRules {\r\n  grid-column: span 2;\r\n}\r\n';
+
+  const styles =
+    ':root:not(.light, .dark) {\r\n  --theme-body-background: #25262b;\r\n  --theme-body-text-color: #c1c2c5;\r\n  --theme-text-color: #c1c2c5;\r\n  --theme-primary-color: #1a1b1e;\r\n  --theme-primary-text-color: #c1c2c5;\r\n  --theme-background-color: #25262b;\r\n  --theme-hightlight-color: #2c2e33;\r\n  --theme-border-color: #373a40;\r\n}\r\n\r\n#MangaOnlineViewer {\r\n  text-decoration: none;\r\n  color: var(--theme-body-text-color);\r\n  background-color: var(--theme-body-background);\r\n}\r\n\r\n#MangaOnlineViewer #Chapter {\r\n  display: grid;\r\n  grid-template-columns: repeat(1, 1fr);\r\n  min-width: 225px;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical:has(+ #Navigation:not(.disabled)),\r\n#MangaOnlineViewer #Chapter.WebComic:has(+ #Navigation:not(.disabled)) {\r\n  padding-bottom: 31px;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical .PageContent {\r\n  margin-bottom: 8px;\r\n  margin-top: 8px;\r\n}\r\n\r\n#MangaOnlineViewer .closeButton {\r\n  width: fit-content;\r\n  height: fit-content;\r\n  position: absolute;\r\n  right: 10px;\r\n  top: 10px;\r\n}\r\n\r\n#MangaOnlineViewer .overlay {\r\n  position: fixed;\r\n  display: none;\r\n  width: 100%;\r\n  height: 100%;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  background-color: rgba(0, 0, 0, 0.5);\r\n  z-index: 950;\r\n  cursor: pointer;\r\n}\r\n\r\n#MangaOnlineViewer .overlay.visible {\r\n  display: block;\r\n}\r\n\r\n#MangaOnlineViewer select {\r\n  height: 20px;\r\n  /*padding: 0;*/\r\n  margin: 2px;\r\n}\r\n\r\n#MangaOnlineViewer .ControlButton,\r\n#MangaOnlineViewer .simpleButton {\r\n  cursor: pointer;\r\n  border-radius: 5px;\r\n  border-width: 1px;\r\n  border-style: solid;\r\n  padding: 2px;\r\n  min-height: 32px;\r\n  color: var(--theme-primary-text-color);\r\n  background-color: var(--theme-primary-color);\r\n  border-color: var(--theme-border-color);\r\n}\r\n\r\n#MangaOnlineViewer .ControlButton:active,\r\n#MangaOnlineViewer .ControlButton:hover {\r\n  opacity: 0.8;\r\n}\r\n\r\n#MangaOnlineViewer .simpleButton {\r\n  font-size: initial;\r\n  min-width: 32px;\r\n}\r\n\r\n#MangaOnlineViewer .panel .simpleButton {\r\n  position: absolute;\r\n  top: 10px;\r\n  left: 10px;\r\n}\r\n\r\n#MangaOnlineViewer .panel {\r\n  padding: 5px;\r\n  position: inherit;\r\n  border-radius: 5px;\r\n  background-color: var(--theme-background-color);\r\n}\r\n\r\n#MangaOnlineViewer :not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {\r\n  max-width: 100%;\r\n  object-fit: contain;\r\n}\r\n\r\n#MangaOnlineViewer .ControlButton.hidden,\r\n.light #ColorScheme > .icon-tabler-sun,\r\n.dark #ColorScheme > .icon-tabler-moon,\r\n#MangaOnlineViewer .light + #CommentsColorScheme > .icon-tabler-sun,\r\n#MangaOnlineViewer .dark + #CommentsColorScheme > .icon-tabler-moon,\r\n#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,\r\n#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,\r\n#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,\r\n#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,\r\n#MangaOnlineViewer.bookmarked .Bookmark > .icon-tabler-bookmark,\r\n#MangaOnlineViewer:not(.bookmarked) .Bookmark > .icon-tabler-bookmark-off,\r\n#MangaOnlineViewer #AutoScroll.running > .icon-tabler-player-play,\r\n#MangaOnlineViewer #AutoScroll:not(.running) > .icon-tabler-player-pause {\r\n  display: none;\r\n}\r\n\r\n#MangaOnlineViewer.hideControls .PageFunctions {\r\n  visibility: hidden;\r\n}\r\n';
+
+  const media =
+    '#MangaOnlineViewer.mobile #Header,\r\n#MangaOnlineViewer.tablet #Header {\r\n  display: flex;\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n}\r\n\r\n#MangaOnlineViewer.mobile .ViewerTitle,\r\n#MangaOnlineViewer.tablet .ViewerTitle {\r\n  order: 1;\r\n  min-height: auto;\r\n  padding: 0;\r\n  margin: 0;\r\n  flex-grow: 1;\r\n  flex-shrink: 1;\r\n  flex-basis: 100%;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #GlobalFunctions,\r\n#MangaOnlineViewer.tablet #GlobalFunctions {\r\n  width: auto;\r\n  order: 2;\r\n  padding: 5px;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #ChapterNavigation,\r\n#MangaOnlineViewer.tablet #ChapterNavigation {\r\n  order: 3;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\r\n#MangaOnlineViewer.tablet #GlobalFunctions #ZoomSlider,\r\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.tablets, .phones),\r\n#MangaOnlineViewer.tablet #GlobalFunctions .ControlButton:not(.tablets, .phones) {\r\n  display: none;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #Header {\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #Header.click + #Chapter:not(.webcomic, .vertical) {\r\n  position: sticky;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #MangaTitle {\r\n  word-wrap: anywhere;\r\n}\r\n\r\n#MangaOnlineViewer.mobile .ViewerTitle {\r\n  order: 1;\r\n  margin-top: 0;\r\n  height: auto;\r\n  padding: 0;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #GlobalFunctions {\r\n  order: 2;\r\n  padding: 0;\r\n  width: auto;\r\n  flex-basis: 35px;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #ChapterNavigation {\r\n  order: 3;\r\n  width: min-content;\r\n  min-width: 205px;\r\n}\r\n\r\n#MangaOnlineViewer.mobile .ChapterControl {\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n}\r\n\r\n#MangaOnlineViewer.mobile .ChapterControl .NavigationControlButton {\r\n  flex-grow: 1;\r\n}\r\n\r\n#MangaOnlineViewer.mobile .PageFunctions {\r\n  padding: 0;\r\n}\r\n\r\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton.Bookmark {\r\n  opacity: 1;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #Navigation,\r\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\r\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.phones),\r\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton:not(.Bookmark),\r\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoomMode,\r\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoom,\r\n#MangaOnlineViewer.mobile #SettingsPanel .fitIfOversize,\r\n#MangaOnlineViewer.mobile #SettingsPanel .showThumbnails,\r\n#MangaOnlineViewer.mobile #SettingsPanel .lazyLoadImages,\r\n#MangaOnlineViewer.mobile #SettingsPanel .downloadZip,\r\n#MangaOnlineViewer.mobile #SettingsPanel .minZoom,\r\n#MangaOnlineViewer.mobile #SettingsPanel .zoomStep,\r\n#MangaOnlineViewer.mobile #SettingsPanel .headerType,\r\n#MangaOnlineViewer.mobile #SettingsPanel .autoScroll,\r\n#MangaOnlineViewer.mobile #KeybindingsPanel,\r\n#MangaOnlineViewer.mobile .ChapterControl .download,\r\n#MangaOnlineViewer.mobile #Counters {\r\n  display: none;\r\n}\r\n';
+
+  const page =
+    '#MangaOnlineViewer .MangaPage {\r\n  width: 100%;\r\n  display: inline-block;\r\n  text-align: center;\r\n  line-height: 0;\r\n  min-height: 22px;\r\n  min-width: 100%;\r\n}\r\n\r\n#MangaOnlineViewer .PageContent {\r\n  text-align: center;\r\n  display: inline-block;\r\n  overflow-x: auto;\r\n  max-width: 100%;\r\n  transition: all 0.3s ease-in-out;\r\n  height: 100%;\r\n  overflow-y: hidden;\r\n}\r\n\r\n#MangaOnlineViewer .MangaPage.hide .PageContent {\r\n  height: 0;\r\n}\r\n\r\n#MangaOnlineViewer .PageContent .PageImg[src=""],\r\n#MangaOnlineViewer .PageContent .PageImg:not([src]) {\r\n  width: 40vw;\r\n  height: 80vh;\r\n  display: inline-block;\r\n  background-position: center;\r\n  background-repeat: no-repeat;\r\n  background-size: 20%;\r\n  background-color: var(--theme-hightlight-color);\r\n}\r\n\r\n#MangaOnlineViewer .PageContent .PageImg.imgBroken {\r\n  width: 40vw;\r\n  height: 80vh;\r\n  display: inline-block;\r\n  background-position: center;\r\n  background-repeat: no-repeat;\r\n  background-size: 20%;\r\n  background-color: var(--theme-hightlight-color);\r\n}\r\n\r\n#MangaOnlineViewer .PageFunctions {\r\n  font-family: monospace;\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  align-items: center;\r\n  margin: 0;\r\n  padding: 0;\r\n  gap: 3px;\r\n  position: absolute;\r\n  right: 0;\r\n}\r\n\r\n#MangaOnlineViewer .PageFunctions > .PageIndex {\r\n  background-color: var(--theme-primary-color);\r\n  color: var(--theme-primary-text-color);\r\n  min-width: 20px;\r\n  text-align: center;\r\n  display: inline-block;\r\n  padding: 3px 5px;\r\n  line-height: 1rem;\r\n  border-radius: 5px;\r\n}\r\n\r\n#MangaOnlineViewer .PageFunctions .ControlButton {\r\n  padding: 3px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin: 0;\r\n  border-width: 0;\r\n  min-height: auto;\r\n  opacity: 0.5;\r\n}\r\n\r\n#MangaOnlineViewer .PageFunctions:hover .ControlButton {\r\n  opacity: 1;\r\n}\r\n\r\n#MangaOnlineViewer .PageFunctions .ControlButton:hover {\r\n  opacity: 0.9;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical .separator {\r\n  display: flex;\r\n  align-items: center;\r\n  text-align: center;\r\n  font-style: italic;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical .separator::before,\r\n#MangaOnlineViewer #Chapter.Vertical .separator::after {\r\n  content: "";\r\n  flex: 1;\r\n  border-bottom: 1px solid var(--theme-text-color);\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::before {\r\n  margin-right: 0.25em;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::after {\r\n  margin-left: 0.25em;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter:not(.separator) .separator,\r\n#MangaOnlineViewer #Chapter:not(.Vertical) .separator {\r\n  display: none;\r\n}\r\n';
+
+  const settings =
+    '#MangaOnlineViewer #SettingsPanel {\r\n  color: var(--theme-text-color);\r\n  padding: 10px;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  bottom: 0;\r\n  z-index: 1000;\r\n  transition:\r\n    transform 0.3s ease-in,\r\n    background-color 0.3s linear;\r\n  transform: translateX(-100%);\r\n  display: flex;\r\n  flex-flow: column;\r\n  gap: 5px;\r\n  overflow-y: auto;\r\n  max-width: 100vw;\r\n  width: 308px;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel.visible {\r\n  transform: translateX(0);\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel fieldset {\r\n  border: 1px solid var(--theme-body-text-color);\r\n  padding: 3px;\r\n  border-radius: 10px;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .ControlLabel {\r\n  display: flex;\r\n  flex-flow: row wrap;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 2px;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: space-between;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem:not(.show) {\r\n  display: none;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel input[type="range"] {\r\n  width: 100%;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .RangeValue {\r\n  display: inline-block;\r\n  color: var(--theme-primary-text-color);\r\n  line-height: 20px;\r\n  text-align: center;\r\n  border-radius: 3px;\r\n  background: var(--theme-primary-color);\r\n  padding: 2px 5px;\r\n  margin-left: 8px;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel datalist {\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  writing-mode: vertical-lr;\r\n  width: 100%;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel datalist option {\r\n  padding: 0;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio {\r\n  border: 1px solid var(--theme-text-color);\r\n  color: var(--theme-primary-text-color);\r\n  background-color: var(--theme-primary-color);\r\n  height: 20px;\r\n  width: 20px;\r\n  border-radius: 50%;\r\n  padding: 1px;\r\n  margin: 2px 5px;\r\n  position: relative;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio svg {\r\n  position: absolute;\r\n  top: 15%;\r\n  right: 15%;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio.selected .icon-tabler-check {\r\n  display: inline;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio:not(.selected) .icon-tabler-check {\r\n  display: none;\r\n}\r\n\r\n#MangaOnlineViewer #ThemeSelector {\r\n  width: 110px;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {\r\n  display: none;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs {\r\n  position: relative;\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  border-radius: 0.5rem;\r\n  background-color: var(--theme-border-color);\r\n  color: var(--theme-text-color);\r\n  box-sizing: border-box;\r\n  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);\r\n  padding: 0.25rem;\r\n  width: 300px;\r\n  font-size: 14px;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio {\r\n  flex: 1 1 auto;\r\n  text-align: center;\r\n}\r\n\r\n#MangaOnlineViewer .toggler input {\r\n  display: none;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio input {\r\n  display: none;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio .name .icon {\r\n  margin: 0 0.5rem;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio .name {\r\n  display: flex;\r\n  cursor: pointer;\r\n  align-items: center;\r\n  justify-content: center;\r\n  border-radius: 0.5rem;\r\n  border: none;\r\n  padding: 0.5rem 0;\r\n  color: var(--theme-text-color);\r\n  background-color: var(--theme-border-color);\r\n  transition: all 0.15s ease-in-out;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio input:checked + .name {\r\n  background-color: var(--theme-primary-color);\r\n  color: var(--theme-primary-text-color);\r\n  font-weight: 600;\r\n}\r\n\r\n#MangaOnlineViewer #ColorScheme {\r\n  padding: 5px;\r\n  min-height: 28px;\r\n  min-width: 28px;\r\n}\r\n\r\n#MangaOnlineViewer .toggler {\r\n  width: 36px;\r\n  /*margin: 40px auto;*/\r\n}\r\n\r\n#MangaOnlineViewer .toggler label {\r\n  display: block;\r\n  position: relative;\r\n  width: 36px;\r\n  height: 18px;\r\n  border: 1px solid #d6d6d6;\r\n  border-radius: 36px;\r\n  background: #e4e8e8;\r\n  cursor: pointer;\r\n}\r\n\r\n#MangaOnlineViewer .toggler label::after {\r\n  display: block;\r\n  border-radius: 100%;\r\n  background-color: #d7062a;\r\n  content: "";\r\n  animation-name: toggler-size;\r\n  animation-duration: 0.15s;\r\n  animation-timing-function: ease-out;\r\n  animation-direction: normal;\r\n  animation-iteration-count: 1;\r\n  animation-play-state: running;\r\n}\r\n\r\n#MangaOnlineViewer .toggler .toggler-on,\r\n#MangaOnlineViewer .toggler .toggler-off {\r\n  opacity: 1;\r\n  z-index: 2;\r\n}\r\n\r\n#MangaOnlineViewer .toggler label::after,\r\n#MangaOnlineViewer .toggler label .toggler-on,\r\n#MangaOnlineViewer .toggler label .toggler-off {\r\n  position: absolute;\r\n  /*top: 50%;*/\r\n  top: 9px;\r\n  left: 25%;\r\n  width: 16px;\r\n  height: 16px;\r\n  transform: translateY(-50%) translateX(-50%);\r\n  transition:\r\n    left 0.15s ease-in-out,\r\n    background-color 0.2s ease-out,\r\n    width 0.15s ease-in-out,\r\n    height 0.15s ease-in-out,\r\n    opacity 0.15s ease-in-out;\r\n}\r\n\r\n#MangaOnlineViewer .toggler input:checked + label::after,\r\n#MangaOnlineViewer .toggler input:checked + label .toggler-on,\r\n#MangaOnlineViewer .toggler input:checked + label .toggler-off {\r\n  left: 75%;\r\n}\r\n\r\n#MangaOnlineViewer .toggler input:checked + label::after {\r\n  background-color: #50ac5d;\r\n  animation-name: toggler-size2;\r\n}\r\n\r\n#MangaOnlineViewer .toggler input:checked + label .toggler-off,\r\n#MangaOnlineViewer .toggler input:not(:checked) + label .toggler-on {\r\n  width: 0;\r\n  height: 0;\r\n  opacity: 0;\r\n}\r\n\r\n#MangaOnlineViewer .toggler .path {\r\n  fill: none;\r\n  stroke: #fefefe;\r\n  stroke-width: 7px;\r\n  stroke-linecap: round;\r\n  stroke-miterlimit: 10;\r\n}\r\n\r\n@keyframes toggler-size {\r\n  0%,\r\n  100% {\r\n    width: 26px;\r\n    height: 26px;\r\n  }\r\n\r\n  50% {\r\n    width: 20px;\r\n    height: 20px;\r\n  }\r\n}\r\n\r\n@keyframes toggler-size2 {\r\n  0%,\r\n  100% {\r\n    width: 26px;\r\n    height: 26px;\r\n  }\r\n\r\n  50% {\r\n    width: 20px;\r\n    height: 20px;\r\n  }\r\n}\r\n';
+
+  const normalize =
+    '/*  Simple Normalizer */\r\nhtml {\r\n  font-size: 100%;\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;\r\n  font-size: 14px;\r\n  line-height: 20px;\r\n  color: var(--theme-body-text-color);\r\n  background-color: var(--theme-body-background);\r\n  padding: 0;\r\n}\r\n\r\na,\r\na:link,\r\na:visited,\r\na:active,\r\na:focus {\r\n  color: var(--theme-body-text-color);\r\n  text-decoration: none;\r\n}\r\n\r\nimg {\r\n  height: auto;\r\n  vertical-align: middle;\r\n  border: 0 none;\r\n}\r\n';
+
+  const thumbnails =
+    '#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=""],\r\n#MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {\r\n  width: 100px;\r\n  height: 150px;\r\n  display: inline-block;\r\n  background-position: center;\r\n  background-repeat: no-repeat;\r\n  background-size: 20%;\r\n}\r\n\r\n#MangaOnlineViewer #NavigationCounters {\r\n  margin: 5px;\r\n  width: 100%;\r\n  line-height: 1rem;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation {\r\n  color: var(--theme-text-color);\r\n  background-color: var(--theme-hightlight-color);\r\n  bottom: -180px;\r\n  height: 185px;\r\n  overflow-x: hidden;\r\n  overflow-y: hidden;\r\n  padding-bottom: 20px;\r\n  position: fixed;\r\n  white-space: nowrap;\r\n  width: 100%;\r\n  text-align: center;\r\n  transition:\r\n    transform 0.3s ease-in,\r\n    background-color 0.3s linear;\r\n  border-bottom-left-radius: 0;\r\n  border-bottom-right-radius: 0;\r\n  line-height: 0;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation #Thumbnails {\r\n  overflow-x: auto;\r\n  overflow-y: hidden;\r\n  margin-right: 10px;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation:hover {\r\n  transform: translateY(-180px);\r\n}\r\n\r\n#MangaOnlineViewer #Navigation.disabled {\r\n  display: none;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation.visible {\r\n  transform: translateY(-180px);\r\n}\r\n\r\n#MangaOnlineViewer #Navigation .Thumbnail {\r\n  display: inline-block;\r\n  height: 150px;\r\n  margin: 0 5px;\r\n  border: 1px solid var(--theme-primary-color);\r\n}\r\n\r\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailIndex {\r\n  color: var(--theme-text-color);\r\n  background-color: var(--theme-hightlight-color);\r\n  display: block;\r\n  opacity: 0.8;\r\n  position: relative;\r\n  bottom: 25%;\r\n  width: 100%;\r\n  line-height: 1rem;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailImg {\r\n  cursor: pointer;\r\n  display: inline-block;\r\n  max-height: 150px;\r\n  min-height: 150px;\r\n  min-width: 80px;\r\n  max-width: 160px;\r\n}\r\n';
+
+  const cssStyles = css`
+    :root,
+    .dark {
+      --theme-body-background: ${colors.dark['600']};
+      --theme-body-text-color: ${colors.dark['50']};
+      --theme-text-color: ${colors.dark['50']};
+      --theme-primary-color: ${colors.dark['700']};
+      --theme-primary-text-color: ${colors.dark['50']};
+      --theme-background-color: ${colors.dark['600']};
+      --theme-hightlight-color: ${colors.dark['500']};
+      --theme-border-color: ${colors.dark['400']};
+    }
+
+    .light {
+      --theme-body-background: ${colors.gray['50']};
+      --theme-body-text-color: ${colors.gray['900']};
+      --theme-text-color: ${colors.gray['900']};
+      --theme-primary-color: ${colors.gray['300']};
+      --theme-primary-text-color: ${colors.gray['900']};
+      --theme-background-color: ${colors.gray['50']};
+      --theme-hightlight-color: ${colors.gray['500']};
+      --theme-border-color: ${colors.gray['100']};
+    }
+
+    #MangaOnlineViewer .PageContent .PageImg[src=''],
+    #MangaOnlineViewer .PageContent .PageImg:not([src]) {
+      background-image: url('${svgToUrl(IconPhoto)}');
+    }
+
+    #MangaOnlineViewer .Thumbnail .ThumbnailImg[src=''],
+    #MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {
+      background-image: url('${svgToUrl(IconPhoto)}');
+    }
+
+    #MangaOnlineViewer .PageContent .PageImg.imgBroken,
+    #MangaOnlineViewer .Thumbnail .ThumbnailImg.imgBroken {
+      background-image: url('${svgToUrl(IconPhotoOff)}');
+    }
+
+    #MangaOnlineViewer .ThemeRadio.custom {
+      /*background-image: url("${svgToUrl(IconPalette)}");*/
+    }
+
+    ${normalize}
+    ${styles}
+  ${header}
+  ${icons}
+  ${keybindings$1}
+  ${page}
+  ${fluid}
+  ${settings}
+  ${thumbnails}
+  ${bookmarks}
+  ${comments}
+  ${media}
+  ${animation}
+  `;
+
+  function generateThemeCSS(name, primary, text) {
+    return css`
+      .ThemeRadio.${name}, [data-theme='${name}'] {
+        --theme-primary-color: ${primary};
+        --theme-primary-text-color: ${text};
+      }
+    `;
+  }
+  function getNormalThemeCSS(theme) {
+    return generateThemeCSS(
+      theme.name,
+      theme[getSettingsValue('themeShade')],
+      getSettingsValue('themeShade') < 500 ? theme['900'] : theme['50'],
+    );
+  }
+  function getCustomThemeCSS(hex) {
+    return generateThemeCSS('custom', hex, getTextColor(hex));
+  }
+  function addTheme(theme) {
+    return wrapStyle(theme.name, getNormalThemeCSS(theme));
+  }
+  const themes = () => Object.values(colors);
+  function refreshThemes() {
+    themes().forEach(theme => {
+      replaceStyleSheet(theme.name, getNormalThemeCSS(theme));
+    });
+    replaceStyleSheet('custom', getCustomThemeCSS(getSettingsValue('customTheme')));
+  }
+  const themesCSS =
+    themes().map(addTheme).join('') +
+    wrapStyle('custom', getCustomThemeCSS(getSettingsValue('customTheme')));
+
+  function head(manga) {
+    return html`
+      <title>${manga.title}</title>
+      <meta charset="UTF-8" />
+      ${wrapStyle('externals', sweetalertStyle)} ${wrapStyle('reader', cssStyles)} ${themesCSS}
+      ${wrapStyle(
+        'MinZoom',
+        `#MangaOnlineViewer .PageContent .PageImg {min-width: ${getSettingsValue('minZoom')}vw;}`,
+      )}
+    `;
+  }
+
+  let emit = (snapshotRef, onChange) => value => {
+    if (snapshotRef.current === value) return;
+    snapshotRef.current = value;
+    onChange();
   };
-  const cleanUpElement = (...elements) => {
-    elements?.forEach(removeAttributes);
-    elements?.forEach(removeAllEventListeners);
-  };
+
+  function useStore(store, { keys, deps = [store, keys] } = {}) {
+    let snapshotRef = React.useRef();
+    snapshotRef.current = store.get();
+
+    let subscribe = React.useCallback(onChange => {
+      emit(snapshotRef, onChange)(store.value);
+
+      return keys?.length > 0
+        ? listenKeys(store, keys, emit(snapshotRef, onChange))
+        : store.listen(emit(snapshotRef, onChange));
+    }, deps);
+    let get = () => snapshotRef.current;
+
+    return React.useSyncExternalStore(subscribe, get, get);
+  }
 
   let scrollActive = false;
   function scroll() {
@@ -2746,17 +2975,6 @@
     window.addEventListener('wheel', _.throttle(manualScroll, 500));
     document.querySelector('#AutoScroll')?.addEventListener('click', toggleAutoScroll);
   }
-
-  var commonjsGlobal =
-    typeof globalThis !== 'undefined'
-      ? globalThis
-      : typeof window !== 'undefined'
-        ? window
-        : typeof global !== 'undefined'
-          ? global
-          : typeof self !== 'undefined'
-            ? self
-            : {};
 
   var dist = {};
 
@@ -3202,18 +3420,63 @@
     window.addEventListener('scroll', _.debounce(toggleScrollDirection, 50));
   }
 
-  function buttonReloadPage(event) {
-    const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
-    reloadImage(img);
-  }
-  function buttonHidePage(event) {
-    const img = event.currentTarget.parentElement?.parentElement;
-    img.classList.toggle('hide');
-  }
-  function individual() {
-    document.querySelectorAll('.Reload')?.forEach(addEvent('click', buttonReloadPage));
-    document.querySelectorAll('.Hide')?.forEach(addEvent('click', buttonHidePage));
-  }
+  const keybindList = () => {
+    const keybinds = getSettingsValue('keybinds');
+    return Object.keys(keybinds).map(kb => {
+      const keys = keybinds[kb]?.length
+        ? keybinds[kb]?.map(key => html`<kbd class="dark">${key}</kbd>`).join(' / ')
+        : '';
+      return html`<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
+    });
+  };
+  const keybindEditor = () =>
+    Object.keys(getSettingsValue('keybinds'))
+      .map(
+        kb =>
+          html`<label for="${kb}">${getLocaleString(kb)}:</label>
+            <input
+              type="text"
+              class="KeybindInput"
+              id="${kb}"
+              name="${kb}"
+              value="${getSettingsValue('keybinds')[kb]?.join(' , ') ?? ''}"
+            />`,
+      )
+      .concat(html` <div id="HotKeysRules">${getLocaleString('KEYBIND_RULES')}</div>`);
+  const KeybindingsPanel$1 = () => html`
+    <div
+      id="KeybindingsPanel"
+      class="panel"
+    >
+      <h2>${getLocaleString('KEYBINDINGS')}</h2>
+      <button
+        id="CloseKeybindings"
+        class="closeButton"
+        title="${getLocaleString('CLOSE')}"
+      >
+        ${IconX}
+      </button>
+      <div class="controls">
+        <button
+          id="EditKeybindings"
+          class="ControlButton"
+          type="button"
+          title="${getLocaleString('EDIT_KEYBINDS')}"
+        >
+          ${IconPencil} ${getLocaleString('BUTTON_EDIT')}
+        </button>
+        <button
+          id="SaveKeybindings"
+          class="ControlButton hidden"
+          type="button"
+          title="${getLocaleString('SAVE_KEYBINDS')}"
+        >
+          ${IconDeviceFloppy} ${getLocaleString('BUTTON_SAVE')}
+        </button>
+      </div>
+      <div id="KeybindingsList">${keybindList().join('\n')}</div>
+    </div>
+  `;
 
   const doClick = selector => document.querySelector(selector)?.dispatchEvent(new Event('click'));
   function doScrolling(sign) {
@@ -3292,7 +3555,7 @@
       doClick('#AutoScroll');
     },
   };
-  function keybindings$1() {
+  function keybindings() {
     document.onkeydown = null;
     document.onkeyup = null;
     window.onkeydown = null;
@@ -3312,83 +3575,6 @@
       );
     });
   }
-
-  function selectGoToPage(event) {
-    const target = event.currentTarget.value;
-    applyZoom();
-    scrollToElement(document.querySelector(`#Page${target}`));
-  }
-  function clickThumbnail(event) {
-    applyZoom();
-    scrollToElement(
-      document.querySelector(
-        `#Page${event.currentTarget.querySelector('.ThumbnailIndex')?.textContent}`,
-      ),
-    );
-  }
-  function navigation() {
-    document.querySelector('#gotoPage')?.addEventListener('change', selectGoToPage);
-    document.querySelectorAll('.Thumbnail')?.forEach(addEvent('click', clickThumbnail));
-    document.querySelector('#Thumbnails')?.addEventListener('wheel', transformScrollToHorizontal);
-  }
-
-  const keybindList = () => {
-    const keybinds = getSettingsValue('keybinds');
-    return Object.keys(keybinds).map(kb => {
-      const keys = keybinds[kb]?.length
-        ? keybinds[kb]?.map(key => html`<kbd class="dark">${key}</kbd>`).join(' / ')
-        : '';
-      return html`<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
-    });
-  };
-  const keybindEditor = () =>
-    Object.keys(getSettingsValue('keybinds'))
-      .map(
-        kb =>
-          html`<label for="${kb}">${getLocaleString(kb)}:</label>
-            <input
-              type="text"
-              class="KeybindInput"
-              id="${kb}"
-              name="${kb}"
-              value="${getSettingsValue('keybinds')[kb]?.join(' , ') ?? ''}"
-            />`,
-      )
-      .concat(html` <div id="HotKeysRules">${getLocaleString('KEYBIND_RULES')}</div>`);
-  const KeybindingsPanel = () => html`
-    <div
-      id="KeybindingsPanel"
-      class="panel"
-    >
-      <h2>${getLocaleString('KEYBINDINGS')}</h2>
-      <button
-        id="CloseKeybindings"
-        class="closeButton"
-        title="${getLocaleString('CLOSE')}"
-      >
-        ${IconX}
-      </button>
-      <div class="controls">
-        <button
-          id="EditKeybindings"
-          class="ControlButton"
-          type="button"
-          title="${getLocaleString('EDIT_KEYBINDS')}"
-        >
-          ${IconPencil} ${getLocaleString('BUTTON_EDIT')}
-        </button>
-        <button
-          id="SaveKeybindings"
-          class="ControlButton hidden"
-          type="button"
-          title="${getLocaleString('SAVE_KEYBINDS')}"
-        >
-          ${IconDeviceFloppy} ${getLocaleString('BUTTON_SAVE')}
-        </button>
-      </div>
-      <div id="KeybindingsList">${keybindList().join('\n')}</div>
-    </div>
-  `;
 
   function toggleFunction(selector, classname, open, close) {
     return () => {
@@ -3466,7 +3652,7 @@
     if (keybindingList) keybindingList.innerHTML = keybindList().join('\n');
     document.querySelector('#SaveKeybindings')?.classList.add('hidden');
     document.querySelector('#EditKeybindings')?.classList.remove('hidden');
-    keybindings$1();
+    keybindings();
   }
   function editKeybindings() {
     const keybindingList = document.querySelector('#KeybindingsList');
@@ -3492,93 +3678,1369 @@
     document.querySelector('#SaveKeybindings')?.addEventListener('click', saveKeybindings);
   }
 
-  function buttonZoomIn(event) {
-    const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
-    const ratio = (img.width / img.naturalWidth) * (100 + getSettingsValue('zoomStep'));
-    applyZoom('percent', ratio, `#${img.getAttribute('id')}`);
-  }
-  function buttonZoomOut(event) {
-    const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
-    const ratio = (img.width / img.naturalWidth) * (100 - getSettingsValue('zoomStep'));
-    applyZoom('percent', ratio, `#${img.getAttribute('id')}`);
-  }
-  function buttonRestoreZoom() {
-    document.querySelector('.PageContent .PageImg')?.removeAttribute('width');
-  }
-  function buttonZoomWidth(event) {
-    const page = event.currentTarget.parentElement?.parentElement;
-    const img = page?.querySelector('.PageImg');
-    applyZoom('width', 0, `#${img.getAttribute('id')}`);
-    page?.classList.toggle('DoublePage');
-  }
-  function buttonZoomHeight(event) {
-    const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
-    applyZoom('height', 0, `#${img.getAttribute('id')}`);
-  }
-  function size() {
-    document.querySelectorAll('.ZoomIn')?.forEach(addEvent('click', buttonZoomIn));
-    document.querySelectorAll('.ZoomOut')?.forEach(addEvent('click', buttonZoomOut));
-    document.querySelectorAll('.ZoomRestore')?.forEach(addEvent('click', buttonRestoreZoom));
-    document.querySelectorAll('.ZoomWidth')?.forEach(addEvent('click', buttonZoomWidth));
-    document.querySelectorAll('.ZoomHeight')?.forEach(addEvent('click', buttonZoomHeight));
+  const SvgArrowAutofitDown = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-arrow-autofit-down',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M18 4v17' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M15 18l3 3l3 -3' }),
+    );
+
+  const SvgArrowAutofitHeight = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-arrow-autofit-height',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M18 14v7' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M18 3v7' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M15 18l3 3l3 -3' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M15 6l3 -3l3 3' }),
+    );
+
+  const SvgArrowAutofitLeft = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-arrow-autofit-left',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M20 18h-17' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M6 15l-3 3l3 3' }),
+    );
+
+  const SvgArrowAutofitRight = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-arrow-autofit-right',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M4 18h17' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M18 15l3 3l-3 3' }),
+    );
+
+  const SvgArrowAutofitWidth = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-arrow-autofit-width',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M10 18h-7' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M21 18h-7' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M6 15l-3 3l3 3' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M18 15l3 3l-3 3' }),
+    );
+
+  const SvgArrowBigLeft = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-arrow-big-left',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z',
+      }),
+    );
+
+  const SvgArrowBigRight = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-arrow-big-right',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z',
+      }),
+    );
+
+  const SvgBookmark = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-bookmark',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z',
+      }),
+    );
+
+  const SvgBookmarkOff = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-bookmark-off',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M7.708 3.721a3.982 3.982 0 0 1 2.292 -.721h4a4 4 0 0 1 4 4v7m0 4v3l-6 -4l-6 4v-14c0 -.308 .035 -.609 .1 -.897',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M3 3l18 18' }),
+    );
+
+  const SvgBookmarks = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-bookmarks',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M11 3h5a3 3 0 0 1 3 3v11' }),
+    );
+
+  const SvgCategory = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-category',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M4 4h6v6h-6z' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M14 4h6v6h-6z' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M4 14h6v6h-6z' }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0',
+      }),
+    );
+
+  const SvgCheck = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-check toggler-on',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M5 12l5 5l10 -10' }),
+    );
+
+  const SvgDeviceFloppy = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-device-floppy',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M14 4l0 4l-6 0l0 -4' }),
+    );
+
+  const SvgExternalLink = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-external-link',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M11 13l9 -9' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M15 4h5v5' }),
+    );
+
+  const SvgEye = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-eye',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0' }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6',
+      }),
+    );
+
+  const SvgEyeOff = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-eye-off',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M10.585 10.587a2 2 0 0 0 2.829 2.828' }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M3 3l18 18' }),
+    );
+
+  const SvgFileDownload = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-file-download',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M14 3v4a1 1 0 0 0 1 1h4' }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M12 17v-6' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M9.5 14.5l2.5 2.5l2.5 -2.5' }),
+    );
+
+  const SvgKeyboard = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-keyboard',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M6 10l0 .01' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M10 10l0 .01' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M14 10l0 .01' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M18 10l0 .01' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M6 14l0 .01' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M18 14l0 .01' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M10 14l4 .01' }),
+    );
+
+  const SvgListNumbers = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-list-numbers',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M11 6h9' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M11 12h9' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M12 18h8' }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M6 10v-6l-2 2' }),
+    );
+
+  const SvgLoader2 = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-loader-2',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M12 3a9 9 0 1 0 9 9' }),
+    );
+
+  const SvgLocationCog = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: 2,
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        className: 'icon icon-tabler icons-tabler-outline icon-tabler-location-cog',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M12 18l-2 -4l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5l-3.14 8.697',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M19.001 15.5v1.5' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M19.001 21v1.5' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M22.032 17.25l-1.299 .75' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M17.27 20l-1.3 .75' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M15.97 17.25l1.3 .75' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M20.733 20l1.3 .75' }),
+    );
+
+  const SvgMenu2 = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-menu-2',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M4 6l16 0' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M4 12l16 0' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M4 18l16 0' }),
+    );
+
+  const SvgMessage = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-message',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M8 9h8' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M8 13h6' }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z',
+      }),
+    );
+
+  const SvgMoon = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-moon',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z',
+      }),
+    );
+
+  const SvgPalette = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-palette',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0',
+      }),
+    );
+
+  const SvgPencil = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-pencil',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M13.5 6.5l4 4' }),
+    );
+
+  const SvgPlayerPause = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-player-pause',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z',
+      }),
+    );
+
+  const SvgPlayerPlay = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-player-play',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M7 4v16l13 -8z' }),
+    );
+
+  const SvgRefresh = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-refresh',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4' }),
+    );
+
+  const SvgSettings = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-settings',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0' }),
+    );
+
+  const SvgSettingsOff = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: 2,
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        className: 'icon icon-tabler icons-tabler-outline icon-tabler-settings-off',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M9.451 5.437c.418 -.218 .75 -.609 .874 -1.12c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35c-.486 .118 -.894 .44 -1.123 .878m-.188 3.803c-.517 .523 -1.349 .734 -2.125 .262a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.472 -.774 -.262 -1.604 .259 -2.121',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M9.889 9.869a3 3 0 1 0 4.226 4.26m.592 -3.424a3.012 3.012 0 0 0 -1.419 -1.415',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M3 3l18 18' }),
+    );
+
+  const SvgSpacingVertical = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-spacing-vertical',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M16 12h-8' }),
+    );
+
+  const SvgSun = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-sun',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7',
+      }),
+    );
+
+  const SvgTrash = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-trash',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M4 7l16 0' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M10 11l0 6' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M14 11l0 6' }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3',
+      }),
+    );
+
+  const SvgWorldCog = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: 2,
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        className: 'icon icon-tabler icons-tabler-outline icon-tabler-world-cog',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M21 12a9 9 0 1 0 -8.979 9' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M3.6 9h16.8' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M3.6 15h8.9' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M11.5 3a17 17 0 0 0 0 18' }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M12.5 3a16.992 16.992 0 0 1 2.522 10.376',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M19.001 15.5v1.5' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M19.001 21v1.5' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M22.032 17.25l-1.299 .75' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M17.27 20l-1.3 .75' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M15.97 17.25l1.3 .75' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M20.733 20l1.3 .75' }),
+    );
+
+  const SvgX = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-x toggler-off',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M18 6l-12 12' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M6 6l12 12' }),
+    );
+
+  const SvgZoomCancel = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-zoom-cancel',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M8 8l4 4' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M12 8l-4 4' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M21 21l-6 -6' }),
+    );
+
+  const SvgZoomIn = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-zoom-in',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M7 10l6 0' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M10 7l0 6' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M21 21l-6 -6' }),
+    );
+
+  const SvgZoomInArea = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-zoom-in-area',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M15 13v4' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M13 15h4' }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M22 22l-3 -3' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M6 18h-1a2 2 0 0 1 -2 -2v-1' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M3 11v-1' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M3 6v-1a2 2 0 0 1 2 -2h1' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M10 3h1' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M15 3h1a2 2 0 0 1 2 2v1' }),
+    );
+
+  const SvgZoomOut = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-zoom-out',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M7 10l6 0' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M21 21l-6 -6' }),
+    );
+
+  const SvgZoomOutArea = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-zoom-out-area',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M13 15h4' }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M22 22l-3 -3' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M6 18h-1a2 2 0 0 1 -2 -2v-1' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M3 11v-1' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M3 6v-1a2 2 0 0 1 2 -2h1' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M10 3h1' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M15 3h1a2 2 0 0 1 2 2v1' }),
+    );
+
+  const SvgZoomPan = props =>
+    /* @__PURE__ */ React.createElement(
+      'svg',
+      {
+        xmlns: 'http://www.w3.org/2000/svg',
+        className: 'icon icon-tabler icon-tabler-zoom-pan',
+        width: 24,
+        height: 24,
+        viewBox: '0 0 24 24',
+        strokeWidth: 2,
+        stroke: 'currentColor',
+        fill: 'none',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        ...props,
+      },
+      /* @__PURE__ */ React.createElement('path', {
+        stroke: 'none',
+        d: 'M0 0h24v24H0z',
+        fill: 'none',
+      }),
+      /* @__PURE__ */ React.createElement('path', {
+        d: 'M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0',
+      }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M17 17l-2.5 -2.5' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M10 5l2 -2l2 2' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M19 10l2 2l-2 2' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M5 10l-2 2l2 2' }),
+      /* @__PURE__ */ React.createElement('path', { d: 'M10 19l2 2l2 -2' }),
+    );
+
+  function BookmarksPanel() {
+    const l = useStore(locale);
+    const s = useStore(settings$1);
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+      id: 'BookmarksPanel',
+      className: 'panel',
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+          id: 'CloseBookmarks',
+          className: 'closeButton',
+          title: l.CLOSE,
+          onClick: buttonBookmarksClose,
+          type: 'button',
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+          className: 'Bookmark simpleButton',
+          title: l.BOOKMARK,
+          type: 'button',
+          onClick: buttonBookmark,
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmark, {}),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmarkOff, {}),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx('h2', { children: l.BOOKMARKS }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+          id: 'BookmarksList',
+          children: isEmpty(s.bookmarks)
+            ? l.LIST_EMPTY
+            : s.bookmarks.map((mark, index) =>
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  'div',
+                  {
+                    id: `Bookmark${index + 1}`,
+                    className: 'BookmarkItem',
+                    children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                        className: 'bookmarkColumnLarge',
+                        children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
+                            className: 'bookmarkName',
+                            children: mark.name,
+                          }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx('br', {}),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx('a', {
+                            className: 'bookmarkURl',
+                            href: mark.url,
+                            target: '_blank',
+                            rel: 'noreferrer',
+                            children: mark.url,
+                          }),
+                        ],
+                      }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                        className: 'bookmarkColumnSmall',
+                        children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
+                            className: 'bookmarkDate',
+                            children: new Date(mark.date).toISOString().slice(0, 10),
+                          }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx('br', {}),
+                          /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                            className: 'bookmarkPage',
+                            children: ['Page: ', mark.page],
+                          }),
+                        ],
+                      }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                        className: 'bookmarkFunctions',
+                        children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx('a', {
+                            href: mark.url,
+                            target: '_blank',
+                            rel: 'noreferrer',
+                            children: /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                              className: 'ControlButton open',
+                              title: 'Open Bookmark',
+                              type: 'button',
+                              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgExternalLink, {}),
+                            }),
+                          }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                            className: 'ControlButton erase',
+                            title: 'Delete Bookmark',
+                            type: 'button',
+                            value: mark.url,
+                            onClick: buttonEraseBookmarks,
+                            children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgTrash, {}),
+                          }),
+                        ],
+                      }),
+                    ],
+                  },
+                  mark.url,
+                ),
+              ),
+        }),
+      ],
+    });
   }
 
-  function generateThemeCSS(name, primary, text) {
-    return css`
-      .ThemeRadio.${name}, [data-theme='${name}'] {
-        --theme-primary-color: ${primary};
-        --theme-primary-text-color: ${text};
-      }
-    `;
+  function CommentsPanel() {
+    const l = useStore(locale);
+    const s = useStore(settings$1);
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs('section', {
+      id: 'CommentsPanel',
+      className: 'panel',
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+          id: 'CloseComments',
+          className: 'closeButton',
+          title: l.CLOSE,
+          onClick: buttonCommentsClose,
+          type: 'button',
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx('h2', { children: l.COMMENTS }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+          id: 'CommentsArea',
+          className: s.colorScheme,
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+          id: 'CommentsColorScheme',
+          className: 'simpleButton ColorScheme',
+          type: 'button',
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSun, {}),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMoon, {}),
+          ],
+        }),
+      ],
+    });
   }
-  function getNormalThemeCSS(theme) {
-    return generateThemeCSS(
-      theme.name,
-      theme[getSettingsValue('themeShade')],
-      getSettingsValue('themeShade') < 500 ? theme['900'] : theme['50'],
+
+  function selectGoToPage(event) {
+    const target = event.currentTarget.value;
+    applyZoom();
+    scrollToElement(document.querySelector(`#Page${target}`));
+  }
+  function clickThumbnail(event) {
+    applyZoom();
+    scrollToElement(
+      document.querySelector(
+        `#Page${event.currentTarget.querySelector('.ThumbnailIndex')?.textContent}`,
+      ),
     );
   }
-  function getCustomThemeCSS(hex) {
-    return generateThemeCSS('custom', hex, getTextColor(hex));
-  }
-  function addTheme(theme) {
-    return wrapStyle(theme.name, getNormalThemeCSS(theme));
-  }
-  const themes = () => Object.values(colors);
-  function refreshThemes() {
-    themes().forEach(theme => {
-      replaceStyleSheet(theme.name, getNormalThemeCSS(theme));
-    });
-    replaceStyleSheet('custom', getCustomThemeCSS(getSettingsValue('customTheme')));
-  }
-  const themesCSS =
-    themes().map(addTheme).join('') +
-    wrapStyle('custom', getCustomThemeCSS(getSettingsValue('customTheme')));
-
-  function changeColorScheme() {
-    const isDark = getSettingsValue('colorScheme') === 'dark';
-    saveSettingsValue('colorScheme', isDark ? 'light' : 'dark');
-    document.documentElement.classList.remove(isDark ? 'dark' : 'light');
-    document.documentElement.classList.add(getSettingsValue('colorScheme'));
-  }
-  function buttonSelectTheme(event) {
-    const target = event.currentTarget;
-    saveSettingsValue('theme', target.title);
-  }
-  function changeCustomTheme(event) {
-    const target = event.currentTarget.value;
-    saveSettingsValue('customTheme', target);
-  }
-  function changeThemeShade(event) {
-    const target = parseInt(event.currentTarget.value, 10);
-    saveSettingsValue('themeShade', target);
-    refreshThemes();
-  }
-  function theming() {
-    document.querySelector('#ColorScheme')?.addEventListener('click', changeColorScheme);
-    document.querySelectorAll('.ThemeRadio').forEach(addEvent('click', buttonSelectTheme));
-    document.querySelector('#CustomThemeHue')?.addEventListener('change', changeCustomTheme);
-    document.querySelector('#ThemeShade')?.addEventListener('input', changeThemeShade);
+  function navigation() {
+    document.querySelector('#gotoPage')?.addEventListener('change', selectGoToPage);
+    document.querySelectorAll('.Thumbnail')?.forEach(addEvent('click', clickThumbnail));
+    document.querySelector('#Thumbnails')?.addEventListener('wheel', transformScrollToHorizontal);
   }
 
   function setupFluid(mode) {
@@ -3674,11 +5136,1344 @@
     document.querySelector('#fitHeight')?.addEventListener('click', changeGlobalZoom('height'));
   }
 
+  function Header$1({ manga }) {
+    const l = useStore(locale);
+    const s = useStore(settings$1);
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+          id: 'menu',
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMenu2, {}),
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('header', {
+          id: 'Header',
+          className: `${s.header} headroom-top`,
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('aside', {
+              id: 'GlobalFunctions',
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                      id: 'enlarge',
+                      title: l.ENLARGE,
+                      className: 'ControlButton',
+                      onClick: changeZoomByStep(1),
+                      type: 'button',
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomInArea, {}),
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                      id: 'restore',
+                      title: l.RESTORE,
+                      className: 'ControlButton',
+                      onClick: () => changeGlobalZoom('percent'),
+                      type: 'button',
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomPan, {}),
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                      id: 'reduce',
+                      title: l.REDUCE,
+                      className: 'ControlButton',
+                      onClick: changeZoomByStep(-1),
+                      type: 'button',
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomOutArea, {}),
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                      id: 'fitWidth',
+                      title: l.FIT_WIDTH,
+                      className: 'ControlButton',
+                      onClick: () => changeGlobalZoom('width'),
+                      type: 'button',
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitWidth, {}),
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                      id: 'fitHeight',
+                      title: l.FIT_HEIGHT,
+                      className: 'ControlButton',
+                      onClick: () => changeGlobalZoom('height'),
+                      type: 'button',
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitHeight, {}),
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                      id: 'keybindings',
+                      title: l.KEYBINDINGS,
+                      className: 'ControlButton',
+                      onClick: buttonKeybindingsOpen,
+                      type: 'button',
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgKeyboard, {}),
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+                      id: 'AutoScroll',
+                      title: l.SCROLL_START,
+                      className: 'ControlButton phones',
+                      onClick: toggleAutoScroll,
+                      type: 'button',
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgPlayerPlay, {}),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgPlayerPause, {}),
+                      ],
+                    }),
+                  ],
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                      id: 'ltrMode',
+                      title: l.VIEW_MODE_LEFT,
+                      className: 'ControlButton',
+                      onClick: () => updateViewMode('FluidLTR'),
+                      type: 'button',
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitRight, {}),
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                      id: 'verticalMode',
+                      title: l.VIEW_MODE_VERTICAL,
+                      className: 'ControlButton tablets',
+                      onClick: () => updateViewMode('Vertical'),
+                      type: 'button',
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitDown, {}),
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                      id: 'webComic',
+                      title: l.VIEW_MODE_WEBCOMIC,
+                      className: 'ControlButton tablets',
+                      onClick: () => updateViewMode('WebComic'),
+                      type: 'button',
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSpacingVertical, {}),
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                      id: 'rtlMode',
+                      title: l.VIEW_MODE_RIGHT,
+                      className: 'ControlButton',
+                      onClick: () => updateViewMode('FluidRTL'),
+                      type: 'button',
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitLeft, {}),
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                      id: 'pageControls',
+                      title: l.TOGGLE_CONTROLS,
+                      className: 'ControlButton tablets',
+                      onClick: buttonGlobalHideImageControls,
+                      type: 'button',
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgListNumbers, {}),
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                      id: 'bookmarks',
+                      title: l.BOOKMARKS,
+                      className: 'ControlButton tablets',
+                      onClick: buttonBookmarksOpen,
+                      type: 'button',
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmarks, {}),
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+                      id: 'settings',
+                      title: l.SETTINGS,
+                      className: 'ControlButton tablets phones',
+                      onClick: buttonSettingsOpen,
+                      type: 'button',
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSettings, {}),
+                    }),
+                  ],
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                  id: 'ZoomSlider',
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('output', {
+                      id: 'ZoomVal',
+                      className: 'RangeValue',
+                      htmlFor: 'Zoom',
+                      children: s.zoomMode === 'percent' ? `${s.defaultZoom}%` : s.zoomMode,
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+                      type: 'range',
+                      value: s.defaultZoom,
+                      name: 'Zoom',
+                      id: 'Zoom',
+                      min: '1',
+                      max: '200',
+                      onInput: changeZoom,
+                    }),
+                  ],
+                }),
+              ],
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+              className: 'ViewerTitle',
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx('h1', {
+                  id: 'MangaTitle',
+                  children: manga.title,
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs('a', {
+                  id: 'series',
+                  href: manga.series ?? '',
+                  onClick: buttonRedirectURL,
+                  children: ['(', l.RETURN_CHAPTER_LIST, ')'],
+                }),
+              ],
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('nav', {
+              id: 'ChapterNavigation',
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+                  id: 'Counters',
+                  className: 'ControlLabel',
+                  children: [
+                    l.PAGES_LOADED,
+                    ':',
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('i', { children: '0' }),
+                    ' /',
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('b', {
+                      children:
+                        manga.begin && manga.begin > 1
+                          ? manga.pages - (manga.begin - 1)
+                          : manga.pages,
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                      className: 'ControlLabel',
+                      children: [l.GO_TO_PAGE, ':'],
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+                      id: 'gotoPage',
+                      onChange: selectGoToPage,
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                          selected: true,
+                          children: '#',
+                        }),
+                        Array.from(Array(manga.pages + 1).keys())
+                          .slice(manga.begin)
+                          .map(index =>
+                            /* @__PURE__ */ jsxRuntimeExports.jsx(
+                              'option',
+                              { value: index, children: index },
+                              index,
+                            ),
+                          ),
+                      ],
+                    }),
+                  ],
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+                  id: 'ChapterControl',
+                  className: 'ChapterControl',
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+                      id: 'CommentsButton',
+                      className: `NavigationControlButton ControlButton ${manga.comments ? '' : 'disabled'}`,
+                      title: l.DISPLAY_COMMENTS,
+                      onClick: buttonCommentsOpen,
+                      type: 'button',
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMessage, {}),
+                        l.DISPLAY_COMMENTS,
+                      ],
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+                      id: 'download',
+                      className: 'NavigationControlButton ControlButton disabled',
+                      type: 'button',
+                      title: l.DOWNLOAD_ZIP,
+                      onClick: buttonStartDownload,
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgFileDownload, {}),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgLoader2, {}),
+                        l.BUTTON_DOWNLOAD,
+                      ],
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs('a', {
+                      id: 'prev',
+                      className: 'NavigationControlButton ControlButton',
+                      type: 'button',
+                      href: manga.prev ?? '',
+                      title: l.PREVIOUS_CHAPTER,
+                      onClick: buttonRedirectURL,
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowBigLeft, {}),
+                        l.BUTTON_PREVIOUS,
+                      ],
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs('a', {
+                      id: 'next',
+                      className: 'NavigationControlButton ControlButton',
+                      type: 'button',
+                      href: manga.next ?? '',
+                      title: l.NEXT_CHAPTER,
+                      onClick: buttonRedirectURL,
+                      children: [
+                        l.BUTTON_NEXT,
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowBigRight, {}),
+                      ],
+                    }),
+                  ],
+                }),
+              ],
+            }),
+          ],
+        }),
+      ],
+    });
+  }
+
+  function KeybindingsPanel() {
+    const l = useStore(locale);
+    const s = useStore(settings$1);
+    const [editor, setEditor] = React.useState(false);
+    const handleEdit = () => {
+      editKeybindings();
+      setEditor(true);
+    };
+    const handleSave = () => {
+      saveKeybindings();
+      setEditor(false);
+    };
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+      id: 'KeybindingsPanel',
+      className: 'panel',
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx('h2', { children: l.KEYBINDINGS }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+          id: 'CloseKeybindings',
+          className: 'closeButton',
+          title: l.CLOSE,
+          onClick: buttonKeybindingsClose,
+          type: 'button',
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'controls',
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+              id: 'EditKeybindings',
+              className: 'ControlButton',
+              type: 'button',
+              title: l.EDIT_KEYBINDS,
+              onClick: handleEdit,
+              children: [/* @__PURE__ */ jsxRuntimeExports.jsx(SvgPencil, {}), l.BUTTON_EDIT],
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+              id: 'SaveKeybindings',
+              className: 'ControlButton hidden',
+              type: 'button',
+              title: l.SAVE_KEYBINDS,
+              onClick: handleSave,
+              children: [/* @__PURE__ */ jsxRuntimeExports.jsx(SvgDeviceFloppy, {}), l.BUTTON_SAVE],
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+          id: 'KeybindingsList',
+          children: !editor
+            ? Object.keys(s.keybinds).map(kb =>
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  'span',
+                  {
+                    children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                        children: [isKey(l, kb) ? l[kb] : '', ':'],
+                      }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
+                        children: s.keybinds[kb]?.map(key =>
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(
+                            'kbd',
+                            { className: 'dark', children: key },
+                            key,
+                          ),
+                        ),
+                      }),
+                    ],
+                  },
+                  kb,
+                ),
+              )
+            : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+                children: [
+                  Object.keys(s.keybinds).map(kb =>
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                      'label',
+                      {
+                        htmlFor: kb,
+                        children: [
+                          isKey(l, kb) ? l[kb] : '',
+                          ':',
+                          /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+                            type: 'text',
+                            className: 'KeybindInput',
+                            id: kb,
+                            name: kb,
+                            defaultValue: s.keybinds[kb]?.join(' , ') ?? '',
+                          }),
+                        ],
+                      },
+                      kb,
+                    ),
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+                    id: 'HotKeysRules',
+                    children: l.KEYBIND_RULES,
+                  }),
+                ],
+              }),
+        }),
+      ],
+    });
+  }
+
+  function buttonReloadPage(event) {
+    const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
+    reloadImage(img);
+  }
+  function buttonHidePage(event) {
+    const img = event.currentTarget.parentElement?.parentElement;
+    img.classList.toggle('hide');
+  }
+  function individual() {
+    document.querySelectorAll('.Reload')?.forEach(addEvent('click', buttonReloadPage));
+    document.querySelectorAll('.Hide')?.forEach(addEvent('click', buttonHidePage));
+  }
+
+  function buttonZoomIn(event) {
+    const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
+    const ratio = (img.width / img.naturalWidth) * (100 + getSettingsValue('zoomStep'));
+    applyZoom('percent', ratio, `#${img.getAttribute('id')}`);
+  }
+  function buttonZoomOut(event) {
+    const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
+    const ratio = (img.width / img.naturalWidth) * (100 - getSettingsValue('zoomStep'));
+    applyZoom('percent', ratio, `#${img.getAttribute('id')}`);
+  }
+  function buttonRestoreZoom() {
+    document.querySelector('.PageContent .PageImg')?.removeAttribute('width');
+  }
+  function buttonZoomWidth(event) {
+    const page = event.currentTarget.parentElement?.parentElement;
+    const img = page?.querySelector('.PageImg');
+    applyZoom('width', 0, `#${img.getAttribute('id')}`);
+    page?.classList.toggle('DoublePage');
+  }
+  function buttonZoomHeight(event) {
+    const img = event.currentTarget.parentElement?.parentElement?.querySelector('.PageImg');
+    applyZoom('height', 0, `#${img.getAttribute('id')}`);
+  }
+  function size() {
+    document.querySelectorAll('.ZoomIn')?.forEach(addEvent('click', buttonZoomIn));
+    document.querySelectorAll('.ZoomOut')?.forEach(addEvent('click', buttonZoomOut));
+    document.querySelectorAll('.ZoomRestore')?.forEach(addEvent('click', buttonRestoreZoom));
+    document.querySelectorAll('.ZoomWidth')?.forEach(addEvent('click', buttonZoomWidth));
+    document.querySelectorAll('.ZoomHeight')?.forEach(addEvent('click', buttonZoomHeight));
+  }
+
+  function MangaPage({ index, src = '' }) {
+    const l = useStore(locale);
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+      id: `Page${index}`,
+      className: 'MangaPage',
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'PageFunctions',
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+              className: 'Bookmark ControlButton',
+              title: l.BOOKMARK,
+              onClick: buttonBookmark,
+              type: 'button',
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmark, {}),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgBookmarkOff, {}),
+              ],
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+              className: 'ZoomIn ControlButton',
+              title: l.ZOOM_IN,
+              onClick: buttonZoomIn,
+              type: 'button',
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomIn, {}),
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+              className: 'ZoomRestore ControlButton',
+              title: l.ZOOM_RESET,
+              onClick: buttonRestoreZoom,
+              type: 'button',
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomCancel, {}),
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+              className: 'ZoomOut ControlButton',
+              title: l.ZOOM_OUT,
+              onClick: buttonZoomOut,
+              type: 'button',
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgZoomOut, {}),
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+              className: 'ZoomWidth ControlButton',
+              title: l.ZOOM_WIDTH,
+              onClick: buttonZoomWidth,
+              type: 'button',
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitWidth, {}),
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+              className: 'ZoomHeight ControlButton',
+              title: l.ZOOM_HEIGHT,
+              onClick: buttonZoomHeight,
+              type: 'button',
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgArrowAutofitHeight, {}),
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+              className: 'Hide ControlButton',
+              title: l.HIDE,
+              onClick: buttonHidePage,
+              type: 'button',
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgEye, {}),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgEyeOff, {}),
+              ],
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+              className: 'Reload ControlButton',
+              title: l.RELOAD,
+              onClick: buttonReloadPage,
+              type: 'button',
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgRefresh, {}),
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
+              className: 'PageIndex',
+              children: index,
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+          className: 'PageContent',
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx('img', {
+            id: `PageImg${index}`,
+            alt: '',
+            className: 'PageImg',
+            src,
+          }),
+        }),
+      ],
+    });
+  }
+
+  function Reader$1({ manga }) {
+    const s = useStore(settings$1);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx('main', {
+      id: 'Chapter',
+      className: `${s.fitWidthIfOversize ? 'fitWidthIfOversize' : ''} ${s.viewMode}`,
+      children: Array.from(Array(manga.pages + 1).keys())
+        .slice(manga.begin)
+        .map(index => /* @__PURE__ */ jsxRuntimeExports.jsx(MangaPage, { index }, index)),
+    });
+  }
+
+  function SettingsPanelGeneral$1() {
+    const l = useStore(locale);
+    const s = useStore(settings$1);
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel',
+          children: [
+            l.SCOPE,
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+              id: 'SettingsScope',
+              className: 'radio-inputs',
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs('label', {
+                  className: 'radio',
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+                      type: 'radio',
+                      id: 'globalSettings',
+                      name: 'settingsScope',
+                      value: 'false',
+                      checked: !isSettingsLocal(),
+                      onChange: changeSettingsScope,
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                      className: 'name',
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgWorldCog, {}),
+                        ' ',
+                        l.GLOBAL,
+                      ],
+                    }),
+                  ],
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs('label', {
+                  className: 'radio',
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+                      type: 'radio',
+                      id: 'localSettings',
+                      name: 'settingsScope',
+                      value: 'true',
+                      checked: isSettingsLocal(),
+                      onChange: changeSettingsScope,
+                    }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+                      className: 'name',
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(SvgLocationCog, {}),
+                        ' ',
+                        window.location.hostname,
+                      ],
+                    }),
+                  ],
+                }),
+              ],
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel locale',
+          children: [
+            l.LANGUAGE,
+            /* @__PURE__ */ jsxRuntimeExports.jsx('select', {
+              id: 'locale',
+              value: s.locale,
+              onChange: changeLocale,
+              children: locales.map(loc =>
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  'option',
+                  { value: loc.ID, children: loc.NAME },
+                  loc.ID,
+                ),
+              ),
+            }),
+          ],
+        }),
+      ],
+    });
+  }
+
+  function SettingsPanelLoading$1() {
+    const l = useStore(locale);
+    const s = useStore(settings$1);
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel loadMode',
+          children: [
+            l.DEFAULT_LOAD_MODE,
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+              id: 'loadMode',
+              value: s.loadMode,
+              onChange: changeLoadMode,
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                  value: 'wait',
+                  children: l.LOAD_MODE_NORMAL,
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                  value: 'always',
+                  children: l.LOAD_MODE_ALWAYS,
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                  value: 'never',
+                  children: l.LOAD_MODE_NEVER,
+                }),
+              ],
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel PagesPerSecond',
+          children: [
+            l.LOAD_SPEED,
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+              id: 'PagesPerSecond',
+              value: s.throttlePageLoad,
+              onChange: changePagesPerSecond,
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs('option', {
+                  value: '3000',
+                  children: ['0.3(', l.SLOWLY, ')'],
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '2000', children: '0.5' }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs('option', {
+                  value: '1000',
+                  children: ['01(', l.NORMAL, ')'],
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '500', children: '02' }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs('option', {
+                  value: '250',
+                  children: ['04(', l.FAST, ')'],
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '125', children: '08' }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs('option', {
+                  value: '100',
+                  children: ['10(', l.EXTREME, ')'],
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                  value: '1',
+                  children: l.ALL_PAGES,
+                }),
+              ],
+            }),
+          ],
+        }),
+      ],
+    });
+  }
+
+  function Toggler({ name, checked = false, onChange }) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+      className: 'toggler',
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+          id: name,
+          name,
+          type: 'checkbox',
+          value: 'true',
+          checked,
+          onChange,
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('label', {
+          htmlFor: name,
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgCheck, {}),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
+          ],
+        }),
+      ],
+    });
+  }
+
+  function SettingsPanelOthers$1() {
+    const l = useStore(locale);
+    const s = useStore(settings$1);
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel verticalSeparator',
+          children: [
+            l.VERTICAL_SEPARATOR,
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+              name: 'verticalSeparator',
+              checked: s.verticalSeparator,
+              onChange: checkVerticalSeparator,
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel fitIfOversize',
+          children: [
+            l.FIT_WIDTH_OVERSIZED,
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+              name: 'fitIfOversize',
+              checked: s.fitWidthIfOversize,
+              onChange: checkFitWidthOversize,
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel showThumbnails',
+          children: [
+            l.SHOW_THUMBNAILS,
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+              name: 'showThumbnails',
+              checked: s.showThumbnails,
+              onChange: checkShowThumbnails,
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel enableComments',
+          children: [
+            l.ENABLE_COMMENTS,
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+              name: 'enableComments',
+              checked: s.enableComments,
+              onChange: checkEnableComments,
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel downloadZip',
+          children: [
+            l.DOWNLOAD_IMAGES,
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+              name: 'downloadZip',
+              checked: s.downloadZip,
+              onChange: checkAutoDownload,
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel hidePageControls',
+          children: [
+            l.HIDE_CONTROLS,
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+              name: 'hidePageControls',
+              checked: s.hidePageControls,
+              onChange: checkHideImageControls,
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel lazyLoadImages',
+          children: [
+            l.LAZY_LOAD_IMAGES_ENABLE,
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Toggler, {
+              name: 'lazyLoadImages',
+              checked: s.lazyLoadImages,
+              onChange: checkLazyLoad,
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: `ControlLabel lazyStart ControlLabelItem ${s.lazyLoadImages ? 'show' : ''}`,
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+              children: [
+                l.LAZY_LOAD_IMAGES,
+                /* @__PURE__ */ jsxRuntimeExports.jsx('output', {
+                  id: 'lazyStartVal',
+                  htmlFor: 'lazyStart',
+                  children: s.lazyStart,
+                }),
+              ],
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+              type: 'range',
+              value: s.lazyStart,
+              onInput: changeLazyStart,
+              name: 'lazyStart',
+              id: 'lazyStart',
+              min: '5',
+              max: '100',
+              step: '5',
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel autoScroll',
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+              children: [
+                l.AUTO_SCROLL_HEIGHT,
+                /* @__PURE__ */ jsxRuntimeExports.jsx('output', {
+                  id: 'scrollHeightVal',
+                  htmlFor: 'scrollHeight',
+                  children: s.scrollHeight,
+                }),
+                'px',
+              ],
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+              type: 'range',
+              value: s.scrollHeight,
+              onInput: changeScrollHeight,
+              name: 'scrollHeight',
+              id: 'scrollHeight',
+              min: '1',
+              max: '100',
+              step: '1',
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel headerType',
+          children: [
+            l.HEADER_TYPE,
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+              id: 'headerType',
+              value: s.header,
+              onChange: changeHeaderType,
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                  value: 'hover',
+                  children: l.HEADER_HOVER,
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                  value: 'scroll',
+                  children: l.HEADER_SCROLL,
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                  value: 'click',
+                  children: l.HEADER_CLICK,
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                  value: 'fixed',
+                  children: l.HEADER_FIXED,
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                  value: 'simple',
+                  children: l.HEADER_SIMPLE,
+                }),
+              ],
+            }),
+          ],
+        }),
+      ],
+    });
+  }
+
+  function changeColorScheme() {
+    const isDark = getSettingsValue('colorScheme') === 'dark';
+    saveSettingsValue('colorScheme', isDark ? 'light' : 'dark');
+    document.documentElement.classList.remove(isDark ? 'dark' : 'light');
+    document.documentElement.classList.add(getSettingsValue('colorScheme'));
+  }
+  function buttonSelectTheme(event) {
+    const target = event.currentTarget;
+    saveSettingsValue('theme', target.title);
+  }
+  function changeCustomTheme(event) {
+    const target = event.currentTarget.value;
+    saveSettingsValue('customTheme', target);
+  }
+  function changeThemeShade(event) {
+    const target = parseInt(event.currentTarget.value, 10);
+    saveSettingsValue('themeShade', target);
+    refreshThemes();
+  }
+  function theming() {
+    document.querySelector('#ColorScheme')?.addEventListener('click', changeColorScheme);
+    document.querySelectorAll('.ThemeRadio').forEach(addEvent('click', buttonSelectTheme));
+    document.querySelector('#CustomThemeHue')?.addEventListener('change', changeCustomTheme);
+    document.querySelector('#ThemeShade')?.addEventListener('input', changeThemeShade);
+  }
+
+  function SettingsPanelTheme() {
+    const l = useStore(locale);
+    const s = useStore(settings$1);
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel ColorSchemeSelector',
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx('label', { children: l.COLOR_SCHEME }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+              id: 'ColorScheme',
+              className: 'ControlButton',
+              onClick: changeColorScheme,
+              type: 'button',
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSun, {}),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMoon, {}),
+              ],
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel ThemeSelector',
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx('label', { children: l.THEME_COLOR }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+              className: `custom ThemeRadio ${s.theme === 'custom' ? 'selected' : ''}`,
+              title: 'custom',
+              onClick: buttonSelectTheme,
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgPalette, {}),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(SvgCheck, {}),
+              ],
+            }),
+            Object.keys(colors).map(color =>
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                'span',
+                {
+                  title: colors[color].name,
+                  className: `${colors[color].name} ThemeRadio ${s.theme === colors[color].name ? 'selected' : ''}`,
+                  onClick: buttonSelectTheme,
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgCheck, {}),
+                },
+                colors[color].name,
+              ),
+            ),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          id: 'Hue',
+          className: `ControlLabel CustomTheme ControlLabelItem ${s.theme.startsWith('custom') ? 'show' : ''}`,
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx('label', { children: l.THEME_HUE }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+              id: 'CustomThemeHue',
+              type: 'color',
+              value: s.customTheme,
+              onChange: changeCustomTheme,
+              className: 'colorpicker CustomTheme',
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          id: 'Shade',
+          className: `ControlLabel CustomTheme ControlLabelItem ${s.theme.startsWith('custom') ? '' : 'show'}`,
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx('label', { children: l.THEME_SHADE }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('output', {
+                  id: 'themeShadeVal',
+                  className: 'RangeValue',
+                  htmlFor: 'ThemeShade',
+                  children: s.themeShade,
+                }),
+              ],
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+              type: 'range',
+              value: s.themeShade,
+              onInput: changeThemeShade,
+              name: 'ThemeShade',
+              id: 'ThemeShade',
+              min: '100',
+              max: '900',
+              step: '100',
+            }),
+          ],
+        }),
+      ],
+    });
+  }
+
+  function SettingsPanelZoom$1() {
+    const l = useStore(locale);
+    const s = useStore(settings$1);
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, {
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel DefaultZoomMode',
+          children: [
+            l.DEFAULT_ZOOM_MODE,
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+              id: 'DefaultZoomMode',
+              value: s.zoomMode,
+              onChange: changeDefaultZoomMode,
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                  value: 'percent',
+                  children: l.PERCENT,
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                  value: 'width',
+                  children: l.FIT_WIDTH,
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                  value: 'height',
+                  children: l.FIT_HEIGHT,
+                }),
+              ],
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: `ControlLabel DefaultZoom ControlLabelItem ${s.zoomMode === 'percent' ? 'show' : ''}`,
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+              children: [
+                l.DEFAULT_ZOOM,
+                /* @__PURE__ */ jsxRuntimeExports.jsxs('output', {
+                  id: 'defaultZoomVal',
+                  className: 'RangeValue',
+                  htmlFor: 'DefaultZoom',
+                  children: [s.defaultZoom, '%'],
+                }),
+              ],
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+              type: 'range',
+              value: s.defaultZoom,
+              onInput: changeDefaultZoom,
+              name: 'DefaultZoom',
+              id: 'DefaultZoom',
+              min: '5',
+              max: '200',
+              step: '5',
+              list: 'tickmarks',
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('datalist', {
+              id: 'tickmarks',
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '5', children: '5' }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '25', children: '25' }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '50', children: '50' }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '75', children: '75' }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '100', children: '100' }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '125', children: '125' }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '150', children: '150' }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '175', children: '175' }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', { value: '200', children: '200' }),
+              ],
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel minZoom',
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+              children: [
+                l.MINIMUM_ZOOM,
+                /* @__PURE__ */ jsxRuntimeExports.jsxs('output', {
+                  id: 'minZoomVal',
+                  className: 'RangeValue',
+                  htmlFor: 'minZoom',
+                  children: [s.minZoom, '%'],
+                }),
+              ],
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+              type: 'range',
+              value: s.minZoom,
+              onInput: changeMinZoom,
+              name: 'minZoom',
+              id: 'minZoom',
+              min: '30',
+              max: '100',
+              step: '10',
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel zoomStep',
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('span', {
+              children: [
+                l.ZOOM_STEP,
+                /* @__PURE__ */ jsxRuntimeExports.jsxs('output', {
+                  id: 'zoomStepVal',
+                  className: 'RangeValue',
+                  htmlFor: 'zoomStep',
+                  children: [s.zoomStep, '%'],
+                }),
+              ],
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx('input', {
+              type: 'range',
+              value: s.zoomStep,
+              onInput: changeZoomStep,
+              name: 'zoomStep',
+              id: 'zoomStep',
+              min: '5',
+              max: '50',
+              step: '5',
+            }),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          className: 'ControlLabel viewMode',
+          children: [
+            l.DEFAULT_VIEW_MODE,
+            /* @__PURE__ */ jsxRuntimeExports.jsxs('select', {
+              id: 'viewMode',
+              value: s.viewMode,
+              onChange: changeDefaultViewMode,
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                  value: 'Vertical',
+                  children: l.VIEW_MODE_VERTICAL,
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                  value: 'WebComic',
+                  children: l.VIEW_MODE_WEBCOMIC,
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                  value: 'FluidLTR',
+                  children: l.VIEW_MODE_LEFT,
+                }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx('option', {
+                  value: 'FluidRTL',
+                  children: l.VIEW_MODE_RIGHT,
+                }),
+              ],
+            }),
+          ],
+        }),
+      ],
+    });
+  }
+
+  function SettingsPanel$1() {
+    const l = useStore(locale);
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+      id: 'SettingsPanel',
+      className: 'panel',
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx('h2', { children: l.SETTINGS }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx('button', {
+          id: 'CloseSettings',
+          className: 'closeButton',
+          title: l.CLOSE,
+          onClick: buttonSettingsClose,
+          type: 'button',
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgX, {}),
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('button', {
+          id: 'ResetSettings',
+          className: 'ControlButton',
+          type: 'button',
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgSettingsOff, {}),
+            l.BUTTON_RESET_SETTINGS,
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.GENERAL }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelGeneral$1, {}),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.THEME }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelTheme, {}),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.LOADING }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelLoading$1, {}),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.ZOOM }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelZoom$1, {}),
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('fieldset', {
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx('legend', { children: l.OTHERS }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanelOthers$1, {}),
+          ],
+        }),
+      ],
+    });
+  }
+
+  function Thumbnail({ index, src = '' }) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+      id: `Thumbnail${index}`,
+      className: 'Thumbnail',
+      onClick: clickThumbnail,
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx('img', {
+          id: `ThumbnailImg${index}`,
+          alt: '',
+          className: 'ThumbnailImg',
+          src,
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx('span', {
+          className: 'ThumbnailIndex',
+          children: index,
+        }),
+      ],
+    });
+  }
+
+  function ThumbnailPanel({ manga }) {
+    const l = useStore(locale);
+    const s = useStore(settings$1);
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs('nav', {
+      id: 'Navigation',
+      className: `panel ${s.showThumbnails ? '' : 'disabled'}`,
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+          id: 'NavigationCounters',
+          className: 'ControlLabel',
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(SvgCategory, {}),
+            /* @__PURE__ */ jsxRuntimeExports.jsx('i', { children: '0' }),
+            ' /',
+            /* @__PURE__ */ jsxRuntimeExports.jsx('b', {
+              children:
+                manga.begin && manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages,
+            }),
+            l.PAGES_LOADED,
+          ],
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+          id: 'Thumbnails',
+          onWheel: transformScrollToHorizontal,
+          children: Array.from(Array(manga.pages + 1).keys())
+            .slice(manga.begin)
+            .map(index => /* @__PURE__ */ jsxRuntimeExports.jsx(Thumbnail, { index }, index)),
+        }),
+      ],
+    });
+  }
+
+  function App({ manga }) {
+    const s = useStore(settings$1);
+    function buttonOverlay() {
+      buttonSettingsClose();
+      buttonCommentsClose();
+      buttonBookmarksClose();
+      buttonKeybindingsClose();
+    }
+    React.useEffect(() => {
+      const handleScroll = _.debounce(toggleScrollDirection, 50);
+      const handleWheel = _.throttle(manualScroll, 500);
+      const handleMouseOver = _.throttle(headerHover, 300);
+      window.addEventListener('scroll', handleScroll);
+      window.addEventListener('wheel', handleWheel);
+      window.addEventListener('mouseover', handleMouseOver);
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('wheel', handleWheel);
+        window.removeEventListener('mouseover', handleMouseOver);
+      };
+    }, []);
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs('div', {
+      id: 'MangaOnlineViewer',
+      className: `${s.colorScheme} ${s.hidePageControls ? 'hideControls' : ''} ${isBookmarked() ? 'bookmarked' : ''} ${getDevice()}`,
+      'data-theme': s.theme,
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+          id: 'menu',
+          className: s.header,
+          onClick: buttonHeaderClick,
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(SvgMenu2, {}),
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Header$1, { manga }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Reader$1, { manga }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(ThumbnailPanel, { manga }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx('div', {
+          id: 'Overlay',
+          className: 'overlay',
+          onClick: buttonOverlay,
+        }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CommentsPanel, {}),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(KeybindingsPanel, {}),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(BookmarksPanel, {}),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsPanel$1, {}),
+      ],
+    });
+  }
+
+  function loadReader(manga) {
+    console.warn('Using React');
+    document.head.innerHTML = head(manga);
+    document.body.innerHTML = "<div id='MangaOnlineViewer'></div>";
+    ReactDOM.createRoot(document.body).render(
+      /* @__PURE__ */ jsxRuntimeExports.jsx(App, { manga }),
+    );
+    setTimeout(() => {
+      loadManga(manga, 0);
+    }, 1e3);
+  }
+
+  function removeAllEventListeners(element) {
+    if (!element || !element.parentNode) {
+      return element;
+    }
+    const newElement = element.cloneNode(true);
+    element.parentNode.replaceChild(newElement, element);
+    return newElement;
+  }
+  const removeAttributes = element => {
+    element.getAttributeNames().forEach(attr => element?.removeAttribute(attr));
+  };
+  const cleanUpElement = (...elements) => {
+    elements?.forEach(removeAttributes);
+    elements?.forEach(removeAllEventListeners);
+  };
+
   let setupEvents = false;
   function events() {
     if (!setupEvents) {
       headroom(100);
-      keybindings$1();
+      keybindings();
       individual();
       size();
       window.addEventListener('resize', () => {
@@ -4610,7 +7405,7 @@
       '#Header': Header(loadedManga),
       '#CommentsPanel': commentsPanel(),
       '#SettingsPanel': SettingsPanel(),
-      '#KeybindingsPanel': KeybindingsPanel(),
+      '#KeybindingsPanel': KeybindingsPanel$1(),
       '#Bookmarks': BookmarkPanel(),
     };
     const SettingsPanelOpened = document
@@ -4667,120 +7462,11 @@
         id="Overlay"
         class="overlay"
       ></div>
-      ${commentsPanel()} ${KeybindingsPanel()} ${BookmarkPanel()} ${SettingsPanel()}
+      ${commentsPanel()} ${KeybindingsPanel$1()} ${BookmarkPanel()} ${SettingsPanel()}
     `;
     settings$1.listen(_.debounce(hydrateApp, 600));
     return main.outerHTML;
   };
-
-  const animation =
-    '@-webkit-keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n\n@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n\n@-webkit-keyframes spin-reverse {\n  0% {\n    transform: rotate(360deg);\n  }\n\n  to {\n    transform: rotate(0);\n  }\n}\n\n@keyframes spin-reverse {\n  0% {\n    transform: rotate(360deg);\n  }\n\n  to {\n    transform: rotate(0);\n  }\n}\n\n.icon-tabler-loader-2,\n.animate-spin {\n  -webkit-animation: spin 1s linear infinite;\n  animation: spin 1s linear infinite;\n}\n\n.animate-spin-reverse {\n  -webkit-animation: spin-reverse 1s linear infinite;\n  animation: spin-reverse 1s linear infinite;\n}\n';
-
-  const bookmarks =
-    '#MangaOnlineViewer #BookmarksPanel {\n  position: fixed;\n  top: 10%;\n  width: 50%;\n  left: 25%;\n  right: 25%;\n  text-align: center;\n  max-height: 70%;\n  transition: transform 0.3s ease-in-out;\n  transform: scaleY(0);\n  z-index: 1000;\n}\n\n#MangaOnlineViewer #BookmarksPanel.visible {\n  transform: scaleY(1);\n  display: block;\n}\n\n#MangaOnlineViewer #BookmarksList {\n  padding: 0 15px;\n  overflow: auto;\n  max-height: 60vh;\n}\n\n#MangaOnlineViewer #BookmarksList .BookmarkItem {\n  display: flex;\n  flex-flow: row;\n  justify-content: space-between;\n  align-items: center;\n  padding: 2px;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkColumnLarge {\n  flex-basis: 90%;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkColumnSmall {\n  width: 90px;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkFunctions {\n  width: 75px;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkURl {\n  text-overflow: ellipsis;\n  overflow: hidden;\n  white-space: nowrap;\n  flex-basis: 55%;\n}\n';
-
-  const comments =
-    '#MangaOnlineViewer #CommentsPanel {\n  position: static;\n  width: 90%;\n  height: 0;\n  top: 5%;\n  left: 5%;\n  text-align: center;\n  transition: transform 0.3s ease-in-out;\n  transform: scaleY(0);\n  z-index: 1000;\n  overflow-y: initial;\n  background-color: var(--theme-body-background);\n  opacity: 0;\n}\n\n#MangaOnlineViewer #CommentsPanel.visible {\n  position: fixed;\n  height: 90%;\n  transform: scaleY(1);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex-direction: column;\n  opacity: 1;\n}\n\n#MangaOnlineViewer #CommentsArea {\n  overflow-y: auto;\n  overscroll-behavior: contain;\n  height: 100%;\n  width: 100%;\n  background-color: var(--theme-body-background);\n}\n';
-
-  const fluid =
-    '#MangaOnlineViewer #Chapter.FluidLTR,\n#MangaOnlineViewer #Chapter.FluidRTL {\n  display: flex;\n  overflow-x: auto;\n  min-width: auto;\n\n  .ZoomWidth {\n    display: none;\n  }\n\n  .PageImg {\n    min-width: unset;\n  }\n\n  .MangaPage {\n    width: initial;\n    min-width: fit-content;\n    position: relative;\n    max-height: 100%;\n  }\n\n  .MangaPage.DoublePage {\n    grid-column: span 2;\n  }\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR {\n  flex-direction: row;\n\n  .MangaPage .PageFunctions {\n    right: auto;\n    left: 0;\n    direction: rtl;\n  }\n}\n\n#MangaOnlineViewer #Chapter.FluidRTL {\n  flex-direction: row-reverse;\n}\n';
-
-  const header =
-    '#MangaOnlineViewer #gotoPage {\n  min-width: 35px;\n}\n\n#MangaOnlineViewer #Header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  flex-flow: row nowrap;\n  transition: transform 0.3s ease-in;\n  position: sticky;\n  top: 0;\n  left: 0;\n  right: 0;\n  background-color: inherit;\n  z-index: 900;\n}\n\n#MangaOnlineViewer #Header.click {\n  padding-left: 40px;\n}\n\n@keyframes headroom {\n  from {\n    transform: translateY(-100%);\n    position: sticky;\n    top: 0;\n  }\n  to {\n    transform: translateY(0%);\n    position: sticky;\n    top: 0;\n  }\n}\n\n#MangaOnlineViewer #Header:not(.visible, .headroom-top, .fixed, .simple) {\n  animation: headroom 0.3s ease-in reverse;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL) {\n  position: fixed;\n  padding-left: 40px;\n  top: -100%;\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-hide {\n  animation: none;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-show,\n#MangaOnlineViewer #Header.headroom-end,\n#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL).visible,\n#MangaOnlineViewer #Header.visible {\n  animation: headroom 0.3s ease-in;\n  transform: translateY(0%);\n  position: sticky;\n  top: 0;\n}\n\n#MangaOnlineViewer #Header.headroom-top {\n  animation: none;\n}\n\n#MangaOnlineViewer #Header.fixed {\n  position: sticky;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#MangaOnlineViewer #Header.simple {\n  position: static;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#MangaOnlineViewer #menu {\n  position: fixed;\n  z-index: 1;\n  color: var(--theme-body-text-color);\n  height: 40px;\n  width: 40px;\n}\n\n#MangaOnlineViewer #menu .icon-tabler {\n  position: relative;\n  top: 4px;\n  left: 4px;\n  height: 32px;\n  width: 32px;\n  stroke-width: 1.25;\n}\n\n#MangaOnlineViewer #menu:not(.click, .hover),\n#MangaOnlineViewer #menu.hide {\n  display: none;\n}\n\n#MangaOnlineViewer #menu.click {\n  z-index: 901;\n}\n\n#MangaOnlineViewer #MangaTitle {\n  padding: 2px;\n  margin: 0;\n  font-size: 1.2rem;\n  font-weight: 400;\n}\n\n#MangaOnlineViewer #GlobalFunctions {\n  display: flex;\n  gap: 3px;\n  padding: 3px 3px 3px 0;\n  flex-wrap: wrap;\n  width: 300px;\n  z-index: 100;\n}\n\n#MangaOnlineViewer .ChapterControl span,\n#MangaOnlineViewer #GlobalFunctions span {\n  display: flex;\n  flex-wrap: nowrap;\n  justify-content: space-evenly;\n}\n\n#MangaOnlineViewer .ChapterControl span {\n  flex-grow: 1;\n}\n\n#MangaOnlineViewer .ChapterControl span > * {\n  flex-basis: 50%;\n}\n\n#MangaOnlineViewer #ScrollControl .icon-tabler,\n#MangaOnlineViewer #GlobalFunctions .icon-tabler {\n  width: 25px;\n  height: 25px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomSlider {\n  display: flex;\n  align-items: center;\n}\n\n#MangaOnlineViewer #GlobalFunctions #Zoom {\n  margin: 2px 5px;\n  width: 160px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomVal {\n  width: 40px;\n  display: inline-block;\n  color: var(--theme-primary-text-color);\n  line-height: 20px;\n  text-align: center;\n  border-radius: 3px;\n  background: var(--theme-primary-color);\n  padding: 2px 5px;\n}\n\n#MangaOnlineViewer #ChapterNavigation {\n  display: flex;\n  flex-flow: column nowrap;\n  justify-content: center;\n  align-items: end;\n  padding: 5px;\n  max-width: 350px;\n}\n\n#MangaOnlineViewer #Counters {\n  padding-right: 5px;\n}\n\n#MangaOnlineViewer #ChapterControl {\n  display: flex;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton {\n  display: inline-flex;\n  margin: 2px;\n  justify-content: center;\n  align-items: center;\n  padding: 3px;\n  gap: 0.5em;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton .icon-tabler {\n  flex-shrink: 0;\n  align-self: center;\n  width: 1rem;\n  height: 1rem;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href="#"],\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href=""],\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href="undefined"] {\n  visibility: hidden;\n}\n\n#MangaOnlineViewer #ChapterControl #download.loading {\n  cursor: not-allowed;\n  pointer-events: none;\n  opacity: 0.6;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton.disabled {\n  pointer-events: none;\n  filter: grayscale(0.9);\n}\n\n#MangaOnlineViewer .ViewerTitle {\n  text-align: center;\n  min-height: 60px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex-direction: column;\n  padding: 5px;\n  flex-basis: 60%;\n}\n';
-
-  const icons =
-    '.icon-tabler {\n  height: 1rem;\n  width: 1rem;\n  vertical-align: sub;\n}\n\n.icon-tabler-file-download > :nth-child(n + 4) {\n  /* 4, 5 */\n  color: gold;\n}\n\n.icon-tabler-arrow-autofit-width > :nth-child(n + 3) {\n  /* 3,4,5,6 */\n  color: yellow;\n}\n\n.icon-tabler-arrow-autofit-height > :nth-child(n + 3) {\n  /* 3,4,5,6 */\n  color: yellow;\n}\n\n.icon-tabler-zoom-in-area > :nth-child(2),\n.icon-tabler-zoom-in-area > :nth-child(3) {\n  color: lime;\n}\n\n.icon-tabler-zoom-out-area > :nth-child(2) {\n  color: red;\n}\n\n.icon-tabler-zoom-pan > :nth-child(n + 4) {\n  color: #9966ff;\n}\n\n.icon-tabler-arrow-autofit-down > :nth-child(n + 3) {\n  color: #28ffbf;\n}\n\n.icon-tabler-arrow-autofit-left > :nth-child(n + 3) {\n  color: #28ffbf;\n}\n\n.icon-tabler-arrow-autofit-right > :nth-child(n + 3) {\n  color: #28ffbf;\n}\n\n.icon-tabler-spacing-vertical > :nth-child(4) {\n  color: fuchsia;\n}\n\n.icon-tabler-list-numbers > :nth-child(n + 5) {\n  color: #e48900;\n}\n\n.icon-tabler-bookmarks > :nth-child(n + 2) {\n  color: orange;\n}\n\n.icon-tabler-bookmark > * {\n  color: orange;\n}\n\n.icon-tabler-bookmark-off > * {\n  color: orange;\n}\n\n.icon-tabler-bookmark-off > :nth-child(3) {\n  color: red;\n}\n\n.icon-tabler-eye-off > :nth-child(4) {\n  color: red;\n}\n\n.icon-tabler-zoom-cancel > :nth-child(3),\n.icon-tabler-zoom-cancel > :nth-child(4) {\n  color: #9966ff;\n}\n\n.icon-tabler-zoom-in > :nth-child(3),\n.icon-tabler-zoom-in > :nth-child(4) {\n  color: lime;\n}\n\n.icon-tabler-zoom-out > :nth-child(3) {\n  color: red;\n}\n\n.icon-tabler-refresh > :nth-child(n + 2) {\n  color: cyan;\n}\n\n.icon-tabler-photo > * {\n  color: silver;\n}\n\n.icon-tabler-photo-off > * {\n  color: silver;\n}\n\n.icon-tabler-photo-off > :nth-child(6) {\n  color: orange;\n}\n\n.icon-tabler-message > :nth-child(2),\n.icon-tabler-message > :nth-child(3) {\n  color: greenyellow;\n}\n';
-
-  const keybindings =
-    '#MangaOnlineViewer #KeybindingsPanel {\n  padding: 10px;\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  transition: transform 0.3s ease-in-out;\n  transform: translateX(100%);\n  line-height: 1.5em;\n  z-index: 1000;\n  overflow-y: auto;\n  width: 360px;\n  max-width: 100vw;\n}\n\n#MangaOnlineViewer #KeybindingsPanel.visible {\n  transform: translateX(0);\n  display: block;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #KeybindingsList {\n  display: grid;\n  grid-template-columns: 1fr 2fr;\n  gap: 5px;\n}\n\n#MangaOnlineViewer #KeybindingsPanel .ControlButton {\n  margin-left: 3px;\n  justify-content: center;\n  align-items: center;\n  padding: 5px 10px;\n  gap: 0.5em;\n}\n\n#MangaOnlineViewer #KeybindingsPanel label {\n  display: ruby;\n}\n\n#MangaOnlineViewer #KeybindingsPanel input {\n  display: inline-block;\n  width: 100%;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #HotKeysRules {\n  grid-column: span 2;\n}\n';
-
-  const styles =
-    ':root:not(.light, .dark) {\n  --theme-body-background: #25262b;\n  --theme-body-text-color: #c1c2c5;\n  --theme-text-color: #c1c2c5;\n  --theme-primary-color: #1a1b1e;\n  --theme-primary-text-color: #c1c2c5;\n  --theme-background-color: #25262b;\n  --theme-hightlight-color: #2c2e33;\n  --theme-border-color: #373a40;\n}\n\n#MangaOnlineViewer {\n  text-decoration: none;\n  color: var(--theme-body-text-color);\n  background-color: var(--theme-body-background);\n}\n\n#MangaOnlineViewer #Chapter {\n  display: grid;\n  grid-template-columns: repeat(1, 1fr);\n  min-width: 225px;\n}\n\n#MangaOnlineViewer #Chapter.Vertical:has(+ #Navigation:not(.disabled)),\n#MangaOnlineViewer #Chapter.WebComic:has(+ #Navigation:not(.disabled)) {\n  padding-bottom: 31px;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .PageContent {\n  margin-bottom: 8px;\n  margin-top: 8px;\n}\n\n#MangaOnlineViewer .closeButton {\n  width: fit-content;\n  height: fit-content;\n  position: absolute;\n  right: 10px;\n  top: 10px;\n}\n\n#MangaOnlineViewer .overlay {\n  position: fixed;\n  display: none;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 950;\n  cursor: pointer;\n}\n\n#MangaOnlineViewer .overlay.visible {\n  display: block;\n}\n\n#MangaOnlineViewer select {\n  height: 20px;\n  /*padding: 0;*/\n  margin: 2px;\n}\n\n#MangaOnlineViewer .ControlButton,\n#MangaOnlineViewer .simpleButton {\n  cursor: pointer;\n  border-radius: 5px;\n  border-width: 1px;\n  border-style: solid;\n  padding: 2px;\n  min-height: 32px;\n  color: var(--theme-primary-text-color);\n  background-color: var(--theme-primary-color);\n  border-color: var(--theme-border-color);\n}\n\n#MangaOnlineViewer .ControlButton:active,\n#MangaOnlineViewer .ControlButton:hover {\n  opacity: 0.8;\n}\n\n#MangaOnlineViewer .simpleButton {\n  font-size: initial;\n  min-width: 32px;\n}\n\n#MangaOnlineViewer .panel .simpleButton {\n  position: absolute;\n  top: 10px;\n  left: 10px;\n}\n\n#MangaOnlineViewer .panel {\n  padding: 5px;\n  position: inherit;\n  border-radius: 5px;\n  background-color: var(--theme-background-color);\n}\n\n#MangaOnlineViewer :not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {\n  max-width: 100%;\n  object-fit: contain;\n}\n\n#MangaOnlineViewer .ControlButton.hidden,\n.light #ColorScheme > .icon-tabler-sun,\n.dark #ColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .light + #CommentsColorScheme > .icon-tabler-sun,\n#MangaOnlineViewer .dark + #CommentsColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,\n#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,\n#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,\n#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,\n#MangaOnlineViewer.bookmarked .Bookmark > .icon-tabler-bookmark,\n#MangaOnlineViewer:not(.bookmarked) .Bookmark > .icon-tabler-bookmark-off,\n#MangaOnlineViewer #AutoScroll.running > .icon-tabler-player-play,\n#MangaOnlineViewer #AutoScroll:not(.running) > .icon-tabler-player-pause {\n  display: none;\n}\n\n#MangaOnlineViewer.hideControls .PageFunctions {\n  visibility: hidden;\n}\n';
-
-  const media =
-    '#MangaOnlineViewer.mobile #Header,\n#MangaOnlineViewer.tablet #Header {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\n#MangaOnlineViewer.mobile .ViewerTitle,\n#MangaOnlineViewer.tablet .ViewerTitle {\n  order: 1;\n  min-height: auto;\n  padding: 0;\n  margin: 0;\n  flex-grow: 1;\n  flex-shrink: 1;\n  flex-basis: 100%;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions,\n#MangaOnlineViewer.tablet #GlobalFunctions {\n  width: auto;\n  order: 2;\n  padding: 5px;\n}\n\n#MangaOnlineViewer.mobile #ChapterNavigation,\n#MangaOnlineViewer.tablet #ChapterNavigation {\n  order: 3;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.tablet #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.tablets, .phones),\n#MangaOnlineViewer.tablet #GlobalFunctions .ControlButton:not(.tablets, .phones) {\n  display: none;\n}\n\n#MangaOnlineViewer.mobile #Header {\n  flex-direction: row;\n  flex-wrap: wrap;\n  justify-content: center;\n  align-items: center;\n}\n\n#MangaOnlineViewer.mobile #Header.click + #Chapter:not(.webcomic, .vertical) {\n  position: sticky;\n}\n\n#MangaOnlineViewer.mobile #MangaTitle {\n  word-wrap: anywhere;\n}\n\n#MangaOnlineViewer.mobile .ViewerTitle {\n  order: 1;\n  margin-top: 0;\n  height: auto;\n  padding: 0;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions {\n  order: 2;\n  padding: 0;\n  width: auto;\n  flex-basis: 35px;\n}\n\n#MangaOnlineViewer.mobile #ChapterNavigation {\n  order: 3;\n  width: min-content;\n  min-width: 205px;\n}\n\n#MangaOnlineViewer.mobile .ChapterControl {\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\n#MangaOnlineViewer.mobile .ChapterControl .NavigationControlButton {\n  flex-grow: 1;\n}\n\n#MangaOnlineViewer.mobile .PageFunctions {\n  padding: 0;\n}\n\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton.Bookmark {\n  opacity: 1;\n}\n\n#MangaOnlineViewer.mobile #Navigation,\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.phones),\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton:not(.Bookmark),\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoomMode,\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoom,\n#MangaOnlineViewer.mobile #SettingsPanel .fitIfOversize,\n#MangaOnlineViewer.mobile #SettingsPanel .showThumbnails,\n#MangaOnlineViewer.mobile #SettingsPanel .lazyLoadImages,\n#MangaOnlineViewer.mobile #SettingsPanel .downloadZip,\n#MangaOnlineViewer.mobile #SettingsPanel .minZoom,\n#MangaOnlineViewer.mobile #SettingsPanel .zoomStep,\n#MangaOnlineViewer.mobile #SettingsPanel .headerType,\n#MangaOnlineViewer.mobile #SettingsPanel .autoScroll,\n#MangaOnlineViewer.mobile #KeybindingsPanel,\n#MangaOnlineViewer.mobile .ChapterControl .download,\n#MangaOnlineViewer.mobile #Counters {\n  display: none;\n}\n';
-
-  const page =
-    '#MangaOnlineViewer .MangaPage {\n  width: 100%;\n  display: inline-block;\n  text-align: center;\n  line-height: 0;\n  min-height: 22px;\n  min-width: 100%;\n}\n\n#MangaOnlineViewer .PageContent {\n  text-align: center;\n  display: inline-block;\n  overflow-x: auto;\n  max-width: 100%;\n  transition: all 0.3s ease-in-out;\n  height: 100%;\n  overflow-y: hidden;\n}\n\n#MangaOnlineViewer .MangaPage.hide .PageContent {\n  height: 0;\n}\n\n#MangaOnlineViewer .PageContent .PageImg[src=""],\n#MangaOnlineViewer .PageContent .PageImg:not([src]) {\n  width: 40vw;\n  height: 80vh;\n  display: inline-block;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: 20%;\n  background-color: var(--theme-hightlight-color);\n}\n\n#MangaOnlineViewer .PageContent .PageImg.imgBroken {\n  width: 40vw;\n  height: 80vh;\n  display: inline-block;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: 20%;\n  background-color: var(--theme-hightlight-color);\n}\n\n#MangaOnlineViewer .PageFunctions {\n  font-family: monospace;\n  display: flex;\n  justify-content: flex-end;\n  align-items: center;\n  margin: 0;\n  padding: 0;\n  gap: 3px;\n  position: absolute;\n  right: 0;\n}\n\n#MangaOnlineViewer .PageFunctions > .PageIndex {\n  background-color: var(--theme-primary-color);\n  color: var(--theme-primary-text-color);\n  min-width: 20px;\n  text-align: center;\n  display: inline-block;\n  padding: 3px 5px;\n  line-height: 1rem;\n  border-radius: 5px;\n}\n\n#MangaOnlineViewer .PageFunctions .ControlButton {\n  padding: 3px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  margin: 0;\n  border-width: 0;\n  min-height: auto;\n  opacity: 0.5;\n}\n\n#MangaOnlineViewer .PageFunctions:hover .ControlButton {\n  opacity: 1;\n}\n\n#MangaOnlineViewer .PageFunctions .ControlButton:hover {\n  opacity: 0.9;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .separator {\n  display: flex;\n  align-items: center;\n  text-align: center;\n  font-style: italic;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .separator::before,\n#MangaOnlineViewer #Chapter.Vertical .separator::after {\n  content: "";\n  flex: 1;\n  border-bottom: 1px solid var(--theme-text-color);\n}\n\n#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::before {\n  margin-right: 0.25em;\n}\n\n#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::after {\n  margin-left: 0.25em;\n}\n\n#MangaOnlineViewer #Chapter:not(.separator) .separator,\n#MangaOnlineViewer #Chapter:not(.Vertical) .separator {\n  display: none;\n}\n';
-
-  const settings =
-    '#MangaOnlineViewer #SettingsPanel {\n  color: var(--theme-text-color);\n  padding: 10px;\n  position: fixed;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  z-index: 1000;\n  transition:\n    transform 0.3s ease-in,\n    background-color 0.3s linear;\n  transform: translateX(-100%);\n  display: flex;\n  flex-flow: column;\n  gap: 5px;\n  overflow-y: auto;\n  max-width: 100vw;\n  width: 308px;\n}\n\n#MangaOnlineViewer #SettingsPanel.visible {\n  transform: translateX(0);\n}\n\n#MangaOnlineViewer #SettingsPanel fieldset {\n  border: 1px solid var(--theme-body-text-color);\n  padding: 3px;\n  border-radius: 10px;\n}\n\n#MangaOnlineViewer #SettingsPanel .ControlLabel {\n  display: flex;\n  flex-flow: row wrap;\n  justify-content: space-between;\n  align-items: center;\n  padding: 2px;\n}\n\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem:not(.show) {\n  display: none;\n}\n\n#MangaOnlineViewer #SettingsPanel input[type="range"] {\n  width: 100%;\n}\n\n#MangaOnlineViewer #SettingsPanel .RangeValue {\n  display: inline-block;\n  color: var(--theme-primary-text-color);\n  line-height: 20px;\n  text-align: center;\n  border-radius: 3px;\n  background: var(--theme-primary-color);\n  padding: 2px 5px;\n  margin-left: 8px;\n}\n\n#MangaOnlineViewer #SettingsPanel datalist {\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-items: center;\n  writing-mode: vertical-lr;\n  width: 100%;\n}\n\n#MangaOnlineViewer #SettingsPanel datalist option {\n  padding: 0;\n}\n\n#MangaOnlineViewer .ThemeRadio {\n  border: 1px solid var(--theme-text-color);\n  color: var(--theme-primary-text-color);\n  background-color: var(--theme-primary-color);\n  height: 20px;\n  width: 20px;\n  border-radius: 50%;\n  padding: 1px;\n  margin: 2px 5px;\n  position: relative;\n}\n\n#MangaOnlineViewer .ThemeRadio svg {\n  position: absolute;\n  top: 15%;\n  right: 15%;\n}\n\n#MangaOnlineViewer .ThemeRadio.selected .icon-tabler-check {\n  display: inline;\n}\n\n#MangaOnlineViewer .ThemeRadio:not(.selected) .icon-tabler-check {\n  display: none;\n}\n\n#MangaOnlineViewer #ThemeSelector {\n  width: 110px;\n}\n\n#MangaOnlineViewer #Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {\n  display: none;\n}\n\n#MangaOnlineViewer .radio-inputs {\n  position: relative;\n  display: flex;\n  flex-wrap: wrap;\n  border-radius: 0.5rem;\n  background-color: var(--theme-border-color);\n  color: var(--theme-text-color);\n  box-sizing: border-box;\n  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);\n  padding: 0.25rem;\n  width: 300px;\n  font-size: 14px;\n}\n\n#MangaOnlineViewer .radio-inputs .radio {\n  flex: 1 1 auto;\n  text-align: center;\n}\n\n#MangaOnlineViewer .toggler input {\n  display: none;\n}\n\n#MangaOnlineViewer .radio-inputs .radio input {\n  display: none;\n}\n\n#MangaOnlineViewer .radio-inputs .radio .name .icon {\n  margin: 0 0.5rem;\n}\n\n#MangaOnlineViewer .radio-inputs .radio .name {\n  display: flex;\n  cursor: pointer;\n  align-items: center;\n  justify-content: center;\n  border-radius: 0.5rem;\n  border: none;\n  padding: 0.5rem 0;\n  color: var(--theme-text-color);\n  background-color: var(--theme-border-color);\n  transition: all 0.15s ease-in-out;\n}\n\n#MangaOnlineViewer .radio-inputs .radio input:checked + .name {\n  background-color: var(--theme-primary-color);\n  color: var(--theme-primary-text-color);\n  font-weight: 600;\n}\n\n#MangaOnlineViewer #ColorScheme {\n  padding: 5px;\n  min-height: 28px;\n  min-width: 28px;\n}\n\n#MangaOnlineViewer .toggler {\n  width: 36px;\n  /*margin: 40px auto;*/\n}\n\n#MangaOnlineViewer .toggler label {\n  display: block;\n  position: relative;\n  width: 36px;\n  height: 18px;\n  border: 1px solid #d6d6d6;\n  border-radius: 36px;\n  background: #e4e8e8;\n  cursor: pointer;\n}\n\n#MangaOnlineViewer .toggler label::after {\n  display: block;\n  border-radius: 100%;\n  background-color: #d7062a;\n  content: "";\n  animation-name: toggler-size;\n  animation-duration: 0.15s;\n  animation-timing-function: ease-out;\n  animation-direction: normal;\n  animation-iteration-count: 1;\n  animation-play-state: running;\n}\n\n#MangaOnlineViewer .toggler .toggler-on,\n#MangaOnlineViewer .toggler .toggler-off {\n  opacity: 1;\n  z-index: 2;\n}\n\n#MangaOnlineViewer .toggler label::after,\n#MangaOnlineViewer .toggler label .toggler-on,\n#MangaOnlineViewer .toggler label .toggler-off {\n  position: absolute;\n  /*top: 50%;*/\n  top: 9px;\n  left: 25%;\n  width: 16px;\n  height: 16px;\n  transform: translateY(-50%) translateX(-50%);\n  transition:\n    left 0.15s ease-in-out,\n    background-color 0.2s ease-out,\n    width 0.15s ease-in-out,\n    height 0.15s ease-in-out,\n    opacity 0.15s ease-in-out;\n}\n\n#MangaOnlineViewer .toggler input:checked + label::after,\n#MangaOnlineViewer .toggler input:checked + label .toggler-on,\n#MangaOnlineViewer .toggler input:checked + label .toggler-off {\n  left: 75%;\n}\n\n#MangaOnlineViewer .toggler input:checked + label::after {\n  background-color: #50ac5d;\n  animation-name: toggler-size2;\n}\n\n#MangaOnlineViewer .toggler input:checked + label .toggler-off,\n#MangaOnlineViewer .toggler input:not(:checked) + label .toggler-on {\n  width: 0;\n  height: 0;\n  opacity: 0;\n}\n\n#MangaOnlineViewer .toggler .path {\n  fill: none;\n  stroke: #fefefe;\n  stroke-width: 7px;\n  stroke-linecap: round;\n  stroke-miterlimit: 10;\n}\n\n@keyframes toggler-size {\n  0%,\n  100% {\n    width: 26px;\n    height: 26px;\n  }\n\n  50% {\n    width: 20px;\n    height: 20px;\n  }\n}\n\n@keyframes toggler-size2 {\n  0%,\n  100% {\n    width: 26px;\n    height: 26px;\n  }\n\n  50% {\n    width: 20px;\n    height: 20px;\n  }\n}\n';
-
-  const normalize =
-    '/*  Simple Normalizer */\nhtml {\n  font-size: 100%;\n}\n\nbody {\n  margin: 0;\n  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;\n  font-size: 14px;\n  line-height: 20px;\n  color: var(--theme-body-text-color);\n  background-color: var(--theme-body-background);\n  padding: 0;\n}\n\na,\na:link,\na:visited,\na:active,\na:focus {\n  color: var(--theme-body-text-color);\n  text-decoration: none;\n}\n\nimg {\n  height: auto;\n  vertical-align: middle;\n  border: 0 none;\n}\n';
-
-  const thumbnails =
-    '#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=""],\n#MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {\n  width: 100px;\n  height: 150px;\n  display: inline-block;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: 20%;\n}\n\n#MangaOnlineViewer #NavigationCounters {\n  margin: 5px;\n  width: 100%;\n  line-height: 1rem;\n}\n\n#MangaOnlineViewer #Navigation {\n  color: var(--theme-text-color);\n  background-color: var(--theme-hightlight-color);\n  bottom: -180px;\n  height: 185px;\n  overflow-x: hidden;\n  overflow-y: hidden;\n  padding-bottom: 20px;\n  position: fixed;\n  white-space: nowrap;\n  width: 100%;\n  text-align: center;\n  transition:\n    transform 0.3s ease-in,\n    background-color 0.3s linear;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n  line-height: 0;\n}\n\n#MangaOnlineViewer #Navigation #Thumbnails {\n  overflow-x: auto;\n  overflow-y: hidden;\n  margin-right: 10px;\n}\n\n#MangaOnlineViewer #Navigation:hover {\n  transform: translateY(-180px);\n}\n\n#MangaOnlineViewer #Navigation.disabled {\n  display: none;\n}\n\n#MangaOnlineViewer #Navigation.visible {\n  transform: translateY(-180px);\n}\n\n#MangaOnlineViewer #Navigation .Thumbnail {\n  display: inline-block;\n  height: 150px;\n  margin: 0 5px;\n  border: 1px solid var(--theme-primary-color);\n}\n\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailIndex {\n  color: var(--theme-text-color);\n  background-color: var(--theme-hightlight-color);\n  display: block;\n  opacity: 0.8;\n  position: relative;\n  bottom: 25%;\n  width: 100%;\n  line-height: 1rem;\n}\n\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailImg {\n  cursor: pointer;\n  display: inline-block;\n  max-height: 150px;\n  min-height: 150px;\n  min-width: 80px;\n  max-width: 160px;\n}\n';
-
-  const cssStyles = css`
-    :root,
-    .dark {
-      --theme-body-background: ${colors.dark['600']};
-      --theme-body-text-color: ${colors.dark['50']};
-      --theme-text-color: ${colors.dark['50']};
-      --theme-primary-color: ${colors.dark['700']};
-      --theme-primary-text-color: ${colors.dark['50']};
-      --theme-background-color: ${colors.dark['600']};
-      --theme-hightlight-color: ${colors.dark['500']};
-      --theme-border-color: ${colors.dark['400']};
-    }
-
-    .light {
-      --theme-body-background: ${colors.gray['50']};
-      --theme-body-text-color: ${colors.gray['900']};
-      --theme-text-color: ${colors.gray['900']};
-      --theme-primary-color: ${colors.gray['300']};
-      --theme-primary-text-color: ${colors.gray['900']};
-      --theme-background-color: ${colors.gray['50']};
-      --theme-hightlight-color: ${colors.gray['500']};
-      --theme-border-color: ${colors.gray['100']};
-    }
-
-    #MangaOnlineViewer .PageContent .PageImg[src=''],
-    #MangaOnlineViewer .PageContent .PageImg:not([src]) {
-      background-image: url('${svgToUrl(IconPhoto)}');
-    }
-
-    #MangaOnlineViewer .Thumbnail .ThumbnailImg[src=''],
-    #MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {
-      background-image: url('${svgToUrl(IconPhoto)}');
-    }
-
-    #MangaOnlineViewer .PageContent .PageImg.imgBroken,
-    #MangaOnlineViewer .Thumbnail .ThumbnailImg.imgBroken {
-      background-image: url('${svgToUrl(IconPhotoOff)}');
-    }
-
-    #MangaOnlineViewer .ThemeRadio.custom {
-      /*background-image: url("${svgToUrl(IconPalette)}");*/
-    }
-
-    ${normalize}
-    ${styles}
-  ${header}
-  ${icons}
-  ${keybindings}
-  ${page}
-  ${fluid}
-  ${settings}
-  ${thumbnails}
-  ${bookmarks}
-  ${comments}
-  ${media}
-  ${animation}
-  `;
-
-  function head(manga) {
-    return html`
-      <title>${manga.title}</title>
-      <meta charset="UTF-8" />
-      ${wrapStyle('externals', sweetalertStyle)} ${wrapStyle('reader', cssStyles)} ${themesCSS}
-      ${wrapStyle(
-        'MinZoom',
-        `#MangaOnlineViewer .PageContent .PageImg {min-width: ${getSettingsValue('minZoom')}vw;}`,
-      )}
-    `;
-  }
 
   function display(manga) {
     cleanUpElement(document.documentElement, document.head, document.body);
@@ -4830,7 +7516,8 @@
     }
     setTimeout(() => {
       try {
-        display(manga);
+        loadReader(manga);
+        (unsafeWindow ?? window).MOVLegacy = () => display(manga);
       } catch (e) {
         logScript(e);
       }

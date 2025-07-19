@@ -10,17 +10,17 @@ export function changeColorScheme() {
   document.documentElement.classList.add(getSettingsValue('colorScheme'));
 }
 
-export function buttonSelectTheme(event: Event) {
+export function buttonSelectTheme(event: Event | React.MouseEvent) {
   const target = event.currentTarget as HTMLElement;
   saveSettingsValue('theme', target.title);
 }
 
-export function changeCustomTheme(event: Event) {
+export function changeCustomTheme(event: Event | React.ChangeEvent) {
   const target = (event.currentTarget as HTMLInputElement).value;
   saveSettingsValue('customTheme', target);
 }
 
-export function changeThemeShade(event: Event) {
+export function changeThemeShade(event: Event | React.FormEvent) {
   const target = parseInt((event.currentTarget as HTMLInputElement).value, 10);
   saveSettingsValue('themeShade', target as Shade);
   refreshThemes();

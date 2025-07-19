@@ -2,7 +2,7 @@ import { getSettingsValue } from '../../core/settings';
 import { applyZoom } from '../page';
 import { addEvent } from './common';
 
-export function buttonZoomIn(event: Event) {
+export function buttonZoomIn(event: Event | React.MouseEvent) {
   const img = (event.currentTarget as HTMLElement).parentElement?.parentElement?.querySelector(
     '.PageImg',
   ) as HTMLImageElement;
@@ -10,7 +10,7 @@ export function buttonZoomIn(event: Event) {
   applyZoom('percent', ratio, `#${img.getAttribute('id')}`);
 }
 
-export function buttonZoomOut(event: Event) {
+export function buttonZoomOut(event: Event | React.MouseEvent) {
   const img = (event.currentTarget as HTMLElement).parentElement?.parentElement?.querySelector(
     '.PageImg',
   ) as HTMLImageElement;
@@ -22,14 +22,14 @@ export function buttonRestoreZoom() {
   document.querySelector('.PageContent .PageImg')?.removeAttribute('width');
 }
 
-export function buttonZoomWidth(event: Event) {
+export function buttonZoomWidth(event: Event | React.MouseEvent) {
   const page = (event.currentTarget as HTMLElement).parentElement?.parentElement;
   const img = page?.querySelector('.PageImg') as HTMLImageElement;
   applyZoom('width', 0, `#${img.getAttribute('id')}`);
   page?.classList.toggle('DoublePage');
 }
 
-export function buttonZoomHeight(event: Event): void {
+export function buttonZoomHeight(event: Event | React.MouseEvent): void {
   const img = (event.currentTarget as HTMLElement).parentElement?.parentElement?.querySelector(
     '.PageImg',
   ) as HTMLImageElement;

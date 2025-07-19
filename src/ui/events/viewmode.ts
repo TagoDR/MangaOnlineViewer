@@ -44,7 +44,7 @@ export function updateViewMode(mode: ViewMode) {
  * It saves the new mode and then applies it to the current session.
  * @param {Event} event - The change event from the view mode selector.
  */
-export function changeDefaultViewMode(event: Event) {
+export function changeDefaultViewMode(event: Event | React.ChangeEvent) {
   const mode = (event.currentTarget as HTMLInputElement).value as ViewMode;
   saveSettingsValue('viewMode', mode);
   updateViewMode(mode)();

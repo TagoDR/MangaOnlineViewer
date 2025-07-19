@@ -4,9 +4,9 @@ import { IconDeviceFloppy, IconPencil, IconX } from '../icons';
 
 export const keybindList = () => {
   const keybinds = getSettingsValue('keybinds');
-  return Object.keys(keybinds).map((kb) => {
+  return Object.keys(keybinds).map(kb => {
     const keys = keybinds[kb]?.length
-      ? keybinds[kb]?.map((key) => html`<kbd class="dark">${key}</kbd>`).join(' / ')
+      ? keybinds[kb]?.map(key => html`<kbd class="dark">${key}</kbd>`).join(' / ')
       : '';
     return html`<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
   });
@@ -14,7 +14,7 @@ export const keybindList = () => {
 export const keybindEditor = () =>
   Object.keys(getSettingsValue('keybinds'))
     .map(
-      (kb) =>
+      kb =>
         html`<label for="${kb}">${getLocaleString(kb)}:</label>
           <input
             type="text"
@@ -27,9 +27,16 @@ export const keybindEditor = () =>
     .concat(html` <div id="HotKeysRules">${getLocaleString('KEYBIND_RULES')}</div>`);
 
 const KeybindingsPanel = () => html`
-  <div id="KeybindingsPanel" class="panel">
+  <div
+    id="KeybindingsPanel"
+    class="panel"
+  >
     <h2>${getLocaleString('KEYBINDINGS')}</h2>
-    <button id="CloseKeybindings" class="closeButton" title="${getLocaleString('CLOSE')}">
+    <button
+      id="CloseKeybindings"
+      class="closeButton"
+      title="${getLocaleString('CLOSE')}"
+    >
       ${IconX}
     </button>
     <div class="controls">

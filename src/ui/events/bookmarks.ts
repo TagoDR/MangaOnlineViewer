@@ -21,7 +21,7 @@ export function removeURLBookmark(url: string = window.location.href) {
   }
 }
 
-export function buttonEraseBookmarks(event: Event) {
+export function buttonEraseBookmarks(event: Event | React.MouseEvent) {
   const target = (event.currentTarget as HTMLButtonElement).value;
   logScript(`Bookmark Removed ${target}`);
   Swal.fire({
@@ -45,7 +45,7 @@ export function buttonBookmarksOpen() {
   document.querySelector('#Overlay')?.classList.add('visible');
 }
 
-export function buttonBookmark(event: Event) {
+export function buttonBookmark(event: Event | React.MouseEvent) {
   document.querySelector('#MangaOnlineViewer')?.classList.toggle('bookmarked');
   const pagesDistance = [...document.querySelectorAll<HTMLElement>('.MangaPage')].map(element =>
     Math.abs(element.offsetTop - window.scrollY),

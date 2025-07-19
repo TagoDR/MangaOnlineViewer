@@ -14,4 +14,6 @@ export const requiredScripts: string[] = [
   'https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js',
   'https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js',
+  'https://cdn.jsdelivr.net/npm/umd-react@19.1.1/dist/react.production.min.js',
+  'https://cdn.jsdelivr.net/npm/umd-react@19.1.1/dist/react-dom.production.min.js',
 ];

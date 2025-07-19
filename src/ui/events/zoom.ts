@@ -19,7 +19,7 @@ export function changeZoomByStep(sign = 1) {
   };
 }
 
-export function changeDefaultZoomMode(event: Event) {
+export function changeDefaultZoomMode(event: Event | React.ChangeEvent) {
   const target = (event.currentTarget as HTMLInputElement).value as ZoomMode;
   saveSettingsValue('zoomMode', target);
   applyZoom(target);
@@ -27,13 +27,13 @@ export function changeDefaultZoomMode(event: Event) {
   percent?.classList.toggle('show', target === 'percent');
 }
 
-export function changeDefaultZoom(event: Event) {
+export function changeDefaultZoom(event: Event | React.FormEvent) {
   const target = parseInt((event.currentTarget as HTMLInputElement).value, 10);
   saveSettingsValue('defaultZoom', target);
   applyZoom('percent', target);
 }
 
-export function changeZoom(event: Event) {
+export function changeZoom(event: Event | React.FormEvent) {
   const target = parseInt((event.currentTarget as HTMLInputElement).value, 10);
   applyZoom('percent', target);
   const zoomVal = document.querySelector('#ZoomVal');

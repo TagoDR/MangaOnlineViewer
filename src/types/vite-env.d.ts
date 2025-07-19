@@ -1,4 +1,5 @@
 /// <reference types="vite/client" />
+/// <reference types="vite-plugin-svgr/client" />
 /** biome-ignore-all lint/suspicious/noExplicitAny: global variables */
 
 /**

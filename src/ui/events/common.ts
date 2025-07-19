@@ -11,7 +11,7 @@ export function addEvent(ev: string, fn: (e: Event) => void) {
   return (elem: Element) => elem.addEventListener(ev, fn);
 }
 
-export function transformScrollToHorizontal(this: HTMLElement, event: Event) {
+export function transformScrollToHorizontal(this: HTMLElement, event: Event | React.WheelEvent) {
   if (!(event as WheelEvent).deltaY) {
     return;
   }

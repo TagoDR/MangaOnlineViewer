@@ -3,7 +3,7 @@ import generateZip from '../../core/download';
 import { logScript } from '../../utils/tampermonkey';
 import { addEvent } from './common';
 
-export function buttonStartDownload(event: Event) {
+export function buttonStartDownload(event: Event | React.MouseEvent) {
   const button = event.currentTarget as HTMLInputElement;
   if (button.classList.contains('loading')) {
     return;
@@ -11,14 +11,14 @@ export function buttonStartDownload(event: Event) {
 
   logScript('Downloading Chapter');
   button.classList.add('loading');
-  generateZip().catch((err) => logScript('Error downloading chapter', err));
+  generateZip().catch(err => logScript('Error downloading chapter', err));
 }
 
 export function buttonGlobalHideImageControls() {
   document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
 }
 
-export function buttonRedirectURL(event: Event) {
+export function buttonRedirectURL(event: Event | React.MouseEvent) {
   const element = event.target as HTMLElement;
   const url = element.getAttribute('value') ?? element.getAttribute('href');
   if ((event as MouseEvent).button !== 1 && !(event as MouseEvent).ctrlKey) {
