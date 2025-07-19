@@ -21,8 +21,9 @@ const mangastreamwp: ISite = {
     'TresDaos',
     'Lectormiau',
     'NTRGod',
+    'Threedaos',
   ],
-  url: /https?:\/\/[^/]*(scans?|comic|realm|rizz|hivetoon|tresdaos|zonamiau|ntrgod)[^/]*\/.+/,
+  url: /https?:\/\/[^/]*(scans?|comic|realm|rizz|hivetoon|tresdaos|zonamiau|ntrgod|threedaos)[^/]*\/.+/,
   homepage: [
     'https://themesia.com/mangastream-wordpress-theme/',
     'https://realmoasis.com/',
@@ -41,6 +42,7 @@ const mangastreamwp: ISite = {
     'https://tresdaos.com',
     'https://zonamiau.com/',
     'https://ntrgod.com/',
+    'https://threedaos.zdrz.xyz/',
   ],
   language: [Language.ENGLISH, Language.SPANISH],
   category: Category.MANGA,
