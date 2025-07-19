@@ -29,12 +29,12 @@
   "bugs": "https://github.com/TagoDR/MangaOnlineViewer/issues",
   "homepage": "https://github.com/TagoDR/MangaOnlineViewer#readme",
   "devDependencies": {
-    "@biomejs/biome": "^2.1.1",
+    "@biomejs/biome": "^2.1.2",
     "@types/crypto-js": "^4.2.2",
     "@types/file-saver": "^2.0.7",
     "@types/imagesloaded": "^4.1.7",
     "@types/lodash": "^4.17.20",
-    "@types/node": "^24.0.13",
+    "@types/node": "^24.0.15",
     "@types/nprogress": "^0.2.3",
     "@types/tampermonkey": "^5.0.4",
     "@types/tinycolor2": "^1.4.6",
@@ -43,7 +43,7 @@
     "rollup-plugin-prettier": "^4.1.2",
     "typescript": "^5.8.3",
     "userscript-metadata-generator": "^0.2.4",
-    "vite": "^7.0.4",
+    "vite": "^7.0.5",
     "vite-plugin-banner": "^0.8.1",
     "vite-svg-loader": "^5.1.0"
   },
