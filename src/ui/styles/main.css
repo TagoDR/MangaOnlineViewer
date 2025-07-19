@@ -1,4 +1,4 @@
-:root {
+:root:not(.light, .dark) {
   --theme-body-background: #25262b;
   --theme-body-text-color: #c1c2c5;
   --theme-text-color: #c1c2c5;
@@ -105,8 +105,8 @@
 }
 
 #MangaOnlineViewer .ControlButton.hidden,
-#MangaOnlineViewer.light #ColorScheme > .icon-tabler-sun,
-#MangaOnlineViewer.dark #ColorScheme > .icon-tabler-moon,
+.light #ColorScheme > .icon-tabler-sun,
+.dark #ColorScheme > .icon-tabler-moon,
 #MangaOnlineViewer .light + #CommentsColorScheme > .icon-tabler-sun,
 #MangaOnlineViewer .dark + #CommentsColorScheme > .icon-tabler-moon,
 #MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,

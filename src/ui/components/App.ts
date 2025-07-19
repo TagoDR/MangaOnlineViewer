@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { getSettingsValue, isBookmarked, settings, showSettings } from '../../core/settings';
 import type { IManga } from '../../types';
 import { html } from '../../utils/code-tag';
@@ -77,7 +78,7 @@ const app = (manga: IManga) => {
     <div id="Overlay" class="overlay"></div>
     ${CommentsPanel()} ${KeybindingsPanel()} ${BookmarksPanel()} ${SettingsPanel()}
   `;
-  settings.listen(hydrateApp);
+  settings.listen(_.debounce(hydrateApp, 600));
   return main.outerHTML;
 };
 export default app;
