@@ -1,3 +1,4 @@
+import { render } from 'lit-html';
 import _ from 'lodash';
 import { getSettingsValue, saveSettingsValue } from '../../core/settings';
 import { isNothing } from '../../utils/checks';
@@ -86,16 +87,16 @@ export function saveKeybindings() {
     newkeybinds[kb] = isNothing(keys) ? undefined : keys;
   });
   saveSettingsValue('keybinds', newkeybinds);
-  const keybindingList = document.querySelector('#KeybindingsList');
-  if (keybindingList) keybindingList.innerHTML = keybindList().join('\n');
+  const keybindingList = document.querySelector<HTMLElement>('#KeybindingsList');
+  if (keybindingList) render(keybindList(), keybindingList);
   document.querySelector('#SaveKeybindings')?.classList.add('hidden');
   document.querySelector('#EditKeybindings')?.classList.remove('hidden');
   keybindings();
 }
 
 export function editKeybindings() {
-  const keybindingList = document.querySelector('#KeybindingsList');
-  if (keybindingList) keybindingList.innerHTML = keybindEditor().join('\n');
+  const keybindingList = document.querySelector<HTMLElement>('#KeybindingsList');
+  if (keybindingList) render(keybindEditor(), keybindingList);
   document.querySelector('#SaveKeybindings')?.classList.remove('hidden');
   document.querySelector('#EditKeybindings')?.classList.add('hidden');
 }

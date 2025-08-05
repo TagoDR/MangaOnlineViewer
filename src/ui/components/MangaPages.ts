@@ -1,5 +1,5 @@
+import { html } from 'lit-html';
 import { getLocaleString } from '../../core/settings';
-import { html } from '../../utils/code-tag';
 import sequence from '../../utils/sequence';
 import {
   IconArrowAutofitHeight,

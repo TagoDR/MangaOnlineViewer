@@ -1,6 +1,6 @@
+import { html } from 'lit-html';
 import { getLocaleString, getSettingsValue, isSettingsLocal } from '../../core/settings.ts';
 import locales from '../../locales';
-import { html } from '../../utils/code-tag.ts';
 import { IconLocationCog, IconWorldCog } from '../icons';
 
 function settingsScope() {
@@ -12,7 +12,7 @@ function settingsScope() {
           type="radio"
           id="globalSettings"
           name="settingsScope"
-          ${!isSettingsLocal() ? 'checked' : ''}
+          ?checked="${!isSettingsLocal()}"
           value="false"
         />
         <span class="name">${IconWorldCog} ${getLocaleString('GLOBAL')}</span>
@@ -22,7 +22,7 @@ function settingsScope() {
           type="radio"
           id="localSettings"
           name="settingsScope"
-          ${isSettingsLocal() ? 'checked' : ''}
+          ?checked="${isSettingsLocal()}"
           value="true"
         />
         <span class="name">${IconLocationCog} ${window.location.hostname}</span>
@@ -32,15 +32,13 @@ function settingsScope() {
 }
 
 function localeSelector() {
-  return locales
-    .map(
-      (locale) => html`
-        <option value="${locale.ID}" ${getSettingsValue('locale') === locale.ID ? 'selected' : ''}>
-          ${locale.NAME}
-        </option>
-      `,
-    )
-    .join('');
+  return locales.map(
+    (locale) => html`
+      <option value="${locale.ID}" ?selected=${getSettingsValue('locale') === locale.ID}>
+        ${locale.NAME}
+      </option>
+    `,
+  );
 }
 
 function language() {
@@ -52,4 +50,4 @@ function language() {
   </div>`;
 }
 
-export default () => settingsScope() + language();
+export default () => html`${settingsScope()} ${language()}`;

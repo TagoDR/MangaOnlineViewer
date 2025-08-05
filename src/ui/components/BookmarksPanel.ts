@@ -1,6 +1,6 @@
+import { html, render } from 'lit-html';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
 import { isEmpty } from '../../utils/checks';
-import { html } from '../../utils/code-tag';
 import { IconBookmark, IconBookmarkOff, IconExternalLink, IconTrash, IconX } from '../icons';
 
 const listBookmarks = () => {
@@ -56,9 +56,7 @@ const BookmarkPanel = () => html`
 
 export function reloadBookmarks() {
   const list = document.getElementById('BookmarksList');
-  if (list) {
-    list.innerHTML = listBookmarks().join('');
-  }
+  if (list) render(listBookmarks(), list);
 }
 
 export default BookmarkPanel;

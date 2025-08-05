@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaOni, MangaPark, MangaReader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.08.22
+// @version       2025.08.05
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -30,7 +30,7 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/bowser/2.11.0/bundled.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
 // @include       /https?:\/\/(www.)?(asuracomic).(net)\/.+/
-// @include       /https?:\/\/(?:www\.)?(?:fto|jto|hto|dto|mto|wto|bato|battwo|batotwo|comiko|batocomic|readtoto|zbato|xbato|mangatoto)\.(?:to|com|net|org)\/(chapter|title).*/
+// @include       /https?:\/\/(www\.)?(\w(ba)?to|readtoto|batocomic|comiko|battwo|batotoo|batotwo).(to|com|net|org)\/(chapter|title).*/
 // @include       /https?:\/\/(www\.)?(bilibilicomics).net\/episode\/.+/
 // @include       /https?:\/\/(www\.)?comick.io\/.+/
 // @include       /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/
@@ -89,12 +89,12 @@
     '.swal2-popup.swal2-toast{box-sizing:border-box;grid-column:1/4!important;grid-row:1/4!important;grid-template-columns:1fr 99fr 1fr;padding:1em;overflow-y:hidden;background:#fff;box-shadow:0 0 1px rgba(0,0,0,.075),0 1px 2px rgba(0,0,0,.075),1px 2px 4px rgba(0,0,0,.075),1px 3px 8px rgba(0,0,0,.075),2px 4px 16px rgba(0,0,0,.075);pointer-events:all}.swal2-popup.swal2-toast>*{grid-column:2}.swal2-popup.swal2-toast .swal2-title{margin:.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-popup.swal2-toast .swal2-loading{justify-content:center}.swal2-popup.swal2-toast .swal2-input{height:2em;margin:.5em;font-size:1em}.swal2-popup.swal2-toast .swal2-validation-message{font-size:1em}.swal2-popup.swal2-toast .swal2-footer{margin:.5em 0 0;padding:.5em 0 0;font-size:.8em}.swal2-popup.swal2-toast .swal2-close{grid-column:3/3;grid-row:1/99;align-self:center;width:.8em;height:.8em;margin:0;font-size:2em}.swal2-popup.swal2-toast .swal2-html-container{margin:.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-popup.swal2-toast .swal2-html-container:empty{padding:0}.swal2-popup.swal2-toast .swal2-loader{grid-column:1;grid-row:1/99;align-self:center;width:2em;height:2em;margin:.25em}.swal2-popup.swal2-toast .swal2-icon{grid-column:1;grid-row:1/99;align-self:center;width:2em;min-width:2em;height:2em;margin:0 .5em 0 0}.swal2-popup.swal2-toast .swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:1.8em;font-weight:700}.swal2-popup.swal2-toast .swal2-icon.swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line]{top:.875em;width:1.375em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:.3125em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:.3125em}.swal2-popup.swal2-toast .swal2-actions{justify-content:flex-start;height:auto;margin:0;margin-top:.5em;padding:0 .5em}.swal2-popup.swal2-toast .swal2-styled{margin:.25em .5em;padding:.4em .6em;font-size:1em}.swal2-popup.swal2-toast .swal2-success{border-color:#a5dc86}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line]{position:absolute;width:1.6em;height:3em;transform:rotate(45deg);border-radius:50%}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left]{top:-.8em;left:-.5em;transform:rotate(-45deg);transform-origin:2em 2em;border-radius:4em 0 0 4em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right]{top:-.25em;left:.9375em;transform-origin:0 1.5em;border-radius:0 4em 4em 0}.swal2-popup.swal2-toast .swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-popup.swal2-toast .swal2-success .swal2-success-fix{top:0;left:.4375em;width:.4375em;height:2.6875em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line]{height:.3125em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip]{top:1.125em;left:.1875em;width:.75em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=long]{top:.9375em;right:.1875em;width:1.375em}.swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip{-webkit-animation:swal2-toast-animate-success-line-tip .75s;animation:swal2-toast-animate-success-line-tip .75s}.swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long{-webkit-animation:swal2-toast-animate-success-line-long .75s;animation:swal2-toast-animate-success-line-long .75s}.swal2-popup.swal2-toast.swal2-show{-webkit-animation:swal2-toast-show .5s;animation:swal2-toast-show .5s}.swal2-popup.swal2-toast.swal2-hide{-webkit-animation:swal2-toast-hide .1s forwards;animation:swal2-toast-hide .1s forwards}.swal2-container{display:grid;position:fixed;z-index:1060;top:0;right:0;bottom:0;left:0;box-sizing:border-box;grid-template-areas:"top-start     top            top-end" "center-start  center         center-end" "bottom-start  bottom-center  bottom-end";grid-template-rows:minmax(-webkit-min-content,auto) minmax(-webkit-min-content,auto) minmax(-webkit-min-content,auto);grid-template-rows:minmax(min-content,auto) minmax(min-content,auto) minmax(min-content,auto);height:100%;padding:.625em;overflow-x:hidden;transition:background-color .1s;-webkit-overflow-scrolling:touch}.swal2-container.swal2-backdrop-show,.swal2-container.swal2-noanimation{background:rgba(0,0,0,.4)}.swal2-container.swal2-backdrop-hide{background:0 0!important}.swal2-container.swal2-bottom-start,.swal2-container.swal2-center-start,.swal2-container.swal2-top-start{grid-template-columns:minmax(0,1fr) auto auto}.swal2-container.swal2-bottom,.swal2-container.swal2-center,.swal2-container.swal2-top{grid-template-columns:auto minmax(0,1fr) auto}.swal2-container.swal2-bottom-end,.swal2-container.swal2-center-end,.swal2-container.swal2-top-end{grid-template-columns:auto auto minmax(0,1fr)}.swal2-container.swal2-top-start>.swal2-popup{align-self:start}.swal2-container.swal2-top>.swal2-popup{grid-column:2;align-self:start;justify-self:center}.swal2-container.swal2-top-end>.swal2-popup,.swal2-container.swal2-top-right>.swal2-popup{grid-column:3;align-self:start;justify-self:end}.swal2-container.swal2-center-left>.swal2-popup,.swal2-container.swal2-center-start>.swal2-popup{grid-row:2;align-self:center}.swal2-container.swal2-center>.swal2-popup{grid-column:2;grid-row:2;align-self:center;justify-self:center}.swal2-container.swal2-center-end>.swal2-popup,.swal2-container.swal2-center-right>.swal2-popup{grid-column:3;grid-row:2;align-self:center;justify-self:end}.swal2-container.swal2-bottom-left>.swal2-popup,.swal2-container.swal2-bottom-start>.swal2-popup{grid-column:1;grid-row:3;align-self:end}.swal2-container.swal2-bottom>.swal2-popup{grid-column:2;grid-row:3;justify-self:center;align-self:end}.swal2-container.swal2-bottom-end>.swal2-popup,.swal2-container.swal2-bottom-right>.swal2-popup{grid-column:3;grid-row:3;align-self:end;justify-self:end}.swal2-container.swal2-grow-fullscreen>.swal2-popup,.swal2-container.swal2-grow-row>.swal2-popup{grid-column:1/4;width:100%}.swal2-container.swal2-grow-column>.swal2-popup,.swal2-container.swal2-grow-fullscreen>.swal2-popup{grid-row:1/4;align-self:stretch}.swal2-container.swal2-no-transition{transition:none!important}.swal2-popup{display:none;position:relative;box-sizing:border-box;grid-template-columns:minmax(0,100%);width:32em;max-width:100%;padding:0 0 1.25em;border:none;border-radius:5px;background:#fff;color:#545454;font-family:inherit;font-size:1rem}.swal2-popup:focus{outline:0}.swal2-popup.swal2-loading{overflow-y:hidden}.swal2-title{position:relative;max-width:100%;margin:0;padding:.8em 1em 0;color:inherit;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;word-wrap:break-word}.swal2-actions{display:flex;z-index:1;box-sizing:border-box;flex-wrap:wrap;align-items:center;justify-content:center;width:auto;margin:1.25em auto 0;padding:0}.swal2-actions:not(.swal2-loading) .swal2-styled[disabled]{opacity:.4}.swal2-actions:not(.swal2-loading) .swal2-styled:hover{background-image:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1))}.swal2-actions:not(.swal2-loading) .swal2-styled:active{background-image:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2))}.swal2-loader{display:none;align-items:center;justify-content:center;width:2.2em;height:2.2em;margin:0 1.875em;-webkit-animation:swal2-rotate-loading 1.5s linear 0s infinite normal;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;border-width:.25em;border-style:solid;border-radius:100%;border-color:#2778c4 transparent #2778c4 transparent}.swal2-styled{margin:.3125em;padding:.625em 1.1em;transition:box-shadow .1s;box-shadow:0 0 0 3px transparent;font-weight:500}.swal2-styled:not([disabled]){cursor:pointer}.swal2-styled.swal2-confirm{border:0;border-radius:.25em;background:initial;background-color:#7066e0;color:#fff;font-size:1em}.swal2-styled.swal2-confirm:focus{box-shadow:0 0 0 3px rgba(112,102,224,.5)}.swal2-styled.swal2-deny{border:0;border-radius:.25em;background:initial;background-color:#dc3741;color:#fff;font-size:1em}.swal2-styled.swal2-deny:focus{box-shadow:0 0 0 3px rgba(220,55,65,.5)}.swal2-styled.swal2-cancel{border:0;border-radius:.25em;background:initial;background-color:#6e7881;color:#fff;font-size:1em}.swal2-styled.swal2-cancel:focus{box-shadow:0 0 0 3px rgba(110,120,129,.5)}.swal2-styled.swal2-default-outline:focus{box-shadow:0 0 0 3px rgba(100,150,200,.5)}.swal2-styled:focus{outline:0}.swal2-styled::-moz-focus-inner{border:0}.swal2-footer{justify-content:center;margin:1em 0 0;padding:1em 1em 0;border-top:1px solid #eee;color:inherit;font-size:1em}.swal2-timer-progress-bar-container{position:absolute;right:0;bottom:0;left:0;grid-column:auto!important;overflow:hidden;border-bottom-right-radius:5px;border-bottom-left-radius:5px}.swal2-timer-progress-bar{width:100%;height:.25em;background:rgba(0,0,0,.2)}.swal2-image{max-width:100%;margin:2em auto 1em}.swal2-close{z-index:2;align-items:center;justify-content:center;width:1.2em;height:1.2em;margin-top:0;margin-right:0;margin-bottom:-1.2em;padding:0;overflow:hidden;transition:color .1s,box-shadow .1s;border:none;border-radius:5px;background:0 0;color:#ccc;font-family:serif;font-family:monospace;font-size:2.5em;cursor:pointer;justify-self:end}.swal2-close:hover{transform:none;background:0 0;color:#f27474}.swal2-close:focus{outline:0;box-shadow:inset 0 0 0 3px rgba(100,150,200,.5)}.swal2-close::-moz-focus-inner{border:0}.swal2-html-container{z-index:1;justify-content:center;margin:1em 1.6em .3em;padding:0;overflow:auto;color:inherit;font-size:1.125em;font-weight:400;line-height:normal;text-align:center;word-wrap:break-word;word-break:break-word}.swal2-checkbox,.swal2-file,.swal2-input,.swal2-radio,.swal2-select,.swal2-textarea{margin:1em 2em 3px}.swal2-file,.swal2-input,.swal2-textarea{box-sizing:border-box;width:auto;transition:border-color .1s,box-shadow .1s;border:1px solid #d9d9d9;border-radius:.1875em;background:inherit;box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px transparent;color:inherit;font-size:1.125em}.swal2-file.swal2-inputerror,.swal2-input.swal2-inputerror,.swal2-textarea.swal2-inputerror{border-color:#f27474!important;box-shadow:0 0 2px #f27474!important}.swal2-file:focus,.swal2-input:focus,.swal2-textarea:focus{border:1px solid #b4dbed;outline:0;box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(100,150,200,.5)}.swal2-file::-moz-placeholder,.swal2-input::-moz-placeholder,.swal2-textarea::-moz-placeholder{color:#ccc}.swal2-file:-ms-input-placeholder,.swal2-input:-ms-input-placeholder,.swal2-textarea:-ms-input-placeholder{color:#ccc}.swal2-file::placeholder,.swal2-input::placeholder,.swal2-textarea::placeholder{color:#ccc}.swal2-range{margin:1em 2em 3px;background:#fff}.swal2-range input{width:80%}.swal2-range output{width:20%;color:inherit;font-weight:600;text-align:center}.swal2-range input,.swal2-range output{height:2.625em;padding:0;font-size:1.125em;line-height:2.625em}.swal2-input{height:2.625em;padding:0 .75em}.swal2-file{width:75%;margin-right:auto;margin-left:auto;background:inherit;font-size:1.125em}.swal2-textarea{height:6.75em;padding:.75em}.swal2-select{min-width:50%;max-width:100%;padding:.375em .625em;background:inherit;color:inherit;font-size:1.125em}.swal2-checkbox,.swal2-radio{align-items:center;justify-content:center;background:#fff;color:inherit}.swal2-checkbox label,.swal2-radio label{margin:0 .6em;font-size:1.125em}.swal2-checkbox input,.swal2-radio input{flex-shrink:0;margin:0 .4em}.swal2-input-label{display:flex;justify-content:center;margin:1em auto 0}.swal2-validation-message{align-items:center;justify-content:center;margin:1em 0 0;padding:.625em;overflow:hidden;background:#f0f0f0;color:#666;font-size:1em;font-weight:300}.swal2-validation-message::before{content:"!";display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 .625em;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center}.swal2-icon{position:relative;box-sizing:content-box;justify-content:center;width:5em;height:5em;margin:2.5em auto .6em;border:.25em solid transparent;border-radius:50%;border-color:#000;font-family:inherit;line-height:5em;cursor:default;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:3.75em}.swal2-icon.swal2-error{border-color:#f27474;color:#f27474}.swal2-icon.swal2-error .swal2-x-mark{position:relative;flex-grow:1}.swal2-icon.swal2-error [class^=swal2-x-mark-line]{display:block;position:absolute;top:2.3125em;width:2.9375em;height:.3125em;border-radius:.125em;background-color:#f27474}.swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:1.0625em;transform:rotate(45deg)}.swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:1em;transform:rotate(-45deg)}.swal2-icon.swal2-error.swal2-icon-show{-webkit-animation:swal2-animate-error-icon .5s;animation:swal2-animate-error-icon .5s}.swal2-icon.swal2-error.swal2-icon-show .swal2-x-mark{-webkit-animation:swal2-animate-error-x-mark .5s;animation:swal2-animate-error-x-mark .5s}.swal2-icon.swal2-warning{border-color:#facea8;color:#f8bb86}.swal2-icon.swal2-warning.swal2-icon-show{-webkit-animation:swal2-animate-error-icon .5s;animation:swal2-animate-error-icon .5s}.swal2-icon.swal2-warning.swal2-icon-show .swal2-icon-content{-webkit-animation:swal2-animate-i-mark .5s;animation:swal2-animate-i-mark .5s}.swal2-icon.swal2-info{border-color:#9de0f6;color:#3fc3ee}.swal2-icon.swal2-info.swal2-icon-show{-webkit-animation:swal2-animate-error-icon .5s;animation:swal2-animate-error-icon .5s}.swal2-icon.swal2-info.swal2-icon-show .swal2-icon-content{-webkit-animation:swal2-animate-i-mark .8s;animation:swal2-animate-i-mark .8s}.swal2-icon.swal2-question{border-color:#c9dae1;color:#87adbd}.swal2-icon.swal2-question.swal2-icon-show{-webkit-animation:swal2-animate-error-icon .5s;animation:swal2-animate-error-icon .5s}.swal2-icon.swal2-question.swal2-icon-show .swal2-icon-content{-webkit-animation:swal2-animate-question-mark .8s;animation:swal2-animate-question-mark .8s}.swal2-icon.swal2-success{border-color:#a5dc86;color:#a5dc86}.swal2-icon.swal2-success [class^=swal2-success-circular-line]{position:absolute;width:3.75em;height:7.5em;transform:rotate(45deg);border-radius:50%}.swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=left]{top:-.4375em;left:-2.0635em;transform:rotate(-45deg);transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}.swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=right]{top:-.6875em;left:1.875em;transform:rotate(-45deg);transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}.swal2-icon.swal2-success .swal2-success-ring{position:absolute;z-index:2;top:-.25em;left:-.25em;box-sizing:content-box;width:100%;height:100%;border:.25em solid rgba(165,220,134,.3);border-radius:50%}.swal2-icon.swal2-success .swal2-success-fix{position:absolute;z-index:1;top:.5em;left:1.625em;width:.4375em;height:5.625em;transform:rotate(-45deg)}.swal2-icon.swal2-success [class^=swal2-success-line]{display:block;position:absolute;z-index:2;height:.3125em;border-radius:.125em;background-color:#a5dc86}.swal2-icon.swal2-success [class^=swal2-success-line][class$=tip]{top:2.875em;left:.8125em;width:1.5625em;transform:rotate(45deg)}.swal2-icon.swal2-success [class^=swal2-success-line][class$=long]{top:2.375em;right:.5em;width:2.9375em;transform:rotate(-45deg)}.swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-tip{-webkit-animation:swal2-animate-success-line-tip .75s;animation:swal2-animate-success-line-tip .75s}.swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-long{-webkit-animation:swal2-animate-success-line-long .75s;animation:swal2-animate-success-line-long .75s}.swal2-icon.swal2-success.swal2-icon-show .swal2-success-circular-line-right{-webkit-animation:swal2-rotate-success-circular-line 4.25s ease-in;animation:swal2-rotate-success-circular-line 4.25s ease-in}.swal2-progress-steps{flex-wrap:wrap;align-items:center;max-width:100%;margin:1.25em auto;padding:0;background:inherit;font-weight:600}.swal2-progress-steps li{display:inline-block;position:relative}.swal2-progress-steps .swal2-progress-step{z-index:20;flex-shrink:0;width:2em;height:2em;border-radius:2em;background:#2778c4;color:#fff;line-height:2em;text-align:center}.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step{background:#2778c4}.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step{background:#add8e6;color:#fff}.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line{background:#add8e6}.swal2-progress-steps .swal2-progress-step-line{z-index:10;flex-shrink:0;width:2.5em;height:.4em;margin:0 -1px;background:#2778c4}[class^=swal2]{-webkit-tap-highlight-color:transparent}.swal2-show{-webkit-animation:swal2-show .3s;animation:swal2-show .3s}.swal2-hide{-webkit-animation:swal2-hide .15s forwards;animation:swal2-hide .15s forwards}.swal2-noanimation{transition:none}.swal2-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}.swal2-rtl .swal2-close{margin-right:initial;margin-left:0}.swal2-rtl .swal2-timer-progress-bar{right:0;left:auto}@-webkit-keyframes swal2-toast-show{0%{transform:translateY(-.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0)}}@keyframes swal2-toast-show{0%{transform:translateY(-.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0)}}@-webkit-keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@-webkit-keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@-webkit-keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}@keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}@-webkit-keyframes swal2-show{0%{transform:scale(.7)}45%{transform:scale(1.05)}80%{transform:scale(.95)}100%{transform:scale(1)}}@keyframes swal2-show{0%{transform:scale(.7)}45%{transform:scale(1.05)}80%{transform:scale(.95)}100%{transform:scale(1)}}@-webkit-keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(.5);opacity:0}}@keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(.5);opacity:0}}@-webkit-keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@-webkit-keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@-webkit-keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@-webkit-keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(.4);opacity:0}50%{margin-top:1.625em;transform:scale(.4);opacity:0}80%{margin-top:-.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(.4);opacity:0}50%{margin-top:1.625em;transform:scale(.4);opacity:0}80%{margin-top:-.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@-webkit-keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0);opacity:1}}@-webkit-keyframes swal2-rotate-loading{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes swal2-rotate-loading{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@-webkit-keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@-webkit-keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:.4}50%{transform:rotateZ(15deg);opacity:.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:.4}50%{transform:rotateZ(15deg);opacity:.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){overflow:hidden}body.swal2-height-auto{height:auto!important}body.swal2-no-backdrop .swal2-container{background-color:transparent!important;pointer-events:none}body.swal2-no-backdrop .swal2-container .swal2-popup{pointer-events:all}body.swal2-no-backdrop .swal2-container .swal2-modal{box-shadow:0 0 10px rgba(0,0,0,.4)}@media print{body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){overflow-y:scroll!important}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown)>[aria-hidden=true]{display:none}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) .swal2-container{position:static!important}}body.swal2-toast-shown .swal2-container{box-sizing:border-box;width:360px;max-width:100%;background-color:transparent;pointer-events:none}body.swal2-toast-shown .swal2-container.swal2-top{top:0;right:auto;bottom:auto;left:50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-top-end,body.swal2-toast-shown .swal2-container.swal2-top-right{top:0;right:0;bottom:auto;left:auto}body.swal2-toast-shown .swal2-container.swal2-top-left,body.swal2-toast-shown .swal2-container.swal2-top-start{top:0;right:auto;bottom:auto;left:0}body.swal2-toast-shown .swal2-container.swal2-center-left,body.swal2-toast-shown .swal2-container.swal2-center-start{top:50%;right:auto;bottom:auto;left:0;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-center{top:50%;right:auto;bottom:auto;left:50%;transform:translate(-50%,-50%)}body.swal2-toast-shown .swal2-container.swal2-center-end,body.swal2-toast-shown .swal2-container.swal2-center-right{top:50%;right:0;bottom:auto;left:auto;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-left,body.swal2-toast-shown .swal2-container.swal2-bottom-start{top:auto;right:auto;bottom:0;left:0}body.swal2-toast-shown .swal2-container.swal2-bottom{top:auto;right:auto;bottom:0;left:50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-end,body.swal2-toast-shown .swal2-container.swal2-bottom-right{top:auto;right:0;bottom:0;left:auto}';
 
   const fix =
-    '#nprogress .bar {\n  background: #29d;\n  position: fixed;\n  z-index: 1031;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 4px;\n}\n\n#pagesSlider {\n  margin: 10px 0;\n}\n\n#pageInputs {\n  display: flex;\n  gap: 5px;\n  align-items: center;\n  justify-content: center;\n}\n\n#swal2-html-container .pageInput {\n  border: 1px darkblue dashed;\n  border-radius: 5px;\n  text-align: center;\n  background-color: aliceblue;\n  color: black;\n  max-width: 40%;\n}\n\n#swal2-title {\n  color: navy;\n}\n\nbutton.swal2-styled {\n  position: inherit;\n  transform: inherit;\n}\n';
+    '#nprogress .bar {\r\n  background: #29d;\r\n  position: fixed;\r\n  z-index: 1031;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 4px;\r\n}\r\n\r\n#pagesSlider {\r\n  margin: 10px 0;\r\n}\r\n\r\n#pageInputs {\r\n  display: flex;\r\n  gap: 5px;\r\n  align-items: center;\r\n  justify-content: center;\r\n}\r\n\r\n#swal2-html-container .pageInput {\r\n  border: 1px darkblue dashed;\r\n  border-radius: 5px;\r\n  text-align: center;\r\n  background-color: aliceblue;\r\n  color: black;\r\n  max-width: 40%;\r\n}\r\n\r\n#swal2-title {\r\n  color: navy;\r\n}\r\n\r\nbutton.swal2-styled {\r\n  position: inherit;\r\n  transform: inherit;\r\n}\r\n';
 
   const sweetalertStyle = [normalize$1, sweetalert, fix, nprogress, keyscss].join('\n');
 
   const startButton =
-    '#StartMOV {\n  all: revert;\n  backface-visibility: hidden;\n  font-size: 2rem;\n  color: #fff;\n  cursor: pointer;\n  margin: 0 auto;\n  padding: 0.5rem 1rem;\n  text-align: center;\n  border: none;\n  border-radius: 10px;\n  min-height: 50px;\n  width: 80%;\n  position: fixed;\n  right: 0;\n  left: 0;\n  bottom: 0;\n  z-index: 105000;\n  transition: all 0.4s ease-in-out;\n  background-size: 300% 100%;\n  background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\n  box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\n}\n\n#StartMOV:hover {\n  background-position: 100% 0;\n  transition: all 0.4s ease-in-out;\n}\n\n#StartMOV:focus {\n  outline: none;\n}\n';
+    '#StartMOV {\r\n  all: revert;\r\n  backface-visibility: hidden;\r\n  font-size: 2rem;\r\n  color: #fff;\r\n  cursor: pointer;\r\n  margin: 0 auto;\r\n  padding: 0.5rem 1rem;\r\n  text-align: center;\r\n  border: none;\r\n  border-radius: 10px;\r\n  min-height: 50px;\r\n  width: 80%;\r\n  position: fixed;\r\n  right: 0;\r\n  left: 0;\r\n  bottom: 0;\r\n  z-index: 105000;\r\n  transition: all 0.4s ease-in-out;\r\n  background-size: 300% 100%;\r\n  background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\r\n  box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\r\n}\r\n\r\n#StartMOV:hover {\r\n  background-position: 100% 0;\r\n  transition: all 0.4s ease-in-out;\r\n}\r\n\r\n#StartMOV:focus {\r\n  outline: none;\r\n}\r\n';
 
   const concatenateTemplateLiteralTag = (raw, ...keys) =>
     keys.length === 0 ? raw[0] : String.raw({ raw }, ...keys);
@@ -194,9 +194,9 @@
   function getEngine() {
     return getInfoGM.scriptHandler ?? 'Greasemonkey';
   }
-  const parser = bowser.getParser(window.navigator.userAgent);
+  const parser$1 = bowser.getParser(window.navigator.userAgent);
   const getDevice = () => {
-    const device = parser.getPlatformType(true);
+    const device = parser$1.getPlatformType(true);
     if (device === 'mobile' || window.matchMedia('screen and (max-width: 600px)').matches) {
       return 'mobile';
     }
@@ -1142,6 +1142,401 @@
     return key in obj;
   }
 
+  /**
+   * @license
+   * Copyright 2017 Google LLC
+   * SPDX-License-Identifier: BSD-3-Clause
+   */
+  const t$2 = globalThis,
+    i$1 = t$2.trustedTypes,
+    s = i$1 ? i$1.createPolicy('lit-html', { createHTML: t => t }) : void 0,
+    e$3 = '$lit$',
+    h = `lit$${Math.random().toFixed(9).slice(2)}$`,
+    o$1 = '?' + h,
+    n = `<${o$1}>`,
+    r = document,
+    l = () => r.createComment(''),
+    c = t => null === t || ('object' != typeof t && 'function' != typeof t),
+    a = Array.isArray,
+    u = t => a(t) || 'function' == typeof t?.[Symbol.iterator],
+    d$1 = '[ \t\n\f\r]',
+    f = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,
+    v = /-->/g,
+    _$1 = />/g,
+    m = RegExp(`>|${d$1}(?:([^\\s"'>=/]+)(${d$1}*=${d$1}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`, 'g'),
+    p = /'/g,
+    g = /"/g,
+    $$1 = /^(?:script|style|textarea|title)$/i,
+    y =
+      t =>
+      (i, ...s) => ({ _$litType$: t, strings: i, values: s }),
+    x$1 = y(1),
+    T = Symbol.for('lit-noChange'),
+    E = Symbol.for('lit-nothing'),
+    A = new WeakMap(),
+    C = r.createTreeWalker(r, 129);
+  function P(t, i) {
+    if (!a(t) || !t.hasOwnProperty('raw')) throw Error('invalid template strings array');
+    return void 0 !== s ? s.createHTML(i) : i;
+  }
+  const V = (t, i) => {
+    const s = t.length - 1,
+      o = [];
+    let r,
+      l = 2 === i ? '<svg>' : 3 === i ? '<math>' : '',
+      c = f;
+    for (let i = 0; i < s; i++) {
+      const s = t[i];
+      let a,
+        u,
+        d = -1,
+        y = 0;
+      for (; y < s.length && ((c.lastIndex = y), (u = c.exec(s)), null !== u); )
+        ((y = c.lastIndex),
+          c === f
+            ? '!--' === u[1]
+              ? (c = v)
+              : void 0 !== u[1]
+                ? (c = _$1)
+                : void 0 !== u[2]
+                  ? ($$1.test(u[2]) && (r = RegExp('</' + u[2], 'g')), (c = m))
+                  : void 0 !== u[3] && (c = m)
+            : c === m
+              ? '>' === u[0]
+                ? ((c = r ?? f), (d = -1))
+                : void 0 === u[1]
+                  ? (d = -2)
+                  : ((d = c.lastIndex - u[2].length),
+                    (a = u[1]),
+                    (c = void 0 === u[3] ? m : '"' === u[3] ? g : p))
+              : c === g || c === p
+                ? (c = m)
+                : c === v || c === _$1
+                  ? (c = f)
+                  : ((c = m), (r = void 0)));
+      const x = c === m && t[i + 1].startsWith('/>') ? ' ' : '';
+      l +=
+        c === f
+          ? s + n
+          : d >= 0
+            ? (o.push(a), s.slice(0, d) + e$3 + s.slice(d) + h + x)
+            : s + h + (-2 === d ? i : x);
+    }
+    return [P(t, l + (t[s] || '<?>') + (2 === i ? '</svg>' : 3 === i ? '</math>' : '')), o];
+  };
+  class N {
+    constructor({ strings: t, _$litType$: s }, n) {
+      let r;
+      this.parts = [];
+      let c = 0,
+        a = 0;
+      const u = t.length - 1,
+        d = this.parts,
+        [f, v] = V(t, s);
+      if (
+        ((this.el = N.createElement(f, n)), (C.currentNode = this.el.content), 2 === s || 3 === s)
+      ) {
+        const t = this.el.content.firstChild;
+        t.replaceWith(...t.childNodes);
+      }
+      for (; null !== (r = C.nextNode()) && d.length < u; ) {
+        if (1 === r.nodeType) {
+          if (r.hasAttributes())
+            for (const t of r.getAttributeNames())
+              if (t.endsWith(e$3)) {
+                const i = v[a++],
+                  s = r.getAttribute(t).split(h),
+                  e = /([.?@])?(.*)/.exec(i);
+                (d.push({
+                  type: 1,
+                  index: c,
+                  name: e[2],
+                  strings: s,
+                  ctor: '.' === e[1] ? H : '?' === e[1] ? I : '@' === e[1] ? L : k,
+                }),
+                  r.removeAttribute(t));
+              } else t.startsWith(h) && (d.push({ type: 6, index: c }), r.removeAttribute(t));
+          if ($$1.test(r.tagName)) {
+            const t = r.textContent.split(h),
+              s = t.length - 1;
+            if (s > 0) {
+              r.textContent = i$1 ? i$1.emptyScript : '';
+              for (let i = 0; i < s; i++)
+                (r.append(t[i], l()), C.nextNode(), d.push({ type: 2, index: ++c }));
+              r.append(t[s], l());
+            }
+          }
+        } else if (8 === r.nodeType)
+          if (r.data === o$1) d.push({ type: 2, index: c });
+          else {
+            let t = -1;
+            for (; -1 !== (t = r.data.indexOf(h, t + 1)); )
+              (d.push({ type: 7, index: c }), (t += h.length - 1));
+          }
+        c++;
+      }
+    }
+    static createElement(t, i) {
+      const s = r.createElement('template');
+      return ((s.innerHTML = t), s);
+    }
+  }
+  function S(t, i, s = t, e) {
+    if (i === T) return i;
+    let h = void 0 !== e ? s._$Co?.[e] : s._$Cl;
+    const o = c(i) ? void 0 : i._$litDirective$;
+    return (
+      h?.constructor !== o &&
+        (h?._$AO?.(false),
+        void 0 === o ? (h = void 0) : ((h = new o(t)), h._$AT(t, s, e)),
+        void 0 !== e ? ((s._$Co ??= [])[e] = h) : (s._$Cl = h)),
+      void 0 !== h && (i = S(t, h._$AS(t, i.values), h, e)),
+      i
+    );
+  }
+  class M {
+    constructor(t, i) {
+      ((this._$AV = []), (this._$AN = void 0), (this._$AD = t), (this._$AM = i));
+    }
+    get parentNode() {
+      return this._$AM.parentNode;
+    }
+    get _$AU() {
+      return this._$AM._$AU;
+    }
+    u(t) {
+      const {
+          el: { content: i },
+          parts: s,
+        } = this._$AD,
+        e = (t?.creationScope ?? r).importNode(i, true);
+      C.currentNode = e;
+      let h = C.nextNode(),
+        o = 0,
+        n = 0,
+        l = s[0];
+      for (; void 0 !== l; ) {
+        if (o === l.index) {
+          let i;
+          (2 === l.type
+            ? (i = new R(h, h.nextSibling, this, t))
+            : 1 === l.type
+              ? (i = new l.ctor(h, l.name, l.strings, this, t))
+              : 6 === l.type && (i = new z(h, this, t)),
+            this._$AV.push(i),
+            (l = s[++n]));
+        }
+        o !== l?.index && ((h = C.nextNode()), o++);
+      }
+      return ((C.currentNode = r), e);
+    }
+    p(t) {
+      let i = 0;
+      for (const s of this._$AV)
+        (void 0 !== s &&
+          (void 0 !== s.strings ? (s._$AI(t, s, i), (i += s.strings.length - 2)) : s._$AI(t[i])),
+          i++);
+    }
+  }
+  class R {
+    get _$AU() {
+      return this._$AM?._$AU ?? this._$Cv;
+    }
+    constructor(t, i, s, e) {
+      ((this.type = 2),
+        (this._$AH = E),
+        (this._$AN = void 0),
+        (this._$AA = t),
+        (this._$AB = i),
+        (this._$AM = s),
+        (this.options = e),
+        (this._$Cv = e?.isConnected ?? true));
+    }
+    get parentNode() {
+      let t = this._$AA.parentNode;
+      const i = this._$AM;
+      return (void 0 !== i && 11 === t?.nodeType && (t = i.parentNode), t);
+    }
+    get startNode() {
+      return this._$AA;
+    }
+    get endNode() {
+      return this._$AB;
+    }
+    _$AI(t, i = this) {
+      ((t = S(this, t, i)),
+        c(t)
+          ? t === E || null == t || '' === t
+            ? (this._$AH !== E && this._$AR(), (this._$AH = E))
+            : t !== this._$AH && t !== T && this._(t)
+          : void 0 !== t._$litType$
+            ? this.$(t)
+            : void 0 !== t.nodeType
+              ? this.T(t)
+              : u(t)
+                ? this.k(t)
+                : this._(t));
+    }
+    O(t) {
+      return this._$AA.parentNode.insertBefore(t, this._$AB);
+    }
+    T(t) {
+      this._$AH !== t && (this._$AR(), (this._$AH = this.O(t)));
+    }
+    _(t) {
+      (this._$AH !== E && c(this._$AH)
+        ? (this._$AA.nextSibling.data = t)
+        : this.T(r.createTextNode(t)),
+        (this._$AH = t));
+    }
+    $(t) {
+      const { values: i, _$litType$: s } = t,
+        e =
+          'number' == typeof s
+            ? this._$AC(t)
+            : (void 0 === s.el && (s.el = N.createElement(P(s.h, s.h[0]), this.options)), s);
+      if (this._$AH?._$AD === e) this._$AH.p(i);
+      else {
+        const t = new M(e, this),
+          s = t.u(this.options);
+        (t.p(i), this.T(s), (this._$AH = t));
+      }
+    }
+    _$AC(t) {
+      let i = A.get(t.strings);
+      return (void 0 === i && A.set(t.strings, (i = new N(t))), i);
+    }
+    k(t) {
+      a(this._$AH) || ((this._$AH = []), this._$AR());
+      const i = this._$AH;
+      let s,
+        e = 0;
+      for (const h of t)
+        (e === i.length
+          ? i.push((s = new R(this.O(l()), this.O(l()), this, this.options)))
+          : (s = i[e]),
+          s._$AI(h),
+          e++);
+      e < i.length && (this._$AR(s && s._$AB.nextSibling, e), (i.length = e));
+    }
+    _$AR(t = this._$AA.nextSibling, i) {
+      for (this._$AP?.(false, true, i); t !== this._$AB; ) {
+        const i = t.nextSibling;
+        (t.remove(), (t = i));
+      }
+    }
+    setConnected(t) {
+      void 0 === this._$AM && ((this._$Cv = t), this._$AP?.(t));
+    }
+  }
+  class k {
+    get tagName() {
+      return this.element.tagName;
+    }
+    get _$AU() {
+      return this._$AM._$AU;
+    }
+    constructor(t, i, s, e, h) {
+      ((this.type = 1),
+        (this._$AH = E),
+        (this._$AN = void 0),
+        (this.element = t),
+        (this.name = i),
+        (this._$AM = e),
+        (this.options = h),
+        s.length > 2 || '' !== s[0] || '' !== s[1]
+          ? ((this._$AH = Array(s.length - 1).fill(new String())), (this.strings = s))
+          : (this._$AH = E));
+    }
+    _$AI(t, i = this, s, e) {
+      const h = this.strings;
+      let o = false;
+      if (void 0 === h)
+        ((t = S(this, t, i, 0)), (o = !c(t) || (t !== this._$AH && t !== T)), o && (this._$AH = t));
+      else {
+        const e = t;
+        let n, r;
+        for (t = h[0], n = 0; n < h.length - 1; n++)
+          ((r = S(this, e[s + n], i, n)),
+            r === T && (r = this._$AH[n]),
+            (o ||= !c(r) || r !== this._$AH[n]),
+            r === E ? (t = E) : t !== E && (t += (r ?? '') + h[n + 1]),
+            (this._$AH[n] = r));
+      }
+      o && !e && this.j(t);
+    }
+    j(t) {
+      t === E
+        ? this.element.removeAttribute(this.name)
+        : this.element.setAttribute(this.name, t ?? '');
+    }
+  }
+  class H extends k {
+    constructor() {
+      (super(...arguments), (this.type = 3));
+    }
+    j(t) {
+      this.element[this.name] = t === E ? void 0 : t;
+    }
+  }
+  class I extends k {
+    constructor() {
+      (super(...arguments), (this.type = 4));
+    }
+    j(t) {
+      this.element.toggleAttribute(this.name, !!t && t !== E);
+    }
+  }
+  class L extends k {
+    constructor(t, i, s, e, h) {
+      (super(t, i, s, e, h), (this.type = 5));
+    }
+    _$AI(t, i = this) {
+      if ((t = S(this, t, i, 0) ?? E) === T) return;
+      const s = this._$AH,
+        e =
+          (t === E && s !== E) ||
+          t.capture !== s.capture ||
+          t.once !== s.once ||
+          t.passive !== s.passive,
+        h = t !== E && (s === E || e);
+      (e && this.element.removeEventListener(this.name, this, s),
+        h && this.element.addEventListener(this.name, this, t),
+        (this._$AH = t));
+    }
+    handleEvent(t) {
+      'function' == typeof this._$AH
+        ? this._$AH.call(this.options?.host ?? this.element, t)
+        : this._$AH.handleEvent(t);
+    }
+  }
+  class z {
+    constructor(t, i, s) {
+      ((this.element = t),
+        (this.type = 6),
+        (this._$AN = void 0),
+        (this._$AM = i),
+        (this.options = s));
+    }
+    get _$AU() {
+      return this._$AM._$AU;
+    }
+    _$AI(t) {
+      S(this, t);
+    }
+  }
+  const j = t$2.litHtmlPolyfillSupport;
+  (j?.(N, R), (t$2.litHtmlVersions ??= []).push('3.3.1'));
+  const B = (t, i, s) => {
+    const e = i;
+    let h = e._$litPart$;
+    if (void 0 === h) {
+      const t = null;
+      e._$litPart$ = h = new R(i.insertBefore(l(), t), t, void 0, {});
+    }
+    return (h._$AI(t), h);
+  };
+
   const objectURLRegex = /^blob:(.+?)\/(.+)$/;
   function getDataFromBase64(src) {
     return src.slice(src.indexOf(';base64,') + 8);
@@ -1174,7 +1569,7 @@
     }
   };
 
-  const settings$2 = {
+  const settings$3 = {
     threshold: 2e3,
     throttle: 500,
     lazyAttribute: 'data-src',
@@ -1186,18 +1581,18 @@
     const { element } = value;
     const rect = element.getBoundingClientRect();
     const target =
-      (window.innerHeight || document.documentElement.clientHeight) + settings$2.threshold;
+      (window.innerHeight || document.documentElement.clientHeight) + settings$3.threshold;
     return rect.top <= target || rect.bottom <= target;
   }
   async function showElement(item) {
-    let value = item.element.getAttribute(settings$2.lazyAttribute) ?? '';
+    let value = item.element.getAttribute(settings$3.lazyAttribute) ?? '';
     if (value) {
       if (!isObjectURL(value) && !isBase64ImageUrl(value) && item.fetchOptions) {
         value = await fetch(value, item.fetchOptions)
           .then(resp => resp.blob())
           .then(blob => blobUtil.blobToDataURL(blob));
       }
-      item.element.setAttribute(settings$2.targetAttribute, value);
+      item.element.setAttribute(settings$3.targetAttribute, value);
     }
     item.callback(item.element)?.catch(logScript);
   }
@@ -1206,7 +1601,7 @@
     listElements = listElements.filter(item => !filterInView(item));
     inView.forEach(showElement);
   }
-  const observerEvent = _.throttle(executeCheck, settings$2.throttle);
+  const observerEvent = _.throttle(executeCheck, settings$3.throttle);
   function lazyLoad$1(element, callback, fetchOptions) {
     if (!setup) {
       window.addEventListener('scroll', observerEvent, {
@@ -1223,6 +1618,12 @@
     listElements.push({ element, callback, fetchOptions });
     observerEvent();
   }
+
+  const renderReplace = (value, container) => {
+    const tempContainer = document.createDocumentFragment();
+    B(value, tempContainer);
+    container.replaceWith(tempContainer);
+  };
 
   async function fetchText(url, format) {
     return new Promise(resolve => {
@@ -1256,191 +1657,563 @@
       .filter(i => i >= begin);
   }
 
-  const IconArrowAutofitDown =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8"/>\n  <path d="M18 4v17"/>\n  <path d="M15 18l3 3l3 -3"/>\n</svg>\n';
+  /**
+   * @license
+   * Copyright 2017 Google LLC
+   * SPDX-License-Identifier: BSD-3-Clause
+   */
+  const t$1 = { ATTRIBUTE: 1, CHILD: 2 },
+    e$2 =
+      t =>
+      (...e) => ({ _$litDirective$: t, values: e });
+  class i {
+    constructor(t) {}
+    get _$AU() {
+      return this._$AM._$AU;
+    }
+    _$AT(t, e, i) {
+      ((this._$Ct = t), (this._$AM = e), (this._$Ci = i));
+    }
+    _$AS(t, e) {
+      return this.update(t, e);
+    }
+    update(t, e) {
+      return this.render(...e);
+    }
+  }
 
-  const IconArrowAutofitHeight =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-height" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6"/>\n  <path d="M18 14v7"/>\n  <path d="M18 3v7"/>\n  <path d="M15 18l3 3l3 -3"/>\n  <path d="M15 6l3 -3l3 3"/>\n</svg>\n';
+  /**
+   * @license
+   * Copyright 2017 Google LLC
+   * SPDX-License-Identifier: BSD-3-Clause
+   */ let e$1 = class e extends i {
+    constructor(i) {
+      if ((super(i), (this.it = E), i.type !== t$1.CHILD))
+        throw Error(this.constructor.directiveName + '() can only be used in child bindings');
+    }
+    render(r) {
+      if (r === E || null == r) return ((this._t = void 0), (this.it = r));
+      if (r === T) return r;
+      if ('string' != typeof r)
+        throw Error(this.constructor.directiveName + '() called with a non-string value');
+      if (r === this.it) return this._t;
+      this.it = r;
+      const s = [r];
+      return (
+        (s.raw = s),
+        (this._t = { _$litType$: this.constructor.resultType, strings: s, values: [] })
+      );
+    }
+  };
+  ((e$1.directiveName = 'unsafeHTML'), (e$1.resultType = 1));
 
-  const IconArrowAutofitLeft =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8"/>\n  <path d="M20 18h-17"/>\n  <path d="M6 15l-3 3l3 3"/>\n</svg>\n';
+  /**
+   * @license
+   * Copyright 2017 Google LLC
+   * SPDX-License-Identifier: BSD-3-Clause
+   */ class t extends e$1 {}
+  ((t.directiveName = 'unsafeSVG'), (t.resultType = 2));
+  const o = e$2(t);
 
-  const IconArrowAutofitRight =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8"/>\n  <path d="M4 18h17"/>\n  <path d="M18 15l3 3l-3 3"/>\n</svg>\n';
+  const icons =
+    '.icon-tabler {\r\n  height: 1rem;\r\n  width: 1rem;\r\n  vertical-align: sub;\r\n}\r\n\r\n.icon-tabler-file-download > :nth-child(n + 4) {\r\n  /* 4, 5 */\r\n  color: gold;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-width > :nth-child(n + 3) {\r\n  /* 3,4,5,6 */\r\n  color: yellow;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-height > :nth-child(n + 3) {\r\n  /* 3,4,5,6 */\r\n  color: yellow;\r\n}\r\n\r\n.icon-tabler-zoom-in-area > :nth-child(2),\r\n.icon-tabler-zoom-in-area > :nth-child(3) {\r\n  color: lime;\r\n}\r\n\r\n.icon-tabler-zoom-out-area > :nth-child(2) {\r\n  color: red;\r\n}\r\n\r\n.icon-tabler-zoom-pan > :nth-child(n + 4) {\r\n  color: #9966ff;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-down > :nth-child(n + 3) {\r\n  color: #28ffbf;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-left > :nth-child(n + 3) {\r\n  color: #28ffbf;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-right > :nth-child(n + 3) {\r\n  color: #28ffbf;\r\n}\r\n\r\n.icon-tabler-spacing-vertical > :nth-child(4) {\r\n  color: fuchsia;\r\n}\r\n\r\n.icon-tabler-list-numbers > :nth-child(n + 5) {\r\n  color: #e48900;\r\n}\r\n\r\n.icon-tabler-bookmarks > :nth-child(n + 2) {\r\n  color: orange;\r\n}\r\n\r\n.icon-tabler-bookmark > :nth-child(2) {\r\n  color: orange;\r\n}\r\n\r\n.icon-tabler-bookmark-off > :nth-child(2) {\r\n  color: orange;\r\n}\r\n\r\n.icon-tabler-bookmark-off > :nth-child(3) {\r\n  color: red;\r\n}\r\n\r\n.icon-tabler-eye-off > :nth-child(4) {\r\n  color: red;\r\n}\r\n\r\n.icon-tabler-zoom-cancel > :nth-child(3),\r\n.icon-tabler-zoom-cancel > :nth-child(4) {\r\n  color: #9966ff;\r\n}\r\n\r\n.icon-tabler-zoom-in > :nth-child(3),\r\n.icon-tabler-zoom-in > :nth-child(4) {\r\n  color: lime;\r\n}\r\n\r\n.icon-tabler-zoom-out > :nth-child(3) {\r\n  color: red;\r\n}\r\n\r\n.icon-tabler-refresh > :nth-child(n + 2) {\r\n  color: cyan;\r\n}\r\n\r\n.icon-tabler-photo > * {\r\n  color: silver;\r\n}\r\n\r\n.icon-tabler-photo-off > * {\r\n  color: silver;\r\n}\r\n\r\n.icon-tabler-photo-off > :nth-child(6) {\r\n  color: orange;\r\n}\r\n\r\n.icon-tabler-message > :nth-child(2),\r\n.icon-tabler-message > :nth-child(3) {\r\n  color: greenyellow;\r\n}\r\n\r\n.icon-tabler-book-return > g {\r\n  color: greenyellow;\r\n}\r\n';
 
-  const IconArrowAutofitWidth =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-autofit-width" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6"/>\n  <path d="M10 18h-7"/>\n  <path d="M21 18h-7"/>\n  <path d="M6 15l-3 3l3 3"/>\n  <path d="M18 15l3 3l-3 3"/>\n</svg>\n';
+  const arrowAutofitDown =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-autofit-down"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8" />\r\n  <path d="M18 4v17" />\r\n  <path d="M15 18l3 3l3 -3" />\r\n</svg>\r\n';
 
-  const IconArrowBigLeft =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z"/>\n</svg>\n';
+  const arrowAutofitHeight =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-autofit-height"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6" />\r\n  <path d="M18 14v7" />\r\n  <path d="M18 3v7" />\r\n  <path d="M15 18l3 3l3 -3" />\r\n  <path d="M15 6l3 -3l3 3" />\r\n</svg>\r\n';
 
-  const IconArrowBigRight =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z"/>\n</svg>\n';
+  const arrowAutofitLeft =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-autofit-left"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8" />\r\n  <path d="M20 18h-17" />\r\n  <path d="M6 15l-3 3l3 3" />\r\n</svg>\r\n';
 
-  const IconBookmark =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z"/>\n</svg>\n';
+  const arrowAutofitRight =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-autofit-right"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8" />\r\n  <path d="M4 18h17" />\r\n  <path d="M18 15l3 3l-3 3" />\r\n</svg>\r\n';
 
-  const IconBookmarkOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmark-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M7.708 3.721a3.982 3.982 0 0 1 2.292 -.721h4a4 4 0 0 1 4 4v7m0 4v3l-6 -4l-6 4v-14c0 -.308 .035 -.609 .1 -.897"/>\n  <path d="M3 3l18 18"/>\n</svg>\n';
+  const arrowAutofitWidth =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-autofit-width"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" />\r\n  <path d="M10 18h-7" />\r\n  <path d="M21 18h-7" />\r\n  <path d="M6 15l-3 3l3 3" />\r\n  <path d="M18 15l3 3l-3 3" />\r\n</svg>\r\n';
 
-  const IconBookmarks =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bookmarks" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z"/>\n  <path d="M11 3h5a3 3 0 0 1 3 3v11"/>\n</svg>\n';
+  const arrowBigLeft =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-big-left"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path\r\n    d="M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z"\r\n  />\r\n</svg>\r\n';
 
-  const IconCategory =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 4h6v6h-6z"/>\n  <path d="M14 4h6v6h-6z"/>\n  <path d="M4 14h6v6h-6z"/>\n  <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>\n</svg>\n';
+  const arrowBigRight =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-big-right"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path\r\n    d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z"\r\n  />\r\n</svg>\r\n';
 
-  const IconCheck =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check toggler-on" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M5 12l5 5l10 -10"/>\n</svg>\n';
+  const book =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-book"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />\r\n  <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />\r\n  <path d="M3 6l0 13" />\r\n  <path d="M12 6l0 13" />\r\n  <path d="M21 6l0 13" />\r\n</svg>\r\n';
 
-  const IconDeviceFloppy =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"/>\n  <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\n  <path d="M14 4l0 4l-6 0l0 -4"/>\n</svg>\n';
+  const bookReturn =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-return"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 2 -1" />\r\n  <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />\r\n  <path d="M3 6l0 13" />\r\n  <path d="M12 6l0 13" />\r\n  <path d="M21 6l0 4" />\r\n  <g transform="rotate(-90, 19, 15)">\r\n    <path d="M15 16l3 -3l3 3" />\r\n    <path d="M18 13v9" />\r\n  </g>\r\n</svg>\r\n';
 
-  const IconExternalLink =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-external-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"/>\n  <path d="M11 13l9 -9"/>\n  <path d="M15 4h5v5"/>\n</svg>\n';
+  const bookUpload =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-book-upload"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M14 20h-8a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12v5" />\r\n  <path d="M11 16h-5a2 2 0 0 0 -2 2" />\r\n  <path d="M15 16l3 -3l3 3" />\r\n  <path d="M18 13v9" />\r\n</svg>\r\n';
 
-  const IconEye =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/>\n  <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/>\n</svg>\n';
+  const bookmark =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-bookmark"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z" />\r\n</svg>\r\n';
 
-  const IconEyeOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828"/>\n  <path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87"/>\n  <path d="M3 3l18 18"/>\n</svg>\n';
+  const bookmarkOff =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-bookmark-off"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path\r\n    d="M7.708 3.721a3.982 3.982 0 0 1 2.292 -.721h4a4 4 0 0 1 4 4v7m0 4v3l-6 -4l-6 4v-14c0 -.308 .035 -.609 .1 -.897"\r\n  />\r\n  <path d="M3 3l18 18" />\r\n</svg>\r\n';
 
-  const IconFileDownload =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M14 3v4a1 1 0 0 0 1 1h4"/>\n  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/>\n  <path d="M12 17v-6"/>\n  <path d="M9.5 14.5l2.5 2.5l2.5 -2.5"/>\n</svg>\n';
+  const bookmarks$2 =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-bookmarks"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z" />\r\n  <path d="M11 3h5a3 3 0 0 1 3 3v11" />\r\n</svg>\r\n';
 
-  const IconKeyboard =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-keyboard" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z"/>\n  <path d="M6 10l0 .01"/>\n  <path d="M10 10l0 .01"/>\n  <path d="M14 10l0 .01"/>\n  <path d="M18 10l0 .01"/>\n  <path d="M6 14l0 .01"/>\n  <path d="M18 14l0 .01"/>\n  <path d="M10 14l4 .01"/>\n</svg>\n';
+  const Comic1SpecialFlat =
+    '<svg\r\n  id="Capa_1"\r\n  enable-background="new 0 0 512 512"\r\n  height="512"\r\n  viewBox="0 0 512 512"\r\n  width="512"\r\n  xmlns="http://www.w3.org/2000/svg"\r\n>\r\n  <g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          d="m427.508 512h-343.02c-5.69 0-10.302-4.612-10.302-10.302v-491.396c0-5.69 4.612-10.302 10.302-10.302h343.02c5.69 0 10.302 4.612 10.302 10.302v491.396c-.001 5.69-4.613 10.302-10.302 10.302z"\r\n          fill="#f2eff2"\r\n        />\r\n      </g>\r\n    </g>\r\n    <path\r\n      d="m427.512 0h-41.238c5.687 0 10.302 4.615 10.302 10.302v41.156l-18.039 71.714 18.039 81.268v46.358l-18.039 45.164 18.039 24.847v46.358l-10.302 61.227 10.302 32.149v41.156c0 5.687-4.615 10.302-10.302 10.302h41.238c5.687 0 10.302-4.615 10.302-10.302v-491.397c0-5.687-4.615-10.302-10.302-10.302z"\r\n      fill="#e1dde1"\r\n    />\r\n    <g>\r\n      <path\r\n        d="m243.51 273.63-47.48 104.08-80.61-10.85v-315.4c0-2.85 2.31-5.15 5.15-5.15h30.86c2.13 0 4.03 1.29 4.8 3.27z"\r\n        fill="#3ad1e0"\r\n      />\r\n      <path\r\n        d="m243.51 273.63-16.68 36.56-101.52-260.61c-.76-1.95-2.64-3.25-4.74-3.27h30.86c2.13 0 4.03 1.29 4.8 3.27z"\r\n        fill="#22c7db"\r\n      />\r\n      <path\r\n        d="m310.81 465.69h-190.24c-2.84 0-5.15-2.3-5.15-5.15v-93.68c25.18-34.92 65.99-57.81 112.19-58.37l-16.07 35.21 74.5 39.08 29.56 75.9c1.32 3.37-1.17 7.01-4.79 7.01z"\r\n        fill="#fb33a8"\r\n      />\r\n      <path\r\n        d="m310.81 465.69h-30.92c3.61 0 6.11-3.64 4.79-7.01l-12.92-33.17c-1.92 4.55-2.88 9.61-2.61 14.91.01.13.01.25.01.38 0 5.92-7.39 8.87-11.45 4.36-6.77-7.49-16.03-11.24-25.29-11.24s-18.54 3.75-25.29 11.24c-1.36 1.52-3.11 2.19-4.83 2.19-3.48 0-6.84-2.78-6.62-6.93.03-.59.04-1.18.04-1.77 0-19.36-16.23-34.99-35.81-33.99-.12.01-.24.01-.37.01-5.92 0-8.87-7.4-4.37-11.46 7.49-6.76 11.24-16.03 11.24-25.29s-3.75-18.52-11.24-25.29c-1.51-1.36-2.18-3.1-2.18-4.81 0-3.48 2.78-6.84 6.92-6.64.6.04 1.19.05 1.77.05 12.81 0 23.98-7.11 29.79-17.57l34.29-1.12-14.22 31.16 74.5 39.08 29.56 75.9c1.32 3.37-1.17 7.01-4.79 7.01z"\r\n        fill="#fb33a8"\r\n      />\r\n      <path\r\n        d="m396.58 51.46v152.98c0 2.84-2.31 5.15-5.15 5.15h-32l-40.41-29.31-40.41 29.31h-17.82c-2.12 0-4.03-1.3-4.8-3.28l-59.6-152.98c-1.32-3.38 1.18-7.02 4.79-7.02h190.25c2.84 0 5.15 2.3 5.15 5.15z"\r\n        fill="#fcb44d"\r\n      />\r\n      <path\r\n        d="m396.576 51.457v152.982c0 2.843-2.308 5.151-5.151 5.151h-30.927c2.843 0 5.151-2.308 5.151-5.151v-152.982c0-2.843-2.308-5.151-5.151-5.151h30.927c2.843.001 5.151 2.308 5.151 5.151z"\r\n        fill="#fb9927"\r\n      />\r\n      <g>\r\n        <path\r\n          d="m359.428 181.065v28.526h-80.818v-28.526c0-22.324 18.1-40.414 40.414-40.414 11.157 0 21.263 4.522 28.567 11.837 7.314 7.314 11.837 17.409 11.837 28.577z"\r\n          fill="#ae6ad8"\r\n        />\r\n        <path\r\n          d="m359.43 181.065v28.526h-29.237v-28.526c0-11.167-4.522-21.263-11.837-28.577-3.935-3.935-8.674-7.067-13.949-9.107 4.533-1.762 9.467-2.73 14.618-2.73 11.157 0 21.263 4.522 28.567 11.837 7.316 7.314 11.838 17.409 11.838 28.577z"\r\n          fill="#975bbb"\r\n        />\r\n        <g>\r\n          <g>\r\n            <circle cx="319.023" cy="121.497" fill="#f2eff2" r="26.224" />\r\n          </g>\r\n        </g>\r\n      </g>\r\n      <path\r\n        d="m396.576 250.798v70.011c0 2.845-2.306 5.151-5.151 5.151h-85.311c-2.123 0-4.029-1.303-4.8-3.281l-27.273-70.011c-1.316-3.377 1.175-7.021 4.8-7.021h112.585c2.844 0 5.15 2.306 5.15 5.151z"\r\n        fill="#23f1a8"\r\n      />\r\n      <path\r\n        d="m396.576 250.798v70.011c0 2.843-2.308 5.151-5.151 5.151h-30.927c2.843 0 5.151-2.308 5.151-5.151v-70.011c0-2.843-2.308-5.151-5.151-5.151h30.927c2.843 0 5.151 2.307 5.151 5.151z"\r\n        fill="#27e19d"\r\n      />\r\n      <path\r\n        d="m324.179 362.016h67.246c2.845 0 5.151 2.306 5.151 5.151v93.376c0 2.845-2.306 5.151-5.151 5.151h-30.866c-2.123 0-4.029-1.303-4.799-3.281l-36.38-93.376c-1.316-3.377 1.175-7.021 4.799-7.021z"\r\n        fill="#23f1a8"\r\n      />\r\n      <path\r\n        d="m396.576 367.167v93.376c0 2.843-2.308 5.151-5.151 5.151h-30.927c2.843 0 5.151-2.308 5.151-5.151v-93.376c0-2.843-2.308-5.151-5.151-5.151h30.927c2.843 0 5.151 2.308 5.151 5.151z"\r\n        fill="#27e19d"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        d="m269.153 413.978c.01.124.01.247.01.371 0 5.924-7.397 8.87-11.456 4.368-6.768-7.489-16.03-11.239-25.291-11.239s-18.533 3.75-25.291 11.239c-1.36 1.514-3.101 2.184-4.821 2.184-3.482 0-6.84-2.782-6.624-6.923.031-.597.041-1.185.041-1.772 0-19.367-16.236-34.995-35.809-33.996-.124.01-.247.01-.371.01-5.924 0-8.87-7.397-4.368-11.456 7.489-6.758 11.239-16.03 11.239-25.291s-3.75-18.523-11.239-25.291c-1.514-1.36-2.184-3.101-2.184-4.811 0-3.482 2.782-6.84 6.923-6.634.597.031 1.185.041 1.772.041 19.367 0 34.995-16.236 33.996-35.799-.01-.124-.01-.247-.01-.371 0-5.934 7.397-8.87 11.456-4.378 6.758 7.489 16.03 11.239 25.291 11.239 3.76 0 7.51-.618 11.095-1.844l42.526 109.158c-10.591 6.183-17.565 17.916-16.885 31.195z"\r\n        fill="#fdef63"\r\n      />\r\n      <path\r\n        d="m268.516 417.19c.406-.839.648-1.79.648-2.841 0-.123 0-.247-.01-.371-.68-13.279 6.294-25.013 16.885-31.194l-42.526-109.158c-3.585 1.226-7.335 1.844-11.095 1.844-7.992 0-15.988-2.799-22.374-8.378z"\r\n        fill="#f3d730"\r\n      />\r\n    </g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          d="m229.374 349.967c-4.267 0-7.726-3.459-7.726-7.726v-29.272c0-4.267 3.459-7.726 7.726-7.726s7.726 3.459 7.726 7.726v29.272c0 4.267-3.459 7.726-7.726 7.726z"\r\n          fill="#554e55"\r\n        />\r\n      </g>\r\n      <g>\r\n        <path\r\n          d="m229.374 377.711c-4.267 0-7.726-3.459-7.726-7.726v-2.061c0-4.267 3.459-7.726 7.726-7.726s7.726 3.459 7.726 7.726v2.061c0 4.267-3.459 7.726-7.726 7.726z"\r\n          fill="#554e55"\r\n        />\r\n      </g>\r\n    </g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          d="m258.185 86.361h-18.228c-4.267 0-7.726-3.459-7.726-7.726s3.459-7.726 7.726-7.726h18.228c4.267 0 7.726 3.459 7.726 7.726 0 4.266-3.459 7.726-7.726 7.726z"\r\n          fill="#f2eff2"\r\n        />\r\n      </g>\r\n      <g>\r\n        <path\r\n          d="m266.269 111.168h-18.229c-4.267 0-7.726-3.459-7.726-7.726s3.459-7.726 7.726-7.726h18.228c4.267 0 7.726 3.459 7.726 7.726s-3.458 7.726-7.725 7.726z"\r\n          fill="#f2eff2"\r\n        />\r\n      </g>\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
 
-  const IconListNumbers =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-numbers" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M11 6h9"/>\n  <path d="M11 12h9"/>\n  <path d="M12 18h8"/>\n  <path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4"/>\n  <path d="M6 10v-6l-2 2"/>\n</svg>\n';
+  const Comic1SpecialLinealColor =
+    '<?xml version="1.0" encoding="UTF-8"?>\r\n<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  version="1.1"\r\n  id="Capa_1"\r\n  x="0px"\r\n  y="0px"\r\n  viewBox="0 0 512 512"\r\n  style="enable-background: new 0 0 512 512"\r\n  xml:space="preserve"\r\n  width="512"\r\n  height="512"\r\n>\r\n  <g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          style="fill: #f2eff2"\r\n          d="M422.485,504.5H89.515c-5.523,0-10-4.477-10-10v-477c0-5.523,4.477-10,10-10h332.971&#10;&#9;&#9;&#9;&#9;c5.523,0,10,4.477,10,10v477C432.485,500.023,428.008,504.5,422.485,504.5z"\r\n        />\r\n      </g>\r\n    </g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          style="fill: #e1dde1"\r\n          d="M432.49,17.5v477c0,5.52-4.48,10-10,10h-40.03c5.52,0,10-4.48,10-10v-477c0-5.52-4.48-10-10-10&#10;&#9;&#9;&#9;&#9;h40.03C428.01,7.5,432.49,11.98,432.49,17.5z"\r\n        />\r\n      </g>\r\n    </g>\r\n    <g>\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M334.56,7.5H89.515c-5.523,0-10,4.477-10,10v477c0,5.523,4.477,10,10,10h332.971c5.523,0,10-4.477,10-10v-477&#10;&#9;&#9;&#9;c0-5.523-4.477-10-10-10h-54.763"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        style="fill: #3ad1e0"\r\n        d="M313.86,452.74L159.16,55.63c-0.75-1.92-2.6-3.18-4.66-3.18h-29.96c-2.76,0-5,2.24-5,5v397.1&#10;&#9;&#9;&#9;c0,2.76,2.24,5,5,5h184.67C312.72,459.55,315.14,456.01,313.86,452.74z"\r\n      />\r\n      <path\r\n        style="fill: #22c7db"\r\n        d="M309.21,459.55h-30.02c3.51,0,5.93-3.54,4.65-6.81L129.14,55.63c-0.74-1.9-2.56-3.16-4.6-3.18&#10;&#9;&#9;&#9;h29.96c2.06,0,3.91,1.26,4.66,3.18l154.7,397.11C315.14,456.01,312.72,459.55,309.21,459.55z"\r\n      />\r\n      <path\r\n        style="fill: #fb33a8"\r\n        d="M258.193,309.845c-9.05-1.894-18.424-2.909-28.037-2.909c-45.55,0-85.862,22.354-110.616,56.676&#10;&#9;&#9;&#9;v90.938c0,2.76,2.24,5,5,5h184.67c3.51,0,5.93-3.54,4.65-6.81L258.193,309.845z"\r\n      />\r\n      <path\r\n        style="fill: #ee2d9a"\r\n        d="M193.362,311.966c-5.64,10.161-16.48,17.055-28.912,17.055c-0.57,0-1.14-0.01-1.72-0.04&#10;&#9;&#9;&#9;c-4.02-0.2-6.72,3.06-6.72,6.44c0,1.66,0.65,3.35,2.12,4.67c7.27,6.57,10.91,15.56,10.91,24.55s-3.64,17.99-10.91,24.55&#10;&#9;&#9;&#9;c-4.37,3.94-1.51,11.12,4.24,11.12c0.12,0,0.24,0,0.36-0.01c19-0.97,34.76,14.2,34.76,33c0,0.57-0.01,1.14-0.04,1.72&#10;&#9;&#9;&#9;c-0.21,4.02,3.05,6.72,6.43,6.72c1.67,0,3.36-0.65,4.68-2.12c6.56-7.27,15.56-10.91,24.55-10.91c8.99,0,17.98,3.64,24.55,10.91&#10;&#9;&#9;&#9;c3.94,4.37,11.12,1.51,11.12-4.24c0-0.12,0-0.24-0.01-0.36c-0.264-5.151,0.666-10.058,2.527-14.479l12.543,32.197&#10;&#9;&#9;&#9;c1.28,3.27-1.14,6.81-4.65,6.81h30.02c3.51,0,5.93-3.54,4.65-6.81l-55.667-142.895L193.362,311.966z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M230.156,306.937c-45.55,0-85.862,22.354-110.616,56.676"\r\n      />\r\n      <path\r\n        style="fill: #fcb44d"\r\n        d="M392.46,57.45v148.5c0,2.76-2.24,5-5,5H260.65c-2.06,0-3.91-1.26-4.66-3.18l-57.85-148.5&#10;&#9;&#9;&#9;c-1.28-3.28,1.14-6.82,4.65-6.82h184.67C390.22,52.45,392.46,54.69,392.46,57.45z"\r\n      />\r\n      <path\r\n        style="fill: #fb9927"\r\n        d="M392.46,57.45v148.5c0,2.76-2.24,5-5,5h-30.021c2.76,0,5-2.24,5-5V57.45c0-2.76-2.24-5-5-5h30.021&#10;&#9;&#9;&#9;C390.22,52.45,392.46,54.69,392.46,57.45z"\r\n      />\r\n      <g>\r\n        <path\r\n          style="fill: #ae6ad8"\r\n          d="M356.4,183.26v27.69h-78.45v-27.69c0-21.67,17.57-39.23,39.23-39.23&#10;&#9;&#9;&#9;&#9;c10.83,0,20.64,4.39,27.73,11.49C352.01,162.62,356.4,172.42,356.4,183.26z"\r\n        />\r\n        <path\r\n          style="fill: #975bbb"\r\n          d="M356.402,183.26v27.69h-28.38v-27.69c0-10.84-4.39-20.64-11.49-27.74&#10;&#9;&#9;&#9;&#9;c-3.82-3.82-8.42-6.86-13.54-8.84c4.4-1.71,9.19-2.65,14.19-2.65c10.83,0,20.64,4.39,27.73,11.49&#10;&#9;&#9;&#9;&#9;C352.012,162.62,356.402,172.42,356.402,183.26z"\r\n        />\r\n        <path\r\n          style="\r\n            fill: none;\r\n            stroke: #000000;\r\n            stroke-width: 15;\r\n            stroke-linecap: round;\r\n            stroke-linejoin: round;\r\n            stroke-miterlimit: 10;\r\n          "\r\n          d="&#10;&#9;&#9;&#9;&#9;M277.95,210.95v-27.69c0-21.67,17.57-39.23,39.23-39.23c10.83,0,20.64,4.39,27.73,11.49c7.1,7.1,11.49,16.9,11.49,27.74v27.69"\r\n        />\r\n        <g>\r\n          <circle style="fill: #f2eff2" cx="317.179" cy="125.438" r="25.456" />\r\n\r\n          <circle\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n            "\r\n            cx="317.179"\r\n            cy="125.438"\r\n            r="25.456"\r\n          />\r\n        </g>\r\n      </g>\r\n      <path\r\n        style="fill: #23f1a8"\r\n        d="M392.46,250.95v67.96c0,2.761-2.239,5-5,5h-82.812c-2.061,0-3.911-1.265-4.659-3.185l-26.474-67.96&#10;&#9;&#9;&#9;c-1.277-3.278,1.141-6.815,4.659-6.815H387.46C390.221,245.95,392.46,248.189,392.46,250.95z"\r\n      />\r\n      <path\r\n        style="fill: #27e19d"\r\n        d="M392.46,250.95v67.96c0,2.76-2.24,5-5,5h-30.021c2.76,0,5-2.24,5-5v-67.96c0-2.76-2.24-5-5-5&#10;&#9;&#9;&#9;h30.021C390.22,245.95,392.46,248.19,392.46,250.95z"\r\n      />\r\n      <path\r\n        style="fill: #23f1a8"\r\n        d="M322.184,358.91h65.276c2.761,0,5,2.239,5,5v90.64c0,2.761-2.239,5-5,5h-29.962&#10;&#9;&#9;&#9;c-2.061,0-3.911-1.265-4.659-3.185l-35.314-90.64C316.248,362.447,318.666,358.91,322.184,358.91z"\r\n      />\r\n      <path\r\n        style="fill: #27e19d"\r\n        d="M392.46,363.91v90.64c0,2.76-2.24,5-5,5h-30.021c2.76,0,5-2.24,5-5v-90.64c0-2.76-2.24-5-5-5&#10;&#9;&#9;&#9;h30.021C390.22,358.91,392.46,361.15,392.46,363.91z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M119.54,242.003V454.55c0,2.761,2.239,5,5,5h184.666c3.518,0,5.936-3.537,4.659-6.815l-154.704-397.1&#10;&#9;&#9;&#9;c-0.748-1.92-2.598-3.185-4.659-3.185H124.54c-2.761,0-5,2.239-5,5v151.391"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M392.46,57.45v148.5c0,2.761-2.239,5-5,5H260.648c-2.061,0-3.911-1.265-4.659-3.185l-57.854-148.5&#10;&#9;&#9;&#9;c-1.277-3.278,1.141-6.815,4.659-6.815H387.46C390.221,52.45,392.46,54.689,392.46,57.45z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M306.627,245.95h-28.454c-3.518,0-5.936,3.537-4.659,6.815l26.474,67.96c0.748,1.92,2.598,3.185,4.659,3.185h82.812&#10;&#9;&#9;&#9;c2.761,0,5-2.239,5-5v-67.96c0-2.761-2.239-5-5-5h-47.67"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M322.184,358.91h65.276c2.761,0,5,2.239,5,5v90.64c0,2.761-2.239,5-5,5h-29.962c-2.061,0-3.911-1.265-4.659-3.185l-35.314-90.64&#10;&#9;&#9;&#9;C316.248,362.447,318.666,358.91,322.184,358.91z"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        style="fill: #fdef63"\r\n        d="M268.77,409.35c0.01,0.12,0.01,0.24,0.01,0.36c0,5.75-7.18,8.61-11.12,4.24&#10;&#9;&#9;&#9;c-6.57-7.27-15.56-10.91-24.55-10.91c-8.99,0-17.99,3.64-24.55,10.91c-1.32,1.47-3.01,2.12-4.68,2.12c-3.38,0-6.64-2.7-6.43-6.72&#10;&#9;&#9;&#9;c0.03-0.58,0.04-1.15,0.04-1.72c0-18.8-15.76-33.97-34.76-33c-0.12,0.01-0.24,0.01-0.36,0.01c-5.75,0-8.61-7.18-4.24-11.12&#10;&#9;&#9;&#9;c7.27-6.56,10.91-15.56,10.91-24.55s-3.64-17.98-10.91-24.55c-1.47-1.32-2.12-3.01-2.12-4.67c0-3.38,2.7-6.64,6.72-6.44&#10;&#9;&#9;&#9;c0.58,0.03,1.15,0.04,1.72,0.04c18.8,0,33.97-15.76,33-34.75c-0.01-0.12-0.01-0.24-0.01-0.36c0-5.76,7.18-8.61,11.12-4.25&#10;&#9;&#9;&#9;c6.56,7.27,15.56,10.91,24.55,10.91c3.65,0,7.29-0.6,10.77-1.79l41.28,105.96C274.88,385.07,268.11,396.46,268.77,409.35z"\r\n      />\r\n      <path\r\n        style="fill: #f3d730"\r\n        d="M268.151,412.468c0.394-0.814,0.629-1.738,0.629-2.758c0-0.12,0-0.24-0.01-0.36&#10;&#9;&#9;&#9;c-0.66-12.89,6.11-24.28,16.39-30.28l-41.28-105.96c-3.48,1.19-7.12,1.79-10.77,1.79c-7.758,0-15.52-2.717-21.718-8.132&#10;&#9;&#9;&#9;L268.151,412.468z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M268.77,409.35c0.01,0.12,0.01,0.24,0.01,0.36c0,5.75-7.18,8.61-11.12,4.24c-6.57-7.27-15.56-10.91-24.55-10.91&#10;&#9;&#9;&#9;c-8.99,0-17.99,3.64-24.55,10.91c-1.32,1.47-3.01,2.12-4.68,2.12c-3.38,0-6.64-2.7-6.43-6.72c0.03-0.58,0.04-1.15,0.04-1.72&#10;&#9;&#9;&#9;c0-18.8-15.76-33.97-34.76-33c-0.12,0.01-0.24,0.01-0.36,0.01c-5.75,0-8.61-7.18-4.24-11.12c7.27-6.56,10.91-15.56,10.91-24.55&#10;&#9;&#9;&#9;s-3.64-17.98-10.91-24.55c-1.47-1.32-2.12-3.01-2.12-4.67c0-3.38,2.7-6.64,6.72-6.44c0.58,0.03,1.15,0.04,1.72,0.04&#10;&#9;&#9;&#9;c18.8,0,33.97-15.76,33-34.75c-0.01-0.12-0.01-0.24-0.01-0.36c0-5.76,7.18-8.61,11.12-4.25c6.56,7.27,15.56,10.91,24.55,10.91&#10;&#9;&#9;&#9;c3.65,0,7.29-0.6,10.77-1.79l41.28,105.96C274.88,385.07,268.11,396.46,268.77,409.35z"\r\n      />\r\n    </g>\r\n    <g>\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="230.156"\r\n        y1="339.714"\r\n        x2="230.156"\r\n        y2="311.299"\r\n      />\r\n\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="230.156"\r\n        y1="364.644"\r\n        x2="230.156"\r\n        y2="366.646"\r\n      />\r\n    </g>\r\n    <g>\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="240.429"\r\n        y1="83.83"\r\n        x2="258.124"\r\n        y2="83.83"\r\n      />\r\n\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="248.276"\r\n        y1="107.911"\r\n        x2="265.97"\r\n        y2="107.911"\r\n      />\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
 
-  const IconLoader2 =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-loader-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 3a9 9 0 1 0 9 9"/>\n</svg>\n';
+  const Comic2SpecialFlat =
+    '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\r\n<!-- Created with Inkscape (http://www.inkscape.org/) -->\r\n\r\n<svg\r\n  version="1.1"\r\n  id="svg3390"\r\n  xml:space="preserve"\r\n  width="682.66669"\r\n  height="682.66669"\r\n  viewBox="0 0 682.66669 682.66669"\r\n  xmlns="http://www.w3.org/2000/svg"\r\n>\r\n  <defs id="defs3394">\r\n    <clipPath clipPathUnits="userSpaceOnUse" id="clipPath3404">\r\n      <path d="M 0,512 H 512 V 0 H 0 Z" id="path3402" />\r\n    </clipPath>\r\n  </defs>\r\n  <g id="g3396" transform="matrix(1.3333333,0,0,-1.3333333,0,682.66667)">\r\n    <g id="g3398">\r\n      <g id="g3400" clip-path="url(#clipPath3404)">\r\n        <g id="g3406" transform="translate(451.7344)">\r\n          <path\r\n            d="m 0,0 h -391.469 c -11.379,0 -20.603,9.225 -20.603,20.604 v 470.792 c 0,11.379 9.224,20.604 20.603,20.604 L 0,512 c 11.379,0 20.604,-9.225 20.604,-20.604 V 20.604 C 20.604,9.225 11.379,0 0,0"\r\n            style="fill: #efe6e6; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3408"\r\n          />\r\n        </g>\r\n        <g id="g3410" transform="translate(472.3376,41.2072)">\r\n          <path\r\n            d="m 0,0 c -216.202,0 -391.468,175.266 -391.468,391.468 v 79.325 h -20.604 c -11.379,0 -20.604,-9.225 -20.604,-20.604 V -20.604 c 0,-11.379 9.225,-20.603 20.604,-20.603 H -20.603 C -9.224,-41.207 0,-31.983 0,-20.604 Z"\r\n            style="fill: #e2d7d7; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3412"\r\n          />\r\n        </g>\r\n        <g id="g3414" transform="translate(235.3964,198.1382)">\r\n          <path\r\n            d="M 0,0 H 195.734 V 272.655 H 82.414 Z"\r\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3416"\r\n          />\r\n        </g>\r\n        <g id="g3418" transform="translate(235.3964,198.1382)">\r\n          <path\r\n            d="M 0,0 H 195.734 V 272.655 H 82.414 Z"\r\n            style="fill: #5ad6ff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3420"\r\n          />\r\n        </g>\r\n        <g id="g3422" transform="translate(80.8692,198.1382)">\r\n          <path\r\n            d="m 0,0 h 113.32 l 82.414,272.655 H 0 Z"\r\n            style="fill: #f4e74d; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3424"\r\n          />\r\n        </g>\r\n        <g id="g3426" transform="translate(80.8692,432.6757)">\r\n          <path\r\n            d="M 0,0 V -234.537 H 78.01 C 29.021,-169.169 0,-87.974 0,0"\r\n            style="fill: #eedb00; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3428"\r\n          />\r\n        </g>\r\n        <path\r\n          d="M 431.131,41.207 H 80.869 v 115.724 h 350.262 z"\r\n          style="fill: #b18cd9; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n          id="path3430"\r\n        />\r\n        <g id="g3432" transform="translate(194.475,156.931)">\r\n          <path\r\n            d="m 0,0 h -113.606 v -115.724 h 350.262 v 2.149 C 144.487,-103.933 61.838,-62.31 0,0"\r\n            style="fill: #996acc; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3434"\r\n          />\r\n        </g>\r\n        <g id="g3436" transform="translate(213.2632,94.3332)">\r\n          <path\r\n            d="m 0,0 c 0,-10.991 -11.188,-19.901 -24.99,-19.901 -13.801,0 -24.989,8.91 -24.989,19.901 0,10.991 11.188,19.9 24.989,19.9 C -11.188,19.9 0,10.991 0,0"\r\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3438"\r\n          />\r\n        </g>\r\n        <g id="g3440" transform="translate(298.7368,94.3332)">\r\n          <path\r\n            d="m 0,0 c 0,-10.991 11.188,-19.901 24.99,-19.901 13.801,0 24.989,8.91 24.989,19.901 0,10.991 -11.188,19.9 -24.989,19.9 C 11.188,19.9 0,10.991 0,0"\r\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3442"\r\n          />\r\n        </g>\r\n        <g id="g3444" transform="translate(202.8374,123.7057)">\r\n          <path\r\n            d="M 0,0 V -10.216"\r\n            style="\r\n              fill: none;\r\n              stroke: #3d4751;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path3446"\r\n          />\r\n        </g>\r\n        <g id="g3448" transform="translate(309.1625,123.7057)">\r\n          <path\r\n            d="M 0,0 V -10.216"\r\n            style="\r\n              fill: none;\r\n              stroke: #3d4751;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path3450"\r\n          />\r\n        </g>\r\n        <g id="g3452" transform="translate(241.984,113.7942)">\r\n          <path\r\n            d="m 0,0 c 3.408,-3.911 8.421,-6.385 14.016,-6.385 5.595,0 10.608,2.474 14.016,6.385"\r\n            style="\r\n              fill: none;\r\n              stroke: #3d4751;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path3454"\r\n          />\r\n        </g>\r\n        <g id="g3456" transform="translate(150.0629,447.8862)">\r\n          <path\r\n            d="m 0,0 33.436,22.907 h -102.63 v -161.294 l 21.382,72.58 59.96,-46.151 -25.363,71.287 75.636,-2.093 z"\r\n            style="fill: #fd5c6f; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3458"\r\n          />\r\n        </g>\r\n        <g id="g3460" transform="translate(80.8692,432.6757)">\r\n          <path\r\n            d="m 0,0 v -123.177 l 10.122,34.358 C 3.502,-60.282 0,-30.55 0,0"\r\n            style="fill: #f6334c; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3462"\r\n          />\r\n        </g>\r\n        <g id="g3464" transform="translate(431.1308,271.141)">\r\n          <path\r\n            d="m 0,0 -57.698,-44.41 24.406,68.598 -72.782,-2.014 60.066,41.15 -60.066,41.151 72.782,-2.014 -24.406,68.597 L 0,126.649 Z"\r\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3466"\r\n          />\r\n        </g>\r\n      </g>\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
 
-  const IconLocationCog =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n     class="icon icon-tabler icons-tabler-outline icon-tabler-location-cog">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 18l-2 -4l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5l-3.14 8.697"/>\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\n  <path d="M19.001 15.5v1.5"/>\n  <path d="M19.001 21v1.5"/>\n  <path d="M22.032 17.25l-1.299 .75"/>\n  <path d="M17.27 20l-1.3 .75"/>\n  <path d="M15.97 17.25l1.3 .75"/>\n  <path d="M20.733 20l1.3 .75"/>\n</svg>\n';
+  const Comic2SpecialLinealColor =
+    '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\r\n<!-- Created with Inkscape (http://www.inkscape.org/) -->\r\n\r\n<svg\r\n  version="1.1"\r\n  id="svg5007"\r\n  xml:space="preserve"\r\n  width="682.66669"\r\n  height="682.66669"\r\n  viewBox="0 0 682.66669 682.66669"\r\n  xmlns="http://www.w3.org/2000/svg"\r\n>\r\n  <defs id="defs5011">\r\n    <clipPath clipPathUnits="userSpaceOnUse" id="clipPath5021">\r\n      <path d="M 0,512 H 512 V 0 H 0 Z" id="path5019" />\r\n    </clipPath>\r\n  </defs>\r\n  <g id="g5013" transform="matrix(1.3333333,0,0,-1.3333333,0,682.66667)">\r\n    <g id="g5015">\r\n      <g id="g5017" clip-path="url(#clipPath5021)">\r\n        <g id="g5023" transform="translate(446,7.5)">\r\n          <path\r\n            d="m 0,0 h -380 c -11.046,0 -20,8.954 -20,20 v 457 c 0,11.046 8.954,20 20,20 H 0 c 11.046,0 20,-8.954 20,-20 V 20 C 20,8.954 11.046,0 0,0"\r\n            style="fill: #efe6e6; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5025"\r\n          />\r\n        </g>\r\n        <g id="g5027" transform="translate(465.9996,47.5)">\r\n          <path\r\n            d="m 0,0 c -209.868,0 -380,170.132 -380,380 v 77 h -20 c -11.045,0 -20,-8.954 -20,-20 V -20 c 0,-11.046 8.955,-20 20,-20 h 380 c 11.046,0 20,8.954 20,20 z"\r\n            style="fill: #e2d7d7; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5029"\r\n          />\r\n        </g>\r\n        <g id="g5031" transform="translate(236,199.8333)">\r\n          <path\r\n            d="M 0,0 H 190 V 264.667 H 80 Z"\r\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5033"\r\n          />\r\n        </g>\r\n        <g id="g5035" transform="translate(236,199.8333)">\r\n          <path\r\n            d="M 0,0 H 190 V 264.667 H 80 Z"\r\n            style="fill: #5ad6ff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5037"\r\n          />\r\n        </g>\r\n        <g id="g5039" transform="translate(86,199.8333)">\r\n          <path\r\n            d="m 0,0 h 110 l 80,264.667 H 0 Z"\r\n            style="fill: #f4e74d; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5041"\r\n          />\r\n        </g>\r\n        <g id="g5043" transform="translate(86,427.4996)">\r\n          <path\r\n            d="M 0,0 V -227.666 H 75.725 C 28.171,-164.213 0,-85.397 0,0"\r\n            style="fill: #eedb00; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5045"\r\n          />\r\n        </g>\r\n        <path\r\n          d="M 426,47.5 H 86 v 112.333 h 340 z"\r\n          style="fill: #b18cd9; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n          id="path5047"\r\n        />\r\n        <g id="g5049" transform="translate(196.2775,159.8334)">\r\n          <path\r\n            d="m 0,0 h -110.278 v -112.333 h 340 v 2.085 C 140.254,-100.888 60.026,-60.484 0,0"\r\n            style="fill: #996acc; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5051"\r\n          />\r\n        </g>\r\n        <g id="g5053" transform="translate(214.5152,99.0695)">\r\n          <path\r\n            d="m 0,0 c 0,-10.669 -10.861,-19.318 -24.258,-19.318 -13.397,0 -24.257,8.649 -24.257,19.318 0,10.669 10.86,19.317 24.257,19.317 C -10.861,19.317 0,10.669 0,0"\r\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5055"\r\n          />\r\n        </g>\r\n        <g id="g5057" transform="translate(297.4848,99.0695)">\r\n          <path\r\n            d="m 0,0 c 0,-10.669 10.861,-19.318 24.258,-19.318 13.397,0 24.257,8.649 24.257,19.318 0,10.669 -10.86,19.317 -24.257,19.317 C 10.861,19.317 0,10.669 0,0"\r\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5059"\r\n          />\r\n        </g>\r\n        <g id="g5061" transform="translate(204.3949,127.5815)">\r\n          <path\r\n            d="M 0,0 V -9.916"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path5063"\r\n          />\r\n        </g>\r\n        <g id="g5065" transform="translate(307.605,127.5815)">\r\n          <path\r\n            d="M 0,0 V -9.916"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path5067"\r\n          />\r\n        </g>\r\n        <g id="g5069" transform="translate(242.3946,117.9604)">\r\n          <path\r\n            d="m 0,0 c 3.308,-3.796 8.175,-6.198 13.605,-6.198 5.431,0 10.298,2.402 13.606,6.198"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path5071"\r\n          />\r\n        </g>\r\n        <g id="g5073" transform="translate(153.1665,442.2645)">\r\n          <path\r\n            d="m 0,0 32.456,22.235 h -99.623 v -156.568 l 20.756,70.454 58.203,-44.799 -24.62,69.199 73.42,-2.032 z"\r\n            style="fill: #fd5c6f; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5075"\r\n          />\r\n        </g>\r\n        <g id="g5077" transform="translate(86,427.4996)">\r\n          <path\r\n            d="m 0,0 v -119.568 l 9.825,33.351 C 3.399,-58.516 0,-29.655 0,0"\r\n            style="fill: #f6334c; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5079"\r\n          />\r\n        </g>\r\n        <g id="g5081" transform="translate(426,270.6974)">\r\n          <path\r\n            d="m 0,0 -56.008,-43.108 23.692,66.587 -70.65,-1.955 58.306,39.945 -58.306,39.945 70.65,-1.955 -23.692,66.588 L 0,122.939 Z"\r\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5083"\r\n          />\r\n        </g>\r\n        <g id="g5085" transform="translate(446,7.5)">\r\n          <path\r\n            d="m 0,0 h -380 c -11.046,0 -20,8.954 -20,20 v 457 c 0,11.046 8.954,20 20,20 H 0 c 11.046,0 20,-8.954 20,-20 V 20 C 20,8.954 11.046,0 0,0 Z"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path5087"\r\n          />\r\n        </g>\r\n        <g id="g5089" transform="translate(426,346.167)">\r\n          <path\r\n            d="m 0,0 v 118.333 h -110 l -80,-264.667 H 0 V -28"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path5091"\r\n          />\r\n        </g>\r\n        <g id="g5093" transform="translate(86,199.8333)">\r\n          <path\r\n            d="m 0,0 h 110 l 80,264.667 H 0 Z"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path5095"\r\n          />\r\n        </g>\r\n        <g id="g5097" transform="translate(154.0172,159.8334)">\r\n          <path\r\n            d="m 0,0 h 271.983 v -112.333 h -340 V 0 H -28"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path5099"\r\n          />\r\n        </g>\r\n        <g id="g5101" transform="translate(86,307.9314)">\r\n          <path\r\n            d="m 0,0 20.756,70.454 58.203,-44.799 -24.62,69.199 73.419,-2.032 -60.591,41.511 32.455,22.236"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path5103"\r\n          />\r\n        </g>\r\n        <g id="g5105" transform="translate(426,270.6974)">\r\n          <path\r\n            d="m 0,0 -56.008,-43.108 23.692,66.587 -70.65,-1.955 58.306,39.945 -58.306,39.945 70.65,-1.955 -23.692,66.588 L 0,122.939"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path5107"\r\n          />\r\n        </g>\r\n      </g>\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
 
-  const IconMenu2 =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 6l16 0"/>\n  <path d="M4 12l16 0"/>\n  <path d="M4 18l16 0"/>\n</svg>\n';
+  const Comic3SpecialFlat =
+    '<svg\r\n  id="Capa_1"\r\n  enable-background="new 0 0 512 512"\r\n  height="512"\r\n  viewBox="0 0 512 512"\r\n  width="512"\r\n  xmlns="http://www.w3.org/2000/svg"\r\n>\r\n  <g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          d="m427.508 512h-343.02c-5.69 0-10.302-4.612-10.302-10.302v-491.396c0-5.69 4.612-10.302 10.302-10.302h343.02c5.69 0 10.302 4.612 10.302 10.302v491.396c-.001 5.69-4.613 10.302-10.302 10.302z"\r\n          fill="#f2eff2"\r\n        />\r\n      </g>\r\n    </g>\r\n    <path\r\n      d="m427.512 0h-41.238c5.687 0 10.302 4.615 10.302 10.302v36.12l-18.016 49.462 18.016 36.952v51.701l-13.787 87.003 13.787 55.974v51.669l-18.016 52.406 18.016 34.008v36.1c0 5.687-4.615 10.302-10.302 10.302h41.238c5.687 0 10.302-4.615 10.302-10.302v-491.395c0-5.687-4.615-10.302-10.302-10.302z"\r\n      fill="#e1dde1"\r\n    />\r\n    <path\r\n      d="m396.6 46.36v86.52c0 2.85-2.31 5.15-5.15 5.15h-110.11l-22.53-48.41 22.53-48.41h110.11c2.84 0 5.15 2.3 5.15 5.15z"\r\n      fill="#3ad1e0"\r\n    />\r\n    <path\r\n      d="m396.599 46.358v86.525c0 2.843-2.308 5.151-5.151 5.151h-30.926c2.843 0 5.151-2.308 5.151-5.151v-86.525c0-2.843-2.308-5.151-5.151-5.151h30.926c2.844 0 5.151 2.308 5.151 5.151z"\r\n      fill="#20bfd5"\r\n    />\r\n    <path\r\n      d="m281.34 41.207h-39.904c-2.845 0-5.151 2.306-5.151 5.151v86.525c0 2.845 2.306 5.151 5.151 5.151h39.904z"\r\n      fill="#23f1a8"\r\n    />\r\n    <path\r\n      d="m304.73 470.79h-77.71l-39.22-20.29-39.23 20.29h-28.03c-2.84 0-5.15-2.3-5.15-5.15v-86.52c0-2.85 2.31-5.15 5.15-5.15h128.92c1.76 0 3.4.89 4.34 2.37l55.27 86.53c2.19 3.43-.27 7.92-4.34 7.92z"\r\n      fill="#23f1a8"\r\n    />\r\n    <g>\r\n      <path\r\n        d="m227.019 443.104v27.689h-78.446v-27.689c0-21.669 17.569-39.228 39.228-39.228 10.83 0 20.639 4.39 27.729 11.489 7.099 7.1 11.489 16.899 11.489 27.739z"\r\n        fill="#ae6ad8"\r\n      />\r\n      <path\r\n        d="m227.021 443.101v27.691h-29.061v-27.691c0-10.838-4.389-20.634-11.486-27.732-3.729-3.74-8.211-6.727-13.207-8.715 4.492-1.793 9.406-2.782 14.536-2.782 10.827 0 20.635 4.389 27.732 11.497 7.097 7.098 11.486 16.895 11.486 27.732z"\r\n        fill="#975bbb"\r\n      />\r\n    </g>\r\n    <path\r\n      d="m304.728 470.793h-30.926c4.069 0 6.531-4.492 4.347-7.922l-55.269-86.525c-.948-1.483-2.586-2.38-4.347-2.38h30.926c1.762 0 3.4.896 4.347 2.38l55.269 86.525c2.184 3.43-.278 7.922-4.347 7.922z"\r\n      fill="#27e19d"\r\n    />\r\n    <path\r\n      d="m391.448 373.966h-81.106c-4.068 0-6.531 4.495-4.341 7.924l55.269 86.525c.946 1.482 2.583 2.378 4.341 2.378h25.837c2.845 0 5.151-2.306 5.151-5.151v-86.525c0-2.845-2.306-5.151-5.151-5.151z"\r\n      fill="#ae6ad8"\r\n    />\r\n    <path\r\n      d="m396.599 379.117v86.525c0 2.843-2.308 5.151-5.151 5.151h-25.837c-.907 0-1.772-.237-2.534-.68 1.556-.886 2.596-2.555 2.596-4.471v-86.525c0-2.843-2.308-5.151-5.151-5.151h30.926c2.844 0 5.151 2.308 5.151 5.151z"\r\n      fill="#975bbb"\r\n    />\r\n    <g>\r\n      <path\r\n        d="m195.602 46.358v86.525c0 2.845-2.306 5.151-5.151 5.151h-69.91c-2.845 0-5.151-2.306-5.151-5.151v-86.525c0-2.845 2.306-5.151 5.151-5.151h69.91c2.845 0 5.151 2.306 5.151 5.151z"\r\n        fill="#3ad1e0"\r\n      />\r\n      <path\r\n        d="m195.6 46.358v86.525c0 2.843-2.308 5.151-5.151 5.151h-30.926c2.843 0 5.151-2.308 5.151-5.151v-86.525c0-2.843-2.308-5.151-5.151-5.151h30.926c2.844 0 5.151 2.308 5.151 5.151z"\r\n        fill="#20bfd5"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        d="m396.6 184.39v143.22c0 2.84-2.31 5.15-5.15 5.15h-30.93l-104.53-27.53-104.52 27.53h-30.93c-2.84 0-5.15-2.31-5.15-5.15v-143.22c0-2.84 2.31-5.15 5.15-5.15h47.77l87.68 16.15 87.69-16.15h47.77c2.84 0 5.15 2.31 5.15 5.15z"\r\n        fill="#fb54b6"\r\n      />\r\n    </g>\r\n    <path\r\n      d="m151.473 332.759c0-57.729 46.798-104.527 104.527-104.527s104.527 46.798 104.527 104.527z"\r\n      fill="#fb9927"\r\n    />\r\n    <path\r\n      d="m360.522 332.759h-35.397c0-51.694-37.519-94.612-86.824-103.028 5.748-.979 11.662-1.494 17.699-1.494 57.731 0 104.522 46.79 104.522 104.522z"\r\n      fill="#f98824"\r\n    />\r\n    <g>\r\n      <path\r\n        d="m396.599 184.392v143.216c0 2.843-2.308 5.151-5.151 5.151h-30.926c2.843 0 5.151-2.308 5.151-5.151v-143.216c0-2.843-2.308-5.151-5.151-5.151h30.926c2.844 0 5.151 2.308 5.151 5.151z"\r\n        fill="#fb33a8"\r\n      />\r\n    </g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          d="m345.43 247.027c-.144 0-.299 0-.453-.01-24.024-1.226-43.947 17.946-43.947 41.722 0 .721.021 1.442.051 2.174.268 5.079-3.853 8.489-8.128 8.489-2.112 0-4.244-.814-5.913-2.678-8.293-9.189-19.676-13.794-31.039-13.794s-22.746 4.605-31.039 13.794c-1.669 1.865-3.801 2.678-5.913 2.678-4.275 0-8.396-3.41-8.128-8.489.031-.731.041-1.453.041-2.174 0-23.777-19.924-42.948-43.937-41.722-.155.01-.309.01-.464.01-7.263 0-10.879-9.076-5.357-14.062 9.189-8.293 13.794-19.666 13.794-31.039 0-7.912-2.225-15.813-6.686-22.685h175.378c-4.461 6.871-6.686 14.773-6.686 22.685 0 11.373 4.605 22.746 13.794 31.039 5.521 4.986 1.905 14.062-5.368 14.062z"\r\n          fill="#fdef63"\r\n        />\r\n        <g>\r\n          <g id="XMLID_00000127012381744132405410000009872483291948348836_">\r\n            <path\r\n              d="m280.138 231.696c-4.268 0-7.726-3.459-7.726-7.726v-.107c0-4.267 3.459-7.726 7.726-7.726s7.726 3.459 7.726 7.726v.107c0 4.267-3.459 7.726-7.726 7.726z"\r\n              fill="#554e55"\r\n            />\r\n          </g>\r\n          <g id="XMLID_00000080918978500845250090000017315552773041050031_">\r\n            <path\r\n              d="m256 231.696c-4.267 0-7.726-3.459-7.726-7.726v-.107c0-4.267 3.459-7.726 7.726-7.726 4.268 0 7.726 3.459 7.726 7.726v.107c0 4.267-3.458 7.726-7.726 7.726z"\r\n              fill="#554e55"\r\n            />\r\n          </g>\r\n          <g id="XMLID_00000140711681861242238370000008769002181148908969_">\r\n            <path\r\n              d="m231.862 231.696c-4.267 0-7.726-3.459-7.726-7.726v-.107c0-4.267 3.459-7.726 7.726-7.726s7.726 3.459 7.726 7.726v.107c.001 4.267-3.459 7.726-7.726 7.726z"\r\n              fill="#554e55"\r\n            />\r\n          </g>\r\n        </g>\r\n        <path\r\n          d="m345.43 247.037c-.155 0-.299 0-.443-.021-24.034-1.226-43.948 17.956-43.948 41.722 0 .721.01 1.432.052 2.174.258 5.079-3.863 8.499-8.128 8.499-2.122 0-4.255-.824-5.924-2.689-6.954-7.685-16.05-12.167-25.507-13.423 29.968-14.804 50.582-45.678 50.582-81.364 0-7.84-.999-15.442-2.864-22.695h34.429c-4.45 6.871-6.676 14.783-6.676 22.685 0 11.373 4.605 22.757 13.784 31.05 5.532 4.966 1.926 14.062-5.357 14.062z"\r\n          fill="#f3d730"\r\n        />\r\n      </g>\r\n    </g>\r\n    <g>\r\n      <g>\r\n        <g>\r\n          <circle cx="187.8" cy="385.284" fill="#d8b2ec" r="25.455" />\r\n        </g>\r\n      </g>\r\n    </g>\r\n    <g>\r\n      <g id="XMLID_00000028301319025648580530000009457246182494066313_">\r\n        <path\r\n          d="m316.443 111.45c-4.258 0-7.714-3.445-7.726-7.705-.012-4.267 3.438-7.736 7.705-7.747l41.222-.114h.021c4.258 0 7.714 3.445 7.726 7.705.012 4.267-3.438 7.736-7.705 7.747l-41.222.114c-.007 0-.014 0-.021 0z"\r\n          fill="#f2eff2"\r\n        />\r\n      </g>\r\n      <g>\r\n        <path\r\n          d="m357.665 83.243h-21.761c-4.268 0-7.726-3.459-7.726-7.726s3.459-7.726 7.726-7.726h21.761c4.268 0 7.726 3.459 7.726 7.726s-3.458 7.726-7.726 7.726z"\r\n          fill="#f2eff2"\r\n        />\r\n      </g>\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
 
-  const IconMessage =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M8 9h8"/>\n  <path d="M8 13h6"/>\n  <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"/>\n</svg>\n';
+  const Comic3SpecialLinealColor =
+    '<?xml version="1.0" encoding="UTF-8"?>\r\n<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  version="1.1"\r\n  id="Capa_1"\r\n  x="0px"\r\n  y="0px"\r\n  viewBox="0 0 512 512"\r\n  style="enable-background: new 0 0 512 512"\r\n  xml:space="preserve"\r\n  width="512"\r\n  height="512"\r\n>\r\n  <g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          style="fill: #f2eff2"\r\n          d="M422.485,504.5H89.515c-5.523,0-10-4.477-10-10v-477c0-5.523,4.477-10,10-10h332.971&#10;&#9;&#9;&#9;&#9;c5.523,0,10,4.477,10,10v477C432.485,500.023,428.008,504.5,422.485,504.5z"\r\n        />\r\n      </g>\r\n    </g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          style="fill: #e1dde1"\r\n          d="M432.49,17.5v477c0,5.52-4.48,10-10,10h-40.03c5.52,0,10-4.48,10-10v-477c0-5.52-4.48-10-10-10&#10;&#9;&#9;&#9;&#9;h40.03C428.01,7.5,432.49,11.98,432.49,17.5z"\r\n        />\r\n      </g>\r\n    </g>\r\n    <g>\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M158.639,7.5H89.515c-5.523,0-10,4.477-10,10v477c0,5.523,4.477,10,10,10h332.971c5.523,0,10-4.477,10-10v-477&#10;&#9;&#9;&#9;c0-5.523-4.477-10-10-10H191.801"\r\n      />\r\n    </g>\r\n    <path\r\n      style="fill: #3ad1e0"\r\n      d="M392.482,52.5v83.99c0,2.761-2.239,5-5,5H241.866c-2.761,0-5-2.239-5-5V52.5c0-2.761,2.239-5,5-5&#10;&#9;&#9;h145.617C390.244,47.5,392.482,49.739,392.482,52.5z"\r\n    />\r\n    <path\r\n      style="fill: #20bfd5"\r\n      d="M392.482,52.5v83.99c0,2.76-2.24,5-5,5h-30.02c2.76,0,5-2.24,5-5V52.5c0-2.76-2.24-5-5-5h30.02&#10;&#9;&#9;C390.242,47.5,392.482,49.74,392.482,52.5z"\r\n    />\r\n    <path\r\n      style="fill: #26d192"\r\n      d="M280.6,47.5h-38.735c-2.761,0-5,2.239-5,5v83.99c0,2.761,2.239,5,5,5H280.6V47.5z"\r\n    />\r\n\r\n    <line\r\n      style="\r\n        fill: none;\r\n        stroke: #000000;\r\n        stroke-width: 15;\r\n        stroke-linecap: round;\r\n        stroke-linejoin: round;\r\n        stroke-miterlimit: 10;\r\n      "\r\n      x1="280.6"\r\n      y1="141.49"\r\n      x2="280.6"\r\n      y2="47.5"\r\n    />\r\n    <path\r\n      style="fill: #23f1a8"\r\n      d="M124.512,370.51h125.143c1.706,0,3.295,0.87,4.214,2.308l53.65,83.99&#10;&#9;&#9;c2.126,3.328-0.264,7.692-4.214,7.692H124.512c-2.761,0-5-2.239-5-5v-83.99C119.512,372.749,121.751,370.51,124.512,370.51z"\r\n    />\r\n    <g>\r\n      <path\r\n        style="fill: #ae6ad8"\r\n        d="M227.87,437.622V464.5h-76.148v-26.878c0-21.034,17.054-38.079,38.079-38.079&#10;&#9;&#9;&#9;c10.512,0,20.034,4.261,26.916,11.153C223.609,417.588,227.87,427.1,227.87,437.622z"\r\n      />\r\n      <path\r\n        style="fill: #975bbb"\r\n        d="M227.872,437.62v26.88h-28.21v-26.88c0-10.52-4.26-20.03-11.15-26.92&#10;&#9;&#9;&#9;c-3.62-3.63-7.97-6.53-12.82-8.46c4.36-1.74,9.13-2.7,14.11-2.7c10.51,0,20.03,4.26,26.92,11.16&#10;&#9;&#9;&#9;C223.612,417.59,227.872,427.1,227.872,437.62z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M151.722,464.5v-26.878c0-21.034,17.054-38.079,38.079-38.079c10.512,0,20.034,4.261,26.916,11.153&#10;&#9;&#9;&#9;c6.892,6.892,11.153,16.404,11.153,26.926V464.5"\r\n      />\r\n    </g>\r\n    <path\r\n      style="fill: #27e19d"\r\n      d="M303.302,464.5h-30.02c3.95,0,6.34-4.36,4.22-7.69l-53.65-83.99c-0.92-1.44-2.51-2.31-4.22-2.31&#10;&#9;&#9;h30.02c1.71,0,3.3,0.87,4.22,2.31l53.65,83.99C309.642,460.14,307.252,464.5,303.302,464.5z"\r\n    />\r\n    <path\r\n      style="fill: #ae6ad8"\r\n      d="M387.482,370.51h-78.73c-3.949,0-6.34,4.363-4.214,7.692l53.65,83.99&#10;&#9;&#9;c0.919,1.438,2.507,2.308,4.214,2.308h25.08c2.761,0,5-2.239,5-5v-83.99C392.482,372.749,390.244,370.51,387.482,370.51z"\r\n    />\r\n    <path\r\n      style="fill: #975bbb"\r\n      d="M392.482,375.51v83.99c0,2.76-2.24,5-5,5h-25.08c-0.88,0-1.72-0.23-2.46-0.66&#10;&#9;&#9;c1.51-0.86,2.52-2.48,2.52-4.34v-83.99c0-2.76-2.24-5-5-5h30.02C390.242,370.51,392.482,372.75,392.482,375.51z"\r\n    />\r\n    <path\r\n      style="\r\n        fill: none;\r\n        stroke: #000000;\r\n        stroke-width: 15;\r\n        stroke-linecap: round;\r\n        stroke-linejoin: round;\r\n        stroke-miterlimit: 10;\r\n      "\r\n      d="&#10;&#9;&#9;M392.482,52.5v83.99c0,2.761-2.239,5-5,5H241.866c-2.761,0-5-2.239-5-5V52.5c0-2.761,2.239-5,5-5h145.617&#10;&#9;&#9;C390.244,47.5,392.482,49.739,392.482,52.5z"\r\n    />\r\n    <g>\r\n      <path\r\n        style="fill: #3ad1e0"\r\n        d="M197.374,52.5v83.99c0,2.761-2.239,5-5,5h-67.862c-2.761,0-5-2.239-5-5V52.5c0-2.761,2.239-5,5-5&#10;&#9;&#9;&#9;h67.862C195.135,47.5,197.374,49.739,197.374,52.5z"\r\n      />\r\n      <path\r\n        style="fill: #20bfd5"\r\n        d="M197.372,52.5v83.99c0,2.76-2.24,5-5,5h-30.02c2.76,0,5-2.24,5-5V52.5c0-2.76-2.24-5-5-5h30.02&#10;&#9;&#9;&#9;C195.132,47.5,197.372,49.74,197.372,52.5z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M197.374,52.5v83.99c0,2.761-2.239,5-5,5h-67.862c-2.761,0-5-2.239-5-5V52.5c0-2.761,2.239-5,5-5h67.862&#10;&#9;&#9;&#9;C195.135,47.5,197.374,49.739,197.374,52.5z"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        style="fill: #fb54b6"\r\n        d="M124.512,181.49h262.97c2.761,0,5,2.239,5,5v139.02c0,2.761-2.239,5-5,5h-262.97&#10;&#9;&#9;&#9;c-2.761,0-5-2.239-5-5V186.49C119.512,183.729,121.751,181.49,124.512,181.49z"\r\n      />\r\n    </g>\r\n    <path\r\n      style="fill: #fb9927"\r\n      d="M154.537,330.51c0-56.038,45.427-101.465,101.465-101.465s101.465,45.427,101.465,101.465H154.537z"\r\n    />\r\n    <path\r\n      style="fill: #f98824"\r\n      d="M357.462,330.51h-34.36c0-50.18-36.42-91.84-84.28-100.01c5.58-0.95,11.32-1.45,17.18-1.45&#10;&#9;&#9;C312.042,229.05,357.462,274.47,357.462,330.51z"\r\n    />\r\n    <path\r\n      style="\r\n        fill: none;\r\n        stroke: #000000;\r\n        stroke-width: 15;\r\n        stroke-linecap: round;\r\n        stroke-linejoin: round;\r\n        stroke-miterlimit: 10;\r\n      "\r\n      d="&#10;&#9;&#9;M154.537,330.51c0-56.038,45.427-101.465,101.465-101.465s101.465,45.427,101.465,101.465"\r\n    />\r\n    <g>\r\n      <path\r\n        style="fill: #fb33a8"\r\n        d="M392.482,186.49v139.02c0,2.76-2.24,5-5,5h-30.02c2.76,0,5-2.24,5-5V186.49c0-2.76-2.24-5-5-5&#10;&#9;&#9;&#9;h30.02C390.242,181.49,392.482,183.73,392.482,186.49z"\r\n      />\r\n    </g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          style="fill: #fdef63"\r\n          d="M342.812,247.29c-0.14,0-0.29,0-0.44-0.01c-23.32-1.19-42.66,17.42-42.66,40.5&#10;&#9;&#9;&#9;&#9;c0,0.7,0.02,1.4,0.05,2.11c0.26,4.93-3.74,8.24-7.89,8.24c-2.05,0-4.12-0.79-5.74-2.6c-8.05-8.92-19.1-13.39-30.13-13.39&#10;&#9;&#9;&#9;&#9;s-22.08,4.47-30.13,13.39c-1.62,1.81-3.69,2.6-5.74,2.6c-4.15,0-8.15-3.31-7.89-8.24c0.03-0.71,0.04-1.41,0.04-2.11&#10;&#9;&#9;&#9;&#9;c0-23.08-19.34-41.69-42.65-40.5c-0.15,0.01-0.3,0.01-0.45,0.01c-7.05,0-10.56-8.81-5.2-13.65c8.92-8.05,13.39-19.09,13.39-30.13&#10;&#9;&#9;&#9;&#9;c0-7.68-2.16-15.35-6.49-22.02h170.24c-4.33,6.67-6.49,14.34-6.49,22.02c0,11.04,4.47,22.08,13.39,30.13&#10;&#9;&#9;&#9;&#9;C353.382,238.48,349.872,247.29,342.812,247.29z"\r\n        />\r\n        <g>\r\n          <line\r\n            id="XMLID_00000127012381744132405410000009872483291948348836_"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n            "\r\n            x1="279.433"\r\n            y1="224.908"\r\n            x2="279.433"\r\n            y2="224.805"\r\n          />\r\n\r\n          <line\r\n            id="XMLID_00000080918978500845250090000017315552773041050031_"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n            "\r\n            x1="256.002"\r\n            y1="224.908"\r\n            x2="256.002"\r\n            y2="224.805"\r\n          />\r\n\r\n          <line\r\n            id="XMLID_00000140711681861242238370000008769002181148908969_"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n            "\r\n            x1="232.572"\r\n            y1="224.908"\r\n            x2="232.572"\r\n            y2="224.805"\r\n          />\r\n        </g>\r\n        <path\r\n          style="fill: #f3d730"\r\n          d="M342.812,247.3c-0.15,0-0.29,0-0.43-0.02c-23.33-1.19-42.66,17.43-42.66,40.5&#10;&#9;&#9;&#9;&#9;c0,0.7,0.01,1.39,0.05,2.11c0.25,4.93-3.75,8.25-7.89,8.25c-2.06,0-4.13-0.8-5.75-2.61c-6.75-7.46-15.58-11.81-24.76-13.03&#10;&#9;&#9;&#9;&#9;c29.09-14.37,49.1-44.34,49.1-78.98c0-7.61-0.97-14.99-2.78-22.03h33.42c-4.32,6.67-6.48,14.35-6.48,22.02&#10;&#9;&#9;&#9;&#9;c0,11.04,4.47,22.09,13.38,30.14C353.382,238.47,349.882,247.3,342.812,247.3z"\r\n        />\r\n      </g>\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M341.122,181.49c-4.33,6.67-6.49,14.34-6.49,22.02c0,11.04,4.47,22.08,13.39,30.13c5.36,4.84,1.85,13.65-5.21,13.65&#10;&#9;&#9;&#9;c-0.14,0-0.29,0-0.44-0.01c-23.32-1.19-42.66,17.42-42.66,40.5c0,0.7,0.02,1.4,0.05,2.11c0.26,4.93-3.74,8.24-7.89,8.24&#10;&#9;&#9;&#9;c-2.05,0-4.12-0.79-5.74-2.6c-8.05-8.92-19.1-13.39-30.13-13.39s-22.08,4.47-30.13,13.39c-1.62,1.81-3.69,2.6-5.74,2.6&#10;&#9;&#9;&#9;c-4.15,0-8.15-3.31-7.89-8.24c0.03-0.71,0.04-1.41,0.04-2.11c0-23.08-19.34-41.69-42.65-40.5c-0.15,0.01-0.3,0.01-0.45,0.01&#10;&#9;&#9;&#9;c-7.05,0-10.56-8.81-5.2-13.65c8.92-8.05,13.39-19.09,13.39-30.13c0-7.68-2.16-15.35-6.49-22.02"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M208.726,181.49h-84.213c-2.761,0-5,2.239-5,5v139.02c0,2.761,2.239,5,5,5h262.97c2.761,0,5-2.239,5-5V186.49c0-2.761-2.239-5-5-5&#10;&#9;&#9;&#9;H241.888"\r\n      />\r\n    </g>\r\n    <path\r\n      style="\r\n        fill: none;\r\n        stroke: #000000;\r\n        stroke-width: 15;\r\n        stroke-linecap: round;\r\n        stroke-linejoin: round;\r\n        stroke-miterlimit: 10;\r\n      "\r\n      d="&#10;&#9;&#9;M124.512,370.51h125.143c1.706,0,3.295,0.87,4.214,2.308l53.65,83.99c2.126,3.328-0.264,7.692-4.214,7.692H124.512&#10;&#9;&#9;c-2.761,0-5-2.239-5-5v-83.99C119.512,372.749,121.751,370.51,124.512,370.51z"\r\n    />\r\n    <path\r\n      style="\r\n        fill: none;\r\n        stroke: #000000;\r\n        stroke-width: 15;\r\n        stroke-linecap: round;\r\n        stroke-linejoin: round;\r\n        stroke-miterlimit: 10;\r\n      "\r\n      d="&#10;&#9;&#9;M392.482,397.976V375.51c0-2.761-2.239-5-5-5h-78.73c-3.949,0-6.34,4.363-4.214,7.692l53.65,83.99&#10;&#9;&#9;c0.919,1.438,2.507,2.308,4.214,2.308h25.08c2.761,0,5-2.239,5-5v-28.362"\r\n    />\r\n    <g>\r\n      <g>\r\n        <g>\r\n          <circle style="fill: #d8b2ec" cx="189.8" cy="381.497" r="24.709" />\r\n\r\n          <circle\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n            "\r\n            cx="189.8"\r\n            cy="381.497"\r\n            r="24.709"\r\n          />\r\n        </g>\r\n      </g>\r\n    </g>\r\n    <g>\r\n      <line\r\n        id="XMLID_00000028301319025648580530000009457246182494066313_"\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="314.674"\r\n        y1="108.185"\r\n        x2="354.689"\r\n        y2="108.075"\r\n      />\r\n\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="333.566"\r\n        y1="80.805"\r\n        x2="354.689"\r\n        y2="80.805"\r\n      />\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
 
-  const IconMoon =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/>\n</svg>\n';
+  const category =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-category"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M4 4h6v6h-6z" />\r\n  <path d="M14 4h6v6h-6z" />\r\n  <path d="M4 14h6v6h-6z" />\r\n  <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />\r\n</svg>\r\n';
 
-  const IconPalette =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-palette" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"/>\n  <path d="M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\n  <path d="M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\n  <path d="M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>\n</svg>\n';
+  const check =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-check toggler-on"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M5 12l5 5l10 -10" />\r\n</svg>\r\n';
 
-  const IconPencil =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/>\n  <path d="M13.5 6.5l4 4"/>\n</svg>\n';
+  const deviceFloppy =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-device-floppy"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />\r\n  <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />\r\n  <path d="M14 4l0 4l-6 0l0 -4" />\r\n</svg>\r\n';
 
-  const IconPhoto =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 8h.01"/>\n  <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/>\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/>\n  <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/>\n</svg>\n';
+  const dotsVertical =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\r\n  <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\r\n  <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\r\n</svg>\r\n';
 
-  const IconPhotoOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo-off" width="24"\n     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"\n     stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 8h.01"/>\n  <path d="M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153"/>\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/>\n  <path d="M16.33 12.338c.574 -.054 1.155 .166 1.67 .662l3 3"/>\n  <path d="M3 3l18 18" color="orange"/>\n</svg>\n';
+  const EReader1KawaiiFlat =
+    '<svg\r\n  id="Capa_1"\r\n  enable-background="new 0 0 512 512"\r\n  viewBox="0 0 512 512"\r\n  xmlns="http://www.w3.org/2000/svg"\r\n>\r\n  <g>\r\n    <g>\r\n      <path\r\n        d="m369.32 512h-226.64c-45.516 0-82.414-36.898-82.414-82.414v-347.172c0-45.516 36.898-82.414 82.414-82.414h226.64c45.516 0 82.414 36.898 82.414 82.414v347.171c0 45.517-36.898 82.415-82.414 82.415z"\r\n        fill="#636978"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        d="m225.095 450.189v-388.378c0-34.137 27.673-61.811 61.81-61.811h-144.225c-45.516 0-82.414 36.898-82.414 82.414v347.171c0 45.516 36.898 82.414 82.414 82.414h144.225c-34.137.001-61.81-27.673-61.81-61.81z"\r\n        fill="#555a66"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        d="m369.32 61.811h-226.64c-11.379 0-20.604 9.225-20.604 20.604v336.869c0 11.379 9.225 20.604 20.604 20.604h226.64c11.379 0 20.604-9.225 20.604-20.604v-336.87c0-11.379-9.225-20.603-20.604-20.603z"\r\n        fill="#96e8ff"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        d="m122.076 82.414v336.869c0 11.379 9.225 20.604 20.604 20.604h82.414v-378.076h-82.414c-11.379 0-20.604 9.224-20.604 20.603z"\r\n        fill="#80dbff"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        d="m256 111.277c-27.66-8.24-55.124-9.125-82.742-2.655-5.835 1.367-9.975 6.555-9.975 12.548v95.771c0 6.566 6.064 11.463 12.479 10.063 23.872-5.21 47.636-4.921 71.52.866 5.731 1.389 11.704 1.389 17.435 0 23.884-5.788 47.648-6.077 71.52-.866 6.415 1.4 12.479-3.497 12.479-10.063 0-40.343 0-55.429 0-95.771 0-5.993-4.139-11.181-9.975-12.548-27.617-6.471-55.081-5.585-82.741 2.655z"\r\n        fill="#fff"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        d="m173.258 108.622c-5.835 1.367-9.975 6.555-9.975 12.548v95.771c0 6.566 6.064 11.463 12.479 10.063 23.872-5.21 47.636-4.921 71.52.866 2.866.694 5.791 1.041 8.717 1.041v-117.634c-27.659-8.24-55.123-9.126-82.741-2.655z"\r\n        fill="#f5fafc"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        d="m205.037 104.432c-10.584.315-21.171 1.704-31.781 4.19-5.834 1.367-9.973 6.56-9.973 12.552v95.761c0 6.547 6.037 11.478 12.432 10.08 23.888-5.221 47.667-4.935 71.567.856 2.866.694 8.717 1.042 8.717 1.042 0-13.231-13.741-21.854-26.952-27.087-14.54-5.759-24.011-19.905-24.011-35.544v-61.85z"\r\n        fill="#e1f1fa"\r\n      />\r\n    </g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          d="m338.414 289.266h-164.829c-4.142 0-7.5-3.357-7.5-7.5s3.358-7.5 7.5-7.5h164.829c4.143 0 7.5 3.357 7.5 7.5s-3.357 7.5-7.5 7.5z"\r\n          fill="#19cffc"\r\n        />\r\n      </g>\r\n      <g>\r\n        <path\r\n          d="m338.414 330.473h-164.829c-4.142 0-7.5-3.357-7.5-7.5s3.358-7.5 7.5-7.5h164.829c4.143 0 7.5 3.357 7.5 7.5s-3.357 7.5-7.5 7.5z"\r\n          fill="#19cffc"\r\n        />\r\n      </g>\r\n      <g>\r\n        <g>\r\n          <path\r\n            d="m191.667 385.134c-4.142 0-7.5-3.357-7.5-7.5v-12.362c0-4.143 3.358-7.5 7.5-7.5s7.5 3.357 7.5 7.5v12.362c0 4.142-3.358 7.5-7.5 7.5z"\r\n            fill="#495560"\r\n          />\r\n        </g>\r\n        <g>\r\n          <path\r\n            d="m320.333 385.134c-4.143 0-7.5-3.357-7.5-7.5v-12.362c0-4.143 3.357-7.5 7.5-7.5s7.5 3.357 7.5 7.5v12.362c0 4.142-3.357 7.5-7.5 7.5z"\r\n            fill="#495560"\r\n          />\r\n        </g>\r\n        <g>\r\n          <path\r\n            d="m256 392.493c-8.668 0-16.911-3.754-22.615-10.3-2.721-3.123-2.396-7.86.727-10.582 3.122-2.721 7.86-2.396 10.582.727 2.855 3.276 6.976 5.155 11.307 5.155s8.452-1.879 11.307-5.155c2.723-3.122 7.457-3.447 10.582-.727 3.122 2.722 3.448 7.459.727 10.582-5.706 6.546-13.949 10.3-22.617 10.3z"\r\n            fill="#495560"\r\n          />\r\n        </g>\r\n      </g>\r\n    </g>\r\n  </g>\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n</svg>\r\n';
 
-  const IconPlayerPause =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-pause" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"/>\n  <path d="M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"/>\n</svg>\n';
+  const EReader1KawaiiLinealColor =
+    '<svg\r\n  version="1.1"\r\n  id="Capa_1"\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  x="0px"\r\n  y="0px"\r\n  viewBox="0 0 512 512"\r\n  style="enable-background: new 0 0 512 512"\r\n  xml:space="preserve"\r\n>\r\n  <g>\r\n    <path\r\n      style="fill: #636978"\r\n      d="M366,504.5H146c-44.183,0-80-35.817-80-80v-337c0-44.183,35.817-80,80-80h220&#10;&#9;&#9;c44.183,0,80,35.817,80,80v337C446,468.683,410.183,504.5,366,504.5z"\r\n    />\r\n    <path\r\n      style="fill: #555a66"\r\n      d="M226,444.5v-377c0-33.137,26.863-60,60-60H146c-44.183,0-80,35.817-80,80v337&#10;&#9;&#9;c0,44.183,35.817,80,80,80h140C252.863,504.5,226,477.637,226,444.5z"\r\n    />\r\n    <path\r\n      style="fill: #96e8ff"\r\n      d="M366,67.5H146c-11.046,0-20,8.954-20,20v327c0,11.046,8.954,20,20,20h220c11.046,0,20-8.954,20-20&#10;&#9;&#9;v-327C386,76.454,377.046,67.5,366,67.5z"\r\n    />\r\n    <path\r\n      style="fill: #80dbff"\r\n      d="M126,87.5v327c0,11.046,8.954,20,20,20h80v-367h-80C134.954,67.5,126,76.454,126,87.5z"\r\n    />\r\n    <path\r\n      style="fill: #ffffff"\r\n      d="M256,115.517c-26.85-7.998-53.509-8.858-80.318-2.577c-5.664,1.327-9.682,6.363-9.682,12.18&#10;&#9;&#9;c0,39.161,0,53.805,0,92.965c0,6.374,5.886,11.128,12.113,9.768c23.172-5.058,46.241-4.777,69.425,0.841&#10;&#9;&#9;c5.563,1.348,11.361,1.348,16.924,0c23.184-5.618,46.252-5.898,69.425-0.841c6.227,1.359,12.113-3.395,12.113-9.768&#10;&#9;&#9;c0-39.161,0-53.805,0-92.965c0-5.818-4.018-10.853-9.682-12.18C309.509,106.659,282.85,107.518,256,115.517z"\r\n    />\r\n    <path\r\n      style="fill: #f5fafc"\r\n      d="M175.682,112.94c-5.664,1.327-9.682,6.363-9.682,12.18c0,39.161,0,53.805,0,92.965&#10;&#9;&#9;c0,6.374,5.886,11.128,12.113,9.769c23.172-5.058,46.241-4.777,69.425,0.841c2.782,0.674,5.622,1.011,8.462,1.011V115.517&#10;&#9;&#9;C229.15,107.518,202.491,106.659,175.682,112.94z"\r\n    />\r\n    <path\r\n      style="fill: #e1f1fa"\r\n      d="M206.53,108.873c-10.274,0.306-20.551,1.654-30.85,4.067c-5.663,1.327-9.681,6.368-9.681,12.184&#10;&#9;&#9;c0,39.155,0,53.801,0,92.955c0,6.355,5.86,11.141,12.068,9.785c23.188-5.068,46.271-4.791,69.47,0.831&#10;&#9;&#9;c2.782,0.674,8.462,1.011,8.462,1.011c0-12.844-13.338-21.214-26.163-26.293c-14.114-5.59-23.307-19.322-23.307-34.502V108.873z"\r\n    />\r\n    <g>\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M366,504.5H146c-44.183,0-80-35.817-80-80v-337c0-44.183,35.817-80,80-80h220c44.183,0,80,35.817,80,80v337&#10;&#9;&#9;&#9;C446,468.683,410.183,504.5,366,504.5z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M126,398.01v16.49c0,11.046,8.954,20,20,20h220c11.046,0,20-8.954,20-20v-327c0-11.046-8.954-20-20-20H146&#10;&#9;&#9;&#9;c-11.046,0-20,8.954-20,20v280.51"\r\n      />\r\n\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="176"\r\n        y1="281.01"\r\n        x2="336"\r\n        y2="281.01"\r\n      />\r\n\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="176"\r\n        y1="321.01"\r\n        x2="336"\r\n        y2="321.01"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M286.144,109.53c-10.033,0.992-20.075,2.987-30.144,5.986c-26.85-7.998-53.509-8.858-80.318-2.577&#10;&#9;&#9;&#9;c-5.664,1.327-9.682,6.363-9.682,12.18c0,39.161,0,53.805,0,92.965c0,6.374,5.886,11.128,12.113,9.768&#10;&#9;&#9;&#9;c23.172-5.058,46.241-4.777,69.425,0.841c5.563,1.348,11.361,1.348,16.924,0c23.184-5.618,46.252-5.898,69.425-0.841&#10;&#9;&#9;&#9;c6.227,1.359,12.113-3.395,12.113-9.768c0-39.161,0-53.805,0-92.965c0-5.818-4.018-10.853-9.682-12.18&#10;&#9;&#9;&#9;c-6.702-1.57-13.395-2.694-20.084-3.372"\r\n      />\r\n\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="256"\r\n        y1="115.517"\r\n        x2="256"\r\n        y2="229.706"\r\n      />\r\n      <g>\r\n        <line\r\n          style="\r\n            fill: none;\r\n            stroke: #000000;\r\n            stroke-width: 15;\r\n            stroke-linecap: round;\r\n            stroke-linejoin: round;\r\n            stroke-miterlimit: 10;\r\n          "\r\n          x1="193.551"\r\n          y1="362.07"\r\n          x2="193.551"\r\n          y2="374.07"\r\n        />\r\n\r\n        <line\r\n          style="\r\n            fill: none;\r\n            stroke: #000000;\r\n            stroke-width: 15;\r\n            stroke-linecap: round;\r\n            stroke-linejoin: round;\r\n            stroke-miterlimit: 10;\r\n          "\r\n          x1="318.449"\r\n          y1="362.07"\r\n          x2="318.449"\r\n          y2="374.07"\r\n        />\r\n        <path\r\n          style="\r\n            fill: none;\r\n            stroke: #000000;\r\n            stroke-width: 15;\r\n            stroke-linecap: round;\r\n            stroke-linejoin: round;\r\n            stroke-miterlimit: 10;\r\n          "\r\n          d="&#10;&#9;&#9;&#9;&#9;M239.536,373.713c4.003,4.594,9.892,7.501,16.464,7.501c6.572,0,12.461-2.907,16.464-7.501"\r\n        />\r\n      </g>\r\n    </g>\r\n  </g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n</svg>\r\n';
 
-  const IconPlayerPlay =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-play" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M7 4v16l13 -8z"/>\n</svg>\n';
+  const EReader2KawaiiFlat =
+    '<svg\r\n  id="Capa_1"\r\n  enable-background="new 0 0 512 512"\r\n  height="512"\r\n  viewBox="0 0 512 512"\r\n  width="512"\r\n  xmlns="http://www.w3.org/2000/svg"\r\n>\r\n  <g>\r\n    <path\r\n      d="m449.945 61.818v388.363c0 34.144-27.684 61.818-61.818 61.818h-264.254c-34.134 0-61.818-27.674-61.818-61.818v-388.363c0-34.144 27.684-61.818 61.818-61.818h264.253c34.135 0 61.819 27.674 61.819 61.818z"\r\n      fill="#808fa4"\r\n    />\r\n    <path\r\n      d="m188.464 512h-64.59c-34.134 0-61.818-27.674-61.818-61.818v-388.364c-.001-34.144 27.683-61.818 61.817-61.818h50.341c-7.367 6.574-15.218 18.092-15.218 37.359v423.909c.001 0-.215 30.24 29.468 50.732z"\r\n      fill="#64768e"\r\n    />\r\n    <path\r\n      d="m418.912 61.942v147.509l-194.274 13.033 77.912-191.451h85.453c17.072 0 30.909 13.837 30.909 30.909z"\r\n      fill="#c5ced6"\r\n    />\r\n    <path\r\n      d="m271.516 31.033-46.878 191.451-65.641-6.501-65.909-6.532 20.843-140.421 45.365-37.997z"\r\n      fill="#abb6c4"\r\n    />\r\n    <path\r\n      d="m159.296 31.033c-.196 2.009-.299 4.121-.299 6.326v178.624l-65.909-6.532v-147.509c0-17.072 13.837-30.909 30.909-30.909z"\r\n      fill="#9ca9ba"\r\n    />\r\n    <path\r\n      d="m313.676 222.484-18.885 196.428h-135.794l-51.732-35.968-14.177-142.46 65.909-5.379z"\r\n      fill="#c5ced6"\r\n    />\r\n    <path\r\n      d="m93.088 240.484 65.909-5.378v183.807h-35c-17.072 0-30.909-13.837-30.909-30.909z"\r\n      fill="#abb6c4"\r\n    />\r\n    <path\r\n      d="m418.912 240.484v147.519c0 17.072-13.837 30.909-30.909 30.909h-62.19l-12.137-196.428z"\r\n      fill="#64768e"\r\n    />\r\n    <path\r\n      d="m287.487 480.971h-62.974c-8.317 0-15.059-6.742-15.059-15.059v-.913c0-8.317 6.742-15.059 15.059-15.059h62.974c8.317 0 15.059 6.742 15.059 15.059v.913c0 8.316-6.743 15.059-15.059 15.059z"\r\n      fill="#64768e"\r\n    />\r\n    <path\r\n      d="m418.912 209.451v31.033h-77.644c-8.531 0-15.455 6.924-15.455 15.455v162.974h-31.022v-162.975c0-8.531-6.923-15.455-15.455-15.455h-120.34l-13.147-13.27 13.147-17.763h44.138c6.718 0 12.673-4.348 14.723-10.746l53.658-167.672h31.033l-50.65 158.255c-3.183 9.974 4.255 20.163 14.723 20.163h152.291z"\r\n      fill="#e8ecf9"\r\n    />\r\n    <path d="m93.088 209.451h65.909v31.033h-65.909z" fill="#d7ddf5" />\r\n    <g>\r\n      <g>\r\n        <path\r\n          d="m129.509 332.474c-4.268 0-7.727-3.459-7.727-7.727v-12.364c0-4.268 3.459-7.727 7.727-7.727s7.727 3.459 7.727 7.727v12.364c0 4.268-3.459 7.727-7.727 7.727z"\r\n          fill="#495560"\r\n        />\r\n      </g>\r\n      <g>\r\n        <path\r\n          d="m258.191 332.474c-4.268 0-7.727-3.459-7.727-7.727v-12.364c0-4.268 3.459-7.727 7.727-7.727s7.727 3.459 7.727 7.727v12.364c.001 4.268-3.458 7.727-7.727 7.727z"\r\n          fill="#495560"\r\n        />\r\n      </g>\r\n      <path\r\n        d="m223.825 324.391c-4.268 0-7.727 3.459-7.727 7.727 0 3.952-3.215 7.167-7.166 7.167-3.952 0-7.167-3.215-7.167-7.167 0-4.268-3.459-7.727-7.727-7.727s-7.727 3.459-7.727 7.727c0 3.952-3.215 7.167-7.166 7.167-3.952 0-7.167-3.215-7.167-7.167 0-4.268-3.459-7.727-7.727-7.727s-7.727 3.459-7.727 7.727c0 12.473 10.148 22.621 22.621 22.621 5.7 0 10.911-2.124 14.894-5.616 3.982 3.492 9.193 5.616 14.894 5.616 12.473 0 22.62-10.148 22.62-22.621-.001-4.268-3.46-7.727-7.728-7.727z"\r\n        fill="#495560"\r\n      />\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
 
-  const IconRefresh =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>\n  <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>\n</svg>\n';
+  const EReader2KawaiiLinealColor =
+    '<?xml version="1.0" encoding="UTF-8"?>\r\n<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  version="1.1"\r\n  id="Capa_1"\r\n  x="0px"\r\n  y="0px"\r\n  viewBox="0 0 511.941 511.941"\r\n  style="enable-background: new 0 0 511.941 511.941"\r\n  xml:space="preserve"\r\n  width="512"\r\n  height="512"\r\n>\r\n  <g>\r\n    <g>\r\n      <path\r\n        style="fill: #808fa4"\r\n        d="M444.211,67.5v376.94c0,33.14-26.87,60-60,60H127.73c-33.13,0-60-26.86-60-60V67.5&#10;&#9;&#9;&#9;c0-33.14,26.87-60,60-60h256.48C417.341,7.5,444.211,34.361,444.211,67.5z"\r\n      />\r\n      <path\r\n        style="fill: #64768e"\r\n        d="M190.421,504.44h-62.69c-33.13,0-60-26.86-60-60V67.5c0-33.14,26.87-60,60-60h48.86&#10;&#9;&#9;&#9;c-7.15,6.38-14.77,17.56-14.77,36.26v411.44C161.821,455.201,161.611,484.551,190.421,504.44z"\r\n      />\r\n      <path\r\n        style="fill: #c5ced6"\r\n        d="M414.091,67.62v143.17l-188.56,12.65l75.62-185.82h82.94&#10;&#9;&#9;&#9;C400.661,37.62,414.091,51.051,414.091,67.62z"\r\n      />\r\n      <polygon\r\n        style="fill: #abb6c4"\r\n        points="271.031,37.62 225.531,223.44 161.821,217.131 97.85,210.79 118.08,74.5 162.111,37.62 &#9;&#9;&#10;&#9;&#9;&#9;"\r\n      />\r\n      <path\r\n        style="fill: #9ca9ba"\r\n        d="M162.111,37.62c-0.19,1.95-0.29,4-0.29,6.14v173.37l-63.97-6.34V67.62c0-16.57,13.43-30,30-30&#10;&#9;&#9;&#9;H162.111z"\r\n      />\r\n      <polygon\r\n        style="fill: #c5ced6"\r\n        points="311.951,223.44 293.62,414.091 161.821,414.091 111.611,379.181 97.85,240.911 &#10;&#9;&#9;&#9;161.821,235.69 &#9;&#9;"\r\n      />\r\n      <path\r\n        style="fill: #abb6c4"\r\n        d="M97.85,240.911l63.97-5.22v178.4h-33.97c-16.57,0-30-13.43-30-30V240.911z"\r\n      />\r\n      <path\r\n        style="fill: #64768e"\r\n        d="M414.091,240.911v143.18c0,16.57-13.43,30-30,30h-60.36l-11.78-190.65L414.091,240.911z"\r\n      />\r\n      <path\r\n        style="fill: #64768e"\r\n        d="M286.088,474.324h-60.235c-8.317,0-15.059-6.742-15.059-15.059v0&#10;&#9;&#9;&#9;c0-8.317,6.742-15.059,15.059-15.059h60.235c8.317,0,15.059,6.742,15.059,15.059v0&#10;&#9;&#9;&#9;C301.147,467.581,294.405,474.324,286.088,474.324z"\r\n      />\r\n      <path\r\n        style="fill: #e8ecf9"\r\n        d="M414.091,210.79v30.12h-75.36c-8.28,0-15,6.72-15,15v158.18h-30.11v-158.18c0-8.28-6.72-15-15-15&#10;&#9;&#9;&#9;h-116.8l-12.76-12.88l12.76-17.24h42.84c6.52,0,12.3-4.22,14.29-10.43l52.08-162.74h30.12l-49.16,153.6&#10;&#9;&#9;&#9;c-3.09,9.68,4.13,19.57,14.29,19.57H414.091z"\r\n      />\r\n      <rect x="97.85" y="210.79" style="fill: #d7ddf5" width="63.97" height="30.12" />\r\n    </g>\r\n    <g>\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M384.206,504.441H127.735c-33.137,0-60-26.863-60-60V67.5c0-33.137,26.863-60,60-60h256.471c33.137,0,60,26.863,60,60v376.941&#10;&#9;&#9;&#9;C444.206,477.578,417.343,504.441,384.206,504.441z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M384.088,414.088H127.853c-16.569,0-30-13.431-30-30V67.618c0-16.569,13.431-30,30-30h256.235c16.569,0,30,13.431,30,30v316.471&#10;&#9;&#9;&#9;C414.088,400.657,400.657,414.088,384.088,414.088z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M286.088,474.324h-60.235c-8.317,0-15.059-6.742-15.059-15.059c0-8.317,6.742-15.059,15.059-15.059h60.235&#10;&#9;&#9;&#9;c8.317,0,15.059,6.742,15.059,15.059C301.147,467.581,294.405,474.324,286.088,474.324z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M100.85,210.79h103.811c6.523,0,12.298-4.215,14.286-10.428L270.56,39.09"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M293.62,410.091v-154.18c0-8.284-6.716-15-15-15H100.85"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M411.091,240.911h-72.36c-8.284,0-15,6.716-15,15v154.18"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M300.616,39.291l-48.622,151.927c-3.098,9.679,4.124,19.572,14.286,19.572h144.81"\r\n      />\r\n      <g>\r\n        <line\r\n          style="\r\n            fill: none;\r\n            stroke: #000000;\r\n            stroke-width: 15;\r\n            stroke-linecap: round;\r\n            stroke-linejoin: round;\r\n            stroke-miterlimit: 10;\r\n          "\r\n          x1="133.2"\r\n          y1="310.695"\r\n          x2="133.2"\r\n          y2="322.695"\r\n        />\r\n\r\n        <line\r\n          style="\r\n            fill: none;\r\n            stroke: #000000;\r\n            stroke-width: 15;\r\n            stroke-linecap: round;\r\n            stroke-linejoin: round;\r\n            stroke-miterlimit: 10;\r\n          "\r\n          x1="258.098"\r\n          y1="310.695"\r\n          x2="258.098"\r\n          y2="322.695"\r\n        />\r\n        <g>\r\n          <path\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-miterlimit: 10;\r\n            "\r\n            d="M195.831,329.85&#10;&#9;&#9;&#9;&#9;&#9;c0,7.984-6.472,14.456-14.456,14.456s-14.456-6.472-14.456-14.456"\r\n          />\r\n          <path\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-miterlimit: 10;\r\n            "\r\n            d="M224.742,329.85&#10;&#9;&#9;&#9;&#9;&#9;c0,7.984-6.472,14.456-14.456,14.456s-14.456-6.472-14.456-14.456"\r\n          />\r\n        </g>\r\n      </g>\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
 
-  const IconSettings =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/>\n  <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/>\n</svg>\n';
+  const externalLink =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-external-link"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />\r\n  <path d="M11 13l9 -9" />\r\n  <path d="M15 4h5v5" />\r\n</svg>\r\n';
 
-  const IconSettingsOff =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n     class="icon icon-tabler icons-tabler-outline icon-tabler-settings-off">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M9.451 5.437c.418 -.218 .75 -.609 .874 -1.12c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35c-.486 .118 -.894 .44 -1.123 .878m-.188 3.803c-.517 .523 -1.349 .734 -2.125 .262a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.472 -.774 -.262 -1.604 .259 -2.121"/>\n  <path d="M9.889 9.869a3 3 0 1 0 4.226 4.26m.592 -3.424a3.012 3.012 0 0 0 -1.419 -1.415"/>\n  <path d="M3 3l18 18"/>\n</svg>\n';
+  const eye =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-eye"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />\r\n  <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />\r\n</svg>\r\n';
 
-  const IconSpacingVertical =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-spacing-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2"/>\n  <path d="M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/>\n  <path d="M16 12h-8"/>\n</svg>\n';
+  const eyeOff =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-eye-off"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />\r\n  <path\r\n    d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87"\r\n  />\r\n  <path d="M3 3l18 18" />\r\n</svg>\r\n';
 
-  const IconSun =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/>\n  <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/>\n</svg>\n';
+  const fileDownload =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-file-download"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M14 3v4a1 1 0 0 0 1 1h4" />\r\n  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />\r\n  <path d="M12 17v-6" />\r\n  <path d="M9.5 14.5l2.5 2.5l2.5 -2.5" />\r\n</svg>\r\n';
 
-  const IconTrash =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M4 7l16 0"/>\n  <path d="M10 11l0 6"/>\n  <path d="M14 11l0 6"/>\n  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>\n  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>\n</svg>\n';
+  const keyboard =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-keyboard"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z" />\r\n  <path d="M6 10l0 .01" />\r\n  <path d="M10 10l0 .01" />\r\n  <path d="M14 10l0 .01" />\r\n  <path d="M18 10l0 .01" />\r\n  <path d="M6 14l0 .01" />\r\n  <path d="M18 14l0 .01" />\r\n  <path d="M10 14l4 .01" />\r\n</svg>\r\n';
 
-  const IconWorldCog =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"\n     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n     class="icon icon-tabler icons-tabler-outline icon-tabler-world-cog">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M21 12a9 9 0 1 0 -8.979 9"/>\n  <path d="M3.6 9h16.8"/>\n  <path d="M3.6 15h8.9"/>\n  <path d="M11.5 3a17 17 0 0 0 0 18"/>\n  <path d="M12.5 3a16.992 16.992 0 0 1 2.522 10.376"/>\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>\n  <path d="M19.001 15.5v1.5"/>\n  <path d="M19.001 21v1.5"/>\n  <path d="M22.032 17.25l-1.299 .75"/>\n  <path d="M17.27 20l-1.3 .75"/>\n  <path d="M15.97 17.25l1.3 .75"/>\n  <path d="M20.733 20l1.3 .75"/>\n</svg>\n';
+  const listNumbers =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-list-numbers"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M11 6h9" />\r\n  <path d="M11 12h9" />\r\n  <path d="M12 18h8" />\r\n  <path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4" />\r\n  <path d="M6 10v-6l-2 2" />\r\n</svg>\r\n';
 
-  const IconX =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x toggler-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M18 6l-12 12"/>\n  <path d="M6 6l12 12"/>\n</svg>\n';
+  const loader2 =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-loader-2"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M12 3a9 9 0 1 0 9 9" />\r\n</svg>\r\n';
 
-  const IconZoomCancel =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-cancel" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\n  <path d="M8 8l4 4"/>\n  <path d="M12 8l-4 4"/>\n  <path d="M21 21l-6 -6"/>\n</svg>\n';
+  const locationCog =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-location-cog"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M12 18l-2 -4l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5l-3.14 8.697" />\r\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />\r\n  <path d="M19.001 15.5v1.5" />\r\n  <path d="M19.001 21v1.5" />\r\n  <path d="M22.032 17.25l-1.299 .75" />\r\n  <path d="M17.27 20l-1.3 .75" />\r\n  <path d="M15.97 17.25l1.3 .75" />\r\n  <path d="M20.733 20l1.3 .75" />\r\n</svg>\r\n';
 
-  const IconZoomIn =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\n  <path d="M7 10l6 0"/>\n  <path d="M10 7l0 6"/>\n  <path d="M21 21l-6 -6"/>\n</svg>\n';
+  const menu2 =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-menu-2"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M4 6l16 0" />\r\n  <path d="M4 12l16 0" />\r\n  <path d="M4 18l16 0" />\r\n</svg>\r\n';
 
-  const IconZoomInArea =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-in-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M15 13v4"/>\n  <path d="M13 15h4"/>\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/>\n  <path d="M22 22l-3 -3"/>\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1"/>\n  <path d="M3 11v-1"/>\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1"/>\n  <path d="M10 3h1"/>\n  <path d="M15 3h1a2 2 0 0 1 2 2v1"/>\n</svg>\n';
+  const menuDeep =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M4 6h16" />\r\n  <path d="M7 12h13" />\r\n  <path d="M10 18h10" />\r\n</svg>\r\n';
 
-  const IconZoomOut =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>\n  <path d="M7 10l6 0"/>\n  <path d="M21 21l-6 -6"/>\n</svg>\n';
+  const message =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-message"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M8 9h8" />\r\n  <path d="M8 13h6" />\r\n  <path\r\n    d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"\r\n  />\r\n</svg>\r\n';
 
-  const IconZoomOutArea =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-out-area" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M13 15h4"/>\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/>\n  <path d="M22 22l-3 -3"/>\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1"/>\n  <path d="M3 11v-1"/>\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1"/>\n  <path d="M10 3h1"/>\n  <path d="M15 3h1a2 2 0 0 1 2 2v1"/>\n</svg>\n';
+  const moon =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-moon"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />\r\n</svg>\r\n';
 
-  const IconZoomPan =
-    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-zoom-pan" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">\n  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>\n  <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>\n  <path d="M17 17l-2.5 -2.5"/>\n  <path d="M10 5l2 -2l2 2"/>\n  <path d="M19 10l2 2l-2 2"/>\n  <path d="M5 10l-2 2l2 2"/>\n  <path d="M10 19l2 2l2 -2"/>\n</svg>\n';
+  const PageKawaiiFlat =
+    '<svg\r\n  id="Capa_1"\r\n  enable-background="new 0 0 512 512"\r\n  height="512"\r\n  viewBox="0 0 512 512"\r\n  width="512"\r\n  xmlns="http://www.w3.org/2000/svg"\r\n>\r\n  <g>\r\n    <path\r\n      d="m449.945 61.818v388.363c0 34.144-27.684 61.818-61.818 61.818h-264.253c-34.134 0-61.818-27.674-61.818-61.818v-388.363c-.001-34.144 27.684-61.818 61.818-61.818h264.253c34.133 0 61.818 27.674 61.818 61.818z"\r\n      fill="#e8ecf9"\r\n    />\r\n    <path\r\n      d="m207.555 512h-83.681c-34.134 0-61.818-27.674-61.818-61.818v-388.364c-.001-34.144 27.684-61.818 61.818-61.818h79.993c-11.292 3.421-26.809 12.446-26.809 36.256v436.87c0 26.479 19.854 35.783 30.497 38.874z"\r\n      fill="#d7ddf5"\r\n    />\r\n    <path\r\n      d="m403.396 62.004v139.751c0 8.541-6.924 15.455-15.455 15.455h-210.883l-51.556-21.729v-124.699l51.556-24.233h210.883c8.531 0 15.455 6.913 15.455 15.455z"\r\n      fill="#c5ced6"\r\n    />\r\n    <path\r\n      d="m177.058 46.549v170.66h-52.999c-8.531 0-15.455-6.913-15.455-15.455v-139.75c0-8.541 6.924-15.455 15.455-15.455z"\r\n      fill="#abb6c4"\r\n    />\r\n    <path\r\n      d="m217.209 279.213v8.036l-40.151 41.769-8.809 9.17-59.644 4.307 12.333-53.195 56.121-25.541h24.696c8.541-.001 15.454 6.923 15.454 15.454z"\r\n      fill="#c5ced6"\r\n    />\r\n    <path\r\n      d="m124.059 263.758h52.999v65.26l-8.809 9.17-59.644 4.307v-63.281c-.001-8.532 6.923-15.456 15.454-15.456z"\r\n      fill="#abb6c4"\r\n    />\r\n    <path\r\n      d="m217.209 334.365v60.407l-40.151 43.438-4.204 4.543-64.25-8.634 8.573-21.379-8.573-26.551 50.743-51.824z"\r\n      fill="#c5ced6"\r\n    />\r\n    <path\r\n      d="m177.058 334.365v103.845l-4.204 4.543-64.25-8.634v-47.93l50.743-51.824z"\r\n      fill="#abb6c4"\r\n    />\r\n    <path\r\n      d="m217.209 287.249v47.116c-2.823 1.731-5.121 4.368-6.388 7.696-2.359 6.182-8.253 9.984-14.496 9.984-1.844 0-3.719-.33-5.543-1.03-.546-.206-1.092-.381-1.638-.525-1.298-.34-2.596-.505-3.895-.505-2.916 0-5.749.824-8.191 2.339l-11.045-14.888 11.045-32.29c1.03.165 2.061.433 3.07.824.587.227 1.175.412 1.772.556 1.247.319 2.514.474 3.771.474 6.244 0 12.137-3.802 14.496-9.984.082-.206.165-.412.258-.608 2.493-5.821 8.191-9.376 14.239-9.376.845.001 1.69.073 2.545.217z"\r\n      fill="#808fa4"\r\n    />\r\n    <path\r\n      d="m177.058 305.146v47.178c-2.782 1.731-5.049 4.348-6.305 7.645-.196.505-.402.989-.649 1.453-2.669 5.316-8.108 8.521-13.847 8.521-.309 0-.618-.01-.927-.031-1.535-.093-3.091-.412-4.605-.999-1.824-.701-3.699-1.03-5.543-1.03-6.244 0-12.137 3.802-14.496 9.984s-8.242 9.984-14.496 9.984c-1.834 0-3.709-.33-5.533-1.03-.68-.258-1.36-.474-2.05-.628v-43.695c5.038-1.02 9.458-4.523 11.426-9.674 2.359-6.182 8.253-9.984 14.496-9.984 1.844 0 3.709.33 5.533 1.03 1.824.701 3.709 1.03 5.553 1.03 1.113 0 2.226-.124 3.297-.361 2.895-.629 5.574-2.081 7.686-4.193 1.494-1.494 2.699-3.318 3.503-5.419 2.359-6.182 8.242-9.984 14.496-9.984.813-.003 1.637.058 2.461.203z"\r\n      fill="#64768e"\r\n    />\r\n    <path\r\n      d="m217.209 394.772v55.224c0 8.541-6.913 15.455-15.455 15.455h-24.696l-15.516-24.284 15.516-28.426c1.885-1.618 3.4-3.719 4.348-6.202 2.359-6.172 8.253-9.973 14.496-9.973 1.844 0 3.719.33 5.543 1.03 1.824.701 3.689 1.03 5.533 1.03 1.175 0 2.349-.134 3.472-.402h.01c2.494-.578 4.822-1.762 6.749-3.452z"\r\n      fill="#808fa4"\r\n    />\r\n    <path\r\n      d="m166.91 416.522c3.74 0 7.346-1.36 10.148-3.781v52.71h-52.999c-8.531 0-15.455-6.913-15.455-15.455v-15.877c3.802-1.968 8.397-2.37 12.704-.721 1.824.701 3.699 1.03 5.543 1.03 6.244 0 12.137-3.802 14.496-9.984s8.242-9.984 14.496-9.984c1.834 0 3.709.33 5.533 1.03 1.824.702 3.7 1.032 5.534 1.032z"\r\n      fill="#64768e"\r\n    />\r\n    <path\r\n      d="m403.396 351.612v98.384c0 8.541-6.924 15.455-15.455 15.455h-69.051l-55.132-93.686v-92.552c0-8.531 6.924-15.455 15.455-15.455h62.91z"\r\n      fill="#808fa4"\r\n    />\r\n    <path\r\n      d="m380.121 333.572-61.231 131.879h-39.677c-8.531 0-15.455-6.913-15.455-15.455v-78.231l77.572-53.699z"\r\n      fill="#abb6c4"\r\n    />\r\n    <path\r\n      d="m403.396 279.213v72.4c-7.058 3.359-14.95 5.234-23.275 5.234-3.534 0-6.996-.34-10.344-.989-17.34-3.338-31.744-14.929-38.956-30.518-3.215-6.924-5.007-14.651-5.007-22.79 0-15.197 6.244-28.941 16.31-38.791h45.818c8.53-.001 15.454 6.923 15.454 15.454z"\r\n      fill="#c5ced6"\r\n    />\r\n    <g>\r\n      <g>\r\n        <ellipse cx="172.744" cy="147.233" fill="#fff" rx="30.72" ry="24.464" />\r\n        <ellipse cx="339.256" cy="147.233" fill="#fff" rx="30.72" ry="24.464" />\r\n        <path\r\n          d="m285.787 117.781c-4.268 0-7.727 3.46-7.727 7.727 0 3.952-3.215 7.166-7.166 7.166s-7.166-3.215-7.166-7.166c0-4.268-3.46-7.727-7.727-7.727-4.268 0-7.727 3.46-7.727 7.727 0 3.952-3.215 7.166-7.166 7.166-3.952 0-7.166-3.215-7.166-7.166 0-4.268-3.46-7.727-7.727-7.727-4.268 0-7.727 3.46-7.727 7.727 0 12.473 10.148 22.621 22.621 22.621 5.701 0 10.911-2.124 14.894-5.616 3.982 3.492 9.193 5.616 14.894 5.616 12.473 0 22.621-10.148 22.621-22.621-.003-4.267-3.463-7.727-7.731-7.727z"\r\n          fill="#495560"\r\n        />\r\n      </g>\r\n      <g>\r\n        <path\r\n          d="m206.795 121.062c-4.268 0-7.727-3.46-7.727-7.727 0-3.559-2.896-6.454-6.455-6.454s-6.455 2.895-6.455 6.454c0 4.268-3.46 7.727-7.727 7.727-4.268 0-7.727-3.46-7.727-7.727 0-12.081 9.829-21.909 21.91-21.909s21.91 9.828 21.91 21.909c-.001 4.267-3.461 7.727-7.729 7.727z"\r\n          fill="#495560"\r\n        />\r\n      </g>\r\n      <g>\r\n        <path\r\n          d="m333.569 121.062c-4.268 0-7.727-3.46-7.727-7.727 0-3.559-2.896-6.454-6.455-6.454s-6.455 2.895-6.455 6.454c0 4.268-3.46 7.727-7.727 7.727-4.268 0-7.727-3.46-7.727-7.727 0-12.081 9.829-21.909 21.91-21.909s21.91 9.828 21.91 21.909c-.001 4.267-3.461 7.727-7.729 7.727z"\r\n          fill="#495560"\r\n        />\r\n      </g>\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
+
+  const PageKawaiiLinealColor =
+    '<?xml version="1.0" encoding="UTF-8"?>\r\n<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  version="1.1"\r\n  id="Capa_1"\r\n  x="0px"\r\n  y="0px"\r\n  viewBox="0 0 511.94 511.94"\r\n  style="enable-background: new 0 0 511.94 511.94"\r\n  xml:space="preserve"\r\n  width="512"\r\n  height="512"\r\n>\r\n  <g>\r\n    <g>\r\n      <path\r\n        style="fill: #e8ecf9"\r\n        d="M444.21,67.5v376.94c0,33.14-26.87,60-60,60H127.73c-33.13,0-60-26.86-60-60V67.5&#10;&#9;&#9;&#9;c0-33.14,26.87-60,60-60h256.48C417.34,7.5,444.21,34.36,444.21,67.5z"\r\n      />\r\n      <path\r\n        style="fill: #d7ddf5"\r\n        d="M208.95,504.44h-81.22c-33.13,0-60-26.86-60-60V67.5c0-33.14,26.87-60,60-60h77.64&#10;&#9;&#9;&#9;c-10.96,3.32-26.02,12.08-26.02,35.19v424.02C179.35,492.41,198.62,501.44,208.95,504.44z"\r\n      />\r\n      <path\r\n        style="fill: #c5ced6"\r\n        d="M399.03,67.68v135.64c0,8.29-6.72,15-15,15H179.35l-50.04-21.09V76.2l50.04-23.52h204.68&#10;&#9;&#9;&#9;C392.31,52.68,399.03,59.39,399.03,67.68z"\r\n      />\r\n      <path\r\n        style="fill: #abb6c4"\r\n        d="M179.35,52.68v165.64h-51.44c-8.28,0-15-6.71-15-15V67.68c0-8.29,6.72-15,15-15H179.35z"\r\n      />\r\n      <path\r\n        style="fill: #c5ced6"\r\n        d="M218.32,278.5v7.8l-38.97,40.54l-8.55,8.9l-57.89,4.18l11.97-51.63l54.47-24.79h23.97&#10;&#9;&#9;&#9;C211.61,263.5,218.32,270.22,218.32,278.5z"\r\n      />\r\n      <path\r\n        style="fill: #abb6c4"\r\n        d="M127.91,263.5h51.44v63.34l-8.55,8.9l-57.89,4.18V278.5C112.91,270.22,119.63,263.5,127.91,263.5z"\r\n      />\r\n      <polygon\r\n        style="fill: #c5ced6"\r\n        points="218.32,332.03 218.32,390.66 179.35,432.82 175.27,437.23 112.91,428.85 121.23,408.1 &#10;&#9;&#9;&#9;112.91,382.33 162.16,332.03 &#9;&#9;"\r\n      />\r\n      <polygon\r\n        style="fill: #abb6c4"\r\n        points="179.35,332.03 179.35,432.82 175.27,437.23 112.91,428.85 112.91,382.33 162.16,332.03 &#9;&#9;&#10;&#9;&#9;&#9;"\r\n      />\r\n      <path\r\n        style="fill: #808fa4"\r\n        d="M218.32,286.3v45.73c-2.74,1.68-4.97,4.24-6.2,7.47c-2.29,6-8.01,9.69-14.07,9.69&#10;&#9;&#9;&#9;c-1.79,0-3.61-0.32-5.38-1c-0.53-0.2-1.06-0.37-1.59-0.51c-1.26-0.33-2.52-0.49-3.78-0.49c-2.83,0-5.58,0.8-7.95,2.27&#10;&#9;&#9;&#9;l-10.72-14.45l10.72-31.34c1,0.16,2,0.42,2.98,0.8c0.57,0.22,1.14,0.4,1.72,0.54c1.21,0.31,2.44,0.46,3.66,0.46&#10;&#9;&#9;&#9;c6.06,0,11.78-3.69,14.07-9.69c0.08-0.2,0.16-0.4,0.25-0.59c2.42-5.65,7.95-9.1,13.82-9.1&#10;&#9;&#9;&#9;C216.67,286.09,217.49,286.16,218.32,286.3z"\r\n      />\r\n      <path\r\n        style="fill: #64768e"\r\n        d="M179.35,303.67v45.79c-2.7,1.68-4.9,4.22-6.12,7.42c-0.19,0.49-0.39,0.96-0.63,1.41&#10;&#9;&#9;&#9;c-2.59,5.16-7.87,8.27-13.44,8.27c-0.3,0-0.6-0.01-0.9-0.03c-1.49-0.09-3-0.4-4.47-0.97c-1.77-0.68-3.59-1-5.38-1&#10;&#9;&#9;&#9;c-6.06,0-11.78,3.69-14.07,9.69s-8,9.69-14.07,9.69c-1.78,0-3.6-0.32-5.37-1c-0.66-0.25-1.32-0.46-1.99-0.61v-42.41&#10;&#9;&#9;&#9;c4.89-0.99,9.18-4.39,11.09-9.39c2.29-6,8.01-9.69,14.07-9.69c1.79,0,3.6,0.32,5.37,1c1.77,0.68,3.6,1,5.39,1&#10;&#9;&#9;&#9;c1.08,0,2.16-0.12,3.2-0.35c2.81-0.61,5.41-2.02,7.46-4.07c1.45-1.45,2.62-3.22,3.4-5.26c2.29-6,8-9.69,14.07-9.69&#10;&#9;&#9;&#9;C177.75,303.47,178.55,303.53,179.35,303.67z"\r\n      />\r\n      <path\r\n        style="fill: #808fa4"\r\n        d="M218.32,390.66v53.6c0,8.29-6.71,15-15,15h-23.97l-15.06-23.57l15.06-27.59&#10;&#9;&#9;&#9;c1.83-1.57,3.3-3.61,4.22-6.02c2.29-5.99,8.01-9.68,14.07-9.68c1.79,0,3.61,0.32,5.38,1c1.77,0.68,3.58,1,5.37,1&#10;&#9;&#9;&#9;c1.14,0,2.28-0.13,3.37-0.39h0.01C214.19,393.45,216.45,392.3,218.32,390.66z"\r\n      />\r\n      <path\r\n        style="fill: #64768e"\r\n        d="M169.5,411.77c3.63,0,7.13-1.32,9.85-3.67v51.16h-51.44c-8.28,0-15-6.71-15-15v-15.41&#10;&#9;&#9;&#9;c3.69-1.91,8.15-2.3,12.33-0.7c1.77,0.68,3.59,1,5.38,1c6.06,0,11.78-3.69,14.07-9.69c2.29-6,8-9.69,14.07-9.69&#10;&#9;&#9;&#9;c1.78,0,3.6,0.32,5.37,1C165.9,411.45,167.72,411.77,169.5,411.77z"\r\n      />\r\n      <path\r\n        style="fill: #808fa4"\r\n        d="M399.03,348.77v95.49c0,8.29-6.72,15-15,15h-67.02l-53.51-90.93V278.5c0-8.28,6.72-15,15-15h61.06&#10;&#9;&#9;&#9;L399.03,348.77z"\r\n      />\r\n      <path\r\n        style="fill: #abb6c4"\r\n        d="M376.44,331.26l-59.43,128H278.5c-8.28,0-15-6.71-15-15v-75.93l75.29-52.12L376.44,331.26z"\r\n      />\r\n      <path\r\n        style="fill: #c5ced6"\r\n        d="M399.03,278.5v70.27c-6.85,3.26-14.51,5.08-22.59,5.08c-3.43,0-6.79-0.33-10.04-0.96&#10;&#9;&#9;&#9;c-16.83-3.24-30.81-14.49-37.81-29.62c-3.12-6.72-4.86-14.22-4.86-22.12c0-14.75,6.06-28.09,15.83-37.65h44.47&#10;&#9;&#9;&#9;C392.31,263.5,399.03,270.22,399.03,278.5z"\r\n      />\r\n      <g>\r\n        <g>\r\n          <ellipse style="fill: #ffffff" cx="175.162" cy="150.402" rx="29.816" ry="23.744" />\r\n          <ellipse style="fill: #ffffff" cx="336.778" cy="150.402" rx="29.816" ry="23.744" />\r\n        </g>\r\n      </g>\r\n    </g>\r\n    <g>\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M67.73,402.54v41.9c0,33.14,26.87,60,60,60h256.48c33.13,0,60-26.86,60-60V67.5c0-33.14-26.87-60-60-60H127.73&#10;&#9;&#9;&#9;c-33.13,0-60,26.86-60,60v300.04"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M359,52.68h25.03c8.28,0,15,6.71,15,15v135.64c0,8.29-6.72,15-15,15H127.91c-8.28,0-15-6.71-15-15V67.68c0-8.29,6.72-15,15-15H324&#10;&#9;&#9;&#9;"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M203.323,459.264h-75.412c-8.284,0-15-6.716-15-15V278.499c0-8.284,6.716-15,15-15h75.412c8.284,0,15,6.716,15,15v165.765&#10;&#9;&#9;&#9;C218.323,452.548,211.607,459.264,203.323,459.264z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M399.03,278.5v165.76c0,8.29-6.72,15-15,15H278.5c-8.28,0-15-6.71-15-15V278.5c0-8.28,6.72-15,15-15h105.53&#10;&#9;&#9;&#9;C392.31,263.5,399.03,270.22,399.03,278.5z"\r\n      />\r\n\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="264.641"\r\n        y1="367.54"\r\n        x2="327.14"\r\n        y2="324.275"\r\n      />\r\n\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="335.24"\r\n        y1="420"\r\n        x2="317.58"\r\n        y2="458.04"\r\n      />\r\n\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="365.42"\r\n        y1="354.99"\r\n        x2="349.98"\r\n        y2="388.25"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M337.07,266.11c-14.481,16.226-16.955,38.907-8.48,57.16c12.198,26.365,43.179,37.557,69.06,26.13"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M114.09,339.63c4.39-1.26,8.16-4.51,9.91-9.1c2.29-6,8.01-9.69,14.07-9.69c4.907,0,5.826,2,10.76,2&#10;&#9;&#9;&#9;c6.016,0,11.752-3.643,14.06-9.68c2.29-6,8-9.69,14.07-9.69c3.551,0,5.135,1.068,7.09,1.54c7.171,1.837,14.948-1.942,17.73-9.23&#10;&#9;&#9;&#9;c2.653-6.632,8.993-10.222,15.36-9.63"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M114.09,382.66c0.973,0.288,2.952,1.28,6.18,1.28c6.07,0,11.78-3.69,14.07-9.69c2.29-6,8.01-9.69,14.07-9.69&#10;&#9;&#9;&#9;c4.605,0,5.534,1.709,9.85,1.97c6.213,0.414,12.476-3.218,14.97-9.65c2.891-7.576,11.422-11.716,19.44-8.69&#10;&#9;&#9;&#9;c7.75,2.977,16.481-0.911,19.45-8.69c1.05-2.75,2.82-5.02,5.02-6.66"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M114.09,428.31c3.44-1.43,7.41-1.59,11.15-0.16c7.75,2.977,16.481-0.911,19.45-8.69c2.29-6,8-9.69,14.07-9.69&#10;&#9;&#9;&#9;c4.886,0,5.854,2,10.74,2c6.07,0,11.78-3.69,14.07-9.69c2.29-5.99,8.01-9.68,14.07-9.68c4.907,0,5.856,2,10.75,2&#10;&#9;&#9;&#9;c3.118,0,6.213-0.998,8.75-2.81"\r\n      />\r\n      <g>\r\n        <g>\r\n          <g>\r\n            <path\r\n              style="\r\n                fill: none;\r\n                stroke: #000000;\r\n                stroke-width: 15;\r\n                stroke-linecap: round;\r\n                stroke-miterlimit: 10;\r\n              "\r\n              d="M255.97,129.317&#10;&#9;&#9;&#9;&#9;&#9;&#9;c0,7.984-6.472,14.456-14.456,14.456c-7.984,0-14.456-6.472-14.456-14.456"\r\n            />\r\n            <path\r\n              style="\r\n                fill: none;\r\n                stroke: #000000;\r\n                stroke-width: 15;\r\n                stroke-linecap: round;\r\n                stroke-miterlimit: 10;\r\n              "\r\n              d="M284.881,129.317&#10;&#9;&#9;&#9;&#9;&#9;&#9;c0,7.984-6.472,14.456-14.456,14.456c-7.984,0-14.456-6.472-14.456-14.456"\r\n            />\r\n          </g>\r\n        </g>\r\n        <path\r\n          style="\r\n            fill: none;\r\n            stroke: #000000;\r\n            stroke-width: 15;\r\n            stroke-linecap: round;\r\n            stroke-linejoin: round;\r\n            stroke-miterlimit: 10;\r\n          "\r\n          d="&#10;&#9;&#9;&#9;&#9;M208.213,117.501c0-7.602-6.163-13.765-13.765-13.765c-7.602,0-13.765,6.163-13.765,13.765"\r\n        />\r\n        <path\r\n          style="\r\n            fill: none;\r\n            stroke: #000000;\r\n            stroke-width: 15;\r\n            stroke-linecap: round;\r\n            stroke-linejoin: round;\r\n            stroke-miterlimit: 10;\r\n          "\r\n          d="&#10;&#9;&#9;&#9;&#9;M303.727,117.501c0-7.602,6.163-13.765,13.765-13.765c7.602,0,13.765,6.163,13.765,13.765"\r\n        />\r\n      </g>\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
+
+  const palette =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-palette"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path\r\n    d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"\r\n  />\r\n  <path d="M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\r\n  <path d="M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\r\n  <path d="M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\r\n</svg>\r\n';
+
+  const pencil =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-pencil"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />\r\n  <path d="M13.5 6.5l4 4" />\r\n</svg>\r\n';
+
+  const photo =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-photo"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M15 8h.01" />\r\n  <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />\r\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />\r\n  <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />\r\n</svg>\r\n';
+
+  const photoOff =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-photo-off"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M15 8h.01" />\r\n  <path\r\n    d="M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153"\r\n  />\r\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />\r\n  <path d="M16.33 12.338c.574 -.054 1.155 .166 1.67 .662l3 3" />\r\n  <path d="M3 3l18 18" color="orange" />\r\n</svg>\r\n';
+
+  const playerPause =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-player-pause"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />\r\n  <path d="M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />\r\n</svg>\r\n';
+
+  const playerPlay =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-player-play"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M7 4v16l13 -8z" />\r\n</svg>\r\n';
+
+  const refresh$1 =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-refresh"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />\r\n  <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />\r\n</svg>\r\n';
+
+  const settings$2 =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-settings"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path\r\n    d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"\r\n  />\r\n  <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />\r\n</svg>\r\n';
+
+  const settingsOff =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-settings-off"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path\r\n    d="M9.451 5.437c.418 -.218 .75 -.609 .874 -1.12c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35c-.486 .118 -.894 .44 -1.123 .878m-.188 3.803c-.517 .523 -1.349 .734 -2.125 .262a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.472 -.774 -.262 -1.604 .259 -2.121"\r\n  />\r\n  <path d="M9.889 9.869a3 3 0 1 0 4.226 4.26m.592 -3.424a3.012 3.012 0 0 0 -1.419 -1.415" />\r\n  <path d="M3 3l18 18" />\r\n</svg>\r\n';
+
+  const spacingVertical =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-spacing-vertical"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2" />\r\n  <path d="M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />\r\n  <path d="M16 12h-8" />\r\n</svg>\r\n';
+
+  const sun =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-sun"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />\r\n  <path\r\n    d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"\r\n  />\r\n</svg>\r\n';
+
+  const trash =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-trash"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M4 7l16 0" />\r\n  <path d="M10 11l0 6" />\r\n  <path d="M14 11l0 6" />\r\n  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />\r\n  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />\r\n</svg>\r\n';
+
+  const worldCog =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-world-cog"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M21 12a9 9 0 1 0 -8.979 9" />\r\n  <path d="M3.6 9h16.8" />\r\n  <path d="M3.6 15h8.9" />\r\n  <path d="M11.5 3a17 17 0 0 0 0 18" />\r\n  <path d="M12.5 3a16.992 16.992 0 0 1 2.522 10.376" />\r\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />\r\n  <path d="M19.001 15.5v1.5" />\r\n  <path d="M19.001 21v1.5" />\r\n  <path d="M22.032 17.25l-1.299 .75" />\r\n  <path d="M17.27 20l-1.3 .75" />\r\n  <path d="M15.97 17.25l1.3 .75" />\r\n  <path d="M20.733 20l1.3 .75" />\r\n</svg>\r\n';
+
+  const x =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-x toggler-off"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M18 6l-12 12" />\r\n  <path d="M6 6l12 12" />\r\n</svg>\r\n';
+
+  const zoomCancel =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-zoom-cancel"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\r\n  <path d="M8 8l4 4" />\r\n  <path d="M12 8l-4 4" />\r\n  <path d="M21 21l-6 -6" />\r\n</svg>\r\n';
+
+  const zoomIn =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-zoom-in"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\r\n  <path d="M7 10l6 0" />\r\n  <path d="M10 7l0 6" />\r\n  <path d="M21 21l-6 -6" />\r\n</svg>\r\n';
+
+  const zoomInArea =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-zoom-in-area"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M15 13v4" />\r\n  <path d="M13 15h4" />\r\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />\r\n  <path d="M22 22l-3 -3" />\r\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1" />\r\n  <path d="M3 11v-1" />\r\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1" />\r\n  <path d="M10 3h1" />\r\n  <path d="M15 3h1a2 2 0 0 1 2 2v1" />\r\n</svg>\r\n';
+
+  const zoomOut =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-zoom-out"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\r\n  <path d="M7 10l6 0" />\r\n  <path d="M21 21l-6 -6" />\r\n</svg>\r\n';
+
+  const zoomOutArea =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-zoom-out-area"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M13 15h4" />\r\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />\r\n  <path d="M22 22l-3 -3" />\r\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1" />\r\n  <path d="M3 11v-1" />\r\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1" />\r\n  <path d="M10 3h1" />\r\n  <path d="M15 3h1a2 2 0 0 1 2 2v1" />\r\n</svg>\r\n';
+
+  const zoomPan =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-zoom-pan"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path stroke="none" d="M0 0h24v24H0z" fill="none" />\r\n  <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />\r\n  <path d="M17 17l-2.5 -2.5" />\r\n  <path d="M10 5l2 -2l2 2" />\r\n  <path d="M19 10l2 2l-2 2" />\r\n  <path d="M5 10l-2 2l2 2" />\r\n  <path d="M10 19l2 2l2 -2" />\r\n</svg>\r\n';
+
+  const rawIcons = /*#__PURE__*/ Object.freeze(
+    /*#__PURE__*/ Object.defineProperty(
+      {
+        __proto__: null,
+        IconArrowAutofitDown: arrowAutofitDown,
+        IconArrowAutofitHeight: arrowAutofitHeight,
+        IconArrowAutofitLeft: arrowAutofitLeft,
+        IconArrowAutofitRight: arrowAutofitRight,
+        IconArrowAutofitWidth: arrowAutofitWidth,
+        IconArrowBigLeft: arrowBigLeft,
+        IconArrowBigRight: arrowBigRight,
+        IconBook: book,
+        IconBookReturn: bookReturn,
+        IconBookUpload: bookUpload,
+        IconBookmark: bookmark,
+        IconBookmarkOff: bookmarkOff,
+        IconBookmarks: bookmarks$2,
+        IconCategory: category,
+        IconCheck: check,
+        IconComic1: Comic1SpecialLinealColor,
+        IconComic1Flat: Comic1SpecialFlat,
+        IconComic2: Comic2SpecialLinealColor,
+        IconComic2Flat: Comic2SpecialFlat,
+        IconComic3: Comic3SpecialLinealColor,
+        IconComic3Flat: Comic3SpecialFlat,
+        IconDeviceFloppy: deviceFloppy,
+        IconDotsVertical: dotsVertical,
+        IconEReader1: EReader1KawaiiLinealColor,
+        IconEReader1Flat: EReader1KawaiiFlat,
+        IconEReader2: EReader2KawaiiLinealColor,
+        IconEReader2Flat: EReader2KawaiiFlat,
+        IconExternalLink: externalLink,
+        IconEye: eye,
+        IconEyeOff: eyeOff,
+        IconFileDownload: fileDownload,
+        IconKeyboard: keyboard,
+        IconListNumbers: listNumbers,
+        IconLoader2: loader2,
+        IconLocationCog: locationCog,
+        IconMenu2: menu2,
+        IconMenuDeep: menuDeep,
+        IconMessage: message,
+        IconMoon: moon,
+        IconPage: PageKawaiiLinealColor,
+        IconPageFlat: PageKawaiiFlat,
+        IconPalette: palette,
+        IconPencil: pencil,
+        IconPhoto: photo,
+        IconPhotoOff: photoOff,
+        IconPlayerPause: playerPause,
+        IconPlayerPlay: playerPlay,
+        IconRefresh: refresh$1,
+        IconSettings: settings$2,
+        IconSettingsOff: settingsOff,
+        IconSpacingVertical: spacingVertical,
+        IconSun: sun,
+        IconTrash: trash,
+        IconWorldCog: worldCog,
+        IconX: x,
+        IconZoomCancel: zoomCancel,
+        IconZoomIn: zoomIn,
+        IconZoomInArea: zoomInArea,
+        IconZoomOut: zoomOut,
+        IconZoomOutArea: zoomOutArea,
+        IconZoomPan: zoomPan,
+      },
+      Symbol.toStringTag,
+      { value: 'Module' },
+    ),
+  );
+
+  function parseCss(css) {
+    const ruleRegex = /([^{}]+)\s*\{([^}]+)\}/g;
+    return [...css.matchAll(ruleRegex)]
+      .map(match => {
+        const selectorsBlock = match[1].trim();
+        const properties = match[2];
+        const colorMatch = /color:\s*([^;]+)/.exec(properties);
+        if (colorMatch) {
+          const color = colorMatch[1].trim();
+          const selectors = selectorsBlock.split(',').map(s => s.trim().replace(/\s\s+/g, ' '));
+          return { selectors, color };
+        }
+        return null;
+      })
+      .filter(rule => rule !== null);
+  }
+  const colorRules = parseCss(icons);
+  const parser = new DOMParser();
+  const serializer = new XMLSerializer();
+  function applyColorsToSvg(svgString, className) {
+    const doc = parser.parseFromString(svgString, 'image/svg+xml');
+    const svg = doc.documentElement;
+    if (svg.querySelector('parsererror')) {
+      console.error(`Error parsing SVG for ${className}`);
+      return svgString;
+    }
+    for (const rule of colorRules) {
+      for (const selector of rule.selectors) {
+        if (selector.startsWith(`.${className}`)) {
+          const selectorMatch = selector.match(new RegExp(`^\\.${className}\\s*(.*)$`));
+          if (selectorMatch) {
+            let subSelector = selectorMatch[1].trim() || '*';
+            if (subSelector.startsWith('>')) {
+              subSelector = subSelector.substring(1).trim();
+            }
+            try {
+              const elements = svg.querySelectorAll(subSelector);
+              elements.forEach(el => {
+                el.setAttribute('stroke', rule.color);
+              });
+            } catch (e) {
+              console.error(`Invalid selector "${subSelector}" for ${className}`, e);
+            }
+          }
+        }
+      }
+    }
+    return serializer.serializeToString(svg);
+  }
+  const styledIcons = Object.fromEntries(
+    Object.keys(rawIcons).map(iconKey => {
+      const kebabCaseName = iconKey
+        .replace(/^Icon/, '')
+        .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+        .toLowerCase();
+      const rawSvg = rawIcons[iconKey];
+      const className = `icon-tabler-${kebabCaseName}`;
+      const styledSvg = applyColorsToSvg(rawSvg, className);
+      return [`${iconKey}Raw`, styledSvg];
+    }),
+  );
+  const styledIconsSVG = Object.fromEntries(
+    Object.keys(styledIcons).map(iconKey => [iconKey.replace('Raw', ''), o(styledIcons[iconKey])]),
+  );
+  const {
+    IconArrowAutofitDown,
+    IconArrowAutofitHeight,
+    IconArrowAutofitLeft,
+    IconArrowAutofitRight,
+    IconArrowAutofitWidth,
+    IconArrowBigLeft,
+    IconArrowBigRight,
+    IconBook,
+    IconBookmark,
+    IconBookmarkOff,
+    IconBookmarks,
+    IconBookReturn,
+    IconBookUpload,
+    IconCategory,
+    IconCheck,
+    IconDeviceFloppy,
+    IconDotsVertical,
+    IconEye,
+    IconEyeOff,
+    IconExternalLink,
+    IconFileDownload,
+    IconKeyboard,
+    IconListNumbers,
+    IconLoader2,
+    IconLocationCog,
+    IconMenu2,
+    IconMenuDeep,
+    IconMessage,
+    IconMoon,
+    IconPalette,
+    IconPencil,
+    IconPhoto,
+    IconPhotoOff,
+    IconPlayerPause,
+    IconPlayerPlay,
+    IconRefresh,
+    IconSettings,
+    IconSettingsOff,
+    IconSpacingVertical,
+    IconSun,
+    IconTrash,
+    IconWorldCog,
+    IconX,
+    IconZoomCancel,
+    IconZoomIn,
+    IconZoomInArea,
+    IconZoomOut,
+    IconZoomOutArea,
+    IconZoomPan,
+    IconPageFlat,
+    IconComic1Flat,
+    IconComic2Flat,
+    IconComic3Flat,
+    IconEReader1Flat,
+    IconEReader2Flat,
+    IconPage,
+    IconComic1,
+    IconComic2,
+    IconComic3,
+    IconEReader1,
+    IconEReader2,
+  } = styledIconsSVG;
+  const {
+    IconArrowAutofitDownRaw,
+    IconArrowAutofitHeightRaw,
+    IconArrowAutofitLeftRaw,
+    IconArrowAutofitRightRaw,
+    IconArrowAutofitWidthRaw,
+    IconArrowBigLeftRaw,
+    IconArrowBigRightRaw,
+    IconBookRaw,
+    IconBookmarkRaw,
+    IconBookmarkOffRaw,
+    IconBookmarksRaw,
+    IconBookReturnRaw,
+    IconBookUploadRaw,
+    IconCategoryRaw,
+    IconCheckRaw,
+    IconDeviceFloppyRaw,
+    IconDotsVerticalRaw,
+    IconEyeRaw,
+    IconEyeOffRaw,
+    IconExternalLinkRaw,
+    IconFileDownloadRaw,
+    IconKeyboardRaw,
+    IconListNumbersRaw,
+    IconLoader2Raw,
+    IconLocationCogRaw,
+    IconMenu2Raw,
+    IconMenuDeepRaw,
+    IconMessageRaw,
+    IconMoonRaw,
+    IconPaletteRaw,
+    IconPencilRaw,
+    IconPhotoRaw,
+    IconPhotoOffRaw,
+    IconPlayerPauseRaw,
+    IconPlayerPlayRaw,
+    IconRefreshRaw,
+    IconSettingsRaw,
+    IconSettingsOffRaw,
+    IconSpacingVerticalRaw,
+    IconSunRaw,
+    IconTrashRaw,
+    IconWorldCogRaw,
+    IconXRaw,
+    IconZoomCancelRaw,
+    IconZoomInRaw,
+    IconZoomInAreaRaw,
+    IconZoomOutRaw,
+    IconZoomOutAreaRaw,
+    IconZoomPanRaw,
+    IconPageFlatRaw,
+    IconComic1FlatRaw,
+    IconComic2FlatRaw,
+    IconComic3FlatRaw,
+    IconEReader1FlatRaw,
+    IconEReader2FlatRaw,
+    IconPageRaw,
+    IconComic1Raw,
+    IconComic2Raw,
+    IconComic3Raw,
+    IconEReader1Raw,
+    IconEReader2Raw,
+  } = styledIcons;
 
   const listBookmarks = () => {
     if (isEmpty(getSettingsValue('bookmarks'))) {
       return [getLocaleString('LIST_EMPTY')];
     }
     return getSettingsValue('bookmarks').map(
-      (mark, index) => html`
-        <div id="Bookmark${index + 1}" class="BookmarkItem">
-          <span class="bookmarkColumnLarge">
-            <span class="bookmarkName">${mark.name}</span>
-            <br />
-            <a class="bookmarkURl" href="${mark.url}" target="_blank">${mark.url}</a>
-          </span>
-          <span class="bookmarkColumnSmall">
-            <span class="bookmarkDate"> ${new Date(mark.date).toISOString().slice(0, 10)}</span>
-            <br />
-            <span class="bookmarkPage">Page: ${mark.page}</span>
-          </span>
-          <span class="bookmarkFunctions">
-            <a class="" href="${mark.url}" target="_blank">
-              <button class="ControlButton open" title="Open Bookmark" type="button">
-                ${IconExternalLink}
-              </button>
-            </a>
-            <button
-              class="ControlButton erase"
-              title="Delete Bookmark"
-              type="button"
-              value="${mark.url}"
-            >
-              ${IconTrash}
+      (mark, index) => x$1`
+      <div id="Bookmark${index + 1}" class="BookmarkItem">
+        <span class="bookmarkColumnLarge">
+          <span class="bookmarkName">${mark.name}</span>
+          <br />
+          <a class="bookmarkURl" href="${mark.url}" target="_blank">${mark.url}</a>
+        </span>
+        <span class="bookmarkColumnSmall">
+          <span class="bookmarkDate"> ${new Date(mark.date).toISOString().slice(0, 10)}</span>
+          <br />
+          <span class="bookmarkPage">Page: ${mark.page}</span>
+        </span>
+        <span class="bookmarkFunctions">
+          <a class="" href="${mark.url}" target="_blank">
+            <button class="ControlButton open" title="Open Bookmark" type="button">
+              ${IconExternalLink}
             </button>
-          </span>
-        </div>
-      `,
+          </a>
+          <button
+            class="ControlButton erase"
+            title="Delete Bookmark"
+            type="button"
+            value="${mark.url}"
+          >
+            ${IconTrash}
+          </button>
+        </span>
+      </div>
+    `,
     );
   };
-  const BookmarkPanel = () => html`
-    <div id="BookmarksPanel" class="panel">
-      <button id="CloseBookmarks" class="closeButton" title="${getLocaleString('CLOSE')}">
-        ${IconX}
-      </button>
-      <button class="Bookmark simpleButton" title="${getLocaleString('BOOKMARK')}">
-        ${IconBookmark} ${IconBookmarkOff}
-      </button>
-      <h2>${getLocaleString('BOOKMARKS')}</h2>
-      <div id="BookmarksList"></div>
-    </div>
-  `;
+  const BookmarkPanel = () => x$1`
+  <div id="BookmarksPanel" class="panel">
+    <button id="CloseBookmarks" class="closeButton" title="${getLocaleString('CLOSE')}">
+      ${IconX}
+    </button>
+    <button class="Bookmark simpleButton" title="${getLocaleString('BOOKMARK')}">
+      ${IconBookmark} ${IconBookmarkOff}
+    </button>
+    <h2>${getLocaleString('BOOKMARKS')}</h2>
+    <div id="BookmarksList"></div>
+  </div>
+`;
   function reloadBookmarks() {
     const list = document.getElementById('BookmarksList');
-    if (list) {
-      list.innerHTML = listBookmarks().join('');
-    }
+    if (list) B(listBookmarks(), list);
   }
 
   function scrollToElement(ele) {
@@ -1796,7 +2569,10 @@
     const percentage = Math.floor((loaded / total) * 100);
     const title = document.querySelector('title');
     if (title) {
-      title.innerHTML = html`(${percentage}%) ${document.querySelector('#MangaTitle')?.textContent}`;
+      renderReplace(
+        x$1`(${percentage}%) ${document.querySelector('#MangaTitle')?.textContent}`,
+        title,
+      );
     }
     document.querySelectorAll('#Counters i, #NavigationCounters i').forEach(ele => {
       ele.textContent = loaded.toString();
@@ -2619,6 +3395,53 @@
     elements?.forEach(removeAllEventListeners);
   };
 
+  /**
+   * @license
+   * Copyright 2018 Google LLC
+   * SPDX-License-Identifier: BSD-3-Clause
+   */ const e = e$2(
+    class extends i {
+      constructor(t) {
+        if ((super(t), t.type !== t$1.ATTRIBUTE || 'class' !== t.name || t.strings?.length > 2))
+          throw Error(
+            '`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.',
+          );
+      }
+      render(t) {
+        return (
+          ' ' +
+          Object.keys(t)
+            .filter(s => t[s])
+            .join(' ') +
+          ' '
+        );
+      }
+      update(s, [i]) {
+        if (void 0 === this.st) {
+          ((this.st = new Set()),
+            void 0 !== s.strings &&
+              (this.nt = new Set(
+                s.strings
+                  .join(' ')
+                  .split(/\s/)
+                  .filter(t => '' !== t),
+              )));
+          for (const t in i) i[t] && !this.nt?.has(t) && this.st.add(t);
+          return this.render(i);
+        }
+        const r = s.element.classList;
+        for (const t of this.st) t in i || (r.remove(t), this.st.delete(t));
+        for (const t in i) {
+          const s = !!i[t];
+          s === this.st.has(t) ||
+            this.nt?.has(t) ||
+            (s ? (r.add(t), this.st.add(t)) : (r.remove(t), this.st.delete(t)));
+        }
+        return T;
+      }
+    },
+  );
+
   let scrollActive = false;
   function scroll() {
     const chapter = document.querySelector('#Chapter');
@@ -3266,52 +4089,51 @@
     const keybinds = getSettingsValue('keybinds');
     return Object.keys(keybinds).map(kb => {
       const keys = keybinds[kb]?.length
-        ? keybinds[kb]?.map(key => html`<kbd class="dark">${key}</kbd>`).join(' / ')
+        ? keybinds[kb]?.map(key => x$1`<kbd class="dark">${key}</kbd>`).join(' / ')
         : '';
-      return html`<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
+      return x$1`<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
     });
   };
   const keybindEditor = () =>
     Object.keys(getSettingsValue('keybinds'))
       .map(
-        kb =>
-          html`<label for="${kb}">${getLocaleString(kb)}:</label>
-            <input
-              type="text"
-              class="KeybindInput"
-              id="${kb}"
-              name="${kb}"
-              value="${getSettingsValue('keybinds')[kb]?.join(' , ') ?? ''}"
-            />`,
+        kb => x$1`<label for="${kb}">${getLocaleString(kb)}:</label>
+          <input
+            type="text"
+            class="KeybindInput"
+            id="${kb}"
+            name="${kb}"
+            value="${getSettingsValue('keybinds')[kb]?.join(' , ') ?? ''}"
+          />`,
       )
-      .concat(html` <div id="HotKeysRules">${getLocaleString('KEYBIND_RULES')}</div>`);
-  const KeybindingsPanel = () => html`
-    <div id="KeybindingsPanel" class="panel">
-      <h2>${getLocaleString('KEYBINDINGS')}</h2>
-      <button id="CloseKeybindings" class="closeButton" title="${getLocaleString('CLOSE')}">
-        ${IconX}
+      .concat(x$1` <div id="HotKeysRules">${getLocaleString('KEYBIND_RULES')}</div>`);
+  const KeybindingsPanel = () => x$1`
+  <div id="KeybindingsPanel" class="panel">
+    <h2>${getLocaleString('KEYBINDINGS')}</h2>
+    <button id="CloseKeybindings" class="closeButton" title="${getLocaleString('CLOSE')}">
+      ${IconX}
+    </button>
+    <div class="controls">
+      <button
+        id="EditKeybindings"
+        class="ControlButton"
+        type="button"
+        title="${getLocaleString('EDIT_KEYBINDS')}"
+      >
+        ${IconPencil} ${getLocaleString('BUTTON_EDIT')}
       </button>
-      <div class="controls">
-        <button
-          id="EditKeybindings"
-          class="ControlButton"
-          type="button"
-          title="${getLocaleString('EDIT_KEYBINDS')}"
-        >
-          ${IconPencil} ${getLocaleString('BUTTON_EDIT')}
-        </button>
-        <button
-          id="SaveKeybindings"
-          class="ControlButton hidden"
-          type="button"
-          title="${getLocaleString('SAVE_KEYBINDS')}"
-        >
-          ${IconDeviceFloppy} ${getLocaleString('BUTTON_SAVE')}
-        </button>
-      </div>
-      <div id="KeybindingsList">${keybindList().join('\n')}</div>
+      <button
+        id="SaveKeybindings"
+        class="ControlButton hidden"
+        type="button"
+        title="${getLocaleString('SAVE_KEYBINDS')}"
+      >
+        ${IconDeviceFloppy} ${getLocaleString('BUTTON_SAVE')}
+      </button>
     </div>
-  `;
+    <div id="KeybindingsList">${keybindList()}</div>
+  </div>
+`;
 
   function toggleFunction(selector, classname, open, close) {
     return () => {
@@ -3386,14 +4208,14 @@
     });
     saveSettingsValue('keybinds', newkeybinds);
     const keybindingList = document.querySelector('#KeybindingsList');
-    if (keybindingList) keybindingList.innerHTML = keybindList().join('\n');
+    if (keybindingList) B(keybindList(), keybindingList);
     document.querySelector('#SaveKeybindings')?.classList.add('hidden');
     document.querySelector('#EditKeybindings')?.classList.remove('hidden');
     keybindings$1();
   }
   function editKeybindings() {
     const keybindingList = document.querySelector('#KeybindingsList');
-    if (keybindingList) keybindingList.innerHTML = keybindEditor().join('\n');
+    if (keybindingList) B(keybindEditor(), keybindingList);
     document.querySelector('#SaveKeybindings')?.classList.remove('hidden');
     document.querySelector('#EditKeybindings')?.classList.add('hidden');
   }
@@ -3621,690 +4443,667 @@
     autoscroll();
   }
 
-  const commentsPanel = () => html`
-    <div id="CommentsPanel" class="panel">
-      <button id="CloseComments" class="closeButton" title="${getLocaleString('CLOSE')}">
-        ${IconX}
-      </button>
-      <h2>${getLocaleString('COMMENTS')}</h2>
-      <div id="CommentsArea" class="${getSettingsValue('colorScheme')}"></div>
-      <button id="CommentsColorScheme" class="simpleButton ColorScheme">
-        ${IconSun} ${IconMoon}
-      </button>
-    </div>
-  `;
+  const commentsPanel = () => x$1`
+  <div id="CommentsPanel" class="panel">
+    <button id="CloseComments" class="closeButton" title="${getLocaleString('CLOSE')}">
+      ${IconX}
+    </button>
+    <h2>${getLocaleString('COMMENTS')}</h2>
+    <div id="CommentsArea" class="${getSettingsValue('colorScheme')}"></div>
+    <button id="CommentsColorScheme" class="simpleButton ColorScheme">
+      ${IconSun} ${IconMoon}
+    </button>
+  </div>
+`;
 
   const listOptions = (times, begin) =>
-    indexList(times, begin).map(index => html` <option value="${index}">${index}</option>`);
-  const Header = manga => html`
-    <header id="Header" class="${getSettingsValue('header')} headroom-top">
-      <aside id="GlobalFunctions">
-        <span>
-          <button id="enlarge" title="${getLocaleString('ENLARGE')}" class="ControlButton">
-            ${IconZoomInArea}
-          </button>
-          <button id="restore" title="${getLocaleString('RESTORE')}" class="ControlButton">
-            ${IconZoomPan}
-          </button>
-          <button id="reduce" title="${getLocaleString('REDUCE')}" class="ControlButton">
-            ${IconZoomOutArea}
-          </button>
-          <button id="fitWidth" title="${getLocaleString('FIT_WIDTH')}" class="ControlButton">
-            ${IconArrowAutofitWidth}
-          </button>
-          <button id="fitHeight" title="${getLocaleString('FIT_HEIGHT')}" class="ControlButton">
-            ${IconArrowAutofitHeight}
-          </button>
-          <button id="keybindings" title="${getLocaleString('KEYBINDINGS')}" class="ControlButton">
-            ${IconKeyboard}
-          </button>
-          <button
-            id="AutoScroll"
-            title="${getLocaleString('SCROLL_START')}"
-            class="ControlButton phones"
-          >
-            ${IconPlayerPlay} ${IconPlayerPause}
-          </button>
-        </span>
-        <span>
-          <button id="ltrMode" title="${getLocaleString('VIEW_MODE_LEFT')}" class="ControlButton">
-            ${IconArrowAutofitRight}
-          </button>
-          <button
-            id="verticalMode"
-            title="${getLocaleString('VIEW_MODE_VERTICAL')}"
-            class="ControlButton tablets"
-          >
-            ${IconArrowAutofitDown}
-          </button>
-          <button
-            id="webComic"
-            title="${getLocaleString('VIEW_MODE_WEBCOMIC')}"
-            class="ControlButton tablets"
-          >
-            ${IconSpacingVertical}
-          </button>
-          <button id="rtlMode" title="${getLocaleString('VIEW_MODE_RIGHT')}" class="ControlButton">
-            ${IconArrowAutofitLeft}
-          </button>
-          <button
-            id="pageControls"
-            title="${getLocaleString('TOGGLE_CONTROLS')}"
-            class="ControlButton tablets"
-          >
-            ${IconListNumbers}
-          </button>
-          <button
-            id="bookmarks"
-            title="${getLocaleString('BOOKMARKS')}"
-            class="ControlButton tablets"
-          >
-            ${IconBookmarks}
-          </button>
-          <button
-            id="settings"
-            title="${getLocaleString('SETTINGS')}"
-            class="ControlButton tablets phones"
-          >
-            ${IconSettings}
-          </button>
-        </span>
-        <span id="ZoomSlider">
-          <output id="ZoomVal" class="RangeValue" for="Zoom">
-            ${getSettingsValue('zoomMode') === 'percent'
-              ? `${getSettingsValue('defaultZoom')}%`
-              : getSettingsValue('zoomMode')}
-          </output>
-          <input
-            type="range"
-            value="${getSettingsValue('defaultZoom')}"
-            name="Zoom"
-            id="Zoom"
-            min="1"
-            max="200"
-          />
-        </span>
-      </aside>
-      <div class="ViewerTitle">
-        <h1 id="MangaTitle">${manga.title}</h1>
-        <a id="series" href="${manga.series ?? ''}">
-          (${getLocaleString('RETURN_CHAPTER_LIST')})
-        </a>
-      </div>
-      <nav id="ChapterNavigation">
-        <div id="Counters" class="ControlLabel">
-          ${getLocaleString('PAGES_LOADED')}:
-          <i>0</i> /
-          <b>${manga.begin && manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
-          <span class="ControlLabel"> ${getLocaleString('GO_TO_PAGE')}: </span>
-          <select id="gotoPage">
-            <option selected>#</option>
-            ${listOptions(manga.pages, manga.begin ?? 0).join('')}
-          </select>
-        </div>
-        <div id="ChapterControl" class="ChapterControl">
-          <span>
-            <button
-              id="CommentsButton"
-              class="NavigationControlButton ControlButton ${manga.comments ? '' : 'disabled'}"
-              title="${getLocaleString('DISPLAY_COMMENTS')}"
-            >
-              ${IconMessage} ${getLocaleString('DISPLAY_COMMENTS')}
-            </button>
-            <button
-              id="download"
-              class="NavigationControlButton ControlButton disabled"
-              type="button"
-              title="${getLocaleString('DOWNLOAD_ZIP')}"
-            >
-              ${IconFileDownload} ${IconLoader2} ${getLocaleString('BUTTON_DOWNLOAD')}
-            </button></span
-          >
-          <span>
-            <a
-              id="prev"
-              class="NavigationControlButton ControlButton"
-              type="button"
-              href="${manga.prev ?? ''}"
-              title="${getLocaleString('PREVIOUS_CHAPTER')}"
-            >
-              ${IconArrowBigLeft} ${getLocaleString('BUTTON_PREVIOUS')}
-            </a>
-            <a
-              id="next"
-              class="NavigationControlButton ControlButton"
-              type="button"
-              href="${manga.next ?? ''}"
-              title="${getLocaleString('NEXT_CHAPTER')}"
-            >
-              ${getLocaleString('BUTTON_NEXT')} ${IconArrowBigRight}
-            </a>
-          </span>
-        </div>
-      </nav>
-    </header>
-  `;
-
-  const listPages = (times, begin) =>
-    indexList(times, begin).map(
-      index => html`
-        <div id="Page${index}" class="MangaPage">
-          <div class="PageFunctions">
-            <button class="Bookmark ControlButton" title="${getLocaleString('BOOKMARK')}">
-              ${IconBookmark} ${IconBookmarkOff}
-            </button>
-            <button class="ZoomIn ControlButton" title="${getLocaleString('ZOOM_IN')}">
-              ${IconZoomIn}
-            </button>
-            <button class="ZoomRestore ControlButton" title="${getLocaleString('ZOOM_RESET')}">
-              ${IconZoomCancel}
-            </button>
-            <button class="ZoomOut ControlButton" title="${getLocaleString('ZOOM_OUT')}">
-              ${IconZoomOut}
-            </button>
-            <button class="ZoomWidth ControlButton" title="${getLocaleString('ZOOM_WIDTH')}">
-              ${IconArrowAutofitWidth}
-            </button>
-            <button class="ZoomHeight ControlButton" title="${getLocaleString('ZOOM_HEIGHT')}">
-              ${IconArrowAutofitHeight}
-            </button>
-            <button class="Hide ControlButton" title="${getLocaleString('HIDE')}">
-              ${IconEye} ${IconEyeOff}
-            </button>
-            <button class="Reload ControlButton" title="${getLocaleString('RELOAD')}">
-              ${IconRefresh}
-            </button>
-            <span class="PageIndex">${index}</span>
-          </div>
-          <div class="PageContent">
-            <img id="PageImg${index}" alt="" class="PageImg" src="" />
-          </div>
-        </div>
-        <div class="separator">
-          [ ${index === times ? getLocaleString('END') : `${index} / ${times}`} ]
-        </div>
-      `,
-    );
-
-  const Reader = manga => html`
-    <main
-      id="Chapter"
-      class="${getSettingsValue('fitWidthIfOversize') ? 'fitWidthIfOversize' : ''}
-  ${getSettingsValue('verticalSeparator') ? 'separator' : ''}
-  ${getSettingsValue('viewMode')}"
-    >
-      ${listPages(manga.pages, manga.begin ?? 0).join('')}
-    </main>
-  `;
-
-  function settingsScope() {
-    return html` <div class="ControlLabel">
-      ${getLocaleString('SCOPE')}
-      <div id="SettingsScope" class="radio-inputs">
-        <label class="radio">
-          <input
-            type="radio"
-            id="globalSettings"
-            name="settingsScope"
-            ${!isSettingsLocal() ? 'checked' : ''}
-            value="false"
-          />
-          <span class="name">${IconWorldCog} ${getLocaleString('GLOBAL')}</span>
-        </label>
-        <label class="radio">
-          <input
-            type="radio"
-            id="localSettings"
-            name="settingsScope"
-            ${isSettingsLocal() ? 'checked' : ''}
-            value="true"
-          />
-          <span class="name">${IconLocationCog} ${window.location.hostname}</span>
-        </label>
-      </div>
-    </div>`;
-  }
-  function localeSelector() {
-    return locales
-      .map(
-        locale => html`
-          <option
-            value="${locale.ID}"
-            ${getSettingsValue('locale') === locale.ID ? 'selected' : ''}
-          >
-            ${locale.NAME}
-          </option>
-        `,
-      )
-      .join('');
-  }
-  function language() {
-    return html` <div class="ControlLabel locale">
-      ${getLocaleString('LANGUAGE')}
-      <select id="locale">
-        ${localeSelector()}
-      </select>
-    </div>`;
-  }
-  const SettingsPanelGeneral = () => settingsScope() + language();
-
-  function loadMode() {
-    return html`
-      <div class="ControlLabel loadMode">
-        ${getLocaleString('DEFAULT_LOAD_MODE')}
-        <select id="loadMode">
-          <option value="wait" ${getSettingsValue('loadMode') === 'wait' ? 'selected' : ''}>
-            ${getLocaleString('LOAD_MODE_NORMAL')}
-          </option>
-          <option value="always" ${getSettingsValue('loadMode') === 'always' ? 'selected' : ''}>
-            ${getLocaleString('LOAD_MODE_ALWAYS')}
-          </option>
-          <option value="never" ${getSettingsValue('loadMode') === 'never' ? 'selected' : ''}>
-            ${getLocaleString('LOAD_MODE_NEVER')}
-          </option>
-        </select>
-      </div>
-    `;
-  }
-  function loadSpeed() {
-    return html`
-      <div class="ControlLabel PagesPerSecond">
-        ${getLocaleString('LOAD_SPEED')}
-        <select id="PagesPerSecond">
-          <option value="3000" ${getSettingsValue('throttlePageLoad') === 3e3 ? 'selected' : ''}>
-            0.3(${getLocaleString('SLOWLY')})
-          </option>
-          <option value="2000" ${getSettingsValue('throttlePageLoad') === 2e3 ? 'selected' : ''}>
-            0.5
-          </option>
-          <option value="1000" ${getSettingsValue('throttlePageLoad') === 1e3 ? 'selected' : ''}>
-            01(${getLocaleString('NORMAL')})
-          </option>
-          <option value="500" ${getSettingsValue('throttlePageLoad') === 500 ? 'selected' : ''}>
-            02
-          </option>
-          <option value="250" ${getSettingsValue('throttlePageLoad') === 250 ? 'selected' : ''}>
-            04(${getLocaleString('FAST')})
-          </option>
-          <option value="125" ${getSettingsValue('throttlePageLoad') === 125 ? 'selected' : ''}>
-            08
-          </option>
-          <option value="100" ${getSettingsValue('throttlePageLoad') === 100 ? 'selected' : ''}>
-            10(${getLocaleString('EXTREME')})
-          </option>
-          <option value="1" ${getSettingsValue('throttlePageLoad') === 1 ? 'selected' : ''}>
-            ${getLocaleString('ALL_PAGES')}
-          </option>
-        </select>
-      </div>
-    `;
-  }
-  const SettingsPanelLoading = () => loadMode() + loadSpeed();
-
-  function toggler(name, checked = false) {
-    return html`
-      <div class="toggler">
-        <input
-          id="${name}"
-          name="${name}"
-          type="checkbox"
-          value="true"
-          ${checked ? 'checked' : ''}
-        />
-        <label for="${name}"> ${IconCheck} ${IconX} </label>
-      </div>
-    `;
-  }
-
-  function checkboxOptions() {
-    return html`
-      <div class="ControlLabel verticalSeparator">
-        ${getLocaleString('VERTICAL_SEPARATOR')}
-        ${toggler('verticalSeparator', getSettingsValue('verticalSeparator'))}
-      </div>
-      <div class="ControlLabel fitIfOversize">
-        ${getLocaleString('FIT_WIDTH_OVERSIZED')}
-        ${toggler('fitIfOversize', getSettingsValue('fitWidthIfOversize'))}
-      </div>
-      <div class="ControlLabel showThumbnails">
-        ${getLocaleString('SHOW_THUMBNAILS')}
-        ${toggler('showThumbnails', getSettingsValue('showThumbnails'))}
-      </div>
-      <div class="ControlLabel enableComments">
-        ${getLocaleString('ENABLE_COMMENTS')}
-        ${toggler('enableComments', getSettingsValue('enableComments'))}
-      </div>
-      <div class="ControlLabel downloadZip">
-        ${getLocaleString('DOWNLOAD_IMAGES')}
-        ${toggler('downloadZip', getSettingsValue('downloadZip'))}
-      </div>
-      <div class="ControlLabel hidePageControls">
-        ${getLocaleString('HIDE_CONTROLS')}
-        ${toggler('hidePageControls', getSettingsValue('hidePageControls'))}
-      </div>
-      <div class="ControlLabel lazyLoadImages">
-        ${getLocaleString('LAZY_LOAD_IMAGES_ENABLE')}
-        ${toggler('lazyLoadImages', getSettingsValue('lazyLoadImages'))}
-      </div>
-    `;
-  }
-  function lazyLoad() {
-    return html`
-      <div
-        class="ControlLabel lazyStart ControlLabelItem
-    ${getSettingsValue('lazyLoadImages') ? 'show' : ''}"
-      >
-        <span>
-          ${getLocaleString('LAZY_LOAD_IMAGES')}
-          <output id="lazyStartVal" for="lazyStart"> ${getSettingsValue('lazyStart')} </output>
-        </span>
-        <input
-          type="range"
-          value="${getSettingsValue('lazyStart')}"
-          name="lazyStart"
-          id="lazyStart"
-          min="5"
-          max="100"
-          step="5"
-          oninput="lazyStartVal.value = this.value"
-        />
-      </div>
-    `;
-  }
-  function headerType() {
-    return html`
-      <div class="ControlLabel headerType">
-        ${getLocaleString('HEADER_TYPE')}
-        <select id="headerType">
-          <option value="hover" ${getSettingsValue('header') === 'hover' ? 'selected' : ''}>
-            ${getLocaleString('HEADER_HOVER')}
-          </option>
-          <option value="scroll" ${getSettingsValue('header') === 'scroll' ? 'selected' : ''}>
-            ${getLocaleString('HEADER_SCROLL')}
-          </option>
-          <option value="click" ${getSettingsValue('header') === 'click' ? 'selected' : ''}>
-            ${getLocaleString('HEADER_CLICK')}
-          </option>
-          <option value="fixed" ${getSettingsValue('header') === 'fixed' ? 'selected' : ''}>
-            ${getLocaleString('HEADER_FIXED')}
-          </option>
-          <option value="simple" ${getSettingsValue('header') === 'simple' ? 'selected' : ''}>
-            ${getLocaleString('HEADER_SIMPLE')}
-          </option>
-        </select>
-      </div>
-    `;
-  }
-  function autoScroll() {
-    return html`
-      <div class="ControlLabel autoScroll">
-        <span>
-          ${getLocaleString('AUTO_SCROLL_HEIGHT')}
-          <output id="scrollHeightVal" for="scrollHeight">
-            ${getSettingsValue('scrollHeight')} </output
-          >px
-        </span>
-        <input
-          type="range"
-          value="${getSettingsValue('scrollHeight')}"
-          name="scrollHeight"
-          id="scrollHeight"
-          min="1"
-          max="100"
-          step="1"
-          oninput="scrollHeightVal.value = this.value"
-        />
-      </div>
-    `;
-  }
-  const SettingsPanelOthers = () => checkboxOptions() + lazyLoad() + headerType() + autoScroll();
-
-  function themesSelector() {
-    return [...Object.keys(colors).map(color => colors[color].name)]
-      .map(
-        theme2 => html`
-          <span
-            title="${theme2}"
-            class="${theme2} ThemeRadio ${getSettingsValue('theme') === theme2 ? 'selected' : ''}"
-          >
-            ${IconCheck}
-          </span>
-        `,
-      )
-      .join('');
-  }
-  function theme() {
-    return html`
-      <div class="ControlLabel ColorSchemeSelector">
-        <label>${getLocaleString('COLOR_SCHEME')}</label>
-        <button id="ColorScheme" class="ControlButton">${IconSun} ${IconMoon}</button>
-      </div>
-      <div class="ControlLabel ThemeSelector">
-        <label>${getLocaleString('THEME_COLOR')}</label>
-        <span
-          class="custom ThemeRadio
-        ${getSettingsValue('theme') === 'custom' ? 'selected' : ''}"
-          title="custom"
+    indexList(times, begin).map(index => x$1` <option value="${index}">${index}</option>`);
+  const Header = manga => x$1`
+  <header id="Header" class="${getSettingsValue('header')} headroom-top">
+    <aside id="GlobalFunctions">
+      <span>
+        <button id="enlarge" title="${getLocaleString('ENLARGE')}" class="ControlButton">
+          ${IconZoomInArea}
+        </button>
+        <button id="restore" title="${getLocaleString('RESTORE')}" class="ControlButton">
+          ${IconZoomPan}
+        </button>
+        <button id="reduce" title="${getLocaleString('REDUCE')}" class="ControlButton">
+          ${IconZoomOutArea}
+        </button>
+        <button id="fitWidth" title="${getLocaleString('FIT_WIDTH')}" class="ControlButton">
+          ${IconArrowAutofitWidth}
+        </button>
+        <button id="fitHeight" title="${getLocaleString('FIT_HEIGHT')}" class="ControlButton">
+          ${IconArrowAutofitHeight}
+        </button>
+        <button id="keybindings" title="${getLocaleString('KEYBINDINGS')}" class="ControlButton">
+          ${IconKeyboard}
+        </button>
+        <button
+          id="AutoScroll"
+          title="${getLocaleString('SCROLL_START')}"
+          class="ControlButton phones"
         >
-          ${IconPalette} ${IconCheck}
-        </span>
-        ${themesSelector()}
-      </div>
-      <div
-        id="Hue"
-        class="ControlLabel CustomTheme ControlLabelItem
-      ${getSettingsValue('theme').startsWith('custom') ? 'show' : ''}"
-      >
-        <label>${getLocaleString('THEME_HUE')}</label>
-        <input
-          id="CustomThemeHue"
-          type="color"
-          value="${getSettingsValue('customTheme')}"
-          class="colorpicker CustomTheme"
-        />
-      </div>
-      <div
-        id="Shade"
-        class="ControlLabel CustomTheme ControlLabelItem
-      ${getSettingsValue('theme').startsWith('custom') ? '' : 'show'}"
-      >
-        <span>
-          <label>${getLocaleString('THEME_SHADE')}</label>
-          <output id="themeShadeVal" class="RangeValue" for="ThemeShade">
-            ${getSettingsValue('themeShade')}
-          </output>
-        </span>
-        <input
-          type="range"
-          value="${getSettingsValue('themeShade')}"
-          name="ThemeShade"
-          id="ThemeShade"
-          min="100"
-          max="900"
-          step="100"
-          oninput="themeShadeVal.value = this.value"
-        />
-      </div>
-    `;
-  }
-
-  function defaultZoomMode() {
-    return html` <div class="ControlLabel DefaultZoomMode">
-      ${getLocaleString('DEFAULT_ZOOM_MODE')}
-      <select id="DefaultZoomMode">
-        <option value="percent" ${getSettingsValue('zoomMode') === 'percent' ? 'selected' : ''}>
-          ${getLocaleString('PERCENT')}
-        </option>
-        <option value="width" ${getSettingsValue('zoomMode') === 'width' ? 'selected' : ''}>
-          ${getLocaleString('FIT_WIDTH')}
-        </option>
-        <option value="height" ${getSettingsValue('zoomMode') === 'height' ? 'selected' : ''}>
-          ${getLocaleString('FIT_HEIGHT')}
-        </option>
-      </select>
-    </div>`;
-  }
-  function defaultZoom() {
-    return html`
-      <div
-        class="ControlLabel DefaultZoom ControlLabelItem ${getSettingsValue('zoomMode') ===
-        'percent'
-          ? 'show'
-          : ''}"
-      >
-        <span>
-          ${getLocaleString('DEFAULT_ZOOM')}
-          <output id="defaultZoomVal" class="RangeValue" for="DefaultZoom">
-            ${getSettingsValue('defaultZoom')}%
-          </output>
-        </span>
+          ${IconPlayerPlay} ${IconPlayerPause}
+        </button>
+      </span>
+      <span>
+        <button id="ltrMode" title="${getLocaleString('VIEW_MODE_LEFT')}" class="ControlButton">
+          ${IconArrowAutofitRight}
+        </button>
+        <button
+          id="verticalMode"
+          title="${getLocaleString('VIEW_MODE_VERTICAL')}"
+          class="ControlButton tablets"
+        >
+          ${IconArrowAutofitDown}
+        </button>
+        <button
+          id="webComic"
+          title="${getLocaleString('VIEW_MODE_WEBCOMIC')}"
+          class="ControlButton tablets"
+        >
+          ${IconSpacingVertical}
+        </button>
+        <button id="rtlMode" title="${getLocaleString('VIEW_MODE_RIGHT')}" class="ControlButton">
+          ${IconArrowAutofitLeft}
+        </button>
+        <button
+          id="pageControls"
+          title="${getLocaleString('TOGGLE_CONTROLS')}"
+          class="ControlButton tablets"
+        >
+          ${IconListNumbers}
+        </button>
+        <button
+          id="bookmarks"
+          title="${getLocaleString('BOOKMARKS')}"
+          class="ControlButton tablets"
+        >
+          ${IconBookmarks}
+        </button>
+        <button
+          id="settings"
+          title="${getLocaleString('SETTINGS')}"
+          class="ControlButton tablets phones"
+        >
+          ${IconSettings}
+        </button>
+      </span>
+      <span id="ZoomSlider">
+        <output id="ZoomVal" class="RangeValue" for="Zoom">
+          ${getSettingsValue('zoomMode') === 'percent' ? `${getSettingsValue('defaultZoom')}%` : getSettingsValue('zoomMode')}
+        </output>
         <input
           type="range"
           value="${getSettingsValue('defaultZoom')}"
-          name="DefaultZoom"
-          id="DefaultZoom"
-          min="5"
+          name="Zoom"
+          id="Zoom"
+          min="1"
           max="200"
-          step="5"
-          list="tickmarks"
-          oninput='defaultZoomVal.value = this.value + "%"'
         />
-        <datalist id="tickmarks">
-          <option value="5">5</option>
-          <option value="25">25</option>
-          <option value="50">50</option>
-          <option value="75">75</option>
-          <option value="100">100</option>
-          <option value="125">125</option>
-          <option value="150">150</option>
-          <option value="175">175</option>
-          <option value="200">200</option>
-        </datalist>
-      </div>
-    `;
-  }
-  function minZoom() {
-    return html`
-      <div class="ControlLabel minZoom">
-        <span>
-          ${getLocaleString('MINIMUM_ZOOM')}
-          <output id="minZoomVal" class="RangeValue" for="minZoom">
-            ${getSettingsValue('minZoom')}%
-          </output>
-        </span>
-        <input
-          type="range"
-          value="${getSettingsValue('minZoom')}"
-          name="minZoom"
-          id="minZoom"
-          min="30"
-          max="100"
-          step="10"
-          oninput='minZoomVal.value = this.value + "%"'
-        />
-      </div>
-    `;
-  }
-  function zoomStep() {
-    return html`
-      <div class="ControlLabel zoomStep">
-        <span>
-          ${getLocaleString('ZOOM_STEP')}
-          <output id="zoomStepVal" class="RangeValue" for="zoomStep">
-            ${getSettingsValue('zoomStep')}%
-          </output>
-        </span>
-        <input
-          type="range"
-          value="${getSettingsValue('zoomStep')}"
-          name="zoomStep"
-          id="zoomStep"
-          min="5"
-          max="50"
-          step="5"
-          oninput='zoomStepVal.value = this.value + "%"'
-        />
-      </div>
-    `;
-  }
-  function viewMode() {
-    return html`
-      <div class="ControlLabel viewMode">
-        ${getLocaleString('DEFAULT_VIEW_MODE')}
-        <select id="viewMode">
-          <option value="Vertical" ${getSettingsValue('viewMode') === 'Vertical' ? 'selected' : ''}>
-            ${getLocaleString('VIEW_MODE_VERTICAL')}
-          </option>
-          <option value="WebComic" ${getSettingsValue('viewMode') === 'WebComic' ? 'selected' : ''}>
-            ${getLocaleString('VIEW_MODE_WEBCOMIC')}
-          </option>
-          <option value="FluidLTR" ${getSettingsValue('viewMode') === 'FluidLTR' ? 'selected' : ''}>
-            ${getLocaleString('VIEW_MODE_LEFT')}
-          </option>
-          <option value="FluidRTL" ${getSettingsValue('viewMode') === 'FluidRTL' ? 'selected' : ''}>
-            ${getLocaleString('VIEW_MODE_RIGHT')}
-          </option>
-        </select>
-      </div>
-    `;
-  }
-  const SettingsPanelZoom = () =>
-    defaultZoomMode() + defaultZoom() + minZoom() + zoomStep() + viewMode();
-
-  const SettingsPanel = () => html`
-    <div id="SettingsPanel" class="panel">
-      <h2>${getLocaleString('SETTINGS')}</h2>
-      <button id="CloseSettings" class="closeButton" title="${getLocaleString('CLOSE')}">
-        ${IconX}
-      </button>
-      <button id="ResetSettings" class="ControlButton">
-        ${IconSettingsOff} ${getLocaleString('BUTTON_RESET_SETTINGS')}
-      </button>
-      <fieldset>
-        <legend>${getLocaleString('GENERAL')}</legend>
-        ${SettingsPanelGeneral()}
-      </fieldset>
-      <fieldset>
-        <legend>${getLocaleString('THEME')}</legend>
-        ${theme()}
-      </fieldset>
-      <fieldset>
-        <legend>${getLocaleString('LOADING')}</legend>
-        ${SettingsPanelLoading()}
-      </fieldset>
-      <fieldset>
-        <legend>${getLocaleString('ZOOM')}</legend>
-        ${SettingsPanelZoom()}
-      </fieldset>
-      <fieldset>
-        <legend>${getLocaleString('OTHERS')}</legend>
-        ${SettingsPanelOthers()}
-      </fieldset>
+      </span>
+    </aside>
+    <div class="ViewerTitle">
+      <h1 id="MangaTitle">${manga.title}</h1>
+      <a id="series" href="${manga.series ?? ''}"> (${getLocaleString('RETURN_CHAPTER_LIST')}) </a>
     </div>
-  `;
-
-  const ThumbnailsPanel = manga => html`
-    <nav id="Navigation" class="panel ${getSettingsValue('showThumbnails') ? '' : 'disabled'}">
-      <div id="NavigationCounters" class="ControlLabel">
-        ${IconCategory}
+    <nav id="ChapterNavigation">
+      <div id="Counters" class="ControlLabel">
+        ${getLocaleString('PAGES_LOADED')}:
         <i>0</i> /
         <b>${manga.begin && manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
-        ${getLocaleString('PAGES_LOADED')}
+        <span class="ControlLabel"> ${getLocaleString('GO_TO_PAGE')}: </span>
+        <select id="gotoPage">
+          <option selected>#</option>
+          ${listOptions(manga.pages, manga.begin ?? 0).join('')}
+        </select>
       </div>
-      <div id="Thumbnails">
-        ${indexList(manga.pages, manga.begin)
-          .map(
-            index => html`
-              <div id="Thumbnail${index}" class="Thumbnail">
-                <img id="ThumbnailImg${index}" alt="" class="ThumbnailImg" src="" />
-                <span class="ThumbnailIndex">${index}</span>
-              </div>
-            `,
-          )
-          .join('')}
+      <div id="ChapterControl" class="ChapterControl">
+        <span>
+          <button
+            id="CommentsButton"
+            class="NavigationControlButton ControlButton ${manga.comments ? '' : 'disabled'}"
+            title="${getLocaleString('DISPLAY_COMMENTS')}"
+          >
+            ${IconMessage} ${getLocaleString('DISPLAY_COMMENTS')}
+          </button>
+          <button
+            id="download"
+            class="NavigationControlButton ControlButton disabled"
+            type="button"
+            title="${getLocaleString('DOWNLOAD_ZIP')}"
+          >
+            ${IconFileDownload} ${IconLoader2} ${getLocaleString('BUTTON_DOWNLOAD')}
+          </button></span
+        >
+        <span>
+          <a
+            id="prev"
+            class="NavigationControlButton ControlButton"
+            type="button"
+            href="${manga.prev ?? ''}"
+            title="${getLocaleString('PREVIOUS_CHAPTER')}"
+          >
+            ${IconArrowBigLeft} ${getLocaleString('BUTTON_PREVIOUS')}
+          </a>
+          <a
+            id="next"
+            class="NavigationControlButton ControlButton"
+            type="button"
+            href="${manga.next ?? ''}"
+            title="${getLocaleString('NEXT_CHAPTER')}"
+          >
+            ${getLocaleString('BUTTON_NEXT')} ${IconArrowBigRight}
+          </a>
+        </span>
       </div>
     </nav>
+  </header>
+`;
+
+  const listPages = (times, begin) =>
+    indexList(times, begin).map(
+      index => x$1`
+      <div id="Page${index}" class="MangaPage">
+        <div class="PageFunctions">
+          <button class="Bookmark ControlButton" title="${getLocaleString('BOOKMARK')}">
+            ${IconBookmark} ${IconBookmarkOff}
+          </button>
+          <button class="ZoomIn ControlButton" title="${getLocaleString('ZOOM_IN')}">
+            ${IconZoomIn}
+          </button>
+          <button class="ZoomRestore ControlButton" title="${getLocaleString('ZOOM_RESET')}">
+            ${IconZoomCancel}
+          </button>
+          <button class="ZoomOut ControlButton" title="${getLocaleString('ZOOM_OUT')}">
+            ${IconZoomOut}
+          </button>
+          <button class="ZoomWidth ControlButton" title="${getLocaleString('ZOOM_WIDTH')}">
+            ${IconArrowAutofitWidth}
+          </button>
+          <button class="ZoomHeight ControlButton" title="${getLocaleString('ZOOM_HEIGHT')}">
+            ${IconArrowAutofitHeight}
+          </button>
+          <button class="Hide ControlButton" title="${getLocaleString('HIDE')}">
+            ${IconEye} ${IconEyeOff}
+          </button>
+          <button class="Reload ControlButton" title="${getLocaleString('RELOAD')}">
+            ${IconRefresh}
+          </button>
+          <span class="PageIndex">${index}</span>
+        </div>
+        <div class="PageContent">
+          <img id="PageImg${index}" alt="" class="PageImg" src="" />
+        </div>
+      </div>
+      <div class="separator">
+        [ ${index === times ? getLocaleString('END') : `${index} / ${times}`} ]
+      </div>
+    `,
+    );
+
+  const Reader = manga => x$1`
+  <main
+    id="Chapter"
+    class="${getSettingsValue('fitWidthIfOversize') ? 'fitWidthIfOversize' : ''}
+  ${getSettingsValue('verticalSeparator') ? 'separator' : ''}
+  ${getSettingsValue('viewMode')}"
+  >
+    ${listPages(manga.pages, manga.begin ?? 0)}
+  </main>
+`;
+
+  function settingsScope() {
+    return x$1` <div class="ControlLabel">
+    ${getLocaleString('SCOPE')}
+    <div id="SettingsScope" class="radio-inputs">
+      <label class="radio">
+        <input
+          type="radio"
+          id="globalSettings"
+          name="settingsScope"
+          ?checked="${!isSettingsLocal()}"
+          value="false"
+        />
+        <span class="name">${IconWorldCog} ${getLocaleString('GLOBAL')}</span>
+      </label>
+      <label class="radio">
+        <input
+          type="radio"
+          id="localSettings"
+          name="settingsScope"
+          ?checked="${isSettingsLocal()}"
+          value="true"
+        />
+        <span class="name">${IconLocationCog} ${window.location.hostname}</span>
+      </label>
+    </div>
+  </div>`;
+  }
+  function localeSelector() {
+    return locales.map(
+      locale => x$1`
+      <option value="${locale.ID}" ?selected=${getSettingsValue('locale') === locale.ID}>
+        ${locale.NAME}
+      </option>
+    `,
+    );
+  }
+  function language() {
+    return x$1` <div class="ControlLabel locale">
+    ${getLocaleString('LANGUAGE')}
+    <select id="locale">
+      ${localeSelector()}
+    </select>
+  </div>`;
+  }
+  const SettingsPanelGeneral = () => x$1`${settingsScope()} ${language()}`;
+
+  function loadMode() {
+    return x$1`
+    <div class="ControlLabel loadMode">
+      ${getLocaleString('DEFAULT_LOAD_MODE')}
+      <select id="loadMode">
+        <option value="wait" ?selected=${getSettingsValue('loadMode') === 'wait'}>
+          ${getLocaleString('LOAD_MODE_NORMAL')}
+        </option>
+        <option value="always" ?selected=${getSettingsValue('loadMode') === 'always'}>
+          ${getLocaleString('LOAD_MODE_ALWAYS')}
+        </option>
+        <option value="never" ?selected=${getSettingsValue('loadMode') === 'never'}>
+          ${getLocaleString('LOAD_MODE_NEVER')}
+        </option>
+      </select>
+    </div>
   `;
+  }
+  function loadSpeed() {
+    return x$1`
+    <div class="ControlLabel PagesPerSecond">
+      ${getLocaleString('LOAD_SPEED')}
+      <select id="PagesPerSecond">
+        <option value="3000" ?selected=${getSettingsValue('throttlePageLoad') === 3e3}>
+          0.3(${getLocaleString('SLOWLY')})
+        </option>
+        <option value="2000" ?selected=${getSettingsValue('throttlePageLoad') === 2e3}>0.5</option>
+        <option value="1000" ?selected=${getSettingsValue('throttlePageLoad') === 1e3}>
+          01(${getLocaleString('NORMAL')})
+        </option>
+        <option value="500" ?selected=${getSettingsValue('throttlePageLoad') === 500}>02</option>
+        <option value="250" ?selected=${getSettingsValue('throttlePageLoad') === 250}>
+          04(${getLocaleString('FAST')})
+        </option>
+        <option value="125" ?selected=${getSettingsValue('throttlePageLoad') === 125}>08</option>
+        <option value="100" ?selected=${getSettingsValue('throttlePageLoad') === 100}>
+          10(${getLocaleString('EXTREME')})
+        </option>
+        <option value="1" ?selected=${getSettingsValue('throttlePageLoad') === 1}>
+          ${getLocaleString('ALL_PAGES')}
+        </option>
+      </select>
+    </div>
+  `;
+  }
+  const SettingsPanelLoading = () => x$1`${loadMode()} ${loadSpeed()}`;
+
+  function toggler(name, checked = false) {
+    return x$1`
+    <div class="toggler">
+      <input id="${name}" name="${name}" type="checkbox" value="true" ?checked="${checked}" />
+      <label for="${name}"> ${IconCheck} ${IconX} </label>
+    </div>
+  `;
+  }
+
+  function checkboxOptions() {
+    return x$1`
+    <div class="ControlLabel verticalSeparator">
+      ${getLocaleString('VERTICAL_SEPARATOR')}
+      ${toggler('verticalSeparator', getSettingsValue('verticalSeparator'))}
+    </div>
+    <div class="ControlLabel fitIfOversize">
+      ${getLocaleString('FIT_WIDTH_OVERSIZED')}
+      ${toggler('fitIfOversize', getSettingsValue('fitWidthIfOversize'))}
+    </div>
+    <div class="ControlLabel showThumbnails">
+      ${getLocaleString('SHOW_THUMBNAILS')}
+      ${toggler('showThumbnails', getSettingsValue('showThumbnails'))}
+    </div>
+    <div class="ControlLabel enableComments">
+      ${getLocaleString('ENABLE_COMMENTS')}
+      ${toggler('enableComments', getSettingsValue('enableComments'))}
+    </div>
+    <div class="ControlLabel downloadZip">
+      ${getLocaleString('DOWNLOAD_IMAGES')}
+      ${toggler('downloadZip', getSettingsValue('downloadZip'))}
+    </div>
+    <div class="ControlLabel hidePageControls">
+      ${getLocaleString('HIDE_CONTROLS')}
+      ${toggler('hidePageControls', getSettingsValue('hidePageControls'))}
+    </div>
+    <div class="ControlLabel lazyLoadImages">
+      ${getLocaleString('LAZY_LOAD_IMAGES_ENABLE')}
+      ${toggler('lazyLoadImages', getSettingsValue('lazyLoadImages'))}
+    </div>
+  `;
+  }
+  function lazyLoad() {
+    return x$1`
+    <div
+      class="ControlLabel lazyStart ControlLabelItem
+    ${getSettingsValue('lazyLoadImages') ? 'show' : ''}"
+    >
+      <span>
+        ${getLocaleString('LAZY_LOAD_IMAGES')}
+        <output id="lazyStartVal" for="lazyStart"> ${getSettingsValue('lazyStart')} </output>
+      </span>
+      <input
+        type="range"
+        value="${getSettingsValue('lazyStart')}"
+        name="lazyStart"
+        id="lazyStart"
+        min="5"
+        max="100"
+        step="5"
+        oninput="lazyStartVal.value = this.value"
+      />
+    </div>
+  `;
+  }
+  function headerType() {
+    return x$1`
+    <div class="ControlLabel headerType">
+      ${getLocaleString('HEADER_TYPE')}
+      <select id="headerType">
+        <option value="hover" ?selected=${getSettingsValue('header') === 'hover'}>
+          ${getLocaleString('HEADER_HOVER')}
+        </option>
+        <option value="scroll" ?selected=${getSettingsValue('header') === 'scroll'}>
+          ${getLocaleString('HEADER_SCROLL')}
+        </option>
+        <option value="click" ?selected=${getSettingsValue('header') === 'click'}>
+          ${getLocaleString('HEADER_CLICK')}
+        </option>
+        <option value="fixed" ?selected=${getSettingsValue('header') === 'fixed'}>
+          ${getLocaleString('HEADER_FIXED')}
+        </option>
+        <option value="simple" ?selected=${getSettingsValue('header') === 'simple'}>
+          ${getLocaleString('HEADER_SIMPLE')}
+        </option>
+      </select>
+    </div>
+  `;
+  }
+  function autoScroll() {
+    return x$1`
+    <div class="ControlLabel autoScroll">
+      <span>
+        ${getLocaleString('AUTO_SCROLL_HEIGHT')}
+        <output id="scrollHeightVal" for="scrollHeight">
+          ${getSettingsValue('scrollHeight')} </output
+        >px
+      </span>
+      <input
+        type="range"
+        value="${getSettingsValue('scrollHeight')}"
+        name="scrollHeight"
+        id="scrollHeight"
+        min="1"
+        max="100"
+        step="1"
+        oninput="scrollHeightVal.value = this.value"
+      />
+    </div>
+  `;
+  }
+  const SettingsPanelOthers = () =>
+    x$1`${checkboxOptions()} ${lazyLoad()} ${headerType()} ${autoScroll()}`;
+
+  function themesSelector() {
+    return [...Object.keys(colors).map(color => colors[color].name)].map(
+      theme2 => x$1`
+      <span
+        title="${theme2}"
+        class="${e({
+          [theme2]: true,
+          ThemeRadio: true,
+          selected: getSettingsValue('theme') === theme2,
+        })}"
+      >
+        ${IconCheck}
+      </span>
+    `,
+    );
+  }
+  function theme() {
+    return x$1`
+    <div class="ControlLabel ColorSchemeSelector">
+      <label>${getLocaleString('COLOR_SCHEME')}</label>
+      <button id="ColorScheme" class="ControlButton">${IconSun} ${IconMoon}</button>
+    </div>
+    <div class="ControlLabel ThemeSelector">
+      <label>${getLocaleString('THEME_COLOR')}</label>
+      <span
+        class="custom ThemeRadio
+        ${getSettingsValue('theme') === 'custom' ? 'selected' : ''}"
+        title="custom"
+      >
+        ${IconPalette} ${IconCheck}
+      </span>
+      ${themesSelector()}
+    </div>
+    <div
+      id="Hue"
+      class="ControlLabel CustomTheme ControlLabelItem
+      ${getSettingsValue('theme').startsWith('custom') ? 'show' : ''}"
+    >
+      <label>${getLocaleString('THEME_HUE')}</label>
+      <input
+        id="CustomThemeHue"
+        type="color"
+        value="${getSettingsValue('customTheme')}"
+        class="colorpicker CustomTheme"
+      />
+    </div>
+    <div
+      id="Shade"
+      class="ControlLabel CustomTheme ControlLabelItem
+      ${getSettingsValue('theme').startsWith('custom') ? '' : 'show'}"
+    >
+      <span>
+        <label>${getLocaleString('THEME_SHADE')}</label>
+        <output id="themeShadeVal" class="RangeValue" for="ThemeShade">
+          ${getSettingsValue('themeShade')}
+        </output>
+      </span>
+      <input
+        type="range"
+        value="${getSettingsValue('themeShade')}"
+        name="ThemeShade"
+        id="ThemeShade"
+        min="100"
+        max="900"
+        step="100"
+        oninput="themeShadeVal.value = this.value"
+      />
+    </div>
+  `;
+  }
+
+  function defaultZoomMode() {
+    return x$1` <div class="ControlLabel DefaultZoomMode">
+    ${getLocaleString('DEFAULT_ZOOM_MODE')}
+    <select id="DefaultZoomMode">
+      <option value="percent" ?selected=${getSettingsValue('zoomMode') === 'percent'}>
+        ${getLocaleString('PERCENT')}
+      </option>
+      <option value="width" ?selected=${getSettingsValue('zoomMode') === 'width'}>
+        ${getLocaleString('FIT_WIDTH')}
+      </option>
+      <option value="height" ?selected=${getSettingsValue('zoomMode') === 'height'}>
+        ${getLocaleString('FIT_HEIGHT')}
+      </option>
+    </select>
+  </div>`;
+  }
+  function defaultZoom() {
+    return x$1`
+    <div
+      class="ControlLabel DefaultZoom ControlLabelItem ${getSettingsValue('zoomMode') === 'percent' ? 'show' : ''}"
+    >
+      <span>
+        ${getLocaleString('DEFAULT_ZOOM')}
+        <output id="defaultZoomVal" class="RangeValue" for="DefaultZoom">
+          ${getSettingsValue('defaultZoom')}%
+        </output>
+      </span>
+      <input
+        type="range"
+        value="${getSettingsValue('defaultZoom')}"
+        name="DefaultZoom"
+        id="DefaultZoom"
+        min="5"
+        max="200"
+        step="5"
+        list="tickmarks"
+        oninput='defaultZoomVal.value = this.value + "%"'
+      />
+      <datalist id="tickmarks">
+        <option value="5">5</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="75">75</option>
+        <option value="100">100</option>
+        <option value="125">125</option>
+        <option value="150">150</option>
+        <option value="175">175</option>
+        <option value="200">200</option>
+      </datalist>
+    </div>
+  `;
+  }
+  function minZoom() {
+    return x$1`
+    <div class="ControlLabel minZoom">
+      <span>
+        ${getLocaleString('MINIMUM_ZOOM')}
+        <output id="minZoomVal" class="RangeValue" for="minZoom">
+          ${getSettingsValue('minZoom')}%
+        </output>
+      </span>
+      <input
+        type="range"
+        value="${getSettingsValue('minZoom')}"
+        name="minZoom"
+        id="minZoom"
+        min="30"
+        max="100"
+        step="10"
+        oninput='minZoomVal.value = this.value + "%"'
+      />
+    </div>
+  `;
+  }
+  function zoomStep() {
+    return x$1`
+    <div class="ControlLabel zoomStep">
+      <span>
+        ${getLocaleString('ZOOM_STEP')}
+        <output id="zoomStepVal" class="RangeValue" for="zoomStep">
+          ${getSettingsValue('zoomStep')}%
+        </output>
+      </span>
+      <input
+        type="range"
+        value="${getSettingsValue('zoomStep')}"
+        name="zoomStep"
+        id="zoomStep"
+        min="5"
+        max="50"
+        step="5"
+        oninput='zoomStepVal.value = this.value + "%"'
+      />
+    </div>
+  `;
+  }
+  function viewMode() {
+    return x$1`
+    <div class="ControlLabel viewMode">
+      ${getLocaleString('DEFAULT_VIEW_MODE')}
+      <select id="viewMode">
+        <option value="Vertical" ?selected=${getSettingsValue('viewMode') === 'Vertical'}>
+          ${getLocaleString('VIEW_MODE_VERTICAL')}
+        </option>
+        <option value="WebComic" ?selected=${getSettingsValue('viewMode') === 'WebComic'}>
+          ${getLocaleString('VIEW_MODE_WEBCOMIC')}
+        </option>
+        <option value="FluidLTR" ?selected=${getSettingsValue('viewMode') === 'FluidLTR'}>
+          ${getLocaleString('VIEW_MODE_LEFT')}
+        </option>
+        <option value="FluidRTL" ?selected=${getSettingsValue('viewMode') === 'FluidRTL'}>
+          ${getLocaleString('VIEW_MODE_RIGHT')}
+        </option>
+      </select>
+    </div>
+  `;
+  }
+  const SettingsPanelZoom = () =>
+    x$1`${defaultZoomMode()} ${defaultZoom()} ${minZoom()} ${zoomStep()} ${viewMode()}`;
+
+  const SettingsPanel = () => x$1`
+  <div id="SettingsPanel" class="panel">
+    <h2>${getLocaleString('SETTINGS')}</h2>
+    <button id="CloseSettings" class="closeButton" title="${getLocaleString('CLOSE')}">
+      ${IconX}
+    </button>
+    <button id="ResetSettings" class="ControlButton">
+      ${IconSettingsOff} ${getLocaleString('BUTTON_RESET_SETTINGS')}
+    </button>
+    <fieldset>
+      <legend>${getLocaleString('GENERAL')}</legend>
+      ${SettingsPanelGeneral()}
+    </fieldset>
+    <fieldset>
+      <legend>${getLocaleString('THEME')}</legend>
+      ${theme()}
+    </fieldset>
+    <fieldset>
+      <legend>${getLocaleString('LOADING')}</legend>
+      ${SettingsPanelLoading()}
+    </fieldset>
+    <fieldset>
+      <legend>${getLocaleString('ZOOM')}</legend>
+      ${SettingsPanelZoom()}
+    </fieldset>
+    <fieldset>
+      <legend>${getLocaleString('OTHERS')}</legend>
+      ${SettingsPanelOthers()}
+    </fieldset>
+  </div>
+`;
+
+  const ThumbnailsPanel = manga => x$1`
+  <nav id="Navigation" class="panel ${getSettingsValue('showThumbnails') ? '' : 'disabled'}">
+    <div id="NavigationCounters" class="ControlLabel">
+      ${IconCategory}
+      <i>0</i> /
+      <b>${manga.begin && manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
+      ${getLocaleString('PAGES_LOADED')}
+    </div>
+    <div id="Thumbnails">
+      ${indexList(manga.pages, manga.begin).map(
+        index => x$1`
+          <div id="Thumbnail${index}" class="Thumbnail">
+            <img id="ThumbnailImg${index}" alt="" class="ThumbnailImg" src="" />
+            <span class="ThumbnailIndex">${index}</span>
+          </div>
+        `,
+      )}
+    </div>
+  </nav>
+`;
 
   let loadedManga;
   function hydrateApp() {
@@ -4341,7 +5140,7 @@
     Object.entries(elements).forEach(([id, component]) => {
       const tag = document.querySelector(id);
       if (tag) {
-        tag.outerHTML = component;
+        renderReplace(component, tag);
       }
     });
     document
@@ -4353,60 +5152,60 @@
   }
   const app = manga => {
     loadedManga = manga;
-    const main = document.createElement('div');
-    main.id = 'MangaOnlineViewer';
-    main.className = `
-        ${getSettingsValue('hidePageControls') ? 'hideControls' : ''}
-        ${isBookmarked() ? 'bookmarked' : ''}
-        ${getDevice()}`;
-    main.innerHTML = html`
+    const main = x$1`
+    <div
+      id="MangaOnlineViewer"
+      class="${e({
+        hideControls: getSettingsValue('hidePageControls'),
+        bookmarked: !!isBookmarked(),
+        [getDevice()]: true,
+      })}"
+    >
       <div id="menu" class="${getSettingsValue('header')}">${IconMenu2}</div>
       ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
       <div id="Overlay" class="overlay"></div>
       ${commentsPanel()} ${KeybindingsPanel()} ${BookmarkPanel()} ${SettingsPanel()}
-    `;
+    </div>
+  `;
     settings$1.listen(_.debounce(hydrateApp, 600));
-    return main.outerHTML;
+    return main;
   };
 
   const animation =
-    '@-webkit-keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n\n@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n\n@-webkit-keyframes spin-reverse {\n  0% {\n    transform: rotate(360deg);\n  }\n\n  to {\n    transform: rotate(0);\n  }\n}\n\n@keyframes spin-reverse {\n  0% {\n    transform: rotate(360deg);\n  }\n\n  to {\n    transform: rotate(0);\n  }\n}\n\n.icon-tabler-loader-2,\n.animate-spin {\n  -webkit-animation: spin 1s linear infinite;\n  animation: spin 1s linear infinite;\n}\n\n.animate-spin-reverse {\n  -webkit-animation: spin-reverse 1s linear infinite;\n  animation: spin-reverse 1s linear infinite;\n}\n';
+    '@-webkit-keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\n@keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\n@-webkit-keyframes spin-reverse {\r\n  0% {\r\n    transform: rotate(360deg);\r\n  }\r\n\r\n  to {\r\n    transform: rotate(0);\r\n  }\r\n}\r\n\r\n@keyframes spin-reverse {\r\n  0% {\r\n    transform: rotate(360deg);\r\n  }\r\n\r\n  to {\r\n    transform: rotate(0);\r\n  }\r\n}\r\n\r\n.icon-tabler-loader-2,\r\n.animate-spin {\r\n  -webkit-animation: spin 1s linear infinite;\r\n  animation: spin 1s linear infinite;\r\n}\r\n\r\n.animate-spin-reverse {\r\n  -webkit-animation: spin-reverse 1s linear infinite;\r\n  animation: spin-reverse 1s linear infinite;\r\n}\r\n';
 
   const bookmarks =
-    '#MangaOnlineViewer #BookmarksPanel {\n  position: fixed;\n  top: 10%;\n  width: 50%;\n  left: 25%;\n  right: 25%;\n  text-align: center;\n  max-height: 70%;\n  transition: transform 0.3s ease-in-out;\n  transform: scaleY(0);\n  z-index: 1000;\n}\n\n#MangaOnlineViewer #BookmarksPanel.visible {\n  transform: scaleY(1);\n  display: block;\n}\n\n#MangaOnlineViewer #BookmarksList {\n  padding: 0 15px;\n  overflow: auto;\n  max-height: 60vh;\n}\n\n#MangaOnlineViewer #BookmarksList .BookmarkItem {\n  display: flex;\n  flex-flow: row;\n  justify-content: space-between;\n  align-items: center;\n  padding: 2px;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkColumnLarge {\n  flex-basis: 90%;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkColumnSmall {\n  width: 90px;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkFunctions {\n  width: 75px;\n}\n\n#MangaOnlineViewer #BookmarksList .bookmarkURl {\n  text-overflow: ellipsis;\n  overflow: hidden;\n  white-space: nowrap;\n  flex-basis: 55%;\n}\n';
+    '#MangaOnlineViewer #BookmarksPanel {\r\n  position: fixed;\r\n  top: 10%;\r\n  width: 50%;\r\n  left: 25%;\r\n  right: 25%;\r\n  text-align: center;\r\n  max-height: 70%;\r\n  transition: transform 0.3s ease-in-out;\r\n  transform: scaleY(0);\r\n  z-index: 1000;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksPanel.visible {\r\n  transform: scaleY(1);\r\n  display: block;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksList {\r\n  padding: 0 15px;\r\n  overflow: auto;\r\n  max-height: 60vh;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksList .BookmarkItem {\r\n  display: flex;\r\n  flex-flow: row;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 2px;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksList .bookmarkColumnLarge {\r\n  flex-basis: 90%;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksList .bookmarkColumnSmall {\r\n  width: 90px;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksList .bookmarkFunctions {\r\n  width: 75px;\r\n}\r\n\r\n#MangaOnlineViewer #BookmarksList .bookmarkURl {\r\n  text-overflow: ellipsis;\r\n  overflow: hidden;\r\n  white-space: nowrap;\r\n  flex-basis: 55%;\r\n}\r\n';
 
   const comments =
-    '#MangaOnlineViewer #CommentsPanel {\n  position: static;\n  width: 90%;\n  height: 0;\n  top: 5%;\n  left: 5%;\n  text-align: center;\n  transition: transform 0.3s ease-in-out;\n  transform: scaleY(0);\n  z-index: 1000;\n  overflow-y: initial;\n  background-color: var(--theme-body-background);\n  opacity: 0;\n}\n\n#MangaOnlineViewer #CommentsPanel.visible {\n  position: fixed;\n  height: 90%;\n  transform: scaleY(1);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex-direction: column;\n  opacity: 1;\n}\n\n#MangaOnlineViewer #CommentsArea {\n  overflow-y: auto;\n  overscroll-behavior: contain;\n  height: 100%;\n  width: 100%;\n  background-color: var(--theme-body-background);\n}\n';
+    '#MangaOnlineViewer #CommentsPanel {\r\n  position: static;\r\n  width: 90%;\r\n  height: 0;\r\n  top: 5%;\r\n  left: 5%;\r\n  text-align: center;\r\n  transition: transform 0.3s ease-in-out;\r\n  transform: scaleY(0);\r\n  z-index: 1000;\r\n  overflow-y: initial;\r\n  background-color: var(--theme-body-background);\r\n  opacity: 0;\r\n}\r\n\r\n#MangaOnlineViewer #CommentsPanel.visible {\r\n  position: fixed;\r\n  height: 90%;\r\n  transform: scaleY(1);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex-direction: column;\r\n  opacity: 1;\r\n}\r\n\r\n#MangaOnlineViewer #CommentsArea {\r\n  overflow-y: auto;\r\n  overscroll-behavior: contain;\r\n  height: 100%;\r\n  width: 100%;\r\n  background-color: var(--theme-body-background);\r\n}\r\n';
 
   const fluid =
-    '#MangaOnlineViewer #Chapter.FluidLTR,\n#MangaOnlineViewer #Chapter.FluidRTL {\n  display: flex;\n  overflow-x: auto;\n  min-width: auto;\n\n  .ZoomWidth {\n    display: none;\n  }\n\n  .PageImg {\n    min-width: unset;\n  }\n\n  .MangaPage {\n    width: initial;\n    min-width: fit-content;\n    position: relative;\n    max-height: 100%;\n  }\n\n  .MangaPage.DoublePage {\n    grid-column: span 2;\n  }\n}\n\n#MangaOnlineViewer #Chapter.FluidLTR {\n  flex-direction: row;\n\n  .MangaPage .PageFunctions {\n    right: auto;\n    left: 0;\n    direction: rtl;\n  }\n}\n\n#MangaOnlineViewer #Chapter.FluidRTL {\n  flex-direction: row-reverse;\n}\n';
+    '#MangaOnlineViewer #Chapter.FluidLTR,\r\n#MangaOnlineViewer #Chapter.FluidRTL {\r\n  display: flex;\r\n  overflow-x: auto;\r\n  min-width: auto;\r\n\r\n  .ZoomWidth {\r\n    display: none;\r\n  }\r\n\r\n  .PageImg {\r\n    min-width: unset;\r\n  }\r\n\r\n  .MangaPage {\r\n    width: initial;\r\n    min-width: fit-content;\r\n    position: relative;\r\n    max-height: 100%;\r\n  }\r\n\r\n  .MangaPage.DoublePage {\r\n    grid-column: span 2;\r\n  }\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.FluidLTR {\r\n  flex-direction: row;\r\n\r\n  .MangaPage .PageFunctions {\r\n    right: auto;\r\n    left: 0;\r\n    direction: rtl;\r\n  }\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.FluidRTL {\r\n  flex-direction: row-reverse;\r\n}\r\n';
 
   const header =
-    '#MangaOnlineViewer #gotoPage {\n  min-width: 35px;\n}\n\n#MangaOnlineViewer #Header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  flex-flow: row nowrap;\n  transition: transform 0.3s ease-in;\n  position: sticky;\n  top: 0;\n  left: 0;\n  right: 0;\n  background-color: inherit;\n  z-index: 900;\n}\n\n#MangaOnlineViewer #Header.click {\n  padding-left: 40px;\n}\n\n@keyframes headroom {\n  from {\n    transform: translateY(-100%);\n    position: sticky;\n    top: 0;\n  }\n  to {\n    transform: translateY(0%);\n    position: sticky;\n    top: 0;\n  }\n}\n\n#MangaOnlineViewer #Header:not(.visible, .headroom-top, .fixed, .simple) {\n  animation: headroom 0.3s ease-in reverse;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL) {\n  position: fixed;\n  padding-left: 40px;\n  top: -100%;\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-hide {\n  animation: none;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#MangaOnlineViewer #Header.scroll.headroom-show,\n#MangaOnlineViewer #Header.headroom-end,\n#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL).visible,\n#MangaOnlineViewer #Header.visible {\n  animation: headroom 0.3s ease-in;\n  transform: translateY(0%);\n  position: sticky;\n  top: 0;\n}\n\n#MangaOnlineViewer #Header.headroom-top {\n  animation: none;\n}\n\n#MangaOnlineViewer #Header.fixed {\n  position: sticky;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#MangaOnlineViewer #Header.simple {\n  position: static;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#MangaOnlineViewer #menu {\n  position: fixed;\n  z-index: 1;\n  color: var(--theme-body-text-color);\n  height: 40px;\n  width: 40px;\n}\n\n#MangaOnlineViewer #menu .icon-tabler {\n  position: relative;\n  top: 4px;\n  left: 4px;\n  height: 32px;\n  width: 32px;\n  stroke-width: 1.25;\n}\n\n#MangaOnlineViewer #menu:not(.click, .hover),\n#MangaOnlineViewer #menu.hide {\n  display: none;\n}\n\n#MangaOnlineViewer #menu.click {\n  z-index: 901;\n}\n\n#MangaOnlineViewer #MangaTitle {\n  padding: 2px;\n  margin: 0;\n  font-size: 1.2rem;\n  font-weight: 400;\n}\n\n#MangaOnlineViewer #GlobalFunctions {\n  display: flex;\n  gap: 3px;\n  padding: 3px 3px 3px 0;\n  flex-wrap: wrap;\n  width: 300px;\n  z-index: 100;\n}\n\n#MangaOnlineViewer .ChapterControl span,\n#MangaOnlineViewer #GlobalFunctions span {\n  display: flex;\n  flex-wrap: nowrap;\n  justify-content: space-evenly;\n}\n\n#MangaOnlineViewer .ChapterControl span {\n  flex-grow: 1;\n}\n\n#MangaOnlineViewer .ChapterControl span > * {\n  flex-basis: 50%;\n}\n\n#MangaOnlineViewer #ScrollControl .icon-tabler,\n#MangaOnlineViewer #GlobalFunctions .icon-tabler {\n  width: 25px;\n  height: 25px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomSlider {\n  display: flex;\n  align-items: center;\n}\n\n#MangaOnlineViewer #GlobalFunctions #Zoom {\n  margin: 2px 5px;\n  width: 160px;\n}\n\n#MangaOnlineViewer #GlobalFunctions #ZoomVal {\n  width: 40px;\n  display: inline-block;\n  color: var(--theme-primary-text-color);\n  line-height: 20px;\n  text-align: center;\n  border-radius: 3px;\n  background: var(--theme-primary-color);\n  padding: 2px 5px;\n}\n\n#MangaOnlineViewer #ChapterNavigation {\n  display: flex;\n  flex-flow: column nowrap;\n  justify-content: center;\n  align-items: end;\n  padding: 5px;\n  max-width: 350px;\n}\n\n#MangaOnlineViewer #Counters {\n  padding-right: 5px;\n}\n\n#MangaOnlineViewer #ChapterControl {\n  display: flex;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton {\n  display: inline-flex;\n  margin: 2px;\n  justify-content: center;\n  align-items: center;\n  padding: 3px;\n  gap: 0.5em;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton .icon-tabler {\n  flex-shrink: 0;\n  align-self: center;\n  width: 1rem;\n  height: 1rem;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href="#"],\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href=""],\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href="undefined"] {\n  visibility: hidden;\n}\n\n#MangaOnlineViewer #ChapterControl #download.loading {\n  cursor: not-allowed;\n  pointer-events: none;\n  opacity: 0.6;\n}\n\n#MangaOnlineViewer #ChapterControl .NavigationControlButton.disabled {\n  pointer-events: none;\n  filter: grayscale(0.9);\n}\n\n#MangaOnlineViewer .ViewerTitle {\n  text-align: center;\n  min-height: 60px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex-direction: column;\n  padding: 5px;\n  flex-basis: 60%;\n}\n';
-
-  const icons =
-    '.icon-tabler {\n  height: 1rem;\n  width: 1rem;\n  vertical-align: sub;\n}\n\n.icon-tabler-file-download > :nth-child(n + 4) {\n  /* 4, 5 */\n  color: gold;\n}\n\n.icon-tabler-arrow-autofit-width > :nth-child(n + 3) {\n  /* 3,4,5,6 */\n  color: yellow;\n}\n\n.icon-tabler-arrow-autofit-height > :nth-child(n + 3) {\n  /* 3,4,5,6 */\n  color: yellow;\n}\n\n.icon-tabler-zoom-in-area > :nth-child(2),\n.icon-tabler-zoom-in-area > :nth-child(3) {\n  color: lime;\n}\n\n.icon-tabler-zoom-out-area > :nth-child(2) {\n  color: red;\n}\n\n.icon-tabler-zoom-pan > :nth-child(n + 4) {\n  color: #9966ff;\n}\n\n.icon-tabler-arrow-autofit-down > :nth-child(n + 3) {\n  color: #28ffbf;\n}\n\n.icon-tabler-arrow-autofit-left > :nth-child(n + 3) {\n  color: #28ffbf;\n}\n\n.icon-tabler-arrow-autofit-right > :nth-child(n + 3) {\n  color: #28ffbf;\n}\n\n.icon-tabler-spacing-vertical > :nth-child(4) {\n  color: fuchsia;\n}\n\n.icon-tabler-list-numbers > :nth-child(n + 5) {\n  color: #e48900;\n}\n\n.icon-tabler-bookmarks > :nth-child(n + 2) {\n  color: orange;\n}\n\n.icon-tabler-bookmark > * {\n  color: orange;\n}\n\n.icon-tabler-bookmark-off > * {\n  color: orange;\n}\n\n.icon-tabler-bookmark-off > :nth-child(3) {\n  color: red;\n}\n\n.icon-tabler-eye-off > :nth-child(4) {\n  color: red;\n}\n\n.icon-tabler-zoom-cancel > :nth-child(3),\n.icon-tabler-zoom-cancel > :nth-child(4) {\n  color: #9966ff;\n}\n\n.icon-tabler-zoom-in > :nth-child(3),\n.icon-tabler-zoom-in > :nth-child(4) {\n  color: lime;\n}\n\n.icon-tabler-zoom-out > :nth-child(3) {\n  color: red;\n}\n\n.icon-tabler-refresh > :nth-child(n + 2) {\n  color: cyan;\n}\n\n.icon-tabler-photo > * {\n  color: silver;\n}\n\n.icon-tabler-photo-off > * {\n  color: silver;\n}\n\n.icon-tabler-photo-off > :nth-child(6) {\n  color: orange;\n}\n\n.icon-tabler-message > :nth-child(2),\n.icon-tabler-message > :nth-child(3) {\n  color: greenyellow;\n}\n';
+    '#MangaOnlineViewer #gotoPage {\r\n  min-width: 35px;\r\n}\r\n\r\n#MangaOnlineViewer #Header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  flex-flow: row nowrap;\r\n  transition: transform 0.3s ease-in;\r\n  position: sticky;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  background-color: inherit;\r\n  z-index: 900;\r\n}\r\n\r\n#MangaOnlineViewer #Header.click {\r\n  padding-left: 40px;\r\n}\r\n\r\n@keyframes headroom {\r\n  from {\r\n    transform: translateY(-100%);\r\n    position: sticky;\r\n    top: 0;\r\n  }\r\n  to {\r\n    transform: translateY(0%);\r\n    position: sticky;\r\n    top: 0;\r\n  }\r\n}\r\n\r\n#MangaOnlineViewer #Header:not(.visible, .headroom-top, .fixed, .simple) {\r\n  animation: headroom 0.3s ease-in reverse;\r\n  transform: translateY(-100%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL) {\r\n  position: fixed;\r\n  padding-left: 40px;\r\n  top: -100%;\r\n}\r\n\r\n#MangaOnlineViewer #Header.scroll.headroom-hide {\r\n  animation: none;\r\n  transform: translateY(-100%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#MangaOnlineViewer #Header.scroll.headroom-show,\r\n#MangaOnlineViewer #Header.headroom-end,\r\n#MangaOnlineViewer #Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL).visible,\r\n#MangaOnlineViewer #Header.visible {\r\n  animation: headroom 0.3s ease-in;\r\n  transform: translateY(0%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#MangaOnlineViewer #Header.headroom-top {\r\n  animation: none;\r\n}\r\n\r\n#MangaOnlineViewer #Header.fixed {\r\n  position: sticky;\r\n  animation: none;\r\n  top: 0;\r\n  transform: translateY(0%);\r\n}\r\n\r\n#MangaOnlineViewer #Header.simple {\r\n  position: static;\r\n  animation: none;\r\n  top: 0;\r\n  transform: translateY(0%);\r\n}\r\n\r\n#MangaOnlineViewer #menu {\r\n  position: fixed;\r\n  z-index: 1;\r\n  color: var(--theme-body-text-color);\r\n  height: 40px;\r\n  width: 40px;\r\n}\r\n\r\n#MangaOnlineViewer #menu .icon-tabler {\r\n  position: relative;\r\n  top: 4px;\r\n  left: 4px;\r\n  height: 32px;\r\n  width: 32px;\r\n  stroke-width: 1.25;\r\n}\r\n\r\n#MangaOnlineViewer #menu:not(.click, .hover),\r\n#MangaOnlineViewer #menu.hide {\r\n  display: none;\r\n}\r\n\r\n#MangaOnlineViewer #menu.click {\r\n  z-index: 901;\r\n}\r\n\r\n#MangaOnlineViewer #MangaTitle {\r\n  padding: 2px;\r\n  margin: 0;\r\n  font-size: 1.2rem;\r\n  font-weight: 400;\r\n}\r\n\r\n#MangaOnlineViewer #GlobalFunctions {\r\n  display: flex;\r\n  gap: 3px;\r\n  padding: 3px 3px 3px 0;\r\n  flex-wrap: wrap;\r\n  width: 300px;\r\n  z-index: 100;\r\n}\r\n\r\n#MangaOnlineViewer .ChapterControl span,\r\n#MangaOnlineViewer #GlobalFunctions span {\r\n  display: flex;\r\n  flex-wrap: nowrap;\r\n  justify-content: space-evenly;\r\n}\r\n\r\n#MangaOnlineViewer .ChapterControl span {\r\n  flex-grow: 1;\r\n}\r\n\r\n#MangaOnlineViewer .ChapterControl span > * {\r\n  flex-basis: 50%;\r\n}\r\n\r\n#MangaOnlineViewer #ScrollControl .icon-tabler,\r\n#MangaOnlineViewer #GlobalFunctions .icon-tabler {\r\n  width: 25px;\r\n  height: 25px;\r\n}\r\n\r\n#MangaOnlineViewer #GlobalFunctions #ZoomSlider {\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n\r\n#MangaOnlineViewer #GlobalFunctions #Zoom {\r\n  margin: 2px 5px;\r\n  width: 160px;\r\n}\r\n\r\n#MangaOnlineViewer #GlobalFunctions #ZoomVal {\r\n  width: 40px;\r\n  display: inline-block;\r\n  color: var(--theme-primary-text-color);\r\n  line-height: 20px;\r\n  text-align: center;\r\n  border-radius: 3px;\r\n  background: var(--theme-primary-color);\r\n  padding: 2px 5px;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterNavigation {\r\n  display: flex;\r\n  flex-flow: column nowrap;\r\n  justify-content: center;\r\n  align-items: end;\r\n  padding: 5px;\r\n  max-width: 350px;\r\n}\r\n\r\n#MangaOnlineViewer #Counters {\r\n  padding-right: 5px;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterControl {\r\n  display: flex;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterControl .NavigationControlButton {\r\n  display: inline-flex;\r\n  margin: 2px;\r\n  justify-content: center;\r\n  align-items: center;\r\n  padding: 3px;\r\n  gap: 0.5em;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterControl .NavigationControlButton .icon-tabler {\r\n  flex-shrink: 0;\r\n  align-self: center;\r\n  width: 1rem;\r\n  height: 1rem;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href="#"],\r\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href=""],\r\n#MangaOnlineViewer #ChapterControl .NavigationControlButton[href="undefined"] {\r\n  visibility: hidden;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterControl #download.loading {\r\n  cursor: not-allowed;\r\n  pointer-events: none;\r\n  opacity: 0.6;\r\n}\r\n\r\n#MangaOnlineViewer #ChapterControl .NavigationControlButton.disabled {\r\n  pointer-events: none;\r\n  filter: grayscale(0.9);\r\n}\r\n\r\n#MangaOnlineViewer .ViewerTitle {\r\n  text-align: center;\r\n  min-height: 60px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex-direction: column;\r\n  padding: 5px;\r\n  flex-basis: 60%;\r\n}\r\n';
 
   const keybindings =
-    '#MangaOnlineViewer #KeybindingsPanel {\n  padding: 10px;\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  transition: transform 0.3s ease-in-out;\n  transform: translateX(100%);\n  line-height: 1.5em;\n  z-index: 1000;\n  overflow-y: auto;\n  width: 360px;\n  max-width: 100vw;\n}\n\n#MangaOnlineViewer #KeybindingsPanel.visible {\n  transform: translateX(0);\n  display: block;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #KeybindingsList {\n  display: grid;\n  grid-template-columns: 1fr 2fr;\n  gap: 5px;\n}\n\n#MangaOnlineViewer #KeybindingsPanel .ControlButton {\n  margin-left: 3px;\n  justify-content: center;\n  align-items: center;\n  padding: 5px 10px;\n  gap: 0.5em;\n}\n\n#MangaOnlineViewer #KeybindingsPanel label {\n  display: ruby;\n}\n\n#MangaOnlineViewer #KeybindingsPanel input {\n  display: inline-block;\n  width: 100%;\n}\n\n#MangaOnlineViewer #KeybindingsPanel #HotKeysRules {\n  grid-column: span 2;\n}\n';
+    '#MangaOnlineViewer #KeybindingsPanel {\r\n  padding: 10px;\r\n  position: fixed;\r\n  top: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  transition: transform 0.3s ease-in-out;\r\n  transform: translateX(100%);\r\n  line-height: 1.5em;\r\n  z-index: 1000;\r\n  overflow-y: auto;\r\n  width: 360px;\r\n  max-width: 100vw;\r\n}\r\n\r\n#MangaOnlineViewer #KeybindingsPanel.visible {\r\n  transform: translateX(0);\r\n  display: block;\r\n}\r\n\r\n#MangaOnlineViewer #KeybindingsPanel #KeybindingsList {\r\n  display: grid;\r\n  grid-template-columns: 1fr 2fr;\r\n  gap: 5px;\r\n}\r\n\r\n#MangaOnlineViewer #KeybindingsPanel .ControlButton {\r\n  margin-left: 3px;\r\n  justify-content: center;\r\n  align-items: center;\r\n  padding: 5px 10px;\r\n  gap: 0.5em;\r\n}\r\n\r\n#MangaOnlineViewer #KeybindingsPanel label {\r\n  display: ruby;\r\n}\r\n\r\n#MangaOnlineViewer #KeybindingsPanel input {\r\n  display: inline-block;\r\n  width: 100%;\r\n}\r\n\r\n#MangaOnlineViewer #KeybindingsPanel #HotKeysRules {\r\n  grid-column: span 2;\r\n}\r\n';
 
   const styles =
-    ':root:not(.light, .dark) {\n  --theme-body-background: #25262b;\n  --theme-body-text-color: #c1c2c5;\n  --theme-text-color: #c1c2c5;\n  --theme-primary-color: #1a1b1e;\n  --theme-primary-text-color: #c1c2c5;\n  --theme-background-color: #25262b;\n  --theme-hightlight-color: #2c2e33;\n  --theme-border-color: #373a40;\n}\n\n#MangaOnlineViewer {\n  text-decoration: none;\n  color: var(--theme-body-text-color);\n  background-color: var(--theme-body-background);\n}\n\n#MangaOnlineViewer #Chapter {\n  display: grid;\n  grid-template-columns: repeat(1, 1fr);\n  min-width: 225px;\n}\n\n#MangaOnlineViewer #Chapter.Vertical:has(+ #Navigation:not(.disabled)),\n#MangaOnlineViewer #Chapter.WebComic:has(+ #Navigation:not(.disabled)) {\n  padding-bottom: 31px;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .PageContent {\n  margin-bottom: 8px;\n  margin-top: 8px;\n}\n\n#MangaOnlineViewer .closeButton {\n  width: fit-content;\n  height: fit-content;\n  position: absolute;\n  right: 10px;\n  top: 10px;\n}\n\n#MangaOnlineViewer .overlay {\n  position: fixed;\n  display: none;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 950;\n  cursor: pointer;\n}\n\n#MangaOnlineViewer .overlay.visible {\n  display: block;\n}\n\n#MangaOnlineViewer select {\n  height: 20px;\n  /*padding: 0;*/\n  margin: 2px;\n}\n\n#MangaOnlineViewer .ControlButton,\n#MangaOnlineViewer .simpleButton {\n  cursor: pointer;\n  border-radius: 5px;\n  border-width: 1px;\n  border-style: solid;\n  padding: 2px;\n  min-height: 32px;\n  color: var(--theme-primary-text-color);\n  background-color: var(--theme-primary-color);\n  border-color: var(--theme-border-color);\n}\n\n#MangaOnlineViewer .ControlButton:active,\n#MangaOnlineViewer .ControlButton:hover {\n  opacity: 0.8;\n}\n\n#MangaOnlineViewer .simpleButton {\n  font-size: initial;\n  min-width: 32px;\n}\n\n#MangaOnlineViewer .panel .simpleButton {\n  position: absolute;\n  top: 10px;\n  left: 10px;\n}\n\n#MangaOnlineViewer .panel {\n  padding: 5px;\n  position: inherit;\n  border-radius: 5px;\n  background-color: var(--theme-background-color);\n}\n\n#MangaOnlineViewer :not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {\n  max-width: 100%;\n  object-fit: contain;\n}\n\n#MangaOnlineViewer .ControlButton.hidden,\n.light #ColorScheme > .icon-tabler-sun,\n.dark #ColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .light + #CommentsColorScheme > .icon-tabler-sun,\n#MangaOnlineViewer .dark + #CommentsColorScheme > .icon-tabler-moon,\n#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,\n#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,\n#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,\n#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,\n#MangaOnlineViewer.bookmarked .Bookmark > .icon-tabler-bookmark,\n#MangaOnlineViewer:not(.bookmarked) .Bookmark > .icon-tabler-bookmark-off,\n#MangaOnlineViewer #AutoScroll.running > .icon-tabler-player-play,\n#MangaOnlineViewer #AutoScroll:not(.running) > .icon-tabler-player-pause {\n  display: none;\n}\n\n#MangaOnlineViewer.hideControls .PageFunctions {\n  visibility: hidden;\n}\n';
+    ':root:not(.light, .dark) {\r\n  --theme-body-background: #25262b;\r\n  --theme-body-text-color: #c1c2c5;\r\n  --theme-text-color: #c1c2c5;\r\n  --theme-primary-color: #1a1b1e;\r\n  --theme-primary-text-color: #c1c2c5;\r\n  --theme-background-color: #25262b;\r\n  --theme-hightlight-color: #2c2e33;\r\n  --theme-border-color: #373a40;\r\n}\r\n\r\n#MangaOnlineViewer {\r\n  text-decoration: none;\r\n  color: var(--theme-body-text-color);\r\n  background-color: var(--theme-body-background);\r\n}\r\n\r\n#MangaOnlineViewer #Chapter {\r\n  display: grid;\r\n  grid-template-columns: repeat(1, 1fr);\r\n  min-width: 225px;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical:has(+ #Navigation:not(.disabled)),\r\n#MangaOnlineViewer #Chapter.WebComic:has(+ #Navigation:not(.disabled)) {\r\n  padding-bottom: 31px;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical .PageContent {\r\n  margin-bottom: 8px;\r\n  margin-top: 8px;\r\n}\r\n\r\n#MangaOnlineViewer .closeButton {\r\n  width: fit-content;\r\n  height: fit-content;\r\n  position: absolute;\r\n  right: 10px;\r\n  top: 10px;\r\n}\r\n\r\n#MangaOnlineViewer .overlay {\r\n  position: fixed;\r\n  display: none;\r\n  width: 100%;\r\n  height: 100%;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  background-color: rgba(0, 0, 0, 0.5);\r\n  z-index: 950;\r\n  cursor: pointer;\r\n}\r\n\r\n#MangaOnlineViewer .overlay.visible {\r\n  display: block;\r\n}\r\n\r\n#MangaOnlineViewer select {\r\n  height: 20px;\r\n  /*padding: 0;*/\r\n  margin: 2px;\r\n}\r\n\r\n#MangaOnlineViewer .ControlButton,\r\n#MangaOnlineViewer .simpleButton {\r\n  cursor: pointer;\r\n  border-radius: 5px;\r\n  border-width: 1px;\r\n  border-style: solid;\r\n  padding: 2px;\r\n  min-height: 32px;\r\n  color: var(--theme-primary-text-color);\r\n  background-color: var(--theme-primary-color);\r\n  border-color: var(--theme-border-color);\r\n}\r\n\r\n#MangaOnlineViewer .ControlButton:active,\r\n#MangaOnlineViewer .ControlButton:hover {\r\n  opacity: 0.8;\r\n}\r\n\r\n#MangaOnlineViewer .simpleButton {\r\n  font-size: initial;\r\n  min-width: 32px;\r\n}\r\n\r\n#MangaOnlineViewer .panel .simpleButton {\r\n  position: absolute;\r\n  top: 10px;\r\n  left: 10px;\r\n}\r\n\r\n#MangaOnlineViewer .panel {\r\n  padding: 5px;\r\n  position: inherit;\r\n  border-radius: 5px;\r\n  background-color: var(--theme-background-color);\r\n}\r\n\r\n#MangaOnlineViewer :not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {\r\n  max-width: 100%;\r\n  object-fit: contain;\r\n}\r\n\r\n#MangaOnlineViewer .ControlButton.hidden,\r\n.light #ColorScheme > .icon-tabler-sun,\r\n.dark #ColorScheme > .icon-tabler-moon,\r\n#MangaOnlineViewer .light + #CommentsColorScheme > .icon-tabler-sun,\r\n#MangaOnlineViewer .dark + #CommentsColorScheme > .icon-tabler-moon,\r\n#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,\r\n#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,\r\n#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,\r\n#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,\r\n#MangaOnlineViewer.bookmarked .Bookmark > .icon-tabler-bookmark,\r\n#MangaOnlineViewer:not(.bookmarked) .Bookmark > .icon-tabler-bookmark-off,\r\n#MangaOnlineViewer #AutoScroll.running > .icon-tabler-player-play,\r\n#MangaOnlineViewer #AutoScroll:not(.running) > .icon-tabler-player-pause {\r\n  display: none;\r\n}\r\n\r\n#MangaOnlineViewer.hideControls .PageFunctions {\r\n  visibility: hidden;\r\n}\r\n';
 
   const media =
-    '#MangaOnlineViewer.mobile #Header,\n#MangaOnlineViewer.tablet #Header {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\n#MangaOnlineViewer.mobile .ViewerTitle,\n#MangaOnlineViewer.tablet .ViewerTitle {\n  order: 1;\n  min-height: auto;\n  padding: 0;\n  margin: 0;\n  flex-grow: 1;\n  flex-shrink: 1;\n  flex-basis: 100%;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions,\n#MangaOnlineViewer.tablet #GlobalFunctions {\n  width: auto;\n  order: 2;\n  padding: 5px;\n}\n\n#MangaOnlineViewer.mobile #ChapterNavigation,\n#MangaOnlineViewer.tablet #ChapterNavigation {\n  order: 3;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.tablet #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.tablets, .phones),\n#MangaOnlineViewer.tablet #GlobalFunctions .ControlButton:not(.tablets, .phones) {\n  display: none;\n}\n\n#MangaOnlineViewer.mobile #Header {\n  flex-direction: row;\n  flex-wrap: wrap;\n  justify-content: center;\n  align-items: center;\n}\n\n#MangaOnlineViewer.mobile #Header.click + #Chapter:not(.webcomic, .vertical) {\n  position: sticky;\n}\n\n#MangaOnlineViewer.mobile #MangaTitle {\n  word-wrap: anywhere;\n}\n\n#MangaOnlineViewer.mobile .ViewerTitle {\n  order: 1;\n  margin-top: 0;\n  height: auto;\n  padding: 0;\n}\n\n#MangaOnlineViewer.mobile #GlobalFunctions {\n  order: 2;\n  padding: 0;\n  width: auto;\n  flex-basis: 35px;\n}\n\n#MangaOnlineViewer.mobile #ChapterNavigation {\n  order: 3;\n  width: min-content;\n  min-width: 205px;\n}\n\n#MangaOnlineViewer.mobile .ChapterControl {\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\n#MangaOnlineViewer.mobile .ChapterControl .NavigationControlButton {\n  flex-grow: 1;\n}\n\n#MangaOnlineViewer.mobile .PageFunctions {\n  padding: 0;\n}\n\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton.Bookmark {\n  opacity: 1;\n}\n\n#MangaOnlineViewer.mobile #Navigation,\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.phones),\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton:not(.Bookmark),\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoomMode,\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoom,\n#MangaOnlineViewer.mobile #SettingsPanel .fitIfOversize,\n#MangaOnlineViewer.mobile #SettingsPanel .showThumbnails,\n#MangaOnlineViewer.mobile #SettingsPanel .lazyLoadImages,\n#MangaOnlineViewer.mobile #SettingsPanel .downloadZip,\n#MangaOnlineViewer.mobile #SettingsPanel .minZoom,\n#MangaOnlineViewer.mobile #SettingsPanel .zoomStep,\n#MangaOnlineViewer.mobile #SettingsPanel .headerType,\n#MangaOnlineViewer.mobile #SettingsPanel .autoScroll,\n#MangaOnlineViewer.mobile #KeybindingsPanel,\n#MangaOnlineViewer.mobile .ChapterControl .download,\n#MangaOnlineViewer.mobile #Counters {\n  display: none;\n}\n';
+    '#MangaOnlineViewer.mobile #Header,\r\n#MangaOnlineViewer.tablet #Header {\r\n  display: flex;\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n}\r\n\r\n#MangaOnlineViewer.mobile .ViewerTitle,\r\n#MangaOnlineViewer.tablet .ViewerTitle {\r\n  order: 1;\r\n  min-height: auto;\r\n  padding: 0;\r\n  margin: 0;\r\n  flex-grow: 1;\r\n  flex-shrink: 1;\r\n  flex-basis: 100%;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #GlobalFunctions,\r\n#MangaOnlineViewer.tablet #GlobalFunctions {\r\n  width: auto;\r\n  order: 2;\r\n  padding: 5px;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #ChapterNavigation,\r\n#MangaOnlineViewer.tablet #ChapterNavigation {\r\n  order: 3;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\r\n#MangaOnlineViewer.tablet #GlobalFunctions #ZoomSlider,\r\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.tablets, .phones),\r\n#MangaOnlineViewer.tablet #GlobalFunctions .ControlButton:not(.tablets, .phones) {\r\n  display: none;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #Header {\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #Header.click + #Chapter:not(.webcomic, .vertical) {\r\n  position: sticky;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #MangaTitle {\r\n  word-wrap: anywhere;\r\n}\r\n\r\n#MangaOnlineViewer.mobile .ViewerTitle {\r\n  order: 1;\r\n  margin-top: 0;\r\n  height: auto;\r\n  padding: 0;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #GlobalFunctions {\r\n  order: 2;\r\n  padding: 0;\r\n  width: auto;\r\n  flex-basis: 35px;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #ChapterNavigation {\r\n  order: 3;\r\n  width: min-content;\r\n  min-width: 205px;\r\n}\r\n\r\n#MangaOnlineViewer.mobile .ChapterControl {\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n}\r\n\r\n#MangaOnlineViewer.mobile .ChapterControl .NavigationControlButton {\r\n  flex-grow: 1;\r\n}\r\n\r\n#MangaOnlineViewer.mobile .PageFunctions {\r\n  padding: 0;\r\n}\r\n\r\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton.Bookmark {\r\n  opacity: 1;\r\n}\r\n\r\n#MangaOnlineViewer.mobile #Navigation,\r\n#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,\r\n#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.phones),\r\n#MangaOnlineViewer.mobile .PageFunctions .ControlButton:not(.Bookmark),\r\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoomMode,\r\n#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoom,\r\n#MangaOnlineViewer.mobile #SettingsPanel .fitIfOversize,\r\n#MangaOnlineViewer.mobile #SettingsPanel .showThumbnails,\r\n#MangaOnlineViewer.mobile #SettingsPanel .lazyLoadImages,\r\n#MangaOnlineViewer.mobile #SettingsPanel .downloadZip,\r\n#MangaOnlineViewer.mobile #SettingsPanel .minZoom,\r\n#MangaOnlineViewer.mobile #SettingsPanel .zoomStep,\r\n#MangaOnlineViewer.mobile #SettingsPanel .headerType,\r\n#MangaOnlineViewer.mobile #SettingsPanel .autoScroll,\r\n#MangaOnlineViewer.mobile #KeybindingsPanel,\r\n#MangaOnlineViewer.mobile .ChapterControl .download,\r\n#MangaOnlineViewer.mobile #Counters {\r\n  display: none;\r\n}\r\n';
 
   const page =
-    '#MangaOnlineViewer .MangaPage {\n  width: 100%;\n  display: inline-block;\n  text-align: center;\n  line-height: 0;\n  min-height: 22px;\n  min-width: 100%;\n}\n\n#MangaOnlineViewer .PageContent {\n  text-align: center;\n  display: inline-block;\n  overflow-x: auto;\n  max-width: 100%;\n  transition: all 0.3s ease-in-out;\n  height: 100%;\n  overflow-y: hidden;\n}\n\n#MangaOnlineViewer .MangaPage.hide .PageContent {\n  height: 0;\n}\n\n#MangaOnlineViewer .PageContent .PageImg[src=""],\n#MangaOnlineViewer .PageContent .PageImg:not([src]) {\n  width: 40vw;\n  height: 80vh;\n  display: inline-block;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: 20%;\n  background-color: var(--theme-hightlight-color);\n}\n\n#MangaOnlineViewer .PageContent .PageImg.imgBroken {\n  width: 40vw;\n  height: 80vh;\n  display: inline-block;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: 20%;\n  background-color: var(--theme-hightlight-color);\n}\n\n#MangaOnlineViewer .PageFunctions {\n  font-family: monospace;\n  display: flex;\n  justify-content: flex-end;\n  align-items: center;\n  margin: 0;\n  padding: 0;\n  gap: 3px;\n  position: absolute;\n  right: 0;\n}\n\n#MangaOnlineViewer .PageFunctions > .PageIndex {\n  background-color: var(--theme-primary-color);\n  color: var(--theme-primary-text-color);\n  min-width: 20px;\n  text-align: center;\n  display: inline-block;\n  padding: 3px 5px;\n  line-height: 1rem;\n  border-radius: 5px;\n}\n\n#MangaOnlineViewer .PageFunctions .ControlButton {\n  padding: 3px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  margin: 0;\n  border-width: 0;\n  min-height: auto;\n  opacity: 0.5;\n}\n\n#MangaOnlineViewer .PageFunctions:hover .ControlButton {\n  opacity: 1;\n}\n\n#MangaOnlineViewer .PageFunctions .ControlButton:hover {\n  opacity: 0.9;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .separator {\n  display: flex;\n  align-items: center;\n  text-align: center;\n  font-style: italic;\n}\n\n#MangaOnlineViewer #Chapter.Vertical .separator::before,\n#MangaOnlineViewer #Chapter.Vertical .separator::after {\n  content: "";\n  flex: 1;\n  border-bottom: 1px solid var(--theme-text-color);\n}\n\n#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::before {\n  margin-right: 0.25em;\n}\n\n#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::after {\n  margin-left: 0.25em;\n}\n\n#MangaOnlineViewer #Chapter:not(.separator) .separator,\n#MangaOnlineViewer #Chapter:not(.Vertical) .separator {\n  display: none;\n}\n';
+    '#MangaOnlineViewer .MangaPage {\r\n  width: 100%;\r\n  display: inline-block;\r\n  text-align: center;\r\n  line-height: 0;\r\n  min-height: 22px;\r\n  min-width: 100%;\r\n}\r\n\r\n#MangaOnlineViewer .PageContent {\r\n  text-align: center;\r\n  display: inline-block;\r\n  overflow-x: auto;\r\n  max-width: 100%;\r\n  transition: all 0.3s ease-in-out;\r\n  height: 100%;\r\n  overflow-y: hidden;\r\n}\r\n\r\n#MangaOnlineViewer .MangaPage.hide .PageContent {\r\n  height: 0;\r\n}\r\n\r\n#MangaOnlineViewer .PageContent .PageImg[src=""],\r\n#MangaOnlineViewer .PageContent .PageImg:not([src]) {\r\n  width: 40vw;\r\n  height: 80vh;\r\n  display: inline-block;\r\n  background-position: center;\r\n  background-repeat: no-repeat;\r\n  background-size: 20%;\r\n  background-color: var(--theme-hightlight-color);\r\n}\r\n\r\n#MangaOnlineViewer .PageContent .PageImg.imgBroken {\r\n  width: 40vw;\r\n  height: 80vh;\r\n  display: inline-block;\r\n  background-position: center;\r\n  background-repeat: no-repeat;\r\n  background-size: 20%;\r\n  background-color: var(--theme-hightlight-color);\r\n}\r\n\r\n#MangaOnlineViewer .PageFunctions {\r\n  font-family: monospace;\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  align-items: center;\r\n  margin: 0;\r\n  padding: 0;\r\n  gap: 3px;\r\n  position: absolute;\r\n  right: 0;\r\n}\r\n\r\n#MangaOnlineViewer .PageFunctions > .PageIndex {\r\n  background-color: var(--theme-primary-color);\r\n  color: var(--theme-primary-text-color);\r\n  min-width: 20px;\r\n  text-align: center;\r\n  display: inline-block;\r\n  padding: 3px 5px;\r\n  line-height: 1rem;\r\n  border-radius: 5px;\r\n}\r\n\r\n#MangaOnlineViewer .PageFunctions .ControlButton {\r\n  padding: 3px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin: 0;\r\n  border-width: 0;\r\n  min-height: auto;\r\n  opacity: 0.5;\r\n}\r\n\r\n#MangaOnlineViewer .PageFunctions:hover .ControlButton {\r\n  opacity: 1;\r\n}\r\n\r\n#MangaOnlineViewer .PageFunctions .ControlButton:hover {\r\n  opacity: 0.9;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical .separator {\r\n  display: flex;\r\n  align-items: center;\r\n  text-align: center;\r\n  font-style: italic;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical .separator::before,\r\n#MangaOnlineViewer #Chapter.Vertical .separator::after {\r\n  content: "";\r\n  flex: 1;\r\n  border-bottom: 1px solid var(--theme-text-color);\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::before {\r\n  margin-right: 0.25em;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::after {\r\n  margin-left: 0.25em;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter:not(.separator) .separator,\r\n#MangaOnlineViewer #Chapter:not(.Vertical) .separator {\r\n  display: none;\r\n}\r\n';
 
   const settings =
-    '#MangaOnlineViewer #SettingsPanel {\n  color: var(--theme-text-color);\n  padding: 10px;\n  position: fixed;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  z-index: 1000;\n  transition:\n    transform 0.3s ease-in,\n    background-color 0.3s linear;\n  transform: translateX(-100%);\n  display: flex;\n  flex-flow: column;\n  gap: 5px;\n  overflow-y: auto;\n  max-width: 100vw;\n  width: 308px;\n}\n\n#MangaOnlineViewer #SettingsPanel.visible {\n  transform: translateX(0);\n}\n\n#MangaOnlineViewer #SettingsPanel fieldset {\n  border: 1px solid var(--theme-body-text-color);\n  padding: 3px;\n  border-radius: 10px;\n}\n\n#MangaOnlineViewer #SettingsPanel .ControlLabel {\n  display: flex;\n  flex-flow: row wrap;\n  justify-content: space-between;\n  align-items: center;\n  padding: 2px;\n}\n\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem:not(.show) {\n  display: none;\n}\n\n#MangaOnlineViewer #SettingsPanel input[type="range"] {\n  width: 100%;\n}\n\n#MangaOnlineViewer #SettingsPanel .RangeValue {\n  display: inline-block;\n  color: var(--theme-primary-text-color);\n  line-height: 20px;\n  text-align: center;\n  border-radius: 3px;\n  background: var(--theme-primary-color);\n  padding: 2px 5px;\n  margin-left: 8px;\n}\n\n#MangaOnlineViewer #SettingsPanel datalist {\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-items: center;\n  writing-mode: vertical-lr;\n  width: 100%;\n}\n\n#MangaOnlineViewer #SettingsPanel datalist option {\n  padding: 0;\n}\n\n#MangaOnlineViewer .ThemeRadio {\n  border: 1px solid var(--theme-text-color);\n  color: var(--theme-primary-text-color);\n  background-color: var(--theme-primary-color);\n  height: 20px;\n  width: 20px;\n  border-radius: 50%;\n  padding: 1px;\n  margin: 2px 5px;\n  position: relative;\n}\n\n#MangaOnlineViewer .ThemeRadio svg {\n  position: absolute;\n  top: 15%;\n  right: 15%;\n}\n\n#MangaOnlineViewer .ThemeRadio.selected .icon-tabler-check {\n  display: inline;\n}\n\n#MangaOnlineViewer .ThemeRadio:not(.selected) .icon-tabler-check {\n  display: none;\n}\n\n#MangaOnlineViewer #ThemeSelector {\n  width: 110px;\n}\n\n#MangaOnlineViewer #Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {\n  display: none;\n}\n\n#MangaOnlineViewer .radio-inputs {\n  position: relative;\n  display: flex;\n  flex-wrap: wrap;\n  border-radius: 0.5rem;\n  background-color: var(--theme-border-color);\n  color: var(--theme-text-color);\n  box-sizing: border-box;\n  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);\n  padding: 0.25rem;\n  width: 300px;\n  font-size: 14px;\n}\n\n#MangaOnlineViewer .radio-inputs .radio {\n  flex: 1 1 auto;\n  text-align: center;\n}\n\n#MangaOnlineViewer .toggler input {\n  display: none;\n}\n\n#MangaOnlineViewer .radio-inputs .radio input {\n  display: none;\n}\n\n#MangaOnlineViewer .radio-inputs .radio .name .icon {\n  margin: 0 0.5rem;\n}\n\n#MangaOnlineViewer .radio-inputs .radio .name {\n  display: flex;\n  cursor: pointer;\n  align-items: center;\n  justify-content: center;\n  border-radius: 0.5rem;\n  border: none;\n  padding: 0.5rem 0;\n  color: var(--theme-text-color);\n  background-color: var(--theme-border-color);\n  transition: all 0.15s ease-in-out;\n}\n\n#MangaOnlineViewer .radio-inputs .radio input:checked + .name {\n  background-color: var(--theme-primary-color);\n  color: var(--theme-primary-text-color);\n  font-weight: 600;\n}\n\n#MangaOnlineViewer #ColorScheme {\n  padding: 5px;\n  min-height: 28px;\n  min-width: 28px;\n}\n\n#MangaOnlineViewer .toggler {\n  width: 36px;\n  /*margin: 40px auto;*/\n}\n\n#MangaOnlineViewer .toggler label {\n  display: block;\n  position: relative;\n  width: 36px;\n  height: 18px;\n  border: 1px solid #d6d6d6;\n  border-radius: 36px;\n  background: #e4e8e8;\n  cursor: pointer;\n}\n\n#MangaOnlineViewer .toggler label::after {\n  display: block;\n  border-radius: 100%;\n  background-color: #d7062a;\n  content: "";\n  animation-name: toggler-size;\n  animation-duration: 0.15s;\n  animation-timing-function: ease-out;\n  animation-direction: normal;\n  animation-iteration-count: 1;\n  animation-play-state: running;\n}\n\n#MangaOnlineViewer .toggler .toggler-on,\n#MangaOnlineViewer .toggler .toggler-off {\n  opacity: 1;\n  z-index: 2;\n}\n\n#MangaOnlineViewer .toggler label::after,\n#MangaOnlineViewer .toggler label .toggler-on,\n#MangaOnlineViewer .toggler label .toggler-off {\n  position: absolute;\n  /*top: 50%;*/\n  top: 9px;\n  left: 25%;\n  width: 16px;\n  height: 16px;\n  transform: translateY(-50%) translateX(-50%);\n  transition:\n    left 0.15s ease-in-out,\n    background-color 0.2s ease-out,\n    width 0.15s ease-in-out,\n    height 0.15s ease-in-out,\n    opacity 0.15s ease-in-out;\n}\n\n#MangaOnlineViewer .toggler input:checked + label::after,\n#MangaOnlineViewer .toggler input:checked + label .toggler-on,\n#MangaOnlineViewer .toggler input:checked + label .toggler-off {\n  left: 75%;\n}\n\n#MangaOnlineViewer .toggler input:checked + label::after {\n  background-color: #50ac5d;\n  animation-name: toggler-size2;\n}\n\n#MangaOnlineViewer .toggler input:checked + label .toggler-off,\n#MangaOnlineViewer .toggler input:not(:checked) + label .toggler-on {\n  width: 0;\n  height: 0;\n  opacity: 0;\n}\n\n#MangaOnlineViewer .toggler .path {\n  fill: none;\n  stroke: #fefefe;\n  stroke-width: 7px;\n  stroke-linecap: round;\n  stroke-miterlimit: 10;\n}\n\n@keyframes toggler-size {\n  0%,\n  100% {\n    width: 26px;\n    height: 26px;\n  }\n\n  50% {\n    width: 20px;\n    height: 20px;\n  }\n}\n\n@keyframes toggler-size2 {\n  0%,\n  100% {\n    width: 26px;\n    height: 26px;\n  }\n\n  50% {\n    width: 20px;\n    height: 20px;\n  }\n}\n';
+    '#MangaOnlineViewer #SettingsPanel {\r\n  color: var(--theme-text-color);\r\n  padding: 10px;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  bottom: 0;\r\n  z-index: 1000;\r\n  transition:\r\n    transform 0.3s ease-in,\r\n    background-color 0.3s linear;\r\n  transform: translateX(-100%);\r\n  display: flex;\r\n  flex-flow: column;\r\n  gap: 5px;\r\n  overflow-y: auto;\r\n  max-width: 100vw;\r\n  width: 308px;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel.visible {\r\n  transform: translateX(0);\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel fieldset {\r\n  border: 1px solid var(--theme-body-text-color);\r\n  padding: 3px;\r\n  border-radius: 10px;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .ControlLabel {\r\n  display: flex;\r\n  flex-flow: row wrap;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 2px;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: space-between;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .ControlLabelItem:not(.show) {\r\n  display: none;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel input[type="range"] {\r\n  width: 100%;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel .RangeValue {\r\n  display: inline-block;\r\n  color: var(--theme-primary-text-color);\r\n  line-height: 20px;\r\n  text-align: center;\r\n  border-radius: 3px;\r\n  background: var(--theme-primary-color);\r\n  padding: 2px 5px;\r\n  margin-left: 8px;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel datalist {\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  writing-mode: vertical-lr;\r\n  width: 100%;\r\n}\r\n\r\n#MangaOnlineViewer #SettingsPanel datalist option {\r\n  padding: 0;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio {\r\n  border: 1px solid var(--theme-text-color);\r\n  color: var(--theme-primary-text-color);\r\n  background-color: var(--theme-primary-color);\r\n  height: 20px;\r\n  width: 20px;\r\n  border-radius: 50%;\r\n  padding: 1px;\r\n  margin: 2px 5px;\r\n  position: relative;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio svg {\r\n  position: absolute;\r\n  top: 15%;\r\n  right: 15%;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio.selected .icon-tabler-check {\r\n  display: inline;\r\n}\r\n\r\n#MangaOnlineViewer .ThemeRadio:not(.selected) .icon-tabler-check {\r\n  display: none;\r\n}\r\n\r\n#MangaOnlineViewer #ThemeSelector {\r\n  width: 110px;\r\n}\r\n\r\n#MangaOnlineViewer #Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {\r\n  display: none;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs {\r\n  position: relative;\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  border-radius: 0.5rem;\r\n  background-color: var(--theme-border-color);\r\n  color: var(--theme-text-color);\r\n  box-sizing: border-box;\r\n  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);\r\n  padding: 0.25rem;\r\n  width: 300px;\r\n  font-size: 14px;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio {\r\n  flex: 1 1 auto;\r\n  text-align: center;\r\n}\r\n\r\n#MangaOnlineViewer .toggler input {\r\n  display: none;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio input {\r\n  display: none;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio .name .icon {\r\n  margin: 0 0.5rem;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio .name {\r\n  display: flex;\r\n  cursor: pointer;\r\n  align-items: center;\r\n  justify-content: center;\r\n  border-radius: 0.5rem;\r\n  border: none;\r\n  padding: 0.5rem 0;\r\n  color: var(--theme-text-color);\r\n  background-color: var(--theme-border-color);\r\n  transition: all 0.15s ease-in-out;\r\n}\r\n\r\n#MangaOnlineViewer .radio-inputs .radio input:checked + .name {\r\n  background-color: var(--theme-primary-color);\r\n  color: var(--theme-primary-text-color);\r\n  font-weight: 600;\r\n}\r\n\r\n#MangaOnlineViewer #ColorScheme {\r\n  padding: 5px;\r\n  min-height: 28px;\r\n  min-width: 28px;\r\n}\r\n\r\n#MangaOnlineViewer .toggler {\r\n  width: 36px;\r\n  /*margin: 40px auto;*/\r\n}\r\n\r\n#MangaOnlineViewer .toggler label {\r\n  display: block;\r\n  position: relative;\r\n  width: 36px;\r\n  height: 18px;\r\n  border: 1px solid #d6d6d6;\r\n  border-radius: 36px;\r\n  background: #e4e8e8;\r\n  cursor: pointer;\r\n}\r\n\r\n#MangaOnlineViewer .toggler label::after {\r\n  display: block;\r\n  border-radius: 100%;\r\n  background-color: #d7062a;\r\n  content: "";\r\n  animation-name: toggler-size;\r\n  animation-duration: 0.15s;\r\n  animation-timing-function: ease-out;\r\n  animation-direction: normal;\r\n  animation-iteration-count: 1;\r\n  animation-play-state: running;\r\n}\r\n\r\n#MangaOnlineViewer .toggler .toggler-on,\r\n#MangaOnlineViewer .toggler .toggler-off {\r\n  opacity: 1;\r\n  z-index: 2;\r\n}\r\n\r\n#MangaOnlineViewer .toggler label::after,\r\n#MangaOnlineViewer .toggler label .toggler-on,\r\n#MangaOnlineViewer .toggler label .toggler-off {\r\n  position: absolute;\r\n  /*top: 50%;*/\r\n  top: 9px;\r\n  left: 25%;\r\n  width: 16px;\r\n  height: 16px;\r\n  transform: translateY(-50%) translateX(-50%);\r\n  transition:\r\n    left 0.15s ease-in-out,\r\n    background-color 0.2s ease-out,\r\n    width 0.15s ease-in-out,\r\n    height 0.15s ease-in-out,\r\n    opacity 0.15s ease-in-out;\r\n}\r\n\r\n#MangaOnlineViewer .toggler input:checked + label::after,\r\n#MangaOnlineViewer .toggler input:checked + label .toggler-on,\r\n#MangaOnlineViewer .toggler input:checked + label .toggler-off {\r\n  left: 75%;\r\n}\r\n\r\n#MangaOnlineViewer .toggler input:checked + label::after {\r\n  background-color: #50ac5d;\r\n  animation-name: toggler-size2;\r\n}\r\n\r\n#MangaOnlineViewer .toggler input:checked + label .toggler-off,\r\n#MangaOnlineViewer .toggler input:not(:checked) + label .toggler-on {\r\n  width: 0;\r\n  height: 0;\r\n  opacity: 0;\r\n}\r\n\r\n#MangaOnlineViewer .toggler .path {\r\n  fill: none;\r\n  stroke: #fefefe;\r\n  stroke-width: 7px;\r\n  stroke-linecap: round;\r\n  stroke-miterlimit: 10;\r\n}\r\n\r\n@keyframes toggler-size {\r\n  0%,\r\n  100% {\r\n    width: 26px;\r\n    height: 26px;\r\n  }\r\n\r\n  50% {\r\n    width: 20px;\r\n    height: 20px;\r\n  }\r\n}\r\n\r\n@keyframes toggler-size2 {\r\n  0%,\r\n  100% {\r\n    width: 26px;\r\n    height: 26px;\r\n  }\r\n\r\n  50% {\r\n    width: 20px;\r\n    height: 20px;\r\n  }\r\n}\r\n';
 
   const normalize =
-    '/*  Simple Normalizer */\nhtml {\n  font-size: 100%;\n}\n\nbody {\n  margin: 0;\n  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;\n  font-size: 14px;\n  line-height: 20px;\n  color: var(--theme-body-text-color);\n  background-color: var(--theme-body-background);\n  padding: 0;\n}\n\na,\na:link,\na:visited,\na:active,\na:focus {\n  color: var(--theme-body-text-color);\n  text-decoration: none;\n}\n\nimg {\n  height: auto;\n  vertical-align: middle;\n  border: 0 none;\n}\n';
+    '/*  Simple Normalizer */\r\nhtml {\r\n  font-size: 100%;\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;\r\n  font-size: 14px;\r\n  line-height: 20px;\r\n  color: var(--theme-body-text-color);\r\n  background-color: var(--theme-body-background);\r\n  padding: 0;\r\n}\r\n\r\na,\r\na:link,\r\na:visited,\r\na:active,\r\na:focus {\r\n  color: var(--theme-body-text-color);\r\n  text-decoration: none;\r\n}\r\n\r\nimg {\r\n  height: auto;\r\n  vertical-align: middle;\r\n  border: 0 none;\r\n}\r\n';
 
   const thumbnails =
-    '#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=""],\n#MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {\n  width: 100px;\n  height: 150px;\n  display: inline-block;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: 20%;\n}\n\n#MangaOnlineViewer #NavigationCounters {\n  margin: 5px;\n  width: 100%;\n  line-height: 1rem;\n}\n\n#MangaOnlineViewer #Navigation {\n  color: var(--theme-text-color);\n  background-color: var(--theme-hightlight-color);\n  bottom: -180px;\n  height: 185px;\n  overflow-x: hidden;\n  overflow-y: hidden;\n  padding-bottom: 20px;\n  position: fixed;\n  white-space: nowrap;\n  width: 100%;\n  text-align: center;\n  transition:\n    transform 0.3s ease-in,\n    background-color 0.3s linear;\n  border-bottom-left-radius: 0;\n  border-bottom-right-radius: 0;\n  line-height: 0;\n}\n\n#MangaOnlineViewer #Navigation #Thumbnails {\n  overflow-x: auto;\n  overflow-y: hidden;\n  margin-right: 10px;\n}\n\n#MangaOnlineViewer #Navigation:hover {\n  transform: translateY(-180px);\n}\n\n#MangaOnlineViewer #Navigation.disabled {\n  display: none;\n}\n\n#MangaOnlineViewer #Navigation.visible {\n  transform: translateY(-180px);\n}\n\n#MangaOnlineViewer #Navigation .Thumbnail {\n  display: inline-block;\n  height: 150px;\n  margin: 0 5px;\n  border: 1px solid var(--theme-primary-color);\n}\n\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailIndex {\n  color: var(--theme-text-color);\n  background-color: var(--theme-hightlight-color);\n  display: block;\n  opacity: 0.8;\n  position: relative;\n  bottom: 25%;\n  width: 100%;\n  line-height: 1rem;\n}\n\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailImg {\n  cursor: pointer;\n  display: inline-block;\n  max-height: 150px;\n  min-height: 150px;\n  min-width: 80px;\n  max-width: 160px;\n}\n';
+    '#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=""],\r\n#MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {\r\n  width: 100px;\r\n  height: 150px;\r\n  display: inline-block;\r\n  background-position: center;\r\n  background-repeat: no-repeat;\r\n  background-size: 20%;\r\n}\r\n\r\n#MangaOnlineViewer #NavigationCounters {\r\n  margin: 5px;\r\n  width: 100%;\r\n  line-height: 1rem;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation {\r\n  color: var(--theme-text-color);\r\n  background-color: var(--theme-hightlight-color);\r\n  bottom: -180px;\r\n  height: 185px;\r\n  overflow-x: hidden;\r\n  overflow-y: hidden;\r\n  padding-bottom: 20px;\r\n  position: fixed;\r\n  white-space: nowrap;\r\n  width: 100%;\r\n  text-align: center;\r\n  transition:\r\n    transform 0.3s ease-in,\r\n    background-color 0.3s linear;\r\n  border-bottom-left-radius: 0;\r\n  border-bottom-right-radius: 0;\r\n  line-height: 0;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation #Thumbnails {\r\n  overflow-x: auto;\r\n  overflow-y: hidden;\r\n  margin-right: 10px;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation:hover {\r\n  transform: translateY(-180px);\r\n}\r\n\r\n#MangaOnlineViewer #Navigation.disabled {\r\n  display: none;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation.visible {\r\n  transform: translateY(-180px);\r\n}\r\n\r\n#MangaOnlineViewer #Navigation .Thumbnail {\r\n  display: inline-block;\r\n  height: 150px;\r\n  margin: 0 5px;\r\n  border: 1px solid var(--theme-primary-color);\r\n}\r\n\r\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailIndex {\r\n  color: var(--theme-text-color);\r\n  background-color: var(--theme-hightlight-color);\r\n  display: block;\r\n  opacity: 0.8;\r\n  position: relative;\r\n  bottom: 25%;\r\n  width: 100%;\r\n  line-height: 1rem;\r\n}\r\n\r\n#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailImg {\r\n  cursor: pointer;\r\n  display: inline-block;\r\n  max-height: 150px;\r\n  min-height: 150px;\r\n  min-width: 80px;\r\n  max-width: 160px;\r\n}\r\n';
 
   const cssStyles = css`
     :root,
@@ -4434,21 +5233,21 @@
 
     #MangaOnlineViewer .PageContent .PageImg[src=''],
     #MangaOnlineViewer .PageContent .PageImg:not([src]) {
-      background-image: url('${svgToUrl(IconPhoto)}');
+      background-image: url('${svgToUrl(IconPhotoRaw)}');
     }
 
     #MangaOnlineViewer .Thumbnail .ThumbnailImg[src=''],
     #MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {
-      background-image: url('${svgToUrl(IconPhoto)}');
+      background-image: url('${svgToUrl(IconPhotoRaw)}');
     }
 
     #MangaOnlineViewer .PageContent .PageImg.imgBroken,
     #MangaOnlineViewer .Thumbnail .ThumbnailImg.imgBroken {
-      background-image: url('${svgToUrl(IconPhotoOff)}');
+      background-image: url('${svgToUrl(IconPhotoOffRaw)}');
     }
 
     #MangaOnlineViewer .ThemeRadio.custom {
-      /*background-image: url("${svgToUrl(IconPalette)}");*/
+      /*background-image: url("${svgToUrl(IconPaletteRaw)}");*/
     }
 
     ${normalize}
@@ -4485,10 +5284,14 @@
     window.scrollTo(0, 0);
     logScriptVerbose(`Page Cleaned Up`);
     document.head.innerHTML = head(manga);
-    document.body.innerHTML = app(manga);
-    events();
-    loadManga(manga);
-    if (manga.comments) document.querySelector('#CommentsArea')?.append(manga.comments);
+    document.body.innerHTML = `<div id="MangaOnlineViewer"></div>`;
+    const root = document.querySelector('#MangaOnlineViewer');
+    if (root) {
+      renderReplace(app(manga), root);
+      events();
+      loadManga(manga);
+      if (manga.comments) document.querySelector('#CommentsArea')?.append(manga.comments);
+    }
   }
 
   async function captureComments$1() {
@@ -4903,7 +5706,7 @@
 
   const batoto = {
     name: 'Batoto',
-    url: /https?:\/\/(?:www\.)?(?:fto|jto|hto|dto|mto|wto|bato|battwo|batotwo|comiko|batocomic|readtoto|zbato|xbato|mangatoto)\.(?:to|com|net|org)\/(chapter|title).*/,
+    url: /https?:\/\/(www\.)?(\w(ba)?to|readtoto|batocomic|comiko|battwo|batotoo|batotwo).(to|com|net|org)\/(chapter|title).*/,
     homepage: 'https://rentry.co/batoto',
     language: [Language.ENGLISH],
     category: Category.MANGA,

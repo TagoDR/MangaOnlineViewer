@@ -1,7 +1,9 @@
+import { html } from 'lit-html';
+import { classMap } from 'lit-html/directives/class-map.js';
 import _ from 'lodash';
 import { getSettingsValue, isBookmarked, settings, showSettings } from '../../core/settings';
 import type { IManga } from '../../types';
-import { html } from '../../utils/code-tag';
+import renderReplace from '../../utils/renderReplace.ts';
 import { getDevice } from '../../utils/tampermonkey';
 import events from '../events';
 import { toggleAutoScroll } from '../events/autoscroll';
@@ -51,9 +53,9 @@ export function hydrateApp() {
     reader.className = `${getSettingsValue('fitWidthIfOversize') ? 'fitWidthIfOversize' : ''} ${getSettingsValue('verticalSeparator') ? 'separator' : ''} ${getSettingsValue('viewMode')}`;
   }
   Object.entries(elements).forEach(([id, component]) => {
-    const tag = document.querySelector(id);
+    const tag = document.querySelector<HTMLElement>(id);
     if (tag) {
-      tag.outerHTML = component;
+      renderReplace(component, tag);
     }
   });
   document
@@ -66,19 +68,23 @@ export function hydrateApp() {
 
 const app = (manga: IManga) => {
   loadedManga = manga;
-  const main = document.createElement('div');
-  main.id = 'MangaOnlineViewer';
-  main.className = `
-        ${getSettingsValue('hidePageControls') ? 'hideControls' : ''}
-        ${isBookmarked() ? 'bookmarked' : ''}
-        ${getDevice()}`;
-  main.innerHTML = html`
-    <div id="menu" class="${getSettingsValue('header')}">${IconMenu2}</div>
-    ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
-    <div id="Overlay" class="overlay"></div>
-    ${CommentsPanel()} ${KeybindingsPanel()} ${BookmarksPanel()} ${SettingsPanel()}
+  const main = html`
+    <div
+      id="MangaOnlineViewer"
+      class="${classMap({
+        hideControls: getSettingsValue('hidePageControls'),
+        bookmarked: !!isBookmarked(),
+        [getDevice()]: true,
+      })}"
+    >
+      <div id="menu" class="${getSettingsValue('header')}">${IconMenu2}</div>
+      ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
+      <div id="Overlay" class="overlay"></div>
+      ${CommentsPanel()} ${KeybindingsPanel()} ${BookmarksPanel()} ${SettingsPanel()}
+    </div>
   `;
+
   settings.listen(_.debounce(hydrateApp, 600));
-  return main.outerHTML;
+  return main;
 };
 export default app;
