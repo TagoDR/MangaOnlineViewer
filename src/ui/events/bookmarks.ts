@@ -87,20 +87,3 @@ export function buttonBookmark(event: Event) {
     .querySelectorAll('.bookmarkFunctions .erase')
     ?.forEach(addEvent('click', buttonEraseBookmarks));
 }
-
-function bookmarks() {
-  // List of Bookmarks
-  document.querySelector('#bookmarks')?.addEventListener('click', buttonBookmarksOpen);
-  document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonBookmarksClose));
-  document.querySelector('#Overlay')?.addEventListener('click', buttonBookmarksClose);
-  // Erase Bookmark
-  document
-    .querySelectorAll('.bookmarkFunctions .erase')
-    ?.forEach(addEvent('click', buttonEraseBookmarks));
-
-  // Bookmark Page to resume reading
-  document.querySelectorAll('.Bookmark')?.forEach(addEvent('click', buttonBookmark));
-  document.querySelector('.AddBookmark')?.addEventListener('click', buttonBookmark);
-}
-
-export default bookmarks;

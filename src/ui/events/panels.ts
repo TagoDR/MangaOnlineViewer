@@ -3,10 +3,14 @@ import _ from 'lodash';
 import { getSettingsValue, saveSettingsValue } from '../../core/settings';
 import { isNothing } from '../../utils/checks';
 import { keybindEditor, keybindList } from '../components/KeybindingsPanel';
-import { addEvent } from './common';
 import keybindings from './keybindings';
 
-function toggleFunction(selector: string, classname: string, open: () => void, close: () => void) {
+export function toggleFunction(
+  selector: string,
+  classname: string,
+  open: () => void,
+  close: () => void,
+) {
   return () => {
     const isOpen = document.querySelector(selector)?.className.includes(classname);
     if (isOpen) {
@@ -79,11 +83,11 @@ export function buttonKeybindingsClose() {
 
 export function saveKeybindings() {
   const newkeybinds: Record<string, string[] | undefined> = getSettingsValue('keybinds');
-  Object.keys(getSettingsValue('keybinds')).forEach((kb) => {
+  Object.keys(getSettingsValue('keybinds')).forEach(kb => {
     const keys = document
       .querySelector<HTMLInputElement>(`#${kb}`)
       ?.value.split(',')
-      ?.map((value) => value.trim());
+      ?.map(value => value.trim());
     newkeybinds[kb] = isNothing(keys) ? undefined : keys;
   });
   saveSettingsValue('keybinds', newkeybinds);
@@ -103,23 +107,7 @@ export function editKeybindings() {
 
 function panels() {
   // Show Header list
-  document.querySelector('#menu')?.addEventListener('click', buttonHeaderClick);
   document.addEventListener('mousemove', _.throttle(headerHover, 300));
-  // Settings Control
-  document
-    .querySelector('#settings')
-    ?.addEventListener(
-      'click',
-      toggleFunction('#SettingsPanel', 'visible', buttonSettingsOpen, buttonSettingsClose),
-    );
-  document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonSettingsClose));
-  document.querySelector('#Overlay')?.addEventListener('click', buttonSettingsClose);
-  // Keybindings list
-  document.querySelector('#keybindings')?.addEventListener('click', buttonKeybindingsOpen);
-  document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonKeybindingsClose));
-  document.querySelector('#Overlay')?.addEventListener('click', buttonKeybindingsClose);
-  document.querySelector('#EditKeybindings')?.addEventListener('click', editKeybindings);
-  document.querySelector('#SaveKeybindings')?.addEventListener('click', saveKeybindings);
 }
 
 export default panels;

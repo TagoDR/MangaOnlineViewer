@@ -2,12 +2,19 @@ import { html } from 'lit-html';
 import { classMap } from 'lit-html/directives/class-map.js';
 import _ from 'lodash';
 import { getSettingsValue, isBookmarked, settings, showSettings } from '../../core/settings';
-import type { IManga } from '../../types';
+import type { IManga, ISettings } from '../../types';
 import renderReplace from '../../utils/renderReplace.ts';
 import { getDevice } from '../../utils/tampermonkey';
 import events from '../events';
 import { toggleAutoScroll } from '../events/autoscroll';
-import { buttonSettingsOpen } from '../events/panels.ts';
+import { buttonBookmarksClose } from '../events/bookmarks.ts';
+import { buttonCommentsClose } from '../events/globals.ts';
+import {
+  buttonHeaderClick,
+  buttonKeybindingsClose,
+  buttonSettingsClose,
+  buttonSettingsOpen,
+} from '../events/panels.ts';
 import { updateViewMode } from '../events/viewmode';
 import { IconMenu2 } from '../icons';
 import { refreshThemes } from '../themes';
@@ -21,7 +28,7 @@ import ThumbnailsPanel from './ThumbnailsPanel';
 
 let loadedManga: IManga;
 
-export function hydrateApp() {
+export function hydrateApp(_value: Readonly<ISettings>, _oldValue: Readonly<ISettings>) {
   showSettings();
   updateViewMode(getSettingsValue('viewMode'))();
   const elements = {
@@ -77,9 +84,24 @@ const app = (manga: IManga) => {
         [getDevice()]: true,
       })}"
     >
-      <div id="menu" class="${getSettingsValue('header')}">${IconMenu2}</div>
+      <div
+        id="menu"
+        class="${getSettingsValue('header')}"
+        @click=${buttonHeaderClick}
+      >
+        ${IconMenu2}
+      </div>
       ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
-      <div id="Overlay" class="overlay"></div>
+      <div
+        id="Overlay"
+        class="overlay"
+        @click="${() => {
+          buttonSettingsClose();
+          buttonCommentsClose();
+          buttonBookmarksClose();
+          buttonKeybindingsClose();
+        }}"
+      ></div>
       ${CommentsPanel()} ${KeybindingsPanel()} ${BookmarksPanel()} ${SettingsPanel()}
     </div>
   `;

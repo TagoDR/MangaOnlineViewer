@@ -1,6 +1,7 @@
 import { html, render } from 'lit-html';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
 import { isEmpty } from '../../utils/checks';
+import { buttonBookmark, buttonBookmarksClose, buttonEraseBookmarks } from '../events/bookmarks';
 import { IconBookmark, IconBookmarkOff, IconExternalLink, IconTrash, IconX } from '../icons';
 
 const listBookmarks = () => {
@@ -10,11 +11,19 @@ const listBookmarks = () => {
 
   return getSettingsValue('bookmarks').map(
     (mark, index) => html`
-      <div id="Bookmark${index + 1}" class="BookmarkItem">
+      <div
+        id="Bookmark${index + 1}"
+        class="BookmarkItem"
+      >
         <span class="bookmarkColumnLarge">
           <span class="bookmarkName">${mark.name}</span>
           <br />
-          <a class="bookmarkURl" href="${mark.url}" target="_blank">${mark.url}</a>
+          <a
+            class="bookmarkURl"
+            href="${mark.url}"
+            target="_blank"
+            >${mark.url}</a
+          >
         </span>
         <span class="bookmarkColumnSmall">
           <span class="bookmarkDate"> ${new Date(mark.date).toISOString().slice(0, 10)}</span>
@@ -22,8 +31,16 @@ const listBookmarks = () => {
           <span class="bookmarkPage">Page: ${mark.page}</span>
         </span>
         <span class="bookmarkFunctions">
-          <a class="" href="${mark.url}" target="_blank">
-            <button class="ControlButton open" title="Open Bookmark" type="button">
+          <a
+            class=""
+            href="${mark.url}"
+            target="_blank"
+          >
+            <button
+              class="ControlButton open"
+              title="Open Bookmark"
+              type="button"
+            >
               ${IconExternalLink}
             </button>
           </a>
@@ -32,6 +49,7 @@ const listBookmarks = () => {
             title="Delete Bookmark"
             type="button"
             value="${mark.url}"
+            @click=${buttonEraseBookmarks}
           >
             ${IconTrash}
           </button>
@@ -42,11 +60,23 @@ const listBookmarks = () => {
 };
 
 const BookmarkPanel = () => html`
-  <div id="BookmarksPanel" class="panel">
-    <button id="CloseBookmarks" class="closeButton" title="${getLocaleString('CLOSE')}">
+  <div
+    id="BookmarksPanel"
+    class="panel"
+  >
+    <button
+      id="CloseBookmarks"
+      class="closeButton"
+      title="${getLocaleString('CLOSE')}"
+      @click=${buttonBookmarksClose}
+    >
       ${IconX}
     </button>
-    <button class="Bookmark simpleButton" title="${getLocaleString('BOOKMARK')}">
+    <button
+      class="Bookmark simpleButton"
+      title="${getLocaleString('BOOKMARK')}"
+      @click=${buttonBookmark}
+    >
       ${IconBookmark} ${IconBookmarkOff}
     </button>
     <h2>${getLocaleString('BOOKMARKS')}</h2>

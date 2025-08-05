@@ -203,9 +203,9 @@ function createLateStartButton(site: ISite, beginning: number): void {
 function showWaitPopup(site: ISite, manga: IManga): void {
   Swal.fire({
     title: getLocaleString('STARTING'),
-    html: html`${
-      manga.begin && manga.begin > 1 ? `${getLocaleString('RESUME')}${manga.begin}.<br/>` : ''
-    }${getLocaleString('WAITING')}`,
+    html: html`${manga.begin && manga.begin > 1
+      ? `${getLocaleString('RESUME')}${manga.begin}.<br/>`
+      : ''}${getLocaleString('WAITING')}`,
     showCancelButton: true,
     cancelButtonColor: '#d33',
     reverseButtons: true,
