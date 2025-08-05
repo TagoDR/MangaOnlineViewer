@@ -93,7 +93,7 @@ export const isSettingsLocal = () => localSettings?.enabled === true;
 export const settings = atom<ISettings>(isSettingsLocal() ? localSettings : globalSettings);
 export const locale = computed(
   settings,
-  (current): ILocale => locales.find((l) => l.ID === current.locale) ?? locales[1],
+  (current): ILocale => locales.find(l => l.ID === current.locale) ?? locales[1],
 );
 
 function refresh() {
@@ -203,7 +203,7 @@ export function changeSettingsValue<K extends ISettingsKey>(
 }
 
 export function getLocaleString<K extends ILocaleKey>(name: K | string): string {
-  const locale = locales.find((l) => l.ID === getSettingsValue('locale')) ?? locales[1];
+  const locale = locales.find(l => l.ID === getSettingsValue('locale')) ?? locales[1];
   if (isKey(locale, name)) return locale?.[name] ?? locales[1]?.[name];
   return `##MISSING_STRING_${name}##`;
 }
@@ -229,7 +229,7 @@ export function toggleLocalSettings(activate = false) {
 }
 
 export function isBookmarked(url: string = window.location.href): number | undefined {
-  return globalSettings.bookmarks.find((el) => el.url === url)?.page;
+  return globalSettings.bookmarks.find(el => el.url === url)?.page;
 }
 
 export function showSettings<K extends ISettingsKey>(key: K | null = null) {

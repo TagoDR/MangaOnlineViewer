@@ -2,6 +2,23 @@ import { html } from 'lit-html';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
 import type { IManga } from '../../types';
 import sequence from '../../utils/sequence';
+import { toggleAutoScroll } from '../events/autoscroll';
+import { buttonBookmarksOpen } from '../events/bookmarks';
+import {
+  buttonCommentsOpen,
+  buttonGlobalHideImageControls,
+  buttonRedirectURL,
+  buttonStartDownload,
+} from '../events/globals';
+import { selectGoToPage } from '../events/navigation';
+import {
+  buttonKeybindingsOpen,
+  buttonSettingsClose,
+  buttonSettingsOpen,
+  toggleFunction,
+} from '../events/panels';
+import { updateViewMode } from '../events/viewmode.ts';
+import { changeGlobalZoom, changeZoom, changeZoomByStep } from '../events/zoom.ts';
 import {
   IconArrowAutofitDown,
   IconArrowAutofitHeight,
@@ -26,45 +43,85 @@ import {
 } from '../icons';
 
 const listOptions = (times: number, begin: number) =>
-  sequence(times, begin).map((index) => html` <option value="${index}">${index}</option>`);
+  sequence(times, begin).map(index => html` <option value="${index}">${index}</option>`);
 const Header = (manga: IManga) => html`
-  <header id="Header" class="${getSettingsValue('header')} headroom-top">
+  <header
+    id="Header"
+    class="${getSettingsValue('header')} headroom-top"
+  >
     <aside id="GlobalFunctions">
       <span>
-        <button id="enlarge" title="${getLocaleString('ENLARGE')}" class="ControlButton">
+        <button
+          id="enlarge"
+          title="${getLocaleString('ENLARGE')}"
+          class="ControlButton"
+          @click="${changeZoomByStep()}"
+        >
           ${IconZoomInArea}
         </button>
-        <button id="restore" title="${getLocaleString('RESTORE')}" class="ControlButton">
+        <button
+          id="restore"
+          title="${getLocaleString('RESTORE')}"
+          class="ControlButton"
+          @click="${changeGlobalZoom('percent')}"
+        >
           ${IconZoomPan}
         </button>
-        <button id="reduce" title="${getLocaleString('REDUCE')}" class="ControlButton">
+        <button
+          id="reduce"
+          title="${getLocaleString('REDUCE')}"
+          class="ControlButton"
+          @click="${changeZoomByStep(-1)}"
+        >
           ${IconZoomOutArea}
         </button>
-        <button id="fitWidth" title="${getLocaleString('FIT_WIDTH')}" class="ControlButton">
+        <button
+          id="fitWidth"
+          title="${getLocaleString('FIT_WIDTH')}"
+          class="ControlButton"
+          @click="${changeGlobalZoom('width')}"
+        >
           ${IconArrowAutofitWidth}
         </button>
-        <button id="fitHeight" title="${getLocaleString('FIT_HEIGHT')}" class="ControlButton">
+        <button
+          id="fitHeight"
+          title="${getLocaleString('FIT_HEIGHT')}"
+          class="ControlButton"
+          @click="${changeGlobalZoom('height')}"
+        >
           ${IconArrowAutofitHeight}
         </button>
-        <button id="keybindings" title="${getLocaleString('KEYBINDINGS')}" class="ControlButton">
+        <button
+          id="keybindings"
+          title="${getLocaleString('KEYBINDINGS')}"
+          class="ControlButton"
+          @click=${buttonKeybindingsOpen}
+        >
           ${IconKeyboard}
         </button>
         <button
           id="AutoScroll"
           title="${getLocaleString('SCROLL_START')}"
           class="ControlButton phones"
+          @click=${toggleAutoScroll}
         >
           ${IconPlayerPlay} ${IconPlayerPause}
         </button>
       </span>
       <span>
-        <button id="ltrMode" title="${getLocaleString('VIEW_MODE_LEFT')}" class="ControlButton">
+        <button
+          id="ltrMode"
+          title="${getLocaleString('VIEW_MODE_LEFT')}"
+          class="ControlButton"
+          @click="${updateViewMode('FluidLTR')}"
+        >
           ${IconArrowAutofitRight}
         </button>
         <button
           id="verticalMode"
           title="${getLocaleString('VIEW_MODE_VERTICAL')}"
           class="ControlButton tablets"
+          @click="${updateViewMode('Vertical')}"
         >
           ${IconArrowAutofitDown}
         </button>
@@ -72,16 +129,23 @@ const Header = (manga: IManga) => html`
           id="webComic"
           title="${getLocaleString('VIEW_MODE_WEBCOMIC')}"
           class="ControlButton tablets"
+          @click="${updateViewMode('WebComic')}"
         >
           ${IconSpacingVertical}
         </button>
-        <button id="rtlMode" title="${getLocaleString('VIEW_MODE_RIGHT')}" class="ControlButton">
+        <button
+          id="rtlMode"
+          title="${getLocaleString('VIEW_MODE_RIGHT')}"
+          class="ControlButton"
+          @click="${updateViewMode('FluidRTL')}"
+        >
           ${IconArrowAutofitLeft}
         </button>
         <button
           id="pageControls"
           title="${getLocaleString('TOGGLE_CONTROLS')}"
           class="ControlButton tablets"
+          @click="${buttonGlobalHideImageControls}"
         >
           ${IconListNumbers}
         </button>
@@ -89,6 +153,7 @@ const Header = (manga: IManga) => html`
           id="bookmarks"
           title="${getLocaleString('BOOKMARKS')}"
           class="ControlButton tablets"
+          @click=${buttonBookmarksOpen}
         >
           ${IconBookmarks}
         </button>
@@ -96,17 +161,25 @@ const Header = (manga: IManga) => html`
           id="settings"
           title="${getLocaleString('SETTINGS')}"
           class="ControlButton tablets phones"
+          @click=${toggleFunction(
+            '#SettingsPanel',
+            'visible',
+            buttonSettingsOpen,
+            buttonSettingsClose,
+          )}
         >
           ${IconSettings}
         </button>
       </span>
       <span id="ZoomSlider">
-        <output id="ZoomVal" class="RangeValue" for="Zoom">
-          ${
-            getSettingsValue('zoomMode') === 'percent'
-              ? `${getSettingsValue('defaultZoom')}%`
-              : getSettingsValue('zoomMode')
-          }
+        <output
+          id="ZoomVal"
+          class="RangeValue"
+          for="Zoom"
+        >
+          ${getSettingsValue('zoomMode') === 'percent'
+            ? `${getSettingsValue('defaultZoom')}%`
+            : getSettingsValue('zoomMode')}
         </output>
         <input
           type="range"
@@ -115,30 +188,47 @@ const Header = (manga: IManga) => html`
           id="Zoom"
           min="1"
           max="200"
+          @change="${changeZoom}"
         />
       </span>
     </aside>
     <div class="ViewerTitle">
       <h1 id="MangaTitle">${manga.title}</h1>
-      <a id="series" href="${manga.series ?? ''}"> (${getLocaleString('RETURN_CHAPTER_LIST')}) </a>
+      <a
+        id="series"
+        href="${manga.series ?? ''}"
+        @click=${buttonRedirectURL}
+      >
+        (${getLocaleString('RETURN_CHAPTER_LIST')})
+      </a>
     </div>
     <nav id="ChapterNavigation">
-      <div id="Counters" class="ControlLabel">
+      <div
+        id="Counters"
+        class="ControlLabel"
+      >
         ${getLocaleString('PAGES_LOADED')}:
         <i>0</i> /
         <b>${manga.begin && manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
         <span class="ControlLabel"> ${getLocaleString('GO_TO_PAGE')}: </span>
-        <select id="gotoPage">
+        <select
+          id="gotoPage"
+          @change=${selectGoToPage}
+        >
           <option selected>#</option>
           ${listOptions(manga.pages, manga.begin ?? 0).join('')}
         </select>
       </div>
-      <div id="ChapterControl" class="ChapterControl">
+      <div
+        id="ChapterControl"
+        class="ChapterControl"
+      >
         <span>
           <button
             id="CommentsButton"
             class="NavigationControlButton ControlButton ${manga.comments ? '' : 'disabled'}"
             title="${getLocaleString('DISPLAY_COMMENTS')}"
+            @click=${buttonCommentsOpen}
           >
             ${IconMessage} ${getLocaleString('DISPLAY_COMMENTS')}
           </button>
@@ -147,6 +237,7 @@ const Header = (manga: IManga) => html`
             class="NavigationControlButton ControlButton disabled"
             type="button"
             title="${getLocaleString('DOWNLOAD_ZIP')}"
+            @click=${buttonStartDownload}
           >
             ${IconFileDownload} ${IconLoader2} ${getLocaleString('BUTTON_DOWNLOAD')}
           </button></span
@@ -158,6 +249,7 @@ const Header = (manga: IManga) => html`
             type="button"
             href="${manga.prev ?? ''}"
             title="${getLocaleString('PREVIOUS_CHAPTER')}"
+            @click=${buttonRedirectURL}
           >
             ${IconArrowBigLeft} ${getLocaleString('BUTTON_PREVIOUS')}
           </a>
@@ -167,6 +259,7 @@ const Header = (manga: IManga) => html`
             type="button"
             href="${manga.next ?? ''}"
             title="${getLocaleString('NEXT_CHAPTER')}"
+            @click=${buttonRedirectURL}
           >
             ${getLocaleString('BUTTON_NEXT')} ${IconArrowBigRight}
           </a>

@@ -11,7 +11,7 @@ const foolslide: ISite = {
   waitEle: 'img.open',
   run(): IManga {
     const chapter = [...document.querySelectorAll('.topbar_left .dropdown_parent:last-of-type li')];
-    const origin = chapter.findIndex((item) => {
+    const origin = chapter.findIndex(item => {
       const url = item.querySelector('a')?.getAttribute('href');
       if (url) {
         return window.location.href.startsWith(url);
@@ -38,7 +38,7 @@ const foolslide: ISite = {
         ?.getAttribute('href'),
     };
     if (images.length > 1) {
-      return { ...manga, listImages: images.map((img) => img.getAttribute('src') ?? '') };
+      return { ...manga, listImages: images.map(img => img.getAttribute('src') ?? '') };
     }
     return {
       ...manga,

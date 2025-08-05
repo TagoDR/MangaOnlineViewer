@@ -2,11 +2,17 @@ import { html } from 'lit-html';
 import { classMap } from 'lit-html/directives/class-map.js';
 import { getLocaleString, getSettingsValue } from '../../core/settings.ts';
 import colors from '../../utils/colors.ts';
+import {
+  buttonSelectTheme,
+  changeColorScheme,
+  changeCustomTheme,
+  changeThemeShade,
+} from '../events/theming.ts';
 import { IconCheck, IconMoon, IconPalette, IconSun } from '../icons';
 
 function themesSelector() {
-  return [...Object.keys(colors).map((color) => colors[color].name)].map(
-    (theme) => html`
+  return [...Object.keys(colors).map(color => colors[color].name)].map(
+    theme => html`
       <span
         title="${theme}"
         class="${classMap({
@@ -14,6 +20,7 @@ function themesSelector() {
           ThemeRadio: true,
           selected: getSettingsValue('theme') === theme,
         })}"
+        @click=${buttonSelectTheme}
       >
         ${IconCheck}
       </span>
@@ -25,7 +32,13 @@ function theme() {
   return html`
     <div class="ControlLabel ColorSchemeSelector">
       <label>${getLocaleString('COLOR_SCHEME')}</label>
-      <button id="ColorScheme" class="ControlButton">${IconSun} ${IconMoon}</button>
+      <button
+        id="ColorScheme"
+        class="ControlButton"
+        @click=${changeColorScheme}
+      >
+        ${IconSun} ${IconMoon}
+      </button>
     </div>
     <div class="ControlLabel ThemeSelector">
       <label>${getLocaleString('THEME_COLOR')}</label>
@@ -33,6 +46,7 @@ function theme() {
         class="custom ThemeRadio
         ${getSettingsValue('theme') === 'custom' ? 'selected' : ''}"
         title="custom"
+        @click=${buttonSelectTheme}
       >
         ${IconPalette} ${IconCheck}
       </span>
@@ -49,6 +63,7 @@ function theme() {
         type="color"
         value="${getSettingsValue('customTheme')}"
         class="colorpicker CustomTheme"
+        @change=${changeCustomTheme}
       />
     </div>
     <div
@@ -58,7 +73,11 @@ function theme() {
     >
       <span>
         <label>${getLocaleString('THEME_SHADE')}</label>
-        <output id="themeShadeVal" class="RangeValue" for="ThemeShade">
+        <output
+          id="themeShadeVal"
+          class="RangeValue"
+          for="ThemeShade"
+        >
           ${getSettingsValue('themeShade')}
         </output>
       </span>
@@ -70,7 +89,7 @@ function theme() {
         min="100"
         max="900"
         step="100"
-        oninput="themeShadeVal.value = this.value"
+        @input=${changeThemeShade}
       />
     </div>
   `;

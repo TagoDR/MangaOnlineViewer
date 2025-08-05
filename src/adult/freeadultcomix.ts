@@ -15,7 +15,7 @@ const freeadultcomix: ISite = {
       pages: images.length,
       prev: '#',
       next: '#',
-      listImages: images.map((img) => img.getAttribute('src') ?? ''),
+      listImages: images.map(img => img.getAttribute('src') ?? ''),
     };
   },
 };

@@ -1,7 +1,6 @@
 import { sanitizeUrl } from '@braintree/sanitize-url';
 import generateZip from '../../core/download';
 import { logScript } from '../../utils/tampermonkey';
-import { addEvent } from './common';
 
 export function buttonStartDownload(event: Event) {
   const button = event.currentTarget as HTMLInputElement;
@@ -11,7 +10,7 @@ export function buttonStartDownload(event: Event) {
 
   logScript('Downloading Chapter');
   button.classList.add('loading');
-  generateZip().catch((err) => logScript('Error downloading chapter', err));
+  generateZip().catch(err => logScript('Error downloading chapter', err));
 }
 
 export function buttonGlobalHideImageControls() {
@@ -45,17 +44,3 @@ export function changeCommentsColor() {
   elem?.classList.toggle('light');
   elem?.classList.toggle('dark');
 }
-
-function globals() {
-  document.querySelector('#download')?.addEventListener('click', buttonStartDownload);
-  document.querySelector('#pageControls')?.addEventListener('click', buttonGlobalHideImageControls);
-  document.querySelector('#next')?.addEventListener('click', buttonRedirectURL);
-  document.querySelector('#prev')?.addEventListener('click', buttonRedirectURL);
-  document.querySelector('#series')?.addEventListener('click', buttonRedirectURL);
-  document.querySelector('#CommentsButton')?.addEventListener('click', buttonCommentsOpen);
-  document.querySelector('#CommentsColorScheme')?.addEventListener('click', changeCommentsColor);
-  document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonCommentsClose));
-  document.querySelector('#Overlay')?.addEventListener('click', buttonCommentsClose);
-}
-
-export default globals;

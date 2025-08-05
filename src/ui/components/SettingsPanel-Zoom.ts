@@ -1,17 +1,32 @@
 import { html } from 'lit-html';
 import { getLocaleString, getSettingsValue } from '../../core/settings.ts';
+import { changeMinZoom, changeZoomStep } from '../events/options.ts';
+import { changeViewMode } from '../events/viewmode.ts';
+import { changeDefaultZoomMode } from '../events/zoom.ts';
 
 function defaultZoomMode() {
   return html` <div class="ControlLabel DefaultZoomMode">
     ${getLocaleString('DEFAULT_ZOOM_MODE')}
-    <select id="DefaultZoomMode">
-      <option value="percent" ?selected=${getSettingsValue('zoomMode') === 'percent'}>
+    <select
+      id="DefaultZoomMode"
+      @change="${changeDefaultZoomMode}"
+    >
+      <option
+        value="percent"
+        ?selected=${getSettingsValue('zoomMode') === 'percent'}
+      >
         ${getLocaleString('PERCENT')}
       </option>
-      <option value="width" ?selected=${getSettingsValue('zoomMode') === 'width'}>
+      <option
+        value="width"
+        ?selected=${getSettingsValue('zoomMode') === 'width'}
+      >
         ${getLocaleString('FIT_WIDTH')}
       </option>
-      <option value="height" ?selected=${getSettingsValue('zoomMode') === 'height'}>
+      <option
+        value="height"
+        ?selected=${getSettingsValue('zoomMode') === 'height'}
+      >
         ${getLocaleString('FIT_HEIGHT')}
       </option>
     </select>
@@ -21,13 +36,17 @@ function defaultZoomMode() {
 function defaultZoom() {
   return html`
     <div
-      class="ControlLabel DefaultZoom ControlLabelItem ${
-        getSettingsValue('zoomMode') === 'percent' ? 'show' : ''
-      }"
+      class="ControlLabel DefaultZoom ControlLabelItem ${getSettingsValue('zoomMode') === 'percent'
+        ? 'show'
+        : ''}"
     >
       <span>
         ${getLocaleString('DEFAULT_ZOOM')}
-        <output id="defaultZoomVal" class="RangeValue" for="DefaultZoom">
+        <output
+          id="defaultZoomVal"
+          class="RangeValue"
+          for="DefaultZoom"
+        >
           ${getSettingsValue('defaultZoom')}%
         </output>
       </span>
@@ -62,7 +81,11 @@ function minZoom() {
     <div class="ControlLabel minZoom">
       <span>
         ${getLocaleString('MINIMUM_ZOOM')}
-        <output id="minZoomVal" class="RangeValue" for="minZoom">
+        <output
+          id="minZoomVal"
+          class="RangeValue"
+          for="minZoom"
+        >
           ${getSettingsValue('minZoom')}%
         </output>
       </span>
@@ -75,6 +98,7 @@ function minZoom() {
         max="100"
         step="10"
         oninput='minZoomVal.value = this.value + "%"'
+        @input="${changeMinZoom}"
       />
     </div>
   `;
@@ -85,7 +109,11 @@ function zoomStep() {
     <div class="ControlLabel zoomStep">
       <span>
         ${getLocaleString('ZOOM_STEP')}
-        <output id="zoomStepVal" class="RangeValue" for="zoomStep">
+        <output
+          id="zoomStepVal"
+          class="RangeValue"
+          for="zoomStep"
+        >
           ${getSettingsValue('zoomStep')}%
         </output>
       </span>
@@ -98,6 +126,7 @@ function zoomStep() {
         max="50"
         step="5"
         oninput='zoomStepVal.value = this.value + "%"'
+        @change="${changeZoomStep}"
       />
     </div>
   `;
@@ -107,17 +136,32 @@ function viewMode() {
   return html`
     <div class="ControlLabel viewMode">
       ${getLocaleString('DEFAULT_VIEW_MODE')}
-      <select id="viewMode">
-        <option value="Vertical" ?selected=${getSettingsValue('viewMode') === 'Vertical'}>
+      <select
+        id="viewMode"
+        @change="${changeViewMode}"
+      >
+        <option
+          value="Vertical"
+          ?selected=${getSettingsValue('viewMode') === 'Vertical'}
+        >
           ${getLocaleString('VIEW_MODE_VERTICAL')}
         </option>
-        <option value="WebComic" ?selected=${getSettingsValue('viewMode') === 'WebComic'}>
+        <option
+          value="WebComic"
+          ?selected=${getSettingsValue('viewMode') === 'WebComic'}
+        >
           ${getLocaleString('VIEW_MODE_WEBCOMIC')}
         </option>
-        <option value="FluidLTR" ?selected=${getSettingsValue('viewMode') === 'FluidLTR'}>
+        <option
+          value="FluidLTR"
+          ?selected=${getSettingsValue('viewMode') === 'FluidLTR'}
+        >
           ${getLocaleString('VIEW_MODE_LEFT')}
         </option>
-        <option value="FluidRTL" ?selected=${getSettingsValue('viewMode') === 'FluidRTL'}>
+        <option
+          value="FluidRTL"
+          ?selected=${getSettingsValue('viewMode') === 'FluidRTL'}
+        >
           ${getLocaleString('VIEW_MODE_RIGHT')}
         </option>
       </select>

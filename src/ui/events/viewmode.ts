@@ -43,21 +43,3 @@ export function changeViewMode(event: Event) {
   const mode = (event.currentTarget as HTMLInputElement).value as ViewMode;
   updateViewMode(mode)();
 }
-
-function viewMode() {
-  // Default View mode Selector
-  document.querySelector('#viewMode')?.addEventListener('change', changeViewMode);
-  // WebComic View Mode Button
-  document.querySelector('#webComic')?.addEventListener('click', updateViewMode('WebComic'));
-  // Fluid LTR View Mode Button
-  document.querySelector('#ltrMode')?.addEventListener('click', updateViewMode('FluidLTR'));
-  // Fluid RTL View Mode Button
-  document.querySelector('#rtlMode')?.addEventListener('click', updateViewMode('FluidRTL'));
-  // Vertical View Mode Button
-  document.querySelector('#verticalMode')?.addEventListener('click', updateViewMode('Vertical'));
-  if (getSettingsValue('viewMode') === 'FluidLTR' || getSettingsValue('viewMode') === 'FluidRTL') {
-    setupFluid(getSettingsValue('viewMode'));
-  }
-}
-
-export default viewMode;

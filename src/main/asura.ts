@@ -20,11 +20,11 @@ const asura: ISite = {
       pages: images.length,
       prev: findClosestByContentEq('h2', 'Prev', 'a')?.getAttribute('href'),
       next: findClosestByContentEq('h2', 'Next', 'a')?.getAttribute('href'),
-      listImages: images.map((img) => img.getAttribute('src') ?? ''),
+      listImages: images.map(img => img.getAttribute('src') ?? ''),
       async before() {
         document
           .querySelectorAll('button.absolute')
-          .forEach((e) => e.dispatchEvent(new Event('click', { bubbles: true })));
+          .forEach(e => e.dispatchEvent(new Event('click', { bubbles: true })));
         await waitForTimer(1000);
       },
     };

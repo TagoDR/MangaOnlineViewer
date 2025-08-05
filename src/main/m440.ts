@@ -16,7 +16,7 @@ const m440: ISite = {
       pages: images.length,
       prev: chapter?.nextElementSibling?.firstElementChild?.getAttribute('href'),
       next: chapter?.previousElementSibling?.firstElementChild?.getAttribute('href'),
-      listImages: images.map((img) => img.getAttribute('data-src') ?? ''),
+      listImages: images.map(img => img.getAttribute('data-src') ?? ''),
     };
   },
 };

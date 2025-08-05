@@ -1,12 +1,16 @@
 import { html } from 'lit-html';
 import { getLocaleString, getSettingsValue, isSettingsLocal } from '../../core/settings.ts';
 import locales from '../../locales';
+import { changeLocale, changeSettingsScope } from '../events/options.ts';
 import { IconLocationCog, IconWorldCog } from '../icons';
 
 function settingsScope() {
   return html` <div class="ControlLabel">
     ${getLocaleString('SCOPE')}
-    <div id="SettingsScope" class="radio-inputs">
+    <div
+      id="SettingsScope"
+      class="radio-inputs"
+    >
       <label class="radio">
         <input
           type="radio"
@@ -14,6 +18,7 @@ function settingsScope() {
           name="settingsScope"
           ?checked="${!isSettingsLocal()}"
           value="false"
+          @change="${changeSettingsScope}"
         />
         <span class="name">${IconWorldCog} ${getLocaleString('GLOBAL')}</span>
       </label>
@@ -24,6 +29,7 @@ function settingsScope() {
           name="settingsScope"
           ?checked="${isSettingsLocal()}"
           value="true"
+          @change="${changeSettingsScope}"
         />
         <span class="name">${IconLocationCog} ${window.location.hostname}</span>
       </label>
@@ -33,8 +39,11 @@ function settingsScope() {
 
 function localeSelector() {
   return locales.map(
-    (locale) => html`
-      <option value="${locale.ID}" ?selected=${getSettingsValue('locale') === locale.ID}>
+    locale => html`
+      <option
+        value="${locale.ID}"
+        ?selected=${getSettingsValue('locale') === locale.ID}
+      >
         ${locale.NAME}
       </option>
     `,
@@ -44,7 +53,10 @@ function localeSelector() {
 function language() {
   return html` <div class="ControlLabel locale">
     ${getLocaleString('LANGUAGE')}
-    <select id="locale">
+    <select
+      id="locale"
+      @change="${changeLocale}"
+    >
       ${localeSelector()}
     </select>
   </div>`;

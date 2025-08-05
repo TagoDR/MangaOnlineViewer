@@ -11,7 +11,7 @@ export function addEvent(ev: string, fn: (e: Event) => void) {
   return (elem: Element) => elem.addEventListener(ev, fn);
 }
 
-export function transformScrollToHorizontal(this: HTMLElement, event: Event) {
+export function transformScrollToHorizontal(event: WheelEvent) {
   if (!(event as WheelEvent).deltaY) {
     return;
   }
@@ -21,7 +21,7 @@ export function transformScrollToHorizontal(this: HTMLElement, event: Event) {
   event.preventDefault();
 }
 
-export function transformScrollToHorizontalReverse(this: HTMLElement, event: Event) {
+export function transformScrollToHorizontalReverse(event: Event) {
   if (!(event as WheelEvent).deltaY) {
     return;
   }

@@ -75,8 +75,20 @@
       />
       <g>
         <g>
-          <ellipse style="fill: #ffffff" cx="175.162" cy="150.402" rx="29.816" ry="23.744" />
-          <ellipse style="fill: #ffffff" cx="336.778" cy="150.402" rx="29.816" ry="23.744" />
+          <ellipse
+            style="fill: #ffffff"
+            cx="175.162"
+            cy="150.402"
+            rx="29.816"
+            ry="23.744"
+          />
+          <ellipse
+            style="fill: #ffffff"
+            cx="336.778"
+            cy="150.402"
+            rx="29.816"
+            ry="23.744"
+          />
         </g>
       </g>
     </g>

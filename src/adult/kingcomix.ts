@@ -17,7 +17,7 @@ const kingcomix: ISite = {
       prev: '#',
       next: '#',
       listImages: src.map(
-        (img) =>
+        img =>
           img.getAttribute('data-src') ??
           img.getAttribute('data-full-url') ??
           img.getAttribute('data-lazy-src') ??

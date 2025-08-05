@@ -22,7 +22,11 @@ function rectangle(width: number, height: number, bgColor: string, textColor: st
       height="${height}"
       viewBox="0 0 ${width} ${height}"
     >
-      <rect fill="${bgColor}" width="${width}" height="${height}" />
+      <rect
+        fill="${bgColor}"
+        width="${width}"
+        height="${height}"
+      />
       <text
         fill="${textColor}"
         font-family="sans-serif"
@@ -60,7 +64,12 @@ function rectangleRuler(width: number, height: number, bgColor: string, textColo
   // Create a loop to draw the horizontal ruler ticks and labels
   for (let x = 0; x <= width; x += 5) {
     // Create a line element for each tick using string templates
-    const tick = html` <line x1="${x}" y1="0" x2="${x}" y2="${rulerMarkerLength(x)}" />`;
+    const tick = html` <line
+      x1="${x}"
+      y1="0"
+      x2="${x}"
+      y2="${rulerMarkerLength(x)}"
+    />`;
     markers += tick;
 
     // Create a text element for each label using string templates
@@ -80,7 +89,12 @@ function rectangleRuler(width: number, height: number, bgColor: string, textColo
   // Create a loop to draw the vertical ruler ticks and labels
   for (let y = 0; y <= height; y += 5) {
     // Create a line element for each tick using string templates
-    const tick = html` <line x1="0" y1="${y}" x2="${rulerMarkerLength(y)}" y2="${y}" />`;
+    const tick = html` <line
+      x1="0"
+      y1="${y}"
+      x2="${rulerMarkerLength(y)}"
+      y2="${y}"
+    />`;
     markers += tick;
 
     // Create a text element for each label using string templates
@@ -106,7 +120,11 @@ function rectangleRuler(width: number, height: number, bgColor: string, textColo
     height="${height}"
     viewBox="0 0 ${width} ${height}"
   >
-    <rect width="${width}" height="${height}" fill="${bgColor}" />
+    <rect
+      width="${width}"
+      height="${height}"
+      fill="${bgColor}"
+    />
     <text
       fill="${textColor}"
       font-family="Verdana, Arial, Helvetica, sans-serif"
@@ -137,7 +155,7 @@ function placeholder(width: number, height: number, bgColor = '#0F1C3F', textCol
   return svgToUrl(str);
 }
 
-const backgrounds = Object.values(colors).map((i) => i['900']);
+const backgrounds = Object.values(colors).map(i => i['900']);
 const widths = [400, 600, 900, 1200, 1400, 1600, 1970];
 const heights = [600, 800, 1000, 1200, 1400, 2000, 2600];
 

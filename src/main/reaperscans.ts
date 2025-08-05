@@ -17,7 +17,7 @@ const reaperscans: ISite = {
       prev: document.querySelector('.fa-chevron-left')?.closest('a')?.getAttribute('href'),
       next: document.querySelector('.fa-chevron-right')?.closest('a')?.getAttribute('href'),
       listImages: images.map(
-        (img) => (img.getAttribute('data-src') || img.getAttribute('src')) ?? '',
+        img => (img.getAttribute('data-src') || img.getAttribute('src')) ?? '',
       ),
     };
   },

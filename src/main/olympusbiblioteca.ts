@@ -15,7 +15,7 @@ const olympusbiblioteca: ISite = {
       pages: images.length,
       prev: document.querySelector('a[name="capitulo anterior"]')?.getAttribute('href'),
       next: document.querySelector('a[name="capitulo siguiente"]')?.getAttribute('href'),
-      listImages: images.map((img) => img.getAttribute('src') ?? ''),
+      listImages: images.map(img => img.getAttribute('src') ?? ''),
     };
   },
 };

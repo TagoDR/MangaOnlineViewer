@@ -10,11 +10,11 @@ const weebcentral: ISite = {
   waitEle: 'main section .maw-w-full',
   async run(): Promise<IManga> {
     const src = [...document.querySelectorAll('main section .maw-w-full')].map(
-      (elem) => elem.getAttribute('src') ?? '',
+      elem => elem.getAttribute('src') ?? '',
     );
     const chaptersList = await fetch(
       document.querySelector('main section a + button')?.getAttribute('hx-get') ?? '',
-    ).then((res) => res.text());
+    ).then(res => res.text());
     const parser = new DOMParser();
     const chapters = parser.parseFromString(chaptersList, 'text/html');
     return {

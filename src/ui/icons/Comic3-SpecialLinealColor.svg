@@ -278,7 +278,12 @@
     <g>
       <g>
         <g>
-          <circle style="fill: #d8b2ec" cx="189.8" cy="381.497" r="24.709" />
+          <circle
+            style="fill: #d8b2ec"
+            cx="189.8"
+            cy="381.497"
+            r="24.709"
+          />
 
           <circle
             style="
