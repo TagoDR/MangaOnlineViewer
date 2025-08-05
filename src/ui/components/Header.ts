@@ -1,6 +1,6 @@
+import { html } from 'lit-html';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
 import type { IManga } from '../../types';
-import { html } from '../../utils/code-tag';
 import sequence from '../../utils/sequence';
 import {
   IconArrowAutofitDown,

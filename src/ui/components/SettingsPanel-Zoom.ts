@@ -1,22 +1,21 @@
+import { html } from 'lit-html';
 import { getLocaleString, getSettingsValue } from '../../core/settings.ts';
-import { html } from '../../utils/code-tag.ts';
 
 function defaultZoomMode() {
-  return html`
-    <div class="ControlLabel DefaultZoomMode">
-      ${getLocaleString('DEFAULT_ZOOM_MODE')}
-      <select id="DefaultZoomMode">
-        <option value="percent" ${getSettingsValue('zoomMode') === 'percent' ? 'selected' : ''}>
-          ${getLocaleString('PERCENT')}
-        </option>
-        <option value="width" ${getSettingsValue('zoomMode') === 'width' ? 'selected' : ''}>
-          ${getLocaleString('FIT_WIDTH')}
-        </option>
-        <option value="height" ${getSettingsValue('zoomMode') === 'height' ? 'selected' : ''}>
-          ${getLocaleString('FIT_HEIGHT')}
-        </option>
-      </select>
-    </div>`;
+  return html` <div class="ControlLabel DefaultZoomMode">
+    ${getLocaleString('DEFAULT_ZOOM_MODE')}
+    <select id="DefaultZoomMode">
+      <option value="percent" ?selected=${getSettingsValue('zoomMode') === 'percent'}>
+        ${getLocaleString('PERCENT')}
+      </option>
+      <option value="width" ?selected=${getSettingsValue('zoomMode') === 'width'}>
+        ${getLocaleString('FIT_WIDTH')}
+      </option>
+      <option value="height" ?selected=${getSettingsValue('zoomMode') === 'height'}>
+        ${getLocaleString('FIT_HEIGHT')}
+      </option>
+    </select>
+  </div>`;
 }
 
 function defaultZoom() {
@@ -109,16 +108,16 @@ function viewMode() {
     <div class="ControlLabel viewMode">
       ${getLocaleString('DEFAULT_VIEW_MODE')}
       <select id="viewMode">
-        <option value="Vertical" ${getSettingsValue('viewMode') === 'Vertical' ? 'selected' : ''}>
+        <option value="Vertical" ?selected=${getSettingsValue('viewMode') === 'Vertical'}>
           ${getLocaleString('VIEW_MODE_VERTICAL')}
         </option>
-        <option value="WebComic" ${getSettingsValue('viewMode') === 'WebComic' ? 'selected' : ''}>
+        <option value="WebComic" ?selected=${getSettingsValue('viewMode') === 'WebComic'}>
           ${getLocaleString('VIEW_MODE_WEBCOMIC')}
         </option>
-        <option value="FluidLTR" ${getSettingsValue('viewMode') === 'FluidLTR' ? 'selected' : ''}>
+        <option value="FluidLTR" ?selected=${getSettingsValue('viewMode') === 'FluidLTR'}>
           ${getLocaleString('VIEW_MODE_LEFT')}
         </option>
-        <option value="FluidRTL" ${getSettingsValue('viewMode') === 'FluidRTL' ? 'selected' : ''}>
+        <option value="FluidRTL" ?selected=${getSettingsValue('viewMode') === 'FluidRTL'}>
           ${getLocaleString('VIEW_MODE_RIGHT')}
         </option>
       </select>
@@ -126,4 +125,5 @@ function viewMode() {
   `;
 }
 
-export default () => defaultZoomMode() + defaultZoom() + minZoom() + zoomStep() + viewMode();
+export default () =>
+  html`${defaultZoomMode()} ${defaultZoom()} ${minZoom()} ${zoomStep()} ${viewMode()}`;

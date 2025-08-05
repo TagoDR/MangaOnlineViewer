@@ -101,6 +101,7 @@ async function lateStart(site: ISite, begin = 1) {
             }
           },
         });
+
         function changedInput() {
           if (
             (pageBeginInput && pageBeginInput.value === '') ||
@@ -125,6 +126,7 @@ async function lateStart(site: ISite, begin = 1) {
           endPage = valEnd;
           rangeSliderElement.value([valBegin, valEnd]);
         }
+
         const observerEvent = _.debounce(changedInput, 600);
         ['change', 'mouseup', 'keyup', 'touchend'].forEach((event) => {
           pageBeginInput?.addEventListener(event, observerEvent);

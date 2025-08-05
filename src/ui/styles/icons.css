@@ -56,11 +56,11 @@
   color: orange;
 }
 
-.icon-tabler-bookmark > * {
+.icon-tabler-bookmark > :nth-child(2) {
   color: orange;
 }
 
-.icon-tabler-bookmark-off > * {
+.icon-tabler-bookmark-off > :nth-child(2) {
   color: orange;
 }
 
@@ -104,5 +104,9 @@
 
 .icon-tabler-message > :nth-child(2),
 .icon-tabler-message > :nth-child(3) {
+  color: greenyellow;
+}
+
+.icon-tabler-book-return > g {
   color: greenyellow;
 }

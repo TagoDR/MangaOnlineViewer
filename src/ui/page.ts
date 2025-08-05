@@ -1,5 +1,6 @@
 import { blobToDataURL } from 'blob-util';
 import imagesLoaded from 'imagesloaded';
+import { html } from 'lit-html';
 import NProgress from 'nprogress';
 import { getSettingsValue } from '../core/settings';
 import {
@@ -11,8 +12,8 @@ import {
   isPagesManga,
   type ZoomMode,
 } from '../types';
-import { html } from '../utils/code-tag';
 import lazyLoad from '../utils/lazyLoad';
+import renderReplace from '../utils/renderReplace.ts';
 import { getElementAttribute } from '../utils/request';
 import sequence from '../utils/sequence';
 import { logScript } from '../utils/tampermonkey';
@@ -105,7 +106,10 @@ function updateProgress() {
   const percentage = Math.floor((loaded / total) * 100);
   const title = document.querySelector('title');
   if (title) {
-    title.innerHTML = html`(${percentage}%) ${document.querySelector('#MangaTitle')?.textContent}`;
+    renderReplace(
+      html`(${percentage}%) ${document.querySelector('#MangaTitle')?.textContent}`,
+      title,
+    );
   }
 
   document.querySelectorAll('#Counters i, #NavigationCounters i').forEach((ele) => {
