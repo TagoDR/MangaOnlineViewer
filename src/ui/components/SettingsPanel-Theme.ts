@@ -1,21 +1,24 @@
+import { html } from 'lit-html';
+import { classMap } from 'lit-html/directives/class-map.js';
 import { getLocaleString, getSettingsValue } from '../../core/settings.ts';
-import { html } from '../../utils/code-tag.ts';
 import colors from '../../utils/colors.ts';
 import { IconCheck, IconMoon, IconPalette, IconSun } from '../icons';
 
 function themesSelector() {
-  return [...Object.keys(colors).map((color) => colors[color].name)]
-    .map(
-      (theme) => html`
-        <span
-          title="${theme}"
-          class="${theme} ThemeRadio ${getSettingsValue('theme') === theme ? 'selected' : ''}"
-        >
-          ${IconCheck}
-        </span>
-      `,
-    )
-    .join('');
+  return [...Object.keys(colors).map((color) => colors[color].name)].map(
+    (theme) => html`
+      <span
+        title="${theme}"
+        class="${classMap({
+          [theme]: true,
+          ThemeRadio: true,
+          selected: getSettingsValue('theme') === theme,
+        })}"
+      >
+        ${IconCheck}
+      </span>
+    `,
+  );
 }
 
 function theme() {

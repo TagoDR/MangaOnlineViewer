@@ -1,5 +1,5 @@
+import { html } from 'lit-html';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
-import { html } from '../../utils/code-tag';
 import toggler from './Toggler';
 
 function checkboxOptions() {
@@ -64,19 +64,19 @@ function headerType() {
     <div class="ControlLabel headerType">
       ${getLocaleString('HEADER_TYPE')}
       <select id="headerType">
-        <option value="hover" ${getSettingsValue('header') === 'hover' ? 'selected' : ''}>
+        <option value="hover" ?selected=${getSettingsValue('header') === 'hover'}>
           ${getLocaleString('HEADER_HOVER')}
         </option>
-        <option value="scroll" ${getSettingsValue('header') === 'scroll' ? 'selected' : ''}>
+        <option value="scroll" ?selected=${getSettingsValue('header') === 'scroll'}>
           ${getLocaleString('HEADER_SCROLL')}
         </option>
-        <option value="click" ${getSettingsValue('header') === 'click' ? 'selected' : ''}>
+        <option value="click" ?selected=${getSettingsValue('header') === 'click'}>
           ${getLocaleString('HEADER_CLICK')}
         </option>
-        <option value="fixed" ${getSettingsValue('header') === 'fixed' ? 'selected' : ''}>
+        <option value="fixed" ?selected=${getSettingsValue('header') === 'fixed'}>
           ${getLocaleString('HEADER_FIXED')}
         </option>
-        <option value="simple" ${getSettingsValue('header') === 'simple' ? 'selected' : ''}>
+        <option value="simple" ?selected=${getSettingsValue('header') === 'simple'}>
           ${getLocaleString('HEADER_SIMPLE')}
         </option>
       </select>
@@ -107,4 +107,4 @@ function autoScroll() {
   `;
 }
 
-export default () => checkboxOptions() + lazyLoad() + headerType() + autoScroll();
+export default () => html`${checkboxOptions()} ${lazyLoad()} ${headerType()} ${autoScroll()}`;

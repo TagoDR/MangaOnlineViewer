@@ -1,5 +1,5 @@
+import { html } from 'lit-html';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
-import { html } from '../../utils/code-tag';
 import { IconDeviceFloppy, IconPencil, IconX } from '../icons';
 
 export const keybindList = () => {
@@ -50,7 +50,7 @@ const KeybindingsPanel = () => html`
         ${IconDeviceFloppy} ${getLocaleString('BUTTON_SAVE')}
       </button>
     </div>
-    <div id="KeybindingsList">${keybindList().join('\n')}</div>
+    <div id="KeybindingsList">${keybindList()}</div>
   </div>
 `;
 

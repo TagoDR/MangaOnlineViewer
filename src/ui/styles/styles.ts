@@ -1,7 +1,7 @@
 import { css } from '../../utils/code-tag';
 import colors from '../../utils/colors';
 import { svgToUrl } from '../../utils/svgs';
-import { IconPalette, IconPhoto, IconPhotoOff } from '../icons';
+import { IconPaletteRaw, IconPhotoOffRaw, IconPhotoRaw } from '../icons';
 import animation from './animation.css?inline';
 import bookmarks from './bookmarks.css?inline';
 import comments from './comments.css?inline';
@@ -42,21 +42,21 @@ export default css`
 
   #MangaOnlineViewer .PageContent .PageImg[src=''],
   #MangaOnlineViewer .PageContent .PageImg:not([src]) {
-    background-image: url('${svgToUrl(IconPhoto)}');
+    background-image: url('${svgToUrl(IconPhotoRaw)}');
   }
 
   #MangaOnlineViewer .Thumbnail .ThumbnailImg[src=''],
   #MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {
-    background-image: url('${svgToUrl(IconPhoto)}');
+    background-image: url('${svgToUrl(IconPhotoRaw)}');
   }
 
   #MangaOnlineViewer .PageContent .PageImg.imgBroken,
   #MangaOnlineViewer .Thumbnail .ThumbnailImg.imgBroken {
-    background-image: url('${svgToUrl(IconPhotoOff)}');
+    background-image: url('${svgToUrl(IconPhotoOffRaw)}');
   }
 
   #MangaOnlineViewer .ThemeRadio.custom {
-    /*background-image: url("${svgToUrl(IconPalette)}");*/
+    /*background-image: url("${svgToUrl(IconPaletteRaw)}");*/
   }
 
   ${normalize}

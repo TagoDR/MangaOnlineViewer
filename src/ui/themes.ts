@@ -5,8 +5,7 @@ import { replaceStyleSheet, wrapStyle } from '../utils/css';
 
 function generateThemeCSS(name: string, primary: string, text: string) {
   return css`
-    .ThemeRadio.${name},
-    [data-theme='${name}'] {
+    .ThemeRadio.${name}, [data-theme='${name}'] {
       --theme-primary-color: ${primary};
       --theme-primary-text-color: ${text};
     }
@@ -26,7 +25,7 @@ function getCustomThemeCSS(hex: string) {
 }
 
 // Add custom Themes to the page
-function addTheme(theme: IColor): string {
+function addTheme(theme: IColor) {
   return wrapStyle(theme.name, getNormalThemeCSS(theme));
 }
 
