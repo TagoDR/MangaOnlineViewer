@@ -12,8 +12,8 @@ const hentalk: ISite = {
     const api = await fetch(
       `${window.location.pathname}/__data.json?x-sveltekit-trailing-slash=1&x-sveltekit-invalidated=001`,
     )
-      .then(async (res) => res.json())
-      .then((j) => j.nodes[2].data);
+      .then(async res => res.json())
+      .then(j => j.nodes[2].data);
     const gallery = api?.[api.find((e: { gallery?: number }) => e?.gallery)?.gallery];
     const slug =
       api?.[gallery?.hash] ||

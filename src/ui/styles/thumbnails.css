@@ -1,4 +1,4 @@
-#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=""],
+#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=''],
 #MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {
   width: 100px;
   height: 150px;

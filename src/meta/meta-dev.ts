@@ -25,5 +25,5 @@ export default {
   noframes: 'on',
   connect: '*',
   require: requiredScripts,
-  include: sites.map((s) => s.url),
+  include: sites.map(s => s.url),
 } as Partial<Tampermonkey.ScriptMetadata>;

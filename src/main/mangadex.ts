@@ -11,7 +11,7 @@ const mangadex: ISite = {
   async run(): Promise<IManga> {
     const chapterId = /\/chapter\/([^/]+)(\/\d+)?/.exec(window.location.pathname)?.at(1);
     const home = `https://api.mangadex.org/at-home/server/${chapterId}`;
-    const server = await fetch(home).then(async (res) => res.json());
+    const server = await fetch(home).then(async res => res.json());
     const images = server.chapter.data;
     const chapters = document.querySelectorAll('#chapter-selector a');
     return {

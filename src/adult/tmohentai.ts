@@ -9,7 +9,7 @@ const tmohhentai: ISite = {
   category: Category.HENTAI,
   run(): IManga {
     const src = [...document.querySelectorAll('.content-image')].map(
-      (i) => i.getAttribute('data-original') ?? i.getAttribute('src') ?? '',
+      i => i.getAttribute('data-original') ?? i.getAttribute('src') ?? '',
     );
     return {
       before() {

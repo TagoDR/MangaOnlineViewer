@@ -1,36 +1,48 @@
 import { html } from 'lit-html';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
+import {
+  changeHeaderType,
+  changeLazyStart,
+  changeScrollHeight,
+  checkAutoDownload,
+  checkEnableComments,
+  checkFitWidthOversize,
+  checkHideImageControls,
+  checkLazyLoad,
+  checkShowThumbnails,
+  checkVerticalSeparator,
+} from '../events/options';
 import toggler from './Toggler';
 
 function checkboxOptions() {
   return html`
     <div class="ControlLabel verticalSeparator">
       ${getLocaleString('VERTICAL_SEPARATOR')}
-      ${toggler('verticalSeparator', getSettingsValue('verticalSeparator'))}
+      ${toggler('verticalSeparator', getSettingsValue('verticalSeparator'), checkVerticalSeparator)}
     </div>
     <div class="ControlLabel fitIfOversize">
       ${getLocaleString('FIT_WIDTH_OVERSIZED')}
-      ${toggler('fitIfOversize', getSettingsValue('fitWidthIfOversize'))}
+      ${toggler('fitIfOversize', getSettingsValue('fitWidthIfOversize'), checkFitWidthOversize)}
     </div>
     <div class="ControlLabel showThumbnails">
       ${getLocaleString('SHOW_THUMBNAILS')}
-      ${toggler('showThumbnails', getSettingsValue('showThumbnails'))}
+      ${toggler('showThumbnails', getSettingsValue('showThumbnails'), checkShowThumbnails)}
     </div>
     <div class="ControlLabel enableComments">
       ${getLocaleString('ENABLE_COMMENTS')}
-      ${toggler('enableComments', getSettingsValue('enableComments'))}
+      ${toggler('enableComments', getSettingsValue('enableComments'), checkEnableComments)}
     </div>
     <div class="ControlLabel downloadZip">
       ${getLocaleString('DOWNLOAD_IMAGES')}
-      ${toggler('downloadZip', getSettingsValue('downloadZip'))}
+      ${toggler('downloadZip', getSettingsValue('downloadZip'), checkAutoDownload)}
     </div>
     <div class="ControlLabel hidePageControls">
       ${getLocaleString('HIDE_CONTROLS')}
-      ${toggler('hidePageControls', getSettingsValue('hidePageControls'))}
+      ${toggler('hidePageControls', getSettingsValue('hidePageControls'), checkHideImageControls)}
     </div>
     <div class="ControlLabel lazyLoadImages">
       ${getLocaleString('LAZY_LOAD_IMAGES_ENABLE')}
-      ${toggler('lazyLoadImages', getSettingsValue('lazyLoadImages'))}
+      ${toggler('lazyLoadImages', getSettingsValue('lazyLoadImages'), checkLazyLoad)}
     </div>
   `;
 }
@@ -43,7 +55,12 @@ function lazyLoad() {
     >
       <span>
         ${getLocaleString('LAZY_LOAD_IMAGES')}
-        <output id="lazyStartVal" for="lazyStart"> ${getSettingsValue('lazyStart')} </output>
+        <output
+          id="lazyStartVal"
+          for="lazyStart"
+        >
+          ${getSettingsValue('lazyStart')}
+        </output>
       </span>
       <input
         type="range"
@@ -54,6 +71,7 @@ function lazyLoad() {
         max="100"
         step="5"
         oninput="lazyStartVal.value = this.value"
+        @change="${changeLazyStart}"
       />
     </div>
   `;
@@ -63,20 +81,38 @@ function headerType() {
   return html`
     <div class="ControlLabel headerType">
       ${getLocaleString('HEADER_TYPE')}
-      <select id="headerType">
-        <option value="hover" ?selected=${getSettingsValue('header') === 'hover'}>
+      <select
+        id="headerType"
+        @change="${changeHeaderType}"
+      >
+        <option
+          value="hover"
+          ?selected=${getSettingsValue('header') === 'hover'}
+        >
           ${getLocaleString('HEADER_HOVER')}
         </option>
-        <option value="scroll" ?selected=${getSettingsValue('header') === 'scroll'}>
+        <option
+          value="scroll"
+          ?selected=${getSettingsValue('header') === 'scroll'}
+        >
           ${getLocaleString('HEADER_SCROLL')}
         </option>
-        <option value="click" ?selected=${getSettingsValue('header') === 'click'}>
+        <option
+          value="click"
+          ?selected=${getSettingsValue('header') === 'click'}
+        >
           ${getLocaleString('HEADER_CLICK')}
         </option>
-        <option value="fixed" ?selected=${getSettingsValue('header') === 'fixed'}>
+        <option
+          value="fixed"
+          ?selected=${getSettingsValue('header') === 'fixed'}
+        >
           ${getLocaleString('HEADER_FIXED')}
         </option>
-        <option value="simple" ?selected=${getSettingsValue('header') === 'simple'}>
+        <option
+          value="simple"
+          ?selected=${getSettingsValue('header') === 'simple'}
+        >
           ${getLocaleString('HEADER_SIMPLE')}
         </option>
       </select>
@@ -89,7 +125,10 @@ function autoScroll() {
     <div class="ControlLabel autoScroll">
       <span>
         ${getLocaleString('AUTO_SCROLL_HEIGHT')}
-        <output id="scrollHeightVal" for="scrollHeight">
+        <output
+          id="scrollHeightVal"
+          for="scrollHeight"
+        >
           ${getSettingsValue('scrollHeight')} </output
         >px
       </span>
@@ -101,7 +140,7 @@ function autoScroll() {
         min="1"
         max="100"
         step="1"
-        oninput="scrollHeightVal.value = this.value"
+        @change="${changeScrollHeight}"
       />
     </div>
   `;

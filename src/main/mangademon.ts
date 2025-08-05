@@ -16,7 +16,7 @@ const mangademon: ISite = {
       prev: document.querySelector('.prevchap')?.getAttribute('href'),
       next: document.querySelector('.nextchap')?.getAttribute('href'),
       listImages: images.map(
-        (img) => (img.getAttribute('data-src') || img.getAttribute('src')) ?? '',
+        img => (img.getAttribute('data-src') || img.getAttribute('src')) ?? '',
       ),
     };
   },

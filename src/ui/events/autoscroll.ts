@@ -62,7 +62,6 @@ export function manualScroll() {
 
 function autoscroll() {
   window.addEventListener('wheel', _.throttle(manualScroll, 500));
-  document.querySelector('#AutoScroll')?.addEventListener('click', toggleAutoScroll);
 }
 
 export default autoscroll;

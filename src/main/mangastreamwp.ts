@@ -69,7 +69,7 @@ const mangastreamwp: ISite = {
         'Siguiente',
       ])?.[0]?.getAttribute('href'),
       listImages: images.map(
-        (img) =>
+        img =>
           img.getAttribute('data-src') ??
           img.getAttribute('data-lazy-src') ??
           img.getAttribute('src') ??

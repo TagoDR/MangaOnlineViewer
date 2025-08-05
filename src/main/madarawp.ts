@@ -8,14 +8,12 @@ function findImages() {
     ...document.querySelectorAll(
       '.wp-manga-chapter-img, .blocks-gallery-item img, .reading-content img, #chapter-images img, #chapterContent img',
     ),
-  ].map((img) => {
+  ].map(img => {
     const attrs = [...img.attributes].filter(
-      (attr) => /.*(src|url).*/i.test(attr.name) && !/^.*(blank|lazy|load).*$/.test(attr.value),
+      attr => /.*(src|url).*/i.test(attr.name) && !/^.*(blank|lazy|load).*$/.test(attr.value),
     );
     if (attrs.length === 0) return '';
-    return (
-      attrs.find((attr) => imageRegex.test(attr.value))?.value ?? img?.getAttribute('src') ?? ''
-    );
+    return attrs.find(attr => imageRegex.test(attr.value))?.value ?? img?.getAttribute('src') ?? '';
   });
 }
 
@@ -66,7 +64,7 @@ const madarawp: ISite = {
   category: Category.MANGA,
   waitFunc: () => {
     const images = findImages();
-    return images.length > 0 && images.every((s) => s && imageRegex.test(s));
+    return images.length > 0 && images.every(s => s && imageRegex.test(s));
   },
   run(): IManga {
     const images = findImages();

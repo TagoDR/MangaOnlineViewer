@@ -21,7 +21,7 @@ const batoto: ISite = {
         pages: images.length,
         prev: findClosestByContentEnds('span', 'Prev Chapter', 'a')?.getAttribute('href'),
         next: findClosestByContentStarts('span', 'Next Chapter', 'a')?.getAttribute('href'),
-        listImages: images.map((img) => img.getAttribute('src') ?? ''),
+        listImages: images.map(img => img.getAttribute('src') ?? ''),
       };
     }
     const images = [...document.querySelectorAll('.page-img')];
@@ -31,7 +31,7 @@ const batoto: ISite = {
       pages: images.length,
       prev: document.querySelector('.nav-prev a')?.getAttribute('href'),
       next: document.querySelector('.nav-next a')?.getAttribute('href'),
-      listImages: images.map((img) => img.getAttribute('src') ?? ''),
+      listImages: images.map(img => img.getAttribute('src') ?? ''),
     };
   },
 };

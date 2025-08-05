@@ -16,7 +16,7 @@ const webtoons: ISite = {
       prev: document.querySelector('._prevEpisode')?.getAttribute('href'),
       next: document.querySelector('._nextEpisode')?.getAttribute('href'),
       listImages: images.map(
-        (img) =>
+        img =>
           img.getAttribute('data-url') ??
           img.getAttribute('data-src') ??
           img.getAttribute('src') ??

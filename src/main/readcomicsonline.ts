@@ -15,7 +15,7 @@ const readcomicsonline: ISite = {
       pages: unsafeWindow.pages.length,
       prev: unsafeWindow.prev_chapter,
       next: unsafeWindow.next_chapter,
-      listImages: images.map((img) => img.getAttribute('data-src') ?? ''),
+      listImages: images.map(img => img.getAttribute('data-src') ?? ''),
     };
   },
 };

@@ -46,12 +46,12 @@ function isNothing(value: any): value is undefined {
   const isEmptyObject = (a: any): boolean => {
     if (!Array.isArray(a)) {
       // It's an Object, not an Array
-      const hasNonempty = Object.keys(a).some((element) => !isNothing(a[element]));
+      const hasNonempty = Object.keys(a).some(element => !isNothing(a[element]));
       return hasNonempty ? false : isEmptyObject(Object.keys(a));
     }
 
     // Check if array is really not empty as JS thinks at least one element should be non-empty
-    return !a.some((element) => element instanceof Promise || !isNothing(element));
+    return !a.some(element => element instanceof Promise || !isNothing(element));
   };
 
   return (

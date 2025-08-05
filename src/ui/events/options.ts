@@ -9,7 +9,6 @@ import {
 import type { HeaderMode, LoadMode } from '../../types';
 import { replaceStyleSheet } from '../../utils/css';
 import { applyZoom } from '../page';
-import { addEvent } from './common';
 
 export function buttonResetSettings() {
   resetSettings();
@@ -142,44 +141,3 @@ export function changeScrollHeight(event: Event) {
   const { value } = event.currentTarget as HTMLInputElement;
   saveSettingsValue('scrollHeight', parseInt(value, 10));
 }
-
-function options() {
-  // Reset Reader Settings
-  document.querySelector('#ResetSettings')?.addEventListener('click', buttonResetSettings);
-  // Change Settings Scope
-  document
-    .querySelectorAll('#SettingsScope input[type=radio]')
-    .forEach(addEvent('change', changeSettingsScope));
-  // Change Locale
-  document.querySelector('#locale')?.addEventListener('change', changeLocale);
-  // Image Fit width if Oversize Toggle
-  document.querySelector('#fitIfOversize')?.addEventListener('change', checkFitWidthOversize);
-  // Vertical Separator Toggle
-  document.querySelector('#verticalSeparator')?.addEventListener('change', checkVerticalSeparator);
-  // Start/Load mode Selector
-  document.querySelector('#loadMode')?.addEventListener('change', changeLoadMode);
-  // Show Thumbnail Toggle
-  document.querySelector('#showThumbnails')?.addEventListener('change', checkShowThumbnails);
-  // Enable Comments Toggle
-  document.querySelector('#enableComments')?.addEventListener('change', checkEnableComments);
-  // Download auto start toggle
-  document.querySelector('#downloadZip')?.addEventListener('change', checkAutoDownload);
-  // Lazy load Toggle
-  document.querySelector('#lazyLoadImages')?.addEventListener('change', checkLazyLoad);
-  // Lazy load starting point Slider
-  document.querySelector('#lazyStart')?.addEventListener('change', changeLazyStart);
-  // Images load speed Selector
-  document.querySelector('#PagesPerSecond')?.addEventListener('change', changePagesPerSecond);
-  // Zoom Step Slider
-  document.querySelector('#zoomStep')?.addEventListener('change', changeZoomStep);
-  // Min Zoom Slider
-  document.querySelector('#minZoom')?.addEventListener('input', changeMinZoom);
-  // Show/hide Image Controls Toggle
-  document.querySelector('#hidePageControls')?.addEventListener('change', checkHideImageControls);
-  // Change Header Type
-  document.querySelector('#headerType')?.addEventListener('change', changeHeaderType);
-  // Change Auto Scroll Percent
-  document.querySelector('#scrollHeight')?.addEventListener('change', changeScrollHeight);
-}
-
-export default options;

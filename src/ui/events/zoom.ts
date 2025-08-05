@@ -39,24 +39,3 @@ export function changeZoom(event: Event) {
   const zoomVal = document.querySelector('#ZoomVal');
   if (zoomVal) zoomVal.textContent = `${target}%`;
 }
-
-function zoom() {
-  // Setting for Zoom Percent
-  document.querySelector('#DefaultZoomMode')?.addEventListener('change', changeDefaultZoomMode);
-  // Setting for Zoom Mode Range slider
-  document.querySelector('#DefaultZoom')?.addEventListener('input', changeDefaultZoom);
-  // Zoom Range Slider
-  document.querySelector('#Zoom')?.addEventListener('input', changeZoom);
-  // Global Zoom In Button
-  document.querySelector('#enlarge')?.addEventListener('click', changeZoomByStep());
-  // Global Zoom Out Button
-  document.querySelector('#reduce')?.addEventListener('click', changeZoomByStep(-1));
-  // Global Zoom Restore Button
-  document.querySelector('#restore')?.addEventListener('click', changeGlobalZoom('percent'));
-  // Global Fit Width Button
-  document.querySelector('#fitWidth')?.addEventListener('click', changeGlobalZoom('width'));
-  // Global Fit height Button
-  document.querySelector('#fitHeight')?.addEventListener('click', changeGlobalZoom('height'));
-}
-
-export default zoom;
