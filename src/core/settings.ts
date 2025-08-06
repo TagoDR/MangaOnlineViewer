@@ -110,7 +110,7 @@ export const appState = map<IApp>({
   currentPage: 0,
   loaded: 0,
   manga: undefined,
-  panel: false,
+  panel: 'none',
   scrollToPage: undefined,
   device: getDevice(),
 });

@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
 import type { IManga } from '../../types';
 import sequence from '../../utils/sequence';
@@ -11,12 +12,7 @@ import {
   buttonStartDownload,
 } from '../events/globals';
 import { selectGoToPage } from '../events/navigation';
-import {
-  buttonKeybindingsOpen,
-  buttonSettingsClose,
-  buttonSettingsOpen,
-  toggleFunction,
-} from '../events/panels';
+import { buttonKeybindingsOpen, buttonSettingsOpen } from '../events/panels';
 import { updateViewMode } from '../events/viewmode.ts';
 import { changeGlobalZoom, changeZoom, changeZoomByStep } from '../events/zoom.ts';
 import {
@@ -43,7 +39,10 @@ import {
 } from '../icons';
 
 const listOptions = (times: number, begin: number) =>
-  sequence(times, begin).map((index) => html` <option value="${index}">${index}</option>`);
+  sequence(times, begin).map(
+    (index) => html`
+    <option value="${index}">${index}</option>`,
+  );
 const Header = (manga: IManga) => html`
   <header
     id="Header"
@@ -161,12 +160,7 @@ const Header = (manga: IManga) => html`
           id="settings"
           title="${getLocaleString('SETTINGS')}"
           class="ControlButton tablets phones"
-          @click=${toggleFunction(
-            '#SettingsPanel',
-            'visible',
-            buttonSettingsOpen,
-            buttonSettingsClose,
-          )}
+          @click=${buttonSettingsOpen}
         >
           ${IconSettings}
         </button>
@@ -201,7 +195,7 @@ const Header = (manga: IManga) => html`
         href="${manga.series ?? ''}"
         @click=${buttonRedirectURL}
       >
-        (${getLocaleString('RETURN_CHAPTER_LIST')})
+          (${getLocaleString('RETURN_CHAPTER_LIST')})
       </a>
     </div>
     <nav id="ChapterNavigation">
@@ -228,7 +222,11 @@ const Header = (manga: IManga) => html`
         <span>
           <button
             id="CommentsButton"
-            class="NavigationControlButton ControlButton ${manga.comments ? '' : 'disabled'}"
+            class="${classMap({
+              NavigationControlButton: true,
+              ControlButton: true,
+              disabled: !!manga.comments,
+            })}"
             title="${getLocaleString('DISPLAY_COMMENTS')}"
             @click=${buttonCommentsOpen}
           >

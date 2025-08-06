@@ -1,11 +1,11 @@
 import _ from 'lodash';
-import { getSettingsValue } from '../../core/settings';
+import { getAppStateValue, getSettingsValue } from '../../core/settings';
 
 let prevOffset = 0;
 let showEnd = 0;
 
 const setScrollDirection = (classSuffix: string) => {
-  const header = document.querySelector<HTMLDivElement>('#Header');
+  const header = getAppStateValue('render')?.querySelector<HTMLDivElement>('#Header');
   if (!header) return;
   header.classList.remove('headroom-end', 'headroom-hide', 'headroom-show', 'headroom-top');
   if (classSuffix) {

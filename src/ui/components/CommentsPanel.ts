@@ -1,18 +1,23 @@
 import { html } from 'lit';
-import { getLocaleString, getSettingsValue } from '../../core/settings';
-import { buttonCommentsClose, changeCommentsColor } from '../events/globals';
+import { getAppStateValue, getLocaleString, getSettingsValue } from '../../core/settings';
+import { changeCommentsColor } from '../events/globals';
 import { IconMoon, IconSun, IconX } from '../icons';
+import { classMap } from 'lit/directives/class-map.js';
+import { buttonPanelsClose } from '../events/panels.ts';
 
 const commentsPanel = () => html`
   <div
     id="CommentsPanel"
-    class="panel"
+    class="${classMap({
+      panel:true,
+      visible: getAppStateValue('panel') === 'comments',
+    })}"
   >
     <button
       id="CloseComments"
       class="closeButton"
       title="${getLocaleString('CLOSE')}"
-      @click=${buttonCommentsClose}
+      @click=${buttonPanelsClose}
     >
       ${IconX}
     </button>
@@ -20,7 +25,9 @@ const commentsPanel = () => html`
     <div
       id="CommentsArea"
       class="${getSettingsValue('colorScheme')}"
-    ></div>
+    >
+      ${getAppStateValue('manga')?.comments}
+    </div>
     <button
       id="CommentsColorScheme"
       class="simpleButton ColorScheme"

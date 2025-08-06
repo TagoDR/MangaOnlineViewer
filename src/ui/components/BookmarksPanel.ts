@@ -1,8 +1,9 @@
-import { html, render } from 'lit';
-import { getLocaleString, getSettingsValue } from '../../core/settings';
+import { html } from 'lit';
+import { getAppStateValue, getLocaleString, getSettingsValue } from '../../core/settings';
 import { isEmpty } from '../../utils/checks';
 import { buttonBookmark, buttonBookmarksClose, buttonEraseBookmarks } from '../events/bookmarks';
 import { IconBookmark, IconBookmarkOff, IconExternalLink, IconTrash, IconX } from '../icons';
+import { classMap } from 'lit/directives/class-map.js';
 
 const listBookmarks = () => {
   if (isEmpty(getSettingsValue('bookmarks'))) {
@@ -62,7 +63,10 @@ const listBookmarks = () => {
 const BookmarkPanel = () => html`
   <div
     id="BookmarksPanel"
-    class="panel"
+    class="${classMap({
+      panel:true,
+      visible: getAppStateValue('panel') === 'bookmarks',
+    })}"
   >
     <button
       id="CloseBookmarks"
@@ -80,13 +84,10 @@ const BookmarkPanel = () => html`
       ${IconBookmark} ${IconBookmarkOff}
     </button>
     <h2>${getLocaleString('BOOKMARKS')}</h2>
-    <div id="BookmarksList"></div>
+    <div id="BookmarksList">
+      ${listBookmarks()}
+    </div>
   </div>
 `;
-
-export function reloadBookmarks() {
-  const list = document.getElementById('BookmarksList');
-  if (list) render(listBookmarks(), list);
-}
 
 export default BookmarkPanel;

@@ -1,6 +1,6 @@
 import type { IManga } from './IManga';
 
-export type Panel = false | 'settings' | 'keybindings' | 'bookmarks' | 'comments';
+export type Panel = 'all' | 'settings' | 'keybindings' | 'bookmarks' | 'comments' | 'none';
 export type Download = 'available' | 'working';
 export type Redirect = 'next' | 'prev' | 'series';
 export type Device = 'desktop' | 'mobile' | 'tablet';
@@ -15,4 +15,5 @@ export type IApp = {
   panel: Panel;
   scrollToPage?: number;
   device: Device;
+  render?: HTMLElement | DocumentFragment;
 };

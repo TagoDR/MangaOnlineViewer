@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import { getLocaleString } from '../../core/settings';
+import { getLocaleString, getSettingsValue } from '../../core/settings';
 import sequence from '../../utils/sequence';
 import { buttonBookmark } from '../events/bookmarks';
 import { buttonHidePage, buttonReloadPage } from '../events/individual';
@@ -22,6 +22,7 @@ import {
   IconZoomIn,
   IconZoomOut,
 } from '../icons';
+import { styleMap } from 'lit-html/directives/style-map.js';
 
 const listPages = (times: number, begin: number) =>
   sequence(times, begin).map(
@@ -95,6 +96,9 @@ const listPages = (times: number, begin: number) =>
             alt=""
             class="PageImg"
             src=""
+            style="${styleMap({
+              'min-width': `${getSettingsValue('minZoom')}vw`
+            })}"
           />
         </div>
       </div>

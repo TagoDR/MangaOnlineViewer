@@ -1,7 +1,9 @@
+import { getAppStateValue, getSettingsValue } from '../../core/settings.ts';
+
 export function scrollToElement(ele: HTMLElement | undefined | null) {
-  const chapter = document.querySelector('#Chapter');
-  if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
-    chapter?.scroll(ele?.offsetLeft ?? 0, ele?.offsetTop ?? 0);
+  if (getSettingsValue('viewMode').startsWith('Fluid')) {
+    getAppStateValue('render')?.querySelector('#Chapter')
+      ?.scroll(ele?.offsetLeft ?? 0, ele?.offsetTop ?? 0);
   } else {
     window?.scroll(ele?.offsetLeft ?? 0, ele?.offsetTop ?? 0);
   }

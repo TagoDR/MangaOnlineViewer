@@ -1,6 +1,6 @@
 import { render } from 'lit';
 import _ from 'lodash';
-import { getSettingsValue, saveSettingsValue } from '../../core/settings';
+import { getSettingsValue, saveSettingsValue, setAppStateValue } from '../../core/settings';
 import { isNothing } from '../../utils/checks';
 import { keybindEditor, keybindList } from '../components/KeybindingsPanel';
 import keybindings from './keybindings';
@@ -51,34 +51,18 @@ export function headerHover(event: MouseEvent) {
   }
 }
 
-export function buttonSettingsOpen() {
-  document.querySelector('#SettingsPanel')?.classList.add('visible');
-  document.querySelector('#Navigation')?.classList.add('visible');
-  document.querySelector('#Header')?.classList.add('visible');
-  document.querySelector('#Overlay')?.classList.add('visible');
+export function buttonPanelsClose() {
+  setAppStateValue('panel', 'none');
 }
 
-export function buttonSettingsClose() {
-  document.querySelector('#SettingsPanel')?.classList.remove('visible');
-  document.querySelector('#Navigation')?.classList.remove('visible');
-  document.querySelector('#Header')?.classList.remove('visible');
-  document.querySelector('#Overlay')?.classList.remove('visible');
+export function buttonSettingsOpen() {
+  setAppStateValue('panel', 'settings');
 }
 
 export function buttonKeybindingsOpen() {
   const keybindingList = document.querySelector('#KeybindingsList');
   if (keybindingList) keybindingList.innerHTML = keybindList().join('\n');
-  document.querySelector('#SaveKeybindings')?.classList.add('hidden');
-  document.querySelector('#EditKeybindings')?.classList.remove('hidden');
-  document.querySelector('#KeybindingsPanel')?.classList.add('visible');
-  document.querySelector('#Overlay')?.classList.add('visible');
-}
-
-export function buttonKeybindingsClose() {
-  document.querySelector('#SaveKeybindings')?.classList.add('hidden');
-  document.querySelector('#EditKeybindings')?.classList.remove('hidden');
-  document.querySelector('#KeybindingsPanel')?.classList.remove('visible');
-  document.querySelector('#Overlay')?.classList.remove('visible');
+  setAppStateValue('panel', 'keybindings');
 }
 
 export function saveKeybindings() {

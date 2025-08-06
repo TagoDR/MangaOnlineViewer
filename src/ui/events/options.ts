@@ -1,20 +1,8 @@
 import Swal from 'sweetalert2';
-import {
-  getLocaleString,
-  getSettingsValue,
-  resetSettings,
-  saveSettingsValue,
-  toggleLocalSettings,
-} from '../../core/settings';
+import { getLocaleString, saveSettingsValue, toggleLocalSettings } from '../../core/settings';
 import type { HeaderMode, LoadMode } from '../../types';
 import { replaceStyleSheet } from '../../utils/css';
 import { applyZoom } from '../page';
-
-export function buttonResetSettings() {
-  resetSettings();
-  const elem = document.getElementById('MangaOnlineViewer');
-  elem?.removeAttribute('locale');
-}
 
 export function changeSettingsScope(event: Event) {
   const scope = (event.currentTarget as HTMLInputElement).value;
@@ -24,8 +12,6 @@ export function changeSettingsScope(event: Event) {
 export function changeLocale(event: Event) {
   const locale = (event.currentTarget as HTMLInputElement).value;
   saveSettingsValue('locale', locale);
-  const elem = document.getElementById('MangaOnlineViewer');
-  elem?.setAttribute('locale', locale);
 }
 
 export function changeLoadMode(event: Event) {
@@ -35,20 +21,17 @@ export function changeLoadMode(event: Event) {
 
 export function checkFitWidthOversize(event: Event) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
-  document.querySelector('#Chapter')?.classList.toggle('fitWidthIfOversize', checked);
   saveSettingsValue('fitWidthIfOversize', checked);
 }
 
 export function checkNavbar(event: Event) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
-  document.querySelector('#Navigation')?.classList.toggle('disabled', !checked);
   saveSettingsValue('navbar', checked ? 'bottom' : 'disabled');
   applyZoom();
 }
 
 export function checkEnableComments(event: Event) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
-  document.querySelector('#CommentsButton')?.classList.toggle('disabled', !checked);
   saveSettingsValue('enableComments', checked);
   applyZoom();
 }
@@ -69,8 +52,6 @@ export function checkAutoDownload(event: Event) {
 export function checkLazyLoad(event: Event) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
   saveSettingsValue('lazyLoadImages', checked);
-  const start = document.querySelector<HTMLDivElement>('.lazyStart');
-  start?.classList.toggle('show', getSettingsValue('lazyLoadImages'));
   if (checked) {
     Swal.fire({
       title: getLocaleString('WARNING'),
@@ -110,24 +91,11 @@ export function changeMinZoom(event: Event) {
 
 export function checkHideImageControls(event: Event) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
-  document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls', checked);
   saveSettingsValue('hidePageControls', checked);
-}
-
-export function updateHeaderType(mode: HeaderMode) {
-  const header = document.querySelector('#Header');
-  if (!header?.classList.contains(mode)) {
-    const menu = document.querySelector('#menu');
-    header?.classList.remove('scroll', 'click', 'hover', 'fixed', 'simple', 'visible');
-    menu?.classList.remove('scroll', 'click', 'hover', 'fixed', 'simple', 'hide');
-    header?.classList.add(mode);
-    menu?.classList.add(mode);
-  }
 }
 
 export function changeHeaderType(event: Event) {
   const headerType = (event.currentTarget as HTMLInputElement).value as HeaderMode;
-  updateHeaderType(headerType);
   saveSettingsValue('header', headerType);
 }
 

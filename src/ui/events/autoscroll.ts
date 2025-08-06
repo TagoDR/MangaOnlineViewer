@@ -1,11 +1,11 @@
 import _ from 'lodash';
-import { getSettingsValue } from '../../core/settings';
+import { getAppStateValue, getSettingsValue } from '../../core/settings';
 import { logScript } from '../../utils/tampermonkey';
 
 let scrollActive = false;
 
 function scroll() {
-  const chapter = document.querySelector<HTMLElement>('#Chapter');
+  const chapter = getAppStateValue('render')?.querySelector<HTMLElement>('#Chapter');
   if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
     const scrollDirection = chapter.classList.contains('FluidRTL') ? -1 : 1;
     chapter?.scrollBy({
@@ -20,9 +20,9 @@ function scroll() {
       behavior: 'smooth',
     });
   }
-  if (document.querySelector('#Header')?.classList.contains('headroom-end')) {
+  if (getAppStateValue('render')?.querySelector('#Header')?.classList.contains('headroom-end')) {
     scrollActive = false;
-    document.querySelector('#ScrollControl')?.classList.remove('running');
+    getAppStateValue('render')?.querySelector('#ScrollControl')?.classList.remove('running');
     logScript('Finished auto scroll');
   }
   if (scrollActive) {
@@ -31,7 +31,7 @@ function scroll() {
 }
 
 export function toggleAutoScroll() {
-  const control = document.querySelector('#AutoScroll');
+  const control = getAppStateValue('render')?.querySelector('#AutoScroll');
   if (scrollActive) {
     scrollActive = false;
     control?.classList.remove('running');
