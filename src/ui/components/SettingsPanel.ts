@@ -1,7 +1,6 @@
 import { html } from 'lit';
-import { getLocaleString } from '../../core/settings';
-import { buttonResetSettings } from '../events/options.ts';
-import { buttonSettingsClose } from '../events/panels.ts';
+import { getLocaleString, resetSettings } from '../../core/settings';
+import { buttonPanelsClose } from '../events/panels.ts';
 import { IconSettingsOff, IconX } from '../icons';
 import SettingsPanelGeneral from './SettingsPanel-General';
 import SettingsPanelLoading from './SettingsPanel-Loading';
@@ -19,14 +18,14 @@ const SettingsPanel = () => html`
       id="CloseSettings"
       class="closeButton"
       title="${getLocaleString('CLOSE')}"
-      @click="${buttonSettingsClose}"
+      @click="${buttonPanelsClose}"
     >
       ${IconX}
     </button>
     <button
       id="ResetSettings"
       class="ControlButton"
-      @click="${buttonResetSettings}"
+      @click="${resetSettings}"
     >
       ${IconSettingsOff} ${getLocaleString('BUTTON_RESET_SETTINGS')}
     </button>

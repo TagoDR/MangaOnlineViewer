@@ -1,6 +1,7 @@
 import { sanitizeUrl } from '@braintree/sanitize-url';
 import generateZip from '../../core/download';
 import { logScript } from '../../utils/tampermonkey';
+import { getAppStateValue, setAppStateValue, setSettingsValue } from '../../core/settings.ts';
 
 export function buttonStartDownload(event: Event) {
   const button = event.currentTarget as HTMLInputElement;
@@ -14,7 +15,7 @@ export function buttonStartDownload(event: Event) {
 }
 
 export function buttonGlobalHideImageControls() {
-  document.querySelector('#MangaOnlineViewer')?.classList.toggle('hideControls');
+  setSettingsValue('hidePageControls', true);
 }
 
 export function buttonRedirectURL(event: Event) {
@@ -30,17 +31,11 @@ export function buttonRedirectURL(event: Event) {
 }
 
 export function buttonCommentsOpen() {
-  document.querySelector('#CommentsPanel')?.classList.add('visible');
-  document.querySelector('#Overlay')?.classList.add('visible');
-}
-
-export function buttonCommentsClose() {
-  document.querySelector('#CommentsPanel')?.classList.remove('visible');
-  document.querySelector('#Overlay')?.classList.remove('visible');
+  setAppStateValue('panel', 'comments');
 }
 
 export function changeCommentsColor() {
-  const elem = document.querySelector('#CommentsArea');
+  const elem = getAppStateValue('render')?.querySelector('#CommentsArea');
   elem?.classList.toggle('light');
   elem?.classList.toggle('dark');
 }
