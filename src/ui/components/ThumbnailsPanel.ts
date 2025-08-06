@@ -5,11 +5,15 @@ import sequence from '../../utils/sequence';
 import { transformScrollToHorizontal } from '../events/common';
 import { clickThumbnail } from '../events/navigation';
 import { IconCategory } from '../icons';
+import { classMap } from 'lit/directives/class-map.js';
 
 const ThumbnailsPanel = (manga: IManga) => html`
   <nav
     id="Navigation"
-    class="panel ${getSettingsValue('navbar') !== 'disabled' ? '' : 'disabled'}"
+    class="${classMap({
+      panel: true,
+      disabled: getSettingsValue('navbar') === 'disabled',
+    })}"
   >
     <div
       id="NavigationCounters"

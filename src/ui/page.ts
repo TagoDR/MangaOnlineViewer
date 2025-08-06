@@ -2,16 +2,8 @@ import { blobToDataURL } from 'blob-util';
 import imagesLoaded from 'imagesloaded';
 import { html } from 'lit';
 import NProgress from 'nprogress';
-import { getSettingsValue } from '../core/settings';
-import {
-  type IManga,
-  type IMangaImages,
-  type IMangaPages,
-  isBruteforceManga,
-  isImagesManga,
-  isPagesManga,
-  type ZoomMode,
-} from '../types';
+import { getAppStateValue, getSettingsValue } from '../core/settings';
+import { type IManga, type IMangaImages, type IMangaPages, isBruteforceManga, isImagesManga, isPagesManga, type ZoomMode } from '../types';
 import lazyLoad from '../utils/lazyLoad';
 import renderReplace from '../utils/renderReplace.ts';
 import { getElementAttribute } from '../utils/request';
@@ -27,8 +19,8 @@ function applyZoom(
   value = getSettingsValue('zoomValue'),
   pages = '.PageContent img',
 ) {
-  const globalZoomVal = document.querySelector('#ZoomVal');
-  const zoom = document.querySelector<HTMLInputElement>('#Zoom');
+  const globalZoomVal = getAppStateValue('render')?.querySelector('#ZoomVal');
+  const zoom = getAppStateValue('render')?.querySelector<HTMLInputElement>('#Zoom');
   if (globalZoomVal) {
     if (zoom && mode === 'percent') {
       globalZoomVal.textContent = `${value}%`;
@@ -42,7 +34,7 @@ function applyZoom(
   } else {
     updateHeaderType(getSettingsValue('header'));
   }
-  const pg = [...document.querySelectorAll<HTMLImageElement>(pages)];
+  const pg = [...getAppStateValue('render')?.querySelectorAll<HTMLImageElement>(pages) ?? []];
   pg.forEach((img) => {
     img.removeAttribute('width');
     img.removeAttribute('height');
@@ -94,25 +86,25 @@ function reloadImage(img: HTMLImageElement) {
 function onImagesDone() {
   logScript('Images Loading Complete');
   if (getSettingsValue('downloadZip')) {
-    document.getElementById('download')?.dispatchEvent(new Event('click'));
+    getAppStateValue('render')?.querySelector('#download')?.dispatchEvent(new Event('click'));
   }
 
-  document.getElementById('download')?.classList.remove('disabled');
+  getAppStateValue('render')?.querySelector('#download')?.classList.remove('disabled');
 }
 
 function updateProgress() {
-  const total = document.querySelectorAll('.PageContent .PageImg').length;
-  const loaded = document.querySelectorAll('.PageContent .PageImg.imgLoaded').length;
+  const total = getAppStateValue('render')?.querySelectorAll('.PageContent .PageImg')?.length ?? 1;
+  const loaded = getAppStateValue('render')?.querySelectorAll('.PageContent .PageImg.imgLoaded')?.length ?? 0;
   const percentage = Math.floor((loaded / total) * 100);
-  const title = document.querySelector('title');
+  const title = getAppStateValue('render')?.querySelector('title');
   if (title) {
     renderReplace(
-      html`(${percentage}%) ${document.querySelector('#MangaTitle')?.textContent}`,
+      html`(${percentage}%) ${getAppStateValue('render')?.querySelector('#MangaTitle')?.textContent}`,
       title,
     );
   }
 
-  document.querySelectorAll('#Counters i, #NavigationCounters i').forEach((ele) => {
+  getAppStateValue('render')?.querySelectorAll('#Counters i, #NavigationCounters i').forEach((ele) => {
     ele.textContent = loaded.toString();
   });
   NProgress.configure({
@@ -125,7 +117,7 @@ function updateProgress() {
 }
 
 export const applyLastGlobalZoom = (pages = '.PageContent img') => {
-  const zoomVal = document.querySelector('#ZoomVal')?.textContent?.trim();
+  const zoomVal = getAppStateValue('render')?.querySelector('#ZoomVal')?.textContent?.trim();
   if (zoomVal?.match(/^\d+%$/)) {
     applyZoom('percent', parseInt(zoomVal, 10), pages);
   } else {
@@ -138,8 +130,8 @@ function onImagesSuccess() {
     instance.images.forEach((image) => {
       image.img.classList.add('imgLoaded');
       image.img.classList.remove('imgBroken');
-      const thumbId = image.img.id.replace('PageImg', 'ThumbnailImg');
-      const thumb = document.getElementById(thumbId);
+      const thumbId = image.img.id.replace('PageImg', '#ThumbnailImg');
+      const thumb = getAppStateValue('render')?.querySelector(thumbId);
       thumb?.classList.remove('imgBroken');
       if (thumb) {
         thumb.setAttribute('src', image.img.getAttribute('src') ?? '');
@@ -154,8 +146,8 @@ function onImagesFail(manga: IManga) {
   return (instance: ImagesLoaded.ImagesLoaded) => {
     instance.images.forEach((image) => {
       image.img.classList.add('imgBroken');
-      const thumbId = image.img.id.replace('PageImg', 'ThumbnailImg');
-      const thumb = document.getElementById(thumbId);
+      const thumbId = image.img.id.replace('PageImg', '#ThumbnailImg');
+      const thumb = getAppStateValue('render')?.querySelector(thumbId);
       thumb?.classList.add('imgBroken');
       const src = image.img.getAttribute('src');
       if (src && getRepeatValue(src) <= getSettingsValue('maxReload')) {
@@ -197,7 +189,7 @@ function normalizeUrl(url: string): string {
 function addImg(manga: IMangaImages, index: number, imageSrc: string, position: number) {
   const relativePosition = position - (manga.begin ?? 0);
   let src = normalizeUrl(imageSrc);
-  const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
+  const img = getAppStateValue('render')?.querySelector<HTMLImageElement>(`#PageImg${index}`);
   if (img) {
     if (
       !(manga.lazy ?? getSettingsValue('lazyLoadImages')) ||
@@ -248,7 +240,7 @@ function findPage(
 ): () => Promise<void> {
   return async () => {
     const src = await getElementAttribute(pageUrl, manga.img, manga.lazyAttr ?? 'src');
-    const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
+    const img = getAppStateValue('render')?.querySelector<HTMLImageElement>(`#PageImg${index}`);
     if (src && img) {
       img.style.width = 'auto';
       if (img.parentElement) {
@@ -265,7 +257,7 @@ function findPage(
 // Adds a page to the place-holder div
 async function addPage(manga: IMangaPages, index: number, pageUrl: string, position: number) {
   const relativePosition = position - (manga.begin ?? 0);
-  const img = document.querySelector<HTMLImageElement>(`#PageImg${index}`);
+  const img = getAppStateValue('render')?.querySelector<HTMLImageElement>(`#PageImg${index}`);
   if (img) {
     if (
       !(manga.lazy ?? getSettingsValue('lazyLoadImages')) ||

@@ -1,14 +1,14 @@
 import hotkeys from 'hotkeys-js';
 import _ from 'lodash';
-import { getSettingsValue } from '../../core/settings';
+import { getAppStateValue, getSettingsValue } from '../../core/settings';
 import { logScript } from '../../utils/tampermonkey';
 import { scrollToElement } from './common';
 
 const doClick = (selector: string) =>
-  document.querySelector(selector)?.dispatchEvent(new Event('click'));
+  getAppStateValue('render')?.querySelector(selector)?.dispatchEvent(new Event('click'));
 
 function doScrolling(sign: 1 | -1) {
-  const chapter = document.querySelector<HTMLElement>('#Chapter');
+  const chapter = getAppStateValue('render')?.querySelector<HTMLElement>('#Chapter');
   if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
     const scrollDirection = chapter.classList.contains('FluidRTL') ? -1 : 1;
     chapter.scrollBy({
@@ -17,11 +17,11 @@ function doScrolling(sign: 1 | -1) {
     });
   } else if (getSettingsValue('zoomMode') === 'height') {
     // Fit height
-    const pages = [...document.querySelectorAll<HTMLElement>('.MangaPage')];
+    const pages = [...getAppStateValue('render')?.querySelectorAll<HTMLElement>('.MangaPage') ?? []];
     const distance = pages.map(element => Math.abs(element.offsetTop - window.scrollY));
     const currentPage = _.indexOf(distance, _.min(distance));
     const target = currentPage + sign;
-    const header = document.querySelector<HTMLDivElement>('#Header');
+    const header = getAppStateValue('render')?.querySelector<HTMLDivElement>('#Header');
     if (header && target < 0) {
       scrollToElement(header);
     } else if (header && target >= pages.length) {

@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
 import {
   changeHeaderType,
@@ -45,8 +46,12 @@ function checkboxOptions() {
 function lazyLoad() {
   return html`
     <div
-      class="ControlLabel lazyStart ControlLabelItem
-    ${getSettingsValue('lazyLoadImages') ? 'show' : ''}"
+      class="${classMap({
+        ControlLabel: true,
+        lazyStart: true,
+        ControlLabelItem: true,
+        show: getSettingsValue('lazyLoadImages'),
+      })}"
     >
       <span>
         ${getLocaleString('LAZY_LOAD_IMAGES')}

@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
-import { buttonKeybindingsClose, editKeybindings, saveKeybindings } from '../events/panels';
+import { buttonPanelsClose, editKeybindings, saveKeybindings } from '../events/panels';
 import { IconDeviceFloppy, IconPencil, IconX } from '../icons';
 
 export const keybindList = () => {
@@ -37,7 +37,7 @@ const KeybindingsPanel = () => html`
       id="CloseKeybindings"
       class="closeButton"
       title="${getLocaleString('CLOSE')}"
-      @click=${buttonKeybindingsClose}
+      @click=${buttonPanelsClose}
     >
       ${IconX}
     </button>
