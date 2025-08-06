@@ -2,7 +2,7 @@ import { getSettingsValue, saveSettingsValue } from '../../core/settings';
 import type { ZoomMode } from '../../types';
 import { applyZoom } from '../page';
 
-export function changeGlobalZoom(mode: ZoomMode, value = getSettingsValue('defaultZoom')) {
+export function changeGlobalZoom(mode: ZoomMode, value = getSettingsValue('zoomValue')) {
   return () => {
     applyZoom(mode, value);
   };
@@ -23,13 +23,13 @@ export function changeDefaultZoomMode(event: Event) {
   const target = (event.currentTarget as HTMLInputElement).value as ZoomMode;
   saveSettingsValue('zoomMode', target);
   applyZoom(target);
-  const percent = document.querySelector<HTMLDivElement>('.DefaultZoom');
+  const percent = document.querySelector<HTMLDivElement>('.zoomValue');
   percent?.classList.toggle('show', target === 'percent');
 }
 
-export function changeDefaultZoom(event: Event) {
+export function changezoomValue(event: Event) {
   const target = parseInt((event.currentTarget as HTMLInputElement).value, 10);
-  saveSettingsValue('defaultZoom', target);
+  saveSettingsValue('zoomValue', target);
   applyZoom('percent', target);
 }
 

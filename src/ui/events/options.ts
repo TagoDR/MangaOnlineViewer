@@ -39,16 +39,10 @@ export function checkFitWidthOversize(event: Event) {
   saveSettingsValue('fitWidthIfOversize', checked);
 }
 
-export function checkVerticalSeparator(event: Event) {
-  const checked = (event.currentTarget as HTMLInputElement).checked;
-  document.querySelector('#Chapter')?.classList.toggle('separator', checked);
-  saveSettingsValue('verticalSeparator', checked);
-}
-
-export function checkShowThumbnails(event: Event) {
+export function checkNavbar(event: Event) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
   document.querySelector('#Navigation')?.classList.toggle('disabled', !checked);
-  saveSettingsValue('showThumbnails', checked);
+  saveSettingsValue('navbar', checked ? 'bottom' : 'disabled');
   applyZoom();
 }
 

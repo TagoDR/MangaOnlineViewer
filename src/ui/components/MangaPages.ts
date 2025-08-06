@@ -1,4 +1,4 @@
-import { html } from 'lit-html';
+import { html } from 'lit';
 import { getLocaleString } from '../../core/settings';
 import sequence from '../../utils/sequence';
 import { buttonBookmark } from '../events/bookmarks';
@@ -25,7 +25,7 @@ import {
 
 const listPages = (times: number, begin: number) =>
   sequence(times, begin).map(
-    index => html`
+    (index) => html`
       <div
         id="Page${index}"
         class="MangaPage"

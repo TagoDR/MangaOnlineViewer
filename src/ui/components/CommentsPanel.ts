@@ -1,4 +1,4 @@
-import { html } from 'lit-html';
+import { html } from 'lit';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
 import { buttonCommentsClose, changeCommentsColor } from '../events/globals';
 import { IconMoon, IconSun, IconX } from '../icons';

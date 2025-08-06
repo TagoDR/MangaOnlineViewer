@@ -1,4 +1,4 @@
-import { html } from 'lit-html';
+import { html } from 'lit';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
 import {
   changeHeaderType,
@@ -9,24 +9,19 @@ import {
   checkFitWidthOversize,
   checkHideImageControls,
   checkLazyLoad,
-  checkShowThumbnails,
-  checkVerticalSeparator,
+  checkNavbar,
 } from '../events/options';
 import toggler from './Toggler';
 
 function checkboxOptions() {
   return html`
-    <div class="ControlLabel verticalSeparator">
-      ${getLocaleString('VERTICAL_SEPARATOR')}
-      ${toggler('verticalSeparator', getSettingsValue('verticalSeparator'), checkVerticalSeparator)}
-    </div>
     <div class="ControlLabel fitIfOversize">
       ${getLocaleString('FIT_WIDTH_OVERSIZED')}
       ${toggler('fitIfOversize', getSettingsValue('fitWidthIfOversize'), checkFitWidthOversize)}
     </div>
     <div class="ControlLabel showThumbnails">
       ${getLocaleString('SHOW_THUMBNAILS')}
-      ${toggler('showThumbnails', getSettingsValue('showThumbnails'), checkShowThumbnails)}
+      ${toggler('showThumbnails', getSettingsValue('navbar') !== 'disabled', checkNavbar)}
     </div>
     <div class="ControlLabel enableComments">
       ${getLocaleString('ENABLE_COMMENTS')}

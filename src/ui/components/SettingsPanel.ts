@@ -1,4 +1,4 @@
-import { html } from 'lit-html';
+import { html } from 'lit';
 import { getLocaleString } from '../../core/settings';
 import { buttonResetSettings } from '../events/options.ts';
 import { buttonSettingsClose } from '../events/panels.ts';

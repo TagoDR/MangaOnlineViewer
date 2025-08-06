@@ -1,4 +1,4 @@
-import { html } from 'lit-html';
+import { html } from 'lit';
 import { getLocaleString, getSettingsValue } from '../../core/settings.ts';
 import { changeLoadMode, changePagesPerSecond } from '../events/options.ts';
 
