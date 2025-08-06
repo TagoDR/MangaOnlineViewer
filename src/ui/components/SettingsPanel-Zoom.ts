@@ -1,4 +1,4 @@
-import { html } from 'lit-html';
+import { html } from 'lit';
 import { getLocaleString, getSettingsValue } from '../../core/settings.ts';
 import { changeMinZoom, changeZoomStep } from '../events/options.ts';
 import { changeViewMode } from '../events/viewmode.ts';
@@ -33,33 +33,33 @@ function defaultZoomMode() {
   </div>`;
 }
 
-function defaultZoom() {
+function zoomValue() {
   return html`
     <div
-      class="ControlLabel DefaultZoom ControlLabelItem ${getSettingsValue('zoomMode') === 'percent'
+      class="ControlLabel zoomValue ControlLabelItem ${getSettingsValue('zoomMode') === 'percent'
         ? 'show'
         : ''}"
     >
       <span>
         ${getLocaleString('DEFAULT_ZOOM')}
         <output
-          id="defaultZoomVal"
+          id="zoomValueVal"
           class="RangeValue"
-          for="DefaultZoom"
+          for="zoomValue"
         >
-          ${getSettingsValue('defaultZoom')}%
+          ${getSettingsValue('zoomValue')}%
         </output>
       </span>
       <input
         type="range"
-        value="${getSettingsValue('defaultZoom')}"
-        name="DefaultZoom"
-        id="DefaultZoom"
+        value="${getSettingsValue('zoomValue')}"
+        name="zoomValue"
+        id="zoomValue"
         min="5"
         max="200"
         step="5"
         list="tickmarks"
-        oninput='defaultZoomVal.value = this.value + "%"'
+        oninput='zoomValueVal.value = this.value + "%"'
       />
       <datalist id="tickmarks">
         <option value="5">5</option>
@@ -170,4 +170,4 @@ function viewMode() {
 }
 
 export default () =>
-  html`${defaultZoomMode()} ${defaultZoom()} ${minZoom()} ${zoomStep()} ${viewMode()}`;
+  html`${defaultZoomMode()} ${zoomValue()} ${minZoom()} ${zoomStep()} ${viewMode()}`;

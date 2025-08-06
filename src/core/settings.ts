@@ -1,49 +1,57 @@
 import _ from 'lodash';
-import { atom, computed } from 'nanostores';
+import { computed, map } from 'nanostores';
 import locales from '../locales';
-import { type ILocale, type ILocaleKey, type ISettings, type ISettingsKey, isKey } from '../types';
-import { applyZoom } from '../ui/page';
+import {
+  type IApp,
+  type ILocale,
+  type ILocaleKey,
+  type ISettings,
+  type ISettingsKey,
+  isKey,
+} from '../types';
 import { isNothing } from '../utils/checks';
 import diffObj from '../utils/diffObj';
 import {
+  getDevice,
   getGlobalSettings,
   getLocalSettings,
   giveToWindow,
   isMobile,
   logScript,
+  logScriptC,
   logScriptVerbose,
   removeValueGM,
-  setGlobalSettings,
-  setLocalSettings,
+  saveGlobalSettings,
+  saveLocalSettings,
   settingsChangeListener,
 } from '../utils/tampermonkey';
 
 export const defaultSettings: ISettings = {
-  enabled: true,
-  locale: 'en_US',
-  theme: 'darkblue',
-  customTheme: '#004526',
-  themeShade: 600,
-  colorScheme: 'dark',
-  fitWidthIfOversize: true,
-  showThumbnails: true,
-  enableComments: true,
-  downloadZip: false,
-  verticalSeparator: false,
-  throttlePageLoad: 1000,
-  zoomMode: 'percent',
-  defaultZoom: 100,
-  zoomStep: 25,
-  minZoom: 30,
-  loadMode: 'wait',
-  viewMode: 'WebComic',
   bookmarks: [],
+  colorScheme: 'dark',
+  customTheme: '#004526',
+  downloadZip: false,
+  enableComments: true,
+  enabled: true,
+  fitWidthIfOversize: true,
+  header: 'hover',
+  hidePageControls: false,
   lazyLoadImages: false,
   lazyStart: 50,
-  hidePageControls: false,
-  header: 'hover',
+  loadMode: 'wait',
+  locale: 'en_US',
   maxReload: 5,
-  scrollHeight: 20,
+  minZoom: 30,
+  navbar: 'bottom',
+  pagination: false,
+  scrollHeight: 5,
+  theme: 'darkblue',
+  themeShade: 600,
+  throttlePageLoad: 1000,
+  viewMode: 'WebComic',
+  zoomMode: 'percent',
+  zoomStep: 25,
+  zoomValue: 100,
   keybinds: {
     SCROLL_UP: ['up', 'W', 'num_8'],
     SCROLL_DOWN: ['down', 'S', 'num_2'],
@@ -66,9 +74,11 @@ export const defaultSettings: ISettings = {
 const mobileSettings: Partial<ISettings> = {
   lazyLoadImages: true,
   fitWidthIfOversize: true,
-  showThumbnails: false,
+  navbar: 'disabled',
   viewMode: 'WebComic',
-  header: 'click',
+  header: 'scroll',
+  hidePageControls: true,
+  pagination: true,
 };
 
 function getDefault(global = true) {
@@ -90,11 +100,25 @@ let localSettings: ISettings = _.defaultsDeep(
 
 export const isSettingsLocal = () => localSettings?.enabled === true;
 
-export const settings = atom<ISettings>(isSettingsLocal() ? localSettings : globalSettings);
+export const settings = map<ISettings>(isSettingsLocal() ? localSettings : globalSettings);
 export const locale = computed(
   settings,
-  (current): ILocale => locales.find(l => l.ID === current.locale) ?? locales[1],
+  (current): ILocale => locales.find((l) => l.ID === current.locale) ?? locales[1],
 );
+export const appState = map<IApp>({
+  autoScroll: false,
+  currentPage: 0,
+  loaded: 0,
+  manga: undefined,
+  panel: false,
+  scrollToPage: undefined,
+  device: getDevice(),
+});
+
+giveToWindow('app', appState);
+
+appState.subscribe(logScriptC('ReaderState'));
+settings.subscribe(logScriptC('SettingsState'));
 
 function refresh() {
   if (isSettingsLocal()) {
@@ -111,7 +135,6 @@ function syncGlobalSettings(newValue: Partial<ISettings>) {
     logScript('Imported Global Settings', diff);
     globalSettings = newSettings;
     refresh();
-    applyZoom(getSettingsValue('zoomMode'), getSettingsValue('defaultZoom'));
   }
 }
 
@@ -124,7 +147,6 @@ function syncLocalSettings(newValue: Partial<ISettings>) {
     logScript('Imported Local Settings', diff);
     localSettings = newSettings;
     refresh();
-    applyZoom(getSettingsValue('zoomMode'), getSettingsValue('defaultZoom'));
   }
 }
 
@@ -138,11 +160,11 @@ settingsChangeListener(_.debounce(syncLocalSettings, 300), window.location.hostn
  * @returns The effective value of the setting.
  */
 export function getSettingsValue<K extends ISettingsKey>(key: K): ISettings[K] {
-  if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
-    return localSettings[key];
-  }
-  return globalSettings[key];
-  // return settings.get()?.[key];
+  // if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
+  //   return localSettings[key];
+  // }
+  // return globalSettings[key];
+  return settings.get()?.[key];
 }
 
 /**
@@ -153,12 +175,12 @@ export function getSettingsValue<K extends ISettingsKey>(key: K): ISettings[K] {
  * @param value The new value for the setting.
  */
 export function setSettingsValue<K extends ISettingsKey>(key: K, value: ISettings[K]): void {
+  settings.setKey(key, value);
   if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
-    localSettings = { ...localSettings, [key]: value };
+    localSettings[key] = value;
   } else {
-    globalSettings = { ...globalSettings, [key]: value };
+    globalSettings[key] = value;
   }
-  settings.set({ ...settings.get(), [key]: value });
 }
 
 /**
@@ -172,13 +194,13 @@ export function saveSettingsValue<K extends ISettingsKey>(key: K, value: ISettin
   setSettingsValue(key, value);
   if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
     const alter = _.defaultsDeep(getLocalSettings(getDefault(false)), getDefault(false));
-    setLocalSettings(diffObj(alter, getDefault(false)));
+    saveLocalSettings(diffObj(alter, getDefault(false)));
   } else {
     const alter = {
       ..._.defaultsDeep(getGlobalSettings(getDefault()), getDefault()),
       [key]: value,
     };
-    setGlobalSettings(diffObj(alter, getDefault()));
+    saveGlobalSettings(diffObj(alter, getDefault()));
   }
 }
 
@@ -202,8 +224,16 @@ export function changeSettingsValue<K extends ISettingsKey>(
   settings.set({ ...settings.get(), [key]: newValue });
 }
 
+export function getAppStateValue<K extends keyof IApp>(key: K): IApp[K] {
+  return appState.get()[key];
+}
+
+export function setAppStateValue<K extends keyof IApp>(key: K, value: IApp[K]): void {
+  appState.setKey(key, value);
+}
+
 export function getLocaleString<K extends ILocaleKey>(name: K | string): string {
-  const locale = locales.find(l => l.ID === getSettingsValue('locale')) ?? locales[1];
+  const locale = locales.find((l) => l.ID === getSettingsValue('locale')) ?? locales[1];
   if (isKey(locale, name)) return locale?.[name] ?? locales[1]?.[name];
   return `##MISSING_STRING_${name}##`;
 }
@@ -222,14 +252,14 @@ export function resetSettings() {
 
 export function toggleLocalSettings(activate = false) {
   localSettings.enabled = activate;
-  setLocalSettings(diffObj(localSettings, getDefault(false)));
+  saveLocalSettings(diffObj(localSettings, getDefault(false)));
   logScript('Local Settings ', activate ? 'Enabled' : 'Disabled');
   refresh();
   return isSettingsLocal();
 }
 
 export function isBookmarked(url: string = window.location.href): number | undefined {
-  return globalSettings.bookmarks.find(el => el.url === url)?.page;
+  return globalSettings.bookmarks.find((el) => el.url === url)?.page;
 }
 
 export function showSettings<K extends ISettingsKey>(key: K | null = null) {

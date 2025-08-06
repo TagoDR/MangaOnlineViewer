@@ -1,4 +1,4 @@
-import { html } from 'lit-html';
+import { html } from 'lit';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
 import type { IManga } from '../../types';
 import sequence from '../../utils/sequence';
@@ -9,7 +9,7 @@ import { IconCategory } from '../icons';
 const ThumbnailsPanel = (manga: IManga) => html`
   <nav
     id="Navigation"
-    class="panel ${getSettingsValue('showThumbnails') ? '' : 'disabled'}"
+    class="panel ${getSettingsValue('navbar') !== 'disabled' ? '' : 'disabled'}"
   >
     <div
       id="NavigationCounters"
@@ -26,7 +26,7 @@ const ThumbnailsPanel = (manga: IManga) => html`
       @wheel=${transformScrollToHorizontal}
     >
       ${sequence(manga.pages, manga.begin).map(
-        index => html`
+        (index) => html`
           <div
             id="Thumbnail${index}"
             class="Thumbnail"

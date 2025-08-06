@@ -1,4 +1,4 @@
-import { html, render } from 'lit-html';
+import { html, render } from 'lit';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
 import { isEmpty } from '../../utils/checks';
 import { buttonBookmark, buttonBookmarksClose, buttonEraseBookmarks } from '../events/bookmarks';

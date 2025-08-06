@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: the values truly does not matter */
 
 import Bowser from 'bowser';
-import type { ISettings } from '../types';
+import type { Device, ISettings } from '../types';
 
 export function giveToWindow(key: string, content: any) {
   if (typeof unsafeWindow !== 'undefined') unsafeWindow[key] = content;
@@ -23,7 +23,10 @@ function logScriptVerbose(...text: any[]): string[] {
 }
 
 // Compose console output
-const logScriptC = (x: string) => (y: string) => logScript(x, y)[1];
+const logScriptC =
+  (x: string) =>
+  (...y: any[]) =>
+    logScript(x, ...y);
 
 // Clear the Console
 function logClear(...text: string[]) {
@@ -105,11 +108,11 @@ function setValueGM(name: string, value: any): string {
   }
 }
 
-function setGlobalSettings(value: Partial<ISettings>) {
+function saveGlobalSettings(value: Partial<ISettings>) {
   return setValueGM('settings', value);
 }
 
-function setLocalSettings(value: Partial<ISettings>) {
+function saveLocalSettings(value: Partial<ISettings>) {
   return setValueGM(window.location.hostname, value);
 }
 
@@ -145,7 +148,7 @@ function getEngine(): string {
 }
 
 const parser = Bowser.getParser(window.navigator.userAgent);
-const getDevice = () => {
+const getDevice = (): Device => {
   const device = parser.getPlatformType(true);
   if (device === 'mobile' || window.matchMedia('screen and (max-width: 600px)').matches) {
     return 'mobile';
@@ -189,8 +192,8 @@ export {
   getGlobalSettings,
   getLocalSettings,
   setValueGM,
-  setGlobalSettings,
-  setLocalSettings,
+  saveGlobalSettings,
+  saveLocalSettings,
   removeValueGM,
   getBrowser,
   getEngine,

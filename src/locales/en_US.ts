@@ -78,7 +78,7 @@ export default {
   GO_TO_PAGE: 'Go to Page',
   ENLARGE: 'Enlarge',
   RESTORE: 'Restore',
-  REDUCE: 'Restore',
+  REDUCE: 'Reduce',
   FIT_WIDTH: 'Fit Width',
   FIT_HEIGHT: 'Fit Height',
   PERCENT: 'Percent',

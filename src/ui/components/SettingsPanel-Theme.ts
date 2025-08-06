@@ -1,5 +1,5 @@
-import { html } from 'lit-html';
-import { classMap } from 'lit-html/directives/class-map.js';
+import { html } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import { getLocaleString, getSettingsValue } from '../../core/settings.ts';
 import colors from '../../utils/colors.ts';
 import {
@@ -11,8 +11,8 @@ import {
 import { IconCheck, IconMoon, IconPalette, IconSun } from '../icons';
 
 function themesSelector() {
-  return [...Object.keys(colors).map(color => colors[color].name)].map(
-    theme => html`
+  return [...Object.keys(colors).map((color) => colors[color].name)].map(
+    (theme) => html`
       <span
         title="${theme}"
         class="${classMap({
