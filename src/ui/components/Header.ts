@@ -1,4 +1,4 @@
-import { html } from 'lit-html';
+import { html } from 'lit';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
 import type { IManga } from '../../types';
 import sequence from '../../utils/sequence';
@@ -43,7 +43,7 @@ import {
 } from '../icons';
 
 const listOptions = (times: number, begin: number) =>
-  sequence(times, begin).map(index => html` <option value="${index}">${index}</option>`);
+  sequence(times, begin).map((index) => html` <option value="${index}">${index}</option>`);
 const Header = (manga: IManga) => html`
   <header
     id="Header"
@@ -177,18 +177,20 @@ const Header = (manga: IManga) => html`
           class="RangeValue"
           for="Zoom"
         >
-          ${getSettingsValue('zoomMode') === 'percent'
-            ? `${getSettingsValue('defaultZoom')}%`
-            : getSettingsValue('zoomMode')}
+          ${
+            getSettingsValue('zoomMode') === 'percent'
+              ? `${getSettingsValue('zoomValue')}%`
+              : getSettingsValue('zoomMode')
+          }
         </output>
         <input
           type="range"
-          value="${getSettingsValue('defaultZoom')}"
+          value="${getSettingsValue('zoomValue')}"
           name="Zoom"
           id="Zoom"
           min="1"
           max="200"
-          @change="${changeZoom}"
+          @input="${changeZoom}"
         />
       </span>
     </aside>

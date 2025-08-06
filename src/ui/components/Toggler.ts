@@ -1,4 +1,4 @@
-import { html } from 'lit-html';
+import { html } from 'lit';
 import { IconCheck, IconX } from '../icons';
 
 function toggler(name: string, checked = false, event?: (e: Event) => void) {

@@ -1,4 +1,4 @@
-import { render } from 'lit-html';
+import { render } from 'lit';
 
 const renderReplace = (value: unknown, container: HTMLElement) => {
   // 1. Create a new container (a DocumentFragment is a good choice for efficiency)

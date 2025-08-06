@@ -79,7 +79,6 @@ export default defineConfig(({ mode }) => {
       viteBanner({ content: metadata, verify: false }),
       svgLoader({ svgo: false, defaultImport: 'raw' }),
     ],
-
     build: {
       target: 'esnext',
       minify: false,
@@ -92,7 +91,6 @@ export default defineConfig(({ mode }) => {
           target !== 'dev' ? prettier({ parser: 'babel-ts' }) : null,
         ],
         output: {
-          // banner: metadata,
           format: 'iife',
           entryFileNames: scripts[target].name,
           sourcemap: false,
