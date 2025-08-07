@@ -1,12 +1,8 @@
 import { blobToDataURL } from 'blob-util';
-import imagesLoaded from 'imagesloaded';
-import { html } from 'lit';
-import NProgress from 'nprogress';
 import {
   getAppStateValue,
   getSettingsValue,
   refreshSettings,
-  setAppStateValue,
   setSettingsValue,
 } from '../core/settings';
 import {
@@ -19,14 +15,12 @@ import {
   type ZoomMode,
 } from '../types';
 import lazyLoad from '../utils/lazyLoad';
-import renderReplace from '../utils/renderReplace.ts';
 import { getElementAttribute } from '../utils/request';
 import sequence from '../utils/sequence';
 import { logScript } from '../utils/tampermonkey';
 import { isBase64ImageUrl, isObjectURL } from '../utils/urls';
 import { waitForFunc } from '../utils/waitFor.ts';
 import { removeURLBookmark } from './events/bookmarks';
-import { buttonStartDownload } from './events/globals.ts';
 
 // After pages load apply default Zoom
 function applyZoom(
@@ -69,69 +63,6 @@ function applyZoom(
   });
 }
 
-function invalidateImageCache(src: string, repeat: number) {
-  const url = src.replace(/[?&]forceReload=\d+$/, '');
-  const symbol = !url.includes('?') ? '?' : '&';
-  return `${url + symbol}forceReload=${repeat}`;
-}
-
-function getRepeatValue(src: string | undefined): number {
-  let repeat = 1;
-  const cache = src?.match(/forceReload=(\d+)$/);
-  if (cache?.at(1)) {
-    repeat = parseInt(cache[1], 10) + 1;
-  }
-
-  return repeat;
-}
-
-// Force reload the image
-function reloadImage(img: HTMLImageElement) {
-  const src = img.getAttribute('src');
-  if (!src) {
-    return;
-  }
-  img.removeAttribute('src');
-  if (isBase64ImageUrl(src) || isObjectURL(src)) {
-    img.setAttribute('src', src);
-  } else {
-    img.setAttribute('src', invalidateImageCache(src, getRepeatValue(src)));
-  }
-}
-
-function onImagesDone() {
-  logScript('Images Loading Complete');
-  if (getSettingsValue('downloadZip')) buttonStartDownload();
-}
-
-function updateProgress() {
-  const total = getAppStateValue('render')?.querySelectorAll('.PageContent .PageImg')?.length ?? 1;
-  const loaded =
-    getAppStateValue('render')?.querySelectorAll('.PageContent .PageImg.imgLoaded')?.length ?? 0;
-  const percentage = Math.floor((loaded / total) * 100);
-  const title = getAppStateValue('render')?.querySelector('title');
-  if (title) {
-    renderReplace(
-      html`(${percentage}%) ${getAppStateValue('render')?.querySelector('#MangaTitle')?.textContent}`,
-      title,
-    );
-  }
-
-  getAppStateValue('render')
-    ?.querySelectorAll('#Counters i, #NavigationCounters i')
-    .forEach(ele => {
-      ele.textContent = loaded.toString();
-    });
-  NProgress.configure({
-    showSpinner: false,
-  }).set(loaded / total);
-  setAppStateValue('loaded', loaded);
-  logScript(`Progress: ${percentage}%`);
-  if (loaded === total) {
-    onImagesDone();
-  }
-}
-
 export const applyLastGlobalZoom = (pages = '.PageContent img') => {
   const zoomVal = getAppStateValue('render')?.querySelector('#ZoomVal')?.textContent?.trim();
   if (zoomVal?.match(/^\d+%$/)) {
@@ -140,53 +71,6 @@ export const applyLastGlobalZoom = (pages = '.PageContent img') => {
     applyZoom(zoomVal as ZoomMode, 100, pages);
   }
 };
-
-function onImagesSuccess() {
-  return (instance: ImagesLoaded.ImagesLoaded) => {
-    instance.images.forEach(image => {
-      image.img.classList.add('imgLoaded');
-      image.img.classList.remove('imgBroken');
-      const thumbId = image.img.id.replace('PageImg', '#ThumbnailImg');
-      const thumb = getAppStateValue('render')?.querySelector(thumbId);
-      thumb?.classList.remove('imgBroken');
-      if (thumb) {
-        thumb.setAttribute('src', image.img.getAttribute('src') ?? '');
-      }
-      applyLastGlobalZoom(`#${image.img.id}`);
-      updateProgress();
-    });
-  };
-}
-
-function onImagesFail(manga: IManga) {
-  return (instance: ImagesLoaded.ImagesLoaded) => {
-    instance.images.forEach(image => {
-      image.img.classList.add('imgBroken');
-      const thumbId = image.img.id.replace('PageImg', '#ThumbnailImg');
-      const thumb = getAppStateValue('render')?.querySelector(thumbId);
-      thumb?.classList.add('imgBroken');
-      const src = image.img.getAttribute('src');
-      if (src && getRepeatValue(src) <= getSettingsValue('maxReload')) {
-        setTimeout(async () => {
-          if (manga.reload) {
-            const id = parseInt(`0${/\d+/.exec(image.img.id)}`, 10);
-            const alt = await manga.reload(id);
-            image.img.setAttribute('src', alt);
-          } else {
-            reloadImage(image.img);
-          }
-          if (image.img.parentElement) {
-            const imgLoad = imagesLoaded(image.img.parentElement);
-            imgLoad.on('done', onImagesSuccess());
-            imgLoad.on('fail', onImagesFail(manga));
-          }
-        }, 2000);
-      } else {
-        // image.img.closest('.MangaPage')?.classList.add('hide');
-      }
-    });
-  };
-}
 
 // Corrects urls
 function normalizeUrl(url: string): string {
@@ -219,11 +103,6 @@ async function addImg(manga: IMangaImages, index: number, imageSrc: string, posi
               .then(resp => resp.blob())
               .then(blob => blobToDataURL(blob));
           }
-          if (img.parentElement) {
-            const imgLoad = imagesLoaded(img.parentElement);
-            imgLoad.on('done', onImagesSuccess());
-            imgLoad.on('fail', onImagesFail(manga));
-          }
           img.setAttribute('src', src);
           logScript('Loaded Image:', index, 'Source:', src);
         },
@@ -235,12 +114,7 @@ async function addImg(manga: IMangaImages, index: number, imageSrc: string, posi
       lazyLoad(
         img,
         () => {
-          if (img.parentElement) {
-            const imgLoad = imagesLoaded(img.parentElement);
-            imgLoad.on('done', onImagesSuccess());
-            imgLoad.on('fail', onImagesFail(manga));
-            logScript('Lazy Image: ', index, ' Source: ', img.getAttribute('src'));
-          }
+          logScript('Lazy Image: ', index, ' Source: ', img.getAttribute('src'));
         },
         manga.fetchOptions,
       );
@@ -260,11 +134,6 @@ function findPage(
     const img = getAppStateValue('render')?.querySelector<HTMLImageElement>(`#PageImg${index}`);
     if (src && img) {
       img.style.width = 'auto';
-      if (img.parentElement) {
-        const imgLoad = imagesLoaded(img.parentElement);
-        imgLoad.on('done', onImagesSuccess());
-        imgLoad.on('fail', onImagesFail(manga));
-      }
       img.setAttribute('src', src);
       logScript(`${lazy && 'Lazy '}Page: `, index, ' Source: ', img.getAttribute('src'));
     }
@@ -347,4 +216,4 @@ function loadManga(manga: IManga, begin = 1) {
   }
 }
 
-export { loadManga, applyZoom, reloadImage };
+export { loadManga, applyZoom };

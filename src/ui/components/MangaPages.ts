@@ -1,8 +1,14 @@
 import { html } from 'lit';
+import { styleMap } from 'lit-html/directives/style-map.js';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
 import sequence from '../../utils/sequence';
 import { buttonBookmark } from '../events/bookmarks';
-import { buttonHidePage, buttonReloadPage } from '../events/individual';
+import {
+  buttonHidePage,
+  buttonReloadPage,
+  imageLoadError,
+  imageLoaded,
+} from '../events/individual';
 import {
   buttonRestoreZoom,
   buttonZoomHeight,
@@ -22,7 +28,6 @@ import {
   IconZoomIn,
   IconZoomOut,
 } from '../icons';
-import { styleMap } from 'lit-html/directives/style-map.js';
 
 const listPages = (times: number, begin: number) =>
   sequence(times, begin).map(
@@ -85,6 +90,7 @@ const listPages = (times: number, begin: number) =>
             class="Reload ControlButton"
             title="${getLocaleString('RELOAD')}"
             @click=${buttonReloadPage}
+            value="${index}"
           >
             ${IconRefresh}
           </button>
@@ -99,6 +105,8 @@ const listPages = (times: number, begin: number) =>
             style="${styleMap({
               'min-width': `${getSettingsValue('minZoom')}vw`,
             })}"
+            @load=${imageLoaded}
+            @error=${imageLoadError}
           />
         </div>
       </div>
