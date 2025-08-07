@@ -8,7 +8,7 @@ function generateThemeCSS(name: string, primary: string, text: string) {
   return css`
     ${selector},
     .ThemeRadio.${name},
-    [data-theme='${name}'] {
+    #MangaOnlineViewer.${name} {
       --theme-primary-color: ${primary};
       --theme-primary-text-color: ${text};
     }
