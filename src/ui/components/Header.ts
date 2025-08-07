@@ -39,16 +39,13 @@ import {
 } from '../icons';
 
 const listOptions = (times: number, begin: number) =>
-  sequence(times, begin).map(
-    index => html`
-    <option value="${index}">${index}</option>`,
-  );
+  sequence(times, begin).map(index => html` <option value="${index}">${index}</option>`);
 const Header = (manga: IManga) => html`
   <header
     id="Header"
     class="${classMap({
       [getSettingsValue('header')]: true,
-      visible: getAppStateValue('header'),
+      'headroom-top': true,
     })}"
   >
     <aside id="GlobalFunctions">
@@ -198,7 +195,7 @@ const Header = (manga: IManga) => html`
         href="${manga.series ?? ''}"
         @click=${buttonRedirectURL}
       >
-          (${getLocaleString('RETURN_CHAPTER_LIST')})
+        (${getLocaleString('RETURN_CHAPTER_LIST')})
       </a>
     </div>
     <nav id="ChapterNavigation">
@@ -207,8 +204,10 @@ const Header = (manga: IManga) => html`
         class="ControlLabel"
       >
         ${getLocaleString('PAGES_LOADED')}:
-        <i>0</i> /
-        <b>${manga.begin && manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
+        <i>${getAppStateValue('loaded') ?? 0}</i> /
+        <b>
+          ${(getAppStateValue('manga')?.pages ?? 0) - ((getAppStateValue('manga')?.begin ?? 1) - 1)}
+        </b>
         <span class="ControlLabel"> ${getLocaleString('GO_TO_PAGE')}: </span>
         <select
           id="gotoPage"
@@ -217,6 +216,7 @@ const Header = (manga: IManga) => html`
           <option selected>#</option>
           ${listOptions(manga.pages, manga.begin ?? 0).join('')}
         </select>
+        <span>: ${getAppStateValue('currentPage')}</span>
       </div>
       <div
         id="ChapterControl"
@@ -228,7 +228,7 @@ const Header = (manga: IManga) => html`
             class="${classMap({
               NavigationControlButton: true,
               ControlButton: true,
-              disabled: !!manga.comments,
+              disabled: !manga.comments,
             })}"
             title="${getLocaleString('DISPLAY_COMMENTS')}"
             @click=${buttonCommentsOpen}
@@ -237,7 +237,12 @@ const Header = (manga: IManga) => html`
           </button>
           <button
             id="download"
-            class="NavigationControlButton ControlButton disabled"
+            class="${classMap({
+              NavigationControlButton: true,
+              ControlButton: true,
+              disabled: getAppStateValue('download') !== 'available',
+              loading: getAppStateValue('download') === 'working',
+            })}"
             type="button"
             title="${getLocaleString('DOWNLOAD_ZIP')}"
             @click=${buttonStartDownload}

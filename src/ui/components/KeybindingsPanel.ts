@@ -1,5 +1,7 @@
 import { html } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import { join } from 'lit-html/directives/join.js';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { getAppStateValue, getLocaleString, getSettingsValue } from '../../core/settings';
 import { buttonPanelsClose, editKeybindings, saveKeybindings } from '../events/panels';
 import { IconDeviceFloppy, IconPencil, IconX } from '../icons';
@@ -30,12 +32,12 @@ export const keybindEditor = () =>
         />`,
     )
     .concat(html`
-      <div id="HotKeysRules">${getLocaleString('KEYBIND_RULES')}</div>`);
+      <div id="HotKeysRules">${unsafeHTML(getLocaleString('KEYBIND_RULES'))}</div>`);
 
 const KeybindingsPanel = () => html`
   <div
     id="KeybindingsPanel"
-    class="panel"
+    class="${classMap({ panel: true, visible: getAppStateValue('panel').startsWith('keybindings') })}"
   >
     <h2>${getLocaleString('KEYBINDINGS')}</h2>
     <button
@@ -52,7 +54,7 @@ const KeybindingsPanel = () => html`
           ? html`
             <button
               id="SaveKeybindings"
-              class="ControlButton hidden"
+              class="ControlButton"
               type="button"
               title="${getLocaleString('SAVE_KEYBINDS')}"
               @click=${saveKeybindings}

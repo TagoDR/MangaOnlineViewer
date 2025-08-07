@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import {
-  changeAppStateValue,
   getAppStateValue,
   getSettingsValue,
   saveSettingsValue,
@@ -10,7 +9,10 @@ import { isNothing } from '../../utils/checks';
 import keybindings from './keybindings';
 
 export function buttonHeaderClick() {
-  changeAppStateValue('header', h => !h);
+  const header = getAppStateValue('render')?.querySelector('#Header');
+  if (header?.classList.contains('click')) {
+    header?.classList.toggle('visible');
+  }
 }
 
 export function isMouseInsideRegion(event: MouseEvent, headerWidth: number, headerHeight: number) {
@@ -25,11 +27,14 @@ export function isMouseInsideRegion(event: MouseEvent, headerWidth: number, head
 
 export function headerHover(event: MouseEvent) {
   const header = getAppStateValue('render')?.querySelector('#Header');
-  if (getSettingsValue('header') === 'hover') {
-    if (header && isMouseInsideRegion(event, header?.clientWidth, header?.clientHeight)) {
-      setAppStateValue('header', true);
+  if (header?.classList.contains('hover')) {
+    const menu = getAppStateValue('render')?.querySelector('#menu');
+    if (isMouseInsideRegion(event, header.clientWidth, header.clientHeight)) {
+      menu?.classList.add('hide');
+      header?.classList.add('visible');
     } else {
-      setAppStateValue('header', false);
+      menu?.classList.remove('hide');
+      header?.classList.remove('visible');
     }
   }
 }

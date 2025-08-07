@@ -1,9 +1,9 @@
 import { html } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import { getAppStateValue, getLocaleString, getSettingsValue } from '../../core/settings';
 import { changeCommentsColor } from '../events/globals';
-import { IconMoon, IconSun, IconX } from '../icons';
-import { classMap } from 'lit/directives/class-map.js';
 import { buttonPanelsClose } from '../events/panels.ts';
+import { IconMoon, IconSun, IconX } from '../icons';
 
 const commentsPanel = () => html`
   <div
@@ -11,6 +11,7 @@ const commentsPanel = () => html`
     class="${classMap({
       panel: true,
       visible: getAppStateValue('panel') === 'comments',
+      [getSettingsValue('colorScheme')]: true,
     })}"
   >
     <button
@@ -24,7 +25,6 @@ const commentsPanel = () => html`
     <h2>${getLocaleString('COMMENTS')}</h2>
     <div
       id="CommentsArea"
-      class="${getSettingsValue('colorScheme')}"
     >
       ${getAppStateValue('manga')?.comments}
     </div>

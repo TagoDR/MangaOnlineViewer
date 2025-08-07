@@ -6,6 +6,7 @@ import {
   getAppStateValue,
   getSettingsValue,
   refreshSettings,
+  setAppStateValue,
   setSettingsValue,
 } from '../core/settings';
 import {
@@ -23,7 +24,9 @@ import { getElementAttribute } from '../utils/request';
 import sequence from '../utils/sequence';
 import { logScript } from '../utils/tampermonkey';
 import { isBase64ImageUrl, isObjectURL } from '../utils/urls';
+import { waitForFunc } from '../utils/waitFor.ts';
 import { removeURLBookmark } from './events/bookmarks';
+import { buttonStartDownload } from './events/globals.ts';
 
 // After pages load apply default Zoom
 function applyZoom(
@@ -98,11 +101,7 @@ function reloadImage(img: HTMLImageElement) {
 
 function onImagesDone() {
   logScript('Images Loading Complete');
-  if (getSettingsValue('downloadZip')) {
-    getAppStateValue('render')?.querySelector('#download')?.dispatchEvent(new Event('click'));
-  }
-
-  getAppStateValue('render')?.querySelector('#download')?.classList.remove('disabled');
+  if (getSettingsValue('downloadZip')) buttonStartDownload();
 }
 
 function updateProgress() {
@@ -126,6 +125,7 @@ function updateProgress() {
   NProgress.configure({
     showSpinner: false,
   }).set(loaded / total);
+  setAppStateValue('loaded', loaded);
   logScript(`Progress: ${percentage}%`);
   if (loaded === total) {
     onImagesDone();
@@ -202,7 +202,8 @@ function normalizeUrl(url: string): string {
 }
 
 // Adds an image to the place-holder div
-function addImg(manga: IMangaImages, index: number, imageSrc: string, position: number) {
+async function addImg(manga: IMangaImages, index: number, imageSrc: string, position: number) {
+  await waitForFunc(() => getAppStateValue('render') !== undefined);
   const relativePosition = position - (manga.begin ?? 0);
   let src = normalizeUrl(imageSrc);
   const img = getAppStateValue('render')?.querySelector<HTMLImageElement>(`#PageImg${index}`);

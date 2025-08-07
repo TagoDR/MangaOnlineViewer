@@ -72,7 +72,6 @@ export default class App extends LitElement {
           id="menu"
           class="${classMap({
             [getSettingsValue('header')]: true,
-            hide: getAppStateValue('header'),
           })}"
           @click=${buttonHeaderClick}
         >
