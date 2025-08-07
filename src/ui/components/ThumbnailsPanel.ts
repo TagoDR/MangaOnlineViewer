@@ -30,7 +30,7 @@ const ThumbnailsPanel = (manga: IManga) => html`
       @wheel=${transformScrollToHorizontal}
     >
       ${sequence(manga.pages, manga.begin).map(
-        (index) => html`
+        index => html`
           <div
             id="Thumbnail${index}"
             class="Thumbnail"

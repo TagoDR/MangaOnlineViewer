@@ -11,8 +11,8 @@ import {
 import { IconCheck, IconMoon, IconPalette, IconSun } from '../icons';
 
 function themesSelector() {
-  return [...Object.keys(colors).map((color) => colors[color].name)].map(
-    (theme) => html`
+  return [...Object.keys(colors).map(color => colors[color].name)].map(
+    theme => html`
       <span
         title="${theme}"
         class="${classMap({

@@ -128,14 +128,14 @@ async function lateStart(site: ISite, begin = 1) {
         }
 
         const observerEvent = _.debounce(changedInput, 600);
-        ['change', 'mouseup', 'keyup', 'touchend'].forEach((event) => {
+        ['change', 'mouseup', 'keyup', 'touchend'].forEach(event => {
           pageBeginInput?.addEventListener(event, observerEvent);
           pageEndInput?.addEventListener(event, observerEvent);
         });
       }
     },
   };
-  Swal.fire(options).then((result) => {
+  Swal.fire(options).then(result => {
     if (result.value) {
       logScript(`Choice: ${beginPage} - ${endPage}`);
       manga.begin = beginPage;
@@ -173,7 +173,7 @@ function showWaitPopup(site: ISite, manga: IManga) {
     cancelButtonColor: '#d33',
     reverseButtons: true,
     timer: 3000,
-  }).then((result) => {
+  }).then(result => {
     if (result.value || result.dismiss === Swal.DismissReason.timer) {
       formatPage(manga).then(() => logScript('Page loaded'));
     } else {
@@ -242,7 +242,7 @@ async function start(sites: ISite[]) {
         testFunc(site),
       ])
         .then(async () => site.run())
-        .then((manga) =>
+        .then(manga =>
           manga.pages > 0
             ? resolve([site, manga])
             : reject(new Error(`${site.name} found ${manga.pages} pages`)),
@@ -250,11 +250,11 @@ async function start(sites: ISite[]) {
     });
   });
   Promise.race(testedSites.map((promise, index) => promise.then(() => index))).then(
-    (fastestIndex) => {
+    fastestIndex => {
       testedSites.forEach((_promise, i) => {
         if (i !== fastestIndex) logScript(`Failed/Skipped: ${foundSites[i].name}`);
       });
-      testedSites[fastestIndex].then((result) => {
+      testedSites[fastestIndex].then(result => {
         preparePage(result);
       });
     },

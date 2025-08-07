@@ -17,7 +17,9 @@ function doScrolling(sign: 1 | -1) {
     });
   } else if (getSettingsValue('zoomMode') === 'height') {
     // Fit height
-    const pages = [...getAppStateValue('render')?.querySelectorAll<HTMLElement>('.MangaPage') ?? []];
+    const pages = [
+      ...(getAppStateValue('render')?.querySelectorAll<HTMLElement>('.MangaPage') ?? []),
+    ];
     const distance = pages.map(element => Math.abs(element.offsetTop - window.scrollY));
     const currentPage = _.indexOf(distance, _.min(distance));
     const target = currentPage + sign;

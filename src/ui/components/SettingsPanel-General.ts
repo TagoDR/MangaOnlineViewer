@@ -39,7 +39,7 @@ function settingsScope() {
 
 function localeSelector() {
   return locales.map(
-    (locale) => html`
+    locale => html`
       <option
         value="${locale.ID}"
         ?selected=${getSettingsValue('locale') === locale.ID}

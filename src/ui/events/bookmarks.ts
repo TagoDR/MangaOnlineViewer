@@ -1,5 +1,11 @@
 import Swal from 'sweetalert2';
-import { changeSettingsValue, getAppStateValue, getLocaleString, isBookmarked, setAppStateValue } from '../../core/settings';
+import {
+  changeSettingsValue,
+  getAppStateValue,
+  getLocaleString,
+  isBookmarked,
+  setAppStateValue,
+} from '../../core/settings';
 import type { IBookmark } from '../../types';
 import { isNothing } from '../../utils/checks';
 import { logScript } from '../../utils/tampermonkey';
@@ -27,12 +33,12 @@ export function buttonBookmarksOpen() {
 }
 
 export function buttonBookmark(event: Event) {
-  const pagesDistance = [...getAppStateValue('render')?.querySelectorAll<HTMLElement>('.MangaPage') ?? []].map(element =>
-    Math.abs(element.offsetTop - window.scrollY),
-  );
+  const pagesDistance = [
+    ...(getAppStateValue('render')?.querySelectorAll<HTMLElement>('.MangaPage') ?? []),
+  ].map(element => Math.abs(element.offsetTop - window.scrollY));
   const currentPage = parseInt(
     (event.currentTarget as HTMLElement).parentElement?.querySelector('.PageIndex')?.textContent ??
-    '0',
+      '0',
     10,
   );
   const num = currentPage || pagesDistance.indexOf(Math.min(...pagesDistance)) + 1;

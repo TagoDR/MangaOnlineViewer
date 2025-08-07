@@ -26,7 +26,7 @@ import { styleMap } from 'lit-html/directives/style-map.js';
 
 const listPages = (times: number, begin: number) =>
   sequence(times, begin).map(
-    (index) => html`
+    index => html`
       <div
         id="Page${index}"
         class="MangaPage"
@@ -97,7 +97,7 @@ const listPages = (times: number, begin: number) =>
             class="PageImg"
             src=""
             style="${styleMap({
-              'min-width': `${getSettingsValue('minZoom')}vw`
+              'min-width': `${getSettingsValue('minZoom')}vw`,
             })}"
           />
         </div>

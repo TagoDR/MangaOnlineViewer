@@ -18,14 +18,14 @@ function parseCss(css: string): CssRule[] {
   const ruleRegex = /([^{}]+)\s*\{([^}]+)\}/g;
   // Use matchAll to get all rule matches and process them functionally.
   return [...css.matchAll(ruleRegex)]
-    .map((match) => {
+    .map(match => {
       const selectorsBlock = match[1].trim();
       const properties = match[2];
       const colorMatch = /color:\s*([^;]+)/.exec(properties);
 
       if (colorMatch) {
         const color = colorMatch[1].trim();
-        const selectors = selectorsBlock.split(',').map((s) => s.trim().replace(/\s\s+/g, ' '));
+        const selectors = selectorsBlock.split(',').map(s => s.trim().replace(/\s\s+/g, ' '));
         return { selectors, color };
       }
       return null;
@@ -64,7 +64,7 @@ function applyColorsToSvg(svgString: string, className: string): string {
           }
           try {
             const elements = svg.querySelectorAll<SVGElement>(subSelector);
-            elements.forEach((el) => {
+            elements.forEach(el => {
               // Set the stroke color, as Tabler icons are stroke-based.
               el.setAttribute('stroke', rule.color);
             });
@@ -79,7 +79,7 @@ function applyColorsToSvg(svgString: string, className: string): string {
 }
 
 const styledIcons: Record<string, string> = Object.fromEntries(
-  Object.keys(rawIcons).map((iconKey) => {
+  Object.keys(rawIcons).map(iconKey => {
     // iconKey is e.g. "IconFileDownload"
     const kebabCaseName = iconKey
       .replace(/^Icon/, '')
@@ -98,7 +98,7 @@ const styledIconsSVG: Record<
   string,
   DirectiveResult<typeof UnsafeSVGDirective>
 > = Object.fromEntries(
-  Object.keys(styledIcons).map((iconKey) => [
+  Object.keys(styledIcons).map(iconKey => [
     iconKey.replace('Raw', ''),
     unsafeSVG(styledIcons[iconKey]),
   ]),
