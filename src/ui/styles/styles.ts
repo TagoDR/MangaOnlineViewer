@@ -40,6 +40,8 @@ export default css`
     --theme-border-color: ${colors.gray['100']};
   }
 
+
+
   #MangaOnlineViewer .PageContent .PageImg[src=''],
   #MangaOnlineViewer .PageContent .PageImg:not([src]) {
     background-image: url('${svgToUrl(IconPhotoRaw)}');

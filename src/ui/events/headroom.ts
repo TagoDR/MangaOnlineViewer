@@ -1,17 +1,8 @@
 import _ from 'lodash';
-import { getAppStateValue, getSettingsValue } from '../../core/settings';
+import { getSettingsValue, setAppStateValue } from '../../core/settings';
 
 let prevOffset = 0;
 let showEnd = 0;
-
-const setScrollDirection = (classSuffix: string) => {
-  const header = getAppStateValue('render')?.querySelector<HTMLDivElement>('#Header');
-  if (!header) return;
-  header.classList.remove('headroom-end', 'headroom-hide', 'headroom-show', 'headroom-top');
-  if (classSuffix) {
-    header.classList.add(`headroom-${classSuffix}`);
-  }
-};
 
 export function toggleScrollDirection() {
   const { scrollY } = window;
@@ -20,15 +11,15 @@ export function toggleScrollDirection() {
     getSettingsValue('zoomMode') !== 'height' &&
     scrollY + window.innerHeight + showEnd > document.body.scrollHeight
   ) {
-    setScrollDirection('end');
+    setAppStateValue('header', true); //end
   } else if (scrollY > prevOffset && scrollY > 50) {
-    setScrollDirection('hide');
+    setAppStateValue('header', false); //hide
   } else if (scrollY < prevOffset && scrollY > 50) {
-    setScrollDirection('show');
+    setAppStateValue('header', true); //show
   } else if (scrollY <= 100) {
-    setScrollDirection('top');
+    setAppStateValue('header', true); //top
   } else {
-    setScrollDirection('');
+    setAppStateValue('header', false); //empty
   }
 
   prevOffset = scrollY;

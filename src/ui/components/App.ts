@@ -1,5 +1,5 @@
 import { useStores } from '@nanostores/lit';
-import { html, LitElement, unsafeCSS } from 'lit';
+import { css, html, LitElement, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import {
@@ -11,7 +11,7 @@ import {
   setAppStateValue,
   settings,
 } from '../../core/settings';
-import { getDevice } from '../../utils/tampermonkey';
+import colors, { getTextColor } from '../../utils/colors.ts';
 import events from '../events';
 import { buttonHeaderClick, buttonPanelsClose } from '../events/panels.ts';
 import { IconMenu2 } from '../icons';
@@ -28,11 +28,39 @@ import ThumbnailsPanel from './ThumbnailsPanel';
 @customElement('manga-online-viewer')
 @useStores(settings, locale, appState)
 export default class App extends LitElement {
-  static styles = [unsafeCSS(cssStyles), unsafeCSS(themesCSS)];
+  static styles = [
+    css`
+  :root{
+    --theme-primary-color: golden;
+    --theme-primary-text-color: white;
+  }
+  `,
+    unsafeCSS(cssStyles),
+    unsafeCSS(themesCSS()),
+  ];
 
   firstUpdated() {
     events();
-    setAppStateValue('render', this.renderRoot);
+    setAppStateValue('render', this.shadowRoot);
+    settings.subscribe((value, _oldValue, changedKey) => {
+      if (changedKey === 'theme' && value.theme !== 'custom') {
+        const theme = colors[value.theme];
+        document.documentElement.style.setProperty(
+          '--theme-primary-color',
+          theme[getSettingsValue('themeShade')],
+        );
+        document.documentElement.style.setProperty(
+          '--theme-primary-text-color',
+          getSettingsValue('themeShade') < 500 ? theme['900'] : theme['50'],
+        );
+      } else if (changedKey === 'customTheme') {
+        document.documentElement.style.setProperty('--theme-primary-color', value.customTheme);
+        document.documentElement.style.setProperty(
+          '--theme-primary-text-color',
+          getTextColor(value.customTheme),
+        );
+      }
+    });
   }
 
   render() {
@@ -53,7 +81,10 @@ export default class App extends LitElement {
       >
         <div
           id="menu"
-          class="${getSettingsValue('header')}"
+          class="${classMap({
+            [getSettingsValue('header')]: true,
+            hide: getAppStateValue('header'),
+          })}"
           @click=${buttonHeaderClick}
         >
           ${IconMenu2}

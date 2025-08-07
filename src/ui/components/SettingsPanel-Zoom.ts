@@ -1,8 +1,9 @@
 import { html } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import { getLocaleString, getSettingsValue } from '../../core/settings.ts';
 import { changeMinZoom, changeZoomStep } from '../events/options.ts';
 import { changeViewMode } from '../events/viewmode.ts';
-import { changeDefaultZoomMode } from '../events/zoom.ts';
+import { changeDefaultZoomMode, changeDefaultZoomValue } from '../events/zoom.ts';
 
 function defaultZoomMode() {
   return html` <div class="ControlLabel DefaultZoomMode">
@@ -36,9 +37,12 @@ function defaultZoomMode() {
 function zoomValue() {
   return html`
     <div
-      class="ControlLabel zoomValue ControlLabelItem ${getSettingsValue('zoomMode') === 'percent'
-        ? 'show'
-        : ''}"
+      class="${classMap({
+        ControlLabel: true,
+        zoomValue: true,
+        ControlLabelItem: true,
+        show: getSettingsValue('zoomMode') === 'percent',
+      })}"
     >
       <span>
         ${getLocaleString('DEFAULT_ZOOM')}
@@ -60,6 +64,7 @@ function zoomValue() {
         step="5"
         list="tickmarks"
         oninput='zoomValueVal.value = this.value + "%"'
+        @change="${changeDefaultZoomValue}"
       />
       <datalist id="tickmarks">
         <option value="5">5</option>

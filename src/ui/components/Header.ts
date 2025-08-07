@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { getLocaleString, getSettingsValue } from '../../core/settings';
+import { getAppStateValue, getLocaleString, getSettingsValue } from '../../core/settings';
 import type { IManga } from '../../types';
 import sequence from '../../utils/sequence';
 import { toggleAutoScroll } from '../events/autoscroll';
@@ -46,7 +46,10 @@ const listOptions = (times: number, begin: number) =>
 const Header = (manga: IManga) => html`
   <header
     id="Header"
-    class="${getSettingsValue('header')} headroom-top"
+    class="${classMap({
+      [getSettingsValue('header')]: true,
+      visible: getAppStateValue('header'),
+    })}"
   >
     <aside id="GlobalFunctions">
       <span>

@@ -113,6 +113,8 @@ export const appState = map<IApp>({
   panel: 'none',
   scrollToPage: undefined,
   device: getDevice(),
+  header: true,
+  navbar: false,
 });
 
 giveToWindow('app', appState);
@@ -120,11 +122,19 @@ giveToWindow('app', appState);
 appState.subscribe(logScriptC('ReaderState'));
 settings.subscribe(logScriptC('SettingsState'));
 
-function refresh() {
-  if (isSettingsLocal()) {
-    settings.set({ ...localSettings });
+export function refreshSettings<K extends ISettingsKey>(key?: K) {
+  if (key) {
+    if (isSettingsLocal()) {
+      settings.setKey(key, localSettings[key]);
+    } else {
+      settings.setKey(key, globalSettings[key]);
+    }
   } else {
-    settings.set({ ...globalSettings });
+    if (isSettingsLocal()) {
+      settings.set({ ...localSettings });
+    } else {
+      settings.set({ ...globalSettings });
+    }
   }
 }
 
@@ -134,7 +144,7 @@ function syncGlobalSettings(newValue: Partial<ISettings>) {
   if (!isNothing(diff)) {
     logScript('Imported Global Settings', diff);
     globalSettings = newSettings;
-    refresh();
+    refreshSettings();
   }
 }
 
@@ -146,7 +156,7 @@ function syncLocalSettings(newValue: Partial<ISettings>) {
   if (!isNothing(diff)) {
     logScript('Imported Local Settings', diff);
     localSettings = newSettings;
-    refresh();
+    refreshSettings();
   }
 }
 
@@ -231,6 +241,12 @@ export function getAppStateValue<K extends keyof IApp>(key: K): IApp[K] {
 export function setAppStateValue<K extends keyof IApp>(key: K, value: IApp[K]): void {
   appState.setKey(key, value);
 }
+export function changeAppStateValue<K extends keyof IApp>(
+  key: K,
+  fn: (value: IApp[K]) => IApp[K],
+): void {
+  appState.setKey(key, fn(appState.get()[key]));
+}
 
 export function getLocaleString<K extends ILocaleKey>(name: K | string): string {
   const locale = locales.find((l) => l.ID === getSettingsValue('locale')) ?? locales[1];
@@ -247,14 +263,14 @@ export function resetSettings() {
     globalSettings = getDefault();
   }
   logScript('Settings Reset');
-  refresh();
+  refreshSettings();
 }
 
 export function toggleLocalSettings(activate = false) {
   localSettings.enabled = activate;
   saveLocalSettings(diffObj(localSettings, getDefault(false)));
   logScript('Local Settings ', activate ? 'Enabled' : 'Disabled');
-  refresh();
+  refreshSettings();
   return isSettingsLocal();
 }
 
