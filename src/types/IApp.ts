@@ -23,6 +23,4 @@ export type IApp = {
   scrollToPage?: number;
   device: Device;
   render?: HTMLElement | DocumentFragment | ShadowRoot | null;
-  header: boolean;
-  navbar: boolean;
 };

@@ -1,16 +1,13 @@
 import { sanitizeUrl } from '@braintree/sanitize-url';
 import generateZip from '../../core/download';
-import { logScript } from '../../utils/tampermonkey';
 import { getAppStateValue, setAppStateValue, setSettingsValue } from '../../core/settings.ts';
+import { logScript } from '../../utils/tampermonkey';
 
-export function buttonStartDownload(event: Event) {
-  const button = event.currentTarget as HTMLInputElement;
-  if (button.classList.contains('loading')) {
-    return;
-  }
+import ClickEvent = JQuery.ClickEvent;
 
+export function buttonStartDownload() {
+  if (getAppStateValue('download') === 'working') return;
   logScript('Downloading Chapter');
-  button.classList.add('loading');
   generateZip().catch(err => logScript('Error downloading chapter', err));
 }
 
@@ -34,8 +31,8 @@ export function buttonCommentsOpen() {
   setAppStateValue('panel', 'comments');
 }
 
-export function changeCommentsColor() {
-  const elem = getAppStateValue('render')?.querySelector('#CommentsArea');
+export function changeCommentsColor(e: ClickEvent) {
+  const elem = e.currentTarget.parentElement;
   elem?.classList.toggle('light');
   elem?.classList.toggle('dark');
 }
