@@ -2,7 +2,8 @@ import { getAppStateValue, getSettingsValue } from '../../core/settings.ts';
 
 export function scrollToElement(ele: HTMLElement | undefined | null) {
   if (getSettingsValue('viewMode').startsWith('Fluid')) {
-    getAppStateValue('render')?.querySelector('#Chapter')
+    getAppStateValue('render')
+      ?.querySelector('#Chapter')
       ?.scroll(ele?.offsetLeft ?? 0, ele?.offsetTop ?? 0);
   } else {
     window?.scroll(ele?.offsetLeft ?? 0, ele?.offsetTop ?? 0);

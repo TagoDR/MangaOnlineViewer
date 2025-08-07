@@ -9,7 +9,7 @@ const commentsPanel = () => html`
   <div
     id="CommentsPanel"
     class="${classMap({
-      panel:true,
+      panel: true,
       visible: getAppStateValue('panel') === 'comments',
     })}"
   >

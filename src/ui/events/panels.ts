@@ -10,7 +10,7 @@ import { isNothing } from '../../utils/checks';
 import keybindings from './keybindings';
 
 export function buttonHeaderClick() {
-  changeAppStateValue('header', (h) => !h);
+  changeAppStateValue('header', h => !h);
 }
 
 export function isMouseInsideRegion(event: MouseEvent, headerWidth: number, headerHeight: number) {
@@ -48,11 +48,11 @@ export function buttonKeybindingsOpen() {
 
 export function saveKeybindings() {
   const newkeybinds: Record<string, string[] | undefined> = getSettingsValue('keybinds');
-  Object.keys(getSettingsValue('keybinds')).forEach((kb) => {
+  Object.keys(getSettingsValue('keybinds')).forEach(kb => {
     const keys = getAppStateValue('render')
       ?.querySelector<HTMLInputElement>(`#${kb}`)
       ?.value.split(',')
-      ?.map((value) => value.trim());
+      ?.map(value => value.trim());
     newkeybinds[kb] = isNothing(keys) ? undefined : keys;
   });
   saveSettingsValue('keybinds', newkeybinds);

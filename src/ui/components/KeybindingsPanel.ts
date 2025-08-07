@@ -6,10 +6,10 @@ import { IconDeviceFloppy, IconPencil, IconX } from '../icons';
 
 export const keybindList = () => {
   const keybinds = getSettingsValue('keybinds');
-  return Object.keys(keybinds).map((kb) => {
+  return Object.keys(keybinds).map(kb => {
     const keys = keybinds[kb]?.length
       ? join(
-          keybinds[kb]?.map((key) => html`<kbd class="dark">${key}</kbd>`),
+          keybinds[kb]?.map(key => html`<kbd class="dark">${key}</kbd>`),
           ' / ',
         )
       : '';
@@ -19,7 +19,7 @@ export const keybindList = () => {
 export const keybindEditor = () =>
   Object.keys(getSettingsValue('keybinds'))
     .map(
-      (kb) =>
+      kb =>
         html`<label for="${kb}">${getLocaleString(kb)}:</label>
         <input
           type="text"

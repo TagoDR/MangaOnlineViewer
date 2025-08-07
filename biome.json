@@ -10,10 +10,15 @@
   },
   "formatter": {
     "enabled": true,
+    "formatWithErrors": false,
     "indentStyle": "space",
     "indentWidth": 2,
     "lineEnding": "crlf",
     "lineWidth": 100,
+    "attributePosition": "auto",
+    "bracketSameLine": false,
+    "bracketSpacing": true,
+    "expand": "auto",
     "useEditorconfig": true
   },
   "linter": {
@@ -25,9 +30,27 @@
   },
   "javascript": {
     "formatter": {
-      "quoteStyle": "single"
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "all",
+      "semicolons": "always",
+      "arrowParentheses": "asNeeded",
+      "bracketSameLine": false,
+      "quoteStyle": "single",
+      "attributePosition": "multiline",
+      "bracketSpacing": true
     }
   },
+  "html": {
+    "formatter": {
+      "selfCloseVoidElements": "always"
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["*.svg"]
+    }
+  ],
   "assist": {
     "enabled": true,
     "actions": {
