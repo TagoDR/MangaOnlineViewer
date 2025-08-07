@@ -1,9 +1,16 @@
-import { getAppStateValue, getSettingsValue, saveSettingsValue } from '../../core/settings';
+import {
+  getAppStateValue,
+  getSettingsValue,
+  saveSettingsValue,
+  setSettingsValue,
+} from '../../core/settings';
 import type { ZoomMode } from '../../types';
 import { applyZoom } from '../page';
 
 export function changeGlobalZoom(mode: ZoomMode, value = getSettingsValue('zoomValue')) {
   return () => {
+    setSettingsValue('zoomMode', mode);
+    setSettingsValue('zoomValue', value);
     applyZoom(mode, value);
   };
 }

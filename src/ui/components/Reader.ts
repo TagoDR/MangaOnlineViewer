@@ -2,7 +2,7 @@ import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { getSettingsValue } from '../../core/settings';
 import type { IManga } from '../../types';
-import { transformScrollToHorizontal } from '../events/common';
+import { transformScrollToHorizontal, transformScrollToHorizontalReverse } from '../events/common';
 import listPages from './MangaPages';
 
 const Reader = (manga: IManga) => html`
@@ -13,8 +13,9 @@ const Reader = (manga: IManga) => html`
       [getSettingsValue('viewMode')]: true,
     })}"
     @wheel=${(e: WheelEvent) => {
-      if (getSettingsValue('viewMode') !== 'FluidLTR') return;
-      transformScrollToHorizontal(e);
+      const viewMode = getSettingsValue('viewMode');
+      if (viewMode === 'FluidLTR') transformScrollToHorizontal(e);
+      else if (viewMode === 'FluidRTL') transformScrollToHorizontalReverse(e);
     }}
   >
     ${listPages(manga.pages, manga.begin ?? 0)}
