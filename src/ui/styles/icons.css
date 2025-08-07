@@ -90,11 +90,11 @@
   color: cyan;
 }
 
-.icon-tabler-photo > * {
+.icon-tabler-photo > :nth-child(n + 2) {
   color: silver;
 }
 
-.icon-tabler-photo-off > * {
+.icon-tabler-photo-off > :nth-child(n + 2) {
   color: silver;
 }
 

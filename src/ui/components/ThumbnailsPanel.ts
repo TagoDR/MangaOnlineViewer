@@ -1,11 +1,11 @@
 import { html } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import { getLocaleString, getSettingsValue } from '../../core/settings';
 import type { IManga } from '../../types';
 import sequence from '../../utils/sequence';
 import { transformScrollToHorizontal } from '../events/common';
 import { clickThumbnail } from '../events/navigation';
 import { IconCategory } from '../icons';
-import { classMap } from 'lit/directives/class-map.js';
 
 const ThumbnailsPanel = (manga: IManga) => html`
   <nav

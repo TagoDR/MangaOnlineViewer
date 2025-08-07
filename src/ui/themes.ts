@@ -8,7 +8,7 @@ function generateThemeCSS(name: string, primary: string, text: string) {
   return css`
     ${selector},
     .ThemeRadio.${name},
-    #MangaOnlineViewer[data-theme='${name}'] {
+    [data-theme='${name}'] {
       --theme-primary-color: ${primary};
       --theme-primary-text-color: ${text};
     }
@@ -34,6 +34,6 @@ function refreshThemes() {
 }
 
 const themesCSS = () =>
-  themes().map(getNormalThemeCSS).join('\n') + getCustomThemeCSS(getSettingsValue('customTheme'))
+  themes().map(getNormalThemeCSS).join('') + getCustomThemeCSS(getSettingsValue('customTheme'));
 
 export { themesCSS, refreshThemes };

@@ -1,31 +1,16 @@
-import { render } from 'lit';
 import _ from 'lodash';
-import { getSettingsValue, saveSettingsValue, setAppStateValue } from '../../core/settings';
+import {
+  changeAppStateValue,
+  getAppStateValue,
+  getSettingsValue,
+  saveSettingsValue,
+  setAppStateValue,
+} from '../../core/settings';
 import { isNothing } from '../../utils/checks';
-import { keybindEditor, keybindList } from '../components/KeybindingsPanel';
 import keybindings from './keybindings';
 
-export function toggleFunction(
-  selector: string,
-  classname: string,
-  open: () => void,
-  close: () => void,
-) {
-  return () => {
-    const isOpen = document.querySelector(selector)?.className.includes(classname);
-    if (isOpen) {
-      close();
-    } else {
-      open();
-    }
-  };
-}
-
 export function buttonHeaderClick() {
-  const header = document.querySelector('#Header');
-  if (header?.classList.contains('click')) {
-    header?.classList.toggle('visible');
-  }
+  changeAppStateValue('header', (h) => !h);
 }
 
 export function isMouseInsideRegion(event: MouseEvent, headerWidth: number, headerHeight: number) {
@@ -39,14 +24,12 @@ export function isMouseInsideRegion(event: MouseEvent, headerWidth: number, head
 }
 
 export function headerHover(event: MouseEvent) {
-  const header = document.querySelector('#Header');
-  if (header?.classList.contains('hover')) {
-    if (isMouseInsideRegion(event, header.clientWidth, header.clientHeight)) {
-      document.querySelector('#menu')?.classList.add('hide');
-      header?.classList.add('visible');
+  const header = getAppStateValue('render')?.querySelector('#Header');
+  if (getSettingsValue('header') === 'hover') {
+    if (header && isMouseInsideRegion(event, header?.clientWidth, header?.clientHeight)) {
+      setAppStateValue('header', true);
     } else {
-      document.querySelector('#menu')?.classList.remove('hide');
-      header?.classList.remove('visible');
+      setAppStateValue('header', false);
     }
   }
 }
@@ -60,38 +43,30 @@ export function buttonSettingsOpen() {
 }
 
 export function buttonKeybindingsOpen() {
-  const keybindingList = document.querySelector('#KeybindingsList');
-  if (keybindingList) keybindingList.innerHTML = keybindList().join('\n');
   setAppStateValue('panel', 'keybindings');
 }
 
 export function saveKeybindings() {
   const newkeybinds: Record<string, string[] | undefined> = getSettingsValue('keybinds');
   Object.keys(getSettingsValue('keybinds')).forEach((kb) => {
-    const keys = document
-      .querySelector<HTMLInputElement>(`#${kb}`)
+    const keys = getAppStateValue('render')
+      ?.querySelector<HTMLInputElement>(`#${kb}`)
       ?.value.split(',')
       ?.map((value) => value.trim());
     newkeybinds[kb] = isNothing(keys) ? undefined : keys;
   });
   saveSettingsValue('keybinds', newkeybinds);
-  const keybindingList = document.querySelector<HTMLElement>('#KeybindingsList');
-  if (keybindingList) render(keybindList(), keybindingList);
-  document.querySelector('#SaveKeybindings')?.classList.add('hidden');
-  document.querySelector('#EditKeybindings')?.classList.remove('hidden');
+  setAppStateValue('panel', 'keybindings');
   keybindings();
 }
 
 export function editKeybindings() {
-  const keybindingList = document.querySelector<HTMLElement>('#KeybindingsList');
-  if (keybindingList) render(keybindEditor(), keybindingList);
-  document.querySelector('#SaveKeybindings')?.classList.remove('hidden');
-  document.querySelector('#EditKeybindings')?.classList.add('hidden');
+  setAppStateValue('panel', 'keybindingsEditor');
 }
 
 function panels() {
   // Show Header list
-  document.addEventListener('mousemove', _.throttle(headerHover, 300));
+  window.addEventListener('mousemove', _.throttle(headerHover, 300));
 }
 
 export default panels;

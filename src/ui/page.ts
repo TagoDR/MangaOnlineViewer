@@ -2,8 +2,21 @@ import { blobToDataURL } from 'blob-util';
 import imagesLoaded from 'imagesloaded';
 import { html } from 'lit';
 import NProgress from 'nprogress';
-import { getAppStateValue, getSettingsValue } from '../core/settings';
-import { type IManga, type IMangaImages, type IMangaPages, isBruteforceManga, isImagesManga, isPagesManga, type ZoomMode } from '../types';
+import {
+  getAppStateValue,
+  getSettingsValue,
+  refreshSettings,
+  setSettingsValue,
+} from '../core/settings';
+import {
+  type IManga,
+  type IMangaImages,
+  type IMangaPages,
+  isBruteforceManga,
+  isImagesManga,
+  isPagesManga,
+  type ZoomMode,
+} from '../types';
 import lazyLoad from '../utils/lazyLoad';
 import renderReplace from '../utils/renderReplace.ts';
 import { getElementAttribute } from '../utils/request';
@@ -11,7 +24,6 @@ import sequence from '../utils/sequence';
 import { logScript } from '../utils/tampermonkey';
 import { isBase64ImageUrl, isObjectURL } from '../utils/urls';
 import { removeURLBookmark } from './events/bookmarks';
-import { updateHeaderType } from './events/options.ts';
 
 // After pages load apply default Zoom
 function applyZoom(
@@ -30,11 +42,12 @@ function applyZoom(
     }
   }
   if (mode === 'height') {
-    updateHeaderType('click');
+    setSettingsValue('header', 'click');
   } else {
-    updateHeaderType(getSettingsValue('header'));
+    setSettingsValue('header', 'click');
+    refreshSettings('header');
   }
-  const pg = [...getAppStateValue('render')?.querySelectorAll<HTMLImageElement>(pages) ?? []];
+  const pg = [...(getAppStateValue('render')?.querySelectorAll<HTMLImageElement>(pages) ?? [])];
   pg.forEach((img) => {
     img.removeAttribute('width');
     img.removeAttribute('height');
@@ -94,7 +107,8 @@ function onImagesDone() {
 
 function updateProgress() {
   const total = getAppStateValue('render')?.querySelectorAll('.PageContent .PageImg')?.length ?? 1;
-  const loaded = getAppStateValue('render')?.querySelectorAll('.PageContent .PageImg.imgLoaded')?.length ?? 0;
+  const loaded =
+    getAppStateValue('render')?.querySelectorAll('.PageContent .PageImg.imgLoaded')?.length ?? 0;
   const percentage = Math.floor((loaded / total) * 100);
   const title = getAppStateValue('render')?.querySelector('title');
   if (title) {
@@ -104,9 +118,11 @@ function updateProgress() {
     );
   }
 
-  getAppStateValue('render')?.querySelectorAll('#Counters i, #NavigationCounters i').forEach((ele) => {
-    ele.textContent = loaded.toString();
-  });
+  getAppStateValue('render')
+    ?.querySelectorAll('#Counters i, #NavigationCounters i')
+    .forEach((ele) => {
+      ele.textContent = loaded.toString();
+    });
   NProgress.configure({
     showSpinner: false,
   }).set(loaded / total);
