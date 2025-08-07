@@ -1,6 +1,6 @@
 import { sanitizeUrl } from '@braintree/sanitize-url';
 import generateZip from '../../core/download';
-import { getAppStateValue, setAppStateValue, setSettingsValue } from '../../core/settings.ts';
+import { changeSettingsValue, getAppStateValue, setAppStateValue } from '../../core/settings.ts';
 import { logScript } from '../../utils/tampermonkey';
 
 import ClickEvent = JQuery.ClickEvent;
@@ -12,7 +12,7 @@ export function buttonStartDownload() {
 }
 
 export function buttonGlobalHideImageControls() {
-  setSettingsValue('hidePageControls', true);
+  changeSettingsValue('hidePageControls', b => !b);
 }
 
 export function buttonRedirectURL(event: Event) {

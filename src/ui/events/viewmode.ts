@@ -1,25 +1,13 @@
-import { getAppStateValue, setSettingsValue } from '../../core/settings';
+import { setSettingsValue } from '../../core/settings';
 import type { ViewMode } from '../../types';
 import { applyZoom } from '../page';
-import {
-  scrollToElement,
-  transformScrollToHorizontal,
-  transformScrollToHorizontalReverse,
-} from './common';
 
 export function updateViewMode(mode: ViewMode) {
   return () => {
-    const chapter = getAppStateValue('render')?.querySelector<HTMLElement>('#Chapter');
-    chapter?.removeEventListener('wheel', transformScrollToHorizontal);
-    chapter?.removeEventListener('wheel', transformScrollToHorizontalReverse);
-    if (mode === 'FluidLTR' || mode === 'FluidRTL') {
-      scrollToElement(chapter);
+    if (mode.startsWith('Fluid')) {
+      setSettingsValue('viewMode', mode);
       setSettingsValue('zoomMode', 'height');
-      applyZoom('height');
-      chapter?.addEventListener(
-        'wheel',
-        mode === 'FluidLTR' ? transformScrollToHorizontal : transformScrollToHorizontalReverse,
-      );
+      setSettingsValue('header', 'click');
     } else {
       applyZoom();
     }
