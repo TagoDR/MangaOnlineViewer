@@ -30,11 +30,7 @@ import ThumbnailsPanel from './ThumbnailsPanel';
 export default class App extends LitElement {
   static styles = [
     css`
-  :root{
-    --theme-primary-color: golden;
-    --theme-primary-text-color: white;
-  }
-  `,
+    `,
     unsafeCSS(cssStyles),
     unsafeCSS(themesCSS()),
   ];
@@ -45,20 +41,14 @@ export default class App extends LitElement {
     settings.subscribe((value, _oldValue, changedKey) => {
       if (changedKey === 'theme' && value.theme !== 'custom') {
         const theme = colors[value.theme];
-        document.documentElement.style.setProperty(
-          '--theme-primary-color',
-          theme[getSettingsValue('themeShade')],
-        );
-        document.documentElement.style.setProperty(
+        this.style.setProperty('--theme-primary-color', theme[getSettingsValue('themeShade')]);
+        this.style.setProperty(
           '--theme-primary-text-color',
           getSettingsValue('themeShade') < 500 ? theme['900'] : theme['50'],
         );
       } else if (changedKey === 'customTheme') {
-        document.documentElement.style.setProperty('--theme-primary-color', value.customTheme);
-        document.documentElement.style.setProperty(
-          '--theme-primary-text-color',
-          getTextColor(value.customTheme),
-        );
+        this.style.setProperty('--theme-primary-color', value.customTheme);
+        this.style.setProperty('--theme-primary-text-color', getTextColor(value.customTheme));
       }
     });
   }
@@ -76,7 +66,6 @@ export default class App extends LitElement {
           [getAppStateValue('device')]: true,
           [getSettingsValue('theme')]: true,
         })}"
-        .data-theme="${getSettingsValue('theme')}"
         .locale="${getSettingsValue('locale')}"
       >
         <div
