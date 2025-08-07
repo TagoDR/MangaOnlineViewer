@@ -40,7 +40,7 @@ import {
 
 const listOptions = (times: number, begin: number) =>
   sequence(times, begin).map(
-    (index) => html`
+    index => html`
     <option value="${index}">${index}</option>`,
   );
 const Header = (manga: IManga) => html`
