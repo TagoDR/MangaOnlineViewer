@@ -6,7 +6,7 @@ export function getDataFromBase64(src: string) {
 }
 
 export function isBase64ImageUrl(imageUrl: string) {
-  const base64Pattern = /^data:image\/(png|jpg|jpeg|gif);base64,/;
+  const base64Pattern = /^data:image\/(png|jpg|jpeg|gif|svg)/;
   return base64Pattern.test(imageUrl);
 }
 
