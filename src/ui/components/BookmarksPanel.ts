@@ -1,9 +1,10 @@
 import { html } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import { getAppStateValue, getLocaleString, getSettingsValue } from '../../core/settings';
 import { isEmpty } from '../../utils/checks';
-import { buttonBookmark, buttonBookmarksClose, buttonEraseBookmarks } from '../events/bookmarks';
+import { buttonBookmark, buttonEraseBookmarks } from '../events/bookmarks';
+import { buttonPanelsClose } from '../events/panels.ts';
 import { IconBookmark, IconBookmarkOff, IconExternalLink, IconTrash, IconX } from '../icons';
-import { classMap } from 'lit/directives/class-map.js';
 
 const listBookmarks = () => {
   if (isEmpty(getSettingsValue('bookmarks'))) {
@@ -64,7 +65,7 @@ const BookmarkPanel = () => html`
   <div
     id="BookmarksPanel"
     class="${classMap({
-      panel:true,
+      panel: true,
       visible: getAppStateValue('panel') === 'bookmarks',
     })}"
   >
@@ -72,7 +73,7 @@ const BookmarkPanel = () => html`
       id="CloseBookmarks"
       class="closeButton"
       title="${getLocaleString('CLOSE')}"
-      @click=${buttonBookmarksClose}
+      @click=${buttonPanelsClose}
     >
       ${IconX}
     </button>
