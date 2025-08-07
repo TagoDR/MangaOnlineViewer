@@ -8,14 +8,18 @@ const doClick = (selector: string) =>
   getAppStateValue('render')?.querySelector(selector)?.dispatchEvent(new Event('click'));
 
 function doScrolling(sign: 1 | -1) {
-  const chapter = getAppStateValue('render')?.querySelector<HTMLElement>('#Chapter');
-  if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
-    const scrollDirection = chapter.classList.contains('FluidRTL') ? -1 : 1;
-    chapter.scrollBy({
-      left: 0.8 * window.innerWidth * sign * scrollDirection,
-      behavior: 'smooth',
-    });
-  } else if (getSettingsValue('zoomMode') === 'height') {
+  const viewMode = getSettingsValue('viewMode');
+  const zoomMode = getSettingsValue('zoomMode');
+  logScript('Scrolling view', viewMode, 'zoom', zoomMode, 'sign', sign);
+  if (viewMode.startsWith('Fluid')) {
+    const scrollDirection = viewMode === 'FluidRTL' ? -1 : 1;
+    getAppStateValue('render')
+      ?.querySelector<HTMLElement>('#Chapter')
+      ?.scrollBy({
+        left: 0.8 * window.innerWidth * sign * scrollDirection,
+        behavior: 'smooth',
+      });
+  } else if (zoomMode === 'height') {
     // Fit height
     const pages = [
       ...(getAppStateValue('render')?.querySelectorAll<HTMLElement>('.MangaPage') ?? []),
@@ -27,7 +31,7 @@ function doScrolling(sign: 1 | -1) {
     if (header && target < 0) {
       scrollToElement(header);
     } else if (header && target >= pages.length) {
-      header.classList.add('headroom-end');
+      return;
     } else {
       logScript(`Current array page ${currentPage},`, `Scrolling to page ${target}`);
       scrollToElement(pages.at(target));

@@ -1,10 +1,5 @@
 import { blobToDataURL } from 'blob-util';
-import {
-  getAppStateValue,
-  getSettingsValue,
-  refreshSettings,
-  setSettingsValue,
-} from '../core/settings';
+import { getAppStateValue, getSettingsValue } from '../core/settings';
 import {
   type IManga,
   type IMangaImages,
@@ -28,22 +23,6 @@ function applyZoom(
   value = getSettingsValue('zoomValue'),
   pages = '.PageContent img',
 ) {
-  const globalZoomVal = getAppStateValue('render')?.querySelector('#ZoomVal');
-  const zoom = getAppStateValue('render')?.querySelector<HTMLInputElement>('#Zoom');
-  if (globalZoomVal) {
-    if (zoom && mode === 'percent') {
-      globalZoomVal.textContent = `${value}%`;
-      zoom.value = value.toString();
-    } else {
-      globalZoomVal.textContent = mode as string;
-    }
-  }
-  if (mode === 'height') {
-    setSettingsValue('header', 'click');
-  } else {
-    setSettingsValue('header', 'click');
-    refreshSettings('header');
-  }
   const pg = [...(getAppStateValue('render')?.querySelectorAll<HTMLImageElement>(pages) ?? [])];
   pg.forEach(img => {
     img.removeAttribute('width');
@@ -57,8 +36,13 @@ function applyZoom(
       const nextHeight = window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -29 : 0);
       img.style.height = `${nextHeight}px`;
       img.style.minWidth = 'unset';
-    } else if (mode === 'percent' && value >= 0 && value !== 100) {
-      img.style.width = `${img.naturalWidth * (value / 100)}px`;
+    } else if (mode === 'percent') {
+      if (value === 100) {
+        img.style.width = 'auto';
+        img.style.height = 'auto';
+      } else {
+        img.style.width = `${img.naturalWidth * (value / 100)}px`;
+      }
     }
   });
 }
