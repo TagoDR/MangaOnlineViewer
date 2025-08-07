@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { getLocaleString, getSettingsValue } from '../../core/settings';
+import { getAppStateValue, getLocaleString, getSettingsValue } from '../../core/settings';
 import type { IManga } from '../../types';
 import sequence from '../../utils/sequence';
 import { transformScrollToHorizontal } from '../events/common';
@@ -20,9 +20,12 @@ const ThumbnailsPanel = (manga: IManga) => html`
       class="ControlLabel"
     >
       ${IconCategory}
-      <i>0</i> /
-      <b>${manga.begin && manga.begin > 1 ? manga.pages - (manga.begin - 1) : manga.pages}</b>
+      <i>${getAppStateValue('loaded')}</i> /
+      <b>
+        ${(getAppStateValue('manga')?.pages ?? 0) - ((getAppStateValue('manga')?.begin ?? 1) - 1)}
+      </b>
       ${getLocaleString('PAGES_LOADED')}
+      <span>: ${getAppStateValue('currentPage')}</span>
     </div>
     <div
       id="Thumbnails"
