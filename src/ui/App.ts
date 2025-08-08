@@ -1,5 +1,5 @@
 import { useStores } from '@nanostores/lit';
-import { html, LitElement, unsafeCSS } from 'lit';
+import { css, html, LitElement, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import {
@@ -10,6 +10,7 @@ import {
   setAppStateValue,
   settings,
 } from '../core/settings';
+import colors, { getTextColor } from '../utils/colors.ts';
 import { getDevice } from '../utils/tampermonkey';
 import { ResizeController } from './controllers/ResizeController.ts';
 import keybindings from './events/keybindings.ts';
@@ -21,7 +22,16 @@ import mediaQueries from './styles/media-queries.css?inline';
 @customElement('mov-app')
 @useStores(settings, locale, appState)
 export default class App extends LitElement {
-  static styles = [unsafeCSS(styles), unsafeCSS(animations), unsafeCSS(mediaQueries)];
+  static styles = [
+    css`
+  :host {
+    --theme-primary-color: black;
+    --theme-primary-text-color: white;
+  }`,
+    unsafeCSS(styles),
+    unsafeCSS(animations),
+    unsafeCSS(mediaQueries),
+  ];
 
   constructor() {
     super();
@@ -32,6 +42,19 @@ export default class App extends LitElement {
 
   protected firstUpdated() {
     setAppStateValue('render', this.renderRoot);
+    settings.subscribe((value, _oldValue, changedKey) => {
+      if (changedKey === 'theme' && value.theme !== 'custom') {
+        const theme = colors[value.theme];
+        this.style.setProperty('--theme-primary-color', theme[getSettingsValue('themeShade')]);
+        this.style.setProperty(
+          '--theme-primary-text-color',
+          getSettingsValue('themeShade') < 500 ? theme['900'] : theme['50'],
+        );
+      } else if (changedKey === 'customTheme') {
+        this.style.setProperty('--theme-primary-color', value.customTheme);
+        this.style.setProperty('--theme-primary-text-color', getTextColor(value.customTheme));
+      }
+    });
     loadManga();
   }
 
