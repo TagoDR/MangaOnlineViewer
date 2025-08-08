@@ -1,0 +1,35 @@
+:host {
+  width: 100%;
+}
+
+#gotoPage {
+  min-width: 35px;
+}
+
+#MangaTitle {
+  padding: 2px;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+#Counters {
+  padding-right: 5px;
+  width: 175px;
+}
+
+.ViewerTitle {
+  text-align: center;
+  min-height: 60px;
+  min-width: 265px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 5px;
+  flex-basis: 60%;
+}
+
+#Zoom {
+  width: 8em;
+}

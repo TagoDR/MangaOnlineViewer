@@ -1,0 +1,16 @@
+:host {
+  display: flex;
+  gap: 3px;
+  padding: 3px 3px 3px 0;
+  flex-wrap: wrap;
+  max-width: 315px;
+  z-index: 100;
+}
+
+wa-button-group::part(base) {
+  display: flex;
+  flex-wrap: nowrap;
+  /*justify-content: space-evenly;*/
+  /*gap: 3px;*/
+  /*width: 350px;*/
+}

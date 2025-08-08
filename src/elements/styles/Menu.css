@@ -1,0 +1,12 @@
+.NavigationControlButton[href="#"],
+.NavigationControlButton[href=""],
+/*.NavigationControlButton[disabled],*/
+  .NavigationControlButton[href="undefined"] {
+  visibility: hidden;
+}
+
+#ChapterNavigation {
+  min-width: 105px;
+  max-width: 220px;
+  width: max-content;
+}

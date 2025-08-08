@@ -8,8 +8,8 @@
 
 import { preparePage } from './core/main.ts';
 import { allowUpload } from './core/upload';
+import display from './elements';
 import localhost from './main/localhost';
-import display from './ui';
 
 // Immediately execute the localhost site configuration to get the mock manga data.
 const site = await localhost.run();
