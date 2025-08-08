@@ -96,14 +96,18 @@
 }
 
 .ThumbnailIndex {
-  color: var(--theme-text-color);
-  background-color: var(--theme-hightlight-color);
+  color: var(--theme-primary-text-color);
+  background-color: var(--theme-primary-color);
   display: block;
-  opacity: 0.8;
+  opacity: 0.9;
   position: absolute;
-  bottom: 25%;
+  left: 0;
+  bottom: 30%;
   width: 100%;
-  line-height: 1rem;
+  line-height: 1.2rem;
+  text-align: center;
+  font-weight: 600;
+  z-index: 1;
 }
 
 .ThumbnailImg {
@@ -113,4 +117,7 @@
   min-height: 150px;
   min-width: 80px;
   max-width: 150px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 48px 48px;
 }

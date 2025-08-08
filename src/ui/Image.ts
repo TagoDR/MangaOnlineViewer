@@ -1,5 +1,6 @@
 import { blobToDataURL } from 'blob-util';
 import {
+  appState,
   changeAppStateValue,
   getAppStateValue,
   getSettingsValue,
@@ -26,6 +27,30 @@ function normalizeUrl(url: string): string {
   return uri;
 }
 
+// Pending lazy images (index -> { src, fetchOptions })
+let pending: Record<number, { src: string; fetchOptions?: RequestInit }> = {};
+let subscribed = false;
+
+function ensureSubscription() {
+  if (subscribed) return;
+  subscribed = true;
+  appState.listen((value, _old, changedKey) => {
+    if (changedKey !== 'currentPage') return;
+    const cp = value.currentPage;
+    // Release any pending whose index is within 3 pages ahead
+    Object.keys(pending)
+      .map(k => parseInt(k, 10))
+      .filter(idx => !Number.isNaN(idx) && cp >= idx - 3)
+      .sort((a, b) => a - b)
+      .forEach(idx => {
+        const item = pending[idx];
+        if (!item) return;
+        void setImageInStore(idx, item.src, item.fetchOptions);
+        delete pending[idx];
+      });
+  });
+}
+
 // Update appState.images for a given page index
 async function setImageInStore(index: number, src: string, fetchOptions?: RequestInit) {
   let finalSrc = normalizeUrl(src);
@@ -47,12 +72,34 @@ async function setImageInStore(index: number, src: string, fetchOptions?: Reques
   logScript('Image set', { index, src: finalSrc });
 }
 
+function maybeDefer(
+  index: number,
+  src: string,
+  fetchOptions: RequestInit | undefined,
+  relativePos: number,
+) {
+  const lazy = getSettingsValue('lazyLoadImages');
+  const lazyStart = getSettingsValue('lazyStart');
+  if (lazy && relativePos > lazyStart) {
+    pending[index] = { src, fetchOptions };
+    return true;
+  }
+  return false;
+}
+
 async function addImg(manga: IMangaImages, index: number, imageSrc: string, position: number) {
   const relativePosition = position - (manga.begin ?? 0);
   const delay = (manga.timer ?? getSettingsValue('throttlePageLoad')) * relativePosition;
+  // Lazy gating: defer setting src if beyond lazyStart
+  if (maybeDefer(index, imageSrc, manga.fetchOptions, relativePosition)) {
+    return;
+  }
   setTimeout(
     () => {
       void setImageInStore(index, imageSrc, manga.fetchOptions);
+      if (manga.pages === position) {
+        // optional: could trigger bookmark cleanup here if used elsewhere
+      }
     },
     Math.max(0, delay),
   );
@@ -74,8 +121,10 @@ async function addPage(manga: IMangaPages, index: number, pageUrl: string, posit
     async () => {
       const src = await resolvePageImageSrc(manga, pageUrl);
       if (src) {
-        await setImageInStore(index, src);
-        logScript('Page image resolved', { index, src });
+        if (!maybeDefer(index, src, undefined, relativePosition)) {
+          await setImageInStore(index, src);
+          logScript('Page image resolved', { index, src });
+        }
       }
     },
     Math.max(0, delay),
@@ -103,9 +152,11 @@ function loadManga(mangaParam?: IManga, beginParam?: number) {
   }
   const begin = beginParam ?? manga.begin ?? 1;
 
-  // Reset images and counters before loading
+  // Reset images, counters, and pending before loading
   setAppStateValue('images', {});
   setAppStateValue('loaded', 0);
+  pending = {};
+  ensureSubscription();
 
   logScript('Loading Images');
   logScript(`Intervals: ${manga.timer ?? getSettingsValue('throttlePageLoad') ?? 'Default(1000)'}`);
