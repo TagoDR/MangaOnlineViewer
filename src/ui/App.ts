@@ -13,6 +13,7 @@ import {
 import { getDevice } from '../utils/tampermonkey';
 import { ResizeController } from './controllers/ResizeController.ts';
 import keybindings from './events/keybindings.ts';
+import { loadManga } from './Image.ts';
 import styles from './styles/App.css?inline';
 import animations from './styles/animations.css?inline';
 import mediaQueries from './styles/media-queries.css?inline';
@@ -29,6 +30,11 @@ export default class App extends LitElement {
     new ResizeController(this);
   }
 
+  protected firstUpdated() {
+    setAppStateValue('render', this.renderRoot);
+    loadManga();
+  }
+
   disconnectedCallback() {
     super.disconnectedCallback();
     window.removeEventListener('app-resize', this.updateDeviceType);
@@ -37,8 +43,8 @@ export default class App extends LitElement {
   render() {
     const classes = {
       [getDevice()]: true,
-      [getSettingsValue('colorScheme')]:true,
-      [getSettingsValue('theme')]:true,
+      [getSettingsValue('colorScheme')]: true,
+      [getSettingsValue('theme')]: true,
     };
 
     return html`

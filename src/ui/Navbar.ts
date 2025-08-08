@@ -34,7 +34,6 @@ export default class Navbar extends LitElement {
     `,
   ];
 
-  /** Defines the layout and scroll direction of the navbar. */
   @property({ type: String })
   mode: 'bottom' | 'left' | 'right' = 'bottom';
 
@@ -89,7 +88,7 @@ export default class Navbar extends LitElement {
                   id="ThumbnailImg${index}"
                   alt="Thumbnail ${index}"
                   class="ThumbnailImg"
-                  src="${getAppStateValue('manga')?.listImages?.[index - 1]}"
+                  src=${getAppStateValue('thumbnails')[index] ?? ''}
                 />
                 <span class="ThumbnailIndex">${index}</span>
               </div>`,
@@ -99,10 +98,6 @@ export default class Navbar extends LitElement {
     `;
   }
 
-  /**
-   * Dispatches an event to the reader store to scroll to a specific page.
-   * @param index The page number of the clicked thumbnail.
-   */
   private _onThumbnailClick(index: number) {
     setAppStateValue('scrollToPage', index);
   }

@@ -23,4 +23,6 @@ export type IApp = {
   scrollToPage?: number;
   device: Device;
   render?: HTMLElement | DocumentFragment | ShadowRoot | null;
+  images: Record<number, string | undefined>;
+  thumbnails: Record<number, string | undefined>;
 };

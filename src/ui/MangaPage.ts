@@ -326,7 +326,7 @@ export default class MangaPage extends LitElement {
               getSettingsValue('viewMode') !== 'FluidLTR',
             height: getSettingsValue('zoomMode') === 'height',
           })}"
-          src=${getAppStateValue('manga')?.listImages?.[this.index - 1]}
+          src=${getAppStateValue('images')?.[this.index] || ''}
           style=${styleMap(imageStyles)}
           @load=${this._onImageLoad}
           @error=${(e: Event) => (e.target as HTMLImageElement).classList.add('imgBroken')}
@@ -375,6 +375,11 @@ export default class MangaPage extends LitElement {
     const img = e.target as HTMLImageElement;
     img.classList.remove('imgBroken');
     this.naturalWidth = img.naturalWidth;
+    const currentThumbnails = getAppStateValue('thumbnails') || {};
+    setAppStateValue('thumbnails', {
+      ...currentThumbnails,
+      [this.index]: img.src,
+    });
     setAppStateValue('loaded', getAppStateValue('loaded') + 1);
     if (getAppStateValue('manga')?.pages === getAppStateValue('loaded')) {
       setAppStateValue('download', 'available');

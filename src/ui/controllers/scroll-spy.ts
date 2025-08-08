@@ -53,7 +53,7 @@ function getActiveElement(rects: DOMRect[]) {
 
   const closest = rects.reduce(
     (acc, item, index) => {
-      // Prioritize elements that are closer to the top of the viewport (y >= 0)
+      // Prioritize ui that are closer to the top of the viewport (y >= 0)
       // and then the ones closest to y = 0
       if (item.y >= 0 && (acc.position < 0 || Math.abs(item.y) < Math.abs(acc.position))) {
         return { index, position: item.y };

@@ -4,12 +4,12 @@ import { getLocaleString, setAppStateValue } from '../core/settings';
 
 // Import all the necessary components to ensure they are defined for the story.
 // This includes the main panel, all its child sections, and any components they use.
-import '../elements/SettingsPanel.ts';
-import '../elements/SettingsPanelGeneral.ts';
-import '../elements/SettingsPanelTheme.ts';
-import '../elements/SettingsPanelLoading.ts';
-import '../elements/SettingsPanelZoom.ts';
-import '../elements/SettingsPanelOthers.ts';
+import '../ui/SettingsPanel.ts';
+import '../ui/SettingsPanelGeneral.ts';
+import '../ui/SettingsPanelTheme.ts';
+import '../ui/SettingsPanelLoading.ts';
+import '../ui/SettingsPanelZoom.ts';
+import '../ui/SettingsPanelOthers.ts';
 
 // The Meta object configures the component's story page
 export default {
