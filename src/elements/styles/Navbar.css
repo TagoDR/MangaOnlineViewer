@@ -1,0 +1,116 @@
+#Navigation {
+  color: var(--theme-text-color);
+  background-color: var(--theme-hightlight-color);
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  display: flex;
+  box-sizing: border-box;
+  gap: 5px;
+  white-space: nowrap;
+  width: 100%;
+  text-align: center;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  line-height: 0;
+}
+
+#NavigationCounters {
+  flex-shrink: 0; /* Prevent this from shrinking */
+  padding: 5px;
+  line-height: 1rem;
+  text-align: center;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+#Thumbnails {
+  flex-grow: 1;
+  display: flex;
+  gap: 5px;
+  padding: 5px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 5px;
+  justify-content: center;
+}
+
+/* == Horizontal Orientation (for bottom position) == */
+#Navigation.horizontal {
+  flex-direction: column;
+}
+
+#Navigation.horizontal #Thumbnails {
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* == Vertical Orientation (for left/right position) == */
+#Navigation.vertical {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+#Navigation.left {
+  direction: rtl;
+}
+
+#Navigation.vertical #NavigationCounters {
+  /* Rotate the text to be vertical */
+  writing-mode: vertical-rl;
+  transform: rotate(180deg); /* Corrects text character orientation */
+}
+
+#Navigation.left #NavigationCounters {
+  /* Rotate the text to be vertical */
+  writing-mode: vertical-rl;
+  direction: initial;
+  transform: rotate(0); /* Corrects text character orientation */
+}
+
+#Navigation.vertical #Thumbnails {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.Thumbnail {
+  display: inline-block;
+  height: 150px;
+  margin: 0 5px;
+  position: relative;
+  /*border: 1px solid var(--theme-primary-color);*/
+}
+
+#Navigation.vertical .Thumbnail {
+  display: inline-block;
+  height: 150px;
+  margin: 5px 0;
+  /*border: 1px solid var(--theme-primary-color);*/
+}
+
+.ThumbnailIndex {
+  color: var(--theme-text-color);
+  background-color: var(--theme-hightlight-color);
+  display: block;
+  opacity: 0.8;
+  position: absolute;
+  bottom: 25%;
+  width: 100%;
+  line-height: 1rem;
+}
+
+.ThumbnailImg {
+  cursor: pointer;
+  display: inline-block;
+  max-height: 150px;
+  min-height: 150px;
+  min-width: 80px;
+  max-width: 150px;
+}

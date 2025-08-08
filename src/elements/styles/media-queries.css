@@ -1,0 +1,107 @@
+.mobile #Header,
+.tablet #Header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.mobile .ViewerTitle,
+.tablet .ViewerTitle {
+  order: 1;
+  min-height: auto;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 100%;
+}
+
+.mobile #GlobalFunctions,
+.tablet #GlobalFunctions {
+  width: auto;
+  order: 2;
+  padding: 5px;
+}
+
+.mobile #ChapterNavigation,
+.tablet #ChapterNavigation {
+  order: 3;
+}
+
+.mobile #GlobalFunctions #ZoomSlider,
+.tablet #GlobalFunctions #ZoomSlider,
+.mobile #GlobalFunctions .ControlButton:not(.tablets, .phones),
+.tablet #GlobalFunctions .ControlButton:not(.tablets, .phones) {
+  display: none;
+}
+
+.mobile #Header {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobile #Header.click + #Chapter:not(.webcomic, .vertical) {
+  position: sticky;
+}
+
+.mobile #MangaTitle {
+  word-wrap: anywhere;
+}
+
+.mobile .ViewerTitle {
+  order: 1;
+  margin-top: 0;
+  height: auto;
+  padding: 0;
+}
+
+.mobile #GlobalFunctions {
+  order: 2;
+  padding: 0;
+  width: auto;
+  flex-basis: 35px;
+}
+
+.mobile #ChapterNavigation {
+  order: 3;
+  width: min-content;
+  min-width: 205px;
+}
+
+.mobile .ChapterControl {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.mobile .ChapterControl .NavigationControlButton {
+  flex-grow: 1;
+}
+
+.mobile .PageFunctions {
+  padding: 0;
+}
+
+.mobile .PageFunctions .ControlButton.Bookmark {
+  opacity: 1;
+}
+
+.mobile #Navigation,
+.mobile #GlobalFunctions .ControlButton:not(.phones),
+.mobile .PageFunctions .ControlButton:not(.Bookmark),
+.mobile #SettingsPanel .DefaultZoomMode,
+.mobile #SettingsPanel .DefaultZoom,
+.mobile #SettingsPanel .fitIfOversize,
+.mobile #SettingsPanel .showThumbnails,
+.mobile #SettingsPanel .lazyLoadImages,
+.mobile #SettingsPanel .downloadZip,
+.mobile #SettingsPanel .minZoom,
+.mobile #SettingsPanel .zoomStep,
+.mobile #SettingsPanel .headerType,
+.mobile #SettingsPanel .autoScroll,
+.mobile #KeybindingsPanel,
+.mobile .ChapterControl .download,
+.mobile #Counters {
+  display: none;
+}

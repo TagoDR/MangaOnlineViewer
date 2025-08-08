@@ -1,0 +1,108 @@
+:host {
+  /* .MangaPage */
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  line-height: 0;
+  position: relative;
+}
+
+:not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.PageContent {
+  text-align: center;
+  display: inline-block;
+  overflow-x: auto;
+  max-width: 100%;
+  transition: all 0.3s ease-in-out;
+  height: 100%;
+  overflow-y: hidden;
+}
+
+.PageContent .PageImg[src=""],
+.PageContent .PageImg:not([src]) {
+  width: 40vw;
+  height: 80vh;
+  display: inline-block;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 20%;
+  background-color: var(--theme-hightlight-color);
+}
+
+.PageContent .PageImg.imgBroken {
+  width: 40vw;
+  height: 80vh;
+  display: inline-block;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 20%;
+  background-color: var(--theme-hightlight-color);
+}
+
+.PageFunctions {
+  font-family: monospace;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 3px;
+  position: absolute;
+  right: 0;
+}
+
+/*.PageFunctions > .PageIndex {
+  background-color: var(--theme-primary-color);
+  color: var(--theme-primary-text-color);
+  min-width: 20px;
+  text-align: center;
+  display: inline-block;
+  padding: 3px 5px;
+  line-height: 1rem;
+  border-radius: 5px;
+}*/
+
+.PageFunctions .ControlButton {
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  border-width: 0;
+  min-height: auto;
+  opacity: 0.5;
+}
+
+.PageFunctions:hover .ControlButton,
+.PageFunctions:hover .wa-button {
+  background-color: var(--theme-primary-color);
+  opacity: 1;
+}
+
+.PageFunctions .ControlButton:hover {
+  opacity: 0.9;
+}
+
+.PageFunctions.hideControls {
+  visibility: hidden;
+}
+
+.PageContent.fitWidthIfOversize,
+.PageImg.fitWidthIfOversize {
+  max-width: 100vw;
+  object-fit: contain;
+}
+
+.PageContent.height,
+.PageImg.height {
+  max-height: 100vh;
+  object-fit: contain;
+}
+
+.PageContent.hide {
+  height: 0;
+}

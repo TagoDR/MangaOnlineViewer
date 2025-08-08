@@ -1,5 +1,5 @@
+import display from '../elements';
 import type { IManga } from '../types';
-import display from '../ui';
 import { logScript, logScriptVerbose } from '../utils/tampermonkey';
 import { waitForFunc, waitWithTimeout } from '../utils/waitFor';
 import { getSettingsValue } from './settings';

@@ -1,0 +1,50 @@
+#BookmarksPanel {
+  position: fixed;
+  top: 10%;
+  width: 50%;
+  left: 25%;
+  right: 25%;
+  text-align: center;
+  max-height: 70%;
+  transition: transform 0.3s ease-in-out;
+  transform: scaleY(0);
+  z-index: 1000;
+}
+
+#BookmarksPanel.visible {
+  transform: scaleY(1);
+  display: block;
+}
+
+#BookmarksList {
+  padding: 0 15px;
+  overflow: auto;
+  max-height: 60vh;
+}
+
+#BookmarksList .BookmarkItem {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px;
+}
+
+#BookmarksList .bookmarkColumnLarge {
+  flex-basis: 90%;
+}
+
+#BookmarksList .bookmarkColumnSmall {
+  width: 90px;
+}
+
+#BookmarksList .bookmarkFunctions {
+  width: 100px;
+}
+
+#BookmarksList .bookmarkURl {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  flex-basis: 55%;
+}
