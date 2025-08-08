@@ -1,116 +1,124 @@
-/**
- * Interface for the settings
- */
-
 import { blobToDataURL } from 'blob-util';
-import _ from 'lodash';
 import { logScript } from './tampermonkey';
 import { isBase64ImageUrl, isObjectURL } from './urls';
 
-type ILazyOptions = {
-  threshold: number;
-  throttle: number;
-  lazyAttribute: string;
-  targetAttribute: string;
-};
-
-/**
- * Settings the lazy load will obey
- */
-const settings: ILazyOptions = {
-  threshold: 2000,
-  throttle: 500,
-  lazyAttribute: 'data-src',
-  targetAttribute: 'src',
-};
-
-/**
- * Interface for the lazy elements
- */
-type LazyItem = {
-  element: HTMLImageElement;
-  callback: (element: HTMLImageElement) => void | Promise<void>;
+type LazyLoadOptions = {
+  root?: Element | Document | null;
+  rootMargin?: string;
+  threshold?: number;
   fetchOptions?: RequestInit;
 };
 
 /**
- * List of elements that will be lazy loaded
- */
-let listElements: LazyItem[] = [];
-let setup = false;
-
-/**
- * Check if the image ins nearing the viewport, so it needs to load.
- * https://stackoverflow.com/a/70476497/2453148
- * @param value
- */
-function filterInView(value: LazyItem) {
-  const { element } = value;
-  const rect = element.getBoundingClientRect();
-  const target = (window.innerHeight || document.documentElement.clientHeight) + settings.threshold;
-  return rect.top <= target || rect.bottom <= target;
-}
-
-/**
- * Execute the loading of the image
- * @param item
- */
-async function showElement(item: LazyItem) {
-  let value = item.element.getAttribute(settings.lazyAttribute) ?? '';
-  if (value) {
-    if (!isObjectURL(value) && !isBase64ImageUrl(value) && item.fetchOptions) {
-      value = await fetch(value, item.fetchOptions)
-        .then(resp => resp.blob())
-        .then(blob => blobToDataURL(blob));
-    }
-    item.element.setAttribute(settings.targetAttribute, value);
-  }
-
-  item.callback(item.element)?.catch(logScript);
-}
-
-/**
- * Lookup images that should be loaded, and update the current list
- */
-function executeCheck() {
-  const inView = listElements.filter(filterInView);
-  listElements = listElements.filter(item => !filterInView(item));
-  inView.forEach(showElement);
-}
-
-/**
- * Function responsible for observing the screen move/change
- */
-const observerEvent = _.throttle(executeCheck, settings.throttle);
-
-/**
- * Simple lazy loading for images.
- * Add an image element to a list, wait for it to be close to appearing on screen then load its
- * 'src' from 'data-src' then call a callback function.
- * @param element
- * @param callback
- * @param fetchOptions
+ * Modern lazy loading using Intersection Observer API
+ * Works with Web Components and Shadow DOM
  */
 function lazyLoad(
   element: HTMLImageElement,
   callback: (element: HTMLImageElement) => void | Promise<void>,
   fetchOptions?: RequestInit,
+  options: LazyLoadOptions = {},
 ): void {
-  if (!setup) {
-    window.addEventListener('scroll', observerEvent, {
-      passive: true,
-    });
-    window.addEventListener('touchmove', observerEvent, {
-      passive: true,
-    });
-    window.addEventListener('resize', observerEvent, {
-      passive: true,
-    });
-    setup = true;
+  const { root = null, rootMargin = '200px', threshold = 0.01 } = options;
+
+  // Create an intersection observer for this specific element
+  const observer = new IntersectionObserver(
+    async entries => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          const img = entry.target as HTMLImageElement;
+
+          try {
+            // Get the data-src attribute
+            let src = img.getAttribute('data-src') ?? '';
+
+            if (src) {
+              // Convert to blob URL if needed
+              if (!isObjectURL(src) && !isBase64ImageUrl(src) && fetchOptions) {
+                src = await fetch(src, fetchOptions)
+                  .then(resp => resp.blob())
+                  .then(blob => blobToDataURL(blob));
+              }
+
+              // Set the actual src
+              img.setAttribute('src', src);
+
+              // Call the callback
+              await callback(img);
+
+              logScript('Lazy loaded image:', src);
+            }
+          } catch (error) {
+            logScript('Error lazy loading image:', error);
+            // Mark as broken
+            img.classList.add('imgBroken');
+          }
+
+          // Stop observing this element
+          observer.unobserve(img);
+          observer.disconnect();
+        }
+      }
+    },
+    {
+      root,
+      rootMargin,
+      threshold,
+    },
+  );
+
+  // Start observing the element
+  observer.observe(element);
+
+  // Store the observer on the element for cleanup if needed
+  (element as any)._lazyObserver = observer;
+}
+
+/**
+ * Cleanup function to disconnect observers (useful for component cleanup)
+ */
+export function cleanupLazyLoad(element: HTMLImageElement): void {
+  const observer = (element as any)._lazyObserver as IntersectionObserver;
+  if (observer) {
+    observer.disconnect();
+    delete (element as any)._lazyObserver;
+  }
+}
+
+/**
+ * Enhanced lazy load that automatically detects the correct scroll container
+ * for different view modes in the manga reader
+ */
+export function lazyLoadWithContext(
+  element: HTMLImageElement,
+  callback: (element: HTMLImageElement) => void | Promise<void>,
+  fetchOptions?: RequestInit,
+): void {
+  // Find the appropriate scroll container
+  let root: Element | null = null;
+
+  // Look for the reader component
+  const readerElement = element.closest('[id="Chapter"]') as HTMLElement;
+
+  if (readerElement) {
+    // Determine view mode from class or attribute
+    const isFluid =
+      readerElement.classList.contains('FluidLTR') || readerElement.classList.contains('FluidRTL');
+
+    if (isFluid) {
+      // In fluid mode, the reader itself is the scroll container
+      root = readerElement;
+    } else {
+      // In vertical modes, look for the parent scroll container
+      root = readerElement.parentElement;
+    }
   }
 
-  listElements.push({ element, callback, fetchOptions });
-  observerEvent();
+  lazyLoad(element, callback, fetchOptions, {
+    root,
+    rootMargin: '500px', // Load images when they're 500px away from viewport
+    threshold: 0.01,
+  });
 }
 
 export default lazyLoad;

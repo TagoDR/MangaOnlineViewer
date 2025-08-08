@@ -1,11 +1,11 @@
 import type { Preview } from '@storybook/web-components-vite';
 import { html } from 'lit';
 import { themes } from 'storybook/theming';
-import '../src/elements/setup';
+import '../src/ui/setup';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import externalCSS from '../src/elements/styles/externalStyle.ts';
-import cssStyles from '../src/elements/styles/defaultTheme.ts';
-import { themesCSS } from '../src/elements/themes.ts';
+import cssStyles from '../src/ui/styles/defaultTheme.ts';
+import externalCSS from '../src/ui/styles/externalStyle.ts';
+import { themesCSS } from '../src/ui/themes.ts';
 import { wrapStyle } from '../src/utils/css';
 
 const preview: Preview = {

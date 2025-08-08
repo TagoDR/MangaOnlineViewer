@@ -113,6 +113,8 @@ export const appState = map<IApp>({
   panel: 'none',
   scrollToPage: undefined,
   device: getDevice(),
+  images: {},
+  thumbnails: {},
 });
 
 giveToWindow('app', appState);

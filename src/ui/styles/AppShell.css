@@ -111,7 +111,7 @@ header.click {
 main {
   grid-area: content;
   display: grid; /* To make the main slot fill the area */
-  overflow: hidden; /* Crucial for child elements to scroll correctly */
+  overflow: hidden; /* Crucial for child ui to scroll correctly */
 }
 
 nav {

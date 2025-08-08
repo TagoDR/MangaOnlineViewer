@@ -28,12 +28,12 @@ export const cleanUpSelector = (...selectors: string[]) => {
 };
 
 export function hideElements(selector: string) {
-  // Get all elements on the page
+  // Get all ui on the page
   const allElements = document.body.querySelectorAll<HTMLElement>(selector);
   allElements.forEach(element => {
     // Hide the element
     element.style.display = 'none';
-    // Disable form elements (inputs, selects, textareas, buttons)
+    // Disable form ui (inputs, selects, textareas, buttons)
 
     if (
       element instanceof HTMLInputElement ||
@@ -51,14 +51,14 @@ export function hideElements(selector: string) {
       });
       element.style.pointerEvents = 'none'; // Further prevent interaction
     }
-    // Disable other interactive elements by preventing events and setting pointer-events
+    // Disable other interactive ui by preventing events and setting pointer-events
 
     element.style.pointerEvents = 'none';
   });
 }
 
 export function removeElements(selector: string) {
-  // Select all script elements in the document
+  // Select all script ui in the document
   const elements = document.querySelectorAll(selector);
   elements?.forEach(e => {
     e?.remove();

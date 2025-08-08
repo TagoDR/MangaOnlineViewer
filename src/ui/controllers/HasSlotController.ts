@@ -32,7 +32,7 @@ export class HasSlotController implements ReactiveController {
         const el = node as HTMLElement;
         const tagName = el.tagName.toLowerCase();
 
-        // Ignore visually hidden elements since they aren't rendered
+        // Ignore visually hidden ui since they aren't rendered
         if (tagName === 'wa-visually-hidden') {
           return false;
         }
