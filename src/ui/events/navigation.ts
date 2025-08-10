@@ -1,6 +1,6 @@
-import { applyZoom } from '../page';
-import { scrollToElement } from './common';
 import { getAppStateValue } from '../../core/settings.ts';
+import { applyZoom } from './zoom.ts';
+import { scrollToElement } from './common';
 
 export function selectGoToPage(event: Event) {
   const target = (event.currentTarget as HTMLOptionElement).value;

@@ -22,16 +22,7 @@
 }
 
 #MangaOnlineViewer .PageContent .PageImg[src=""],
-#MangaOnlineViewer .PageContent .PageImg:not([src]) {
-  width: 40vw;
-  height: 80vh;
-  display: inline-block;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 20%;
-  background-color: var(--theme-hightlight-color);
-}
-
+#MangaOnlineViewer .PageContent .PageImg:not([src]),
 #MangaOnlineViewer .PageContent .PageImg.imgBroken {
   width: 40vw;
   height: 80vh;
@@ -40,6 +31,31 @@
   background-repeat: no-repeat;
   background-size: 20%;
   background-color: var(--theme-hightlight-color);
+  position: relative;
+  text-align: center;
+  line-height: 80vh;
+  vertical-align: top;
+  color: var(--theme-text-color);
+  font-size: 1rem;
+  min-width: 40vw;
+  min-height: 50vh;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+}
+
+#MangaOnlineViewer .PageContent .PageImg[src=""]:before,
+#MangaOnlineViewer .PageContent .PageImg:not([src]):before,
+#MangaOnlineViewer .PageContent .PageImg.imgBroken:before {
+  content: attr(alt);
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: pre-wrap;
+  text-align: center;
+  color: var(--theme-text-color);
+  font-size: 1rem;
 }
 
 #MangaOnlineViewer .PageFunctions {

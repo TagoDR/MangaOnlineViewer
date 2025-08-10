@@ -1,5 +1,11 @@
 import NProgress from 'nprogress';
-import { changeAppStateValue, getAppStateValue, getSettingsValue } from '../../core/settings.ts';
+import {
+  changeAppStateValue,
+  getAppStateValue,
+  getSettingsValue,
+  setAppStateValue,
+} from '../../core/settings.ts';
+import { isEmpty } from '../../utils/checks.ts';
 import { logScript } from '../../utils/tampermonkey.ts';
 import { isBase64ImageUrl, isObjectURL } from '../../utils/urls.ts';
 import { buttonStartDownload } from './globals.ts';
@@ -20,13 +26,10 @@ function getRepeatValue(src: string | undefined): number {
   return repeat;
 }
 
-export function buttonReloadPage(event: Event): void {
-  const index = (event.currentTarget as HTMLButtonElement).value;
-  const img = getAppStateValue('render')?.querySelector<HTMLImageElement>(`#PageImg${index}`);
-  const src = img?.getAttribute('src');
-  if (!src) {
-    return;
-  }
+function realoadImage(index: number, img: HTMLImageElement) {
+  logScript(`Reloading Page ${index}`, img);
+  const src = getAppStateValue('images')?.[index]?.src;
+  if (!src) return;
   const repeat = getRepeatValue(src);
   if (repeat > 5) return;
   img?.removeAttribute('src');
@@ -35,7 +38,13 @@ export function buttonReloadPage(event: Event): void {
   } else {
     img?.setAttribute('src', invalidateImageCache(src, repeat));
   }
-  logScript(`Reloading Page ${index}`);
+}
+
+export function buttonReloadPage(event: Event): void {
+  const button = event.currentTarget as HTMLButtonElement;
+  const index = parseInt(button.value, 10);
+  const img = button.closest('.MangaPage')?.querySelector('.PageImg') as HTMLImageElement;
+  realoadImage(index, img);
 }
 
 export function buttonHidePage(event: Event): void {
@@ -46,6 +55,19 @@ export function buttonHidePage(event: Event): void {
 export function imageLoaded(event: Event): void {
   (event.currentTarget as HTMLImageElement).classList.add('imgLoaded');
   (event.currentTarget as HTMLImageElement).classList.remove('imgBroken');
+  const img = event.currentTarget as HTMLImageElement;
+  const index = parseInt(img.id.replace('PageImg', ''), 10);
+  const image = getAppStateValue('images')?.[index];
+  if (image) {
+    setAppStateValue('images', {
+      ...getAppStateValue('images'),
+      [index]: {
+        ...image,
+        naturalWidth: img.naturalWidth,
+        naturalHeight: img.naturalHeight,
+      },
+    });
+  }
   const loaded = getAppStateValue('loaded') ?? 0;
   const total =
     (getAppStateValue('manga')?.pages ?? 1) - (getAppStateValue('manga')?.begin ?? 1) - 1;
@@ -62,6 +84,8 @@ export function imageLoaded(event: Event): void {
 
 export function imageLoadError(event: Event): void {
   const img = event.currentTarget as HTMLImageElement;
+  if (isEmpty(img.getAttribute('src'))) return;
   img.classList.add('imgBroken');
-  buttonReloadPage(event);
+  const index = parseInt(img.id.replace('PageImg', ''), 10);
+  realoadImage(index, img);
 }

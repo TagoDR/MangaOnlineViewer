@@ -1,6 +1,6 @@
 import { setSettingsValue } from '../../core/settings';
 import type { ViewMode } from '../../types';
-import { applyZoom } from '../page';
+import { applyZoom } from './zoom.ts';
 
 export function updateViewMode(mode: ViewMode) {
   return () => {

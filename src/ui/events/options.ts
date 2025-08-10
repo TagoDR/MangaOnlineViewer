@@ -2,7 +2,7 @@ import Swal from 'sweetalert2';
 import { getLocaleString, saveSettingsValue, toggleLocalSettings } from '../../core/settings';
 import type { HeaderMode, LoadMode } from '../../types';
 import { replaceStyleSheet } from '../../utils/css';
-import { applyZoom } from '../page';
+import { applyZoom } from './zoom.ts';
 
 export function changeSettingsScope(event: Event) {
   const scope = (event.currentTarget as HTMLInputElement).value;

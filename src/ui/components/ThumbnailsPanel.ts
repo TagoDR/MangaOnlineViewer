@@ -42,7 +42,7 @@ const ThumbnailsPanel = (manga: IManga) => html`
               id="ThumbnailImg${index}"
               alt=""
               class="ThumbnailImg"
-              src=""
+              src=${getAppStateValue('images')?.[index]?.src ?? ''}
             />
             <span class="ThumbnailIndex">${index}</span>
           </div>

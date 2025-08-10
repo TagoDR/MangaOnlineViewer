@@ -1,6 +1,6 @@
 import { html } from 'lit';
-import { styleMap } from 'lit-html/directives/style-map.js';
-import { getLocaleString, getSettingsValue } from '../../core/settings';
+import { type StyleInfo, styleMap } from 'lit-html/directives/style-map.js';
+import { getAppStateValue, getLocaleString, getSettingsValue } from '../../core/settings';
 import sequence from '../../utils/sequence';
 import { buttonBookmark } from '../events/bookmarks';
 import {
@@ -29,6 +29,16 @@ import {
   IconZoomOut,
 } from '../icons';
 
+function getImageStyle(index: number) {
+  const image = getAppStateValue('images')?.[index];
+  const imageStyles: StyleInfo = {
+    width: image?.width ?? 'auto',
+    height: image?.height ?? 'auto',
+    'min-width': image?.minWidth ?? `${getSettingsValue('minZoom')}vw`,
+  };
+  return imageStyles;
+}
+
 const listPages = (times: number, begin: number) =>
   sequence(times, begin).map(
     index => html`
@@ -41,6 +51,7 @@ const listPages = (times: number, begin: number) =>
             class="Bookmark ControlButton"
             title="${getLocaleString('BOOKMARK')}"
             @click=${buttonBookmark}
+            value="${index}"
           >
             ${IconBookmark} ${IconBookmarkOff}
           </button>
@@ -48,6 +59,7 @@ const listPages = (times: number, begin: number) =>
             class="ZoomIn ControlButton"
             title="${getLocaleString('ZOOM_IN')}"
             @click=${buttonZoomIn}
+            value="${index}"
           >
             ${IconZoomIn}
           </button>
@@ -55,6 +67,7 @@ const listPages = (times: number, begin: number) =>
             class="ZoomRestore ControlButton"
             title="${getLocaleString('ZOOM_RESET')}"
             @click=${buttonRestoreZoom}
+            value="${index}"
           >
             ${IconZoomCancel}
           </button>
@@ -62,6 +75,7 @@ const listPages = (times: number, begin: number) =>
             class="ZoomOut ControlButton"
             title="${getLocaleString('ZOOM_OUT')}"
             @click=${buttonZoomOut}
+            value="${index}"
           >
             ${IconZoomOut}
           </button>
@@ -69,6 +83,7 @@ const listPages = (times: number, begin: number) =>
             class="ZoomWidth ControlButton"
             title="${getLocaleString('ZOOM_WIDTH')}"
             @click=${buttonZoomWidth}
+            value="${index}"
           >
             ${IconArrowAutofitWidth}
           </button>
@@ -76,6 +91,7 @@ const listPages = (times: number, begin: number) =>
             class="ZoomHeight ControlButton"
             title="${getLocaleString('ZOOM_HEIGHT')}"
             @click=${buttonZoomHeight}
+            value="${index}"
           >
             ${IconArrowAutofitHeight}
           </button>
@@ -83,6 +99,7 @@ const listPages = (times: number, begin: number) =>
             class="Hide ControlButton"
             title="${getLocaleString('HIDE')}"
             @click=${buttonHidePage}
+            value="${index}"
           >
             ${IconEye} ${IconEyeOff}
           </button>
@@ -99,12 +116,10 @@ const listPages = (times: number, begin: number) =>
         <div class="PageContent">
           <img
             id="PageImg${index}"
-            alt=""
+            alt="Page ${index}"
             class="PageImg"
-            src=""
-            style="${styleMap({
-              'min-width': `${getSettingsValue('minZoom')}vw`,
-            })}"
+            src=${getAppStateValue('images')?.[index]?.src ?? ''}
+            style="${styleMap(getImageStyle(index))}"
             @load=${imageLoaded}
             @error=${imageLoadError}
           />

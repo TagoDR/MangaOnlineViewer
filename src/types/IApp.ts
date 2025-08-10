@@ -11,6 +11,15 @@ export type Panel =
 export type Download = 'available' | 'working';
 export type Redirect = 'next' | 'prev' | 'series';
 export type Device = 'desktop' | 'mobile' | 'tablet';
+export type Page = {
+  src: string;
+  width?: string;
+  height?: string;
+  minWidth?: string;
+  minHeight?: string;
+  naturalWidth?: number;
+  naturalHeight?: number;
+};
 
 export type IApp = {
   autoScroll: boolean;
@@ -23,4 +32,5 @@ export type IApp = {
   scrollToPage?: number;
   device: Device;
   render?: HTMLElement | DocumentFragment | ShadowRoot | null;
+  images: Record<number, Page | undefined>;
 };
