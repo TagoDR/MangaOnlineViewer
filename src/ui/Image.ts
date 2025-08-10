@@ -34,16 +34,10 @@ function normalizeUrl(url: string): string {
 }
 
 // Adds an image to the place-holder div
-async function addImg(
-  manga: IMangaImages,
-  index: number,
-  imageSrc: string,
-  position: number = index,
-) {
-  const relativePosition = position - (manga.begin ?? 1);
-  let src = normalizeUrl(imageSrc);
+async function addImg(manga: IMangaImages, index: number, imageSrc: string, position: number = 0) {
   setTimeout(
     async () => {
+      let src = normalizeUrl(imageSrc);
       if (!isObjectURL(src) && !isBase64ImageUrl(src) && manga.fetchOptions) {
         src = await fetch(src, manga.fetchOptions)
           .then(resp => resp.blob())
@@ -54,19 +48,13 @@ async function addImg(
       });
       logScript('Loaded Image:', index, 'Source:', src);
     },
-    (manga.timer ?? getSettingsValue('throttlePageLoad')) * relativePosition,
+    (manga.timer ?? getSettingsValue('throttlePageLoad')) * position,
   );
   if (manga.pages === index) removeURLBookmark();
 }
 
 // Adds a page to the place-holder div
-async function addPage(
-  manga: IMangaPages,
-  index: number,
-  pageUrl: string,
-  position: number = index,
-) {
-  const relativePosition = position - (manga.begin ?? 0);
+async function addPage(manga: IMangaPages, index: number, pageUrl: string, position: number = 0) {
   setTimeout(
     async () => {
       const imageSrc = await getElementAttribute(pageUrl, manga.img, manga.lazyAttr ?? 'src');
@@ -78,7 +66,7 @@ async function addPage(
         logScript(`Loaded Page: `, index, ' Source: ', src);
       }
     },
-    (manga.timer ?? getSettingsValue('throttlePageLoad')) * relativePosition,
+    (manga.timer ?? getSettingsValue('throttlePageLoad')) * position,
   );
   if (manga.pages === position) removeURLBookmark();
 }
@@ -87,9 +75,9 @@ async function addPage(
 function loadMangaPages(begin: number, manga: IMangaPages) {
   sequence(manga.pages, begin)
     .filter(
-      (index, _position) =>
+      (_index, position) =>
         !(manga.lazy ?? getSettingsValue('lazyLoadImages')) ||
-        index <= getSettingsValue('lazyStart'),
+        position <= getSettingsValue('lazyStart'),
     )
     .forEach((index, position) => {
       addPage(manga, index, manga.listPages[index - 1], position);
@@ -100,9 +88,9 @@ function loadMangaPages(begin: number, manga: IMangaPages) {
 function loadMangaImages(begin: number, manga: IMangaImages) {
   sequence(manga.pages, begin)
     .filter(
-      (index, _position) =>
+      (_index, position) =>
         !(manga.lazy ?? getSettingsValue('lazyLoadImages')) ||
-        index <= getSettingsValue('lazyStart'),
+        position <= getSettingsValue('lazyStart'),
     )
     .forEach((index, position) => {
       addImg(manga, index, manga.listImages[index - 1], position);
@@ -150,7 +138,8 @@ export default async function loadImages() {
 
   appState.listen((value, oldValue, changedKey) => {
     if (changedKey === 'currentPage' && value.currentPage > oldValue.currentPage) {
-      for (let i = value.currentPage; i < value.currentPage + 3; i++) {
+      for (let i = value.currentPage; i < value.currentPage + 5; i++) {
+        if (value.images[i] !== undefined) continue;
         if (isImagesManga(manga)) {
           addImg(manga, i, manga.listImages[i - 1]);
         } else if (isPagesManga(manga)) {

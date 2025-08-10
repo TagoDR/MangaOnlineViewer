@@ -3,6 +3,7 @@ import autoscroll from './events/autoscroll';
 import headroom from './events/headroom';
 import keybindings from './events/keybindings';
 import panels from './events/panels';
+import trackCurrentPage from './events/currentpage';
 import { setAppStateValue } from '../core/settings.ts';
 
 // Controls for the extra features added to the sites
@@ -14,6 +15,7 @@ function events() {
   });
   panels();
   autoscroll();
+  trackCurrentPage();
 }
 
 export default events;
