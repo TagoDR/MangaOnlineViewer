@@ -114,6 +114,7 @@ export const appState = map<IApp>({
   scrollToPage: undefined,
   device: getDevice(),
   images: {},
+  headerVisible: true,
 });
 
 if (import.meta.env.DEV) {
@@ -125,19 +126,20 @@ if (import.meta.env.DEV) {
 
 export function refreshSettings<K extends ISettingsKey>(key?: K) {
   if (key) {
-    if (isSettingsLocal()) {
-      settings.setKey(key, localSettings[key]);
-    } else {
-      settings.setKey(key, globalSettings[key]);
+    const newVal = isSettingsLocal() ? localSettings[key] : globalSettings[key];
+    const currentVal = settings.get()?.[key];
+    if (!_.isEqual(currentVal, newVal)) {
+      settings.setKey(key, newVal);
+      logScript('Refreshed Settings', key, newVal);
     }
-  } else {
-    if (isSettingsLocal()) {
-      settings.set({ ...localSettings });
-    } else {
-      settings.set({ ...globalSettings });
-    }
+    return;
   }
-  logScript('Refreshed Settings', key, key ? getSettingsValue(key) : null);
+  const newObj = isSettingsLocal() ? { ...localSettings } : { ...globalSettings };
+  const currentObj = settings.get();
+  if (!_.isEqual(currentObj, newObj)) {
+    settings.set(newObj);
+    logScript('Refreshed Settings', key, null);
+  }
 }
 
 function syncGlobalSettings(newValue: Partial<ISettings>) {
@@ -187,6 +189,8 @@ export function getSettingsValue<K extends ISettingsKey>(key: K): ISettings[K] {
  * @param value The new value for the setting.
  */
 export function setSettingsValue<K extends ISettingsKey>(key: K, value: ISettings[K]): void {
+  const current = settings.get()?.[key];
+  if (_.isEqual(current, value)) return;
   settings.setKey(key, value);
 }
 
@@ -198,6 +202,10 @@ export function setSettingsValue<K extends ISettingsKey>(key: K, value: ISetting
  * @param value The new value for the setting.
  */
 export function saveSettingsValue<K extends ISettingsKey>(key: K, value: ISettings[K]): void {
+  // Avoid persisting if there is no effective change
+  const currentEffective = getSettingsValue(key);
+  if (_.isEqual(currentEffective, value)) return;
+
   setSettingsValue(key, value);
   if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
     const alter = _.defaultsDeep(getLocalSettings(getDefault(false)), getDefault(false));
@@ -222,13 +230,13 @@ export function changeSettingsValue<K extends ISettingsKey>(
   key: K,
   fn: (value: ISettings[K]) => ISettings[K],
 ): void {
-  const newValue = fn(
-    isSettingsLocal() && !['locale', 'bookmarks'].includes(key)
-      ? localSettings[key]
-      : globalSettings[key],
-  );
+  const oldValue = isSettingsLocal() && !['locale', 'bookmarks'].includes(key)
+    ? localSettings[key]
+    : globalSettings[key];
+  const newValue = fn(oldValue);
+  if (_.isEqual(oldValue, newValue)) return;
   saveSettingsValue(key, newValue);
-  settings.set({ ...settings.get(), [key]: newValue });
+  // settings store will be updated by saveSettingsValue via setSettingsValue if needed
 }
 
 export function getAppStateValue<K extends keyof IApp>(key: K): IApp[K] {
@@ -236,13 +244,18 @@ export function getAppStateValue<K extends keyof IApp>(key: K): IApp[K] {
 }
 
 export function setAppStateValue<K extends keyof IApp>(key: K, value: IApp[K]): void {
+  const current = appState.get()[key];
+  if (_.isEqual(current, value)) return;
   appState.setKey(key, value);
 }
 export function changeAppStateValue<K extends keyof IApp>(
   key: K,
   fn: (value: IApp[K]) => IApp[K],
 ): void {
-  appState.setKey(key, fn(appState.get()[key]));
+  const oldVal = appState.get()[key];
+  const newVal = fn(oldVal);
+  if (_.isEqual(oldVal, newVal)) return;
+  appState.setKey(key, newVal);
 }
 
 export function getLocaleString<K extends ILocaleKey>(name: K | string): string {
