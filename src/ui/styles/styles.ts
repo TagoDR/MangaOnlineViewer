@@ -1,7 +1,7 @@
 import { css } from '../../utils/code-tag';
 import colors from '../../utils/colors';
 import { svgToUrl } from '../../utils/svgs';
-import { IconPaletteRaw, IconPhotoOffRaw, IconPhotoRaw } from '../icons';
+import { IconPhotoOffRaw, IconPhotoRaw } from '../icons';
 import animation from './animation.css?inline';
 import bookmarks from './bookmarks.css?inline';
 import comments from './comments.css?inline';
@@ -17,7 +17,6 @@ import normalize from './simplenormalize.css?inline';
 import thumbnails from './thumbnails.css?inline';
 
 export default css`
-  :root,
   .dark {
     --theme-body-background: ${colors.dark['600']};
     --theme-body-text-color: ${colors.dark['50']};
@@ -40,25 +39,16 @@ export default css`
     --theme-border-color: ${colors.gray['100']};
   }
 
-
-
-  #MangaOnlineViewer .PageContent .PageImg[src=''],
-  #MangaOnlineViewer .PageContent .PageImg:not([src]) {
+  .PageContent .PageImg[src=''],
+  .PageContent .PageImg:not([src]),
+  .Thumbnail .ThumbnailImg[src=''],
+  .Thumbnail .ThumbnailImg:not([src]) {
     background-image: url('${svgToUrl(IconPhotoRaw)}');
   }
 
-  #MangaOnlineViewer .Thumbnail .ThumbnailImg[src=''],
-  #MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {
-    background-image: url('${svgToUrl(IconPhotoRaw)}');
-  }
-
-  #MangaOnlineViewer .PageContent .PageImg.imgBroken,
-  #MangaOnlineViewer .Thumbnail .ThumbnailImg.imgBroken {
+  .PageContent .PageImg.imgBroken,
+  .Thumbnail .ThumbnailImg.imgBroken {
     background-image: url('${svgToUrl(IconPhotoOffRaw)}');
-  }
-
-  #MangaOnlineViewer .ThemeRadio.custom {
-    /*background-image: url("${svgToUrl(IconPaletteRaw)}");*/
   }
 
   ${normalize}

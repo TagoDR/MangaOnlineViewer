@@ -1,4 +1,4 @@
-#MangaOnlineViewer #CommentsPanel {
+#CommentsPanel {
   position: static;
   width: 90%;
   height: 0;
@@ -13,7 +13,7 @@
   opacity: 0;
 }
 
-#MangaOnlineViewer #CommentsPanel.visible {
+#CommentsPanel.visible {
   position: fixed;
   height: 90%;
   transform: scaleY(1);
@@ -24,7 +24,7 @@
   opacity: 1;
 }
 
-#MangaOnlineViewer #CommentsArea {
+#CommentsArea {
   overflow-y: auto;
   overscroll-behavior: contain;
   height: 100%;

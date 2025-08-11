@@ -15,23 +15,23 @@
   background-color: var(--theme-body-background);
 }
 
-#MangaOnlineViewer #Chapter {
+#Chapter {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   min-width: 225px;
 }
 
-#MangaOnlineViewer #Chapter.Vertical:has(+ #Navigation:not(.disabled)),
-#MangaOnlineViewer #Chapter.WebComic:has(+ #Navigation:not(.disabled)) {
+#Chapter.Vertical:has(+ #Navigation:not(.disabled)),
+#Chapter.WebComic:has(+ #Navigation:not(.disabled)) {
   padding-bottom: 31px;
 }
 
-#MangaOnlineViewer #Chapter.Vertical .PageContent {
+#Chapter.Vertical .PageContent {
   margin-bottom: 8px;
   margin-top: 8px;
 }
 
-#MangaOnlineViewer .closeButton {
+.closeButton {
   width: fit-content;
   height: fit-content;
   position: absolute;
@@ -39,7 +39,7 @@
   top: 10px;
 }
 
-#MangaOnlineViewer .overlay {
+.overlay {
   position: fixed;
   display: none;
   width: 100%;
@@ -53,18 +53,18 @@
   cursor: pointer;
 }
 
-#MangaOnlineViewer .overlay.visible {
+.overlay.visible {
   display: block;
 }
 
-#MangaOnlineViewer select {
+select {
   height: 20px;
   /*padding: 0;*/
   margin: 2px;
 }
 
-#MangaOnlineViewer .ControlButton,
-#MangaOnlineViewer .simpleButton {
+.ControlButton,
+.simpleButton {
   cursor: pointer;
   border-radius: 5px;
   border-width: 1px;
@@ -76,50 +76,50 @@
   border-color: var(--theme-border-color);
 }
 
-#MangaOnlineViewer .ControlButton:active,
-#MangaOnlineViewer .ControlButton:hover {
+.ControlButton:active,
+.ControlButton:hover {
   opacity: 0.8;
 }
 
-#MangaOnlineViewer .simpleButton {
+.simpleButton {
   font-size: initial;
   min-width: 32px;
 }
 
-#MangaOnlineViewer .panel .simpleButton {
+.panel .simpleButton {
   position: absolute;
   top: 10px;
   left: 10px;
 }
 
-#MangaOnlineViewer .panel {
+.panel {
   padding: 5px;
   position: inherit;
   border-radius: 5px;
   background-color: var(--theme-background-color);
 }
 
-#MangaOnlineViewer :not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {
+:not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {
   max-width: 100%;
   object-fit: contain;
 }
 
-#MangaOnlineViewer .ControlButton.hidden,
-#MangaOnlineViewer.light #ColorScheme > .icon-tabler-sun,
-#MangaOnlineViewer.dark #ColorScheme > .icon-tabler-moon,
-#MangaOnlineViewer .light #CommentsColorScheme > .icon-tabler-sun,
-#MangaOnlineViewer .dark #CommentsColorScheme > .icon-tabler-moon,
-#MangaOnlineViewer .ChapterControl #download.loading > .icon-tabler-file-download,
-#MangaOnlineViewer .ChapterControl #download:not(.loading) > .icon-tabler-loader-2,
-#MangaOnlineViewer .MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,
-#MangaOnlineViewer .MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,
-#MangaOnlineViewer.bookmarked .Bookmark > .icon-tabler-bookmark,
+.ControlButton.hidden,
+.light #ColorScheme > .icon-tabler-sun,
+.dark #ColorScheme > .icon-tabler-moon,
+.light #CommentsColorScheme > .icon-tabler-sun,
+.dark #CommentsColorScheme > .icon-tabler-moon,
+.ChapterControl #download.loading > .icon-tabler-file-download,
+.ChapterControl #download:not(.loading) > .icon-tabler-loader-2,
+.MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,
+.MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,
+.bookmarked .Bookmark > .icon-tabler-bookmark,
 #MangaOnlineViewer:not(.bookmarked) .Bookmark > .icon-tabler-bookmark-off,
-#MangaOnlineViewer #AutoScroll.running > .icon-tabler-player-play,
-#MangaOnlineViewer #AutoScroll:not(.running) > .icon-tabler-player-pause {
+#AutoScroll.running > .icon-tabler-player-play,
+#AutoScroll:not(.running) > .icon-tabler-player-pause {
   display: none;
 }
 
-#MangaOnlineViewer.hideControls .PageFunctions {
+.hideControls .PageFunctions {
   visibility: hidden;
 }

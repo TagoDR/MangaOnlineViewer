@@ -1,5 +1,5 @@
-#MangaOnlineViewer #Chapter.FluidLTR,
-#MangaOnlineViewer #Chapter.FluidRTL {
+#Chapter.FluidLTR,
+#Chapter.FluidRTL {
   display: flex;
   overflow-x: auto;
   min-width: auto;
@@ -24,7 +24,7 @@
   }
 }
 
-#MangaOnlineViewer #Chapter.FluidLTR {
+#Chapter.FluidLTR {
   flex-direction: row;
 
   .MangaPage .PageFunctions {
@@ -34,6 +34,6 @@
   }
 }
 
-#MangaOnlineViewer #Chapter.FluidRTL {
+#Chapter.FluidRTL {
   flex-direction: row-reverse;
 }

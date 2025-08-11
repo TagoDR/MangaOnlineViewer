@@ -1,5 +1,5 @@
-#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=""],
-#MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {
+.Thumbnail .ThumbnailImg[src=""],
+.Thumbnail .ThumbnailImg:not([src]) {
   width: 100px;
   height: 150px;
   display: inline-block;
@@ -8,13 +8,13 @@
   background-size: 20%;
 }
 
-#MangaOnlineViewer #NavigationCounters {
+#NavigationCounters {
   margin: 5px;
   width: 100%;
   line-height: 1rem;
 }
 
-#MangaOnlineViewer #Navigation {
+#Navigation {
   color: var(--theme-text-color);
   background-color: var(--theme-hightlight-color);
   bottom: -180px;
@@ -34,32 +34,29 @@
   line-height: 0;
 }
 
-#MangaOnlineViewer #Navigation #Thumbnails {
+#Navigation #Thumbnails {
   overflow-x: auto;
   overflow-y: hidden;
   margin-right: 10px;
 }
 
-#MangaOnlineViewer #Navigation:hover {
+#Navigation:hover,
+#Navigation.visible {
   transform: translateY(-180px);
 }
 
-#MangaOnlineViewer #Navigation.disabled {
+#Navigation.disabled {
   display: none;
 }
 
-#MangaOnlineViewer #Navigation.visible {
-  transform: translateY(-180px);
-}
-
-#MangaOnlineViewer #Navigation .Thumbnail {
+#Navigation .Thumbnail {
   display: inline-block;
   height: 150px;
   margin: 0 5px;
   border: 1px solid var(--theme-primary-color);
 }
 
-#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailIndex {
+#Navigation .Thumbnail .ThumbnailIndex {
   color: var(--theme-text-color);
   background-color: var(--theme-hightlight-color);
   display: block;
@@ -70,7 +67,7 @@
   line-height: 1rem;
 }
 
-#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailImg {
+#Navigation .Thumbnail .ThumbnailImg {
   cursor: pointer;
   display: inline-block;
   max-height: 150px;

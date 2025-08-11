@@ -1,4 +1,4 @@
-#MangaOnlineViewer #SettingsPanel {
+#SettingsPanel {
   color: var(--theme-text-color);
   padding: 10px;
   position: fixed;
@@ -18,17 +18,17 @@
   width: 308px;
 }
 
-#MangaOnlineViewer #SettingsPanel.visible {
+#SettingsPanel.visible {
   transform: translateX(0);
 }
 
-#MangaOnlineViewer #SettingsPanel fieldset {
+#SettingsPanel fieldset {
   border: 1px solid var(--theme-body-text-color);
   padding: 3px;
   border-radius: 10px;
 }
 
-#MangaOnlineViewer #SettingsPanel .ControlLabel {
+#SettingsPanel .ControlLabel {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
@@ -36,21 +36,21 @@
   padding: 2px;
 }
 
-#MangaOnlineViewer #SettingsPanel .ControlLabelItem {
+#SettingsPanel .ControlLabelItem {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-#MangaOnlineViewer #SettingsPanel .ControlLabelItem:not(.show) {
+#SettingsPanel .ControlLabelItem:not(.show) {
   display: none;
 }
 
-#MangaOnlineViewer #SettingsPanel input[type="range"] {
+#SettingsPanel input[type="range"] {
   width: 100%;
 }
 
-#MangaOnlineViewer #SettingsPanel .RangeValue {
+#SettingsPanel .RangeValue {
   display: inline-block;
   color: var(--theme-primary-text-color);
   line-height: 20px;
@@ -61,7 +61,7 @@
   margin-left: 8px;
 }
 
-#MangaOnlineViewer #SettingsPanel datalist {
+#SettingsPanel datalist {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -70,11 +70,11 @@
   width: 100%;
 }
 
-#MangaOnlineViewer #SettingsPanel datalist option {
+#SettingsPanel datalist option {
   padding: 0;
 }
 
-#MangaOnlineViewer .ThemeRadio {
+.ThemeRadio {
   border: 1px solid var(--theme-text-color);
   color: var(--theme-primary-text-color);
   background-color: var(--theme-primary-color);
@@ -86,29 +86,29 @@
   position: relative;
 }
 
-#MangaOnlineViewer .ThemeRadio svg {
+.ThemeRadio svg {
   position: absolute;
   top: 15%;
   right: 15%;
 }
 
-#MangaOnlineViewer .ThemeRadio.selected .icon-tabler-check {
+.ThemeRadio.selected .icon-tabler-check {
   display: inline;
 }
 
-#MangaOnlineViewer .ThemeRadio:not(.selected) .icon-tabler-check {
+.ThemeRadio:not(.selected) .icon-tabler-check {
   display: none;
 }
 
-#MangaOnlineViewer #ThemeSelector {
+#ThemeSelector {
   width: 110px;
 }
 
-#MangaOnlineViewer #Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {
+#Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {
   display: none;
 }
 
-#MangaOnlineViewer .radio-inputs {
+.radio-inputs {
   position: relative;
   display: flex;
   flex-wrap: wrap;
@@ -122,24 +122,24 @@
   font-size: 14px;
 }
 
-#MangaOnlineViewer .radio-inputs .radio {
+.radio-inputs .radio {
   flex: 1 1 auto;
   text-align: center;
 }
 
-#MangaOnlineViewer .toggler input {
+.toggler input {
   display: none;
 }
 
-#MangaOnlineViewer .radio-inputs .radio input {
+.radio-inputs .radio input {
   display: none;
 }
 
-#MangaOnlineViewer .radio-inputs .radio .name .icon {
+.radio-inputs .radio .name .icon {
   margin: 0 0.5rem;
 }
 
-#MangaOnlineViewer .radio-inputs .radio .name {
+.radio-inputs .radio .name {
   display: flex;
   cursor: pointer;
   align-items: center;
@@ -152,24 +152,24 @@
   transition: all 0.15s ease-in-out;
 }
 
-#MangaOnlineViewer .radio-inputs .radio input:checked + .name {
+.radio-inputs .radio input:checked + .name {
   background-color: var(--theme-primary-color);
   color: var(--theme-primary-text-color);
   font-weight: 600;
 }
 
-#MangaOnlineViewer #ColorScheme {
+#ColorScheme {
   padding: 5px;
   min-height: 28px;
   min-width: 28px;
 }
 
-#MangaOnlineViewer .toggler {
+.toggler {
   width: 36px;
   /*margin: 40px auto;*/
 }
 
-#MangaOnlineViewer .toggler label {
+.toggler label {
   display: block;
   position: relative;
   width: 36px;
@@ -180,7 +180,7 @@
   cursor: pointer;
 }
 
-#MangaOnlineViewer .toggler label::after {
+.toggler label::after {
   display: block;
   border-radius: 100%;
   background-color: #d7062a;
@@ -193,15 +193,15 @@
   animation-play-state: running;
 }
 
-#MangaOnlineViewer .toggler .toggler-on,
-#MangaOnlineViewer .toggler .toggler-off {
+.toggler .toggler-on,
+.toggler .toggler-off {
   opacity: 1;
   z-index: 2;
 }
 
-#MangaOnlineViewer .toggler label::after,
-#MangaOnlineViewer .toggler label .toggler-on,
-#MangaOnlineViewer .toggler label .toggler-off {
+.toggler label::after,
+.toggler label .toggler-on,
+.toggler label .toggler-off {
   position: absolute;
   /*top: 50%;*/
   top: 9px;
@@ -217,25 +217,25 @@
     opacity 0.15s ease-in-out;
 }
 
-#MangaOnlineViewer .toggler input:checked + label::after,
-#MangaOnlineViewer .toggler input:checked + label .toggler-on,
-#MangaOnlineViewer .toggler input:checked + label .toggler-off {
+.toggler input:checked + label::after,
+.toggler input:checked + label .toggler-on,
+.toggler input:checked + label .toggler-off {
   left: 75%;
 }
 
-#MangaOnlineViewer .toggler input:checked + label::after {
+.toggler input:checked + label::after {
   background-color: #50ac5d;
   animation-name: toggler-size2;
 }
 
-#MangaOnlineViewer .toggler input:checked + label .toggler-off,
-#MangaOnlineViewer .toggler input:not(:checked) + label .toggler-on {
+.toggler input:checked + label .toggler-off,
+.toggler input:not(:checked) + label .toggler-on {
   width: 0;
   height: 0;
   opacity: 0;
 }
 
-#MangaOnlineViewer .toggler .path {
+.toggler .path {
   fill: none;
   stroke: #fefefe;
   stroke-width: 7px;
