@@ -1,6 +1,5 @@
 import { getSettingsValue, saveSettingsValue } from '../../core/settings';
 import type { Shade } from '../../types';
-import { refreshThemes } from '../themes';
 
 export function changeColorScheme() {
   const isDark = getSettingsValue('colorScheme') === 'dark';
@@ -23,5 +22,4 @@ export function changeThemeShade(event: Event) {
   const target = event.target as HTMLInputElement;
   (target.parentElement?.querySelector('#themeShadeVal') as HTMLOutputElement).value = target.value;
   saveSettingsValue('themeShade', parseInt(target.value, 10) as Shade);
-  refreshThemes();
 }

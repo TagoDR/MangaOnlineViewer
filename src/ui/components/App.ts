@@ -11,7 +11,6 @@ import {
   setAppStateValue,
   settings,
 } from '../../core/settings';
-import colors, { getTextColor } from '../../utils/colors.ts';
 import events from '../events';
 import { buttonHeaderClick, buttonPanelsClose } from '../events/panels.ts';
 import { IconMenu2 } from '../icons';
@@ -30,33 +29,24 @@ import ThumbnailsPanel from './ThumbnailsPanel';
 export default class App extends LitElement {
   static styles = [
     css`
+      :host {
+        --theme-primary-color: teal;
+        --theme-primary-text-color: white;
+      }
     `,
     unsafeCSS(cssStyles),
-    unsafeCSS(themesCSS()),
   ];
 
   firstUpdated() {
     events();
     setAppStateValue('render', this.shadowRoot);
-    settings.subscribe((value, _oldValue, changedKey) => {
-      if (changedKey === 'theme' && value.theme !== 'custom') {
-        const theme = colors[value.theme];
-        this.style.setProperty('--theme-primary-color', theme[getSettingsValue('themeShade')]);
-        this.style.setProperty(
-          '--theme-primary-text-color',
-          getSettingsValue('themeShade') < 500 ? theme['900'] : theme['50'],
-        );
-      } else if (changedKey === 'customTheme') {
-        this.style.setProperty('--theme-primary-color', value.customTheme);
-        this.style.setProperty('--theme-primary-text-color', getTextColor(value.customTheme));
-      }
-    });
   }
 
   render() {
     const manga = getAppStateValue('manga');
     if (!manga) return html``;
     return html`
+      <style>${themesCSS()}</style>
       <div
         id="MangaOnlineViewer"
         class="${classMap({
