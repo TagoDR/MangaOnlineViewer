@@ -1,18 +1,12 @@
 import { getAppStateValue } from '../../core/settings.ts';
-import { applyZoom } from './zoom.ts';
 import { scrollToElement } from './common';
 
 export function selectGoToPage(event: Event) {
   const target = (event.currentTarget as HTMLOptionElement).value;
-  applyZoom();
   scrollToElement(getAppStateValue('render')?.querySelector<HTMLElement>(`#Page${target}`));
 }
 
 export function clickThumbnail(event: Event) {
-  applyZoom();
-  scrollToElement(
-    getAppStateValue('render')?.querySelector<HTMLElement>(
-      `#Page${(event.currentTarget as HTMLElement).querySelector('.ThumbnailIndex')?.textContent}`,
-    ),
-  );
+  const target = parseInt((event.currentTarget as HTMLElement).id.replace('ThumbnailImg', ''), 10);
+  scrollToElement(getAppStateValue('render')?.querySelector<HTMLElement>(`#Page${target}`));
 }

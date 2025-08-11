@@ -1,20 +1,22 @@
-import { setSettingsValue } from '../../core/settings';
+import { refreshSettings, saveSettingsValue, setSettingsValue } from '../../core/settings';
 import type { ViewMode } from '../../types';
-import { applyZoom } from './zoom.ts';
 
 export function updateViewMode(mode: ViewMode) {
   return () => {
+    setSettingsValue('viewMode', mode);
     if (mode.startsWith('Fluid')) {
-      setSettingsValue('viewMode', mode);
       setSettingsValue('zoomMode', 'height');
       setSettingsValue('header', 'click');
     } else {
-      applyZoom();
+      refreshSettings('zoomMode');
+      refreshSettings('zoomValue');
+      refreshSettings('header');
     }
   };
 }
 
-export function changeViewMode(event: Event) {
+export function changeDefaultViewMode(event: Event) {
   const mode = (event.currentTarget as HTMLInputElement).value as ViewMode;
+  saveSettingsValue('viewMode', mode);
   updateViewMode(mode)();
 }

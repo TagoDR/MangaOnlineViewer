@@ -26,16 +26,8 @@ export function isMouseInsideRegion(event: MouseEvent, headerWidth: number, head
 }
 
 export function headerHover(event: MouseEvent) {
-  const header = getAppStateValue('render')?.querySelector('#Header');
-  if (header?.classList.contains('hover')) {
-    const menu = getAppStateValue('render')?.querySelector('#menu');
-    if (isMouseInsideRegion(event, header.clientWidth, header.clientHeight)) {
-      menu?.classList.add('hide');
-      header?.classList.add('visible');
-    } else {
-      menu?.classList.remove('hide');
-      header?.classList.remove('visible');
-    }
+  if (getSettingsValue('header') === 'hover') {
+    setAppStateValue('headerVisible', isMouseInsideRegion(event, window.innerWidth, 150));
   }
 }
 

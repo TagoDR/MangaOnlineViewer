@@ -29,7 +29,6 @@ const ThumbnailsPanel = (manga: IManga) => html`
     </div>
     <div
       id="Thumbnails"
-      @click=${clickThumbnail}
       @wheel=${transformScrollToHorizontal}
     >
       ${sequence(manga.pages, manga.begin).map(
@@ -43,6 +42,7 @@ const ThumbnailsPanel = (manga: IManga) => html`
               alt=""
               class="ThumbnailImg"
               src=${getAppStateValue('images')?.[index]?.src ?? ''}
+              @click=${clickThumbnail}
             />
             <span class="ThumbnailIndex">${index}</span>
           </div>

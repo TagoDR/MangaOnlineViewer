@@ -2,7 +2,6 @@ import Swal from 'sweetalert2';
 import { getLocaleString, saveSettingsValue, toggleLocalSettings } from '../../core/settings';
 import type { HeaderMode, LoadMode } from '../../types';
 import { replaceStyleSheet } from '../../utils/css';
-import { applyZoom } from './zoom.ts';
 
 export function changeSettingsScope(event: Event) {
   const scope = (event.currentTarget as HTMLInputElement).value;
@@ -27,13 +26,11 @@ export function checkFitWidthOversize(event: Event) {
 export function checkNavbar(event: Event) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
   saveSettingsValue('navbar', checked ? 'bottom' : 'disabled');
-  applyZoom();
 }
 
 export function checkEnableComments(event: Event) {
   const checked = (event.currentTarget as HTMLInputElement).checked;
   saveSettingsValue('enableComments', checked);
-  applyZoom();
 }
 
 export function checkAutoDownload(event: Event) {

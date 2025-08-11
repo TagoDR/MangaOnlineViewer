@@ -38,7 +38,7 @@ import {
   IconZoomPan,
 } from '../icons';
 
-const listOptions = (times: number, begin: number) =>
+const listOptions = (times: number, begin: number = 1) =>
   sequence(times, begin).map(index => html` <option value="${index}">${index}</option>`);
 const Header = (manga: IManga) => html`
   <header
@@ -46,6 +46,7 @@ const Header = (manga: IManga) => html`
     class="${classMap({
       [getSettingsValue('header')]: true,
       'headroom-top': true,
+      visible: getSettingsValue('header') === 'hover' && getAppStateValue('headerVisible'),
     })}"
   >
     <aside id="GlobalFunctions">
@@ -62,7 +63,7 @@ const Header = (manga: IManga) => html`
           id="restore"
           title="${getLocaleString('RESTORE')}"
           class="ControlButton"
-          @click="${changeGlobalZoom('percent')}"
+          @click="${changeGlobalZoom('percent', 100)}"
         >
           ${IconZoomPan}
         </button>
@@ -214,7 +215,7 @@ const Header = (manga: IManga) => html`
           @change=${selectGoToPage}
         >
           <option selected>#</option>
-          ${listOptions(manga.pages, manga.begin ?? 0).join('')}
+          ${listOptions(manga.pages, manga.begin)}
         </select>
         <span>: ${getAppStateValue('currentPage')}</span>
       </div>

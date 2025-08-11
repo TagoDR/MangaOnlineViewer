@@ -1,4 +1,4 @@
-import { getSettingsValue } from '../../core/settings';
+import { getSettingsValue, setSettingsValue } from '../../core/settings';
 import { applyZoom } from './zoom.ts';
 
 export function buttonZoomIn(event: Event) {
@@ -32,5 +32,6 @@ export function buttonZoomWidth(event: Event) {
 export function buttonZoomHeight(event: Event): void {
   const button = event.currentTarget as HTMLButtonElement;
   const index = parseInt(button.value, 10);
+  setSettingsValue('zoomMode', 'height');
   applyZoom('height', 0, index);
 }

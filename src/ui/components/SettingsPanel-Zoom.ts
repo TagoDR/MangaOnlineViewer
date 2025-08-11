@@ -2,7 +2,7 @@ import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { getLocaleString, getSettingsValue } from '../../core/settings.ts';
 import { changeMinZoom, changeZoomStep } from '../events/options.ts';
-import { changeViewMode } from '../events/viewmode.ts';
+import { changeDefaultViewMode } from '../events/viewmode.ts';
 import { changeDefaultZoomMode, changeDefaultZoomValue } from '../events/zoom.ts';
 
 function defaultZoomMode() {
@@ -143,7 +143,7 @@ function viewMode() {
       ${getLocaleString('DEFAULT_VIEW_MODE')}
       <select
         id="viewMode"
-        @change="${changeViewMode}"
+        @change="${changeDefaultViewMode}"
       >
         <option
           value="Vertical"

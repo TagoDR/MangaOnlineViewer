@@ -33,4 +33,5 @@ export type IApp = {
   device: Device;
   render?: HTMLElement | DocumentFragment | ShadowRoot | null;
   images: Record<number, Page | undefined>;
+  headerVisible: boolean;
 };

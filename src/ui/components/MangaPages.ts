@@ -31,11 +31,36 @@ import {
 
 function getImageStyle(index: number) {
   const image = getAppStateValue('images')?.[index];
+  const mode = getSettingsValue('zoomMode');
+  const value = getSettingsValue('zoomValue');
   const imageStyles: StyleInfo = {
     width: image?.width ?? 'auto',
     height: image?.height ?? 'auto',
     'min-width': image?.minWidth ?? `${getSettingsValue('minZoom')}vw`,
   };
+  if (image?.naturalWidth) {
+    if (mode === 'width') {
+      // Fit width
+      imageStyles.width = `${window.innerWidth}px`; // Or maybe `100vw`
+      imageStyles.height = 'auto';
+    } else if (mode === 'height') {
+      // Fit height
+      const nextHeight = window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -29 : 0);
+      imageStyles.height = `${nextHeight}px`; // Or maybe `100vh`
+      imageStyles.maxHeight = `${nextHeight}px`; // Or maybe `100vh`
+      imageStyles.minWidth = 'unset';
+      imageStyles.width = 'auto';
+    } else if (mode === 'percent') {
+      if (value === 100) {
+        imageStyles.width = 'auto';
+        imageStyles.height = 'auto';
+      } else {
+        imageStyles.width = `${image.naturalWidth * (value / 100)}px`;
+        imageStyles.height = 'auto';
+      }
+      imageStyles.minWidth = `${getSettingsValue('minZoom')}vw`;
+    }
+  }
   return imageStyles;
 }
 

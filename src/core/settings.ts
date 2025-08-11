@@ -117,7 +117,6 @@ export const appState = map<IApp>({
 });
 
 if (import.meta.env.DEV) {
-  giveToWindow('app', appState);
   logger({
     Settings: settings,
     AppState: appState,
@@ -138,6 +137,7 @@ export function refreshSettings<K extends ISettingsKey>(key?: K) {
       settings.set({ ...globalSettings });
     }
   }
+  logScript('Refreshed Settings', key, key ? getSettingsValue(key) : null);
 }
 
 function syncGlobalSettings(newValue: Partial<ISettings>) {
@@ -188,11 +188,6 @@ export function getSettingsValue<K extends ISettingsKey>(key: K): ISettings[K] {
  */
 export function setSettingsValue<K extends ISettingsKey>(key: K, value: ISettings[K]): void {
   settings.setKey(key, value);
-  if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
-    localSettings[key] = value;
-  } else {
-    globalSettings[key] = value;
-  }
 }
 
 /**
