@@ -52,6 +52,7 @@
     "@braintree/sanitize-url": "^7.1.1",
     "@gerhobbelt/keyscss": "^1.1.3-6",
     "@nanostores/lit": "^0.2.2",
+    "@nanostores/logger": "^1.0.0",
     "blob-util": "^2.0.2",
     "bowser": "^2.11.0",
     "file-saver": "^2.0.5",

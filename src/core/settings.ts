@@ -1,3 +1,4 @@
+import { logger } from '@nanostores/logger';
 import _ from 'lodash';
 import { computed, map } from 'nanostores';
 import locales from '../locales';
@@ -18,7 +19,6 @@ import {
   giveToWindow,
   isMobile,
   logScript,
-  logScriptC,
   logScriptVerbose,
   removeValueGM,
   saveGlobalSettings,
@@ -44,7 +44,7 @@ export const defaultSettings: ISettings = {
   minZoom: 30,
   navbar: 'bottom',
   pagination: false,
-  scrollHeight: 5,
+  scrollHeight: 25,
   theme: 'darkblue',
   themeShade: 600,
   throttlePageLoad: 1000,
@@ -116,10 +116,13 @@ export const appState = map<IApp>({
   images: {},
 });
 
-giveToWindow('app', appState);
-
-appState.subscribe(logScriptC('ReaderState'));
-settings.subscribe(logScriptC('SettingsState'));
+if (import.meta.env.DEV) {
+  giveToWindow('app', appState);
+  logger({
+    Settings: settings,
+    AppState: appState,
+  });
+}
 
 export function refreshSettings<K extends ISettingsKey>(key?: K) {
   if (key) {
