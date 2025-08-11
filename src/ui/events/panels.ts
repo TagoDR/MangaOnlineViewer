@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import {
+  changeAppStateValue,
   getAppStateValue,
   getSettingsValue,
   saveSettingsValue,
@@ -9,9 +10,8 @@ import { isNothing } from '../../utils/checks';
 import keybindings from './keybindings';
 
 export function buttonHeaderClick() {
-  const header = getAppStateValue('render')?.querySelector('#Header');
-  if (header?.classList.contains('click')) {
-    header?.classList.toggle('visible');
+  if (getSettingsValue('header') === 'click') {
+    changeAppStateValue('headerVisible', v => !v);
   }
 }
 

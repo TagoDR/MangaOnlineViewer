@@ -46,7 +46,7 @@ const Header = (manga: IManga) => html`
     class="${classMap({
       [getSettingsValue('header')]: true,
       'headroom-top': true,
-      visible: getSettingsValue('header') === 'hover' && getAppStateValue('headerVisible'),
+      visible: getAppStateValue('headerVisible'),
     })}"
   >
     <aside id="GlobalFunctions">
