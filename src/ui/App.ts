@@ -10,20 +10,20 @@ import {
   locale,
   setAppStateValue,
   settings,
-} from '../../core/settings';
-import events from '../events';
-import { buttonHeaderClick } from '../events/headroom.ts';
-import { buttonPanelsClose } from '../events/panels.ts';
-import { IconMenu2 } from '../icons';
-import cssStyles from '../styles/styles.ts';
-import { themesCSS } from '../themes';
-import BookmarksPanel from './BookmarksPanel';
-import CommentsPanel from './CommentsPanel';
-import Header from './Header';
-import KeybindingsPanel from './KeybindingsPanel';
-import Reader from './Reader';
-import SettingsPanel from './SettingsPanel';
-import ThumbnailsPanel from './ThumbnailsPanel';
+} from '../core/settings.ts';
+import BookmarksPanel from './BookmarkDialog.ts';
+import CommentsPanel from './CommentsDialog.ts';
+import { buttonHeaderClick } from './events/headroom.ts';
+import { buttonPanelsClose } from './events/panels.ts';
+import events from './events.ts';
+import Header from './Header.ts';
+import { IconMenu2 } from './icons';
+import KeybindingsDialog from './KeybindingsDialog.ts';
+import Navbar from './Navbar.ts';
+import Reader from './Reader.ts';
+import SettingsPanel from './SettingsPanel.ts';
+import cssStyles from './styles/defaultTheme.ts';
+import { themesCSS } from './themes.ts';
 
 @customElement('manga-online-viewer')
 @useStores(settings, locale, appState)
@@ -67,7 +67,7 @@ export default class App extends LitElement {
         >
           ${IconMenu2}
         </div>
-        ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
+        ${Header(manga)} ${Reader(manga)} ${Navbar(manga)}
         <div
           id="Overlay"
           class="${classMap({
@@ -76,7 +76,7 @@ export default class App extends LitElement {
           })}"
           @click="${buttonPanelsClose}"
         ></div>
-        ${CommentsPanel()} ${KeybindingsPanel()} ${BookmarksPanel()} ${SettingsPanel()}
+        ${CommentsPanel()} ${KeybindingsDialog()} ${BookmarksPanel()} ${SettingsPanel()}
       </div>
     `;
   }

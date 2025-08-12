@@ -1,9 +1,9 @@
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { getLocaleString, getSettingsValue } from '../../core/settings.ts';
-import { changeMinZoom, changeZoomStep } from '../events/options.ts';
-import { changeDefaultViewMode } from '../events/viewmode.ts';
-import { changeDefaultZoomMode, changeDefaultZoomValue } from '../events/zoom.ts';
+import { getLocaleString, getSettingsValue } from '../core/settings.ts';
+import { changeMinZoom, changeZoomStep } from './events/options.ts';
+import { changeDefaultViewMode } from './events/viewmode.ts';
+import { changeDefaultZoomMode, changeDefaultZoomValue } from './events/zoom.ts';
 
 function defaultZoomMode() {
   return html` <div class="ControlLabel DefaultZoomMode">

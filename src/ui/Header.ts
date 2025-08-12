@@ -1,20 +1,20 @@
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { getAppStateValue, getLocaleString, getSettingsValue } from '../../core/settings';
-import type { IManga } from '../../types';
-import sequence from '../../utils/sequence';
-import { toggleAutoScroll } from '../events/autoscroll';
-import { buttonBookmarksOpen } from '../events/bookmarks';
+import { getAppStateValue, getLocaleString, getSettingsValue } from '../core/settings.ts';
+import type { IManga } from '../types';
+import sequence from '../utils/sequence.ts';
+import { toggleAutoScroll } from './events/autoscroll.ts';
+import { buttonBookmarksOpen } from './events/bookmarks.ts';
 import {
   buttonCommentsOpen,
   buttonGlobalHideImageControls,
   buttonRedirectURL,
   buttonStartDownload,
-} from '../events/globals';
-import { selectGoToPage } from '../events/navigation';
-import { buttonKeybindingsOpen, buttonSettingsOpen } from '../events/panels';
-import { updateViewMode } from '../events/viewmode.ts';
-import { changeGlobalZoom, changeZoom, changeZoomByStep } from '../events/zoom.ts';
+} from './events/globals.ts';
+import { selectGoToPage } from './events/navigation.ts';
+import { buttonKeybindingsOpen, buttonSettingsOpen } from './events/panels.ts';
+import { updateViewMode } from './events/viewmode.ts';
+import { changeGlobalZoom, changeZoom, changeZoomByStep } from './events/zoom.ts';
 import {
   IconArrowAutofitDown,
   IconArrowAutofitHeight,
@@ -36,7 +36,7 @@ import {
   IconZoomInArea,
   IconZoomOutArea,
   IconZoomPan,
-} from '../icons';
+} from './icons';
 
 const listOptions = (times: number, begin: number = 1) =>
   sequence(times, begin).map(index => html` <option value="${index}">${index}</option>`);

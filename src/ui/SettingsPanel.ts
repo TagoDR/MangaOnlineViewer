@@ -1,13 +1,13 @@
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { getAppStateValue, getLocaleString, resetSettings } from '../../core/settings';
-import { buttonPanelsClose } from '../events/panels.ts';
-import { IconSettingsOff, IconX } from '../icons';
-import SettingsPanelGeneral from './SettingsPanel-General';
-import SettingsPanelLoading from './SettingsPanel-Loading';
-import SettingsPanelOthers from './SettingsPanel-Others';
-import SettingsPanelTheme from './SettingsPanel-Theme';
-import SettingsPanelZoom from './SettingsPanel-Zoom';
+import { getAppStateValue, getLocaleString, resetSettings } from '../core/settings.ts';
+import { buttonPanelsClose } from './events/panels.ts';
+import { IconSettingsOff, IconX } from './icons';
+import SettingsPanelGeneral from './SettingsPanelGeneral.ts';
+import SettingsPanelLoading from './SettingsPanelLoading.ts';
+import SettingsPanelOthers from './SettingsPanelOthers.ts';
+import SettingsPanelTheme from './SettingsPanelTheme.ts';
+import SettingsPanelZoom from './SettingsPanelZoom.ts';
 
 const SettingsPanel = () => html`
   <div

@@ -1,8 +1,8 @@
 import { html } from 'lit';
-import { getLocaleString, getSettingsValue, isSettingsLocal } from '../../core/settings.ts';
-import locales from '../../locales';
-import { changeLocale, changeSettingsScope } from '../events/options.ts';
-import { IconLocationCog, IconWorldCog } from '../icons';
+import { getLocaleString, getSettingsValue, isSettingsLocal } from '../core/settings.ts';
+import locales from '../locales';
+import { changeLocale, changeSettingsScope } from './events/options.ts';
+import { IconLocationCog, IconWorldCog } from './icons';
 
 function settingsScope() {
   return html` <div class="ControlLabel">

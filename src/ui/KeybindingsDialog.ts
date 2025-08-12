@@ -2,9 +2,9 @@ import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { join } from 'lit-html/directives/join.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
-import { getAppStateValue, getLocaleString, getSettingsValue } from '../../core/settings';
-import { buttonPanelsClose, editKeybindings, saveKeybindings } from '../events/panels';
-import { IconDeviceFloppy, IconPencil, IconX } from '../icons';
+import { getAppStateValue, getLocaleString, getSettingsValue } from '../core/settings.ts';
+import { buttonPanelsClose, editKeybindings, saveKeybindings } from './events/panels.ts';
+import { IconDeviceFloppy, IconPencil, IconX } from './icons';
 
 export const keybindList = () => {
   const keybinds = getSettingsValue('keybinds');
@@ -34,7 +34,7 @@ export const keybindEditor = () =>
     .concat(html`
       <div id="HotKeysRules">${unsafeHTML(getLocaleString('KEYBIND_RULES'))}</div>`);
 
-const KeybindingsPanel = () => html`
+const KeybindingsDialog = () => html`
   <div
     id="KeybindingsPanel"
     class="${classMap({ panel: true, visible: getAppStateValue('panel').startsWith('keybindings') })}"
@@ -79,4 +79,4 @@ const KeybindingsPanel = () => html`
   </div>
 `;
 
-export default KeybindingsPanel;
+export default KeybindingsDialog;

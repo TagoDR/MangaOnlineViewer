@@ -1,10 +1,10 @@
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { getAppStateValue, getLocaleString, getSettingsValue } from '../../core/settings';
-import { isEmpty } from '../../utils/checks';
-import { buttonBookmark, buttonEraseBookmarks } from '../events/bookmarks';
-import { buttonPanelsClose } from '../events/panels.ts';
-import { IconBookmark, IconBookmarkOff, IconExternalLink, IconTrash, IconX } from '../icons';
+import { getAppStateValue, getLocaleString, getSettingsValue } from '../core/settings.ts';
+import { isEmpty } from '../utils/checks.ts';
+import { buttonBookmark, buttonEraseBookmarks } from './events/bookmarks.ts';
+import { buttonPanelsClose } from './events/panels.ts';
+import { IconBookmark, IconBookmarkOff, IconExternalLink, IconTrash, IconX } from './icons';
 
 const listBookmarks = () => {
   if (isEmpty(getSettingsValue('bookmarks'))) {

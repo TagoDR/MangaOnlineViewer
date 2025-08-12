@@ -1,9 +1,9 @@
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { getLocaleString, getSettingsValue } from '../../core/settings.ts';
-import colors, { getTextColor, sortColors } from '../../utils/colors.ts';
-import { buttonSelectTheme, changeColorScheme, changeThemeHex } from '../events/theming.ts';
-import { IconCheck, IconMoon, IconSun } from '../icons';
+import { getLocaleString, getSettingsValue } from '../core/settings.ts';
+import colors, { getTextColor, sortColors } from '../utils/colors.ts';
+import { buttonSelectTheme, changeColorScheme, changeThemeHex } from './events/theming.ts';
+import { IconCheck, IconMoon, IconSun } from './icons';
 
 function themesSelector() {
   const swatchKeys = Object.keys(colors)

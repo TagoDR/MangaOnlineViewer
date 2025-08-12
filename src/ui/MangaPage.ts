@@ -1,21 +1,21 @@
 import { html } from 'lit';
 import { type StyleInfo, styleMap } from 'lit-html/directives/style-map.js';
-import { getAppStateValue, getLocaleString, getSettingsValue } from '../../core/settings';
-import sequence from '../../utils/sequence';
-import { buttonBookmark } from '../events/bookmarks';
+import { getAppStateValue, getLocaleString, getSettingsValue } from '../core/settings.ts';
+import sequence from '../utils/sequence.ts';
+import { buttonBookmark } from './events/bookmarks.ts';
 import {
   buttonHidePage,
   buttonReloadPage,
   imageLoadError,
   imageLoaded,
-} from '../events/individual';
+} from './events/individual.ts';
 import {
   buttonRestoreZoom,
   buttonZoomHeight,
   buttonZoomIn,
   buttonZoomOut,
   buttonZoomWidth,
-} from '../events/size';
+} from './events/size.ts';
 import {
   IconArrowAutofitHeight,
   IconArrowAutofitWidth,
@@ -27,7 +27,7 @@ import {
   IconZoomCancel,
   IconZoomIn,
   IconZoomOut,
-} from '../icons';
+} from './icons';
 
 function getImageStyle(index: number) {
   const image = getAppStateValue('images')?.[index];

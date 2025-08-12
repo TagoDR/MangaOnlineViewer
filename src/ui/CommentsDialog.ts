@@ -1,11 +1,11 @@
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { getAppStateValue, getLocaleString, getSettingsValue } from '../../core/settings';
-import { changeCommentsColor } from '../events/globals';
-import { buttonPanelsClose } from '../events/panels.ts';
-import { IconMoon, IconSun, IconX } from '../icons';
+import { getAppStateValue, getLocaleString, getSettingsValue } from '../core/settings.ts';
+import { changeCommentsColor } from './events/globals.ts';
+import { buttonPanelsClose } from './events/panels.ts';
+import { IconMoon, IconSun, IconX } from './icons';
 
-const commentsPanel = () => html`
+const commentsDialog = () => html`
   <div
     id="CommentsPanel"
     class="${classMap({
@@ -37,4 +37,4 @@ const commentsPanel = () => html`
     </button>
   </div>
 `;
-export default commentsPanel;
+export default commentsDialog;

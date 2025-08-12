@@ -1,6 +1,6 @@
 import { html } from 'lit';
-import { getLocaleString, getSettingsValue } from '../../core/settings.ts';
-import { changeLoadMode, changePagesPerSecond } from '../events/options.ts';
+import { getLocaleString, getSettingsValue } from '../core/settings.ts';
+import { changeLoadMode, changePagesPerSecond } from './events/options.ts';
 
 function loadMode() {
   return html`

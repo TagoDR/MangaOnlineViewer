@@ -1,6 +1,7 @@
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { getLocaleString, getSettingsValue } from '../../core/settings';
+import { getLocaleString, getSettingsValue } from '../core/settings.ts';
+import toggler from './components/Toggler.ts';
 import {
   changeHeaderType,
   changeLazyStart,
@@ -11,7 +12,7 @@ import {
   checkFitWidthOversize,
   checkHideImageControls,
   checkLazyLoad,
-} from '../events/options';
+} from './events/options.ts';
 import {
   IconArrowsMove,
   IconArrowsVertical,
@@ -22,8 +23,7 @@ import {
   IconLayoutSidebarRight,
   IconPin,
   IconX,
-} from '../icons';
-import toggler from './Toggler';
+} from './icons';
 
 function checkboxOptions() {
   return html`

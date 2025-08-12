@@ -1,13 +1,13 @@
 import { html, nothing } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { getAppStateValue, getLocaleString, getSettingsValue } from '../../core/settings';
-import type { IManga } from '../../types';
-import sequence from '../../utils/sequence';
-import { transformScrollToHorizontal } from '../events/common';
-import { clickThumbnail } from '../events/navigation';
-import { IconCategory } from '../icons';
+import { getAppStateValue, getLocaleString, getSettingsValue } from '../core/settings.ts';
+import type { IManga } from '../types';
+import sequence from '../utils/sequence.ts';
+import { transformScrollToHorizontal } from './events/common.ts';
+import { clickThumbnail } from './events/navigation.ts';
+import { IconCategory } from './icons';
 
-const ThumbnailsPanel = (manga: IManga) => {
+const Navbar = (manga: IManga) => {
   const navbarPosition = getSettingsValue('navbar');
   const isVertical = navbarPosition === 'left' || navbarPosition === 'right';
   return html`
@@ -58,4 +58,4 @@ const ThumbnailsPanel = (manga: IManga) => {
     </nav>
   `;
 };
-export default ThumbnailsPanel;
+export default Navbar;

@@ -1,9 +1,12 @@
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { getSettingsValue } from '../../core/settings';
-import type { IManga } from '../../types';
-import { transformScrollToHorizontal, transformScrollToHorizontalReverse } from '../events/common';
-import listPages from './MangaPages';
+import { getSettingsValue } from '../core/settings.ts';
+import type { IManga } from '../types';
+import {
+  transformScrollToHorizontal,
+  transformScrollToHorizontalReverse,
+} from './events/common.ts';
+import listPages from './MangaPage.ts';
 
 const Reader = (manga: IManga) => html`
   <main
