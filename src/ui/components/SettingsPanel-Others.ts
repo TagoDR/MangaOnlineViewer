@@ -12,7 +12,17 @@ import {
   checkHideImageControls,
   checkLazyLoad,
 } from '../events/options';
-import { IconLayoutBottombar, IconLayoutSidebar, IconLayoutSidebarRight, IconX } from '../icons';
+import {
+  IconArrowsMove,
+  IconArrowsVertical,
+  IconBoxAlignTop,
+  IconHandClick,
+  IconLayoutBottombar,
+  IconLayoutSidebar,
+  IconLayoutSidebarRight,
+  IconPin,
+  IconX,
+} from '../icons';
 import toggler from './Toggler';
 
 function checkboxOptions() {
@@ -75,44 +85,33 @@ function lazyLoad() {
 }
 
 function headerType() {
+  const headerOptions = [
+    { value: 'hover', label: getLocaleString('HEADER_HOVER'), icon: IconArrowsMove },
+    { value: 'scroll', label: getLocaleString('HEADER_SCROLL'), icon: IconArrowsVertical },
+    { value: 'click', label: getLocaleString('HEADER_CLICK'), icon: IconHandClick },
+    { value: 'fixed', label: getLocaleString('HEADER_FIXED'), icon: IconPin },
+    { value: 'simple', label: getLocaleString('HEADER_SIMPLE'), icon: IconBoxAlignTop },
+  ];
   return html`
     <div class="ControlLabel headerType">
       ${getLocaleString('HEADER_TYPE')}
-      <select
-        id="headerType"
-        @change="${changeHeaderType}"
-      >
-        <option
-          value="hover"
-          ?selected=${getSettingsValue('header') === 'hover'}
-        >
-          ${getLocaleString('HEADER_HOVER')}
-        </option>
-        <option
-          value="scroll"
-          ?selected=${getSettingsValue('header') === 'scroll'}
-        >
-          ${getLocaleString('HEADER_SCROLL')}
-        </option>
-        <option
-          value="click"
-          ?selected=${getSettingsValue('header') === 'click'}
-        >
-          ${getLocaleString('HEADER_CLICK')}
-        </option>
-        <option
-          value="fixed"
-          ?selected=${getSettingsValue('header') === 'fixed'}
-        >
-          ${getLocaleString('HEADER_FIXED')}
-        </option>
-        <option
-          value="simple"
-          ?selected=${getSettingsValue('header') === 'simple'}
-        >
-          ${getLocaleString('HEADER_SIMPLE')}
-        </option>
-      </select>
+      <div class="radio-inputs">
+        ${headerOptions.map(
+          option => html`
+            <label class="radio">
+              <input
+                type="radio"
+                name="headerType"
+                value=${option.value}
+                ?checked=${getSettingsValue('header') === option.value}
+                @change=${changeHeaderType}
+              />
+              <span class="name">${option.icon} ${option.label}</span>
+              </span>
+            </label>
+          `,
+        )}
+      </div>
     </div>
   `;
 }
