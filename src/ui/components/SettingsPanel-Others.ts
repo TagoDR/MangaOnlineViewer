@@ -12,6 +12,7 @@ import {
   checkHideImageControls,
   checkLazyLoad,
 } from '../events/options';
+import { IconLayoutBottombar, IconLayoutSidebar, IconLayoutSidebarRight, IconX } from '../icons';
 import toggler from './Toggler';
 
 function checkboxOptions() {
@@ -117,19 +118,32 @@ function headerType() {
 }
 
 function navbarType() {
+  const navbarOptions = [
+    { value: 'bottom', label: getLocaleString('NAVBAR_BOTTOM'), icon: IconLayoutBottombar },
+    { value: 'left', label: getLocaleString('NAVBAR_LEFT'), icon: IconLayoutSidebar },
+    { value: 'right', label: getLocaleString('NAVBAR_RIGHT'), icon: IconLayoutSidebarRight },
+    { value: 'disabled', label: getLocaleString('NAVBAR_DISABLED'), icon: IconX },
+  ];
   return html`
     <div class="ControlLabel navbarType">
       ${getLocaleString('NAVBAR_TYPE')}
-      <select
-        id="navbarType"
-        value="${getSettingsValue('navbar')}"
-        @change=${changeNavbarType}
-      >
-        <option value="bottom">${getLocaleString('NAVBAR_BOTTOM')}</option>
-        <option value="right">${getLocaleString('NAVBAR_RIGHT')}</option>
-        <option value="left">${getLocaleString('NAVBAR_LEFT')}</option>
-        <option value="disabled">${getLocaleString('NAVBAR_DISABLED')}</option>
-      </select>
+      <div class="radio-inputs">
+        ${navbarOptions.map(
+          option => html`
+            <label class="radio">
+              <input
+                type="radio"
+                name="navbarType"
+                value=${option.value}
+                ?checked=${getSettingsValue('navbar') === option.value}
+                @change=${changeNavbarType}
+              />
+              <span class="name">${option.icon} ${option.label}</span>
+              </span>
+            </label>
+          `,
+        )}
+      </div>
     </div>
   `;
 }

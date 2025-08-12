@@ -105,6 +105,11 @@ export type ILocale = {
   LOADING: string;
   ZOOM: string;
   OTHERS: string;
+  NAVBAR_TYPE: string;
+  NAVBAR_BOTTOM: string;
+  NAVBAR_LEFT: string;
+  NAVBAR_RIGHT: string;
+  NAVBAR_DISABLED: string;
 };
 
 export type ILocaleKey = keyof ILocale;
