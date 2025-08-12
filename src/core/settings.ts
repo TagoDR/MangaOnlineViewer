@@ -29,7 +29,6 @@ import {
 export const defaultSettings: ISettings = {
   bookmarks: [],
   colorScheme: 'dark',
-  customTheme: '#004526',
   downloadZip: false,
   enableComments: true,
   enabled: true,
@@ -45,8 +44,7 @@ export const defaultSettings: ISettings = {
   navbar: 'bottom',
   pagination: false,
   scrollHeight: 25,
-  theme: 'darkblue',
-  themeShade: 600,
+  theme: '#29487D',
   throttlePageLoad: 1000,
   viewMode: 'WebComic',
   zoomMode: 'percent',
@@ -83,11 +81,11 @@ const mobileSettings: Partial<ISettings> = {
 
 function getDefault(global = true) {
   return !isMobile()
-    ? { ...defaultSettings, enabled: global, theme: global ? 'darkblue' : 'darkgreen' }
+    ? { ...defaultSettings, enabled: global, theme: global ? '#29487D' : '#004526' }
     : _.defaultsDeep(mobileSettings, {
         ...defaultSettings,
         enabled: global,
-        theme: global ? 'darkblue' : 'darkgreen',
+        theme: global ? '#29487D' : '#004526',
       });
 }
 

@@ -1,31 +1,29 @@
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { getLocaleString, getSettingsValue } from '../../core/settings.ts';
-import colors from '../../utils/colors.ts';
-import {
-  buttonSelectTheme,
-  changeColorScheme,
-  changeCustomTheme,
-  changeThemeShade,
-} from '../events/theming.ts';
-import { IconCheck, IconMoon, IconPalette, IconSun } from '../icons';
+import colors, { getTextColor } from '../../utils/colors.ts';
+import { buttonSelectTheme, changeColorScheme, changeThemeHex } from '../events/theming.ts';
+import { IconCheck, IconMoon, IconSun } from '../icons';
 
 function themesSelector() {
-  return [...Object.keys(colors).map(color => colors[color].name)].map(
-    theme => html`
+  const swatchKeys = Object.keys(colors).filter(k => !['dark', 'gray'].includes(k));
+  return swatchKeys.map(key => {
+    const hex = colors[key]['600'];
+    const text = getTextColor(hex);
+    return html`
       <span
-        title="${theme}"
+        title="${hex}"
         class="${classMap({
-          [theme]: true,
           ThemeRadio: true,
-          selected: getSettingsValue('theme') === theme,
+          selected: getSettingsValue('theme') === hex,
         })}"
+        style="background-color: ${hex}; color: ${text}"
         @click=${buttonSelectTheme}
       >
         ${IconCheck}
       </span>
-    `,
-  );
+    `;
+  });
 }
 
 function theme() {
@@ -42,54 +40,14 @@ function theme() {
     </div>
     <div class="ControlLabel ThemeSelector">
       <label>${getLocaleString('THEME_COLOR')}</label>
-      <span
-        class="custom ThemeRadio
-        ${getSettingsValue('theme') === 'custom' ? 'selected' : ''}"
-        title="custom"
-        @click=${buttonSelectTheme}
-      >
-        ${IconPalette} ${IconCheck}
-      </span>
       ${themesSelector()}
-    </div>
-    <div
-      id="Hue"
-      class="ControlLabel CustomTheme ControlLabelItem
-      ${getSettingsValue('theme').startsWith('custom') ? 'show' : ''}"
-    >
-      <label>${getLocaleString('THEME_HUE')}</label>
       <input
-        id="CustomThemeHue"
+        id="ThemeHex"
         type="color"
-        value="${getSettingsValue('customTheme')}"
-        class="colorpicker CustomTheme"
-        @change=${changeCustomTheme}
-      />
-    </div>
-    <div
-      id="Shade"
-      class="ControlLabel CustomTheme ControlLabelItem
-      ${getSettingsValue('theme').startsWith('custom') ? '' : 'show'}"
-    >
-      <span>
-        <label>${getLocaleString('THEME_SHADE')}</label>
-        <output
-          id="themeShadeVal"
-          class="RangeValue"
-          for="ThemeShade"
-        >
-          ${getSettingsValue('themeShade')}
-        </output>
-      </span>
-      <input
-        type="range"
-        value="${getSettingsValue('themeShade')}"
-        name="ThemeShade"
-        id="ThemeShade"
-        min="100"
-        max="900"
-        step="100"
-        @input=${changeThemeShade}
+        value="${getSettingsValue('theme')}"
+        class="colorpicker"
+        title="${getSettingsValue('theme')}"
+        @change=${changeThemeHex}
       />
     </div>
   `;

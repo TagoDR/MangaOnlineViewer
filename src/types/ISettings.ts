@@ -1,6 +1,5 @@
 import type { IBookmark } from './IBookmark';
 
-export type Shade = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 export type ViewMode = 'WebComic' | 'FluidLTR' | 'FluidRTL' | 'Vertical';
 export type LoadMode = 'wait' | 'always' | 'never';
 export type ColorScheme = 'dark' | 'light';
@@ -11,7 +10,6 @@ export type ZoomMode = 'percent' | 'height' | 'width';
 export type ISettings = {
   bookmarks: IBookmark[];
   colorScheme: ColorScheme;
-  customTheme: string;
   downloadZip: boolean;
   enableComments: boolean;
   enabled: boolean;
@@ -29,7 +27,6 @@ export type ISettings = {
   pagination: boolean;
   scrollHeight: number;
   theme: string;
-  themeShade: Shade;
   throttlePageLoad: number;
   viewMode: ViewMode;
   zoomMode: ZoomMode;

@@ -1,32 +1,28 @@
 import { getSettingsValue } from '../core/settings';
 import { css } from '../utils/code-tag';
-import colors, { getTextColor, type IColor } from '../utils/colors';
+import colors, { getTextColor } from '../utils/colors';
 
-function generateThemeCSS(name: string, primary: string, text: string) {
+function resolveHexTheme(): string {
+  const value = getSettingsValue('theme');
+  if (typeof value === 'string' && value.startsWith('#')) return value;
+  // Try to map from old theme name to a default shade (600)
+  if (typeof value === 'string' && value in colors) {
+    // @ts-ignore index signature by name
+    return colors[value as keyof typeof colors]['600'];
+  }
+  // Fallback
+  return '#004526';
+}
+
+const themesCSS = () => {
+  const hex = resolveHexTheme();
+  const text = getTextColor(hex);
   return css`
-    .ThemeRadio.${name},
-    #MangaOnlineViewer.${name} {
-      --theme-primary-color: ${primary};
+    #MangaOnlineViewer {
+      --theme-primary-color: ${hex};
       --theme-primary-text-color: ${text};
     }
   `;
-}
-
-function getNormalThemeCSS(theme: IColor) {
-  return generateThemeCSS(
-    theme.name,
-    theme[getSettingsValue('themeShade')],
-    getSettingsValue('themeShade') < 500 ? theme['900'] : theme['50'],
-  );
-}
-
-function getCustomThemeCSS(hex: string) {
-  return generateThemeCSS('custom', hex, getTextColor(hex));
-}
-
-const themes = (): IColor[] => Object.values(colors);
-
-const themesCSS = () =>
-  themes().map(getNormalThemeCSS).join('') + getCustomThemeCSS(getSettingsValue('customTheme'));
+};
 
 export { themesCSS };
