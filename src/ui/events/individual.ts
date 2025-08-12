@@ -68,11 +68,12 @@ export function imageLoaded(event: Event): void {
       },
     });
   }
+
+  changeAppStateValue('loaded', (n) => n + 1);
   const loaded = getAppStateValue('loaded') ?? 0;
   const total =
-    (getAppStateValue('manga')?.pages ?? 1) - (getAppStateValue('manga')?.begin ?? 1) - 1;
-  const percentage = Math.floor((loaded / total) * 100);
-  changeAppStateValue('loaded', n => n + 1);
+    (getAppStateValue('manga')?.pages ?? 1) - ((getAppStateValue('manga')?.begin ?? 1) - 1);
+  const percentage = loaded / total;
   NProgress.configure({
     showSpinner: false,
   }).set(percentage);

@@ -15,7 +15,7 @@ import {
 } from '../types';
 import { getElementAttribute } from '../utils/request';
 import sequence from '../utils/sequence';
-import { logScript } from '../utils/tampermonkey';
+import { logScript, logScriptVerbose } from '../utils/tampermonkey';
 import { isBase64ImageUrl, isObjectURL } from '../utils/urls';
 import { waitForFunc } from '../utils/waitFor.ts';
 import { removeURLBookmark } from './events/bookmarks';
@@ -46,7 +46,7 @@ async function addImg(manga: IMangaImages, index: number, imageSrc: string, posi
       changeAppStateValue('images', images => {
         return { ...images, [index]: { src } };
       });
-      logScript('Loaded Image:', index, 'Source:', src);
+      logScriptVerbose('Loaded Image:', index, 'Source:', src);
     },
     (manga.timer ?? getSettingsValue('throttlePageLoad')) * position,
   );
@@ -102,20 +102,22 @@ export default async function loadImages() {
   await waitForFunc(() => getAppStateValue('manga') !== undefined);
   const manga = getAppStateValue('manga') as IManga;
   const begin = manga.begin ?? 1;
-  logScript('Loading Images');
-  logScript(`Intervals: ${manga.timer ?? getSettingsValue('throttlePageLoad') ?? 'Default(1000)'}`);
-  logScript(
+  logScriptVerbose('Loading Images');
+  logScriptVerbose(
+    `Intervals: ${manga.timer ?? getSettingsValue('throttlePageLoad') ?? 'Default(1000)'}`,
+  );
+  logScriptVerbose(
     `Lazy: ${manga.lazy ?? getSettingsValue('lazyLoadImages')}, Starting from: ${getSettingsValue('lazyStart')}`,
   );
 
   if (isImagesManga(manga)) {
-    logScript('Method: Images:', manga.listImages);
+    logScriptVerbose('Method: Images:', manga.listImages);
     loadMangaImages(begin, manga);
   } else if (isPagesManga(manga)) {
-    logScript('Method: Pages:', manga.listPages);
+    logScriptVerbose('Method: Pages:', manga.listPages);
     loadMangaPages(begin, manga);
   } else if (isBruteforceManga(manga)) {
-    logScript('Method: Brute Force');
+    logScriptVerbose('Method: Brute Force');
     manga.bruteForce({
       begin,
       addImg,
