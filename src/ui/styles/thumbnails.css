@@ -1,3 +1,9 @@
+:host {
+  /* Define sizes for the navigation bar for easy customization */
+  --nav-collapsed-size: 30px;
+  --nav-expanded-size: 180px;
+}
+
 .Thumbnail .ThumbnailImg[src=""],
 .Thumbnail .ThumbnailImg:not([src]) {
   width: 100px;
@@ -74,4 +80,95 @@
   min-height: 150px;
   min-width: 80px;
   max-width: 160px;
+}
+
+#Navigation.bottom {
+  flex-direction: column;
+}
+
+#Navigation.bottom #Thumbnails {
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* == Vertical Orientation (for left/right position) == */
+#Navigation.left,
+#Navigation.right {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+#Navigation.left {
+  direction: rtl;
+}
+
+#Navigation.left #NavigationCounters,
+#Navigation.right #NavigationCounters {
+  /* Rotate the text to be vertical */
+  writing-mode: vertical-rl;
+  transform: rotate(180deg); /* Corrects text character orientation */
+}
+
+#Navigation.left #NavigationCounters {
+  /* Rotate the text to be vertical */
+  writing-mode: vertical-rl;
+  direction: initial;
+  transform: rotate(0); /* Corrects text character orientation */
+}
+#Navigation.left #Thumbnails,
+#Navigation.right #Thumbnails {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-right: 0;
+}
+
+/* Side navigation positioning and animation */
+#Navigation.left,
+#Navigation.right {
+  top: 0;
+  bottom: auto;
+  height: 100%;
+  width: 185px;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#Navigation.left {
+  left: -180px;
+  right: auto;
+}
+
+#Navigation.right {
+  right: -180px;
+  left: auto;
+}
+
+#Navigation.left:hover,
+#Navigation.left.visible {
+  transform: translateX(180px);
+}
+
+#Navigation.right:hover,
+#Navigation.right.visible {
+  transform: translateX(-180px);
+}
+
+#Navigation.left .Thumbnail,
+#Navigation.right .Thumbnail {
+  display: inline-block;
+  height: 150px;
+  margin: 5px 0;
+  /*border: 1px solid var(--theme-primary-color);*/
+}
+
+/* Counters adjustments for sidebars */
+#Navigation.left #NavigationCounters,
+#Navigation.right #NavigationCounters {
+  width: auto;
+  margin: 10px 5px;
 }

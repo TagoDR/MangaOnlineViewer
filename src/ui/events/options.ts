@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 import { getLocaleString, saveSettingsValue, toggleLocalSettings } from '../../core/settings';
-import type { HeaderMode, LoadMode } from '../../types';
+import type { HeaderMode, LoadMode, NavbarMode } from '../../types';
 import { replaceStyleSheet } from '../../utils/css';
 
 export function changeSettingsScope(event: Event) {
@@ -23,9 +23,9 @@ export function checkFitWidthOversize(event: Event) {
   saveSettingsValue('fitWidthIfOversize', checked);
 }
 
-export function checkNavbar(event: Event) {
-  const checked = (event.currentTarget as HTMLInputElement).checked;
-  saveSettingsValue('navbar', checked ? 'bottom' : 'disabled');
+export function changeNavbarType(event: Event) {
+  const navbarType = (event.currentTarget as HTMLInputElement).value as NavbarMode;
+  saveSettingsValue('navbar', navbarType);
 }
 
 export function checkEnableComments(event: Event) {

@@ -11,8 +11,8 @@ const ThumbnailsPanel = (manga: IManga) => html`
   <nav
     id="Navigation"
     class="${classMap({
+      [getSettingsValue('navbar')]: true,
       panel: true,
-      disabled: getSettingsValue('navbar') === 'disabled',
     })}"
   >
     <div

@@ -4,13 +4,13 @@ import { getLocaleString, getSettingsValue } from '../../core/settings';
 import {
   changeHeaderType,
   changeLazyStart,
+  changeNavbarType,
   changeScrollHeight,
   checkAutoDownload,
   checkEnableComments,
   checkFitWidthOversize,
   checkHideImageControls,
   checkLazyLoad,
-  checkNavbar,
 } from '../events/options';
 import toggler from './Toggler';
 
@@ -19,10 +19,6 @@ function checkboxOptions() {
     <div class="ControlLabel fitIfOversize">
       ${getLocaleString('FIT_WIDTH_OVERSIZED')}
       ${toggler('fitIfOversize', getSettingsValue('fitWidthIfOversize'), checkFitWidthOversize)}
-    </div>
-    <div class="ControlLabel showThumbnails">
-      ${getLocaleString('SHOW_THUMBNAILS')}
-      ${toggler('showThumbnails', getSettingsValue('navbar') !== 'disabled', checkNavbar)}
     </div>
     <div class="ControlLabel enableComments">
       ${getLocaleString('ENABLE_COMMENTS')}
@@ -120,6 +116,24 @@ function headerType() {
   `;
 }
 
+function navbarType() {
+  return html`
+    <div class="ControlLabel navbarType">
+      ${getLocaleString('NAVBAR_TYPE')}
+      <select
+        id="navbarType"
+        value="${getSettingsValue('navbar')}"
+        @change=${changeNavbarType}
+      >
+        <option value="bottom">${getLocaleString('NAVBAR_BOTTOM')}</option>
+        <option value="right">${getLocaleString('NAVBAR_RIGHT')}</option>
+        <option value="left">${getLocaleString('NAVBAR_LEFT')}</option>
+        <option value="disabled">${getLocaleString('NAVBAR_DISABLED')}</option>
+      </select>
+    </div>
+  `;
+}
+
 function autoScroll() {
   return html`
     <div class="ControlLabel autoScroll">
@@ -146,4 +160,5 @@ function autoScroll() {
   `;
 }
 
-export default () => html`${checkboxOptions()} ${lazyLoad()} ${headerType()} ${autoScroll()}`;
+export default () =>
+  html`${checkboxOptions()} ${lazyLoad()} ${headerType()} ${navbarType()} ${autoScroll()}`;
