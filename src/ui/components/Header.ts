@@ -45,7 +45,7 @@ const Header = (manga: IManga) => html`
     id="Header"
     class="${classMap({
       [getSettingsValue('header')]: true,
-      'headroom-top': true,
+      top: window.scrollY <= 100,
       visible: getAppStateValue('headerVisible'),
     })}"
   >

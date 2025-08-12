@@ -230,13 +230,10 @@ export function changeSettingsValue<K extends ISettingsKey>(
   key: K,
   fn: (value: ISettings[K]) => ISettings[K],
 ): void {
-  const oldValue = isSettingsLocal() && !['locale', 'bookmarks'].includes(key)
-    ? localSettings[key]
-    : globalSettings[key];
+  // Use the effective current value from the reactive store
+  const oldValue = getSettingsValue(key);
   const newValue = fn(oldValue);
-  if (_.isEqual(oldValue, newValue)) return;
-  saveSettingsValue(key, newValue);
-  // settings store will be updated by saveSettingsValue via setSettingsValue if needed
+  setSettingsValue(key, newValue);
 }
 
 export function getAppStateValue<K extends keyof IApp>(key: K): IApp[K] {

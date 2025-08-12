@@ -12,7 +12,8 @@ import {
   settings,
 } from '../../core/settings';
 import events from '../events';
-import { buttonHeaderClick, buttonPanelsClose } from '../events/panels.ts';
+import { buttonHeaderClick } from '../events/headroom.ts';
+import { buttonPanelsClose } from '../events/panels.ts';
 import { IconMenu2 } from '../icons';
 import cssStyles from '../styles/styles.ts';
 import { themesCSS } from '../themes';

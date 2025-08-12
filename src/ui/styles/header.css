@@ -16,64 +16,40 @@
   z-index: 900;
 }
 
-#Header.click {
-  padding-left: 40px;
-}
-
 @keyframes headroom {
   from {
     transform: translateY(-100%);
-    position: sticky;
-    top: 0;
   }
   to {
     transform: translateY(0%);
-    position: sticky;
-    top: 0;
   }
 }
 
-#Header:not(.visible, .headroom-top, .fixed, .simple) {
+#Header:not(.visible) {
   animation: headroom 0.3s ease-in reverse;
   transform: translateY(-100%);
-  position: sticky;
-  top: 0;
 }
 
-#Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL) {
-  position: fixed;
-  padding-left: 40px;
-  top: -100%;
-}
-
-#Header.scroll.headroom-hide {
-  animation: none;
-  transform: translateY(-100%);
-  position: sticky;
-  top: 0;
-}
-
-#Header.scroll.headroom-show,
-#Header.headroom-end,
-#Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL).visible,
 #Header.visible {
   animation: headroom 0.3s ease-in;
   transform: translateY(0%);
-  position: sticky;
-  top: 0;
 }
 
-#Header.headroom-top {
+#Header.click {
+  padding-left: 40px;
+  transform: unset;
+}
+
+#Header.click:not(.visible) {
+  position: fixed;
+  top: -100%;
+}
+
+#Header.top {
   animation: none;
 }
 
-#Header.fixed {
-  position: sticky;
-  animation: none;
-  top: 0;
-  transform: translateY(0%);
-}
-
+#Header.fixed,
 #Header.simple {
   position: static;
   animation: none;

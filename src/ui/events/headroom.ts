@@ -1,17 +1,33 @@
 import _ from 'lodash';
-import { getAppStateValue, getSettingsValue } from '../../core/settings';
+import { changeAppStateValue, getSettingsValue, setAppStateValue } from '../../core/settings';
+
+export function buttonHeaderClick() {
+  if (getSettingsValue('header') === 'click') {
+    changeAppStateValue('headerVisible', v => !v);
+  }
+}
+
+export function isMouseInsideRegion(event: MouseEvent, headerWidth: number, headerHeight: number) {
+  // Check if the mouse is inside the region
+  return (
+    event.clientX >= 0 &&
+    event.clientX <= headerWidth &&
+    event.clientY >= 0 &&
+    event.clientY <= headerHeight
+  );
+}
+
+export function headerHover(event: MouseEvent) {
+  if (getSettingsValue('header') === 'hover') {
+    setAppStateValue(
+      'headerVisible',
+      isMouseInsideRegion(event, window.innerWidth, 150) || window.scrollY <= 100,
+    );
+  }
+}
 
 let prevOffset = 0;
-let showEnd = 0;
-
-const setScrollDirection = (classSuffix: string) => {
-  const header = getAppStateValue('render')?.querySelector<HTMLDivElement>('#Header');
-  if (!header) return;
-  header.classList.remove('headroom-end', 'headroom-hide', 'headroom-show', 'headroom-top');
-  if (classSuffix) {
-    header.classList.add(`headroom-${classSuffix}`);
-  }
-};
+const showEnd = 100;
 
 export function toggleScrollDirection() {
   const { scrollY } = window;
@@ -20,15 +36,15 @@ export function toggleScrollDirection() {
     getSettingsValue('zoomMode') !== 'height' &&
     scrollY + window.innerHeight + showEnd > document.body.scrollHeight
   ) {
-    setScrollDirection('end');
+    setAppStateValue('headerVisible', true); // end
   } else if (scrollY > prevOffset && scrollY > 50) {
-    setScrollDirection('hide');
+    setAppStateValue('headerVisible', false); // hide
   } else if (scrollY < prevOffset && scrollY > 50) {
-    setScrollDirection('show');
+    setAppStateValue('headerVisible', true); // show
   } else if (scrollY <= 100) {
-    setScrollDirection('top');
+    setAppStateValue('headerVisible', true); // top
   } else {
-    setScrollDirection('');
+    setAppStateValue('headerVisible', false); // ''
   }
 
   prevOffset = scrollY;
@@ -38,9 +54,9 @@ export function toggleScrollDirection() {
  * Changes header class when scrolling up or down to show/hide it
  * @param showEnd default 0px from end of the screen to show header
  */
-function headroom(pixelsToShowEnd = 0) {
-  showEnd = pixelsToShowEnd;
-  window.addEventListener('scroll', _.debounce(toggleScrollDirection, 50));
+function headroom() {
+  window.addEventListener('scroll', _.throttle(toggleScrollDirection, 300));
+  window.addEventListener('mousemove', _.throttle(headerHover, 300));
 }
 
 export default headroom;
