@@ -74,22 +74,63 @@
   padding: 0;
 }
 
+.ThemeSelector .ColorPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.ThemeSelector .SwatchGroup {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.ThemeSelector .ColorName {
+  font-size: 12px;
+  color: var(--theme-text-color);
+  text-transform: capitalize;
+  min-width: 64px;
+}
+
+.ThemeSelector .Swatches {
+  display: grid;
+  grid-template-columns: repeat(9, 16px);
+  gap: 8px;
+  align-items: center;
+}
+
 .ThemeRadio {
-  border: 1px solid var(--theme-text-color);
   color: var(--theme-primary-text-color);
-  background-color: var(--theme-primary-color);
   height: 20px;
   width: 20px;
-  border-radius: 50%;
-  padding: 1px;
-  margin: 2px 5px;
+  border-radius: 3px;
+  margin: 0;
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.ThemeRadio:hover,
+.ThemeRadio:focus-visible {
+  outline: 2px solid var(--theme-border-color);
+  outline-offset: 1px;
+}
+
+.ThemeRadio.selected {
+  box-shadow:
+    0 0 0 2px var(--theme-body-background),
+    0 0 0 3px var(--theme-text-color);
 }
 
 .ThemeRadio svg {
-  position: absolute;
-  top: 15%;
-  right: 15%;
+  width: 10px;
+  height: 10px;
 }
 
 .ThemeRadio.selected .icon-tabler-check {

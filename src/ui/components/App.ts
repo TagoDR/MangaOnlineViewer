@@ -55,7 +55,6 @@ export default class App extends LitElement {
           hideControls: getSettingsValue('hidePageControls'),
           bookmarked: !!isBookmarked(),
           [getAppStateValue('device')]: true,
-          [getSettingsValue('theme')]: true,
         })}"
         .locale="${getSettingsValue('locale')}"
       >

@@ -397,4 +397,41 @@ export function isBackgroundColorDark(element: Element) {
   return isDark(window.getComputedStyle(element).backgroundColor);
 }
 
+export function sortColors(a: string, b: string) {
+  const sampleShades = [600, 700, 800, 900] as const;
+  const metrics = (key: string) => {
+    const hsls = sampleShades.map(sh => tinycolor(colors[key][sh]).toHsl());
+    let sumX = 0,
+      sumY = 0,
+      count = 0;
+    let sAcc = 0,
+      lAcc = 0;
+    for (const hsl of hsls) {
+      const h = hsl.h;
+      if (Number.isFinite(h)) {
+        const rad = (h * Math.PI) / 180;
+        sumX += Math.cos(rad);
+        sumY += Math.sin(rad);
+        count++;
+      }
+      sAcc += hsl.s;
+      lAcc += hsl.l;
+    }
+    const hue = count > 0 ? ((Math.atan2(sumY, sumX) * 180) / Math.PI + 360) % 360 : 9999;
+    const sat = sAcc / hsls.length;
+    const light = lAcc / hsls.length;
+    return { hue, sat, light };
+  };
+  const A = metrics(a);
+  const B = metrics(b);
+  if (A.hue === B.hue) {
+    if (A.sat === B.sat) {
+      if (A.light === B.light) return colors[a].name.localeCompare(colors[b].name);
+      return A.light - B.light;
+    }
+    return B.sat - A.sat;
+  }
+  return A.hue - B.hue;
+}
+
 export default colors;
