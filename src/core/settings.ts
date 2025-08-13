@@ -293,6 +293,8 @@ export function showSettings<K extends ISettingsKey>(key: K | null = null) {
     key ? globalSettings[key] : globalSettings,
     '\nLocal Settings',
     key ? localSettings[key] : localSettings,
+    '\nAppState',
+    appState.get(),
   );
 }
 

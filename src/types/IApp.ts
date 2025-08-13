@@ -19,6 +19,7 @@ export type Page = {
   minHeight?: string;
   naturalWidth?: number;
   naturalHeight?: number;
+  base64?: string;
 };
 
 export type IApp = {

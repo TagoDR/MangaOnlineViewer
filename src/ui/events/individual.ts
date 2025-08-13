@@ -53,9 +53,9 @@ export function buttonHidePage(event: Event): void {
 }
 
 export function imageLoaded(event: Event): void {
-  (event.currentTarget as HTMLImageElement).classList.add('imgLoaded');
-  (event.currentTarget as HTMLImageElement).classList.remove('imgBroken');
   const img = event.currentTarget as HTMLImageElement;
+  img.classList.add('imgLoaded');
+  img.classList.remove('imgBroken');
   const index = parseInt(img.id.replace('PageImg', ''), 10);
   const image = getAppStateValue('images')?.[index];
   if (image) {
@@ -65,6 +65,32 @@ export function imageLoaded(event: Event): void {
         ...image,
         naturalWidth: img.naturalWidth,
         naturalHeight: img.naturalHeight,
+      },
+    });
+  }
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    // Set canvas size to the natural image size for full quality
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    ctx.drawImage(img, 0, 0);
+  }
+  // Try to get base64 data URL (may fail for cross-origin images)
+  let dataUrl: string | undefined;
+  try {
+    dataUrl = canvas.toDataURL('image/png');
+  } catch (e) {
+    // Ignore CORS-tainted canvas
+    dataUrl = undefined;
+  }
+
+  if (image) {
+    setAppStateValue('images', {
+      ...getAppStateValue('images'),
+      [index]: {
+        ...image,
+        base64: dataUrl ?? image.base64,
       },
     });
   }
