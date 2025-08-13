@@ -22,11 +22,11 @@ function settingsScope() {
 
   return html` <div class="ControlLabel">
     ${getLocaleString('SCOPE')}
-    <segmented-control
+    <mov-segmented-control
       .options=${options}
       .value=${value}
       @change=${changeSettingsScope}
-    ></segmented-control>
+    ></mov-segmented-control>
   </div>`;
 }
 

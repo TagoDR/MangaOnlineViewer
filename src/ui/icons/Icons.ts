@@ -35,6 +35,7 @@ export { default as IconExternalLink } from './external-link.svg';
 export { default as IconEye } from './eye.svg';
 export { default as IconEyeOff } from './eye-off.svg';
 export { default as IconFileDownload } from './file-download.svg';
+export { default as IconFilePercent } from './file-percent.svg';
 export { default as IconHandClick } from './hand-click.svg';
 export { default as IconKeyboard } from './keyboard.svg';
 export { default as IconLayoutBottombar } from './layout-bottombar.svg';

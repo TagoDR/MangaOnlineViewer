@@ -2,7 +2,7 @@ import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 @customElement('mov-pagination')
-export class MangaOnlineViewerPagination extends LitElement {
+export class Pagination extends LitElement {
   static styles = css`
     :host {
       display: flex;

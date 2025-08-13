@@ -11,7 +11,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
  * proper layout behavior and proxies the click() method.
  */
 @customElement('mov-button')
-export class MovButton extends LitElement {
+export class Button extends LitElement {
   static styles = css`
     :host {
       display: inline-flex;
@@ -111,6 +111,6 @@ export class MovButton extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mov-button': MovButton;
+    'mov-button': Button;
   }
 }

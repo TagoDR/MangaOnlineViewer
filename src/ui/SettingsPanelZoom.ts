@@ -4,33 +4,31 @@ import { getLocaleString, getSettingsValue } from '../core/settings.ts';
 import { changeMinZoom, changeZoomStep } from './events/options.ts';
 import { changeDefaultViewMode } from './events/viewmode.ts';
 import { changeDefaultZoomMode, changeDefaultZoomValue } from './events/zoom.ts';
+import {
+  IconArrowAutofitDown,
+  IconArrowAutofitHeight,
+  IconArrowAutofitLeft,
+  IconArrowAutofitRight,
+  IconArrowAutofitWidth,
+  IconFilePercent,
+  IconSpacingVertical,
+} from './icons';
+import './components/SegmentedControl.ts';
 
 function defaultZoomMode() {
+  const zoomOptions = [
+    { value: 'percent', label: getLocaleString('PERCENT'), icon: IconFilePercent },
+    { value: 'width', label: getLocaleString('FIT_WIDTH'), icon: IconArrowAutofitWidth },
+    { value: 'height', label: getLocaleString('FIT_HEIGHT'), icon: IconArrowAutofitHeight },
+  ];
   return html` <div class="ControlLabel DefaultZoomMode">
     ${getLocaleString('DEFAULT_ZOOM_MODE')}
-    <select
-      id="DefaultZoomMode"
-      @change="${changeDefaultZoomMode}"
-    >
-      <option
-        value="percent"
-        ?selected=${getSettingsValue('zoomMode') === 'percent'}
-      >
-        ${getLocaleString('PERCENT')}
-      </option>
-      <option
-        value="width"
-        ?selected=${getSettingsValue('zoomMode') === 'width'}
-      >
-        ${getLocaleString('FIT_WIDTH')}
-      </option>
-      <option
-        value="height"
-        ?selected=${getSettingsValue('zoomMode') === 'height'}
-      >
-        ${getLocaleString('FIT_HEIGHT')}
-      </option>
-    </select>
+    <mov-segmented-control
+      .options=${zoomOptions}
+      .value=${getSettingsValue('zoomMode')}
+      @change=${changeDefaultZoomMode}
+      labelPosition="tooltip"
+    ></mov-segmented-control>
   </div>`;
 }
 
@@ -138,38 +136,21 @@ function zoomStep() {
 }
 
 function viewMode() {
+  const viewModeOptions = [
+    { value: 'Vertical', label: getLocaleString('VIEW_MODE_VERTICAL'), icon: IconArrowAutofitDown },
+    { value: 'WebComic', label: getLocaleString('VIEW_MODE_WEBCOMIC'), icon: IconSpacingVertical },
+    { value: 'FluidLTR', label: getLocaleString('VIEW_MODE_LEFT'), icon: IconArrowAutofitRight },
+    { value: 'FluidRTL', label: getLocaleString('VIEW_MODE_RIGHT'), icon: IconArrowAutofitLeft },
+  ];
   return html`
     <div class="ControlLabel viewMode">
       ${getLocaleString('DEFAULT_VIEW_MODE')}
-      <select
-        id="viewMode"
-        @change="${changeDefaultViewMode}"
-      >
-        <option
-          value="Vertical"
-          ?selected=${getSettingsValue('viewMode') === 'Vertical'}
-        >
-          ${getLocaleString('VIEW_MODE_VERTICAL')}
-        </option>
-        <option
-          value="WebComic"
-          ?selected=${getSettingsValue('viewMode') === 'WebComic'}
-        >
-          ${getLocaleString('VIEW_MODE_WEBCOMIC')}
-        </option>
-        <option
-          value="FluidLTR"
-          ?selected=${getSettingsValue('viewMode') === 'FluidLTR'}
-        >
-          ${getLocaleString('VIEW_MODE_LEFT')}
-        </option>
-        <option
-          value="FluidRTL"
-          ?selected=${getSettingsValue('viewMode') === 'FluidRTL'}
-        >
-          ${getLocaleString('VIEW_MODE_RIGHT')}
-        </option>
-      </select>
+      <mov-segmented-control
+        .options=${viewModeOptions}
+        .value=${getSettingsValue('viewMode')}
+        @change=${changeDefaultViewMode}
+        labelPosition="tooltip"
+      ></mov-segmented-control>
     </div>
   `;
 }

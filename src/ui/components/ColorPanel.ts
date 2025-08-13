@@ -5,7 +5,7 @@ import colors, { getTextColor, sortColors } from '../../utils/colors.ts';
 import { buttonSelectTheme } from '../events/theming.ts';
 import { IconCheck } from '../icons';
 
-@customElement('color-panel')
+@customElement('mov-color-panel')
 export class ColorPanel extends LitElement {
   @property({ type: String })
   selectedTheme = '';

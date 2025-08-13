@@ -114,12 +114,12 @@ function headerType() {
   return html`
     <div class="ControlLabel headerType">
       ${getLocaleString('HEADER_TYPE')}
-      <segmented-control
+      <mov-segmented-control
         .options=${headerOptions}
         .value=${getSettingsValue('header')}
         @change=${changeHeaderType}
         labelPosition="bottom"
-      ></segmented-control>
+      ></mov-segmented-control>
     </div>
   `;
 }
@@ -134,12 +134,12 @@ function navbarType() {
   return html`
     <div class="ControlLabel navbarType">
       ${getLocaleString('NAVBAR_TYPE')}
-      <segmented-control
+      <mov-segmented-control
         .options=${navbarOptions}
         .value=${getSettingsValue('navbar')}
         @change=${changeNavbarType}
         labelPosition="tooltip"
-      ></segmented-control>
+      ></mov-segmented-control>
     </div>
   `;
 }

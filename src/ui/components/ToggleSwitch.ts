@@ -4,12 +4,12 @@ import { IconCheck, IconX } from '../icons';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mov-toggle-switch': MovToggleSwitch;
+    'mov-toggle-switch': ToggleSwitch;
   }
 }
 
 @customElement('mov-toggle-switch')
-export class MovToggleSwitch extends LitElement {
+export class ToggleSwitch extends LitElement {
   @property({ type: String })
   name = '';
 

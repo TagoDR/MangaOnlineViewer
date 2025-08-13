@@ -8,7 +8,7 @@ export type SegmentedControlOption = {
   icon?: unknown;
 };
 
-@customElement('segmented-control')
+@customElement('mov-segmented-control')
 export class SegmentedControl extends LitElement {
   @property({ type: Array })
   options: SegmentedControlOption[] = [];

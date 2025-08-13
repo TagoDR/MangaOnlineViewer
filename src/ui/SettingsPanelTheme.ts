@@ -25,7 +25,7 @@ function theme() {
         title="${getSettingsValue('theme')}"
         @change=${changeThemeHex}
       />
-      <color-panel .selectedTheme=${getSettingsValue('theme')}></color-panel>
+      <mov-color-panel .selectedTheme=${getSettingsValue('theme')}></mov-color-panel>
     </div>
   `;
 }
