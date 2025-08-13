@@ -1,0 +1,135 @@
+:host {
+  /* Define sizes for the navigation bar for easy customization */
+  --nav-collapsed-size: 30px;
+  --nav-expanded-size: 180px;
+  --mov-header-height: 80px;
+}
+
+:host {
+  height: 100vh;
+  width: 100vw;
+}
+
+#AppShell {
+  display: grid;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  /* Animate the grid layout changes for a smooth expand/collapse effect */
+  transition:
+    grid-template-columns 0.3s ease,
+    grid-template-rows 0.3s ease;
+}
+
+/* --- Grid Layout Definitions --- */
+
+/* Layout when nav is disabled (default) */
+#AppShell.nav-disabled {
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "header"
+    "content";
+}
+
+/* Bottom Nav */
+#AppShell.nav-is-bottom {
+  grid-template-rows: auto 1fr var(--nav-collapsed-size);
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "header"
+    "content"
+    "nav";
+}
+
+#AppShell.nav-is-bottom.nav-expanded {
+  grid-template-rows: auto 1fr var(--nav-expanded-size);
+}
+
+/* Left Nav */
+#AppShell.nav-is-left {
+  grid-template-rows: auto 1fr;
+  grid-template-columns: var(--nav-collapsed-size) 1fr;
+  grid-template-areas:
+    "header header"
+    "nav    content";
+}
+
+#AppShell.nav-is-left.nav-expanded {
+  grid-template-columns: var(--nav-expanded-size) 1fr;
+}
+
+/* Right Nav */
+#AppShell.nav-is-right {
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr var(--nav-collapsed-size);
+  grid-template-areas:
+    "header  header"
+    "content nav";
+}
+
+#AppShell.nav-is-right.nav-expanded {
+  grid-template-columns: 1fr var(--nav-expanded-size);
+}
+
+/* --- Grid Area Assignments & Common Styles --- */
+header {
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  gap: 5px;
+  height: var(--mov-header-height);
+  background: var(--theme-background-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  transition:
+    transform 0.3s ease,
+    margin-bottom 0.3s ease;
+  flex-shrink: 0;
+  position: relative;
+  margin-bottom: 0;
+  border-bottom: 1px solid var(--wa-color-border-normal);
+}
+
+header.hidden {
+  transform: translateY(-100%);
+  margin-bottom: calc(-1 * var(--mov-header-height));
+}
+
+header.click {
+  padding: 0 16px 0 50px;
+}
+
+#HeaderControls {
+  position: absolute;
+  z-index: 3000;
+  top: 18px;
+  left: 5px;
+}
+
+main {
+  grid-area: content;
+  display: grid; /* To make the main slot fill the area */
+  overflow: hidden; /* Crucial for child ui to scroll correctly */
+}
+
+nav {
+  grid-area: nav;
+  overflow: hidden;
+  z-index: 5;
+  background-color: var(--theme-hightlight-color);
+}
+
+/* Add borders based on position */
+#AppShell.nav-is-bottom nav {
+  border-top: 1px solid var(--wa-color-border-normal);
+}
+
+#AppShell.nav-is-left nav {
+  border-right: 1px solid var(--wa-color-border-normal);
+}
+
+#AppShell.nav-is-right nav {
+  border-left: 1px solid var(--wa-color-border-normal);
+}

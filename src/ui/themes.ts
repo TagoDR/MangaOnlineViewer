@@ -1,6 +1,7 @@
 import { getSettingsValue } from '../core/settings';
 import { css } from '../utils/code-tag';
 import colors, { getTextColor } from '../utils/colors';
+import { themeWA } from '../utils/palettes.ts';
 
 function resolveHexTheme(): string {
   const value = getSettingsValue('theme');
@@ -17,11 +18,13 @@ function resolveHexTheme(): string {
 const themesCSS = () => {
   const hex = resolveHexTheme();
   const text = getTextColor(hex);
+  const selector = `#MangaOnlineViewer`;
   return css`
-    #MangaOnlineViewer {
+    ${selector} {
       --theme-primary-color: ${hex};
       --theme-primary-text-color: ${text};
     }
+    ${themeWA(hex, 'brand', 'mov', selector)}
   `;
 };
 

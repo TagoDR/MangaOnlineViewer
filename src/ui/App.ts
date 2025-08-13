@@ -22,7 +22,7 @@ import KeybindingsDialog from './KeybindingsDialog.ts';
 import Navbar from './Navbar.ts';
 import Reader from './Reader.ts';
 import SettingsPanel from './SettingsPanel.ts';
-import cssStyles from './styles/defaultTheme.ts';
+import cssStyles from './styles';
 import { themesCSS } from './themes.ts';
 
 @customElement('manga-online-viewer')
