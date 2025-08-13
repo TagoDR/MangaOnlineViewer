@@ -23,11 +23,7 @@ const commentsDialog = () => html`
       ${IconX}
     </button>
     <h2>${getLocaleString('COMMENTS')}</h2>
-    <div
-      id="CommentsArea"
-    >
-      ${getAppStateValue('manga')?.comments}
-    </div>
+    <div id="CommentsArea">${getAppStateValue('manga')?.comments}</div>
     <button
       id="CommentsColorScheme"
       class="simpleButton ColorScheme"

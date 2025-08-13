@@ -23,21 +23,23 @@ export const keybindEditor = () =>
     .map(
       kb =>
         html`<label for="${kb}">${getLocaleString(kb)}:</label>
-        <input
-          type="text"
-          class="KeybindInput"
-          id="${kb}"
-          name="${kb}"
-          value="${getSettingsValue('keybinds')[kb]?.join(' , ') ?? ''}"
-        />`,
+          <input
+            type="text"
+            class="KeybindInput"
+            id="${kb}"
+            name="${kb}"
+            value="${getSettingsValue('keybinds')[kb]?.join(' , ') ?? ''}"
+          />`,
     )
-    .concat(html`
-      <div id="HotKeysRules">${unsafeHTML(getLocaleString('KEYBIND_RULES'))}</div>`);
+    .concat(html` <div id="HotKeysRules">${unsafeHTML(getLocaleString('KEYBIND_RULES'))}</div>`);
 
 const KeybindingsDialog = () => html`
   <div
     id="KeybindingsPanel"
-    class="${classMap({ panel: true, visible: getAppStateValue('panel').startsWith('keybindings') })}"
+    class="${classMap({
+      panel: true,
+      visible: getAppStateValue('panel').startsWith('keybindings'),
+    })}"
   >
     <h2>${getLocaleString('KEYBINDINGS')}</h2>
     <button
@@ -51,26 +53,24 @@ const KeybindingsDialog = () => html`
     <div class="controls">
       ${
         getAppStateValue('panel') === 'keybindingsEditor'
-          ? html`
-            <button
-              id="SaveKeybindings"
-              class="ControlButton"
-              type="button"
-              title="${getLocaleString('SAVE_KEYBINDS')}"
-              @click=${saveKeybindings}
-            >
-              ${IconDeviceFloppy} ${getLocaleString('BUTTON_SAVE')}
-            </button>`
-          : html`
-            <button
-              id="EditKeybindings"
-              class="ControlButton"
-              type="button"
-              title="${getLocaleString('EDIT_KEYBINDS')}"
-              @click=${editKeybindings}
-            >
-              ${IconPencil} ${getLocaleString('BUTTON_EDIT')}
-            </button>`
+          ? html` <button
+            id="SaveKeybindings"
+            class="ControlButton"
+            type="button"
+            title="${getLocaleString('SAVE_KEYBINDS')}"
+            @click=${saveKeybindings}
+          >
+            ${IconDeviceFloppy} ${getLocaleString('BUTTON_SAVE')}
+          </button>`
+          : html` <button
+            id="EditKeybindings"
+            class="ControlButton"
+            type="button"
+            title="${getLocaleString('EDIT_KEYBINDS')}"
+            @click=${editKeybindings}
+          >
+            ${IconPencil} ${getLocaleString('BUTTON_EDIT')}
+          </button>`
       }
     </div>
     <div id="KeybindingsList">

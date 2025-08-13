@@ -15,7 +15,7 @@
     "indentWidth": 2,
     "lineEnding": "crlf",
     "lineWidth": 100,
-    "attributePosition": "auto",
+    "attributePosition": "multiline",
     "bracketSameLine": false,
     "bracketSpacing": true,
     "expand": "auto",

@@ -1,10 +1,6 @@
 import { sanitizeUrl } from '@braintree/sanitize-url';
 import generateZip from '../../core/download';
-import {
-  changeSettingsValue,
-  getAppStateValue,
-  setAppStateValue,
-} from '../../core/settings.ts';
+import { changeSettingsValue, getAppStateValue, setAppStateValue } from '../../core/settings.ts';
 import { logScript } from '../../utils/tampermonkey';
 
 import ClickEvent = JQuery.ClickEvent;

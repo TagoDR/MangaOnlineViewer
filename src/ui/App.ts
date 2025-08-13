@@ -47,7 +47,9 @@ export default class App extends LitElement {
     const manga = getAppStateValue('manga');
     if (!manga) return html``;
     return html`
-      <style>${themesCSS()}</style>
+      <style>
+        ${themesCSS()}
+      </style>
       <div
         id="MangaOnlineViewer"
         class="${classMap({

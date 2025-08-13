@@ -54,7 +54,9 @@ export class ColorPanel extends LitElement {
       outline-offset: 1px;
     }
     .ThemeRadio.selected {
-      box-shadow: 0 0 0 2px var(--theme-body-background), 0 0 0 3px var(--theme-text-color);
+      box-shadow:
+        0 0 0 2px var(--theme-body-background),
+        0 0 0 3px var(--theme-text-color);
     }
     .ThemeRadio svg {
       width: 10px;
@@ -70,12 +72,12 @@ export class ColorPanel extends LitElement {
 
   protected render() {
     const swatchKeys = Object.keys(colors)
-      .filter((k) => !['dark', 'gray'].includes(k))
+      .filter(k => !['dark', 'gray'].includes(k))
       .sort(sortColors);
     const shades = [/*50,*/ 100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
-    return swatchKeys.map((key) => {
+    return swatchKeys.map(key => {
       const name = colors[key].name;
-      const swatches = shades.map((shade) => {
+      const swatches = shades.map(shade => {
         const hex = colors[key][shade];
         const text = getTextColor(hex);
         return html`

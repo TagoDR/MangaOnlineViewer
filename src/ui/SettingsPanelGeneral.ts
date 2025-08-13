@@ -33,7 +33,10 @@ function settingsScope() {
 function localeSelector() {
   return locales.map(
     locale => html`
-      <option value="${locale.ID}" ?selected=${getSettingsValue('locale') === locale.ID}>
+      <option
+        value="${locale.ID}"
+        ?selected=${getSettingsValue('locale') === locale.ID}
+      >
         ${locale.NAME}
       </option>
     `,
@@ -43,7 +46,12 @@ function localeSelector() {
 function language() {
   return html` <div class="ControlLabel locale">
     ${getLocaleString('LANGUAGE')}
-    <select id="locale" @change="${changeLocale}">${localeSelector()}</select>
+    <select
+      id="locale"
+      @change="${changeLocale}"
+    >
+      ${localeSelector()}
+    </select>
   </div>`;
 }
 

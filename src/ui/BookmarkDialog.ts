@@ -85,9 +85,7 @@ const BookmarkPanel = () => html`
       ${IconBookmark} ${IconBookmarkOff}
     </button>
     <h2>${getLocaleString('BOOKMARKS')}</h2>
-    <div id="BookmarksList">
-      ${listBookmarks()}
-    </div>
+    <div id="BookmarksList">${listBookmarks()}</div>
   </div>
 `;
 
