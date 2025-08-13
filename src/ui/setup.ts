@@ -25,6 +25,7 @@ import './components/ToggleButton.ts';
 import './components/ColorSwatch.ts';
 import './components/ColorPalette.ts';
 import './components/ColorScheme.ts';
+import './components/ColorPanel.ts';
 import './components/ColorPicker.ts';
 import './components/Pagination.ts';
 import './layout/Center.ts';

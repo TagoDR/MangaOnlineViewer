@@ -3,6 +3,7 @@ import type { IManga } from '../types';
 import { cleanUpElement } from '../utils/cleanup';
 import { logScriptVerbose } from '../utils/tampermonkey';
 import head from './head';
+import './setup.ts';
 import './App.ts';
 import loadImages from './Image.ts';
 
