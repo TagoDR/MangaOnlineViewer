@@ -3,47 +3,37 @@ import { getLocaleString, getSettingsValue, isSettingsLocal } from '../core/sett
 import locales from '../locales';
 import { changeLocale, changeSettingsScope } from './events/options.ts';
 import { IconLocationCog, IconWorldCog } from './icons';
+import './components/SegmentedControl.ts';
 
 function settingsScope() {
+  const options = [
+    {
+      value: 'false',
+      label: getLocaleString('GLOBAL'),
+      icon: IconWorldCog,
+    },
+    {
+      value: 'true',
+      label: window.location.hostname,
+      icon: IconLocationCog,
+    },
+  ];
+  const value = isSettingsLocal() ? 'true' : 'false';
+
   return html` <div class="ControlLabel">
     ${getLocaleString('SCOPE')}
-    <div
-      id="SettingsScope"
-      class="radio-inputs"
-    >
-      <label class="radio">
-        <input
-          type="radio"
-          id="globalSettings"
-          name="settingsScope"
-          ?checked="${!isSettingsLocal()}"
-          value="false"
-          @change="${changeSettingsScope}"
-        />
-        <span class="name">${IconWorldCog} ${getLocaleString('GLOBAL')}</span>
-      </label>
-      <label class="radio">
-        <input
-          type="radio"
-          id="localSettings"
-          name="settingsScope"
-          ?checked="${isSettingsLocal()}"
-          value="true"
-          @change="${changeSettingsScope}"
-        />
-        <span class="name">${IconLocationCog} ${window.location.hostname}</span>
-      </label>
-    </div>
+    <segmented-control
+      .options=${options}
+      .value=${value}
+      @change=${changeSettingsScope}
+    ></segmented-control>
   </div>`;
 }
 
 function localeSelector() {
   return locales.map(
     locale => html`
-      <option
-        value="${locale.ID}"
-        ?selected=${getSettingsValue('locale') === locale.ID}
-      >
+      <option value="${locale.ID}" ?selected=${getSettingsValue('locale') === locale.ID}>
         ${locale.NAME}
       </option>
     `,
@@ -53,12 +43,7 @@ function localeSelector() {
 function language() {
   return html` <div class="ControlLabel locale">
     ${getLocaleString('LANGUAGE')}
-    <select
-      id="locale"
-      @change="${changeLocale}"
-    >
-      ${localeSelector()}
-    </select>
+    <select id="locale" @change="${changeLocale}">${localeSelector()}</select>
   </div>`;
 }
 

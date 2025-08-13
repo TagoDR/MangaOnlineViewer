@@ -28,27 +28,12 @@ import './components/ColorScheme.ts';
 import './components/ColorPanel.ts';
 import './components/ColorPicker.ts';
 import './components/Pagination.ts';
+import './components/SegmentedControl.ts';
 import './layout/Center.ts';
 import './layout/Stack.ts';
 import './layout/SimpleGrid.ts';
 import './layout/Group.ts';
 import './components/AppShell.ts';
-
-import './MangaPage.ts';
-import './Reader.ts';
-import './Header.ts';
-import './BookmarkDialog.ts';
-import './KeybindingsDialog.ts';
-import './Navbar.ts';
-import './CommentsDialog.ts';
-import './SettingsPanelGeneral.ts';
-import './SettingsPanelTheme.ts';
-import './SettingsPanelLoading.ts';
-import './SettingsPanelZoom.ts';
-import './SettingsPanelOthers.ts';
-import './SettingsPanel.ts';
-import './Toolbar.ts';
-import './Menu.ts';
 
 import { registerIconLibrary } from '@awesome.me/webawesome';
 import * as styledIcons from './icons';

@@ -62,12 +62,7 @@ function lazyLoad() {
     >
       <span>
         ${getLocaleString('LAZY_LOAD_IMAGES')}
-        <output
-          id="lazyStartVal"
-          for="lazyStart"
-        >
-          ${getSettingsValue('lazyStart')}
-        </output>
+        <output id="lazyStartVal" for="lazyStart"> ${getSettingsValue('lazyStart')} </output>
       </span>
       <input
         type="range"
@@ -95,23 +90,12 @@ function headerType() {
   return html`
     <div class="ControlLabel headerType">
       ${getLocaleString('HEADER_TYPE')}
-      <div class="radio-inputs">
-        ${headerOptions.map(
-          option => html`
-            <label class="radio">
-              <input
-                type="radio"
-                name="headerType"
-                value=${option.value}
-                ?checked=${getSettingsValue('header') === option.value}
-                @change=${changeHeaderType}
-              />
-              <span class="name">${option.icon} ${option.label}</span>
-              </span>
-            </label>
-          `,
-        )}
-      </div>
+      <segmented-control
+        .options=${headerOptions}
+        .value=${getSettingsValue('header')}
+        @change=${changeHeaderType}
+        labelPosition="bottom"
+      ></segmented-control>
     </div>
   `;
 }
@@ -126,23 +110,12 @@ function navbarType() {
   return html`
     <div class="ControlLabel navbarType">
       ${getLocaleString('NAVBAR_TYPE')}
-      <div class="radio-inputs">
-        ${navbarOptions.map(
-          option => html`
-            <label class="radio">
-              <input
-                type="radio"
-                name="navbarType"
-                value=${option.value}
-                ?checked=${getSettingsValue('navbar') === option.value}
-                @change=${changeNavbarType}
-              />
-              <span class="name">${option.icon} ${option.label}</span>
-              </span>
-            </label>
-          `,
-        )}
-      </div>
+      <segmented-control
+        .options=${navbarOptions}
+        .value=${getSettingsValue('navbar')}
+        @change=${changeNavbarType}
+        labelPosition="tooltip"
+      ></segmented-control>
     </div>
   `;
 }
@@ -152,11 +125,7 @@ function autoScroll() {
     <div class="ControlLabel autoScroll">
       <span>
         ${getLocaleString('AUTO_SCROLL_HEIGHT')}
-        <output
-          id="scrollHeightVal"
-          for="scrollHeight"
-        >
-          ${getSettingsValue('scrollHeight')} </output
+        <output id="scrollHeightVal" for="scrollHeight"> ${getSettingsValue('scrollHeight')} </output
         >px
       </span>
       <input

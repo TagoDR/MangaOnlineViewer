@@ -82,59 +82,6 @@
   display: none;
 }
 
-.radio-inputs {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-  gap: 0.25rem;
-  justify-items: stretch;
-  align-items: stretch;
-  border-radius: 0.5rem;
-  background-color: var(--theme-border-color);
-  color: var(--theme-text-color);
-  box-sizing: border-box;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
-  padding: 0.25rem;
-  width: 100%;
-  font-size: 14px;
-}
-
-.radio-inputs .radio {
-  text-align: center;
-  width: 100%;
-}
-
-.toggler input {
-  display: none;
-}
-
-.radio-inputs .radio input {
-  display: none;
-}
-
-.radio-inputs .radio .name .icon {
-  margin: 0.25rem;
-}
-
-.radio-inputs .radio .name {
-  display: flex;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.5rem;
-  border: none;
-  padding: 0.5rem 0;
-  color: var(--theme-text-color);
-  background-color: var(--theme-border-color);
-  transition: all 0.15s ease-in-out;
-}
-
-.radio-inputs .radio input:checked + .name {
-  background-color: var(--theme-primary-color);
-  color: var(--theme-primary-text-color);
-  font-weight: 600;
-}
-
 #ColorScheme {
   padding: 5px;
   min-height: 28px;
