@@ -29,6 +29,7 @@ import './components/ColorPanel.ts';
 import './components/ColorPicker.ts';
 import './components/Pagination.ts';
 import './components/SegmentedControl.ts';
+import './components/ToggleSwitch.ts';
 import './layout/Center.ts';
 import './layout/Stack.ts';
 import './layout/SimpleGrid.ts';

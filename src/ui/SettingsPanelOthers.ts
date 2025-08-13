@@ -1,7 +1,6 @@
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { getLocaleString, getSettingsValue } from '../core/settings.ts';
-import toggler from './components/Toggler.ts';
 import {
   changeHeaderType,
   changeLazyStart,
@@ -29,23 +28,23 @@ function checkboxOptions() {
   return html`
     <div class="ControlLabel fitIfOversize">
       ${getLocaleString('FIT_WIDTH_OVERSIZED')}
-      ${toggler('fitIfOversize', getSettingsValue('fitWidthIfOversize'), checkFitWidthOversize)}
+      <mov-toggle-switch name='fitIfOversize' ?checked=${getSettingsValue('fitWidthIfOversize')} .onChange=${checkFitWidthOversize}></mov-toggle-switch>
     </div>
     <div class="ControlLabel enableComments">
       ${getLocaleString('ENABLE_COMMENTS')}
-      ${toggler('enableComments', getSettingsValue('enableComments'), checkEnableComments)}
+      <mov-toggle-switch name='enableComments' ?checked=${getSettingsValue('enableComments')} .onChange=${checkEnableComments}></mov-toggle-switch>
     </div>
     <div class="ControlLabel downloadZip">
       ${getLocaleString('DOWNLOAD_IMAGES')}
-      ${toggler('downloadZip', getSettingsValue('downloadZip'), checkAutoDownload)}
+      <mov-toggle-switch name='downloadZip' ?checked=${getSettingsValue('downloadZip')} .onChange=${checkAutoDownload}></mov-toggle-switch>
     </div>
     <div class="ControlLabel hidePageControls">
       ${getLocaleString('HIDE_CONTROLS')}
-      ${toggler('hidePageControls', getSettingsValue('hidePageControls'), checkHideImageControls)}
+      <mov-toggle-switch name='hidePageControls' ?checked=${getSettingsValue('hidePageControls')} .onChange=${checkHideImageControls}></mov-toggle-switch>
     </div>
     <div class="ControlLabel lazyLoadImages">
       ${getLocaleString('LAZY_LOAD_IMAGES_ENABLE')}
-      ${toggler('lazyLoadImages', getSettingsValue('lazyLoadImages'), checkLazyLoad)}
+      <mov-toggle-switch name='lazyLoadImages' ?checked=${getSettingsValue('lazyLoadImages')} .onChange=${checkLazyLoad}></mov-toggle-switch>
     </div>
   `;
 }
