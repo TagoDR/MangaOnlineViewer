@@ -68,31 +68,32 @@ export function imageLoaded(event: Event): void {
       },
     });
   }
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-  if (ctx) {
-    // Set canvas size to the natural image size for full quality
-    canvas.width = img.naturalWidth;
-    canvas.height = img.naturalHeight;
-    ctx.drawImage(img, 0, 0);
-  }
-  // Try to get base64 data URL (may fail for cross-origin images)
-  let dataUrl: string | undefined;
-  try {
-    dataUrl = canvas.toDataURL('image/png');
-  } catch (e) {
-    // Ignore CORS-tainted canvas
-    dataUrl = undefined;
-  }
 
-  if (image) {
-    setAppStateValue('images', {
-      ...getAppStateValue('images'),
-      [index]: {
-        ...image,
-        base64: dataUrl ?? image.base64,
-      },
-    });
+  // Draw onto an offscreen canvas and try to get a Blob
+  try {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      ctx.drawImage(img, 0, 0);
+      // Asynchronously get a Blob from the canvas; default to PNG
+      canvas.toBlob(blob => {
+        if (!blob) return; // CORS tainted or failed
+        const current = getAppStateValue('images')?.[index];
+        if (current) {
+          setAppStateValue('images', {
+            ...getAppStateValue('images'),
+            [index]: {
+              ...current,
+              blob,
+            },
+          });
+        }
+      }, 'image/png');
+    }
+  } catch (e) {
+    // Ignore failures (e.g., CORS tainted). We still proceed with progress updates.
   }
 
   changeAppStateValue('loaded', n => n + 1);
