@@ -5,6 +5,12 @@ import colors, { getTextColor, sortColors } from '../../utils/colors.ts';
 import { buttonSelectTheme } from '../events/theming.ts';
 import { IconCheck } from '../icons';
 
+declare global {
+  interface HTMLElementTagNameMap {
+    'mov-color-panel': ColorPanel;
+  }
+}
+
 @customElement('mov-color-panel')
 export class ColorPanel extends LitElement {
   @property({ type: String })

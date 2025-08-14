@@ -8,6 +8,12 @@ export type SegmentedControlOption = {
   icon?: unknown;
 };
 
+declare global {
+  interface HTMLElementTagNameMap {
+    'mov-segmented-control': SegmentedControl;
+  }
+}
+
 @customElement('mov-segmented-control')
 export class SegmentedControl extends LitElement {
   @property({ type: Array })

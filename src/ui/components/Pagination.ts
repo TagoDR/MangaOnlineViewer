@@ -1,6 +1,12 @@
 import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
+declare global {
+  interface HTMLElementTagNameMap {
+    'mov-pagination': Pagination;
+  }
+}
+
 @customElement('mov-pagination')
 export class Pagination extends LitElement {
   static styles = css`

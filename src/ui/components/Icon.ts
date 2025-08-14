@@ -5,6 +5,12 @@ import * as styledIcons from '../icons';
 import type { DirectiveResult } from 'lit/directive.js';
 import type { UnsafeSVGDirective } from 'lit/directives/unsafe-svg.js';
 
+declare global {
+  interface HTMLElementTagNameMap {
+    'mov-icon': Icon;
+  }
+}
+
 /**
  * A custom icon component that wraps <wa-icon> to display project-specific
  * SVGs with custom colors applied.
@@ -46,11 +52,5 @@ export class Icon extends LitElement {
       .src=${dataUrl}
       .label=${this.label}
     ></wa-icon>`;
-  }
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'mov-icon': Icon;
   }
 }

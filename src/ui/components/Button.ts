@@ -3,6 +3,11 @@ import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+declare global {
+  interface HTMLElementTagNameMap {
+    'mov-button': Button;
+  }
+}
 /**
  * A wrapper component for <wa-button>.
  *
@@ -106,11 +111,5 @@ export class Button extends LitElement {
     });
 
     this.isIconButton = text.trim() === '' && hasIcon;
-  }
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'mov-button': Button;
   }
 }

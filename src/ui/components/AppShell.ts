@@ -6,6 +6,12 @@ import { AutoScrollController } from '../controllers/AutoScrollController.ts';
 import { HeaderVisibilityController } from '../controllers/HeaderVisibilityController.ts';
 import styles from '../styles/AppShell.css?inline';
 
+declare global {
+  interface HTMLElementTagNameMap {
+    'mov-app-shell': AppShell;
+  }
+}
+
 @customElement('mov-app-shell')
 export class AppShell extends LitElement {
   static styles = css`
