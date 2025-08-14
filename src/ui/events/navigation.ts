@@ -6,7 +6,6 @@ export function selectGoToPage(event: Event) {
   scrollToElement(getAppStateValue('render')?.querySelector<HTMLElement>(`#Page${target}`));
 }
 
-export function clickThumbnail(event: Event) {
-  const target = parseInt((event.currentTarget as HTMLElement).id.replace('ThumbnailImg', ''), 10);
+export function clickThumbnail(target: number) {
   scrollToElement(getAppStateValue('render')?.querySelector<HTMLElement>(`#Page${target}`));
 }

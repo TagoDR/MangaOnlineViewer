@@ -36,6 +36,8 @@ import './layout/SimpleGrid.ts';
 import './layout/Group.ts';
 import './components/AppShell.ts';
 
+import './Navbar.ts';
+
 import { registerIconLibrary } from '@awesome.me/webawesome';
 import * as styledIcons from './icons';
 import * as rawIcons from './icons/Icons.ts';

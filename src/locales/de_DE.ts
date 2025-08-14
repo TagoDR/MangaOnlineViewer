@@ -115,4 +115,9 @@ export default {
   LOADING: 'Lädt',
   ZOOM: 'Zoom',
   OTHERS: 'Sonstiges',
+  NAVBAR_TYPE: 'Change Navbar Type',
+  NAVBAR_BOTTOM: 'Bottom',
+  NAVBAR_LEFT: 'Left',
+  NAVBAR_RIGHT: 'Right',
+  NAVBAR_DISABLED: 'Disabled',
 } satisfies ILocale;

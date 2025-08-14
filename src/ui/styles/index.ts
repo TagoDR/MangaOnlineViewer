@@ -14,7 +14,6 @@ import media from './media.css?inline';
 import page from './page.css?inline';
 import settings from './SettingsPanel.css?inline';
 import normalize from './simplenormalize.css?inline';
-import thumbnails from './thumbnails.css?inline';
 
 export default css`
   .dark {
@@ -40,14 +39,11 @@ export default css`
   }
 
   .PageContent .PageImg[src=''],
-  .PageContent .PageImg:not([src]),
-  .Thumbnail .ThumbnailImg[src=''],
-  .Thumbnail .ThumbnailImg:not([src]) {
+  .PageContent .PageImg:not([src]) {
     background-image: url('${svgToUrl(IconPhotoRaw)}');
   }
 
-  .PageContent .PageImg.imgBroken,
-  .Thumbnail .ThumbnailImg.imgBroken {
+  .PageContent .PageImg.imgBroken {
     background-image: url('${svgToUrl(IconPhotoOffRaw)}');
   }
 
@@ -59,7 +55,6 @@ export default css`
   ${page}
   ${fluid}
   ${settings}
-  ${thumbnails}
   ${bookmarks}
   ${comments}
   ${media}

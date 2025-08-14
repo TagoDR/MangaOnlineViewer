@@ -17,7 +17,6 @@ import { buttonPanelsClose } from './events/panels.ts';
 import events from './events.ts';
 import Header from './Header.ts';
 import KeybindingsDialog from './KeybindingsDialog.ts';
-import Navbar from './Navbar.ts';
 import Reader from './Reader.ts';
 import SettingsPanel from './SettingsPanel.ts';
 import cssStyles from './styles';
@@ -50,7 +49,8 @@ export default class App extends LitElement {
         })}"
         .locale="${getSettingsValue('locale')}"
       >
-        ${Header(manga)} ${Reader(manga)} ${Navbar(manga)}
+        ${Header(manga)} ${Reader(manga)}
+        <mov-navbar .mode=${getSettingsValue('navbar')}></mov-navbar>
         <div
           id="Overlay"
           class="${classMap({
