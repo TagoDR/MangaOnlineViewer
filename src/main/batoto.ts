@@ -4,7 +4,7 @@ import { findClosestByContentEnds, findClosestByContentStarts } from '../utils/f
 
 const batoto: ISite = {
   name: 'Batoto',
-  url: /https?:\/\/(www\.)?(\w(ba)?to|readtoto|batocomic|comiko|battwo|batotoo|batotwo).(to|com|net|org)\/(chapter|title).*/,
+  url: /https?:\/\/(?:www\.)?(?:fto|jto|hto|dto|mto|wto|bato|battwo|batotwo|comiko|batocomic|readtoto|zbato|xbato|mangatoto)\.(?:to|com|net|org)\/(chapter|title).*/,
   homepage: 'https://rentry.co/batoto',
   language: [Language.ENGLISH],
   category: Category.MANGA,
