@@ -1,11 +1,16 @@
+import { sanitizeUrl } from '@braintree/sanitize-url';
 import hotkeys from 'hotkeys-js';
 import _ from 'lodash';
-import { getAppStateValue, getSettingsValue } from '../../core/settings';
+import {
+  changeAppStateValue,
+  getAppStateValue,
+  getSettingsValue,
+  setAppStateValue,
+} from '../../core/settings';
 import { logScript } from '../../utils/tampermonkey';
 import { scrollToElement } from './common';
-
-const doClick = (selector: string) =>
-  getAppStateValue('render')?.querySelector(selector)?.dispatchEvent(new Event('click'));
+import { updateViewMode } from './viewmode.ts';
+import { changeGlobalZoom, changeZoomByStep } from './zoom.ts';
 
 function doScrolling(sign: 1 | -1) {
   const viewMode = getSettingsValue('viewMode');
@@ -52,43 +57,53 @@ const actions: Record<string, () => void> = {
     doScrolling(1);
   },
   NEXT_CHAPTER() {
-    doClick('#next');
+    const url = getAppStateValue('manga')?.next;
+    if (url && url !== '#') {
+      window.location.href = sanitizeUrl(url);
+    } else {
+      window.history.back();
+    }
   },
   PREVIOUS_CHAPTER() {
-    doClick('#prev');
+    const url = getAppStateValue('manga')?.prev;
+    if (url && url !== '#') {
+      window.location.href = sanitizeUrl(url);
+    } else {
+      window.history.back();
+    }
   },
   ENLARGE() {
-    doClick('#enlarge');
+    changeZoomByStep(1)();
   },
   REDUCE() {
-    doClick('#reduce');
+    changeZoomByStep(-1)();
   },
   RESTORE() {
-    doClick('#restore');
+    changeGlobalZoom('percent', 100)();
   },
   FIT_WIDTH() {
-    doClick('#fitWidth');
+    changeGlobalZoom('width')();
   },
   FIT_HEIGHT() {
-    doClick('#fitHeight');
+    changeGlobalZoom('height')();
   },
   SETTINGS() {
-    doClick('#settings');
+    setAppStateValue('panel', 'settings');
   },
   VIEW_MODE_WEBCOMIC() {
-    doClick('#webComic');
+    updateViewMode('WebComic')();
   },
   VIEW_MODE_VERTICAL() {
-    doClick('#verticalMode');
+    updateViewMode('Vertical')();
   },
   VIEW_MODE_LEFT() {
-    doClick('#rtlMode');
+    updateViewMode('FluidRTL')();
   },
   VIEW_MODE_RIGHT() {
-    doClick('#ltrMode');
+    updateViewMode('FluidLTR')();
   },
   SCROLL_START() {
-    doClick('#AutoScroll');
+    changeAppStateValue('autoScroll', b => !b);
   },
 };
 
