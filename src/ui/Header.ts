@@ -28,6 +28,7 @@ import {
   IconKeyboard,
   IconListNumbers,
   IconLoader2,
+  IconMenu2,
   IconMessage,
   IconPlayerPause,
   IconPlayerPlay,
@@ -37,10 +38,20 @@ import {
   IconZoomOutArea,
   IconZoomPan,
 } from './icons';
+import { buttonHeaderClick } from "./events/headroom.ts";
 
 const listOptions = (times: number, begin: number = 1) =>
   sequence(times, begin).map(index => html` <option value="${index}">${index}</option>`);
 const Header = (manga: IManga) => html`
+  <div
+    id="menu"
+    class="${classMap({
+      [getSettingsValue('header')]: true,
+    })}"
+    @click=${buttonHeaderClick}
+  >
+    ${IconMenu2}
+  </div>
   <header
     id="Header"
     class="${classMap({

@@ -13,11 +13,9 @@ import {
 } from '../core/settings.ts';
 import BookmarksPanel from './BookmarkDialog.ts';
 import CommentsPanel from './CommentsDialog.ts';
-import { buttonHeaderClick } from './events/headroom.ts';
 import { buttonPanelsClose } from './events/panels.ts';
 import events from './events.ts';
 import Header from './Header.ts';
-import { IconMenu2 } from './icons';
 import KeybindingsDialog from './KeybindingsDialog.ts';
 import Navbar from './Navbar.ts';
 import Reader from './Reader.ts';
@@ -28,15 +26,7 @@ import { themesCSS } from './themes.ts';
 @customElement('manga-online-viewer')
 @useStores(settings, locale, appState)
 export default class App extends LitElement {
-  static styles = [
-    css`
-      :host {
-        --theme-primary-color: teal;
-        --theme-primary-text-color: white;
-      }
-    `,
-    unsafeCSS(cssStyles),
-  ];
+  static styles = [css``, unsafeCSS(cssStyles)];
 
   firstUpdated() {
     events();
@@ -60,15 +50,6 @@ export default class App extends LitElement {
         })}"
         .locale="${getSettingsValue('locale')}"
       >
-        <div
-          id="menu"
-          class="${classMap({
-            [getSettingsValue('header')]: true,
-          })}"
-          @click=${buttonHeaderClick}
-        >
-          ${IconMenu2}
-        </div>
         ${Header(manga)} ${Reader(manga)} ${Navbar(manga)}
         <div
           id="Overlay"
