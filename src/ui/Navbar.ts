@@ -94,6 +94,7 @@ export default class Navbar extends LitElement {
    * @returns The rendered template.
    */
   render() {
+    if(this.mode === 'disabled') return html``;
     const manga = getAppStateValue('manga');
     const navClasses = {
       horizontal: this.mode === 'bottom',
@@ -103,7 +104,6 @@ export default class Navbar extends LitElement {
       bottom: this.mode === 'bottom',
       hiding: this.isHiding,
     };
-    if(getAppStateValue('navbar') === 'disabled') return html``;
 
     return html`
       <nav
