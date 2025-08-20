@@ -16,45 +16,59 @@
   z-index: 900;
 }
 
+#Header.click {
+  padding-left: 40px;
+}
+
 @keyframes headroom {
   from {
     transform: translateY(-100%);
+    position: sticky;
+    top: 0;
   }
   to {
     transform: translateY(0%);
+    position: sticky;
+    top: 0;
   }
 }
 
-#Header:not(.visible) {
+#Header:not(.visible, .headroom-top, .fixed, .simple) {
   animation: headroom 0.3s ease-in reverse;
   transform: translateY(-100%);
+  position: sticky;
+  top: 0;
 }
 
-#Header.visible {
-  animation: headroom 0.3s ease-in;
-  transform: translateY(0%);
-}
-
-#Header.click {
-  padding-left: 40px;
-  transform: unset;
-}
-
-#Header.click:not(.visible) {
+#Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL) {
   position: fixed;
+  padding-left: 40px;
   top: -100%;
 }
 
-#Header.top {
+#Header.scroll.headroom-hide {
+  animation: none;
+  transform: translateY(-100%);
+  position: sticky;
+  top: 0;
+}
+
+#Header.scroll.headroom-show,
+#Header.headroom-end,
+#Header.click:has(+ #Chapter.FluidLTR, + #Chapter.FluidRTL).visible,
+#Header.visible {
+  animation: headroom 0.3s ease-in;
+  transform: translateY(0%);
+  position: sticky;
+  top: 0;
+}
+
+#Header.headroom-top {
   animation: none;
 }
 
-#Header.end {
-  position: sticky;
-}
-
 #Header.fixed {
-  position: fixed;
+  position: sticky;
   animation: none;
   top: 0;
   transform: translateY(0%);

@@ -60,18 +60,18 @@ export function toggleScrollDirection() {
     scrollY + window.innerHeight + showEnd > document.body.scrollHeight
   ) {
     // Show header if near the end of the page
-    setAppStateValue('headerVisible', true);
+    setAppStateValue('headroom', 'end');
   } else if (scrollY > prevOffset && scrollY > 50) {
     // Hide header on scroll down
-    setAppStateValue('headerVisible', false);
+    setAppStateValue('headroom', 'hide');
   } else if (header === 'scroll' && scrollY < prevOffset && scrollY > 50) {
     // Show header on scroll up
-    setAppStateValue('headerVisible', true);
+    setAppStateValue('headroom', 'show');
   } else if (header !== 'click' && scrollY <= 65) {
     // Always show header if near the top
-    setAppStateValue('headerVisible', true);
+    setAppStateValue('headroom', 'top');
   } else {
-    setAppStateValue('headerVisible', false);
+    setAppStateValue('headroom', 'none');
   }
 
   prevOffset = scrollY;
