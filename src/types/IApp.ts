@@ -27,6 +27,8 @@ export type Redirect = 'next' | 'prev' | 'series';
  */
 export type Device = 'desktop' | 'mobile' | 'tablet';
 
+export type Headroom = 'top' | 'end' | 'show' | 'hide' | 'none';
+
 /**
  * Represents the state and properties of a single page image in the viewer.
  */
@@ -74,6 +76,8 @@ export type IApp = {
   render?: HTMLElement | DocumentFragment | ShadowRoot | null;
   /** A map of page numbers to their corresponding page data. */
   images: Record<number, Page | undefined>;
-  /** Whether the main header is currently visible. */
+  /** Whether the main header is currently visible, for click and hover types. */
   headerVisible: boolean;
+  /** Controls the visibility state of the header, for scroll type  */
+  headroom: Headroom;
 };

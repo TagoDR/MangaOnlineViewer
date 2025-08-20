@@ -1,9 +1,4 @@
-import {
-  getAppStateValue,
-  getSettingsValue,
-  saveSettingsValue,
-  setAppStateValue,
-} from '../../core/settings';
+import { getAppStateValue, saveSettingsValue, setAppStateValue } from '../../core/settings';
 import { isNothing } from '../../utils/checks';
 import keybindings from './keybindings';
 
@@ -34,10 +29,12 @@ export function buttonKeybindingsOpen() {
  */
 export function saveKeybindings() {
   const newKeybinds: Record<string, string[] | undefined> = {};
-  getAppStateValue('render')?.querySelectorAll<HTMLInputElement>('.KeybindInput').forEach(element => {
-    const keys = element.value.split(',').map(value => value.trim());
-    newKeybinds[element.id] = isNothing(keys) ? undefined : keys;
-  });
+  getAppStateValue('render')
+    ?.querySelectorAll<HTMLInputElement>('.KeybindInput')
+    .forEach(element => {
+      const keys = element.value.split(',').map(value => value.trim());
+      newKeybinds[element.id] = isNothing(keys) ? undefined : keys;
+    });
   saveSettingsValue('keybinds', newKeybinds);
   setAppStateValue('panel', 'keybindings');
   keybindings();

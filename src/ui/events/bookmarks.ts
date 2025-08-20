@@ -1,3 +1,10 @@
+import {
+  changeSettingsValue,
+  getAppStateValue,
+  getLocaleString,
+  isBookmarked,
+  setAppStateValue,
+} from '../../core/settings';
 import Swal from 'sweetalert2-neutral';
 import {
   changeSettingsValue,
