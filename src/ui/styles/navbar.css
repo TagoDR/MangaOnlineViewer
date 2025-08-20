@@ -1,80 +1,144 @@
-#MangaOnlineViewer .Thumbnail .ThumbnailImg[src=""],
-#MangaOnlineViewer .Thumbnail .ThumbnailImg:not([src]) {
-  width: 100px;
-  height: 150px;
-  display: inline-block;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 20%;
+:host {
+  /* Define sizes for the navigation bar for easy customization */
+  --nav-collapsed-size: 34px;
+  --nav-expanded-size: 200px;
+  --header-height: 80px; /* Adjust as needed */
 }
-
-#MangaOnlineViewer #NavigationCounters {
-  margin: 5px;
-  width: 100%;
-  line-height: 1rem;
-}
-
-#MangaOnlineViewer #Navigation {
+#Navigation {
   color: var(--theme-text-color);
   background-color: var(--theme-hightlight-color);
-  bottom: -180px;
-  height: 185px;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  padding-bottom: 20px;
-  position: fixed;
+  overflow: hidden;
+  display: flex;
+  box-sizing: border-box;
+  gap: 5px;
   white-space: nowrap;
-  width: 100%;
   text-align: center;
-  transition:
-    transform 0.3s ease-in,
-    background-color 0.3s linear;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
   line-height: 0;
+  transition: all 0.3s ease;
+  position: fixed;
 }
-
-#MangaOnlineViewer #Navigation #Thumbnails {
-  overflow-x: auto;
-  overflow-y: hidden;
-  margin-right: 10px;
-}
-
-#MangaOnlineViewer #Navigation:hover {
-  transform: translateY(-180px);
-}
-
-#MangaOnlineViewer #Navigation.disabled {
+#Navigation:not(:hover) #Thumbnails {
   display: none;
 }
-
-#MangaOnlineViewer #Navigation.visible {
-  transform: translateY(-180px);
-}
-
-#MangaOnlineViewer #Navigation .Thumbnail {
-  display: inline-block;
-  height: 150px;
-  margin: 0 5px;
-  border: 1px solid var(--theme-primary-color);
-}
-
-#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailIndex {
-  color: var(--theme-text-color);
-  background-color: var(--theme-hightlight-color);
-  display: block;
-  opacity: 0.8;
-  position: relative;
-  bottom: 25%;
-  width: 100%;
+#NavigationCounters {
+  flex-shrink: 0; /* Prevent this from shrinking */
+  padding: 5px;
   line-height: 1rem;
+  text-align: center;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+#Thumbnails {
+  flex-grow: 1;
+  display: flex;
+  gap: 5px;
+  justify-content: flex-start;
+}
+/* == Horizontal Orientation (for top/bottom position) == */
+#Navigation.horizontal {
+  flex-direction: column;
+  height: var(--nav-collapsed-size);
+  width: 100%;
+  left: 0;
+  right: 0;
+}
+#Navigation.horizontal:hover {
+  height: var(--nav-expanded-size);
+}
+#Navigation.top {
+  top: 0;
+}
+#Navigation.bottom {
+  bottom: 0;
+}
+#Navigation.horizontal #Thumbnails {
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+/* == Vertical Orientation (for left/right position) == */
+#Navigation.vertical {
+  flex-direction: row;
+  width: var(--nav-collapsed-size);
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  transition:
+    top 0.3s ease,
+    height 0.3s ease,
+    width 0.3s ease;
+}
+#Navigation.vertical:hover {
+  width: var(--nav-expanded-size);
+}
+#Navigation.left {
+  left: 0;
+  flex-direction: row-reverse;
+}
+#Navigation.right {
+  right: 0;
+}
+#Navigation.vertical #NavigationCounters {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+#Navigation.right #NavigationCounters {
+  transform: rotate(0deg);
+}
+#Navigation.vertical #Thumbnails {
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  justify-content: flex-start;
 }
 
-#MangaOnlineViewer #Navigation .Thumbnail .ThumbnailImg {
+#Navigation.left #Thumbnails {
+  direction: rtl;
+}
+/* Adjust for header visibility */
+#Navigation.vertical.header {
+  top: var(--header-height);
+  height: calc(100% - var(--header-height));
+}
+
+#Navigation .Thumbnail {
+  display: inline-flex;
+  height: 150px;
+  width: 150px;
+  margin: 0 5px;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  /*border: 1px solid var(--theme-primary-color);*/
+}
+#Navigation.vertical .Thumbnail {
+  /*border: 1px solid var(--theme-primary-color);*/
+}
+.ThumbnailIndex {
+  color: var(--theme-primary-text-color);
+  background-color: var(--theme-primary-color);
+  display: block;
+  opacity: 0.9;
+  position: absolute;
+  left: 0;
+  bottom: 30%;
+  width: 100%;
+  line-height: 1.2rem;
+  text-align: center;
+  font-weight: 600;
+  z-index: 1;
+}
+.ThumbnailImg {
   cursor: pointer;
   display: inline-block;
   max-height: 150px;
   min-height: 150px;
   min-width: 80px;
-  max-width: 160px;
+  max-width: 150px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 48px 48px;
 }
