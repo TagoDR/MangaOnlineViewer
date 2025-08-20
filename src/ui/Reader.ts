@@ -23,14 +23,14 @@ const Reader = (manga: IManga) => html`
     class="${classMap({
       fitWidthIfOversize: getSettingsValue('fitWidthIfOversize'),
       [getSettingsValue('viewMode')]: true,
+      'separator': getSettingsValue('viewMode') === 'Vertical'
     })}"
     style="${styleMap({
       [`margin-${getSettingsValue('navbar')}`]: '34px',
     })}"
     @wheel=${(e: WheelEvent) => {
-      const viewMode = getSettingsValue('viewMode');
-      if (viewMode === 'FluidLTR') transformScrollToHorizontal(e);
-      else if (viewMode === 'FluidRTL') transformScrollToHorizontalReverse(e);
+      if (getSettingsValue('viewMode') === 'FluidLTR') transformScrollToHorizontal(e);
+      else if (getSettingsValue('viewMode') === 'FluidRTL') transformScrollToHorizontalReverse(e);
     }}
   >
     ${listPages(manga.pages, manga.begin ?? 0)}
