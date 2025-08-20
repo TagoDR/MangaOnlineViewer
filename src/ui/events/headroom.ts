@@ -52,6 +52,7 @@ const showEnd = 100;
  * This is the core logic for the 'scroll' header mode.
  */
 export function toggleScrollDirection() {
+  const header = getSettingsValue('header');
   const { scrollY } = window;
   if (
     showEnd &&
@@ -63,10 +64,10 @@ export function toggleScrollDirection() {
   } else if (scrollY > prevOffset && scrollY > 50) {
     // Hide header on scroll down
     setAppStateValue('headerVisible', false);
-  } else if (scrollY < prevOffset && scrollY > 50) {
+  } else if (header === 'scroll' && scrollY < prevOffset && scrollY > 50) {
     // Show header on scroll up
     setAppStateValue('headerVisible', true);
-  } else if (scrollY <= 100) {
+  } else if (scrollY <= 65) {
     // Always show header if near the top
     setAppStateValue('headerVisible', true);
   } else {
