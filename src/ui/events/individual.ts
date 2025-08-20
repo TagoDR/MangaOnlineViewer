@@ -151,6 +151,4 @@ export function imageLoadError(event: Event): void {
   const img = event.currentTarget as HTMLImageElement;
   if (isEmpty(img.getAttribute('src'))) return;
   img.classList.add('imgBroken');
-  const index = parseInt(img.id.replace('PageImg', ''), 10);
-  realoadImage(index, img);
 }
