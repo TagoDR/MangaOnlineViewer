@@ -56,11 +56,11 @@
   color: orange;
 }
 
-.icon-tabler-bookmark > * {
+.icon-tabler-bookmark > :nth-child(2) {
   color: orange;
 }
 
-.icon-tabler-bookmark-off > * {
+.icon-tabler-bookmark-off > :nth-child(2) {
   color: orange;
 }
 
@@ -90,11 +90,11 @@
   color: cyan;
 }
 
-.icon-tabler-photo > * {
+.icon-tabler-photo > :nth-child(n + 2) {
   color: silver;
 }
 
-.icon-tabler-photo-off > * {
+.icon-tabler-photo-off > :nth-child(n + 2) {
   color: silver;
 }
 
@@ -104,5 +104,9 @@
 
 .icon-tabler-message > :nth-child(2),
 .icon-tabler-message > :nth-child(3) {
+  color: greenyellow;
+}
+
+.icon-tabler-book-return > g {
   color: greenyellow;
 }

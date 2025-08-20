@@ -1,28 +1,21 @@
-import { applyZoom } from '../page';
-import { addEvent, scrollToElement, transformScrollToHorizontal } from './common';
+import { getAppStateValue } from '../../core/settings.ts';
+import { scrollToElement } from './common';
 
+/**
+ * Event handler for the "Go to Page" dropdown selector.
+ * It reads the selected page number and scrolls to the corresponding page element.
+ * @param {Event} event - The change event from the `<select>` element.
+ */
 export function selectGoToPage(event: Event) {
   const target = (event.currentTarget as HTMLOptionElement).value;
-  applyZoom();
-  scrollToElement(document.querySelector<HTMLElement>(`#Page${target}`));
+  scrollToElement(getAppStateValue('render')?.querySelector<HTMLElement>(`#Page${target}`));
 }
 
-export function clickThumbnail(event: Event) {
-  applyZoom();
-  scrollToElement(
-    document.querySelector<HTMLElement>(
-      `#Page${(event.currentTarget as HTMLElement).querySelector('.ThumbnailIndex')?.textContent}`,
-    ),
-  );
+/**
+ * Event handler for clicking a page thumbnail in the navigation bar.
+ * It scrolls to the corresponding page element.
+ * @param {number} target - The page number to navigate to.
+ */
+export function clickThumbnail(target: number) {
+  scrollToElement(getAppStateValue('render')?.querySelector<HTMLElement>(`#Page${target}`));
 }
-
-function navigation() {
-  // Goto Navigation Selector
-  document.querySelector('#gotoPage')?.addEventListener('change', selectGoToPage);
-  // Thumbnail Navigation
-  document.querySelectorAll('.Thumbnail')?.forEach(addEvent('click', clickThumbnail));
-  // Convert Vertical Scroll To Horizontal
-  document.querySelector('#Thumbnails')?.addEventListener('wheel', transformScrollToHorizontal);
-}
-
-export default navigation;

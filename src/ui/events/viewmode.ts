@@ -1,40 +1,24 @@
-import { getSettingsValue, saveSettingsValue } from '../../core/settings';
+import { refreshSettings, saveSettingsValue, setSettingsValue } from '../../core/settings';
 import type { ViewMode } from '../../types';
-import { applyZoom } from '../page';
-import {
-  scrollToElement,
-  transformScrollToHorizontal,
-  transformScrollToHorizontalReverse,
-} from './common';
 
-function setupFluid(mode: ViewMode) {
-  const chapter = document.querySelector<HTMLElement>('#Chapter');
-  document.querySelector('#Header')?.classList.remove('visible');
-  document.querySelector('#menu')?.classList.remove('hide');
-  applyZoom('height');
-  scrollToElement(chapter);
-  chapter?.addEventListener(
-    'wheel',
-    mode === 'FluidLTR' ? transformScrollToHorizontal : transformScrollToHorizontalReverse,
-  );
-}
-
+/**
+ * Returns a function that updates the current view mode in the application state.
+ * When switching to a 'Fluid' mode, it also enforces specific zoom and header settings for a better experience.
+ * When switching away from a 'Fluid' mode, it reverts those settings to their original values.
+ * @param {ViewMode} mode - The view mode to switch to.
+ * @returns {() => void} A function to be used as an event handler.
+ */
 export function updateViewMode(mode: ViewMode) {
   return () => {
-    const chapter = document.querySelector<HTMLElement>('#Chapter');
-    chapter?.classList.remove('Vertical', 'WebComic', 'FluidLTR', 'FluidRTL');
-    chapter?.classList.add(mode);
-    chapter?.removeEventListener('wheel', transformScrollToHorizontal);
-    chapter?.removeEventListener('wheel', transformScrollToHorizontalReverse);
-    if (mode === 'FluidLTR' || mode === 'FluidRTL') {
-      setupFluid(mode);
+    setSettingsValue('viewMode', mode);
+    if (mode.startsWith('Fluid')) {
+      setSettingsValue('zoomMode', 'height');
+      setSettingsValue('header', 'click');
     } else {
-      const headerClass = getSettingsValue('header');
-      const header = document.querySelector<HTMLElement>('#Header');
-      if (header) header.className = headerClass;
-      const menu = document.querySelector<HTMLElement>('#menu');
-      if (menu) menu.className = headerClass;
-      applyZoom();
+      // Revert to the user's saved preferences when leaving fluid mode
+      refreshSettings('zoomMode');
+      refreshSettings('zoomValue');
+      refreshSettings('header');
     }
   };
 }
@@ -49,21 +33,3 @@ export function changeDefaultViewMode(event: Event) {
   saveSettingsValue('viewMode', mode);
   updateViewMode(mode)();
 }
-
-function viewMode() {
-  // Default View mode Selector
-  document.querySelector('#viewMode')?.addEventListener('change', changeDefaultViewMode);
-  // WebComic View Mode Button
-  document.querySelector('#webComic')?.addEventListener('click', updateViewMode('WebComic'));
-  // Fluid LTR View Mode Button
-  document.querySelector('#ltrMode')?.addEventListener('click', updateViewMode('FluidLTR'));
-  // Fluid RTL View Mode Button
-  document.querySelector('#rtlMode')?.addEventListener('click', updateViewMode('FluidRTL'));
-  // Vertical View Mode Button
-  document.querySelector('#verticalMode')?.addEventListener('click', updateViewMode('Vertical'));
-  if (getSettingsValue('viewMode') === 'FluidLTR' || getSettingsValue('viewMode') === 'FluidRTL') {
-    setupFluid(getSettingsValue('viewMode'));
-  }
-}
-
-export default viewMode;

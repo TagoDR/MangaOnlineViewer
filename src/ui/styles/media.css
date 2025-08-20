@@ -1,12 +1,12 @@
-#MangaOnlineViewer.mobile #Header,
-#MangaOnlineViewer.tablet #Header {
+.mobile #Header,
+.tablet #Header {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
-#MangaOnlineViewer.mobile .ViewerTitle,
-#MangaOnlineViewer.tablet .ViewerTitle {
+.mobile .ViewerTitle,
+.tablet .ViewerTitle {
   order: 1;
   min-height: auto;
   padding: 0;
@@ -16,93 +16,93 @@
   flex-basis: 100%;
 }
 
-#MangaOnlineViewer.mobile #GlobalFunctions,
-#MangaOnlineViewer.tablet #GlobalFunctions {
+.mobile #GlobalFunctions,
+.tablet #GlobalFunctions {
   width: auto;
   order: 2;
   padding: 5px;
 }
 
-#MangaOnlineViewer.mobile #ChapterNavigation,
-#MangaOnlineViewer.tablet #ChapterNavigation {
+.mobile #ChapterNavigation,
+.tablet #ChapterNavigation {
   order: 3;
 }
 
-#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,
-#MangaOnlineViewer.tablet #GlobalFunctions #ZoomSlider,
-#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.tablets, .phones),
-#MangaOnlineViewer.tablet #GlobalFunctions .ControlButton:not(.tablets, .phones) {
+.mobile #GlobalFunctions #ZoomSlider,
+.tablet #GlobalFunctions #ZoomSlider,
+.mobile #GlobalFunctions .ControlButton:not(.tablets, .phones),
+.tablet #GlobalFunctions .ControlButton:not(.tablets, .phones) {
   display: none;
 }
 
-#MangaOnlineViewer.mobile #Header {
+.mobile #Header {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
 
-#MangaOnlineViewer.mobile #Header.click + #Chapter:not(.webcomic, .vertical) {
+.mobile #Header.click + #Chapter:not(.webcomic, .vertical) {
   position: sticky;
 }
 
-#MangaOnlineViewer.mobile #MangaTitle {
+.mobile #MangaTitle {
   word-wrap: anywhere;
 }
 
-#MangaOnlineViewer.mobile .ViewerTitle {
+.mobile .ViewerTitle {
   order: 1;
   margin-top: 0;
   height: auto;
   padding: 0;
 }
 
-#MangaOnlineViewer.mobile #GlobalFunctions {
+.mobile #GlobalFunctions {
   order: 2;
   padding: 0;
   width: auto;
   flex-basis: 35px;
 }
 
-#MangaOnlineViewer.mobile #ChapterNavigation {
+.mobile #ChapterNavigation {
   order: 3;
   width: min-content;
   min-width: 205px;
 }
 
-#MangaOnlineViewer.mobile .ChapterControl {
+.mobile .ChapterControl {
   flex-direction: row;
   flex-wrap: wrap;
 }
 
-#MangaOnlineViewer.mobile .ChapterControl .NavigationControlButton {
+.mobile .ChapterControl .NavigationControlButton {
   flex-grow: 1;
 }
 
-#MangaOnlineViewer.mobile .PageFunctions {
+.mobile .PageFunctions {
   padding: 0;
 }
 
-#MangaOnlineViewer.mobile .PageFunctions .ControlButton.Bookmark {
+.mobile .PageFunctions .ControlButton.Bookmark {
   opacity: 1;
 }
 
-#MangaOnlineViewer.mobile #Navigation,
-#MangaOnlineViewer.mobile #GlobalFunctions #ZoomSlider,
-#MangaOnlineViewer.mobile #GlobalFunctions .ControlButton:not(.phones),
-#MangaOnlineViewer.mobile .PageFunctions .ControlButton:not(.Bookmark),
-#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoomMode,
-#MangaOnlineViewer.mobile #SettingsPanel .DefaultZoom,
-#MangaOnlineViewer.mobile #SettingsPanel .fitIfOversize,
-#MangaOnlineViewer.mobile #SettingsPanel .showThumbnails,
-#MangaOnlineViewer.mobile #SettingsPanel .lazyLoadImages,
-#MangaOnlineViewer.mobile #SettingsPanel .downloadZip,
-#MangaOnlineViewer.mobile #SettingsPanel .minZoom,
-#MangaOnlineViewer.mobile #SettingsPanel .zoomStep,
-#MangaOnlineViewer.mobile #SettingsPanel .headerType,
-#MangaOnlineViewer.mobile #SettingsPanel .autoScroll,
-#MangaOnlineViewer.mobile #KeybindingsPanel,
-#MangaOnlineViewer.mobile .ChapterControl .download,
-#MangaOnlineViewer.mobile #Counters {
+.mobile #Navigation,
+.mobile #GlobalFunctions #ZoomSlider,
+.mobile #GlobalFunctions .ControlButton:not(.phones),
+.mobile .PageFunctions .ControlButton:not(.Bookmark),
+.mobile #SettingsPanel .DefaultZoomMode,
+.mobile #SettingsPanel .zoomValue,
+.mobile #SettingsPanel .fitIfOversize,
+.mobile #SettingsPanel .showThumbnails,
+.mobile #SettingsPanel .lazyLoadImages,
+.mobile #SettingsPanel .downloadZip,
+.mobile #SettingsPanel .minZoom,
+.mobile #SettingsPanel .zoomStep,
+.mobile #SettingsPanel .headerType,
+.mobile #SettingsPanel .autoScroll,
+.mobile #KeybindingsPanel,
+.mobile .ChapterControl .download,
+.mobile #Counters {
   display: none;
 }

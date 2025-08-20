@@ -1,43 +1,23 @@
+import { setAppStateValue } from '../core/settings.ts';
 import { getDevice } from '../utils/tampermonkey';
 import autoscroll from './events/autoscroll';
-import bookmarks from './events/bookmarks';
-import globals from './events/globals';
+import trackCurrentPage from './events/currentpage';
 import headroom from './events/headroom';
-import individual from './events/individual';
 import keybindings from './events/keybindings';
-import navigation from './events/navigation';
-import options from './events/options';
-import panels from './events/panels';
-import size from './events/size';
-import theming from './events/theming';
-import viewMode from './events/viewmode';
-import zoom from './events/zoom';
 
-let setupEvents = false;
-
-// Controls for the extra features added to the sites
+/**
+ * Initializes all global event listeners for the application.
+ * This function sets up headroom for the header, keyboard shortcuts,
+ * auto-scrolling, current page tracking, and responsive device detection on resize.
+ */
 function events() {
-  if (!setupEvents) {
-    headroom(100);
-    keybindings();
-    individual();
-    size();
-    window.addEventListener('resize', () => {
-      const reader = document.querySelector('#MangaOnlineViewer');
-      reader?.classList.remove('mobile', 'tablet', 'desktop');
-      reader?.classList.add(getDevice());
-    });
-    setupEvents = true;
-  }
-  bookmarks();
-  globals();
-  navigation();
-  options();
-  panels();
-  theming();
-  viewMode();
-  zoom();
+  headroom();
+  keybindings();
+  window.addEventListener('resize', () => {
+    setAppStateValue('device', getDevice());
+  });
   autoscroll();
+  trackCurrentPage();
 }
 
 export default events;

@@ -1,7 +1,9 @@
+import { logger } from '@nanostores/logger';
 import _ from 'lodash';
 import { computed, map } from 'nanostores';
 import locales from '../locales';
 import {
+  type IApp,
   type IBookmark,
   type ILocale,
   type ILocaleKey,
@@ -9,10 +11,10 @@ import {
   type ISettingsKey,
   isKey,
 } from '../types';
-import { applyZoom } from '../ui/page';
 import { isNothing } from '../utils/checks';
 import diffObj from '../utils/diffObj';
 import {
+  getDevice,
   getGlobalSettings,
   getLocalSettings,
   giveToWindow,
@@ -30,31 +32,29 @@ import {
  * @type {ISettings}
  */
 export const defaultSettings: ISettings = {
-  enabled: true,
-  locale: 'en_US',
-  theme: 'darkblue',
-  customTheme: '#004526',
-  themeShade: 600,
-  colorScheme: 'dark',
-  fitWidthIfOversize: true,
-  showThumbnails: true,
-  enableComments: true,
-  downloadZip: false,
-  verticalSeparator: false,
-  throttlePageLoad: 1000,
-  zoomMode: 'percent',
-  defaultZoom: 100,
-  zoomStep: 25,
-  minZoom: 30,
-  loadMode: 'wait',
-  viewMode: 'WebComic',
   bookmarks: [],
+  colorScheme: 'dark',
+  downloadZip: false,
+  enableComments: true,
+  enabled: true,
+  fitWidthIfOversize: true,
+  header: 'hover',
+  hidePageControls: false,
   lazyLoadImages: false,
   lazyStart: 50,
-  hidePageControls: false,
-  header: 'hover',
+  loadMode: 'wait',
+  locale: 'en_US',
   maxReload: 5,
-  scrollHeight: 20,
+  minZoom: 30,
+  navbar: 'bottom',
+  pagination: false,
+  scrollHeight: 25,
+  theme: '#29487D',
+  throttlePageLoad: 1000,
+  viewMode: 'WebComic',
+  zoomMode: 'percent',
+  zoomStep: 25,
+  zoomValue: 100,
   keybinds: {
     SCROLL_UP: ['up', 'W', 'num_8'],
     SCROLL_DOWN: ['down', 'S', 'num_2'],
@@ -81,9 +81,11 @@ export const defaultSettings: ISettings = {
 const mobileSettings: Partial<ISettings> = {
   lazyLoadImages: true,
   fitWidthIfOversize: true,
-  showThumbnails: false,
+  navbar: 'disabled',
   viewMode: 'WebComic',
-  header: 'click',
+  header: 'scroll',
+  hidePageControls: true,
+  pagination: true,
 };
 
 /**
@@ -93,11 +95,11 @@ const mobileSettings: Partial<ISettings> = {
  */
 function getDefault(global = true): ISettings {
   return !isMobile()
-    ? { ...defaultSettings, enabled: global, theme: global ? 'darkblue' : 'darkgreen' }
+    ? { ...defaultSettings, enabled: global, theme: global ? '#29487D' : '#004526' }
     : _.defaultsDeep(mobileSettings, {
         ...defaultSettings,
         enabled: global,
-        theme: global ? 'darkblue' : 'darkgreen',
+        theme: global ? '#29487D' : '#004526',
       });
 }
 
@@ -247,6 +249,30 @@ export const locale = computed(
 );
 
 /**
+ * The reactive store for the application's volatile state, like current page, scroll state, etc.
+ * This state is not persisted.
+ * @type {import('nanostores').MapStore<IApp>}
+ */
+export const appState = map<IApp>({
+  autoScroll: false,
+  currentPage: 0,
+  loaded: 0,
+  manga: undefined,
+  panel: 'none',
+  scrollToPage: undefined,
+  device: getDevice(),
+  images: {},
+  headerVisible: true,
+});
+
+if (import.meta.env.DEV) {
+  logger({
+    Settings: settings,
+    AppState: appState,
+  });
+}
+
+/**
  * Refreshes the reactive `settings` store with the latest values from the raw settings objects.
  * Call this after a change is made to `globalSettings` or `localSettings` to propagate the change.
  * @param {K} [key] - If provided, refreshes only a single key. Otherwise, refreshes the entire object.
@@ -288,7 +314,6 @@ function syncGlobalSettings(newValue: Partial<ISettings>): void {
     logScript('Imported Global Settings', diff);
     globalSettings = newSettings;
     refreshSettings();
-    applyZoom(getSettingsValue('zoomMode'), getSettingsValue('defaultZoom'));
   }
 }
 
@@ -305,7 +330,6 @@ function syncLocalSettings(newValue: Partial<ISettings>): void {
     logScript('Imported Local Settings', diff);
     localSettings = newSettings;
     refreshSettings();
-    applyZoom(getSettingsValue('zoomMode'), getSettingsValue('defaultZoom'));
   }
 }
 
@@ -371,6 +395,44 @@ export function changeSettingsValue<K extends ISettingsKey>(
 }
 
 /**
+ * Gets a value from the reactive `appState` store.
+ * @template K
+ * @param {K} key - The key of the value to get.
+ * @returns {IApp[K]} The value from the app state.
+ */
+export function getAppStateValue<K extends keyof IApp>(key: K): IApp[K] {
+  return appState.get()[key];
+}
+
+/**
+ * Sets a value in the reactive `appState` store.
+ * @template K
+ * @param {K} key - The key of the value to set.
+ * @param {IApp[K]} value - The new value.
+ */
+export function setAppStateValue<K extends keyof IApp>(key: K, value: IApp[K]): void {
+  const current = appState.get()[key];
+  if (_.isEqual(current, value)) return;
+  appState.setKey(key, value);
+}
+
+/**
+ * Updates a value in the `appState` store using a function.
+ * @template K
+ * @param {K} key - The key of the value to change.
+ * @param {(value: IApp[K]) => IApp[K]} fn - The function to change the value.
+ */
+export function changeAppStateValue<K extends keyof IApp>(
+  key: K,
+  fn: (value: IApp[K]) => IApp[K],
+): void {
+  const oldVal = appState.get()[key];
+  const newVal = fn(oldVal);
+  if (_.isEqual(oldVal, newVal)) return;
+  appState.setKey(key, newVal);
+}
+
+/**
  * Gets a translated string from the current locale.
  * @param {K | string} name - The key of the string to get.
  * @returns {string} The translated string, or a placeholder if not found.
@@ -432,6 +494,8 @@ export function showSettings<K extends ISettingsKey>(key: K | null = null): void
     key ? globalSettings[key] : globalSettings,
     '\nLocal Settings',
     key ? localSettings[key] : localSettings,
+    '\nAppState',
+    appState.get(),
   );
 }
 

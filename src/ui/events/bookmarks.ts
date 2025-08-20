@@ -1,26 +1,31 @@
+import {
+  changeSettingsValue,
+  getAppStateValue,
+  getLocaleString,
+  isBookmarked,
+  setAppStateValue,
+} from '../../core/settings';
 import Swal from 'sweetalert2-neutral';
 import { changeSettingsValue, getLocaleString, isBookmarked } from '../../core/settings';
 import type { IBookmark } from '../../types';
 import { isNothing } from '../../utils/checks';
 import { logScript } from '../../utils/tampermonkey';
-import { reloadBookmarks } from '../components/BookmarksPanel';
-import { addEvent } from './common';
 
-export function buttonBookmarksClose() {
-  document.querySelector('#BookmarksPanel')?.classList.remove('visible');
-  document.querySelector('#Overlay')?.classList.remove('visible');
-}
-
+/**
+ * Removes a bookmark from the settings for a given URL.
+ * @param {string} [url=window.location.href] - The URL of the bookmark to remove.
+ */
 export function removeURLBookmark(url: string = window.location.href) {
   if (!isNothing(isBookmarked(url))) {
     logScript(`Bookmark Removed ${url}`);
     changeSettingsValue('bookmarks', b => b.filter(el => el.url !== url));
-    if (url === window.location.href) {
-      document.querySelector('#MangaOnlineViewer')?.classList.remove('bookmarked');
-    }
   }
 }
 
+/**
+ * Event handler for the button to erase a specific bookmark from the bookmarks panel.
+ * @param {Event} event - The click event from the erase button.
+ */
 export function buttonEraseBookmarks(event: Event) {
   const target = (event.currentTarget as HTMLButtonElement).value;
   logScript(`Bookmark Removed ${target}`);
@@ -30,38 +35,24 @@ export function buttonEraseBookmarks(event: Event) {
     icon: 'error',
   });
   removeURLBookmark(target);
-  reloadBookmarks();
-  document
-    .querySelectorAll('.bookmarkFunctions .erase')
-    ?.forEach(addEvent('click', buttonEraseBookmarks));
 }
 
+/**
+ * Event handler to open the bookmarks panel.
+ */
 export function buttonBookmarksOpen() {
-  reloadBookmarks();
-  document
-    .querySelectorAll('.bookmarkFunctions .erase')
-    ?.forEach(addEvent('click', buttonEraseBookmarks));
-  document.querySelector('#BookmarksPanel')?.classList.add('visible');
-  document.querySelector('#Overlay')?.classList.add('visible');
+  setAppStateValue('panel', 'bookmarks');
 }
 
-export function buttonBookmark(event: Event) {
-  document.querySelector('#MangaOnlineViewer')?.classList.toggle('bookmarked');
-  const pagesDistance = [...document.querySelectorAll<HTMLElement>('.MangaPage')].map(element =>
-    Math.abs(element.offsetTop - window.scrollY),
-  );
-  const currentPage = parseInt(
-    (event.currentTarget as HTMLElement).parentElement?.querySelector('.PageIndex')?.textContent ??
-      '0',
-    10,
-  );
-  const num = currentPage || pagesDistance.indexOf(Math.min(...pagesDistance)) + 1;
+/**
+ * Event handler to toggle a bookmark for the current page.
+ * If a bookmark exists, it is removed. If not, a new one is created.
+ * A confirmation dialog is shown to the user in either case.
+ */
+export function buttonBookmark() {
+  const num = getAppStateValue('currentPage');
   const mark: IBookmark = {
-    name:
-      document
-        .querySelector('title')
-        ?.textContent?.trim()
-        .replace(/^\(\d+%\) */, '') ?? '',
+    name: getAppStateValue('manga')?.title ?? window.location.hostname,
     url: window.location.href,
     page: num,
     date: new Date().toISOString().slice(0, 10),
@@ -77,30 +68,8 @@ export function buttonBookmark(event: Event) {
     changeSettingsValue('bookmarks', b => [...b, mark]);
     Swal.fire({
       title: getLocaleString('BOOKMARK_SAVED'),
-      html: getLocaleString('BOOKMARK_SAVED').replace('##NUM##', num.toString()),
+      html: getLocaleString('BOOKMARK_MESSAGE').replace('##num##', num.toString()),
       icon: 'success',
     });
   }
-
-  reloadBookmarks();
-  document
-    .querySelectorAll('.bookmarkFunctions .erase')
-    ?.forEach(addEvent('click', buttonEraseBookmarks));
 }
-
-function bookmarks() {
-  // List of Bookmarks
-  document.querySelector('#bookmarks')?.addEventListener('click', buttonBookmarksOpen);
-  document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonBookmarksClose));
-  document.querySelector('#Overlay')?.addEventListener('click', buttonBookmarksClose);
-  // Erase Bookmark
-  document
-    .querySelectorAll('.bookmarkFunctions .erase')
-    ?.forEach(addEvent('click', buttonEraseBookmarks));
-
-  // Bookmark Page to resume reading
-  document.querySelectorAll('.Bookmark')?.forEach(addEvent('click', buttonBookmark));
-  document.querySelector('.AddBookmark')?.addEventListener('click', buttonBookmark);
-}
-
-export default bookmarks;

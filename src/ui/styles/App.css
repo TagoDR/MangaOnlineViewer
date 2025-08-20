@@ -1,0 +1,127 @@
+:root:not(.light, .dark) {
+  --theme-body-background: #25262b;
+  --theme-body-text-color: #c1c2c5;
+  --theme-text-color: #c1c2c5;
+  --theme-primary-color: #1a1b1e;
+  --theme-primary-text-color: #c1c2c5;
+  --theme-background-color: #25262b;
+  --theme-hightlight-color: #2c2e33;
+  --theme-border-color: #373a40;
+}
+
+#MangaOnlineViewer {
+  text-decoration: none;
+  color: var(--theme-body-text-color);
+  background-color: var(--theme-body-background);
+}
+
+#Chapter {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  min-width: 225px;
+}
+
+#Chapter.Vertical:has(+ #Navigation:not(.disabled)),
+#Chapter.WebComic:has(+ #Navigation:not(.disabled)) {
+  padding-bottom: 31px;
+}
+
+#Chapter.Vertical .PageContent {
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+.closeButton {
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 950;
+  cursor: pointer;
+}
+
+.overlay.visible {
+  display: block;
+}
+
+select {
+  height: 20px;
+  /*padding: 0;*/
+  margin: 2px;
+}
+
+.ControlButton,
+.ControlButton:visited,
+.ControlButton:link,
+.simpleButton {
+  cursor: pointer;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  padding: 2px;
+  min-height: 32px;
+  color: var(--theme-primary-text-color);
+  background-color: var(--theme-primary-color);
+  border-color: var(--theme-border-color);
+}
+
+.ControlButton:active,
+.ControlButton:hover {
+  opacity: 0.8;
+}
+
+.simpleButton {
+  font-size: initial;
+  min-width: 32px;
+}
+
+.panel .simpleButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.panel {
+  padding: 5px;
+  position: inherit;
+  border-radius: 5px;
+  background-color: var(--theme-background-color);
+}
+
+:not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.ControlButton.hidden,
+.light #ColorScheme > .icon-tabler-sun,
+.dark #ColorScheme > .icon-tabler-moon,
+.light #CommentsColorScheme > .icon-tabler-sun,
+.dark #CommentsColorScheme > .icon-tabler-moon,
+.ChapterControl #download.loading > .icon-tabler-file-download,
+.ChapterControl #download:not(.loading) > .icon-tabler-loader-2,
+.MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,
+.MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,
+.bookmarked .Bookmark > .icon-tabler-bookmark,
+#MangaOnlineViewer:not(.bookmarked) .Bookmark > .icon-tabler-bookmark-off,
+#AutoScroll.running > .icon-tabler-player-play,
+#AutoScroll:not(.running) > .icon-tabler-player-pause {
+  display: none;
+}
+
+.hideControls .PageFunctions {
+  visibility: hidden;
+}

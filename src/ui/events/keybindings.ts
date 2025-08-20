@@ -1,36 +1,51 @@
+import { sanitizeUrl } from '@braintree/sanitize-url';
 import hotkeys from 'hotkeys-js';
 import _ from 'lodash';
-import { getSettingsValue } from '../../core/settings';
+import { getAppStateValue, getSettingsValue, setAppStateValue } from '../../core/settings';
 import { logScript } from '../../utils/tampermonkey';
+import { toggleAutoScroll } from './autoscroll.ts';
 import { scrollToElement } from './common';
+import { updateViewMode } from './viewmode.ts';
+import { changeGlobalZoom, changeZoomByStep } from './zoom.ts';
 
-const doClick = (selector: string) =>
-  document.querySelector(selector)?.dispatchEvent(new Event('click'));
-
+/**
+ * Handles the logic for scrolling the page up or down.
+ * The behavior changes based on the current view and zoom modes to provide an intuitive experience.
+ * @internal
+ * @param {1 | -1} sign - The direction of the scroll (-1 for up, 1 for down).
+ */
 function doScrolling(sign: 1 | -1) {
-  const chapter = document.querySelector<HTMLElement>('#Chapter');
-  if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
-    const scrollDirection = chapter.classList.contains('FluidRTL') ? -1 : 1;
-    chapter.scrollBy({
-      left: 0.8 * window.innerWidth * sign * scrollDirection,
-      behavior: 'smooth',
-    });
-  } else if (getSettingsValue('zoomMode') === 'height') {
-    // Fit height
-    const pages = [...document.querySelectorAll<HTMLElement>('.MangaPage')];
+  const viewMode = getSettingsValue('viewMode');
+  const zoomMode = getSettingsValue('zoomMode');
+  logScript('Scrolling view', viewMode, 'zoom', zoomMode, 'sign', sign);
+  if (viewMode.startsWith('Fluid')) {
+    // In fluid modes, scroll horizontally.
+    const scrollDirection = viewMode === 'FluidRTL' ? -1 : 1;
+    getAppStateValue('render')
+      ?.querySelector<HTMLElement>('#Chapter')
+      ?.scrollBy({
+        left: 0.8 * window.innerWidth * sign * scrollDirection,
+        behavior: 'smooth',
+      });
+  } else if (zoomMode === 'height') {
+    // In 'Fit Height' mode, scroll page by page.
+    const pages = [
+      ...(getAppStateValue('render')?.querySelectorAll<HTMLElement>('.MangaPage') ?? []),
+    ];
     const distance = pages.map(element => Math.abs(element.offsetTop - window.scrollY));
     const currentPage = _.indexOf(distance, _.min(distance));
     const target = currentPage + sign;
-    const header = document.querySelector<HTMLDivElement>('#Header');
+    const header = getAppStateValue('render')?.querySelector<HTMLDivElement>('#Header');
     if (header && target < 0) {
       scrollToElement(header);
-    } else if (header && target >= pages.length) {
-      header.classList.add('headroom-end');
+    } else if (target >= pages.length) {
+      // Do nothing if at the end
     } else {
       logScript(`Current array page ${currentPage},`, `Scrolling to page ${target}`);
       scrollToElement(pages.at(target));
     }
   } else {
+    // In all other vertical modes, scroll by a percentage of the viewport height.
     window.scrollBy({
       top: 0.8 * window.innerHeight * sign,
       behavior: 'smooth',
@@ -38,6 +53,10 @@ function doScrolling(sign: 1 | -1) {
   }
 }
 
+/**
+ * A mapping of keybinding identifiers to their corresponding action functions.
+ * @internal
+ */
 const actions: Record<string, () => void> = {
   SCROLL_UP() {
     doScrolling(-1);
@@ -46,47 +65,61 @@ const actions: Record<string, () => void> = {
     doScrolling(1);
   },
   NEXT_CHAPTER() {
-    doClick('#next');
+    const url = getAppStateValue('manga')?.next;
+    if (url && url !== '#') {
+      window.location.href = sanitizeUrl(url);
+    } else {
+      window.history.back();
+    }
   },
   PREVIOUS_CHAPTER() {
-    doClick('#prev');
+    const url = getAppStateValue('manga')?.prev;
+    if (url && url !== '#') {
+      window.location.href = sanitizeUrl(url);
+    } else {
+      window.history.back();
+    }
   },
   ENLARGE() {
-    doClick('#enlarge');
+    changeZoomByStep(1)();
   },
   REDUCE() {
-    doClick('#reduce');
+    changeZoomByStep(-1)();
   },
   RESTORE() {
-    doClick('#restore');
+    changeGlobalZoom('percent', 100)();
   },
   FIT_WIDTH() {
-    doClick('#fitWidth');
+    changeGlobalZoom('width')();
   },
   FIT_HEIGHT() {
-    doClick('#fitHeight');
+    changeGlobalZoom('height')();
   },
   SETTINGS() {
-    doClick('#settings');
+    setAppStateValue('panel', 'settings');
   },
   VIEW_MODE_WEBCOMIC() {
-    doClick('#webComic');
+    updateViewMode('WebComic')();
   },
   VIEW_MODE_VERTICAL() {
-    doClick('#verticalMode');
+    updateViewMode('Vertical')();
   },
   VIEW_MODE_LEFT() {
-    doClick('#rtlMode');
+    updateViewMode('FluidRTL')();
   },
   VIEW_MODE_RIGHT() {
-    doClick('#ltrMode');
+    updateViewMode('FluidLTR')();
   },
   SCROLL_START() {
-    doClick('#AutoScroll');
+    toggleAutoScroll();
   },
 };
 
-// Clean key press configurations and set some when specified
+/**
+ * Initializes the keybinding system.
+ * It first unbinds all existing hotkeys to prevent conflicts, then re-binds them
+ * based on the current user settings. Each keybinding is throttled to prevent rapid firing.
+ */
 function keybindings() {
   document.onkeydown = null;
   document.onkeyup = null;

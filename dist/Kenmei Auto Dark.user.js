@@ -8,7 +8,7 @@
 // @grant       none
 // ==/UserScript==
 
-(function() {
-    'use strict'
-    document.body.classList.add('dark');
+(function () {
+  'use strict';
+  document.body.classList.add('dark');
 })();
