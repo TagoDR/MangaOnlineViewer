@@ -1,4 +1,4 @@
-#MangaOnlineViewer #BookmarksPanel {
+#BookmarksPanel {
   position: fixed;
   top: 10%;
   width: 50%;
@@ -11,18 +11,18 @@
   z-index: 1000;
 }
 
-#MangaOnlineViewer #BookmarksPanel.visible {
+#BookmarksPanel.visible {
   transform: scaleY(1);
   display: block;
 }
 
-#MangaOnlineViewer #BookmarksList {
+#BookmarksList {
   padding: 0 15px;
   overflow: auto;
   max-height: 60vh;
 }
 
-#MangaOnlineViewer #BookmarksList .BookmarkItem {
+#BookmarksList .BookmarkItem {
   display: flex;
   flex-flow: row;
   justify-content: space-between;
@@ -30,19 +30,19 @@
   padding: 2px;
 }
 
-#MangaOnlineViewer #BookmarksList .bookmarkColumnLarge {
+#BookmarksList .bookmarkColumnLarge {
   flex-basis: 90%;
 }
 
-#MangaOnlineViewer #BookmarksList .bookmarkColumnSmall {
+#BookmarksList .bookmarkColumnSmall {
   width: 90px;
 }
 
-#MangaOnlineViewer #BookmarksList .bookmarkFunctions {
+#BookmarksList .bookmarkFunctions {
   width: 75px;
 }
 
-#MangaOnlineViewer #BookmarksList .bookmarkURl {
+#BookmarksList .bookmarkURl {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;

@@ -1,8 +1,8 @@
 import { getSettingsValue, saveSettingsValue } from '../../core/settings';
-import type { Shade } from '../../types';
-import { refreshThemes } from '../themes';
-import { addEvent } from './common';
 
+/**
+ * Toggles the color scheme between 'dark' and 'light' and applies the corresponding class to the root element.
+ */
 export function changeColorScheme() {
   const isDark = getSettingsValue('colorScheme') === 'dark';
   saveSettingsValue('colorScheme', isDark ? 'light' : 'dark');
@@ -10,31 +10,22 @@ export function changeColorScheme() {
   document.documentElement.classList.add(getSettingsValue('colorScheme'));
 }
 
+/**
+ * Event handler for selecting a new theme color from a swatch.
+ * It reads the color value from the element's `title` attribute.
+ * @param {Event} event - The click event from a color swatch element.
+ */
 export function buttonSelectTheme(event: Event) {
   const target = event.currentTarget as HTMLElement;
+  // The hex color is stored in the title attribute of the swatch
   saveSettingsValue('theme', target.title);
 }
 
-export function changeCustomTheme(event: Event) {
-  const target = (event.currentTarget as HTMLInputElement).value;
-  saveSettingsValue('customTheme', target);
+/**
+ * Event handler for changing the theme color via a text input or color picker.
+ * @param {Event} event - The input or change event from a color input element.
+ */
+export function changeThemeHex(event: Event) {
+  const value = (event.currentTarget as HTMLInputElement).value;
+  saveSettingsValue('theme', value);
 }
-
-export function changeThemeShade(event: Event) {
-  const target = parseInt((event.currentTarget as HTMLInputElement).value, 10);
-  saveSettingsValue('themeShade', target as Shade);
-  refreshThemes();
-}
-
-function theming() {
-  // ColorScheme Selector
-  document.querySelector('#ColorScheme')?.addEventListener('click', changeColorScheme);
-  // Theme Control Selector
-  document.querySelectorAll('.ThemeRadio').forEach(addEvent('click', buttonSelectTheme));
-  // Custom theme Color Input
-  document.querySelector('#CustomThemeHue')?.addEventListener('change', changeCustomTheme);
-  // Theme Shade Input
-  document.querySelector('#ThemeShade')?.addEventListener('input', changeThemeShade);
-}
-
-export default theming;

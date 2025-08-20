@@ -1,3 +1,4 @@
+export * from './IApp.ts';
 export * from './IBookmark';
 export * from './ILocale';
 export * from './IManga';

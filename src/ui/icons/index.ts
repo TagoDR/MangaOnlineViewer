@@ -1,46 +1,294 @@
-// Icons from https://tabler-icons.io/
-export { default as IconArrowAutofitDown } from './arrow-autofit-down.svg';
-export { default as IconArrowAutofitHeight } from './arrow-autofit-height.svg';
-export { default as IconArrowAutofitLeft } from './arrow-autofit-left.svg';
-export { default as IconArrowAutofitRight } from './arrow-autofit-right.svg';
-export { default as IconArrowAutofitWidth } from './arrow-autofit-width.svg';
-export { default as IconArrowBigLeft } from './arrow-big-left.svg';
-export { default as IconArrowBigRight } from './arrow-big-right.svg';
-export { default as IconBookmark } from './bookmark.svg';
-export { default as IconBookmarkOff } from './bookmark-off.svg';
-export { default as IconBookmarks } from './bookmarks.svg';
-export { default as IconCategory } from './category.svg';
-export { default as IconCheck } from './check.svg';
-export { default as IconDeviceFloppy } from './device-floppy.svg';
-export { default as IconExternalLink } from './external-link.svg';
-export { default as IconEye } from './eye.svg';
-export { default as IconEyeOff } from './eye-off.svg';
-export { default as IconFileDownload } from './file-download.svg';
-export { default as IconKeyboard } from './keyboard.svg';
-export { default as IconListNumbers } from './list-numbers.svg';
-export { default as IconLoader2 } from './loader-2.svg';
-export { default as IconLocationCog } from './location-cog.svg';
-export { default as IconMenu2 } from './menu-2.svg';
-export { default as IconMessage } from './message.svg';
-export { default as IconMoon } from './moon.svg';
-export { default as IconPalette } from './palette.svg';
-export { default as IconPencil } from './pencil.svg';
-export { default as IconPencilCog } from './pencil-cog.svg';
-export { default as IconPhoto } from './photo.svg';
-export { default as IconPhotoOff } from './photo-off.svg';
-export { default as IconPlayerPause } from './player-pause.svg';
-export { default as IconPlayerPlay } from './player-play.svg';
-export { default as IconRefresh } from './refresh.svg';
-export { default as IconSettings } from './settings.svg';
-export { default as IconSettingsOff } from './settings-off.svg';
-export { default as IconSpacingVertical } from './spacing-vertical.svg';
-export { default as IconSun } from './sun.svg';
-export { default as IconTrash } from './trash.svg';
-export { default as IconWorldCog } from './world-cog.svg';
-export { default as IconX } from './x.svg';
-export { default as IconZoomCancel } from './zoom-cancel.svg';
-export { default as IconZoomIn } from './zoom-in.svg';
-export { default as IconZoomInArea } from './zoom-in-area.svg';
-export { default as IconZoomOut } from './zoom-out.svg';
-export { default as IconZoomOutArea } from './zoom-out-area.svg';
-export { default as IconZoomPan } from './zoom-pan.svg';
+/**
+ * @file This module is responsible for processing raw SVG icon strings.
+ * It parses a dedicated CSS file (`Icons.css`) to extract color rules, applies these rules
+ * directly to the SVG strings by adding `stroke` attributes, and then exports the processed icons
+ * in two formats:
+ * 1. As raw SVG strings (e.g., `IconNameRaw`).
+ * 2. As Lit `unsafeSVG` directives for direct rendering in templates (e.g., `IconName`).
+ */
+
+import type { DirectiveResult } from 'lit/directive.js';
+import { type UnsafeSVGDirective, unsafeSVG } from 'lit/directives/unsafe-svg.js';
+import iconsCSS from '../styles/Icons.css?inline';
+import * as rawIcons from './Icons.ts';
+
+/**
+ * Represents a parsed CSS rule containing selectors and a color.
+ * @internal
+ */
+type CssRule = {
+  selectors: string[];
+  color: string;
+};
+
+/**
+ * Parses a CSS string to extract simple color rules.
+ * This is specifically tailored to the format used in `Icons.css`.
+ * @internal
+ * @param {string} css - The CSS string to parse.
+ * @returns {CssRule[]} An array of parsed CSS rules.
+ */
+function parseCss(css: string): CssRule[] {
+  const ruleRegex = /([^{}]+)\s*\{([^}]+)\}/g;
+  return [...css.matchAll(ruleRegex)]
+    .map(match => {
+      const selectorsBlock = match[1].trim();
+      const properties = match[2];
+      const colorMatch = /color:\s*([^;]+)/.exec(properties);
+
+      if (colorMatch) {
+        const color = colorMatch[1].trim();
+        const selectors = selectorsBlock.split(',').map(s => s.trim().replace(/\s\s+/g, ' '));
+        return { selectors, color };
+      }
+      return null;
+    })
+    .filter((rule): rule is CssRule => rule !== null);
+}
+
+const colorRules = parseCss(iconsCSS);
+const parser = new DOMParser();
+const serializer = new XMLSerializer();
+
+/**
+ * Applies the parsed CSS color rules to a raw SVG string by injecting `stroke` attributes into its child elements.
+ * @internal
+ * @param {string} svgString - The original SVG icon as a string.
+ * @param {string} className - The base class name of the icon (e.g., 'icon-tabler-file-download') used for matching selectors.
+ * @returns {string} A new SVG string with the color styles applied.
+ */
+function applyColorsToSvg(svgString: string, className: string): string {
+  const doc = parser.parseFromString(svgString, 'image/svg+xml');
+  const svg = doc.documentElement;
+
+  if (svg.querySelector('parsererror')) {
+    console.error(`Error parsing SVG for ${className}`);
+    return svgString;
+  }
+
+  for (const rule of colorRules) {
+    for (const selector of rule.selectors) {
+      if (selector.startsWith(`.${className}`)) {
+        const selectorMatch = selector.match(new RegExp(`^\\.${className}\\s*(.*)$`));
+        if (selectorMatch) {
+          let subSelector = selectorMatch[1].trim() || '*';
+          if (subSelector.startsWith('>')) {
+            subSelector = subSelector.substring(1).trim();
+          }
+          try {
+            const elements = svg.querySelectorAll<SVGElement>(subSelector);
+            elements.forEach(el => {
+              el.setAttribute('stroke', rule.color);
+            });
+          } catch (e) {
+            console.error(`Invalid selector "${subSelector}" for ${className}`, e);
+          }
+        }
+      }
+    }
+  }
+  return serializer.serializeToString(svg);
+}
+
+/**
+ * A record of all icons as processed SVG strings with colors applied.
+ * The keys are in the format `IconNameRaw`.
+ * @internal
+ */
+const styledIcons: Record<string, string> = Object.fromEntries(
+  Object.keys(rawIcons).map(iconKey => {
+    const kebabCaseName = iconKey
+      .replace(/^Icon/, '')
+      .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+      .toLowerCase();
+
+    const rawSvg = (rawIcons as Record<string, string>)[iconKey];
+    const className = `icon-tabler-${kebabCaseName}`;
+    const styledSvg = applyColorsToSvg(rawSvg, className);
+
+    return [`${iconKey}Raw`, styledSvg];
+  }),
+);
+
+/**
+ * A record of all icons as Lit `unsafeSVG` directives, ready for rendering.
+ * The keys are in the format `IconName`.
+ * @internal
+ */
+const styledIconsSVG: Record<
+  string,
+  DirectiveResult<typeof UnsafeSVGDirective>
+> = Object.fromEntries(
+  Object.keys(styledIcons).map(iconKey => [
+    iconKey.replace('Raw', ''),
+    unsafeSVG(styledIcons[iconKey]),
+  ]),
+);
+
+/**
+ * A collection of all processed icons, exported as Lit `unsafeSVG` directives.
+ * Use these for direct rendering within a Lit template.
+ * @example html`${IconFileDownload}`
+ */
+export const {
+  IconArrowAutofitDown,
+  IconArrowAutofitHeight,
+  IconArrowAutofitLeft,
+  IconArrowAutofitRight,
+  IconArrowAutofitWidth,
+  IconArrowBigLeft,
+  IconArrowBigRight,
+  IconBook,
+  IconBookmark,
+  IconBookmarkOff,
+  IconBookmarks,
+  IconBookReturn,
+  IconBookUpload,
+  IconCategory,
+  IconCheck,
+  IconChevronRight,
+  IconDeviceFloppy,
+  IconDotsVertical,
+  IconEye,
+  IconEyeOff,
+  IconExternalLink,
+  IconFileDownload,
+  IconFilePercent,
+  IconPin,
+  IconArrowsMove,
+  IconBoxAlignTop,
+  IconArrowsVertical,
+  IconHandClick,
+  IconKeyboard,
+  IconLayoutBottombar,
+  IconLayoutBottombarInactive,
+  IconLayoutSidebar,
+  IconLayoutSidebarInactive,
+  IconLayoutSidebarRight,
+  IconLayoutSidebarRightInactive,
+  IconListNumbers,
+  IconLoader2,
+  IconLocationCog,
+  IconMenu2,
+  IconMenuDeep,
+  IconMessage,
+  IconMoon,
+  IconPalette,
+  IconPencil,
+  IconPencilCog,
+  IconPhoto,
+  IconPhotoOff,
+  IconPlayerPause,
+  IconPlayerPlay,
+  IconRefresh,
+  IconSettings,
+  IconSettingsOff,
+  IconSpacingVertical,
+  IconSun,
+  IconTrash,
+  IconWorldCog,
+  IconX,
+  IconZoomCancel,
+  IconZoomIn,
+  IconZoomInArea,
+  IconZoomOut,
+  IconZoomOutArea,
+  IconZoomPan,
+  IconPageFlat,
+  IconComic1Flat,
+  IconComic2Flat,
+  IconComic3Flat,
+  IconEReader1Flat,
+  IconEReader2Flat,
+  IconPage,
+  IconComic1,
+  IconComic2,
+  IconComic3,
+  IconEReader1,
+  IconEReader2,
+} = styledIconsSVG;
+
+/**
+ * A collection of all processed icons, exported as raw SVG strings.
+ * Use these when you need the SVG content directly, for example, in a data URL.
+ * The keys are suffixed with `Raw`.
+ * @example svgToUrl(IconFileDownloadRaw)
+ */
+export const {
+  IconArrowAutofitDownRaw,
+  IconArrowAutofitHeightRaw,
+  IconArrowAutofitLeftRaw,
+  IconArrowAutofitRightRaw,
+  IconArrowAutofitWidthRaw,
+  IconArrowBigLeftRaw,
+  IconArrowBigRightRaw,
+  IconArrowsMoveRaw,
+  IconArrowsVerticalRaw,
+  IconArrowsMoveVerticalRaw,
+  IconBookRaw,
+  IconBookmarkRaw,
+  IconBookmarkOffRaw,
+  IconBookmarksRaw,
+  IconBookReturnRaw,
+  IconBookUploadRaw,
+  IconBoxAlignTopRaw,
+  IconCategoryRaw,
+  IconCheckRaw,
+  IconChevronRightRaw,
+  IconDeviceFloppyRaw,
+  IconDotsVerticalRaw,
+  IconEyeRaw,
+  IconEyeOffRaw,
+  IconExternalLinkRaw,
+  IconFileDownloadRaw,
+  IconFilePercentRaw,
+  IconHandClickRaw,
+  IconKeyboardRaw,
+  IconLayoutBottombarRaw,
+  IconLayoutBottombarInactiveRaw,
+  IconLayoutSidebarRaw,
+  IconLayoutSidebarInactiveRaw,
+  IconLayoutSidebarRightRaw,
+  IconLayoutSidebarRightInactiveRaw,
+  IconListNumbersRaw,
+  IconLoader2Raw,
+  IconLocationCogRaw,
+  IconMenu2Raw,
+  IconMenuDeepRaw,
+  IconMessageRaw,
+  IconMoonRaw,
+  IconPaletteRaw,
+  IconPencilRaw,
+  IconPencilCogRaw,
+  IconPhotoRaw,
+  IconPhotoOffRaw,
+  IconPinRaw,
+  IconPlayerPauseRaw,
+  IconPlayerPlayRaw,
+  IconRefreshRaw,
+  IconSettingsRaw,
+  IconSettingsOffRaw,
+  IconSpacingVerticalRaw,
+  IconSunRaw,
+  IconTrashRaw,
+  IconWorldCogRaw,
+  IconXRaw,
+  IconZoomCancelRaw,
+  IconZoomInRaw,
+  IconZoomInAreaRaw,
+  IconZoomOutRaw,
+  IconZoomOutAreaRaw,
+  IconZoomPanRaw,
+  IconPageFlatRaw,
+  IconComic1FlatRaw,
+  IconComic2FlatRaw,
+  IconComic3FlatRaw,
+  IconEReader1FlatRaw,
+  IconEReader2FlatRaw,
+  IconPageRaw,
+  IconComic1Raw,
+  IconComic2Raw,
+  IconComic3Raw,
+  IconEReader1Raw,
+  IconEReader2Raw,
+} = styledIcons;

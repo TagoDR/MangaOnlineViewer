@@ -1,105 +1,72 @@
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
-import { logScript, logScriptC } from '../utils/tampermonkey';
-import {
-  getDataFromBase64,
-  getExtension,
-  getExtensionBase64,
-  isBase64ImageUrl,
-  isObjectURL,
-} from '../utils/urls';
+import { logScript } from '../utils/tampermonkey';
+import { getAppStateValue, setAppStateValue } from './settings.ts';
 
-type ImageFile = {
-  name: string;
-  data: string;
-};
-
-let zip: JSZip;
-
-const getFilename = (name: string, index: number, total: number, ext: string) =>
-  `${name}${(index + 1).toString().padStart(Math.floor(Math.log10(total)) + 1, '0')}.${ext.replace(
-    'jpeg',
-    'jpg',
-  )}`;
-
-async function getImage(src: string) {
-  return new Promise<Tampermonkey.Response<string>>((resolve, reject) => {
-    logScript(`Getting Image data: ${src}`);
-    GM_xmlhttpRequest({
-      method: 'GET',
-      url: src,
-      headers: { referer: window.location.host, origin: window.location.host },
-      responseType: 'blob',
-      onload(response) {
-        if (response.status !== 200) {
-          reject(response);
-        }
-        resolve(response);
-      },
-    });
-  });
-}
-
-async function getImageData(
-  img: HTMLImageElement,
-  index: number,
-  array: HTMLImageElement[],
-): Promise<ImageFile> {
-  const src = img.getAttribute('src') ?? img.getAttribute('data-src') ?? '';
-  if (isObjectURL(src)) {
-    throw new Error('Image source unusable');
+/**
+ * Gets the file extension from a MIME type.
+ * @param {string} [mime] - The MIME type of the file.
+ * @returns {string} The corresponding file extension (e.g., 'jpg', 'png'). Defaults to 'png'.
+ */
+function extFromMime(mime?: string): string {
+  switch (mime) {
+    case 'image/jpeg':
+      return 'jpg';
+    case 'image/png':
+      return 'png';
+    case 'image/webp':
+      return 'webp';
+    case 'image/gif':
+      return 'gif';
+    case 'image/bmp':
+      return 'bmp';
+    default:
+      return 'png';
   }
-  if (isBase64ImageUrl(src)) {
-    return Promise.resolve({
-      name: getFilename('Page-', index, array.length, getExtensionBase64(src)),
-      data: getDataFromBase64(src) ?? '',
+}
+
+/**
+ * Generates a zip file from the images stored in the application state and initiates a download.
+ * The zip file is named after the manga title.
+ * @returns {Promise<void>} A promise that resolves when the zip generation and download process is initiated.
+ */
+async function generateZip(): Promise<void> {
+  setAppStateValue('download', 'working');
+  const zip = new JSZip();
+  // Read images from app state; use Blob only
+  const images = getAppStateValue('images') ?? {};
+  const manga = getAppStateValue('manga');
+  const digits = Math.floor(Math.log10(manga?.pages ?? 1)) + 1;
+
+  Object.entries(images)
+    .sort((a, b) => Number(a[0]) - Number(b[0]))
+    .forEach(([key, page]) => {
+      if (!page || !page.blob) return;
+      const blob = page.blob;
+      const ext = extFromMime(blob.type);
+      const name = `Page-${Number(key).toString().padStart(digits, '0')}.${ext}`;
+
+      logScript(`${name} Added to Zip from Blob`);
+      zip.file(name, blob, {
+        createFolders: true,
+        compression: 'DEFLATE',
+      });
     });
-  }
 
-  return new Promise(resolve => {
-    getImage(src)
-      .then(res => {
-        resolve({
-          name: getFilename('Page-', index, array.length, getExtension(src)),
-          data: res.response,
-        });
-      })
-      .catch(logScriptC('Image not Available'));
-  });
-}
-
-function addZip(img: ImageFile) {
-  logScript(`${img.name} Added to Zip from Base64 Image`);
-  zip.file(img.name, img.data, {
-    base64: true,
-    createFolders: true,
-    compression: 'DEFLATE',
-  });
-}
-
-async function generateZip() {
-  zip = new JSZip();
-  const images = [...document.querySelectorAll<HTMLImageElement>('.PageImg')];
-  Promise.all(images.map(getImageData))
-    .then(data => {
-      data.forEach(addZip);
-      logScript('Generating Zip');
-      zip
-        .generateAsync(
-          {
-            type: 'blob',
-          },
-          // LogScript, progress
-        )
-        .then(content => {
-          logScript('Download Ready');
-          const zipName = `${document.querySelector('#MangaTitle')?.textContent?.trim()}.zip`;
-          saveAs(content, zipName, { autoBom: false });
-          document.getElementById('download')?.classList.remove('loading');
-        })
-        .catch(logScript);
+  logScript('Generating Zip');
+  zip
+    .generateAsync({ type: 'blob' })
+    .then(content => {
+      logScript('Download Ready');
+      const zipName = `${manga?.title ?? document.title}.zip`;
+      saveAs(content, zipName, { autoBom: false });
     })
-    .catch(msg => logScript("One or more images couldn't be Downloaded", msg));
+    .catch(err => {
+      logScript('Error generating zip', err);
+    })
+    .finally(() => {
+      setAppStateValue('download', undefined);
+    });
 }
 
 export default generateZip;

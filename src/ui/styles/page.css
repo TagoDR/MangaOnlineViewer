@@ -1,4 +1,4 @@
-#MangaOnlineViewer .MangaPage {
+.MangaPage {
   width: 100%;
   display: inline-block;
   text-align: center;
@@ -7,7 +7,7 @@
   min-width: 100%;
 }
 
-#MangaOnlineViewer .PageContent {
+.PageContent {
   text-align: center;
   display: inline-block;
   overflow-x: auto;
@@ -17,12 +17,13 @@
   overflow-y: hidden;
 }
 
-#MangaOnlineViewer .MangaPage.hide .PageContent {
+.MangaPage.hide .PageContent {
   height: 0;
 }
 
-#MangaOnlineViewer .PageContent .PageImg[src=""],
-#MangaOnlineViewer .PageContent .PageImg:not([src]) {
+.PageContent .PageImg[src=""],
+.PageContent .PageImg:not([src]),
+.PageContent .PageImg.imgBroken {
   width: 40vw;
   height: 80vh;
   display: inline-block;
@@ -30,19 +31,34 @@
   background-repeat: no-repeat;
   background-size: 20%;
   background-color: var(--theme-hightlight-color);
+  position: relative;
+  text-align: center;
+  line-height: 80vh;
+  vertical-align: top;
+  color: var(--theme-text-color);
+  font-size: 1rem;
+  min-width: 40vw;
+  min-height: 50vh;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
 }
 
-#MangaOnlineViewer .PageContent .PageImg.imgBroken {
-  width: 40vw;
-  height: 80vh;
-  display: inline-block;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 20%;
-  background-color: var(--theme-hightlight-color);
+.PageContent .PageImg[src=""]:before,
+.PageContent .PageImg:not([src]):before,
+.PageContent .PageImg.imgBroken:before {
+  content: attr(alt);
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: pre-wrap;
+  text-align: center;
+  color: var(--theme-text-color);
+  font-size: 1rem;
 }
 
-#MangaOnlineViewer .PageFunctions {
+.PageFunctions {
   font-family: monospace;
   display: flex;
   justify-content: flex-end;
@@ -54,7 +70,7 @@
   right: 0;
 }
 
-#MangaOnlineViewer .PageFunctions > .PageIndex {
+.PageFunctions > .PageIndex {
   background-color: var(--theme-primary-color);
   color: var(--theme-primary-text-color);
   min-width: 20px;
@@ -65,7 +81,7 @@
   border-radius: 5px;
 }
 
-#MangaOnlineViewer .PageFunctions .ControlButton {
+.PageFunctions .ControlButton {
   padding: 3px;
   display: flex;
   justify-content: center;
@@ -76,37 +92,37 @@
   opacity: 0.5;
 }
 
-#MangaOnlineViewer .PageFunctions:hover .ControlButton {
+.PageFunctions:hover .ControlButton {
   opacity: 1;
 }
 
-#MangaOnlineViewer .PageFunctions .ControlButton:hover {
+.PageFunctions .ControlButton:hover {
   opacity: 0.9;
 }
 
-#MangaOnlineViewer #Chapter.Vertical .separator {
+#Chapter.Vertical .separator {
   display: flex;
   align-items: center;
   text-align: center;
   font-style: italic;
 }
 
-#MangaOnlineViewer #Chapter.Vertical .separator::before,
-#MangaOnlineViewer #Chapter.Vertical .separator::after {
+#Chapter.Vertical .separator::before,
+#Chapter.Vertical .separator::after {
   content: "";
   flex: 1;
   border-bottom: 1px solid var(--theme-text-color);
 }
 
-#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::before {
+#Chapter.Vertical.separator:not(:empty)::before {
   margin-right: 0.25em;
 }
 
-#MangaOnlineViewer #Chapter.Vertical.separator:not(:empty)::after {
+#Chapter.Vertical.separator:not(:empty)::after {
   margin-left: 0.25em;
 }
 
-#MangaOnlineViewer #Chapter:not(.separator) .separator,
-#MangaOnlineViewer #Chapter:not(.Vertical) .separator {
+#Chapter:not(.separator) .separator,
+#Chapter:not(.Vertical) .separator {
   display: none;
 }

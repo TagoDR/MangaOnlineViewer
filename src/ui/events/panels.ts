@@ -1,121 +1,51 @@
-import _ from 'lodash';
-import { saveSettingsValue } from '../../core/settings';
+import {
+  getAppStateValue,
+  getSettingsValue,
+  saveSettingsValue,
+  setAppStateValue,
+} from '../../core/settings';
 import { isNothing } from '../../utils/checks';
-import { keybindEditor, keybindList } from '../components/KeybindingsPanel';
-import { addEvent } from './common';
 import keybindings from './keybindings';
 
-function toggleFunction(selector: string, classname: string, open: () => void, close: () => void) {
-  return () => {
-    const isOpen = document.querySelector(selector)?.className.includes(classname);
-    if (isOpen) {
-      close();
-    } else {
-      open();
-    }
-  };
+/**
+ * Event handler to close any currently open panel by setting the application state.
+ */
+export function buttonPanelsClose() {
+  setAppStateValue('panel', 'none');
 }
 
-export function buttonHeaderClick() {
-  const header = document.querySelector('#Header');
-  if (header?.classList.contains('click')) {
-    header?.classList.toggle('visible');
-  }
-}
-
-export function isMouseInsideRegion(event: MouseEvent, headerWidth: number, headerHeight: number) {
-  // Check if the mouse is inside the region
-  return (
-    event.clientX >= 0 &&
-    event.clientX <= headerWidth &&
-    event.clientY >= 0 &&
-    event.clientY <= headerHeight
-  );
-}
-
-export function headerHover(event: MouseEvent) {
-  const header = document.querySelector('#Header');
-  if (header?.classList.contains('hover')) {
-    if (isMouseInsideRegion(event, header.clientWidth, header.clientHeight)) {
-      document.querySelector('#menu')?.classList.add('hide');
-      header?.classList.add('visible');
-    } else {
-      document.querySelector('#menu')?.classList.remove('hide');
-      header?.classList.remove('visible');
-    }
-  }
-}
-
+/**
+ * Event handler to open the settings panel.
+ */
 export function buttonSettingsOpen() {
-  document.querySelector('#SettingsPanel')?.classList.add('visible');
-  document.querySelector('#Navigation')?.classList.add('visible');
-  document.querySelector('#Header')?.classList.add('visible');
-  document.querySelector('#Overlay')?.classList.add('visible');
+  setAppStateValue('panel', 'settings');
 }
 
-export function buttonSettingsClose() {
-  document.querySelector('#SettingsPanel')?.classList.remove('visible');
-  document.querySelector('#Navigation')?.classList.remove('visible');
-  document.querySelector('#Header')?.classList.remove('visible');
-  document.querySelector('#Overlay')?.classList.remove('visible');
-}
-
+/**
+ * Event handler to open the keybindings panel in its default view mode.
+ */
 export function buttonKeybindingsOpen() {
-  const keybindingList = document.querySelector('#KeybindingsList');
-  if (keybindingList) keybindingList.innerHTML = keybindList().join('\n');
-  document.querySelector('#SaveKeybindings')?.classList.add('hidden');
-  document.querySelector('#EditKeybindings')?.classList.remove('hidden');
-  document.querySelector('#KeybindingsPanel')?.classList.add('visible');
-  document.querySelector('#Overlay')?.classList.add('visible');
+  setAppStateValue('panel', 'keybindings');
 }
 
-export function buttonKeybindingsClose() {
-  document.querySelector('#SaveKeybindings')?.classList.add('hidden');
-  document.querySelector('#EditKeybindings')?.classList.remove('hidden');
-  document.querySelector('#KeybindingsPanel')?.classList.remove('visible');
-  document.querySelector('#Overlay')?.classList.remove('visible');
-}
-
+/**
+ * Saves the keybindings from the editor form to the application settings.
+ * After saving, it switches the panel back to the keybindings view mode and re-initializes the keybinding listeners.
+ */
 export function saveKeybindings() {
   const newKeybinds: Record<string, string[] | undefined> = {};
-  document.querySelectorAll<HTMLInputElement>('.KeybindInput').forEach(element => {
+  getAppStateValue('render')?.querySelectorAll<HTMLInputElement>('.KeybindInput').forEach(element => {
     const keys = element.value.split(',').map(value => value.trim());
     newKeybinds[element.id] = isNothing(keys) ? undefined : keys;
   });
   saveSettingsValue('keybinds', newKeybinds);
-  const keybindingList = document.querySelector('#KeybindingsList');
-  if (keybindingList) keybindingList.innerHTML = keybindList().join('\n');
-  document.querySelector('#SaveKeybindings')?.classList.add('hidden');
-  document.querySelector('#EditKeybindings')?.classList.remove('hidden');
+  setAppStateValue('panel', 'keybindings');
   keybindings();
 }
 
+/**
+ * Event handler to switch the keybindings panel to its editor mode.
+ */
 export function editKeybindings() {
-  const keybindingList = document.querySelector('#KeybindingsList');
-  if (keybindingList) keybindingList.innerHTML = keybindEditor().join('\n');
-  document.querySelector('#SaveKeybindings')?.classList.remove('hidden');
-  document.querySelector('#EditKeybindings')?.classList.add('hidden');
+  setAppStateValue('panel', 'keybindingsEditor');
 }
-
-function panels() {
-  // Show Header list
-  document.querySelector('#menu')?.addEventListener('click', buttonHeaderClick);
-  document.addEventListener('mousemove', _.throttle(headerHover, 300));
-  // Settings Control
-  document
-    .querySelector('#settings')
-    ?.addEventListener(
-      'click',
-      toggleFunction('#SettingsPanel', 'visible', buttonSettingsOpen, buttonSettingsClose),
-    );
-  document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonSettingsClose));
-  document.querySelector('#Overlay')?.addEventListener('click', buttonSettingsClose);
-  // Keybindings list
-  document.querySelector('#keybindings')?.addEventListener('click', buttonKeybindingsOpen);
-  document.querySelectorAll('.closeButton')?.forEach(addEvent('click', buttonKeybindingsClose));
-  document.querySelector('#Overlay')?.addEventListener('click', buttonKeybindingsClose);
-  document.querySelector('#EditKeybindings')?.addEventListener('click', editKeybindings);
-  document.querySelector('#SaveKeybindings')?.addEventListener('click', saveKeybindings);
-}
-
-export default panels;

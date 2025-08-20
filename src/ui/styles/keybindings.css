@@ -1,4 +1,4 @@
-#MangaOnlineViewer #KeybindingsPanel {
+#KeybindingsPanel {
   padding: 10px;
   position: fixed;
   top: 0;
@@ -13,18 +13,18 @@
   max-width: 100vw;
 }
 
-#MangaOnlineViewer #KeybindingsPanel.visible {
+#KeybindingsPanel.visible {
   transform: translateX(0);
   display: block;
 }
 
-#MangaOnlineViewer #KeybindingsPanel #KeybindingsList {
+#KeybindingsPanel #KeybindingsList {
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 5px;
 }
 
-#MangaOnlineViewer #KeybindingsPanel .ControlButton {
+#KeybindingsPanel .ControlButton {
   margin-left: 3px;
   justify-content: center;
   align-items: center;
@@ -32,15 +32,15 @@
   gap: 0.5em;
 }
 
-#MangaOnlineViewer #KeybindingsPanel label {
+#KeybindingsPanel label {
   display: ruby;
 }
 
-#MangaOnlineViewer #KeybindingsPanel input {
+#KeybindingsPanel input {
   display: inline-block;
   width: 100%;
 }
 
-#MangaOnlineViewer #KeybindingsPanel #HotKeysRules {
+#KeybindingsPanel #HotKeysRules {
   grid-column: span 2;
 }
