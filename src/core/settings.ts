@@ -83,7 +83,7 @@ const mobileSettings: Partial<ISettings> = {
   fitWidthIfOversize: true,
   navbar: 'disabled',
   viewMode: 'WebComic',
-  header: 'scroll',
+  header: 'click',
   hidePageControls: true,
   pagination: true,
 };

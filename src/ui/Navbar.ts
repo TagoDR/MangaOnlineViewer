@@ -103,6 +103,7 @@ export default class Navbar extends LitElement {
       bottom: this.mode === 'bottom',
       hiding: this.isHiding,
     };
+    if(getAppStateValue('navbar') === 'disabled') return html``;
 
     return html`
       <nav
