@@ -9,7 +9,7 @@
 
 import type { DirectiveResult } from 'lit/directive.js';
 import { type UnsafeSVGDirective, unsafeSVG } from 'lit/directives/unsafe-svg.js';
-import iconsCSS from '../styles/Icons.css?inline';
+import iconsCSS from '../styles/icons.css?inline';
 import * as rawIcons from './Icons.ts';
 
 /**
