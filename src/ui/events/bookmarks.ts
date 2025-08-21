@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2-neutral';
 import {
   changeSettingsValue,
   getAppStateValue,
@@ -5,8 +6,6 @@ import {
   isBookmarked,
   setAppStateValue,
 } from '../../core/settings';
-import Swal from 'sweetalert2-neutral';
-import { changeSettingsValue, getLocaleString, isBookmarked } from '../../core/settings';
 import type { IBookmark } from '../../types';
 import { isNothing } from '../../utils/checks';
 import { logScript } from '../../utils/tampermonkey';
