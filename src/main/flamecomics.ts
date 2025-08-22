@@ -8,11 +8,12 @@ const flamecomics: ISite = {
   language: [Language.ENGLISH],
   category: Category.MANGA,
   run(): IManga {
-    const cdn = 'https://cdn.flamecomics.xyz/series';
+    const cdn = 'https://cdn.flamecomics.xyz/uploads/images/series';
     const json = JSON.parse(document.getElementById('__NEXT_DATA__')?.innerHTML ?? '');
     const chapter = json?.props?.pageProps?.chapter;
     const images = Object.keys(chapter?.images).map(
-      i => `${cdn}/${chapter?.series_id}/${chapter?.token}/${chapter?.images?.[i]?.name}`,
+      i =>
+        `${cdn}/${chapter?.series_id}/${chapter?.token}/${chapter?.images?.[i]?.name}?${chapter?.unix_timestamp}`,
     );
     return {
       title: `${chapter?.title} ${chapter?.chapter}`,
