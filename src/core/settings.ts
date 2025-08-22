@@ -130,7 +130,10 @@ export const locale = computed(
  */
 export function refreshSettings<K extends ISettingsKey>(key?: K): void {
   if (key) {
-    const newVal = isSettingsLocal() ? localSettings[key] : globalSettings[key];
+    const newVal =
+      isSettingsLocal() && !['locale', 'bookmarks'].includes(key)
+        ? localSettings[key]
+        : globalSettings[key];
     const currentVal = settings.get()?.[key];
     if (!_.isEqual(currentVal, newVal)) {
       settings.setKey(key, newVal);
@@ -138,7 +141,9 @@ export function refreshSettings<K extends ISettingsKey>(key?: K): void {
     }
     return;
   }
-  const newObj = isSettingsLocal() ? { ...localSettings } : { ...globalSettings };
+  const newObj = isSettingsLocal()
+    ? { ...localSettings, locale: globalSettings.locale, bookmarks: globalSettings.bookmarks }
+    : { ...globalSettings };
   const currentObj = settings.get();
   if (!_.isEqual(currentObj, newObj)) {
     settings.set(newObj);
@@ -215,17 +220,17 @@ export function saveSettingsValue<K extends ISettingsKey>(key: K, value: ISettin
 
   setSettingsValue(key, value);
   if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
-    const alter = {
+    localSettings = {
       ..._.defaultsDeep(getLocalSettings(getDefault(false)), getDefault(false)),
       [key]: value,
     };
-    saveLocalSettings(diffObj(alter, getDefault(false)));
+    saveLocalSettings(diffObj(localSettings, getDefault(false)));
   } else {
-    const alter = {
+    globalSettings = {
       ..._.defaultsDeep(getGlobalSettings(getDefault()), getDefault()),
       [key]: value,
     };
-    saveGlobalSettings(diffObj(alter, getDefault()));
+    saveGlobalSettings(diffObj(globalSettings, getDefault()));
   }
 }
 
