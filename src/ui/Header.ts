@@ -75,6 +75,7 @@ const Header = (manga: IManga) => html`
       [getSettingsValue('header')]: getSettingsValue('header') !== 'click',
       click: getSettingsValue('header') === 'click' || getSettingsValue('zoomMode') === 'height',
       top: window.scrollY <= 64,
+      end: window.scrollY + window.innerHeight + 100 > document.body.scrollHeight,
       visible: getAppStateValue('headerVisible'),
     })}"
   >

@@ -49,6 +49,10 @@
   animation: none;
 }
 
+#Header.end {
+  position: sticky;
+}
+
 #Header.fixed {
   position: fixed;
   animation: none;
