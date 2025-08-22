@@ -48,7 +48,7 @@ export function hydrateApp() {
   }
   const reader = document.querySelector('#Chapter');
   if (reader) {
-    reader.className = `${getSettingsValue('fitWidthIfOversize') ? 'fitWidthIfOversize' : ''}  ${getSettingsValue('viewMode')}`;
+    reader.className = `${getSettingsValue('fitWidthIfOversize') ? 'fitWidthIfOversize' : ''} ${getSettingsValue('verticalSeparator') ? 'separator' : ''} ${getSettingsValue('viewMode')}`;
   }
   Object.entries(elements).forEach(([id, component]) => {
     const tag = document.querySelector(id);

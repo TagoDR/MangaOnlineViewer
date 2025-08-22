@@ -1,4 +1,4 @@
-import { getSettingsValue } from '../../core/settings';
+import { getSettingsValue, saveSettingsValue } from '../../core/settings';
 import type { ViewMode } from '../../types';
 import { applyZoom } from '../page';
 import {
@@ -39,14 +39,20 @@ export function updateViewMode(mode: ViewMode) {
   };
 }
 
-export function changeViewMode(event: Event) {
+/**
+ * Event handler to change and persist the default view mode from the settings panel.
+ * It saves the new mode and then applies it to the current session.
+ * @param {Event} event - The change event from the view mode selector.
+ */
+export function changeDefaultViewMode(event: Event) {
   const mode = (event.currentTarget as HTMLInputElement).value as ViewMode;
+  saveSettingsValue('viewMode', mode);
   updateViewMode(mode)();
 }
 
 function viewMode() {
   // Default View mode Selector
-  document.querySelector('#viewMode')?.addEventListener('change', changeViewMode);
+  document.querySelector('#viewMode')?.addEventListener('change', changeDefaultViewMode);
   // WebComic View Mode Button
   document.querySelector('#webComic')?.addEventListener('click', updateViewMode('WebComic'));
   // Fluid LTR View Mode Button
