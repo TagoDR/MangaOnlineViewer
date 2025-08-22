@@ -67,7 +67,7 @@ export function toggleScrollDirection() {
   } else if (header === 'scroll' && scrollY < prevOffset && scrollY > 50) {
     // Show header on scroll up
     setAppStateValue('headerVisible', true);
-  } else if (scrollY <= 65) {
+  } else if (header !== 'click' && scrollY <= 65) {
     // Always show header if near the top
     setAppStateValue('headerVisible', true);
   } else {

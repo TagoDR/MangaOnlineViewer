@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { getAppStateValue, setAppStateValue, getSettingsValue } from '../../core/settings';
+import { getAppStateValue, getSettingsValue, setAppStateValue } from '../../core/settings';
 
 /**
  * Extracts the page number from a page element's ID (e.g., "Page12" -> 12).

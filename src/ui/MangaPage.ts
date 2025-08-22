@@ -42,10 +42,20 @@ function getImageStyle(index: number): StyleInfo {
   const mode = getSettingsValue('zoomMode');
   const value = getSettingsValue('zoomValue');
   const imageStyles: StyleInfo = {
-    width: image?.width ?? 'auto',
-    height: image?.height ?? 'auto',
-    'min-width': image?.minWidth ?? `${getSettingsValue('minZoom')}vw`,
+    width: 'auto',
+    height: 'auto',
+    'min-width': `${getSettingsValue('minZoom')}vw`,
   };
+  if (image?.width) {
+    imageStyles.width = `${image.width}px`;
+    imageStyles.height = 'auto';
+    return imageStyles;
+  }
+  if (image?.height) {
+    imageStyles.height = `${image.height}px`;
+    imageStyles.width = 'auto';
+    return imageStyles;
+  }
   if (image?.naturalWidth) {
     if (mode === 'width') {
       // Fit width
@@ -64,11 +74,10 @@ function getImageStyle(index: number): StyleInfo {
     } else if (mode === 'percent') {
       if (value === 100) {
         imageStyles.width = 'auto';
-        imageStyles.height = 'auto';
       } else {
-        imageStyles.width = `${image.naturalWidth * (value / 100)}px`;
-        imageStyles.height = 'auto';
+        imageStyles.width = `${image.naturalWidth * ((image.width || value) / 100)}px`;
       }
+      imageStyles.height = 'auto';
       imageStyles.minWidth = `${getSettingsValue('minZoom')}vw`;
     }
   }

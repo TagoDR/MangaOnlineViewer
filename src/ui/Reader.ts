@@ -23,7 +23,7 @@ const Reader = (manga: IManga) => html`
     class="${classMap({
       fitWidthIfOversize: getSettingsValue('fitWidthIfOversize'),
       [getSettingsValue('viewMode')]: true,
-      'separator': getSettingsValue('viewMode') === 'Vertical'
+      separator: getSettingsValue('viewMode') === 'Vertical',
     })}"
     style="${styleMap({
       [`margin-${getSettingsValue('navbar')}`]: '34px',

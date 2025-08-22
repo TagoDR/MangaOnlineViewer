@@ -1,5 +1,4 @@
-import { getSettingsValue, setSettingsValue } from '../../core/settings';
-import { applyZoom } from './zoom.ts';
+import { getAppStateValue, getSettingsValue, setAppStateValue } from '../../core/settings';
 
 /**
  * Event handler to zoom in on an individual page by a percentage step.
@@ -8,9 +7,18 @@ import { applyZoom } from './zoom.ts';
 export function buttonZoomIn(event: Event) {
   const button = event.currentTarget as HTMLButtonElement;
   const index = parseInt(button.value, 10);
-  const img = button.closest('.MangaPage')?.querySelector('.PageImg') as HTMLImageElement;
-  const ratio = (img.width / img.naturalWidth) * (100 + getSettingsValue('zoomStep'));
-  applyZoom('percent', ratio, index);
+  const images = getAppStateValue('images');
+  const img = getAppStateValue('images')?.[index];
+  if (img?.naturalWidth) {
+    setAppStateValue('images', {
+      ...images,
+      [index]: {
+        ...img,
+        width: (img?.width || img?.naturalWidth) * (1 + getSettingsValue('zoomStep') / 100),
+        height: undefined,
+      },
+    });
+  }
 }
 
 /**
@@ -20,9 +28,18 @@ export function buttonZoomIn(event: Event) {
 export function buttonZoomOut(event: Event) {
   const button = event.currentTarget as HTMLButtonElement;
   const index = parseInt(button.value, 10);
-  const img = button.closest('.MangaPage')?.querySelector('.PageImg') as HTMLImageElement;
-  const ratio = (img.width / img.naturalWidth) * (100 - getSettingsValue('zoomStep'));
-  applyZoom('percent', ratio, index);
+  const images = getAppStateValue('images');
+  const img = getAppStateValue('images')?.[index];
+  if (img?.naturalWidth) {
+    setAppStateValue('images', {
+      ...images,
+      [index]: {
+        ...img,
+        width: (img?.width || img?.naturalWidth) * (1 - getSettingsValue('zoomStep') / 100),
+        height: undefined,
+      },
+    });
+  }
 }
 
 /**
@@ -32,7 +49,18 @@ export function buttonZoomOut(event: Event) {
 export function buttonRestoreZoom(event: Event) {
   const button = event.currentTarget as HTMLButtonElement;
   const index = parseInt(button.value, 10);
-  applyZoom('percent', 100, index);
+  const images = getAppStateValue('images');
+  const img = getAppStateValue('images')?.[index];
+  if (img) {
+    setAppStateValue('images', {
+      ...images,
+      [index]: {
+        ...img,
+        width: undefined,
+        height: undefined,
+      },
+    });
+  }
 }
 
 /**
@@ -42,7 +70,22 @@ export function buttonRestoreZoom(event: Event) {
 export function buttonZoomWidth(event: Event) {
   const button = event.currentTarget as HTMLButtonElement;
   const index = parseInt(button.value, 10);
-  applyZoom('width', 0, index);
+  const images = getAppStateValue('images');
+  const img = getAppStateValue('images')?.[index];
+  if (img) {
+    setAppStateValue('images', {
+      ...images,
+      [index]: {
+        ...img,
+        width:
+          window.innerWidth +
+          (getSettingsValue('navbar') === 'left' || getSettingsValue('navbar') === 'right'
+            ? -34
+            : 0),
+        height: undefined,
+      },
+    });
+  }
 }
 
 /**
@@ -52,6 +95,16 @@ export function buttonZoomWidth(event: Event) {
 export function buttonZoomHeight(event: Event): void {
   const button = event.currentTarget as HTMLButtonElement;
   const index = parseInt(button.value, 10);
-  setSettingsValue('zoomMode', 'height');
-  applyZoom('height', 0, index);
+  const images = getAppStateValue('images');
+  const img = getAppStateValue('images')?.[index];
+  if (img) {
+    setAppStateValue('images', {
+      ...images,
+      [index]: {
+        ...img,
+        width: undefined,
+        height: window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -34 : 0),
+      },
+    });
+  }
 }

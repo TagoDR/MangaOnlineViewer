@@ -34,13 +34,11 @@ export type Page = {
   /** The source URL of the image (can be a remote URL, data URL, or blob URL). */
   src: string;
   /** The CSS width of the image element. */
-  width?: string;
+  width?: number;
   /** The CSS height of the image element. */
-  height?: string;
+  height?: number;
   /** The CSS min-width of the image element. */
   minWidth?: string;
-  /** The CSS min-height of the image element. */
-  minHeight?: string;
   /** The original, intrinsic width of the loaded image. */
   naturalWidth?: number;
   /** The original, intrinsic height of the loaded image. */

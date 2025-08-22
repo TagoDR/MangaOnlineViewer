@@ -72,8 +72,9 @@ const Header = (manga: IManga) => html`
   <header
     id="Header"
     class="${classMap({
-      [getSettingsValue('header')]: true,
-      top: window.scrollY <= 100,
+      [getSettingsValue('header')]: getSettingsValue('header') !== 'click',
+      click: getSettingsValue('header') === 'click' || getSettingsValue('zoomMode') === 'height',
+      top: window.scrollY <= 64,
       visible: getAppStateValue('headerVisible'),
     })}"
   >

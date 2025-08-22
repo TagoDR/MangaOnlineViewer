@@ -46,7 +46,7 @@ export default class App extends LitElement {
 
   /**
    * Renders the application's UI.
-   * This includes applying the current theme, and rendering the header, reader,
+   * This includes applying the current theme and rendering the header, reader,
    * navigation bar, overlay, and all dialog panels.
    * @returns The rendered template.
    */

@@ -45,7 +45,7 @@ function getRepeatValue(src: string | undefined): number {
  * @param {number} index - The page index of the image to reload.
  * @param {HTMLImageElement} img - The `<img>` element to reload.
  */
-function realoadImage(index: number, img: HTMLImageElement) {
+function reloadImage(index: number, img: HTMLImageElement) {
   logScript(`Reloading Page ${index}`, img);
   const src = getAppStateValue('images')?.[index]?.src;
   if (!src) return;
@@ -67,7 +67,7 @@ export function buttonReloadPage(event: Event): void {
   const button = event.currentTarget as HTMLButtonElement;
   const index = parseInt(button.value, 10);
   const img = button.closest('.MangaPage')?.querySelector('.PageImg') as HTMLImageElement;
-  realoadImage(index, img);
+  reloadImage(index, img);
 }
 
 /**
@@ -152,5 +152,5 @@ export function imageLoadError(event: Event): void {
   if (isEmpty(img.getAttribute('src'))) return;
   img.classList.add('imgBroken');
   const index = parseInt(img.id.replace('PageImg', ''), 10);
-  realoadImage(index, img);
+  reloadImage(index, img);
 }
