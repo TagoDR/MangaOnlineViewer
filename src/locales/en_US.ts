@@ -1,5 +1,9 @@
 import type { ILocale } from '../types';
 
+/**
+ * English (United States) localization.
+ * @type {ILocale}
+ */
 export default {
   ID: 'en_US',
   NAME: 'English (US)',
@@ -78,7 +82,7 @@ export default {
   GO_TO_PAGE: 'Go to Page',
   ENLARGE: 'Enlarge',
   RESTORE: 'Restore',
-  REDUCE: 'Restore',
+  REDUCE: 'Reduce',
   FIT_WIDTH: 'Fit Width',
   FIT_HEIGHT: 'Fit Height',
   PERCENT: 'Percent',
@@ -114,4 +118,9 @@ export default {
   LOADING: 'Loading',
   ZOOM: 'Zoom',
   OTHERS: 'Others',
+  NAVBAR_TYPE: 'Change Navbar Type',
+  NAVBAR_BOTTOM: 'Bottom',
+  NAVBAR_LEFT: 'Left',
+  NAVBAR_RIGHT: 'Right',
+  NAVBAR_DISABLED: 'Disabled',
 } satisfies ILocale;

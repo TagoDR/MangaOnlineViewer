@@ -1,5 +1,11 @@
+/**
+ * Defines the structure for a localization object, containing all the translatable strings
+ * used throughout the application's user interface.
+ */
 export type ILocale = {
+  /** The unique identifier for the locale, e.g., 'en_US'. */
   ID: string;
+  /** The human-readable name of the language, e.g., 'English (US)'. */
   NAME: string;
 
   STARTING: string;
@@ -105,6 +111,15 @@ export type ILocale = {
   LOADING: string;
   ZOOM: string;
   OTHERS: string;
+  NAVBAR_TYPE: string;
+  NAVBAR_BOTTOM: string;
+  NAVBAR_LEFT: string;
+  NAVBAR_RIGHT: string;
+  NAVBAR_DISABLED: string;
 };
 
+/**
+ * A utility type that represents all valid keys for the localization strings.
+ * This ensures type safety when accessing translations.
+ */
 export type ILocaleKey = keyof ILocale;

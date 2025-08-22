@@ -1,5 +1,9 @@
 import type { ILocale } from '../types';
 
+/**
+ * Spanish (Spain) localization.
+ * @type {ILocale}
+ */
 export default {
   ID: 'es_ES',
   NAME: 'Español (ES)',
@@ -116,4 +120,9 @@ export default {
   LOADING: 'Carga',
   ZOOM: 'Zoom',
   OTHERS: 'Otros',
+  NAVBAR_TYPE: 'Cambiar el tipo de barra de navegación',
+  NAVBAR_BOTTOM: 'Abajo',
+  NAVBAR_LEFT: 'Izquierda',
+  NAVBAR_RIGHT: 'Derecha',
+  NAVBAR_DISABLED: 'Desactivado',
 } satisfies ILocale;

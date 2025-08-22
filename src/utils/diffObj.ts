@@ -19,9 +19,11 @@ import _ from 'lodash';
  * https://gist.github.com/Yimiprod/7ee176597fef230d1451
  * https://stackoverflow.com/questions/8572826/generic-deep-diff-between-two-objects
  * https://qastack.com.br/programming/31683075/how-to-do-a-deep-comparison-between-2-objects-with-lodash
- * @param  {Object} changed Object compared
- * @param  {Object} original   Object to compare with
- * @return {Object} Return a new object who represent the diff
+ *
+ * @template T - The type of the objects being compared.
+ * @param {T} changed - The object with potential changes.
+ * @param {T} original - The original object to compare against.
+ * @returns {Partial<Record<string, unknown>>} A new object representing the difference.
  */
 const diffObj = <T extends Record<string, unknown>>(
   changed: T,
@@ -36,10 +38,10 @@ const diffObj = <T extends Record<string, unknown>>(
       (result: any, value: any, key: keyof Record<string, unknown>) => {
         if (!_.isEqual(value, base[key])) {
           if (_.isArray(value)) {
-            // @ts-ignore
+            // @ts-expect-error
             result[key] = _.difference(value, base[key]);
           } else if (_.isObject(value) && _.isObject(base[key])) {
-            // @ts-ignore
+            // @ts-expect-error
             result[key] = changes(value, base[key]);
           } else {
             result[key] = value;
@@ -51,9 +53,21 @@ const diffObj = <T extends Record<string, unknown>>(
   return changes(changed, original);
 };
 
+/**
+ * An alternative function to deeply diff two objects or arrays.
+ * It recursively compares the `changed` object/array against the `original` and returns a new object/array containing only the changed values.
+ *
+ * @param {any} changed - The object or array with potential changes.
+ * @param {any} original - The original object or array to compare against.
+ * @returns {any} A new object or array representing the differences.
+ */
 export const getDiff = (changed: any, original: any) => {
   const accumulator = _.isArray(original) ? [] : {};
 
+  /**
+   * Recursively compares properties and populates the result.
+   * @internal
+   */
   function recursiveDiff(base: any, object: any, result: any) {
     for (const key in base) {
       const value: Record<string, unknown> = object[key];

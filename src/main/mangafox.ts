@@ -22,7 +22,7 @@ const mangafox: ISite = {
         const url = `chapterfun.ashx?cid=${
           unsafeWindow.chapterid ?? unsafeWindow.chapter_id
         }&page=${i}&key=${key}`;
-        const api: string = await fetch(url, options).then(async (res) => res.text());
+        const api: string = await fetch(url, options).then(async res => res.text());
 
         // biome-ignore lint/security/noGlobalEval: only solution found
         // biome-ignore lint/complexity/noCommaOperator: only solution found

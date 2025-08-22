@@ -1,5 +1,18 @@
 import { waitForAtb, waitWithTimer } from './waitFor';
 
+/**
+ * A last-resort method to scrape image URLs by simulating user interaction.
+ * It programmatically clicks a "next" button to navigate through pages and extracts the image source from a target element on each page.
+ * An overlay is added to prevent user interaction during the process.
+ *
+ * @param {() => void} resetPosition - A function to reset the scroll position or state before starting.
+ * @param {number} quantPages - The total number of pages to scrape.
+ * @param {string} nextSelector - The CSS selector for the "next page" button.
+ * @param {string} targetSelector - The CSS selector for the container element where the image appears.
+ * @param {string} [imageSelector='img'] - The CSS selector for the image element within the target container.
+ * @param {string} [imageAttribute='src'] - The attribute on the image element that holds the URL.
+ * @returns {Promise<string[]>} A promise that resolves with an array of the scraped image URLs.
+ */
 export async function bruteforce(
   resetPosition: () => void,
   quantPages: number,

@@ -1,5 +1,9 @@
 import type { ILocale } from '../types';
 
+/**
+ * German (Germany) localization.
+ * @type {ILocale}
+ */
 export default {
   ID: 'de_DE',
   NAME: 'Deutsch',
@@ -115,4 +119,9 @@ export default {
   LOADING: 'Lädt',
   ZOOM: 'Zoom',
   OTHERS: 'Sonstiges',
+  NAVBAR_TYPE: 'Navigationsleistentyp ändern',
+  NAVBAR_BOTTOM: 'Unten',
+  NAVBAR_LEFT: 'Links',
+  NAVBAR_RIGHT: 'Rechts',
+  NAVBAR_DISABLED: 'Deaktiviert',
 } satisfies ILocale;

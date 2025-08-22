@@ -15,7 +15,7 @@ const bestporncomix: ISite = {
       pages: images.length,
       prev: '#',
       next: '#',
-      listImages: images.map((img) => img.getAttribute('href') ?? ''),
+      listImages: images.map(img => img.getAttribute('href') ?? ''),
     };
   },
 };

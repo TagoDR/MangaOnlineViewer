@@ -23,7 +23,7 @@ const mangago: ISite = {
       next: unsafeWindow.next_c_url,
       listImages: images,
       before() {
-        if (images.some((s) => s === '')) {
+        if (images.some(s => s === '')) {
           document.querySelector<HTMLFormElement>('#nform')?.submit();
         }
       },

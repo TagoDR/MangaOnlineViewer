@@ -1,17 +1,31 @@
-// Prettier supports these languages:
-// https://github.com/prettier/prettier/blob/e46aba0ab279c764dc26e0f41f15c55122440c51/src/language-js/embed.js#L13
-
+/**
+ * A simple template literal tag that concatenates the template strings and expressions.
+ * This function is the base for the `html` and `css` tags and does not perform any special processing.
+ * @internal
+ * @param {TemplateStringsArray} raw - The static parts of the template literal.
+ * @param {...unknown} keys - The dynamic expressions embedded in the template literal.
+ * @returns {string} The concatenated string.
+ */
 const concatenateTemplateLiteralTag = (raw: TemplateStringsArray, ...keys: unknown[]): string =>
   keys.length === 0 ? raw[0] : String.raw({ raw }, ...keys);
 
 /**
- Enable highlighting/prettifying when used as html`<div>`
- https://prettier.io/docs/en/options.html#embedded-language-formatting
+ * A template literal tag used to identify HTML strings.
+ * This allows IDEs and tools like Prettier to apply proper syntax highlighting and formatting.
+ * @example
+ * const myHtml = html`<div>Hello, World!</div>`;
  */
 const html = concatenateTemplateLiteralTag;
+
 /**
- Enable highlighting/prettifying when used as css`.a {}`
- https://prettier.io/docs/en/options.html#embedded-language-formatting
+ * A template literal tag used to identify CSS strings.
+ * This allows IDEs and tools like Prettier to apply proper syntax highlighting and formatting.
+ * @example
+ * const myCss = css`
+ *   .my-class {
+ *     color: blue;
+ *   }
+ * `;
  */
 const css = concatenateTemplateLiteralTag;
 

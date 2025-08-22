@@ -1,6 +1,13 @@
 import sites from '../adult';
 import { requiredScripts } from '../core/externals';
 
+/**
+ * Tampermonkey metadata block for the adult (NSFW) version of the script.
+ * This configuration is used by the Tampermonkey extension to manage the script.
+ * It includes details like the script's name, author, update/download URLs, permissions,
+ * and the specific adult sites it runs on. The description and include patterns are dynamically generated.
+ * @type {Partial<Tampermonkey.ScriptMetadata>}
+ */
 export default {
   name: 'Manga OnlineViewer Adult',
   author: 'Tago',
@@ -11,8 +18,8 @@ export default {
   supportURL: 'https://github.com/TagoDR/MangaOnlineViewer/issues',
   namespace: 'https://github.com/TagoDR',
   description: `Shows all pages at once in online view for these sites: ${sites
-    .flatMap((s) => s.name)
-    .map((s) => s.trim())
+    .flatMap(s => s.name)
+    .map(s => s.trim())
     .join(', ')}`,
   version: new Date().toISOString().slice(0, 10).replaceAll('-', '.'),
   license: 'MIT',
@@ -30,5 +37,5 @@ export default {
   noframes: 'on',
   connect: '*',
   require: requiredScripts,
-  include: sites.map((s) => s.url),
+  include: sites.map(s => s.url),
 } as Partial<Tampermonkey.ScriptMetadata>;

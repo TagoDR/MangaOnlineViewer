@@ -15,7 +15,7 @@ const wpmanga: ISite = {
       pages: images.length,
       prev: document.querySelector('a.prev')?.getAttribute('href'),
       next: document.querySelector('a.next')?.getAttribute('href'),
-      listImages: images.map((img) => img.getAttribute('src') ?? ''),
+      listImages: images.map(img => img.getAttribute('src') ?? ''),
       before() {
         if (/all.html$/.exec(window.location.pathname)) {
           return;

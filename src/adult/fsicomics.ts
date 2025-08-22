@@ -14,7 +14,7 @@ const fsicomics: ISite = {
       pages: images.length,
       prev: '#',
       next: '#',
-      listImages: images.map((img) => img.getAttribute('data-large-file') ?? ''),
+      listImages: images.map(img => img.getAttribute('data-large-file') ?? ''),
     };
   },
 };

@@ -4,6 +4,13 @@ import main from '../main';
 
 const sites = [...main, ...adult];
 
+/**
+ * Tampermonkey metadata block for the development version of the script.
+ * This configuration is used by the Tampermonkey extension to manage the script.
+ * It includes details like the script's name, author, permissions, and the sites it runs on.
+ * The version is dynamically generated from the current timestamp for easy updates during development.
+ * @type {Partial<Tampermonkey.ScriptMetadata>}
+ */
 export default {
   name: 'MOV',
   author: 'TagoDR',
@@ -25,5 +32,5 @@ export default {
   noframes: 'on',
   connect: '*',
   require: requiredScripts,
-  include: sites.map((s) => s.url),
+  include: sites.map(s => s.url),
 } as Partial<Tampermonkey.ScriptMetadata>;

@@ -14,7 +14,7 @@ const wnacg: ISite = {
       pages: pages.length,
       prev: '#',
       next: '#',
-      listPages: pages.map((page) => window.location.pathname.replace(/\d+/, page.value)),
+      listPages: pages.map(page => window.location.pathname.replace(/\d+/, page.value)),
       img: '#picarea',
     };
   },

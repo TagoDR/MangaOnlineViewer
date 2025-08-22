@@ -12,13 +12,13 @@ const mangapark: ISite = {
     const images = [...document.querySelectorAll('main div div > img.w-full')];
     return {
       title: [...document.querySelectorAll('.comic-detail h3 a, .comic-detail h6 span')]
-        .map((e) => e.textContent?.trim())
+        .map(e => e.textContent?.trim())
         .join(' '),
       series: document.querySelector('.comic-detail a')?.getAttribute('href'),
       pages: images.length,
       prev: document.querySelectorAll('main div div a.btn-primary')?.item(0)?.getAttribute('href'),
       next: document.querySelectorAll('main div div a.btn-primary')?.item(1)?.getAttribute('href'),
-      listImages: images.map((src) => src.getAttribute('src') ?? ''),
+      listImages: images.map(src => src.getAttribute('src') ?? ''),
     };
   },
 };

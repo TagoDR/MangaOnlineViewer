@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { atom, computed } from 'nanostores';
+import { computed, map } from 'nanostores';
 import locales from '../locales';
 import { type ILocale, type ILocaleKey, type ISettings, type ISettingsKey, isKey } from '../types';
 import { applyZoom } from '../ui/page';
@@ -13,11 +13,15 @@ import {
   logScript,
   logScriptVerbose,
   removeValueGM,
-  setGlobalSettings,
-  setLocalSettings,
+  saveGlobalSettings,
+  saveLocalSettings,
   settingsChangeListener,
 } from '../utils/tampermonkey';
 
+/**
+ * Default settings for the script.
+ * @type {ISettings}
+ */
 export const defaultSettings: ISettings = {
   enabled: true,
   locale: 'en_US',
@@ -63,6 +67,10 @@ export const defaultSettings: ISettings = {
   },
 };
 
+/**
+ * Settings overrides for mobile devices.
+ * @type {Partial<ISettings>}
+ */
 const mobileSettings: Partial<ISettings> = {
   lazyLoadImages: true,
   fitWidthIfOversize: true,
@@ -71,7 +79,12 @@ const mobileSettings: Partial<ISettings> = {
   header: 'click',
 };
 
-function getDefault(global = true) {
+/**
+ * Generates the default settings object based on the device type (mobile/desktop) and scope (global/local).
+ * @param {boolean} [global=true] - Whether to get the global or local default settings.
+ * @returns {ISettings} The default settings object.
+ */
+function getDefault(global = true): ISettings {
   return !isMobile()
     ? { ...defaultSettings, enabled: global, theme: global ? 'darkblue' : 'darkgreen' }
     : _.defaultsDeep(mobileSettings, {
@@ -81,49 +94,86 @@ function getDefault(global = true) {
       });
 }
 
-// Configuration
+// Raw settings objects, loaded from Tampermonkey's storage.
 let globalSettings: ISettings = _.defaultsDeep(getGlobalSettings(getDefault()), getDefault());
 let localSettings: ISettings = _.defaultsDeep(
   getLocalSettings(getDefault(false)),
   getDefault(false),
 );
 
-export const isSettingsLocal = () => localSettings?.enabled === true;
+/**
+ * Checks if site-specific (local) settings are currently enabled and active.
+ * @returns {boolean} True if local settings are enabled, false otherwise.
+ */
+export const isSettingsLocal = (): boolean => localSettings?.enabled === true;
 
-export const settings = atom<ISettings>(isSettingsLocal() ? localSettings : globalSettings);
+/**
+ * The reactive store for all settings. It holds either global or local settings based on the current mode.
+ * Components should subscribe to this store to react to settings changes.
+ * @type {import('nanostores').MapStore<ISettings>}
+ */
+export const settings = map<ISettings>(isSettingsLocal() ? localSettings : globalSettings);
+
+/**
+ * A computed store that provides the currently selected locale object based on the `locale` setting.
+ * @type {import('nanostores').ComputedStore<ILocale>}
+ */
 export const locale = computed(
   settings,
-  (current): ILocale => locales.find((l) => l.ID === current.locale) ?? locales[1],
+  (current): ILocale => locales.find(l => l.ID === current.locale) ?? locales[1],
 );
 
-function refresh() {
-  if (isSettingsLocal()) {
-    settings.set({ ...localSettings });
-  } else {
-    settings.set({ ...globalSettings });
+/**
+ * Refreshes the reactive `settings` store with the latest values from the raw settings objects.
+ * Call this after a change is made to `globalSettings` or `localSettings` to propagate the change.
+ * @param {K} [key] - If provided, refreshes only a single key. Otherwise, refreshes the entire object.
+ */
+export function refreshSettings<K extends ISettingsKey>(key?: K): void {
+  if (key) {
+    const newVal = isSettingsLocal() ? localSettings[key] : globalSettings[key];
+    const currentVal = settings.get()?.[key];
+    if (!_.isEqual(currentVal, newVal)) {
+      settings.setKey(key, newVal);
+      logScript('Refreshed Settings', key, newVal);
+    }
+    return;
+  }
+  const newObj = isSettingsLocal() ? { ...localSettings } : { ...globalSettings };
+  const currentObj = settings.get();
+  if (!_.isEqual(currentObj, newObj)) {
+    settings.set(newObj);
+    logScript('Refreshed Settings', key, null);
   }
 }
 
-function syncGlobalSettings(newValue: Partial<ISettings>) {
+/**
+ * Synchronization callback for when global settings are changed in another tab.
+ * @param {Partial<ISettings>} newValue - The new settings value from storage.
+ */
+function syncGlobalSettings(newValue: Partial<ISettings>): void {
   const newSettings = _.defaultsDeep(newValue, getDefault());
   const diff = globalSettings ? diffObj(newSettings, globalSettings) : newSettings;
   if (!isNothing(diff)) {
     logScript('Imported Global Settings', diff);
     globalSettings = newSettings;
-    refresh();
+    refreshSettings();
     applyZoom(getSettingsValue('zoomMode'), getSettingsValue('defaultZoom'));
   }
 }
 
 settingsChangeListener(_.debounce(syncGlobalSettings, 300), 'settings');
 
-function syncLocalSettings(newValue: Partial<ISettings>) {
+/**
+ * Synchronization callback for when local settings are changed in another tab.
+ * @param {Partial<ISettings>} newValue - The new settings value from storage.
+ */
+function syncLocalSettings(newValue: Partial<ISettings>): void {
   const newSettings = _.defaultsDeep(newValue, getDefault(false));
   const diff = localSettings ? diffObj(newSettings, localSettings) : newSettings;
   if (!isNothing(diff)) {
     logScript('Imported Local Settings', diff);
     localSettings = newSettings;
-    refresh();
+    refreshSettings();
     applyZoom(getSettingsValue('zoomMode'), getSettingsValue('defaultZoom'));
   }
 }
@@ -131,84 +181,84 @@ function syncLocalSettings(newValue: Partial<ISettings>) {
 settingsChangeListener(_.debounce(syncLocalSettings, 300), window.location.hostname);
 
 /**
- * Gets the effective value for a setting, considering site-specific overrides,
- * then global settings, then session defaults.
- *
- * @param key The key of the setting to retrieve.
- * @returns The effective value of the setting.
+ * Gets the effective value for a setting from the reactive store.
+ * This respects whether local or global settings are currently active.
+ * @template K
+ * @param {K} key - The key of the setting to retrieve.
+ * @returns {ISettings[K]} The effective value of the setting.
  */
 export function getSettingsValue<K extends ISettingsKey>(key: K): ISettings[K] {
-  if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
-    return localSettings[key];
-  }
-  return globalSettings[key];
-  // return settings.get()?.[key];
+  return settings.get()?.[key];
 }
 
 /**
- * Sets a single setting value by its key without persisting the change.
- * The value provided must match the type of the setting defined in ISettings.
- *
- * @param key The key of the setting to update.
- * @param value The new value for the setting.
+ * Sets a single setting value in the reactive `settings` store. This change is NOT persisted to storage.
+ * @template K
+ * @param {K} key - The key of the setting to update.
+ * @param {ISettings[K]} value - The new value for the setting.
  */
 export function setSettingsValue<K extends ISettingsKey>(key: K, value: ISettings[K]): void {
-  if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
-    localSettings = { ...localSettings, [key]: value };
-  } else {
-    globalSettings = { ...globalSettings, [key]: value };
-  }
-  settings.set({ ...settings.get(), [key]: value });
+  const current = settings.get()?.[key];
+  if (_.isEqual(current, value)) return;
+  settings.setKey(key, value);
 }
 
 /**
- * Saves a single setting value by its key and persists the change.
- * The value provided must match the type of the setting defined in ISettings.
- *
- * @param key The key of the setting to update.
- * @param value The new value for the setting.
+ * Saves a single setting value by its key and persists the change to Tampermonkey's storage.
+ * @template K
+ * @param {K} key - The key of the setting to update.
+ * @param {ISettings[K]} value - The new value for the setting.
  */
 export function saveSettingsValue<K extends ISettingsKey>(key: K, value: ISettings[K]): void {
+  const currentEffective = getSettingsValue(key);
+  if (_.isEqual(currentEffective, value)) return;
+
   setSettingsValue(key, value);
   if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
-    const alter = _.defaultsDeep(getLocalSettings(getDefault(false)), getDefault(false));
-    setLocalSettings(diffObj(alter, getDefault(false)));
+    const alter = {
+      ..._.defaultsDeep(getLocalSettings(getDefault(false)), getDefault(false)),
+      [key]: value,
+    };
+    saveLocalSettings(diffObj(alter, getDefault(false)));
   } else {
     const alter = {
       ..._.defaultsDeep(getGlobalSettings(getDefault()), getDefault()),
       [key]: value,
     };
-    setGlobalSettings(diffObj(alter, getDefault()));
+    saveGlobalSettings(diffObj(alter, getDefault()));
   }
 }
 
 /**
- * Changes a single setting value by its key and persists the change.
- * The function provided must match the type of the setting defined in ISettings.
- *
- * @param key The key of the setting to update.
- * @param fn function that receives the current value and must return the new value
+ * Updates a single setting value using a function and persists the change.
+ * @template K
+ * @param {K} key - The key of the setting to update.
+ * @param {(value: ISettings[K]) => ISettings[K]} fn - A function that receives the current value and returns the new value.
  */
 export function changeSettingsValue<K extends ISettingsKey>(
   key: K,
   fn: (value: ISettings[K]) => ISettings[K],
 ): void {
-  const newValue = fn(
-    isSettingsLocal() && !['locale', 'bookmarks'].includes(key)
-      ? localSettings[key]
-      : globalSettings[key],
-  );
-  saveSettingsValue(key, newValue);
-  settings.set({ ...settings.get(), [key]: newValue });
+  const oldValue = getSettingsValue(key);
+  const newValue = fn(oldValue);
+  setSettingsValue(key, newValue);
 }
 
+/**
+ * Gets a translated string from the current locale.
+ * @param {K | string} name - The key of the string to get.
+ * @returns {string} The translated string, or a placeholder if not found.
+ */
 export function getLocaleString<K extends ILocaleKey>(name: K | string): string {
-  const locale = locales.find((l) => l.ID === getSettingsValue('locale')) ?? locales[1];
-  if (isKey(locale, name)) return locale?.[name] ?? locales[1]?.[name];
+  const currentLocale = locales.find(l => l.ID === getSettingsValue('locale')) ?? locales[1];
+  if (isKey(currentLocale, name)) return currentLocale?.[name] ?? locales[1]?.[name];
   return `##MISSING_STRING_${name}##`;
 }
 
-export function resetSettings() {
+/**
+ * Resets the settings (either local or global) to their default values.
+ */
+export function resetSettings(): void {
   if (isSettingsLocal()) {
     removeValueGM(window.location.hostname);
     localSettings = getDefault(false);
@@ -217,22 +267,36 @@ export function resetSettings() {
     globalSettings = getDefault();
   }
   logScript('Settings Reset');
-  refresh();
+  refreshSettings();
 }
 
-export function toggleLocalSettings(activate = false) {
+/**
+ * Enables or disables site-specific (local) settings.
+ * @param {boolean} [activate=false] - Whether to activate or deactivate local settings.
+ * @returns {boolean} The new state of local settings (true if enabled, false otherwise).
+ */
+export function toggleLocalSettings(activate = false): boolean {
   localSettings.enabled = activate;
-  setLocalSettings(diffObj(localSettings, getDefault(false)));
+  saveLocalSettings(diffObj(localSettings, getDefault(false)));
   logScript('Local Settings ', activate ? 'Enabled' : 'Disabled');
-  refresh();
+  refreshSettings();
   return isSettingsLocal();
 }
 
+/**
+ * Checks if a URL is bookmarked.
+ * @param {string} [url=window.location.href] - The URL to check.
+ * @returns {number | undefined} The bookmarked page number, or undefined if not bookmarked.
+ */
 export function isBookmarked(url: string = window.location.href): number | undefined {
-  return globalSettings.bookmarks.find((el) => el.url === url)?.page;
+  return globalSettings.bookmarks.find(el => el.url === url)?.page;
 }
 
-export function showSettings<K extends ISettingsKey>(key: K | null = null) {
+/**
+ * A debug utility to log the current state of settings to the console.
+ * @param {K | null} [key=null] - An optional settings key to inspect a specific value.
+ */
+export function showSettings<K extends ISettingsKey>(key: K | null = null): void {
   logScriptVerbose(
     'Current Settings (Local:',
     isSettingsLocal(),

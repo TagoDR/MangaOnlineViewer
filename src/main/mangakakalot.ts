@@ -26,7 +26,7 @@ const mangakakalot: ISite = {
       pages: images.length,
       prev: document.querySelector('.navi-change-chapter-btn-prev, .next')?.getAttribute('href'),
       next: document.querySelector('.navi-change-chapter-btn-next, .back')?.getAttribute('href'),
-      listImages: images.map((img) => img.getAttribute('src') ?? ''),
+      listImages: images.map(img => img.getAttribute('src') ?? ''),
     };
   },
 };

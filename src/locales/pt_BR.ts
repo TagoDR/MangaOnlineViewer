@@ -1,5 +1,9 @@
 import type { ILocale } from '../types';
 
+/**
+ * Portuguese (Brazil) localization.
+ * @type {ILocale}
+ */
 export default {
   ID: 'pt_BR',
   NAME: 'Portugues (Brasil)',
@@ -114,4 +118,9 @@ export default {
   LOADING: 'Carregamento',
   ZOOM: 'Zoom',
   OTHERS: 'Outros',
+  NAVBAR_TYPE: 'Mudar barra de navegação',
+  NAVBAR_BOTTOM: 'Embaixo',
+  NAVBAR_LEFT: 'Esquerda',
+  NAVBAR_RIGHT: 'Direita',
+  NAVBAR_DISABLED: 'Desativado',
 } satisfies ILocale;

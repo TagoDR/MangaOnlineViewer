@@ -4,7 +4,13 @@ import { logScript, logScriptVerbose } from '../utils/tampermonkey';
 import { waitForFunc, waitWithTimeout } from '../utils/waitFor';
 import { getSettingsValue } from './settings';
 
-async function captureComments() {
+/**
+ * Captures the comments section (Disqus or Facebook) from the page.
+ * It scrolls to the bottom of the page to trigger the lazy-loading of comments,
+ * then waits for the comment iframe to fully load.
+ * @returns {Promise<Element | null>} A promise that resolves with the comments element, or null if not found or disabled.
+ */
+async function captureComments(): Promise<Element | null> {
   if (!getSettingsValue('enableComments')) return null;
   let comments = document.querySelector('#disqus_thread, #fb-comments');
   if (comments) {
@@ -32,7 +38,13 @@ async function captureComments() {
   return comments;
 }
 
-export default async function viewer(manga: IManga) {
+/**
+ * Initializes and starts the manga viewer.
+ * It executes any pre-display actions, captures comments if enabled, and then renders the viewer UI.
+ * @param {IManga} manga - The manga object containing all necessary data for the viewer.
+ * @returns {Promise<void>}
+ */
+export default async function viewer(manga: IManga): Promise<void> {
   if (manga.before !== undefined) {
     logScriptVerbose(`Executing Preparation`);
     await manga.before(manga.begin ?? 0);
@@ -40,6 +52,7 @@ export default async function viewer(manga: IManga) {
   if (getSettingsValue('enableComments') && !manga.comments) {
     manga.comments = await captureComments();
   }
+  // Use a timeout to ensure the page has time to reflow before rendering the viewer.
   setTimeout(() => {
     try {
       display(manga);

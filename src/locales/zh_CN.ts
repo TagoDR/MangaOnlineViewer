@@ -1,6 +1,10 @@
 // Translation by lhj5426
 import type { ILocale } from '../types';
 
+/**
+ * Chinese (Simplified) localization.
+ * @type {ILocale}
+ */
 export default {
   ID: 'zh_CN',
   NAME: '中文 (简体)',
@@ -114,4 +118,9 @@ export default {
   LOADING: '装载',
   ZOOM: '缩放',
   OTHERS: '别人',
+  NAVBAR_TYPE: '更改导航栏类型',
+  NAVBAR_BOTTOM: '底部',
+  NAVBAR_LEFT: '左边',
+  NAVBAR_RIGHT: '正确的',
+  NAVBAR_DISABLED: '已禁用',
 } satisfies ILocale;

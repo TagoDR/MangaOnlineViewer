@@ -18,32 +18,58 @@ const fileTypes = [
 
 const fileImageExt = /.(png|jpg|jpeg|gif|bmp|webp)$/i;
 
-const orderFiles = (a: string, b: string) =>
+/**
+ * Sorts file names in natural order (e.g., "file1.jpg", "file2.jpg", "file10.jpg").
+ * @param {string} a - The first file name.
+ * @param {string} b - The second file name.
+ * @returns {number} A number indicating the sort order.
+ */
+const orderFiles = (a: string, b: string): number =>
   a.localeCompare(b, navigator.languages[0] || navigator.language, {
     numeric: true,
     ignorePunctuation: true,
   });
 
-function validFileType(file: File) {
+/**
+ * Checks if a file is a valid image type based on its MIME type.
+ * @param {File} file - The file to check.
+ * @returns {boolean} True if the file is a valid image type, false otherwise.
+ */
+function validFileType(file: File): boolean {
   return fileTypes.includes(file.type);
 }
 
-const getImageBlob = (content: ArrayBuffer) => {
+/**
+ * Creates a blob URL from an image's array buffer.
+ * @param {ArrayBuffer} content - The array buffer of the image.
+ * @returns {string} The blob URL representing the image.
+ */
+const getImageBlob = (content: ArrayBuffer): string => {
   const buffer = new Uint8Array(content);
   const blob = new Blob([buffer.buffer]);
   return URL.createObjectURL(blob);
 };
 
-export async function loadZipFile(filePath: string | File) {
+/**
+ * Loads a zip file and extracts all image files, returning them as an array of blob URLs.
+ * @param {string | File} filePath - The path to the zip file or the zip file object itself.
+ * @returns {Promise<string[]>} A promise that resolves with an array of image blob URLs.
+ */
+export async function loadZipFile(filePath: string | File): Promise<string[]> {
   const zip = await JSZip.loadAsync(filePath);
   const files = zip
     .filter((_, file) => !file.dir && fileImageExt.test(file.name))
     .sort((a, b) => orderFiles(a.name, b.name));
   logScript('Files in zip:', zip.files);
-  return Promise.all(files.map((file) => file.async('arraybuffer').then(getImageBlob)));
+  return Promise.all(files.map(file => file.async('arraybuffer').then(getImageBlob)));
 }
 
-function displayUploadedFiles(title: string, listImages: string[]) {
+/**
+ * Renders the uploaded images in the viewer.
+ * @param {string} title - The title for the viewer.
+ * @param {string[]} listImages - An array of image blob URLs to display.
+ */
+function displayUploadedFiles(title: string, listImages: string[]): void {
   formatPage({
     title,
     series: '?reload',
@@ -56,12 +82,21 @@ function displayUploadedFiles(title: string, listImages: string[]) {
   }).then(() => logScript('Page loaded'));
 }
 
-export async function loadMangaFromZip(zipFile: File | string) {
+/**
+ * Loads and displays a manga from a zip file.
+ * @param {File | string} zipFile - The zip file to load, either as a File object or a path.
+ * @returns {Promise<void>}
+ */
+export async function loadMangaFromZip(zipFile: File | string): Promise<void> {
   const listImages = await loadZipFile(zipFile);
   displayUploadedFiles(typeof zipFile === 'string' ? zipFile : zipFile.name, listImages);
 }
 
-function openFileImages(evt: Event) {
+/**
+ * Handles the file input change event for loading local image files.
+ * @param {Event} evt - The file input change event.
+ */
+function openFileImages(evt: Event): void {
   const input = evt.target as HTMLInputElement;
   const files = Array.from(input.files as Iterable<File>)
     .filter(validFileType)
@@ -69,7 +104,7 @@ function openFileImages(evt: Event) {
   logScript(
     'Local Files: ',
     files,
-    files.map((f) => f.webkitRelativePath || f.name),
+    files.map(f => f.webkitRelativePath || f.name),
   );
   if (input.files?.[0]) {
     displayUploadedFiles(
@@ -79,11 +114,16 @@ function openFileImages(evt: Event) {
   }
 }
 
-export function allowUpload() {
+/**
+ * Checks if the current page is the local testing environment and sets up file upload handlers.
+ * This is used for local development and testing of the viewer with local files.
+ * @returns {boolean} True if the upload functionality is enabled, false otherwise.
+ */
+export function allowUpload(): boolean {
   if (localhost.url.test(window.location.href)) {
     if (document.querySelector('#MangaOnlineViewer, #LocalTest')) {
       document.querySelector('#LocalTest')?.setAttribute('style', 'display:none');
-      document.querySelector('#file')?.addEventListener('change', (evt) => {
+      document.querySelector('#file')?.addEventListener('change', evt => {
         const input = evt.target as HTMLInputElement;
         if (input.files?.[0]) loadMangaFromZip(input.files[0]);
       });

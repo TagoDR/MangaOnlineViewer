@@ -1,5 +1,9 @@
 import tinycolor from 'tinycolor2';
 
+/**
+ * A collection of base, non-themed colors.
+ * @type {object}
+ */
 export const base = {
   transparent: 'transparent',
   current: 'currentColor',
@@ -33,6 +37,9 @@ export const base = {
   },
 };
 
+/**
+ * Defines the structure for a 10-step color palette, from light (50) to dark (900).
+ */
 export type IColor = {
   name: string;
   50: string;
@@ -47,8 +54,15 @@ export type IColor = {
   900: string;
 };
 
+/**
+ * Defines the structure for a collection of color palettes.
+ */
 export type IPalette = Record<string, IColor>;
 
+/**
+ * A comprehensive collection of predefined color palettes.
+ * @type {IPalette}
+ */
 const colors: IPalette = {
   dark: {
     name: 'dark',
@@ -353,12 +367,24 @@ const lightSteps = 5;
 const lightnessStep = (lightest - 50) / lightSteps;
 const darknessStep = (50 - darkest) / darkSteps;
 
-function setLightness(hsl: tinycolor.ColorFormats.HSLA, lightness: number) {
-  hsl.l = lightness;
+/**
+ * Sets the lightness of an HSL color.
+ * @internal
+ * @param {tinycolor.ColorFormats.HSLA} hsl - The HSL color object.
+ * @param {number} lightness - The new lightness value.
+ * @returns {string} The resulting color in hex string format.
+ */
+function setLightness(hsl: tinycolor.ColorFormats.HSLA, lightness: number): string {
+  hsl.l = lightness / 100;
   return tinycolor(hsl).toHexString();
 }
 
-export function customColor(color: string) {
+/**
+ * Generates a 10-step color palette from a single base color.
+ * @param {string} color - The base color in any valid CSS color format (e.g., hex, rgb, hsl).
+ * @returns {IColor} A complete color palette with 10 shades.
+ */
+export function customColor(color: string): IColor {
   const hsl = tinycolor(color).toHsl();
   return {
     name: 'custom',
@@ -375,26 +401,146 @@ export function customColor(color: string) {
   };
 }
 
-export function getTextColor(hex: string) {
+/**
+ * Calculates a suitable contrasting text color (either very light or very dark) for a given background color.
+ * @param {string} hex - The background color in hex format.
+ * @returns {string} A hex color string for the contrasting text.
+ */
+export function getTextColor(hex: string): string {
   const color = tinycolor(hex);
   const hsl = color.toHsl();
   return setLightness(hsl, color.isDark() ? lightest : darkest);
 }
 
-export function isLight(color: string) {
+/**
+ * Checks if a color is considered light based on its brightness.
+ * @param {string} color - The color string to check.
+ * @returns {boolean} `true` if the color is light, `false` otherwise.
+ */
+export function isLight(color: string): boolean {
   return tinycolor(color).getBrightness() > 120;
 }
 
-export function isDark(color: string) {
+/**
+ * Checks if a color is considered dark based on its brightness.
+ * @param {string} color - The color string to check.
+ * @returns {boolean} `true` if the color is dark, `false` otherwise.
+ */
+export function isDark(color: string): boolean {
   return tinycolor(color).getBrightness() <= 120;
 }
 
-export function isBackgroundColorLight(element: Element) {
+/**
+ * Checks if the computed background color of a DOM element is light.
+ * @param {Element} element - The DOM element to check.
+ * @returns {boolean} `true` if the background is light, `false` otherwise.
+ */
+export function isBackgroundColorLight(element: Element): boolean {
   return isLight(window.getComputedStyle(element).backgroundColor);
 }
 
-export function isBackgroundColorDark(element: Element) {
+/**
+ * Checks if the computed background color of a DOM element is dark.
+ * @param {Element} element - The DOM element to check.
+ * @returns {boolean} `true` if the background is dark, `false` otherwise.
+ */
+export function isBackgroundColorDark(element: Element): boolean {
   return isDark(window.getComputedStyle(element).backgroundColor);
+}
+
+/**
+ * A comparison function for sorting color palette keys (e.g., 'red', 'blue') in a perceptually logical order.
+ * It sorts primarily by hue, then by saturation, and finally by lightness.
+ * @param {string} a - The key of the first color palette.
+ * @param {string} b - The key of the second color palette.
+ * @returns {number} A number indicating the sort order, suitable for `Array.prototype.sort()`.
+ */
+export function sortColors(a: string, b: string): number {
+  const sampleShades = [600, 700, 800, 900] as const;
+  const metrics = (key: string) => {
+    const hsls = sampleShades.map(sh => tinycolor(colors[key][sh]).toHsl());
+    let sumX = 0,
+      sumY = 0,
+      count = 0;
+    let sAcc = 0,
+      lAcc = 0;
+    for (const hsl of hsls) {
+      const h = hsl.h;
+      if (Number.isFinite(h)) {
+        const rad = (h * Math.PI) / 180;
+        sumX += Math.cos(rad);
+        sumY += Math.sin(rad);
+        count++;
+      }
+      sAcc += hsl.s;
+      lAcc += hsl.l;
+    }
+    const hue = count > 0 ? ((Math.atan2(sumY, sumX) * 180) / Math.PI + 360) % 360 : 9999;
+    const sat = sAcc / hsls.length;
+    const light = lAcc / hsls.length;
+    return { hue, sat, light };
+  };
+  const A = metrics(a);
+  const B = metrics(b);
+  if (A.hue === B.hue) {
+    if (A.sat === B.sat) {
+      if (A.light === B.light) return colors[a].name.localeCompare(colors[b].name);
+      return A.light - B.light;
+    }
+    return B.sat - A.sat;
+  }
+  return A.hue - B.hue;
+}
+
+const LIGHTNESS_MAP = [0.96, 0.907, 0.805, 0.697, 0.605, 0.547, 0.518, 0.445, 0.395, 0.34];
+const SATURATION_MAP = [0.32, 0.16, 0.08, 0.04, 0, 0, 0.04, 0.08, 0.16, 0.32];
+
+function getClosestLightness(colorObject: tinycolor.Instance) {
+  const lightnessGoal = colorObject.getLuminance();
+  return LIGHTNESS_MAP.reduce((prev, curr) =>
+    Math.abs(curr - lightnessGoal) < Math.abs(prev - lightnessGoal) ? curr : prev,
+  );
+}
+
+export function generateColorsMap(color: string) {
+  const colorObject = tinycolor(color);
+  const closestLightness = getClosestLightness(colorObject);
+  const baseColorIndex = LIGHTNESS_MAP.indexOf(closestLightness);
+
+  const colors = LIGHTNESS_MAP.map(l =>
+    tinycolor({
+      h: colorObject.toHsl().h,
+      s: colorObject.toHsl().s,
+      l: l,
+    }),
+  ).map((c, i) => {
+    const saturationDelta = SATURATION_MAP[i] - SATURATION_MAP[baseColorIndex];
+    return saturationDelta >= 0
+      ? c.saturate(saturationDelta * 100)
+      : c.desaturate(Math.abs(saturationDelta * 100));
+  });
+
+  colors[baseColorIndex] = tinycolor(color);
+
+  return { baseColorIndex, colors };
+}
+
+export type ColorsTuple = readonly [
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  ...string[],
+];
+
+export function generateColors(color: string) {
+  return generateColorsMap(color).colors.map(c => c.toHexString()) as unknown as ColorsTuple;
 }
 
 export default colors;

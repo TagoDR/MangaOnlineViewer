@@ -16,7 +16,7 @@ const mangatoon: ISite = {
       pages: images.length,
       prev: document.querySelector('.page-icons-prev')?.getAttribute('href'),
       next: document.querySelector('.page-icons-next')?.getAttribute('href'),
-      listImages: images.map((img) => img.getAttribute('data-src') ?? ''),
+      listImages: images.map(img => img.getAttribute('data-src') ?? ''),
     };
   },
 };
