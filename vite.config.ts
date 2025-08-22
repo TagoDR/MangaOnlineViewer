@@ -45,7 +45,7 @@ const globals = {
   lodash: '_',
   nprogress: 'NProgress',
   'range-slider-input': 'rangeSlider',
-  sweetalert2: 'Swal',
+  'sweetalert2-neutral': 'Swal',
   tinycolor2: 'tinycolor',
   bowser: 'bowser',
 };

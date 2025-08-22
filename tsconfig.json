@@ -11,11 +11,7 @@
     "incremental": true,
     "inlineSources": true,
     "isolatedModules": true,
-    "lib": [
-      "ESNext",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "moduleResolution": "bundler",
     "noEmit": true,
@@ -32,8 +28,5 @@
     "target": "ESNext",
     "useDefineForClassFields": false
   },
-  "include": [
-    "**/*.ts"
-  ]
+  "include": ["**/*.ts"]
 }
-

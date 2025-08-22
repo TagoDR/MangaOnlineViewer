@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import rangeSlider, { type RangeSlider } from 'range-slider-input';
 import rangeSliderStyles from 'range-slider-input/dist/style.css?inline';
-import Swal, { type SweetAlertOptions } from 'sweetalert2';
+import Swal, { type SweetAlertOptions } from 'sweetalert2-neutral';
 import type { IManga, ISite } from '../types';
 import sweetalertStyle from '../ui/styles/externalStyle';
 import startButton from '../ui/styles/startButton.css?inline';
