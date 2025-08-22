@@ -1,4 +1,10 @@
-import { getSettingsValue, saveSettingsValue, setSettingsValue } from '../../core/settings';
+import {
+  getSettingsValue,
+  refreshSettings,
+  saveSettingsValue,
+  setAppStateValue,
+  setSettingsValue,
+} from '../../core/settings';
 import type { ZoomMode } from '../../types';
 import { logScript } from '../../utils/tampermonkey.ts';
 
@@ -7,16 +13,21 @@ import { logScript } from '../../utils/tampermonkey.ts';
  * which in turn causes the images to re-render with the new zoom settings.
  * @param {ZoomMode} [mode=getSettingsValue('zoomMode')] - The zoom mode to apply ('percent', 'width', or 'height').
  * @param {number} [value=getSettingsValue('zoomValue')] - The zoom value (e.g., a percentage).
- * @param {number} [index] - An optional page index. If provided, the zoom may be applied only to a specific page (logic handled by the component).
  */
-export function applyZoom(
+function applyZoom(
   mode: ZoomMode = getSettingsValue('zoomMode'),
   value = getSettingsValue('zoomValue'),
-  index?: number,
 ) {
-  logScript('Zoom', mode, value, index);
+  logScript('Zoom', mode, value);
   setSettingsValue('zoomMode', mode);
   setSettingsValue('zoomValue', value);
+  if (mode === 'height') {
+    setSettingsValue('header', 'click');
+    setAppStateValue('headerVisible', false);
+  } else {
+    // Revert to the user's saved preferences when leaving fluid mode
+    refreshSettings('header');
+  }
 }
 
 /**
@@ -27,8 +38,6 @@ export function applyZoom(
  */
 export function changeGlobalZoom(mode: ZoomMode, value = getSettingsValue('zoomValue')) {
   return () => {
-    setSettingsValue('zoomMode', mode);
-    setSettingsValue('zoomValue', value);
     applyZoom(mode, value);
   };
 }
@@ -41,7 +50,6 @@ export function changeGlobalZoom(mode: ZoomMode, value = getSettingsValue('zoomV
 export function changeZoomByStep(sign = 1) {
   return () => {
     const ratio = getSettingsValue('zoomValue') + sign * getSettingsValue('zoomStep');
-    setSettingsValue('zoomValue', ratio);
     applyZoom('percent', ratio);
   };
 }
@@ -53,7 +61,6 @@ export function changeZoomByStep(sign = 1) {
 export function changeDefaultZoomMode(event: Event) {
   const target = (event.currentTarget as HTMLInputElement).value as ZoomMode;
   saveSettingsValue('zoomMode', target);
-  applyZoom(target);
 }
 
 /**
@@ -63,7 +70,6 @@ export function changeDefaultZoomMode(event: Event) {
 export function changeDefaultZoomValue(event: Event) {
   const target = parseInt((event.currentTarget as HTMLInputElement).value, 10);
   saveSettingsValue('zoomValue', target);
-  applyZoom('percent', target);
 }
 
 /**
