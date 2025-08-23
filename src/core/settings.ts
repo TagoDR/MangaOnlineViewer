@@ -112,7 +112,9 @@ export const isSettingsLocal = (): boolean => localSettings?.enabled === true;
  * Components should subscribe to this store to react to settings changes.
  * @type {import('nanostores').MapStore<ISettings>}
  */
-export const settings = map<ISettings>(isSettingsLocal() ? localSettings : globalSettings);
+export const settings = map<ISettings>(
+  isSettingsLocal() ? { ...localSettings, locale: globalSettings.locale } : globalSettings,
+);
 
 /**
  * A computed store that provides the currently selected locale object based on the `locale` setting.
@@ -130,10 +132,7 @@ export const locale = computed(
  */
 export function refreshSettings<K extends ISettingsKey>(key?: K): void {
   if (key) {
-    const newVal =
-      isSettingsLocal() && !['locale', 'bookmarks'].includes(key)
-        ? localSettings[key]
-        : globalSettings[key];
+    const newVal = isSettingsLocal() && key !== 'locale' ? localSettings[key] : globalSettings[key];
     const currentVal = settings.get()?.[key];
     if (!_.isEqual(currentVal, newVal)) {
       settings.setKey(key, newVal);
@@ -142,7 +141,7 @@ export function refreshSettings<K extends ISettingsKey>(key?: K): void {
     return;
   }
   const newObj = isSettingsLocal()
-    ? { ...localSettings, locale: globalSettings.locale, bookmarks: globalSettings.bookmarks }
+    ? { ...localSettings, locale: globalSettings.locale }
     : { ...globalSettings };
   const currentObj = settings.get();
   if (!_.isEqual(currentObj, newObj)) {
@@ -219,17 +218,11 @@ export function saveSettingsValue<K extends ISettingsKey>(key: K, value: ISettin
   if (_.isEqual(currentEffective, value)) return;
 
   setSettingsValue(key, value);
-  if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
-    localSettings = {
-      ..._.defaultsDeep(getLocalSettings(getDefault(false)), getDefault(false)),
-      [key]: value,
-    };
+  if (isSettingsLocal() && key !== 'locale') {
+    localSettings[key] = value;
     saveLocalSettings(diffObj(localSettings, getDefault(false)));
   } else {
-    globalSettings = {
-      ..._.defaultsDeep(getGlobalSettings(getDefault()), getDefault()),
-      [key]: value,
-    };
+    globalSettings[key] = value;
     saveGlobalSettings(diffObj(globalSettings, getDefault()));
   }
 }
