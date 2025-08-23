@@ -63,15 +63,14 @@
 
 #SettingsPanel datalist {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  writing-mode: vertical-lr;
   width: 100%;
 }
 
 #SettingsPanel datalist option {
   padding: 0;
+  writing-mode: vertical-lr;
 }
 
 #ThemeSelector {
