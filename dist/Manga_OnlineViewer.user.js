@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaOni, MangaPark, MangaReader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.08.22
+// @version       2025.08.23
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -2146,11 +2146,13 @@
   let globalSettings = _.defaultsDeep(getGlobalSettings(getDefault()), getDefault());
   let localSettings = _.defaultsDeep(getLocalSettings(getDefault(false)), getDefault(false));
   const isSettingsLocal = () => localSettings?.enabled === true;
-  const settings$1 = map(isSettingsLocal() ? localSettings : globalSettings);
+  const settings$1 = map(
+    isSettingsLocal() ? { ...localSettings, locale: globalSettings.locale } : globalSettings,
+  );
   computed(settings$1, current => locales.find(l => l.ID === current.locale) ?? locales[1]);
   function refreshSettings(key) {
     const newObj = isSettingsLocal()
-      ? { ...localSettings, locale: globalSettings.locale, bookmarks: globalSettings.bookmarks }
+      ? { ...localSettings, locale: globalSettings.locale }
       : { ...globalSettings };
     const currentObj = settings$1.get();
     if (!_.isEqual(currentObj, newObj)) {
@@ -2192,17 +2194,11 @@
     const currentEffective = getSettingsValue(key);
     if (_.isEqual(currentEffective, value)) return;
     setSettingsValue(key, value);
-    if (isSettingsLocal() && !['locale', 'bookmarks'].includes(key)) {
-      localSettings = {
-        ..._.defaultsDeep(getLocalSettings(getDefault(false)), getDefault(false)),
-        [key]: value,
-      };
+    if (isSettingsLocal() && key !== 'locale') {
+      localSettings[key] = value;
       saveLocalSettings(diffObj(localSettings, getDefault(false)));
     } else {
-      globalSettings = {
-        ..._.defaultsDeep(getGlobalSettings(getDefault()), getDefault()),
-        [key]: value,
-      };
+      globalSettings[key] = value;
       saveGlobalSettings(diffObj(globalSettings, getDefault()));
     }
   }
