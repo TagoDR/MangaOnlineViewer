@@ -23,7 +23,7 @@
 
 ## External Dependencies
 
-- Uses libraries: `tinycolor`, `imagesloaded`, `jszip`, `nprogress`, `sweetalert2`, `lodash`, `hotkeys-js`, `range-slider-input`, `bowser`, `blob-util`.
+- Uses libraries: `tinycolor`, `jszip`, `nprogress`, `sweetalert2`, `lodash`, `hotkeys-js`, `range-slider-input`, `bowser`, `blob-util`.
 - Dependencies are not bundled with the userscript builds whenever possible, they are imported via CDN in the userscript manager.
 - Designed for Tampermonkey/Violentmonkey, but can run as bookmarklets or local HTML.
 

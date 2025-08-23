@@ -76,7 +76,6 @@ export default defineConfig(({ mode }) => {
           externalGlobals({
             'blob-util': 'blobUtil',
             'hotkeys-js': 'hotkeys',
-            imagesloaded: 'imagesLoaded',
             jszip: 'JSZip',
             lodash: '_',
             nprogress: 'NProgress',
