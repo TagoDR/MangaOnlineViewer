@@ -12,7 +12,7 @@ const sites = [...main, ...adult];
  * @type {Partial<Tampermonkey.ScriptMetadata>}
  */
 export default {
-  name: 'MOV',
+  name: 'Manga OnlineViewer Dev',
   author: 'TagoDR',
   namespace: 'https://github.com/TagoDR',
   description: 'Shows all pages at once in online view for sites',
