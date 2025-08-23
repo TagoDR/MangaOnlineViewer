@@ -69,11 +69,10 @@ function zoomValue() {
         min="5"
         max="200"
         step="5"
-        list="tickmarks"
-        oninput='zoomValueVal.value = this.value + "%"'
-        @change="${changeDefaultZoomValue}"
+        list="zoomValueList"
+        @input="${changeDefaultZoomValue}"
       />
-      <datalist id="tickmarks">
+      <datalist id="zoomValueList">
         <option value="5">5</option>
         <option value="25">25</option>
         <option value="50">50</option>
@@ -110,12 +109,18 @@ function minZoom() {
         value="${getSettingsValue('minZoom')}"
         name="minZoom"
         id="minZoom"
-        min="30"
+        min="25"
         max="100"
-        step="10"
-        oninput='minZoomVal.value = this.value + "%"'
+        step="5"
         @input="${changeMinZoom}"
+        list="minZoomList"
       />
+      <datalist id="minZoomList">
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="75">75</option>
+        <option value="100">100</option>
+      </datalist>
     </div>
   `;
 }
@@ -142,12 +147,17 @@ function zoomStep() {
         value="${getSettingsValue('zoomStep')}"
         name="zoomStep"
         id="zoomStep"
-        min="5"
+        min="10"
         max="50"
         step="5"
-        oninput='zoomStepVal.value = this.value + "%"'
-        @change="${changeZoomStep}"
+        @input="${changeZoomStep}"
+        list="zoomStepList"
       />
+      <datalist id="zoomStepList">
+        <option value="10">10</option>
+        <option value="30">30</option>
+        <option value="50">50</option>
+      </datalist>
     </div>
   `;
 }

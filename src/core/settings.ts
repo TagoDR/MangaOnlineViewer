@@ -53,7 +53,7 @@ export const defaultSettings: ISettings = {
   throttlePageLoad: 1000,
   viewMode: 'WebComic',
   zoomMode: 'percent',
-  zoomStep: 25,
+  zoomStep: 30,
   zoomValue: 100,
   keybinds: {
     SCROLL_UP: ['up', 'W', 'num_8'],
