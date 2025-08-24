@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { getSettingsValue, saveSettingsValue } from '../../core/settings';
+import { saveSettingsValue } from '../../core/settings';
 import { isNothing } from '../../utils/checks';
 import { keybindEditor, keybindList } from '../components/KeybindingsPanel';
 import { addEvent } from './common';
@@ -77,15 +77,12 @@ export function buttonKeybindingsClose() {
 }
 
 export function saveKeybindings() {
-  const newkeybinds: Record<string, string[] | undefined> = getSettingsValue('keybinds');
-  Object.keys(getSettingsValue('keybinds')).forEach((kb) => {
-    const keys = document
-      .querySelector<HTMLInputElement>(`#${kb}`)
-      ?.value.split(',')
-      ?.map((value) => value.trim());
-    newkeybinds[kb] = isNothing(keys) ? undefined : keys;
+  const newKeybinds: Record<string, string[] | undefined> = {};
+  document.querySelectorAll<HTMLInputElement>('.KeybindInput').forEach(element => {
+    const keys = element.value.split(',').map(value => value.trim());
+    newKeybinds[element.id] = isNothing(keys) ? undefined : keys;
   });
-  saveSettingsValue('keybinds', newkeybinds);
+  saveSettingsValue('keybinds', newKeybinds);
   const keybindingList = document.querySelector('#KeybindingsList');
   if (keybindingList) keybindingList.innerHTML = keybindList().join('\n');
   document.querySelector('#SaveKeybindings')?.classList.add('hidden');

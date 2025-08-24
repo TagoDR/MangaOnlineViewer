@@ -1,7 +1,14 @@
 import _ from 'lodash';
 import { computed, map } from 'nanostores';
 import locales from '../locales';
-import { type ILocale, type ILocaleKey, type ISettings, type ISettingsKey, isKey } from '../types';
+import {
+  type IBookmark,
+  type ILocale,
+  type ILocaleKey,
+  type ISettings,
+  type ISettingsKey,
+  isKey,
+} from '../types';
 import { applyZoom } from '../ui/page';
 import { isNothing } from '../utils/checks';
 import diffObj from '../utils/diffObj';
@@ -94,6 +101,110 @@ function getDefault(global = true): ISettings {
       });
 }
 
+/**
+ * A customizer function for Lodash's isEqualWith to handle specific
+ * comparison logic for ISettings objects.
+ *
+ * It specifically handles the 'bookmarks' array and the `keybinds` object,
+ * comparing their contents regardless of their order.
+ *
+ * @param value The value from the first object.
+ * @param other The value from the second object.
+ * @param key The key of the property being compared.
+ * @returns A boolean if a custom comparison is made, or undefined to
+ * let Lodash's default comparison take over.
+ */
+export function compareSettingsCustomizer(
+  value: any,
+  other: any,
+  key: string | number | symbol | undefined,
+): boolean | undefined {
+  // Handle the 'bookmarks' array.
+  if (key === 'bookmarks') {
+    // Ensure both values are arrays before proceeding.
+    if (Array.isArray(value) && Array.isArray(other)) {
+      // If the array lengths are different, they are not equal.
+      if (value.length !== other.length) {
+        return false;
+      }
+
+      // To compare arrays without considering order, we can sort them first.
+      // We'll create a sortable string from the bookmark properties.
+      // Using `url` and `date` ensures uniqueness for sorting.
+      const getBookmarkSortKey = (b: IBookmark) => `${b.url}-${b.date}`;
+
+      const sortedValue = [...value].sort((a, b) =>
+        getBookmarkSortKey(a).localeCompare(getBookmarkSortKey(b)),
+      );
+      const sortedOther = [...other].sort((a, b) =>
+        getBookmarkSortKey(a).localeCompare(getBookmarkSortKey(b)),
+      );
+
+      // Now we can use Lodash's isEqual to perform a deep comparison
+      // on the sorted arrays.
+      return _.isEqual(sortedValue, sortedOther);
+    }
+  }
+
+  // Handle the 'keybinds' object.
+  if (key === 'keybinds') {
+    // Ensure both values are objects before proceeding.
+    if (typeof value === 'object' && typeof other === 'object') {
+      const keysA = Object.keys(value).sort();
+      const keysB = Object.keys(other).sort();
+
+      // If the keys are different, the objects are not equal.
+      if (!_.isEqual(keysA, keysB)) {
+        return false;
+      }
+
+      // Compare the arrays for each key, after sorting the inner arrays.
+      for (const k of keysA) {
+        const sortedArrayA = value[k] ? [...value[k]].sort() : [];
+        const sortedArrayB = other[k] ? [...other[k]].sort() : [];
+        if (!_.isEqual(sortedArrayA, sortedArrayB)) {
+          return false;
+        }
+      }
+      return true;
+    }
+  }
+
+  // For all other properties, return undefined to let Lodash handle the comparison.
+  return undefined;
+}
+
+/**
+ * Compares two ISettings objects to detect changes, handling bookmarks
+ * as an unordered list. Can also compare individual properties if the
+ * optional key is provided.
+ *
+ * @param newSettings The new settings object or value.
+ * @param oldSettings The old settings object or value.
+ * @param key The optional key to use when comparing individual properties.
+ * @returns true if the settings are identical, false otherwise.
+ */
+export function haveSettingsChanged(
+  newSettings: ISettings | ISettings[ISettingsKey],
+  oldSettings: ISettings | ISettings[ISettingsKey],
+  key?: ISettingsKey,
+): boolean {
+  // If the references are the same, no change has occurred.
+  // This is a quick check to prevent unnecessary deep comparisons.
+  if (newSettings === oldSettings) {
+    return false;
+  }
+
+  // If a key is provided, we create a temporary object to trigger the customizer logic.
+  if (key) {
+    const tempA = { [key]: newSettings };
+    const tempB = { [key]: oldSettings };
+    return !_.isEqualWith(tempA, tempB, compareSettingsCustomizer);
+  }
+  // If no key is provided, assume we are comparing the full object.
+  return !_.isEqualWith(newSettings, oldSettings, compareSettingsCustomizer);
+}
+
 // Raw settings objects, loaded from Tampermonkey's storage.
 let globalSettings: ISettings = _.defaultsDeep(getGlobalSettings(getDefault()), getDefault());
 let localSettings: ISettings = _.defaultsDeep(
@@ -107,13 +218,23 @@ let localSettings: ISettings = _.defaultsDeep(
  */
 export const isSettingsLocal = (): boolean => localSettings?.enabled === true;
 
+export const isLocalSettingsAllowed = (key: ISettingsKey) =>
+  isSettingsLocal() && !['locale', 'bookmarks', 'keybinds'].includes(key);
+
 /**
  * The reactive store for all settings. It holds either global or local settings based on the current mode.
  * Components should subscribe to this store to react to settings changes.
  * @type {import('nanostores').MapStore<ISettings>}
  */
 export const settings = map<ISettings>(
-  isSettingsLocal() ? { ...localSettings, locale: globalSettings.locale } : globalSettings,
+  isSettingsLocal()
+    ? {
+        ...localSettings,
+        locale: globalSettings.locale,
+        keybinds: globalSettings.keybinds,
+        bookmarks: globalSettings.bookmarks,
+      }
+    : globalSettings,
 );
 
 /**
@@ -132,19 +253,25 @@ export const locale = computed(
  */
 export function refreshSettings<K extends ISettingsKey>(key?: K): void {
   if (key) {
-    const newVal = isSettingsLocal() && key !== 'locale' ? localSettings[key] : globalSettings[key];
+    const newVal = isLocalSettingsAllowed(key) ? localSettings[key] : globalSettings[key];
     const currentVal = settings.get()?.[key];
-    if (!_.isEqual(currentVal, newVal)) {
+    // Pass the key to the comparison function
+    if (haveSettingsChanged(currentVal, newVal, key)) {
       settings.setKey(key, newVal);
       logScript('Refreshed Settings', key, newVal);
     }
     return;
   }
   const newObj = isSettingsLocal()
-    ? { ...localSettings, locale: globalSettings.locale }
+    ? {
+        ...localSettings,
+        locale: globalSettings.locale,
+        keybinds: globalSettings.keybinds,
+        bookmarks: globalSettings.bookmarks,
+      }
     : { ...globalSettings };
   const currentObj = settings.get();
-  if (!_.isEqual(currentObj, newObj)) {
+  if (haveSettingsChanged(currentObj, newObj)) {
     settings.set(newObj);
     logScript('Refreshed Settings', key, null);
   }
@@ -203,7 +330,8 @@ export function getSettingsValue<K extends ISettingsKey>(key: K): ISettings[K] {
  */
 export function setSettingsValue<K extends ISettingsKey>(key: K, value: ISettings[K]): void {
   const current = settings.get()?.[key];
-  if (_.isEqual(current, value)) return;
+  // Pass the key to the comparison function
+  if (!haveSettingsChanged(current, value, key)) return;
   settings.setKey(key, value);
 }
 
@@ -215,10 +343,10 @@ export function setSettingsValue<K extends ISettingsKey>(key: K, value: ISetting
  */
 export function saveSettingsValue<K extends ISettingsKey>(key: K, value: ISettings[K]): void {
   const currentEffective = getSettingsValue(key);
-  if (_.isEqual(currentEffective, value)) return;
-
-  setSettingsValue(key, value);
-  if (isSettingsLocal() && key !== 'locale') {
+  // Pass the key to the comparison function
+  if (!haveSettingsChanged(currentEffective, value, key)) return;
+  settings.setKey(key, value);
+  if (isLocalSettingsAllowed(key)) {
     localSettings[key] = value;
     saveLocalSettings(diffObj(localSettings, getDefault(false)));
   } else {
