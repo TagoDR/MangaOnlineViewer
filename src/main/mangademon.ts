@@ -18,6 +18,15 @@ const mangademon: ISite = {
       listImages: images.map(
         img => (img.getAttribute('data-src') || img.getAttribute('src')) ?? '',
       ),
+      before(): void {
+        // Restore Tampered document.createTextNode
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+        const originalDocument = iframe.contentWindow?.document;
+        if (originalDocument) document.createTextNode = originalDocument.createTextNode;
+        document.body.removeChild(iframe);
+      },
     };
   },
 };
