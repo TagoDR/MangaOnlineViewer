@@ -51,7 +51,7 @@ export function buttonCommentsOpen() {
  * @param {MouseEvent} e - The click event.
  */
 export function changeCommentsColor(e: MouseEvent) {
-  const elem = (e.currentTarget as HTMLElement).parentElement;
+  const elem = (e.currentTarget as HTMLElement).previousElementSibling;
   elem?.classList.toggle('light');
   elem?.classList.toggle('dark');
 }
