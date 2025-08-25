@@ -94,7 +94,6 @@ export default class Navbar extends LitElement {
    * @returns The rendered template.
    */
   render() {
-    if (this.mode === 'disabled') return html``;
     const manga = getAppStateValue('manga');
     const navClasses = {
       horizontal: this.mode === 'bottom',

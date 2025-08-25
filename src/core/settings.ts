@@ -262,7 +262,8 @@ export const appState = map<IApp>({
   scrollToPage: undefined,
   device: getDevice(),
   images: {},
-  headerVisible: true,
+  headerVisible: false,
+  headroom: 'top',
 });
 
 if (import.meta.env.DEV) {

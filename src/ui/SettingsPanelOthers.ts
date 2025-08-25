@@ -11,6 +11,7 @@ import {
   checkFitWidthOversize,
   checkHideImageControls,
   checkLazyLoad,
+  checkPagination,
 } from './events/options.ts';
 import {
   IconArrowsMove,
@@ -32,6 +33,14 @@ function checkboxOptions() {
         name="fitIfOversize"
         ?checked=${getSettingsValue('fitWidthIfOversize')}
         .onChange=${checkFitWidthOversize}
+      ></mov-toggle-switch>
+    </div>
+    <div class="ControlLabel pagination">
+      ${getLocaleString('ENABLE_PAGINATION')}
+      <mov-toggle-switch
+        name="pagination"
+        ?checked=${getSettingsValue('pagination')}
+        .onChange=${checkPagination}
       ></mov-toggle-switch>
     </div>
     <div class="ControlLabel enableComments">

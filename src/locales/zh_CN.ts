@@ -123,4 +123,5 @@ export default {
   NAVBAR_LEFT: '左边',
   NAVBAR_RIGHT: '正确的',
   NAVBAR_DISABLED: '已禁用',
+  ENABLE_PAGINATION: '启用分页',
 } satisfies ILocale;

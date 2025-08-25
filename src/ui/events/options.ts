@@ -58,6 +58,15 @@ export function checkEnableComments(event: Event) {
 }
 
 /**
+ * Event handler to toggle and save the 'enable pagination' setting.
+ * @param {Event} event - The change event from the checkbox.
+ */
+export function checkPagination(event: Event) {
+  const checked = (event.currentTarget as HTMLInputElement).checked;
+  saveSettingsValue('pagination', checked);
+}
+
+/**
  * Event handler to toggle and save the 'auto download' setting. Shows an informational popup when enabled.
  * @param {Event} event - The change event from the checkbox.
  */
