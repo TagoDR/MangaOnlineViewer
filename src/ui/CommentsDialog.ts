@@ -19,7 +19,6 @@ const commentsDialog = () => html`
     class="${classMap({
       panel: true,
       visible: getAppStateValue('panel') === 'comments',
-      [getSettingsValue('colorScheme')]: true,
     })}"
   >
     <button
@@ -31,7 +30,12 @@ const commentsDialog = () => html`
       ${IconX}
     </button>
     <h2>${getLocaleString('COMMENTS')}</h2>
-    <div id="CommentsArea">${getAppStateValue('manga')?.comments}</div>
+    <div
+      id="CommentsArea"
+      class="${getSettingsValue('colorScheme')}"
+    >
+      ${getAppStateValue('manga')?.comments}
+    </div>
     <button
       id="CommentsColorScheme"
       class="simpleButton ColorScheme"
