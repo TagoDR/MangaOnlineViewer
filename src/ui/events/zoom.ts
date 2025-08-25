@@ -1,4 +1,6 @@
+import _ from 'lodash';
 import {
+  getAppStateValue,
   getSettingsValue,
   refreshSettings,
   saveSettingsValue,
@@ -7,6 +9,7 @@ import {
 } from '../../core/settings';
 import type { ZoomMode } from '../../types';
 import { logScript } from '../../utils/tampermonkey.ts';
+import { scrollToElement } from './common.ts';
 
 /**
  * Applies a new zoom level to the viewer. This function updates the application's reactive state,
@@ -22,12 +25,41 @@ function applyZoom(
   setSettingsValue('zoomMode', mode);
   setSettingsValue('zoomValue', value);
   if (mode === 'height') {
-    setSettingsValue('header', 'click');
+    // setSettingsValue('header', 'click');
     setAppStateValue('headerVisible', false);
+    setAppStateValue('headroom', 'hide');
+    scrollToElement(
+      getAppStateValue('render')?.querySelector<HTMLElement>(
+        `#Page${getAppStateValue('currentPage')}`,
+      ),
+    );
   } else {
     // Revert to the user's saved preferences when leaving fluid mode
     refreshSettings('header');
   }
+  const nextWidth =
+    window.innerWidth +
+    (getSettingsValue('navbar') === 'left' || getSettingsValue('navbar') === 'right' ? -34 : 0);
+  const nextHeight = window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -34 : 0);
+  const images = getAppStateValue('images');
+  const newImages = _.each(images, page => {
+    if (page) {
+      if (mode === 'width') {
+        // Fit width
+        page.width = nextWidth;
+        page.height = undefined;
+      } else if (mode === 'height') {
+        // Fit height
+        page.width = undefined;
+        page.height = nextHeight;
+      } else if (mode === 'percent') {
+        page.width = page.naturalWidth ? page.naturalWidth * (value / 100) : undefined;
+        page.height = undefined;
+      }
+    }
+    return page;
+  });
+  setAppStateValue('images', newImages);
 }
 
 /**
@@ -50,7 +82,7 @@ export function changeGlobalZoom(mode: ZoomMode, value = getSettingsValue('zoomV
 export function changeZoomByStep(sign = 1) {
   return () => {
     const ratio = getSettingsValue('zoomValue') + sign * getSettingsValue('zoomStep');
-    applyZoom('percent', ratio);
+    if (ratio > 0 && ratio < 500) applyZoom('percent', ratio);
   };
 }
 

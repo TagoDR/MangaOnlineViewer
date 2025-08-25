@@ -39,7 +39,7 @@ export function headerHover(event: MouseEvent) {
   if (getSettingsValue('header') === 'hover') {
     setAppStateValue(
       'headerVisible',
-      isMouseInsideRegion(event, window.innerWidth, 150) || window.scrollY <= 100,
+      isMouseInsideRegion(event, window.innerWidth, 150) || window.scrollY < 100,
     );
   }
 }
