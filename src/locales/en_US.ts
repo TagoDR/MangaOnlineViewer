@@ -123,4 +123,5 @@ export default {
   NAVBAR_LEFT: 'Left',
   NAVBAR_RIGHT: 'Right',
   NAVBAR_DISABLED: 'Disabled',
+  ENABLE_PAGINATION: 'Enable Pagination',
 } satisfies ILocale;

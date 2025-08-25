@@ -68,7 +68,24 @@ export default class App extends LitElement {
         .locale="${getSettingsValue('locale')}"
       >
         ${Header(manga)} ${Reader(manga)}
-        <mov-navbar .mode=${getSettingsValue('navbar')}></mov-navbar>
+        ${
+          getSettingsValue('navbar') === 'disabled'
+            ? ''
+            : html`<mov-navbar .mode=${getSettingsValue('navbar')}></mov-navbar>`
+        }
+        ${
+          !getSettingsValue('pagination')
+            ? ''
+            : html`
+              <mov-pagination
+                .startPage=${manga.begin}
+                .totalPages=${manga.pages}
+                .currentPage=${getAppStateValue('currentPage')}
+                .next=${manga.next}
+                .prev=${manga.prev}
+              ></mov-pagination>`
+        }
+
         <div
           id="Overlay"
           class="${classMap({
