@@ -39,49 +39,11 @@ import {
  */
 function getImageStyle(index: number): StyleInfo {
   const image = getAppStateValue('images')?.[index];
-  const mode = getSettingsValue('zoomMode');
-  const value = getSettingsValue('zoomValue');
-  const imageStyles: StyleInfo = {
-    width: 'auto',
-    height: 'auto',
+  return {
+    width: image?.width ? `${image.width}px` : 'auto',
+    height: image?.height ? `${image.height}px` : 'auto',
     'min-width': `${getSettingsValue('minZoom')}vw`,
   };
-  if (image?.width) {
-    imageStyles.width = `${image.width}px`;
-    imageStyles.height = 'auto';
-    return imageStyles;
-  }
-  if (image?.height) {
-    imageStyles.height = `${image.height}px`;
-    imageStyles.width = 'auto';
-    return imageStyles;
-  }
-  if (image?.naturalWidth) {
-    if (mode === 'width') {
-      // Fit width
-      const nextWidth =
-        window.innerWidth +
-        (getSettingsValue('navbar') === 'left' || getSettingsValue('navbar') === 'right' ? -34 : 0);
-      imageStyles.width = `${nextWidth}px`; // Or maybe `100vw`
-      imageStyles.height = 'auto';
-    } else if (mode === 'height') {
-      // Fit height
-      const nextHeight = window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -34 : 0);
-      imageStyles.height = `${nextHeight}px`; // Or maybe `100vh`
-      imageStyles.maxHeight = `${nextHeight}px`; // Or maybe `100vh`
-      imageStyles.minWidth = 'unset';
-      imageStyles.width = 'auto';
-    } else if (mode === 'percent') {
-      if (value === 100) {
-        imageStyles.width = 'auto';
-      } else {
-        imageStyles.width = `${image.naturalWidth * ((image.width || value) / 100)}px`;
-      }
-      imageStyles.height = 'auto';
-      imageStyles.minWidth = `${getSettingsValue('minZoom')}vw`;
-    }
-  }
-  return imageStyles;
 }
 
 /**
