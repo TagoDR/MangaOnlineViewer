@@ -2,21 +2,29 @@ import { getLocaleString, getSettingsValue } from '../../core/settings.ts';
 import { html } from '../../utils/code-tag.ts';
 
 function defaultZoomMode() {
-  return html`
-    <div class="ControlLabel DefaultZoomMode">
-      ${getLocaleString('DEFAULT_ZOOM_MODE')}
-      <select id="DefaultZoomMode">
-        <option value="percent" ${getSettingsValue('zoomMode') === 'percent' ? 'selected' : ''}>
-          ${getLocaleString('PERCENT')}
-        </option>
-        <option value="width" ${getSettingsValue('zoomMode') === 'width' ? 'selected' : ''}>
-          ${getLocaleString('FIT_WIDTH')}
-        </option>
-        <option value="height" ${getSettingsValue('zoomMode') === 'height' ? 'selected' : ''}>
-          ${getLocaleString('FIT_HEIGHT')}
-        </option>
-      </select>
-    </div>`;
+  return html` <div class="ControlLabel DefaultZoomMode">
+    ${getLocaleString('DEFAULT_ZOOM_MODE')}
+    <select id="DefaultZoomMode">
+      <option
+        value="percent"
+        ${getSettingsValue('zoomMode') === 'percent' ? 'selected' : ''}
+      >
+        ${getLocaleString('PERCENT')}
+      </option>
+      <option
+        value="width"
+        ${getSettingsValue('zoomMode') === 'width' ? 'selected' : ''}
+      >
+        ${getLocaleString('FIT_WIDTH')}
+      </option>
+      <option
+        value="height"
+        ${getSettingsValue('zoomMode') === 'height' ? 'selected' : ''}
+      >
+        ${getLocaleString('FIT_HEIGHT')}
+      </option>
+    </select>
+  </div>`;
 }
 
 function defaultZoom() {
@@ -28,7 +36,11 @@ function defaultZoom() {
     >
       <span>
         ${getLocaleString('DEFAULT_ZOOM')}
-        <output id="defaultZoomVal" class="RangeValue" for="DefaultZoom">
+        <output
+          id="defaultZoomVal"
+          class="RangeValue"
+          for="DefaultZoom"
+        >
           ${getSettingsValue('defaultZoom')}%
         </output>
       </span>
@@ -63,7 +75,11 @@ function minZoom() {
     <div class="ControlLabel minZoom">
       <span>
         ${getLocaleString('MINIMUM_ZOOM')}
-        <output id="minZoomVal" class="RangeValue" for="minZoom">
+        <output
+          id="minZoomVal"
+          class="RangeValue"
+          for="minZoom"
+        >
           ${getSettingsValue('minZoom')}%
         </output>
       </span>
@@ -86,7 +102,11 @@ function zoomStep() {
     <div class="ControlLabel zoomStep">
       <span>
         ${getLocaleString('ZOOM_STEP')}
-        <output id="zoomStepVal" class="RangeValue" for="zoomStep">
+        <output
+          id="zoomStepVal"
+          class="RangeValue"
+          for="zoomStep"
+        >
           ${getSettingsValue('zoomStep')}%
         </output>
       </span>
@@ -109,16 +129,28 @@ function viewMode() {
     <div class="ControlLabel viewMode">
       ${getLocaleString('DEFAULT_VIEW_MODE')}
       <select id="viewMode">
-        <option value="Vertical" ${getSettingsValue('viewMode') === 'Vertical' ? 'selected' : ''}>
+        <option
+          value="Vertical"
+          ${getSettingsValue('viewMode') === 'Vertical' ? 'selected' : ''}
+        >
           ${getLocaleString('VIEW_MODE_VERTICAL')}
         </option>
-        <option value="WebComic" ${getSettingsValue('viewMode') === 'WebComic' ? 'selected' : ''}>
+        <option
+          value="WebComic"
+          ${getSettingsValue('viewMode') === 'WebComic' ? 'selected' : ''}
+        >
           ${getLocaleString('VIEW_MODE_WEBCOMIC')}
         </option>
-        <option value="FluidLTR" ${getSettingsValue('viewMode') === 'FluidLTR' ? 'selected' : ''}>
+        <option
+          value="FluidLTR"
+          ${getSettingsValue('viewMode') === 'FluidLTR' ? 'selected' : ''}
+        >
           ${getLocaleString('VIEW_MODE_LEFT')}
         </option>
-        <option value="FluidRTL" ${getSettingsValue('viewMode') === 'FluidRTL' ? 'selected' : ''}>
+        <option
+          value="FluidRTL"
+          ${getSettingsValue('viewMode') === 'FluidRTL' ? 'selected' : ''}
+        >
           ${getLocaleString('VIEW_MODE_RIGHT')}
         </option>
       </select>

@@ -73,9 +73,17 @@ const app = (manga: IManga) => {
         ${isBookmarked() ? 'bookmarked' : ''}
         ${getDevice()}`;
   main.innerHTML = html`
-    <div id="menu" class="${getSettingsValue('header')}">${IconMenu2}</div>
+    <div
+      id="menu"
+      class="${getSettingsValue('header')}"
+    >
+      ${IconMenu2}
+    </div>
     ${Header(manga)} ${Reader(manga)} ${ThumbnailsPanel(manga)}
-    <div id="Overlay" class="overlay"></div>
+    <div
+      id="Overlay"
+      class="overlay"
+    ></div>
     ${CommentsPanel()} ${KeybindingsPanel()} ${BookmarksPanel()} ${SettingsPanel()}
   `;
   settings.listen(_.debounce(hydrateApp, 600));

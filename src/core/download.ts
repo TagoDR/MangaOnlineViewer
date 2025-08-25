@@ -56,9 +56,9 @@ async function getImageData(
     });
   }
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     getImage(src)
-      .then((res) => {
+      .then(res => {
         resolve({
           name: getFilename('Page-', index, array.length, getExtension(src)),
           data: res.response,
@@ -81,7 +81,7 @@ async function generateZip() {
   zip = new JSZip();
   const images = [...document.querySelectorAll<HTMLImageElement>('.PageImg')];
   Promise.all(images.map(getImageData))
-    .then((data) => {
+    .then(data => {
       data.forEach(addZip);
       logScript('Generating Zip');
       zip
@@ -91,7 +91,7 @@ async function generateZip() {
           },
           // LogScript, progress
         )
-        .then((content) => {
+        .then(content => {
           logScript('Download Ready');
           const zipName = `${document.querySelector('#MangaTitle')?.textContent?.trim()}.zip`;
           saveAs(content, zipName, { autoBom: false });
@@ -99,7 +99,7 @@ async function generateZip() {
         })
         .catch(logScript);
     })
-    .catch((msg) => logScript("One or more images couldn't be Downloaded", msg));
+    .catch(msg => logScript("One or more images couldn't be Downloaded", msg));
 }
 
 export default generateZip;

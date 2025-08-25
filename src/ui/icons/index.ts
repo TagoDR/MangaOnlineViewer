@@ -25,6 +25,7 @@ export { default as IconMessage } from './message.svg';
 export { default as IconMoon } from './moon.svg';
 export { default as IconPalette } from './palette.svg';
 export { default as IconPencil } from './pencil.svg';
+export { default as IconPencilCog } from './pencil-cog.svg';
 export { default as IconPhoto } from './photo.svg';
 export { default as IconPhotoOff } from './photo-off.svg';
 export { default as IconPlayerPause } from './player-pause.svg';

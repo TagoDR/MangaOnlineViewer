@@ -3,7 +3,7 @@
   "description": "Userscript that helps to read Manga faster by loading all the pages at once",
   "version": "45.0.0",
   "scripts": {
-    "start": "vite",
+    "start": "vite --mode dev",
     "build": "vite build --mode dev",
     "release": "vite build --mode main && vite build --mode adult",
     "check": "biome check --write ./src",
@@ -19,13 +19,7 @@
     "type": "git",
     "url": "git+https://github.com/TagoDR/MangaOnlineViewer.git"
   },
-  "keywords": [
-    "manga",
-    "reader",
-    "viewer",
-    "online",
-    "loader"
-  ],
+  "keywords": ["manga", "reader", "viewer", "online", "loader"],
   "bugs": "https://github.com/TagoDR/MangaOnlineViewer/issues",
   "homepage": "https://github.com/TagoDR/MangaOnlineViewer#readme",
   "devDependencies": {
@@ -64,10 +58,7 @@
     "sweetalert2-neutral": "^11.22.2-neutral",
     "tinycolor2": "^1.6.0"
   },
-  "browserslist": [
-    "defaults and fully supports es6-module",
-    "maintained node versions"
-  ],
+  "browserslist": ["defaults and fully supports es6-module", "maintained node versions"],
   "prettier": {
     "overrides": [
       {

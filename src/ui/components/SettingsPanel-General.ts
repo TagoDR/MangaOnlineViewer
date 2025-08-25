@@ -6,7 +6,10 @@ import { IconLocationCog, IconWorldCog } from '../icons';
 function settingsScope() {
   return html` <div class="ControlLabel">
     ${getLocaleString('SCOPE')}
-    <div id="SettingsScope" class="radio-inputs">
+    <div
+      id="SettingsScope"
+      class="radio-inputs"
+    >
       <label class="radio">
         <input
           type="radio"
@@ -34,8 +37,11 @@ function settingsScope() {
 function localeSelector() {
   return locales
     .map(
-      (locale) => html`
-        <option value="${locale.ID}" ${getSettingsValue('locale') === locale.ID ? 'selected' : ''}>
+      locale => html`
+        <option
+          value="${locale.ID}"
+          ${getSettingsValue('locale') === locale.ID ? 'selected' : ''}
+        >
           ${locale.NAME}
         </option>
       `,

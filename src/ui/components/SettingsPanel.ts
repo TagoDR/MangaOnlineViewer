@@ -8,12 +8,22 @@ import SettingsPanelTheme from './SettingsPanel-Theme';
 import SettingsPanelZoom from './SettingsPanel-Zoom';
 
 const SettingsPanel = () => html`
-  <div id="SettingsPanel" class="panel">
+  <div
+    id="SettingsPanel"
+    class="panel"
+  >
     <h2>${getLocaleString('SETTINGS')}</h2>
-    <button id="CloseSettings" class="closeButton" title="${getLocaleString('CLOSE')}">
+    <button
+      id="CloseSettings"
+      class="closeButton"
+      title="${getLocaleString('CLOSE')}"
+    >
       ${IconX}
     </button>
-    <button id="ResetSettings" class="ControlButton">
+    <button
+      id="ResetSettings"
+      class="ControlButton"
+    >
       ${IconSettingsOff} ${getLocaleString('BUTTON_RESET_SETTINGS')}
     </button>
     <fieldset>

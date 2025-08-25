@@ -5,8 +5,7 @@ import { replaceStyleSheet, wrapStyle } from '../utils/css';
 
 function generateThemeCSS(name: string, primary: string, text: string) {
   return css`
-    .ThemeRadio.${name},
-    [data-theme='${name}'] {
+    .ThemeRadio.${name}, [data-theme='${name}'] {
       --theme-primary-color: ${primary};
       --theme-primary-text-color: ${text};
     }
