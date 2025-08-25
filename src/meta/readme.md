@@ -45,10 +45,8 @@ then open it in the browser, and you will see the options to load local Files.
 ## Supported Hentai Sites
 
 > Adult Script available **_only_** on [GitHub](https://github.com/TagoDR/MangaOnlineViewer)
-<details>
-<summary>Show List</summary>
+
 <!-- @echo LIST_HENTAI_SITES -->
-</details>
 
 ## HotKeys
 
@@ -185,7 +183,7 @@ bookmarklet.
 ##### Main Reader:
 
 ```JS
-javascript:(function () {
+javascript:(function() {
   if (unsafeWindow === undefined) unsafeWindow = window;
   ["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
 })();
@@ -194,7 +192,7 @@ javascript:(function () {
 ##### Adult Reader:
 
 ```JS
-javascript:(function () {
+javascript:(function() {
   if (unsafeWindow === undefined) unsafeWindow = window;
   ["<!-- @echo BOOKMARKLET -->", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer_Adult.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
 })();
