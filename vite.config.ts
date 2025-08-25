@@ -17,6 +17,10 @@ import metaDev from './src/meta/meta-dev';
 import metaMain from './src/meta/meta-main';
 import { bookmarklet, comicSites, hentaiSites, mangaSites } from './src/meta/readme';
 
+const didChange = (filePath: string, content: string) =>
+  !fs.existsSync(filePath) ||
+  fs.readFileSync(filePath, 'utf8').replace(/\r\n/g, '\n') !== content.replace(/\r\n/g, '\n');
+
 /**
  * The main Vite configuration function.
  * It determines the build target based on the Vite mode (`main`, `adult`, or `dev`)
@@ -41,14 +45,20 @@ export default defineConfig(({ mode }) => {
       .replace('<!-- @echo LIST_COMIC_SITES -->', comicSites)
       .replace('<!-- @echo LIST_HENTAI_SITES -->', hentaiSites)
       .replaceAll('<!-- @echo BOOKMARKLET -->', bookmarklet);
-    fs.writeFileSync('./readme.md', readme, 'utf8');
+    const readmePath = './readme.md';
+    if (didChange(readmePath, readme)) {
+      fs.writeFileSync(readmePath, readme, 'utf8');
+    }
   }
 
   /**
    * Generates and writes the .meta.js file for a given script.
    */
   const banner = userscript(meta as Metadata);
-  fs.writeFileSync(`./dist/${meta?.name?.replace(/ /g, '_')}.meta.js`, banner, 'utf8');
+  const metaPath = `./dist/${meta?.name?.replace(/ /g, '_')}.meta.js`;
+  if (didChange(metaPath, banner)) {
+    fs.writeFileSync(metaPath, banner, 'utf8');
+  }
 
   return {
     plugins: [
