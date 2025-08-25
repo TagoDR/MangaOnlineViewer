@@ -23,6 +23,7 @@ import { bookmarklet, comicSites, hentaiSites, mangaSites } from './src/meta/rea
  * and returns the appropriate configuration for that target.
  */
 export default defineConfig(({ mode }) => {
+  if (mode === 'development') mode = 'dev';
   const meta = {
     main: metaMain,
     adult: metaAdult,

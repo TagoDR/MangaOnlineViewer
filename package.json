@@ -3,7 +3,7 @@
   "description": "Userscript that helps to read Manga faster by loading all the pages at once",
   "version": "45.0.0",
   "scripts": {
-    "start": "vite --mode dev",
+    "start": "vite",
     "build": "vite build --mode dev",
     "release": "vite build --mode main && vite build --mode adult",
     "check": "biome check --write ./src",
