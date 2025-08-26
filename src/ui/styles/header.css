@@ -23,13 +23,9 @@
 @keyframes headroom {
   from {
     transform: translateY(-100%);
-    position: sticky;
-    top: 0;
   }
   to {
     transform: translateY(0%);
-    position: sticky;
-    top: 0;
   }
 }
 
