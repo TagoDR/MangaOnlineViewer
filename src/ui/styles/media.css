@@ -23,16 +23,13 @@
   padding: 5px;
 }
 
+.mobile #GlobalFunctions span {
+  flex-direction: column;
+}
+
 .mobile #ChapterNavigation,
 .tablet #ChapterNavigation {
   order: 3;
-}
-
-.mobile #GlobalFunctions #ZoomSlider,
-.tablet #GlobalFunctions #ZoomSlider,
-.mobile #GlobalFunctions .ControlButton:not(.tablets, .phones),
-.tablet #GlobalFunctions .ControlButton:not(.tablets, .phones) {
-  display: none;
 }
 
 .mobile #Header {
@@ -87,6 +84,10 @@
   opacity: 1;
 }
 
+.mobile #GlobalFunctions #ZoomSlider,
+.tablet #GlobalFunctions #ZoomSlider,
+.mobile #GlobalFunctions .ControlButton:not(.tablets, .phones),
+.tablet #GlobalFunctions .ControlButton:not(.tablets, .phones),
 .mobile #Navigation,
 .mobile #GlobalFunctions #ZoomSlider,
 .mobile #GlobalFunctions .ControlButton:not(.phones),
@@ -104,6 +105,7 @@
 .mobile #SettingsPanel .autoScroll,
 .mobile #KeybindingsPanel,
 .mobile .ChapterControl .download,
+.tablet #Counters,
 .mobile #Counters {
   display: none;
 }
