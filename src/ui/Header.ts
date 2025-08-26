@@ -64,6 +64,7 @@ const Header = (manga: IManga) => html`
     id="menu"
     class="${classMap({
       [getSettingsValue('header')]: true,
+      hide: ['top', 'end'].includes(getAppStateValue('headroom')),
     })}"
     @click=${buttonHeaderClick}
   >
