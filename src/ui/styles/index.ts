@@ -4,6 +4,7 @@
  * and combines them into a single CSS template literal that can be injected into the application's shadow DOM.
  */
 
+import keyscss from '@gerhobbelt/keyscss/keys.css?inline';
 import { css } from '../../utils/code-tag';
 import { svgToUrl } from '../../utils/svgs';
 import { IconPhotoOffRaw, IconPhotoRaw } from '../icons';
@@ -42,4 +43,5 @@ export default css`
   ${comments}
   ${media}
   ${animation}
+  ${keyscss}
 `;

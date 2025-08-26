@@ -79,7 +79,7 @@ const Header = (manga: IManga) => html`
         ['hide', 'none'].includes(getAppStateValue('headroom')),
     })}"
   >
-    <aside id="GlobalFunctions">
+    <div id="GlobalFunctions">
       <span>
         <button
           id="enlarge"
@@ -225,7 +225,7 @@ const Header = (manga: IManga) => html`
           @input="${changeZoom}"
         />
       </span>
-    </aside>
+    </div>
     <div class="ViewerTitle">
       <h1 id="MangaTitle">${manga.title}</h1>
       <a
@@ -236,7 +236,7 @@ const Header = (manga: IManga) => html`
         (${getLocaleString('RETURN_CHAPTER_LIST')})
       </a>
     </div>
-    <nav id="ChapterNavigation">
+    <div id="ChapterNavigation">
       <div
         id="Counters"
         class="ControlLabel"
@@ -311,7 +311,7 @@ const Header = (manga: IManga) => html`
           </a>
         </span>
       </div>
-    </nav>
+    </div>
   </header>
 `;
 
