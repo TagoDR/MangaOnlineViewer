@@ -134,7 +134,7 @@ const Header = (manga: IManga) => html`
         <button
           id="AutoScroll"
           title="${getLocaleString('SCROLL_START')}"
-          class="ControlButton phones"
+          class="ControlButton"
           @click=${toggleAutoScroll}
         >
           ${IconPlayerPlay} ${IconPlayerPause}
@@ -180,7 +180,7 @@ const Header = (manga: IManga) => html`
         <button
           id="pageControls"
           title="${getLocaleString('TOGGLE_CONTROLS')}"
-          class="ControlButton tablets"
+          class="ControlButton tablets phones"
           @click="${buttonGlobalHideImageControls}"
           ?selected=${getSettingsValue('hidePageControls')}
         >
