@@ -107,3 +107,13 @@
 .icon-tabler-book-return > g {
   color: greenyellow;
 }
+
+.icon-tabler-file-percent > :nth-child(2),
+.icon-tabler-file-percent > :nth-child(5),
+.icon-tabler-file-percent > :nth-child(6) {
+  color: yellow;
+}
+
+.icon-tabler-settings-off > :nth-child(4) {
+  color: red;
+}
