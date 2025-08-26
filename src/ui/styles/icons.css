@@ -5,17 +5,14 @@
 }
 
 .icon-tabler-file-download > :nth-child(n + 4) {
-  /* 4, 5 */
   color: gold;
 }
 
 .icon-tabler-arrow-autofit-width > :nth-child(n + 3) {
-  /* 3,4,5,6 */
   color: yellow;
 }
 
 .icon-tabler-arrow-autofit-height > :nth-child(n + 3) {
-  /* 3,4,5,6 */
   color: yellow;
 }
 
