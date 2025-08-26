@@ -108,6 +108,7 @@ const Header = (manga: IManga) => html`
           title="${getLocaleString('FIT_WIDTH')}"
           class="ControlButton"
           @click="${changeGlobalZoom('width')}"
+          ?selected=${getSettingsValue('zoomMode') === 'width'}
         >
           ${IconArrowAutofitWidth}
         </button>
@@ -116,6 +117,7 @@ const Header = (manga: IManga) => html`
           title="${getLocaleString('FIT_HEIGHT')}"
           class="ControlButton"
           @click="${changeGlobalZoom('height')}"
+          ?selected=${getSettingsValue('zoomMode') === 'height'}
         >
           ${IconArrowAutofitHeight}
         </button>
@@ -142,6 +144,7 @@ const Header = (manga: IManga) => html`
           title="${getLocaleString('VIEW_MODE_LEFT')}"
           class="ControlButton"
           @click="${updateViewMode('FluidLTR')}"
+          ?selected=${getSettingsValue('viewMode') === 'FluidLTR'}
         >
           ${IconArrowAutofitRight}
         </button>
@@ -150,6 +153,7 @@ const Header = (manga: IManga) => html`
           title="${getLocaleString('VIEW_MODE_VERTICAL')}"
           class="ControlButton tablets"
           @click="${updateViewMode('Vertical')}"
+          ?selected=${getSettingsValue('viewMode') === 'Vertical'}
         >
           ${IconArrowAutofitDown}
         </button>
@@ -158,6 +162,7 @@ const Header = (manga: IManga) => html`
           title="${getLocaleString('VIEW_MODE_WEBCOMIC')}"
           class="ControlButton tablets"
           @click="${updateViewMode('WebComic')}"
+          ?selected=${getSettingsValue('viewMode') === 'WebComic'}
         >
           ${IconSpacingVertical}
         </button>
@@ -166,6 +171,7 @@ const Header = (manga: IManga) => html`
           title="${getLocaleString('VIEW_MODE_RIGHT')}"
           class="ControlButton"
           @click="${updateViewMode('FluidRTL')}"
+          ?selected=${getSettingsValue('viewMode') === 'FluidRTL'}
         >
           ${IconArrowAutofitLeft}
         </button>
@@ -174,6 +180,7 @@ const Header = (manga: IManga) => html`
           title="${getLocaleString('TOGGLE_CONTROLS')}"
           class="ControlButton tablets"
           @click="${buttonGlobalHideImageControls}"
+          ?selected=${getSettingsValue('hidePageControls')}
         >
           ${IconListNumbers}
         </button>

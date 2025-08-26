@@ -83,6 +83,11 @@ select {
   opacity: 0.8;
 }
 
+.ControlButton[selected] {
+  background-color: var(--theme-hightlight-color);
+  border: 1px solid var(--theme-border-color);
+}
+
 .simpleButton {
   font-size: initial;
   min-width: 32px;
