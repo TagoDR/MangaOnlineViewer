@@ -23,7 +23,7 @@ const tmofans: ISite = {
       next: document.querySelector('.chapter-next a')?.getAttribute('href'),
     };
     if (images.length > 1) {
-      return { ...manga, listImages: images.map(item => $(item).attr('data-src') ?? '') };
+      return { ...manga, listImages: images.map(item => item.getAttribute('data-src') ?? '') };
     }
     return {
       ...manga,
