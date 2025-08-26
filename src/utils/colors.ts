@@ -38,6 +38,28 @@ export const base = {
 };
 
 /**
+ * A collection of sample colors, courtesy of colors.css.
+ */
+export const sample = {
+  teal: '#39cccc',
+  aqua: '#7fdbff',
+  blue: '#0074d9',
+  navy: '#001f3f',
+  lime: '#01ff70',
+  green: '#2ecc40',
+  olive: '#3d9970',
+  fuchsia: '#f012be',
+  purple: '#b10dc9',
+  maroon: '#85144b',
+  red: '#ff4136',
+  orange: '#ff851b',
+  yellow: '#ffdc00',
+  gray: '#aaaaaa',
+  silver: '#dddddd',
+  back: '#111111',
+};
+
+/**
  * Defines the structure for a 10-step color palette, from light (50) to dark (900).
  */
 export type IColor = {
