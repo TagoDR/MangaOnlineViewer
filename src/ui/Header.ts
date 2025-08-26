@@ -74,7 +74,9 @@ const Header = (manga: IManga) => html`
     class="${classMap({
       [getSettingsValue('header')]: true,
       [`headroom-${getAppStateValue('headroom')}`]: true,
-      visible: getAppStateValue('headerVisible'),
+      visible:
+        getAppStateValue('headerVisible') &&
+        ['hide', 'none'].includes(getAppStateValue('headroom')),
     })}"
   >
     <aside id="GlobalFunctions">

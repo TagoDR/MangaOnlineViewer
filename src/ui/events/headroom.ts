@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { changeAppStateValue, getSettingsValue, setAppStateValue } from '../../core/settings';
 
+const headerHeight = 100;
 /**
  * Event handler to toggle the header's visibility when in 'click' mode.
  */
@@ -39,7 +40,7 @@ export function headerHover(event: MouseEvent) {
   if (getSettingsValue('header') === 'hover') {
     setAppStateValue(
       'headerVisible',
-      isMouseInsideRegion(event, window.innerWidth, 150) || window.scrollY < 100,
+      isMouseInsideRegion(event, window.innerWidth, headerHeight * 1.5),
     );
   }
 }
@@ -61,13 +62,13 @@ export function toggleScrollDirection() {
   ) {
     // Show header if near the end of the page
     setAppStateValue('headroom', 'end');
-  } else if (scrollY > prevOffset && scrollY > 50) {
+  } else if (scrollY > prevOffset && scrollY > headerHeight) {
     // Hide header on scroll down
     setAppStateValue('headroom', 'hide');
-  } else if (header === 'scroll' && scrollY < prevOffset && scrollY > 50) {
+  } else if (header === 'scroll' && scrollY < prevOffset && scrollY > headerHeight) {
     // Show header on scroll up
     setAppStateValue('headroom', 'show');
-  } else if (header !== 'click' && scrollY <= 65) {
+  } else if (header !== 'click' && scrollY <= headerHeight) {
     // Always show header if near the top
     setAppStateValue('headroom', 'top');
   } else {
