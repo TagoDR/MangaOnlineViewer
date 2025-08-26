@@ -18,9 +18,10 @@ export class Pagination extends LitElement {
       background-color: transparent;
       justify-content: center;
       align-items: center;
-      gap: 1rem;
+      gap: 3px;
       width: 100%;
       font-family: system-ui, -apple-system, sans-serif;
+      max-width: 100%;
     }
 
     .pagination-button {
@@ -57,9 +58,9 @@ export class Pagination extends LitElement {
 
     .slider-container {
       position: relative;
-      min-width: 10rem;
-      width: 50%;
-      margin: 0 1rem;
+      max-width: 1000px;
+      width: inherit;
+      margin: 0 5px;
     }
 
     .pagination-slider {
