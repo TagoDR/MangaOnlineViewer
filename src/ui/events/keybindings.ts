@@ -4,7 +4,6 @@ import _ from 'lodash';
 import { getAppStateValue, getSettingsValue, setAppStateValue } from '../../core/settings';
 import { logScript } from '../../utils/tampermonkey';
 import { toggleAutoScroll } from './autoscroll.ts';
-import { scrollToElement } from './common';
 import { updateViewMode } from './viewmode.ts';
 import { changeGlobalZoom, changeZoomByStep } from './zoom.ts';
 
@@ -21,28 +20,20 @@ function doScrolling(sign: 1 | -1) {
   if (viewMode.startsWith('Fluid')) {
     // In fluid modes, scroll horizontally.
     const scrollDirection = viewMode === 'FluidRTL' ? -1 : 1;
-    getAppStateValue('render')
-      ?.querySelector<HTMLElement>('#Chapter')
-      ?.scrollBy({
-        left: 0.8 * window.innerWidth * sign * scrollDirection,
-        behavior: 'smooth',
-      });
+    window?.scrollBy({
+      left: 0.8 * window.innerWidth * sign * scrollDirection,
+      behavior: 'smooth',
+    });
   } else if (zoomMode === 'height') {
     // In 'Fit Height' mode, scroll page by page.
-    const pages = [
-      ...(getAppStateValue('render')?.querySelectorAll<HTMLElement>('.MangaPage') ?? []),
-    ];
-    const distance = pages.map(element => Math.abs(element.offsetTop - window.scrollY));
-    const currentPage = _.indexOf(distance, _.min(distance));
+    const currentPage = getAppStateValue('currentPage');
     const target = currentPage + sign;
-    const header = getAppStateValue('render')?.querySelector<HTMLDivElement>('#Header');
-    if (header && target < 0) {
-      scrollToElement(header);
-    } else if (target >= pages.length) {
+    if (target < 0) {
+      setAppStateValue('scrollToPage', 0);
+    } else if (target >= (getAppStateValue('manga')?.pages ?? 1)) {
       // Do nothing if at the end
     } else {
-      logScript(`Current array page ${currentPage},`, `Scrolling to page ${target}`);
-      scrollToElement(pages.at(target));
+      setAppStateValue('scrollToPage', target);
     }
   } else {
     // In all other vertical modes, scroll by a percentage of the viewport height.
