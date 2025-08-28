@@ -1,8 +1,7 @@
 import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { getAppStateValue } from '../../core/settings.ts';
+import { setAppStateValue } from '../../core/settings.ts';
 import { isNothing } from '../../utils/checks.ts';
-import { scrollToElement } from '../events/common.ts';
 import { buttonRedirectURL } from '../events/globals.ts';
 import { selectGoToPage } from '../events/navigation.ts';
 
@@ -225,6 +224,6 @@ export class Pagination extends LitElement {
   }
 
   private goToPage(page: number) {
-    scrollToElement(getAppStateValue('render')?.querySelector<HTMLElement>(`#Page${page}`));
+    setAppStateValue('scrollToPage', page);
   }
 }

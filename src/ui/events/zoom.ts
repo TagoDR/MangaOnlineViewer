@@ -9,7 +9,6 @@ import {
 } from '../../core/settings';
 import type { ZoomMode } from '../../types';
 import { logScript } from '../../utils/tampermonkey.ts';
-import { scrollToElement } from './common.ts';
 
 /**
  * Applies a new zoom level to the viewer. This function updates the application's reactive state,
@@ -28,11 +27,7 @@ function applyZoom(
     // setSettingsValue('header', 'click');
     setAppStateValue('headerVisible', false);
     setAppStateValue('headroom', 'hide');
-    scrollToElement(
-      getAppStateValue('render')?.querySelector<HTMLElement>(
-        `#Page${getAppStateValue('currentPage')}`,
-      ),
-    );
+    setAppStateValue('scrollToPage', getAppStateValue('currentPage'));
   } else {
     // Revert to the user's saved preferences when leaving fluid mode
     refreshSettings('header');
