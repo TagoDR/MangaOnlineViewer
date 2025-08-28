@@ -16,7 +16,7 @@ import { logScript } from '../../utils/tampermonkey.ts';
  * @param {ZoomMode} [mode=getSettingsValue('zoomMode')] - The zoom mode to apply ('percent', 'width', or 'height').
  * @param {number} [value=getSettingsValue('zoomValue')] - The zoom value (e.g., a percentage).
  */
-function applyZoom(
+export function applyZoom(
   mode: ZoomMode = getSettingsValue('zoomMode'),
   value = getSettingsValue('zoomValue'),
 ) {
@@ -37,8 +37,8 @@ function applyZoom(
     (getSettingsValue('navbar') === 'left' || getSettingsValue('navbar') === 'right' ? -34 : 0);
   const nextHeight = window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -34 : 0);
   const images = getAppStateValue('images');
-  const newImages = _.each(images, page => {
-    if (page) {
+  if (images) {
+    const newImages = _.each(images, page => {
       if (mode === 'width') {
         // Fit width
         page.width = nextWidth;
@@ -51,10 +51,11 @@ function applyZoom(
         page.width = page.naturalWidth ? page.naturalWidth * (value / 100) : undefined;
         page.height = undefined;
       }
-    }
-    return page;
-  });
-  setAppStateValue('images', newImages);
+
+      return page;
+    });
+    setAppStateValue('images', newImages);
+  }
 }
 
 /**

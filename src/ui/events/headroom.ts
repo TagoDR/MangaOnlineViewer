@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { changeAppStateValue, getSettingsValue, setAppStateValue } from '../../core/settings';
 
-const headerHeight = 100;
+const headerHeight = 99;
 /**
  * Event handler to toggle the header's visibility when in 'click' mode.
  */

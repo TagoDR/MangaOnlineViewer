@@ -90,17 +90,15 @@ export function imageLoaded(event: Event): void {
   img.classList.add('imgLoaded');
   img.classList.remove('imgBroken');
   const index = parseInt(img.id.replace('PageImg', ''), 10);
-  const image = getAppStateValue('images')?.[index];
-  if (image) {
-    setAppStateValue('images', {
-      ...getAppStateValue('images'),
-      [index]: {
-        ...image,
-        naturalWidth: img.naturalWidth,
-        naturalHeight: img.naturalHeight,
-      },
-    });
-  }
+  const image = getAppStateValue('images')?.[index] ?? {};
+  setAppStateValue('images', {
+    ...getAppStateValue('images'),
+    [index]: {
+      ...image,
+      naturalWidth: img.naturalWidth,
+      naturalHeight: img.naturalHeight,
+    },
+  });
 
   // Draw onto an offscreen canvas and try to get a Blob
   try {
@@ -112,16 +110,14 @@ export function imageLoaded(event: Event): void {
       ctx.drawImage(img, 0, 0);
       canvas.toBlob(blob => {
         if (!blob) return; // CORS tainted or failed
-        const current = getAppStateValue('images')?.[index];
-        if (current) {
-          setAppStateValue('images', {
-            ...getAppStateValue('images'),
-            [index]: {
-              ...current,
-              blob,
-            },
-          });
-        }
+        const current = getAppStateValue('images')?.[index] ?? {};
+        setAppStateValue('images', {
+          ...getAppStateValue('images'),
+          [index]: {
+            ...current,
+            blob,
+          },
+        });
       }, 'image/png');
     }
   } catch (e) {

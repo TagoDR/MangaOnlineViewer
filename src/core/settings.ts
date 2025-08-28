@@ -261,7 +261,6 @@ export const appState = map<IApp>({
   panel: 'none',
   scrollToPage: undefined,
   device: getDevice(),
-  images: {},
   headerVisible: false,
   headroom: 'top',
 });

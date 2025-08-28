@@ -26,7 +26,10 @@ const Reader = (manga: IManga) => html`
       separator: getSettingsValue('viewMode') === 'Vertical',
     })}"
     style="${styleMap({
-      [`margin-${getSettingsValue('navbar')}`]: '34px',
+      [`padding-${getSettingsValue('navbar')}`]: '34px',
+      'max-height': getSettingsValue('viewMode').startsWith('Fluid')
+        ? `${window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -34 : 0)}px`
+        : undefined,
     })}"
     @wheel=${(e: WheelEvent) => {
       if (getSettingsValue('viewMode') === 'FluidLTR') transformScrollToHorizontal(e);
