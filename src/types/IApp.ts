@@ -34,7 +34,7 @@ export type Headroom = 'top' | 'end' | 'show' | 'hide' | 'none';
  */
 export type Page = {
   /** The source URL of the image (can be a remote URL, data URL, or blob URL). */
-  src: string;
+  src?: string;
   /** The CSS width of the image element. */
   width?: number;
   /** The CSS height of the image element. */
@@ -75,7 +75,7 @@ export type IApp = {
   /** A reference to the shadow root of the main application component, used for rendering portals or querying the DOM. */
   render?: HTMLElement | DocumentFragment | ShadowRoot | null;
   /** A map of page numbers to their corresponding page data. */
-  images: Record<number, Page | undefined>;
+  images?: Record<number, Page>;
   /** Whether the main header is currently visible, for click and hover types. */
   headerVisible: boolean;
   /** Controls the visibility state of the header, for scroll type  */

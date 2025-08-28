@@ -1,5 +1,6 @@
 import { refreshSettings, saveSettingsValue, setSettingsValue } from '../../core/settings';
 import type { ViewMode } from '../../types';
+import { applyZoom } from './zoom.ts';
 
 /**
  * Returns a function that updates the current view mode in the application state.
@@ -14,6 +15,7 @@ export function updateViewMode(mode: ViewMode) {
     if (mode.startsWith('Fluid')) {
       setSettingsValue('zoomMode', 'height');
       setSettingsValue('header', 'click');
+      applyZoom();
     } else {
       // Revert to the user's saved preferences when leaving fluid mode
       refreshSettings('zoomMode');

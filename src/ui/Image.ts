@@ -4,6 +4,7 @@ import {
   changeAppStateValue,
   getAppStateValue,
   getSettingsValue,
+  setAppStateValue,
 } from '../core/settings';
 import {
   type IManga,
@@ -12,6 +13,7 @@ import {
   isBruteforceManga,
   isImagesManga,
   isPagesManga,
+  type Page,
 } from '../types';
 import { getElementAttribute } from '../utils/request';
 import sequence from '../utils/sequence';
@@ -138,6 +140,15 @@ export default async function loadImages() {
   logScriptVerbose(
     `Lazy: ${manga.lazy ?? getSettingsValue('lazyLoadImages')}, Starting from: ${getSettingsValue('lazyStart')}`,
   );
+  // Initialize images with empty objects
+  const initialImages = sequence(manga.pages, begin).reduce(
+    (acc, page) => {
+      acc[page] = {};
+      return acc;
+    },
+    {} as Record<number, Page>,
+  );
+  setAppStateValue('images', initialImages);
 
   if (isImagesManga(manga)) {
     logScriptVerbose('Method: Images:', manga.listImages);
@@ -171,7 +182,7 @@ export default async function loadImages() {
   appState.listen((value, oldValue, changedKey) => {
     if (changedKey === 'currentPage' && value.currentPage > oldValue.currentPage) {
       for (let i = value.currentPage; i < value.currentPage + 5; i++) {
-        if (value.images[i] !== undefined) continue;
+        if (value.images?.[i]?.src !== undefined) continue;
         if (isImagesManga(manga)) {
           addImg(manga, i, manga.listImages[i - 1]);
         } else if (isPagesManga(manga)) {

@@ -42,6 +42,9 @@ function getImageStyle(index: number): StyleInfo {
   return {
     width: image?.width ? `${image.width}px` : 'auto',
     height: image?.height ? `${image.height}px` : 'auto',
+    'max-height': getSettingsValue('viewMode').startsWith('Fluid')
+      ? window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -34 : 0)
+      : undefined,
     'min-width': `${getSettingsValue('minZoom')}vw`,
   };
 }
