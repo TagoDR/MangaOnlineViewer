@@ -1,10 +1,5 @@
 import NProgress from 'nprogress';
-import {
-  changeAppStateValue,
-  getAppStateValue,
-  getSettingsValue,
-  setAppStateValue,
-} from '../../core/settings.ts';
+import { changeAppStateValue, getAppStateValue, getSettingsValue } from '../../core/settings.ts';
 import { isEmpty } from '../../utils/checks.ts';
 import { logScript } from '../../utils/tampermonkey.ts';
 import { isBase64ImageUrl, isObjectURL } from '../../utils/urls.ts';
@@ -90,14 +85,15 @@ export function imageLoaded(event: Event): void {
   img.classList.add('imgLoaded');
   img.classList.remove('imgBroken');
   const index = parseInt(img.id.replace('PageImg', ''), 10);
-  const image = getAppStateValue('images')?.[index] ?? {};
-  setAppStateValue('images', {
-    ...getAppStateValue('images'),
-    [index]: {
-      ...image,
-      naturalWidth: img.naturalWidth,
-      naturalHeight: img.naturalHeight,
-    },
+  changeAppStateValue('images', images => {
+    return {
+      ...images,
+      [index]: {
+        ...images?.[index],
+        naturalWidth: img.naturalWidth,
+        naturalHeight: img.naturalHeight,
+      },
+    };
   });
 
   // Draw onto an offscreen canvas and try to get a Blob
@@ -110,17 +106,13 @@ export function imageLoaded(event: Event): void {
       ctx.drawImage(img, 0, 0);
       canvas.toBlob(blob => {
         if (!blob) return; // CORS tainted or failed
-        const current = getAppStateValue('images')?.[index] ?? {};
-        setAppStateValue('images', {
-          ...getAppStateValue('images'),
-          [index]: {
-            ...current,
-            blob,
-          },
+        changeAppStateValue('images', images => {
+          return { ...images, [index]: { ...images?.[index], blob } };
         });
       }, 'image/png');
     }
   } catch (e) {
+    console.error('Failed to transforme image to blob: ', e, ' for page ', index);
     // Ignore failures (e.g., CORS tainted). We still proceed with progress updates.
   }
 

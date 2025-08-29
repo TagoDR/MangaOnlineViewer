@@ -4,7 +4,6 @@ import {
   changeAppStateValue,
   getAppStateValue,
   getSettingsValue,
-  setAppStateValue,
 } from '../core/settings';
 import {
   type IManga,
@@ -13,7 +12,6 @@ import {
   isBruteforceManga,
   isImagesManga,
   isPagesManga,
-  type Page,
 } from '../types';
 import { getElementAttribute } from '../utils/request';
 import sequence from '../utils/sequence';
@@ -21,6 +19,7 @@ import { logScript, logScriptVerbose } from '../utils/tampermonkey';
 import { isBase64ImageUrl, isObjectURL } from '../utils/urls';
 import { waitForFunc } from '../utils/waitFor.ts';
 import { removeURLBookmark } from './events/bookmarks';
+import { applyZoom } from './events/zoom.ts';
 
 /**
  * Normalizes a URL by trimming whitespace and ensuring it starts with a protocol.
@@ -56,7 +55,7 @@ async function addImg(manga: IMangaImages, index: number, imageSrc: string, posi
           .then(blob => blobToDataURL(blob));
       }
       changeAppStateValue('images', images => {
-        return { ...images, [index]: { src } };
+        return { ...images, [index]: { ...images?.[index], src } };
       });
       logScriptVerbose('Loaded Image:', index, 'Source:', src);
     },
@@ -140,15 +139,7 @@ export default async function loadImages() {
   logScriptVerbose(
     `Lazy: ${manga.lazy ?? getSettingsValue('lazyLoadImages')}, Starting from: ${getSettingsValue('lazyStart')}`,
   );
-  // Initialize images with empty objects
-  const initialImages = sequence(manga.pages, begin).reduce(
-    (acc, page) => {
-      acc[page] = {};
-      return acc;
-    },
-    {} as Record<number, Page>,
-  );
-  setAppStateValue('images', initialImages);
+  applyZoom();
 
   if (isImagesManga(manga)) {
     logScriptVerbose('Method: Images:', manga.listImages);
