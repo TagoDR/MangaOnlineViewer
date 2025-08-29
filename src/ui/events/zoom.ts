@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {
   getAppStateValue,
   getSettingsValue,
@@ -7,7 +6,7 @@ import {
   setAppStateValue,
   setSettingsValue,
 } from '../../core/settings';
-import type { ZoomMode } from '../../types';
+import type { Page, ZoomMode } from '../../types';
 import { logScript } from '../../utils/tampermonkey.ts';
 
 /**
@@ -37,25 +36,25 @@ export function applyZoom(
     (getSettingsValue('navbar') === 'left' || getSettingsValue('navbar') === 'right' ? -34 : 0);
   const nextHeight = window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -34 : 0);
   const images = getAppStateValue('images');
-  if (images) {
-    const newImages = _.each(images, page => {
-      if (mode === 'width') {
-        // Fit width
-        page.width = nextWidth;
-        page.height = undefined;
-      } else if (mode === 'height') {
-        // Fit height
-        page.width = undefined;
-        page.height = nextHeight;
-      } else if (mode === 'percent') {
-        page.width = page.naturalWidth ? page.naturalWidth * (value / 100) : undefined;
-        page.height = undefined;
-      }
-
-      return page;
-    });
-    setAppStateValue('images', newImages);
+  const manga = getAppStateValue('manga');
+  const newImages: Record<number, Page> = {};
+  for (let i = manga?.begin ?? 1; i < (manga?.pages ?? 1); i++) {
+    const page = { ...images?.[i] };
+    if (mode === 'width') {
+      // Fit width
+      page.width = nextWidth;
+      page.height = undefined;
+    } else if (mode === 'height') {
+      // Fit height
+      page.width = undefined;
+      page.height = nextHeight;
+    } else if (mode === 'percent') {
+      page.width = page.naturalWidth ? page.naturalWidth * (value / 100) : undefined;
+      page.height = undefined;
+    }
+    newImages[i] = page;
   }
+  setAppStateValue('images', newImages);
 }
 
 /**
