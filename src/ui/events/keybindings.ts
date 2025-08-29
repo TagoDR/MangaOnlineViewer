@@ -1,7 +1,12 @@
 import { sanitizeUrl } from '@braintree/sanitize-url';
 import hotkeys from 'hotkeys-js';
 import _ from 'lodash';
-import { getAppStateValue, getSettingsValue, setAppStateValue } from '../../core/settings';
+import {
+  changeAppStateValue,
+  getAppStateValue,
+  getSettingsValue,
+  setAppStateValue,
+} from '../../core/settings';
 import { logScript } from '../../utils/tampermonkey';
 import { toggleAutoScroll } from './autoscroll.ts';
 import { updateViewMode } from './viewmode.ts';
@@ -87,7 +92,7 @@ const actions: Record<string, () => void> = {
     changeGlobalZoom('height')();
   },
   SETTINGS() {
-    setAppStateValue('panel', 'settings');
+    changeAppStateValue('panel', p => (p === 'none' ? 'settings' : 'none'));
   },
   VIEW_MODE_WEBCOMIC() {
     updateViewMode('WebComic')();
