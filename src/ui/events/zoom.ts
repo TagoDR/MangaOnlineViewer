@@ -38,7 +38,7 @@ export function applyZoom(
   const images = getAppStateValue('images');
   const manga = getAppStateValue('manga');
   const newImages: Record<number, Page> = {};
-  for (let i = manga?.begin ?? 1; i < (manga?.pages ?? 1); i++) {
+  for (let i = manga?.begin ?? 1; i <= (manga?.pages ?? 1); i++) {
     const page = { ...images?.[i] };
     if (mode === 'width') {
       // Fit width
