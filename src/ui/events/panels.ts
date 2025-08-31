@@ -1,5 +1,5 @@
-import { getAppStateValue, saveSettingsValue, setAppStateValue } from '../../core/settings';
-import { isNothing } from '../../utils/checks';
+import type { Ref } from 'lit/directives/ref.js';
+import { saveSettingsValue, setAppStateValue } from '../../core/settings';
 import keybindings from './keybindings';
 
 /**
@@ -27,14 +27,18 @@ export function buttonKeybindingsOpen() {
  * Saves the keybindings from the editor form to the application settings.
  * After saving, it switches the panel back to the keybindings view mode and re-initializes the keybinding listeners.
  */
-export function saveKeybindings() {
+export function saveKeybindings(keybindsRefs: Record<string, Ref<HTMLInputElement>>) {
   const newKeybinds: Record<string, string[] | undefined> = {};
-  getAppStateValue('render')
-    ?.querySelectorAll<HTMLInputElement>('.KeybindInput')
-    .forEach(element => {
-      const keys = element.value.split(',').map(value => value.trim());
-      newKeybinds[element.id] = isNothing(keys) ? undefined : keys;
-    });
+  Object.keys(keybindsRefs).forEach(id => {
+    const element = keybindsRefs[id].value;
+    if (element) {
+      const keys = element.value
+        .split(',')
+        .map(value => value.trim())
+        .filter(key => key !== '');
+      newKeybinds[id] = keys.length > 0 ? keys : undefined;
+    }
+  });
   saveSettingsValue('keybinds', newKeybinds);
   setAppStateValue('panel', 'keybindings');
   keybindings();

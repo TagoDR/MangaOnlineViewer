@@ -1,10 +1,22 @@
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
+import { createRef, type Ref, ref } from 'lit/directives/ref.js';
 import { join } from 'lit-html/directives/join.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { getAppStateValue, getLocaleString, getSettingsValue } from '../core/settings.ts';
 import { buttonPanelsClose, editKeybindings, saveKeybindings } from './events/panels.ts';
 import { IconDeviceFloppy, IconPencil, IconX } from './icons';
+
+// Create a reference for each keybinding input element.
+const keybindsRefs: Record<string, Ref<HTMLInputElement>> = Object.keys(
+  getSettingsValue('keybinds'),
+).reduce(
+  (acc, key) => {
+    acc[key] = createRef();
+    return acc;
+  },
+  {} as Record<string, Ref<HTMLInputElement>>,
+);
 
 /**
  * Renders a read-only list of the current keybindings.
@@ -32,20 +44,21 @@ export const keybindList = () => {
  *
  * @returns An array of Lit templates for the keybinding editor form.
  */
-export const keybindEditor = () =>
-  Object.keys(getSettingsValue('keybinds'))
-    .map(
-      kb =>
-        html`<label for="${kb}">${getLocaleString(kb)}:</label>
-          <input
-            type="text"
-            class="KeybindInput"
-            id="${kb}"
-            name="${kb}"
-            value="${getSettingsValue('keybinds')[kb]?.join(' , ') ?? ''}"
-          />`,
-    )
-    .concat(html` <div id="HotKeysRules">${unsafeHTML(getLocaleString('KEYBIND_RULES'))}</div>`);
+export const keybindEditor = () => {
+  const keybinds = getSettingsValue('keybinds');
+  return Object.keys(keybinds).map(
+    kb =>
+      html`<label for="${kb}">${getLocaleString(kb)}:</label>
+        <input
+          type="text"
+          class="KeybindInput"
+          id="${kb}"
+          name="${kb}"
+          value="${keybinds[kb]?.join(' , ') ?? ''}"
+          ${ref(keybindsRefs[kb])}
+        />`,
+  );
+};
 
 /**
  * Renders the keybindings panel as a Lit template.
@@ -79,7 +92,7 @@ const KeybindingsDialog = () => html`
             class="ControlButton"
             type="button"
             title="${getLocaleString('SAVE_KEYBINDS')}"
-            @click=${saveKeybindings}
+            @click=${() => saveKeybindings(keybindsRefs)}
           >
             ${IconDeviceFloppy} ${getLocaleString('BUTTON_SAVE')}
           </button>`
@@ -97,6 +110,7 @@ const KeybindingsDialog = () => html`
     <div id="KeybindingsList">
       ${getAppStateValue('panel') === 'keybindingsEditor' ? keybindEditor() : keybindList()}
     </div>
+    <div id="HotKeysRules">${unsafeHTML(getLocaleString('KEYBIND_RULES'))}</div>
   </div>
 `;
 
