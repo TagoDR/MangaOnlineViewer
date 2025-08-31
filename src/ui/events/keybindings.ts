@@ -35,7 +35,7 @@ function doScrolling(sign: 1 | -1) {
     const target = currentPage + sign;
     if (target < 0) {
       setAppStateValue('scrollToPage', 0);
-    } else if (target >= (getAppStateValue('manga')?.pages ?? 1)) {
+    } else if (target > (getAppStateValue('manga')?.pages ?? 1)) {
       // Do nothing if at the end
     } else {
       setAppStateValue('scrollToPage', target);
