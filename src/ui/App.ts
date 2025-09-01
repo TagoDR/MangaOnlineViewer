@@ -76,14 +76,13 @@ export default class App extends LitElement {
         ${
           !getSettingsValue('pagination')
             ? ''
-            : html`
-              <mov-pagination
-                .startPage=${manga.begin}
-                .totalPages=${manga.pages}
-                .currentPage=${getAppStateValue('currentPage')}
-                .next=${manga.next}
-                .prev=${manga.prev}
-              ></mov-pagination>`
+            : html` <mov-pagination
+              .startPage=${manga.begin}
+              .totalPages=${manga.pages}
+              .currentPage=${getAppStateValue('currentPage')}
+              .next=${manga.next}
+              .prev=${manga.prev}
+            ></mov-pagination>`
         }
 
         <div
