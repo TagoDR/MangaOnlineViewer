@@ -31,9 +31,7 @@ appState.listen((value, _oldValue, changedKey) => {
     if (value.scrollToPage <= 0) {
       window.scrollTo(0, 0);
     } else {
-      scrollToElement(
-        getAppStateValue('render')?.querySelector<HTMLElement>(`#Page${value.scrollToPage}`),
-      );
+      scrollToElement(getAppStateValue('images')?.[value.scrollToPage]?.ref?.value);
     }
     setAppStateValue('scrollToPage', undefined);
   }

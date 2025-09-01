@@ -1,7 +1,13 @@
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { type StyleInfo, styleMap } from 'lit-html/directives/style-map.js';
-import { getAppStateValue, getLocaleString, getSettingsValue } from '../core/settings.ts';
+import {
+  changeImage,
+  getAppStateValue,
+  getLocaleString,
+  getSettingsValue,
+} from '../core/settings.ts';
 import sequence from '../utils/sequence.ts';
 import { buttonBookmark } from './events/bookmarks.ts';
 import {
@@ -60,8 +66,11 @@ function getImageStyle(index: number): StyleInfo {
  * @returns An array of Lit `TemplateResult` objects, one for each page.
  */
 const listPages = (times: number, begin: number) =>
-  sequence(times, begin).map(
-    index => html`
+  sequence(times, begin).map(index => {
+    if (!getAppStateValue('images')?.[index].ref) {
+      changeImage(index, _image => ({ ref: createRef() }));
+    }
+    return html`
       <div
         id="Page${index}"
         class="${classMap({
@@ -145,12 +154,13 @@ const listPages = (times: number, begin: number) =>
             style="${styleMap(getImageStyle(index))}"
             @load=${imageLoaded}
             @error=${imageLoadError}
+            ${ref(getAppStateValue('images')?.[index].ref)}
           />
         </div>
       </div>
       <div class="separator">
         [ ${index === times ? getLocaleString('END') : `${index} / ${times}`} ]
       </div>
-    `,
-  );
+    `;
+  });
 export default listPages;

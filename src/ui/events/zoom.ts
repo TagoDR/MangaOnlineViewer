@@ -49,7 +49,8 @@ export function applyZoom(
       page.width = undefined;
       page.height = nextHeight;
     } else if (mode === 'percent') {
-      page.width = page.naturalWidth ? page.naturalWidth * (value / 100) : undefined;
+      const width = page.naturalWidth ?? page.ref?.value?.naturalWidth;
+      page.width = width ? width * (value / 100) : undefined;
       page.height = undefined;
     }
     newImages[i] = page;

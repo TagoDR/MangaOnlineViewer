@@ -1,5 +1,10 @@
 import NProgress from 'nprogress';
-import { changeAppStateValue, getAppStateValue, getSettingsValue } from '../../core/settings.ts';
+import {
+  changeAppStateValue,
+  changeImage,
+  getAppStateValue,
+  getSettingsValue,
+} from '../../core/settings.ts';
 import { isEmpty } from '../../utils/checks.ts';
 import { logScript } from '../../utils/tampermonkey.ts';
 import { isBase64ImageUrl, isObjectURL } from '../../utils/urls.ts';
@@ -61,8 +66,10 @@ function reloadImage(index: number, img: HTMLImageElement) {
 export function buttonReloadPage(event: Event): void {
   const button = event.currentTarget as HTMLButtonElement;
   const index = parseInt(button.value, 10);
-  const img = button.closest('.MangaPage')?.querySelector('.PageImg') as HTMLImageElement;
-  reloadImage(index, img);
+  const img = getAppStateValue('images')?.[index]?.ref?.value;
+  if (img) {
+    reloadImage(index, img);
+  }
 }
 
 /**
@@ -86,16 +93,10 @@ export function imageLoaded(event: Event): void {
   img.classList.add('imgLoaded');
   img.classList.remove('imgBroken');
   const index = parseInt(img.id.replace('PageImg', ''), 10);
-  changeAppStateValue('images', images => {
-    return {
-      ...images,
-      [index]: {
-        ...images?.[index],
-        naturalWidth: img.naturalWidth,
-        naturalHeight: img.naturalHeight,
-      },
-    };
-  });
+  changeImage(index, _image => ({
+    naturalWidth: img.naturalWidth,
+    naturalHeight: img.naturalHeight,
+  }));
 
   // Draw onto an offscreen canvas and try to get a Blob
   try {
@@ -107,9 +108,7 @@ export function imageLoaded(event: Event): void {
       ctx.drawImage(img, 0, 0);
       canvas.toBlob(blob => {
         if (!blob) return; // CORS tainted or failed
-        changeAppStateValue('images', images => {
-          return { ...images, [index]: { ...images?.[index], blob } };
-        });
+        changeImage(index, _image => ({ blob }));
       }, 'image/png');
     }
   } catch (e) {
