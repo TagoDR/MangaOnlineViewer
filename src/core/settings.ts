@@ -10,6 +10,7 @@ import {
   type ISettings,
   type ISettingsKey,
   isKey,
+  type Page,
 } from '../types';
 import { isNothing } from '../utils/checks';
 import diffObj from '../utils/diffObj';
@@ -430,6 +431,20 @@ export function changeAppStateValue<K extends keyof IApp>(
   const newVal = fn(oldVal);
   if (_.isEqual(oldVal, newVal)) return;
   appState.setKey(key, newVal);
+}
+
+/**
+ * Updates a specific image's data within the `appState.images` object.
+ * This is useful for updating properties of a single image (e.g., its loaded status, dimensions).
+ *
+ * @param {number} index - The index of the image to update.
+ * @param {(value: Page) => Page} fn - A function that receives the current image data and returns the updated image data.
+ */
+export function changeImage(index: number, fn: (value: Page) => Page): void {
+  changeAppStateValue('images', images => ({
+    ...images,
+    [index]: { ...images?.[index], ...fn(images?.[index] ?? {}) },
+  }));
 }
 
 /**

@@ -70,8 +70,9 @@ export function buttonReloadPage(event: Event): void {
  * @param {Event} event - The click event from the hide button.
  */
 export function buttonHidePage(event: Event): void {
-  const img = (event.currentTarget as HTMLElement).parentElement?.parentElement as HTMLElement;
-  img.classList.toggle('hide');
+  const button = event.currentTarget as HTMLButtonElement;
+  const index = parseInt(button.value, 10);
+  changeImage(index, image => ({ hide: !image.hide }));
 }
 
 /**

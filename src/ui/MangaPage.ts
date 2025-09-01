@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import { type StyleInfo, styleMap } from 'lit-html/directives/style-map.js';
 import { getAppStateValue, getLocaleString, getSettingsValue } from '../core/settings.ts';
 import sequence from '../utils/sequence.ts';
@@ -63,7 +64,10 @@ const listPages = (times: number, begin: number) =>
     index => html`
       <div
         id="Page${index}"
-        class="MangaPage"
+        class="${classMap({
+          MangaPage: true,
+          hide: !!getAppStateValue('images')?.[index].hide,
+        })}"
       >
         <div class="PageFunctions">
           <button
