@@ -1,8 +1,7 @@
 :host {
-  /* Define sizes for the navigation bar for easy customization */
   --nav-collapsed-size: 34px;
   --nav-expanded-size: 200px;
-  --header-height: 80px; /* Adjust as needed */
+  --header-height: 80px;
 }
 #Navigation {
   color: var(--theme-text-color);

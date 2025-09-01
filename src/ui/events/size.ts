@@ -1,4 +1,9 @@
-import { getAppStateValue, getSettingsValue, setAppStateValue } from '../../core/settings';
+import {
+  getAppStateValue,
+  getSettingsValue,
+  navbarSize,
+  setAppStateValue,
+} from '../../core/settings';
 
 /**
  * Event handler to zoom in on an individual page by a percentage step.
@@ -80,7 +85,7 @@ export function buttonZoomWidth(event: Event) {
         width:
           window.innerWidth +
           (getSettingsValue('navbar') === 'left' || getSettingsValue('navbar') === 'right'
-            ? -34
+            ? -navbarSize
             : 0),
         height: undefined,
       },
@@ -103,7 +108,7 @@ export function buttonZoomHeight(event: Event): void {
       [index]: {
         ...img,
         width: undefined,
-        height: window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -34 : 0),
+        height: window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -navbarSize : 0),
       },
     });
   }

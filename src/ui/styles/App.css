@@ -9,16 +9,22 @@
   --theme-border-color: #373a40;
 }
 
+:host {
+  box-sizing: border-box;
+}
+
 #MangaOnlineViewer {
   text-decoration: none;
   color: var(--theme-body-text-color);
   background-color: var(--theme-body-background);
+  box-sizing: border-box;
 }
 
 #Chapter {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   min-width: 225px;
+  box-sizing: border-box;
 }
 
 #Chapter.Vertical:has(+ #Navigation:not(.disabled)),

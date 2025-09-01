@@ -1,7 +1,6 @@
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { ref } from 'lit/directives/ref.js';
-import { styleMap } from 'lit/directives/style-map.js';
 import { getAppStateValue, getSettingsValue } from '../core/settings.ts';
 import type { IManga } from '../types';
 import {
@@ -26,12 +25,6 @@ const Reader = (manga: IManga) => html`
       fitWidthIfOversize: getSettingsValue('fitWidthIfOversize'),
       [getSettingsValue('viewMode')]: true,
       separator: getSettingsValue('viewMode') === 'Vertical',
-    })}"
-    style="${styleMap({
-      [`padding-${getSettingsValue('navbar')}`]: '34px',
-      'max-height': getSettingsValue('viewMode').startsWith('Fluid')
-        ? `${window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -34 : 0)}px`
-        : undefined,
     })}"
     @wheel=${(e: WheelEvent) => {
       if (getSettingsValue('viewMode') === 'FluidLTR') transformScrollToHorizontal(e);
