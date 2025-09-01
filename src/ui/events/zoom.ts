@@ -1,6 +1,7 @@
 import {
   getAppStateValue,
   getSettingsValue,
+  navbarSize,
   refreshSettings,
   saveSettingsValue,
   setAppStateValue,
@@ -33,8 +34,11 @@ export function applyZoom(
   }
   const nextWidth =
     window.innerWidth +
-    (getSettingsValue('navbar') === 'left' || getSettingsValue('navbar') === 'right' ? -34 : 0);
-  const nextHeight = window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -34 : 0);
+    (getSettingsValue('navbar') === 'left' || getSettingsValue('navbar') === 'right'
+      ? -navbarSize
+      : 0);
+  const nextHeight =
+    window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -navbarSize : 0);
   const images = getAppStateValue('images');
   const manga = getAppStateValue('manga');
   const newImages: Record<number, Page> = {};

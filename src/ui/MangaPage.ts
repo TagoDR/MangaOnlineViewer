@@ -7,6 +7,7 @@ import {
   getAppStateValue,
   getLocaleString,
   getSettingsValue,
+  navbarSize,
 } from '../core/settings.ts';
 import sequence from '../utils/sequence.ts';
 import { buttonBookmark } from './events/bookmarks.ts';
@@ -50,7 +51,7 @@ function getImageStyle(index: number): StyleInfo {
     width: image?.width ? `${image.width}px` : 'auto',
     height: image?.height ? `${image.height}px` : 'auto',
     'max-height': getSettingsValue('viewMode').startsWith('Fluid')
-      ? window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -34 : 0)
+      ? `${window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -navbarSize : 0)}px`
       : undefined,
     'min-width': `${getSettingsValue('minZoom')}vw`,
   };

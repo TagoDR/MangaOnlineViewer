@@ -1,4 +1,5 @@
 import { logger } from '@nanostores/logger';
+import { createRef } from 'lit/directives/ref.js';
 import _ from 'lodash';
 import { computed, map } from 'nanostores';
 import locales from '../locales';
@@ -27,7 +28,6 @@ import {
   saveLocalSettings,
   settingsChangeListener,
 } from '../utils/tampermonkey';
-import { createRef } from 'lit/directives/ref.js';
 
 /**
  * Default settings for the script.
@@ -517,3 +517,5 @@ export function showSettings<K extends ISettingsKey>(key: K | null = null): void
 }
 
 giveToWindow('MOVSettings', showSettings);
+
+export const navbarSize = 34;
