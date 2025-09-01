@@ -5,11 +5,8 @@
  */
 
 import _ from 'lodash';
-import { getAppStateValue, getSettingsValue } from '../../core/settings';
+import { getAppStateValue, getSettingsValue, setAppStateValue } from '../../core/settings';
 import { logScript } from '../../utils/tampermonkey';
-
-/** A flag to indicate if the auto-scroll loop is currently active. */
-let scrollActive = false;
 
 /**
  * The core scrolling animation loop.
@@ -19,10 +16,9 @@ let scrollActive = false;
  * @internal
  */
 function scroll() {
-  const chapter = getAppStateValue('render')?.querySelector<HTMLElement>('#Chapter');
-  if (chapter?.classList.contains('FluidLTR') || chapter?.classList.contains('FluidRTL')) {
-    const scrollDirection = chapter.classList.contains('FluidRTL') ? -1 : 1;
-    chapter?.scrollBy({
+  if (getSettingsValue('viewMode').startsWith('Fluid')) {
+    const scrollDirection = getSettingsValue('viewMode') === 'FluidRTL' ? -1 : 1;
+    getAppStateValue('chapter').value?.scrollBy({
       top: 0,
       left: getSettingsValue('scrollHeight') * scrollDirection,
       behavior: 'smooth',
@@ -34,12 +30,11 @@ function scroll() {
       behavior: 'smooth',
     });
   }
-  if (getAppStateValue('render')?.querySelector('#Header')?.classList.contains('headroom-end')) {
-    scrollActive = false;
-    getAppStateValue('render')?.querySelector('#ScrollControl')?.classList.remove('running');
+  if (getAppStateValue('headroom') === 'end') {
+    setAppStateValue('autoScroll', false);
     logScript('Finished auto scroll');
   }
-  if (scrollActive) {
+  if (getAppStateValue('autoScroll')) {
     requestAnimationFrame(scroll);
   }
 }
@@ -49,15 +44,12 @@ function scroll() {
  * It updates the UI state of the control button and starts or stops the `scroll` animation loop.
  */
 export function toggleAutoScroll() {
-  const control = getAppStateValue('render')?.querySelector('#AutoScroll');
-  if (scrollActive) {
-    scrollActive = false;
-    control?.classList.remove('running');
+  if (getAppStateValue('autoScroll')) {
+    setAppStateValue('autoScroll', false);
     logScript('Stopped auto scroll');
   } else {
-    scrollActive = true;
+    setAppStateValue('autoScroll', true);
     requestAnimationFrame(scroll);
-    control?.classList.add('running');
     logScript('Start auto scroll');
   }
 }
@@ -73,11 +65,11 @@ const debounceAutoScroll = _.debounce(() => {
  * If auto-scroll is active, it pauses it. It then uses a debounce function to resume scrolling after the user stops.
  */
 export function manualScroll() {
-  if (!resume && scrollActive) {
+  if (!resume && getAppStateValue('autoScroll')) {
     toggleAutoScroll();
     resume = true;
   }
-  if (resume && !scrollActive) {
+  if (resume && !getAppStateValue('autoScroll')) {
     debounceAutoScroll();
   }
 }

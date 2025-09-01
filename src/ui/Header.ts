@@ -135,7 +135,10 @@ const Header = (manga: IManga) => html`
         <button
           id="AutoScroll"
           title="${getLocaleString('SCROLL_START')}"
-          class="ControlButton"
+          class="${classMap({
+            ControlButton: true,
+            running: getAppStateValue('autoScroll'),
+          })}"
           @click=${toggleAutoScroll}
         >
           ${IconPlayerPlay} ${IconPlayerPause}

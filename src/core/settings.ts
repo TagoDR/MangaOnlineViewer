@@ -27,6 +27,7 @@ import {
   saveLocalSettings,
   settingsChangeListener,
 } from '../utils/tampermonkey';
+import { createRef } from 'lit/directives/ref.js';
 
 /**
  * Default settings for the script.
@@ -256,14 +257,15 @@ export const locale = computed(
  */
 export const appState = map<IApp>({
   autoScroll: false,
+  chapter: createRef(),
   currentPage: 0,
+  device: getDevice(),
+  headerVisible: false,
+  headroom: 'top',
   loaded: 0,
   manga: undefined,
   panel: 'none',
   scrollToPage: undefined,
-  device: getDevice(),
-  headerVisible: false,
-  headroom: 'top',
 });
 
 if (import.meta.env.DEV) {
