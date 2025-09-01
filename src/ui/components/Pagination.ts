@@ -19,7 +19,10 @@ export class Pagination extends LitElement {
       align-items: center;
       gap: 3px;
       width: 100%;
-      font-family: system-ui, -apple-system, sans-serif;
+      font-family:
+        system-ui,
+        -apple-system,
+        sans-serif;
       max-width: 100%;
     }
 
@@ -160,7 +163,7 @@ export class Pagination extends LitElement {
         ?disabled=${isNothing(this.prev) || this.prev === '#'}
       >
         <svg viewBox="0 0 24 24">
-          <path d="M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z"/>
+          <path d="M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z" />
         </svg>
         <div class="tooltip">Previous Chapter</div>
       </button>
@@ -171,7 +174,7 @@ export class Pagination extends LitElement {
         ?disabled=${this.currentPage <= this.startPage}
       >
         <svg viewBox="0 0 24 24">
-          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
         </svg>
         <div class="tooltip">Previous Page</div>
       </button>
@@ -185,9 +188,7 @@ export class Pagination extends LitElement {
           .value="${this.currentPage.toString()}"
           @input="${selectGoToPage}"
         />
-        <div class="slider-tooltip">
-          ${this.currentPage} / ${this.totalPages}
-        </div>
+        <div class="slider-tooltip">${this.currentPage} / ${this.totalPages}</div>
       </div>
 
       <button
@@ -196,7 +197,7 @@ export class Pagination extends LitElement {
         ?disabled="${this.currentPage === this.totalPages - (this.startPage - 1)}"
       >
         <svg viewBox="0 0 24 24">
-          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
         </svg>
         <div class="tooltip">Next Page</div>
       </button>
@@ -208,7 +209,7 @@ export class Pagination extends LitElement {
         ?disabled=${isNothing(this.next) || this.next === '#'}
       >
         <svg viewBox="0 0 24 24">
-          <path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z"/>
+          <path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z" />
         </svg>
         <div class="tooltip">Next Chapter</div>
       </button>
