@@ -77,8 +77,8 @@ export type IApp = {
   scrollToPage?: number;
   /** The detected device type. */
   device: Device;
-  /** A reference to the shadow root of the main application component, used for rendering portals or querying the DOM. */
-  render?: HTMLElement | DocumentFragment | ShadowRoot | null;
+  /** Reference for the #Chapter */
+  chapter: Ref<HTMLDivElement>;
   /** A map of page numbers to their corresponding page data. */
   images?: Record<number, Page>;
   /** Whether the main header is currently visible, for click and hover types. */

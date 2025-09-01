@@ -1,7 +1,8 @@
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
+import { ref } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
-import { getSettingsValue } from '../core/settings.ts';
+import { getAppStateValue, getSettingsValue } from '../core/settings.ts';
 import type { IManga } from '../types';
 import {
   transformScrollToHorizontal,
@@ -20,6 +21,7 @@ import listPages from './MangaPage.ts';
 const Reader = (manga: IManga) => html`
   <main
     id="Chapter"
+    ${ref(getAppStateValue('chapter'))}
     class="${classMap({
       fitWidthIfOversize: getSettingsValue('fitWidthIfOversize'),
       [getSettingsValue('viewMode')]: true,

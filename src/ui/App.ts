@@ -8,7 +8,6 @@ import {
   getSettingsValue,
   isBookmarked,
   locale,
-  setAppStateValue,
   settings,
 } from '../core/settings.ts';
 import BookmarksPanel from './BookmarkDialog.ts';
@@ -41,7 +40,6 @@ export default class App extends LitElement {
    */
   firstUpdated() {
     events();
-    setAppStateValue('render', this.shadowRoot);
   }
 
   /**
