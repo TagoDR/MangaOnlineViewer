@@ -1,3 +1,4 @@
+import type { Ref } from 'lit/directives/ref.js';
 import type { IManga } from './IManga';
 
 /**
@@ -33,6 +34,8 @@ export type Headroom = 'top' | 'end' | 'show' | 'hide' | 'none';
  * Represents the state and properties of a single page image in the viewer.
  */
 export type Page = {
+  /** A reference to the HTMLImageElement for this page. */
+  ref?: Ref<HTMLImageElement>;
   /** The source URL of the image (can be a remote URL, data URL, or blob URL). */
   src?: string;
   /** The CSS width of the image element. */
@@ -47,6 +50,8 @@ export type Page = {
   naturalHeight?: number;
   /** The blob data of the image, if it has been fetched. */
   blob?: Blob;
+  /** Whether the image should be hidden from view. */
+  hide?: boolean;
 };
 
 /**
