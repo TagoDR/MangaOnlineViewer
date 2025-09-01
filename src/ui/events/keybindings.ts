@@ -25,10 +25,12 @@ function doScrolling(sign: 1 | -1) {
   if (viewMode.startsWith('Fluid')) {
     // In fluid modes, scroll horizontally.
     const scrollDirection = viewMode === 'FluidRTL' ? -1 : 1;
-    window?.scrollBy({
-      left: 0.8 * window.innerWidth * sign * scrollDirection,
-      behavior: 'smooth',
-    });
+    getAppStateValue('render')
+      ?.querySelector<HTMLElement>('#Chapter')
+      ?.scrollBy({
+        left: 0.8 * window.innerWidth * sign * scrollDirection,
+        behavior: 'smooth',
+      });
   } else if (zoomMode === 'height') {
     // In 'Fit Height' mode, scroll page by page.
     const currentPage = getAppStateValue('currentPage');
