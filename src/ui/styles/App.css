@@ -7,6 +7,8 @@
   --theme-background-color: #25262b;
   --theme-hightlight-color: #2c2e33;
   --theme-border-color: #373a40;
+  --theme-secondary-color: #2c2e33;
+  --theme-secondary-text-color: #c1c2c5;
 }
 
 :host {
@@ -89,7 +91,8 @@ select {
 }
 
 .ControlButton[selected] {
-  background-color: var(--theme-hightlight-color);
+  background-color: var(--theme-secondary-color);
+  color: var(--theme-secondary-text-color);
   border: 1px solid var(--theme-border-color);
 }
 

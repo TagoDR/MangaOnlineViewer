@@ -98,7 +98,7 @@ function gradinetByLightness(baseColor: Instance): string[] {
  */
 export function generateColorGradient(
   baseHexColor: string,
-  mode: string = 'base',
+  mode: 'saturation' | 'lightness' | 'mantine' | 'base' = 'base',
 ): string[] | null {
   const baseColor = tinycolor(baseHexColor);
   if (!baseColor.isValid()) {
