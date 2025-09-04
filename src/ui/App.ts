@@ -2,12 +2,14 @@ import { useStores } from '@nanostores/lit';
 import { css, html, LitElement, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { styleMap } from 'lit/directives/style-map.js';
 import {
   appState,
   getAppStateValue,
   getSettingsValue,
   isBookmarked,
   locale,
+  navbarSize,
   settings,
 } from '../core/settings.ts';
 import BookmarksPanel from './BookmarkDialog.ts';
@@ -63,6 +65,9 @@ export default class App extends LitElement {
           bookmarked: !!isBookmarked(),
           [getAppStateValue('device')]: true,
         })}"
+        style="${styleMap({
+          [`padding-${getSettingsValue('navbar')}`]: `${navbarSize}px`,
+        })}"
         .locale="${getSettingsValue('locale')}"
       >
         ${Header(manga)} ${Reader(manga)}
@@ -82,7 +87,6 @@ export default class App extends LitElement {
               .prev=${manga.prev}
             ></mov-pagination>`
         }
-
         <div
           id="Overlay"
           class="${classMap({
