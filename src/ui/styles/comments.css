@@ -1,5 +1,5 @@
 #CommentsPanel {
-  position: static;
+  position: absolute;
   width: 90%;
   height: 0;
   top: 5%;
