@@ -1,7 +1,7 @@
 import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import colors, { getTextColor, sortColors } from '../../utils/colors.ts';
+import colors, { getTextColor } from '../../utils/colors.ts';
 import { buttonSelectTheme } from '../events/theming.ts';
 import { IconCheck } from '../icons';
 
@@ -95,12 +95,12 @@ export class ColorPanel extends LitElement {
    * @internal
    */
   protected render() {
-    const swatchKeys = Object.keys(colors)
-      .filter(k => !['dark', 'gray'].includes(k))
-      .sort(sortColors);
-    const shades = [/*50,*/ 100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
+    const swatchKeys = Object.keys(colors).filter(
+      k => !['dark', 'gray', 'zinc', 'neutral', 'stone'].includes(k),
+    );
+    // .sort(sortColors);
+    const shades = [/*50, 100,*/ 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
     return swatchKeys.map(key => {
-      const name = colors[key].name;
       const swatches = shades.map(shade => {
         const hex = colors[key][shade];
         const text = getTextColor(hex);
@@ -119,7 +119,7 @@ export class ColorPanel extends LitElement {
         `;
       });
       return html` <div class="SwatchGroup">
-        <span class="ColorName">${name}</span>
+        <span class="ColorName">${key}</span>
         <div class="Swatches">${swatches}</div>
       </div>`;
     });

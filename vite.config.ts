@@ -81,7 +81,7 @@ export default defineConfig(({ mode }) => {
             nprogress: 'NProgress',
             'range-slider-input': 'rangeSlider',
             'sweetalert2-neutral': 'Swal',
-            tinycolor2: 'tinycolor',
+            'colorjs.io': 'Color',
             bowser: 'bowser',
           }),
           prettier({ parser: 'babel-ts' }),

@@ -19,7 +19,13 @@
     "type": "git",
     "url": "git+https://github.com/TagoDR/MangaOnlineViewer.git"
   },
-  "keywords": ["manga", "reader", "viewer", "online", "loader"],
+  "keywords": [
+    "manga",
+    "reader",
+    "viewer",
+    "online",
+    "loader"
+  ],
   "bugs": "https://github.com/TagoDR/MangaOnlineViewer/issues",
   "homepage": "https://github.com/TagoDR/MangaOnlineViewer#readme",
   "devDependencies": {
@@ -30,7 +36,6 @@
     "@types/node": "^24.3.0",
     "@types/nprogress": "^0.2.3",
     "@types/tampermonkey": "^5.0.4",
-    "@types/tinycolor2": "^1.4.6",
     "del": "^8.0.0",
     "rollup-plugin-external-globals": "^0.13.0",
     "rollup-plugin-prettier": "^4.1.2",
@@ -48,6 +53,7 @@
     "@nanostores/logger": "^1.0.0",
     "blob-util": "^2.0.2",
     "bowser": "^2.12.1",
+    "colorjs.io": "^0.5.2",
     "file-saver": "^2.0.5",
     "hotkeys-js": "^3.13.15",
     "jszip": "=3.9.1",
@@ -57,10 +63,12 @@
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "range-slider-input": "^2.4.4",
-    "sweetalert2-neutral": "^11.22.2-neutral",
-    "tinycolor2": "^1.6.0"
+    "sweetalert2-neutral": "^11.22.2-neutral"
   },
-  "browserslist": ["defaults and fully supports es6-module", "maintained node versions"],
+  "browserslist": [
+    "defaults and fully supports es6-module",
+    "maintained node versions"
+  ],
   "prettier": {
     "overrides": [
       {

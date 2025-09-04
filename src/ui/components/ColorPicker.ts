@@ -1,7 +1,7 @@
 import { css, html, LitElement, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
-import tinycolor from 'tinycolor2';
+import Color from 'colorjs.io';
 import colors from '../../utils/colors';
 import './ColorSwatch.ts';
 
@@ -171,15 +171,24 @@ export class ColorPicker extends LitElement {
       backgroundColor: `hsl(${this.hsv.h}, 100%, 50%)`,
     };
 
+    const hsv = {
+      h: this.hsv.h,
+      s: this.hsv.s * 100,
+      v: this.hsv.v * 100,
+    };
     const saturationThumbStyle = {
       top: `${this.saturationThumbPosition.y}%`,
       left: `${this.saturationThumbPosition.x}%`,
-      backgroundColor: tinycolor(this.hsv).toHexString(),
+      backgroundColor: new Color({ space: 'hsv', coords: [hsv.h, hsv.s, hsv.v] }).toString({
+        format: 'hex',
+      }),
     };
 
     const hueThumbStyle = {
       left: `${this.hueThumbPosition}%`,
     };
+
+    const selectedColorHex = new Color(this.value).toString({ format: 'hex' });
 
     return html`
       <div
@@ -213,25 +222,28 @@ export class ColorPicker extends LitElement {
         ${
           this.swatches
             ? this.swatches.map(
-                color => html`
+                (color) => html`
                 <mov-color-swatch
                   .color=${color}
                   title=${color}
-                  ?selected=${tinycolor.equals(this.value, color)}
+                  ?selected=${selectedColorHex === new Color(color).toString({ format: 'hex' })}
                   @click=${() => this.selectSwatch(color)}
                 ></mov-color-swatch>
               `,
               )
-            : Object.values(colors).map(
-                color => html`
-                <mov-color-swatch
-                  .color=${color['600']}
-                  title=${color.name.charAt(0).toUpperCase() + color.name.slice(1)}
-                  ?selected=${tinycolor.equals(this.value, color['600'])}
-                  @click=${() => this.selectSwatch(color['600'])}
-                ></mov-color-swatch>
-              `,
-              )
+            : Object.entries(colors)
+                .filter(([name]) => !['dark', 'gray', 'zinc', 'neutral', 'stone'].includes(name))
+                .map(
+                  ([name, color]) => html`
+                    <mov-color-swatch
+                      .color=${color['600']}
+                      title=${name.charAt(0).toUpperCase() + name.slice(1)}
+                      ?selected=${selectedColorHex ===
+                      new Color(color['600']).toString({ format: 'hex' })}
+                      @click=${() => this.selectSwatch(color['600'])}
+                    ></mov-color-swatch>
+                  `,
+                )
         }
       </div>
     `;
@@ -242,7 +254,11 @@ export class ColorPicker extends LitElement {
    * @internal
    */
   private updateStateFromValue(color: string) {
-    const newHsv = tinycolor(color).toHsv();
+    const parsedColor = Color.parse(color);
+    if (!parsedColor) return;
+    const newHsvColor = new Color(parsedColor).to('hsv');
+    const [h, s, v] = newHsvColor.coords;
+    const newHsv = { h, s: s / 100, v: v / 100 };
     if (newHsv.h !== this.hsv.h || newHsv.s !== this.hsv.s || newHsv.v !== this.hsv.v) {
       this.hsv = newHsv;
       this.updateThumbPositions();
@@ -254,7 +270,14 @@ export class ColorPicker extends LitElement {
    * @internal
    */
   private updateValueFromHsv() {
-    const newValue = tinycolor(this.hsv).toHexString();
+    const hsv = {
+      h: this.hsv.h,
+      s: this.hsv.s * 100,
+      v: this.hsv.v * 100,
+    };
+    const newValue = new Color({ space: 'hsv', coords: [hsv.h, hsv.s, hsv.v] }).toString({
+      format: 'hex',
+    });
     if (this.value !== newValue) {
       this.value = newValue;
       this.dispatchEvent(
