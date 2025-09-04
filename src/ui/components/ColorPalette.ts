@@ -42,7 +42,7 @@ export class ColorPalette extends LitElement {
    * @type {string}
    */
   @property({ type: String })
-  mode = 'base';
+  mode: 'saturation' | 'lightness' | 'mantine' | 'chakra' | 'steps' = 'steps';
 
   /**
    * The internal state holding the array of generated color strings.

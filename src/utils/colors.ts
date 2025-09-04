@@ -381,93 +381,13 @@ const colors: IPalette = {
   },
 };
 
-const darkest = 10;
-const lightest = 95;
-const darkSteps = 4;
-const lightSteps = 5;
-
-const lightnessStep = (lightest - 50) / lightSteps;
-const darknessStep = (50 - darkest) / darkSteps;
-
 /**
- * Sets the lightness of an HSL color.
- * @internal
- * @param {tinycolor.ColorFormats.HSLA} hsl - The HSL color object.
- * @param {number} lightness - The new lightness value.
- * @returns {string} The resulting color in hex string format.
- */
-function setLightness(hsl: tinycolor.ColorFormats.HSLA, lightness: number): string {
-  hsl.l = lightness / 100;
-  return tinycolor(hsl).toHexString();
-}
-
-/**
- * Generates a 10-step color palette from a single base color.
- * @param {string} color - The base color in any valid CSS color format (e.g., hex, rgb, hsl).
- * @returns {IColor} A complete color palette with 10 shades.
- */
-export function customColor(color: string): IColor {
-  const hsl = tinycolor(color).toHsl();
-  return {
-    name: 'custom',
-    50: setLightness(hsl, 50 + lightnessStep * 5),
-    100: setLightness(hsl, 50 + lightnessStep * 4),
-    200: setLightness(hsl, 50 + lightnessStep * 3),
-    300: setLightness(hsl, 50 + lightnessStep * 2),
-    400: setLightness(hsl, 50 + lightnessStep),
-    500: setLightness(hsl, 50),
-    600: setLightness(hsl, 50 - darknessStep),
-    700: setLightness(hsl, 50 - darknessStep * 2),
-    800: setLightness(hsl, 50 - darknessStep * 3),
-    900: setLightness(hsl, 50 - darknessStep * 4),
-  };
-}
-
-/**
- * Calculates a suitable contrasting text color (either very light or very dark) for a given background color.
+ * Calculates a suitable contrasting text color (white or black) for a given background color.
  * @param {string} hex - The background color in hex format.
  * @returns {string} A hex color string for the contrasting text.
  */
 export function getTextColor(hex: string): string {
-  const color = tinycolor(hex);
-  const hsl = color.toHsl();
-  return setLightness(hsl, color.isDark() ? lightest : darkest);
-}
-
-/**
- * Checks if a color is considered light based on its brightness.
- * @param {string} color - The color string to check.
- * @returns {boolean} `true` if the color is light, `false` otherwise.
- */
-export function isLight(color: string): boolean {
-  return tinycolor(color).getBrightness() > 120;
-}
-
-/**
- * Checks if a color is considered dark based on its brightness.
- * @param {string} color - The color string to check.
- * @returns {boolean} `true` if the color is dark, `false` otherwise.
- */
-export function isDark(color: string): boolean {
-  return tinycolor(color).getBrightness() <= 120;
-}
-
-/**
- * Checks if the computed background color of a DOM element is light.
- * @param {Element} element - The DOM element to check.
- * @returns {boolean} `true` if the background is light, `false` otherwise.
- */
-export function isBackgroundColorLight(element: Element): boolean {
-  return isLight(window.getComputedStyle(element).backgroundColor);
-}
-
-/**
- * Checks if the computed background color of a DOM element is dark.
- * @param {Element} element - The DOM element to check.
- * @returns {boolean} `true` if the background is dark, `false` otherwise.
- */
-export function isBackgroundColorDark(element: Element): boolean {
-  return isDark(window.getComputedStyle(element).backgroundColor);
+  return tinycolor.mostReadable(hex, ['#000', '#fff']).toHexString();
 }
 
 /**
@@ -512,57 +432,6 @@ export function sortColors(a: string, b: string): number {
     return B.sat - A.sat;
   }
   return A.hue - B.hue;
-}
-
-const LIGHTNESS_MAP = [0.96, 0.907, 0.805, 0.697, 0.605, 0.547, 0.518, 0.445, 0.395, 0.34];
-const SATURATION_MAP = [0.32, 0.16, 0.08, 0.04, 0, 0, 0.04, 0.08, 0.16, 0.32];
-
-function getClosestLightness(colorObject: tinycolor.Instance) {
-  const lightnessGoal = colorObject.getLuminance();
-  return LIGHTNESS_MAP.reduce((prev, curr) =>
-    Math.abs(curr - lightnessGoal) < Math.abs(prev - lightnessGoal) ? curr : prev,
-  );
-}
-
-export function generateColorsMap(color: string) {
-  const colorObject = tinycolor(color);
-  const closestLightness = getClosestLightness(colorObject);
-  const baseColorIndex = LIGHTNESS_MAP.indexOf(closestLightness);
-
-  const colors = LIGHTNESS_MAP.map(l =>
-    tinycolor({
-      h: colorObject.toHsl().h,
-      s: colorObject.toHsl().s,
-      l: l,
-    }),
-  ).map((c, i) => {
-    const saturationDelta = SATURATION_MAP[i] - SATURATION_MAP[baseColorIndex];
-    return saturationDelta >= 0
-      ? c.saturate(saturationDelta * 100)
-      : c.desaturate(Math.abs(saturationDelta * 100));
-  });
-
-  colors[baseColorIndex] = tinycolor(color);
-
-  return { baseColorIndex, colors };
-}
-
-export type ColorsTuple = readonly [
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  ...string[],
-];
-
-export function generateColors(color: string) {
-  return generateColorsMap(color).colors.map(c => c.toHexString()) as unknown as ColorsTuple;
 }
 
 export default colors;

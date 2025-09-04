@@ -1,5 +1,5 @@
 import tinycolor, { type Instance } from 'tinycolor2';
-import { generateColors } from './colors.ts';
+import { sample } from './colors.ts';
 
 const darkest = 10;
 const lightest = 95;
@@ -78,7 +78,7 @@ function gradientBySaturation(baseColor: Instance): string[] {
  * @param {Instance} baseColor - A `tinycolor` instance for the base color.
  * @returns {string[]} An array of 11 hex color strings.
  */
-function gradinetByLightness(baseColor: Instance): string[] {
+function gradientByLightness(baseColor: Instance): string[] {
   const colors: string[] = [];
   const lightnessSteps = [95, 90, 80, 70, 60, 50, 40, 30, 20, 10, 5];
 
@@ -91,6 +91,63 @@ function gradinetByLightness(baseColor: Instance): string[] {
 }
 
 /**
+ * Generates an 11-color palette from a single base color, inspired by Chakra UI's color scale.
+ * @param {string} color - The base color.
+ * @returns {string[]} An array of 11 hex color strings.
+ */
+export function gradientByChakra(baseColor: Instance): string[] {
+  const palette: string[] = new Array(11);
+
+  // Base color at index 5
+  palette[5] = baseColor.toHexString();
+
+  // Lighter shades (mixing with white)
+  const lightMixes = [95, 85, 70, 50, 25];
+  for (let i = 0; i < 5; i++) {
+    palette[i] = tinycolor.mix(baseColor, 'white', lightMixes[i]).toHexString();
+  }
+
+  // Darker shades (mixing with black)
+  const darkMixes = [25, 50, 70, 85, 95];
+  for (let i = 0; i < 5; i++) {
+    palette[i + 6] = tinycolor.mix(baseColor, 'black', darkMixes[i]).toHexString();
+  }
+
+  return palette;
+}
+
+/**
+ * Generates an 11-color palette from a single base color, inspired by Mantine's color generation.
+ * @param {string} color - The base color.
+ * @returns {string[]} An array of 11 hex color strings.
+ */
+export function gradientByMantine(baseColor: Instance): string[] {
+  const baseHsl = baseColor.toHsl();
+  const palette: string[] = new Array(11);
+
+  // Base color at index 5
+  palette[5] = baseColor.toHexString();
+
+  // Generate 5 lighter shades (interpolating towards white)
+  for (let i = 0; i < 5; i++) {
+    const factor = (5 - i) / 6;
+    const l = baseHsl.l + (1 - baseHsl.l) * factor;
+    const s = baseHsl.s - baseHsl.s * factor;
+    palette[i] = tinycolor({ h: baseHsl.h, s, l }).toHexString();
+  }
+
+  // Generate 5 darker shades (interpolating towards black, with increased saturation)
+  for (let i = 0; i < 5; i++) {
+    const factor = (i + 1) / 6;
+    const l = baseHsl.l - baseHsl.l * factor;
+    const s = baseHsl.s + (1 - baseHsl.s) * factor;
+    palette[i + 6] = tinycolor({ h: baseHsl.h, s, l }).toHexString();
+  }
+
+  return palette;
+}
+
+/**
  * Generates an 11-shade color gradient from a single base color using different algorithms.
  * @param {string} baseHexColor - The base color in hexadecimal format (e.g., "#123456").
  * @param {string} [mode='base'] - The gradient generation algorithm: 'base', 'saturation', or 'lightness'.
@@ -98,20 +155,21 @@ function gradinetByLightness(baseColor: Instance): string[] {
  */
 export function generateColorGradient(
   baseHexColor: string,
-  mode: 'saturation' | 'lightness' | 'mantine' | 'base' = 'base',
-): string[] | null {
-  const baseColor = tinycolor(baseHexColor);
+  mode: 'saturation' | 'lightness' | 'mantine' | 'chakra' | 'steps' = 'steps',
+): string[] {
+  let baseColor = tinycolor(baseHexColor);
   if (!baseColor.isValid()) {
-    console.error('Invalid base hex color provided.');
-    return null;
+    baseColor = tinycolor(sample.navy);
   }
   switch (mode) {
     case 'saturation':
       return gradientBySaturation(baseColor);
     case 'lightness':
-      return gradinetByLightness(baseColor);
+      return gradientByLightness(baseColor);
     case 'mantine':
-      return [...generateColors(baseHexColor)];
+      return gradientByMantine(baseColor);
+    case 'chakra':
+      return gradientByChakra(baseColor);
     default:
       return gradientBySteps(baseColor);
   }
