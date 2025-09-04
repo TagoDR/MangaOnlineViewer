@@ -1,3 +1,4 @@
+import tinycolor from 'tinycolor2';
 import { getSettingsValue } from '../core/settings';
 import { css } from '../utils/code-tag';
 import colors, { getTextColor } from '../utils/colors';
@@ -12,7 +13,7 @@ import { generateColorGradient } from '../utils/palettes.ts';
  * @returns {string} A string of CSS styles, or an empty string if the gradient generation fails.
  */
 const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsValue('theme')) => {
-  const gradient = generateColorGradient(hex);
+  const gradient = generateColorGradient(hex, tinycolor(hex).isDark() ? 'chakra' : 'steps');
   const text = getTextColor(hex);
   const secondary = getSettingsValue('colorScheme') === 'dark' ? gradient[8] : gradient[2];
   const secondaryText = getTextColor(secondary);
