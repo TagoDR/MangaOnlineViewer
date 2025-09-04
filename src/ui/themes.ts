@@ -12,34 +12,34 @@ import { generateColorGradient } from '../utils/palettes.ts';
  * @returns {string} A string of CSS styles, or an empty string if the gradient generation fails.
  */
 const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsValue('theme')) => {
-  const gradient = generateColorGradient(hex, 'base');
+  const gradient = generateColorGradient(hex);
   const text = getTextColor(hex);
+  const secondary = getSettingsValue('colorScheme') === 'dark' ? gradient[8] : gradient[2];
+  const secondaryText = getTextColor(secondary);
 
-  if (!gradient) return '';
-  const name = 'custom';
   return css`
     :where(:root),
     ${selector} {
-      --mov-color-${name}-95: ${gradient[0]};
-      --mov-color-${name}-90: ${gradient[1]};
-      --mov-color-${name}-80: ${gradient[2]};
-      --mov-color-${name}-70: ${gradient[3]};
-      --mov-color-${name}-60: ${gradient[4]};
-      --mov-color-${name}-50: ${gradient[5]};
-      --mov-color-${name}-40: ${gradient[6]};
-      --mov-color-${name}-30: ${gradient[7]};
-      --mov-color-${name}-20: ${gradient[8]};
-      --mov-color-${name}-10: ${gradient[9]};
-      --mov-color-${name}-05: ${gradient[10]};
-      --mov-color-${name}: var(--mov-color-${name}-60);
-      --mov-color-${name}-key: 60;
-      --mov-color-${name}-gte-60: calc(100% - (clamp(0, 60 - var(--mov-color-${name}-key), 1) * 100%));
-      --mov-color-${name}-on: color-mix(in oklab, var(--mov-color-${name}-10) var(--mov-color-${name}-gte-60), white);
+      --mov-color-custom-95: ${gradient[0]};
+      --mov-color-custom-90: ${gradient[1]};
+      --mov-color-custom-80: ${gradient[2]};
+      --mov-color-custom-70: ${gradient[3]};
+      --mov-color-custom-60: ${gradient[4]};
+      --mov-color-custom-50: ${gradient[5]};
+      --mov-color-custom-40: ${gradient[6]};
+      --mov-color-custom-30: ${gradient[7]};
+      --mov-color-custom-20: ${gradient[8]};
+      --mov-color-custom-10: ${gradient[9]};
+      --mov-color-custom-05: ${gradient[10]};
+      --mov-color-custom: var(--mov-color-custom-60);
+      --mov-color-custom-key: 60;
+      --mov-color-custom-gte-60: calc(100% - (clamp(0, 60 - var(--mov-color-custom-key), 1) * 100%));
+      --mov-color-custom-on: color-mix(in oklab, var(--mov-color-custom-10) var(--mov-color-custom-gte-60), white);
 
       --theme-primary-color: ${hex};
       --theme-primary-text-color: ${text};
-      --theme-secondary-color: var(--mov-color-fill-normal);
-      --theme-secondary-text-color: var(--mov-color-on-normal);
+      --theme-secondary-color: ${secondary};
+      --theme-secondary-text-color: ${secondaryText};
     }
 
     .light {
@@ -51,14 +51,14 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
       --theme-hightlight-color: ${colors.gray['500']};
       --theme-border-color: ${colors.gray['100']};
 
-      --mov-color-fill-quiet: var(--mov-color-${name}-95);
-      --mov-color-fill-normal: var(--mov-color-${name}-90);
-      --mov-color-fill-loud: var(--mov-color-${name}-50);
-      --mov-color-border-quiet: var(--mov-color-${name}-90);
-      --mov-color-border-normal: var(--mov-color-${name}-80);
-      --mov-color-border-loud: var(--mov-color-${name}-60);
-      --mov-color-on-quiet: var(--mov-color-${name}-40);
-      --mov-color-on-normal: var(--mov-color-${name}-30);
+      --mov-color-fill-quiet: var(--mov-color-custom-95);
+      --mov-color-fill-normal: var(--mov-color-custom-90);
+      --mov-color-fill-loud: var(--mov-color-custom-50);
+      --mov-color-border-quiet: var(--mov-color-custom-90);
+      --mov-color-border-normal: var(--mov-color-custom-80);
+      --mov-color-border-loud: var(--mov-color-custom-60);
+      --mov-color-on-quiet: var(--mov-color-custom-40);
+      --mov-color-on-normal: var(--mov-color-custom-30);
       --mov-color-on-loud: white;
     }
 
@@ -71,14 +71,14 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
       --theme-hightlight-color: ${colors.dark['500']};
       --theme-border-color: ${colors.dark['400']};
 
-      --mov-color-fill-quiet: var(--mov-color-${name}-10);
-      --mov-color-fill-normal: var(--mov-color-${name}-20);
-      --mov-color-fill-loud: var(--mov-color-${name}-50);
-      --mov-color-border-quiet: var(--mov-color-${name}-20);
-      --mov-color-border-normal: var(--mov-color-${name}-30);
-      --mov-color-border-loud: var(--mov-color-${name}-40);
-      --mov-color-on-quiet: var(--mov-color-${name}-60);
-      --mov-color-on-normal: var(--mov-color-${name}-70);
+      --mov-color-fill-quiet: var(--mov-color-custom-10);
+      --mov-color-fill-normal: var(--mov-color-custom-20);
+      --mov-color-fill-loud: var(--mov-color-custom-50);
+      --mov-color-border-quiet: var(--mov-color-custom-20);
+      --mov-color-border-normal: var(--mov-color-custom-30);
+      --mov-color-border-loud: var(--mov-color-custom-40);
+      --mov-color-on-quiet: var(--mov-color-custom-60);
+      --mov-color-on-normal: var(--mov-color-custom-70);
       --mov-color-on-loud: white;
     }
   `;
