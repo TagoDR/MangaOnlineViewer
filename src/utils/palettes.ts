@@ -96,23 +96,47 @@ function gradientByLightness(baseColor: Instance): string[] {
  * @returns {string[]} An array of 11 hex color strings.
  */
 export function gradientByChakra(baseColor: Instance): string[] {
-  const palette: string[] = new Array(11);
+  const palette: string[] = new Array(11).fill('');
+  const baseHsl = baseColor.toHsl();
 
-  // Base color at index 5
-  palette[5] = baseColor.toHexString();
+  // Configuration for the gradient generation
+  const config = {
+    lightest: { lightness: 95, rotate: -10, saturate: -30 },
+    darkest: { lightness: 10, rotate: 10, saturate: 10 },
+  };
+  const lightStepsCount = 5;
+  const darkStepsCount = 5;
 
-  // Lighter shades (mixing with white)
-  const lightMixes = [95, 85, 70, 50, 25];
-  for (let i = 0; i < 5; i++) {
-    palette[i] = tinycolor.mix(baseColor, 'white', lightMixes[i]).toHexString();
+  // Calculate per-step adjustments
+  const lightnessStep = (config.lightest.lightness - 50) / lightStepsCount;
+  const darknessStep = (50 - config.darkest.lightness) / darkStepsCount;
+  const lightRotateStep = config.lightest.rotate / lightStepsCount;
+  const darkRotateStep = config.darkest.rotate / darkStepsCount;
+  const lightSaturateStep = config.lightest.saturate / lightStepsCount;
+  const darkSaturateStep = config.darkest.saturate / darkStepsCount;
+
+  // Generate lighter shades (indices 0-4)
+  for (let i = 1; i <= lightStepsCount; i++) {
+    const step = lightStepsCount - i;
+    const color = tinycolor(baseHsl)
+      .lighten(lightnessStep * (i - 0.5))
+      .spin(lightRotateStep * i)
+      .saturate(lightSaturateStep * i);
+    palette[step] = color.toHexString();
   }
 
-  // Darker shades (mixing with black)
-  const darkMixes = [25, 50, 70, 85, 95];
-  for (let i = 0; i < 5; i++) {
-    palette[i + 6] = tinycolor.mix(baseColor, 'black', darkMixes[i]).toHexString();
-  }
+  // Set the base color (index 5)
+  palette[5] = tinycolor(baseHsl).lighten(0).toHexString();
 
+  // Generate darker shades (indices 6-10)
+  for (let i = 1; i <= darkStepsCount; i++) {
+    const step = lightStepsCount + i;
+    const color = tinycolor(baseHsl)
+      .darken(darknessStep * (i - 0.5))
+      .spin(darkRotateStep * i)
+      .saturate(darkSaturateStep * i);
+    palette[step] = color.toHexString();
+  }
   return palette;
 }
 
