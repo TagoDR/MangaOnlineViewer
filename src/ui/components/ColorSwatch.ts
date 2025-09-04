@@ -1,7 +1,7 @@
 import { css, html, LitElement, type PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
-import tinycolor from 'tinycolor2';
+import { getTextColor } from '../../utils/colors.ts';
 import { IconCheck } from '../icons';
 
 declare global {
@@ -123,8 +123,7 @@ export class ColorSwatch extends LitElement {
    */
   willUpdate(changedProperties: PropertyValues) {
     if (changedProperties.has('color')) {
-      // Use black for light colors and white for dark colors to ensure contrast
-      this.contrastColor = tinycolor(this.color).isLight() ? '#000000' : '#FFFFFF';
+      this.contrastColor = getTextColor(this.color);
     }
   }
 
