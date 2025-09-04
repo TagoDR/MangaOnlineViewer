@@ -35,6 +35,11 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
       --mov-color-${name}-key: 60;
       --mov-color-${name}-gte-60: calc(100% - (clamp(0, 60 - var(--mov-color-${name}-key), 1) * 100%));
       --mov-color-${name}-on: color-mix(in oklab, var(--mov-color-${name}-10) var(--mov-color-${name}-gte-60), white);
+
+      --theme-primary-color: ${hex};
+      --theme-primary-text-color: ${text};
+      --theme-secondary-color: var(--mov-color-fill-normal);
+      --theme-secondary-text-color: var(--mov-color-on-normal);
     }
 
     .light {
@@ -46,9 +51,6 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
       --theme-hightlight-color: ${colors.gray['500']};
       --theme-border-color: ${colors.gray['100']};
 
-      --mov-color-mix-hover: black 10%;
-      --mov-color-mix-active: black 20%;
-
       --mov-color-fill-quiet: var(--mov-color-${name}-95);
       --mov-color-fill-normal: var(--mov-color-${name}-90);
       --mov-color-fill-loud: var(--mov-color-${name}-50);
@@ -58,11 +60,6 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
       --mov-color-on-quiet: var(--mov-color-${name}-40);
       --mov-color-on-normal: var(--mov-color-${name}-30);
       --mov-color-on-loud: white;
-
-      --theme-primary-color: ${hex};
-      --theme-primary-text-color: ${text};
-      --theme-secondary-color: var(--mov-color-fill-normal);
-      --theme-secondary-text-color: var(--mov-color-on-normal);
     }
 
     .dark{
@@ -74,9 +71,6 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
       --theme-hightlight-color: ${colors.dark['500']};
       --theme-border-color: ${colors.dark['400']};
 
-      --mov-color-mix-hover: black 8%;
-      --mov-color-mix-active: black 16%;
-
       --mov-color-fill-quiet: var(--mov-color-${name}-10);
       --mov-color-fill-normal: var(--mov-color-${name}-20);
       --mov-color-fill-loud: var(--mov-color-${name}-50);
@@ -86,11 +80,6 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
       --mov-color-on-quiet: var(--mov-color-${name}-60);
       --mov-color-on-normal: var(--mov-color-${name}-70);
       --mov-color-on-loud: white;
-
-      --theme-primary-color: ${hex};
-      --theme-primary-text-color: ${text};
-      --theme-secondary-color: color-mix( in oklab, var(--mov-color-fill-normal), var(--mov-color-mix-hover) );
-      --theme-secondary-text-color: var(--mov-color-on-normal);
     }
   `;
 };
