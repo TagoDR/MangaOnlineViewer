@@ -351,18 +351,28 @@ const colors: IPalette = {
 };
 
 /**
- * Calculates a suitable contrasting text color (white or black) for a given background color.
- * @returns {string} A hex color string for the contrasting text.
- * @param color
+ * Determines if a given color is considered "dark" based on its contrast with white and black.
+ * Uses the APCA (Accessible Perceptual Contrast Algorithm) for contrast calculation.
+ * @param {string} color - The color string to evaluate.
+ * @returns {boolean} True if the color is dark (i.e., white text provides better contrast), false otherwise.
+ */
+export function isDark(color: string) {
+  if (!Color.parse(color)) {
+    return true;
+  }
+  const contrastWhite = Color.contrast(color, 'white', 'APCA');
+  const contrastBlack = Color.contrast(color, 'black', 'APCA');
+  return contrastWhite > contrastBlack;
+}
+
+/**
+ * Determines the optimal text color (black or white) for a given background color
+ * to ensure sufficient contrast.
+ * @param {string} color - The background color string.
+ * @returns {string} Either '#FFFFFF' (white) or '#000000' (black).
  */
 export function getTextColor(color: string): string {
-  if (!Color.parse(color)) {
-    return '#000000';
-  }
-  const contrastWhite = Color.contrast(color, 'white', 'WCAG21');
-  const contrastBlack = Color.contrast(color, 'black', 'WCAG21');
-
-  return contrastWhite > contrastBlack ? '#FFFFFF' : '#000000';
+  return isDark(color) ? '#FFFFFF' : '#000000';
 }
 
 export default colors;
