@@ -1,8 +1,8 @@
 import { css, html, LitElement, type PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { map } from 'lit/directives/map.js';
+import { styleMap } from 'lit/directives/style-map.js';
 import { generateColorGradient } from '../../utils/palettes.ts';
-import './ColorSwatch.ts';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -12,11 +12,13 @@ declare global {
 
 /**
  * A component that displays a 10-shade color palette generated from a single base color.
- * It uses the `generateColorGradient` utility to create the shades and renders them as a series of `mov-color-swatch` elements.
+ * It uses the `generateColorGradient` utility to create the shades and renders them as a series of swatches.
  *
  * @element mov-color-palette
  *
  * @cssprop [--palette-gap=4px] - The gap between the color swatches.
+ * @cssprop [--swatch-size=22px] - The size of the color swatches.
+ * @cssprop [--swatch-radius=4px] - The border radius of the color swatches.
  */
 @customElement('mov-color-palette')
 export class ColorPalette extends LitElement {
@@ -26,6 +28,20 @@ export class ColorPalette extends LitElement {
       gap: var(--palette-gap, 4px);
       align-items: center;
       justify-content: center;
+    }
+
+    .swatch {
+      width: var(--swatch-size, 22px);
+      height: var(--swatch-size, 22px);
+      border-radius: var(--swatch-radius, 4px);
+      border: 1px solid var(--theme-border-color, rgba(0, 0, 0, 0.1));
+      transition: transform 0.15s ease;
+      cursor: pointer;
+      box-sizing: border-box;
+    }
+
+    .swatch:hover {
+      transform: scale(1.1);
     }
   `;
 
@@ -65,12 +81,11 @@ export class ColorPalette extends LitElement {
     return html`
       ${map(
         this.gradient,
-        color =>
-          html`<mov-color-swatch
-            .color=${color}
-            radius="4px"
-            size="22"
-          ></mov-color-swatch>`,
+        (color) =>
+          html`<div
+            class="swatch"
+            style=${styleMap({ backgroundColor: color })}
+          ></div>`,
       )}
     `;
   }
