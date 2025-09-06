@@ -360,8 +360,8 @@ export function isDark(color: string) {
   if (!Color.parse(color)) {
     return true;
   }
-  const contrastWhite = Color.contrast(color, 'white', 'APCA');
-  const contrastBlack = Color.contrast(color, 'black', 'APCA');
+  const contrastWhite = Color.contrast(color, 'white', 'Lstar');
+  const contrastBlack = Color.contrast(color, 'black', 'Lstar');
   return contrastWhite > contrastBlack;
 }
 
