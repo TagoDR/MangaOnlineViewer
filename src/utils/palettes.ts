@@ -53,11 +53,11 @@ function gradientBySaturation(baseColor: Color): string[] {
     newColor.set('hsl.l', l * 100);
 
     if (l > 0.8) {
-      newColor.set('hsl.s', (s) => s * 0.4);
+      newColor.set('hsl.s', s => s * 0.4);
     } else if (l > 0.6) {
-      newColor.set('hsl.s', (s) => s * 0.8);
+      newColor.set('hsl.s', s => s * 0.8);
     } else if (l < 0.3) {
-      newColor.set('hsl.s', (s) => Math.min(100, s * 1.1));
+      newColor.set('hsl.s', s => Math.min(100, s * 1.1));
     }
 
     colors.push(newColor.toString({ format: 'hex' }).toUpperCase());
@@ -76,13 +76,7 @@ function gradientByLightness(baseColor: Color): string[] {
   const lightnessSteps = [95, 90, 80, 70, 60, 50, 40, 30, 20, 10, 5];
   const baseHsl = baseColor.to('hsl');
   for (const lightness of lightnessSteps) {
-    colors.push(
-      baseHsl
-        .clone()
-        .set('hsl.l', lightness)
-        .toString({ format: 'hex' })
-        .toUpperCase(),
-    );
+    colors.push(baseHsl.clone().set('hsl.l', lightness).toString({ format: 'hex' }).toUpperCase());
   }
   return colors;
 }
@@ -117,9 +111,9 @@ export function gradientByChakra(baseColor: Color): string[] {
     const step = lightStepsCount - i;
     const color = baseHsl
       .clone()
-      .set('hsl.l', (l) => l + lightnessStep * (i - 0.5))
-      .set('hsl.h', (h) => h + lightRotateStep * i)
-      .set('hsl.s', (s) => s + lightSaturateStep * i);
+      .set('hsl.l', l => l + lightnessStep * (i - 0.5))
+      .set('hsl.h', h => h + lightRotateStep * i)
+      .set('hsl.s', s => s + lightSaturateStep * i);
     palette[step] = color.toString({ format: 'hex' });
   }
 
@@ -131,9 +125,9 @@ export function gradientByChakra(baseColor: Color): string[] {
     const step = lightStepsCount + i;
     const color = baseHsl
       .clone()
-      .set('hsl.l', (l) => l - darknessStep * (i - 0.5))
-      .set('hsl.h', (h) => h + darkRotateStep * i)
-      .set('hsl.s', (s) => s + darkSaturateStep * i);
+      .set('hsl.l', l => l - darknessStep * (i - 0.5))
+      .set('hsl.h', h => h + darkRotateStep * i)
+      .set('hsl.s', s => s + darkSaturateStep * i);
     palette[step] = color.toString({ format: 'hex' });
   }
   return palette;
@@ -183,9 +177,7 @@ export function generateColorGradient(
   baseHexColor: string,
   mode: 'saturation' | 'lightness' | 'mantine' | 'chakra' | 'steps' = 'steps',
 ): string[] {
-  const baseColor = Color.parse(baseHexColor)
-    ? new Color(baseHexColor)
-    : new Color(sample.navy);
+  const baseColor = Color.parse(baseHexColor) ? new Color(baseHexColor) : new Color(sample.navy);
   switch (mode) {
     case 'saturation':
       return gradientBySaturation(baseColor);

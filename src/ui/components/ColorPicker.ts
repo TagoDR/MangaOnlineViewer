@@ -222,7 +222,7 @@ export class ColorPicker extends LitElement {
         ${
           this.swatches
             ? this.swatches.map(
-                (color) => html`
+                color => html`
                 <mov-color-swatch
                   .color=${color}
                   title=${color}
@@ -235,14 +235,15 @@ export class ColorPicker extends LitElement {
                 .filter(([name]) => !['dark', 'gray', 'zinc', 'neutral', 'stone'].includes(name))
                 .map(
                   ([name, color]) => html`
-                    <mov-color-swatch
-                      .color=${color['600']}
-                      title=${name.charAt(0).toUpperCase() + name.slice(1)}
-                      ?selected=${selectedColorHex ===
-                      new Color(color['600']).toString({ format: 'hex' })}
-                      @click=${() => this.selectSwatch(color['600'])}
-                    ></mov-color-swatch>
-                  `,
+                  <mov-color-swatch
+                    .color=${color['600']}
+                    title=${name.charAt(0).toUpperCase() + name.slice(1)}
+                    ?selected=${
+                      selectedColorHex === new Color(color['600']).toString({ format: 'hex' })
+                    }
+                    @click=${() => this.selectSwatch(color['600'])}
+                  ></mov-color-swatch>
+                `,
                 )
         }
       </div>

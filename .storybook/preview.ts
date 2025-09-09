@@ -33,9 +33,7 @@ class ThemeWrapper extends LitElement {
       <style>
         ${unsafeCSS(themesCSS(':host', this.color))}
       </style>
-      <div
-        id="display"
-      >
+      <div id="display">
         <div class="color-picker-wrapper">
           <label for="theme-color-picker">Theme Color:</label>
           <input
@@ -88,7 +86,7 @@ const preview: Preview = {
     story => html`
       <style>
         :root,
-        html{
+        html {
           text-decoration: none;
           color: var(--theme-body-text-color);
           background-color: var(--theme-body-background);
