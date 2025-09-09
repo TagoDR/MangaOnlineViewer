@@ -199,7 +199,11 @@
     var(--wa-color-brand-fill-loud) 90%,
     var(--wa-color-mix-hover)
   );
-  border-color: color-mix(in srgb, var(--wa-color-brand-border-loud) 90%, var(--wa-color-mix-hover));
+  border-color: color-mix(
+    in srgb,
+    var(--wa-color-brand-border-loud) 90%,
+    var(--wa-color-mix-hover)
+  );
 }
 
 .button--brand.button--filled:active:not(.button--disabled) {

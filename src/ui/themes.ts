@@ -33,8 +33,14 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
       --mov-color-custom-05: ${gradient[10]};
       --mov-color-custom: var(--mov-color-custom-60);
       --mov-color-custom-key: 60;
-      --mov-color-custom-gte-60: calc(100% - (clamp(0, 60 - var(--mov-color-custom-key), 1) * 100%));
-      --mov-color-custom-on: color-mix(in oklab, var(--mov-color-custom-10) var(--mov-color-custom-gte-60), white);
+      --mov-color-custom-gte-60: calc(
+        100% - (clamp(0, 60 - var(--mov-color-custom-key), 1) * 100%)
+      );
+      --mov-color-custom-on: color-mix(
+        in oklab,
+        var(--mov-color-custom-10) var(--mov-color-custom-gte-60),
+        white
+      );
 
       --theme-primary-color: ${hex};
       --theme-primary-text-color: ${text};
@@ -62,7 +68,7 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
       --mov-color-on-loud: white;
     }
 
-    .dark{
+    .dark {
       color-scheme: dark;
       --theme-body-background: ${colors.dark['600']};
       --theme-body-text-color: ${colors.dark['50']};

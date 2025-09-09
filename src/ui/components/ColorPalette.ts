@@ -81,7 +81,7 @@ export class ColorPalette extends LitElement {
     return html`
       ${map(
         this.gradient,
-        (color) =>
+        color =>
           html`<div
             class="swatch"
             style=${styleMap({ backgroundColor: color })}

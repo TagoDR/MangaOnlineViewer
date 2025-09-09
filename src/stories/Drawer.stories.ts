@@ -8,6 +8,7 @@ import '../ui/components/Drawer.ts';
  * It manages the open/closed state of the drawer.
  */
 @customElement('mov-drawer-story-wrapper')
+// @ts-expect-error
 class DrawerStoryWrapper extends LitElement {
   @state()
   private isOpen = false;
@@ -74,7 +75,10 @@ export const Default: Story = {
 export const Open: Story = {
   name: 'Initially Open',
   render: ({ right }) => html`
-    <mov-drawer ?open=${true} ?right=${right}>
+    <mov-drawer
+      ?open=${true}
+      ?right=${right}
+    >
       <div style="padding: 1rem;">
         <p>This drawer is initially open.</p>
         <p>The 'open' property is set to true.</p>
@@ -89,7 +93,10 @@ export const Open: Story = {
 export const Right: Story = {
   name: 'Right Position',
   render: ({ right }) => html`
-    <mov-drawer ?open=${true} ?right=${right}>
+    <mov-drawer
+      ?open=${true}
+      ?right=${right}
+    >
       <div style="padding: 1rem;">
         <p>This drawer is positioned on the right.</p>
         <p>The 'right' property is set to true.</p>
