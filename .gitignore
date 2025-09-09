@@ -51,3 +51,6 @@ benchmarks/graphs
 # Testing build
 /dist/Manga_OnlineViewer_Dev.meta.js
 /dist/Manga_OnlineViewer_Dev.user.js
+
+*storybook.log
+storybook-static
