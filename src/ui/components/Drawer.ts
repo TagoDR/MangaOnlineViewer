@@ -1,5 +1,6 @@
 import { css, html, LitElement, type PropertyValueMap } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
+import { IconX } from '../icons';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -13,14 +14,19 @@ declare global {
  * @element mov-drawer
  *
  * @fires open - Dispatched when the drawer begins to open.
- * @fires close - Dispatched when the drawer begins to close. The parent component is responsible for setting `open = false`.
+ * @fires close - Dispatched when the drawer has closed.
  *
  * @attr {boolean} open - Reflects the open/closed state of the drawer. Set this to true to open the drawer and false to close it.
  * @attr {boolean} right - If present, positions the drawer on the right side of the screen.
  *
- * @slot - The content to display inside the drawer.
+ * @slot - The main content to display inside the drawer.
+ * @slot header - Content for the drawer's header.
+ * @slot action - Content for an optional action item, positioned opposite the close button.
  *
  * @csspart dialog - The underlying <dialog> element used for the drawer.
+ * @csspart header-bar - The container for the header, action, and close buttons.
+ * @csspart close-button-container - The container for the close button.
+ * @csspart close-button - The close button element.
  */
 @customElement('mov-drawer')
 export class MovDrawer extends LitElement {
@@ -57,22 +63,72 @@ export class MovDrawer extends LitElement {
       transform: translateX(100%);
     }
 
+    :host([open]) dialog {
+      transform: none;
+      visibility: visible;
+    }
+
     dialog::backdrop {
       background-color: #000;
       opacity: 0;
       transition: var(--side-drawer-overlay-transition);
     }
 
-    :host([open]) dialog {
-      transform: none;
-      visibility: visible;
-    }
-
     :host([open]) dialog::backdrop {
       opacity: var(--side-drawer-overlay-opacity);
     }
 
-    slot {
+    .header-bar {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--theme-border-color, #e0e0e0);
+      flex-shrink: 0;
+    }
+
+    .action-item {
+      order: 1;
+    }
+
+    .header-content {
+      order: 2;
+      flex-grow: 1;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .close-button-container {
+      order: 3;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .action-item, .close-button-container {
+        min-width: 40px;
+    }
+
+    :host([right]) .action-item {
+      order: 3;
+    }
+    :host([right]) .header-content {
+      order: 2;
+    }
+    :host([right]) .close-button-container {
+      order: 1;
+      justify-content: flex-start;
+    }
+
+    .close-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+      line-height: 1;
+      padding: 0;
+      color: inherit;
+    }
+
+    .content-slot {
       display: block;
       padding: 1rem;
       overflow-y: auto;
@@ -90,14 +146,12 @@ export class MovDrawer extends LitElement {
   private dialog!: HTMLDialogElement;
 
   private close() {
-    this.dispatchEvent(new CustomEvent('close', { bubbles: true, composed: true }));
+    this.open = false;
   }
 
-  protected firstUpdated(): void {
-    this.dialog.addEventListener('close', () => {
-      // This handles the ESC key closing the dialog
-      this.close();
-    });
+  private handleCancel(e: Event) {
+    e.preventDefault();
+    this.close();
   }
 
   protected updated(changedProperties: PropertyValueMap<this>): void {
@@ -108,24 +162,26 @@ export class MovDrawer extends LitElement {
         }
         this.dispatchEvent(new CustomEvent('open', { bubbles: true, composed: true }));
       } else {
-        // Animate the closing of the drawer
-        this.dialog.addEventListener(
-          'transitionend',
-          () => {
-            if (!this.open && this.dialog.open) {
-              this.dialog.close();
-            }
-          },
-          { once: true },
-        );
-      }
-    }
-  }
+        // The `open` property was set to false. This could have been done
+        // by the parent, or by the component itself (e.g. via backdrop click).
+        if (changedProperties.get('open') === true) {
+            // Only dispatch the close event if it was previously open.
+            this.dispatchEvent(new CustomEvent('close', { bubbles: true, composed: true }));
+        }
 
-  private handleBackdropClick(event: MouseEvent) {
-    // Close the drawer if the backdrop is clicked
-    if (event.target === this.dialog) {
-      this.close();
+        // Animate the closing of the drawer
+        const closeDialog = () => {
+            if (this.dialog.open) {
+                this.dialog.close();
+            }
+        };
+
+        const timer = setTimeout(closeDialog, 300);
+        this.dialog.addEventListener('transitionend', () => {
+            clearTimeout(timer);
+            closeDialog();
+        }, { once: true });
+      }
     }
   }
 
@@ -133,9 +189,20 @@ export class MovDrawer extends LitElement {
     return html`
       <dialog
         part="dialog"
-        @click=${this.handleBackdropClick}
+        @cancel=${this.handleCancel}
       >
-        <slot></slot>
+        <div class="header-bar" part="header-bar">
+            <div class="action-item">
+                <slot name="action"></slot>
+            </div>
+            <div class="header-content">
+                <slot name="header"></slot>
+            </div>
+            <div class="close-button-container" part="close-button-container">
+                <button class="close-button" part="close-button" @click=${this.close} aria-label="Close">${IconX}</button>
+            </div>
+        </div>
+        <slot class="content-slot"></slot>
       </dialog>
     `;
   }
