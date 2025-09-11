@@ -7,27 +7,41 @@ const meta: Meta = {
   component: 'mov-panel',
   argTypes: {
     open: { control: 'boolean' },
-    mode: { control: { type: 'radio', options: ['drawer', 'dialog'] } },
-    position: { control: { type: 'radio', options: ['left', 'right'] } },
-    fullscreen: { control: 'boolean' },
+    mode: { control: { type: 'radio', options: ['drawer', 'dialog', 'inline'] } },
+    position: { control: { type: 'radio', options: ['left', 'right', 'center', 'fullscreen'] } },
   },
   render: args => {
     const container = document.createElement('div');
+
+    if (args.mode === 'inline') {
+      const template = html`
+        <mov-panel
+          mode="inline"
+          position=${args.position || 'left'}
+        >
+          ${args.slot}
+        </mov-panel>
+      `;
+      render(template, container);
+      return container;
+    }
+
     const openPanel = () => {
-      const panel = document.querySelector('mov-panel');
+      const panel = container.querySelector('mov-panel');
       if (panel) panel.open = true;
     };
+    const closePanel = () => {
+      const panel = container.querySelector('mov-panel');
+      if (panel) panel.open = false;
+    };
+
     const template = html`
       <button @click=${openPanel}>Open Panel</button>
       <mov-panel
         ?open=${args.open}
         mode=${args.mode || 'drawer'}
         position=${args.position || 'left'}
-        ?fullscreen=${args.fullscreen}
-        @close=${() => {
-          const panel = document.querySelector('mov-panel');
-          if (panel) panel.open = false;
-        }}
+        @close=${closePanel}
       >
         ${args.slot}
       </mov-panel>
@@ -65,6 +79,7 @@ export const DialogCentered: Story = {
   args: {
     open: false,
     mode: 'dialog',
+    position: 'center',
     slot: html`<p>This is a centered dialog panel.</p>`,
   },
 };
@@ -73,8 +88,19 @@ export const DialogFullscreen: Story = {
   name: 'Dialog (Fullscreen)',
   args: {
     ...DialogCentered.args,
-    fullscreen: true,
+    position: 'fullscreen',
     slot: html`<p>This is a fullscreen dialog panel.</p>`,
+  },
+};
+
+export const Inline: Story = {
+  name: 'Inline',
+  args: {
+    mode: 'inline',
+    slot: html`
+      <span slot="header">Inline Panel</span>
+      <p>This is an inline panel. It appears directly in the layout.</p>
+    `,
   },
 };
 
