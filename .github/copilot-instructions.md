@@ -11,17 +11,17 @@ MangaOnlineViewer is a browser userscript that enhances the experience of readin
 The project is written in TypeScript and uses Vite for its build process. The architecture is modular, with a clear separation between core logic and site-specific implementations.
 
 -   **Entry Points**: The project has three distinct builds, each with its own entry point:
-    -   `src/userscript-main.ts`: For the main, public version.
-    -   `src/userscript-adult.ts`: For sites with adult content.
-    -   `src/userscript-dev.ts`: A development build that includes all sites.
+  -   `src/userscript-main.ts`: For the main, public version.
+  -   `src/userscript-adult.ts`: For sites with adult content.
+  -   `src/userscript-dev.ts`: A development build that includes all sites.
 
 -   **Site Modules (The Core Task)**: The primary function of this project is to support various manga websites. Each site is a self-contained module located in either `src/main/` or `src/adult/`.
-    -   **`ISite` Interface**: Every site module must export a default object that conforms to the `ISite` interface (defined in `src/types/ISite.ts`). This interface is the central abstraction of the project.
-    -   **Key `ISite` Properties**:
-        -   `url`: A `RegExp` that matches the chapter URLs for the specific site.
-        -   `run()`: The main function that scrapes the page to find and return chapter and image information (`IManga` object).
-        -   `wait...`: A set of properties (`waitEle`, `waitAttr`, `waitVar`, `waitFunc`, `waitTime`) used to delay the execution of `run()` until the page is fully loaded and ready for scraping. For example, `waitEle: '#image-container'` will wait for that element to appear in the DOM.
-    -   **Aggregation**: All site modules are imported and aggregated in their respective `index.ts` files (`src/main/index.ts` and `src/adult/index.ts`).
+  -   **`ISite` Interface**: Every site module must export a default object that conforms to the `ISite` interface (defined in `src/types/ISite.ts`). This interface is the central abstraction of the project.
+  -   **Key `ISite` Properties**:
+    -   `url`: A `RegExp` that matches the chapter URLs for the specific site.
+    -   `run()`: The main function that scrapes the page to find and return chapter and image information (`IManga` object).
+    -   `wait...`: A set of properties (`waitEle`, `waitAttr`, `waitVar`, `waitFunc`, `waitTime`) used to delay the execution of `run()` until the page is fully loaded and ready for scraping. For example, `waitEle: '#image-container'` will wait for that element to appear in the DOM.
+  -   **Aggregation**: All site modules are imported and aggregated in their respective `index.ts` files (`src/main/index.ts` and `src/adult/index.ts`).
 
 -   **Core Logic**: Shared functionality like the viewer, settings panel, download manager, and UI components are located in `src/core/` and `src/ui/`.
 
@@ -30,17 +30,17 @@ The project is written in TypeScript and uses Vite for its build process. The ar
 ## 3. Developer Workflow
 
 -   **Setup**:
-    1.  Clone the repository.
-    2.  Run `npm install` to install all dependencies.
+  1.  Clone the repository.
+  2.  Run `npm install` to install all dependencies.
 
 -   **Builds**: The build process is managed by Vite and configured in `vite.config.ts`.
-    -   **Development**: Run `npm start` or `npm run build`. This generates a `Manga_Online_Viewer_DEV.user.js` file in the `dist/` directory. This is the recommended script for development and testing as it includes all sites. And `npm run storybook` to test individual peaces of the UI.
-    -   **Release**: Run `npm run release`. This generates the separate `main` and `adult` userscripts for production. Should only be used by CI/CD pipeline.
+  -   **Development**: Run `npm start` or `npm run build`. This generates a `Manga_Online_Viewer_DEV.user.js` file in the `dist/` directory. This is the recommended script for development and testing as it includes all sites. And `npm run storybook` to test individual peaces of the UI.
+  -   **Release**: Run `npm run release`. This generates the separate `main` and `adult` userscripts for production. Should only be used by CI/CD pipeline.
 
 -   **Linting & Formatting**: The project uses Biome and Prettier to maintain code quality and consistency. Configuration is in `biome.json` and the `prettier` key in `package.json`.
-    -   `npm run lint`: Check for linting issues.
-    -   `npm run format`: Automatically format the code.
-    -   `npm run check`: Run all Biome checks and apply safe fixes.
+  -   `npm run lint`: Check for linting issues.
+  -   `npm run format`: Automatically format the code.
+  -   `npm run check`: Run all Biome checks and apply safe fixes.
 
 -   **Testing**: There are no automated unit or integration tests. All testing is done manually by installing the generated userscript in a browser with Tampermonkey and visiting a supported site. Storybook is used for UI component visualization via `npm run storybook`.
 
@@ -97,9 +97,9 @@ This is the most common contribution. Follow these steps carefully.
     ```
 
 4.  **Build and Test**:
-    -   Run `npm run build` to generate the development userscript.
-    -   Install or update the script in Tampermonkey.
-    -   Navigate to a URL that matches the `url` regex you defined and verify that the viewer loads correctly.
+  -   Run `npm run build` to generate the development userscript.
+  -   Install or update the script in Tampermonkey.
+  -   Navigate to a URL that matches the `url` regex you defined and verify that the viewer loads correctly.
 
 ## 5. Folder Philosophy: Where to Create Files
 
@@ -110,10 +110,10 @@ To maintain a clean and organized codebase, follow these guidelines for creating
 -   `src/core/`: Add new files here for shared, non-UI business logic. Examples include download management, application state, or new viewer features.
 
 -   `src/ui/`: This folder is for all things related to the user interface.
-    -   `src/ui/components/`: Create new reusable UI components (e.g., a new button, a dialog) as Lit elements here.
-    -   `src/ui/styles/`: Add global styles or styles specific to a component.
-    -   `src/ui/icons/`: Store new SVG icons in this directory.
-    -   `src/ui/events/`: Store UI event logic to avoid bloating the main components in `src/ui/` folder.
+  -   `src/ui/components/`: Create new reusable UI components (e.g., a new button, a dialog) as Lit elements here.
+  -   `src/ui/styles/`: Add global styles or styles specific to a component.
+  -   `src/ui/icons/`: Store new SVG icons in this directory.
+  -   `src/ui/events/`: Store UI event logic to avoid bloating the main components in `src/ui/` folder.
 
 -   `src/types/`: If you need a new data structure or interface that will be shared across different parts of the application (e.g., a new `IChapter` or `IUser` type), define it here.
 
