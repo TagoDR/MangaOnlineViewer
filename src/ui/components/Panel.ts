@@ -44,7 +44,7 @@ export class MovPanel extends LitElement {
       visibility: hidden;
     }
 
-    :host([open]) dialog {
+    :host([open]:not([mode='inline'])) dialog {
       visibility: visible;
     }
 
@@ -100,6 +100,31 @@ export class MovPanel extends LitElement {
       flex-grow: 1;
     }
 
+    /* --- MODE: INLINE --- */
+    :host([mode='inline']) {
+      display: block;
+      width: 100%;
+    }
+    :host([mode='inline']) dialog {
+      all: unset;
+      background-color: var(--theme-background-color, #fff);
+      color: var(--theme-text-color, #000);
+      box-shadow: none;
+      display: flex;
+      flex-direction: column;
+      visibility: visible;
+      position: relative;
+      width: 100%;
+      border: 1px solid var(--theme-border-color, #e0e0e0);
+      border-radius: 12px;
+    }
+    :host([mode='inline']) dialog::backdrop {
+      display: none;
+    }
+    :host([mode='inline']) .close-button {
+      display: none; /* No close button in inline mode */
+    }
+
     /* --- MODE: DRAWER --- */
     :host([mode='drawer']) {
       --panel-transition: transform 0.25s ease-out;
@@ -139,6 +164,13 @@ export class MovPanel extends LitElement {
       --panel-transition: transform 0.15s ease-out, opacity 0.15s ease-out;
     }
     :host([mode='dialog']) dialog {
+      opacity: 0;
+      transition: var(--panel-transition);
+    }
+    :host([mode='dialog'][open]) dialog {
+      opacity: 1;
+    }
+    :host([mode='dialog'][position='center']) dialog {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0.9);
@@ -146,14 +178,14 @@ export class MovPanel extends LitElement {
       width: var(--dialog-width, 700px);
       max-width: 90vw;
       max-height: 90vh;
-      opacity: 0;
-      transition: var(--panel-transition);
     }
-    :host([mode='dialog'][open]) dialog {
+    :host([mode='dialog'][position='center'][open]) dialog {
       transform: translate(-50%, -50%) scale(1);
-      opacity: 1;
     }
-    :host([mode='dialog'][fullscreen]) dialog {
+    :host([position='fullscreen']) {
+      --panel-overlay-transition: none;
+    }
+    :host([position='fullscreen']) dialog {
       width: 100vw;
       height: 100vh;
       max-width: 100vw;
@@ -162,13 +194,14 @@ export class MovPanel extends LitElement {
       left: 0;
       transform: none;
       border-radius: 0;
+      transition: none;
     }
   `;
 
   @property({ type: Boolean, reflect: true }) open = false;
-  @property({ type: String, reflect: true }) mode: 'drawer' | 'dialog' = 'drawer';
-  @property({ type: String, reflect: true }) position: 'left' | 'right' = 'left';
-  @property({ type: Boolean, reflect: true }) fullscreen = false;
+  @property({ type: String, reflect: true }) mode: 'drawer' | 'dialog' | 'inline' = 'drawer';
+  @property({ type: String, reflect: true }) position: 'left' | 'right' | 'center' | 'fullscreen' =
+    'left';
 
   @query('dialog')
   private dialog!: HTMLDialogElement;
@@ -182,33 +215,31 @@ export class MovPanel extends LitElement {
     this.close();
   }
 
+  private handleClick(event: MouseEvent) {
+    if (this.mode !== 'inline' && event.target === this.dialog) {
+      this.close();
+    }
+  }
+
   protected updated(changedProperties: PropertyValueMap<this>): void {
+    if (this.mode === 'inline') {
+      return;
+    }
     if (changedProperties.has('open')) {
       if (this.open) {
-        if (!this.dialog.open) {
-          this.dialog.showModal();
-        }
+        this.dialog.showModal();
         this.dispatchEvent(new CustomEvent('open', { bubbles: true, composed: true }));
       } else {
         if (changedProperties.get('open') === true) {
           this.dispatchEvent(new CustomEvent('close', { bubbles: true, composed: true }));
         }
-
-        const closeDialog = () => {
+        // Wait for animations to finish before closing the dialog.
+        // The longest animation is 250ms, so 300ms is a safe buffer.
+        setTimeout(() => {
           if (this.dialog.open) {
             this.dialog.close();
           }
-        };
-
-        const timer = setTimeout(closeDialog, 300);
-        this.dialog.addEventListener(
-          'transitionend',
-          () => {
-            clearTimeout(timer);
-            closeDialog();
-          },
-          { once: true },
-        );
+        }, 300);
       }
     }
   }
@@ -218,6 +249,7 @@ export class MovPanel extends LitElement {
       <dialog
         part="dialog"
         @cancel=${this.handleCancel}
+        @click=${this.handleClick}
       >
         <div
           class="header-bar"
