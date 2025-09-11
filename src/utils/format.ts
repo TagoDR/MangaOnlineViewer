@@ -41,7 +41,11 @@ export function toKebabCase(name: string): string {
   const withoutPrefix = name.startsWith('Icon') ? name.substring(4) : name;
 
   // Insert hyphens before uppercase letters (except the first one) and convert to lowercase.
-  const kebabCased = withoutPrefix.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase();
+  const kebabCased = withoutPrefix
+    .trim()
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
+    .replace(/([a-z\d])([A-Z])/g, '$1-$2')
+    .toLowerCase();
 
   return kebabCased;
 }
