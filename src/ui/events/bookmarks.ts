@@ -17,7 +17,7 @@ import { logScript } from '../../utils/tampermonkey';
 export function removeURLBookmark(url: string = window.location.href) {
   if (!isNothing(isBookmarked(url))) {
     logScript(`Bookmark Removed ${url}`);
-    changeSettingsValue('bookmarks', b => b.filter(el => el.url !== url));
+    changeSettingsValue('bookmarks', b => [...b.filter(el => el.url !== url)]);
   }
 }
 
@@ -57,7 +57,7 @@ export function buttonBookmark() {
     date: new Date().toISOString().slice(0, 10),
   };
   if (isBookmarked(mark.url)) {
-    changeSettingsValue('bookmarks', b => b.filter(el => el.url !== mark.url));
+    changeSettingsValue('bookmarks', b => [...b.filter(el => el.url !== mark.url)]);
     Swal.fire({
       title: getLocaleString('BOOKMARK_REMOVED'),
       timer: 10000,
