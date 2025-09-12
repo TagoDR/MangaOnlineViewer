@@ -58,6 +58,9 @@ export default class Navbar extends LitElement {
   @property({ type: String })
   mode: NavbarMode = 'bottom';
 
+  @property({ type: Boolean })
+  forceExpanded: boolean = false;
+
   /**
    * Internal state to manage visibility during mode changes, preventing visual jumps.
    * @private
