@@ -19,7 +19,6 @@ import events from './events.ts';
 import Header from './Header.ts';
 import KeybindingsDialog from './KeybindingsDialog.ts';
 import Reader from './Reader.ts';
-import SettingsPanel from './SettingsPanel.ts';
 import cssStyles from './styles';
 import { themesCSS } from './themes.ts';
 
@@ -95,7 +94,8 @@ export default class App extends LitElement {
           })}"
           @click="${buttonPanelsClose}"
         ></div>
-        ${CommentsPanel()} ${KeybindingsDialog()} ${BookmarksPanel()} ${SettingsPanel()}
+        ${CommentsPanel()} ${KeybindingsDialog()} ${BookmarksPanel()}
+        <mov-settings-panel></mov-settings-panel>
       </div>
     `;
   }

@@ -13,7 +13,7 @@ function theme() {
         class="ControlButton"
         @click=${changeColorScheme}
       >
-        ${IconSun} ${IconMoon}
+        ${getSettingsValue('colorScheme') === 'dark' ? IconMoon : IconSun}
       </button>
     </div>
     <div class="ControlLabel ThemeSelector">
@@ -24,7 +24,7 @@ function theme() {
         value="${getSettingsValue('theme')}"
         class="colorpicker"
         title="${getSettingsValue('theme')}"
-        @change=${changeThemeHex}
+        @input=${changeThemeHex}
         list="color-sample"
       />
       <datalist id="color-sample">

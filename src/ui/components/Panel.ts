@@ -4,7 +4,7 @@ import { IconX } from '../icons';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mov-panel': MovPanel;
+    'mov-panel': Panel;
   }
 }
 
@@ -25,7 +25,7 @@ declare global {
  * @slot action - Content for an optional action item, positioned opposite the close button.
  */
 @customElement('mov-panel')
-export class MovPanel extends LitElement {
+export default class Panel extends LitElement {
   static styles = css`
     :host {
       --panel-overlay-transition: opacity linear 0.25s;
