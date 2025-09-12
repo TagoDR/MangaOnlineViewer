@@ -13,7 +13,7 @@ import {
   settings,
 } from '../core/settings.ts';
 import BookmarksPanel from './BookmarkDialog.ts';
-import CommentsPanel from './CommentsDialog.ts';
+import CommentsPanel from './CommentsPanel.ts';
 import { buttonPanelsClose } from './events/panels.ts';
 import events from './events.ts';
 import Header from './Header.ts';
