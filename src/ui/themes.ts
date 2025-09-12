@@ -19,7 +19,8 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
 
   return css`
     :where(:root),
-    ${selector} {
+    ${selector},
+    .dark{
       --mov-color-custom-95: ${gradient[0]};
       --mov-color-custom-90: ${gradient[1]};
       --mov-color-custom-80: ${gradient[2]};
@@ -46,6 +47,27 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
       --theme-primary-text-color: ${text};
       --theme-secondary-color: ${secondary};
       --theme-secondary-text-color: ${secondaryText};
+
+      color-scheme: dark;
+      --theme-body-background: ${colors.dark['600']};
+      --theme-body-text-color: ${colors.dark['50']};
+      --theme-text-color: ${colors.dark['50']};
+      --theme-background-color: ${colors.dark['600']};
+      --theme-hightlight-color: ${colors.dark['500']};
+      --theme-border-color: ${colors.dark['400']};
+
+      --mov-color-fill-quiet: var(--mov-color-custom-10);
+      --mov-color-fill-normal: var(--mov-color-custom-20);
+      --mov-color-fill-loud: var(--mov-color-custom-50);
+      --mov-color-border-quiet: var(--mov-color-custom-20);
+      --mov-color-border-normal: var(--mov-color-custom-30);
+      --mov-color-border-loud: var(--mov-color-custom-40);
+      --mov-color-on-quiet: var(--mov-color-custom-60);
+      --mov-color-on-normal: var(--mov-color-custom-70);
+      --mov-color-on-loud: white;
+
+      --mov-color-mix-hover: black 8%;
+      --mov-color-mix-active: black 16%;
     }
 
     .light {
@@ -66,26 +88,9 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
       --mov-color-on-quiet: var(--mov-color-custom-40);
       --mov-color-on-normal: var(--mov-color-custom-30);
       --mov-color-on-loud: white;
-    }
 
-    .dark {
-      color-scheme: dark;
-      --theme-body-background: ${colors.dark['600']};
-      --theme-body-text-color: ${colors.dark['50']};
-      --theme-text-color: ${colors.dark['50']};
-      --theme-background-color: ${colors.dark['600']};
-      --theme-hightlight-color: ${colors.dark['500']};
-      --theme-border-color: ${colors.dark['400']};
-
-      --mov-color-fill-quiet: var(--mov-color-custom-10);
-      --mov-color-fill-normal: var(--mov-color-custom-20);
-      --mov-color-fill-loud: var(--mov-color-custom-50);
-      --mov-color-border-quiet: var(--mov-color-custom-20);
-      --mov-color-border-normal: var(--mov-color-custom-30);
-      --mov-color-border-loud: var(--mov-color-custom-40);
-      --mov-color-on-quiet: var(--mov-color-custom-60);
-      --mov-color-on-normal: var(--mov-color-custom-70);
-      --mov-color-on-loud: white;
+      --mov-color-mix-hover: black 10%;
+      --mov-color-mix-active: black 20%;
     }
   `;
 };
