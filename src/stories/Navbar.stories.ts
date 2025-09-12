@@ -1,6 +1,6 @@
 /**
  * @file Storybook stories for the Navbar component (`<mov-navbar>`).
- * This file defines a story that showcases the thumbnail navigation bar and its interactivity.
+ * This file defines stories that showcase the thumbnail navigation bar in all its positions.
  */
 import { useStores } from '@nanostores/lit';
 import type { Meta, StoryObj } from '@storybook/web-components';
@@ -8,22 +8,23 @@ import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { appState, getAppStateValue, setAppStateValue } from '../core/settings';
 import localhost from '../main/localhost.ts';
-import type { IMangaImages } from '../types';
-// Import the component being tested and its dependencies
+import type { IMangaImages, NavbarMode } from '../types';
 import '../ui/Navbar.ts';
 
 // Mock manga data for the stories
 const mockManga = localhost.run() as IMangaImages;
 
 /**
- * A helper component to display the relevant application state changes
- * that are triggered by interacting with the Navbar controls.
+ * A helper component to display the relevant application state changes.
  * @internal
  */
 @customElement('mov-navbar-state-display')
 @useStores(appState)
 // @ts-expect-error
 class StateDisplay extends LitElement {
+  protected createRenderRoot() {
+    return this; // No shadow DOM
+  }
   render() {
     return html`
       <div style="font-family: monospace; font-size: 0.9rem;">
@@ -35,54 +36,67 @@ class StateDisplay extends LitElement {
   }
 }
 
-/**
- * The `Meta` object for the `<mov-navbar>` component stories.
- * This configures the component's entry in the Storybook UI.
- * The `render` function sets up a mock state to ensure the navbar is fully interactive.
- * @see https://storybook.js.org/docs/web-components/writing-stories/introduction#default-export
- */
-export default {
-  title: 'Section/Navbar',
+const meta: Meta = {
+  title: 'UI/Navbar',
   component: 'mov-navbar',
-  parameters: {
-    docs: {
-      description: {
-        component: `
-The Thumbnails Navbar provides a horizontally-scrollable list of page thumbnails.
-It displays the current page, total pages, and allows for quick navigation by clicking a thumbnail.
-This story mocks the necessary global state (the application store) to render the component.
-        `,
-      },
+  argTypes: {
+    mode: {
+      control: 'select',
+      options: ['bottom', 'left', 'right'],
+      description: 'The position and layout of the navbar.',
     },
   },
-  /**
-   * The render function sets up the application's state before rendering the Navbar.
-   * @returns The Lit template for the story.
-   */
-  render: () => {
+  render: (args) => {
     // Set up the mock manga data in the store
     setAppStateValue('manga', mockManga);
     setAppStateValue('currentPage', 1);
+    setAppStateValue(
+      'images',
+      mockManga.listImages.reduce((acc, img, index) => ({ ...acc, [index + 1]: { src: img } }), {}),
+    );
     setAppStateValue('loaded', mockManga.pages);
     setAppStateValue('scrollToPage', undefined); // Reset on each render
 
+    const isVertical = args.mode === 'left' || args.mode === 'right';
+
+    const containerStyle = isVertical
+      ? 'display: flex; height: 500px; border: 1px solid #ccc;'
+      : '';
+    const contentStyle = isVertical ? 'flex-grow: 1; padding: 1rem;' : '';
+
     return html`
-      <div style="padding: 1rem; border: 1px solid #ccc; border-radius: 4px;">
+      <div style="${containerStyle}">
+        ${args.mode === 'right' ? html`<div style="${contentStyle}">Mock Content Area</div>` : ''}
+        <mov-navbar .mode=${args.mode}></mov-navbar>
+        ${args.mode !== 'right' ? html`<div style="${contentStyle}">Mock Content Area</div>` : ''}
+      </div>
+      <div style="padding: 1rem; border: 1px solid #ccc; border-radius: 4px; margin-top: 1rem;">
         <p><b>State from Store:</b></p>
         <mov-navbar-state-display></mov-navbar-state-display>
-        <p><i>(Click a thumbnail below to see 'Scroll To Page' change)</i></p>
-      </div>
-      <div style="margin-top: 2rem; position: relative; height: 190px; border: 2px dashed #ccc;">
-        <!-- The component is usually inside a footer, so we simulate that context -->
-        <mov-navbar></mov-navbar>
+        <p><i>(Click a thumbnail to see 'Scroll To Page' change)</i></p>
       </div>
     `;
   },
-} satisfies Meta;
+};
 
-/**
- * The default story for the Navbar component.
- * It demonstrates the navbar with a full set of mock thumbnails and displays state changes upon interaction.
- * @type {StoryObj}
- */
-export const Default: StoryObj = {};
+export default meta;
+
+type Story = StoryObj<{ mode: NavbarMode }>;
+
+export const Bottom: Story = {
+  args: {
+    mode: 'bottom',
+  },
+};
+
+export const Left: Story = {
+  args: {
+    mode: 'left',
+  },
+};
+
+export const Right: Story = {
+  args: {
+    mode: 'right',
+  },
+};
