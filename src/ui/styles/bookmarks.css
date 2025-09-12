@@ -1,19 +1,5 @@
 #BookmarksPanel {
-  position: fixed;
-  top: 10%;
-  width: 50%;
-  left: 25%;
-  right: 25%;
   text-align: center;
-  max-height: 70%;
-  transition: transform 0.3s ease-in-out;
-  transform: scaleY(0);
-  z-index: 1000;
-}
-
-#BookmarksPanel.visible {
-  transform: scaleY(1);
-  display: block;
 }
 
 #BookmarksList {

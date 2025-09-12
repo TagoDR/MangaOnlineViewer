@@ -1,10 +1,14 @@
 import { html } from 'lit';
-import { classMap } from 'lit/directives/class-map.js';
-import { getAppStateValue, getLocaleString, getSettingsValue } from '../core/settings.ts';
+import {
+  getAppStateValue,
+  getLocaleString,
+  getSettingsValue,
+  isBookmarked,
+} from '../core/settings.ts';
 import { isEmpty } from '../utils/checks.ts';
 import { buttonBookmark, buttonEraseBookmarks } from './events/bookmarks.ts';
 import { buttonPanelsClose } from './events/panels.ts';
-import { IconBookmark, IconBookmarkOff, IconExternalLink, IconTrash, IconX } from './icons';
+import { IconBookmark, IconBookmarkOff, IconExternalLink, IconTrash } from './icons';
 
 /**
  * Renders the list of saved bookmarks.
@@ -76,31 +80,24 @@ const listBookmarks = () => {
  * @returns A Lit `TemplateResult` representing the bookmarks panel.
  */
 const BookmarkPanel = () => html`
-  <div
+  <mov-panel
     id="BookmarksPanel"
-    class="${classMap({
-      panel: true,
-      visible: getAppStateValue('panel') === 'bookmarks',
-    })}"
+    ?open=${getAppStateValue('panel') === 'bookmarks'}
+    mode="dialog"
+    position="center"
+    @close=${buttonPanelsClose}
   >
-    <button
-      id="CloseBookmarks"
-      class="closeButton"
-      title="${getLocaleString('CLOSE')}"
-      @click=${buttonPanelsClose}
-    >
-      ${IconX}
-    </button>
     <button
       class="Bookmark simpleButton"
       title="${getLocaleString('BOOKMARK')}"
       @click=${buttonBookmark}
+      slot="action"
     >
-      ${IconBookmark} ${IconBookmarkOff}
+      ${isBookmarked() === undefined ? IconBookmark : IconBookmarkOff}
     </button>
-    <h2>${getLocaleString('BOOKMARKS')}</h2>
+    <h2 slot="header">${getLocaleString('BOOKMARKS')}</h2>
     <div id="BookmarksList">${listBookmarks()}</div>
-  </div>
+  </mov-panel>
 `;
 
 export default BookmarkPanel;

@@ -12,7 +12,7 @@ import {
   navbarSize,
   settings,
 } from '../core/settings.ts';
-import BookmarksPanel from './BookmarkDialog.ts';
+import BookmarksPanel from './BookmarkPanel.ts';
 import CommentsPanel from './CommentsPanel.ts';
 import { buttonPanelsClose } from './events/panels.ts';
 import events from './events.ts';

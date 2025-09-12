@@ -494,7 +494,7 @@ export function toggleLocalSettings(activate = false): boolean {
  * @returns {number | undefined} The bookmarked page number, or undefined if not bookmarked.
  */
 export function isBookmarked(url: string = window.location.href): number | undefined {
-  return globalSettings.bookmarks.find(el => el.url === url)?.page;
+  return getSettingsValue('bookmarks').find(el => el.url === url)?.page;
 }
 
 /**
