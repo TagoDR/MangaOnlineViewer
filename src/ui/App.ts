@@ -17,7 +17,7 @@ import CommentsPanel from './CommentsDialog.ts';
 import { buttonPanelsClose } from './events/panels.ts';
 import events from './events.ts';
 import Header from './Header.ts';
-import KeybindingsDialog from './KeybindingsDialog.ts';
+import KeybindingsPanel from './KeybindingsPanel.ts';
 import Reader from './Reader.ts';
 import cssStyles from './styles';
 import { themesCSS } from './themes.ts';
@@ -94,7 +94,7 @@ export default class App extends LitElement {
           })}"
           @click="${buttonPanelsClose}"
         ></div>
-        ${CommentsPanel()} ${KeybindingsDialog()} ${BookmarksPanel()}
+        ${CommentsPanel()} ${KeybindingsPanel()} ${BookmarksPanel()}
         <mov-settings-panel></mov-settings-panel>
       </div>
     `;

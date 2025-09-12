@@ -1,11 +1,10 @@
 import { html } from 'lit';
-import { classMap } from 'lit/directives/class-map.js';
 import { createRef, type Ref, ref } from 'lit/directives/ref.js';
 import { join } from 'lit-html/directives/join.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { getAppStateValue, getLocaleString, getSettingsValue } from '../core/settings.ts';
 import { buttonPanelsClose, editKeybindings, saveKeybindings } from './events/panels.ts';
-import { IconDeviceFloppy, IconPencil, IconX } from './icons';
+import { IconDeviceFloppy, IconPencil } from './icons';
 
 // Create a reference for each keybinding input element.
 const keybindsRefs: Record<string, Ref<HTMLInputElement>> = Object.keys(
@@ -67,24 +66,16 @@ export const keybindEditor = () => {
  *
  * @returns A Lit `TemplateResult` representing the keybindings panel.
  */
-const KeybindingsDialog = () => html`
-  <div
+const KeybindingsPanel = () => html`
+  <mov-panel
     id="KeybindingsPanel"
-    class="${classMap({
-      panel: true,
-      visible: getAppStateValue('panel').startsWith('keybindings'),
-    })}"
+    ?open=${getAppStateValue('panel').startsWith('keybindings')}
+    mode="drawer"
+    position="right"
+    @close=${buttonPanelsClose}
   >
-    <h2>${getLocaleString('KEYBINDINGS')}</h2>
-    <button
-      id="CloseKeybindings"
-      class="closeButton"
-      title="${getLocaleString('CLOSE')}"
-      @click=${buttonPanelsClose}
-    >
-      ${IconX}
-    </button>
-    <div class="controls">
+    <h2  slot="header">${getLocaleString('KEYBINDINGS')}</h2>
+    <div class="controls" slot="action">
       ${
         getAppStateValue('panel') === 'keybindingsEditor'
           ? html` <button
@@ -111,7 +102,7 @@ const KeybindingsDialog = () => html`
       ${getAppStateValue('panel') === 'keybindingsEditor' ? keybindEditor() : keybindList()}
     </div>
     <div id="HotKeysRules">${unsafeHTML(getLocaleString('KEYBIND_RULES'))}</div>
-  </div>
+  </mov-panel>
 `;
 
-export default KeybindingsDialog;
+export default KeybindingsPanel;
