@@ -1,19 +1,20 @@
 import type { Preview } from '@storybook/web-components-vite';
 import { css, html, LitElement, unsafeCSS } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 import { themes } from 'storybook/theming';
 import '../src/ui/setup';
+import { useStores } from '@nanostores/lit';
+import { appState, getSettingsValue, locale, settings } from '../src/core/settings.ts';
+import { changeThemeHex } from '../src/ui/events/theming.ts';
 import cssStyles from '../src/ui/styles';
 import externalCSS from '../src/ui/styles/externalStyle.ts';
 import { themesCSS } from '../src/ui/themes.ts';
 import colors, { sample } from '../src/utils/colors.ts';
 
 @customElement('theme-wrapper')
+@useStores(settings, locale, appState)
 // @ts-expect-error
 class ThemeWrapper extends LitElement {
-  @state()
-  private color = '#087f5b'; // default color
-
   static styles = [
     unsafeCSS(externalCSS),
     unsafeCSS(cssStyles),
@@ -31,17 +32,18 @@ class ThemeWrapper extends LitElement {
   render() {
     return html`
       <style>
-        ${unsafeCSS(themesCSS(':host', this.color))}
+        ${unsafeCSS(themesCSS(':host', getSettingsValue('theme')))}
       </style>
       <div id="display">
         <div class="color-picker-wrapper">
           <label for="theme-color-picker">Theme Color:</label>
           <input
-            id="theme-color-picker"
+            id="ThemeHex"
             type="color"
-            .value=${this.color}
+            value="${getSettingsValue('theme')}"
             class="colorpicker"
-            @input=${this.changeColor}
+            title="${getSettingsValue('theme')}"
+            @input=${changeThemeHex}
             list="color-sample"
           />
           <datalist id="color-sample">
@@ -53,9 +55,6 @@ class ThemeWrapper extends LitElement {
         </div>
       </div>
     `;
-  }
-  changeColor(event: Event) {
-    this.color = (event.target as HTMLInputElement).value;
   }
 }
 
