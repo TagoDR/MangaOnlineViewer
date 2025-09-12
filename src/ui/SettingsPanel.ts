@@ -1,7 +1,14 @@
 import { useStores } from '@nanostores/lit';
 import { css, html, LitElement, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { appState, getLocaleString, locale, resetSettings, settings } from '../core/settings.ts';
+import {
+  appState,
+  getAppStateValue,
+  getLocaleString,
+  locale,
+  resetSettings,
+  settings,
+} from '../core/settings.ts';
 import { buttonPanelsClose } from './events/panels.ts';
 import { IconSettingsOff } from './icons';
 import SettingsPanelGeneral from './SettingsPanelGeneral.ts';
@@ -35,7 +42,7 @@ export default class SettingsPanel extends LitElement {
     return html`
       <mov-panel
         id="SettingsPanel"
-        .open=${appState.get().panel === 'settings'}
+        .open=${getAppStateValue('panel') === 'settings'}
         mode="drawer"
         @close=${buttonPanelsClose}
       >

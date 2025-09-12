@@ -31,7 +31,7 @@ appState.listen((value, _oldValue, changedKey) => {
     } else {
       scrollToElement(getAppStateValue('images')?.[value.scrollToPage]?.ref?.value);
     }
-    setAppStateValue('scrollToPage', undefined);
+    setTimeout(() => setAppStateValue('scrollToPage', undefined), 10);
   }
 });
 

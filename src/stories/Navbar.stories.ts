@@ -4,8 +4,8 @@
  */
 import { useStores } from '@nanostores/lit';
 import type { Meta, StoryObj } from '@storybook/web-components';
-import { html, LitElement } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { html, LitElement, type PropertyValueMap } from 'lit';
+import { customElement, state } from 'lit/decorators.js';
 import { appState, getAppStateValue, setAppStateValue } from '../core/settings';
 import localhost from '../main/localhost.ts';
 import type { IMangaImages, NavbarMode } from '../types';
@@ -22,15 +22,34 @@ const mockManga = localhost.run() as IMangaImages;
 @useStores(appState)
 // @ts-expect-error
 class StateDisplay extends LitElement {
+  @state()
+  private lastScrolledToPage: number | undefined;
+
   protected createRenderRoot() {
     return this; // No shadow DOM
   }
+
+  willUpdate(changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    super.willUpdate(changedProperties);
+    const currentScrollTo = appState.get().scrollToPage;
+    if (typeof currentScrollTo === 'number') {
+      this.lastScrolledToPage = currentScrollTo;
+    }
+  }
+
   render() {
+    const currentScrollTo = appState.get().scrollToPage;
+    const displayValue = this.lastScrolledToPage ?? 'none';
+    const status =
+      currentScrollTo === undefined && this.lastScrolledToPage !== undefined
+        ? ' (then cleared)'
+        : '';
+
     return html`
       <div style="font-family: monospace; font-size: 0.9rem;">
         <div><b>Current Page:</b> ${getAppStateValue('currentPage')}</div>
         <div><b>Loaded:</b> ${getAppStateValue('loaded')}</div>
-        <div><b>Scroll To Page Triggered:</b> ${getAppStateValue('scrollToPage') ?? 'none'}</div>
+        <div><b>Scroll To Page Triggered:</b> ${displayValue}${status}</div>
       </div>
     `;
   }
@@ -46,7 +65,7 @@ const meta: Meta = {
       description: 'The position and layout of the navbar.',
     },
   },
-  render: (args) => {
+  render: args => {
     // Set up the mock manga data in the store
     setAppStateValue('manga', mockManga);
     setAppStateValue('currentPage', 1);
