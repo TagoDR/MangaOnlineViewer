@@ -1,5 +1,5 @@
 import { useStores } from '@nanostores/lit';
-import { css, html, LitElement, unsafeCSS } from 'lit';
+import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import {
   appState,
@@ -33,7 +33,7 @@ declare global {
 @customElement('mov-settings-panel')
 @useStores(settings, locale, appState)
 export default class SettingsPanel extends LitElement {
-  static styles = [css``, unsafeCSS(cssStyles)];
+  static styles = [unsafeCSS(cssStyles)];
   protected createRenderRoot() {
     return this; // No shadow DOM
   }
@@ -42,7 +42,7 @@ export default class SettingsPanel extends LitElement {
     return html`
       <mov-panel
         id="SettingsPanel"
-        .open=${getAppStateValue('panel') === 'settings'}
+        ?open=${getAppStateValue('panel') === 'settings'}
         mode="drawer"
         @close=${buttonPanelsClose}
       >
@@ -52,6 +52,7 @@ export default class SettingsPanel extends LitElement {
           class="ControlButton"
           @click="${resetSettings}"
           title="${getLocaleString('BUTTON_RESET_SETTINGS')}"
+          style="width: 100%"
         >
           ${IconSettingsOff} ${getLocaleString('BUTTON_RESET_SETTINGS')}
         </button>
