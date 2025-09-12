@@ -1,27 +1,9 @@
 #CommentsPanel {
-  position: absolute;
-  width: 90%;
-  height: 0;
-  top: 5%;
-  left: 5%;
   text-align: center;
-  transition: transform 0.3s ease-in-out;
-  transform: scaleY(0);
-  z-index: 1000;
-  overflow-y: initial;
-  background-color: var(--theme-body-background);
-  opacity: 0;
-}
-
-#CommentsPanel.visible {
-  position: fixed;
-  height: 90%;
-  transform: scaleY(1);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  opacity: 1;
 }
 
 #CommentsArea {

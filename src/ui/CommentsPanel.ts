@@ -1,9 +1,8 @@
 import { html } from 'lit';
-import { classMap } from 'lit/directives/class-map.js';
 import { getAppStateValue, getLocaleString, getSettingsValue } from '../core/settings.ts';
 import { changeCommentsColor } from './events/globals.ts';
 import { buttonPanelsClose } from './events/panels.ts';
-import { IconMoon, IconSun, IconX } from './icons';
+import { IconMoon, IconSun } from './icons';
 
 /**
  * Renders the comments panel as a Lit template.
@@ -13,23 +12,15 @@ import { IconMoon, IconSun, IconX } from './icons';
  *
  * @returns A Lit `TemplateResult` representing the comments panel.
  */
-const commentsDialog = () => html`
-  <div
+const commentsPanel = () => html`
+  <mov-panel
     id="CommentsPanel"
-    class="${classMap({
-      panel: true,
-      visible: getAppStateValue('panel') === 'comments',
-    })}"
+    ?open=${getAppStateValue('panel') === 'comments'}
+    mode="dialog"
+    position="fullscreen"
+    @close=${buttonPanelsClose}
   >
-    <button
-      id="CloseComments"
-      class="closeButton"
-      title="${getLocaleString('CLOSE')}"
-      @click=${buttonPanelsClose}
-    >
-      ${IconX}
-    </button>
-    <h2>${getLocaleString('COMMENTS')}</h2>
+    <h2 slot="header">${getLocaleString('COMMENTS')}</h2>
     <div
       id="CommentsArea"
       class="${getSettingsValue('colorScheme')}"
@@ -40,9 +31,10 @@ const commentsDialog = () => html`
       id="CommentsColorScheme"
       class="simpleButton ColorScheme"
       @click=${changeCommentsColor}
+      slot="action"
     >
       ${IconSun} ${IconMoon}
     </button>
-  </div>
+  </mov-panel>
 `;
-export default commentsDialog;
+export default commentsPanel;
