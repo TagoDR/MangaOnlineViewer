@@ -16,7 +16,7 @@
   transition: all 0.3s ease;
   position: fixed;
 }
-#Navigation:not(:hover) #Thumbnails {
+:host(:not([forceExpanded])) #Navigation:not(:hover) #Thumbnails {
   display: none;
 }
 #NavigationCounters {
@@ -44,6 +44,7 @@
   left: 0;
   right: 0;
 }
+:host([forceExpanded]) #Navigation.horizontal,
 #Navigation.horizontal:hover {
   height: var(--nav-expanded-size);
 }
@@ -66,6 +67,7 @@
     height 0.3s ease,
     width 0.3s ease;
 }
+:host([forceExpanded]) #Navigation.vertical,
 #Navigation.vertical:hover {
   width: var(--nav-expanded-size);
 }

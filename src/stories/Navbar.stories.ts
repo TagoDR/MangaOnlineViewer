@@ -64,6 +64,10 @@ const meta: Meta = {
       options: ['bottom', 'left', 'right'],
       description: 'The position and layout of the navbar.',
     },
+    forceExpanded: {
+      control: 'boolean',
+      description: 'Force the header/navbar to be visible, overriding auto-hide behavior.',
+    },
   },
   render: args => {
     // Set up the mock manga data in the store
@@ -86,7 +90,7 @@ const meta: Meta = {
     return html`
       <div style="${containerStyle}">
         ${args.mode === 'right' ? html`<div style="${contentStyle}">Mock Content Area</div>` : ''}
-        <mov-navbar .mode=${args.mode}></mov-navbar>
+        <mov-navbar .mode=${args.mode} ?forceExpanded="${args.forceExpanded}"></mov-navbar>
         ${args.mode !== 'right' ? html`<div style="${contentStyle}">Mock Content Area</div>` : ''}
       </div>
       <div style="padding: 1rem; border: 1px solid #ccc; border-radius: 4px; margin-top: 1rem;">
@@ -100,22 +104,33 @@ const meta: Meta = {
 
 export default meta;
 
-type Story = StoryObj<{ mode: NavbarMode }>;
+type Story = StoryObj<{ mode: NavbarMode; forceExpanded?: boolean }>;
 
 export const Bottom: Story = {
   args: {
     mode: 'bottom',
+    forceExpanded: false,
+  },
+};
+
+export const BottomExpanded: Story = {
+  name: 'Bottom (Forced Open)',
+  args: {
+    mode: 'bottom',
+    forceExpanded: true,
   },
 };
 
 export const Left: Story = {
   args: {
     mode: 'left',
+    forceExpanded: true, // Vertical navs should be open by default
   },
 };
 
 export const Right: Story = {
   args: {
     mode: 'right',
+    forceExpanded: true, // Vertical navs should be open by default
   },
 };
