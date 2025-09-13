@@ -13,7 +13,7 @@ const meta: Meta = {
       description: 'Toggles the visibility of the bookmark panel by updating the global store.',
     },
   },
-  render: (args) => {
+  render: args => {
     setAppStateValue('panel', args.open ? 'bookmarks' : 'none');
 
     const openPanel = () => {

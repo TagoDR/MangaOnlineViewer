@@ -13,7 +13,7 @@ const meta: Meta = {
       description: 'Toggles the visibility of the comments panel by updating the global store.',
     },
   },
-  render: (args) => {
+  render: args => {
     setAppStateValue('panel', args.open ? 'comments' : 'none');
 
     const openPanel = () => {

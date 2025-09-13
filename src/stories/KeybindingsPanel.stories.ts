@@ -14,7 +14,7 @@ const meta: Meta = {
       description: 'Toggles the visibility and mode of the keybindings panel.',
     },
   },
-  render: (args) => {
+  render: args => {
     setAppStateValue('panel', args.panel);
 
     const openListView = () => {

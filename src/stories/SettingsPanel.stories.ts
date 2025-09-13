@@ -23,7 +23,9 @@ const meta: Meta = {
 
     // The story now includes a button to demonstrate reopening the panel.
     return html`
-      <style>${styles}</style>
+      <style>
+        ${styles}
+      </style>
       <button @click=${openPanel}>Set Panel to Open</button>
       <p>Change the 'open' control in Storybook to close the panel.</p>
       <mov-settings-panel></mov-settings-panel>
