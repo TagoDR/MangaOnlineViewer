@@ -96,27 +96,30 @@ export default class KeybindingsPanel extends LitElement {
         @close=${buttonPanelsClose}
       >
         <h2 slot="header">${getLocaleString('KEYBINDINGS')}</h2>
-        <div class="controls" slot="action">
+        <div
+          class="controls"
+          slot="action"
+        >
           ${
             getAppStateValue('panel') === 'keybindingsEditor'
               ? html` <button
-                  id="SaveKeybindings"
-                  class="ControlButton"
-                  type="button"
-                  title="${getLocaleString('SAVE_KEYBINDS')}"
-                  @click=${() => saveKeybindings(this.keybindsRefs)}
-                >
-                  ${IconDeviceFloppy} ${getLocaleString('BUTTON_SAVE')}
-                </button>`
+                id="SaveKeybindings"
+                class="ControlButton"
+                type="button"
+                title="${getLocaleString('SAVE_KEYBINDS')}"
+                @click=${() => saveKeybindings(this.keybindsRefs)}
+              >
+                ${IconDeviceFloppy} ${getLocaleString('BUTTON_SAVE')}
+              </button>`
               : html` <button
-                  id="EditKeybindings"
-                  class="ControlButton"
-                  type="button"
-                  title="${getLocaleString('EDIT_KEYBINDS')}"
-                  @click=${editKeybindings}
-                >
-                  ${IconPencil} ${getLocaleString('BUTTON_EDIT')}
-                </button>`
+                id="EditKeybindings"
+                class="ControlButton"
+                type="button"
+                title="${getLocaleString('EDIT_KEYBINDS')}"
+                @click=${editKeybindings}
+              >
+                ${IconPencil} ${getLocaleString('BUTTON_EDIT')}
+              </button>`
           }
         </div>
         <div id="KeybindingsList">

@@ -19,8 +19,7 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
 
   return css`
     :where(:root),
-    ${selector},
-    .dark{
+    ${selector}, .dark {
       --mov-color-custom-95: ${gradient[0]};
       --mov-color-custom-90: ${gradient[1]};
       --mov-color-custom-80: ${gradient[2]};

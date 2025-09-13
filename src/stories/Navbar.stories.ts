@@ -90,7 +90,10 @@ const meta: Meta = {
     return html`
       <div style="${containerStyle}">
         ${args.mode === 'right' ? html`<div style="${contentStyle}">Mock Content Area</div>` : ''}
-        <mov-navbar .mode=${args.mode} ?forceExpanded="${args.forceExpanded}"></mov-navbar>
+        <mov-navbar
+          .mode=${args.mode}
+          ?forceExpanded="${args.forceExpanded}"
+        ></mov-navbar>
         ${args.mode !== 'right' ? html`<div style="${contentStyle}">Mock Content Area</div>` : ''}
       </div>
       <div style="padding: 1rem; border: 1px solid #ccc; border-radius: 4px; margin-top: 1rem;">
