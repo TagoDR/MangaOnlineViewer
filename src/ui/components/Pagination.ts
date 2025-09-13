@@ -86,6 +86,7 @@ export class Pagination extends LitElement {
       border-radius: 50%;
       cursor: pointer;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--theme-primary-color);
     }
 
     .pagination-slider::-moz-range-thumb {
@@ -94,7 +95,7 @@ export class Pagination extends LitElement {
       background: white;
       border-radius: 50%;
       cursor: pointer;
-      border: none;
+      border: 1px solid var(--theme-primary-color);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
