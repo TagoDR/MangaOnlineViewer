@@ -86,15 +86,9 @@ export default class App extends LitElement {
               .prev=${manga.prev}
             ></mov-pagination>`
         }
-        <div
-          id="Overlay"
-          class="${classMap({
-            overlay: true,
-            visible: getAppStateValue('panel') !== 'none',
-          })}"
-          @click="${buttonPanelsClose}"
-        ></div>
-        ${CommentsPanel()} ${KeybindingsPanel()} ${BookmarksPanel()}
+        <mov-comments-panel></mov-comments-panel>
+        <mov-keybindings-panel></mov-keybindings-panel>
+        <mov-bookmark-panel></mov-bookmark-panel>
         <mov-settings-panel></mov-settings-panel>
       </div>
     `;
