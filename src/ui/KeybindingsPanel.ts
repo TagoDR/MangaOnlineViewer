@@ -1,108 +1,133 @@
-import { html } from 'lit';
+import { useStores } from '@nanostores/lit';
+import { html, LitElement } from 'lit';
+import { customElement } from 'lit/decorators.js';
 import { createRef, type Ref, ref } from 'lit/directives/ref.js';
 import { join } from 'lit-html/directives/join.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
-import { getAppStateValue, getLocaleString, getSettingsValue } from '../core/settings.ts';
+import {
+  appState,
+  getAppStateValue,
+  getLocaleString,
+  getSettingsValue,
+  locale,
+  settings,
+} from '../core/settings.ts';
 import { buttonPanelsClose, editKeybindings, saveKeybindings } from './events/panels.ts';
 import { IconDeviceFloppy, IconPencil } from './icons';
+import './components/Panel.ts';
 
-// Create a reference for each keybinding input element.
-const keybindsRefs: Record<string, Ref<HTMLInputElement>> = Object.keys(
-  getSettingsValue('keybinds'),
-).reduce(
-  (acc, key) => {
-    acc[key] = createRef();
-    return acc;
-  },
-  {} as Record<string, Ref<HTMLInputElement>>,
-);
+declare global {
+  interface HTMLElementTagNameMap {
+    'mov-keybindings-panel': KeybindingsPanel;
+  }
+}
 
 /**
- * Renders a read-only list of the current keybindings.
- * Each keybinding is displayed with its description and the assigned keys.
- *
- * @returns An array of Lit templates, each representing a keybinding entry.
- */
-export const keybindList = () => {
-  const keybinds = getSettingsValue('keybinds');
-  return Object.keys(keybinds).map(kb => {
-    const keys = keybinds[kb]?.length
-      ? join(
-          keybinds[kb]?.map(key => html`<kbd class="dark">${key}</kbd>`),
-          ' / ',
-        )
-      : '';
-    return html`<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
-  });
-};
-
-/**
- * Renders an editable form for modifying keybindings.
- * It creates a text input for each keybinding action and displays the current assignments.
- * Also includes a section with rules for defining keybindings.
- *
- * @returns An array of Lit templates for the keybinding editor form.
- */
-export const keybindEditor = () => {
-  const keybinds = getSettingsValue('keybinds');
-  return Object.keys(keybinds).map(
-    kb =>
-      html`<label for="${kb}">${getLocaleString(kb)}:</label>
-        <input
-          type="text"
-          class="KeybindInput"
-          id="${kb}"
-          name="${kb}"
-          value="${keybinds[kb]?.join(' , ') ?? ''}"
-          ${ref(keybindsRefs[kb])}
-        />`,
-  );
-};
-
-/**
- * Renders the keybindings panel as a Lit template.
+ * Renders the keybindings panel as a Lit component.
  * This panel can switch between a read-only view and an editor for keybindings.
  * Its visibility is controlled by the `panel` property in the application state.
- *
- * @returns A Lit `TemplateResult` representing the keybindings panel.
  */
-const KeybindingsPanel = () => html`
-  <mov-panel
-    id="KeybindingsPanel"
-    ?open=${getAppStateValue('panel').startsWith('keybindings')}
-    mode="drawer"
-    position="right"
-    @close=${buttonPanelsClose}
-  >
-    <h2  slot="header">${getLocaleString('KEYBINDINGS')}</h2>
-    <div class="controls" slot="action">
-      ${
-        getAppStateValue('panel') === 'keybindingsEditor'
-          ? html` <button
-            id="SaveKeybindings"
-            class="ControlButton"
-            type="button"
-            title="${getLocaleString('SAVE_KEYBINDS')}"
-            @click=${() => saveKeybindings(keybindsRefs)}
-          >
-            ${IconDeviceFloppy} ${getLocaleString('BUTTON_SAVE')}
-          </button>`
-          : html` <button
-            id="EditKeybindings"
-            class="ControlButton"
-            type="button"
-            title="${getLocaleString('EDIT_KEYBINDS')}"
-            @click=${editKeybindings}
-          >
-            ${IconPencil} ${getLocaleString('BUTTON_EDIT')}
-          </button>`
-      }
-    </div>
-    <div id="KeybindingsList">
-      ${getAppStateValue('panel') === 'keybindingsEditor' ? keybindEditor() : keybindList()}
-    </div>
-    <div id="HotKeysRules">${unsafeHTML(getLocaleString('KEYBIND_RULES'))}</div>
-  </mov-panel>
-`;
+@customElement('mov-keybindings-panel')
+@useStores(settings, locale, appState)
+export default class KeybindingsPanel extends LitElement {
+  private keybindsRefs: Record<string, Ref<HTMLInputElement>> = Object.keys(
+    getSettingsValue('keybinds'),
+  ).reduce(
+    (acc, key) => {
+      acc[key] = createRef();
+      return acc;
+    },
+    {} as Record<string, Ref<HTMLInputElement>>,
+  );
 
-export default KeybindingsPanel;
+  protected createRenderRoot() {
+    return this; // No shadow DOM
+  }
+
+  /**
+   * Renders a read-only list of the current keybindings.
+   * Each keybinding is displayed with its description and the assigned keys.
+   *
+   * @returns An array of Lit templates, each representing a keybinding entry.
+   */
+  private keybindList() {
+    const keybinds = getSettingsValue('keybinds');
+    return Object.keys(keybinds).map(kb => {
+      const keys = keybinds[kb]?.length
+        ? join(
+            keybinds[kb]?.map(key => html`<kbd class="dark">${key}</kbd>`),
+            ' / ',
+          )
+        : '';
+      return html`<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
+    });
+  }
+
+  /**
+   * Renders an editable form for modifying keybindings.
+   * It creates a text input for each keybinding action and displays the current assignments.
+   * Also includes a section with rules for defining keybindings.
+   *
+   * @returns An array of Lit templates for the keybinding editor form.
+   */
+  private keybindEditor() {
+    const keybinds = getSettingsValue('keybinds');
+    return Object.keys(keybinds).map(
+      kb =>
+        html`<label for="${kb}">${getLocaleString(kb)}:</label>
+          <input
+            type="text"
+            class="KeybindInput"
+            id="${kb}"
+            name="${kb}"
+            value="${keybinds[kb]?.join(' , ') ?? ''}"
+            ${ref(this.keybindsRefs[kb])}
+          />`,
+    );
+  }
+
+  render() {
+    return html`
+      <mov-panel
+        id="KeybindingsPanel"
+        ?open=${getAppStateValue('panel').startsWith('keybindings')}
+        mode="drawer"
+        position="right"
+        @close=${buttonPanelsClose}
+      >
+        <h2 slot="header">${getLocaleString('KEYBINDINGS')}</h2>
+        <div class="controls" slot="action">
+          ${
+            getAppStateValue('panel') === 'keybindingsEditor'
+              ? html` <button
+                  id="SaveKeybindings"
+                  class="ControlButton"
+                  type="button"
+                  title="${getLocaleString('SAVE_KEYBINDS')}"
+                  @click=${() => saveKeybindings(this.keybindsRefs)}
+                >
+                  ${IconDeviceFloppy} ${getLocaleString('BUTTON_SAVE')}
+                </button>`
+              : html` <button
+                  id="EditKeybindings"
+                  class="ControlButton"
+                  type="button"
+                  title="${getLocaleString('EDIT_KEYBINDS')}"
+                  @click=${editKeybindings}
+                >
+                  ${IconPencil} ${getLocaleString('BUTTON_EDIT')}
+                </button>`
+          }
+        </div>
+        <div id="KeybindingsList">
+          ${
+            getAppStateValue('panel') === 'keybindingsEditor'
+              ? this.keybindEditor()
+              : this.keybindList()
+          }
+        </div>
+        <div id="HotKeysRules">${unsafeHTML(getLocaleString('KEYBIND_RULES'))}</div>
+      </mov-panel>
+    `;
+  }
+}
