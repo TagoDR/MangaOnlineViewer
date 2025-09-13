@@ -12,12 +12,9 @@ import {
   navbarSize,
   settings,
 } from '../core/settings.ts';
-import BookmarksPanel from './BookmarkPanel.ts';
-import CommentsPanel from './CommentsPanel.ts';
-import { buttonPanelsClose } from './events/panels.ts';
 import events from './events.ts';
 import Header from './Header.ts';
-import KeybindingsPanel from './KeybindingsPanel.ts';
+import loadImages from './Image.ts';
 import Reader from './Reader.ts';
 import cssStyles from './styles';
 import { themesCSS } from './themes.ts';
@@ -41,6 +38,7 @@ export default class App extends LitElement {
    */
   firstUpdated() {
     events();
+    loadImages();
   }
 
   /**

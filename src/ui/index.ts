@@ -5,7 +5,6 @@ import { logScriptVerbose } from '../utils/tampermonkey';
 import head from './head';
 import './setup.ts';
 import './App.ts';
-import loadImages from './Image.ts';
 
 /**
  * Initializes the manga viewer UI.
@@ -21,5 +20,4 @@ export default function display(manga: IManga) {
   document.head.innerHTML = head(manga);
   document.body.innerHTML = `<manga-online-viewer></manga-online-viewer>`;
   setAppStateValue('manga', manga);
-  loadImages();
 }

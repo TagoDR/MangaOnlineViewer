@@ -68,7 +68,7 @@ function getImageStyle(index: number): StyleInfo {
  */
 const listPages = (times: number, begin: number) =>
   sequence(times, begin).map(index => {
-    if (!getAppStateValue('images')?.[index].ref) {
+    if (!getAppStateValue('images')?.[index]?.ref) {
       changeImage(index, _image => ({ ref: createRef() }));
     }
     return html`
