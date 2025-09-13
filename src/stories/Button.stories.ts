@@ -10,7 +10,7 @@ import '../ui/components/Icon.ts';
 import { toKebabCase } from '../utils/format.ts'; // Ensure the <mov-button> component is defined
 
 const variants = ['brand', 'neutral', 'success', 'warning', 'danger'];
-const appearances = ['plain', 'accent', 'filled', 'filled outline', 'outline', 'light', 'subtle'];
+const appearances = ['plain', 'accent', 'filled', 'filled outline', 'outline'];
 const sizes = ['small', 'medium', 'large'];
 const commonIcons = [
   'IconArrowAutofitDown',
@@ -143,15 +143,10 @@ export const AllVariants: StoryObj = {
             <tr>
               <th><em>default</em></th>
               <td>
-                <wa-button
-                  variant="neutral"
-                  appearance="accent"
-                  size="medium"
-                  >Button</wa-button
-                >
+                <wa-button>Button</wa-button>
               </td>
               <td>
-                <mov-button size="medium">Button</mov-button>
+                <mov-button>Button</mov-button>
               </td>
             </tr>
             <tr>
@@ -193,34 +188,9 @@ export const AllVariants: StoryObj = {
               <td>
                 <div class="wa-cluster wa-gap-2xs">
                   <mov-button
-                    variant="brand"
                     appearance="accent"
                     size="medium"
                     >Brand</mov-button
-                  >
-                  <mov-button
-                    variant="neutral"
-                    appearance="accent"
-                    size="medium"
-                    >Neutral</mov-button
-                  >
-                  <mov-button
-                    variant="success"
-                    appearance="accent"
-                    size="medium"
-                    >Success</mov-button
-                  >
-                  <mov-button
-                    variant="warning"
-                    appearance="accent"
-                    size="medium"
-                    >Warning</mov-button
-                  >
-                  <mov-button
-                    variant="danger"
-                    appearance="accent"
-                    size="medium"
-                    >Danger</mov-button
                   >
                 </div>
               </td>
@@ -264,34 +234,9 @@ export const AllVariants: StoryObj = {
               <td>
                 <div class="wa-cluster wa-gap-2xs">
                   <mov-button
-                    variant="brand"
                     appearance="filled outlined"
                     size="medium"
                     >Brand</mov-button
-                  >
-                  <mov-button
-                    variant="neutral"
-                    appearance="filled outlined"
-                    size="medium"
-                    >Neutral</mov-button
-                  >
-                  <mov-button
-                    variant="success"
-                    appearance="filled outlined"
-                    size="medium"
-                    >Success</mov-button
-                  >
-                  <mov-button
-                    variant="warning"
-                    appearance="filled outlined"
-                    size="medium"
-                    >Warning</mov-button
-                  >
-                  <mov-button
-                    variant="danger"
-                    appearance="filled outlined"
-                    size="medium"
-                    >Danger</mov-button
                   >
                 </div>
               </td>
@@ -335,34 +280,9 @@ export const AllVariants: StoryObj = {
               <td>
                 <div class="wa-cluster wa-gap-2xs">
                   <mov-button
-                    variant="brand"
                     appearance="filled"
                     size="medium"
                     >Brand</mov-button
-                  >
-                  <mov-button
-                    variant="neutral"
-                    appearance="filled"
-                    size="medium"
-                    >Neutral</mov-button
-                  >
-                  <mov-button
-                    variant="success"
-                    appearance="filled"
-                    size="medium"
-                    >Success</mov-button
-                  >
-                  <mov-button
-                    variant="warning"
-                    appearance="filled"
-                    size="medium"
-                    >Warning</mov-button
-                  >
-                  <mov-button
-                    variant="danger"
-                    appearance="filled"
-                    size="medium"
-                    >Danger</mov-button
                   >
                 </div>
               </td>
@@ -406,34 +326,9 @@ export const AllVariants: StoryObj = {
               <td>
                 <div class="wa-cluster wa-gap-2xs">
                   <mov-button
-                    variant="brand"
                     appearance="outlined"
                     size="medium"
                     >Brand</mov-button
-                  >
-                  <mov-button
-                    variant="neutral"
-                    appearance="outlined"
-                    size="medium"
-                    >Neutral</mov-button
-                  >
-                  <mov-button
-                    variant="success"
-                    appearance="outlined"
-                    size="medium"
-                    >Success</mov-button
-                  >
-                  <mov-button
-                    variant="warning"
-                    appearance="outlined"
-                    size="medium"
-                    >Warning</mov-button
-                  >
-                  <mov-button
-                    variant="danger"
-                    appearance="outlined"
-                    size="medium"
-                    >Danger</mov-button
                   >
                 </div>
               </td>
@@ -477,34 +372,9 @@ export const AllVariants: StoryObj = {
               <td>
                 <div class="wa-cluster wa-gap-2xs">
                   <mov-button
-                    variant="brand"
                     appearance="plain"
                     size="medium"
                     >Brand</mov-button
-                  >
-                  <mov-button
-                    variant="neutral"
-                    appearance="plain"
-                    size="medium"
-                    >Neutral</mov-button
-                  >
-                  <mov-button
-                    variant="success"
-                    appearance="plain"
-                    size="medium"
-                    >Success</mov-button
-                  >
-                  <mov-button
-                    variant="warning"
-                    appearance="plain"
-                    size="medium"
-                    >Warning</mov-button
-                  >
-                  <mov-button
-                    variant="danger"
-                    appearance="plain"
-                    size="medium"
-                    >Danger</mov-button
                   >
                 </div>
               </td>
@@ -591,12 +461,12 @@ export const AllVariants: StoryObj = {
               <th><code>icons</code></th>
               <td>
                 ${commonIcons.map(
-                  icon => html`
+                  (icon, index) => html`
                     <wa-button
                       title="${icon}"
                       variant="brand"
-                      appearance="accent"
-                      size="medium"
+                      size="small"
+                      appearance="${appearances[index % appearances.length]}"
                     >
                       <wa-icon name="${toKebabCase(icon)}"></wa-icon>
                     </wa-button>
@@ -605,8 +475,12 @@ export const AllVariants: StoryObj = {
               </td>
               <td>
                 ${commonIcons.map(
-                  icon => html`
-                    <mov-button title="${icon}">
+                  (icon, index) => html`
+                    <mov-button
+                      title="${icon}"
+                      size="small"
+                      appearance="${appearances[index % appearances.length]}"
+                    >
                       <mov-icon name="${icon}"></mov-icon>
                     </mov-button>
                   `,

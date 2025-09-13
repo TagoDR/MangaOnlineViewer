@@ -1,7 +1,8 @@
-import { css, html, LitElement, unsafeCSS } from 'lit';
+import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import './Icon.ts';
 import styles from '../styles/button.css?inline';
 
 declare global {
@@ -29,149 +30,119 @@ declare global {
  *
  */
 @customElement('mov-button')
-export class Button extends LitElement {
-  static styles = [unsafeCSS(styles), css``];
+export default class Button extends LitElement {
+  static styles = [unsafeCSS(styles)];
 
-  @query('slot:not([name])') labelSlot: HTMLSlotElement | undefined;
-  @state() isIconButton = false;
+  @query('.button') button: HTMLButtonElement | HTMLLinkElement | undefined;
+  @query('slot:not([name])') private readonly labelSlot: HTMLSlotElement | undefined;
 
-  /**
-   * The color variant to use, corresponding to a theme color name (e.g., "brand", "accent").
-   * @type {'neutral' | 'brand' | 'success' | 'warning' | 'danger'}
-   */
-  @property({ type: String })
-  variant?: 'neutral' | 'brand' | 'success' | 'warning' | 'danger';
+  @state() private isIconButton = false;
+  @state() private hasLabel = false;
+  @state() private hasStart = false;
+  @state() private hasEnd = false;
 
-  /**
-   * The visual appearance of the button.
-   * @type {'accent' | 'filled' | 'outline' | 'light' | 'subtle' | 'plain'}
-   */
-  @property({ type: String, reflect: true })
-  appearance?: 'accent' | 'filled' | 'outlined' | 'light' | 'subtle' | 'plain';
+  @property() title = '';
+  @property({ reflect: true }) variant: 'brand' | 'neutral' | 'success' | 'warning' | 'danger' =
+    'brand';
+  @property({ reflect: true }) appearance: 'accent' | 'filled' | 'outline' | 'plain' = 'accent';
+  @property({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
+  @property({ attribute: 'with-caret', type: Boolean, reflect: true }) withCaret = false;
+  @property({ type: Boolean, reflect: true }) disabled = false;
+  @property({ type: Boolean, reflect: true }) loading = false;
+  @property({ type: Boolean, reflect: true }) pill = false;
+  @property() type: 'button' | 'submit' | 'reset' = 'button';
+  @property({ reflect: true }) name?: string;
+  @property({ reflect: true }) value?: string;
+  @property({ reflect: true }) href?: string;
+  @property() target?: '_blank' | '_parent' | '_self' | '_top';
+  @property() rel?: string;
+  @property() download?: string;
+  @property({ reflect: true }) form: string | null = null;
 
-  /**
-   * The size of the button.
-   * @type {'small' | 'medium' | 'large'}
-   */
-  @property({ type: String, reflect: true })
-  size?: 'small' | 'medium' | 'large' = 'medium';
+  private handleClick(event: MouseEvent) {
+    if (this.disabled || this.loading) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
 
-  /**
-   * If provided, the component will be rendered as an `<a>` tag with this `href`.
-   * @type {string | undefined}
-   */
-  @property({ type: String })
-  href?: string;
+    if (this.type === 'submit' && !this.href) {
+      const form = this.closest('form');
+      if (form) {
+        event.preventDefault();
+        const tempButton = document.createElement('button');
+        tempButton.type = this.type;
+        tempButton.style.display = 'none';
+        if (this.name) tempButton.name = this.name;
+        if (this.value) tempButton.value = this.value;
+        form.appendChild(tempButton);
+        tempButton.click();
+        form.removeChild(tempButton);
+      }
+    }
+  }
 
-  /**
-   * The `target` attribute for the link, used when `href` is set.
-   * @type {string | undefined}
-   */
-  @property({ type: String })
-  target?: string;
+  click() {
+    this.button?.click();
+  }
 
-  /**
-   * If `true`, the button will be in a disabled state and cannot be interacted with.
-   * @type {boolean}
-   */
-  @property({ type: Boolean, reflect: true })
-  disabled?: boolean = false;
+  focus(options?: FocusOptions) {
+    this.button?.focus(options);
+  }
 
-  /**
-   * If `true`, a loading spinner will be shown, and the button will be disabled.
-   * @type {boolean}
-   */
-  @property({ type: Boolean, reflect: true })
-  loading?: boolean = false;
+  blur() {
+    this.button?.blur();
+  }
 
-  /**
-   * The `title` attribute, which is often displayed as a tooltip on hover.
-   * @type {string}
-   */
-  @property({ type: String })
-  title: string = '';
-
-  /**
-   * The `value` attribute, used when the component is rendered as a `<button>`.
-   * @type {string | undefined}
-   */
-  @property({ type: String })
-  value?: string;
-
-  /**
-   * The `pill` attribute, used to make the button more rounded.
-   * @type {boolean | undefined}
-   */
-  @property({ type: Boolean })
-  pill?: boolean;
-
-  /**
-   * The `name` attribute, used when the component is rendered as a `<button>`.
-   * @type {string | undefined}
-   */
-  @property({ type: String })
-  name?: string;
-
-  /**
-   * The `type` attribute, used when the component is rendered as a `<button>`.
-   * @type {'button' | 'submit' | 'reset'}
-   */
-  @property({ type: String })
-  type?: 'button' | 'submit' | 'reset' = 'button';
-
-  /**
-   * Renders the component as either an `<a>` or a `<button>` element based on the `href` property.
-   * @internal
-   */
   render() {
     const isLink = this.href ? true : false;
     const classes = {
       button: true,
-      [`button--${this.variant}`]: !!this.variant,
-      [`button--${this.appearance}`]: !!this.appearance,
-      [`button--${this.size}`]: !!this.size,
-      'button--disabled': !!(this.disabled || this.loading),
-      'button--loading': !!this.loading,
-      'button--pill': !!this.pill,
+      'with-caret': this.withCaret,
+      disabled: this.disabled,
+      loading: this.loading,
+      pill: this.pill,
+      'has-label': this.hasLabel,
+      'has-start': this.hasStart,
+      'has-end': this.hasEnd,
+      'is-icon-button': this.isIconButton,
     };
 
-    // Update host class for icon button styling
-    if (this.isIconButton) {
-      this.classList.add('icon-button');
-    } else {
-      this.classList.remove('icon-button');
-    }
-
     const buttonContent = html`
-      <span
-        part="content"
-        class="button__content"
-      >
-        <slot
-          name="start"
-          part="start"
-          class="start"
-        ></slot>
-        <slot
-          part="label"
-          class="label"
-          @slotchange=${this.handleLabelSlotChange}
-        ></slot>
-        <slot
-          name="end"
-          part="end"
-          class="end"
-        ></slot>
-        ${
-          this.loading
-            ? html`<mov-icon
-              class="button__spinner"
-              part="spinner"
-              name="IconLoader2"
-            ></mov-icon>`
-            : ''
-        }
-      </span>
+      <slot
+        name="start"
+        @slotchange=${this.handleLabelSlotChange}
+        part="start"
+        class="start"
+      ></slot>
+      <slot
+        @slotchange=${this.handleLabelSlotChange}
+        part="label"
+        class="label"
+      ></slot>
+      <slot
+        name="end"
+        @slotchange=${this.handleLabelSlotChange}
+        part="end"
+        class="end"
+      ></slot>
+      ${
+        this.withCaret
+          ? html`<mov-icon
+            part="caret"
+            class="caret"
+            name="chevron-down"
+          ></mov-icon>`
+          : ''
+      }
+      ${
+        this.loading
+          ? html`<span
+            part="spinner"
+            class="spinner"
+          ></span>`
+          : ''
+      }
     `;
 
     return isLink
@@ -185,6 +156,7 @@ export class Button extends LitElement {
             role="button"
             aria-disabled=${this.disabled ? 'true' : 'false'}
             tabindex=${this.disabled ? '-1' : '0'}
+            @click=${this.handleClick}
           >
             ${buttonContent}
           </a>
@@ -200,10 +172,71 @@ export class Button extends LitElement {
             value=${ifDefined(this.value)}
             aria-disabled=${this.disabled ? 'true' : 'false'}
             tabindex=${this.disabled ? '-1' : '0'}
+            @click=${this.handleClick}
           >
             ${buttonContent}
           </button>
         `;
+    /*    return html`
+      <a
+        part="base"
+        class=${classMap({
+          button: true,
+          'with-caret': this.withCaret,
+          disabled: this.disabled,
+          loading: this.loading,
+          pill: this.pill,
+          'has-label': this.hasLabel,
+          'has-start': this.hasStart,
+          'has-end': this.hasEnd,
+          'is-icon-button': this.isIconButton,
+        })}
+        ?disabled=${ifDefined(isLink ? undefined : this.disabled)}
+        type=${ifDefined(isLink ? undefined : this.type)}
+        title=${this.title}
+        name=${ifDefined(isLink ? undefined : this.name)}
+        value=${ifDefined(isLink ? undefined : this.value)}
+        href=${ifDefined(this.href)}
+        target=${ifDefined(this.target)}
+        download=${ifDefined(this.download)}
+        rel=${ifDefined(isLink && this.rel ? this.rel : undefined)}
+        role="button"
+        aria-disabled=${this.disabled ? 'true' : 'false'}
+        tabindex=${this.disabled ? '-1' : '0'}
+        @click=${this.handleClick}
+      >
+        <slot
+          name="start"
+          @slotchange=${this.handleLabelSlotChange}
+          part="start"
+          class="start"
+        ></slot>
+        <slot
+          @slotchange=${this.handleLabelSlotChange}
+          part="label"
+          class="label"
+        ></slot>
+        <slot
+          name="end"
+          @slotchange=${this.handleLabelSlotChange}
+          part="end"
+          class="end"
+        ></slot>
+        ${this.withCaret
+          ? html`<mov-icon
+              part="caret"
+              class="caret"
+              name="chevron-down"
+            ></mov-icon>`
+          : ''}
+        ${this.loading
+          ? html`<span
+              part="spinner"
+              class="spinner"
+            ></span>`
+          : ''}
+      </a>
+    `;*/
   }
 
   private handleLabelSlotChange() {
@@ -237,38 +270,5 @@ export class Button extends LitElement {
     });
 
     this.isIconButton = text.trim() === '' && hasIcon;
-  }
-
-  /**
-   * Clicks the button.
-   * @public
-   */
-  click() {
-    const button = this.renderRoot.querySelector('.button') as
-      | HTMLButtonElement
-      | HTMLAnchorElement;
-    button?.click();
-  }
-
-  /**
-   * Sets focus on the button.
-   * @public
-   */
-  focus(options?: FocusOptions) {
-    const button = this.renderRoot.querySelector('.button') as
-      | HTMLButtonElement
-      | HTMLAnchorElement;
-    button?.focus(options);
-  }
-
-  /**
-   * Removes focus from the button.
-   * @public
-   */
-  blur() {
-    const button = this.renderRoot.querySelector('.button') as
-      | HTMLButtonElement
-      | HTMLAnchorElement;
-    button?.blur();
   }
 }
