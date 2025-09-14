@@ -260,8 +260,6 @@ export const appState = map<IApp>({
   chapter: createRef(),
   currentPage: 0,
   device: getDevice(),
-  headerVisible: false,
-  headroom: 'top',
   loaded: 0,
   manga: undefined,
   panel: 'none',

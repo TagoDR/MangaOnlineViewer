@@ -2,7 +2,6 @@ import { setAppStateValue } from '../core/settings.ts';
 import { getDevice } from '../utils/tampermonkey';
 import autoscroll from './events/autoscroll';
 import trackCurrentPage from './events/currentpage';
-import headroom from './events/headroom';
 import keybindings from './events/keybindings';
 
 /**
@@ -11,7 +10,6 @@ import keybindings from './events/keybindings';
  * auto-scrolling, current page tracking, and responsive device detection on resize.
  */
 function events() {
-  headroom();
   keybindings();
   window.addEventListener('resize', () => {
     setAppStateValue('device', getDevice());

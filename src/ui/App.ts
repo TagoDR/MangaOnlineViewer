@@ -13,7 +13,6 @@ import {
   settings,
 } from '../core/settings.ts';
 import events from './events.ts';
-import Header from './Header.ts';
 import loadImages from './Image.ts';
 import Reader from './Reader.ts';
 import cssStyles from './styles';
@@ -67,7 +66,8 @@ export default class App extends LitElement {
         })}"
         .locale="${getSettingsValue('locale')}"
       >
-        ${Header(manga)} ${Reader(manga)}
+        <mov-header .manga=${manga}></mov-header>
+        ${Reader(manga)}
         ${
           getSettingsValue('navbar') === 'disabled'
             ? ''

@@ -1,90 +1,96 @@
+import type { ReactiveController, ReactiveControllerHost } from 'lit';
 import _ from 'lodash';
-import { changeAppStateValue, getSettingsValue, setAppStateValue } from '../../core/settings';
+import { getSettingsValue } from '../../core/settings.ts';
 
 const headerHeight = 99;
-/**
- * Event handler to toggle the header's visibility when in 'click' mode.
- */
-export function buttonHeaderClick() {
-  if (getSettingsValue('header') === 'click') {
-    changeAppStateValue('headerVisible', v => !v);
-  }
-}
-
-/**
- * Checks if the mouse cursor is within a specified rectangular region at the top-left of the screen.
- * @param {MouseEvent} event - The mouse event containing the cursor coordinates.
- * @param {number} headerWidth - The width of the region to check.
- * @param {number} headerHeight - The height of the region to check.
- * @returns {boolean} `true` if the mouse is inside the region, `false` otherwise.
- */
-export function isMouseInsideRegion(
-  event: MouseEvent,
-  headerWidth: number,
-  headerHeight: number,
-): boolean {
-  return (
-    event.clientX >= 0 &&
-    event.clientX <= headerWidth &&
-    event.clientY >= 0 &&
-    event.clientY <= headerHeight
-  );
-}
-
-/**
- * Event handler to control header visibility in 'hover' mode.
- * The header is shown if the mouse is in the top portion of the screen or if the page is scrolled to the top.
- * @param {MouseEvent} event - The mouse move event.
- */
-export function headerHover(event: MouseEvent) {
-  if (getSettingsValue('header') === 'hover') {
-    setAppStateValue(
-      'headerVisible',
-      isMouseInsideRegion(event, window.innerWidth, headerHeight * 1.5),
-    );
-  }
-}
-
-let prevOffset = 0;
 const showEnd = 100;
 
-/**
- * Toggles the header's visibility based on the scroll direction and position.
- * This is the core logic for the 'scroll' header mode.
- */
-export function toggleScrollDirection() {
-  const header = getSettingsValue('header');
-  const { scrollY } = window;
-  if (
-    showEnd &&
-    getSettingsValue('zoomMode') !== 'height' &&
-    scrollY + window.innerHeight + showEnd > document.body.scrollHeight
-  ) {
-    // Show header if near the end of the page
-    setAppStateValue('headroom', 'end');
-  } else if (scrollY > prevOffset && scrollY > headerHeight) {
-    // Hide header on scroll down
-    setAppStateValue('headroom', 'hide');
-  } else if (header === 'scroll' && scrollY < prevOffset && scrollY > headerHeight) {
-    // Show header on scroll up
-    setAppStateValue('headroom', 'show');
-  } else if (header !== 'click' && scrollY <= headerHeight) {
-    // Always show header if near the top
-    setAppStateValue('headroom', 'top');
-  } else {
-    setAppStateValue('headroom', 'none');
+export class HeadroomController implements ReactiveController {
+  host: ReactiveControllerHost;
+
+  private prevOffset = 0;
+
+  public headroom = 'top';
+
+  public headerVisible = true;
+
+  constructor(host: ReactiveControllerHost) {
+    this.host = host;
+    host.addController(this);
   }
 
-  prevOffset = scrollY;
-}
+  hostConnected() {
+    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('mousemove', this.handleMouseMove);
+    this.handleScroll(); // Initial check
+  }
 
-/**
- * Initializes the header visibility logic by attaching throttled scroll and mousemove event listeners.
- * This setup is often referred to as "headroom.js" behavior.
- */
-function headroom() {
-  window.addEventListener('scroll', _.throttle(toggleScrollDirection, 300));
-  window.addEventListener('mousemove', _.throttle(headerHover, 300));
-}
+  hostDisconnected() {
+    window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener('mousemove', this.handleMouseMove);
+  }
 
-export default headroom;
+  private handleScroll = _.throttle(() => {
+    const header = getSettingsValue('header');
+    const { scrollY } = window;
+    let newHeadroom = 'none';
+    if (
+      showEnd &&
+      getSettingsValue('zoomMode') !== 'height' &&
+      scrollY + window.innerHeight + showEnd > document.body.scrollHeight
+    ) {
+      // Show header if near the end of the page
+      newHeadroom = 'end';
+    } else if (scrollY > this.prevOffset && scrollY > headerHeight) {
+      // Hide header on scroll down
+      newHeadroom = 'hide';
+    } else if (header === 'scroll' && scrollY < this.prevOffset && scrollY > headerHeight) {
+      // Show header on scroll up
+      newHeadroom = 'show';
+    } else if (header !== 'click' && scrollY <= headerHeight) {
+      // Always show header if near the top
+      newHeadroom = 'top';
+    }
+
+    if (this.headroom !== newHeadroom) {
+      this.headroom = newHeadroom;
+      this.host.requestUpdate();
+    }
+
+    this.prevOffset = scrollY;
+  }, 300);
+
+  private static isMouseInsideRegion(
+    event: MouseEvent,
+    headerWidth: number,
+    headerHeight: number,
+  ): boolean {
+    return (
+      event.clientX >= 0 &&
+      event.clientX <= headerWidth &&
+      event.clientY >= 0 &&
+      event.clientY <= headerHeight
+    );
+  }
+
+  private handleMouseMove = _.throttle((event: MouseEvent) => {
+    if (getSettingsValue('header') === 'hover') {
+      const newHeaderVisible = HeadroomController.isMouseInsideRegion(
+        event,
+        window.innerWidth,
+        headerHeight * 1.5,
+      );
+      if (this.headerVisible !== newHeaderVisible) {
+        this.headerVisible = newHeaderVisible;
+        this.host.requestUpdate();
+      }
+    }
+  }, 300);
+
+  public toggleHeaderVisibility = () => {
+    if (getSettingsValue('header') === 'click') {
+      this.headerVisible = !this.headerVisible;
+      this.host.requestUpdate();
+    }
+  };
+}

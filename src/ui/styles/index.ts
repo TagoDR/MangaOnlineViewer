@@ -11,7 +11,6 @@ import { IconPhotoOffRaw, IconPhotoRaw } from '../icons';
 import styles from './App.css?inline';
 import animation from './animation.css?inline';
 import fluid from './fluid.css?inline';
-import header from './header.css?inline';
 import media from './media.css?inline';
 import page from './page.css?inline';
 import normalize from './simplenormalize.css?inline';
@@ -28,7 +27,6 @@ export default css`
 
   ${normalize}
   ${styles}
-  ${header}
   ${page}
   ${fluid}
   ${media}

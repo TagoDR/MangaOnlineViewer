@@ -81,8 +81,4 @@ export type IApp = {
   chapter: Ref<HTMLDivElement>;
   /** A map of page numbers to their corresponding page data. */
   images?: Record<number, Page>;
-  /** Whether the main header is currently visible, for click and hover types. */
-  headerVisible: boolean;
-  /** Controls the visibility state of the header, for scroll type  */
-  headroom: Headroom;
 };
