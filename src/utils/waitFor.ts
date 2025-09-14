@@ -94,7 +94,7 @@ export function waitForAtb(
 export function waitForVar(
   name: keyof typeof unsafeWindow | string,
   target = document.body,
-): Promise<any> {
+): Promise<unknown> {
   return new Promise(resolve => {
     if (!isNothing(unsafeWindow[name])) {
       resolve(unsafeWindow[name]);
@@ -133,7 +133,7 @@ export function waitForTimer<T>(millis: number = 1000, result?: T): Promise<T | 
  * @param {() => boolean} predFn - A function that will be repeatedly invoked. The polling stops when it returns `true`.
  * @returns {Promise<any>} A promise that resolves with the truthy result of the predicate function.
  */
-export async function until(predFn: () => boolean): Promise<any> {
+export async function until(predFn: () => boolean): Promise<unknown> {
   const poll = (done: (value: unknown) => void) => {
     const result = predFn();
     if (result) {

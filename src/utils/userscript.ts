@@ -2,7 +2,7 @@
  * A wrapped `console.log` function that adds a styled prefix to all log messages for easy identification.
  * @param {...any} args - The arguments to be logged to the console.
  */
-export function log(...args: any[]) {
+export function log(...args: unknown[]) {
   // eslint-disable-next-line no-console
   console.log('%cUserscript (React Mode):', 'color: purple; font-weight: bold', ...args);
 }

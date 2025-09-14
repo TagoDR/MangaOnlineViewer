@@ -29,7 +29,7 @@ class StateDisplay extends LitElement {
     return this; // No shadow DOM
   }
 
-  willUpdate(changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+  willUpdate(changedProperties: PropertyValueMap<unknown> | Map<PropertyKey, unknown>): void {
     super.willUpdate(changedProperties);
     const currentScrollTo = appState.get().scrollToPage;
     if (typeof currentScrollTo === 'number') {
@@ -66,7 +66,7 @@ const meta: Meta = {
     },
     forceExpanded: {
       control: 'boolean',
-      description: 'Force the header/navbar to be visible, overriding auto-hide behavior.',
+      description: 'Force the navbar to be visible, overriding auto-hide behavior.',
     },
   },
   render: args => {

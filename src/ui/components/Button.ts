@@ -95,7 +95,7 @@ export default class Button extends LitElement {
   }
 
   render() {
-    const isLink = this.href ? true : false;
+    const isLink = !!this.href;
     const classes = {
       button: true,
       'with-caret': this.withCaret,

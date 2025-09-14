@@ -252,7 +252,10 @@ export default class Panel extends LitElement {
 
   render() {
     return html`
-      <div class="backdrop" @click=${this.close}></div>
+      <div
+        class="backdrop"
+        @click=${this.close}
+      ></div>
       <dialog
         part="dialog"
         @cancel=${this.handleCancel}
