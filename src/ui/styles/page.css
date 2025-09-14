@@ -1,3 +1,39 @@
+.PageButton .icon-tabler {
+  height: 1rem;
+  width: 1rem;
+  vertical-align: sub;
+}
+
+.PageButton,
+.PageButton:visited,
+.PageButton:link {
+  cursor: pointer;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  padding: 2px;
+  min-height: 32px;
+  color: var(--theme-primary-text-color);
+  background-color: var(--theme-primary-color);
+  border-color: var(--theme-border-color);
+  text-decoration: none;
+}
+
+.PageButton:active,
+.PageButton:hover {
+  opacity: 0.8;
+}
+
+.PageButton[selected] {
+  background-color: var(--theme-secondary-color);
+  color: var(--theme-secondary-text-color);
+  border: 1px solid var(--theme-border-color);
+}
+
+.PageButton.hidden {
+  display: none;
+}
+
 .MangaPage {
   width: 100%;
   display: inline-block;
@@ -81,7 +117,7 @@
   border-radius: 5px;
 }
 
-.PageFunctions .ControlButton {
+.PageFunctions .PageButton {
   padding: 3px;
   display: flex;
   justify-content: center;
@@ -92,11 +128,11 @@
   opacity: 0.5;
 }
 
-.PageFunctions:hover .ControlButton {
+.PageFunctions:hover .PageButton {
   opacity: 1;
 }
 
-.PageFunctions .ControlButton:hover {
+.PageFunctions .PageButton:hover {
   opacity: 0.9;
 }
 

@@ -1,3 +1,47 @@
+.HeaderButton .icon-tabler {
+  height: 1rem;
+  width: 1rem;
+  vertical-align: sub;
+}
+
+#GlobalFunctions .icon-tabler,
+.NavigationButton .icon-tabler {
+  flex-shrink: 0;
+  align-self: center;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.HeaderButton,
+.HeaderButton:visited,
+.HeaderButton:link {
+  cursor: pointer;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  padding: 2px;
+  min-height: 32px;
+  color: var(--theme-primary-text-color);
+  background-color: var(--theme-primary-color);
+  border-color: var(--theme-border-color);
+  text-decoration: none;
+}
+
+.HeaderButton:active,
+.HeaderButton:hover {
+  opacity: 0.8;
+}
+
+.HeaderButton[selected] {
+  background-color: var(--theme-secondary-color);
+  color: var(--theme-secondary-text-color);
+  border: 1px solid var(--theme-border-color);
+}
+
+.HeaderButton.hidden {
+  display: none;
+}
+
 #gotoPage {
   min-width: 35px;
 }
@@ -90,8 +134,8 @@
   position: relative;
   top: 4px;
   left: 4px;
-  height: 32px;
-  width: 32px;
+  height: 2rem;
+  width: 2rem;
   stroke-width: 1.25;
 }
 
@@ -135,12 +179,6 @@
   flex-basis: 50%;
 }
 
-#ScrollControl .icon-tabler,
-#GlobalFunctions .icon-tabler {
-  width: 25px;
-  height: 25px;
-}
-
 #GlobalFunctions #ZoomSlider {
   display: flex;
   align-items: center;
@@ -179,7 +217,7 @@
   display: flex;
 }
 
-#ChapterControl .NavigationControlButton {
+#ChapterControl .NavigationButton {
   display: inline-flex;
   margin: 2px;
   justify-content: center;
@@ -188,16 +226,9 @@
   gap: 0.5em;
 }
 
-#ChapterControl .NavigationControlButton .icon-tabler {
-  flex-shrink: 0;
-  align-self: center;
-  width: 1rem;
-  height: 1rem;
-}
-
-#ChapterControl .NavigationControlButton[href="#"],
-#ChapterControl .NavigationControlButton[href=""],
-#ChapterControl .NavigationControlButton[href="undefined"] {
+#ChapterControl .NavigationButton[href="#"],
+#ChapterControl .NavigationButton[href=""],
+#ChapterControl .NavigationButton[href="undefined"] {
   visibility: hidden;
 }
 
@@ -207,7 +238,7 @@
   opacity: 0.6;
 }
 
-#ChapterControl .NavigationControlButton.disabled {
+#ChapterControl .NavigationButton.disabled {
   pointer-events: none;
   filter: grayscale(0.9);
 }

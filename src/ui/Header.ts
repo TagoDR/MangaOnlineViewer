@@ -82,7 +82,7 @@ export class MovHeader extends LitElement {
             <button
               id="enlarge"
               title="${getLocaleString('ENLARGE')}"
-              class="ControlButton"
+              class="HeaderButton"
               @click="${changeZoomByStep()}"
             >
               ${IconZoomInArea}
@@ -90,7 +90,7 @@ export class MovHeader extends LitElement {
             <button
               id="restore"
               title="${getLocaleString('RESTORE')}"
-              class="ControlButton"
+              class="HeaderButton"
               @click="${changeGlobalZoom('percent', 100)}"
             >
               ${IconZoomPan}
@@ -98,7 +98,7 @@ export class MovHeader extends LitElement {
             <button
               id="reduce"
               title="${getLocaleString('REDUCE')}"
-              class="ControlButton"
+              class="HeaderButton"
               @click="${changeZoomByStep(-1)}"
             >
               ${IconZoomOutArea}
@@ -106,7 +106,7 @@ export class MovHeader extends LitElement {
             <button
               id="fitWidth"
               title="${getLocaleString('FIT_WIDTH')}"
-              class="ControlButton"
+              class="HeaderButton"
               @click="${changeGlobalZoom('width')}"
               ?selected=${getSettingsValue('zoomMode') === 'width'}
             >
@@ -115,7 +115,7 @@ export class MovHeader extends LitElement {
             <button
               id="fitHeight"
               title="${getLocaleString('FIT_HEIGHT')}"
-              class="ControlButton"
+              class="HeaderButton"
               @click="${changeGlobalZoom('height')}"
               ?selected=${getSettingsValue('zoomMode') === 'height'}
             >
@@ -124,7 +124,7 @@ export class MovHeader extends LitElement {
             <button
               id="keybindings"
               title="${getLocaleString('KEYBINDINGS')}"
-              class="ControlButton"
+              class="HeaderButton"
               @click=${buttonKeybindingsOpen}
             >
               ${IconKeyboard}
@@ -133,7 +133,7 @@ export class MovHeader extends LitElement {
               id="AutoScroll"
               title="${getLocaleString('SCROLL_START')}"
               class="${classMap({
-                ControlButton: true,
+                HeaderButton: true,
                 running: getAppStateValue('autoScroll'),
               })}"
               @click=${toggleAutoScroll}
@@ -145,7 +145,7 @@ export class MovHeader extends LitElement {
             <button
               id="ltrMode"
               title="${getLocaleString('VIEW_MODE_LEFT')}"
-              class="ControlButton"
+              class="HeaderButton"
               @click="${updateViewMode('FluidLTR')}"
               ?selected=${getSettingsValue('viewMode') === 'FluidLTR'}
             >
@@ -154,7 +154,7 @@ export class MovHeader extends LitElement {
             <button
               id="verticalMode"
               title="${getLocaleString('VIEW_MODE_VERTICAL')}"
-              class="ControlButton tablets"
+              class="HeaderButton tablets"
               @click="${updateViewMode('Vertical')}"
               ?selected=${getSettingsValue('viewMode') === 'Vertical'}
             >
@@ -163,7 +163,7 @@ export class MovHeader extends LitElement {
             <button
               id="webComic"
               title="${getLocaleString('VIEW_MODE_WEBCOMIC')}"
-              class="ControlButton tablets"
+              class="HeaderButton tablets"
               @click="${updateViewMode('WebComic')}"
               ?selected=${getSettingsValue('viewMode') === 'WebComic'}
             >
@@ -172,7 +172,7 @@ export class MovHeader extends LitElement {
             <button
               id="rtlMode"
               title="${getLocaleString('VIEW_MODE_RIGHT')}"
-              class="ControlButton"
+              class="HeaderButton"
               @click="${updateViewMode('FluidRTL')}"
               ?selected=${getSettingsValue('viewMode') === 'FluidRTL'}
             >
@@ -181,7 +181,7 @@ export class MovHeader extends LitElement {
             <button
               id="pageControls"
               title="${getLocaleString('TOGGLE_CONTROLS')}"
-              class="ControlButton tablets phones"
+              class="HeaderButton tablets phones"
               @click="${buttonGlobalHideImageControls}"
               ?selected=${getSettingsValue('hidePageControls')}
             >
@@ -190,7 +190,7 @@ export class MovHeader extends LitElement {
             <button
               id="bookmarks"
               title="${getLocaleString('BOOKMARKS')}"
-              class="ControlButton tablets"
+              class="HeaderButton tablets"
               @click=${buttonBookmarksOpen}
             >
               ${IconBookmarks}
@@ -198,7 +198,7 @@ export class MovHeader extends LitElement {
             <button
               id="settings"
               title="${getLocaleString('SETTINGS')}"
-              class="ControlButton tablets phones"
+              class="HeaderButton tablets phones"
               @click=${buttonSettingsOpen}
             >
               ${IconSettings}
@@ -270,8 +270,8 @@ export class MovHeader extends LitElement {
               <button
                 id="CommentsButton"
                 class="${classMap({
-                  NavigationControlButton: true,
-                  ControlButton: true,
+                  NavigationButton: true,
+                  HeaderButton: true,
                   disabled: !this.manga.comments,
                 })}"
                 title="${getLocaleString('DISPLAY_COMMENTS')}"
@@ -282,8 +282,8 @@ export class MovHeader extends LitElement {
               <button
                 id="download"
                 class="${classMap({
-                  NavigationControlButton: true,
-                  ControlButton: true,
+                  NavigationButton: true,
+                  HeaderButton: true,
                   disabled: getAppStateValue('download') !== 'available',
                   loading: getAppStateValue('download') === 'working',
                 })}"
@@ -298,7 +298,7 @@ export class MovHeader extends LitElement {
             <span>
               <a
                 id="prev"
-                class="NavigationControlButton ControlButton"
+                class="NavigationButton HeaderButton"
                 type="button"
                 href="${this.manga.prev ?? ''}"
                 title="${getLocaleString('PREVIOUS_CHAPTER')}"
@@ -308,7 +308,7 @@ export class MovHeader extends LitElement {
               </a>
               <a
                 id="next"
-                class="NavigationControlButton ControlButton"
+                class="NavigationButton HeaderButton"
                 type="button"
                 href="${this.manga.next ?? ''}"
                 title="${getLocaleString('NEXT_CHAPTER')}"

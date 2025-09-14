@@ -82,7 +82,7 @@ const listPages = (times: number, begin: number) =>
       >
         <div class="PageFunctions">
           <button
-            class="Bookmark ControlButton"
+            class="Bookmark PageButton"
             title="${getLocaleString('BOOKMARK')}"
             @click=${buttonBookmark}
             value="${index}"
@@ -90,7 +90,7 @@ const listPages = (times: number, begin: number) =>
             ${isBookmarked() ? IconBookmarkOff : IconBookmark}
           </button>
           <button
-            class="ZoomIn ControlButton"
+            class="ZoomIn PageButton"
             title="${getLocaleString('ZOOM_IN')}"
             @click=${buttonZoomIn}
             value="${index}"
@@ -98,7 +98,7 @@ const listPages = (times: number, begin: number) =>
             ${IconZoomIn}
           </button>
           <button
-            class="ZoomRestore ControlButton"
+            class="ZoomRestore PageButton"
             title="${getLocaleString('ZOOM_RESET')}"
             @click=${buttonRestoreZoom}
             value="${index}"
@@ -106,7 +106,7 @@ const listPages = (times: number, begin: number) =>
             ${IconZoomCancel}
           </button>
           <button
-            class="ZoomOut ControlButton"
+            class="ZoomOut PageButton"
             title="${getLocaleString('ZOOM_OUT')}"
             @click=${buttonZoomOut}
             value="${index}"
@@ -114,7 +114,7 @@ const listPages = (times: number, begin: number) =>
             ${IconZoomOut}
           </button>
           <button
-            class="ZoomWidth ControlButton"
+            class="ZoomWidth PageButton"
             title="${getLocaleString('ZOOM_WIDTH')}"
             @click=${buttonZoomWidth}
             value="${index}"
@@ -122,7 +122,7 @@ const listPages = (times: number, begin: number) =>
             ${IconArrowAutofitWidth}
           </button>
           <button
-            class="ZoomHeight ControlButton"
+            class="ZoomHeight PageButton"
             title="${getLocaleString('ZOOM_HEIGHT')}"
             @click=${buttonZoomHeight}
             value="${index}"
@@ -130,7 +130,7 @@ const listPages = (times: number, begin: number) =>
             ${IconArrowAutofitHeight}
           </button>
           <button
-            class="Hide ControlButton"
+            class="Hide PageButton"
             title="${getLocaleString('HIDE')}"
             @click=${buttonHidePage}
             value="${index}"
@@ -138,7 +138,7 @@ const listPages = (times: number, begin: number) =>
             ${getAppStateValue('images')?.[index].hide ? IconEye : IconEyeOff}
           </button>
           <button
-            class="Reload ControlButton"
+            class="Reload PageButton"
             title="${getLocaleString('RELOAD')}"
             @click=${buttonReloadPage}
             value="${index}"

@@ -70,35 +70,6 @@ select {
   margin: 2px;
 }
 
-.ControlButton,
-.ControlButton:visited,
-.ControlButton:link {
-  cursor: pointer;
-  border-radius: 5px;
-  border-width: 1px;
-  border-style: solid;
-  padding: 2px;
-  min-height: 32px;
-  color: var(--theme-primary-text-color);
-  background-color: var(--theme-primary-color);
-  border-color: var(--theme-border-color);
-}
-
-.ControlButton:active,
-.ControlButton:hover {
-  opacity: 0.8;
-}
-
-.ControlButton[selected] {
-  background-color: var(--theme-secondary-color);
-  color: var(--theme-secondary-text-color);
-  border: 1px solid var(--theme-border-color);
-}
-
-.ControlButton.hidden {
-  display: none;
-}
-
 :not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {
   max-width: 100%;
   object-fit: contain;
