@@ -13,7 +13,6 @@ import {
 import { isEmpty } from '../utils/checks.ts';
 import { buttonBookmark, buttonEraseBookmarks } from './events/bookmarks.ts';
 import { buttonPanelsClose } from './events/panels.ts';
-import { IconBookmark, IconBookmarkOff, IconExternalLink, IconTrash } from './icons';
 import './components/Panel.ts';
 import styles from './styles/bookmarks.css?inline';
 
@@ -76,23 +75,25 @@ export default class BookmarkPanel extends LitElement {
               href="${mark.url}"
               target="_blank"
             >
-              <button
-                class="ControlButton open"
+              <mov-button
+                class="open"
                 title="Open Bookmark"
                 type="button"
+                size="small"
               >
-                ${IconExternalLink}
-              </button>
+              <mov-icon name="IconExternalLink" size="16px"></mov-icon>
+              </mov-button>
             </a>
-            <button
-              class="ControlButton erase"
+            <mov-button
+              class="erase"
               title="Delete Bookmark"
               type="button"
+              size="small"
               value="${mark.url}"
               @click=${buttonEraseBookmarks}
             >
-              ${IconTrash}
-            </button>
+              <mov-icon name="IconTrash" size="16px"></mov-icon>
+            </mov-button>
           </span>
         </div>
       `,
@@ -108,14 +109,14 @@ export default class BookmarkPanel extends LitElement {
         position="center"
         @close=${buttonPanelsClose}
       >
-        <button
+        <mov-button
           class="Bookmark"
           title="${getLocaleString('BOOKMARK')}"
           @click=${buttonBookmark}
           slot="action"
         >
-          ${isBookmarked() === undefined ? IconBookmark : IconBookmarkOff}
-        </button>
+          <mov-icon name="${isBookmarked() === undefined ? 'IconBookmark' : 'IconBookmarkOff'}" size="24px"></mov-icon>
+        </mov-button>
         <h2 slot="header">${getLocaleString('BOOKMARKS')}</h2>
         <div id="BookmarksList">${this.listBookmarks()}</div>
       </mov-panel>

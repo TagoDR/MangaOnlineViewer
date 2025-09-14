@@ -6,8 +6,8 @@
 
 // biome-ignore assist/source/organizeImports: grouping
 // Custom application-specific components and layouts
-// import './components/Icon.ts';
-// import './components/Button.ts';
+import './components/Icon.ts';
+import './components/Button.ts';
 // import './components/ToggleButton.ts';
 // import './components/ColorSwatch.ts';
 // import './components/ColorPalette.ts';
