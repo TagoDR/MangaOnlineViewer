@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import '../ui/components/ToggleSwitch.ts';
+import '../../ui/components/ToggleSwitch.ts';
 
 export default {
   title: 'Components/Toggle Switch',

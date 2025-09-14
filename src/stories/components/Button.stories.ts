@@ -5,9 +5,9 @@
  */
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import '../ui/components/Button.ts'; // Ensure the <mov-button> component is defined
-import '../ui/components/Icon.ts';
-import { toKebabCase } from '../utils/format.ts'; // Ensure the <mov-button> component is defined
+import '../../ui/components/Button.ts'; // Ensure the <mov-button> component is defined
+import '../../ui/components/Icon.ts';
+import { toKebabCase } from '../../utils/format.ts'; // Ensure the <mov-button> component is defined
 
 const variants = ['brand', 'neutral', 'success', 'warning', 'danger'];
 const appearances = ['plain', 'accent', 'filled', 'filled outline', 'outline'];

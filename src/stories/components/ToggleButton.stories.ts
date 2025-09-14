@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import '../ui/components/ToggleButton.ts';
+import '../../ui/components/ToggleButton.ts';
 
 const modes = ['menu', 'chevron', 'theme', 'play-pause', 'expand', 'custom'];
 const variants = ['neutral', 'brand', 'success', 'warning', 'danger'];

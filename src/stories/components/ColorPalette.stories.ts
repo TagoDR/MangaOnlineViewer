@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import '../ui/components/ColorPalette.ts';
+import '../../ui/components/ColorPalette.ts';
 
 // Define the type for the story arguments
 type ColorPaletteArgs = {

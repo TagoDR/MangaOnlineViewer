@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html, render } from 'lit';
-import '../../src/ui/components/Panel';
+import '../../ui/components/Panel.ts';
 
 const meta: Meta = {
   title: 'Components/Panel',

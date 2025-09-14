@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import '../ui/components/ColorSwatch.ts';
-import { IconPalette } from '../ui/icons';
+import '../../ui/components/ColorSwatch.ts';
+import { IconPalette } from '../../ui/icons';
 
 type ColorSwatchArgs = {
   color: string;

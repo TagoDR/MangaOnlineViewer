@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import '../ui/components/SegmentedControl.ts';
-import { IconMessage, IconPhoto, IconSettings } from '../ui/icons';
+import '../../ui/components/SegmentedControl.ts';
+import { IconMessage, IconPhoto, IconSettings } from '../../ui/icons';
 
 const optionsWithIcons = [
   { value: 'photos', label: 'Photos', icon: IconPhoto },

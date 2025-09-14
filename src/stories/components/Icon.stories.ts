@@ -6,7 +6,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 import { map } from 'lit/directives/map.js';
-import '../ui/components/Icon.ts'; // Ensure the <mov-icon> component is defined
+import '../../ui/components/Icon.ts'; // Ensure the <mov-icon> component is defined
 
 const icons = [
   'arrow-autofit-down',

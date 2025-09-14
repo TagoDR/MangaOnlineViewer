@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import '../ui/components/ColorPanel.ts';
+import '../../ui/components/ColorPanel.ts';
 
 /**
  * A wrapper component to manage the state for the mov-color-panel story.

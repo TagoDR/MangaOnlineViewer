@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import '../ui/components/ColorPicker.ts';
+import '../../ui/components/ColorPicker.ts';
 
 // A helper component to manage and display the state
 @customElement('mov-color-picker-story-wrapper')
-// @ts-ignore
+// @ts-expect-error
 class ColorPickerStoryWrapper extends LitElement {
   @property({ type: Array })
   swatches: string[] | null = null;
