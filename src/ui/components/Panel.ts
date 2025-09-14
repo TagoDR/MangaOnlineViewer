@@ -30,13 +30,29 @@ export default class Panel extends LitElement {
     :host {
       --panel-overlay-transition: opacity linear 0.25s;
       --panel-overlay-opacity: 0.5;
+      --panel-z-index: 1000;
+    }
+
+    .backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: #000;
+      opacity: 0;
+      transition: var(--panel-overlay-transition);
+      z-index: var(--panel-z-index);
+    }
+
+    :host([open]) .backdrop {
+      display: block;
+      opacity: var(--panel-overlay-opacity);
     }
 
     dialog {
       all: unset;
       background-color: var(--theme-background-color, #fff);
       color: var(--theme-text-color, #000);
-      z-index: 1001;
+      z-index: calc(var(--panel-z-index) + 1);
       position: fixed;
       box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
       display: flex;
@@ -46,16 +62,6 @@ export default class Panel extends LitElement {
 
     :host([open]:not([mode='inline'])) dialog {
       visibility: visible;
-    }
-
-    dialog::backdrop {
-      background-color: #000;
-      opacity: 0;
-      transition: var(--panel-overlay-transition);
-    }
-
-    :host([open]) dialog::backdrop {
-      opacity: var(--panel-overlay-opacity);
     }
 
     /* Header Styles */
@@ -118,7 +124,7 @@ export default class Panel extends LitElement {
       border: 1px solid var(--theme-border-color, #e0e0e0);
       border-radius: 12px;
     }
-    :host([mode='inline']) dialog::backdrop {
+    :host([mode='inline']) .backdrop {
       display: none;
     }
     :host([mode='inline']) .close-button {
@@ -227,7 +233,7 @@ export default class Panel extends LitElement {
     }
     if (changedProperties.has('open')) {
       if (this.open) {
-        this.dialog.showModal();
+        this.dialog.show();
         this.dispatchEvent(new CustomEvent('open', { bubbles: true, composed: true }));
       } else {
         if (changedProperties.get('open') === true) {
@@ -246,6 +252,7 @@ export default class Panel extends LitElement {
 
   render() {
     return html`
+      <div class="backdrop" @click=${this.close}></div>
       <dialog
         part="dialog"
         @cancel=${this.handleCancel}
