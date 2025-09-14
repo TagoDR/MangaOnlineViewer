@@ -72,8 +72,7 @@ select {
 
 .ControlButton,
 .ControlButton:visited,
-.ControlButton:link,
-.simpleButton {
+.ControlButton:link {
   cursor: pointer;
   border-radius: 5px;
   border-width: 1px;
@@ -96,43 +95,13 @@ select {
   border: 1px solid var(--theme-border-color);
 }
 
-.simpleButton {
-  font-size: initial;
-  min-width: 32px;
-}
-
-.panel .simpleButton {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-}
-
-.panel {
-  padding: 5px;
-  position: inherit;
-  border-radius: 5px;
-  background-color: var(--theme-background-color);
+.ControlButton.hidden {
+  display: none;
 }
 
 :not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {
   max-width: 100%;
   object-fit: contain;
-}
-
-.ControlButton.hidden,
-.light #ColorScheme > .icon-tabler-sun,
-.dark #ColorScheme > .icon-tabler-moon,
-.light #CommentsColorScheme > .icon-tabler-sun,
-.dark #CommentsColorScheme > .icon-tabler-moon,
-.ChapterControl #download.loading > .icon-tabler-file-download,
-.ChapterControl #download:not(.loading) > .icon-tabler-loader-2,
-.MangaPage.hide .ControlButton.Hide > .icon-tabler-eye-off,
-.MangaPage:not(.hide) .ControlButton.Hide > .icon-tabler-eye,
-.bookmarked .Bookmark > .icon-tabler-bookmark,
-#MangaOnlineViewer:not(.bookmarked) .Bookmark > .icon-tabler-bookmark-off,
-#AutoScroll.running > .icon-tabler-player-play,
-#AutoScroll:not(.running) > .icon-tabler-player-pause {
-  display: none;
 }
 
 .hideControls .PageFunctions {

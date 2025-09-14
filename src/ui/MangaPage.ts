@@ -7,6 +7,7 @@ import {
   getAppStateValue,
   getLocaleString,
   getSettingsValue,
+  isBookmarked,
   navbarSize,
 } from '../core/settings.ts';
 import sequence from '../utils/sequence.ts';
@@ -86,7 +87,7 @@ const listPages = (times: number, begin: number) =>
             @click=${buttonBookmark}
             value="${index}"
           >
-            ${IconBookmark} ${IconBookmarkOff}
+            ${isBookmarked() ? IconBookmarkOff : IconBookmark}
           </button>
           <button
             class="ZoomIn ControlButton"
@@ -134,7 +135,7 @@ const listPages = (times: number, begin: number) =>
             @click=${buttonHidePage}
             value="${index}"
           >
-            ${IconEye} ${IconEyeOff}
+            ${getAppStateValue('images')?.[index].hide ? IconEye : IconEyeOff}
           </button>
           <button
             class="Reload ControlButton"

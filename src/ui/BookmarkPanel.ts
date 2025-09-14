@@ -109,7 +109,7 @@ export default class BookmarkPanel extends LitElement {
         @close=${buttonPanelsClose}
       >
         <button
-          class="Bookmark simpleButton"
+          class="Bookmark"
           title="${getLocaleString('BOOKMARK')}"
           @click=${buttonBookmark}
           slot="action"

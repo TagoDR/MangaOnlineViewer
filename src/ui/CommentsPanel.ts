@@ -57,7 +57,7 @@ export default class CommentsPanel extends LitElement {
         </div>
         <button
           id="CommentsColorScheme"
-          class="simpleButton ColorScheme"
+          class="ColorScheme"
           @click=${this.changeCommentsColor}
           slot="action"
         >

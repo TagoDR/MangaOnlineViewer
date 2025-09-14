@@ -291,7 +291,8 @@ export class MovHeader extends LitElement {
                 title="${getLocaleString('DOWNLOAD_ZIP')}"
                 @click=${buttonStartDownload}
               >
-                ${getAppStateValue('download') === 'working' ? IconLoader2 : IconFileDownload} ${getLocaleString('BUTTON_DOWNLOAD')}
+                ${getAppStateValue('download') === 'working' ? IconLoader2 : IconFileDownload}
+                ${getLocaleString('BUTTON_DOWNLOAD')}
               </button></span
             >
             <span>
