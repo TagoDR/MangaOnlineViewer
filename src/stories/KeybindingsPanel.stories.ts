@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 import { setAppStateValue } from '../core/settings.ts';
 import '../ui/KeybindingsPanel.ts';
-import styles from '../ui/styles';
 
 const meta: Meta = {
   title: 'UI/KeybindingsPanel',
@@ -25,9 +24,6 @@ const meta: Meta = {
     };
 
     return html`
-      <style>
-        ${styles}
-      </style>
       <button @click=${openListView}>Open List View</button>
       <button @click=${openEditorView}>Open Editor View</button>
       <p>Change the 'panel' control in Storybook to change the view or close the panel.</p>

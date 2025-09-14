@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 import { setAppStateValue } from '../core/settings.ts';
 import '../ui/SettingsPanel.ts';
-import styles from '../ui/styles';
 
 const meta: Meta = {
   title: 'UI/SettingsPanel',
@@ -23,9 +22,6 @@ const meta: Meta = {
 
     // The story now includes a button to demonstrate reopening the panel.
     return html`
-      <style>
-        ${styles}
-      </style>
       <button @click=${openPanel}>Set Panel to Open</button>
       <p>Change the 'open' control in Storybook to close the panel.</p>
       <mov-settings-panel></mov-settings-panel>

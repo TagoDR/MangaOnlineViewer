@@ -1,5 +1,5 @@
 import { useStores } from '@nanostores/lit';
-import { html, LitElement } from 'lit';
+import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import {
   appState,
@@ -15,6 +15,7 @@ import { buttonBookmark, buttonEraseBookmarks } from './events/bookmarks.ts';
 import { buttonPanelsClose } from './events/panels.ts';
 import { IconBookmark, IconBookmarkOff, IconExternalLink, IconTrash } from './icons';
 import './components/Panel.ts';
+import styles from './styles/bookmarks.css?inline';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -30,9 +31,11 @@ declare global {
 @customElement('mov-bookmark-panel')
 @useStores(settings, locale, appState)
 export default class BookmarkPanel extends LitElement {
-  protected createRenderRoot() {
-    return this; // No shadow DOM
-  }
+  static styles = [unsafeCSS(styles)];
+
+  // protected createRenderRoot() {
+  //   return this; // No shadow DOM
+  // }
 
   /**
    * Renders the list of saved bookmarks.

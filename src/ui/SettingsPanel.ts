@@ -17,7 +17,7 @@ import SettingsPanelOthers from './SettingsPanelOthers.ts';
 import SettingsPanelTheme from './SettingsPanelTheme.ts';
 import SettingsPanelZoom from './SettingsPanelZoom.ts';
 import './components/Panel.ts';
-import cssStyles from './styles/settings.css?inline';
+import styles from './styles/settings.css?inline';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -33,10 +33,11 @@ declare global {
 @customElement('mov-settings-panel')
 @useStores(settings, locale, appState)
 export default class SettingsPanel extends LitElement {
-  static styles = [unsafeCSS(cssStyles)];
-  protected createRenderRoot() {
-    return this; // No shadow DOM
-  }
+  static styles = [unsafeCSS(styles)];
+
+  // protected createRenderRoot() {
+  //   return this; // No shadow DOM
+  // }
 
   render() {
     return html`

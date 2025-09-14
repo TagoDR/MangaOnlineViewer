@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 import { setAppStateValue } from '../core/settings.ts';
 import '../ui/CommentsPanel.ts';
-import styles from '../ui/styles';
 
 const meta: Meta = {
   title: 'UI/CommentsPanel',
@@ -21,9 +20,6 @@ const meta: Meta = {
     };
 
     return html`
-      <style>
-        ${styles}
-      </style>
       <button @click=${openPanel}>Set Panel to Open</button>
       <p>Change the 'open' control in Storybook to close the panel.</p>
       <mov-comments-panel></mov-comments-panel>

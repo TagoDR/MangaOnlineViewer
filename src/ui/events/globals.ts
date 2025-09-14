@@ -44,14 +44,3 @@ export function buttonRedirectURL(event: Event) {
 export function buttonCommentsOpen() {
   setAppStateValue('panel', 'comments');
 }
-
-/**
- * Event handler to toggle the color scheme of the comments panel.
- * It toggles 'light' and 'dark' classes on the parent element of the button.
- * @param {MouseEvent} e - The click event.
- */
-export function changeCommentsColor(e: MouseEvent) {
-  const elem = (e.currentTarget as HTMLElement).previousElementSibling;
-  elem?.classList.toggle('light');
-  elem?.classList.toggle('dark');
-}

@@ -1,5 +1,5 @@
 import { useStores } from '@nanostores/lit';
-import { html, LitElement } from 'lit';
+import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { createRef, type Ref, ref } from 'lit/directives/ref.js';
 import { join } from 'lit-html/directives/join.js';
@@ -15,6 +15,7 @@ import {
 import { buttonPanelsClose, editKeybindings, saveKeybindings } from './events/panels.ts';
 import { IconDeviceFloppy, IconPencil } from './icons';
 import './components/Panel.ts';
+import styles from './styles/keybindings.css?inline';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -30,6 +31,12 @@ declare global {
 @customElement('mov-keybindings-panel')
 @useStores(settings, locale, appState)
 export default class KeybindingsPanel extends LitElement {
+  static styles = [unsafeCSS(styles)];
+
+  // protected createRenderRoot() {
+  //   return this; // No shadow DOM
+  // }
+
   private keybindsRefs: Record<string, Ref<HTMLInputElement>> = Object.keys(
     getSettingsValue('keybinds'),
   ).reduce(
@@ -39,10 +46,6 @@ export default class KeybindingsPanel extends LitElement {
     },
     {} as Record<string, Ref<HTMLInputElement>>,
   );
-
-  protected createRenderRoot() {
-    return this; // No shadow DOM
-  }
 
   /**
    * Renders a read-only list of the current keybindings.

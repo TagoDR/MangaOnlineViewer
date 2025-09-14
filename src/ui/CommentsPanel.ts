@@ -1,6 +1,6 @@
 import { useStores } from '@nanostores/lit';
-import { html, LitElement } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { html, LitElement, unsafeCSS } from 'lit';
+import { customElement, state } from 'lit/decorators.js';
 import {
   appState,
   getAppStateValue,
@@ -9,10 +9,11 @@ import {
   locale,
   settings,
 } from '../core/settings.ts';
-import { changeCommentsColor } from './events/globals.ts';
 import { buttonPanelsClose } from './events/panels.ts';
 import { IconMoon, IconSun } from './icons';
 import './components/Panel.ts';
+import styles from './styles/comments.css?inline';
+import { themesCSS } from './themes.ts';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -29,9 +30,14 @@ declare global {
 @customElement('mov-comments-panel')
 @useStores(settings, locale, appState)
 export default class CommentsPanel extends LitElement {
-  protected createRenderRoot() {
-    return this; // No shadow DOM
-  }
+  static styles = [unsafeCSS(styles), unsafeCSS(themesCSS(':host'))];
+
+  // protected createRenderRoot() {
+  //   return this; // No shadow DOM
+  // }
+
+  @state()
+  private colorScheme: 'dark' | 'light' = getSettingsValue('colorScheme');
 
   render() {
     return html`
@@ -45,19 +51,28 @@ export default class CommentsPanel extends LitElement {
         <h2 slot="header">${getLocaleString('COMMENTS')}</h2>
         <div
           id="CommentsArea"
-          class="${getSettingsValue('colorScheme')}"
+          class="${this.colorScheme}"
         >
           ${getAppStateValue('manga')?.comments}
         </div>
         <button
           id="CommentsColorScheme"
           class="simpleButton ColorScheme"
-          @click=${changeCommentsColor}
+          @click=${this.changeCommentsColor}
           slot="action"
         >
-          ${IconSun} ${IconMoon}
+          ${this.colorScheme === 'dark' ? IconSun : IconMoon}
         </button>
       </mov-panel>
     `;
+  }
+
+  /**
+   * Event handler to toggle the color scheme of the comments panel.
+   * It toggles 'light' and 'dark' classes on the parent element of the button.
+   * @param {MouseEvent} e - The click event.
+   */
+  changeCommentsColor(_e: MouseEvent) {
+    this.colorScheme = this.colorScheme === 'dark' ? 'light' : 'dark';
   }
 }
