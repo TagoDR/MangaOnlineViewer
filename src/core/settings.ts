@@ -87,7 +87,7 @@ const mobileSettings: Partial<ISettings> = {
   viewMode: 'WebComic',
   header: 'click',
   hidePageControls: true,
-  pagination: true,
+  pagination: false,
 };
 
 /**
