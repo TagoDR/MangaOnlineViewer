@@ -16,23 +16,33 @@ import { logScript } from '../../utils/tampermonkey';
  * @internal
  */
 function scroll() {
+  const chapterElement = getAppStateValue('chapter').value;
   if (getSettingsValue('viewMode').startsWith('Fluid')) {
     const scrollDirection = getSettingsValue('viewMode') === 'FluidRTL' ? -1 : 1;
-    getAppStateValue('chapter').value?.scrollBy({
+    chapterElement?.scrollBy({
       top: 0,
       left: getSettingsValue('scrollHeight') * scrollDirection,
       behavior: 'smooth',
     });
+    // Stop scrolling if we've reached the end horizontally
+    if (
+      chapterElement &&
+      chapterElement.scrollLeft + chapterElement.clientWidth >= chapterElement.scrollWidth - 2
+    ) {
+      setAppStateValue('autoScroll', false);
+      logScript('Finished auto scroll');
+    }
   } else {
     window.scrollBy({
       top: getSettingsValue('scrollHeight'),
       left: 0,
       behavior: 'smooth',
     });
-  }
-  if (window.scrollY + window.innerHeight > document.body.scrollHeight) {
-    setAppStateValue('autoScroll', false);
-    logScript('Finished auto scroll');
+    // Stop scrolling if we've reached the bottom of the page
+    if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) {
+      setAppStateValue('autoScroll', false);
+      logScript('Finished auto scroll');
+    }
   }
   if (getAppStateValue('autoScroll')) {
     requestAnimationFrame(scroll);
