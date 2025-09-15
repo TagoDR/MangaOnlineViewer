@@ -81,7 +81,10 @@ export default class BookmarkPanel extends LitElement {
                 type="button"
                 size="small"
               >
-              <mov-icon name="IconExternalLink" size="16px"></mov-icon>
+                <mov-icon
+                  name="IconExternalLink"
+                  size="16px"
+                ></mov-icon>
               </mov-button>
             </a>
             <mov-button
@@ -92,7 +95,10 @@ export default class BookmarkPanel extends LitElement {
               value="${mark.url}"
               @click=${buttonEraseBookmarks}
             >
-              <mov-icon name="IconTrash" size="16px"></mov-icon>
+              <mov-icon
+                name="IconTrash"
+                size="16px"
+              ></mov-icon>
             </mov-button>
           </span>
         </div>
@@ -115,7 +121,10 @@ export default class BookmarkPanel extends LitElement {
           @click=${buttonBookmark}
           slot="action"
         >
-          <mov-icon name="${isBookmarked() === undefined ? 'IconBookmark' : 'IconBookmarkOff'}" size="24px"></mov-icon>
+          <mov-icon
+            name="${isBookmarked() === undefined ? 'IconBookmark' : 'IconBookmarkOff'}"
+            size="24px"
+          ></mov-icon>
         </mov-button>
         <h2 slot="header">${getLocaleString('BOOKMARKS')}</h2>
         <div id="BookmarksList">${this.listBookmarks()}</div>

@@ -10,7 +10,6 @@ import {
   settings,
 } from '../core/settings.ts';
 import { buttonPanelsClose } from './events/panels.ts';
-import { IconMoon, IconSun } from './icons';
 import './components/Panel.ts';
 import styles from './styles/comments.css?inline';
 import { themesCSS } from './themes.ts';
@@ -55,14 +54,14 @@ export default class CommentsPanel extends LitElement {
         >
           ${getAppStateValue('manga')?.comments}
         </div>
-        <button
+        <mov-toggle-button
           id="CommentsColorScheme"
-          class="ColorScheme"
+          mode="theme"
           @click=${this.changeCommentsColor}
           slot="action"
+          ?active=${this.colorScheme === 'dark'}
         >
-          ${this.colorScheme === 'dark' ? IconSun : IconMoon}
-        </button>
+        </mov-toggle-button>
       </mov-panel>
     `;
   }

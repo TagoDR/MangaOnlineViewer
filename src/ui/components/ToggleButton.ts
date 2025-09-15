@@ -189,13 +189,6 @@ export class ToggleButton extends LitElement {
   activeIcon = '';
 
   /**
-   * The color variant to use, corresponding to a theme color name (e.g., "brand", "accent").
-   * @type {'neutral' | 'brand' | 'success' | 'warning' | 'danger'}
-   */
-  @property({ type: String })
-  variant?: 'neutral' | 'brand' | 'success' | 'warning' | 'danger' = 'brand';
-
-  /**
    * The visual appearance of the button.
    * @type {'accent' | 'filled' | 'outline' | 'light' | 'subtle' | 'plain'}
    */
@@ -241,7 +234,6 @@ export class ToggleButton extends LitElement {
     return html`
       <mov-button
         @click=${this._onClick}
-        .variant=${ifDefined(this.variant)}
         .appearance=${ifDefined(this.appearance)}
         .size=${ifDefined(this.size)}
         ?disabled=${ifDefined(this.disabled)}

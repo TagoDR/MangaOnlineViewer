@@ -2,19 +2,18 @@ import { html } from 'lit';
 import { getLocaleString, getSettingsValue } from '../core/settings.ts';
 import { sample } from '../utils/colors.ts';
 import { changeColorScheme, changeThemeHex } from './events/theming.ts';
-import { IconMoon, IconSun } from './icons';
 
 function theme() {
   return html`
     <div class="ControlLabel ColorSchemeSelector">
       <label>${getLocaleString('COLOR_SCHEME')}</label>
-      <button
+      <mov-toggle-button
         id="ColorScheme"
-        class="ControlButton"
+        mode="theme"
         @click=${changeColorScheme}
+        ?active=${getSettingsValue('colorScheme') === 'dark'}
       >
-        ${getSettingsValue('colorScheme') === 'dark' ? IconMoon : IconSun}
-      </button>
+      </mov-toggle-button>
     </div>
     <div class="ControlLabel ThemeSelector">
       <label>${getLocaleString('THEME_COLOR')}</label>

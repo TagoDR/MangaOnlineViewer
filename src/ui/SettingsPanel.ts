@@ -10,7 +10,6 @@ import {
   settings,
 } from '../core/settings.ts';
 import { buttonPanelsClose } from './events/panels.ts';
-import { IconSettingsOff } from './icons';
 import SettingsPanelGeneral from './SettingsPanelGeneral.ts';
 import SettingsPanelLoading from './SettingsPanelLoading.ts';
 import SettingsPanelOthers from './SettingsPanelOthers.ts';
@@ -48,15 +47,19 @@ export default class SettingsPanel extends LitElement {
         @close=${buttonPanelsClose}
       >
         <h2 slot="header">${getLocaleString('SETTINGS')}</h2>
-        <button
+        <mov-button
           id="ResetSettings"
-          class="ControlButton"
           @click="${resetSettings}"
           title="${getLocaleString('BUTTON_RESET_SETTINGS')}"
           style="width: 100%"
         >
-          ${IconSettingsOff} ${getLocaleString('BUTTON_RESET_SETTINGS')}
-        </button>
+          <mov-icon
+            name="IconSettingsOff"
+            size="20px"
+            slot="start"
+          ></mov-icon>
+          ${getLocaleString('BUTTON_RESET_SETTINGS')}
+        </mov-button>
         <div class="content">
           <fieldset>
             <legend>${getLocaleString('GENERAL')}</legend>

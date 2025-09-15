@@ -13,7 +13,6 @@ import {
   settings,
 } from '../core/settings.ts';
 import { buttonPanelsClose, editKeybindings, saveKeybindings } from './events/panels.ts';
-import { IconDeviceFloppy, IconPencil } from './icons';
 import './components/Panel.ts';
 import styles from './styles/keybindings.css?inline';
 
@@ -105,24 +104,32 @@ export default class KeybindingsPanel extends LitElement {
         >
           ${
             getAppStateValue('panel') === 'keybindingsEditor'
-              ? html` <button
+              ? html` <mov-button
                 id="SaveKeybindings"
-                class="ControlButton"
                 type="button"
                 title="${getLocaleString('SAVE_KEYBINDS')}"
                 @click=${() => saveKeybindings(this.keybindsRefs)}
               >
-                ${IconDeviceFloppy} ${getLocaleString('BUTTON_SAVE')}
-              </button>`
-              : html` <button
+                <mov-icon
+                  name="IconDeviceFloppy"
+                  size="16px"
+                  slot="start"
+                ></mov-icon>
+                ${getLocaleString('BUTTON_SAVE')}
+              </mov-button>`
+              : html` <mov-button
                 id="EditKeybindings"
-                class="ControlButton"
                 type="button"
                 title="${getLocaleString('EDIT_KEYBINDS')}"
                 @click=${editKeybindings}
               >
-                ${IconPencil} ${getLocaleString('BUTTON_EDIT')}
-              </button>`
+                <mov-icon
+                  name="IconPencil"
+                  size="16px"
+                  slot="start"
+                ></mov-icon>
+                ${getLocaleString('BUTTON_EDIT')}
+              </mov-button>`
           }
         </div>
         <div id="KeybindingsList">
