@@ -1,5 +1,5 @@
 import { useStores } from '@nanostores/lit';
-import { html, LitElement, unsafeCSS } from 'lit';
+import { css, html, LitElement, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import {
   appState,
@@ -32,7 +32,23 @@ declare global {
 @customElement('mov-settings-panel')
 @useStores(settings, locale, appState)
 export default class SettingsPanel extends LitElement {
-  static styles = [unsafeCSS(styles)];
+  static styles = [
+    css`
+      #SettingsPanel.mobile #SettingsPanelZoom,
+      #SettingsPanel.mobile .fitIfOversize,
+      #SettingsPanel.mobile .showThumbnails,
+      #SettingsPanel.mobile .lazyLoadImages,
+      #SettingsPanel.mobile .downloadZip,
+      #SettingsPanel.mobile .minZoom,
+      #SettingsPanel.mobile .zoomStep,
+      #SettingsPanel.mobile .headerType,
+      #SettingsPanel.mobile .navbarType,
+      #SettingsPanel.mobile .autoScroll {
+        display: none;
+      }
+    `,
+    unsafeCSS(styles),
+  ];
 
   // protected createRenderRoot() {
   //   return this; // No shadow DOM
@@ -45,6 +61,7 @@ export default class SettingsPanel extends LitElement {
         ?open=${getAppStateValue('panel') === 'settings'}
         mode="drawer"
         @close=${buttonPanelsClose}
+        class="${getAppStateValue('device')}"
       >
         <h2 slot="header">${getLocaleString('SETTINGS')}</h2>
         <mov-button
@@ -61,23 +78,23 @@ export default class SettingsPanel extends LitElement {
           ${getLocaleString('BUTTON_RESET_SETTINGS')}
         </mov-button>
         <div class="content">
-          <fieldset>
+          <fieldset id="SettingsPanelGeneral">
             <legend>${getLocaleString('GENERAL')}</legend>
             ${SettingsPanelGeneral()}
           </fieldset>
-          <fieldset>
+          <fieldset id="SettingsPanelTheme">
             <legend>${getLocaleString('THEME')}</legend>
             ${SettingsPanelTheme()}
           </fieldset>
-          <fieldset>
+          <fieldset id="SettingsPanelLoading">
             <legend>${getLocaleString('LOADING')}</legend>
             ${SettingsPanelLoading()}
           </fieldset>
-          <fieldset>
+          <fieldset id="SettingsPanelZoom">
             <legend>${getLocaleString('ZOOM')}</legend>
             ${SettingsPanelZoom()}
           </fieldset>
-          <fieldset>
+          <fieldset id="SettingsPanelOthers">
             <legend>${getLocaleString('OTHERS')}</legend>
             ${SettingsPanelOthers()}
           </fieldset>

@@ -20,6 +20,7 @@
   color: var(--theme-body-text-color);
   background-color: var(--theme-body-background);
   box-sizing: border-box;
+  min-height: 100vh;
 }
 
 #Chapter {

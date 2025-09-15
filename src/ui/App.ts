@@ -12,12 +12,12 @@ import {
   navbarSize,
   settings,
 } from '../core/settings.ts';
+import { ifTrue } from '../utils/directives.ts';
 import events from './events.ts';
 import loadImages from './Image.ts';
 import Reader from './Reader.ts';
 import cssStyles from './styles';
 import { themesCSS } from './themes.ts';
-import { ifTrue } from '../utils/directives.ts';
 
 /**
  * The root component for the MangaOnlineViewer application, rendered as `<manga-online-viewer>`.

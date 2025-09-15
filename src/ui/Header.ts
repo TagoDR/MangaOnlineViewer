@@ -1,7 +1,15 @@
+import { useStores } from '@nanostores/lit';
 import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { getAppStateValue, getLocaleString, getSettingsValue } from '../core/settings';
+import {
+  appState,
+  getAppStateValue,
+  getLocaleString,
+  getSettingsValue,
+  locale,
+  settings,
+} from '../core/settings';
 import type { IManga } from '../types';
 import sequence from '../utils/sequence';
 import { toggleAutoScroll } from './events/autoscroll';
@@ -41,10 +49,12 @@ import {
   IconZoomPan,
 } from './icons';
 import styles from './styles/header.css?inline';
+import media from './styles/media.css?inline';
 
 @customElement('mov-header')
+@useStores(settings, locale, appState)
 export class MovHeader extends LitElement {
-  static styles = [unsafeCSS(styles)];
+  static styles = [unsafeCSS(styles), unsafeCSS(media)];
 
   // protected createRenderRoot() {
   //   return this; // No shadow DOM
@@ -75,6 +85,7 @@ export class MovHeader extends LitElement {
           [getSettingsValue('header')]: true,
           [`headroom-${headroom}`]: true,
           visible: headerVisible && ['hide', 'none'].includes(headroom),
+          [getAppStateValue('device')]: true,
         })}"
       >
         <div id="GlobalFunctions">

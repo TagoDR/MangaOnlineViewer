@@ -1,5 +1,5 @@
-.mobile #Header,
-.tablet #Header {
+#Header.mobile,
+#Header.tablet {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -32,14 +32,14 @@
   order: 3;
 }
 
-.mobile #Header {
+#Header.mobile {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
 
-.mobile #Header.click + #Chapter:not(.webcomic, .vertical) {
+#Header.mobile.click + #Chapter:not(.webcomic, .vertical) {
   position: sticky;
 }
 
@@ -72,7 +72,7 @@
   flex-wrap: wrap;
 }
 
-.mobile .ChapterControl .NavigationControlButton {
+.mobile .ChapterControl .NavigationButton {
   flex-grow: 1;
 }
 
@@ -80,30 +80,17 @@
   padding: 0;
 }
 
-.mobile .PageFunctions .ControlButton.Bookmark {
+.mobile .PageFunctions .PageButton.Bookmark {
   opacity: 1;
 }
 
 .mobile #GlobalFunctions #ZoomSlider,
 .tablet #GlobalFunctions #ZoomSlider,
-.mobile #GlobalFunctions .ControlButton:not(.tablets, .phones),
-.tablet #GlobalFunctions .ControlButton:not(.tablets, .phones),
-.mobile #Navigation,
+.mobile #GlobalFunctions .HeaderButton:not(.tablets, .phones),
+.tablet #GlobalFunctions .HeaderButton:not(.tablets, .phones),
 .mobile #GlobalFunctions #ZoomSlider,
-.mobile #GlobalFunctions .ControlButton:not(.phones),
-.mobile .PageFunctions .ControlButton:not(.Bookmark),
-.mobile #SettingsPanel .DefaultZoomMode,
-.mobile #SettingsPanel .zoomValue,
-.mobile #SettingsPanel .fitIfOversize,
-.mobile #SettingsPanel .showThumbnails,
-.mobile #SettingsPanel .lazyLoadImages,
-.mobile #SettingsPanel .downloadZip,
-.mobile #SettingsPanel .minZoom,
-.mobile #SettingsPanel .zoomStep,
-.mobile #SettingsPanel .headerType,
-.mobile #SettingsPanel .navbarType,
-.mobile #SettingsPanel .autoScroll,
-.mobile #KeybindingsPanel,
+.mobile #GlobalFunctions .HeaderButton:not(.phones),
+.mobile .PageFunctions .PageButton:not(.Bookmark),
 .mobile .ChapterControl .download,
 .tablet #Counters,
 .mobile #Counters {

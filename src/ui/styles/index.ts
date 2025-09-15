@@ -3,8 +3,6 @@
  * It imports individual CSS files as inline strings, defines base theme variables for light and dark modes,
  * and combines them into a single CSS template literal that can be injected into the application's shadow DOM.
  */
-
-import keyscss from '@gerhobbelt/keyscss/keys.css?inline';
 import { css } from '../../utils/code-tag';
 import { svgToUrl } from '../../utils/svgs';
 import { IconPhoto, IconPhotoOff } from '../icons/StyledIcons.ts';
@@ -31,5 +29,4 @@ export default css`
   ${fluid}
   ${media}
   ${animation}
-  ${keyscss}
 `;

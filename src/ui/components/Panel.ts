@@ -58,6 +58,8 @@ export default class Panel extends LitElement {
       display: flex;
       flex-direction: column;
       visibility: hidden;
+      max-width: 100vw;
+      max-height: 100vh;
     }
 
     :host([open]:not([mode='inline'])) dialog {
@@ -137,7 +139,6 @@ export default class Panel extends LitElement {
     }
     :host([mode='drawer']) dialog {
       width: 350px;
-      max-width: 75vw;
       top: 0;
       bottom: 0;
       height: 100%;
@@ -182,8 +183,6 @@ export default class Panel extends LitElement {
       transform: translate(-50%, -50%) scale(0.9);
       border-radius: 12px;
       width: var(--dialog-width, 700px);
-      max-width: 90vw;
-      max-height: 90vh;
     }
     :host([mode='dialog'][position='center'][open]) dialog {
       transform: translate(-50%, -50%) scale(1);
@@ -194,8 +193,6 @@ export default class Panel extends LitElement {
     :host([position='fullscreen']) dialog {
       width: 100vw;
       height: 100vh;
-      max-width: 100vw;
-      max-height: 100vh;
       top: 0;
       left: 0;
       transform: none;

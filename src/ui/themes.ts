@@ -19,7 +19,7 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
 
   return css`
     :where(:root),
-    ${selector}, .dark {
+    ${selector}, .dark ${selector}.dark {
       --mov-color-custom-95: ${gradient[0]};
       --mov-color-custom-90: ${gradient[1]};
       --mov-color-custom-80: ${gradient[2]};
@@ -57,19 +57,20 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
 
       --mov-color-fill-quiet: var(--mov-color-custom-10);
       --mov-color-fill-normal: var(--mov-color-custom-20);
-      --mov-color-fill-loud: var(--mov-color-custom-50);
+      --mov-color-fill-loud: var(--theme-primary-color);
       --mov-color-border-quiet: var(--mov-color-custom-20);
       --mov-color-border-normal: var(--mov-color-custom-30);
       --mov-color-border-loud: var(--mov-color-custom-40);
       --mov-color-on-quiet: var(--mov-color-custom-60);
       --mov-color-on-normal: var(--mov-color-custom-70);
-      --mov-color-on-loud: white;
+      --mov-color-on-loud: var(--theme-primary-text-color, white);
 
       --mov-color-mix-hover: black 8%;
       --mov-color-mix-active: black 16%;
     }
 
-    .light {
+    .light,
+    ${selector}.light {
       color-scheme: light;
       --theme-body-background: ${colors.gray['50']};
       --theme-body-text-color: ${colors.gray['900']};
@@ -80,13 +81,13 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
 
       --mov-color-fill-quiet: var(--mov-color-custom-95);
       --mov-color-fill-normal: var(--mov-color-custom-90);
-      --mov-color-fill-loud: var(--mov-color-custom-50);
+      --mov-color-fill-loud: var(--theme-primary-color);
       --mov-color-border-quiet: var(--mov-color-custom-90);
       --mov-color-border-normal: var(--mov-color-custom-80);
       --mov-color-border-loud: var(--mov-color-custom-60);
       --mov-color-on-quiet: var(--mov-color-custom-40);
       --mov-color-on-normal: var(--mov-color-custom-30);
-      --mov-color-on-loud: white;
+      --mov-color-on-loud: var(--theme-primary-text-color, white);
 
       --mov-color-mix-hover: black 10%;
       --mov-color-mix-active: black 20%;
