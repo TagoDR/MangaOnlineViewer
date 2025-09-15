@@ -17,6 +17,7 @@ import loadImages from './Image.ts';
 import Reader from './Reader.ts';
 import cssStyles from './styles';
 import { themesCSS } from './themes.ts';
+import { ifTrue } from '../utils/directives.ts';
 
 /**
  * The root component for the MangaOnlineViewer application, rendered as `<manga-online-viewer>`.
@@ -68,22 +69,20 @@ export default class App extends LitElement {
       >
         <mov-header .manga=${manga}></mov-header>
         ${Reader(manga)}
-        ${
-          getSettingsValue('navbar') === 'disabled'
-            ? ''
-            : html`<mov-navbar .mode=${getSettingsValue('navbar')}></mov-navbar>`
-        }
-        ${
-          !getSettingsValue('pagination')
-            ? ''
-            : html` <mov-pagination
-              .startPage=${manga.begin}
-              .totalPages=${manga.pages}
-              .currentPage=${getAppStateValue('currentPage')}
-              .next=${manga.next}
-              .prev=${manga.prev}
-            ></mov-pagination>`
-        }
+        ${ifTrue(
+          getSettingsValue('navbar') !== 'disabled',
+          html`<mov-navbar .mode=${getSettingsValue('navbar')}></mov-navbar>`,
+        )}
+        ${ifTrue(
+          getSettingsValue('pagination'),
+          html` <mov-pagination
+            .startPage=${manga.begin}
+            .totalPages=${manga.pages}
+            .currentPage=${getAppStateValue('currentPage')}
+            .next=${manga.next}
+            .prev=${manga.prev}
+          ></mov-pagination>`,
+        )}
         <mov-comments-panel></mov-comments-panel>
         <mov-keybindings-panel></mov-keybindings-panel>
         <mov-bookmark-panel></mov-bookmark-panel>

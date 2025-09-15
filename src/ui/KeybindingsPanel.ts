@@ -1,5 +1,5 @@
 import { useStores } from '@nanostores/lit';
-import { html, LitElement, unsafeCSS } from 'lit';
+import { html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { createRef, type Ref, ref } from 'lit/directives/ref.js';
 import { join } from 'lit-html/directives/join.js';
@@ -82,7 +82,7 @@ export default class KeybindingsPanel extends LitElement {
             class="KeybindInput"
             id="${kb}"
             name="${kb}"
-            value="${keybinds[kb]?.join(' , ') ?? ''}"
+            value="${keybinds[kb]?.join(' , ') ?? nothing}"
             ${ref(this.keybindsRefs[kb])}
           />`,
     );

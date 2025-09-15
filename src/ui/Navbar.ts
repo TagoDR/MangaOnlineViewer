@@ -1,5 +1,5 @@
 import { useStores } from '@nanostores/lit';
-import { css, html, LitElement, type PropertyValues, unsafeCSS } from 'lit';
+import { css, html, LitElement, nothing, type PropertyValues, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { map } from 'lit/directives/map.js';
@@ -141,7 +141,7 @@ export default class Navbar extends LitElement {
                   id="ThumbnailImg${index}"
                   alt=""
                   class="ThumbnailImg"
-                  src=${getAppStateValue('images')?.[index]?.src ?? ''}
+                  src=${getAppStateValue('images')?.[index]?.src ?? nothing}
                 />
                 <figcaption class="ThumbnailIndex">${index}</figcaption>
               </figure>`,

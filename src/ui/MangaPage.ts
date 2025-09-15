@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { type StyleInfo, styleMap } from 'lit-html/directives/style-map.js';
@@ -152,7 +152,7 @@ const listPages = (times: number, begin: number) =>
             id="PageImg${index}"
             alt="Page ${index}"
             class="PageImg"
-            src=${getAppStateValue('images')?.[index]?.src ?? ''}
+            src=${getAppStateValue('images')?.[index]?.src ?? nothing}
             style="${styleMap(getImageStyle(index))}"
             @load=${imageLoaded}
             @error=${imageLoadError}
