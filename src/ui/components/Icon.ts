@@ -4,7 +4,7 @@ import type { DirectiveResult } from 'lit/directive.js';
 import type { UnsafeSVGDirective } from 'lit/directives/unsafe-svg.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { toPascalCase } from '../../utils/format.ts';
-import * as styledIcons from '../icons';
+import * as styledIcons from '../icons/StyledIcons.ts';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -70,23 +70,12 @@ export class Icon extends LitElement {
   size = '';
 
   render() {
-    const pascal = toPascalCase(this.name);
-    const key = `${pascal}Raw`;
-    const styledSvg = (
-      styledIcons as Record<string, string | DirectiveResult<typeof UnsafeSVGDirective>>
-    )[key] as string | undefined;
+    const key = toPascalCase(this.name);
+    const styledSvg = (styledIcons as Record<string, DirectiveResult<typeof UnsafeSVGDirective>>)[
+      key
+    ] as string | undefined;
 
     const style = this.size ? `--mov-icon-size: ${this.size};` : '';
-
-    if (!styledSvg) {
-      // Fallback: keep slot size but no graphic
-      return html`<span
-        role=${this.label ? 'img' : nothing}
-        aria-label=${this.label || nothing}
-        aria-hidden=${this.label ? nothing : 'true'}
-        style=${style}
-      ></span>`;
-    }
 
     return html`<span
       role=${this.label ? 'img' : nothing}

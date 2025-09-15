@@ -64,7 +64,7 @@ function applyColorsToSvg(svgString: string, className: string): string {
   for (const rule of colorRules) {
     for (const selector of rule.selectors) {
       if (selector.startsWith(`.${className}`)) {
-        const selectorMatch = selector.match(new RegExp(`^\.${className}\s*(.*)$`));
+        const selectorMatch = selector.match(new RegExp(`^\\.${className}\\s*(.*)$`));
         if (selectorMatch) {
           let subSelector = selectorMatch[1].trim() || '*';
           if (subSelector.startsWith('>')) {
