@@ -2,7 +2,7 @@ import type { ReactiveController, ReactiveControllerHost } from 'lit';
 import _ from 'lodash';
 import { getSettingsValue } from '../../core/settings.ts';
 
-const headerHeight = 99;
+const headerHeight = 49;
 const showEnd = 100;
 
 export class HeadroomController implements ReactiveController {

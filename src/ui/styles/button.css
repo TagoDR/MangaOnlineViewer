@@ -31,6 +31,7 @@
 }
 
 .button {
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -47,7 +48,6 @@
   font-weight: var(--mov-font-weight-action);
   line-height: calc(var(--mov-form-control-height) - var(--mov-border-width-s) * 2);
   height: var(--mov-form-control-height);
-  width: 100%;
   border-radius: var(--mov-border-radius-m);
   border-style: solid;
   border-width: var(--mov-border-width-s);

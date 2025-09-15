@@ -7,19 +7,14 @@
 
 .mobile .ViewerTitle,
 .tablet .ViewerTitle {
-  order: 1;
+  order: 4;
   min-height: auto;
-  padding: 0;
-  margin: 0;
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: 100%;
 }
 
 .mobile #GlobalFunctions,
 .tablet #GlobalFunctions {
-  width: auto;
   order: 2;
+  width: auto;
   padding: 5px;
 }
 
@@ -27,9 +22,14 @@
   flex-direction: column;
 }
 
-.mobile #ChapterNavigation,
-.tablet #ChapterNavigation {
+.mobile .zoom-container,
+.tablet .zoom-container {
   order: 3;
+}
+
+.mobile #Toolbar,
+.tabler #Toolbar {
+  order: 1;
 }
 
 #Header.mobile {
@@ -48,7 +48,7 @@
 }
 
 .mobile .ViewerTitle {
-  order: 1;
+  order: 3;
   margin-top: 0;
   height: auto;
   padding: 0;
@@ -58,7 +58,6 @@
   order: 2;
   padding: 0;
   width: auto;
-  flex-basis: 35px;
 }
 
 .mobile #ChapterNavigation {
@@ -93,6 +92,9 @@
 .mobile .PageFunctions .PageButton:not(.Bookmark),
 .mobile .ChapterControl .download,
 .tablet #Counters,
-.mobile #Counters {
+.mobile .zoom-container,
+.mobile #ZoomDropdown,
+.mobile #ViewDropdown,
+.mobile #FileDropdown :where(:nth-child(3), :nth-child(4)) {
   display: none;
 }

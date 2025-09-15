@@ -1,5 +1,5 @@
 import { useStores } from '@nanostores/lit';
-import { html, LitElement, unsafeCSS } from 'lit';
+import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import {
@@ -11,7 +11,6 @@ import {
   settings,
 } from '../core/settings';
 import type { IManga } from '../types';
-import sequence from '../utils/sequence';
 import { toggleAutoScroll } from './events/autoscroll';
 import { buttonBookmarksOpen } from './events/bookmarks';
 import {
@@ -21,44 +20,18 @@ import {
   buttonStartDownload,
 } from './events/globals';
 import { HeadroomController } from './events/headroom';
-import { selectGoToPage } from './events/navigation';
 import { buttonKeybindingsOpen, buttonSettingsOpen } from './events/panels';
 import { updateViewMode } from './events/viewmode';
 import { changeGlobalZoom, changeZoom, changeZoomByStep } from './events/zoom';
-import {
-  IconArrowAutofitDown,
-  IconArrowAutofitHeight,
-  IconArrowAutofitLeft,
-  IconArrowAutofitRight,
-  IconArrowAutofitWidth,
-  IconArrowBigLeft,
-  IconArrowBigRight,
-  IconBookmarks,
-  IconFileDownload,
-  IconKeyboard,
-  IconListNumbers,
-  IconLoader2,
-  IconMenu2,
-  IconMessage,
-  IconPlayerPause,
-  IconPlayerPlay,
-  IconSettings,
-  IconSpacingVertical,
-  IconZoomInArea,
-  IconZoomOutArea,
-  IconZoomPan,
-} from './icons';
 import styles from './styles/header.css?inline';
 import media from './styles/media.css?inline';
+import './components/dropdown.ts';
+import './components/Icon.ts';
 
 @customElement('mov-header')
 @useStores(settings, locale, appState)
 export class MovHeader extends LitElement {
-  static styles = [unsafeCSS(styles), unsafeCSS(media)];
-
-  // protected createRenderRoot() {
-  //   return this; // No shadow DOM
-  // }
+  static styles = [unsafeCSS(styles), unsafeCSS(media), css``];
 
   private headroomController = new HeadroomController(this);
 
@@ -69,16 +42,16 @@ export class MovHeader extends LitElement {
     if (!this.manga) return html``;
     const { headroom, headerVisible } = this.headroomController;
     return html`
-      <div
+      <button
         id="menu"
-        class="${classMap({
+        class="HeaderButton ${classMap({
           [getSettingsValue('header')]: true,
           hide: ['top', 'end'].includes(headroom),
         })}"
         @click=${this.headroomController.toggleHeaderVisibility}
       >
-        ${IconMenu2}
-      </div>
+        <mov-icon name="IconMenu2"></mov-icon>
+      </button>
       <header
         id="Header"
         class="${classMap({
@@ -88,247 +61,259 @@ export class MovHeader extends LitElement {
           [getAppStateValue('device')]: true,
         })}"
       >
-        <div id="GlobalFunctions">
-          <span>
-            <button
-              id="enlarge"
-              title="${getLocaleString('ENLARGE')}"
-              class="HeaderButton"
-              @click="${changeZoomByStep()}"
+        <div id="Toolbar" class="button-group">
+          <mov-dropdown id="FileDropdown">
+            <mov-button
+              slot="trigger"
+              class="HeaderButton dropdown-trigger"
+              >File</mov-button
             >
-              ${IconZoomInArea}
-            </button>
-            <button
-              id="restore"
-              title="${getLocaleString('RESTORE')}"
-              class="HeaderButton"
-              @click="${changeGlobalZoom('percent', 100)}"
+            <mov-dropdown-item
+              id="settings"
+              @click=${buttonSettingsOpen}
             >
-              ${IconZoomPan}
-            </button>
-            <button
-              id="reduce"
-              title="${getLocaleString('REDUCE')}"
-              class="HeaderButton"
-              @click="${changeZoomByStep(-1)}"
-            >
-              ${IconZoomOutArea}
-            </button>
-            <button
-              id="fitWidth"
-              title="${getLocaleString('FIT_WIDTH')}"
-              class="HeaderButton"
-              @click="${changeGlobalZoom('width')}"
-              ?selected=${getSettingsValue('zoomMode') === 'width'}
-            >
-              ${IconArrowAutofitWidth}
-            </button>
-            <button
-              id="fitHeight"
-              title="${getLocaleString('FIT_HEIGHT')}"
-              class="HeaderButton"
-              @click="${changeGlobalZoom('height')}"
-              ?selected=${getSettingsValue('zoomMode') === 'height'}
-            >
-              ${IconArrowAutofitHeight}
-            </button>
-            <button
+              <mov-icon
+                slot="icon"
+                name="IconSettings"
+              ></mov-icon>
+              ${getLocaleString('SETTINGS')}
+            </mov-dropdown-item>
+            <mov-dropdown-item
               id="keybindings"
-              title="${getLocaleString('KEYBINDINGS')}"
-              class="HeaderButton"
               @click=${buttonKeybindingsOpen}
             >
-              ${IconKeyboard}
-            </button>
-            <button
+              <mov-icon
+                slot="icon"
+                name="IconKeyboard"
+              ></mov-icon>
+              ${getLocaleString('KEYBINDINGS')}
+            </mov-dropdown-item>
+            <mov-dropdown-item
               id="AutoScroll"
-              title="${getLocaleString('SCROLL_START')}"
-              class="${classMap({
-                HeaderButton: true,
-                running: getAppStateValue('autoScroll'),
-              })}"
+              class="${classMap({ running: getAppStateValue('autoScroll') })}"
               @click=${toggleAutoScroll}
             >
-              ${getAppStateValue('autoScroll') ? IconPlayerPause : IconPlayerPlay}
-            </button>
-          </span>
-          <span>
-            <button
-              id="ltrMode"
-              title="${getLocaleString('VIEW_MODE_LEFT')}"
-              class="HeaderButton"
-              @click="${updateViewMode('FluidLTR')}"
-              ?selected=${getSettingsValue('viewMode') === 'FluidLTR'}
+              <mov-icon
+                slot="icon"
+                name="${getAppStateValue('autoScroll') ? 'IconPlayerPause' : 'IconPlayerPlay'}"
+              ></mov-icon>
+              ${getLocaleString('SCROLL_START')}
+            </mov-dropdown-item>
+            <mov-dropdown-item
+              id="bookmarks"
+              class="tablets"
+              @click=${buttonBookmarksOpen}
             >
-              ${IconArrowAutofitRight}
-            </button>
-            <button
-              id="verticalMode"
-              title="${getLocaleString('VIEW_MODE_VERTICAL')}"
-              class="HeaderButton tablets"
-              @click="${updateViewMode('Vertical')}"
-              ?selected=${getSettingsValue('viewMode') === 'Vertical'}
-            >
-              ${IconArrowAutofitDown}
-            </button>
-            <button
-              id="webComic"
-              title="${getLocaleString('VIEW_MODE_WEBCOMIC')}"
-              class="HeaderButton tablets"
-              @click="${updateViewMode('WebComic')}"
-              ?selected=${getSettingsValue('viewMode') === 'WebComic'}
-            >
-              ${IconSpacingVertical}
-            </button>
-            <button
-              id="rtlMode"
-              title="${getLocaleString('VIEW_MODE_RIGHT')}"
-              class="HeaderButton"
-              @click="${updateViewMode('FluidRTL')}"
-              ?selected=${getSettingsValue('viewMode') === 'FluidRTL'}
-            >
-              ${IconArrowAutofitLeft}
-            </button>
-            <button
+              <mov-icon
+                slot="icon"
+                name="IconBookmarks"
+              ></mov-icon>
+              ${getLocaleString('BOOKMARKS')}
+            </mov-dropdown-item>
+            <mov-dropdown-item
               id="pageControls"
-              title="${getLocaleString('TOGGLE_CONTROLS')}"
-              class="HeaderButton tablets phones"
+              class="tablets phones"
               @click="${buttonGlobalHideImageControls}"
               ?selected=${getSettingsValue('hidePageControls')}
             >
-              ${IconListNumbers}
-            </button>
-            <button
-              id="bookmarks"
-              title="${getLocaleString('BOOKMARKS')}"
-              class="HeaderButton tablets"
-              @click=${buttonBookmarksOpen}
+              <mov-icon
+                slot="icon"
+                name="IconListNumbers"
+              ></mov-icon>
+              ${getLocaleString('TOGGLE_CONTROLS')}
+            </mov-dropdown-item>
+          </mov-dropdown>
+
+          <mov-dropdown
+            id="ViewDropdown"
+            checkable
+          >
+            <mov-button
+              slot="trigger"
+              class="HeaderButton dropdown-trigger"
+              >View</mov-button
             >
-              ${IconBookmarks}
-            </button>
-            <button
-              id="settings"
-              title="${getLocaleString('SETTINGS')}"
-              class="HeaderButton tablets phones"
-              @click=${buttonSettingsOpen}
+            <mov-dropdown-item
+              id="webComic"
+              class="tablets"
+              @click="${updateViewMode('WebComic')}"
+              ?selected=${getSettingsValue('viewMode') === 'WebComic'}
             >
-              ${IconSettings}
-            </button>
-          </span>
-          <span id="ZoomSlider">
-            <output
-              id="ZoomVal"
-              class="RangeValue"
-              for="Zoom"
+              <mov-icon
+                slot="icon"
+                name="IconSpacingVertical"
+              ></mov-icon>
+              ${getLocaleString('VIEW_MODE_WEBCOMIC')}
+            </mov-dropdown-item>
+            <mov-dropdown-item
+              id="verticalMode"
+              class="tablets"
+              @click="${updateViewMode('Vertical')}"
+              ?selected=${getSettingsValue('viewMode') === 'Vertical'}
             >
-              ${
-                getSettingsValue('zoomMode') === 'percent'
-                  ? `${getSettingsValue('zoomValue')}%`
-                  : getSettingsValue('zoomMode')
-              }
-            </output>
-            <input
-              type="range"
-              value="${getSettingsValue('zoomValue')}"
-              name="Zoom"
-              id="Zoom"
-              min="1"
-              max="200"
-              @input="${changeZoom}"
-            />
-          </span>
+              <mov-icon
+                slot="icon"
+                name="IconArrowAutofitDown"
+              ></mov-icon>
+              ${getLocaleString('VIEW_MODE_VERTICAL')}
+            </mov-dropdown-item>
+            <mov-dropdown-item
+              id="ltrMode"
+              @click="${updateViewMode('FluidLTR')}"
+              ?selected=${getSettingsValue('viewMode') === 'FluidLTR'}
+            >
+              <mov-icon
+                slot="icon"
+                name="IconArrowAutofitRight"
+              ></mov-icon>
+              ${getLocaleString('VIEW_MODE_LEFT')}
+            </mov-dropdown-item>
+            <mov-dropdown-item
+              id="rtlMode"
+              @click="${updateViewMode('FluidRTL')}"
+              ?selected=${getSettingsValue('viewMode') === 'FluidRTL'}
+            >
+              <mov-icon
+                slot="icon"
+                name="IconArrowAutofitLeft"
+              ></mov-icon>
+              ${getLocaleString('VIEW_MODE_RIGHT')}
+            </mov-dropdown-item>
+          </mov-dropdown>
+          <mov-dropdown
+            id="ZoomDropdown"
+            checkable
+          >
+            <mov-button
+              slot="trigger"
+              class="HeaderButton dropdown-trigger"
+              >Zoom</mov-button
+            >
+            <mov-dropdown-item
+              id="enlarge"
+              @click="${changeZoomByStep()}"
+            >
+              <mov-icon
+                slot="icon"
+                name="IconZoomInArea"
+              ></mov-icon>
+              ${getLocaleString('ENLARGE')}
+            </mov-dropdown-item>
+            <mov-dropdown-item
+              id="restore"
+              @click="${changeGlobalZoom('percent', 100)}"
+            >
+              <mov-icon
+                slot="icon"
+                name="IconZoomPan"
+              ></mov-icon>
+              ${getLocaleString('RESTORE')}
+            </mov-dropdown-item>
+            <mov-dropdown-item
+              id="reduce"
+              @click="${changeZoomByStep(-1)}"
+            >
+              <mov-icon
+                slot="icon"
+                name="IconZoomOutArea"
+              ></mov-icon>
+              ${getLocaleString('REDUCE')}
+            </mov-dropdown-item>
+            <mov-dropdown-item
+              id="fitWidth"
+              @click="${changeGlobalZoom('width')}"
+              ?selected=${getSettingsValue('zoomMode') === 'width'}
+            >
+              <mov-icon
+                slot="icon"
+                name="IconArrowAutofitWidth"
+              ></mov-icon>
+              ${getLocaleString('FIT_WIDTH')}
+            </mov-dropdown-item>
+            <mov-dropdown-item
+              id="fitHeight"
+              @click="${changeGlobalZoom('height')}"
+              ?selected=${getSettingsValue('zoomMode') === 'height'}
+            >
+              <mov-icon
+                slot="icon"
+                name="IconArrowAutofitHeight"
+              ></mov-icon>
+              ${getLocaleString('FIT_HEIGHT')}
+            </mov-dropdown-item>
+          </mov-dropdown>
         </div>
         <div class="ViewerTitle">
           <h1 id="MangaTitle">${this.manga.title}</h1>
-          <a
+        </div>
+        <div
+          class="zoom-container"
+          style="max-width: 300px;"
+        >
+          <input
+            type="range"
+            id="Zoom"
+            .value="${getSettingsValue('zoomValue')}"
+            min="${getSettingsValue('minZoom')}"
+            max="200"
+            @input=${changeZoom}
+          />
+          <span id="ZoomVal"
+            >${
+              getSettingsValue('zoomMode') === 'percent'
+                ? `${getSettingsValue('zoomValue')}%`
+                : getSettingsValue('zoomMode')
+            }</span
+          >
+        </div>
+        <div id="GlobalFunctions" class="button-group">
+          <mov-button
             id="series"
-            href="${this.manga.series ?? ''}"
+            href="${this.manga.series ?? nothing}"
+            @click=${buttonRedirectURL}
+            title="${getLocaleString('RETURN_CHAPTER_LIST')}"
+          >
+            <mov-icon name="IconBookReturn"></mov-icon>
+          </mov-button>
+          <mov-button
+            id="CommentsButton"
+            class="${classMap({ disabled: !this.manga.comments })}"
+            title="${getLocaleString('DISPLAY_COMMENTS')}"
+            @click=${buttonCommentsOpen}
+          >
+            <mov-icon name="IconMessage"></mov-icon>
+          </mov-button>
+          <mov-button
+            id="download"
+            class="${classMap({
+              disabled: getAppStateValue('download') !== 'available',
+              loading: getAppStateValue('download') === 'working',
+            })}"
+            title="${getLocaleString('DOWNLOAD_ZIP')}"
+            @click=${buttonStartDownload}
+          >
+            <mov-icon
+              name="${
+                getAppStateValue('download') === 'working' ? 'IconLoader2' : 'IconFileDownload'
+              }"
+            ></mov-icon>
+          </mov-button>
+          <mov-button
+            id="prev"
+            href="${this.manga.prev ?? nothing}"
+            title="${getLocaleString('PREVIOUS_CHAPTER')}"
             @click=${buttonRedirectURL}
           >
-            (${getLocaleString('RETURN_CHAPTER_LIST')})
-          </a>
-        </div>
-        <div id="ChapterNavigation">
-          <div
-            id="Counters"
-            class="ControlLabel"
+            <mov-icon name="IconArrowBigLeft"></mov-icon>
+          </mov-button>
+          <mov-button
+            id="next"
+            href="${this.manga.next ?? nothing}"
+            title="${getLocaleString('NEXT_CHAPTER')}"
+            @click=${buttonRedirectURL}
           >
-            ${getLocaleString('PAGES_LOADED')}:
-            <i>${getAppStateValue('loaded') ?? 0}</i> /
-            <b>
-              ${
-                (getAppStateValue('manga')?.pages ?? 0) -
-                ((getAppStateValue('manga')?.begin ?? 1) - 1)
-              }
-            </b>
-            <span class="ControlLabel"> ${getLocaleString('GO_TO_PAGE')}: </span>
-            <select
-              id="gotoPage"
-              @change=${selectGoToPage}
-            >
-              <option selected>#</option>
-              ${sequence(this.manga.pages, this.manga.begin).map(
-                index => html` <option value="${index}">${index}</option>`,
-              )}
-            </select>
-            <span>: ${getAppStateValue('currentPage')}</span>
-          </div>
-          <div
-            id="ChapterControl"
-            class="ChapterControl"
-          >
-            <span>
-              <button
-                id="CommentsButton"
-                class="${classMap({
-                  NavigationButton: true,
-                  HeaderButton: true,
-                  disabled: !this.manga.comments,
-                })}"
-                title="${getLocaleString('DISPLAY_COMMENTS')}"
-                @click=${buttonCommentsOpen}
-              >
-                ${IconMessage} ${getLocaleString('DISPLAY_COMMENTS')}
-              </button>
-              <button
-                id="download"
-                class="${classMap({
-                  NavigationButton: true,
-                  HeaderButton: true,
-                  disabled: getAppStateValue('download') !== 'available',
-                  loading: getAppStateValue('download') === 'working',
-                })}"
-                type="button"
-                title="${getLocaleString('DOWNLOAD_ZIP')}"
-                @click=${buttonStartDownload}
-              >
-                ${getAppStateValue('download') === 'working' ? IconLoader2 : IconFileDownload}
-                ${getLocaleString('BUTTON_DOWNLOAD')}
-              </button></span
-            >
-            <span>
-              <a
-                id="prev"
-                class="NavigationButton HeaderButton"
-                type="button"
-                href="${this.manga.prev ?? ''}"
-                title="${getLocaleString('PREVIOUS_CHAPTER')}"
-                @click=${buttonRedirectURL}
-              >
-                ${IconArrowBigLeft} ${getLocaleString('BUTTON_PREVIOUS')}
-              </a>
-              <a
-                id="next"
-                class="NavigationButton HeaderButton"
-                type="button"
-                href="${this.manga.next ?? ''}"
-                title="${getLocaleString('NEXT_CHAPTER')}"
-                @click=${buttonRedirectURL}
-              >
-                ${getLocaleString('BUTTON_NEXT')} ${IconArrowBigRight}
-              </a>
-            </span>
-          </div>
+            <mov-icon name="IconArrowBigRight"></mov-icon>
+          </mov-button>
         </div>
       </header>
     `;

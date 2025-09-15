@@ -46,9 +46,31 @@
   min-width: 35px;
 }
 
+.button-group {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+.dropdown-trigger {
+  position: relative;
+  padding-right: 20px;
+}
+.dropdown-trigger::after {
+  content: "";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  border: solid var(--theme-primary-text-color);
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: translateY(-50%) rotate(45deg);
+  -webkit-transform: translateY(-50%) rotate(45deg);
+}
+
 #Header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   flex-flow: row nowrap;
   transition: transform 0.3s ease-in;
@@ -245,11 +267,27 @@
 
 .ViewerTitle {
   text-align: center;
-  min-height: 60px;
+  min-height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   padding: 5px;
-  flex-basis: 60%;
+  /*flex-basis: 60%;*/
+}
+
+.zoom-container {
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  max-width: 300px;
+}
+.zoom-container input[type="range"] {
+  flex-grow: 1;
+  margin: 0 5px;
+}
+.zoom-container span,
+.zoom-container output {
+  min-width: 3ch;
+  text-align: right;
 }
