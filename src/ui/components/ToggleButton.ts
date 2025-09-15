@@ -318,8 +318,12 @@ export class ToggleButton extends LitElement {
     // Two-icon swap modes (menu, theme, custom)
     return html`
       <mov-icon
-        class=${this.active ? 'active-icon' : 'inactive-icon'}
-        name=${this.active ? icons.active : icons.inactive}
+        class="inactive-icon"
+        name=${icons.inactive}
+      ></mov-icon>
+      <mov-icon
+        class="active-icon"
+        name=${icons.active}
       ></mov-icon>
     `;
   }

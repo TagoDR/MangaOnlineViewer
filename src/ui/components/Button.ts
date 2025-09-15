@@ -177,66 +177,6 @@ export default class Button extends LitElement {
             ${buttonContent}
           </button>
         `;
-    /*    return html`
-      <a
-        part="base"
-        class=${classMap({
-          button: true,
-          'with-caret': this.withCaret,
-          disabled: this.disabled,
-          loading: this.loading,
-          pill: this.pill,
-          'has-label': this.hasLabel,
-          'has-start': this.hasStart,
-          'has-end': this.hasEnd,
-          'is-icon-button': this.isIconButton,
-        })}
-        ?disabled=${ifDefined(isLink ? undefined : this.disabled)}
-        type=${ifDefined(isLink ? undefined : this.type)}
-        title=${this.title}
-        name=${ifDefined(isLink ? undefined : this.name)}
-        value=${ifDefined(isLink ? undefined : this.value)}
-        href=${ifDefined(this.href)}
-        target=${ifDefined(this.target)}
-        download=${ifDefined(this.download)}
-        rel=${ifDefined(isLink && this.rel ? this.rel : undefined)}
-        role="button"
-        aria-disabled=${this.disabled ? 'true' : 'false'}
-        tabindex=${this.disabled ? '-1' : '0'}
-        @click=${this.handleClick}
-      >
-        <slot
-          name="start"
-          @slotchange=${this.handleLabelSlotChange}
-          part="start"
-          class="start"
-        ></slot>
-        <slot
-          @slotchange=${this.handleLabelSlotChange}
-          part="label"
-          class="label"
-        ></slot>
-        <slot
-          name="end"
-          @slotchange=${this.handleLabelSlotChange}
-          part="end"
-          class="end"
-        ></slot>
-        ${this.withCaret
-          ? html`<mov-icon
-              part="caret"
-              class="caret"
-              name="chevron-down"
-            ></mov-icon>`
-          : ''}
-        ${this.loading
-          ? html`<span
-              part="spinner"
-              class="spinner"
-            ></span>`
-          : ''}
-      </a>
-    `;*/
   }
 
   private handleLabelSlotChange() {
