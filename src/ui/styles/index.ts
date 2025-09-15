@@ -7,7 +7,7 @@
 import keyscss from '@gerhobbelt/keyscss/keys.css?inline';
 import { css } from '../../utils/code-tag';
 import { svgToUrl } from '../../utils/svgs';
-import { IconPhotoOffRaw, IconPhotoRaw } from '../icons';
+import { IconPhoto, IconPhotoOff } from '../icons/StyledIcons.ts';
 import styles from './App.css?inline';
 import animation from './animation.css?inline';
 import fluid from './fluid.css?inline';
@@ -18,11 +18,11 @@ import normalize from './simplenormalize.css?inline';
 export default css`
   .PageContent .PageImg[src=''],
   .PageContent .PageImg:not([src]) {
-    background-image: url('${svgToUrl(IconPhotoRaw)}');
+    background-image: url('${svgToUrl(IconPhoto)}');
   }
 
   .PageContent .PageImg.imgBroken {
-    background-image: url('${svgToUrl(IconPhotoOffRaw)}');
+    background-image: url('${svgToUrl(IconPhotoOff)}');
   }
 
   ${normalize}
