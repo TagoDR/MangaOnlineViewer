@@ -30,7 +30,7 @@ function scroll() {
       behavior: 'smooth',
     });
   }
-  if (getAppStateValue('headroom') === 'end') {
+  if (window.scrollY + window.innerHeight > document.body.scrollHeight) {
     setAppStateValue('autoScroll', false);
     logScript('Finished auto scroll');
   }

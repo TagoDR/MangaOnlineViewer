@@ -9,7 +9,8 @@ import sequence from '../utils/sequence';
 import { svgToUrl } from '../utils/svgs.ts';
 import { transformScrollToHorizontal } from './events/common.ts';
 import { clickThumbnail } from './events/navigation.ts';
-import { IconCategory, IconPhotoOffRaw, IconPhotoRaw } from './icons';
+import { IconCategory } from './icons';
+import { IconPhoto, IconPhotoOff } from './icons/StyledIcons.ts';
 import styles from './styles/navbar.css?inline';
 
 /**
@@ -41,11 +42,11 @@ export default class Navbar extends LitElement {
 
       .Thumbnail .ThumbnailImg[src=''],
       .Thumbnail .ThumbnailImg:not([src]) {
-        background-image: url('${unsafeCSS(svgToUrl(IconPhotoRaw))}');
+        background-image: url('${unsafeCSS(svgToUrl(IconPhoto))}');
       }
 
       .Thumbnail .ThumbnailImg.imgBroken {
-        background-image: url('${unsafeCSS(svgToUrl(IconPhotoOffRaw))}');
+        background-image: url('${unsafeCSS(svgToUrl(IconPhotoOff))}');
       }
     `,
   ];

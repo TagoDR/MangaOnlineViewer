@@ -24,9 +24,6 @@ export function applyZoom(
   setSettingsValue('zoomMode', mode);
   setSettingsValue('zoomValue', value);
   if (mode === 'height') {
-    // setSettingsValue('header', 'click');
-    setAppStateValue('headerVisible', false);
-    setAppStateValue('headroom', 'hide');
     setAppStateValue('scrollToPage', getAppStateValue('currentPage'));
   } else {
     // Revert to the user's saved preferences when leaving fluid mode
