@@ -38,6 +38,10 @@ export default class App extends LitElement {
   firstUpdated() {
     events();
     loadImages();
+    document.documentElement.classList.add(
+      getSettingsValue('colorScheme'),
+      `wa-${getSettingsValue('colorScheme')}`,
+    );
   }
 
   /**
