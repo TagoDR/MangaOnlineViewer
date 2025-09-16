@@ -61,6 +61,10 @@ export default class App extends LitElement {
    */
   firstUpdated() {
     if (this.loadMode === 'always') this.start();
+    document.documentElement.classList.add(
+      getSettingsValue('colorScheme'),
+      `wa-${getSettingsValue('colorScheme')}`,
+    );
     events();
     loadImages();
   }
