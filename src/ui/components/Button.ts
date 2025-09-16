@@ -42,8 +42,6 @@ export default class Button extends LitElement {
   @state() private hasEnd = false;
 
   @property() title = '';
-  @property({ reflect: true }) variant: 'brand' | 'neutral' | 'success' | 'warning' | 'danger' =
-    'brand';
   @property({ reflect: true }) appearance: 'accent' | 'filled' | 'outline' | 'plain' = 'accent';
   @property({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
   @property({ attribute: 'with-caret', type: Boolean, reflect: true }) withCaret = false;
@@ -157,6 +155,7 @@ export default class Button extends LitElement {
             role="button"
             aria-disabled=${this.disabled ? 'true' : 'false'}
             tabindex=${this.disabled ? '-1' : '0'}
+            download=${ifDefined(this.download)}
             @click=${this.handleClick}
           >
             ${buttonContent}
