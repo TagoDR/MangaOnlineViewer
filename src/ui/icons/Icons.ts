@@ -56,6 +56,7 @@ export { default as IconPageFlat } from './Page-KawaiiFlat.svg';
 export { default as IconPage } from './Page-KawaiiLinealColor.svg';
 export { default as IconPalette } from './palette.svg';
 export { default as IconPencil } from './pencil.svg';
+export { default as IconPencilCog } from './pencil-cog.svg';
 export { default as IconPhoto } from './photo.svg';
 export { default as IconPhotoOff } from './photo-off.svg';
 export { default as IconPin } from './pin.svg';

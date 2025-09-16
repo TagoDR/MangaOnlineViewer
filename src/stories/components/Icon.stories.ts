@@ -5,68 +5,23 @@
  */
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import { map } from 'lit/directives/map.js';
+import * as styledIcons from '../../ui/icons/StyledIcons.ts';
+import { sample } from '../../utils/colors.ts';
 import '../../ui/components/Icon.ts'; // Ensure the <mov-icon> component is defined
 
-const icons = [
-  'arrow-autofit-down',
-  'arrow-autofit-height',
-  'arrow-autofit-left',
-  'arrow-autofit-right',
-  'arrow-autofit-width',
-  'arrow-big-left',
-  'arrow-big-right',
-  'bookmark',
-  'bookmark-off',
-  'bookmarks',
-  'category',
-  'check',
-  'device-floppy',
-  'external-link',
-  'eye',
-  'eye-off',
-  'file-download',
-  'keyboard',
-  'list-numbers',
-  'loader2',
-  'location-cog',
-  'menu-2',
-  'message',
-  'moon',
-  'palette',
-  'pencil',
-  'photo',
-  'photo-off',
-  'player-pause',
-  'player-play',
-  'refresh',
-  'settings',
-  'settings-off',
-  'spacing-vertical',
-  'sun',
-  'trash',
-  'world-cog',
-  'x',
-  'zoom-cancel',
-  'zoom-in',
-  'zoom-in-area',
-  'zoom-out',
-  'zoom-out-area',
-  'zoom-pan',
-];
+const icons = Object.keys(styledIcons)
+  // .map(icon =>
+  //   icon
+  //     .replace(/^Icon/, '')
+  //     .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+  //     .toLowerCase(),
+  // )
+  .sort();
 
-const colors = [
-  { name: 'Primary', value: '#007bff' },
-  { name: 'Secondary', value: '#6c757d' },
-  { name: 'Success', value: '#28a745' },
-  { name: 'Warning', value: '#ffc107' },
-  { name: 'Danger', value: '#dc3545' },
-  { name: 'Info', value: '#17a2b8' },
-  { name: 'Purple', value: '#6f42c1' },
-  { name: 'Pink', value: '#e83e8c' },
-  { name: 'Orange', value: '#fd7e14' },
-  { name: 'Teal', value: '#20c997' },
-];
+const colors = Object.entries({ ...sample, white: '#fff', black: '#000' }).map(([name, value]) => ({
+  name: name.charAt(0).toUpperCase() + name.slice(1),
+  value,
+}));
 
 /**
  * The `Meta` object for the `<mov-icon>` component stories.
@@ -158,12 +113,11 @@ export const ColorVariations: StoryObj = {
     controls: { disable: true },
   },
   render: () => html`
-    <div style="display: flex; align-items: center; gap: 1rem;">
-      ${map(
-        colors,
+    <div style="display: flex; align-items: center; gap: 1rem; background-color: var(--theme-primary-color)">
+      ${colors.map(
         color => html`
           <mov-icon
-            name="palette"
+            name="settings"
             label="${color.name}"
             size="24px"
             style="color: ${color.value};"
@@ -250,8 +204,13 @@ export const IconGallery: StoryObj = {
   },
   render: () => html`
     <style>
-      .icon-gallery-search {
+      .icon-gallery-controls {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
         margin-bottom: 1rem;
+      }
+      .icon-gallery-search {
         padding: 0.5rem;
         width: 100%;
         max-width: 300px;
@@ -279,32 +238,53 @@ export const IconGallery: StoryObj = {
         font-size: 0.8em;
       }
     </style>
-    <input
-      type="text"
-      class="icon-gallery-search"
-      placeholder="Search icons..."
-      @input=${(e: Event) => {
-        const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
-        const gallery = document.querySelector('.icon-gallery');
-        const items = gallery?.querySelectorAll('.icon-item');
-        items?.forEach(item => {
-          const name = item.querySelector('.icon-name')?.textContent?.toLowerCase() ?? '';
-          (item as HTMLElement).style.display = name.includes(searchTerm) ? 'flex' : 'none';
-        });
-      }}
-    />
+    <div class="icon-gallery-controls">
+      <button
+        @click=${(e: Event) => {
+          const gallery = (e.currentTarget as HTMLElement).parentElement?.nextElementSibling;
+          if (!gallery) return;
+          const icons = gallery.querySelectorAll('mov-icon');
+          const currentColor = (icons[0] as HTMLElement)?.style.color || 'white';
+          const nextColor = currentColor === 'white' ? 'black' : 'white';
+          icons.forEach(icon => {
+            (icon as HTMLElement).style.color = nextColor;
+          });
+        }}
+      >
+        Toggle Icon Color
+      </button>
+      <input
+        type="text"
+        class="icon-gallery-search"
+        placeholder="Search icons..."
+        @input=${(e: Event) => {
+          const input = e.target as HTMLInputElement;
+          const searchTerm = input.value.toLowerCase();
+          const gallery = input.parentElement?.nextElementSibling;
+          if (!gallery) {
+            return;
+          }
+          const items = gallery.querySelectorAll('.icon-item');
+          items.forEach(item => {
+            const name = item.querySelector('.icon-name')?.textContent?.toLowerCase() ?? '';
+            (item as HTMLElement).style.display = name.includes(searchTerm) ? 'flex' : 'none';
+          });
+        }}
+      />
+    </div>
     <div class="icon-gallery">
-      ${map(
-        icons,
+      ${icons.map(
         icon => html`
           <div
             class="icon-item"
             title="Click to copy <mov-icon name='${icon}'></mov-icon>"
+            style="background-color: var(--theme-primary-color)"
             @click=${() => navigator.clipboard.writeText(`<mov-icon name="${icon}"></mov-icon>`)}
           >
             <mov-icon
               name="${icon}"
               size="24px"
+              style="color: white;"
             ></mov-icon>
             <span class="icon-name">${icon}</span>
           </div>
