@@ -26,7 +26,7 @@ import { updateViewMode } from './events/viewmode';
 import { changeGlobalZoom, changeZoom, changeZoomByStep } from './events/zoom';
 import styles from './styles/header.css?inline';
 import media from './styles/media.css?inline';
-import './components/dropdown.ts';
+import './components/Dropdown.ts';
 import './components/Icon.ts';
 
 @customElement('mov-header')
@@ -71,7 +71,10 @@ export class MovHeader extends LitElement {
           [getAppStateValue('device')]: true,
         })}"
       >
-        <div id="Toolbar" class="button-group">
+        <div
+          id="Toolbar"
+          class="button-group"
+        >
           <mov-dropdown id="FileDropdown">
             <mov-button
               slot="trigger"
@@ -86,8 +89,7 @@ export class MovHeader extends LitElement {
                 slot="icon"
                 name="IconSettings"
               ></mov-icon>
-              ${getLocaleString('SETTINGS')}
-              ${renderKeybind('SETTINGS')}
+              ${getLocaleString('SETTINGS')} ${renderKeybind('SETTINGS')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="keybindings"
@@ -108,8 +110,7 @@ export class MovHeader extends LitElement {
                 slot="icon"
                 name="${getAppStateValue('autoScroll') ? 'IconPlayerPause' : 'IconPlayerPlay'}"
               ></mov-icon>
-              ${getLocaleString('SCROLL_START')}
-              ${renderKeybind('SCROLL_START')}
+              ${getLocaleString('SCROLL_START')} ${renderKeybind('SCROLL_START')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="bookmarks"
@@ -155,8 +156,7 @@ export class MovHeader extends LitElement {
                 slot="icon"
                 name="IconSpacingVertical"
               ></mov-icon>
-              ${getLocaleString('VIEW_MODE_WEBCOMIC')}
-              ${renderKeybind('VIEW_MODE_WEBCOMIC')}
+              ${getLocaleString('VIEW_MODE_WEBCOMIC')} ${renderKeybind('VIEW_MODE_WEBCOMIC')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="verticalMode"
@@ -168,8 +168,7 @@ export class MovHeader extends LitElement {
                 slot="icon"
                 name="IconArrowAutofitDown"
               ></mov-icon>
-              ${getLocaleString('VIEW_MODE_VERTICAL')}
-              ${renderKeybind('VIEW_MODE_VERTICAL')}
+              ${getLocaleString('VIEW_MODE_VERTICAL')} ${renderKeybind('VIEW_MODE_VERTICAL')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="ltrMode"
@@ -180,8 +179,7 @@ export class MovHeader extends LitElement {
                 slot="icon"
                 name="IconArrowAutofitRight"
               ></mov-icon>
-              ${getLocaleString('VIEW_MODE_LEFT')}
-              ${renderKeybind('VIEW_MODE_LEFT')}
+              ${getLocaleString('VIEW_MODE_LEFT')} ${renderKeybind('VIEW_MODE_LEFT')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="rtlMode"
@@ -192,8 +190,7 @@ export class MovHeader extends LitElement {
                 slot="icon"
                 name="IconArrowAutofitLeft"
               ></mov-icon>
-              ${getLocaleString('VIEW_MODE_RIGHT')}
-              ${renderKeybind('VIEW_MODE_RIGHT')}
+              ${getLocaleString('VIEW_MODE_RIGHT')} ${renderKeybind('VIEW_MODE_RIGHT')}
             </mov-dropdown-item>
           </mov-dropdown>
           <mov-dropdown
@@ -213,8 +210,7 @@ export class MovHeader extends LitElement {
                 slot="icon"
                 name="IconZoomInArea"
               ></mov-icon>
-              ${getLocaleString('ENLARGE')}
-              ${renderKeybind('ENLARGE')}
+              ${getLocaleString('ENLARGE')} ${renderKeybind('ENLARGE')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="restore"
@@ -224,8 +220,7 @@ export class MovHeader extends LitElement {
                 slot="icon"
                 name="IconZoomPan"
               ></mov-icon>
-              ${getLocaleString('RESTORE')}
-              ${renderKeybind('RESTORE')}
+              ${getLocaleString('RESTORE')} ${renderKeybind('RESTORE')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="reduce"
@@ -235,8 +230,7 @@ export class MovHeader extends LitElement {
                 slot="icon"
                 name="IconZoomOutArea"
               ></mov-icon>
-              ${getLocaleString('REDUCE')}
-              ${renderKeybind('REDUCE')}
+              ${getLocaleString('REDUCE')} ${renderKeybind('REDUCE')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="fitWidth"
@@ -247,8 +241,7 @@ export class MovHeader extends LitElement {
                 slot="icon"
                 name="IconArrowAutofitWidth"
               ></mov-icon>
-              ${getLocaleString('FIT_WIDTH')}
-              ${renderKeybind('FIT_WIDTH')}
+              ${getLocaleString('FIT_WIDTH')} ${renderKeybind('FIT_WIDTH')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="fitHeight"
@@ -259,8 +252,7 @@ export class MovHeader extends LitElement {
                 slot="icon"
                 name="IconArrowAutofitHeight"
               ></mov-icon>
-              ${getLocaleString('FIT_HEIGHT')}
-              ${renderKeybind('FIT_HEIGHT')}
+              ${getLocaleString('FIT_HEIGHT')} ${renderKeybind('FIT_HEIGHT')}
             </mov-dropdown-item>
           </mov-dropdown>
         </div>
@@ -287,7 +279,10 @@ export class MovHeader extends LitElement {
             }</span
           >
         </div>
-        <div id="GlobalFunctions" class="button-group">
+        <div
+          id="GlobalFunctions"
+          class="button-group"
+        >
           <mov-button
             id="series"
             href="${this.manga.series ?? nothing}"

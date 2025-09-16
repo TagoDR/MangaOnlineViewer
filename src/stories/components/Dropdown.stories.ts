@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import '../../ui/components/dropdown.ts';
+import '../../ui/components/Dropdown.ts';
 import '../../ui/components/Icon.ts';
 
 export default {
