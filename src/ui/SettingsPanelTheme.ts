@@ -30,10 +30,22 @@ function theme() {
         ${Object.values(sample).map(c => html`<option value="${c}"></option>`)}
       </datalist>
     </div>
-    ${Object.values(sample).map(c => html`<mov-color-swatch .value="${c}" ?selected=${getSettingsValue('theme') === c} @click=${changeThemeHex}></mov-color-swatch>`)}
+    <span id="ColorRecommendations">
+      ${Object.values(sample).map(
+        c =>
+          html`<mov-color-swatch
+            .value="${c}"
+            ?selected=${getSettingsValue('theme') === c}
+            @click=${changeThemeHex}
+          ></mov-color-swatch>`,
+      )}
+    </span>
     <details class="ControlLabel">
       <summary>${getLocaleString('THEME_HUE')} & ${getLocaleString('THEME_SHADE')}</summary>
-      <mov-color-panel .value=${getSettingsValue('theme')} @click=${buttonSelectTheme}></mov-color-panel>
+      <mov-color-panel
+        .value=${getSettingsValue('theme')}
+        @click=${buttonSelectTheme}
+      ></mov-color-panel>
     </details>
   `;
 }

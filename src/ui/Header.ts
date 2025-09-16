@@ -80,13 +80,12 @@ export class MovHeader extends LitElement {
             <mov-button
               slot="trigger"
               title="${getLocaleString('FILE_MENU')}"
-              >
+            >
               <mov-icon
                 label="File"
                 name="IconDotsVertical"
               ></mov-icon>
-            </mov-button
-            >
+            </mov-button>
             <mov-dropdown-item
               id="settings"
               @click=${buttonSettingsOpen}
@@ -150,13 +149,12 @@ export class MovHeader extends LitElement {
             <mov-button
               slot="trigger"
               title="${getLocaleString('VIEW_MENU')}"
-              >
+            >
               <mov-icon
                 label="View"
                 name="IconBook"
               ></mov-icon>
-            </mov-button
-            >
+            </mov-button>
             <mov-dropdown-item
               id="webComic"
               class="tablets"
@@ -211,13 +209,12 @@ export class MovHeader extends LitElement {
             <mov-button
               slot="trigger"
               title="${getLocaleString('ZOOM_MENU')}"
-              >
+            >
               <mov-icon
                 label="Zoom"
                 name="IconZoom"
               ></mov-icon>
-            </mov-button
-            >
+            </mov-button>
             <mov-dropdown-item
               id="enlarge"
               @click="${changeZoomByStep()}"

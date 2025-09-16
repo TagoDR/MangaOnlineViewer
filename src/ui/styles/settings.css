@@ -61,6 +61,12 @@
   width: 110px;
 }
 
+#ColorRecommendations {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2px;
+}
 #Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {
   display: none;
 }

@@ -113,7 +113,9 @@ export const ColorVariations: StoryObj = {
     controls: { disable: true },
   },
   render: () => html`
-    <div style="display: flex; align-items: center; gap: 1rem; background-color: var(--theme-primary-color)">
+    <div
+      style="display: flex; align-items: center; gap: 1rem; background-color: var(--theme-primary-color)"
+    >
       ${colors.map(
         color => html`
           <mov-icon
