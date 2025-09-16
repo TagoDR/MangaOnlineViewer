@@ -52,33 +52,28 @@ export default class BookmarkPanel extends LitElement {
       (mark, index) => html`
         <div
           id="Bookmark${index + 1}"
-          class="BookmarkItem"
+          class="bookmark-item"
         >
-          <span class="bookmarkColumnLarge">
-            <span class="bookmarkName">${mark.name}</span>
-            <br />
+          <div class="bookmark-info">
+            <div class="bookmark-name">${mark.name}</div>
             <a
-              class="bookmarkURl"
+              class="bookmark-url"
               href="${mark.url}"
               target="_blank"
               >${mark.url}</a
             >
-          </span>
-          <span class="bookmarkColumnSmall">
-            <span class="bookmarkDate"> ${new Date(mark.date).toISOString().slice(0, 10)}</span>
-            <br />
-            <span class="bookmarkPage">Page: ${mark.page}</span>
-          </span>
-          <span class="bookmarkFunctions">
+          </div>
+          <div class="bookmark-details">
+            <div class="bookmark-date">${new Date(mark.date).toISOString().slice(0, 10)}</div>
+            <div class="bookmark-page">Page: ${mark.page}</div>
+          </div>
+          <div class="bookmark-actions">
             <a
-              class=""
               href="${mark.url}"
               target="_blank"
             >
               <mov-button
-                class="open"
                 title="Open Bookmark"
-                type="button"
                 size="small"
               >
                 <mov-icon
@@ -88,9 +83,7 @@ export default class BookmarkPanel extends LitElement {
               </mov-button>
             </a>
             <mov-button
-              class="erase"
               title="Delete Bookmark"
-              type="button"
               size="small"
               value="${mark.url}"
               @click=${buttonEraseBookmarks}
@@ -100,7 +93,7 @@ export default class BookmarkPanel extends LitElement {
                 size="16px"
               ></mov-icon>
             </mov-button>
-          </span>
+          </div>
         </div>
       `,
     );

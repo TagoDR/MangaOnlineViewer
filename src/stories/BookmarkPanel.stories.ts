@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import { setAppStateValue } from '../core/settings.ts';
+import { setAppStateValue, settings } from '../core/settings.ts';
 import '../ui/BookmarkPanel.ts';
 
 const meta: Meta = {
@@ -13,6 +13,20 @@ const meta: Meta = {
     },
   },
   render: args => {
+    settings.setKey('bookmarks', [
+      {
+        name: 'My Great Manga',
+        url: 'http://example.com/1',
+        page: 1,
+        date: new Date().toISOString(),
+      },
+      {
+        name: 'Another Awesome Manga',
+        url: 'http://example.com/2',
+        page: 42,
+        date: new Date().toISOString(),
+      },
+    ]);
     setAppStateValue('panel', args.open ? 'bookmarks' : 'none');
 
     const openPanel = () => {

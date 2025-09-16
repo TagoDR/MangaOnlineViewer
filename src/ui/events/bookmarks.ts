@@ -51,7 +51,10 @@ export function buttonBookmarksOpen() {
 export function buttonBookmark() {
   const num = getAppStateValue('currentPage');
   const mark: IBookmark = {
-    name: getAppStateValue('manga')?.title ?? window.location.hostname,
+    name:
+      getAppStateValue('manga')?.title ??
+      document.documentElement.title ??
+      window.location.hostname,
     url: window.location.href,
     page: num,
     date: new Date().toISOString().slice(0, 10),

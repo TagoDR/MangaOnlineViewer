@@ -3,34 +3,63 @@
 }
 
 #BookmarksList {
-  padding: 0 15px;
+  padding: 0 5px;
   overflow: auto;
   max-height: 60vh;
-}
-
-#BookmarksList .BookmarkItem {
   display: flex;
-  flex-flow: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2px;
+  flex-direction: column;
   gap: 5px;
 }
 
-#BookmarksList .bookmarkColumnLarge {
-  flex-basis: 80%;
+.bookmark-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 5px;
+  transition: background-color 150ms ease-in-out;
+  text-align: left;
 }
 
-#BookmarksList .bookmarkColumnSmall {
-  width: 90px;
+.bookmark-item:hover {
+  background-color: var(--mov-color-fill-quiet, rgba(128, 128, 128, 0.1));
 }
 
-#BookmarksList .bookmarkFunctions {
-  width: 100px;
+.bookmark-info {
+  flex-grow: 1;
+  min-width: 0;
 }
 
-#BookmarksList .bookmarkURl {
-  text-overflow: ellipsis;
-  overflow: hidden;
+.bookmark-name {
+  font-weight: 500;
+}
+
+.bookmark-url {
+  font-size: 0.875rem;
+  text-decoration: none;
+  display: block;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: color-mix(in oklab, var(--theme-body-text-color), transparent 30%);
+}
+.bookmark-url:hover {
+  text-decoration: underline;
+}
+
+.bookmark-details {
+  flex-shrink: 0;
+  width: 90px;
+  font-size: 0.875rem;
+  text-align: right;
+  color: color-mix(in oklab, var(--theme-body-text-color), transparent 30%);
+}
+.bookmark-details > div {
+  padding: 2px 0;
+}
+
+.bookmark-actions {
+  flex-shrink: 0;
+  display: flex;
+  gap: 0.5rem;
 }
