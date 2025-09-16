@@ -43,8 +43,9 @@
   position: sticky;
 }
 
+.tablet #MangaTitle,
 .mobile #MangaTitle {
-  word-wrap: anywhere;
+  max-width: 90vw;
 }
 
 .mobile #ViewerTitle {

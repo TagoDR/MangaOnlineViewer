@@ -89,6 +89,12 @@
   margin: 0;
   font-size: 1.2rem;
   font-weight: 400;
+  word-wrap: anywhere;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 200px;
+  max-width: 40vw;
 }
 
 #GlobalFunctions {
@@ -96,6 +102,5 @@
   gap: 3px;
   padding: 3px 3px 3px 0;
   flex-wrap: wrap;
-  width: 300px;
   z-index: 100;
 }

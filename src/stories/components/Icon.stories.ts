@@ -277,9 +277,9 @@ export const IconGallery: StoryObj = {
         icon => html`
           <div
             class="icon-item"
-            title="Click to copy <mov-icon name='${icon}'></mov-icon>"
+            title="Click to copy icon name: ${icon}"
             style="background-color: var(--theme-primary-color)"
-            @click=${() => navigator.clipboard.writeText(`<mov-icon name="${icon}"></mov-icon>`)}
+            @click=${() => navigator.clipboard.writeText(icon)}
           >
             <mov-icon
               name="${icon}"

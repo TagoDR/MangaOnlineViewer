@@ -79,8 +79,13 @@ export class MovHeader extends LitElement {
           <mov-dropdown id="FileDropdown">
             <mov-button
               slot="trigger"
-              with-caret
-              >File</mov-button
+              title="${getLocaleString('FILE_MENU')}"
+              >
+              <mov-icon
+                label="File"
+                name="IconDotsVertical"
+              ></mov-icon>
+            </mov-button
             >
             <mov-dropdown-item
               id="settings"
@@ -144,8 +149,13 @@ export class MovHeader extends LitElement {
           >
             <mov-button
               slot="trigger"
-              with-caret
-              >View</mov-button
+              title="${getLocaleString('VIEW_MENU')}"
+              >
+              <mov-icon
+                label="View"
+                name="IconBook"
+              ></mov-icon>
+            </mov-button
             >
             <mov-dropdown-item
               id="webComic"
@@ -200,8 +210,13 @@ export class MovHeader extends LitElement {
           >
             <mov-button
               slot="trigger"
-              with-caret
-              >Zoom</mov-button
+              title="${getLocaleString('ZOOM_MENU')}"
+              >
+              <mov-icon
+                label="Zoom"
+                name="IconZoom"
+              ></mov-icon>
+            </mov-button
             >
             <mov-dropdown-item
               id="enlarge"
