@@ -2,7 +2,6 @@ import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import colors, { getTextColor } from '../../utils/colors.ts';
-import { buttonSelectTheme } from '../events/theming.ts';
 import { IconCheck } from '../icons';
 
 declare global {
@@ -28,7 +27,7 @@ export class ColorPanel extends LitElement {
    * @type {string}
    */
   @property({ type: String })
-  selectedTheme = '';
+  value = '';
 
   static styles = css`
     :host {
@@ -91,6 +90,18 @@ export class ColorPanel extends LitElement {
   `;
 
   /**
+   * Handles clicks on individual color swatches. It stops the event from bubbling,
+   * sets the host's title to the swatch's color, and dispatches a new click event
+   * from the host. This allows the parent listener to use `event.currentTarget.title`
+   * to get the color.
+   */
+  private handleColorClick(event: MouseEvent) {
+    event.stopPropagation();
+    this.title = (event.currentTarget as HTMLElement).title;
+    this.click();
+  }
+
+  /**
    * Renders the grid of color swatches grouped by color family.
    * @internal
    */
@@ -109,10 +120,10 @@ export class ColorPanel extends LitElement {
             title="${hex}"
             class="${classMap({
               ThemeRadio: true,
-              selected: this.selectedTheme === hex,
+              selected: this.value === hex,
             })}"
             style="background-color: ${hex}; color: ${text}"
-            @click=${buttonSelectTheme}
+            @click=${this.handleColorClick}
           >
             ${IconCheck}
           </span>

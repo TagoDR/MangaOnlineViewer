@@ -1,7 +1,7 @@
 import { html } from 'lit';
 import { getLocaleString, getSettingsValue } from '../core/settings.ts';
 import { sample } from '../utils/colors.ts';
-import { changeColorScheme, changeThemeHex } from './events/theming.ts';
+import { buttonSelectTheme, changeColorScheme, changeThemeHex } from './events/theming.ts';
 
 function theme() {
   return html`
@@ -20,7 +20,7 @@ function theme() {
       <input
         id="ThemeHex"
         type="color"
-        value="${getSettingsValue('theme')}"
+        .value="${getSettingsValue('theme')}"
         class="colorpicker"
         title="${getSettingsValue('theme')}"
         @input=${changeThemeHex}
@@ -30,9 +30,10 @@ function theme() {
         ${Object.values(sample).map(c => html`<option value="${c}"></option>`)}
       </datalist>
     </div>
+    ${Object.values(sample).map(c => html`<mov-color-swatch .value="${c}" ?selected=${getSettingsValue('theme') === c} @click=${changeThemeHex}></mov-color-swatch>`)}
     <details class="ControlLabel">
       <summary>${getLocaleString('THEME_HUE')} & ${getLocaleString('THEME_SHADE')}</summary>
-      <mov-color-panel .selectedTheme=${getSettingsValue('theme')}></mov-color-panel>
+      <mov-color-panel .value=${getSettingsValue('theme')} @click=${buttonSelectTheme}></mov-color-panel>
     </details>
   `;
 }

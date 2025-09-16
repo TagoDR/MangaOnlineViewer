@@ -87,7 +87,7 @@ export class ColorSwatch extends LitElement {
    * @type {string}
    */
   @property({ type: String })
-  color = '#228be6';
+  value = '#228be6';
 
   /**
    * If `true`, a checkmark icon will be displayed over the swatch.
@@ -123,7 +123,7 @@ export class ColorSwatch extends LitElement {
    */
   willUpdate(changedProperties: PropertyValues) {
     if (changedProperties.has('color')) {
-      this.contrastColor = getTextColor(this.color);
+      this.contrastColor = getTextColor(this.value);
     }
   }
 
@@ -135,7 +135,7 @@ export class ColorSwatch extends LitElement {
 
     const swatchStyles = {
       '--radius': typeof this.radius === 'number' ? `${this.radius}px` : this.radius,
-      '--color': this.color,
+      '--color': this.value,
       '--contrast-color': this.contrastColor,
     };
 

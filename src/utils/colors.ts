@@ -4,22 +4,17 @@ import Color from 'colorjs.io';
  * A collection of sample colors, courtesy of colors.css.
  */
 export const sample = {
-  teal: '#39cccc',
-  aqua: '#7fdbff',
-  blue: '#0074d9',
   navy: '#001f3f',
-  lime: '#01ff70',
-  green: '#2ecc40',
-  olive: '#3d9970',
-  fuchsia: '#f012be',
-  purple: '#b10dc9',
-  maroon: '#85144b',
-  red: '#ff4136',
-  orange: '#ff851b',
-  yellow: '#ffdc00',
-  gray: '#aaaaaa',
-  silver: '#dddddd',
-  back: '#111111',
+  darkblue: '#1e4f7a',
+  blue: '#1A2F4B',
+  darkgreen: '#062925',
+  green: '#1A3636',
+  grass: '#1B3C53',
+  teal: '#044A42',
+  darkpurple: '#1B0044',
+  purple: '#363062',
+  grape: '#31326F',
+  maroon: '#44000D',
 };
 
 /**

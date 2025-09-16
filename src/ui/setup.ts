@@ -9,7 +9,7 @@
 import './components/Icon.ts';
 import './components/Button.ts';
 import './components/ToggleButton.ts';
-// import './components/ColorSwatch.ts';
+import './components/ColorSwatch.ts';
 // import './components/ColorPalette.ts';
 import './components/ColorPanel.ts';
 // import './components/ColorPicker.ts';
