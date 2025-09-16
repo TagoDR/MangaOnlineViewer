@@ -42,7 +42,7 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
   return css`
     :where(:root),
     ${selector}, .dark,
-    ${selector}.dark {
+    ${selector}.dark, ${selector}.wa-dark, .wa-dark {
       --theme-primary-color: ${hex};
       --theme-primary-text-color: ${text};
       --theme-secondary-color: ${secondary};
@@ -66,12 +66,24 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
       --mov-color-on-normal: var(--theme-secondary-text-color, ${gradient[3]});
       --mov-color-on-loud: var(--theme-primary-text-color, white);
 
+      --wa-color-brand-fill-quiet: var(--mov-color-fill-quiet);
+      --wa-color-brand-fill-normal: var(--mov-color-fill-normal);
+      --wa-color-brand-fill-loud: var(--mov-color-fill-loud);
+      --wa-color-brand-border-quiet: var(--mov-color-border-quiet);
+      --wa-color-brand-border-normal: var(--mov-color-border-normal);
+      --wa-color-brand-border-loud: var(--mov-color-border-loud);
+      --wa-color-brand-on-quiet: var(--mov-color-on-quiet);
+      --wa-color-brand-on-normal: var(--mov-color-on-normal);
+      --wa-color-brand-on-loud: var(--mov-color-on-loud);
+
       --mov-color-mix-hover: black 8%;
       --mov-color-mix-active: black 16%;
     }
 
+    ${selector}.light,
     .light,
-    ${selector}.light {
+    ${selector}.wa-light,
+    .wa-light {
       color-scheme: light;
       --theme-body-background: ${colors.gray['50']};
       --theme-body-text-color: ${colors.gray['900']};
