@@ -7,7 +7,6 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 import '../../ui/components/Button.ts'; // Ensure the <mov-button> component is defined
 import '../../ui/components/Icon.ts';
-import { toKebabCase } from '../../utils/format.ts'; // Ensure the <mov-button> component is defined
 
 const variants = ['brand', 'neutral', 'success', 'warning', 'danger'];
 const appearances = ['plain', 'accent', 'filled', 'filled outline', 'outline'];
@@ -113,22 +112,6 @@ export const AllVariants: StoryObj = {
     controls: { disable: true },
   },
   render: () => html`
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.0.0-beta.5/dist-cdn/styles/themes/default.css"
-    />
-    <script type="module">
-      import 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.0.0-beta.5/dist-cdn/components/button/button.js';
-      import 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.0.0-beta.5/dist-cdn/components/icon/icon.js';
-      import { registerIconLibrary } from 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.0.0-beta.5/dist-cdn/webawesome.js';
-      registerIconLibrary('default', {
-        resolver: name => 'https://cdn.jsdelivr.net/npm/@tabler/icons/icons/' + name + '.svg',
-        mutator: svg => {
-          svg.style.fill = 'none';
-          svg.setAttribute('stroke', 'var(--wa-color-text-normal)');
-        },
-      });
-    </script>
     <div style="display: flex; flex-direction: column; gap: 1.5rem;">
       <div class="table-scroll">
         <table>
@@ -201,31 +184,31 @@ export const AllVariants: StoryObj = {
                 <div class="wa-cluster wa-gap-2xs">
                   <wa-button
                     variant="brand"
-                    appearance="filled outlined"
+                    appearance="filled-outlined"
                     size="medium"
                     >Brand</wa-button
                   >
                   <wa-button
                     variant="neutral"
-                    appearance="filled outlined"
+                    appearance="filled-outlined"
                     size="medium"
                     >Neutral</wa-button
                   >
                   <wa-button
                     variant="success"
-                    appearance="filled outlined"
+                    appearance="filled-outlined"
                     size="medium"
                     >Success</wa-button
                   >
                   <wa-button
                     variant="warning"
-                    appearance="filled outlined"
+                    appearance="filled-outlined"
                     size="medium"
                     >Warning</wa-button
                   >
                   <wa-button
                     variant="danger"
-                    appearance="filled outlined"
+                    appearance="filled-outlined"
                     size="medium"
                     >Danger</wa-button
                   >
@@ -234,7 +217,7 @@ export const AllVariants: StoryObj = {
               <td>
                 <div class="wa-cluster wa-gap-2xs">
                   <mov-button
-                    appearance="filled outlined"
+                    appearance="filled-outlined"
                     size="medium"
                     >Brand</mov-button
                   >
@@ -468,7 +451,7 @@ export const AllVariants: StoryObj = {
                       size="small"
                       appearance="${appearances[index % appearances.length]}"
                     >
-                      <wa-icon name="${toKebabCase(icon)}"></wa-icon>
+                      <wa-icon name="${icon}"></wa-icon>
                     </wa-button>
                   `,
                 )}
