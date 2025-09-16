@@ -33,7 +33,7 @@
   top: 0;
 }
 
-#Header.scroll.headroom-hide {
+#Header.scroll.headroom-hide:not(.visible) {
   animation: none;
   transform: translateY(-100%);
   position: sticky;

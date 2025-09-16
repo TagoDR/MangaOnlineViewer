@@ -52,8 +52,19 @@ export class HeadroomController implements ReactiveController {
       newHeadroom = 'top';
     }
 
+    let needsUpdate = false;
     if (this.headroom !== newHeadroom) {
       this.headroom = newHeadroom;
+      needsUpdate = true;
+    }
+    if (header === 'scroll') {
+      const newHeaderVisible = newHeadroom !== 'hide';
+      if (this.headerVisible !== newHeaderVisible) {
+        this.headerVisible = newHeaderVisible;
+        needsUpdate = true;
+      }
+    }
+    if (needsUpdate) {
       this.host.requestUpdate();
     }
 
@@ -74,7 +85,7 @@ export class HeadroomController implements ReactiveController {
   }
 
   private handleMouseMove = _.throttle((event: MouseEvent) => {
-    if (getSettingsValue('header') === 'hover') {
+    if (['hover', 'scroll'].includes(getSettingsValue('header'))) {
       const newHeaderVisible = HeadroomController.isMouseInsideRegion(
         event,
         window.innerWidth,

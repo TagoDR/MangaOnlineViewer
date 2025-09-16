@@ -40,7 +40,7 @@ export const defaultSettings: ISettings = {
   enableComments: true,
   enabled: true,
   fitWidthIfOversize: true,
-  header: 'hover',
+  header: 'scroll',
   hidePageControls: false,
   lazyLoadImages: false,
   lazyStart: 50,
