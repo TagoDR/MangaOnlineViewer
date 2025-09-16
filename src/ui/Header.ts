@@ -44,6 +44,7 @@ export class MovHeader extends LitElement {
     const { headroom, headerVisible } = this.headroomController;
     const keybinds = getSettingsValue('keybinds');
     const renderKeybind = (action: keyof typeof keybinds) => {
+      if (getAppStateValue('device') !== 'desktop') return nothing;
       const keys = keybinds[action];
       if (!keys || keys.length === 0) {
         return nothing;
@@ -259,9 +260,7 @@ export class MovHeader extends LitElement {
         <div id="ViewerTitle">
           <h1 id="MangaTitle">${this.manga.title}</h1>
         </div>
-        <div
-          id="ZoomControl"
-        >
+        <div id="ZoomControl">
           <input
             type="range"
             id="Zoom"
