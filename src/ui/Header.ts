@@ -256,12 +256,11 @@ export class MovHeader extends LitElement {
             </mov-dropdown-item>
           </mov-dropdown>
         </div>
-        <div class="ViewerTitle">
+        <div id="ViewerTitle">
           <h1 id="MangaTitle">${this.manga.title}</h1>
         </div>
         <div
-          class="zoom-container"
-          style="max-width: 300px;"
+          id="ZoomControl"
         >
           <input
             type="range"
@@ -288,25 +287,24 @@ export class MovHeader extends LitElement {
             href="${this.manga.series ?? nothing}"
             @click=${buttonRedirectURL}
             title="${getLocaleString('RETURN_CHAPTER_LIST')}"
+            ?disabled=${!this.manga.series}
           >
             <mov-icon name="IconBookReturn"></mov-icon>
           </mov-button>
           <mov-button
             id="CommentsButton"
-            class="${classMap({ disabled: !this.manga.comments })}"
             title="${getLocaleString('DISPLAY_COMMENTS')}"
             @click=${buttonCommentsOpen}
+            ?disabled=${!this.manga.comments}
           >
             <mov-icon name="IconMessage"></mov-icon>
           </mov-button>
           <mov-button
             id="download"
-            class="${classMap({
-              disabled: getAppStateValue('download') !== 'available',
-              loading: getAppStateValue('download') === 'working',
-            })}"
             title="${getLocaleString('DOWNLOAD_ZIP')}"
             @click=${buttonStartDownload}
+            ?disabled=${getAppStateValue('download') !== 'available'}
+            ?loading=${getAppStateValue('download') === 'working'}
           >
             <mov-icon
               name="${
@@ -319,6 +317,7 @@ export class MovHeader extends LitElement {
             href="${this.manga.prev ?? nothing}"
             title="${getLocaleString('PREVIOUS_CHAPTER')}"
             @click=${buttonRedirectURL}
+            ?disabled=${!this.manga.prev}
           >
             <mov-icon name="IconArrowBigLeft"></mov-icon>
           </mov-button>
@@ -327,6 +326,7 @@ export class MovHeader extends LitElement {
             href="${this.manga.next ?? nothing}"
             title="${getLocaleString('NEXT_CHAPTER')}"
             @click=${buttonRedirectURL}
+            ?disabled=${!this.manga.next}
           >
             <mov-icon name="IconArrowBigRight"></mov-icon>
           </mov-button>

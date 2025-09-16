@@ -5,8 +5,8 @@
   flex-wrap: wrap;
 }
 
-.mobile .ViewerTitle,
-.tablet .ViewerTitle {
+.mobile #ViewerTitle,
+.tablet #ViewerTitle {
   order: 4;
   min-height: auto;
 }
@@ -22,8 +22,8 @@
   flex-direction: column;
 }
 
-.mobile .zoom-container,
-.tablet .zoom-container {
+.mobile #ZoomControl,
+.tablet #ZoomControl {
   order: 3;
 }
 
@@ -47,7 +47,7 @@
   word-wrap: anywhere;
 }
 
-.mobile .ViewerTitle {
+.mobile #ViewerTitle {
   order: 3;
   margin-top: 0;
   height: auto;
@@ -73,21 +73,6 @@
   border-radius: 0 5px 5px 0;
 }
 
-.mobile #ChapterNavigation {
-  order: 3;
-  width: min-content;
-  min-width: 205px;
-}
-
-.mobile .ChapterControl {
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.mobile .ChapterControl .NavigationButton {
-  flex-grow: 1;
-}
-
 .mobile .PageFunctions {
   padding: 0;
 }
@@ -99,9 +84,8 @@
 .mobile #GlobalFunctions #ZoomSlider,
 .tablet #GlobalFunctions #ZoomSlider,
 .mobile .PageFunctions .PageButton:not(.Bookmark),
-.mobile .ChapterControl .download,
 .tablet #Counters,
-.mobile .zoom-container,
+.mobile #ZoomControl,
 .mobile #ZoomDropdown,
 .mobile #ViewDropdown,
 .mobile #FileDropdown :where(:nth-child(3), :nth-child(4)) {
