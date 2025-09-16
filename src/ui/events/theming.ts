@@ -6,8 +6,11 @@ import { getSettingsValue, saveSettingsValue } from '../../core/settings';
 export function changeColorScheme() {
   const isDark = getSettingsValue('colorScheme') === 'dark';
   saveSettingsValue('colorScheme', isDark ? 'light' : 'dark');
-  document.documentElement.classList.remove(isDark ? 'dark' : 'light');
-  document.documentElement.classList.add(getSettingsValue('colorScheme'));
+  document.documentElement.classList.remove('dark', 'light', 'wa-dark', 'wa-light');
+  document.documentElement.classList.add(
+    getSettingsValue('colorScheme'),
+    `wa-${getSettingsValue('colorScheme')}`,
+  );
 }
 
 /**
