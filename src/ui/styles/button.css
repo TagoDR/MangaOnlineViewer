@@ -51,6 +51,9 @@
   border-radius: var(--mov-border-radius-m);
   border-style: solid;
   border-width: var(--mov-border-width-s);
+  background-color: var(--mov-color-fill-loud);
+  color: var(--mov-color-on-loud);
+  border-color: transparent;
 }
 
 /* Appearance modifiers */
