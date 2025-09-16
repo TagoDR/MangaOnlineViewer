@@ -52,16 +52,16 @@ export class MovHeader extends LitElement {
     };
 
     return html`
-      <button
+      <mov-button
         id="menu"
-        class="HeaderButton ${classMap({
+        class="${classMap({
           [getSettingsValue('header')]: true,
           hide: ['top', 'end'].includes(headroom),
         })}"
         @click=${this.headroomController.toggleHeaderVisibility}
       >
         <mov-icon name="IconMenu2"></mov-icon>
-      </button>
+      </mov-button>
       <header
         id="Header"
         class="${classMap({
@@ -78,7 +78,7 @@ export class MovHeader extends LitElement {
           <mov-dropdown id="FileDropdown">
             <mov-button
               slot="trigger"
-              class="HeaderButton dropdown-trigger"
+              with-caret
               >File</mov-button
             >
             <mov-dropdown-item
@@ -143,7 +143,7 @@ export class MovHeader extends LitElement {
           >
             <mov-button
               slot="trigger"
-              class="HeaderButton dropdown-trigger"
+              with-caret
               >View</mov-button
             >
             <mov-dropdown-item
@@ -199,7 +199,7 @@ export class MovHeader extends LitElement {
           >
             <mov-button
               slot="trigger"
-              class="HeaderButton dropdown-trigger"
+              with-caret
               >Zoom</mov-button
             >
             <mov-dropdown-item

@@ -131,7 +131,8 @@ export default class Button extends LitElement {
           ? html`<mov-icon
             part="caret"
             class="caret"
-            name="chevron-down"
+            name="IconChevronRight"
+            style="transform: rotate(90deg)"
           ></mov-icon>`
           : ''
       }

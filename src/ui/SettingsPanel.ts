@@ -68,7 +68,6 @@ export default class SettingsPanel extends LitElement {
           id="ResetSettings"
           @click="${resetSettings}"
           title="${getLocaleString('BUTTON_RESET_SETTINGS')}"
-          style="width: 100%"
         >
           <mov-icon
             name="IconSettingsOff"

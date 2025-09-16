@@ -70,3 +70,8 @@
   min-height: 28px;
   min-width: 28px;
 }
+
+#ResetSettings,
+#ResetSettings::part(base) {
+  width: 100%;
+}

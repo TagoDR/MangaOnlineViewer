@@ -18,7 +18,7 @@ export default {
   },
   render: args => html`
     <mov-dropdown ?open=''${args.open}'' ?checkable=''${args.checkable}''>
-      <button slot="trigger" class="HeaderButton dropdown-trigger">Dropdown Trigger</button>
+      <button slot="trigger" class="dropdown-trigger">Dropdown Trigger</button>
       <mov-dropdown-item>
         <mov-icon slot="icon" name="IconSettings"></mov-icon>
         Settings
@@ -57,7 +57,7 @@ export const Checkable: StoryObj = {
     >
       <button
         slot="trigger"
-        class="HeaderButton dropdown-trigger"
+        class="dropdown-trigger"
       >
         View Mode
       </button>
@@ -98,7 +98,7 @@ export const WithDetails: StoryObj = {
     <mov-dropdown open>
       <button
         slot="trigger"
-        class="HeaderButton dropdown-trigger"
+        class="dropdown-trigger"
       >
         File
       </button>
