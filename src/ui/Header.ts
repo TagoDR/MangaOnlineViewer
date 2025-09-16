@@ -1,3 +1,4 @@
+import keycss from '@gerhobbelt/keyscss/keys.css?inline';
 import { useStores } from '@nanostores/lit';
 import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
@@ -31,7 +32,7 @@ import './components/Icon.ts';
 @customElement('mov-header')
 @useStores(settings, locale, appState)
 export class MovHeader extends LitElement {
-  static styles = [unsafeCSS(styles), unsafeCSS(media), css``];
+  static styles = [unsafeCSS(styles), unsafeCSS(media), unsafeCSS(keycss), css``];
 
   private headroomController = new HeadroomController(this);
 
@@ -41,6 +42,15 @@ export class MovHeader extends LitElement {
   render() {
     if (!this.manga) return html``;
     const { headroom, headerVisible } = this.headroomController;
+    const keybinds = getSettingsValue('keybinds');
+    const renderKeybind = (action: keyof typeof keybinds) => {
+      const keys = keybinds[action];
+      if (!keys || keys.length === 0) {
+        return nothing;
+      }
+      return keys.map(key => html`<kbd slot="details">${key}</kbd>`);
+    };
+
     return html`
       <button
         id="menu"
@@ -77,6 +87,7 @@ export class MovHeader extends LitElement {
                 name="IconSettings"
               ></mov-icon>
               ${getLocaleString('SETTINGS')}
+              ${renderKeybind('SETTINGS')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="keybindings"
@@ -98,6 +109,7 @@ export class MovHeader extends LitElement {
                 name="${getAppStateValue('autoScroll') ? 'IconPlayerPause' : 'IconPlayerPlay'}"
               ></mov-icon>
               ${getLocaleString('SCROLL_START')}
+              ${renderKeybind('SCROLL_START')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="bookmarks"
@@ -144,6 +156,7 @@ export class MovHeader extends LitElement {
                 name="IconSpacingVertical"
               ></mov-icon>
               ${getLocaleString('VIEW_MODE_WEBCOMIC')}
+              ${renderKeybind('VIEW_MODE_WEBCOMIC')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="verticalMode"
@@ -156,6 +169,7 @@ export class MovHeader extends LitElement {
                 name="IconArrowAutofitDown"
               ></mov-icon>
               ${getLocaleString('VIEW_MODE_VERTICAL')}
+              ${renderKeybind('VIEW_MODE_VERTICAL')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="ltrMode"
@@ -167,6 +181,7 @@ export class MovHeader extends LitElement {
                 name="IconArrowAutofitRight"
               ></mov-icon>
               ${getLocaleString('VIEW_MODE_LEFT')}
+              ${renderKeybind('VIEW_MODE_LEFT')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="rtlMode"
@@ -178,6 +193,7 @@ export class MovHeader extends LitElement {
                 name="IconArrowAutofitLeft"
               ></mov-icon>
               ${getLocaleString('VIEW_MODE_RIGHT')}
+              ${renderKeybind('VIEW_MODE_RIGHT')}
             </mov-dropdown-item>
           </mov-dropdown>
           <mov-dropdown
@@ -198,6 +214,7 @@ export class MovHeader extends LitElement {
                 name="IconZoomInArea"
               ></mov-icon>
               ${getLocaleString('ENLARGE')}
+              ${renderKeybind('ENLARGE')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="restore"
@@ -208,6 +225,7 @@ export class MovHeader extends LitElement {
                 name="IconZoomPan"
               ></mov-icon>
               ${getLocaleString('RESTORE')}
+              ${renderKeybind('RESTORE')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="reduce"
@@ -218,6 +236,7 @@ export class MovHeader extends LitElement {
                 name="IconZoomOutArea"
               ></mov-icon>
               ${getLocaleString('REDUCE')}
+              ${renderKeybind('REDUCE')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="fitWidth"
@@ -229,6 +248,7 @@ export class MovHeader extends LitElement {
                 name="IconArrowAutofitWidth"
               ></mov-icon>
               ${getLocaleString('FIT_WIDTH')}
+              ${renderKeybind('FIT_WIDTH')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="fitHeight"
@@ -240,6 +260,7 @@ export class MovHeader extends LitElement {
                 name="IconArrowAutofitHeight"
               ></mov-icon>
               ${getLocaleString('FIT_HEIGHT')}
+              ${renderKeybind('FIT_HEIGHT')}
             </mov-dropdown-item>
           </mov-dropdown>
         </div>

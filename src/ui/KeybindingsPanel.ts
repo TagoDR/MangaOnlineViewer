@@ -14,6 +14,7 @@ import {
 } from '../core/settings.ts';
 import { buttonPanelsClose, editKeybindings, saveKeybindings } from './events/panels.ts';
 import './components/Panel.ts';
+import keycss from '@gerhobbelt/keyscss/keys.css?inline';
 import styles from './styles/keybindings.css?inline';
 
 declare global {
@@ -30,7 +31,7 @@ declare global {
 @customElement('mov-keybindings-panel')
 @useStores(settings, locale, appState)
 export default class KeybindingsPanel extends LitElement {
-  static styles = [unsafeCSS(styles)];
+  static styles = [unsafeCSS(styles), unsafeCSS(keycss)];
 
   // protected createRenderRoot() {
   //   return this; // No shadow DOM
