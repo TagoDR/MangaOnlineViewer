@@ -1,5 +1,5 @@
-import type { Ref } from 'lit/directives/ref.js';
 import type { TemplateResult } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 import type { IManga } from './IManga';
 
 /**
@@ -61,7 +61,7 @@ export type Page = {
 export interface DialogState {
   open: boolean;
   title: string;
-  icon?: 'info' | 'warning' | 'success' | 'error' | 'question';
+  icon?: string;
   content: TemplateResult;
   footer: TemplateResult;
 }
