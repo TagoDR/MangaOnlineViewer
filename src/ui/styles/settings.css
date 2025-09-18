@@ -1,8 +1,6 @@
 #SettingsPanel {
   color: var(--theme-text-color);
   padding: 10px;
-  display: flex;
-  flex-flow: column;
   gap: 5px;
 }
 
