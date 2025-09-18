@@ -104,3 +104,10 @@
   flex-wrap: wrap;
   z-index: 100;
 }
+
+#ZoomControl {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 5px;
+}
