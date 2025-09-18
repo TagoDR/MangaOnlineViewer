@@ -5,7 +5,7 @@ import '../ui/KeybindingsPanel.ts';
 
 const meta: Meta = {
   title: 'UI/KeybindingsPanel',
-  component: 'mov-keybindings-panel',
+  component: 'keybindings-panel',
   argTypes: {
     panel: {
       control: 'select',
@@ -27,7 +27,7 @@ const meta: Meta = {
       <button @click=${openListView}>Open List View</button>
       <button @click=${openEditorView}>Open Editor View</button>
       <p>Change the 'panel' control in Storybook to change the view or close the panel.</p>
-      <mov-keybindings-panel></mov-keybindings-panel>
+      <keybindings-panel></keybindings-panel>
     `;
   },
 };

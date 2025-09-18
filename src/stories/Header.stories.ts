@@ -11,7 +11,7 @@ const mockManga = localhost.run() as IMangaImages;
 
 export default {
   title: 'UI/Header',
-  component: 'mov-header',
+  component: 'reader-header',
   argTypes: {
     mode: {
       control: 'select',
@@ -29,7 +29,7 @@ export default {
       <style>
         ${styles}
       </style>
-      <mov-header .manga=${mockManga}></mov-header>
+      <reader-header .manga=${mockManga}></reader-header>
       <div style="height: 200vh; background: #eee; padding: 1rem;">
         Scroll down to see header effects
       </div>

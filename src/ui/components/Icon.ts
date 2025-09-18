@@ -42,7 +42,7 @@ export class Icon extends LitElement {
     }
     /* Fallback if no color is set */
     :host(:not([style*='color'])) svg {
-      color: var(--theme-primary-text-color);
+      color: var(--mov-color-on-loud);
     }
   `;
 

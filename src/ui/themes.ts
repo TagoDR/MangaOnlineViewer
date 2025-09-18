@@ -56,13 +56,13 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
       --theme-border-color: ${colors.dark['400']};
 
       --mov-color-fill-quiet: ${gradient[9]};
-      --mov-color-fill-normal: ${gradient[8]};
+      --mov-color-fill-normal: var(--theme-secondary-color, ${gradient[8]});
       --mov-color-fill-loud: var(--theme-primary-color);
       --mov-color-border-quiet: ${gradient[8]};
       --mov-color-border-normal: ${gradient[7]};
       --mov-color-border-loud: ${gradient[6]};
       --mov-color-on-quiet: ${gradient[4]};
-      --mov-color-on-normal: ${gradient[3]};
+      --mov-color-on-normal: var(--theme-secondary-text-color, ${gradient[3]});
       --mov-color-on-loud: var(--theme-primary-text-color, white);
 
       --mov-color-mix-hover: black 8%;
@@ -80,13 +80,13 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
       --theme-border-color: ${colors.gray['100']};
 
       --mov-color-fill-quiet: ${gradient[0]};
-      --mov-color-fill-normal: ${gradient[1]};
+      --mov-color-fill-normal: var(--theme-secondary-color, ${gradient[1]});
       --mov-color-fill-loud: var(--theme-primary-color);
       --mov-color-border-quiet: ${gradient[1]};
       --mov-color-border-normal: ${gradient[2]};
       --mov-color-border-loud: ${gradient[4]};
       --mov-color-on-quiet: ${gradient[6]};
-      --mov-color-on-normal: ${gradient[7]};
+      --mov-color-on-normal: var(--theme-secondary-text-color, ${gradient[3]});
       --mov-color-on-loud: var(--theme-primary-text-color, white);
 
       --mov-color-mix-hover: black 10%;

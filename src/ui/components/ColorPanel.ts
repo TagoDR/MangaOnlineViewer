@@ -55,7 +55,7 @@ export class ColorPanel extends LitElement {
       align-items: center;
     }
     .ThemeRadio {
-      color: var(--theme-primary-text-color);
+      color: var(--mov-color-on-loud);
       height: 20px;
       width: 20px;
       border-radius: 3px;

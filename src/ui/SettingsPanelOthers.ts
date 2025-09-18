@@ -29,51 +29,51 @@ function checkboxOptions() {
   return html`
     <div class="ControlLabel fitIfOversize">
       ${getLocaleString('FIT_WIDTH_OVERSIZED')}
-      <mov-toggle-switch
+      <toggle-switch
         name="fitIfOversize"
         ?checked=${getSettingsValue('fitWidthIfOversize')}
         .onChange=${checkFitWidthOversize}
-      ></mov-toggle-switch>
+      ></toggle-switch>
     </div>
     <div class="ControlLabel pagination">
       ${getLocaleString('ENABLE_PAGINATION')}
-      <mov-toggle-switch
+      <toggle-switch
         name="pagination"
         ?checked=${getSettingsValue('pagination')}
         .onChange=${checkPagination}
-      ></mov-toggle-switch>
+      ></toggle-switch>
     </div>
     <div class="ControlLabel enableComments">
       ${getLocaleString('ENABLE_COMMENTS')}
-      <mov-toggle-switch
+      <toggle-switch
         name="enableComments"
         ?checked=${getSettingsValue('enableComments')}
         .onChange=${checkEnableComments}
-      ></mov-toggle-switch>
+      ></toggle-switch>
     </div>
     <div class="ControlLabel downloadZip">
       ${getLocaleString('DOWNLOAD_IMAGES')}
-      <mov-toggle-switch
+      <toggle-switch
         name="downloadZip"
         ?checked=${getSettingsValue('downloadZip')}
         .onChange=${checkAutoDownload}
-      ></mov-toggle-switch>
+      ></toggle-switch>
     </div>
     <div class="ControlLabel hidePageControls">
       ${getLocaleString('HIDE_CONTROLS')}
-      <mov-toggle-switch
+      <toggle-switch
         name="hidePageControls"
         ?checked=${getSettingsValue('hidePageControls')}
         .onChange=${checkHideImageControls}
-      ></mov-toggle-switch>
+      ></toggle-switch>
     </div>
     <div class="ControlLabel lazyLoadImages">
       ${getLocaleString('LAZY_LOAD_IMAGES_ENABLE')}
-      <mov-toggle-switch
+      <toggle-switch
         name="lazyLoadImages"
         ?checked=${getSettingsValue('lazyLoadImages')}
         .onChange=${checkLazyLoad}
-      ></mov-toggle-switch>
+      ></toggle-switch>
     </div>
   `;
 }
@@ -123,12 +123,12 @@ function headerType() {
   return html`
     <div class="ControlLabel headerType">
       ${getLocaleString('HEADER_TYPE')}
-      <mov-segmented-control
+      <segmented-control
         .options=${headerOptions}
         .value=${getSettingsValue('header')}
         @change=${changeHeaderType}
         labelPosition="bottom"
-      ></mov-segmented-control>
+      ></segmented-control>
     </div>
   `;
 }
@@ -143,12 +143,12 @@ function navbarType() {
   return html`
     <div class="ControlLabel navbarType">
       ${getLocaleString('NAVBAR_TYPE')}
-      <mov-segmented-control
+      <segmented-control
         .options=${navbarOptions}
         .value=${getSettingsValue('navbar')}
         @change=${changeNavbarType}
         labelPosition="tooltip"
-      ></mov-segmented-control>
+      ></segmented-control>
     </div>
   `;
 }

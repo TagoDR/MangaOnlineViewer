@@ -27,12 +27,12 @@ function defaultZoomMode() {
   ];
   return html` <div class="ControlLabel DefaultZoomMode">
     ${getLocaleString('DEFAULT_ZOOM_MODE')}
-    <mov-segmented-control
+    <segmented-control
       .options=${zoomOptions}
       .value=${getSettingsValue('zoomMode')}
       @change=${changeDefaultZoomMode}
       labelPosition="tooltip"
-    ></mov-segmented-control>
+    ></segmented-control>
   </div>`;
 }
 
@@ -176,12 +176,12 @@ function viewMode() {
   return html`
     <div class="ControlLabel viewMode">
       ${getLocaleString('DEFAULT_VIEW_MODE')}
-      <mov-segmented-control
+      <segmented-control
         .options=${viewModeOptions}
         .value=${getSettingsValue('viewMode')}
         @change=${changeDefaultViewMode}
         labelPosition="tooltip"
-      ></mov-segmented-control>
+      ></segmented-control>
     </div>
   `;
 }

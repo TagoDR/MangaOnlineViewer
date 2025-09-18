@@ -20,7 +20,7 @@ import styles from './styles/settings.css?inline';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mov-settings-panel': SettingsPanel;
+    'settings-panel': SettingsPanel;
   }
 }
 
@@ -29,7 +29,7 @@ declare global {
  * This panel serves as a container for various setting categories, each rendered as a separate fieldset.
  * Its visibility is reactively controlled by the `panel` property in the application state.
  */
-@customElement('mov-settings-panel')
+@customElement('settings-panel')
 @useStores(settings, locale, appState)
 export default class SettingsPanel extends LitElement {
   static styles = [

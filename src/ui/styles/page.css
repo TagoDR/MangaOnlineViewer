@@ -13,8 +13,8 @@
   border-style: solid;
   padding: 2px;
   min-height: 32px;
-  color: var(--theme-primary-text-color);
-  background-color: var(--theme-primary-color);
+  color: var(--mov-color-on-loud);
+  background-color: var(--mov-color-fill-loud);
   border-color: var(--theme-border-color);
   text-decoration: none;
 }
@@ -25,8 +25,8 @@
 }
 
 .PageButton[selected] {
-  background-color: var(--theme-secondary-color);
-  color: var(--theme-secondary-text-color);
+  background-color: var(--mov-color-fill-normal);
+  color: var(--mov-color-on-normal);
   border: 1px solid var(--theme-border-color);
 }
 
@@ -107,8 +107,8 @@
 }
 
 .PageFunctions > .PageIndex {
-  background-color: var(--theme-primary-color);
-  color: var(--theme-primary-text-color);
+  background-color: var(--mov-color-fill-loud);
+  color: var(--mov-color-on-loud);
   min-width: 20px;
   text-align: center;
   display: inline-block;

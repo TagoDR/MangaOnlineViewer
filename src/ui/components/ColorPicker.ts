@@ -1,7 +1,7 @@
+import Color from 'colorjs.io';
 import { css, html, LitElement, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
-import Color from 'colorjs.io';
 import colors from '../../utils/colors';
 import './ColorSwatch.ts';
 
@@ -223,26 +223,26 @@ export class ColorPicker extends LitElement {
           this.swatches
             ? this.swatches.map(
                 color => html`
-                <mov-color-swatch
+                <color-swatch
                   .color=${color}
                   title=${color}
                   ?selected=${selectedColorHex === new Color(color).toString({ format: 'hex' })}
                   @click=${() => this.selectSwatch(color)}
-                ></mov-color-swatch>
+                ></color-swatch>
               `,
               )
             : Object.entries(colors)
                 .filter(([name]) => !['dark', 'gray', 'zinc', 'neutral', 'stone'].includes(name))
                 .map(
                   ([name, color]) => html`
-                  <mov-color-swatch
+                  <color-swatch
                     .color=${color['600']}
                     title=${name.charAt(0).toUpperCase() + name.slice(1)}
                     ?selected=${
                       selectedColorHex === new Color(color['600']).toString({ format: 'hex' })
                     }
                     @click=${() => this.selectSwatch(color['600'])}
-                  ></mov-color-swatch>
+                  ></color-swatch>
                 `,
                 )
         }

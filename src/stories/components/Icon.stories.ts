@@ -114,7 +114,7 @@ export const ColorVariations: StoryObj = {
   },
   render: () => html`
     <div
-      style="display: flex; align-items: center; gap: 1rem; background-color: var(--theme-primary-color)"
+      style="display: flex; align-items: center; gap: 1rem; background-color: var(--mov-color-fill-loud)"
     >
       ${colors.map(
         color => html`
@@ -280,7 +280,7 @@ export const IconGallery: StoryObj = {
           <div
             class="icon-item"
             title="Click to copy icon name: ${icon}"
-            style="background-color: var(--theme-primary-color)"
+            style="background-color: var(--mov-color-fill-loud)"
             @click=${() => navigator.clipboard.writeText(icon)}
           >
             <mov-icon

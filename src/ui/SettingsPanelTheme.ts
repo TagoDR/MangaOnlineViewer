@@ -7,13 +7,13 @@ function theme() {
   return html`
     <div class="ControlLabel ColorSchemeSelector">
       <label>${getLocaleString('COLOR_SCHEME')}</label>
-      <mov-toggle-button
+      <toggle-button
         id="ColorScheme"
         mode="theme"
         @click=${changeColorScheme}
         ?active=${getSettingsValue('colorScheme') === 'dark'}
       >
-      </mov-toggle-button>
+      </toggle-button>
     </div>
     <div class="ControlLabel ThemeSelector">
       <label>${getLocaleString('THEME_COLOR')}</label>
@@ -33,11 +33,11 @@ function theme() {
     <span id="ColorRecommendations">
       ${Object.values(sample).map(
         c =>
-          html`<mov-color-swatch
+          html`<color-swatch
             .value="${c}"
             ?selected=${getSettingsValue('theme') === c}
             @click=${changeThemeHex}
-          ></mov-color-swatch>`,
+          ></color-swatch>`,
       )}
     </span>
     <details class="ControlLabel">

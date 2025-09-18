@@ -4,7 +4,7 @@ import { IconCheck, IconX } from '../icons';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mov-toggle-switch': ToggleSwitch;
+    'toggle-switch': ToggleSwitch;
   }
 }
 
@@ -12,11 +12,11 @@ declare global {
  * A stylish toggle switch component that mimics the appearance of a physical switch.
  * It is built upon a native HTML checkbox for accessibility and form integration.
  *
- * @element mov-toggle-switch
+ * @element toggle-switch
  *
  * @cssprop [--toggler-size=2em] - Controls the overall size of the toggle switch. The width is set to this value, and the height is half of it.
  */
-@customElement('mov-toggle-switch')
+@customElement('toggle-switch')
 export class ToggleSwitch extends LitElement {
   /**
    * The `name` attribute for the underlying `<input type="checkbox">` element.

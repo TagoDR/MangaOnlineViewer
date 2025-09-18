@@ -16,7 +16,7 @@ import { themesCSS } from './themes.ts';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mov-comments-panel': CommentsPanel;
+    'comments-panel': CommentsPanel;
   }
 }
 
@@ -26,7 +26,7 @@ declare global {
  * It includes controls to close the panel and to toggle the color scheme of the comments iframe.
  * Its visibility is controlled by the `panel` property in the application state.
  */
-@customElement('mov-comments-panel')
+@customElement('comments-panel')
 @useStores(settings, locale, appState)
 export default class CommentsPanel extends LitElement {
   static styles = [unsafeCSS(styles), unsafeCSS(themesCSS(':host'))];
@@ -54,14 +54,14 @@ export default class CommentsPanel extends LitElement {
         >
           ${getAppStateValue('manga')?.comments}
         </div>
-        <mov-toggle-button
+        <toggle-button
           id="CommentsColorScheme"
           mode="theme"
           @click=${this.changeCommentsColor}
           slot="action"
           ?active=${this.colorScheme === 'dark'}
         >
-        </mov-toggle-button>
+        </toggle-button>
       </mov-panel>
     `;
   }

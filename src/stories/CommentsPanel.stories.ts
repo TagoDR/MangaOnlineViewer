@@ -5,7 +5,7 @@ import '../ui/CommentsPanel.ts';
 
 const meta: Meta = {
   title: 'UI/CommentsPanel',
-  component: 'mov-comments-panel',
+  component: 'comments-panel',
   argTypes: {
     open: {
       control: 'boolean',
@@ -22,7 +22,7 @@ const meta: Meta = {
     return html`
       <button @click=${openPanel}>Set Panel to Open</button>
       <p>Change the 'open' control in Storybook to close the panel.</p>
-      <mov-comments-panel></mov-comments-panel>
+      <comments-panel></comments-panel>
     `;
   },
 };

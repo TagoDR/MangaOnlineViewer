@@ -9,7 +9,7 @@ const sizes = ['small', 'medium', 'large'];
 
 export default {
   title: 'Components/ToggleButton',
-  component: 'mov-toggle-button',
+  component: 'toggle-button',
   argTypes: {
     mode: {
       control: 'select',
@@ -67,7 +67,7 @@ export default {
     },
   },
   render: args => html`
-    <mov-toggle-button
+    <toggle-button
       mode="${args.mode}"
       ?active="${args.active}"
       label="${args.label}"
@@ -81,7 +81,7 @@ export default {
       ?loading="${args.loading}"
       animation-duration="${args.animationDuration}"
       @toggle="${(e: CustomEvent) => console.log('Toggle:', e.detail)}"
-    ></mov-toggle-button>
+    ></toggle-button>
   `,
 } satisfies Meta;
 
@@ -146,15 +146,15 @@ export const AllModes: StoryObj = {
         <h4 class="mode-title">Menu Mode</h4>
         <p class="mode-description">Hamburger menu ↔ Close (X)</p>
         <div class="mode-buttons">
-          <mov-toggle-button
+          <toggle-button
             mode="menu"
             label="Menu"
-          ></mov-toggle-button>
-          <mov-toggle-button
+          ></toggle-button>
+          <toggle-button
             mode="menu"
             active
             label="Menu"
-          ></mov-toggle-button>
+          ></toggle-button>
         </div>
       </div>
 
@@ -162,15 +162,15 @@ export const AllModes: StoryObj = {
         <h4 class="mode-title">Chevron Mode</h4>
         <p class="mode-description">Right arrow → Down arrow (90° rotation)</p>
         <div class="mode-buttons">
-          <mov-toggle-button
+          <toggle-button
             mode="chevron"
             label="Expand"
-          ></mov-toggle-button>
-          <mov-toggle-button
+          ></toggle-button>
+          <toggle-button
             mode="chevron"
             active
             label="Expand"
-          ></mov-toggle-button>
+          ></toggle-button>
         </div>
       </div>
 
@@ -178,15 +178,15 @@ export const AllModes: StoryObj = {
         <h4 class="mode-title">Theme Mode</h4>
         <p class="mode-description">Moon ↔ Sun (dark/light theme)</p>
         <div class="mode-buttons">
-          <mov-toggle-button
+          <toggle-button
             mode="theme"
             label="Theme"
-          ></mov-toggle-button>
-          <mov-toggle-button
+          ></toggle-button>
+          <toggle-button
             mode="theme"
             active
             label="Theme"
-          ></mov-toggle-button>
+          ></toggle-button>
         </div>
       </div>
 
@@ -194,15 +194,15 @@ export const AllModes: StoryObj = {
         <h4 class="mode-title">Play/Pause Mode</h4>
         <p class="mode-description">Play ↔ Pause (media controls)</p>
         <div class="mode-buttons">
-          <mov-toggle-button
+          <toggle-button
             mode="play-pause"
             label="Play"
-          ></mov-toggle-button>
-          <mov-toggle-button
+          ></toggle-button>
+          <toggle-button
             mode="play-pause"
             active
             label="Play"
-          ></mov-toggle-button>
+          ></toggle-button>
         </div>
       </div>
 
@@ -210,15 +210,15 @@ export const AllModes: StoryObj = {
         <h4 class="mode-title">Expand Mode</h4>
         <p class="mode-description">Down arrow → Up arrow (180° rotation)</p>
         <div class="mode-buttons">
-          <mov-toggle-button
+          <toggle-button
             mode="expand"
             label="Expand"
-          ></mov-toggle-button>
-          <mov-toggle-button
+          ></toggle-button>
+          <toggle-button
             mode="expand"
             active
             label="Expand"
-          ></mov-toggle-button>
+          ></toggle-button>
         </div>
       </div>
 
@@ -226,21 +226,21 @@ export const AllModes: StoryObj = {
         <h4 class="mode-title">Custom Mode</h4>
         <p class="mode-description">Your own icons</p>
         <div class="mode-buttons">
-          <mov-toggle-button
+          <toggle-button
             mode="custom"
             icon="bookmark"
             activeIcon="bookmark"
             label="Bookmark"
           >
-          </mov-toggle-button>
-          <mov-toggle-button
+          </toggle-button>
+          <toggle-button
             mode="custom"
             icon="bookmark-off"
             activeIcon="bookmark-off"
             active
             label="Bookmark"
           >
-          </mov-toggle-button>
+          </toggle-button>
         </div>
       </div>
     </div>
@@ -278,27 +278,27 @@ export const Variants: StoryObj = {
         variant => html`
           <div class="variant-row">
             <span class="variant-label">${variant}:</span>
-            <mov-toggle-button
+            <toggle-button
               variant="${variant}"
               appearance="filled"
-            ></mov-toggle-button>
-            <mov-toggle-button
+            ></toggle-button>
+            <toggle-button
               variant="${variant}"
               appearance="filled"
               active
-            ></mov-toggle-button>
-            <mov-toggle-button
+            ></toggle-button>
+            <toggle-button
               variant="${variant}"
               appearance="outline"
-            ></mov-toggle-button>
-            <mov-toggle-button
+            ></toggle-button>
+            <toggle-button
               variant="${variant}"
               appearance="light"
-            ></mov-toggle-button>
-            <mov-toggle-button
+            ></toggle-button>
+            <toggle-button
               variant="${variant}"
               appearance="subtle"
-            ></mov-toggle-button>
+            ></toggle-button>
           </div>
         `,
       )}
@@ -335,22 +335,22 @@ export const Sizes: StoryObj = {
         size => html`
           <div class="size-row">
             <span class="size-label">${size.toUpperCase()}:</span>
-            <mov-toggle-button
+            <toggle-button
               size="${size}"
               mode="menu"
-            ></mov-toggle-button>
-            <mov-toggle-button
+            ></toggle-button>
+            <toggle-button
               size="${size}"
               mode="chevron"
-            ></mov-toggle-button>
-            <mov-toggle-button
+            ></toggle-button>
+            <toggle-button
               size="${size}"
               mode="theme"
-            ></mov-toggle-button>
-            <mov-toggle-button
+            ></toggle-button>
+            <toggle-button
               size="${size}"
               mode="play-pause"
-            ></mov-toggle-button>
+            ></toggle-button>
           </div>
         `,
       )}
@@ -386,44 +386,44 @@ export const States: StoryObj = {
     <div class="states-demo">
       <div class="state-row">
         <span class="state-label">Normal:</span>
-        <mov-toggle-button></mov-toggle-button>
-        <mov-toggle-button active></mov-toggle-button>
-        <mov-toggle-button mode="chevron"></mov-toggle-button>
-        <mov-toggle-button mode="theme"></mov-toggle-button>
+        <toggle-button></toggle-button>
+        <toggle-button active></toggle-button>
+        <toggle-button mode="chevron"></toggle-button>
+        <toggle-button mode="theme"></toggle-button>
       </div>
 
       <div class="state-row">
         <span class="state-label">Disabled:</span>
-        <mov-toggle-button disabled></mov-toggle-button>
-        <mov-toggle-button
+        <toggle-button disabled></toggle-button>
+        <toggle-button
           disabled
           active
-        ></mov-toggle-button>
-        <mov-toggle-button
+        ></toggle-button>
+        <toggle-button
           disabled
           mode="chevron"
-        ></mov-toggle-button>
-        <mov-toggle-button
+        ></toggle-button>
+        <toggle-button
           disabled
           mode="theme"
-        ></mov-toggle-button>
+        ></toggle-button>
       </div>
 
       <div class="state-row">
         <span class="state-label">Loading:</span>
-        <mov-toggle-button loading></mov-toggle-button>
-        <mov-toggle-button
+        <toggle-button loading></toggle-button>
+        <toggle-button
           loading
           active
-        ></mov-toggle-button>
-        <mov-toggle-button
+        ></toggle-button>
+        <toggle-button
           loading
           mode="chevron"
-        ></mov-toggle-button>
-        <mov-toggle-button
+        ></toggle-button>
+        <toggle-button
           loading
           mode="theme"
-        ></mov-toggle-button>
+        ></toggle-button>
       </div>
     </div>
   `,
@@ -467,84 +467,84 @@ export const CustomIcons: StoryObj = {
       <div class="custom-item">
         <h5 class="custom-title">Bookmark Toggle</h5>
         <div class="custom-buttons">
-          <mov-toggle-button
+          <toggle-button
             mode="custom"
             icon="bookmark"
             activeIcon="bookmark-off"
             label="Toggle bookmark"
           >
-          </mov-toggle-button>
-          <mov-toggle-button
+          </toggle-button>
+          <toggle-button
             mode="custom"
             icon="bookmark"
             activeIcon="bookmark-off"
             active
             label="Toggle bookmark"
           >
-          </mov-toggle-button>
+          </toggle-button>
         </div>
       </div>
 
       <div class="custom-item">
         <h5 class="custom-title">Visibility Toggle</h5>
         <div class="custom-buttons">
-          <mov-toggle-button
+          <toggle-button
             mode="custom"
             icon="eye"
             activeIcon="eye-off"
             label="Toggle visibility"
           >
-          </mov-toggle-button>
-          <mov-toggle-button
+          </toggle-button>
+          <toggle-button
             mode="custom"
             icon="eye"
             activeIcon="eye-off"
             active
             label="Toggle visibility"
           >
-          </mov-toggle-button>
+          </toggle-button>
         </div>
       </div>
 
       <div class="custom-item">
         <h5 class="custom-title">Settings Toggle</h5>
         <div class="custom-buttons">
-          <mov-toggle-button
+          <toggle-button
             mode="custom"
             icon="settings"
             activeIcon="settings-off"
             label="Toggle settings"
           >
-          </mov-toggle-button>
-          <mov-toggle-button
+          </toggle-button>
+          <toggle-button
             mode="custom"
             icon="settings"
             activeIcon="settings-off"
             active
             label="Toggle settings"
           >
-          </mov-toggle-button>
+          </toggle-button>
         </div>
       </div>
 
       <div class="custom-item">
         <h5 class="custom-title">Photo Toggle</h5>
         <div class="custom-buttons">
-          <mov-toggle-button
+          <toggle-button
             mode="custom"
             icon="photo"
             activeIcon="photo-off"
             label="Toggle photo"
           >
-          </mov-toggle-button>
-          <mov-toggle-button
+          </toggle-button>
+          <toggle-button
             mode="custom"
             icon="photo"
             activeIcon="photo-off"
             active
             label="Toggle photo"
           >
-          </mov-toggle-button>
+          </toggle-button>
         </div>
       </div>
     </div>
@@ -579,62 +579,62 @@ export const AnimationDemo: StoryObj = {
     <div class="animation-demo">
       <div class="animation-row">
         <span class="animation-label">Fast (150ms):</span>
-        <mov-toggle-button
+        <toggle-button
           animation-duration="150"
           mode="menu"
-        ></mov-toggle-button>
-        <mov-toggle-button
+        ></toggle-button>
+        <toggle-button
           animation-duration="150"
           mode="chevron"
-        ></mov-toggle-button>
-        <mov-toggle-button
+        ></toggle-button>
+        <toggle-button
           animation-duration="150"
           mode="theme"
-        ></mov-toggle-button>
-        <mov-toggle-button
+        ></toggle-button>
+        <toggle-button
           animation-duration="150"
           mode="play-pause"
-        ></mov-toggle-button>
+        ></toggle-button>
       </div>
 
       <div class="animation-row">
         <span class="animation-label">Normal (350ms):</span>
-        <mov-toggle-button
+        <toggle-button
           animation-duration="350"
           mode="menu"
-        ></mov-toggle-button>
-        <mov-toggle-button
+        ></toggle-button>
+        <toggle-button
           animation-duration="350"
           mode="chevron"
-        ></mov-toggle-button>
-        <mov-toggle-button
+        ></toggle-button>
+        <toggle-button
           animation-duration="350"
           mode="theme"
-        ></mov-toggle-button>
-        <mov-toggle-button
+        ></toggle-button>
+        <toggle-button
           animation-duration="350"
           mode="play-pause"
-        ></mov-toggle-button>
+        ></toggle-button>
       </div>
 
       <div class="animation-row">
         <span class="animation-label">Slow (600ms):</span>
-        <mov-toggle-button
+        <toggle-button
           animation-duration="600"
           mode="menu"
-        ></mov-toggle-button>
-        <mov-toggle-button
+        ></toggle-button>
+        <toggle-button
           animation-duration="600"
           mode="chevron"
-        ></mov-toggle-button>
-        <mov-toggle-button
+        ></toggle-button>
+        <toggle-button
           animation-duration="600"
           mode="theme"
-        ></mov-toggle-button>
-        <mov-toggle-button
+        ></toggle-button>
+        <toggle-button
           animation-duration="600"
           mode="play-pause"
-        ></mov-toggle-button>
+        ></toggle-button>
       </div>
     </div>
     <p style="font-size: 0.875rem; color: #6c757d; margin-top: 1rem;">

@@ -5,7 +5,7 @@ import '../ui/BookmarkPanel.ts';
 
 const meta: Meta = {
   title: 'UI/BookmarkPanel',
-  component: 'mov-bookmark-panel',
+  component: 'bookmark-panel',
   argTypes: {
     open: {
       control: 'boolean',
@@ -36,7 +36,7 @@ const meta: Meta = {
     return html`
       <button @click=${openPanel}>Set Panel to Open</button>
       <p>Change the 'open' control in Storybook to close the panel.</p>
-      <mov-bookmark-panel></mov-bookmark-panel>
+      <bookmark-panel></bookmark-panel>
     `;
   },
 };

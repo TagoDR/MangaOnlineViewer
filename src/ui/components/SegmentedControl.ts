@@ -16,7 +16,7 @@ export type SegmentedControlOption = {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mov-segmented-control': SegmentedControl;
+    'segmented-control': SegmentedControl;
   }
 }
 
@@ -24,11 +24,11 @@ declare global {
  * A control that allows users to select one option from a set, presented as a row of connected buttons.
  * It is built upon native radio inputs for accessibility and form integration.
  *
- * @element mov-segmented-control
+ * @element segmented-control
  *
  * @fires change - Dispatched when the selected value changes. The `detail` property of the event contains the new value.
  */
-@customElement('mov-segmented-control')
+@customElement('segmented-control')
 export class SegmentedControl extends LitElement {
   /**
    * An array of option objects to display in the control.
@@ -90,8 +90,8 @@ export class SegmentedControl extends LitElement {
       flex-direction: column;
     }
     input:checked + .label {
-      background-color: var(--theme-primary-color);
-      color: var(--theme-primary-text-color);
+      background-color: var(--mov-color-fill-loud);
+      color: var(--mov-color-on-loud);
       font-weight: 600;
     }
   `;

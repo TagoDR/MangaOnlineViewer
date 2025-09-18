@@ -9,7 +9,7 @@
   --mov-border-radius-pill: 9999px;
   --mov-transition-fast: 75ms;
   --mov-font-weight-action: 500;
-  --mov-focus-ring: solid 0.1875rem var(--theme-primary-color);
+  --mov-focus-ring: solid 0.1875rem var(--mov-color-fill-loud);
   --mov-focus-ring-offset: 0.0625rem;
   --mov-line-height-condensed: 1.2;
   --mov-form-control-padding-block: 0.75em;

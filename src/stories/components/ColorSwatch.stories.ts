@@ -14,7 +14,7 @@ type ColorSwatchArgs = {
 // The Meta object configures the component's story page
 export default {
   title: 'Components/ColorSwatch',
-  component: 'mov-color-swatch',
+  component: 'color-swatch',
   argTypes: {
     color: {
       control: 'color',
@@ -37,13 +37,13 @@ export default {
   },
   // A generic render function to be reused by all stories
   render: (args: ColorSwatchArgs) => html`
-    <mov-color-swatch
+    <color-swatch
       color=${args.color}
       ?selected=${args.selected}
       size=${args.size}
       radius=${args.radius}
       @click=${args.onClick}
-    ></mov-color-swatch>
+    ></color-swatch>
   `,
 } satisfies Meta<ColorSwatchArgs>;
 
@@ -79,7 +79,7 @@ export const Square: StoryObj<ColorSwatchArgs> = {
 export const WithSlottedContent: StoryObj<ColorSwatchArgs> = {
   name: 'With Slotted Icon',
   render: (args: ColorSwatchArgs) => html`
-    <mov-color-swatch
+    <color-swatch
       color=${args.color}
       ?selected=${args.selected}
       size=${args.size}
@@ -88,7 +88,7 @@ export const WithSlottedContent: StoryObj<ColorSwatchArgs> = {
     >
       <!-- The checkmark will appear over this icon when selected -->
       ${IconPalette}
-    </mov-color-swatch>
+    </color-swatch>
   `,
   args: {
     ...Default.args,

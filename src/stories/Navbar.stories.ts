@@ -1,5 +1,5 @@
 /**
- * @file Storybook stories for the Navbar component (`<mov-navbar>`).
+ * @file Storybook stories for the Navbar component (`<navbar-thumbnails>`).
  * This file defines stories that showcase the thumbnail navigation bar in all its positions.
  */
 import { useStores } from '@nanostores/lit';
@@ -18,7 +18,7 @@ const mockManga = localhost.run() as IMangaImages;
  * A helper component to display the relevant application state changes.
  * @internal
  */
-@customElement('mov-navbar-state-display')
+@customElement('navbar-thumbnails-state-display')
 @useStores(appState)
 // @ts-expect-error
 class StateDisplay extends LitElement {
@@ -57,7 +57,7 @@ class StateDisplay extends LitElement {
 
 const meta: Meta = {
   title: 'UI/Navbar',
-  component: 'mov-navbar',
+  component: 'navbar-thumbnails',
   argTypes: {
     mode: {
       control: 'select',
@@ -90,15 +90,15 @@ const meta: Meta = {
     return html`
       <div style="${containerStyle}">
         ${args.mode === 'right' ? html`<div style="${contentStyle}">Mock Content Area</div>` : ''}
-        <mov-navbar
+        <navbar-thumbnails
           .mode=${args.mode}
           ?forceExpanded="${args.forceExpanded}"
-        ></mov-navbar>
+        ></navbar-thumbnails>
         ${args.mode !== 'right' ? html`<div style="${contentStyle}">Mock Content Area</div>` : ''}
       </div>
       <div style="padding: 1rem; border: 1px solid #ccc; border-radius: 4px; margin-top: 1rem;">
         <p><b>State from Store:</b></p>
-        <mov-navbar-state-display></mov-navbar-state-display>
+        <navbar-thumbnails-state-display></navbar-thumbnails-state-display>
         <p><i>(Click a thumbnail to see 'Scroll To Page' change)</i></p>
       </div>
     `;

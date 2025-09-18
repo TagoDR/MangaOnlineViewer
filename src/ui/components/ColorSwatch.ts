@@ -6,7 +6,7 @@ import { IconCheck } from '../icons';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mov-color-swatch': ColorSwatch;
+    'color-swatch': ColorSwatch;
   }
 }
 
@@ -15,11 +15,11 @@ declare global {
  * It can indicate a "selected" state with a checkmark and automatically calculates
  * a contrasting color for the checkmark to ensure visibility.
  *
- * @element mov-color-swatch
+ * @element color-swatch
  *
  * @slot - The default slot can be used to place custom content (like an icon) inside the swatch.
  */
-@customElement('mov-color-swatch')
+@customElement('color-swatch')
 export class ColorSwatch extends LitElement {
   static styles = css`
     :host {

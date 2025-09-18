@@ -5,7 +5,7 @@ import '../ui/SettingsPanel.ts';
 
 const meta: Meta = {
   title: 'UI/SettingsPanel',
-  component: 'mov-settings-panel',
+  component: 'settings-panel',
   argTypes: {
     open: {
       control: 'boolean',
@@ -24,7 +24,7 @@ const meta: Meta = {
     return html`
       <button @click=${openPanel}>Set Panel to Open</button>
       <p>Change the 'open' control in Storybook to close the panel.</p>
-      <mov-settings-panel></mov-settings-panel>
+      <settings-panel></settings-panel>
     `;
   },
 };

@@ -5,7 +5,7 @@ import { isNothing } from '../../utils/checks.ts';
 import { buttonRedirectURL } from '../events/globals.ts';
 import { selectGoToPage } from '../events/navigation.ts';
 
-@customElement('mov-pagination')
+@customElement('manga-pagination')
 export class Pagination extends LitElement {
   static styles = css`
     :host {
@@ -27,9 +27,9 @@ export class Pagination extends LitElement {
     }
 
     .pagination-button {
-      background: var(--theme-primary-color);
-      border: 1px solid var(--theme-primary-color);
-      color: var(--theme-primary-text-color);
+      background: var(--mov-color-fill-loud);
+      border: 1px solid var(--mov-color-fill-loud);
+      color: var(--mov-color-on-loud);
       padding: 8px 12px;
       border-radius: 4px;
       cursor: pointer;
@@ -70,7 +70,7 @@ export class Pagination extends LitElement {
       appearance: none;
       width: 100%;
       height: 4px;
-      background: var(--theme-primary-color);
+      background: var(--mov-color-fill-loud);
       opacity: 0.5;
       border-radius: 2px;
       outline: none;
@@ -86,7 +86,7 @@ export class Pagination extends LitElement {
       border-radius: 50%;
       cursor: pointer;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--theme-primary-color);
+      border: 1px solid var(--mov-color-fill-loud);
     }
 
     .pagination-slider::-moz-range-thumb {
@@ -95,7 +95,7 @@ export class Pagination extends LitElement {
       background: white;
       border-radius: 50%;
       cursor: pointer;
-      border: 1px solid var(--theme-primary-color);
+      border: 1px solid var(--mov-color-fill-loud);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 

@@ -19,7 +19,7 @@ import styles from './styles/keybindings.css?inline';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mov-keybindings-panel': KeybindingsPanel;
+    'keybindings-panel': KeybindingsPanel;
   }
 }
 
@@ -28,7 +28,7 @@ declare global {
  * This panel can switch between a read-only view and an editor for keybindings.
  * Its visibility is controlled by the `panel` property in the application state.
  */
-@customElement('mov-keybindings-panel')
+@customElement('keybindings-panel')
 @useStores(settings, locale, appState)
 export default class KeybindingsPanel extends LitElement {
   static styles = [unsafeCSS(styles), unsafeCSS(keycss)];

@@ -4,7 +4,7 @@ import '../ui/components/Pagination.ts';
 
 export default {
   title: 'Components/Pagination',
-  component: 'mov-pagination',
+  component: 'manga-pagination',
   argTypes: {
     currentPage: { control: 'number' },
     totalPages: { control: 'number' },
@@ -15,14 +15,14 @@ export default {
   },
   render: args => html`
     <div style="position: relative; height: 100px; padding-top: 20px;">
-      <mov-pagination
+      <manga-pagination
         .currentPage=${args.currentPage}
         .totalPages=${args.totalPages}
         .startPage=${args.startPage}
         @prev-page=${args.onPrevPage}
         @next-page=${args.onNextPage}
         @goto-page=${(e: CustomEvent) => args.onGoToPage(e.detail)}
-      ></mov-pagination>
+      ></manga-pagination>
     </div>
   `,
 } satisfies Meta;

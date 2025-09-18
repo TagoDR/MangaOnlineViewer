@@ -18,7 +18,7 @@ import styles from './styles/bookmarks.css?inline';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mov-bookmark-panel': BookmarkPanel;
+    'bookmark-panel': BookmarkPanel;
   }
 }
 
@@ -27,7 +27,7 @@ declare global {
  * This panel displays a list of saved bookmarks and provides controls to add or close the panel.
  * Its visibility is controlled by the `panel` property in the application state.
  */
-@customElement('mov-bookmark-panel')
+@customElement('bookmark-panel')
 @useStores(settings, locale, appState)
 export default class BookmarkPanel extends LitElement {
   static styles = [unsafeCSS(styles)];

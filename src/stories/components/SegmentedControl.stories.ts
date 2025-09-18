@@ -17,7 +17,7 @@ const optionsWithoutIcons = [
 
 export default {
   title: 'Components/Segmented Control',
-  component: 'mov-segmented-control',
+  component: 'segmented-control',
   argTypes: {
     value: { control: 'text' },
     labelPosition: {
@@ -28,13 +28,13 @@ export default {
   },
   render: args => html`
     <div style="width: 300px; padding: 1rem;">
-      <mov-segmented-control
+      <segmented-control
         .options=${args.options}
         .value=${args.value}
         .labelPosition=${args.labelPosition}
         @change=${(e: CustomEvent) => args.onChange(e.detail)}
       >
-      </mov-segmented-control>
+      </segmented-control>
     </div>
   `,
 } satisfies Meta;

@@ -36,11 +36,11 @@
 
 #SettingsPanel .RangeValue {
   display: inline-block;
-  color: var(--theme-primary-text-color);
+  color: var(--mov-color-on-loud);
   line-height: 20px;
   text-align: center;
   border-radius: 3px;
-  background: var(--theme-primary-color);
+  background: var(--mov-color-fill-loud);
   padding: 2px 5px;
   margin-left: 8px;
 }

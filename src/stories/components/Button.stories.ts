@@ -625,12 +625,12 @@ export const ColoredButtons: StoryObj = {
   render: () => html`
     <style>
       .custom-purple {
-        --theme-primary-color: #6f42c1;
-        --theme-primary-text-color: white;
+        --mov-color-fill-loud: #6f42c1;
+        --mov-color-on-loud: white;
       }
       .custom-green {
-        --theme-primary-color: #28a745;
-        --theme-primary-text-color: white;
+        --mov-color-fill-loud: #28a745;
+        --mov-color-on-loud: white;
       }
     </style>
     <div style="display: flex; align-items: center; gap: 1rem;">

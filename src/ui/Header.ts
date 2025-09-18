@@ -29,9 +29,9 @@ import media from './styles/media.css?inline';
 import './components/Dropdown.ts';
 import './components/Icon.ts';
 
-@customElement('mov-header')
+@customElement('reader-header')
 @useStores(settings, locale, appState)
-export class MovHeader extends LitElement {
+export class Header extends LitElement {
   static styles = [unsafeCSS(styles), unsafeCSS(media), unsafeCSS(keycss), css``];
 
   private headroomController = new HeadroomController(this);

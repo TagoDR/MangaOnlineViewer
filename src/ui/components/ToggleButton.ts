@@ -5,7 +5,7 @@ import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mov-toggle-button': ToggleButton;
+    'toggle-button': ToggleButton;
   }
 }
 
@@ -24,11 +24,11 @@ type ToggleMode = 'menu' | 'chevron' | 'theme' | 'custom' | 'play-pause' | 'expa
  * A generic toggle button that switches between two states, often represented by different icons.
  * It is built upon `mov-button` and `mov-icon` and supports various modes for common use cases.
  *
- * @element mov-toggle-button
+ * @element toggle-button
  *
  * @fires toggle - Dispatched when the button is clicked. The `detail` object contains the new `value` (boolean), the `oldValue`, and the `mode`.
  */
-@customElement('mov-toggle-button')
+@customElement('toggle-button')
 export class ToggleButton extends LitElement {
   static styles = css`
     :host {
@@ -129,7 +129,7 @@ export class ToggleButton extends LitElement {
 
     /* Focus visible enhancement */
     mov-button:focus-visible {
-      outline: 2px solid var(--theme-primary-color, currentColor);
+      outline: 2px solid var(--mov-color-fill-loud, currentColor);
       outline-offset: 2px;
     }
 

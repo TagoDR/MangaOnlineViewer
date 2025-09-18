@@ -90,17 +90,17 @@ export class MovDropdownItem extends LitElement {
       align-items: center;
       padding: 8px 12px;
       cursor: pointer;
-      color: var(--theme-primary-text-color);
-      background-color: var(--theme-primary-color);
+      color: var(--mov-color-on-loud);
+      background-color: var(--mov-color-fill-loud);
       gap: 10px;
     }
     .item:hover {
-      background-color: var(--theme-secondary-color);
-      color: var(--theme-secondary-text-color);
+      background-color: var(--mov-color-fill-normal);
+      color: var(--mov-color-on-normal);
     }
     :host([selected]) .item {
-      background-color: var(--theme-secondary-color);
-      color: var(--theme-secondary-text-color);
+      background-color: var(--mov-color-fill-normal);
+      color: var(--mov-color-on-normal);
     }
     .item-content {
       display: flex;

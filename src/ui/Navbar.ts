@@ -18,11 +18,11 @@ import styles from './styles/navbar.css?inline';
  * It can be positioned at the bottom, left, or right of the screen.
  * The component subscribes to global state stores to reactively update its content.
  *
- * @element mov-navbar
+ * @element navbar-thumbnails
  * @fires wheel - Transforms vertical scroll to horizontal scroll when in 'bottom' mode.
  * @fires click - Navigates to the corresponding page when a thumbnail is clicked.
  */
-@customElement('mov-navbar')
+@customElement('navbar-thumbnails')
 @useStores(settings, locale, appState)
 export default class Navbar extends LitElement {
   /**

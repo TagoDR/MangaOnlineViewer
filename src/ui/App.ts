@@ -67,26 +67,26 @@ export default class App extends LitElement {
         })}"
         .locale="${getSettingsValue('locale')}"
       >
-        <mov-header .manga=${manga}></mov-header>
+        <reader-header .manga=${manga}></reader-header>
         ${Reader(manga)}
         ${ifTrue(
           getSettingsValue('navbar') !== 'disabled',
-          html`<mov-navbar .mode=${getSettingsValue('navbar')}></mov-navbar>`,
+          html`<navbar-thumbnails .mode=${getSettingsValue('navbar')}></navbar-thumbnails>`,
         )}
         ${ifTrue(
           getSettingsValue('pagination'),
-          html` <mov-pagination
+          html` <manga-pagination
             .startPage=${manga.begin}
             .totalPages=${manga.pages}
             .currentPage=${getAppStateValue('currentPage')}
             .next=${manga.next}
             .prev=${manga.prev}
-          ></mov-pagination>`,
+          ></manga-pagination>`,
         )}
-        <mov-comments-panel></mov-comments-panel>
-        <mov-keybindings-panel></mov-keybindings-panel>
-        <mov-bookmark-panel></mov-bookmark-panel>
-        <mov-settings-panel></mov-settings-panel>
+        <comments-panel></comments-panel>
+        <keybindings-panel></keybindings-panel>
+        <bookmark-panel></bookmark-panel>
+        <settings-panel></settings-panel>
       </div>
     `;
   }
