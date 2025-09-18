@@ -16,7 +16,7 @@ declare global {
  * @fires close - Dispatched when the drawer has closed.
  *
  * @attr {boolean} open - Reflects the open/closed state of the drawer.
- * @attr {'start' | 'end'} placement - The side from which the drawer appears. 'start' is right, 'end' is left. Defaults to 'end'.
+ * @attr {'start' | 'end'} placement - The side from which the drawer appears. 'start' is left, 'end' is right. Defaults to 'end'.
  *
  * @slot - The main content to display inside the drawer.
  * @slot header - Content for the drawer's header.
@@ -112,24 +112,24 @@ export default class Drawer extends LitElement {
       flex-grow: 1;
     }
 
-    :host([placement='end']) dialog {
+    :host([placement='start']) dialog {
       left: 0;
       transform: translateX(-100%);
     }
-    :host([placement='start']) dialog {
+    :host([placement='end']) dialog {
       right: 0;
       transform: translateX(100%);
     }
     :host([open]) dialog {
       transform: none;
     }
-    :host([placement='start']) .action-item {
+    :host([placement='end']) .action-item {
       order: 3;
     }
-    :host([placement='start']) .header-content {
+    :host([placement='end']) .header-content {
       order: 2;
     }
-    :host([placement='start']) .close-button-container {
+    :host([placement='end']) .close-button-container {
       order: 1;
       justify-content: flex-start;
     }

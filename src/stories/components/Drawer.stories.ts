@@ -42,22 +42,22 @@ export default meta;
 type Story = StoryObj;
 
 export const DrawerEnd: Story = {
-  name: 'Drawer (End/Left)',
+  name: 'Drawer (End/Right)',
   args: {
     open: false,
     placement: 'end',
-    header: 'Left Drawer',
-    slot: html`<p>This is a drawer panel on the left.</p>`,
+    header: 'Right Drawer',
+    slot: html`<p>This is a drawer panel on the right.</p>`,
   },
 };
 
 export const DrawerStart: Story = {
-  name: 'Drawer (Start/Right)',
+  name: 'Drawer (Start/Left)',
   args: {
     ...DrawerEnd.args,
     placement: 'start',
-    header: 'Right Drawer',
-    slot: html`<p>This is a drawer panel on the right.</p>`,
+    header: 'Left Drawer',
+    slot: html`<p>This is a drawer panel on the left.</p>`,
   },
 };
 
