@@ -15,6 +15,7 @@
   line-height: 0;
   transition: all 0.3s ease;
   position: fixed;
+  z-index: 1000;
 }
 :host(:not([forceExpanded])) #Navigation:not(:hover) #Thumbnails {
   display: none;
