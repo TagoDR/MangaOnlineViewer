@@ -4,7 +4,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import '../../ui/components/ColorPicker.ts';
 
 // A helper component to manage and display the state
-@customElement('mov-color-picker-story-wrapper')
+@customElement('color-picker-story-wrapper')
 // @ts-expect-error
 class ColorPickerStoryWrapper extends LitElement {
   @property({ type: Array })
@@ -17,11 +17,11 @@ class ColorPickerStoryWrapper extends LitElement {
       <div
         style="display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 1rem;"
       >
-        <mov-color-picker
+        <color-picker
           .value="${this.color}"
           .swatches="${this.swatches}"
           @change="${this.handleColorChange}"
-        ></mov-color-picker>
+        ></color-picker>
         <div>Selected Value: <strong>${this.color}</strong></div>
       </div>
     `;
@@ -34,14 +34,14 @@ class ColorPickerStoryWrapper extends LitElement {
 
 export default {
   title: 'Components/Color Picker',
-  component: 'mov-color-picker',
+  component: 'color-picker',
   parameters: {
     controls: { disable: true }, // Disable controls as the component is self-managing
   },
   render: args =>
-    html`<mov-color-picker-story-wrapper
+    html`<color-picker-story-wrapper
       .swatches="${args.swatches}"
-    ></mov-color-picker-story-wrapper>`,
+    ></color-picker-story-wrapper>`,
 } satisfies Meta;
 
 export const Default: StoryObj = {

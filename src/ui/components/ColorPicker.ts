@@ -7,7 +7,7 @@ import './ColorSwatch.ts';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mov-color-picker': ColorPicker;
+    'color-picker': ColorPicker;
   }
 }
 
@@ -15,11 +15,11 @@ declare global {
  * An interactive color picker component that allows users to select a color
  * from a saturation/value panel, a hue slider, or a predefined set of swatches.
  *
- * @element mov-color-picker
+ * @element color-picker
  *
  * @fires change - Dispatched whenever the selected color value changes. The `detail` object contains the new `value` as a hex string.
  */
-@customElement('mov-color-picker')
+@customElement('color-picker')
 export class ColorPicker extends LitElement {
   static styles = css`
     :host {

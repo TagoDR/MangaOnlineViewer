@@ -42,10 +42,10 @@ function theme() {
     </span>
     <details class="ControlLabel">
       <summary>${getLocaleString('THEME_HUE')} & ${getLocaleString('THEME_SHADE')}</summary>
-      <mov-color-panel
+      <color-panel
         .value=${getSettingsValue('theme')}
         @click=${buttonSelectTheme}
-      ></mov-color-panel>
+      ></color-panel>
     </details>
   `;
 }

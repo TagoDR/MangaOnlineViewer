@@ -6,7 +6,7 @@ import { IconCheck } from '../icons';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mov-color-panel': ColorPanel;
+    'color-panel': ColorPanel;
   }
 }
 
@@ -15,11 +15,11 @@ declare global {
  * It renders a list of predefined color families and their shades, allowing the user
  * to pick a new primary theme color for the application.
  *
- * @element mov-color-panel
+ * @element color-panel
  *
  * @fires click - When a color swatch is clicked, it dispatches an event that is handled by `buttonSelectTheme` to update the application settings.
  */
-@customElement('mov-color-panel')
+@customElement('color-panel')
 export class ColorPanel extends LitElement {
   /**
    * The currently selected theme color in hexadecimal format (e.g., "#29487D").

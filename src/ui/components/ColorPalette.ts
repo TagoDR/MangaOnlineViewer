@@ -6,7 +6,7 @@ import { generateColorGradient } from '../../utils/palettes.ts';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mov-color-palette': ColorPalette;
+    'color-palette': ColorPalette;
   }
 }
 
@@ -14,13 +14,13 @@ declare global {
  * A component that displays a 10-shade color palette generated from a single base color.
  * It uses the `generateColorGradient` utility to create the shades and renders them as a series of swatches.
  *
- * @element mov-color-palette
+ * @element color-palette
  *
  * @cssprop [--palette-gap=4px] - The gap between the color swatches.
  * @cssprop [--swatch-size=22px] - The size of the color swatches.
  * @cssprop [--swatch-radius=4px] - The border radius of the color swatches.
  */
-@customElement('mov-color-palette')
+@customElement('color-palette')
 export class ColorPalette extends LitElement {
   static styles = css`
     :host {

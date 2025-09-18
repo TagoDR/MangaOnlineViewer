@@ -11,7 +11,7 @@ type ColorPaletteArgs = {
 // The Meta object configures the component's story page
 export default {
   title: 'Components/Color Palette',
-  component: 'mov-color-palette',
+  component: 'color-palette',
   argTypes: {
     baseColor: {
       control: 'color',
@@ -25,10 +25,10 @@ export default {
   },
   // A generic render function to be reused by all stories
   render: (args: ColorPaletteArgs) => html`
-    <mov-color-palette
+    <color-palette
       baseColor=${args.baseColor}
       mode=${args.mode}
-    ></mov-color-palette>
+    ></color-palette>
   `,
 } satisfies Meta<ColorPaletteArgs>;
 

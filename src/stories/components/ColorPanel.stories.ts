@@ -4,11 +4,11 @@ import { customElement, state } from 'lit/decorators.js';
 import '../../ui/components/ColorPanel.ts';
 
 /**
- * A wrapper component to manage the state for the mov-color-panel story.
- * The mov-color-panel itself relies on a global event handler for theme changes,
+ * A wrapper component to manage the state for the color-panel story.
+ * The color-panel itself relies on a global event handler for theme changes,
  * so this wrapper simulates that behavior for Storybook.
  */
-@customElement('mov-color-panel-story-wrapper')
+@customElement('color-panel-story-wrapper')
 // @ts-expect-error
 class ColorPanelStoryWrapper extends LitElement {
   @state()
@@ -39,7 +39,7 @@ class ColorPanelStoryWrapper extends LitElement {
         @click=${this.handleColorSelect}
       >
         <p>Click a color to select it:</p>
-        <mov-color-panel .selectedTheme=${this.selectedTheme}></mov-color-panel>
+        <color-panel .selectedTheme=${this.selectedTheme}></color-panel>
         <p style="margin-top: 1rem;">
           Selected Color:
           <strong>${this.selectedTheme}</strong>
@@ -58,7 +58,7 @@ class ColorPanelStoryWrapper extends LitElement {
 
 export default {
   title: 'Components/Color Panel',
-  component: 'mov-color-panel',
+  component: 'color-panel',
   tags: ['autodocs'],
   parameters: {
     controls: { disable: true },
@@ -69,7 +69,7 @@ export default {
       },
     },
   },
-  render: () => html`<mov-color-panel-story-wrapper></mov-color-panel-story-wrapper>`,
+  render: () => html`<color-panel-story-wrapper></color-panel-story-wrapper>`,
 } satisfies Meta;
 
 export const Default: StoryObj = {};
