@@ -2,6 +2,11 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 import { setAppStateValue } from '../core/settings.ts';
 import '../ui/CommentsPanel.ts';
+import localhost from '../main/localhost.ts';
+import type { IMangaImages } from '../types';
+
+// Mock data required by the App component and its children
+const mockManga = localhost.run() as IMangaImages;
 
 const meta: Meta = {
   title: 'UI/CommentsPanel',
@@ -13,6 +18,7 @@ const meta: Meta = {
     },
   },
   render: args => {
+    setAppStateValue('manga', mockManga);
     setAppStateValue('panel', args.open ? 'comments' : 'none');
 
     const openPanel = () => {
