@@ -60,6 +60,7 @@ export default class SettingsPanel extends LitElement {
         id="SettingsPanel"
         ?open=${getAppStateValue('panel') === 'settings'}
         @close=${buttonPanelsClose}
+        placement="start"
         class="${getAppStateValue('device')}"
       >
         <h2 slot="header">${getLocaleString('SETTINGS')}</h2>

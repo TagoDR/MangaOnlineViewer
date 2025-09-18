@@ -110,7 +110,7 @@ export default class BookmarkPanel extends LitElement {
           class="Bookmark"
           title="${getLocaleString('BOOKMARK')}"
           @click=${buttonBookmark}
-          slot="action"
+          slot="header-actions"
         >
           <mov-icon
             name="${isBookmarked() === undefined ? 'IconBookmark' : 'IconBookmarkOff'}"

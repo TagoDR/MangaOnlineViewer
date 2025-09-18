@@ -94,13 +94,13 @@ export default class KeybindingsPanel extends LitElement {
       <mov-drawer
         id="KeybindingsPanel"
         ?open=${getAppStateValue('panel').startsWith('keybindings')}
-        position="right"
+        placement="end"
         @close=${buttonPanelsClose}
       >
         <h2 slot="header">${getLocaleString('KEYBINDINGS')}</h2>
         <div
           class="controls"
-          slot="action"
+          slot="header-actions"
         >
           ${
             getAppStateValue('panel') === 'keybindingsEditor'

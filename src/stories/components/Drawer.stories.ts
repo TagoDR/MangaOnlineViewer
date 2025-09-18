@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
-import { html, render } from 'lit';
+import { html, nothing, render } from 'lit';
 import '../../ui/components/Drawer.ts';
 
 const meta: Meta = {
@@ -7,7 +7,7 @@ const meta: Meta = {
   component: 'mov-drawer',
   argTypes: {
     open: { control: 'boolean' },
-    position: { control: { type: 'radio', options: ['left', 'right'] } },
+    placement: { control: { type: 'radio', options: ['start', 'end'] } },
   },
   render: args => {
     const container = document.createElement('div');
@@ -25,12 +25,11 @@ const meta: Meta = {
       <button @click=${openPanel}>Open Drawer</button>
       <mov-drawer
         ?open=${args.open}
-        position=${args.position || 'left'}
+        placement=${args.placement || 'end'}
         @close=${closePanel}
       >
         <span slot="header">${args.header}</span>
-        <button slot="action">${args.action}</button>
-        ${args.slot}
+        ${args.action ? html`<button slot="header-actions">${args.action}</button>` : nothing} ${args.slot}
       </mov-drawer>
     `;
     render(template, container);
@@ -42,21 +41,21 @@ export default meta;
 
 type Story = StoryObj;
 
-export const DrawerLeft: Story = {
-  name: 'Drawer (Left)',
+export const DrawerEnd: Story = {
+  name: 'Drawer (End/Left)',
   args: {
     open: false,
-    position: 'left',
+    placement: 'end',
     header: 'Left Drawer',
     slot: html`<p>This is a drawer panel on the left.</p>`,
   },
 };
 
-export const DrawerRight: Story = {
-  name: 'Drawer (Right)',
+export const DrawerStart: Story = {
+  name: 'Drawer (Start/Right)',
   args: {
-    ...DrawerLeft.args,
-    position: 'right',
+    ...DrawerEnd.args,
+    placement: 'start',
     header: 'Right Drawer',
     slot: html`<p>This is a drawer panel on the right.</p>`,
   },
@@ -65,7 +64,7 @@ export const DrawerRight: Story = {
 export const WithHeaderAndAction: Story = {
   name: 'With Header and Action',
   args: {
-    ...DrawerLeft.args,
+    ...DrawerEnd.args,
     header: 'Panel Title',
     action: 'Action',
     slot: html`<p>This panel has a header and an action button.</p>`,

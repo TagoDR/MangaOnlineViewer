@@ -21,7 +21,7 @@ declare global {
  *
  * @slot - The main content to display inside the dialog.
  * @slot header - Content for the dialog's header.
- * @slot action - Content for an optional action item, positioned opposite the close button.
+ * @slot header-actions - Content for an optional action item, positioned opposite the close button.
  */
 @customElement('mov-dialog')
 export default class Dialog extends LitElement {
@@ -228,7 +228,7 @@ export default class Dialog extends LitElement {
           part="header-bar"
         >
           <div class="action-item">
-            <slot name="action"></slot>
+            <slot name="header-actions"></slot>
           </div>
           <div class="header-content">
             <slot name="header"></slot>

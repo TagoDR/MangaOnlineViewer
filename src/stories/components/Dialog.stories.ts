@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
-import { html, render } from 'lit';
+import { html, nothing, render } from 'lit';
 import '../../ui/components/Dialog.ts';
 
 const meta: Meta = {
@@ -41,7 +41,7 @@ const meta: Meta = {
         @close=${closePanel}
       >
         <span slot="header">${args.header}</span>
-        <button slot="action">${args.action}</button>
+        ${args.action ? html`<button slot="header-actions">${args.action}</button>` : nothing} ${args.slot}
         ${args.slot}
       </mov-dialog>
     `;

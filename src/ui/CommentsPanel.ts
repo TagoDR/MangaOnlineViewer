@@ -57,7 +57,7 @@ export default class CommentsPanel extends LitElement {
           id="CommentsColorScheme"
           mode="theme"
           @click=${this.changeCommentsColor}
-          slot="action"
+          slot="header-actions"
           ?active=${this.colorScheme === 'dark'}
         >
         </toggle-button>

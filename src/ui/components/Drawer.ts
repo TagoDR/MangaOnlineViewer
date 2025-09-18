@@ -16,11 +16,11 @@ declare global {
  * @fires close - Dispatched when the drawer has closed.
  *
  * @attr {boolean} open - Reflects the open/closed state of the drawer.
- * @attr {'left' | 'right'} position - The side from which the drawer appears. Defaults to 'left'.
+ * @attr {'start' | 'end'} placement - The side from which the drawer appears. 'start' is right, 'end' is left. Defaults to 'end'.
  *
  * @slot - The main content to display inside the drawer.
  * @slot header - Content for the drawer's header.
- * @slot action - Content for an optional action item, positioned opposite the close button.
+ * @slot header-actions - Content for an optional action item, positioned opposite the close button.
  */
 @customElement('mov-drawer')
 export default class Drawer extends LitElement {
@@ -112,31 +112,31 @@ export default class Drawer extends LitElement {
       flex-grow: 1;
     }
 
-    :host([position='left']) dialog {
+    :host([placement='end']) dialog {
       left: 0;
       transform: translateX(-100%);
     }
-    :host([position='right']) dialog {
+    :host([placement='start']) dialog {
       right: 0;
       transform: translateX(100%);
     }
     :host([open]) dialog {
       transform: none;
     }
-    :host([position='right']) .action-item {
+    :host([placement='start']) .action-item {
       order: 3;
     }
-    :host([position='right']) .header-content {
+    :host([placement='start']) .header-content {
       order: 2;
     }
-    :host([position='right']) .close-button-container {
+    :host([placement='start']) .close-button-container {
       order: 1;
       justify-content: flex-start;
     }
   `;
 
   @property({ type: Boolean, reflect: true }) open = false;
-  @property({ type: String, reflect: true }) position: 'left' | 'right' = 'left';
+  @property({ type: String, reflect: true }) placement: 'start' | 'end' = 'end';
 
   @query('dialog')
   private dialog!: HTMLDialogElement;
@@ -192,7 +192,7 @@ export default class Drawer extends LitElement {
           part="header-bar"
         >
           <div class="action-item">
-            <slot name="action"></slot>
+            <slot name="header-actions"></slot>
           </div>
           <div class="header-content">
             <slot name="header"></slot>
