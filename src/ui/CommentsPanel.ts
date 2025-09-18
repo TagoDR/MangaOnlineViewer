@@ -10,7 +10,7 @@ import {
   settings,
 } from '../core/settings.ts';
 import { buttonPanelsClose } from './events/panels.ts';
-import './components/Panel.ts';
+import './components/Dialog.ts';
 import styles from './styles/comments.css?inline';
 import { themesCSS } from './themes.ts';
 
@@ -40,11 +40,10 @@ export default class CommentsPanel extends LitElement {
 
   render() {
     return html`
-      <mov-panel
+      <mov-dialog
         id="CommentsPanel"
         ?open=${getAppStateValue('panel') === 'comments'}
-        mode="dialog"
-        position="fullscreen"
+        fullscreen
         @close=${buttonPanelsClose}
       >
         <h2 slot="header">${getLocaleString('COMMENTS')}</h2>
@@ -62,7 +61,7 @@ export default class CommentsPanel extends LitElement {
           ?active=${this.colorScheme === 'dark'}
         >
         </toggle-button>
-      </mov-panel>
+      </mov-dialog>
     `;
   }
 

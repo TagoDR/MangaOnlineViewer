@@ -13,7 +13,7 @@ import {
   settings,
 } from '../core/settings.ts';
 import { buttonPanelsClose, editKeybindings, saveKeybindings } from './events/panels.ts';
-import './components/Panel.ts';
+import './components/Drawer.ts';
 import keycss from '@gerhobbelt/keyscss/keys.css?inline';
 import styles from './styles/keybindings.css?inline';
 
@@ -91,10 +91,9 @@ export default class KeybindingsPanel extends LitElement {
 
   render() {
     return html`
-      <mov-panel
+      <mov-drawer
         id="KeybindingsPanel"
         ?open=${getAppStateValue('panel').startsWith('keybindings')}
-        mode="drawer"
         position="right"
         @close=${buttonPanelsClose}
       >
@@ -141,7 +140,7 @@ export default class KeybindingsPanel extends LitElement {
           }
         </div>
         <div id="HotKeysRules">${unsafeHTML(getLocaleString('KEYBIND_RULES'))}</div>
-      </mov-panel>
+      </mov-drawer>
     `;
   }
 }

@@ -16,7 +16,8 @@ import './components/ColorPanel.ts';
 import './components/SegmentedControl.ts';
 import './components/ToggleSwitch.ts';
 import './components/Pagination.ts';
-import './components/Panel.ts';
+import './components/Drawer.ts';
+import './components/Dialog.ts';
 import './components/Dropdown.ts';
 
 import './Header.ts';

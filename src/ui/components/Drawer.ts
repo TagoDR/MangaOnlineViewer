@@ -4,33 +4,32 @@ import { IconX } from '../icons';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mov-panel': Panel;
+    'mov-drawer': Drawer;
   }
 }
 
 /**
- * A versatile panel component that can function as a side drawer or a dialog.
+ * A side drawer component.
  *
- * @element mov-panel
- * @fires open - Dispatched when the panel begins to open.
- * @fires close - Dispatched when the panel has closed.
+ * @element mov-drawer
+ * @fires open - Dispatched when the drawer begins to open.
+ * @fires close - Dispatched when the drawer has closed.
  *
- * @attr {boolean} open - Reflects the open/closed state of the panel.
- * @attr {'drawer' | 'dialog'} mode - The mode of the panel. Defaults to 'drawer'.
- * @attr {'left' | 'right'} position - For 'drawer' mode, the side from which the panel appears. Defaults to 'left'.
- * @attr {boolean} fullscreen - For 'dialog' mode, whether the dialog covers the full screen.
+ * @attr {boolean} open - Reflects the open/closed state of the drawer.
+ * @attr {'left' | 'right'} position - The side from which the drawer appears. Defaults to 'left'.
  *
- * @slot - The main content to display inside the panel.
- * @slot header - Content for the panel's header.
+ * @slot - The main content to display inside the drawer.
+ * @slot header - Content for the drawer's header.
  * @slot action - Content for an optional action item, positioned opposite the close button.
  */
-@customElement('mov-panel')
-export default class Panel extends LitElement {
+@customElement('mov-drawer')
+export default class Drawer extends LitElement {
   static styles = css`
     :host {
       --panel-overlay-transition: opacity linear 0.25s;
       --panel-overlay-opacity: 0.5;
       --panel-z-index: 1000;
+      --panel-transition: transform 0.25s ease-out;
     }
 
     .backdrop {
@@ -60,9 +59,14 @@ export default class Panel extends LitElement {
       visibility: hidden;
       max-width: 100vw;
       max-height: 100vh;
+      width: 350px;
+      top: 0;
+      bottom: 0;
+      height: 100%;
+      transition: var(--panel-transition);
     }
 
-    :host([open]:not([mode='inline'])) dialog {
+    :host([open]) dialog {
       visibility: visible;
     }
 
@@ -108,108 +112,36 @@ export default class Panel extends LitElement {
       flex-grow: 1;
     }
 
-    /* --- MODE: INLINE --- */
-    :host([mode='inline']) {
-      display: block;
-      width: 100%;
-    }
-    :host([mode='inline']) dialog {
-      all: unset;
-      background-color: var(--theme-background-color, #fff);
-      color: var(--theme-text-color, #000);
-      box-shadow: none;
-      display: flex;
-      flex-direction: column;
-      visibility: visible;
-      position: relative;
-      width: 100%;
-      border: 1px solid var(--theme-border-color, #e0e0e0);
-      border-radius: 12px;
-    }
-    :host([mode='inline']) .backdrop {
-      display: none;
-    }
-    :host([mode='inline']) .close-button {
-      display: none; /* No close button in inline mode */
-    }
-
-    /* --- MODE: DRAWER --- */
-    :host([mode='drawer']) {
-      --panel-transition: transform 0.25s ease-out;
-    }
-    :host([mode='drawer']) dialog {
-      width: 350px;
-      top: 0;
-      bottom: 0;
-      height: 100%;
-      transition: var(--panel-transition);
-    }
-    :host([mode='drawer'][position='left']) dialog {
+    :host([position='left']) dialog {
       left: 0;
       transform: translateX(-100%);
     }
-    :host([mode='drawer'][position='right']) dialog {
+    :host([position='right']) dialog {
       right: 0;
       transform: translateX(100%);
     }
-    :host([mode='drawer'][open]) dialog {
+    :host([open]) dialog {
       transform: none;
     }
-    :host([mode='drawer'][position='right']) .action-item {
+    :host([position='right']) .action-item {
       order: 3;
     }
-    :host([mode='drawer'][position='right']) .header-content {
+    :host([position='right']) .header-content {
       order: 2;
     }
-    :host([mode='drawer'][position='right']) .close-button-container {
+    :host([position='right']) .close-button-container {
       order: 1;
       justify-content: flex-start;
-    }
-
-    /* --- MODE: DIALOG --- */
-    :host([mode='dialog']) {
-      --panel-transition: transform 0.15s ease-out, opacity 0.15s ease-out;
-    }
-    :host([mode='dialog']) dialog {
-      opacity: 0;
-      transition: var(--panel-transition);
-    }
-    :host([mode='dialog'][open]) dialog {
-      opacity: 1;
-    }
-    :host([mode='dialog'][position='center']) dialog {
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.9);
-      border-radius: 12px;
-      width: var(--dialog-width, 700px);
-    }
-    :host([mode='dialog'][position='center'][open]) dialog {
-      transform: translate(-50%, -50%) scale(1);
-    }
-    :host([position='fullscreen']) {
-      --panel-overlay-transition: none;
-    }
-    :host([position='fullscreen']) dialog {
-      width: 100vw;
-      height: 100vh;
-      top: 0;
-      left: 0;
-      transform: none;
-      border-radius: 0;
-      transition: none;
     }
   `;
 
   @property({ type: Boolean, reflect: true }) open = false;
-  @property({ type: String, reflect: true }) mode: 'drawer' | 'dialog' | 'inline' = 'drawer';
-  @property({ type: String, reflect: true }) position: 'left' | 'right' | 'center' | 'fullscreen' =
-    'left';
+  @property({ type: String, reflect: true }) position: 'left' | 'right' = 'left';
 
   @query('dialog')
   private dialog!: HTMLDialogElement;
 
-  private close() {
+  close() {
     this.open = false;
   }
 
@@ -219,15 +151,12 @@ export default class Panel extends LitElement {
   }
 
   private handleClick(event: MouseEvent) {
-    if (this.mode !== 'inline' && event.target === this.dialog) {
+    if (event.target === this.dialog) {
       this.close();
     }
   }
 
   protected updated(changedProperties: PropertyValueMap<this>): void {
-    if (this.mode === 'inline') {
-      return;
-    }
     if (changedProperties.has('open')) {
       if (this.open) {
         this.dialog.show();

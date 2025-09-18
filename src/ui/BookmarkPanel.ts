@@ -13,7 +13,7 @@ import {
 import { isEmpty } from '../utils/checks.ts';
 import { buttonBookmark, buttonEraseBookmarks } from './events/bookmarks.ts';
 import { buttonPanelsClose } from './events/panels.ts';
-import './components/Panel.ts';
+import './components/Dialog.ts';
 import styles from './styles/bookmarks.css?inline';
 
 declare global {
@@ -101,11 +101,9 @@ export default class BookmarkPanel extends LitElement {
 
   render() {
     return html`
-      <mov-panel
+      <mov-dialog
         id="BookmarksPanel"
         ?open=${getAppStateValue('panel') === 'bookmarks'}
-        mode="dialog"
-        position="center"
         @close=${buttonPanelsClose}
       >
         <mov-button
@@ -121,7 +119,7 @@ export default class BookmarkPanel extends LitElement {
         </mov-button>
         <h2 slot="header">${getLocaleString('BOOKMARKS')}</h2>
         <div id="BookmarksList">${this.listBookmarks()}</div>
-      </mov-panel>
+      </mov-dialog>
     `;
   }
 }

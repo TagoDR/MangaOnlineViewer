@@ -15,7 +15,7 @@ import SettingsPanelLoading from './SettingsPanelLoading.ts';
 import SettingsPanelOthers from './SettingsPanelOthers.ts';
 import SettingsPanelTheme from './SettingsPanelTheme.ts';
 import SettingsPanelZoom from './SettingsPanelZoom.ts';
-import './components/Panel.ts';
+import './components/Drawer.ts';
 import styles from './styles/settings.css?inline';
 
 declare global {
@@ -56,10 +56,9 @@ export default class SettingsPanel extends LitElement {
 
   render() {
     return html`
-      <mov-panel
+      <mov-drawer
         id="SettingsPanel"
         ?open=${getAppStateValue('panel') === 'settings'}
-        mode="drawer"
         @close=${buttonPanelsClose}
         class="${getAppStateValue('device')}"
       >
@@ -98,7 +97,7 @@ export default class SettingsPanel extends LitElement {
             ${SettingsPanelOthers()}
           </fieldset>
         </div>
-      </mov-panel>
+      </mov-drawer>
     `;
   }
 }
