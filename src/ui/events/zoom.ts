@@ -10,11 +10,40 @@ import {
 import type { Page, ZoomMode } from '../../types';
 import { logScript } from '../../utils/tampermonkey.ts';
 
+export function calculatePageZoom(
+  page: Page,
+  mode: ZoomMode = getSettingsValue('zoomMode'),
+  value = getSettingsValue('zoomValue'),
+) {
+  const nextWidth =
+    window.innerWidth +
+    (getSettingsValue('navbar') === 'left' || getSettingsValue('navbar') === 'right'
+      ? -navbarSize
+      : 0);
+  const nextHeight =
+    window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -navbarSize : 0);
+  if (mode === 'width') {
+    // Fit width
+    page.width = nextWidth;
+    page.height = undefined;
+  } else if (mode === 'height') {
+    // Fit height
+    page.width = undefined;
+    page.height = nextHeight;
+  } else if (mode === 'percent') {
+    const width = page.naturalWidth ?? page.ref?.value?.naturalWidth;
+    page.width = width ? width * (value / 100) : undefined;
+    page.height = undefined;
+  }
+  return page;
+}
+
 /**
  * Applies a new zoom level to the viewer. This function updates the application's reactive state,
  * which in turn causes the images to re-render with the new zoom settings.
  * @param {ZoomMode} [mode=getSettingsValue('zoomMode')] - The zoom mode to apply ('percent', 'width', or 'height').
  * @param {number} [value=getSettingsValue('zoomValue')] - The zoom value (e.g., a percentage).
+ * @param index - Page that must be updated individually
  */
 export function applyZoom(
   mode: ZoomMode = getSettingsValue('zoomMode'),
@@ -29,32 +58,11 @@ export function applyZoom(
     // Revert to the user's saved preferences when leaving fluid mode
     refreshSettings('header');
   }
-  const nextWidth =
-    window.innerWidth +
-    (getSettingsValue('navbar') === 'left' || getSettingsValue('navbar') === 'right'
-      ? -navbarSize
-      : 0);
-  const nextHeight =
-    window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -navbarSize : 0);
   const images = getAppStateValue('images');
   const manga = getAppStateValue('manga');
   const newImages: Record<number, Page> = {};
   for (let i = manga?.begin ?? 1; i <= (manga?.pages ?? 1); i++) {
-    const page = { ...images?.[i] };
-    if (mode === 'width') {
-      // Fit width
-      page.width = nextWidth;
-      page.height = undefined;
-    } else if (mode === 'height') {
-      // Fit height
-      page.width = undefined;
-      page.height = nextHeight;
-    } else if (mode === 'percent') {
-      const width = page.naturalWidth ?? page.ref?.value?.naturalWidth;
-      page.width = width ? width * (value / 100) : undefined;
-      page.height = undefined;
-    }
-    newImages[i] = page;
+    newImages[i] = calculatePageZoom({ ...images?.[i] }, mode, value);
   }
   setAppStateValue('images', newImages);
 }
@@ -99,6 +107,7 @@ export function changeDefaultZoomMode(event: Event) {
 export function changeDefaultZoomValue(event: Event) {
   const target = parseInt((event.currentTarget as HTMLInputElement).value, 10);
   saveSettingsValue('zoomValue', target);
+  applyZoom('percent', target);
 }
 
 /**

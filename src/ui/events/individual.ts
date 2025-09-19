@@ -9,6 +9,7 @@ import { isEmpty } from '../../utils/checks.ts';
 import { logScript } from '../../utils/tampermonkey.ts';
 import { isBase64ImageUrl, isObjectURL } from '../../utils/urls.ts';
 import { buttonStartDownload } from './globals.ts';
+import { calculatePageZoom } from './zoom.ts';
 
 /**
  * Appends a cache-busting query parameter to a URL.
@@ -93,11 +94,12 @@ export function imageLoaded(event: Event): void {
   img.classList.add('imgLoaded');
   img.classList.remove('imgBroken');
   const index = parseInt(img.id.replace('PageImg', ''), 10);
-  changeImage(index, _image => ({
-    naturalWidth: img.naturalWidth,
-    naturalHeight: img.naturalHeight,
-  }));
-
+  changeImage(index, _image =>
+    calculatePageZoom({
+      naturalWidth: img.naturalWidth,
+      naturalHeight: img.naturalHeight,
+    }),
+  );
   // Draw onto an offscreen canvas and try to get a Blob
   try {
     const canvas = document.createElement('canvas');
@@ -112,7 +114,7 @@ export function imageLoaded(event: Event): void {
       }, 'image/png');
     }
   } catch (e) {
-    console.error('Failed to transforme image to blob: ', e, ' for page ', index);
+    console.error('Failed to transform image to blob for page', index, e);
     // Ignore failures (e.g., CORS tainted). We still proceed with progress updates.
   }
 
