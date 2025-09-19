@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.09.17
+// @version       2025.09.19
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -4685,14 +4685,14 @@
     ),
   );
 
-  var __defProp$c = Object.defineProperty;
-  var __getOwnPropDesc$g = Object.getOwnPropertyDescriptor;
-  var __decorateClass$g = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$g(target, key) : target;
+  var __defProp$d = Object.defineProperty;
+  var __getOwnPropDesc$h = Object.getOwnPropertyDescriptor;
+  var __decorateClass$h = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$h(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$c(target, key, result);
+    if (kind && result) __defProp$d(target, key, result);
     return result;
   };
   let Icon = class extends i$1 {
@@ -4735,13 +4735,13 @@
     }
     /* Fallback if no color is set */
     :host(:not([style*='color'])) svg {
-      color: var(--theme-primary-text-color);
+      color: var(--mov-color-on-loud);
     }
   `;
-  __decorateClass$g([n$1({ type: String })], Icon.prototype, 'name', 2);
-  __decorateClass$g([n$1({ type: String })], Icon.prototype, 'label', 2);
-  __decorateClass$g([n$1({ type: String })], Icon.prototype, 'size', 2);
-  Icon = __decorateClass$g([t$1('mov-icon')], Icon);
+  __decorateClass$h([n$1({ type: String })], Icon.prototype, 'name', 2);
+  __decorateClass$h([n$1({ type: String })], Icon.prototype, 'label', 2);
+  __decorateClass$h([n$1({ type: String })], Icon.prototype, 'size', 2);
+  Icon = __decorateClass$h([t$1('mov-icon')], Icon);
 
   /**
    * @license
@@ -4797,16 +4797,16 @@
    */ const o$3 = o => o ?? E;
 
   const styles$7 =
-    ':host {\n  display: inline-block;\n  --mov-font-size-scale: 1;\n  --mov-font-size-m: calc(1rem * var(--mov-font-size-scale));\n  --mov-font-size-s: round(calc(var(--mov-font-size-m) / 1.125), 1px);\n  --mov-font-size-l: round(calc(var(--mov-font-size-m) * 1.125 * 1.125), 1px);\n  --mov-border-width-s: 0.0625rem;\n  --mov-border-radius-m: 0.375rem;\n  --mov-border-radius-pill: 9999px;\n  --mov-transition-fast: 75ms;\n  --mov-font-weight-action: 500;\n  --mov-focus-ring: solid 0.1875rem var(--theme-primary-color);\n  --mov-focus-ring-offset: 0.0625rem;\n  --mov-line-height-condensed: 1.2;\n  --mov-form-control-padding-block: 0.75em;\n  --mov-form-control-padding-inline: 1em;\n  --mov-form-control-height: round(\n    calc(2 * var(--mov-form-control-padding-block) + 1em * var(--mov-line-height-condensed)),\n    1px\n  );\n}\n\n:host([size="small"]) {\n  font-size: var(--mov-font-size-s);\n}\n:host([size="medium"]) {\n  font-size: var(--mov-font-size-m);\n}\n:host([size="large"]) {\n  font-size: var(--mov-font-size-l);\n}\n\n.button {\n  box-sizing: border-box;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  text-decoration: none;\n  user-select: none;\n  white-space: nowrap;\n  vertical-align: middle;\n  transition-property: background, border, box-shadow, color;\n  transition-duration: var(--mov-transition-fast);\n  cursor: pointer;\n  padding: 0 var(--mov-form-control-padding-inline);\n  font-family: inherit;\n  font-size: inherit;\n  font-weight: var(--mov-font-weight-action);\n  line-height: calc(var(--mov-form-control-height) - var(--mov-border-width-s) * 2);\n  height: var(--mov-form-control-height);\n  border-radius: var(--mov-border-radius-m);\n  border-style: solid;\n  border-width: var(--mov-border-width-s);\n  background-color: var(--mov-color-fill-loud);\n  color: var(--mov-color-on-loud);\n  border-color: transparent;\n}\n\n/* Appearance modifiers */\n:host([appearance~="plain"]) {\n  .button {\n    color: var(--mov-color-on-quiet);\n    background-color: transparent;\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-quiet);\n      background-color: var(--mov-color-fill-quiet);\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-quiet);\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\n  }\n}\n\n:host([appearance~="outlined"]) {\n  .button {\n    color: var(--mov-color-on-quiet);\n    background-color: transparent;\n    border-color: var(--mov-color-border-loud);\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-quiet);\n      background-color: var(--mov-color-fill-quiet);\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-quiet);\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\n  }\n}\n\n:host([appearance~="filled"]) {\n  .button {\n    color: var(--mov-color-on-normal);\n    background-color: var(--mov-color-fill-normal);\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-normal);\n      background-color: color-mix(\n        in oklab,\n        var(--mov-color-fill-normal),\n        var(--mov-color-mix-hover)\n      );\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-normal);\n    background-color: color-mix(\n      in oklab,\n      var(--mov-color-fill-normal),\n      var(--mov-color-mix-active)\n    );\n  }\n}\n\n:host([appearance~="filled"][appearance~="outlined"]) .button {\n  border-color: var(--mov-color-border-normal);\n}\n\n:host([appearance~="accent"]) {\n  .button {\n    color: var(--mov-color-on-loud);\n    background-color: var(--mov-color-fill-loud);\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-hover));\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-active));\n  }\n}\n/* Focus states */\n.button:focus {\n  outline: none;\n}\n.button:focus-visible {\n  outline: var(--mov-focus-ring);\n  outline-offset: var(--mov-focus-ring-offset);\n}\n\n/* Disabled state */\n.button.disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n}\n.button.disabled * {\n  pointer-events: none;\n}\n\n/* Icon buttons */\n.button.is-icon-button {\n  outline-offset: 2px;\n  width: var(--mov-form-control-height);\n  aspect-ratio: 1;\n}\n\n/* Pill modifier */\n:host([pill]) .button {\n  border-radius: var(--mov-border-radius-pill);\n}\n\n.start,\n.end {\n  flex: 0 0 auto;\n  display: flex;\n  align-items: center;\n  pointer-events: none;\n}\n\n.label {\n  display: inline-block;\n}\n.is-icon-button .label {\n  display: flex;\n}\n\nmov-icon[part~="caret"] {\n  display: flex;\n  align-self: center;\n  align-items: center;\n}\nmov-icon[part~="caret"]::part(svg) {\n  width: 0.875em;\n  height: 0.875em;\n}\n\n.loading {\n  position: relative;\n  cursor: wait;\n}\n.loading .start,\n.loading .label,\n.loading .end,\n.loading .caret {\n  visibility: hidden;\n}\n\n.spinner {\n  --indicator-color: currentColor;\n  --track-color: color-mix(in oklab, currentColor, transparent 90%);\n  position: absolute;\n  font-size: 1em;\n  height: 1em;\n  width: 1em;\n  top: calc(50% - 0.5em);\n  left: calc(50% - 0.5em);\n  border-radius: 50%;\n  border: 2px solid var(--track-color);\n  border-top-color: var(--indicator-color);\n  animation: spin 1s linear infinite;\n}\n\n@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n\nslot[name="start"]::slotted(*) {\n  margin-inline-end: 0.75em;\n}\nslot[name="end"]::slotted(*),\n.button:not(.visually-hidden-label) [part~="caret"] {\n  margin-inline-start: 0.75em;\n}\n';
+    ':host {\n  display: inline-block;\n  --mov-font-size-scale: 1;\n  --mov-font-size-m: calc(1rem * var(--mov-font-size-scale));\n  --mov-font-size-s: round(calc(var(--mov-font-size-m) / 1.125), 1px);\n  --mov-font-size-l: round(calc(var(--mov-font-size-m) * 1.125 * 1.125), 1px);\n  --mov-border-width-s: 0.0625rem;\n  --mov-border-radius-m: 0.375rem;\n  --mov-border-radius-pill: 9999px;\n  --mov-transition-fast: 75ms;\n  --mov-font-weight-action: 500;\n  --mov-focus-ring: solid 0.1875rem var(--mov-color-fill-loud);\n  --mov-focus-ring-offset: 0.0625rem;\n  --mov-line-height-condensed: 1.2;\n  --mov-form-control-padding-block: 0.75em;\n  --mov-form-control-padding-inline: 1em;\n  --mov-form-control-height: round(\n    calc(2 * var(--mov-form-control-padding-block) + 1em * var(--mov-line-height-condensed)),\n    1px\n  );\n}\n\n:host([size="small"]) {\n  font-size: var(--mov-font-size-s);\n}\n:host([size="medium"]) {\n  font-size: var(--mov-font-size-m);\n}\n:host([size="large"]) {\n  font-size: var(--mov-font-size-l);\n}\n\n.button {\n  box-sizing: border-box;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  text-decoration: none;\n  user-select: none;\n  white-space: nowrap;\n  vertical-align: middle;\n  transition-property: background, border, box-shadow, color;\n  transition-duration: var(--mov-transition-fast);\n  cursor: pointer;\n  padding: 0 var(--mov-form-control-padding-inline);\n  font-family: inherit;\n  font-size: inherit;\n  font-weight: var(--mov-font-weight-action);\n  line-height: calc(var(--mov-form-control-height) - var(--mov-border-width-s) * 2);\n  height: var(--mov-form-control-height);\n  border-radius: var(--mov-border-radius-m);\n  border-style: solid;\n  border-width: var(--mov-border-width-s);\n  background-color: var(--mov-color-fill-loud);\n  color: var(--mov-color-on-loud);\n  border-color: transparent;\n}\n\n/* Appearance modifiers */\n:host([appearance~="plain"]) {\n  .button {\n    color: var(--mov-color-on-quiet);\n    background-color: transparent;\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-quiet);\n      background-color: var(--mov-color-fill-quiet);\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-quiet);\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\n  }\n}\n\n:host([appearance~="outlined"]) {\n  .button {\n    color: var(--mov-color-on-quiet);\n    background-color: transparent;\n    border-color: var(--mov-color-border-loud);\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-quiet);\n      background-color: var(--mov-color-fill-quiet);\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-quiet);\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\n  }\n}\n\n:host([appearance~="filled"]) {\n  .button {\n    color: var(--mov-color-on-normal);\n    background-color: var(--mov-color-fill-normal);\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-normal);\n      background-color: color-mix(\n        in oklab,\n        var(--mov-color-fill-normal),\n        var(--mov-color-mix-hover)\n      );\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-normal);\n    background-color: color-mix(\n      in oklab,\n      var(--mov-color-fill-normal),\n      var(--mov-color-mix-active)\n    );\n  }\n}\n\n:host([appearance~="filled"][appearance~="outlined"]) .button {\n  border-color: var(--mov-color-border-normal);\n}\n\n:host([appearance~="accent"]) {\n  .button {\n    color: var(--mov-color-on-loud);\n    background-color: var(--mov-color-fill-loud);\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-hover));\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-active));\n  }\n}\n/* Focus states */\n.button:focus {\n  outline: none;\n}\n.button:focus-visible {\n  outline: var(--mov-focus-ring);\n  outline-offset: var(--mov-focus-ring-offset);\n}\n\n/* Disabled state */\n.button.disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n}\n.button.disabled * {\n  pointer-events: none;\n}\n\n/* Icon buttons */\n.button.is-icon-button {\n  outline-offset: 2px;\n  width: var(--mov-form-control-height);\n  aspect-ratio: 1;\n}\n\n/* Pill modifier */\n:host([pill]) .button {\n  border-radius: var(--mov-border-radius-pill);\n}\n\n.start,\n.end {\n  flex: 0 0 auto;\n  display: flex;\n  align-items: center;\n  pointer-events: none;\n}\n\n.label {\n  display: inline-block;\n}\n.is-icon-button .label {\n  display: flex;\n}\n\nmov-icon[part~="caret"] {\n  display: flex;\n  align-self: center;\n  align-items: center;\n}\nmov-icon[part~="caret"]::part(svg) {\n  width: 0.875em;\n  height: 0.875em;\n}\n\n.loading {\n  position: relative;\n  cursor: wait;\n}\n.loading .start,\n.loading .label,\n.loading .end,\n.loading .caret {\n  visibility: hidden;\n}\n\n.spinner {\n  --indicator-color: currentColor;\n  --track-color: color-mix(in oklab, currentColor, transparent 90%);\n  position: absolute;\n  font-size: 1em;\n  height: 1em;\n  width: 1em;\n  top: calc(50% - 0.5em);\n  left: calc(50% - 0.5em);\n  border-radius: 50%;\n  border: 2px solid var(--track-color);\n  border-top-color: var(--indicator-color);\n  animation: spin 1s linear infinite;\n}\n\n@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n\nslot[name="start"]::slotted(*) {\n  margin-inline-end: 0.75em;\n}\nslot[name="end"]::slotted(*),\n.button:not(.visually-hidden-label) [part~="caret"] {\n  margin-inline-start: 0.75em;\n}\n';
 
-  var __defProp$b = Object.defineProperty;
-  var __getOwnPropDesc$f = Object.getOwnPropertyDescriptor;
-  var __decorateClass$f = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$f(target, key) : target;
+  var __defProp$c = Object.defineProperty;
+  var __getOwnPropDesc$g = Object.getOwnPropertyDescriptor;
+  var __decorateClass$g = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$g(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$b(target, key, result);
+    if (kind && result) __defProp$c(target, key, result);
     return result;
   };
   let Button = class extends i$1 {
@@ -4969,42 +4969,42 @@
     }
   };
   Button.styles = [r$3(styles$7)];
-  __decorateClass$f([e$2('.button')], Button.prototype, 'button', 2);
-  __decorateClass$f([e$2('slot:not([name])')], Button.prototype, 'labelSlot', 2);
-  __decorateClass$f([r()], Button.prototype, 'isIconButton', 2);
-  __decorateClass$f([r()], Button.prototype, 'hasLabel', 2);
-  __decorateClass$f([r()], Button.prototype, 'hasStart', 2);
-  __decorateClass$f([r()], Button.prototype, 'hasEnd', 2);
-  __decorateClass$f([n$1()], Button.prototype, 'title', 2);
-  __decorateClass$f([n$1({ reflect: true })], Button.prototype, 'appearance', 2);
-  __decorateClass$f([n$1({ reflect: true })], Button.prototype, 'size', 2);
-  __decorateClass$f(
+  __decorateClass$g([e$2('.button')], Button.prototype, 'button', 2);
+  __decorateClass$g([e$2('slot:not([name])')], Button.prototype, 'labelSlot', 2);
+  __decorateClass$g([r()], Button.prototype, 'isIconButton', 2);
+  __decorateClass$g([r()], Button.prototype, 'hasLabel', 2);
+  __decorateClass$g([r()], Button.prototype, 'hasStart', 2);
+  __decorateClass$g([r()], Button.prototype, 'hasEnd', 2);
+  __decorateClass$g([n$1()], Button.prototype, 'title', 2);
+  __decorateClass$g([n$1({ reflect: true })], Button.prototype, 'appearance', 2);
+  __decorateClass$g([n$1({ reflect: true })], Button.prototype, 'size', 2);
+  __decorateClass$g(
     [n$1({ attribute: 'with-caret', type: Boolean, reflect: true })],
     Button.prototype,
     'withCaret',
     2,
   );
-  __decorateClass$f([n$1({ type: Boolean, reflect: true })], Button.prototype, 'disabled', 2);
-  __decorateClass$f([n$1({ type: Boolean, reflect: true })], Button.prototype, 'loading', 2);
-  __decorateClass$f([n$1({ type: Boolean, reflect: true })], Button.prototype, 'pill', 2);
-  __decorateClass$f([n$1()], Button.prototype, 'type', 2);
-  __decorateClass$f([n$1({ reflect: true })], Button.prototype, 'name', 2);
-  __decorateClass$f([n$1({ reflect: true })], Button.prototype, 'value', 2);
-  __decorateClass$f([n$1({ reflect: true })], Button.prototype, 'href', 2);
-  __decorateClass$f([n$1()], Button.prototype, 'target', 2);
-  __decorateClass$f([n$1()], Button.prototype, 'rel', 2);
-  __decorateClass$f([n$1()], Button.prototype, 'download', 2);
-  __decorateClass$f([n$1({ reflect: true })], Button.prototype, 'form', 2);
-  Button = __decorateClass$f([t$1('mov-button')], Button);
+  __decorateClass$g([n$1({ type: Boolean, reflect: true })], Button.prototype, 'disabled', 2);
+  __decorateClass$g([n$1({ type: Boolean, reflect: true })], Button.prototype, 'loading', 2);
+  __decorateClass$g([n$1({ type: Boolean, reflect: true })], Button.prototype, 'pill', 2);
+  __decorateClass$g([n$1()], Button.prototype, 'type', 2);
+  __decorateClass$g([n$1({ reflect: true })], Button.prototype, 'name', 2);
+  __decorateClass$g([n$1({ reflect: true })], Button.prototype, 'value', 2);
+  __decorateClass$g([n$1({ reflect: true })], Button.prototype, 'href', 2);
+  __decorateClass$g([n$1()], Button.prototype, 'target', 2);
+  __decorateClass$g([n$1()], Button.prototype, 'rel', 2);
+  __decorateClass$g([n$1()], Button.prototype, 'download', 2);
+  __decorateClass$g([n$1({ reflect: true })], Button.prototype, 'form', 2);
+  Button = __decorateClass$g([t$1('mov-button')], Button);
 
-  var __defProp$a = Object.defineProperty;
-  var __getOwnPropDesc$e = Object.getOwnPropertyDescriptor;
-  var __decorateClass$e = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$e(target, key) : target;
+  var __defProp$b = Object.defineProperty;
+  var __getOwnPropDesc$f = Object.getOwnPropertyDescriptor;
+  var __decorateClass$f = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$f(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$a(target, key, result);
+    if (kind && result) __defProp$b(target, key, result);
     return result;
   };
   let ToggleButton = class extends i$1 {
@@ -5245,7 +5245,7 @@
 
     /* Focus visible enhancement */
     mov-button:focus-visible {
-      outline: 2px solid var(--theme-primary-color, currentColor);
+      outline: 2px solid var(--mov-color-fill-loud, currentColor);
       outline-offset: 2px;
     }
 
@@ -5261,22 +5261,22 @@
       flex-shrink: 0;
     }
   `;
-  __decorateClass$e([n$1({ type: String })], ToggleButton.prototype, 'mode', 2);
-  __decorateClass$e([n$1({ type: Boolean, reflect: true })], ToggleButton.prototype, 'active', 2);
-  __decorateClass$e([n$1({ type: String })], ToggleButton.prototype, 'label', 2);
-  __decorateClass$e([n$1({ type: String })], ToggleButton.prototype, 'activeLabel', 2);
-  __decorateClass$e([n$1({ type: String })], ToggleButton.prototype, 'icon', 2);
-  __decorateClass$e([n$1({ type: String })], ToggleButton.prototype, 'activeIcon', 2);
-  __decorateClass$e(
+  __decorateClass$f([n$1({ type: String })], ToggleButton.prototype, 'mode', 2);
+  __decorateClass$f([n$1({ type: Boolean, reflect: true })], ToggleButton.prototype, 'active', 2);
+  __decorateClass$f([n$1({ type: String })], ToggleButton.prototype, 'label', 2);
+  __decorateClass$f([n$1({ type: String })], ToggleButton.prototype, 'activeLabel', 2);
+  __decorateClass$f([n$1({ type: String })], ToggleButton.prototype, 'icon', 2);
+  __decorateClass$f([n$1({ type: String })], ToggleButton.prototype, 'activeIcon', 2);
+  __decorateClass$f(
     [n$1({ type: String, reflect: true })],
     ToggleButton.prototype,
     'appearance',
     2,
   );
-  __decorateClass$e([n$1({ type: String, reflect: true })], ToggleButton.prototype, 'size', 2);
-  __decorateClass$e([n$1({ type: Boolean })], ToggleButton.prototype, 'disabled', 2);
-  __decorateClass$e([n$1({ type: Boolean, reflect: true })], ToggleButton.prototype, 'loading', 2);
-  ToggleButton = __decorateClass$e([t$1('mov-toggle-button')], ToggleButton);
+  __decorateClass$f([n$1({ type: String, reflect: true })], ToggleButton.prototype, 'size', 2);
+  __decorateClass$f([n$1({ type: Boolean })], ToggleButton.prototype, 'disabled', 2);
+  __decorateClass$f([n$1({ type: Boolean, reflect: true })], ToggleButton.prototype, 'loading', 2);
+  ToggleButton = __decorateClass$f([t$1('toggle-button')], ToggleButton);
 
   /**
    * @license
@@ -5405,14 +5405,14 @@
     IconZoomPan,
   } = styledIconsSVG;
 
-  var __defProp$9 = Object.defineProperty;
-  var __getOwnPropDesc$d = Object.getOwnPropertyDescriptor;
-  var __decorateClass$d = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$d(target, key) : target;
+  var __defProp$a = Object.defineProperty;
+  var __getOwnPropDesc$e = Object.getOwnPropertyDescriptor;
+  var __decorateClass$e = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$e(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$9(target, key, result);
+    if (kind && result) __defProp$a(target, key, result);
     return result;
   };
   let ColorSwatch = class extends i$1 {
@@ -5516,21 +5516,21 @@
       opacity: 1;
     }
   `;
-  __decorateClass$d([n$1({ type: String })], ColorSwatch.prototype, 'value', 2);
-  __decorateClass$d([n$1({ type: Boolean, reflect: true })], ColorSwatch.prototype, 'selected', 2);
-  __decorateClass$d([n$1({ type: Number })], ColorSwatch.prototype, 'size', 2);
-  __decorateClass$d([n$1({ type: String })], ColorSwatch.prototype, 'radius', 2);
-  __decorateClass$d([n$1({ state: true })], ColorSwatch.prototype, 'contrastColor', 2);
-  ColorSwatch = __decorateClass$d([t$1('mov-color-swatch')], ColorSwatch);
+  __decorateClass$e([n$1({ type: String })], ColorSwatch.prototype, 'value', 2);
+  __decorateClass$e([n$1({ type: Boolean, reflect: true })], ColorSwatch.prototype, 'selected', 2);
+  __decorateClass$e([n$1({ type: Number })], ColorSwatch.prototype, 'size', 2);
+  __decorateClass$e([n$1({ type: String })], ColorSwatch.prototype, 'radius', 2);
+  __decorateClass$e([n$1({ state: true })], ColorSwatch.prototype, 'contrastColor', 2);
+  ColorSwatch = __decorateClass$e([t$1('color-swatch')], ColorSwatch);
 
-  var __defProp$8 = Object.defineProperty;
-  var __getOwnPropDesc$c = Object.getOwnPropertyDescriptor;
-  var __decorateClass$c = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$c(target, key) : target;
+  var __defProp$9 = Object.defineProperty;
+  var __getOwnPropDesc$d = Object.getOwnPropertyDescriptor;
+  var __decorateClass$d = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$d(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$8(target, key, result);
+    if (kind && result) __defProp$9(target, key, result);
     return result;
   };
   let ColorPanel = class extends i$1 {
@@ -5612,7 +5612,7 @@
       align-items: center;
     }
     .ThemeRadio {
-      color: var(--theme-primary-text-color);
+      color: var(--mov-color-on-loud);
       height: 20px;
       width: 20px;
       border-radius: 3px;
@@ -5645,17 +5645,17 @@
       display: none;
     }
   `;
-  __decorateClass$c([n$1({ type: String })], ColorPanel.prototype, 'value', 2);
-  ColorPanel = __decorateClass$c([t$1('mov-color-panel')], ColorPanel);
+  __decorateClass$d([n$1({ type: String })], ColorPanel.prototype, 'value', 2);
+  ColorPanel = __decorateClass$d([t$1('color-panel')], ColorPanel);
 
-  var __defProp$7 = Object.defineProperty;
-  var __getOwnPropDesc$b = Object.getOwnPropertyDescriptor;
-  var __decorateClass$b = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$b(target, key) : target;
+  var __defProp$8 = Object.defineProperty;
+  var __getOwnPropDesc$c = Object.getOwnPropertyDescriptor;
+  var __decorateClass$c = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$c(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$7(target, key, result);
+    if (kind && result) __defProp$8(target, key, result);
     return result;
   };
   let SegmentedControl = class extends i$1 {
@@ -5748,24 +5748,24 @@
       flex-direction: column;
     }
     input:checked + .label {
-      background-color: var(--theme-primary-color);
-      color: var(--theme-primary-text-color);
+      background-color: var(--mov-color-fill-loud);
+      color: var(--mov-color-on-loud);
       font-weight: 600;
     }
   `;
-  __decorateClass$b([n$1({ type: Array })], SegmentedControl.prototype, 'options', 2);
-  __decorateClass$b([n$1({ type: String })], SegmentedControl.prototype, 'value', 2);
-  __decorateClass$b([n$1({ type: String })], SegmentedControl.prototype, 'labelPosition', 2);
-  SegmentedControl = __decorateClass$b([t$1('mov-segmented-control')], SegmentedControl);
+  __decorateClass$c([n$1({ type: Array })], SegmentedControl.prototype, 'options', 2);
+  __decorateClass$c([n$1({ type: String })], SegmentedControl.prototype, 'value', 2);
+  __decorateClass$c([n$1({ type: String })], SegmentedControl.prototype, 'labelPosition', 2);
+  SegmentedControl = __decorateClass$c([t$1('segmented-control')], SegmentedControl);
 
-  var __defProp$6 = Object.defineProperty;
-  var __getOwnPropDesc$a = Object.getOwnPropertyDescriptor;
-  var __decorateClass$a = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$a(target, key) : target;
+  var __defProp$7 = Object.defineProperty;
+  var __getOwnPropDesc$b = Object.getOwnPropertyDescriptor;
+  var __decorateClass$b = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$b(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$6(target, key, result);
+    if (kind && result) __defProp$7(target, key, result);
     return result;
   };
   let ToggleSwitch = class extends i$1 {
@@ -5773,133 +5773,147 @@
       super(...arguments);
       this.name = '';
       this.checked = false;
+      this.disabled = false;
+      this.design = 'graphical';
+      this.textOn = 'ON';
+      this.textOff = 'OFF';
+    }
+    toggleChecked() {
+      if (!this.disabled) {
+        this.checked = !this.checked;
+        this.dispatchEvent(new Event('change'));
+      }
     }
     render() {
+      const knobContent =
+        this.design === 'graphical'
+          ? x$1`${this.checked ? IconCheck : IconX}`
+          : x$1`<span class="text">${this.checked ? this.textOn : this.textOff}</span>`;
       return x$1`
-      <div class="toggler">
-        <input
-          id="${this.name}"
-          name="${this.name}"
-          type="checkbox"
-          value="true"
-          ?checked=${this.checked}
-          @change=${this.onChange}
-        />
-        <label for="${this.name}">
-          <span class="toggler-on">${IconCheck}</span>
-          <span class="toggler-off">${IconX}</span>
-        </label>
+      <input
+        type="checkbox"
+        id="${this.name}"
+        name="${this.name}"
+        ?checked=${this.checked}
+        ?disabled=${this.disabled}
+        @change=${this.onChange}
+      />
+      <div
+        class="${e({
+          switch: true,
+          [this.design]: true,
+        })}"
+        role="switch"
+        aria-checked="${this.checked}"
+        tabindex="${this.disabled ? -1 : 0}"
+        @click=${this.toggleChecked}
+        @keydown=${e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            this.toggleChecked();
+          }
+        }}
+      >
+        <div class="knob">${knobContent}</div>
       </div>
     `;
     }
   };
   ToggleSwitch.styles = i$3`
-    /* From Uiverse.io by mobinkakei */
     :host {
-      --toggler-size: 2em;
+      --switch-width: 3rem;
+      --switch-height: 1.5rem;
+      --knob-size: 1.25rem;
+      display: inline-block;
     }
 
-    .toggler input {
+    input {
       display: none;
     }
 
-    .toggler label {
-      display: block;
+    .switch {
       position: relative;
-      width: var(--toggler-size);
-      height: calc(var(--toggler-size) / 2);
-      border: 1px solid #d6d6d6;
-      border-radius: 36px;
-      background: #e4e8e8;
+      width: var(--switch-width);
+      height: var(--switch-height);
+      border-radius: var(--switch-height);
+      background-color: #d7062a;
+      border: 1px solid #d7062a;
+      transition:
+        background-color 0.3s,
+        border-color 0.3s;
       cursor: pointer;
     }
 
-    .toggler label::after {
-      display: block;
-      border-radius: 100%;
-      background-color: #d7062a;
-      content: '';
-      animation-name: toggler-size;
-      animation-duration: 0.15s;
-      animation-timing-function: ease-out;
-      animation-direction: normal;
-      animation-iteration-count: 1;
-      animation-play-state: running;
+    input:checked + .switch {
+      background-color: #50ac5d;
+      border-color: #50ac5d;
     }
 
-    .toggler label::after,
-    .toggler label .toggler-on .icon,
-    .toggler label .toggler-off .icon {
+    .switch.textual {
+      background-color: var(--mov-color-on-loud);
+      border-color: var(--mov-color-on-loud);
+    }
+
+    input:checked + .switch.textual {
+      background-color: var(--mov-color-fill-loud);
+      border-color: var(--mov-color-fill-loud);
+    }
+
+    input:disabled + .switch {
+      background-color: #eee;
+      border-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .knob {
       position: absolute;
       top: 50%;
-      left: 25%;
-      width: calc(var(--toggler-size) * 0.4);
-      height: calc(var(--toggler-size) * 0.4);
-      transform: translateY(-50%) translateX(-50%);
-      transition:
-        left 0.15s ease-in-out,
-        background-color 0.2s ease-out,
-        width 0.15s ease-in-out,
-        height 0.15s ease-in-out,
-        opacity 0.15s ease-in-out;
+      left: 2px;
+      transform: translateY(-50%);
+      width: var(--knob-size);
+      height: var(--knob-size);
+      background-color: #fff;
+      border-radius: 50%;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      transition: left 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+      font-family: Arial;
+      color: #333;
     }
 
-    .toggler input:checked + label::after,
-    .toggler input:checked + label .toggler-on .icon,
-    .toggler input:checked + label .toggler-off .icon {
-      left: 75%;
+    input:checked + .switch .knob {
+      left: calc(100% - var(--knob-size) - 2px);
     }
 
-    .toggler input:checked + label::after {
-      background-color: #50ac5d;
-      animation-name: toggler-size2;
+    .switch:focus {
+      outline: 2px solid #0a6ed1;
+      outline-offset: 2px;
     }
 
-    .toggler .toggler-on .icon,
-    .toggler .toggler-off .icon {
-      opacity: 1;
-      z-index: 2;
-      color: #fefefe;
+    .icon {
+      width: 1rem;
+      height: 1rem;
       fill: none;
     }
 
-    .toggler input:checked + label .toggler-off .icon,
-    .toggler input:not(:checked) + label .toggler-on .icon {
-      width: 0;
-      height: 0;
-      opacity: 0;
-    }
-
-    @keyframes toggler-size {
-      0%,
-      100% {
-        width: calc(var(--toggler-size) * 0.4);
-        height: calc(var(--toggler-size) * 0.4);
-      }
-
-      50% {
-        width: calc(var(--toggler-size) * 0.3);
-        height: calc(var(--toggler-size) * 0.3);
-      }
-    }
-
-    @keyframes toggler-size2 {
-      0%,
-      100% {
-        width: calc(var(--toggler-size) * 0.4);
-        height: calc(var(--toggler-size) * 0.4);
-      }
-
-      50% {
-        width: calc(var(--toggler-size) * 0.3);
-        height: calc(var(--toggler-size) * 0.3);
-      }
+    .text {
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: #333;
     }
   `;
-  __decorateClass$a([n$1({ type: String })], ToggleSwitch.prototype, 'name', 2);
-  __decorateClass$a([n$1({ type: Boolean, reflect: true })], ToggleSwitch.prototype, 'checked', 2);
-  __decorateClass$a([n$1({ attribute: false })], ToggleSwitch.prototype, 'onChange', 2);
-  ToggleSwitch = __decorateClass$a([t$1('mov-toggle-switch')], ToggleSwitch);
+  __decorateClass$b([n$1({ type: String })], ToggleSwitch.prototype, 'name', 2);
+  __decorateClass$b([n$1({ type: Boolean, reflect: true })], ToggleSwitch.prototype, 'checked', 2);
+  __decorateClass$b([n$1({ type: Boolean, reflect: true })], ToggleSwitch.prototype, 'disabled', 2);
+  __decorateClass$b([n$1({ type: String, reflect: true })], ToggleSwitch.prototype, 'design', 2);
+  __decorateClass$b([n$1({ type: String })], ToggleSwitch.prototype, 'textOn', 2);
+  __decorateClass$b([n$1({ type: String })], ToggleSwitch.prototype, 'textOff', 2);
+  __decorateClass$b([n$1({ attribute: false })], ToggleSwitch.prototype, 'onChange', 2);
+  ToggleSwitch = __decorateClass$b([t$1('toggle-switch')], ToggleSwitch);
 
   var commonjsGlobal =
     typeof globalThis !== 'undefined'
@@ -6293,14 +6307,14 @@
     setAppStateValue('scrollToPage', target);
   }
 
-  var __defProp$5 = Object.defineProperty;
-  var __getOwnPropDesc$9 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$9 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$9(target, key) : target;
+  var __defProp$6 = Object.defineProperty;
+  var __getOwnPropDesc$a = Object.getOwnPropertyDescriptor;
+  var __decorateClass$a = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$a(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$5(target, key, result);
+    if (kind && result) __defProp$6(target, key, result);
     return result;
   };
   let Pagination = class extends i$1 {
@@ -6401,9 +6415,9 @@
     }
 
     .pagination-button {
-      background: var(--theme-primary-color);
-      border: 1px solid var(--theme-primary-color);
-      color: var(--theme-primary-text-color);
+      background: var(--mov-color-fill-loud);
+      border: 1px solid var(--mov-color-fill-loud);
+      color: var(--mov-color-on-loud);
       padding: 8px 12px;
       border-radius: 4px;
       cursor: pointer;
@@ -6444,7 +6458,7 @@
       appearance: none;
       width: 100%;
       height: 4px;
-      background: var(--theme-primary-color);
+      background: var(--mov-color-fill-loud);
       opacity: 0.5;
       border-radius: 2px;
       outline: none;
@@ -6460,7 +6474,7 @@
       border-radius: 50%;
       cursor: pointer;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--theme-primary-color);
+      border: 1px solid var(--mov-color-fill-loud);
     }
 
     .pagination-slider::-moz-range-thumb {
@@ -6469,7 +6483,7 @@
       background: white;
       border-radius: 50%;
       cursor: pointer;
-      border: 1px solid var(--theme-primary-color);
+      border: 1px solid var(--mov-color-fill-loud);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
@@ -6514,12 +6528,212 @@
       opacity: 1;
     }
   `;
-  __decorateClass$9([n$1({ type: Number })], Pagination.prototype, 'currentPage', 2);
-  __decorateClass$9([n$1({ type: Number })], Pagination.prototype, 'totalPages', 2);
-  __decorateClass$9([n$1({ type: Number })], Pagination.prototype, 'startPage', 2);
-  __decorateClass$9([n$1({ type: String })], Pagination.prototype, 'next', 2);
-  __decorateClass$9([n$1({ type: String })], Pagination.prototype, 'prev', 2);
-  Pagination = __decorateClass$9([t$1('mov-pagination')], Pagination);
+  __decorateClass$a([n$1({ type: Number })], Pagination.prototype, 'currentPage', 2);
+  __decorateClass$a([n$1({ type: Number })], Pagination.prototype, 'totalPages', 2);
+  __decorateClass$a([n$1({ type: Number })], Pagination.prototype, 'startPage', 2);
+  __decorateClass$a([n$1({ type: String })], Pagination.prototype, 'next', 2);
+  __decorateClass$a([n$1({ type: String })], Pagination.prototype, 'prev', 2);
+  Pagination = __decorateClass$a([t$1('manga-pagination')], Pagination);
+
+  var __defProp$5 = Object.defineProperty;
+  var __getOwnPropDesc$9 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$9 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$9(target, key) : target;
+    for (var i = decorators.length - 1, decorator; i >= 0; i--)
+      if ((decorator = decorators[i]))
+        result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+    if (kind && result) __defProp$5(target, key, result);
+    return result;
+  };
+  let Drawer = class extends i$1 {
+    constructor() {
+      super(...arguments);
+      this.open = false;
+      this.placement = 'end';
+    }
+    close() {
+      this.open = false;
+    }
+    handleCancel(e) {
+      e.preventDefault();
+      this.close();
+    }
+    handleClick(event) {
+      if (event.target === this.dialog) {
+        this.close();
+      }
+    }
+    updated(changedProperties) {
+      if (changedProperties.has('open')) {
+        if (this.open) {
+          this.dialog.show();
+          this.dispatchEvent(new CustomEvent('open', { bubbles: true, composed: true }));
+        } else {
+          if (changedProperties.get('open') === true) {
+            this.dispatchEvent(new CustomEvent('close', { bubbles: true, composed: true }));
+          }
+          setTimeout(() => {
+            if (this.dialog.open) {
+              this.dialog.close();
+            }
+          }, 300);
+        }
+      }
+    }
+    render() {
+      return x$1`
+      <div
+        class="backdrop"
+        @click=${this.close}
+      ></div>
+      <dialog
+        part="dialog"
+        @cancel=${this.handleCancel}
+        @click=${this.handleClick}
+      >
+        <div
+          class="header-bar"
+          part="header-bar"
+        >
+          <div class="action-item">
+            <slot name="header-actions"></slot>
+          </div>
+          <div class="header-content">
+            <slot name="header"></slot>
+          </div>
+          <div
+            class="close-button-container"
+            part="close-button-container"
+          >
+            <button
+              class="close-button"
+              part="close-button"
+              @click=${this.close}
+              aria-label="Close"
+            >
+              ${IconX}
+            </button>
+          </div>
+        </div>
+        <slot class="content-slot"></slot>
+      </dialog>
+    `;
+    }
+  };
+  Drawer.styles = i$3`
+    :host {
+      --panel-overlay-transition: opacity linear 0.25s;
+      --panel-overlay-opacity: 0.5;
+      --panel-z-index: 1000;
+      --panel-transition: transform 0.25s ease-out;
+    }
+
+    .backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: #000;
+      opacity: 0;
+      transition: var(--panel-overlay-transition);
+      z-index: var(--panel-z-index);
+    }
+
+    :host([open]) .backdrop {
+      display: block;
+      opacity: var(--panel-overlay-opacity);
+    }
+
+    dialog {
+      all: unset;
+      background-color: var(--theme-background-color, #fff);
+      color: var(--theme-text-color, #000);
+      z-index: calc(var(--panel-z-index) + 1);
+      position: fixed;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      visibility: hidden;
+      max-width: 100vw;
+      max-height: 100vh;
+      width: 350px;
+      top: 0;
+      bottom: 0;
+      height: 100%;
+      transition: var(--panel-transition);
+    }
+
+    :host([open]) dialog {
+      visibility: visible;
+    }
+
+    /* Header Styles */
+    .header-bar {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--theme-border-color, #e0e0e0);
+      flex-shrink: 0;
+    }
+    .action-item {
+      order: 1;
+    }
+    .header-content {
+      order: 2;
+      flex-grow: 1;
+      text-align: center;
+      font-weight: bold;
+    }
+    .close-button-container {
+      order: 3;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .action-item,
+    .close-button-container {
+      min-width: 40px;
+    }
+    .close-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+      line-height: 1;
+      padding: 0;
+      color: inherit;
+    }
+    .content-slot {
+      display: block;
+      padding: 1rem;
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+
+    :host([placement='start']) dialog {
+      left: 0;
+      transform: translateX(-100%);
+    }
+    :host([placement='end']) dialog {
+      right: 0;
+      transform: translateX(100%);
+    }
+    :host([open]) dialog {
+      transform: none;
+    }
+    :host([placement='end']) .action-item {
+      order: 3;
+    }
+    :host([placement='end']) .header-content {
+      order: 2;
+    }
+    :host([placement='end']) .close-button-container {
+      order: 1;
+      justify-content: flex-start;
+    }
+  `;
+  __decorateClass$9([n$1({ type: Boolean, reflect: true })], Drawer.prototype, 'open', 2);
+  __decorateClass$9([n$1({ type: String, reflect: true })], Drawer.prototype, 'placement', 2);
+  __decorateClass$9([e$2('dialog')], Drawer.prototype, 'dialog', 2);
+  Drawer = __decorateClass$9([t$1('mov-drawer')], Drawer);
 
   var __defProp$4 = Object.defineProperty;
   var __getOwnPropDesc$8 = Object.getOwnPropertyDescriptor;
@@ -6531,12 +6745,12 @@
     if (kind && result) __defProp$4(target, key, result);
     return result;
   };
-  let Panel = class extends i$1 {
+  let Dialog = class extends i$1 {
     constructor() {
       super(...arguments);
       this.open = false;
-      this.mode = 'drawer';
-      this.position = 'left';
+      this.mode = 'dialog';
+      this.fullscreen = false;
     }
     close() {
       this.open = false;
@@ -6586,7 +6800,7 @@
           part="header-bar"
         >
           <div class="action-item">
-            <slot name="action"></slot>
+            <slot name="header-actions"></slot>
           </div>
           <div class="header-content">
             <slot name="header"></slot>
@@ -6610,7 +6824,7 @@
     `;
     }
   };
-  Panel.styles = i$3`
+  Dialog.styles = i$3`
     :host {
       --panel-overlay-transition: opacity linear 0.25s;
       --panel-overlay-opacity: 0.5;
@@ -6717,39 +6931,6 @@
       display: none; /* No close button in inline mode */
     }
 
-    /* --- MODE: DRAWER --- */
-    :host([mode='drawer']) {
-      --panel-transition: transform 0.25s ease-out;
-    }
-    :host([mode='drawer']) dialog {
-      width: 350px;
-      top: 0;
-      bottom: 0;
-      height: 100%;
-      transition: var(--panel-transition);
-    }
-    :host([mode='drawer'][position='left']) dialog {
-      left: 0;
-      transform: translateX(-100%);
-    }
-    :host([mode='drawer'][position='right']) dialog {
-      right: 0;
-      transform: translateX(100%);
-    }
-    :host([mode='drawer'][open]) dialog {
-      transform: none;
-    }
-    :host([mode='drawer'][position='right']) .action-item {
-      order: 3;
-    }
-    :host([mode='drawer'][position='right']) .header-content {
-      order: 2;
-    }
-    :host([mode='drawer'][position='right']) .close-button-container {
-      order: 1;
-      justify-content: flex-start;
-    }
-
     /* --- MODE: DIALOG --- */
     :host([mode='dialog']) {
       --panel-transition: transform 0.15s ease-out, opacity 0.15s ease-out;
@@ -6761,20 +6942,20 @@
     :host([mode='dialog'][open]) dialog {
       opacity: 1;
     }
-    :host([mode='dialog'][position='center']) dialog {
+    :host([mode='dialog']:not([fullscreen])) dialog {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0.9);
       border-radius: 12px;
       width: var(--dialog-width, 700px);
     }
-    :host([mode='dialog'][position='center'][open]) dialog {
+    :host([mode='dialog']:not([fullscreen])[open]) dialog {
       transform: translate(-50%, -50%) scale(1);
     }
-    :host([position='fullscreen']) {
+    :host([fullscreen]) {
       --panel-overlay-transition: none;
     }
-    :host([position='fullscreen']) dialog {
+    :host([fullscreen]) dialog {
       width: 100vw;
       height: 100vh;
       top: 0;
@@ -6784,11 +6965,11 @@
       transition: none;
     }
   `;
-  __decorateClass$8([n$1({ type: Boolean, reflect: true })], Panel.prototype, 'open', 2);
-  __decorateClass$8([n$1({ type: String, reflect: true })], Panel.prototype, 'mode', 2);
-  __decorateClass$8([n$1({ type: String, reflect: true })], Panel.prototype, 'position', 2);
-  __decorateClass$8([e$2('dialog')], Panel.prototype, 'dialog', 2);
-  Panel = __decorateClass$8([t$1('mov-panel')], Panel);
+  __decorateClass$8([n$1({ type: Boolean, reflect: true })], Dialog.prototype, 'open', 2);
+  __decorateClass$8([n$1({ type: String, reflect: true })], Dialog.prototype, 'mode', 2);
+  __decorateClass$8([n$1({ type: Boolean, reflect: true })], Dialog.prototype, 'fullscreen', 2);
+  __decorateClass$8([e$2('dialog')], Dialog.prototype, 'dialog', 2);
+  Dialog = __decorateClass$8([t$1('mov-dialog')], Dialog);
 
   var __defProp$3 = Object.defineProperty;
   var __getOwnPropDesc$7 = Object.getOwnPropertyDescriptor;
@@ -6896,17 +7077,17 @@
       align-items: center;
       padding: 8px 12px;
       cursor: pointer;
-      color: var(--theme-primary-text-color);
-      background-color: var(--theme-primary-color);
+      color: var(--mov-color-on-loud);
+      background-color: var(--mov-color-fill-loud);
       gap: 10px;
     }
     .item:hover {
-      background-color: var(--theme-secondary-color);
-      color: var(--theme-secondary-text-color);
+      background-color: var(--mov-color-fill-normal);
+      color: var(--mov-color-on-normal);
     }
     :host([selected]) .item {
-      background-color: var(--theme-secondary-color);
-      color: var(--theme-secondary-text-color);
+      background-color: var(--mov-color-fill-normal);
+      color: var(--mov-color-on-normal);
     }
     .item-content {
       display: flex;
@@ -7387,6 +7568,31 @@
     }
   }
 
+  function calculatePageZoom(
+    page,
+    mode = getSettingsValue('zoomMode'),
+    value = getSettingsValue('zoomValue'),
+  ) {
+    const nextWidth =
+      window.innerWidth +
+      (getSettingsValue('navbar') === 'left' || getSettingsValue('navbar') === 'right'
+        ? -navbarSize
+        : 0);
+    const nextHeight =
+      window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -navbarSize : 0);
+    if (mode === 'width') {
+      page.width = nextWidth;
+      page.height = void 0;
+    } else if (mode === 'height') {
+      page.width = void 0;
+      page.height = nextHeight;
+    } else if (mode === 'percent') {
+      const width = page.naturalWidth ?? page.ref?.value?.naturalWidth;
+      page.width = width ? width * (value / 100) : void 0;
+      page.height = void 0;
+    }
+    return page;
+  }
   function applyZoom(mode = getSettingsValue('zoomMode'), value = getSettingsValue('zoomValue')) {
     logScript('Zoom', mode, value);
     setSettingsValue('zoomMode', mode);
@@ -7396,30 +7602,11 @@
     } else {
       refreshSettings('header');
     }
-    const nextWidth =
-      window.innerWidth +
-      (getSettingsValue('navbar') === 'left' || getSettingsValue('navbar') === 'right'
-        ? -navbarSize
-        : 0);
-    const nextHeight =
-      window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -navbarSize : 0);
     const images = getAppStateValue('images');
     const manga = getAppStateValue('manga');
     const newImages = {};
     for (let i = manga?.begin ?? 1; i <= (manga?.pages ?? 1); i++) {
-      const page = { ...images?.[i] };
-      if (mode === 'width') {
-        page.width = nextWidth;
-        page.height = void 0;
-      } else if (mode === 'height') {
-        page.width = void 0;
-        page.height = nextHeight;
-      } else if (mode === 'percent') {
-        const width = page.naturalWidth ?? page.ref?.value?.naturalWidth;
-        page.width = width ? width * (value / 100) : void 0;
-        page.height = void 0;
-      }
-      newImages[i] = page;
+      newImages[i] = calculatePageZoom({ ...images?.[i] }, mode, value);
     }
     setAppStateValue('images', newImages);
   }
@@ -7441,6 +7628,7 @@
   function changeDefaultZoomValue(event) {
     const target = parseInt(event.currentTarget.value, 10);
     saveSettingsValue('zoomValue', target);
+    applyZoom('percent', target);
   }
   function changeZoom(event) {
     const target = parseInt(event.currentTarget.value, 10);
@@ -7601,7 +7789,7 @@
   }
 
   const styles$6 =
-    '#Header {\n  display: flex;\n  justify-content: space-around;\n  align-items: center;\n  flex-flow: row nowrap;\n  transition: transform 0.3s ease-in;\n  position: sticky;\n  top: 0;\n  left: 0;\n  right: 0;\n  background-color: var(--theme-background-color);\n  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);\n  z-index: 900;\n}\n\n#Header.click {\n  padding-left: 40px;\n}\n\n@keyframes headroom {\n  from {\n    transform: translateY(-100%);\n  }\n  to {\n    transform: translateY(0%);\n  }\n}\n\n#Header:not(.visible, .headroom-top, .fixed, .simple) {\n  animation: headroom 0.3s ease-in reverse;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.scroll.headroom-hide:not(.visible) {\n  animation: none;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.scroll.headroom-show,\n#Header.headroom-end,\n#Header.visible {\n  animation: headroom 0.3s ease-in;\n  transform: translateY(0%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.headroom-top {\n  animation: none;\n}\n\n#Header.fixed {\n  position: sticky;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#Header.simple {\n  position: static;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#menu {\n  position: fixed;\n  z-index: 1;\n  color: var(--theme-body-text-color);\n  height: 40px;\n  width: 40px;\n}\n\n#menu:not(.click),\n#menu.hide {\n  display: none;\n}\n\n#menu.click {\n  z-index: 901;\n}\n\n#MangaTitle {\n  padding: 2px;\n  margin: 0;\n  font-size: 1.2rem;\n  font-weight: 400;\n  word-wrap: anywhere;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  min-width: 200px;\n  max-width: 40vw;\n}\n\n#GlobalFunctions {\n  display: flex;\n  gap: 3px;\n  padding: 3px 3px 3px 0;\n  flex-wrap: wrap;\n  z-index: 100;\n}\n';
+    '#Header {\n  display: flex;\n  justify-content: space-around;\n  align-items: center;\n  flex-flow: row nowrap;\n  transition: transform 0.3s ease-in;\n  position: sticky;\n  top: 0;\n  left: 0;\n  right: 0;\n  background-color: var(--theme-background-color);\n  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);\n  z-index: 900;\n}\n\n#Header.click {\n  padding-left: 40px;\n}\n\n@keyframes headroom {\n  from {\n    transform: translateY(-100%);\n  }\n  to {\n    transform: translateY(0%);\n  }\n}\n\n#Header:not(.visible, .headroom-top, .fixed, .simple) {\n  animation: headroom 0.3s ease-in reverse;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.scroll.headroom-hide:not(.visible) {\n  animation: none;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.scroll.headroom-show,\n#Header.headroom-end,\n#Header.visible {\n  animation: headroom 0.3s ease-in;\n  transform: translateY(0%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.headroom-top {\n  animation: none;\n}\n\n#Header.fixed {\n  position: sticky;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#Header.simple {\n  position: static;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#menu {\n  position: fixed;\n  z-index: 1;\n  color: var(--theme-body-text-color);\n  height: 40px;\n  width: 40px;\n}\n\n#menu:not(.click),\n#menu.hide {\n  display: none;\n}\n\n#menu.click {\n  z-index: 901;\n}\n\n#MangaTitle {\n  padding: 2px;\n  margin: 0;\n  font-size: 1.2rem;\n  font-weight: 400;\n  word-wrap: anywhere;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  min-width: 200px;\n  max-width: 40vw;\n}\n\n#GlobalFunctions {\n  display: flex;\n  gap: 3px;\n  padding: 3px 3px 3px 0;\n  flex-wrap: wrap;\n  z-index: 100;\n}\n\n#ZoomControl {\n  display: flex;\n  align-items: center;\n  gap: 3px;\n  padding: 10px 5px;\n}\n';
 
   const media =
     '#Header.mobile,\n#Header.tablet {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\n.mobile #ViewerTitle,\n.tablet #ViewerTitle {\n  order: 4;\n  min-height: auto;\n}\n\n.mobile #GlobalFunctions,\n.tablet #GlobalFunctions {\n  order: 2;\n  width: auto;\n  padding: 5px;\n}\n\n.mobile #GlobalFunctions span {\n  flex-direction: column;\n}\n\n.mobile #ZoomControl,\n.tablet #ZoomControl {\n  order: 3;\n}\n\n.mobile #Toolbar,\n.tabler #Toolbar {\n  order: 1;\n}\n\n#Header.mobile {\n  flex-direction: row;\n  flex-wrap: wrap;\n  justify-content: center;\n  align-items: center;\n}\n\n#Header.mobile.click + #Chapter:not(.webcomic, .vertical) {\n  position: sticky;\n}\n\n.tablet #MangaTitle,\n.mobile #MangaTitle {\n  max-width: 90vw;\n}\n\n.mobile #ViewerTitle {\n  order: 3;\n  margin-top: 0;\n  height: auto;\n  padding: 0;\n}\n\n.mobile #GlobalFunctions {\n  order: 2;\n  padding: 0;\n  width: auto;\n  gap: 0;\n}\n\n.mobile mov-button::part(base) {\n  border-radius: 0;\n}\n\n.mobile #FileDropdown mov-button:first-of-type::part(base) {\n  border-radius: 5px 0 0 5px;\n}\n\n.mobile #GlobalFunctions mov-button:last-of-type::part(base) {\n  border-radius: 0 5px 5px 0;\n}\n\n.mobile .PageFunctions {\n  padding: 0;\n}\n\n.mobile .PageFunctions .PageButton.Bookmark {\n  opacity: 1;\n}\n\n.mobile #GlobalFunctions #ZoomSlider,\n.tablet #GlobalFunctions #ZoomSlider,\n.mobile .PageFunctions .PageButton:not(.Bookmark),\n.tablet #Counters,\n.mobile #ZoomControl,\n.mobile #ZoomDropdown,\n.mobile #ViewDropdown,\n.mobile #FileDropdown :where(:nth-child(3), :nth-child(4)) {\n  display: none;\n}\n';
@@ -7616,7 +7804,7 @@
     if (kind && result) __defProp$2(target, key, result);
     return result;
   };
-  let MovHeader = class extends i$1 {
+  let Header = class extends i$1 {
     constructor() {
       super(...arguments);
       this.headroomController = new HeadroomController(this);
@@ -7921,11 +8109,11 @@
     `;
     }
   };
-  MovHeader.styles = [r$3(styles$6), r$3(media), r$3(keycss), i$3``];
-  __decorateClass$6([n$1({ type: Object })], MovHeader.prototype, 'manga', 2);
-  MovHeader = __decorateClass$6(
-    [t$1('mov-header'), libExports.useStores(settings$1, locale, appState)],
-    MovHeader,
+  Header.styles = [r$3(styles$6), r$3(media), r$3(keycss), i$3``];
+  __decorateClass$6([n$1({ type: Object })], Header.prototype, 'manga', 2);
+  Header = __decorateClass$6(
+    [t$1('reader-header'), libExports.useStores(settings$1, locale, appState)],
+    Header,
   );
 
   const styles$5 =
@@ -8005,18 +8193,16 @@
     }
     render() {
       return x$1`
-      <mov-panel
+      <mov-dialog
         id="BookmarksPanel"
         ?open=${getAppStateValue('panel') === 'bookmarks'}
-        mode="dialog"
-        position="center"
         @close=${buttonPanelsClose}
       >
         <mov-button
           class="Bookmark"
           title="${getLocaleString('BOOKMARK')}"
           @click=${buttonBookmark}
-          slot="action"
+          slot="header-actions"
         >
           <mov-icon
             name="${isBookmarked() === void 0 ? 'IconBookmark' : 'IconBookmarkOff'}"
@@ -8025,13 +8211,13 @@
         </mov-button>
         <h2 slot="header">${getLocaleString('BOOKMARKS')}</h2>
         <div id="BookmarksList">${this.listBookmarks()}</div>
-      </mov-panel>
+      </mov-dialog>
     `;
     }
   };
   BookmarkPanel.styles = [r$3(styles$5)];
   BookmarkPanel = __decorateClass$5(
-    [t$1('mov-bookmark-panel'), libExports.useStores(settings$1, locale, appState)],
+    [t$1('bookmark-panel'), libExports.useStores(settings$1, locale, appState)],
     BookmarkPanel,
   );
 
@@ -8109,17 +8295,16 @@
     }
     render() {
       return x$1`
-      <mov-panel
+      <mov-drawer
         id="KeybindingsPanel"
         ?open=${getAppStateValue('panel').startsWith('keybindings')}
-        mode="drawer"
-        position="right"
+        placement="end"
         @close=${buttonPanelsClose}
       >
         <h2 slot="header">${getLocaleString('KEYBINDINGS')}</h2>
         <div
           class="controls"
-          slot="action"
+          slot="header-actions"
         >
           ${
             getAppStateValue('panel') === 'keybindingsEditor'
@@ -8155,13 +8340,13 @@
           ${getAppStateValue('panel') === 'keybindingsEditor' ? this.keybindEditor() : this.keybindList()}
         </div>
         <div id="HotKeysRules">${o$5(getLocaleString('KEYBIND_RULES'))}</div>
-      </mov-panel>
+      </mov-drawer>
     `;
     }
   };
   KeybindingsPanel.styles = [r$3(styles$4), r$3(keycss)];
   KeybindingsPanel = __decorateClass$4(
-    [t$1('mov-keybindings-panel'), libExports.useStores(settings$1, locale, appState)],
+    [t$1('keybindings-panel'), libExports.useStores(settings$1, locale, appState)],
     KeybindingsPanel,
   );
 
@@ -8200,7 +8385,7 @@
   }
 
   const styles$3 =
-    ':host {\n  --nav-collapsed-size: 34px;\n  --nav-expanded-size: 200px;\n  --header-height: 80px;\n}\n#Navigation {\n  color: var(--theme-text-color);\n  background-color: var(--theme-hightlight-color);\n  overflow: hidden;\n  display: flex;\n  box-sizing: border-box;\n  gap: 5px;\n  white-space: nowrap;\n  text-align: center;\n  line-height: 0;\n  transition: all 0.3s ease;\n  position: fixed;\n}\n:host(:not([forceExpanded])) #Navigation:not(:hover) #Thumbnails {\n  display: none;\n}\n#NavigationCounters {\n  flex-shrink: 0; /* Prevent this from shrinking */\n  padding: 5px;\n  line-height: 1rem;\n  text-align: center;\n  white-space: nowrap;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 0.5rem;\n}\n#Thumbnails {\n  flex-grow: 1;\n  display: flex;\n  gap: 5px;\n  justify-content: flex-start;\n}\n/* == Horizontal Orientation (for top/bottom position) == */\n#Navigation.horizontal {\n  flex-direction: column;\n  height: var(--nav-collapsed-size);\n  width: 100%;\n  left: 0;\n  right: 0;\n}\n:host([forceExpanded]) #Navigation.horizontal,\n#Navigation.horizontal:hover {\n  height: var(--nav-expanded-size);\n}\n#Navigation.bottom {\n  bottom: 0;\n}\n#Navigation.horizontal #Thumbnails {\n  flex-direction: row;\n  overflow-x: auto;\n  overflow-y: hidden;\n}\n/* == Vertical Orientation (for left/right position) == */\n#Navigation.vertical {\n  flex-direction: row;\n  width: var(--nav-collapsed-size);\n  height: 100%;\n  bottom: 0;\n  transition:\n    top 0.3s ease,\n    height 0.3s ease,\n    width 0.3s ease;\n}\n:host([forceExpanded]) #Navigation.vertical,\n#Navigation.vertical:hover {\n  width: var(--nav-expanded-size);\n}\n#Navigation.left {\n  left: 0;\n  flex-direction: row-reverse;\n}\n#Navigation.right {\n  right: 0;\n}\n#Navigation.vertical #NavigationCounters {\n  writing-mode: vertical-rl;\n  transform: rotate(180deg);\n}\n#Navigation.right #NavigationCounters {\n  transform: rotate(0deg);\n}\n#Navigation.vertical #Thumbnails {\n  flex-direction: column;\n  overflow-y: auto;\n  overflow-x: hidden;\n  justify-content: flex-start;\n}\n\n#Navigation.left #Thumbnails {\n  direction: rtl;\n}\n/* Adjust for header visibility */\n#Navigation.vertical.header {\n  top: var(--header-height);\n  height: calc(100% - var(--header-height));\n}\n\n#Navigation .Thumbnail {\n  display: inline-flex;\n  height: 150px;\n  width: 150px;\n  margin: 0 5px;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  /*border: 1px solid var(--theme-primary-color);*/\n}\n#Navigation.vertical .Thumbnail {\n  /*border: 1px solid var(--theme-primary-color);*/\n}\n.ThumbnailIndex {\n  color: var(--theme-primary-text-color);\n  background-color: var(--theme-primary-color);\n  display: block;\n  opacity: 0.9;\n  position: absolute;\n  left: 0;\n  bottom: 30%;\n  width: 100%;\n  line-height: 1.2rem;\n  text-align: center;\n  font-weight: 600;\n  z-index: 1;\n}\n.ThumbnailImg {\n  cursor: pointer;\n  display: inline-block;\n  max-height: 150px;\n  min-height: 150px;\n  min-width: 80px;\n  max-width: 150px;\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: 48px 48px;\n}\n';
+    ':host {\n  --nav-collapsed-size: 34px;\n  --nav-expanded-size: 200px;\n  --header-height: 80px;\n}\n#Navigation {\n  color: var(--theme-text-color);\n  background-color: var(--theme-hightlight-color);\n  overflow: hidden;\n  display: flex;\n  box-sizing: border-box;\n  gap: 5px;\n  white-space: nowrap;\n  text-align: center;\n  line-height: 0;\n  transition: all 0.3s ease;\n  position: fixed;\n  z-index: 1000;\n}\n:host(:not([forceExpanded])) #Navigation:not(:hover) #Thumbnails {\n  display: none;\n}\n#NavigationCounters {\n  flex-shrink: 0; /* Prevent this from shrinking */\n  padding: 5px;\n  line-height: 1rem;\n  text-align: center;\n  white-space: nowrap;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 0.5rem;\n}\n#Thumbnails {\n  flex-grow: 1;\n  display: flex;\n  gap: 5px;\n  justify-content: flex-start;\n}\n/* == Horizontal Orientation (for top/bottom position) == */\n#Navigation.horizontal {\n  flex-direction: column;\n  height: var(--nav-collapsed-size);\n  width: 100%;\n  left: 0;\n  right: 0;\n}\n:host([forceExpanded]) #Navigation.horizontal,\n#Navigation.horizontal:hover {\n  height: var(--nav-expanded-size);\n}\n#Navigation.bottom {\n  bottom: 0;\n}\n#Navigation.horizontal #Thumbnails {\n  flex-direction: row;\n  overflow-x: auto;\n  overflow-y: hidden;\n}\n/* == Vertical Orientation (for left/right position) == */\n#Navigation.vertical {\n  flex-direction: row;\n  width: var(--nav-collapsed-size);\n  height: 100%;\n  bottom: 0;\n  transition:\n    top 0.3s ease,\n    height 0.3s ease,\n    width 0.3s ease;\n}\n:host([forceExpanded]) #Navigation.vertical,\n#Navigation.vertical:hover {\n  width: var(--nav-expanded-size);\n}\n#Navigation.left {\n  left: 0;\n  flex-direction: row-reverse;\n}\n#Navigation.right {\n  right: 0;\n}\n#Navigation.vertical #NavigationCounters {\n  writing-mode: vertical-rl;\n  transform: rotate(180deg);\n}\n#Navigation.right #NavigationCounters {\n  transform: rotate(0deg);\n}\n#Navigation.vertical #Thumbnails {\n  flex-direction: column;\n  overflow-y: auto;\n  overflow-x: hidden;\n  justify-content: flex-start;\n}\n\n#Navigation.left #Thumbnails {\n  direction: rtl;\n}\n/* Adjust for header visibility */\n#Navigation.vertical.header {\n  top: var(--header-height);\n  height: calc(100% - var(--header-height));\n}\n\n#Navigation .Thumbnail {\n  display: inline-flex;\n  height: 150px;\n  width: 150px;\n  margin: 0 5px;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  /*border: 1px solid var(--mov-color-fill-loud);*/\n}\n#Navigation.vertical .Thumbnail {\n  /*border: 1px solid var(--mov-color-fill-loud);*/\n}\n.ThumbnailIndex {\n  color: var(--mov-color-on-loud);\n  background-color: var(--mov-color-fill-loud);\n  display: block;\n  opacity: 0.9;\n  position: absolute;\n  left: 0;\n  bottom: 30%;\n  width: 100%;\n  line-height: 1.2rem;\n  text-align: center;\n  font-weight: 600;\n  z-index: 1;\n}\n.ThumbnailImg {\n  cursor: pointer;\n  display: inline-block;\n  max-height: 150px;\n  min-height: 150px;\n  min-width: 80px;\n  max-width: 150px;\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: 48px 48px;\n}\n';
 
   var __defProp$1 = Object.defineProperty;
   var __getOwnPropDesc$3 = Object.getOwnPropertyDescriptor;
@@ -8325,12 +8510,12 @@
   __decorateClass$3([n$1({ type: Boolean })], Navbar.prototype, 'forceExpanded', 2);
   __decorateClass$3([r()], Navbar.prototype, 'isHiding', 2);
   Navbar = __decorateClass$3(
-    [t$1('mov-navbar'), libExports.useStores(settings$1, locale, appState)],
+    [t$1('navbar-thumbnails'), libExports.useStores(settings$1, locale, appState)],
     Navbar,
   );
 
   const styles$2 =
-    '#CommentsPanel {\n  text-align: center;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex-direction: column;\n}\n\n#CommentsArea {\n  overflow-y: auto;\n  overscroll-behavior: contain;\n  height: 100%;\n  width: 100%;\n  background-color: var(--theme-body-background);\n}\n';
+    '#CommentsPanel {\n  text-align: center;\n}\n\n#CommentsArea {\n  overflow-y: auto;\n  overscroll-behavior: contain;\n  height: 100%;\n  width: 100%;\n  background-color: var(--theme-body-background);\n}\n';
 
   const darkest = 10;
   const lightest = 95;
@@ -8483,13 +8668,13 @@
         --theme-border-color: ${colors.dark['400']};
 
         --mov-color-fill-quiet: ${gradient[9]};
-        --mov-color-fill-normal: ${gradient[8]};
+        --mov-color-fill-normal: var(--theme-secondary-color, ${gradient[8]});
         --mov-color-fill-loud: var(--theme-primary-color);
         --mov-color-border-quiet: ${gradient[8]};
         --mov-color-border-normal: ${gradient[7]};
         --mov-color-border-loud: ${gradient[6]};
         --mov-color-on-quiet: ${gradient[4]};
-        --mov-color-on-normal: ${gradient[3]};
+        --mov-color-on-normal: var(--theme-secondary-text-color, ${gradient[3]});
         --mov-color-on-loud: var(--theme-primary-text-color, white);
 
         --mov-color-mix-hover: black 8%;
@@ -8507,13 +8692,13 @@
         --theme-border-color: ${colors.gray['100']};
 
         --mov-color-fill-quiet: ${gradient[0]};
-        --mov-color-fill-normal: ${gradient[1]};
+        --mov-color-fill-normal: var(--theme-secondary-color, ${gradient[1]});
         --mov-color-fill-loud: var(--theme-primary-color);
         --mov-color-border-quiet: ${gradient[1]};
         --mov-color-border-normal: ${gradient[2]};
         --mov-color-border-loud: ${gradient[4]};
         --mov-color-on-quiet: ${gradient[6]};
-        --mov-color-on-normal: ${gradient[7]};
+        --mov-color-on-normal: var(--theme-secondary-text-color, ${gradient[3]});
         --mov-color-on-loud: var(--theme-primary-text-color, white);
 
         --mov-color-mix-hover: black 10%;
@@ -8539,11 +8724,10 @@
     }
     render() {
       return x$1`
-      <mov-panel
+      <mov-dialog
         id="CommentsPanel"
         ?open=${getAppStateValue('panel') === 'comments'}
-        mode="dialog"
-        position="fullscreen"
+        fullscreen
         @close=${buttonPanelsClose}
       >
         <h2 slot="header">${getLocaleString('COMMENTS')}</h2>
@@ -8553,15 +8737,15 @@
         >
           ${getAppStateValue('manga')?.comments}
         </div>
-        <mov-toggle-button
+        <toggle-button
           id="CommentsColorScheme"
           mode="theme"
           @click=${this.changeCommentsColor}
-          slot="action"
+          slot="header-actions"
           ?active=${this.colorScheme === 'dark'}
         >
-        </mov-toggle-button>
-      </mov-panel>
+        </toggle-button>
+      </mov-dialog>
     `;
     }
     /**
@@ -8576,7 +8760,7 @@
   CommentsPanel.styles = [r$3(styles$2), r$3(themesCSS(':host'))];
   __decorateClass$2([r()], CommentsPanel.prototype, 'colorScheme', 2);
   CommentsPanel = __decorateClass$2(
-    [t$1('mov-comments-panel'), libExports.useStores(settings$1, locale, appState)],
+    [t$1('comments-panel'), libExports.useStores(settings$1, locale, appState)],
     CommentsPanel,
   );
 
@@ -8684,11 +8868,11 @@
     const value = isSettingsLocal() ? 'true' : 'false';
     return x$1` <div class="ControlLabel">
     ${getLocaleString('SCOPE')}
-    <mov-segmented-control
+    <segmented-control
       .options=${options}
       .value=${value}
       @change=${changeSettingsScope}
-    ></mov-segmented-control>
+    ></segmented-control>
   </div>`;
   }
   function localeSelector() {
@@ -8812,51 +8996,51 @@
     return x$1`
     <div class="ControlLabel fitIfOversize">
       ${getLocaleString('FIT_WIDTH_OVERSIZED')}
-      <mov-toggle-switch
+      <toggle-switch
         name="fitIfOversize"
         ?checked=${getSettingsValue('fitWidthIfOversize')}
         .onChange=${checkFitWidthOversize}
-      ></mov-toggle-switch>
+      ></toggle-switch>
     </div>
     <div class="ControlLabel pagination">
       ${getLocaleString('ENABLE_PAGINATION')}
-      <mov-toggle-switch
+      <toggle-switch
         name="pagination"
         ?checked=${getSettingsValue('pagination')}
         .onChange=${checkPagination}
-      ></mov-toggle-switch>
+      ></toggle-switch>
     </div>
     <div class="ControlLabel enableComments">
       ${getLocaleString('ENABLE_COMMENTS')}
-      <mov-toggle-switch
+      <toggle-switch
         name="enableComments"
         ?checked=${getSettingsValue('enableComments')}
         .onChange=${checkEnableComments}
-      ></mov-toggle-switch>
+      ></toggle-switch>
     </div>
     <div class="ControlLabel downloadZip">
       ${getLocaleString('DOWNLOAD_IMAGES')}
-      <mov-toggle-switch
+      <toggle-switch
         name="downloadZip"
         ?checked=${getSettingsValue('downloadZip')}
         .onChange=${checkAutoDownload}
-      ></mov-toggle-switch>
+      ></toggle-switch>
     </div>
     <div class="ControlLabel hidePageControls">
       ${getLocaleString('HIDE_CONTROLS')}
-      <mov-toggle-switch
+      <toggle-switch
         name="hidePageControls"
         ?checked=${getSettingsValue('hidePageControls')}
         .onChange=${checkHideImageControls}
-      ></mov-toggle-switch>
+      ></toggle-switch>
     </div>
     <div class="ControlLabel lazyLoadImages">
       ${getLocaleString('LAZY_LOAD_IMAGES_ENABLE')}
-      <mov-toggle-switch
+      <toggle-switch
         name="lazyLoadImages"
         ?checked=${getSettingsValue('lazyLoadImages')}
         .onChange=${checkLazyLoad}
-      ></mov-toggle-switch>
+      ></toggle-switch>
     </div>
   `;
   }
@@ -8904,12 +9088,12 @@
     return x$1`
     <div class="ControlLabel headerType">
       ${getLocaleString('HEADER_TYPE')}
-      <mov-segmented-control
+      <segmented-control
         .options=${headerOptions}
         .value=${getSettingsValue('header')}
         @change=${changeHeaderType}
         labelPosition="bottom"
-      ></mov-segmented-control>
+      ></segmented-control>
     </div>
   `;
   }
@@ -8923,12 +9107,12 @@
     return x$1`
     <div class="ControlLabel navbarType">
       ${getLocaleString('NAVBAR_TYPE')}
-      <mov-segmented-control
+      <segmented-control
         .options=${navbarOptions}
         .value=${getSettingsValue('navbar')}
         @change=${changeNavbarType}
         labelPosition="tooltip"
-      ></mov-segmented-control>
+      ></segmented-control>
     </div>
   `;
   }
@@ -8979,13 +9163,13 @@
     return x$1`
     <div class="ControlLabel ColorSchemeSelector">
       <label>${getLocaleString('COLOR_SCHEME')}</label>
-      <mov-toggle-button
+      <toggle-button
         id="ColorScheme"
         mode="theme"
         @click=${changeColorScheme}
         ?active=${getSettingsValue('colorScheme') === 'dark'}
       >
-      </mov-toggle-button>
+      </toggle-button>
     </div>
     <div class="ControlLabel ThemeSelector">
       <label>${getLocaleString('THEME_COLOR')}</label>
@@ -9004,19 +9188,19 @@
     </div>
     <span id="ColorRecommendations">
       ${Object.values(sample).map(
-        c => x$1`<mov-color-swatch
+        c => x$1`<color-swatch
             .value="${c}"
             ?selected=${getSettingsValue('theme') === c}
             @click=${changeThemeHex}
-          ></mov-color-swatch>`,
+          ></color-swatch>`,
       )}
     </span>
     <details class="ControlLabel">
       <summary>${getLocaleString('THEME_HUE')} & ${getLocaleString('THEME_SHADE')}</summary>
-      <mov-color-panel
+      <color-panel
         .value=${getSettingsValue('theme')}
         @click=${buttonSelectTheme}
-      ></mov-color-panel>
+      ></color-panel>
     </details>
   `;
   }
@@ -9029,12 +9213,12 @@
     ];
     return x$1` <div class="ControlLabel DefaultZoomMode">
     ${getLocaleString('DEFAULT_ZOOM_MODE')}
-    <mov-segmented-control
+    <segmented-control
       .options=${zoomOptions}
       .value=${getSettingsValue('zoomMode')}
       @change=${changeDefaultZoomMode}
       labelPosition="tooltip"
-    ></mov-segmented-control>
+    ></segmented-control>
   </div>`;
   }
   function zoomValue() {
@@ -9165,12 +9349,12 @@
     return x$1`
     <div class="ControlLabel viewMode">
       ${getLocaleString('DEFAULT_VIEW_MODE')}
-      <mov-segmented-control
+      <segmented-control
         .options=${viewModeOptions}
         .value=${getSettingsValue('viewMode')}
         @change=${changeDefaultViewMode}
         labelPosition="tooltip"
-      ></mov-segmented-control>
+      ></segmented-control>
     </div>
   `;
   }
@@ -9178,7 +9362,7 @@
     x$1`${defaultZoomMode()} ${zoomValue()} ${minZoom()} ${zoomStep()} ${viewMode()}`;
 
   const styles$1 =
-    '#SettingsPanel {\n  color: var(--theme-text-color);\n  padding: 10px;\n  display: flex;\n  flex-flow: column;\n  gap: 5px;\n}\n\n#SettingsPanel fieldset {\n  border: 1px solid var(--theme-body-text-color);\n  padding: 3px;\n  border-radius: 10px;\n}\n\n#SettingsPanel .ControlLabel {\n  display: flex;\n  flex-flow: row wrap;\n  justify-content: space-between;\n  align-items: center;\n  padding: 2px;\n}\n\n#SettingsPanel .ControlLabelItem {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\n#SettingsPanel .ControlLabelItem:not(.show) {\n  display: none;\n}\n\n#SettingsPanel input[type="range"] {\n  width: 100%;\n}\n\n#SettingsPanel .RangeValue {\n  display: inline-block;\n  color: var(--theme-primary-text-color);\n  line-height: 20px;\n  text-align: center;\n  border-radius: 3px;\n  background: var(--theme-primary-color);\n  padding: 2px 5px;\n  margin-left: 8px;\n}\n\n#SettingsPanel datalist {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  width: 100%;\n}\n\n#SettingsPanel datalist option {\n  padding: 0;\n  writing-mode: vertical-lr;\n}\n\n#ThemeSelector {\n  width: 110px;\n}\n\n#ColorRecommendations {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  gap: 2px;\n}\n#Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {\n  display: none;\n}\n\n#ColorScheme {\n  padding: 5px;\n  min-height: 28px;\n  min-width: 28px;\n}\n\n#ResetSettings,\n#ResetSettings::part(base) {\n  width: 100%;\n}\n';
+    '#SettingsPanel {\n  color: var(--theme-text-color);\n  padding: 10px;\n  gap: 5px;\n}\n\n#SettingsPanel fieldset {\n  border: 1px solid var(--theme-body-text-color);\n  padding: 3px;\n  border-radius: 10px;\n}\n\n#SettingsPanel .ControlLabel {\n  display: flex;\n  flex-flow: row wrap;\n  justify-content: space-between;\n  align-items: center;\n  padding: 2px;\n}\n\n#SettingsPanel .ControlLabelItem {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\n#SettingsPanel .ControlLabelItem:not(.show) {\n  display: none;\n}\n\n#SettingsPanel input[type="range"] {\n  width: 100%;\n}\n\n#SettingsPanel .RangeValue {\n  display: inline-block;\n  color: var(--mov-color-on-loud);\n  line-height: 20px;\n  text-align: center;\n  border-radius: 3px;\n  background: var(--mov-color-fill-loud);\n  padding: 2px 5px;\n  margin-left: 8px;\n}\n\n#SettingsPanel datalist {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  width: 100%;\n}\n\n#SettingsPanel datalist option {\n  padding: 0;\n  writing-mode: vertical-lr;\n}\n\n#ThemeSelector {\n  width: 110px;\n}\n\n#ColorRecommendations {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  gap: 2px;\n}\n#Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {\n  display: none;\n}\n\n#ColorScheme {\n  padding: 5px;\n  min-height: 28px;\n  min-width: 28px;\n}\n\n#ResetSettings,\n#ResetSettings::part(base) {\n  width: 100%;\n}\n';
 
   var __getOwnPropDesc$1 = Object.getOwnPropertyDescriptor;
   var __decorateClass$1 = (decorators, target, key, kind) => {
@@ -9193,11 +9377,11 @@
     // }
     render() {
       return x$1`
-      <mov-panel
+      <mov-drawer
         id="SettingsPanel"
         ?open=${getAppStateValue('panel') === 'settings'}
-        mode="drawer"
         @close=${buttonPanelsClose}
+        placement="start"
         class="${getAppStateValue('device')}"
       >
         <h2 slot="header">${getLocaleString('SETTINGS')}</h2>
@@ -9235,7 +9419,7 @@
             ${SettingsPanelOthers()}
           </fieldset>
         </div>
-      </mov-panel>
+      </mov-drawer>
     `;
     }
   };
@@ -9257,7 +9441,7 @@
     r$3(styles$1),
   ];
   SettingsPanel = __decorateClass$1(
-    [t$1('mov-settings-panel'), libExports.useStores(settings$1, locale, appState)],
+    [t$1('settings-panel'), libExports.useStores(settings$1, locale, appState)],
     SettingsPanel,
   );
 
@@ -9522,10 +9706,12 @@
     img.classList.add('imgLoaded');
     img.classList.remove('imgBroken');
     const index = parseInt(img.id.replace('PageImg', ''), 10);
-    changeImage(index, _image => ({
-      naturalWidth: img.naturalWidth,
-      naturalHeight: img.naturalHeight,
-    }));
+    changeImage(index, _image =>
+      calculatePageZoom({
+        naturalWidth: img.naturalWidth,
+        naturalHeight: img.naturalHeight,
+      }),
+    );
     try {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
@@ -9539,7 +9725,7 @@
         }, 'image/png');
       }
     } catch (e) {
-      console.error('Failed to transforme image to blob: ', e, ' for page ', index);
+      console.error('Failed to transform image to blob for page', index, e);
     }
     changeAppStateValue('loaded', n => n + 1);
     const loaded = getAppStateValue('loaded') ?? 0;
@@ -9785,7 +9971,7 @@
     '#Chapter.FluidLTR,\n#Chapter.FluidRTL {\n  display: flex;\n  overflow-x: auto;\n  min-width: auto;\n\n  .ZoomWidth {\n    display: none;\n  }\n\n  .PageImg {\n    min-width: unset;\n  }\n\n  .MangaPage {\n    width: initial;\n    min-width: fit-content;\n    position: relative;\n  }\n\n  .MangaPage.DoublePage {\n    grid-column: span 2;\n  }\n}\n\n#Chapter.FluidLTR {\n  flex-direction: row;\n\n  .MangaPage .PageFunctions {\n    right: auto;\n    left: 0;\n    direction: rtl;\n  }\n}\n\n#Chapter.FluidRTL {\n  flex-direction: row-reverse;\n}\n';
 
   const page =
-    '.PageButton .icon-tabler {\n  height: 1rem;\n  width: 1rem;\n  vertical-align: sub;\n}\n\n.PageButton,\n.PageButton:visited,\n.PageButton:link {\n  cursor: pointer;\n  border-radius: 5px;\n  border-width: 1px;\n  border-style: solid;\n  padding: 2px;\n  min-height: 32px;\n  color: var(--theme-primary-text-color);\n  background-color: var(--theme-primary-color);\n  border-color: var(--theme-border-color);\n  text-decoration: none;\n}\n\n.PageButton:active,\n.PageButton:hover {\n  opacity: 0.8;\n}\n\n.PageButton[selected] {\n  background-color: var(--theme-secondary-color);\n  color: var(--theme-secondary-text-color);\n  border: 1px solid var(--theme-border-color);\n}\n\n.PageButton.hidden {\n  display: none;\n}\n\n.MangaPage {\n  width: 100%;\n  display: inline-block;\n  text-align: center;\n  line-height: 0;\n  min-height: 22px;\n  min-width: 100%;\n}\n\n.PageContent {\n  text-align: center;\n  display: inline-block;\n  overflow-x: auto;\n  max-width: 100%;\n  transition: all 0.3s ease-in-out;\n  height: 100%;\n  overflow-y: hidden;\n}\n\n.MangaPage.hide .PageContent {\n  height: 0;\n}\n\n.PageContent .PageImg[src=""],\n.PageContent .PageImg:not([src]),\n.PageContent .PageImg.imgBroken {\n  width: 40vw;\n  height: 80vh;\n  display: inline-block;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: 20%;\n  background-color: var(--theme-hightlight-color);\n  position: relative;\n  text-align: center;\n  line-height: 80vh;\n  vertical-align: top;\n  color: var(--theme-text-color);\n  font-size: 1rem;\n  min-width: 40vw;\n  min-height: 50vh;\n  max-width: 100%;\n  max-height: 100%;\n  margin: 0;\n}\n\n.PageContent .PageImg[src=""]:before,\n.PageContent .PageImg:not([src]):before,\n.PageContent .PageImg.imgBroken:before {\n  content: attr(alt);\n  position: absolute;\n  top: 40%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  white-space: pre-wrap;\n  text-align: center;\n  color: var(--theme-text-color);\n  font-size: 1rem;\n}\n\n.PageFunctions {\n  font-family: monospace;\n  display: flex;\n  justify-content: flex-end;\n  align-items: center;\n  margin: 0;\n  padding: 0;\n  gap: 3px;\n  position: absolute;\n  right: 0;\n}\n\n.PageFunctions > .PageIndex {\n  background-color: var(--theme-primary-color);\n  color: var(--theme-primary-text-color);\n  min-width: 20px;\n  text-align: center;\n  display: inline-block;\n  padding: 3px 5px;\n  line-height: 1rem;\n  border-radius: 5px;\n}\n\n.PageFunctions .PageButton {\n  padding: 3px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  margin: 0;\n  border-width: 0;\n  min-height: auto;\n  opacity: 0.5;\n}\n\n.PageFunctions:hover .PageButton {\n  opacity: 1;\n}\n\n.PageFunctions .PageButton:hover {\n  opacity: 0.9;\n}\n\n#Chapter.Vertical .separator {\n  display: flex;\n  align-items: center;\n  text-align: center;\n  font-style: italic;\n}\n\n#Chapter.Vertical .separator::before,\n#Chapter.Vertical .separator::after {\n  content: "";\n  flex: 1;\n  border-bottom: 1px solid var(--theme-text-color);\n}\n\n#Chapter.Vertical.separator:not(:empty)::before {\n  margin-right: 0.25em;\n}\n\n#Chapter.Vertical.separator:not(:empty)::after {\n  margin-left: 0.25em;\n}\n\n#Chapter:not(.separator) .separator,\n#Chapter:not(.Vertical) .separator {\n  display: none;\n}\n';
+    '.PageButton .icon-tabler {\n  height: 1rem;\n  width: 1rem;\n  vertical-align: sub;\n}\n\n.PageButton,\n.PageButton:visited,\n.PageButton:link {\n  cursor: pointer;\n  border-radius: 5px;\n  border-width: 1px;\n  border-style: solid;\n  padding: 2px;\n  min-height: 32px;\n  color: var(--mov-color-on-loud);\n  background-color: var(--mov-color-fill-loud);\n  border-color: var(--theme-border-color);\n  text-decoration: none;\n}\n\n.PageButton:active,\n.PageButton:hover {\n  opacity: 0.8;\n}\n\n.PageButton[selected] {\n  background-color: var(--mov-color-fill-normal);\n  color: var(--mov-color-on-normal);\n  border: 1px solid var(--theme-border-color);\n}\n\n.PageButton.hidden {\n  display: none;\n}\n\n.MangaPage {\n  width: 100%;\n  display: inline-block;\n  text-align: center;\n  line-height: 0;\n  min-height: 22px;\n  min-width: 100%;\n}\n\n.PageContent {\n  text-align: center;\n  display: inline-block;\n  overflow-x: auto;\n  max-width: 100%;\n  transition: all 0.3s ease-in-out;\n  height: 100%;\n  overflow-y: hidden;\n}\n\n.MangaPage.hide .PageContent {\n  height: 0;\n}\n\n.PageContent .PageImg[src=""],\n.PageContent .PageImg:not([src]),\n.PageContent .PageImg.imgBroken {\n  width: 40vw;\n  height: 80vh;\n  display: inline-block;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: 20%;\n  background-color: var(--theme-hightlight-color);\n  position: relative;\n  text-align: center;\n  line-height: 80vh;\n  vertical-align: top;\n  color: var(--theme-text-color);\n  font-size: 1rem;\n  min-width: 40vw;\n  min-height: 50vh;\n  max-width: 100%;\n  max-height: 100%;\n  margin: 0;\n}\n\n.PageContent .PageImg[src=""]:before,\n.PageContent .PageImg:not([src]):before,\n.PageContent .PageImg.imgBroken:before {\n  content: attr(alt);\n  position: absolute;\n  top: 40%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  white-space: pre-wrap;\n  text-align: center;\n  color: var(--theme-text-color);\n  font-size: 1rem;\n}\n\n.PageFunctions {\n  font-family: monospace;\n  display: flex;\n  justify-content: flex-end;\n  align-items: center;\n  margin: 0;\n  padding: 0;\n  gap: 3px;\n  position: absolute;\n  right: 0;\n}\n\n.PageFunctions > .PageIndex {\n  background-color: var(--mov-color-fill-loud);\n  color: var(--mov-color-on-loud);\n  min-width: 20px;\n  text-align: center;\n  display: inline-block;\n  padding: 3px 5px;\n  line-height: 1rem;\n  border-radius: 5px;\n}\n\n.PageFunctions .PageButton {\n  padding: 3px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  margin: 0;\n  border-width: 0;\n  min-height: auto;\n  opacity: 0.5;\n}\n\n.PageFunctions:hover .PageButton {\n  opacity: 1;\n}\n\n.PageFunctions .PageButton:hover {\n  opacity: 0.9;\n}\n\n#Chapter.Vertical .separator {\n  display: flex;\n  align-items: center;\n  text-align: center;\n  font-style: italic;\n}\n\n#Chapter.Vertical .separator::before,\n#Chapter.Vertical .separator::after {\n  content: "";\n  flex: 1;\n  border-bottom: 1px solid var(--theme-text-color);\n}\n\n#Chapter.Vertical.separator:not(:empty)::before {\n  margin-right: 0.25em;\n}\n\n#Chapter.Vertical.separator:not(:empty)::after {\n  margin-left: 0.25em;\n}\n\n#Chapter:not(.separator) .separator,\n#Chapter:not(.Vertical) .separator {\n  display: none;\n}\n';
 
   const normalize =
     '/*  Simple Normalizer */\nhtml {\n  font-size: 100%;\n}\n\nbody {\n  margin: 0;\n  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;\n  font-size: 14px;\n  line-height: 20px;\n  color: var(--theme-body-text-color);\n  background-color: var(--theme-body-background);\n  padding: 0;\n}\n\na,\na:link,\na:visited,\na:active,\na:focus {\n  color: var(--theme-body-text-color);\n  text-decoration: none;\n}\n\nimg {\n  height: auto;\n  vertical-align: middle;\n  border: 0 none;\n}\n';
@@ -9852,26 +10038,26 @@
         })}"
         .locale="${getSettingsValue('locale')}"
       >
-        <mov-header .manga=${manga}></mov-header>
+        <reader-header .manga=${manga}></reader-header>
         ${Reader(manga)}
         ${ifTrue(
           getSettingsValue('navbar') !== 'disabled',
-          x$1`<mov-navbar .mode=${getSettingsValue('navbar')}></mov-navbar>`,
+          x$1`<navbar-thumbnails .mode=${getSettingsValue('navbar')}></navbar-thumbnails>`,
         )}
         ${ifTrue(
           getSettingsValue('pagination'),
-          x$1` <mov-pagination
+          x$1` <manga-pagination
             .startPage=${manga.begin}
             .totalPages=${manga.pages}
             .currentPage=${getAppStateValue('currentPage')}
             .next=${manga.next}
             .prev=${manga.prev}
-          ></mov-pagination>`,
+          ></manga-pagination>`,
         )}
-        <mov-comments-panel></mov-comments-panel>
-        <mov-keybindings-panel></mov-keybindings-panel>
-        <mov-bookmark-panel></mov-bookmark-panel>
-        <mov-settings-panel></mov-settings-panel>
+        <comments-panel></comments-panel>
+        <keybindings-panel></keybindings-panel>
+        <bookmark-panel></bookmark-panel>
+        <settings-panel></settings-panel>
       </div>
     `;
     }
