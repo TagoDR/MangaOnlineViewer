@@ -1,165 +1,145 @@
 import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { IconCheck, IconX } from '../icons';
 
-declare global {
-  interface HTMLElementTagNameMap {
-    'toggle-switch': ToggleSwitch;
-  }
-}
-
-/**
- * A stylish toggle switch component that mimics the appearance of a physical switch.
- * It is built upon a native HTML checkbox for accessibility and form integration.
- *
- * @element toggle-switch
- *
- * @cssprop [--toggler-size=2em] - Controls the overall size of the toggle switch. The width is set to this value, and the height is half of it.
- */
 @customElement('toggle-switch')
 export class ToggleSwitch extends LitElement {
-  /**
-   * The `name` attribute for the underlying `<input type="checkbox">` element.
-   * This is useful for associating the switch with a label or for use in a form.
-   * @type {string}
-   */
-  @property({ type: String })
-  name = '';
-
-  /**
-   * The boolean state of the switch. `true` if the switch is in the "on" position, `false` otherwise.
-   * @type {boolean}
-   */
-  @property({ type: Boolean, reflect: true })
-  checked = false;
-
-  /**
-   * An optional event handler function that can be passed as a property.
-   * It will be attached directly to the `change` event of the internal `<input>` element.
-   * @type {((e: Event) => void) | undefined}
-   */
-  @property({ attribute: false })
-  onChange: ((e: Event) => void) | undefined;
+  @property({ type: String }) name = '';
+  @property({ type: Boolean, reflect: true }) checked = false;
+  @property({ type: Boolean, reflect: true }) disabled = false;
+  @property({ type: String, reflect: true }) design: 'graphical' | 'textual' = 'graphical';
+  @property({ type: String }) textOn = 'ON';
+  @property({ type: String }) textOff = 'OFF';
+  @property({ attribute: false }) onChange?: (e: Event) => void;
 
   static styles = css`
-    /* From Uiverse.io by mobinkakei */
     :host {
-      --toggler-size: 2em;
+      --switch-width: 3rem;
+      --switch-height: 1.5rem;
+      --knob-size: 1.25rem;
+      display: inline-block;
     }
 
-    .toggler input {
+    input {
       display: none;
     }
 
-    .toggler label {
-      display: block;
+    .switch {
       position: relative;
-      width: var(--toggler-size);
-      height: calc(var(--toggler-size) / 2);
-      border: 1px solid #d6d6d6;
-      border-radius: 36px;
-      background: #e4e8e8;
+      width: var(--switch-width);
+      height: var(--switch-height);
+      border-radius: var(--switch-height);
+      background-color: #d7062a;
+      border: 1px solid #d7062a;
+      transition:
+        background-color 0.3s,
+        border-color 0.3s;
       cursor: pointer;
     }
 
-    .toggler label::after {
-      display: block;
-      border-radius: 100%;
-      background-color: #d7062a;
-      content: '';
-      animation-name: toggler-size;
-      animation-duration: 0.15s;
-      animation-timing-function: ease-out;
-      animation-direction: normal;
-      animation-iteration-count: 1;
-      animation-play-state: running;
+    input:checked + .switch {
+      background-color: #50ac5d;
+      border-color: #50ac5d;
     }
 
-    .toggler label::after,
-    .toggler label .toggler-on .icon,
-    .toggler label .toggler-off .icon {
+    .switch.textual {
+      background-color: var(--mov-color-on-loud);
+      border-color: var(--mov-color-on-loud);
+    }
+
+    input:checked + .switch.textual {
+      background-color: var(--mov-color-fill-loud);
+      border-color: var(--mov-color-fill-loud);
+    }
+
+    input:disabled + .switch {
+      background-color: #eee;
+      border-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .knob {
       position: absolute;
       top: 50%;
-      left: 25%;
-      width: calc(var(--toggler-size) * 0.4);
-      height: calc(var(--toggler-size) * 0.4);
-      transform: translateY(-50%) translateX(-50%);
-      transition:
-        left 0.15s ease-in-out,
-        background-color 0.2s ease-out,
-        width 0.15s ease-in-out,
-        height 0.15s ease-in-out,
-        opacity 0.15s ease-in-out;
+      left: 2px;
+      transform: translateY(-50%);
+      width: var(--knob-size);
+      height: var(--knob-size);
+      background-color: #fff;
+      border-radius: 50%;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      transition: left 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+      font-family: Arial;
+      color: #333;
     }
 
-    .toggler input:checked + label::after,
-    .toggler input:checked + label .toggler-on .icon,
-    .toggler input:checked + label .toggler-off .icon {
-      left: 75%;
+    input:checked + .switch .knob {
+      left: calc(100% - var(--knob-size) - 2px);
     }
 
-    .toggler input:checked + label::after {
-      background-color: #50ac5d;
-      animation-name: toggler-size2;
+    .switch:focus {
+      outline: 2px solid #0a6ed1;
+      outline-offset: 2px;
     }
 
-    .toggler .toggler-on .icon,
-    .toggler .toggler-off .icon {
-      opacity: 1;
-      z-index: 2;
-      color: #fefefe;
+    .icon {
+      width: 1rem;
+      height: 1rem;
       fill: none;
     }
 
-    .toggler input:checked + label .toggler-off .icon,
-    .toggler input:not(:checked) + label .toggler-on .icon {
-      width: 0;
-      height: 0;
-      opacity: 0;
-    }
-
-    @keyframes toggler-size {
-      0%,
-      100% {
-        width: calc(var(--toggler-size) * 0.4);
-        height: calc(var(--toggler-size) * 0.4);
-      }
-
-      50% {
-        width: calc(var(--toggler-size) * 0.3);
-        height: calc(var(--toggler-size) * 0.3);
-      }
-    }
-
-    @keyframes toggler-size2 {
-      0%,
-      100% {
-        width: calc(var(--toggler-size) * 0.4);
-        height: calc(var(--toggler-size) * 0.4);
-      }
-
-      50% {
-        width: calc(var(--toggler-size) * 0.3);
-        height: calc(var(--toggler-size) * 0.3);
-      }
+    .text {
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: #333;
     }
   `;
 
+  private toggleChecked() {
+    if (!this.disabled) {
+      this.checked = !this.checked;
+      this.dispatchEvent(new Event('change'));
+    }
+  }
+
   protected render() {
+    const knobContent =
+      this.design === 'graphical'
+        ? html`${this.checked ? IconCheck : IconX}`
+        : html`<span class="text">${this.checked ? this.textOn : this.textOff}</span>`;
+
     return html`
-      <div class="toggler">
-        <input
-          id="${this.name}"
-          name="${this.name}"
-          type="checkbox"
-          value="true"
-          ?checked=${this.checked}
-          @change=${this.onChange}
-        />
-        <label for="${this.name}">
-          <span class="toggler-on">${IconCheck}</span>
-          <span class="toggler-off">${IconX}</span>
-        </label>
+      <input
+        type="checkbox"
+        id="${this.name}"
+        name="${this.name}"
+        ?checked=${this.checked}
+        ?disabled=${this.disabled}
+        @change=${this.onChange}
+      />
+      <div
+        class="${classMap({
+          switch: true,
+          [this.design]: true,
+        })}"
+        role="switch"
+        aria-checked="${this.checked}"
+        tabindex="${this.disabled ? -1 : 0}"
+        @click=${this.toggleChecked}
+        @keydown=${(e: KeyboardEvent) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            this.toggleChecked();
+          }
+        }}
+      >
+        <div class="knob">${knobContent}</div>
       </div>
     `;
   }
