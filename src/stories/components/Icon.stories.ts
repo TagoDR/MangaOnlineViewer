@@ -6,7 +6,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 import * as styledIcons from '../../ui/icons/StyledIcons.ts';
-import { sample } from '../../utils/colors.ts';
+import colors, { sample } from '../../utils/colors.ts';
 import '../../ui/components/Icon.ts'; // Ensure the <mov-icon> component is defined
 
 const icons = Object.keys(styledIcons)
@@ -18,10 +18,12 @@ const icons = Object.keys(styledIcons)
   // )
   .sort();
 
-const colors = Object.entries({ ...sample, white: '#fff', black: '#000' }).map(([name, value]) => ({
-  name: name.charAt(0).toUpperCase() + name.slice(1),
-  value,
-}));
+const samples = Object.entries({ ...sample, white: '#fff', black: '#000' }).map(
+  ([name, value]) => ({
+    name: name.charAt(0).toUpperCase() + name.slice(1),
+    value,
+  }),
+);
 
 /**
  * The `Meta` object for the `<mov-icon>` component stories.
@@ -104,7 +106,7 @@ export const Sizes: StoryObj = {
 };
 
 /**
- * A story showcasing the icon component with different colors applied.
+ * A story showcasing the icon component with different samples applied.
  * @type {StoryObj}
  */
 export const ColorVariations: StoryObj = {
@@ -116,7 +118,7 @@ export const ColorVariations: StoryObj = {
     <div
       style="display: flex; align-items: center; gap: 1rem; background-color: var(--mov-color-fill-loud)"
     >
-      ${colors.map(
+      ${samples.map(
         color => html`
           <mov-icon
             name="settings"
@@ -172,26 +174,60 @@ export const IconStates: StoryObj = {
  */
 export const IconContexts: StoryObj = {
   name: 'Icon in Context',
-  parameters: {
-    controls: { disable: true },
+  args: {
+    name: 'IconFileDownload',
   },
-  render: () => html`
-    <div style="display: flex; flex-direction: column; gap: 1rem;">
-      <p style="display: flex; align-items: center; gap: 0.5rem;">
-        <mov-icon
-          name="settings"
-          size="1em"
-        ></mov-icon>
-        <span>Icon inline with text.</span>
-      </p>
-      <button
-        style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border: 1px solid #ccc; border-radius: 4px; background: #eee; cursor: pointer;"
-      >
-        <mov-icon name="file-download"></mov-icon>
-        <span>Icon in a button</span>
-      </button>
-    </div>
-  `,
+  render: args => {
+    const buttonStyle =
+      'display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer;';
+    return html`
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div>
+          <h4>Icon inline with text</h4>
+          <p
+            style="display: flex; align-items: center; gap: 0.5rem; background-color: var(--mov-color-fill-loud); color: var(--mov-color-on-loud)"
+          >
+            <mov-icon
+              name="settings"
+              size="1em"
+            ></mov-icon>
+            <span>Icon inherits font size from parent.</span>
+          </p>
+        </div>
+
+        <div>
+          <h4>Icon in buttons (White Icon Variant)</h4>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            ${Object.values(colors).map(
+              color => html`
+                <button style="${buttonStyle} background-color: ${color[800]}; color: white;">
+                  <mov-icon name="${args.name}"></mov-icon>
+                  <span>${color[800]}</span>
+                </button>
+              `,
+            )}
+          </div>
+        </div>
+
+        <div>
+          <h4>Icon in buttons (Black Icon Variant)</h4>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            ${Object.values(colors).map(
+              color => html`
+                <button style="${buttonStyle} background-color: ${color[200]}; color: black;">
+                  <mov-icon
+                    name="${args.name}"
+                    style="color:black"
+                  ></mov-icon>
+                  <span>${color[200]}</span>
+                </button>
+              `,
+            )}
+          </div>
+        </div>
+      </div>
+    `;
+  },
 };
 
 /**

@@ -39,9 +39,7 @@ export default {
     controls: { disable: true }, // Disable controls as the component is self-managing
   },
   render: args =>
-    html`<color-picker-story-wrapper
-      .swatches="${args.swatches}"
-    ></color-picker-story-wrapper>`,
+    html`<color-picker-story-wrapper .swatches="${args.swatches}"></color-picker-story-wrapper>`,
 } satisfies Meta;
 
 export const Default: StoryObj = {

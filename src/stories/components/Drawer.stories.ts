@@ -29,7 +29,8 @@ const meta: Meta = {
         @close=${closePanel}
       >
         <span slot="header">${args.header}</span>
-        ${args.action ? html`<button slot="header-actions">${args.action}</button>` : nothing} ${args.slot}
+        ${args.action ? html`<button slot="header-actions">${args.action}</button>` : nothing}
+        ${args.slot}
       </mov-drawer>
     `;
     render(template, container);
