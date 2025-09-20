@@ -62,6 +62,7 @@ export const defaultSettings: ISettings = {
     SCROLL_DOWN: ['down', 'S', 'num_2'],
     NEXT_CHAPTER: ['right', '/', 'D', 'num_6'],
     PREVIOUS_CHAPTER: ['left', ';', 'A', 'num_4'],
+    RETURN_CHAPTER_LIST: ['backspace', 'del'],
     ENLARGE: ['-', 'num_add', 'E'],
     REDUCE: ['=', 'num_subtract', 'Q'],
     RESTORE: ['9', 'num_divide', 'R'],

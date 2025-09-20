@@ -50,6 +50,19 @@ function doScrolling(sign: 1 | -1) {
 }
 
 /**
+ * Redirects the browser to a given URL.
+ * If the URL is null, undefined, or '#', it navigates back in the browser history.
+ * @param {string | undefined | null} url - The URL to redirect to.
+ */
+function redirectUrl(url: string | undefined | null) {
+  if (url && url !== '#') {
+    window.location.href = sanitizeUrl(url);
+  } else {
+    window.history.back();
+  }
+}
+
+/**
  * A mapping of keybinding identifiers to their corresponding action functions.
  * @internal
  */
@@ -61,20 +74,13 @@ const actions: Record<string, () => void> = {
     doScrolling(1);
   },
   NEXT_CHAPTER() {
-    const url = getAppStateValue('manga')?.next;
-    if (url && url !== '#') {
-      window.location.href = sanitizeUrl(url);
-    } else {
-      window.history.back();
-    }
+    redirectUrl(getAppStateValue('manga')?.next);
   },
   PREVIOUS_CHAPTER() {
-    const url = getAppStateValue('manga')?.prev;
-    if (url && url !== '#') {
-      window.location.href = sanitizeUrl(url);
-    } else {
-      window.history.back();
-    }
+    redirectUrl(getAppStateValue('manga')?.prev);
+  },
+  RETURN_CHAPTER_LIST() {
+    redirectUrl(getAppStateValue('manga')?.series);
   },
   ENLARGE() {
     changeZoomByStep(1)();
