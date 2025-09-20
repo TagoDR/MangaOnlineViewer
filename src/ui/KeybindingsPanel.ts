@@ -91,7 +91,7 @@ export default class KeybindingsPanel extends LitElement {
 
   render() {
     return html`
-      <mov-drawer
+      <wa-drawer
         id="KeybindingsPanel"
         ?open=${getAppStateValue('panel').startsWith('keybindings')}
         placement="end"
@@ -104,32 +104,32 @@ export default class KeybindingsPanel extends LitElement {
         >
           ${
             getAppStateValue('panel') === 'keybindingsEditor'
-              ? html` <mov-button
+              ? html` <wa-button
                 id="SaveKeybindings"
                 type="button"
                 title="${getLocaleString('SAVE_KEYBINDS')}"
                 @click=${() => saveKeybindings(this.keybindsRefs)}
               >
-                <mov-icon
+                <wa-icon
                   name="IconDeviceFloppy"
                   size="16px"
                   slot="start"
-                ></mov-icon>
+                ></wa-icon>
                 ${getLocaleString('BUTTON_SAVE')}
-              </mov-button>`
-              : html` <mov-button
+              </wa-button>`
+              : html` <wa-button
                 id="EditKeybindings"
                 type="button"
                 title="${getLocaleString('EDIT_KEYBINDS')}"
                 @click=${editKeybindings}
               >
-                <mov-icon
+                <wa-icon
                   name="IconPencil"
                   size="16px"
                   slot="start"
-                ></mov-icon>
+                ></wa-icon>
                 ${getLocaleString('BUTTON_EDIT')}
-              </mov-button>`
+              </wa-button>`
           }
         </div>
         <div id="KeybindingsList">
@@ -140,7 +140,7 @@ export default class KeybindingsPanel extends LitElement {
           }
         </div>
         <div id="HotKeysRules">${unsafeHTML(getLocaleString('KEYBIND_RULES'))}</div>
-      </mov-drawer>
+      </wa-drawer>
     `;
   }
 }

@@ -40,7 +40,7 @@ export default class CommentsPanel extends LitElement {
 
   render() {
     return html`
-      <mov-dialog
+      <wa-dialog
         id="CommentsPanel"
         ?open=${getAppStateValue('panel') === 'comments'}
         fullscreen
@@ -61,7 +61,7 @@ export default class CommentsPanel extends LitElement {
           ?active=${this.colorScheme === 'dark'}
         >
         </toggle-button>
-      </mov-dialog>
+      </wa-dialog>
     `;
   }
 
