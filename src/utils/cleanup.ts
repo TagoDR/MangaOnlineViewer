@@ -19,7 +19,9 @@ function removeAllEventListeners(element: HTMLElement): HTMLElement {
  * @param {HTMLElement} element - The element from which to remove attributes.
  */
 const removeAttributes = (element: HTMLElement) => {
-  element.getAttributeNames().forEach(attr => element?.removeAttribute(attr));
+  element.getAttributeNames().forEach(attr => {
+    element?.removeAttribute(attr);
+  });
 };
 
 /**

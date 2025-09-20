@@ -17,6 +17,26 @@
   position: fixed;
   z-index: 1000;
 }
+#Thumbnails {
+  flex-grow: 1;
+  display: flex;
+  gap: 5px;
+  justify-content: flex-start;
+}
+#Navigation.horizontal #Thumbnails {
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+#Navigation.vertical #Thumbnails {
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  justify-content: flex-start;
+}
+#Navigation.left #Thumbnails {
+  direction: rtl;
+}
 :host(:not([forceExpanded])) #Navigation:not(:hover) #Thumbnails {
   display: none;
 }
@@ -30,12 +50,6 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-}
-#Thumbnails {
-  flex-grow: 1;
-  display: flex;
-  gap: 5px;
-  justify-content: flex-start;
 }
 /* == Horizontal Orientation (for top/bottom position) == */
 #Navigation.horizontal {
@@ -51,11 +65,6 @@
 }
 #Navigation.bottom {
   bottom: 0;
-}
-#Navigation.horizontal #Thumbnails {
-  flex-direction: row;
-  overflow-x: auto;
-  overflow-y: hidden;
 }
 /* == Vertical Orientation (for left/right position) == */
 #Navigation.vertical {
@@ -85,16 +94,6 @@
 }
 #Navigation.right #NavigationCounters {
   transform: rotate(0deg);
-}
-#Navigation.vertical #Thumbnails {
-  flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
-  justify-content: flex-start;
-}
-
-#Navigation.left #Thumbnails {
-  direction: rtl;
 }
 /* Adjust for header visibility */
 #Navigation.vertical.header {

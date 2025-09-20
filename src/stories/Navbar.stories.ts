@@ -8,7 +8,7 @@ import { html, LitElement, type PropertyValueMap } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { appState, getAppStateValue, setAppStateValue } from '../core/settings';
 import localhost from '../main/localhost.ts';
-import type { IMangaImages, NavbarMode } from '../types';
+import type { IMangaImages, NavbarMode, Page } from '../types';
 import '../ui/Navbar.ts';
 
 // Mock manga data for the stories
@@ -73,10 +73,10 @@ const meta: Meta = {
     // Set up the mock manga data in the store
     setAppStateValue('manga', mockManga);
     setAppStateValue('currentPage', 1);
-    setAppStateValue(
-      'images',
-      mockManga.listImages.reduce((acc, img, index) => ({ ...acc, [index + 1]: { src: img } }), {}),
+    const images: Record<number, Page> = Object.fromEntries(
+      mockManga.listImages.map((img, index) => [index + 1, { src: img }]),
     );
+    setAppStateValue('images', images);
     setAppStateValue('loaded', mockManga.pages);
     setAppStateValue('scrollToPage', undefined); // Reset on each render
 

@@ -22,9 +22,9 @@ const asura: ISite = {
       next: findClosestByContentEq('h2', 'Next', 'a')?.getAttribute('href'),
       listImages: images.map(img => img.getAttribute('src') ?? ''),
       async before() {
-        document
-          .querySelectorAll('button.absolute')
-          .forEach(e => e.dispatchEvent(new Event('click', { bubbles: true })));
+        document.querySelectorAll('button.absolute').forEach(e => {
+          e.dispatchEvent(new Event('click', { bubbles: true }));
+        });
         await waitForTimer(1000);
       },
     };

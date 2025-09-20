@@ -120,8 +120,8 @@ function getDefault(global = true): ISettings {
  * let Lodash's default comparison take over.
  */
 export function compareSettingsCustomizer(
-  value: any,
-  other: any,
+  value: unknown,
+  other: unknown,
   key: string | number | symbol | undefined,
 ): boolean | undefined {
   // Handle the 'bookmarks' array.
@@ -154,9 +154,11 @@ export function compareSettingsCustomizer(
   // Handle the 'keybinds' object.
   if (key === 'keybinds') {
     // Ensure both values are objects before proceeding.
-    if (typeof value === 'object' && typeof other === 'object') {
-      const keysA = Object.keys(value).sort();
-      const keysB = Object.keys(other).sort();
+    if (value && typeof value === 'object' && other && typeof other === 'object') {
+      const valueKeybinds = value as Record<string, string[]>;
+      const otherKeybinds = other as Record<string, string[]>;
+      const keysA = Object.keys(valueKeybinds).sort();
+      const keysB = Object.keys(otherKeybinds).sort();
 
       // If the keys are different, the objects are not equal.
       if (!_.isEqual(keysA, keysB)) {
@@ -165,8 +167,8 @@ export function compareSettingsCustomizer(
 
       // Compare the arrays for each key, after sorting the inner arrays.
       for (const k of keysA) {
-        const sortedArrayA = value[k] ? [...value[k]].sort() : [];
-        const sortedArrayB = other[k] ? [...other[k]].sort() : [];
+        const sortedArrayA = valueKeybinds[k] ? [...valueKeybinds[k]].sort() : [];
+        const sortedArrayB = otherKeybinds[k] ? [...otherKeybinds[k]].sort() : [];
         if (!_.isEqual(sortedArrayA, sortedArrayB)) {
           return false;
         }
