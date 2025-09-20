@@ -164,10 +164,7 @@ export class Header extends LitElement {
             </wa-dropdown-item>
           </wa-dropdown>
 
-          <wa-dropdown
-            id="ViewDropdown"
-            checkable
-          >
+          <wa-dropdown id="ViewDropdown">
             <wa-button
               slot="trigger"
               title="${getLocaleString('VIEW_MENU')}"
@@ -224,10 +221,7 @@ export class Header extends LitElement {
               ${getLocaleString('VIEW_MODE_RIGHT')} ${renderKeybind('VIEW_MODE_RIGHT')}
             </wa-dropdown-item>
           </wa-dropdown>
-          <wa-dropdown
-            id="ZoomDropdown"
-            checkable
-          >
+          <wa-dropdown id="ZoomDropdown">
             <wa-button
               slot="trigger"
               title="${getLocaleString('ZOOM_MENU')}"

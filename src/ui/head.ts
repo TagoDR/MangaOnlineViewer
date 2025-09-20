@@ -15,6 +15,10 @@ function head(manga: IManga) {
   return html`
     <title>${manga.title}</title>
     <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://early.webawesome.com/webawesome@3.0.0-beta.6/dist/styles/webawesome.css"
+    />
     ${wrapStyle('externals', externalCSS)}
   `;
 }
