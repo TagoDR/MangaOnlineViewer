@@ -124,4 +124,7 @@ export default {
   NAVBAR_RIGHT: '正确的',
   NAVBAR_DISABLED: '已禁用',
   ENABLE_PAGINATION: '启用分页',
+  FILE_MENU: '主菜单',
+  VIEW_MENU: '查看菜单',
+  ZOOM_MENU: '缩放菜单',
 } satisfies ILocale;

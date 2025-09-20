@@ -124,4 +124,7 @@ export default {
   NAVBAR_RIGHT: 'Direita',
   NAVBAR_DISABLED: 'Desativado',
   ENABLE_PAGINATION: 'Ligar Paginação',
+  FILE_MENU: 'Menu Principal',
+  VIEW_MENU: 'Menu de Visualizações',
+  ZOOM_MENU: 'Menu de Zoom',
 } satisfies ILocale;

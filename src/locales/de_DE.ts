@@ -125,4 +125,7 @@ export default {
   NAVBAR_RIGHT: 'Rechts',
   NAVBAR_DISABLED: 'Deaktiviert',
   ENABLE_PAGINATION: 'Paginierung aktivieren',
+  FILE_MENU: 'Hauptmenü',
+  VIEW_MENU: 'Menü „Ansicht“',
+  ZOOM_MENU: 'Zoom-Menü',
 } satisfies ILocale;

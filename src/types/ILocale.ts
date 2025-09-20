@@ -117,6 +117,9 @@ export type ILocale = {
   NAVBAR_RIGHT: string;
   NAVBAR_DISABLED: string;
   ENABLE_PAGINATION: string;
+  FILE_MENU: string;
+  VIEW_MENU: string;
+  ZOOM_MENU: string;
 };
 
 /**
