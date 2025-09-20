@@ -28,7 +28,7 @@ const meta: Meta = {
         placement=${args.placement || 'end'}
         @close=${closePanel}
       >
-        <span slot="header">${args.header}</span>
+        <span slot="label">${args.label}</span>
         ${args.action ? html`<button slot="header-actions">${args.action}</button>` : nothing}
         ${args.slot}
       </mov-drawer>
@@ -47,7 +47,7 @@ export const DrawerEnd: Story = {
   args: {
     open: false,
     placement: 'end',
-    header: 'Right Drawer',
+    label: 'Right Drawer',
     slot: html`<p>This is a drawer panel on the right.</p>`,
   },
 };
@@ -57,7 +57,7 @@ export const DrawerStart: Story = {
   args: {
     ...DrawerEnd.args,
     placement: 'start',
-    header: 'Left Drawer',
+    label: 'Left Drawer',
     slot: html`<p>This is a drawer panel on the left.</p>`,
   },
 };
@@ -66,7 +66,7 @@ export const WithHeaderAndAction: Story = {
   name: 'With Header and Action',
   args: {
     ...DrawerEnd.args,
-    header: 'Panel Title',
+    label: 'Panel Title',
     action: 'Action',
     slot: html`<p>This panel has a header and an action button.</p>`,
   },

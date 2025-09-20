@@ -118,6 +118,7 @@ export default class BookmarkPanel extends LitElement {
           ></mov-icon>
         </mov-button>
         <h2 slot="header">${getLocaleString('BOOKMARKS')}</h2>
+        <h2 slot="label">${getLocaleString('BOOKMARKS')}</h2>
         <div id="BookmarksList">${this.listBookmarks()}</div>
       </mov-dialog>
     `;

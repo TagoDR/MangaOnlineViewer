@@ -97,7 +97,7 @@ export default class KeybindingsPanel extends LitElement {
         placement="end"
         @close=${buttonPanelsClose}
       >
-        <h2 slot="header">${getLocaleString('KEYBINDINGS')}</h2>
+        <h2 slot="label">${getLocaleString('KEYBINDINGS')}</h2>
         <div
           class="controls"
           slot="header-actions"

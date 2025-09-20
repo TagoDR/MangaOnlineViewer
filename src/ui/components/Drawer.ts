@@ -195,7 +195,7 @@ export default class Drawer extends LitElement {
             <slot name="header-actions"></slot>
           </div>
           <div class="header-content">
-            <slot name="header"></slot>
+            <slot name="label"></slot>
           </div>
           <div
             class="close-button-container"

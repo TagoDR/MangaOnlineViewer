@@ -46,7 +46,7 @@ export default class CommentsPanel extends LitElement {
         fullscreen
         @close=${buttonPanelsClose}
       >
-        <h2 slot="header">${getLocaleString('COMMENTS')}</h2>
+        <h2 slot="label">${getLocaleString('COMMENTS')}</h2>
         <div
           id="CommentsArea"
           class="${this.colorScheme}"

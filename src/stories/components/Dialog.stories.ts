@@ -16,7 +16,7 @@ const meta: Meta = {
     if (args.mode === 'inline') {
       const template = html`
         <mov-dialog mode="inline">
-          <span slot="header">${args.header}</span>
+          <span slot="label">${args.label}</span>
           ${args.slot}
         </mov-dialog>
       `;
@@ -40,7 +40,7 @@ const meta: Meta = {
         ?fullscreen=${args.fullscreen}
         @close=${closePanel}
       >
-        <span slot="header">${args.header}</span>
+        <span slot="label">${args.label}</span>
         ${args.action ? html`<button slot="header-actions">${args.action}</button>` : nothing}
         ${args.slot} ${args.slot}
       </mov-dialog>
@@ -59,7 +59,7 @@ export const DialogCentered: Story = {
   args: {
     open: false,
     fullscreen: false,
-    header: 'Centered Dialog',
+    label: 'Centered Dialog',
     slot: html`<p>This is a centered dialog panel.</p>`,
   },
 };
@@ -69,7 +69,7 @@ export const DialogFullscreen: Story = {
   args: {
     ...DialogCentered.args,
     fullscreen: true,
-    header: 'Fullscreen Dialog',
+    label: 'Fullscreen Dialog',
     slot: html`<p>This is a fullscreen dialog panel.</p>`,
   },
 };
@@ -78,7 +78,7 @@ export const Inline: Story = {
   name: 'Inline',
   args: {
     mode: 'inline',
-    header: 'Inline Panel',
+    label: 'Inline Panel',
     slot: html`<p>This is an inline panel. It appears directly in the layout.</p>`,
   },
 };
@@ -87,7 +87,7 @@ export const WithHeaderAndAction: Story = {
   name: 'With Header and Action',
   args: {
     ...DialogCentered.args,
-    header: 'Panel Title',
+    label: 'Panel Title',
     action: 'Action',
     slot: html`<p>This panel has a header and an action button.</p>`,
   },
