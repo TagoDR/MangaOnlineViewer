@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaOni, MangaPark, MangaReader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.09.19
+// @version       2025.09.20
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -1189,6 +1189,9 @@
     NAVBAR_RIGHT: 'Rechts',
     NAVBAR_DISABLED: 'Deaktiviert',
     ENABLE_PAGINATION: 'Paginierung aktivieren',
+    FILE_MENU: 'Hauptmenü',
+    VIEW_MENU: 'Menü „Ansicht“',
+    ZOOM_MENU: 'Zoom-Menü',
   };
 
   const en_US = {
@@ -1311,6 +1314,9 @@
     NAVBAR_RIGHT: 'Right',
     NAVBAR_DISABLED: 'Disabled',
     ENABLE_PAGINATION: 'Enable Pagination',
+    FILE_MENU: 'Main Menu',
+    VIEW_MENU: 'View Menu',
+    ZOOM_MENU: 'Zoom Menu',
   };
 
   const es_ES = {
@@ -1435,6 +1441,135 @@
     NAVBAR_RIGHT: 'Derecha',
     NAVBAR_DISABLED: 'Desactivado',
     ENABLE_PAGINATION: 'Habilitar paginación',
+    FILE_MENU: 'Menú principal',
+    VIEW_MENU: 'Ver menú',
+    ZOOM_MENU: 'Menú Zoom',
+  };
+
+  const fr_FR = {
+    ID: 'fr_FR',
+    NAME: 'Français (FR)',
+    STARTING: 'Démarrage<br>Manga OnlineViewer',
+    RESUME: 'Reprise de la lecture à partir de la Page ',
+    WAITING: 'Veuillez patienter, 3 secondes...',
+    CHOOSE_BEGINNING: 'Choisissez la page par laquelle commencer :',
+    BUTTON_START: 'Démarrer Manga OnlineViewer',
+    SETTINGS: 'Paramètres',
+    LANGUAGE: 'Langue',
+    COLOR_SCHEME: 'Palette de couleurs',
+    THEME: 'Thème',
+    THEME_COLOR: 'Couleur',
+    THEME_HUE: 'Teinte de couleur',
+    THEME_SHADE: 'Nuance de couleur',
+    DEFAULT_LOAD_MODE: 'Mode de chargement par défaut',
+    LOAD_MODE_NORMAL: 'Normal (attendre 3 s)',
+    LOAD_MODE_ALWAYS: 'Toujours (immédiatement)',
+    LOAD_MODE_NEVER: 'Jamais (manuellement)',
+    LOAD_SPEED: 'Vitesse de chargement des pages/seconde',
+    DEFAULT_ZOOM: 'Zoom par défaut (entre 5 et 200)',
+    DEFAULT_ZOOM_MODE: 'Mode de zoom par défaut',
+    MINIMUM_ZOOM: "Zoom minimum par rapport à la largeur de l'écran (entre 30 et 100)",
+    ZOOM_STEP: 'Pas de changement de zoom (entre 5 et 50)',
+    DEFAULT_VIEW_MODE: "Mode d'affichage par défaut",
+    VIEW_MODE_VERTICAL: 'Vertical',
+    VIEW_MODE_LEFT: 'De gauche à droite',
+    VIEW_MODE_RIGHT: 'De droite à gauche',
+    VIEW_MODE_WEBCOMIC: 'WebComic',
+    FIT_WIDTH_OVERSIZED: 'Ajuster à la largeur si surdimensionné',
+    SHOW_THUMBNAILS: 'Afficher les vignettes',
+    ENABLE_COMMENTS: 'Capturer les commentaires (si disponibles)',
+    HIDE_CONTROLS: 'Toujours masquer les contrôles de page',
+    HEADER_TYPE: "Changer le type d'en-tête",
+    HEADER_HOVER: 'Survol',
+    HEADER_SCROLL: 'Défilement',
+    HEADER_CLICK: 'Clic',
+    HEADER_FIXED: 'Fixe',
+    HEADER_SIMPLE: 'Simple',
+    BUTTON_DOWNLOAD: 'Télécharger',
+    DOWNLOAD_ZIP: 'Télécharger le fichier Zip',
+    DOWNLOAD_IMAGES: 'Télécharger les images en Zip automatiquement',
+    BUTTON_NEXT: 'Suivant',
+    NEXT_CHAPTER: 'Chapitre suivant',
+    BUTTON_PREVIOUS: 'Précédent',
+    PREVIOUS_CHAPTER: 'Chapitre précédent',
+    BOOKMARKS: 'Favoris',
+    BOOKMARK: 'Favori',
+    BOOKMARK_REMOVED: 'Favori supprimé',
+    BOOKMARK_SAVED: 'Favori enregistré',
+    BOOKMARK_MESSAGE:
+      'La prochaine fois que vous ouvrirez ce chapitre, il reprendra à partir de :<h4>Page ##num##</h4>(Seulement <i>UNE FOIS</i> par favori)',
+    KEYBINDINGS: 'Raccourcis clavier',
+    EDIT_KEYBINDS: 'Modifier les raccourcis clavier',
+    SAVE_KEYBINDS: 'Enregistrer les raccourcis clavier',
+    BUTTON_EDIT: 'Modifier',
+    BUTTON_SAVE: 'Enregistrer',
+    KEYBIND_RULES: `
+    <h3>Touches prises en charge</h3>
+    Modificateurs autorisés : shift, option, alt, ctrl, control, command. </br>
+    Touches spéciales : backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. </br>
+    Exemples : <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd>
+  `,
+    ATTENTION: 'Attention',
+    WARNING: 'Avertissement',
+    BUTTON_RESET_SETTINGS: 'Réinitialiser les paramètres',
+    SETTINGS_RESET: 'Les paramètres ont été réinitialisés, rechargez la page pour prendre effet',
+    LANGUAGE_CHANGED: 'La langue a été modifiée, rechargez la page pour prendre effet',
+    AUTO_DOWNLOAD:
+      "La prochaine fois qu'un chapitre finira de se charger, il vous sera proposé de l'enregistrer automatiquement",
+    LAZY_LOAD:
+      "Le chargement paresseux est incompatible avec le téléchargement zip, vous ne pourrez pas télécharger avec ce paramètre activé.<br/> Suggestion : <span style='color:red;font-weight:bold'>Désactivez les vignettes</span> pour économiser de la bande passante/mémoire.",
+    LAZY_LOAD_IMAGES_ENABLE: 'Activer le chargement paresseux des images',
+    LAZY_LOAD_IMAGES: 'Début du chargement paresseux à partir de la page (entre 5 et 100)',
+    RETURN_CHAPTER_LIST: 'Retour à la liste des chapitres',
+    PAGES_LOADED: 'Pages chargées',
+    GO_TO_PAGE: 'Aller à la page',
+    ENLARGE: 'Agrandir',
+    RESTORE: 'Restaurer',
+    REDUCE: 'Réduire',
+    FIT_WIDTH: 'Ajuster à la largeur',
+    FIT_HEIGHT: 'Ajuster à la hauteur',
+    PERCENT: 'Pourcentage',
+    TOGGLE_CONTROLS: 'Basculer les contrôles de page',
+    ZOOM_IN: 'Zoom avant',
+    ZOOM_OUT: 'Zoom arrière',
+    ZOOM_RESET: 'Réinitialiser le zoom',
+    ZOOM_WIDTH: 'Zoomer à la largeur',
+    ZOOM_HEIGHT: 'Zoomer à la hauteur',
+    HIDE: 'Masquer',
+    RELOAD: 'Recharger',
+    SLOWLY: 'Lentement',
+    NORMAL: 'Normal',
+    FAST: 'Rapide',
+    EXTREME: 'Extrême',
+    ALL_PAGES: 'Toutes les pages',
+    SPEED_WARNING: 'Vitesse de chargement trop élevée',
+    SPEED_WARNING_MESSAGE:
+      "Cette vitesse n'est pas recommandée.<br> Elle peut nuire à certains serveurs ou marquer votre IP comme un attaquant DDoS.<br> Veuillez l'utiliser avec prudence !",
+    SCROLL_UP: 'Faire défiler vers le haut',
+    SCROLL_DOWN: 'Faire défiler vers le bas',
+    CLOSE: 'Fermer',
+    LIST_EMPTY: 'Liste vide',
+    DISPLAY_COMMENTS: 'Afficher les commentaires',
+    COMMENTS: 'Section des commentaires',
+    SCROLL_START: 'Basculer le défilement automatique',
+    AUTO_SCROLL_HEIGHT: 'Vitesse de défilement automatique en pixels',
+    VERTICAL_SEPARATOR: 'Afficher les séparateurs verticaux',
+    END: 'Fin',
+    SCOPE: 'Portée',
+    GLOBAL: 'Global',
+    GENERAL: 'Général',
+    LOADING: 'Chargement',
+    ZOOM: 'Zoom',
+    OTHERS: 'Autres',
+    NAVBAR_TYPE: 'Changer le type de barre de navigation',
+    NAVBAR_BOTTOM: 'Bas',
+    NAVBAR_LEFT: 'Gauche',
+    NAVBAR_RIGHT: 'Droite',
+    NAVBAR_DISABLED: 'Désactivé',
+    ENABLE_PAGINATION: 'Activer la pagination',
+    FILE_MENU: 'Menu principal',
+    VIEW_MENU: 'Menu Affichage',
+    ZOOM_MENU: 'Menu Zoom',
   };
 
   const pt_BR = {
@@ -1557,6 +1692,9 @@
     NAVBAR_RIGHT: 'Direita',
     NAVBAR_DISABLED: 'Desativado',
     ENABLE_PAGINATION: 'Ligar Paginação',
+    FILE_MENU: 'Menu Principal',
+    VIEW_MENU: 'Menu de Visualizações',
+    ZOOM_MENU: 'Menu de Zoom',
   };
 
   const zh_CN = {
@@ -1678,9 +1816,12 @@
     NAVBAR_RIGHT: '正确的',
     NAVBAR_DISABLED: '已禁用',
     ENABLE_PAGINATION: '启用分页',
+    FILE_MENU: '主菜单',
+    VIEW_MENU: '查看菜单',
+    ZOOM_MENU: '缩放菜单',
   };
 
-  const locales = [en_US, es_ES, pt_BR, zh_CN, de_DE];
+  const locales = [en_US, es_ES, pt_BR, zh_CN, de_DE, fr_FR];
 
   function isImagesManga(manga) {
     return 'listImages' in manga && !isNothing(manga.listImages);
@@ -1760,6 +1901,7 @@
       SCROLL_DOWN: ['down', 'S', 'num_2'],
       NEXT_CHAPTER: ['right', '/', 'D', 'num_6'],
       PREVIOUS_CHAPTER: ['left', ';', 'A', 'num_4'],
+      RETURN_CHAPTER_LIST: ['backspace', 'del'],
       ENLARGE: ['-', 'num_add', 'E'],
       REDUCE: ['=', 'num_subtract', 'Q'],
       RESTORE: ['9', 'num_divide', 'R'],
@@ -6626,6 +6768,13 @@
       });
     }
   }
+  function redirectUrl(url) {
+    if (url && url !== '#') {
+      window.location.href = distExports.sanitizeUrl(url);
+    } else {
+      window.history.back();
+    }
+  }
   const actions = {
     SCROLL_UP() {
       doScrolling(-1);
@@ -6634,20 +6783,13 @@
       doScrolling(1);
     },
     NEXT_CHAPTER() {
-      const url = getAppStateValue('manga')?.next;
-      if (url && url !== '#') {
-        window.location.href = distExports.sanitizeUrl(url);
-      } else {
-        window.history.back();
-      }
+      redirectUrl(getAppStateValue('manga')?.next);
     },
     PREVIOUS_CHAPTER() {
-      const url = getAppStateValue('manga')?.prev;
-      if (url && url !== '#') {
-        window.location.href = distExports.sanitizeUrl(url);
-      } else {
-        window.history.back();
-      }
+      redirectUrl(getAppStateValue('manga')?.prev);
+    },
+    RETURN_CHAPTER_LIST() {
+      redirectUrl(getAppStateValue('manga')?.series);
     },
     ENLARGE() {
       changeZoomByStep(1)();
