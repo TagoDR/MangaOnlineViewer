@@ -1,6 +1,6 @@
 import { css, html, LitElement, type PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { styleMap } from 'lit/directives/style-map.js';
+import { styleMap } from 'lit-html/directives/style-map.js';
 import { getTextColor } from '../../utils/colors.ts';
 import { IconCheck } from '../icons';
 
@@ -70,6 +70,9 @@ export class ColorSwatch extends LitElement {
       display: flex;
       align-items: center;
       justify-content: center;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 1;
     }
 
     .check-icon svg {
@@ -77,7 +80,7 @@ export class ColorSwatch extends LitElement {
       height: 60%;
     }
 
-    :host([selected]) .check-icon {
+    :host([checked]) .check-icon {
       opacity: 1;
     }
   `;
@@ -87,14 +90,14 @@ export class ColorSwatch extends LitElement {
    * @type {string}
    */
   @property({ type: String })
-  value = '#228be6';
+  color = '#000000';
 
   /**
-   * If `true`, a checkmark icon will be displayed over the swatch.
-   * @type {boolean}
+   * The currently selected color value. If this matches the swatch's `color`, the swatch will be checked.
+   * @type {string | undefined}
    */
-  @property({ type: Boolean, reflect: true })
-  selected = false;
+  @property({ type: String })
+  selected: string | undefined;
 
   /**
    * The size (width and height) of the swatch in pixels.
@@ -118,13 +121,36 @@ export class ColorSwatch extends LitElement {
   private contrastColor = '#FFFFFF';
 
   /**
+   * Whether the swatch is currently checked. This is automatically set if `color` matches `selected`.
+   */
+  @property({ type: Boolean, reflect: true })
+  checked: boolean = false;
+
+  /**
    * Recalculates the contrasting color for the checkmark whenever the swatch color changes.
    * @internal
    */
   willUpdate(changedProperties: PropertyValues) {
     if (changedProperties.has('color')) {
-      this.contrastColor = getTextColor(this.value);
+      this.contrastColor = getTextColor(this.color);
     }
+    if (changedProperties.has('selected')) {
+      this.checked = this.color.toLowerCase() === this.selected?.toLowerCase();
+    }
+  }
+
+  /**
+   * Handles the click event on the swatch.
+   * Dispatches 'input' and 'change' events with the swatch's color value.
+   * @private
+   */
+  private handleClick() {
+    this.dispatchEvent(
+      new CustomEvent('input', { detail: { value: this.color }, bubbles: true, composed: true }),
+    );
+    this.dispatchEvent(
+      new CustomEvent('change', { detail: { value: this.color }, bubbles: true, composed: true }),
+    );
   }
 
   render() {
@@ -135,7 +161,7 @@ export class ColorSwatch extends LitElement {
 
     const swatchStyles = {
       '--radius': typeof this.radius === 'number' ? `${this.radius}px` : this.radius,
-      '--color': this.value,
+      '--color': this.color,
       '--contrast-color': this.contrastColor,
     };
 
@@ -144,6 +170,7 @@ export class ColorSwatch extends LitElement {
         <div
           class="swatch"
           style=${styleMap(swatchStyles)}
+          @click=${this.handleClick}
         >
           <slot></slot>
           <span class="check-icon"> ${IconCheck} </span>

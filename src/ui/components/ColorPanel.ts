@@ -21,14 +21,6 @@ declare global {
  */
 @customElement('color-panel')
 export class ColorPanel extends LitElement {
-  /**
-   * The currently selected theme color in hexadecimal format (e.g., "#29487D").
-   * This is used to highlight the active swatch with a checkmark.
-   * @type {string}
-   */
-  @property({ type: String })
-  value = '';
-
   static styles = css`
     :host {
       display: flex;
@@ -90,15 +82,36 @@ export class ColorPanel extends LitElement {
   `;
 
   /**
-   * Handles clicks on individual color swatches. It stops the event from bubbling,
-   * sets the host's title to the swatch's color, and dispatches a new click event
-   * from the host. This allows the parent listener to use `event.currentTarget.title`
-   * to get the color.
+   * The currently selected theme color in hexadecimal format (e.g., "#29487D").
+   * This is used to highlight the active swatch with a checkmark.
+   * @type {string}
+   */
+  @property({ type: String, reflect: true })
+  value = '';
+
+  /**
+   * The currently selected color value. If this matches the swatch's `color`, the swatch will be checked.
+   * @type {string | undefined}
+   */
+  @property({ type: String })
+  selected: string | undefined;
+
+  /**
+   * Handles the click event on a color swatch.
+   * Updates the component's `value` property to the selected color's hex code.
+   * Dispatches 'input' and 'change' custom events to notify parent components
+   * about the color selection.
+   * @param {MouseEvent} event The click event object.
+   * @private
    */
   private handleColorClick(event: MouseEvent) {
-    event.stopPropagation();
-    this.title = (event.currentTarget as HTMLElement).title;
-    this.click();
+    this.value = (event.currentTarget as HTMLElement).title;
+    this.dispatchEvent(
+      new CustomEvent('input', { detail: { value: this.value }, bubbles: true, composed: true }),
+    );
+    this.dispatchEvent(
+      new CustomEvent('change', { detail: { value: this.value }, bubbles: true, composed: true }),
+    );
   }
 
   /**
@@ -115,12 +128,13 @@ export class ColorPanel extends LitElement {
       const swatches = shades.map(shade => {
         const hex = colors[key][shade];
         const text = getTextColor(hex);
+        const isSelected = this.selected?.toLowerCase() === hex.toLowerCase();
         return html`
           <span
             title="${hex}"
             class="${classMap({
               ThemeRadio: true,
-              selected: this.value === hex,
+              selected: isSelected,
             })}"
             style="background-color: ${hex}; color: ${text}"
             @click=${this.handleColorClick}

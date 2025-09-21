@@ -1,9 +1,9 @@
 import Color from 'colorjs.io';
 import { css, html, LitElement, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
-import colors from '../../utils/colors';
-import './ColorSwatch.ts';
+import colors, { getTextColor } from '../../utils/colors';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -12,26 +12,42 @@ declare global {
 }
 
 /**
- * An interactive color picker component that allows users to select a color
- * from a saturation/value panel, a hue slider, or a predefined set of swatches.
+ * An interactive color picker component that allows users to select a color.
  *
  * @element color-picker
- *
- * @fires change - Dispatched whenever the selected color value changes. The `detail` object contains the new `value` as a hex string.
+ * @fires input - Dispatched continuously while the color is changing.
+ * @fires change - Dispatched when the color selection is finalized.
  */
 @customElement('color-picker')
 export class ColorPicker extends LitElement {
   static styles = css`
     :host {
-      display: block;
+      display: inline-block;
+      position: relative;
+    }
+
+    .picker-container {
       width: 250px;
+      box-sizing: border-box;
+    }
+
+    .picker-container.popup {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      z-index: 10;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     .saturation-panel {
       position: relative;
       width: 100%;
       height: 180px;
-      border-radius: var(--wa-border-radius-lg);
+      border-radius: 8px;
       cursor: crosshair;
       -webkit-tap-highlight-color: transparent;
     }
@@ -99,47 +115,69 @@ export class ColorPicker extends LitElement {
       gap: 8px;
       margin-top: 12px;
     }
+
+    .swatch {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 4px;
+      border: 1px solid #dee2e6;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      transition: transform 0.1s;
+    }
+
+    .swatch:hover {
+      transform: scale(1.1);
+    }
+
+    .popup-trigger {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      border: 1px solid #e0e0e0;
+      padding: 4px;
+      box-sizing: border-box;
+      cursor: pointer;
+      background-color: #fff;
+    }
+
+    .preview {
+      width: 100%;
+      height: 100%;
+      border-radius: 2px;
+    }
   `;
 
-  /**
-   * The current selected color value as a hex string.
-   * @type {string}
-   */
   @property({ type: String })
   value = '#228be6';
 
-  /**
-   * An optional array of color strings to use as swatches.
-   * If not provided, a default set of swatches will be generated.
-   * @type {string[] | null}
-   */
   @property({ type: Array })
   swatches: string[] | null = null;
 
-  /**
-   * The internal HSV representation of the current color.
-   * @internal
-   */
+  @property({ type: String })
+  mode: 'inline' | 'popup' = 'inline';
+
+  @state()
+  private opened = false;
+
+  @state()
+  private sourceSpace = 'srgb';
+
   @state()
   private hsv = { h: 0, s: 0, v: 0 };
 
-  /**
-   * The position of the thumb on the saturation/value panel.
-   * @internal
-   */
   @state()
   private saturationThumbPosition = { x: 0, y: 0 };
 
-  /**
-   * The position of the thumb on the hue slider.
-   * @internal
-   */
   @state()
   private hueThumbPosition = 0;
 
   private saturationPanel?: HTMLDivElement;
   private hueSlider?: HTMLDivElement;
-
   private isDraggingSaturation = false;
   private isDraggingHue = false;
 
@@ -148,7 +186,7 @@ export class ColorPicker extends LitElement {
     this.updateStateFromValue(this.value);
     window.addEventListener('mousemove', this.handleDrag);
     window.addEventListener('mouseup', this.handleDragEnd);
-    window.addEventListener('touchmove', this.handleDrag);
+    window.addEventListener('touchmove', this.handleDrag, { passive: false });
     window.addEventListener('touchend', this.handleDragEnd);
   }
 
@@ -158,24 +196,73 @@ export class ColorPicker extends LitElement {
     window.removeEventListener('mouseup', this.handleDragEnd);
     window.removeEventListener('touchmove', this.handleDrag);
     window.removeEventListener('touchend', this.handleDragEnd);
+    window.removeEventListener('click', this.handleClickOutside);
+  }
+
+  updated(changedProperties: PropertyValues) {
+    if (changedProperties.has('mode')) {
+      if (this.mode === 'popup') {
+        window.addEventListener('click', this.handleClickOutside);
+      } else {
+        window.removeEventListener('click', this.handleClickOutside);
+      }
+    }
   }
 
   willUpdate(changedProperties: PropertyValues) {
     if (changedProperties.has('value')) {
       this.updateStateFromValue(this.value);
     }
+    if (changedProperties.has('mode') && this.mode === 'inline') {
+      this.opened = false;
+    }
   }
 
-  render() {
+  private handleClickOutside = (e: MouseEvent) => {
+    if (this.opened && !e.composedPath().includes(this)) {
+      this.opened = false;
+    }
+  };
+
+  private togglePopup() {
+    if (this.mode === 'popup') {
+      this.opened = !this.opened;
+    }
+  }
+
+  private isSameColor(color1: string, color2: string): boolean {
+    if (!color1 || !color2) return false;
+    try {
+      return Color.deltaE(color1, color2, { method: '2000' }) < 1;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  private renderCheckIcon(color: string) {
+    return html`
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        style=${styleMap({ stroke: getTextColor(color) })}
+      >
+        <path d="M5 12l5 5l10 -10" />
+      </svg>
+    `;
+  }
+
+  private renderPickerBody() {
     const saturationPanelStyle = {
       backgroundColor: `hsl(${this.hsv.h}, 100%, 50%)`,
     };
 
-    const hsv = {
-      h: this.hsv.h,
-      s: this.hsv.s * 100,
-      v: this.hsv.v * 100,
-    };
+    const hsv = { h: this.hsv.h, s: this.hsv.s * 100, v: this.hsv.v * 100 };
     const saturationThumbStyle = {
       top: `${this.saturationThumbPosition.y}%`,
       left: `${this.saturationThumbPosition.x}%`,
@@ -187,8 +274,6 @@ export class ColorPicker extends LitElement {
     const hueThumbStyle = {
       left: `${this.hueThumbPosition}%`,
     };
-
-    const selectedColorHex = new Color(this.value).toString({ format: 'hex' });
 
     return html`
       <div
@@ -219,82 +304,115 @@ export class ColorPicker extends LitElement {
       </div>
 
       <div class="swatches">
-        ${
-          this.swatches
-            ? this.swatches.map(
-                color => html`
-                <color-swatch
-                  .color=${color}
-                  title=${color}
-                  ?selected=${selectedColorHex === new Color(color).toString({ format: 'hex' })}
-                  @click=${() => this.selectSwatch(color)}
-                ></color-swatch>
-              `,
-              )
-            : Object.entries(colors)
-                .filter(([name]) => !['dark', 'gray', 'zinc', 'neutral', 'stone'].includes(name))
-                .map(
-                  ([name, color]) => html`
-                  <color-swatch
-                    .color=${color['600']}
-                    title=${name.charAt(0).toUpperCase() + name.slice(1)}
-                    ?selected=${
-                      selectedColorHex === new Color(color['600']).toString({ format: 'hex' })
-                    }
-                    @click=${() => this.selectSwatch(color['600'])}
-                  ></color-swatch>
-                `,
-                )
-        }
+        ${(
+          this.swatches ||
+            Object.entries(colors)
+              .filter(([name]) => !['dark', 'gray', 'zinc', 'neutral', 'stone'].includes(name))
+              .map(([, color]) => color['600'])
+        ).map(
+          color => html`
+            <button
+              class="swatch"
+              title=${color}
+              style=${styleMap({ backgroundColor: color })}
+              @click=${() => this.selectSwatch(color)}
+            >
+              ${this.isSameColor(this.value, color) ? this.renderCheckIcon(color) : ''}
+            </button>
+          `,
+        )}
       </div>
     `;
   }
 
-  /**
-   * Updates the internal HSV state from a hex color value.
-   * @internal
-   */
+  render() {
+    const pickerClasses = {
+      'picker-container': true,
+      popup: this.mode === 'popup',
+    };
+
+    const pickerBody = this.renderPickerBody();
+
+    if (this.mode === 'popup') {
+      return html`
+        <div
+          class="popup-trigger"
+          @click=${this.togglePopup}
+        >
+          <div
+            class="preview"
+            style=${styleMap({ backgroundColor: this.value })}
+          ></div>
+        </div>
+        ${this.opened ? html`<div class=${classMap(pickerClasses)}>${pickerBody}</div>` : ''}
+      `;
+    }
+
+    return html`<div class=${classMap(pickerClasses)}>${pickerBody}</div>`;
+  }
+
   private updateStateFromValue(color: string) {
-    const parsedColor = Color.parse(color);
-    if (!parsedColor) return;
-    const newHsvColor = new Color(parsedColor).to('hsv');
-    const [h, s, v] = newHsvColor.coords;
-    const newHsv = { h, s: s / 100, v: v / 100 };
-    if (newHsv.h !== this.hsv.h || newHsv.s !== this.hsv.s || newHsv.v !== this.hsv.v) {
-      this.hsv = newHsv;
-      this.updateThumbPositions();
+    try {
+      const newColor = new Color(color);
+      this.sourceSpace = newColor.space.id;
+      const srgbColor = newColor.to('srgb');
+      const hsvColor = srgbColor.to('hsv');
+      let [h, s, v] = hsvColor.coords;
+
+      if (isNaN(h)) {
+        h = this.hsv.h || 0;
+        s = 0;
+      }
+
+      s = Math.max(0, Math.min(100, s));
+      v = Math.max(0, Math.min(100, v));
+
+      const newHsv = { h, s: s / 100, v: v / 100 };
+
+      if (newHsv.h !== this.hsv.h || newHsv.s !== this.hsv.s || newHsv.v !== this.hsv.v) {
+        this.hsv = newHsv;
+        this.updateThumbPositions();
+      }
+    } catch (e) {
+      console.error(`[color-picker] Invalid color value: "${color}"`, e);
     }
   }
 
-  /**
-   * Updates the public `value` property from the internal HSV state and dispatches a change event.
-   * @internal
-   */
+  private dispatchInput() {
+    this.dispatchEvent(
+      new CustomEvent('input', { detail: { value: this.value }, bubbles: true, composed: true }),
+    );
+  }
+
+  private dispatchChange() {
+    this.dispatchEvent(
+      new CustomEvent('change', { detail: { value: this.value }, bubbles: true, composed: true }),
+    );
+  }
+
   private updateValueFromHsv() {
-    const hsv = {
-      h: this.hsv.h,
-      s: this.hsv.s * 100,
-      v: this.hsv.v * 100,
-    };
-    const newValue = new Color({ space: 'hsv', coords: [hsv.h, hsv.s, hsv.v] }).toString({
-      format: 'hex',
-    });
+    const hsv = { h: this.hsv.h, s: this.hsv.s * 100, v: this.hsv.v * 100 };
+    const newColorFromHsv = new Color({ space: 'hsv', coords: [hsv.h, hsv.s, hsv.v] });
+
+    let newValue: string;
+    try {
+      const hexSpaces = ['srgb', 'hsl', 'hsv'];
+      if (!this.sourceSpace || hexSpaces.includes(this.sourceSpace)) {
+        newValue = newColorFromHsv.to('srgb').toString({ format: 'hex' });
+      } else {
+        newValue = newColorFromHsv.to(this.sourceSpace).toString({ precision: 5 });
+      }
+    } catch (e) {
+      console.error(`[color-picker] Could not convert color to space ${this.sourceSpace}`, e);
+      newValue = newColorFromHsv.to('srgb').toString({ format: 'hex' });
+    }
+
     if (this.value !== newValue) {
       this.value = newValue;
-      this.dispatchEvent(
-        new CustomEvent('change', {
-          detail: { value: this.value },
-          bubbles: true,
-          composed: true,
-        }),
-      );
+      this.dispatchInput();
     }
   }
 
-  /**
-   * Recalculates the thumb positions based on the current HSV state.
-   * @internal
-   */
   private updateThumbPositions() {
     this.saturationThumbPosition = {
       x: this.hsv.s * 100,
@@ -303,10 +421,6 @@ export class ColorPicker extends LitElement {
     this.hueThumbPosition = (this.hsv.h / 360) * 100;
   }
 
-  /**
-   * Initiates a drag operation on the saturation/value panel.
-   * @internal
-   */
   private handleSaturationDragStart = (e: MouseEvent | TouchEvent) => {
     e.preventDefault();
     this.isDraggingSaturation = true;
@@ -314,10 +428,6 @@ export class ColorPicker extends LitElement {
     this.updateSaturation(e);
   };
 
-  /**
-   * Initiates a drag operation on the hue slider.
-   * @internal
-   */
   private handleHueDragStart = (e: MouseEvent | TouchEvent) => {
     e.preventDefault();
     this.isDraggingHue = true;
@@ -325,10 +435,6 @@ export class ColorPicker extends LitElement {
     this.updateHue(e);
   };
 
-  /**
-   * Handles the movement during a drag operation on either the saturation panel or hue slider.
-   * @internal
-   */
   private handleDrag = (e: MouseEvent | TouchEvent) => {
     if (this.isDraggingSaturation) {
       this.updateSaturation(e);
@@ -338,19 +444,14 @@ export class ColorPicker extends LitElement {
     }
   };
 
-  /**
-   * Ends the current drag operation.
-   * @internal
-   */
   private handleDragEnd = () => {
+    if (this.isDraggingSaturation || this.isDraggingHue) {
+      this.dispatchChange();
+    }
     this.isDraggingSaturation = false;
     this.isDraggingHue = false;
   };
 
-  /**
-   * Gets the client coordinates from a mouse or touch event.
-   * @internal
-   */
   private getEventPosition(e: MouseEvent | TouchEvent) {
     if ('touches' in e) {
       return { clientX: e.touches[0].clientX, clientY: e.touches[0].clientY };
@@ -358,10 +459,6 @@ export class ColorPicker extends LitElement {
     return { clientX: e.clientX, clientY: e.clientY };
   }
 
-  /**
-   * Updates the saturation and value based on the user's interaction with the saturation panel.
-   * @internal
-   */
   private updateSaturation(e: MouseEvent | TouchEvent) {
     if (!this.saturationPanel) return;
     const { clientX, clientY } = this.getEventPosition(e);
@@ -372,12 +469,9 @@ export class ColorPicker extends LitElement {
     this.hsv.s = x / rect.width;
     this.hsv.v = 1 - y / rect.height;
     this.updateValueFromHsv();
+    this.updateThumbPositions();
   }
 
-  /**
-   * Updates the hue based on the user's interaction with the hue slider.
-   * @internal
-   */
   private updateHue(e: MouseEvent | TouchEvent) {
     if (!this.hueSlider) return;
     const { clientX } = this.getEventPosition(e);
@@ -386,20 +480,12 @@ export class ColorPicker extends LitElement {
 
     this.hsv.h = (x / rect.width) * 360;
     this.updateValueFromHsv();
+    this.updateThumbPositions();
   }
 
-  /**
-   * Sets the color value based on a clicked swatch and dispatches a change event.
-   * @internal
-   */
   private selectSwatch(color: string) {
     this.value = color;
-    this.dispatchEvent(
-      new CustomEvent('change', {
-        detail: { value: this.value },
-        bubbles: true,
-        composed: true,
-      }),
-    );
+    this.dispatchInput();
+    this.dispatchChange();
   }
 }

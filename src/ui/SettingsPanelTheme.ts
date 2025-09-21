@@ -1,7 +1,7 @@
 import { html } from 'lit';
 import { getLocaleString, getSettingsValue } from '../core/settings.ts';
 import { sample } from '../utils/colors.ts';
-import { buttonSelectTheme, changeColorScheme, changeThemeHex } from './events/theming.ts';
+import { changeColorScheme, changeTheme } from './events/theming.ts';
 
 function theme() {
   return html`
@@ -23,28 +23,34 @@ function theme() {
         .value="${getSettingsValue('theme')}"
         class="colorpicker"
         title="${getSettingsValue('theme')}"
-        @input=${changeThemeHex}
+        @input=${changeTheme}
         list="color-sample"
       />
       <datalist id="color-sample">
         ${Object.values(sample).map(c => html`<option value="${c}"></option>`)}
       </datalist>
     </div>
+    <color-palette
+      .baseColor="${getSettingsValue('theme')}"
+      mode="chakra"
+      .selected=${getSettingsValue('theme')}
+      @change="${changeTheme}"
+    ></color-palette>
     <span id="ColorRecommendations">
       ${Object.values(sample).map(
         c =>
           html`<color-swatch
-            .value="${c}"
-            ?selected=${getSettingsValue('theme') === c}
-            @click=${changeThemeHex}
+            .color="${c}"
+            .selected=${getSettingsValue('theme')}
+            @change=${changeTheme}
           ></color-swatch>`,
       )}
     </span>
     <details class="ControlLabel">
       <summary>${getLocaleString('THEME_HUE')} & ${getLocaleString('THEME_SHADE')}</summary>
       <color-panel
-        .value=${getSettingsValue('theme')}
-        @click=${buttonSelectTheme}
+        .selected=${getSettingsValue('theme')}
+        @change=${changeTheme}
       ></color-panel>
     </details>
   `;

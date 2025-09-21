@@ -64,7 +64,7 @@ export default class SettingsPanel extends LitElement {
         class="${getAppStateValue('device')}"
       >
         <h2 slot="label">${getLocaleString('SETTINGS')}</h2>
-        <wa-button
+        <mov-button
           id="ResetSettings"
           @click="${resetSettings}"
           title="${getLocaleString('BUTTON_RESET_SETTINGS')}"

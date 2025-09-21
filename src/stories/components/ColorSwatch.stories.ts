@@ -1,98 +1,57 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
-import { html } from 'lit';
-import '../../ui/components/ColorSwatch.ts';
-import { IconPalette } from '../../ui/icons';
+import { html, LitElement } from 'lit';
+import { customElement } from 'lit/decorators.js';
+import { appState, getSettingsValue, locale, settings } from '../../core/settings.ts';
+import { changeTheme } from '../../ui/events/theming.ts';
+import { sample } from '../../utils/colors';
+import '../../ui/components/ColorSwatch';
+import { useStores } from '@nanostores/lit';
 
-type ColorSwatchArgs = {
-  color: string;
-  selected: boolean;
-  size: number;
-  radius: string;
-  onClick: (e: Event) => void;
-};
+/**
+ * A wrapper component for the story that subscribes to the Nanostore
+ * and manages its own state to react to changes.
+ */
+@customElement('story-color-swatch-wrapper')
+@useStores(settings, locale, appState)
+// @ts-expect-error
+class StoryColorSwatchWrapper extends LitElement {
+  // The render function now uses the component's own reactive state.
+  render() {
+    return html`
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        ${Object.entries(sample).map(
+          ([name, color]) => html`
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+              <color-swatch
+                color=${color}
+                @input="${changeTheme}"
+                .selected="${getSettingsValue('theme')}"
+              ></color-swatch>
+              <span style="font-size: 12px;">${name}</span>
+            </div>
+          `,
+        )}
+      </div>
+    `;
+  }
+}
 
-// The Meta object configures the component's story page
 export default {
-  title: 'Components/ColorSwatch',
+  title: 'Components/Color Swatch',
   component: 'color-swatch',
-  argTypes: {
-    color: {
-      control: 'color',
-      description: 'The background color of the swatch.',
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        component:
+          'A panel displaying color swatches for theme selection. The component is interactive within the story, and the theme will update globally when a color is selected.',
+      },
     },
-    selected: {
-      control: 'boolean',
-      description: 'Whether the swatch is in a selected state (shows a checkmark).',
-    },
-    size: {
-      control: { type: 'range', min: 16, max: 64, step: 2 },
-      description: 'The width and height of the swatch in pixels.',
-    },
-    radius: {
-      control: 'text',
-      description:
-        'The border-radius of the swatch (e.g., "50%" for a circle, "4px" for rounded corners).',
-    },
-    onClick: { action: 'click' },
   },
-  // A generic render function to be reused by all stories
-  render: (args: ColorSwatchArgs) => html`
-    <color-swatch
-      color=${args.color}
-      ?selected=${args.selected}
-      size=${args.size}
-      radius=${args.radius}
-      @click=${args.onClick}
-    ></color-swatch>
-  `,
-} satisfies Meta<ColorSwatchArgs>;
+} satisfies Meta;
 
-// Default story showing a circular swatch
-export const Default: StoryObj<ColorSwatchArgs> = {
-  name: 'Default (Circle)',
-  args: {
-    color: '#228be6',
-    selected: false,
-    size: 26,
-    radius: '50%',
-  },
-};
+type Story = StoryObj;
 
-// Story showing the swatch in a selected state
-export const Selected: StoryObj<ColorSwatchArgs> = {
-  args: {
-    ...Default.args,
-    selected: true,
-  },
-};
-
-// Story showing a square swatch
-export const Square: StoryObj<ColorSwatchArgs> = {
-  args: {
-    ...Default.args,
-    radius: '4px',
-    size: 32,
-  },
-};
-
-// Story demonstrating how to use the default slot for an icon
-export const WithSlottedContent: StoryObj<ColorSwatchArgs> = {
-  name: 'With Slotted Icon',
-  render: (args: ColorSwatchArgs) => html`
-    <color-swatch
-      color=${args.color}
-      ?selected=${args.selected}
-      size=${args.size}
-      radius=${args.radius}
-      @click=${args.onClick}
-    >
-      <!-- The checkmark will appear over this icon when selected -->
-      ${IconPalette}
-    </color-swatch>
-  `,
-  args: {
-    ...Default.args,
-    color: '#ced4da', // A light color to show the black icon
-    size: 48,
-  },
+export const Default: Story = {
+  render: () => html`<story-color-swatch-wrapper></story-color-swatch-wrapper>`,
 };

@@ -1,12 +1,50 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
-import { html } from 'lit';
+import { html, LitElement } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { appState, getSettingsValue, locale, settings } from '../../core/settings.ts';
 import '../../ui/components/ColorPalette.ts';
+import { useStores } from '@nanostores/lit';
+import { changeTheme } from '../../ui/events/theming.ts';
 
 // Define the type for the story arguments
 type ColorPaletteArgs = {
   baseColor: string;
-  mode: string;
 };
+
+/**
+ * A wrapper component for the story that subscribes to the Nanostore
+ * and manages its own state to react to changes. It also renders a palette
+ * for each generation mode.
+ */
+@customElement('story-color-palette-wrapper')
+@useStores(settings, locale, appState)
+// @ts-expect-error
+class StoryColorPaletteWrapper extends LitElement {
+  @property({ type: String })
+  baseColor = '#228be6';
+
+  render() {
+    const modes = ['steps', 'saturation', 'lightness', 'mantine', 'chakra'];
+    return html`
+      <div style="display: flex; flex-direction: column; gap: 0.5rem; justify-content: center;">
+        ${modes.map(
+          mode => html`
+            <div style="display: flex; flex-direction: row; align-items: center; gap: 0.5rem;">
+              <color-palette
+                orientation="vertical"
+                baseColor=${this.baseColor}
+                mode=${mode}
+                .selected=${getSettingsValue('theme')}
+                @input="${changeTheme}"
+              ></color-palette>
+              <h4 style="text-transform: capitalize; margin: 0;">${mode}</h4>
+            </div>
+          `,
+        )}
+      </div>
+    `;
+  }
+}
 
 // The Meta object configures the component's story page
 export default {
@@ -17,68 +55,15 @@ export default {
       control: 'color',
       description: 'The base color in hex format from which to generate the 10-shade palette.',
     },
-    mode: {
-      control: { type: 'select' },
-      options: ['base', 'light', 'dark'],
-      description: 'The mode used to generate the color gradient.',
-    },
   },
-  // A generic render function to be reused by all stories
-  render: (args: ColorPaletteArgs) => html`
-    <color-palette
-      baseColor=${args.baseColor}
-      mode=${args.mode}
-    ></color-palette>
-  `,
 } satisfies Meta<ColorPaletteArgs>;
 
 // Default story showing a blue palette
 export const Default: StoryObj<ColorPaletteArgs> = {
-  name: 'Default (Blue)',
+  name: 'All Modes',
   args: {
     baseColor: '#228be6',
-    mode: 'base',
   },
-};
-
-// Story for a red palette
-export const Red: StoryObj<ColorPaletteArgs> = {
-  args: {
-    baseColor: '#fa5252',
-    mode: 'base',
-  },
-};
-
-// Story for a green palette
-export const Green: StoryObj<ColorPaletteArgs> = {
-  args: {
-    baseColor: '#40c057',
-    mode: 'base',
-  },
-};
-
-// Story for a grayscale palette
-export const Gray: StoryObj<ColorPaletteArgs> = {
-  args: {
-    baseColor: '#868e96',
-    mode: 'base',
-  },
-};
-
-// Story demonstrating the 'light' mode
-export const LightMode: StoryObj<ColorPaletteArgs> = {
-  name: 'Light Mode',
-  args: {
-    baseColor: '#228be6',
-    mode: 'light',
-  },
-};
-
-// Story demonstrating the 'dark' mode
-export const DarkMode: StoryObj<ColorPaletteArgs> = {
-  name: 'Dark Mode',
-  args: {
-    baseColor: '#228be6',
-    mode: 'dark',
-  },
+  render: args =>
+    html`<story-color-palette-wrapper baseColor=${args.baseColor}></story-color-palette-wrapper>`,
 };

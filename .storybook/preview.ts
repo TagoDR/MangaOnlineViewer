@@ -4,8 +4,9 @@ import { customElement } from 'lit/decorators.js';
 import { themes } from 'storybook/theming';
 import '../src/ui/setup';
 import { useStores } from '@nanostores/lit';
+import { styleMap } from 'lit-html/directives/style-map.js';
 import { appState, getSettingsValue, locale, settings } from '../src/core/settings.ts';
-import { changeThemeHex } from '../src/ui/events/theming.ts';
+import { changeTheme } from '../src/ui/events/theming.ts';
 import cssStyles from '../src/ui/styles';
 import externalCSS from '../src/ui/styles/externalStyle.ts';
 import { themesCSS } from '../src/ui/themes.ts';
@@ -40,15 +41,29 @@ class ThemeWrapper extends LitElement {
           <input
             id="ThemeHex"
             type="color"
-            value="${getSettingsValue('theme')}"
+            .value="${getSettingsValue('theme')}"
             class="colorpicker"
             title="${getSettingsValue('theme')}"
-            @input=${changeThemeHex}
+            @input=${changeTheme}
             list="color-sample"
           />
           <datalist id="color-sample">
             ${Object.values(sample).map(c => html`<option value="${c}"></option>`)}
           </datalist>
+          <p style="margin-top: 1rem;">Selected Color:</p>
+          <span
+            style="${styleMap({
+              display: 'block',
+              minWidth: '100px',
+              height: '20px',
+              'background-color': 'var(--mov-color-fill-loud)',
+              color: 'var(--mov-color-on-loud)',
+              border: '1px dashed silver',
+              padding: '0.5rem',
+            })}"
+          >
+            <strong>${getSettingsValue('theme')}</strong>
+          </span>
         </div>
         <div>
           <slot></slot>

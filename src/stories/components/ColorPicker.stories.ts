@@ -1,56 +1,94 @@
+import { useStores } from '@nanostores/lit';
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html, LitElement } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
+import { appState, getSettingsValue, locale, settings } from '../../core/settings';
+import type { ColorPicker } from '../../ui/components/ColorPicker.ts';
 import '../../ui/components/ColorPicker.ts';
+import { changeTheme } from '../../ui/events/theming';
+import colors from '../../utils/colors.ts';
 
-// A helper component to manage and display the state
-@customElement('color-picker-story-wrapper')
+// Wrapper for the Live Theme Preview story
+@customElement('story-color-picker-theme-wrapper')
+@useStores(settings, locale, appState)
 // @ts-expect-error
-class ColorPickerStoryWrapper extends LitElement {
-  @property({ type: Array })
-  swatches: string[] | null = null;
-  @state()
-  private color = '#228be6';
+class StoryColorPickerThemeWrapper extends LitElement {
+  @property({ type: String })
+  mode: 'inline' | 'popup' = 'inline';
 
   render() {
+    const theme = getSettingsValue('theme');
     return html`
-      <div
-        style="display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 1rem;"
-      >
-        <color-picker
-          .value="${this.color}"
-          .swatches="${this.swatches}"
-          @change="${this.handleColorChange}"
-        ></color-picker>
-        <div>Selected Value: <strong>${this.color}</strong></div>
-      </div>
+      <color-picker
+        .mode="${this.mode}"
+        .value=${theme}
+        @change=${changeTheme}
+        .swatches=${Object.values(colors)
+          .slice(6)
+          .flatMap(c => [c[600]])}
+      ></color-picker>
     `;
-  }
-
-  private handleColorChange(e: CustomEvent) {
-    this.color = e.detail.value;
   }
 }
 
-export default {
+const meta: Meta<ColorPicker> = {
   title: 'Components/Color Picker',
   component: 'color-picker',
   parameters: {
-    controls: { disable: true }, // Disable controls as the component is self-managing
+    docs: {
+      description: {
+        component:
+          'An interactive color picker. It can be used inline or as a popup. The component supports various color formats like HEX, RGB, and OKLCH.',
+      },
+    },
   },
-  render: args =>
-    html`<color-picker-story-wrapper .swatches="${args.swatches}"></color-picker-story-wrapper>`,
-} satisfies Meta;
-
-export const Default: StoryObj = {
+  argTypes: {
+    value: { control: 'color' },
+    mode: {
+      control: { type: 'radio' },
+      options: ['inline', 'popup'],
+    },
+    swatches: { control: 'object' },
+  },
   args: {
+    value: '#228be6',
+    mode: 'inline',
     swatches: null,
   },
 };
 
-export const CustomSwatches: StoryObj = {
-  name: 'With Custom Swatches',
-  args: {
-    swatches: ['#e67e22', '#2ecc71', '#9b59b6', '#f1c40f', '#3498db', '#e74c3c'],
+export default meta;
+
+export const Default: StoryObj<ColorPicker> = {
+  name: 'Live Theme Preview',
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story:
+          'This story demonstrates the color picker controlling the global application theme. Changes are applied when the color selection is finalized (`change` event).',
+      },
+    },
   },
+  render: () => html`<story-color-picker-theme-wrapper></story-color-picker-theme-wrapper>`,
+};
+
+export const Popup: StoryObj<ColorPicker> = {
+  name: 'Popup Mode',
+  args: {
+    mode: 'popup',
+    value: 'oklch(0.65 0.15 250)',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates the `popup` mode, which is useful for compact UI layouts.',
+      },
+    },
+  },
+  render: args =>
+    html`<story-color-picker-theme-wrapper
+      .value=${args.value}
+      mode="popup"
+    ></story-color-picker-theme-wrapper>`,
 };
