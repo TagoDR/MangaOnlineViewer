@@ -1,5 +1,5 @@
-import { customElement, property, query, state } from 'lit/decorators.js';
 import { css, html, LitElement, nothing, type PropertyValues } from 'lit';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { choose } from 'lit-html/directives/choose.js';
 
@@ -81,16 +81,18 @@ export class SegmentedControl extends LitElement {
       border-radius: 0.5rem;
       background-color: var(--theme-border-color);
       padding: 0.25rem;
+      flex-wrap: wrap;
     }
     .thumb {
       position: absolute;
-      top: 0.25rem;
-      bottom: 0.25rem;
+      top: 0;
+      left: 0;
       border-radius: 0.5rem;
       background-color: var(--mov-color-fill-loud);
       transition:
         transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-        width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 1;
     }
     .option {
@@ -108,15 +110,33 @@ export class SegmentedControl extends LitElement {
       justify-content: center;
       border-radius: 0.5rem;
       border: none;
-      padding: 0.5rem 0;
       color: var(--theme-text-color);
       background-color: transparent;
       transition: color 0.15s ease-in-out;
       flex-direction: row;
       gap: 0.25rem;
+      padding: 0.5rem 0.75rem; /* Default padding (medium) */
+      font-size: 1rem; /* Default font-size (medium) */
+    }
+    .label.small {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+    }
+    .label.large {
+      padding: 0.75rem 1rem;
+      font-size: 1.125rem;
     }
     .label.bottom {
       flex-direction: column;
+    }
+    .label.bottom.small {
+      padding: 0.25rem;
+    }
+    .label.bottom.medium {
+      padding: 0.5rem;
+    }
+    .label.bottom.large {
+      padding: 0.75rem;
     }
     input:checked + .label {
       color: var(--mov-color-on-loud);
@@ -167,7 +187,9 @@ export class SegmentedControl extends LitElement {
     if (
       changedProperties.has('value') ||
       changedProperties.has('_options') ||
-      changedProperties.has('labelPosition')
+      changedProperties.has('labelPosition') ||
+      changedProperties.has('size') ||
+      changedProperties.has('multiline')
     ) {
       Promise.resolve().then(() => this.updateThumbPosition());
     }
@@ -182,11 +204,13 @@ export class SegmentedControl extends LitElement {
       ?.parentElement as HTMLLabelElement | null;
 
     if (selectedOption) {
-      const { offsetLeft, offsetWidth } = selectedOption;
-      this.thumb.style.transform = `translateX(${offsetLeft}px)`;
+      const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = selectedOption;
+      this.thumb.style.transform = `translate(${offsetLeft}px, ${offsetTop}px)`;
       this.thumb.style.width = `${offsetWidth}px`;
+      this.thumb.style.height = `${offsetHeight}px`;
     } else {
       this.thumb.style.width = '0px';
+      this.thumb.style.height = '0px';
     }
   }
 
@@ -211,10 +235,14 @@ export class SegmentedControl extends LitElement {
                 class="${classMap({
                   label: true,
                   bottom: this.labelPosition === 'bottom',
+                  small: this.size === 'small',
+                  medium: this.size === 'medium',
+                  large: this.size === 'large',
                 })}"
               >
-                ${option.icon
-                  ? html`<mov-icon
+                ${
+                  option.icon
+                    ? html`<mov-icon
                       name="${option.icon}"
                       .size=${choose(
                         this.size,
@@ -226,7 +254,8 @@ export class SegmentedControl extends LitElement {
                         () => this.size,
                       )}
                     ></mov-icon>`
-                  : nothing}
+                    : nothing
+                }
                 ${this.labelPosition !== 'tooltip' ? html`<span>${option.label}</span>` : nothing}
               </span>
             </label>
