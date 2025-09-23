@@ -1,10 +1,17 @@
-import { css, html, LitElement, nothing, type PropertyValues } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
+import { css, html, LitElement, nothing, type PropertyValues } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
+import { choose } from 'lit-html/directives/choose.js';
 
-type SegmentedControlOptionData = {
+/**
+ * Defines the structure for a single option within the segmented control.
+ */
+export type SegmentedControlOptionData = {
+  /** The unique value for the option, submitted with the change event. */
   value: string;
+  /** The human-readable label for the option. */
   label: string;
+  /** An optional icon template to display with the label. */
   icon?: string;
 };
 
@@ -43,6 +50,13 @@ export class SegmentedControl extends LitElement {
    */
   @property({ type: String })
   labelPosition: 'side' | 'bottom' | 'tooltip' = 'side';
+
+  /**
+   * The size of the icons in the control.
+   * @type {'small' | 'medium' | 'large'}
+   */
+  @property({ type: String })
+  size: 'small' | 'medium' | 'large' = 'medium';
 
   @state()
   private _options: SegmentedControlOptionData[] = [];
@@ -120,6 +134,11 @@ export class SegmentedControl extends LitElement {
     this.resizeObserver.unobserve(this);
   }
 
+  /**
+   * Handles the change event from the internal radio inputs, updates the component's value,
+   * and dispatches a `change` event.
+   * @internal
+   */
   private handleChange(event: Event) {
     const target = event.currentTarget as HTMLInputElement;
     this.value = target.value;
@@ -194,7 +213,20 @@ export class SegmentedControl extends LitElement {
                   bottom: this.labelPosition === 'bottom',
                 })}"
               >
-                ${option.icon ? html`<mov-icon name="${option.icon}"></mov-icon>` : nothing}
+                ${option.icon
+                  ? html`<mov-icon
+                      name="${option.icon}"
+                      .size=${choose(
+                        this.size,
+                        [
+                          ['small', () => '16px'],
+                          ['medium', () => '24px'],
+                          ['large', () => '36px'],
+                        ],
+                        () => this.size,
+                      )}
+                    ></mov-icon>`
+                  : nothing}
                 ${this.labelPosition !== 'tooltip' ? html`<span>${option.label}</span>` : nothing}
               </span>
             </label>

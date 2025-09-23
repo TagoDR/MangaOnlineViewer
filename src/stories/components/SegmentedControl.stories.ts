@@ -11,13 +11,19 @@ export default {
       control: 'select',
       options: ['side', 'bottom', 'tooltip'],
     },
+    size: {
+      control: 'select',
+      options: ['small', 'medium', 'large'],
+    },
     onChange: { action: 'change' },
   },
 } satisfies Meta;
 
 type Story = StoryObj<{
+  options: { value: string; label: string; icon?: string }[];
   value: string;
   labelPosition: 'side' | 'bottom' | 'tooltip';
+  size: 'small' | 'medium' | 'large';
   onChange: (value: string) => void;
 }>;
 
@@ -25,6 +31,7 @@ export const Default: Story = {
   args: {
     value: 'vue',
     labelPosition: 'side',
+    size: 'medium',
   },
   render: args => html`
     <div style="width: 300px; padding: 1rem;">
@@ -55,6 +62,7 @@ export const WithIcons: Story = {
   args: {
     value: 'messages',
     labelPosition: 'side',
+    size: 'medium',
   },
   render: args => html`
     <div style="width: 300px; padding: 1rem;">
@@ -99,4 +107,47 @@ export const TooltipLabels: Story = {
     labelPosition: 'tooltip',
   },
   render: WithIcons.render,
+};
+
+export const Sizes: Story = {
+  name: 'Sizes',
+  args: {
+    ...WithIcons.args,
+  },
+  render: args => html`
+    <div style="display: flex; flex-direction: column; gap: 1rem; width: 300px; padding: 1rem;">
+      <segmented-control
+        .options=${args.options}
+        .value=${args.value}
+        .labelPosition=${args.labelPosition}
+        size="small"
+        @change=${(e: CustomEvent) => args.onChange(e.detail)}
+      >
+      </segmented-control>
+      <segmented-control
+        .options=${args.options}
+        .value=${args.value}
+        .labelPosition=${args.labelPosition}
+        size="medium"
+        @change=${(e: CustomEvent) => args.onChange(e.detail)}
+      >
+      </segmented-control>
+      <segmented-control
+        .options=${args.options}
+        .value=${args.value}
+        .labelPosition=${args.labelPosition}
+        size="large"
+        @change=${(e: CustomEvent) => args.onChange(e.detail)}
+      >
+      </segmented-control>
+      <segmented-control
+        .options=${args.options}
+        .value=${args.value}
+        .labelPosition=${args.labelPosition}
+        size="64px"
+        @change=${(e: CustomEvent) => args.onChange(e.detail)}
+      >
+      </segmented-control>
+    </div>
+  `,
 };
