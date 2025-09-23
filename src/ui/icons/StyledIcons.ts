@@ -5,7 +5,7 @@
  * as raw SVG strings.
  */
 import iconsCSS from '../styles/icons.css?inline';
-import * as rawIcons from './Icons.ts';
+import * as rawIcons from './svg.ts';
 
 /**
  * Represents a parsed CSS rule containing selectors and a color.
@@ -42,17 +42,57 @@ function parseCss(css: string): CssRule[] {
 }
 
 const colorRules = parseCss(iconsCSS);
+
+/**
+ * A map from icon class names to the styling rules that apply to them.
+ * This is pre-computed to optimize the color application process.
+ * @internal
+ */
+const rulesByClassName = new Map<string, { subSelector: string; color: string }[]>();
+
+for (const rule of colorRules) {
+  for (const selector of rule.selectors) {
+    // Assumes selectors are in the format `.icon-class-name [sub-selector]`
+    const match = selector.match(/^\s*\.([^ ]+)\s*(.*)$/);
+    if (!match) {
+      continue;
+    }
+
+    const [, className, rest] = match;
+    let subSelector = rest.trim();
+
+    // The sub-selector applies within the SVG, so we remove the child combinator `>`.
+    if (subSelector.startsWith('>')) {
+      subSelector = subSelector.substring(1).trim();
+    }
+    // An empty sub-selector should apply to all elements.
+    if (subSelector === '') {
+      subSelector = '*';
+    }
+
+    if (!rulesByClassName.has(className)) {
+      rulesByClassName.set(className, []);
+    }
+    rulesByClassName.get(className)!.push({ subSelector, color: rule.color });
+  }
+}
+
 const parser = new DOMParser();
 const serializer = new XMLSerializer();
 
 /**
- * Applies the parsed CSS color rules to a raw SVG string by injecting `stroke` attributes into its child elements.
+ * Applies pre-parsed CSS color rules to a raw SVG string by injecting `stroke` attributes into its child elements.
  * @internal
  * @param {string} svgString - The original SVG icon as a string.
  * @param {string} className - The base class name of the icon (e.g., 'icon-tabler-file-download') used for matching selectors.
  * @returns {string} A new SVG string with the color styles applied.
  */
 function applyColorsToSvg(svgString: string, className: string): string {
+  const rulesForIcon = rulesByClassName.get(className);
+  if (!rulesForIcon?.length) {
+    return svgString;
+  }
+
   const doc = parser.parseFromString(svgString, 'image/svg+xml');
   const svg = doc.documentElement;
 
@@ -61,25 +101,14 @@ function applyColorsToSvg(svgString: string, className: string): string {
     return svgString;
   }
 
-  for (const rule of colorRules) {
-    for (const selector of rule.selectors) {
-      if (selector.startsWith(`.${className}`)) {
-        const selectorMatch = new RegExp(`^\\.${className}\\s*(.*)$`).exec(selector);
-        if (selectorMatch) {
-          let subSelector = selectorMatch[1].trim() || '*';
-          if (subSelector.startsWith('>')) {
-            subSelector = subSelector.substring(1).trim();
-          }
-          try {
-            const elements = svg.querySelectorAll<SVGElement>(subSelector);
-            elements.forEach(el => {
-              el.setAttribute('stroke', rule.color);
-            });
-          } catch (e) {
-            console.error(`Invalid selector "${subSelector}" for ${className}`, e);
-          }
-        }
-      }
+  for (const { subSelector, color } of rulesForIcon) {
+    try {
+      const elements = svg.querySelectorAll<SVGElement>(subSelector);
+      elements.forEach(el => {
+        el.setAttribute('stroke', color);
+      });
+    } catch (e) {
+      console.error(`Invalid selector "${subSelector}" for ${className}`, e);
     }
   }
   return serializer.serializeToString(svg);

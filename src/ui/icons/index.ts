@@ -15,10 +15,7 @@ const styledIconsSVG: Record<
   string,
   DirectiveResult<typeof UnsafeSVGDirective>
 > = Object.fromEntries(
-  Object.keys(styledIcons).map(iconKey => [
-    iconKey,
-    unsafeSVG((styledIcons as Record<string, string>)[iconKey]),
-  ]),
+  Object.entries(styledIcons).map(([iconKey, icon]) => [iconKey, unsafeSVG(icon)]),
 );
 
 /**
