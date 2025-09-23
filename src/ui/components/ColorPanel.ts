@@ -21,7 +21,7 @@ declare global {
  */
 @customElement('color-panel')
 export class ColorPanel extends LitElement {
-  static styles = css`
+  static readonly styles = css`
     :host {
       display: flex;
       flex-direction: column;

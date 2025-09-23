@@ -8,7 +8,8 @@ import { changeTheme } from '../../ui/events/theming.ts';
 
 @customElement('story-color-panel-wrapper')
 @useStores(settings, locale, appState)
-// @ts-expect-error - Decorator is valid
+// @ts-expect-error
+// biome-ignore lint/correctness/noUnusedVariables: Display
 class StoryColorPanelWrapper extends LitElement {
   render() {
     return html`

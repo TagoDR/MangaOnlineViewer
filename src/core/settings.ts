@@ -157,8 +157,8 @@ export function compareSettingsCustomizer(
     if (value && typeof value === 'object' && other && typeof other === 'object') {
       const valueKeybinds = value as Record<string, string[]>;
       const otherKeybinds = other as Record<string, string[]>;
-      const keysA = Object.keys(valueKeybinds).sort();
-      const keysB = Object.keys(otherKeybinds).sort();
+      const keysA = Object.keys(valueKeybinds).sort((a, b) => a.localeCompare(b));
+      const keysB = Object.keys(otherKeybinds).sort((a, b) => a.localeCompare(b));
 
       // If the keys are different, the objects are not equal.
       if (!_.isEqual(keysA, keysB)) {
@@ -167,8 +167,12 @@ export function compareSettingsCustomizer(
 
       // Compare the arrays for each key, after sorting the inner arrays.
       for (const k of keysA) {
-        const sortedArrayA = valueKeybinds[k] ? [...valueKeybinds[k]].sort() : [];
-        const sortedArrayB = otherKeybinds[k] ? [...otherKeybinds[k]].sort() : [];
+        const sortedArrayA = valueKeybinds[k]
+          ? [...valueKeybinds[k]].sort((a, b) => a.localeCompare(b))
+          : [];
+        const sortedArrayB = otherKeybinds[k]
+          ? [...otherKeybinds[k]].sort((a, b) => a.localeCompare(b))
+          : [];
         if (!_.isEqual(sortedArrayA, sortedArrayB)) {
           return false;
         }
@@ -279,7 +283,7 @@ if (import.meta.env.DEV) {
 /**
  * Refreshes the reactive `settings` store with the latest values from the raw settings objects.
  * Call this after a change is made to `globalSettings` or `localSettings` to propagate the change.
- * @param {K} [key] - If provided, refreshes only a single key. Otherwise, refreshes the entire object.
+ * @param {ISettingsKey} [key] - If provided, refreshes only a single key. Otherwise, refreshes the entire object.
  */
 export function refreshSettings<K extends ISettingsKey>(key?: K): void {
   if (key) {
@@ -452,7 +456,7 @@ export function changeImage(index: number, fn: (value: Page) => Page): void {
 
 /**
  * Gets a translated string from the current locale.
- * @param {K | string} name - The key of the string to get.
+ * @param {ILocaleKey | string} name - The key of the string to get.
  * @returns {string} The translated string, or a placeholder if not found.
  */
 export function getLocaleString<K extends ILocaleKey>(name: K | string): string {
@@ -500,7 +504,7 @@ export function isBookmarked(url: string = window.location.href): number | undef
 
 /**
  * A debug utility to log the current state of settings to the console.
- * @param {K | null} [key=null] - An optional settings key to inspect a specific value.
+ * @param {ISettingsKey | null} [key=null] - An optional settings key to inspect a specific value.
  */
 export function showSettings<K extends ISettingsKey>(key: K | null = null): void {
   logScriptVerbose(

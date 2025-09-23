@@ -41,7 +41,7 @@ async function generateZip(): Promise<void> {
   Object.entries(images)
     .sort((a, b) => Number(a[0]) - Number(b[0]))
     .forEach(([key, page]) => {
-      if (!page || !page.blob) return;
+      if (!page?.blob) return;
       const blob = page.blob;
       const ext = extFromMime(blob.type);
       const name = `Page-${Number(key).toString().padStart(digits, '0')}.${ext}`;

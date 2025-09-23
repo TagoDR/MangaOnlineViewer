@@ -54,7 +54,7 @@ export class SegmentedControl extends LitElement {
   @property({ type: String })
   labelPosition: 'side' | 'bottom' | 'tooltip' = 'side';
 
-  static styles = css`
+  static readonly styles = css`
     :host {
       width: 100%;
     }

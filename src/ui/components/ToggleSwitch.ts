@@ -1,4 +1,4 @@
-import { css, html, LitElement } from 'lit';
+import { css, html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { IconCheck, IconX } from '../icons';
@@ -13,7 +13,7 @@ export class ToggleSwitch extends LitElement {
   @property({ type: String }) textOff = 'OFF';
   @property({ attribute: false }) onChange?: (e: Event) => void;
 
-  static styles = css`
+  static readonly styles = css`
     :host {
       --switch-width: 3rem;
       --switch-height: 1.5rem;
@@ -109,10 +109,12 @@ export class ToggleSwitch extends LitElement {
   }
 
   protected render() {
-    const knobContent =
-      this.design === 'graphical'
-        ? html`${this.checked ? IconCheck : IconX}`
-        : html`<span class="text">${this.checked ? this.textOn : this.textOff}</span>`;
+    let knobContent: TemplateResult<1>;
+    if (this.design === 'graphical') {
+      knobContent = html`${this.checked ? IconCheck : IconX}`;
+    } else {
+      knobContent = html`<span class="text">${this.checked ? this.textOn : this.textOff}</span>`;
+    }
 
     return html`
       <input

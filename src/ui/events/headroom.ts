@@ -43,7 +43,7 @@ export class HeadroomController implements ReactiveController {
     return false;
   }
 
-  private handleScroll = _.throttle(() => {
+  private readonly handleScroll = _.throttle(() => {
     if (this.isAnyDropdownOpen()) {
       this.prevOffset = window.scrollY;
       return;
@@ -102,7 +102,7 @@ export class HeadroomController implements ReactiveController {
     );
   }
 
-  private handleMouseMove = _.throttle((event: MouseEvent) => {
+  private readonly handleMouseMove = _.throttle((event: MouseEvent) => {
     if (this.isAnyDropdownOpen()) {
       if (!this.headerVisible) {
         this.headerVisible = true;

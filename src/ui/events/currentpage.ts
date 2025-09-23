@@ -25,7 +25,16 @@ function computeCurrentPage(): number | null {
     const image = pages[index].ref?.value;
     if (!image) continue;
     const rect = image?.getBoundingClientRect();
-    const edge = isHorizontal ? (isRTL ? rect.right : rect.left) : rect.top;
+    let edge: number;
+    if (isHorizontal) {
+      if (isRTL) {
+        edge = rect.right;
+      } else {
+        edge = rect.left;
+      }
+    } else {
+      edge = rect.top;
+    }
     const passed = isHorizontal ? edge <= viewportCenterX : edge <= viewportCenterY;
     if (passed) {
       if (!best || edge > best.edge) {

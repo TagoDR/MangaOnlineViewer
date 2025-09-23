@@ -43,7 +43,6 @@ export function calculatePageZoom(
  * which in turn causes the images to re-render with the new zoom settings.
  * @param {ZoomMode} [mode=getSettingsValue('zoomMode')] - The zoom mode to apply ('percent', 'width', or 'height').
  * @param {number} [value=getSettingsValue('zoomValue')] - The zoom value (e.g., a percentage).
- * @param index - Page that must be updated individually
  */
 export function applyZoom(
   mode: ZoomMode = getSettingsValue('zoomMode'),

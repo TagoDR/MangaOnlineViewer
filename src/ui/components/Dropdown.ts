@@ -4,7 +4,7 @@ import './Icon.ts';
 
 @customElement('mov-dropdown')
 export class MovDropdown extends LitElement {
-  static styles = css`
+  static readonly styles = css`
     :host {
       position: relative;
       display: inline-block;
@@ -36,7 +36,7 @@ export class MovDropdown extends LitElement {
   @property({ type: Boolean, reflect: true })
   checkable = false;
 
-  private boundClickHandler: (e: MouseEvent) => void;
+  private readonly boundClickHandler: (e: MouseEvent) => void;
 
   constructor() {
     super();
@@ -80,7 +80,7 @@ export class MovDropdown extends LitElement {
 
 @customElement('mov-dropdown-item')
 export class MovDropdownItem extends LitElement {
-  static styles = css`
+  static readonly styles = css`
     :host {
       display: block;
     }

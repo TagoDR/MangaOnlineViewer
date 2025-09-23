@@ -16,7 +16,7 @@ import colors, { sample } from '../src/utils/colors.ts';
 @useStores(settings, locale, appState)
 // @ts-expect-error
 class ThemeWrapper extends LitElement {
-  static styles = [
+  static readonly styles = [
     unsafeCSS(externalCSS),
     unsafeCSS(cssStyles),
     css`

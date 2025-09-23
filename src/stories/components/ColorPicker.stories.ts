@@ -12,6 +12,7 @@ import colors from '../../utils/colors.ts';
 @customElement('story-color-picker-theme-wrapper')
 @useStores(settings, locale, appState)
 // @ts-expect-error
+// biome-ignore lint/correctness/noUnusedVariables: Display
 class StoryColorPickerThemeWrapper extends LitElement {
   @property({ type: String })
   mode: 'inline' | 'popup' = 'inline';

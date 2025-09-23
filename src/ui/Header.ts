@@ -30,7 +30,7 @@ import media from './styles/media.css?inline';
 @customElement('reader-header')
 @useStores(settings, locale, appState)
 export class Header extends LitElement {
-  static styles = [unsafeCSS(styles), unsafeCSS(media), unsafeCSS(keycss), css``];
+  static readonly styles = [unsafeCSS(styles), unsafeCSS(media), unsafeCSS(keycss), css``];
 
   private readonly headroomController: HeadroomController;
 

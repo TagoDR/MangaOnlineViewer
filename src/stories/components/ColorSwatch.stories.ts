@@ -14,6 +14,7 @@ import { useStores } from '@nanostores/lit';
 @customElement('story-color-swatch-wrapper')
 @useStores(settings, locale, appState)
 // @ts-expect-error
+// biome-ignore lint/correctness/noUnusedVariables: Display
 class StoryColorSwatchWrapper extends LitElement {
   // The render function now uses the component's own reactive state.
   render() {

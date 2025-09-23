@@ -24,7 +24,7 @@ declare global {
  */
 @customElement('mov-drawer')
 export default class Drawer extends LitElement {
-  static styles = css`
+  static readonly styles = css`
     :host {
       --panel-overlay-transition: opacity linear 0.25s;
       --panel-overlay-opacity: 0.5;
@@ -139,7 +139,7 @@ export default class Drawer extends LitElement {
   @property({ type: String, reflect: true }) placement: 'start' | 'end' = 'end';
 
   @query('dialog')
-  private dialog!: HTMLDialogElement;
+  private readonly dialog!: HTMLDialogElement;
 
   close() {
     this.open = false;

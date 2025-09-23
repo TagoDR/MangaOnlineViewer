@@ -19,6 +19,7 @@ type ColorPaletteArgs = {
 @customElement('story-color-palette-wrapper')
 @useStores(settings, locale, appState)
 // @ts-expect-error
+// biome-ignore lint/correctness/noUnusedVariables: Display
 class StoryColorPaletteWrapper extends LitElement {
   @property({ type: String })
   baseColor = '#228be6';

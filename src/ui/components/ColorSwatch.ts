@@ -21,7 +21,7 @@ declare global {
  */
 @customElement('color-swatch')
 export class ColorSwatch extends LitElement {
-  static styles = css`
+  static readonly styles = css`
     :host {
       display: inline-flex;
       align-items: center;

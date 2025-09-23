@@ -30,11 +30,7 @@ declare global {
 @customElement('bookmark-panel')
 @useStores(settings, locale, appState)
 export default class BookmarkPanel extends LitElement {
-  static styles = [unsafeCSS(styles)];
-
-  // protected createRenderRoot() {
-  //   return this; // No shadow DOM
-  // }
+  static readonly styles = [unsafeCSS(styles)];
 
   /**
    * Renders the list of saved bookmarks.

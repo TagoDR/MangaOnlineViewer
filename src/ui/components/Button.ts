@@ -31,15 +31,15 @@ declare global {
  */
 @customElement('mov-button')
 export default class Button extends LitElement {
-  static styles = [unsafeCSS(styles)];
+  static readonly styles = [unsafeCSS(styles)];
 
   @query('.button') button: HTMLButtonElement | HTMLLinkElement | undefined;
   @query('slot:not([name])') private readonly labelSlot: HTMLSlotElement | undefined;
 
   @state() private isIconButton = false;
-  @state() private hasLabel = false;
-  @state() private hasStart = false;
-  @state() private hasEnd = false;
+  @state() private readonly hasLabel = false;
+  @state() private readonly hasStart = false;
+  @state() private readonly hasEnd = false;
 
   @property() title = '';
   @property({ reflect: true }) appearance: 'accent' | 'filled' | 'outline' | 'plain' = 'accent';
@@ -144,39 +144,41 @@ export default class Button extends LitElement {
       }
     `;
 
-    return isLink
-      ? html`
-          <a
-            part="base"
-            class=${classMap(classes)}
-            href=${ifDefined(this.href)}
-            target=${ifDefined(this.target)}
-            title=${ifDefined(this.title)}
-            role="button"
-            aria-disabled=${this.disabled ? 'true' : 'false'}
-            tabindex=${this.disabled ? '-1' : '0'}
-            download=${ifDefined(this.download)}
-            @click=${this.handleClick}
-          >
-            ${buttonContent}
-          </a>
-        `
-      : html`
-          <button
-            part="base"
-            class=${classMap(classes)}
-            ?disabled=${this.disabled || this.loading}
-            type=${ifDefined(this.type)}
-            title=${ifDefined(this.title)}
-            name=${ifDefined(this.name)}
-            value=${ifDefined(this.value)}
-            aria-disabled=${this.disabled ? 'true' : 'false'}
-            tabindex=${this.disabled ? '-1' : '0'}
-            @click=${this.handleClick}
-          >
-            ${buttonContent}
-          </button>
-        `;
+    if (isLink) {
+      return html`
+        <a
+          part="base"
+          class=${classMap(classes)}
+          href=${ifDefined(this.href)}
+          target=${ifDefined(this.target)}
+          title=${ifDefined(this.title)}
+          role="button"
+          aria-disabled=${this.disabled ? 'true' : 'false'}
+          tabindex=${this.disabled ? '-1' : '0'}
+          download=${ifDefined(this.download)}
+          @click=${this.handleClick}
+        >
+          ${buttonContent}
+        </a>
+      `;
+    } else {
+      return html`
+        <button
+          part="base"
+          class=${classMap(classes)}
+          ?disabled=${this.disabled || this.loading}
+          type=${ifDefined(this.type)}
+          title=${ifDefined(this.title)}
+          name=${ifDefined(this.name)}
+          value=${ifDefined(this.value)}
+          aria-disabled=${this.disabled ? 'true' : 'false'}
+          tabindex=${this.disabled ? '-1' : '0'}
+          @click=${this.handleClick}
+        >
+          ${buttonContent}
+        </button>
+      `;
+    }
   }
 
   private handleLabelSlotChange() {

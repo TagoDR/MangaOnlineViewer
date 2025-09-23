@@ -1,5 +1,5 @@
 import { useStores } from '@nanostores/lit';
-import { css, html, LitElement, unsafeCSS } from 'lit';
+import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
@@ -12,7 +12,6 @@ import {
   navbarSize,
   settings,
 } from '../core/settings.ts';
-import { ifTrue } from '../utils/directives.ts';
 import events from './events.ts';
 import loadImages from './Image.ts';
 import Reader from './Reader.ts';
@@ -28,7 +27,7 @@ import { themesCSS } from './themes.ts';
 @customElement('manga-online-viewer')
 @useStores(settings, locale, appState)
 export default class App extends LitElement {
-  static styles = [css``, unsafeCSS(cssStyles)];
+  static readonly styles = [css``, unsafeCSS(cssStyles)];
 
   /**
    * LitElement lifecycle hook, called after the component's first render.
@@ -69,20 +68,22 @@ export default class App extends LitElement {
       >
         <reader-header .manga=${manga}></reader-header>
         ${Reader(manga)}
-        ${ifTrue(
-          getSettingsValue('navbar') !== 'disabled',
-          html`<navbar-thumbnails .mode=${getSettingsValue('navbar')}></navbar-thumbnails>`,
-        )}
-        ${ifTrue(
-          getSettingsValue('pagination'),
-          html` <manga-pagination
-            .startPage=${manga.begin}
-            .totalPages=${manga.pages}
-            .currentPage=${getAppStateValue('currentPage')}
-            .next=${manga.next}
-            .prev=${manga.prev}
-          ></manga-pagination>`,
-        )}
+        ${
+          getSettingsValue('navbar') !== 'disabled'
+            ? html`<navbar-thumbnails .mode=${getSettingsValue('navbar')}></navbar-thumbnails>`
+            : nothing
+        }
+        ${
+          getSettingsValue('pagination')
+            ? html` <manga-pagination
+              .startPage=${manga.begin}
+              .totalPages=${manga.pages}
+              .currentPage=${getAppStateValue('currentPage')}
+              .next=${manga.next}
+              .prev=${manga.prev}
+            ></manga-pagination>`
+            : nothing
+        }
         <comments-panel></comments-panel>
         <keybindings-panel></keybindings-panel>
         <bookmark-panel></bookmark-panel>

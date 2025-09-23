@@ -9,14 +9,7 @@ import * as styledIcons from '../../ui/icons/StyledIcons.ts';
 import colors, { sample } from '../../utils/colors.ts';
 import '../../ui/components/Icon.ts'; // Ensure the <mov-icon> component is defined
 
-const icons = Object.keys(styledIcons)
-  // .map(icon =>
-  //   icon
-  //     .replace(/^Icon/, '')
-  //     .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
-  //     .toLowerCase(),
-  // )
-  .sort();
+const icons = Object.keys(styledIcons).sort((a, b) => a.localeCompare(b));
 
 const samples = Object.entries({ ...sample, white: '#fff', black: '#000' }).map(
   ([name, value]) => ({

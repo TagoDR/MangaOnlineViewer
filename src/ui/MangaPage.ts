@@ -48,12 +48,16 @@ import {
  */
 function getImageStyle(index: number): StyleInfo {
   const image = getAppStateValue('images')?.[index];
+  let maxHeight: string | undefined;
+  if (getSettingsValue('viewMode').startsWith('Fluid')) {
+    maxHeight = `${window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -navbarSize : 0)}px`;
+  } else {
+    maxHeight = undefined;
+  }
   return {
     width: image?.width ? `${image.width}px` : 'auto',
     height: image?.height ? `${image.height}px` : 'auto',
-    'max-height': getSettingsValue('viewMode').startsWith('Fluid')
-      ? `${window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -navbarSize : 0)}px`
-      : undefined,
+    'max-height': maxHeight,
     'min-width': `${getSettingsValue('minZoom')}vw`,
   };
 }

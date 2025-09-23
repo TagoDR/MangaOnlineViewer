@@ -20,7 +20,7 @@ declare global {
  */
 @customElement('color-picker')
 export class ColorPicker extends LitElement {
-  static styles = css`
+  static readonly styles = css`
     :host {
       display: inline-block;
       position: relative;
@@ -184,27 +184,27 @@ export class ColorPicker extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.updateStateFromValue(this.value);
-    window.addEventListener('mousemove', this.handleDrag);
-    window.addEventListener('mouseup', this.handleDragEnd);
-    window.addEventListener('touchmove', this.handleDrag, { passive: false });
-    window.addEventListener('touchend', this.handleDragEnd);
+    window.addEventListener('mousemove', this.handleDrag.bind(this));
+    window.addEventListener('mouseup', this.handleDragEnd.bind(this));
+    window.addEventListener('touchmove', this.handleDrag.bind(this), { passive: false });
+    window.addEventListener('touchend', this.handleDragEnd.bind(this));
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    window.removeEventListener('mousemove', this.handleDrag);
-    window.removeEventListener('mouseup', this.handleDragEnd);
-    window.removeEventListener('touchmove', this.handleDrag);
-    window.removeEventListener('touchend', this.handleDragEnd);
-    window.removeEventListener('click', this.handleClickOutside);
+    window.removeEventListener('mousemove', this.handleDrag.bind(this));
+    window.removeEventListener('mouseup', this.handleDragEnd.bind(this));
+    window.removeEventListener('touchmove', this.handleDrag.bind(this));
+    window.removeEventListener('touchend', this.handleDragEnd.bind(this));
+    window.removeEventListener('click', this.handleClickOutside.bind(this));
   }
 
   updated(changedProperties: PropertyValues) {
     if (changedProperties.has('mode')) {
       if (this.mode === 'popup') {
-        window.addEventListener('click', this.handleClickOutside);
+        window.addEventListener('click', this.handleClickOutside.bind(this));
       } else {
-        window.removeEventListener('click', this.handleClickOutside);
+        window.removeEventListener('click', this.handleClickOutside.bind(this));
       }
     }
   }
@@ -218,11 +218,11 @@ export class ColorPicker extends LitElement {
     }
   }
 
-  private handleClickOutside = (e: MouseEvent) => {
+  private handleClickOutside(e: MouseEvent) {
     if (this.opened && !e.composedPath().includes(this)) {
       this.opened = false;
     }
-  };
+  }
 
   private togglePopup() {
     if (this.mode === 'popup') {
@@ -232,11 +232,7 @@ export class ColorPicker extends LitElement {
 
   private isSameColor(color1: string, color2: string): boolean {
     if (!color1 || !color2) return false;
-    try {
-      return Color.deltaE(color1, color2, { method: '2000' }) < 1;
-    } catch (e) {
-      return false;
-    }
+    return Color.deltaE(color1, color2, { method: '2000' }) < 1;
   }
 
   private renderCheckIcon(color: string) {
@@ -279,8 +275,8 @@ export class ColorPicker extends LitElement {
       <div
         class="saturation-panel"
         style=${styleMap(saturationPanelStyle)}
-        @mousedown=${this.handleSaturationDragStart}
-        @touchstart=${this.handleSaturationDragStart}
+        @mousedown=${this.handleSaturationDragStart.bind(this)}
+        @touchstart=${this.handleSaturationDragStart.bind(this)}
       >
         <div class="saturation-overlay-1"></div>
         <div class="saturation-overlay-2"></div>
@@ -293,8 +289,8 @@ export class ColorPicker extends LitElement {
       <div class="sliders">
         <div
           class="hue-slider"
-          @mousedown=${this.handleHueDragStart}
-          @touchstart=${this.handleHueDragStart}
+          @mousedown=${this.handleHueDragStart.bind(this)}
+          @touchstart=${this.handleHueDragStart.bind(this)}
         >
           <div
             class="hue-thumb"
@@ -359,7 +355,7 @@ export class ColorPicker extends LitElement {
       const hsvColor = srgbColor.to('hsv');
       let [h, s, v] = hsvColor.coords;
 
-      if (isNaN(h)) {
+      if (Number.isNaN(h)) {
         h = this.hsv.h || 0;
         s = 0;
       }
@@ -421,36 +417,36 @@ export class ColorPicker extends LitElement {
     this.hueThumbPosition = (this.hsv.h / 360) * 100;
   }
 
-  private handleSaturationDragStart = (e: MouseEvent | TouchEvent) => {
+  private handleSaturationDragStart(e: MouseEvent | TouchEvent) {
     e.preventDefault();
     this.isDraggingSaturation = true;
     this.saturationPanel = this.shadowRoot?.querySelector('.saturation-panel') as HTMLDivElement;
     this.updateSaturation(e);
-  };
+  }
 
-  private handleHueDragStart = (e: MouseEvent | TouchEvent) => {
+  private handleHueDragStart(e: MouseEvent | TouchEvent) {
     e.preventDefault();
     this.isDraggingHue = true;
     this.hueSlider = this.shadowRoot?.querySelector('.hue-slider') as HTMLDivElement;
     this.updateHue(e);
-  };
+  }
 
-  private handleDrag = (e: MouseEvent | TouchEvent) => {
+  private handleDrag(e: MouseEvent | TouchEvent) {
     if (this.isDraggingSaturation) {
       this.updateSaturation(e);
     }
     if (this.isDraggingHue) {
       this.updateHue(e);
     }
-  };
+  }
 
-  private handleDragEnd = () => {
+  private handleDragEnd() {
     if (this.isDraggingSaturation || this.isDraggingHue) {
       this.dispatchChange();
     }
     this.isDraggingSaturation = false;
     this.isDraggingHue = false;
-  };
+  }
 
   private getEventPosition(e: MouseEvent | TouchEvent) {
     if ('touches' in e) {

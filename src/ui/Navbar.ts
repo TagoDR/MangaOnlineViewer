@@ -19,7 +19,6 @@ import styles from './styles/navbar.css?inline';
  * The component subscribes to global state stores to reactively update its content.
  *
  * @element navbar-thumbnails
- * @fires wheel - Transforms vertical scroll to horizontal scroll when in 'bottom' mode.
  * @fires click - Navigates to the corresponding page when a thumbnail is clicked.
  */
 @customElement('navbar-thumbnails')
@@ -28,7 +27,7 @@ export default class Navbar extends LitElement {
   /**
    * The component's styles, including imported CSS and dynamic styles for image placeholders.
    */
-  static styles = [
+  static readonly styles = [
     unsafeCSS(styles),
     css`
       #Navigation {

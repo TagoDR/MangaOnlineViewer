@@ -22,7 +22,7 @@ declare global {
  */
 @customElement('color-palette')
 export class ColorPalette extends LitElement {
-  static styles = css`
+  static readonly styles = css`
     :host {
       display: flex;
       gap: var(--palette-gap, 4px);

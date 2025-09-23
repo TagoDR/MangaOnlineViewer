@@ -32,7 +32,7 @@ declare global {
 @customElement('settings-panel')
 @useStores(settings, locale, appState)
 export default class SettingsPanel extends LitElement {
-  static styles = [
+  static readonly styles = [
     css`
       #SettingsPanel.mobile #SettingsPanelZoom,
       #SettingsPanel.mobile .fitIfOversize,
@@ -49,10 +49,6 @@ export default class SettingsPanel extends LitElement {
     `,
     unsafeCSS(styles),
   ];
-
-  // protected createRenderRoot() {
-  //   return this; // No shadow DOM
-  // }
 
   render() {
     return html`

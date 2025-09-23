@@ -25,7 +25,7 @@ declare global {
  */
 @customElement('mov-dialog')
 export default class Dialog extends LitElement {
-  static styles = css`
+  static readonly styles = css`
     :host {
       --panel-overlay-transition: opacity linear 0.25s;
       --panel-overlay-opacity: 0.5;
@@ -172,7 +172,7 @@ export default class Dialog extends LitElement {
   @property({ type: Boolean, reflect: true }) fullscreen = false;
 
   @query('dialog')
-  private dialog!: HTMLDialogElement;
+  private readonly dialog!: HTMLDialogElement;
 
   close() {
     this.open = false;

@@ -21,20 +21,14 @@ const mockManga = localhost.run() as IMangaImages;
 @customElement('navbar-thumbnails-state-display')
 @useStores(appState)
 // @ts-expect-error
+// biome-ignore lint/correctness/noUnusedVariables: Display
 class StateDisplay extends LitElement {
   @state()
   private lastScrolledToPage: number | undefined;
 
-  protected createRenderRoot() {
-    return this; // No shadow DOM
-  }
-
   willUpdate(changedProperties: PropertyValueMap<unknown> | Map<PropertyKey, unknown>): void {
     super.willUpdate(changedProperties);
-    const currentScrollTo = appState.get().scrollToPage;
-    if (typeof currentScrollTo === 'number') {
-      this.lastScrolledToPage = currentScrollTo;
-    }
+    this.lastScrolledToPage = appState.get().scrollToPage;
   }
 
   render() {

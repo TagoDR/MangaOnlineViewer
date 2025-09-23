@@ -31,13 +31,9 @@ declare global {
 @customElement('keybindings-panel')
 @useStores(settings, locale, appState)
 export default class KeybindingsPanel extends LitElement {
-  static styles = [unsafeCSS(styles), unsafeCSS(keycss)];
+  static readonly styles = [unsafeCSS(styles), unsafeCSS(keycss)];
 
-  // protected createRenderRoot() {
-  //   return this; // No shadow DOM
-  // }
-
-  private keybindsRefs: Record<string, Ref<HTMLInputElement>> = Object.keys(
+  private readonly keybindsRefs: Record<string, Ref<HTMLInputElement>> = Object.keys(
     getSettingsValue('keybinds'),
   ).reduce(
     (acc, key) => {

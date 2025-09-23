@@ -84,7 +84,7 @@ function gradientByLightness(baseColor: Color): string[] {
 
 /**
  * Generates an 11-color palette from a single base color, inspired by Chakra UI's color scale.
- * @param {string} color - The base color.
+ * @param {Color} baseColor - A `Color` instance for the base color.
  * @returns {string[]} An array of 11 hex color strings.
  */
 export function gradientByChakra(baseColor: Color): string[] {
@@ -136,8 +136,8 @@ export function gradientByChakra(baseColor: Color): string[] {
 
 /**
  * Generates an 11-color palette from a single base color, inspired by Mantine's color generation.
- * @param {string} color - The base color.
  * @returns {string[]} An array of 11 hex color strings.
+ * @param {Color} baseColor - A `Color` instance for the base color.
  */
 export function gradientByMantine(baseColor: Color): string[] {
   const baseHsl = baseColor.to('hsl');

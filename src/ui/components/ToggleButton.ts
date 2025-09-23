@@ -30,7 +30,7 @@ type ToggleMode = 'menu' | 'chevron' | 'theme' | 'custom' | 'play-pause' | 'expa
  */
 @customElement('toggle-button')
 export class ToggleButton extends LitElement {
-  static styles = css`
+  static readonly styles = css`
     :host {
       display: inline-flex;
       vertical-align: middle;

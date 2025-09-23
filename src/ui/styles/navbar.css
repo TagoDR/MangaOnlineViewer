@@ -109,11 +109,8 @@
   position: relative;
   justify-content: center;
   align-items: center;
-  /*border: 1px solid var(--mov-color-fill-loud);*/
 }
-#Navigation.vertical .Thumbnail {
-  /*border: 1px solid var(--mov-color-fill-loud);*/
-}
+
 .ThumbnailIndex {
   color: var(--mov-color-on-loud);
   background-color: var(--mov-color-fill-loud);

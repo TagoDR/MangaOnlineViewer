@@ -7,7 +7,7 @@ import { selectGoToPage } from '../events/navigation.ts';
 
 @customElement('manga-pagination')
 export class Pagination extends LitElement {
-  static styles = css`
+  static readonly styles = css`
     :host {
       display: flex;
       position: fixed;

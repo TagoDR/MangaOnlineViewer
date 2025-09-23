@@ -29,11 +29,7 @@ declare global {
 @customElement('comments-panel')
 @useStores(settings, locale, appState)
 export default class CommentsPanel extends LitElement {
-  static styles = [unsafeCSS(styles), unsafeCSS(themesCSS(':host'))];
-
-  // protected createRenderRoot() {
-  //   return this; // No shadow DOM
-  // }
+  static readonly styles = [unsafeCSS(styles), unsafeCSS(themesCSS(':host'))];
 
   @state()
   private colorScheme: 'dark' | 'light' = getSettingsValue('colorScheme');
@@ -68,9 +64,8 @@ export default class CommentsPanel extends LitElement {
   /**
    * Event handler to toggle the color scheme of the comments panel.
    * It toggles 'light' and 'dark' classes on the parent element of the button.
-   * @param {MouseEvent} e - The click event.
    */
-  changeCommentsColor(_e: MouseEvent) {
+  changeCommentsColor() {
     this.colorScheme = this.colorScheme === 'dark' ? 'light' : 'dark';
   }
 }

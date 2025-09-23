@@ -22,7 +22,7 @@ declare global {
  */
 @customElement('mov-icon')
 export class Icon extends LitElement {
-  static styles = css`
+  static readonly styles = css`
     :host {
       --mov-icon-size: 1rem;
       display: inline-flex;

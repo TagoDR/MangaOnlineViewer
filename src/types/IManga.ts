@@ -57,7 +57,7 @@ export type IMangaImages = {
  */
 type IBruteForceObj = {
   begin: number;
-  addImg: (manga: IMangaImages, index: number, imageSrc: string, position: number) => void;
+  addImg: (manga: IMangaImages, index: number, imageSrc: string, position: number) => Promise<void>;
   loadImages: (list: string[]) => void;
   loadPages: (list: string[], img: string, lazyAttr: string | undefined) => void;
   wait: number;

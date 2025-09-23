@@ -4,8 +4,6 @@
  * and configures the icon library for use throughout the application.
  */
 
-// biome-ignore assist/source/organizeImports: grouping
-// Custom application-specific components and layouts
 import './components/Icon.ts';
 import './components/Button.ts';
 import './components/ToggleButton.ts';

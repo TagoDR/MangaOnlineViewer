@@ -10,10 +10,7 @@ const multporn: ISite = {
   // WaitEle: '.jb-idx-thumb:last .jb-thm-thumb-image',
   async run(): Promise<IManga> {
     const url =
-      document.head.textContent
-        ?.match(/"configUrl":"(.+?)",/)
-        ?.at(1)
-        ?.replaceAll('\\', '') ?? '';
+      /"configUrl":"(.+?)",/.exec(document.head.textContent)?.at(1)?.replaceAll('\\', '') ?? '';
     const api = await fetch(url)
       .then(async res => res.text())
       .then(html => new DOMParser().parseFromString(html, 'text/xml'));

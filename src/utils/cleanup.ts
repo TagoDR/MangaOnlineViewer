@@ -5,7 +5,7 @@
  * @returns {HTMLElement} The new, listener-free element that replaced the original.
  */
 function removeAllEventListeners(element: HTMLElement): HTMLElement {
-  if (!element || !element.parentNode) {
+  if (!element?.parentNode) {
     return element;
   }
   const newElement = element.cloneNode(true) as HTMLElement;
