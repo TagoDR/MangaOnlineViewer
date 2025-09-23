@@ -2,18 +2,6 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 import '../../ui/components/SegmentedControl.ts';
 
-const optionsWithIcons = [
-  { value: 'photos', label: 'Photos', icon: 'IconPhoto' },
-  { value: 'messages', label: 'Messages', icon: 'IconMessage' },
-  { value: 'settings', label: 'Settings', icon: 'IconSettings' },
-];
-
-const optionsWithoutIcons = [
-  { value: 'react', label: 'React' },
-  { value: 'vue', label: 'Vue' },
-  { value: 'svelte', label: 'Svelte' },
-];
-
 export default {
   title: 'Components/Segmented Control',
   component: 'segmented-control',
@@ -25,21 +13,9 @@ export default {
     },
     onChange: { action: 'change' },
   },
-  render: args => html`
-    <div style="width: 300px; padding: 1rem;">
-      <segmented-control
-        .options=${args.options}
-        .value=${args.value}
-        .labelPosition=${args.labelPosition}
-        @change=${(e: CustomEvent) => args.onChange(e.detail)}
-      >
-      </segmented-control>
-    </div>
-  `,
 } satisfies Meta;
 
 type Story = StoryObj<{
-  options: { value: string; label: string; icon?: unknown }[];
   value: string;
   labelPosition: 'side' | 'bottom' | 'tooltip';
   onChange: (value: string) => void;
@@ -47,19 +23,64 @@ type Story = StoryObj<{
 
 export const Default: Story = {
   args: {
-    options: optionsWithoutIcons,
     value: 'vue',
     labelPosition: 'side',
   },
+  render: args => html`
+    <div style="width: 300px; padding: 1rem;">
+      <segmented-control
+        .value=${args.value}
+        .labelPosition=${args.labelPosition}
+        @change=${(e: CustomEvent) => args.onChange(e.detail)}
+      >
+        <segmented-control-option
+          value="react"
+          label="React"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="vue"
+          label="Vue"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="svelte"
+          label="Svelte"
+        ></segmented-control-option>
+      </segmented-control>
+    </div>
+  `,
 };
 
 export const WithIcons: Story = {
   name: 'With Icons',
   args: {
-    options: optionsWithIcons,
     value: 'messages',
     labelPosition: 'side',
   },
+  render: args => html`
+    <div style="width: 300px; padding: 1rem;">
+      <segmented-control
+        .value=${args.value}
+        .labelPosition=${args.labelPosition}
+        @change=${(e: CustomEvent) => args.onChange(e.detail)}
+      >
+        <segmented-control-option
+          value="photos"
+          label="Photos"
+          icon="photo"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="messages"
+          label="Messages"
+          icon="message"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="settings"
+          label="Settings"
+          icon="settings"
+        ></segmented-control-option>
+      </segmented-control>
+    </div>
+  `,
 };
 
 export const LabelsOnBottom: Story = {
@@ -68,6 +89,7 @@ export const LabelsOnBottom: Story = {
     ...WithIcons.args,
     labelPosition: 'bottom',
   },
+  render: WithIcons.render,
 };
 
 export const TooltipLabels: Story = {
@@ -76,4 +98,5 @@ export const TooltipLabels: Story = {
     ...WithIcons.args,
     labelPosition: 'tooltip',
   },
+  render: WithIcons.render,
 };

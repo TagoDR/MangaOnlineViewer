@@ -102,42 +102,74 @@ function lazyLoad() {
 }
 
 function headerType() {
-  const headerOptions = [
-    { value: 'hover', label: getLocaleString('HEADER_HOVER'), icon: 'IconArrowsMove' },
-    { value: 'scroll', label: getLocaleString('HEADER_SCROLL'), icon: 'IconArrowsVertical' },
-    { value: 'click', label: getLocaleString('HEADER_CLICK'), icon: 'IconHandClick' },
-    { value: 'fixed', label: getLocaleString('HEADER_FIXED'), icon: 'IconPin' },
-    { value: 'simple', label: getLocaleString('HEADER_SIMPLE'), icon: 'IconBoxAlignTop' },
-  ];
   return html`
     <div class="ControlLabel headerType">
       ${getLocaleString('HEADER_TYPE')}
       <segmented-control
-        .options=${headerOptions}
         .value=${getSettingsValue('header')}
         @change=${changeHeaderType}
         labelPosition="bottom"
-      ></segmented-control>
+      >
+        <segmented-control-option
+          value="hover"
+          label=${getLocaleString('HEADER_HOVER')}
+          icon="arrows-move"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="scroll"
+          label=${getLocaleString('HEADER_SCROLL')}
+          icon="arrows-vertical"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="click"
+          label=${getLocaleString('HEADER_CLICK')}
+          icon="hand-click"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="fixed"
+          label=${getLocaleString('HEADER_FIXED')}
+          icon="pin"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="simple"
+          label=${getLocaleString('HEADER_SIMPLE')}
+          icon="box-align-top"
+        ></segmented-control-option>
+      </segmented-control>
     </div>
   `;
 }
 
 function navbarType() {
-  const navbarOptions = [
-    { value: 'bottom', label: getLocaleString('NAVBAR_BOTTOM'), icon: 'IconLayoutBottombar' },
-    { value: 'left', label: getLocaleString('NAVBAR_LEFT'), icon: 'IconLayoutSidebar' },
-    { value: 'right', label: getLocaleString('NAVBAR_RIGHT'), icon: 'IconLayoutSidebarRight' },
-    { value: 'disabled', label: getLocaleString('NAVBAR_DISABLED'), icon: 'IconX' },
-  ];
   return html`
     <div class="ControlLabel navbarType">
       ${getLocaleString('NAVBAR_TYPE')}
       <segmented-control
-        .options=${navbarOptions}
         .value=${getSettingsValue('navbar')}
         @change=${changeNavbarType}
         labelPosition="tooltip"
-      ></segmented-control>
+      >
+        <segmented-control-option
+          value="bottom"
+          label=${getLocaleString('NAVBAR_BOTTOM')}
+          icon="layout-bottombar"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="left"
+          label=${getLocaleString('NAVBAR_LEFT')}
+          icon="layout-sidebar"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="right"
+          label=${getLocaleString('NAVBAR_RIGHT')}
+          icon="layout-sidebar-right"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="disabled"
+          label=${getLocaleString('NAVBAR_DISABLED')}
+          icon="x"
+        ></segmented-control-option>
+      </segmented-control>
     </div>
   `;
 }

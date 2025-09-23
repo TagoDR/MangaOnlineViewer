@@ -1,22 +1,17 @@
-import { css, html, LitElement, PropertyValues } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { css, html, LitElement, nothing, type PropertyValues } from 'lit';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-/**
- * Defines the structure for a single option within the segmented control.
- */
-export type SegmentedControlOption = {
-  /** The unique value for the option, submitted with the change event. */
+type SegmentedControlOptionData = {
   value: string;
-  /** The human-readable label for the option. */
   label: string;
-  /** An optional icon template to display with the label. */
   icon?: string;
 };
 
 declare global {
   interface HTMLElementTagNameMap {
     'segmented-control': SegmentedControl;
+    'segmented-control-option': SegmentedControlOption;
   }
 }
 
@@ -27,16 +22,11 @@ declare global {
  * @element segmented-control
  *
  * @fires change - Dispatched when the selected value changes. The `detail` property of the event contains the new value.
+ *
+ * @slot - This component accepts `segmented-control-option` elements to define the options.
  */
 @customElement('segmented-control')
 export class SegmentedControl extends LitElement {
-  /**
-   * An array of option objects to display in the control.
-   * @type {SegmentedControlOption[]}
-   */
-  @property({ type: Array })
-  options: SegmentedControlOption[] = [];
-
   /**
    * The currently selected value. This should correspond to the `value` property of one of the options.
    * @type {string}
@@ -54,10 +44,16 @@ export class SegmentedControl extends LitElement {
   @property({ type: String })
   labelPosition: 'side' | 'bottom' | 'tooltip' = 'side';
 
-  @query('.thumb')
-  private thumb!: HTMLDivElement;
+  @state()
+  private _options: SegmentedControlOptionData[] = [];
 
-  private resizeObserver = new ResizeObserver(() => this.updateThumbPosition());
+  @query('.thumb')
+  private readonly thumb!: HTMLDivElement;
+
+  @query('slot')
+  private readonly _slotEl!: HTMLSlotElement;
+
+  private readonly resizeObserver = new ResizeObserver(() => this.updateThumbPosition());
 
   static readonly styles = css`
     :host {
@@ -124,11 +120,6 @@ export class SegmentedControl extends LitElement {
     this.resizeObserver.unobserve(this);
   }
 
-  /**
-   * Handles the change event from the internal radio inputs, updates the component's value,
-   * and dispatches a `change` event.
-   * @internal
-   */
   private handleChange(event: Event) {
     const target = event.currentTarget as HTMLInputElement;
     this.value = target.value;
@@ -137,24 +128,28 @@ export class SegmentedControl extends LitElement {
     );
   }
 
-  /**
-   * @internal
-   */
+  private handleSlotChange() {
+    this._options = (this._slotEl.assignedNodes({ flatten: true }) as HTMLElement[])
+      .filter(node => node.nodeName === 'SEGMENTED-CONTROL-OPTION')
+      .map(node => ({
+        value: node.getAttribute('value') ?? '',
+        label: node.getAttribute('label') ?? '',
+        icon: node.getAttribute('icon') ?? undefined,
+      }));
+  }
+
   protected firstUpdated() {
+    this.handleSlotChange();
     this.updateThumbPosition();
   }
 
-  /**
-   * @internal
-   */
   protected updated(changedProperties: PropertyValues) {
     super.updated(changedProperties);
     if (
       changedProperties.has('value') ||
-      changedProperties.has('options') ||
+      changedProperties.has('_options') ||
       changedProperties.has('labelPosition')
     ) {
-      // Use a microtask to ensure the DOM is updated before we measure.
       Promise.resolve().then(() => this.updateThumbPosition());
     }
   }
@@ -172,23 +167,19 @@ export class SegmentedControl extends LitElement {
       this.thumb.style.transform = `translateX(${offsetLeft}px)`;
       this.thumb.style.width = `${offsetWidth}px`;
     } else {
-      // No selection, hide the thumb
       this.thumb.style.width = '0px';
     }
   }
 
-  /**
-   * @internal
-   */
   protected render() {
     return html`
       <div class="segmented-control">
         <div class="thumb"></div>
-        ${this.options.map(
+        ${this._options.map(
           option => html`
             <label
               class="option"
-              title="${this.labelPosition === 'tooltip' ? option.label : ''}"
+              title="${this.labelPosition === 'tooltip' ? option.label : nothing}"
             >
               <input
                 type="radio"
@@ -203,13 +194,57 @@ export class SegmentedControl extends LitElement {
                   bottom: this.labelPosition === 'bottom',
                 })}"
               >
-                <mov-icon name="${option.icon}"></mov-icon>
-                ${this.labelPosition !== 'tooltip' ? html`<span>${option.label}</span>` : ''}
+                ${option.icon ? html`<mov-icon name="${option.icon}"></mov-icon>` : nothing}
+                ${this.labelPosition !== 'tooltip' ? html`<span>${option.label}</span>` : nothing}
               </span>
             </label>
           `,
         )}
       </div>
+      <div style="display: none;">
+        <slot @slotchange=${this.handleSlotChange}></slot>
+      </div>
     `;
+  }
+}
+
+/**
+ * A data component that represents an option in a `segmented-control`.
+ * It does not render any visible content itself but provides its attributes
+ * to the parent `segmented-control` element.
+ *
+ * @element segmented-control-option
+ *
+ * @slot - This component does not render slotted content.
+ */
+@customElement('segmented-control-option')
+export class SegmentedControlOption extends LitElement {
+  /**
+   * The value of the option.
+   * @type {string}
+   */
+  @property({ type: String, reflect: true })
+  value = '';
+
+  /**
+   * The text label for the option.
+   * @type {string}
+   */
+  @property({ type: String, reflect: true })
+  label = '';
+
+  /**
+   * The name of the icon to display.
+   * @type {string}
+   */
+  @property({ type: String, reflect: true })
+  icon?: string;
+
+  /**
+   * This component is a data container and does not need its own shadow DOM.
+   * @internal
+   */
+  protected createRenderRoot() {
+    return this;
   }
 }

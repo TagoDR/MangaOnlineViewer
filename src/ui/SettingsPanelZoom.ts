@@ -11,19 +11,29 @@ import './components/SegmentedControl.ts';
  * @returns The Lit template for the default zoom mode setting.
  */
 function defaultZoomMode() {
-  const zoomOptions = [
-    { value: 'percent', label: getLocaleString('PERCENT'), icon: 'IconFilePercent' },
-    { value: 'width', label: getLocaleString('FIT_WIDTH'), icon: 'IconArrowAutofitWidth' },
-    { value: 'height', label: getLocaleString('FIT_HEIGHT'), icon: 'IconArrowAutofitHeight' },
-  ];
   return html` <div class="ControlLabel DefaultZoomMode">
     ${getLocaleString('DEFAULT_ZOOM_MODE')}
     <segmented-control
-      .options=${zoomOptions}
       .value=${getSettingsValue('zoomMode')}
       @change=${changeDefaultZoomMode}
       labelPosition="tooltip"
-    ></segmented-control>
+    >
+      <segmented-control-option
+        value="percent"
+        label=${getLocaleString('PERCENT')}
+        icon="file-percent"
+      ></segmented-control-option>
+      <segmented-control-option
+        value="width"
+        label=${getLocaleString('FIT_WIDTH')}
+        icon="arrow-autofit-width"
+      ></segmented-control-option>
+      <segmented-control-option
+        value="height"
+        label=${getLocaleString('FIT_HEIGHT')}
+        icon="arrow-autofit-height"
+      ></segmented-control-option>
+    </segmented-control>
   </div>`;
 }
 
@@ -158,29 +168,35 @@ function zoomStep() {
  * @returns The Lit template for the default view mode setting.
  */
 function viewMode() {
-  const viewModeOptions = [
-    {
-      value: 'Vertical',
-      label: getLocaleString('VIEW_MODE_VERTICAL'),
-      icon: 'IconArrowAutofitDown',
-    },
-    {
-      value: 'WebComic',
-      label: getLocaleString('VIEW_MODE_WEBCOMIC'),
-      icon: 'IconSpacingVertical',
-    },
-    { value: 'FluidLTR', label: getLocaleString('VIEW_MODE_LEFT'), icon: 'IconArrowAutofitRight' },
-    { value: 'FluidRTL', label: getLocaleString('VIEW_MODE_RIGHT'), icon: 'IconArrowAutofitLeft' },
-  ];
   return html`
     <div class="ControlLabel viewMode">
       ${getLocaleString('DEFAULT_VIEW_MODE')}
       <segmented-control
-        .options=${viewModeOptions}
         .value=${getSettingsValue('viewMode')}
         @change=${changeDefaultViewMode}
         labelPosition="tooltip"
-      ></segmented-control>
+      >
+        <segmented-control-option
+          value="Vertical"
+          label=${getLocaleString('VIEW_MODE_VERTICAL')}
+          icon="arrow-autofit-down"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="WebComic"
+          label=${getLocaleString('VIEW_MODE_WEBCOMIC')}
+          icon="spacing-vertical"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="FluidLTR"
+          label=${getLocaleString('VIEW_MODE_LEFT')}
+          icon="arrow-autofit-right"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="FluidRTL"
+          label=${getLocaleString('VIEW_MODE_RIGHT')}
+          icon="arrow-autofit-left"
+        ></segmented-control-option>
+      </segmented-control>
     </div>
   `;
 }
