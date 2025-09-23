@@ -1,5 +1,5 @@
-import { css, html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { css, html, LitElement, PropertyValues } from 'lit';
+import { customElement, property, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 /**
@@ -11,7 +11,7 @@ export type SegmentedControlOption = {
   /** The human-readable label for the option. */
   label: string;
   /** An optional icon template to display with the label. */
-  icon?: unknown;
+  icon?: string;
 };
 
 declare global {
@@ -54,20 +54,39 @@ export class SegmentedControl extends LitElement {
   @property({ type: String })
   labelPosition: 'side' | 'bottom' | 'tooltip' = 'side';
 
+  @query('.thumb')
+  private thumb!: HTMLDivElement;
+
+  private resizeObserver = new ResizeObserver(() => this.updateThumbPosition());
+
   static readonly styles = css`
     :host {
       width: 100%;
+      display: block;
     }
     .segmented-control {
+      position: relative;
       display: flex;
       gap: 0.25rem;
       border-radius: 0.5rem;
       background-color: var(--theme-border-color);
       padding: 0.25rem;
     }
+    .thumb {
+      position: absolute;
+      top: 0.25rem;
+      bottom: 0.25rem;
+      border-radius: 0.5rem;
+      background-color: var(--mov-color-fill-loud);
+      transition:
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
+    }
     .option {
       flex: 1;
       text-align: center;
+      z-index: 2;
     }
     input {
       display: none;
@@ -81,8 +100,8 @@ export class SegmentedControl extends LitElement {
       border: none;
       padding: 0.5rem 0;
       color: var(--theme-text-color);
-      background-color: var(--theme-border-color);
-      transition: all 0.15s ease-in-out;
+      background-color: transparent;
+      transition: color 0.15s ease-in-out;
       flex-direction: row;
       gap: 0.25rem;
     }
@@ -90,11 +109,20 @@ export class SegmentedControl extends LitElement {
       flex-direction: column;
     }
     input:checked + .label {
-      background-color: var(--mov-color-fill-loud);
       color: var(--mov-color-on-loud);
       font-weight: 600;
     }
   `;
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.resizeObserver.observe(this);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.resizeObserver.unobserve(this);
+  }
 
   /**
    * Handles the change event from the internal radio inputs, updates the component's value,
@@ -112,9 +140,50 @@ export class SegmentedControl extends LitElement {
   /**
    * @internal
    */
+  protected firstUpdated() {
+    this.updateThumbPosition();
+  }
+
+  /**
+   * @internal
+   */
+  protected updated(changedProperties: PropertyValues) {
+    super.updated(changedProperties);
+    if (
+      changedProperties.has('value') ||
+      changedProperties.has('options') ||
+      changedProperties.has('labelPosition')
+    ) {
+      // Use a microtask to ensure the DOM is updated before we measure.
+      Promise.resolve().then(() => this.updateThumbPosition());
+    }
+  }
+
+  private updateThumbPosition() {
+    if (!this.thumb) {
+      return;
+    }
+
+    const selectedOption = this.shadowRoot?.querySelector<HTMLInputElement>('input:checked')
+      ?.parentElement as HTMLLabelElement | null;
+
+    if (selectedOption) {
+      const { offsetLeft, offsetWidth } = selectedOption;
+      this.thumb.style.transform = `translateX(${offsetLeft}px)`;
+      this.thumb.style.width = `${offsetWidth}px`;
+    } else {
+      // No selection, hide the thumb
+      this.thumb.style.width = '0px';
+    }
+  }
+
+  /**
+   * @internal
+   */
   protected render() {
     return html`
       <div class="segmented-control">
+        <div class="thumb"></div>
         ${this.options.map(
           option => html`
             <label
@@ -134,7 +203,7 @@ export class SegmentedControl extends LitElement {
                   bottom: this.labelPosition === 'bottom',
                 })}"
               >
-                ${option.icon}
+                <mov-icon name="${option.icon}"></mov-icon>
                 ${this.labelPosition !== 'tooltip' ? html`<span>${option.label}</span>` : ''}
               </span>
             </label>

@@ -13,17 +13,6 @@ import {
   checkLazyLoad,
   checkPagination,
 } from './events/options.ts';
-import {
-  IconArrowsMove,
-  IconArrowsVertical,
-  IconBoxAlignTop,
-  IconHandClick,
-  IconLayoutBottombar,
-  IconLayoutSidebar,
-  IconLayoutSidebarRight,
-  IconPin,
-  IconX,
-} from './icons';
 
 function checkboxOptions() {
   return html`
@@ -114,11 +103,11 @@ function lazyLoad() {
 
 function headerType() {
   const headerOptions = [
-    { value: 'hover', label: getLocaleString('HEADER_HOVER'), icon: IconArrowsMove },
-    { value: 'scroll', label: getLocaleString('HEADER_SCROLL'), icon: IconArrowsVertical },
-    { value: 'click', label: getLocaleString('HEADER_CLICK'), icon: IconHandClick },
-    { value: 'fixed', label: getLocaleString('HEADER_FIXED'), icon: IconPin },
-    { value: 'simple', label: getLocaleString('HEADER_SIMPLE'), icon: IconBoxAlignTop },
+    { value: 'hover', label: getLocaleString('HEADER_HOVER'), icon: 'IconArrowsMove' },
+    { value: 'scroll', label: getLocaleString('HEADER_SCROLL'), icon: 'IconArrowsVertical' },
+    { value: 'click', label: getLocaleString('HEADER_CLICK'), icon: 'IconHandClick' },
+    { value: 'fixed', label: getLocaleString('HEADER_FIXED'), icon: 'IconPin' },
+    { value: 'simple', label: getLocaleString('HEADER_SIMPLE'), icon: 'IconBoxAlignTop' },
   ];
   return html`
     <div class="ControlLabel headerType">
@@ -135,10 +124,10 @@ function headerType() {
 
 function navbarType() {
   const navbarOptions = [
-    { value: 'bottom', label: getLocaleString('NAVBAR_BOTTOM'), icon: IconLayoutBottombar },
-    { value: 'left', label: getLocaleString('NAVBAR_LEFT'), icon: IconLayoutSidebar },
-    { value: 'right', label: getLocaleString('NAVBAR_RIGHT'), icon: IconLayoutSidebarRight },
-    { value: 'disabled', label: getLocaleString('NAVBAR_DISABLED'), icon: IconX },
+    { value: 'bottom', label: getLocaleString('NAVBAR_BOTTOM'), icon: 'IconLayoutBottombar' },
+    { value: 'left', label: getLocaleString('NAVBAR_LEFT'), icon: 'IconLayoutSidebar' },
+    { value: 'right', label: getLocaleString('NAVBAR_RIGHT'), icon: 'IconLayoutSidebarRight' },
+    { value: 'disabled', label: getLocaleString('NAVBAR_DISABLED'), icon: 'IconX' },
   ];
   return html`
     <div class="ControlLabel navbarType">

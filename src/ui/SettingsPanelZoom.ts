@@ -4,15 +4,6 @@ import { getLocaleString, getSettingsValue } from '../core/settings.ts';
 import { changeMinZoom, changeZoomStep } from './events/options.ts';
 import { changeDefaultViewMode } from './events/viewmode.ts';
 import { changeDefaultZoomMode, changeDefaultZoomValue } from './events/zoom.ts';
-import {
-  IconArrowAutofitDown,
-  IconArrowAutofitHeight,
-  IconArrowAutofitLeft,
-  IconArrowAutofitRight,
-  IconArrowAutofitWidth,
-  IconFilePercent,
-  IconSpacingVertical,
-} from './icons';
 import './components/SegmentedControl.ts';
 
 /**
@@ -21,9 +12,9 @@ import './components/SegmentedControl.ts';
  */
 function defaultZoomMode() {
   const zoomOptions = [
-    { value: 'percent', label: getLocaleString('PERCENT'), icon: IconFilePercent },
-    { value: 'width', label: getLocaleString('FIT_WIDTH'), icon: IconArrowAutofitWidth },
-    { value: 'height', label: getLocaleString('FIT_HEIGHT'), icon: IconArrowAutofitHeight },
+    { value: 'percent', label: getLocaleString('PERCENT'), icon: 'IconFilePercent' },
+    { value: 'width', label: getLocaleString('FIT_WIDTH'), icon: 'IconArrowAutofitWidth' },
+    { value: 'height', label: getLocaleString('FIT_HEIGHT'), icon: 'IconArrowAutofitHeight' },
   ];
   return html` <div class="ControlLabel DefaultZoomMode">
     ${getLocaleString('DEFAULT_ZOOM_MODE')}
@@ -168,10 +159,18 @@ function zoomStep() {
  */
 function viewMode() {
   const viewModeOptions = [
-    { value: 'Vertical', label: getLocaleString('VIEW_MODE_VERTICAL'), icon: IconArrowAutofitDown },
-    { value: 'WebComic', label: getLocaleString('VIEW_MODE_WEBCOMIC'), icon: IconSpacingVertical },
-    { value: 'FluidLTR', label: getLocaleString('VIEW_MODE_LEFT'), icon: IconArrowAutofitRight },
-    { value: 'FluidRTL', label: getLocaleString('VIEW_MODE_RIGHT'), icon: IconArrowAutofitLeft },
+    {
+      value: 'Vertical',
+      label: getLocaleString('VIEW_MODE_VERTICAL'),
+      icon: 'IconArrowAutofitDown',
+    },
+    {
+      value: 'WebComic',
+      label: getLocaleString('VIEW_MODE_WEBCOMIC'),
+      icon: 'IconSpacingVertical',
+    },
+    { value: 'FluidLTR', label: getLocaleString('VIEW_MODE_LEFT'), icon: 'IconArrowAutofitRight' },
+    { value: 'FluidRTL', label: getLocaleString('VIEW_MODE_RIGHT'), icon: 'IconArrowAutofitLeft' },
   ];
   return html`
     <div class="ControlLabel viewMode">
