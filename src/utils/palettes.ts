@@ -1,40 +1,41 @@
 import Color from 'colorjs.io';
 import { sample } from './colors.ts';
 
-const darkest = 10;
-const lightest = 95;
-const darkSteps = 4;
-const lightSteps = 5;
-
-const lightnessStep = (lightest - 50) / lightSteps;
-const darknessStep = (50 - darkest) / darkSteps;
-
 /**
- * Creates an 11-step gradient by adjusting lightness around a central point.
+ * Generates a consistent 11-shade tonal palette from a single base color.
+ * Any color from the generated palette will produce the same palette when used as a base.
+ * The base color is guaranteed to be in the palette.
  * @internal
  * @param {Color} baseColor - A `Color` instance for the base color.
  * @returns {string[]} An array of 11 hex color strings.
  */
 function gradientBySteps(baseColor: Color): string[] {
-  const baseHsl = baseColor.to('hsl');
-  const results: string[] = [];
-  const steps = [
-    50 + lightnessStep * 5,
-    50 + lightnessStep * 4,
-    50 + lightnessStep * 3,
-    50 + lightnessStep * 2,
-    50 + lightnessStep,
-    50,
-    50 - darknessStep,
-    50 - darknessStep * 2,
-    50 - darknessStep * 3,
-    50 - darknessStep * 4,
-    50 - darknessStep * 5,
-  ];
-  for (const l of steps) {
-    results.push(baseHsl.clone().set('hsl.l', l).toString({ format: 'hex' }));
+  const baseOklch = baseColor.to('oklch');
+  const hue = baseOklch.get('oklch.h');
+  const chroma = baseOklch.get('oklch.c');
+  const originalLightness = baseOklch.get('oklch.l');
+
+  const lightnessSteps = [0.95, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.05];
+  const palette = lightnessSteps.map(l =>
+    new Color('oklch', [l, chroma, hue]).toString({ format: 'hex' }),
+  );
+
+  let closestIndex = -1;
+  let minDiff = Infinity;
+
+  for (let i = 0; i < lightnessSteps.length; i++) {
+    const diff = Math.abs(lightnessSteps[i] - originalLightness);
+    if (diff < minDiff) {
+      minDiff = diff;
+      closestIndex = i;
+    }
   }
-  return results;
+
+  if (closestIndex !== -1) {
+    palette[closestIndex] = baseColor.toString({ format: 'hex' });
+  }
+
+  return palette.map(c => c.toUpperCase());
 }
 
 /**

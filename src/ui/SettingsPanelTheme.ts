@@ -32,7 +32,7 @@ function theme() {
     </div>
     <color-palette
       .baseColor="${getSettingsValue('theme')}"
-      mode="chakra"
+      mode="steps"
       .selected=${getSettingsValue('theme')}
       @change="${changeTheme}"
     ></color-palette>
