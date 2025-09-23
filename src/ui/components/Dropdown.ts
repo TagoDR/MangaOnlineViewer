@@ -91,7 +91,7 @@ export class MovDropdownItem extends LitElement {
       padding: 8px 12px;
       cursor: pointer;
       color: var(--mov-color-on-loud);
-      background-color: var(--mov-color-fill-loud);
+      background-color: var(--theme-background-color);
       gap: 10px;
     }
     .item:hover {

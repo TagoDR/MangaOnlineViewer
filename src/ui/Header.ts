@@ -26,15 +26,18 @@ import { updateViewMode } from './events/viewmode';
 import { changeGlobalZoom, changeZoom, changeZoomByStep } from './events/zoom';
 import styles from './styles/header.css?inline';
 import media from './styles/media.css?inline';
-import './components/Dropdown.ts';
-import './components/Icon.ts';
 
 @customElement('reader-header')
 @useStores(settings, locale, appState)
 export class Header extends LitElement {
   static styles = [unsafeCSS(styles), unsafeCSS(media), unsafeCSS(keycss), css``];
 
-  private headroomController = new HeadroomController(this);
+  private readonly headroomController: HeadroomController;
+
+  constructor() {
+    super();
+    this.headroomController = new HeadroomController(this);
+  }
 
   @property({ type: Object })
   manga?: IManga;

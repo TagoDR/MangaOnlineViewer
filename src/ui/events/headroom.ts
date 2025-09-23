@@ -1,12 +1,13 @@
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 import _ from 'lodash';
 import { getSettingsValue } from '../../core/settings.ts';
+import type { MovDropdown } from '../components/Dropdown.ts';
 
 const headerHeight = 49;
 const showEnd = 100;
 
 export class HeadroomController implements ReactiveController {
-  host: ReactiveControllerHost;
+  host: ReactiveControllerHost & { shadowRoot: ShadowRoot | null };
 
   private prevOffset = 0;
 
@@ -14,7 +15,7 @@ export class HeadroomController implements ReactiveController {
 
   public headerVisible = true;
 
-  constructor(host: ReactiveControllerHost) {
+  constructor(host: ReactiveControllerHost & { shadowRoot: ShadowRoot | null }) {
     this.host = host;
     host.addController(this);
   }
@@ -30,7 +31,24 @@ export class HeadroomController implements ReactiveController {
     window.removeEventListener('mousemove', this.handleMouseMove);
   }
 
+  private isAnyDropdownOpen(): boolean {
+    if (!this.host.shadowRoot) return false;
+    const allDropdowns = this.host.shadowRoot.querySelectorAll<MovDropdown>('mov-dropdown');
+    // eslint-disable-next-line no-restricted-syntax
+    for (const dropdown of allDropdowns) {
+      if (dropdown.open) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   private handleScroll = _.throttle(() => {
+    if (this.isAnyDropdownOpen()) {
+      this.prevOffset = window.scrollY;
+      return;
+    }
+
     const header = getSettingsValue('header');
     const { scrollY } = window;
     let newHeadroom = 'none';
@@ -85,6 +103,14 @@ export class HeadroomController implements ReactiveController {
   }
 
   private handleMouseMove = _.throttle((event: MouseEvent) => {
+    if (this.isAnyDropdownOpen()) {
+      if (!this.headerVisible) {
+        this.headerVisible = true;
+        this.host.requestUpdate();
+      }
+      return;
+    }
+
     if (['hover', 'scroll'].includes(getSettingsValue('header'))) {
       const newHeaderVisible = HeadroomController.isMouseInsideRegion(
         event,
