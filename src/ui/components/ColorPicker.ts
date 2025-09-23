@@ -159,7 +159,7 @@ export class ColorPicker extends LitElement {
   swatches: string[] | null = null;
 
   @property({ type: String })
-  mode: 'inline' | 'popup' = 'inline';
+  mode: 'inline' | 'popup' = 'popup';
 
   @state()
   private opened = false;

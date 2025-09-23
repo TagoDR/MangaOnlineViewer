@@ -17,18 +17,13 @@ function theme() {
     </div>
     <div class="ControlLabel ThemeSelector">
       <label>${getLocaleString('THEME_COLOR')}</label>
-      <input
+      <color-picker
         id="ThemeHex"
-        type="color"
         .value="${getSettingsValue('theme')}"
-        class="colorpicker"
         title="${getSettingsValue('theme')}"
         @input=${changeTheme}
-        list="color-sample"
+        .swatches=${Object.values(sample)}
       />
-      <datalist id="color-sample">
-        ${Object.values(sample).map(c => html`<option value="${c}"></option>`)}
-      </datalist>
     </div>
     <color-palette
       .baseColor="${getSettingsValue('theme')}"
