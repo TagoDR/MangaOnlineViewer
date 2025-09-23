@@ -36,9 +36,9 @@ export class ColorPicker extends LitElement {
       top: calc(100% + 4px);
       left: 0;
       z-index: 10;
-      border: 1px solid #e0e0e0;
+      border: 1px solid var(--theme-border-color);
       border-radius: 8px;
-      background: #fff;
+      background: var(--theme-background-color);
       padding: 12px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
@@ -138,11 +138,11 @@ export class ColorPicker extends LitElement {
       width: 32px;
       height: 32px;
       border-radius: 4px;
-      border: 1px solid #e0e0e0;
+      border: 1px solid var(--theme-background-color);
       padding: 4px;
       box-sizing: border-box;
       cursor: pointer;
-      background-color: #fff;
+      background-color: var(--theme-hightlight-color);
     }
 
     .preview {
