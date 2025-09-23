@@ -40,10 +40,6 @@ export class Icon extends LitElement {
       display: block;
       color: inherit; /* This will inherit from the host element */
     }
-    /* Fallback if no color is set */
-    :host(:not([style*='color'])) svg {
-      color: var(--mov-color-on-loud);
-    }
   `;
 
   /**

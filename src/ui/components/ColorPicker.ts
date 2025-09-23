@@ -43,6 +43,11 @@ export class ColorPicker extends LitElement {
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
+    .picker-container.popup.right {
+      left: auto;
+      right: 0;
+    }
+
     .saturation-panel {
       position: relative;
       width: 100%;
@@ -135,7 +140,7 @@ export class ColorPicker extends LitElement {
     }
 
     .popup-trigger {
-      width: 32px;
+      width: 96px;
       height: 32px;
       border-radius: 4px;
       border: 1px solid var(--theme-background-color);
@@ -163,6 +168,9 @@ export class ColorPicker extends LitElement {
 
   @state()
   private opened = false;
+
+  @state()
+  private popupDirection: 'left' | 'right' = 'left';
 
   @state()
   private sourceSpace = 'srgb';
@@ -226,6 +234,37 @@ export class ColorPicker extends LitElement {
 
   private togglePopup() {
     if (this.mode === 'popup') {
+      if (!this.opened) {
+        const triggerRect = this.getBoundingClientRect();
+        const pickerWidth = 250; // from CSS
+
+        let containerRect: { left: number; right: number };
+        const drawer = this.closest('mov-drawer');
+        if (drawer && drawer.shadowRoot) {
+          const dialog = drawer.shadowRoot.querySelector('dialog');
+          if (dialog) {
+            containerRect = dialog.getBoundingClientRect();
+          } else {
+            containerRect = { left: 0, right: window.innerWidth };
+          }
+        } else {
+          containerRect = { left: 0, right: window.innerWidth };
+        }
+
+        // Default direction is 'left' (left-aligned, opens to the right)
+        // Check if it overflows on the right boundary of the container
+        if (triggerRect.left + pickerWidth > containerRect.right) {
+          // It overflows. Check if it fits on the left.
+          // The left boundary of the container is containerRect.left
+          if (triggerRect.right - pickerWidth > containerRect.left) {
+            this.popupDirection = 'right';
+          } else {
+            this.popupDirection = 'left';
+          }
+        } else {
+          this.popupDirection = 'left';
+        }
+      }
       this.opened = !this.opened;
     }
   }
@@ -325,6 +364,7 @@ export class ColorPicker extends LitElement {
     const pickerClasses = {
       'picker-container': true,
       popup: this.mode === 'popup',
+      right: this.popupDirection === 'right',
     };
 
     const pickerBody = this.renderPickerBody();

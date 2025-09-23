@@ -90,7 +90,7 @@ export class MovDropdownItem extends LitElement {
       align-items: center;
       padding: 8px 12px;
       cursor: pointer;
-      color: var(--mov-color-on-loud);
+      color: var(--theme-body-text-color);
       background-color: var(--theme-background-color);
       gap: 10px;
     }

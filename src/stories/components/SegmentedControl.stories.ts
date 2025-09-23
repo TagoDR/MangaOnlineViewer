@@ -127,35 +127,35 @@ export const Sizes: Story = {
             html`<div>
               <div>${s} ${p}</div>
               <segmented-control
-              .value=${args.value}
-              .labelPosition=${p}
-              size="${s}"
-              @change=${(e: CustomEvent) => args.onChange(e.detail)}
-            >
-              ${new Array(args.quantity).fill(0).map(
-                () =>
-                  html`<segmented-control-option
-                      value="photos"
-                      label="Photos"
-                      icon="photo"
-                    ></segmented-control-option>
-                    <segmented-control-option
-                      value="messages"
-                      label="Messages"
-                      icon="message"
-                    ></segmented-control-option>
-                    <segmented-control-option
-                      value="settings"
-                      label="Settings"
-                      icon="settings"
-                    ></segmented-control-option>
-                    <segmented-control-option
-                      value="Menu"
-                      label="Menu"
-                      icon="book-return"
-                    ></segmented-control-option>`,
-              )}
-            </segmented-control>
+                .value=${args.value}
+                .labelPosition=${p}
+                size="${s}"
+                @change=${(e: CustomEvent) => args.onChange(e.detail)}
+              >
+                ${new Array(args.quantity).fill(0).map(
+                  () =>
+                    html`<segmented-control-option
+                        value="photos"
+                        label="Photos"
+                        icon="photo"
+                      ></segmented-control-option>
+                      <segmented-control-option
+                        value="messages"
+                        label="Messages"
+                        icon="message"
+                      ></segmented-control-option>
+                      <segmented-control-option
+                        value="settings"
+                        label="Settings"
+                        icon="settings"
+                      ></segmented-control-option>
+                      <segmented-control-option
+                        value="Menu"
+                        label="Menu"
+                        icon="book-return"
+                      ></segmented-control-option>`,
+                )}
+              </segmented-control>
             </div>`,
         ),
       )}

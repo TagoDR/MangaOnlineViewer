@@ -23,7 +23,7 @@ function theme() {
         title="${getSettingsValue('theme')}"
         @input=${changeTheme}
         .swatches=${Object.values(sample)}
-      />
+      ></color-picker>
     </div>
     <color-palette
       .baseColor="${getSettingsValue('theme')}"
