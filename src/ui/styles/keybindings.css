@@ -1,5 +1,4 @@
-#KeybindingsPanel {
-  padding: 10px;
+#KeybindingsPanel div {
   line-height: 1.5em;
 }
 

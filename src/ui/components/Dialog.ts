@@ -61,7 +61,8 @@ export default class Dialog extends LitElement {
       max-height: 100vh;
     }
 
-    :host([open]:not([mode='inline'])) dialog {
+    :host([open]:not([mode='inline'])) dialog,
+    .closing {
       visibility: visible;
     }
 
@@ -161,9 +162,11 @@ export default class Dialog extends LitElement {
       height: 100vh;
       top: 0;
       left: 0;
-      transform: none;
+      transform: translateY(2rem);
       border-radius: 0;
-      transition: none;
+    }
+    :host([fullscreen][open]) dialog {
+      transform: translateY(0);
     }
   `;
 
@@ -195,15 +198,16 @@ export default class Dialog extends LitElement {
     }
     if (changedProperties.has('open')) {
       if (this.open) {
+        this.dialog.classList.remove('closing');
         this.dialog.show();
         this.dispatchEvent(new CustomEvent('open', { bubbles: true, composed: true }));
-      } else {
-        if (changedProperties.get('open') === true) {
-          this.dispatchEvent(new CustomEvent('close', { bubbles: true, composed: true }));
-        }
+      } else if (changedProperties.get('open') === true) {
+        this.dispatchEvent(new CustomEvent('close', { bubbles: true, composed: true }));
+        this.dialog.classList.add('closing');
         // Wait for animations to finish before closing the dialog.
         // The longest animation is 250ms, so 300ms is a safe buffer.
         setTimeout(() => {
+          this.dialog.classList.remove('closing');
           if (this.dialog.open) {
             this.dialog.close();
           }

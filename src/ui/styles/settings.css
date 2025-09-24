@@ -1,7 +1,5 @@
 #SettingsPanel {
   color: var(--theme-text-color);
-  padding: 10px;
-  gap: 5px;
 }
 
 #SettingsPanel fieldset {

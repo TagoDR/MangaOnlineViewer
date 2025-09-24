@@ -66,7 +66,8 @@ export default class Drawer extends LitElement {
       transition: var(--panel-transition);
     }
 
-    :host([open]) dialog {
+    :host([open]) dialog,
+    .closing {
       visibility: visible;
     }
 
@@ -159,15 +160,16 @@ export default class Drawer extends LitElement {
   protected updated(changedProperties: PropertyValueMap<this>): void {
     if (changedProperties.has('open')) {
       if (this.open) {
+        this.dialog.classList.remove('closing');
         this.dialog.show();
         this.dispatchEvent(new CustomEvent('open', { bubbles: true, composed: true }));
-      } else {
-        if (changedProperties.get('open') === true) {
-          this.dispatchEvent(new CustomEvent('close', { bubbles: true, composed: true }));
-        }
+      } else if (changedProperties.get('open') === true) {
+        this.dispatchEvent(new CustomEvent('close', { bubbles: true, composed: true }));
+        this.dialog.classList.add('closing');
         // Wait for animations to finish before closing the dialog.
         // The longest animation is 250ms, so 300ms is a safe buffer.
         setTimeout(() => {
+          this.dialog.classList.remove('closing');
           if (this.dialog.open) {
             this.dialog.close();
           }
