@@ -73,7 +73,7 @@ for (const rule of colorRules) {
     if (!rulesByClassName.has(className)) {
       rulesByClassName.set(className, []);
     }
-    rulesByClassName.get(className)!.push({ subSelector, color: rule.color });
+    rulesByClassName.get(className)?.push({ subSelector, color: rule.color });
   }
 }
 

@@ -240,7 +240,7 @@ export class ColorPicker extends LitElement {
 
         let containerRect: { left: number; right: number };
         const drawer = this.closest('mov-drawer');
-        if (drawer && drawer.shadowRoot) {
+        if (drawer?.shadowRoot) {
           const dialog = drawer.shadowRoot.querySelector('dialog');
           if (dialog) {
             containerRect = dialog.getBoundingClientRect();
