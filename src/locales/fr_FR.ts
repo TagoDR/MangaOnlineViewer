@@ -110,6 +110,8 @@ export default {
   DISPLAY_COMMENTS: 'Afficher les commentaires',
   COMMENTS: 'Section des commentaires',
   SCROLL_START: 'Basculer le défilement automatique',
+  INCREASE_SPEED: 'Augmenter la vitesse de défilement',
+  DECREASE_SPEED: 'Diminuer la vitesse de défilement',
   AUTO_SCROLL_HEIGHT: 'Vitesse de défilement automatique en pixels',
   VERTICAL_SEPARATOR: 'Afficher les séparateurs verticaux',
   END: 'Fin',

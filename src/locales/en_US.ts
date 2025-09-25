@@ -109,6 +109,8 @@ export default {
   DISPLAY_COMMENTS: 'Display Comments',
   COMMENTS: 'Comments Section',
   SCROLL_START: 'Toggle Auto Scroll',
+  INCREASE_SPEED: 'Increase Scroll Speed',
+  DECREASE_SPEED: 'Decrease Scroll Speed',
   AUTO_SCROLL_HEIGHT: 'Auto Scroll Speed in Pixels',
   VERTICAL_SEPARATOR: 'Show Vertical Separators',
   END: 'End',

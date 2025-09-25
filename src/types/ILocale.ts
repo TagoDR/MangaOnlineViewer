@@ -102,6 +102,8 @@ export type ILocale = {
   DISPLAY_COMMENTS: string;
   COMMENTS: string;
   SCROLL_START: string;
+  INCREASE_SPEED: string;
+  DECREASE_SPEED: string;
   AUTO_SCROLL_HEIGHT: string;
   VERTICAL_SEPARATOR: string;
   END: string;

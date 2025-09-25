@@ -110,6 +110,8 @@ export default {
   DISPLAY_COMMENTS: 'Kommentare anzeigen',
   COMMENTS: 'Kommentarbereich',
   SCROLL_START: 'Auto-Scroll umschalten',
+  INCREASE_SPEED: 'Scrollgeschwindigkeit erhöhen',
+  DECREASE_SPEED: 'Scrollgeschwindigkeit verringern',
   AUTO_SCROLL_HEIGHT: 'Auto-Scroll-Geschwindigkeit in Pixel',
   VERTICAL_SEPARATOR: 'Vertikale Trenner anzeigen',
   END: 'Ende',

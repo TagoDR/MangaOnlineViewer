@@ -1,5 +1,10 @@
 import Swal from 'sweetalert2-neutral';
-import { getLocaleString, saveSettingsValue, toggleLocalSettings } from '../../core/settings';
+import {
+  changeSettingsValue,
+  getLocaleString,
+  saveSettingsValue,
+  toggleLocalSettings,
+} from '../../core/settings';
 import type { HeaderMode, LoadMode, NavbarMode } from '../../types';
 import { replaceStyleSheet } from '../../utils/css';
 
@@ -168,4 +173,14 @@ export function changeHeaderType(event: Event) {
 export function changeScrollHeight(event: Event) {
   const { value } = event.currentTarget as HTMLInputElement;
   saveSettingsValue('scrollHeight', parseInt(value, 10));
+}
+
+export function changeAutoScrollSpeed(sign: 1 | -1) {
+  changeSettingsValue('scrollHeight', v => {
+    const speed = v + sign * 25;
+    if (speed <= 0) return 0;
+    const max = Math.ceil(window.innerHeight / 400) * 100;
+    if (speed >= max) return max;
+    return speed;
+  });
 }

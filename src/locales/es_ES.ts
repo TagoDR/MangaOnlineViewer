@@ -111,6 +111,8 @@ export default {
   DISPLAY_COMMENTS: 'Mostrar comentarios',
   COMMENTS: 'Sección de comentarios',
   SCROLL_START: 'Alternar desplazamiento automático',
+  INCREASE_SPEED: 'Aumentar la velocidad de desplazamiento',
+  DECREASE_SPEED: 'Disminuir la velocidad de desplazamiento',
   AUTO_SCROLL_HEIGHT: 'Velocidad de desplazamiento automático en píxeles',
   VERTICAL_SEPARATOR: 'Mostrar separadores verticales',
   END: 'Fin',

@@ -109,6 +109,8 @@ export default {
   DISPLAY_COMMENTS: '显示注释',
   COMMENTS: '评论部分',
   SCROLL_START: '切换自动滚动',
+  INCREASE_SPEED: '增加滚动速度',
+  DECREASE_SPEED: '降低滚动速度',
   AUTO_SCROLL_HEIGHT: '自动滚动速度（以像素为单位）',
   VERTICAL_SEPARATOR: '显示垂直分隔符',
   END: '结尾',

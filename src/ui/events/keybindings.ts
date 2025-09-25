@@ -9,6 +9,7 @@ import {
 } from '../../core/settings';
 import { logScript } from '../../utils/tampermonkey';
 import { toggleAutoScroll } from './autoscroll.ts';
+import { changeAutoScrollSpeed } from './options.ts';
 import { updateViewMode } from './viewmode.ts';
 import { changeGlobalZoom, changeZoomByStep } from './zoom.ts';
 
@@ -114,6 +115,12 @@ const actions: Record<string, () => void> = {
   },
   SCROLL_START() {
     toggleAutoScroll();
+  },
+  INCREASE_SPEED() {
+    changeAutoScrollSpeed(1);
+  },
+  DECREASE_SPEED() {
+    changeAutoScrollSpeed(-1);
   },
 };
 

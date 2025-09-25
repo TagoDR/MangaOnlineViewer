@@ -74,6 +74,8 @@ export const defaultSettings: ISettings = {
     VIEW_MODE_LEFT: ['N'],
     VIEW_MODE_RIGHT: ['B'],
     SCROLL_START: ['space'],
+    INCREASE_SPEED: ['.'],
+    DECREASE_SPEED: [','],
   },
 };
 

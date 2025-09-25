@@ -109,6 +109,8 @@ export default {
   DISPLAY_COMMENTS: 'Mostar Comentarios',
   COMMENTS: 'Seção de comentários',
   SCROLL_START: 'Ativar Rolagem Automatica',
+  INCREASE_SPEED: 'Aumentar Valocidade da Rolagem',
+  DECREASE_SPEED: 'Diminuir Valocidade da Rolagem',
   AUTO_SCROLL_HEIGHT: 'Velocidade da Rolagem Automatica em Pixels',
   VERTICAL_SEPARATOR: 'Mostrar Separadores Verticais',
   END: 'Fin',
