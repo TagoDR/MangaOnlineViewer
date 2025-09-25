@@ -1,7 +1,7 @@
 import keycss from '@gerhobbelt/keyscss/keys.css?inline';
 import { useStores } from '@nanostores/lit';
 import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import {
   appState,
@@ -34,6 +34,11 @@ export class Header extends LitElement {
 
   private readonly headroomController: HeadroomController;
 
+  @query('#MangaTitle') private mangaTitleElement!: HTMLElement;
+  @state() private truncatedTitle: string | undefined;
+  private canvasContext: CanvasRenderingContext2D | null = null;
+  private resizeObserver: ResizeObserver | undefined;
+
   constructor() {
     super();
     this.headroomController = new HeadroomController(this);
@@ -41,6 +46,67 @@ export class Header extends LitElement {
 
   @property({ type: Object })
   manga?: IManga;
+
+  protected firstUpdated() {
+    const canvas = document.createElement('canvas');
+    this.canvasContext = canvas.getContext('2d');
+    this.resizeObserver = new ResizeObserver(() => this.updateTitle());
+    this.resizeObserver.observe(this.mangaTitleElement);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.resizeObserver?.disconnect();
+  }
+
+  protected updated(changedProperties: Map<string | number | symbol, unknown>) {
+    super.updated(changedProperties);
+    if (changedProperties.has('manga') && this.manga) {
+      // Delay update until after render
+      requestAnimationFrame(() => this.updateTitle());
+    }
+  }
+
+  private updateTitle() {
+    if (!this.manga || !this.mangaTitleElement || !this.canvasContext) {
+      this.truncatedTitle = this.manga?.title;
+      return;
+    }
+
+    const style = window.getComputedStyle(this.mangaTitleElement);
+    this.canvasContext.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+
+    const fullText = this.manga.title ?? '';
+    const containerWidth = this.mangaTitleElement.clientWidth;
+    const textWidth = this.canvasContext.measureText(fullText).width;
+
+    if (textWidth <= containerWidth) {
+      this.truncatedTitle = fullText;
+      return;
+    }
+
+    const ellipsis = '...';
+    const ellipsisWidth = this.canvasContext.measureText(ellipsis).width;
+    const targetWidth = containerWidth - ellipsisWidth;
+
+    // Find the split point
+    let start = '';
+    let end = '';
+    for (let i = 1; i < fullText.length; i++) {
+      const startCandidate = fullText.substring(0, i);
+      const endCandidate = fullText.substring(fullText.length - i);
+      if (
+        this.canvasContext.measureText(startCandidate).width +
+          this.canvasContext.measureText(endCandidate).width >
+        targetWidth
+      ) {
+        break;
+      }
+      start = startCandidate;
+      end = endCandidate;
+    }
+    this.truncatedTitle = `${start}${ellipsis}${end}`;
+  }
 
   render() {
     if (!this.manga) return html``;
@@ -273,7 +339,7 @@ export class Header extends LitElement {
           </mov-dropdown>
         </div>
         <div id="ViewerTitle">
-          <h1 id="MangaTitle">${this.manga.title}</h1>
+          <h1 id="MangaTitle" title="${this.manga.title}">${this.truncatedTitle ?? this.manga.title}</h1>
         </div>
         <div id="ZoomControl">
           <input
