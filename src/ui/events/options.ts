@@ -179,7 +179,7 @@ export function changeAutoScrollSpeed(sign: 1 | -1) {
   changeSettingsValue('scrollHeight', v => {
     const speed = v + sign * 25;
     if (speed <= 0) return 0;
-    const max = Math.ceil(window.innerHeight / 400) * 100;
+    const max = Math.ceil(window.innerHeight / 200) * 100;
     if (speed >= max) return max;
     return speed;
   });

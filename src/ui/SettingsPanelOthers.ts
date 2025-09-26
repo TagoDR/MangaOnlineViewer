@@ -192,7 +192,7 @@ function autoScroll() {
         name="scrollHeight"
         id="scrollHeight"
         min="1"
-        max="${Math.ceil(window.innerHeight / 400) * 100}"
+        max="${Math.ceil(window.innerHeight / 200) * 100}"
         step="1"
         @change="${changeScrollHeight}"
       />
