@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.09.25
+// @version       2025.09.26
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -8830,7 +8830,7 @@
     changeSettingsValue('scrollHeight', v => {
       const speed = v + sign * 25;
       if (speed <= 0) return 0;
-      const max = Math.ceil(window.innerHeight / 400) * 100;
+      const max = Math.ceil(window.innerHeight / 200) * 100;
       if (speed >= max) return max;
       return speed;
     });
@@ -10235,7 +10235,7 @@
         name="scrollHeight"
         id="scrollHeight"
         min="1"
-        max="${Math.ceil(window.innerHeight / 400) * 100}"
+        max="${Math.ceil(window.innerHeight / 200) * 100}"
         step="1"
         @change="${changeScrollHeight}"
       />
