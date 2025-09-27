@@ -92,3 +92,44 @@ export const WithHeaderAndAction: Story = {
     slot: html`<p>This panel has a header and an action button.</p>`,
   },
 };
+
+export const WithCustomButtons: Story = {
+  name: 'With Custom Buttons',
+  args: {
+    ...DialogCentered.args,
+    label: 'Custom Buttons Dialog',
+    slot: html`<p>This dialog has custom buttons.</p>`,
+  },
+  render: args => {
+    const container = document.createElement('div');
+    const openPanel = () => {
+      const panel = container.querySelector('mov-dialog');
+      if (panel) panel.open = true;
+    };
+    const closePanel = () => {
+      const panel = container.querySelector('mov-dialog');
+      if (panel) panel.open = false;
+    };
+
+    const template = html`
+      <button @click=${openPanel}>Open Dialog</button>
+      <mov-dialog
+        ?open=${args.open}
+        ?fullscreen=${args.fullscreen}
+        @close=${closePanel}
+      >
+        <span slot="label">${args.label}</span>
+        ${args.slot}
+        <div
+          slot="footer"
+          style="display: flex; justify-content: flex-end; gap: 0.5rem;"
+        >
+          <button @click=${closePanel}>Custom OK</button>
+          <button @click=${closePanel}>Custom Cancel</button>
+        </div>
+      </mov-dialog>
+    `;
+    render(template, container);
+    return container;
+  },
+};
