@@ -252,6 +252,7 @@ export default class Dialog extends LitElement {
           </div>
         </div>
         <slot class="content-slot"></slot>
+        <slot name="footer"></slot>
       </dialog>
     `;
   }
