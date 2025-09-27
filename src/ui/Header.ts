@@ -308,8 +308,9 @@ export class Header extends LitElement {
             max="200"
             @input=${changeZoom}
           />
-          <span id="ZoomVal"
-            >${
+          <span id="ZoomVal">
+            Zoom:
+            ${
               getSettingsValue('zoomMode') === 'percent'
                 ? `${getSettingsValue('zoomValue')}%`
                 : getSettingsValue('zoomMode')

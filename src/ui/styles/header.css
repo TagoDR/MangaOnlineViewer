@@ -108,6 +108,7 @@
 #ZoomControl {
   display: flex;
   align-items: center;
+  flex-direction: column;
   gap: 3px;
   padding: 10px 5px;
 }

@@ -17,6 +17,7 @@ import './components/Pagination.ts';
 import './components/Drawer.ts';
 import './components/Dialog.ts';
 import './components/Dropdown.ts';
+import './components/Slider.ts';
 
 import './Header.ts';
 import './BookmarkPanel.ts';

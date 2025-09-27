@@ -1,23 +1,29 @@
-import { setAppStateValue } from '../core/settings.ts';
-import type { IManga } from '../types';
-import { cleanUpElement } from '../utils/cleanup';
-import { logScriptVerbose } from '../utils/tampermonkey';
-import head from './head';
-import './setup.ts';
+/**
+ * This file serves as the central setup for the application's UI components.
+ * It imports all necessary WebAwesome components and custom Lit components,
+ * and configures the icon library for use throughout the application.
+ */
+
+import './components/Icon.ts';
+import './components/Button.ts';
+import './components/ToggleButton.ts';
+import './components/ColorSwatch.ts';
+import './components/ColorPalette.ts';
+import './components/ColorPanel.ts';
+import './components/ColorPicker.ts';
+import './components/SegmentedControl.ts';
+import './components/ToggleSwitch.ts';
+import './components/Pagination.ts';
+import './components/Drawer.ts';
+import './components/Dialog.ts';
+import './components/Dropdown.ts';
+
+import './Header.ts';
+import './BookmarkPanel.ts';
+import './KeybindingsPanel.ts';
+import './Navbar.ts';
+import './CommentsPanel.ts';
+import './SettingsPanel.ts';
 import './App.ts';
 
-/**
- * Initializes the manga viewer UI.
- * This function cleans up the original page content, injects the viewer's HTML structure,
- * sets the manga data in the application state, and begins loading the manga images.
- * @param {IManga} manga - The manga object containing all necessary data to display the viewer.
- */
-export default function display(manga: IManga) {
-  console.warn('Running Lit-ts');
-  cleanUpElement(document.documentElement, document.head, document.body);
-  window.scrollTo(0, 0);
-  logScriptVerbose(`Page Cleaned Up`);
-  document.head.innerHTML = head(manga);
-  document.body.innerHTML = `<manga-online-viewer></manga-online-viewer>`;
-  setAppStateValue('manga', manga);
-}
+import '@moaqzdev/toast';
