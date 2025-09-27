@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDemon, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaOni, MangaPark, MangaReader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.09.26
+// @version       2025.09.27
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -34,7 +34,7 @@
 // @include       /https?:\/\/(www\.)?comick.io\/.+/
 // @include       /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/
 // @include       /https?:\/\/(www.)?(flamecomics).(xyz)\/series\/.+/
-// @include       /https?:\/\/visorikigai.(ajaco|eltanews).(com|net)\/capitulo\/\d+/
+// @include       /https?:\/\/(visorikigai|visualikigai).(ajaco|eltanews|foodib).(com|net)\/capitulo\/\d+/
 // @include       /https?:\/\/(www\.)?kumanga.com\/manga\/leer\/.+/
 // @include       /https?:\/\/(www.)?leercapitulo.co\/leer\/.+/
 // @include       /https?:\/\/(www\.)?lhtranslation.net\/read.+/
@@ -5821,7 +5821,7 @@
     toggleChecked() {
       if (!this.disabled) {
         this.checked = !this.checked;
-        this.dispatchEvent(new Event('change'));
+        this.dispatchEvent(new CustomEvent('change', { detail: { checked: this.checked } }));
       }
     }
     render() {
@@ -5838,26 +5838,17 @@
         name="${this.name}"
         ?checked=${this.checked}
         ?disabled=${this.disabled}
-        @change=${this.onChange}
+        @click=${this.toggleChecked}
       />
-      <div
+      <label
+        for="${this.name}"
         class="${e({
           switch: true,
           [this.design]: true,
         })}"
-        role="switch"
-        aria-checked="${this.checked}"
-        tabindex="${this.disabled ? -1 : 0}"
-        @click=${this.toggleChecked}
-        @keydown=${e => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            this.toggleChecked();
-          }
-        }}
       >
         <div class="knob">${knobContent}</div>
-      </div>
+      </label>
     `;
     }
   };
@@ -5874,6 +5865,7 @@
     }
 
     .switch {
+      display: inline-block;
       position: relative;
       width: var(--switch-width);
       height: var(--switch-height);
@@ -5954,7 +5946,6 @@
   __decorateClass$b([n$1({ type: String, reflect: true })], ToggleSwitch.prototype, 'design', 2);
   __decorateClass$b([n$1({ type: String })], ToggleSwitch.prototype, 'textOn', 2);
   __decorateClass$b([n$1({ type: String })], ToggleSwitch.prototype, 'textOff', 2);
-  __decorateClass$b([n$1({ attribute: false })], ToggleSwitch.prototype, 'onChange', 2);
   ToggleSwitch = __decorateClass$b([t$1('toggle-switch')], ToggleSwitch);
 
   var commonjsGlobal =
@@ -7712,7 +7703,7 @@
     saveSettingsValue('loadMode', mode);
   }
   function checkFitWidthOversize(event) {
-    const checked = event.currentTarget.checked;
+    const checked = event.detail.checked;
     saveSettingsValue('fitWidthIfOversize', checked);
   }
   function changeNavbarType(event) {
@@ -7720,15 +7711,15 @@
     saveSettingsValue('navbar', navbarType);
   }
   function checkEnableComments(event) {
-    const checked = event.currentTarget.checked;
+    const checked = event.detail.checked;
     saveSettingsValue('enableComments', checked);
   }
   function checkPagination(event) {
-    const checked = event.currentTarget.checked;
+    const checked = event.detail.checked;
     saveSettingsValue('pagination', checked);
   }
   function checkAutoDownload(event) {
-    const checked = event.currentTarget.checked;
+    const checked = event.detail.checked;
     saveSettingsValue('downloadZip', checked);
     if (checked) {
       Swal.fire({
@@ -7740,7 +7731,7 @@
     }
   }
   function checkLazyLoad(event) {
-    const checked = event.currentTarget.checked;
+    const checked = event.detail.checked;
     saveSettingsValue('lazyLoadImages', checked);
     if (checked) {
       Swal.fire({
@@ -7775,7 +7766,7 @@
     saveSettingsValue('minZoom', parseInt(min, 10));
   }
   function checkHideImageControls(event) {
-    const checked = event.currentTarget.checked;
+    const checked = event.detail.checked;
     saveSettingsValue('hidePageControls', checked);
   }
   function changeHeaderType(event) {
@@ -9028,7 +9019,7 @@
       <toggle-switch
         name="fitIfOversize"
         ?checked=${getSettingsValue('fitWidthIfOversize')}
-        .onChange=${checkFitWidthOversize}
+        @change=${checkFitWidthOversize}
       ></toggle-switch>
     </div>
     <div class="ControlLabel pagination">
@@ -9036,7 +9027,7 @@
       <toggle-switch
         name="pagination"
         ?checked=${getSettingsValue('pagination')}
-        .onChange=${checkPagination}
+        @change=${checkPagination}
       ></toggle-switch>
     </div>
     <div class="ControlLabel enableComments">
@@ -9044,7 +9035,7 @@
       <toggle-switch
         name="enableComments"
         ?checked=${getSettingsValue('enableComments')}
-        .onChange=${checkEnableComments}
+        @change=${checkEnableComments}
       ></toggle-switch>
     </div>
     <div class="ControlLabel downloadZip">
@@ -9052,7 +9043,7 @@
       <toggle-switch
         name="downloadZip"
         ?checked=${getSettingsValue('downloadZip')}
-        .onChange=${checkAutoDownload}
+        @change=${checkAutoDownload}
       ></toggle-switch>
     </div>
     <div class="ControlLabel hidePageControls">
@@ -9060,7 +9051,7 @@
       <toggle-switch
         name="hidePageControls"
         ?checked=${getSettingsValue('hidePageControls')}
-        .onChange=${checkHideImageControls}
+        @change=${checkHideImageControls}
       ></toggle-switch>
     </div>
     <div class="ControlLabel lazyLoadImages">
@@ -9068,7 +9059,7 @@
       <toggle-switch
         name="lazyLoadImages"
         ?checked=${getSettingsValue('lazyLoadImages')}
-        .onChange=${checkLazyLoad}
+        @change=${checkLazyLoad}
       ></toggle-switch>
     </div>
   `;
@@ -10765,7 +10756,7 @@
 
   const ikigai = {
     name: ['Ikigai Mangas - EltaNews', 'Ikigai Mangas - Ajaco'],
-    url: /https?:\/\/visorikigai.(ajaco|eltanews).(com|net)\/capitulo\/\d+/,
+    url: /https?:\/\/(visorikigai|visualikigai).(ajaco|eltanews|foodib).(com|net)\/capitulo\/\d+/,
     homepage: ['https://visorikigai.eltanews.com/', 'https://visorikigai.ajaco.net/'],
     language: [Language.SPANISH],
     category: Category.MANGA,

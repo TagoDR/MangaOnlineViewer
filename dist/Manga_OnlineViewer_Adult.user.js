@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.09.26
+// @version       2025.09.27
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -6861,7 +6861,7 @@
     toggleChecked() {
       if (!this.disabled) {
         this.checked = !this.checked;
-        this.dispatchEvent(new Event('change'));
+        this.dispatchEvent(new CustomEvent('change', { detail: { checked: this.checked } }));
       }
     }
     render() {
@@ -6878,26 +6878,17 @@
         name="${this.name}"
         ?checked=${this.checked}
         ?disabled=${this.disabled}
-        @change=${this.onChange}
+        @click=${this.toggleChecked}
       />
-      <div
+      <label
+        for="${this.name}"
         class="${e({
           switch: true,
           [this.design]: true,
         })}"
-        role="switch"
-        aria-checked="${this.checked}"
-        tabindex="${this.disabled ? -1 : 0}"
-        @click=${this.toggleChecked}
-        @keydown=${e => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            this.toggleChecked();
-          }
-        }}
       >
         <div class="knob">${knobContent}</div>
-      </div>
+      </label>
     `;
     }
   };
@@ -6914,6 +6905,7 @@
     }
 
     .switch {
+      display: inline-block;
       position: relative;
       width: var(--switch-width);
       height: var(--switch-height);
@@ -6994,7 +6986,6 @@
   __decorateClass$b([n$1({ type: String, reflect: true })], ToggleSwitch.prototype, 'design', 2);
   __decorateClass$b([n$1({ type: String })], ToggleSwitch.prototype, 'textOn', 2);
   __decorateClass$b([n$1({ type: String })], ToggleSwitch.prototype, 'textOff', 2);
-  __decorateClass$b([n$1({ attribute: false })], ToggleSwitch.prototype, 'onChange', 2);
   ToggleSwitch = __decorateClass$b([t$1('toggle-switch')], ToggleSwitch);
 
   var commonjsGlobal =
@@ -8752,7 +8743,7 @@
     saveSettingsValue('loadMode', mode);
   }
   function checkFitWidthOversize(event) {
-    const checked = event.currentTarget.checked;
+    const checked = event.detail.checked;
     saveSettingsValue('fitWidthIfOversize', checked);
   }
   function changeNavbarType(event) {
@@ -8760,15 +8751,15 @@
     saveSettingsValue('navbar', navbarType);
   }
   function checkEnableComments(event) {
-    const checked = event.currentTarget.checked;
+    const checked = event.detail.checked;
     saveSettingsValue('enableComments', checked);
   }
   function checkPagination(event) {
-    const checked = event.currentTarget.checked;
+    const checked = event.detail.checked;
     saveSettingsValue('pagination', checked);
   }
   function checkAutoDownload(event) {
-    const checked = event.currentTarget.checked;
+    const checked = event.detail.checked;
     saveSettingsValue('downloadZip', checked);
     if (checked) {
       Swal.fire({
@@ -8780,7 +8771,7 @@
     }
   }
   function checkLazyLoad(event) {
-    const checked = event.currentTarget.checked;
+    const checked = event.detail.checked;
     saveSettingsValue('lazyLoadImages', checked);
     if (checked) {
       Swal.fire({
@@ -8815,7 +8806,7 @@
     saveSettingsValue('minZoom', parseInt(min, 10));
   }
   function checkHideImageControls(event) {
-    const checked = event.currentTarget.checked;
+    const checked = event.detail.checked;
     saveSettingsValue('hidePageControls', checked);
   }
   function changeHeaderType(event) {
@@ -10068,7 +10059,7 @@
       <toggle-switch
         name="fitIfOversize"
         ?checked=${getSettingsValue('fitWidthIfOversize')}
-        .onChange=${checkFitWidthOversize}
+        @change=${checkFitWidthOversize}
       ></toggle-switch>
     </div>
     <div class="ControlLabel pagination">
@@ -10076,7 +10067,7 @@
       <toggle-switch
         name="pagination"
         ?checked=${getSettingsValue('pagination')}
-        .onChange=${checkPagination}
+        @change=${checkPagination}
       ></toggle-switch>
     </div>
     <div class="ControlLabel enableComments">
@@ -10084,7 +10075,7 @@
       <toggle-switch
         name="enableComments"
         ?checked=${getSettingsValue('enableComments')}
-        .onChange=${checkEnableComments}
+        @change=${checkEnableComments}
       ></toggle-switch>
     </div>
     <div class="ControlLabel downloadZip">
@@ -10092,7 +10083,7 @@
       <toggle-switch
         name="downloadZip"
         ?checked=${getSettingsValue('downloadZip')}
-        .onChange=${checkAutoDownload}
+        @change=${checkAutoDownload}
       ></toggle-switch>
     </div>
     <div class="ControlLabel hidePageControls">
@@ -10100,7 +10091,7 @@
       <toggle-switch
         name="hidePageControls"
         ?checked=${getSettingsValue('hidePageControls')}
-        .onChange=${checkHideImageControls}
+        @change=${checkHideImageControls}
       ></toggle-switch>
     </div>
     <div class="ControlLabel lazyLoadImages">
@@ -10108,7 +10099,7 @@
       <toggle-switch
         name="lazyLoadImages"
         ?checked=${getSettingsValue('lazyLoadImages')}
-        .onChange=${checkLazyLoad}
+        @change=${checkLazyLoad}
       ></toggle-switch>
     </div>
   `;
