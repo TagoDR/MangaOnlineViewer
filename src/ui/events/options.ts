@@ -39,8 +39,8 @@ export function changeLoadMode(event: Event) {
  * Event handler to toggle and save the 'fit width if oversized' setting.
  * @param {Event} event - The change event from the checkbox.
  */
-export function checkFitWidthOversize(event: Event) {
-  const checked = (event.currentTarget as HTMLInputElement).checked;
+export function checkFitWidthOversize(event: CustomEvent) {
+  const checked = event.detail.checked;
   saveSettingsValue('fitWidthIfOversize', checked);
 }
 
@@ -57,8 +57,8 @@ export function changeNavbarType(event: Event) {
  * Event handler to toggle and save the 'enable comments' setting.
  * @param {Event} event - The change event from the checkbox.
  */
-export function checkEnableComments(event: Event) {
-  const checked = (event.currentTarget as HTMLInputElement).checked;
+export function checkEnableComments(event: CustomEvent) {
+  const checked = event.detail.checked;
   saveSettingsValue('enableComments', checked);
 }
 
@@ -66,8 +66,8 @@ export function checkEnableComments(event: Event) {
  * Event handler to toggle and save the 'enable pagination' setting.
  * @param {Event} event - The change event from the checkbox.
  */
-export function checkPagination(event: Event) {
-  const checked = (event.currentTarget as HTMLInputElement).checked;
+export function checkPagination(event: CustomEvent) {
+  const checked = event.detail.checked;
   saveSettingsValue('pagination', checked);
 }
 
@@ -75,8 +75,8 @@ export function checkPagination(event: Event) {
  * Event handler to toggle and save the 'auto download' setting. Shows an informational popup when enabled.
  * @param {Event} event - The change event from the checkbox.
  */
-export function checkAutoDownload(event: Event) {
-  const checked = (event.currentTarget as HTMLInputElement).checked;
+export function checkAutoDownload(event: CustomEvent) {
+  const checked = event.detail.checked;
   saveSettingsValue('downloadZip', checked);
   if (checked) {
     Swal.fire({
@@ -92,8 +92,8 @@ export function checkAutoDownload(event: Event) {
  * Event handler to toggle and save the 'lazy load' setting. Shows a warning popup when enabled.
  * @param {Event} event - The change event from the checkbox.
  */
-export function checkLazyLoad(event: Event) {
-  const checked = (event.currentTarget as HTMLInputElement).checked;
+export function checkLazyLoad(event: CustomEvent) {
+  const checked = event.detail.checked;
   saveSettingsValue('lazyLoadImages', checked);
   if (checked) {
     Swal.fire({
@@ -152,8 +152,8 @@ export function changeMinZoom(event: Event) {
  * Event handler to toggle and save the 'hide page controls' setting.
  * @param {Event} event - The change event from the checkbox.
  */
-export function checkHideImageControls(event: Event) {
-  const checked = (event.currentTarget as HTMLInputElement).checked;
+export function checkHideImageControls(event: CustomEvent) {
+  const checked = event.detail.checked;
   saveSettingsValue('hidePageControls', checked);
 }
 

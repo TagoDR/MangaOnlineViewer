@@ -11,7 +11,6 @@ export class ToggleSwitch extends LitElement {
   @property({ type: String, reflect: true }) design: 'graphical' | 'textual' = 'graphical';
   @property({ type: String }) textOn = 'ON';
   @property({ type: String }) textOff = 'OFF';
-  @property({ attribute: false }) onChange?: (e: Event) => void;
 
   static readonly styles = css`
     :host {
@@ -26,6 +25,7 @@ export class ToggleSwitch extends LitElement {
     }
 
     .switch {
+      display: inline-block;
       position: relative;
       width: var(--switch-width);
       height: var(--switch-height);
@@ -104,7 +104,7 @@ export class ToggleSwitch extends LitElement {
   private toggleChecked() {
     if (!this.disabled) {
       this.checked = !this.checked;
-      this.dispatchEvent(new Event('change'));
+      this.dispatchEvent(new CustomEvent('change', { detail: { checked: this.checked } }));
     }
   }
 
@@ -123,26 +123,17 @@ export class ToggleSwitch extends LitElement {
         name="${this.name}"
         ?checked=${this.checked}
         ?disabled=${this.disabled}
-        @change=${this.onChange}
+        @click=${this.toggleChecked}
       />
-      <div
+      <label
+        for="${this.name}"
         class="${classMap({
           switch: true,
           [this.design]: true,
         })}"
-        role="switch"
-        aria-checked="${this.checked}"
-        tabindex="${this.disabled ? -1 : 0}"
-        @click=${this.toggleChecked}
-        @keydown=${(e: KeyboardEvent) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            this.toggleChecked();
-          }
-        }}
       >
         <div class="knob">${knobContent}</div>
-      </div>
+      </label>
     `;
   }
 }

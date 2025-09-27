@@ -22,7 +22,7 @@ export default {
         ?checked=${args.checked}
         .design=${args.design}
         ?disabled="${args.disabled}"
-        .onChange=${(e: Event) => args.onChange((e.target as HTMLInputElement).checked)}
+        @change=${(e: Event) => args.onChange((e.target as HTMLInputElement).checked)}
       >
       </toggle-switch>
       <label for=${args.name}>A toggle switch (${args.design})</label>

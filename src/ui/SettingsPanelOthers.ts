@@ -21,7 +21,7 @@ function checkboxOptions() {
       <toggle-switch
         name="fitIfOversize"
         ?checked=${getSettingsValue('fitWidthIfOversize')}
-        .onChange=${checkFitWidthOversize}
+        @change=${checkFitWidthOversize}
       ></toggle-switch>
     </div>
     <div class="ControlLabel pagination">
@@ -29,7 +29,7 @@ function checkboxOptions() {
       <toggle-switch
         name="pagination"
         ?checked=${getSettingsValue('pagination')}
-        .onChange=${checkPagination}
+        @change=${checkPagination}
       ></toggle-switch>
     </div>
     <div class="ControlLabel enableComments">
@@ -37,7 +37,7 @@ function checkboxOptions() {
       <toggle-switch
         name="enableComments"
         ?checked=${getSettingsValue('enableComments')}
-        .onChange=${checkEnableComments}
+        @change=${checkEnableComments}
       ></toggle-switch>
     </div>
     <div class="ControlLabel downloadZip">
@@ -45,7 +45,7 @@ function checkboxOptions() {
       <toggle-switch
         name="downloadZip"
         ?checked=${getSettingsValue('downloadZip')}
-        .onChange=${checkAutoDownload}
+        @change=${checkAutoDownload}
       ></toggle-switch>
     </div>
     <div class="ControlLabel hidePageControls">
@@ -53,7 +53,7 @@ function checkboxOptions() {
       <toggle-switch
         name="hidePageControls"
         ?checked=${getSettingsValue('hidePageControls')}
-        .onChange=${checkHideImageControls}
+        @change=${checkHideImageControls}
       ></toggle-switch>
     </div>
     <div class="ControlLabel lazyLoadImages">
@@ -61,7 +61,7 @@ function checkboxOptions() {
       <toggle-switch
         name="lazyLoadImages"
         ?checked=${getSettingsValue('lazyLoadImages')}
-        .onChange=${checkLazyLoad}
+        @change=${checkLazyLoad}
       ></toggle-switch>
     </div>
   `;
