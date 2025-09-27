@@ -300,12 +300,16 @@ export class Header extends LitElement {
           </h1>
         </div>
         <div id="ZoomControl">
-          <input
-            type="range"
-            id="Zoom"
+          <mov-slider
             .value="${getSettingsValue('zoomValue')}"
+            name="Zoom"
+            id="Zoom"
             min="${getSettingsValue('minZoom')}"
             max="200"
+            step="20"
+            with-markers
+            with-tooltip
+            label="Zoom : ${getSettingsValue('zoomValue')}"
             @input=${changeZoom}
           />
           <span id="ZoomVal"
@@ -315,6 +319,7 @@ export class Header extends LitElement {
                 : getSettingsValue('zoomMode')
             }</span
           >
+          </mov-slider>
         </div>
         <div
           id="GlobalFunctions"
