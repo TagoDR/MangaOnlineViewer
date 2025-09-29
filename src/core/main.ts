@@ -1,7 +1,9 @@
-import _ from 'lodash';
-import rangeSlider, { type RangeSlider } from 'range-slider-input';
-import rangeSliderStyles from 'range-slider-input/dist/style.css?inline';
+import 'toolcool-range-slider';
+import 'toolcool-range-slider/dist/plugins/tcrs-generated-labels.min.js';
+import 'toolcool-range-slider/dist/plugins/tcrs-moving-tooltip.min.js';
+import 'toolcool-range-slider/dist/plugins/tcrs-marks.min';
 import Swal, { type SweetAlertOptions } from 'sweetalert2-neutral';
+import type { RangeSlider } from 'toolcool-range-slider';
 import type { IManga, ISite } from '../types';
 import sweetalertStyle from '../ui/styles/externalStyle.ts';
 import startButton from '../ui/styles/startButton.css?inline';
@@ -20,157 +22,64 @@ import { allowUpload } from './upload';
 import formatPage from './viewer';
 
 /**
- * Validates the beginning page number, ensuring it's within the valid range.
- * @param {number} valBegin - The beginning page number to validate.
- * @param {number} endPage - The ending page number.
- * @param {RangeSlider} rs - The RangeSlider instance.
- * @returns {number} The validated beginning page number.
- */
-function validateMin(valBegin: number, endPage: number, rs: RangeSlider): number {
-  let val = valBegin;
-  if (Number.isNaN(val) || val < rs.min()) {
-    val = rs.min();
-  } else if (val > rs.max()) {
-    val = rs.max();
-  } else if (val > endPage) {
-    val = endPage;
-  }
-
-  return val;
-}
-
-/**
- * Validates the ending page number, ensuring it's within the valid range.
- * @param {number} valEnd - The ending page number to validate.
- * @param {number} beginPage - The beginning page number.
- * @param {RangeSlider} rs - The RangeSlider instance.
- * @returns {number} The validated ending page number.
- */
-function validateMax(valEnd: number, beginPage: number, rs: RangeSlider): number {
-  let val = valEnd;
-  if (Number.isNaN(val) || val > rs.max()) {
-    val = rs.max();
-  } else if (val < rs.min()) {
-    val = rs.min();
-  } else if (val < beginPage) {
-    val = beginPage;
-  }
-
-  return val;
-}
-
-/**
  * Shows a prompt to the user to select the beginning and ending pages for the manga.
- * @param {ISite} site - The site configuration object.
+ * @param {IManga} manga - The manga configuration object.
  * @param {number} [begin=1] - The initial beginning page number.
  * @returns {Promise<void>}
  */
-async function lateStart(site: ISite, begin = 1): Promise<void> {
-  const manga = await site.run();
+export function lateStart(
+  manga: IManga,
+  begin = 1,
+): Promise<{ begin: number; end: number } | null> {
   logScript('LateStart');
   let beginPage = begin;
   let endPage = manga.pages;
-  const options: SweetAlertOptions = {
-    title: getLocaleString('STARTING'),
+  return new Promise(resolve => {
+    const options: SweetAlertOptions = {
+      title: getLocaleString('STARTING'),
 
-    html: html`
-      ${getLocaleString('CHOOSE_BEGINNING')}
-      <div id="pageInputGroup">
-        <div id="pageInputs">
-          <input
-            type="number"
-            id="pageBegin"
-            class="pageInput"
+      html: html`
+        ${getLocaleString('CHOOSE_BEGINNING')}
+        <div id="pageInputGroup">
+          <tc-range-slider
+            id="pagesSlider"
             min="1"
-            inputmode="numeric"
-            pattern="[0-9]*"
             max="${manga.pages}"
-            value="${beginPage}"
-          />
-          -
-          <input
-            type="number"
-            id="pageEnd"
-            class="pageInput"
-            min="1"
-            inputmode="numeric"
-            pattern="[0-9]*"
-            max="${manga.pages}"
-            value="${endPage}"
-          />
+            round="0"
+            step="1"
+            value1="${beginPage}"
+            value2="${endPage}"
+            marks="true"
+            marks-count="${Math.ceil(manga.pages / 10)}"
+            marks-values-count="${Math.ceil(manga.pages / 5)}"
+            generate-labels="true"
+            slider-width="100%"
+            range-dragging="true"
+            pointers-overlap="false"
+          ></tc-range-slider>
         </div>
-        <div id="pagesSlider"></div>
-      </div>
-    `,
-    showCancelButton: true,
-    cancelButtonColor: '#d33',
-    reverseButtons: true,
-    icon: 'question',
-    didOpen() {
-      const pageBeginInput = document.querySelector<HTMLInputElement>('#pageBegin');
-      const pageEndInput = document.querySelector<HTMLInputElement>('#pageEnd');
-      const inputSlider = document.getElementById('pagesSlider');
-      if (inputSlider) {
-        const rangeSliderElement = rangeSlider(inputSlider, {
-          min: 1,
-          max: manga.pages,
-          value: [beginPage, endPage],
-          onInput(value, userInteraction) {
-            if (userInteraction) {
-              [beginPage, endPage] = value;
-              if (pageBeginInput) {
-                pageBeginInput.value = beginPage.toString();
-              }
-
-              if (pageEndInput) {
-                pageEndInput.value = endPage.toString();
-              }
-            }
-          },
+      `,
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      reverseButtons: true,
+      icon: 'question',
+      didOpen() {
+        const slider = document.querySelector<RangeSlider>('#pagesSlider');
+        slider?.addEventListener('change', (evt: Event) => {
+          const detail = (evt as CustomEvent).detail;
+          [beginPage, endPage] = [detail.value1, detail.value2];
         });
-
-        function changedInput() {
-          if (
-            (pageBeginInput && pageBeginInput.value === '') ||
-            (pageEndInput && pageEndInput.value === '')
-          ) {
-            return;
-          }
-
-          const valBegin = validateMin(
-            parseInt(pageBeginInput?.value ?? '0', 10),
-            endPage,
-            rangeSliderElement,
-          );
-          const valEnd = validateMax(
-            parseInt(pageEndInput?.value ?? '0', 10),
-            beginPage,
-            rangeSliderElement,
-          );
-          if (pageBeginInput) pageBeginInput.value = valBegin.toString();
-          if (pageEndInput) pageEndInput.value = valEnd.toString();
-          beginPage = valBegin;
-          endPage = valEnd;
-          rangeSliderElement.value([valBegin, valEnd]);
-        }
-
-        const observerEvent = _.debounce(changedInput, 600);
-        ['change', 'mouseup', 'keyup', 'touchend'].forEach(event => {
-          pageBeginInput?.addEventListener(event, observerEvent);
-          pageEndInput?.addEventListener(event, observerEvent);
-        });
+      },
+    };
+    Swal.fire(options).then(result => {
+      if (result.value) {
+        logScript(`Choice: ${beginPage} - ${endPage}`);
+        resolve({ begin: beginPage, end: endPage });
+      } else {
+        logScript(result.dismiss);
+        resolve(null);
       }
-    },
-  };
-  Swal.fire(options).then(result => {
-    if (result.value) {
-      logScript(`Choice: ${beginPage} - ${endPage}`);
-      manga.begin = beginPage;
-      manga.pages = endPage;
-      formatPage(manga).then(() => logScript('Page loaded'));
-    } else {
-      logScript(result.dismiss);
-    }
+    });
   });
 }
 
@@ -183,14 +92,22 @@ function createLateStartButton(site: ISite, beginning: number): void {
   const button = document.createElement('button');
   button.innerText = getLocaleString('BUTTON_START');
   button.id = 'StartMOV';
-  button.onclick = () => {
-    lateStart(site, beginning).catch(logScript);
+  button.onclick = async () => {
+    const manga = await site.run();
+    lateStart(manga, beginning)
+      .then(res => {
+        if (res) {
+          const newManga = { ...manga, begin: res.begin, pages: res.end };
+          formatPage(newManga).then(() => logScript('Page loaded'));
+        }
+      })
+      .catch(logScript);
   };
 
   document.body.appendChild(button);
 
   const style = document.createElement('style');
-  style.appendChild(document.createTextNode(startButton + rangeSliderStyles));
+  style.appendChild(document.createTextNode(startButton));
   document.head.appendChild(style);
   logScript('Start Button added to page', button);
 }
