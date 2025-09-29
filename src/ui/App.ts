@@ -88,6 +88,7 @@ export default class App extends LitElement {
         <keybindings-panel></keybindings-panel>
         <bookmark-panel></bookmark-panel>
         <settings-panel></settings-panel>
+        <moaqz-toaster dismissable></moaqz-toaster>
       </div>
     `;
   }

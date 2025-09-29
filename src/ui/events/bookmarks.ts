@@ -1,4 +1,4 @@
-import Swal from 'sweetalert2-neutral';
+import { toast } from '@moaqzdev/toast/utils';
 import {
   changeSettingsValue,
   getAppStateValue,
@@ -28,10 +28,9 @@ export function removeURLBookmark(url: string = window.location.href) {
 export function buttonEraseBookmarks(event: Event) {
   const target = (event.currentTarget as HTMLButtonElement).value;
   logScript(`Bookmark Removed ${target}`);
-  Swal.fire({
+  toast.error({
     title: getLocaleString('BOOKMARK_REMOVED'),
-    timer: 10000,
-    icon: 'error',
+    duration: 10000,
   });
   removeURLBookmark(target);
 }
@@ -61,17 +60,16 @@ export function buttonBookmark() {
   };
   if (isBookmarked(mark.url)) {
     changeSettingsValue('bookmarks', b => [...b.filter(el => el.url !== mark.url)]);
-    Swal.fire({
+    toast.error({
       title: getLocaleString('BOOKMARK_REMOVED'),
-      timer: 10000,
-      icon: 'error',
+      duration: 10000,
     });
   } else {
     changeSettingsValue('bookmarks', b => [...b, mark]);
-    Swal.fire({
+    toast.success({
       title: getLocaleString('BOOKMARK_SAVED'),
-      html: getLocaleString('BOOKMARK_MESSAGE').replace('##num##', num.toString()),
-      icon: 'success',
+      description: getLocaleString('BOOKMARK_MESSAGE').replace('##num##', num.toString()),
+      duration: 10000,
     });
   }
 }

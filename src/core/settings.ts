@@ -1,3 +1,4 @@
+import { toast } from '@moaqzdev/toast/utils';
 import { logger } from '@nanostores/logger';
 import { createRef } from 'lit/directives/ref.js';
 import _ from 'lodash';
@@ -526,3 +527,15 @@ export function showSettings<K extends ISettingsKey>(key: K | null = null): void
 giveToWindow('MOVSettings', showSettings);
 
 export const navbarSize = 34;
+
+function changedConfig(value: ISettings, oldValue: ISettings, changedKey: ISettingsKey) {
+  if (!['bookmarks'].includes(changedKey)) {
+    toast.info({
+      title: `${changedKey} Changed`,
+      description: `from ${JSON.stringify(oldValue[changedKey])} to ${JSON.stringify(value[changedKey])}`,
+      duration: 2000,
+    });
+  }
+}
+
+settings.listen(_.debounce(changedConfig, 300));

@@ -25,3 +25,5 @@ import './KeybindingsPanel.ts';
 import './Navbar.ts';
 import './CommentsPanel.ts';
 import './SettingsPanel.ts';
+
+import '@moaqzdev/toast';
