@@ -49,6 +49,7 @@
   "dependencies": {
     "@braintree/sanitize-url": "^7.1.1",
     "@gerhobbelt/keyscss": "^1.1.3-6",
+    "@moaqzdev/toast": "^1.3.0",
     "@nanostores/lit": "^0.2.3",
     "@nanostores/logger": "^1.0.0",
     "blob-util": "^2.0.2",
@@ -62,9 +63,8 @@
     "nanostores": "^1.0.1",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
-    "range-slider-input": "^2.4.4",
     "sweetalert2-neutral": "^11.22.2-neutral",
-    "@moaqzdev/toast": "^1.3.0"
+    "toolcool-range-slider": "^4.0.28"
   },
   "browserslist": ["defaults and fully supports es6-module", "maintained node versions"],
   "prettier": {
