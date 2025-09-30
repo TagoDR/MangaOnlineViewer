@@ -8,7 +8,7 @@ const mgeko: ISite = {
   language: [Language.ENGLISH],
   category: Category.MANGA,
   run(): IManga {
-    const images = [...document.querySelectorAll('#chapter-reader img')];
+    const images = [...document.querySelectorAll('img[id^="image-"]')];
     return {
       title: document.querySelector('.titles')?.textContent?.trim(),
       series: document.querySelector('.titles a')?.getAttribute('href'),
