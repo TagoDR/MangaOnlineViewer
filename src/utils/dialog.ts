@@ -161,3 +161,73 @@ export function createLateStartButton(onClick: () => void): void {
   style.appendChild(document.createTextNode(startButton));
   document.head.appendChild(style);
 }
+
+// Helper function to get an SVG icon based on the type
+function getIcon(iconType?: 'info' | 'warning' | 'success' | 'error') {
+  const style = 'width: 3em; height: 3em;';
+  switch (iconType) {
+    case 'info':
+      return `<svg style="${style}" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>`;
+    case 'warning':
+      return `<svg style="${style}" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>`;
+    default:
+      return '';
+  }
+}
+
+/**
+ * Displays a non-interactive informational dialog.
+ * @param {object} options - The options for the dialog.
+ * @param {string} options.title - The title of the dialog.
+ * @param {string} options.html - The HTML content of the dialog.
+ * @param {'info'|'warning'|'success'|'error'} [options.icon] - The icon to display.
+ * @param {number} [options.timer] - An optional timer in ms to auto-close the dialog.
+ */
+export function showInfoDialog(options: {
+  title: string;
+  html: string;
+  icon?: 'info' | 'warning' | 'success' | 'error';
+  timer?: number;
+}): void {
+  const dialog = document.createElement('mov-dialog');
+
+  dialog.innerHTML = html`
+    <span slot="label">${options.title}</span>
+    <div style="display: flex; align-items: center; padding: 1rem; gap: 1rem;">
+      ${
+        options.icon
+          ? `<div style="flex-shrink: 0; color: var(--mov-color-fill-loud)">${getIcon(
+              options.icon,
+            )}</div>`
+          : ''
+      }
+      <div style="flex-grow: 1;">${options.html}</div>
+    </div>
+    <div
+      slot="footer"
+      style="display: flex; justify-content: flex-end; padding: 0.5rem 1rem 1rem;"
+    >
+      <mov-button id="mov-info-ok-button">OK</mov-button>
+    </div>
+  `;
+
+  document.body.append(dialog);
+
+  const closeDialog = () => {
+    if (document.body.contains(dialog)) {
+      dialog.close();
+    }
+  };
+
+  if (options.timer) {
+    setTimeout(closeDialog, options.timer);
+  }
+
+  dialog.addEventListener('close', () => {
+    dialog.remove();
+  });
+
+  dialog.querySelector('#mov-info-ok-button')?.addEventListener('click', closeDialog);
+
+  dialog.open = true;
+}

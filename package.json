@@ -63,7 +63,6 @@
     "nanostores": "^1.0.1",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
-    "sweetalert2-neutral": "^11.22.2-neutral",
     "toolcool-range-slider": "^4.0.28"
   },
   "browserslist": ["defaults and fully supports es6-module", "maintained node versions"],

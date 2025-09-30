@@ -1,4 +1,3 @@
-import Swal from 'sweetalert2-neutral';
 import {
   changeSettingsValue,
   getLocaleString,
@@ -6,6 +5,7 @@ import {
   toggleLocalSettings,
 } from '../../core/settings';
 import type { HeaderMode, LoadMode, NavbarMode } from '../../types';
+import { showInfoDialog } from '../../utils/dialog';
 import { replaceStyleSheet } from '../../utils/css';
 
 /**
@@ -79,9 +79,9 @@ export function checkAutoDownload(event: CustomEvent) {
   const checked = event.detail.checked;
   saveSettingsValue('downloadZip', checked);
   if (checked) {
-    Swal.fire({
+    showInfoDialog({
       title: getLocaleString('ATTENTION'),
-      text: getLocaleString('AUTO_DOWNLOAD'),
+      html: getLocaleString('AUTO_DOWNLOAD'),
       timer: 10000,
       icon: 'info',
     });
@@ -96,7 +96,7 @@ export function checkLazyLoad(event: CustomEvent) {
   const checked = event.detail.checked;
   saveSettingsValue('lazyLoadImages', checked);
   if (checked) {
-    Swal.fire({
+    showInfoDialog({
       title: getLocaleString('WARNING'),
       html: getLocaleString('LAZY_LOAD'),
       icon: 'warning',
@@ -121,7 +121,7 @@ export function changePagesPerSecond(event: Event) {
   const timer = parseInt((event.currentTarget as HTMLInputElement).value, 10);
   saveSettingsValue('throttlePageLoad', timer);
   if (timer < 100) {
-    Swal.fire({
+    showInfoDialog({
       title: getLocaleString('SPEED_WARNING'),
       html: getLocaleString('SPEED_WARNING_MESSAGE'),
       icon: 'warning',
