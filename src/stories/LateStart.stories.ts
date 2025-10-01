@@ -4,12 +4,13 @@ import { customElement, property, state } from 'lit/decorators.js';
 import '../ui/components/Button';
 import '../ui/components/Icon.ts';
 import { themesCSS } from '../ui/themes';
-import { createLateStartButton, initialPrompt, lateStart } from '../utils/dialog';
+import { displayStartup } from '../utils/dialog';
+import '../utils/dialog.ts';
 
 // Mock data for the story
 const MOCK_BEGIN = 10;
 
-type Status = 'idle' | 'initial-prompt' | 'initial-canceled' | 'late-start-prompt' | 'success';
+type Status = 'idle' | 'running' | 'success' | 'canceled';
 
 @customElement('late-start-story-wrapper')
 // @ts-expect-error
@@ -22,7 +23,7 @@ class LateStartStoryWrapper extends LitElement {
   private status: Status = 'idle';
 
   @state()
-  private message = 'Click "Start" to begin the process.';
+  private message = 'Click a button to begin the process.';
 
   @state()
   private result: { begin: number; end: number } | null = null;
@@ -43,51 +44,40 @@ class LateStartStoryWrapper extends LitElement {
   }
 
   private cleanup() {
-    // Remove the floating button if it exists
-    document.getElementById('StartMOV')?.remove();
-
-    // Find and remove the associated style tag
-    const styles = Array.from(document.head.querySelectorAll('style'));
-    const lateStartStyle = styles.find(s => s.textContent?.includes('#StartMOV'));
-    lateStartStyle?.remove();
+    document.querySelector('mov-startup')?.remove();
   }
 
   private reset = () => {
     this.cleanup();
     this.status = 'idle';
-    this.message = 'Click "Start" to begin the process.';
+    this.message = 'Click a button to begin the process.';
     this.result = null;
   };
 
-  private startLateStart = async () => {
-    this.status = 'late-start-prompt';
-    this.message = 'Late start dialog is open. Choose a page range.';
-    try {
-      const res = await lateStart(this.maxPages, MOCK_BEGIN);
-      this.status = 'success';
-      this.message = 'Success! Script "ran" with the selected page range.';
-      this.result = res;
-      this.cleanup();
-    } catch (error) {
-      this.status = 'idle';
-      this.message = `Late start canceled. You can try again. Message: ${error}`;
-      this.cleanup();
-    }
-  };
+  private startProcess = async (lateStart = false) => {
+    this.reset();
+    this.status = 'running';
+    this.message = lateStart
+      ? 'Late start dialog is open. Choose a page range.'
+      : 'Initial prompt is open. It will auto-run or you can cancel.';
 
-  private startInitialPrompt = async () => {
-    this.status = 'initial-prompt';
-    this.message = 'Initial prompt is open. It will auto-run after 3 seconds or you can cancel.';
     try {
-      await initialPrompt(3000);
+      const res = await displayStartup(
+        this.maxPages,
+        MOCK_BEGIN,
+        3000,
+        lateStart ? 'late-start-prompt' : 'initial-prompt',
+      );
       this.status = 'success';
-      this.message = 'Success! Script "ran" immediately.';
-      this.result = null;
+      this.message = res
+        ? 'Success! Script "ran" with the selected page range.'
+        : 'Success! Script "ran" immediately.';
+      this.result = res;
     } catch (error) {
-      this.status = 'initial-canceled';
-      this.message = `Initial prompt canceled. Click the floating button to start manually. Message:${error}`;
-      createLateStartButton(this.startLateStart);
+      this.status = 'canceled';
+      this.message = `Process canceled. You can try again. Message: ${error}`;
     }
+    this.cleanup();
   };
 
   connectedCallback() {
@@ -108,9 +98,11 @@ class LateStartStoryWrapper extends LitElement {
         <p><b>Status:</b> ${this.message}</p>
 
         ${
-          this.status === 'idle'
-            ? html`<mov-button @click=${this.startInitialPrompt}>Start Full Process</mov-button>
-              <mov-button @click=${this.startLateStart}>Start Late Dialog</mov-button>`
+          this.status === 'idle' || this.status === 'canceled'
+            ? html`<mov-button @click=${() => this.startProcess(false)}
+                >Start Full Process</mov-button
+              >
+              <mov-button @click=${() => this.startProcess(true)}>Start Late Dialog</mov-button>`
             : nothing
         }
 

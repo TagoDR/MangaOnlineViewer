@@ -1,191 +1,255 @@
 /**
- * This file provides utility functions for creating and managing dialogs, replacing SweetAlert functionality.
- * It uses the custom <mov-dialog> component to create responsive and interactive prompts.
+ * This file provides a web component for managing the startup process of the script.
+ * It replaces the old dialog functions with a self-contained Lit component.
  */
+import { html, LitElement, unsafeCSS } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
 import 'toolcool-range-slider/dist/plugins/tcrs-generated-labels.min.js';
 import 'toolcool-range-slider/dist/plugins/tcrs-marks.min';
 import 'toolcool-range-slider';
-import type { RangeSlider } from 'toolcool-range-slider';
 import { getLocaleString } from '../core/settings';
 import '../ui/components/Dialog';
 import '../ui/components/Button';
 import startButton from '../ui/styles/startButton.css?inline';
-import { html } from './code-tag';
-
 import '../ui/components/Icon.ts';
+import { choose } from 'lit-html/directives/choose.js';
+import { themesCSS } from '../ui/themes.ts';
 import colors from './colors.ts';
 import sequence from './sequence.ts';
 
 /**
- * Creates and displays a modal dialog to inform the user the script is about to run.
- * The dialog has a "Start Now" button and a "Cancel" button.
- * It automatically resolves after a timeout.
- * @param {number} [timeoutMs=3000] - The timeout in milliseconds to auto-resolve.
- * @returns {Promise<void>} A promise that resolves if the user confirms or the timer runs out,
- * and rejects if the user cancels.
+ * A Lit component to handle the startup flow, including an initial prompt,
+ * a late-start button, and a page range selection dialog.
+ *
+ * @fires start - Dispatched when the script should start. Detail is `null` for immediate start,
+ * or `{ begin: number, end: number }` for a late start with a page range.
+ * @fires close - Dispatched when the startup process is fully canceled.
  */
-export function initialPrompt(timeoutMs = 3000): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const dialog = document.createElement('mov-dialog');
-    dialog.icon = 'info';
-    dialog.innerHTML = html`
-      <span slot="label">${getLocaleString('STARTING')}</span>
-      <div style="padding: 1rem;">${getLocaleString('WAITING')}</div>
-      <div
-        slot="footer"
-        style="display: flex; justify-content: space-between; padding: 0.5rem 1rem 1rem;"
-      >
-        <mov-button
-          id="mov-cancel-button"
-          style="--mov-color-fill-loud:  ${colors.red[700]}; --mov-color-on-loud: white;"
-        >
-          Cancel
-        </mov-button>
-        <mov-button
-          id="mov-start-button"
-          style="--mov-color-fill-loud:  ${colors.green[700]}; --mov-color-on-loud: white;"
-        >
-          Start Now
-        </mov-button>
-      </div>
+@customElement('mov-startup')
+export class MovStartup extends LitElement {
+  @property({ type: Number })
+  mangaPages = 0;
+
+  @property({ type: Number })
+  begin = 1;
+
+  @property({ type: Number })
+  timeoutMs = 3000;
+
+  @property()
+  initialStatus: 'initial-prompt' | 'late-start-prompt' = 'initial-prompt';
+
+  @state()
+  private status: 'initial-prompt' | 'late-start-button' | 'late-start-prompt' = 'initial-prompt';
+
+  private timeoutId?: number;
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.status = this.initialStatus;
+    if (this.status === 'initial-prompt') {
+      this.timeoutId = window.setTimeout(() => {
+        this.handleStart();
+      }, this.timeoutMs);
+    }
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    window.clearTimeout(this.timeoutId);
+  }
+
+  private handleStart() {
+    window.clearTimeout(this.timeoutId);
+    this.dispatchEvent(new CustomEvent('start', { detail: null }));
+    this.remove();
+  }
+
+  private handleCancelInitial() {
+    window.clearTimeout(this.timeoutId);
+    this.status = 'late-start-button';
+  }
+
+  private showLateStartPrompt() {
+    this.status = 'late-start-prompt';
+  }
+
+  private handleLateStart(begin: number, end: number) {
+    this.dispatchEvent(new CustomEvent('start', { detail: { begin, end } }));
+    this.remove();
+  }
+
+  private handleClose() {
+    this.dispatchEvent(new CustomEvent('close'));
+    this.remove();
+  }
+
+  render() {
+    return html`
+      <style>
+        ${unsafeCSS(startButton)}
+        ${unsafeCSS(themesCSS())}
+      </style>
+      ${choose(this.status, [
+        ['initial-prompt', () => this.renderInitialPrompt()],
+        ['late-start-button', () => this.renderLateStartButton()],
+        ['late-start-prompt', () => this.renderLateStartPrompt()],
+      ])}
     `;
-    document.body.append(dialog);
+  }
 
-    let resolved = false;
-    const timeoutId = setTimeout(() => {
-      if (document.body.contains(dialog)) {
-        resolved = true;
-        dialog.close();
-        resolve();
-      }
-    }, timeoutMs);
-
-    dialog.addEventListener('close', () => {
-      clearTimeout(timeoutId);
-      if (!resolved) {
-        reject(new Error('Dialog closed by user'));
-      }
-      dialog.remove();
-    });
-
-    dialog.querySelector('#mov-start-button')?.addEventListener('click', () => {
-      resolved = true;
-      dialog.close();
-      resolve();
-    });
-
-    dialog.querySelector('#mov-cancel-button')?.addEventListener('click', () => {
-      dialog.close();
-    });
-
-    dialog.open = true;
-  });
-}
-
-/**
- * Creates and displays a modal dialog with a range slider for page selection.
- * @param {number} mangaPages - The total number of pages.
- * @param {number} [begin=1] - The initial starting page.
- * @returns {Promise<{begin: number, end: number}>} A promise that resolves with the selected
- * page range, or rejects if the user cancels.
- */
-export function lateStart(mangaPages: number, begin = 1): Promise<{ begin: number; end: number }> {
-  return new Promise((resolve, reject) => {
-    let beginPage = begin;
-    let endPage = mangaPages;
-
-    const dialog = document.createElement('mov-dialog');
-    dialog.icon = 'question';
-    dialog.innerHTML = html`
-      <span slot="label">${getLocaleString('STARTING')}</span>
-      <div style="padding: 1rem;">
-        ${getLocaleString('CHOOSE_BEGINNING')}
+  renderInitialPrompt() {
+    const handleDialogClose = (e: Event) => {
+      e.stopPropagation();
+      this.handleCancelInitial();
+    };
+    return html`
+      <mov-dialog
+        open
+        icon="info"
+        @close=${handleDialogClose}
+      >
+        <span slot="label">${getLocaleString('STARTING')}</span>
+        <div style="padding: 1rem;">${getLocaleString('WAITING')}</div>
         <div
-          id="pageInputGroup"
-          style="padding: 1rem 0;"
+          slot="footer"
+          style="display: flex; justify-content: space-between; padding: 0.5rem 1rem 1rem;"
         >
-          <tc-range-slider
-            id="pagesSlider"
-            theme="glass"
-            css-links="https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-themes.min.css"
-            min="1"
-            max="${mangaPages}"
-            round="0"
-            step="1"
-            value1="${beginPage}"
-            value2="${endPage}"
-            data="${sequence(mangaPages).join(', ')}"
-            marks="true"
-            marks-count="11"
-            marks-values-count="11"
-            generate-labels="true"
-            slider-width="100%"
-            pointers-overlap="false"
-            pointers-min-distance="1"
-            generate-labels-text-color="var(--mov-color-on-loud)"
-          ></tc-range-slider>
+          <mov-button
+            @click=${() => this.shadowRoot?.querySelector('mov-dialog')?.close()}
+            style="--mov-color-fill-loud: ${colors.red[700]}; --mov-color-on-loud: white;"
+          >
+            Cancel
+          </mov-button>
+          <mov-button
+            @click=${this.handleStart}
+            style="--mov-color-fill-loud: ${colors.green[700]}; --mov-color-on-loud: white;"
+          >
+            Start Now
+          </mov-button>
         </div>
-      </div>
-      <div
-        slot="footer"
-        style="display: flex; justify-content: flex-end; gap: 0.5rem; padding: 0.5rem 1rem 1rem;"
-      >
-        <mov-button
-          id="mov-close-button"
-          style="--mov-color-fill-loud:  ${colors.red[700]}; --mov-color-on-loud: white;"
-        >
-          Close
-        </mov-button>
-        <mov-button
-          id="mov-run-button"
-          style="--mov-color-fill-loud:  ${colors.green[700]}; --mov-color-on-loud: white;"
-        >
-          Run
-        </mov-button>
-      </div>
+      </mov-dialog>
     `;
-    document.body.append(dialog);
+  }
 
-    const slider = dialog.querySelector<RangeSlider>('#pagesSlider');
-    slider?.addEventListener('change', (evt: Event) => {
-      const detail = (evt as CustomEvent).detail;
-      [beginPage, endPage] = [detail.value1, detail.value2];
-    });
+  renderLateStartButton() {
+    return html`
+      <button
+        id="StartMOV"
+        @click=${this.showLateStartPrompt}
+      >
+        ${getLocaleString('BUTTON_START')}
+      </button>
+    `;
+  }
 
-    let resolved = false;
-    dialog.addEventListener('close', () => {
-      if (!resolved) {
-        reject(new Error('Dialog closed by user'));
-      }
-      dialog.remove();
-    });
+  renderLateStartPrompt() {
+    let beginPage = this.begin;
+    let endPage = this.mangaPages;
 
-    dialog.querySelector('#mov-run-button')?.addEventListener('click', () => {
-      resolved = true;
-      dialog.close();
-      resolve({ begin: beginPage, end: endPage });
-    });
+    const onSliderChange = (e: CustomEvent) => {
+      [beginPage, endPage] = [e.detail.value1, e.detail.value2];
+    };
 
-    dialog.querySelector('#mov-close-button')?.addEventListener('click', () => {
-      dialog.close();
-    });
+    const handleDialogClose = (e: Event) => {
+      e.stopPropagation();
+      this.handleClose();
+    };
 
-    dialog.open = true;
-  });
+    return html`
+      <mov-dialog
+        open
+        icon="question"
+        @close=${handleDialogClose}
+      >
+        <span slot="label">${getLocaleString('STARTING')}</span>
+        <div style="padding: 1rem;">
+          ${getLocaleString('CHOOSE_BEGINNING')}
+          <div
+            id="pageInputGroup"
+            style="padding: 1rem 0;"
+          >
+            <tc-range-slider
+              id="pagesSlider"
+              theme="glass"
+              css-links="https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-themes.min.css"
+              min="1"
+              max="${this.mangaPages}"
+              round="0"
+              step="1"
+              value1="${beginPage}"
+              value2="${endPage}"
+              data="${sequence(this.mangaPages).join(', ')}"
+              marks="true"
+              marks-count="11"
+              marks-values-count="11"
+              generate-labels="true"
+              slider-width="100%"
+              pointers-overlap="false"
+              pointers-min-distance="1"
+              generate-labels-text-color="var(--mov-color-on-loud)"
+              @change=${onSliderChange}
+            ></tc-range-slider>
+          </div>
+        </div>
+        <div
+          slot="footer"
+          style="display: flex; justify-content: flex-end; gap: 0.5rem; padding: 0.5rem 1rem 1rem;"
+        >
+          <mov-button
+            @click=${() => this.shadowRoot?.querySelector('mov-dialog')?.close()}
+            style="--mov-color-fill-loud: ${colors.red[700]}; --mov-color-on-loud: white;"
+          >
+            Close
+          </mov-button>
+          <mov-button
+            @click=${() => this.handleLateStart(beginPage, endPage)}
+            style="--mov-color-fill-loud: ${colors.green[700]}; --mov-color-on-loud: white;"
+          >
+            Run
+          </mov-button>
+        </div>
+      </mov-dialog>
+    `;
+  }
 }
 
 /**
- * Creates and injects a button to start the manga viewer later.
- * @param {() => void} onClick - The function to execute when the button is clicked.
+ * Creates and adds a <mov-startup> component to the page to handle the startup process.
+ * @param mangaPages - The total number of pages for the late start dialog.
+ * @param begin - The initial start page for the late start dialog.
+ * @param timeout - The timeout in milliseconds for the initial prompt.
+ * @param initialStatus - The initial state of the dialog
+ * @returns A promise that resolves with `null` for an immediate start, or with
+ * `{ begin: number, end: number }` for a late start. It rejects if the process is canceled.
  */
-export function createLateStartButton(onClick: () => void): void {
-  const button = document.createElement('button');
-  button.innerText = getLocaleString('BUTTON_START');
-  button.id = 'StartMOV';
-  button.onclick = onClick;
-  document.body.appendChild(button);
+export function displayStartup(
+  mangaPages: number,
+  begin = 1,
+  timeout = 3000,
+  initialStatus: 'initial-prompt' | 'late-start-prompt' = 'initial-prompt',
+): Promise<{ begin: number; end: number } | null> {
+  return new Promise((resolve, reject) => {
+    // Ensure no multiple instances
+    if (document.querySelector('mov-startup')) {
+      reject(new Error('Startup process is already in progress.'));
+      return;
+    }
 
-  const style = document.createElement('style');
-  style.appendChild(document.createTextNode(startButton));
-  document.head.appendChild(style);
+    const startupElement = document.createElement('mov-startup') as MovStartup;
+    startupElement.mangaPages = mangaPages;
+    startupElement.begin = begin;
+    startupElement.timeoutMs = timeout;
+    startupElement.initialStatus = initialStatus;
+
+    startupElement.addEventListener('start', ((e: CustomEvent) => {
+      resolve(e.detail);
+    }) as EventListener);
+
+    startupElement.addEventListener('close', () => {
+      reject(new Error('Startup process was canceled by the user.'));
+    });
+
+    document.body.append(startupElement);
+  });
 }
