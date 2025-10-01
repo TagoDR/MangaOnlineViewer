@@ -2,7 +2,7 @@
  * This file provides a web component for managing the startup process of the script.
  * It replaces the old dialog functions with a self-contained Lit component.
  */
-import { html, LitElement, unsafeCSS } from 'lit';
+import { html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import 'toolcool-range-slider/dist/plugins/tcrs-generated-labels.min.js';
 import 'toolcool-range-slider/dist/plugins/tcrs-marks.min';
@@ -12,7 +12,6 @@ import '../ui/components/Dialog';
 import '../ui/components/Button';
 import startButton from '../ui/styles/startButton.css?inline';
 import '../ui/components/Icon.ts';
-import { choose } from 'lit-html/directives/choose.js';
 import { themesCSS } from '../ui/themes.ts';
 import colors from './colors.ts';
 import sequence from './sequence.ts';
@@ -42,15 +41,26 @@ export class MovStartup extends LitElement {
   @state()
   private status: 'initial-prompt' | 'late-start-button' | 'late-start-prompt' = 'initial-prompt';
 
+  @state()
+  private isInitialDialogOpen = false;
+
+  @state()
+  private isLateStartDialogOpen = false;
+
   private timeoutId?: number;
 
   connectedCallback() {
     super.connectedCallback();
     this.status = this.initialStatus;
     if (this.status === 'initial-prompt') {
+      this.isInitialDialogOpen = true;
       this.timeoutId = window.setTimeout(() => {
         this.handleStart();
       }, this.timeoutMs);
+    }
+
+    if (this.status === 'late-start-prompt') {
+      this.isLateStartDialogOpen = true;
     }
   }
 
@@ -61,6 +71,7 @@ export class MovStartup extends LitElement {
 
   private handleStart() {
     window.clearTimeout(this.timeoutId);
+    this.isInitialDialogOpen = false;
     this.dispatchEvent(new CustomEvent('start', { detail: null }));
     this.remove();
   }
@@ -72,9 +83,11 @@ export class MovStartup extends LitElement {
 
   private showLateStartPrompt() {
     this.status = 'late-start-prompt';
+    this.isLateStartDialogOpen = true;
   }
 
   private handleLateStart(begin: number, end: number) {
+    this.isLateStartDialogOpen = false;
     this.dispatchEvent(new CustomEvent('start', { detail: { begin, end } }));
     this.remove();
   }
@@ -87,25 +100,25 @@ export class MovStartup extends LitElement {
   render() {
     return html`
       <style>
-        ${unsafeCSS(startButton)}
-        ${unsafeCSS(themesCSS())}
+        ${startButton}
+        ${themesCSS('#StartMOV')}
       </style>
-      ${choose(this.status, [
-        ['initial-prompt', () => this.renderInitialPrompt()],
-        ['late-start-button', () => this.renderLateStartButton()],
-        ['late-start-prompt', () => this.renderLateStartPrompt()],
-      ])}
+      <div id="StartMOV">
+        ${this.renderInitialPrompt()} ${this.renderLateStartPrompt()}
+        ${this.status === 'late-start-button' ? this.renderLateStartButton() : ''}
+      </div>
     `;
   }
 
   renderInitialPrompt() {
     const handleDialogClose = (e: Event) => {
       e.stopPropagation();
+      this.isInitialDialogOpen = false;
       this.handleCancelInitial();
     };
     return html`
       <mov-dialog
-        open
+        ?open=${this.isInitialDialogOpen}
         icon="info"
         @close=${handleDialogClose}
       >
@@ -116,7 +129,9 @@ export class MovStartup extends LitElement {
           style="display: flex; justify-content: space-between; padding: 0.5rem 1rem 1rem;"
         >
           <mov-button
-            @click=${() => this.shadowRoot?.querySelector('mov-dialog')?.close()}
+            @click=${() => {
+              this.isInitialDialogOpen = false;
+            }}
             style="--mov-color-fill-loud: ${colors.red[700]}; --mov-color-on-loud: white;"
           >
             Cancel
@@ -153,12 +168,13 @@ export class MovStartup extends LitElement {
 
     const handleDialogClose = (e: Event) => {
       e.stopPropagation();
+      this.isLateStartDialogOpen = false;
       this.handleClose();
     };
 
     return html`
       <mov-dialog
-        open
+        ?open=${this.isLateStartDialogOpen}
         icon="question"
         @close=${handleDialogClose}
       >
@@ -197,7 +213,9 @@ export class MovStartup extends LitElement {
           style="display: flex; justify-content: flex-end; gap: 0.5rem; padding: 0.5rem 1rem 1rem;"
         >
           <mov-button
-            @click=${() => this.shadowRoot?.querySelector('mov-dialog')?.close()}
+            @click=${() => {
+              this.isLateStartDialogOpen = false;
+            }}
             style="--mov-color-fill-loud: ${colors.red[700]}; --mov-color-on-loud: white;"
           >
             Close
