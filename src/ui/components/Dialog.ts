@@ -134,7 +134,8 @@ export default class Dialog extends LitElement {
     /* --- MODE: INLINE --- */
     :host([mode='inline']) {
       display: block;
-      width: 100%;
+      width: 500px;
+      max-width: 100%;
     }
     :host([mode='inline']) dialog {
       all: unset;
@@ -145,7 +146,8 @@ export default class Dialog extends LitElement {
       flex-direction: column;
       visibility: visible;
       position: relative;
-      width: 100%;
+      width: 500px;
+      max-width: 100%;
       border: 1px solid var(--theme-border-color, #e0e0e0);
       border-radius: 12px;
     }

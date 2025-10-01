@@ -8,23 +8,13 @@ const meta: Meta = {
   component: 'mov-dialog',
   argTypes: {
     open: { control: 'boolean' },
-    mode: { control: { type: 'radio', options: ['dialog', 'inline'] } },
+    mode: { control: 'radio', options: ['dialog', 'inline'] },
     fullscreen: { control: 'boolean' },
+    icon: { control: 'select', options: ['info', 'warning', 'success', 'error', 'question'] },
+    slot: { control: 'object' },
   },
   render: args => {
     const container = document.createElement('div');
-
-    if (args.mode === 'inline') {
-      const template = html`
-        <mov-dialog mode="inline">
-          <span slot="label">${args.label}</span>
-          ${args.slot}
-        </mov-dialog>
-      `;
-      render(template, container);
-      return container;
-    }
-
     const openPanel = () => {
       const panel = container.querySelector('mov-dialog');
       if (panel) panel.open = true;
@@ -35,10 +25,12 @@ const meta: Meta = {
     };
 
     const template = html`
-      <button @click=${openPanel}>Open Dialog</button>
+      ${args.mode !== 'inline' ? html`<button @click=${openPanel}>Open Dialog</button>` : nothing}
       <mov-dialog
         ?open=${args.open}
         ?fullscreen=${args.fullscreen}
+        .icon="${args.icon}"
+        .mode="${args.mode}"
         @close=${closePanel}
       >
         <span slot="label">${args.label}</span>
@@ -61,6 +53,7 @@ export const DialogCentered: Story = {
     open: false,
     fullscreen: false,
     label: 'Centered Dialog',
+    mode: 'dialog',
     slot: html`<p>This is a centered dialog panel.</p>`,
   },
 };

@@ -5,8 +5,8 @@ import {
   toggleLocalSettings,
 } from '../../core/settings';
 import type { HeaderMode, LoadMode, NavbarMode } from '../../types';
-import { showInfoDialog } from '../../utils/dialog';
 import { replaceStyleSheet } from '../../utils/css';
+import { showInfoDialog } from '../../utils/dialog';
 
 /**
  * Event handler to change the settings scope between global and site-specific (local).

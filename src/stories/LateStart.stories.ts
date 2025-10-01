@@ -1,19 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html, LitElement, nothing } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import '../ui/components/Button';
+import '../ui/components/Icon.ts';
 import { themesCSS } from '../ui/themes';
 import { createLateStartButton, initialPrompt, lateStart } from '../utils/dialog';
 
 // Mock data for the story
-const MOCK_PAGES = 50;
 const MOCK_BEGIN = 10;
 
 type Status = 'idle' | 'initial-prompt' | 'initial-canceled' | 'late-start-prompt' | 'success';
 
 @customElement('late-start-story-wrapper')
 // @ts-expect-error
+// biome-ignore lint/correctness/noUnusedVariables: Display
 class LateStartStoryWrapper extends LitElement {
+  @property({ type: Number })
+  maxPages = 50;
+
   @state()
   private status: Status = 'idle';
 
@@ -44,7 +48,7 @@ class LateStartStoryWrapper extends LitElement {
 
     // Find and remove the associated style tag
     const styles = Array.from(document.head.querySelectorAll('style'));
-    const lateStartStyle = styles.find(s => s.textContent?.includes('#StartMOV'));
+    const lateStartStyle = styles.find((s) => s.textContent?.includes('#StartMOV'));
     lateStartStyle?.remove();
   }
 
@@ -59,14 +63,15 @@ class LateStartStoryWrapper extends LitElement {
     this.status = 'late-start-prompt';
     this.message = 'Late start dialog is open. Choose a page range.';
     try {
-      const res = await lateStart(MOCK_PAGES, MOCK_BEGIN);
+      const res = await lateStart(this.maxPages, MOCK_BEGIN);
       this.status = 'success';
       this.message = 'Success! Script "ran" with the selected page range.';
       this.result = res;
       this.cleanup();
     } catch (error) {
-      this.status = 'initial-canceled'; // Go back to the state with the button
-      this.message = 'Late start canceled. Click the floating button to try again.';
+      this.status = 'idle';
+      this.message = `Late start canceled. You can try again. Message: ${error}`;
+      this.cleanup();
     }
   };
 
@@ -80,7 +85,7 @@ class LateStartStoryWrapper extends LitElement {
       this.result = null;
     } catch (error) {
       this.status = 'initial-canceled';
-      this.message = 'Initial prompt canceled. Click the floating button to start manually.';
+      this.message = `Initial prompt canceled. Click the floating button to start manually. Message:${error}`;
       createLateStartButton(this.startLateStart);
     }
   };
@@ -104,7 +109,8 @@ class LateStartStoryWrapper extends LitElement {
 
         ${
           this.status === 'idle'
-            ? html`<mov-button @click=${this.startInitialPrompt}>Start</mov-button>`
+            ? html`<mov-button @click=${this.startInitialPrompt}>Start Full Process</mov-button>
+                <mov-button @click=${this.startLateStart}>Start Late Dialog</mov-button>`
             : nothing
         }
 
@@ -113,11 +119,11 @@ class LateStartStoryWrapper extends LitElement {
         ${
           this.result
             ? html`
-              <div style="margin-top: 20px;">
-                <strong>Result:</strong>
-                <pre>${JSON.stringify(this.result, null, 2)}</pre>
-              </div>
-            `
+                <div style="margin-top: 20px;">
+                  <strong>Result:</strong>
+                  <pre>${JSON.stringify(this.result, null, 2)}</pre>
+                </div>
+              `
             : nothing
         }
       </div>
@@ -127,7 +133,16 @@ class LateStartStoryWrapper extends LitElement {
 
 export default {
   title: 'Features/LateStart',
-  render: () => html`<late-start-story-wrapper></late-start-story-wrapper>`,
+  render: (args) =>
+    html`<late-start-story-wrapper .maxPages=${args.maxPages}></late-start-story-wrapper>`,
+  argTypes: {
+    maxPages: {
+      control: { type: 'number' },
+    },
+  },
+  args: {
+    maxPages: 50,
+  },
 } satisfies Meta;
 
 export const Default: StoryObj = {
