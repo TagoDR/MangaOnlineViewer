@@ -77,7 +77,6 @@ class LateStartStoryWrapper extends LitElement {
       this.status = 'canceled';
       this.message = `Process canceled. You can try again. Message: ${error}`;
     }
-    this.cleanup();
   };
 
   connectedCallback() {

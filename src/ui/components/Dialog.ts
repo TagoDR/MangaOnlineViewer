@@ -3,6 +3,7 @@ import { customElement, property, query } from 'lit/decorators.js';
 import { IconX } from '../icons';
 import './Icon';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import { themesCSS } from '../themes.ts';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -341,6 +342,9 @@ export function showInfoDialog(options: {
   }
   render(
     html`
+      <style>
+        ${themesCSS()}
+      </style>
       <span slot="label">${unsafeHTML(options.title)}</span>
       <div style="padding: 1rem;">${unsafeHTML(options.html)}</div>
       <div
