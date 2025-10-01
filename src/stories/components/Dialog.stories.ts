@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing, render } from 'lit';
-import '../../ui/components/Dialog.ts';
+import Dialog from '../../ui/components/Dialog';
+import '../../ui/components/Icon';
 
 const meta: Meta = {
   title: 'Components/Dialog',
@@ -130,6 +131,90 @@ export const WithCustomButtons: Story = {
       </mov-dialog>
     `;
     render(template, container);
+    return container;
+  },
+};
+
+export const WithIcons: Story = {
+  name: 'With Icons',
+  args: {
+    ...DialogCentered.args,
+  },
+  render: () => {
+    const container = document.createElement('div');
+    const dialogContainer = document.createElement('div');
+
+    const openPanel = (iconType: 'info' | 'warning' | 'success' | 'error' | 'question') => {
+      const closePanel = () => {
+        render(html``, dialogContainer);
+      };
+
+      const dialogTemplate = html`
+        <mov-dialog
+          open
+          .icon=${iconType}
+          @close=${closePanel}
+        >
+          <span slot="label">${iconType.toUpperCase()} Dialog</span>
+          <p>This is a dialog with a "${iconType}" icon.</p>
+          <div
+            slot="footer"
+            style="display: flex; justify-content: flex-end; gap: 0.5rem;"
+          >
+            <button @click=${closePanel}>Close</button>
+          </div>
+        </mov-dialog>
+      `;
+      render(dialogTemplate, dialogContainer);
+    };
+
+    const icons: Array<'info' | 'warning' | 'success' | 'error' | 'question'> = [
+      'info',
+      'warning',
+      'success',
+      'error',
+      'question',
+    ];
+
+    const getColorForIcon = (iconType: (typeof icons)[number]) => {
+      switch (iconType) {
+        case 'success':
+          return 'var(--theme-color-success, #28a745)';
+        case 'error':
+          return 'var(--theme-color-danger, #dc3545)';
+        case 'warning':
+          return 'var(--theme-color-warning, #ffc107)';
+        case 'info':
+          return 'var(--theme-color-info, #17a2b8)';
+        case 'question':
+          return 'var(--theme-color-secondary, #6c757d)';
+        default:
+          return 'inherit';
+      }
+    };
+
+    const buttonsTemplate = html`
+      <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+        ${icons.map(
+          icon => html`
+            <button
+              @click=${() => openPanel(icon)}
+              style="display: flex; align-items: center; gap: 0.25rem;"
+            >
+              <mov-icon
+                .name=${Dialog.getIconName(icon)}
+                style="color: ${getColorForIcon(icon)}"
+              ></mov-icon>
+              Show ${icon}
+            </button>
+          `,
+        )}
+      </div>
+    `;
+
+    render(buttonsTemplate, container);
+    container.append(dialogContainer);
+
     return container;
   },
 };

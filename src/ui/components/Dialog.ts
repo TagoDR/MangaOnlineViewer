@@ -1,6 +1,7 @@
 import { css, html, LitElement, type PropertyValueMap } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { IconX } from '../icons';
+import './Icon';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -108,6 +109,28 @@ export default class Dialog extends LitElement {
       flex-grow: 1;
     }
 
+    .icon-container {
+      display: flex;
+      justify-content: center;
+      padding-block-end: 1rem;
+      text-align: center;
+    }
+    :host([icon='success']) .icon-container mov-icon {
+      color: var(--theme-color-success, #28a745);
+    }
+    :host([icon='error']) .icon-container mov-icon {
+      color: var(--theme-color-danger, #dc3545);
+    }
+    :host([icon='warning']) .icon-container mov-icon {
+      color: var(--theme-color-warning, #ffc107);
+    }
+    :host([icon='info']) .icon-container mov-icon {
+      color: var(--theme-color-info, #17a2b8);
+    }
+    :host([icon='question']) .icon-container mov-icon {
+      color: var(--theme-color-secondary, #6c757d);
+    }
+
     /* --- MODE: INLINE --- */
     :host([mode='inline']) {
       display: block;
@@ -173,6 +196,29 @@ export default class Dialog extends LitElement {
   @property({ type: Boolean, reflect: true }) open = false;
   @property({ type: String, reflect: true }) mode: 'dialog' | 'inline' = 'dialog';
   @property({ type: Boolean, reflect: true }) fullscreen = false;
+  @property({ type: String, reflect: true }) icon?:
+    | 'info'
+    | 'warning'
+    | 'success'
+    | 'error'
+    | 'question';
+
+  static getIconName(iconType?: 'info' | 'warning' | 'success' | 'error' | 'question') {
+    switch (iconType) {
+      case 'info':
+        return 'info-circle';
+      case 'warning':
+        return 'alert-circle';
+      case 'success':
+        return 'circle-check';
+      case 'error':
+        return 'circle-x';
+      case 'question':
+        return 'help';
+      default:
+        return '';
+    }
+  }
 
   @query('dialog')
   private readonly dialog!: HTMLDialogElement;
@@ -251,7 +297,21 @@ export default class Dialog extends LitElement {
             </button>
           </div>
         </div>
-        <slot class="content-slot"></slot>
+        <div class="content-slot">
+          ${
+            this.icon
+              ? html`
+                <div class="icon-container">
+                  <mov-icon
+                    .name=${Dialog.getIconName(this.icon)}
+                    size="4rem"
+                  ></mov-icon>
+                </div>
+              `
+              : ''
+          }
+          <slot></slot>
+        </div>
         <slot name="footer"></slot>
       </dialog>
     `;
