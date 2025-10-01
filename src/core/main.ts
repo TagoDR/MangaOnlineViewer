@@ -1,6 +1,5 @@
 import type { IManga, ISite } from '../types';
-import { themesCSS } from '../ui/themes.ts';
-import { createLateStartButton, initialPrompt, lateStart } from '../utils/dialog';
+import { displayStartup } from '../utils/dialog';
 import {
   getBrowser,
   getDevice,
@@ -13,42 +12,6 @@ import { testAttribute, testElement, testFunc, testTime, testVariable } from './
 import { getSettingsValue, isBookmarked } from './settings';
 import { allowUpload } from './upload';
 import formatPage from './viewer';
-
-/**
- * Handles the click event for the "Late Start" button.
- * When clicked, it initiates the manga loading process after a delay,
- * allowing the user to specify a starting page.
- */
-function clickLateStart(site: ISite) {
-  return async () => {
-    try {
-      const mangaData = await site.run();
-      const res = await lateStart(mangaData.pages, mangaData.begin ?? 1);
-      const newManga = { ...mangaData, begin: res.begin, pages: res.end };
-      formatPage(newManga).then(() => logScript('Page loaded'));
-    } catch (e) {
-      if (e instanceof Error) {
-        logScript(e.message);
-      }
-    }
-  };
-}
-
-/**
- * Shows a popup to wait for the manga to load, with an option to start immediately or cancel.
- * @param {ISite} site - The site configuration object.
- * @param {IManga} manga - The manga data object.
- */
-function showWaitPopup(site: ISite, manga: IManga): void {
-  initialPrompt(3000)
-    .then(() => {
-      formatPage(manga).then(() => logScript('Page loaded'));
-    })
-    .catch(error => {
-      logScript(error.message);
-      createLateStartButton(clickLateStart(site));
-    });
-}
 
 /**
  * Prepares the page to display the manga viewer.
@@ -76,17 +39,25 @@ export async function preparePage([site, manga]: [ISite, IManga]): Promise<void>
     formatPage(manga).then(() => logScript('Page loaded'));
   });
 
-  switch (site.start ?? getSettingsValue('loadMode')) {
-    case 'never':
-      createLateStartButton(clickLateStart(site));
-      break;
-    case 'always':
+  const loadMode = site.start ?? getSettingsValue('loadMode');
+  if (loadMode === 'always') {
+    formatPage(manga).then(() => logScript('Page loaded'));
+    return;
+  }
+
+  const initialStatus = loadMode === 'never' ? 'late-start-prompt' : 'initial-prompt';
+  try {
+    const result = await displayStartup(manga.pages, manga.begin ?? 1, 3000, initialStatus);
+    if (result) {
+      const newManga = { ...manga, begin: result.begin, pages: result.end };
+      formatPage(newManga).then(() => logScript('Page loaded'));
+    } else {
       formatPage(manga).then(() => logScript('Page loaded'));
-      break;
-    // case 'wait':
-    default:
-      showWaitPopup(site, manga);
-      break;
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      logScript(error.message);
+    }
   }
 }
 
@@ -101,9 +72,6 @@ async function start(sites: ISite[]): Promise<void> {
       getInfoGM.script.version
     } on ${getDevice()} ${getBrowser()} with ${getEngine()}`,
   );
-  const styles = document.createElement('style');
-  styles.appendChild(document.createTextNode(themesCSS()));
-  document.body.appendChild(styles);
   if (allowUpload()) return;
   logScript(sites.length, 'Known Manga Sites:', sites);
   const foundSites = sites.filter((s: ISite) => s.url.test(window.location.href));
