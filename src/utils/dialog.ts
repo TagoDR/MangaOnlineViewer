@@ -100,7 +100,10 @@ export function lateStart(mangaPages: number, begin = 1): Promise<{ begin: numbe
       <span slot="label">${getLocaleString('STARTING')}</span>
       <div style="padding: 1rem;">
         ${getLocaleString('CHOOSE_BEGINNING')}
-        <div id="pageInputGroup" style="padding: 1rem 0;">
+        <div
+          id="pageInputGroup"
+          style="padding: 1rem 0;"
+        >
           <tc-range-slider
             id="pagesSlider"
             theme="glass"
@@ -185,56 +188,4 @@ export function createLateStartButton(onClick: () => void): void {
   const style = document.createElement('style');
   style.appendChild(document.createTextNode(startButton));
   document.head.appendChild(style);
-}
-
-/**
- * Displays a non-interactive informational dialog.
- * @param {object} options - The options for the dialog.
- * @param {string} options.title - The title of the dialog.
- * @param {string} options.html - The HTML content of the dialog.
- * @param {'info'|'warning'|'success'|'error'} [options.icon] - The icon to display.
- * @param {number} [options.timer] - An optional timer in ms to auto-close the dialog.
- */
-export function showInfoDialog(options: {
-  title: string;
-  html: string;
-  icon?: 'info' | 'warning' | 'success' | 'error' | 'question';
-  timer?: number;
-}): void {
-  const dialog = document.createElement('mov-dialog');
-
-  if (options.icon) {
-    dialog.icon = options.icon;
-  }
-
-  dialog.innerHTML = html`
-    <span slot="label">${options.title}</span>
-    <div style="padding: 1rem;">${options.html}</div>
-    <div
-      slot="footer"
-      style="display: flex; justify-content: flex-end; padding: 0.5rem 1rem 1rem;"
-    >
-      <mov-button id="mov-info-ok-button">OK</mov-button>
-    </div>
-  `;
-
-  document.body.append(dialog);
-
-  const closeDialog = () => {
-    if (document.body.contains(dialog)) {
-      dialog.close();
-    }
-  };
-
-  if (options.timer) {
-    setTimeout(closeDialog, options.timer);
-  }
-
-  dialog.addEventListener('close', () => {
-    dialog.remove();
-  });
-
-  dialog.querySelector('#mov-info-ok-button')?.addEventListener('click', closeDialog);
-
-  dialog.open = true;
 }
