@@ -2,16 +2,19 @@
  * This file provides utility functions for creating and managing dialogs, replacing SweetAlert functionality.
  * It uses the custom <mov-dialog> component to create responsive and interactive prompts.
  */
-import 'toolcool-range-slider';
 import 'toolcool-range-slider/dist/plugins/tcrs-generated-labels.min.js';
 import 'toolcool-range-slider/dist/plugins/tcrs-marks.min';
-import 'toolcool-range-slider/dist/plugins/tcrs-moving-tooltip.min.js';
+import 'toolcool-range-slider';
 import type { RangeSlider } from 'toolcool-range-slider';
 import { getLocaleString } from '../core/settings';
 import '../ui/components/Dialog';
 import '../ui/components/Button';
 import startButton from '../ui/styles/startButton.css?inline';
 import { html } from './code-tag';
+
+import '../ui/components/Icon.ts';
+import colors from './colors.ts';
+import sequence from './sequence.ts';
 
 /**
  * Creates and displays a modal dialog to inform the user the script is about to run.
@@ -24,6 +27,7 @@ import { html } from './code-tag';
 export function initialPrompt(timeoutMs = 3000): Promise<void> {
   return new Promise((resolve, reject) => {
     const dialog = document.createElement('mov-dialog');
+    dialog.icon = 'info';
     dialog.innerHTML = html`
       <span slot="label">${getLocaleString('STARTING')}</span>
       <div style="padding: 1rem;">${getLocaleString('WAITING')}</div>
@@ -31,8 +35,18 @@ export function initialPrompt(timeoutMs = 3000): Promise<void> {
         slot="footer"
         style="display: flex; justify-content: space-between; padding: 0.5rem 1rem 1rem;"
       >
-        <mov-button id="mov-cancel-button"> Cancel </mov-button>
-        <mov-button id="mov-start-button"> Start Now </mov-button>
+        <mov-button
+          id="mov-cancel-button"
+          style="--mov-color-fill-loud:  ${colors.red[700]}; --mov-color-on-loud: white;"
+        >
+          Cancel
+        </mov-button>
+        <mov-button
+          id="mov-start-button"
+          style="--mov-color-fill-loud:  ${colors.green[700]}; --mov-color-on-loud: white;"
+        >
+          Start Now
+        </mov-button>
       </div>
     `;
     document.body.append(dialog);
@@ -81,30 +95,31 @@ export function lateStart(mangaPages: number, begin = 1): Promise<{ begin: numbe
     let endPage = mangaPages;
 
     const dialog = document.createElement('mov-dialog');
+    dialog.icon = 'question';
     dialog.innerHTML = html`
       <span slot="label">${getLocaleString('STARTING')}</span>
       <div style="padding: 1rem;">
         ${getLocaleString('CHOOSE_BEGINNING')}
-        <div
-          id="pageInputGroup"
-          style="padding: 1rem 0;"
-        >
+        <div id="pageInputGroup" style="padding: 1rem 0;">
           <tc-range-slider
             id="pagesSlider"
+            theme="glass"
+            css-links="https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-themes.min.css"
             min="1"
             max="${mangaPages}"
-            round="1"
+            round="0"
             step="1"
             value1="${beginPage}"
             value2="${endPage}"
+            data="${sequence(mangaPages).join(', ')}"
             marks="true"
-            marks-count="${Math.ceil(mangaPages / 10)}"
-            marks-values-count="${Math.ceil(mangaPages / 20)}"
+            marks-count="11"
+            marks-values-count="11"
             generate-labels="true"
             slider-width="100%"
-            range-dragging="true"
             pointers-overlap="false"
-            moving-tooltip="true"
+            pointers-min-distance="1"
+            generate-labels-text-color="var(--mov-color-on-loud)"
           ></tc-range-slider>
         </div>
       </div>
@@ -112,8 +127,18 @@ export function lateStart(mangaPages: number, begin = 1): Promise<{ begin: numbe
         slot="footer"
         style="display: flex; justify-content: flex-end; gap: 0.5rem; padding: 0.5rem 1rem 1rem;"
       >
-        <mov-button id="mov-close-button"> Close </mov-button>
-        <mov-button id="mov-run-button"> Run </mov-button>
+        <mov-button
+          id="mov-close-button"
+          style="--mov-color-fill-loud:  ${colors.red[700]}; --mov-color-on-loud: white;"
+        >
+          Close
+        </mov-button>
+        <mov-button
+          id="mov-run-button"
+          style="--mov-color-fill-loud:  ${colors.green[700]}; --mov-color-on-loud: white;"
+        >
+          Run
+        </mov-button>
       </div>
     `;
     document.body.append(dialog);
@@ -162,19 +187,6 @@ export function createLateStartButton(onClick: () => void): void {
   document.head.appendChild(style);
 }
 
-// Helper function to get an SVG icon based on the type
-function getIcon(iconType?: 'info' | 'warning' | 'success' | 'error') {
-  const style = 'width: 3em; height: 3em;';
-  switch (iconType) {
-    case 'info':
-      return `<svg style="${style}" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>`;
-    case 'warning':
-      return `<svg style="${style}" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>`;
-    default:
-      return '';
-  }
-}
-
 /**
  * Displays a non-interactive informational dialog.
  * @param {object} options - The options for the dialog.
@@ -186,23 +198,18 @@ function getIcon(iconType?: 'info' | 'warning' | 'success' | 'error') {
 export function showInfoDialog(options: {
   title: string;
   html: string;
-  icon?: 'info' | 'warning' | 'success' | 'error';
+  icon?: 'info' | 'warning' | 'success' | 'error' | 'question';
   timer?: number;
 }): void {
   const dialog = document.createElement('mov-dialog');
 
+  if (options.icon) {
+    dialog.icon = options.icon;
+  }
+
   dialog.innerHTML = html`
     <span slot="label">${options.title}</span>
-    <div style="display: flex; align-items: center; padding: 1rem; gap: 1rem;">
-      ${
-        options.icon
-          ? `<div style="flex-shrink: 0; color: var(--mov-color-fill-loud)">${getIcon(
-              options.icon,
-            )}</div>`
-          : ''
-      }
-      <div style="flex-grow: 1;">${options.html}</div>
-    </div>
+    <div style="padding: 1rem;">${options.html}</div>
     <div
       slot="footer"
       style="display: flex; justify-content: flex-end; padding: 0.5rem 1rem 1rem;"
