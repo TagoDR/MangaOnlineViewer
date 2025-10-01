@@ -1,5 +1,7 @@
 // Icons from https://tabler-icons.io/
 // Icons from https://www.flaticon.com/
+
+export { default as IconAlertCircle } from './alert-circle.svg';
 export { default as IconArrowAutofitDown } from './arrow-autofit-down.svg';
 export { default as IconArrowAutofitHeight } from './arrow-autofit-height.svg';
 export { default as IconArrowAutofitLeft } from './arrow-autofit-left.svg';
@@ -26,6 +28,8 @@ export { default as IconComic3 } from './Comic3-SpecialLinealColor.svg';
 export { default as IconCategory } from './category.svg';
 export { default as IconCheck } from './check.svg';
 export { default as IconChevronRight } from './chevron-right.svg';
+export { default as IconCircleCheck } from './circle-check.svg';
+export { default as IconCircleX } from './circle-x.svg';
 export { default as IconDeviceFloppy } from './device-floppy.svg';
 export { default as IconDotsVertical } from './dots-vertical.svg';
 export { default as IconEReader1Flat } from './E-reader1-KawaiiFlat.svg';
@@ -38,6 +42,8 @@ export { default as IconEyeOff } from './eye-off.svg';
 export { default as IconFileDownload } from './file-download.svg';
 export { default as IconFilePercent } from './file-percent.svg';
 export { default as IconHandClick } from './hand-click.svg';
+export { default as IconHelp } from './help.svg';
+export { default as IconInfoCircle } from './info-circle.svg';
 export { default as IconKeyboard } from './keyboard.svg';
 export { default as IconLayoutBottombar } from './layout-bottombar.svg';
 export { default as IconLayoutBottombarInactive } from './layout-bottombar-inactive.svg';
