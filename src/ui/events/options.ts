@@ -6,7 +6,8 @@ import {
 } from '../../core/settings';
 import type { HeaderMode, LoadMode, NavbarMode } from '../../types';
 import { replaceStyleSheet } from '../../utils/css';
-import { showInfoDialog } from '../../utils/dialog';
+
+import { showInfoDialog } from '../components/Dialog.ts';
 
 /**
  * Event handler to change the settings scope between global and site-specific (local).

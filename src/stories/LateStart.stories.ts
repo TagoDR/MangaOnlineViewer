@@ -48,7 +48,7 @@ class LateStartStoryWrapper extends LitElement {
 
     // Find and remove the associated style tag
     const styles = Array.from(document.head.querySelectorAll('style'));
-    const lateStartStyle = styles.find((s) => s.textContent?.includes('#StartMOV'));
+    const lateStartStyle = styles.find(s => s.textContent?.includes('#StartMOV'));
     lateStartStyle?.remove();
   }
 
@@ -110,7 +110,7 @@ class LateStartStoryWrapper extends LitElement {
         ${
           this.status === 'idle'
             ? html`<mov-button @click=${this.startInitialPrompt}>Start Full Process</mov-button>
-                <mov-button @click=${this.startLateStart}>Start Late Dialog</mov-button>`
+              <mov-button @click=${this.startLateStart}>Start Late Dialog</mov-button>`
             : nothing
         }
 
@@ -119,11 +119,11 @@ class LateStartStoryWrapper extends LitElement {
         ${
           this.result
             ? html`
-                <div style="margin-top: 20px;">
-                  <strong>Result:</strong>
-                  <pre>${JSON.stringify(this.result, null, 2)}</pre>
-                </div>
-              `
+              <div style="margin-top: 20px;">
+                <strong>Result:</strong>
+                <pre>${JSON.stringify(this.result, null, 2)}</pre>
+              </div>
+            `
             : nothing
         }
       </div>
@@ -133,7 +133,7 @@ class LateStartStoryWrapper extends LitElement {
 
 export default {
   title: 'Features/LateStart',
-  render: (args) =>
+  render: args =>
     html`<late-start-story-wrapper .maxPages=${args.maxPages}></late-start-story-wrapper>`,
   argTypes: {
     maxPages: {
