@@ -1,5 +1,6 @@
-import { setAppStateValue } from '../core/settings.ts';
+import { getAppStateValue, setAppStateValue } from '../core/settings.ts';
 import { getDevice } from '../utils/tampermonkey';
+import { waitForFunc } from '../utils/waitFor.ts';
 import autoscroll from './events/autoscroll';
 import trackCurrentPage from './events/currentpage';
 import keybindings from './events/keybindings';
@@ -9,7 +10,8 @@ import keybindings from './events/keybindings';
  * This function sets up headroom for the header, keyboard shortcuts,
  * auto-scrolling, current page tracking, and responsive device detection on resize.
  */
-function events() {
+async function events() {
+  await waitForFunc(() => getAppStateValue('manga') !== undefined);
   keybindings();
   window.addEventListener('resize', () => {
     setAppStateValue('device', getDevice());

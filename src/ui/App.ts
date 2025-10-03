@@ -37,17 +37,17 @@ export default class App extends LitElement {
   loadMode: LoadMode = 'wait';
 
   @property({ type: Object })
-  manga!: IManga;
+  manga?: IManga;
 
-  start(begin?: number, end?: number) {
-    setAppStateValue('manga', {
-      ...this.manga,
-      begin: begin ?? this.manga.begin,
-      pages: end ?? this.manga.pages,
-    });
-    document.documentElement.setAttribute('mov', '');
-    events();
-    loadImages();
+  async start(begin?: number, end?: number) {
+    if (this.manga) {
+      setAppStateValue('manga', {
+        ...this.manga,
+        begin: begin ?? this.manga.begin,
+        pages: end ?? this.manga.pages,
+      });
+      document.documentElement.setAttribute('mov', '');
+    }
   }
 
   /**
@@ -58,6 +58,8 @@ export default class App extends LitElement {
    */
   firstUpdated() {
     if (this.loadMode === 'always') this.start();
+    events();
+    loadImages();
   }
 
   updated() {
