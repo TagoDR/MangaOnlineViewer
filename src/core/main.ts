@@ -75,6 +75,8 @@ export async function preparePage([site, manga]: [ISite | undefined, IManga]): P
   cleanUpElement(document.documentElement, document.head, document.body);
   window.scrollTo(0, 0);
   document.head.innerHTML += wrapStyle('externals', externalCSS);
+  document.head.innerHTML +=
+    '<link rel="stylesheet" href="https://early.webawesome.com/webawesome@3.0.0-beta.6/dist/styles/webawesome.css" />';
 
   const viewer = document.createElement('manga-online-viewer') as App;
   viewer.loadMode = site?.start ?? getSettingsValue('loadMode');
