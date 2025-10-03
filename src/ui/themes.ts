@@ -41,7 +41,8 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
 
   return css`
     :where(:root),
-    ${selector}, .dark ${selector}.dark {
+    ${selector}, .dark,
+    ${selector}.dark {
       --theme-primary-color: ${hex};
       --theme-primary-text-color: ${text};
       --theme-secondary-color: ${secondary};

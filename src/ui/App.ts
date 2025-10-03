@@ -39,6 +39,17 @@ export default class App extends LitElement {
   @property({ type: Object })
   manga!: IManga;
 
+  start(begin?: number, end?: number) {
+    setAppStateValue('manga', {
+      ...this.manga,
+      begin: begin ?? this.manga.begin,
+      pages: end ?? this.manga.pages,
+    });
+    document.documentElement.setAttribute('mov', '');
+    events();
+    loadImages();
+  }
+
   /**
    * LitElement lifecycle hook, called after the component's first render.
    * It initializes global event listeners and registers the component's `shadowRoot`
@@ -46,9 +57,7 @@ export default class App extends LitElement {
    * that may need to interact with the DOM.
    */
   firstUpdated() {
-    events();
-    loadImages();
-    if (this.loadMode === 'always') setAppStateValue('manga', this.manga);
+    if (this.loadMode === 'always') this.start();
   }
 
   updated() {
@@ -65,6 +74,7 @@ export default class App extends LitElement {
    */
   render() {
     const manga = getAppStateValue('manga');
+    const dialog = getAppStateValue('dialog');
     return html`
       <style>
         ${themesCSS()}
@@ -112,14 +122,23 @@ export default class App extends LitElement {
                 ['never', () => 'late-start-button'],
               ])}"
               @start=${(e: CustomEvent) => {
-                document.documentElement.classList.add('mov');
-                setAppStateValue('manga', {
-                  ...this.manga,
-                  begin: e.detail?.begin ?? this.manga.begin,
-                  pages: e.detail?.end ?? this.manga.pages,
-                });
+                this.start(e.detail?.begin, e.detail?.end);
               }}
             ></script-startup>`
+        }
+        ${
+          dialog
+            ? html`
+              <mov-dialog
+                open
+                .icon=${dialog.icon}
+                @close=${() => setAppStateValue('dialog', null)}
+              >
+                <span slot="label">${dialog.title}</span>
+                ${dialog.content} ${dialog.footer}
+              </mov-dialog>
+            `
+            : ''
         }
       </div>
     `;

@@ -1,4 +1,5 @@
 import type { Ref } from 'lit/directives/ref.js';
+import type { TemplateResult } from 'lit';
 import type { IManga } from './IManga';
 
 /**
@@ -55,6 +56,17 @@ export type Page = {
 };
 
 /**
+ * Defines the shape of the dialog state object.
+ */
+export interface DialogState {
+  open: boolean;
+  title: string;
+  icon?: 'info' | 'warning' | 'success' | 'error' | 'question';
+  content: TemplateResult;
+  footer: TemplateResult;
+}
+
+/**
  * Defines the shape of the application's volatile state, managed by a NanoStore.
  * This state is not persisted and resets on page load.
  */
@@ -81,4 +93,6 @@ export type IApp = {
   chapter: Ref<HTMLDivElement>;
   /** A map of page numbers to their corresponding page data. */
   images?: Record<number, Page>;
+  /** The currently active dialog's state, or null if no dialog is open. */
+  dialog?: DialogState | null;
 };

@@ -1,9 +1,8 @@
-import { css, html, LitElement, type PropertyValueMap, render } from 'lit';
+import { css, html, LitElement, type PropertyValueMap } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { IconX } from '../icons';
 import './Icon';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
-import { themesCSS } from '../themes.ts';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -321,8 +320,11 @@ export default class Dialog extends LitElement {
     `;
   }
 }
+
+import { setAppStateValue } from '../../core/settings.ts';
+
 /**
- * Displays a non-interactive informational dialog.
+ * Displays a non-interactive informational dialog by setting the global dialog state.
  * @param {object} options - The options for the dialog.
  * @param {string} options.title - The title of the dialog.
  * @param {string} options.html - The HTML content of the dialog.
@@ -335,45 +337,24 @@ export function showInfoDialog(options: {
   icon?: 'info' | 'warning' | 'success' | 'error' | 'question';
   timer?: number;
 }): void {
-  const dialog = document.createElement('mov-dialog');
-
-  if (options.icon) {
-    dialog.icon = options.icon;
-  }
-  render(
-    html`
-      <style>
-        ${themesCSS()}
-      </style>
-      <span slot="label">${unsafeHTML(options.title)}</span>
-      <div style="padding: 1rem;">${unsafeHTML(options.html)}</div>
-      <div
-        slot="footer"
-        style="display: flex; justify-content: flex-end; padding: 0.5rem 1rem 1rem;"
-      >
-        <mov-button id="mov-info-ok-button">OK</mov-button>
-      </div>
-    `,
-    dialog,
-  );
-
-  document.body.append(dialog);
-
-  const closeDialog = () => {
-    if (document.body.contains(dialog)) {
-      dialog.close();
-    }
-  };
+  const closeDialog = () => setAppStateValue('dialog', null);
 
   if (options.timer) {
     setTimeout(closeDialog, options.timer);
   }
 
-  dialog.addEventListener('close', () => {
-    dialog.remove();
+  setAppStateValue('dialog', {
+    open: true,
+    icon: options.icon,
+    title: options.title,
+    content: html`<div style="padding: 1rem;">${unsafeHTML(options.html)}</div>`,
+    footer: html`
+      <div
+        slot="footer"
+        style="display: flex; justify-content: flex-end; padding: 0.5rem 1rem 1rem;"
+      >
+        <mov-button @click=${closeDialog}>OK</mov-button>
+      </div>
+    `,
   });
-
-  dialog.querySelector('#mov-info-ok-button')?.addEventListener('click', closeDialog);
-
-  dialog.open = true;
 }
