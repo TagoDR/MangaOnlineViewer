@@ -181,5 +181,9 @@ export default async function loadImages() {
         }
       }
     }
+    if (changedKey === 'loaded') {
+      const percent = value.loaded / (value.manga?.pages ?? 1);
+      document.title = `(${percent}%) ${value.manga?.title ?? 'Manga Online Viewer'}`;
+    }
   });
 }

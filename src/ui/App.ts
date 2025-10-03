@@ -62,12 +62,6 @@ export default class App extends LitElement {
     loadImages();
   }
 
-  updated() {
-    if (getAppStateValue('manga')) {
-      document.title = getAppStateValue('manga')?.title ?? 'Manga Online Viewer';
-    }
-  }
-
   /**
    * Renders the application's UI.
    * This includes applying the current theme and rendering the header, reader,
