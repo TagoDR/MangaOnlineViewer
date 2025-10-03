@@ -6,19 +6,18 @@
  * to run the script on a live website.
  */
 
-import { preparePage } from './core/main.ts';
+import start from './core/main.ts';
 import { allowUpload } from './core/upload';
 import localhost from './main/localhost';
-import display from './ui';
-
-// Immediately execute the localhost site configuration to get the mock manga data.
-const site = await localhost.run();
 
 // Enable local file upload functionality.
 allowUpload();
 
 // Add a click listener to a test button for re-rendering the display.
-document.querySelector('#test')?.addEventListener('click', () => preparePage([localhost, site]));
+document
+  .querySelector('#test')
+  ?.addEventListener('click', () => start([{ ...localhost, url: /localhost/ }]));
 
 // Immediately render the main application UI with the mock data.
-display(site);
+// import display from './ui';
+// display(site);

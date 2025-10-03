@@ -2,19 +2,18 @@
  * This file provides a web component for managing the startup process of the script.
  * It replaces the old dialog functions with a self-contained Lit component.
  */
-import { html, LitElement } from 'lit';
+import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import 'toolcool-range-slider/dist/plugins/tcrs-generated-labels.min.js';
 import 'toolcool-range-slider/dist/plugins/tcrs-marks.min';
 import 'toolcool-range-slider';
-import { getLocaleString } from '../core/settings';
-import '../ui/components/Dialog';
-import '../ui/components/Button';
-import startButton from '../ui/styles/startButton.css?inline';
-import '../ui/components/Icon.ts';
-import { themesCSS } from '../ui/themes.ts';
-import colors from './colors.ts';
-import sequence from './sequence.ts';
+import { getLocaleString } from '../core/settings.ts';
+import './components/Dialog.ts';
+import './components/Button.ts';
+import startButton from './styles/startButton.css?inline';
+import './components/Icon.ts';
+import colors from '../utils/colors.ts';
+import sequence from '../utils/sequence.ts';
 
 /**
  * A Lit component to handle the startup flow, including an initial prompt,
@@ -24,8 +23,9 @@ import sequence from './sequence.ts';
  * or `{ begin: number, end: number }` for a late start with a page range.
  * @fires close - Dispatched when the startup process is fully canceled.
  */
-@customElement('mov-startup')
+@customElement('script-startup')
 export class MovStartup extends LitElement {
+  static styles = [unsafeCSS(startButton)];
   @property({ type: Number })
   mangaPages = 0;
 
@@ -98,16 +98,15 @@ export class MovStartup extends LitElement {
   }
 
   render() {
-    return html`
-      <style>
-        ${startButton}
-        ${themesCSS('#StartMOV')}
-      </style>
-      <div id="StartMOV">
-        ${this.renderInitialPrompt()} ${this.renderLateStartPrompt()}
-        ${this.status === 'late-start-button' ? this.renderLateStartButton() : ''}
-      </div>
-    `;
+    switch (this.status) {
+      case 'late-start-button':
+        return this.renderLateStartButton();
+      case 'late-start-prompt':
+        return this.renderLateStartPrompt();
+      case 'initial-prompt':
+      default:
+        return this.renderInitialPrompt();
+    }
   }
 
   renderInitialPrompt() {
@@ -233,7 +232,7 @@ export class MovStartup extends LitElement {
 }
 
 /**
- * Creates and adds a <mov-startup> component to the page to handle the startup process.
+ * Creates and adds a <script-startup> component to the page to handle the startup process.
  * @param mangaPages - The total number of pages for the late start dialog.
  * @param begin - The initial start page for the late start dialog.
  * @param timeout - The timeout in milliseconds for the initial prompt.
@@ -249,12 +248,12 @@ export function displayStartup(
 ): Promise<{ begin: number; end: number } | null> {
   return new Promise((resolve, reject) => {
     // Ensure no multiple instances
-    if (document.querySelector('mov-startup')) {
+    if (document.querySelector('script-startup')) {
       reject(new Error('Startup process is already in progress.'));
       return;
     }
 
-    const startupElement = document.createElement('mov-startup') as MovStartup;
+    const startupElement = document.createElement('script-startup') as MovStartup;
     startupElement.mangaPages = mangaPages;
     startupElement.begin = begin;
     startupElement.timeoutMs = timeout;

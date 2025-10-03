@@ -4,8 +4,8 @@ import { customElement, property, state } from 'lit/decorators.js';
 import '../ui/components/Button';
 import '../ui/components/Icon.ts';
 import { themesCSS } from '../ui/themes';
-import { displayStartup } from '../utils/dialog';
-import '../utils/dialog.ts';
+import { displayStartup } from '../ui/Startup.ts';
+import '../ui/Startup.ts';
 
 // Mock data for the story
 const MOCK_BEGIN = 10;
@@ -44,7 +44,7 @@ class LateStartStoryWrapper extends LitElement {
   }
 
   private cleanup() {
-    document.querySelector('mov-startup')?.remove();
+    document.querySelector('script-startup')?.remove();
   }
 
   private reset = () => {
