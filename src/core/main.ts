@@ -1,5 +1,5 @@
 import type { IManga, ISite } from '../types';
-import { displayStartup } from '../utils/dialog';
+import { displayStartup } from '../ui/Startup.ts';
 import {
   getBrowser,
   getDevice,
