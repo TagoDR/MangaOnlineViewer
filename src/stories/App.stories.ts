@@ -3,8 +3,7 @@ import { html } from 'lit';
 import { appState } from '../core/settings';
 
 // Import the component and all its dependencies to ensure they are registered
-import '../ui/setup.ts';
-import '../ui/App.ts';
+import '../ui';
 import localhost from '../main/localhost.ts';
 import type { IMangaImages } from '../types';
 

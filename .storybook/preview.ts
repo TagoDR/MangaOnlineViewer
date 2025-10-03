@@ -2,7 +2,7 @@ import type { Preview } from '@storybook/web-components-vite';
 import { css, html, LitElement, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { themes } from 'storybook/theming';
-import '../src/ui/setup';
+import '../src/ui';
 import { useStores } from '@nanostores/lit';
 import { styleMap } from 'lit-html/directives/style-map.js';
 import { appState, getSettingsValue, locale, settings } from '../src/core/settings.ts';

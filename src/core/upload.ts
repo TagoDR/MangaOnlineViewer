@@ -1,7 +1,7 @@
 import JSZip from 'jszip';
 import localhost from '../main/localhost';
 import { logScript } from '../utils/tampermonkey';
-import formatPage from './viewer';
+import { preparePage } from './main.ts';
 
 const fileTypes = [
   'image/apng',
@@ -70,16 +70,19 @@ export async function loadZipFile(filePath: string | File): Promise<string[]> {
  * @param {string[]} listImages - An array of image blob URLs to display.
  */
 function displayUploadedFiles(title: string, listImages: string[]): void {
-  formatPage({
-    title,
-    series: '?reload',
-    pages: listImages.length,
-    begin: 1,
-    prev: '#',
-    next: '#',
-    lazy: false,
-    listImages,
-  }).then(() => logScript('Page loaded'));
+  preparePage([
+    undefined,
+    {
+      title,
+      series: '?reload',
+      pages: listImages.length,
+      begin: 1,
+      prev: '#',
+      next: '#',
+      lazy: false,
+      listImages,
+    },
+  ]).then(() => logScript('Page loaded'));
 }
 
 /**

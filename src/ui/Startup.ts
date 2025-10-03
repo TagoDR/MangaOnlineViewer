@@ -3,7 +3,7 @@
  * It replaces the old dialog functions with a self-contained Lit component.
  */
 import { html, LitElement, unsafeCSS } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import 'toolcool-range-slider/dist/plugins/tcrs-generated-labels.min.js';
 import 'toolcool-range-slider/dist/plugins/tcrs-marks.min';
 import 'toolcool-range-slider';
@@ -26,41 +26,26 @@ import sequence from '../utils/sequence.ts';
 @customElement('script-startup')
 export class MovStartup extends LitElement {
   static styles = [unsafeCSS(startButton)];
-  @property({ type: Number })
+  @property({ type: Number, reflect: true })
   mangaPages = 0;
 
-  @property({ type: Number })
+  @property({ type: Number, reflect: true })
   begin = 1;
 
   @property({ type: Number })
   timeoutMs = 3000;
 
-  @property()
-  initialStatus: 'initial-prompt' | 'late-start-prompt' = 'initial-prompt';
-
-  @state()
-  private status: 'initial-prompt' | 'late-start-button' | 'late-start-prompt' = 'initial-prompt';
-
-  @state()
-  private isInitialDialogOpen = false;
-
-  @state()
-  private isLateStartDialogOpen = false;
+  @property({ type: String, reflect: true })
+  status: 'initial-prompt' | 'late-start-button' | 'late-start-prompt' = 'initial-prompt';
 
   private timeoutId?: number;
 
   connectedCallback() {
     super.connectedCallback();
-    this.status = this.initialStatus;
     if (this.status === 'initial-prompt') {
-      this.isInitialDialogOpen = true;
       this.timeoutId = window.setTimeout(() => {
         this.handleStart();
       }, this.timeoutMs);
-    }
-
-    if (this.status === 'late-start-prompt') {
-      this.isLateStartDialogOpen = true;
     }
   }
 
@@ -71,30 +56,20 @@ export class MovStartup extends LitElement {
 
   private handleStart() {
     window.clearTimeout(this.timeoutId);
-    this.isInitialDialogOpen = false;
     this.dispatchEvent(new CustomEvent('start', { detail: null }));
-    this.remove();
-  }
-
-  private handleCancelInitial() {
-    window.clearTimeout(this.timeoutId);
-    this.status = 'late-start-button';
-  }
-
-  private showLateStartPrompt() {
-    this.status = 'late-start-prompt';
-    this.isLateStartDialogOpen = true;
   }
 
   private handleLateStart(begin: number, end: number) {
-    this.isLateStartDialogOpen = false;
     this.dispatchEvent(new CustomEvent('start', { detail: { begin, end } }));
-    this.remove();
+  }
+  private handleButtonCLick() {
+    this.status = 'late-start-prompt';
   }
 
-  private handleClose() {
-    this.dispatchEvent(new CustomEvent('close'));
-    this.remove();
+  private handleDialogClose(e: Event) {
+    e.stopPropagation();
+    window.clearTimeout(this.timeoutId);
+    this.status = 'late-start-button';
   }
 
   render() {
@@ -110,16 +85,11 @@ export class MovStartup extends LitElement {
   }
 
   renderInitialPrompt() {
-    const handleDialogClose = (e: Event) => {
-      e.stopPropagation();
-      this.isInitialDialogOpen = false;
-      this.handleCancelInitial();
-    };
     return html`
       <mov-dialog
-        ?open=${this.isInitialDialogOpen}
+        ?open=${this.status === 'initial-prompt'}
         icon="info"
-        @close=${handleDialogClose}
+        @close=${this.handleDialogClose}
       >
         <span slot="label">${getLocaleString('STARTING')}</span>
         <div style="padding: 1rem;">${getLocaleString('WAITING')}</div>
@@ -128,9 +98,7 @@ export class MovStartup extends LitElement {
           style="display: flex; justify-content: space-between; padding: 0.5rem 1rem 1rem;"
         >
           <mov-button
-            @click=${() => {
-              this.isInitialDialogOpen = false;
-            }}
+            @click=${this.handleDialogClose}
             style="--mov-color-fill-loud: ${colors.red[700]}; --mov-color-on-loud: white;"
           >
             Cancel
@@ -150,7 +118,7 @@ export class MovStartup extends LitElement {
     return html`
       <button
         id="StartMOV"
-        @click=${this.showLateStartPrompt}
+        @click=${this.handleButtonCLick}
       >
         ${getLocaleString('BUTTON_START')}
       </button>
@@ -165,17 +133,11 @@ export class MovStartup extends LitElement {
       [beginPage, endPage] = [e.detail.value1, e.detail.value2];
     };
 
-    const handleDialogClose = (e: Event) => {
-      e.stopPropagation();
-      this.isLateStartDialogOpen = false;
-      this.handleClose();
-    };
-
     return html`
       <mov-dialog
-        ?open=${this.isLateStartDialogOpen}
+        ?open=${this.status === 'late-start-prompt'}
         icon="question"
-        @close=${handleDialogClose}
+        @close=${this.handleDialogClose}
       >
         <span slot="label">${getLocaleString('STARTING')}</span>
         <div style="padding: 1rem;">
@@ -201,7 +163,6 @@ export class MovStartup extends LitElement {
               generate-labels="true"
               slider-width="100%"
               pointers-overlap="false"
-              pointers-min-distance="1"
               generate-labels-text-color="var(--mov-color-on-loud)"
               @change=${onSliderChange}
             ></tc-range-slider>
@@ -212,9 +173,7 @@ export class MovStartup extends LitElement {
           style="display: flex; justify-content: flex-end; gap: 0.5rem; padding: 0.5rem 1rem 1rem;"
         >
           <mov-button
-            @click=${() => {
-              this.isLateStartDialogOpen = false;
-            }}
+            @click=${this.handleDialogClose}
             style="--mov-color-fill-loud: ${colors.red[700]}; --mov-color-on-loud: white;"
           >
             Close
@@ -229,44 +188,4 @@ export class MovStartup extends LitElement {
       </mov-dialog>
     `;
   }
-}
-
-/**
- * Creates and adds a <script-startup> component to the page to handle the startup process.
- * @param mangaPages - The total number of pages for the late start dialog.
- * @param begin - The initial start page for the late start dialog.
- * @param timeout - The timeout in milliseconds for the initial prompt.
- * @param initialStatus - The initial state of the dialog
- * @returns A promise that resolves with `null` for an immediate start, or with
- * `{ begin: number, end: number }` for a late start. It rejects if the process is canceled.
- */
-export function displayStartup(
-  mangaPages: number,
-  begin = 1,
-  timeout = 3000,
-  initialStatus: 'initial-prompt' | 'late-start-prompt' = 'initial-prompt',
-): Promise<{ begin: number; end: number } | null> {
-  return new Promise((resolve, reject) => {
-    // Ensure no multiple instances
-    if (document.querySelector('script-startup')) {
-      reject(new Error('Startup process is already in progress.'));
-      return;
-    }
-
-    const startupElement = document.createElement('script-startup') as MovStartup;
-    startupElement.mangaPages = mangaPages;
-    startupElement.begin = begin;
-    startupElement.timeoutMs = timeout;
-    startupElement.initialStatus = initialStatus;
-
-    startupElement.addEventListener('start', ((e: CustomEvent) => {
-      resolve(e.detail);
-    }) as EventListener);
-
-    startupElement.addEventListener('close', () => {
-      reject(new Error('Startup process was canceled by the user.'));
-    });
-
-    document.body.append(startupElement);
-  });
 }

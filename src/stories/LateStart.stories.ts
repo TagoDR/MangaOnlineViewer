@@ -1,16 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html, LitElement, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import '../ui/components/Button';
-import '../ui/components/Icon.ts';
 import { themesCSS } from '../ui/themes';
-import { displayStartup } from '../ui/Startup.ts';
 import '../ui/Startup.ts';
 
 // Mock data for the story
 const MOCK_BEGIN = 10;
 
-type Status = 'idle' | 'running' | 'success' | 'canceled';
+type StoryStatus = 'idle' | 'running' | 'success';
 
 @customElement('late-start-story-wrapper')
 // @ts-expect-error
@@ -20,7 +17,11 @@ class LateStartStoryWrapper extends LitElement {
   maxPages = 50;
 
   @state()
-  private status: Status = 'idle';
+  private storyStatus: StoryStatus = 'idle';
+
+  @state()
+  private startupStatus: 'initial-prompt' | 'late-start-button' | 'late-start-prompt' =
+    'initial-prompt';
 
   @state()
   private message = 'Click a button to begin the process.';
@@ -30,7 +31,8 @@ class LateStartStoryWrapper extends LitElement {
 
   private themeStyleElement: HTMLStyleElement | null = null;
 
-  private injectThemeStyles() {
+  connectedCallback() {
+    super.connectedCallback();
     if (this.themeStyleElement) return;
     this.themeStyleElement = document.createElement('style');
     this.themeStyleElement.id = 'mov-theme-styles-story';
@@ -38,75 +40,62 @@ class LateStartStoryWrapper extends LitElement {
     document.head.append(this.themeStyleElement);
   }
 
-  private removeThemeStyles() {
+  disconnectedCallback() {
+    super.disconnectedCallback();
     this.themeStyleElement?.remove();
     this.themeStyleElement = null;
   }
 
-  private cleanup() {
-    document.querySelector('script-startup')?.remove();
-  }
-
   private reset = () => {
-    this.cleanup();
-    this.status = 'idle';
+    this.storyStatus = 'idle';
     this.message = 'Click a button to begin the process.';
     this.result = null;
   };
 
-  private startProcess = async (lateStart = false) => {
+  private startProcess = (lateStart = false) => {
     this.reset();
-    this.status = 'running';
+    this.storyStatus = 'running';
+    this.startupStatus = lateStart ? 'late-start-prompt' : 'initial-prompt';
     this.message = lateStart
       ? 'Late start dialog is open. Choose a page range.'
       : 'Initial prompt is open. It will auto-run or you can cancel.';
-
-    try {
-      const res = await displayStartup(
-        this.maxPages,
-        MOCK_BEGIN,
-        3000,
-        lateStart ? 'late-start-prompt' : 'initial-prompt',
-      );
-      this.status = 'success';
-      this.message = res
-        ? 'Success! Script "ran" with the selected page range.'
-        : 'Success! Script "ran" immediately.';
-      this.result = res;
-    } catch (error) {
-      this.status = 'canceled';
-      this.message = `Process canceled. You can try again. Message: ${error}`;
-    }
   };
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.injectThemeStyles();
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this.cleanup();
-    this.removeThemeStyles();
-  }
+  private handleStart = (e: CustomEvent) => {
+    this.storyStatus = 'success';
+    this.result = e.detail;
+    this.message = e.detail
+      ? 'Success! Script ran with the selected page range.'
+      : 'Success! Script ran immediately.';
+  };
 
   protected render() {
     return html`
-      <div style="font-family: sans-serif; padding: 1rem; color: var(--theme-text-color)">
+      <div style="font-family: sans-serif; padding: 1rem; color: var(--mov-text-color)">
         <h2>Manga Online Viewer - Start Process Simulation</h2>
         <p><b>Status:</b> ${this.message}</p>
 
         ${
-          this.status === 'idle' || this.status === 'canceled'
-            ? html`<mov-button @click=${() => this.startProcess(false)}
-                >Start Full Process</mov-button
-              >
-              <mov-button @click=${() => this.startProcess(true)}>Start Late Dialog</mov-button>`
+          this.storyStatus !== 'running'
+            ? html`
+              <button @click=${() => this.startProcess(false)}>Start Full Process</button>
+              <button @click=${() => this.startProcess(true)}>Start Late Dialog</button>
+            `
             : nothing
         }
-
-        <mov-button @click=${this.reset}>Reset</mov-button>
-
+        ${this.storyStatus !== 'idle' ? html`<button @click=${this.reset}>Reset</button>` : nothing}
+        ${
+          this.storyStatus === 'running'
+            ? html`
+              <script-startup
+                .mangaPages=${this.maxPages}
+                .begin=${MOCK_BEGIN}
+                .status=${this.startupStatus}
+                @start=${this.handleStart}
+              ></script-startup>
+            `
+            : nothing
+        }
         ${
           this.result
             ? html`

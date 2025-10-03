@@ -1,17 +1,55 @@
 import type { IManga, ISite } from '../types';
-import { displayStartup } from '../ui/Startup.ts';
 import {
   getBrowser,
   getDevice,
   getEngine,
   getInfoGM,
-  giveToWindow,
   logScript,
+  logScriptVerbose,
 } from '../utils/tampermonkey';
 import { testAttribute, testElement, testFunc, testTime, testVariable } from './check';
 import { getSettingsValue, isBookmarked } from './settings';
 import { allowUpload } from './upload';
-import formatPage from './viewer';
+import '../ui';
+import type App from '../ui/App.ts';
+import externalCSS from '../ui/styles/externalStyle.ts';
+import { cleanUpElement } from '../utils/cleanup.ts';
+import { wrapStyle } from '../utils/css.ts';
+import { waitForFunc, waitWithTimeout } from '../utils/waitFor.ts';
+
+/**
+ * Captures the comments section (Disqus or Facebook) from the page.
+ * It scrolls to the bottom of the page to trigger the lazy-loading of comments,
+ * then waits for the comment iframe to fully load.
+ * @returns {Promise<Element | null>} A promise that resolves with the comments element, or null if not found or disabled.
+ */
+async function captureComments(): Promise<Element | null> {
+  if (!getSettingsValue('enableComments')) return null;
+  let comments = document.querySelector('#disqus_thread, #fb-comments');
+  if (comments) {
+    logScript(`Waiting to Comments to load`, comments);
+    window.scrollTo(0, document.body.scrollHeight);
+    await waitWithTimeout(
+      waitForFunc(() => {
+        comments = document.querySelector('#disqus_thread, #fb-comments');
+        const iframe = comments?.querySelector<HTMLIFrameElement>(
+          'iframe:not(#indicator-north, #indicator-south)',
+        );
+        return (
+          iframe?.contentWindow?.document.readyState === 'complete' &&
+          !!iframe?.contentWindow?.document?.body?.textContent?.length
+        );
+      }),
+    );
+    if (comments.children.length) {
+      logScript(`Got Comments`, comments);
+    } else {
+      logScript(`Timeout Comments`);
+    }
+  }
+  window.scrollTo(0, 0);
+  return comments;
+}
 
 /**
  * Prepares the page to display the manga viewer.
@@ -20,45 +58,28 @@ import formatPage from './viewer';
  * @param {IManga} siteMangaTuple[1] - The manga data object.
  * @returns {Promise<void>}
  */
-export async function preparePage([site, manga]: [ISite, IManga]): Promise<void> {
-  logScript(`Found Pages: ${manga.pages} in ${site.name}`);
+export async function preparePage([site, manga]: [ISite | undefined, IManga]): Promise<void> {
+  logScript(`Found Pages: ${manga.pages} in ${site?.name}`);
   if (!manga.title) {
     manga.title = document.querySelector('title')?.textContent?.trim();
   }
-
   manga.begin = isBookmarked() ?? manga.begin ?? 1;
-  giveToWindow('MOV', (startPage?: number, endPage?: number) => {
-    if (startPage !== undefined) {
-      manga.begin = startPage;
-    }
-
-    if (endPage !== undefined) {
-      manga.pages = endPage;
-    }
-
-    formatPage(manga).then(() => logScript('Page loaded'));
-  });
-
-  const loadMode = site.start ?? getSettingsValue('loadMode');
-  if (loadMode === 'always') {
-    formatPage(manga).then(() => logScript('Page loaded'));
-    return;
+  if (manga.before !== undefined) {
+    logScriptVerbose(`Executing Preparation`);
+    await manga.before(manga.begin ?? 0);
+  }
+  if (getSettingsValue('enableComments') && !manga.comments) {
+    manga.comments = await captureComments();
   }
 
-  const initialStatus = loadMode === 'never' ? 'late-start-prompt' : 'initial-prompt';
-  try {
-    const result = await displayStartup(manga.pages, manga.begin ?? 1, 3000, initialStatus);
-    if (result) {
-      const newManga = { ...manga, begin: result.begin, pages: result.end };
-      formatPage(newManga).then(() => logScript('Page loaded'));
-    } else {
-      formatPage(manga).then(() => logScript('Page loaded'));
-    }
-  } catch (error) {
-    if (error instanceof Error) {
-      logScript(error.message);
-    }
-  }
+  cleanUpElement(document.documentElement, document.head, document.body);
+  window.scrollTo(0, 0);
+  document.head.innerHTML += wrapStyle('externals', externalCSS);
+
+  const viewer = document.createElement('manga-online-viewer') as App;
+  viewer.loadMode = site?.start ?? getSettingsValue('loadMode');
+  viewer.manga = manga;
+  document.body.appendChild(viewer);
 }
 
 /**
