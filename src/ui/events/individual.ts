@@ -119,13 +119,14 @@ export function imageLoaded(event: Event): void {
   }
 
   changeAppStateValue('loaded', n => n + 1);
+  const total = getAppStateValue('manga')?.pages ?? 1;
   const loaded = getAppStateValue('loaded') ?? 0;
-  const total =
-    (getAppStateValue('manga')?.pages ?? 1) - ((getAppStateValue('manga')?.begin ?? 1) - 1);
-  const percentage = loaded / total;
+  const percentage = Math.floor((loaded / total) * 100);
+  document.title = `(${percentage}%) ${getAppStateValue('manga')?.title}`;
   NProgress.configure({
     showSpinner: false,
-  }).set(percentage);
+  }).set(loaded / total);
+  logScript(`Progress: ${percentage}%`);
   if (loaded === total) {
     logScript('Images Loading Complete');
     if (getSettingsValue('downloadZip')) buttonStartDownload();

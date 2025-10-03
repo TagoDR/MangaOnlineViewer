@@ -8,6 +8,7 @@
   height: 4px;
 }
 
-html[mov] body > *:not(manga-online-viewer) {
+html[mov] body > *:not(manga-online-viewer, #nprogress) {
+  /* biome-ignore lint/complexity/noImportantStyles: requirement */
   display: none !important;
 }
