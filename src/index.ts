@@ -6,7 +6,7 @@
  * to run the script on a live website.
  */
 
-import start from './core/main.ts';
+import start, { preparePage } from './core/main.ts';
 import { allowUpload } from './core/upload';
 import localhost from './main/localhost';
 
@@ -16,8 +16,7 @@ allowUpload();
 // Add a click listener to a test button for re-rendering the display.
 document
   .querySelector('#test')
-  ?.addEventListener('click', () => start([{ ...localhost, url: /localhost/ }]));
+  ?.addEventListener('click', () => start([{ ...localhost, url: /.*/ }]));
 
 // Immediately render the main application UI with the mock data.
-// import display from './ui';
-// display(site);
+preparePage([{ ...localhost, start: 'always' }, await localhost.run()]);
