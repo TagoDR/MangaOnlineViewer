@@ -1,4 +1,4 @@
-import { css, html, LitElement } from 'lit';
+import { css, html, LitElement, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { setAppStateValue } from '../../core/settings.ts';
 import { isNothing } from '../../utils/checks.ts';
@@ -141,6 +141,9 @@ export class Pagination extends LitElement {
     }
   `;
 
+  @property({ type: Boolean })
+  mode: boolean = false;
+
   @property({ type: Number })
   currentPage = 1;
 
@@ -156,6 +159,7 @@ export class Pagination extends LitElement {
   prev?: string;
 
   render() {
+    if (!this.mode) return nothing;
     return html`
       <button
         class="pagination-button"

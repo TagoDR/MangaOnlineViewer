@@ -1,6 +1,6 @@
 import { useStores } from '@nanostores/lit';
-import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { css, html, LitElement, unsafeCSS } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import {
@@ -10,6 +10,7 @@ import {
   isBookmarked,
   locale,
   navbarSize,
+  setAppStateValue,
   settings,
 } from '../core/settings.ts';
 import events from './events.ts';
@@ -17,6 +18,9 @@ import loadImages from './Image.ts';
 import Reader from './Reader.ts';
 import cssStyles from './styles';
 import { themesCSS } from './themes.ts';
+import './Startup.ts';
+import { choose } from 'lit-html/directives/choose.js';
+import type { IManga, LoadMode } from '../types';
 
 /**
  * The root component for the MangaOnlineViewer application, rendered as `<manga-online-viewer>`.
@@ -29,6 +33,12 @@ import { themesCSS } from './themes.ts';
 export default class App extends LitElement {
   static readonly styles = [css``, unsafeCSS(cssStyles)];
 
+  @property({ type: String, reflect: true })
+  loadMode: LoadMode = 'wait';
+
+  @property({ type: Object })
+  manga!: IManga;
+
   /**
    * LitElement lifecycle hook, called after the component's first render.
    * It initializes global event listeners and registers the component's `shadowRoot`
@@ -38,6 +48,13 @@ export default class App extends LitElement {
   firstUpdated() {
     events();
     loadImages();
+    if (this.loadMode === 'always') setAppStateValue('manga', this.manga);
+  }
+
+  updated() {
+    if (getAppStateValue('manga')) {
+      document.title = getAppStateValue('manga')?.title ?? 'Manga Online Viewer';
+    }
   }
 
   /**
@@ -48,7 +65,6 @@ export default class App extends LitElement {
    */
   render() {
     const manga = getAppStateValue('manga');
-    if (!manga) return html``;
     return html`
       <style>
         ${themesCSS()}
@@ -66,29 +82,45 @@ export default class App extends LitElement {
         })}"
         .locale="${getSettingsValue('locale')}"
       >
-        <reader-header .manga=${manga}></reader-header>
-        ${Reader(manga)}
         ${
-          getSettingsValue('navbar') !== 'disabled'
-            ? html`<navbar-thumbnails .mode=${getSettingsValue('navbar')}></navbar-thumbnails>`
-            : nothing
+          manga
+            ? html`
+              <reader-header .manga=${manga}></reader-header>
+              ${Reader(manga)}
+              <navbar-thumbnails
+                      .mode=${getSettingsValue('navbar')}
+                    ></navbar-thumbnails>
+              <manga-pagination
+                        .mode="${getSettingsValue('pagination')}"
+                      .startPage=${manga.begin}
+                      .totalPages=${manga.pages}
+                      .currentPage=${getAppStateValue('currentPage')}
+                      .next=${manga.next}
+                      .prev=${manga.prev}
+                    ></manga-pagination>
+              <comments-panel></comments-panel>
+              <keybindings-panel></keybindings-panel>
+              <bookmark-panel></bookmark-panel>
+              <settings-panel></settings-panel>
+              <moaqz-toaster dismissable></moaqz-toaster>
+              </div>`
+            : html` <script-startup
+              .mangaPages="${this.manga?.pages}"
+              begin="${this.manga?.begin}"
+              initialStatus="${choose(this.loadMode, [
+                ['wait', () => 'initial-prompt'],
+                ['never', () => 'late-start-button'],
+              ])}"
+              @start=${(e: CustomEvent) => {
+                document.documentElement.classList.add('mov');
+                setAppStateValue('manga', {
+                  ...this.manga,
+                  begin: e.detail?.begin ?? this.manga.begin,
+                  pages: e.detail?.end ?? this.manga.pages,
+                });
+              }}
+            ></script-startup>`
         }
-        ${
-          getSettingsValue('pagination')
-            ? html` <manga-pagination
-              .startPage=${manga.begin}
-              .totalPages=${manga.pages}
-              .currentPage=${getAppStateValue('currentPage')}
-              .next=${manga.next}
-              .prev=${manga.prev}
-            ></manga-pagination>`
-            : nothing
-        }
-        <comments-panel></comments-panel>
-        <keybindings-panel></keybindings-panel>
-        <bookmark-panel></bookmark-panel>
-        <settings-panel></settings-panel>
-        <moaqz-toaster dismissable></moaqz-toaster>
       </div>
     `;
   }
