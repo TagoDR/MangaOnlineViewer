@@ -309,16 +309,13 @@ export class Header extends LitElement {
             step="20"
             with-markers
             with-tooltip
-            label="Zoom : ${getSettingsValue('zoomValue')}"
-            @input=${changeZoom}
-          />
-          <span id="ZoomVal"
-            >${
+            label="Zoom : ${
               getSettingsValue('zoomMode') === 'percent'
                 ? `${getSettingsValue('zoomValue')}%`
                 : getSettingsValue('zoomMode')
-            }</span
-          >
+            }"
+            @input=${changeZoom}
+          />
           </mov-slider>
         </div>
         <div
