@@ -126,8 +126,13 @@ function getValueGM(name: string, defaultValue: any = null): any {
  */
 function getJsonGM(name: string, defaultValue: any = null) {
   const result = getValueGM(name, defaultValue);
-  if (typeof result === 'string') {
-    return JSON.parse(result);
+  if (typeof result === 'string' && result.trim() !== '') {
+    try {
+      return JSON.parse(result);
+    } catch (e) {
+      logScript('Failed to parse JSON from storage', name, e);
+      return defaultValue;
+    }
   }
   return result;
 }

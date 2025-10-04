@@ -37,10 +37,7 @@ const diffObj = <T extends Record<string, unknown>>(
       object,
       (result: any, value: any, key: keyof Record<string, unknown>) => {
         if (!_.isEqual(value, base[key])) {
-          if (_.isArray(value)) {
-            // @ts-expect-error
-            result[key] = _.difference(value, base[key]);
-          } else if (_.isObject(value) && _.isObject(base[key])) {
+          if (_.isObject(value) && _.isObject(base[key]) && !_.isArray(value)) {
             // @ts-expect-error
             result[key] = changes(value, base[key]);
           } else {

@@ -57,7 +57,7 @@ export type ISettings = {
   downloadZip: boolean;
   /** Whether to capture and display the comments section from the original page. */
   enableComments: boolean;
-  /** Whether the script is enabled globally or for a specific site. */
+  /** Whether the script is enabled, locally for a specific site, or globally. */
   enabled: boolean;
   /** Whether to automatically fit oversized images to the screen width. */
   fitWidthIfOversize: boolean;

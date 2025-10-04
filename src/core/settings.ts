@@ -39,7 +39,7 @@ export const defaultSettings: ISettings = {
   colorScheme: 'dark',
   downloadZip: false,
   enableComments: true,
-  enabled: true,
+  enabled: false,
   fitWidthIfOversize: true,
   header: 'scroll',
   hidePageControls: false,
@@ -100,13 +100,12 @@ const mobileSettings: Partial<ISettings> = {
  * @returns {ISettings} The default settings object.
  */
 function getDefault(global = true): ISettings {
-  return !isMobile()
-    ? { ...defaultSettings, enabled: global, theme: global ? '#29487D' : '#004526' }
-    : _.defaultsDeep(mobileSettings, {
+  return isMobile()
+    ? _.defaultsDeep(mobileSettings, {
         ...defaultSettings,
-        enabled: global,
         theme: global ? '#29487D' : '#004526',
-      });
+      })
+    : { ...defaultSettings, theme: global ? '#29487D' : '#004526' };
 }
 
 /**
@@ -299,19 +298,16 @@ export function refreshSettings<K extends ISettingsKey>(key?: K): void {
     }
     return;
   }
-  const newObj = isSettingsLocal()
-    ? {
-        ...localSettings,
-        locale: globalSettings.locale,
-        keybinds: globalSettings.keybinds,
-        bookmarks: globalSettings.bookmarks,
-      }
-    : { ...globalSettings };
-  const currentObj = settings.get();
-  if (haveSettingsChanged(currentObj, newObj)) {
-    settings.set(newObj);
-    logScript('Refreshed Settings', key, null);
+  for (const key in settings.get()) {
+    const currentObj = settings.get()[key as ISettingsKey];
+    const newObj = isLocalSettingsAllowed(key as ISettingsKey)
+      ? localSettings[key as ISettingsKey]
+      : globalSettings[key as ISettingsKey];
+    if (haveSettingsChanged(currentObj, newObj)) {
+      settings.setKey(key as ISettingsKey, newObj);
+    }
   }
+  logScript('Refreshed All Settings');
 }
 
 /**
@@ -344,7 +340,7 @@ function syncLocalSettings(newValue: Partial<ISettings>): void {
   }
 }
 
-settingsChangeListener(_.debounce(syncLocalSettings, 300), window.location.hostname);
+settingsChangeListener(_.debounce(syncLocalSettings, 300), location.hostname);
 
 /**
  * Gets the effective value for a setting from the reactive store.
@@ -469,31 +465,37 @@ export function getLocaleString<K extends ILocaleKey>(name: K | string): string 
 }
 
 /**
- * Resets the settings (either local or global) to their default values.
- */
-export function resetSettings(): void {
-  if (isSettingsLocal()) {
-    removeValueGM(window.location.hostname);
-    localSettings = getDefault(false);
-  } else {
-    removeValueGM('settings');
-    globalSettings = getDefault();
-  }
-  logScript('Settings Reset');
-  refreshSettings();
-}
-
-/**
  * Enables or disables site-specific (local) settings.
  * @param {boolean} [activate=false] - Whether to activate or deactivate local settings.
  * @returns {boolean} The new state of local settings (true if enabled, false otherwise).
  */
-export function toggleLocalSettings(activate = false): boolean {
+export function toggleLocalSettings(activate: boolean = false): boolean {
   localSettings.enabled = activate;
   saveLocalSettings(diffObj(localSettings, getDefault(false)));
   logScript('Local Settings ', activate ? 'Enabled' : 'Disabled');
   refreshSettings();
+  toast.info({
+    title: `Changed Settings to`,
+    description: isSettingsLocal() ? 'Local' : 'Global',
+    duration: 2000,
+  });
   return isSettingsLocal();
+}
+
+/**
+ * Resets the settings (either local or global) to their default values.
+ */
+export function resetSettings(): void {
+  if (isSettingsLocal()) {
+    removeValueGM(location.hostname);
+    localSettings = getDefault(false);
+    toggleLocalSettings(false);
+  } else {
+    removeValueGM('settings');
+    globalSettings = getDefault();
+    refreshSettings();
+  }
+  logScript('Settings Reset');
 }
 
 /**
@@ -501,7 +503,7 @@ export function toggleLocalSettings(activate = false): boolean {
  * @param {string} [url=window.location.href] - The URL to check.
  * @returns {number | undefined} The bookmarked page number, or undefined if not bookmarked.
  */
-export function isBookmarked(url: string = window.location.href): number | undefined {
+export function isBookmarked(url: string = location.href): number | undefined {
   return getSettingsValue('bookmarks').find(el => el.url === url)?.page;
 }
 
@@ -528,14 +530,20 @@ giveToWindow('MOVSettings', showSettings);
 
 export const navbarSize = 34;
 
-function changedConfig(value: ISettings, oldValue: ISettings, changedKey: ISettingsKey) {
-  if (!['bookmarks'].includes(changedKey)) {
+const changedSettings = (
+  newSettings: ISettings,
+  oldSettings: ISettings,
+  changedKey?: keyof ISettings,
+) => {
+  if (changedKey && !['bookmarks', 'zoomValue'].includes(changedKey)) {
+    const oldValue = oldSettings[changedKey];
+    const newValue = newSettings[changedKey];
     toast.info({
       title: `${changedKey} Changed`,
-      description: `from ${JSON.stringify(oldValue[changedKey])} to ${JSON.stringify(value[changedKey])}`,
+      description: `from ${JSON.stringify(oldValue)} to ${JSON.stringify(newValue)}`,
       duration: 2000,
     });
   }
-}
+};
 
-settings.listen(_.debounce(changedConfig, 300));
+settings.listen(_.debounce(changedSettings, 300));
