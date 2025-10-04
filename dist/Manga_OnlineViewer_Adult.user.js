@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.10.03
+// @version       2025.10.04
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -22,10 +22,8 @@
 // @require       https://cdn.jsdelivr.net/npm/colorjs.io@0.5.2/dist/color.global.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
-// @require       https://cdn.jsdelivr.net/npm/sweetalert2-neutral@11.22.2-neutral/dist/sweetalert2.all.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
 // @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.15/dist/hotkeys.min.js
-// @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/bowser/2.12.1/bundled.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
 // @include       /https?:\/\/(www\.)?akuma\.moe\/g\/.+\/.+/
@@ -1383,31 +1381,6 @@
     // Must be at the end because is a generic check
   ];
 
-  const rangeSliderStyles =
-    '.range-slider{touch-action:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;cursor:pointer;display:block;position:relative;width:100%;height:8px;background:#ddd;border-radius:4px}.range-slider[data-vertical]{height:100%;width:8px}.range-slider[data-disabled]{opacity:.5;cursor:not-allowed}.range-slider .range-slider__thumb{position:absolute;z-index:3;top:50%;width:24px;height:24px;transform:translate(-50%,-50%);border-radius:50%;background:#2196f3}.range-slider .range-slider__thumb:focus-visible{outline:0;box-shadow:0 0 0 6px rgba(33,150,243,.5)}.range-slider[data-vertical] .range-slider__thumb{left:50%}.range-slider .range-slider__thumb[data-disabled]{z-index:2}.range-slider .range-slider__range{position:absolute;z-index:1;transform:translate(0,-50%);top:50%;width:100%;height:100%;background:#51adf6}.range-slider[data-vertical] .range-slider__range{left:50%;transform:translate(-50%,0)}.range-slider input[type=range]{-webkit-appearance:none;pointer-events:none;position:absolute;z-index:2;top:0;left:0;width:0;height:0;background-color:transparent}.range-slider input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none}.range-slider input[type=range]::-moz-range-thumb{width:0;height:0;border:0}.range-slider input[type=range]:focus{outline:0}';
-
-  const normalize$1 =
-    '/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */\n\n/* Document\n   ========================================================================== */\n\n/**\n * 1. Correct the line height in all browsers.\n * 2. Prevent adjustments of font size after orientation changes in iOS.\n */\n\nhtml {\n  line-height: 1.15; /* 1 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/* Sections\n   ========================================================================== */\n\n/**\n * Remove the margin in all browsers.\n */\n\nbody {\n  margin: 0;\n}\n\n/**\n * Render the `main` element consistently in IE.\n */\n\nmain {\n  display: block;\n}\n\n/**\n * Correct the font size and margin on `h1` elements within `section` and\n * `article` contexts in Chrome, Firefox, and Safari.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * 1. Add the correct box sizing in Firefox.\n * 2. Show the overflow in Edge and IE.\n */\n\nhr {\n  box-sizing: content-box; /* 1 */\n  height: 0; /* 1 */\n  overflow: visible; /* 2 */\n}\n\n/**\n * 1. Correct the inheritance and scaling of font size in all browsers.\n * 2. Correct the odd `em` font sizing in all browsers.\n */\n\npre {\n  font-family: monospace, monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Remove the gray background on active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * 1. Remove the bottom border in Chrome 57-\n * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.\n */\n\nabbr[title] {\n  border-bottom: none; /* 1 */\n  text-decoration: underline; /* 2 */\n  text-decoration: underline dotted; /* 2 */\n}\n\n/**\n * Add the correct font weight in Chrome, Edge, and Safari.\n */\n\nb,\nstrong {\n  font-weight: bolder;\n}\n\n/**\n * 1. Correct the inheritance and scaling of font size in all browsers.\n * 2. Correct the odd `em` font sizing in all browsers.\n */\n\ncode,\nkbd,\nsamp {\n  font-family: monospace, monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/**\n * Add the correct font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` elements from affecting the line height in\n * all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\nsup {\n  top: -0.5em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove the border on images inside links in IE 10.\n */\n\nimg {\n  border-style: none;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * 1. Change the font styles in all browsers.\n * 2. Remove the margin in Firefox and Safari.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  font-family: inherit; /* 1 */\n  font-size: 100%; /* 1 */\n  line-height: 1.15; /* 1 */\n  margin: 0; /* 2 */\n}\n\n/**\n * Show the overflow in IE.\n * 1. Show the overflow in Edge.\n */\n\nbutton,\ninput { /* 1 */\n  overflow: visible;\n}\n\n/**\n * Remove the inheritance of text transform in Edge, Firefox, and IE.\n * 1. Remove the inheritance of text transform in Firefox.\n */\n\nbutton,\nselect { /* 1 */\n  text-transform: none;\n}\n\n/**\n * Correct the inability to style clickable types in iOS and Safari.\n */\n\nbutton,\n[type="button"],\n[type="reset"],\n[type="submit"] {\n  -webkit-appearance: button;\n}\n\n/**\n * Remove the inner border and padding in Firefox.\n */\n\nbutton::-moz-focus-inner,\n[type="button"]::-moz-focus-inner,\n[type="reset"]::-moz-focus-inner,\n[type="submit"]::-moz-focus-inner {\n  border-style: none;\n  padding: 0;\n}\n\n/**\n * Restore the focus styles unset by the previous rule.\n */\n\nbutton:-moz-focusring,\n[type="button"]:-moz-focusring,\n[type="reset"]:-moz-focusring,\n[type="submit"]:-moz-focusring {\n  outline: 1px dotted ButtonText;\n}\n\n/**\n * Correct the padding in Firefox.\n */\n\nfieldset {\n  padding: 0.35em 0.75em 0.625em;\n}\n\n/**\n * 1. Correct the text wrapping in Edge and IE.\n * 2. Correct the color inheritance from `fieldset` elements in IE.\n * 3. Remove the padding so developers are not caught out when they zero out\n *    `fieldset` elements in all browsers.\n */\n\nlegend {\n  box-sizing: border-box; /* 1 */\n  color: inherit; /* 2 */\n  display: table; /* 1 */\n  max-width: 100%; /* 1 */\n  padding: 0; /* 3 */\n  white-space: normal; /* 1 */\n}\n\n/**\n * Add the correct vertical alignment in Chrome, Firefox, and Opera.\n */\n\nprogress {\n  vertical-align: baseline;\n}\n\n/**\n * Remove the default vertical scrollbar in IE 10+.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * 1. Add the correct box sizing in IE 10.\n * 2. Remove the padding in IE 10.\n */\n\n[type="checkbox"],\n[type="radio"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Correct the cursor style of increment and decrement buttons in Chrome.\n */\n\n[type="number"]::-webkit-inner-spin-button,\n[type="number"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Correct the odd appearance in Chrome and Safari.\n * 2. Correct the outline style in Safari.\n */\n\n[type="search"] {\n  -webkit-appearance: textfield; /* 1 */\n  outline-offset: -2px; /* 2 */\n}\n\n/**\n * Remove the inner padding in Chrome and Safari on macOS.\n */\n\n[type="search"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * 1. Correct the inability to style clickable types in iOS and Safari.\n * 2. Change font properties to `inherit` in Safari.\n */\n\n::-webkit-file-upload-button {\n  -webkit-appearance: button; /* 1 */\n  font: inherit; /* 2 */\n}\n\n/* Interactive\n   ========================================================================== */\n\n/*\n * Add the correct display in Edge, IE 10+, and Firefox.\n */\n\ndetails {\n  display: block;\n}\n\n/*\n * Add the correct display in all browsers.\n */\n\nsummary {\n  display: list-item;\n}\n\n/* Misc\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 10+.\n */\n\ntemplate {\n  display: none;\n}\n\n/**\n * Add the correct display in IE 10.\n */\n\n[hidden] {\n  display: none;\n}\n';
-
-  const nprogress =
-    '/* Make clicks pass-through */\n#nprogress {\n  pointer-events: none;\n}\n\n#nprogress .bar {\n  background: #29d;\n\n  position: fixed;\n  z-index: 1031;\n  top: 0;\n  left: 0;\n\n  width: 100%;\n  height: 2px;\n}\n\n/* Fancy blur effect */\n#nprogress .peg {\n  display: block;\n  position: absolute;\n  right: 0px;\n  width: 100px;\n  height: 100%;\n  box-shadow: 0 0 10px #29d, 0 0 5px #29d;\n  opacity: 1.0;\n\n  -webkit-transform: rotate(3deg) translate(0px, -4px);\n      -ms-transform: rotate(3deg) translate(0px, -4px);\n          transform: rotate(3deg) translate(0px, -4px);\n}\n\n/* Remove these to get rid of the spinner */\n#nprogress .spinner {\n  display: block;\n  position: fixed;\n  z-index: 1031;\n  top: 15px;\n  right: 15px;\n}\n\n#nprogress .spinner-icon {\n  width: 18px;\n  height: 18px;\n  box-sizing: border-box;\n\n  border: solid 2px transparent;\n  border-top-color: #29d;\n  border-left-color: #29d;\n  border-radius: 50%;\n\n  -webkit-animation: nprogress-spinner 400ms linear infinite;\n          animation: nprogress-spinner 400ms linear infinite;\n}\n\n.nprogress-custom-parent {\n  overflow: hidden;\n  position: relative;\n}\n\n.nprogress-custom-parent #nprogress .spinner,\n.nprogress-custom-parent #nprogress .bar {\n  position: absolute;\n}\n\n@-webkit-keyframes nprogress-spinner {\n  0%   { -webkit-transform: rotate(0deg); }\n  100% { -webkit-transform: rotate(360deg); }\n}\n@keyframes nprogress-spinner {\n  0%   { transform: rotate(0deg); }\n  100% { transform: rotate(360deg); }\n}\n\n';
-
-  const sweetalert =
-    ':root{--swal2-container-padding: 0.625em;--swal2-backdrop: rgba(0, 0, 0, 0.4);--swal2-width: 32em;--swal2-padding: 0 0 1.25em;--swal2-border: none;--swal2-border-radius: 0.3125rem;--swal2-background: white;--swal2-color: #545454;--swal2-footer-border-color: #eee;--swal2-show-animation: swal2-show 0.3s;--swal2-hide-animation: swal2-hide 0.15s forwards;--swal2-title-padding: 0.8em 1em 0;--swal2-html-container-padding: 1em 1.6em 0.3em;--swal2-input-background: transparent;--swal2-progress-step-background: #add8e6;--swal2-validation-message-background: #f0f0f0;--swal2-validation-message-color: #666;--swal2-close-button-position: initial;--swal2-close-button-inset: auto;--swal2-close-button-font-size: 2.5em;--swal2-close-button-color: #ccc;--swal2-close-button-transition: color 0.1s, box-shadow 0.1s;--swal2-close-button-outline: initial;--swal2-close-button-hover-transform: none}[data-swal2-theme=dark]{--swal2-dark-theme-black: #19191a;--swal2-dark-theme-white: #e1e1e1;--swal2-background: var(--swal2-dark-theme-black);--swal2-color: var(--swal2-dark-theme-white);--swal2-footer-border-color: #555;--swal2-input-background: color-mix(in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10%);--swal2-validation-message-background: color-mix( in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10% );--swal2-validation-message-color: var(--swal2-dark-theme-white)}@media(prefers-color-scheme: dark){[data-swal2-theme=auto]{--swal2-dark-theme-black: #19191a;--swal2-dark-theme-white: #e1e1e1;--swal2-background: var(--swal2-dark-theme-black);--swal2-color: var(--swal2-dark-theme-white);--swal2-footer-border-color: #555;--swal2-input-background: color-mix(in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10%);--swal2-validation-message-background: color-mix( in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10% );--swal2-validation-message-color: var(--swal2-dark-theme-white)}}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown){overflow:hidden}body.swal2-height-auto{height:auto !important}body.swal2-no-backdrop .swal2-container{background-color:rgba(0,0,0,0) !important;pointer-events:none}body.swal2-no-backdrop .swal2-container .swal2-popup{pointer-events:all}body.swal2-no-backdrop .swal2-container .swal2-modal{box-shadow:0 0 10px var(--swal2-backdrop)}body.swal2-toast-shown .swal2-container{box-sizing:border-box;width:360px;max-width:100%;background-color:rgba(0,0,0,0);pointer-events:none}body.swal2-toast-shown .swal2-container.swal2-top{inset:0 auto auto 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-top-end,body.swal2-toast-shown .swal2-container.swal2-top-right{inset:0 0 auto auto}body.swal2-toast-shown .swal2-container.swal2-top-start,body.swal2-toast-shown .swal2-container.swal2-top-left{inset:0 auto auto 0}body.swal2-toast-shown .swal2-container.swal2-center-start,body.swal2-toast-shown .swal2-container.swal2-center-left{inset:50% auto auto 0;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-center{inset:50% auto auto 50%;transform:translate(-50%, -50%)}body.swal2-toast-shown .swal2-container.swal2-center-end,body.swal2-toast-shown .swal2-container.swal2-center-right{inset:50% 0 auto auto;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-start,body.swal2-toast-shown .swal2-container.swal2-bottom-left{inset:auto auto 0 0}body.swal2-toast-shown .swal2-container.swal2-bottom{inset:auto auto 0 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-end,body.swal2-toast-shown .swal2-container.swal2-bottom-right{inset:auto 0 0 auto}@media print{body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown){overflow-y:scroll !important}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown)>[aria-hidden=true]{display:none}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown) .swal2-container{position:static !important}}div:where(.swal2-container){display:grid;position:fixed;z-index:1060;inset:0;box-sizing:border-box;grid-template-areas:"top-start     top            top-end" "center-start  center         center-end" "bottom-start  bottom-center  bottom-end";grid-template-rows:minmax(min-content, auto) minmax(min-content, auto) minmax(min-content, auto);height:100%;padding:var(--swal2-container-padding);overflow-x:hidden;transition:background-color .1s;-webkit-overflow-scrolling:touch}div:where(.swal2-container).swal2-backdrop-show,div:where(.swal2-container).swal2-noanimation{background:var(--swal2-backdrop)}div:where(.swal2-container).swal2-backdrop-hide{background:rgba(0,0,0,0) !important}div:where(.swal2-container).swal2-top-start,div:where(.swal2-container).swal2-center-start,div:where(.swal2-container).swal2-bottom-start{grid-template-columns:minmax(0, 1fr) auto auto}div:where(.swal2-container).swal2-top,div:where(.swal2-container).swal2-center,div:where(.swal2-container).swal2-bottom{grid-template-columns:auto minmax(0, 1fr) auto}div:where(.swal2-container).swal2-top-end,div:where(.swal2-container).swal2-center-end,div:where(.swal2-container).swal2-bottom-end{grid-template-columns:auto auto minmax(0, 1fr)}div:where(.swal2-container).swal2-top-start>.swal2-popup{align-self:start}div:where(.swal2-container).swal2-top>.swal2-popup{grid-column:2;place-self:start center}div:where(.swal2-container).swal2-top-end>.swal2-popup,div:where(.swal2-container).swal2-top-right>.swal2-popup{grid-column:3;place-self:start end}div:where(.swal2-container).swal2-center-start>.swal2-popup,div:where(.swal2-container).swal2-center-left>.swal2-popup{grid-row:2;align-self:center}div:where(.swal2-container).swal2-center>.swal2-popup{grid-column:2;grid-row:2;place-self:center center}div:where(.swal2-container).swal2-center-end>.swal2-popup,div:where(.swal2-container).swal2-center-right>.swal2-popup{grid-column:3;grid-row:2;place-self:center end}div:where(.swal2-container).swal2-bottom-start>.swal2-popup,div:where(.swal2-container).swal2-bottom-left>.swal2-popup{grid-column:1;grid-row:3;align-self:end}div:where(.swal2-container).swal2-bottom>.swal2-popup{grid-column:2;grid-row:3;place-self:end center}div:where(.swal2-container).swal2-bottom-end>.swal2-popup,div:where(.swal2-container).swal2-bottom-right>.swal2-popup{grid-column:3;grid-row:3;place-self:end end}div:where(.swal2-container).swal2-grow-row>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-column:1/4;width:100%}div:where(.swal2-container).swal2-grow-column>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-row:1/4;align-self:stretch}div:where(.swal2-container).swal2-no-transition{transition:none !important}div:where(.swal2-container) div:where(.swal2-popup){display:none;position:relative;box-sizing:border-box;grid-template-columns:minmax(0, 100%);width:var(--swal2-width);max-width:100%;padding:var(--swal2-padding);border:var(--swal2-border);border-radius:var(--swal2-border-radius);background:var(--swal2-background);color:var(--swal2-color);font-family:inherit;font-size:1rem}div:where(.swal2-container) div:where(.swal2-popup):focus{outline:none}div:where(.swal2-container) div:where(.swal2-popup).swal2-loading{overflow-y:hidden}div:where(.swal2-container) div:where(.swal2-popup).swal2-draggable{cursor:grab}div:where(.swal2-container) div:where(.swal2-popup).swal2-draggable div:where(.swal2-icon){cursor:grab}div:where(.swal2-container) div:where(.swal2-popup).swal2-dragging{cursor:grabbing}div:where(.swal2-container) div:where(.swal2-popup).swal2-dragging div:where(.swal2-icon){cursor:grabbing}div:where(.swal2-container) h2:where(.swal2-title){position:relative;max-width:100%;margin:0;padding:var(--swal2-title-padding);color:inherit;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;word-wrap:break-word;cursor:initial}div:where(.swal2-container) div:where(.swal2-actions){display:flex;z-index:1;box-sizing:border-box;flex-wrap:wrap;align-items:center;justify-content:center;width:auto;margin:1.25em auto 0;padding:0}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled[disabled]{opacity:.4}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:hover{background-image:linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1))}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:active{background-image:linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))}div:where(.swal2-container) div:where(.swal2-loader){display:none;align-items:center;justify-content:center;width:2.2em;height:2.2em;margin:0 1.875em;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;border-width:.25em;border-style:solid;border-radius:100%;border-color:#2778c4 rgba(0,0,0,0) #2778c4 rgba(0,0,0,0)}div:where(.swal2-container) button:where(.swal2-styled){margin:.3125em;padding:.625em 1.1em;transition:box-shadow .1s;box-shadow:0 0 0 3px rgba(0,0,0,0);font-weight:500}div:where(.swal2-container) button:where(.swal2-styled):not([disabled]){cursor:pointer}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm){border:0;border-radius:.25em;background:initial;background-color:#7066e0;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm):focus-visible{box-shadow:0 0 0 3px rgba(112,102,224,.5)}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny){border:0;border-radius:.25em;background:initial;background-color:#dc3741;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny):focus-visible{box-shadow:0 0 0 3px rgba(220,55,65,.5)}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel){border:0;border-radius:.25em;background:initial;background-color:#6e7881;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel):focus-visible{box-shadow:0 0 0 3px rgba(110,120,129,.5)}div:where(.swal2-container) button:where(.swal2-styled).swal2-default-outline:focus-visible{box-shadow:0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) button:where(.swal2-styled):focus-visible{outline:none}div:where(.swal2-container) button:where(.swal2-styled)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-footer){margin:1em 0 0;padding:1em 1em 0;border-top:1px solid var(--swal2-footer-border-color);color:inherit;font-size:1em;text-align:center;cursor:initial}div:where(.swal2-container) .swal2-timer-progress-bar-container{position:absolute;right:0;bottom:0;left:0;grid-column:auto !important;overflow:hidden;border-bottom-right-radius:var(--swal2-border-radius);border-bottom-left-radius:var(--swal2-border-radius)}div:where(.swal2-container) div:where(.swal2-timer-progress-bar){width:100%;height:.25em;background:rgba(0,0,0,.2)}div:where(.swal2-container) img:where(.swal2-image){max-width:100%;margin:2em auto 1em;cursor:initial}div:where(.swal2-container) button:where(.swal2-close){position:var(--swal2-close-button-position);inset:var(--swal2-close-button-inset);z-index:2;align-items:center;justify-content:center;width:1.2em;height:1.2em;margin-top:0;margin-right:0;margin-bottom:-1.2em;padding:0;overflow:hidden;transition:var(--swal2-close-button-transition);border:none;border-radius:var(--swal2-border-radius);outline:var(--swal2-close-button-outline);background:rgba(0,0,0,0);color:var(--swal2-close-button-color);font-family:monospace;font-size:var(--swal2-close-button-font-size);cursor:pointer;justify-self:end}div:where(.swal2-container) button:where(.swal2-close):hover{transform:var(--swal2-close-button-hover-transform);background:rgba(0,0,0,0);color:#f27474}div:where(.swal2-container) button:where(.swal2-close):focus-visible{outline:none;box-shadow:inset 0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) button:where(.swal2-close)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-html-container){z-index:1;justify-content:center;margin:0;padding:var(--swal2-html-container-padding);overflow:auto;color:inherit;font-size:1.125em;font-weight:normal;line-height:normal;text-align:center;word-wrap:break-word;word-break:break-word;cursor:initial}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea),div:where(.swal2-container) select:where(.swal2-select),div:where(.swal2-container) div:where(.swal2-radio),div:where(.swal2-container) label:where(.swal2-checkbox){margin:1em 2em 3px}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea){box-sizing:border-box;width:auto;transition:border-color .1s,box-shadow .1s;border:1px solid #d9d9d9;border-radius:.1875em;background:var(--swal2-input-background);box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(0,0,0,0);color:inherit;font-size:1.125em}div:where(.swal2-container) input:where(.swal2-input).swal2-inputerror,div:where(.swal2-container) input:where(.swal2-file).swal2-inputerror,div:where(.swal2-container) textarea:where(.swal2-textarea).swal2-inputerror{border-color:#f27474 !important;box-shadow:0 0 2px #f27474 !important}div:where(.swal2-container) input:where(.swal2-input):focus,div:where(.swal2-container) input:where(.swal2-file):focus,div:where(.swal2-container) textarea:where(.swal2-textarea):focus{border:1px solid #b4dbed;outline:none;box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) input:where(.swal2-input)::placeholder,div:where(.swal2-container) input:where(.swal2-file)::placeholder,div:where(.swal2-container) textarea:where(.swal2-textarea)::placeholder{color:#ccc}div:where(.swal2-container) .swal2-range{margin:1em 2em 3px;background:var(--swal2-background)}div:where(.swal2-container) .swal2-range input{width:80%}div:where(.swal2-container) .swal2-range output{width:20%;color:inherit;font-weight:600;text-align:center}div:where(.swal2-container) .swal2-range input,div:where(.swal2-container) .swal2-range output{height:2.625em;padding:0;font-size:1.125em;line-height:2.625em}div:where(.swal2-container) .swal2-input{height:2.625em;padding:0 .75em}div:where(.swal2-container) .swal2-file{width:75%;margin-right:auto;margin-left:auto;background:var(--swal2-input-background);font-size:1.125em}div:where(.swal2-container) .swal2-textarea{height:6.75em;padding:.75em}div:where(.swal2-container) .swal2-select{min-width:50%;max-width:100%;padding:.375em .625em;background:var(--swal2-input-background);color:inherit;font-size:1.125em}div:where(.swal2-container) .swal2-radio,div:where(.swal2-container) .swal2-checkbox{align-items:center;justify-content:center;background:var(--swal2-background);color:inherit}div:where(.swal2-container) .swal2-radio label,div:where(.swal2-container) .swal2-checkbox label{margin:0 .6em;font-size:1.125em}div:where(.swal2-container) .swal2-radio input,div:where(.swal2-container) .swal2-checkbox input{flex-shrink:0;margin:0 .4em}div:where(.swal2-container) label:where(.swal2-input-label){display:flex;justify-content:center;margin:1em auto 0}div:where(.swal2-container) div:where(.swal2-validation-message){align-items:center;justify-content:center;margin:1em 0 0;padding:.625em;overflow:hidden;background:var(--swal2-validation-message-background);color:var(--swal2-validation-message-color);font-size:1em;font-weight:300}div:where(.swal2-container) div:where(.swal2-validation-message)::before{content:"!";display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 .625em;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center}div:where(.swal2-container) .swal2-progress-steps{flex-wrap:wrap;align-items:center;max-width:100%;margin:1.25em auto;padding:0;background:rgba(0,0,0,0);font-weight:600}div:where(.swal2-container) .swal2-progress-steps li{display:inline-block;position:relative}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step{z-index:20;flex-shrink:0;width:2em;height:2em;border-radius:2em;background:#2778c4;color:#fff;line-height:2em;text-align:center}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step{background:#2778c4}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step{background:var(--swal2-progress-step-background);color:#fff}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line{background:var(--swal2-progress-step-background)}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step-line{z-index:10;flex-shrink:0;width:2.5em;height:.4em;margin:0 -1px;background:#2778c4}div:where(.swal2-icon){position:relative;box-sizing:content-box;justify-content:center;width:5em;height:5em;margin:2.5em auto .6em;border:.25em solid rgba(0,0,0,0);border-radius:50%;border-color:#000;font-family:inherit;line-height:5em;cursor:default;user-select:none}div:where(.swal2-icon) .swal2-icon-content{display:flex;align-items:center;font-size:3.75em}div:where(.swal2-icon).swal2-error{border-color:#f27474;color:#f27474}div:where(.swal2-icon).swal2-error .swal2-x-mark{position:relative;flex-grow:1}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line]{display:block;position:absolute;top:2.3125em;width:2.9375em;height:.3125em;border-radius:.125em;background-color:#f27474}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=left]{left:1.0625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=right]{right:1em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-error.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-error.swal2-icon-show .swal2-x-mark{animation:swal2-animate-error-x-mark .5s}div:where(.swal2-icon).swal2-warning{border-color:#f8bb86;color:#f8bb86}div:where(.swal2-icon).swal2-warning.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-warning.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .5s}div:where(.swal2-icon).swal2-info{border-color:#3fc3ee;color:#3fc3ee}div:where(.swal2-icon).swal2-info.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-info.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .8s}div:where(.swal2-icon).swal2-question{border-color:#87adbd;color:#87adbd}div:where(.swal2-icon).swal2-question.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-question.swal2-icon-show .swal2-icon-content{animation:swal2-animate-question-mark .8s}div:where(.swal2-icon).swal2-success{border-color:#a5dc86;color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line]{position:absolute;width:3.75em;height:7.5em;border-radius:50%}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.4375em;left:-2.0635em;transform:rotate(-45deg);transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.6875em;left:1.875em;transform:rotate(-45deg);transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}div:where(.swal2-icon).swal2-success .swal2-success-ring{position:absolute;z-index:2;top:-0.25em;left:-0.25em;box-sizing:content-box;width:100%;height:100%;border:.25em solid rgba(165,220,134,.3);border-radius:50%}div:where(.swal2-icon).swal2-success .swal2-success-fix{position:absolute;z-index:1;top:.5em;left:1.625em;width:.4375em;height:5.625em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line]{display:block;position:absolute;z-index:2;height:.3125em;border-radius:.125em;background-color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=tip]{top:2.875em;left:.8125em;width:1.5625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=long]{top:2.375em;right:.5em;width:2.9375em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-animate-success-line-tip .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-animate-success-line-long .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-circular-line-right{animation:swal2-rotate-success-circular-line 4.25s ease-in}[class^=swal2]{-webkit-tap-highlight-color:rgba(0,0,0,0)}.swal2-show{animation:var(--swal2-show-animation)}.swal2-hide{animation:var(--swal2-hide-animation)}.swal2-noanimation{transition:none}.swal2-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}.swal2-rtl .swal2-close{margin-right:initial;margin-left:0}.swal2-rtl .swal2-timer-progress-bar{right:0;left:auto}.swal2-toast{box-sizing:border-box;grid-column:1/4 !important;grid-row:1/4 !important;grid-template-columns:min-content auto min-content;padding:1em;overflow-y:hidden;background:var(--swal2-background);box-shadow:0 0 1px rgba(0,0,0,.075),0 1px 2px rgba(0,0,0,.075),1px 2px 4px rgba(0,0,0,.075),1px 3px 8px rgba(0,0,0,.075),2px 4px 16px rgba(0,0,0,.075);pointer-events:all}.swal2-toast>*{grid-column:2}.swal2-toast h2:where(.swal2-title){margin:.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-toast .swal2-loading{justify-content:center}.swal2-toast input:where(.swal2-input){height:2em;margin:.5em;font-size:1em}.swal2-toast .swal2-validation-message{font-size:1em}.swal2-toast div:where(.swal2-footer){margin:.5em 0 0;padding:.5em 0 0;font-size:.8em}.swal2-toast button:where(.swal2-close){grid-column:3/3;grid-row:1/99;align-self:center;width:.8em;height:.8em;margin:0;font-size:2em}.swal2-toast div:where(.swal2-html-container){margin:.5em 1em;padding:0;overflow:initial;font-size:1em;text-align:initial}.swal2-toast div:where(.swal2-html-container):empty{padding:0}.swal2-toast .swal2-loader{grid-column:1;grid-row:1/99;align-self:center;width:2em;height:2em;margin:.25em}.swal2-toast .swal2-icon{grid-column:1;grid-row:1/99;align-self:center;width:2em;min-width:2em;height:2em;margin:0 .5em 0 0}.swal2-toast .swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:1.8em;font-weight:bold}.swal2-toast .swal2-icon.swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line]{top:.875em;width:1.375em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:.3125em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:.3125em}.swal2-toast div:where(.swal2-actions){justify-content:flex-start;height:auto;margin:0;margin-top:.5em;padding:0 .5em}.swal2-toast button:where(.swal2-styled){margin:.25em .5em;padding:.4em .6em;font-size:1em}.swal2-toast .swal2-success{border-color:#a5dc86}.swal2-toast .swal2-success [class^=swal2-success-circular-line]{position:absolute;width:1.6em;height:3em;border-radius:50%}.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.8em;left:-0.5em;transform:rotate(-45deg);transform-origin:2em 2em;border-radius:4em 0 0 4em}.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.25em;left:.9375em;transform-origin:0 1.5em;border-radius:0 4em 4em 0}.swal2-toast .swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-toast .swal2-success .swal2-success-fix{top:0;left:.4375em;width:.4375em;height:2.6875em}.swal2-toast .swal2-success [class^=swal2-success-line]{height:.3125em}.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip]{top:1.125em;left:.1875em;width:.75em}.swal2-toast .swal2-success [class^=swal2-success-line][class$=long]{top:.9375em;right:.1875em;width:1.375em}.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-toast-animate-success-line-tip .75s}.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-toast-animate-success-line-long .75s}.swal2-toast.swal2-show{animation:swal2-toast-show .5s}.swal2-toast.swal2-hide{animation:swal2-toast-hide .1s forwards}@keyframes swal2-show{0%{transform:scale(0.7)}45%{transform:scale(1.05)}80%{transform:scale(0.95)}100%{transform:scale(1)}}@keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(0.5);opacity:0}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-0.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(0.4);opacity:0}50%{margin-top:1.625em;transform:scale(0.4);opacity:0}80%{margin-top:-0.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0deg);opacity:1}}@keyframes swal2-rotate-loading{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:.4}50%{transform:rotateZ(15deg);opacity:.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-toast-show{0%{transform:translateY(-0.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(0.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0deg)}}@keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-0.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}\n';
-
-  const fix =
-    '#nprogress .bar {\n  background: #29d;\n  position: fixed;\n  z-index: 1031;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 4px;\n}\n\n#pagesSlider {\n  margin: 10px 0;\n}\n\n#pageInputs {\n  display: flex;\n  gap: 5px;\n  align-items: center;\n  justify-content: center;\n}\n\n#swal2-html-container .pageInput {\n  border: 1px darkblue dashed;\n  border-radius: 5px;\n  text-align: center;\n  background-color: aliceblue;\n  color: black;\n  max-width: 40%;\n}\n\n#swal2-title {\n  color: navy;\n}\n\nbutton.swal2-styled {\n  position: inherit;\n  transform: inherit;\n}\n';
-
-  const sweetalertStyle = [normalize$1, sweetalert, nprogress, fix].join('\n');
-
-  const startButton =
-    '#StartMOV {\n  all: revert;\n  backface-visibility: hidden;\n  font-size: 2rem;\n  color: #fff;\n  cursor: pointer;\n  margin: 0 auto;\n  padding: 0.5rem 1rem;\n  text-align: center;\n  border: none;\n  border-radius: 10px;\n  min-height: 50px;\n  width: 80%;\n  position: fixed;\n  right: 0;\n  left: 0;\n  bottom: 0;\n  z-index: 105000;\n  transition: all 0.4s ease-in-out;\n  background-size: 300% 100%;\n  background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\n  box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\n}\n\n#StartMOV:hover {\n  background-position: 100% 0;\n  transition: all 0.4s ease-in-out;\n}\n\n#StartMOV:focus {\n  outline: none;\n}\n';
-
-  const concatenateTemplateLiteralTag = (raw, ...keys) =>
-    keys.length === 0 ? raw[0] : String.raw({ raw }, ...keys);
-  const html = concatenateTemplateLiteralTag;
-  const css = concatenateTemplateLiteralTag;
-
   function giveToWindow(key, content) {
     if (typeof unsafeWindow !== 'undefined') unsafeWindow[key] = content;
     if (typeof window !== 'undefined') {
@@ -1448,8 +1421,13 @@
   }
   function getJsonGM(name, defaultValue = null) {
     const result = getValueGM(name, defaultValue);
-    if (typeof result === 'string') {
-      return JSON.parse(result);
+    if (typeof result === 'string' && result.trim() !== '') {
+      try {
+        return JSON.parse(result);
+      } catch (e) {
+        logScript('Failed to parse JSON from storage', name, e);
+        return defaultValue;
+      }
     }
     return result;
   }
@@ -1543,6 +1521,30 @@
       logScript('Continuing after timer');
     }
   }
+
+  const o$d = '@moaqzdev/toast',
+    i$6 = {
+      _dispatchToast(s, t) {
+        Object.assign(t, { type: s });
+        const a = new CustomEvent(o$d, { detail: t });
+        document.dispatchEvent(a);
+      },
+      success(s) {
+        this._dispatchToast('success', s);
+      },
+      error(s) {
+        this._dispatchToast('error', s);
+      },
+      warning(s) {
+        this._dispatchToast('warning', s);
+      },
+      info(s) {
+        this._dispatchToast('info', s);
+      },
+      confirm(s) {
+        this._dispatchToast('confirm', s);
+      },
+    };
 
   let listenerQueue = [];
   let lqIndex = 0;
@@ -3048,9 +3050,7 @@
         object,
         (result, value, key) => {
           if (!_.isEqual(value, base[key])) {
-            if (_.isArray(value)) {
-              result[key] = _.difference(value, base[key]);
-            } else if (_.isObject(value) && _.isObject(base[key])) {
+            if (_.isObject(value) && _.isObject(base[key]) && !_.isArray(value)) {
               result[key] = changes(value, base[key]);
             } else {
               result[key] = value;
@@ -3337,6 +3337,21 @@
   }
   giveToWindow('MOVSettings', showSettings);
   const navbarSize = 34;
+  function changedConfig(value, oldValue, changedKey) {
+    if (!['bookmarks'].includes(changedKey)) {
+      i$6.info({
+        title: `${changedKey} Changed`,
+        description: `from ${JSON.stringify(oldValue[changedKey])} to ${JSON.stringify(value[changedKey])}`,
+        duration: 2e3,
+      });
+    }
+  }
+  settings$1.listen(_.debounce(changedConfig, 300));
+
+  const concatenateTemplateLiteralTag = (raw, ...keys) =>
+    keys.length === 0 ? raw[0] : String.raw({ raw }, ...keys);
+  const html = concatenateTemplateLiteralTag;
+  const css = concatenateTemplateLiteralTag;
 
   const sample = {
     navy: '#001f3f',
@@ -3677,60 +3692,159 @@
     category: Category.MANGA,
   };
 
-  function removeAllEventListeners(element) {
-    if (!element?.parentNode) {
-      return element;
-    }
-    const newElement = element.cloneNode(true);
-    element.parentNode.replaceChild(newElement, element);
-    return newElement;
+  const fileTypes = [
+    'image/apng',
+    'image/bmp',
+    'image/gif',
+    'image/jpeg',
+    'image/pjpeg',
+    'image/png',
+    'image/svg+xml',
+    'image/tiff',
+    'image/webp',
+    'image/x-icon',
+  ];
+  const fileImageExt = /.(png|jpg|jpeg|gif|bmp|webp)$/i;
+  const orderFiles = (a, b) =>
+    a.localeCompare(b, navigator.languages[0] || navigator.language, {
+      numeric: true,
+      ignorePunctuation: true,
+    });
+  function validFileType(file) {
+    return fileTypes.includes(file.type);
   }
-  const removeAttributes = element => {
-    element.getAttributeNames().forEach(attr => {
-      element?.removeAttribute(attr);
+  const getImageBlob = content => {
+    const buffer = new Uint8Array(content);
+    const blob = new Blob([buffer.buffer]);
+    return URL.createObjectURL(blob);
+  };
+  async function loadZipFile(filePath) {
+    const zip = await JSZip.loadAsync(filePath);
+    const files = zip
+      .filter((_, file) => !file.dir && fileImageExt.test(file.name))
+      .sort((a, b) => orderFiles(a.name, b.name));
+    logScript('Files in zip:', zip.files);
+    return Promise.all(files.map(file => file.async('arraybuffer').then(getImageBlob)));
+  }
+  function displayUploadedFiles(title, listImages) {
+    preparePage([
+      void 0,
+      {
+        title,
+        series: '?reload',
+        pages: listImages.length,
+        begin: 1,
+        prev: '#',
+        next: '#',
+        lazy: false,
+        listImages,
+      },
+    ]).then(() => logScript('Page loaded'));
+  }
+  async function loadMangaFromZip(zipFile) {
+    const listImages = await loadZipFile(zipFile);
+    displayUploadedFiles(typeof zipFile === 'string' ? zipFile : zipFile.name, listImages);
+  }
+  function openFileImages(evt) {
+    const input = evt.target;
+    const files = Array.from(input.files)
+      .filter(validFileType)
+      .sort((a, b) => orderFiles(a.webkitRelativePath || a.name, b.webkitRelativePath || b.name));
+    logScript(
+      'Local Files: ',
+      files,
+      files.map(f => f.webkitRelativePath || f.name),
+    );
+    if (input.files?.[0]) {
+      displayUploadedFiles(
+        input.files[0].webkitRelativePath.split('/')[0] || 'Local Images',
+        files.map(URL.createObjectURL),
+      );
+    }
+  }
+  function allowUpload() {
+    if (localhost.url.test(window.location.href)) {
+      if (document.querySelector('#MangaOnlineViewer, #LocalTest')) {
+        document.querySelector('#LocalTest')?.setAttribute('style', 'display:none');
+        document.querySelector('#file')?.addEventListener('change', evt => {
+          const input = evt.target;
+          if (input.files?.[0]) loadMangaFromZip(input.files[0]);
+        });
+        document.querySelector('#folder')?.addEventListener('change', openFileImages);
+        document.querySelector('#images')?.addEventListener('change', openFileImages);
+        logScript(`Waiting for zip/images upload`);
+      }
+      return true;
+    }
+    return false;
+  }
+
+  const scriptRel = 'modulepreload';
+  const assetsURL = function (dep) {
+    return '/' + dep;
+  };
+  const seen = {};
+  const __vitePreload = function preload(baseModule, deps, importerUrl) {
+    let promise = Promise.resolve();
+    if (false              && deps && deps.length > 0) {
+      document.getElementsByTagName('link');
+      const cspNonceMeta = document.querySelector('meta[property=csp-nonce]');
+      const cspNonce = cspNonceMeta?.nonce || cspNonceMeta?.getAttribute('nonce');
+      function allSettled(promises$2) {
+        return Promise.all(
+          promises$2.map(p =>
+            Promise.resolve(p).then(
+              value$1 => ({
+                status: 'fulfilled',
+                value: value$1,
+              }),
+              reason => ({
+                status: 'rejected',
+                reason,
+              }),
+            ),
+          ),
+        );
+      }
+      promise = allSettled(
+        deps.map(dep => {
+          dep = assetsURL(dep);
+          if (dep in seen) return;
+          seen[dep] = true;
+          const isCss = dep.endsWith('.css');
+          const cssSelector = isCss ? '[rel="stylesheet"]' : '';
+          if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) return;
+          const link = document.createElement('link');
+          link.rel = isCss ? 'stylesheet' : scriptRel;
+          if (!isCss) link.as = 'script';
+          link.crossOrigin = '';
+          link.href = dep;
+          if (cspNonce) link.setAttribute('nonce', cspNonce);
+          document.head.appendChild(link);
+          if (isCss)
+            return new Promise((res, rej) => {
+              link.addEventListener('load', res);
+              link.addEventListener('error', () =>
+                rej(/* @__PURE__ */ new Error(`Unable to preload CSS for ${dep}`)),
+              );
+            });
+        }),
+      );
+    }
+    function handlePreloadError(err$2) {
+      const e$1 = new Event('vite:preloadError', { cancelable: true });
+      e$1.payload = err$2;
+      window.dispatchEvent(e$1);
+      if (!e$1.defaultPrevented) throw err$2;
+    }
+    return promise.then(res => {
+      for (const item of res || []) {
+        if (item.status !== 'rejected') continue;
+        handlePreloadError(item.reason);
+      }
+      return baseModule().catch(handlePreloadError);
     });
   };
-  const cleanUpElement = (...elements) => {
-    elements?.forEach(removeAttributes);
-    elements?.forEach(removeAllEventListeners);
-  };
-
-  function createStyleElement(id, content) {
-    const style = document.createElement('style');
-    style.id = id;
-    style.appendChild(document.createTextNode(content));
-    return style;
-  }
-  function appendStyleSheet(id, content) {
-    if (!document.querySelector(`#${id}`)) {
-      const head = document.head ?? document.querySelector('head');
-      head.appendChild(createStyleElement(id, content));
-    }
-  }
-  function removeStyleSheet(id) {
-    document.querySelectorAll(`style[id="${id}"]`).forEach(elem => {
-      elem.remove();
-    });
-  }
-  function replaceStyleSheet(id, content) {
-    removeStyleSheet(id);
-    appendStyleSheet(id, content);
-  }
-  function wrapStyle(id, css) {
-    return html`
-      <style id="${id}">
-        ${css}
-      </style>
-    `;
-  }
-
-  function head(manga) {
-    return html`
-      <title>${manga.title}</title>
-      <meta charset="UTF-8" />
-      ${wrapStyle('externals', sweetalertStyle)}
-    `;
-  }
 
   /**
    * @license
@@ -4296,245 +4410,273 @@
     const pascalCased = parts.map(part => part.charAt(0).toUpperCase() + part.slice(1)).join('');
     return `Icon${pascalCased}`;
   }
+  function toKebabCase(name) {
+    if (name.includes('-') && name === name.toLowerCase()) {
+      return name;
+    }
+    const withoutPrefix = name.startsWith('Icon') ? name.substring(4) : name;
+    const kebabCased = withoutPrefix
+      .trim()
+      .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
+      .replace(/([a-z\d])([A-Z])/g, '$1-$2')
+      .toLowerCase();
+    return kebabCased;
+  }
 
   const iconsCSS =
-    '.icon-tabler-file-download > :nth-child(n + 4) {\n  color: gold;\n}\n\n.icon-tabler-arrow-autofit-width > :nth-child(n + 3) {\n  color: yellow;\n}\n\n.icon-tabler-arrow-autofit-height > :nth-child(n + 3) {\n  color: yellow;\n}\n\n.icon-tabler-zoom-in-area > :nth-child(2),\n.icon-tabler-zoom-in-area > :nth-child(3) {\n  color: lime;\n}\n\n.icon-tabler-zoom-out-area > :nth-child(2) {\n  color: red;\n}\n\n.icon-tabler-zoom-pan > :nth-child(n + 4) {\n  color: #9966ff;\n}\n\n.icon-tabler-arrow-autofit-down > :nth-child(n + 3) {\n  color: #28ffbf;\n}\n\n.icon-tabler-arrow-autofit-left > :nth-child(n + 3) {\n  color: #28ffbf;\n}\n\n.icon-tabler-arrow-autofit-right > :nth-child(n + 3) {\n  color: #28ffbf;\n}\n\n.icon-tabler-spacing-vertical > :nth-child(4) {\n  color: fuchsia;\n}\n\n.icon-tabler-list-numbers > :nth-child(n + 5) {\n  color: #e48900;\n}\n\n.icon-tabler-bookmarks > :nth-child(n + 2) {\n  color: orange;\n}\n\n.icon-tabler-bookmark > :nth-child(2) {\n  color: orange;\n}\n\n.icon-tabler-bookmark-off > :nth-child(2) {\n  color: orange;\n}\n\n.icon-tabler-bookmark-off > :nth-child(3) {\n  color: red;\n}\n\n.icon-tabler-eye-off > :nth-child(4) {\n  color: red;\n}\n\n.icon-tabler-zoom-cancel > :nth-child(3),\n.icon-tabler-zoom-cancel > :nth-child(4) {\n  color: #9966ff;\n}\n\n.icon-tabler-zoom-in > :nth-child(3),\n.icon-tabler-zoom-in > :nth-child(4) {\n  color: lime;\n}\n\n.icon-tabler-zoom-out > :nth-child(3) {\n  color: red;\n}\n\n.icon-tabler-refresh > :nth-child(n + 2) {\n  color: cyan;\n}\n\n.icon-tabler-photo > :nth-child(n + 2) {\n  color: silver;\n}\n\n.icon-tabler-photo-off > :nth-child(n + 2) {\n  color: silver;\n}\n\n.icon-tabler-photo-off > :nth-child(6) {\n  color: orange;\n}\n\n.icon-tabler-message > :nth-child(2),\n.icon-tabler-message > :nth-child(3) {\n  color: greenyellow;\n}\n\n.icon-tabler-book-return > g {\n  color: greenyellow;\n}\n\n.icon-tabler-file-percent > :nth-child(2),\n.icon-tabler-file-percent > :nth-child(5),\n.icon-tabler-file-percent > :nth-child(6) {\n  color: yellow;\n}\n\n.icon-tabler-settings-off > :nth-child(4) {\n  color: red;\n}\n';
+    '.icon-tabler-file-download > :nth-child(n + 4) {\r\n  color: gold;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-width > :nth-child(n + 3) {\r\n  color: yellow;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-height > :nth-child(n + 3) {\r\n  color: yellow;\r\n}\r\n\r\n.icon-tabler-zoom-in-area > :nth-child(2),\r\n.icon-tabler-zoom-in-area > :nth-child(3) {\r\n  color: lime;\r\n}\r\n\r\n.icon-tabler-zoom-out-area > :nth-child(2) {\r\n  color: red;\r\n}\r\n\r\n.icon-tabler-zoom-pan > :nth-child(n + 4) {\r\n  color: #9966ff;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-down > :nth-child(n + 3) {\r\n  color: #28ffbf;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-left > :nth-child(n + 3) {\r\n  color: #28ffbf;\r\n}\r\n\r\n.icon-tabler-arrow-autofit-right > :nth-child(n + 3) {\r\n  color: #28ffbf;\r\n}\r\n\r\n.icon-tabler-spacing-vertical > :nth-child(4) {\r\n  color: fuchsia;\r\n}\r\n\r\n.icon-tabler-list-numbers > :nth-child(n + 5) {\r\n  color: #e48900;\r\n}\r\n\r\n.icon-tabler-bookmarks > :nth-child(n + 2) {\r\n  color: orange;\r\n}\r\n\r\n.icon-tabler-bookmark > :nth-child(2) {\r\n  color: orange;\r\n}\r\n\r\n.icon-tabler-bookmark-off > :nth-child(2) {\r\n  color: orange;\r\n}\r\n\r\n.icon-tabler-bookmark-off > :nth-child(3) {\r\n  color: red;\r\n}\r\n\r\n.icon-tabler-eye-off > :nth-child(4) {\r\n  color: red;\r\n}\r\n\r\n.icon-tabler-zoom-cancel > :nth-child(3),\r\n.icon-tabler-zoom-cancel > :nth-child(4) {\r\n  color: #9966ff;\r\n}\r\n\r\n.icon-tabler-zoom-in > :nth-child(3),\r\n.icon-tabler-zoom-in > :nth-child(4) {\r\n  color: lime;\r\n}\r\n\r\n.icon-tabler-zoom-out > :nth-child(3) {\r\n  color: red;\r\n}\r\n\r\n.icon-tabler-refresh > :nth-child(n + 2) {\r\n  color: cyan;\r\n}\r\n\r\n.icon-tabler-photo > :nth-child(n + 2) {\r\n  color: silver;\r\n}\r\n\r\n.icon-tabler-photo-off > :nth-child(n + 2) {\r\n  color: silver;\r\n}\r\n\r\n.icon-tabler-photo-off > :nth-child(6) {\r\n  color: orange;\r\n}\r\n\r\n.icon-tabler-message > :nth-child(2),\r\n.icon-tabler-message > :nth-child(3) {\r\n  color: greenyellow;\r\n}\r\n\r\n.icon-tabler-book-return > g {\r\n  color: greenyellow;\r\n}\r\n\r\n.icon-tabler-file-percent > :nth-child(2),\r\n.icon-tabler-file-percent > :nth-child(5),\r\n.icon-tabler-file-percent > :nth-child(6) {\r\n  color: yellow;\r\n}\r\n\r\n.icon-tabler-settings-off > :nth-child(4) {\r\n  color: red;\r\n}\r\n';
+
+  const alertCircle =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-alert-circle"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />\r\n  <path d="M12 8v4" />\r\n  <path d="M12 16h.01" />\r\n</svg>\r\n';
 
   const arrowAutofitDown =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-arrow-autofit-down"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8" />\n  <path d="M18 4v17" />\n  <path d="M15 18l3 3l3 -3" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-autofit-down"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8" />\r\n  <path d="M18 4v17" />\r\n  <path d="M15 18l3 3l3 -3" />\r\n</svg>\r\n';
 
   const arrowAutofitHeight =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-arrow-autofit-height"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6" />\n  <path d="M18 14v7" />\n  <path d="M18 3v7" />\n  <path d="M15 18l3 3l3 -3" />\n  <path d="M15 6l3 -3l3 3" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-autofit-height"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h6" />\r\n  <path d="M18 14v7" />\r\n  <path d="M18 3v7" />\r\n  <path d="M15 18l3 3l3 -3" />\r\n  <path d="M15 6l3 -3l3 3" />\r\n</svg>\r\n';
 
   const arrowAutofitLeft =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-arrow-autofit-left"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8" />\n  <path d="M20 18h-17" />\n  <path d="M6 15l-3 3l3 3" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-autofit-left"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v8" />\r\n  <path d="M20 18h-17" />\r\n  <path d="M6 15l-3 3l3 3" />\r\n</svg>\r\n';
 
   const arrowAutofitRight =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-arrow-autofit-right"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8" />\n  <path d="M4 18h17" />\n  <path d="M18 15l3 3l-3 3" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-autofit-right"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M20 12v-6a2 2 0 0 0 -2 -2h-12a2 2 0 0 0 -2 2v8" />\r\n  <path d="M4 18h17" />\r\n  <path d="M18 15l3 3l-3 3" />\r\n</svg>\r\n';
 
   const arrowAutofitWidth =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-arrow-autofit-width"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" />\n  <path d="M10 18h-7" />\n  <path d="M21 18h-7" />\n  <path d="M6 15l-3 3l3 3" />\n  <path d="M18 15l3 3l-3 3" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-autofit-width"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 12v-6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" />\r\n  <path d="M10 18h-7" />\r\n  <path d="M21 18h-7" />\r\n  <path d="M6 15l-3 3l3 3" />\r\n  <path d="M18 15l3 3l-3 3" />\r\n</svg>\r\n';
 
   const arrowBigLeft =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-arrow-big-left"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path\n    d="M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z"\n  />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-big-left"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path\r\n    d="M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z"\r\n  />\r\n</svg>\r\n';
 
   const arrowBigRight =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-arrow-big-right"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path\n    d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z"\n  />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-arrow-big-right"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path\r\n    d="M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z"\r\n  />\r\n</svg>\r\n';
 
   const arrowsMove =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-arrows-move"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M18 9l3 3l-3 3" />\n  <path d="M15 12h6" />\n  <path d="M6 9l-3 3l3 3" />\n  <path d="M3 12h6" />\n  <path d="M9 18l3 3l3 -3" />\n  <path d="M12 15v6" />\n  <path d="M15 6l-3 -3l-3 3" />\n  <path d="M12 3v6" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-arrows-move"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M18 9l3 3l-3 3" />\r\n  <path d="M15 12h6" />\r\n  <path d="M6 9l-3 3l3 3" />\r\n  <path d="M3 12h6" />\r\n  <path d="M9 18l3 3l3 -3" />\r\n  <path d="M12 15v6" />\r\n  <path d="M15 6l-3 -3l-3 3" />\r\n  <path d="M12 3v6" />\r\n</svg>\r\n';
 
   const arrowsMoveVertical =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-arrows-move-vertical"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M9 18l3 3l3 -3" />\n  <path d="M12 15v6" />\n  <path d="M15 6l-3 -3l-3 3" />\n  <path d="M12 3v6" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-arrows-move-vertical"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M9 18l3 3l3 -3" />\r\n  <path d="M12 15v6" />\r\n  <path d="M15 6l-3 -3l-3 3" />\r\n  <path d="M12 3v6" />\r\n</svg>\r\n';
 
   const arrowsVertical =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-arrows-vertical"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M8 7l4 -4l4 4" />\n  <path d="M8 17l4 4l4 -4" />\n  <path d="M12 3l0 18" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-arrows-vertical"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M8 7l4 -4l4 4" />\r\n  <path d="M8 17l4 4l4 -4" />\r\n  <path d="M12 3l0 18" />\r\n</svg>\r\n';
 
   const book =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-book"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />\n  <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />\n  <path d="M3 6l0 13" />\n  <path d="M12 6l0 13" />\n  <path d="M21 6l0 13" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-book"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />\r\n  <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />\r\n  <path d="M3 6l0 13" />\r\n  <path d="M12 6l0 13" />\r\n  <path d="M21 6l0 13" />\r\n</svg>\r\n';
 
   const bookReturn =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-return"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 2 -1" />\n  <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />\n  <path d="M3 6l0 13" />\n  <path d="M12 6l0 13" />\n  <path d="M21 6l0 4" />\n  <g transform="rotate(-90, 19, 15)">\n    <path d="M15 16l3 -3l3 3" />\n    <path d="M18 13v9" />\n  </g>\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-return"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 2 -1" />\r\n  <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />\r\n  <path d="M3 6l0 13" />\r\n  <path d="M12 6l0 13" />\r\n  <path d="M21 6l0 4" />\r\n  <g transform="rotate(-90, 19, 15)">\r\n    <path d="M15 16l3 -3l3 3" />\r\n    <path d="M18 13v9" />\r\n  </g>\r\n</svg>\r\n';
 
   const bookUpload =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-book-upload"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M14 20h-8a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12v5" />\n  <path d="M11 16h-5a2 2 0 0 0 -2 2" />\n  <path d="M15 16l3 -3l3 3" />\n  <path d="M18 13v9" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-book-upload"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M14 20h-8a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12v5" />\r\n  <path d="M11 16h-5a2 2 0 0 0 -2 2" />\r\n  <path d="M15 16l3 -3l3 3" />\r\n  <path d="M18 13v9" />\r\n</svg>\r\n';
 
   const bookmark =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-bookmark"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-bookmark"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z" />\r\n</svg>\r\n';
 
   const bookmarkOff =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-bookmark-off"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path\n    d="M7.708 3.721a3.982 3.982 0 0 1 2.292 -.721h4a4 4 0 0 1 4 4v7m0 4v3l-6 -4l-6 4v-14c0 -.308 .035 -.609 .1 -.897"\n  />\n  <path d="M3 3l18 18" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-bookmark-off"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path\r\n    d="M7.708 3.721a3.982 3.982 0 0 1 2.292 -.721h4a4 4 0 0 1 4 4v7m0 4v3l-6 -4l-6 4v-14c0 -.308 .035 -.609 .1 -.897"\r\n  />\r\n  <path d="M3 3l18 18" />\r\n</svg>\r\n';
 
   const bookmarks =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-bookmarks"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z" />\n  <path d="M11 3h5a3 3 0 0 1 3 3v11" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-bookmarks"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z" />\r\n  <path d="M11 3h5a3 3 0 0 1 3 3v11" />\r\n</svg>\r\n';
 
   const boxAlignTop =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-box-align-top"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M4 10.005h16v-5a1 1 0 0 0 -1 -1h-14a1 1 0 0 0 -1 1v5z" />\n  <path d="M4 15.005v-.01" />\n  <path d="M4 20.005v-.01" />\n  <path d="M9 20.005v-.01" />\n  <path d="M15 20.005v-.01" />\n  <path d="M20 20.005v-.01" />\n  <path d="M20 15.005v-.01" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-box-align-top"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 10.005h16v-5a1 1 0 0 0 -1 -1h-14a1 1 0 0 0 -1 1v5z" />\r\n  <path d="M4 15.005v-.01" />\r\n  <path d="M4 20.005v-.01" />\r\n  <path d="M9 20.005v-.01" />\r\n  <path d="M15 20.005v-.01" />\r\n  <path d="M20 20.005v-.01" />\r\n  <path d="M20 15.005v-.01" />\r\n</svg>\r\n';
 
   const Comic1SpecialFlat =
-    '<svg\n  id="Capa_1"\n  enable-background="new 0 0 512 512"\n  height="512"\n  viewBox="0 0 512 512"\n  width="512"\n  xmlns="http://www.w3.org/2000/svg"\n>\n  <g>\n    <g>\n      <g>\n        <path\n          d="m427.508 512h-343.02c-5.69 0-10.302-4.612-10.302-10.302v-491.396c0-5.69 4.612-10.302 10.302-10.302h343.02c5.69 0 10.302 4.612 10.302 10.302v491.396c-.001 5.69-4.613 10.302-10.302 10.302z"\n          fill="#f2eff2"\n        />\n      </g>\n    </g>\n    <path\n      d="m427.512 0h-41.238c5.687 0 10.302 4.615 10.302 10.302v41.156l-18.039 71.714 18.039 81.268v46.358l-18.039 45.164 18.039 24.847v46.358l-10.302 61.227 10.302 32.149v41.156c0 5.687-4.615 10.302-10.302 10.302h41.238c5.687 0 10.302-4.615 10.302-10.302v-491.397c0-5.687-4.615-10.302-10.302-10.302z"\n      fill="#e1dde1"\n    />\n    <g>\n      <path\n        d="m243.51 273.63-47.48 104.08-80.61-10.85v-315.4c0-2.85 2.31-5.15 5.15-5.15h30.86c2.13 0 4.03 1.29 4.8 3.27z"\n        fill="#3ad1e0"\n      />\n      <path\n        d="m243.51 273.63-16.68 36.56-101.52-260.61c-.76-1.95-2.64-3.25-4.74-3.27h30.86c2.13 0 4.03 1.29 4.8 3.27z"\n        fill="#22c7db"\n      />\n      <path\n        d="m310.81 465.69h-190.24c-2.84 0-5.15-2.3-5.15-5.15v-93.68c25.18-34.92 65.99-57.81 112.19-58.37l-16.07 35.21 74.5 39.08 29.56 75.9c1.32 3.37-1.17 7.01-4.79 7.01z"\n        fill="#fb33a8"\n      />\n      <path\n        d="m310.81 465.69h-30.92c3.61 0 6.11-3.64 4.79-7.01l-12.92-33.17c-1.92 4.55-2.88 9.61-2.61 14.91.01.13.01.25.01.38 0 5.92-7.39 8.87-11.45 4.36-6.77-7.49-16.03-11.24-25.29-11.24s-18.54 3.75-25.29 11.24c-1.36 1.52-3.11 2.19-4.83 2.19-3.48 0-6.84-2.78-6.62-6.93.03-.59.04-1.18.04-1.77 0-19.36-16.23-34.99-35.81-33.99-.12.01-.24.01-.37.01-5.92 0-8.87-7.4-4.37-11.46 7.49-6.76 11.24-16.03 11.24-25.29s-3.75-18.52-11.24-25.29c-1.51-1.36-2.18-3.1-2.18-4.81 0-3.48 2.78-6.84 6.92-6.64.6.04 1.19.05 1.77.05 12.81 0 23.98-7.11 29.79-17.57l34.29-1.12-14.22 31.16 74.5 39.08 29.56 75.9c1.32 3.37-1.17 7.01-4.79 7.01z"\n        fill="#fb33a8"\n      />\n      <path\n        d="m396.58 51.46v152.98c0 2.84-2.31 5.15-5.15 5.15h-32l-40.41-29.31-40.41 29.31h-17.82c-2.12 0-4.03-1.3-4.8-3.28l-59.6-152.98c-1.32-3.38 1.18-7.02 4.79-7.02h190.25c2.84 0 5.15 2.3 5.15 5.15z"\n        fill="#fcb44d"\n      />\n      <path\n        d="m396.576 51.457v152.982c0 2.843-2.308 5.151-5.151 5.151h-30.927c2.843 0 5.151-2.308 5.151-5.151v-152.982c0-2.843-2.308-5.151-5.151-5.151h30.927c2.843.001 5.151 2.308 5.151 5.151z"\n        fill="#fb9927"\n      />\n      <g>\n        <path\n          d="m359.428 181.065v28.526h-80.818v-28.526c0-22.324 18.1-40.414 40.414-40.414 11.157 0 21.263 4.522 28.567 11.837 7.314 7.314 11.837 17.409 11.837 28.577z"\n          fill="#ae6ad8"\n        />\n        <path\n          d="m359.43 181.065v28.526h-29.237v-28.526c0-11.167-4.522-21.263-11.837-28.577-3.935-3.935-8.674-7.067-13.949-9.107 4.533-1.762 9.467-2.73 14.618-2.73 11.157 0 21.263 4.522 28.567 11.837 7.316 7.314 11.838 17.409 11.838 28.577z"\n          fill="#975bbb"\n        />\n        <g>\n          <g>\n            <circle\n              cx="319.023"\n              cy="121.497"\n              fill="#f2eff2"\n              r="26.224"\n            />\n          </g>\n        </g>\n      </g>\n      <path\n        d="m396.576 250.798v70.011c0 2.845-2.306 5.151-5.151 5.151h-85.311c-2.123 0-4.029-1.303-4.8-3.281l-27.273-70.011c-1.316-3.377 1.175-7.021 4.8-7.021h112.585c2.844 0 5.15 2.306 5.15 5.151z"\n        fill="#23f1a8"\n      />\n      <path\n        d="m396.576 250.798v70.011c0 2.843-2.308 5.151-5.151 5.151h-30.927c2.843 0 5.151-2.308 5.151-5.151v-70.011c0-2.843-2.308-5.151-5.151-5.151h30.927c2.843 0 5.151 2.307 5.151 5.151z"\n        fill="#27e19d"\n      />\n      <path\n        d="m324.179 362.016h67.246c2.845 0 5.151 2.306 5.151 5.151v93.376c0 2.845-2.306 5.151-5.151 5.151h-30.866c-2.123 0-4.029-1.303-4.799-3.281l-36.38-93.376c-1.316-3.377 1.175-7.021 4.799-7.021z"\n        fill="#23f1a8"\n      />\n      <path\n        d="m396.576 367.167v93.376c0 2.843-2.308 5.151-5.151 5.151h-30.927c2.843 0 5.151-2.308 5.151-5.151v-93.376c0-2.843-2.308-5.151-5.151-5.151h30.927c2.843 0 5.151 2.308 5.151 5.151z"\n        fill="#27e19d"\n      />\n    </g>\n    <g>\n      <path\n        d="m269.153 413.978c.01.124.01.247.01.371 0 5.924-7.397 8.87-11.456 4.368-6.768-7.489-16.03-11.239-25.291-11.239s-18.533 3.75-25.291 11.239c-1.36 1.514-3.101 2.184-4.821 2.184-3.482 0-6.84-2.782-6.624-6.923.031-.597.041-1.185.041-1.772 0-19.367-16.236-34.995-35.809-33.996-.124.01-.247.01-.371.01-5.924 0-8.87-7.397-4.368-11.456 7.489-6.758 11.239-16.03 11.239-25.291s-3.75-18.523-11.239-25.291c-1.514-1.36-2.184-3.101-2.184-4.811 0-3.482 2.782-6.84 6.923-6.634.597.031 1.185.041 1.772.041 19.367 0 34.995-16.236 33.996-35.799-.01-.124-.01-.247-.01-.371 0-5.934 7.397-8.87 11.456-4.378 6.758 7.489 16.03 11.239 25.291 11.239 3.76 0 7.51-.618 11.095-1.844l42.526 109.158c-10.591 6.183-17.565 17.916-16.885 31.195z"\n        fill="#fdef63"\n      />\n      <path\n        d="m268.516 417.19c.406-.839.648-1.79.648-2.841 0-.123 0-.247-.01-.371-.68-13.279 6.294-25.013 16.885-31.194l-42.526-109.158c-3.585 1.226-7.335 1.844-11.095 1.844-7.992 0-15.988-2.799-22.374-8.378z"\n        fill="#f3d730"\n      />\n    </g>\n    <g>\n      <g>\n        <path\n          d="m229.374 349.967c-4.267 0-7.726-3.459-7.726-7.726v-29.272c0-4.267 3.459-7.726 7.726-7.726s7.726 3.459 7.726 7.726v29.272c0 4.267-3.459 7.726-7.726 7.726z"\n          fill="#554e55"\n        />\n      </g>\n      <g>\n        <path\n          d="m229.374 377.711c-4.267 0-7.726-3.459-7.726-7.726v-2.061c0-4.267 3.459-7.726 7.726-7.726s7.726 3.459 7.726 7.726v2.061c0 4.267-3.459 7.726-7.726 7.726z"\n          fill="#554e55"\n        />\n      </g>\n    </g>\n    <g>\n      <g>\n        <path\n          d="m258.185 86.361h-18.228c-4.267 0-7.726-3.459-7.726-7.726s3.459-7.726 7.726-7.726h18.228c4.267 0 7.726 3.459 7.726 7.726 0 4.266-3.459 7.726-7.726 7.726z"\n          fill="#f2eff2"\n        />\n      </g>\n      <g>\n        <path\n          d="m266.269 111.168h-18.229c-4.267 0-7.726-3.459-7.726-7.726s3.459-7.726 7.726-7.726h18.228c4.267 0 7.726 3.459 7.726 7.726s-3.458 7.726-7.725 7.726z"\n          fill="#f2eff2"\n        />\n      </g>\n    </g>\n  </g>\n</svg>\n';
+    '<svg\r\n  id="Capa_1"\r\n  enable-background="new 0 0 512 512"\r\n  height="512"\r\n  viewBox="0 0 512 512"\r\n  width="512"\r\n  xmlns="http://www.w3.org/2000/svg"\r\n>\r\n  <g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          d="m427.508 512h-343.02c-5.69 0-10.302-4.612-10.302-10.302v-491.396c0-5.69 4.612-10.302 10.302-10.302h343.02c5.69 0 10.302 4.612 10.302 10.302v491.396c-.001 5.69-4.613 10.302-10.302 10.302z"\r\n          fill="#f2eff2"\r\n        />\r\n      </g>\r\n    </g>\r\n    <path\r\n      d="m427.512 0h-41.238c5.687 0 10.302 4.615 10.302 10.302v41.156l-18.039 71.714 18.039 81.268v46.358l-18.039 45.164 18.039 24.847v46.358l-10.302 61.227 10.302 32.149v41.156c0 5.687-4.615 10.302-10.302 10.302h41.238c5.687 0 10.302-4.615 10.302-10.302v-491.397c0-5.687-4.615-10.302-10.302-10.302z"\r\n      fill="#e1dde1"\r\n    />\r\n    <g>\r\n      <path\r\n        d="m243.51 273.63-47.48 104.08-80.61-10.85v-315.4c0-2.85 2.31-5.15 5.15-5.15h30.86c2.13 0 4.03 1.29 4.8 3.27z"\r\n        fill="#3ad1e0"\r\n      />\r\n      <path\r\n        d="m243.51 273.63-16.68 36.56-101.52-260.61c-.76-1.95-2.64-3.25-4.74-3.27h30.86c2.13 0 4.03 1.29 4.8 3.27z"\r\n        fill="#22c7db"\r\n      />\r\n      <path\r\n        d="m310.81 465.69h-190.24c-2.84 0-5.15-2.3-5.15-5.15v-93.68c25.18-34.92 65.99-57.81 112.19-58.37l-16.07 35.21 74.5 39.08 29.56 75.9c1.32 3.37-1.17 7.01-4.79 7.01z"\r\n        fill="#fb33a8"\r\n      />\r\n      <path\r\n        d="m310.81 465.69h-30.92c3.61 0 6.11-3.64 4.79-7.01l-12.92-33.17c-1.92 4.55-2.88 9.61-2.61 14.91.01.13.01.25.01.38 0 5.92-7.39 8.87-11.45 4.36-6.77-7.49-16.03-11.24-25.29-11.24s-18.54 3.75-25.29 11.24c-1.36 1.52-3.11 2.19-4.83 2.19-3.48 0-6.84-2.78-6.62-6.93.03-.59.04-1.18.04-1.77 0-19.36-16.23-34.99-35.81-33.99-.12.01-.24.01-.37.01-5.92 0-8.87-7.4-4.37-11.46 7.49-6.76 11.24-16.03 11.24-25.29s-3.75-18.52-11.24-25.29c-1.51-1.36-2.18-3.1-2.18-4.81 0-3.48 2.78-6.84 6.92-6.64.6.04 1.19.05 1.77.05 12.81 0 23.98-7.11 29.79-17.57l34.29-1.12-14.22 31.16 74.5 39.08 29.56 75.9c1.32 3.37-1.17 7.01-4.79 7.01z"\r\n        fill="#fb33a8"\r\n      />\r\n      <path\r\n        d="m396.58 51.46v152.98c0 2.84-2.31 5.15-5.15 5.15h-32l-40.41-29.31-40.41 29.31h-17.82c-2.12 0-4.03-1.3-4.8-3.28l-59.6-152.98c-1.32-3.38 1.18-7.02 4.79-7.02h190.25c2.84 0 5.15 2.3 5.15 5.15z"\r\n        fill="#fcb44d"\r\n      />\r\n      <path\r\n        d="m396.576 51.457v152.982c0 2.843-2.308 5.151-5.151 5.151h-30.927c2.843 0 5.151-2.308 5.151-5.151v-152.982c0-2.843-2.308-5.151-5.151-5.151h30.927c2.843.001 5.151 2.308 5.151 5.151z"\r\n        fill="#fb9927"\r\n      />\r\n      <g>\r\n        <path\r\n          d="m359.428 181.065v28.526h-80.818v-28.526c0-22.324 18.1-40.414 40.414-40.414 11.157 0 21.263 4.522 28.567 11.837 7.314 7.314 11.837 17.409 11.837 28.577z"\r\n          fill="#ae6ad8"\r\n        />\r\n        <path\r\n          d="m359.43 181.065v28.526h-29.237v-28.526c0-11.167-4.522-21.263-11.837-28.577-3.935-3.935-8.674-7.067-13.949-9.107 4.533-1.762 9.467-2.73 14.618-2.73 11.157 0 21.263 4.522 28.567 11.837 7.316 7.314 11.838 17.409 11.838 28.577z"\r\n          fill="#975bbb"\r\n        />\r\n        <g>\r\n          <g>\r\n            <circle\r\n              cx="319.023"\r\n              cy="121.497"\r\n              fill="#f2eff2"\r\n              r="26.224"\r\n            />\r\n          </g>\r\n        </g>\r\n      </g>\r\n      <path\r\n        d="m396.576 250.798v70.011c0 2.845-2.306 5.151-5.151 5.151h-85.311c-2.123 0-4.029-1.303-4.8-3.281l-27.273-70.011c-1.316-3.377 1.175-7.021 4.8-7.021h112.585c2.844 0 5.15 2.306 5.15 5.151z"\r\n        fill="#23f1a8"\r\n      />\r\n      <path\r\n        d="m396.576 250.798v70.011c0 2.843-2.308 5.151-5.151 5.151h-30.927c2.843 0 5.151-2.308 5.151-5.151v-70.011c0-2.843-2.308-5.151-5.151-5.151h30.927c2.843 0 5.151 2.307 5.151 5.151z"\r\n        fill="#27e19d"\r\n      />\r\n      <path\r\n        d="m324.179 362.016h67.246c2.845 0 5.151 2.306 5.151 5.151v93.376c0 2.845-2.306 5.151-5.151 5.151h-30.866c-2.123 0-4.029-1.303-4.799-3.281l-36.38-93.376c-1.316-3.377 1.175-7.021 4.799-7.021z"\r\n        fill="#23f1a8"\r\n      />\r\n      <path\r\n        d="m396.576 367.167v93.376c0 2.843-2.308 5.151-5.151 5.151h-30.927c2.843 0 5.151-2.308 5.151-5.151v-93.376c0-2.843-2.308-5.151-5.151-5.151h30.927c2.843 0 5.151 2.308 5.151 5.151z"\r\n        fill="#27e19d"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        d="m269.153 413.978c.01.124.01.247.01.371 0 5.924-7.397 8.87-11.456 4.368-6.768-7.489-16.03-11.239-25.291-11.239s-18.533 3.75-25.291 11.239c-1.36 1.514-3.101 2.184-4.821 2.184-3.482 0-6.84-2.782-6.624-6.923.031-.597.041-1.185.041-1.772 0-19.367-16.236-34.995-35.809-33.996-.124.01-.247.01-.371.01-5.924 0-8.87-7.397-4.368-11.456 7.489-6.758 11.239-16.03 11.239-25.291s-3.75-18.523-11.239-25.291c-1.514-1.36-2.184-3.101-2.184-4.811 0-3.482 2.782-6.84 6.923-6.634.597.031 1.185.041 1.772.041 19.367 0 34.995-16.236 33.996-35.799-.01-.124-.01-.247-.01-.371 0-5.934 7.397-8.87 11.456-4.378 6.758 7.489 16.03 11.239 25.291 11.239 3.76 0 7.51-.618 11.095-1.844l42.526 109.158c-10.591 6.183-17.565 17.916-16.885 31.195z"\r\n        fill="#fdef63"\r\n      />\r\n      <path\r\n        d="m268.516 417.19c.406-.839.648-1.79.648-2.841 0-.123 0-.247-.01-.371-.68-13.279 6.294-25.013 16.885-31.194l-42.526-109.158c-3.585 1.226-7.335 1.844-11.095 1.844-7.992 0-15.988-2.799-22.374-8.378z"\r\n        fill="#f3d730"\r\n      />\r\n    </g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          d="m229.374 349.967c-4.267 0-7.726-3.459-7.726-7.726v-29.272c0-4.267 3.459-7.726 7.726-7.726s7.726 3.459 7.726 7.726v29.272c0 4.267-3.459 7.726-7.726 7.726z"\r\n          fill="#554e55"\r\n        />\r\n      </g>\r\n      <g>\r\n        <path\r\n          d="m229.374 377.711c-4.267 0-7.726-3.459-7.726-7.726v-2.061c0-4.267 3.459-7.726 7.726-7.726s7.726 3.459 7.726 7.726v2.061c0 4.267-3.459 7.726-7.726 7.726z"\r\n          fill="#554e55"\r\n        />\r\n      </g>\r\n    </g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          d="m258.185 86.361h-18.228c-4.267 0-7.726-3.459-7.726-7.726s3.459-7.726 7.726-7.726h18.228c4.267 0 7.726 3.459 7.726 7.726 0 4.266-3.459 7.726-7.726 7.726z"\r\n          fill="#f2eff2"\r\n        />\r\n      </g>\r\n      <g>\r\n        <path\r\n          d="m266.269 111.168h-18.229c-4.267 0-7.726-3.459-7.726-7.726s3.459-7.726 7.726-7.726h18.228c4.267 0 7.726 3.459 7.726 7.726s-3.458 7.726-7.725 7.726z"\r\n          fill="#f2eff2"\r\n        />\r\n      </g>\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
 
   const Comic1SpecialLinealColor =
-    '<?xml version="1.0" encoding="UTF-8"?>\n<svg\n  xmlns="http://www.w3.org/2000/svg"\n  version="1.1"\n  id="Capa_1"\n  x="0px"\n  y="0px"\n  viewBox="0 0 512 512"\n  style="enable-background: new 0 0 512 512"\n  xml:space="preserve"\n  width="512"\n  height="512"\n>\n  <g>\n    <g>\n      <g>\n        <path\n          style="fill: #f2eff2"\n          d="M422.485,504.5H89.515c-5.523,0-10-4.477-10-10v-477c0-5.523,4.477-10,10-10h332.971&#10;&#9;&#9;&#9;&#9;c5.523,0,10,4.477,10,10v477C432.485,500.023,428.008,504.5,422.485,504.5z"\n        />\n      </g>\n    </g>\n    <g>\n      <g>\n        <path\n          style="fill: #e1dde1"\n          d="M432.49,17.5v477c0,5.52-4.48,10-10,10h-40.03c5.52,0,10-4.48,10-10v-477c0-5.52-4.48-10-10-10&#10;&#9;&#9;&#9;&#9;h40.03C428.01,7.5,432.49,11.98,432.49,17.5z"\n        />\n      </g>\n    </g>\n    <g>\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M334.56,7.5H89.515c-5.523,0-10,4.477-10,10v477c0,5.523,4.477,10,10,10h332.971c5.523,0,10-4.477,10-10v-477&#10;&#9;&#9;&#9;c0-5.523-4.477-10-10-10h-54.763"\n      />\n    </g>\n    <g>\n      <path\n        style="fill: #3ad1e0"\n        d="M313.86,452.74L159.16,55.63c-0.75-1.92-2.6-3.18-4.66-3.18h-29.96c-2.76,0-5,2.24-5,5v397.1&#10;&#9;&#9;&#9;c0,2.76,2.24,5,5,5h184.67C312.72,459.55,315.14,456.01,313.86,452.74z"\n      />\n      <path\n        style="fill: #22c7db"\n        d="M309.21,459.55h-30.02c3.51,0,5.93-3.54,4.65-6.81L129.14,55.63c-0.74-1.9-2.56-3.16-4.6-3.18&#10;&#9;&#9;&#9;h29.96c2.06,0,3.91,1.26,4.66,3.18l154.7,397.11C315.14,456.01,312.72,459.55,309.21,459.55z"\n      />\n      <path\n        style="fill: #fb33a8"\n        d="M258.193,309.845c-9.05-1.894-18.424-2.909-28.037-2.909c-45.55,0-85.862,22.354-110.616,56.676&#10;&#9;&#9;&#9;v90.938c0,2.76,2.24,5,5,5h184.67c3.51,0,5.93-3.54,4.65-6.81L258.193,309.845z"\n      />\n      <path\n        style="fill: #ee2d9a"\n        d="M193.362,311.966c-5.64,10.161-16.48,17.055-28.912,17.055c-0.57,0-1.14-0.01-1.72-0.04&#10;&#9;&#9;&#9;c-4.02-0.2-6.72,3.06-6.72,6.44c0,1.66,0.65,3.35,2.12,4.67c7.27,6.57,10.91,15.56,10.91,24.55s-3.64,17.99-10.91,24.55&#10;&#9;&#9;&#9;c-4.37,3.94-1.51,11.12,4.24,11.12c0.12,0,0.24,0,0.36-0.01c19-0.97,34.76,14.2,34.76,33c0,0.57-0.01,1.14-0.04,1.72&#10;&#9;&#9;&#9;c-0.21,4.02,3.05,6.72,6.43,6.72c1.67,0,3.36-0.65,4.68-2.12c6.56-7.27,15.56-10.91,24.55-10.91c8.99,0,17.98,3.64,24.55,10.91&#10;&#9;&#9;&#9;c3.94,4.37,11.12,1.51,11.12-4.24c0-0.12,0-0.24-0.01-0.36c-0.264-5.151,0.666-10.058,2.527-14.479l12.543,32.197&#10;&#9;&#9;&#9;c1.28,3.27-1.14,6.81-4.65,6.81h30.02c3.51,0,5.93-3.54,4.65-6.81l-55.667-142.895L193.362,311.966z"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M230.156,306.937c-45.55,0-85.862,22.354-110.616,56.676"\n      />\n      <path\n        style="fill: #fcb44d"\n        d="M392.46,57.45v148.5c0,2.76-2.24,5-5,5H260.65c-2.06,0-3.91-1.26-4.66-3.18l-57.85-148.5&#10;&#9;&#9;&#9;c-1.28-3.28,1.14-6.82,4.65-6.82h184.67C390.22,52.45,392.46,54.69,392.46,57.45z"\n      />\n      <path\n        style="fill: #fb9927"\n        d="M392.46,57.45v148.5c0,2.76-2.24,5-5,5h-30.021c2.76,0,5-2.24,5-5V57.45c0-2.76-2.24-5-5-5h30.021&#10;&#9;&#9;&#9;C390.22,52.45,392.46,54.69,392.46,57.45z"\n      />\n      <g>\n        <path\n          style="fill: #ae6ad8"\n          d="M356.4,183.26v27.69h-78.45v-27.69c0-21.67,17.57-39.23,39.23-39.23&#10;&#9;&#9;&#9;&#9;c10.83,0,20.64,4.39,27.73,11.49C352.01,162.62,356.4,172.42,356.4,183.26z"\n        />\n        <path\n          style="fill: #975bbb"\n          d="M356.402,183.26v27.69h-28.38v-27.69c0-10.84-4.39-20.64-11.49-27.74&#10;&#9;&#9;&#9;&#9;c-3.82-3.82-8.42-6.86-13.54-8.84c4.4-1.71,9.19-2.65,14.19-2.65c10.83,0,20.64,4.39,27.73,11.49&#10;&#9;&#9;&#9;&#9;C352.012,162.62,356.402,172.42,356.402,183.26z"\n        />\n        <path\n          style="\n            fill: none;\n            stroke: #000000;\n            stroke-width: 15;\n            stroke-linecap: round;\n            stroke-linejoin: round;\n            stroke-miterlimit: 10;\n          "\n          d="&#10;&#9;&#9;&#9;&#9;M277.95,210.95v-27.69c0-21.67,17.57-39.23,39.23-39.23c10.83,0,20.64,4.39,27.73,11.49c7.1,7.1,11.49,16.9,11.49,27.74v27.69"\n        />\n        <g>\n          <circle\n            style="fill: #f2eff2"\n            cx="317.179"\n            cy="125.438"\n            r="25.456"\n          />\n\n          <circle\n            style="\n              fill: none;\n              stroke: #000000;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-linejoin: round;\n              stroke-miterlimit: 10;\n            "\n            cx="317.179"\n            cy="125.438"\n            r="25.456"\n          />\n        </g>\n      </g>\n      <path\n        style="fill: #23f1a8"\n        d="M392.46,250.95v67.96c0,2.761-2.239,5-5,5h-82.812c-2.061,0-3.911-1.265-4.659-3.185l-26.474-67.96&#10;&#9;&#9;&#9;c-1.277-3.278,1.141-6.815,4.659-6.815H387.46C390.221,245.95,392.46,248.189,392.46,250.95z"\n      />\n      <path\n        style="fill: #27e19d"\n        d="M392.46,250.95v67.96c0,2.76-2.24,5-5,5h-30.021c2.76,0,5-2.24,5-5v-67.96c0-2.76-2.24-5-5-5&#10;&#9;&#9;&#9;h30.021C390.22,245.95,392.46,248.19,392.46,250.95z"\n      />\n      <path\n        style="fill: #23f1a8"\n        d="M322.184,358.91h65.276c2.761,0,5,2.239,5,5v90.64c0,2.761-2.239,5-5,5h-29.962&#10;&#9;&#9;&#9;c-2.061,0-3.911-1.265-4.659-3.185l-35.314-90.64C316.248,362.447,318.666,358.91,322.184,358.91z"\n      />\n      <path\n        style="fill: #27e19d"\n        d="M392.46,363.91v90.64c0,2.76-2.24,5-5,5h-30.021c2.76,0,5-2.24,5-5v-90.64c0-2.76-2.24-5-5-5&#10;&#9;&#9;&#9;h30.021C390.22,358.91,392.46,361.15,392.46,363.91z"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M119.54,242.003V454.55c0,2.761,2.239,5,5,5h184.666c3.518,0,5.936-3.537,4.659-6.815l-154.704-397.1&#10;&#9;&#9;&#9;c-0.748-1.92-2.598-3.185-4.659-3.185H124.54c-2.761,0-5,2.239-5,5v151.391"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M392.46,57.45v148.5c0,2.761-2.239,5-5,5H260.648c-2.061,0-3.911-1.265-4.659-3.185l-57.854-148.5&#10;&#9;&#9;&#9;c-1.277-3.278,1.141-6.815,4.659-6.815H387.46C390.221,52.45,392.46,54.689,392.46,57.45z"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M306.627,245.95h-28.454c-3.518,0-5.936,3.537-4.659,6.815l26.474,67.96c0.748,1.92,2.598,3.185,4.659,3.185h82.812&#10;&#9;&#9;&#9;c2.761,0,5-2.239,5-5v-67.96c0-2.761-2.239-5-5-5h-47.67"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M322.184,358.91h65.276c2.761,0,5,2.239,5,5v90.64c0,2.761-2.239,5-5,5h-29.962c-2.061,0-3.911-1.265-4.659-3.185l-35.314-90.64&#10;&#9;&#9;&#9;C316.248,362.447,318.666,358.91,322.184,358.91z"\n      />\n    </g>\n    <g>\n      <path\n        style="fill: #fdef63"\n        d="M268.77,409.35c0.01,0.12,0.01,0.24,0.01,0.36c0,5.75-7.18,8.61-11.12,4.24&#10;&#9;&#9;&#9;c-6.57-7.27-15.56-10.91-24.55-10.91c-8.99,0-17.99,3.64-24.55,10.91c-1.32,1.47-3.01,2.12-4.68,2.12c-3.38,0-6.64-2.7-6.43-6.72&#10;&#9;&#9;&#9;c0.03-0.58,0.04-1.15,0.04-1.72c0-18.8-15.76-33.97-34.76-33c-0.12,0.01-0.24,0.01-0.36,0.01c-5.75,0-8.61-7.18-4.24-11.12&#10;&#9;&#9;&#9;c7.27-6.56,10.91-15.56,10.91-24.55s-3.64-17.98-10.91-24.55c-1.47-1.32-2.12-3.01-2.12-4.67c0-3.38,2.7-6.64,6.72-6.44&#10;&#9;&#9;&#9;c0.58,0.03,1.15,0.04,1.72,0.04c18.8,0,33.97-15.76,33-34.75c-0.01-0.12-0.01-0.24-0.01-0.36c0-5.76,7.18-8.61,11.12-4.25&#10;&#9;&#9;&#9;c6.56,7.27,15.56,10.91,24.55,10.91c3.65,0,7.29-0.6,10.77-1.79l41.28,105.96C274.88,385.07,268.11,396.46,268.77,409.35z"\n      />\n      <path\n        style="fill: #f3d730"\n        d="M268.151,412.468c0.394-0.814,0.629-1.738,0.629-2.758c0-0.12,0-0.24-0.01-0.36&#10;&#9;&#9;&#9;c-0.66-12.89,6.11-24.28,16.39-30.28l-41.28-105.96c-3.48,1.19-7.12,1.79-10.77,1.79c-7.758,0-15.52-2.717-21.718-8.132&#10;&#9;&#9;&#9;L268.151,412.468z"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M268.77,409.35c0.01,0.12,0.01,0.24,0.01,0.36c0,5.75-7.18,8.61-11.12,4.24c-6.57-7.27-15.56-10.91-24.55-10.91&#10;&#9;&#9;&#9;c-8.99,0-17.99,3.64-24.55,10.91c-1.32,1.47-3.01,2.12-4.68,2.12c-3.38,0-6.64-2.7-6.43-6.72c0.03-0.58,0.04-1.15,0.04-1.72&#10;&#9;&#9;&#9;c0-18.8-15.76-33.97-34.76-33c-0.12,0.01-0.24,0.01-0.36,0.01c-5.75,0-8.61-7.18-4.24-11.12c7.27-6.56,10.91-15.56,10.91-24.55&#10;&#9;&#9;&#9;s-3.64-17.98-10.91-24.55c-1.47-1.32-2.12-3.01-2.12-4.67c0-3.38,2.7-6.64,6.72-6.44c0.58,0.03,1.15,0.04,1.72,0.04&#10;&#9;&#9;&#9;c18.8,0,33.97-15.76,33-34.75c-0.01-0.12-0.01-0.24-0.01-0.36c0-5.76,7.18-8.61,11.12-4.25c6.56,7.27,15.56,10.91,24.55,10.91&#10;&#9;&#9;&#9;c3.65,0,7.29-0.6,10.77-1.79l41.28,105.96C274.88,385.07,268.11,396.46,268.77,409.35z"\n      />\n    </g>\n    <g>\n      <line\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        x1="230.156"\n        y1="339.714"\n        x2="230.156"\n        y2="311.299"\n      />\n\n      <line\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        x1="230.156"\n        y1="364.644"\n        x2="230.156"\n        y2="366.646"\n      />\n    </g>\n    <g>\n      <line\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        x1="240.429"\n        y1="83.83"\n        x2="258.124"\n        y2="83.83"\n      />\n\n      <line\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        x1="248.276"\n        y1="107.911"\n        x2="265.97"\n        y2="107.911"\n      />\n    </g>\n  </g>\n</svg>\n';
+    '<?xml version="1.0" encoding="UTF-8"?>\r\n<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  version="1.1"\r\n  id="Capa_1"\r\n  x="0px"\r\n  y="0px"\r\n  viewBox="0 0 512 512"\r\n  style="enable-background: new 0 0 512 512"\r\n  xml:space="preserve"\r\n  width="512"\r\n  height="512"\r\n>\r\n  <g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          style="fill: #f2eff2"\r\n          d="M422.485,504.5H89.515c-5.523,0-10-4.477-10-10v-477c0-5.523,4.477-10,10-10h332.971&#10;&#9;&#9;&#9;&#9;c5.523,0,10,4.477,10,10v477C432.485,500.023,428.008,504.5,422.485,504.5z"\r\n        />\r\n      </g>\r\n    </g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          style="fill: #e1dde1"\r\n          d="M432.49,17.5v477c0,5.52-4.48,10-10,10h-40.03c5.52,0,10-4.48,10-10v-477c0-5.52-4.48-10-10-10&#10;&#9;&#9;&#9;&#9;h40.03C428.01,7.5,432.49,11.98,432.49,17.5z"\r\n        />\r\n      </g>\r\n    </g>\r\n    <g>\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M334.56,7.5H89.515c-5.523,0-10,4.477-10,10v477c0,5.523,4.477,10,10,10h332.971c5.523,0,10-4.477,10-10v-477&#10;&#9;&#9;&#9;c0-5.523-4.477-10-10-10h-54.763"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        style="fill: #3ad1e0"\r\n        d="M313.86,452.74L159.16,55.63c-0.75-1.92-2.6-3.18-4.66-3.18h-29.96c-2.76,0-5,2.24-5,5v397.1&#10;&#9;&#9;&#9;c0,2.76,2.24,5,5,5h184.67C312.72,459.55,315.14,456.01,313.86,452.74z"\r\n      />\r\n      <path\r\n        style="fill: #22c7db"\r\n        d="M309.21,459.55h-30.02c3.51,0,5.93-3.54,4.65-6.81L129.14,55.63c-0.74-1.9-2.56-3.16-4.6-3.18&#10;&#9;&#9;&#9;h29.96c2.06,0,3.91,1.26,4.66,3.18l154.7,397.11C315.14,456.01,312.72,459.55,309.21,459.55z"\r\n      />\r\n      <path\r\n        style="fill: #fb33a8"\r\n        d="M258.193,309.845c-9.05-1.894-18.424-2.909-28.037-2.909c-45.55,0-85.862,22.354-110.616,56.676&#10;&#9;&#9;&#9;v90.938c0,2.76,2.24,5,5,5h184.67c3.51,0,5.93-3.54,4.65-6.81L258.193,309.845z"\r\n      />\r\n      <path\r\n        style="fill: #ee2d9a"\r\n        d="M193.362,311.966c-5.64,10.161-16.48,17.055-28.912,17.055c-0.57,0-1.14-0.01-1.72-0.04&#10;&#9;&#9;&#9;c-4.02-0.2-6.72,3.06-6.72,6.44c0,1.66,0.65,3.35,2.12,4.67c7.27,6.57,10.91,15.56,10.91,24.55s-3.64,17.99-10.91,24.55&#10;&#9;&#9;&#9;c-4.37,3.94-1.51,11.12,4.24,11.12c0.12,0,0.24,0,0.36-0.01c19-0.97,34.76,14.2,34.76,33c0,0.57-0.01,1.14-0.04,1.72&#10;&#9;&#9;&#9;c-0.21,4.02,3.05,6.72,6.43,6.72c1.67,0,3.36-0.65,4.68-2.12c6.56-7.27,15.56-10.91,24.55-10.91c8.99,0,17.98,3.64,24.55,10.91&#10;&#9;&#9;&#9;c3.94,4.37,11.12,1.51,11.12-4.24c0-0.12,0-0.24-0.01-0.36c-0.264-5.151,0.666-10.058,2.527-14.479l12.543,32.197&#10;&#9;&#9;&#9;c1.28,3.27-1.14,6.81-4.65,6.81h30.02c3.51,0,5.93-3.54,4.65-6.81l-55.667-142.895L193.362,311.966z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M230.156,306.937c-45.55,0-85.862,22.354-110.616,56.676"\r\n      />\r\n      <path\r\n        style="fill: #fcb44d"\r\n        d="M392.46,57.45v148.5c0,2.76-2.24,5-5,5H260.65c-2.06,0-3.91-1.26-4.66-3.18l-57.85-148.5&#10;&#9;&#9;&#9;c-1.28-3.28,1.14-6.82,4.65-6.82h184.67C390.22,52.45,392.46,54.69,392.46,57.45z"\r\n      />\r\n      <path\r\n        style="fill: #fb9927"\r\n        d="M392.46,57.45v148.5c0,2.76-2.24,5-5,5h-30.021c2.76,0,5-2.24,5-5V57.45c0-2.76-2.24-5-5-5h30.021&#10;&#9;&#9;&#9;C390.22,52.45,392.46,54.69,392.46,57.45z"\r\n      />\r\n      <g>\r\n        <path\r\n          style="fill: #ae6ad8"\r\n          d="M356.4,183.26v27.69h-78.45v-27.69c0-21.67,17.57-39.23,39.23-39.23&#10;&#9;&#9;&#9;&#9;c10.83,0,20.64,4.39,27.73,11.49C352.01,162.62,356.4,172.42,356.4,183.26z"\r\n        />\r\n        <path\r\n          style="fill: #975bbb"\r\n          d="M356.402,183.26v27.69h-28.38v-27.69c0-10.84-4.39-20.64-11.49-27.74&#10;&#9;&#9;&#9;&#9;c-3.82-3.82-8.42-6.86-13.54-8.84c4.4-1.71,9.19-2.65,14.19-2.65c10.83,0,20.64,4.39,27.73,11.49&#10;&#9;&#9;&#9;&#9;C352.012,162.62,356.402,172.42,356.402,183.26z"\r\n        />\r\n        <path\r\n          style="\r\n            fill: none;\r\n            stroke: #000000;\r\n            stroke-width: 15;\r\n            stroke-linecap: round;\r\n            stroke-linejoin: round;\r\n            stroke-miterlimit: 10;\r\n          "\r\n          d="&#10;&#9;&#9;&#9;&#9;M277.95,210.95v-27.69c0-21.67,17.57-39.23,39.23-39.23c10.83,0,20.64,4.39,27.73,11.49c7.1,7.1,11.49,16.9,11.49,27.74v27.69"\r\n        />\r\n        <g>\r\n          <circle\r\n            style="fill: #f2eff2"\r\n            cx="317.179"\r\n            cy="125.438"\r\n            r="25.456"\r\n          />\r\n\r\n          <circle\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n            "\r\n            cx="317.179"\r\n            cy="125.438"\r\n            r="25.456"\r\n          />\r\n        </g>\r\n      </g>\r\n      <path\r\n        style="fill: #23f1a8"\r\n        d="M392.46,250.95v67.96c0,2.761-2.239,5-5,5h-82.812c-2.061,0-3.911-1.265-4.659-3.185l-26.474-67.96&#10;&#9;&#9;&#9;c-1.277-3.278,1.141-6.815,4.659-6.815H387.46C390.221,245.95,392.46,248.189,392.46,250.95z"\r\n      />\r\n      <path\r\n        style="fill: #27e19d"\r\n        d="M392.46,250.95v67.96c0,2.76-2.24,5-5,5h-30.021c2.76,0,5-2.24,5-5v-67.96c0-2.76-2.24-5-5-5&#10;&#9;&#9;&#9;h30.021C390.22,245.95,392.46,248.19,392.46,250.95z"\r\n      />\r\n      <path\r\n        style="fill: #23f1a8"\r\n        d="M322.184,358.91h65.276c2.761,0,5,2.239,5,5v90.64c0,2.761-2.239,5-5,5h-29.962&#10;&#9;&#9;&#9;c-2.061,0-3.911-1.265-4.659-3.185l-35.314-90.64C316.248,362.447,318.666,358.91,322.184,358.91z"\r\n      />\r\n      <path\r\n        style="fill: #27e19d"\r\n        d="M392.46,363.91v90.64c0,2.76-2.24,5-5,5h-30.021c2.76,0,5-2.24,5-5v-90.64c0-2.76-2.24-5-5-5&#10;&#9;&#9;&#9;h30.021C390.22,358.91,392.46,361.15,392.46,363.91z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M119.54,242.003V454.55c0,2.761,2.239,5,5,5h184.666c3.518,0,5.936-3.537,4.659-6.815l-154.704-397.1&#10;&#9;&#9;&#9;c-0.748-1.92-2.598-3.185-4.659-3.185H124.54c-2.761,0-5,2.239-5,5v151.391"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M392.46,57.45v148.5c0,2.761-2.239,5-5,5H260.648c-2.061,0-3.911-1.265-4.659-3.185l-57.854-148.5&#10;&#9;&#9;&#9;c-1.277-3.278,1.141-6.815,4.659-6.815H387.46C390.221,52.45,392.46,54.689,392.46,57.45z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M306.627,245.95h-28.454c-3.518,0-5.936,3.537-4.659,6.815l26.474,67.96c0.748,1.92,2.598,3.185,4.659,3.185h82.812&#10;&#9;&#9;&#9;c2.761,0,5-2.239,5-5v-67.96c0-2.761-2.239-5-5-5h-47.67"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M322.184,358.91h65.276c2.761,0,5,2.239,5,5v90.64c0,2.761-2.239,5-5,5h-29.962c-2.061,0-3.911-1.265-4.659-3.185l-35.314-90.64&#10;&#9;&#9;&#9;C316.248,362.447,318.666,358.91,322.184,358.91z"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        style="fill: #fdef63"\r\n        d="M268.77,409.35c0.01,0.12,0.01,0.24,0.01,0.36c0,5.75-7.18,8.61-11.12,4.24&#10;&#9;&#9;&#9;c-6.57-7.27-15.56-10.91-24.55-10.91c-8.99,0-17.99,3.64-24.55,10.91c-1.32,1.47-3.01,2.12-4.68,2.12c-3.38,0-6.64-2.7-6.43-6.72&#10;&#9;&#9;&#9;c0.03-0.58,0.04-1.15,0.04-1.72c0-18.8-15.76-33.97-34.76-33c-0.12,0.01-0.24,0.01-0.36,0.01c-5.75,0-8.61-7.18-4.24-11.12&#10;&#9;&#9;&#9;c7.27-6.56,10.91-15.56,10.91-24.55s-3.64-17.98-10.91-24.55c-1.47-1.32-2.12-3.01-2.12-4.67c0-3.38,2.7-6.64,6.72-6.44&#10;&#9;&#9;&#9;c0.58,0.03,1.15,0.04,1.72,0.04c18.8,0,33.97-15.76,33-34.75c-0.01-0.12-0.01-0.24-0.01-0.36c0-5.76,7.18-8.61,11.12-4.25&#10;&#9;&#9;&#9;c6.56,7.27,15.56,10.91,24.55,10.91c3.65,0,7.29-0.6,10.77-1.79l41.28,105.96C274.88,385.07,268.11,396.46,268.77,409.35z"\r\n      />\r\n      <path\r\n        style="fill: #f3d730"\r\n        d="M268.151,412.468c0.394-0.814,0.629-1.738,0.629-2.758c0-0.12,0-0.24-0.01-0.36&#10;&#9;&#9;&#9;c-0.66-12.89,6.11-24.28,16.39-30.28l-41.28-105.96c-3.48,1.19-7.12,1.79-10.77,1.79c-7.758,0-15.52-2.717-21.718-8.132&#10;&#9;&#9;&#9;L268.151,412.468z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M268.77,409.35c0.01,0.12,0.01,0.24,0.01,0.36c0,5.75-7.18,8.61-11.12,4.24c-6.57-7.27-15.56-10.91-24.55-10.91&#10;&#9;&#9;&#9;c-8.99,0-17.99,3.64-24.55,10.91c-1.32,1.47-3.01,2.12-4.68,2.12c-3.38,0-6.64-2.7-6.43-6.72c0.03-0.58,0.04-1.15,0.04-1.72&#10;&#9;&#9;&#9;c0-18.8-15.76-33.97-34.76-33c-0.12,0.01-0.24,0.01-0.36,0.01c-5.75,0-8.61-7.18-4.24-11.12c7.27-6.56,10.91-15.56,10.91-24.55&#10;&#9;&#9;&#9;s-3.64-17.98-10.91-24.55c-1.47-1.32-2.12-3.01-2.12-4.67c0-3.38,2.7-6.64,6.72-6.44c0.58,0.03,1.15,0.04,1.72,0.04&#10;&#9;&#9;&#9;c18.8,0,33.97-15.76,33-34.75c-0.01-0.12-0.01-0.24-0.01-0.36c0-5.76,7.18-8.61,11.12-4.25c6.56,7.27,15.56,10.91,24.55,10.91&#10;&#9;&#9;&#9;c3.65,0,7.29-0.6,10.77-1.79l41.28,105.96C274.88,385.07,268.11,396.46,268.77,409.35z"\r\n      />\r\n    </g>\r\n    <g>\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="230.156"\r\n        y1="339.714"\r\n        x2="230.156"\r\n        y2="311.299"\r\n      />\r\n\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="230.156"\r\n        y1="364.644"\r\n        x2="230.156"\r\n        y2="366.646"\r\n      />\r\n    </g>\r\n    <g>\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="240.429"\r\n        y1="83.83"\r\n        x2="258.124"\r\n        y2="83.83"\r\n      />\r\n\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="248.276"\r\n        y1="107.911"\r\n        x2="265.97"\r\n        y2="107.911"\r\n      />\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
 
   const Comic2SpecialFlat =
-    '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n<!-- Created with Inkscape (http://www.inkscape.org/) -->\n\n<svg\n  version="1.1"\n  id="svg3390"\n  xml:space="preserve"\n  width="682.66669"\n  height="682.66669"\n  viewBox="0 0 682.66669 682.66669"\n  xmlns="http://www.w3.org/2000/svg"\n>\n  <defs id="defs3394">\n    <clipPath\n      clipPathUnits="userSpaceOnUse"\n      id="clipPath3404"\n    >\n      <path\n        d="M 0,512 H 512 V 0 H 0 Z"\n        id="path3402"\n      />\n    </clipPath>\n  </defs>\n  <g\n    id="g3396"\n    transform="matrix(1.3333333,0,0,-1.3333333,0,682.66667)"\n  >\n    <g id="g3398">\n      <g\n        id="g3400"\n        clip-path="url(#clipPath3404)"\n      >\n        <g\n          id="g3406"\n          transform="translate(451.7344)"\n        >\n          <path\n            d="m 0,0 h -391.469 c -11.379,0 -20.603,9.225 -20.603,20.604 v 470.792 c 0,11.379 9.224,20.604 20.603,20.604 L 0,512 c 11.379,0 20.604,-9.225 20.604,-20.604 V 20.604 C 20.604,9.225 11.379,0 0,0"\n            style="fill: #efe6e6; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path3408"\n          />\n        </g>\n        <g\n          id="g3410"\n          transform="translate(472.3376,41.2072)"\n        >\n          <path\n            d="m 0,0 c -216.202,0 -391.468,175.266 -391.468,391.468 v 79.325 h -20.604 c -11.379,0 -20.604,-9.225 -20.604,-20.604 V -20.604 c 0,-11.379 9.225,-20.603 20.604,-20.603 H -20.603 C -9.224,-41.207 0,-31.983 0,-20.604 Z"\n            style="fill: #e2d7d7; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path3412"\n          />\n        </g>\n        <g\n          id="g3414"\n          transform="translate(235.3964,198.1382)"\n        >\n          <path\n            d="M 0,0 H 195.734 V 272.655 H 82.414 Z"\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path3416"\n          />\n        </g>\n        <g\n          id="g3418"\n          transform="translate(235.3964,198.1382)"\n        >\n          <path\n            d="M 0,0 H 195.734 V 272.655 H 82.414 Z"\n            style="fill: #5ad6ff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path3420"\n          />\n        </g>\n        <g\n          id="g3422"\n          transform="translate(80.8692,198.1382)"\n        >\n          <path\n            d="m 0,0 h 113.32 l 82.414,272.655 H 0 Z"\n            style="fill: #f4e74d; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path3424"\n          />\n        </g>\n        <g\n          id="g3426"\n          transform="translate(80.8692,432.6757)"\n        >\n          <path\n            d="M 0,0 V -234.537 H 78.01 C 29.021,-169.169 0,-87.974 0,0"\n            style="fill: #eedb00; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path3428"\n          />\n        </g>\n        <path\n          d="M 431.131,41.207 H 80.869 v 115.724 h 350.262 z"\n          style="fill: #b18cd9; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n          id="path3430"\n        />\n        <g\n          id="g3432"\n          transform="translate(194.475,156.931)"\n        >\n          <path\n            d="m 0,0 h -113.606 v -115.724 h 350.262 v 2.149 C 144.487,-103.933 61.838,-62.31 0,0"\n            style="fill: #996acc; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path3434"\n          />\n        </g>\n        <g\n          id="g3436"\n          transform="translate(213.2632,94.3332)"\n        >\n          <path\n            d="m 0,0 c 0,-10.991 -11.188,-19.901 -24.99,-19.901 -13.801,0 -24.989,8.91 -24.989,19.901 0,10.991 11.188,19.9 24.989,19.9 C -11.188,19.9 0,10.991 0,0"\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path3438"\n          />\n        </g>\n        <g\n          id="g3440"\n          transform="translate(298.7368,94.3332)"\n        >\n          <path\n            d="m 0,0 c 0,-10.991 11.188,-19.901 24.99,-19.901 13.801,0 24.989,8.91 24.989,19.901 0,10.991 -11.188,19.9 -24.989,19.9 C 11.188,19.9 0,10.991 0,0"\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path3442"\n          />\n        </g>\n        <g\n          id="g3444"\n          transform="translate(202.8374,123.7057)"\n        >\n          <path\n            d="M 0,0 V -10.216"\n            style="\n              fill: none;\n              stroke: #3d4751;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-linejoin: round;\n              stroke-miterlimit: 10;\n              stroke-dasharray: none;\n              stroke-opacity: 1;\n            "\n            id="path3446"\n          />\n        </g>\n        <g\n          id="g3448"\n          transform="translate(309.1625,123.7057)"\n        >\n          <path\n            d="M 0,0 V -10.216"\n            style="\n              fill: none;\n              stroke: #3d4751;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-linejoin: round;\n              stroke-miterlimit: 10;\n              stroke-dasharray: none;\n              stroke-opacity: 1;\n            "\n            id="path3450"\n          />\n        </g>\n        <g\n          id="g3452"\n          transform="translate(241.984,113.7942)"\n        >\n          <path\n            d="m 0,0 c 3.408,-3.911 8.421,-6.385 14.016,-6.385 5.595,0 10.608,2.474 14.016,6.385"\n            style="\n              fill: none;\n              stroke: #3d4751;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-linejoin: round;\n              stroke-miterlimit: 10;\n              stroke-dasharray: none;\n              stroke-opacity: 1;\n            "\n            id="path3454"\n          />\n        </g>\n        <g\n          id="g3456"\n          transform="translate(150.0629,447.8862)"\n        >\n          <path\n            d="m 0,0 33.436,22.907 h -102.63 v -161.294 l 21.382,72.58 59.96,-46.151 -25.363,71.287 75.636,-2.093 z"\n            style="fill: #fd5c6f; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path3458"\n          />\n        </g>\n        <g\n          id="g3460"\n          transform="translate(80.8692,432.6757)"\n        >\n          <path\n            d="m 0,0 v -123.177 l 10.122,34.358 C 3.502,-60.282 0,-30.55 0,0"\n            style="fill: #f6334c; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path3462"\n          />\n        </g>\n        <g\n          id="g3464"\n          transform="translate(431.1308,271.141)"\n        >\n          <path\n            d="m 0,0 -57.698,-44.41 24.406,68.598 -72.782,-2.014 60.066,41.15 -60.066,41.151 72.782,-2.014 -24.406,68.597 L 0,126.649 Z"\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path3466"\n          />\n        </g>\n      </g>\n    </g>\n  </g>\n</svg>\n';
+    '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\r\n<!-- Created with Inkscape (http://www.inkscape.org/) -->\r\n\r\n<svg\r\n  version="1.1"\r\n  id="svg3390"\r\n  xml:space="preserve"\r\n  width="682.66669"\r\n  height="682.66669"\r\n  viewBox="0 0 682.66669 682.66669"\r\n  xmlns="http://www.w3.org/2000/svg"\r\n>\r\n  <defs id="defs3394">\r\n    <clipPath\r\n      clipPathUnits="userSpaceOnUse"\r\n      id="clipPath3404"\r\n    >\r\n      <path\r\n        d="M 0,512 H 512 V 0 H 0 Z"\r\n        id="path3402"\r\n      />\r\n    </clipPath>\r\n  </defs>\r\n  <g\r\n    id="g3396"\r\n    transform="matrix(1.3333333,0,0,-1.3333333,0,682.66667)"\r\n  >\r\n    <g id="g3398">\r\n      <g\r\n        id="g3400"\r\n        clip-path="url(#clipPath3404)"\r\n      >\r\n        <g\r\n          id="g3406"\r\n          transform="translate(451.7344)"\r\n        >\r\n          <path\r\n            d="m 0,0 h -391.469 c -11.379,0 -20.603,9.225 -20.603,20.604 v 470.792 c 0,11.379 9.224,20.604 20.603,20.604 L 0,512 c 11.379,0 20.604,-9.225 20.604,-20.604 V 20.604 C 20.604,9.225 11.379,0 0,0"\r\n            style="fill: #efe6e6; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3408"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g3410"\r\n          transform="translate(472.3376,41.2072)"\r\n        >\r\n          <path\r\n            d="m 0,0 c -216.202,0 -391.468,175.266 -391.468,391.468 v 79.325 h -20.604 c -11.379,0 -20.604,-9.225 -20.604,-20.604 V -20.604 c 0,-11.379 9.225,-20.603 20.604,-20.603 H -20.603 C -9.224,-41.207 0,-31.983 0,-20.604 Z"\r\n            style="fill: #e2d7d7; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3412"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g3414"\r\n          transform="translate(235.3964,198.1382)"\r\n        >\r\n          <path\r\n            d="M 0,0 H 195.734 V 272.655 H 82.414 Z"\r\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3416"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g3418"\r\n          transform="translate(235.3964,198.1382)"\r\n        >\r\n          <path\r\n            d="M 0,0 H 195.734 V 272.655 H 82.414 Z"\r\n            style="fill: #5ad6ff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3420"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g3422"\r\n          transform="translate(80.8692,198.1382)"\r\n        >\r\n          <path\r\n            d="m 0,0 h 113.32 l 82.414,272.655 H 0 Z"\r\n            style="fill: #f4e74d; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3424"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g3426"\r\n          transform="translate(80.8692,432.6757)"\r\n        >\r\n          <path\r\n            d="M 0,0 V -234.537 H 78.01 C 29.021,-169.169 0,-87.974 0,0"\r\n            style="fill: #eedb00; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3428"\r\n          />\r\n        </g>\r\n        <path\r\n          d="M 431.131,41.207 H 80.869 v 115.724 h 350.262 z"\r\n          style="fill: #b18cd9; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n          id="path3430"\r\n        />\r\n        <g\r\n          id="g3432"\r\n          transform="translate(194.475,156.931)"\r\n        >\r\n          <path\r\n            d="m 0,0 h -113.606 v -115.724 h 350.262 v 2.149 C 144.487,-103.933 61.838,-62.31 0,0"\r\n            style="fill: #996acc; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3434"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g3436"\r\n          transform="translate(213.2632,94.3332)"\r\n        >\r\n          <path\r\n            d="m 0,0 c 0,-10.991 -11.188,-19.901 -24.99,-19.901 -13.801,0 -24.989,8.91 -24.989,19.901 0,10.991 11.188,19.9 24.989,19.9 C -11.188,19.9 0,10.991 0,0"\r\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3438"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g3440"\r\n          transform="translate(298.7368,94.3332)"\r\n        >\r\n          <path\r\n            d="m 0,0 c 0,-10.991 11.188,-19.901 24.99,-19.901 13.801,0 24.989,8.91 24.989,19.901 0,10.991 -11.188,19.9 -24.989,19.9 C 11.188,19.9 0,10.991 0,0"\r\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3442"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g3444"\r\n          transform="translate(202.8374,123.7057)"\r\n        >\r\n          <path\r\n            d="M 0,0 V -10.216"\r\n            style="\r\n              fill: none;\r\n              stroke: #3d4751;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path3446"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g3448"\r\n          transform="translate(309.1625,123.7057)"\r\n        >\r\n          <path\r\n            d="M 0,0 V -10.216"\r\n            style="\r\n              fill: none;\r\n              stroke: #3d4751;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path3450"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g3452"\r\n          transform="translate(241.984,113.7942)"\r\n        >\r\n          <path\r\n            d="m 0,0 c 3.408,-3.911 8.421,-6.385 14.016,-6.385 5.595,0 10.608,2.474 14.016,6.385"\r\n            style="\r\n              fill: none;\r\n              stroke: #3d4751;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path3454"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g3456"\r\n          transform="translate(150.0629,447.8862)"\r\n        >\r\n          <path\r\n            d="m 0,0 33.436,22.907 h -102.63 v -161.294 l 21.382,72.58 59.96,-46.151 -25.363,71.287 75.636,-2.093 z"\r\n            style="fill: #fd5c6f; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3458"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g3460"\r\n          transform="translate(80.8692,432.6757)"\r\n        >\r\n          <path\r\n            d="m 0,0 v -123.177 l 10.122,34.358 C 3.502,-60.282 0,-30.55 0,0"\r\n            style="fill: #f6334c; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3462"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g3464"\r\n          transform="translate(431.1308,271.141)"\r\n        >\r\n          <path\r\n            d="m 0,0 -57.698,-44.41 24.406,68.598 -72.782,-2.014 60.066,41.15 -60.066,41.151 72.782,-2.014 -24.406,68.597 L 0,126.649 Z"\r\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path3466"\r\n          />\r\n        </g>\r\n      </g>\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
 
   const Comic2SpecialLinealColor =
-    '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n<!-- Created with Inkscape (http://www.inkscape.org/) -->\n\n<svg\n  version="1.1"\n  id="svg5007"\n  xml:space="preserve"\n  width="682.66669"\n  height="682.66669"\n  viewBox="0 0 682.66669 682.66669"\n  xmlns="http://www.w3.org/2000/svg"\n>\n  <defs id="defs5011">\n    <clipPath\n      clipPathUnits="userSpaceOnUse"\n      id="clipPath5021"\n    >\n      <path\n        d="M 0,512 H 512 V 0 H 0 Z"\n        id="path5019"\n      />\n    </clipPath>\n  </defs>\n  <g\n    id="g5013"\n    transform="matrix(1.3333333,0,0,-1.3333333,0,682.66667)"\n  >\n    <g id="g5015">\n      <g\n        id="g5017"\n        clip-path="url(#clipPath5021)"\n      >\n        <g\n          id="g5023"\n          transform="translate(446,7.5)"\n        >\n          <path\n            d="m 0,0 h -380 c -11.046,0 -20,8.954 -20,20 v 457 c 0,11.046 8.954,20 20,20 H 0 c 11.046,0 20,-8.954 20,-20 V 20 C 20,8.954 11.046,0 0,0"\n            style="fill: #efe6e6; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path5025"\n          />\n        </g>\n        <g\n          id="g5027"\n          transform="translate(465.9996,47.5)"\n        >\n          <path\n            d="m 0,0 c -209.868,0 -380,170.132 -380,380 v 77 h -20 c -11.045,0 -20,-8.954 -20,-20 V -20 c 0,-11.046 8.955,-20 20,-20 h 380 c 11.046,0 20,8.954 20,20 z"\n            style="fill: #e2d7d7; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path5029"\n          />\n        </g>\n        <g\n          id="g5031"\n          transform="translate(236,199.8333)"\n        >\n          <path\n            d="M 0,0 H 190 V 264.667 H 80 Z"\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path5033"\n          />\n        </g>\n        <g\n          id="g5035"\n          transform="translate(236,199.8333)"\n        >\n          <path\n            d="M 0,0 H 190 V 264.667 H 80 Z"\n            style="fill: #5ad6ff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path5037"\n          />\n        </g>\n        <g\n          id="g5039"\n          transform="translate(86,199.8333)"\n        >\n          <path\n            d="m 0,0 h 110 l 80,264.667 H 0 Z"\n            style="fill: #f4e74d; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path5041"\n          />\n        </g>\n        <g\n          id="g5043"\n          transform="translate(86,427.4996)"\n        >\n          <path\n            d="M 0,0 V -227.666 H 75.725 C 28.171,-164.213 0,-85.397 0,0"\n            style="fill: #eedb00; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path5045"\n          />\n        </g>\n        <path\n          d="M 426,47.5 H 86 v 112.333 h 340 z"\n          style="fill: #b18cd9; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n          id="path5047"\n        />\n        <g\n          id="g5049"\n          transform="translate(196.2775,159.8334)"\n        >\n          <path\n            d="m 0,0 h -110.278 v -112.333 h 340 v 2.085 C 140.254,-100.888 60.026,-60.484 0,0"\n            style="fill: #996acc; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path5051"\n          />\n        </g>\n        <g\n          id="g5053"\n          transform="translate(214.5152,99.0695)"\n        >\n          <path\n            d="m 0,0 c 0,-10.669 -10.861,-19.318 -24.258,-19.318 -13.397,0 -24.257,8.649 -24.257,19.318 0,10.669 10.86,19.317 24.257,19.317 C -10.861,19.317 0,10.669 0,0"\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path5055"\n          />\n        </g>\n        <g\n          id="g5057"\n          transform="translate(297.4848,99.0695)"\n        >\n          <path\n            d="m 0,0 c 0,-10.669 10.861,-19.318 24.258,-19.318 13.397,0 24.257,8.649 24.257,19.318 0,10.669 -10.86,19.317 -24.257,19.317 C 10.861,19.317 0,10.669 0,0"\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path5059"\n          />\n        </g>\n        <g\n          id="g5061"\n          transform="translate(204.3949,127.5815)"\n        >\n          <path\n            d="M 0,0 V -9.916"\n            style="\n              fill: none;\n              stroke: #000000;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-linejoin: round;\n              stroke-miterlimit: 10;\n              stroke-dasharray: none;\n              stroke-opacity: 1;\n            "\n            id="path5063"\n          />\n        </g>\n        <g\n          id="g5065"\n          transform="translate(307.605,127.5815)"\n        >\n          <path\n            d="M 0,0 V -9.916"\n            style="\n              fill: none;\n              stroke: #000000;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-linejoin: round;\n              stroke-miterlimit: 10;\n              stroke-dasharray: none;\n              stroke-opacity: 1;\n            "\n            id="path5067"\n          />\n        </g>\n        <g\n          id="g5069"\n          transform="translate(242.3946,117.9604)"\n        >\n          <path\n            d="m 0,0 c 3.308,-3.796 8.175,-6.198 13.605,-6.198 5.431,0 10.298,2.402 13.606,6.198"\n            style="\n              fill: none;\n              stroke: #000000;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-linejoin: round;\n              stroke-miterlimit: 10;\n              stroke-dasharray: none;\n              stroke-opacity: 1;\n            "\n            id="path5071"\n          />\n        </g>\n        <g\n          id="g5073"\n          transform="translate(153.1665,442.2645)"\n        >\n          <path\n            d="m 0,0 32.456,22.235 h -99.623 v -156.568 l 20.756,70.454 58.203,-44.799 -24.62,69.199 73.42,-2.032 z"\n            style="fill: #fd5c6f; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path5075"\n          />\n        </g>\n        <g\n          id="g5077"\n          transform="translate(86,427.4996)"\n        >\n          <path\n            d="m 0,0 v -119.568 l 9.825,33.351 C 3.399,-58.516 0,-29.655 0,0"\n            style="fill: #f6334c; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path5079"\n          />\n        </g>\n        <g\n          id="g5081"\n          transform="translate(426,270.6974)"\n        >\n          <path\n            d="m 0,0 -56.008,-43.108 23.692,66.587 -70.65,-1.955 58.306,39.945 -58.306,39.945 70.65,-1.955 -23.692,66.588 L 0,122.939 Z"\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\n            id="path5083"\n          />\n        </g>\n        <g\n          id="g5085"\n          transform="translate(446,7.5)"\n        >\n          <path\n            d="m 0,0 h -380 c -11.046,0 -20,8.954 -20,20 v 457 c 0,11.046 8.954,20 20,20 H 0 c 11.046,0 20,-8.954 20,-20 V 20 C 20,8.954 11.046,0 0,0 Z"\n            style="\n              fill: none;\n              stroke: #000000;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-linejoin: round;\n              stroke-miterlimit: 10;\n              stroke-dasharray: none;\n              stroke-opacity: 1;\n            "\n            id="path5087"\n          />\n        </g>\n        <g\n          id="g5089"\n          transform="translate(426,346.167)"\n        >\n          <path\n            d="m 0,0 v 118.333 h -110 l -80,-264.667 H 0 V -28"\n            style="\n              fill: none;\n              stroke: #000000;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-linejoin: round;\n              stroke-miterlimit: 10;\n              stroke-dasharray: none;\n              stroke-opacity: 1;\n            "\n            id="path5091"\n          />\n        </g>\n        <g\n          id="g5093"\n          transform="translate(86,199.8333)"\n        >\n          <path\n            d="m 0,0 h 110 l 80,264.667 H 0 Z"\n            style="\n              fill: none;\n              stroke: #000000;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-linejoin: round;\n              stroke-miterlimit: 10;\n              stroke-dasharray: none;\n              stroke-opacity: 1;\n            "\n            id="path5095"\n          />\n        </g>\n        <g\n          id="g5097"\n          transform="translate(154.0172,159.8334)"\n        >\n          <path\n            d="m 0,0 h 271.983 v -112.333 h -340 V 0 H -28"\n            style="\n              fill: none;\n              stroke: #000000;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-linejoin: round;\n              stroke-miterlimit: 10;\n              stroke-dasharray: none;\n              stroke-opacity: 1;\n            "\n            id="path5099"\n          />\n        </g>\n        <g\n          id="g5101"\n          transform="translate(86,307.9314)"\n        >\n          <path\n            d="m 0,0 20.756,70.454 58.203,-44.799 -24.62,69.199 73.419,-2.032 -60.591,41.511 32.455,22.236"\n            style="\n              fill: none;\n              stroke: #000000;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-linejoin: round;\n              stroke-miterlimit: 10;\n              stroke-dasharray: none;\n              stroke-opacity: 1;\n            "\n            id="path5103"\n          />\n        </g>\n        <g\n          id="g5105"\n          transform="translate(426,270.6974)"\n        >\n          <path\n            d="m 0,0 -56.008,-43.108 23.692,66.587 -70.65,-1.955 58.306,39.945 -58.306,39.945 70.65,-1.955 -23.692,66.588 L 0,122.939"\n            style="\n              fill: none;\n              stroke: #000000;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-linejoin: round;\n              stroke-miterlimit: 10;\n              stroke-dasharray: none;\n              stroke-opacity: 1;\n            "\n            id="path5107"\n          />\n        </g>\n      </g>\n    </g>\n  </g>\n</svg>\n';
+    '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\r\n<!-- Created with Inkscape (http://www.inkscape.org/) -->\r\n\r\n<svg\r\n  version="1.1"\r\n  id="svg5007"\r\n  xml:space="preserve"\r\n  width="682.66669"\r\n  height="682.66669"\r\n  viewBox="0 0 682.66669 682.66669"\r\n  xmlns="http://www.w3.org/2000/svg"\r\n>\r\n  <defs id="defs5011">\r\n    <clipPath\r\n      clipPathUnits="userSpaceOnUse"\r\n      id="clipPath5021"\r\n    >\r\n      <path\r\n        d="M 0,512 H 512 V 0 H 0 Z"\r\n        id="path5019"\r\n      />\r\n    </clipPath>\r\n  </defs>\r\n  <g\r\n    id="g5013"\r\n    transform="matrix(1.3333333,0,0,-1.3333333,0,682.66667)"\r\n  >\r\n    <g id="g5015">\r\n      <g\r\n        id="g5017"\r\n        clip-path="url(#clipPath5021)"\r\n      >\r\n        <g\r\n          id="g5023"\r\n          transform="translate(446,7.5)"\r\n        >\r\n          <path\r\n            d="m 0,0 h -380 c -11.046,0 -20,8.954 -20,20 v 457 c 0,11.046 8.954,20 20,20 H 0 c 11.046,0 20,-8.954 20,-20 V 20 C 20,8.954 11.046,0 0,0"\r\n            style="fill: #efe6e6; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5025"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5027"\r\n          transform="translate(465.9996,47.5)"\r\n        >\r\n          <path\r\n            d="m 0,0 c -209.868,0 -380,170.132 -380,380 v 77 h -20 c -11.045,0 -20,-8.954 -20,-20 V -20 c 0,-11.046 8.955,-20 20,-20 h 380 c 11.046,0 20,8.954 20,20 z"\r\n            style="fill: #e2d7d7; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5029"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5031"\r\n          transform="translate(236,199.8333)"\r\n        >\r\n          <path\r\n            d="M 0,0 H 190 V 264.667 H 80 Z"\r\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5033"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5035"\r\n          transform="translate(236,199.8333)"\r\n        >\r\n          <path\r\n            d="M 0,0 H 190 V 264.667 H 80 Z"\r\n            style="fill: #5ad6ff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5037"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5039"\r\n          transform="translate(86,199.8333)"\r\n        >\r\n          <path\r\n            d="m 0,0 h 110 l 80,264.667 H 0 Z"\r\n            style="fill: #f4e74d; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5041"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5043"\r\n          transform="translate(86,427.4996)"\r\n        >\r\n          <path\r\n            d="M 0,0 V -227.666 H 75.725 C 28.171,-164.213 0,-85.397 0,0"\r\n            style="fill: #eedb00; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5045"\r\n          />\r\n        </g>\r\n        <path\r\n          d="M 426,47.5 H 86 v 112.333 h 340 z"\r\n          style="fill: #b18cd9; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n          id="path5047"\r\n        />\r\n        <g\r\n          id="g5049"\r\n          transform="translate(196.2775,159.8334)"\r\n        >\r\n          <path\r\n            d="m 0,0 h -110.278 v -112.333 h 340 v 2.085 C 140.254,-100.888 60.026,-60.484 0,0"\r\n            style="fill: #996acc; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5051"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5053"\r\n          transform="translate(214.5152,99.0695)"\r\n        >\r\n          <path\r\n            d="m 0,0 c 0,-10.669 -10.861,-19.318 -24.258,-19.318 -13.397,0 -24.257,8.649 -24.257,19.318 0,10.669 10.86,19.317 24.257,19.317 C -10.861,19.317 0,10.669 0,0"\r\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5055"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5057"\r\n          transform="translate(297.4848,99.0695)"\r\n        >\r\n          <path\r\n            d="m 0,0 c 0,-10.669 10.861,-19.318 24.258,-19.318 13.397,0 24.257,8.649 24.257,19.318 0,10.669 -10.86,19.317 -24.257,19.317 C 10.861,19.317 0,10.669 0,0"\r\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5059"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5061"\r\n          transform="translate(204.3949,127.5815)"\r\n        >\r\n          <path\r\n            d="M 0,0 V -9.916"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path5063"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5065"\r\n          transform="translate(307.605,127.5815)"\r\n        >\r\n          <path\r\n            d="M 0,0 V -9.916"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path5067"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5069"\r\n          transform="translate(242.3946,117.9604)"\r\n        >\r\n          <path\r\n            d="m 0,0 c 3.308,-3.796 8.175,-6.198 13.605,-6.198 5.431,0 10.298,2.402 13.606,6.198"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path5071"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5073"\r\n          transform="translate(153.1665,442.2645)"\r\n        >\r\n          <path\r\n            d="m 0,0 32.456,22.235 h -99.623 v -156.568 l 20.756,70.454 58.203,-44.799 -24.62,69.199 73.42,-2.032 z"\r\n            style="fill: #fd5c6f; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5075"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5077"\r\n          transform="translate(86,427.4996)"\r\n        >\r\n          <path\r\n            d="m 0,0 v -119.568 l 9.825,33.351 C 3.399,-58.516 0,-29.655 0,0"\r\n            style="fill: #f6334c; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5079"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5081"\r\n          transform="translate(426,270.6974)"\r\n        >\r\n          <path\r\n            d="m 0,0 -56.008,-43.108 23.692,66.587 -70.65,-1.955 58.306,39.945 -58.306,39.945 70.65,-1.955 -23.692,66.588 L 0,122.939 Z"\r\n            style="fill: #ffffff; fill-opacity: 1; fill-rule: nonzero; stroke: none"\r\n            id="path5083"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5085"\r\n          transform="translate(446,7.5)"\r\n        >\r\n          <path\r\n            d="m 0,0 h -380 c -11.046,0 -20,8.954 -20,20 v 457 c 0,11.046 8.954,20 20,20 H 0 c 11.046,0 20,-8.954 20,-20 V 20 C 20,8.954 11.046,0 0,0 Z"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path5087"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5089"\r\n          transform="translate(426,346.167)"\r\n        >\r\n          <path\r\n            d="m 0,0 v 118.333 h -110 l -80,-264.667 H 0 V -28"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path5091"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5093"\r\n          transform="translate(86,199.8333)"\r\n        >\r\n          <path\r\n            d="m 0,0 h 110 l 80,264.667 H 0 Z"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path5095"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5097"\r\n          transform="translate(154.0172,159.8334)"\r\n        >\r\n          <path\r\n            d="m 0,0 h 271.983 v -112.333 h -340 V 0 H -28"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path5099"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5101"\r\n          transform="translate(86,307.9314)"\r\n        >\r\n          <path\r\n            d="m 0,0 20.756,70.454 58.203,-44.799 -24.62,69.199 73.419,-2.032 -60.591,41.511 32.455,22.236"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path5103"\r\n          />\r\n        </g>\r\n        <g\r\n          id="g5105"\r\n          transform="translate(426,270.6974)"\r\n        >\r\n          <path\r\n            d="m 0,0 -56.008,-43.108 23.692,66.587 -70.65,-1.955 58.306,39.945 -58.306,39.945 70.65,-1.955 -23.692,66.588 L 0,122.939"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n              stroke-dasharray: none;\r\n              stroke-opacity: 1;\r\n            "\r\n            id="path5107"\r\n          />\r\n        </g>\r\n      </g>\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
 
   const Comic3SpecialFlat =
-    '<svg\n  id="Capa_1"\n  enable-background="new 0 0 512 512"\n  height="512"\n  viewBox="0 0 512 512"\n  width="512"\n  xmlns="http://www.w3.org/2000/svg"\n>\n  <g>\n    <g>\n      <g>\n        <path\n          d="m427.508 512h-343.02c-5.69 0-10.302-4.612-10.302-10.302v-491.396c0-5.69 4.612-10.302 10.302-10.302h343.02c5.69 0 10.302 4.612 10.302 10.302v491.396c-.001 5.69-4.613 10.302-10.302 10.302z"\n          fill="#f2eff2"\n        />\n      </g>\n    </g>\n    <path\n      d="m427.512 0h-41.238c5.687 0 10.302 4.615 10.302 10.302v36.12l-18.016 49.462 18.016 36.952v51.701l-13.787 87.003 13.787 55.974v51.669l-18.016 52.406 18.016 34.008v36.1c0 5.687-4.615 10.302-10.302 10.302h41.238c5.687 0 10.302-4.615 10.302-10.302v-491.395c0-5.687-4.615-10.302-10.302-10.302z"\n      fill="#e1dde1"\n    />\n    <path\n      d="m396.6 46.36v86.52c0 2.85-2.31 5.15-5.15 5.15h-110.11l-22.53-48.41 22.53-48.41h110.11c2.84 0 5.15 2.3 5.15 5.15z"\n      fill="#3ad1e0"\n    />\n    <path\n      d="m396.599 46.358v86.525c0 2.843-2.308 5.151-5.151 5.151h-30.926c2.843 0 5.151-2.308 5.151-5.151v-86.525c0-2.843-2.308-5.151-5.151-5.151h30.926c2.844 0 5.151 2.308 5.151 5.151z"\n      fill="#20bfd5"\n    />\n    <path\n      d="m281.34 41.207h-39.904c-2.845 0-5.151 2.306-5.151 5.151v86.525c0 2.845 2.306 5.151 5.151 5.151h39.904z"\n      fill="#23f1a8"\n    />\n    <path\n      d="m304.73 470.79h-77.71l-39.22-20.29-39.23 20.29h-28.03c-2.84 0-5.15-2.3-5.15-5.15v-86.52c0-2.85 2.31-5.15 5.15-5.15h128.92c1.76 0 3.4.89 4.34 2.37l55.27 86.53c2.19 3.43-.27 7.92-4.34 7.92z"\n      fill="#23f1a8"\n    />\n    <g>\n      <path\n        d="m227.019 443.104v27.689h-78.446v-27.689c0-21.669 17.569-39.228 39.228-39.228 10.83 0 20.639 4.39 27.729 11.489 7.099 7.1 11.489 16.899 11.489 27.739z"\n        fill="#ae6ad8"\n      />\n      <path\n        d="m227.021 443.101v27.691h-29.061v-27.691c0-10.838-4.389-20.634-11.486-27.732-3.729-3.74-8.211-6.727-13.207-8.715 4.492-1.793 9.406-2.782 14.536-2.782 10.827 0 20.635 4.389 27.732 11.497 7.097 7.098 11.486 16.895 11.486 27.732z"\n        fill="#975bbb"\n      />\n    </g>\n    <path\n      d="m304.728 470.793h-30.926c4.069 0 6.531-4.492 4.347-7.922l-55.269-86.525c-.948-1.483-2.586-2.38-4.347-2.38h30.926c1.762 0 3.4.896 4.347 2.38l55.269 86.525c2.184 3.43-.278 7.922-4.347 7.922z"\n      fill="#27e19d"\n    />\n    <path\n      d="m391.448 373.966h-81.106c-4.068 0-6.531 4.495-4.341 7.924l55.269 86.525c.946 1.482 2.583 2.378 4.341 2.378h25.837c2.845 0 5.151-2.306 5.151-5.151v-86.525c0-2.845-2.306-5.151-5.151-5.151z"\n      fill="#ae6ad8"\n    />\n    <path\n      d="m396.599 379.117v86.525c0 2.843-2.308 5.151-5.151 5.151h-25.837c-.907 0-1.772-.237-2.534-.68 1.556-.886 2.596-2.555 2.596-4.471v-86.525c0-2.843-2.308-5.151-5.151-5.151h30.926c2.844 0 5.151 2.308 5.151 5.151z"\n      fill="#975bbb"\n    />\n    <g>\n      <path\n        d="m195.602 46.358v86.525c0 2.845-2.306 5.151-5.151 5.151h-69.91c-2.845 0-5.151-2.306-5.151-5.151v-86.525c0-2.845 2.306-5.151 5.151-5.151h69.91c2.845 0 5.151 2.306 5.151 5.151z"\n        fill="#3ad1e0"\n      />\n      <path\n        d="m195.6 46.358v86.525c0 2.843-2.308 5.151-5.151 5.151h-30.926c2.843 0 5.151-2.308 5.151-5.151v-86.525c0-2.843-2.308-5.151-5.151-5.151h30.926c2.844 0 5.151 2.308 5.151 5.151z"\n        fill="#20bfd5"\n      />\n    </g>\n    <g>\n      <path\n        d="m396.6 184.39v143.22c0 2.84-2.31 5.15-5.15 5.15h-30.93l-104.53-27.53-104.52 27.53h-30.93c-2.84 0-5.15-2.31-5.15-5.15v-143.22c0-2.84 2.31-5.15 5.15-5.15h47.77l87.68 16.15 87.69-16.15h47.77c2.84 0 5.15 2.31 5.15 5.15z"\n        fill="#fb54b6"\n      />\n    </g>\n    <path\n      d="m151.473 332.759c0-57.729 46.798-104.527 104.527-104.527s104.527 46.798 104.527 104.527z"\n      fill="#fb9927"\n    />\n    <path\n      d="m360.522 332.759h-35.397c0-51.694-37.519-94.612-86.824-103.028 5.748-.979 11.662-1.494 17.699-1.494 57.731 0 104.522 46.79 104.522 104.522z"\n      fill="#f98824"\n    />\n    <g>\n      <path\n        d="m396.599 184.392v143.216c0 2.843-2.308 5.151-5.151 5.151h-30.926c2.843 0 5.151-2.308 5.151-5.151v-143.216c0-2.843-2.308-5.151-5.151-5.151h30.926c2.844 0 5.151 2.308 5.151 5.151z"\n        fill="#fb33a8"\n      />\n    </g>\n    <g>\n      <g>\n        <path\n          d="m345.43 247.027c-.144 0-.299 0-.453-.01-24.024-1.226-43.947 17.946-43.947 41.722 0 .721.021 1.442.051 2.174.268 5.079-3.853 8.489-8.128 8.489-2.112 0-4.244-.814-5.913-2.678-8.293-9.189-19.676-13.794-31.039-13.794s-22.746 4.605-31.039 13.794c-1.669 1.865-3.801 2.678-5.913 2.678-4.275 0-8.396-3.41-8.128-8.489.031-.731.041-1.453.041-2.174 0-23.777-19.924-42.948-43.937-41.722-.155.01-.309.01-.464.01-7.263 0-10.879-9.076-5.357-14.062 9.189-8.293 13.794-19.666 13.794-31.039 0-7.912-2.225-15.813-6.686-22.685h175.378c-4.461 6.871-6.686 14.773-6.686 22.685 0 11.373 4.605 22.746 13.794 31.039 5.521 4.986 1.905 14.062-5.368 14.062z"\n          fill="#fdef63"\n        />\n        <g>\n          <g id="XMLID_00000127012381744132405410000009872483291948348836_">\n            <path\n              d="m280.138 231.696c-4.268 0-7.726-3.459-7.726-7.726v-.107c0-4.267 3.459-7.726 7.726-7.726s7.726 3.459 7.726 7.726v.107c0 4.267-3.459 7.726-7.726 7.726z"\n              fill="#554e55"\n            />\n          </g>\n          <g id="XMLID_00000080918978500845250090000017315552773041050031_">\n            <path\n              d="m256 231.696c-4.267 0-7.726-3.459-7.726-7.726v-.107c0-4.267 3.459-7.726 7.726-7.726 4.268 0 7.726 3.459 7.726 7.726v.107c0 4.267-3.458 7.726-7.726 7.726z"\n              fill="#554e55"\n            />\n          </g>\n          <g id="XMLID_00000140711681861242238370000008769002181148908969_">\n            <path\n              d="m231.862 231.696c-4.267 0-7.726-3.459-7.726-7.726v-.107c0-4.267 3.459-7.726 7.726-7.726s7.726 3.459 7.726 7.726v.107c.001 4.267-3.459 7.726-7.726 7.726z"\n              fill="#554e55"\n            />\n          </g>\n        </g>\n        <path\n          d="m345.43 247.037c-.155 0-.299 0-.443-.021-24.034-1.226-43.948 17.956-43.948 41.722 0 .721.01 1.432.052 2.174.258 5.079-3.863 8.499-8.128 8.499-2.122 0-4.255-.824-5.924-2.689-6.954-7.685-16.05-12.167-25.507-13.423 29.968-14.804 50.582-45.678 50.582-81.364 0-7.84-.999-15.442-2.864-22.695h34.429c-4.45 6.871-6.676 14.783-6.676 22.685 0 11.373 4.605 22.757 13.784 31.05 5.532 4.966 1.926 14.062-5.357 14.062z"\n          fill="#f3d730"\n        />\n      </g>\n    </g>\n    <g>\n      <g>\n        <g>\n          <circle\n            cx="187.8"\n            cy="385.284"\n            fill="#d8b2ec"\n            r="25.455"\n          />\n        </g>\n      </g>\n    </g>\n    <g>\n      <g id="XMLID_00000028301319025648580530000009457246182494066313_">\n        <path\n          d="m316.443 111.45c-4.258 0-7.714-3.445-7.726-7.705-.012-4.267 3.438-7.736 7.705-7.747l41.222-.114h.021c4.258 0 7.714 3.445 7.726 7.705.012 4.267-3.438 7.736-7.705 7.747l-41.222.114c-.007 0-.014 0-.021 0z"\n          fill="#f2eff2"\n        />\n      </g>\n      <g>\n        <path\n          d="m357.665 83.243h-21.761c-4.268 0-7.726-3.459-7.726-7.726s3.459-7.726 7.726-7.726h21.761c4.268 0 7.726 3.459 7.726 7.726s-3.458 7.726-7.726 7.726z"\n          fill="#f2eff2"\n        />\n      </g>\n    </g>\n  </g>\n</svg>\n';
+    '<svg\r\n  id="Capa_1"\r\n  enable-background="new 0 0 512 512"\r\n  height="512"\r\n  viewBox="0 0 512 512"\r\n  width="512"\r\n  xmlns="http://www.w3.org/2000/svg"\r\n>\r\n  <g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          d="m427.508 512h-343.02c-5.69 0-10.302-4.612-10.302-10.302v-491.396c0-5.69 4.612-10.302 10.302-10.302h343.02c5.69 0 10.302 4.612 10.302 10.302v491.396c-.001 5.69-4.613 10.302-10.302 10.302z"\r\n          fill="#f2eff2"\r\n        />\r\n      </g>\r\n    </g>\r\n    <path\r\n      d="m427.512 0h-41.238c5.687 0 10.302 4.615 10.302 10.302v36.12l-18.016 49.462 18.016 36.952v51.701l-13.787 87.003 13.787 55.974v51.669l-18.016 52.406 18.016 34.008v36.1c0 5.687-4.615 10.302-10.302 10.302h41.238c5.687 0 10.302-4.615 10.302-10.302v-491.395c0-5.687-4.615-10.302-10.302-10.302z"\r\n      fill="#e1dde1"\r\n    />\r\n    <path\r\n      d="m396.6 46.36v86.52c0 2.85-2.31 5.15-5.15 5.15h-110.11l-22.53-48.41 22.53-48.41h110.11c2.84 0 5.15 2.3 5.15 5.15z"\r\n      fill="#3ad1e0"\r\n    />\r\n    <path\r\n      d="m396.599 46.358v86.525c0 2.843-2.308 5.151-5.151 5.151h-30.926c2.843 0 5.151-2.308 5.151-5.151v-86.525c0-2.843-2.308-5.151-5.151-5.151h30.926c2.844 0 5.151 2.308 5.151 5.151z"\r\n      fill="#20bfd5"\r\n    />\r\n    <path\r\n      d="m281.34 41.207h-39.904c-2.845 0-5.151 2.306-5.151 5.151v86.525c0 2.845 2.306 5.151 5.151 5.151h39.904z"\r\n      fill="#23f1a8"\r\n    />\r\n    <path\r\n      d="m304.73 470.79h-77.71l-39.22-20.29-39.23 20.29h-28.03c-2.84 0-5.15-2.3-5.15-5.15v-86.52c0-2.85 2.31-5.15 5.15-5.15h128.92c1.76 0 3.4.89 4.34 2.37l55.27 86.53c2.19 3.43-.27 7.92-4.34 7.92z"\r\n      fill="#23f1a8"\r\n    />\r\n    <g>\r\n      <path\r\n        d="m227.019 443.104v27.689h-78.446v-27.689c0-21.669 17.569-39.228 39.228-39.228 10.83 0 20.639 4.39 27.729 11.489 7.099 7.1 11.489 16.899 11.489 27.739z"\r\n        fill="#ae6ad8"\r\n      />\r\n      <path\r\n        d="m227.021 443.101v27.691h-29.061v-27.691c0-10.838-4.389-20.634-11.486-27.732-3.729-3.74-8.211-6.727-13.207-8.715 4.492-1.793 9.406-2.782 14.536-2.782 10.827 0 20.635 4.389 27.732 11.497 7.097 7.098 11.486 16.895 11.486 27.732z"\r\n        fill="#975bbb"\r\n      />\r\n    </g>\r\n    <path\r\n      d="m304.728 470.793h-30.926c4.069 0 6.531-4.492 4.347-7.922l-55.269-86.525c-.948-1.483-2.586-2.38-4.347-2.38h30.926c1.762 0 3.4.896 4.347 2.38l55.269 86.525c2.184 3.43-.278 7.922-4.347 7.922z"\r\n      fill="#27e19d"\r\n    />\r\n    <path\r\n      d="m391.448 373.966h-81.106c-4.068 0-6.531 4.495-4.341 7.924l55.269 86.525c.946 1.482 2.583 2.378 4.341 2.378h25.837c2.845 0 5.151-2.306 5.151-5.151v-86.525c0-2.845-2.306-5.151-5.151-5.151z"\r\n      fill="#ae6ad8"\r\n    />\r\n    <path\r\n      d="m396.599 379.117v86.525c0 2.843-2.308 5.151-5.151 5.151h-25.837c-.907 0-1.772-.237-2.534-.68 1.556-.886 2.596-2.555 2.596-4.471v-86.525c0-2.843-2.308-5.151-5.151-5.151h30.926c2.844 0 5.151 2.308 5.151 5.151z"\r\n      fill="#975bbb"\r\n    />\r\n    <g>\r\n      <path\r\n        d="m195.602 46.358v86.525c0 2.845-2.306 5.151-5.151 5.151h-69.91c-2.845 0-5.151-2.306-5.151-5.151v-86.525c0-2.845 2.306-5.151 5.151-5.151h69.91c2.845 0 5.151 2.306 5.151 5.151z"\r\n        fill="#3ad1e0"\r\n      />\r\n      <path\r\n        d="m195.6 46.358v86.525c0 2.843-2.308 5.151-5.151 5.151h-30.926c2.843 0 5.151-2.308 5.151-5.151v-86.525c0-2.843-2.308-5.151-5.151-5.151h30.926c2.844 0 5.151 2.308 5.151 5.151z"\r\n        fill="#20bfd5"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        d="m396.6 184.39v143.22c0 2.84-2.31 5.15-5.15 5.15h-30.93l-104.53-27.53-104.52 27.53h-30.93c-2.84 0-5.15-2.31-5.15-5.15v-143.22c0-2.84 2.31-5.15 5.15-5.15h47.77l87.68 16.15 87.69-16.15h47.77c2.84 0 5.15 2.31 5.15 5.15z"\r\n        fill="#fb54b6"\r\n      />\r\n    </g>\r\n    <path\r\n      d="m151.473 332.759c0-57.729 46.798-104.527 104.527-104.527s104.527 46.798 104.527 104.527z"\r\n      fill="#fb9927"\r\n    />\r\n    <path\r\n      d="m360.522 332.759h-35.397c0-51.694-37.519-94.612-86.824-103.028 5.748-.979 11.662-1.494 17.699-1.494 57.731 0 104.522 46.79 104.522 104.522z"\r\n      fill="#f98824"\r\n    />\r\n    <g>\r\n      <path\r\n        d="m396.599 184.392v143.216c0 2.843-2.308 5.151-5.151 5.151h-30.926c2.843 0 5.151-2.308 5.151-5.151v-143.216c0-2.843-2.308-5.151-5.151-5.151h30.926c2.844 0 5.151 2.308 5.151 5.151z"\r\n        fill="#fb33a8"\r\n      />\r\n    </g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          d="m345.43 247.027c-.144 0-.299 0-.453-.01-24.024-1.226-43.947 17.946-43.947 41.722 0 .721.021 1.442.051 2.174.268 5.079-3.853 8.489-8.128 8.489-2.112 0-4.244-.814-5.913-2.678-8.293-9.189-19.676-13.794-31.039-13.794s-22.746 4.605-31.039 13.794c-1.669 1.865-3.801 2.678-5.913 2.678-4.275 0-8.396-3.41-8.128-8.489.031-.731.041-1.453.041-2.174 0-23.777-19.924-42.948-43.937-41.722-.155.01-.309.01-.464.01-7.263 0-10.879-9.076-5.357-14.062 9.189-8.293 13.794-19.666 13.794-31.039 0-7.912-2.225-15.813-6.686-22.685h175.378c-4.461 6.871-6.686 14.773-6.686 22.685 0 11.373 4.605 22.746 13.794 31.039 5.521 4.986 1.905 14.062-5.368 14.062z"\r\n          fill="#fdef63"\r\n        />\r\n        <g>\r\n          <g id="XMLID_00000127012381744132405410000009872483291948348836_">\r\n            <path\r\n              d="m280.138 231.696c-4.268 0-7.726-3.459-7.726-7.726v-.107c0-4.267 3.459-7.726 7.726-7.726s7.726 3.459 7.726 7.726v.107c0 4.267-3.459 7.726-7.726 7.726z"\r\n              fill="#554e55"\r\n            />\r\n          </g>\r\n          <g id="XMLID_00000080918978500845250090000017315552773041050031_">\r\n            <path\r\n              d="m256 231.696c-4.267 0-7.726-3.459-7.726-7.726v-.107c0-4.267 3.459-7.726 7.726-7.726 4.268 0 7.726 3.459 7.726 7.726v.107c0 4.267-3.458 7.726-7.726 7.726z"\r\n              fill="#554e55"\r\n            />\r\n          </g>\r\n          <g id="XMLID_00000140711681861242238370000008769002181148908969_">\r\n            <path\r\n              d="m231.862 231.696c-4.267 0-7.726-3.459-7.726-7.726v-.107c0-4.267 3.459-7.726 7.726-7.726s7.726 3.459 7.726 7.726v.107c.001 4.267-3.459 7.726-7.726 7.726z"\r\n              fill="#554e55"\r\n            />\r\n          </g>\r\n        </g>\r\n        <path\r\n          d="m345.43 247.037c-.155 0-.299 0-.443-.021-24.034-1.226-43.948 17.956-43.948 41.722 0 .721.01 1.432.052 2.174.258 5.079-3.863 8.499-8.128 8.499-2.122 0-4.255-.824-5.924-2.689-6.954-7.685-16.05-12.167-25.507-13.423 29.968-14.804 50.582-45.678 50.582-81.364 0-7.84-.999-15.442-2.864-22.695h34.429c-4.45 6.871-6.676 14.783-6.676 22.685 0 11.373 4.605 22.757 13.784 31.05 5.532 4.966 1.926 14.062-5.357 14.062z"\r\n          fill="#f3d730"\r\n        />\r\n      </g>\r\n    </g>\r\n    <g>\r\n      <g>\r\n        <g>\r\n          <circle\r\n            cx="187.8"\r\n            cy="385.284"\r\n            fill="#d8b2ec"\r\n            r="25.455"\r\n          />\r\n        </g>\r\n      </g>\r\n    </g>\r\n    <g>\r\n      <g id="XMLID_00000028301319025648580530000009457246182494066313_">\r\n        <path\r\n          d="m316.443 111.45c-4.258 0-7.714-3.445-7.726-7.705-.012-4.267 3.438-7.736 7.705-7.747l41.222-.114h.021c4.258 0 7.714 3.445 7.726 7.705.012 4.267-3.438 7.736-7.705 7.747l-41.222.114c-.007 0-.014 0-.021 0z"\r\n          fill="#f2eff2"\r\n        />\r\n      </g>\r\n      <g>\r\n        <path\r\n          d="m357.665 83.243h-21.761c-4.268 0-7.726-3.459-7.726-7.726s3.459-7.726 7.726-7.726h21.761c4.268 0 7.726 3.459 7.726 7.726s-3.458 7.726-7.726 7.726z"\r\n          fill="#f2eff2"\r\n        />\r\n      </g>\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
 
   const Comic3SpecialLinealColor =
-    '<?xml version="1.0" encoding="UTF-8"?>\n<svg\n  xmlns="http://www.w3.org/2000/svg"\n  version="1.1"\n  id="Capa_1"\n  x="0px"\n  y="0px"\n  viewBox="0 0 512 512"\n  style="enable-background: new 0 0 512 512"\n  xml:space="preserve"\n  width="512"\n  height="512"\n>\n  <g>\n    <g>\n      <g>\n        <path\n          style="fill: #f2eff2"\n          d="M422.485,504.5H89.515c-5.523,0-10-4.477-10-10v-477c0-5.523,4.477-10,10-10h332.971&#10;&#9;&#9;&#9;&#9;c5.523,0,10,4.477,10,10v477C432.485,500.023,428.008,504.5,422.485,504.5z"\n        />\n      </g>\n    </g>\n    <g>\n      <g>\n        <path\n          style="fill: #e1dde1"\n          d="M432.49,17.5v477c0,5.52-4.48,10-10,10h-40.03c5.52,0,10-4.48,10-10v-477c0-5.52-4.48-10-10-10&#10;&#9;&#9;&#9;&#9;h40.03C428.01,7.5,432.49,11.98,432.49,17.5z"\n        />\n      </g>\n    </g>\n    <g>\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M158.639,7.5H89.515c-5.523,0-10,4.477-10,10v477c0,5.523,4.477,10,10,10h332.971c5.523,0,10-4.477,10-10v-477&#10;&#9;&#9;&#9;c0-5.523-4.477-10-10-10H191.801"\n      />\n    </g>\n    <path\n      style="fill: #3ad1e0"\n      d="M392.482,52.5v83.99c0,2.761-2.239,5-5,5H241.866c-2.761,0-5-2.239-5-5V52.5c0-2.761,2.239-5,5-5&#10;&#9;&#9;h145.617C390.244,47.5,392.482,49.739,392.482,52.5z"\n    />\n    <path\n      style="fill: #20bfd5"\n      d="M392.482,52.5v83.99c0,2.76-2.24,5-5,5h-30.02c2.76,0,5-2.24,5-5V52.5c0-2.76-2.24-5-5-5h30.02&#10;&#9;&#9;C390.242,47.5,392.482,49.74,392.482,52.5z"\n    />\n    <path\n      style="fill: #26d192"\n      d="M280.6,47.5h-38.735c-2.761,0-5,2.239-5,5v83.99c0,2.761,2.239,5,5,5H280.6V47.5z"\n    />\n\n    <line\n      style="\n        fill: none;\n        stroke: #000000;\n        stroke-width: 15;\n        stroke-linecap: round;\n        stroke-linejoin: round;\n        stroke-miterlimit: 10;\n      "\n      x1="280.6"\n      y1="141.49"\n      x2="280.6"\n      y2="47.5"\n    />\n    <path\n      style="fill: #23f1a8"\n      d="M124.512,370.51h125.143c1.706,0,3.295,0.87,4.214,2.308l53.65,83.99&#10;&#9;&#9;c2.126,3.328-0.264,7.692-4.214,7.692H124.512c-2.761,0-5-2.239-5-5v-83.99C119.512,372.749,121.751,370.51,124.512,370.51z"\n    />\n    <g>\n      <path\n        style="fill: #ae6ad8"\n        d="M227.87,437.622V464.5h-76.148v-26.878c0-21.034,17.054-38.079,38.079-38.079&#10;&#9;&#9;&#9;c10.512,0,20.034,4.261,26.916,11.153C223.609,417.588,227.87,427.1,227.87,437.622z"\n      />\n      <path\n        style="fill: #975bbb"\n        d="M227.872,437.62v26.88h-28.21v-26.88c0-10.52-4.26-20.03-11.15-26.92&#10;&#9;&#9;&#9;c-3.62-3.63-7.97-6.53-12.82-8.46c4.36-1.74,9.13-2.7,14.11-2.7c10.51,0,20.03,4.26,26.92,11.16&#10;&#9;&#9;&#9;C223.612,417.59,227.872,427.1,227.872,437.62z"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M151.722,464.5v-26.878c0-21.034,17.054-38.079,38.079-38.079c10.512,0,20.034,4.261,26.916,11.153&#10;&#9;&#9;&#9;c6.892,6.892,11.153,16.404,11.153,26.926V464.5"\n      />\n    </g>\n    <path\n      style="fill: #27e19d"\n      d="M303.302,464.5h-30.02c3.95,0,6.34-4.36,4.22-7.69l-53.65-83.99c-0.92-1.44-2.51-2.31-4.22-2.31&#10;&#9;&#9;h30.02c1.71,0,3.3,0.87,4.22,2.31l53.65,83.99C309.642,460.14,307.252,464.5,303.302,464.5z"\n    />\n    <path\n      style="fill: #ae6ad8"\n      d="M387.482,370.51h-78.73c-3.949,0-6.34,4.363-4.214,7.692l53.65,83.99&#10;&#9;&#9;c0.919,1.438,2.507,2.308,4.214,2.308h25.08c2.761,0,5-2.239,5-5v-83.99C392.482,372.749,390.244,370.51,387.482,370.51z"\n    />\n    <path\n      style="fill: #975bbb"\n      d="M392.482,375.51v83.99c0,2.76-2.24,5-5,5h-25.08c-0.88,0-1.72-0.23-2.46-0.66&#10;&#9;&#9;c1.51-0.86,2.52-2.48,2.52-4.34v-83.99c0-2.76-2.24-5-5-5h30.02C390.242,370.51,392.482,372.75,392.482,375.51z"\n    />\n    <path\n      style="\n        fill: none;\n        stroke: #000000;\n        stroke-width: 15;\n        stroke-linecap: round;\n        stroke-linejoin: round;\n        stroke-miterlimit: 10;\n      "\n      d="&#10;&#9;&#9;M392.482,52.5v83.99c0,2.761-2.239,5-5,5H241.866c-2.761,0-5-2.239-5-5V52.5c0-2.761,2.239-5,5-5h145.617&#10;&#9;&#9;C390.244,47.5,392.482,49.739,392.482,52.5z"\n    />\n    <g>\n      <path\n        style="fill: #3ad1e0"\n        d="M197.374,52.5v83.99c0,2.761-2.239,5-5,5h-67.862c-2.761,0-5-2.239-5-5V52.5c0-2.761,2.239-5,5-5&#10;&#9;&#9;&#9;h67.862C195.135,47.5,197.374,49.739,197.374,52.5z"\n      />\n      <path\n        style="fill: #20bfd5"\n        d="M197.372,52.5v83.99c0,2.76-2.24,5-5,5h-30.02c2.76,0,5-2.24,5-5V52.5c0-2.76-2.24-5-5-5h30.02&#10;&#9;&#9;&#9;C195.132,47.5,197.372,49.74,197.372,52.5z"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M197.374,52.5v83.99c0,2.761-2.239,5-5,5h-67.862c-2.761,0-5-2.239-5-5V52.5c0-2.761,2.239-5,5-5h67.862&#10;&#9;&#9;&#9;C195.135,47.5,197.374,49.739,197.374,52.5z"\n      />\n    </g>\n    <g>\n      <path\n        style="fill: #fb54b6"\n        d="M124.512,181.49h262.97c2.761,0,5,2.239,5,5v139.02c0,2.761-2.239,5-5,5h-262.97&#10;&#9;&#9;&#9;c-2.761,0-5-2.239-5-5V186.49C119.512,183.729,121.751,181.49,124.512,181.49z"\n      />\n    </g>\n    <path\n      style="fill: #fb9927"\n      d="M154.537,330.51c0-56.038,45.427-101.465,101.465-101.465s101.465,45.427,101.465,101.465H154.537z"\n    />\n    <path\n      style="fill: #f98824"\n      d="M357.462,330.51h-34.36c0-50.18-36.42-91.84-84.28-100.01c5.58-0.95,11.32-1.45,17.18-1.45&#10;&#9;&#9;C312.042,229.05,357.462,274.47,357.462,330.51z"\n    />\n    <path\n      style="\n        fill: none;\n        stroke: #000000;\n        stroke-width: 15;\n        stroke-linecap: round;\n        stroke-linejoin: round;\n        stroke-miterlimit: 10;\n      "\n      d="&#10;&#9;&#9;M154.537,330.51c0-56.038,45.427-101.465,101.465-101.465s101.465,45.427,101.465,101.465"\n    />\n    <g>\n      <path\n        style="fill: #fb33a8"\n        d="M392.482,186.49v139.02c0,2.76-2.24,5-5,5h-30.02c2.76,0,5-2.24,5-5V186.49c0-2.76-2.24-5-5-5&#10;&#9;&#9;&#9;h30.02C390.242,181.49,392.482,183.73,392.482,186.49z"\n      />\n    </g>\n    <g>\n      <g>\n        <path\n          style="fill: #fdef63"\n          d="M342.812,247.29c-0.14,0-0.29,0-0.44-0.01c-23.32-1.19-42.66,17.42-42.66,40.5&#10;&#9;&#9;&#9;&#9;c0,0.7,0.02,1.4,0.05,2.11c0.26,4.93-3.74,8.24-7.89,8.24c-2.05,0-4.12-0.79-5.74-2.6c-8.05-8.92-19.1-13.39-30.13-13.39&#10;&#9;&#9;&#9;&#9;s-22.08,4.47-30.13,13.39c-1.62,1.81-3.69,2.6-5.74,2.6c-4.15,0-8.15-3.31-7.89-8.24c0.03-0.71,0.04-1.41,0.04-2.11&#10;&#9;&#9;&#9;&#9;c0-23.08-19.34-41.69-42.65-40.5c-0.15,0.01-0.3,0.01-0.45,0.01c-7.05,0-10.56-8.81-5.2-13.65c8.92-8.05,13.39-19.09,13.39-30.13&#10;&#9;&#9;&#9;&#9;c0-7.68-2.16-15.35-6.49-22.02h170.24c-4.33,6.67-6.49,14.34-6.49,22.02c0,11.04,4.47,22.08,13.39,30.13&#10;&#9;&#9;&#9;&#9;C353.382,238.48,349.872,247.29,342.812,247.29z"\n        />\n        <g>\n          <line\n            id="XMLID_00000127012381744132405410000009872483291948348836_"\n            style="\n              fill: none;\n              stroke: #000000;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-linejoin: round;\n              stroke-miterlimit: 10;\n            "\n            x1="279.433"\n            y1="224.908"\n            x2="279.433"\n            y2="224.805"\n          />\n\n          <line\n            id="XMLID_00000080918978500845250090000017315552773041050031_"\n            style="\n              fill: none;\n              stroke: #000000;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-linejoin: round;\n              stroke-miterlimit: 10;\n            "\n            x1="256.002"\n            y1="224.908"\n            x2="256.002"\n            y2="224.805"\n          />\n\n          <line\n            id="XMLID_00000140711681861242238370000008769002181148908969_"\n            style="\n              fill: none;\n              stroke: #000000;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-linejoin: round;\n              stroke-miterlimit: 10;\n            "\n            x1="232.572"\n            y1="224.908"\n            x2="232.572"\n            y2="224.805"\n          />\n        </g>\n        <path\n          style="fill: #f3d730"\n          d="M342.812,247.3c-0.15,0-0.29,0-0.43-0.02c-23.33-1.19-42.66,17.43-42.66,40.5&#10;&#9;&#9;&#9;&#9;c0,0.7,0.01,1.39,0.05,2.11c0.25,4.93-3.75,8.25-7.89,8.25c-2.06,0-4.13-0.8-5.75-2.61c-6.75-7.46-15.58-11.81-24.76-13.03&#10;&#9;&#9;&#9;&#9;c29.09-14.37,49.1-44.34,49.1-78.98c0-7.61-0.97-14.99-2.78-22.03h33.42c-4.32,6.67-6.48,14.35-6.48,22.02&#10;&#9;&#9;&#9;&#9;c0,11.04,4.47,22.09,13.38,30.14C353.382,238.47,349.882,247.3,342.812,247.3z"\n        />\n      </g>\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M341.122,181.49c-4.33,6.67-6.49,14.34-6.49,22.02c0,11.04,4.47,22.08,13.39,30.13c5.36,4.84,1.85,13.65-5.21,13.65&#10;&#9;&#9;&#9;c-0.14,0-0.29,0-0.44-0.01c-23.32-1.19-42.66,17.42-42.66,40.5c0,0.7,0.02,1.4,0.05,2.11c0.26,4.93-3.74,8.24-7.89,8.24&#10;&#9;&#9;&#9;c-2.05,0-4.12-0.79-5.74-2.6c-8.05-8.92-19.1-13.39-30.13-13.39s-22.08,4.47-30.13,13.39c-1.62,1.81-3.69,2.6-5.74,2.6&#10;&#9;&#9;&#9;c-4.15,0-8.15-3.31-7.89-8.24c0.03-0.71,0.04-1.41,0.04-2.11c0-23.08-19.34-41.69-42.65-40.5c-0.15,0.01-0.3,0.01-0.45,0.01&#10;&#9;&#9;&#9;c-7.05,0-10.56-8.81-5.2-13.65c8.92-8.05,13.39-19.09,13.39-30.13c0-7.68-2.16-15.35-6.49-22.02"\n      />\n    </g>\n    <g>\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M208.726,181.49h-84.213c-2.761,0-5,2.239-5,5v139.02c0,2.761,2.239,5,5,5h262.97c2.761,0,5-2.239,5-5V186.49c0-2.761-2.239-5-5-5&#10;&#9;&#9;&#9;H241.888"\n      />\n    </g>\n    <path\n      style="\n        fill: none;\n        stroke: #000000;\n        stroke-width: 15;\n        stroke-linecap: round;\n        stroke-linejoin: round;\n        stroke-miterlimit: 10;\n      "\n      d="&#10;&#9;&#9;M124.512,370.51h125.143c1.706,0,3.295,0.87,4.214,2.308l53.65,83.99c2.126,3.328-0.264,7.692-4.214,7.692H124.512&#10;&#9;&#9;c-2.761,0-5-2.239-5-5v-83.99C119.512,372.749,121.751,370.51,124.512,370.51z"\n    />\n    <path\n      style="\n        fill: none;\n        stroke: #000000;\n        stroke-width: 15;\n        stroke-linecap: round;\n        stroke-linejoin: round;\n        stroke-miterlimit: 10;\n      "\n      d="&#10;&#9;&#9;M392.482,397.976V375.51c0-2.761-2.239-5-5-5h-78.73c-3.949,0-6.34,4.363-4.214,7.692l53.65,83.99&#10;&#9;&#9;c0.919,1.438,2.507,2.308,4.214,2.308h25.08c2.761,0,5-2.239,5-5v-28.362"\n    />\n    <g>\n      <g>\n        <g>\n          <circle\n            style="fill: #d8b2ec"\n            cx="189.8"\n            cy="381.497"\n            r="24.709"\n          />\n\n          <circle\n            style="\n              fill: none;\n              stroke: #000000;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-linejoin: round;\n              stroke-miterlimit: 10;\n            "\n            cx="189.8"\n            cy="381.497"\n            r="24.709"\n          />\n        </g>\n      </g>\n    </g>\n    <g>\n      <line\n        id="XMLID_00000028301319025648580530000009457246182494066313_"\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        x1="314.674"\n        y1="108.185"\n        x2="354.689"\n        y2="108.075"\n      />\n\n      <line\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        x1="333.566"\n        y1="80.805"\n        x2="354.689"\n        y2="80.805"\n      />\n    </g>\n  </g>\n</svg>\n';
+    '<?xml version="1.0" encoding="UTF-8"?>\r\n<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  version="1.1"\r\n  id="Capa_1"\r\n  x="0px"\r\n  y="0px"\r\n  viewBox="0 0 512 512"\r\n  style="enable-background: new 0 0 512 512"\r\n  xml:space="preserve"\r\n  width="512"\r\n  height="512"\r\n>\r\n  <g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          style="fill: #f2eff2"\r\n          d="M422.485,504.5H89.515c-5.523,0-10-4.477-10-10v-477c0-5.523,4.477-10,10-10h332.971&#10;&#9;&#9;&#9;&#9;c5.523,0,10,4.477,10,10v477C432.485,500.023,428.008,504.5,422.485,504.5z"\r\n        />\r\n      </g>\r\n    </g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          style="fill: #e1dde1"\r\n          d="M432.49,17.5v477c0,5.52-4.48,10-10,10h-40.03c5.52,0,10-4.48,10-10v-477c0-5.52-4.48-10-10-10&#10;&#9;&#9;&#9;&#9;h40.03C428.01,7.5,432.49,11.98,432.49,17.5z"\r\n        />\r\n      </g>\r\n    </g>\r\n    <g>\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M158.639,7.5H89.515c-5.523,0-10,4.477-10,10v477c0,5.523,4.477,10,10,10h332.971c5.523,0,10-4.477,10-10v-477&#10;&#9;&#9;&#9;c0-5.523-4.477-10-10-10H191.801"\r\n      />\r\n    </g>\r\n    <path\r\n      style="fill: #3ad1e0"\r\n      d="M392.482,52.5v83.99c0,2.761-2.239,5-5,5H241.866c-2.761,0-5-2.239-5-5V52.5c0-2.761,2.239-5,5-5&#10;&#9;&#9;h145.617C390.244,47.5,392.482,49.739,392.482,52.5z"\r\n    />\r\n    <path\r\n      style="fill: #20bfd5"\r\n      d="M392.482,52.5v83.99c0,2.76-2.24,5-5,5h-30.02c2.76,0,5-2.24,5-5V52.5c0-2.76-2.24-5-5-5h30.02&#10;&#9;&#9;C390.242,47.5,392.482,49.74,392.482,52.5z"\r\n    />\r\n    <path\r\n      style="fill: #26d192"\r\n      d="M280.6,47.5h-38.735c-2.761,0-5,2.239-5,5v83.99c0,2.761,2.239,5,5,5H280.6V47.5z"\r\n    />\r\n\r\n    <line\r\n      style="\r\n        fill: none;\r\n        stroke: #000000;\r\n        stroke-width: 15;\r\n        stroke-linecap: round;\r\n        stroke-linejoin: round;\r\n        stroke-miterlimit: 10;\r\n      "\r\n      x1="280.6"\r\n      y1="141.49"\r\n      x2="280.6"\r\n      y2="47.5"\r\n    />\r\n    <path\r\n      style="fill: #23f1a8"\r\n      d="M124.512,370.51h125.143c1.706,0,3.295,0.87,4.214,2.308l53.65,83.99&#10;&#9;&#9;c2.126,3.328-0.264,7.692-4.214,7.692H124.512c-2.761,0-5-2.239-5-5v-83.99C119.512,372.749,121.751,370.51,124.512,370.51z"\r\n    />\r\n    <g>\r\n      <path\r\n        style="fill: #ae6ad8"\r\n        d="M227.87,437.622V464.5h-76.148v-26.878c0-21.034,17.054-38.079,38.079-38.079&#10;&#9;&#9;&#9;c10.512,0,20.034,4.261,26.916,11.153C223.609,417.588,227.87,427.1,227.87,437.622z"\r\n      />\r\n      <path\r\n        style="fill: #975bbb"\r\n        d="M227.872,437.62v26.88h-28.21v-26.88c0-10.52-4.26-20.03-11.15-26.92&#10;&#9;&#9;&#9;c-3.62-3.63-7.97-6.53-12.82-8.46c4.36-1.74,9.13-2.7,14.11-2.7c10.51,0,20.03,4.26,26.92,11.16&#10;&#9;&#9;&#9;C223.612,417.59,227.872,427.1,227.872,437.62z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M151.722,464.5v-26.878c0-21.034,17.054-38.079,38.079-38.079c10.512,0,20.034,4.261,26.916,11.153&#10;&#9;&#9;&#9;c6.892,6.892,11.153,16.404,11.153,26.926V464.5"\r\n      />\r\n    </g>\r\n    <path\r\n      style="fill: #27e19d"\r\n      d="M303.302,464.5h-30.02c3.95,0,6.34-4.36,4.22-7.69l-53.65-83.99c-0.92-1.44-2.51-2.31-4.22-2.31&#10;&#9;&#9;h30.02c1.71,0,3.3,0.87,4.22,2.31l53.65,83.99C309.642,460.14,307.252,464.5,303.302,464.5z"\r\n    />\r\n    <path\r\n      style="fill: #ae6ad8"\r\n      d="M387.482,370.51h-78.73c-3.949,0-6.34,4.363-4.214,7.692l53.65,83.99&#10;&#9;&#9;c0.919,1.438,2.507,2.308,4.214,2.308h25.08c2.761,0,5-2.239,5-5v-83.99C392.482,372.749,390.244,370.51,387.482,370.51z"\r\n    />\r\n    <path\r\n      style="fill: #975bbb"\r\n      d="M392.482,375.51v83.99c0,2.76-2.24,5-5,5h-25.08c-0.88,0-1.72-0.23-2.46-0.66&#10;&#9;&#9;c1.51-0.86,2.52-2.48,2.52-4.34v-83.99c0-2.76-2.24-5-5-5h30.02C390.242,370.51,392.482,372.75,392.482,375.51z"\r\n    />\r\n    <path\r\n      style="\r\n        fill: none;\r\n        stroke: #000000;\r\n        stroke-width: 15;\r\n        stroke-linecap: round;\r\n        stroke-linejoin: round;\r\n        stroke-miterlimit: 10;\r\n      "\r\n      d="&#10;&#9;&#9;M392.482,52.5v83.99c0,2.761-2.239,5-5,5H241.866c-2.761,0-5-2.239-5-5V52.5c0-2.761,2.239-5,5-5h145.617&#10;&#9;&#9;C390.244,47.5,392.482,49.739,392.482,52.5z"\r\n    />\r\n    <g>\r\n      <path\r\n        style="fill: #3ad1e0"\r\n        d="M197.374,52.5v83.99c0,2.761-2.239,5-5,5h-67.862c-2.761,0-5-2.239-5-5V52.5c0-2.761,2.239-5,5-5&#10;&#9;&#9;&#9;h67.862C195.135,47.5,197.374,49.739,197.374,52.5z"\r\n      />\r\n      <path\r\n        style="fill: #20bfd5"\r\n        d="M197.372,52.5v83.99c0,2.76-2.24,5-5,5h-30.02c2.76,0,5-2.24,5-5V52.5c0-2.76-2.24-5-5-5h30.02&#10;&#9;&#9;&#9;C195.132,47.5,197.372,49.74,197.372,52.5z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M197.374,52.5v83.99c0,2.761-2.239,5-5,5h-67.862c-2.761,0-5-2.239-5-5V52.5c0-2.761,2.239-5,5-5h67.862&#10;&#9;&#9;&#9;C195.135,47.5,197.374,49.739,197.374,52.5z"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        style="fill: #fb54b6"\r\n        d="M124.512,181.49h262.97c2.761,0,5,2.239,5,5v139.02c0,2.761-2.239,5-5,5h-262.97&#10;&#9;&#9;&#9;c-2.761,0-5-2.239-5-5V186.49C119.512,183.729,121.751,181.49,124.512,181.49z"\r\n      />\r\n    </g>\r\n    <path\r\n      style="fill: #fb9927"\r\n      d="M154.537,330.51c0-56.038,45.427-101.465,101.465-101.465s101.465,45.427,101.465,101.465H154.537z"\r\n    />\r\n    <path\r\n      style="fill: #f98824"\r\n      d="M357.462,330.51h-34.36c0-50.18-36.42-91.84-84.28-100.01c5.58-0.95,11.32-1.45,17.18-1.45&#10;&#9;&#9;C312.042,229.05,357.462,274.47,357.462,330.51z"\r\n    />\r\n    <path\r\n      style="\r\n        fill: none;\r\n        stroke: #000000;\r\n        stroke-width: 15;\r\n        stroke-linecap: round;\r\n        stroke-linejoin: round;\r\n        stroke-miterlimit: 10;\r\n      "\r\n      d="&#10;&#9;&#9;M154.537,330.51c0-56.038,45.427-101.465,101.465-101.465s101.465,45.427,101.465,101.465"\r\n    />\r\n    <g>\r\n      <path\r\n        style="fill: #fb33a8"\r\n        d="M392.482,186.49v139.02c0,2.76-2.24,5-5,5h-30.02c2.76,0,5-2.24,5-5V186.49c0-2.76-2.24-5-5-5&#10;&#9;&#9;&#9;h30.02C390.242,181.49,392.482,183.73,392.482,186.49z"\r\n      />\r\n    </g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          style="fill: #fdef63"\r\n          d="M342.812,247.29c-0.14,0-0.29,0-0.44-0.01c-23.32-1.19-42.66,17.42-42.66,40.5&#10;&#9;&#9;&#9;&#9;c0,0.7,0.02,1.4,0.05,2.11c0.26,4.93-3.74,8.24-7.89,8.24c-2.05,0-4.12-0.79-5.74-2.6c-8.05-8.92-19.1-13.39-30.13-13.39&#10;&#9;&#9;&#9;&#9;s-22.08,4.47-30.13,13.39c-1.62,1.81-3.69,2.6-5.74,2.6c-4.15,0-8.15-3.31-7.89-8.24c0.03-0.71,0.04-1.41,0.04-2.11&#10;&#9;&#9;&#9;&#9;c0-23.08-19.34-41.69-42.65-40.5c-0.15,0.01-0.3,0.01-0.45,0.01c-7.05,0-10.56-8.81-5.2-13.65c8.92-8.05,13.39-19.09,13.39-30.13&#10;&#9;&#9;&#9;&#9;c0-7.68-2.16-15.35-6.49-22.02h170.24c-4.33,6.67-6.49,14.34-6.49,22.02c0,11.04,4.47,22.08,13.39,30.13&#10;&#9;&#9;&#9;&#9;C353.382,238.48,349.872,247.29,342.812,247.29z"\r\n        />\r\n        <g>\r\n          <line\r\n            id="XMLID_00000127012381744132405410000009872483291948348836_"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n            "\r\n            x1="279.433"\r\n            y1="224.908"\r\n            x2="279.433"\r\n            y2="224.805"\r\n          />\r\n\r\n          <line\r\n            id="XMLID_00000080918978500845250090000017315552773041050031_"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n            "\r\n            x1="256.002"\r\n            y1="224.908"\r\n            x2="256.002"\r\n            y2="224.805"\r\n          />\r\n\r\n          <line\r\n            id="XMLID_00000140711681861242238370000008769002181148908969_"\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n            "\r\n            x1="232.572"\r\n            y1="224.908"\r\n            x2="232.572"\r\n            y2="224.805"\r\n          />\r\n        </g>\r\n        <path\r\n          style="fill: #f3d730"\r\n          d="M342.812,247.3c-0.15,0-0.29,0-0.43-0.02c-23.33-1.19-42.66,17.43-42.66,40.5&#10;&#9;&#9;&#9;&#9;c0,0.7,0.01,1.39,0.05,2.11c0.25,4.93-3.75,8.25-7.89,8.25c-2.06,0-4.13-0.8-5.75-2.61c-6.75-7.46-15.58-11.81-24.76-13.03&#10;&#9;&#9;&#9;&#9;c29.09-14.37,49.1-44.34,49.1-78.98c0-7.61-0.97-14.99-2.78-22.03h33.42c-4.32,6.67-6.48,14.35-6.48,22.02&#10;&#9;&#9;&#9;&#9;c0,11.04,4.47,22.09,13.38,30.14C353.382,238.47,349.882,247.3,342.812,247.3z"\r\n        />\r\n      </g>\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M341.122,181.49c-4.33,6.67-6.49,14.34-6.49,22.02c0,11.04,4.47,22.08,13.39,30.13c5.36,4.84,1.85,13.65-5.21,13.65&#10;&#9;&#9;&#9;c-0.14,0-0.29,0-0.44-0.01c-23.32-1.19-42.66,17.42-42.66,40.5c0,0.7,0.02,1.4,0.05,2.11c0.26,4.93-3.74,8.24-7.89,8.24&#10;&#9;&#9;&#9;c-2.05,0-4.12-0.79-5.74-2.6c-8.05-8.92-19.1-13.39-30.13-13.39s-22.08,4.47-30.13,13.39c-1.62,1.81-3.69,2.6-5.74,2.6&#10;&#9;&#9;&#9;c-4.15,0-8.15-3.31-7.89-8.24c0.03-0.71,0.04-1.41,0.04-2.11c0-23.08-19.34-41.69-42.65-40.5c-0.15,0.01-0.3,0.01-0.45,0.01&#10;&#9;&#9;&#9;c-7.05,0-10.56-8.81-5.2-13.65c8.92-8.05,13.39-19.09,13.39-30.13c0-7.68-2.16-15.35-6.49-22.02"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M208.726,181.49h-84.213c-2.761,0-5,2.239-5,5v139.02c0,2.761,2.239,5,5,5h262.97c2.761,0,5-2.239,5-5V186.49c0-2.761-2.239-5-5-5&#10;&#9;&#9;&#9;H241.888"\r\n      />\r\n    </g>\r\n    <path\r\n      style="\r\n        fill: none;\r\n        stroke: #000000;\r\n        stroke-width: 15;\r\n        stroke-linecap: round;\r\n        stroke-linejoin: round;\r\n        stroke-miterlimit: 10;\r\n      "\r\n      d="&#10;&#9;&#9;M124.512,370.51h125.143c1.706,0,3.295,0.87,4.214,2.308l53.65,83.99c2.126,3.328-0.264,7.692-4.214,7.692H124.512&#10;&#9;&#9;c-2.761,0-5-2.239-5-5v-83.99C119.512,372.749,121.751,370.51,124.512,370.51z"\r\n    />\r\n    <path\r\n      style="\r\n        fill: none;\r\n        stroke: #000000;\r\n        stroke-width: 15;\r\n        stroke-linecap: round;\r\n        stroke-linejoin: round;\r\n        stroke-miterlimit: 10;\r\n      "\r\n      d="&#10;&#9;&#9;M392.482,397.976V375.51c0-2.761-2.239-5-5-5h-78.73c-3.949,0-6.34,4.363-4.214,7.692l53.65,83.99&#10;&#9;&#9;c0.919,1.438,2.507,2.308,4.214,2.308h25.08c2.761,0,5-2.239,5-5v-28.362"\r\n    />\r\n    <g>\r\n      <g>\r\n        <g>\r\n          <circle\r\n            style="fill: #d8b2ec"\r\n            cx="189.8"\r\n            cy="381.497"\r\n            r="24.709"\r\n          />\r\n\r\n          <circle\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-linejoin: round;\r\n              stroke-miterlimit: 10;\r\n            "\r\n            cx="189.8"\r\n            cy="381.497"\r\n            r="24.709"\r\n          />\r\n        </g>\r\n      </g>\r\n    </g>\r\n    <g>\r\n      <line\r\n        id="XMLID_00000028301319025648580530000009457246182494066313_"\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="314.674"\r\n        y1="108.185"\r\n        x2="354.689"\r\n        y2="108.075"\r\n      />\r\n\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="333.566"\r\n        y1="80.805"\r\n        x2="354.689"\r\n        y2="80.805"\r\n      />\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
 
   const category =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-category"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M4 4h6v6h-6z" />\n  <path d="M14 4h6v6h-6z" />\n  <path d="M4 14h6v6h-6z" />\n  <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-category"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 4h6v6h-6z" />\r\n  <path d="M14 4h6v6h-6z" />\r\n  <path d="M4 14h6v6h-6z" />\r\n  <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />\r\n</svg>\r\n';
 
   const check =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-check"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M5 12l5 5l10 -10" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-check"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M5 12l5 5l10 -10" />\r\n</svg>\r\n';
 
   const chevronRight =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M9 6l6 6l-6 6" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M9 6l6 6l-6 6" />\r\n</svg>\r\n';
+
+  const circleCheck =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-circle-check"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />\r\n  <path d="M9 12l2 2l4 -4" />\r\n</svg>\r\n';
+
+  const circleX =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-circle-x"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />\r\n  <path d="M10 10l4 4m0 -4l-4 4" />\r\n</svg>\r\n';
 
   const deviceFloppy =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-device-floppy"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />\n  <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />\n  <path d="M14 4l0 4l-6 0l0 -4" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-device-floppy"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />\r\n  <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />\r\n  <path d="M14 4l0 4l-6 0l0 -4" />\r\n</svg>\r\n';
 
   const dotsVertical =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\n  <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\n  <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\r\n  <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\r\n  <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\r\n</svg>\r\n';
 
   const EReader1KawaiiFlat =
-    '<svg\n  id="Capa_1"\n  enable-background="new 0 0 512 512"\n  viewBox="0 0 512 512"\n  xmlns="http://www.w3.org/2000/svg"\n>\n  <g>\n    <g>\n      <path\n        d="m369.32 512h-226.64c-45.516 0-82.414-36.898-82.414-82.414v-347.172c0-45.516 36.898-82.414 82.414-82.414h226.64c45.516 0 82.414 36.898 82.414 82.414v347.171c0 45.517-36.898 82.415-82.414 82.415z"\n        fill="#636978"\n      />\n    </g>\n    <g>\n      <path\n        d="m225.095 450.189v-388.378c0-34.137 27.673-61.811 61.81-61.811h-144.225c-45.516 0-82.414 36.898-82.414 82.414v347.171c0 45.516 36.898 82.414 82.414 82.414h144.225c-34.137.001-61.81-27.673-61.81-61.81z"\n        fill="#555a66"\n      />\n    </g>\n    <g>\n      <path\n        d="m369.32 61.811h-226.64c-11.379 0-20.604 9.225-20.604 20.604v336.869c0 11.379 9.225 20.604 20.604 20.604h226.64c11.379 0 20.604-9.225 20.604-20.604v-336.87c0-11.379-9.225-20.603-20.604-20.603z"\n        fill="#96e8ff"\n      />\n    </g>\n    <g>\n      <path\n        d="m122.076 82.414v336.869c0 11.379 9.225 20.604 20.604 20.604h82.414v-378.076h-82.414c-11.379 0-20.604 9.224-20.604 20.603z"\n        fill="#80dbff"\n      />\n    </g>\n    <g>\n      <path\n        d="m256 111.277c-27.66-8.24-55.124-9.125-82.742-2.655-5.835 1.367-9.975 6.555-9.975 12.548v95.771c0 6.566 6.064 11.463 12.479 10.063 23.872-5.21 47.636-4.921 71.52.866 5.731 1.389 11.704 1.389 17.435 0 23.884-5.788 47.648-6.077 71.52-.866 6.415 1.4 12.479-3.497 12.479-10.063 0-40.343 0-55.429 0-95.771 0-5.993-4.139-11.181-9.975-12.548-27.617-6.471-55.081-5.585-82.741 2.655z"\n        fill="#fff"\n      />\n    </g>\n    <g>\n      <path\n        d="m173.258 108.622c-5.835 1.367-9.975 6.555-9.975 12.548v95.771c0 6.566 6.064 11.463 12.479 10.063 23.872-5.21 47.636-4.921 71.52.866 2.866.694 5.791 1.041 8.717 1.041v-117.634c-27.659-8.24-55.123-9.126-82.741-2.655z"\n        fill="#f5fafc"\n      />\n    </g>\n    <g>\n      <path\n        d="m205.037 104.432c-10.584.315-21.171 1.704-31.781 4.19-5.834 1.367-9.973 6.56-9.973 12.552v95.761c0 6.547 6.037 11.478 12.432 10.08 23.888-5.221 47.667-4.935 71.567.856 2.866.694 8.717 1.042 8.717 1.042 0-13.231-13.741-21.854-26.952-27.087-14.54-5.759-24.011-19.905-24.011-35.544v-61.85z"\n        fill="#e1f1fa"\n      />\n    </g>\n    <g>\n      <g>\n        <path\n          d="m338.414 289.266h-164.829c-4.142 0-7.5-3.357-7.5-7.5s3.358-7.5 7.5-7.5h164.829c4.143 0 7.5 3.357 7.5 7.5s-3.357 7.5-7.5 7.5z"\n          fill="#19cffc"\n        />\n      </g>\n      <g>\n        <path\n          d="m338.414 330.473h-164.829c-4.142 0-7.5-3.357-7.5-7.5s3.358-7.5 7.5-7.5h164.829c4.143 0 7.5 3.357 7.5 7.5s-3.357 7.5-7.5 7.5z"\n          fill="#19cffc"\n        />\n      </g>\n      <g>\n        <g>\n          <path\n            d="m191.667 385.134c-4.142 0-7.5-3.357-7.5-7.5v-12.362c0-4.143 3.358-7.5 7.5-7.5s7.5 3.357 7.5 7.5v12.362c0 4.142-3.358 7.5-7.5 7.5z"\n            fill="#495560"\n          />\n        </g>\n        <g>\n          <path\n            d="m320.333 385.134c-4.143 0-7.5-3.357-7.5-7.5v-12.362c0-4.143 3.357-7.5 7.5-7.5s7.5 3.357 7.5 7.5v12.362c0 4.142-3.357 7.5-7.5 7.5z"\n            fill="#495560"\n          />\n        </g>\n        <g>\n          <path\n            d="m256 392.493c-8.668 0-16.911-3.754-22.615-10.3-2.721-3.123-2.396-7.86.727-10.582 3.122-2.721 7.86-2.396 10.582.727 2.855 3.276 6.976 5.155 11.307 5.155s8.452-1.879 11.307-5.155c2.723-3.122 7.457-3.447 10.582-.727 3.122 2.722 3.448 7.459.727 10.582-5.706 6.546-13.949 10.3-22.617 10.3z"\n            fill="#495560"\n          />\n        </g>\n      </g>\n    </g>\n  </g>\n  <g />\n  <g />\n  <g />\n  <g />\n  <g />\n  <g />\n  <g />\n  <g />\n  <g />\n  <g />\n  <g />\n  <g />\n  <g />\n  <g />\n  <g />\n</svg>\n';
+    '<svg\r\n  id="Capa_1"\r\n  enable-background="new 0 0 512 512"\r\n  viewBox="0 0 512 512"\r\n  xmlns="http://www.w3.org/2000/svg"\r\n>\r\n  <g>\r\n    <g>\r\n      <path\r\n        d="m369.32 512h-226.64c-45.516 0-82.414-36.898-82.414-82.414v-347.172c0-45.516 36.898-82.414 82.414-82.414h226.64c45.516 0 82.414 36.898 82.414 82.414v347.171c0 45.517-36.898 82.415-82.414 82.415z"\r\n        fill="#636978"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        d="m225.095 450.189v-388.378c0-34.137 27.673-61.811 61.81-61.811h-144.225c-45.516 0-82.414 36.898-82.414 82.414v347.171c0 45.516 36.898 82.414 82.414 82.414h144.225c-34.137.001-61.81-27.673-61.81-61.81z"\r\n        fill="#555a66"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        d="m369.32 61.811h-226.64c-11.379 0-20.604 9.225-20.604 20.604v336.869c0 11.379 9.225 20.604 20.604 20.604h226.64c11.379 0 20.604-9.225 20.604-20.604v-336.87c0-11.379-9.225-20.603-20.604-20.603z"\r\n        fill="#96e8ff"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        d="m122.076 82.414v336.869c0 11.379 9.225 20.604 20.604 20.604h82.414v-378.076h-82.414c-11.379 0-20.604 9.224-20.604 20.603z"\r\n        fill="#80dbff"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        d="m256 111.277c-27.66-8.24-55.124-9.125-82.742-2.655-5.835 1.367-9.975 6.555-9.975 12.548v95.771c0 6.566 6.064 11.463 12.479 10.063 23.872-5.21 47.636-4.921 71.52.866 5.731 1.389 11.704 1.389 17.435 0 23.884-5.788 47.648-6.077 71.52-.866 6.415 1.4 12.479-3.497 12.479-10.063 0-40.343 0-55.429 0-95.771 0-5.993-4.139-11.181-9.975-12.548-27.617-6.471-55.081-5.585-82.741 2.655z"\r\n        fill="#fff"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        d="m173.258 108.622c-5.835 1.367-9.975 6.555-9.975 12.548v95.771c0 6.566 6.064 11.463 12.479 10.063 23.872-5.21 47.636-4.921 71.52.866 2.866.694 5.791 1.041 8.717 1.041v-117.634c-27.659-8.24-55.123-9.126-82.741-2.655z"\r\n        fill="#f5fafc"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        d="m205.037 104.432c-10.584.315-21.171 1.704-31.781 4.19-5.834 1.367-9.973 6.56-9.973 12.552v95.761c0 6.547 6.037 11.478 12.432 10.08 23.888-5.221 47.667-4.935 71.567.856 2.866.694 8.717 1.042 8.717 1.042 0-13.231-13.741-21.854-26.952-27.087-14.54-5.759-24.011-19.905-24.011-35.544v-61.85z"\r\n        fill="#e1f1fa"\r\n      />\r\n    </g>\r\n    <g>\r\n      <g>\r\n        <path\r\n          d="m338.414 289.266h-164.829c-4.142 0-7.5-3.357-7.5-7.5s3.358-7.5 7.5-7.5h164.829c4.143 0 7.5 3.357 7.5 7.5s-3.357 7.5-7.5 7.5z"\r\n          fill="#19cffc"\r\n        />\r\n      </g>\r\n      <g>\r\n        <path\r\n          d="m338.414 330.473h-164.829c-4.142 0-7.5-3.357-7.5-7.5s3.358-7.5 7.5-7.5h164.829c4.143 0 7.5 3.357 7.5 7.5s-3.357 7.5-7.5 7.5z"\r\n          fill="#19cffc"\r\n        />\r\n      </g>\r\n      <g>\r\n        <g>\r\n          <path\r\n            d="m191.667 385.134c-4.142 0-7.5-3.357-7.5-7.5v-12.362c0-4.143 3.358-7.5 7.5-7.5s7.5 3.357 7.5 7.5v12.362c0 4.142-3.358 7.5-7.5 7.5z"\r\n            fill="#495560"\r\n          />\r\n        </g>\r\n        <g>\r\n          <path\r\n            d="m320.333 385.134c-4.143 0-7.5-3.357-7.5-7.5v-12.362c0-4.143 3.357-7.5 7.5-7.5s7.5 3.357 7.5 7.5v12.362c0 4.142-3.357 7.5-7.5 7.5z"\r\n            fill="#495560"\r\n          />\r\n        </g>\r\n        <g>\r\n          <path\r\n            d="m256 392.493c-8.668 0-16.911-3.754-22.615-10.3-2.721-3.123-2.396-7.86.727-10.582 3.122-2.721 7.86-2.396 10.582.727 2.855 3.276 6.976 5.155 11.307 5.155s8.452-1.879 11.307-5.155c2.723-3.122 7.457-3.447 10.582-.727 3.122 2.722 3.448 7.459.727 10.582-5.706 6.546-13.949 10.3-22.617 10.3z"\r\n            fill="#495560"\r\n          />\r\n        </g>\r\n      </g>\r\n    </g>\r\n  </g>\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n  <g />\r\n</svg>\r\n';
 
   const EReader1KawaiiLinealColor =
-    '<svg\n  version="1.1"\n  id="Capa_1"\n  xmlns="http://www.w3.org/2000/svg"\n  x="0px"\n  y="0px"\n  viewBox="0 0 512 512"\n  style="enable-background: new 0 0 512 512"\n  xml:space="preserve"\n>\n  <g>\n    <path\n      style="fill: #636978"\n      d="M366,504.5H146c-44.183,0-80-35.817-80-80v-337c0-44.183,35.817-80,80-80h220&#10;&#9;&#9;c44.183,0,80,35.817,80,80v337C446,468.683,410.183,504.5,366,504.5z"\n    />\n    <path\n      style="fill: #555a66"\n      d="M226,444.5v-377c0-33.137,26.863-60,60-60H146c-44.183,0-80,35.817-80,80v337&#10;&#9;&#9;c0,44.183,35.817,80,80,80h140C252.863,504.5,226,477.637,226,444.5z"\n    />\n    <path\n      style="fill: #96e8ff"\n      d="M366,67.5H146c-11.046,0-20,8.954-20,20v327c0,11.046,8.954,20,20,20h220c11.046,0,20-8.954,20-20&#10;&#9;&#9;v-327C386,76.454,377.046,67.5,366,67.5z"\n    />\n    <path\n      style="fill: #80dbff"\n      d="M126,87.5v327c0,11.046,8.954,20,20,20h80v-367h-80C134.954,67.5,126,76.454,126,87.5z"\n    />\n    <path\n      style="fill: #ffffff"\n      d="M256,115.517c-26.85-7.998-53.509-8.858-80.318-2.577c-5.664,1.327-9.682,6.363-9.682,12.18&#10;&#9;&#9;c0,39.161,0,53.805,0,92.965c0,6.374,5.886,11.128,12.113,9.768c23.172-5.058,46.241-4.777,69.425,0.841&#10;&#9;&#9;c5.563,1.348,11.361,1.348,16.924,0c23.184-5.618,46.252-5.898,69.425-0.841c6.227,1.359,12.113-3.395,12.113-9.768&#10;&#9;&#9;c0-39.161,0-53.805,0-92.965c0-5.818-4.018-10.853-9.682-12.18C309.509,106.659,282.85,107.518,256,115.517z"\n    />\n    <path\n      style="fill: #f5fafc"\n      d="M175.682,112.94c-5.664,1.327-9.682,6.363-9.682,12.18c0,39.161,0,53.805,0,92.965&#10;&#9;&#9;c0,6.374,5.886,11.128,12.113,9.769c23.172-5.058,46.241-4.777,69.425,0.841c2.782,0.674,5.622,1.011,8.462,1.011V115.517&#10;&#9;&#9;C229.15,107.518,202.491,106.659,175.682,112.94z"\n    />\n    <path\n      style="fill: #e1f1fa"\n      d="M206.53,108.873c-10.274,0.306-20.551,1.654-30.85,4.067c-5.663,1.327-9.681,6.368-9.681,12.184&#10;&#9;&#9;c0,39.155,0,53.801,0,92.955c0,6.355,5.86,11.141,12.068,9.785c23.188-5.068,46.271-4.791,69.47,0.831&#10;&#9;&#9;c2.782,0.674,8.462,1.011,8.462,1.011c0-12.844-13.338-21.214-26.163-26.293c-14.114-5.59-23.307-19.322-23.307-34.502V108.873z"\n    />\n    <g>\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M366,504.5H146c-44.183,0-80-35.817-80-80v-337c0-44.183,35.817-80,80-80h220c44.183,0,80,35.817,80,80v337&#10;&#9;&#9;&#9;C446,468.683,410.183,504.5,366,504.5z"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M126,398.01v16.49c0,11.046,8.954,20,20,20h220c11.046,0,20-8.954,20-20v-327c0-11.046-8.954-20-20-20H146&#10;&#9;&#9;&#9;c-11.046,0-20,8.954-20,20v280.51"\n      />\n\n      <line\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        x1="176"\n        y1="281.01"\n        x2="336"\n        y2="281.01"\n      />\n\n      <line\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        x1="176"\n        y1="321.01"\n        x2="336"\n        y2="321.01"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M286.144,109.53c-10.033,0.992-20.075,2.987-30.144,5.986c-26.85-7.998-53.509-8.858-80.318-2.577&#10;&#9;&#9;&#9;c-5.664,1.327-9.682,6.363-9.682,12.18c0,39.161,0,53.805,0,92.965c0,6.374,5.886,11.128,12.113,9.768&#10;&#9;&#9;&#9;c23.172-5.058,46.241-4.777,69.425,0.841c5.563,1.348,11.361,1.348,16.924,0c23.184-5.618,46.252-5.898,69.425-0.841&#10;&#9;&#9;&#9;c6.227,1.359,12.113-3.395,12.113-9.768c0-39.161,0-53.805,0-92.965c0-5.818-4.018-10.853-9.682-12.18&#10;&#9;&#9;&#9;c-6.702-1.57-13.395-2.694-20.084-3.372"\n      />\n\n      <line\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        x1="256"\n        y1="115.517"\n        x2="256"\n        y2="229.706"\n      />\n      <g>\n        <line\n          style="\n            fill: none;\n            stroke: #000000;\n            stroke-width: 15;\n            stroke-linecap: round;\n            stroke-linejoin: round;\n            stroke-miterlimit: 10;\n          "\n          x1="193.551"\n          y1="362.07"\n          x2="193.551"\n          y2="374.07"\n        />\n\n        <line\n          style="\n            fill: none;\n            stroke: #000000;\n            stroke-width: 15;\n            stroke-linecap: round;\n            stroke-linejoin: round;\n            stroke-miterlimit: 10;\n          "\n          x1="318.449"\n          y1="362.07"\n          x2="318.449"\n          y2="374.07"\n        />\n        <path\n          style="\n            fill: none;\n            stroke: #000000;\n            stroke-width: 15;\n            stroke-linecap: round;\n            stroke-linejoin: round;\n            stroke-miterlimit: 10;\n          "\n          d="&#10;&#9;&#9;&#9;&#9;M239.536,373.713c4.003,4.594,9.892,7.501,16.464,7.501c6.572,0,12.461-2.907,16.464-7.501"\n        />\n      </g>\n    </g>\n  </g>\n  <g></g>\n  <g></g>\n  <g></g>\n  <g></g>\n  <g></g>\n  <g></g>\n  <g></g>\n  <g></g>\n  <g></g>\n  <g></g>\n  <g></g>\n  <g></g>\n  <g></g>\n  <g></g>\n  <g></g>\n</svg>\n';
+    '<svg\r\n  version="1.1"\r\n  id="Capa_1"\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  x="0px"\r\n  y="0px"\r\n  viewBox="0 0 512 512"\r\n  style="enable-background: new 0 0 512 512"\r\n  xml:space="preserve"\r\n>\r\n  <g>\r\n    <path\r\n      style="fill: #636978"\r\n      d="M366,504.5H146c-44.183,0-80-35.817-80-80v-337c0-44.183,35.817-80,80-80h220&#10;&#9;&#9;c44.183,0,80,35.817,80,80v337C446,468.683,410.183,504.5,366,504.5z"\r\n    />\r\n    <path\r\n      style="fill: #555a66"\r\n      d="M226,444.5v-377c0-33.137,26.863-60,60-60H146c-44.183,0-80,35.817-80,80v337&#10;&#9;&#9;c0,44.183,35.817,80,80,80h140C252.863,504.5,226,477.637,226,444.5z"\r\n    />\r\n    <path\r\n      style="fill: #96e8ff"\r\n      d="M366,67.5H146c-11.046,0-20,8.954-20,20v327c0,11.046,8.954,20,20,20h220c11.046,0,20-8.954,20-20&#10;&#9;&#9;v-327C386,76.454,377.046,67.5,366,67.5z"\r\n    />\r\n    <path\r\n      style="fill: #80dbff"\r\n      d="M126,87.5v327c0,11.046,8.954,20,20,20h80v-367h-80C134.954,67.5,126,76.454,126,87.5z"\r\n    />\r\n    <path\r\n      style="fill: #ffffff"\r\n      d="M256,115.517c-26.85-7.998-53.509-8.858-80.318-2.577c-5.664,1.327-9.682,6.363-9.682,12.18&#10;&#9;&#9;c0,39.161,0,53.805,0,92.965c0,6.374,5.886,11.128,12.113,9.768c23.172-5.058,46.241-4.777,69.425,0.841&#10;&#9;&#9;c5.563,1.348,11.361,1.348,16.924,0c23.184-5.618,46.252-5.898,69.425-0.841c6.227,1.359,12.113-3.395,12.113-9.768&#10;&#9;&#9;c0-39.161,0-53.805,0-92.965c0-5.818-4.018-10.853-9.682-12.18C309.509,106.659,282.85,107.518,256,115.517z"\r\n    />\r\n    <path\r\n      style="fill: #f5fafc"\r\n      d="M175.682,112.94c-5.664,1.327-9.682,6.363-9.682,12.18c0,39.161,0,53.805,0,92.965&#10;&#9;&#9;c0,6.374,5.886,11.128,12.113,9.769c23.172-5.058,46.241-4.777,69.425,0.841c2.782,0.674,5.622,1.011,8.462,1.011V115.517&#10;&#9;&#9;C229.15,107.518,202.491,106.659,175.682,112.94z"\r\n    />\r\n    <path\r\n      style="fill: #e1f1fa"\r\n      d="M206.53,108.873c-10.274,0.306-20.551,1.654-30.85,4.067c-5.663,1.327-9.681,6.368-9.681,12.184&#10;&#9;&#9;c0,39.155,0,53.801,0,92.955c0,6.355,5.86,11.141,12.068,9.785c23.188-5.068,46.271-4.791,69.47,0.831&#10;&#9;&#9;c2.782,0.674,8.462,1.011,8.462,1.011c0-12.844-13.338-21.214-26.163-26.293c-14.114-5.59-23.307-19.322-23.307-34.502V108.873z"\r\n    />\r\n    <g>\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M366,504.5H146c-44.183,0-80-35.817-80-80v-337c0-44.183,35.817-80,80-80h220c44.183,0,80,35.817,80,80v337&#10;&#9;&#9;&#9;C446,468.683,410.183,504.5,366,504.5z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M126,398.01v16.49c0,11.046,8.954,20,20,20h220c11.046,0,20-8.954,20-20v-327c0-11.046-8.954-20-20-20H146&#10;&#9;&#9;&#9;c-11.046,0-20,8.954-20,20v280.51"\r\n      />\r\n\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="176"\r\n        y1="281.01"\r\n        x2="336"\r\n        y2="281.01"\r\n      />\r\n\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="176"\r\n        y1="321.01"\r\n        x2="336"\r\n        y2="321.01"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M286.144,109.53c-10.033,0.992-20.075,2.987-30.144,5.986c-26.85-7.998-53.509-8.858-80.318-2.577&#10;&#9;&#9;&#9;c-5.664,1.327-9.682,6.363-9.682,12.18c0,39.161,0,53.805,0,92.965c0,6.374,5.886,11.128,12.113,9.768&#10;&#9;&#9;&#9;c23.172-5.058,46.241-4.777,69.425,0.841c5.563,1.348,11.361,1.348,16.924,0c23.184-5.618,46.252-5.898,69.425-0.841&#10;&#9;&#9;&#9;c6.227,1.359,12.113-3.395,12.113-9.768c0-39.161,0-53.805,0-92.965c0-5.818-4.018-10.853-9.682-12.18&#10;&#9;&#9;&#9;c-6.702-1.57-13.395-2.694-20.084-3.372"\r\n      />\r\n\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="256"\r\n        y1="115.517"\r\n        x2="256"\r\n        y2="229.706"\r\n      />\r\n      <g>\r\n        <line\r\n          style="\r\n            fill: none;\r\n            stroke: #000000;\r\n            stroke-width: 15;\r\n            stroke-linecap: round;\r\n            stroke-linejoin: round;\r\n            stroke-miterlimit: 10;\r\n          "\r\n          x1="193.551"\r\n          y1="362.07"\r\n          x2="193.551"\r\n          y2="374.07"\r\n        />\r\n\r\n        <line\r\n          style="\r\n            fill: none;\r\n            stroke: #000000;\r\n            stroke-width: 15;\r\n            stroke-linecap: round;\r\n            stroke-linejoin: round;\r\n            stroke-miterlimit: 10;\r\n          "\r\n          x1="318.449"\r\n          y1="362.07"\r\n          x2="318.449"\r\n          y2="374.07"\r\n        />\r\n        <path\r\n          style="\r\n            fill: none;\r\n            stroke: #000000;\r\n            stroke-width: 15;\r\n            stroke-linecap: round;\r\n            stroke-linejoin: round;\r\n            stroke-miterlimit: 10;\r\n          "\r\n          d="&#10;&#9;&#9;&#9;&#9;M239.536,373.713c4.003,4.594,9.892,7.501,16.464,7.501c6.572,0,12.461-2.907,16.464-7.501"\r\n        />\r\n      </g>\r\n    </g>\r\n  </g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n  <g></g>\r\n</svg>\r\n';
 
   const EReader2KawaiiFlat =
-    '<svg\n  id="Capa_1"\n  enable-background="new 0 0 512 512"\n  height="512"\n  viewBox="0 0 512 512"\n  width="512"\n  xmlns="http://www.w3.org/2000/svg"\n>\n  <g>\n    <path\n      d="m449.945 61.818v388.363c0 34.144-27.684 61.818-61.818 61.818h-264.254c-34.134 0-61.818-27.674-61.818-61.818v-388.363c0-34.144 27.684-61.818 61.818-61.818h264.253c34.135 0 61.819 27.674 61.819 61.818z"\n      fill="#808fa4"\n    />\n    <path\n      d="m188.464 512h-64.59c-34.134 0-61.818-27.674-61.818-61.818v-388.364c-.001-34.144 27.683-61.818 61.817-61.818h50.341c-7.367 6.574-15.218 18.092-15.218 37.359v423.909c.001 0-.215 30.24 29.468 50.732z"\n      fill="#64768e"\n    />\n    <path\n      d="m418.912 61.942v147.509l-194.274 13.033 77.912-191.451h85.453c17.072 0 30.909 13.837 30.909 30.909z"\n      fill="#c5ced6"\n    />\n    <path\n      d="m271.516 31.033-46.878 191.451-65.641-6.501-65.909-6.532 20.843-140.421 45.365-37.997z"\n      fill="#abb6c4"\n    />\n    <path\n      d="m159.296 31.033c-.196 2.009-.299 4.121-.299 6.326v178.624l-65.909-6.532v-147.509c0-17.072 13.837-30.909 30.909-30.909z"\n      fill="#9ca9ba"\n    />\n    <path\n      d="m313.676 222.484-18.885 196.428h-135.794l-51.732-35.968-14.177-142.46 65.909-5.379z"\n      fill="#c5ced6"\n    />\n    <path\n      d="m93.088 240.484 65.909-5.378v183.807h-35c-17.072 0-30.909-13.837-30.909-30.909z"\n      fill="#abb6c4"\n    />\n    <path\n      d="m418.912 240.484v147.519c0 17.072-13.837 30.909-30.909 30.909h-62.19l-12.137-196.428z"\n      fill="#64768e"\n    />\n    <path\n      d="m287.487 480.971h-62.974c-8.317 0-15.059-6.742-15.059-15.059v-.913c0-8.317 6.742-15.059 15.059-15.059h62.974c8.317 0 15.059 6.742 15.059 15.059v.913c0 8.316-6.743 15.059-15.059 15.059z"\n      fill="#64768e"\n    />\n    <path\n      d="m418.912 209.451v31.033h-77.644c-8.531 0-15.455 6.924-15.455 15.455v162.974h-31.022v-162.975c0-8.531-6.923-15.455-15.455-15.455h-120.34l-13.147-13.27 13.147-17.763h44.138c6.718 0 12.673-4.348 14.723-10.746l53.658-167.672h31.033l-50.65 158.255c-3.183 9.974 4.255 20.163 14.723 20.163h152.291z"\n      fill="#e8ecf9"\n    />\n    <path\n      d="m93.088 209.451h65.909v31.033h-65.909z"\n      fill="#d7ddf5"\n    />\n    <g>\n      <g>\n        <path\n          d="m129.509 332.474c-4.268 0-7.727-3.459-7.727-7.727v-12.364c0-4.268 3.459-7.727 7.727-7.727s7.727 3.459 7.727 7.727v12.364c0 4.268-3.459 7.727-7.727 7.727z"\n          fill="#495560"\n        />\n      </g>\n      <g>\n        <path\n          d="m258.191 332.474c-4.268 0-7.727-3.459-7.727-7.727v-12.364c0-4.268 3.459-7.727 7.727-7.727s7.727 3.459 7.727 7.727v12.364c.001 4.268-3.458 7.727-7.727 7.727z"\n          fill="#495560"\n        />\n      </g>\n      <path\n        d="m223.825 324.391c-4.268 0-7.727 3.459-7.727 7.727 0 3.952-3.215 7.167-7.166 7.167-3.952 0-7.167-3.215-7.167-7.167 0-4.268-3.459-7.727-7.727-7.727s-7.727 3.459-7.727 7.727c0 3.952-3.215 7.167-7.166 7.167-3.952 0-7.167-3.215-7.167-7.167 0-4.268-3.459-7.727-7.727-7.727s-7.727 3.459-7.727 7.727c0 12.473 10.148 22.621 22.621 22.621 5.7 0 10.911-2.124 14.894-5.616 3.982 3.492 9.193 5.616 14.894 5.616 12.473 0 22.62-10.148 22.62-22.621-.001-4.268-3.46-7.727-7.728-7.727z"\n        fill="#495560"\n      />\n    </g>\n  </g>\n</svg>\n';
+    '<svg\r\n  id="Capa_1"\r\n  enable-background="new 0 0 512 512"\r\n  height="512"\r\n  viewBox="0 0 512 512"\r\n  width="512"\r\n  xmlns="http://www.w3.org/2000/svg"\r\n>\r\n  <g>\r\n    <path\r\n      d="m449.945 61.818v388.363c0 34.144-27.684 61.818-61.818 61.818h-264.254c-34.134 0-61.818-27.674-61.818-61.818v-388.363c0-34.144 27.684-61.818 61.818-61.818h264.253c34.135 0 61.819 27.674 61.819 61.818z"\r\n      fill="#808fa4"\r\n    />\r\n    <path\r\n      d="m188.464 512h-64.59c-34.134 0-61.818-27.674-61.818-61.818v-388.364c-.001-34.144 27.683-61.818 61.817-61.818h50.341c-7.367 6.574-15.218 18.092-15.218 37.359v423.909c.001 0-.215 30.24 29.468 50.732z"\r\n      fill="#64768e"\r\n    />\r\n    <path\r\n      d="m418.912 61.942v147.509l-194.274 13.033 77.912-191.451h85.453c17.072 0 30.909 13.837 30.909 30.909z"\r\n      fill="#c5ced6"\r\n    />\r\n    <path\r\n      d="m271.516 31.033-46.878 191.451-65.641-6.501-65.909-6.532 20.843-140.421 45.365-37.997z"\r\n      fill="#abb6c4"\r\n    />\r\n    <path\r\n      d="m159.296 31.033c-.196 2.009-.299 4.121-.299 6.326v178.624l-65.909-6.532v-147.509c0-17.072 13.837-30.909 30.909-30.909z"\r\n      fill="#9ca9ba"\r\n    />\r\n    <path\r\n      d="m313.676 222.484-18.885 196.428h-135.794l-51.732-35.968-14.177-142.46 65.909-5.379z"\r\n      fill="#c5ced6"\r\n    />\r\n    <path\r\n      d="m93.088 240.484 65.909-5.378v183.807h-35c-17.072 0-30.909-13.837-30.909-30.909z"\r\n      fill="#abb6c4"\r\n    />\r\n    <path\r\n      d="m418.912 240.484v147.519c0 17.072-13.837 30.909-30.909 30.909h-62.19l-12.137-196.428z"\r\n      fill="#64768e"\r\n    />\r\n    <path\r\n      d="m287.487 480.971h-62.974c-8.317 0-15.059-6.742-15.059-15.059v-.913c0-8.317 6.742-15.059 15.059-15.059h62.974c8.317 0 15.059 6.742 15.059 15.059v.913c0 8.316-6.743 15.059-15.059 15.059z"\r\n      fill="#64768e"\r\n    />\r\n    <path\r\n      d="m418.912 209.451v31.033h-77.644c-8.531 0-15.455 6.924-15.455 15.455v162.974h-31.022v-162.975c0-8.531-6.923-15.455-15.455-15.455h-120.34l-13.147-13.27 13.147-17.763h44.138c6.718 0 12.673-4.348 14.723-10.746l53.658-167.672h31.033l-50.65 158.255c-3.183 9.974 4.255 20.163 14.723 20.163h152.291z"\r\n      fill="#e8ecf9"\r\n    />\r\n    <path\r\n      d="m93.088 209.451h65.909v31.033h-65.909z"\r\n      fill="#d7ddf5"\r\n    />\r\n    <g>\r\n      <g>\r\n        <path\r\n          d="m129.509 332.474c-4.268 0-7.727-3.459-7.727-7.727v-12.364c0-4.268 3.459-7.727 7.727-7.727s7.727 3.459 7.727 7.727v12.364c0 4.268-3.459 7.727-7.727 7.727z"\r\n          fill="#495560"\r\n        />\r\n      </g>\r\n      <g>\r\n        <path\r\n          d="m258.191 332.474c-4.268 0-7.727-3.459-7.727-7.727v-12.364c0-4.268 3.459-7.727 7.727-7.727s7.727 3.459 7.727 7.727v12.364c.001 4.268-3.458 7.727-7.727 7.727z"\r\n          fill="#495560"\r\n        />\r\n      </g>\r\n      <path\r\n        d="m223.825 324.391c-4.268 0-7.727 3.459-7.727 7.727 0 3.952-3.215 7.167-7.166 7.167-3.952 0-7.167-3.215-7.167-7.167 0-4.268-3.459-7.727-7.727-7.727s-7.727 3.459-7.727 7.727c0 3.952-3.215 7.167-7.166 7.167-3.952 0-7.167-3.215-7.167-7.167 0-4.268-3.459-7.727-7.727-7.727s-7.727 3.459-7.727 7.727c0 12.473 10.148 22.621 22.621 22.621 5.7 0 10.911-2.124 14.894-5.616 3.982 3.492 9.193 5.616 14.894 5.616 12.473 0 22.62-10.148 22.62-22.621-.001-4.268-3.46-7.727-7.728-7.727z"\r\n        fill="#495560"\r\n      />\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
 
   const EReader2KawaiiLinealColor =
-    '<?xml version="1.0" encoding="UTF-8"?>\n<svg\n  xmlns="http://www.w3.org/2000/svg"\n  version="1.1"\n  id="Capa_1"\n  x="0px"\n  y="0px"\n  viewBox="0 0 511.941 511.941"\n  style="enable-background: new 0 0 511.941 511.941"\n  xml:space="preserve"\n  width="512"\n  height="512"\n>\n  <g>\n    <g>\n      <path\n        style="fill: #808fa4"\n        d="M444.211,67.5v376.94c0,33.14-26.87,60-60,60H127.73c-33.13,0-60-26.86-60-60V67.5&#10;&#9;&#9;&#9;c0-33.14,26.87-60,60-60h256.48C417.341,7.5,444.211,34.361,444.211,67.5z"\n      />\n      <path\n        style="fill: #64768e"\n        d="M190.421,504.44h-62.69c-33.13,0-60-26.86-60-60V67.5c0-33.14,26.87-60,60-60h48.86&#10;&#9;&#9;&#9;c-7.15,6.38-14.77,17.56-14.77,36.26v411.44C161.821,455.201,161.611,484.551,190.421,504.44z"\n      />\n      <path\n        style="fill: #c5ced6"\n        d="M414.091,67.62v143.17l-188.56,12.65l75.62-185.82h82.94&#10;&#9;&#9;&#9;C400.661,37.62,414.091,51.051,414.091,67.62z"\n      />\n      <polygon\n        style="fill: #abb6c4"\n        points="271.031,37.62 225.531,223.44 161.821,217.131 97.85,210.79 118.08,74.5 162.111,37.62 &#9;&#9;&#10;&#9;&#9;&#9;"\n      />\n      <path\n        style="fill: #9ca9ba"\n        d="M162.111,37.62c-0.19,1.95-0.29,4-0.29,6.14v173.37l-63.97-6.34V67.62c0-16.57,13.43-30,30-30&#10;&#9;&#9;&#9;H162.111z"\n      />\n      <polygon\n        style="fill: #c5ced6"\n        points="311.951,223.44 293.62,414.091 161.821,414.091 111.611,379.181 97.85,240.911 &#10;&#9;&#9;&#9;161.821,235.69 &#9;&#9;"\n      />\n      <path\n        style="fill: #abb6c4"\n        d="M97.85,240.911l63.97-5.22v178.4h-33.97c-16.57,0-30-13.43-30-30V240.911z"\n      />\n      <path\n        style="fill: #64768e"\n        d="M414.091,240.911v143.18c0,16.57-13.43,30-30,30h-60.36l-11.78-190.65L414.091,240.911z"\n      />\n      <path\n        style="fill: #64768e"\n        d="M286.088,474.324h-60.235c-8.317,0-15.059-6.742-15.059-15.059v0&#10;&#9;&#9;&#9;c0-8.317,6.742-15.059,15.059-15.059h60.235c8.317,0,15.059,6.742,15.059,15.059v0&#10;&#9;&#9;&#9;C301.147,467.581,294.405,474.324,286.088,474.324z"\n      />\n      <path\n        style="fill: #e8ecf9"\n        d="M414.091,210.79v30.12h-75.36c-8.28,0-15,6.72-15,15v158.18h-30.11v-158.18c0-8.28-6.72-15-15-15&#10;&#9;&#9;&#9;h-116.8l-12.76-12.88l12.76-17.24h42.84c6.52,0,12.3-4.22,14.29-10.43l52.08-162.74h30.12l-49.16,153.6&#10;&#9;&#9;&#9;c-3.09,9.68,4.13,19.57,14.29,19.57H414.091z"\n      />\n      <rect\n        x="97.85"\n        y="210.79"\n        style="fill: #d7ddf5"\n        width="63.97"\n        height="30.12"\n      />\n    </g>\n    <g>\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M384.206,504.441H127.735c-33.137,0-60-26.863-60-60V67.5c0-33.137,26.863-60,60-60h256.471c33.137,0,60,26.863,60,60v376.941&#10;&#9;&#9;&#9;C444.206,477.578,417.343,504.441,384.206,504.441z"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M384.088,414.088H127.853c-16.569,0-30-13.431-30-30V67.618c0-16.569,13.431-30,30-30h256.235c16.569,0,30,13.431,30,30v316.471&#10;&#9;&#9;&#9;C414.088,400.657,400.657,414.088,384.088,414.088z"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M286.088,474.324h-60.235c-8.317,0-15.059-6.742-15.059-15.059c0-8.317,6.742-15.059,15.059-15.059h60.235&#10;&#9;&#9;&#9;c8.317,0,15.059,6.742,15.059,15.059C301.147,467.581,294.405,474.324,286.088,474.324z"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M100.85,210.79h103.811c6.523,0,12.298-4.215,14.286-10.428L270.56,39.09"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M293.62,410.091v-154.18c0-8.284-6.716-15-15-15H100.85"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M411.091,240.911h-72.36c-8.284,0-15,6.716-15,15v154.18"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M300.616,39.291l-48.622,151.927c-3.098,9.679,4.124,19.572,14.286,19.572h144.81"\n      />\n      <g>\n        <line\n          style="\n            fill: none;\n            stroke: #000000;\n            stroke-width: 15;\n            stroke-linecap: round;\n            stroke-linejoin: round;\n            stroke-miterlimit: 10;\n          "\n          x1="133.2"\n          y1="310.695"\n          x2="133.2"\n          y2="322.695"\n        />\n\n        <line\n          style="\n            fill: none;\n            stroke: #000000;\n            stroke-width: 15;\n            stroke-linecap: round;\n            stroke-linejoin: round;\n            stroke-miterlimit: 10;\n          "\n          x1="258.098"\n          y1="310.695"\n          x2="258.098"\n          y2="322.695"\n        />\n        <g>\n          <path\n            style="\n              fill: none;\n              stroke: #000000;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-miterlimit: 10;\n            "\n            d="M195.831,329.85&#10;&#9;&#9;&#9;&#9;&#9;c0,7.984-6.472,14.456-14.456,14.456s-14.456-6.472-14.456-14.456"\n          />\n          <path\n            style="\n              fill: none;\n              stroke: #000000;\n              stroke-width: 15;\n              stroke-linecap: round;\n              stroke-miterlimit: 10;\n            "\n            d="M224.742,329.85&#10;&#9;&#9;&#9;&#9;&#9;c0,7.984-6.472,14.456-14.456,14.456s-14.456-6.472-14.456-14.456"\n          />\n        </g>\n      </g>\n    </g>\n  </g>\n</svg>\n';
+    '<?xml version="1.0" encoding="UTF-8"?>\r\n<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  version="1.1"\r\n  id="Capa_1"\r\n  x="0px"\r\n  y="0px"\r\n  viewBox="0 0 511.941 511.941"\r\n  style="enable-background: new 0 0 511.941 511.941"\r\n  xml:space="preserve"\r\n  width="512"\r\n  height="512"\r\n>\r\n  <g>\r\n    <g>\r\n      <path\r\n        style="fill: #808fa4"\r\n        d="M444.211,67.5v376.94c0,33.14-26.87,60-60,60H127.73c-33.13,0-60-26.86-60-60V67.5&#10;&#9;&#9;&#9;c0-33.14,26.87-60,60-60h256.48C417.341,7.5,444.211,34.361,444.211,67.5z"\r\n      />\r\n      <path\r\n        style="fill: #64768e"\r\n        d="M190.421,504.44h-62.69c-33.13,0-60-26.86-60-60V67.5c0-33.14,26.87-60,60-60h48.86&#10;&#9;&#9;&#9;c-7.15,6.38-14.77,17.56-14.77,36.26v411.44C161.821,455.201,161.611,484.551,190.421,504.44z"\r\n      />\r\n      <path\r\n        style="fill: #c5ced6"\r\n        d="M414.091,67.62v143.17l-188.56,12.65l75.62-185.82h82.94&#10;&#9;&#9;&#9;C400.661,37.62,414.091,51.051,414.091,67.62z"\r\n      />\r\n      <polygon\r\n        style="fill: #abb6c4"\r\n        points="271.031,37.62 225.531,223.44 161.821,217.131 97.85,210.79 118.08,74.5 162.111,37.62 &#9;&#9;&#10;&#9;&#9;&#9;"\r\n      />\r\n      <path\r\n        style="fill: #9ca9ba"\r\n        d="M162.111,37.62c-0.19,1.95-0.29,4-0.29,6.14v173.37l-63.97-6.34V67.62c0-16.57,13.43-30,30-30&#10;&#9;&#9;&#9;H162.111z"\r\n      />\r\n      <polygon\r\n        style="fill: #c5ced6"\r\n        points="311.951,223.44 293.62,414.091 161.821,414.091 111.611,379.181 97.85,240.911 &#10;&#9;&#9;&#9;161.821,235.69 &#9;&#9;"\r\n      />\r\n      <path\r\n        style="fill: #abb6c4"\r\n        d="M97.85,240.911l63.97-5.22v178.4h-33.97c-16.57,0-30-13.43-30-30V240.911z"\r\n      />\r\n      <path\r\n        style="fill: #64768e"\r\n        d="M414.091,240.911v143.18c0,16.57-13.43,30-30,30h-60.36l-11.78-190.65L414.091,240.911z"\r\n      />\r\n      <path\r\n        style="fill: #64768e"\r\n        d="M286.088,474.324h-60.235c-8.317,0-15.059-6.742-15.059-15.059v0&#10;&#9;&#9;&#9;c0-8.317,6.742-15.059,15.059-15.059h60.235c8.317,0,15.059,6.742,15.059,15.059v0&#10;&#9;&#9;&#9;C301.147,467.581,294.405,474.324,286.088,474.324z"\r\n      />\r\n      <path\r\n        style="fill: #e8ecf9"\r\n        d="M414.091,210.79v30.12h-75.36c-8.28,0-15,6.72-15,15v158.18h-30.11v-158.18c0-8.28-6.72-15-15-15&#10;&#9;&#9;&#9;h-116.8l-12.76-12.88l12.76-17.24h42.84c6.52,0,12.3-4.22,14.29-10.43l52.08-162.74h30.12l-49.16,153.6&#10;&#9;&#9;&#9;c-3.09,9.68,4.13,19.57,14.29,19.57H414.091z"\r\n      />\r\n      <rect\r\n        x="97.85"\r\n        y="210.79"\r\n        style="fill: #d7ddf5"\r\n        width="63.97"\r\n        height="30.12"\r\n      />\r\n    </g>\r\n    <g>\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M384.206,504.441H127.735c-33.137,0-60-26.863-60-60V67.5c0-33.137,26.863-60,60-60h256.471c33.137,0,60,26.863,60,60v376.941&#10;&#9;&#9;&#9;C444.206,477.578,417.343,504.441,384.206,504.441z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M384.088,414.088H127.853c-16.569,0-30-13.431-30-30V67.618c0-16.569,13.431-30,30-30h256.235c16.569,0,30,13.431,30,30v316.471&#10;&#9;&#9;&#9;C414.088,400.657,400.657,414.088,384.088,414.088z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M286.088,474.324h-60.235c-8.317,0-15.059-6.742-15.059-15.059c0-8.317,6.742-15.059,15.059-15.059h60.235&#10;&#9;&#9;&#9;c8.317,0,15.059,6.742,15.059,15.059C301.147,467.581,294.405,474.324,286.088,474.324z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M100.85,210.79h103.811c6.523,0,12.298-4.215,14.286-10.428L270.56,39.09"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M293.62,410.091v-154.18c0-8.284-6.716-15-15-15H100.85"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M411.091,240.911h-72.36c-8.284,0-15,6.716-15,15v154.18"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M300.616,39.291l-48.622,151.927c-3.098,9.679,4.124,19.572,14.286,19.572h144.81"\r\n      />\r\n      <g>\r\n        <line\r\n          style="\r\n            fill: none;\r\n            stroke: #000000;\r\n            stroke-width: 15;\r\n            stroke-linecap: round;\r\n            stroke-linejoin: round;\r\n            stroke-miterlimit: 10;\r\n          "\r\n          x1="133.2"\r\n          y1="310.695"\r\n          x2="133.2"\r\n          y2="322.695"\r\n        />\r\n\r\n        <line\r\n          style="\r\n            fill: none;\r\n            stroke: #000000;\r\n            stroke-width: 15;\r\n            stroke-linecap: round;\r\n            stroke-linejoin: round;\r\n            stroke-miterlimit: 10;\r\n          "\r\n          x1="258.098"\r\n          y1="310.695"\r\n          x2="258.098"\r\n          y2="322.695"\r\n        />\r\n        <g>\r\n          <path\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-miterlimit: 10;\r\n            "\r\n            d="M195.831,329.85&#10;&#9;&#9;&#9;&#9;&#9;c0,7.984-6.472,14.456-14.456,14.456s-14.456-6.472-14.456-14.456"\r\n          />\r\n          <path\r\n            style="\r\n              fill: none;\r\n              stroke: #000000;\r\n              stroke-width: 15;\r\n              stroke-linecap: round;\r\n              stroke-miterlimit: 10;\r\n            "\r\n            d="M224.742,329.85&#10;&#9;&#9;&#9;&#9;&#9;c0,7.984-6.472,14.456-14.456,14.456s-14.456-6.472-14.456-14.456"\r\n          />\r\n        </g>\r\n      </g>\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
 
   const externalLink =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-external-link"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />\n  <path d="M11 13l9 -9" />\n  <path d="M15 4h5v5" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-external-link"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />\r\n  <path d="M11 13l9 -9" />\r\n  <path d="M15 4h5v5" />\r\n</svg>\r\n';
 
   const eye =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-eye"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />\n  <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-eye"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />\r\n  <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />\r\n</svg>\r\n';
 
   const eyeOff =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-eye-off"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />\n  <path\n    d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87"\n  />\n  <path d="M3 3l18 18" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-eye-off"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />\r\n  <path\r\n    d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87"\r\n  />\r\n  <path d="M3 3l18 18" />\r\n</svg>\r\n';
 
   const fileDownload =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-file-download"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M14 3v4a1 1 0 0 0 1 1h4" />\n  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />\n  <path d="M12 17v-6" />\n  <path d="M9.5 14.5l2.5 2.5l2.5 -2.5" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-file-download"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M14 3v4a1 1 0 0 0 1 1h4" />\r\n  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />\r\n  <path d="M12 17v-6" />\r\n  <path d="M9.5 14.5l2.5 2.5l2.5 -2.5" />\r\n</svg>\r\n';
 
   const filePercent =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-file-percent"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M10 17l4 -4" />\n  <path d="M14 3v4a1 1 0 0 0 1 1h4" />\n  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />\n  <path d="M10 13h.01" />\n  <path d="M14 17h.01" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-file-percent"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M10 17l4 -4" />\r\n  <path d="M14 3v4a1 1 0 0 0 1 1h4" />\r\n  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />\r\n  <path d="M10 13h.01" />\r\n  <path d="M14 17h.01" />\r\n</svg>\r\n';
 
   const handClick =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-hand-click"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M8 13v-8.5a1.5 1.5 0 0 1 3 0v7.5" />\n  <path d="M11 11.5v-2a1.5 1.5 0 0 1 3 0v2.5" />\n  <path d="M14 10.5a1.5 1.5 0 0 1 3 0v1.5" />\n  <path\n    d="M17 11.5a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7l-.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47"\n  />\n  <path d="M5 3l-1 -1" />\n  <path d="M4 7h-1" />\n  <path d="M14 3l1 -1" />\n  <path d="M15 6h1" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-hand-click"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M8 13v-8.5a1.5 1.5 0 0 1 3 0v7.5" />\r\n  <path d="M11 11.5v-2a1.5 1.5 0 0 1 3 0v2.5" />\r\n  <path d="M14 10.5a1.5 1.5 0 0 1 3 0v1.5" />\r\n  <path\r\n    d="M17 11.5a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7l-.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47"\r\n  />\r\n  <path d="M5 3l-1 -1" />\r\n  <path d="M4 7h-1" />\r\n  <path d="M14 3l1 -1" />\r\n  <path d="M15 6h1" />\r\n</svg>\r\n';
+
+  const help =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-help"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />\r\n  <path d="M12 17l0 .01" />\r\n  <path d="M12 13.5a1.5 1.5 0 0 1 1 -1.5a2.6 2.6 0 1 0 -3 -4" />\r\n</svg>\r\n';
+
+  const infoCircle =
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-info-circle"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />\r\n  <path d="M12 9h.01" />\r\n  <path d="M11 12h1v4h1" />\r\n</svg>\r\n';
 
   const keyboard =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-keyboard"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z" />\n  <path d="M6 10l0 .01" />\n  <path d="M10 10l0 .01" />\n  <path d="M14 10l0 .01" />\n  <path d="M18 10l0 .01" />\n  <path d="M6 14l0 .01" />\n  <path d="M18 14l0 .01" />\n  <path d="M10 14l4 .01" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-keyboard"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z" />\r\n  <path d="M6 10l0 .01" />\r\n  <path d="M10 10l0 .01" />\r\n  <path d="M14 10l0 .01" />\r\n  <path d="M18 10l0 .01" />\r\n  <path d="M6 14l0 .01" />\r\n  <path d="M18 14l0 .01" />\r\n  <path d="M10 14l4 .01" />\r\n</svg>\r\n';
 
   const layoutBottombar =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-layout-bottombar"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />\n  <path d="M4 15l16 0" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-layout-bottombar"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />\r\n  <path d="M4 15l16 0" />\r\n</svg>\r\n';
 
   const layoutBottombarInactive =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-layout-bottombar-inactive"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />\n  <path d="M4 15h1" />\n  <path d="M19 15h1" />\n  <path d="M9 15h1" />\n  <path d="M14 15h1" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-layout-bottombar-inactive"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />\r\n  <path d="M4 15h1" />\r\n  <path d="M19 15h1" />\r\n  <path d="M9 15h1" />\r\n  <path d="M14 15h1" />\r\n</svg>\r\n';
 
   const layoutSidebar =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-layout-sidebar"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />\n  <path d="M9 4l0 16" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-layout-sidebar"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />\r\n  <path d="M9 4l0 16" />\r\n</svg>\r\n';
 
   const layoutSidebarInactive =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-layout-sidebar-inactive"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />\n  <path d="M9 4v1" />\n  <path d="M9 9v1" />\n  <path d="M9 14v1" />\n  <path d="M9 19v1" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-layout-sidebar-inactive"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />\r\n  <path d="M9 4v1" />\r\n  <path d="M9 9v1" />\r\n  <path d="M9 14v1" />\r\n  <path d="M9 19v1" />\r\n</svg>\r\n';
 
   const layoutSidebarRight =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-layout-sidebar-right"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />\n  <path d="M15 4l0 16" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-layout-sidebar-right"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />\r\n  <path d="M15 4l0 16" />\r\n</svg>\r\n';
 
   const layoutSidebarRightInactive =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-layout-sidebar-right-inactive"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />\n  <path d="M15 4v1" />\n  <path d="M15 9v1" />\n  <path d="M15 14v1" />\n  <path d="M15 19v1" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-layout-sidebar-right-inactive"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />\r\n  <path d="M15 4v1" />\r\n  <path d="M15 9v1" />\r\n  <path d="M15 14v1" />\r\n  <path d="M15 19v1" />\r\n</svg>\r\n';
 
   const listNumbers =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-list-numbers"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M11 6h9" />\n  <path d="M11 12h9" />\n  <path d="M12 18h8" />\n  <path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4" />\n  <path d="M6 10v-6l-2 2" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-list-numbers"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M11 6h9" />\r\n  <path d="M11 12h9" />\r\n  <path d="M12 18h8" />\r\n  <path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4" />\r\n  <path d="M6 10v-6l-2 2" />\r\n</svg>\r\n';
 
   const loader2 =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-loader-2"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M12 3a9 9 0 1 0 9 9" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-loader-2"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 3a9 9 0 1 0 9 9" />\r\n</svg>\r\n';
 
   const locationCog =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-location-cog"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M12 18l-2 -4l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5l-3.14 8.697" />\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />\n  <path d="M19.001 15.5v1.5" />\n  <path d="M19.001 21v1.5" />\n  <path d="M22.032 17.25l-1.299 .75" />\n  <path d="M17.27 20l-1.3 .75" />\n  <path d="M15.97 17.25l1.3 .75" />\n  <path d="M20.733 20l1.3 .75" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-location-cog"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 18l-2 -4l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5l-3.14 8.697" />\r\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />\r\n  <path d="M19.001 15.5v1.5" />\r\n  <path d="M19.001 21v1.5" />\r\n  <path d="M22.032 17.25l-1.299 .75" />\r\n  <path d="M17.27 20l-1.3 .75" />\r\n  <path d="M15.97 17.25l1.3 .75" />\r\n  <path d="M20.733 20l1.3 .75" />\r\n</svg>\r\n';
 
   const menu2 =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-menu-2"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M4 6l16 0" />\n  <path d="M4 12l16 0" />\n  <path d="M4 18l16 0" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-menu-2"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 6l16 0" />\r\n  <path d="M4 12l16 0" />\r\n  <path d="M4 18l16 0" />\r\n</svg>\r\n';
 
   const menuDeep =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M4 6h16" />\n  <path d="M7 12h13" />\n  <path d="M10 18h10" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 6h16" />\r\n  <path d="M7 12h13" />\r\n  <path d="M10 18h10" />\r\n</svg>\r\n';
 
   const message =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-message"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M8 9h8" />\n  <path d="M8 13h6" />\n  <path\n    d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"\n  />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-message"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M8 9h8" />\r\n  <path d="M8 13h6" />\r\n  <path\r\n    d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"\r\n  />\r\n</svg>\r\n';
 
   const moon =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-moon"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-moon"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />\r\n</svg>\r\n';
 
   const PageKawaiiFlat =
-    '<svg\n  id="Capa_1"\n  enable-background="new 0 0 512 512"\n  height="512"\n  viewBox="0 0 512 512"\n  width="512"\n  xmlns="http://www.w3.org/2000/svg"\n>\n  <g>\n    <path\n      d="m449.945 61.818v388.363c0 34.144-27.684 61.818-61.818 61.818h-264.253c-34.134 0-61.818-27.674-61.818-61.818v-388.363c-.001-34.144 27.684-61.818 61.818-61.818h264.253c34.133 0 61.818 27.674 61.818 61.818z"\n      fill="#e8ecf9"\n    />\n    <path\n      d="m207.555 512h-83.681c-34.134 0-61.818-27.674-61.818-61.818v-388.364c-.001-34.144 27.684-61.818 61.818-61.818h79.993c-11.292 3.421-26.809 12.446-26.809 36.256v436.87c0 26.479 19.854 35.783 30.497 38.874z"\n      fill="#d7ddf5"\n    />\n    <path\n      d="m403.396 62.004v139.751c0 8.541-6.924 15.455-15.455 15.455h-210.883l-51.556-21.729v-124.699l51.556-24.233h210.883c8.531 0 15.455 6.913 15.455 15.455z"\n      fill="#c5ced6"\n    />\n    <path\n      d="m177.058 46.549v170.66h-52.999c-8.531 0-15.455-6.913-15.455-15.455v-139.75c0-8.541 6.924-15.455 15.455-15.455z"\n      fill="#abb6c4"\n    />\n    <path\n      d="m217.209 279.213v8.036l-40.151 41.769-8.809 9.17-59.644 4.307 12.333-53.195 56.121-25.541h24.696c8.541-.001 15.454 6.923 15.454 15.454z"\n      fill="#c5ced6"\n    />\n    <path\n      d="m124.059 263.758h52.999v65.26l-8.809 9.17-59.644 4.307v-63.281c-.001-8.532 6.923-15.456 15.454-15.456z"\n      fill="#abb6c4"\n    />\n    <path\n      d="m217.209 334.365v60.407l-40.151 43.438-4.204 4.543-64.25-8.634 8.573-21.379-8.573-26.551 50.743-51.824z"\n      fill="#c5ced6"\n    />\n    <path\n      d="m177.058 334.365v103.845l-4.204 4.543-64.25-8.634v-47.93l50.743-51.824z"\n      fill="#abb6c4"\n    />\n    <path\n      d="m217.209 287.249v47.116c-2.823 1.731-5.121 4.368-6.388 7.696-2.359 6.182-8.253 9.984-14.496 9.984-1.844 0-3.719-.33-5.543-1.03-.546-.206-1.092-.381-1.638-.525-1.298-.34-2.596-.505-3.895-.505-2.916 0-5.749.824-8.191 2.339l-11.045-14.888 11.045-32.29c1.03.165 2.061.433 3.07.824.587.227 1.175.412 1.772.556 1.247.319 2.514.474 3.771.474 6.244 0 12.137-3.802 14.496-9.984.082-.206.165-.412.258-.608 2.493-5.821 8.191-9.376 14.239-9.376.845.001 1.69.073 2.545.217z"\n      fill="#808fa4"\n    />\n    <path\n      d="m177.058 305.146v47.178c-2.782 1.731-5.049 4.348-6.305 7.645-.196.505-.402.989-.649 1.453-2.669 5.316-8.108 8.521-13.847 8.521-.309 0-.618-.01-.927-.031-1.535-.093-3.091-.412-4.605-.999-1.824-.701-3.699-1.03-5.543-1.03-6.244 0-12.137 3.802-14.496 9.984s-8.242 9.984-14.496 9.984c-1.834 0-3.709-.33-5.533-1.03-.68-.258-1.36-.474-2.05-.628v-43.695c5.038-1.02 9.458-4.523 11.426-9.674 2.359-6.182 8.253-9.984 14.496-9.984 1.844 0 3.709.33 5.533 1.03 1.824.701 3.709 1.03 5.553 1.03 1.113 0 2.226-.124 3.297-.361 2.895-.629 5.574-2.081 7.686-4.193 1.494-1.494 2.699-3.318 3.503-5.419 2.359-6.182 8.242-9.984 14.496-9.984.813-.003 1.637.058 2.461.203z"\n      fill="#64768e"\n    />\n    <path\n      d="m217.209 394.772v55.224c0 8.541-6.913 15.455-15.455 15.455h-24.696l-15.516-24.284 15.516-28.426c1.885-1.618 3.4-3.719 4.348-6.202 2.359-6.172 8.253-9.973 14.496-9.973 1.844 0 3.719.33 5.543 1.03 1.824.701 3.689 1.03 5.533 1.03 1.175 0 2.349-.134 3.472-.402h.01c2.494-.578 4.822-1.762 6.749-3.452z"\n      fill="#808fa4"\n    />\n    <path\n      d="m166.91 416.522c3.74 0 7.346-1.36 10.148-3.781v52.71h-52.999c-8.531 0-15.455-6.913-15.455-15.455v-15.877c3.802-1.968 8.397-2.37 12.704-.721 1.824.701 3.699 1.03 5.543 1.03 6.244 0 12.137-3.802 14.496-9.984s8.242-9.984 14.496-9.984c1.834 0 3.709.33 5.533 1.03 1.824.702 3.7 1.032 5.534 1.032z"\n      fill="#64768e"\n    />\n    <path\n      d="m403.396 351.612v98.384c0 8.541-6.924 15.455-15.455 15.455h-69.051l-55.132-93.686v-92.552c0-8.531 6.924-15.455 15.455-15.455h62.91z"\n      fill="#808fa4"\n    />\n    <path\n      d="m380.121 333.572-61.231 131.879h-39.677c-8.531 0-15.455-6.913-15.455-15.455v-78.231l77.572-53.699z"\n      fill="#abb6c4"\n    />\n    <path\n      d="m403.396 279.213v72.4c-7.058 3.359-14.95 5.234-23.275 5.234-3.534 0-6.996-.34-10.344-.989-17.34-3.338-31.744-14.929-38.956-30.518-3.215-6.924-5.007-14.651-5.007-22.79 0-15.197 6.244-28.941 16.31-38.791h45.818c8.53-.001 15.454 6.923 15.454 15.454z"\n      fill="#c5ced6"\n    />\n    <g>\n      <g>\n        <ellipse\n          cx="172.744"\n          cy="147.233"\n          fill="#fff"\n          rx="30.72"\n          ry="24.464"\n        />\n        <ellipse\n          cx="339.256"\n          cy="147.233"\n          fill="#fff"\n          rx="30.72"\n          ry="24.464"\n        />\n        <path\n          d="m285.787 117.781c-4.268 0-7.727 3.46-7.727 7.727 0 3.952-3.215 7.166-7.166 7.166s-7.166-3.215-7.166-7.166c0-4.268-3.46-7.727-7.727-7.727-4.268 0-7.727 3.46-7.727 7.727 0 3.952-3.215 7.166-7.166 7.166-3.952 0-7.166-3.215-7.166-7.166 0-4.268-3.46-7.727-7.727-7.727-4.268 0-7.727 3.46-7.727 7.727 0 12.473 10.148 22.621 22.621 22.621 5.701 0 10.911-2.124 14.894-5.616 3.982 3.492 9.193 5.616 14.894 5.616 12.473 0 22.621-10.148 22.621-22.621-.003-4.267-3.463-7.727-7.731-7.727z"\n          fill="#495560"\n        />\n      </g>\n      <g>\n        <path\n          d="m206.795 121.062c-4.268 0-7.727-3.46-7.727-7.727 0-3.559-2.896-6.454-6.455-6.454s-6.455 2.895-6.455 6.454c0 4.268-3.46 7.727-7.727 7.727-4.268 0-7.727-3.46-7.727-7.727 0-12.081 9.829-21.909 21.91-21.909s21.91 9.828 21.91 21.909c-.001 4.267-3.461 7.727-7.729 7.727z"\n          fill="#495560"\n        />\n      </g>\n      <g>\n        <path\n          d="m333.569 121.062c-4.268 0-7.727-3.46-7.727-7.727 0-3.559-2.896-6.454-6.455-6.454s-6.455 2.895-6.455 6.454c0 4.268-3.46 7.727-7.727 7.727-4.268 0-7.727-3.46-7.727-7.727 0-12.081 9.829-21.909 21.91-21.909s21.91 9.828 21.91 21.909c-.001 4.267-3.461 7.727-7.729 7.727z"\n          fill="#495560"\n        />\n      </g>\n    </g>\n  </g>\n</svg>\n';
+    '<svg\r\n  id="Capa_1"\r\n  enable-background="new 0 0 512 512"\r\n  height="512"\r\n  viewBox="0 0 512 512"\r\n  width="512"\r\n  xmlns="http://www.w3.org/2000/svg"\r\n>\r\n  <g>\r\n    <path\r\n      d="m449.945 61.818v388.363c0 34.144-27.684 61.818-61.818 61.818h-264.253c-34.134 0-61.818-27.674-61.818-61.818v-388.363c-.001-34.144 27.684-61.818 61.818-61.818h264.253c34.133 0 61.818 27.674 61.818 61.818z"\r\n      fill="#e8ecf9"\r\n    />\r\n    <path\r\n      d="m207.555 512h-83.681c-34.134 0-61.818-27.674-61.818-61.818v-388.364c-.001-34.144 27.684-61.818 61.818-61.818h79.993c-11.292 3.421-26.809 12.446-26.809 36.256v436.87c0 26.479 19.854 35.783 30.497 38.874z"\r\n      fill="#d7ddf5"\r\n    />\r\n    <path\r\n      d="m403.396 62.004v139.751c0 8.541-6.924 15.455-15.455 15.455h-210.883l-51.556-21.729v-124.699l51.556-24.233h210.883c8.531 0 15.455 6.913 15.455 15.455z"\r\n      fill="#c5ced6"\r\n    />\r\n    <path\r\n      d="m177.058 46.549v170.66h-52.999c-8.531 0-15.455-6.913-15.455-15.455v-139.75c0-8.541 6.924-15.455 15.455-15.455z"\r\n      fill="#abb6c4"\r\n    />\r\n    <path\r\n      d="m217.209 279.213v8.036l-40.151 41.769-8.809 9.17-59.644 4.307 12.333-53.195 56.121-25.541h24.696c8.541-.001 15.454 6.923 15.454 15.454z"\r\n      fill="#c5ced6"\r\n    />\r\n    <path\r\n      d="m124.059 263.758h52.999v65.26l-8.809 9.17-59.644 4.307v-63.281c-.001-8.532 6.923-15.456 15.454-15.456z"\r\n      fill="#abb6c4"\r\n    />\r\n    <path\r\n      d="m217.209 334.365v60.407l-40.151 43.438-4.204 4.543-64.25-8.634 8.573-21.379-8.573-26.551 50.743-51.824z"\r\n      fill="#c5ced6"\r\n    />\r\n    <path\r\n      d="m177.058 334.365v103.845l-4.204 4.543-64.25-8.634v-47.93l50.743-51.824z"\r\n      fill="#abb6c4"\r\n    />\r\n    <path\r\n      d="m217.209 287.249v47.116c-2.823 1.731-5.121 4.368-6.388 7.696-2.359 6.182-8.253 9.984-14.496 9.984-1.844 0-3.719-.33-5.543-1.03-.546-.206-1.092-.381-1.638-.525-1.298-.34-2.596-.505-3.895-.505-2.916 0-5.749.824-8.191 2.339l-11.045-14.888 11.045-32.29c1.03.165 2.061.433 3.07.824.587.227 1.175.412 1.772.556 1.247.319 2.514.474 3.771.474 6.244 0 12.137-3.802 14.496-9.984.082-.206.165-.412.258-.608 2.493-5.821 8.191-9.376 14.239-9.376.845.001 1.69.073 2.545.217z"\r\n      fill="#808fa4"\r\n    />\r\n    <path\r\n      d="m177.058 305.146v47.178c-2.782 1.731-5.049 4.348-6.305 7.645-.196.505-.402.989-.649 1.453-2.669 5.316-8.108 8.521-13.847 8.521-.309 0-.618-.01-.927-.031-1.535-.093-3.091-.412-4.605-.999-1.824-.701-3.699-1.03-5.543-1.03-6.244 0-12.137 3.802-14.496 9.984s-8.242 9.984-14.496 9.984c-1.834 0-3.709-.33-5.533-1.03-.68-.258-1.36-.474-2.05-.628v-43.695c5.038-1.02 9.458-4.523 11.426-9.674 2.359-6.182 8.253-9.984 14.496-9.984 1.844 0 3.709.33 5.533 1.03 1.824.701 3.709 1.03 5.553 1.03 1.113 0 2.226-.124 3.297-.361 2.895-.629 5.574-2.081 7.686-4.193 1.494-1.494 2.699-3.318 3.503-5.419 2.359-6.182 8.242-9.984 14.496-9.984.813-.003 1.637.058 2.461.203z"\r\n      fill="#64768e"\r\n    />\r\n    <path\r\n      d="m217.209 394.772v55.224c0 8.541-6.913 15.455-15.455 15.455h-24.696l-15.516-24.284 15.516-28.426c1.885-1.618 3.4-3.719 4.348-6.202 2.359-6.172 8.253-9.973 14.496-9.973 1.844 0 3.719.33 5.543 1.03 1.824.701 3.689 1.03 5.533 1.03 1.175 0 2.349-.134 3.472-.402h.01c2.494-.578 4.822-1.762 6.749-3.452z"\r\n      fill="#808fa4"\r\n    />\r\n    <path\r\n      d="m166.91 416.522c3.74 0 7.346-1.36 10.148-3.781v52.71h-52.999c-8.531 0-15.455-6.913-15.455-15.455v-15.877c3.802-1.968 8.397-2.37 12.704-.721 1.824.701 3.699 1.03 5.543 1.03 6.244 0 12.137-3.802 14.496-9.984s8.242-9.984 14.496-9.984c1.834 0 3.709.33 5.533 1.03 1.824.702 3.7 1.032 5.534 1.032z"\r\n      fill="#64768e"\r\n    />\r\n    <path\r\n      d="m403.396 351.612v98.384c0 8.541-6.924 15.455-15.455 15.455h-69.051l-55.132-93.686v-92.552c0-8.531 6.924-15.455 15.455-15.455h62.91z"\r\n      fill="#808fa4"\r\n    />\r\n    <path\r\n      d="m380.121 333.572-61.231 131.879h-39.677c-8.531 0-15.455-6.913-15.455-15.455v-78.231l77.572-53.699z"\r\n      fill="#abb6c4"\r\n    />\r\n    <path\r\n      d="m403.396 279.213v72.4c-7.058 3.359-14.95 5.234-23.275 5.234-3.534 0-6.996-.34-10.344-.989-17.34-3.338-31.744-14.929-38.956-30.518-3.215-6.924-5.007-14.651-5.007-22.79 0-15.197 6.244-28.941 16.31-38.791h45.818c8.53-.001 15.454 6.923 15.454 15.454z"\r\n      fill="#c5ced6"\r\n    />\r\n    <g>\r\n      <g>\r\n        <ellipse\r\n          cx="172.744"\r\n          cy="147.233"\r\n          fill="#fff"\r\n          rx="30.72"\r\n          ry="24.464"\r\n        />\r\n        <ellipse\r\n          cx="339.256"\r\n          cy="147.233"\r\n          fill="#fff"\r\n          rx="30.72"\r\n          ry="24.464"\r\n        />\r\n        <path\r\n          d="m285.787 117.781c-4.268 0-7.727 3.46-7.727 7.727 0 3.952-3.215 7.166-7.166 7.166s-7.166-3.215-7.166-7.166c0-4.268-3.46-7.727-7.727-7.727-4.268 0-7.727 3.46-7.727 7.727 0 3.952-3.215 7.166-7.166 7.166-3.952 0-7.166-3.215-7.166-7.166 0-4.268-3.46-7.727-7.727-7.727-4.268 0-7.727 3.46-7.727 7.727 0 12.473 10.148 22.621 22.621 22.621 5.701 0 10.911-2.124 14.894-5.616 3.982 3.492 9.193 5.616 14.894 5.616 12.473 0 22.621-10.148 22.621-22.621-.003-4.267-3.463-7.727-7.731-7.727z"\r\n          fill="#495560"\r\n        />\r\n      </g>\r\n      <g>\r\n        <path\r\n          d="m206.795 121.062c-4.268 0-7.727-3.46-7.727-7.727 0-3.559-2.896-6.454-6.455-6.454s-6.455 2.895-6.455 6.454c0 4.268-3.46 7.727-7.727 7.727-4.268 0-7.727-3.46-7.727-7.727 0-12.081 9.829-21.909 21.91-21.909s21.91 9.828 21.91 21.909c-.001 4.267-3.461 7.727-7.729 7.727z"\r\n          fill="#495560"\r\n        />\r\n      </g>\r\n      <g>\r\n        <path\r\n          d="m333.569 121.062c-4.268 0-7.727-3.46-7.727-7.727 0-3.559-2.896-6.454-6.455-6.454s-6.455 2.895-6.455 6.454c0 4.268-3.46 7.727-7.727 7.727-4.268 0-7.727-3.46-7.727-7.727 0-12.081 9.829-21.909 21.91-21.909s21.91 9.828 21.91 21.909c-.001 4.267-3.461 7.727-7.729 7.727z"\r\n          fill="#495560"\r\n        />\r\n      </g>\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
 
   const PageKawaiiLinealColor =
-    '<?xml version="1.0" encoding="UTF-8"?>\n<svg\n  xmlns="http://www.w3.org/2000/svg"\n  version="1.1"\n  id="Capa_1"\n  x="0px"\n  y="0px"\n  viewBox="0 0 511.94 511.94"\n  style="enable-background: new 0 0 511.94 511.94"\n  xml:space="preserve"\n  width="512"\n  height="512"\n>\n  <g>\n    <g>\n      <path\n        style="fill: #e8ecf9"\n        d="M444.21,67.5v376.94c0,33.14-26.87,60-60,60H127.73c-33.13,0-60-26.86-60-60V67.5&#10;&#9;&#9;&#9;c0-33.14,26.87-60,60-60h256.48C417.34,7.5,444.21,34.36,444.21,67.5z"\n      />\n      <path\n        style="fill: #d7ddf5"\n        d="M208.95,504.44h-81.22c-33.13,0-60-26.86-60-60V67.5c0-33.14,26.87-60,60-60h77.64&#10;&#9;&#9;&#9;c-10.96,3.32-26.02,12.08-26.02,35.19v424.02C179.35,492.41,198.62,501.44,208.95,504.44z"\n      />\n      <path\n        style="fill: #c5ced6"\n        d="M399.03,67.68v135.64c0,8.29-6.72,15-15,15H179.35l-50.04-21.09V76.2l50.04-23.52h204.68&#10;&#9;&#9;&#9;C392.31,52.68,399.03,59.39,399.03,67.68z"\n      />\n      <path\n        style="fill: #abb6c4"\n        d="M179.35,52.68v165.64h-51.44c-8.28,0-15-6.71-15-15V67.68c0-8.29,6.72-15,15-15H179.35z"\n      />\n      <path\n        style="fill: #c5ced6"\n        d="M218.32,278.5v7.8l-38.97,40.54l-8.55,8.9l-57.89,4.18l11.97-51.63l54.47-24.79h23.97&#10;&#9;&#9;&#9;C211.61,263.5,218.32,270.22,218.32,278.5z"\n      />\n      <path\n        style="fill: #abb6c4"\n        d="M127.91,263.5h51.44v63.34l-8.55,8.9l-57.89,4.18V278.5C112.91,270.22,119.63,263.5,127.91,263.5z"\n      />\n      <polygon\n        style="fill: #c5ced6"\n        points="218.32,332.03 218.32,390.66 179.35,432.82 175.27,437.23 112.91,428.85 121.23,408.1 &#10;&#9;&#9;&#9;112.91,382.33 162.16,332.03 &#9;&#9;"\n      />\n      <polygon\n        style="fill: #abb6c4"\n        points="179.35,332.03 179.35,432.82 175.27,437.23 112.91,428.85 112.91,382.33 162.16,332.03 &#9;&#9;&#10;&#9;&#9;&#9;"\n      />\n      <path\n        style="fill: #808fa4"\n        d="M218.32,286.3v45.73c-2.74,1.68-4.97,4.24-6.2,7.47c-2.29,6-8.01,9.69-14.07,9.69&#10;&#9;&#9;&#9;c-1.79,0-3.61-0.32-5.38-1c-0.53-0.2-1.06-0.37-1.59-0.51c-1.26-0.33-2.52-0.49-3.78-0.49c-2.83,0-5.58,0.8-7.95,2.27&#10;&#9;&#9;&#9;l-10.72-14.45l10.72-31.34c1,0.16,2,0.42,2.98,0.8c0.57,0.22,1.14,0.4,1.72,0.54c1.21,0.31,2.44,0.46,3.66,0.46&#10;&#9;&#9;&#9;c6.06,0,11.78-3.69,14.07-9.69c0.08-0.2,0.16-0.4,0.25-0.59c2.42-5.65,7.95-9.1,13.82-9.1&#10;&#9;&#9;&#9;C216.67,286.09,217.49,286.16,218.32,286.3z"\n      />\n      <path\n        style="fill: #64768e"\n        d="M179.35,303.67v45.79c-2.7,1.68-4.9,4.22-6.12,7.42c-0.19,0.49-0.39,0.96-0.63,1.41&#10;&#9;&#9;&#9;c-2.59,5.16-7.87,8.27-13.44,8.27c-0.3,0-0.6-0.01-0.9-0.03c-1.49-0.09-3-0.4-4.47-0.97c-1.77-0.68-3.59-1-5.38-1&#10;&#9;&#9;&#9;c-6.06,0-11.78,3.69-14.07,9.69s-8,9.69-14.07,9.69c-1.78,0-3.6-0.32-5.37-1c-0.66-0.25-1.32-0.46-1.99-0.61v-42.41&#10;&#9;&#9;&#9;c4.89-0.99,9.18-4.39,11.09-9.39c2.29-6,8.01-9.69,14.07-9.69c1.79,0,3.6,0.32,5.37,1c1.77,0.68,3.6,1,5.39,1&#10;&#9;&#9;&#9;c1.08,0,2.16-0.12,3.2-0.35c2.81-0.61,5.41-2.02,7.46-4.07c1.45-1.45,2.62-3.22,3.4-5.26c2.29-6,8-9.69,14.07-9.69&#10;&#9;&#9;&#9;C177.75,303.47,178.55,303.53,179.35,303.67z"\n      />\n      <path\n        style="fill: #808fa4"\n        d="M218.32,390.66v53.6c0,8.29-6.71,15-15,15h-23.97l-15.06-23.57l15.06-27.59&#10;&#9;&#9;&#9;c1.83-1.57,3.3-3.61,4.22-6.02c2.29-5.99,8.01-9.68,14.07-9.68c1.79,0,3.61,0.32,5.38,1c1.77,0.68,3.58,1,5.37,1&#10;&#9;&#9;&#9;c1.14,0,2.28-0.13,3.37-0.39h0.01C214.19,393.45,216.45,392.3,218.32,390.66z"\n      />\n      <path\n        style="fill: #64768e"\n        d="M169.5,411.77c3.63,0,7.13-1.32,9.85-3.67v51.16h-51.44c-8.28,0-15-6.71-15-15v-15.41&#10;&#9;&#9;&#9;c3.69-1.91,8.15-2.3,12.33-0.7c1.77,0.68,3.59,1,5.38,1c6.06,0,11.78-3.69,14.07-9.69c2.29-6,8-9.69,14.07-9.69&#10;&#9;&#9;&#9;c1.78,0,3.6,0.32,5.37,1C165.9,411.45,167.72,411.77,169.5,411.77z"\n      />\n      <path\n        style="fill: #808fa4"\n        d="M399.03,348.77v95.49c0,8.29-6.72,15-15,15h-67.02l-53.51-90.93V278.5c0-8.28,6.72-15,15-15h61.06&#10;&#9;&#9;&#9;L399.03,348.77z"\n      />\n      <path\n        style="fill: #abb6c4"\n        d="M376.44,331.26l-59.43,128H278.5c-8.28,0-15-6.71-15-15v-75.93l75.29-52.12L376.44,331.26z"\n      />\n      <path\n        style="fill: #c5ced6"\n        d="M399.03,278.5v70.27c-6.85,3.26-14.51,5.08-22.59,5.08c-3.43,0-6.79-0.33-10.04-0.96&#10;&#9;&#9;&#9;c-16.83-3.24-30.81-14.49-37.81-29.62c-3.12-6.72-4.86-14.22-4.86-22.12c0-14.75,6.06-28.09,15.83-37.65h44.47&#10;&#9;&#9;&#9;C392.31,263.5,399.03,270.22,399.03,278.5z"\n      />\n      <g>\n        <g>\n          <ellipse\n            style="fill: #ffffff"\n            cx="175.162"\n            cy="150.402"\n            rx="29.816"\n            ry="23.744"\n          />\n          <ellipse\n            style="fill: #ffffff"\n            cx="336.778"\n            cy="150.402"\n            rx="29.816"\n            ry="23.744"\n          />\n        </g>\n      </g>\n    </g>\n    <g>\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M67.73,402.54v41.9c0,33.14,26.87,60,60,60h256.48c33.13,0,60-26.86,60-60V67.5c0-33.14-26.87-60-60-60H127.73&#10;&#9;&#9;&#9;c-33.13,0-60,26.86-60,60v300.04"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M359,52.68h25.03c8.28,0,15,6.71,15,15v135.64c0,8.29-6.72,15-15,15H127.91c-8.28,0-15-6.71-15-15V67.68c0-8.29,6.72-15,15-15H324&#10;&#9;&#9;&#9;"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M203.323,459.264h-75.412c-8.284,0-15-6.716-15-15V278.499c0-8.284,6.716-15,15-15h75.412c8.284,0,15,6.716,15,15v165.765&#10;&#9;&#9;&#9;C218.323,452.548,211.607,459.264,203.323,459.264z"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M399.03,278.5v165.76c0,8.29-6.72,15-15,15H278.5c-8.28,0-15-6.71-15-15V278.5c0-8.28,6.72-15,15-15h105.53&#10;&#9;&#9;&#9;C392.31,263.5,399.03,270.22,399.03,278.5z"\n      />\n\n      <line\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        x1="264.641"\n        y1="367.54"\n        x2="327.14"\n        y2="324.275"\n      />\n\n      <line\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        x1="335.24"\n        y1="420"\n        x2="317.58"\n        y2="458.04"\n      />\n\n      <line\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        x1="365.42"\n        y1="354.99"\n        x2="349.98"\n        y2="388.25"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M337.07,266.11c-14.481,16.226-16.955,38.907-8.48,57.16c12.198,26.365,43.179,37.557,69.06,26.13"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M114.09,339.63c4.39-1.26,8.16-4.51,9.91-9.1c2.29-6,8.01-9.69,14.07-9.69c4.907,0,5.826,2,10.76,2&#10;&#9;&#9;&#9;c6.016,0,11.752-3.643,14.06-9.68c2.29-6,8-9.69,14.07-9.69c3.551,0,5.135,1.068,7.09,1.54c7.171,1.837,14.948-1.942,17.73-9.23&#10;&#9;&#9;&#9;c2.653-6.632,8.993-10.222,15.36-9.63"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M114.09,382.66c0.973,0.288,2.952,1.28,6.18,1.28c6.07,0,11.78-3.69,14.07-9.69c2.29-6,8.01-9.69,14.07-9.69&#10;&#9;&#9;&#9;c4.605,0,5.534,1.709,9.85,1.97c6.213,0.414,12.476-3.218,14.97-9.65c2.891-7.576,11.422-11.716,19.44-8.69&#10;&#9;&#9;&#9;c7.75,2.977,16.481-0.911,19.45-8.69c1.05-2.75,2.82-5.02,5.02-6.66"\n      />\n      <path\n        style="\n          fill: none;\n          stroke: #000000;\n          stroke-width: 15;\n          stroke-linecap: round;\n          stroke-linejoin: round;\n          stroke-miterlimit: 10;\n        "\n        d="&#10;&#9;&#9;&#9;M114.09,428.31c3.44-1.43,7.41-1.59,11.15-0.16c7.75,2.977,16.481-0.911,19.45-8.69c2.29-6,8-9.69,14.07-9.69&#10;&#9;&#9;&#9;c4.886,0,5.854,2,10.74,2c6.07,0,11.78-3.69,14.07-9.69c2.29-5.99,8.01-9.68,14.07-9.68c4.907,0,5.856,2,10.75,2&#10;&#9;&#9;&#9;c3.118,0,6.213-0.998,8.75-2.81"\n      />\n      <g>\n        <g>\n          <g>\n            <path\n              style="\n                fill: none;\n                stroke: #000000;\n                stroke-width: 15;\n                stroke-linecap: round;\n                stroke-miterlimit: 10;\n              "\n              d="M255.97,129.317&#10;&#9;&#9;&#9;&#9;&#9;&#9;c0,7.984-6.472,14.456-14.456,14.456c-7.984,0-14.456-6.472-14.456-14.456"\n            />\n            <path\n              style="\n                fill: none;\n                stroke: #000000;\n                stroke-width: 15;\n                stroke-linecap: round;\n                stroke-miterlimit: 10;\n              "\n              d="M284.881,129.317&#10;&#9;&#9;&#9;&#9;&#9;&#9;c0,7.984-6.472,14.456-14.456,14.456c-7.984,0-14.456-6.472-14.456-14.456"\n            />\n          </g>\n        </g>\n        <path\n          style="\n            fill: none;\n            stroke: #000000;\n            stroke-width: 15;\n            stroke-linecap: round;\n            stroke-linejoin: round;\n            stroke-miterlimit: 10;\n          "\n          d="&#10;&#9;&#9;&#9;&#9;M208.213,117.501c0-7.602-6.163-13.765-13.765-13.765c-7.602,0-13.765,6.163-13.765,13.765"\n        />\n        <path\n          style="\n            fill: none;\n            stroke: #000000;\n            stroke-width: 15;\n            stroke-linecap: round;\n            stroke-linejoin: round;\n            stroke-miterlimit: 10;\n          "\n          d="&#10;&#9;&#9;&#9;&#9;M303.727,117.501c0-7.602,6.163-13.765,13.765-13.765c7.602,0,13.765,6.163,13.765,13.765"\n        />\n      </g>\n    </g>\n  </g>\n</svg>\n';
+    '<?xml version="1.0" encoding="UTF-8"?>\r\n<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  version="1.1"\r\n  id="Capa_1"\r\n  x="0px"\r\n  y="0px"\r\n  viewBox="0 0 511.94 511.94"\r\n  style="enable-background: new 0 0 511.94 511.94"\r\n  xml:space="preserve"\r\n  width="512"\r\n  height="512"\r\n>\r\n  <g>\r\n    <g>\r\n      <path\r\n        style="fill: #e8ecf9"\r\n        d="M444.21,67.5v376.94c0,33.14-26.87,60-60,60H127.73c-33.13,0-60-26.86-60-60V67.5&#10;&#9;&#9;&#9;c0-33.14,26.87-60,60-60h256.48C417.34,7.5,444.21,34.36,444.21,67.5z"\r\n      />\r\n      <path\r\n        style="fill: #d7ddf5"\r\n        d="M208.95,504.44h-81.22c-33.13,0-60-26.86-60-60V67.5c0-33.14,26.87-60,60-60h77.64&#10;&#9;&#9;&#9;c-10.96,3.32-26.02,12.08-26.02,35.19v424.02C179.35,492.41,198.62,501.44,208.95,504.44z"\r\n      />\r\n      <path\r\n        style="fill: #c5ced6"\r\n        d="M399.03,67.68v135.64c0,8.29-6.72,15-15,15H179.35l-50.04-21.09V76.2l50.04-23.52h204.68&#10;&#9;&#9;&#9;C392.31,52.68,399.03,59.39,399.03,67.68z"\r\n      />\r\n      <path\r\n        style="fill: #abb6c4"\r\n        d="M179.35,52.68v165.64h-51.44c-8.28,0-15-6.71-15-15V67.68c0-8.29,6.72-15,15-15H179.35z"\r\n      />\r\n      <path\r\n        style="fill: #c5ced6"\r\n        d="M218.32,278.5v7.8l-38.97,40.54l-8.55,8.9l-57.89,4.18l11.97-51.63l54.47-24.79h23.97&#10;&#9;&#9;&#9;C211.61,263.5,218.32,270.22,218.32,278.5z"\r\n      />\r\n      <path\r\n        style="fill: #abb6c4"\r\n        d="M127.91,263.5h51.44v63.34l-8.55,8.9l-57.89,4.18V278.5C112.91,270.22,119.63,263.5,127.91,263.5z"\r\n      />\r\n      <polygon\r\n        style="fill: #c5ced6"\r\n        points="218.32,332.03 218.32,390.66 179.35,432.82 175.27,437.23 112.91,428.85 121.23,408.1 &#10;&#9;&#9;&#9;112.91,382.33 162.16,332.03 &#9;&#9;"\r\n      />\r\n      <polygon\r\n        style="fill: #abb6c4"\r\n        points="179.35,332.03 179.35,432.82 175.27,437.23 112.91,428.85 112.91,382.33 162.16,332.03 &#9;&#9;&#10;&#9;&#9;&#9;"\r\n      />\r\n      <path\r\n        style="fill: #808fa4"\r\n        d="M218.32,286.3v45.73c-2.74,1.68-4.97,4.24-6.2,7.47c-2.29,6-8.01,9.69-14.07,9.69&#10;&#9;&#9;&#9;c-1.79,0-3.61-0.32-5.38-1c-0.53-0.2-1.06-0.37-1.59-0.51c-1.26-0.33-2.52-0.49-3.78-0.49c-2.83,0-5.58,0.8-7.95,2.27&#10;&#9;&#9;&#9;l-10.72-14.45l10.72-31.34c1,0.16,2,0.42,2.98,0.8c0.57,0.22,1.14,0.4,1.72,0.54c1.21,0.31,2.44,0.46,3.66,0.46&#10;&#9;&#9;&#9;c6.06,0,11.78-3.69,14.07-9.69c0.08-0.2,0.16-0.4,0.25-0.59c2.42-5.65,7.95-9.1,13.82-9.1&#10;&#9;&#9;&#9;C216.67,286.09,217.49,286.16,218.32,286.3z"\r\n      />\r\n      <path\r\n        style="fill: #64768e"\r\n        d="M179.35,303.67v45.79c-2.7,1.68-4.9,4.22-6.12,7.42c-0.19,0.49-0.39,0.96-0.63,1.41&#10;&#9;&#9;&#9;c-2.59,5.16-7.87,8.27-13.44,8.27c-0.3,0-0.6-0.01-0.9-0.03c-1.49-0.09-3-0.4-4.47-0.97c-1.77-0.68-3.59-1-5.38-1&#10;&#9;&#9;&#9;c-6.06,0-11.78,3.69-14.07,9.69s-8,9.69-14.07,9.69c-1.78,0-3.6-0.32-5.37-1c-0.66-0.25-1.32-0.46-1.99-0.61v-42.41&#10;&#9;&#9;&#9;c4.89-0.99,9.18-4.39,11.09-9.39c2.29-6,8.01-9.69,14.07-9.69c1.79,0,3.6,0.32,5.37,1c1.77,0.68,3.6,1,5.39,1&#10;&#9;&#9;&#9;c1.08,0,2.16-0.12,3.2-0.35c2.81-0.61,5.41-2.02,7.46-4.07c1.45-1.45,2.62-3.22,3.4-5.26c2.29-6,8-9.69,14.07-9.69&#10;&#9;&#9;&#9;C177.75,303.47,178.55,303.53,179.35,303.67z"\r\n      />\r\n      <path\r\n        style="fill: #808fa4"\r\n        d="M218.32,390.66v53.6c0,8.29-6.71,15-15,15h-23.97l-15.06-23.57l15.06-27.59&#10;&#9;&#9;&#9;c1.83-1.57,3.3-3.61,4.22-6.02c2.29-5.99,8.01-9.68,14.07-9.68c1.79,0,3.61,0.32,5.38,1c1.77,0.68,3.58,1,5.37,1&#10;&#9;&#9;&#9;c1.14,0,2.28-0.13,3.37-0.39h0.01C214.19,393.45,216.45,392.3,218.32,390.66z"\r\n      />\r\n      <path\r\n        style="fill: #64768e"\r\n        d="M169.5,411.77c3.63,0,7.13-1.32,9.85-3.67v51.16h-51.44c-8.28,0-15-6.71-15-15v-15.41&#10;&#9;&#9;&#9;c3.69-1.91,8.15-2.3,12.33-0.7c1.77,0.68,3.59,1,5.38,1c6.06,0,11.78-3.69,14.07-9.69c2.29-6,8-9.69,14.07-9.69&#10;&#9;&#9;&#9;c1.78,0,3.6,0.32,5.37,1C165.9,411.45,167.72,411.77,169.5,411.77z"\r\n      />\r\n      <path\r\n        style="fill: #808fa4"\r\n        d="M399.03,348.77v95.49c0,8.29-6.72,15-15,15h-67.02l-53.51-90.93V278.5c0-8.28,6.72-15,15-15h61.06&#10;&#9;&#9;&#9;L399.03,348.77z"\r\n      />\r\n      <path\r\n        style="fill: #abb6c4"\r\n        d="M376.44,331.26l-59.43,128H278.5c-8.28,0-15-6.71-15-15v-75.93l75.29-52.12L376.44,331.26z"\r\n      />\r\n      <path\r\n        style="fill: #c5ced6"\r\n        d="M399.03,278.5v70.27c-6.85,3.26-14.51,5.08-22.59,5.08c-3.43,0-6.79-0.33-10.04-0.96&#10;&#9;&#9;&#9;c-16.83-3.24-30.81-14.49-37.81-29.62c-3.12-6.72-4.86-14.22-4.86-22.12c0-14.75,6.06-28.09,15.83-37.65h44.47&#10;&#9;&#9;&#9;C392.31,263.5,399.03,270.22,399.03,278.5z"\r\n      />\r\n      <g>\r\n        <g>\r\n          <ellipse\r\n            style="fill: #ffffff"\r\n            cx="175.162"\r\n            cy="150.402"\r\n            rx="29.816"\r\n            ry="23.744"\r\n          />\r\n          <ellipse\r\n            style="fill: #ffffff"\r\n            cx="336.778"\r\n            cy="150.402"\r\n            rx="29.816"\r\n            ry="23.744"\r\n          />\r\n        </g>\r\n      </g>\r\n    </g>\r\n    <g>\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M67.73,402.54v41.9c0,33.14,26.87,60,60,60h256.48c33.13,0,60-26.86,60-60V67.5c0-33.14-26.87-60-60-60H127.73&#10;&#9;&#9;&#9;c-33.13,0-60,26.86-60,60v300.04"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M359,52.68h25.03c8.28,0,15,6.71,15,15v135.64c0,8.29-6.72,15-15,15H127.91c-8.28,0-15-6.71-15-15V67.68c0-8.29,6.72-15,15-15H324&#10;&#9;&#9;&#9;"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M203.323,459.264h-75.412c-8.284,0-15-6.716-15-15V278.499c0-8.284,6.716-15,15-15h75.412c8.284,0,15,6.716,15,15v165.765&#10;&#9;&#9;&#9;C218.323,452.548,211.607,459.264,203.323,459.264z"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M399.03,278.5v165.76c0,8.29-6.72,15-15,15H278.5c-8.28,0-15-6.71-15-15V278.5c0-8.28,6.72-15,15-15h105.53&#10;&#9;&#9;&#9;C392.31,263.5,399.03,270.22,399.03,278.5z"\r\n      />\r\n\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="264.641"\r\n        y1="367.54"\r\n        x2="327.14"\r\n        y2="324.275"\r\n      />\r\n\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="335.24"\r\n        y1="420"\r\n        x2="317.58"\r\n        y2="458.04"\r\n      />\r\n\r\n      <line\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        x1="365.42"\r\n        y1="354.99"\r\n        x2="349.98"\r\n        y2="388.25"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M337.07,266.11c-14.481,16.226-16.955,38.907-8.48,57.16c12.198,26.365,43.179,37.557,69.06,26.13"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M114.09,339.63c4.39-1.26,8.16-4.51,9.91-9.1c2.29-6,8.01-9.69,14.07-9.69c4.907,0,5.826,2,10.76,2&#10;&#9;&#9;&#9;c6.016,0,11.752-3.643,14.06-9.68c2.29-6,8-9.69,14.07-9.69c3.551,0,5.135,1.068,7.09,1.54c7.171,1.837,14.948-1.942,17.73-9.23&#10;&#9;&#9;&#9;c2.653-6.632,8.993-10.222,15.36-9.63"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M114.09,382.66c0.973,0.288,2.952,1.28,6.18,1.28c6.07,0,11.78-3.69,14.07-9.69c2.29-6,8.01-9.69,14.07-9.69&#10;&#9;&#9;&#9;c4.605,0,5.534,1.709,9.85,1.97c6.213,0.414,12.476-3.218,14.97-9.65c2.891-7.576,11.422-11.716,19.44-8.69&#10;&#9;&#9;&#9;c7.75,2.977,16.481-0.911,19.45-8.69c1.05-2.75,2.82-5.02,5.02-6.66"\r\n      />\r\n      <path\r\n        style="\r\n          fill: none;\r\n          stroke: #000000;\r\n          stroke-width: 15;\r\n          stroke-linecap: round;\r\n          stroke-linejoin: round;\r\n          stroke-miterlimit: 10;\r\n        "\r\n        d="&#10;&#9;&#9;&#9;M114.09,428.31c3.44-1.43,7.41-1.59,11.15-0.16c7.75,2.977,16.481-0.911,19.45-8.69c2.29-6,8-9.69,14.07-9.69&#10;&#9;&#9;&#9;c4.886,0,5.854,2,10.74,2c6.07,0,11.78-3.69,14.07-9.69c2.29-5.99,8.01-9.68,14.07-9.68c4.907,0,5.856,2,10.75,2&#10;&#9;&#9;&#9;c3.118,0,6.213-0.998,8.75-2.81"\r\n      />\r\n      <g>\r\n        <g>\r\n          <g>\r\n            <path\r\n              style="\r\n                fill: none;\r\n                stroke: #000000;\r\n                stroke-width: 15;\r\n                stroke-linecap: round;\r\n                stroke-miterlimit: 10;\r\n              "\r\n              d="M255.97,129.317&#10;&#9;&#9;&#9;&#9;&#9;&#9;c0,7.984-6.472,14.456-14.456,14.456c-7.984,0-14.456-6.472-14.456-14.456"\r\n            />\r\n            <path\r\n              style="\r\n                fill: none;\r\n                stroke: #000000;\r\n                stroke-width: 15;\r\n                stroke-linecap: round;\r\n                stroke-miterlimit: 10;\r\n              "\r\n              d="M284.881,129.317&#10;&#9;&#9;&#9;&#9;&#9;&#9;c0,7.984-6.472,14.456-14.456,14.456c-7.984,0-14.456-6.472-14.456-14.456"\r\n            />\r\n          </g>\r\n        </g>\r\n        <path\r\n          style="\r\n            fill: none;\r\n            stroke: #000000;\r\n            stroke-width: 15;\r\n            stroke-linecap: round;\r\n            stroke-linejoin: round;\r\n            stroke-miterlimit: 10;\r\n          "\r\n          d="&#10;&#9;&#9;&#9;&#9;M208.213,117.501c0-7.602-6.163-13.765-13.765-13.765c-7.602,0-13.765,6.163-13.765,13.765"\r\n        />\r\n        <path\r\n          style="\r\n            fill: none;\r\n            stroke: #000000;\r\n            stroke-width: 15;\r\n            stroke-linecap: round;\r\n            stroke-linejoin: round;\r\n            stroke-miterlimit: 10;\r\n          "\r\n          d="&#10;&#9;&#9;&#9;&#9;M303.727,117.501c0-7.602,6.163-13.765,13.765-13.765c7.602,0,13.765,6.163,13.765,13.765"\r\n        />\r\n      </g>\r\n    </g>\r\n  </g>\r\n</svg>\r\n';
 
   const palette =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-palette"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path\n    d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"\n  />\n  <path d="M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\n  <path d="M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\n  <path d="M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-palette"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path\r\n    d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"\r\n  />\r\n  <path d="M8.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\r\n  <path d="M12.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\r\n  <path d="M16.5 10.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />\r\n</svg>\r\n';
 
   const pencil =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-pencil"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />\n  <path d="M13.5 6.5l4 4" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-pencil"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />\r\n  <path d="M13.5 6.5l4 4" />\r\n</svg>\r\n';
 
   const pencilCog =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-pencil-cog"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />\n  <path d="M13.5 6.5l4 4" />\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />\n  <path d="M19.001 15.5v1.5" />\n  <path d="M19.001 21v1.5" />\n  <path d="M22.032 17.25l-1.299 .75" />\n  <path d="M17.27 20l-1.3 .75" />\n  <path d="M15.97 17.25l1.3 .75" />\n  <path d="M20.733 20l1.3 .75" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-pencil-cog"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />\r\n  <path d="M13.5 6.5l4 4" />\r\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />\r\n  <path d="M19.001 15.5v1.5" />\r\n  <path d="M19.001 21v1.5" />\r\n  <path d="M22.032 17.25l-1.299 .75" />\r\n  <path d="M17.27 20l-1.3 .75" />\r\n  <path d="M15.97 17.25l1.3 .75" />\r\n  <path d="M20.733 20l1.3 .75" />\r\n</svg>\r\n';
 
   const photo =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-photo"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M15 8h.01" />\n  <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />\n  <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-photo"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M15 8h.01" />\r\n  <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />\r\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />\r\n  <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />\r\n</svg>\r\n';
 
   const photoOff =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-photo-off"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M15 8h.01" />\n  <path\n    d="M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153"\n  />\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />\n  <path d="M16.33 12.338c.574 -.054 1.155 .166 1.67 .662l3 3" />\n  <path\n    d="M3 3l18 18"\n    color="orange"\n  />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-photo-off"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M15 8h.01" />\r\n  <path\r\n    d="M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153"\r\n  />\r\n  <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />\r\n  <path d="M16.33 12.338c.574 -.054 1.155 .166 1.67 .662l3 3" />\r\n  <path\r\n    d="M3 3l18 18"\r\n    color="orange"\r\n  />\r\n</svg>\r\n';
 
   const pin =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-pin"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M15 4.5l-4 4l-4 1.5l-1.5 1.5l7 7l1.5 -1.5l1.5 -4l4 -4" />\n  <path d="M9 15l-4.5 4.5" />\n  <path d="M14.5 4l5.5 5.5" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-pin"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M15 4.5l-4 4l-4 1.5l-1.5 1.5l7 7l1.5 -1.5l1.5 -4l4 -4" />\r\n  <path d="M9 15l-4.5 4.5" />\r\n  <path d="M14.5 4l5.5 5.5" />\r\n</svg>\r\n';
 
   const playerPause =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-player-pause"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />\n  <path d="M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-player-pause"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />\r\n  <path d="M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />\r\n</svg>\r\n';
 
   const playerPlay =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-player-play"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M7 4v16l13 -8z" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-player-play"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M7 4v16l13 -8z" />\r\n</svg>\r\n';
 
   const refresh =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-refresh"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />\n  <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-refresh"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />\r\n  <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />\r\n</svg>\r\n';
 
   const settings =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-settings"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path\n    d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"\n  />\n  <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-settings"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path\r\n    d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"\r\n  />\r\n  <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />\r\n</svg>\r\n';
 
   const settingsOff =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-settings-off"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path\n    d="M9.451 5.437c.418 -.218 .75 -.609 .874 -1.12c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35c-.486 .118 -.894 .44 -1.123 .878m-.188 3.803c-.517 .523 -1.349 .734 -2.125 .262a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.472 -.774 -.262 -1.604 .259 -2.121"\n  />\n  <path d="M9.889 9.869a3 3 0 1 0 4.226 4.26m.592 -3.424a3.012 3.012 0 0 0 -1.419 -1.415" />\n  <path d="M3 3l18 18" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-settings-off"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path\r\n    d="M9.451 5.437c.418 -.218 .75 -.609 .874 -1.12c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35c-.486 .118 -.894 .44 -1.123 .878m-.188 3.803c-.517 .523 -1.349 .734 -2.125 .262a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.472 -.774 -.262 -1.604 .259 -2.121"\r\n  />\r\n  <path d="M9.889 9.869a3 3 0 1 0 4.226 4.26m.592 -3.424a3.012 3.012 0 0 0 -1.419 -1.415" />\r\n  <path d="M3 3l18 18" />\r\n</svg>\r\n';
 
   const spacingVertical =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-spacing-vertical"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2" />\n  <path d="M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />\n  <path d="M16 12h-8" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-spacing-vertical"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 20v-2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2" />\r\n  <path d="M4 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />\r\n  <path d="M16 12h-8" />\r\n</svg>\r\n';
 
   const sun =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-sun"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />\n  <path\n    d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"\n  />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-sun"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />\r\n  <path\r\n    d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"\r\n  />\r\n</svg>\r\n';
 
   const trash =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-trash"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M4 7l16 0" />\n  <path d="M10 11l0 6" />\n  <path d="M14 11l0 6" />\n  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />\n  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-trash"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M4 7l16 0" />\r\n  <path d="M10 11l0 6" />\r\n  <path d="M14 11l0 6" />\r\n  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />\r\n  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />\r\n</svg>\r\n';
 
   const worldCog =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-world-cog"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M21 12a9 9 0 1 0 -8.979 9" />\n  <path d="M3.6 9h16.8" />\n  <path d="M3.6 15h8.9" />\n  <path d="M11.5 3a17 17 0 0 0 0 18" />\n  <path d="M12.5 3a16.992 16.992 0 0 1 2.522 10.376" />\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />\n  <path d="M19.001 15.5v1.5" />\n  <path d="M19.001 21v1.5" />\n  <path d="M22.032 17.25l-1.299 .75" />\n  <path d="M17.27 20l-1.3 .75" />\n  <path d="M15.97 17.25l1.3 .75" />\n  <path d="M20.733 20l1.3 .75" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-world-cog"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M21 12a9 9 0 1 0 -8.979 9" />\r\n  <path d="M3.6 9h16.8" />\r\n  <path d="M3.6 15h8.9" />\r\n  <path d="M11.5 3a17 17 0 0 0 0 18" />\r\n  <path d="M12.5 3a16.992 16.992 0 0 1 2.522 10.376" />\r\n  <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />\r\n  <path d="M19.001 15.5v1.5" />\r\n  <path d="M19.001 21v1.5" />\r\n  <path d="M22.032 17.25l-1.299 .75" />\r\n  <path d="M17.27 20l-1.3 .75" />\r\n  <path d="M15.97 17.25l1.3 .75" />\r\n  <path d="M20.733 20l1.3 .75" />\r\n</svg>\r\n';
 
   const x =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-x"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M18 6l-12 12" />\n  <path d="M6 6l12 12" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-x"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M18 6l-12 12" />\r\n  <path d="M6 6l12 12" />\r\n</svg>\r\n';
 
   const zoom =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-zoom"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\n  <path d="M21 21l-6 -6" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  fill="none"\r\n  stroke="currentColor"\r\n  stroke-width="2"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n  class="icon icon-tabler icons-tabler-outline icon-tabler-zoom"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\r\n  <path d="M21 21l-6 -6" />\r\n</svg>\r\n';
 
   const zoomCancel =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-zoom-cancel"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\n  <path d="M8 8l4 4" />\n  <path d="M12 8l-4 4" />\n  <path d="M21 21l-6 -6" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-zoom-cancel"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\r\n  <path d="M8 8l4 4" />\r\n  <path d="M12 8l-4 4" />\r\n  <path d="M21 21l-6 -6" />\r\n</svg>\r\n';
 
   const zoomIn =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-zoom-in"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\n  <path d="M7 10l6 0" />\n  <path d="M10 7l0 6" />\n  <path d="M21 21l-6 -6" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-zoom-in"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\r\n  <path d="M7 10l6 0" />\r\n  <path d="M10 7l0 6" />\r\n  <path d="M21 21l-6 -6" />\r\n</svg>\r\n';
 
   const zoomInArea =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-zoom-in-area"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M15 13v4" />\n  <path d="M13 15h4" />\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />\n  <path d="M22 22l-3 -3" />\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1" />\n  <path d="M3 11v-1" />\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1" />\n  <path d="M10 3h1" />\n  <path d="M15 3h1a2 2 0 0 1 2 2v1" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-zoom-in-area"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M15 13v4" />\r\n  <path d="M13 15h4" />\r\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />\r\n  <path d="M22 22l-3 -3" />\r\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1" />\r\n  <path d="M3 11v-1" />\r\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1" />\r\n  <path d="M10 3h1" />\r\n  <path d="M15 3h1a2 2 0 0 1 2 2v1" />\r\n</svg>\r\n';
 
   const zoomOut =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-zoom-out"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\n  <path d="M7 10l6 0" />\n  <path d="M21 21l-6 -6" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-zoom-out"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />\r\n  <path d="M7 10l6 0" />\r\n  <path d="M21 21l-6 -6" />\r\n</svg>\r\n';
 
   const zoomOutArea =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-zoom-out-area"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M13 15h4" />\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />\n  <path d="M22 22l-3 -3" />\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1" />\n  <path d="M3 11v-1" />\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1" />\n  <path d="M10 3h1" />\n  <path d="M15 3h1a2 2 0 0 1 2 2v1" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-zoom-out-area"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M13 15h4" />\r\n  <path d="M15 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />\r\n  <path d="M22 22l-3 -3" />\r\n  <path d="M6 18h-1a2 2 0 0 1 -2 -2v-1" />\r\n  <path d="M3 11v-1" />\r\n  <path d="M3 6v-1a2 2 0 0 1 2 -2h1" />\r\n  <path d="M10 3h1" />\r\n  <path d="M15 3h1a2 2 0 0 1 2 2v1" />\r\n</svg>\r\n';
 
   const zoomPan =
-    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-zoom-pan"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />\n  <path d="M17 17l-2.5 -2.5" />\n  <path d="M10 5l2 -2l2 2" />\n  <path d="M19 10l2 2l-2 2" />\n  <path d="M5 10l-2 2l2 2" />\n  <path d="M10 19l2 2l2 -2" />\n</svg>\n';
+    '<svg\r\n  xmlns="http://www.w3.org/2000/svg"\r\n  class="icon icon-tabler icon-tabler-zoom-pan"\r\n  width="24"\r\n  height="24"\r\n  viewBox="0 0 24 24"\r\n  stroke-width="2"\r\n  stroke="currentColor"\r\n  fill="none"\r\n  stroke-linecap="round"\r\n  stroke-linejoin="round"\r\n>\r\n  <path\r\n    stroke="none"\r\n    d="M0 0h24v24H0z"\r\n    fill="none"\r\n  />\r\n  <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />\r\n  <path d="M17 17l-2.5 -2.5" />\r\n  <path d="M10 5l2 -2l2 2" />\r\n  <path d="M19 10l2 2l-2 2" />\r\n  <path d="M5 10l-2 2l2 2" />\r\n  <path d="M10 19l2 2l2 -2" />\r\n</svg>\r\n';
 
   const rawIcons = /*#__PURE__*/ Object.freeze(
     /*#__PURE__*/ Object.defineProperty(
       {
         __proto__: null,
+        IconAlertCircle: alertCircle,
         IconArrowAutofitDown: arrowAutofitDown,
         IconArrowAutofitHeight: arrowAutofitHeight,
         IconArrowAutofitLeft: arrowAutofitLeft,
@@ -4555,6 +4697,8 @@
         IconCategory: category,
         IconCheck: check,
         IconChevronRight: chevronRight,
+        IconCircleCheck: circleCheck,
+        IconCircleX: circleX,
         IconComic1: Comic1SpecialLinealColor,
         IconComic1Flat: Comic1SpecialFlat,
         IconComic2: Comic2SpecialLinealColor,
@@ -4573,6 +4717,8 @@
         IconFileDownload: fileDownload,
         IconFilePercent: filePercent,
         IconHandClick: handClick,
+        IconHelp: help,
+        IconInfoCircle: infoCircle,
         IconKeyboard: keyboard,
         IconLayoutBottombar: layoutBottombar,
         IconLayoutBottombarInactive: layoutBottombarInactive,
@@ -4714,6 +4860,11 @@
     IconCategory: IconCategory$1,
     IconCheck: IconCheck$1,
     IconChevronRight: IconChevronRight$1,
+    IconAlertCircle: IconAlertCircle$1,
+    IconCircleCheck: IconCircleCheck$1,
+    IconCircleX: IconCircleX$1,
+    IconHelp: IconHelp$1,
+    IconInfoCircle: IconInfoCircle$1,
     IconComic1: IconComic1$1,
     IconComic1Flat: IconComic1Flat$1,
     IconComic2: IconComic2$1,
@@ -4777,6 +4928,7 @@
     /*#__PURE__*/ Object.defineProperty(
       {
         __proto__: null,
+        IconAlertCircle: IconAlertCircle$1,
         IconArrowAutofitDown: IconArrowAutofitDown$1,
         IconArrowAutofitHeight: IconArrowAutofitHeight$1,
         IconArrowAutofitLeft: IconArrowAutofitLeft$1,
@@ -4797,6 +4949,8 @@
         IconCategory: IconCategory$1,
         IconCheck: IconCheck$1,
         IconChevronRight: IconChevronRight$1,
+        IconCircleCheck: IconCircleCheck$1,
+        IconCircleX: IconCircleX$1,
         IconComic1: IconComic1$1,
         IconComic1Flat: IconComic1Flat$1,
         IconComic2: IconComic2$1,
@@ -4815,6 +4969,8 @@
         IconFileDownload: IconFileDownload$1,
         IconFilePercent: IconFilePercent$1,
         IconHandClick: IconHandClick$1,
+        IconHelp: IconHelp$1,
+        IconInfoCircle: IconInfoCircle$1,
         IconKeyboard: IconKeyboard$1,
         IconLayoutBottombar: IconLayoutBottombar$1,
         IconLayoutBottombarInactive: IconLayoutBottombarInactive$1,
@@ -4860,14 +5016,14 @@
     ),
   );
 
-  var __defProp$f = Object.defineProperty;
-  var __getOwnPropDesc$j = Object.getOwnPropertyDescriptor;
-  var __decorateClass$j = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$j(target, key) : target;
+  var __defProp$i = Object.defineProperty;
+  var __getOwnPropDesc$l = Object.getOwnPropertyDescriptor;
+  var __decorateClass$l = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$l(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$f(target, key, result);
+    if (kind && result) __defProp$i(target, key, result);
     return result;
   };
   let Icon = class extends i$1 {
@@ -4909,10 +5065,10 @@
       color: inherit; /* This will inherit from the host element */
     }
   `;
-  __decorateClass$j([n$1({ type: String })], Icon.prototype, 'name', 2);
-  __decorateClass$j([n$1({ type: String })], Icon.prototype, 'label', 2);
-  __decorateClass$j([n$1({ type: String })], Icon.prototype, 'size', 2);
-  Icon = __decorateClass$j([t$1('mov-icon')], Icon);
+  __decorateClass$l([n$1({ type: String })], Icon.prototype, 'name', 2);
+  __decorateClass$l([n$1({ type: String })], Icon.prototype, 'label', 2);
+  __decorateClass$l([n$1({ type: String })], Icon.prototype, 'size', 2);
+  Icon = __decorateClass$l([t$1('mov-icon')], Icon);
 
   /**
    * @license
@@ -4968,16 +5124,16 @@
    */ const o$3 = o => o ?? E;
 
   const styles$7 =
-    ':host {\n  display: inline-block;\n  --mov-font-size-scale: 1;\n  --mov-font-size-m: calc(1rem * var(--mov-font-size-scale));\n  --mov-font-size-s: round(calc(var(--mov-font-size-m) / 1.125), 1px);\n  --mov-font-size-l: round(calc(var(--mov-font-size-m) * 1.125 * 1.125), 1px);\n  --mov-border-width-s: 0.0625rem;\n  --mov-border-radius-m: 0.375rem;\n  --mov-border-radius-pill: 9999px;\n  --mov-transition-fast: 75ms;\n  --mov-font-weight-action: 500;\n  --mov-focus-ring: solid 0.1875rem var(--mov-color-fill-loud);\n  --mov-focus-ring-offset: 0.0625rem;\n  --mov-line-height-condensed: 1.2;\n  --mov-form-control-padding-block: 0.75em;\n  --mov-form-control-padding-inline: 1em;\n  --mov-form-control-height: round(\n    calc(2 * var(--mov-form-control-padding-block) + 1em * var(--mov-line-height-condensed)),\n    1px\n  );\n}\n\n:host([size="small"]) {\n  font-size: var(--mov-font-size-s);\n}\n:host([size="medium"]) {\n  font-size: var(--mov-font-size-m);\n}\n:host([size="large"]) {\n  font-size: var(--mov-font-size-l);\n}\n\n.button {\n  box-sizing: border-box;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  text-decoration: none;\n  user-select: none;\n  white-space: nowrap;\n  vertical-align: middle;\n  transition-property: background, border, box-shadow, color;\n  transition-duration: var(--mov-transition-fast);\n  cursor: pointer;\n  padding: 0 var(--mov-form-control-padding-inline);\n  font-family: inherit;\n  font-size: inherit;\n  font-weight: var(--mov-font-weight-action);\n  line-height: calc(var(--mov-form-control-height) - var(--mov-border-width-s) * 2);\n  height: var(--mov-form-control-height);\n  border-radius: var(--mov-border-radius-m);\n  border-style: solid;\n  border-width: var(--mov-border-width-s);\n  background-color: var(--mov-color-fill-loud);\n  color: var(--mov-color-on-loud);\n  border-color: transparent;\n}\n\n/* Appearance modifiers */\n:host([appearance~="plain"]) {\n  .button {\n    color: var(--mov-color-on-quiet);\n    background-color: transparent;\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-quiet);\n      background-color: var(--mov-color-fill-quiet);\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-quiet);\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\n  }\n}\n\n:host([appearance~="outlined"]) {\n  .button {\n    color: var(--mov-color-on-quiet);\n    background-color: transparent;\n    border-color: var(--mov-color-border-loud);\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-quiet);\n      background-color: var(--mov-color-fill-quiet);\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-quiet);\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\n  }\n}\n\n:host([appearance~="filled"]) {\n  .button {\n    color: var(--mov-color-on-normal);\n    background-color: var(--mov-color-fill-normal);\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-normal);\n      background-color: color-mix(\n        in oklab,\n        var(--mov-color-fill-normal),\n        var(--mov-color-mix-hover)\n      );\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-normal);\n    background-color: color-mix(\n      in oklab,\n      var(--mov-color-fill-normal),\n      var(--mov-color-mix-active)\n    );\n  }\n}\n\n:host([appearance~="filled"][appearance~="outlined"]) .button {\n  border-color: var(--mov-color-border-normal);\n}\n\n:host([appearance~="accent"]) {\n  .button {\n    color: var(--mov-color-on-loud);\n    background-color: var(--mov-color-fill-loud);\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-hover));\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-active));\n  }\n}\n/* Focus states */\n.button:focus {\n  outline: none;\n}\n.button:focus-visible {\n  outline: var(--mov-focus-ring);\n  outline-offset: var(--mov-focus-ring-offset);\n}\n\n/* Disabled state */\n.button.disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n}\n.button.disabled * {\n  pointer-events: none;\n}\n\n/* Icon buttons */\n.button.is-icon-button {\n  outline-offset: 2px;\n  width: var(--mov-form-control-height);\n  aspect-ratio: 1;\n}\n\n/* Pill modifier */\n:host([pill]) .button {\n  border-radius: var(--mov-border-radius-pill);\n}\n\n.start,\n.end {\n  flex: 0 0 auto;\n  display: flex;\n  align-items: center;\n  pointer-events: none;\n}\n\n.label {\n  display: inline-block;\n}\n.is-icon-button .label {\n  display: flex;\n}\n\nmov-icon[part~="caret"] {\n  display: flex;\n  align-self: center;\n  align-items: center;\n}\nmov-icon[part~="caret"]::part(svg) {\n  width: 0.875em;\n  height: 0.875em;\n}\n\n.loading {\n  position: relative;\n  cursor: wait;\n}\n.loading .start,\n.loading .label,\n.loading .end,\n.loading .caret {\n  visibility: hidden;\n}\n\n.spinner {\n  --indicator-color: currentColor;\n  --track-color: color-mix(in oklab, currentColor, transparent 90%);\n  position: absolute;\n  font-size: 1em;\n  height: 1em;\n  width: 1em;\n  top: calc(50% - 0.5em);\n  left: calc(50% - 0.5em);\n  border-radius: 50%;\n  border: 2px solid var(--track-color);\n  border-top-color: var(--indicator-color);\n  animation: spin 1s linear infinite;\n}\n\n@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n\nslot[name="start"]::slotted(*) {\n  margin-inline-end: 0.75em;\n}\nslot[name="end"]::slotted(*),\n.button:not(.visually-hidden-label) [part~="caret"] {\n  margin-inline-start: 0.75em;\n}\n';
+    ':host {\r\n  display: inline-block;\r\n  --mov-font-size-scale: 1;\r\n  --mov-font-size-m: calc(1rem * var(--mov-font-size-scale));\r\n  --mov-font-size-s: round(calc(var(--mov-font-size-m) / 1.125), 1px);\r\n  --mov-font-size-l: round(calc(var(--mov-font-size-m) * 1.125 * 1.125), 1px);\r\n  --mov-border-width-s: 0.0625rem;\r\n  --mov-border-radius-m: 0.375rem;\r\n  --mov-border-radius-pill: 9999px;\r\n  --mov-transition-fast: 75ms;\r\n  --mov-font-weight-action: 500;\r\n  --mov-focus-ring: solid 0.1875rem var(--mov-color-fill-loud);\r\n  --mov-focus-ring-offset: 0.0625rem;\r\n  --mov-line-height-condensed: 1.2;\r\n  --mov-form-control-padding-block: 0.75em;\r\n  --mov-form-control-padding-inline: 1em;\r\n  --mov-form-control-height: round(\r\n    calc(2 * var(--mov-form-control-padding-block) + 1em * var(--mov-line-height-condensed)),\r\n    1px\r\n  );\r\n}\r\n\r\n:host([size="small"]) {\r\n  font-size: var(--mov-font-size-s);\r\n}\r\n:host([size="medium"]) {\r\n  font-size: var(--mov-font-size-m);\r\n}\r\n:host([size="large"]) {\r\n  font-size: var(--mov-font-size-l);\r\n}\r\n\r\n.button {\r\n  box-sizing: border-box;\r\n  display: inline-flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  text-decoration: none;\r\n  user-select: none;\r\n  white-space: nowrap;\r\n  vertical-align: middle;\r\n  transition-property: background, border, box-shadow, color;\r\n  transition-duration: var(--mov-transition-fast);\r\n  cursor: pointer;\r\n  padding: 0 var(--mov-form-control-padding-inline);\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  font-weight: var(--mov-font-weight-action);\r\n  line-height: calc(var(--mov-form-control-height) - var(--mov-border-width-s) * 2);\r\n  height: var(--mov-form-control-height);\r\n  border-radius: var(--mov-border-radius-m);\r\n  border-style: solid;\r\n  border-width: var(--mov-border-width-s);\r\n  background-color: var(--mov-color-fill-loud);\r\n  color: var(--mov-color-on-loud);\r\n  border-color: transparent;\r\n}\r\n\r\n/* Appearance modifiers */\r\n:host([appearance~="plain"]) {\r\n  .button {\r\n    color: var(--mov-color-on-quiet);\r\n    background-color: transparent;\r\n    border-color: transparent;\r\n  }\r\n  @media (hover: hover) {\r\n    .button:not(.disabled):not(.loading):hover {\r\n      color: var(--mov-color-on-quiet);\r\n      background-color: var(--mov-color-fill-quiet);\r\n    }\r\n  }\r\n  .button:not(.disabled):not(.loading):active {\r\n    color: var(--mov-color-on-quiet);\r\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\r\n  }\r\n}\r\n\r\n:host([appearance~="outlined"]) {\r\n  .button {\r\n    color: var(--mov-color-on-quiet);\r\n    background-color: transparent;\r\n    border-color: var(--mov-color-border-loud);\r\n  }\r\n  @media (hover: hover) {\r\n    .button:not(.disabled):not(.loading):hover {\r\n      color: var(--mov-color-on-quiet);\r\n      background-color: var(--mov-color-fill-quiet);\r\n    }\r\n  }\r\n  .button:not(.disabled):not(.loading):active {\r\n    color: var(--mov-color-on-quiet);\r\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\r\n  }\r\n}\r\n\r\n:host([appearance~="filled"]) {\r\n  .button {\r\n    color: var(--mov-color-on-normal);\r\n    background-color: var(--mov-color-fill-normal);\r\n    border-color: transparent;\r\n  }\r\n  @media (hover: hover) {\r\n    .button:not(.disabled):not(.loading):hover {\r\n      color: var(--mov-color-on-normal);\r\n      background-color: color-mix(\r\n        in oklab,\r\n        var(--mov-color-fill-normal),\r\n        var(--mov-color-mix-hover)\r\n      );\r\n    }\r\n  }\r\n  .button:not(.disabled):not(.loading):active {\r\n    color: var(--mov-color-on-normal);\r\n    background-color: color-mix(\r\n      in oklab,\r\n      var(--mov-color-fill-normal),\r\n      var(--mov-color-mix-active)\r\n    );\r\n  }\r\n}\r\n\r\n:host([appearance~="filled"][appearance~="outlined"]) .button {\r\n  border-color: var(--mov-color-border-normal);\r\n}\r\n\r\n:host([appearance~="accent"]) {\r\n  .button {\r\n    color: var(--mov-color-on-loud);\r\n    background-color: var(--mov-color-fill-loud);\r\n    border-color: transparent;\r\n  }\r\n  @media (hover: hover) {\r\n    .button:not(.disabled):not(.loading):hover {\r\n      background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-hover));\r\n    }\r\n  }\r\n  .button:not(.disabled):not(.loading):active {\r\n    background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-active));\r\n  }\r\n}\r\n/* Focus states */\r\n.button:focus {\r\n  outline: none;\r\n}\r\n.button:focus-visible {\r\n  outline: var(--mov-focus-ring);\r\n  outline-offset: var(--mov-focus-ring-offset);\r\n}\r\n\r\n/* Disabled state */\r\n.button.disabled {\r\n  opacity: 0.5;\r\n  cursor: not-allowed;\r\n}\r\n.button.disabled * {\r\n  pointer-events: none;\r\n}\r\n\r\n/* Icon buttons */\r\n.button.is-icon-button {\r\n  outline-offset: 2px;\r\n  width: var(--mov-form-control-height);\r\n  aspect-ratio: 1;\r\n}\r\n\r\n/* Pill modifier */\r\n:host([pill]) .button {\r\n  border-radius: var(--mov-border-radius-pill);\r\n}\r\n\r\n.start,\r\n.end {\r\n  flex: 0 0 auto;\r\n  display: flex;\r\n  align-items: center;\r\n  pointer-events: none;\r\n}\r\n\r\n.label {\r\n  display: inline-block;\r\n}\r\n.is-icon-button .label {\r\n  display: flex;\r\n}\r\n\r\nwa-icon[part~="caret"] {\r\n  display: flex;\r\n  align-self: center;\r\n  align-items: center;\r\n}\r\nwa-icon[part~="caret"]::part(svg) {\r\n  width: 0.875em;\r\n  height: 0.875em;\r\n}\r\n\r\n.loading {\r\n  position: relative;\r\n  cursor: wait;\r\n}\r\n.loading .start,\r\n.loading .label,\r\n.loading .end,\r\n.loading .caret {\r\n  visibility: hidden;\r\n}\r\n\r\n.spinner {\r\n  --indicator-color: currentColor;\r\n  --track-color: color-mix(in oklab, currentColor, transparent 90%);\r\n  position: absolute;\r\n  font-size: 1em;\r\n  height: 1em;\r\n  width: 1em;\r\n  top: calc(50% - 0.5em);\r\n  left: calc(50% - 0.5em);\r\n  border-radius: 50%;\r\n  border: 2px solid var(--track-color);\r\n  border-top-color: var(--indicator-color);\r\n  animation: spin 1s linear infinite;\r\n}\r\n\r\n@keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\nslot[name="start"]::slotted(*) {\r\n  margin-inline-end: 0.75em;\r\n}\r\nslot[name="end"]::slotted(*),\r\n.button:not(.visually-hidden-label) [part~="caret"] {\r\n  margin-inline-start: 0.75em;\r\n}\r\n';
 
-  var __defProp$e = Object.defineProperty;
-  var __getOwnPropDesc$i = Object.getOwnPropertyDescriptor;
-  var __decorateClass$i = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$i(target, key) : target;
+  var __defProp$h = Object.defineProperty;
+  var __getOwnPropDesc$k = Object.getOwnPropertyDescriptor;
+  var __decorateClass$k = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$k(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$e(target, key, result);
+    if (kind && result) __defProp$h(target, key, result);
     return result;
   };
   let Button = class extends i$1 {
@@ -5142,42 +5298,42 @@
     }
   };
   Button.styles = [r$4(styles$7)];
-  __decorateClass$i([e$2('.button')], Button.prototype, 'button', 2);
-  __decorateClass$i([e$2('slot:not([name])')], Button.prototype, 'labelSlot', 2);
-  __decorateClass$i([r$1()], Button.prototype, 'isIconButton', 2);
-  __decorateClass$i([r$1()], Button.prototype, 'hasLabel', 2);
-  __decorateClass$i([r$1()], Button.prototype, 'hasStart', 2);
-  __decorateClass$i([r$1()], Button.prototype, 'hasEnd', 2);
-  __decorateClass$i([n$1()], Button.prototype, 'title', 2);
-  __decorateClass$i([n$1({ reflect: true })], Button.prototype, 'appearance', 2);
-  __decorateClass$i([n$1({ reflect: true })], Button.prototype, 'size', 2);
-  __decorateClass$i(
+  __decorateClass$k([e$2('.button')], Button.prototype, 'button', 2);
+  __decorateClass$k([e$2('slot:not([name])')], Button.prototype, 'labelSlot', 2);
+  __decorateClass$k([r$1()], Button.prototype, 'isIconButton', 2);
+  __decorateClass$k([r$1()], Button.prototype, 'hasLabel', 2);
+  __decorateClass$k([r$1()], Button.prototype, 'hasStart', 2);
+  __decorateClass$k([r$1()], Button.prototype, 'hasEnd', 2);
+  __decorateClass$k([n$1()], Button.prototype, 'title', 2);
+  __decorateClass$k([n$1({ reflect: true })], Button.prototype, 'appearance', 2);
+  __decorateClass$k([n$1({ reflect: true })], Button.prototype, 'size', 2);
+  __decorateClass$k(
     [n$1({ attribute: 'with-caret', type: Boolean, reflect: true })],
     Button.prototype,
     'withCaret',
     2,
   );
-  __decorateClass$i([n$1({ type: Boolean, reflect: true })], Button.prototype, 'disabled', 2);
-  __decorateClass$i([n$1({ type: Boolean, reflect: true })], Button.prototype, 'loading', 2);
-  __decorateClass$i([n$1({ type: Boolean, reflect: true })], Button.prototype, 'pill', 2);
-  __decorateClass$i([n$1()], Button.prototype, 'type', 2);
-  __decorateClass$i([n$1({ reflect: true })], Button.prototype, 'name', 2);
-  __decorateClass$i([n$1({ reflect: true })], Button.prototype, 'value', 2);
-  __decorateClass$i([n$1({ reflect: true })], Button.prototype, 'href', 2);
-  __decorateClass$i([n$1()], Button.prototype, 'target', 2);
-  __decorateClass$i([n$1()], Button.prototype, 'rel', 2);
-  __decorateClass$i([n$1()], Button.prototype, 'download', 2);
-  __decorateClass$i([n$1({ reflect: true })], Button.prototype, 'form', 2);
-  Button = __decorateClass$i([t$1('mov-button')], Button);
+  __decorateClass$k([n$1({ type: Boolean, reflect: true })], Button.prototype, 'disabled', 2);
+  __decorateClass$k([n$1({ type: Boolean, reflect: true })], Button.prototype, 'loading', 2);
+  __decorateClass$k([n$1({ type: Boolean, reflect: true })], Button.prototype, 'pill', 2);
+  __decorateClass$k([n$1()], Button.prototype, 'type', 2);
+  __decorateClass$k([n$1({ reflect: true })], Button.prototype, 'name', 2);
+  __decorateClass$k([n$1({ reflect: true })], Button.prototype, 'value', 2);
+  __decorateClass$k([n$1({ reflect: true })], Button.prototype, 'href', 2);
+  __decorateClass$k([n$1()], Button.prototype, 'target', 2);
+  __decorateClass$k([n$1()], Button.prototype, 'rel', 2);
+  __decorateClass$k([n$1()], Button.prototype, 'download', 2);
+  __decorateClass$k([n$1({ reflect: true })], Button.prototype, 'form', 2);
+  Button = __decorateClass$k([t$1('mov-button')], Button);
 
-  var __defProp$d = Object.defineProperty;
-  var __getOwnPropDesc$h = Object.getOwnPropertyDescriptor;
-  var __decorateClass$h = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$h(target, key) : target;
+  var __defProp$g = Object.defineProperty;
+  var __getOwnPropDesc$j = Object.getOwnPropertyDescriptor;
+  var __decorateClass$j = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$j(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$d(target, key, result);
+    if (kind && result) __defProp$g(target, key, result);
     return result;
   };
   let ToggleButton = class extends i$1 {
@@ -5434,22 +5590,22 @@
       flex-shrink: 0;
     }
   `;
-  __decorateClass$h([n$1({ type: String })], ToggleButton.prototype, 'mode', 2);
-  __decorateClass$h([n$1({ type: Boolean, reflect: true })], ToggleButton.prototype, 'active', 2);
-  __decorateClass$h([n$1({ type: String })], ToggleButton.prototype, 'label', 2);
-  __decorateClass$h([n$1({ type: String })], ToggleButton.prototype, 'activeLabel', 2);
-  __decorateClass$h([n$1({ type: String })], ToggleButton.prototype, 'icon', 2);
-  __decorateClass$h([n$1({ type: String })], ToggleButton.prototype, 'activeIcon', 2);
-  __decorateClass$h(
+  __decorateClass$j([n$1({ type: String })], ToggleButton.prototype, 'mode', 2);
+  __decorateClass$j([n$1({ type: Boolean, reflect: true })], ToggleButton.prototype, 'active', 2);
+  __decorateClass$j([n$1({ type: String })], ToggleButton.prototype, 'label', 2);
+  __decorateClass$j([n$1({ type: String })], ToggleButton.prototype, 'activeLabel', 2);
+  __decorateClass$j([n$1({ type: String })], ToggleButton.prototype, 'icon', 2);
+  __decorateClass$j([n$1({ type: String })], ToggleButton.prototype, 'activeIcon', 2);
+  __decorateClass$j(
     [n$1({ type: String, reflect: true })],
     ToggleButton.prototype,
     'appearance',
     2,
   );
-  __decorateClass$h([n$1({ type: String, reflect: true })], ToggleButton.prototype, 'size', 2);
-  __decorateClass$h([n$1({ type: Boolean })], ToggleButton.prototype, 'disabled', 2);
-  __decorateClass$h([n$1({ type: Boolean, reflect: true })], ToggleButton.prototype, 'loading', 2);
-  ToggleButton = __decorateClass$h([t$1('toggle-button')], ToggleButton);
+  __decorateClass$j([n$1({ type: String, reflect: true })], ToggleButton.prototype, 'size', 2);
+  __decorateClass$j([n$1({ type: Boolean })], ToggleButton.prototype, 'disabled', 2);
+  __decorateClass$j([n$1({ type: Boolean, reflect: true })], ToggleButton.prototype, 'loading', 2);
+  ToggleButton = __decorateClass$j([t$1('toggle-button')], ToggleButton);
 
   /**
    * @license
@@ -5519,6 +5675,11 @@
     IconCategory,
     IconCheck,
     IconChevronRight,
+    IconAlertCircle,
+    IconCircleCheck,
+    IconCircleX,
+    IconHelp,
+    IconInfoCircle,
     IconComic1,
     IconComic1Flat,
     IconComic2,
@@ -5578,14 +5739,14 @@
     IconZoomPan,
   } = styledIconsSVG;
 
-  var __defProp$c = Object.defineProperty;
-  var __getOwnPropDesc$g = Object.getOwnPropertyDescriptor;
-  var __decorateClass$g = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$g(target, key) : target;
+  var __defProp$f = Object.defineProperty;
+  var __getOwnPropDesc$i = Object.getOwnPropertyDescriptor;
+  var __decorateClass$i = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$i(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$c(target, key, result);
+    if (kind && result) __defProp$f(target, key, result);
     return result;
   };
   let ColorSwatch = class extends i$1 {
@@ -5709,13 +5870,13 @@
       opacity: 1;
     }
   `;
-  __decorateClass$g([n$1({ type: String })], ColorSwatch.prototype, 'color', 2);
-  __decorateClass$g([n$1({ type: String })], ColorSwatch.prototype, 'selected', 2);
-  __decorateClass$g([n$1({ type: Number })], ColorSwatch.prototype, 'size', 2);
-  __decorateClass$g([n$1({ type: String })], ColorSwatch.prototype, 'radius', 2);
-  __decorateClass$g([n$1({ state: true })], ColorSwatch.prototype, 'contrastColor', 2);
-  __decorateClass$g([n$1({ type: Boolean, reflect: true })], ColorSwatch.prototype, 'checked', 2);
-  ColorSwatch = __decorateClass$g([t$1('color-swatch')], ColorSwatch);
+  __decorateClass$i([n$1({ type: String })], ColorSwatch.prototype, 'color', 2);
+  __decorateClass$i([n$1({ type: String })], ColorSwatch.prototype, 'selected', 2);
+  __decorateClass$i([n$1({ type: Number })], ColorSwatch.prototype, 'size', 2);
+  __decorateClass$i([n$1({ type: String })], ColorSwatch.prototype, 'radius', 2);
+  __decorateClass$i([n$1({ state: true })], ColorSwatch.prototype, 'contrastColor', 2);
+  __decorateClass$i([n$1({ type: Boolean, reflect: true })], ColorSwatch.prototype, 'checked', 2);
+  ColorSwatch = __decorateClass$i([t$1('color-swatch')], ColorSwatch);
 
   function gradientBySteps(baseColor) {
     const baseOklch = baseColor.to('oklch');
@@ -5842,14 +6003,14 @@
     }
   }
 
-  var __defProp$b = Object.defineProperty;
-  var __getOwnPropDesc$f = Object.getOwnPropertyDescriptor;
-  var __decorateClass$f = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$f(target, key) : target;
+  var __defProp$e = Object.defineProperty;
+  var __getOwnPropDesc$h = Object.getOwnPropertyDescriptor;
+  var __decorateClass$h = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$h(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$b(target, key, result);
+    if (kind && result) __defProp$e(target, key, result);
     return result;
   };
   let ColorPalette = class extends i$1 {
@@ -5964,27 +6125,27 @@
       transform: scale(1.1);
     }
   `;
-  __decorateClass$f([n$1({ type: String })], ColorPalette.prototype, 'baseColor', 2);
-  __decorateClass$f([n$1({ type: String })], ColorPalette.prototype, 'mode', 2);
-  __decorateClass$f(
+  __decorateClass$h([n$1({ type: String })], ColorPalette.prototype, 'baseColor', 2);
+  __decorateClass$h([n$1({ type: String })], ColorPalette.prototype, 'mode', 2);
+  __decorateClass$h(
     [n$1({ type: String, reflect: true })],
     ColorPalette.prototype,
     'orientation',
     2,
   );
-  __decorateClass$f([n$1({ type: String })], ColorPalette.prototype, 'selected', 2);
-  __decorateClass$f([n$1({ type: String, reflect: true })], ColorPalette.prototype, 'value', 2);
-  __decorateClass$f([r$1()], ColorPalette.prototype, 'gradient', 2);
-  ColorPalette = __decorateClass$f([t$1('color-palette')], ColorPalette);
+  __decorateClass$h([n$1({ type: String })], ColorPalette.prototype, 'selected', 2);
+  __decorateClass$h([n$1({ type: String, reflect: true })], ColorPalette.prototype, 'value', 2);
+  __decorateClass$h([r$1()], ColorPalette.prototype, 'gradient', 2);
+  ColorPalette = __decorateClass$h([t$1('color-palette')], ColorPalette);
 
-  var __defProp$a = Object.defineProperty;
-  var __getOwnPropDesc$e = Object.getOwnPropertyDescriptor;
-  var __decorateClass$e = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$e(target, key) : target;
+  var __defProp$d = Object.defineProperty;
+  var __getOwnPropDesc$g = Object.getOwnPropertyDescriptor;
+  var __decorateClass$g = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$g(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$a(target, key, result);
+    if (kind && result) __defProp$d(target, key, result);
     return result;
   };
   let ColorPanel = class extends i$1 {
@@ -6106,18 +6267,18 @@
       display: none;
     }
   `;
-  __decorateClass$e([n$1({ type: String, reflect: true })], ColorPanel.prototype, 'value', 2);
-  __decorateClass$e([n$1({ type: String })], ColorPanel.prototype, 'selected', 2);
-  ColorPanel = __decorateClass$e([t$1('color-panel')], ColorPanel);
+  __decorateClass$g([n$1({ type: String, reflect: true })], ColorPanel.prototype, 'value', 2);
+  __decorateClass$g([n$1({ type: String })], ColorPanel.prototype, 'selected', 2);
+  ColorPanel = __decorateClass$g([t$1('color-panel')], ColorPanel);
 
-  var __defProp$9 = Object.defineProperty;
-  var __getOwnPropDesc$d = Object.getOwnPropertyDescriptor;
-  var __decorateClass$d = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$d(target, key) : target;
+  var __defProp$c = Object.defineProperty;
+  var __getOwnPropDesc$f = Object.getOwnPropertyDescriptor;
+  var __decorateClass$f = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$f(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$9(target, key, result);
+    if (kind && result) __defProp$c(target, key, result);
     return result;
   };
   let ColorPicker = class extends i$1 {
@@ -6565,16 +6726,16 @@
       border-radius: 2px;
     }
   `;
-  __decorateClass$d([n$1({ type: String })], ColorPicker.prototype, 'value', 2);
-  __decorateClass$d([n$1({ type: Array })], ColorPicker.prototype, 'swatches', 2);
-  __decorateClass$d([n$1({ type: String })], ColorPicker.prototype, 'mode', 2);
-  __decorateClass$d([r$1()], ColorPicker.prototype, 'opened', 2);
-  __decorateClass$d([r$1()], ColorPicker.prototype, 'popupDirection', 2);
-  __decorateClass$d([r$1()], ColorPicker.prototype, 'sourceSpace', 2);
-  __decorateClass$d([r$1()], ColorPicker.prototype, 'hsv', 2);
-  __decorateClass$d([r$1()], ColorPicker.prototype, 'saturationThumbPosition', 2);
-  __decorateClass$d([r$1()], ColorPicker.prototype, 'hueThumbPosition', 2);
-  ColorPicker = __decorateClass$d([t$1('color-picker')], ColorPicker);
+  __decorateClass$f([n$1({ type: String })], ColorPicker.prototype, 'value', 2);
+  __decorateClass$f([n$1({ type: Array })], ColorPicker.prototype, 'swatches', 2);
+  __decorateClass$f([n$1({ type: String })], ColorPicker.prototype, 'mode', 2);
+  __decorateClass$f([r$1()], ColorPicker.prototype, 'opened', 2);
+  __decorateClass$f([r$1()], ColorPicker.prototype, 'popupDirection', 2);
+  __decorateClass$f([r$1()], ColorPicker.prototype, 'sourceSpace', 2);
+  __decorateClass$f([r$1()], ColorPicker.prototype, 'hsv', 2);
+  __decorateClass$f([r$1()], ColorPicker.prototype, 'saturationThumbPosition', 2);
+  __decorateClass$f([r$1()], ColorPicker.prototype, 'hueThumbPosition', 2);
+  ColorPicker = __decorateClass$f([t$1('color-picker')], ColorPicker);
 
   /**
    * @license
@@ -6586,14 +6747,14 @@
     return t?.();
   };
 
-  var __defProp$8 = Object.defineProperty;
-  var __getOwnPropDesc$c = Object.getOwnPropertyDescriptor;
-  var __decorateClass$c = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$c(target, key) : target;
+  var __defProp$b = Object.defineProperty;
+  var __getOwnPropDesc$e = Object.getOwnPropertyDescriptor;
+  var __decorateClass$e = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$e(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$8(target, key, result);
+    if (kind && result) __defProp$b(target, key, result);
     return result;
   };
   let SegmentedControl = class extends i$1 {
@@ -6794,13 +6955,13 @@
       font-weight: 600;
     }
   `;
-  __decorateClass$c([n$1({ type: String })], SegmentedControl.prototype, 'value', 2);
-  __decorateClass$c([n$1({ type: String })], SegmentedControl.prototype, 'labelPosition', 2);
-  __decorateClass$c([n$1({ type: String })], SegmentedControl.prototype, 'size', 2);
-  __decorateClass$c([r$1()], SegmentedControl.prototype, '_options', 2);
-  __decorateClass$c([e$2('.thumb')], SegmentedControl.prototype, 'thumb', 2);
-  __decorateClass$c([e$2('slot')], SegmentedControl.prototype, '_slotEl', 2);
-  SegmentedControl = __decorateClass$c([t$1('segmented-control')], SegmentedControl);
+  __decorateClass$e([n$1({ type: String })], SegmentedControl.prototype, 'value', 2);
+  __decorateClass$e([n$1({ type: String })], SegmentedControl.prototype, 'labelPosition', 2);
+  __decorateClass$e([n$1({ type: String })], SegmentedControl.prototype, 'size', 2);
+  __decorateClass$e([r$1()], SegmentedControl.prototype, '_options', 2);
+  __decorateClass$e([e$2('.thumb')], SegmentedControl.prototype, 'thumb', 2);
+  __decorateClass$e([e$2('slot')], SegmentedControl.prototype, '_slotEl', 2);
+  SegmentedControl = __decorateClass$e([t$1('segmented-control')], SegmentedControl);
   let SegmentedControlOption = class extends i$1 {
     constructor() {
       super(...arguments);
@@ -6815,37 +6976,37 @@
       return this;
     }
   };
-  __decorateClass$c(
+  __decorateClass$e(
     [n$1({ type: String, reflect: true })],
     SegmentedControlOption.prototype,
     'value',
     2,
   );
-  __decorateClass$c(
+  __decorateClass$e(
     [n$1({ type: String, reflect: true })],
     SegmentedControlOption.prototype,
     'label',
     2,
   );
-  __decorateClass$c(
+  __decorateClass$e(
     [n$1({ type: String, reflect: true })],
     SegmentedControlOption.prototype,
     'icon',
     2,
   );
-  SegmentedControlOption = __decorateClass$c(
+  SegmentedControlOption = __decorateClass$e(
     [t$1('segmented-control-option')],
     SegmentedControlOption,
   );
 
-  var __defProp$7 = Object.defineProperty;
-  var __getOwnPropDesc$b = Object.getOwnPropertyDescriptor;
-  var __decorateClass$b = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$b(target, key) : target;
+  var __defProp$a = Object.defineProperty;
+  var __getOwnPropDesc$d = Object.getOwnPropertyDescriptor;
+  var __decorateClass$d = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$d(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$7(target, key, result);
+    if (kind && result) __defProp$a(target, key, result);
     return result;
   };
   let ToggleSwitch = class extends i$1 {
@@ -6980,13 +7141,13 @@
       color: #333;
     }
   `;
-  __decorateClass$b([n$1({ type: String })], ToggleSwitch.prototype, 'name', 2);
-  __decorateClass$b([n$1({ type: Boolean, reflect: true })], ToggleSwitch.prototype, 'checked', 2);
-  __decorateClass$b([n$1({ type: Boolean, reflect: true })], ToggleSwitch.prototype, 'disabled', 2);
-  __decorateClass$b([n$1({ type: String, reflect: true })], ToggleSwitch.prototype, 'design', 2);
-  __decorateClass$b([n$1({ type: String })], ToggleSwitch.prototype, 'textOn', 2);
-  __decorateClass$b([n$1({ type: String })], ToggleSwitch.prototype, 'textOff', 2);
-  ToggleSwitch = __decorateClass$b([t$1('toggle-switch')], ToggleSwitch);
+  __decorateClass$d([n$1({ type: String })], ToggleSwitch.prototype, 'name', 2);
+  __decorateClass$d([n$1({ type: Boolean, reflect: true })], ToggleSwitch.prototype, 'checked', 2);
+  __decorateClass$d([n$1({ type: Boolean, reflect: true })], ToggleSwitch.prototype, 'disabled', 2);
+  __decorateClass$d([n$1({ type: String, reflect: true })], ToggleSwitch.prototype, 'design', 2);
+  __decorateClass$d([n$1({ type: String })], ToggleSwitch.prototype, 'textOn', 2);
+  __decorateClass$d([n$1({ type: String })], ToggleSwitch.prototype, 'textOff', 2);
+  ToggleSwitch = __decorateClass$d([t$1('toggle-switch')], ToggleSwitch);
 
   var commonjsGlobal =
     typeof globalThis !== 'undefined'
@@ -7380,24 +7541,26 @@
     setAppStateValue('scrollToPage', target);
   }
 
-  var __defProp$6 = Object.defineProperty;
-  var __getOwnPropDesc$a = Object.getOwnPropertyDescriptor;
-  var __decorateClass$a = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$a(target, key) : target;
+  var __defProp$9 = Object.defineProperty;
+  var __getOwnPropDesc$c = Object.getOwnPropertyDescriptor;
+  var __decorateClass$c = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$c(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$6(target, key, result);
+    if (kind && result) __defProp$9(target, key, result);
     return result;
   };
   let Pagination = class extends i$1 {
     constructor() {
       super(...arguments);
+      this.mode = false;
       this.currentPage = 1;
       this.totalPages = 1;
       this.startPage = 1;
     }
     render() {
+      if (!this.mode) return E;
       return x$1`
       <button
         class="pagination-button"
@@ -7601,21 +7764,22 @@
       opacity: 1;
     }
   `;
-  __decorateClass$a([n$1({ type: Number })], Pagination.prototype, 'currentPage', 2);
-  __decorateClass$a([n$1({ type: Number })], Pagination.prototype, 'totalPages', 2);
-  __decorateClass$a([n$1({ type: Number })], Pagination.prototype, 'startPage', 2);
-  __decorateClass$a([n$1({ type: String })], Pagination.prototype, 'next', 2);
-  __decorateClass$a([n$1({ type: String })], Pagination.prototype, 'prev', 2);
-  Pagination = __decorateClass$a([t$1('manga-pagination')], Pagination);
+  __decorateClass$c([n$1({ type: Boolean })], Pagination.prototype, 'mode', 2);
+  __decorateClass$c([n$1({ type: Number })], Pagination.prototype, 'currentPage', 2);
+  __decorateClass$c([n$1({ type: Number })], Pagination.prototype, 'totalPages', 2);
+  __decorateClass$c([n$1({ type: Number })], Pagination.prototype, 'startPage', 2);
+  __decorateClass$c([n$1({ type: String })], Pagination.prototype, 'next', 2);
+  __decorateClass$c([n$1({ type: String })], Pagination.prototype, 'prev', 2);
+  Pagination = __decorateClass$c([t$1('manga-pagination')], Pagination);
 
-  var __defProp$5 = Object.defineProperty;
-  var __getOwnPropDesc$9 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$9 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$9(target, key) : target;
+  var __defProp$8 = Object.defineProperty;
+  var __getOwnPropDesc$b = Object.getOwnPropertyDescriptor;
+  var __decorateClass$b = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$b(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$5(target, key, result);
+    if (kind && result) __defProp$8(target, key, result);
     return result;
   };
   let Drawer = class extends i$1 {
@@ -7805,19 +7969,19 @@
       justify-content: flex-start;
     }
   `;
-  __decorateClass$9([n$1({ type: Boolean, reflect: true })], Drawer.prototype, 'open', 2);
-  __decorateClass$9([n$1({ type: String, reflect: true })], Drawer.prototype, 'placement', 2);
-  __decorateClass$9([e$2('dialog')], Drawer.prototype, 'dialog', 2);
-  Drawer = __decorateClass$9([t$1('mov-drawer')], Drawer);
+  __decorateClass$b([n$1({ type: Boolean, reflect: true })], Drawer.prototype, 'open', 2);
+  __decorateClass$b([n$1({ type: String, reflect: true })], Drawer.prototype, 'placement', 2);
+  __decorateClass$b([e$2('dialog')], Drawer.prototype, 'dialog', 2);
+  Drawer = __decorateClass$b([t$1('mov-drawer')], Drawer);
 
-  var __defProp$4 = Object.defineProperty;
-  var __getOwnPropDesc$8 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$8 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$8(target, key) : target;
+  var __defProp$7 = Object.defineProperty;
+  var __getOwnPropDesc$a = Object.getOwnPropertyDescriptor;
+  var __decorateClass$a = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$a(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$4(target, key, result);
+    if (kind && result) __defProp$7(target, key, result);
     return result;
   };
   let Dialog = class extends i$1 {
@@ -7826,6 +7990,22 @@
       this.open = false;
       this.mode = 'dialog';
       this.fullscreen = false;
+    }
+    static getIconName(iconType) {
+      switch (iconType) {
+        case 'info':
+          return 'info-circle';
+        case 'warning':
+          return 'alert-circle';
+        case 'success':
+          return 'circle-check';
+        case 'error':
+          return 'circle-x';
+        case 'question':
+          return 'help';
+        default:
+          return '';
+      }
     }
     close() {
       this.open = false;
@@ -7895,7 +8075,22 @@
             </button>
           </div>
         </div>
-        <slot class="content-slot"></slot>
+        <div class="content-slot">
+          ${
+            this.icon
+              ? x$1`
+                <div class="icon-container">
+                  <mov-icon
+                    .name=${Dialog.getIconName(this.icon)}
+                    size="4rem"
+                  ></mov-icon>
+                </div>
+              `
+              : ''
+          }
+          <slot></slot>
+        </div>
+        <slot name="footer"></slot>
       </dialog>
     `;
     }
@@ -7983,10 +8178,33 @@
       flex-grow: 1;
     }
 
+    .icon-container {
+      display: flex;
+      justify-content: center;
+      padding-block-end: 1rem;
+      text-align: center;
+    }
+    :host([icon='success']) .icon-container mov-icon {
+      color: var(--theme-color-success, #28a745);
+    }
+    :host([icon='error']) .icon-container mov-icon {
+      color: var(--theme-color-danger, #dc3545);
+    }
+    :host([icon='warning']) .icon-container mov-icon {
+      color: var(--theme-color-warning, #ffc107);
+    }
+    :host([icon='info']) .icon-container mov-icon {
+      color: var(--theme-color-info, #17a2b8);
+    }
+    :host([icon='question']) .icon-container mov-icon {
+      color: var(--theme-color-secondary, #6c757d);
+    }
+
     /* --- MODE: INLINE --- */
     :host([mode='inline']) {
       display: block;
-      width: 100%;
+      width: 500px;
+      max-width: 100%;
     }
     :host([mode='inline']) dialog {
       all: unset;
@@ -7997,7 +8215,8 @@
       flex-direction: column;
       visibility: visible;
       position: relative;
-      width: 100%;
+      width: 500px;
+      max-width: 100%;
       border: 1px solid var(--theme-border-color, #e0e0e0);
       border-radius: 12px;
     }
@@ -8044,20 +8263,41 @@
       transform: translateY(0);
     }
   `;
-  __decorateClass$8([n$1({ type: Boolean, reflect: true })], Dialog.prototype, 'open', 2);
-  __decorateClass$8([n$1({ type: String, reflect: true })], Dialog.prototype, 'mode', 2);
-  __decorateClass$8([n$1({ type: Boolean, reflect: true })], Dialog.prototype, 'fullscreen', 2);
-  __decorateClass$8([e$2('dialog')], Dialog.prototype, 'dialog', 2);
-  Dialog = __decorateClass$8([t$1('mov-dialog')], Dialog);
+  __decorateClass$a([n$1({ type: Boolean, reflect: true })], Dialog.prototype, 'open', 2);
+  __decorateClass$a([n$1({ type: String, reflect: true })], Dialog.prototype, 'mode', 2);
+  __decorateClass$a([n$1({ type: Boolean, reflect: true })], Dialog.prototype, 'fullscreen', 2);
+  __decorateClass$a([n$1({ type: String, reflect: true })], Dialog.prototype, 'icon', 2);
+  __decorateClass$a([e$2('dialog')], Dialog.prototype, 'dialog', 2);
+  Dialog = __decorateClass$a([t$1('mov-dialog')], Dialog);
+  function showInfoDialog(options) {
+    const closeDialog = () => setAppStateValue('dialog', null);
+    if (options.timer) {
+      setTimeout(closeDialog, options.timer);
+    }
+    setAppStateValue('dialog', {
+      open: true,
+      icon: Dialog.getIconName(options.icon),
+      title: options.title,
+      content: x$1`<div style="padding: 1rem;">${o$5(options.html)}</div>`,
+      footer: x$1`
+      <div
+        slot="footer"
+        style="display: flex; justify-content: flex-end; padding: 0.5rem 1rem 1rem;"
+      >
+        <mov-button @click=${closeDialog}>OK</mov-button>
+      </div>
+    `,
+    });
+  }
 
-  var __defProp$3 = Object.defineProperty;
-  var __getOwnPropDesc$7 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$7 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$7(target, key) : target;
+  var __defProp$6 = Object.defineProperty;
+  var __getOwnPropDesc$9 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$9 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$9(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$3(target, key, result);
+    if (kind && result) __defProp$6(target, key, result);
     return result;
   };
   let MovDropdown = class extends i$1 {
@@ -8122,9 +8362,9 @@
       display: block;
     }
   `;
-  __decorateClass$7([n$1({ type: Boolean, reflect: true })], MovDropdown.prototype, 'open', 2);
-  __decorateClass$7([n$1({ type: Boolean, reflect: true })], MovDropdown.prototype, 'checkable', 2);
-  MovDropdown = __decorateClass$7([t$1('mov-dropdown')], MovDropdown);
+  __decorateClass$9([n$1({ type: Boolean, reflect: true })], MovDropdown.prototype, 'open', 2);
+  __decorateClass$9([n$1({ type: Boolean, reflect: true })], MovDropdown.prototype, 'checkable', 2);
+  MovDropdown = __decorateClass$9([t$1('mov-dropdown')], MovDropdown);
   let MovDropdownItem = class extends i$1 {
     constructor() {
       super(...arguments);
@@ -8187,13 +8427,553 @@
       opacity: 0.7;
     }
   `;
-  __decorateClass$7(
+  __decorateClass$9(
     [n$1({ type: Boolean, reflect: true })],
     MovDropdownItem.prototype,
     'selected',
     2,
   );
-  MovDropdownItem = __decorateClass$7([t$1('mov-dropdown-item')], MovDropdownItem);
+  MovDropdownItem = __decorateClass$9([t$1('mov-dropdown-item')], MovDropdownItem);
+
+  var __defProp$5 = Object.defineProperty;
+  var __getOwnPropDesc$8 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$8 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$8(target, key) : target;
+    for (var i = decorators.length - 1, decorator; i >= 0; i--)
+      if ((decorator = decorators[i]))
+        result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+    if (kind && result) __defProp$5(target, key, result);
+    return result;
+  };
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(value, max));
+  }
+  class DraggableElement {
+    constructor(element, options) {
+      this.isDragging = false;
+      this.handlePointerDown = event => {
+        if (event.button !== 0) return;
+        this.isDragging = true;
+        this.options.start(event.clientX, event.clientY);
+        this.element.setPointerCapture(event.pointerId);
+        this.element.addEventListener('pointermove', this.handlePointerMove);
+        this.element.addEventListener('pointerup', this.handlePointerUp);
+      };
+      this.handlePointerMove = event => {
+        if (!this.isDragging) return;
+        this.options.move(event.clientX, event.clientY);
+      };
+      this.handlePointerUp = event => {
+        if (!this.isDragging) return;
+        this.isDragging = false;
+        this.options.stop();
+        this.element.releasePointerCapture(event.pointerId);
+        this.element.removeEventListener('pointermove', this.handlePointerMove);
+        this.element.removeEventListener('pointerup', this.handlePointerUp);
+      };
+      this.element = element;
+      this.options = options;
+      this.element.addEventListener('pointerdown', this.handlePointerDown);
+    }
+    toggle(enabled) {
+      if (enabled) {
+        this.element.addEventListener('pointerdown', this.handlePointerDown);
+      } else {
+        this.element.removeEventListener('pointerdown', this.handlePointerDown);
+      }
+    }
+  }
+  let MovSlider = class extends i$1 {
+    constructor() {
+      super(...arguments);
+      this.draggableThumbMin = null;
+      this.draggableThumbMax = null;
+      this.activeThumb = null;
+      this.label = '';
+      this.minValue = 0;
+      this.maxValue = 50;
+      this.value = 0;
+      this.range = false;
+      this.disabled = false;
+      this.readonly = false;
+      this.min = 0;
+      this.max = 100;
+      this.step = 1;
+      this.withMarkers = false;
+    }
+    firstUpdated() {
+      if (this.range) {
+        this.draggableThumbMin = new DraggableElement(this.thumbMin, {
+          start: () => {
+            this.activeThumb = 'min';
+            this.trackBoundingClientRect = this.track.getBoundingClientRect();
+            this.valueWhenDraggingStarted = this.minValue;
+          },
+          move: (x, y) => {
+            this.setThumbValueFromCoordinates(x, y, 'min');
+          },
+          stop: () => {
+            if (this.minValue !== this.valueWhenDraggingStarted) {
+              this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+            }
+            this.valueWhenDraggingStarted = void 0;
+            this.activeThumb = null;
+          },
+        });
+        this.draggableThumbMax = new DraggableElement(this.thumbMax, {
+          start: () => {
+            this.activeThumb = 'max';
+            this.trackBoundingClientRect = this.track.getBoundingClientRect();
+            this.valueWhenDraggingStarted = this.maxValue;
+          },
+          move: (x, y) => {
+            this.setThumbValueFromCoordinates(x, y, 'max');
+          },
+          stop: () => {
+            if (this.maxValue !== this.valueWhenDraggingStarted) {
+              this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+            }
+            this.valueWhenDraggingStarted = void 0;
+            this.activeThumb = null;
+          },
+        });
+        this.draggableTrack = new DraggableElement(this.track, {
+          start: (x, y) => {
+            this.trackBoundingClientRect = this.track.getBoundingClientRect();
+            const value = this.getValueFromCoordinates(x, y);
+            const minDistance = Math.abs(value - this.minValue);
+            const maxDistance = Math.abs(value - this.maxValue);
+            this.activeThumb = minDistance <= maxDistance ? 'min' : 'max';
+            this.valueWhenDraggingStarted =
+              this.activeThumb === 'min' ? this.minValue : this.maxValue;
+            this.setThumbValueFromCoordinates(x, y, this.activeThumb);
+          },
+          move: (x, y) => {
+            if (this.activeThumb) {
+              this.setThumbValueFromCoordinates(x, y, this.activeThumb);
+            }
+          },
+          stop: () => {
+            if (this.activeThumb) {
+              const currentValue = this.activeThumb === 'min' ? this.minValue : this.maxValue;
+              if (currentValue !== this.valueWhenDraggingStarted) {
+                this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+              }
+            }
+            this.valueWhenDraggingStarted = void 0;
+            this.activeThumb = null;
+          },
+        });
+      } else {
+        this.draggableTrack = new DraggableElement(this.slider, {
+          start: (x, y) => {
+            this.trackBoundingClientRect = this.track.getBoundingClientRect();
+            this.valueWhenDraggingStarted = this.value;
+            this.setValueFromCoordinates(x, y);
+          },
+          move: (x, y) => {
+            this.setValueFromCoordinates(x, y);
+          },
+          stop: () => {
+            if (this.value !== this.valueWhenDraggingStarted) {
+              this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+            }
+            this.valueWhenDraggingStarted = void 0;
+          },
+        });
+      }
+    }
+    updated(changedProperties) {
+      if (this.range) {
+        if (changedProperties.has('minValue') || changedProperties.has('maxValue')) {
+          this.minValue = clamp(this.minValue, this.min, this.maxValue);
+          this.maxValue = clamp(this.maxValue, this.minValue, this.max);
+        }
+      } else if (changedProperties.has('value')) {
+        this.value = clamp(this.value, this.min, this.max);
+      }
+      if (changedProperties.has('min') || changedProperties.has('max')) {
+        if (this.range) {
+          this.minValue = clamp(this.minValue, this.min, this.max);
+          this.maxValue = clamp(this.maxValue, this.min, this.max);
+        } else {
+          this.value = clamp(this.value, this.min, this.max);
+        }
+      }
+      if (changedProperties.has('disabled') || changedProperties.has('readonly')) {
+        const enabled = !(this.disabled || this.readonly);
+        if (this.range) {
+          this.draggableThumbMin?.toggle(enabled);
+          this.draggableThumbMax?.toggle(enabled);
+        }
+        this.draggableTrack.toggle(enabled);
+      }
+      super.updated(changedProperties);
+    }
+    clampAndRoundToStep(value) {
+      const stepPrecision = (String(this.step).split('.')[1] || '').replace(/0+$/g, '').length;
+      value = Math.round(value / this.step) * this.step;
+      value = clamp(value, this.min, this.max);
+      return parseFloat(value.toFixed(stepPrecision));
+    }
+    getPercentageFromValue(value) {
+      return ((value - this.min) / (this.max - this.min)) * 100;
+    }
+    getValueFromCoordinates(x, _y) {
+      const { left, width } = this.trackBoundingClientRect;
+      const relativePosition = x - left;
+      const percentage = relativePosition / width;
+      return this.clampAndRoundToStep(this.min + (this.max - this.min) * percentage);
+    }
+    handleKeyDown(event) {
+      const target = event.target;
+      if (this.disabled || this.readonly) return;
+      if (this.range) {
+        if (target === this.thumbMin) {
+          this.activeThumb = 'min';
+        } else if (target === this.thumbMax) {
+          this.activeThumb = 'max';
+        }
+        if (!this.activeThumb) return;
+      }
+      let current;
+      if (this.range) {
+        current = this.activeThumb === 'min' ? this.minValue : this.maxValue;
+      } else {
+        current = this.value;
+      }
+      let newValue = current;
+      switch (event.key) {
+        case 'ArrowRight':
+          event.preventDefault();
+          newValue = this.clampAndRoundToStep(current + this.step);
+          break;
+        case 'ArrowLeft':
+          event.preventDefault();
+          newValue = this.clampAndRoundToStep(current - this.step);
+          break;
+        case 'Home':
+          event.preventDefault();
+          if (this.range && this.activeThumb === 'min') {
+            newValue = this.min;
+          } else {
+            newValue = this.range ? this.minValue : this.min;
+          }
+          break;
+        case 'End':
+          event.preventDefault();
+          if (this.range && this.activeThumb === 'max') {
+            newValue = this.max;
+          } else {
+            newValue = this.range ? this.maxValue : this.max;
+          }
+          break;
+        case 'PageUp': {
+          event.preventDefault();
+          const stepUp = Math.max(current + (this.max - this.min) / 10, current + this.step);
+          newValue = this.clampAndRoundToStep(stepUp);
+          break;
+        }
+        case 'PageDown': {
+          event.preventDefault();
+          const stepDown = Math.min(current - (this.max - this.min) / 10, current - this.step);
+          newValue = this.clampAndRoundToStep(stepDown);
+          break;
+        }
+      }
+      if (newValue === current) return;
+      if (this.range) {
+        if (this.activeThumb === 'min') {
+          this.minValue = Math.max(this.min, newValue);
+        } else {
+          this.maxValue = Math.min(this.max, newValue);
+        }
+      } else {
+        this.value = clamp(newValue, this.min, this.max);
+      }
+      this.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true }));
+      this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+    }
+    setValueFromCoordinates(x, y) {
+      const oldValue = this.value;
+      this.value = this.getValueFromCoordinates(x, y);
+      if (this.value !== oldValue) {
+        this.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true }));
+      }
+    }
+    setThumbValueFromCoordinates(x, y, thumb) {
+      const value = this.getValueFromCoordinates(x, y);
+      const oldValue = thumb === 'min' ? this.minValue : this.maxValue;
+      if (thumb === 'min') {
+        this.minValue = Math.max(this.min, value > this.maxValue ? this.maxValue : value);
+      } else {
+        this.maxValue = Math.min(this.max, value < this.minValue ? this.minValue : value);
+      }
+      if (oldValue !== (thumb === 'min' ? this.minValue : this.maxValue)) {
+        this.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true }));
+      }
+    }
+    focus() {
+      if (this.range) {
+        this.thumbMin?.focus();
+      } else {
+        this.slider.focus();
+      }
+    }
+    blur() {
+      if (this.range) {
+        if (document.activeElement === this.thumbMin) {
+          this.thumbMin.blur();
+        } else if (document.activeElement === this.thumbMax) {
+          this.thumbMax.blur();
+        }
+      } else {
+        this.slider.blur();
+      }
+    }
+    render() {
+      const sliderClasses = e({
+        disabled: this.disabled,
+      });
+      const markers = [];
+      if (this.withMarkers) {
+        for (let i = this.min; i <= this.max; i += this.step) {
+          markers.push(this.getPercentageFromValue(i));
+        }
+      }
+      const markersTemplate = this.withMarkers
+        ? x$1`
+          <div
+            id="markers"
+            part="markers"
+          >
+            ${markers.map(
+              marker => x$1`<span
+                  class="marker"
+                  style="left: ${marker}%"
+                ></span>`,
+            )}
+          </div>
+        `
+        : '';
+      if (this.range) {
+        const minThumbPosition = clamp(this.getPercentageFromValue(this.minValue), 0, 100);
+        const maxThumbPosition = clamp(this.getPercentageFromValue(this.maxValue), 0, 100);
+        return x$1`
+        <label for="slider">${this.label}</label>
+        <div
+          id="slider"
+          part="slider"
+          class=${sliderClasses}
+        >
+          <div
+            id="track"
+            part="track"
+          >
+            <div
+              id="indicator"
+              part="indicator"
+              style="--start: ${Math.min(minThumbPosition, maxThumbPosition)}%; --end: ${Math.max(
+                minThumbPosition,
+                maxThumbPosition,
+              )}%"
+            ></div>
+            ${markersTemplate}
+            <span
+              id="thumb-min"
+              part="thumb thumb-min"
+              style="--position: ${minThumbPosition}%"
+              role="slider"
+              aria-valuemin=${this.min}
+              aria-valuenow=${this.minValue}
+              aria-valuemax=${this.max}
+              aria-label="Minimum value"
+              aria-disabled=${this.disabled ? 'true' : 'false'}
+              aria-readonly=${this.readonly ? 'true' : 'false'}
+              tabindex=${this.disabled ? -1 : 0}
+              @keydown=${this.handleKeyDown}
+            ></span>
+            <span
+              id="thumb-max"
+              part="thumb thumb-max"
+              style="--position: ${maxThumbPosition}%"
+              role="slider"
+              aria-valuemin=${this.min}
+              aria-valuenow=${this.maxValue}
+              aria-valuemax=${this.max}
+              aria-label="Maximum value"
+              aria-disabled=${this.disabled ? 'true' : 'false'}
+              aria-readonly=${this.readonly ? 'true' : 'false'}
+              tabindex=${this.disabled ? -1 : 0}
+              @keydown=${this.handleKeyDown}
+            ></span>
+          </div>
+        </div>
+      `;
+      } else {
+        const thumbPosition = clamp(this.getPercentageFromValue(this.value), 0, 100);
+        return x$1`
+        <label for="slider">${this.label}</label>
+        <div
+          id="slider"
+          part="slider"
+          class=${sliderClasses}
+          role="slider"
+          aria-disabled=${this.disabled ? 'true' : 'false'}
+          aria-readonly=${this.disabled ? 'true' : 'false'}
+          aria-valuemin=${this.min}
+          aria-valuenow=${this.value}
+          aria-valuemax=${this.max}
+          aria-label=${this.label}
+          tabindex=${this.disabled ? -1 : 0}
+          @keydown=${this.handleKeyDown}
+        >
+          <div
+            id="track"
+            part="track"
+          >
+            <div
+              id="indicator"
+              part="indicator"
+              style="--start: 0%; --end: ${thumbPosition}%"
+            ></div>
+            ${markersTemplate}
+            <span
+              id="thumb"
+              part="thumb"
+              style="--position: ${thumbPosition}%"
+            ></span>
+          </div>
+        </div>
+      `;
+      }
+    }
+  };
+  MovSlider.styles = i$3`
+    :host {
+      --track-size: 0.5em;
+      --thumb-width: 1.4em;
+      --thumb-height: 1.4em;
+      --marker-width: 0.1875em;
+      --marker-height: 0.1875em;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    #slider {
+      flex: 1;
+      touch-action: none;
+      position: relative;
+    }
+
+    #slider:focus {
+      outline: none;
+    }
+
+    #slider:focus-visible:not(.disabled) #thumb,
+    #slider:focus-visible:not(.disabled) #thumb-min,
+    #slider:focus-visible:not(.disabled) #thumb-max {
+      outline: var(--theme-primary-color) solid 2px;
+    }
+
+    #track {
+      position: relative;
+      border-radius: 9999px;
+      background: var(--mov-color-fill-quiet);
+      height: var(--track-size);
+    }
+
+    .disabled #track {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    #indicator {
+      position: absolute;
+      border-radius: inherit;
+      background-color: var(--mov-color-fill-loud);
+      height: 100%;
+      left: var(--start, 0%);
+      right: calc(100% - var(--end, 0%));
+    }
+
+    #thumb,
+    #thumb-min,
+    #thumb-max {
+      z-index: 3;
+      position: absolute;
+      width: var(--thumb-width);
+      height: var(--thumb-height);
+      border: solid 0.125em var(--theme-background-color);
+      border-radius: 50%;
+      background-color: var(--mov-color-fill-loud);
+      cursor: pointer;
+      top: calc(50% - var(--thumb-height) / 2);
+      left: calc(var(--position) - var(--thumb-width) / 2);
+    }
+
+    .disabled #thumb,
+    .disabled #thumb-min,
+    .disabled #thumb-max {
+      cursor: inherit;
+    }
+
+    :host([range]) #thumb-min:focus-visible,
+    :host([range]) #thumb-max:focus-visible {
+      z-index: 4; /* Ensure focused thumb appears on top */
+      outline: var(--theme-primary-color) solid 2px;
+    }
+
+    #markers {
+      position: absolute;
+      top: calc(50% - var(--marker-height) / 2);
+      left: 0;
+      right: 0;
+      height: var(--marker-height);
+      pointer-events: none;
+    }
+
+    .marker {
+      position: absolute;
+      width: var(--marker-width);
+      height: var(--marker-height);
+      border-radius: 50%;
+      background-color: var(--theme-background-color);
+    }
+  `;
+  __decorateClass$8([e$2('#slider')], MovSlider.prototype, 'slider', 2);
+  __decorateClass$8([e$2('#thumb')], MovSlider.prototype, 'thumb', 2);
+  __decorateClass$8([e$2('#thumb-min')], MovSlider.prototype, 'thumbMin', 2);
+  __decorateClass$8([e$2('#thumb-max')], MovSlider.prototype, 'thumbMax', 2);
+  __decorateClass$8([e$2('#track')], MovSlider.prototype, 'track', 2);
+  __decorateClass$8([n$1()], MovSlider.prototype, 'label', 2);
+  __decorateClass$8(
+    [n$1({ type: Number, attribute: 'min-value' })],
+    MovSlider.prototype,
+    'minValue',
+    2,
+  );
+  __decorateClass$8(
+    [n$1({ type: Number, attribute: 'max-value' })],
+    MovSlider.prototype,
+    'maxValue',
+    2,
+  );
+  __decorateClass$8([n$1({ type: Number })], MovSlider.prototype, 'value', 2);
+  __decorateClass$8([n$1({ type: Boolean, reflect: true })], MovSlider.prototype, 'range', 2);
+  __decorateClass$8([n$1({ type: Boolean })], MovSlider.prototype, 'disabled', 2);
+  __decorateClass$8([n$1({ type: Boolean, reflect: true })], MovSlider.prototype, 'readonly', 2);
+  __decorateClass$8([n$1({ type: Number })], MovSlider.prototype, 'min', 2);
+  __decorateClass$8([n$1({ type: Number })], MovSlider.prototype, 'max', 2);
+  __decorateClass$8([n$1({ type: Number })], MovSlider.prototype, 'step', 2);
+  __decorateClass$8(
+    [n$1({ type: Boolean, attribute: 'with-markers' })],
+    MovSlider.prototype,
+    'withMarkers',
+    2,
+  );
+  MovSlider = __decorateClass$8([t$1('mov-slider')], MovSlider);
 
   const keycss =
     '/**\r\n * KEYS.css\r\n *\r\n * A simple stylesheet for rendering beautiful keyboard-style elements.\r\n *\r\n * Author:  Michael Hüneburg\r\n * Website: http://michaelhue.com/keyscss\r\n * License: MIT License (see LICENSE.txt)\r\n */\r\n\r\nkbd,\r\n.key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  background-color: #505050;\r\n  background-color: gradient(linear, left top, left bottom, from(#3c3c3c), to(#505050));\r\n  color: #fafafa;\r\n  text-shadow: -1px -1px 0 #464646;\r\n  -webkit-box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n          box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n  font-size: .85em;\r\n  line-height: 1;\r\n  cursor: default;\r\n  -webkit-user-select: none;\r\n     -moz-user-select: none;\r\n      -ms-user-select: none;\r\n          user-select: none;\r\n}\r\nkbd[title],\r\n.key[title] {\r\n  cursor: help;\r\n}\r\nkbd.dark,\r\n.dark-keys kbd,\r\n.key.dark,\r\n.dark-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  background-color: #505050;\r\n  background-color: gradient(linear, left top, left bottom, from(#3c3c3c), to(#505050));\r\n  color: #fafafa;\r\n  text-shadow: -1px -1px 0 #464646;\r\n  -webkit-box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n          box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n}\r\nkbd.light,\r\n.light-keys kbd,\r\n.key.light,\r\n.light-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  background-color: #fafafa;\r\n  background-color: gradient(linear, left top, left bottom, from(#d2d2d2), to(#ffffff));\r\n  color: #323232;\r\n  text-shadow: 0 0 2px #ffffff;\r\n  -webkit-box-shadow: inset 0 0 1px #ffffff, inset 0 0 0.4em #c8c8c8, 0 0.1em 0 #828282, 0 0.11em 0 rgba(0, 0, 0, 0.4), 0 0.1em 0.11em rgba(0, 0, 0, 0.9);\r\n          box-shadow: inset 0 0 1px #ffffff, inset 0 0 0.4em #c8c8c8, 0 0.1em 0 #828282, 0 0.11em 0 rgba(0, 0, 0, 0.4), 0 0.1em 0.11em rgba(0, 0, 0, 0.9);\r\n}\r\nkbd.so,\r\n.so-keys kbd,\r\n.key.so,\r\n.so-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  margin: 0 .1em;\r\n  padding: .1em .6em;\r\n  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;\r\n  line-height: 1.4;\r\n  color: #242729;\r\n  text-shadow: 0 1px 0 #FFF;\r\n  background-color: #e1e3e5;\r\n  border: 1px solid #adb3b9;\r\n  border-radius: 0.27272727em;\r\n  -webkit-box-shadow: 0 1px 0 rgba(12, 13, 14, 0.2), 0 0 0 2px #FFF inset;\r\n          box-shadow: 0 1px 0 rgba(12, 13, 14, 0.2), 0 0 0 2px #FFF inset;\r\n}\r\nkbd.github,\r\n.github-keys kbd,\r\n.key.github,\r\n.github-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  padding: 0.27272727em 0.45454545em;\r\n  font-size: 68.75%;\r\n  line-height: 0.90909091;\r\n  color: #444d56;\r\n  vertical-align: middle;\r\n  background-color: #fafbfc;\r\n  border: solid 1px #c6cbd1;\r\n  border-bottom-color: #959da5;\r\n  border-radius: 0.27272727em;\r\n  -webkit-box-shadow: inset 0 -1px 0 #959da5;\r\n          box-shadow: inset 0 -1px 0 #959da5;\r\n  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;\r\n  -webkit-box-sizing: border-box;\r\n          box-sizing: border-box;\r\n  text-shadow: none;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImtleXMuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztFQUVFLGdCQUFnQjtFQUNoQixzQkFBc0I7RUFDdEIsb0JBQW9CO0VBQ3BCLGVBQWU7RUFDZiw2QkFBNkI7RUFDN0IsbUJBQW1CO0VBQ25CLHdEQUF3RDtFQUN4RCxtQkFBbUI7RUFDbkIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixhQUFhO0VBQ2IsMEJBQTBCO0VBQzFCLHNGQUFzRjtFQUN0RixlQUFlO0VBQ2YsaUNBQWlDO0VBQ2pDLDhIQUFzSDtVQUF0SCxzSEFBc0g7RUFDdEgsaUJBQWlCO0VBQ2pCLGVBQWU7RUFDZixnQkFBZ0I7RUFDaEIsMEJBQWtCO0tBQWxCLHVCQUFrQjtNQUFsQixzQkFBa0I7VUFBbEIsa0JBQWtCO0NBQ25CO0FBQ0Q7O0VBRUUsYUFBYTtDQUNkO0FBQ0Q7Ozs7RUFJRSxnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixlQUFlO0VBQ2YsNkJBQTZCO0VBQzdCLG1CQUFtQjtFQUNuQix3REFBd0Q7RUFDeEQsbUJBQW1CO0VBQ25CLHNCQUFzQjtFQUN0QixvQkFBb0I7RUFDcEIsYUFBYTtFQUNiLDBCQUEwQjtFQUMxQixzRkFBc0Y7RUFDdEYsZUFBZTtFQUNmLGlDQUFpQztFQUNqQyw4SEFBc0g7VUFBdEgsc0hBQXNIO0NBQ3ZIO0FBQ0Q7Ozs7RUFJRSxnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixlQUFlO0VBQ2YsNkJBQTZCO0VBQzdCLG1CQUFtQjtFQUNuQix3REFBd0Q7RUFDeEQsbUJBQW1CO0VBQ25CLHNCQUFzQjtFQUN0QixvQkFBb0I7RUFDcEIsYUFBYTtFQUNiLDBCQUEwQjtFQUMxQixzRkFBc0Y7RUFDdEYsZUFBZTtFQUNmLDZCQUE2QjtFQUM3Qix3SkFBZ0o7VUFBaEosZ0pBQWdKO0NBQ2pKO0FBQ0Q7Ozs7RUFJRSxnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixlQUFlO0VBQ2YsNkJBQTZCO0VBQzdCLG1CQUFtQjtFQUNuQix3REFBd0Q7RUFDeEQsbUJBQW1CO0VBQ25CLHNCQUFzQjtFQUN0QixvQkFBb0I7RUFDcEIsYUFBYTtFQUNiLGVBQWU7RUFDZixtQkFBbUI7RUFDbkIsNERBQTREO0VBQzVELGlCQUFpQjtFQUNqQixlQUFlO0VBQ2YsMEJBQTBCO0VBQzFCLDBCQUEwQjtFQUMxQiwwQkFBMEI7RUFDMUIsNEJBQTRCO0VBQzVCLHdFQUFnRTtVQUFoRSxnRUFBZ0U7Q0FDakU7QUFDRDs7OztFQUlFLGdCQUFnQjtFQUNoQixzQkFBc0I7RUFDdEIsb0JBQW9CO0VBQ3BCLGVBQWU7RUFDZiw2QkFBNkI7RUFDN0IsbUJBQW1CO0VBQ25CLHdEQUF3RDtFQUN4RCxtQkFBbUI7RUFDbkIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixhQUFhO0VBQ2IsbUNBQW1DO0VBQ25DLGtCQUFrQjtFQUNsQix3QkFBd0I7RUFDeEIsZUFBZTtFQUNmLHVCQUF1QjtFQUN2QiwwQkFBMEI7RUFDMUIsMEJBQTBCO0VBQzFCLDZCQUE2QjtFQUM3Qiw0QkFBNEI7RUFDNUIsMkNBQW1DO1VBQW5DLG1DQUFtQztFQUNuQyxzRkFBc0Y7RUFDdEYsK0JBQXVCO1VBQXZCLHVCQUF1QjtFQUN2QixrQkFBa0I7Q0FDbkIiLCJmaWxlIjoidG1wMi5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJrYmQsXG4ua2V5IHtcbiAgZGlzcGxheTogaW5saW5lO1xuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIHdoaXRlLXNwYWNlOiBub3dyYXA7XG4gIG1pbi13aWR0aDogMWVtO1xuICBwYWRkaW5nOiAuM2VtIC40ZW0gLjJlbSAuM2VtO1xuICBmb250LXN0eWxlOiBub3JtYWw7XG4gIGZvbnQtZmFtaWx5OiBcIkx1Y2lkYSBHcmFuZGVcIiwgTHVjaWRhLCBBcmlhbCwgc2Fucy1zZXJpZjtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG4gIGJvcmRlci1yYWRpdXM6IC4zZW07XG4gIGJvcmRlcjogbm9uZTtcbiAgYmFja2dyb3VuZC1jb2xvcjogIzUwNTA1MDtcbiAgYmFja2dyb3VuZC1jb2xvcjogZ3JhZGllbnQobGluZWFyLCBsZWZ0IHRvcCwgbGVmdCBib3R0b20sIGZyb20oIzNjM2MzYyksIHRvKCM1MDUwNTApKTtcbiAgY29sb3I6ICNmYWZhZmE7XG4gIHRleHQtc2hhZG93OiAtMXB4IC0xcHggMCAjNDY0NjQ2O1xuICBib3gtc2hhZG93OiBpbnNldCAwIDAgMXB4ICM5Njk2OTYsIGluc2V0IDAgLTAuMDVlbSAwLjRlbSAjNTA1MDUwLCAwIDAuMWVtIDAgIzFlMWUxZSwgMCAwLjFlbSAwLjFlbSByZ2JhKDAsIDAsIDAsIDAuMyk7XG4gIGZvbnQtc2l6ZTogLjg1ZW07XG4gIGxpbmUtaGVpZ2h0OiAxO1xuICBjdXJzb3I6IGRlZmF1bHQ7XG4gIHVzZXItc2VsZWN0OiBub25lO1xufVxua2JkW3RpdGxlXSxcbi5rZXlbdGl0bGVdIHtcbiAgY3Vyc29yOiBoZWxwO1xufVxua2JkLmRhcmssXG4uZGFyay1rZXlzIGtiZCxcbi5rZXkuZGFyayxcbi5kYXJrLWtleXMgLmtleSB7XG4gIGRpc3BsYXk6IGlubGluZTtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICBtaW4td2lkdGg6IDFlbTtcbiAgcGFkZGluZzogLjNlbSAuNGVtIC4yZW0gLjNlbTtcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xuICBmb250LWZhbWlseTogXCJMdWNpZGEgR3JhbmRlXCIsIEx1Y2lkYSwgQXJpYWwsIHNhbnMtc2VyaWY7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBib3JkZXItcmFkaXVzOiAuM2VtO1xuICBib3JkZXI6IG5vbmU7XG4gIGJhY2tncm91bmQtY29sb3I6ICM1MDUwNTA7XG4gIGJhY2tncm91bmQtY29sb3I6IGdyYWRpZW50KGxpbmVhciwgbGVmdCB0b3AsIGxlZnQgYm90dG9tLCBmcm9tKCMzYzNjM2MpLCB0bygjNTA1MDUwKSk7XG4gIGNvbG9yOiAjZmFmYWZhO1xuICB0ZXh0LXNoYWRvdzogLTFweCAtMXB4IDAgIzQ2NDY0NjtcbiAgYm94LXNoYWRvdzogaW5zZXQgMCAwIDFweCAjOTY5Njk2LCBpbnNldCAwIC0wLjA1ZW0gMC40ZW0gIzUwNTA1MCwgMCAwLjFlbSAwICMxZTFlMWUsIDAgMC4xZW0gMC4xZW0gcmdiYSgwLCAwLCAwLCAwLjMpO1xufVxua2JkLmxpZ2h0LFxuLmxpZ2h0LWtleXMga2JkLFxuLmtleS5saWdodCxcbi5saWdodC1rZXlzIC5rZXkge1xuICBkaXNwbGF5OiBpbmxpbmU7XG4gIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgd2hpdGUtc3BhY2U6IG5vd3JhcDtcbiAgbWluLXdpZHRoOiAxZW07XG4gIHBhZGRpbmc6IC4zZW0gLjRlbSAuMmVtIC4zZW07XG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcbiAgZm9udC1mYW1pbHk6IFwiTHVjaWRhIEdyYW5kZVwiLCBMdWNpZGEsIEFyaWFsLCBzYW5zLXNlcmlmO1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgYm9yZGVyLXJhZGl1czogLjNlbTtcbiAgYm9yZGVyOiBub25lO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmFmYWZhO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiBncmFkaWVudChsaW5lYXIsIGxlZnQgdG9wLCBsZWZ0IGJvdHRvbSwgZnJvbSgjZDJkMmQyKSwgdG8oI2ZmZmZmZikpO1xuICBjb2xvcjogIzMyMzIzMjtcbiAgdGV4dC1zaGFkb3c6IDAgMCAycHggI2ZmZmZmZjtcbiAgYm94LXNoYWRvdzogaW5zZXQgMCAwIDFweCAjZmZmZmZmLCBpbnNldCAwIDAgMC40ZW0gI2M4YzhjOCwgMCAwLjFlbSAwICM4MjgyODIsIDAgMC4xMWVtIDAgcmdiYSgwLCAwLCAwLCAwLjQpLCAwIDAuMWVtIDAuMTFlbSByZ2JhKDAsIDAsIDAsIDAuOSk7XG59XG5rYmQuc28sXG4uc28ta2V5cyBrYmQsXG4ua2V5LnNvLFxuLnNvLWtleXMgLmtleSB7XG4gIGRpc3BsYXk6IGlubGluZTtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICBtaW4td2lkdGg6IDFlbTtcbiAgcGFkZGluZzogLjNlbSAuNGVtIC4yZW0gLjNlbTtcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xuICBmb250LWZhbWlseTogXCJMdWNpZGEgR3JhbmRlXCIsIEx1Y2lkYSwgQXJpYWwsIHNhbnMtc2VyaWY7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBib3JkZXItcmFkaXVzOiAuM2VtO1xuICBib3JkZXI6IG5vbmU7XG4gIG1hcmdpbjogMCAuMWVtO1xuICBwYWRkaW5nOiAuMWVtIC42ZW07XG4gIGZvbnQtZmFtaWx5OiBBcmlhbCwgXCJIZWx2ZXRpY2EgTmV1ZVwiLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7XG4gIGxpbmUtaGVpZ2h0OiAxLjQ7XG4gIGNvbG9yOiAjMjQyNzI5O1xuICB0ZXh0LXNoYWRvdzogMCAxcHggMCAjRkZGO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZTFlM2U1O1xuICBib3JkZXI6IDFweCBzb2xpZCAjYWRiM2I5O1xuICBib3JkZXItcmFkaXVzOiAwLjI3MjcyNzI3ZW07XG4gIGJveC1zaGFkb3c6IDAgMXB4IDAgcmdiYSgxMiwgMTMsIDE0LCAwLjIpLCAwIDAgMCAycHggI0ZGRiBpbnNldDtcbn1cbmtiZC5naXRodWIsXG4uZ2l0aHViLWtleXMga2JkLFxuLmtleS5naXRodWIsXG4uZ2l0aHViLWtleXMgLmtleSB7XG4gIGRpc3BsYXk6IGlubGluZTtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICBtaW4td2lkdGg6IDFlbTtcbiAgcGFkZGluZzogLjNlbSAuNGVtIC4yZW0gLjNlbTtcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xuICBmb250LWZhbWlseTogXCJMdWNpZGEgR3JhbmRlXCIsIEx1Y2lkYSwgQXJpYWwsIHNhbnMtc2VyaWY7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBib3JkZXItcmFkaXVzOiAuM2VtO1xuICBib3JkZXI6IG5vbmU7XG4gIHBhZGRpbmc6IDAuMjcyNzI3MjdlbSAwLjQ1NDU0NTQ1ZW07XG4gIGZvbnQtc2l6ZTogNjguNzUlO1xuICBsaW5lLWhlaWdodDogMC45MDkwOTA5MTtcbiAgY29sb3I6ICM0NDRkNTY7XG4gIHZlcnRpY2FsLWFsaWduOiBtaWRkbGU7XG4gIGJhY2tncm91bmQtY29sb3I6ICNmYWZiZmM7XG4gIGJvcmRlcjogc29saWQgMXB4ICNjNmNiZDE7XG4gIGJvcmRlci1ib3R0b20tY29sb3I6ICM5NTlkYTU7XG4gIGJvcmRlci1yYWRpdXM6IDAuMjcyNzI3MjdlbTtcbiAgYm94LXNoYWRvdzogaW5zZXQgMCAtMXB4IDAgIzk1OWRhNTtcbiAgZm9udC1mYW1pbHk6IFwiU0ZNb25vLVJlZ3VsYXJcIiwgQ29uc29sYXMsIFwiTGliZXJhdGlvbiBNb25vXCIsIE1lbmxvLCBDb3VyaWVyLCBtb25vc3BhY2U7XG4gIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG4gIHRleHQtc2hhZG93OiBub25lO1xufVxuIl19 */';
@@ -8692,10 +9472,9 @@
   function buttonEraseBookmarks(event) {
     const target = event.currentTarget.value;
     logScript(`Bookmark Removed ${target}`);
-    Swal.fire({
+    i$6.error({
       title: getLocaleString('BOOKMARK_REMOVED'),
-      timer: 1e4,
-      icon: 'error',
+      duration: 1e4,
     });
     removeURLBookmark(target);
   }
@@ -8715,19 +9494,47 @@
     };
     if (isBookmarked(mark.url)) {
       changeSettingsValue('bookmarks', b => [...b.filter(el => el.url !== mark.url)]);
-      Swal.fire({
+      i$6.error({
         title: getLocaleString('BOOKMARK_REMOVED'),
-        timer: 1e4,
-        icon: 'error',
+        duration: 1e4,
       });
     } else {
       changeSettingsValue('bookmarks', b => [...b, mark]);
-      Swal.fire({
+      i$6.success({
         title: getLocaleString('BOOKMARK_SAVED'),
-        html: getLocaleString('BOOKMARK_MESSAGE').replace('##num##', num.toString()),
-        icon: 'success',
+        description: getLocaleString('BOOKMARK_MESSAGE').replace('##num##', num.toString()),
+        duration: 1e4,
       });
     }
+  }
+
+  function createStyleElement(id, content) {
+    const style = document.createElement('style');
+    style.id = id;
+    style.appendChild(document.createTextNode(content));
+    return style;
+  }
+  function appendStyleSheet(id, content) {
+    if (!document.querySelector(`#${id}`)) {
+      const head = document.head ?? document.querySelector('head');
+      head.appendChild(createStyleElement(id, content));
+    }
+  }
+  function removeStyleSheet(id) {
+    document.querySelectorAll(`style[id="${id}"]`).forEach(elem => {
+      elem.remove();
+    });
+  }
+  function replaceStyleSheet(id, content) {
+    removeStyleSheet(id);
+    appendStyleSheet(id, content);
+  }
+  function wrapStyle(id, css) {
+    return html`
+      <style id="${id}">
+        ${css}
+      </style>
+    `;
   }
 
   function changeSettingsScope(event) {
@@ -8762,9 +9569,9 @@
     const checked = event.detail.checked;
     saveSettingsValue('downloadZip', checked);
     if (checked) {
-      Swal.fire({
+      showInfoDialog({
         title: getLocaleString('ATTENTION'),
-        text: getLocaleString('AUTO_DOWNLOAD'),
+        html: getLocaleString('AUTO_DOWNLOAD'),
         timer: 1e4,
         icon: 'info',
       });
@@ -8774,7 +9581,7 @@
     const checked = event.detail.checked;
     saveSettingsValue('lazyLoadImages', checked);
     if (checked) {
-      Swal.fire({
+      showInfoDialog({
         title: getLocaleString('WARNING'),
         html: getLocaleString('LAZY_LOAD'),
         icon: 'warning',
@@ -8789,7 +9596,7 @@
     const timer = parseInt(event.currentTarget.value, 10);
     saveSettingsValue('throttlePageLoad', timer);
     if (timer < 100) {
-      Swal.fire({
+      showInfoDialog({
         title: getLocaleString('SPEED_WARNING'),
         html: getLocaleString('SPEED_WARNING_MESSAGE'),
         icon: 'warning',
@@ -9054,19 +9861,19 @@
   }
 
   const styles$6 =
-    '#Header {\n  display: flex;\n  justify-content: space-around;\n  align-items: center;\n  flex-flow: row nowrap;\n  transition: transform 0.3s ease-in;\n  position: sticky;\n  top: 0;\n  left: 0;\n  right: 0;\n  background-color: var(--theme-background-color);\n  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);\n  z-index: 900;\n}\n\n#Header.click {\n  padding-left: 40px;\n}\n\n@keyframes headroom {\n  from {\n    transform: translateY(-100%);\n  }\n  to {\n    transform: translateY(0%);\n  }\n}\n\n#Header:not(.visible, .headroom-top, .fixed, .simple) {\n  animation: headroom 0.3s ease-in reverse;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.scroll.headroom-hide:not(.visible) {\n  animation: none;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.scroll.headroom-show,\n#Header.headroom-end,\n#Header.visible {\n  animation: headroom 0.3s ease-in;\n  transform: translateY(0%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.headroom-top {\n  animation: none;\n}\n\n#Header.fixed {\n  position: sticky;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#Header.simple {\n  position: static;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#menu {\n  position: fixed;\n  z-index: 1;\n  color: var(--theme-body-text-color);\n  height: 40px;\n  width: 40px;\n}\n\n#menu:not(.click),\n#menu.hide {\n  display: none;\n}\n\n#menu.click {\n  z-index: 901;\n}\n\n#MangaTitle {\n  padding: 2px;\n  margin: 0;\n  font-size: 1.2rem;\n  font-weight: 400;\n  word-wrap: anywhere;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  min-width: 200px;\n  max-width: 40vw;\n}\n\n#GlobalFunctions {\n  display: flex;\n  gap: 3px;\n  padding: 3px 3px 3px 0;\n  flex-wrap: wrap;\n  z-index: 100;\n}\n\n#ZoomControl {\n  display: flex;\n  align-items: center;\n  gap: 3px;\n  padding: 10px 5px;\n}\n';
+    '#Header {\r\n  display: flex;\r\n  justify-content: space-around;\r\n  align-items: center;\r\n  flex-flow: row nowrap;\r\n  transition: transform 0.3s ease-in;\r\n  position: sticky;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  background-color: var(--theme-background-color);\r\n  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);\r\n  z-index: 900;\r\n}\r\n\r\n#Header.click {\r\n  padding-left: 40px;\r\n}\r\n\r\n@keyframes headroom {\r\n  from {\r\n    transform: translateY(-100%);\r\n  }\r\n  to {\r\n    transform: translateY(0%);\r\n  }\r\n}\r\n\r\n#Header:not(.visible, .headroom-top, .fixed, .simple) {\r\n  animation: headroom 0.3s ease-in reverse;\r\n  transform: translateY(-100%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#Header.scroll.headroom-hide:not(.visible) {\r\n  animation: none;\r\n  transform: translateY(-100%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#Header.scroll.headroom-show,\r\n#Header.headroom-end,\r\n#Header.visible {\r\n  animation: headroom 0.3s ease-in;\r\n  transform: translateY(0%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#Header.headroom-top {\r\n  animation: none;\r\n}\r\n\r\n#Header.fixed {\r\n  position: sticky;\r\n  animation: none;\r\n  top: 0;\r\n  transform: translateY(0%);\r\n}\r\n\r\n#Header.simple {\r\n  position: static;\r\n  animation: none;\r\n  top: 0;\r\n  transform: translateY(0%);\r\n}\r\n\r\n#menu {\r\n  position: fixed;\r\n  z-index: 1;\r\n  color: var(--theme-body-text-color);\r\n  height: 40px;\r\n  width: 40px;\r\n}\r\n\r\n#menu:not(.click),\r\n#menu.hide {\r\n  display: none;\r\n}\r\n\r\n#menu.click {\r\n  z-index: 901;\r\n}\r\n\r\n#MangaTitle {\r\n  padding: 2px;\r\n  margin: 0;\r\n  font-size: 1.2rem;\r\n  font-weight: 400;\r\n  word-wrap: anywhere;\r\n  white-space: nowrap;\r\n  overflow: hidden;\r\n  text-overflow: ellipsis;\r\n  min-width: 200px;\r\n  max-width: 40vw;\r\n}\r\n\r\n#GlobalFunctions {\r\n  display: flex;\r\n  gap: 3px;\r\n  padding: 3px 3px 3px 0;\r\n  flex-wrap: wrap;\r\n  z-index: 100;\r\n}\r\n\r\n#ZoomControl {\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 3px;\r\n  padding: 10px 5px;\r\n}\r\n\r\n#Zoom {\r\n  width: 200px;\r\n}\r\n';
 
   const media =
-    '#Header.mobile,\n#Header.tablet {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\n.mobile #ViewerTitle,\n.tablet #ViewerTitle {\n  order: 4;\n  min-height: auto;\n}\n\n.mobile #GlobalFunctions,\n.tablet #GlobalFunctions {\n  order: 2;\n  width: auto;\n  padding: 5px;\n}\n\n.mobile #GlobalFunctions span {\n  flex-direction: column;\n}\n\n.mobile #ZoomControl,\n.tablet #ZoomControl {\n  order: 3;\n}\n\n.mobile #Toolbar,\n.tabler #Toolbar {\n  order: 1;\n}\n\n#Header.mobile {\n  flex-direction: row;\n  flex-wrap: wrap;\n  justify-content: center;\n  align-items: center;\n}\n\n#Header.mobile.click + #Chapter:not(.webcomic, .vertical) {\n  position: sticky;\n}\n\n.tablet #MangaTitle,\n.mobile #MangaTitle {\n  max-width: 90vw;\n}\n\n.mobile #ViewerTitle {\n  order: 3;\n  margin-top: 0;\n  height: auto;\n  padding: 0;\n}\n\n.mobile #GlobalFunctions {\n  order: 2;\n  padding: 0;\n  width: auto;\n  gap: 0;\n}\n\n.mobile mov-button::part(base) {\n  border-radius: 0;\n}\n\n.mobile #FileDropdown mov-button:first-of-type::part(base) {\n  border-radius: 5px 0 0 5px;\n}\n\n.mobile #GlobalFunctions mov-button:last-of-type::part(base) {\n  border-radius: 0 5px 5px 0;\n}\n\n.mobile .PageFunctions {\n  padding: 0;\n}\n\n.mobile .PageFunctions .PageButton.Bookmark {\n  opacity: 1;\n}\n\n.mobile #GlobalFunctions #ZoomSlider,\n.tablet #GlobalFunctions #ZoomSlider,\n.mobile .PageFunctions .PageButton:not(.Bookmark),\n.tablet #Counters,\n.mobile #ZoomControl,\n.mobile #ZoomDropdown,\n.mobile #ViewDropdown,\n.mobile #FileDropdown :where(:nth-child(3), :nth-child(4)) {\n  display: none;\n}\n';
+    '#Header.mobile,\r\n#Header.tablet {\r\n  display: flex;\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n}\r\n\r\n.mobile #ViewerTitle,\r\n.tablet #ViewerTitle {\r\n  order: 4;\r\n  min-height: auto;\r\n}\r\n\r\n.mobile #GlobalFunctions,\r\n.tablet #GlobalFunctions {\r\n  order: 2;\r\n  width: auto;\r\n  padding: 5px;\r\n}\r\n\r\n.mobile #GlobalFunctions span {\r\n  flex-direction: column;\r\n}\r\n\r\n.mobile #ZoomControl,\r\n.tablet #ZoomControl {\r\n  order: 3;\r\n}\r\n\r\n.mobile #Toolbar,\r\n.tabler #Toolbar {\r\n  order: 1;\r\n}\r\n\r\n#Header.mobile {\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n\r\n#Header.mobile.click + #Chapter:not(.webcomic, .vertical) {\r\n  position: sticky;\r\n}\r\n\r\n.tablet #MangaTitle,\r\n.mobile #MangaTitle {\r\n  max-width: 90vw;\r\n}\r\n\r\n.mobile #ViewerTitle {\r\n  order: 3;\r\n  margin-top: 0;\r\n  height: auto;\r\n  padding: 0;\r\n}\r\n\r\n.mobile #GlobalFunctions {\r\n  order: 2;\r\n  padding: 0;\r\n  width: auto;\r\n  gap: 0;\r\n}\r\n\r\n.mobile wa-button::part(base) {\r\n  border-radius: 0;\r\n}\r\n\r\n.mobile #FileDropdown wa-button:first-of-type::part(base) {\r\n  border-radius: 5px 0 0 5px;\r\n}\r\n\r\n.mobile #GlobalFunctions wa-button:last-of-type::part(base) {\r\n  border-radius: 0 5px 5px 0;\r\n}\r\n\r\n.mobile .PageFunctions {\r\n  padding: 0;\r\n}\r\n\r\n.mobile .PageFunctions .PageButton.Bookmark {\r\n  opacity: 1;\r\n}\r\n\r\n.mobile #GlobalFunctions #ZoomSlider,\r\n.tablet #GlobalFunctions #ZoomSlider,\r\n.mobile .PageFunctions .PageButton:not(.Bookmark),\r\n.tablet #Counters,\r\n.mobile #ZoomControl,\r\n.mobile #ZoomDropdown,\r\n.mobile #ViewDropdown,\r\n.mobile #FileDropdown :where(:nth-child(3), :nth-child(4)) {\r\n  display: none;\r\n}\r\n';
 
-  var __defProp$2 = Object.defineProperty;
-  var __getOwnPropDesc$6 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$6 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$6(target, key) : target;
+  var __defProp$4 = Object.defineProperty;
+  var __getOwnPropDesc$7 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$7 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$7(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$2(target, key, result);
+    if (kind && result) __defProp$4(target, key, result);
     return result;
   };
   let Header = class extends i$1 {
@@ -9101,7 +9908,7 @@
         return keys.map(key => x$1`<kbd slot="details">${key}</kbd>`);
       };
       return x$1`
-      <mov-button
+      <wa-button
         id="menu"
         class="${e({
           [getSettingsValue('header')]: true,
@@ -9109,8 +9916,8 @@
         })}"
         @click=${this.headroomController.toggleHeaderVisibility}
       >
-        <mov-icon name="IconMenu2"></mov-icon>
-      </mov-button>
+        <wa-icon name="IconMenu2"></wa-icon>
+      </wa-button>
       <header
         id="Header"
         class="${e({
@@ -9124,198 +9931,192 @@
           id="Toolbar"
           class="button-group"
         >
-          <mov-dropdown id="FileDropdown">
-            <mov-button
+          <wa-dropdown id="FileDropdown">
+            <wa-button
               slot="trigger"
               title="${getLocaleString('FILE_MENU')}"
             >
-              <mov-icon
+              <wa-icon
                 label="File"
                 name="IconDotsVertical"
-              ></mov-icon>
-            </mov-button>
-            <mov-dropdown-item
+              ></wa-icon>
+            </wa-button>
+            <wa-dropdown-item
               id="settings"
               @click=${buttonSettingsOpen}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconSettings"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('SETTINGS')} ${renderKeybind('SETTINGS')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="keybindings"
               @click=${buttonKeybindingsOpen}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconKeyboard"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('KEYBINDINGS')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="AutoScroll"
               class="${e({ running: getAppStateValue('autoScroll') })}"
               @click=${toggleAutoScroll}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="${getAppStateValue('autoScroll') ? 'IconPlayerPause' : 'IconPlayerPlay'}"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('SCROLL_START')} ${renderKeybind('SCROLL_START')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="bookmarks"
               class="tablets"
               @click=${buttonBookmarksOpen}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconBookmarks"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('BOOKMARKS')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="pageControls"
               class="tablets phones"
               @click="${buttonGlobalHideImageControls}"
               ?selected=${getSettingsValue('hidePageControls')}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconListNumbers"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('TOGGLE_CONTROLS')}
-            </mov-dropdown-item>
-          </mov-dropdown>
+            </wa-dropdown-item>
+          </wa-dropdown>
 
-          <mov-dropdown
-            id="ViewDropdown"
-            checkable
-          >
-            <mov-button
+          <wa-dropdown id="ViewDropdown">
+            <wa-button
               slot="trigger"
               title="${getLocaleString('VIEW_MENU')}"
             >
-              <mov-icon
+              <wa-icon
                 label="View"
                 name="IconBook"
-              ></mov-icon>
-            </mov-button>
-            <mov-dropdown-item
+              ></wa-icon>
+            </wa-button>
+            <wa-dropdown-item
               id="webComic"
               class="tablets"
               @click="${updateViewMode('WebComic')}"
               ?selected=${getSettingsValue('viewMode') === 'WebComic'}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconSpacingVertical"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('VIEW_MODE_WEBCOMIC')} ${renderKeybind('VIEW_MODE_WEBCOMIC')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="verticalMode"
               class="tablets"
               @click="${updateViewMode('Vertical')}"
               ?selected=${getSettingsValue('viewMode') === 'Vertical'}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconArrowAutofitDown"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('VIEW_MODE_VERTICAL')} ${renderKeybind('VIEW_MODE_VERTICAL')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="ltrMode"
               @click="${updateViewMode('FluidLTR')}"
               ?selected=${getSettingsValue('viewMode') === 'FluidLTR'}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconArrowAutofitRight"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('VIEW_MODE_LEFT')} ${renderKeybind('VIEW_MODE_LEFT')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="rtlMode"
               @click="${updateViewMode('FluidRTL')}"
               ?selected=${getSettingsValue('viewMode') === 'FluidRTL'}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconArrowAutofitLeft"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('VIEW_MODE_RIGHT')} ${renderKeybind('VIEW_MODE_RIGHT')}
-            </mov-dropdown-item>
-          </mov-dropdown>
-          <mov-dropdown
-            id="ZoomDropdown"
-            checkable
-          >
-            <mov-button
+            </wa-dropdown-item>
+          </wa-dropdown>
+          <wa-dropdown id="ZoomDropdown">
+            <wa-button
               slot="trigger"
               title="${getLocaleString('ZOOM_MENU')}"
             >
-              <mov-icon
+              <wa-icon
                 label="Zoom"
                 name="IconZoom"
-              ></mov-icon>
-            </mov-button>
-            <mov-dropdown-item
+              ></wa-icon>
+            </wa-button>
+            <wa-dropdown-item
               id="enlarge"
               @click="${changeZoomByStep()}"
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconZoomInArea"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('ENLARGE')} ${renderKeybind('ENLARGE')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="restore"
               @click="${changeGlobalZoom('percent', 100)}"
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconZoomPan"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('RESTORE')} ${renderKeybind('RESTORE')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="reduce"
               @click="${changeZoomByStep(-1)}"
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconZoomOutArea"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('REDUCE')} ${renderKeybind('REDUCE')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="fitWidth"
               @click="${changeGlobalZoom('width')}"
               ?selected=${getSettingsValue('zoomMode') === 'width'}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconArrowAutofitWidth"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('FIT_WIDTH')} ${renderKeybind('FIT_WIDTH')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="fitHeight"
               @click="${changeGlobalZoom('height')}"
               ?selected=${getSettingsValue('zoomMode') === 'height'}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconArrowAutofitHeight"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('FIT_HEIGHT')} ${renderKeybind('FIT_HEIGHT')}
-            </mov-dropdown-item>
-          </mov-dropdown>
+            </wa-dropdown-item>
+          </wa-dropdown>
         </div>
         <div id="ViewerTitle">
           <h1
@@ -9326,87 +10127,90 @@
           </h1>
         </div>
         <div id="ZoomControl">
-          <input
-            type="range"
-            id="Zoom"
+          <wa-slider
+          <mov-slider
             .value="${getSettingsValue('zoomValue')}"
+            name="Zoom"
+            id="Zoom"
             min="${getSettingsValue('minZoom')}"
             max="200"
+            step="20"
+            with-markers
+            with-tooltip
+            label="Zoom : ${getSettingsValue('zoomMode') === 'percent' ? `${getSettingsValue('zoomValue')}%` : getSettingsValue('zoomMode')}"
             @input=${changeZoom}
-          />
-          <span id="ZoomVal"
-            >${getSettingsValue('zoomMode') === 'percent' ? `${getSettingsValue('zoomValue')}%` : getSettingsValue('zoomMode')}</span
           >
+          </wa-slider>
         </div>
         <div
           id="GlobalFunctions"
           class="button-group"
         >
-          <mov-button
+          <wa-button
             id="series"
             href="${this.manga.series ?? E}"
             @click=${buttonRedirectURL}
             title="${getLocaleString('RETURN_CHAPTER_LIST')}"
             ?disabled=${!this.manga.series}
           >
-            <mov-icon name="IconBookReturn"></mov-icon>
-          </mov-button>
-          <mov-button
+            <wa-icon name="IconBookReturn"></wa-icon>
+          </wa-button>
+          <wa-button
             id="CommentsButton"
             title="${getLocaleString('DISPLAY_COMMENTS')}"
             @click=${buttonCommentsOpen}
             ?disabled=${!this.manga.comments}
           >
-            <mov-icon name="IconMessage"></mov-icon>
-          </mov-button>
-          <mov-button
+            <wa-icon name="IconMessage"></wa-icon>
+          </wa-button>
+          <wa-button
             id="download"
             title="${getLocaleString('DOWNLOAD_ZIP')}"
             @click=${buttonStartDownload}
             ?disabled=${getAppStateValue('download') !== 'available'}
             ?loading=${getAppStateValue('download') === 'working'}
           >
-            <mov-icon
+            <wa-icon
               name="${getAppStateValue('download') === 'working' ? 'IconLoader2' : 'IconFileDownload'}"
-            ></mov-icon>
-          </mov-button>
-          <mov-button
+            ></wa-icon>
+          </wa-button>
+          <wa-button
             id="prev"
             href="${this.manga.prev ?? E}"
             title="${getLocaleString('PREVIOUS_CHAPTER')}"
             @click=${buttonRedirectURL}
             ?disabled=${!this.manga.prev}
           >
-            <mov-icon name="IconArrowBigLeft"></mov-icon>
-          </mov-button>
-          <mov-button
+            <wa-icon name="IconArrowBigLeft"></wa-icon>
+          </wa-button>
+          <wa-button
             id="next"
             href="${this.manga.next ?? E}"
             title="${getLocaleString('NEXT_CHAPTER')}"
             @click=${buttonRedirectURL}
             ?disabled=${!this.manga.next}
           >
-            <mov-icon name="IconArrowBigRight"></mov-icon>
-          </mov-button>
+            <wa-icon name="IconArrowBigRight"></wa-icon>
+          </wa-button>
         </div>
       </header>
     `;
     }
   };
   Header.styles = [r$4(styles$6), r$4(media), r$4(keycss), i$3``];
-  __decorateClass$6([e$2('#MangaTitle')], Header.prototype, 'mangaTitleElement', 2);
-  __decorateClass$6([n$1({ type: Object })], Header.prototype, 'manga', 2);
-  Header = __decorateClass$6(
+  __decorateClass$7([e$2('#MangaTitle')], Header.prototype, 'mangaTitleElement', 2);
+  __decorateClass$7([n$1({ type: Object })], Header.prototype, 'manga', 2);
+  Header = __decorateClass$7(
     [t$1('reader-header'), libExports.useStores(settings$1, locale, appState)],
     Header,
   );
 
   const styles$5 =
-    '#BookmarksPanel {\n  text-align: center;\n  --width: 100vw;\n}\n\n#BookmarksList {\n  padding: 0 5px;\n  overflow: auto;\n  max-height: 60vh;\n  display: flex;\n  flex-direction: column;\n  gap: 5px;\n}\n\n.bookmark-item {\n  display: flex;\n  align-items: center;\n  gap: 1rem;\n  padding: 0.75rem 1rem;\n  border-radius: 5px;\n  transition: background-color 150ms ease-in-out;\n  text-align: left;\n}\n\n.bookmark-item:hover {\n  background-color: var(--mov-color-fill-quiet, rgba(128, 128, 128, 0.1));\n}\n\n.bookmark-info {\n  flex-grow: 1;\n  min-width: 0;\n}\n\n.bookmark-name {\n  font-weight: 500;\n}\n\n.bookmark-url {\n  font-size: 0.875rem;\n  text-decoration: none;\n  display: block;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  color: color-mix(in oklab, var(--theme-body-text-color), transparent 30%);\n}\n.bookmark-url:hover {\n  text-decoration: underline;\n}\n\n.bookmark-details {\n  flex-shrink: 0;\n  width: 90px;\n  font-size: 0.875rem;\n  text-align: right;\n  color: color-mix(in oklab, var(--theme-body-text-color), transparent 30%);\n}\n.bookmark-details > div {\n  padding: 2px 0;\n}\n\n.bookmark-actions {\n  flex-shrink: 0;\n  display: flex;\n  gap: 0.5rem;\n}\n';
+    '#BookmarksPanel {\r\n  text-align: center;\r\n  --width: 100vw;\r\n}\r\n\r\n#BookmarksList {\r\n  padding: 0 5px;\r\n  overflow: auto;\r\n  max-height: 60vh;\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 5px;\r\n}\r\n\r\n.bookmark-item {\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 1rem;\r\n  padding: 0.75rem 1rem;\r\n  border-radius: 5px;\r\n  transition: background-color 150ms ease-in-out;\r\n  text-align: left;\r\n}\r\n\r\n.bookmark-item:hover {\r\n  background-color: var(--mov-color-fill-quiet, rgba(128, 128, 128, 0.1));\r\n}\r\n\r\n.bookmark-info {\r\n  flex-grow: 1;\r\n  min-width: 0;\r\n}\r\n\r\n.bookmark-name {\r\n  font-weight: 500;\r\n}\r\n\r\n.bookmark-url {\r\n  font-size: 0.875rem;\r\n  text-decoration: none;\r\n  display: block;\r\n  white-space: nowrap;\r\n  overflow: hidden;\r\n  text-overflow: ellipsis;\r\n  color: color-mix(in oklab, var(--theme-body-text-color), transparent 30%);\r\n}\r\n.bookmark-url:hover {\r\n  text-decoration: underline;\r\n}\r\n\r\n.bookmark-details {\r\n  flex-shrink: 0;\r\n  width: 90px;\r\n  font-size: 0.875rem;\r\n  text-align: right;\r\n  color: color-mix(in oklab, var(--theme-body-text-color), transparent 30%);\r\n}\r\n.bookmark-details > div {\r\n  padding: 2px 0;\r\n}\r\n\r\n.bookmark-actions {\r\n  flex-shrink: 0;\r\n  display: flex;\r\n  gap: 0.5rem;\r\n}\r\n';
 
-  var __getOwnPropDesc$5 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$5 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$5(target, key) : target;
+  var __getOwnPropDesc$6 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$6 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$6(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i])) result = decorator(result) || result;
     return result;
@@ -9447,27 +10251,27 @@
               href="${mark.url}"
               target="_blank"
             >
-              <mov-button
+              <wa-button
                 title="Open Bookmark"
                 size="small"
               >
-                <mov-icon
+                <wa-icon
                   name="IconExternalLink"
                   size="16px"
-                ></mov-icon>
-              </mov-button>
+                ></wa-icon>
+              </wa-button>
             </a>
-            <mov-button
+            <wa-button
               title="Delete Bookmark"
               size="small"
               value="${mark.url}"
               @click=${buttonEraseBookmarks}
             >
-              <mov-icon
+              <wa-icon
                 name="IconTrash"
                 size="16px"
-              ></mov-icon>
-            </mov-button>
+              ></wa-icon>
+            </wa-button>
           </div>
         </div>
       `,
@@ -9475,31 +10279,31 @@
     }
     render() {
       return x$1`
-      <mov-dialog
+      <wa-dialog
         id="BookmarksPanel"
         ?open=${getAppStateValue('panel') === 'bookmarks'}
-        @close=${buttonPanelsClose}
+        light-dismiss
+        @wa-after-hide=${buttonPanelsClose}
       >
-        <mov-button
+        <wa-button
           class="Bookmark"
           title="${getLocaleString('BOOKMARK')}"
           @click=${buttonBookmark}
           slot="header-actions"
         >
-          <mov-icon
+          <wa-icon
             name="${isBookmarked() === void 0 ? 'IconBookmark' : 'IconBookmarkOff'}"
             size="24px"
-          ></mov-icon>
-        </mov-button>
-        <h2 slot="header">${getLocaleString('BOOKMARKS')}</h2>
+          ></wa-icon>
+        </wa-button>
         <h2 slot="label">${getLocaleString('BOOKMARKS')}</h2>
         <div id="BookmarksList">${this.listBookmarks()}</div>
-      </mov-dialog>
+      </wa-dialog>
     `;
     }
   };
   BookmarkPanel.styles = [r$4(styles$5)];
-  BookmarkPanel = __decorateClass$5(
+  BookmarkPanel = __decorateClass$6(
     [t$1('bookmark-panel'), libExports.useStores(settings$1, locale, appState)],
     BookmarkPanel,
   );
@@ -9517,11 +10321,11 @@
   }
 
   const styles$4 =
-    '#KeybindingsPanel div {\n  line-height: 1.5em;\n}\n\n#KeybindingsPanel #KeybindingsList {\n  display: grid;\n  grid-template-columns: 1fr 2fr;\n  gap: 5px;\n}\n\n#KeybindingsPanel .ControlButton {\n  margin-left: 3px;\n  justify-content: center;\n  align-items: center;\n  padding: 5px 10px;\n  gap: 0.5em;\n}\n\n#KeybindingsPanel label {\n  display: ruby;\n}\n\n#KeybindingsPanel input {\n  display: inline-block;\n  width: 100%;\n}\n\n#KeybindingsPanel #HotKeysRules {\n  grid-column: span 2;\n}\n';
+    '#KeybindingsPanel div {\r\n  line-height: 1.5em;\r\n}\r\n\r\n#KeybindingsPanel #KeybindingsList {\r\n  display: grid;\r\n  grid-template-columns: 1fr 2fr;\r\n  gap: 5px;\r\n}\r\n\r\n#KeybindingsPanel .ControlButton {\r\n  margin-left: 3px;\r\n  justify-content: center;\r\n  align-items: center;\r\n  padding: 5px 10px;\r\n  gap: 0.5em;\r\n}\r\n\r\n#KeybindingsPanel label {\r\n  display: ruby;\r\n}\r\n\r\n#KeybindingsPanel input {\r\n  display: inline-block;\r\n  width: 100%;\r\n}\r\n\r\n#KeybindingsPanel #HotKeysRules {\r\n  grid-column: span 2;\r\n}\r\n';
 
-  var __getOwnPropDesc$4 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$4 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$4(target, key) : target;
+  var __getOwnPropDesc$5 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$5 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$5(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i])) result = decorator(result) || result;
     return result;
@@ -9575,11 +10379,11 @@
     }
     render() {
       return x$1`
-      <mov-drawer
+      <wa-drawer
         id="KeybindingsPanel"
         ?open=${getAppStateValue('panel').startsWith('keybindings')}
         placement="end"
-        @close=${buttonPanelsClose}
+        @wa-after-hide=${buttonPanelsClose}
       >
         <h2 slot="label">${getLocaleString('KEYBINDINGS')}</h2>
         <div
@@ -9588,44 +10392,44 @@
         >
           ${
             getAppStateValue('panel') === 'keybindingsEditor'
-              ? x$1` <mov-button
+              ? x$1` <wa-button
                 id="SaveKeybindings"
                 type="button"
                 title="${getLocaleString('SAVE_KEYBINDS')}"
                 @click=${() => saveKeybindings(this.keybindsRefs)}
               >
-                <mov-icon
+                <wa-icon
                   name="IconDeviceFloppy"
                   size="16px"
                   slot="start"
-                ></mov-icon>
+                ></wa-icon>
                 ${getLocaleString('BUTTON_SAVE')}
-              </mov-button>`
-              : x$1` <mov-button
+              </wa-button>`
+              : x$1` <wa-button
                 id="EditKeybindings"
                 type="button"
                 title="${getLocaleString('EDIT_KEYBINDS')}"
                 @click=${editKeybindings}
               >
-                <mov-icon
+                <wa-icon
                   name="IconPencil"
                   size="16px"
                   slot="start"
-                ></mov-icon>
+                ></wa-icon>
                 ${getLocaleString('BUTTON_EDIT')}
-              </mov-button>`
+              </wa-button>`
           }
         </div>
         <div id="KeybindingsList">
           ${getAppStateValue('panel') === 'keybindingsEditor' ? this.keybindEditor() : this.keybindList()}
         </div>
         <div id="HotKeysRules">${o$5(getLocaleString('KEYBIND_RULES'))}</div>
-      </mov-drawer>
+      </wa-drawer>
     `;
     }
   };
   KeybindingsPanel.styles = [r$4(styles$4), r$4(keycss)];
-  KeybindingsPanel = __decorateClass$4(
+  KeybindingsPanel = __decorateClass$5(
     [t$1('keybindings-panel'), libExports.useStores(settings$1, locale, appState)],
     KeybindingsPanel,
   );
@@ -9665,16 +10469,16 @@
   }
 
   const styles$3 =
-    ':host {\n  --nav-collapsed-size: 34px;\n  --nav-expanded-size: 200px;\n  --header-height: 80px;\n}\n#Navigation {\n  color: var(--theme-text-color);\n  background-color: var(--theme-hightlight-color);\n  overflow: hidden;\n  display: flex;\n  box-sizing: border-box;\n  gap: 5px;\n  white-space: nowrap;\n  text-align: center;\n  line-height: 0;\n  transition: all 0.3s ease;\n  position: fixed;\n  z-index: 1000;\n}\n#Thumbnails {\n  flex-grow: 1;\n  display: flex;\n  gap: 5px;\n  justify-content: flex-start;\n}\n#Navigation.horizontal #Thumbnails {\n  flex-direction: row;\n  overflow-x: auto;\n  overflow-y: hidden;\n}\n#Navigation.vertical #Thumbnails {\n  flex-direction: column;\n  overflow-y: auto;\n  overflow-x: hidden;\n  justify-content: flex-start;\n}\n#Navigation.left #Thumbnails {\n  direction: rtl;\n}\n:host(:not([forceExpanded])) #Navigation:not(:hover) #Thumbnails {\n  display: none;\n}\n#NavigationCounters {\n  flex-shrink: 0; /* Prevent this from shrinking */\n  padding: 5px;\n  line-height: 1rem;\n  text-align: center;\n  white-space: nowrap;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 0.5rem;\n}\n/* == Horizontal Orientation (for top/bottom position) == */\n#Navigation.horizontal {\n  flex-direction: column;\n  height: var(--nav-collapsed-size);\n  width: 100%;\n  left: 0;\n  right: 0;\n}\n:host([forceExpanded]) #Navigation.horizontal,\n#Navigation.horizontal:hover {\n  height: var(--nav-expanded-size);\n}\n#Navigation.bottom {\n  bottom: 0;\n}\n/* == Vertical Orientation (for left/right position) == */\n#Navigation.vertical {\n  flex-direction: row;\n  width: var(--nav-collapsed-size);\n  height: 100%;\n  bottom: 0;\n  transition:\n    top 0.3s ease,\n    height 0.3s ease,\n    width 0.3s ease;\n}\n:host([forceExpanded]) #Navigation.vertical,\n#Navigation.vertical:hover {\n  width: var(--nav-expanded-size);\n}\n#Navigation.left {\n  left: 0;\n  flex-direction: row-reverse;\n}\n#Navigation.right {\n  right: 0;\n}\n#Navigation.vertical #NavigationCounters {\n  writing-mode: vertical-rl;\n  transform: rotate(180deg);\n}\n#Navigation.right #NavigationCounters {\n  transform: rotate(0deg);\n}\n/* Adjust for header visibility */\n#Navigation.vertical.header {\n  top: var(--header-height);\n  height: calc(100% - var(--header-height));\n}\n\n#Navigation .Thumbnail {\n  display: inline-flex;\n  height: 150px;\n  width: 150px;\n  margin: 0 5px;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n}\n\n.ThumbnailIndex {\n  color: var(--mov-color-on-loud);\n  background-color: var(--mov-color-fill-loud);\n  display: block;\n  opacity: 0.9;\n  position: absolute;\n  left: 0;\n  bottom: 30%;\n  width: 100%;\n  line-height: 1.2rem;\n  text-align: center;\n  font-weight: 600;\n  z-index: 1;\n}\n.ThumbnailImg {\n  cursor: pointer;\n  display: inline-block;\n  max-height: 150px;\n  min-height: 150px;\n  min-width: 80px;\n  max-width: 150px;\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: 48px 48px;\n}\n';
+    ':host {\r\n  --nav-collapsed-size: 34px;\r\n  --nav-expanded-size: 200px;\r\n  --header-height: 80px;\r\n}\r\n#Navigation {\r\n  color: var(--theme-text-color);\r\n  background-color: var(--theme-hightlight-color);\r\n  overflow: hidden;\r\n  display: flex;\r\n  box-sizing: border-box;\r\n  gap: 5px;\r\n  white-space: nowrap;\r\n  text-align: center;\r\n  line-height: 0;\r\n  transition: all 0.3s ease;\r\n  position: fixed;\r\n  z-index: 1000;\r\n}\r\n#Thumbnails {\r\n  flex-grow: 1;\r\n  display: flex;\r\n  gap: 5px;\r\n  justify-content: flex-start;\r\n}\r\n#Navigation.horizontal #Thumbnails {\r\n  flex-direction: row;\r\n  overflow-x: auto;\r\n  overflow-y: hidden;\r\n}\r\n#Navigation.vertical #Thumbnails {\r\n  flex-direction: column;\r\n  overflow-y: auto;\r\n  overflow-x: hidden;\r\n  justify-content: flex-start;\r\n}\r\n#Navigation.left #Thumbnails {\r\n  direction: rtl;\r\n}\r\n:host(:not([forceExpanded])) #Navigation:not(:hover) #Thumbnails {\r\n  display: none;\r\n}\r\n#NavigationCounters {\r\n  flex-shrink: 0; /* Prevent this from shrinking */\r\n  padding: 5px;\r\n  line-height: 1rem;\r\n  text-align: center;\r\n  white-space: nowrap;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  gap: 0.5rem;\r\n}\r\n/* == Horizontal Orientation (for top/bottom position) == */\r\n#Navigation.horizontal {\r\n  flex-direction: column;\r\n  height: var(--nav-collapsed-size);\r\n  width: 100%;\r\n  left: 0;\r\n  right: 0;\r\n}\r\n:host([forceExpanded]) #Navigation.horizontal,\r\n#Navigation.horizontal:hover {\r\n  height: var(--nav-expanded-size);\r\n}\r\n#Navigation.bottom {\r\n  bottom: 0;\r\n}\r\n/* == Vertical Orientation (for left/right position) == */\r\n#Navigation.vertical {\r\n  flex-direction: row;\r\n  width: var(--nav-collapsed-size);\r\n  height: 100%;\r\n  bottom: 0;\r\n  transition:\r\n    top 0.3s ease,\r\n    height 0.3s ease,\r\n    width 0.3s ease;\r\n}\r\n:host([forceExpanded]) #Navigation.vertical,\r\n#Navigation.vertical:hover {\r\n  width: var(--nav-expanded-size);\r\n}\r\n#Navigation.left {\r\n  left: 0;\r\n  flex-direction: row-reverse;\r\n}\r\n#Navigation.right {\r\n  right: 0;\r\n}\r\n#Navigation.vertical #NavigationCounters {\r\n  writing-mode: vertical-rl;\r\n  transform: rotate(180deg);\r\n}\r\n#Navigation.right #NavigationCounters {\r\n  transform: rotate(0deg);\r\n}\r\n/* Adjust for header visibility */\r\n#Navigation.vertical.header {\r\n  top: var(--header-height);\r\n  height: calc(100% - var(--header-height));\r\n}\r\n\r\n#Navigation .Thumbnail {\r\n  display: inline-flex;\r\n  height: 150px;\r\n  width: 150px;\r\n  margin: 0 5px;\r\n  position: relative;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n\r\n.ThumbnailIndex {\r\n  color: var(--mov-color-on-loud);\r\n  background-color: var(--mov-color-fill-loud);\r\n  display: block;\r\n  opacity: 0.9;\r\n  position: absolute;\r\n  left: 0;\r\n  bottom: 30%;\r\n  width: 100%;\r\n  line-height: 1.2rem;\r\n  text-align: center;\r\n  font-weight: 600;\r\n  z-index: 1;\r\n}\r\n.ThumbnailImg {\r\n  cursor: pointer;\r\n  display: inline-block;\r\n  max-height: 150px;\r\n  min-height: 150px;\r\n  min-width: 80px;\r\n  max-width: 150px;\r\n  background-repeat: no-repeat;\r\n  background-position: center;\r\n  background-size: 48px 48px;\r\n}\r\n';
 
-  var __defProp$1 = Object.defineProperty;
-  var __getOwnPropDesc$3 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$3 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$3(target, key) : target;
+  var __defProp$3 = Object.defineProperty;
+  var __getOwnPropDesc$4 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$4 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$4(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$1(target, key, result);
+    if (kind && result) __defProp$3(target, key, result);
     return result;
   };
   let Navbar = class extends i$1 {
@@ -9709,6 +10513,7 @@
      * @returns The rendered template.
      */
     render() {
+      if (this.mode === 'disabled') return E;
       const manga = getAppStateValue('manga');
       const navClasses = {
         horizontal: this.mode === 'bottom',
@@ -9786,16 +10591,16 @@
       }
     `,
   ];
-  __decorateClass$3([n$1({ type: String })], Navbar.prototype, 'mode', 2);
-  __decorateClass$3([n$1({ type: Boolean })], Navbar.prototype, 'forceExpanded', 2);
-  __decorateClass$3([r$1()], Navbar.prototype, 'isHiding', 2);
-  Navbar = __decorateClass$3(
+  __decorateClass$4([n$1({ type: String })], Navbar.prototype, 'mode', 2);
+  __decorateClass$4([n$1({ type: Boolean })], Navbar.prototype, 'forceExpanded', 2);
+  __decorateClass$4([r$1()], Navbar.prototype, 'isHiding', 2);
+  Navbar = __decorateClass$4(
     [t$1('navbar-thumbnails'), libExports.useStores(settings$1, locale, appState)],
     Navbar,
   );
 
   const styles$2 =
-    '#CommentsPanel {\n  text-align: center;\n  --width: 100vw;\n}\n\n#CommentsArea {\n  overflow-y: auto;\n  overscroll-behavior: contain;\n  height: 100%;\n  width: 100%;\n  background-color: var(--theme-body-background);\n}\n';
+    '#CommentsPanel {\r\n  text-align: center;\r\n  --width: 100vw;\r\n}\r\n\r\n#CommentsArea {\r\n  overflow-y: auto;\r\n  overscroll-behavior: contain;\r\n  height: 100%;\r\n  width: 100%;\r\n  background-color: var(--theme-body-background);\r\n}\r\n';
 
   const themesCSS = (selector = '#MangaOnlineViewer', hex = getSettingsValue('theme')) => {
     const gradient = generateColorGradient(hex);
@@ -9804,7 +10609,8 @@
     const secondaryText = getTextColor(secondary);
     return css`
       :where(:root),
-      ${selector}, .dark ${selector}.dark {
+      ${selector}, .dark,
+      ${selector}.dark, ${selector}.wa-dark, .wa-dark {
         --theme-primary-color: ${hex};
         --theme-primary-text-color: ${text};
         --theme-secondary-color: ${secondary};
@@ -9828,12 +10634,24 @@
         --mov-color-on-normal: var(--theme-secondary-text-color, ${gradient[3]});
         --mov-color-on-loud: var(--theme-primary-text-color, white);
 
+        --wa-color-neutral-fill-quiet: var(--mov-color-fill-quiet);
+        --wa-color-neutral-fill-normal: var(--mov-color-fill-normal);
+        --wa-color-neutral-fill-loud: var(--mov-color-fill-loud);
+        --wa-color-neutral-border-quiet: var(--mov-color-border-quiet);
+        --wa-color-neutral-border-normal: var(--mov-color-border-normal);
+        --wa-color-neutral-border-loud: var(--mov-color-border-loud);
+        --wa-color-neutral-on-quiet: var(--mov-color-on-quiet);
+        --wa-color-neutral-on-normal: var(--mov-color-on-normal);
+        --wa-color-neutral-on-loud: var(--mov-color-on-loud);
+
         --mov-color-mix-hover: black 8%;
         --mov-color-mix-active: black 16%;
       }
 
+      ${selector}.light,
       .light,
-      ${selector}.light {
+    ${selector}.wa-light,
+    .wa-light {
         color-scheme: light;
         --theme-body-background: ${colors.gray['50']};
         --theme-body-text-color: ${colors.gray['900']};
@@ -9858,14 +10676,14 @@
     `;
   };
 
-  var __defProp = Object.defineProperty;
-  var __getOwnPropDesc$2 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$2 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$2(target, key) : target;
+  var __defProp$2 = Object.defineProperty;
+  var __getOwnPropDesc$3 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$3 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$3(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp(target, key, result);
+    if (kind && result) __defProp$2(target, key, result);
     return result;
   };
   let CommentsPanel = class extends i$1 {
@@ -9875,11 +10693,11 @@
     }
     render() {
       return x$1`
-      <mov-dialog
+      <wa-dialog
         id="CommentsPanel"
         ?open=${getAppStateValue('panel') === 'comments'}
-        fullscreen
-        @close=${buttonPanelsClose}
+        light-dismiss
+        @wa-after-hide=${buttonPanelsClose}
       >
         <h2 slot="label">${getLocaleString('COMMENTS')}</h2>
         <div
@@ -9896,7 +10714,7 @@
           ?active=${this.colorScheme === 'dark'}
         >
         </toggle-button>
-      </mov-dialog>
+      </wa-dialog>
     `;
     }
     /**
@@ -9908,8 +10726,8 @@
     }
   };
   CommentsPanel.styles = [r$4(styles$2), r$4(themesCSS(':host'))];
-  __decorateClass$2([r$1()], CommentsPanel.prototype, 'colorScheme', 2);
-  CommentsPanel = __decorateClass$2(
+  __decorateClass$3([r$1()], CommentsPanel.prototype, 'colorScheme', 2);
+  CommentsPanel = __decorateClass$3(
     [t$1('comments-panel'), libExports.useStores(settings$1, locale, appState)],
     CommentsPanel,
   );
@@ -10239,8 +11057,11 @@
   function changeColorScheme() {
     const isDark = getSettingsValue('colorScheme') === 'dark';
     saveSettingsValue('colorScheme', isDark ? 'light' : 'dark');
-    document.documentElement.classList.remove(isDark ? 'dark' : 'light');
-    document.documentElement.classList.add(getSettingsValue('colorScheme'));
+    document.documentElement.classList.remove('dark', 'light', 'wa-dark', 'wa-light');
+    document.documentElement.classList.add(
+      getSettingsValue('colorScheme'),
+      `wa-${getSettingsValue('colorScheme')}`,
+    );
   }
   function changeTheme(event) {
     const value = event instanceof CustomEvent ? event.detail.value : event.currentTarget.value;
@@ -10261,13 +11082,13 @@
     </div>
     <div class="ControlLabel ThemeSelector">
       <label>${getLocaleString('THEME_COLOR')}</label>
-      <color-picker
+      <wa-color-picker
         id="ThemeHex"
         .value="${getSettingsValue('theme')}"
         title="${getSettingsValue('theme')}"
         @input=${changeTheme}
         .swatches=${Object.values(sample)}
-      ></color-picker>
+      ></wa-color-picker>
     </div>
     <color-palette
       .baseColor="${getSettingsValue('theme')}"
@@ -10277,7 +11098,7 @@
     ></color-palette>
     <span id="ColorRecommendations">
       ${Object.values(sample).map(
-        c => x$1`<color-swatch
+        c => x$1` <color-swatch
             .color="${c}"
             .selected=${getSettingsValue('theme')}
             @change=${changeTheme}
@@ -10467,11 +11288,11 @@
     x$1`${defaultZoomMode()} ${zoomValue()} ${minZoom()} ${zoomStep()} ${viewMode()}`;
 
   const styles$1 =
-    '#SettingsPanel {\n  color: var(--theme-text-color);\n}\n\n#SettingsPanel fieldset {\n  border: 1px solid var(--theme-body-text-color);\n  padding: 3px;\n  border-radius: 10px;\n}\n\n#SettingsPanel .ControlLabel {\n  display: flex;\n  flex-flow: row wrap;\n  justify-content: space-between;\n  align-items: center;\n  padding: 2px;\n}\n\n#SettingsPanel .ControlLabelItem {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\n#SettingsPanel .ControlLabelItem:not(.show) {\n  display: none;\n}\n\n#SettingsPanel input[type="range"] {\n  width: 100%;\n}\n\n#SettingsPanel .RangeValue {\n  display: inline-block;\n  color: var(--mov-color-on-loud);\n  line-height: 20px;\n  text-align: center;\n  border-radius: 3px;\n  background: var(--mov-color-fill-loud);\n  padding: 2px 5px;\n  margin-left: 8px;\n}\n\n#SettingsPanel datalist {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  width: 100%;\n}\n\n#SettingsPanel datalist option {\n  padding: 0;\n  writing-mode: vertical-lr;\n}\n\n#ThemeSelector {\n  width: 110px;\n}\n\n#ColorRecommendations {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  gap: 2px;\n}\n#Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {\n  display: none;\n}\n\n#ColorScheme {\n  padding: 5px;\n  min-height: 28px;\n  min-width: 28px;\n}\n\n#ResetSettings,\n#ResetSettings::part(base) {\n  width: 100%;\n}\n';
+    '#SettingsPanel {\r\n  color: var(--theme-text-color);\r\n}\r\n\r\n#SettingsPanel fieldset {\r\n  border: 1px solid var(--theme-body-text-color);\r\n  padding: 3px;\r\n  border-radius: 10px;\r\n}\r\n\r\n#SettingsPanel .ControlLabel {\r\n  display: flex;\r\n  flex-flow: row wrap;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 2px;\r\n}\r\n\r\n#SettingsPanel .ControlLabelItem {\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: space-between;\r\n}\r\n\r\n#SettingsPanel .ControlLabelItem:not(.show) {\r\n  display: none;\r\n}\r\n\r\n#SettingsPanel input[type="range"] {\r\n  width: 100%;\r\n}\r\n\r\n#SettingsPanel .RangeValue {\r\n  display: inline-block;\r\n  color: var(--mov-color-on-loud);\r\n  line-height: 20px;\r\n  text-align: center;\r\n  border-radius: 3px;\r\n  background: var(--mov-color-fill-loud);\r\n  padding: 2px 5px;\r\n  margin-left: 8px;\r\n}\r\n\r\n#SettingsPanel datalist {\r\n  display: flex;\r\n  flex-direction: row;\r\n  justify-content: space-between;\r\n  width: 100%;\r\n}\r\n\r\n#SettingsPanel datalist option {\r\n  padding: 0;\r\n  writing-mode: vertical-lr;\r\n}\r\n\r\n#ThemeSelector {\r\n  width: 110px;\r\n}\r\n\r\n#ColorRecommendations {\r\n  display: flex;\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n  gap: 2px;\r\n}\r\n#Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {\r\n  display: none;\r\n}\r\n\r\n#ColorScheme {\r\n  padding: 5px;\r\n  min-height: 28px;\r\n  min-width: 28px;\r\n}\r\n\r\n#ResetSettings,\r\n#ResetSettings::part(base) {\r\n  width: 100%;\r\n}\r\n';
 
-  var __getOwnPropDesc$1 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$1 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$1(target, key) : target;
+  var __getOwnPropDesc$2 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$2 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$2(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i])) result = decorator(result) || result;
     return result;
@@ -10479,26 +11300,26 @@
   let SettingsPanel = class extends i$1 {
     render() {
       return x$1`
-      <mov-drawer
+      <wa-drawer
         id="SettingsPanel"
         ?open=${getAppStateValue('panel') === 'settings'}
-        @close=${buttonPanelsClose}
+        @wa-after-hide=${buttonPanelsClose}
         placement="start"
         class="${getAppStateValue('device')}"
       >
         <h2 slot="label">${getLocaleString('SETTINGS')}</h2>
-        <mov-button
+        <wa-button
           id="ResetSettings"
           @click="${resetSettings}"
           title="${getLocaleString('BUTTON_RESET_SETTINGS')}"
         >
-          <mov-icon
+          <wa-icon
             name="IconSettingsOff"
             size="20px"
             slot="start"
-          ></mov-icon>
+          ></wa-icon>
           ${getLocaleString('BUTTON_RESET_SETTINGS')}
-        </mov-button>
+        </wa-button>
         <div class="content">
           <fieldset id="SettingsPanelGeneral">
             <legend>${getLocaleString('GENERAL')}</legend>
@@ -10521,7 +11342,7 @@
             ${SettingsPanelOthers()}
           </fieldset>
         </div>
-      </mov-drawer>
+      </wa-drawer>
     `;
     }
   };
@@ -10542,7 +11363,7 @@
     `,
     r$4(styles$1),
   ];
-  SettingsPanel = __decorateClass$1(
+  SettingsPanel = __decorateClass$2(
     [t$1('settings-panel'), libExports.useStores(settings$1, locale, appState)],
     SettingsPanel,
   );
@@ -10608,7 +11429,8 @@
     attachListeners();
   }
 
-  function events() {
+  async function events() {
+    await waitForFunc(() => getAppStateValue('manga') !== void 0);
     keybindings();
     window.addEventListener('resize', () => {
       setAppStateValue('device', getDevice());
@@ -10757,6 +11579,10 @@
             addPage(manga, i, manga.listPages[i - 1]);
           }
         }
+      }
+      if (changedKey === 'loaded') {
+        const percent = value.loaded / (value.manga?.pages ?? 1);
+        document.title = `(${percent}%) ${value.manga?.title ?? 'Manga Online Viewer'}`;
       }
     });
   }
@@ -11065,19 +11891,19 @@
 `;
 
   const styles =
-    ':root:not(.light, .dark) {\n  --theme-body-background: #25262b;\n  --theme-body-text-color: #c1c2c5;\n  --theme-text-color: #c1c2c5;\n  --theme-primary-color: #1a1b1e;\n  --theme-primary-text-color: #c1c2c5;\n  --theme-background-color: #25262b;\n  --theme-hightlight-color: #2c2e33;\n  --theme-border-color: #373a40;\n  --theme-secondary-color: #2c2e33;\n  --theme-secondary-text-color: #c1c2c5;\n}\n\n:host {\n  box-sizing: border-box;\n}\n\n#MangaOnlineViewer {\n  text-decoration: none;\n  color: var(--theme-body-text-color);\n  background-color: var(--theme-body-background);\n  box-sizing: border-box;\n  min-height: 100vh;\n}\n\n#Chapter {\n  display: grid;\n  grid-template-columns: repeat(1, 1fr);\n  min-width: 225px;\n  box-sizing: border-box;\n}\n\n#Chapter.Vertical:has(+ #Navigation:not(.disabled)),\n#Chapter.WebComic:has(+ #Navigation:not(.disabled)) {\n  padding-bottom: 31px;\n}\n\n#Chapter.Vertical .PageContent {\n  margin-bottom: 8px;\n  margin-top: 8px;\n}\n\n.closeButton {\n  width: fit-content;\n  height: fit-content;\n  position: absolute;\n  right: 10px;\n  top: 10px;\n}\n\n.overlay {\n  position: fixed;\n  display: none;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 950;\n  cursor: pointer;\n}\n\n.overlay.visible {\n  display: block;\n}\n\nselect {\n  height: 20px;\n  margin: 2px;\n}\n\n:not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {\n  max-width: 100%;\n  object-fit: contain;\n}\n\n.hideControls .PageFunctions {\n  visibility: hidden;\n}\n';
+    ':root:not(.light, .dark) {\r\n  --theme-body-background: #25262b;\r\n  --theme-body-text-color: #c1c2c5;\r\n  --theme-text-color: #c1c2c5;\r\n  --theme-primary-color: #1a1b1e;\r\n  --theme-primary-text-color: #c1c2c5;\r\n  --theme-background-color: #25262b;\r\n  --theme-hightlight-color: #2c2e33;\r\n  --theme-border-color: #373a40;\r\n  --theme-secondary-color: #2c2e33;\r\n  --theme-secondary-text-color: #c1c2c5;\r\n}\r\n\r\n:host {\r\n  box-sizing: border-box;\r\n}\r\n\r\n#MangaOnlineViewer {\r\n  text-decoration: none;\r\n  color: var(--theme-body-text-color);\r\n  background-color: var(--theme-body-background);\r\n  box-sizing: border-box;\r\n  min-height: 100vh;\r\n}\r\n\r\n#Chapter {\r\n  display: grid;\r\n  grid-template-columns: repeat(1, 1fr);\r\n  min-width: 225px;\r\n  box-sizing: border-box;\r\n}\r\n\r\n#Chapter.Vertical:has(+ #Navigation:not(.disabled)),\r\n#Chapter.WebComic:has(+ #Navigation:not(.disabled)) {\r\n  padding-bottom: 31px;\r\n}\r\n\r\n#Chapter.Vertical .PageContent {\r\n  margin-bottom: 8px;\r\n  margin-top: 8px;\r\n}\r\n\r\n.closeButton {\r\n  width: fit-content;\r\n  height: fit-content;\r\n  position: absolute;\r\n  right: 10px;\r\n  top: 10px;\r\n}\r\n\r\n.overlay {\r\n  position: fixed;\r\n  display: none;\r\n  width: 100%;\r\n  height: 100%;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  background-color: rgba(0, 0, 0, 0.5);\r\n  z-index: 950;\r\n  cursor: pointer;\r\n}\r\n\r\n.overlay.visible {\r\n  display: block;\r\n}\r\n\r\nselect {\r\n  height: 20px;\r\n  margin: 2px;\r\n}\r\n\r\n:not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {\r\n  max-width: 100%;\r\n  object-fit: contain;\r\n}\r\n\r\n.hideControls .PageFunctions {\r\n  visibility: hidden;\r\n}\r\n';
 
   const animation =
-    '@-webkit-keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n\n@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n\n@-webkit-keyframes spin-reverse {\n  0% {\n    transform: rotate(360deg);\n  }\n\n  to {\n    transform: rotate(0);\n  }\n}\n\n@keyframes spin-reverse {\n  0% {\n    transform: rotate(360deg);\n  }\n\n  to {\n    transform: rotate(0);\n  }\n}\n\n.icon-tabler-loader-2,\n.animate-spin {\n  -webkit-animation: spin 1s linear infinite;\n  animation: spin 1s linear infinite;\n}\n\n.animate-spin-reverse {\n  -webkit-animation: spin-reverse 1s linear infinite;\n  animation: spin-reverse 1s linear infinite;\n}\n';
+    '@-webkit-keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\n@keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\n@-webkit-keyframes spin-reverse {\r\n  0% {\r\n    transform: rotate(360deg);\r\n  }\r\n\r\n  to {\r\n    transform: rotate(0);\r\n  }\r\n}\r\n\r\n@keyframes spin-reverse {\r\n  0% {\r\n    transform: rotate(360deg);\r\n  }\r\n\r\n  to {\r\n    transform: rotate(0);\r\n  }\r\n}\r\n\r\n.icon-tabler-loader-2,\r\n.animate-spin {\r\n  -webkit-animation: spin 1s linear infinite;\r\n  animation: spin 1s linear infinite;\r\n}\r\n\r\n.animate-spin-reverse {\r\n  -webkit-animation: spin-reverse 1s linear infinite;\r\n  animation: spin-reverse 1s linear infinite;\r\n}\r\n';
 
   const fluid =
-    '#Chapter.FluidLTR,\n#Chapter.FluidRTL {\n  display: flex;\n  overflow-x: auto;\n  min-width: auto;\n\n  .ZoomWidth {\n    display: none;\n  }\n\n  .PageImg {\n    min-width: unset;\n  }\n\n  .MangaPage {\n    width: initial;\n    min-width: fit-content;\n    position: relative;\n  }\n\n  .MangaPage.DoublePage {\n    grid-column: span 2;\n  }\n}\n\n#Chapter.FluidLTR {\n  flex-direction: row;\n\n  .MangaPage .PageFunctions {\n    right: auto;\n    left: 0;\n    direction: rtl;\n  }\n}\n\n#Chapter.FluidRTL {\n  flex-direction: row-reverse;\n}\n';
+    '#Chapter.FluidLTR,\r\n#Chapter.FluidRTL {\r\n  display: flex;\r\n  overflow-x: auto;\r\n  min-width: auto;\r\n\r\n  .ZoomWidth {\r\n    display: none;\r\n  }\r\n\r\n  .PageImg {\r\n    min-width: unset;\r\n  }\r\n\r\n  .MangaPage {\r\n    width: initial;\r\n    min-width: fit-content;\r\n    position: relative;\r\n  }\r\n\r\n  .MangaPage.DoublePage {\r\n    grid-column: span 2;\r\n  }\r\n}\r\n\r\n#Chapter.FluidLTR {\r\n  flex-direction: row;\r\n\r\n  .MangaPage .PageFunctions {\r\n    right: auto;\r\n    left: 0;\r\n    direction: rtl;\r\n  }\r\n}\r\n\r\n#Chapter.FluidRTL {\r\n  flex-direction: row-reverse;\r\n}\r\n';
 
   const page =
-    '.PageButton .icon-tabler {\n  height: 1rem;\n  width: 1rem;\n  vertical-align: sub;\n}\n\n.PageButton,\n.PageButton:visited,\n.PageButton:link {\n  cursor: pointer;\n  border-radius: 5px;\n  border-width: 1px;\n  border-style: solid;\n  padding: 2px;\n  min-height: 32px;\n  color: var(--mov-color-on-loud);\n  background-color: var(--mov-color-fill-loud);\n  border-color: var(--theme-border-color);\n  text-decoration: none;\n}\n\n.PageButton:active,\n.PageButton:hover {\n  opacity: 0.8;\n}\n\n.PageButton[selected] {\n  background-color: var(--mov-color-fill-normal);\n  color: var(--mov-color-on-normal);\n  border: 1px solid var(--theme-border-color);\n}\n\n.PageButton.hidden {\n  display: none;\n}\n\n.MangaPage {\n  width: 100%;\n  display: inline-block;\n  text-align: center;\n  line-height: 0;\n  min-height: 22px;\n  min-width: 100%;\n}\n\n.PageContent {\n  text-align: center;\n  display: inline-block;\n  overflow-x: auto;\n  max-width: 100%;\n  transition: all 0.3s ease-in-out;\n  height: 100%;\n  overflow-y: hidden;\n}\n\n.MangaPage.hide .PageContent {\n  height: 0;\n}\n\n.PageContent .PageImg[src=""],\n.PageContent .PageImg:not([src]),\n.PageContent .PageImg.imgBroken {\n  width: 40vw;\n  height: 80vh;\n  display: inline-block;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: 20%;\n  background-color: var(--theme-hightlight-color);\n  position: relative;\n  text-align: center;\n  line-height: 80vh;\n  vertical-align: top;\n  color: var(--theme-text-color);\n  font-size: 1rem;\n  min-width: 40vw;\n  min-height: 50vh;\n  max-width: 100%;\n  max-height: 100%;\n  margin: 0;\n}\n\n.PageContent .PageImg[src=""]:before,\n.PageContent .PageImg:not([src]):before,\n.PageContent .PageImg.imgBroken:before {\n  content: attr(alt);\n  position: absolute;\n  top: 40%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  white-space: pre-wrap;\n  text-align: center;\n  color: var(--theme-text-color);\n  font-size: 1rem;\n}\n\n.PageFunctions {\n  font-family: monospace;\n  display: flex;\n  justify-content: flex-end;\n  align-items: center;\n  margin: 0;\n  padding: 0;\n  gap: 3px;\n  position: absolute;\n  right: 0;\n}\n\n.PageFunctions > .PageIndex {\n  background-color: var(--mov-color-fill-loud);\n  color: var(--mov-color-on-loud);\n  min-width: 20px;\n  text-align: center;\n  display: inline-block;\n  padding: 3px 5px;\n  line-height: 1rem;\n  border-radius: 5px;\n}\n\n.PageFunctions .PageButton {\n  padding: 3px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  margin: 0;\n  border-width: 0;\n  min-height: auto;\n  opacity: 0.5;\n}\n\n.PageFunctions:hover .PageButton {\n  opacity: 1;\n}\n\n.PageFunctions .PageButton:hover {\n  opacity: 0.9;\n}\n\n#Chapter.Vertical .separator {\n  display: flex;\n  align-items: center;\n  text-align: center;\n  font-style: italic;\n}\n\n#Chapter.Vertical .separator::before,\n#Chapter.Vertical .separator::after {\n  content: "";\n  flex: 1;\n  border-bottom: 1px solid var(--theme-text-color);\n}\n\n#Chapter.Vertical.separator:not(:empty)::before {\n  margin-right: 0.25em;\n}\n\n#Chapter.Vertical.separator:not(:empty)::after {\n  margin-left: 0.25em;\n}\n\n#Chapter:not(.separator) .separator,\n#Chapter:not(.Vertical) .separator {\n  display: none;\n}\n';
+    '.PageButton .icon-tabler {\r\n  height: 1rem;\r\n  width: 1rem;\r\n  vertical-align: sub;\r\n}\r\n\r\n.PageButton,\r\n.PageButton:visited,\r\n.PageButton:link {\r\n  cursor: pointer;\r\n  border-radius: 5px;\r\n  border-width: 1px;\r\n  border-style: solid;\r\n  padding: 2px;\r\n  min-height: 32px;\r\n  color: var(--mov-color-on-loud);\r\n  background-color: var(--mov-color-fill-loud);\r\n  border-color: var(--theme-border-color);\r\n  text-decoration: none;\r\n}\r\n\r\n.PageButton:active,\r\n.PageButton:hover {\r\n  opacity: 0.8;\r\n}\r\n\r\n.PageButton[selected] {\r\n  background-color: var(--mov-color-fill-normal);\r\n  color: var(--mov-color-on-normal);\r\n  border: 1px solid var(--theme-border-color);\r\n}\r\n\r\n.PageButton.hidden {\r\n  display: none;\r\n}\r\n\r\n.MangaPage {\r\n  width: 100%;\r\n  display: inline-block;\r\n  text-align: center;\r\n  line-height: 0;\r\n  min-height: 22px;\r\n  min-width: 100%;\r\n}\r\n\r\n.PageContent {\r\n  text-align: center;\r\n  display: inline-block;\r\n  overflow-x: auto;\r\n  max-width: 100%;\r\n  transition: all 0.3s ease-in-out;\r\n  height: 100%;\r\n  overflow-y: hidden;\r\n}\r\n\r\n.MangaPage.hide .PageContent {\r\n  height: 0;\r\n}\r\n\r\n.PageContent .PageImg[src=""],\r\n.PageContent .PageImg:not([src]),\r\n.PageContent .PageImg.imgBroken {\r\n  width: 40vw;\r\n  height: 80vh;\r\n  display: inline-block;\r\n  background-position: center;\r\n  background-repeat: no-repeat;\r\n  background-size: 20%;\r\n  background-color: var(--theme-hightlight-color);\r\n  position: relative;\r\n  text-align: center;\r\n  line-height: 80vh;\r\n  vertical-align: top;\r\n  color: var(--theme-text-color);\r\n  font-size: 1rem;\r\n  min-width: 40vw;\r\n  min-height: 50vh;\r\n  max-width: 100%;\r\n  max-height: 100%;\r\n  margin: 0;\r\n}\r\n\r\n.PageContent .PageImg[src=""]:before,\r\n.PageContent .PageImg:not([src]):before,\r\n.PageContent .PageImg.imgBroken:before {\r\n  content: attr(alt);\r\n  position: absolute;\r\n  top: 40%;\r\n  left: 50%;\r\n  transform: translate(-50%, -50%);\r\n  white-space: pre-wrap;\r\n  text-align: center;\r\n  color: var(--theme-text-color);\r\n  font-size: 1rem;\r\n}\r\n\r\n.PageFunctions {\r\n  font-family: monospace;\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  align-items: center;\r\n  margin: 0;\r\n  padding: 0;\r\n  gap: 3px;\r\n  position: absolute;\r\n  right: 0;\r\n}\r\n\r\n.PageFunctions > .PageIndex {\r\n  background-color: var(--mov-color-fill-loud);\r\n  color: var(--mov-color-on-loud);\r\n  min-width: 20px;\r\n  text-align: center;\r\n  display: inline-block;\r\n  padding: 3px 5px;\r\n  line-height: 1rem;\r\n  border-radius: 5px;\r\n}\r\n\r\n.PageFunctions .PageButton {\r\n  padding: 3px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin: 0;\r\n  border-width: 0;\r\n  min-height: auto;\r\n  opacity: 0.5;\r\n}\r\n\r\n.PageFunctions:hover .PageButton {\r\n  opacity: 1;\r\n}\r\n\r\n.PageFunctions .PageButton:hover {\r\n  opacity: 0.9;\r\n}\r\n\r\n#Chapter.Vertical .separator {\r\n  display: flex;\r\n  align-items: center;\r\n  text-align: center;\r\n  font-style: italic;\r\n}\r\n\r\n#Chapter.Vertical .separator::before,\r\n#Chapter.Vertical .separator::after {\r\n  content: "";\r\n  flex: 1;\r\n  border-bottom: 1px solid var(--theme-text-color);\r\n}\r\n\r\n#Chapter.Vertical.separator:not(:empty)::before {\r\n  margin-right: 0.25em;\r\n}\r\n\r\n#Chapter.Vertical.separator:not(:empty)::after {\r\n  margin-left: 0.25em;\r\n}\r\n\r\n#Chapter:not(.separator) .separator,\r\n#Chapter:not(.Vertical) .separator {\r\n  display: none;\r\n}\r\n';
 
-  const normalize =
-    '/*  Simple Normalizer */\nhtml {\n  font-size: 100%;\n}\n\nbody {\n  margin: 0;\n  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;\n  font-size: 14px;\n  line-height: 20px;\n  color: var(--theme-body-text-color);\n  background-color: var(--theme-body-background);\n  padding: 0;\n}\n\na,\na:link,\na:visited,\na:active,\na:focus {\n  color: var(--theme-body-text-color);\n  text-decoration: none;\n}\n\nimg {\n  height: auto;\n  vertical-align: middle;\n  border: 0 none;\n}\n';
+  const normalize$1 =
+    '/*  Simple Normalizer */\r\nhtml {\r\n  font-size: 100%;\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;\r\n  font-size: 14px;\r\n  line-height: 20px;\r\n  color: var(--theme-body-text-color);\r\n  background-color: var(--theme-body-background);\r\n  padding: 0;\r\n}\r\n\r\na,\r\na:link,\r\na:visited,\r\na:active,\r\na:focus {\r\n  color: var(--theme-body-text-color);\r\n  text-decoration: none;\r\n}\r\n\r\nimg {\r\n  height: auto;\r\n  vertical-align: middle;\r\n  border: 0 none;\r\n}\r\n';
 
   const cssStyles = css`
     .PageContent .PageImg[src=''],
@@ -11089,7 +11915,7 @@
       background-image: url('${svgToUrl(IconPhotoOff$1)}');
     }
 
-    ${normalize}
+    ${normalize$1}
     ${styles}
   ${page}
   ${fluid}
@@ -11097,14 +11923,221 @@
   ${animation}
   `;
 
+  const startButton =
+    '#StartMOV {\r\n  all: revert;\r\n  backface-visibility: hidden;\r\n  font-size: 2rem;\r\n  color: #fff;\r\n  cursor: pointer;\r\n  margin: 0 auto;\r\n  padding: 0.5rem 1rem;\r\n  text-align: center;\r\n  border: none;\r\n  border-radius: 10px;\r\n  min-height: 50px;\r\n  width: 80%;\r\n  position: fixed;\r\n  right: 0;\r\n  left: 0;\r\n  bottom: 0;\r\n  z-index: 105000;\r\n  transition: all 0.4s ease-in-out;\r\n  background-size: 300% 100%;\r\n  background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\r\n  box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\r\n}\r\n\r\n#StartMOV:hover {\r\n  background-position: 100% 0;\r\n  transition: all 0.4s ease-in-out;\r\n}\r\n\r\n#StartMOV:focus {\r\n  outline: none;\r\n}\r\n';
+
+  var __defProp$1 = Object.defineProperty;
+  var __getOwnPropDesc$1 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$1 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$1(target, key) : target;
+    for (var i = decorators.length - 1, decorator; i >= 0; i--)
+      if ((decorator = decorators[i]))
+        result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+    if (kind && result) __defProp$1(target, key, result);
+    return result;
+  };
+  let MovStartup = class extends i$1 {
+    constructor() {
+      super(...arguments);
+      this.mangaPages = 0;
+      this.begin = 1;
+      this.end = 0;
+      this.timeoutMs = 3e3;
+      this.status = 'initial-prompt';
+    }
+    connectedCallback() {
+      super.connectedCallback();
+      if (this.status === 'initial-prompt') {
+        this.timeoutId = window.setTimeout(() => {
+          this.handleStart();
+        }, this.timeoutMs);
+      }
+    }
+    disconnectedCallback() {
+      super.disconnectedCallback();
+      window.clearTimeout(this.timeoutId);
+    }
+    handleStart() {
+      window.clearTimeout(this.timeoutId);
+      this.dispatchEvent(new CustomEvent('start', { detail: null }));
+    }
+    handleLateStart(begin, end) {
+      this.dispatchEvent(new CustomEvent('start', { detail: { begin, end } }));
+    }
+    handleButtonCLick() {
+      this.status = 'late-start-prompt';
+    }
+    handleDialogClose(e) {
+      if (e.eventPhase !== Event.AT_TARGET) {
+        e.stopPropagation();
+        e.preventDefault();
+        return;
+      }
+      window.clearTimeout(this.timeoutId);
+      this.status = 'late-start-button';
+    }
+    onSliderInput(e) {
+      const slider = e.target;
+      this.begin = slider.minValue;
+      this.end = slider.maxValue;
+    }
+    render() {
+      switch (this.status) {
+        case 'late-start-button':
+          return this.renderLateStartButton();
+        case 'late-start-prompt':
+          return this.renderLateStartPrompt();
+        case 'initial-prompt':
+        default:
+          return this.renderInitialPrompt();
+      }
+    }
+    renderInitialPrompt() {
+      return x$1`
+      <wa-dialog
+        ?open=${this.status === 'initial-prompt'}
+        @wa-hide=${this.handleDialogClose}
+      >
+        <span slot="label">${getLocaleString('STARTING')}</span>
+        <div class="display: flex; align-items: center; gap: 1rem; padding: 1rem;">
+          <wa-icon
+            name="IconInfoCircle"
+            style="font-size: 4rem"
+          ></wa-icon>
+          ${getLocaleString('WAITING')}
+        </div>
+        <div
+          slot="footer"
+          style="display: flex; justify-content: space-between; padding: 0.5rem 1rem 1rem;"
+        >
+          <wa-button
+            @click=${this.handleDialogClose}
+            variant="danger"
+          >
+            Cancel
+          </wa-button>
+          <wa-button
+            @click=${this.handleStart}
+            variant="success"
+          >
+            Start Now
+          </wa-button>
+        </div>
+      </wa-dialog>
+    `;
+    }
+    renderLateStartButton() {
+      return x$1`
+      <button
+        id="StartMOV"
+        @click=${this.handleButtonCLick}
+      >
+        ${getLocaleString('BUTTON_START')}
+      </button>
+    `;
+    }
+    renderLateStartPrompt() {
+      if (this.end === 0) {
+        this.end = this.mangaPages;
+      }
+      return x$1`
+      <wa-dialog
+        ?open=${this.status === 'late-start-prompt'}
+        @wa-hide=${this.handleDialogClose}
+      >
+        <span slot="label">${getLocaleString('STARTING')}</span>
+        <div class="display: flex; align-items: center; gap: 1rem; padding: 1rem;">
+          <wa-icon
+            name="IconHelp"
+            style="font-size: 4rem"
+          ></wa-icon>
+            ${getLocaleString('CHOOSE_BEGINNING')}
+            <div
+              id="pageInputGroup"
+              style="padding: 1rem 0;"
+            >
+              <div
+                style="display: flex; justify-content: space-between; font-family: monospace; padding-bottom: 5px;"
+              >
+                <span id="mov-min-page-display">${this.begin}</span>
+                <span id="mov-max-page-display">${this.end}</span>
+              </div>
+              <wa-slider
+                id="pagesSlider"
+                min="1"
+                max="${this.mangaPages}"
+                min-value="${this.begin}"
+                max-value="${this.end}"
+                step="1"
+                range
+                with-markers
+                with-tooltip
+                @input="${this.onSliderInput}"
+              >
+                <span slot="reference">1</span>
+                <span slot="reference">${Math.floor(this.mangaPages / 2)}</span>
+                <span slot="reference">${this.mangaPages}</span>
+              </wa-slider>
+            </div>
+        </div>
+        <div
+          slot="footer"
+          style="display: flex; justify-content: flex-end; gap: 0.5rem; padding: 0.5rem 1rem 1rem;"
+        >
+          <wa-button
+            @click=${this.handleDialogClose}
+            variant="danger"
+          >
+            Close
+          </wa-button>
+          <wa-button
+            @click=${() => this.handleLateStart(this.begin, this.end)}
+            variant="success"
+          >
+            Run
+          </wa-button>
+        </div>
+      </wa-dialog>
+    `;
+    }
+  };
+  MovStartup.styles = [r$4(startButton)];
+  __decorateClass$1([n$1({ type: Number, reflect: true })], MovStartup.prototype, 'mangaPages', 2);
+  __decorateClass$1([n$1({ type: Number, reflect: true })], MovStartup.prototype, 'begin', 2);
+  __decorateClass$1([n$1({ type: Number, reflect: true })], MovStartup.prototype, 'end', 2);
+  __decorateClass$1([n$1({ type: Number })], MovStartup.prototype, 'timeoutMs', 2);
+  __decorateClass$1([n$1({ type: String, reflect: true })], MovStartup.prototype, 'status', 2);
+  MovStartup = __decorateClass$1([t$1('script-startup')], MovStartup);
+
+  var __freeze = Object.freeze;
+  var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __decorateClass = (decorators, target, key, kind) => {
     var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
-      if ((decorator = decorators[i])) result = decorator(result) || result;
+      if ((decorator = decorators[i]))
+        result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+    if (kind && result) __defProp(target, key, result);
     return result;
   };
+  var __template = (cooked, raw) =>
+    __freeze(__defProp(cooked, 'raw', { value: __freeze(cooked.slice()) }));
+  var _a;
   let App = class extends i$1 {
+    constructor() {
+      super(...arguments);
+      this.loadMode = 'wait';
+    }
+    async start(begin, end) {
+      if (this.manga) {
+        setAppStateValue('manga', {
+          ...this.manga,
+          begin: begin ?? this.manga.begin,
+          pages: end ?? this.manga.pages,
+        });
+        document.documentElement.setAttribute('mov', '');
+      }
+    }
     /**
      * LitElement lifecycle hook, called after the component's first render.
      * It initializes global event listeners and registers the component's `shadowRoot`
@@ -11112,6 +12145,11 @@
      * that may need to interact with the DOM.
      */
     firstUpdated() {
+      if (this.loadMode === 'always') this.start();
+      document.documentElement.classList.add(
+        getSettingsValue('colorScheme'),
+        `wa-${getSettingsValue('colorScheme')}`,
+      );
       events();
       loadImages();
     }
@@ -11123,7 +12161,7 @@
      */
     render() {
       const manga = getAppStateValue('manga');
-      if (!manga) return x$1``;
+      const dialog = getAppStateValue('dialog');
       return x$1`
       <style>
         ${themesCSS()}
@@ -11141,43 +12179,552 @@
         })}"
         .locale="${getSettingsValue('locale')}"
       >
-        <reader-header .manga=${manga}></reader-header>
-        ${Reader(manga)}
-        ${getSettingsValue('navbar') !== 'disabled' ? x$1`<navbar-thumbnails .mode=${getSettingsValue('navbar')}></navbar-thumbnails>` : E}
         ${
-          getSettingsValue('pagination')
-            ? x$1` <manga-pagination
-              .startPage=${manga.begin}
-              .totalPages=${manga.pages}
-              .currentPage=${getAppStateValue('currentPage')}
-              .next=${manga.next}
-              .prev=${manga.prev}
-            ></manga-pagination>`
+          manga
+            ? x$1`
+              <reader-header .manga=${manga}></reader-header>
+              ${Reader(manga)}
+              <navbar-thumbnails
+                      .mode=${getSettingsValue('navbar')}
+                    ></navbar-thumbnails>
+              <manga-pagination
+                        .mode="${getSettingsValue('pagination')}"
+                      .startPage=${manga.begin}
+                      .totalPages=${manga.pages}
+                      .currentPage=${getAppStateValue('currentPage')}
+                      .next=${manga.next}
+                      .prev=${manga.prev}
+                    ></manga-pagination>
+              <comments-panel></comments-panel>
+              <keybindings-panel></keybindings-panel>
+              <bookmark-panel></bookmark-panel>
+              <settings-panel></settings-panel>
+              <moaqz-toaster dismissable></moaqz-toaster>
+              </div>`
+            : x$1(
+                _a ||
+                  (_a = __template([
+                    ' <script-startup\n              .mangaPages="',
+                    '"\n              begin="',
+                    '"\n              initialStatus="',
+                    '"\n              @start=',
+                    '\n            ><\/script-startup>',
+                  ])),
+                this.manga?.pages,
+                this.manga?.begin,
+                r(this.loadMode, [
+                  ['wait', () => 'initial-prompt'],
+                  ['never', () => 'late-start-button'],
+                ]),
+                e => {
+                  this.start(e.detail?.begin, e.detail?.end);
+                },
+              )
+        }
+        ${
+          dialog
+            ? x$1`
+              <wa-dialog
+                open
+                @wa-hide=${() => setAppStateValue('dialog', null)}
+              >
+                <span slot="label">${dialog.title}</span>
+                <div class="display: flex; align-items: center; gap: 1rem;">
+                  <wa-icon
+                    name="${dialog.icon}"
+                    style="font-size: 4rem"
+                  ></wa-icon>
+                  ${dialog.content}
+                </div>
+                ${dialog.footer}
+              </wa-dialog>
+            `
             : E
         }
-        <comments-panel></comments-panel>
-        <keybindings-panel></keybindings-panel>
-        <bookmark-panel></bookmark-panel>
-        <settings-panel></settings-panel>
       </div>
     `;
     }
   };
   App.styles = [i$3``, r$4(cssStyles)];
+  __decorateClass([n$1({ type: String, reflect: true })], App.prototype, 'loadMode', 2);
+  __decorateClass([n$1({ type: Object })], App.prototype, 'manga', 2);
   App = __decorateClass(
     [t$1('manga-online-viewer'), libExports.useStores(settings$1, locale, appState)],
     App,
   );
 
-  function display(manga) {
-    console.warn('Running Lit-ts');
-    cleanUpElement(document.documentElement, document.head, document.body);
-    window.scrollTo(0, 0);
-    logScriptVerbose(`Page Cleaned Up`);
-    document.head.innerHTML = head(manga);
-    document.body.innerHTML = `<manga-online-viewer></manga-online-viewer>`;
-    setAppStateValue('manga', manga);
+  const TOAST_EVENT = '@moaqzdev/toast';
+  class Toaster extends HTMLElement {
+    constructor() {
+      (super(), this.attachShadow({ mode: 'open' }));
+    }
+    async createToast({
+      title: o,
+      type: r,
+      description: c,
+      onConfirm: v,
+      onCancel: f,
+      confirmText: b = '\u2705',
+      cancelText: h = '\u274C',
+      duration: d = 3e3,
+    }) {
+      const a = this.shadowRoot.querySelector('#toast-tmpl').content.cloneNode(true),
+        t = {
+          container: a.querySelector('[data-toast]'),
+          title: a.querySelector('[data-title]'),
+          description: a.querySelector('[data-description]'),
+          actions: a.querySelector('[data-actions]'),
+          confirmBtn: a.querySelector("button[data-action-type='confirm']"),
+          cancelBtn: a.querySelector("button[data-action-type='cancel']"),
+          closeBtn: a.querySelector('[data-close-button]'),
+        };
+      ((t.title.textContent = o || ''),
+        t.container.setAttribute('data-type', r),
+        c == null ? t.description?.remove() : (t.description.textContent = c));
+      const n = () => this.removeToast(t.container);
+      if (
+        (r === 'confirm'
+          ? ((t.confirmBtn.textContent = b),
+            t.confirmBtn.addEventListener(
+              'click',
+              () => {
+                (v?.(), n());
+              },
+              { once: true },
+            ),
+            (t.cancelBtn.textContent = h),
+            t.cancelBtn.addEventListener(
+              'click',
+              () => {
+                (f?.(), n());
+              },
+              { once: true },
+            ))
+          : t.actions?.remove(),
+        this.hasAttribute('dismissable')
+          ? t.closeBtn.addEventListener('click', n, { once: true })
+          : t.closeBtn?.remove(),
+        this.shadowRoot.querySelector('[data-toaster]').appendChild(a),
+        d !== 'none')
+      ) {
+        const l = Math.max(Number.parseInt(d, 10) || 0, 3e3),
+          i = new AbortController(),
+          g = Date.now();
+        let e = null,
+          p = 0;
+        const u = () => {
+          (i.abort(), n());
+        };
+        let m = setTimeout(u, l);
+        const y = () => {
+            e == null && (clearTimeout(m), (e = Date.now()));
+          },
+          _ = () => {
+            e != null && ((p = e - g), (e = null), (m = setTimeout(u, Math.max(l - p, 0))));
+          };
+        (['focusin', 'pointerenter', 'mouseenter'].forEach(s => {
+          t.container.addEventListener(s, y, { signal: i.signal });
+        }),
+          ['focusout', 'pointerleave', 'mouseleave'].forEach(s => {
+            t.container.addEventListener(s, _, { signal: i.signal });
+          }));
+      }
+    }
+    removeToast(o) {
+      o.animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: 300,
+        easing: 'ease',
+        fill: 'forwards',
+      }).finished.then(() => o.remove());
+    }
+    handleEvent(o) {
+      if (o instanceof CustomEvent && o.type === TOAST_EVENT) {
+        const r = o.detail;
+        this.createToast(r);
+      }
+    }
+    connectedCallback() {
+      (this.render(), document.addEventListener(TOAST_EVENT, this));
+    }
+    disconnectedCallback() {
+      document.removeEventListener(TOAST_EVENT, this);
+    }
+    render() {
+      this.shadowRoot.innerHTML = `
+    <style>${Toaster.STYLES}</style>
+
+    <template id="toast-tmpl">
+      <li data-toast tabindex="0">
+        <button data-close-button aria-label="Close">
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="14" 
+            height="14" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+          </svg>
+        </button>
+        <p data-title></p>
+        <p data-description></p>
+        <div data-actions>
+          <button type="button" data-action-type="confirm"></button>
+          <button type="button" data-action-type="cancel"></button>
+        </div>
+      </li>
+    </template>
+
+    <ol data-toaster tabindex="-1"></ol>`;
+    }
+    static STYLES = `
+  * {
+    box-sizing: border-box;
   }
+
+  :host {
+    --_travel-distance: var(--toast-travel-distance, 5vh);
+
+    --_toast-background: var(--toast-background, #FCFCFC);
+    --_toast-border: var(--toast-border, #00000026);
+    --_toast-title: var(--toast-title, #000000DF);
+    --_toast-description: var(--toast-description, #0000009B);
+
+    --_toast-success: var(--toast-success, #00924BA4);
+    --_toast-error: var(--toast-error, #D2000571);
+    --_toast-warning: var(--toast-warning, #E35F00AA);
+    --_toast-info: var(--toast-info, #0084E6A1);
+    --_toast-confirm: var(--toast-confirm, #6600C06C);
+
+    --_toast-actions-direction: var(--toast-actions-direction, row);
+    --_toast-actions-justify: var(--toast-actions-justify, flex-end);
+    --_toast-actions-gap: var(--toast-actions-gap, 0.25rem);
+
+    --_toast-actions-confirm-text-color: var(--toast-actions-confirm-text-color, white);
+    --_toast-actions-confirm-background-color: var(--toast-actions-confirm-background-color, #00713FDE);
+    --_toast-actions-cancel-text-color: var(--toast-actions-cancel-text-color, white);
+    --_toast-actions-cancel-background-color: var(--toast-actions-cancel-background-color, #C40006D3);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :host {
+      --_toast-background: var(--toast-background, #111111);
+      --_toast-border: var(--toast-border,  #FFFFFF2C);
+      --_toast-title: var(--toast-title, #FFFFFFED);
+      --_toast-description: var(--toast-description, #FFFFFFAF);
+  
+      --_toast-success: var(--toast-success, #54FFAD73);
+      --_toast-error: var(--toast-error, #FF5D61B0);
+      --_toast-warning: var(--toast-warning, #FE84389D);
+      --_toast-info: var(--toast-info, #3094FEB9);
+      --_toast-confirm: var(--toast-confirm, #C47EFFA4);
+
+      --_toast-actions-confirm-text-color: var(--toast-actions-confirm-text-color, white);
+      --_toast-actions-confirm-background-color: var(--toast-actions-confirm-background-color, #54FFAD73);
+      --_toast-actions-cancel-text-color: var(--toast-actions-cancel-text-color, white);
+      --_toast-actions-cancel-background-color: var(--toast-actions-cancel-background-color, #FF5D61B0);
+    }
+  }
+
+  @keyframes slide-in {
+    from { 
+      transform: translateY(var(--_travel-distance)) 
+    }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0 }
+    to { opacity: 1 }
+  }
+
+  [data-toaster] {
+    --container-width: 20rem;
+
+    position: fixed;
+    z-index: 999;
+    width: var(--container-width);
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
+    top: 0;
+    right: 0;
+    pointer-events: none;
+    margin: 0;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+  }
+
+  :host([position="bottom-right"]) [data-toaster] {
+    top: 0;
+    right: 0;
+  }
+  
+  :host([position="bottom-left"]) [data-toaster] {
+    top: 0;
+    left: 0;
+  }
+
+  :host([position="bottom-center"]) [data-toaster] {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  :host([position="top-right"]) [data-toaster] {
+    top: 0;
+    right: 0;
+    flex-direction: column;
+  }
+  
+  :host([position="top-left"]) [data-toaster] {
+    top: 0;
+    left: 0;
+    flex-direction: column;
+  }
+
+  :host([position="top-center"]) [data-toaster] {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column;
+  }
+
+  [data-toast] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    position: relative;
+
+    pointer-events: none;
+    user-select: none;
+
+    list-style: none;
+    background-color: var(--_toast-background);
+    padding: 1rem;
+    border: 1px solid var(--_toast-border);
+    border-radius: 0.25rem;
+    pointer-events: all;
+
+    will-change: transform;
+    animation: fade-in .3s ease, slide-in .3s ease;
+
+    @media (prefers-reduced-motion: reduce){
+      --_travel-distance: 0;
+    }
+  
+    &[data-type="success"] {
+      border-top: 4px solid var(--_toast-success);
+    }
+  
+    &[data-type="error"] {
+      border-top: 4px solid var(--_toast-error);
+    }
+  
+    &[data-type="info"] {
+      border-top: 4px solid var(--_toast-info)
+    }
+
+    &[data-type="warning"] {
+      border-top: 4px solid var(--_toast-warning)
+    }
+
+    &[data-type="confirm"] {
+      border-top: 4px solid var(--_toast-confirm);
+    }
+  }
+
+  [data-close-button] {
+    --size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--size);
+    height: var(--size);
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: var(--_toast-title);
+    background-color: var(--_toast-background);
+    border-radius: 50%;
+    border: 1px solid var(--_toast-border);
+    padding: 0.125rem;
+    translate: -35% -35%;
+    cursor: pointer;
+  }
+
+  [data-actions] {
+    display: flex;
+    flex-direction: var(--_toast-actions-direction);
+    justify-content: var(--_toast-actions-justify);
+    gap: var(--_toast-actions-gap);
+    margin-top: 0.5rem;
+  }
+
+  button[data-action-type="confirm"],
+  button[data-action-type="cancel"] {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition-property: opacity;
+    transition-duration: 200ms;
+
+    &:hover,
+    &:focus {
+      opacity: 0.8;
+    }
+  }
+      
+  button[data-action-type="confirm"] {
+    color: var(--_toast-actions-confirm-text-color);
+    font-weight: 600;
+    background-color: var(--_toast-actions-confirm-background-color);
+  }
+
+  button[data-action-type="cancel"] {
+    color: var(--_toast-actions-cancel-text-color);
+    font-weight: 600;
+    background-color:var(--_toast-actions-cancel-background-color);
+  }
+  
+  [data-title], [data-description] {
+    margin: 0;
+    all: initial; 
+    font-family: inherit;
+    line-height: 1.5;
+  }
+
+  [data-title] {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--_toast-title);
+  }
+
+  [data-description] {
+    font-size: 0.875rem;
+    color: var(--_toast-description);
+    text-wrap: pretty;
+  }`;
+  }
+  customElements.define('moaqz-toaster', Toaster);
+
+  const tablerResolver = name =>
+    `https://cdn.jsdelivr.net/npm/@tabler/icons/icons/${toKebabCase(name)}.svg`;
+  __vitePreload(
+    () =>
+      import(
+        'https://early.webawesome.com/webawesome@3.0.0-beta.6/dist/components/button/button.js'
+      ),
+    false              ? __VITE_PRELOAD__ : void 0,
+  );
+  __vitePreload(
+    () =>
+      import(
+        // @ts-expect-error
+        'https://early.webawesome.com/webawesome@3.0.0-beta.6/dist/components/button-group/button-group.js'
+      ),
+    false              ? __VITE_PRELOAD__ : void 0,
+  );
+  __vitePreload(
+    () =>
+      import(
+        // @ts-expect-error
+        'https://early.webawesome.com/webawesome@3.0.0-beta.6/dist/components/color-picker/color-picker.js'
+      ),
+    false              ? __VITE_PRELOAD__ : void 0,
+  );
+  __vitePreload(
+    () =>
+      import(
+        'https://early.webawesome.com/webawesome@3.0.0-beta.6/dist/components/drawer/drawer.js'
+      ),
+    false              ? __VITE_PRELOAD__ : void 0,
+  );
+  __vitePreload(
+    () =>
+      import(
+        'https://early.webawesome.com/webawesome@3.0.0-beta.6/dist/components/dialog/dialog.js'
+      ),
+    false              ? __VITE_PRELOAD__ : void 0,
+  );
+  __vitePreload(
+    () =>
+      import(
+        'https://early.webawesome.com/webawesome@3.0.0-beta.6/dist/components/slider/slider.js'
+      ),
+    false              ? __VITE_PRELOAD__ : void 0,
+  );
+  __vitePreload(
+    () =>
+      import('https://early.webawesome.com/webawesome@3.0.0-beta.6/dist/components/icon/icon.js'),
+    false              ? __VITE_PRELOAD__ : void 0,
+  );
+  __vitePreload(
+    () =>
+      import(
+        // @ts-expect-error
+        'https://early.webawesome.com/webawesome@3.0.0-beta.6/dist/components/dropdown/dropdown.js'
+      ),
+    false              ? __VITE_PRELOAD__ : void 0,
+  );
+  __vitePreload(
+    () => import('https://early.webawesome.com/webawesome@3.0.0-beta.6/dist/webawesome.js'),
+    false              ? __VITE_PRELOAD__ : void 0,
+  ).then(wa => {
+    wa.setBasePath('https://early.webawesome.com/webawesome@3.0.0-beta.6/dist/');
+    wa.registerIconLibrary('default', {
+      resolver: (name, family) => {
+        const customIcon =
+          family === 'unstyled' ? rawIcons[toPascalCase(name)] : styledIcons$1[toPascalCase(name)];
+        if (customIcon) {
+          return `data:image/svg+xml,${encodeURIComponent(customIcon)}`;
+        }
+        return tablerResolver(name);
+      },
+      mutator: svg => {
+        svg.style.fill = 'none';
+        svg.setAttribute('height', 'auto');
+        svg.setAttribute('width', 'auto');
+        svg.setAttribute('stroke', 'currentColor');
+      },
+    });
+  });
+
+  const normalize =
+    '/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */\n\n/* Document\n   ========================================================================== */\n\n/**\n * 1. Correct the line height in all browsers.\n * 2. Prevent adjustments of font size after orientation changes in iOS.\n */\n\nhtml {\n  line-height: 1.15; /* 1 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/* Sections\n   ========================================================================== */\n\n/**\n * Remove the margin in all browsers.\n */\n\nbody {\n  margin: 0;\n}\n\n/**\n * Render the `main` element consistently in IE.\n */\n\nmain {\n  display: block;\n}\n\n/**\n * Correct the font size and margin on `h1` elements within `section` and\n * `article` contexts in Chrome, Firefox, and Safari.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * 1. Add the correct box sizing in Firefox.\n * 2. Show the overflow in Edge and IE.\n */\n\nhr {\n  box-sizing: content-box; /* 1 */\n  height: 0; /* 1 */\n  overflow: visible; /* 2 */\n}\n\n/**\n * 1. Correct the inheritance and scaling of font size in all browsers.\n * 2. Correct the odd `em` font sizing in all browsers.\n */\n\npre {\n  font-family: monospace, monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Remove the gray background on active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * 1. Remove the bottom border in Chrome 57-\n * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.\n */\n\nabbr[title] {\n  border-bottom: none; /* 1 */\n  text-decoration: underline; /* 2 */\n  text-decoration: underline dotted; /* 2 */\n}\n\n/**\n * Add the correct font weight in Chrome, Edge, and Safari.\n */\n\nb,\nstrong {\n  font-weight: bolder;\n}\n\n/**\n * 1. Correct the inheritance and scaling of font size in all browsers.\n * 2. Correct the odd `em` font sizing in all browsers.\n */\n\ncode,\nkbd,\nsamp {\n  font-family: monospace, monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/**\n * Add the correct font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` elements from affecting the line height in\n * all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\nsup {\n  top: -0.5em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove the border on images inside links in IE 10.\n */\n\nimg {\n  border-style: none;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * 1. Change the font styles in all browsers.\n * 2. Remove the margin in Firefox and Safari.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  font-family: inherit; /* 1 */\n  font-size: 100%; /* 1 */\n  line-height: 1.15; /* 1 */\n  margin: 0; /* 2 */\n}\n\n/**\n * Show the overflow in IE.\n * 1. Show the overflow in Edge.\n */\n\nbutton,\ninput { /* 1 */\n  overflow: visible;\n}\n\n/**\n * Remove the inheritance of text transform in Edge, Firefox, and IE.\n * 1. Remove the inheritance of text transform in Firefox.\n */\n\nbutton,\nselect { /* 1 */\n  text-transform: none;\n}\n\n/**\n * Correct the inability to style clickable types in iOS and Safari.\n */\n\nbutton,\n[type="button"],\n[type="reset"],\n[type="submit"] {\n  -webkit-appearance: button;\n}\n\n/**\n * Remove the inner border and padding in Firefox.\n */\n\nbutton::-moz-focus-inner,\n[type="button"]::-moz-focus-inner,\n[type="reset"]::-moz-focus-inner,\n[type="submit"]::-moz-focus-inner {\n  border-style: none;\n  padding: 0;\n}\n\n/**\n * Restore the focus styles unset by the previous rule.\n */\n\nbutton:-moz-focusring,\n[type="button"]:-moz-focusring,\n[type="reset"]:-moz-focusring,\n[type="submit"]:-moz-focusring {\n  outline: 1px dotted ButtonText;\n}\n\n/**\n * Correct the padding in Firefox.\n */\n\nfieldset {\n  padding: 0.35em 0.75em 0.625em;\n}\n\n/**\n * 1. Correct the text wrapping in Edge and IE.\n * 2. Correct the color inheritance from `fieldset` elements in IE.\n * 3. Remove the padding so developers are not caught out when they zero out\n *    `fieldset` elements in all browsers.\n */\n\nlegend {\n  box-sizing: border-box; /* 1 */\n  color: inherit; /* 2 */\n  display: table; /* 1 */\n  max-width: 100%; /* 1 */\n  padding: 0; /* 3 */\n  white-space: normal; /* 1 */\n}\n\n/**\n * Add the correct vertical alignment in Chrome, Firefox, and Opera.\n */\n\nprogress {\n  vertical-align: baseline;\n}\n\n/**\n * Remove the default vertical scrollbar in IE 10+.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * 1. Add the correct box sizing in IE 10.\n * 2. Remove the padding in IE 10.\n */\n\n[type="checkbox"],\n[type="radio"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Correct the cursor style of increment and decrement buttons in Chrome.\n */\n\n[type="number"]::-webkit-inner-spin-button,\n[type="number"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Correct the odd appearance in Chrome and Safari.\n * 2. Correct the outline style in Safari.\n */\n\n[type="search"] {\n  -webkit-appearance: textfield; /* 1 */\n  outline-offset: -2px; /* 2 */\n}\n\n/**\n * Remove the inner padding in Chrome and Safari on macOS.\n */\n\n[type="search"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * 1. Correct the inability to style clickable types in iOS and Safari.\n * 2. Change font properties to `inherit` in Safari.\n */\n\n::-webkit-file-upload-button {\n  -webkit-appearance: button; /* 1 */\n  font: inherit; /* 2 */\n}\n\n/* Interactive\n   ========================================================================== */\n\n/*\n * Add the correct display in Edge, IE 10+, and Firefox.\n */\n\ndetails {\n  display: block;\n}\n\n/*\n * Add the correct display in all browsers.\n */\n\nsummary {\n  display: list-item;\n}\n\n/* Misc\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 10+.\n */\n\ntemplate {\n  display: none;\n}\n\n/**\n * Add the correct display in IE 10.\n */\n\n[hidden] {\n  display: none;\n}\n';
+
+  const nprogress =
+    '/* Make clicks pass-through */\n#nprogress {\n  pointer-events: none;\n}\n\n#nprogress .bar {\n  background: #29d;\n\n  position: fixed;\n  z-index: 1031;\n  top: 0;\n  left: 0;\n\n  width: 100%;\n  height: 2px;\n}\n\n/* Fancy blur effect */\n#nprogress .peg {\n  display: block;\n  position: absolute;\n  right: 0px;\n  width: 100px;\n  height: 100%;\n  box-shadow: 0 0 10px #29d, 0 0 5px #29d;\n  opacity: 1.0;\n\n  -webkit-transform: rotate(3deg) translate(0px, -4px);\n      -ms-transform: rotate(3deg) translate(0px, -4px);\n          transform: rotate(3deg) translate(0px, -4px);\n}\n\n/* Remove these to get rid of the spinner */\n#nprogress .spinner {\n  display: block;\n  position: fixed;\n  z-index: 1031;\n  top: 15px;\n  right: 15px;\n}\n\n#nprogress .spinner-icon {\n  width: 18px;\n  height: 18px;\n  box-sizing: border-box;\n\n  border: solid 2px transparent;\n  border-top-color: #29d;\n  border-left-color: #29d;\n  border-radius: 50%;\n\n  -webkit-animation: nprogress-spinner 400ms linear infinite;\n          animation: nprogress-spinner 400ms linear infinite;\n}\n\n.nprogress-custom-parent {\n  overflow: hidden;\n  position: relative;\n}\n\n.nprogress-custom-parent #nprogress .spinner,\n.nprogress-custom-parent #nprogress .bar {\n  position: absolute;\n}\n\n@-webkit-keyframes nprogress-spinner {\n  0%   { -webkit-transform: rotate(0deg); }\n  100% { -webkit-transform: rotate(360deg); }\n}\n@keyframes nprogress-spinner {\n  0%   { transform: rotate(0deg); }\n  100% { transform: rotate(360deg); }\n}\n\n';
+
+  const fix =
+    '#nprogress .bar {\r\n  background: #29d;\r\n  position: fixed;\r\n  z-index: 1031;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 4px;\r\n}\r\n\r\nhtml[mov] body > *:not(manga-online-viewer) {\r\n  display: none !important;\r\n}\r\n';
+
+  const externalCSS = [normalize, nprogress, fix].join('\n');
+
+  function removeAllEventListeners(element) {
+    if (!element?.parentNode) {
+      return element;
+    }
+    const newElement = element.cloneNode(true);
+    element.parentNode.replaceChild(newElement, element);
+    return newElement;
+  }
+  const removeAttributes = element => {
+    element.getAttributeNames().forEach(attr => {
+      element?.removeAttribute(attr);
+    });
+  };
+  const cleanUpElement = (...elements) => {
+    elements?.forEach(removeAttributes);
+    elements?.forEach(removeAllEventListeners);
+  };
 
   async function captureComments() {
     if (!getSettingsValue('enableComments')) return null;
@@ -11204,7 +12751,12 @@
     window.scrollTo(0, 0);
     return comments;
   }
-  async function viewer(manga) {
+  async function preparePage([site, manga]) {
+    logScript(`Found Pages: ${manga.pages} in ${site?.name}`);
+    if (!manga.title) {
+      manga.title = document.querySelector('title')?.textContent?.trim();
+    }
+    manga.begin = isBookmarked() ?? manga.begin ?? 1;
     if (manga.before !== void 0) {
       logScriptVerbose(`Executing Preparation`);
       await manga.before(manga.begin ?? 0);
@@ -11212,286 +12764,15 @@
     if (getSettingsValue('enableComments') && !manga.comments) {
       manga.comments = await captureComments();
     }
-    setTimeout(() => {
-      try {
-        display(manga);
-      } catch (e) {
-        logScript(e);
-      }
-    }, 50);
-  }
-
-  const fileTypes = [
-    'image/apng',
-    'image/bmp',
-    'image/gif',
-    'image/jpeg',
-    'image/pjpeg',
-    'image/png',
-    'image/svg+xml',
-    'image/tiff',
-    'image/webp',
-    'image/x-icon',
-  ];
-  const fileImageExt = /.(png|jpg|jpeg|gif|bmp|webp)$/i;
-  const orderFiles = (a, b) =>
-    a.localeCompare(b, navigator.languages[0] || navigator.language, {
-      numeric: true,
-      ignorePunctuation: true,
-    });
-  function validFileType(file) {
-    return fileTypes.includes(file.type);
-  }
-  const getImageBlob = content => {
-    const buffer = new Uint8Array(content);
-    const blob = new Blob([buffer.buffer]);
-    return URL.createObjectURL(blob);
-  };
-  async function loadZipFile(filePath) {
-    const zip = await JSZip.loadAsync(filePath);
-    const files = zip
-      .filter((_, file) => !file.dir && fileImageExt.test(file.name))
-      .sort((a, b) => orderFiles(a.name, b.name));
-    logScript('Files in zip:', zip.files);
-    return Promise.all(files.map(file => file.async('arraybuffer').then(getImageBlob)));
-  }
-  function displayUploadedFiles(title, listImages) {
-    viewer({
-      title,
-      series: '?reload',
-      pages: listImages.length,
-      begin: 1,
-      prev: '#',
-      next: '#',
-      lazy: false,
-      listImages,
-    }).then(() => logScript('Page loaded'));
-  }
-  async function loadMangaFromZip(zipFile) {
-    const listImages = await loadZipFile(zipFile);
-    displayUploadedFiles(typeof zipFile === 'string' ? zipFile : zipFile.name, listImages);
-  }
-  function openFileImages(evt) {
-    const input = evt.target;
-    const files = Array.from(input.files)
-      .filter(validFileType)
-      .sort((a, b) => orderFiles(a.webkitRelativePath || a.name, b.webkitRelativePath || b.name));
-    logScript(
-      'Local Files: ',
-      files,
-      files.map(f => f.webkitRelativePath || f.name),
-    );
-    if (input.files?.[0]) {
-      displayUploadedFiles(
-        input.files[0].webkitRelativePath.split('/')[0] || 'Local Images',
-        files.map(URL.createObjectURL),
-      );
-    }
-  }
-  function allowUpload() {
-    if (localhost.url.test(window.location.href)) {
-      if (document.querySelector('#MangaOnlineViewer, #LocalTest')) {
-        document.querySelector('#LocalTest')?.setAttribute('style', 'display:none');
-        document.querySelector('#file')?.addEventListener('change', evt => {
-          const input = evt.target;
-          if (input.files?.[0]) loadMangaFromZip(input.files[0]);
-        });
-        document.querySelector('#folder')?.addEventListener('change', openFileImages);
-        document.querySelector('#images')?.addEventListener('change', openFileImages);
-        logScript(`Waiting for zip/images upload`);
-      }
-      return true;
-    }
-    return false;
-  }
-
-  function validateMin(valBegin, endPage, rs) {
-    let val = valBegin;
-    if (Number.isNaN(val) || val < rs.min()) {
-      val = rs.min();
-    } else if (val > rs.max()) {
-      val = rs.max();
-    } else if (val > endPage) {
-      val = endPage;
-    }
-    return val;
-  }
-  function validateMax(valEnd, beginPage, rs) {
-    let val = valEnd;
-    if (Number.isNaN(val) || val > rs.max()) {
-      val = rs.max();
-    } else if (val < rs.min()) {
-      val = rs.min();
-    } else if (val < beginPage) {
-      val = beginPage;
-    }
-    return val;
-  }
-  async function lateStart(site, begin = 1) {
-    const manga = await site.run();
-    logScript('LateStart');
-    let beginPage = begin;
-    let endPage = manga.pages;
-    const options = {
-      title: getLocaleString('STARTING'),
-      html: html`
-        ${getLocaleString('CHOOSE_BEGINNING')}
-        <div id="pageInputGroup">
-          <div id="pageInputs">
-            <input
-              type="number"
-              id="pageBegin"
-              class="pageInput"
-              min="1"
-              inputmode="numeric"
-              pattern="[0-9]*"
-              max="${manga.pages}"
-              value="${beginPage}"
-            />
-            -
-            <input
-              type="number"
-              id="pageEnd"
-              class="pageInput"
-              min="1"
-              inputmode="numeric"
-              pattern="[0-9]*"
-              max="${manga.pages}"
-              value="${endPage}"
-            />
-          </div>
-          <div id="pagesSlider"></div>
-        </div>
-      `,
-      showCancelButton: true,
-      cancelButtonColor: '#d33',
-      reverseButtons: true,
-      icon: 'question',
-      didOpen() {
-        const pageBeginInput = document.querySelector('#pageBegin');
-        const pageEndInput = document.querySelector('#pageEnd');
-        const inputSlider = document.getElementById('pagesSlider');
-        if (inputSlider) {
-          let changedInput = function () {
-            if (
-              (pageBeginInput && pageBeginInput.value === '') ||
-              (pageEndInput && pageEndInput.value === '')
-            ) {
-              return;
-            }
-            const valBegin = validateMin(
-              parseInt(pageBeginInput?.value ?? '0', 10),
-              endPage,
-              rangeSliderElement,
-            );
-            const valEnd = validateMax(
-              parseInt(pageEndInput?.value ?? '0', 10),
-              beginPage,
-              rangeSliderElement,
-            );
-            if (pageBeginInput) pageBeginInput.value = valBegin.toString();
-            if (pageEndInput) pageEndInput.value = valEnd.toString();
-            beginPage = valBegin;
-            endPage = valEnd;
-            rangeSliderElement.value([valBegin, valEnd]);
-          };
-          const rangeSliderElement = rangeSlider(inputSlider, {
-            min: 1,
-            max: manga.pages,
-            value: [beginPage, endPage],
-            onInput(value, userInteraction) {
-              if (userInteraction) {
-                [beginPage, endPage] = value;
-                if (pageBeginInput) {
-                  pageBeginInput.value = beginPage.toString();
-                }
-                if (pageEndInput) {
-                  pageEndInput.value = endPage.toString();
-                }
-              }
-            },
-          });
-          const observerEvent = _.debounce(changedInput, 600);
-          ['change', 'mouseup', 'keyup', 'touchend'].forEach(event => {
-            pageBeginInput?.addEventListener(event, observerEvent);
-            pageEndInput?.addEventListener(event, observerEvent);
-          });
-        }
-      },
-    };
-    Swal.fire(options).then(result => {
-      if (result.value) {
-        logScript(`Choice: ${beginPage} - ${endPage}`);
-        manga.begin = beginPage;
-        manga.pages = endPage;
-        viewer(manga).then(() => logScript('Page loaded'));
-      } else {
-        logScript(result.dismiss);
-      }
-    });
-  }
-  function createLateStartButton(site, beginning) {
-    const button = document.createElement('button');
-    button.innerText = getLocaleString('BUTTON_START');
-    button.id = 'StartMOV';
-    button.onclick = () => {
-      lateStart(site, beginning).catch(logScript);
-    };
-    document.body.appendChild(button);
-    const style = document.createElement('style');
-    style.appendChild(document.createTextNode(startButton + rangeSliderStyles));
-    document.head.appendChild(style);
-    logScript('Start Button added to page', button);
-  }
-  function showWaitPopup(site, manga) {
-    Swal.fire({
-      title: getLocaleString('STARTING'),
-      html: html`${manga.begin && manga.begin > 1
-        ? `${getLocaleString('RESUME')}${manga.begin}.<br/>`
-        : ''}${getLocaleString('WAITING')}`,
-      showCancelButton: true,
-      cancelButtonColor: '#d33',
-      reverseButtons: true,
-      timer: 3e3,
-    }).then(result => {
-      if (result.value || result.dismiss === Swal.DismissReason.timer) {
-        viewer(manga).then(() => logScript('Page loaded'));
-      } else {
-        createLateStartButton(site, manga.begin ?? 0);
-        logScript(result.dismiss);
-      }
-    });
-  }
-  async function preparePage([site, manga]) {
-    logScript(`Found Pages: ${manga.pages} in ${site.name}`);
-    if (!manga.title) {
-      manga.title = document.querySelector('title')?.textContent?.trim();
-    }
-    manga.begin = isBookmarked() ?? manga.begin ?? 1;
-    const style = document.createElement('style');
-    style.appendChild(document.createTextNode(sweetalertStyle));
-    document.body.appendChild(style);
-    giveToWindow('MOV', (startPage, endPage) => {
-      if (startPage !== void 0) {
-        manga.begin = startPage;
-      }
-      if (endPage !== void 0) {
-        manga.pages = endPage;
-      }
-      viewer(manga).then(() => logScript('Page loaded'));
-    });
-    switch (site.start ?? getSettingsValue('loadMode')) {
-      case 'never':
-        createLateStartButton(site, manga.begin);
-        break;
-      case 'always':
-        viewer(manga).then(() => logScript('Page loaded'));
-        break;
-      // case 'wait':
-      default:
-        showWaitPopup(site, manga);
-        break;
-    }
+    cleanUpElement(document.documentElement, document.head, document.body);
+    window.scrollTo(0, 0);
+    document.head.innerHTML += wrapStyle('externals', externalCSS);
+    document.head.innerHTML +=
+      '<link rel="stylesheet" href="https://early.webawesome.com/webawesome@3.0.0-beta.6/dist/styles/webawesome.css" />';
+    const viewer = document.createElement('manga-online-viewer');
+    viewer.loadMode = site?.start ?? getSettingsValue('loadMode');
+    viewer.manga = manga;
+    document.body.appendChild(viewer);
   }
   async function start(sites) {
     logScript(
