@@ -1,5 +1,5 @@
-import type { Ref } from 'lit/directives/ref.js';
 import type { TemplateResult } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 import type { IManga } from './IManga';
 
 /**

@@ -78,7 +78,6 @@ export class MovStartup extends LitElement {
         return this.renderLateStartButton();
       case 'late-start-prompt':
         return this.renderLateStartPrompt();
-      case 'initial-prompt':
       default:
         return this.renderInitialPrompt();
     }
