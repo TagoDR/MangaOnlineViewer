@@ -13,8 +13,8 @@ const mgeko: ISite = {
       title: document.querySelector('.titles')?.textContent?.trim(),
       series: document.querySelector('.titles a')?.getAttribute('href'),
       pages: images.length,
-      prev: document.querySelector('.chnav.prev')?.getAttribute('href'),
-      next: document.querySelector('.chnav.next')?.getAttribute('href'),
+      prev: document.querySelector('.chnav.prev:not(.isDisabled)')?.getAttribute('href'),
+      next: document.querySelector('.chnav.next:not(.isDisabled)')?.getAttribute('href'),
       listImages: images.map(img => img.getAttribute('src') ?? ''),
     };
   },
