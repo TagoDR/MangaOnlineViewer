@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 import '../../ui/components/SegmentedControl.ts';
+import sequence from '../../utils/sequence.ts';
 
 const sizes = ['small', 'medium', 'large'];
 const positions = ['side', 'bottom', 'tooltip'];
@@ -132,26 +133,26 @@ export const Sizes: Story = {
                 size="${s}"
                 @change=${(e: CustomEvent) => args.onChange(e.detail)}
               >
-                ${new Array(args.quantity).fill(0).map(
-                  () =>
+                ${sequence(args.quantity).map(
+                  index =>
                     html`<segmented-control-option
-                        value="photos"
-                        label="Photos"
+                        value="photos${index}"
+                        label="Photos${index}"
                         icon="photo"
                       ></segmented-control-option>
                       <segmented-control-option
-                        value="messages"
-                        label="Messages"
+                        value="messages${index}"
+                        label="Messages${index}"
                         icon="message"
                       ></segmented-control-option>
                       <segmented-control-option
-                        value="settings"
-                        label="Settings"
+                        value="settings${index}"
+                        label="Settings${index}"
                         icon="settings"
                       ></segmented-control-option>
                       <segmented-control-option
-                        value="Menu"
-                        label="Menu"
+                        value="Menu${index}"
+                        label="Menu${index}"
                         icon="book-return"
                       ></segmented-control-option>`,
                 )}

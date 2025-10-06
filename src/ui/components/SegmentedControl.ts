@@ -24,7 +24,7 @@ declare global {
 
 /**
  * A control that allows users to select one option from a set, presented as a row of connected buttons.
- * It is built upon native radio inputs for accessibility and form integration.
+ * It is a fully custom component, eliminating the need for hidden radio inputs.
  *
  * @element segmented-control
  *
@@ -38,7 +38,7 @@ export class SegmentedControl extends LitElement {
    * The currently selected value. This should correspond to the `value` property of one of the options.
    * @type {string}
    */
-  @property({ type: String })
+  @property({ type: String, reflect: true })
   value = '';
 
   /**
@@ -98,18 +98,20 @@ export class SegmentedControl extends LitElement {
     .option {
       flex: 1;
       text-align: center;
-      z-index: 2;
+      z-index: 2; /* Ensure button is above thumb */
+      position: relative; /* Needed to correctly position the button */
     }
-    input {
-      display: none;
-    }
-    .label {
+
+    .button {
+      /* The button now acts as the interactive label */
+      width: 100%;
       display: flex;
       cursor: pointer;
       align-items: center;
       justify-content: center;
       border-radius: 0.5rem;
       border: none;
+      /* Default colors when not selected */
       color: var(--theme-text-color);
       background-color: transparent;
       transition: color 0.15s ease-in-out;
@@ -117,30 +119,37 @@ export class SegmentedControl extends LitElement {
       gap: 0.25rem;
       padding: 0.5rem 0.75rem; /* Default padding (medium) */
       font-size: 1rem; /* Default font-size (medium) */
+      box-sizing: border-box; /* Include padding/border in element's total width/height */
     }
-    .label.small {
+
+    /* Selected State Styles - Driven by the 'selected' class */
+    .button.selected {
+      color: var(--mov-color-on-loud);
+      font-weight: 600;
+    }
+
+    /* Size Variations */
+    .button.small {
       padding: 0.25rem 0.5rem;
       font-size: 0.875rem;
     }
-    .label.large {
+    .button.large {
       padding: 0.75rem 1rem;
       font-size: 1.125rem;
     }
-    .label.bottom {
+
+    /* Label Position Variations */
+    .button.bottom {
       flex-direction: column;
     }
-    .label.bottom.small {
+    .button.bottom.small {
       padding: 0.25rem;
     }
-    .label.bottom.medium {
+    .button.bottom.medium {
       padding: 0.5rem;
     }
-    .label.bottom.large {
+    .button.bottom.large {
       padding: 0.75rem;
-    }
-    input:checked + .label {
-      color: var(--mov-color-on-loud);
-      font-weight: 600;
     }
   `;
 
@@ -155,18 +164,24 @@ export class SegmentedControl extends LitElement {
   }
 
   /**
-   * Handles the change event from the internal radio inputs, updates the component's value,
+   * Handles the click event on an option button, updates the component's value,
    * and dispatches a `change` event.
    * @internal
    */
-  private handleChange(event: Event) {
-    const target = event.currentTarget as HTMLInputElement;
-    this.value = target.value;
+  private handleClick(_event: Event, value: string) {
+    // The value might be the same as 'this.value' (user clicked the selected option),
+    // but we still update the state and dispatch the event.
+    this.value = value;
+
     this.dispatchEvent(
       new CustomEvent('change', { detail: this.value, bubbles: true, composed: true }),
     );
   }
 
+  /**
+   * Gathers option data from the slotted `segmented-control-option` elements.
+   * @internal
+   */
   private handleSlotChange() {
     this._options = (this._slotEl.assignedNodes({ flatten: true }) as HTMLElement[])
       .filter(node => node.nodeName === 'SEGMENTED-CONTROL-OPTION')
@@ -179,7 +194,8 @@ export class SegmentedControl extends LitElement {
 
   protected firstUpdated() {
     this.handleSlotChange();
-    this.updateThumbPosition();
+    // Use a slight delay to ensure all options have rendered and calculated their size
+    this.updateComplete.then(() => this.updateThumbPosition());
   }
 
   protected updated(changedProperties: PropertyValues) {
@@ -188,27 +204,43 @@ export class SegmentedControl extends LitElement {
       changedProperties.has('value') ||
       changedProperties.has('_options') ||
       changedProperties.has('labelPosition') ||
-      changedProperties.has('size') ||
-      changedProperties.has('multiline')
+      changedProperties.has('size')
     ) {
+      // Schedule thumb position update after the DOM has fully rendered the new state
       Promise.resolve().then(() => this.updateThumbPosition());
     }
   }
 
+  /**
+   * Finds the currently selected option button and moves/resizes the thumb element.
+   * @internal
+   */
   private updateThumbPosition() {
     if (!this.thumb) {
       return;
     }
 
-    const selectedOption = this.shadowRoot?.querySelector<HTMLInputElement>('input:checked')
-      ?.parentElement as HTMLLabelElement | null;
+    // Use a robust selector to find the button that has the 'selected' class.
+    const selectedButton = this.shadowRoot?.querySelector<HTMLButtonElement>('.button.selected');
 
-    if (selectedOption) {
-      const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = selectedOption;
-      this.thumb.style.transform = `translate(${offsetLeft}px, ${offsetTop}px)`;
+    if (selectedButton) {
+      // Use the button's position and size to place the thumb
+      const { offsetWidth, offsetHeight } = selectedButton;
+
+      // The button's position is relative to its parent `.option` wrapper.
+      // We need the position relative to the `.segmented-control` container.
+      const buttonRect = selectedButton.getBoundingClientRect();
+      const containerRect =
+        this.shadowRoot!.querySelector('.segmented-control')!.getBoundingClientRect();
+
+      const offsetX = buttonRect.left - containerRect.left;
+      const offsetY = buttonRect.top - containerRect.top;
+
+      this.thumb.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
       this.thumb.style.width = `${offsetWidth}px`;
       this.thumb.style.height = `${offsetHeight}px`;
     } else {
+      // Hide the thumb if no option is selected
       this.thumb.style.width = '0px';
       this.thumb.style.height = '0px';
     }
@@ -220,25 +252,22 @@ export class SegmentedControl extends LitElement {
         <div class="thumb"></div>
         ${this._options.map(
           option => html`
-            <label
+            <div
               class="option"
               title="${this.labelPosition === 'tooltip' ? option.label : nothing}"
             >
-              <input
-                type="radio"
-                name="segmented-control"
-                .value=${option.value}
-                ?checked=${this.value === option.value}
-                @change=${this.handleChange}
-              />
-              <span
+              <button
                 class="${classMap({
-                  label: true,
+                  button: true,
+                  selected: this.value === option.value, // ✅ Use component state for selection
                   bottom: this.labelPosition === 'bottom',
                   small: this.size === 'small',
                   medium: this.size === 'medium',
                   large: this.size === 'large',
                 })}"
+                @click=${(e: Event) => this.handleClick(e, option.value)}
+                role="radio"
+                aria-checked="${this.value === option.value}"
               >
                 ${
                   option.icon
@@ -257,8 +286,8 @@ export class SegmentedControl extends LitElement {
                     : nothing
                 }
                 ${this.labelPosition !== 'tooltip' ? html`<span>${option.label}</span>` : nothing}
-              </span>
-            </label>
+              </button>
+            </div>
           `,
         )}
       </div>
