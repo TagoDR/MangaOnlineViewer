@@ -17,13 +17,13 @@ function theme() {
     </div>
     <div class="ControlLabel ThemeSelector">
       <label>${getLocaleString('THEME_COLOR')}</label>
-      <color-picker
+      <wa-color-picker
         id="ThemeHex"
         .value="${getSettingsValue('theme')}"
         title="${getSettingsValue('theme')}"
         @input=${changeTheme}
         .swatches=${Object.values(sample)}
-      ></color-picker>
+      ></wa-color-picker>
     </div>
     <color-palette
       .baseColor="${getSettingsValue('theme')}"
@@ -34,7 +34,7 @@ function theme() {
     <span id="ColorRecommendations">
       ${Object.values(sample).map(
         c =>
-          html`<color-swatch
+          html` <color-swatch
             .color="${c}"
             .selected=${getSettingsValue('theme')}
             @change=${changeTheme}

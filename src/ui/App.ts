@@ -1,5 +1,5 @@
 import { useStores } from '@nanostores/lit';
-import { css, html, LitElement, unsafeCSS } from 'lit';
+import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
@@ -131,16 +131,29 @@ export default class App extends LitElement {
         ${
           dialog
             ? html`
-              <mov-dialog
+              <wa-dialog
                 open
-                .icon=${dialog.icon}
-                @close=${() => setAppStateValue('dialog', null)}
+                @wa-hide=${(e: Event) => {
+                  if (e.eventPhase !== Event.AT_TARGET) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    return;
+                  }
+                  setAppStateValue('dialog', null);
+                }}
               >
                 <span slot="label">${dialog.title}</span>
-                ${dialog.content} ${dialog.footer}
-              </mov-dialog>
+                <div style="display: flex; align-items: center; jutify-contet gap: 1rem;">
+                  <wa-icon
+                    name="${dialog.icon}"
+                    style="font-size: 4rem"
+                  ></wa-icon>
+                  ${dialog.content}
+                </div>
+                ${dialog.footer}
+              </wa-dialog>
             `
-            : ''
+            : nothing
         }
       </div>
     `;

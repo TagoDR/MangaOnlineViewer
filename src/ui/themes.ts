@@ -66,15 +66,15 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
       --mov-color-on-normal: var(--theme-secondary-text-color, ${gradient[3]});
       --mov-color-on-loud: var(--theme-primary-text-color, white);
 
-      --wa-color-brand-fill-quiet: var(--mov-color-fill-quiet);
-      --wa-color-brand-fill-normal: var(--mov-color-fill-normal);
-      --wa-color-brand-fill-loud: var(--mov-color-fill-loud);
-      --wa-color-brand-border-quiet: var(--mov-color-border-quiet);
-      --wa-color-brand-border-normal: var(--mov-color-border-normal);
-      --wa-color-brand-border-loud: var(--mov-color-border-loud);
-      --wa-color-brand-on-quiet: var(--mov-color-on-quiet);
-      --wa-color-brand-on-normal: var(--mov-color-on-normal);
-      --wa-color-brand-on-loud: var(--mov-color-on-loud);
+      --wa-color-neutral-fill-quiet: var(--mov-color-fill-quiet);
+      --wa-color-neutral-fill-normal: var(--mov-color-fill-normal);
+      --wa-color-neutral-fill-loud: var(--mov-color-fill-loud);
+      --wa-color-neutral-border-quiet: var(--mov-color-border-quiet);
+      --wa-color-neutral-border-normal: var(--mov-color-border-normal);
+      --wa-color-neutral-border-loud: var(--mov-color-border-loud);
+      --wa-color-neutral-on-quiet: var(--mov-color-on-quiet);
+      --wa-color-neutral-on-normal: var(--mov-color-on-normal);
+      --wa-color-neutral-on-loud: var(--mov-color-on-loud);
 
       --mov-color-mix-hover: black 8%;
       --mov-color-mix-active: black 16%;

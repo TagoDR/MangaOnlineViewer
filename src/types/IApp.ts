@@ -60,7 +60,7 @@ export type Page = {
 export interface DialogState {
   open: boolean;
   title: string;
-  icon?: 'info' | 'warning' | 'success' | 'error' | 'question';
+  icon?: string;
   content: TemplateResult;
   footer: TemplateResult;
 }

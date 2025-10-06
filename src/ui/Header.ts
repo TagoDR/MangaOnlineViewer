@@ -74,7 +74,7 @@ export class Header extends LitElement {
     };
 
     return html`
-      <mov-button
+      <wa-button
         id="menu"
         class="${classMap({
           [getSettingsValue('header')]: true,
@@ -82,8 +82,8 @@ export class Header extends LitElement {
         })}"
         @click=${this.headroomController.toggleHeaderVisibility}
       >
-        <mov-icon name="IconMenu2"></mov-icon>
-      </mov-button>
+        <wa-icon name="IconMenu2"></wa-icon>
+      </wa-button>
       <header
         id="Header"
         class="${classMap({
@@ -97,198 +97,192 @@ export class Header extends LitElement {
           id="Toolbar"
           class="button-group"
         >
-          <mov-dropdown id="FileDropdown">
-            <mov-button
+          <wa-dropdown id="FileDropdown">
+            <wa-button
               slot="trigger"
               title="${getLocaleString('FILE_MENU')}"
             >
-              <mov-icon
+              <wa-icon
                 label="File"
                 name="IconDotsVertical"
-              ></mov-icon>
-            </mov-button>
-            <mov-dropdown-item
+              ></wa-icon>
+            </wa-button>
+            <wa-dropdown-item
               id="settings"
               @click=${buttonSettingsOpen}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconSettings"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('SETTINGS')} ${renderKeybind('SETTINGS')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="keybindings"
               @click=${buttonKeybindingsOpen}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconKeyboard"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('KEYBINDINGS')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="AutoScroll"
               class="${classMap({ running: getAppStateValue('autoScroll') })}"
               @click=${toggleAutoScroll}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="${getAppStateValue('autoScroll') ? 'IconPlayerPause' : 'IconPlayerPlay'}"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('SCROLL_START')} ${renderKeybind('SCROLL_START')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="bookmarks"
               class="tablets"
               @click=${buttonBookmarksOpen}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconBookmarks"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('BOOKMARKS')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="pageControls"
               class="tablets phones"
               @click="${buttonGlobalHideImageControls}"
               ?selected=${getSettingsValue('hidePageControls')}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconListNumbers"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('TOGGLE_CONTROLS')}
-            </mov-dropdown-item>
-          </mov-dropdown>
+            </wa-dropdown-item>
+          </wa-dropdown>
 
-          <mov-dropdown
-            id="ViewDropdown"
-            checkable
-          >
-            <mov-button
+          <wa-dropdown id="ViewDropdown">
+            <wa-button
               slot="trigger"
               title="${getLocaleString('VIEW_MENU')}"
             >
-              <mov-icon
+              <wa-icon
                 label="View"
                 name="IconBook"
-              ></mov-icon>
-            </mov-button>
-            <mov-dropdown-item
+              ></wa-icon>
+            </wa-button>
+            <wa-dropdown-item
               id="webComic"
               class="tablets"
               @click="${updateViewMode('WebComic')}"
               ?selected=${getSettingsValue('viewMode') === 'WebComic'}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconSpacingVertical"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('VIEW_MODE_WEBCOMIC')} ${renderKeybind('VIEW_MODE_WEBCOMIC')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="verticalMode"
               class="tablets"
               @click="${updateViewMode('Vertical')}"
               ?selected=${getSettingsValue('viewMode') === 'Vertical'}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconArrowAutofitDown"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('VIEW_MODE_VERTICAL')} ${renderKeybind('VIEW_MODE_VERTICAL')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="ltrMode"
               @click="${updateViewMode('FluidLTR')}"
               ?selected=${getSettingsValue('viewMode') === 'FluidLTR'}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconArrowAutofitRight"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('VIEW_MODE_LEFT')} ${renderKeybind('VIEW_MODE_LEFT')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="rtlMode"
               @click="${updateViewMode('FluidRTL')}"
               ?selected=${getSettingsValue('viewMode') === 'FluidRTL'}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconArrowAutofitLeft"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('VIEW_MODE_RIGHT')} ${renderKeybind('VIEW_MODE_RIGHT')}
-            </mov-dropdown-item>
-          </mov-dropdown>
-          <mov-dropdown
-            id="ZoomDropdown"
-            checkable
-          >
-            <mov-button
+            </wa-dropdown-item>
+          </wa-dropdown>
+          <wa-dropdown id="ZoomDropdown">
+            <wa-button
               slot="trigger"
               title="${getLocaleString('ZOOM_MENU')}"
             >
-              <mov-icon
+              <wa-icon
                 label="Zoom"
                 name="IconZoom"
-              ></mov-icon>
-            </mov-button>
-            <mov-dropdown-item
+              ></wa-icon>
+            </wa-button>
+            <wa-dropdown-item
               id="enlarge"
               @click="${changeZoomByStep()}"
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconZoomInArea"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('ENLARGE')} ${renderKeybind('ENLARGE')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="restore"
               @click="${changeGlobalZoom('percent', 100)}"
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconZoomPan"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('RESTORE')} ${renderKeybind('RESTORE')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="reduce"
               @click="${changeZoomByStep(-1)}"
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconZoomOutArea"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('REDUCE')} ${renderKeybind('REDUCE')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="fitWidth"
               @click="${changeGlobalZoom('width')}"
               ?selected=${getSettingsValue('zoomMode') === 'width'}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconArrowAutofitWidth"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('FIT_WIDTH')} ${renderKeybind('FIT_WIDTH')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
+            </wa-dropdown-item>
+            <wa-dropdown-item
               id="fitHeight"
               @click="${changeGlobalZoom('height')}"
               ?selected=${getSettingsValue('zoomMode') === 'height'}
             >
-              <mov-icon
+              <wa-icon
                 slot="icon"
                 name="IconArrowAutofitHeight"
-              ></mov-icon>
+              ></wa-icon>
               ${getLocaleString('FIT_HEIGHT')} ${renderKeybind('FIT_HEIGHT')}
-            </mov-dropdown-item>
-          </mov-dropdown>
+            </wa-dropdown-item>
+          </wa-dropdown>
         </div>
         <div id="ViewerTitle">
           <h1
@@ -299,67 +293,68 @@ export class Header extends LitElement {
           </h1>
         </div>
         <div id="ZoomControl">
-          <input
-            type="range"
+          <wa-slider
             id="Zoom"
+            name="Zoom"
             .value="${getSettingsValue('zoomValue')}"
             min="${getSettingsValue('minZoom')}"
             max="200"
             @input=${changeZoom}
-          />
-          <span id="ZoomVal">
-            Zoom:
-            ${
+            step="20"
+            with-markers
+            with-tooltip
+            label="Zoom : ${
               getSettingsValue('zoomMode') === 'percent'
                 ? `${getSettingsValue('zoomValue')}%`
                 : getSettingsValue('zoomMode')
-            }</span
+            }"
           >
+          </wa-slider>
         </div>
         <div
           id="GlobalFunctions"
           class="button-group"
         >
-          <mov-button
+          <wa-button
             id="series"
             href="${this.manga.series ?? nothing}"
             @click=${buttonRedirectURL}
             title="${getLocaleString('RETURN_CHAPTER_LIST')}"
             ?disabled=${!this.manga.series}
           >
-            <mov-icon name="IconBookReturn"></mov-icon>
-          </mov-button>
-          <mov-button
+            <wa-icon name="IconBookReturn"></wa-icon>
+          </wa-button>
+          <wa-button
             id="download"
             title="${getLocaleString('DOWNLOAD_ZIP')}"
             @click=${buttonStartDownload}
             ?disabled=${getAppStateValue('download') !== 'available'}
             ?loading=${getAppStateValue('download') === 'working'}
           >
-            <mov-icon
+            <wa-icon
               name="${
                 getAppStateValue('download') === 'working' ? 'IconLoader2' : 'IconFileDownload'
               }"
-            ></mov-icon>
-          </mov-button>
-          <mov-button
+            ></wa-icon>
+          </wa-button>
+          <wa-button
             id="prev"
             href="${this.manga.prev ?? nothing}"
             title="${getLocaleString('PREVIOUS_CHAPTER')}"
             @click=${buttonRedirectURL}
             ?disabled=${!this.manga.prev}
           >
-            <mov-icon name="IconArrowBigLeft"></mov-icon>
-          </mov-button>
-          <mov-button
+            <wa-icon name="IconArrowBigLeft"></wa-icon>
+          </wa-button>
+          <wa-button
             id="next"
             href="${this.manga.next ?? nothing}"
             title="${getLocaleString('NEXT_CHAPTER')}"
             @click=${buttonRedirectURL}
             ?disabled=${!this.manga.next}
           >
-            <mov-icon name="IconArrowBigRight"></mov-icon>
-          </mov-button>
+            <wa-icon name="IconArrowBigRight"></wa-icon>
+          </wa-button>
         </div>
       </header>
     `;

@@ -346,7 +346,7 @@ export function showInfoDialog(options: {
 
   setAppStateValue('dialog', {
     open: true,
-    icon: options.icon,
+    icon: Dialog.getIconName(options.icon),
     title: options.title,
     content: html`<div style="padding: 1rem;">${unsafeHTML(options.html)}</div>`,
     footer: html`

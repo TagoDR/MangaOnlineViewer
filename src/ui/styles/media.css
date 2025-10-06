@@ -62,15 +62,15 @@
   gap: 0;
 }
 
-.mobile mov-button::part(base) {
+.mobile wa-button::part(base) {
   border-radius: 0;
 }
 
-.mobile #FileDropdown mov-button:first-of-type::part(base) {
+.mobile #FileDropdown wa-button:first-of-type::part(base) {
   border-radius: 5px 0 0 5px;
 }
 
-.mobile #GlobalFunctions mov-button:last-of-type::part(base) {
+.mobile #GlobalFunctions wa-button:last-of-type::part(base) {
   border-radius: 0 5px 5px 0;
 }
 

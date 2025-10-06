@@ -68,27 +68,27 @@ export default class BookmarkPanel extends LitElement {
               href="${mark.url}"
               target="_blank"
             >
-              <mov-button
+              <wa-button
                 title="Open Bookmark"
                 size="small"
               >
-                <mov-icon
+                <wa-icon
                   name="IconExternalLink"
                   size="16px"
-                ></mov-icon>
-              </mov-button>
+                ></wa-icon>
+              </wa-button>
             </a>
-            <mov-button
+            <wa-button
               title="Delete Bookmark"
               size="small"
               value="${mark.url}"
               @click=${buttonEraseBookmarks}
             >
-              <mov-icon
+              <wa-icon
                 name="IconTrash"
                 size="16px"
-              ></mov-icon>
-            </mov-button>
+              ></wa-icon>
+            </wa-button>
           </div>
         </div>
       `,
@@ -97,26 +97,26 @@ export default class BookmarkPanel extends LitElement {
 
   render() {
     return html`
-      <mov-dialog
+      <wa-dialog
         id="BookmarksPanel"
         ?open=${getAppStateValue('panel') === 'bookmarks'}
-        @close=${buttonPanelsClose}
+        light-dismiss
+        @wa-hide=${buttonPanelsClose}
       >
-        <mov-button
+        <wa-button
           class="Bookmark"
           title="${getLocaleString('BOOKMARK')}"
           @click=${buttonBookmark}
           slot="header-actions"
         >
-          <mov-icon
+          <wa-icon
             name="${isBookmarked() === undefined ? 'IconBookmark' : 'IconBookmarkOff'}"
             size="24px"
-          ></mov-icon>
-        </mov-button>
-        <h2 slot="header">${getLocaleString('BOOKMARKS')}</h2>
+          ></wa-icon>
+        </wa-button>
         <h2 slot="label">${getLocaleString('BOOKMARKS')}</h2>
         <div id="BookmarksList">${this.listBookmarks()}</div>
-      </mov-dialog>
+      </wa-dialog>
     `;
   }
 }
