@@ -12,3 +12,8 @@ html[mov] body > *:not(manga-online-viewer, #nprogress) {
   /* biome-ignore lint/complexity/noImportantStyles: requirement */
   display: none !important;
 }
+
+html {
+  /* biome-ignore lint/complexity/noImportantStyles: requirement */
+  font-size: 16px !important;
+}
