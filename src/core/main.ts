@@ -81,6 +81,8 @@ export async function preparePage([site, manga]: [ISite | undefined, IManga]): P
     manga.comments = await captureComments();
   }
   document.head.innerHTML += wrapStyle('externals', externalCSS);
+  document.head.innerHTML +=
+    '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.0.0/dist-cdn/styles/webawesome.css" />';
   const viewer = document.createElement('manga-online-viewer') as App;
   viewer.loadMode = site?.start ?? getSettingsValue('loadMode');
   viewer.manga = manga;
