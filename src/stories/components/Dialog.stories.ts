@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing, render } from 'lit';
-import Dialog from '../../ui/components/Dialog';
+import {getIconName} from '../../ui/components/Dialog';
 import '../../ui/components/Icon';
 import '../../ui/components/Button';
 import { getLocaleString } from '../../core/settings';
@@ -197,7 +197,7 @@ export const WithIcons: Story = {
               style="display: flex; align-items: center; gap: 0.25rem;"
             >
               <mov-icon
-                .name=${Dialog.getIconName(icon)}
+                .name=${getIconName(icon)}
                 style="color: ${getColorForIcon(icon)}"
               ></mov-icon>
               Show ${icon}

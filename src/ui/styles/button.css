@@ -183,11 +183,13 @@
   display: flex;
 }
 
+wa-icon[part~="caret"],
 mov-icon[part~="caret"] {
   display: flex;
   align-self: center;
   align-items: center;
 }
+wa-icon[part~="caret"]::part(svg),
 mov-icon[part~="caret"]::part(svg) {
   width: 0.875em;
   height: 0.875em;

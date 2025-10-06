@@ -1,5 +1,5 @@
 import { useStores } from '@nanostores/lit';
-import { css, html, LitElement, unsafeCSS } from 'lit';
+import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
@@ -22,6 +22,7 @@ import './Startup.ts';
 import { choose } from 'lit-html/directives/choose.js';
 import type { IManga, LoadMode } from '../types';
 import { cleanUpElement } from '../utils/cleanup.ts';
+import {getIconName} from "./components/Dialog.ts";
 
 /**
  * The root component for the MangaOnlineViewer application, rendered as `<manga-online-viewer>`.
@@ -131,16 +132,29 @@ export default class App extends LitElement {
         ${
           dialog
             ? html`
-              <mov-dialog
+              <wa-dialog
                 open
-                .icon=${dialog.icon}
-                @close=${() => setAppStateValue('dialog', null)}
+                @wa-hide=${(e: Event) => {
+                  if (e.eventPhase !== Event.AT_TARGET) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    return;
+                  }
+                  setAppStateValue('dialog', null);
+                }}
               >
                 <span slot="label">${dialog.title}</span>
-                ${dialog.content} ${dialog.footer}
-              </mov-dialog>
+                <div style="display: flex; align-items: center; jutify-contet gap: 1rem;">
+                  <wa-icon
+                    name="${getIconName(dialog.icon)}"
+                    style="font-size: 4rem"
+                  ></wa-icon>
+                  ${dialog.content}
+                </div>
+                ${dialog.footer}
+              </wa-dialog>
             `
-            : ''
+            : nothing
         }
       </div>
     `;

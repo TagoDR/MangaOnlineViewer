@@ -52,26 +52,26 @@ export default class SettingsPanel extends LitElement {
 
   render() {
     return html`
-      <mov-drawer
+      <wa-drawer
         id="SettingsPanel"
         ?open=${getAppStateValue('panel') === 'settings'}
-        @close=${buttonPanelsClose}
+        @wa-hide=${buttonPanelsClose}
         placement="start"
         class="${getAppStateValue('device')}"
       >
         <h2 slot="label">${getLocaleString('SETTINGS')}</h2>
-        <mov-button
+        <wa-button
           id="ResetSettings"
           @click="${resetSettings}"
           title="${getLocaleString('BUTTON_RESET_SETTINGS')}"
         >
-          <mov-icon
+          <wa-icon
             name="IconSettingsOff"
             size="20px"
             slot="start"
-          ></mov-icon>
+          ></wa-icon>
           ${getLocaleString('BUTTON_RESET_SETTINGS')}
-        </mov-button>
+        </wa-button>
         <div class="content">
           <fieldset id="SettingsPanelGeneral">
             <legend>${getLocaleString('GENERAL')}</legend>
@@ -94,7 +94,7 @@ export default class SettingsPanel extends LitElement {
             ${SettingsPanelOthers()}
           </fieldset>
         </div>
-      </mov-drawer>
+      </wa-drawer>
     `;
   }
 }
