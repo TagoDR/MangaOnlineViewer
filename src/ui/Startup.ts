@@ -2,18 +2,12 @@
  * This file provides a web component for managing the startup process of the script.
  * It replaces the old dialog functions with a self-contained Lit component.
  */
+
+import type WaSlider from '@awesome.me/webawesome/dist/components/slider/slider.js';
 import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import 'toolcool-range-slider/dist/plugins/tcrs-generated-labels.min.js';
-import 'toolcool-range-slider/dist/plugins/tcrs-marks.min';
-import 'toolcool-range-slider';
-import { getLocaleString } from '../core/settings.ts';
-import './components/Dialog.ts';
-import './components/Button.ts';
-import startButton from './styles/startButton.css?inline';
-import './components/Icon.ts';
-import colors from '../utils/colors.ts';
-import sequence from '../utils/sequence.ts';
+import { getLocaleString } from '../core/settings';
+import startButton from '../ui/styles/startButton.css?inline';
 
 /**
  * A Lit component to handle the startup flow, including an initial prompt,
@@ -31,6 +25,9 @@ export class MovStartup extends LitElement {
 
   @property({ type: Number, reflect: true })
   begin = 1;
+
+  @property({ type: Number, reflect: true })
+  end = 0;
 
   @property({ type: Number })
   timeoutMs = 3000;
@@ -67,9 +64,19 @@ export class MovStartup extends LitElement {
   }
 
   private handleDialogClose(e: Event) {
-    e.stopPropagation();
+    if (e.eventPhase !== Event.AT_TARGET) {
+      e.stopPropagation();
+      e.preventDefault();
+      return;
+    }
     window.clearTimeout(this.timeoutId);
     this.status = 'late-start-button';
+  }
+
+  private onSliderInput(e: CustomEvent) {
+    const slider = e.target as WaSlider;
+    this.begin = slider.minValue;
+    this.end = slider.maxValue;
   }
 
   render() {
@@ -85,31 +92,36 @@ export class MovStartup extends LitElement {
 
   renderInitialPrompt() {
     return html`
-      <mov-dialog
+      <wa-dialog
         ?open=${this.status === 'initial-prompt'}
-        icon="info"
-        @close=${this.handleDialogClose}
+        @wa-hide=${this.handleDialogClose}
       >
         <span slot="label">${getLocaleString('STARTING')}</span>
-        <div style="padding: 1rem;">${getLocaleString('WAITING')}</div>
+        <div class="display: flex; align-items: center; gap: 1rem; padding: 1rem;">
+          <wa-icon
+            name="IconInfoCircle"
+            style="font-size: 4rem"
+          ></wa-icon>
+          ${getLocaleString('WAITING')}
+        </div>
         <div
           slot="footer"
           style="display: flex; justify-content: space-between; padding: 0.5rem 1rem 1rem;"
         >
-          <mov-button
+          <wa-button
             @click=${this.handleDialogClose}
-            style="--mov-color-fill-loud: ${colors.red[700]}; --mov-color-on-loud: white;"
+            variant="danger"
           >
             Cancel
-          </mov-button>
-          <mov-button
+          </wa-button>
+          <wa-button
             @click=${this.handleStart}
-            style="--mov-color-fill-loud: ${colors.green[700]}; --mov-color-on-loud: white;"
+            variant="success"
           >
             Start Now
-          </mov-button>
+          </wa-button>
         </div>
-      </mov-dialog>
+      </wa-dialog>
     `;
   }
 
@@ -125,66 +137,67 @@ export class MovStartup extends LitElement {
   }
 
   renderLateStartPrompt() {
-    let beginPage = this.begin;
-    let endPage = this.mangaPages;
-
-    const onSliderChange = (e: CustomEvent) => {
-      [beginPage, endPage] = [e.detail.value1, e.detail.value2];
-    };
-
+    if (this.end === 0) {
+      this.end = this.mangaPages;
+    }
     return html`
-      <mov-dialog
+      <wa-dialog
         ?open=${this.status === 'late-start-prompt'}
-        icon="question"
-        @close=${this.handleDialogClose}
+        @wa-hide=${this.handleDialogClose}
       >
         <span slot="label">${getLocaleString('STARTING')}</span>
-        <div style="padding: 1rem;">
+        <div class="display: flex; align-items: center; gap: 1rem; padding: 1rem;">
+          <wa-icon
+            name="IconHelp"
+            style="font-size: 4rem"
+          ></wa-icon>
           ${getLocaleString('CHOOSE_BEGINNING')}
           <div
             id="pageInputGroup"
             style="padding: 1rem 0;"
           >
-            <tc-range-slider
+            <div
+              style="display: flex; justify-content: space-between; font-family: monospace; padding-bottom: 5px;"
+            >
+              <span id="mov-min-page-display">${this.begin}</span>
+              <span id="mov-max-page-display">${this.end}</span>
+            </div>
+            <wa-slider
               id="pagesSlider"
-              theme="glass"
-              css-links="https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-themes.min.css"
               min="1"
               max="${this.mangaPages}"
-              round="0"
+              min-value="${this.begin}"
+              max-value="${this.end}"
               step="1"
-              value1="${beginPage}"
-              value2="${endPage}"
-              data="${sequence(this.mangaPages).join(', ')}"
-              marks="true"
-              marks-count="11"
-              marks-values-count="11"
-              generate-labels="true"
-              slider-width="100%"
-              pointers-overlap="false"
-              generate-labels-text-color="var(--mov-color-on-loud)"
-              @change=${onSliderChange}
-            ></tc-range-slider>
+              range
+              with-markers
+              with-tooltip
+              @input="${this.onSliderInput}"
+            >
+              <span slot="reference">1</span>
+              <span slot="reference">${Math.floor(this.mangaPages / 2)}</span>
+              <span slot="reference">${this.mangaPages}</span>
+            </wa-slider>
           </div>
         </div>
         <div
           slot="footer"
           style="display: flex; justify-content: flex-end; gap: 0.5rem; padding: 0.5rem 1rem 1rem;"
         >
-          <mov-button
+          <wa-button
             @click=${this.handleDialogClose}
-            style="--mov-color-fill-loud: ${colors.red[700]}; --mov-color-on-loud: white;"
+            variant="danger"
           >
             Close
-          </mov-button>
-          <mov-button
-            @click=${() => this.handleLateStart(beginPage, endPage)}
-            style="--mov-color-fill-loud: ${colors.green[700]}; --mov-color-on-loud: white;"
+          </wa-button>
+          <wa-button
+            @click=${() => this.handleLateStart(this.begin, this.end)}
+            variant="success"
           >
             Run
-          </mov-button>
+          </wa-button>
         </div>
-      </mov-dialog>
+      </wa-dialog>
     `;
   }
 }
