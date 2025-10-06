@@ -11,6 +11,7 @@ import cssStyles from '../src/ui/styles';
 import externalCSS from '../src/ui/styles/externalStyle.ts';
 import { themesCSS } from '../src/ui/themes.ts';
 import colors, { sample } from '../src/utils/colors.ts';
+import '@awesome.me/webawesome/dist/styles/webawesome.css';
 
 @customElement('theme-wrapper')
 @useStores(settings, locale, appState)

@@ -33,6 +33,8 @@ export async function preparePage([site, manga]: [ISite | undefined, IManga]): P
     await manga.before(manga.begin ?? 0);
   }
   document.head.innerHTML += wrapStyle('externals', externalCSS);
+  document.head.innerHTML +=
+    '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.0.0/dist-cdn/styles/webawesome.css" />';
   const viewer = document.createElement('manga-online-viewer') as App;
   viewer.loadMode = site?.start ?? getSettingsValue('loadMode');
   viewer.manga = manga;
