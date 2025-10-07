@@ -4,6 +4,7 @@ import {
   changeImage,
   getAppStateValue,
   getSettingsValue,
+  setAppStateValue,
 } from '../../core/settings.ts';
 import { isEmpty } from '../../utils/checks.ts';
 import { logScript } from '../../utils/tampermonkey.ts';
@@ -100,23 +101,6 @@ export function imageLoaded(event: Event): void {
       naturalHeight: img.naturalHeight,
     }),
   );
-  // Draw onto an offscreen canvas and try to get a Blob
-  try {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    if (ctx) {
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      ctx.drawImage(img, 0, 0);
-      canvas.toBlob(blob => {
-        if (!blob) return; // CORS tainted or failed
-        changeImage(index, _image => ({ blob }));
-      }, 'image/png');
-    }
-  } catch (e) {
-    console.error('Failed to transform image to blob for page', index, e);
-    // Ignore failures (e.g., CORS tainted). We still proceed with progress updates.
-  }
 
   changeAppStateValue('loaded', n => n + 1);
   const total = getAppStateValue('manga')?.pages ?? 1;
@@ -129,6 +113,7 @@ export function imageLoaded(event: Event): void {
   logScript(`Progress: ${percentage}%`);
   if (loaded === total) {
     logScript('Images Loading Complete');
+    setAppStateValue('download', 'available');
     if (getSettingsValue('downloadZip')) buttonStartDownload();
   }
 }
