@@ -2675,7 +2675,7 @@
   function validFileType(file) {
     return fileTypes.includes(file.type);
   }
-  const getImageBlob = content => {
+  const getImageBlob$1 = content => {
     const buffer = new Uint8Array(content);
     const blob = new Blob([buffer.buffer]);
     return URL.createObjectURL(blob);
@@ -2686,7 +2686,7 @@
       .filter((_, file) => !file.dir && fileImageExt.test(file.name))
       .sort((a, b) => orderFiles(a.name, b.name));
     logScript('Files in zip:', zip.files);
-    return Promise.all(files.map(file => file.async('arraybuffer').then(getImageBlob)));
+    return Promise.all(files.map(file => file.async('arraybuffer').then(getImageBlob$1)));
   }
   function displayUploadedFiles(title, listImages) {
     preparePage([
@@ -6360,17 +6360,73 @@
         return 'png';
     }
   }
+  async function getBlobFromFetch(page) {
+    if (!page.src) return null;
+    try {
+      const response = await fetch(page.src);
+      if (response.ok) {
+        logScript(`Got blob for page ${page.src} from fetch`);
+        return await response.blob();
+      }
+    } catch (error) {
+      logScript(`Failed to get blob for page ${page.src} from fetch`, error);
+    }
+    return null;
+  }
+  async function getBlobFromCanvas(page) {
+    const img = page.ref?.value;
+    if (!img) return null;
+    try {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        ctx.drawImage(img, 0, 0);
+        return await new Promise(resolve => {
+          canvas.toBlob(
+            blob => {
+              if (blob) {
+                logScript(`Got blob for page ${page.src} from canvas`);
+              }
+              resolve(blob);
+            },
+            'image/png',
+            1,
+          );
+        });
+      }
+    } catch (e) {
+      logScript(`Failed to get blob for page ${page.src} from canvas`, e);
+    }
+    return null;
+  }
+  async function getImageBlob(page) {
+    if (page.blob) {
+      logScript(`Got blob for page ${page.src} from cache`);
+      return page.blob;
+    }
+    const blob = await getBlobFromFetch(page);
+    if (blob) {
+      return blob;
+    }
+    const canvasBlob = await getBlobFromCanvas(page);
+    if (canvasBlob) {
+      return canvasBlob;
+    }
+    logScript(`Failed to get blob for page ${page.src}`);
+    return null;
+  }
   async function generateZip() {
     setAppStateValue('download', 'working');
     const zip = new JSZip();
     const images = getAppStateValue('images') ?? {};
     const manga = getAppStateValue('manga');
     const digits = Math.floor(Math.log10(manga?.pages ?? 1)) + 1;
-    Object.entries(images)
-      .sort((a, b) => Number(a[0]) - Number(b[0]))
-      .forEach(([key, page]) => {
-        if (!page?.blob) return;
-        const blob = page.blob;
+    const imageEntries = Object.entries(images).sort((a, b) => Number(a[0]) - Number(b[0]));
+    for (const [key, page] of imageEntries) {
+      const blob = await getImageBlob(page);
+      if (blob) {
         const ext = extFromMime(blob.type);
         const name = `Page-${Number(key).toString().padStart(digits, '0')}.${ext}`;
         logScript(`${name} Added to Zip from Blob`);
@@ -6378,7 +6434,8 @@
           createFolders: true,
           compression: 'DEFLATE',
         });
-      });
+      }
+    }
     logScript('Generating Zip');
     zip
       .generateAsync({ type: 'blob' })
@@ -9994,21 +10051,6 @@
         naturalHeight: img.naturalHeight,
       }),
     );
-    try {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        canvas.width = img.naturalWidth;
-        canvas.height = img.naturalHeight;
-        ctx.drawImage(img, 0, 0);
-        canvas.toBlob(blob => {
-          if (!blob) return;
-          changeImage(index, _image => ({ blob }));
-        }, 'image/png');
-      }
-    } catch (e) {
-      console.error('Failed to transform image to blob for page', index, e);
-    }
     changeAppStateValue('loaded', n => n + 1);
     const total = getAppStateValue('manga')?.pages ?? 1;
     const loaded = getAppStateValue('loaded') ?? 0;
@@ -10020,6 +10062,7 @@
     logScript(`Progress: ${percentage}%`);
     if (loaded === total) {
       logScript('Images Loading Complete');
+      setAppStateValue('download', 'available');
       if (getSettingsValue('downloadZip')) buttonStartDownload();
     }
   }
