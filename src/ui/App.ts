@@ -21,6 +21,7 @@ import { themesCSS } from './themes.ts';
 import './Startup.ts';
 import { choose } from 'lit-html/directives/choose.js';
 import type { IManga, LoadMode } from '../types';
+import { cleanUpElement } from '../utils/cleanup.ts';
 
 /**
  * The root component for the MangaOnlineViewer application, rendered as `<manga-online-viewer>`.
@@ -41,6 +42,8 @@ export default class App extends LitElement {
 
   async start(begin?: number, end?: number) {
     if (this.manga) {
+      cleanUpElement(document.documentElement, document.head, document.body);
+      window.scrollTo(0, 0);
       setAppStateValue('manga', {
         ...this.manga,
         begin: begin ?? this.manga.begin,
