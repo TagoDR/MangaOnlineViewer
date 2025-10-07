@@ -53,13 +53,14 @@ function doScrolling(sign: 1 | -1) {
 /**
  * Redirects the browser to a given URL.
  * If the URL is null, undefined, or '#', it navigates back in the browser history.
- * @param {string | undefined | null} url - The URL to redirect to.
+ * @param type
  */
-function redirectUrl(url: string | undefined | null) {
+function redirectUrl(type: 'next' | 'prev' | 'series') {
+  const url = getAppStateValue('manga')?.[type];
   if (url && url !== '#') {
-    window.location.href = sanitizeUrl(url);
-  } else {
-    window.history.back();
+    location.href = sanitizeUrl(url);
+  } else if (type !== 'next') {
+    history.back();
   }
 }
 
@@ -75,13 +76,13 @@ const actions: Record<string, () => void> = {
     doScrolling(1);
   },
   NEXT_CHAPTER() {
-    redirectUrl(getAppStateValue('manga')?.next);
+    redirectUrl('next');
   },
   PREVIOUS_CHAPTER() {
-    redirectUrl(getAppStateValue('manga')?.prev);
+    redirectUrl('prev');
   },
   RETURN_CHAPTER_LIST() {
-    redirectUrl(getAppStateValue('manga')?.series);
+    redirectUrl('series');
   },
   ENLARGE() {
     changeZoomByStep(1)();
