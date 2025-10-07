@@ -7,6 +7,7 @@ import dysnatyscans from './dysnatyscans';
 import flamecomics from './flamecomics';
 import foolslide from './foolslide';
 import ikigai from './ikigai';
+import kagane from './kagane';
 import kumanga from './kumanga';
 import leercapitulo from './leercapitulo';
 import lhtranslation from './lhtranslation';
@@ -46,6 +47,7 @@ const sites: ISite[] = [
   dysnatyscans,
   flamecomics,
   ikigai,
+  kagane,
   kumanga,
   leercapitulo,
   lhtranslation,
