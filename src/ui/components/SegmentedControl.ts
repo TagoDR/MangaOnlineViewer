@@ -230,11 +230,12 @@ export class SegmentedControl extends LitElement {
       // The button's position is relative to its parent `.option` wrapper.
       // We need the position relative to the `.segmented-control` container.
       const buttonRect = selectedButton.getBoundingClientRect();
-      const containerRect =
-        this.shadowRoot!.querySelector('.segmented-control')!.getBoundingClientRect();
+      const containerRect = this.shadowRoot
+        ?.querySelector('.segmented-control')
+        ?.getBoundingClientRect();
 
-      const offsetX = buttonRect.left - containerRect.left;
-      const offsetY = buttonRect.top - containerRect.top;
+      const offsetX = buttonRect.left - (containerRect?.left ?? 0);
+      const offsetY = buttonRect.top - (containerRect?.top ?? 0);
 
       this.thumb.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
       this.thumb.style.width = `${offsetWidth}px`;
