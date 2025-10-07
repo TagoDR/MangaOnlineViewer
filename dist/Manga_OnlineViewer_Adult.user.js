@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.10.05
+// @version       2025.10.07
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -22,10 +22,8 @@
 // @require       https://cdn.jsdelivr.net/npm/colorjs.io@0.5.2/dist/color.global.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
-// @require       https://cdn.jsdelivr.net/npm/sweetalert2-neutral@11.22.2-neutral/dist/sweetalert2.all.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
 // @require       https://cdn.jsdelivr.net/npm/hotkeys-js@3.13.15/dist/hotkeys.min.js
-// @require       https://cdn.jsdelivr.net/npm/range-slider-input@2.4.4/dist/rangeslider.nostyle.umd.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/bowser/2.12.1/bundled.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
 // @include       /https?:\/\/(www\.)?akuma\.moe\/g\/.+\/.+/
@@ -1383,31 +1381,6 @@
     // Must be at the end because is a generic check
   ];
 
-  const rangeSliderStyles =
-    '.range-slider{touch-action:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;cursor:pointer;display:block;position:relative;width:100%;height:8px;background:#ddd;border-radius:4px}.range-slider[data-vertical]{height:100%;width:8px}.range-slider[data-disabled]{opacity:.5;cursor:not-allowed}.range-slider .range-slider__thumb{position:absolute;z-index:3;top:50%;width:24px;height:24px;transform:translate(-50%,-50%);border-radius:50%;background:#2196f3}.range-slider .range-slider__thumb:focus-visible{outline:0;box-shadow:0 0 0 6px rgba(33,150,243,.5)}.range-slider[data-vertical] .range-slider__thumb{left:50%}.range-slider .range-slider__thumb[data-disabled]{z-index:2}.range-slider .range-slider__range{position:absolute;z-index:1;transform:translate(0,-50%);top:50%;width:100%;height:100%;background:#51adf6}.range-slider[data-vertical] .range-slider__range{left:50%;transform:translate(-50%,0)}.range-slider input[type=range]{-webkit-appearance:none;pointer-events:none;position:absolute;z-index:2;top:0;left:0;width:0;height:0;background-color:transparent}.range-slider input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none}.range-slider input[type=range]::-moz-range-thumb{width:0;height:0;border:0}.range-slider input[type=range]:focus{outline:0}';
-
-  const normalize$1 =
-    '/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */\n\n/* Document\n   ========================================================================== */\n\n/**\n * 1. Correct the line height in all browsers.\n * 2. Prevent adjustments of font size after orientation changes in iOS.\n */\n\nhtml {\n  line-height: 1.15; /* 1 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/* Sections\n   ========================================================================== */\n\n/**\n * Remove the margin in all browsers.\n */\n\nbody {\n  margin: 0;\n}\n\n/**\n * Render the `main` element consistently in IE.\n */\n\nmain {\n  display: block;\n}\n\n/**\n * Correct the font size and margin on `h1` elements within `section` and\n * `article` contexts in Chrome, Firefox, and Safari.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * 1. Add the correct box sizing in Firefox.\n * 2. Show the overflow in Edge and IE.\n */\n\nhr {\n  box-sizing: content-box; /* 1 */\n  height: 0; /* 1 */\n  overflow: visible; /* 2 */\n}\n\n/**\n * 1. Correct the inheritance and scaling of font size in all browsers.\n * 2. Correct the odd `em` font sizing in all browsers.\n */\n\npre {\n  font-family: monospace, monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Remove the gray background on active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * 1. Remove the bottom border in Chrome 57-\n * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.\n */\n\nabbr[title] {\n  border-bottom: none; /* 1 */\n  text-decoration: underline; /* 2 */\n  text-decoration: underline dotted; /* 2 */\n}\n\n/**\n * Add the correct font weight in Chrome, Edge, and Safari.\n */\n\nb,\nstrong {\n  font-weight: bolder;\n}\n\n/**\n * 1. Correct the inheritance and scaling of font size in all browsers.\n * 2. Correct the odd `em` font sizing in all browsers.\n */\n\ncode,\nkbd,\nsamp {\n  font-family: monospace, monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/**\n * Add the correct font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` elements from affecting the line height in\n * all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\nsup {\n  top: -0.5em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove the border on images inside links in IE 10.\n */\n\nimg {\n  border-style: none;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * 1. Change the font styles in all browsers.\n * 2. Remove the margin in Firefox and Safari.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  font-family: inherit; /* 1 */\n  font-size: 100%; /* 1 */\n  line-height: 1.15; /* 1 */\n  margin: 0; /* 2 */\n}\n\n/**\n * Show the overflow in IE.\n * 1. Show the overflow in Edge.\n */\n\nbutton,\ninput { /* 1 */\n  overflow: visible;\n}\n\n/**\n * Remove the inheritance of text transform in Edge, Firefox, and IE.\n * 1. Remove the inheritance of text transform in Firefox.\n */\n\nbutton,\nselect { /* 1 */\n  text-transform: none;\n}\n\n/**\n * Correct the inability to style clickable types in iOS and Safari.\n */\n\nbutton,\n[type="button"],\n[type="reset"],\n[type="submit"] {\n  -webkit-appearance: button;\n}\n\n/**\n * Remove the inner border and padding in Firefox.\n */\n\nbutton::-moz-focus-inner,\n[type="button"]::-moz-focus-inner,\n[type="reset"]::-moz-focus-inner,\n[type="submit"]::-moz-focus-inner {\n  border-style: none;\n  padding: 0;\n}\n\n/**\n * Restore the focus styles unset by the previous rule.\n */\n\nbutton:-moz-focusring,\n[type="button"]:-moz-focusring,\n[type="reset"]:-moz-focusring,\n[type="submit"]:-moz-focusring {\n  outline: 1px dotted ButtonText;\n}\n\n/**\n * Correct the padding in Firefox.\n */\n\nfieldset {\n  padding: 0.35em 0.75em 0.625em;\n}\n\n/**\n * 1. Correct the text wrapping in Edge and IE.\n * 2. Correct the color inheritance from `fieldset` elements in IE.\n * 3. Remove the padding so developers are not caught out when they zero out\n *    `fieldset` elements in all browsers.\n */\n\nlegend {\n  box-sizing: border-box; /* 1 */\n  color: inherit; /* 2 */\n  display: table; /* 1 */\n  max-width: 100%; /* 1 */\n  padding: 0; /* 3 */\n  white-space: normal; /* 1 */\n}\n\n/**\n * Add the correct vertical alignment in Chrome, Firefox, and Opera.\n */\n\nprogress {\n  vertical-align: baseline;\n}\n\n/**\n * Remove the default vertical scrollbar in IE 10+.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * 1. Add the correct box sizing in IE 10.\n * 2. Remove the padding in IE 10.\n */\n\n[type="checkbox"],\n[type="radio"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Correct the cursor style of increment and decrement buttons in Chrome.\n */\n\n[type="number"]::-webkit-inner-spin-button,\n[type="number"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Correct the odd appearance in Chrome and Safari.\n * 2. Correct the outline style in Safari.\n */\n\n[type="search"] {\n  -webkit-appearance: textfield; /* 1 */\n  outline-offset: -2px; /* 2 */\n}\n\n/**\n * Remove the inner padding in Chrome and Safari on macOS.\n */\n\n[type="search"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * 1. Correct the inability to style clickable types in iOS and Safari.\n * 2. Change font properties to `inherit` in Safari.\n */\n\n::-webkit-file-upload-button {\n  -webkit-appearance: button; /* 1 */\n  font: inherit; /* 2 */\n}\n\n/* Interactive\n   ========================================================================== */\n\n/*\n * Add the correct display in Edge, IE 10+, and Firefox.\n */\n\ndetails {\n  display: block;\n}\n\n/*\n * Add the correct display in all browsers.\n */\n\nsummary {\n  display: list-item;\n}\n\n/* Misc\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 10+.\n */\n\ntemplate {\n  display: none;\n}\n\n/**\n * Add the correct display in IE 10.\n */\n\n[hidden] {\n  display: none;\n}\n';
-
-  const nprogress =
-    '/* Make clicks pass-through */\n#nprogress {\n  pointer-events: none;\n}\n\n#nprogress .bar {\n  background: #29d;\n\n  position: fixed;\n  z-index: 1031;\n  top: 0;\n  left: 0;\n\n  width: 100%;\n  height: 2px;\n}\n\n/* Fancy blur effect */\n#nprogress .peg {\n  display: block;\n  position: absolute;\n  right: 0px;\n  width: 100px;\n  height: 100%;\n  box-shadow: 0 0 10px #29d, 0 0 5px #29d;\n  opacity: 1.0;\n\n  -webkit-transform: rotate(3deg) translate(0px, -4px);\n      -ms-transform: rotate(3deg) translate(0px, -4px);\n          transform: rotate(3deg) translate(0px, -4px);\n}\n\n/* Remove these to get rid of the spinner */\n#nprogress .spinner {\n  display: block;\n  position: fixed;\n  z-index: 1031;\n  top: 15px;\n  right: 15px;\n}\n\n#nprogress .spinner-icon {\n  width: 18px;\n  height: 18px;\n  box-sizing: border-box;\n\n  border: solid 2px transparent;\n  border-top-color: #29d;\n  border-left-color: #29d;\n  border-radius: 50%;\n\n  -webkit-animation: nprogress-spinner 400ms linear infinite;\n          animation: nprogress-spinner 400ms linear infinite;\n}\n\n.nprogress-custom-parent {\n  overflow: hidden;\n  position: relative;\n}\n\n.nprogress-custom-parent #nprogress .spinner,\n.nprogress-custom-parent #nprogress .bar {\n  position: absolute;\n}\n\n@-webkit-keyframes nprogress-spinner {\n  0%   { -webkit-transform: rotate(0deg); }\n  100% { -webkit-transform: rotate(360deg); }\n}\n@keyframes nprogress-spinner {\n  0%   { transform: rotate(0deg); }\n  100% { transform: rotate(360deg); }\n}\n\n';
-
-  const sweetalert =
-    ':root{--swal2-container-padding: 0.625em;--swal2-backdrop: rgba(0, 0, 0, 0.4);--swal2-width: 32em;--swal2-padding: 0 0 1.25em;--swal2-border: none;--swal2-border-radius: 0.3125rem;--swal2-background: white;--swal2-color: #545454;--swal2-footer-border-color: #eee;--swal2-show-animation: swal2-show 0.3s;--swal2-hide-animation: swal2-hide 0.15s forwards;--swal2-title-padding: 0.8em 1em 0;--swal2-html-container-padding: 1em 1.6em 0.3em;--swal2-input-background: transparent;--swal2-progress-step-background: #add8e6;--swal2-validation-message-background: #f0f0f0;--swal2-validation-message-color: #666;--swal2-close-button-position: initial;--swal2-close-button-inset: auto;--swal2-close-button-font-size: 2.5em;--swal2-close-button-color: #ccc;--swal2-close-button-transition: color 0.1s, box-shadow 0.1s;--swal2-close-button-outline: initial;--swal2-close-button-hover-transform: none}[data-swal2-theme=dark]{--swal2-dark-theme-black: #19191a;--swal2-dark-theme-white: #e1e1e1;--swal2-background: var(--swal2-dark-theme-black);--swal2-color: var(--swal2-dark-theme-white);--swal2-footer-border-color: #555;--swal2-input-background: color-mix(in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10%);--swal2-validation-message-background: color-mix( in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10% );--swal2-validation-message-color: var(--swal2-dark-theme-white)}@media(prefers-color-scheme: dark){[data-swal2-theme=auto]{--swal2-dark-theme-black: #19191a;--swal2-dark-theme-white: #e1e1e1;--swal2-background: var(--swal2-dark-theme-black);--swal2-color: var(--swal2-dark-theme-white);--swal2-footer-border-color: #555;--swal2-input-background: color-mix(in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10%);--swal2-validation-message-background: color-mix( in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10% );--swal2-validation-message-color: var(--swal2-dark-theme-white)}}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown){overflow:hidden}body.swal2-height-auto{height:auto !important}body.swal2-no-backdrop .swal2-container{background-color:rgba(0,0,0,0) !important;pointer-events:none}body.swal2-no-backdrop .swal2-container .swal2-popup{pointer-events:all}body.swal2-no-backdrop .swal2-container .swal2-modal{box-shadow:0 0 10px var(--swal2-backdrop)}body.swal2-toast-shown .swal2-container{box-sizing:border-box;width:360px;max-width:100%;background-color:rgba(0,0,0,0);pointer-events:none}body.swal2-toast-shown .swal2-container.swal2-top{inset:0 auto auto 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-top-end,body.swal2-toast-shown .swal2-container.swal2-top-right{inset:0 0 auto auto}body.swal2-toast-shown .swal2-container.swal2-top-start,body.swal2-toast-shown .swal2-container.swal2-top-left{inset:0 auto auto 0}body.swal2-toast-shown .swal2-container.swal2-center-start,body.swal2-toast-shown .swal2-container.swal2-center-left{inset:50% auto auto 0;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-center{inset:50% auto auto 50%;transform:translate(-50%, -50%)}body.swal2-toast-shown .swal2-container.swal2-center-end,body.swal2-toast-shown .swal2-container.swal2-center-right{inset:50% 0 auto auto;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-start,body.swal2-toast-shown .swal2-container.swal2-bottom-left{inset:auto auto 0 0}body.swal2-toast-shown .swal2-container.swal2-bottom{inset:auto auto 0 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-end,body.swal2-toast-shown .swal2-container.swal2-bottom-right{inset:auto 0 0 auto}@media print{body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown){overflow-y:scroll !important}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown)>[aria-hidden=true]{display:none}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown) .swal2-container{position:static !important}}div:where(.swal2-container){display:grid;position:fixed;z-index:1060;inset:0;box-sizing:border-box;grid-template-areas:"top-start     top            top-end" "center-start  center         center-end" "bottom-start  bottom-center  bottom-end";grid-template-rows:minmax(min-content, auto) minmax(min-content, auto) minmax(min-content, auto);height:100%;padding:var(--swal2-container-padding);overflow-x:hidden;transition:background-color .1s;-webkit-overflow-scrolling:touch}div:where(.swal2-container).swal2-backdrop-show,div:where(.swal2-container).swal2-noanimation{background:var(--swal2-backdrop)}div:where(.swal2-container).swal2-backdrop-hide{background:rgba(0,0,0,0) !important}div:where(.swal2-container).swal2-top-start,div:where(.swal2-container).swal2-center-start,div:where(.swal2-container).swal2-bottom-start{grid-template-columns:minmax(0, 1fr) auto auto}div:where(.swal2-container).swal2-top,div:where(.swal2-container).swal2-center,div:where(.swal2-container).swal2-bottom{grid-template-columns:auto minmax(0, 1fr) auto}div:where(.swal2-container).swal2-top-end,div:where(.swal2-container).swal2-center-end,div:where(.swal2-container).swal2-bottom-end{grid-template-columns:auto auto minmax(0, 1fr)}div:where(.swal2-container).swal2-top-start>.swal2-popup{align-self:start}div:where(.swal2-container).swal2-top>.swal2-popup{grid-column:2;place-self:start center}div:where(.swal2-container).swal2-top-end>.swal2-popup,div:where(.swal2-container).swal2-top-right>.swal2-popup{grid-column:3;place-self:start end}div:where(.swal2-container).swal2-center-start>.swal2-popup,div:where(.swal2-container).swal2-center-left>.swal2-popup{grid-row:2;align-self:center}div:where(.swal2-container).swal2-center>.swal2-popup{grid-column:2;grid-row:2;place-self:center center}div:where(.swal2-container).swal2-center-end>.swal2-popup,div:where(.swal2-container).swal2-center-right>.swal2-popup{grid-column:3;grid-row:2;place-self:center end}div:where(.swal2-container).swal2-bottom-start>.swal2-popup,div:where(.swal2-container).swal2-bottom-left>.swal2-popup{grid-column:1;grid-row:3;align-self:end}div:where(.swal2-container).swal2-bottom>.swal2-popup{grid-column:2;grid-row:3;place-self:end center}div:where(.swal2-container).swal2-bottom-end>.swal2-popup,div:where(.swal2-container).swal2-bottom-right>.swal2-popup{grid-column:3;grid-row:3;place-self:end end}div:where(.swal2-container).swal2-grow-row>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-column:1/4;width:100%}div:where(.swal2-container).swal2-grow-column>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-row:1/4;align-self:stretch}div:where(.swal2-container).swal2-no-transition{transition:none !important}div:where(.swal2-container) div:where(.swal2-popup){display:none;position:relative;box-sizing:border-box;grid-template-columns:minmax(0, 100%);width:var(--swal2-width);max-width:100%;padding:var(--swal2-padding);border:var(--swal2-border);border-radius:var(--swal2-border-radius);background:var(--swal2-background);color:var(--swal2-color);font-family:inherit;font-size:1rem}div:where(.swal2-container) div:where(.swal2-popup):focus{outline:none}div:where(.swal2-container) div:where(.swal2-popup).swal2-loading{overflow-y:hidden}div:where(.swal2-container) div:where(.swal2-popup).swal2-draggable{cursor:grab}div:where(.swal2-container) div:where(.swal2-popup).swal2-draggable div:where(.swal2-icon){cursor:grab}div:where(.swal2-container) div:where(.swal2-popup).swal2-dragging{cursor:grabbing}div:where(.swal2-container) div:where(.swal2-popup).swal2-dragging div:where(.swal2-icon){cursor:grabbing}div:where(.swal2-container) h2:where(.swal2-title){position:relative;max-width:100%;margin:0;padding:var(--swal2-title-padding);color:inherit;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;word-wrap:break-word;cursor:initial}div:where(.swal2-container) div:where(.swal2-actions){display:flex;z-index:1;box-sizing:border-box;flex-wrap:wrap;align-items:center;justify-content:center;width:auto;margin:1.25em auto 0;padding:0}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled[disabled]{opacity:.4}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:hover{background-image:linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1))}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:active{background-image:linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))}div:where(.swal2-container) div:where(.swal2-loader){display:none;align-items:center;justify-content:center;width:2.2em;height:2.2em;margin:0 1.875em;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;border-width:.25em;border-style:solid;border-radius:100%;border-color:#2778c4 rgba(0,0,0,0) #2778c4 rgba(0,0,0,0)}div:where(.swal2-container) button:where(.swal2-styled){margin:.3125em;padding:.625em 1.1em;transition:box-shadow .1s;box-shadow:0 0 0 3px rgba(0,0,0,0);font-weight:500}div:where(.swal2-container) button:where(.swal2-styled):not([disabled]){cursor:pointer}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm){border:0;border-radius:.25em;background:initial;background-color:#7066e0;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm):focus-visible{box-shadow:0 0 0 3px rgba(112,102,224,.5)}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny){border:0;border-radius:.25em;background:initial;background-color:#dc3741;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny):focus-visible{box-shadow:0 0 0 3px rgba(220,55,65,.5)}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel){border:0;border-radius:.25em;background:initial;background-color:#6e7881;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel):focus-visible{box-shadow:0 0 0 3px rgba(110,120,129,.5)}div:where(.swal2-container) button:where(.swal2-styled).swal2-default-outline:focus-visible{box-shadow:0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) button:where(.swal2-styled):focus-visible{outline:none}div:where(.swal2-container) button:where(.swal2-styled)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-footer){margin:1em 0 0;padding:1em 1em 0;border-top:1px solid var(--swal2-footer-border-color);color:inherit;font-size:1em;text-align:center;cursor:initial}div:where(.swal2-container) .swal2-timer-progress-bar-container{position:absolute;right:0;bottom:0;left:0;grid-column:auto !important;overflow:hidden;border-bottom-right-radius:var(--swal2-border-radius);border-bottom-left-radius:var(--swal2-border-radius)}div:where(.swal2-container) div:where(.swal2-timer-progress-bar){width:100%;height:.25em;background:rgba(0,0,0,.2)}div:where(.swal2-container) img:where(.swal2-image){max-width:100%;margin:2em auto 1em;cursor:initial}div:where(.swal2-container) button:where(.swal2-close){position:var(--swal2-close-button-position);inset:var(--swal2-close-button-inset);z-index:2;align-items:center;justify-content:center;width:1.2em;height:1.2em;margin-top:0;margin-right:0;margin-bottom:-1.2em;padding:0;overflow:hidden;transition:var(--swal2-close-button-transition);border:none;border-radius:var(--swal2-border-radius);outline:var(--swal2-close-button-outline);background:rgba(0,0,0,0);color:var(--swal2-close-button-color);font-family:monospace;font-size:var(--swal2-close-button-font-size);cursor:pointer;justify-self:end}div:where(.swal2-container) button:where(.swal2-close):hover{transform:var(--swal2-close-button-hover-transform);background:rgba(0,0,0,0);color:#f27474}div:where(.swal2-container) button:where(.swal2-close):focus-visible{outline:none;box-shadow:inset 0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) button:where(.swal2-close)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-html-container){z-index:1;justify-content:center;margin:0;padding:var(--swal2-html-container-padding);overflow:auto;color:inherit;font-size:1.125em;font-weight:normal;line-height:normal;text-align:center;word-wrap:break-word;word-break:break-word;cursor:initial}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea),div:where(.swal2-container) select:where(.swal2-select),div:where(.swal2-container) div:where(.swal2-radio),div:where(.swal2-container) label:where(.swal2-checkbox){margin:1em 2em 3px}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea){box-sizing:border-box;width:auto;transition:border-color .1s,box-shadow .1s;border:1px solid #d9d9d9;border-radius:.1875em;background:var(--swal2-input-background);box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(0,0,0,0);color:inherit;font-size:1.125em}div:where(.swal2-container) input:where(.swal2-input).swal2-inputerror,div:where(.swal2-container) input:where(.swal2-file).swal2-inputerror,div:where(.swal2-container) textarea:where(.swal2-textarea).swal2-inputerror{border-color:#f27474 !important;box-shadow:0 0 2px #f27474 !important}div:where(.swal2-container) input:where(.swal2-input):focus,div:where(.swal2-container) input:where(.swal2-file):focus,div:where(.swal2-container) textarea:where(.swal2-textarea):focus{border:1px solid #b4dbed;outline:none;box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) input:where(.swal2-input)::placeholder,div:where(.swal2-container) input:where(.swal2-file)::placeholder,div:where(.swal2-container) textarea:where(.swal2-textarea)::placeholder{color:#ccc}div:where(.swal2-container) .swal2-range{margin:1em 2em 3px;background:var(--swal2-background)}div:where(.swal2-container) .swal2-range input{width:80%}div:where(.swal2-container) .swal2-range output{width:20%;color:inherit;font-weight:600;text-align:center}div:where(.swal2-container) .swal2-range input,div:where(.swal2-container) .swal2-range output{height:2.625em;padding:0;font-size:1.125em;line-height:2.625em}div:where(.swal2-container) .swal2-input{height:2.625em;padding:0 .75em}div:where(.swal2-container) .swal2-file{width:75%;margin-right:auto;margin-left:auto;background:var(--swal2-input-background);font-size:1.125em}div:where(.swal2-container) .swal2-textarea{height:6.75em;padding:.75em}div:where(.swal2-container) .swal2-select{min-width:50%;max-width:100%;padding:.375em .625em;background:var(--swal2-input-background);color:inherit;font-size:1.125em}div:where(.swal2-container) .swal2-radio,div:where(.swal2-container) .swal2-checkbox{align-items:center;justify-content:center;background:var(--swal2-background);color:inherit}div:where(.swal2-container) .swal2-radio label,div:where(.swal2-container) .swal2-checkbox label{margin:0 .6em;font-size:1.125em}div:where(.swal2-container) .swal2-radio input,div:where(.swal2-container) .swal2-checkbox input{flex-shrink:0;margin:0 .4em}div:where(.swal2-container) label:where(.swal2-input-label){display:flex;justify-content:center;margin:1em auto 0}div:where(.swal2-container) div:where(.swal2-validation-message){align-items:center;justify-content:center;margin:1em 0 0;padding:.625em;overflow:hidden;background:var(--swal2-validation-message-background);color:var(--swal2-validation-message-color);font-size:1em;font-weight:300}div:where(.swal2-container) div:where(.swal2-validation-message)::before{content:"!";display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 .625em;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center}div:where(.swal2-container) .swal2-progress-steps{flex-wrap:wrap;align-items:center;max-width:100%;margin:1.25em auto;padding:0;background:rgba(0,0,0,0);font-weight:600}div:where(.swal2-container) .swal2-progress-steps li{display:inline-block;position:relative}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step{z-index:20;flex-shrink:0;width:2em;height:2em;border-radius:2em;background:#2778c4;color:#fff;line-height:2em;text-align:center}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step{background:#2778c4}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step{background:var(--swal2-progress-step-background);color:#fff}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line{background:var(--swal2-progress-step-background)}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step-line{z-index:10;flex-shrink:0;width:2.5em;height:.4em;margin:0 -1px;background:#2778c4}div:where(.swal2-icon){position:relative;box-sizing:content-box;justify-content:center;width:5em;height:5em;margin:2.5em auto .6em;border:.25em solid rgba(0,0,0,0);border-radius:50%;border-color:#000;font-family:inherit;line-height:5em;cursor:default;user-select:none}div:where(.swal2-icon) .swal2-icon-content{display:flex;align-items:center;font-size:3.75em}div:where(.swal2-icon).swal2-error{border-color:#f27474;color:#f27474}div:where(.swal2-icon).swal2-error .swal2-x-mark{position:relative;flex-grow:1}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line]{display:block;position:absolute;top:2.3125em;width:2.9375em;height:.3125em;border-radius:.125em;background-color:#f27474}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=left]{left:1.0625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=right]{right:1em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-error.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-error.swal2-icon-show .swal2-x-mark{animation:swal2-animate-error-x-mark .5s}div:where(.swal2-icon).swal2-warning{border-color:#f8bb86;color:#f8bb86}div:where(.swal2-icon).swal2-warning.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-warning.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .5s}div:where(.swal2-icon).swal2-info{border-color:#3fc3ee;color:#3fc3ee}div:where(.swal2-icon).swal2-info.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-info.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .8s}div:where(.swal2-icon).swal2-question{border-color:#87adbd;color:#87adbd}div:where(.swal2-icon).swal2-question.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-question.swal2-icon-show .swal2-icon-content{animation:swal2-animate-question-mark .8s}div:where(.swal2-icon).swal2-success{border-color:#a5dc86;color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line]{position:absolute;width:3.75em;height:7.5em;border-radius:50%}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.4375em;left:-2.0635em;transform:rotate(-45deg);transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.6875em;left:1.875em;transform:rotate(-45deg);transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}div:where(.swal2-icon).swal2-success .swal2-success-ring{position:absolute;z-index:2;top:-0.25em;left:-0.25em;box-sizing:content-box;width:100%;height:100%;border:.25em solid rgba(165,220,134,.3);border-radius:50%}div:where(.swal2-icon).swal2-success .swal2-success-fix{position:absolute;z-index:1;top:.5em;left:1.625em;width:.4375em;height:5.625em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line]{display:block;position:absolute;z-index:2;height:.3125em;border-radius:.125em;background-color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=tip]{top:2.875em;left:.8125em;width:1.5625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=long]{top:2.375em;right:.5em;width:2.9375em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-animate-success-line-tip .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-animate-success-line-long .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-circular-line-right{animation:swal2-rotate-success-circular-line 4.25s ease-in}[class^=swal2]{-webkit-tap-highlight-color:rgba(0,0,0,0)}.swal2-show{animation:var(--swal2-show-animation)}.swal2-hide{animation:var(--swal2-hide-animation)}.swal2-noanimation{transition:none}.swal2-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}.swal2-rtl .swal2-close{margin-right:initial;margin-left:0}.swal2-rtl .swal2-timer-progress-bar{right:0;left:auto}.swal2-toast{box-sizing:border-box;grid-column:1/4 !important;grid-row:1/4 !important;grid-template-columns:min-content auto min-content;padding:1em;overflow-y:hidden;background:var(--swal2-background);box-shadow:0 0 1px rgba(0,0,0,.075),0 1px 2px rgba(0,0,0,.075),1px 2px 4px rgba(0,0,0,.075),1px 3px 8px rgba(0,0,0,.075),2px 4px 16px rgba(0,0,0,.075);pointer-events:all}.swal2-toast>*{grid-column:2}.swal2-toast h2:where(.swal2-title){margin:.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-toast .swal2-loading{justify-content:center}.swal2-toast input:where(.swal2-input){height:2em;margin:.5em;font-size:1em}.swal2-toast .swal2-validation-message{font-size:1em}.swal2-toast div:where(.swal2-footer){margin:.5em 0 0;padding:.5em 0 0;font-size:.8em}.swal2-toast button:where(.swal2-close){grid-column:3/3;grid-row:1/99;align-self:center;width:.8em;height:.8em;margin:0;font-size:2em}.swal2-toast div:where(.swal2-html-container){margin:.5em 1em;padding:0;overflow:initial;font-size:1em;text-align:initial}.swal2-toast div:where(.swal2-html-container):empty{padding:0}.swal2-toast .swal2-loader{grid-column:1;grid-row:1/99;align-self:center;width:2em;height:2em;margin:.25em}.swal2-toast .swal2-icon{grid-column:1;grid-row:1/99;align-self:center;width:2em;min-width:2em;height:2em;margin:0 .5em 0 0}.swal2-toast .swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:1.8em;font-weight:bold}.swal2-toast .swal2-icon.swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line]{top:.875em;width:1.375em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:.3125em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:.3125em}.swal2-toast div:where(.swal2-actions){justify-content:flex-start;height:auto;margin:0;margin-top:.5em;padding:0 .5em}.swal2-toast button:where(.swal2-styled){margin:.25em .5em;padding:.4em .6em;font-size:1em}.swal2-toast .swal2-success{border-color:#a5dc86}.swal2-toast .swal2-success [class^=swal2-success-circular-line]{position:absolute;width:1.6em;height:3em;border-radius:50%}.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.8em;left:-0.5em;transform:rotate(-45deg);transform-origin:2em 2em;border-radius:4em 0 0 4em}.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.25em;left:.9375em;transform-origin:0 1.5em;border-radius:0 4em 4em 0}.swal2-toast .swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-toast .swal2-success .swal2-success-fix{top:0;left:.4375em;width:.4375em;height:2.6875em}.swal2-toast .swal2-success [class^=swal2-success-line]{height:.3125em}.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip]{top:1.125em;left:.1875em;width:.75em}.swal2-toast .swal2-success [class^=swal2-success-line][class$=long]{top:.9375em;right:.1875em;width:1.375em}.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-toast-animate-success-line-tip .75s}.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-toast-animate-success-line-long .75s}.swal2-toast.swal2-show{animation:swal2-toast-show .5s}.swal2-toast.swal2-hide{animation:swal2-toast-hide .1s forwards}@keyframes swal2-show{0%{transform:scale(0.7)}45%{transform:scale(1.05)}80%{transform:scale(0.95)}100%{transform:scale(1)}}@keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(0.5);opacity:0}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-0.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(0.4);opacity:0}50%{margin-top:1.625em;transform:scale(0.4);opacity:0}80%{margin-top:-0.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0deg);opacity:1}}@keyframes swal2-rotate-loading{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:.4}50%{transform:rotateZ(15deg);opacity:.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-toast-show{0%{transform:translateY(-0.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(0.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0deg)}}@keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-0.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}\n';
-
-  const fix =
-    '#nprogress .bar {\n  background: #29d;\n  position: fixed;\n  z-index: 1031;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 4px;\n}\n\n#pagesSlider {\n  margin: 10px 0;\n}\n\n#pageInputs {\n  display: flex;\n  gap: 5px;\n  align-items: center;\n  justify-content: center;\n}\n\n#swal2-html-container .pageInput {\n  border: 1px darkblue dashed;\n  border-radius: 5px;\n  text-align: center;\n  background-color: aliceblue;\n  color: black;\n  max-width: 40%;\n}\n\n#swal2-title {\n  color: navy;\n}\n\nbutton.swal2-styled {\n  position: inherit;\n  transform: inherit;\n}\n';
-
-  const sweetalertStyle = [normalize$1, sweetalert, nprogress, fix].join('\n');
-
-  const startButton =
-    '#StartMOV {\n  all: revert;\n  backface-visibility: hidden;\n  font-size: 2rem;\n  color: #fff;\n  cursor: pointer;\n  margin: 0 auto;\n  padding: 0.5rem 1rem;\n  text-align: center;\n  border: none;\n  border-radius: 10px;\n  min-height: 50px;\n  width: 80%;\n  position: fixed;\n  right: 0;\n  left: 0;\n  bottom: 0;\n  z-index: 105000;\n  transition: all 0.4s ease-in-out;\n  background-size: 300% 100%;\n  background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\n  box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\n}\n\n#StartMOV:hover {\n  background-position: 100% 0;\n  transition: all 0.4s ease-in-out;\n}\n\n#StartMOV:focus {\n  outline: none;\n}\n';
-
-  const concatenateTemplateLiteralTag = (raw, ...keys) =>
-    keys.length === 0 ? raw[0] : String.raw({ raw }, ...keys);
-  const html = concatenateTemplateLiteralTag;
-  const css = concatenateTemplateLiteralTag;
-
   function giveToWindow(key, content) {
     if (typeof unsafeWindow !== 'undefined') unsafeWindow[key] = content;
     if (typeof window !== 'undefined') {
@@ -1448,8 +1421,13 @@
   }
   function getJsonGM(name, defaultValue = null) {
     const result = getValueGM(name, defaultValue);
-    if (typeof result === 'string') {
-      return JSON.parse(result);
+    if (typeof result === 'string' && result.trim() !== '') {
+      try {
+        return JSON.parse(result);
+      } catch (e) {
+        logScript('Failed to parse JSON from storage', name, e);
+        return defaultValue;
+      }
     }
     return result;
   }
@@ -1543,6 +1521,30 @@
       logScript('Continuing after timer');
     }
   }
+
+  const o$d = '@moaqzdev/toast',
+    i$6 = {
+      _dispatchToast(s, t) {
+        Object.assign(t, { type: s });
+        const a = new CustomEvent(o$d, { detail: t });
+        document.dispatchEvent(a);
+      },
+      success(s) {
+        this._dispatchToast('success', s);
+      },
+      error(s) {
+        this._dispatchToast('error', s);
+      },
+      warning(s) {
+        this._dispatchToast('warning', s);
+      },
+      info(s) {
+        this._dispatchToast('info', s);
+      },
+      confirm(s) {
+        this._dispatchToast('confirm', s);
+      },
+    };
 
   let listenerQueue = [];
   let lqIndex = 0;
@@ -2278,7 +2280,7 @@
   const de_DE = {
     ID: 'de_DE',
     NAME: 'Deutsch',
-    STARTING: 'Starte<br>Manga OnlineViewer',
+    STARTING: 'Starte Manga OnlineViewer',
     RESUME: 'Fortsetzen ab Seite ',
     WAITING: 'Bitte warten, 3 Sekunden...',
     CHOOSE_BEGINNING: 'Wähle die Startseite:',
@@ -2326,7 +2328,7 @@
     BOOKMARK_REMOVED: 'Lesezeichen entfernt',
     BOOKMARK_SAVED: 'Lesezeichen gespeichert',
     BOOKMARK_MESSAGE:
-      'Beim nächsten Öffnen dieses Kapitels wird ab fortgesetzt:<h4>Seite ##num##</h4>(Nur <i>EINMAL</i> pro Lesezeichen)',
+      'Beim nächsten Öffnen dieses Kapitels wird ab fortgesetzt: Seite ##num## (Nur EINMAL pro Lesezeichen)',
     KEYBINDINGS: 'Tastenkürzel',
     EDIT_KEYBINDS: 'Tastenkürzel bearbeiten',
     SAVE_KEYBINDS: 'Tastenkürzel speichern',
@@ -2334,8 +2336,8 @@
     BUTTON_SAVE: 'Speichern',
     KEYBIND_RULES: `
     <h3>Unterstützte Tasten</h3>
-    Erlaubte Modifikatoren: shift, option, alt, ctrl, control, command. </br>
-    Spezielle Tasten: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. </br>
+    Erlaubte Modifikatoren: shift, option, alt, ctrl, control, command. <br/>
+    Spezielle Tasten: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. <br/>
     Beispiele: <kbd>a</kbd>, <kbd>ctrl+a</kbd>, <kbd>shift+a</kbd>, <kbd>num_2</kbd>, <kbd>2</kbd>
   `,
     ATTENTION: 'Achtung',
@@ -2373,7 +2375,7 @@
     ALL_PAGES: 'Alle Seiten',
     SPEED_WARNING: 'Ladegeschwindigkeit zu hoch',
     SPEED_WARNING_MESSAGE:
-      'Diese Geschwindigkeit wird nicht empfohlen.<br> Sie kann einige Server überlasten oder deine IP als DDoS-Angreifer markieren.<br> Bitte mit Vorsicht verwenden!',
+      'Diese Geschwindigkeit wird nicht empfohlen.<br/> Sie kann einige Server überlasten oder deine IP als DDoS-Angreifer markieren.<br/> Bitte mit Vorsicht verwenden!',
     SCROLL_UP: 'Nach oben scrollen',
     SCROLL_DOWN: 'Nach unten scrollen',
     CLOSE: 'Schließen',
@@ -2406,7 +2408,7 @@
   const en_US = {
     ID: 'en_US',
     NAME: 'English (US)',
-    STARTING: 'Starting<br>Manga OnlineViewer',
+    STARTING: 'Starting Manga OnlineViewer',
     RESUME: 'Resuming reading from Page ',
     WAITING: 'Please wait, 3 seconds...',
     CHOOSE_BEGINNING: 'Choose the Page to start from:',
@@ -2454,7 +2456,7 @@
     BOOKMARK_REMOVED: 'Bookmark Removed',
     BOOKMARK_SAVED: 'Bookmark Saved',
     BOOKMARK_MESSAGE:
-      'Next time you open this chapter it will resume from:<h4>Page ##num##</h4>(Only <i>ONCE</i> per Bookmark)',
+      'Next time you open this chapter it will resume from: Page ##num## (Only ONCE per Bookmark)',
     KEYBINDINGS: 'Keybindings',
     EDIT_KEYBINDS: 'Edit KeyBindings',
     SAVE_KEYBINDS: 'Save KeyBindings',
@@ -2462,8 +2464,8 @@
     BUTTON_SAVE: 'Save',
     KEYBIND_RULES: `
     <h3>Supported Keys</h3>
-    Allowed modifiers: shift, option, alt, ctrl, control, command. </br>
-    Special keys: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. </br>
+    Allowed modifiers: shift, option, alt, ctrl, control, command. <br/>
+    Special keys: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. <br/>
     Examples: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd>
   `,
     ATTENTION: 'Attention',
@@ -2500,7 +2502,7 @@
     ALL_PAGES: 'All Pages',
     SPEED_WARNING: 'Loading Speed too High',
     SPEED_WARNING_MESSAGE:
-      'This speed is not recommended.<br> It may hurt some servers or get your IP marked as DDoS attacker.<br> Please use with caution!',
+      'This speed is not recommended.<br/> It may hurt some servers or get your IP marked as DDoS attacker.<br/> Please use with caution!',
     SCROLL_UP: 'Scroll Up',
     SCROLL_DOWN: 'Scroll Down',
     CLOSE: 'Close',
@@ -2533,7 +2535,7 @@
   const es_ES = {
     ID: 'es_ES',
     NAME: 'Español (ES)',
-    STARTING: 'Iniciando<br>Manga OnlineViewer',
+    STARTING: 'Iniciando Manga OnlineViewer',
     RESUME: 'Continuando lectura desde la Página ',
     WAITING: 'Por favor espere, 3 segundos...',
     CHOOSE_BEGINNING: 'Elija la página en la que comenzar:',
@@ -2581,7 +2583,7 @@
     BOOKMARK_REMOVED: 'Marcador eliminado',
     BOOKMARK_SAVED: 'Marcador guardado',
     BOOKMARK_MESSAGE:
-      'La próxima vez que abra este capítulo, continuará desde la <h4>página ##num##</h4>(Sólo <i>UNA VEZ</i> por Marcador)',
+      'La próxima vez que abra este capítulo, continuará desde la página ##num## (Sólo UNA VEZ por Marcador)',
     KEYBINDINGS: 'Atajos de teclado',
     EDIT_KEYBINDS: 'Editar atajos',
     SAVE_KEYBINDS: 'Guardar atajos',
@@ -2589,8 +2591,8 @@
     BUTTON_SAVE: 'Guardar',
     KEYBIND_RULES: `
     <h3>Teclas soportadas</h3>
-    Modificadores permitidos: shift, option, alt, ctrl, control, command. </br>
-    Teclas especiales: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. <br>
+    Modificadores permitidos: shift, option, alt, ctrl, control, command. <br/>
+    Teclas especiales: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. <br/>
     Ejemplos: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd>
   `,
     ATTENTION: 'Atención',
@@ -2629,7 +2631,7 @@
     ALL_PAGES: 'Todas las páginas',
     SPEED_WARNING: 'Velocidad de carga muy alta',
     SPEED_WARNING_MESSAGE:
-      'No se recomienda esta velocidad.<br> Puede dañar algunos servidores o marcar su IP como atacante DDoS.<br> ¡Utilícelo con precaución!',
+      'No se recomienda esta velocidad.<br/> Puede dañar algunos servidores o marcar su IP como atacante DDoS.<br/> ¡Utilícelo con precaución!',
     SCROLL_UP: 'Desplazar arriba',
     SCROLL_DOWN: 'Desplazar abajo',
     CLOSE: 'Cerrar',
@@ -2662,7 +2664,7 @@
   const fr_FR = {
     ID: 'fr_FR',
     NAME: 'Français (FR)',
-    STARTING: 'Démarrage<br>Manga OnlineViewer',
+    STARTING: 'Démarrage Manga OnlineViewer',
     RESUME: 'Reprise de la lecture à partir de la Page ',
     WAITING: 'Veuillez patienter, 3 secondes...',
     CHOOSE_BEGINNING: 'Choisissez la page par laquelle commencer :',
@@ -2710,7 +2712,7 @@
     BOOKMARK_REMOVED: 'Favori supprimé',
     BOOKMARK_SAVED: 'Favori enregistré',
     BOOKMARK_MESSAGE:
-      'La prochaine fois que vous ouvrirez ce chapitre, il reprendra à partir de :<h4>Page ##num##</h4>(Seulement <i>UNE FOIS</i> par favori)',
+      'La prochaine fois que vous ouvrirez ce chapitre, il reprendra à partir de: Page ##num## (Seulement UNE FOIS par favori)',
     KEYBINDINGS: 'Raccourcis clavier',
     EDIT_KEYBINDS: 'Modifier les raccourcis clavier',
     SAVE_KEYBINDS: 'Enregistrer les raccourcis clavier',
@@ -2718,8 +2720,8 @@
     BUTTON_SAVE: 'Enregistrer',
     KEYBIND_RULES: `
     <h3>Touches prises en charge</h3>
-    Modificateurs autorisés : shift, option, alt, ctrl, control, command. </br>
-    Touches spéciales : backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. </br>
+    Modificateurs autorisés : shift, option, alt, ctrl, control, command. <br/>
+    Touches spéciales : backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. <br/>
     Exemples : <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd>
   `,
     ATTENTION: 'Attention',
@@ -2757,7 +2759,7 @@
     ALL_PAGES: 'Toutes les pages',
     SPEED_WARNING: 'Vitesse de chargement trop élevée',
     SPEED_WARNING_MESSAGE:
-      "Cette vitesse n'est pas recommandée.<br> Elle peut nuire à certains serveurs ou marquer votre IP comme un attaquant DDoS.<br> Veuillez l'utiliser avec prudence !",
+      "Cette vitesse n'est pas recommandée.<br/> Elle peut nuire à certains serveurs ou marquer votre IP comme un attaquant DDoS.<br/> Veuillez l'utiliser avec prudence !",
     SCROLL_UP: 'Faire défiler vers le haut',
     SCROLL_DOWN: 'Faire défiler vers le bas',
     CLOSE: 'Fermer',
@@ -2790,7 +2792,7 @@
   const pt_BR = {
     ID: 'pt_BR',
     NAME: 'Portugues (Brasil)',
-    STARTING: 'Iniciando<br>Manga OnlineViewer',
+    STARTING: 'Iniciando Manga OnlineViewer',
     RESUME: 'Continuando leitura na Pagina ',
     WAITING: 'Por Favor espere, 3 segundos...',
     CHOOSE_BEGINNING: 'Escolha a pagina de onde começar:',
@@ -2838,7 +2840,7 @@
     BOOKMARK_REMOVED: 'Marca pagina Removido',
     BOOKMARK_SAVED: 'Marca pagina Salvo',
     BOOKMARK_MESSAGE:
-      'Proxima vez que abrir este capitulo continuará a partir da <h4>Pagina ##num##</h4>(Apenas <i>UMA VEZ</i> por marca pagina)',
+      'Proxima vez que abrir este capitulo continuará a partir da Pagina ##num## (Apenas UMA VEZ por marca pagina)',
     KEYBINDINGS: 'Atalhos',
     EDIT_KEYBINDS: 'Editar Atalhos',
     SAVE_KEYBINDS: 'Salvar Atalhos',
@@ -2846,8 +2848,8 @@
     BUTTON_SAVE: 'Salvar',
     KEYBIND_RULES: `
     <h3>Teclas Suportadas</h3>
-    Modificadores permitidos: shift, option, alt, ctrl, control, command. </br>
-    Teclas Especiais: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide.</br>
+    Modificadores permitidos: shift, option, alt, ctrl, control, command. <br/>
+    Teclas Especiais: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide.<br/>
     Exemplos: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd>
   `,
     ATTENTION: 'Atenção',
@@ -2884,7 +2886,7 @@
     ALL_PAGES: 'Todas as Paginas',
     SPEED_WARNING: 'Velocidade de Carregamento muito alta',
     SPEED_WARNING_MESSAGE:
-      'Essa velocidade não é recomendada.<br> Ela pode derrubar um servidor or marcar voce como um ataque hacker de DDoS.<br> Use com cuidado!',
+      'Essa velocidade não é recomendada.<br/> Ela pode derrubar um servidor or marcar voce como um ataque hacker de DDoS.<br/> Use com cuidado!',
     SCROLL_UP: 'Subir Pagina',
     SCROLL_DOWN: 'Descer Pagina',
     CLOSE: 'Fechar',
@@ -2917,7 +2919,7 @@
   const zh_CN = {
     ID: 'zh_CN',
     NAME: '中文 (简体)',
-    STARTING: '正在启动<br>Manga OnlineViewer',
+    STARTING: '正在启动 Manga OnlineViewer',
     RESUME: '从页面继续阅读 ',
     WAITING: '请等待3秒钟...',
     CHOOSE_BEGINNING: '选择要开始的页数:',
@@ -2964,7 +2966,7 @@
     BOOKMARK: 'Bookmark',
     BOOKMARK_REMOVED: '删除书签',
     BOOKMARK_SAVED: '保存书签',
-    BOOKMARK_MESSAGE: '下次打开本章时，将从:<h4>页码 ##num##</h4>(<i>仅一次</i> 每个书签)',
+    BOOKMARK_MESSAGE: '下次打开本章时，将从: 页码 ##num## (仅一次 每个书签)',
     KEYBINDINGS: '快捷键',
     EDIT_KEYBINDS: '编辑键绑定',
     SAVE_KEYBINDS: '保存键绑定',
@@ -2972,8 +2974,8 @@
     BUTTON_SAVE: '救',
     KEYBIND_RULES: `
     <h3>支持的密钥</h3>
-    允许的修饰符: shift, option, alt, ctrl, control, command. </br>
-    特殊键: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide.</br>
+    允许的修饰符: shift, option, alt, ctrl, control, command. <br/>
+    特殊键: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide.<br/>
     例子: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd>
   `,
     ATTENTION: '注意',
@@ -3010,7 +3012,7 @@
     ALL_PAGES: '所有页面',
     SPEED_WARNING: '加载速度过高',
     SPEED_WARNING_MESSAGE:
-      '不建议使用此速度.<br>它可能会伤害某些服务器或将您的 IP 标记为 DDoS 攻击者.<br>请谨慎使用!',
+      '不建议使用此速度.<br/>它可能会伤害某些服务器或将您的 IP 标记为 DDoS 攻击者.<br/>请谨慎使用!',
     SCROLL_UP: '向上滚动',
     SCROLL_DOWN: '向下滚动',
     CLOSE: '关闭',
@@ -3048,9 +3050,7 @@
         object,
         (result, value, key) => {
           if (!_.isEqual(value, base[key])) {
-            if (_.isArray(value)) {
-              result[key] = _.difference(value, base[key]);
-            } else if (_.isObject(value) && _.isObject(base[key])) {
+            if (_.isObject(value) && _.isObject(base[key]) && !_.isArray(value)) {
               result[key] = changes(value, base[key]);
             } else {
               result[key] = value;
@@ -3067,7 +3067,7 @@
     colorScheme: 'dark',
     downloadZip: false,
     enableComments: true,
-    enabled: true,
+    enabled: false,
     fitWidthIfOversize: true,
     header: 'scroll',
     hidePageControls: false,
@@ -3117,13 +3117,12 @@
     pagination: false,
   };
   function getDefault(global = true) {
-    return !isMobile()
-      ? { ...defaultSettings, enabled: global, theme: global ? '#29487D' : '#004526' }
-      : _.defaultsDeep(mobileSettings, {
+    return isMobile()
+      ? _.defaultsDeep(mobileSettings, {
           ...defaultSettings,
-          enabled: global,
           theme: global ? '#29487D' : '#004526',
-        });
+        })
+      : { ...defaultSettings, theme: global ? '#29487D' : '#004526' };
   }
   function compareSettingsCustomizer(value, other, key) {
     if (key === 'bookmarks') {
@@ -3216,19 +3215,14 @@
       }
       return;
     }
-    const newObj = isSettingsLocal()
-      ? {
-          ...localSettings,
-          locale: globalSettings.locale,
-          keybinds: globalSettings.keybinds,
-          bookmarks: globalSettings.bookmarks,
-        }
-      : { ...globalSettings };
-    const currentObj = settings$1.get();
-    if (haveSettingsChanged(currentObj, newObj)) {
-      settings$1.set(newObj);
-      logScript('Refreshed Settings', key, null);
+    for (const key2 in settings$1.get()) {
+      const currentObj = settings$1.get()[key2];
+      const newObj = isLocalSettingsAllowed(key2) ? localSettings[key2] : globalSettings[key2];
+      if (haveSettingsChanged(currentObj, newObj)) {
+        settings$1.setKey(key2, newObj);
+      }
     }
+    logScript('Refreshed All Settings');
   }
   function syncGlobalSettings(newValue) {
     const newSettings = _.defaultsDeep(newValue, getDefault());
@@ -3249,7 +3243,7 @@
       refreshSettings();
     }
   }
-  settingsChangeListener(_.debounce(syncLocalSettings, 300), window.location.hostname);
+  settingsChangeListener(_.debounce(syncLocalSettings, 300), location.hostname);
   function getSettingsValue(key) {
     return settings$1.get()?.[key];
   }
@@ -3300,25 +3294,31 @@
     if (isKey(currentLocale, name)) return currentLocale?.[name] ?? locales[1]?.[name];
     return `##MISSING_STRING_${name}##`;
   }
-  function resetSettings() {
-    if (isSettingsLocal()) {
-      removeValueGM(window.location.hostname);
-      localSettings = getDefault(false);
-    } else {
-      removeValueGM('settings');
-      globalSettings = getDefault();
-    }
-    logScript('Settings Reset');
-    refreshSettings();
-  }
   function toggleLocalSettings(activate = false) {
     localSettings.enabled = activate;
     saveLocalSettings(diffObj(localSettings, getDefault(false)));
     logScript('Local Settings ', activate ? 'Enabled' : 'Disabled');
     refreshSettings();
+    i$6.info({
+      title: `Changed Settings to`,
+      description: isSettingsLocal() ? 'Local' : 'Global',
+      duration: 2e3,
+    });
     return isSettingsLocal();
   }
-  function isBookmarked(url = window.location.href) {
+  function resetSettings() {
+    if (isSettingsLocal()) {
+      removeValueGM(location.hostname);
+      localSettings = getDefault(false);
+      toggleLocalSettings(false);
+    } else {
+      removeValueGM('settings');
+      globalSettings = getDefault();
+      refreshSettings();
+    }
+    logScript('Settings Reset');
+  }
+  function isBookmarked(url = location.href) {
     return getSettingsValue('bookmarks').find(el => el.url === url)?.page;
   }
   function showSettings(key = null) {
@@ -3337,6 +3337,23 @@
   }
   giveToWindow('MOVSettings', showSettings);
   const navbarSize = 34;
+  const changedSettings = (newSettings, oldSettings, changedKey) => {
+    if (changedKey && !['bookmarks', 'zoomValue'].includes(changedKey)) {
+      const oldValue = oldSettings[changedKey];
+      const newValue = newSettings[changedKey];
+      i$6.info({
+        title: `${changedKey} Changed`,
+        description: `from ${JSON.stringify(oldValue)} to ${JSON.stringify(newValue)}`,
+        duration: 2e3,
+      });
+    }
+  };
+  settings$1.listen(_.debounce(changedSettings, 300));
+
+  const concatenateTemplateLiteralTag = (raw, ...keys) =>
+    keys.length === 0 ? raw[0] : String.raw({ raw }, ...keys);
+  const html = concatenateTemplateLiteralTag;
+  const css = concatenateTemplateLiteralTag;
 
   const sample = {
     navy: '#001f3f',
@@ -3677,59 +3694,91 @@
     category: Category.MANGA,
   };
 
-  function removeAllEventListeners(element) {
-    if (!element?.parentNode) {
-      return element;
-    }
-    const newElement = element.cloneNode(true);
-    element.parentNode.replaceChild(newElement, element);
-    return newElement;
-  }
-  const removeAttributes = element => {
-    element.getAttributeNames().forEach(attr => {
-      element?.removeAttribute(attr);
+  const fileTypes = [
+    'image/apng',
+    'image/bmp',
+    'image/gif',
+    'image/jpeg',
+    'image/pjpeg',
+    'image/png',
+    'image/svg+xml',
+    'image/tiff',
+    'image/webp',
+    'image/x-icon',
+  ];
+  const fileImageExt = /.(png|jpg|jpeg|gif|bmp|webp)$/i;
+  const orderFiles = (a, b) =>
+    a.localeCompare(b, navigator.languages[0] || navigator.language, {
+      numeric: true,
+      ignorePunctuation: true,
     });
-  };
-  const cleanUpElement = (...elements) => {
-    elements?.forEach(removeAttributes);
-    elements?.forEach(removeAllEventListeners);
-  };
-
-  function createStyleElement(id, content) {
-    const style = document.createElement('style');
-    style.id = id;
-    style.appendChild(document.createTextNode(content));
-    return style;
+  function validFileType(file) {
+    return fileTypes.includes(file.type);
   }
-  function appendStyleSheet(id, content) {
-    if (!document.querySelector(`#${id}`)) {
-      const head = document.head ?? document.querySelector('head');
-      head.appendChild(createStyleElement(id, content));
+  const getImageBlob = content => {
+    const buffer = new Uint8Array(content);
+    const blob = new Blob([buffer.buffer]);
+    return URL.createObjectURL(blob);
+  };
+  async function loadZipFile(filePath) {
+    const zip = await JSZip.loadAsync(filePath);
+    const files = zip
+      .filter((_, file) => !file.dir && fileImageExt.test(file.name))
+      .sort((a, b) => orderFiles(a.name, b.name));
+    logScript('Files in zip:', zip.files);
+    return Promise.all(files.map(file => file.async('arraybuffer').then(getImageBlob)));
+  }
+  function displayUploadedFiles(title, listImages) {
+    preparePage([
+      void 0,
+      {
+        title,
+        series: '?reload',
+        pages: listImages.length,
+        begin: 1,
+        prev: '#',
+        next: '#',
+        lazy: false,
+        listImages,
+      },
+    ]).then(() => logScript('Page loaded'));
+  }
+  async function loadMangaFromZip(zipFile) {
+    const listImages = await loadZipFile(zipFile);
+    displayUploadedFiles(typeof zipFile === 'string' ? zipFile : zipFile.name, listImages);
+  }
+  function openFileImages(evt) {
+    const input = evt.target;
+    const files = Array.from(input.files)
+      .filter(validFileType)
+      .sort((a, b) => orderFiles(a.webkitRelativePath || a.name, b.webkitRelativePath || b.name));
+    logScript(
+      'Local Files: ',
+      files,
+      files.map(f => f.webkitRelativePath || f.name),
+    );
+    if (input.files?.[0]) {
+      displayUploadedFiles(
+        input.files[0].webkitRelativePath.split('/')[0] || 'Local Images',
+        files.map(URL.createObjectURL),
+      );
     }
   }
-  function removeStyleSheet(id) {
-    document.querySelectorAll(`style[id="${id}"]`).forEach(elem => {
-      elem.remove();
-    });
-  }
-  function replaceStyleSheet(id, content) {
-    removeStyleSheet(id);
-    appendStyleSheet(id, content);
-  }
-  function wrapStyle(id, css) {
-    return html`
-      <style id="${id}">
-        ${css}
-      </style>
-    `;
-  }
-
-  function head(manga) {
-    return html`
-      <title>${manga.title}</title>
-      <meta charset="UTF-8" />
-      ${wrapStyle('externals', sweetalertStyle)}
-    `;
+  function allowUpload() {
+    if (localhost.url.test(window.location.href)) {
+      if (document.querySelector('#MangaOnlineViewer, #LocalTest')) {
+        document.querySelector('#LocalTest')?.setAttribute('style', 'display:none');
+        document.querySelector('#file')?.addEventListener('change', evt => {
+          const input = evt.target;
+          if (input.files?.[0]) loadMangaFromZip(input.files[0]);
+        });
+        document.querySelector('#folder')?.addEventListener('change', openFileImages);
+        document.querySelector('#images')?.addEventListener('change', openFileImages);
+        logScript(`Waiting for zip/images upload`);
+      }
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -4300,6 +4349,9 @@
   const iconsCSS =
     '.icon-tabler-file-download > :nth-child(n + 4) {\n  color: gold;\n}\n\n.icon-tabler-arrow-autofit-width > :nth-child(n + 3) {\n  color: yellow;\n}\n\n.icon-tabler-arrow-autofit-height > :nth-child(n + 3) {\n  color: yellow;\n}\n\n.icon-tabler-zoom-in-area > :nth-child(2),\n.icon-tabler-zoom-in-area > :nth-child(3) {\n  color: lime;\n}\n\n.icon-tabler-zoom-out-area > :nth-child(2) {\n  color: red;\n}\n\n.icon-tabler-zoom-pan > :nth-child(n + 4) {\n  color: #9966ff;\n}\n\n.icon-tabler-arrow-autofit-down > :nth-child(n + 3) {\n  color: #28ffbf;\n}\n\n.icon-tabler-arrow-autofit-left > :nth-child(n + 3) {\n  color: #28ffbf;\n}\n\n.icon-tabler-arrow-autofit-right > :nth-child(n + 3) {\n  color: #28ffbf;\n}\n\n.icon-tabler-spacing-vertical > :nth-child(4) {\n  color: fuchsia;\n}\n\n.icon-tabler-list-numbers > :nth-child(n + 5) {\n  color: #e48900;\n}\n\n.icon-tabler-bookmarks > :nth-child(n + 2) {\n  color: orange;\n}\n\n.icon-tabler-bookmark > :nth-child(2) {\n  color: orange;\n}\n\n.icon-tabler-bookmark-off > :nth-child(2) {\n  color: orange;\n}\n\n.icon-tabler-bookmark-off > :nth-child(3) {\n  color: red;\n}\n\n.icon-tabler-eye-off > :nth-child(4) {\n  color: red;\n}\n\n.icon-tabler-zoom-cancel > :nth-child(3),\n.icon-tabler-zoom-cancel > :nth-child(4) {\n  color: #9966ff;\n}\n\n.icon-tabler-zoom-in > :nth-child(3),\n.icon-tabler-zoom-in > :nth-child(4) {\n  color: lime;\n}\n\n.icon-tabler-zoom-out > :nth-child(3) {\n  color: red;\n}\n\n.icon-tabler-refresh > :nth-child(n + 2) {\n  color: cyan;\n}\n\n.icon-tabler-photo > :nth-child(n + 2) {\n  color: silver;\n}\n\n.icon-tabler-photo-off > :nth-child(n + 2) {\n  color: silver;\n}\n\n.icon-tabler-photo-off > :nth-child(6) {\n  color: orange;\n}\n\n.icon-tabler-message > :nth-child(2),\n.icon-tabler-message > :nth-child(3) {\n  color: greenyellow;\n}\n\n.icon-tabler-book-return > g {\n  color: greenyellow;\n}\n\n.icon-tabler-file-percent > :nth-child(2),\n.icon-tabler-file-percent > :nth-child(5),\n.icon-tabler-file-percent > :nth-child(6) {\n  color: yellow;\n}\n\n.icon-tabler-settings-off > :nth-child(4) {\n  color: red;\n}\n';
 
+  const alertCircle =
+    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-alert-circle"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />\n  <path d="M12 8v4" />\n  <path d="M12 16h.01" />\n</svg>\n';
+
   const arrowAutofitDown =
     '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-arrow-autofit-down"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8" />\n  <path d="M18 4v17" />\n  <path d="M15 18l3 3l3 -3" />\n</svg>\n';
 
@@ -4378,6 +4430,12 @@
   const chevronRight =
     '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M9 6l6 6l-6 6" />\n</svg>\n';
 
+  const circleCheck =
+    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-circle-check"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />\n  <path d="M9 12l2 2l4 -4" />\n</svg>\n';
+
+  const circleX =
+    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-circle-x"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />\n  <path d="M10 10l4 4m0 -4l-4 4" />\n</svg>\n';
+
   const deviceFloppy =
     '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-device-floppy"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />\n  <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />\n  <path d="M14 4l0 4l-6 0l0 -4" />\n</svg>\n';
 
@@ -4413,6 +4471,12 @@
 
   const handClick =
     '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-hand-click"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M8 13v-8.5a1.5 1.5 0 0 1 3 0v7.5" />\n  <path d="M11 11.5v-2a1.5 1.5 0 0 1 3 0v2.5" />\n  <path d="M14 10.5a1.5 1.5 0 0 1 3 0v1.5" />\n  <path\n    d="M17 11.5a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7l-.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47"\n  />\n  <path d="M5 3l-1 -1" />\n  <path d="M4 7h-1" />\n  <path d="M14 3l1 -1" />\n  <path d="M15 6h1" />\n</svg>\n';
+
+  const help =
+    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-help"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />\n  <path d="M12 17l0 .01" />\n  <path d="M12 13.5a1.5 1.5 0 0 1 1 -1.5a2.6 2.6 0 1 0 -3 -4" />\n</svg>\n';
+
+  const infoCircle =
+    '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  fill="none"\n  stroke="currentColor"\n  stroke-width="2"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n  class="icon icon-tabler icons-tabler-outline icon-tabler-info-circle"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />\n  <path d="M12 9h.01" />\n  <path d="M11 12h1v4h1" />\n</svg>\n';
 
   const keyboard =
     '<svg\n  xmlns="http://www.w3.org/2000/svg"\n  class="icon icon-tabler icon-tabler-keyboard"\n  width="24"\n  height="24"\n  viewBox="0 0 24 24"\n  stroke-width="2"\n  stroke="currentColor"\n  fill="none"\n  stroke-linecap="round"\n  stroke-linejoin="round"\n>\n  <path\n    stroke="none"\n    d="M0 0h24v24H0z"\n    fill="none"\n  />\n  <path d="M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z" />\n  <path d="M6 10l0 .01" />\n  <path d="M10 10l0 .01" />\n  <path d="M14 10l0 .01" />\n  <path d="M18 10l0 .01" />\n  <path d="M6 14l0 .01" />\n  <path d="M18 14l0 .01" />\n  <path d="M10 14l4 .01" />\n</svg>\n';
@@ -4535,6 +4599,7 @@
     /*#__PURE__*/ Object.defineProperty(
       {
         __proto__: null,
+        IconAlertCircle: alertCircle,
         IconArrowAutofitDown: arrowAutofitDown,
         IconArrowAutofitHeight: arrowAutofitHeight,
         IconArrowAutofitLeft: arrowAutofitLeft,
@@ -4555,6 +4620,8 @@
         IconCategory: category,
         IconCheck: check,
         IconChevronRight: chevronRight,
+        IconCircleCheck: circleCheck,
+        IconCircleX: circleX,
         IconComic1: Comic1SpecialLinealColor,
         IconComic1Flat: Comic1SpecialFlat,
         IconComic2: Comic2SpecialLinealColor,
@@ -4573,6 +4640,8 @@
         IconFileDownload: fileDownload,
         IconFilePercent: filePercent,
         IconHandClick: handClick,
+        IconHelp: help,
+        IconInfoCircle: infoCircle,
         IconKeyboard: keyboard,
         IconLayoutBottombar: layoutBottombar,
         IconLayoutBottombarInactive: layoutBottombarInactive,
@@ -4714,6 +4783,11 @@
     IconCategory: IconCategory$1,
     IconCheck: IconCheck$1,
     IconChevronRight: IconChevronRight$1,
+    IconAlertCircle: IconAlertCircle$1,
+    IconCircleCheck: IconCircleCheck$1,
+    IconCircleX: IconCircleX$1,
+    IconHelp: IconHelp$1,
+    IconInfoCircle: IconInfoCircle$1,
     IconComic1: IconComic1$1,
     IconComic1Flat: IconComic1Flat$1,
     IconComic2: IconComic2$1,
@@ -4777,6 +4851,7 @@
     /*#__PURE__*/ Object.defineProperty(
       {
         __proto__: null,
+        IconAlertCircle: IconAlertCircle$1,
         IconArrowAutofitDown: IconArrowAutofitDown$1,
         IconArrowAutofitHeight: IconArrowAutofitHeight$1,
         IconArrowAutofitLeft: IconArrowAutofitLeft$1,
@@ -4797,6 +4872,8 @@
         IconCategory: IconCategory$1,
         IconCheck: IconCheck$1,
         IconChevronRight: IconChevronRight$1,
+        IconCircleCheck: IconCircleCheck$1,
+        IconCircleX: IconCircleX$1,
         IconComic1: IconComic1$1,
         IconComic1Flat: IconComic1Flat$1,
         IconComic2: IconComic2$1,
@@ -4815,6 +4892,8 @@
         IconFileDownload: IconFileDownload$1,
         IconFilePercent: IconFilePercent$1,
         IconHandClick: IconHandClick$1,
+        IconHelp: IconHelp$1,
+        IconInfoCircle: IconInfoCircle$1,
         IconKeyboard: IconKeyboard$1,
         IconLayoutBottombar: IconLayoutBottombar$1,
         IconLayoutBottombarInactive: IconLayoutBottombarInactive$1,
@@ -4860,14 +4939,14 @@
     ),
   );
 
-  var __defProp$f = Object.defineProperty;
-  var __getOwnPropDesc$j = Object.getOwnPropertyDescriptor;
-  var __decorateClass$j = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$j(target, key) : target;
+  var __defProp$h = Object.defineProperty;
+  var __getOwnPropDesc$k = Object.getOwnPropertyDescriptor;
+  var __decorateClass$k = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$k(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$f(target, key, result);
+    if (kind && result) __defProp$h(target, key, result);
     return result;
   };
   let Icon = class extends i$1 {
@@ -4909,10 +4988,10 @@
       color: inherit; /* This will inherit from the host element */
     }
   `;
-  __decorateClass$j([n$1({ type: String })], Icon.prototype, 'name', 2);
-  __decorateClass$j([n$1({ type: String })], Icon.prototype, 'label', 2);
-  __decorateClass$j([n$1({ type: String })], Icon.prototype, 'size', 2);
-  Icon = __decorateClass$j([t$1('mov-icon')], Icon);
+  __decorateClass$k([n$1({ type: String })], Icon.prototype, 'name', 2);
+  __decorateClass$k([n$1({ type: String })], Icon.prototype, 'label', 2);
+  __decorateClass$k([n$1({ type: String })], Icon.prototype, 'size', 2);
+  Icon = __decorateClass$k([t$1('mov-icon')], Icon);
 
   /**
    * @license
@@ -4970,14 +5049,14 @@
   const styles$7 =
     ':host {\n  display: inline-block;\n  --mov-font-size-scale: 1;\n  --mov-font-size-m: calc(1rem * var(--mov-font-size-scale));\n  --mov-font-size-s: round(calc(var(--mov-font-size-m) / 1.125), 1px);\n  --mov-font-size-l: round(calc(var(--mov-font-size-m) * 1.125 * 1.125), 1px);\n  --mov-border-width-s: 0.0625rem;\n  --mov-border-radius-m: 0.375rem;\n  --mov-border-radius-pill: 9999px;\n  --mov-transition-fast: 75ms;\n  --mov-font-weight-action: 500;\n  --mov-focus-ring: solid 0.1875rem var(--mov-color-fill-loud);\n  --mov-focus-ring-offset: 0.0625rem;\n  --mov-line-height-condensed: 1.2;\n  --mov-form-control-padding-block: 0.75em;\n  --mov-form-control-padding-inline: 1em;\n  --mov-form-control-height: round(\n    calc(2 * var(--mov-form-control-padding-block) + 1em * var(--mov-line-height-condensed)),\n    1px\n  );\n}\n\n:host([size="small"]) {\n  font-size: var(--mov-font-size-s);\n}\n:host([size="medium"]) {\n  font-size: var(--mov-font-size-m);\n}\n:host([size="large"]) {\n  font-size: var(--mov-font-size-l);\n}\n\n.button {\n  box-sizing: border-box;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  text-decoration: none;\n  user-select: none;\n  white-space: nowrap;\n  vertical-align: middle;\n  transition-property: background, border, box-shadow, color;\n  transition-duration: var(--mov-transition-fast);\n  cursor: pointer;\n  padding: 0 var(--mov-form-control-padding-inline);\n  font-family: inherit;\n  font-size: inherit;\n  font-weight: var(--mov-font-weight-action);\n  line-height: calc(var(--mov-form-control-height) - var(--mov-border-width-s) * 2);\n  height: var(--mov-form-control-height);\n  border-radius: var(--mov-border-radius-m);\n  border-style: solid;\n  border-width: var(--mov-border-width-s);\n  background-color: var(--mov-color-fill-loud);\n  color: var(--mov-color-on-loud);\n  border-color: transparent;\n}\n\n/* Appearance modifiers */\n:host([appearance~="plain"]) {\n  .button {\n    color: var(--mov-color-on-quiet);\n    background-color: transparent;\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-quiet);\n      background-color: var(--mov-color-fill-quiet);\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-quiet);\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\n  }\n}\n\n:host([appearance~="outlined"]) {\n  .button {\n    color: var(--mov-color-on-quiet);\n    background-color: transparent;\n    border-color: var(--mov-color-border-loud);\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-quiet);\n      background-color: var(--mov-color-fill-quiet);\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-quiet);\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\n  }\n}\n\n:host([appearance~="filled"]) {\n  .button {\n    color: var(--mov-color-on-normal);\n    background-color: var(--mov-color-fill-normal);\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-normal);\n      background-color: color-mix(\n        in oklab,\n        var(--mov-color-fill-normal),\n        var(--mov-color-mix-hover)\n      );\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-normal);\n    background-color: color-mix(\n      in oklab,\n      var(--mov-color-fill-normal),\n      var(--mov-color-mix-active)\n    );\n  }\n}\n\n:host([appearance~="filled"][appearance~="outlined"]) .button {\n  border-color: var(--mov-color-border-normal);\n}\n\n:host([appearance~="accent"]) {\n  .button {\n    color: var(--mov-color-on-loud);\n    background-color: var(--mov-color-fill-loud);\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-hover));\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-active));\n  }\n}\n/* Focus states */\n.button:focus {\n  outline: none;\n}\n.button:focus-visible {\n  outline: var(--mov-focus-ring);\n  outline-offset: var(--mov-focus-ring-offset);\n}\n\n/* Disabled state */\n.button.disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n}\n.button.disabled * {\n  pointer-events: none;\n}\n\n/* Icon buttons */\n.button.is-icon-button {\n  outline-offset: 2px;\n  width: var(--mov-form-control-height);\n  aspect-ratio: 1;\n}\n\n/* Pill modifier */\n:host([pill]) .button {\n  border-radius: var(--mov-border-radius-pill);\n}\n\n.start,\n.end {\n  flex: 0 0 auto;\n  display: flex;\n  align-items: center;\n  pointer-events: none;\n}\n\n.label {\n  display: inline-block;\n}\n.is-icon-button .label {\n  display: flex;\n}\n\nmov-icon[part~="caret"] {\n  display: flex;\n  align-self: center;\n  align-items: center;\n}\nmov-icon[part~="caret"]::part(svg) {\n  width: 0.875em;\n  height: 0.875em;\n}\n\n.loading {\n  position: relative;\n  cursor: wait;\n}\n.loading .start,\n.loading .label,\n.loading .end,\n.loading .caret {\n  visibility: hidden;\n}\n\n.spinner {\n  --indicator-color: currentColor;\n  --track-color: color-mix(in oklab, currentColor, transparent 90%);\n  position: absolute;\n  font-size: 1em;\n  height: 1em;\n  width: 1em;\n  top: calc(50% - 0.5em);\n  left: calc(50% - 0.5em);\n  border-radius: 50%;\n  border: 2px solid var(--track-color);\n  border-top-color: var(--indicator-color);\n  animation: spin 1s linear infinite;\n}\n\n@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n\nslot[name="start"]::slotted(*) {\n  margin-inline-end: 0.75em;\n}\nslot[name="end"]::slotted(*),\n.button:not(.visually-hidden-label) [part~="caret"] {\n  margin-inline-start: 0.75em;\n}\n';
 
-  var __defProp$e = Object.defineProperty;
-  var __getOwnPropDesc$i = Object.getOwnPropertyDescriptor;
-  var __decorateClass$i = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$i(target, key) : target;
+  var __defProp$g = Object.defineProperty;
+  var __getOwnPropDesc$j = Object.getOwnPropertyDescriptor;
+  var __decorateClass$j = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$j(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$e(target, key, result);
+    if (kind && result) __defProp$g(target, key, result);
     return result;
   };
   let Button = class extends i$1 {
@@ -5142,42 +5221,42 @@
     }
   };
   Button.styles = [r$4(styles$7)];
-  __decorateClass$i([e$2('.button')], Button.prototype, 'button', 2);
-  __decorateClass$i([e$2('slot:not([name])')], Button.prototype, 'labelSlot', 2);
-  __decorateClass$i([r$1()], Button.prototype, 'isIconButton', 2);
-  __decorateClass$i([r$1()], Button.prototype, 'hasLabel', 2);
-  __decorateClass$i([r$1()], Button.prototype, 'hasStart', 2);
-  __decorateClass$i([r$1()], Button.prototype, 'hasEnd', 2);
-  __decorateClass$i([n$1()], Button.prototype, 'title', 2);
-  __decorateClass$i([n$1({ reflect: true })], Button.prototype, 'appearance', 2);
-  __decorateClass$i([n$1({ reflect: true })], Button.prototype, 'size', 2);
-  __decorateClass$i(
+  __decorateClass$j([e$2('.button')], Button.prototype, 'button', 2);
+  __decorateClass$j([e$2('slot:not([name])')], Button.prototype, 'labelSlot', 2);
+  __decorateClass$j([r$1()], Button.prototype, 'isIconButton', 2);
+  __decorateClass$j([r$1()], Button.prototype, 'hasLabel', 2);
+  __decorateClass$j([r$1()], Button.prototype, 'hasStart', 2);
+  __decorateClass$j([r$1()], Button.prototype, 'hasEnd', 2);
+  __decorateClass$j([n$1()], Button.prototype, 'title', 2);
+  __decorateClass$j([n$1({ reflect: true })], Button.prototype, 'appearance', 2);
+  __decorateClass$j([n$1({ reflect: true })], Button.prototype, 'size', 2);
+  __decorateClass$j(
     [n$1({ attribute: 'with-caret', type: Boolean, reflect: true })],
     Button.prototype,
     'withCaret',
     2,
   );
-  __decorateClass$i([n$1({ type: Boolean, reflect: true })], Button.prototype, 'disabled', 2);
-  __decorateClass$i([n$1({ type: Boolean, reflect: true })], Button.prototype, 'loading', 2);
-  __decorateClass$i([n$1({ type: Boolean, reflect: true })], Button.prototype, 'pill', 2);
-  __decorateClass$i([n$1()], Button.prototype, 'type', 2);
-  __decorateClass$i([n$1({ reflect: true })], Button.prototype, 'name', 2);
-  __decorateClass$i([n$1({ reflect: true })], Button.prototype, 'value', 2);
-  __decorateClass$i([n$1({ reflect: true })], Button.prototype, 'href', 2);
-  __decorateClass$i([n$1()], Button.prototype, 'target', 2);
-  __decorateClass$i([n$1()], Button.prototype, 'rel', 2);
-  __decorateClass$i([n$1()], Button.prototype, 'download', 2);
-  __decorateClass$i([n$1({ reflect: true })], Button.prototype, 'form', 2);
-  Button = __decorateClass$i([t$1('mov-button')], Button);
+  __decorateClass$j([n$1({ type: Boolean, reflect: true })], Button.prototype, 'disabled', 2);
+  __decorateClass$j([n$1({ type: Boolean, reflect: true })], Button.prototype, 'loading', 2);
+  __decorateClass$j([n$1({ type: Boolean, reflect: true })], Button.prototype, 'pill', 2);
+  __decorateClass$j([n$1()], Button.prototype, 'type', 2);
+  __decorateClass$j([n$1({ reflect: true })], Button.prototype, 'name', 2);
+  __decorateClass$j([n$1({ reflect: true })], Button.prototype, 'value', 2);
+  __decorateClass$j([n$1({ reflect: true })], Button.prototype, 'href', 2);
+  __decorateClass$j([n$1()], Button.prototype, 'target', 2);
+  __decorateClass$j([n$1()], Button.prototype, 'rel', 2);
+  __decorateClass$j([n$1()], Button.prototype, 'download', 2);
+  __decorateClass$j([n$1({ reflect: true })], Button.prototype, 'form', 2);
+  Button = __decorateClass$j([t$1('mov-button')], Button);
 
-  var __defProp$d = Object.defineProperty;
-  var __getOwnPropDesc$h = Object.getOwnPropertyDescriptor;
-  var __decorateClass$h = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$h(target, key) : target;
+  var __defProp$f = Object.defineProperty;
+  var __getOwnPropDesc$i = Object.getOwnPropertyDescriptor;
+  var __decorateClass$i = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$i(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$d(target, key, result);
+    if (kind && result) __defProp$f(target, key, result);
     return result;
   };
   let ToggleButton = class extends i$1 {
@@ -5434,22 +5513,22 @@
       flex-shrink: 0;
     }
   `;
-  __decorateClass$h([n$1({ type: String })], ToggleButton.prototype, 'mode', 2);
-  __decorateClass$h([n$1({ type: Boolean, reflect: true })], ToggleButton.prototype, 'active', 2);
-  __decorateClass$h([n$1({ type: String })], ToggleButton.prototype, 'label', 2);
-  __decorateClass$h([n$1({ type: String })], ToggleButton.prototype, 'activeLabel', 2);
-  __decorateClass$h([n$1({ type: String })], ToggleButton.prototype, 'icon', 2);
-  __decorateClass$h([n$1({ type: String })], ToggleButton.prototype, 'activeIcon', 2);
-  __decorateClass$h(
+  __decorateClass$i([n$1({ type: String })], ToggleButton.prototype, 'mode', 2);
+  __decorateClass$i([n$1({ type: Boolean, reflect: true })], ToggleButton.prototype, 'active', 2);
+  __decorateClass$i([n$1({ type: String })], ToggleButton.prototype, 'label', 2);
+  __decorateClass$i([n$1({ type: String })], ToggleButton.prototype, 'activeLabel', 2);
+  __decorateClass$i([n$1({ type: String })], ToggleButton.prototype, 'icon', 2);
+  __decorateClass$i([n$1({ type: String })], ToggleButton.prototype, 'activeIcon', 2);
+  __decorateClass$i(
     [n$1({ type: String, reflect: true })],
     ToggleButton.prototype,
     'appearance',
     2,
   );
-  __decorateClass$h([n$1({ type: String, reflect: true })], ToggleButton.prototype, 'size', 2);
-  __decorateClass$h([n$1({ type: Boolean })], ToggleButton.prototype, 'disabled', 2);
-  __decorateClass$h([n$1({ type: Boolean, reflect: true })], ToggleButton.prototype, 'loading', 2);
-  ToggleButton = __decorateClass$h([t$1('toggle-button')], ToggleButton);
+  __decorateClass$i([n$1({ type: String, reflect: true })], ToggleButton.prototype, 'size', 2);
+  __decorateClass$i([n$1({ type: Boolean })], ToggleButton.prototype, 'disabled', 2);
+  __decorateClass$i([n$1({ type: Boolean, reflect: true })], ToggleButton.prototype, 'loading', 2);
+  ToggleButton = __decorateClass$i([t$1('toggle-button')], ToggleButton);
 
   /**
    * @license
@@ -5519,6 +5598,11 @@
     IconCategory,
     IconCheck,
     IconChevronRight,
+    IconAlertCircle,
+    IconCircleCheck,
+    IconCircleX,
+    IconHelp,
+    IconInfoCircle,
     IconComic1,
     IconComic1Flat,
     IconComic2,
@@ -5578,14 +5662,14 @@
     IconZoomPan,
   } = styledIconsSVG;
 
-  var __defProp$c = Object.defineProperty;
-  var __getOwnPropDesc$g = Object.getOwnPropertyDescriptor;
-  var __decorateClass$g = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$g(target, key) : target;
+  var __defProp$e = Object.defineProperty;
+  var __getOwnPropDesc$h = Object.getOwnPropertyDescriptor;
+  var __decorateClass$h = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$h(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$c(target, key, result);
+    if (kind && result) __defProp$e(target, key, result);
     return result;
   };
   let ColorSwatch = class extends i$1 {
@@ -5709,13 +5793,13 @@
       opacity: 1;
     }
   `;
-  __decorateClass$g([n$1({ type: String })], ColorSwatch.prototype, 'color', 2);
-  __decorateClass$g([n$1({ type: String })], ColorSwatch.prototype, 'selected', 2);
-  __decorateClass$g([n$1({ type: Number })], ColorSwatch.prototype, 'size', 2);
-  __decorateClass$g([n$1({ type: String })], ColorSwatch.prototype, 'radius', 2);
-  __decorateClass$g([n$1({ state: true })], ColorSwatch.prototype, 'contrastColor', 2);
-  __decorateClass$g([n$1({ type: Boolean, reflect: true })], ColorSwatch.prototype, 'checked', 2);
-  ColorSwatch = __decorateClass$g([t$1('color-swatch')], ColorSwatch);
+  __decorateClass$h([n$1({ type: String })], ColorSwatch.prototype, 'color', 2);
+  __decorateClass$h([n$1({ type: String })], ColorSwatch.prototype, 'selected', 2);
+  __decorateClass$h([n$1({ type: Number })], ColorSwatch.prototype, 'size', 2);
+  __decorateClass$h([n$1({ type: String })], ColorSwatch.prototype, 'radius', 2);
+  __decorateClass$h([n$1({ state: true })], ColorSwatch.prototype, 'contrastColor', 2);
+  __decorateClass$h([n$1({ type: Boolean, reflect: true })], ColorSwatch.prototype, 'checked', 2);
+  ColorSwatch = __decorateClass$h([t$1('color-swatch')], ColorSwatch);
 
   function gradientBySteps(baseColor) {
     const baseOklch = baseColor.to('oklch');
@@ -5842,14 +5926,14 @@
     }
   }
 
-  var __defProp$b = Object.defineProperty;
-  var __getOwnPropDesc$f = Object.getOwnPropertyDescriptor;
-  var __decorateClass$f = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$f(target, key) : target;
+  var __defProp$d = Object.defineProperty;
+  var __getOwnPropDesc$g = Object.getOwnPropertyDescriptor;
+  var __decorateClass$g = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$g(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$b(target, key, result);
+    if (kind && result) __defProp$d(target, key, result);
     return result;
   };
   let ColorPalette = class extends i$1 {
@@ -5964,27 +6048,27 @@
       transform: scale(1.1);
     }
   `;
-  __decorateClass$f([n$1({ type: String })], ColorPalette.prototype, 'baseColor', 2);
-  __decorateClass$f([n$1({ type: String })], ColorPalette.prototype, 'mode', 2);
-  __decorateClass$f(
+  __decorateClass$g([n$1({ type: String })], ColorPalette.prototype, 'baseColor', 2);
+  __decorateClass$g([n$1({ type: String })], ColorPalette.prototype, 'mode', 2);
+  __decorateClass$g(
     [n$1({ type: String, reflect: true })],
     ColorPalette.prototype,
     'orientation',
     2,
   );
-  __decorateClass$f([n$1({ type: String })], ColorPalette.prototype, 'selected', 2);
-  __decorateClass$f([n$1({ type: String, reflect: true })], ColorPalette.prototype, 'value', 2);
-  __decorateClass$f([r$1()], ColorPalette.prototype, 'gradient', 2);
-  ColorPalette = __decorateClass$f([t$1('color-palette')], ColorPalette);
+  __decorateClass$g([n$1({ type: String })], ColorPalette.prototype, 'selected', 2);
+  __decorateClass$g([n$1({ type: String, reflect: true })], ColorPalette.prototype, 'value', 2);
+  __decorateClass$g([r$1()], ColorPalette.prototype, 'gradient', 2);
+  ColorPalette = __decorateClass$g([t$1('color-palette')], ColorPalette);
 
-  var __defProp$a = Object.defineProperty;
-  var __getOwnPropDesc$e = Object.getOwnPropertyDescriptor;
-  var __decorateClass$e = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$e(target, key) : target;
+  var __defProp$c = Object.defineProperty;
+  var __getOwnPropDesc$f = Object.getOwnPropertyDescriptor;
+  var __decorateClass$f = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$f(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$a(target, key, result);
+    if (kind && result) __defProp$c(target, key, result);
     return result;
   };
   let ColorPanel = class extends i$1 {
@@ -6106,18 +6190,18 @@
       display: none;
     }
   `;
-  __decorateClass$e([n$1({ type: String, reflect: true })], ColorPanel.prototype, 'value', 2);
-  __decorateClass$e([n$1({ type: String })], ColorPanel.prototype, 'selected', 2);
-  ColorPanel = __decorateClass$e([t$1('color-panel')], ColorPanel);
+  __decorateClass$f([n$1({ type: String, reflect: true })], ColorPanel.prototype, 'value', 2);
+  __decorateClass$f([n$1({ type: String })], ColorPanel.prototype, 'selected', 2);
+  ColorPanel = __decorateClass$f([t$1('color-panel')], ColorPanel);
 
-  var __defProp$9 = Object.defineProperty;
-  var __getOwnPropDesc$d = Object.getOwnPropertyDescriptor;
-  var __decorateClass$d = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$d(target, key) : target;
+  var __defProp$b = Object.defineProperty;
+  var __getOwnPropDesc$e = Object.getOwnPropertyDescriptor;
+  var __decorateClass$e = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$e(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$9(target, key, result);
+    if (kind && result) __defProp$b(target, key, result);
     return result;
   };
   let ColorPicker = class extends i$1 {
@@ -6565,16 +6649,16 @@
       border-radius: 2px;
     }
   `;
-  __decorateClass$d([n$1({ type: String })], ColorPicker.prototype, 'value', 2);
-  __decorateClass$d([n$1({ type: Array })], ColorPicker.prototype, 'swatches', 2);
-  __decorateClass$d([n$1({ type: String })], ColorPicker.prototype, 'mode', 2);
-  __decorateClass$d([r$1()], ColorPicker.prototype, 'opened', 2);
-  __decorateClass$d([r$1()], ColorPicker.prototype, 'popupDirection', 2);
-  __decorateClass$d([r$1()], ColorPicker.prototype, 'sourceSpace', 2);
-  __decorateClass$d([r$1()], ColorPicker.prototype, 'hsv', 2);
-  __decorateClass$d([r$1()], ColorPicker.prototype, 'saturationThumbPosition', 2);
-  __decorateClass$d([r$1()], ColorPicker.prototype, 'hueThumbPosition', 2);
-  ColorPicker = __decorateClass$d([t$1('color-picker')], ColorPicker);
+  __decorateClass$e([n$1({ type: String })], ColorPicker.prototype, 'value', 2);
+  __decorateClass$e([n$1({ type: Array })], ColorPicker.prototype, 'swatches', 2);
+  __decorateClass$e([n$1({ type: String })], ColorPicker.prototype, 'mode', 2);
+  __decorateClass$e([r$1()], ColorPicker.prototype, 'opened', 2);
+  __decorateClass$e([r$1()], ColorPicker.prototype, 'popupDirection', 2);
+  __decorateClass$e([r$1()], ColorPicker.prototype, 'sourceSpace', 2);
+  __decorateClass$e([r$1()], ColorPicker.prototype, 'hsv', 2);
+  __decorateClass$e([r$1()], ColorPicker.prototype, 'saturationThumbPosition', 2);
+  __decorateClass$e([r$1()], ColorPicker.prototype, 'hueThumbPosition', 2);
+  ColorPicker = __decorateClass$e([t$1('color-picker')], ColorPicker);
 
   /**
    * @license
@@ -6586,14 +6670,14 @@
     return t?.();
   };
 
-  var __defProp$8 = Object.defineProperty;
-  var __getOwnPropDesc$c = Object.getOwnPropertyDescriptor;
-  var __decorateClass$c = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$c(target, key) : target;
+  var __defProp$a = Object.defineProperty;
+  var __getOwnPropDesc$d = Object.getOwnPropertyDescriptor;
+  var __decorateClass$d = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$d(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$8(target, key, result);
+    if (kind && result) __defProp$a(target, key, result);
     return result;
   };
   let SegmentedControl = class extends i$1 {
@@ -6614,17 +6698,20 @@
       this.resizeObserver.unobserve(this);
     }
     /**
-     * Handles the change event from the internal radio inputs, updates the component's value,
+     * Handles the click event on an option button, updates the component's value,
      * and dispatches a `change` event.
      * @internal
      */
-    handleChange(event) {
-      const target = event.currentTarget;
-      this.value = target.value;
+    handleClick(_event, value) {
+      this.value = value;
       this.dispatchEvent(
         new CustomEvent('change', { detail: this.value, bubbles: true, composed: true }),
       );
     }
+    /**
+     * Gathers option data from the slotted `segmented-control-option` elements.
+     * @internal
+     */
     handleSlotChange() {
       this._options = this._slotEl
         .assignedNodes({ flatten: true })
@@ -6637,7 +6724,7 @@
     }
     firstUpdated() {
       this.handleSlotChange();
-      this.updateThumbPosition();
+      this.updateComplete.then(() => this.updateThumbPosition());
     }
     updated(changedProperties) {
       super.updated(changedProperties);
@@ -6645,20 +6732,29 @@
         changedProperties.has('value') ||
         changedProperties.has('_options') ||
         changedProperties.has('labelPosition') ||
-        changedProperties.has('size') ||
-        changedProperties.has('multiline')
+        changedProperties.has('size')
       ) {
         Promise.resolve().then(() => this.updateThumbPosition());
       }
     }
+    /**
+     * Finds the currently selected option button and moves/resizes the thumb element.
+     * @internal
+     */
     updateThumbPosition() {
       if (!this.thumb) {
         return;
       }
-      const selectedOption = this.shadowRoot?.querySelector('input:checked')?.parentElement;
-      if (selectedOption) {
-        const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = selectedOption;
-        this.thumb.style.transform = `translate(${offsetLeft}px, ${offsetTop}px)`;
+      const selectedButton = this.shadowRoot?.querySelector('.button.selected');
+      if (selectedButton) {
+        const { offsetWidth, offsetHeight } = selectedButton;
+        const buttonRect = selectedButton.getBoundingClientRect();
+        const containerRect = this.shadowRoot
+          ?.querySelector('.segmented-control')
+          ?.getBoundingClientRect();
+        const offsetX = buttonRect.left - (containerRect?.left ?? 0);
+        const offsetY = buttonRect.top - (containerRect?.top ?? 0);
+        this.thumb.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
         this.thumb.style.width = `${offsetWidth}px`;
         this.thumb.style.height = `${offsetHeight}px`;
       } else {
@@ -6672,25 +6768,23 @@
         <div class="thumb"></div>
         ${this._options.map(
           option => x$1`
-            <label
+            <div
               class="option"
               title="${this.labelPosition === 'tooltip' ? option.label : E}"
             >
-              <input
-                type="radio"
-                name="segmented-control"
-                .value=${option.value}
-                ?checked=${this.value === option.value}
-                @change=${this.handleChange}
-              />
-              <span
+              <button
                 class="${e({
-                  label: true,
+                  button: true,
+                  selected: this.value === option.value,
+                  // ✅ Use component state for selection
                   bottom: this.labelPosition === 'bottom',
                   small: this.size === 'small',
                   medium: this.size === 'medium',
                   large: this.size === 'large',
                 })}"
+                @click=${e => this.handleClick(e, option.value)}
+                role="radio"
+                aria-checked="${this.value === option.value}"
               >
                 ${
                   option.icon
@@ -6709,8 +6803,8 @@
                     : E
                 }
                 ${this.labelPosition !== 'tooltip' ? x$1`<span>${option.label}</span>` : E}
-              </span>
-            </label>
+              </button>
+            </div>
           `,
         )}
       </div>
@@ -6749,18 +6843,20 @@
     .option {
       flex: 1;
       text-align: center;
-      z-index: 2;
+      z-index: 2; /* Ensure button is above thumb */
+      position: relative; /* Needed to correctly position the button */
     }
-    input {
-      display: none;
-    }
-    .label {
+
+    .button {
+      /* The button now acts as the interactive label */
+      width: 100%;
       display: flex;
       cursor: pointer;
       align-items: center;
       justify-content: center;
       border-radius: 0.5rem;
       border: none;
+      /* Default colors when not selected */
       color: var(--theme-text-color);
       background-color: transparent;
       transition: color 0.15s ease-in-out;
@@ -6768,39 +6864,46 @@
       gap: 0.25rem;
       padding: 0.5rem 0.75rem; /* Default padding (medium) */
       font-size: 1rem; /* Default font-size (medium) */
+      box-sizing: border-box; /* Include padding/border in element's total width/height */
     }
-    .label.small {
-      padding: 0.25rem 0.5rem;
-      font-size: 0.875rem;
-    }
-    .label.large {
-      padding: 0.75rem 1rem;
-      font-size: 1.125rem;
-    }
-    .label.bottom {
-      flex-direction: column;
-    }
-    .label.bottom.small {
-      padding: 0.25rem;
-    }
-    .label.bottom.medium {
-      padding: 0.5rem;
-    }
-    .label.bottom.large {
-      padding: 0.75rem;
-    }
-    input:checked + .label {
+
+    /* Selected State Styles - Driven by the 'selected' class */
+    .button.selected {
       color: var(--mov-color-on-loud);
       font-weight: 600;
     }
+
+    /* Size Variations */
+    .button.small {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+    }
+    .button.large {
+      padding: 0.75rem 1rem;
+      font-size: 1.125rem;
+    }
+
+    /* Label Position Variations */
+    .button.bottom {
+      flex-direction: column;
+    }
+    .button.bottom.small {
+      padding: 0.25rem;
+    }
+    .button.bottom.medium {
+      padding: 0.5rem;
+    }
+    .button.bottom.large {
+      padding: 0.75rem;
+    }
   `;
-  __decorateClass$c([n$1({ type: String })], SegmentedControl.prototype, 'value', 2);
-  __decorateClass$c([n$1({ type: String })], SegmentedControl.prototype, 'labelPosition', 2);
-  __decorateClass$c([n$1({ type: String })], SegmentedControl.prototype, 'size', 2);
-  __decorateClass$c([r$1()], SegmentedControl.prototype, '_options', 2);
-  __decorateClass$c([e$2('.thumb')], SegmentedControl.prototype, 'thumb', 2);
-  __decorateClass$c([e$2('slot')], SegmentedControl.prototype, '_slotEl', 2);
-  SegmentedControl = __decorateClass$c([t$1('segmented-control')], SegmentedControl);
+  __decorateClass$d([n$1({ type: String, reflect: true })], SegmentedControl.prototype, 'value', 2);
+  __decorateClass$d([n$1({ type: String })], SegmentedControl.prototype, 'labelPosition', 2);
+  __decorateClass$d([n$1({ type: String })], SegmentedControl.prototype, 'size', 2);
+  __decorateClass$d([r$1()], SegmentedControl.prototype, '_options', 2);
+  __decorateClass$d([e$2('.thumb')], SegmentedControl.prototype, 'thumb', 2);
+  __decorateClass$d([e$2('slot')], SegmentedControl.prototype, '_slotEl', 2);
+  SegmentedControl = __decorateClass$d([t$1('segmented-control')], SegmentedControl);
   let SegmentedControlOption = class extends i$1 {
     constructor() {
       super(...arguments);
@@ -6815,37 +6918,37 @@
       return this;
     }
   };
-  __decorateClass$c(
+  __decorateClass$d(
     [n$1({ type: String, reflect: true })],
     SegmentedControlOption.prototype,
     'value',
     2,
   );
-  __decorateClass$c(
+  __decorateClass$d(
     [n$1({ type: String, reflect: true })],
     SegmentedControlOption.prototype,
     'label',
     2,
   );
-  __decorateClass$c(
+  __decorateClass$d(
     [n$1({ type: String, reflect: true })],
     SegmentedControlOption.prototype,
     'icon',
     2,
   );
-  SegmentedControlOption = __decorateClass$c(
+  SegmentedControlOption = __decorateClass$d(
     [t$1('segmented-control-option')],
     SegmentedControlOption,
   );
 
-  var __defProp$7 = Object.defineProperty;
-  var __getOwnPropDesc$b = Object.getOwnPropertyDescriptor;
-  var __decorateClass$b = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$b(target, key) : target;
+  var __defProp$9 = Object.defineProperty;
+  var __getOwnPropDesc$c = Object.getOwnPropertyDescriptor;
+  var __decorateClass$c = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$c(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$7(target, key, result);
+    if (kind && result) __defProp$9(target, key, result);
     return result;
   };
   let ToggleSwitch = class extends i$1 {
@@ -6980,13 +7083,13 @@
       color: #333;
     }
   `;
-  __decorateClass$b([n$1({ type: String })], ToggleSwitch.prototype, 'name', 2);
-  __decorateClass$b([n$1({ type: Boolean, reflect: true })], ToggleSwitch.prototype, 'checked', 2);
-  __decorateClass$b([n$1({ type: Boolean, reflect: true })], ToggleSwitch.prototype, 'disabled', 2);
-  __decorateClass$b([n$1({ type: String, reflect: true })], ToggleSwitch.prototype, 'design', 2);
-  __decorateClass$b([n$1({ type: String })], ToggleSwitch.prototype, 'textOn', 2);
-  __decorateClass$b([n$1({ type: String })], ToggleSwitch.prototype, 'textOff', 2);
-  ToggleSwitch = __decorateClass$b([t$1('toggle-switch')], ToggleSwitch);
+  __decorateClass$c([n$1({ type: String })], ToggleSwitch.prototype, 'name', 2);
+  __decorateClass$c([n$1({ type: Boolean, reflect: true })], ToggleSwitch.prototype, 'checked', 2);
+  __decorateClass$c([n$1({ type: Boolean, reflect: true })], ToggleSwitch.prototype, 'disabled', 2);
+  __decorateClass$c([n$1({ type: String, reflect: true })], ToggleSwitch.prototype, 'design', 2);
+  __decorateClass$c([n$1({ type: String })], ToggleSwitch.prototype, 'textOn', 2);
+  __decorateClass$c([n$1({ type: String })], ToggleSwitch.prototype, 'textOff', 2);
+  ToggleSwitch = __decorateClass$c([t$1('toggle-switch')], ToggleSwitch);
 
   var commonjsGlobal =
     typeof globalThis !== 'undefined'
@@ -7380,24 +7483,26 @@
     setAppStateValue('scrollToPage', target);
   }
 
-  var __defProp$6 = Object.defineProperty;
-  var __getOwnPropDesc$a = Object.getOwnPropertyDescriptor;
-  var __decorateClass$a = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$a(target, key) : target;
+  var __defProp$8 = Object.defineProperty;
+  var __getOwnPropDesc$b = Object.getOwnPropertyDescriptor;
+  var __decorateClass$b = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$b(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$6(target, key, result);
+    if (kind && result) __defProp$8(target, key, result);
     return result;
   };
   let Pagination = class extends i$1 {
     constructor() {
       super(...arguments);
+      this.mode = false;
       this.currentPage = 1;
       this.totalPages = 1;
       this.startPage = 1;
     }
     render() {
+      if (!this.mode) return E;
       return x$1`
       <button
         class="pagination-button"
@@ -7601,21 +7706,22 @@
       opacity: 1;
     }
   `;
-  __decorateClass$a([n$1({ type: Number })], Pagination.prototype, 'currentPage', 2);
-  __decorateClass$a([n$1({ type: Number })], Pagination.prototype, 'totalPages', 2);
-  __decorateClass$a([n$1({ type: Number })], Pagination.prototype, 'startPage', 2);
-  __decorateClass$a([n$1({ type: String })], Pagination.prototype, 'next', 2);
-  __decorateClass$a([n$1({ type: String })], Pagination.prototype, 'prev', 2);
-  Pagination = __decorateClass$a([t$1('manga-pagination')], Pagination);
+  __decorateClass$b([n$1({ type: Boolean })], Pagination.prototype, 'mode', 2);
+  __decorateClass$b([n$1({ type: Number })], Pagination.prototype, 'currentPage', 2);
+  __decorateClass$b([n$1({ type: Number })], Pagination.prototype, 'totalPages', 2);
+  __decorateClass$b([n$1({ type: Number })], Pagination.prototype, 'startPage', 2);
+  __decorateClass$b([n$1({ type: String })], Pagination.prototype, 'next', 2);
+  __decorateClass$b([n$1({ type: String })], Pagination.prototype, 'prev', 2);
+  Pagination = __decorateClass$b([t$1('manga-pagination')], Pagination);
 
-  var __defProp$5 = Object.defineProperty;
-  var __getOwnPropDesc$9 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$9 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$9(target, key) : target;
+  var __defProp$7 = Object.defineProperty;
+  var __getOwnPropDesc$a = Object.getOwnPropertyDescriptor;
+  var __decorateClass$a = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$a(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$5(target, key, result);
+    if (kind && result) __defProp$7(target, key, result);
     return result;
   };
   let Drawer = class extends i$1 {
@@ -7805,19 +7911,19 @@
       justify-content: flex-start;
     }
   `;
-  __decorateClass$9([n$1({ type: Boolean, reflect: true })], Drawer.prototype, 'open', 2);
-  __decorateClass$9([n$1({ type: String, reflect: true })], Drawer.prototype, 'placement', 2);
-  __decorateClass$9([e$2('dialog')], Drawer.prototype, 'dialog', 2);
-  Drawer = __decorateClass$9([t$1('mov-drawer')], Drawer);
+  __decorateClass$a([n$1({ type: Boolean, reflect: true })], Drawer.prototype, 'open', 2);
+  __decorateClass$a([n$1({ type: String, reflect: true })], Drawer.prototype, 'placement', 2);
+  __decorateClass$a([e$2('dialog')], Drawer.prototype, 'dialog', 2);
+  Drawer = __decorateClass$a([t$1('mov-drawer')], Drawer);
 
-  var __defProp$4 = Object.defineProperty;
-  var __getOwnPropDesc$8 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$8 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$8(target, key) : target;
+  var __defProp$6 = Object.defineProperty;
+  var __getOwnPropDesc$9 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$9 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$9(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$4(target, key, result);
+    if (kind && result) __defProp$6(target, key, result);
     return result;
   };
   let Dialog = class extends i$1 {
@@ -7826,6 +7932,22 @@
       this.open = false;
       this.mode = 'dialog';
       this.fullscreen = false;
+    }
+    static getIconName(iconType) {
+      switch (iconType) {
+        case 'info':
+          return 'info-circle';
+        case 'warning':
+          return 'alert-circle';
+        case 'success':
+          return 'circle-check';
+        case 'error':
+          return 'circle-x';
+        case 'question':
+          return 'help';
+        default:
+          return '';
+      }
     }
     close() {
       this.open = false;
@@ -7895,7 +8017,22 @@
             </button>
           </div>
         </div>
-        <slot class="content-slot"></slot>
+        <div class="content-slot">
+          ${
+            this.icon
+              ? x$1`
+                <div class="icon-container">
+                  <mov-icon
+                    .name=${Dialog.getIconName(this.icon)}
+                    size="4rem"
+                  ></mov-icon>
+                </div>
+              `
+              : ''
+          }
+          <slot></slot>
+        </div>
+        <slot name="footer"></slot>
       </dialog>
     `;
     }
@@ -7983,10 +8120,33 @@
       flex-grow: 1;
     }
 
+    .icon-container {
+      display: flex;
+      justify-content: center;
+      padding-block-end: 1rem;
+      text-align: center;
+    }
+    :host([icon='success']) .icon-container mov-icon {
+      color: var(--theme-color-success, #28a745);
+    }
+    :host([icon='error']) .icon-container mov-icon {
+      color: var(--theme-color-danger, #dc3545);
+    }
+    :host([icon='warning']) .icon-container mov-icon {
+      color: var(--theme-color-warning, #ffc107);
+    }
+    :host([icon='info']) .icon-container mov-icon {
+      color: var(--theme-color-info, #17a2b8);
+    }
+    :host([icon='question']) .icon-container mov-icon {
+      color: var(--theme-color-secondary, #6c757d);
+    }
+
     /* --- MODE: INLINE --- */
     :host([mode='inline']) {
       display: block;
-      width: 100%;
+      width: 500px;
+      max-width: 100%;
     }
     :host([mode='inline']) dialog {
       all: unset;
@@ -7997,7 +8157,8 @@
       flex-direction: column;
       visibility: visible;
       position: relative;
-      width: 100%;
+      width: 500px;
+      max-width: 100%;
       border: 1px solid var(--theme-border-color, #e0e0e0);
       border-radius: 12px;
     }
@@ -8044,20 +8205,41 @@
       transform: translateY(0);
     }
   `;
-  __decorateClass$8([n$1({ type: Boolean, reflect: true })], Dialog.prototype, 'open', 2);
-  __decorateClass$8([n$1({ type: String, reflect: true })], Dialog.prototype, 'mode', 2);
-  __decorateClass$8([n$1({ type: Boolean, reflect: true })], Dialog.prototype, 'fullscreen', 2);
-  __decorateClass$8([e$2('dialog')], Dialog.prototype, 'dialog', 2);
-  Dialog = __decorateClass$8([t$1('mov-dialog')], Dialog);
+  __decorateClass$9([n$1({ type: Boolean, reflect: true })], Dialog.prototype, 'open', 2);
+  __decorateClass$9([n$1({ type: String, reflect: true })], Dialog.prototype, 'mode', 2);
+  __decorateClass$9([n$1({ type: Boolean, reflect: true })], Dialog.prototype, 'fullscreen', 2);
+  __decorateClass$9([n$1({ type: String, reflect: true })], Dialog.prototype, 'icon', 2);
+  __decorateClass$9([e$2('dialog')], Dialog.prototype, 'dialog', 2);
+  Dialog = __decorateClass$9([t$1('mov-dialog')], Dialog);
+  function showInfoDialog(options) {
+    const closeDialog = () => setAppStateValue('dialog', null);
+    if (options.timer) {
+      setTimeout(closeDialog, options.timer);
+    }
+    setAppStateValue('dialog', {
+      open: true,
+      icon: options.icon,
+      title: options.title,
+      content: x$1`<div style="padding: 1rem;">${o$5(options.html)}</div>`,
+      footer: x$1`
+      <div
+        slot="footer"
+        style="display: flex; justify-content: flex-end; padding: 0.5rem 1rem 1rem;"
+      >
+        <mov-button @click=${closeDialog}>OK</mov-button>
+      </div>
+    `,
+    });
+  }
 
-  var __defProp$3 = Object.defineProperty;
-  var __getOwnPropDesc$7 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$7 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$7(target, key) : target;
+  var __defProp$5 = Object.defineProperty;
+  var __getOwnPropDesc$8 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$8 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$8(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$3(target, key, result);
+    if (kind && result) __defProp$5(target, key, result);
     return result;
   };
   let MovDropdown = class extends i$1 {
@@ -8122,9 +8304,9 @@
       display: block;
     }
   `;
-  __decorateClass$7([n$1({ type: Boolean, reflect: true })], MovDropdown.prototype, 'open', 2);
-  __decorateClass$7([n$1({ type: Boolean, reflect: true })], MovDropdown.prototype, 'checkable', 2);
-  MovDropdown = __decorateClass$7([t$1('mov-dropdown')], MovDropdown);
+  __decorateClass$8([n$1({ type: Boolean, reflect: true })], MovDropdown.prototype, 'open', 2);
+  __decorateClass$8([n$1({ type: Boolean, reflect: true })], MovDropdown.prototype, 'checkable', 2);
+  MovDropdown = __decorateClass$8([t$1('mov-dropdown')], MovDropdown);
   let MovDropdownItem = class extends i$1 {
     constructor() {
       super(...arguments);
@@ -8187,13 +8369,13 @@
       opacity: 0.7;
     }
   `;
-  __decorateClass$7(
+  __decorateClass$8(
     [n$1({ type: Boolean, reflect: true })],
     MovDropdownItem.prototype,
     'selected',
     2,
   );
-  MovDropdownItem = __decorateClass$7([t$1('mov-dropdown-item')], MovDropdownItem);
+  MovDropdownItem = __decorateClass$8([t$1('mov-dropdown-item')], MovDropdownItem);
 
   const keycss =
     '/**\r\n * KEYS.css\r\n *\r\n * A simple stylesheet for rendering beautiful keyboard-style elements.\r\n *\r\n * Author:  Michael Hüneburg\r\n * Website: http://michaelhue.com/keyscss\r\n * License: MIT License (see LICENSE.txt)\r\n */\r\n\r\nkbd,\r\n.key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  background-color: #505050;\r\n  background-color: gradient(linear, left top, left bottom, from(#3c3c3c), to(#505050));\r\n  color: #fafafa;\r\n  text-shadow: -1px -1px 0 #464646;\r\n  -webkit-box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n          box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n  font-size: .85em;\r\n  line-height: 1;\r\n  cursor: default;\r\n  -webkit-user-select: none;\r\n     -moz-user-select: none;\r\n      -ms-user-select: none;\r\n          user-select: none;\r\n}\r\nkbd[title],\r\n.key[title] {\r\n  cursor: help;\r\n}\r\nkbd.dark,\r\n.dark-keys kbd,\r\n.key.dark,\r\n.dark-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  background-color: #505050;\r\n  background-color: gradient(linear, left top, left bottom, from(#3c3c3c), to(#505050));\r\n  color: #fafafa;\r\n  text-shadow: -1px -1px 0 #464646;\r\n  -webkit-box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n          box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n}\r\nkbd.light,\r\n.light-keys kbd,\r\n.key.light,\r\n.light-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  background-color: #fafafa;\r\n  background-color: gradient(linear, left top, left bottom, from(#d2d2d2), to(#ffffff));\r\n  color: #323232;\r\n  text-shadow: 0 0 2px #ffffff;\r\n  -webkit-box-shadow: inset 0 0 1px #ffffff, inset 0 0 0.4em #c8c8c8, 0 0.1em 0 #828282, 0 0.11em 0 rgba(0, 0, 0, 0.4), 0 0.1em 0.11em rgba(0, 0, 0, 0.9);\r\n          box-shadow: inset 0 0 1px #ffffff, inset 0 0 0.4em #c8c8c8, 0 0.1em 0 #828282, 0 0.11em 0 rgba(0, 0, 0, 0.4), 0 0.1em 0.11em rgba(0, 0, 0, 0.9);\r\n}\r\nkbd.so,\r\n.so-keys kbd,\r\n.key.so,\r\n.so-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  margin: 0 .1em;\r\n  padding: .1em .6em;\r\n  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;\r\n  line-height: 1.4;\r\n  color: #242729;\r\n  text-shadow: 0 1px 0 #FFF;\r\n  background-color: #e1e3e5;\r\n  border: 1px solid #adb3b9;\r\n  border-radius: 0.27272727em;\r\n  -webkit-box-shadow: 0 1px 0 rgba(12, 13, 14, 0.2), 0 0 0 2px #FFF inset;\r\n          box-shadow: 0 1px 0 rgba(12, 13, 14, 0.2), 0 0 0 2px #FFF inset;\r\n}\r\nkbd.github,\r\n.github-keys kbd,\r\n.key.github,\r\n.github-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: "Lucida Grande", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  padding: 0.27272727em 0.45454545em;\r\n  font-size: 68.75%;\r\n  line-height: 0.90909091;\r\n  color: #444d56;\r\n  vertical-align: middle;\r\n  background-color: #fafbfc;\r\n  border: solid 1px #c6cbd1;\r\n  border-bottom-color: #959da5;\r\n  border-radius: 0.27272727em;\r\n  -webkit-box-shadow: inset 0 -1px 0 #959da5;\r\n          box-shadow: inset 0 -1px 0 #959da5;\r\n  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;\r\n  -webkit-box-sizing: border-box;\r\n          box-sizing: border-box;\r\n  text-shadow: none;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImtleXMuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztFQUVFLGdCQUFnQjtFQUNoQixzQkFBc0I7RUFDdEIsb0JBQW9CO0VBQ3BCLGVBQWU7RUFDZiw2QkFBNkI7RUFDN0IsbUJBQW1CO0VBQ25CLHdEQUF3RDtFQUN4RCxtQkFBbUI7RUFDbkIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixhQUFhO0VBQ2IsMEJBQTBCO0VBQzFCLHNGQUFzRjtFQUN0RixlQUFlO0VBQ2YsaUNBQWlDO0VBQ2pDLDhIQUFzSDtVQUF0SCxzSEFBc0g7RUFDdEgsaUJBQWlCO0VBQ2pCLGVBQWU7RUFDZixnQkFBZ0I7RUFDaEIsMEJBQWtCO0tBQWxCLHVCQUFrQjtNQUFsQixzQkFBa0I7VUFBbEIsa0JBQWtCO0NBQ25CO0FBQ0Q7O0VBRUUsYUFBYTtDQUNkO0FBQ0Q7Ozs7RUFJRSxnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixlQUFlO0VBQ2YsNkJBQTZCO0VBQzdCLG1CQUFtQjtFQUNuQix3REFBd0Q7RUFDeEQsbUJBQW1CO0VBQ25CLHNCQUFzQjtFQUN0QixvQkFBb0I7RUFDcEIsYUFBYTtFQUNiLDBCQUEwQjtFQUMxQixzRkFBc0Y7RUFDdEYsZUFBZTtFQUNmLGlDQUFpQztFQUNqQyw4SEFBc0g7VUFBdEgsc0hBQXNIO0NBQ3ZIO0FBQ0Q7Ozs7RUFJRSxnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixlQUFlO0VBQ2YsNkJBQTZCO0VBQzdCLG1CQUFtQjtFQUNuQix3REFBd0Q7RUFDeEQsbUJBQW1CO0VBQ25CLHNCQUFzQjtFQUN0QixvQkFBb0I7RUFDcEIsYUFBYTtFQUNiLDBCQUEwQjtFQUMxQixzRkFBc0Y7RUFDdEYsZUFBZTtFQUNmLDZCQUE2QjtFQUM3Qix3SkFBZ0o7VUFBaEosZ0pBQWdKO0NBQ2pKO0FBQ0Q7Ozs7RUFJRSxnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixlQUFlO0VBQ2YsNkJBQTZCO0VBQzdCLG1CQUFtQjtFQUNuQix3REFBd0Q7RUFDeEQsbUJBQW1CO0VBQ25CLHNCQUFzQjtFQUN0QixvQkFBb0I7RUFDcEIsYUFBYTtFQUNiLGVBQWU7RUFDZixtQkFBbUI7RUFDbkIsNERBQTREO0VBQzVELGlCQUFpQjtFQUNqQixlQUFlO0VBQ2YsMEJBQTBCO0VBQzFCLDBCQUEwQjtFQUMxQiwwQkFBMEI7RUFDMUIsNEJBQTRCO0VBQzVCLHdFQUFnRTtVQUFoRSxnRUFBZ0U7Q0FDakU7QUFDRDs7OztFQUlFLGdCQUFnQjtFQUNoQixzQkFBc0I7RUFDdEIsb0JBQW9CO0VBQ3BCLGVBQWU7RUFDZiw2QkFBNkI7RUFDN0IsbUJBQW1CO0VBQ25CLHdEQUF3RDtFQUN4RCxtQkFBbUI7RUFDbkIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixhQUFhO0VBQ2IsbUNBQW1DO0VBQ25DLGtCQUFrQjtFQUNsQix3QkFBd0I7RUFDeEIsZUFBZTtFQUNmLHVCQUF1QjtFQUN2QiwwQkFBMEI7RUFDMUIsMEJBQTBCO0VBQzFCLDZCQUE2QjtFQUM3Qiw0QkFBNEI7RUFDNUIsMkNBQW1DO1VBQW5DLG1DQUFtQztFQUNuQyxzRkFBc0Y7RUFDdEYsK0JBQXVCO1VBQXZCLHVCQUF1QjtFQUN2QixrQkFBa0I7Q0FDbkIiLCJmaWxlIjoidG1wMi5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJrYmQsXG4ua2V5IHtcbiAgZGlzcGxheTogaW5saW5lO1xuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIHdoaXRlLXNwYWNlOiBub3dyYXA7XG4gIG1pbi13aWR0aDogMWVtO1xuICBwYWRkaW5nOiAuM2VtIC40ZW0gLjJlbSAuM2VtO1xuICBmb250LXN0eWxlOiBub3JtYWw7XG4gIGZvbnQtZmFtaWx5OiBcIkx1Y2lkYSBHcmFuZGVcIiwgTHVjaWRhLCBBcmlhbCwgc2Fucy1zZXJpZjtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG4gIGJvcmRlci1yYWRpdXM6IC4zZW07XG4gIGJvcmRlcjogbm9uZTtcbiAgYmFja2dyb3VuZC1jb2xvcjogIzUwNTA1MDtcbiAgYmFja2dyb3VuZC1jb2xvcjogZ3JhZGllbnQobGluZWFyLCBsZWZ0IHRvcCwgbGVmdCBib3R0b20sIGZyb20oIzNjM2MzYyksIHRvKCM1MDUwNTApKTtcbiAgY29sb3I6ICNmYWZhZmE7XG4gIHRleHQtc2hhZG93OiAtMXB4IC0xcHggMCAjNDY0NjQ2O1xuICBib3gtc2hhZG93OiBpbnNldCAwIDAgMXB4ICM5Njk2OTYsIGluc2V0IDAgLTAuMDVlbSAwLjRlbSAjNTA1MDUwLCAwIDAuMWVtIDAgIzFlMWUxZSwgMCAwLjFlbSAwLjFlbSByZ2JhKDAsIDAsIDAsIDAuMyk7XG4gIGZvbnQtc2l6ZTogLjg1ZW07XG4gIGxpbmUtaGVpZ2h0OiAxO1xuICBjdXJzb3I6IGRlZmF1bHQ7XG4gIHVzZXItc2VsZWN0OiBub25lO1xufVxua2JkW3RpdGxlXSxcbi5rZXlbdGl0bGVdIHtcbiAgY3Vyc29yOiBoZWxwO1xufVxua2JkLmRhcmssXG4uZGFyay1rZXlzIGtiZCxcbi5rZXkuZGFyayxcbi5kYXJrLWtleXMgLmtleSB7XG4gIGRpc3BsYXk6IGlubGluZTtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICBtaW4td2lkdGg6IDFlbTtcbiAgcGFkZGluZzogLjNlbSAuNGVtIC4yZW0gLjNlbTtcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xuICBmb250LWZhbWlseTogXCJMdWNpZGEgR3JhbmRlXCIsIEx1Y2lkYSwgQXJpYWwsIHNhbnMtc2VyaWY7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBib3JkZXItcmFkaXVzOiAuM2VtO1xuICBib3JkZXI6IG5vbmU7XG4gIGJhY2tncm91bmQtY29sb3I6ICM1MDUwNTA7XG4gIGJhY2tncm91bmQtY29sb3I6IGdyYWRpZW50KGxpbmVhciwgbGVmdCB0b3AsIGxlZnQgYm90dG9tLCBmcm9tKCMzYzNjM2MpLCB0bygjNTA1MDUwKSk7XG4gIGNvbG9yOiAjZmFmYWZhO1xuICB0ZXh0LXNoYWRvdzogLTFweCAtMXB4IDAgIzQ2NDY0NjtcbiAgYm94LXNoYWRvdzogaW5zZXQgMCAwIDFweCAjOTY5Njk2LCBpbnNldCAwIC0wLjA1ZW0gMC40ZW0gIzUwNTA1MCwgMCAwLjFlbSAwICMxZTFlMWUsIDAgMC4xZW0gMC4xZW0gcmdiYSgwLCAwLCAwLCAwLjMpO1xufVxua2JkLmxpZ2h0LFxuLmxpZ2h0LWtleXMga2JkLFxuLmtleS5saWdodCxcbi5saWdodC1rZXlzIC5rZXkge1xuICBkaXNwbGF5OiBpbmxpbmU7XG4gIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgd2hpdGUtc3BhY2U6IG5vd3JhcDtcbiAgbWluLXdpZHRoOiAxZW07XG4gIHBhZGRpbmc6IC4zZW0gLjRlbSAuMmVtIC4zZW07XG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcbiAgZm9udC1mYW1pbHk6IFwiTHVjaWRhIEdyYW5kZVwiLCBMdWNpZGEsIEFyaWFsLCBzYW5zLXNlcmlmO1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgYm9yZGVyLXJhZGl1czogLjNlbTtcbiAgYm9yZGVyOiBub25lO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmFmYWZhO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiBncmFkaWVudChsaW5lYXIsIGxlZnQgdG9wLCBsZWZ0IGJvdHRvbSwgZnJvbSgjZDJkMmQyKSwgdG8oI2ZmZmZmZikpO1xuICBjb2xvcjogIzMyMzIzMjtcbiAgdGV4dC1zaGFkb3c6IDAgMCAycHggI2ZmZmZmZjtcbiAgYm94LXNoYWRvdzogaW5zZXQgMCAwIDFweCAjZmZmZmZmLCBpbnNldCAwIDAgMC40ZW0gI2M4YzhjOCwgMCAwLjFlbSAwICM4MjgyODIsIDAgMC4xMWVtIDAgcmdiYSgwLCAwLCAwLCAwLjQpLCAwIDAuMWVtIDAuMTFlbSByZ2JhKDAsIDAsIDAsIDAuOSk7XG59XG5rYmQuc28sXG4uc28ta2V5cyBrYmQsXG4ua2V5LnNvLFxuLnNvLWtleXMgLmtleSB7XG4gIGRpc3BsYXk6IGlubGluZTtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICBtaW4td2lkdGg6IDFlbTtcbiAgcGFkZGluZzogLjNlbSAuNGVtIC4yZW0gLjNlbTtcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xuICBmb250LWZhbWlseTogXCJMdWNpZGEgR3JhbmRlXCIsIEx1Y2lkYSwgQXJpYWwsIHNhbnMtc2VyaWY7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBib3JkZXItcmFkaXVzOiAuM2VtO1xuICBib3JkZXI6IG5vbmU7XG4gIG1hcmdpbjogMCAuMWVtO1xuICBwYWRkaW5nOiAuMWVtIC42ZW07XG4gIGZvbnQtZmFtaWx5OiBBcmlhbCwgXCJIZWx2ZXRpY2EgTmV1ZVwiLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7XG4gIGxpbmUtaGVpZ2h0OiAxLjQ7XG4gIGNvbG9yOiAjMjQyNzI5O1xuICB0ZXh0LXNoYWRvdzogMCAxcHggMCAjRkZGO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZTFlM2U1O1xuICBib3JkZXI6IDFweCBzb2xpZCAjYWRiM2I5O1xuICBib3JkZXItcmFkaXVzOiAwLjI3MjcyNzI3ZW07XG4gIGJveC1zaGFkb3c6IDAgMXB4IDAgcmdiYSgxMiwgMTMsIDE0LCAwLjIpLCAwIDAgMCAycHggI0ZGRiBpbnNldDtcbn1cbmtiZC5naXRodWIsXG4uZ2l0aHViLWtleXMga2JkLFxuLmtleS5naXRodWIsXG4uZ2l0aHViLWtleXMgLmtleSB7XG4gIGRpc3BsYXk6IGlubGluZTtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICBtaW4td2lkdGg6IDFlbTtcbiAgcGFkZGluZzogLjNlbSAuNGVtIC4yZW0gLjNlbTtcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xuICBmb250LWZhbWlseTogXCJMdWNpZGEgR3JhbmRlXCIsIEx1Y2lkYSwgQXJpYWwsIHNhbnMtc2VyaWY7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBib3JkZXItcmFkaXVzOiAuM2VtO1xuICBib3JkZXI6IG5vbmU7XG4gIHBhZGRpbmc6IDAuMjcyNzI3MjdlbSAwLjQ1NDU0NTQ1ZW07XG4gIGZvbnQtc2l6ZTogNjguNzUlO1xuICBsaW5lLWhlaWdodDogMC45MDkwOTA5MTtcbiAgY29sb3I6ICM0NDRkNTY7XG4gIHZlcnRpY2FsLWFsaWduOiBtaWRkbGU7XG4gIGJhY2tncm91bmQtY29sb3I6ICNmYWZiZmM7XG4gIGJvcmRlcjogc29saWQgMXB4ICNjNmNiZDE7XG4gIGJvcmRlci1ib3R0b20tY29sb3I6ICM5NTlkYTU7XG4gIGJvcmRlci1yYWRpdXM6IDAuMjcyNzI3MjdlbTtcbiAgYm94LXNoYWRvdzogaW5zZXQgMCAtMXB4IDAgIzk1OWRhNTtcbiAgZm9udC1mYW1pbHk6IFwiU0ZNb25vLVJlZ3VsYXJcIiwgQ29uc29sYXMsIFwiTGliZXJhdGlvbiBNb25vXCIsIE1lbmxvLCBDb3VyaWVyLCBtb25vc3BhY2U7XG4gIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG4gIHRleHQtc2hhZG93OiBub25lO1xufVxuIl19 */';
@@ -8692,10 +8874,9 @@
   function buttonEraseBookmarks(event) {
     const target = event.currentTarget.value;
     logScript(`Bookmark Removed ${target}`);
-    Swal.fire({
+    i$6.error({
       title: getLocaleString('BOOKMARK_REMOVED'),
-      timer: 1e4,
-      icon: 'error',
+      duration: 1e4,
     });
     removeURLBookmark(target);
   }
@@ -8715,19 +8896,47 @@
     };
     if (isBookmarked(mark.url)) {
       changeSettingsValue('bookmarks', b => [...b.filter(el => el.url !== mark.url)]);
-      Swal.fire({
+      i$6.error({
         title: getLocaleString('BOOKMARK_REMOVED'),
-        timer: 1e4,
-        icon: 'error',
+        duration: 1e4,
       });
     } else {
       changeSettingsValue('bookmarks', b => [...b, mark]);
-      Swal.fire({
+      i$6.success({
         title: getLocaleString('BOOKMARK_SAVED'),
-        html: getLocaleString('BOOKMARK_MESSAGE').replace('##num##', num.toString()),
-        icon: 'success',
+        description: getLocaleString('BOOKMARK_MESSAGE').replace('##num##', num.toString()),
+        duration: 1e4,
       });
     }
+  }
+
+  function createStyleElement(id, content) {
+    const style = document.createElement('style');
+    style.id = id;
+    style.appendChild(document.createTextNode(content));
+    return style;
+  }
+  function appendStyleSheet(id, content) {
+    if (!document.querySelector(`#${id}`)) {
+      const head = document.head ?? document.querySelector('head');
+      head.appendChild(createStyleElement(id, content));
+    }
+  }
+  function removeStyleSheet(id) {
+    document.querySelectorAll(`style[id="${id}"]`).forEach(elem => {
+      elem.remove();
+    });
+  }
+  function replaceStyleSheet(id, content) {
+    removeStyleSheet(id);
+    appendStyleSheet(id, content);
+  }
+  function wrapStyle(id, css) {
+    return html`
+      <style id="${id}">
+        ${css}
+      </style>
+    `;
   }
 
   function changeSettingsScope(event) {
@@ -8762,9 +8971,9 @@
     const checked = event.detail.checked;
     saveSettingsValue('downloadZip', checked);
     if (checked) {
-      Swal.fire({
+      showInfoDialog({
         title: getLocaleString('ATTENTION'),
-        text: getLocaleString('AUTO_DOWNLOAD'),
+        html: getLocaleString('AUTO_DOWNLOAD'),
         timer: 1e4,
         icon: 'info',
       });
@@ -8774,7 +8983,7 @@
     const checked = event.detail.checked;
     saveSettingsValue('lazyLoadImages', checked);
     if (checked) {
-      Swal.fire({
+      showInfoDialog({
         title: getLocaleString('WARNING'),
         html: getLocaleString('LAZY_LOAD'),
         icon: 'warning',
@@ -8789,7 +8998,7 @@
     const timer = parseInt(event.currentTarget.value, 10);
     saveSettingsValue('throttlePageLoad', timer);
     if (timer < 100) {
-      Swal.fire({
+      showInfoDialog({
         title: getLocaleString('SPEED_WARNING'),
         html: getLocaleString('SPEED_WARNING_MESSAGE'),
         icon: 'warning',
@@ -8940,11 +9149,12 @@
       });
     }
   }
-  function redirectUrl(url) {
+  function redirectUrl(type) {
+    const url = getAppStateValue('manga')?.[type];
     if (url && url !== '#') {
-      window.location.href = distExports.sanitizeUrl(url);
-    } else {
-      window.history.back();
+      location.href = distExports.sanitizeUrl(url);
+    } else if (type !== 'next') {
+      history.back();
     }
   }
   const actions = {
@@ -8955,13 +9165,13 @@
       doScrolling(1);
     },
     NEXT_CHAPTER() {
-      redirectUrl(getAppStateValue('manga')?.next);
+      redirectUrl('next');
     },
     PREVIOUS_CHAPTER() {
-      redirectUrl(getAppStateValue('manga')?.prev);
+      redirectUrl('prev');
     },
     RETURN_CHAPTER_LIST() {
-      redirectUrl(getAppStateValue('manga')?.series);
+      redirectUrl('series');
     },
     ENLARGE() {
       changeZoomByStep(1)();
@@ -9054,19 +9264,19 @@
   }
 
   const styles$6 =
-    '#Header {\n  display: flex;\n  justify-content: space-around;\n  align-items: center;\n  flex-flow: row nowrap;\n  transition: transform 0.3s ease-in;\n  position: sticky;\n  top: 0;\n  left: 0;\n  right: 0;\n  background-color: var(--theme-background-color);\n  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);\n  z-index: 900;\n}\n\n#Header.click {\n  padding-left: 40px;\n}\n\n@keyframes headroom {\n  from {\n    transform: translateY(-100%);\n  }\n  to {\n    transform: translateY(0%);\n  }\n}\n\n#Header:not(.visible, .headroom-top, .fixed, .simple) {\n  animation: headroom 0.3s ease-in reverse;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.scroll.headroom-hide:not(.visible) {\n  animation: none;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.scroll.headroom-show,\n#Header.headroom-end,\n#Header.visible {\n  animation: headroom 0.3s ease-in;\n  transform: translateY(0%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.headroom-top {\n  animation: none;\n}\n\n#Header.fixed {\n  position: sticky;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#Header.simple {\n  position: static;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#menu {\n  position: fixed;\n  z-index: 1;\n  color: var(--theme-body-text-color);\n  height: 40px;\n  width: 40px;\n}\n\n#menu:not(.click),\n#menu.hide {\n  display: none;\n}\n\n#menu.click {\n  z-index: 901;\n}\n\n#MangaTitle {\n  padding: 2px;\n  margin: 0;\n  font-size: 1.2rem;\n  font-weight: 400;\n  word-wrap: anywhere;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  min-width: 200px;\n  max-width: 40vw;\n}\n\n#GlobalFunctions {\n  display: flex;\n  gap: 3px;\n  padding: 3px 3px 3px 0;\n  flex-wrap: wrap;\n  z-index: 100;\n}\n\n#ZoomControl {\n  display: flex;\n  align-items: center;\n  gap: 3px;\n  padding: 10px 5px;\n}\n';
+    '#Header {\n  display: flex;\n  justify-content: space-around;\n  align-items: center;\n  flex-flow: row nowrap;\n  transition: transform 0.3s ease-in;\n  position: sticky;\n  top: 0;\n  left: 0;\n  right: 0;\n  background-color: var(--theme-background-color);\n  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);\n  z-index: 900;\n}\n\n#Header.click {\n  padding-left: 40px;\n}\n\n@keyframes headroom {\n  from {\n    transform: translateY(-100%);\n  }\n  to {\n    transform: translateY(0%);\n  }\n}\n\n#Header:not(.visible, .headroom-top, .fixed, .simple) {\n  animation: headroom 0.3s ease-in reverse;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.scroll.headroom-hide:not(.visible) {\n  animation: none;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.scroll.headroom-show,\n#Header.headroom-end,\n#Header.visible {\n  animation: headroom 0.3s ease-in;\n  transform: translateY(0%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.headroom-top {\n  animation: none;\n}\n\n#Header.fixed {\n  position: sticky;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#Header.simple {\n  position: static;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#menu {\n  position: fixed;\n  z-index: 1;\n  color: var(--theme-body-text-color);\n  height: 40px;\n  width: 40px;\n}\n\n#menu:not(.click),\n#menu.hide {\n  display: none;\n}\n\n#menu.click {\n  z-index: 901;\n}\n\n#MangaTitle {\n  padding: 2px;\n  margin: 0;\n  font-size: 1.2rem;\n  font-weight: 400;\n  word-wrap: anywhere;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  min-width: 200px;\n  max-width: 40vw;\n}\n\n#GlobalFunctions {\n  display: flex;\n  gap: 3px;\n  padding: 3px 3px 3px 0;\n  flex-wrap: wrap;\n  z-index: 100;\n}\n\n#ZoomControl {\n  display: flex;\n  align-items: center;\n  flex-direction: column;\n  gap: 3px;\n  padding: 10px 5px;\n}\n';
 
   const media =
     '#Header.mobile,\n#Header.tablet {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\n.mobile #ViewerTitle,\n.tablet #ViewerTitle {\n  order: 4;\n  min-height: auto;\n}\n\n.mobile #GlobalFunctions,\n.tablet #GlobalFunctions {\n  order: 2;\n  width: auto;\n  padding: 5px;\n}\n\n.mobile #GlobalFunctions span {\n  flex-direction: column;\n}\n\n.mobile #ZoomControl,\n.tablet #ZoomControl {\n  order: 3;\n}\n\n.mobile #Toolbar,\n.tabler #Toolbar {\n  order: 1;\n}\n\n#Header.mobile {\n  flex-direction: row;\n  flex-wrap: wrap;\n  justify-content: center;\n  align-items: center;\n}\n\n#Header.mobile.click + #Chapter:not(.webcomic, .vertical) {\n  position: sticky;\n}\n\n.tablet #MangaTitle,\n.mobile #MangaTitle {\n  max-width: 90vw;\n}\n\n.mobile #ViewerTitle {\n  order: 3;\n  margin-top: 0;\n  height: auto;\n  padding: 0;\n}\n\n.mobile #GlobalFunctions {\n  order: 2;\n  padding: 0;\n  width: auto;\n  gap: 0;\n}\n\n.mobile mov-button::part(base) {\n  border-radius: 0;\n}\n\n.mobile #FileDropdown mov-button:first-of-type::part(base) {\n  border-radius: 5px 0 0 5px;\n}\n\n.mobile #GlobalFunctions mov-button:last-of-type::part(base) {\n  border-radius: 0 5px 5px 0;\n}\n\n.mobile .PageFunctions {\n  padding: 0;\n}\n\n.mobile .PageFunctions .PageButton.Bookmark {\n  opacity: 1;\n}\n\n.mobile #GlobalFunctions #ZoomSlider,\n.tablet #GlobalFunctions #ZoomSlider,\n.mobile .PageFunctions .PageButton:not(.Bookmark),\n.tablet #Counters,\n.mobile #ZoomControl,\n.mobile #ZoomDropdown,\n.mobile #ViewDropdown,\n.mobile #FileDropdown :where(:nth-child(3), :nth-child(4)) {\n  display: none;\n}\n';
 
-  var __defProp$2 = Object.defineProperty;
-  var __getOwnPropDesc$6 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$6 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$6(target, key) : target;
+  var __defProp$4 = Object.defineProperty;
+  var __getOwnPropDesc$7 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$7 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$7(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$2(target, key, result);
+    if (kind && result) __defProp$4(target, key, result);
     return result;
   };
   let Header = class extends i$1 {
@@ -9334,8 +9544,9 @@
             max="200"
             @input=${changeZoom}
           />
-          <span id="ZoomVal"
-            >${getSettingsValue('zoomMode') === 'percent' ? `${getSettingsValue('zoomValue')}%` : getSettingsValue('zoomMode')}</span
+          <span id="ZoomVal">
+            Zoom:
+            ${getSettingsValue('zoomMode') === 'percent' ? `${getSettingsValue('zoomValue')}%` : getSettingsValue('zoomMode')}</span
           >
         </div>
         <div
@@ -9394,9 +9605,9 @@
     }
   };
   Header.styles = [r$4(styles$6), r$4(media), r$4(keycss), i$3``];
-  __decorateClass$6([e$2('#MangaTitle')], Header.prototype, 'mangaTitleElement', 2);
-  __decorateClass$6([n$1({ type: Object })], Header.prototype, 'manga', 2);
-  Header = __decorateClass$6(
+  __decorateClass$7([e$2('#MangaTitle')], Header.prototype, 'mangaTitleElement', 2);
+  __decorateClass$7([n$1({ type: Object })], Header.prototype, 'manga', 2);
+  Header = __decorateClass$7(
     [t$1('reader-header'), libExports.useStores(settings$1, locale, appState)],
     Header,
   );
@@ -9404,9 +9615,9 @@
   const styles$5 =
     '#BookmarksPanel {\n  text-align: center;\n  --width: 100vw;\n}\n\n#BookmarksList {\n  padding: 0 5px;\n  overflow: auto;\n  max-height: 60vh;\n  display: flex;\n  flex-direction: column;\n  gap: 5px;\n}\n\n.bookmark-item {\n  display: flex;\n  align-items: center;\n  gap: 1rem;\n  padding: 0.75rem 1rem;\n  border-radius: 5px;\n  transition: background-color 150ms ease-in-out;\n  text-align: left;\n}\n\n.bookmark-item:hover {\n  background-color: var(--mov-color-fill-quiet, rgba(128, 128, 128, 0.1));\n}\n\n.bookmark-info {\n  flex-grow: 1;\n  min-width: 0;\n}\n\n.bookmark-name {\n  font-weight: 500;\n}\n\n.bookmark-url {\n  font-size: 0.875rem;\n  text-decoration: none;\n  display: block;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  color: color-mix(in oklab, var(--theme-body-text-color), transparent 30%);\n}\n.bookmark-url:hover {\n  text-decoration: underline;\n}\n\n.bookmark-details {\n  flex-shrink: 0;\n  width: 90px;\n  font-size: 0.875rem;\n  text-align: right;\n  color: color-mix(in oklab, var(--theme-body-text-color), transparent 30%);\n}\n.bookmark-details > div {\n  padding: 2px 0;\n}\n\n.bookmark-actions {\n  flex-shrink: 0;\n  display: flex;\n  gap: 0.5rem;\n}\n';
 
-  var __getOwnPropDesc$5 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$5 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$5(target, key) : target;
+  var __getOwnPropDesc$6 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$6 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$6(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i])) result = decorator(result) || result;
     return result;
@@ -9499,7 +9710,7 @@
     }
   };
   BookmarkPanel.styles = [r$4(styles$5)];
-  BookmarkPanel = __decorateClass$5(
+  BookmarkPanel = __decorateClass$6(
     [t$1('bookmark-panel'), libExports.useStores(settings$1, locale, appState)],
     BookmarkPanel,
   );
@@ -9519,9 +9730,9 @@
   const styles$4 =
     '#KeybindingsPanel div {\n  line-height: 1.5em;\n}\n\n#KeybindingsPanel #KeybindingsList {\n  display: grid;\n  grid-template-columns: 1fr 2fr;\n  gap: 5px;\n}\n\n#KeybindingsPanel .ControlButton {\n  margin-left: 3px;\n  justify-content: center;\n  align-items: center;\n  padding: 5px 10px;\n  gap: 0.5em;\n}\n\n#KeybindingsPanel label {\n  display: ruby;\n}\n\n#KeybindingsPanel input {\n  display: inline-block;\n  width: 100%;\n}\n\n#KeybindingsPanel #HotKeysRules {\n  grid-column: span 2;\n}\n';
 
-  var __getOwnPropDesc$4 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$4 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$4(target, key) : target;
+  var __getOwnPropDesc$5 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$5 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$5(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i])) result = decorator(result) || result;
     return result;
@@ -9625,7 +9836,7 @@
     }
   };
   KeybindingsPanel.styles = [r$4(styles$4), r$4(keycss)];
-  KeybindingsPanel = __decorateClass$4(
+  KeybindingsPanel = __decorateClass$5(
     [t$1('keybindings-panel'), libExports.useStores(settings$1, locale, appState)],
     KeybindingsPanel,
   );
@@ -9667,14 +9878,14 @@
   const styles$3 =
     ':host {\n  --nav-collapsed-size: 34px;\n  --nav-expanded-size: 200px;\n  --header-height: 80px;\n}\n#Navigation {\n  color: var(--theme-text-color);\n  background-color: var(--theme-hightlight-color);\n  overflow: hidden;\n  display: flex;\n  box-sizing: border-box;\n  gap: 5px;\n  white-space: nowrap;\n  text-align: center;\n  line-height: 0;\n  transition: all 0.3s ease;\n  position: fixed;\n  z-index: 1000;\n}\n#Thumbnails {\n  flex-grow: 1;\n  display: flex;\n  gap: 5px;\n  justify-content: flex-start;\n}\n#Navigation.horizontal #Thumbnails {\n  flex-direction: row;\n  overflow-x: auto;\n  overflow-y: hidden;\n}\n#Navigation.vertical #Thumbnails {\n  flex-direction: column;\n  overflow-y: auto;\n  overflow-x: hidden;\n  justify-content: flex-start;\n}\n#Navigation.left #Thumbnails {\n  direction: rtl;\n}\n:host(:not([forceExpanded])) #Navigation:not(:hover) #Thumbnails {\n  display: none;\n}\n#NavigationCounters {\n  flex-shrink: 0; /* Prevent this from shrinking */\n  padding: 5px;\n  line-height: 1rem;\n  text-align: center;\n  white-space: nowrap;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 0.5rem;\n}\n/* == Horizontal Orientation (for top/bottom position) == */\n#Navigation.horizontal {\n  flex-direction: column;\n  height: var(--nav-collapsed-size);\n  width: 100%;\n  left: 0;\n  right: 0;\n}\n:host([forceExpanded]) #Navigation.horizontal,\n#Navigation.horizontal:hover {\n  height: var(--nav-expanded-size);\n}\n#Navigation.bottom {\n  bottom: 0;\n}\n/* == Vertical Orientation (for left/right position) == */\n#Navigation.vertical {\n  flex-direction: row;\n  width: var(--nav-collapsed-size);\n  height: 100%;\n  bottom: 0;\n  transition:\n    top 0.3s ease,\n    height 0.3s ease,\n    width 0.3s ease;\n}\n:host([forceExpanded]) #Navigation.vertical,\n#Navigation.vertical:hover {\n  width: var(--nav-expanded-size);\n}\n#Navigation.left {\n  left: 0;\n  flex-direction: row-reverse;\n}\n#Navigation.right {\n  right: 0;\n}\n#Navigation.vertical #NavigationCounters {\n  writing-mode: vertical-rl;\n  transform: rotate(180deg);\n}\n#Navigation.right #NavigationCounters {\n  transform: rotate(0deg);\n}\n/* Adjust for header visibility */\n#Navigation.vertical.header {\n  top: var(--header-height);\n  height: calc(100% - var(--header-height));\n}\n\n#Navigation .Thumbnail {\n  display: inline-flex;\n  height: 150px;\n  width: 150px;\n  margin: 0 5px;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n}\n\n.ThumbnailIndex {\n  color: var(--mov-color-on-loud);\n  background-color: var(--mov-color-fill-loud);\n  display: block;\n  opacity: 0.9;\n  position: absolute;\n  left: 0;\n  bottom: 30%;\n  width: 100%;\n  line-height: 1.2rem;\n  text-align: center;\n  font-weight: 600;\n  z-index: 1;\n}\n.ThumbnailImg {\n  cursor: pointer;\n  display: inline-block;\n  max-height: 150px;\n  min-height: 150px;\n  min-width: 80px;\n  max-width: 150px;\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: 48px 48px;\n}\n';
 
-  var __defProp$1 = Object.defineProperty;
-  var __getOwnPropDesc$3 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$3 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$3(target, key) : target;
+  var __defProp$3 = Object.defineProperty;
+  var __getOwnPropDesc$4 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$4 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$4(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$1(target, key, result);
+    if (kind && result) __defProp$3(target, key, result);
     return result;
   };
   let Navbar = class extends i$1 {
@@ -9709,6 +9920,7 @@
      * @returns The rendered template.
      */
     render() {
+      if (this.mode === 'disabled') return E;
       const manga = getAppStateValue('manga');
       const navClasses = {
         horizontal: this.mode === 'bottom',
@@ -9786,10 +9998,10 @@
       }
     `,
   ];
-  __decorateClass$3([n$1({ type: String })], Navbar.prototype, 'mode', 2);
-  __decorateClass$3([n$1({ type: Boolean })], Navbar.prototype, 'forceExpanded', 2);
-  __decorateClass$3([r$1()], Navbar.prototype, 'isHiding', 2);
-  Navbar = __decorateClass$3(
+  __decorateClass$4([n$1({ type: String })], Navbar.prototype, 'mode', 2);
+  __decorateClass$4([n$1({ type: Boolean })], Navbar.prototype, 'forceExpanded', 2);
+  __decorateClass$4([r$1()], Navbar.prototype, 'isHiding', 2);
+  Navbar = __decorateClass$4(
     [t$1('navbar-thumbnails'), libExports.useStores(settings$1, locale, appState)],
     Navbar,
   );
@@ -9804,7 +10016,8 @@
     const secondaryText = getTextColor(secondary);
     return css`
       :where(:root),
-      ${selector}, .dark ${selector}.dark {
+      ${selector}, .dark,
+      ${selector}.dark {
         --theme-primary-color: ${hex};
         --theme-primary-text-color: ${text};
         --theme-secondary-color: ${secondary};
@@ -9858,14 +10071,14 @@
     `;
   };
 
-  var __defProp = Object.defineProperty;
-  var __getOwnPropDesc$2 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$2 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$2(target, key) : target;
+  var __defProp$2 = Object.defineProperty;
+  var __getOwnPropDesc$3 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$3 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$3(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i]))
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp(target, key, result);
+    if (kind && result) __defProp$2(target, key, result);
     return result;
   };
   let CommentsPanel = class extends i$1 {
@@ -9908,8 +10121,8 @@
     }
   };
   CommentsPanel.styles = [r$4(styles$2), r$4(themesCSS(':host'))];
-  __decorateClass$2([r$1()], CommentsPanel.prototype, 'colorScheme', 2);
-  CommentsPanel = __decorateClass$2(
+  __decorateClass$3([r$1()], CommentsPanel.prototype, 'colorScheme', 2);
+  CommentsPanel = __decorateClass$3(
     [t$1('comments-panel'), libExports.useStores(settings$1, locale, appState)],
     CommentsPanel,
   );
@@ -10469,9 +10682,9 @@
   const styles$1 =
     '#SettingsPanel {\n  color: var(--theme-text-color);\n}\n\n#SettingsPanel fieldset {\n  border: 1px solid var(--theme-body-text-color);\n  padding: 3px;\n  border-radius: 10px;\n}\n\n#SettingsPanel .ControlLabel {\n  display: flex;\n  flex-flow: row wrap;\n  justify-content: space-between;\n  align-items: center;\n  padding: 2px;\n}\n\n#SettingsPanel .ControlLabelItem {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\n#SettingsPanel .ControlLabelItem:not(.show) {\n  display: none;\n}\n\n#SettingsPanel input[type="range"] {\n  width: 100%;\n}\n\n#SettingsPanel .RangeValue {\n  display: inline-block;\n  color: var(--mov-color-on-loud);\n  line-height: 20px;\n  text-align: center;\n  border-radius: 3px;\n  background: var(--mov-color-fill-loud);\n  padding: 2px 5px;\n  margin-left: 8px;\n}\n\n#SettingsPanel datalist {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  width: 100%;\n}\n\n#SettingsPanel datalist option {\n  padding: 0;\n  writing-mode: vertical-lr;\n}\n\n#ThemeSelector {\n  width: 110px;\n}\n\n#ColorRecommendations {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  gap: 2px;\n}\n#Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {\n  display: none;\n}\n\n#ColorScheme {\n  padding: 5px;\n  min-height: 28px;\n  min-width: 28px;\n}\n\n#ResetSettings,\n#ResetSettings::part(base) {\n  width: 100%;\n}\n';
 
-  var __getOwnPropDesc$1 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$1 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$1(target, key) : target;
+  var __getOwnPropDesc$2 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$2 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$2(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if ((decorator = decorators[i])) result = decorator(result) || result;
     return result;
@@ -10542,7 +10755,7 @@
     `,
     r$4(styles$1),
   ];
-  SettingsPanel = __decorateClass$1(
+  SettingsPanel = __decorateClass$2(
     [t$1('settings-panel'), libExports.useStores(settings$1, locale, appState)],
     SettingsPanel,
   );
@@ -10608,7 +10821,8 @@
     attachListeners();
   }
 
-  function events() {
+  async function events() {
+    await waitForFunc(() => getAppStateValue('manga') !== void 0);
     keybindings();
     window.addEventListener('resize', () => {
       setAppStateValue('device', getDevice());
@@ -10827,13 +11041,14 @@
       console.error('Failed to transform image to blob for page', index, e);
     }
     changeAppStateValue('loaded', n => n + 1);
+    const total = getAppStateValue('manga')?.pages ?? 1;
     const loaded = getAppStateValue('loaded') ?? 0;
-    const total =
-      (getAppStateValue('manga')?.pages ?? 1) - ((getAppStateValue('manga')?.begin ?? 1) - 1);
-    const percentage = loaded / total;
+    const percentage = Math.floor((loaded / total) * 100);
+    document.title = `(${percentage}%) ${getAppStateValue('manga')?.title}`;
     NProgress.configure({
       showSpinner: false,
-    }).set(percentage);
+    }).set(loaded / total);
+    logScript(`Progress: ${percentage}%`);
     if (loaded === total) {
       logScript('Images Loading Complete');
       if (getSettingsValue('downloadZip')) buttonStartDownload();
@@ -11076,7 +11291,7 @@
   const page =
     '.PageButton .icon-tabler {\n  height: 1rem;\n  width: 1rem;\n  vertical-align: sub;\n}\n\n.PageButton,\n.PageButton:visited,\n.PageButton:link {\n  cursor: pointer;\n  border-radius: 5px;\n  border-width: 1px;\n  border-style: solid;\n  padding: 2px;\n  min-height: 32px;\n  color: var(--mov-color-on-loud);\n  background-color: var(--mov-color-fill-loud);\n  border-color: var(--theme-border-color);\n  text-decoration: none;\n}\n\n.PageButton:active,\n.PageButton:hover {\n  opacity: 0.8;\n}\n\n.PageButton[selected] {\n  background-color: var(--mov-color-fill-normal);\n  color: var(--mov-color-on-normal);\n  border: 1px solid var(--theme-border-color);\n}\n\n.PageButton.hidden {\n  display: none;\n}\n\n.MangaPage {\n  width: 100%;\n  display: inline-block;\n  text-align: center;\n  line-height: 0;\n  min-height: 22px;\n  min-width: 100%;\n}\n\n.PageContent {\n  text-align: center;\n  display: inline-block;\n  overflow-x: auto;\n  max-width: 100%;\n  transition: all 0.3s ease-in-out;\n  height: 100%;\n  overflow-y: hidden;\n}\n\n.MangaPage.hide .PageContent {\n  height: 0;\n}\n\n.PageContent .PageImg[src=""],\n.PageContent .PageImg:not([src]),\n.PageContent .PageImg.imgBroken {\n  width: 40vw;\n  height: 80vh;\n  display: inline-block;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: 20%;\n  background-color: var(--theme-hightlight-color);\n  position: relative;\n  text-align: center;\n  line-height: 80vh;\n  vertical-align: top;\n  color: var(--theme-text-color);\n  font-size: 1rem;\n  min-width: 40vw;\n  min-height: 50vh;\n  max-width: 100%;\n  max-height: 100%;\n  margin: 0;\n}\n\n.PageContent .PageImg[src=""]:before,\n.PageContent .PageImg:not([src]):before,\n.PageContent .PageImg.imgBroken:before {\n  content: attr(alt);\n  position: absolute;\n  top: 40%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  white-space: pre-wrap;\n  text-align: center;\n  color: var(--theme-text-color);\n  font-size: 1rem;\n}\n\n.PageFunctions {\n  font-family: monospace;\n  display: flex;\n  justify-content: flex-end;\n  align-items: center;\n  margin: 0;\n  padding: 0;\n  gap: 3px;\n  position: absolute;\n  right: 0;\n}\n\n.PageFunctions > .PageIndex {\n  background-color: var(--mov-color-fill-loud);\n  color: var(--mov-color-on-loud);\n  min-width: 20px;\n  text-align: center;\n  display: inline-block;\n  padding: 3px 5px;\n  line-height: 1rem;\n  border-radius: 5px;\n}\n\n.PageFunctions .PageButton {\n  padding: 3px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  margin: 0;\n  border-width: 0;\n  min-height: auto;\n  opacity: 0.5;\n}\n\n.PageFunctions:hover .PageButton {\n  opacity: 1;\n}\n\n.PageFunctions .PageButton:hover {\n  opacity: 0.9;\n}\n\n#Chapter.Vertical .separator {\n  display: flex;\n  align-items: center;\n  text-align: center;\n  font-style: italic;\n}\n\n#Chapter.Vertical .separator::before,\n#Chapter.Vertical .separator::after {\n  content: "";\n  flex: 1;\n  border-bottom: 1px solid var(--theme-text-color);\n}\n\n#Chapter.Vertical.separator:not(:empty)::before {\n  margin-right: 0.25em;\n}\n\n#Chapter.Vertical.separator:not(:empty)::after {\n  margin-left: 0.25em;\n}\n\n#Chapter:not(.separator) .separator,\n#Chapter:not(.Vertical) .separator {\n  display: none;\n}\n';
 
-  const normalize =
+  const normalize$1 =
     '/*  Simple Normalizer */\nhtml {\n  font-size: 100%;\n}\n\nbody {\n  margin: 0;\n  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;\n  font-size: 14px;\n  line-height: 20px;\n  color: var(--theme-body-text-color);\n  background-color: var(--theme-body-background);\n  padding: 0;\n}\n\na,\na:link,\na:visited,\na:active,\na:focus {\n  color: var(--theme-body-text-color);\n  text-decoration: none;\n}\n\nimg {\n  height: auto;\n  vertical-align: middle;\n  border: 0 none;\n}\n';
 
   const cssStyles = css`
@@ -11089,7 +11304,7 @@
       background-image: url('${svgToUrl(IconPhotoOff$1)}');
     }
 
-    ${normalize}
+    ${normalize$1}
     ${styles}
   ${page}
   ${fluid}
@@ -11097,14 +11312,2147 @@
   ${animation}
   `;
 
+  /* 
+  Tool Cool Range Slider - Generated Labels Plugin v1.0.8
+  https://github.com/mzusin/toolcool-range-slider 
+  MIT License        
+  Copyright (c) 2022-present, Miriam Zusin                    
+  */
+  (() => {
+    var E = s =>
+      s == null ? false : typeof s == 'boolean' ? s : s.trim().toLowerCase() === 'true';
+    window.tcRangeSliderPlugins = window.tcRangeSliderPlugins || [];
+    var F = 'min-label',
+      H = 'max-label',
+      y = '#1E293B',
+      A = () => {
+        let s = null,
+          b = null,
+          i = null,
+          L,
+          m = false,
+          n = y,
+          l = '',
+          x,
+          r = null,
+          o = null,
+          u = null,
+          g = [],
+          S = () => {
+            var t;
+            let e =
+              (t = s == null ? void 0 : s.shadowRoot) == null
+                ? void 0
+                : t.querySelector('.range-slider-box');
+            ((r = document.createElement('div')), r.classList.add('labels-row'), e.prepend(r));
+          },
+          v = e => {
+            let t = document.createElement('label');
+            return ((t.className = e), t.setAttribute('for', 'range-slider'), t);
+          },
+          C = () => {
+            ((o = v(F)),
+              (o.textContent = f(i == null ? void 0 : i.getTextMin(), l)),
+              (u = v(H)),
+              (u.textContent = f(i == null ? void 0 : i.getTextMax(), l)),
+              b == null || b.before(o),
+              b == null || b.after(u));
+            let e = i == null ? void 0 : i.getValues();
+            if (!!e)
+              for (let t = 0; t < e.length; t++) {
+                let a = v(`value${t + 1}-label generated-label`);
+                ((a.textContent = f(e[t], l)), g.push(a), r == null || r.append(a));
+              }
+          },
+          I = () => {
+            for (let e of g) !e || e.remove();
+            (o == null || o.remove(), u == null || u.remove(), r == null || r.remove(), (g = []));
+          },
+          M = e => {
+            ((m = e), m ? (S(), C()) : I());
+          },
+          T = e => {
+            n = e;
+            for (let t of g) !t || (t.style.color = n != null ? n : y);
+            (o && (o.style.color = n != null ? n : y), u && (u.style.color = n != null ? n : y));
+          },
+          h = e => {
+            ((l = e), L && L());
+          },
+          P = () => {
+            !i || !r || r.classList.toggle('is-reversed', i.isRightToLeft() || i.isBottomToTop());
+          },
+          f = (e, t) => {
+            let a = `${(e != null ? e : '').toString()}${t}`;
+            return !!x && typeof x == 'function' ? x(e) : a;
+          };
+        return {
+          get name() {
+            return 'Generated Labels';
+          },
+          init: (e, t, a, d) => {
+            var c, p, w;
+            ((s = e),
+              (i = d),
+              (b = (c = e.shadowRoot) == null ? void 0 : c.getElementById('range-slider')),
+              (L = t),
+              (n = (p = s.getAttribute('generate-labels-text-color')) != null ? p : y),
+              (l = (w = s.getAttribute('generate-labels-units')) != null ? w : ''),
+              M(E(s.getAttribute('generate-labels'))),
+              P(),
+              T(n));
+          },
+          update: e => {
+            if (!(!m || !e.values)) {
+              P();
+              for (let t = 0; t < e.values.length; t++) {
+                let a = e.values[t],
+                  d = g[t];
+                if (a === void 0 && !!d) {
+                  (d.remove(), (g[t] = void 0));
+                  continue;
+                }
+                if (a !== void 0 && !d) {
+                  let c = v(`value${t + 1}-label generated-label`);
+                  if (((c.textContent = f(a, l)), (g[t] = c), e.values.length <= 0))
+                    r == null || r.append(c);
+                  else if (t === 0) r == null || r.append(c);
+                  else {
+                    let p = g[t - 1];
+                    p == null || p.after(c);
+                  }
+                  continue;
+                }
+                !d || (d.textContent = f(a, l));
+              }
+              (o && (o.textContent = f(e.textMin, l)),
+                u && (u.textContent = f(e.textMax, l)),
+                T(n));
+            }
+          },
+          onAttrChange: (e, t) => {
+            (e === 'generate-labels' && M(E(t)),
+              e === 'generate-labels-text-color' && T(t),
+              e === 'generate-labels-units' && h(t));
+          },
+          gettersAndSetters: [
+            {
+              name: 'generateLabels',
+              attributes: {
+                get() {
+                  return m != null ? m : false;
+                },
+                set: e => {
+                  M(E(e));
+                },
+              },
+            },
+            {
+              name: 'textColor',
+              attributes: {
+                get() {
+                  return n != null ? n : '';
+                },
+                set: e => {
+                  T(e);
+                },
+              },
+            },
+            {
+              name: 'generateLabelsTextColor',
+              attributes: {
+                get() {
+                  return n != null ? n : '';
+                },
+                set: e => {
+                  T(e);
+                },
+              },
+            },
+            {
+              name: 'units',
+              attributes: {
+                get() {
+                  return l != null ? l : '';
+                },
+                set: e => {
+                  h(e);
+                },
+              },
+            },
+            {
+              name: 'generateLabelsUnits',
+              attributes: {
+                get() {
+                  return l != null ? l : '';
+                },
+                set: e => {
+                  h(e);
+                },
+              },
+            },
+            {
+              name: 'generateLabelsFormat',
+              attributes: {
+                get() {
+                  return x;
+                },
+                set: e => {
+                  ((x = e), L && L());
+                },
+              },
+            },
+          ],
+          css: `
+    .labels-row{
+      text-align: center;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .is-reversed,
+    .is-reversed + .row{
+      flex-direction: row-reverse;
+    }
+    
+    .type-vertical{
+      position: relative;
+    }
+    
+    .type-vertical .labels-row{
+      flex-direction: column;
+      position: absolute;
+      top: 50%;
+      right: -100%;
+      transform: translateY(-50%);
+    }
+    
+    .type-vertical .is-reversed,
+    .type-vertical .is-reversed + .row{
+      flex-direction: column-reverse;
+    }
+    
+    .max-label,
+    .min-label{
+      margin: 0 1rem;
+      width: 2rem;
+      text-align: center;
+      white-space: nowrap;
+    }
+    
+    .generated-label{
+      text-align: center;
+      margin: 0 0.5rem;
+      white-space: nowrap;
+    }
+    `,
+          destroy: I,
+        };
+      };
+    window.tcRangeSliderPlugins.push(A);
+  })();
+
+  /* 
+  Tool Cool Range Slider - Marks Plugin v1.0.1
+  https://github.com/mzusin/toolcool-range-slider 
+  MIT License        
+  Copyright (c) 2022-present, Miriam Zusin                         
+  */
+  (() => {
+    var R = (r, n, t, c, d) => {
+        let a = n - r;
+        return a === 0 ? t : ((c - t) * (d - r)) / a + t;
+      },
+      I = r => !isNaN(parseFloat(r)) && isFinite(r),
+      g = (r, n) => (I(r) ? Number(r) : n);
+    var h = r =>
+      r == null ? false : typeof r == 'boolean' ? r : r.trim().toLowerCase() === 'true';
+    window.tcRangeSliderPlugins = window.tcRangeSliderPlugins || [];
+    var p = 11,
+      y = 11,
+      A = () => {
+        let r = null,
+          n = null,
+          t = null,
+          c = null,
+          d = null,
+          a = false,
+          s = p,
+          u = y,
+          L = () => {
+            var l;
+            let e =
+              (l = r == null ? void 0 : r.shadowRoot) == null
+                ? void 0
+                : l.querySelector('#range-slider');
+            ((t = document.createElement('div')),
+              t.classList.add('marks'),
+              (c = document.createElement('div')),
+              c.classList.add('mark-points'),
+              t.append(c),
+              (d = document.createElement('div')),
+              d.classList.add('mark-values'),
+              t.append(d),
+              e.append(t));
+          },
+          P = () => {
+            !n || !t || t.classList.toggle('is-reversed', n.isRightToLeft() || n.isBottomToTop());
+          },
+          S = () => {
+            var v;
+            if (!t || !n) return;
+            let e = n.getMin(),
+              l = n.getMax(),
+              E = n.getType() === 'vertical',
+              f = n.isRightToLeft() || n.isBottomToTop();
+            for (let i = 0; i < s; i++) {
+              let o = document.createElement('div');
+              o.classList.add('mark', `mark-${i}`);
+              let m = s === 0 ? 0 : (i * 100) / (s - 1);
+              (E
+                ? f
+                  ? (o.style.top = `${100 - m}%`)
+                  : (o.style.top = `${m}%`)
+                : f
+                  ? (o.style.left = `${100 - m}%`)
+                  : (o.style.left = `${m}%`),
+                c == null || c.append(o));
+            }
+            let b = n.getData();
+            for (let i = 0; i < u; i++) {
+              let o = document.createElement('div');
+              o.classList.add('mark-value', `mark-value-${i}`);
+              let m = u === 0 ? 0 : (i * 100) / (u - 1),
+                w = R(0, u - 1, e, l, i);
+              ((o.textContent = (b ? ((v = b[Math.round(w)]) != null ? v : '') : w).toString()),
+                E
+                  ? f
+                    ? (o.style.top = `${100 - m}%`)
+                    : (o.style.top = `${m}%`)
+                  : f
+                    ? (o.style.left = `${100 - m}%`)
+                    : (o.style.left = `${m}%`),
+                d == null || d.append(o));
+            }
+          },
+          k = (e, l) => {
+            (T(), (s = e), (u = l), s <= 0 && (s = p), u <= 0 && (u = y), L(), S(), P());
+          },
+          C = e => {
+            ((a = e), a ? (L(), S(), P()) : T());
+          },
+          x = e => {
+            !t || t.style.setProperty('--marks-color', e);
+          },
+          M = e => {
+            !t || t.style.setProperty('--values-color', e);
+          },
+          T = () => {
+            t == null || t.remove();
+          };
+        return {
+          get name() {
+            return 'Marks';
+          },
+          init: (e, l, E, f) => {
+            var b, v;
+            ((n = f),
+              (r = e),
+              (a = h(r.getAttribute('marks'))),
+              a &&
+                (k(g(r.getAttribute('marks-count'), p), g(r.getAttribute('marks-values-count'), y)),
+                x((b = r.getAttribute('marks-color')) != null ? b : '#cbd5e1'),
+                M((v = r.getAttribute('marks-values-color')) != null ? v : '#475569')));
+          },
+          onAttrChange: (e, l) => {
+            (e === 'marks' && C(h(l)),
+              e === 'marks-count' && k(g(l, p), u),
+              e === 'marks-values-count' && k(s, g(l, y)),
+              e === 'marks-color' && x(l),
+              e === 'marks-values-color' && M(l));
+          },
+          gettersAndSetters: [
+            {
+              name: 'marksEnabled',
+              attributes: {
+                get() {
+                  return a != null ? a : false;
+                },
+                set: e => {
+                  C(h(e));
+                },
+              },
+            },
+            {
+              name: 'marksCount',
+              attributes: {
+                get() {
+                  return s != null ? s : p;
+                },
+                set: e => {
+                  k(g(e, p), u);
+                },
+              },
+            },
+            {
+              name: 'marksValuesCount',
+              attributes: {
+                get() {
+                  return s != null ? s : p;
+                },
+                set: e => {
+                  k(s, g(e, y));
+                },
+              },
+            },
+            {
+              name: 'marksColor',
+              attributes: {
+                get() {
+                  return t == null ? void 0 : t.style.getPropertyValue('--marks-color');
+                },
+                set: e => {
+                  x(e);
+                },
+              },
+            },
+            {
+              name: 'markValuesColor',
+              attributes: {
+                get() {
+                  return t == null ? void 0 : t.style.getPropertyValue('--values-color');
+                },
+                set: e => {
+                  M(e);
+                },
+              },
+            },
+          ],
+          destroy: T,
+          css: `
+:root{
+  --marks-color: #cbd5e1;
+  --values-color: #475569;
+}
+  
+.marks{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 100%;
+  left: 0;
+  color: var(--values-color, #475569);
+}
+
+.type-vertical .marks{
+  width: auto;
+  height: 100%;
+  top: 0;
+  left: 100%;
+  flex-direction: row;
+}
+    
+.mark-points{
+  width: 100%;
+  height: 1rem;
+  position: relative;
+  margin-top: 5px;
+}  
+
+.type-vertical .mark-points {
+  width: 1rem;
+  height: 100%;
+  margin-top: 0;
+  margin-left: 5px;
+}
+
+.mark-values{
+  width: 100%;
+  height: 1rem;
+  position: relative;
+}
+
+.type-vertical .mark-values {
+  width: 1rem;
+  height: 100%;
+  margin-left: 0.7rem;
+}
+
+.mark{
+  background: var(--marks-color, #cbd5e1);
+  width: 2px;
+  height: 5px;
+  position: absolute;
+  transform: translateX(-50%);
+}  
+
+.type-vertical .mark {
+    width: 5px;
+    height: 2px;
+    transform: translateY(-50%);
+}
+
+.mark-value{
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.type-vertical .mark-value{
+    transform: translateY(-50%);
+}
+    `,
+        };
+      };
+    window.tcRangeSliderPlugins.push(A);
+  })();
+
+  /* 
+  Tool Cool Range Slider v4.0.28
+  https://github.com/mzusin/toolcool-range-slider
+  MIT License        
+  Copyright (c) 2022-present, Miriam Zusin          
+  */
+  (() => {
+    var jn = Object.defineProperty;
+    var Et = Math.pow,
+      qn = (r, i, t) =>
+        i in r
+          ? jn(r, i, { enumerable: true, configurable: true, writable: true, value: t })
+          : (r[i] = t);
+    var ae = (r, i, t) => (qn(r, typeof i != 'symbol' ? i + '' : i, t), t);
+    var St = (r, i) =>
+      ` ${i && i.length > 0 ? i.map(t => `<link rel="stylesheet" href="${t}" />`).join('') : ''} <style> ${r} </style> <div class="range-slider-box"> <div class="row"> <div id="range-slider" class="range-slider"> <div class="container"> <div class="panel"></div> <div class="panel-fill"></div> <div class="container"> <div class="pointer" tabindex="0" role="slider"> <div class="pointer-shape"></div> </div> </div> </div> </div> </div> </div>`;
+    var Tt =
+      ':host{--width:300px;--height:.25rem;--opacity:.4;--panel-bg:#cbd5e1;--panel-bg-hover:#94a3b8;--panel-bg-fill:#475569;--panel-bg-border-radius:1rem;--pointer-width:1rem;--pointer-height:1rem;--pointer-bg:#fff;--pointer-bg-hover:#dcdcdc;--pointer-bg-focus:#dcdcdc;--pointer-shadow:0 0 2px rgba(0,0,0,0.8);--pointer-shadow-hover:0 0 2px #000;--pointer-shadow-focus:var(--pointer-shadow-hover);--pointer-border:1px solid hsla(0,0%,88%,0.5);--pointer-border-hover:1px solid #94a3b8;--pointer-border-focus:var(--pointer-border-hover);--pointer-border-radius:100%;--animate-onclick:.3s}:host{max-width:100%}.range-slider-box{display:flex;position:relative;flex-direction:column}.range-slider{position:relative;width:var(--width,100%);height:var(--height,0.25rem);touch-action:none;max-width:100%;box-sizing:border-box;cursor:pointer}.row{width:100%;display:flex;align-items:center}.range-slider.disabled{opacity:var(--opacity,0.4);cursor:default}.pointer.disabled{-webkit-filter:brightness(0.8);filter:brightness(0.8);cursor:default}.range-slider *{box-sizing:border-box}.container{position:absolute;width:100%;height:100%}.panel{position:absolute;z-index:10;width:100%;height:100%;background:var(--panel-bg,#2d4373);border-radius:var(--panel-bg-border-radius,1rem);overflow:hidden;transition:.3s all ease}.panel-fill{background:var(--panel-bg-fill,#000);border-radius:var(--panel-bg-border-radius,1rem);overflow:hidden;height:100%;position:absolute;z-index:10}.panel:hover{background:var(--panel-bg-hover,#5f79b7)}.disabled .panel:hover{background:var(--panel-bg,#5f79b7)}.pointer{position:absolute;z-index:20;outline:0;top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%)}.pointer-shape{background:var(--pointer-bg,#fff);background-size:contain;box-shadow:var(--pointer-shadow);border:var(--pointer-border);border-radius:var(--pointer-border-radius,100%);-webkit-transform:translateX(-50%);transform:translateX(-50%);width:var(--pointer-width,15px);height:var(--pointer-height,15px);transition:.3s all ease}.pointer-shape:hover{background:var(--pointer-bg-hover,#fff);background-size:contain;border:var(--pointer-border-hover);box-shadow:var(--pointer-shadow-hover)}.disabled .pointer-shape:hover{background:var(--pointer-bg,#fff);background-size:contain;border:var(--pointer-border);box-shadow:var(--pointer-shadow)}.pointer:focus .pointer-shape{background:var(--pointer-bg-focus,#fff);background-size:contain;border:var(--pointer-border-focus);box-shadow:var(--pointer-shadow-focus)}.disabled .pointer:focus .pointer-shape{background:var(--pointer-bg,#fff);background-size:contain;border:var(--pointer-border);box-shadow:var(--pointer-shadow)}.type-vertical .range-slider{--width:.25rem;--height:300px;max-height:100%}.type-vertical .range-slider .pointer{left:50%}.type-vertical .range-slider .panel-fill{width:100%}.type-vertical.range-slider-box{flex-direction:row}.type-vertical .row{flex-direction:column}.animate-on-click .pointer,.animate-on-click .panel-fill{transition:all var(--animate-onclick)}.range-dragging .panel-fill{cursor:move}';
+    var le = 'pointers-overlap',
+      ue = 'pointers-min-distance',
+      de = 'pointers-max-distance',
+      ce = 'range-dragging',
+      pe = 'data',
+      be = 'min',
+      ge = 'max',
+      fe = 'step',
+      me = 'round',
+      he = 'type',
+      ve = 'theme',
+      ye = 'rtl',
+      xe = 'btt',
+      Pe = 'disabled',
+      Ee = 'keyboard-disabled',
+      Se = 'mousewheel-disabled',
+      At = 'slider-width',
+      Mt = 'slider-height',
+      wt = 'slider-radius',
+      Dt = 'slider-bg',
+      Lt = 'slider-bg-hover',
+      Ct = 'slider-bg-fill',
+      kt = 'pointer-width',
+      Ht = 'pointer-height',
+      It = 'pointer-radius',
+      Rt = 'pointer-bg',
+      Ot = 'pointer-bg-hover',
+      Bt = 'pointer-bg-focus',
+      Ft = 'pointer-shadow',
+      Nt = 'pointer-shadow-hover',
+      Vt = 'pointer-shadow-focus',
+      Ut = 'pointer-border',
+      zt = 'pointer-border-hover',
+      Wt = 'pointer-border-focus',
+      Te = 'animate-onclick',
+      Kt = 'css-links';
+    var I = 'vertical',
+      V = 'horizontal';
+    var we = (r, i, t, n, s) => {
+        let d = i - r;
+        return d === 0 ? t : ((n - t) * (s - r)) / d + t;
+      },
+      B = r => !isNaN(parseFloat(r)) && isFinite(r),
+      E = (r, i) => (B(r) ? Number(r) : i),
+      Qe = (r, i) => (i === 0 ? 0 : Math.round(r / i) * i),
+      jt = (r, i = 1 / 0) => {
+        if (i === 1 / 0) return r;
+        let t = Et(10, i);
+        return Math.round(r * t) / t;
+      },
+      D = r => (r == null ? false : typeof r == 'boolean' ? r : r.trim().toLowerCase() === 'true');
+    var qt = (r, i) => {
+        r.dispatchEvent(new CustomEvent('onPointerClicked', { detail: { $pointer: i } }));
+      },
+      Xt = (r, i) => {
+        r.dispatchEvent(new CustomEvent('onMouseDown', { detail: { nativeEvent: i } }));
+      },
+      Gt = (r, i) => {
+        r.dispatchEvent(new CustomEvent('onMouseUp', { detail: { nativeEvent: i } }));
+      },
+      Yt = (r, i) => {
+        r.dispatchEvent(new CustomEvent('onKeyDown', { detail: { nativeEvent: i } }));
+      },
+      Zt = (r, i) => {
+        if (!i || i.length <= 0) return;
+        let t = i.map(s => (B(s) ? E(s, s) : s)),
+          n = { values: t || [] };
+        ((n.value = t[0]), (n.value0 = t[0]), (n.value1 = t[0]));
+        for (let s = 1; s < t.length; s++) n[`value${s + 1}`] = t[s];
+        r.dispatchEvent(new CustomEvent('change', { detail: n }));
+      };
+    var Y = (r, i, t) => {
+      let n = 0,
+        s,
+        d,
+        m,
+        l,
+        a = false,
+        f = (g, S, L, P, A, k) => {
+          let F = n;
+          (L !== void 0 && g > L && (g = L), S !== void 0 && g < S && (g = S), (n = g));
+          let R = n;
+          return (
+            ((P === I && k) || (P === V && A)) && (R = 100 - R),
+            P === I ? (i.style.top = `${R}%`) : (i.style.left = `${R}%`),
+            F !== n
+          );
+        },
+        x = g => g === i || i.contains(g),
+        p = (g, S, L, P) => {
+          ((s = g), (d = S), (m = L), (l = P));
+        },
+        b = g => {
+          ((a = g),
+            i.classList.toggle('disabled', a),
+            a
+              ? i.setAttribute('aria-disabled', 'true')
+              : i.hasAttribute('aria-disabled') && i.removeAttribute('aria-disabled'));
+        },
+        T = (g, S) => {
+          S == null ? i.removeAttribute(g) : i.setAttribute(g, S);
+        },
+        C = g => i.getAttribute(g),
+        c = g => {
+          if (!a) {
+            switch (g.key) {
+              case 'ArrowLeft': {
+                (g.preventDefault(), typeof s == 'function' && s(t));
+                break;
+              }
+              case 'ArrowRight': {
+                (g.preventDefault(), typeof d == 'function' && d(t));
+                break;
+              }
+              case 'ArrowUp': {
+                (g.preventDefault(), typeof m == 'function' && m(t));
+                break;
+              }
+              case 'ArrowDown': {
+                (g.preventDefault(), typeof l == 'function' && l(t));
+                break;
+              }
+            }
+            Yt(r, g);
+          }
+        },
+        h = () => {
+          a || qt(r, i);
+        };
+      return (
+        (i.className = `pointer pointer-${t}`),
+        i.addEventListener('keydown', c),
+        i.addEventListener('click', h),
+        {
+          $pointer: i,
+          get percent() {
+            return n;
+          },
+          get disabled() {
+            return a;
+          },
+          set disabled(g) {
+            b(g);
+          },
+          updatePosition: f,
+          isClicked: x,
+          setCallbacks: p,
+          setAttr: T,
+          getAttr: C,
+          destroy: () => {
+            (i.removeEventListener('keydown', c), i.removeEventListener('click', h), i.remove());
+          },
+        }
+      );
+    };
+    var Jt = r => {
+        if (r == null) return;
+        if (Array.isArray(r)) return r;
+        if (r.trim() === '') return;
+        let t = r.split(','),
+          n = [],
+          s = true;
+        for (let d = 0; d < t.length; d++) {
+          let m = t[d].trim();
+          m !== '' && (n.push(m), B(m) || (s = false));
+        }
+        return s ? n.map(d => Number(d)) : n;
+      },
+      Qt = (r, i) =>
+        i ? i.findIndex(t => t === r || t.toString().trim() === r.toString().trim()) : -1;
+    var _t = r => ({
+      updatePosition: (t, n, s, d) => {
+        if (n.length <= 0) return;
+        let m = n.length === 1,
+          l = n[0],
+          a = n[n.length - 1];
+        t === I
+          ? (r.style.removeProperty('width'),
+            r.style.removeProperty('right'),
+            r.style.removeProperty('left'),
+            m ? (r.style.height = `${l}%`) : (r.style.height = `${Math.abs(l - a)}%`),
+            d
+              ? ((r.style.bottom = '0%'),
+                m ? (r.style.top = 'auto') : (r.style.top = `${Math.min(100 - a, 100 - l)}%`))
+              : ((r.style.bottom = 'auto'),
+                m ? (r.style.top = '0%') : (r.style.top = `${Math.min(l, a)}%`)))
+          : (r.style.removeProperty('height'),
+            r.style.removeProperty('top'),
+            r.style.removeProperty('bottom'),
+            m ? (r.style.width = `${l}%`) : (r.style.width = `${Math.abs(l - a)}%`),
+            s
+              ? ((r.style.right = '0%'),
+                m ? (r.style.left = 'auto') : (r.style.left = `${Math.min(100 - a, 100 - l)}%`))
+              : ((r.style.right = 'auto'),
+                m ? (r.style.left = '0%') : (r.style.left = `${Math.min(l, a)}%`)));
+      },
+    });
+    var _e = '--animate-onclick',
+      $t = '--width',
+      en = '--height',
+      tn = '--panel-bg-border-radius',
+      nn = '--panel-bg',
+      rn = '--panel-bg-hover',
+      on = '--panel-bg-fill',
+      sn = '--pointer-width',
+      an = '--pointer-height',
+      ln = '--pointer-border-radius',
+      un = '--pointer-bg',
+      dn = '--pointer-bg-hover',
+      cn = '--pointer-bg-focus',
+      pn = '--pointer-shadow',
+      bn = '--pointer-shadow-hover',
+      gn = '--pointer-shadow-focus',
+      fn = '--pointer-border',
+      mn = '--pointer-border-hover',
+      hn = '--pointer-border-focus';
+    var q = (r, i, t) => {
+        let n = new Map();
+        for (let s of r.attributes) {
+          let d = s.nodeName.trim().toLowerCase();
+          if (!i.test(d)) continue;
+          let l = d.replace(/\D/g, '').trim(),
+            a = l === '' || l === '0' || l === '1' ? 0 : E(l, 0) - 1,
+            f = t && typeof t == 'function' ? t(s.value) : s.value;
+          n.set(a, f);
+        }
+        return n;
+      },
+      yn = r => {
+        if (!r) return null;
+        let i = r.getAttribute(Kt);
+        if (!i) return null;
+        let t = i.split(';'),
+          n = [];
+        for (let s of t) s.trim() !== '' && n.push(s.trim());
+        return n;
+      };
+    var $e = [
+        [$t, At, 'sliderWidth', null],
+        [en, Mt, 'sliderHeight', null],
+        [tn, wt, 'sliderRadius', null],
+        [nn, Dt, 'sliderBg', null],
+        [rn, Lt, 'sliderBgHover', null],
+        [on, Ct, 'sliderBgFill', null],
+        [sn, kt, 'pointer#Width', /^pointer([0-9]*)-width$/],
+        [an, Ht, 'pointer#Height', /^pointer([0-9]*)-height$/],
+        [ln, It, 'pointer#Radius', /^pointer([0-9]*)-radius$/],
+        [un, Rt, 'pointer#Bg', /^pointer([0-9]*)-bg$/],
+        [dn, Ot, 'pointer#BgHover', /^pointer([0-9]*)-bg-hover$/],
+        [cn, Bt, 'pointer#BgFocus', /^pointer([0-9]*)-bg-focus$/],
+        [pn, Ft, 'pointer#Shadow', /^pointer([0-9]*)-shadow$/],
+        [bn, Nt, 'pointer#ShadowHover', /^pointer([0-9]*)-shadow-hover$/],
+        [gn, Vt, 'pointer#ShadowFocus', /^pointer([0-9]*)-shadow-focus$/],
+        [fn, Ut, 'pointer#Border', /^pointer([0-9]*)-border$/],
+        [mn, zt, 'pointer#BorderHover', /^pointer([0-9]*)-border-hover$/],
+        [hn, Wt, 'pointer#BorderFocus', /^pointer([0-9]*)-border-focus$/],
+      ],
+      xn = (r, i, t) => {
+        let n = null,
+          s = [],
+          d = new Map(),
+          m = (c, h = i) => {
+            let w = [...h.classList];
+            for (let g of w) g.startsWith(c) && i.classList.remove(g);
+          },
+          l = () => {
+            m('shape');
+            let c = i.querySelectorAll('.pointer');
+            for (let h of c) m('shape', h);
+          },
+          a = c => {
+            ((n = c), m('theme-'), typeof c == 'string' && i.classList.add(`theme-${c}`));
+          },
+          f = () => {
+            if ((l(), !(s.length <= 0))) {
+              i.classList.add('shape', `shape-${s[0]}`);
+              for (let c = 1; c < s.length; c++) {
+                let h = s[c];
+                if (!h) continue;
+                let w = i.querySelector(`.pointer-${c}`);
+                !w || w.classList.add('shape', `shape-${h}`);
+              }
+            }
+          },
+          x = (c, h) => {
+            ((s[c] = h), f());
+          },
+          p = () => {
+            l();
+            let c = q(r, /^pointer([0-9]*)-shape$/);
+            if (!(c.size <= 0)) {
+              for (let h of c) {
+                let w = h[0];
+                s[w] = h[1];
+              }
+              f();
+            }
+          },
+          b = (c, h) => `${c}-${h}`,
+          T = (c, h, w) => {
+            let g = t[w];
+            if (!g) return;
+            let S = w === 0 ? i : g.$pointer;
+            if (h == null) {
+              (d.has(b(c, w)) && d.delete(b(c, w)), S.style.removeProperty(c));
+              return;
+            }
+            (d.set(b(c, w), h), S.style.setProperty(c, h));
+          },
+          C = (c, h) => d.get(b(c, h));
+        return (
+          (() => {
+            for (let c of $e) {
+              let [h, w, g, S] = c;
+              if (S) {
+                let P = q(r, S);
+                for (let A of P) {
+                  let k = A[0],
+                    F = A[1];
+                  T(h, F, k);
+                }
+              } else {
+                let P = r.getAttribute(w);
+                T(h, P, 0);
+              }
+              let L = [];
+              if (g.indexOf('#') === -1) L.push([g, 0]);
+              else {
+                (L.push([g.replace('#', ''), 0]),
+                  L.push([g.replace('#', '0'), 0]),
+                  L.push([g.replace('#', '1'), 0]));
+                for (let P = 1; P < t.length; P++) L.push([g.replace('#', (P + 1).toString()), P]);
+              }
+              for (let P of L)
+                try {
+                  let A = P[0],
+                    k = P[1];
+                  Object.prototype.hasOwnProperty.call(r, A) ||
+                    Object.defineProperty(r, A, {
+                      get() {
+                        return C(h, k);
+                      },
+                      set: F => {
+                        T(h, F, k);
+                      },
+                    });
+                } catch (A) {
+                  console.error(A);
+                }
+            }
+            (a(r.getAttribute(ve)), p());
+          })(),
+          {
+            setStyle: T,
+            getStyle: C,
+            get theme() {
+              return n;
+            },
+            set theme(c) {
+              a(c);
+            },
+            get pointerShapes() {
+              return s;
+            },
+            setPointerShape: x,
+          }
+        );
+      };
+    var K = 'animate-on-click',
+      et = 'range-dragging';
+    var Pn = (r, i, t, n) => {
+      let s = [],
+        d = p => {
+          for (let b of s) b.update && typeof b.update == 'function' && b.update(p);
+        },
+        m = () => {
+          for (let p of s) p.destroy && typeof p.destroy == 'function' && p.destroy();
+        },
+        l = (p, b) => {
+          for (let T of s)
+            T.onAttrChange && typeof T.onAttrChange == 'function' && T.onAttrChange(p, b);
+        },
+        a = p => {
+          if (!!p.gettersAndSetters) {
+            for (let b of p.gettersAndSetters)
+              if (!(!b.name || !b.attributes))
+                try {
+                  Object.prototype.hasOwnProperty.call(r, b.name) ||
+                    Object.defineProperty(r, b.name, b.attributes);
+                } catch (T) {
+                  console.error('defineSettersGetters error:', T);
+                }
+          }
+        },
+        f = p => {
+          var T;
+          if (!p.css) return;
+          let b = (T = r.shadowRoot) == null ? void 0 : T.querySelector('style');
+          !b || (b.innerHTML += p.css);
+        };
+      return {
+        init: () => {
+          if (!!window.tcRangeSliderPlugins)
+            for (let p of window.tcRangeSliderPlugins) {
+              let b = p();
+              (s.push(b),
+                b.init && typeof b.init == 'function' && (b.init(r, i, t, n), a(b), f(b)));
+            }
+        },
+        update: d,
+        onAttrChange: l,
+        destroy: m,
+      };
+    };
+    var Yn = 10,
+      En = 20,
+      Sn = (r, i) => {
+        let t = new Map(),
+          n = /^value([0-9]*)$/;
+        for (let l of r.attributes) {
+          let a = l.nodeName.trim().toLowerCase();
+          if (!n.test(a)) continue;
+          let x = a.replace('value', '').trim(),
+            p = x === '' || x === '0' || x === '1' ? 0 : E(x, 0) - 1,
+            b = B(l.value) ? E(l.value, 0) : l.value;
+          t.set(p, b);
+        }
+        let s = Math.max(...Array.from(t.keys())),
+          d = [];
+        d.push([Y(r, i, 0), t.get(0)]);
+        let m = i;
+        for (let l = 1; l <= s; l++) {
+          let a = i.cloneNode(true);
+          (m.after(a), (m = a), d.push([Y(r, a, l), t.get(l)]));
+        }
+        return d;
+      },
+      tt = (r, i, t, n, s, d, m) => {
+        try {
+          (Object.defineProperty(r, n, {
+            configurable: !0,
+            get() {
+              if (!i) return;
+              let l = i.pointers[t];
+              if (!l) return;
+              let a = i.getTextValue(l.percent);
+              return B(a) ? E(a, a) : a;
+            },
+            set: l => {
+              i.pointers[t] ? i == null || i.setValue(l, t) : i == null || i.addPointer(l);
+            },
+          }),
+            Object.defineProperty(r, s, {
+              configurable: !0,
+              get() {
+                var l, a;
+                return (a =
+                  (l = i == null ? void 0 : i.pointers[t]) == null
+                    ? void 0
+                    : l.getAttr('aria-label')) != null
+                  ? a
+                  : void 0;
+              },
+              set: l => {
+                !i || i.setAriaLabel(t, l);
+              },
+            }),
+            Object.defineProperty(r, d, {
+              configurable: !0,
+              get() {
+                var l, a;
+                return (a =
+                  (l = i == null ? void 0 : i.styles) == null ? void 0 : l.pointerShapes[t]) != null
+                  ? a
+                  : null;
+              },
+              set: l => {
+                !i || !i.styles || i.styles.setPointerShape(t, l);
+              },
+            }),
+            Object.defineProperty(r, m, {
+              configurable: !0,
+              get() {
+                var l;
+                return (l = i == null ? void 0 : i.pointers[t].disabled) != null ? l : !1;
+              },
+              set: l => {
+                if (!i) return;
+                let a = i == null ? void 0 : i.pointers[t];
+                !a || (a.disabled = l);
+              },
+            }));
+        } catch (l) {
+          console.error(l);
+        }
+      },
+      Tn = (r, i) => {
+        let t = [
+          ['value', 'ariaLabel', 'pointerShape', 'pointerDisabled', 0],
+          ['value0', 'ariaLabel0', 'pointerShape0', 'pointer0Disabled', 0],
+          ['value1', 'ariaLabel1', 'pointerShape1', 'pointer1Disabled', 0],
+        ];
+        for (let n = 2; n < Yn; n++)
+          t.push([`value${n}`, `ariaLabel${n}`, `pointer${n}Shape`, `pointer${n}Disabled`, n - 1]);
+        for (let n of t) tt(r, i, n[4], n[0], n[1], n[2], n[3]);
+      },
+      nt = (r, i, t) => {
+        var s;
+        let n = (s = t.shadowRoot) == null ? void 0 : s.querySelector('.container');
+        if (!!n) for (let d of r) i ? n.prepend(d.$pointer) : n.append(d.$pointer);
+      },
+      An = (r, i) => {
+        if (!(!i || r.length <= 1)) {
+          for (let t of r) t.$pointer.style.zIndex = En.toString();
+          i.$pointer.style.zIndex = (En * 2).toString();
+        }
+      };
+    var rt = 0,
+      Z = 100,
+      U = 2,
+      Mn = '0.3s',
+      wn = (r, i, t) => {
+        let n = t.map(e => e[0]),
+          s = null,
+          d = null,
+          m = null,
+          l = null,
+          a = rt,
+          f = Z,
+          x,
+          p,
+          b = V,
+          T = U,
+          C = false,
+          c = false,
+          h = false,
+          w = 0,
+          g = 1 / 0,
+          S = false,
+          L,
+          P,
+          A = false,
+          k = false,
+          F = false,
+          R = Mn,
+          ot = [],
+          st = e => {
+            A ||
+              (e.preventDefault && e.preventDefault(),
+              z(e),
+              window.addEventListener('mousemove', z),
+              window.addEventListener('mouseup', J),
+              Xt(r, e));
+          },
+          J = e => {
+            A ||
+              ((L = void 0),
+              (P = void 0),
+              window.removeEventListener('mousemove', z),
+              window.removeEventListener('mouseup', J),
+              R && i.classList.add(K),
+              Gt(r, e));
+          },
+          Ln = (e, o) => {
+            if (n.length <= 0) return;
+            if (n.length === 1) return (n[0].isClicked(e) && R && i.classList.remove(K), n[0]);
+            let u = kn(e);
+            if (S) {
+              let v = o,
+                O = _(v);
+              (O !== void 0 && (v = Qe(v, O)),
+                u
+                  ? ((L = v), (P = 0), R && i.classList.remove(K))
+                  : L !== void 0 && ((P = v - L), (L = v)));
+            }
+            if (!Cn(e) && !u) {
+              for (let v of n)
+                if (!(!v.isClicked(e) || v.disabled)) return (R && i.classList.remove(K), v);
+              for (let v of n) if (s === v) return v;
+            }
+            let y = 1 / 0,
+              M = null;
+            for (let v of n) {
+              if (v.disabled) continue;
+              let O = Math.abs(o - v.percent);
+              O < y && ((y = O), (M = v));
+            }
+            return M;
+          },
+          at = () => n.findIndex(e => s === e && !e.disabled),
+          z = e => {
+            let o;
+            if (b === I) {
+              let { height: y, top: M } = i.getBoundingClientRect(),
+                v = e.type.indexOf('mouse') !== -1 ? e.clientY : e.touches[0].clientY;
+              o = (Math.min(Math.max(0, v - M), y) * 100) / y;
+            } else {
+              let { width: y, left: M } = i.getBoundingClientRect(),
+                v = e.type.indexOf('mouse') !== -1 ? e.clientX : e.touches[0].clientX;
+              o = (Math.min(Math.max(0, v - M), y) * 100) / y;
+            }
+            if (
+              ((C || c) && (o = 100 - o),
+              (s = Ln(e.target, o)),
+              s && An(n, s),
+              S && n.length > 1 && P !== void 0)
+            ) {
+              let y = n[0],
+                M = n[n.length - 1],
+                v = y.percent + P < 0,
+                O = M.percent + P > 100;
+              if (v || O) return;
+              for (let se = 0; se < n.length; se++) H(se, n[se].percent + P);
+              return;
+            }
+            let u = at();
+            u !== -1 && (H(u, o), s == null || s.$pointer.focus());
+          },
+          Q = e => {
+            if (A || document.activeElement !== r || (s == null ? void 0 : s.disabled)) return;
+            (e.stopPropagation(), e.preventDefault());
+            let o = e.deltaY < 0,
+              u = C || c,
+              y = o ? !u : u,
+              M = at();
+            M !== -1 && (y ? X(M, n[M].percent) : G(M, n[M].percent));
+          },
+          lt = e => {
+            A ||
+              k ||
+              (b === I ? (c ? H(e, 100) : H(e, 0)) : C ? G(e, n[e].percent) : X(e, n[e].percent));
+          },
+          ut = e => {
+            A ||
+              k ||
+              (b === I ? (c ? H(e, 0) : H(e, 100)) : C ? X(e, n[e].percent) : G(e, n[e].percent));
+          },
+          dt = e => {
+            A ||
+              k ||
+              (b === I ? (c ? G(e, n[e].percent) : X(e, n[e].percent)) : C ? H(e, 100) : H(e, 0));
+          },
+          ct = e => {
+            A ||
+              k ||
+              (b === I ? (c ? X(e, n[e].percent) : G(e, n[e].percent)) : C ? H(e, 0) : H(e, 100));
+          },
+          Cn = e => e.classList.contains('panel'),
+          kn = e => e.classList.contains('panel-fill'),
+          X = (e, o) => {
+            if (o === void 0) return;
+            let u = _(o);
+            (u == null && (u = 1), (o -= u), o < 0 && (o = 0), H(e, o));
+          },
+          G = (e, o) => {
+            if (o === void 0) return;
+            let u = _(o);
+            (u == null && (u = 1), (o += u), o > 100 && (o = 100), H(e, o));
+          },
+          W = () => {
+            !l ||
+              l.update({
+                percents: pt(),
+                values: bt(),
+                $pointers: gt(),
+                min: ft(),
+                max: mt(),
+                data: Ce(),
+                step: Le(),
+                round: He(),
+                type: ke(),
+                textMin: $(),
+                textMax: ee(),
+                rightToLeft: Oe(),
+                bottomToTop: Be(),
+                pointersOverlap: Ue(),
+                pointersMinDistance: Ie(),
+                pointersMaxDistance: Re(),
+                rangeDragging: ze(),
+                disabled: Fe(),
+                keyboardDisabled: Ne(),
+                mousewheelDisabled: Ve(),
+              });
+          },
+          Hn = () => {
+            W();
+          },
+          In = e => {
+            if (!(h || n.length <= 1 || f === a))
+              if (e === 0) {
+                let o = (g * 100) / (f - a);
+                return Math.max(0, n[e + 1].percent - o);
+              } else {
+                let o = (w * 100) / (f - a);
+                return Math.min(n[e - 1].percent + o, 100);
+              }
+          },
+          Rn = e => {
+            if (!(h || n.length <= 1 || f === a))
+              if (e === n.length - 1) {
+                let o = (g * 100) / (f - a);
+                return Math.min(n[e - 1].percent + o, 100);
+              } else {
+                let o = (w * 100) / (f - a);
+                return Math.max(0, n[e + 1].percent - o);
+              }
+          },
+          _ = e => {
+            let o;
+            if (typeof x == 'function') {
+              let u = we(0, 100, a, f, e);
+              o = x(u, e);
+            } else o = x;
+            if (B(o)) {
+              let u = f - a;
+              return ((o = u === 0 ? 0 : (o * 100) / u), o);
+            }
+          },
+          j = e => {
+            if (e === void 0) return;
+            let o = we(0, 100, a, f, e);
+            return p !== void 0 ? p[Math.round(o)] : jt(o, T);
+          },
+          $ = () => (p !== void 0 ? p[a] : a),
+          ee = () => (p !== void 0 ? p[f] : f),
+          Le = () => x,
+          On = e => {
+            var o;
+            return e <= 0 || h ? $() : (o = j(n[e - 1].percent)) != null ? o : '';
+          },
+          Bn = e => {
+            var o;
+            return n.length <= 1 || e >= n.length - 1 || h
+              ? ee()
+              : (o = j(n[e + 1].percent)) != null
+                ? o
+                : '';
+          },
+          pt = () => n.map(e => e.percent),
+          bt = () => n.map(e => j(e.percent)),
+          gt = () => n.map(e => e.$pointer),
+          ft = () => a,
+          mt = () => f,
+          Ce = () => p,
+          ke = () => b,
+          He = () => T,
+          Ie = () => w,
+          Re = () => g,
+          Fn = e => ot[e],
+          Oe = () => C,
+          Be = () => c,
+          Fe = () => A,
+          Ne = () => k,
+          Ve = () => F,
+          Ue = () => h,
+          ze = () => S,
+          H = (e, o) => {
+            if (o === void 0) return;
+            let u = _(o);
+            u !== void 0 && (o = Qe(o, u));
+            let y = n[e];
+            if (!y) return;
+            let M = y.updatePosition(o, In(e), Rn(e), b, C, c);
+            (d == null ||
+              d.updatePosition(
+                b,
+                n.map(v => v.percent),
+                C,
+                c,
+              ),
+              W());
+            for (let v of n) {
+              let O = j(v.percent);
+              O !== void 0 &&
+                (v.setAttr('aria-valuenow', O.toString()),
+                v.setAttr('aria-valuetext', O.toString()));
+            }
+            (Vn(),
+              M &&
+                Zt(
+                  r,
+                  n.map(v => j(v.percent)),
+                ));
+          },
+          N = () => {
+            for (let e = 0; e < n.length; e++) H(e, n[e].percent);
+          },
+          Nn = (e, o) => {
+            ((a = p !== void 0 ? 0 : E(e, rt)),
+              (f = p !== void 0 ? p.length - 1 : E(o, Z)),
+              te(a),
+              ne(f));
+          },
+          Vn = () => {
+            var e, o;
+            for (let u = 0; u < n.length; u++) {
+              let y = n[u];
+              (y.setAttr('aria-valuemin', ((e = On(u)) != null ? e : '').toString()),
+                y.setAttr('aria-valuemax', ((o = Bn(u)) != null ? o : '').toString()));
+            }
+          },
+          te = e => {
+            ((a = E(e, rt)), a > f && (f = a + Z), N());
+          },
+          ne = e => {
+            ((f = E(e, Z)), f < a && (f = a + Z), N());
+          },
+          ht = e => {
+            h = true;
+            for (let o = 0; o < e.length; o++) re(e[o], o);
+            h = false;
+            for (let o = 0; o < e.length; o++) re(e[o], o);
+          },
+          re = (e, o) => {
+            let u;
+            p !== void 0
+              ? ((u = e == null ? 0 : Qt(e, p)), u === -1 && (u = 0))
+              : ((u = E(e, a)), u < a && (u = a), u > f && (u = f));
+            let y = we(a, f, 0, 100, u);
+            H(o, y);
+          },
+          ie = e => {
+            if (e == null) {
+              x = void 0;
+              return;
+            }
+            if (typeof e == 'function') {
+              ((x = e), N());
+              return;
+            }
+            if (B(e)) {
+              x = E(e, 1);
+              let o = Math.abs(f - a);
+              (x > o && (x = void 0), N());
+              return;
+            }
+            x = void 0;
+          },
+          We = e => {
+            ((h = e), N());
+          },
+          Ke = e => {
+            ((!B(e) || e < 0) && (e = 0), (w = e));
+          },
+          je = e => {
+            ((!B(e) || e < 0) && (e = 1 / 0), (g = e));
+          },
+          qe = e => {
+            ((A = e),
+              i.classList.toggle('disabled', A),
+              A
+                ? i.setAttribute('aria-disabled', 'true')
+                : i.hasAttribute('aria-disabled') && i.removeAttribute('aria-disabled'));
+          },
+          vt = e => {
+            k = e;
+          },
+          yt = e => {
+            ((F = e),
+              F
+                ? document.removeEventListener('wheel', Q)
+                : document.addEventListener('wheel', Q, { passive: false }));
+          },
+          Xe = e => {
+            if (e == null) {
+              p = void 0;
+              return;
+            }
+            if (((p = Jt(e)), p === void 0 || p.length <= 0)) {
+              p = void 0;
+              return;
+            }
+            (te(0), ne(p.length - 1), x === void 0 && ie(1));
+          },
+          Ge = e => {
+            var y;
+            typeof e == 'string' ? (b = e.trim().toLowerCase() === I ? I : V) : (b = V);
+            let o = (y = r.shadowRoot) == null ? void 0 : y.querySelector('.range-slider-box');
+            if (!o) return;
+            ((o.className = `range-slider-box type-${b}`), N());
+            let u = b === I ? 'vertical' : 'horizontal';
+            for (let M of n) M.setAttr('aria-orientation', u);
+          },
+          Ye = e => {
+            ((C = e), n.length > 1 && nt(n, C, r), N(), W());
+          },
+          Ze = e => {
+            ((c = e), n.length > 1 && nt(n, c, r), N(), W());
+          },
+          Je = e => {
+            ((T = E(e, U)), T < 0 && (T = U), W());
+          },
+          xt = e => {
+            e == null || e.toString().trim().toLowerCase() === 'false'
+              ? ((R = void 0), i.style.removeProperty(_e), i.classList.remove(K))
+              : ((R = e.toString()), i.style.setProperty(_e, R), i.classList.add(K));
+          },
+          Pt = (e, o) => {
+            let u = n[e];
+            !u || (u.setAttr('aria-label', o), (ot[e] = o));
+          },
+          oe = e => {
+            if (((L = void 0), n.length <= 1)) {
+              ((S = false), i.classList.remove(et));
+              return;
+            }
+            ((S = e), i.classList.toggle(et, S));
+          },
+          Un = () => {
+            (qe(D(r.getAttribute(Pe))), (k = D(r.getAttribute(Ee))), (F = D(r.getAttribute(Se))));
+            let e = q(r, /^pointer([0-9]*)-disabled$/, o => D(o));
+            for (let o of e) {
+              let u = o[0];
+              !n[u] || (n[u].disabled = o[1]);
+            }
+          },
+          zn = () => {
+            let e = q(r, /^aria-label([0-9]*)$/);
+            for (let o of e) {
+              let u = o[0];
+              Pt(u, o[1]);
+            }
+          },
+          Wn = e => {
+            let o = n.length,
+              u = n[o - 1].$pointer,
+              y = u.cloneNode(true);
+            u.after(y);
+            let M = Y(r, y, o);
+            return (M.setCallbacks(lt, ut, dt, ct), n.push(M), re(e, o), N(), W(), o);
+          },
+          Kn = () => {
+            let e = n.length,
+              o = n[e - 1];
+            return o ? (o.destroy(), n.pop(), n.length <= 1 && oe(false), N(), W(), e - 1) : -1;
+          };
+        return (
+          (() => {
+            var o, u;
+            for (let y of n) y.setCallbacks(lt, ut, dt, ct);
+            let e = (o = r.shadowRoot) == null ? void 0 : o.querySelector('.panel-fill');
+            (e && (d = _t(e)),
+              Ge(r.getAttribute(he)),
+              Ye(D(r.getAttribute(ye))),
+              Ze(D(r.getAttribute(xe))),
+              Nn(r.getAttribute(be), r.getAttribute(ge)),
+              ie(r.getAttribute(fe)),
+              Xe(r.getAttribute(pe)),
+              ht(t.map(y => y[1])),
+              We(D(r.getAttribute(le))),
+              Ke(E(r.getAttribute(ue), 0)),
+              je(E(r.getAttribute(de), 1 / 0)),
+              oe(D(r.getAttribute(ce))),
+              Je(E(r.getAttribute(me), U)),
+              Un(),
+              zn(),
+              (m = xn(r, i, n)),
+              xt((u = r.getAttribute(Te)) != null ? u : Mn),
+              i.addEventListener('mousedown', st),
+              i.addEventListener('mouseup', J),
+              i.addEventListener('touchmove', z),
+              i.addEventListener('touchstart', z),
+              F || document.addEventListener('wheel', Q, { passive: false }),
+              (l = Pn(
+                r,
+                Hn,
+                {
+                  setValues: ht,
+                  setMin: te,
+                  setMax: ne,
+                  setStep: ie,
+                  setPointersOverlap: We,
+                  setPointersMinDistance: Ke,
+                  setPointersMaxDistance: je,
+                  setDisabled: qe,
+                  setType: Ge,
+                  setRightToLeft: Ye,
+                  setBottomToTop: Ze,
+                  setRound: Je,
+                  setKeyboardDisabled: vt,
+                  setMousewheelDisabled: yt,
+                  setRangeDragging: oe,
+                  setData: Xe,
+                },
+                {
+                  getPercents: pt,
+                  getValues: bt,
+                  getPointerElements: gt,
+                  getMin: ft,
+                  getMax: mt,
+                  getStep: Le,
+                  getData: Ce,
+                  getType: ke,
+                  getRound: He,
+                  getTextMin: $,
+                  getTextMax: ee,
+                  isRightToLeft: Oe,
+                  isBottomToTop: Be,
+                  isDisabled: Fe,
+                  isKeyboardDisabled: Ne,
+                  isMousewheelDisabled: Ve,
+                  isPointersOverlap: Ue,
+                  isRangeDraggingEnabled: ze,
+                  getPointersMinDistance: Ie,
+                  getPointersMaxDistance: Re,
+                },
+              )),
+              l.init());
+          })(),
+          {
+            get pointers() {
+              return n;
+            },
+            get styles() {
+              return m;
+            },
+            get pluginsManager() {
+              return l;
+            },
+            get min() {
+              return $();
+            },
+            get max() {
+              return ee();
+            },
+            get step() {
+              return Le();
+            },
+            get pointersOverlap() {
+              return Ue();
+            },
+            set pointersOverlap(e) {
+              We(e);
+            },
+            get pointersMinDistance() {
+              return Ie();
+            },
+            set pointersMinDistance(e) {
+              Ke(e);
+            },
+            get pointersMaxDistance() {
+              return Re();
+            },
+            set pointersMaxDistance(e) {
+              je(e);
+            },
+            get disabled() {
+              return Fe();
+            },
+            set disabled(e) {
+              qe(e);
+            },
+            get data() {
+              return Ce();
+            },
+            get type() {
+              return ke();
+            },
+            set type(e) {
+              Ge(e);
+            },
+            get rightToLeft() {
+              return Oe();
+            },
+            set rightToLeft(e) {
+              Ye(e);
+            },
+            get bottomToTop() {
+              return Be();
+            },
+            set bottomToTop(e) {
+              Ze(e);
+            },
+            get round() {
+              return He();
+            },
+            set round(e) {
+              Je(e);
+            },
+            get animateOnClick() {
+              return R;
+            },
+            set animateOnClick(e) {
+              xt(e);
+            },
+            get keyboardDisabled() {
+              return Ne();
+            },
+            set keyboardDisabled(e) {
+              vt(e);
+            },
+            get mousewheelDisabled() {
+              return Ve();
+            },
+            set mousewheelDisabled(e) {
+              yt(e);
+            },
+            get rangeDragging() {
+              return ze();
+            },
+            set rangeDragging(e) {
+              oe(e);
+            },
+            setMin: te,
+            setMax: ne,
+            setValue: re,
+            setStep: ie,
+            setData: Xe,
+            getTextValue: j,
+            setAriaLabel: Pt,
+            getAriaLabel: Fn,
+            addPointer: Wn,
+            removePointer: Kn,
+            destroy: () => {
+              (i.removeEventListener('mousedown', st),
+                i.removeEventListener('mouseup', J),
+                i.removeEventListener('touchmove', z),
+                i.removeEventListener('touchstart', z),
+                document.removeEventListener('wheel', Q));
+              for (let e of n) e.destroy();
+              l == null || l.destroy();
+            },
+          }
+        );
+      };
+    var Dn = (r, i, t) => {
+      let n = $e.find(([l, a, f, x]) => a.replace('#', '') === i.replace(/\d+/g, ''));
+      if (n && r.styles) {
+        let [l, a, f, x] = n,
+          p = i.replace(/\D/g, '').trim(),
+          b = p === '' || p === '0' || p === '1' ? 0 : E(p, 0) - 1;
+        r.styles.setStyle(l, t, b);
+        return;
+      }
+      switch ((r && r.pluginsManager && r.pluginsManager.onAttrChange(i, t), i)) {
+        case be: {
+          r.setMin(t);
+          break;
+        }
+        case ge: {
+          r.setMax(t);
+          break;
+        }
+        case fe: {
+          r.setStep(t);
+          break;
+        }
+        case le: {
+          r.pointersOverlap = D(t);
+          break;
+        }
+        case ue: {
+          r.pointersMinDistance = E(t, 0);
+          break;
+        }
+        case ce: {
+          r.rangeDragging = D(t);
+          break;
+        }
+        case de: {
+          r.pointersMaxDistance = E(t, 1 / 0);
+          break;
+        }
+        case Pe: {
+          r.disabled = D(t);
+          break;
+        }
+        case Ee: {
+          r.keyboardDisabled = D(t);
+          break;
+        }
+        case Se: {
+          r.mousewheelDisabled = D(t);
+          break;
+        }
+        case pe: {
+          r.setData(t);
+          break;
+        }
+        case he: {
+          r.type = t;
+          break;
+        }
+        case ye: {
+          r.rightToLeft = D(t);
+          break;
+        }
+        case xe: {
+          r.bottomToTop = D(t);
+          break;
+        }
+        case me: {
+          r.round = E(t, U);
+          break;
+        }
+        case ve: {
+          r.styles && (r.styles.theme = t);
+          break;
+        }
+        case Te: {
+          r.animateOnClick = t;
+          break;
+        }
+      }
+      let s = null;
+      if (
+        (/^value([0-9]*)$/.test(i) && (s = 'value'),
+        /^pointer([0-9]*)-disabled$/.test(i) && (s = 'pointer-disabled'),
+        /^aria-label([0-9]*)$/.test(i) && (s = 'aria-label'),
+        /^pointer([0-9]*)-shape$/.test(i) && (s = 'pointer-shape'),
+        !s)
+      )
+        return;
+      let d = i.replace(/\D/g, '').trim(),
+        m = d === '' || d === '0' || d === '1' ? 0 : E(d, 0) - 1;
+      switch (s) {
+        case 'value': {
+          r.setValue(t, m);
+          break;
+        }
+        case 'pointer-disabled': {
+          let l = r == null ? void 0 : r.pointers[m];
+          if (!l) return;
+          l.disabled = D(t);
+          break;
+        }
+        case 'aria-label': {
+          r.setAriaLabel(m, t);
+          break;
+        }
+        case 'pointer-shape': {
+          r.styles && r.styles.setPointerShape(m, t);
+          break;
+        }
+      }
+    };
+    var it = class extends HTMLElement {
+        constructor() {
+          super();
+          ae(this, 'slider');
+          ae(this, '_externalCSSList', []);
+          ae(this, '_observer', null);
+          this.attachShadow({ mode: 'open' });
+        }
+        set step(t) {
+          this.slider && this.slider.setStep(t);
+        }
+        get step() {
+          var t;
+          return (t = this.slider) == null ? void 0 : t.step;
+        }
+        set disabled(t) {
+          this.slider && (this.slider.disabled = t);
+        }
+        get disabled() {
+          var t, n;
+          return (n = (t = this.slider) == null ? void 0 : t.disabled) != null ? n : false;
+        }
+        set data(t) {
+          var n;
+          (n = this.slider) == null || n.setData(t);
+        }
+        get data() {
+          var t;
+          return (t = this.slider) == null ? void 0 : t.data;
+        }
+        set min(t) {
+          var n;
+          (n = this.slider) == null || n.setMin(t);
+        }
+        get min() {
+          var t;
+          return (t = this.slider) == null ? void 0 : t.min;
+        }
+        set max(t) {
+          var n;
+          (n = this.slider) == null || n.setMax(t);
+        }
+        get max() {
+          var t;
+          return (t = this.slider) == null ? void 0 : t.max;
+        }
+        set round(t) {
+          !this.slider || (this.slider.round = t);
+        }
+        get round() {
+          var t, n;
+          return (n = (t = this.slider) == null ? void 0 : t.round) != null ? n : U;
+        }
+        set type(t) {
+          !this.slider || (this.slider.type = t != null ? t : V);
+        }
+        get type() {
+          var t;
+          return ((t = this.slider) == null ? void 0 : t.type) || V;
+        }
+        set pointersOverlap(t) {
+          !this.slider || (this.slider.pointersOverlap = t);
+        }
+        get pointersOverlap() {
+          var t, n;
+          return (n = (t = this.slider) == null ? void 0 : t.pointersOverlap) != null ? n : false;
+        }
+        set pointersMinDistance(t) {
+          !this.slider || (this.slider.pointersMinDistance = t);
+        }
+        get pointersMinDistance() {
+          var t, n;
+          return (n = (t = this.slider) == null ? void 0 : t.pointersMinDistance) != null ? n : 0;
+        }
+        set pointersMaxDistance(t) {
+          !this.slider || (this.slider.pointersMaxDistance = t);
+        }
+        get pointersMaxDistance() {
+          var t, n;
+          return (n = (t = this.slider) == null ? void 0 : t.pointersMaxDistance) != null
+            ? n
+            : 1 / 0;
+        }
+        set theme(t) {
+          !this.slider || !this.slider.styles || (this.slider.styles.theme = t);
+        }
+        get theme() {
+          var t, n, s;
+          return (s =
+            (n = (t = this.slider) == null ? void 0 : t.styles) == null ? void 0 : n.theme) != null
+            ? s
+            : null;
+        }
+        set rtl(t) {
+          !this.slider || (this.slider.rightToLeft = t);
+        }
+        get rtl() {
+          var t, n;
+          return (n = (t = this.slider) == null ? void 0 : t.rightToLeft) != null ? n : false;
+        }
+        set btt(t) {
+          !this.slider || (this.slider.bottomToTop = t);
+        }
+        get btt() {
+          var t, n;
+          return (n = (t = this.slider) == null ? void 0 : t.bottomToTop) != null ? n : false;
+        }
+        set keyboardDisabled(t) {
+          !this.slider || (this.slider.keyboardDisabled = t);
+        }
+        get keyboardDisabled() {
+          var t, n;
+          return (n = (t = this.slider) == null ? void 0 : t.keyboardDisabled) != null ? n : false;
+        }
+        set mousewheelDisabled(t) {
+          !this.slider || (this.slider.mousewheelDisabled = t);
+        }
+        get mousewheelDisabled() {
+          var t, n;
+          return (n = (t = this.slider) == null ? void 0 : t.mousewheelDisabled) != null
+            ? n
+            : false;
+        }
+        set animateOnClick(t) {
+          !this.slider || (this.slider.animateOnClick = t);
+        }
+        get animateOnClick() {
+          var t;
+          return (t = this.slider) == null ? void 0 : t.animateOnClick;
+        }
+        get rangeDragging() {
+          var t, n;
+          return (n = (t = this.slider) == null ? void 0 : t.rangeDragging) != null ? n : false;
+        }
+        set rangeDragging(t) {
+          this.slider && (this.slider.rangeDragging = D(t));
+        }
+        get externalCSSList() {
+          return this._externalCSSList;
+        }
+        addPointer(t) {
+          var s, d;
+          if (!this.slider) return;
+          let n = (d = (s = this.slider) == null ? void 0 : s.addPointer(t)) != null ? d : 0;
+          tt(
+            this,
+            this.slider,
+            n,
+            `value${n + 1}`,
+            `ariaLabel${n + 1}`,
+            `pointerShape${n + 1}`,
+            `pointer${n + 1}Disabled`,
+          );
+        }
+        removePointer() {
+          var t;
+          !this.slider || (t = this.slider) == null || t.removePointer();
+        }
+        addCSS(t) {
+          if (!this.shadowRoot) return;
+          let n = document.createElement('style');
+          ((n.textContent = t), this.shadowRoot.appendChild(n));
+        }
+        connectedCallback() {
+          var d, m;
+          if (!this.shadowRoot) return;
+          ((this._externalCSSList = yn(this)),
+            (this.shadowRoot.innerHTML = St(Tt, this._externalCSSList)));
+          let t = (d = this.shadowRoot) == null ? void 0 : d.querySelector('.pointer');
+          if (!t) return;
+          let n = (m = this.shadowRoot) == null ? void 0 : m.getElementById('range-slider');
+          if (!n) return;
+          let s = Sn(this, t);
+          ((this.slider = wn(this, n, s)),
+            Tn(this, this.slider),
+            (this._observer = new MutationObserver(l => {
+              l.forEach(a => {
+                var x;
+                if (!this.slider || a.type !== 'attributes') return;
+                let f = a.attributeName;
+                !f || Dn(this.slider, f, (x = this.getAttribute(f)) != null ? x : '');
+              });
+            })),
+            this._observer.observe(this, { attributes: true }));
+        }
+        disconnectedCallback() {
+          (this._observer && this._observer.disconnect(), this.slider && this.slider.destroy());
+        }
+      },
+      De = it;
+    window.tcRangeSlider = De;
+    customElements.get('toolcool-range-slider') ||
+      customElements.define('toolcool-range-slider', De);
+    customElements.get('tc-range-slider') ||
+      customElements.define('tc-range-slider', class extends De {});
+  })();
+
+  const startButton =
+    '#StartMOV {\n  all: revert;\n  backface-visibility: hidden;\n  font-size: 2rem;\n  color: #fff;\n  cursor: pointer;\n  margin: 0 auto;\n  padding: 0.5rem 1rem;\n  text-align: center;\n  border: none;\n  border-radius: 10px;\n  min-height: 50px;\n  width: 80%;\n  position: fixed;\n  right: 0;\n  left: 0;\n  bottom: 0;\n  z-index: 105000;\n  transition: all 0.4s ease-in-out;\n  background-size: 300% 100%;\n  background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\n  box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\n}\n\n#StartMOV:hover {\n  background-position: 100% 0;\n  transition: all 0.4s ease-in-out;\n}\n\n#StartMOV:focus {\n  outline: none;\n}\n';
+
+  var __defProp$1 = Object.defineProperty;
+  var __getOwnPropDesc$1 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$1 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$1(target, key) : target;
+    for (var i = decorators.length - 1, decorator; i >= 0; i--)
+      if ((decorator = decorators[i]))
+        result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+    if (kind && result) __defProp$1(target, key, result);
+    return result;
+  };
+  let MovStartup = class extends i$1 {
+    constructor() {
+      super(...arguments);
+      this.mangaPages = 0;
+      this.begin = 1;
+      this.timeoutMs = 3e3;
+      this.status = 'initial-prompt';
+    }
+    connectedCallback() {
+      super.connectedCallback();
+      if (this.status === 'initial-prompt') {
+        this.timeoutId = window.setTimeout(() => {
+          this.handleStart();
+        }, this.timeoutMs);
+      }
+    }
+    disconnectedCallback() {
+      super.disconnectedCallback();
+      window.clearTimeout(this.timeoutId);
+    }
+    handleStart() {
+      window.clearTimeout(this.timeoutId);
+      this.dispatchEvent(new CustomEvent('start', { detail: null }));
+    }
+    handleLateStart(begin, end) {
+      this.dispatchEvent(new CustomEvent('start', { detail: { begin, end } }));
+    }
+    handleButtonCLick() {
+      this.status = 'late-start-prompt';
+    }
+    handleDialogClose(e) {
+      e.stopPropagation();
+      window.clearTimeout(this.timeoutId);
+      this.status = 'late-start-button';
+    }
+    render() {
+      switch (this.status) {
+        case 'late-start-button':
+          return this.renderLateStartButton();
+        case 'late-start-prompt':
+          return this.renderLateStartPrompt();
+        default:
+          return this.renderInitialPrompt();
+      }
+    }
+    renderInitialPrompt() {
+      return x$1`
+      <mov-dialog
+        ?open=${this.status === 'initial-prompt'}
+        icon="info"
+        @close=${this.handleDialogClose}
+      >
+        <span slot="label">${getLocaleString('STARTING')}</span>
+        <div style="padding: 1rem;">${getLocaleString('WAITING')}</div>
+        <div
+          slot="footer"
+          style="display: flex; justify-content: space-between; padding: 0.5rem 1rem 1rem;"
+        >
+          <mov-button
+            @click=${this.handleDialogClose}
+            style="--mov-color-fill-loud: ${colors.red[700]}; --mov-color-on-loud: white;"
+          >
+            Cancel
+          </mov-button>
+          <mov-button
+            @click=${this.handleStart}
+            style="--mov-color-fill-loud: ${colors.green[700]}; --mov-color-on-loud: white;"
+          >
+            Start Now
+          </mov-button>
+        </div>
+      </mov-dialog>
+    `;
+    }
+    renderLateStartButton() {
+      return x$1`
+      <button
+        id="StartMOV"
+        @click=${this.handleButtonCLick}
+      >
+        ${getLocaleString('BUTTON_START')}
+      </button>
+    `;
+    }
+    renderLateStartPrompt() {
+      let beginPage = this.begin;
+      let endPage = this.mangaPages;
+      const onSliderChange = e => {
+        [beginPage, endPage] = [e.detail.value1, e.detail.value2];
+      };
+      return x$1`
+      <mov-dialog
+        ?open=${this.status === 'late-start-prompt'}
+        icon="question"
+        @close=${this.handleDialogClose}
+      >
+        <span slot="label">${getLocaleString('STARTING')}</span>
+        <div style="padding: 1rem;">
+          ${getLocaleString('CHOOSE_BEGINNING')}
+          <div
+            id="pageInputGroup"
+            style="padding: 1rem 0;"
+          >
+            <tc-range-slider
+              id="pagesSlider"
+              theme="glass"
+              css-links="https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-themes.min.css"
+              min="1"
+              max="${this.mangaPages}"
+              round="0"
+              step="1"
+              value1="${beginPage}"
+              value2="${endPage}"
+              data="${sequence(this.mangaPages).join(', ')}"
+              marks="true"
+              marks-count="11"
+              marks-values-count="11"
+              generate-labels="true"
+              slider-width="100%"
+              pointers-overlap="false"
+              generate-labels-text-color="var(--mov-color-on-loud)"
+              @change=${onSliderChange}
+            ></tc-range-slider>
+          </div>
+        </div>
+        <div
+          slot="footer"
+          style="display: flex; justify-content: flex-end; gap: 0.5rem; padding: 0.5rem 1rem 1rem;"
+        >
+          <mov-button
+            @click=${this.handleDialogClose}
+            style="--mov-color-fill-loud: ${colors.red[700]}; --mov-color-on-loud: white;"
+          >
+            Close
+          </mov-button>
+          <mov-button
+            @click=${() => this.handleLateStart(beginPage, endPage)}
+            style="--mov-color-fill-loud: ${colors.green[700]}; --mov-color-on-loud: white;"
+          >
+            Run
+          </mov-button>
+        </div>
+      </mov-dialog>
+    `;
+    }
+  };
+  MovStartup.styles = [r$4(startButton)];
+  __decorateClass$1([n$1({ type: Number, reflect: true })], MovStartup.prototype, 'mangaPages', 2);
+  __decorateClass$1([n$1({ type: Number, reflect: true })], MovStartup.prototype, 'begin', 2);
+  __decorateClass$1([n$1({ type: Number })], MovStartup.prototype, 'timeoutMs', 2);
+  __decorateClass$1([n$1({ type: String, reflect: true })], MovStartup.prototype, 'status', 2);
+  MovStartup = __decorateClass$1([t$1('script-startup')], MovStartup);
+
+  var __freeze = Object.freeze;
+  var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __decorateClass = (decorators, target, key, kind) => {
     var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
-      if ((decorator = decorators[i])) result = decorator(result) || result;
+      if ((decorator = decorators[i]))
+        result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+    if (kind && result) __defProp(target, key, result);
     return result;
   };
+  var __template = (cooked, raw) =>
+    __freeze(__defProp(cooked, 'raw', { value: __freeze(cooked.slice()) }));
+  var _a;
   let App = class extends i$1 {
+    constructor() {
+      super(...arguments);
+      this.loadMode = 'wait';
+    }
+    async start(begin, end) {
+      if (this.manga) {
+        setAppStateValue('manga', {
+          ...this.manga,
+          begin: begin ?? this.manga.begin,
+          pages: end ?? this.manga.pages,
+        });
+        document.documentElement.setAttribute('mov', '');
+      }
+    }
     /**
      * LitElement lifecycle hook, called after the component's first render.
      * It initializes global event listeners and registers the component's `shadowRoot`
@@ -11112,6 +13460,7 @@
      * that may need to interact with the DOM.
      */
     firstUpdated() {
+      if (this.loadMode === 'always') this.start();
       events();
       loadImages();
     }
@@ -11123,7 +13472,7 @@
      */
     render() {
       const manga = getAppStateValue('manga');
-      if (!manga) return x$1``;
+      const dialog = getAppStateValue('dialog');
       return x$1`
       <style>
         ${themesCSS()}
@@ -11141,43 +13490,464 @@
         })}"
         .locale="${getSettingsValue('locale')}"
       >
-        <reader-header .manga=${manga}></reader-header>
-        ${Reader(manga)}
-        ${getSettingsValue('navbar') !== 'disabled' ? x$1`<navbar-thumbnails .mode=${getSettingsValue('navbar')}></navbar-thumbnails>` : E}
         ${
-          getSettingsValue('pagination')
-            ? x$1` <manga-pagination
-              .startPage=${manga.begin}
-              .totalPages=${manga.pages}
-              .currentPage=${getAppStateValue('currentPage')}
-              .next=${manga.next}
-              .prev=${manga.prev}
-            ></manga-pagination>`
-            : E
+          manga
+            ? x$1`
+              <reader-header .manga=${manga}></reader-header>
+              ${Reader(manga)}
+              <navbar-thumbnails
+                      .mode=${getSettingsValue('navbar')}
+                    ></navbar-thumbnails>
+              <manga-pagination
+                        .mode="${getSettingsValue('pagination')}"
+                      .startPage=${manga.begin}
+                      .totalPages=${manga.pages}
+                      .currentPage=${getAppStateValue('currentPage')}
+                      .next=${manga.next}
+                      .prev=${manga.prev}
+                    ></manga-pagination>
+              <comments-panel></comments-panel>
+              <keybindings-panel></keybindings-panel>
+              <bookmark-panel></bookmark-panel>
+              <settings-panel></settings-panel>
+              <moaqz-toaster dismissable></moaqz-toaster>
+              </div>`
+            : x$1(
+                _a ||
+                  (_a = __template([
+                    ' <script-startup\n              .mangaPages="',
+                    '"\n              begin="',
+                    '"\n              initialStatus="',
+                    '"\n              @start=',
+                    '\n            ><\/script-startup>',
+                  ])),
+                this.manga?.pages,
+                this.manga?.begin,
+                r(this.loadMode, [
+                  ['wait', () => 'initial-prompt'],
+                  ['never', () => 'late-start-button'],
+                ]),
+                e => {
+                  this.start(e.detail?.begin, e.detail?.end);
+                },
+              )
         }
-        <comments-panel></comments-panel>
-        <keybindings-panel></keybindings-panel>
-        <bookmark-panel></bookmark-panel>
-        <settings-panel></settings-panel>
+        ${
+          dialog
+            ? x$1`
+              <mov-dialog
+                open
+                .icon=${dialog.icon}
+                @close=${() => setAppStateValue('dialog', null)}
+              >
+                <span slot="label">${dialog.title}</span>
+                ${dialog.content} ${dialog.footer}
+              </mov-dialog>
+            `
+            : ''
+        }
       </div>
     `;
     }
   };
   App.styles = [i$3``, r$4(cssStyles)];
+  __decorateClass([n$1({ type: String, reflect: true })], App.prototype, 'loadMode', 2);
+  __decorateClass([n$1({ type: Object })], App.prototype, 'manga', 2);
   App = __decorateClass(
     [t$1('manga-online-viewer'), libExports.useStores(settings$1, locale, appState)],
     App,
   );
 
-  function display(manga) {
-    console.warn('Running Lit-ts');
-    cleanUpElement(document.documentElement, document.head, document.body);
-    window.scrollTo(0, 0);
-    logScriptVerbose(`Page Cleaned Up`);
-    document.head.innerHTML = head(manga);
-    document.body.innerHTML = `<manga-online-viewer></manga-online-viewer>`;
-    setAppStateValue('manga', manga);
+  const TOAST_EVENT = '@moaqzdev/toast';
+  class Toaster extends HTMLElement {
+    constructor() {
+      (super(), this.attachShadow({ mode: 'open' }));
+    }
+    async createToast({
+      title: o,
+      type: r,
+      description: c,
+      onConfirm: v,
+      onCancel: f,
+      confirmText: b = '\u2705',
+      cancelText: h = '\u274C',
+      duration: d = 3e3,
+    }) {
+      const a = this.shadowRoot.querySelector('#toast-tmpl').content.cloneNode(true),
+        t = {
+          container: a.querySelector('[data-toast]'),
+          title: a.querySelector('[data-title]'),
+          description: a.querySelector('[data-description]'),
+          actions: a.querySelector('[data-actions]'),
+          confirmBtn: a.querySelector("button[data-action-type='confirm']"),
+          cancelBtn: a.querySelector("button[data-action-type='cancel']"),
+          closeBtn: a.querySelector('[data-close-button]'),
+        };
+      ((t.title.textContent = o || ''),
+        t.container.setAttribute('data-type', r),
+        c == null ? t.description?.remove() : (t.description.textContent = c));
+      const n = () => this.removeToast(t.container);
+      if (
+        (r === 'confirm'
+          ? ((t.confirmBtn.textContent = b),
+            t.confirmBtn.addEventListener(
+              'click',
+              () => {
+                (v?.(), n());
+              },
+              { once: true },
+            ),
+            (t.cancelBtn.textContent = h),
+            t.cancelBtn.addEventListener(
+              'click',
+              () => {
+                (f?.(), n());
+              },
+              { once: true },
+            ))
+          : t.actions?.remove(),
+        this.hasAttribute('dismissable')
+          ? t.closeBtn.addEventListener('click', n, { once: true })
+          : t.closeBtn?.remove(),
+        this.shadowRoot.querySelector('[data-toaster]').appendChild(a),
+        d !== 'none')
+      ) {
+        const l = Math.max(Number.parseInt(d, 10) || 0, 3e3),
+          i = new AbortController(),
+          g = Date.now();
+        let e = null,
+          p = 0;
+        const u = () => {
+          (i.abort(), n());
+        };
+        let m = setTimeout(u, l);
+        const y = () => {
+            e == null && (clearTimeout(m), (e = Date.now()));
+          },
+          _ = () => {
+            e != null && ((p = e - g), (e = null), (m = setTimeout(u, Math.max(l - p, 0))));
+          };
+        (['focusin', 'pointerenter', 'mouseenter'].forEach(s => {
+          t.container.addEventListener(s, y, { signal: i.signal });
+        }),
+          ['focusout', 'pointerleave', 'mouseleave'].forEach(s => {
+            t.container.addEventListener(s, _, { signal: i.signal });
+          }));
+      }
+    }
+    removeToast(o) {
+      o.animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: 300,
+        easing: 'ease',
+        fill: 'forwards',
+      }).finished.then(() => o.remove());
+    }
+    handleEvent(o) {
+      if (o instanceof CustomEvent && o.type === TOAST_EVENT) {
+        const r = o.detail;
+        this.createToast(r);
+      }
+    }
+    connectedCallback() {
+      (this.render(), document.addEventListener(TOAST_EVENT, this));
+    }
+    disconnectedCallback() {
+      document.removeEventListener(TOAST_EVENT, this);
+    }
+    render() {
+      this.shadowRoot.innerHTML = `
+    <style>${Toaster.STYLES}</style>
+
+    <template id="toast-tmpl">
+      <li data-toast tabindex="0">
+        <button data-close-button aria-label="Close">
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="14" 
+            height="14" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+          </svg>
+        </button>
+        <p data-title></p>
+        <p data-description></p>
+        <div data-actions>
+          <button type="button" data-action-type="confirm"></button>
+          <button type="button" data-action-type="cancel"></button>
+        </div>
+      </li>
+    </template>
+
+    <ol data-toaster tabindex="-1"></ol>`;
+    }
+    static STYLES = `
+  * {
+    box-sizing: border-box;
   }
+
+  :host {
+    --_travel-distance: var(--toast-travel-distance, 5vh);
+
+    --_toast-background: var(--toast-background, #FCFCFC);
+    --_toast-border: var(--toast-border, #00000026);
+    --_toast-title: var(--toast-title, #000000DF);
+    --_toast-description: var(--toast-description, #0000009B);
+
+    --_toast-success: var(--toast-success, #00924BA4);
+    --_toast-error: var(--toast-error, #D2000571);
+    --_toast-warning: var(--toast-warning, #E35F00AA);
+    --_toast-info: var(--toast-info, #0084E6A1);
+    --_toast-confirm: var(--toast-confirm, #6600C06C);
+
+    --_toast-actions-direction: var(--toast-actions-direction, row);
+    --_toast-actions-justify: var(--toast-actions-justify, flex-end);
+    --_toast-actions-gap: var(--toast-actions-gap, 0.25rem);
+
+    --_toast-actions-confirm-text-color: var(--toast-actions-confirm-text-color, white);
+    --_toast-actions-confirm-background-color: var(--toast-actions-confirm-background-color, #00713FDE);
+    --_toast-actions-cancel-text-color: var(--toast-actions-cancel-text-color, white);
+    --_toast-actions-cancel-background-color: var(--toast-actions-cancel-background-color, #C40006D3);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :host {
+      --_toast-background: var(--toast-background, #111111);
+      --_toast-border: var(--toast-border,  #FFFFFF2C);
+      --_toast-title: var(--toast-title, #FFFFFFED);
+      --_toast-description: var(--toast-description, #FFFFFFAF);
+  
+      --_toast-success: var(--toast-success, #54FFAD73);
+      --_toast-error: var(--toast-error, #FF5D61B0);
+      --_toast-warning: var(--toast-warning, #FE84389D);
+      --_toast-info: var(--toast-info, #3094FEB9);
+      --_toast-confirm: var(--toast-confirm, #C47EFFA4);
+
+      --_toast-actions-confirm-text-color: var(--toast-actions-confirm-text-color, white);
+      --_toast-actions-confirm-background-color: var(--toast-actions-confirm-background-color, #54FFAD73);
+      --_toast-actions-cancel-text-color: var(--toast-actions-cancel-text-color, white);
+      --_toast-actions-cancel-background-color: var(--toast-actions-cancel-background-color, #FF5D61B0);
+    }
+  }
+
+  @keyframes slide-in {
+    from { 
+      transform: translateY(var(--_travel-distance)) 
+    }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0 }
+    to { opacity: 1 }
+  }
+
+  [data-toaster] {
+    --container-width: 20rem;
+
+    position: fixed;
+    z-index: 999;
+    width: var(--container-width);
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
+    top: 0;
+    right: 0;
+    pointer-events: none;
+    margin: 0;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+  }
+
+  :host([position="bottom-right"]) [data-toaster] {
+    top: 0;
+    right: 0;
+  }
+  
+  :host([position="bottom-left"]) [data-toaster] {
+    top: 0;
+    left: 0;
+  }
+
+  :host([position="bottom-center"]) [data-toaster] {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  :host([position="top-right"]) [data-toaster] {
+    top: 0;
+    right: 0;
+    flex-direction: column;
+  }
+  
+  :host([position="top-left"]) [data-toaster] {
+    top: 0;
+    left: 0;
+    flex-direction: column;
+  }
+
+  :host([position="top-center"]) [data-toaster] {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column;
+  }
+
+  [data-toast] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    position: relative;
+
+    pointer-events: none;
+    user-select: none;
+
+    list-style: none;
+    background-color: var(--_toast-background);
+    padding: 1rem;
+    border: 1px solid var(--_toast-border);
+    border-radius: 0.25rem;
+    pointer-events: all;
+
+    will-change: transform;
+    animation: fade-in .3s ease, slide-in .3s ease;
+
+    @media (prefers-reduced-motion: reduce){
+      --_travel-distance: 0;
+    }
+  
+    &[data-type="success"] {
+      border-top: 4px solid var(--_toast-success);
+    }
+  
+    &[data-type="error"] {
+      border-top: 4px solid var(--_toast-error);
+    }
+  
+    &[data-type="info"] {
+      border-top: 4px solid var(--_toast-info)
+    }
+
+    &[data-type="warning"] {
+      border-top: 4px solid var(--_toast-warning)
+    }
+
+    &[data-type="confirm"] {
+      border-top: 4px solid var(--_toast-confirm);
+    }
+  }
+
+  [data-close-button] {
+    --size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--size);
+    height: var(--size);
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: var(--_toast-title);
+    background-color: var(--_toast-background);
+    border-radius: 50%;
+    border: 1px solid var(--_toast-border);
+    padding: 0.125rem;
+    translate: -35% -35%;
+    cursor: pointer;
+  }
+
+  [data-actions] {
+    display: flex;
+    flex-direction: var(--_toast-actions-direction);
+    justify-content: var(--_toast-actions-justify);
+    gap: var(--_toast-actions-gap);
+    margin-top: 0.5rem;
+  }
+
+  button[data-action-type="confirm"],
+  button[data-action-type="cancel"] {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition-property: opacity;
+    transition-duration: 200ms;
+
+    &:hover,
+    &:focus {
+      opacity: 0.8;
+    }
+  }
+      
+  button[data-action-type="confirm"] {
+    color: var(--_toast-actions-confirm-text-color);
+    font-weight: 600;
+    background-color: var(--_toast-actions-confirm-background-color);
+  }
+
+  button[data-action-type="cancel"] {
+    color: var(--_toast-actions-cancel-text-color);
+    font-weight: 600;
+    background-color:var(--_toast-actions-cancel-background-color);
+  }
+  
+  [data-title], [data-description] {
+    margin: 0;
+    all: initial; 
+    font-family: inherit;
+    line-height: 1.5;
+  }
+
+  [data-title] {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--_toast-title);
+  }
+
+  [data-description] {
+    font-size: 0.875rem;
+    color: var(--_toast-description);
+    text-wrap: pretty;
+  }`;
+  }
+  customElements.define('moaqz-toaster', Toaster);
+
+  const normalize =
+    '/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */\n\n/* Document\n   ========================================================================== */\n\n/**\n * 1. Correct the line height in all browsers.\n * 2. Prevent adjustments of font size after orientation changes in iOS.\n */\n\nhtml {\n  line-height: 1.15; /* 1 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/* Sections\n   ========================================================================== */\n\n/**\n * Remove the margin in all browsers.\n */\n\nbody {\n  margin: 0;\n}\n\n/**\n * Render the `main` element consistently in IE.\n */\n\nmain {\n  display: block;\n}\n\n/**\n * Correct the font size and margin on `h1` elements within `section` and\n * `article` contexts in Chrome, Firefox, and Safari.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * 1. Add the correct box sizing in Firefox.\n * 2. Show the overflow in Edge and IE.\n */\n\nhr {\n  box-sizing: content-box; /* 1 */\n  height: 0; /* 1 */\n  overflow: visible; /* 2 */\n}\n\n/**\n * 1. Correct the inheritance and scaling of font size in all browsers.\n * 2. Correct the odd `em` font sizing in all browsers.\n */\n\npre {\n  font-family: monospace, monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Remove the gray background on active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * 1. Remove the bottom border in Chrome 57-\n * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.\n */\n\nabbr[title] {\n  border-bottom: none; /* 1 */\n  text-decoration: underline; /* 2 */\n  text-decoration: underline dotted; /* 2 */\n}\n\n/**\n * Add the correct font weight in Chrome, Edge, and Safari.\n */\n\nb,\nstrong {\n  font-weight: bolder;\n}\n\n/**\n * 1. Correct the inheritance and scaling of font size in all browsers.\n * 2. Correct the odd `em` font sizing in all browsers.\n */\n\ncode,\nkbd,\nsamp {\n  font-family: monospace, monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/**\n * Add the correct font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` elements from affecting the line height in\n * all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\nsup {\n  top: -0.5em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove the border on images inside links in IE 10.\n */\n\nimg {\n  border-style: none;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * 1. Change the font styles in all browsers.\n * 2. Remove the margin in Firefox and Safari.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  font-family: inherit; /* 1 */\n  font-size: 100%; /* 1 */\n  line-height: 1.15; /* 1 */\n  margin: 0; /* 2 */\n}\n\n/**\n * Show the overflow in IE.\n * 1. Show the overflow in Edge.\n */\n\nbutton,\ninput { /* 1 */\n  overflow: visible;\n}\n\n/**\n * Remove the inheritance of text transform in Edge, Firefox, and IE.\n * 1. Remove the inheritance of text transform in Firefox.\n */\n\nbutton,\nselect { /* 1 */\n  text-transform: none;\n}\n\n/**\n * Correct the inability to style clickable types in iOS and Safari.\n */\n\nbutton,\n[type="button"],\n[type="reset"],\n[type="submit"] {\n  -webkit-appearance: button;\n}\n\n/**\n * Remove the inner border and padding in Firefox.\n */\n\nbutton::-moz-focus-inner,\n[type="button"]::-moz-focus-inner,\n[type="reset"]::-moz-focus-inner,\n[type="submit"]::-moz-focus-inner {\n  border-style: none;\n  padding: 0;\n}\n\n/**\n * Restore the focus styles unset by the previous rule.\n */\n\nbutton:-moz-focusring,\n[type="button"]:-moz-focusring,\n[type="reset"]:-moz-focusring,\n[type="submit"]:-moz-focusring {\n  outline: 1px dotted ButtonText;\n}\n\n/**\n * Correct the padding in Firefox.\n */\n\nfieldset {\n  padding: 0.35em 0.75em 0.625em;\n}\n\n/**\n * 1. Correct the text wrapping in Edge and IE.\n * 2. Correct the color inheritance from `fieldset` elements in IE.\n * 3. Remove the padding so developers are not caught out when they zero out\n *    `fieldset` elements in all browsers.\n */\n\nlegend {\n  box-sizing: border-box; /* 1 */\n  color: inherit; /* 2 */\n  display: table; /* 1 */\n  max-width: 100%; /* 1 */\n  padding: 0; /* 3 */\n  white-space: normal; /* 1 */\n}\n\n/**\n * Add the correct vertical alignment in Chrome, Firefox, and Opera.\n */\n\nprogress {\n  vertical-align: baseline;\n}\n\n/**\n * Remove the default vertical scrollbar in IE 10+.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * 1. Add the correct box sizing in IE 10.\n * 2. Remove the padding in IE 10.\n */\n\n[type="checkbox"],\n[type="radio"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Correct the cursor style of increment and decrement buttons in Chrome.\n */\n\n[type="number"]::-webkit-inner-spin-button,\n[type="number"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Correct the odd appearance in Chrome and Safari.\n * 2. Correct the outline style in Safari.\n */\n\n[type="search"] {\n  -webkit-appearance: textfield; /* 1 */\n  outline-offset: -2px; /* 2 */\n}\n\n/**\n * Remove the inner padding in Chrome and Safari on macOS.\n */\n\n[type="search"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * 1. Correct the inability to style clickable types in iOS and Safari.\n * 2. Change font properties to `inherit` in Safari.\n */\n\n::-webkit-file-upload-button {\n  -webkit-appearance: button; /* 1 */\n  font: inherit; /* 2 */\n}\n\n/* Interactive\n   ========================================================================== */\n\n/*\n * Add the correct display in Edge, IE 10+, and Firefox.\n */\n\ndetails {\n  display: block;\n}\n\n/*\n * Add the correct display in all browsers.\n */\n\nsummary {\n  display: list-item;\n}\n\n/* Misc\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 10+.\n */\n\ntemplate {\n  display: none;\n}\n\n/**\n * Add the correct display in IE 10.\n */\n\n[hidden] {\n  display: none;\n}\n';
+
+  const nprogress =
+    '/* Make clicks pass-through */\n#nprogress {\n  pointer-events: none;\n}\n\n#nprogress .bar {\n  background: #29d;\n\n  position: fixed;\n  z-index: 1031;\n  top: 0;\n  left: 0;\n\n  width: 100%;\n  height: 2px;\n}\n\n/* Fancy blur effect */\n#nprogress .peg {\n  display: block;\n  position: absolute;\n  right: 0px;\n  width: 100px;\n  height: 100%;\n  box-shadow: 0 0 10px #29d, 0 0 5px #29d;\n  opacity: 1.0;\n\n  -webkit-transform: rotate(3deg) translate(0px, -4px);\n      -ms-transform: rotate(3deg) translate(0px, -4px);\n          transform: rotate(3deg) translate(0px, -4px);\n}\n\n/* Remove these to get rid of the spinner */\n#nprogress .spinner {\n  display: block;\n  position: fixed;\n  z-index: 1031;\n  top: 15px;\n  right: 15px;\n}\n\n#nprogress .spinner-icon {\n  width: 18px;\n  height: 18px;\n  box-sizing: border-box;\n\n  border: solid 2px transparent;\n  border-top-color: #29d;\n  border-left-color: #29d;\n  border-radius: 50%;\n\n  -webkit-animation: nprogress-spinner 400ms linear infinite;\n          animation: nprogress-spinner 400ms linear infinite;\n}\n\n.nprogress-custom-parent {\n  overflow: hidden;\n  position: relative;\n}\n\n.nprogress-custom-parent #nprogress .spinner,\n.nprogress-custom-parent #nprogress .bar {\n  position: absolute;\n}\n\n@-webkit-keyframes nprogress-spinner {\n  0%   { -webkit-transform: rotate(0deg); }\n  100% { -webkit-transform: rotate(360deg); }\n}\n@keyframes nprogress-spinner {\n  0%   { transform: rotate(0deg); }\n  100% { transform: rotate(360deg); }\n}\n\n';
+
+  const fix =
+    '#nprogress .bar {\n  background: #29d;\n  position: fixed;\n  z-index: 1031;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 4px;\n}\n\nhtml[mov] body > *:not(manga-online-viewer, #nprogress) {\n  /* biome-ignore lint/complexity/noImportantStyles: requirement */\n  display: none !important;\n}\n\nhtml {\n  /* biome-ignore lint/complexity/noImportantStyles: requirement */\n  font-size: 16px !important;\n}\n';
+
+  const externalCSS = [normalize, nprogress, fix].join('\n');
+
+  function removeAllEventListeners(element) {
+    if (!element?.parentNode) {
+      return element;
+    }
+    const newElement = element.cloneNode(true);
+    element.parentNode.replaceChild(newElement, element);
+    return newElement;
+  }
+  const removeAttributes = element => {
+    element.getAttributeNames().forEach(attr => {
+      element?.removeAttribute(attr);
+    });
+  };
+  const cleanUpElement = (...elements) => {
+    elements?.forEach(removeAttributes);
+    elements?.forEach(removeAllEventListeners);
+  };
 
   async function captureComments() {
     if (!getSettingsValue('enableComments')) return null;
@@ -11204,7 +13974,12 @@
     window.scrollTo(0, 0);
     return comments;
   }
-  async function viewer(manga) {
+  async function preparePage([site, manga]) {
+    logScript(`Found Pages: ${manga.pages} in ${site?.name}`);
+    if (!manga.title) {
+      manga.title = document.querySelector('title')?.textContent?.trim();
+    }
+    manga.begin = isBookmarked() ?? manga.begin ?? 1;
     if (manga.before !== void 0) {
       logScriptVerbose(`Executing Preparation`);
       await manga.before(manga.begin ?? 0);
@@ -11212,286 +13987,13 @@
     if (getSettingsValue('enableComments') && !manga.comments) {
       manga.comments = await captureComments();
     }
-    setTimeout(() => {
-      try {
-        display(manga);
-      } catch (e) {
-        logScript(e);
-      }
-    }, 50);
-  }
-
-  const fileTypes = [
-    'image/apng',
-    'image/bmp',
-    'image/gif',
-    'image/jpeg',
-    'image/pjpeg',
-    'image/png',
-    'image/svg+xml',
-    'image/tiff',
-    'image/webp',
-    'image/x-icon',
-  ];
-  const fileImageExt = /.(png|jpg|jpeg|gif|bmp|webp)$/i;
-  const orderFiles = (a, b) =>
-    a.localeCompare(b, navigator.languages[0] || navigator.language, {
-      numeric: true,
-      ignorePunctuation: true,
-    });
-  function validFileType(file) {
-    return fileTypes.includes(file.type);
-  }
-  const getImageBlob = content => {
-    const buffer = new Uint8Array(content);
-    const blob = new Blob([buffer.buffer]);
-    return URL.createObjectURL(blob);
-  };
-  async function loadZipFile(filePath) {
-    const zip = await JSZip.loadAsync(filePath);
-    const files = zip
-      .filter((_, file) => !file.dir && fileImageExt.test(file.name))
-      .sort((a, b) => orderFiles(a.name, b.name));
-    logScript('Files in zip:', zip.files);
-    return Promise.all(files.map(file => file.async('arraybuffer').then(getImageBlob)));
-  }
-  function displayUploadedFiles(title, listImages) {
-    viewer({
-      title,
-      series: '?reload',
-      pages: listImages.length,
-      begin: 1,
-      prev: '#',
-      next: '#',
-      lazy: false,
-      listImages,
-    }).then(() => logScript('Page loaded'));
-  }
-  async function loadMangaFromZip(zipFile) {
-    const listImages = await loadZipFile(zipFile);
-    displayUploadedFiles(typeof zipFile === 'string' ? zipFile : zipFile.name, listImages);
-  }
-  function openFileImages(evt) {
-    const input = evt.target;
-    const files = Array.from(input.files)
-      .filter(validFileType)
-      .sort((a, b) => orderFiles(a.webkitRelativePath || a.name, b.webkitRelativePath || b.name));
-    logScript(
-      'Local Files: ',
-      files,
-      files.map(f => f.webkitRelativePath || f.name),
-    );
-    if (input.files?.[0]) {
-      displayUploadedFiles(
-        input.files[0].webkitRelativePath.split('/')[0] || 'Local Images',
-        files.map(URL.createObjectURL),
-      );
-    }
-  }
-  function allowUpload() {
-    if (localhost.url.test(window.location.href)) {
-      if (document.querySelector('#MangaOnlineViewer, #LocalTest')) {
-        document.querySelector('#LocalTest')?.setAttribute('style', 'display:none');
-        document.querySelector('#file')?.addEventListener('change', evt => {
-          const input = evt.target;
-          if (input.files?.[0]) loadMangaFromZip(input.files[0]);
-        });
-        document.querySelector('#folder')?.addEventListener('change', openFileImages);
-        document.querySelector('#images')?.addEventListener('change', openFileImages);
-        logScript(`Waiting for zip/images upload`);
-      }
-      return true;
-    }
-    return false;
-  }
-
-  function validateMin(valBegin, endPage, rs) {
-    let val = valBegin;
-    if (Number.isNaN(val) || val < rs.min()) {
-      val = rs.min();
-    } else if (val > rs.max()) {
-      val = rs.max();
-    } else if (val > endPage) {
-      val = endPage;
-    }
-    return val;
-  }
-  function validateMax(valEnd, beginPage, rs) {
-    let val = valEnd;
-    if (Number.isNaN(val) || val > rs.max()) {
-      val = rs.max();
-    } else if (val < rs.min()) {
-      val = rs.min();
-    } else if (val < beginPage) {
-      val = beginPage;
-    }
-    return val;
-  }
-  async function lateStart(site, begin = 1) {
-    const manga = await site.run();
-    logScript('LateStart');
-    let beginPage = begin;
-    let endPage = manga.pages;
-    const options = {
-      title: getLocaleString('STARTING'),
-      html: html`
-        ${getLocaleString('CHOOSE_BEGINNING')}
-        <div id="pageInputGroup">
-          <div id="pageInputs">
-            <input
-              type="number"
-              id="pageBegin"
-              class="pageInput"
-              min="1"
-              inputmode="numeric"
-              pattern="[0-9]*"
-              max="${manga.pages}"
-              value="${beginPage}"
-            />
-            -
-            <input
-              type="number"
-              id="pageEnd"
-              class="pageInput"
-              min="1"
-              inputmode="numeric"
-              pattern="[0-9]*"
-              max="${manga.pages}"
-              value="${endPage}"
-            />
-          </div>
-          <div id="pagesSlider"></div>
-        </div>
-      `,
-      showCancelButton: true,
-      cancelButtonColor: '#d33',
-      reverseButtons: true,
-      icon: 'question',
-      didOpen() {
-        const pageBeginInput = document.querySelector('#pageBegin');
-        const pageEndInput = document.querySelector('#pageEnd');
-        const inputSlider = document.getElementById('pagesSlider');
-        if (inputSlider) {
-          let changedInput = function () {
-            if (
-              (pageBeginInput && pageBeginInput.value === '') ||
-              (pageEndInput && pageEndInput.value === '')
-            ) {
-              return;
-            }
-            const valBegin = validateMin(
-              parseInt(pageBeginInput?.value ?? '0', 10),
-              endPage,
-              rangeSliderElement,
-            );
-            const valEnd = validateMax(
-              parseInt(pageEndInput?.value ?? '0', 10),
-              beginPage,
-              rangeSliderElement,
-            );
-            if (pageBeginInput) pageBeginInput.value = valBegin.toString();
-            if (pageEndInput) pageEndInput.value = valEnd.toString();
-            beginPage = valBegin;
-            endPage = valEnd;
-            rangeSliderElement.value([valBegin, valEnd]);
-          };
-          const rangeSliderElement = rangeSlider(inputSlider, {
-            min: 1,
-            max: manga.pages,
-            value: [beginPage, endPage],
-            onInput(value, userInteraction) {
-              if (userInteraction) {
-                [beginPage, endPage] = value;
-                if (pageBeginInput) {
-                  pageBeginInput.value = beginPage.toString();
-                }
-                if (pageEndInput) {
-                  pageEndInput.value = endPage.toString();
-                }
-              }
-            },
-          });
-          const observerEvent = _.debounce(changedInput, 600);
-          ['change', 'mouseup', 'keyup', 'touchend'].forEach(event => {
-            pageBeginInput?.addEventListener(event, observerEvent);
-            pageEndInput?.addEventListener(event, observerEvent);
-          });
-        }
-      },
-    };
-    Swal.fire(options).then(result => {
-      if (result.value) {
-        logScript(`Choice: ${beginPage} - ${endPage}`);
-        manga.begin = beginPage;
-        manga.pages = endPage;
-        viewer(manga).then(() => logScript('Page loaded'));
-      } else {
-        logScript(result.dismiss);
-      }
-    });
-  }
-  function createLateStartButton(site, beginning) {
-    const button = document.createElement('button');
-    button.innerText = getLocaleString('BUTTON_START');
-    button.id = 'StartMOV';
-    button.onclick = () => {
-      lateStart(site, beginning).catch(logScript);
-    };
-    document.body.appendChild(button);
-    const style = document.createElement('style');
-    style.appendChild(document.createTextNode(startButton + rangeSliderStyles));
-    document.head.appendChild(style);
-    logScript('Start Button added to page', button);
-  }
-  function showWaitPopup(site, manga) {
-    Swal.fire({
-      title: getLocaleString('STARTING'),
-      html: html`${manga.begin && manga.begin > 1
-        ? `${getLocaleString('RESUME')}${manga.begin}.<br/>`
-        : ''}${getLocaleString('WAITING')}`,
-      showCancelButton: true,
-      cancelButtonColor: '#d33',
-      reverseButtons: true,
-      timer: 3e3,
-    }).then(result => {
-      if (result.value || result.dismiss === Swal.DismissReason.timer) {
-        viewer(manga).then(() => logScript('Page loaded'));
-      } else {
-        createLateStartButton(site, manga.begin ?? 0);
-        logScript(result.dismiss);
-      }
-    });
-  }
-  async function preparePage([site, manga]) {
-    logScript(`Found Pages: ${manga.pages} in ${site.name}`);
-    if (!manga.title) {
-      manga.title = document.querySelector('title')?.textContent?.trim();
-    }
-    manga.begin = isBookmarked() ?? manga.begin ?? 1;
-    const style = document.createElement('style');
-    style.appendChild(document.createTextNode(sweetalertStyle));
-    document.body.appendChild(style);
-    giveToWindow('MOV', (startPage, endPage) => {
-      if (startPage !== void 0) {
-        manga.begin = startPage;
-      }
-      if (endPage !== void 0) {
-        manga.pages = endPage;
-      }
-      viewer(manga).then(() => logScript('Page loaded'));
-    });
-    switch (site.start ?? getSettingsValue('loadMode')) {
-      case 'never':
-        createLateStartButton(site, manga.begin);
-        break;
-      case 'always':
-        viewer(manga).then(() => logScript('Page loaded'));
-        break;
-      // case 'wait':
-      default:
-        showWaitPopup(site, manga);
-        break;
-    }
+    cleanUpElement(document.documentElement, document.head, document.body);
+    window.scrollTo(0, 0);
+    document.head.innerHTML += wrapStyle('externals', externalCSS);
+    const viewer = document.createElement('manga-online-viewer');
+    viewer.loadMode = site?.start ?? getSettingsValue('loadMode');
+    viewer.manga = manga;
+    document.body.appendChild(viewer);
   }
   async function start(sites) {
     logScript(
