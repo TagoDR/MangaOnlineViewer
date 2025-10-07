@@ -8,7 +8,7 @@ import type { ILocale } from '../types';
 export default {
   ID: 'zh_CN',
   NAME: '中文 (简体)',
-  STARTING: '正在启动<br>Manga OnlineViewer',
+  STARTING: '正在启动 Manga OnlineViewer',
   RESUME: '从页面继续阅读 ',
   WAITING: '请等待3秒钟...',
   CHOOSE_BEGINNING: '选择要开始的页数:',
@@ -55,7 +55,7 @@ export default {
   BOOKMARK: 'Bookmark',
   BOOKMARK_REMOVED: '删除书签',
   BOOKMARK_SAVED: '保存书签',
-  BOOKMARK_MESSAGE: '下次打开本章时，将从:<h4>页码 ##num##</h4>(<i>仅一次</i> 每个书签)',
+  BOOKMARK_MESSAGE: '下次打开本章时，将从: 页码 ##num## (仅一次 每个书签)',
   KEYBINDINGS: '快捷键',
   EDIT_KEYBINDS: '编辑键绑定',
   SAVE_KEYBINDS: '保存键绑定',
@@ -63,8 +63,8 @@ export default {
   BUTTON_SAVE: '救',
   KEYBIND_RULES: `
     <h3>支持的密钥</h3>
-    允许的修饰符: shift, option, alt, ctrl, control, command. </br>
-    特殊键: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide.</br>
+    允许的修饰符: shift, option, alt, ctrl, control, command. <br/>
+    特殊键: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide.<br/>
     例子: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd>
   `,
   ATTENTION: '注意',
@@ -101,7 +101,7 @@ export default {
   ALL_PAGES: '所有页面',
   SPEED_WARNING: '加载速度过高',
   SPEED_WARNING_MESSAGE:
-    '不建议使用此速度.<br>它可能会伤害某些服务器或将您的 IP 标记为 DDoS 攻击者.<br>请谨慎使用!',
+    '不建议使用此速度.<br/>它可能会伤害某些服务器或将您的 IP 标记为 DDoS 攻击者.<br/>请谨慎使用!',
   SCROLL_UP: '向上滚动',
   SCROLL_DOWN: '向下滚动',
   CLOSE: '关闭',

@@ -7,7 +7,7 @@ import type { ILocale } from '../types';
 export default {
   ID: 'fr_FR',
   NAME: 'Français (FR)',
-  STARTING: 'Démarrage<br>Manga OnlineViewer',
+  STARTING: 'Démarrage Manga OnlineViewer',
   RESUME: 'Reprise de la lecture à partir de la Page ',
   WAITING: 'Veuillez patienter, 3 secondes...',
   CHOOSE_BEGINNING: 'Choisissez la page par laquelle commencer :',
@@ -55,7 +55,7 @@ export default {
   BOOKMARK_REMOVED: 'Favori supprimé',
   BOOKMARK_SAVED: 'Favori enregistré',
   BOOKMARK_MESSAGE:
-    'La prochaine fois que vous ouvrirez ce chapitre, il reprendra à partir de :<h4>Page ##num##</h4>(Seulement <i>UNE FOIS</i> par favori)',
+    'La prochaine fois que vous ouvrirez ce chapitre, il reprendra à partir de: Page ##num## (Seulement UNE FOIS par favori)',
   KEYBINDINGS: 'Raccourcis clavier',
   EDIT_KEYBINDS: 'Modifier les raccourcis clavier',
   SAVE_KEYBINDS: 'Enregistrer les raccourcis clavier',
@@ -63,8 +63,8 @@ export default {
   BUTTON_SAVE: 'Enregistrer',
   KEYBIND_RULES: `
     <h3>Touches prises en charge</h3>
-    Modificateurs autorisés : shift, option, alt, ctrl, control, command. </br>
-    Touches spéciales : backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. </br>
+    Modificateurs autorisés : shift, option, alt, ctrl, control, command. <br/>
+    Touches spéciales : backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. <br/>
     Exemples : <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd>
   `,
   ATTENTION: 'Attention',
@@ -102,7 +102,7 @@ export default {
   ALL_PAGES: 'Toutes les pages',
   SPEED_WARNING: 'Vitesse de chargement trop élevée',
   SPEED_WARNING_MESSAGE:
-    "Cette vitesse n'est pas recommandée.<br> Elle peut nuire à certains serveurs ou marquer votre IP comme un attaquant DDoS.<br> Veuillez l'utiliser avec prudence !",
+    "Cette vitesse n'est pas recommandée.<br/> Elle peut nuire à certains serveurs ou marquer votre IP comme un attaquant DDoS.<br/> Veuillez l'utiliser avec prudence !",
   SCROLL_UP: 'Faire défiler vers le haut',
   SCROLL_DOWN: 'Faire défiler vers le bas',
   CLOSE: 'Fermer',

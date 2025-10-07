@@ -7,7 +7,7 @@ import type { ILocale } from '../types';
 export default {
   ID: 'pt_BR',
   NAME: 'Portugues (Brasil)',
-  STARTING: 'Iniciando<br>Manga OnlineViewer',
+  STARTING: 'Iniciando Manga OnlineViewer',
   RESUME: 'Continuando leitura na Pagina ',
   WAITING: 'Por Favor espere, 3 segundos...',
   CHOOSE_BEGINNING: 'Escolha a pagina de onde começar:',
@@ -55,7 +55,7 @@ export default {
   BOOKMARK_REMOVED: 'Marca pagina Removido',
   BOOKMARK_SAVED: 'Marca pagina Salvo',
   BOOKMARK_MESSAGE:
-    'Proxima vez que abrir este capitulo continuará a partir da <h4>Pagina ##num##</h4>(Apenas <i>UMA VEZ</i> por marca pagina)',
+    'Proxima vez que abrir este capitulo continuará a partir da Pagina ##num## (Apenas UMA VEZ por marca pagina)',
   KEYBINDINGS: 'Atalhos',
   EDIT_KEYBINDS: 'Editar Atalhos',
   SAVE_KEYBINDS: 'Salvar Atalhos',
@@ -63,8 +63,8 @@ export default {
   BUTTON_SAVE: 'Salvar',
   KEYBIND_RULES: `
     <h3>Teclas Suportadas</h3>
-    Modificadores permitidos: shift, option, alt, ctrl, control, command. </br>
-    Teclas Especiais: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide.</br>
+    Modificadores permitidos: shift, option, alt, ctrl, control, command. <br/>
+    Teclas Especiais: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide.<br/>
     Exemplos: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd>
   `,
   ATTENTION: 'Atenção',
@@ -101,7 +101,7 @@ export default {
   ALL_PAGES: 'Todas as Paginas',
   SPEED_WARNING: 'Velocidade de Carregamento muito alta',
   SPEED_WARNING_MESSAGE:
-    'Essa velocidade não é recomendada.<br> Ela pode derrubar um servidor or marcar voce como um ataque hacker de DDoS.<br> Use com cuidado!',
+    'Essa velocidade não é recomendada.<br/> Ela pode derrubar um servidor or marcar voce como um ataque hacker de DDoS.<br/> Use com cuidado!',
   SCROLL_UP: 'Subir Pagina',
   SCROLL_DOWN: 'Descer Pagina',
   CLOSE: 'Fechar',

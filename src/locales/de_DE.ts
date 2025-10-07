@@ -7,7 +7,7 @@ import type { ILocale } from '../types';
 export default {
   ID: 'de_DE',
   NAME: 'Deutsch',
-  STARTING: 'Starte<br>Manga OnlineViewer',
+  STARTING: 'Starte Manga OnlineViewer',
   RESUME: 'Fortsetzen ab Seite ',
   WAITING: 'Bitte warten, 3 Sekunden...',
   CHOOSE_BEGINNING: 'Wähle die Startseite:',
@@ -55,7 +55,7 @@ export default {
   BOOKMARK_REMOVED: 'Lesezeichen entfernt',
   BOOKMARK_SAVED: 'Lesezeichen gespeichert',
   BOOKMARK_MESSAGE:
-    'Beim nächsten Öffnen dieses Kapitels wird ab fortgesetzt:<h4>Seite ##num##</h4>(Nur <i>EINMAL</i> pro Lesezeichen)',
+    'Beim nächsten Öffnen dieses Kapitels wird ab fortgesetzt: Seite ##num## (Nur EINMAL pro Lesezeichen)',
   KEYBINDINGS: 'Tastenkürzel',
   EDIT_KEYBINDS: 'Tastenkürzel bearbeiten',
   SAVE_KEYBINDS: 'Tastenkürzel speichern',
@@ -63,8 +63,8 @@ export default {
   BUTTON_SAVE: 'Speichern',
   KEYBIND_RULES: `
     <h3>Unterstützte Tasten</h3>
-    Erlaubte Modifikatoren: shift, option, alt, ctrl, control, command. </br>
-    Spezielle Tasten: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. </br>
+    Erlaubte Modifikatoren: shift, option, alt, ctrl, control, command. <br/>
+    Spezielle Tasten: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. <br/>
     Beispiele: <kbd>a</kbd>, <kbd>ctrl+a</kbd>, <kbd>shift+a</kbd>, <kbd>num_2</kbd>, <kbd>2</kbd>
   `,
   ATTENTION: 'Achtung',
@@ -102,7 +102,7 @@ export default {
   ALL_PAGES: 'Alle Seiten',
   SPEED_WARNING: 'Ladegeschwindigkeit zu hoch',
   SPEED_WARNING_MESSAGE:
-    'Diese Geschwindigkeit wird nicht empfohlen.<br> Sie kann einige Server überlasten oder deine IP als DDoS-Angreifer markieren.<br> Bitte mit Vorsicht verwenden!',
+    'Diese Geschwindigkeit wird nicht empfohlen.<br/> Sie kann einige Server überlasten oder deine IP als DDoS-Angreifer markieren.<br/> Bitte mit Vorsicht verwenden!',
   SCROLL_UP: 'Nach oben scrollen',
   SCROLL_DOWN: 'Nach unten scrollen',
   CLOSE: 'Schließen',

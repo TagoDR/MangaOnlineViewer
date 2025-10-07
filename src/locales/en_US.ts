@@ -7,7 +7,7 @@ import type { ILocale } from '../types';
 export default {
   ID: 'en_US',
   NAME: 'English (US)',
-  STARTING: 'Starting<br>Manga OnlineViewer',
+  STARTING: 'Starting Manga OnlineViewer',
   RESUME: 'Resuming reading from Page ',
   WAITING: 'Please wait, 3 seconds...',
   CHOOSE_BEGINNING: 'Choose the Page to start from:',
@@ -55,7 +55,7 @@ export default {
   BOOKMARK_REMOVED: 'Bookmark Removed',
   BOOKMARK_SAVED: 'Bookmark Saved',
   BOOKMARK_MESSAGE:
-    'Next time you open this chapter it will resume from:<h4>Page ##num##</h4>(Only <i>ONCE</i> per Bookmark)',
+    'Next time you open this chapter it will resume from: Page ##num## (Only ONCE per Bookmark)',
   KEYBINDINGS: 'Keybindings',
   EDIT_KEYBINDS: 'Edit KeyBindings',
   SAVE_KEYBINDS: 'Save KeyBindings',
@@ -63,8 +63,8 @@ export default {
   BUTTON_SAVE: 'Save',
   KEYBIND_RULES: `
     <h3>Supported Keys</h3>
-    Allowed modifiers: shift, option, alt, ctrl, control, command. </br>
-    Special keys: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. </br>
+    Allowed modifiers: shift, option, alt, ctrl, control, command. <br/>
+    Special keys: backspace, tab, clear, enter, return, esc, escape, space, up, down, left, right, home, end, pageup, pagedown, del, delete, f1 - f19, num_0 - num_9, num_multiply, num_add, num_enter, num_subtract, num_decimal, num_divide. <br/>
     Examples: <kbd>a</kbd>, <kbd>ctrl+a</kbd> , <kbd>shift+a</kbd> , <kbd>num_2</kbd> , <kbd>2</kbd>
   `,
   ATTENTION: 'Attention',
@@ -101,7 +101,7 @@ export default {
   ALL_PAGES: 'All Pages',
   SPEED_WARNING: 'Loading Speed too High',
   SPEED_WARNING_MESSAGE:
-    'This speed is not recommended.<br> It may hurt some servers or get your IP marked as DDoS attacker.<br> Please use with caution!',
+    'This speed is not recommended.<br/> It may hurt some servers or get your IP marked as DDoS attacker.<br/> Please use with caution!',
   SCROLL_UP: 'Scroll Up',
   SCROLL_DOWN: 'Scroll Down',
   CLOSE: 'Close',
