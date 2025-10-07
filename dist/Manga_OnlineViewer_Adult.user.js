@@ -13424,6 +13424,24 @@
   __decorateClass$1([n$1({ type: String, reflect: true })], MovStartup.prototype, 'status', 2);
   MovStartup = __decorateClass$1([t$1('script-startup')], MovStartup);
 
+  function removeAllEventListeners(element) {
+    if (!element?.parentNode) {
+      return element;
+    }
+    const newElement = element.cloneNode(true);
+    element.parentNode.replaceChild(newElement, element);
+    return newElement;
+  }
+  const removeAttributes = element => {
+    element.getAttributeNames().forEach(attr => {
+      element?.removeAttribute(attr);
+    });
+  };
+  const cleanUpElement = (...elements) => {
+    elements?.forEach(removeAttributes);
+    elements?.forEach(removeAllEventListeners);
+  };
+
   var __freeze = Object.freeze;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -13445,6 +13463,8 @@
     }
     async start(begin, end) {
       if (this.manga) {
+        cleanUpElement(document.documentElement, document.head, document.body);
+        window.scrollTo(0, 0);
         setAppStateValue('manga', {
           ...this.manga,
           begin: begin ?? this.manga.begin,
@@ -13927,27 +13947,9 @@
     '/* Make clicks pass-through */\n#nprogress {\n  pointer-events: none;\n}\n\n#nprogress .bar {\n  background: #29d;\n\n  position: fixed;\n  z-index: 1031;\n  top: 0;\n  left: 0;\n\n  width: 100%;\n  height: 2px;\n}\n\n/* Fancy blur effect */\n#nprogress .peg {\n  display: block;\n  position: absolute;\n  right: 0px;\n  width: 100px;\n  height: 100%;\n  box-shadow: 0 0 10px #29d, 0 0 5px #29d;\n  opacity: 1.0;\n\n  -webkit-transform: rotate(3deg) translate(0px, -4px);\n      -ms-transform: rotate(3deg) translate(0px, -4px);\n          transform: rotate(3deg) translate(0px, -4px);\n}\n\n/* Remove these to get rid of the spinner */\n#nprogress .spinner {\n  display: block;\n  position: fixed;\n  z-index: 1031;\n  top: 15px;\n  right: 15px;\n}\n\n#nprogress .spinner-icon {\n  width: 18px;\n  height: 18px;\n  box-sizing: border-box;\n\n  border: solid 2px transparent;\n  border-top-color: #29d;\n  border-left-color: #29d;\n  border-radius: 50%;\n\n  -webkit-animation: nprogress-spinner 400ms linear infinite;\n          animation: nprogress-spinner 400ms linear infinite;\n}\n\n.nprogress-custom-parent {\n  overflow: hidden;\n  position: relative;\n}\n\n.nprogress-custom-parent #nprogress .spinner,\n.nprogress-custom-parent #nprogress .bar {\n  position: absolute;\n}\n\n@-webkit-keyframes nprogress-spinner {\n  0%   { -webkit-transform: rotate(0deg); }\n  100% { -webkit-transform: rotate(360deg); }\n}\n@keyframes nprogress-spinner {\n  0%   { transform: rotate(0deg); }\n  100% { transform: rotate(360deg); }\n}\n\n';
 
   const fix =
-    '#nprogress .bar {\n  background: #29d;\n  position: fixed;\n  z-index: 1031;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 4px;\n}\n\nhtml[mov] body > *:not(manga-online-viewer, #nprogress) {\n  /* biome-ignore lint/complexity/noImportantStyles: requirement */\n  display: none !important;\n}\n\nhtml {\n  /* biome-ignore lint/complexity/noImportantStyles: requirement */\n  font-size: 16px !important;\n}\n';
+    '#nprogress .bar {\n  background: #29d;\n  position: fixed;\n  z-index: 1031;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 4px;\n}\n\nhtml[mov] body > *:not(manga-online-viewer, #nprogress) {\n  /* biome-ignore lint/complexity/noImportantStyles: requirement */\n  display: none !important;\n}\n\nhtml[mov] {\n  all: unset;\n  font-size: 16px;\n}\n';
 
   const externalCSS = [normalize, nprogress, fix].join('\n');
-
-  function removeAllEventListeners(element) {
-    if (!element?.parentNode) {
-      return element;
-    }
-    const newElement = element.cloneNode(true);
-    element.parentNode.replaceChild(newElement, element);
-    return newElement;
-  }
-  const removeAttributes = element => {
-    element.getAttributeNames().forEach(attr => {
-      element?.removeAttribute(attr);
-    });
-  };
-  const cleanUpElement = (...elements) => {
-    elements?.forEach(removeAttributes);
-    elements?.forEach(removeAllEventListeners);
-  };
 
   async function captureComments() {
     if (!getSettingsValue('enableComments')) return null;
@@ -13987,8 +13989,6 @@
     if (getSettingsValue('enableComments') && !manga.comments) {
       manga.comments = await captureComments();
     }
-    cleanUpElement(document.documentElement, document.head, document.body);
-    window.scrollTo(0, 0);
     document.head.innerHTML += wrapStyle('externals', externalCSS);
     const viewer = document.createElement('manga-online-viewer');
     viewer.loadMode = site?.start ?? getSettingsValue('loadMode');
