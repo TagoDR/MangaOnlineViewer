@@ -42,6 +42,7 @@ then open it in the browser, and you will see the options to load local Files.
 - [Comick](https://comick.io/) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
 - [Flame Comics](https://flamecomics.xyz/) _[English]_
+- [Kagane](https://kagane.org/) _[English]_
 - [LHTranslation](https://lhtranslation.net/) _[English]_
 - [MangaBuddy](https://mangabuddy.com/) _[English]_
 - [MangaDemon](https://demonicscans.org/) _[English]_
