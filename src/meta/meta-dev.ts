@@ -16,7 +16,12 @@ export default {
   author: 'TagoDR',
   namespace: 'https://github.com/TagoDR',
   description: 'Shows all pages at once in online view for sites',
-  version: Date.now().toString(), // .slice(0, 10).replaceAll('-', '.'),
+  version: new Date()
+    .toISOString()
+    .slice(0, 16)
+    .replaceAll('-', '.')
+    .replace('T', '.build-')
+    .replace(':', ''),
   license: 'MIT',
   icon: 'https://cdn-icons-png.flaticon.com/32/9824/9824248.png', // https://www.freepik.com/icon/comic_9824248
   'run-at': 'document-end',

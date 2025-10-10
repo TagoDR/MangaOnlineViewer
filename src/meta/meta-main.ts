@@ -21,7 +21,12 @@ export default {
     .flatMap(s => s.name)
     .map(s => s.trim())
     .join(', ')}`,
-  version: new Date().toISOString().slice(0, 10).replaceAll('-', '.'),
+  version: new Date()
+    .toISOString()
+    .slice(0, 16)
+    .replaceAll('-', '.')
+    .replace('T', '.build-')
+    .replace(':', ''),
   license: 'MIT',
   icon: 'https://cdn-icons-png.flaticon.com/32/2281/2281832.png', // https://www.freepik.com/icon/comic_2281832
   'run-at': 'document-end',

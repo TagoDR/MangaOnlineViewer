@@ -23,7 +23,7 @@ export function giveToWindow(key: string, content: any) {
  * @returns {any[]} The logged content.
  */
 function logScript(...text: any[]): any[] {
-  console.log('MangaOnlineViewer: ', ...text);
+  console.log(`MangaOnlineViewer-${import.meta.env.MODE}: `, ...text);
   return text;
 }
 
