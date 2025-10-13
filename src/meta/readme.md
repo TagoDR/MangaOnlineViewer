@@ -22,9 +22,9 @@ Other Browsers with other add-ons may also work, but not officially supported.
 
 ## Installation
 
-#### [Main Reader](https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer.user.js) ([force update](/dist/Manga_OnlineViewer.user.js?raw=1))
+#### [Main Reader](https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer.user.js) [force update](/dist/Manga_OnlineViewer.user.js?raw=1)
 
-#### [Adult Reader](https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer_Adult.user.js) ([force update](/dist/Manga_OnlineViewer_Adult.user.js?raw=1))
+#### [Adult Reader](https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer_Adult.user.js) [force update](/dist/Manga_OnlineViewer_Adult.user.js?raw=1)
 
 #### Official Source: [GitHub](https://github.com/TagoDR/MangaOnlineViewer)
 
