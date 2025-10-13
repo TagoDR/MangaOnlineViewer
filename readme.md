@@ -22,9 +22,9 @@ Other Browsers with other add-ons may also work, but not officially supported.
 
 ## Installation
 
-#### [Main Reader](https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer.user.js) ([force update](/dist/Manga_OnlineViewer.user.js?raw=1))
+#### [Main Reader](/dist/Manga_OnlineViewer.user.js?raw=1)
 
-#### [Adult Reader](https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer_Adult.user.js) ([force update](/dist/Manga_OnlineViewer_Adult.user.js?raw=1))
+#### [Adult Reader](/dist/Manga_OnlineViewer_Adult.user.js?raw=1)
 
 #### Official Source: [GitHub](https://github.com/TagoDR/MangaOnlineViewer)
 
@@ -45,7 +45,6 @@ then open it in the browser, and you will see the options to load local Files.
 - [Kagane](https://kagane.org/) _[English]_
 - [LHTranslation](https://lhtranslation.net/) _[English]_
 - [MangaBuddy](https://mangabuddy.com/) _[English]_
-- [MangaDemon](https://demonicscans.org/) _[English]_
 - [MangaDex](https://mangadex.org/) _[English]_
 - [MangaFox](https://fanfox.net/) / [MangaHere](https://www.mangahere.cc/) _[English]_
 - [Mangago](https://www.mangago.me/) _[English]_
