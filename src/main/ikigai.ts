@@ -4,7 +4,7 @@ import { findClosestByContentEq } from '../utils/find';
 
 const ikigai: ISite = {
   name: ['Ikigai Mangas - EltaNews', 'Ikigai Mangas - Ajaco'],
-  url: /https?:\/\/(visorikigai|visualikigai).(ajaco|eltanews|foodib).(com|net)\/capitulo\/\d+/,
+  url: /https?:\/\/(visorikigai|visualikigai).(ajaco|eltanews|foodib|jobswu).(com|net|site)\/capitulo\/\d+/,
   homepage: ['https://visorikigai.eltanews.com/', 'https://visorikigai.ajaco.net/'],
   language: [Language.SPANISH],
   category: Category.MANGA,
