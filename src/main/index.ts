@@ -15,7 +15,6 @@ import localhost from './localhost';
 import m440 from './m440.ts';
 import madarawp from './madarawp';
 import mangabuddy from './mangabuddy';
-import mangademon from './mangademon';
 import mangadex from './mangadex';
 import mangafox from './mangafox';
 import mangago from './mangago';
@@ -54,7 +53,6 @@ const sites: ISite[] = [
   localhost,
   m440,
   mangabuddy,
-  mangademon,
   mangadex,
   mangafox,
   mangago,
