@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaOni, MangaPark, MangaReader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod
-// @version       2025.10.13.build-1819
+// @version       2025.10.14.build-1800
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -12595,15 +12595,25 @@
     constructor() {
       (super(), this.attachShadow({ mode: 'open' }));
     }
+    static #t = 3e3;
+    parseDuration(o) {
+      if (o === 'none' || (Number.isInteger(o) && o > Toaster.#t)) return o;
+      const e = this.getAttribute('duration');
+      if (e) {
+        const r = Number.parseInt(e);
+        if (!Number.isNaN(r)) return r;
+      }
+      return Toaster.#t;
+    }
     async createToast({
       title: o,
-      type: r,
-      description: c,
-      onConfirm: v,
+      type: e,
+      description: r,
+      onConfirm: m,
       onCancel: f,
-      confirmText: b = '\u2705',
-      cancelText: h = '\u274C',
-      duration: d = 3e3,
+      confirmText: v = '\u2705',
+      cancelText: b = '\u274C',
+      duration: n,
     }) {
       const a = this.shadowRoot.querySelector('#toast-tmpl').content.cloneNode(true),
         t = {
@@ -12615,55 +12625,55 @@
           cancelBtn: a.querySelector("button[data-action-type='cancel']"),
           closeBtn: a.querySelector('[data-close-button]'),
         };
-      ((t.title.textContent = o || ''),
-        t.container.setAttribute('data-type', r),
-        c == null ? t.description?.remove() : (t.description.textContent = c));
-      const n = () => this.removeToast(t.container);
+      ((n = this.parseDuration(n)),
+        (t.title.textContent = o || ''),
+        t.container.setAttribute('data-type', e),
+        r == null ? t.description?.remove() : (t.description.textContent = r));
+      const s = () => this.removeToast(t.container);
       if (
-        (r === 'confirm'
-          ? ((t.confirmBtn.textContent = b),
+        (e === 'confirm'
+          ? ((t.confirmBtn.textContent = v),
             t.confirmBtn.addEventListener(
               'click',
               () => {
-                (v?.(), n());
+                (m?.(), s());
               },
               { once: true },
             ),
-            (t.cancelBtn.textContent = h),
+            (t.cancelBtn.textContent = b),
             t.cancelBtn.addEventListener(
               'click',
               () => {
-                (f?.(), n());
+                (f?.(), s());
               },
               { once: true },
             ))
           : t.actions?.remove(),
         this.hasAttribute('dismissable')
-          ? t.closeBtn.addEventListener('click', n, { once: true })
+          ? t.closeBtn.addEventListener('click', s, { once: true })
           : t.closeBtn?.remove(),
         this.shadowRoot.querySelector('[data-toaster]').appendChild(a),
-        d !== 'none')
+        n !== 'none')
       ) {
-        const l = Math.max(Number.parseInt(d, 10) || 0, 3e3),
-          i = new AbortController(),
-          g = Date.now();
-        let e = null,
-          p = 0;
+        const c = new AbortController(),
+          h = Date.now();
+        let i = null,
+          l = 0;
         const u = () => {
-          (i.abort(), n());
+          (c.abort(), s());
         };
-        let m = setTimeout(u, l);
-        const y = () => {
-            e == null && (clearTimeout(m), (e = Date.now()));
+        let p = setTimeout(u, n);
+        const g = () => {
+            i == null && (clearTimeout(p), (i = Date.now()));
           },
-          _ = () => {
-            e != null && ((p = e - g), (e = null), (m = setTimeout(u, Math.max(l - p, 0))));
+          y = () => {
+            i != null && ((l = i - h), (i = null), (p = setTimeout(u, Math.max(n - l, 0))));
           };
-        (['focusin', 'pointerenter', 'mouseenter'].forEach(s => {
-          t.container.addEventListener(s, y, { signal: i.signal });
+        (['focusin', 'pointerenter', 'mouseenter'].forEach(d => {
+          t.container.addEventListener(d, g, { signal: c.signal });
         }),
-          ['focusout', 'pointerleave', 'mouseleave'].forEach(s => {
-            t.container.addEventListener(s, _, { signal: i.signal });
+          ['focusout', 'pointerleave', 'mouseleave'].forEach(d => {
+            t.container.addEventListener(d, y, { signal: c.signal });
           }));
       }
     }
@@ -12676,8 +12686,8 @@
     }
     handleEvent(o) {
       if (o instanceof CustomEvent && o.type === TOAST_EVENT) {
-        const r = o.detail;
-        this.createToast(r);
+        const e = o.detail;
+        this.createToast(e);
       }
     }
     connectedCallback() {
