@@ -28,11 +28,11 @@ Other Browsers with other add-ons may also work, but not officially supported.
 
 #### Official Source: [GitHub](https://github.com/TagoDR/MangaOnlineViewer)
 
-## Local Files (ZIP, CBZ, CBR..., PNGs, JPGs...)
+## Local Files Reader (ZIP, CBZ, CBR..., PNGs, JPGs...)
 
-Save this
-file [index.html](/index.html?raw=1),
-then open it in the browser, and you will see the options to load local Files.
+Download the standalone HTML file from the link below. Open it in your browser to load local comic/manga files.
+
+[Download Local Standalone Reader](/dist/Manga_Local_Viewer.html?raw=1)
 
 ## Supported Manga Sites
 

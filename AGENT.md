@@ -36,6 +36,7 @@ The project is written in TypeScript and uses Vite for its build process. The ar
 - **Builds**: The build process is managed by Vite and configured in `vite.config.ts`.
   - **Development**: Run `npm start` or `npm run build`. This generates a `Manga_Online_Viewer_DEV.user.js` file in the `dist/` directory. This is the recommended script for development and testing as it includes all sites. And `npm run storybook` to test individual peaces of the UI.
   - **Release**: Run `npm run release`. This generates the separate `main` and `adult` userscripts for production. Should only be used by CI/CD pipeline.
+  - **Standalone**: Run `npm run build:standalone`. This compiles the application into a single, portable HTML file (`dist/Manga_Online_Viewer_Standalone.html`) that can be opened directly in a browser to read local files.
 
 - **Linting & Formatting**: The project uses Biome and Prettier to maintain code quality and consistency. Configuration is in `biome.json` and the `prettier` key in `package.json`.
   - `npm run lint`: Check for linting issues.

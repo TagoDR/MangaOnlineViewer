@@ -71,7 +71,7 @@ export async function loadZipFile(filePath: string | File): Promise<string[]> {
  */
 function displayUploadedFiles(title: string, listImages: string[]): void {
   preparePage([
-    undefined,
+    { ...localhost, start: 'always' },
     {
       title,
       series: '?reload',

@@ -14,6 +14,7 @@ import viteBanner from 'vite-plugin-banner';
 import svgLoader from 'vite-svg-loader';
 import metaAdult from './src/meta/meta-adult';
 import metaDev from './src/meta/meta-dev';
+import { viteSingleFile } from 'vite-plugin-singlefile';
 import metaMain from './src/meta/meta-main';
 import { bookmarklet, comicSites, hentaiSites, mangaSites } from './src/meta/readme';
 
@@ -27,6 +28,29 @@ const didChange = (filePath: string, content: string) =>
  * and returns the appropriate configuration for that target.
  */
 export default defineConfig(({ mode }) => {
+  if (mode === 'standalone') {
+    return {
+      plugins: [
+        svgLoader({ svgo: false, defaultImport: 'raw' }),
+        viteSingleFile({ useRecommendedBuildConfig: true }),
+        {
+          name: 'rename-index',
+          closeBundle() {
+            fs.renameSync('./dist/index.html', './dist/Manga_Local_Viewer.html');
+          },
+        },
+      ],
+      build: {
+        target: 'esnext',
+        emptyOutDir: false,
+        outDir: 'dist',
+        rollupOptions: {
+          input: 'index.html',
+        },
+      },
+    };
+  }
+
   if (mode === 'development') mode = 'dev';
   const meta = {
     main: metaMain,

@@ -5,13 +5,13 @@
   "scripts": {
     "start": "vite --host",
     "build": "vite build --mode dev",
-    "release": "vite build --mode main && vite build --mode adult",
+    "build:standalone": "vite build --mode standalone",
+    "release": "vite build --mode main && vite build --mode adult && vite build --mode standalone",
     "check": "biome check --write ./src",
     "lint": "biome lint --write ./src",
     "format": "prettier --write --log-level error . \"!**/dist\" && biome format --write .",
     "ci": "biome ci ./src",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "storybook": "storybook dev -p 6006"
   },
   "author": "TagoDR",
   "license": "MIT",
@@ -44,6 +44,7 @@
     "userscript-metadata-generator": "^0.2.4",
     "vite": "^7.1.10",
     "vite-plugin-banner": "^0.8.1",
+    "vite-plugin-singlefile": "^2.3.0",
     "vite-svg-loader": "^5.1.0"
   },
   "dependencies": {

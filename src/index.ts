@@ -10,13 +10,18 @@ import start, { preparePage } from './core/main.ts';
 import { allowUpload } from './core/upload';
 import localhost from './main/localhost';
 
-// Enable local file upload functionality.
-allowUpload();
+if (document.querySelector('manga-online-viewer')) {
+  console.log('MangaOnlineViewer is already running');
+} else {
+  // Enable local file upload functionality.
+  allowUpload();
 
-// Add a click listener to a test button for re-rendering the display.
-document
-  .querySelector('#test')
-  ?.addEventListener('click', () => start([{ ...localhost, url: /.*/ }]));
+  // Add a click listener to a test button for re-rendering the display.
+  document
+    .querySelector('#test')
+    ?.addEventListener('click', () => start([{ ...localhost, url: /.*/ }]));
 
-// Immediately render the main application UI with the mock data.
-preparePage([{ ...localhost, start: 'always' }, await localhost.run()]);
+  // Immediately render the main application UI with the mock data.
+  if (import.meta.env.MODE !== 'standalone')
+    preparePage([{ ...localhost, start: 'always' }, await localhost.run()]);
+}
