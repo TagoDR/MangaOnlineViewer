@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.10.14.build-1800
+// @version       2025.10.16.build-0117
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -3686,12 +3686,150 @@
     const encoded = encodeURIComponent(cleaned).replace(/\(/g, '%28').replace(/\)/g, '%29');
     return `data:image/svg+xml;charset=UTF-8,${encoded}`;
   }
-  Object.values(colors).map(i => i['900']);
+  const rulerMarkerLength = len => {
+    if (len % 100 === 0) {
+      return 15;
+    }
+    if (len % 50 === 0) {
+      return 10;
+    }
+    if (len % 25 === 0) {
+      return 5;
+    }
+    return 2.5;
+  };
+  function rectangleRuler(width, height, bgColor, textColor) {
+    let markers = '';
+    for (let x = 0; x <= width; x += 5) {
+      const tick = html` <line
+        x1="${x}"
+        y1="0"
+        x2="${x}"
+        y2="${rulerMarkerLength(x)}"
+      />`;
+      markers += tick;
+      if (x !== 0 && x % 50 === 0) {
+        const label = html` <text
+          x="${x}"
+          y="25"
+          text-anchor="middle"
+          font-size="${rulerMarkerLength(x)}px"
+        >
+          ${x}
+        </text>`;
+        markers += label;
+      }
+    }
+    for (let y = 0; y <= height; y += 5) {
+      const tick = html` <line
+        x1="0"
+        y1="${y}"
+        x2="${rulerMarkerLength(y)}"
+        y2="${y}"
+      />`;
+      markers += tick;
+      if (y !== 0 && y % 50 === 0) {
+        const label = html` <text
+          x="25"
+          y="${y}"
+          text-anchor="middle"
+          dominant-baseline="middle"
+          font-size="${rulerMarkerLength(y)}px"
+        >
+          ${y}
+        </text>`;
+        markers += label;
+      }
+    }
+    return html` <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="${width}"
+      height="${height}"
+      viewBox="0 0 ${width} ${height}"
+    >
+      <rect
+        width="${width}"
+        height="${height}"
+        fill="${bgColor}"
+      />
+      <text
+        fill="${textColor}"
+        font-family="Verdana, Arial, Helvetica, sans-serif"
+        font-size="30"
+        dy="10.5"
+        font-weight="bold"
+        x="50%"
+        y="50%"
+        text-anchor="middle"
+      >
+        ${width}x${height}
+      </text>
+      <g
+        stroke-width="1"
+        font-family="Verdana, Arial, Helvetica, sans-serif"
+        font-size="10px"
+        font-weight="100"
+        fill="${textColor}"
+        stroke="${textColor}"
+      >
+        ${markers}
+      </g>
+    </svg>`;
+  }
+  function placeholder(width, height, bgColor = '#0F1C3F', textColor = '#ECEAD9') {
+    const str = rectangleRuler(width, height, bgColor, textColor);
+    return svgToUrl(str);
+  }
+  const backgrounds = Object.values(colors).map(i => i['900']);
+  const widths = [400, 600, 900, 1200, 1400, 1600, 1970];
+  const heights = [600, 800, 1e3, 1200, 1400, 2e3, 2600];
+  function randomPlaceholder() {
+    const randomWidth = Math.floor(Math.random() * widths.length);
+    const randomHeight = Math.floor(Math.random() * heights.length);
+    const randomColor = Math.floor(Math.random() * backgrounds.length);
+    return placeholder(widths[randomWidth], heights[randomHeight], backgrounds[randomColor]);
+  }
 
   const localhost = {
+    name: 'Local Files',
     url: /(file:\/\/\/.+(index)?.html)/,
+    homepage: '/index.html?raw=1',
     language: [Language.RAW],
     category: Category.MANGA,
+    run() {
+      const num = parseInt(/\d+/.exec(window.location.search)?.toString() ?? '5', 10);
+      const comments = document.createElement('div');
+      const lorem =
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+      const commentsEn = [
+        lorem,
+        `<span style="color: white; background-color: black;">${lorem.substring(0, 100)}</span>`,
+        `<span style="color: black; background-color: white;">${lorem.substring(100, 200)}</span>`,
+        `<b>${lorem.substring(200, 300)}</b>`,
+        `<i>${lorem.substring(300, 400)}</i>`,
+      ];
+      comments.innerHTML = Array(100)
+        .fill(0)
+        .map(() => commentsEn[Math.floor(Math.random() * commentsEn.length)])
+        .join('<br><br>');
+      return {
+        title: 'Placeholder Manga Loaded',
+        series: '?reload',
+        pages: num,
+        begin: 1,
+        prev: '?pages=50',
+        next: '?pages=1',
+        listImages: [
+          placeholder(1970, 1400, '#2D1657'),
+          placeholder(985, 1400, '#152C55'),
+          placeholder(985, 1400, '#7A1420'),
+          placeholder(985, 1400, '#0F5B30'),
+          placeholder(1970, 1400, '#806D15'),
+          ...Array(num).fill(0).map(randomPlaceholder),
+        ],
+        comments,
+      };
+    },
   };
 
   const fileTypes = [
@@ -3730,7 +3868,7 @@
   }
   function displayUploadedFiles(title, listImages) {
     preparePage([
-      void 0,
+      { ...localhost, start: 'always' },
       {
         title,
         series: '?reload',
