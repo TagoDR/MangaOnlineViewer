@@ -60,7 +60,7 @@ async function collectAllSources(num: number): Promise<string[]> {
 const kagane: ISite = {
   name: 'Kagane',
   homepage: 'https://kagane.org/',
-  url: /https:\/\/(www.)?kagane.org\/series\/.+\/reader\/.+/,
+  url: /https:\/\/(www\.)?kagane\.org\/series\/.+\/reader\/.+/,
   language: Language.ENGLISH,
   category: Category.MANGA,
   waitEle: '.reader-page img',
