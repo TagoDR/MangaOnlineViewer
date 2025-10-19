@@ -21,24 +21,30 @@
     "type": "git",
     "url": "git+https://github.com/TagoDR/MangaOnlineViewer.git"
   },
-  "keywords": ["manga", "reader", "viewer", "online", "loader"],
+  "keywords": [
+    "manga",
+    "reader",
+    "viewer",
+    "online",
+    "loader"
+  ],
   "bugs": "https://github.com/TagoDR/MangaOnlineViewer/issues",
   "homepage": "https://github.com/TagoDR/MangaOnlineViewer#readme",
   "devDependencies": {
     "@biomejs/biome": "^2.2.6",
-    "@storybook/addon-docs": "^9.1.10",
-    "@storybook/web-components-vite": "^9.1.10",
+    "@storybook/addon-docs": "^9.1.13",
+    "@storybook/web-components-vite": "^9.1.13",
     "@types/crypto-js": "^4.2.2",
     "@types/file-saver": "^2.0.7",
     "@types/lodash": "^4.17.20",
-    "@types/node": "^24.7.2",
+    "@types/node": "^24.8.1",
     "@types/nprogress": "^0.2.3",
-    "@types/tampermonkey": "^5.0.4",
+    "@types/tampermonkey": "^5.0.5",
     "@vueless/storybook-dark-mode": "^9.0.9",
     "del": "^8.0.1",
     "rollup-plugin-external-globals": "^0.13.0",
     "rollup-plugin-prettier": "^4.1.2",
-    "storybook": "^9.1.10",
+    "storybook": "^9.1.13",
     "tslib": "^2.8.1",
     "typescript": "^5.9.3",
     "userscript-metadata-generator": "^0.2.4",
@@ -66,7 +72,10 @@
     "nprogress": "^0.2.0",
     "toolcool-range-slider": "^4.0.28"
   },
-  "browserslist": ["defaults and fully supports es6-module", "maintained node versions"],
+  "browserslist": [
+    "defaults and fully supports es6-module",
+    "maintained node versions"
+  ],
   "prettier": {
     "overrides": [
       {
