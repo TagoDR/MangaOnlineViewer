@@ -7,14 +7,13 @@ import {
   logScript,
   logScriptVerbose,
 } from '../utils/tampermonkey';
-import { testAttribute, testElement, testFunc, testTime, testVariable } from './check';
+import { runSiteTests } from './check';
 import { getSettingsValue, isBookmarked } from './settings';
 import { allowUpload } from './upload';
 import '../ui';
 import type App from '../ui/App.ts';
 import externalCSS from '../ui/styles/externalStyle.ts';
 import { wrapStyle } from '../utils/css.ts';
-import { waitForFunc, waitWithTimeout } from '../utils/waitFor.ts';
 
 /**
  * Captures the comments section (Disqus or Facebook) from the page.
@@ -24,26 +23,37 @@ import { waitForFunc, waitWithTimeout } from '../utils/waitFor.ts';
  */
 async function captureComments(): Promise<Element | null> {
   if (!getSettingsValue('enableComments')) return null;
-  let comments = document.querySelector('#disqus_thread, #fb-comments');
+  const comments = document.querySelector('#disqus_thread, #fb-comments');
   if (comments) {
-    logScript(`Waiting to Comments to load`, comments);
+    logScript('Waiting for Comments to load', comments);
     window.scrollTo(0, document.body.scrollHeight);
-    await waitWithTimeout(
-      waitForFunc(() => {
-        comments = document.querySelector('#disqus_thread, #fb-comments');
-        const iframe = comments?.querySelector<HTMLIFrameElement>(
+
+    await new Promise<void>(resolve => {
+      const observer = new MutationObserver(() => {
+        const iframe = comments.querySelector<HTMLIFrameElement>(
           'iframe:not(#indicator-north, #indicator-south)',
         );
-        return (
+        if (
           iframe?.contentWindow?.document.readyState === 'complete' &&
-          !!iframe?.contentWindow?.document?.body?.textContent?.length
-        );
-      }),
-    );
+          !!iframe?.contentWindow?.document.body?.textContent?.length
+        ) {
+          observer.disconnect();
+          resolve();
+        }
+      });
+      observer.observe(comments, { childList: true, subtree: true });
+
+      // Also resolve after a timeout, in case the comments never load.
+      setTimeout(() => {
+        observer.disconnect();
+        resolve();
+      }, 10000); // 10 seconds timeout
+    });
+
     if (comments.children.length) {
-      logScript(`Got Comments`, comments);
+      logScript('Got Comments', comments);
     } else {
-      logScript(`Timeout Comments`);
+      logScript('Timeout Comments');
     }
   }
   window.scrollTo(0, 0);
@@ -92,34 +102,30 @@ async function start(sites: ISite[]): Promise<void> {
   logScript(sites.length, 'Known Manga Sites:', sites);
   const foundSites = sites.filter((s: ISite) => s.url.test(window.location.href));
   logScript(foundSites.length, 'Found sites:', foundSites);
-  const testedSites = foundSites.map(async (site): Promise<[ISite, IManga]> => {
+
+  const sitePromises = foundSites.map(async (site): Promise<[ISite, IManga]> => {
     logScript(`Testing site: ${site.name}`);
-    return new Promise((resolve, reject) => {
-      Promise.all([
-        testTime(site),
-        testElement(site),
-        testAttribute(site),
-        testVariable(site),
-        testFunc(site),
-      ])
-        .then(async () => site.run())
-        .then(manga =>
-          manga.pages > 0
-            ? resolve([site, manga])
-            : reject(new Error(`${site.name} found ${manga.pages} pages`)),
-        );
-    });
+    await runSiteTests(site);
+    const manga = await site.run();
+    if (manga.pages > 0) {
+      return [site, manga];
+    }
+    throw new Error(`${site.name} found ${manga.pages} pages`);
   });
-  Promise.race(testedSites.map((promise, index) => promise.then(() => index))).then(
-    fastestIndex => {
-      testedSites.forEach((_promise, i) => {
-        if (i !== fastestIndex) logScript(`Failed/Skipped: ${foundSites[i].name}`);
-      });
-      testedSites[fastestIndex].then(result => {
-        preparePage(result);
-      });
-    },
-  );
+
+  try {
+    const result = await Promise.any(sitePromises);
+    preparePage(result);
+  } catch (error) {
+    if (error instanceof AggregateError) {
+      logScript('All sites failed to run:');
+      for (const err of error.errors) {
+        logScript(err.message);
+      }
+    } else {
+      logScript('An unexpected error occurred:', error);
+    }
+  }
 }
 
 export default start;

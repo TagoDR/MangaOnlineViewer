@@ -22,7 +22,8 @@ function linkSite(site: [string, string]): string {
 
 /**
  * Normalizes a site's name and homepage into a consistent array format.
- * Handles cases where a site might have multiple names or homepages.
+ * This function is designed to handle cases where a site might have a single name (string) or multiple names (array of strings).
+ * It ensures that the output is always an array of [name, homepage] tuples, making it easier to process later.
  * @internal
  * @param {ISite} site - The site object to normalize.
  * @returns {Array<[string, string]>} An array of name/homepage tuples.

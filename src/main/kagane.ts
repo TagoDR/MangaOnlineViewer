@@ -1,6 +1,16 @@
 // == Kagane =======================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
+interface ChapterData {
+  id: string;
+  metadata?: {
+    title: string;
+  };
+  media?: {
+    pagesCount: number;
+  };
+}
+
 /**
  * A utility function to pause execution.
  * @param {number} ms - Milliseconds to wait.
@@ -83,21 +93,23 @@ const kagane: ISite = {
       headers,
     }).then(res => res.json());
 
-    const currentChapter = booksData.data.content.find((c: any) => c.id === chapterId);
-    const chapterIndex = booksData.data.content.findIndex((c: any) => c.id === chapterId);
+    const content: ChapterData[] = booksData.data.content;
 
-    const prevChapter = booksData.data.content[chapterIndex + 1];
-    const nextChapter = booksData.data.content[chapterIndex - 1];
+    const currentChapter = content.find(c => c.id === chapterId);
+    const chapterIndex = content.findIndex(c => c.id === chapterId);
+
+    const prevChapter = content[chapterIndex + 1];
+    const nextChapter = content[chapterIndex - 1];
 
     // The images are DRM protected and cannot be loaded directly.
     // This is just a placeholder.
     return {
       title: `${seriesData.data.name} - ${currentChapter?.metadata?.title}`,
       series: `/series/${seriesId}`,
-      pages: currentChapter?.media?.pagesCount,
+      pages: currentChapter?.media?.pagesCount ?? 0,
       prev: prevChapter ? `/series/${seriesId}/books/${prevChapter.id}` : undefined,
       next: nextChapter ? `/series/${seriesId}/books/${nextChapter.id}` : undefined,
-      listImages: await collectAllSources(currentChapter?.media?.pagesCount),
+      listImages: await collectAllSources(currentChapter?.media?.pagesCount ?? 0),
     };
   },
 };

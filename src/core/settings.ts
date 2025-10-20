@@ -121,68 +121,68 @@ function getDefault(global = true): ISettings {
  * @returns A boolean if a custom comparison is made, or undefined to
  * let Lodash's default comparison take over.
  */
+function areBookmarksEqual(value: IBookmark[], other: IBookmark[]): boolean | undefined {
+  if (Array.isArray(value) && Array.isArray(other)) {
+    if (value.length !== other.length) {
+      return false;
+    }
+    const getBookmarkSortKey = (b: IBookmark) => `${b.url}-${b.date}`;
+    const sortedValue = [...value].sort((a, b) =>
+      getBookmarkSortKey(a).localeCompare(getBookmarkSortKey(b)),
+    );
+    const sortedOther = [...other].sort((a, b) =>
+      getBookmarkSortKey(a).localeCompare(getBookmarkSortKey(b)),
+    );
+    return _.isEqual(sortedValue, sortedOther);
+  }
+  return undefined;
+}
+
+function areKeybindsEqual(
+  value: Record<string, string[] | undefined>,
+  other: Record<string, string[] | undefined>,
+): boolean | undefined {
+  if (value && typeof value === 'object' && other && typeof other === 'object') {
+    const valueKeybinds = value as Record<string, string[]>;
+    const otherKeybinds = other as Record<string, string[]>;
+    const keysA = Object.keys(valueKeybinds).sort((a, b) => a.localeCompare(b));
+    const keysB = Object.keys(otherKeybinds).sort((a, b) => a.localeCompare(b));
+
+    if (!_.isEqual(keysA, keysB)) {
+      return false;
+    }
+
+    for (const k of keysA) {
+      const sortedArrayA = valueKeybinds[k]
+        ? [...valueKeybinds[k]].sort((a, b) => a.localeCompare(b))
+        : [];
+      const sortedArrayB = otherKeybinds[k]
+        ? [...otherKeybinds[k]].sort((a, b) => a.localeCompare(b))
+        : [];
+      if (!_.isEqual(sortedArrayA, sortedArrayB)) {
+        return false;
+      }
+    }
+    return true;
+  }
+  return undefined;
+}
+
 export function compareSettingsCustomizer(
   value: unknown,
   other: unknown,
   key: string | number | symbol | undefined,
 ): boolean | undefined {
-  // Handle the 'bookmarks' array.
   if (key === 'bookmarks') {
-    // Ensure both values are arrays before proceeding.
-    if (Array.isArray(value) && Array.isArray(other)) {
-      // If the array lengths are different, they are not equal.
-      if (value.length !== other.length) {
-        return false;
-      }
-
-      // To compare arrays without considering order, we can sort them first.
-      // We'll create a sortable string from the bookmark properties.
-      // Using `url` and `date` ensures uniqueness for sorting.
-      const getBookmarkSortKey = (b: IBookmark) => `${b.url}-${b.date}`;
-
-      const sortedValue = [...value].sort((a, b) =>
-        getBookmarkSortKey(a).localeCompare(getBookmarkSortKey(b)),
-      );
-      const sortedOther = [...other].sort((a, b) =>
-        getBookmarkSortKey(a).localeCompare(getBookmarkSortKey(b)),
-      );
-
-      // Now we can use Lodash's isEqual to perform a deep comparison
-      // on the sorted arrays.
-      return _.isEqual(sortedValue, sortedOther);
-    }
+    return areBookmarksEqual(value as IBookmark[], other as IBookmark[]);
   }
 
-  // Handle the 'keybinds' object.
   if (key === 'keybinds') {
-    // Ensure both values are objects before proceeding.
-    if (value && typeof value === 'object' && other && typeof other === 'object') {
-      const valueKeybinds = value as Record<string, string[]>;
-      const otherKeybinds = other as Record<string, string[]>;
-      const keysA = Object.keys(valueKeybinds).sort((a, b) => a.localeCompare(b));
-      const keysB = Object.keys(otherKeybinds).sort((a, b) => a.localeCompare(b));
-
-      // If the keys are different, the objects are not equal.
-      if (!_.isEqual(keysA, keysB)) {
-        return false;
-      }
-
-      // Compare the arrays for each key, after sorting the inner arrays.
-      for (const k of keysA) {
-        const sortedArrayA = valueKeybinds[k]
-          ? [...valueKeybinds[k]].sort((a, b) => a.localeCompare(b))
-          : [];
-        const sortedArrayB = otherKeybinds[k]
-          ? [...otherKeybinds[k]].sort((a, b) => a.localeCompare(b))
-          : [];
-        if (!_.isEqual(sortedArrayA, sortedArrayB)) {
-          return false;
-        }
-      }
-      return true;
-    }
+    return areKeybindsEqual(
+      value as Record<string, string[] | undefined>,
+      other as Record<string, string[] | undefined>,
+    );
   }
-
   // For all other properties, return undefined to let Lodash handle the comparison.
   return undefined;
 }
@@ -320,7 +320,9 @@ function syncGlobalSettings(newValue: Partial<ISettings>): void {
   if (!isNothing(diff)) {
     logScript('Imported Global Settings', diff);
     globalSettings = newSettings;
-    refreshSettings();
+    for (const key in diff) {
+      refreshSettings(key as ISettingsKey);
+    }
   }
 }
 
@@ -336,7 +338,9 @@ function syncLocalSettings(newValue: Partial<ISettings>): void {
   if (!isNothing(diff)) {
     logScript('Imported Local Settings', diff);
     localSettings = newSettings;
-    refreshSettings();
+    for (const key in diff) {
+      refreshSettings(key as ISettingsKey);
+    }
   }
 }
 

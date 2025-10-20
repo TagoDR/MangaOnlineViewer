@@ -87,6 +87,7 @@ export function waitForAtb(
 /**
  * Waits for a global variable to be available on the `unsafeWindow` object.
  * Note: This is specific to userscript environments like Tampermonkey.
+ * @security This function uses `unsafeWindow` to access global variables on the page. This can be a security risk if the page's scripts are malicious.
  * @param {string | keyof typeof unsafeWindow} name - The name of the variable to wait for.
  * @param {HTMLElement} [target=document.body] - The DOM element to observe for changes as a fallback trigger.
  * @returns {Promise<any>} A promise that resolves with the value of the variable once it becomes available.

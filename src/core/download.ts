@@ -32,6 +32,31 @@ function extFromMime(mime?: string): string {
  */
 async function getBlobFromFetch(page: Page): Promise<Blob | null> {
   if (!page.src) return null;
+  if (typeof GM_xmlhttpRequest !== 'undefined') {
+    return new Promise(resolve => {
+      GM_xmlhttpRequest({
+        method: 'GET',
+        url: page.src as string,
+        responseType: 'blob',
+        onload: response => {
+          if (response.status === 200) {
+            logScript(`Got blob for page ${page.src} from GM_xmlhttpRequest`);
+            resolve(response.response);
+          } else {
+            logScript(
+              `Failed to get blob for page ${page.src} from GM_xmlhttpRequest`,
+              response.statusText,
+            );
+            resolve(null);
+          }
+        },
+        onerror: error => {
+          logScript(`Failed to get blob for page ${page.src} from GM_xmlhttpRequest`, error);
+          resolve(null);
+        },
+      });
+    });
+  }
   try {
     const response = await fetch(page.src);
     if (response.ok) {
@@ -87,18 +112,11 @@ async function getImageBlob(page: Page): Promise<Blob | null> {
     return page.blob;
   }
 
-  const blob = await getBlobFromFetch(page);
-  if (blob) {
-    return blob;
+  const blob = (await getBlobFromFetch(page)) || (await getBlobFromCanvas(page));
+  if (!blob) {
+    logScript(`Failed to get blob for page ${page.src}`);
   }
-
-  const canvasBlob = await getBlobFromCanvas(page);
-  if (canvasBlob) {
-    return canvasBlob;
-  }
-
-  logScript(`Failed to get blob for page ${page.src}`);
-  return null;
+  return blob;
 }
 
 /**
@@ -113,18 +131,30 @@ async function generateZip(): Promise<void> {
   const manga = getAppStateValue('manga');
   const digits = Math.floor(Math.log10(manga?.pages ?? 1)) + 1;
   const imageEntries = Object.entries(images).sort((a, b) => Number(a[0]) - Number(b[0]));
+  const failedDownloads: string[] = [];
   for (const [key, page] of imageEntries) {
-    // eslint-disable-next-line no-await-in-loop
-    const blob = await getImageBlob(page);
-    if (blob) {
-      const ext = extFromMime(blob.type);
-      const name = `Page-${Number(key).toString().padStart(digits, '0')}.${ext}`;
-      logScript(`${name} Added to Zip from Blob`);
-      zip.file(name, blob, {
-        createFolders: true,
-        compression: 'DEFLATE',
-      });
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      const blob = await getImageBlob(page);
+      if (blob) {
+        const ext = extFromMime(blob.type);
+        const name = `Page-${Number(key).toString().padStart(digits, '0')}.${ext}`;
+        logScript(`${name} Added to Zip from Blob`);
+        zip.file(name, blob, {
+          createFolders: true,
+          compression: 'DEFLATE',
+        });
+      } else {
+        failedDownloads.push(page.src ?? key);
+      }
+    } catch (error) {
+      logScript(`Error processing page ${key}`, error);
+      failedDownloads.push(page.src ?? key);
     }
+  }
+
+  if (failedDownloads.length > 0) {
+    logScript('Some images failed to download:', failedDownloads);
   }
 
   logScript('Generating Zip');

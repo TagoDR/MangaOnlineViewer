@@ -110,12 +110,12 @@ const getInfoGM =
  * @param {any} [defaultValue=null] - The default value to return if the key does not exist.
  * @returns {any} The retrieved value or the default.
  */
-function getValueGM(name: string, defaultValue: any = null): any {
+function getValueGM<T>(name: string, defaultValue?: T): T {
   if (typeof GM_getValue !== 'undefined') {
     return GM_getValue(name, defaultValue);
   }
   logScriptVerbose('Fake Getting: ', name, ' = ', defaultValue);
-  return defaultValue;
+  return defaultValue as T;
 }
 
 /**
@@ -124,17 +124,17 @@ function getValueGM(name: string, defaultValue: any = null): any {
  * @param {any} [defaultValue=null] - The default value to return if the key does not exist.
  * @returns {any} The parsed JSON object or the default value.
  */
-function getJsonGM(name: string, defaultValue: any = null) {
+function getJsonGM<T>(name: string, defaultValue?: T): T {
   const result = getValueGM(name, defaultValue);
   if (typeof result === 'string' && result.trim() !== '') {
     try {
-      return JSON.parse(result);
+      return JSON.parse(result) as T;
     } catch (e) {
       logScript('Failed to parse JSON from storage', name, e);
-      return defaultValue;
+      return defaultValue as T;
     }
   }
-  return result;
+  return result as T;
 }
 
 /**
@@ -143,7 +143,7 @@ function getJsonGM(name: string, defaultValue: any = null) {
  * @returns {Partial<ISettings>} The global settings object.
  */
 function getGlobalSettings(defaultSettings?: ISettings): Partial<ISettings> {
-  return getJsonGM('settings', defaultSettings);
+  return getJsonGM<Partial<ISettings>>('settings', defaultSettings);
 }
 
 /**
@@ -152,7 +152,7 @@ function getGlobalSettings(defaultSettings?: ISettings): Partial<ISettings> {
  * @returns {Partial<ISettings>} The local settings object.
  */
 function getLocalSettings(defaultSettings?: ISettings): Partial<ISettings> {
-  return getJsonGM(window.location.hostname, defaultSettings);
+  return getJsonGM<Partial<ISettings>>(window.location.hostname, defaultSettings);
 }
 
 /**
@@ -242,7 +242,7 @@ const settingsChangeListener = (
     try {
       return GM_addValueChangeListener(
         gmValue,
-        (_name: string, _oldValue: any, newValue: any, remote: boolean) => {
+        (_name: string, _oldValue: any, newValue: Partial<ISettings>, remote: boolean) => {
           if (remote) fn(newValue);
         },
       );

@@ -61,22 +61,6 @@ export default class Button extends LitElement {
     if (this.disabled || this.loading) {
       event.preventDefault();
       event.stopPropagation();
-      return;
-    }
-
-    if (this.type === 'submit' && !this.href) {
-      const form = this.closest('form');
-      if (form) {
-        event.preventDefault();
-        const tempButton = document.createElement('button');
-        tempButton.type = this.type;
-        tempButton.style.display = 'none';
-        if (this.name) tempButton.name = this.name;
-        if (this.value) tempButton.value = this.value;
-        form.appendChild(tempButton);
-        tempButton.click();
-        form.removeChild(tempButton);
-      }
     }
   }
 
@@ -173,7 +157,6 @@ export default class Button extends LitElement {
           value=${ifDefined(this.value)}
           aria-disabled=${this.disabled ? 'true' : 'false'}
           tabindex=${this.disabled ? '-1' : '0'}
-          @click=${this.handleClick}
         >
           ${buttonContent}
         </button>
@@ -182,35 +165,17 @@ export default class Button extends LitElement {
   }
 
   private handleLabelSlotChange() {
-    const isIconEl = (el: Element | null | undefined) => {
-      if (!el) return false;
-      const name = el.localName;
-      return name === 'wa-icon' || name === 'mov-icon' || name === 'svg';
-    };
     const nodes = this.labelSlot?.assignedNodes({ flatten: true }) ?? [];
-    let hasIconLabel = false;
-    let hasIcon = false;
-    let text = '';
+    const elements = nodes.filter(node => node.nodeType === Node.ELEMENT_NODE);
+    const textNodes = nodes.filter(
+      node => node.nodeType === Node.TEXT_NODE && node.textContent?.trim() !== '',
+    );
 
-    // If there's only an icon and no text, it's an icon button
-    [...nodes].forEach((node, index) => {
-      if (node.nodeType === Node.ELEMENT_NODE && isIconEl(node as HTMLElement)) {
-        hasIcon = true;
-        if (!hasIconLabel) hasIconLabel = (node as HTMLElement).hasAttribute('label');
-      }
+    const isIcon = (el: Node) =>
+      ['wa-icon', 'mov-icon', 'svg'].includes((el as HTMLElement).localName);
 
-      // Concatenate text nodes
-      if (node.nodeType === Node.TEXT_NODE) {
-        text += node.textContent;
-      }
-      if (index === 0 && isIconEl(node as HTMLElement)) {
-        (node as HTMLElement).setAttribute('slot', 'start');
-      }
-      if (index === nodes.length - 1 && isIconEl(node as HTMLElement)) {
-        (node as HTMLElement).setAttribute('slot', 'end');
-      }
-    });
+    const hasIcon = elements.some(isIcon);
 
-    this.isIconButton = text.trim() === '' && hasIcon;
+    this.isIconButton = textNodes.length === 0 && hasIcon;
   }
 }

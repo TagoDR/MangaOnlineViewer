@@ -25,27 +25,62 @@ export enum Category {
  * This contains all the core logic and properties needed to handle a specific website.
  */
 export type ISiteBase = {
-  /** A regular expression to match the URLs where the script should run. */
+  /**
+   * A regular expression that must match the manga chapter URL for the script to activate.
+   * @example /https:\/\/mangasite\.com\/manga\/.+\/\d+/
+   */
   url: RegExp;
-  /** The language(s) of the content on the site. */
+  /** The primary language of the content on the site. */
   language: Language | Language[];
-  /** Any notable observations or warnings about the site. */
+  /**
+   * Any notable observations or warnings about the site, such as if it requires a login
+   * or has aggressive anti-bot measures. This is for informational purposes.
+   */
   obs?: string;
-  /** The category or categories of content on the site. */
+  /** The category of content on the site (e.g., manga, comic, hentai). */
   category: Category | Category[];
-  /** Specifies an attribute to wait for on a specific element before proceeding. `[selector, attribute]` */
+  /**
+   * Waits for a specific attribute to be present on a DOM element before executing the script.
+   * Useful for sites where content is loaded dynamically and indicated by an attribute change.
+   * @example ['#image-container', 'data-loaded'] // Waits for the `data-loaded` attribute on the element with id `image-container`.
+   */
   waitAttr?: [string, string];
-  /** A CSS selector for an element to wait for before proceeding. */
+  /**
+   * Waits for a specific DOM element to exist before executing the script.
+   * This is the most common wait condition, used to ensure the page structure is ready.
+   * @example '#chapter-images' // Waits for the element with id `chapter-images`.
+   */
   waitEle?: string;
-  /** The name of a global variable to wait for before proceeding. */
+  /**
+   * Waits for a specific global JavaScript variable to be defined on the `window` object.
+   * Useful for sites that expose chapter data in a global variable.
+   * @example '__CHAPTER_DATA__' // Waits for `window.__CHAPTER_DATA__` to be available.
+   */
   waitVar?: string;
-  /** A custom function that must return `true` before proceeding. */
+  /**
+   * Waits for a custom function to return `true`.
+   * This provides maximum flexibility for complex scenarios where other wait conditions are insufficient.
+   * The function is polled until it returns true.
+   * @example () => document.querySelectorAll('.page-image').length > 0
+   */
   waitFunc?: () => boolean;
-  /** A fixed amount of time (in milliseconds) to wait before proceeding. */
+  /**
+   * A fixed amount of time (in milliseconds) to wait before executing the script.
+   * This should be used as a last resort when no other reliable wait condition can be found.
+   * @example 5000 // Waits for 5 seconds.
+   */
   waitTime?: number;
-  /** Overrides the global load mode setting. 'never' requires manual start, 'always' starts immediately. */
+  /**
+   * Overrides the global 'Load Mode' setting for this specific site.
+   * - `never`: The script will not run automatically; the user must start it manually via the button.
+   * - `always`: The script will run automatically as soon as the page loads.
+   */
   start?: 'never' | 'always';
-  /** The main function that executes to scrape the manga data from the page. */
+  /**
+   * The main function that scrapes the manga data from the page.
+   * It must return an `IManga` object or a promise that resolves to one.
+   * This function is where the core logic for extracting chapter details and image URLs resides.
+   */
   run(): IManga | Promise<IManga>;
 };
 

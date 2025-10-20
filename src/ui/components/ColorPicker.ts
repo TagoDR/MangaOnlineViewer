@@ -387,30 +387,43 @@ export class ColorPicker extends LitElement {
     return html`<div class=${classMap(pickerClasses)}>${pickerBody}</div>`;
   }
 
-  private updateStateFromValue(color: string) {
+  private parseColor(color: string): Color | null {
     try {
-      const newColor = new Color(color);
-      this.sourceSpace = newColor.space.id;
-      const srgbColor = newColor.to('srgb');
-      const hsvColor = srgbColor.to('hsv');
-      let [h, s, v] = hsvColor.coords;
-
-      if (Number.isNaN(h)) {
-        h = this.hsv.h || 0;
-        s = 0;
-      }
-
-      s = Math.max(0, Math.min(100, s));
-      v = Math.max(0, Math.min(100, v));
-
-      const newHsv = { h, s: s / 100, v: v / 100 };
-
-      if (newHsv.h !== this.hsv.h || newHsv.s !== this.hsv.s || newHsv.v !== this.hsv.v) {
-        this.hsv = newHsv;
-        this.updateThumbPositions();
-      }
+      return new Color(color);
     } catch (e) {
       console.error(`[color-picker] Invalid color value: "${color}"`, e);
+      return null;
+    }
+  }
+
+  private colorToHsv(color: Color): { h: number; s: number; v: number } {
+    const srgbColor = color.to('srgb');
+    const hsvColor = srgbColor.to('hsv');
+    let [h, s, v] = hsvColor.coords;
+
+    if (Number.isNaN(h)) {
+      h = this.hsv.h || 0;
+      s = 0;
+    }
+
+    s = Math.max(0, Math.min(100, s)) / 100;
+    v = Math.max(0, Math.min(100, v)) / 100;
+
+    return { h, s, v };
+  }
+
+  private updateStateFromValue(color: string) {
+    const newColor = this.parseColor(color);
+    if (!newColor) {
+      return;
+    }
+
+    this.sourceSpace = newColor.space.id;
+    const newHsv = this.colorToHsv(newColor);
+
+    if (newHsv.h !== this.hsv.h || newHsv.s !== this.hsv.s || newHsv.v !== this.hsv.v) {
+      this.hsv = newHsv;
+      this.updateThumbPositions();
     }
   }
 
@@ -457,6 +470,10 @@ export class ColorPicker extends LitElement {
     this.hueThumbPosition = (this.hsv.h / 360) * 100;
   }
 
+  /**
+   * Initiates dragging for the saturation/value panel.
+   * @param e The mouse or touch event.
+   */
   private handleSaturationDragStart(e: MouseEvent | TouchEvent) {
     e.preventDefault();
     this.isDraggingSaturation = true;
@@ -464,6 +481,10 @@ export class ColorPicker extends LitElement {
     this.updateSaturation(e);
   }
 
+  /**
+   * Initiates dragging for the hue slider.
+   * @param e The mouse or touch event.
+   */
   private handleHueDragStart(e: MouseEvent | TouchEvent) {
     e.preventDefault();
     this.isDraggingHue = true;
@@ -471,6 +492,10 @@ export class ColorPicker extends LitElement {
     this.updateHue(e);
   }
 
+  /**
+   * Handles the continuous drag movement for both saturation and hue.
+   * @param e The mouse or touch event.
+   */
   private handleDrag(e: MouseEvent | TouchEvent) {
     if (this.isDraggingSaturation) {
       this.updateSaturation(e);
@@ -480,6 +505,9 @@ export class ColorPicker extends LitElement {
     }
   }
 
+  /**
+   * Finalizes the drag operation and dispatches the 'change' event.
+   */
   private handleDragEnd() {
     if (this.isDraggingSaturation || this.isDraggingHue) {
       this.dispatchChange();

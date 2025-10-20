@@ -19,34 +19,44 @@ import { changeGlobalZoom, changeZoomByStep } from './zoom.ts';
  * @internal
  * @param {1 | -1} sign - The direction of the scroll (-1 for up, 1 for down).
  */
+function scrollFluid(sign: 1 | -1) {
+  const viewMode = getSettingsValue('viewMode');
+  const scrollDirection = viewMode === 'FluidRTL' ? -1 : 1;
+  getAppStateValue('chapter').value?.scrollBy({
+    left: 0.8 * window.innerWidth * sign * scrollDirection,
+    behavior: 'smooth',
+  });
+}
+
+function scrollPage(sign: 1 | -1) {
+  const currentPage = getAppStateValue('currentPage');
+  const target = currentPage + sign;
+  if (target < 0) {
+    setAppStateValue('scrollToPage', 0);
+  } else if (target > (getAppStateValue('manga')?.pages ?? 1)) {
+    // Do nothing if at the end
+  } else {
+    setAppStateValue('scrollToPage', target);
+  }
+}
+
+function scrollVertical(sign: 1 | -1) {
+  window.scrollBy({
+    top: 0.8 * window.innerHeight * sign,
+    behavior: 'smooth',
+  });
+}
+
 function doScrolling(sign: 1 | -1) {
   const viewMode = getSettingsValue('viewMode');
   const zoomMode = getSettingsValue('zoomMode');
   logScript('Scrolling view', viewMode, 'zoom', zoomMode, 'sign', sign);
   if (viewMode.startsWith('Fluid')) {
-    // In fluid modes, scroll horizontally.
-    const scrollDirection = viewMode === 'FluidRTL' ? -1 : 1;
-    getAppStateValue('chapter').value?.scrollBy({
-      left: 0.8 * window.innerWidth * sign * scrollDirection,
-      behavior: 'smooth',
-    });
+    scrollFluid(sign);
   } else if (zoomMode === 'height') {
-    // In 'Fit Height' mode, scroll page by page.
-    const currentPage = getAppStateValue('currentPage');
-    const target = currentPage + sign;
-    if (target < 0) {
-      setAppStateValue('scrollToPage', 0);
-    } else if (target > (getAppStateValue('manga')?.pages ?? 1)) {
-      // Do nothing if at the end
-    } else {
-      setAppStateValue('scrollToPage', target);
-    }
+    scrollPage(sign);
   } else {
-    // In all other vertical modes, scroll by a percentage of the viewport height.
-    window.scrollBy({
-      top: 0.8 * window.innerHeight * sign,
-      behavior: 'smooth',
-    });
+    scrollVertical(sign);
   }
 }
 

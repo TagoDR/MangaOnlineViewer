@@ -10,18 +10,29 @@ import {
 import type { Page, ZoomMode } from '../../types';
 import { logScript } from '../../utils/tampermonkey.ts';
 
+function getAvailableWidth(): number {
+  const navbar = getSettingsValue('navbar');
+  if (navbar === 'left' || navbar === 'right') {
+    return window.innerWidth - navbarSize;
+  }
+  return window.innerWidth;
+}
+
+function getAvailableHeight(): number {
+  const navbar = getSettingsValue('navbar');
+  if (navbar === 'bottom') {
+    return window.innerHeight - navbarSize;
+  }
+  return window.innerHeight;
+}
+
 export function calculatePageZoom(
   page: Page,
   mode: ZoomMode = getSettingsValue('zoomMode'),
   value = getSettingsValue('zoomValue'),
 ) {
-  const nextWidth =
-    window.innerWidth +
-    (getSettingsValue('navbar') === 'left' || getSettingsValue('navbar') === 'right'
-      ? -navbarSize
-      : 0);
-  const nextHeight =
-    window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -navbarSize : 0);
+  const nextWidth = getAvailableWidth();
+  const nextHeight = getAvailableHeight();
   if (mode === 'width') {
     // Fit width
     page.width = nextWidth;

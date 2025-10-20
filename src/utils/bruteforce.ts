@@ -2,6 +2,7 @@ import { waitForAtb, waitWithTimer } from './waitFor';
 
 /**
  * A last-resort method to scrape image URLs by simulating user interaction.
+ * This function should only be used when image URLs are not readily available in the page source and must be discovered through interaction, such as clicking a "next" button.
  * It programmatically clicks a "next" button to navigate through pages and extracts the image source from a target element on each page.
  * An overlay is added to prevent user interaction during the process.
  *

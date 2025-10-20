@@ -330,6 +330,7 @@ import { setAppStateValue } from '../../core/settings.ts';
  * @param {string} options.html - The HTML content of the dialog.
  * @param {'info'|'warning'|'success'|'error'} [options.icon] - The icon to display.
  * @param {number} [options.timer] - An optional timer in ms to auto-close the dialog.
+ * @security This function uses `unsafeHTML`. Do not use it with untrusted content.
  */
 export function showInfoDialog(options: {
   title: string;

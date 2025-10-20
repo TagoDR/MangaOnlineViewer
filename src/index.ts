@@ -1,5 +1,5 @@
 /**
- * @file This is the entry point for the local development environment.
+ * @file This is the entry point for the local development environment, which is not part of the production userscript builds.
  * It initializes the application with a mock `localhost` site configuration,
  * sets up handlers for local file uploads, and immediately displays the viewer UI.
  * This allows for rapid testing and development of the UI components without needing

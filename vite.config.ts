@@ -7,14 +7,13 @@
 
 import * as fs from 'node:fs';
 import externalGlobals from 'rollup-plugin-external-globals';
-import prettier from 'rollup-plugin-prettier';
 import userscript, { type Metadata } from 'userscript-metadata-generator';
 import { defineConfig } from 'vite';
 import viteBanner from 'vite-plugin-banner';
+import { viteSingleFile } from 'vite-plugin-singlefile';
 import svgLoader from 'vite-svg-loader';
 import metaAdult from './src/meta/meta-adult';
 import metaDev from './src/meta/meta-dev';
-import { viteSingleFile } from 'vite-plugin-singlefile';
 import metaMain from './src/meta/meta-main';
 import { bookmarklet, comicSites, hentaiSites, mangaSites } from './src/meta/readme';
 
@@ -103,12 +102,9 @@ export default defineConfig(({ mode }) => {
             jszip: 'JSZip',
             lodash: '_',
             nprogress: 'NProgress',
-            'range-slider-input': 'rangeSlider',
-            'sweetalert2-neutral': 'Swal',
             'colorjs.io': 'Color',
             bowser: 'bowser',
           }),
-          prettier({ parser: 'babel-ts' }),
         ],
         output: {
           format: 'iife',

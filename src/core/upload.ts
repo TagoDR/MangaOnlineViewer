@@ -97,6 +97,8 @@ export async function loadMangaFromZip(zipFile: File | string): Promise<void> {
 
 /**
  * Handles the file input change event for loading local image files.
+ * This function uses the non-standard 'webkitRelativePath' property to get the relative path of files from a directory input.
+ * While non-standard, it is supported by all major modern browsers and there is no standard alternative that provides the same functionality.
  * @param {Event} evt - The file input change event.
  */
 function openFileImages(evt: Event): void {

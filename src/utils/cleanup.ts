@@ -1,5 +1,7 @@
 /**
  * Removes all event listeners from a DOM element by cloning and replacing it.
+ * This is a brute-force approach, but it is the most reliable way to remove all event listeners when you don't have references to the listeners themselves.
+ * Note: This method can have side effects, such as losing the element's state or breaking references to it.
  * @internal
  * @param {HTMLElement} element - The element from which to remove event listeners.
  * @returns {HTMLElement} The new, listener-free element that replaced the original.

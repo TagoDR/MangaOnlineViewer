@@ -18,7 +18,8 @@ type CssRule = {
 
 /**
  * Parses a CSS string to extract simple color rules.
- * This is specifically tailored to the format used in `Icons.css`.
+ * This function is intentionally simple and tailored to the specific format of `Icons.css`.
+ * A more robust solution would require a full CSS parser, which is not necessary for this use case.
  * @internal
  * @param {string} css - The CSS string to parse.
  * @returns {CssRule[]} An array of parsed CSS rules.

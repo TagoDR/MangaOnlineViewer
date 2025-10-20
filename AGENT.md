@@ -15,6 +15,11 @@ The project is written in TypeScript and uses Vite for its build process. The ar
   - `src/userscript-adult.ts`: For sites with adult content.
   - `src/userscript-dev.ts`: A development build that includes all sites.
 
+- **Settings Management**: The application state is managed using nanostores, a tiny state manager. The core logic is in `src/core/settings.ts`.
+  - **`settings` store**: Holds all user-configurable settings, such as theme, language, and view mode. It supports both global (default) and local (site-specific) settings.
+  - **`appState` store**: Manages the application's volatile state, such as the current page, scroll state, and loaded images. This state is not persisted.
+  - **Global vs. Local Settings**: By default, all settings are global. However, users can enable site-specific settings, which will override the global settings for the current domain.
+
 - **Site Modules (The Core Task)**: The primary function of this project is to support various manga websites. Each site is a self-contained module located in either `src/main/` or `src/adult/`.
   - **`ISite` Interface**: Every site module must export a default object that conforms to the `ISite` interface (defined in `src/types/ISite.ts`). This interface is the central abstraction of the project.
   - **Key `ISite` Properties**:
@@ -25,7 +30,18 @@ The project is written in TypeScript and uses Vite for its build process. The ar
 
 - **Core Logic**: Shared functionality like the viewer, settings panel, download manager, and UI components are located in `src/core/` and `src/ui/`.
 
-- **UI Layer**: The UI is built using the `lit` library. UI components are in `src/ui/`, with their logic and presentation separated.
+- **UI Layer**: The UI is built with `lit` and organized into a component-based architecture.
+  - **`src/ui/`**: Contains the main UI panels and application layout files (e.g., `App.ts`, `Header.ts`, `SettingsPanel.ts`). These are the top-level containers.
+  - **`src/ui/components/`**: Houses smaller, reusable UI components (e.g., buttons, switches, dialogs) that are used to build the main UI. This promotes modularity and reusability. The components are designed to be standalone and are registered as custom elements.
+
+- **Icon System**: The project uses a custom icon system to handle SVGs.
+  - **`src/ui/icons/svg.ts`**: This file exports all raw SVG strings.
+  - **`src/ui/icons/StyledIcons.ts`**: This module processes the raw SVGs, applies colors based on CSS rules, and exports the styled SVGs.
+  - **`src/ui/icons/index.ts`**: This file converts the styled SVG strings into Lit `unsafeSVG` directives for easy rendering in templates.
+  - **`<mov-icon>` component**: A lightweight component for rendering icons. It takes a `name` property corresponding to the icon's filename (in PascalCase, without the `Icon` prefix).
+
+- **Site Engines**: To avoid code duplication, the project uses a site-engine approach for common manga platforms.
+  - **Example**: `src/main/madarawp.ts` and `src/main/mangastreamwp.ts` are generic engines for sites built with the WordPress theme/plugins. Instead of writing a new scraper from scratch, a new site can reuse this engines with minor configuration tweaks. Other engines exist for platforms like Foolslide.
 
 ## 3. Developer Workflow
 
@@ -34,24 +50,29 @@ The project is written in TypeScript and uses Vite for its build process. The ar
   2.  Run `npm install` to install all dependencies.
 
 - **Builds**: The build process is managed by Vite and configured in `vite.config.ts`.
-  - **Development**: Run `npm start` or `npm run build`. This generates a `Manga_Online_Viewer_DEV.user.js` file in the `dist/` directory. This is the recommended script for development and testing as it includes all sites. And `npm run storybook` to test individual peaces of the UI.
-  - **Release**: Run `npm run release`. This generates the separate `main` and `adult` userscripts for production. Should only be used by CI/CD pipeline.
+  - **Development**: Run `npm start` or `npm run build`. This generates a `Manga_Online_Viewer_DEV.user.js` file in the `dist/` directory. This is the recommended script for development as it includes all sites.
+  - **UI Development**: Run `npm run storybook`. This starts a Storybook server where you can develop and test UI components in isolation. It's the best way to work on the UI without needing to load a live manga site.
+  - **Release**: Run `npm run release`. This generates the separate `main` and `adult` userscripts for production. Should only be used by the CI/CD pipeline.
   - **Standalone**: Run `npm run build:standalone`. This compiles the application into a single, portable HTML file (`dist/Manga_Online_Viewer_Standalone.html`) that can be opened directly in a browser to read local files.
 
-- **Linting & Formatting**: The project uses Biome and Prettier to maintain code quality and consistency. Configuration is in `biome.json` and the `prettier` key in `package.json`.
+- **Linting & Formatting**: The project uses Biome to maintain code quality and consistency. Configuration is in `biome.json`.
   - `npm run lint`: Check for linting issues.
   - `npm run format`: Automatically format the code.
   - `npm run check`: Run all Biome checks and apply safe fixes.
 
-- **Testing**: There are no automated unit or integration tests. All testing is done manually by installing the generated userscript in a browser with Tampermonkey and visiting a supported site. Storybook is used for UI component visualization via `npm run storybook`.
+- **Testing**:
+  - **UI Components**: The primary method for testing is **Storybook**. Use it to visually inspect, develop, and test individual UI components in `src/ui/components/`. Each component should have a corresponding `.stories.ts` file in the `src/stories/` directory.
+  - **End-to-End**: Manual testing is required for site-specific functionality. Install the generated userscript in a browser with Tampermonkey and visit a supported site to ensure the viewer works as expected.
 
 ## 4. How to Add a New Site (A Step-by-Step Guide)
 
 This is the most common contribution. Follow these steps carefully.
 
-1.  **Create the Site File**: Create a new TypeScript file in `src/main/` (or `src/adult/` if appropriate). The filename should be the name of the site (e.g., `newsite.ts`).
+1.  **Check for Existing Engines**: Before creating a new file, check if the target site uses a common engine like MadaraWP, Foolslide, or MangaStream. If so, you may be able to add support by modifying the existing engine's configuration.
 
-2.  **Implement the `ISite` Object**: In your new file, define and export the site configuration.
+2.  **Create the Site File**: If no engine exists, create a new TypeScript file in `src/main/` (or `src/adult/` if appropriate). The filename should be the name of the site (e.g., `newsite.ts`).
+
+3.  **Implement the `ISite` Object**: In your new file, define and export the site configuration.
 
     ```typescript
     // src/main/newsite.ts
@@ -82,7 +103,7 @@ This is the most common contribution. Follow these steps carefully.
     export default newSite;
     ```
 
-3.  **Register the Site**: Open `src/main/index.ts` (or `src/adult/index.ts`) and add your new site to the list.
+4.  **Register the Site**: Open `src/main/index.ts` (or `src/adult/index.ts`) and add your new site to the list.
 
     ```typescript
     // src/main/index.ts
@@ -97,7 +118,7 @@ This is the most common contribution. Follow these steps carefully.
     export default sites;
     ```
 
-4.  **Build and Test**:
+5.  **Build and Test**:
     - Run `npm run build` to generate the development userscript.
     - Install or update the script in Tampermonkey.
     - Navigate to a URL that matches the `url` regex you defined and verify that the viewer loads correctly.
@@ -122,7 +143,7 @@ To maintain a clean and organized codebase, follow these guidelines for creating
 
 - `src/locales/`: Add new language translations here. Create a new file (e.g., `fr_FR.ts`) and add the key-value pairs for the new language.
 
-- `src/stories/`: Contain stories for Storybook to test peaces of the ui
+- `src/stories/`: Contains Storybook stories for UI components. Each file in this directory (e.g., `Button.stories.ts`) corresponds to a component in `src/ui/components/` and defines different states and variations of that component for isolated testing and development.
 
 ## 6. Important Conventions
 
