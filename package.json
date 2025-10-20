@@ -42,7 +42,7 @@
     "tslib": "^2.8.1",
     "typescript": "^5.9.3",
     "userscript-metadata-generator": "^0.2.4",
-    "vite": "^7.1.10",
+    "vite": "^7.1.11",
     "vite-plugin-banner": "^0.8.1",
     "vite-plugin-singlefile": "^2.3.0",
     "vite-svg-loader": "^5.1.0"
