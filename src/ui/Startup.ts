@@ -4,9 +4,6 @@
  */
 import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import 'toolcool-range-slider/dist/plugins/tcrs-generated-labels.min.js';
-import 'toolcool-range-slider/dist/plugins/tcrs-marks.min';
-import 'toolcool-range-slider';
 import { getLocaleString } from '../core/settings.ts';
 import './components/Dialog.ts';
 import './components/Button.ts';
