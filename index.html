@@ -12,6 +12,10 @@
       href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
     />
   </head>
+  <script type="module">
+    import { requiredScripts } from './src/core/externals';
+    requiredScripts.forEach(script => { import(script)})
+  </script>
   <body>
     <main
       id="MangaOnlineViewer"
