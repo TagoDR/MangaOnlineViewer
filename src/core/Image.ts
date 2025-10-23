@@ -1,11 +1,5 @@
 import { blobToDataURL } from 'blob-util';
 import {
-  appState,
-  changeAppStateValue,
-  getAppStateValue,
-  getSettingsValue,
-} from '../core/settings';
-import {
   type IManga,
   type IMangaImages,
   type IMangaPages,
@@ -13,13 +7,14 @@ import {
   isImagesManga,
   isPagesManga,
 } from '../types';
-import { getElementAttribute } from '../utils/request';
-import sequence from '../utils/sequence';
-import { logScript, logScriptVerbose } from '../utils/tampermonkey';
-import { isBase64ImageUrl, isObjectURL } from '../utils/urls';
+import { removeURLBookmark } from '../ui/events/bookmarks.ts';
+import { applyZoom } from '../ui/events/zoom.ts';
+import { getElementAttribute } from '../utils/request.ts';
+import sequence from '../utils/sequence.ts';
+import { logScript, logScriptVerbose } from '../utils/tampermonkey.ts';
+import { isBase64ImageUrl, isObjectURL } from '../utils/urls.ts';
 import { waitForFunc } from '../utils/waitFor.ts';
-import { removeURLBookmark } from './events/bookmarks';
-import { applyZoom } from './events/zoom.ts';
+import { appState, changeAppStateValue, getAppStateValue, getSettingsValue } from './settings.ts';
 
 /**
  * Normalizes a URL by trimming whitespace and ensuring it starts with a protocol.
