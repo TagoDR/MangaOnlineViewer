@@ -104,6 +104,7 @@ export default defineConfig(({ mode }) => {
             nprogress: 'NProgress',
             'colorjs.io': 'Color',
             bowser: 'bowser',
+            'file-saver': 'window',
           }),
         ],
         output: {
