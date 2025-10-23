@@ -3,6 +3,7 @@ import { css, html, LitElement, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
+import loadImages from '../core/Image.ts';
 import {
   appState,
   getAppStateValue,
@@ -14,7 +15,6 @@ import {
   settings,
 } from '../core/settings.ts';
 import events from './events.ts';
-import loadImages from './Image.ts';
 import Reader from './Reader.ts';
 import cssStyles from './styles';
 import { themesCSS } from './themes.ts';
