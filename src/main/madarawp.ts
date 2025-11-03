@@ -10,7 +10,7 @@ function findImages() {
     ),
   ].map(img => {
     const attrs = [...img.attributes].filter(
-      attr => /.*(src|url).*/i.test(attr.name) && !/^.*(blank|lazy|load).*$/.test(attr.value),
+      attr => /.*(src|url).*/i.test(attr.name) && !/^.*(blank|lazy|loading).*$/.test(attr.value),
     );
     if (attrs.length === 0) return '';
     return attrs.find(attr => imageRegex.test(attr.value))?.value ?? img?.getAttribute('src') ?? '';
@@ -37,8 +37,9 @@ const madarawp: ISite = {
     'Dragon Tea',
     'SetsuScans',
     'ToonGod',
+    'Hades Scans',
   ],
-  url: /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon)\/.+\/.+/,
+  url: /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon|tmo)\/.+\/.+/,
   homepage: [
     'https://mangabooth.com/',
     'https://manhuaus.com',
@@ -58,6 +59,7 @@ const madarawp: ISite = {
     'https://dragontea.ink/',
     'https://setsuscans.com/',
     'https://toongod.org/home/',
+    'https://lectorhades.latamtoon.com',
   ],
   language: [Language.ENGLISH],
   obs: 'Any Site that uses Madara WordPress Plugin',
