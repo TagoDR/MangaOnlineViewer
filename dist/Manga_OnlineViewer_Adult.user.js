@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.10.21.build-1704
+// @version       2025.11.03.build-1747
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -791,7 +791,7 @@
       )
     ].map((img) => {
       const attrs = [...img.attributes].filter(
-        (attr) => /.*(src|url).*/i.test(attr.name) && !/^.*(blank|lazy|load).*$/.test(attr.value)
+        (attr) => /.*(src|url).*/i.test(attr.name) && !/^.*(blank|lazy|loading).*$/.test(attr.value)
       );
       if (attrs.length === 0) return "";
       return attrs.find((attr) => imageRegex.test(attr.value))?.value ?? img?.getAttribute("src") ?? "";
@@ -816,9 +816,10 @@
       "LeviatanScans",
       "Dragon Tea",
       "SetsuScans",
-      "ToonGod"
+      "ToonGod",
+      "Hades Scans"
     ],
-    url: /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon)\/.+\/.+/,
+    url: /https?:\/\/.+\/(manga|series|manhua|comic|ch|novel|webtoon|tmo)\/.+\/.+/,
     homepage: [
       "https://mangabooth.com/",
       "https://manhuaus.com",
@@ -837,7 +838,8 @@
       "https://leviatanscans.com/",
       "https://dragontea.ink/",
       "https://setsuscans.com/",
-      "https://toongod.org/home/"
+      "https://toongod.org/home/",
+      "https://lectorhades.latamtoon.com"
     ],
     language: [Language.ENGLISH],
     obs: "Any Site that uses Madara WordPress Plugin",
