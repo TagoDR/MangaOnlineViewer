@@ -3,8 +3,8 @@ import { Category, type IManga, type ISite, Language } from '../types';
 
 const leercapitulo: ISite = {
   name: 'LeerCapitulo',
-  url: /https?:\/\/(www.)?leercapitulo.co\/leer\/.+/,
-  homepage: 'https://www.leercapitulo.co/',
+  url: /https?:\/\/(www.)?leercapitulo.re\/leer\/.+/,
+  homepage: 'https://www.leercapitulo.re/',
   language: [Language.SPANISH],
   category: Category.MANGA,
   waitEle: '#page_select',
