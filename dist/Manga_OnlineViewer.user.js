@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaOni, MangaPark, MangaReader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2025.11.03.build-1747
+// @version       2025.11.17.build-2211
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -5034,7 +5034,7 @@
   function requireFileSaver_min () {
   	if (hasRequiredFileSaver_min) return FileSaver_min$1.exports;
   	hasRequiredFileSaver_min = 1;
-  	(function (module, exports) {
+  	(function (module, exports$1) {
   		(function(a,b){b();})(FileSaver_min,function(){function b(a,b){return "undefined"==typeof b?b={autoBom:false}:"object"!=typeof b&&(console.warn("Deprecated: Expected third argument to be a object"),b={autoBom:!b}),b.autoBom&&/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(a.type)?new Blob(["\uFEFF",a],{type:a.type}):a}function c(a,b,c){var d=new XMLHttpRequest;d.open("GET",a),d.responseType="blob",d.onload=function(){g(d.response,b,c);},d.onerror=function(){console.error("could not download file");},d.send();}function d(a){var b=new XMLHttpRequest;b.open("HEAD",a,false);try{b.send();}catch(a){}return 200<=b.status&&299>=b.status}function e(a){try{a.dispatchEvent(new MouseEvent("click"));}catch(c){var b=document.createEvent("MouseEvents");b.initMouseEvent("click",true,true,window,0,0,0,80,20,false,false,false,false,0,null),a.dispatchEvent(b);}}var f="object"==typeof window&&window.window===window?window:"object"==typeof self&&self.self===self?self:"object"==typeof commonjsGlobal&&commonjsGlobal.global===commonjsGlobal?commonjsGlobal:void 0,a=f.navigator&&/Macintosh/.test(navigator.userAgent)&&/AppleWebKit/.test(navigator.userAgent)&&!/Safari/.test(navigator.userAgent),g=f.saveAs||("object"!=typeof window||window!==f?function(){}:"download"in HTMLAnchorElement.prototype&&!a?function(b,g,h){var i=f.URL||f.webkitURL,j=document.createElement("a");g=g||b.name||"download",j.download=g,j.rel="noopener","string"==typeof b?(j.href=b,j.origin===location.origin?e(j):d(j.href)?c(b,g,h):e(j,j.target="_blank")):(j.href=i.createObjectURL(b),setTimeout(function(){i.revokeObjectURL(j.href);},4E4),setTimeout(function(){e(j);},0));}:"msSaveOrOpenBlob"in navigator?function(f,g,h){if(g=g||f.name||"download","string"!=typeof f)navigator.msSaveOrOpenBlob(b(f,h),g);else if(d(f))c(f,g,h);else {var i=document.createElement("a");i.href=f,i.target="_blank",setTimeout(function(){e(i);});}}:function(b,d,e,g){if(g=g||open("","_blank"),g&&(g.document.title=g.document.body.innerText="downloading..."),"string"==typeof b)return c(b,d,e);var h="application/octet-stream"===b.type,i=/constructor/i.test(f.HTMLElement)||f.safari,j=/CriOS\/[\d]+/.test(navigator.userAgent);if((j||h&&i||a)&&"undefined"!=typeof FileReader){var k=new FileReader;k.onloadend=function(){var a=k.result;a=j?a:a.replace(/^data:[^;]*;/,"data:attachment/file;"),g?g.location.href=a:location=a,g=null;},k.readAsDataURL(b);}else {var l=f.URL||f.webkitURL,m=l.createObjectURL(b);g?g.location=m:location.href=m,g=null,setTimeout(function(){l.revokeObjectURL(m);},4E4);}});f.saveAs=g.saveAs=g,(module.exports=g);});
 
   		
@@ -6377,17 +6377,17 @@
   function requireLib () {
   	if (hasRequiredLib) return lib;
   	hasRequiredLib = 1;
-  	(function (exports) {
-  		Object.defineProperty(exports, "__esModule", { value: true });
-  		exports.withStores = exports.useStores = exports.MultiStoreController = exports.StoreController = void 0;
+  	(function (exports$1) {
+  		Object.defineProperty(exports$1, "__esModule", { value: true });
+  		exports$1.withStores = exports$1.useStores = exports$1.MultiStoreController = exports$1.StoreController = void 0;
   		var StoreController_1 = requireStoreController();
-  		Object.defineProperty(exports, "StoreController", { enumerable: true, get: function () { return StoreController_1.StoreController; } });
+  		Object.defineProperty(exports$1, "StoreController", { enumerable: true, get: function () { return StoreController_1.StoreController; } });
   		var MultiStoreController_1 = requireMultiStoreController();
-  		Object.defineProperty(exports, "MultiStoreController", { enumerable: true, get: function () { return MultiStoreController_1.MultiStoreController; } });
+  		Object.defineProperty(exports$1, "MultiStoreController", { enumerable: true, get: function () { return MultiStoreController_1.MultiStoreController; } });
   		var useStores_1 = requireUseStores();
-  		Object.defineProperty(exports, "useStores", { enumerable: true, get: function () { return useStores_1.useStores; } });
+  		Object.defineProperty(exports$1, "useStores", { enumerable: true, get: function () { return useStores_1.useStores; } });
   		var withStores_1 = requireWithStores();
-  		Object.defineProperty(exports, "withStores", { enumerable: true, get: function () { return withStores_1.withStores; } }); 
+  		Object.defineProperty(exports$1, "withStores", { enumerable: true, get: function () { return withStores_1.withStores; } }); 
   	} (lib));
   	return lib;
   }
