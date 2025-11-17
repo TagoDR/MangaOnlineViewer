@@ -67,7 +67,7 @@ Download the standalone HTML file from the link below. Open it in your browser t
 - [Local Files](/index.html?raw=1) _[Raw]_
 - [Ikigai Mangas - EltaNews](https://visorikigai.eltanews.com/) / [Ikigai Mangas - Ajaco](https://visorikigai.ajaco.net/) _[Spanish]_
 - [KuManga](https://www.kumanga.com/) _[Spanish]_
-- [LeerCapitulo](https://www.leercapitulo.co/) _[Spanish]_
+- [LeerCapitulo](https://www.leercapitulo.re/) _[Spanish]_
 - [M440](https://m440.in/) _[Spanish]_
 - [MangaOni](https://manga-oni.com/) _[Spanish]_
 - [ManhwaWeb](https://manhwaweb.com/) _[Spanish]_
