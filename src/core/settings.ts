@@ -68,7 +68,7 @@ export const defaultSettings: ISettings = {
     REDUCE: ['=', 'num_subtract', 'Q'],
     RESTORE: ['9', 'num_divide', 'R'],
     FIT_WIDTH: ['0', 'num_multiply', 'F'],
-    FIT_HEIGHT: ['H'],
+    FIT_HEIGHT: ['H', 'num_0'],
     SETTINGS: ['num_divide', 'num_5', 'X'],
     VIEW_MODE_WEBCOMIC: ['C'],
     VIEW_MODE_VERTICAL: ['V'],
