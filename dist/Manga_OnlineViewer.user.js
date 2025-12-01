@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaOni, MangaPark, MangaReader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2025.11.17.build-2231
+// @version       2025.12.01.build-2218
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -309,7 +309,7 @@
   let lqIndex = 0;
   const QUEUE_ITEMS_PER_LISTENER = 4;
   let epoch = 0;
-  let atom = (initialValue) => {
+  const atom = /* @__NO_SIDE_EFFECTS__ */ (initialValue) => {
     let listeners = [];
     let $atom = {
       get() {
@@ -479,9 +479,11 @@
     return $computed
   };
 
-  let computed = (stores, fn) => computedStore(stores, fn);
+  /* @__NO_SIDE_EFFECTS__ */
+  const computed = (stores, fn) => computedStore(stores, fn);
 
-  let map = (initial = {}) => {
+  /* @__NO_SIDE_EFFECTS__ */
+  const map = (initial = {}) => {
     let $map = atom(initial);
 
     $map.setKey = function (key, value) {
@@ -565,7 +567,6 @@
     VIEW_MODE_WEBCOMIC: "WebComic",
     FIT_WIDTH_OVERSIZED: "Breite anpassen bei Übergröße",
     SHOW_THUMBNAILS: "Miniaturansichten anzeigen",
-    ENABLE_COMMENTS: "Kommentare erfassen (wenn verfügbar)",
     HIDE_CONTROLS: "Seitensteuerung immer ausblenden",
     HEADER_TYPE: "Kopfbereichstyp ändern",
     HEADER_HOVER: "Hover",
@@ -633,8 +634,6 @@
     SCROLL_DOWN: "Nach unten scrollen",
     CLOSE: "Schließen",
     LIST_EMPTY: "Liste leer",
-    DISPLAY_COMMENTS: "Kommentare anzeigen",
-    COMMENTS: "Kommentarbereich",
     SCROLL_START: "Auto-Scroll umschalten",
     INCREASE_SPEED: "Scrollgeschwindigkeit erhöhen",
     DECREASE_SPEED: "Scrollgeschwindigkeit verringern",
@@ -689,7 +688,6 @@
     VIEW_MODE_WEBCOMIC: "WebComic",
     FIT_WIDTH_OVERSIZED: "Fit Width if Oversized",
     SHOW_THUMBNAILS: "Show Thumbnails",
-    ENABLE_COMMENTS: "Capture Comments (When available)",
     HIDE_CONTROLS: "Always Hide Page Controls",
     HEADER_TYPE: "Change Header Type",
     HEADER_HOVER: "Hover",
@@ -757,8 +755,6 @@
     SCROLL_DOWN: "Scroll Down",
     CLOSE: "Close",
     LIST_EMPTY: "List Empty",
-    DISPLAY_COMMENTS: "Display Comments",
-    COMMENTS: "Comments Section",
     SCROLL_START: "Toggle Auto Scroll",
     INCREASE_SPEED: "Increase Scroll Speed",
     DECREASE_SPEED: "Decrease Scroll Speed",
@@ -813,7 +809,6 @@
     VIEW_MODE_WEBCOMIC: "WebComic",
     FIT_WIDTH_OVERSIZED: "Ajustar ancho si es demasiado grande",
     SHOW_THUMBNAILS: "Mostrar miniaturas",
-    ENABLE_COMMENTS: "Capturar comentarios (cuando esté disponible)",
     HIDE_CONTROLS: "Ocultar siempre la barra de controles",
     HEADER_TYPE: "Cambiar tipo de cabecera",
     HEADER_HOVER: "Pasar por encima",
@@ -881,8 +876,6 @@
     SCROLL_DOWN: "Desplazar abajo",
     CLOSE: "Cerrar",
     LIST_EMPTY: "Lista vacía",
-    DISPLAY_COMMENTS: "Mostrar comentarios",
-    COMMENTS: "Sección de comentarios",
     SCROLL_START: "Alternar desplazamiento automático",
     INCREASE_SPEED: "Aumentar la velocidad de desplazamiento",
     DECREASE_SPEED: "Disminuir la velocidad de desplazamiento",
@@ -937,7 +930,6 @@
     VIEW_MODE_WEBCOMIC: "WebComic",
     FIT_WIDTH_OVERSIZED: "Ajuster à la largeur si surdimensionné",
     SHOW_THUMBNAILS: "Afficher les vignettes",
-    ENABLE_COMMENTS: "Capturer les commentaires (si disponibles)",
     HIDE_CONTROLS: "Toujours masquer les contrôles de page",
     HEADER_TYPE: "Changer le type d'en-tête",
     HEADER_HOVER: "Survol",
@@ -1005,8 +997,6 @@
     SCROLL_DOWN: "Faire défiler vers le bas",
     CLOSE: "Fermer",
     LIST_EMPTY: "Liste vide",
-    DISPLAY_COMMENTS: "Afficher les commentaires",
-    COMMENTS: "Section des commentaires",
     SCROLL_START: "Basculer le défilement automatique",
     INCREASE_SPEED: "Augmenter la vitesse de défilement",
     DECREASE_SPEED: "Diminuer la vitesse de défilement",
@@ -1061,7 +1051,6 @@
     VIEW_MODE_WEBCOMIC: "WebComic",
     FIT_WIDTH_OVERSIZED: "Encher a tela se grande demais",
     SHOW_THUMBNAILS: "Mostra Miniaturas",
-    ENABLE_COMMENTS: "Capturar comentários (quando disponível)",
     HIDE_CONTROLS: "Sempre esconder controles das paginas",
     HEADER_TYPE: "Mudar Tipo de Cabeçalho",
     HEADER_HOVER: "Passar por perto",
@@ -1129,8 +1118,6 @@
     SCROLL_DOWN: "Descer Pagina",
     CLOSE: "Fechar",
     LIST_EMPTY: "Lista Vazia",
-    DISPLAY_COMMENTS: "Mostar Comentarios",
-    COMMENTS: "Seção de comentários",
     SCROLL_START: "Ativar Rolagem Automatica",
     INCREASE_SPEED: "Aumentar Valocidade da Rolagem",
     DECREASE_SPEED: "Diminuir Valocidade da Rolagem",
@@ -1185,7 +1172,6 @@
     VIEW_MODE_WEBCOMIC: "垂直无缝",
     FIT_WIDTH_OVERSIZED: "如果尺寸过大、则适合宽度",
     SHOW_THUMBNAILS: "显示缩略图",
-    ENABLE_COMMENTS: "捕获评论（如果可用）",
     HIDE_CONTROLS: "始终隐藏页面控件",
     HEADER_TYPE: "更改标题显示方式",
     HEADER_HOVER: "悬停",
@@ -1253,8 +1239,6 @@
     SCROLL_DOWN: "向下滚动",
     CLOSE: "关闭",
     LIST_EMPTY: "没有收藏书签",
-    DISPLAY_COMMENTS: "显示注释",
-    COMMENTS: "评论部分",
     SCROLL_START: "切换自动滚动",
     INCREASE_SPEED: "增加滚动速度",
     DECREASE_SPEED: "降低滚动速度",
@@ -1330,7 +1314,6 @@
     bookmarks: [],
     colorScheme: "dark",
     downloadZip: false,
-    enableComments: true,
     enabled: false,
     fitWidthIfOversize: true,
     header: "scroll",
@@ -1360,7 +1343,7 @@
       REDUCE: ["=", "num_subtract", "Q"],
       RESTORE: ["9", "num_divide", "R"],
       FIT_WIDTH: ["0", "num_multiply", "F"],
-      FIT_HEIGHT: ["H"],
+      FIT_HEIGHT: ["H", "num_0"],
       SETTINGS: ["num_divide", "num_5", "X"],
       VIEW_MODE_WEBCOMIC: ["C"],
       VIEW_MODE_VERTICAL: ["V"],
@@ -1571,7 +1554,6 @@
     localSettings.enabled = activate;
     saveLocalSettings(diffObj(localSettings, getDefault(false)));
     logScript("Local Settings ", activate ? "Enabled" : "Disabled");
-    refreshSettings();
     i$6.info({
       title: `Changed Settings to`,
       description: isSettingsLocal() ? "Local" : "Global",
@@ -2070,16 +2052,6 @@
     category: Category.MANGA,
     run() {
       const num = parseInt(/\d+/.exec(window.location.search)?.toString() ?? "5", 10);
-      const comments = document.createElement("div");
-      const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-      const commentsEn = [
-        lorem,
-        `<span style="color: white; background-color: black;">${lorem.substring(0, 100)}</span>`,
-        `<span style="color: black; background-color: white;">${lorem.substring(100, 200)}</span>`,
-        `<b>${lorem.substring(200, 300)}</b>`,
-        `<i>${lorem.substring(300, 400)}</i>`
-      ];
-      comments.innerHTML = Array(100).fill(0).map(() => commentsEn[Math.floor(Math.random() * commentsEn.length)]).join("<br><br>");
       return {
         title: "Placeholder Manga Loaded",
         series: "?reload",
@@ -2094,8 +2066,7 @@
           placeholder(985, 1400, "#0F5B30"),
           placeholder(1970, 1400, "#806D15"),
           ...Array(num).fill(0).map(randomPlaceholder)
-        ],
-        comments
+        ]
       };
     }
   };
@@ -2748,14 +2719,14 @@
     IconZoomPan: IconZoomPan$1
   }, Symbol.toStringTag, { value: 'Module' }));
 
-  var __defProp$h = Object.defineProperty;
-  var __getOwnPropDesc$k = Object.getOwnPropertyDescriptor;
-  var __decorateClass$k = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$k(target, key) : target;
+  var __defProp$g = Object.defineProperty;
+  var __getOwnPropDesc$j = Object.getOwnPropertyDescriptor;
+  var __decorateClass$j = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$j(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if (decorator = decorators[i])
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$h(target, key, result);
+    if (kind && result) __defProp$g(target, key, result);
     return result;
   };
   let Icon = class extends i$1 {
@@ -2797,16 +2768,16 @@
       color: inherit; /* This will inherit from the host element */
     }
   `;
-  __decorateClass$k([
+  __decorateClass$j([
     n$1({ type: String })
   ], Icon.prototype, "name", 2);
-  __decorateClass$k([
+  __decorateClass$j([
     n$1({ type: String })
   ], Icon.prototype, "label", 2);
-  __decorateClass$k([
+  __decorateClass$j([
     n$1({ type: String })
   ], Icon.prototype, "size", 2);
-  Icon = __decorateClass$k([
+  Icon = __decorateClass$j([
     t$1("mov-icon")
   ], Icon);
 
@@ -2822,16 +2793,16 @@
    * SPDX-License-Identifier: BSD-3-Clause
    */const o$3=o=>o??E;
 
-  const styles$7 = ":host {\n  display: inline-block;\n  --mov-font-size-scale: 1;\n  --mov-font-size-m: calc(1rem * var(--mov-font-size-scale));\n  --mov-font-size-s: round(calc(var(--mov-font-size-m) / 1.125), 1px);\n  --mov-font-size-l: round(calc(var(--mov-font-size-m) * 1.125 * 1.125), 1px);\n  --mov-border-width-s: 0.0625rem;\n  --mov-border-radius-m: 0.375rem;\n  --mov-border-radius-pill: 9999px;\n  --mov-transition-fast: 75ms;\n  --mov-font-weight-action: 500;\n  --mov-focus-ring: solid 0.1875rem var(--mov-color-fill-loud);\n  --mov-focus-ring-offset: 0.0625rem;\n  --mov-line-height-condensed: 1.2;\n  --mov-form-control-padding-block: 0.75em;\n  --mov-form-control-padding-inline: 1em;\n  --mov-form-control-height: round(\n    calc(2 * var(--mov-form-control-padding-block) + 1em * var(--mov-line-height-condensed)),\n    1px\n  );\n}\n\n:host([size=\"small\"]) {\n  font-size: var(--mov-font-size-s);\n}\n:host([size=\"medium\"]) {\n  font-size: var(--mov-font-size-m);\n}\n:host([size=\"large\"]) {\n  font-size: var(--mov-font-size-l);\n}\n\n.button {\n  box-sizing: border-box;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  text-decoration: none;\n  user-select: none;\n  white-space: nowrap;\n  vertical-align: middle;\n  transition-property: background, border, box-shadow, color;\n  transition-duration: var(--mov-transition-fast);\n  cursor: pointer;\n  padding: 0 var(--mov-form-control-padding-inline);\n  font-family: inherit;\n  font-size: inherit;\n  font-weight: var(--mov-font-weight-action);\n  line-height: calc(var(--mov-form-control-height) - var(--mov-border-width-s) * 2);\n  height: var(--mov-form-control-height);\n  border-radius: var(--mov-border-radius-m);\n  border-style: solid;\n  border-width: var(--mov-border-width-s);\n  background-color: var(--mov-color-fill-loud);\n  color: var(--mov-color-on-loud);\n  border-color: transparent;\n}\n\n/* Appearance modifiers */\n:host([appearance~=\"plain\"]) {\n  .button {\n    color: var(--mov-color-on-quiet);\n    background-color: transparent;\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-quiet);\n      background-color: var(--mov-color-fill-quiet);\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-quiet);\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\n  }\n}\n\n:host([appearance~=\"outlined\"]) {\n  .button {\n    color: var(--mov-color-on-quiet);\n    background-color: transparent;\n    border-color: var(--mov-color-border-loud);\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-quiet);\n      background-color: var(--mov-color-fill-quiet);\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-quiet);\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\n  }\n}\n\n:host([appearance~=\"filled\"]) {\n  .button {\n    color: var(--mov-color-on-normal);\n    background-color: var(--mov-color-fill-normal);\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-normal);\n      background-color: color-mix(\n        in oklab,\n        var(--mov-color-fill-normal),\n        var(--mov-color-mix-hover)\n      );\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-normal);\n    background-color: color-mix(\n      in oklab,\n      var(--mov-color-fill-normal),\n      var(--mov-color-mix-active)\n    );\n  }\n}\n\n:host([appearance~=\"filled\"][appearance~=\"outlined\"]) .button {\n  border-color: var(--mov-color-border-normal);\n}\n\n:host([appearance~=\"accent\"]) {\n  .button {\n    color: var(--mov-color-on-loud);\n    background-color: var(--mov-color-fill-loud);\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-hover));\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-active));\n  }\n}\n/* Focus states */\n.button:focus {\n  outline: none;\n}\n.button:focus-visible {\n  outline: var(--mov-focus-ring);\n  outline-offset: var(--mov-focus-ring-offset);\n}\n\n/* Disabled state */\n.button.disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n}\n.button.disabled * {\n  pointer-events: none;\n}\n\n/* Icon buttons */\n.button.is-icon-button {\n  outline-offset: 2px;\n  width: var(--mov-form-control-height);\n  aspect-ratio: 1;\n}\n\n/* Pill modifier */\n:host([pill]) .button {\n  border-radius: var(--mov-border-radius-pill);\n}\n\n.start,\n.end {\n  flex: 0 0 auto;\n  display: flex;\n  align-items: center;\n  pointer-events: none;\n}\n\n.label {\n  display: inline-block;\n}\n.is-icon-button .label {\n  display: flex;\n}\n\nmov-icon[part~=\"caret\"] {\n  display: flex;\n  align-self: center;\n  align-items: center;\n}\nmov-icon[part~=\"caret\"]::part(svg) {\n  width: 0.875em;\n  height: 0.875em;\n}\n\n.loading {\n  position: relative;\n  cursor: wait;\n}\n.loading .start,\n.loading .label,\n.loading .end,\n.loading .caret {\n  visibility: hidden;\n}\n\n.spinner {\n  --indicator-color: currentColor;\n  --track-color: color-mix(in oklab, currentColor, transparent 90%);\n  position: absolute;\n  font-size: 1em;\n  height: 1em;\n  width: 1em;\n  top: calc(50% - 0.5em);\n  left: calc(50% - 0.5em);\n  border-radius: 50%;\n  border: 2px solid var(--track-color);\n  border-top-color: var(--indicator-color);\n  animation: spin 1s linear infinite;\n}\n\n@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n\nslot[name=\"start\"]::slotted(*) {\n  margin-inline-end: 0.75em;\n}\nslot[name=\"end\"]::slotted(*),\n.button:not(.visually-hidden-label) [part~=\"caret\"] {\n  margin-inline-start: 0.75em;\n}\n";
+  const styles$6 = ":host {\n  display: inline-block;\n  --mov-font-size-scale: 1;\n  --mov-font-size-m: calc(1rem * var(--mov-font-size-scale));\n  --mov-font-size-s: round(calc(var(--mov-font-size-m) / 1.125), 1px);\n  --mov-font-size-l: round(calc(var(--mov-font-size-m) * 1.125 * 1.125), 1px);\n  --mov-border-width-s: 0.0625rem;\n  --mov-border-radius-m: 0.375rem;\n  --mov-border-radius-pill: 9999px;\n  --mov-transition-fast: 75ms;\n  --mov-font-weight-action: 500;\n  --mov-focus-ring: solid 0.1875rem var(--mov-color-fill-loud);\n  --mov-focus-ring-offset: 0.0625rem;\n  --mov-line-height-condensed: 1.2;\n  --mov-form-control-padding-block: 0.75em;\n  --mov-form-control-padding-inline: 1em;\n  --mov-form-control-height: round(\n    calc(2 * var(--mov-form-control-padding-block) + 1em * var(--mov-line-height-condensed)),\n    1px\n  );\n}\n\n:host([size=\"small\"]) {\n  font-size: var(--mov-font-size-s);\n}\n:host([size=\"medium\"]) {\n  font-size: var(--mov-font-size-m);\n}\n:host([size=\"large\"]) {\n  font-size: var(--mov-font-size-l);\n}\n\n.button {\n  box-sizing: border-box;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  text-decoration: none;\n  user-select: none;\n  white-space: nowrap;\n  vertical-align: middle;\n  transition-property: background, border, box-shadow, color;\n  transition-duration: var(--mov-transition-fast);\n  cursor: pointer;\n  padding: 0 var(--mov-form-control-padding-inline);\n  font-family: inherit;\n  font-size: inherit;\n  font-weight: var(--mov-font-weight-action);\n  line-height: calc(var(--mov-form-control-height) - var(--mov-border-width-s) * 2);\n  height: var(--mov-form-control-height);\n  border-radius: var(--mov-border-radius-m);\n  border-style: solid;\n  border-width: var(--mov-border-width-s);\n  background-color: var(--mov-color-fill-loud);\n  color: var(--mov-color-on-loud);\n  border-color: transparent;\n}\n\n/* Appearance modifiers */\n:host([appearance~=\"plain\"]) {\n  .button {\n    color: var(--mov-color-on-quiet);\n    background-color: transparent;\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-quiet);\n      background-color: var(--mov-color-fill-quiet);\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-quiet);\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\n  }\n}\n\n:host([appearance~=\"outlined\"]) {\n  .button {\n    color: var(--mov-color-on-quiet);\n    background-color: transparent;\n    border-color: var(--mov-color-border-loud);\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-quiet);\n      background-color: var(--mov-color-fill-quiet);\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-quiet);\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\n  }\n}\n\n:host([appearance~=\"filled\"]) {\n  .button {\n    color: var(--mov-color-on-normal);\n    background-color: var(--mov-color-fill-normal);\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-normal);\n      background-color: color-mix(\n        in oklab,\n        var(--mov-color-fill-normal),\n        var(--mov-color-mix-hover)\n      );\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-normal);\n    background-color: color-mix(\n      in oklab,\n      var(--mov-color-fill-normal),\n      var(--mov-color-mix-active)\n    );\n  }\n}\n\n:host([appearance~=\"filled\"][appearance~=\"outlined\"]) .button {\n  border-color: var(--mov-color-border-normal);\n}\n\n:host([appearance~=\"accent\"]) {\n  .button {\n    color: var(--mov-color-on-loud);\n    background-color: var(--mov-color-fill-loud);\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-hover));\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-active));\n  }\n}\n/* Focus states */\n.button:focus {\n  outline: none;\n}\n.button:focus-visible {\n  outline: var(--mov-focus-ring);\n  outline-offset: var(--mov-focus-ring-offset);\n}\n\n/* Disabled state */\n.button.disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n}\n.button.disabled * {\n  pointer-events: none;\n}\n\n/* Icon buttons */\n.button.is-icon-button {\n  outline-offset: 2px;\n  width: var(--mov-form-control-height);\n  aspect-ratio: 1;\n}\n\n/* Pill modifier */\n:host([pill]) .button {\n  border-radius: var(--mov-border-radius-pill);\n}\n\n.start,\n.end {\n  flex: 0 0 auto;\n  display: flex;\n  align-items: center;\n  pointer-events: none;\n}\n\n.label {\n  display: inline-block;\n}\n.is-icon-button .label {\n  display: flex;\n}\n\nmov-icon[part~=\"caret\"] {\n  display: flex;\n  align-self: center;\n  align-items: center;\n}\nmov-icon[part~=\"caret\"]::part(svg) {\n  width: 0.875em;\n  height: 0.875em;\n}\n\n.loading {\n  position: relative;\n  cursor: wait;\n}\n.loading .start,\n.loading .label,\n.loading .end,\n.loading .caret {\n  visibility: hidden;\n}\n\n.spinner {\n  --indicator-color: currentColor;\n  --track-color: color-mix(in oklab, currentColor, transparent 90%);\n  position: absolute;\n  font-size: 1em;\n  height: 1em;\n  width: 1em;\n  top: calc(50% - 0.5em);\n  left: calc(50% - 0.5em);\n  border-radius: 50%;\n  border: 2px solid var(--track-color);\n  border-top-color: var(--indicator-color);\n  animation: spin 1s linear infinite;\n}\n\n@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n\nslot[name=\"start\"]::slotted(*) {\n  margin-inline-end: 0.75em;\n}\nslot[name=\"end\"]::slotted(*),\n.button:not(.visually-hidden-label) [part~=\"caret\"] {\n  margin-inline-start: 0.75em;\n}\n";
 
-  var __defProp$g = Object.defineProperty;
-  var __getOwnPropDesc$j = Object.getOwnPropertyDescriptor;
-  var __decorateClass$j = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$j(target, key) : target;
+  var __defProp$f = Object.defineProperty;
+  var __getOwnPropDesc$i = Object.getOwnPropertyDescriptor;
+  var __decorateClass$i = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$i(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if (decorator = decorators[i])
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$g(target, key, result);
+    if (kind && result) __defProp$f(target, key, result);
     return result;
   };
   let Button = class extends i$1 {
@@ -2954,82 +2925,82 @@
       this.isIconButton = textNodes.length === 0 && hasIcon;
     }
   };
-  Button.styles = [r$4(styles$7)];
-  __decorateClass$j([
+  Button.styles = [r$4(styles$6)];
+  __decorateClass$i([
     e$2(".button")
   ], Button.prototype, "button", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     e$2("slot:not([name])")
   ], Button.prototype, "labelSlot", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     r$1()
   ], Button.prototype, "isIconButton", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     r$1()
   ], Button.prototype, "hasLabel", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     r$1()
   ], Button.prototype, "hasStart", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     r$1()
   ], Button.prototype, "hasEnd", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     n$1()
   ], Button.prototype, "title", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     n$1({ reflect: true })
   ], Button.prototype, "appearance", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     n$1({ reflect: true })
   ], Button.prototype, "size", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     n$1({ attribute: "with-caret", type: Boolean, reflect: true })
   ], Button.prototype, "withCaret", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     n$1({ type: Boolean, reflect: true })
   ], Button.prototype, "disabled", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     n$1({ type: Boolean, reflect: true })
   ], Button.prototype, "loading", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     n$1({ type: Boolean, reflect: true })
   ], Button.prototype, "pill", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     n$1()
   ], Button.prototype, "type", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     n$1({ reflect: true })
   ], Button.prototype, "name", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     n$1({ reflect: true })
   ], Button.prototype, "value", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     n$1({ reflect: true })
   ], Button.prototype, "href", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     n$1()
   ], Button.prototype, "target", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     n$1()
   ], Button.prototype, "rel", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     n$1()
   ], Button.prototype, "download", 2);
-  __decorateClass$j([
+  __decorateClass$i([
     n$1({ reflect: true })
   ], Button.prototype, "form", 2);
-  Button = __decorateClass$j([
+  Button = __decorateClass$i([
     t$1("mov-button")
   ], Button);
 
-  var __defProp$f = Object.defineProperty;
-  var __getOwnPropDesc$i = Object.getOwnPropertyDescriptor;
-  var __decorateClass$i = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$i(target, key) : target;
+  var __defProp$e = Object.defineProperty;
+  var __getOwnPropDesc$h = Object.getOwnPropertyDescriptor;
+  var __decorateClass$h = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$h(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if (decorator = decorators[i])
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$f(target, key, result);
+    if (kind && result) __defProp$e(target, key, result);
     return result;
   };
   let ToggleButton = class extends i$1 {
@@ -3286,37 +3257,37 @@
       flex-shrink: 0;
     }
   `;
-  __decorateClass$i([
+  __decorateClass$h([
     n$1({ type: String })
   ], ToggleButton.prototype, "mode", 2);
-  __decorateClass$i([
+  __decorateClass$h([
     n$1({ type: Boolean, reflect: true })
   ], ToggleButton.prototype, "active", 2);
-  __decorateClass$i([
+  __decorateClass$h([
     n$1({ type: String })
   ], ToggleButton.prototype, "label", 2);
-  __decorateClass$i([
+  __decorateClass$h([
     n$1({ type: String })
   ], ToggleButton.prototype, "activeLabel", 2);
-  __decorateClass$i([
+  __decorateClass$h([
     n$1({ type: String })
   ], ToggleButton.prototype, "icon", 2);
-  __decorateClass$i([
+  __decorateClass$h([
     n$1({ type: String })
   ], ToggleButton.prototype, "activeIcon", 2);
-  __decorateClass$i([
+  __decorateClass$h([
     n$1({ type: String, reflect: true })
   ], ToggleButton.prototype, "appearance", 2);
-  __decorateClass$i([
+  __decorateClass$h([
     n$1({ type: String, reflect: true })
   ], ToggleButton.prototype, "size", 2);
-  __decorateClass$i([
+  __decorateClass$h([
     n$1({ type: Boolean })
   ], ToggleButton.prototype, "disabled", 2);
-  __decorateClass$i([
+  __decorateClass$h([
     n$1({ type: Boolean, reflect: true })
   ], ToggleButton.prototype, "loading", 2);
-  ToggleButton = __decorateClass$i([
+  ToggleButton = __decorateClass$h([
     t$1("toggle-button")
   ], ToggleButton);
 
@@ -3414,14 +3385,14 @@
     IconZoomPan
   } = styledIconsSVG;
 
-  var __defProp$e = Object.defineProperty;
-  var __getOwnPropDesc$h = Object.getOwnPropertyDescriptor;
-  var __decorateClass$h = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$h(target, key) : target;
+  var __defProp$d = Object.defineProperty;
+  var __getOwnPropDesc$g = Object.getOwnPropertyDescriptor;
+  var __decorateClass$g = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$g(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if (decorator = decorators[i])
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$e(target, key, result);
+    if (kind && result) __defProp$d(target, key, result);
     return result;
   };
   let ColorSwatch = class extends i$1 {
@@ -3545,25 +3516,25 @@
       opacity: 1;
     }
   `;
-  __decorateClass$h([
+  __decorateClass$g([
     n$1({ type: String })
   ], ColorSwatch.prototype, "color", 2);
-  __decorateClass$h([
+  __decorateClass$g([
     n$1({ type: String })
   ], ColorSwatch.prototype, "selected", 2);
-  __decorateClass$h([
+  __decorateClass$g([
     n$1({ type: Number })
   ], ColorSwatch.prototype, "size", 2);
-  __decorateClass$h([
+  __decorateClass$g([
     n$1({ type: String })
   ], ColorSwatch.prototype, "radius", 2);
-  __decorateClass$h([
+  __decorateClass$g([
     n$1({ state: true })
   ], ColorSwatch.prototype, "contrastColor", 2);
-  __decorateClass$h([
+  __decorateClass$g([
     n$1({ type: Boolean, reflect: true })
   ], ColorSwatch.prototype, "checked", 2);
-  ColorSwatch = __decorateClass$h([
+  ColorSwatch = __decorateClass$g([
     t$1("color-swatch")
   ], ColorSwatch);
 
@@ -3682,14 +3653,14 @@
     }
   }
 
-  var __defProp$d = Object.defineProperty;
-  var __getOwnPropDesc$g = Object.getOwnPropertyDescriptor;
-  var __decorateClass$g = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$g(target, key) : target;
+  var __defProp$c = Object.defineProperty;
+  var __getOwnPropDesc$f = Object.getOwnPropertyDescriptor;
+  var __decorateClass$f = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$f(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if (decorator = decorators[i])
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$d(target, key, result);
+    if (kind && result) __defProp$c(target, key, result);
     return result;
   };
   let ColorPalette = class extends i$1 {
@@ -3804,36 +3775,36 @@
       transform: scale(1.1);
     }
   `;
-  __decorateClass$g([
+  __decorateClass$f([
     n$1({ type: String })
   ], ColorPalette.prototype, "baseColor", 2);
-  __decorateClass$g([
+  __decorateClass$f([
     n$1({ type: String })
   ], ColorPalette.prototype, "mode", 2);
-  __decorateClass$g([
+  __decorateClass$f([
     n$1({ type: String, reflect: true })
   ], ColorPalette.prototype, "orientation", 2);
-  __decorateClass$g([
+  __decorateClass$f([
     n$1({ type: String })
   ], ColorPalette.prototype, "selected", 2);
-  __decorateClass$g([
+  __decorateClass$f([
     n$1({ type: String, reflect: true })
   ], ColorPalette.prototype, "value", 2);
-  __decorateClass$g([
+  __decorateClass$f([
     r$1()
   ], ColorPalette.prototype, "gradient", 2);
-  ColorPalette = __decorateClass$g([
+  ColorPalette = __decorateClass$f([
     t$1("color-palette")
   ], ColorPalette);
 
-  var __defProp$c = Object.defineProperty;
-  var __getOwnPropDesc$f = Object.getOwnPropertyDescriptor;
-  var __decorateClass$f = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$f(target, key) : target;
+  var __defProp$b = Object.defineProperty;
+  var __getOwnPropDesc$e = Object.getOwnPropertyDescriptor;
+  var __decorateClass$e = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$e(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if (decorator = decorators[i])
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$c(target, key, result);
+    if (kind && result) __defProp$b(target, key, result);
     return result;
   };
   let ColorPanel = class extends i$1 {
@@ -3963,24 +3934,24 @@
       display: none;
     }
   `;
-  __decorateClass$f([
+  __decorateClass$e([
     n$1({ type: String, reflect: true })
   ], ColorPanel.prototype, "value", 2);
-  __decorateClass$f([
+  __decorateClass$e([
     n$1({ type: String })
   ], ColorPanel.prototype, "selected", 2);
-  ColorPanel = __decorateClass$f([
+  ColorPanel = __decorateClass$e([
     t$1("color-panel")
   ], ColorPanel);
 
-  var __defProp$b = Object.defineProperty;
-  var __getOwnPropDesc$e = Object.getOwnPropertyDescriptor;
-  var __decorateClass$e = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$e(target, key) : target;
+  var __defProp$a = Object.defineProperty;
+  var __getOwnPropDesc$d = Object.getOwnPropertyDescriptor;
+  var __decorateClass$d = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$d(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if (decorator = decorators[i])
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$b(target, key, result);
+    if (kind && result) __defProp$a(target, key, result);
     return result;
   };
   let ColorPicker = class extends i$1 {
@@ -4448,34 +4419,34 @@
       border-radius: 2px;
     }
   `;
-  __decorateClass$e([
+  __decorateClass$d([
     n$1({ type: String })
   ], ColorPicker.prototype, "value", 2);
-  __decorateClass$e([
+  __decorateClass$d([
     n$1({ type: Array })
   ], ColorPicker.prototype, "swatches", 2);
-  __decorateClass$e([
+  __decorateClass$d([
     n$1({ type: String })
   ], ColorPicker.prototype, "mode", 2);
-  __decorateClass$e([
+  __decorateClass$d([
     r$1()
   ], ColorPicker.prototype, "opened", 2);
-  __decorateClass$e([
+  __decorateClass$d([
     r$1()
   ], ColorPicker.prototype, "popupDirection", 2);
-  __decorateClass$e([
+  __decorateClass$d([
     r$1()
   ], ColorPicker.prototype, "sourceSpace", 2);
-  __decorateClass$e([
+  __decorateClass$d([
     r$1()
   ], ColorPicker.prototype, "hsv", 2);
-  __decorateClass$e([
+  __decorateClass$d([
     r$1()
   ], ColorPicker.prototype, "saturationThumbPosition", 2);
-  __decorateClass$e([
+  __decorateClass$d([
     r$1()
   ], ColorPicker.prototype, "hueThumbPosition", 2);
-  ColorPicker = __decorateClass$e([
+  ColorPicker = __decorateClass$d([
     t$1("color-picker")
   ], ColorPicker);
 
@@ -4486,14 +4457,14 @@
    */
   const r=(r,o,t)=>{for(const t of o)if(t[0]===r)return (0, t[1])();return t?.()};
 
-  var __defProp$a = Object.defineProperty;
-  var __getOwnPropDesc$d = Object.getOwnPropertyDescriptor;
-  var __decorateClass$d = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$d(target, key) : target;
+  var __defProp$9 = Object.defineProperty;
+  var __getOwnPropDesc$c = Object.getOwnPropertyDescriptor;
+  var __decorateClass$c = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$c(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if (decorator = decorators[i])
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$a(target, key, result);
+    if (kind && result) __defProp$9(target, key, result);
     return result;
   };
   let SegmentedControl = class extends i$1 {
@@ -4699,25 +4670,25 @@
       padding: 0.75rem;
     }
   `;
-  __decorateClass$d([
+  __decorateClass$c([
     n$1({ type: String, reflect: true })
   ], SegmentedControl.prototype, "value", 2);
-  __decorateClass$d([
+  __decorateClass$c([
     n$1({ type: String })
   ], SegmentedControl.prototype, "labelPosition", 2);
-  __decorateClass$d([
+  __decorateClass$c([
     n$1({ type: String })
   ], SegmentedControl.prototype, "size", 2);
-  __decorateClass$d([
+  __decorateClass$c([
     r$1()
   ], SegmentedControl.prototype, "_options", 2);
-  __decorateClass$d([
+  __decorateClass$c([
     e$2(".thumb")
   ], SegmentedControl.prototype, "thumb", 2);
-  __decorateClass$d([
+  __decorateClass$c([
     e$2("slot")
   ], SegmentedControl.prototype, "_slotEl", 2);
-  SegmentedControl = __decorateClass$d([
+  SegmentedControl = __decorateClass$c([
     t$1("segmented-control")
   ], SegmentedControl);
   let SegmentedControlOption = class extends i$1 {
@@ -4734,27 +4705,27 @@
       return this;
     }
   };
-  __decorateClass$d([
+  __decorateClass$c([
     n$1({ type: String, reflect: true })
   ], SegmentedControlOption.prototype, "value", 2);
-  __decorateClass$d([
+  __decorateClass$c([
     n$1({ type: String, reflect: true })
   ], SegmentedControlOption.prototype, "label", 2);
-  __decorateClass$d([
+  __decorateClass$c([
     n$1({ type: String, reflect: true })
   ], SegmentedControlOption.prototype, "icon", 2);
-  SegmentedControlOption = __decorateClass$d([
+  SegmentedControlOption = __decorateClass$c([
     t$1("segmented-control-option")
   ], SegmentedControlOption);
 
-  var __defProp$9 = Object.defineProperty;
-  var __getOwnPropDesc$c = Object.getOwnPropertyDescriptor;
-  var __decorateClass$c = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$c(target, key) : target;
+  var __defProp$8 = Object.defineProperty;
+  var __getOwnPropDesc$b = Object.getOwnPropertyDescriptor;
+  var __decorateClass$b = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$b(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if (decorator = decorators[i])
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$9(target, key, result);
+    if (kind && result) __defProp$8(target, key, result);
     return result;
   };
   let ToggleSwitch = class extends i$1 {
@@ -4889,25 +4860,25 @@
       color: #333;
     }
   `;
-  __decorateClass$c([
+  __decorateClass$b([
     n$1({ type: String })
   ], ToggleSwitch.prototype, "name", 2);
-  __decorateClass$c([
+  __decorateClass$b([
     n$1({ type: Boolean, reflect: true })
   ], ToggleSwitch.prototype, "checked", 2);
-  __decorateClass$c([
+  __decorateClass$b([
     n$1({ type: Boolean, reflect: true })
   ], ToggleSwitch.prototype, "disabled", 2);
-  __decorateClass$c([
+  __decorateClass$b([
     n$1({ type: String, reflect: true })
   ], ToggleSwitch.prototype, "design", 2);
-  __decorateClass$c([
+  __decorateClass$b([
     n$1({ type: String })
   ], ToggleSwitch.prototype, "textOn", 2);
-  __decorateClass$c([
+  __decorateClass$b([
     n$1({ type: String })
   ], ToggleSwitch.prototype, "textOff", 2);
-  ToggleSwitch = __decorateClass$c([
+  ToggleSwitch = __decorateClass$b([
     t$1("toggle-switch")
   ], ToggleSwitch);
 
@@ -5198,9 +5169,6 @@
       }
     }
   }
-  function buttonCommentsOpen() {
-    setAppStateValue("panel", "comments");
-  }
 
   function scrollToElement(ele) {
     if (getSettingsValue("viewMode").startsWith("Fluid")) {
@@ -5227,14 +5195,14 @@
     setAppStateValue("scrollToPage", target);
   }
 
-  var __defProp$8 = Object.defineProperty;
-  var __getOwnPropDesc$b = Object.getOwnPropertyDescriptor;
-  var __decorateClass$b = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$b(target, key) : target;
+  var __defProp$7 = Object.defineProperty;
+  var __getOwnPropDesc$a = Object.getOwnPropertyDescriptor;
+  var __decorateClass$a = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$a(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if (decorator = decorators[i])
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$8(target, key, result);
+    if (kind && result) __defProp$7(target, key, result);
     return result;
   };
   let Pagination = class extends i$1 {
@@ -5450,36 +5418,36 @@
       opacity: 1;
     }
   `;
-  __decorateClass$b([
+  __decorateClass$a([
     n$1({ type: Boolean })
   ], Pagination.prototype, "mode", 2);
-  __decorateClass$b([
+  __decorateClass$a([
     n$1({ type: Number })
   ], Pagination.prototype, "currentPage", 2);
-  __decorateClass$b([
+  __decorateClass$a([
     n$1({ type: Number })
   ], Pagination.prototype, "totalPages", 2);
-  __decorateClass$b([
+  __decorateClass$a([
     n$1({ type: Number })
   ], Pagination.prototype, "startPage", 2);
-  __decorateClass$b([
+  __decorateClass$a([
     n$1({ type: String })
   ], Pagination.prototype, "next", 2);
-  __decorateClass$b([
+  __decorateClass$a([
     n$1({ type: String })
   ], Pagination.prototype, "prev", 2);
-  Pagination = __decorateClass$b([
+  Pagination = __decorateClass$a([
     t$1("manga-pagination")
   ], Pagination);
 
-  var __defProp$7 = Object.defineProperty;
-  var __getOwnPropDesc$a = Object.getOwnPropertyDescriptor;
-  var __decorateClass$a = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$a(target, key) : target;
+  var __defProp$6 = Object.defineProperty;
+  var __getOwnPropDesc$9 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$9 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$9(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if (decorator = decorators[i])
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$7(target, key, result);
+    if (kind && result) __defProp$6(target, key, result);
     return result;
   };
   let Drawer = class extends i$1 {
@@ -5669,27 +5637,27 @@
       justify-content: flex-start;
     }
   `;
-  __decorateClass$a([
+  __decorateClass$9([
     n$1({ type: Boolean, reflect: true })
   ], Drawer.prototype, "open", 2);
-  __decorateClass$a([
+  __decorateClass$9([
     n$1({ type: String, reflect: true })
   ], Drawer.prototype, "placement", 2);
-  __decorateClass$a([
+  __decorateClass$9([
     e$2("dialog")
   ], Drawer.prototype, "dialog", 2);
-  Drawer = __decorateClass$a([
+  Drawer = __decorateClass$9([
     t$1("mov-drawer")
   ], Drawer);
 
-  var __defProp$6 = Object.defineProperty;
-  var __getOwnPropDesc$9 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$9 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$9(target, key) : target;
+  var __defProp$5 = Object.defineProperty;
+  var __getOwnPropDesc$8 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$8 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$8(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if (decorator = decorators[i])
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$6(target, key, result);
+    if (kind && result) __defProp$5(target, key, result);
     return result;
   };
   let Dialog = class extends i$1 {
@@ -5967,22 +5935,22 @@
       transform: translateY(0);
     }
   `;
-  __decorateClass$9([
+  __decorateClass$8([
     n$1({ type: Boolean, reflect: true })
   ], Dialog.prototype, "open", 2);
-  __decorateClass$9([
+  __decorateClass$8([
     n$1({ type: String, reflect: true })
   ], Dialog.prototype, "mode", 2);
-  __decorateClass$9([
+  __decorateClass$8([
     n$1({ type: Boolean, reflect: true })
   ], Dialog.prototype, "fullscreen", 2);
-  __decorateClass$9([
+  __decorateClass$8([
     n$1({ type: String, reflect: true })
   ], Dialog.prototype, "icon", 2);
-  __decorateClass$9([
+  __decorateClass$8([
     e$2("dialog")
   ], Dialog.prototype, "dialog", 2);
-  Dialog = __decorateClass$9([
+  Dialog = __decorateClass$8([
     t$1("mov-dialog")
   ], Dialog);
   function showInfoDialog(options) {
@@ -6006,14 +5974,14 @@
     });
   }
 
-  var __defProp$5 = Object.defineProperty;
-  var __getOwnPropDesc$8 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$8 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$8(target, key) : target;
+  var __defProp$4 = Object.defineProperty;
+  var __getOwnPropDesc$7 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$7 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$7(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if (decorator = decorators[i])
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$5(target, key, result);
+    if (kind && result) __defProp$4(target, key, result);
     return result;
   };
   let MovDropdown = class extends i$1 {
@@ -6078,13 +6046,13 @@
       display: block;
     }
   `;
-  __decorateClass$8([
+  __decorateClass$7([
     n$1({ type: Boolean, reflect: true })
   ], MovDropdown.prototype, "open", 2);
-  __decorateClass$8([
+  __decorateClass$7([
     n$1({ type: Boolean, reflect: true })
   ], MovDropdown.prototype, "checkable", 2);
-  MovDropdown = __decorateClass$8([
+  MovDropdown = __decorateClass$7([
     t$1("mov-dropdown")
   ], MovDropdown);
   let MovDropdownItem = class extends i$1 {
@@ -6149,10 +6117,10 @@
       opacity: 0.7;
     }
   `;
-  __decorateClass$8([
+  __decorateClass$7([
     n$1({ type: Boolean, reflect: true })
   ], MovDropdownItem.prototype, "selected", 2);
-  MovDropdownItem = __decorateClass$8([
+  MovDropdownItem = __decorateClass$7([
     t$1("mov-dropdown-item")
   ], MovDropdownItem);
 
@@ -6694,10 +6662,6 @@
     const navbarType = event.currentTarget.value;
     saveSettingsValue("navbar", navbarType);
   }
-  function checkEnableComments(event) {
-    const checked = event.detail.checked;
-    saveSettingsValue("enableComments", checked);
-  }
   function checkPagination(event) {
     const checked = event.detail.checked;
     saveSettingsValue("pagination", checked);
@@ -7009,18 +6973,18 @@
     setAppStateValue("panel", "keybindingsEditor");
   }
 
-  const styles$6 = "#Header {\n  display: flex;\n  justify-content: space-around;\n  align-items: center;\n  flex-flow: row nowrap;\n  transition: transform 0.3s ease-in;\n  position: sticky;\n  top: 0;\n  left: 0;\n  right: 0;\n  background-color: var(--theme-background-color);\n  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);\n  z-index: 900;\n}\n\n#Header.click {\n  padding-left: 40px;\n}\n\n@keyframes headroom {\n  from {\n    transform: translateY(-100%);\n  }\n  to {\n    transform: translateY(0%);\n  }\n}\n\n#Header:not(.visible, .headroom-top, .fixed, .simple) {\n  animation: headroom 0.3s ease-in reverse;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.scroll.headroom-hide:not(.visible) {\n  animation: none;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.scroll.headroom-show,\n#Header.headroom-end,\n#Header.visible {\n  animation: headroom 0.3s ease-in;\n  transform: translateY(0%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.headroom-top {\n  animation: none;\n}\n\n#Header.fixed {\n  position: sticky;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#Header.simple {\n  position: static;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#menu {\n  position: fixed;\n  z-index: 1;\n  color: var(--theme-body-text-color);\n  height: 40px;\n  width: 40px;\n}\n\n#menu:not(.click),\n#menu.hide {\n  display: none;\n}\n\n#menu.click {\n  z-index: 901;\n}\n\n#MangaTitle {\n  padding: 2px;\n  margin: 0;\n  font-size: 1.2rem;\n  font-weight: 400;\n  word-wrap: anywhere;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  min-width: 200px;\n  max-width: 40vw;\n}\n\n#GlobalFunctions {\n  display: flex;\n  gap: 3px;\n  padding: 3px 3px 3px 0;\n  flex-wrap: wrap;\n  z-index: 100;\n}\n\n#ZoomControl {\n  display: flex;\n  align-items: center;\n  flex-direction: column;\n  gap: 3px;\n  padding: 10px 5px;\n}\n";
+  const styles$5 = "#Header {\n  display: flex;\n  justify-content: space-around;\n  align-items: center;\n  flex-flow: row nowrap;\n  transition: transform 0.3s ease-in;\n  position: sticky;\n  top: 0;\n  left: 0;\n  right: 0;\n  background-color: var(--theme-background-color);\n  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);\n  z-index: 900;\n}\n\n#Header.click {\n  padding-left: 40px;\n}\n\n@keyframes headroom {\n  from {\n    transform: translateY(-100%);\n  }\n  to {\n    transform: translateY(0%);\n  }\n}\n\n#Header:not(.visible, .headroom-top, .fixed, .simple) {\n  animation: headroom 0.3s ease-in reverse;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.scroll.headroom-hide:not(.visible) {\n  animation: none;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.scroll.headroom-show,\n#Header.headroom-end,\n#Header.visible {\n  animation: headroom 0.3s ease-in;\n  transform: translateY(0%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.headroom-top {\n  animation: none;\n}\n\n#Header.fixed {\n  position: sticky;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#Header.simple {\n  position: static;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#menu {\n  position: fixed;\n  z-index: 1;\n  color: var(--theme-body-text-color);\n  height: 40px;\n  width: 40px;\n}\n\n#menu:not(.click),\n#menu.hide {\n  display: none;\n}\n\n#menu.click {\n  z-index: 901;\n  top:0;\n  left: 0;\n}\n\n#MangaTitle {\n  padding: 2px;\n  margin: 0;\n  font-size: 1.2rem;\n  font-weight: 400;\n  word-wrap: anywhere;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  min-width: 200px;\n  max-width: 40vw;\n}\n\n#GlobalFunctions {\n  display: flex;\n  gap: 3px;\n  padding: 3px 3px 3px 0;\n  flex-wrap: wrap;\n  z-index: 100;\n}\n\n#ZoomControl {\n  display: flex;\n  align-items: center;\n  flex-direction: column;\n  gap: 3px;\n  padding: 10px 5px;\n}\n";
 
   const media = "#Header.mobile,\n#Header.tablet {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\n.mobile #ViewerTitle,\n.tablet #ViewerTitle {\n  order: 4;\n  min-height: auto;\n}\n\n.mobile #GlobalFunctions,\n.tablet #GlobalFunctions {\n  order: 2;\n  width: auto;\n  padding: 5px;\n}\n\n.mobile #GlobalFunctions span {\n  flex-direction: column;\n}\n\n.mobile #ZoomControl,\n.tablet #ZoomControl {\n  order: 3;\n}\n\n.mobile #Toolbar,\n.tabler #Toolbar {\n  order: 1;\n}\n\n#Header.mobile {\n  flex-direction: row;\n  flex-wrap: wrap;\n  justify-content: center;\n  align-items: center;\n}\n\n#Header.mobile.click + #Chapter:not(.webcomic, .vertical) {\n  position: sticky;\n}\n\n.tablet #MangaTitle,\n.mobile #MangaTitle {\n  max-width: 90vw;\n}\n\n.mobile #ViewerTitle {\n  order: 3;\n  margin-top: 0;\n  height: auto;\n  padding: 0;\n}\n\n.mobile #GlobalFunctions {\n  order: 2;\n  padding: 0;\n  width: auto;\n  gap: 0;\n}\n\n.mobile mov-button::part(base) {\n  border-radius: 0;\n}\n\n.mobile #FileDropdown mov-button:first-of-type::part(base) {\n  border-radius: 5px 0 0 5px;\n}\n\n.mobile #GlobalFunctions mov-button:last-of-type::part(base) {\n  border-radius: 0 5px 5px 0;\n}\n\n.mobile .PageFunctions {\n  padding: 0;\n}\n\n.mobile .PageFunctions .PageButton.Bookmark {\n  opacity: 1;\n}\n\n.mobile #GlobalFunctions #ZoomSlider,\n.tablet #GlobalFunctions #ZoomSlider,\n.mobile .PageFunctions .PageButton:not(.Bookmark),\n.tablet #Counters,\n.mobile #ZoomControl,\n.mobile #ZoomDropdown,\n.mobile #ViewDropdown,\n.mobile #FileDropdown :where(:nth-child(3), :nth-child(4)) {\n  display: none;\n}\n";
 
-  var __defProp$4 = Object.defineProperty;
-  var __getOwnPropDesc$7 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$7 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$7(target, key) : target;
+  var __defProp$3 = Object.defineProperty;
+  var __getOwnPropDesc$6 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$6 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$6(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if (decorator = decorators[i])
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$4(target, key, result);
+    if (kind && result) __defProp$3(target, key, result);
     return result;
   };
   let Header = class extends i$1 {
@@ -7307,14 +7271,6 @@
             <mov-icon name="IconBookReturn"></mov-icon>
           </mov-button>
           <mov-button
-            id="CommentsButton"
-            title="${getLocaleString("DISPLAY_COMMENTS")}"
-            @click=${buttonCommentsOpen}
-            ?disabled=${!this.manga.comments}
-          >
-            <mov-icon name="IconMessage"></mov-icon>
-          </mov-button>
-          <mov-button
             id="download"
             title="${getLocaleString("DOWNLOAD_ZIP")}"
             @click=${buttonStartDownload}
@@ -7348,23 +7304,23 @@
     `;
     }
   };
-  Header.styles = [r$4(styles$6), r$4(media), r$4(keycss), i$3``];
-  __decorateClass$7([
+  Header.styles = [r$4(styles$5), r$4(media), r$4(keycss), i$3``];
+  __decorateClass$6([
     e$2("#MangaTitle")
   ], Header.prototype, "mangaTitleElement", 2);
-  __decorateClass$7([
+  __decorateClass$6([
     n$1({ type: Object })
   ], Header.prototype, "manga", 2);
-  Header = __decorateClass$7([
+  Header = __decorateClass$6([
     t$1("reader-header"),
     libExports.useStores(settings$1, locale, appState)
   ], Header);
 
-  const styles$5 = "#BookmarksPanel {\n  text-align: center;\n  --width: 100vw;\n}\n\n#BookmarksList {\n  padding: 0 5px;\n  overflow: auto;\n  max-height: 60vh;\n  display: flex;\n  flex-direction: column;\n  gap: 5px;\n}\n\n.bookmark-item {\n  display: flex;\n  align-items: center;\n  gap: 1rem;\n  padding: 0.75rem 1rem;\n  border-radius: 5px;\n  transition: background-color 150ms ease-in-out;\n  text-align: left;\n}\n\n.bookmark-item:hover {\n  background-color: var(--mov-color-fill-quiet, rgba(128, 128, 128, 0.1));\n}\n\n.bookmark-info {\n  flex-grow: 1;\n  min-width: 0;\n}\n\n.bookmark-name {\n  font-weight: 500;\n}\n\n.bookmark-url {\n  font-size: 0.875rem;\n  text-decoration: none;\n  display: block;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  color: color-mix(in oklab, var(--theme-body-text-color), transparent 30%);\n}\n.bookmark-url:hover {\n  text-decoration: underline;\n}\n\n.bookmark-details {\n  flex-shrink: 0;\n  width: 90px;\n  font-size: 0.875rem;\n  text-align: right;\n  color: color-mix(in oklab, var(--theme-body-text-color), transparent 30%);\n}\n.bookmark-details > div {\n  padding: 2px 0;\n}\n\n.bookmark-actions {\n  flex-shrink: 0;\n  display: flex;\n  gap: 0.5rem;\n}\n";
+  const styles$4 = "#BookmarksPanel {\n  text-align: center;\n  --width: 100vw;\n}\n\n#BookmarksList {\n  padding: 0 5px;\n  overflow: auto;\n  max-height: 60vh;\n  display: flex;\n  flex-direction: column;\n  gap: 5px;\n}\n\n.bookmark-item {\n  display: flex;\n  align-items: center;\n  gap: 1rem;\n  padding: 0.75rem 1rem;\n  border-radius: 5px;\n  transition: background-color 150ms ease-in-out;\n  text-align: left;\n}\n\n.bookmark-item:hover {\n  background-color: var(--mov-color-fill-quiet, rgba(128, 128, 128, 0.1));\n}\n\n.bookmark-info {\n  flex-grow: 1;\n  min-width: 0;\n}\n\n.bookmark-name {\n  font-weight: 500;\n}\n\n.bookmark-url {\n  font-size: 0.875rem;\n  text-decoration: none;\n  display: block;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  color: color-mix(in oklab, var(--theme-body-text-color), transparent 30%);\n}\n.bookmark-url:hover {\n  text-decoration: underline;\n}\n\n.bookmark-details {\n  flex-shrink: 0;\n  width: 90px;\n  font-size: 0.875rem;\n  text-align: right;\n  color: color-mix(in oklab, var(--theme-body-text-color), transparent 30%);\n}\n.bookmark-details > div {\n  padding: 2px 0;\n}\n\n.bookmark-actions {\n  flex-shrink: 0;\n  display: flex;\n  gap: 0.5rem;\n}\n";
 
-  var __getOwnPropDesc$6 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$6 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$6(target, key) : target;
+  var __getOwnPropDesc$5 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$5 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$5(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if (decorator = decorators[i])
         result = (decorator(result)) || result;
@@ -7457,8 +7413,8 @@
     `;
     }
   };
-  BookmarkPanel.styles = [r$4(styles$5)];
-  BookmarkPanel = __decorateClass$6([
+  BookmarkPanel.styles = [r$4(styles$4)];
+  BookmarkPanel = __decorateClass$5([
     t$1("bookmark-panel"),
     libExports.useStores(settings$1, locale, appState)
   ], BookmarkPanel);
@@ -7470,11 +7426,11 @@
    */
   function*o$1(o,t){if(void 0!==o){let i=-1;for(const n of o)i>-1&&(yield t),i++,yield n;}}
 
-  const styles$4 = "#KeybindingsPanel div {\n  line-height: 1.5em;\n}\n\n#KeybindingsPanel #KeybindingsList {\n  display: grid;\n  grid-template-columns: 1fr 2fr;\n  gap: 5px;\n}\n\n#KeybindingsPanel .ControlButton {\n  margin-left: 3px;\n  justify-content: center;\n  align-items: center;\n  padding: 5px 10px;\n  gap: 0.5em;\n}\n\n#KeybindingsPanel label {\n  display: ruby;\n}\n\n#KeybindingsPanel input {\n  display: inline-block;\n  width: 100%;\n}\n\n#KeybindingsPanel #HotKeysRules {\n  grid-column: span 2;\n}\n";
+  const styles$3 = "#KeybindingsPanel div {\n  line-height: 1.5em;\n}\n\n#KeybindingsPanel #KeybindingsList {\n  display: grid;\n  grid-template-columns: 1fr 2fr;\n  gap: 5px;\n}\n\n#KeybindingsPanel .ControlButton {\n  margin-left: 3px;\n  justify-content: center;\n  align-items: center;\n  padding: 5px 10px;\n  gap: 0.5em;\n}\n\n#KeybindingsPanel label {\n  display: ruby;\n}\n\n#KeybindingsPanel input {\n  display: inline-block;\n  width: 100%;\n}\n\n#KeybindingsPanel #HotKeysRules {\n  grid-column: span 2;\n}\n";
 
-  var __getOwnPropDesc$5 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$5 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$5(target, key) : target;
+  var __getOwnPropDesc$4 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$4 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$4(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if (decorator = decorators[i])
         result = (decorator(result)) || result;
@@ -7577,8 +7533,8 @@
     `;
     }
   };
-  KeybindingsPanel.styles = [r$4(styles$4), r$4(keycss)];
-  KeybindingsPanel = __decorateClass$5([
+  KeybindingsPanel.styles = [r$4(styles$3), r$4(keycss)];
+  KeybindingsPanel = __decorateClass$4([
     t$1("keybindings-panel"),
     libExports.useStores(settings$1, locale, appState)
   ], KeybindingsPanel);
@@ -7609,16 +7565,16 @@
     event.preventDefault();
   }
 
-  const styles$3 = ":host {\n  --nav-collapsed-size: 34px;\n  --nav-expanded-size: 200px;\n  --header-height: 80px;\n}\n#Navigation {\n  color: var(--theme-text-color);\n  background-color: var(--theme-hightlight-color);\n  overflow: hidden;\n  display: flex;\n  box-sizing: border-box;\n  gap: 5px;\n  white-space: nowrap;\n  text-align: center;\n  line-height: 0;\n  transition: all 0.3s ease;\n  position: fixed;\n  z-index: 1000;\n}\n#Thumbnails {\n  flex-grow: 1;\n  display: flex;\n  gap: 5px;\n  justify-content: flex-start;\n}\n#Navigation.horizontal #Thumbnails {\n  flex-direction: row;\n  overflow-x: auto;\n  overflow-y: hidden;\n}\n#Navigation.vertical #Thumbnails {\n  flex-direction: column;\n  overflow-y: auto;\n  overflow-x: hidden;\n  justify-content: flex-start;\n}\n#Navigation.left #Thumbnails {\n  direction: rtl;\n}\n:host(:not([forceExpanded])) #Navigation:not(:hover) #Thumbnails {\n  display: none;\n}\n#NavigationCounters {\n  flex-shrink: 0; /* Prevent this from shrinking */\n  padding: 5px;\n  line-height: 1rem;\n  text-align: center;\n  white-space: nowrap;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 0.5rem;\n}\n/* == Horizontal Orientation (for top/bottom position) == */\n#Navigation.horizontal {\n  flex-direction: column;\n  height: var(--nav-collapsed-size);\n  width: 100%;\n  left: 0;\n  right: 0;\n}\n:host([forceExpanded]) #Navigation.horizontal,\n#Navigation.horizontal:hover {\n  height: var(--nav-expanded-size);\n}\n#Navigation.bottom {\n  bottom: 0;\n}\n/* == Vertical Orientation (for left/right position) == */\n#Navigation.vertical {\n  flex-direction: row;\n  width: var(--nav-collapsed-size);\n  height: 100%;\n  bottom: 0;\n  transition:\n    top 0.3s ease,\n    height 0.3s ease,\n    width 0.3s ease;\n}\n:host([forceExpanded]) #Navigation.vertical,\n#Navigation.vertical:hover {\n  width: var(--nav-expanded-size);\n}\n#Navigation.left {\n  left: 0;\n  flex-direction: row-reverse;\n}\n#Navigation.right {\n  right: 0;\n}\n#Navigation.vertical #NavigationCounters {\n  writing-mode: vertical-rl;\n  transform: rotate(180deg);\n}\n#Navigation.right #NavigationCounters {\n  transform: rotate(0deg);\n}\n/* Adjust for header visibility */\n#Navigation.vertical.header {\n  top: var(--header-height);\n  height: calc(100% - var(--header-height));\n}\n\n#Navigation .Thumbnail {\n  display: inline-flex;\n  height: 150px;\n  width: 150px;\n  margin: 0 5px;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n}\n\n.ThumbnailIndex {\n  color: var(--mov-color-on-loud);\n  background-color: var(--mov-color-fill-loud);\n  display: block;\n  opacity: 0.9;\n  position: absolute;\n  left: 0;\n  bottom: 30%;\n  width: 100%;\n  line-height: 1.2rem;\n  text-align: center;\n  font-weight: 600;\n  z-index: 1;\n}\n.ThumbnailImg {\n  cursor: pointer;\n  display: inline-block;\n  max-height: 150px;\n  min-height: 150px;\n  min-width: 80px;\n  max-width: 150px;\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: 48px 48px;\n}\n";
+  const styles$2 = ":host {\n  --nav-collapsed-size: 34px;\n  --nav-expanded-size: 200px;\n  --header-height: 80px;\n}\n#Navigation {\n  color: var(--theme-text-color);\n  background-color: var(--theme-hightlight-color);\n  overflow: hidden;\n  display: flex;\n  box-sizing: border-box;\n  gap: 5px;\n  white-space: nowrap;\n  text-align: center;\n  line-height: 0;\n  transition: all 0.3s ease;\n  position: fixed;\n  z-index: 1000;\n}\n#Thumbnails {\n  flex-grow: 1;\n  display: flex;\n  gap: 5px;\n  justify-content: flex-start;\n}\n#Navigation.horizontal #Thumbnails {\n  flex-direction: row;\n  overflow-x: auto;\n  overflow-y: hidden;\n}\n#Navigation.vertical #Thumbnails {\n  flex-direction: column;\n  overflow-y: auto;\n  overflow-x: hidden;\n  justify-content: flex-start;\n}\n#Navigation.left #Thumbnails {\n  direction: rtl;\n}\n:host(:not([forceExpanded])) #Navigation:not(:hover) #Thumbnails {\n  display: none;\n}\n#NavigationCounters {\n  flex-shrink: 0; /* Prevent this from shrinking */\n  padding: 5px;\n  line-height: 1rem;\n  text-align: center;\n  white-space: nowrap;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 0.5rem;\n}\n/* == Horizontal Orientation (for top/bottom position) == */\n#Navigation.horizontal {\n  flex-direction: column;\n  height: var(--nav-collapsed-size);\n  width: 100%;\n  left: 0;\n  right: 0;\n}\n:host([forceExpanded]) #Navigation.horizontal,\n#Navigation.horizontal:hover {\n  height: var(--nav-expanded-size);\n}\n#Navigation.bottom {\n  bottom: 0;\n}\n/* == Vertical Orientation (for left/right position) == */\n#Navigation.vertical {\n  flex-direction: row;\n  width: var(--nav-collapsed-size);\n  height: 100%;\n  bottom: 0;\n  transition:\n    top 0.3s ease,\n    height 0.3s ease,\n    width 0.3s ease;\n}\n:host([forceExpanded]) #Navigation.vertical,\n#Navigation.vertical:hover {\n  width: var(--nav-expanded-size);\n}\n#Navigation.left {\n  left: 0;\n  flex-direction: row-reverse;\n}\n#Navigation.right {\n  right: 0;\n}\n#Navigation.vertical #NavigationCounters {\n  writing-mode: vertical-rl;\n  transform: rotate(180deg);\n}\n#Navigation.right #NavigationCounters {\n  transform: rotate(0deg);\n}\n/* Adjust for header visibility */\n#Navigation.vertical.header {\n  top: var(--header-height);\n  height: calc(100% - var(--header-height));\n}\n\n#Navigation .Thumbnail {\n  display: inline-flex;\n  height: 150px;\n  width: 150px;\n  margin: 0 5px;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n}\n\n.ThumbnailIndex {\n  color: var(--mov-color-on-loud);\n  background-color: var(--mov-color-fill-loud);\n  display: block;\n  opacity: 0.9;\n  position: absolute;\n  left: 0;\n  bottom: 30%;\n  width: 100%;\n  line-height: 1.2rem;\n  text-align: center;\n  font-weight: 600;\n  z-index: 1;\n}\n.ThumbnailImg {\n  cursor: pointer;\n  display: inline-block;\n  max-height: 150px;\n  min-height: 150px;\n  min-width: 80px;\n  max-width: 150px;\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: 48px 48px;\n}\n";
 
-  var __defProp$3 = Object.defineProperty;
-  var __getOwnPropDesc$4 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$4 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$4(target, key) : target;
+  var __defProp$2 = Object.defineProperty;
+  var __getOwnPropDesc$3 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$3 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$3(target, key) : target;
     for (var i = decorators.length - 1, decorator; i >= 0; i--)
       if (decorator = decorators[i])
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$3(target, key, result);
+    if (kind && result) __defProp$2(target, key, result);
     return result;
   };
   let Navbar = class extends i$1 {
@@ -7710,7 +7666,7 @@
    * The component's styles, including imported CSS and dynamic styles for image placeholders.
    */
   Navbar.styles = [
-    r$4(styles$3),
+    r$4(styles$2),
     i$3`
       #Navigation {
         transition: opacity 0.2s ease-in-out;
@@ -7731,141 +7687,19 @@
       }
     `
   ];
-  __decorateClass$4([
+  __decorateClass$3([
     n$1({ type: String })
   ], Navbar.prototype, "mode", 2);
-  __decorateClass$4([
+  __decorateClass$3([
     n$1({ type: Boolean })
   ], Navbar.prototype, "forceExpanded", 2);
-  __decorateClass$4([
+  __decorateClass$3([
     r$1()
   ], Navbar.prototype, "isHiding", 2);
-  Navbar = __decorateClass$4([
+  Navbar = __decorateClass$3([
     t$1("navbar-thumbnails"),
     libExports.useStores(settings$1, locale, appState)
   ], Navbar);
-
-  const styles$2 = "#CommentsPanel {\n  text-align: center;\n  --width: 100vw;\n}\n\n#CommentsArea {\n  overflow-y: auto;\n  overscroll-behavior: contain;\n  height: 100%;\n  width: 100%;\n  background-color: var(--theme-body-background);\n}\n";
-
-  const themesCSS = (selector = "#MangaOnlineViewer", hex = getSettingsValue("theme")) => {
-    const gradient = generateColorGradient(hex);
-    const text = getTextColor(hex);
-    const secondary = getSettingsValue("colorScheme") === "dark" ? gradient[8] : gradient[2];
-    const secondaryText = getTextColor(secondary);
-    return css`
-    :where(:root),
-    ${selector}, .dark,
-    ${selector}.dark {
-      --theme-primary-color: ${hex};
-      --theme-primary-text-color: ${text};
-      --theme-secondary-color: ${secondary};
-      --theme-secondary-text-color: ${secondaryText};
-
-      color-scheme: dark;
-      --theme-body-background: ${colors.dark["600"]};
-      --theme-body-text-color: ${colors.dark["50"]};
-      --theme-text-color: ${colors.dark["50"]};
-      --theme-background-color: ${colors.dark["600"]};
-      --theme-hightlight-color: ${colors.dark["500"]};
-      --theme-border-color: ${colors.dark["400"]};
-
-      --mov-color-fill-quiet: ${gradient[9]};
-      --mov-color-fill-normal: var(--theme-secondary-color, ${gradient[8]});
-      --mov-color-fill-loud: var(--theme-primary-color);
-      --mov-color-border-quiet: ${gradient[8]};
-      --mov-color-border-normal: ${gradient[7]};
-      --mov-color-border-loud: ${gradient[6]};
-      --mov-color-on-quiet: ${gradient[4]};
-      --mov-color-on-normal: var(--theme-secondary-text-color, ${gradient[3]});
-      --mov-color-on-loud: var(--theme-primary-text-color, white);
-
-      --mov-color-mix-hover: black 8%;
-      --mov-color-mix-active: black 16%;
-    }
-
-    .light,
-    ${selector}.light {
-      color-scheme: light;
-      --theme-body-background: ${colors.gray["50"]};
-      --theme-body-text-color: ${colors.gray["900"]};
-      --theme-text-color: ${colors.gray["900"]};
-      --theme-background-color: ${colors.gray["50"]};
-      --theme-hightlight-color: ${colors.gray["500"]};
-      --theme-border-color: ${colors.gray["100"]};
-
-      --mov-color-fill-quiet: ${gradient[0]};
-      --mov-color-fill-normal: var(--theme-secondary-color, ${gradient[1]});
-      --mov-color-fill-loud: var(--theme-primary-color);
-      --mov-color-border-quiet: ${gradient[1]};
-      --mov-color-border-normal: ${gradient[2]};
-      --mov-color-border-loud: ${gradient[4]};
-      --mov-color-on-quiet: ${gradient[6]};
-      --mov-color-on-normal: var(--theme-secondary-text-color, ${gradient[3]});
-      --mov-color-on-loud: var(--theme-primary-text-color, white);
-
-      --mov-color-mix-hover: black 10%;
-      --mov-color-mix-active: black 20%;
-    }
-  `;
-  };
-
-  var __defProp$2 = Object.defineProperty;
-  var __getOwnPropDesc$3 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$3 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$3(target, key) : target;
-    for (var i = decorators.length - 1, decorator; i >= 0; i--)
-      if (decorator = decorators[i])
-        result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$2(target, key, result);
-    return result;
-  };
-  let CommentsPanel = class extends i$1 {
-    constructor() {
-      super(...arguments);
-      this.colorScheme = getSettingsValue("colorScheme");
-    }
-    render() {
-      return x$1`
-      <mov-dialog
-        id="CommentsPanel"
-        ?open=${getAppStateValue("panel") === "comments"}
-        fullscreen
-        @close=${buttonPanelsClose}
-      >
-        <h2 slot="label">${getLocaleString("COMMENTS")}</h2>
-        <div
-          id="CommentsArea"
-          class="${this.colorScheme}"
-        >
-          ${getAppStateValue("manga")?.comments}
-        </div>
-        <toggle-button
-          id="CommentsColorScheme"
-          mode="theme"
-          @click=${this.changeCommentsColor}
-          slot="header-actions"
-          ?active=${this.colorScheme === "dark"}
-        >
-        </toggle-button>
-      </mov-dialog>
-    `;
-    }
-    /**
-     * Event handler to toggle the color scheme of the comments panel.
-     * It toggles 'light' and 'dark' classes on the parent element of the button.
-     */
-    changeCommentsColor() {
-      this.colorScheme = this.colorScheme === "dark" ? "light" : "dark";
-    }
-  };
-  CommentsPanel.styles = [r$4(styles$2), r$4(themesCSS(":host"))];
-  __decorateClass$3([
-    r$1()
-  ], CommentsPanel.prototype, "colorScheme", 2);
-  CommentsPanel = __decorateClass$3([
-    t$1("comments-panel"),
-    libExports.useStores(settings$1, locale, appState)
-  ], CommentsPanel);
 
   function settingsScope() {
     const value = isSettingsLocal() ? "true" : "false";
@@ -8021,14 +7855,6 @@
         name="pagination"
         ?checked=${getSettingsValue("pagination")}
         @change=${checkPagination}
-      ></toggle-switch>
-    </div>
-    <div class="ControlLabel enableComments">
-      ${getLocaleString("ENABLE_COMMENTS")}
-      <toggle-switch
-        name="enableComments"
-        ?checked=${getSettingsValue("enableComments")}
-        @change=${checkEnableComments}
       ></toggle-switch>
     </div>
     <div class="ControlLabel downloadZip">
@@ -9025,6 +8851,68 @@
   ${animation}
 `;
 
+  const themesCSS = (selector = "#MangaOnlineViewer", hex = getSettingsValue("theme")) => {
+    const gradient = generateColorGradient(hex);
+    const text = getTextColor(hex);
+    const secondary = getSettingsValue("colorScheme") === "dark" ? gradient[8] : gradient[2];
+    const secondaryText = getTextColor(secondary);
+    return css`
+    :where(:root),
+    ${selector}, .dark,
+    ${selector}.dark {
+      --theme-primary-color: ${hex};
+      --theme-primary-text-color: ${text};
+      --theme-secondary-color: ${secondary};
+      --theme-secondary-text-color: ${secondaryText};
+
+      color-scheme: dark;
+      --theme-body-background: ${colors.dark["600"]};
+      --theme-body-text-color: ${colors.dark["50"]};
+      --theme-text-color: ${colors.dark["50"]};
+      --theme-background-color: ${colors.dark["600"]};
+      --theme-hightlight-color: ${colors.dark["500"]};
+      --theme-border-color: ${colors.dark["400"]};
+
+      --mov-color-fill-quiet: ${gradient[9]};
+      --mov-color-fill-normal: var(--theme-secondary-color, ${gradient[8]});
+      --mov-color-fill-loud: var(--theme-primary-color);
+      --mov-color-border-quiet: ${gradient[8]};
+      --mov-color-border-normal: ${gradient[7]};
+      --mov-color-border-loud: ${gradient[6]};
+      --mov-color-on-quiet: ${gradient[4]};
+      --mov-color-on-normal: var(--theme-secondary-text-color, ${gradient[3]});
+      --mov-color-on-loud: var(--theme-primary-text-color, white);
+
+      --mov-color-mix-hover: black 8%;
+      --mov-color-mix-active: black 16%;
+    }
+
+    .light,
+    ${selector}.light {
+      color-scheme: light;
+      --theme-body-background: ${colors.gray["50"]};
+      --theme-body-text-color: ${colors.gray["900"]};
+      --theme-text-color: ${colors.gray["900"]};
+      --theme-background-color: ${colors.gray["50"]};
+      --theme-hightlight-color: ${colors.gray["500"]};
+      --theme-border-color: ${colors.gray["100"]};
+
+      --mov-color-fill-quiet: ${gradient[0]};
+      --mov-color-fill-normal: var(--theme-secondary-color, ${gradient[1]});
+      --mov-color-fill-loud: var(--theme-primary-color);
+      --mov-color-border-quiet: ${gradient[1]};
+      --mov-color-border-normal: ${gradient[2]};
+      --mov-color-border-loud: ${gradient[4]};
+      --mov-color-on-quiet: ${gradient[6]};
+      --mov-color-on-normal: var(--theme-secondary-text-color, ${gradient[3]});
+      --mov-color-on-loud: var(--theme-primary-text-color, white);
+
+      --mov-color-mix-hover: black 10%;
+      --mov-color-mix-active: black 20%;
+    }
+  `;
+  };
+
   /* 
   Tool Cool Range Slider - Generated Labels Plugin v1.0.8
   https://github.com/mzusin/toolcool-range-slider 
@@ -9437,7 +9325,6 @@
                       .next=${manga.next}
                       .prev=${manga.prev}
                     ></manga-pagination>
-              <comments-panel></comments-panel>
               <keybindings-panel></keybindings-panel>
               <bookmark-panel></bookmark-panel>
               <settings-panel></settings-panel>
@@ -9743,37 +9630,6 @@
 
   const externalCSS = [normalize, nprogress, fix].join("\n");
 
-  async function captureComments$1() {
-    if (!getSettingsValue("enableComments")) return null;
-    const comments = document.querySelector("#disqus_thread, #fb-comments");
-    if (comments) {
-      logScript("Waiting for Comments to load", comments);
-      window.scrollTo(0, document.body.scrollHeight);
-      await new Promise((resolve) => {
-        const observer = new MutationObserver(() => {
-          const iframe = comments.querySelector(
-            "iframe:not(#indicator-north, #indicator-south)"
-          );
-          if (iframe?.contentWindow?.document.readyState === "complete" && !!iframe?.contentWindow?.document.body?.textContent?.length) {
-            observer.disconnect();
-            resolve();
-          }
-        });
-        observer.observe(comments, { childList: true, subtree: true });
-        setTimeout(() => {
-          observer.disconnect();
-          resolve();
-        }, 1e4);
-      });
-      if (comments.children.length) {
-        logScript("Got Comments", comments);
-      } else {
-        logScript("Timeout Comments");
-      }
-    }
-    window.scrollTo(0, 0);
-    return comments;
-  }
   async function preparePage([site, manga]) {
     logScript(`Found Pages: ${manga.pages} in ${site?.name}`);
     if (!manga.title) {
@@ -9783,9 +9639,6 @@
     if (manga.before !== void 0) {
       logScriptVerbose(`Executing Preparation`);
       await manga.before(manga.begin ?? 0);
-    }
-    if (getSettingsValue("enableComments") && !manga.comments) {
-      manga.comments = await captureComments$1();
     }
     document.head.innerHTML += wrapStyle("externals", externalCSS);
     const viewer = document.createElement("manga-online-viewer");
@@ -9937,21 +9790,6 @@
     }
   };
 
-  function captureComments() {
-    const comments = document.querySelector("#comments-container");
-    if (!comments) return null;
-    const css = [...document.styleSheets].filter((stylesheet) => !stylesheet.href || stylesheet.href.startsWith(window.location.origin)).map((stylesheet) => [...stylesheet.cssRules]?.map(({ cssText }) => cssText)?.join("\n") ?? "");
-    comments.classList.remove("blur-sm");
-    const container = document.createElement("div");
-    const shadowRoot = container.attachShadow({ mode: "open" });
-    const commentsParent = document.createElement("div");
-    commentsParent.appendChild(comments);
-    shadowRoot.appendChild(commentsParent);
-    const style = document.createElement("style");
-    style.textContent = css.join("\n");
-    shadowRoot.appendChild(style);
-    return container;
-  }
   const comick = {
     name: "Comick",
     url: /https?:\/\/(www\.)?comick.io\/.+/,
@@ -9974,8 +9812,7 @@
         pages: pages?.length,
         prev: data?.prev?.href,
         next: data?.next?.href,
-        listImages: pages,
-        comments: captureComments()
+        listImages: pages
       };
     }
   };
