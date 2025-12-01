@@ -22,7 +22,6 @@ import './Header.ts';
 import './BookmarkPanel.ts';
 import './KeybindingsPanel.ts';
 import './Navbar.ts';
-import './CommentsPanel.ts';
 import './SettingsPanel.ts';
 import './App.ts';
 

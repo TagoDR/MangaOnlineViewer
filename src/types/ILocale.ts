@@ -36,7 +36,6 @@ export type ILocale = {
   VIEW_MODE_WEBCOMIC: string;
   FIT_WIDTH_OVERSIZED: string;
   SHOW_THUMBNAILS: string;
-  ENABLE_COMMENTS: string;
   HIDE_CONTROLS: string;
   HEADER_TYPE: string;
   HEADER_HOVER: string;
@@ -99,8 +98,6 @@ export type ILocale = {
   SCROLL_DOWN: string;
   CLOSE: string;
   LIST_EMPTY: string;
-  DISPLAY_COMMENTS: string;
-  COMMENTS: string;
   SCROLL_START: string;
   INCREASE_SPEED: string;
   DECREASE_SPEED: string;

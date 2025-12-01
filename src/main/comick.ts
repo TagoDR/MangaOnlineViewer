@@ -1,24 +1,6 @@
 // == Comick =======================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-function captureComments() {
-  const comments = document.querySelector('#comments-container');
-  if (!comments) return null;
-  const css = [...document.styleSheets]
-    .filter(stylesheet => !stylesheet.href || stylesheet.href.startsWith(window.location.origin))
-    .map(stylesheet => [...stylesheet.cssRules]?.map(({ cssText }) => cssText)?.join('\n') ?? '');
-  comments.classList.remove('blur-sm');
-  const container = document.createElement('div');
-  const shadowRoot = container.attachShadow({ mode: 'open' });
-  const commentsParent = document.createElement('div');
-  commentsParent.appendChild(comments);
-  shadowRoot.appendChild(commentsParent);
-  const style = document.createElement('style');
-  style.textContent = css.join('\n');
-  shadowRoot.appendChild(style);
-  return container;
-}
-
 const comick: ISite = {
   name: 'Comick',
   url: /https?:\/\/(www\.)?comick.io\/.+/,
@@ -43,7 +25,6 @@ const comick: ISite = {
       prev: data?.prev?.href,
       next: data?.next?.href,
       listImages: pages,
-      comments: captureComments(),
     };
   },
 };

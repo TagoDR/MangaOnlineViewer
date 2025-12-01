@@ -1,6 +1,6 @@
 import { sanitizeUrl } from '@braintree/sanitize-url';
 import generateZip from '../../core/download';
-import { changeSettingsValue, getAppStateValue, setAppStateValue } from '../../core/settings.ts';
+import { changeSettingsValue, getAppStateValue } from '../../core/settings.ts';
 import { logScript } from '../../utils/tampermonkey';
 
 /**
@@ -36,11 +36,4 @@ export function buttonRedirectURL(event: Event) {
       window.history.back();
     }
   }
-}
-
-/**
- * Event handler to open the comments panel.
- */
-export function buttonCommentsOpen() {
-  setAppStateValue('panel', 'comments');
 }

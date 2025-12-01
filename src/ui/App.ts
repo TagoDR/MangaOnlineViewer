@@ -107,7 +107,6 @@ export default class App extends LitElement {
                       .next=${manga.next}
                       .prev=${manga.prev}
                     ></manga-pagination>
-              <comments-panel></comments-panel>
               <keybindings-panel></keybindings-panel>
               <bookmark-panel></bookmark-panel>
               <settings-panel></settings-panel>

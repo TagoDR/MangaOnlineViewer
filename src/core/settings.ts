@@ -38,7 +38,6 @@ export const defaultSettings: ISettings = {
   bookmarks: [],
   colorScheme: 'dark',
   downloadZip: false,
-  enableComments: true,
   enabled: false,
   fitWidthIfOversize: true,
   header: 'scroll',
@@ -477,7 +476,6 @@ export function toggleLocalSettings(activate: boolean = false): boolean {
   localSettings.enabled = activate;
   saveLocalSettings(diffObj(localSettings, getDefault(false)));
   logScript('Local Settings ', activate ? 'Enabled' : 'Disabled');
-  refreshSettings();
   toast.info({
     title: `Changed Settings to`,
     description: isSettingsLocal() ? 'Local' : 'Global',

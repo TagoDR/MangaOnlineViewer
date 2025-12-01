@@ -20,8 +20,6 @@ export type IMangaBase = {
   lazy?: boolean;
   /** Overrides the global throttle timer (in milliseconds) for loading images. */
   timer?: number;
-  /** A reference to the captured comments element from the original page. */
-  comments?: Element | null;
   /** An optional function to execute before the viewer starts loading images. */
   before?(begin: number): void | Promise<void>;
   /** An optional function to reload the source for a specific page, returning the new image URL. */

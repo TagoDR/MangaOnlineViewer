@@ -11,7 +11,6 @@ export type Panel =
   | 'keybindings'
   | 'keybindingsEditor'
   | 'bookmarks'
-  | 'comments'
   | 'none';
 
 /**

@@ -16,51 +16,6 @@ import externalCSS from '../ui/styles/externalStyle.ts';
 import { wrapStyle } from '../utils/css.ts';
 
 /**
- * Captures the comments section (Disqus or Facebook) from the page.
- * It scrolls to the bottom of the page to trigger the lazy-loading of comments,
- * then waits for the comment iframe to fully load.
- * @returns {Promise<Element | null>} A promise that resolves with the comments element, or null if not found or disabled.
- */
-async function captureComments(): Promise<Element | null> {
-  if (!getSettingsValue('enableComments')) return null;
-  const comments = document.querySelector('#disqus_thread, #fb-comments');
-  if (comments) {
-    logScript('Waiting for Comments to load', comments);
-    window.scrollTo(0, document.body.scrollHeight);
-
-    await new Promise<void>(resolve => {
-      const observer = new MutationObserver(() => {
-        const iframe = comments.querySelector<HTMLIFrameElement>(
-          'iframe:not(#indicator-north, #indicator-south)',
-        );
-        if (
-          iframe?.contentWindow?.document.readyState === 'complete' &&
-          !!iframe?.contentWindow?.document.body?.textContent?.length
-        ) {
-          observer.disconnect();
-          resolve();
-        }
-      });
-      observer.observe(comments, { childList: true, subtree: true });
-
-      // Also resolve after a timeout, in case the comments never load.
-      setTimeout(() => {
-        observer.disconnect();
-        resolve();
-      }, 10000); // 10 seconds timeout
-    });
-
-    if (comments.children.length) {
-      logScript('Got Comments', comments);
-    } else {
-      logScript('Timeout Comments');
-    }
-  }
-  window.scrollTo(0, 0);
-  return comments;
-}
-
-/**
  * Prepares the page to display the manga viewer.
  * @param {[ISite, IManga]} siteMangaTuple - A tuple containing the site and manga objects.
  * @param {ISite} siteMangaTuple[0] - The site configuration object.
@@ -76,9 +31,6 @@ export async function preparePage([site, manga]: [ISite | undefined, IManga]): P
   if (manga.before !== undefined) {
     logScriptVerbose(`Executing Preparation`);
     await manga.before(manga.begin ?? 0);
-  }
-  if (getSettingsValue('enableComments') && !manga.comments) {
-    manga.comments = await captureComments();
   }
   document.head.innerHTML += wrapStyle('externals', externalCSS);
   const viewer = document.createElement('manga-online-viewer') as App;

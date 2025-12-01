@@ -17,7 +17,6 @@ import { TitleController } from './controllers/title.ts';
 import { toggleAutoScroll } from './events/autoscroll';
 import { buttonBookmarksOpen } from './events/bookmarks';
 import {
-  buttonCommentsOpen,
   buttonGlobalHideImageControls,
   buttonRedirectURL,
   buttonStartDownload,
@@ -329,14 +328,6 @@ export class Header extends LitElement {
             ?disabled=${!this.manga.series}
           >
             <mov-icon name="IconBookReturn"></mov-icon>
-          </mov-button>
-          <mov-button
-            id="CommentsButton"
-            title="${getLocaleString('DISPLAY_COMMENTS')}"
-            @click=${buttonCommentsOpen}
-            ?disabled=${!this.manga.comments}
-          >
-            <mov-icon name="IconMessage"></mov-icon>
           </mov-button>
           <mov-button
             id="download"

@@ -7,7 +7,6 @@ import {
   changeNavbarType,
   changeScrollHeight,
   checkAutoDownload,
-  checkEnableComments,
   checkFitWidthOversize,
   checkHideImageControls,
   checkLazyLoad,
@@ -30,14 +29,6 @@ function checkboxOptions() {
         name="pagination"
         ?checked=${getSettingsValue('pagination')}
         @change=${checkPagination}
-      ></toggle-switch>
-    </div>
-    <div class="ControlLabel enableComments">
-      ${getLocaleString('ENABLE_COMMENTS')}
-      <toggle-switch
-        name="enableComments"
-        ?checked=${getSettingsValue('enableComments')}
-        @change=${checkEnableComments}
       ></toggle-switch>
     </div>
     <div class="ControlLabel downloadZip">

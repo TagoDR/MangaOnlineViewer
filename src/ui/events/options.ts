@@ -55,15 +55,6 @@ export function changeNavbarType(event: Event) {
 }
 
 /**
- * Event handler to toggle and save the 'enable comments' setting.
- * @param {Event} event - The change event from the checkbox.
- */
-export function checkEnableComments(event: CustomEvent) {
-  const checked = event.detail.checked;
-  saveSettingsValue('enableComments', checked);
-}
-
-/**
  * Event handler to toggle and save the 'enable pagination' setting.
  * @param {Event} event - The change event from the checkbox.
  */
