@@ -18,12 +18,16 @@ export class HeadroomController implements ReactiveController {
   constructor(host: ReactiveControllerHost & { shadowRoot: ShadowRoot | null }) {
     this.host = host;
     host.addController(this);
+    const header = getSettingsValue('header');
+    const zoomMode = getSettingsValue('zoomMode');
+    if (zoomMode === 'height' && ['click', 'hover'].includes(header)) {
+      this.headerVisible = false;
+    }
   }
 
   hostConnected() {
     window.addEventListener('scroll', this.handleScroll);
     window.addEventListener('mousemove', this.handleMouseMove);
-    this.handleScroll(); // Initial check
   }
 
   hostDisconnected() {
