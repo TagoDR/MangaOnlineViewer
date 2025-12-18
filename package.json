@@ -41,7 +41,7 @@
     "@types/tampermonkey": "^5.0.5",
     "@vueless/storybook-dark-mode": "^10.0.4",
     "rollup-plugin-external-globals": "^0.13.0",
-    "storybook": "^10.1.2",
+    "storybook": "^10.1.10",
     "tslib": "^2.8.1",
     "typescript": "^5.9.3",
     "userscript-metadata-generator": "^0.2.4",
